@@ -9,19 +9,6 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
 import sqlite3
-def create_table(connection, tbl_name, col_name, col_type) :
-	#
-	cmd     = 'create table ' + tbl_name + '('
-	count   = 0
-	for col in col_name :
-		cmd   += '\n\t' + col + ' ' + col_type[count]
-		count += 1
-		if count < len(col_name) :
-			cmd += ','
-	cmd += '\n\t);'
-	#
-	cursor  = connection.cursor()
-	cursor.execute(cmd)
 # ===========================================================================
 # $begin create_integrand$$ $newlinech #$$
 # $spell
@@ -40,7 +27,7 @@ def create_table(connection, tbl_name, col_name, col_type) :
 # $icode%connection%, %integrand2eta%)%$$
 #
 # $head connection$$
-# is a $cref/connection/create_connection/$$ for this database.
+# is a $cref/connection/create_connection/connection/$$ for this database.
 #
 # $head integrand2eta$$
 # is a $code dict$$ or $code collections.OrderedDict$$
@@ -85,11 +72,15 @@ def create_table(connection, tbl_name, col_name, col_type) :
 # 
 # $end
 # ---------------------------------------------------------------------------
+import dismod_at
 def create_integrand(connection, integrand2eta ) :
-	col_name = ['integrand_id',        'integrand_name', 'eta' ]
-	col_type = ['integer primary key', 'text',           'real' ]
+	import collections
+	col_name2type = collections.OrderedDict()
+	col_name2type[ 'integrand_id' ]   = 'integer primary key'
+	col_name2type[ 'integrand_name' ] = 'text'
+	col_name2type[ 'eta' ]            = 'real'
 	#
-	create_table(connection, 'integrand', col_name, col_type)
+	dismod_at.create_table(connection, 'integrand', col_name2type)
 	#
 	cursor = connection.cursor();
 	for name in integrand2eta :
@@ -98,6 +89,8 @@ def create_integrand(connection, integrand2eta ) :
 		cmd += name + '\',' + str(eta) + ');'
 		cursor.execute(cmd)
 	#
+	col_name = col_name2type.keys()
+	col_type = col_name2type.values()
 	return (col_name, col_type)
 # ===========================================================================
 # $begin create_data$$ $newlinech #$$
@@ -203,25 +196,24 @@ def create_integrand(connection, integrand2eta ) :
 # ---------------------------------------------------------------------------
 def create_data(connection , covariate_list ) :
 	import collections
-	schema  = collections.OrderedDict()
-	schema['data_id']       = 'integer primary key'
-	schema['integrand_id']  = 'integer'
-	schema['likelihood_id'] = 'integer'
-	schema['location_id']   = 'integer'
-	schema['meas_value']    = 'real'
-	schema['meas_stdev']    = 'real'
-	schema['age_lower']     = 'real'
-	schema['age_upper']     = 'real'
-	schema['time_lower']    = 'real'
-	schema['time_upper']    = 'real'
+	col_name2type  = collections.OrderedDict()
+	col_name2type['data_id']       = 'integer primary key'
+	col_name2type['integrand_id']  = 'integer'
+	col_name2type['likelihood_id'] = 'integer'
+	col_name2type['location_id']   = 'integer'
+	col_name2type['meas_value']    = 'real'
+	col_name2type['meas_stdev']    = 'real'
+	col_name2type['age_lower']     = 'real'
+	col_name2type['age_upper']     = 'real'
+	col_name2type['time_lower']    = 'real'
+	col_name2type['time_upper']    = 'real'
 	for covariate in covariate_list : 
 		assert covariate.startswith('c_')
-		schema[covariate]   = 'real'
+		col_name2type[covariate]   = 'real'
 	#
-	col_name  = schema.keys()
-	col_type = schema.values()
+	dismod_at.create_table(connection, 'data', col_name2type)
 	#
-	create_table(connection, 'data', col_name, col_type)
-	#
+	col_name  = col_name2type.keys()
+	col_type = col_name2type.values()
 	return (col_name, col_type)
 # ===========================================================================

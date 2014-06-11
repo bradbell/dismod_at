@@ -9,7 +9,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
 import sqlite3
-# ----------------------------------------------------------------------------
+# ============================================================================
 # $begin create_connection$$ $newlinech #$$
 # $spell
 #	sqlite
@@ -22,7 +22,6 @@ import sqlite3
 # $section Create a Python sqlite3 Database Connection$$
 #
 # $head Syntax$$
-# $codei%import dismod_at
 # %connection% = dismod_at.create_connection(%file_name%, %new%)
 # %$$
 #
@@ -35,6 +34,12 @@ import sqlite3
 # If it is true, and a data base with the same name already exists,
 # the existing database is deleted before creating the connection.
 #
+# $head connection$$
+# The return value is an sqlite3
+# $href%https://docs.python.org/2/library/sqlite3.html#connection-objects
+#	%connection object
+# %$$
+#
 # $end
 # ---------------------------------------------------------------------------
 def create_connection(file_name, new) :
@@ -43,3 +48,49 @@ def create_connection(file_name, new) :
 		os.remove(file_name)
 	connection = sqlite3.connect(file_name)
 	return connection
+# ==========================================================================-
+# $begin create_table$$ $newlinech #$$
+# $spell
+#	dismod
+# $$
+# $index create_table, database$$
+# $index table, database create$$
+# $index database, create_table$$
+#
+# $section Create a Database Table$$
+#
+# $head Syntax$$
+# %dismod_at.create_table(%connection%, %col_name2type%)
+# %$$
+#
+# $head connection$$
+# is a $cref/connection/create_connection/connection/$$ for this database.
+#
+# $head table_name$$
+# is a $code str$$ that specifies the name of the table.
+#
+# $head col_name2type$$
+# is as $code dict$$, or $code collections.OrderedDict$$,
+# where the keys the names of the columns and each value is the type
+# for the corresponding column.
+# The valid types are 
+# $code integer$$, $code real$$, $code text$$, and
+# $code integer primary key$$.
+# There must be one, and only one, column with type
+# $code integer primary key$$.
+#
+# $end
+# ---------------------------------------------------------------------------
+def create_table(connection, tbl_name, col_name2type) :
+	#
+	cmd     = 'create table ' + tbl_name + '('
+	count   = 0
+	for name in col_name2type :
+		cmd   += '\n\t' + name + ' ' + col_name2type[name]
+		count += 1
+		if count < len(col_name2type) :
+			cmd += ','
+	cmd += '\n\t);'
+	#
+	cursor  = connection.cursor()
+	cursor.execute(cmd)
