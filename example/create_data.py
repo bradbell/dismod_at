@@ -27,21 +27,21 @@ def create_data() :
 	connection     = dismod_at.create_connection(file_name, new)
 	#
 	covariate_list         = [ 'c_sex', 'c_income' ]
-	(name_list, type_list) = dismod_at.create_data(connection, covariate_list)
+	(col_name, col_type) = dismod_at.create_data(connection, covariate_list)
 	#
 	# place values in table
 	index      = 0
 	cmd        = 'insert into data values('
-	for column in name_list :
-		if column == 'data_id':
+	for col in col_name :
+		if col == 'data_id':
 			# primary key
 			cmd += 'null'
-		elif type_list[index] == 'integer' :
+		elif col_type[index] == 'integer' :
 			cmd += str(index)
 		else :
 			cmd += str( index + 0.5 )
 		index += 1
-		if index < len(name_list) :
+		if index < len(col_name) :
 			cmd += ','
 	cmd += ');'
 	#
@@ -51,14 +51,14 @@ def create_data() :
 	# check values in table
 	for row in cursor.execute('select * from data') :
 		index = 0
-		for column in name_list :
-			if column == 'data_id' :
+		for col in col_name :
+			if col == 'data_id' :
 				# primary key starts at one, but where is this specified ?
 				assert row[index] == 1 
-			elif type_list[index] == 'integer' :
+			elif col_type[index] == 'integer' :
 				assert row[index] == index
 			else :
-				assert type_list[index] == 'real'
+				assert col_type[index] == 'real'
 				assert row[index] == index + 0.5
 			index += 1
 # END PYTHON
