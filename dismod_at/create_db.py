@@ -10,7 +10,7 @@
 # -------------------------------------------------------------------------- */
 import sqlite3
 #
-# $begin create_connection$$
+# $begin create_connection$$ $newlinech #$$
 # $spell
 #	sqlite
 #	dismod
@@ -59,8 +59,8 @@ def create_connection(file_name, new) :
 # $section Create An Empty Data Table$$
 # 
 # $head Syntax$$
-# $codei%schema = dismod_at.create_data(%connection%, %covariate_list%)
-# %$$
+# $codei%(%name_list%, %type_list%) = dismod_at.create_data(%$$
+# $icode%connection%, %covariate_list%)%$$
 #
 # $head connection$$
 # Is a $cref/connection/create_connection/$$ for this database.
@@ -127,11 +127,13 @@ def create_connection(file_name, new) :
 # $codei%len(%covariate_list%)%$$ and have type $code real$$. 
 # The corresponding values in the table are the covariates for this row.
 #
-# $head schema$$
-# The return value $icode schema$$
-# is an $code collections.OrderedDict$$ that where the keys
-# are the column names and the values are the corresponding types
-# and the order is the order of the columns in the table.
+# $head name_list$$
+# The return value $icode name_list$$ is a list of strings containing
+# the column names in the same order as the in the table.
+#
+# $head type_list$$
+# The return value $icode type_list$$ is a list of strings contianing
+# the column types in the same order as the columns in the table.
 #
 # $children%example/create_data.py
 # %$$
@@ -158,16 +160,20 @@ def create_data(connection , covariate_list ) :
 		assert covariate.startswith('c_')
 		schema[covariate]   = 'real'
 	#
-	cursor  = connection.cursor()
+	name_list = schema.keys()
+	type_list = schema.values()
+	#
 	cmd     = 'create table data('
 	count   = 0
-	for column in schema :
+	for column in name_list :
 		cmd   += '\n\t' + column + ' ' + schema[column]
 		count += 1
 		if count < len(schema) :
 			cmd += ','
 	cmd += '\n\t);'
+	#
+	cursor  = connection.cursor()
 	cursor.execute(cmd)
 	#
-	return schema
+	return (name_list, type_list)
 # ===========================================================================
