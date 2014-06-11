@@ -1,0 +1,8 @@
+$begin dismod_at$$
+
+$section Disease Rates as Functions of Age and Time$$
+
+$childtable%dismod_at/create_db.py
+%$$
+
+$end
