@@ -20,6 +20,7 @@
 # $$
 # $end
 # BEGIN PYTHON
+from __future__ import print_function
 def create_data() :
 	import dismod_at
 	file_name      = 'example.db'
@@ -61,4 +62,5 @@ def create_data() :
 				assert col_type[index] == 'real'
 				assert row[index] == index + 0.5
 			index += 1
+	print('create_data: OK')
 # END PYTHON

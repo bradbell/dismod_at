@@ -20,6 +20,7 @@
 # $$
 # $end
 # BEGIN PYTHON
+from __future__ import print_function
 def create_integrand() :
 	import dismod_at
 	import collections
@@ -52,4 +53,5 @@ def create_integrand() :
 	assert row_list[0][1] == 'incidence'
 	assert row_list[1][1] == 'remission'
 	assert row_list[2][1] == 'mtall'
+	print('create_integrand: OK')
 # END PYTHON
