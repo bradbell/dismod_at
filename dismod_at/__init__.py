@@ -9,4 +9,3 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
 from database import *
-from create_db import *

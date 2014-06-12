@@ -10,7 +10,7 @@
 # -------------------------------------------------------------------------- */
 import sqlite3
 # ============================================================================
-# $begin unicode_tuple$$
+# $begin unicode_tuple$$ $newlinech #$$
 # $spell
 #	iterable
 #	unicode
@@ -140,6 +140,12 @@ def create_connection(file_name, new) :
 # $code integer primary key$$.
 # If $icode col_name2type$$ is an ordered dictionary,
 # the columns in the table have the same order.
+#
+# $children%example/create_table.py
+# %$$
+# $head Example$$
+# The file $cref create_table.py$$ creates an example use of
+# $code create_table$$.
 #
 # $end
 # ---------------------------------------------------------------------------
