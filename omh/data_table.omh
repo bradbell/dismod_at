@@ -1,0 +1,72 @@
+$begin data_table$$ $newlinech #$$
+$spell
+	cov
+	covariate
+	covariates
+	stdev
+	dismod
+$$
+$index data, table$$
+$index table, data$$
+
+$section The Data Table$$
+
+$head data_id$$
+This column has type $code integer$$ and is the primary key for the 
+$code data$$ table. 
+
+$head integrand_id$$
+This column has type $code integer$$ and its value is the
+$cref/integrand table id/create_integrand/integrand/integrand_id/$$
+for each row of the $code data$$ table.
+
+$head likelihood_id$$
+This column has type $code integer$$ and identifies the data likelihood
+for each row of the $code data$$ table.
+
+$head location_id$$
+This column has type $code integer$$ and identifies the location
+for each row of the $code data$$ table.
+
+$head meas_value$$
+This column has type $code real$$ and is the measured value
+for each row of the $code data$$ table; 
+i.e., the measurement of the integrand at the specified location etc. 
+
+$head meas_stdev$$
+This column has type $code real$$ and is the standard deviation 
+for this measurement value.
+This standard for the data and is in the same units at the data.
+
+$head age_lower$$
+This column has type $code real$$ and is the lower age limit 
+for this measurement and must be between the 
+minimum and maximum age specified by the $code age_grid$$ table.
+
+$head age_upper$$
+This column has type $code real$$ and is the upper age limit
+for this measurement and must be between the 
+minimum and maximum age specified by the $code age_grid$$ table.
+
+$head time_lower$$
+This column has type $code real$$ and is the lower time limit 
+for this measurement and must be between the 
+minimum and maximum time specified by the $code time_grid$$ table.
+
+$head time_upper$$
+This column has type $code real$$ and is the upper time limit
+for this measurement and must be between the 
+minimum and maximum time specified by the $code time_grid$$ table.
+
+$head Covariates$$
+The covariate columns have type $code real$$ and column names
+that begin with the two characters $code c_$$.
+The values in column $codei%c_%cov%$$
+is the value of covariate $icode cov$$ for this measurement.
+
+$children%example/data_table.py
+%$$
+$head Example$$
+The file $cref data_table.py$$ creates an example $code data$$ table.
+
+$end

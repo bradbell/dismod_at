@@ -12,6 +12,7 @@ import sqlite3
 # ============================================================================
 # $begin create_connection$$ $newlinech #$$
 # $spell
+#	str
 #	sqlite
 #	dismod
 # $$
@@ -22,7 +23,7 @@ import sqlite3
 # $section Create a Python sqlite3 Database Connection$$
 #
 # $head Syntax$$
-# %connection% = dismod_at.create_connection(%file_name%, %new%)
+# $icode%connection% = dismod_at.create_connection(%file_name%, %new%)
 # %$$
 #
 # $head file_name$$
@@ -52,6 +53,7 @@ def create_connection(file_name, new) :
 # $begin create_table$$ $newlinech #$$
 # $spell
 #	dismod
+#	str
 # $$
 # $index create_table, database$$
 # $index table, database create$$
@@ -60,7 +62,7 @@ def create_connection(file_name, new) :
 # $section Create a Database Table$$
 #
 # $head Syntax$$
-# %dismod_at.create_table(%connection%, %col_name2type%)
+# $codei%dismod_at.create_table(%connection%, %col_name2type%)
 # %$$
 #
 # $head connection$$
