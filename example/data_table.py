@@ -24,14 +24,13 @@
 from __future__ import print_function
 def data_table() :
 	import dismod_at
-	import collections
 	#
 	file_name      = 'example.db'
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
 	#
 	# required columns
-	col_name2type  = collections.OrderedDict()
+	col_name2type  = dict()
 	col_name2type['data_id']       = 'integer primary key'
 	col_name2type['integrand_id']  = 'integer'
 	col_name2type['likelihood_id'] = 'integer'
@@ -51,21 +50,30 @@ def data_table() :
 	tbl_name = 'data'
 	dismod_at.create_table(connection, tbl_name, col_name2type)
 	#
-	# place values in table
-	index      = 0
-	cmd        = 'insert into data values('
+	# now pretend like we do not know all the columns in the table
+	# nor the order of the table columns.
+	col_name2type = dismod_at.get_name2type(connection, tbl_name)
+	#
+	index         = 0
+	col_name      = col_name2type.keys()
+	for i in range(len(col_name)) :
+		col_name[i] = str(col_name[i])
+	col_value     = list()
 	for name in col_name2type :
 		if name == 'data_id':
 			# primary key
-			cmd += 'null'
+			col_value.append('null')
 		elif col_name2type[name] == 'integer' :
-			cmd += str(index)
+			col_value.append(index)
 		else :
-			cmd += str( index + 0.5 )
-		if name != 'c_income' :
-			cmd += ','
+			col_value.append(index + 0.5 )
 		index += 1
-	cmd += ');'
+	col_name  = str( tuple( col_name ) )
+	col_value = str( tuple( col_value ) )
+	#
+	col_name  = col_name.replace("'", "")
+	col_value = col_value.replace("'", "")
+	cmd       = 'insert into data ' + col_name + ' values ' + col_value + ';'
 	#
 	cursor     = connection.cursor()
 	cursor.execute(cmd)
