@@ -9,4 +9,4 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
 from data_table        import *
-from create_integrand  import *
+from integrand_table   import *

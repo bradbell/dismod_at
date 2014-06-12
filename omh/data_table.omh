@@ -1,4 +1,4 @@
-$begin data_table$$ $newlinech #$$
+$begin data_table$$
 $spell
 	cov
 	covariate
@@ -17,7 +17,7 @@ $code data$$ table.
 
 $head integrand_id$$
 This column has type $code integer$$ and its value is the
-$cref/integrand table id/create_integrand/integrand/integrand_id/$$
+$cref/integrand table id/integrand_table/integrand_id/$$
 for each row of the $code data$$ table.
 
 $head likelihood_id$$
@@ -60,9 +60,14 @@ minimum and maximum time specified by the $code time_grid$$ table.
 
 $head Covariates$$
 The covariate columns have type $code real$$ and column names
-that begin with the two characters $code c_$$.
-The values in column $codei%c_%cov%$$
+that begin with the two characters $code x_$$.
+The values in column $codei%x_%cov%$$
 is the value of covariate $icode cov$$ for this measurement.
+
+$head Comments$$
+This table may also any number of columns with names that begin
+with the two characters $code c_$$.
+These are comment columns and are ignored by $code dismod_at$$.
 
 $children%example/data_table.py
 %$$

@@ -10,6 +10,62 @@
 # -------------------------------------------------------------------------- */
 import sqlite3
 # ============================================================================
+# $begin unicode_tuple$$
+# $spell
+#	iterable
+#	unicode
+#	tuple
+#	str
+# $$
+# $index convert, iterable to string$$
+# $index string, version of iterable$$
+#
+# $section Convert an Iterable Object to a Unicode String$$
+#
+# $head Syntax$$
+# $icode%u_tuple% = dismod_at.unicode_tuple(%iterable%, %quote_string%)%$$
+#
+# $head iterable$$
+# is any object where we can iterate over its elements
+# and convert each element to a unicode value.
+#
+# $head quote_string$$
+# is either $code True$$ or $code False$$. 
+# If it is $code True$$, and an element is a $code str$$ or $code unicode$$,
+# it is surrounded by the single quote character.
+#
+# $head None$$
+# The value $code None$$ is converted to the unicode string $code null$$
+# (always without quotes).
+#
+# $head u_tuple$$
+# is a unicode string representation of the tuple containing the elements.
+# To be specific it is given by
+# $codei%
+#	%u_tuple% = u'( %u_1%, %u_2%, %...%, %u_n% )'
+# %$$
+# where $icode n$$ is the number of elements 
+# and $icode u_1$$ is the $th i$$ element.
+# 
+# $end
+# --------------------------------------------------------------------------
+def unicode_tuple(iterable, quote_string) :
+	u_tuple = u'(' 
+	count   = 0
+	for element in iterable :
+		if count > 0 :
+			u_tuple += u','
+		count += 1
+		#
+		if element == None :
+			u_tuple += u' null'
+		elif quote_string and isinstance(element, basestring) :
+			u_tuple += u' ' + u"'" + unicode(element) + u"'"
+		else :
+			u_tuple += u' ' + unicode(element)
+	u_tuple     += u' )'
+	return u_tuple
+# ============================================================================
 # $begin create_connection$$ $newlinech #$$
 # $spell
 #	str

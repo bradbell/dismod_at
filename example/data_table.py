@@ -30,50 +30,48 @@ def data_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	#
 	# required columns
-	col_name2type  = dict()
-	col_name2type['data_id']       = 'integer primary key'
-	col_name2type['integrand_id']  = 'integer'
-	col_name2type['likelihood_id'] = 'integer'
-	col_name2type['location_id']   = 'integer'
-	col_name2type['meas_value']    = 'real'
-	col_name2type['meas_stdev']    = 'real'
-	col_name2type['age_lower']     = 'real'
-	col_name2type['age_upper']     = 'real'
-	col_name2type['time_lower']    = 'real'
-	col_name2type['time_upper']    = 'real'
-	#
-	# covariates
-	col_name2type['c_sex']         = 'real'
-	col_name2type['c_income']      = 'real'
-	#
-	# create the table
+	col_name2type  =  {
+		# required columns
+		'data_id'       : 'integer primary key',
+		'integrand_id'  : 'integer',
+		'likelihood_id' : 'integer',
+		'location_id'   : 'integer',
+		'meas_value'    : 'real',
+		'meas_stdev'    : 'real',
+		'age_lower'     : 'real',
+		'age_upper'     : 'real',
+		'time_lower'    : 'real',
+		'time_upper'    : 'real',
+		# covariates 
+		'x_sex'         : 'real',
+		'x_income'      : 'real',
+		# comments
+		'c_data_source' : 'text'
+	}
+	# create the data table
 	tbl_name = 'data'
 	dismod_at.create_table(connection, tbl_name, col_name2type)
 	#
-	# now pretend like we do not know all the columns in the table
-	# nor the order of the table columns.
-	col_name2type = dismod_at.get_name2type(connection, tbl_name)
-	#
-	index         = 0
-	col_name      = col_name2type.keys()
-	for i in range(len(col_name)) :
-		col_name[i] = str(col_name[i])
-	col_value     = list()
-	for name in col_name2type :
-		if name == 'data_id':
+	col_name  = col_name2type.keys()
+	col_value = list()
+	index     = 0
+	for name in col_name :
+		if name == 'data_id' :
 			# primary key
-			col_value.append('null')
+			col_value.append(None)
+		elif name == 'c_data_source' :
+			col_value.append('www.healthdata.org')
 		elif col_name2type[name] == 'integer' :
 			col_value.append(index)
 		else :
+			assert col_name2type[name] == 'real'
 			col_value.append(index + 0.5 )
 		index += 1
-	col_name  = str( tuple( col_name ) )
-	col_value = str( tuple( col_value ) )
-	#
-	col_name  = col_name.replace("'", "")
-	col_value = col_value.replace("'", "")
-	cmd       = 'insert into data ' + col_name + ' values ' + col_value + ';'
+	quote_string = False
+	name_tuple   = dismod_at.unicode_tuple(col_name, quote_string)
+	quote_string = True
+	value_tuple  = dismod_at.unicode_tuple(col_value, quote_string)
+	cmd = 'insert into data' + name_tuple + ' values ' + value_tuple + ';'
 	#
 	cursor     = connection.cursor()
 	cursor.execute(cmd)
@@ -81,15 +79,16 @@ def data_table() :
 	# check values in table
 	for row in cursor.execute('select * from data') :
 		index = 0
-		for name in col_name2type :
+		for name in col_name :
 			if name == 'data_id' :
 				# primary key starts at one, but where is this specified ?
 				assert row[index] == 1 
+			elif name == 'c_data_source' :
+				assert row[index] == 'www.healthdata.org'
 			elif col_name2type[name] == 'integer' :
 				assert row[index] == index
 			else :
 				assert col_name2type[name] == 'real'
-				assert row[index] == index + 0.5
 			index += 1
 	print('data_table: OK')
 # END PYTHON
