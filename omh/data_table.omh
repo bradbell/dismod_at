@@ -19,8 +19,8 @@ $code data$$ table.
 
 $head integrand_id$$
 This column has type $code integer$$ and its value is the
-$cref/integrand table id/integrand_table/integrand_id/$$
-for this measurement.
+$cref integrand_table$$ primary key that identifies
+the integrand for this measurement.
 
 $head likelihood_id$$
 This column has type $code integer$$ and identifies the data likelihood
@@ -30,8 +30,9 @@ $head location_id$$
 This column has type $code integer$$ and identifies the location
 for this measurement.
 
-$head age_weight_id$$
-This column has type $code integer$$ and identifies the age-weighting
+$head weighting_id$$
+This column has type $code integer$$ and its value identifies the 
+age-time $cref/weighting/id2name_table/Simple Tables/weighting/$$
 for this measurement.
 
 $head meas_value$$
@@ -69,11 +70,6 @@ The covariate columns have type $code real$$ and column names
 that begin with the two characters $code x_$$.
 The values in column $codei%x_%cov%$$
 is the value of covariate $icode cov$$ for this measurement.
-
-$head Comments$$
-This table may also any number of columns with names that begin
-with the two characters $code c_$$.
-These are comment columns and are ignored by $code dismod_at$$.
 
 $children%example/data_table.py
 %$$

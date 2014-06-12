@@ -20,4 +20,4 @@ then
 fi
 mkdir doc
 cd doc
-omhelp ../doc.omh -noframe -xml
+omhelp ../doc.omh -debug -noframe -xml

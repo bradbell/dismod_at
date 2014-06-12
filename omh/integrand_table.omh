@@ -8,24 +8,13 @@ $index integrand, table$$
 $index table, integrand$$
 
 $section The Integrand Table$$
-The $code integrand$$ table must have the following columns:
-
-$head integrand_id$$
-This column has type $code integer$$ and is the primary key for the
-$code integrand$$ table. 
-
-$head integrand_name$$
-This column has type $code text$$ and is the human readable
-name for this integrand.
+The $code integrand$$ table is an $cref id2name_table$$; i.e.,
+it has $code integrand_id$$ and $code integrand_name$$ columns.
+In addition, it has the following columns:
 
 $head eta$$
 This column has type $code real$$ and is the offset, when using
 a log transformation with this integrand.
-
-$head Comments$$
-This table may have any number of columns with names that begin
-with the two characters $code c_$$.
-These are comment columns and are ignored by $code dismod_at$$.
 
 $children%example/integrand_table.py
 %$$
