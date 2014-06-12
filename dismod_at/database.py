@@ -16,6 +16,7 @@ import sqlite3
 #	unicode
 #	tuple
 #	str
+#	dismod
 # $$
 # $index convert, iterable to string$$
 # $index string, version of iterable$$

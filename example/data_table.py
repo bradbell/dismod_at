@@ -36,6 +36,7 @@ def data_table() :
 		'integrand_id'  : 'integer',
 		'likelihood_id' : 'integer',
 		'location_id'   : 'integer',
+		'age_weight_id' : 'integer',
 		'meas_value'    : 'real',
 		'meas_stdev'    : 'real',
 		'age_lower'     : 'real',

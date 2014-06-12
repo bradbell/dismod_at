@@ -10,6 +10,8 @@ $index data, table$$
 $index table, data$$
 
 $section The Data Table$$
+Each row of the data file corresponds to one measurement;
+see $cref/meas_value/data_table/meas_value/$$ below.
 
 $head data_id$$
 This column has type $code integer$$ and is the primary key for the 
@@ -18,15 +20,19 @@ $code data$$ table.
 $head integrand_id$$
 This column has type $code integer$$ and its value is the
 $cref/integrand table id/integrand_table/integrand_id/$$
-for each row of the $code data$$ table.
+for this measurement.
 
 $head likelihood_id$$
 This column has type $code integer$$ and identifies the data likelihood
-for each row of the $code data$$ table.
+for this measurement.
 
 $head location_id$$
 This column has type $code integer$$ and identifies the location
-for each row of the $code data$$ table.
+for this measurement.
+
+$head age_weight_id$$
+This column has type $code integer$$ and identifies the age-weighting
+for this measurement.
 
 $head meas_value$$
 This column has type $code real$$ and is the measured value
@@ -36,7 +42,7 @@ i.e., the measurement of the integrand at the specified location etc.
 $head meas_stdev$$
 This column has type $code real$$ and is the standard deviation 
 for this measurement value.
-This standard for the data and is in the same units at the data.
+This standard for this measurement and is in the same units at the data.
 
 $head age_lower$$
 This column has type $code real$$ and is the lower age limit 
