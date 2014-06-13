@@ -1,8 +1,15 @@
 $begin integrand_table$$ 
 $spell
-dismod
-integrands
-str
+	dismod
+	integrands
+	str
+	mtexcess
+	mtother
+	mtwith
+	mtall
+	mtspecific
+	mtstandard
+	relrisk
 $$
 $index integrand, table$$
 $index table, integrand$$
@@ -10,7 +17,26 @@ $index table, integrand$$
 $section The Integrand Table$$
 The $code integrand$$ table is an $cref id2name_table$$; i.e.,
 it has $code integrand_id$$ and $code integrand_name$$ columns.
-In addition, it has the following columns:
+In addition, it has an $code eta$$ column.
+
+$head integrand_name$$
+The following values,
+and only the following values,
+appear in the $icode integrand_name$$ column:
+$table
+$icode integrand_name$$ $pre   $$ $cnext Description                   $rnext
+$code incidence$$       $cnext incidence rate                          $rnext
+$code remission$$       $cnext remission rate                          $rnext
+$code mtexcess$$        $cnext excess mortality rate                   $rnext
+$code mtother$$         $cnext other cause mortality rate              $rnext
+$code mtwith$$          $cnext with condition mortality rate           $rnext
+$code prevalence$$      $cnext prevalence                              $rnext
+$code mtspecific$$      $cnext cause specific mortality rate           $rnext
+$code mtall$$           $cnext all-cause mortality rate                $rnext
+$code mtstandard$$      $cnext standardized mortality ratio            $rnext
+$code relrisk$$         $cnext relative risk ratio
+$tend
+
 
 $head eta$$
 This column has type $code real$$ and is the offset, when using

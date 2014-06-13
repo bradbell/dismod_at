@@ -23,8 +23,9 @@ $cref integrand_table$$ primary key that identifies
 the integrand for this measurement.
 
 $head likelihood_id$$
-This column has type $code integer$$ and identifies the data likelihood
-for this measurement.
+This column has type $code integer$$ and identifies the 
+$cref/likelihood/id2name_table/Only Id to Name/likelihood/$$
+used to model this measurement.
 
 $head location_id$$
 This column has type $code integer$$ and identifies the location
@@ -32,7 +33,7 @@ for this measurement.
 
 $head weighting_id$$
 This column has type $code integer$$ and its value identifies the 
-age-time $cref/weighting/id2name_table/Simple Tables/weighting/$$
+age-time $cref/weighting/id2name_table/Only Id to Name/weighting/$$
 for this measurement.
 
 $head meas_value$$
