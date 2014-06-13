@@ -1,5 +1,6 @@
 $begin data_table$$
 $spell
+	gridname
 	cov
 	covariate
 	covariates
@@ -31,9 +32,9 @@ $head area_id$$
 This column has type $code integer$$ and identifies the area
 for this measurement.
 
-$head weighting_id$$
+$head gridname_id$$
 This column has type $code integer$$ and its value identifies the 
-age-time $cref/weighting/id2name_table/Only Id to Name/weighting/$$
+age-time $cref/gridname/id2name_table/Only Id to Name/gridname/$$
 for this measurement.
 
 $head meas_value$$

@@ -1,0 +1,32 @@
+$begin grid_table.omh$$
+$spell
+	mytable
+	gridname
+$$
+
+$section Grid Tables$$
+
+$head Definition$$
+The table $icode mytable$$ is a grid table
+if it has the following columns:
+
+$head mytable_id$$
+The column with name $icode%mytable%_id%$$
+has type $code integer$$ and is the primary key for the table.
+
+$head gridname_id$$ 
+The column with name $code gridname_id$$
+has type $code integer$$ and is value in a row is the 
+$cref/gridname/id2name_table/Only Id to Name/gridname/$$ 
+primary key that identifies the grid for this row. 
+
+$head age$$
+The column with name $code age$$ 
+has type $code real$$ and is value is the age value for this grid point.
+
+$head time$$
+The column with name $code time$$ 
+has type $code real$$ and is value is the time value for this grid point.
+
+
+$end

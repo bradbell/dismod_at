@@ -1,18 +1,21 @@
 $begin id2name_table$$
+$spell
+	mytable
+	gridname
+$$
 
-$section The Id to Name Tables$$
+$section Id to Name Tables$$
 
 $head Definition$$
-If $icode table$$ is an
-id to name table,
-it has the following columns:
+The table $icode mytable$$ is an id to name table
+if it has the following columns:
 
-$head table_id$$
-The column with name $icode%table%_id%$$
+$head mytable_id$$
+The column with name $icode%mytable%_id%$$
 has type $code integer$$ and is the primary key for the table.
 
-$head table_name$$ 
-The column with name $icode%table%_name%$$
+$head mytable_name$$ 
+The column with name $icode%mytable%_name%$$
 has type $code text$$ and has a different value for every row; i.e.,
 the names are unique and can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
@@ -22,9 +25,8 @@ The following id to name tables only have an id column,
 a name column,
 and $cref/comment columns/table/Comment Columns/$$:
 
-$subhead weighting$$
-This table just attaches names to each of the age-time functions
-defined by the values in the $code weight$$ table.
+$subhead gridname$$
+This table just attaches names to each of the age-time grid of values.
 
 $subhead likelihood$$
 This table just attaches names to each of the likelihood identifiers.
