@@ -11,8 +11,9 @@ with the two characters $code c_$$.
 These are comment columns and are ignored by $code dismod_at$$.
 
 $childtable%omh/id2name_table.omh
-	%omh/data_table.omh
 	%omh/integrand_table.omh
+	%omh/area_table.omh
+	%omh/data_table.omh
 %$$
 
 $end

@@ -30,7 +30,7 @@ $subhead likelihood$$
 This table just attaches names to each of the likelihood identifiers.
 The following values,
 and only the following values,
-appear in the $icode likehood_name$$ column:
+appear in the $icode likelihood$$ column:
 $code gaussian$$, 
 $code laplace$$, 
 $code log_gaussian$$, 

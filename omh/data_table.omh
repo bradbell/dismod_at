@@ -27,8 +27,8 @@ This column has type $code integer$$ and identifies the
 $cref/likelihood/id2name_table/Only Id to Name/likelihood/$$
 used to model this measurement.
 
-$head location_id$$
-This column has type $code integer$$ and identifies the location
+$head area_id$$
+This column has type $code integer$$ and identifies the area
 for this measurement.
 
 $head weighting_id$$
@@ -39,7 +39,7 @@ for this measurement.
 $head meas_value$$
 This column has type $code real$$ and is the measured value
 for each row of the $code data$$ table; 
-i.e., the measurement of the integrand at the specified location etc. 
+i.e., the measurement of the integrand at the specified area etc. 
 
 $head meas_stdev$$
 This column has type $code real$$ and is the standard deviation 

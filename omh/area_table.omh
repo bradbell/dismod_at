@@ -1,0 +1,24 @@
+$begin area_table$$ 
+$spell
+$$
+$index area, table$$
+$index table, area$$
+
+$section The Location Table$$
+The $code area$$ table is an $cref id2name_table$$; i.e.,
+it has $code area_id$$ and $code area_name$$ columns.
+In addition, it has a $code parent_id$$ column.
+
+$head parent_id$$
+This column has type $code integer$$ and is the $icode area_id$$
+of the parent for this area.
+There is only one area that does not have a parent; i.e.,
+its parent area is $code null$$.
+
+$children%example/area_table.py
+%$$
+$head Example$$
+The file $cref area_table.py$$ 
+contains an example $code area$$ table.
+
+$end
