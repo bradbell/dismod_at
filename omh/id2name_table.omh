@@ -1,13 +1,12 @@
 $begin id2name_table$$
 $spell
 	mytable
-	gridname
 $$
 
-$section Id to Name Tables$$
+$section id2name Tables$$
 
 $head Definition$$
-The table $icode mytable$$ is an id to name table
+The table $icode mytable$$ is an id2name table
 if it has the following columns:
 
 $head mytable_id$$
@@ -20,13 +19,14 @@ has type $code text$$ and has a different value for every row; i.e.,
 the names are unique and can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
 
-$head Only Id to Name$$
-The following id to name tables only have an id column,
+$head Only id2name$$
+The following id2name tables only have an id column,
 a name column,
 and $cref/comment columns/table/Comment Columns/$$:
 
-$subhead gridname$$
-This table just attaches names to each of the age-time grid of values.
+$subhead user$$
+This table just attaches names, that the user chooses,
+to the corresponing integer primary key.
 
 $subhead likelihood$$
 This table just attaches names to each of the likelihood identifiers.

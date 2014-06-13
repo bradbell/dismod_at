@@ -1,0 +1,28 @@
+$begin weight_table$$ 
+$spell
+$$
+$index weight, table$$
+$index table, weight$$
+
+$section The Weight Table$$
+The $code weight$$ table is an $cref grid_table$$; i.e.,
+it has columns named 
+$code weight_id$$, 
+$code user_id$$,
+$code age$$,
+and $code time$$.
+In addition, it has the following column:
+
+$head weight$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the weighting, at the corresponding age and time,
+and for the specified $icode user_id$$,
+
+$children%example/weight_table.py
+%$$
+$head Example$$
+The file $cref weight_table.py$$ 
+contains an example $code weight$$ table.
+
+$end

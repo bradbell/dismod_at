@@ -25,17 +25,16 @@ the integrand for this measurement.
 
 $head likelihood_id$$
 This column has type $code integer$$ and identifies the 
-$cref/likelihood/id2name_table/Only Id to Name/likelihood/$$
+$cref/likelihood/id2name_table/Only id2name/likelihood/$$
 used to model this measurement.
 
 $head area_id$$
 This column has type $code integer$$ and identifies the area
 for this measurement.
 
-$head gridname_id$$
-This column has type $code integer$$ and its value identifies the 
-age-time $cref/gridname/id2name_table/Only Id to Name/gridname/$$
-for this measurement.
+$head user_id$$
+This column has type $code integer$$ and its value identifies a 
+that identifies a weighting in the $cref weight_table$$.
 
 $head meas_value$$
 This column has type $code real$$ and is the measured value

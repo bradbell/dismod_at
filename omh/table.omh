@@ -14,6 +14,7 @@ $childtable%omh/id2name_table.omh
 	%omh/grid_table.omh
 	%omh/integrand_table.omh
 	%omh/area_table.omh
+	%omh/weight_table.omh
 	%omh/data_table.omh
 %$$
 

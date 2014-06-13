@@ -1,7 +1,6 @@
-$begin grid_table.omh$$
+$begin grid_table$$
 $spell
 	mytable
-	gridname
 $$
 
 $section Grid Tables$$
@@ -14,10 +13,9 @@ $head mytable_id$$
 The column with name $icode%mytable%_id%$$
 has type $code integer$$ and is the primary key for the table.
 
-$head gridname_id$$ 
-The column with name $code gridname_id$$
-has type $code integer$$ and is value in a row is the 
-$cref/gridname/id2name_table/Only Id to Name/gridname/$$ 
+$head user_id$$ 
+This column has type $code integer$$ and is value in a row is the 
+$cref/user/id2name_table/Only id2name/user/$$ table
 primary key that identifies the grid for this row. 
 
 $head age$$
