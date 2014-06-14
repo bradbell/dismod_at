@@ -19,10 +19,10 @@ For each row in the table, the value in this column
 is the weighting, at the corresponding age and time,
 and for the specified $icode user_id$$,
 
-$children%example/weight_table.py
+$children%example/user_weight.py
 %$$
 $head Example$$
-The file $cref weight_table.py$$ 
+The file $cref user_weight.py$$ 
 contains an example $code weight$$ table.
 
 $end

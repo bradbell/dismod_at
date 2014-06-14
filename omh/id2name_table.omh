@@ -24,9 +24,11 @@ The following id2name tables only have an id column,
 a name column,
 and $cref/comment columns/table/Comment Columns/$$:
 
+$comment user_weight is a documentation child of weight$$
 $subhead user$$
 This table just attaches names, that the user chooses,
 to the corresponing integer primary key.
+The file $cref user_weight.py$$ contains an example $code user$$ table.
 
 $subhead likelihood$$
 This table just attaches names to each of the likelihood identifiers.
