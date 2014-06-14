@@ -34,27 +34,22 @@ def create_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	col_name2type  =  {
-		'temp_id'   : 'integer primary key',
-		'temp_name' : 'text'
-	}
-	# create the integrand table
-	tbl_name = 'temp'
-	dismod_at.create_table(connection, tbl_name, col_name2type)
-	#
+	ptype                = 'integer primary key'
 	inverted_exclamation = unichr( 10 * 16 + 1 ) # 00a1
 	cent_sign            = unichr( 10 * 16 + 2 ) # 00a2
 	pound_sign           = unichr( 10 * 16 + 3 ) # 00a3
+	#
+	# create table
 	name_tuple        = '( temp_id, temp_name )'
-	value_tuple_list  = [ 
-		"( null, '" + inverted_exclamation + "' )",
-		"( null, '" + cent_sign            + "' )",
-		"( null, '" + pound_sign           + "' )"
+	col_name = [ 'temp_id', 'temp_name'          ]
+	col_type = [ ptype,     'text'               ]
+	row_list = [ 
+	           [ None,      inverted_exclamation ],
+	           [ None,      cent_sign            ],
+	           [ None,      pound_sign           ]
 	]
-	for value_tuple in value_tuple_list :
-		cmd  = 'insert into temp '
-		cmd +=  name_tuple + ' values ' + value_tuple + ';'
-		cursor.execute(cmd)
+	tbl_name = 'temp'
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	row_list = list()
@@ -62,11 +57,12 @@ def create_table() :
 	for row in cursor.execute(cmd) :
 		row_list.append(row)
 	for i in range( len(row_list) ) :
-		# check default value for primary key
+		# check default value for primary key (where is this specified ?)
 		assert row_list[i][0] == i + 1
 	# check value of temp_name
 	assert row_list[0][1] == inverted_exclamation
 	assert row_list[1][1] == cent_sign
 	assert row_list[2][1] == pound_sign
+	#
 	print('create_table: OK')
 # END PYTHON

@@ -29,67 +29,77 @@ def data_table() :
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
 	#
-	# required columns
-	col_name2type  =  {
+	col_name = [
 		# required columns
-		'data_id'       : 'integer primary key',
-		'integrand_id'  : 'integer',
-		'likelihood_id' : 'integer',
-		'location_id'   : 'integer',
-		'weighting_id'  : 'integer',
-		'meas_value'    : 'real',
-		'meas_stdev'    : 'real',
-		'age_lower'     : 'real',
-		'age_upper'     : 'real',
-		'time_lower'    : 'real',
-		'time_upper'    : 'real',
+		'data_id',
+		'integrand_id',
+		'likelihood_id',
+		'location_id',
+		'weighting_id',
+		'meas_value',
+		'meas_stdev',
+		'age_lower',
+		'age_upper',
+		'time_lower',
+		'time_upper',
 		# covariates 
-		'x_sex'         : 'real',
-		'x_income'      : 'real',
+		'x_sex',
+		'x_income',
 		# comments
-		'c_data_source' : 'text'
-	}
+		'c_data_source',
+	]
+	col_type = [
+		'integer primary key',  # data_id
+		'integer',              # integrand_id
+		'integer',              # likelihood_id
+		'integer',              # location_id
+		'integer',              # weighting_id
+		'real',                 # meas_value
+		'real',                 # meas_stdev
+		'real',                 # age_lower
+		'real',                 # age_upper
+		'real',                 # time_lower
+		'real',                 # time_upper
+		'real',                 # x_sex
+		'real',                 # x_income
+		'text'                  # c_data_source
+	]
+	row_list = [ [
+		0,                      # data_id
+		1,                      # integrand_id
+		2,                      # likelihood_id
+		3,                      # location_id
+		4,                      # weighting_id = user_id in user table
+		1e-4,                   # meas_value
+		1e-5,                   # meas_stdev
+		0.0,                    # age_lower
+		100.0,                  # age_upper
+		2000.,                  # time_lower
+		2005.,                  # time_upper
+		0.5,                    # x_sex
+		1000.,                  # x_income
+		'www.healthdata.org'    # c_data_source
+	] ]
+
 	# create the data table
 	tbl_name = 'data'
-	dismod_at.create_table(connection, tbl_name, col_name2type)
-	#
-	col_name  = col_name2type.keys()
-	col_value = list()
-	index     = 0
-	for name in col_name :
-		if name == 'data_id' :
-			# primary key
-			col_value.append(None)
-		elif name == 'c_data_source' :
-			col_value.append('www.healthdata.org')
-		elif col_name2type[name] == 'integer' :
-			col_value.append(index)
-		else :
-			assert col_name2type[name] == 'real'
-			col_value.append(index + 0.5 )
-		index += 1
-	quote_string = False
-	name_tuple   = dismod_at.unicode_tuple(col_name, quote_string)
-	quote_string = True
-	value_tuple  = dismod_at.unicode_tuple(col_value, quote_string)
-	cmd = 'insert into data' + name_tuple + ' values ' + value_tuple + ';'
-	#
-	cursor     = connection.cursor()
-	cursor.execute(cmd)
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
-	for row in cursor.execute('select * from data') :
-		index = 0
-		for name in col_name :
-			if name == 'data_id' :
-				# primary key starts at one, but where is this specified ?
-				assert row[index] == 1 
-			elif name == 'c_data_source' :
-				assert row[index] == 'www.healthdata.org'
-			elif col_name2type[name] == 'integer' :
-				assert row[index] == index
-			else :
-				assert col_name2type[name] == 'real'
-			index += 1
+	cmd  = 'select '
+	for name in col_name :
+		cmd += name
+		if name != col_name[-1] :
+			cmd += ', ' 
+	cmd += ' from data'
+	count        = 0
+	cursor       = connection.cursor()
+	for row in cursor.execute(cmd) :
+		assert len(row) == len(col_name)
+		for j in range( len(row) ) :
+			assert row[j] == row_list[0][j]
+		count += 1
+	assert count == 1
+	#
 	print('data_table: OK')
 # END PYTHON

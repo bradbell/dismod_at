@@ -30,27 +30,18 @@ def area_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	# required columns
-	col_name2type  =  {
-		'area_id'   : 'integer primary key',
-		'area_name' : 'text',
-		'parent_id' : 'integer',
-	}
-	# create the area table
-	tbl_name = 'area'
-	dismod_at.create_table(connection, tbl_name, col_name2type)
-	#
-	name_tuple        = '( area_id, area_name, parent_id )'
-	value_tuple_list  = [
-		"( 0, 'world',         null )",
-		"( 1, 'north_america', 0    )",
-		"( 2, 'united_states', 1    )",
-		"( 3, 'canada',        1    )"
+	# create the table
+	ptype    = 'integer primary key'
+	col_name = ['area_id', 'parent_id', 'area_name'     ]
+	col_type = [ ptype,    'integer',   'text'          ]
+	row_list = [
+	           [ 0,        None,        'world'         ],
+	           [ 1,        0,           'north_america' ],
+	           [ 2,        1,           'united_states' ],
+	           [ 3,        1,           'canada'        ]
 	]
-	for value_tuple in value_tuple_list :
-		cmd  = 'insert into area '
-		cmd +=  name_tuple + ' values ' + value_tuple + ';'
-		cursor.execute(cmd)
+	tbl_name = 'area'
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	row_list = list()

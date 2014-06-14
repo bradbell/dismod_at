@@ -33,51 +33,35 @@ def user_weight() :
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
-	# --------------------------------------------------------------------
-	# Create a user table
-	col_name2type  =  {
-		'user_id'   : 'integer primary key',
-		'user_name' : 'text'
-	}
-	tbl_name = 'user'
-	dismod_at.create_table(connection, tbl_name, col_name2type)
-	#
-	name_tuple    = '( user_id, user_name )'
-	value_tuple   = "( 0, 'uniform')"
-	cmd  = 'insert into user ' + name_tuple + ' values ' + value_tuple + ';'
-	cursor.execute(cmd)
-	value_tuple   = "( 1, 'time_constant')"
-	cmd  = 'insert into user ' + name_tuple + ' values ' + value_tuple + ';'
-	cursor.execute(cmd)
-	# ---------------------------------------------------------------------
-	# Create a weight table
 	# 
-	col_name2type  =  {
-		'weight_id'   : 'integer primary key',
-		'user_id'     : 'integer',
-		'age'         : 'real',
-		'time'        : 'real',
-		'weight'      : 'real'
-	}
-	tbl_name = 'weight'
-	dismod_at.create_table(connection, tbl_name, col_name2type)
-	#
-	name_tuple        = '( weight_id, user_id, age, time, weight )'
-	value_tuple_list  = [
-		'( null, 0,   0.0, 1980., 1.0)',
-		'( null, 0, 100.0, 1980., 1.0)',
-		'( null, 0,   0.0, 2015., 1.0)',
-		'( null, 0, 100.0, 2015., 1.0)',
-		#
-		'( null, 1,   0.0, 1980., 0.5)',
-		'( null, 1, 100.0, 1980., 1.5)',
-		'( null, 1,   0.0, 2015., 0.5)',
-		'( null, 1, 100.0, 2015., 1.5)',
+	# create a user table
+	ptype    = 'integer primary key'
+	col_name = [ 'user_id', 'user_name'     ]
+	col_type = [ ptype,     'text'          ]
+	row_list = [
+	           [ 0,         'uniform'       ],
+	           [ 1,         'time_constant' ]
 	]
-	for value_tuple in value_tuple_list :
-		cmd  = 'insert into weight '
-		cmd +=  name_tuple + ' values ' + value_tuple + ';'
-		cursor.execute(cmd)
+	tbl_name = 'user'
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	#
+	# create a weight table
+	col_name = [ 'weight_id', 'user_id', 'age',  'time',  'weight' ]
+	col_type = [ ptype,       'integer', 'real', 'real',  'real'   ]
+	row_list = [
+	           # uniform
+	           [ None,        0,         0.0,    1980.,   1.0      ],
+	           [ None,        0,       100.0,    1980.,   1.0      ],
+	           [ None,        0,         0.0,    2015.,   1.0      ],
+	           [ None,        0,       100.0,    2015.,   1.0      ],
+	           # time_consant
+	           [ None,        0,         0.0,    1980.,   0.5      ],
+	           [ None,        0,       100.0,    1980.,   1.5      ],
+	           [ None,        0,         0.0,    2015.,   0.5      ],
+	           [ None,        0,       100.0,    2015.,   1.5      ]
+	]
+	tbl_name = 'weight'
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in the uniform weight table
 	row_list = list()

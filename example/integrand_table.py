@@ -30,41 +30,33 @@ def integrand_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	# required columns
-	col_name2type  =  {
-		'integrand_id'   : 'integer primary key',
-		'integrand_name' : 'text',
-		'eta'            : 'real',
-	}
 	# create the integrand table
-	tbl_name = 'integrand'
-	dismod_at.create_table(connection, tbl_name, col_name2type)
-	#
-	name_tuple        = '( integrand_id, integrand_name, eta )'
-	value_tuple_list  = [
-		"( null, 'incidence', 1e-5 )",
-		"( null, 'remission', 2e-5 )",
-		"( null, 'mtall',     3e-5 )"
+	ptype    = 'integer primary key'
+	col_name = [ 'integrand_id', 'integrand_name', 'eta'    ]
+	col_type = [ ptype,          'text',           'real'   ]
+	row_list = [
+	           [ None,           'incidence',      1e-5     ],
+	           [ None,           'remission',      2e-5     ],
+	           [ None,           'mtall',          3e-5     ]
 	]
-	for value_tuple in value_tuple_list :
-		cmd  = 'insert into integrand '
-		cmd +=  name_tuple + ' values ' + value_tuple + ';'
-		cursor.execute(cmd)
+	tbl_name = 'integrand'
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
-	row_list = list()
-	cmd      = 'select integrand_id, integrand_name, eta from integrand;'
-	for row in cursor.execute(cmd) :
-		row_list.append(row)
-	for i in range( len(row_list) ) :
-		# check default value for primary key
-		assert row_list[i][0] == i + 1
-		# check value of eta
-		check = 1e-5 * float(i + 1)
-		assert abs( row_list[i][2] / check - 1.0 ) < 1e-10
-	# check value of integrand_name
-	assert row_list[0][1] == 'incidence'
-	assert row_list[1][1] == 'remission'
-	assert row_list[2][1] == 'mtall'
+	cmd = 'select integrand_id, integrand_name, eta from integrand;'
+	cursor.execute(cmd)
+	fetchall = cursor.fetchall()
+	assert len(fetchall) == len(row_list)
+	for i in range( len(fetchall) ) :
+		row   = row_list[i]
+		check = fetchall[i]
+		assert len(row) == len(check)
+		for j in range( len(check) ) :
+			if col_type[j] == ptype :
+				# check default value for primary key
+				assert check[j] == i + 1
+			else :
+				assert row[j] == check[j]
+	#
 	print('integrand_table: OK')
 # END PYTHON
