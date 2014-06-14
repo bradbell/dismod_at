@@ -35,7 +35,7 @@ def data_table() :
 		'integrand_id',
 		'likelihood_id',
 		'location_id',
-		'weighting_id',
+		'weight_user_id',
 		'meas_value',
 		'meas_stdev',
 		'age_lower',
@@ -53,7 +53,7 @@ def data_table() :
 		'integer',              # integrand_id
 		'integer',              # likelihood_id
 		'integer',              # location_id
-		'integer',              # weighting_id
+		'integer',              # weight_user_id
 		'real',                 # meas_value
 		'real',                 # meas_stdev
 		'real',                 # age_lower
@@ -69,7 +69,7 @@ def data_table() :
 		1,                      # integrand_id
 		2,                      # likelihood_id
 		3,                      # location_id
-		4,                      # weighting_id = user_id in user table
+		4,                      # weight_user_id
 		1e-4,                   # meas_value
 		1e-5,                   # meas_stdev
 		0.0,                    # age_lower
@@ -83,7 +83,7 @@ def data_table() :
 
 	# create the data table
 	tbl_name = 'data'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	cmd  = 'select '

@@ -40,7 +40,7 @@ def integrand_table() :
 	           [ None,           'mtall',          3e-5     ]
 	]
 	tbl_name = 'integrand'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	cmd = 'select integrand_id, integrand_name, eta from integrand;'

@@ -32,9 +32,10 @@ $head area_id$$
 This column has type $code integer$$ and identifies the area
 for this measurement.
 
-$head weighting_id$$
+$head weight_user_id$$
 This column has type $code integer$$ and its value identifies a
-$code user_id$$ in the $cref/user/id2name_table/Only id2name/user/$$ table. 
+$cref/user_id/id2name_table/Only id2name/user/$$ value int the
+$cref weight_table$$. 
 
 $head meas_value$$
 This column has type $code real$$ and is the measured value

@@ -49,7 +49,7 @@ def create_table() :
 	           [ None,      pound_sign           ]
 	]
 	tbl_name = 'temp'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	row_list = list()

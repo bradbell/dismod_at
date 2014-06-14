@@ -163,7 +163,7 @@ def get_name2type(connection, tbl_name) :
 		col_name2type[key]  =  value
 	return col_name2type
 # ==========================================================================-
-# $begin create_table_$$ $newlinech #$$
+# $begin create_table$$ $newlinech #$$
 # $spell
 #	dismod
 #	str
@@ -214,7 +214,7 @@ def get_name2type(connection, tbl_name) :
 #
 # $end
 # ---------------------------------------------------------------------------
-def create_table_(connection, tbl_name, col_name, col_type, row_list) :
+def create_table(connection, tbl_name, col_name, col_type, row_list) :
 	#
 	cmd       = 'create table ' + tbl_name + '('
 	n_col     = len( col_name )

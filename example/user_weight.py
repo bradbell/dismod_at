@@ -43,7 +43,7 @@ def user_weight() :
 	           [ 1,         'time_constant' ]
 	]
 	tbl_name = 'user'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# create a weight table
 	col_name = [ 'weight_id', 'user_id', 'age',  'time',  'weight' ]
@@ -61,7 +61,7 @@ def user_weight() :
 	           [ None,        0,       100.0,    2015.,   1.5      ]
 	]
 	tbl_name = 'weight'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in the uniform weight table
 	row_list = list()
