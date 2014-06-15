@@ -10,15 +10,13 @@
 # -------------------------------------------------------------------------- */
 # $begin rate_table.py$$ $newlinech #$$
 #
+# $index rate, example$$
+# $index example, rate table$$
+#
 # $section rate_table: Example and Text$$
-#
-# $index weight, example$$
-# $index example, weight table$$
-# $index table, weight example$$
-#
-# $index user, example$$
-# $index example, user table$$
-# $index table, user example$$
+# The use of $code None$$ for lower bound,
+# upper bounds, and standard deviations is explained 
+# $cref/here/table/Infinity and Nan/$$.
 #
 # $code
 # $verbatim%example/rate_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
@@ -109,24 +107,24 @@ def rate_table() :
 	inf      = float('inf')
 	default  = [
 		None,       # rate_id
-		1,          # user_id for rho_prior
-		None,       # age
-		None,       # time
+		1,          # user_id            (rho_prior)
+		None,       # age                (age  index is 2)
+		None,       # time               (time index is 3)
 		0.0,        # rate_lower
 		1.0,        # rate_upper
 		0.1,        # rate_mean
-		inf,        # rate_std
+		None,       # rate_std           (plus infinity)
 		2,          # rate_likelihood_id (log_gaussian)
-		-inf,       # da_lower
-		+inf,       # da_upper
+		None,       # da_lower           (minus infinity)
+		None,       # da_upper           (plus infinity)
 		0.0,        # da_mean
-		inf,        # da_std
-		2,          # da_likelihood_id (log_gaussian)
+		None,       # da_std             (plus infinity)
+		2,          # da_likelihood_id   (log_gaussian)
 		0.0,        # dt_lower
 		1.0,        # dt_upper
 		0.1,        # dt_mean
-		inf,        # dt_std
-		2           # dt_likelihood_id (log_gaussian)
+		None,       # dt_std             (plus inifnity)
+		2           # dt_likelihood_id   (log_gaussian)
 	]
 	age_grid  = [ 0.0, 50.0, 100.0 ]
 	time_grid = [ 1980., 1990., 2000., 2010 ]  

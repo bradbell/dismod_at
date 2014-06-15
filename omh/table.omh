@@ -1,14 +1,41 @@
 $begin table$$
 $spell
+	std
 	dismod
 $$
 
 $section Data Base Tables$$
 
 $head Comment Columns$$
+$index comment, column$$
+$index column, comment$$
 Any table may have any number of columns with names that begin
 with the two characters $code c_$$.
 These are comment columns and are ignored by $code dismod_at$$.
+
+$head Infinity and Nan$$
+The $code real$$ values plus infinity, minus infinity, and nan
+are not part of the SQL language and hence cause problems
+for databases.
+For this reason we adopt the following conventions:
+
+$subhead Lower Bound$$
+$index lower, minus infinity$$
+$index infinity, minus lower$$
+A lower bound of minus infinity is represented in the
+data base a $code null$$.
+
+$subhead Upper Bound$$
+$index upper, plus infinity$$
+$index infinity, plus upper$$
+An upper bound of plus infinity is represented in the
+data base a $code null$$.
+
+$subhead Standard Deviation$$
+$index std, plus infinity$$
+$index infinity, plus std$$
+A standard deviation of plus infinity is represented in the
+data base a $code null$$.
 
 $childtable%omh/id2name_table.omh
 	%omh/grid_table.omh
