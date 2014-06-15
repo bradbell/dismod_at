@@ -97,7 +97,7 @@ def data_table() :
 	for row in cursor.execute(cmd) :
 		assert len(row) == len(col_name)
 		for j in range( len(row) ) :
-			assert row[j] == row_list[0][j]
+			assert row[j] == row_list[count][j]
 		count += 1
 	assert count == 1
 	#

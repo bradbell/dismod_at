@@ -1,0 +1,115 @@
+$begin rate_table$$ 
+$spell
+	std
+	da
+	dt
+$$
+$index rate, table$$
+$index table, rate$$
+
+$section The Rate Table$$
+The $code rate$$ table is an $cref grid_table$$; i.e.,
+it has columns named 
+$code rate_id$$, 
+$code user_id$$,
+$code age$$,
+and $code time$$.
+In addition, it has the following columns:
+
+$head Rate Values$$
+The values in this table, for one $icode user_id$$,
+correspond to one of the rates in the model; i.e.,
+$icode iota$$, $icode rho$$, $icode chi$$, or $icode omega$$.
+
+$head rate_lower$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the lower bound for the rate at the corresponding age and time.
+
+$head rate_upper$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the upper bound for the rate at the corresponding age and time.
+
+$head rate_mean$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the mean, before truncation by the bound,
+for the rate at the corresponding age and time.
+
+$head rate_std$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the standard deviation, before truncation by the bound,
+for the rate at the corresponding age and time.
+
+$head Difference Quotients in Age$$
+These values pertain to the forward difference quotients
+w.r.t age. The values at the maximum age, for each time,
+are not used.
+
+$head da_lower$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the lower bound for the age difference quotient
+at the corresponding age and time.
+
+$head da_upper$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the upper bound for the age difference quotient
+at the corresponding age and time.
+
+$head da_mean$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the mean, before truncation by the bound,
+for the age difference quotient
+at the corresponding age and time.
+
+$head da_std$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the standard deviation, before truncation by the bound,
+for the age difference quotient
+at the corresponding age and time.
+
+$head Difference Quotients in Time$$
+These values pertain to the forward difference quotients
+w.r.t time. The values at the maximum time, for each age,
+are not used.
+
+$head dt_lower$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the lower bound for the time difference quotient
+at the corresponding age and time.
+
+$head dt_upper$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the upper bound for the time difference quotient
+at the corresponding age and time.
+
+$head dt_mean$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the mean, before truncation by the bound,
+for the time difference quotient
+at the corresponding age and time.
+
+$head dt_std$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the standard deviation, before truncation by the bound,
+for the time difference quotient
+at the corresponding age and time.
+
+
+$children%example/rate_table.py
+%$$
+$head Example$$
+The file $cref rate_table.py$$ 
+contains an example $code weight$$ table.
+
+$end

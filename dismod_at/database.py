@@ -39,6 +39,14 @@ import sqlite3
 # The value $code None$$ is converted to the unicode string $code null$$
 # (always without quotes).
 #
+# $head Infinity$$
+# If $icode u_j$$ is a $code float$$ and equal to plus infinity,
+# the corresponding tuple value has an exponent that is ten times the 
+# exponent for the maximum float. 
+# This is so that, when written by pythons $code sqlite$$ package, it 
+# gets converted to infinity. 
+# Minus infinity is handled in a similar fashion.
+#
 # $head u_tuple$$
 # is a unicode string representation of the tuple containing the elements.
 # To be specific it is given by
@@ -50,6 +58,12 @@ import sqlite3
 # 
 # $end
 # --------------------------------------------------------------------------
+def unicode_infinity() :
+	import sys
+	import math
+	exponent = int( math.log( sys.float_info.max ) / math.log(10.) ) + 10
+	inf      = u'10e' + unicode(exponent)
+	return inf
 def unicode_tuple(iterable, quote_string) :
 	u_tuple = u'(' 
 	count   = 0
@@ -60,6 +74,10 @@ def unicode_tuple(iterable, quote_string) :
 		#
 		if element == None :
 			u_tuple += u' null'
+		elif isinstance(element, float) and element == float('inf') :
+			u_tuple += u' ' + unicode_infinity()
+		elif isinstance(element, float) and element == - float('inf') :
+			u_tuple += u' -' + unicode_infinity()
 		elif quote_string and isinstance(element, basestring) :
 			u_tuple += u' ' + u"'" + unicode(element) + u"'"
 		else :

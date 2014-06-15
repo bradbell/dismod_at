@@ -26,8 +26,8 @@ and $cref/comment columns/table/Comment Columns/$$:
 
 $comment user_weight is include in documentation by weight_table$$
 $subhead user$$
-This table just attaches names, that the user chooses,
-to the corresponing integer primary key.
+This table just attaches the text the user chooses for $icode user_name$$
+to the corresponding $icode user_id$$ integer value.
 The file $cref user_weight.py$$ contains an example $code user$$ table.
 
 $subhead likelihood$$

@@ -16,6 +16,7 @@ $childtable%omh/id2name_table.omh
 	%omh/area_table.omh
 	%omh/weight_table.omh
 	%omh/data_table.omh
+	%omh/rate_table.omh
 %$$
 
 $end

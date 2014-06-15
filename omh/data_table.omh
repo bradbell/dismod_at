@@ -4,7 +4,7 @@ $spell
 	cov
 	covariate
 	covariates
-	stdev
+	std
 	dismod
 $$
 $index data, table$$
@@ -42,7 +42,7 @@ This column has type $code real$$ and is the measured value
 for each row of the $code data$$ table; 
 i.e., the measurement of the integrand at the specified area etc. 
 
-$head meas_stdev$$
+$head meas_std$$
 This column has type $code real$$ and is the standard deviation 
 for this measurement value.
 This standard for this measurement and is in the same units at the data.
