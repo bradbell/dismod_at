@@ -53,7 +53,7 @@ def create_table() :
 	#
 	# check values in table
 	row_list = list()
-	cmd      = 'select temp_id, temp_name from temp;'
+	cmd      = 'select temp_id, temp_name from temp'
 	for row in cursor.execute(cmd) :
 		row_list.append(row)
 	for i in range( len(row_list) ) :

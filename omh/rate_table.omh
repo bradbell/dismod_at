@@ -43,6 +43,11 @@ For each row in the table, the value in this column
 is the standard deviation, before truncation by the bound,
 for the rate at the corresponding age and time.
 
+$head rate_likelihood_id$$
+This column has type $code integer$$ and identifies the 
+$cref/likelihood/id2name_table/Only id2name/likelihood/$$
+for the rate.
+
 $head Difference Quotients in Age$$
 These values pertain to the forward difference quotients
 w.r.t age. The values at the maximum age, for each time,
@@ -73,6 +78,11 @@ For each row in the table, the value in this column
 is the standard deviation, before truncation by the bound,
 for the age difference quotient
 at the corresponding age and time.
+
+$head da_likelihood_id$$
+This column has type $code integer$$ and identifies the 
+$cref/likelihood/id2name_table/Only id2name/likelihood/$$
+for the age difference quotient.
 
 $head Difference Quotients in Time$$
 These values pertain to the forward difference quotients
@@ -105,6 +115,10 @@ is the standard deviation, before truncation by the bound,
 for the time difference quotient
 at the corresponding age and time.
 
+$head dt_likelihood_id$$
+This column has type $code integer$$ and identifies the 
+$cref/likelihood/id2name_table/Only id2name/likelihood/$$
+for the time difference quotient.
 
 $children%example/rate_table.py
 %$$

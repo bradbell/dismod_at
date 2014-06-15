@@ -19,26 +19,30 @@ has type $code text$$ and has a different value for every row; i.e.,
 the names are unique and can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
 
+$children%example/likelihood_table.py
+	%example/user_table.py
+%$$
 $head Only id2name$$
 The following id2name tables only have an id column,
 a name column,
 and $cref/comment columns/table/Comment Columns/$$:
 
-$comment user_weight is include in documentation by weight_table$$
-$subhead user$$
-This table just attaches the text the user chooses for $icode user_name$$
-to the corresponding $icode user_id$$ integer value.
-The file $cref user_weight.py$$ contains an example $code user$$ table.
-
 $subhead likelihood$$
-This table just attaches names to each of the likelihood identifiers.
+This table just attaches an integer id
+to each of the likelihood name.
 The following values,
 and only the following values,
-appear in the $icode likelihood$$ column:
+appear in the $code likelihood_name$$ column:
 $code gaussian$$, 
 $code laplace$$, 
 $code log_gaussian$$, 
 $code log_laplace$$.
+The file $cref likelihood_table.py$$ contains an example 
+$code likelihood$$ table.
 
+$subhead user$$
+This table just attaches the text the user chooses for $icode user_name$$
+to the corresponding $icode user_id$$ integer value.
+The file $cref user_table.py$$ contains an example $code user$$ table.
 
 $end

@@ -8,9 +8,9 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin user_weight.py$$ $newlinech #$$
+# $begin weight_table.py$$ $newlinech #$$
 #
-# $section user_weight: Example and Text$$
+# $section weight_table: Example and Text$$
 #
 # $index weight, example$$
 # $index example, weight table$$
@@ -21,12 +21,12 @@
 # $index table, user example$$
 #
 # $code
-# $verbatim%example/user_weight.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/weight_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-def user_weight() :
+def weight_table() :
 	import dismod_at
 	#
 	file_name      = 'example.db'
@@ -87,5 +87,5 @@ def user_weight() :
 	assert row_list[3][1] == 2015.
 	assert row_list[3][2] == 1.0
 	#
-	print('user_weight: OK')
+	print('weight_table: OK')
 # END PYTHON

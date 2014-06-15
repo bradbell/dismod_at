@@ -8,21 +8,21 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin integrand_table.py$$ $newlinech #$$
+# $begin user_table.py$$ $newlinech #$$
 #
-# $section integrand_table: Example and Text$$
+# $section user_table: Example and Text$$
 #
-# $index integrand, , example$$
-# $index example, integrand table$$
-# $index table, integrand example$$
+# $index user, , example$$
+# $index example, user table$$
+# $index table, user example$$
 #
 # $code
-# $verbatim%example/integrand_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/user_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-def integrand_table() :
+def user_table() :
 	import dismod_at
 	#
 	file_name      = 'example.db'
@@ -30,20 +30,26 @@ def integrand_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	# create the integrand table
+	# create the user table
 	ptype    = 'integer primary key'
-	col_name = [ 'integrand_id', 'integrand_name', 'eta'    ]
-	col_type = [ ptype,          'text',           'real'   ]
+	col_name = [ 'user_id', 'user_name'  ]
+	col_type = [ ptype,           'text' ]
 	row_list = [
-	           [ None,           'incidence',      1e-5     ],
-	           [ None,           'remission',      2e-5     ],
-	           [ None,           'mtall',          3e-5     ]
+	           # rate priors 
+	           [ 1,               'iota_prior'        ],
+	           [ 2,               'rho_prior',        ],
+	           [ 3,               'chi_prior',        ],
+	           [ 4,               'omega_prior',      ],
+	          # weighting fucntions
+	           [ 5,               'constant'          ],
+	           [ 6,               'age_constant'      ],
+	           [ 7,               'time_constant'     ]
 	]
-	tbl_name = 'integrand'
+	tbl_name = 'user'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
-	cmd = 'select integrand_id, integrand_name, eta from integrand'
+	cmd = 'select user_id, user_name from user'
 	cursor.execute(cmd)
 	fetchall = cursor.fetchall()
 	assert len(fetchall) == len(row_list)
@@ -52,11 +58,7 @@ def integrand_table() :
 		check = fetchall[i]
 		assert len(row) == len(check)
 		for j in range( len(check) ) :
-			if col_type[j] == ptype :
-				# check default value for primary key
-				assert check[j] == i + 1
-			else :
-				assert row[j] == check[j]
+			assert row[j] == check[j]
 	#
-	print('integrand_table: OK')
+	print('user_table: OK')
 # END PYTHON

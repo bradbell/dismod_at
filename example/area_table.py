@@ -45,7 +45,7 @@ def area_table() :
 	#
 	# check values in table
 	row_list = list()
-	cmd      = 'select area_id, area_name, parent_id from area;'
+	cmd      = 'select area_id, area_name, parent_id from area'
 	for row in cursor.execute(cmd) :
 		row_list.append(row)
 	#

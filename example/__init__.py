@@ -12,5 +12,7 @@ from area_table        import *
 from create_table      import *
 from data_table        import *
 from integrand_table   import *
+from likelihood_table  import *
 from rate_table        import *
-from user_weight       import *
+from user_table        import *
+from weight_table      import *

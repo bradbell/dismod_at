@@ -37,12 +37,25 @@ def rate_table() :
 	# 
 	# create a user table
 	ptype    = 'integer primary key'
-	col_name = [ 'user_id', 'user_name'     ]
-	col_type = [ ptype,     'text'          ]
+	col_name = [ 'user_id', 'user_name'       ]
+	col_type = [ ptype,     'text'            ]
 	row_list = [
-	           [ 0,         'iota_prior'    ]
+	           [ 0,         'iota_prior'      ],
+	           [ 1,         'rho_prior'       ],
+	           [ 2,         'chi_prior'       ],
+	           [ 3,         'omega_prior'     ]
 	]
-	tbl_name = 'user'
+	# 
+	# create a likelihood table
+	col_name = [ 'likelihood_id', 'likelihood_name'  ]
+	col_type = [ ptype,     'text'            ]
+	row_list = [
+	           [ 0,         'gaussian'        ],
+	           [ 1,         'laplace'         ],
+	           [ 2,         'log_gaussian'    ],
+	           [ 3,         'log_laplace'     ]
+	]
+	tbl_name = 'likelihood'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# rate table names
@@ -55,14 +68,17 @@ def rate_table() :
 		'rate_upper',
 		'rate_mean',
 		'rate_std',
+		'rate_likelihood_id',
 		'da_lower',
 		'da_upper',
 		'da_mean',
 		'da_std',
+		'da_likelihood_id',
 		'dt_lower',
 		'dt_upper',
 		'dt_mean',
-		'dt_std' 
+		'dt_std',
+		'dt_likelihood_id' 
 	]
 	#
 	# rate table types
@@ -75,14 +91,17 @@ def rate_table() :
 		'real',     # rate_upper
 		'real',     # rate_mean
 		'real',     # rate_std
+		'integer',  # rate_likelihood_id
 		'real',     # da_lower
 		'real',     # da_upper
 		'real',     # da_mean
 		'real',     # da_std
+		'integer',  # da_likelihood_id
 		'real',     # dt_lower
 		'real',     # dt_upper
 		'real',     # dt_mean
-		'real'      # dt_std
+		'real',     # dt_std
+		'integer'   # dt_likelihood_id
 	]
 	#
 	# rate table values
@@ -90,21 +109,24 @@ def rate_table() :
 	inf      = float('inf')
 	default  = [
 		None,       # rate_id
-		0,          # user_id for iota_prior
+		1,          # user_id for rho_prior
 		None,       # age
 		None,       # time
 		0.0,        # rate_lower
 		1.0,        # rate_upper
 		0.1,        # rate_mean
 		inf,        # rate_std
+		2,          # rate_likelihood_id (log_gaussian)
 		-inf,       # da_lower
 		+inf,       # da_upper
 		0.0,        # da_mean
 		inf,        # da_std
+		2,          # da_likelihood_id (log_gaussian)
 		0.0,        # dt_lower
 		1.0,        # dt_upper
 		0.1,        # dt_mean
-		inf         # dt_std
+		inf,        # dt_std
+		2           # dt_likelihood_id (log_gaussian)
 	]
 	age_grid  = [ 0.0, 50.0, 100.0 ]
 	time_grid = [ 1980., 1990., 2000., 2010 ]  
