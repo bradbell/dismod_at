@@ -8,15 +8,21 @@ $section Grid Tables$$
 $head Definition$$
 The table $icode mytable$$ is a grid table
 if it has the following columns:
+$icode%mytable%_id%$$,
+$code user_id$$,
+$code age$$, and 
+$code time$$.
+Note that a grid table is also a 
+$cref lookup_table$$.
 
 $head mytable_id$$
 The column with name $icode%mytable%_id%$$
 has type $code integer$$ and is the primary key for the table.
 
 $head user_id$$ 
-This column has type $code integer$$ and is value in a row is the 
-$cref/user/lookup_table/Lookup Only/user/$$ table
-primary key that identifies the grid for this row. 
+This column has type $code integer$$ and its value in a row is the 
+$icode user_id$$, in the $cref user_table$$,
+that identifies the grid for this row. 
 
 $head age$$
 The column with name $code age$$ 

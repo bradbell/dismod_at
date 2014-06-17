@@ -1,8 +1,8 @@
 $begin rate_table$$ 
 $spell
 	std
-	da
-	dt
+	dage
+	dtime
 $$
 $index rate, table$$
 $index table, rate$$
@@ -16,114 +16,34 @@ $code age$$,
 and $code time$$.
 In addition, it has the following columns:
 
-$head Rate$$
+$head rate$$
 The values in this table, for one $icode user_id$$,
 correspond to one of the rates in the model; i.e.,
 $icode iota$$, $icode rho$$, $icode chi$$, or $icode omega$$.
 
-$head rate_lower$$
-This column has type $code real$$.
-For each row in the table, the value in this column
-is the lower bound for the rate at the corresponding age and time.
+$head rate_prior_id$$
+This column has type $code integer$$ and its value in a row is the
+$icode prior_id$$, in the $cref prior_table$$,
+for the prior that is used for the rate at this $icode age$$ and $icode time$$.
 
-$head rate_upper$$
-This column has type $code real$$.
-For each row in the table, the value in this column
-is the upper bound for the rate at the corresponding age and time.
+$head dage_prior_id$$
+This column has type $code integer$$ and its value in a row is the
+$icode prior_id$$, in the $cref prior_table$$,
+for the prior that is used for the 
+forward difference quotients w.r.t age. 
+The prior at the maximum age, for each time, is not used.
 
-$head rate_mean$$
-This column has type $code real$$.
-For each row in the table, the value in this column
-is the mean, before truncation by the bound,
-for the rate at the corresponding age and time.
-
-$head rate_std$$
-This column has type $code real$$.
-For each row in the table, the value in this column
-is the standard deviation, before truncation by the bound,
-for the rate at the corresponding age and time.
-
-$head rate_likelihood_id$$
-This column has type $code integer$$ and identifies the 
-$cref/likelihood/lookup_table/Lookup Only/likelihood/$$
-for the rate.
-
-$head Difference Quotients in Age$$
-These values pertain to the forward difference quotients
-w.r.t age. The values at the maximum age, for each time,
-are not used.
-
-$head da_lower$$
-This column has type $code real$$.
-For each row in the table, the value in this column
-is the lower bound for the age difference quotient
-at the corresponding age and time.
-
-$head da_upper$$
-This column has type $code real$$.
-For each row in the table, the value in this column
-is the upper bound for the age difference quotient
-at the corresponding age and time.
-
-$head da_mean$$
-This column has type $code real$$.
-For each row in the table, the value in this column
-is the mean, before truncation by the bound,
-for the age difference quotient
-at the corresponding age and time.
-
-$head da_std$$
-This column has type $code real$$.
-For each row in the table, the value in this column
-is the standard deviation, before truncation by the bound,
-for the age difference quotient
-at the corresponding age and time.
-
-$head da_likelihood_id$$
-This column has type $code integer$$ and identifies the 
-$cref/likelihood/lookup_table/Lookup Only/likelihood/$$
-for the age difference quotient.
-
-$head Difference Quotients in Time$$
-These values pertain to the forward difference quotients
-w.r.t time. The values at the maximum time, for each age,
-are not used.
-
-$head dt_lower$$
-This column has type $code real$$.
-For each row in the table, the value in this column
-is the lower bound for the time difference quotient
-at the corresponding age and time.
-
-$head dt_upper$$
-This column has type $code real$$.
-For each row in the table, the value in this column
-is the upper bound for the time difference quotient
-at the corresponding age and time.
-
-$head dt_mean$$
-This column has type $code real$$.
-For each row in the table, the value in this column
-is the mean, before truncation by the bound,
-for the time difference quotient
-at the corresponding age and time.
-
-$head dt_std$$
-This column has type $code real$$.
-For each row in the table, the value in this column
-is the standard deviation, before truncation by the bound,
-for the time difference quotient
-at the corresponding age and time.
-
-$head dt_likelihood_id$$
-This column has type $code integer$$ and identifies the 
-$cref/likelihood/lookup_table/Lookup Only/likelihood/$$
-for the time difference quotient.
+$head dtime_prior_id$$
+This column has type $code integer$$ and its value in a row is the
+$icode prior_id$$, in the $cref prior_table$$,
+for the prior that is used for the 
+forward difference quotients w.r.t time. 
+The prior at the maximum time, for each time, is not used.
 
 $children%example/rate_table.py
 %$$
 $head Example$$
 The file $cref rate_table.py$$ 
-contains an example $code weight$$ table.
+contains an example $code rate$$ table.
 
 $end

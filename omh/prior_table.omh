@@ -1,0 +1,48 @@
+$begin prior_table$$ 
+$spell
+	std
+$$
+$index prior, table$$
+$index table, prior$$
+
+$section The Prior Table$$
+The $code prior$$ table is a $cref lookup_table$$; i.e.,
+it has $code prior_id$$ and $code prior_name$$ columns.
+In addition, it has the following columns:
+
+$head lower$$
+$index lower, minus infinity$$
+$index infinity, minus lower$$
+This column has type $code real$$ and specifies a lower bound
+for the prior.
+Note that the value $code null$$ is interpreted as minus infinity; i.e.,
+no lower limit.
+
+$head upper$$
+$index upper, plus infinity$$
+$index infinity, plus upper$$
+This column has type $code real$$ and specifies a upper bound
+for the prior.
+Note that the value $code null$$ is interpreted as plus infinity; i.e.,
+no upper limit.
+
+$head std$$
+$index std, plus infinity$$
+$index infinity, plus std$$
+This column has type $code real$$ and specifies the standard deviation
+for the prior.
+Note that the value $code null$$ is interpreted as plus infinity; i.e.,
+the uniform distribution between the lower and upper limits.
+
+$head likelihood_id$$
+This column has type $code integer$$ and identifies the
+$cref/likelihood/likelihood_tale/$$ for this prior.
+
+
+$children%example/prior_table.py
+%$$
+$head Example$$
+The file $cref prior_table.py$$ 
+contains an example $code prior$$ table.
+
+$end
