@@ -1,12 +1,12 @@
-$begin id2name_table$$
+$begin lookup_table$$
 $spell
 	mytable
 $$
 
-$section id2name Tables$$
+$section lookup Tables$$
 
 $head Definition$$
-The table $icode mytable$$ is an id2name table
+The table $icode mytable$$ is an lookup table
 if it has the following columns:
 
 $head mytable_id$$
@@ -22,8 +22,8 @@ The names are intended to be easier for a human to remember than the ids.
 $children%example/likelihood_table.py
 	%example/user_table.py
 %$$
-$head Only id2name$$
-The following id2name tables only have an id column,
+$head Lookup Only$$
+The following lookup tables only have an id column,
 a name column,
 and $cref/comment columns/table/Comment Columns/$$:
 

@@ -25,7 +25,7 @@ the integrand for this measurement.
 
 $head likelihood_id$$
 This column has type $code integer$$ and identifies the 
-$cref/likelihood/id2name_table/Only id2name/likelihood/$$
+$cref/likelihood/lookup_table/Lookup Only/likelihood/$$
 used to model this measurement.
 
 $head area_id$$
@@ -34,7 +34,7 @@ for this measurement.
 
 $head weight_user_id$$
 This column has type $code integer$$ and its value identifies a
-$cref/user_id/id2name_table/Only id2name/user/$$ value int the
+$cref/user_id/lookup_table/Lookup Only/user/$$ value int the
 $cref weight_table$$. 
 
 $head meas_value$$

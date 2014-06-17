@@ -15,7 +15,7 @@ $index integrand, table$$
 $index table, integrand$$
 
 $section The Integrand Table$$
-The $code integrand$$ table is an $cref id2name_table$$; i.e.,
+The $code integrand$$ table is a $cref lookup_table$$; i.e.,
 it has $code integrand_id$$ and $code integrand_name$$ columns.
 In addition, it has an $code eta$$ column.
 

@@ -15,7 +15,7 @@ has type $code integer$$ and is the primary key for the table.
 
 $head user_id$$ 
 This column has type $code integer$$ and is value in a row is the 
-$cref/user/id2name_table/Only id2name/user/$$ table
+$cref/user/lookup_table/Lookup Only/user/$$ table
 primary key that identifies the grid for this row. 
 
 $head age$$

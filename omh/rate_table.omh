@@ -45,7 +45,7 @@ for the rate at the corresponding age and time.
 
 $head rate_likelihood_id$$
 This column has type $code integer$$ and identifies the 
-$cref/likelihood/id2name_table/Only id2name/likelihood/$$
+$cref/likelihood/lookup_table/Lookup Only/likelihood/$$
 for the rate.
 
 $head Difference Quotients in Age$$
@@ -81,7 +81,7 @@ at the corresponding age and time.
 
 $head da_likelihood_id$$
 This column has type $code integer$$ and identifies the 
-$cref/likelihood/id2name_table/Only id2name/likelihood/$$
+$cref/likelihood/lookup_table/Lookup Only/likelihood/$$
 for the age difference quotient.
 
 $head Difference Quotients in Time$$
@@ -117,7 +117,7 @@ at the corresponding age and time.
 
 $head dt_likelihood_id$$
 This column has type $code integer$$ and identifies the 
-$cref/likelihood/id2name_table/Only id2name/likelihood/$$
+$cref/likelihood/lookup_table/Lookup Only/likelihood/$$
 for the time difference quotient.
 
 $children%example/rate_table.py

@@ -5,7 +5,7 @@ $index area, table$$
 $index table, area$$
 
 $section The Area Table$$
-The $code area$$ table is an $cref id2name_table$$; i.e.,
+The $code area$$ table is a $cref lookup_table$$; i.e.,
 it has $code area_id$$ and $code area_name$$ columns.
 In addition, it has a $code parent_id$$ column.
 

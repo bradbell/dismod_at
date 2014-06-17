@@ -37,7 +37,7 @@ $index infinity, plus std$$
 A standard deviation of plus infinity is represented in the
 data base a $code null$$.
 
-$childtable%omh/id2name_table.omh
+$childtable%omh/lookup_table.omh
 	%omh/grid_table.omh
 	%omh/integrand_table.omh
 	%omh/area_table.omh
