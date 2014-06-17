@@ -16,7 +16,7 @@ $code age$$,
 and $code time$$.
 In addition, it has the following columns:
 
-$head Rate Values$$
+$head Rate$$
 The values in this table, for one $icode user_id$$,
 correspond to one of the rates in the model; i.e.,
 $icode iota$$, $icode rho$$, $icode chi$$, or $icode omega$$.
