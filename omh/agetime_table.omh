@@ -6,13 +6,13 @@ $$
 $section Age-Time Tables$$
 
 $head Definition$$
-The table $icode mytable$$ is a grid table
+The table $icode mytable$$ is a age-time table
 if it has the following columns:
 $icode%mytable%_id%$$,
 $code grid_id$$,
 $code age$$, and 
 $code time$$.
-Note that a grid table is also a 
+Note that a age-time table is also a 
 $cref lookup_table$$.
 
 $head mytable_id$$
