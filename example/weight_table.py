@@ -39,8 +39,9 @@ def weight_table() :
 	col_name = [ 'grid_id', 'grid_name'     ]
 	col_type = [ ptype,     'text'          ]
 	row_list = [
-	           [ 0,         'uniform'       ],
-	           [ 1,         'time_constant' ]
+	           [ 0,         'constant'      ],
+	           [ 1,         'age_linear'    ],
+	           [ 2,         'bilinear'      ] 
 	]
 	tbl_name = 'grid'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
@@ -49,43 +50,34 @@ def weight_table() :
 	col_name = [ 'weight_id', 'grid_id', 'age',  'time',  'weight' ]
 	col_type = [ ptype,       'integer', 'real', 'real',  'real'   ]
 	row_list = [
-	           # uniform
-	           [ None,        0,         0.0,    1980.,   1.0      ],
-	           [ None,        0,       100.0,    1980.,   1.0      ],
-	           [ None,        0,         0.0,    2015.,   1.0      ],
-	           [ None,        0,       100.0,    2015.,   1.0      ],
-	           # time_consant
-	           [ None,        0,         0.0,    1980.,   0.5      ],
-	           [ None,        0,       100.0,    1980.,   1.5      ],
-	           [ None,        0,         0.0,    2015.,   0.5      ],
-	           [ None,        0,       100.0,    2015.,   1.5      ]
+	           # constant
+	           [ 1,           0,        50.0,    2000.,   1.0      ],
+	           # age_linear  
+	           [ 2,           1,         0.0,    2000.,   0.5      ],
+	           [ 3,           1,       100.0,    2000.,   1.5      ],
+	           # bilinear  
+	           [ 4,           2,         0.0,    1990.,   0.5      ],
+	           [ 5,           2,       100.0,    1990.,   1.0      ],
+	           [ 6,           2,         0.0,    2010.,   1.0      ],
+	           [ 7,           2,       100.0,    2010.,   1.5      ]
 	]
 	tbl_name = 'weight'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in the uniform weight table
-	row_list = list()
-	cmd  = 'select age, time, weight from weight'
-	cmd += ' inner join grid on weight.grid_id = grid.grid_id'
-	cmd += " where grid.grid_name = 'uniform'" 
+	cmd  = 'select w.weight_id, w.grid_id, w.age, w.time, w.weight'
+	cmd += ' from weight w'
+	cmd += ' inner join grid g on w.grid_id = g.grid_id'
+	cmd += " where g.grid_name = 'bilinear'" 
+	#
+	count        = 3
+	cursor       = connection.cursor()
 	for row in cursor.execute(cmd) :
-		row_list.append(row)
-	# 
-	assert row_list[0][0] == 0.0
-	assert row_list[0][1] == 1980.
-	assert row_list[0][2] == 1.0
-	# 
-	assert row_list[1][0] == 100.0
-	assert row_list[1][1] == 1980.
-	assert row_list[1][2] == 1.0
-	# 
-	assert row_list[2][0] == 0.0
-	assert row_list[2][1] == 2015.
-	assert row_list[2][2] == 1.0
-	# 
-	assert row_list[3][0] == 100.0
-	assert row_list[3][1] == 2015.
-	assert row_list[3][2] == 1.0
+		assert len(row) == len(col_name)
+		for j in range( len(row) ) :
+			assert row[j] == row_list[count][j]
+		count += 1
+	assert count == len( row_list )
 	#
 	print('weight_table: OK')
 # END PYTHON

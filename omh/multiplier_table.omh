@@ -1,0 +1,46 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin multiplier_table$$ 
+$spell
+	agetime
+	std
+	dage
+	dtime
+	covariate
+$$
+$index multiplier, table$$
+$index table, multiplier$$
+
+$section The Multiplier Table$$
+This table specifies the prior for the covariate multipliers.
+A set of rows with the same $icode grid_id$$ value correspond
+to the same covariate; see $cref covariate_table$$.
+
+$head agetime_table$$
+The $code multiplier$$ table is an $cref agetime_table$$; i.e.,
+it has columns named 
+$code multiplier_id$$, 
+$code grid_id$$,
+$code age$$,
+and $code time$$.
+In addition, it has the following columns:
+
+$head prior_id$$
+This column has type $code integer$$ and its value in a row is the
+$icode prior_id$$, in the $cref prior_table$$,
+
+$comment%example/multiplier_table.py
+%$$
+$head Example$$
+The file $comment multiplier_table.py$$ 
+contains an example $code multiplier$$ table.
+
+$end

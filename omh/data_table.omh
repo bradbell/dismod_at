@@ -80,8 +80,9 @@ minimum and maximum time specified by the $code time_grid$$ table.
 $head Covariates$$
 The covariate columns have type $code real$$ and column names
 that begin with the two characters $code x_$$.
-The values in column $codei%x_%cov%$$
-is the value of covariate $icode cov$$ for this measurement.
+The column $codei%x_%covariate_id%$$ contains
+the value, for this measurement, of the covariate specified by
+$icode covariate_id$$; see $cref covariate_table$$.
 
 $children%example/data_table.py
 %$$

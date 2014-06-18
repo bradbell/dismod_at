@@ -31,6 +31,8 @@ $childtable%omh/lookup_table.omh
 	%omh/data_table.omh
 	%omh/prior_table.omh
 	%omh/rate_table.omh
+	%omh/covariate_table.omh
+	%omh/multiplier_table.omh
 %$$
 
 $end

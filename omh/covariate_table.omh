@@ -1,0 +1,36 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin covariate_table$$ 
+$spell
+	agetime
+	covariate
+$$
+$index covariate, table$$
+$index table, covariate$$
+
+$section The Covariate Table$$
+The $code covariate$$ table is a $cref lookup_table$$; i.e.,
+it has $code covariate_id$$ and $code covariate_name$$ columns.
+In addition, it has an $code eta$$ column.
+
+$head grid_id$$
+This is $icode grid_id$$ that is used to define the prior for 
+the multiplier of this covariate; see
+$cref/agetime table/multiplier_table/agetime_table/$$ in the 
+multiplier table.
+
+$children%example/covariate_table.py
+%$$
+$head Example$$
+The file $cref covariate_table.py$$ 
+contains an example $code covariate$$ table.
+
+$end
