@@ -36,7 +36,7 @@ the uniform distribution between the lower and upper limits.
 
 $head likelihood_id$$
 This column has type $code integer$$ and identifies the
-$cref/likelihood/likelihood_tale/$$ for this prior.
+$cref/likelihood/lookup_table/Lookup Only/likelihood/$$ for this prior.
 
 
 $children%example/prior_table.py

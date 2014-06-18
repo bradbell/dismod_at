@@ -10,6 +10,8 @@
 # -------------------------------------------------------------------------- */
 # $begin rate_table.py$$ $newlinech #$$
 #
+# $section rate_table: Example and Text$$
+#
 # $index rate, example$$
 # $index example, rate table$$
 #

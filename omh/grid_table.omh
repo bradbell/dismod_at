@@ -21,8 +21,8 @@ has type $code integer$$ and is the primary key for the table.
 
 $head user_id$$ 
 This column has type $code integer$$ and its value in a row is the 
-$icode user_id$$, in the $cref user_table$$,
-that identifies the grid for this row. 
+$icode user_id$$, in the $cref/user/lookup_table/Lookup Only/user/$$
+table that identifies the grid for this row. 
 
 $head age$$
 The column with name $code age$$ 

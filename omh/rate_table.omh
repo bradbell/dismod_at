@@ -8,6 +8,12 @@ $index rate, table$$
 $index table, rate$$
 
 $section The Rate Table$$
+This table specifies the prior for a particular location and
+one of the rate functions
+$icode iota$$, $icode rho$$, $icode chi$$, or $icode omega$$.
+See $cref area_table$$ for referencing these priors.
+
+$head grid_table$$
 The $code rate$$ table is an $cref grid_table$$; i.e.,
 it has columns named 
 $code rate_id$$, 
@@ -15,11 +21,6 @@ $code user_id$$,
 $code age$$,
 and $code time$$.
 In addition, it has the following columns:
-
-$head rate$$
-The values in this table, for one $icode user_id$$,
-correspond to one of the rates in the model; i.e.,
-$icode iota$$, $icode rho$$, $icode chi$$, or $icode omega$$.
 
 $head rate_prior_id$$
 This column has type $code integer$$ and its value in a row is the
@@ -39,6 +40,7 @@ $icode prior_id$$, in the $cref prior_table$$,
 for the prior that is used for the 
 forward difference quotients w.r.t time. 
 The prior at the maximum time, for each time, is not used.
+
 
 $children%example/rate_table.py
 %$$
