@@ -32,9 +32,9 @@ $head area_id$$
 This column has type $code integer$$ and identifies the area
 for this measurement.
 
-$head weight_user_id$$
+$head weight_grid_id$$
 This column has type $code integer$$ and its value identifies a
-$cref/user_id/lookup_table/Lookup Only/user/$$ value int the
+$cref/grid_id/lookup_table/Lookup Only/grid/$$ value int the
 $cref weight_table$$. 
 
 $head meas_value$$

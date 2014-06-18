@@ -15,20 +15,20 @@ of the parent for this area.
 There is only one area that does not have a parent; i.e.,
 its parent area is $code null$$.
 
-$head iota_user_id$$
-Is the $cref/user_id/rate_table/agetime_table/$$ in the rate table
-that is used as the prior for $code iota_user_id$$ for this $icode area$$.
+$head iota_grid_id$$
+Is the $cref/grid_id/rate_table/agetime_table/$$ in the rate table
+that is used as the prior for $code iota_grid_id$$ for this $icode area$$.
 
-$head rho_user_id$$
-Is the $icode user_id$$ in the rate table
+$head rho_grid_id$$
+Is the $icode grid_id$$ in the rate table
 that is used as the prior for $code rho$$ for this $icode area$$.
 
-$head chi_user_id$$
-Is the $icode user_id$$ in the rate table
+$head chi_grid_id$$
+Is the $icode grid_id$$ in the rate table
 that is used as the prior for $code chi$$ for this $icode area$$.
 
-$head omega_user_id$$
-Is the $icode user_id$$ in the rate table
+$head omega_grid_id$$
+Is the $icode grid_id$$ in the rate table
 that is used as the prior for $code omega$$ for this $icode area$$.
 
 $children%example/area_table.py

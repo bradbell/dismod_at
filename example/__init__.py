@@ -15,5 +15,5 @@ from integrand_table   import *
 from likelihood_table  import *
 from prior_table       import *
 from rate_table        import *
-from user_table        import *
+from grid_table        import *
 from weight_table      import *

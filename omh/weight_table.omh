@@ -8,7 +8,7 @@ $section The Weight Table$$
 The $code weight$$ table is an $cref agetime_table$$; i.e.,
 it has columns named 
 $code weight_id$$, 
-$code user_id$$,
+$code grid_id$$,
 $code age$$,
 and $code time$$.
 In addition, it has the following column:
@@ -17,7 +17,7 @@ $head weight$$
 This column has type $code real$$.
 For each row in the table, the value in this column
 is the weighting, at the corresponding age and time,
-and for the specified $icode user_id$$,
+and for the specified $icode grid_id$$,
 
 $children%example/weight_table.py
 %$$

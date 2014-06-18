@@ -8,21 +8,21 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin user_table.py$$ $newlinech #$$
+# $begin grid_table.py$$ $newlinech #$$
 #
-# $section user_table: Example and Text$$
+# $section grid_table: Example and Text$$
 #
 # $index user, , example$$
-# $index example, user table$$
+# $index example, grid table$$
 # $index table, user example$$
 #
 # $code
-# $verbatim%example/user_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/grid_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-def user_table() :
+def grid_table() :
 	import dismod_at
 	#
 	file_name      = 'example.db'
@@ -30,9 +30,9 @@ def user_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	# create the user table
+	# create the grid table
 	ptype    = 'integer primary key'
-	col_name = [ 'user_id', 'user_name'  ]
+	col_name = [ 'grid_id', 'grid_name'  ]
 	col_type = [ ptype,           'text' ]
 	row_list = [
 	           # rate priors 
@@ -45,11 +45,11 @@ def user_table() :
 	           [ 6,               'age_constant'      ],
 	           [ 7,               'time_constant'     ]
 	]
-	tbl_name = 'user'
+	tbl_name = 'grid'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
-	cmd = 'select user_id, user_name from user'
+	cmd = 'select grid_id, grid_name from grid'
 	cursor.execute(cmd)
 	fetchall = cursor.fetchall()
 	assert len(fetchall) == len(row_list)
@@ -60,5 +60,5 @@ def user_table() :
 		for j in range( len(check) ) :
 			assert row[j] == check[j]
 	#
-	print('user_table: OK')
+	print('grid_table: OK')
 # END PYTHON

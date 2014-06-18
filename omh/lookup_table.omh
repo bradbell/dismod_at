@@ -20,7 +20,7 @@ the names are unique and can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
 
 $children%example/likelihood_table.py
-	%example/user_table.py
+	%example/grid_table.py
 %$$
 $head Lookup Only$$
 The following lookup tables only have an id column,
@@ -40,9 +40,9 @@ $code log_laplace$$.
 The file $cref likelihood_table.py$$ contains an example 
 $code likelihood$$ table.
 
-$subhead user$$
-This table just attaches the text the user chooses for $icode user_name$$
-to the corresponding $icode user_id$$ integer value.
-The file $cref user_table.py$$ contains an example $code user$$ table.
+$subhead grid$$
+This table just attaches the text the user chooses for $icode grid_name$$
+to the corresponding $icode grid_id$$ integer value.
+The file $cref grid_table.py$$ contains an example $code grid$$ table.
 
 $end

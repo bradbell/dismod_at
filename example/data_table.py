@@ -35,7 +35,7 @@ def data_table() :
 		'integrand_id',
 		'likelihood_id',
 		'location_id',
-		'weight_user_id',
+		'weight_grid_id',
 		'meas_value',
 		'meas_stdev',
 		'age_lower',
@@ -53,7 +53,7 @@ def data_table() :
 		'integer',              # integrand_id
 		'integer',              # likelihood_id
 		'integer',              # location_id
-		'integer',              # weight_user_id
+		'integer',              # weight_grid_id
 		'real',                 # meas_value
 		'real',                 # meas_stdev
 		'real',                 # age_lower
@@ -69,7 +69,7 @@ def data_table() :
 		1,                      # integrand_id
 		2,                      # likelihood_id
 		3,                      # location_id
-		4,                      # weight_user_id
+		4,                      # weight_grid_id
 		1e-4,                   # meas_value
 		1e-5,                   # meas_stdev
 		0.0,                    # age_lower

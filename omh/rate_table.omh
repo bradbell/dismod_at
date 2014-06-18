@@ -18,7 +18,7 @@ $head agetime_table$$
 The $code rate$$ table is an $cref agetime_table$$; i.e.,
 it has columns named 
 $code rate_id$$, 
-$code user_id$$,
+$code grid_id$$,
 $code age$$,
 and $code time$$.
 In addition, it has the following columns:

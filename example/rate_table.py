@@ -33,7 +33,7 @@ def rate_table() :
 	# rate table names
 	col_name = [
 		'rate_id', 
-		'user_id', 
+		'grid_id', 
 		'age',  
 		'time',  
 		'rate_prior_id',
@@ -45,7 +45,7 @@ def rate_table() :
 	ptype = 'integer primary key'
 	col_type = [
 		ptype,      # rate_id
-		'integer',  # user_id
+		'integer',  # grid_id
 		'real',     # age
 		'real',     # time
 		'integer',  # rate_prior_id
@@ -58,7 +58,7 @@ def rate_table() :
 	inf      = float('inf')
 	default  = [
 		None,       # rate_id
-		1,          # user_id            (rho_prior)
+		1,          # grid_id            (rho_prior)
 		None,       # age                (age  index is 2)
 		None,       # time               (time index is 3)
 		1,          # rate_prior_id

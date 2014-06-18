@@ -17,7 +17,7 @@
 # $index table, weight example$$
 #
 # $index user, example$$
-# $index example, user table$$
+# $index example, grid table$$
 # $index table, user example$$
 #
 # $code
@@ -34,19 +34,19 @@ def weight_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	# 
-	# create a user table
+	# create a grid table
 	ptype    = 'integer primary key'
-	col_name = [ 'user_id', 'user_name'     ]
+	col_name = [ 'grid_id', 'grid_name'     ]
 	col_type = [ ptype,     'text'          ]
 	row_list = [
 	           [ 0,         'uniform'       ],
 	           [ 1,         'time_constant' ]
 	]
-	tbl_name = 'user'
+	tbl_name = 'grid'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# create a weight table
-	col_name = [ 'weight_id', 'user_id', 'age',  'time',  'weight' ]
+	col_name = [ 'weight_id', 'grid_id', 'age',  'time',  'weight' ]
 	col_type = [ ptype,       'integer', 'real', 'real',  'real'   ]
 	row_list = [
 	           # uniform
@@ -66,8 +66,8 @@ def weight_table() :
 	# check values in the uniform weight table
 	row_list = list()
 	cmd  = 'select age, time, weight from weight'
-	cmd += ' inner join user on weight.user_id = user.user_id'
-	cmd += " where user.user_name = 'uniform'" 
+	cmd += ' inner join grid on weight.grid_id = grid.grid_id'
+	cmd += " where grid.grid_name = 'uniform'" 
 	for row in cursor.execute(cmd) :
 		row_list.append(row)
 	# 
