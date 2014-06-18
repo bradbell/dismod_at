@@ -7,7 +7,7 @@ $index table, area$$
 $section The Area Table$$
 The $code area$$ table is a $cref lookup_table$$; i.e.,
 it has $code area_id$$ and $code area_name$$ columns.
-In addition, it has a $code parent_id$$ column.
+In addition, it has the following columns:
 
 $head parent_id$$
 This column has type $code integer$$ and is the $icode area_id$$
@@ -17,19 +17,19 @@ its parent area is $code null$$.
 
 $head iota_grid_id$$
 Is the $cref/grid_id/rate_table/agetime_table/$$ in the rate table
-that is used as the prior for $code iota_grid_id$$ for this $icode area$$.
+that is used as $code iota$$ prior for this area.
 
 $head rho_grid_id$$
 Is the $icode grid_id$$ in the rate table
-that is used as the prior for $code rho$$ for this $icode area$$.
+that is used as the $code rho$$ prior for this area.
 
 $head chi_grid_id$$
 Is the $icode grid_id$$ in the rate table
-that is used as the prior for $code chi$$ for this $icode area$$.
+that is used as the $code chi$$ prior for this area.
 
 $head omega_grid_id$$
 Is the $icode grid_id$$ in the rate table
-that is used as the prior for $code omega$$ for this $icode area$$.
+that is used as the $code omega$$ prior for this area.
 
 $children%example/area_table.py
 %$$
