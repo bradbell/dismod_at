@@ -2,7 +2,7 @@
 # $Id$
 # -----------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-#           Copyright (C) 2013-14 University of Washington
+#           Copyright (C) 2014-14 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 # 
 # This program is distributed under the terms of the 
@@ -54,12 +54,12 @@ else
 fi
 # -----------------------------------------------------------------------------
 case $ext in
-	omh)
+	cpp)
 	cat << EOF  >> bin/add_copyright.$$
 // \$Id:\$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2013-14 University of Washington
+          Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -69,12 +69,27 @@ see http://www.gnu.org/licenses/agpl.txt
 EOF
 	;;
 
+	omh)
+	cat << EOF  >> bin/add_copyright.$$
+\$Id:\$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+EOF
+	;;
+
 	cmake | sh | py | R )
 	cat << EOF  >> bin/add_copyright.$$
 # \$Id:\$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-#           Copyright (C) 2013-14 University of Washington
+#           Copyright (C) 2014-14 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 # 
 # This program is distributed under the terms of the 
