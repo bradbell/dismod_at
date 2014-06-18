@@ -16,7 +16,7 @@ There is only one area that does not have a parent; i.e.,
 its parent area is $code null$$.
 
 $head iota_user_id$$
-Is the $cref/user_id/rate_table/grid_table/$$ in the rate table
+Is the $cref/user_id/rate_table/agetime_table/$$ in the rate table
 that is used as the prior for $code iota_user_id$$ for this $icode area$$.
 
 $head rho_user_id$$

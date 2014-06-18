@@ -1,9 +1,9 @@
-$begin grid_table$$
+$begin agetime_table$$
 $spell
 	mytable
 $$
 
-$section Grid Tables$$
+$section Age-Time Tables$$
 
 $head Definition$$
 The table $icode mytable$$ is a grid table

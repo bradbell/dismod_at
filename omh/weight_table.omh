@@ -5,7 +5,7 @@ $index weight, table$$
 $index table, weight$$
 
 $section The Weight Table$$
-The $code weight$$ table is an $cref grid_table$$; i.e.,
+The $code weight$$ table is an $cref agetime_table$$; i.e.,
 it has columns named 
 $code weight_id$$, 
 $code user_id$$,

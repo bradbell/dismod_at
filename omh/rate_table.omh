@@ -1,5 +1,6 @@
 $begin rate_table$$ 
 $spell
+	agetime
 	std
 	dage
 	dtime
@@ -13,8 +14,8 @@ one of the rate functions
 $icode iota$$, $icode rho$$, $icode chi$$, or $icode omega$$.
 See $cref area_table$$ for referencing these priors.
 
-$head grid_table$$
-The $code rate$$ table is an $cref grid_table$$; i.e.,
+$head agetime_table$$
+The $code rate$$ table is an $cref agetime_table$$; i.e.,
 it has columns named 
 $code rate_id$$, 
 $code user_id$$,
