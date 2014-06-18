@@ -37,10 +37,10 @@ $head prior_id$$
 This column has type $code integer$$ and its value in a row is the
 $icode prior_id$$, in the $cref prior_table$$,
 
-$comment%example/multiplier_table.py
+$children%example/multiplier_table.py
 %$$
 $head Example$$
-The file $comment multiplier_table.py$$ 
+The file $cref multiplier_table.py$$ 
 contains an example $code multiplier$$ table.
 
 $end
