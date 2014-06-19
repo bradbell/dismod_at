@@ -16,9 +16,16 @@ $index prior, table$$
 $index table, prior$$
 
 $section The Prior Table$$
-The $code prior$$ table is a $cref lookup_table$$; i.e.,
-it has $code prior_id$$ and $code prior_name$$ columns.
-In addition, it has the following columns:
+The $code prior$$ table is used to define priors for a single scalar value.
+It has the following columns:
+
+$head prior_id$$
+This column has type $code integer$$ and is the primary key for this table.
+
+$head prior_name$$
+This column has type $code text$$ and has a different value for every row; 
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
 
 $head lower$$
 $index lower, minus infinity$$
