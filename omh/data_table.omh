@@ -35,7 +35,7 @@ the integrand for this measurement.
 
 $head likelihood_id$$
 This column has type $code integer$$ and identifies the 
-$cref/likelihood/lookup_table/Lookup Only/likelihood/$$
+$cref/likelihood/likelihood_table/$$
 used to model this measurement.
 
 $head area_id$$
