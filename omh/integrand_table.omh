@@ -25,9 +25,12 @@ $index integrand, table$$
 $index table, integrand$$
 
 $section The Integrand Table$$
-The $code integrand$$ table is a $cref lookup_table$$; i.e.,
-it has $code integrand_id$$ and $code integrand_name$$ columns.
-In addition, it has an $code eta$$ column.
+The $code integrand$$ table is used to identify data integrands.
+It have the following columns:
+
+$head integrand_id$$
+This column has type $code integer$$ 
+and is the primary key for this table.
 
 $head integrand_name$$
 The following values,
