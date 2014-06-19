@@ -31,7 +31,7 @@ $head weight$$
 This column has type $code real$$.
 For each row in the table, the value in this column
 is the weighting, at the corresponding age and time,
-and for the specified $icode grid_id$$,
+and for the specified $icode weight_id$$,
 
 $children%example/weight_table.py
 %$$

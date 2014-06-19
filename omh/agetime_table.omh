@@ -64,26 +64,26 @@ has type $code real$$ and is value is the time value for this grid point.
 The age and time columns must use the same units.
 
 $head Rectangular Grid$$
-Each fixed value for $icode grid_id$$ corresponds to a rectangular grid.
+Each fixed value for $icode mytable_id$$ corresponds to a rectangular grid.
 There are $latex m \times n$$ such rows and the corresponding 
 $codei%(%time%, %age%)%$$ values are $latex ( t_i , a_j )$$ where:
 
 $subhead n$$
 is the number of values that appear in the $code age$$ column
-with the specified  $icode grid_id$$.   
+with the specified  $icode mytable_id$$.   
 
 $subhead a_j$$
 for $latex j = 1 , \ldots , n$$,
 $latex a_j$$ is the $th j$$ age value,
-with the specified  $icode grid_id$$, in increasing order.
+with the specified  $icode mytable_id$$, in increasing order.
 
 $subhead m$$
 is the number of values that appear in the $code time$$ column
-with the specified  $icode grid_id$$.   
+with the specified  $icode mytable_id$$.   
 
 $subhead t_i$$
 for $latex i = 1 , \ldots , m$$,
 $latex t_i$$ is the $th i$$ time value,
-with the specified  $icode grid_id$$, in increasing order.
+with the specified  $icode mytable_id$$, in increasing order.
 
 $end
