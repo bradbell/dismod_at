@@ -1,0 +1,60 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin smoothing_table$$ 
+$spell
+	agetime
+	std
+	dage
+	dtime
+$$
+$index smoothing, table$$
+$index table, smoothing$$
+
+$section The Smoothing Table$$
+This table specifies the smoothing prior for a function of age and time.
+
+$head agetime Table$$
+The $code smoothing$$ table is an $cref agetime_table$$.
+Hence there is a table called $code name_smoothing$$
+with columns $code smoothing_id$$ and $code smoothing_name$$.
+In addition, 
+smoothing table has columns $code smoothing_primary$$ and $code smoothing_id$$.
+
+$head Other Columns$$
+
+$subhead value_prior_id$$
+This column has type $code integer$$ and its value in a row is the
+$icode prior_id$$, in the $cref prior_table$$,
+for the prior that is used for the 
+function value this $icode age$$ and $icode time$$.
+
+$subhead dage_prior_id$$
+This column has type $code integer$$ and its value in a row is the
+$icode prior_id$$, in the $cref prior_table$$,
+for the prior that is used for the 
+function's forward difference quotients w.r.t age. 
+The prior at the maximum age, for each time, is not used.
+
+$subhead dtime_prior_id$$
+This column has type $code integer$$ and its value in a row is the
+$icode prior_id$$, in the $cref prior_table$$,
+for the prior that is used for the 
+function's forward difference quotients w.r.t time. 
+The prior at the maximum time, for each age, is not used.
+
+
+$children%example/smoothing_table.py
+%$$
+$head Example$$
+The file $cref smoothing_table.py$$ 
+contains an example $code smoothing$$ table.
+
+$end

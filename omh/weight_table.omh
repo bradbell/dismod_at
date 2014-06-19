@@ -16,6 +16,7 @@ $index weight, table$$
 $index table, weight$$
 
 $section The Weight Table$$
+This table specifies age-time weighting functions.
 
 $head agetime Table$$
 The $code weight$$ table is an $cref agetime_table$$.

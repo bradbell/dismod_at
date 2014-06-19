@@ -18,4 +18,5 @@ from likelihood_table  import *
 from multiplier_table  import *
 from prior_table       import *
 from rate_table        import *
+from smoothing_table   import *
 from weight_table      import *
