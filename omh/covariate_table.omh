@@ -10,22 +10,24 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin covariate_table$$ 
 $spell
-	agetime
 	covariate
 $$
 $index covariate, table$$
 $index table, covariate$$
 
 $section The Covariate Table$$
-The $code covariate$$ table is a $cref lookup_table$$; i.e.,
-it has $code covariate_id$$ and $code covariate_name$$ columns.
-In addition, it has an $code eta$$ column.
+The $code covariate$$ table is used to identify 
+$cref/covariate/data_table/Covariates/$$ columns in the
+data table.
+It has the following columns:
 
-$head grid_id$$
-This is $icode grid_id$$ that is used to define the prior for 
-the multiplier of this covariate; see
-$cref/agetime table/multiplier_table/agetime_table/$$ in the 
-multiplier table.
+$head covariate_id$$
+This column has type $code integer$$ and is the primary key for this table.
+
+$head covariate_name$$
+This column has type $code text$$ and has a different value for every row; 
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
 
 $children%example/covariate_table.py
 %$$
