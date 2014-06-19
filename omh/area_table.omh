@@ -15,9 +15,15 @@ $index area, table$$
 $index table, area$$
 
 $section The Area Table$$
-The $code area$$ table is a $cref lookup_table$$; i.e.,
-it has $code area_id$$ and $code area_name$$ columns.
-In addition, it has the following columns:
+The $code area$$ table has the following columns:
+
+$head area_id$$
+This column has type $code integer$$ and is the primary key for this table.
+
+$head area_name$$
+This column has type $code text$$ and has a different value for every row; 
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
 
 $head parent_id$$
 This column has type $code integer$$ and is the $icode area_id$$
@@ -25,21 +31,21 @@ of the parent for this area.
 There is only one area that does not have a parent; i.e.,
 its parent area is $code null$$.
 
-$head iota_grid_id$$
-Is the $cref/grid_id/rate_table/agetime_table/$$ in the rate table
-that is used as $code iota$$ prior for this area.
+$head iota_smoothing_id$$
+Is the $icode smoothing_id$$ in the $cref smoothing_table$$ that
+is used as $code iota$$ prior for this area.
 
-$head rho_grid_id$$
-Is the $icode grid_id$$ in the rate table
-that is used as the $code rho$$ prior for this area.
+$head rho_smoothing_id$$
+Is the $icode smoothing_id$$ in the $cref smoothing_table$$ that
+is used as $code rho$$ prior for this area.
 
-$head chi_grid_id$$
-Is the $icode grid_id$$ in the rate table
-that is used as the $code chi$$ prior for this area.
+$head chi_smoothing_id$$
+Is the $icode smoothing_id$$ in the $cref smoothing_table$$ that
+is used as $code chi$$ prior for this area.
 
-$head omega_grid_id$$
-Is the $icode grid_id$$ in the rate table
-that is used as the $code omega$$ prior for this area.
+$head omega_smoothing_id$$
+Is the $icode smoothing_id$$ in the $cref smoothing_table$$ that
+is used as $code omega$$ prior for this area.
 
 $children%example/area_table.py
 %$$
