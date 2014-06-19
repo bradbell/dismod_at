@@ -16,30 +16,50 @@ $$
 $section Age-Time Tables$$
 
 $head Definition$$
-The table $icode mytable$$ is a age-time table
-if it has the following columns:
-$icode%mytable%_id%$$,
-$code grid_id$$,
-$code age$$, and 
-$code time$$.
-Note that a age-time table is also a 
-$cref lookup_table$$.
+The table $icode mytable$$ is a age-time table,
+then there also is a table called $codei%name_%mytable%$$
+and the following conditions hold:
 
-$head mytable_id$$
+$head Table name_mytable$$
+The table $codei%name_%mytable%$$ has the following columns:
+
+$subhead mytable_id$$
 The column with name $icode%mytable%_id%$$
-has type $code integer$$ and is the primary key for the table.
+has type $code integer$$ and is the primary key for the table
+$codei%name_%mytable%$$.
 
-$head grid_id$$ 
-This column has type $code integer$$ and its value in a row is the 
-$icode grid_id$$, in the $cref/grid/lookup_table/Lookup Only/grid/$$
-table that identifies the grid for this row. 
+$subhead mytable_name$$ 
+The table $codei%name_%mytable%$$ has a 
+column with name $icode%mytable%_name%$$ that
+has type $code text$$ and has a different value for every row; i.e.,
+the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+$subhead Comments$$
+The table $codei%name_%mytable%$$ may have
+$cref/comment columns/table/Comment Columns/$$.
+
+$head Table mytable$$ 
+The table $codei%name_%mytable%$$ has the following columns:
+
+$subhead mytable_primary$$
+The table $icode mytable$$ has a 
+column with name $icode%mytable%_primary%$$ that has type $code integer$$,
+and is the primary key for table $icode mytable$$.
+
+$subhead mytable_id$$
+The table $icode mytable$$ has a 
+column with name $icode%mytable%_id%$$ that has type $code integer$$,
+and is the primary key for table $codei%name_%mytable%$$.
 
 $head age$$
-The column with name $code age$$ 
+The table $icode mytable$$ has a 
+column with name $code age$$ that
 has type $code real$$ and is value is the age value for this grid point.
 
 $head time$$
-The column with name $code time$$ 
+The table $icode mytable$$ has a 
+column with name $code time$$ that
 has type $code real$$ and is value is the time value for this grid point.
 The age and time columns must use the same units.
 
