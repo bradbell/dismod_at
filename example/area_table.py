@@ -66,7 +66,6 @@ def area_table() :
 	cursor       = connection.cursor()
 	for row in cursor.execute(cmd) :
 		assert len(row) == len(col_name)
-		print(row)
 		for j in range( len(row) ) :
 			assert row[j] == row_list[count][j]
 		count += 1

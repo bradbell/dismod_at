@@ -31,24 +31,40 @@ def multiplier_table() :
 	cursor         = connection.cursor()
 	# 
 	# create a multiplier table
-	ptype    = 'integer primary key'
-	col_name = [ 'multiplier_id', 'grid_id', 'age',  'time',  'prior_id' ]
-	col_type = [ ptype,           'integer', 'real', 'real',  'integer'  ]
-	row_list = [
-	           [ 1,               1,          0.0,    1980.,   2         ],
-	           [ 2,               1,          0.0,    2015.,   1         ],
-	           [ 3,               1,        100.0,    1980.,   2         ],
-	           [ 4,               1,        100.0,    2015.,   1         ]
+	col_name = [ 
+		'multiplier_id', 
+		'multiplier_use',
+		'covariate_id', 
+		'integrand_id',
+		'rate_name',
+  		'smoothing_id'
 	]
+	ptype    = 'integer primary key'
+	col_type = [ 
+		ptype,     # multiplier_id
+		'text',    # multiplier_use
+		'integer', # covariate_id
+		'integer', # integrand_id
+		'text',    # rate_name
+  		'integer'  # smoothing_id
+	]
+	row_list = [ [
+		0,      # multiplier_id
+		'mean', # muitiplier_use
+		1,      # covariate_id
+		None,   # integrand_id
+		'iota', # rate_name
+		2       # smoothing_id
+	] ]
 	tbl_name = 'multiplier'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in the uniform multiplier table
-	cmd    = 'select multiplier_id,grid_id,age,time,prior_id from multiplier'
+	columns = ','.join(col_name)
+	cmd    = 'SELECT ' + columns + ' FROM multiplier'
 	cursor = connection.cursor()
 	count  = 0
 	for row in cursor.execute(cmd) :
-		assert len(row) == len(col_name)
 		for j in range( len(row) ) :
 			assert row[j] == row_list[count][j]
 		count += 1
