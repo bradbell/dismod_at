@@ -33,11 +33,12 @@ def data_table() :
 		# required columns
 		'data_id',
 		'integrand_id',
-		'likelihood_id',
 		'location_id',
 		'weight_id',
 		'meas_value',
 		'meas_stdev',
+		'meas_density',
+		'meas_eta',
 		'age_lower',
 		'age_upper',
 		'time_lower',
@@ -51,11 +52,12 @@ def data_table() :
 	col_type = [
 		'integer primary key',  # data_id
 		'integer',              # integrand_id
-		'integer',              # likelihood_id
 		'integer',              # location_id
 		'integer',              # weight_id
 		'real',                 # meas_value
 		'real',                 # meas_stdev
+		'text',                 # meas_density
+		'real',                 # meas_eta
 		'real',                 # age_lower
 		'real',                 # age_upper
 		'real',                 # time_lower
@@ -67,11 +69,12 @@ def data_table() :
 	row_list = [ [
 		0,                      # data_id
 		1,                      # integrand_id
-		2,                      # likelihood_id
 		3,                      # location_id
 		4,                      # weight_id
 		1e-4,                   # meas_value
 		1e-5,                   # meas_stdev
+		'log_gaussina',         # meas_density
+		1e-5,                   # meas_eta
 		0.0,                    # age_lower
 		100.0,                  # age_upper
 		2000.,                  # time_lower
@@ -86,12 +89,8 @@ def data_table() :
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
-	cmd  = 'select '
-	for name in col_name :
-		cmd += name
-		if name != col_name[-1] :
-			cmd += ', ' 
-	cmd += ' from data'
+	columns = ','.join(col_name)
+	cmd     = 'SELECT ' + columns + ' FROM data'
 	count        = 0
 	cursor       = connection.cursor()
 	for row in cursor.execute(cmd) :

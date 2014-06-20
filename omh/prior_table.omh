@@ -51,10 +51,20 @@ for the prior.
 Note that the value $code null$$ is interpreted as plus infinity; i.e.,
 the uniform distribution between the lower and upper limits.
 
-$head likelihood_id$$
-This column has type $code integer$$ and identifies the
-$cref/likelihood/likelihood_table/$$ for this prior.
+$head density$$
+This column has type $code text$$ and identifies density function used
+for this measurement.
+It must be one of the following:
+$code gaussian$$, 
+$code laplace$$,
+$code log_gaussian$$,
+or $code log_laplace$$. 
 
+$head eta$$
+This column has type $code real$$ and is only used in the
+cases where $icode density$$ is $code log_gaussian$$
+or $code log_laplace$$.
+In these cases, it is the offset in the corresponding density function.
 
 $children%example/prior_table.py
 %$$

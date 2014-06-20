@@ -13,7 +13,6 @@ from create_table      import *
 from covariate_table   import *
 from data_table        import *
 from integrand_table   import *
-from likelihood_table  import *
 from multiplier_table  import *
 from prior_table       import *
 from smoothing_table   import *

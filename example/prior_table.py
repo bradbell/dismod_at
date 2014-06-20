@@ -39,41 +39,45 @@ def prior_table() :
 		'upper',	
 		'mean',	
 		'std',	
-		'likelihood_id'  
+		'density',
+		'eta'  
 	]
 	col_type = [ 
-		ptype,     # prior_id 
-		'text',    # prior_name	
-		'real',    # lower	
-		'real',    # upper	
-		'real',    # mean	
-		'real',    # std	
-		'integer'  # likelihood_id
+		ptype,            # prior_id 
+		'text',           # prior_name	
+		'real',           # lower	
+		'real',           # upper	
+		'real',           # mean	
+		'real',           # std	
+		'text',           # density
+		'real'            # eta
 	]
 	row_list = [ [ 
-		1,         # prior_id 
-		'none',    # prior_name	
-		None,      # lower	
-		None,      # upper	
-		0,         # mean	
-		None,      # std	
-		1,         # likelihood_id
+		1,                # prior_id 
+		'none',           # prior_name	
+		None,             # lower	
+		None,             # upper	
+		0,                # mean	
+		None,             # std	
+		'gaussian',       # density
+		None              # eta
 	],[
-		2,         # prior_id 
-		'rate',    # prior_name	
-		0.0,       # lower	
-		1.0,       # upper	
-		0,         # mean	
-		None,      # std	
-		1,         # likelihood_id
+		2,                # prior_id 
+		'rate',           # prior_name	
+		0.0,              # lower	
+		1.0,              # upper	
+		0,                # mean	
+		None,             # std	
+		'log_gaussian',   # density
+		1e-4              # eta
 	] ]
 
 	tbl_name = 'prior'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
-	columns = 'prior_id, prior_name, lower, upper, mean, std, likelihood_id'
-	cmd = 'select ' + columns + ' from prior'
+	columns = ','.join(col_name)
+	cmd     = 'SELECT ' + columns + ' FROM prior'
 	cursor.execute(cmd)
 	fetchall = cursor.fetchall()
 	assert len(fetchall) == len(row_list)
