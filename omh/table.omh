@@ -24,11 +24,11 @@ with the two characters $code c_$$.
 These are comment columns and are ignored by $code dismod_at$$.
 
 $childtable%omh/agetime_table.omh
-	%omh/area_table.omh
 	%omh/covariate_table.omh
 	%omh/data_table.omh
 	%omh/integrand_table.omh
 	%omh/multiplier_table.omh
+	%omh/node_table.omh
 	%omh/prior_table.omh
 	%omh/smoothing_table.omh
 	%omh/weight_table.omh

@@ -10,12 +10,12 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
 import example
-example.area_table()
 example.create_table()
 example.covariate_table()
 example.data_table()
 example.integrand_table()
 example.multiplier_table()
+example.node_table()
 example.prior_table()
 example.smoothing_table()
 example.weight_table()

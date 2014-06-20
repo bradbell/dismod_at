@@ -33,8 +33,8 @@ This column has type $code integer$$ and its value is the
 $cref integrand_table$$ primary key that identifies
 the integrand for this measurement.
 
-$head area_id$$
-This column has type $code integer$$ and identifies the area
+$head node_id$$
+This column has type $code integer$$ and identifies the node
 for this measurement.
 
 $head weight_id$$
@@ -45,7 +45,7 @@ $cref weight_table$$.
 $head meas_value$$
 This column has type $code real$$ and is the measured value
 for each row of the $code data$$ table; 
-i.e., the measurement of the integrand at the specified area etc. 
+i.e., the measurement of the integrand, node,  etc. 
 
 $head meas_std$$
 This column has type $code real$$ and is the standard deviation 
