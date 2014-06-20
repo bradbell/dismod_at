@@ -46,7 +46,7 @@ def covariate_table() :
 	#
 	# check values in table
 	columns = ','.join(col_name)
-	cmd     = 'select ' + columns + ' from covariate'
+	cmd     = 'SELECT ' + columns + ' FROM covariate'
 	cursor.execute(cmd)
 	fetchall = cursor.fetchall()
 	assert len(fetchall) == len(row_list)

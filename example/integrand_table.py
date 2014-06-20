@@ -43,7 +43,7 @@ def integrand_table() :
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
-	cmd = 'select integrand_id, integrand_name, eta from integrand'
+	cmd = 'SELECT integrand_id, integrand_name, eta FROM integrand'
 	cursor.execute(cmd)
 	fetchall = cursor.fetchall()
 	assert len(fetchall) == len(row_list)
