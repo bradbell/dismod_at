@@ -35,18 +35,18 @@ def covariate_table() :
 	#
 	# create the covariate table
 	ptype    = 'integer primary key'
-	col_name = [ 'covariate_id', 'covariate_name',	'grid_id'	]
-	col_type = [ ptype,          'text',              'integer' ] 
+	col_name = [ 'covariate_id', 'covariate_name',	'reference' ]
+	col_type = [ ptype,          'text',             'real'     ] 
 	row_list = [
-	           [ 1,              'sex',               1         ],
-	           [ 2,              'income',            2         ]
+	           [ 1,              'sex',              0.0        ],
+	           [ 2,              'income',           2000.0     ]
 	]
 	tbl_name = 'covariate'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
-	columns = 'covariate_id, covariate_name, grid_id'
-	cmd = 'select ' + columns + ' from covariate'
+	columns = ','.join(col_name)
+	cmd     = 'select ' + columns + ' from covariate'
 	cursor.execute(cmd)
 	fetchall = cursor.fetchall()
 	assert len(fetchall) == len(row_list)
