@@ -8,21 +8,22 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin prior_table$$ 
+$begin like_table$$ 
 $spell
 	std
 $$
-$index prior, table$$
-$index table, prior$$
+$index like, table$$
+$index table, like$$
 
-$section The Prior Table$$
-The $code prior$$ table is used to define priors for a single scalar value.
+$section The Likelihood Table$$
+The $code like$$ table is used to define 
+likelihoods for a single scalar value.
 It has the following columns:
 
-$head prior_id$$
+$head like_id$$
 This column has type $code integer$$ and is the primary key for this table.
 
-$head prior_name$$
+$head like_name$$
 This column has type $code text$$ and has a different value for every row; 
 i.e., the names are unique and can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
@@ -31,7 +32,7 @@ $head lower$$
 $index lower, minus infinity$$
 $index infinity, minus lower$$
 This column has type $code real$$ and specifies a lower bound
-for the prior.
+for the likelihood.
 Note that the value $code null$$ is interpreted as minus infinity; i.e.,
 no lower limit.
 
@@ -39,7 +40,7 @@ $head upper$$
 $index upper, plus infinity$$
 $index infinity, plus upper$$
 This column has type $code real$$ and specifies a upper bound
-for the prior.
+for the likelihood.
 Note that the value $code null$$ is interpreted as plus infinity; i.e.,
 no upper limit.
 
@@ -47,7 +48,7 @@ $head std$$
 $index std, plus infinity$$
 $index infinity, plus std$$
 This column has type $code real$$ and specifies the standard deviation
-for the prior.
+for the likelihood.
 Note that the value $code null$$ is interpreted as plus infinity; i.e.,
 the uniform distribution between the lower and upper limits.
 
@@ -66,10 +67,10 @@ cases where $icode density$$ is $code log_gaussian$$
 or $code log_laplace$$.
 In these cases, it is the offset in the corresponding density function.
 
-$children%example/prior_table.py
+$children%example/like_table.py
 %$$
 $head Example$$
-The file $cref prior_table.py$$ 
-contains an example $code prior$$ table.
+The file $cref like_table.py$$ 
+contains an example $code like$$ table.
 
 $end

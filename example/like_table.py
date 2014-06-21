@@ -8,21 +8,21 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin prior_table.py$$ $newlinech #$$
+# $begin like_table.py$$ $newlinech #$$
 #
-# $section prior_table: Example and Test$$
+# $section like_table: Example and Test$$
 #
-# $index prior, , example$$
-# $index example, prior table$$
-# $index table, prior example$$
+# $index like, , example$$
+# $index example, like table$$
+# $index table, like example$$
 #
 # $code
-# $verbatim%example/prior_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/like_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-def prior_table() :
+def like_table() :
 	import dismod_at
 	#
 	file_name      = 'example.db'
@@ -30,11 +30,11 @@ def prior_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	# create the prior table
+	# create the like table
 	ptype    = 'integer primary key'
 	col_name = [ 
-		'prior_id', 
-		'prior_name',	
+		'like_id', 
+		'like_name',	
 		'lower',	
 		'upper',	
 		'mean',	
@@ -43,8 +43,8 @@ def prior_table() :
 		'eta'  
 	]
 	col_type = [ 
-		ptype,            # prior_id 
-		'text',           # prior_name	
+		ptype,            # like_id 
+		'text',           # like_name	
 		'real',           # lower	
 		'real',           # upper	
 		'real',           # mean	
@@ -53,8 +53,8 @@ def prior_table() :
 		'real'            # eta
 	]
 	row_list = [ [ 
-		1,                # prior_id 
-		'none',           # prior_name	
+		1,                # like_id 
+		'none',           # like_name	
 		None,             # lower	
 		None,             # upper	
 		0,                # mean	
@@ -62,8 +62,8 @@ def prior_table() :
 		'gaussian',       # density
 		None              # eta
 	],[
-		2,                # prior_id 
-		'rate',           # prior_name	
+		2,                # like_id 
+		'rate',           # like_name	
 		0.0,              # lower	
 		1.0,              # upper	
 		0,                # mean	
@@ -72,12 +72,12 @@ def prior_table() :
 		1e-4              # eta
 	] ]
 
-	tbl_name = 'prior'
+	tbl_name = 'like'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	columns = ','.join(col_name)
-	cmd     = 'SELECT ' + columns + ' FROM prior'
+	cmd     = 'SELECT ' + columns + ' FROM like'
 	cursor.execute(cmd)
 	fetchall = cursor.fetchall()
 	assert len(fetchall) == len(row_list)
@@ -88,5 +88,5 @@ def prior_table() :
 		for j in range( len(check) ) :
 			assert row[j] == check[j]
 	#
-	print('prior_table: OK')
+	print('like_table: OK')
 # END PYTHON

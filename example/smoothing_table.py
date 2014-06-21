@@ -49,9 +49,9 @@ def smoothing_table() :
 		'smoothing_id', 
 		'age',  
 		'time',  
-		'value_prior_id',
-		'dage_prior_id',
-		'dtime_prior_id',
+		'value_like_id',
+		'dage_like_id',
+		'dtime_like_id',
 	]
 	#
 	# smoothing table column types
@@ -60,9 +60,9 @@ def smoothing_table() :
 		'integer',  # smoothing_id
 		'real',     # age
 		'real',     # time
-		'integer',  # value_prior_id
-		'integer',  # dage_prior_id
-		'integer',  # dtime_prior_id
+		'integer',  # value_like_id
+		'integer',  # dage_like_id
+		'integer',  # dtime_like_id
 	]
 	#
 	# smoothing table values
@@ -72,9 +72,9 @@ def smoothing_table() :
 		3,          # smoothing_id       (age_time)
 		None,       # age                (age  index is 2)
 		None,       # time               (time index is 3)
-		1,          # value_prior_id
-		1,          # dage_prior_id
-		1           # dtime_prior_id
+		1,          # value_like_id
+		1,          # dage_like_id
+		1           # dtime_like_id
 	]
 	age_grid  = [ 0.0, 50.0, 100.0 ]
 	time_grid = [ 1980., 1990., 2000., 2010 ]  

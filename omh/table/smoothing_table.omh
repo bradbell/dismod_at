@@ -41,25 +41,25 @@ See $cref/age/agetime_table/Table mytable/age/$$.
 $head time$$
 See $cref/time/agetime_table/Table mytable/time/$$.
 
-$head value_prior_id$$
+$head value_like_id$$
 This column has type $code integer$$ and its value in a row is the
-$icode prior_id$$, in the $cref prior_table$$,
+$icode like_id$$, in the $cref like_table$$,
 for the prior that is used for the 
 function value this $icode age$$ and $icode time$$.
 
-$head dage_prior_id$$
+$head dage_like_id$$
 This column has type $code integer$$ and its value in a row is the
-$icode prior_id$$, in the $cref prior_table$$,
+$icode like_id$$, in the $cref like_table$$,
 for the prior that is used for the 
 function's forward difference quotients w.r.t age. 
-The prior at the maximum age, for each time, is not used.
+The likelihood at the maximum age, for each time, is not used.
 
-$head dtime_prior_id$$
+$head dtime_like_id$$
 This column has type $code integer$$ and its value in a row is the
-$icode prior_id$$, in the $cref prior_table$$,
+$icode like_id$$, in the $cref like_table$$,
 for the prior that is used for the 
 function's forward difference quotients w.r.t time. 
-The prior at the maximum time, for each age, is not used.
+The likelihood at the maximum time, for each age, is not used.
 
 $children%example/smoothing_table.py
 %$$

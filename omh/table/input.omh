@@ -27,10 +27,10 @@ $childtable%omh/table/agetime_table.omh
 	%omh/table/covariate_table.omh
 	%omh/table/data_table.omh
 	%omh/table/integrand_table.omh
+	%omh/table/like_table.omh
 	%omh/table/multiplier_table.omh
 	%omh/table/node_table.omh
 	%omh/table/misc_table.omh
-	%omh/table/prior_table.omh
 	%omh/table/smoothing_table.omh
 	%omh/table/weight_table.omh
 %$$
