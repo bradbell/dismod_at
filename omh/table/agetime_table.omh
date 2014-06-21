@@ -37,7 +37,7 @@ The names are intended to be easier for a human to remember than the ids.
 
 $subhead Comments$$
 The table $codei%name_%mytable%$$ may have
-$cref/comment columns/table/Comment Columns/$$.
+$cref/comment columns/input/Comment Columns/$$.
 
 $head Table mytable$$ 
 The table $codei%name_%mytable%$$ has the following columns:

@@ -8,18 +8,18 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin table$$
+$begin input$$
 $spell
 	std
 	dismod
 $$
 
-$section Data Base Tables$$
+$section Data Base Input Tables$$
 
 $head Comment Columns$$
 $index comment, column$$
 $index column, comment$$
-Any table may have any number of columns with names that begin
+Any input table may have any number of columns with names that begin
 with the two characters $code c_$$.
 These are comment columns and are ignored by $code dismod_at$$.
 

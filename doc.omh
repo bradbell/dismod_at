@@ -12,7 +12,7 @@ $begin dismod_at$$
 
 $section Disease Rates as Functions of Age and Time$$
 
-$childtable%omh/table/table.omh
+$childtable%omh/table/input.omh
 	%dismod_at/database.py
 %$$
 
