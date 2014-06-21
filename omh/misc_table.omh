@@ -36,6 +36,10 @@ For this $icode misc_name$$ value, $icode misc_real$$ is $code null$$ and
 $icode misc_integer$$ is the $cref/smoothing_id/node_table/node_id/$$ for 
 the parent node for this estimation.
 
+$subhead child_smoothing_id$$
+For this $icode misc_name$$ value, $icode misc_real$$ is $code null$$ and
+$icode misc_integer$$ is the $cref/smoothing_id/node_table/node_id/$$ for 
+the dfference between the parent and each of its children.
 
 $head misc_integer$$
 This column has $code integer$$ and its meaning depends
