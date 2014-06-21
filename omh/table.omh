@@ -29,6 +29,7 @@ $childtable%omh/agetime_table.omh
 	%omh/integrand_table.omh
 	%omh/multiplier_table.omh
 	%omh/node_table.omh
+	%omh/misc_table.omh
 	%omh/prior_table.omh
 	%omh/smoothing_table.omh
 	%omh/weight_table.omh

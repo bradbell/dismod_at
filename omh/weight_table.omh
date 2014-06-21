@@ -11,21 +11,32 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin weight_table$$ 
 $spell
 	agetime
+	mytable
 $$
 $index weight, table$$
 $index table, weight$$
 
 $section The Weight Table$$
 This table specifies age-time weighting functions.
-
-$head agetime Table$$
 The $code weight$$ table is an $cref agetime_table$$.
-Hence there is a table called $code name_weight$$
-with columns $code weight_id$$ and $code weight_name$$.
-In addition, 
-weight table has columns $code weight_primary$$ and $code weight_id$$.
+Hence it has the standard columns
+$code weight_primary$$,
+$code weight_id$$,
+$code age$$,
+$code time$$.
+In addition, it has the other columns listed below:
 
-$head Other Columns$$
+$head weight_primary$$
+See $cref/mytable_primary/agetime_table/Table mytable/mytable_primary/$$.
+
+$head weight_id$$
+See $cref/mytable_id/agetime_table/Table mytable/mytable_id/$$.
+
+$head age$$
+See $cref/age/agetime_table/Table mytable/age/$$.
+
+$head time$$
+See $cref/time/agetime_table/Table mytable/time/$$.
 
 $head weight$$
 This column has type $code real$$.

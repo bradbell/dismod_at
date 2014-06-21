@@ -52,12 +52,12 @@ The table $icode mytable$$ has a
 column with name $icode%mytable%_id%$$ that has type $code integer$$,
 and is the primary key for table $codei%name_%mytable%$$.
 
-$head age$$
+$subhead age$$
 The table $icode mytable$$ has a 
 column with name $code age$$ that
 has type $code real$$ and is value is the age value for this grid point.
 
-$head time$$
+$subhead time$$
 The table $icode mytable$$ has a 
 column with name $code time$$ that
 has type $code real$$ and is value is the time value for this grid point.

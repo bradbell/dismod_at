@@ -39,8 +39,8 @@ for this measurement.
 
 $head weight_id$$
 This column has type $code integer$$ and its value identifies a
-$cref/weight_id/weight_table/agetime Table/$$ value int the
-$cref weight_table$$. 
+$cref/weight_id/weight_table/weight_id/$$ value int the
+$code weight$$ table.
 
 $head meas_value$$
 This column has type $code real$$ and is the measured value
