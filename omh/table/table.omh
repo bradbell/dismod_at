@@ -23,16 +23,16 @@ Any table may have any number of columns with names that begin
 with the two characters $code c_$$.
 These are comment columns and are ignored by $code dismod_at$$.
 
-$childtable%omh/agetime_table.omh
-	%omh/covariate_table.omh
-	%omh/data_table.omh
-	%omh/integrand_table.omh
-	%omh/multiplier_table.omh
-	%omh/node_table.omh
-	%omh/misc_table.omh
-	%omh/prior_table.omh
-	%omh/smoothing_table.omh
-	%omh/weight_table.omh
+$childtable%omh/table/agetime_table.omh
+	%omh/table/covariate_table.omh
+	%omh/table/data_table.omh
+	%omh/table/integrand_table.omh
+	%omh/table/multiplier_table.omh
+	%omh/table/node_table.omh
+	%omh/table/misc_table.omh
+	%omh/table/prior_table.omh
+	%omh/table/smoothing_table.omh
+	%omh/table/weight_table.omh
 %$$
 
 $end
