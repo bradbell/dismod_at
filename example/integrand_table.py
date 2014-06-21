@@ -10,7 +10,7 @@
 # -------------------------------------------------------------------------- */
 # $begin integrand_table.py$$ $newlinech #$$
 #
-# $section integrand_table: Example and Text$$
+# $section integrand_table: Example and Test$$
 #
 # $index integrand, , example$$
 # $index example, integrand table$$

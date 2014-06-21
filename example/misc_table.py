@@ -10,7 +10,7 @@
 # -------------------------------------------------------------------------- */
 # $begin misc_table.py$$ $newlinech #$$
 #
-# $section misc_table: Example and Text$$
+# $section misc_table: Example and Test$$
 #
 # $index misc, , example$$
 # $index example, misc table$$
@@ -30,7 +30,7 @@ def misc_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	# create the misc  table
+	# create the misc table
 	ptype    = 'integer primary key'
 	col_name = [ 'misc_id','misc_name',          'misc_integer', 'misc_real' ]
 	col_type = [ ptype,    'text',               'integer',      'real'      ]

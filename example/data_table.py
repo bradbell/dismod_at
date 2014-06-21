@@ -10,7 +10,7 @@
 # -------------------------------------------------------------------------- */
 # $begin data_table.py$$ $newlinech #$$
 #
-# $section data_table: Example and Text$$
+# $section data_table: Example and Test$$
 #
 # $index data, , example$$
 # $index example, data table$$

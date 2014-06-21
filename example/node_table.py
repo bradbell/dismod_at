@@ -10,7 +10,7 @@
 # -------------------------------------------------------------------------- */
 # $begin node_table.py$$ $newlinech #$$
 #
-# $section node_table: Example and Text$$
+# $section node_table: Example and Test$$
 #
 # $index node, , example$$
 # $index example, node table$$
@@ -30,7 +30,7 @@ def node_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	# create the node  table
+	# create the node table
 	ptype    = 'integer primary key'
 	col_name = [ 'node_id', 'node_name',     'parent_id' ]
 	col_type = [ ptype,     'text',          'integer'  ]

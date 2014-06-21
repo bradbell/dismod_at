@@ -13,7 +13,7 @@
 # 	covariate
 # $$
 #
-# $section covariate_table: Example and Text$$
+# $section covariate_table: Example and Test$$
 #
 # $index covariate, table example$$
 # $index example, covariate table$$

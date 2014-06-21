@@ -18,7 +18,7 @@
 # $index create_table, , example$$
 # $index example, create_table$$
 #
-# $section create_table and Unicode: Example and Text$$
+# $section create_table and Unicode: Example and Test$$
 #
 # $code
 # $verbatim%example/create_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$

@@ -10,7 +10,7 @@
 # -------------------------------------------------------------------------- */
 # $begin weight_table.py$$ $newlinech #$$
 #
-# $section weight_table: Example and Text$$
+# $section weight_table: Example and Test$$
 #
 # $index weight, example$$
 # $index example, weight table$$
@@ -30,7 +30,7 @@ def weight_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	# 
-	# create name_weight  table
+	# create name_weight table
 	ptype    = 'integer primary key'
 	col_name = [ 'weight_id', 'weight_name'   ]
 	col_type = [ ptype,       'text'          ]

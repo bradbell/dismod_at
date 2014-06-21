@@ -10,7 +10,7 @@
 # -------------------------------------------------------------------------- */
 # $begin multiplier_table.py$$ $newlinech #$$
 #
-# $section multiplier_table: Example and Text$$
+# $section multiplier_table: Example and Test$$
 #
 # $index multiplier, example$$
 # $index example, multiplier table$$

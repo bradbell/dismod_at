@@ -10,7 +10,7 @@
 # -------------------------------------------------------------------------- */
 # $begin prior_table.py$$ $newlinech #$$
 #
-# $section prior_table: Example and Text$$
+# $section prior_table: Example and Test$$
 #
 # $index prior, , example$$
 # $index example, prior table$$
