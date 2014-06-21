@@ -37,7 +37,7 @@ def misc_table() :
 	row_list = [
 	           [ 0,        'parent_node_id',     1,              None        ],
 	           [ 1,        'parent_smoothing_id',2,              None        ],
-	           [ 1,        'child_smoothing_id', 3,              None        ] 
+	           [ 2,        'child_smoothing_id', 3,              None        ] 
 	]
 	tbl_name = 'misc'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
