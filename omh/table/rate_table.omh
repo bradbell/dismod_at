@@ -1,0 +1,49 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin rate_table$$ 
+$spell
+$$
+$index rate, table$$
+$index table, rate$$
+
+$section The Miscellaneous Table$$
+The $code rate$$ table has the following columns:
+
+$head rate_id$$
+This column has type $code integer$$ 
+and is the primary key for this table.
+
+$head is_parent$$
+This column has type $code integer$$ and is one, 
+if this row is for the parent node,
+and zero if it is for the child nodes.
+
+$head rate_name$$
+This column has type $code text$$ and is one of the following:
+$code iota$$, $code rho$$, $code chi$$ or $code omega$$.
+Each combination of $icode is_parent$$ and $icode rate_name$$ 
+must appear once and only once.
+
+$head smoothing_id$$
+This column has type $code integer$$ and its value in a row is the
+$icode smoothing_id$$, in the $cref smoothing_table$$.
+It specifies the prior for this rate when fitting the parent
+(fixed effect) or children (random effect) depending on 
+$icode is_parent$$.
+
+
+$children%example/rate_table.py
+%$$
+$head Example$$
+The file $cref rate_table.py$$ 
+contains an example $code rate$$ table.
+
+$end

@@ -58,7 +58,8 @@ must be $code null$$.
 $head smoothing_id$$
 This column has type $code integer$$ and its value in a row is the
 $icode smoothing_id$$, in the $cref smoothing_table$$.
-It specifies the prior for this covariate multiplier.
+It specifies the prior for this covariate multiplier
+(as a fixed effect).
 
 $children%example/multiplier_table.py
 %$$

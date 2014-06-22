@@ -16,5 +16,6 @@ from like_table        import *
 from misc_table        import *
 from multiplier_table  import *
 from node_table        import *
+from rate_table        import *
 from smoothing_table   import *
 from weight_table      import *
