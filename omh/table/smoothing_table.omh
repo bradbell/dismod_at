@@ -10,7 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin smoothing_table$$ 
 $spell
-	mytable
+	grid
 	agetime
 	std
 	dage
@@ -21,7 +21,7 @@ $index table, smoothing$$
 
 $section The Smoothing Table$$
 This table specifies the smoothing prior for a function of age and time.
-The $code smoothing$$ table is an $cref agetime_table$$.
+The $code smoothing$$ table is a $cref grid_table$$.
 Hence it has the standard columns
 $code smoothing_primary$$,
 $code smoothing_id$$,
@@ -30,16 +30,16 @@ $code time$$.
 In addition, it has the other columns listed below:
 
 $head smoothing_primary$$
-See $cref/mytable_primary/agetime_table/Table mytable/mytable_primary/$$.
+See $cref/grid_primary/grid_table/Table grid/grid_primary/$$.
 
 $head smoothing_id$$
-See $cref/mytable_id/agetime_table/Table mytable/mytable_id/$$.
+See $cref/grid_id/grid_table/Table grid/grid_id/$$.
 
 $head age$$
-See $cref/age/agetime_table/Table mytable/age/$$.
+See $cref/age/grid_table/Table grid/age/$$.
 
 $head time$$
-See $cref/time/agetime_table/Table mytable/time/$$.
+See $cref/time/grid_table/Table grid/time/$$.
 
 $head value_like_id$$
 This column has type $code integer$$ and its value in a row is the
