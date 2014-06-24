@@ -1,20 +1,21 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2013-14 University of Washington
+          Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin dismod_at$$
+$begin output$$
+$spell
+$$
 
-$section Disease Rates as Functions of Age and Time$$
+$section Data Base Output Tables$$
 
-$childtable%omh/table/input.omh
-	%omh/table/output.omh
-	%dismod_at/database.py
+$childtable%omh/table/variable_table.omh
+	%omh/table/post_table.omh
 %$$
 
 $end

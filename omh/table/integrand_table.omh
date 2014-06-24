@@ -26,7 +26,7 @@ $index table, integrand$$
 
 $section The Integrand Table$$
 The $code integrand$$ table is used to identify data integrands.
-It have the following columns:
+It has the following columns:
 
 $head integrand_id$$
 This column has type $code integer$$ 

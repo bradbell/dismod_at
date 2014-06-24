@@ -1,0 +1,94 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin post_table$$ 
+$spell
+$$
+$index post, table$$
+$index table, post$$
+
+$section The Posterior Table$$
+The posterior table contains a simulation of the posterior distribution
+for all the model variables.
+
+$head post_id$$
+This column has type $code integer$$ and is the primary key for this table.
+It is also the row number in the table.
+
+$head sample_number$$
+This column has type $code integer$$ and is 
+non-decreasing with row number.
+For each value of $icode sample_number$$, 
+each variable,
+each age for that variable,
+and each time for that variable,
+there is one and only one sample.
+Sample number zero corresponds to the for variables
+(and is not a random sample from the posterior).
+
+$head variable_id$$
+This column has type $code integer$$ and its value is the primary key in the 
+$cref variable_table$$.
+We use $cref/variable_type/variable_table/variable_type/$$ for the
+corresponding variable type.
+
+$head variable_index$$
+This column has type $code integer$$ and its meaning depends on the 
+variable type:
+
+$subhead multiplier$$
+If $icode variable_type$$ is $code multiplier$$,
+the value $icode variable_index$$ is equal to the 
+$cref/multiplier_id/multiplier_table/multiplier_id/$$ for this variable.
+Note that the age-time grid for this variable will be the same as for 
+the $cref/smoothing_id/multiplier_table/smoothing_id/$$ that corresponds
+to this $icode multiplier_id$$.
+
+$subhead parent_rate$$
+If $icode variable_type$$ is $codei%parent%_rate%$$
+(where $icode rate$$ is one of $code iota$$, $code rho$$, $code chi$$
+$code omega$$)
+the value $icode variable_index$$ is equal to the 
+$cref/node_id/node_table/node_id/$$ for the 
+$cref/parent node/misc_table/misc_name/parent_node_id/$$ for this estimation.
+Note that the age-time grid for this variable will be the same as for 
+the $cref/smoothing_id/rate_table/smoothing_id/$$ that corresponds
+to this $icode rate$$ with 
+$cref/is_parent/rate_table/is_parent/$$ one (true).
+
+
+$subhead child_rate$$
+If $icode variable_type$$ is $codei%child%_rate%$$
+(where $icode rate$$ is one of $code iota$$, $code rho$$, $code chi$$
+$code omega$$)
+the value $icode variable_index$$ is equal to the 
+$cref/node_id/node_table/node_id/$$ for one of the children of the 
+parent node.
+Note that the age-time grid for this variable will be the same as for 
+the $cref/smoothing_id/rate_table/smoothing_id/$$ that corresponds
+to this $icode rate$$ with 
+$cref/is_parent/rate_table/is_parent/$$ zero (false).
+
+$head age$$
+This column has type $code real$$ and is the age 
+for the grid point corresponding to this sample.
+
+$head time$$
+This column has type $code real$$ and is the time 
+for the grid point corresponding to this sample.
+
+
+$children%example/post_table.py
+%$$
+$head Example$$
+The file $cref post_table.py$$ 
+contains an example $code post$$ table.
+
+$end
