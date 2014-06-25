@@ -32,18 +32,18 @@ def integrand_table() :
 	#
 	# create the integrand table
 	ptype    = 'integer primary key'
-	col_name = [ 'integrand_id', 'integrand_name', 'eta'    ]
-	col_type = [ ptype,          'text',           'real'   ]
+	col_name = [ 'integrand_id', 'integrand_name' ]
+	col_type = [ ptype,          'text',          ]
 	row_list = [
-	           [ None,           'incidence',      1e-5     ],
-	           [ None,           'remission',      2e-5     ],
-	           [ None,           'mtall',          3e-5     ]
+	           [ None,           'incidence',     ],
+	           [ None,           'remission',     ],
+	           [ None,           'mtall',         ]
 	]
 	tbl_name = 'integrand'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
-	cmd = 'SELECT integrand_id, integrand_name, eta FROM integrand'
+	cmd = 'SELECT integrand_id, integrand_name FROM integrand'
 	cursor.execute(cmd)
 	fetchall = cursor.fetchall()
 	assert len(fetchall) == len(row_list)

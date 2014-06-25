@@ -51,11 +51,6 @@ $code mtstandard$$      $cnext standardized mortality ratio            $rnext
 $code relrisk$$         $cnext relative risk ratio
 $tend
 
-
-$head eta$$
-This column has type $code real$$ and is the offset, when using
-a log transformation with this integrand.
-
 $children%example/table/integrand_table.py
 %$$
 $head Example$$
