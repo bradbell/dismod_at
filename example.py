@@ -10,6 +10,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
 import example
+#
 example.table.create_table()
 example.table.covariate_table()
 example.table.data_table()
@@ -23,3 +24,5 @@ example.table.rate_prior()
 example.table.rate_table()
 example.table.smooth_table()
 example.table.weight_table()
+#
+example.get_started()

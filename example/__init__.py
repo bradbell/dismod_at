@@ -9,3 +9,4 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
 import table
+from get_started import *

@@ -21,8 +21,9 @@
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-def rate_table() :
+def get_started() :
 	import dismod_at
+	import copy
 	#
 	# Connect to a new data base
 	file_name      = 'example.db'
@@ -44,7 +45,7 @@ def rate_table() :
 	# create node table
 	world_id         = 0
 	north_america_id = 1
-	united_state_id  = 2
+	united_states_id = 2
 	canada_id        = 3
 	col_name = [ 'node_id',          'node_name',     'parent_id'      ]
 	col_type = [ ptype,              'text',          'integer'        ]
