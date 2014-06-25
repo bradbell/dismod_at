@@ -34,7 +34,7 @@ The column has type $code real$$ and is
 the reference value for the corresponding covariate; i.e.,
 the covariate value that corresponds to no adjustment.
 
-$children%example/covariate_table.py
+$children%example/table/covariate_table.py
 %$$
 $head Example$$
 The file $cref covariate_table.py$$ 

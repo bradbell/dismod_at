@@ -8,21 +8,21 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin node_table.py$$ $newlinech #$$
+# $begin misc_table.py$$ $newlinech #$$
 #
-# $section node_table: Example and Test$$
+# $section misc_table: Example and Test$$
 #
-# $index node, , example$$
-# $index example, node table$$
-# $index table, node example$$
+# $index misc, , example$$
+# $index example, misc table$$
+# $index table, misc example$$
 #
 # $code
-# $verbatim%example/node_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/misc_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-def node_table() :
+def misc_table() :
 	import dismod_at
 	#
 	file_name      = 'example.db'
@@ -30,22 +30,19 @@ def node_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	# create the node table
+	# create the misc table
 	ptype    = 'integer primary key'
-	col_name = [ 'node_id', 'node_name',     'parent_id' ]
-	col_type = [ ptype,     'text',          'integer'  ]
+	col_name = [ 'misc_id','misc_name',          'misc_integer', 'misc_real' ]
+	col_type = [ ptype,    'text',               'integer',      'real'      ]
 	row_list = [
-	           [ 0,         'world',         None       ],
-		       [ 1,         'north_america', 0          ],
-		       [ 2,         'united_states', 1          ],
-		       [ 3,         'canada',        1          ]
+	           [ 0,        'parent_node_id',     3,              None        ],
 	]
-	tbl_name = 'node'
+	tbl_name = 'misc'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	columns  = ','.join(col_name)
-	cmd      = 'SELECT ' + columns + ' FROM node'
+	cmd      = 'SELECT ' + columns + ' FROM misc'
 	count        = 0
 	cursor       = connection.cursor()
 	for row in cursor.execute(cmd) :
@@ -55,5 +52,5 @@ def node_table() :
 		count += 1
 	assert count == len( row_list )
 	#
-	print('node_table: OK')
+	print('misc_table: OK')
 # END PYTHON

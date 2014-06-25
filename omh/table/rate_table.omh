@@ -36,7 +36,7 @@ $code omega$$      $pre   $$ $cnext model other cause mortality
 $tend
 
 
-$children%example/rate_table.py
+$children%example/table/rate_table.py
 %$$
 $head Example$$
 The file $cref rate_table.py$$ 

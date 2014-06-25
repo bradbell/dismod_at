@@ -36,7 +36,7 @@ $subhead Child Group$$
 The child group for node $icode p$$ is the sent of $icode node_id$$ values 
 such that the corresponding $icode parent_id$$ is equal to $icode p$$.
 
-$children%example/node_table.py
+$children%example/table/node_table.py
 %$$
 $head Example$$
 The file $cref node_table.py$$ 

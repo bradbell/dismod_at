@@ -20,7 +20,7 @@
 # $index table, covariate example$$
 #
 # $code
-# $verbatim%example/covariate_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/covariate_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON

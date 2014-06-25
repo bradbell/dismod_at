@@ -68,7 +68,7 @@ function's forward difference quotients w.r.t time.
 The likelihood at the maximum time, for each age, is not used.
 
 $children%omh/table/smooth_grid.omh
-	%example/smooth_table.py
+	%example/table/smooth_table.py
 %$$
 $head Example$$
 The file $cref smooth_table.py$$ 

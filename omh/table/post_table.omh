@@ -70,7 +70,7 @@ This column has type $code real$$ is the value of the specified
 variable at the specified age and time.
 
 
-$children%example/post_table.py
+$children%example/table/post_table.py
 %$$
 $head Example$$
 The file $cref post_table.py$$ 

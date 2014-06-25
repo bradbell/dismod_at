@@ -17,7 +17,7 @@
 # $index table, weight example$$
 #
 # $code
-# $verbatim%example/weight_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/weight_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON

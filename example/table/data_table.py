@@ -17,7 +17,7 @@
 # $index table, data example$$
 #
 # $code
-# $verbatim%example/data_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/data_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON

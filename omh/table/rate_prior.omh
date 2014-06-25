@@ -44,7 +44,7 @@ It specifies the prior for this rate when fitting the parent
 (fixed effect) or children (random effect) depending on 
 $icode is_parent$$.
 
-$children%example/rate_prior.py
+$children%example/table/rate_prior.py
 %$$
 $head Example$$
 The file $cref rate_prior.py$$ 

@@ -56,7 +56,7 @@ $head eta$$
 This column has type $code real$$ and is the offset, when using
 a log transformation with this integrand.
 
-$children%example/integrand_table.py
+$children%example/table/integrand_table.py
 %$$
 $head Example$$
 The file $cref integrand_table.py$$ 

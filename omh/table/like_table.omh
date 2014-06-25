@@ -67,7 +67,7 @@ cases where $icode density$$ is $code log_gaussian$$
 or $code log_laplace$$.
 In these cases, it is the offset in the corresponding density function.
 
-$children%example/like_table.py
+$children%example/table/like_table.py
 %$$
 $head Example$$
 The file $cref like_table.py$$ 

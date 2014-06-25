@@ -17,7 +17,7 @@
 # $index table, integrand example$$
 #
 # $code
-# $verbatim%example/integrand_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/integrand_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON

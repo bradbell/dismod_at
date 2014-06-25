@@ -52,7 +52,7 @@ is the weighting, at the corresponding age and time,
 and for the specified $icode weight_id$$,
 
 $children%omh/table/weight_grid.omh
-	%example/weight_table.py
+	%example/table/weight_table.py
 %$$
 $head Example$$
 The file $cref weight_table.py$$ 

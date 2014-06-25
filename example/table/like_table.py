@@ -17,7 +17,7 @@
 # $index table, like example$$
 #
 # $code
-# $verbatim%example/like_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/like_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON

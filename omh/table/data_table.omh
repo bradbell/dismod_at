@@ -94,7 +94,7 @@ The column $codei%x_%covariate_id%$$ contains
 the value, for this measurement, of the covariate specified by
 $icode covariate_id$$; see $cref covariate_table$$.
 
-$children%example/data_table.py
+$children%example/table/data_table.py
 %$$
 $head Example$$
 The file $cref data_table.py$$ creates an example $code data$$ table.

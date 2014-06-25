@@ -43,7 +43,7 @@ one, but not both, of $icode misc_integer$$ and $icode misc_real$$
 must be $code null$$.
 
 
-$children%example/misc_table.py
+$children%example/table/misc_table.py
 %$$
 $head Example$$
 The file $cref misc_table.py$$ 
