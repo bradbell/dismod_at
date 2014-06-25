@@ -8,20 +8,20 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin smoothing_table.py$$ $newlinech #$$
+# $begin smooth_table.py$$ $newlinech #$$
 #
-# $section smoothing_table: Example and Test$$
+# $section smooth_table: Example and Test$$
 #
-# $index smoothing, example$$
-# $index example, smoothing table$$
+# $index smooth, example$$
+# $index example, smooth table$$
 #
 # $code
-# $verbatim%example/smoothing_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/smooth_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-def smoothing_table() :
+def smooth_table() :
 	import dismod_at
 	import copy
 	#
@@ -30,23 +30,23 @@ def smoothing_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	# 
-	# create name_smoothing table
+	# create smooth_grid table
 	ptype    = 'integer primary key'
-	col_name = [ 'smoothing_id', 'smoothing_name' ]
-	col_type = [ ptype,         'text'          ]
+	col_name = [ 'smooth_grid_id', 'smooth_grid_name' ]
+	col_type = [ ptype,            'text'          ]
 	row_list = [
-	           [ 0,             'constant'      ],
-	           [ 1,             'age_only'      ],
-	           [ 2,             'time_only'     ],
-	           [ 3,             'age_time'      ] 
+	           [ 0,                'constant'      ],
+	           [ 1,                'age_only'      ],
+	           [ 2,                'time_only'     ],
+	           [ 3,                'age_time'      ] 
 	]
-	tbl_name = 'name_smoothing'
+	tbl_name = 'smooth_grid'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# 
-	# smoothing table column names
+	# smooth table column names
 	col_name = [
-		'smoothing_primary', 
-		'smoothing_id', 
+		'smooth_id', 
+		'smooth_grid_id', 
 		'age',  
 		'time',  
 		'value_like_id',
@@ -54,10 +54,10 @@ def smoothing_table() :
 		'dtime_like_id',
 	]
 	#
-	# smoothing table column types
+	# smooth table column types
 	col_type = [
-		ptype,      # smoothing_primary
-		'integer',  # smoothing_id
+		ptype,      # smooth_id
+		'integer',  # smooth_grid_id
 		'real',     # age
 		'real',     # time
 		'integer',  # value_like_id
@@ -65,11 +65,11 @@ def smoothing_table() :
 		'integer',  # dtime_like_id
 	]
 	#
-	# smoothing table values
+	# smooth table values
 	row_list = list()
 	default  = [
-		None,       # smoothing_primary
-		3,          # smoothing_id       (age_time)
+		None,       # smooth_id
+		3,          # smooth_grid_id     (age_time)
 		None,       # age                (age  index is 2)
 		None,       # time               (time index is 3)
 		1,          # value_like_id
@@ -87,14 +87,14 @@ def smoothing_table() :
 			age_time.append( (age, time) )
 	#
 	# write the table
-	tbl_name = 'smoothing'
+	tbl_name = 'smooth'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in the table
 	columns = ','.join(col_name)
-	cmd     = 'SELECT ' + columns + ' FROM smoothing'
-	cmd    += ' JOIN name_smoothing USING(smoothing_id) '
-	cmd    += ' WHERE smoothing_name = "age_time"'
+	cmd     = 'SELECT ' + columns + ' FROM smooth'
+	cmd    += ' JOIN smooth_grid USING(smooth_grid_id) '
+	cmd    += ' WHERE smooth_grid_name = "age_time"'
 	count        = 0
 	cursor       = connection.cursor()
 	for row in cursor.execute(cmd) :
@@ -109,5 +109,5 @@ def smoothing_table() :
 		count += 1
 	assert count == len(row_list)
 	#
-	print('smoothing_table: OK')
+	print('smooth_table: OK')
 # END PYTHON

@@ -32,7 +32,7 @@ def rate_table() :
 	#
 	# create the rate table
 	ptype    = 'integer primary key'
-	col_name = [ 'rate_id', 'is_parent', 'rate_name', 'smoothing_id'  ]
+	col_name = [ 'rate_id', 'is_parent', 'rate_name', 'smooth_grid_id']
 	col_type = [ ptype,     'integer',   'text',      'integer'       ]
 	row_list = [
 	           [ 0,         1,           'iota',     1                ],

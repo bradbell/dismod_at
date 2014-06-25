@@ -37,7 +37,7 @@ def multiplier_table() :
 		'covariate_id', 
 		'integrand_id',
 		'rate_name',
-  		'smoothing_id'
+  		'smooth_grid_id'
 	]
 	ptype    = 'integer primary key'
 	col_type = [ 
@@ -46,7 +46,7 @@ def multiplier_table() :
 		'integer', # covariate_id
 		'integer', # integrand_id
 		'text',    # rate_name
-  		'integer'  # smoothing_id
+  		'integer'  # smooth_grid_id'
 	]
 	row_list = [ [
 		0,      # multiplier_id
@@ -54,7 +54,7 @@ def multiplier_table() :
 		1,      # covariate_id
 		None,   # integrand_id
 		'iota', # rate_name
-		2       # smoothing_id
+		2       # smooth_grid_id'
 	] ]
 	tbl_name = 'multiplier'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

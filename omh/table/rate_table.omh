@@ -32,13 +32,13 @@ $code iota$$, $code rho$$, $code chi$$ or $code omega$$.
 Each combination of $icode is_parent$$ and $icode rate_name$$ 
 must appear once and only once.
 
-$head smoothing_id$$
-This column has type $code integer$$ and its value in a row is the
-$icode smoothing_id$$, in the $cref smoothing_table$$.
+$head smooth_grid_id$$
+This column has type $code integer$$ and its value in a row is a
+$cref/smooth_grid_id/smooth_table/smooth_grid_id/$$ 
+in the $code smooth$$ table.
 It specifies the prior for this rate when fitting the parent
 (fixed effect) or children (random effect) depending on 
 $icode is_parent$$.
-
 
 $children%example/rate_table.py
 %$$

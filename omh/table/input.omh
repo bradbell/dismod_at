@@ -32,7 +32,7 @@ $childtable%omh/table/grid_table.omh
 	%omh/table/node_table.omh
 	%omh/table/misc_table.omh
 	%omh/table/rate_table.omh
-	%omh/table/smoothing_table.omh
+	%omh/table/smooth_table.omh
 	%omh/table/weight_table.omh
 %$$
 

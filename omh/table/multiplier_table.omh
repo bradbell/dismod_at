@@ -55,9 +55,10 @@ For each row,
 one and only one, of $icode rate_name$$ and $icode integrand_id$$ 
 must be $code null$$.
 
-$head smoothing_id$$
-This column has type $code integer$$ and its value in a row is the
-$icode smoothing_id$$, in the $cref smoothing_table$$.
+$head smooth_grid_id$$
+This column has type $code integer$$ and its value in a row is a
+$cref/smooth_grid_id/smooth_table/smooth_grid_id/$$ 
+in the $code smooth$$ table.
 It specifies the prior for this covariate multiplier
 (as a fixed effect).
 

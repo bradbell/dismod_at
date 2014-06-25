@@ -48,7 +48,7 @@ If $icode variable_type$$ is $code multiplier$$,
 the value $icode variable_index$$ is equal to the 
 $cref/multiplier_id/multiplier_table/multiplier_id/$$ for this variable.
 Note that the age-time grid for this variable will be the same as for 
-the $cref/smoothing_id/multiplier_table/smoothing_id/$$ that corresponds
+the $cref/smooth_grid_id/multiplier_table/smooth_grid_id/$$ that corresponds
 to this $icode multiplier_id$$.
 
 $subhead parent_rate$$
@@ -59,7 +59,7 @@ the value $icode variable_index$$ is equal to the
 $cref/node_id/node_table/node_id/$$ for the 
 $cref/parent node/misc_table/misc_name/parent_node_id/$$ for this estimation.
 Note that the age-time grid for this variable will be the same as for 
-the $cref/smoothing_id/rate_table/smoothing_id/$$ that corresponds
+the $cref/smooth_grid_id/rate_table/smooth_grid_id/$$ that corresponds
 to this $icode rate$$ with 
 $cref/is_parent/rate_table/is_parent/$$ one (true).
 
@@ -72,7 +72,7 @@ the value $icode variable_index$$ is equal to the
 $cref/node_id/node_table/node_id/$$ for one of the children of the 
 parent node.
 Note that the age-time grid for this variable will be the same as for 
-the $cref/smoothing_id/rate_table/smoothing_id/$$ that corresponds
+the $cref/smooth_grid_id/rate_table/smooth_grid_id/$$ that corresponds
 to this $icode rate$$ with 
 $cref/is_parent/rate_table/is_parent/$$ zero (false).
 

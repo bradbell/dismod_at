@@ -8,7 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin smoothing_table$$ 
+$begin smooth_table$$ 
 $spell
 	grid
 	agetime
@@ -16,30 +16,35 @@ $spell
 	dage
 	dtime
 $$
-$index smoothing, table$$
-$index table, smoothing$$
+$index smooth, table$$
+$index table, smooth$$
 
 $section The Smoothing Table$$
 This table specifies the smoothing prior for a function of age and time.
-The $code smoothing$$ table is a $cref grid_table$$.
-Hence it has the standard columns
-$code smoothing_primary$$,
-$code smoothing_id$$,
-$code age$$,
-$code time$$.
-In addition, it has the other columns listed below:
+It has the following columns:
 
-$head smoothing_primary$$
-See $cref/grid_primary/grid_table/Table grid/grid_primary/$$.
+$head smooth_id$$
+This column has type $code integer$$ and is the primary key for
+the $code smooth$$ table.
 
-$head smoothing_id$$
-See $cref/grid_id/grid_table/Table grid/grid_id/$$.
+$head smooth_grid_id$$
+This column has type $code integer$$ and is the primary key for
+the $cref smooth_grid$$ table.
 
-$head age$$
-See $cref/age/grid_table/Table grid/age/$$.
+$subhead age$$
+This column 
+has type $code real$$ and is value is the age value for this grid point.
+For each fixed value of $icode smooth_grid_id$$ and $icode time$$,
+the set of corresponding $icode age$$ values is constant; i.e.,
+the grid corresponding to $icode smooth_grid_id$$ is rectangular.
 
-$head time$$
-See $cref/time/grid_table/Table grid/time/$$.
+$subhead time$$
+This column 
+has type $code real$$ and is value is the time value for this grid point.
+For each fixed value of $icode smooth_grid_id$$ and $icode age$$,
+the set of corresponding $icode time$$ values is constant; i.e.,
+the grid corresponding to $icode smooth_grid_id$$ is rectangular.
+
 
 $head value_like_id$$
 This column has type $code integer$$ and its value in a row is the
@@ -61,10 +66,11 @@ for the prior that is used for the
 function's forward difference quotients w.r.t time. 
 The likelihood at the maximum time, for each age, is not used.
 
-$children%example/smoothing_table.py
+$children%omh/table/smooth_grid.omh
+	%example/smooth_table.py
 %$$
 $head Example$$
-The file $cref smoothing_table.py$$ 
-contains an example $code smoothing$$ table.
+The file $cref smooth_table.py$$ 
+contains an example $code smooth$$ table.
 
 $end
