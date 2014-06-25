@@ -17,26 +17,33 @@ $index weight, table$$
 $index table, weight$$
 
 $section The Weight Table$$
-This table specifies age-time weighting functions.
-The $code weight$$ table is a $cref grid_table$$.
-Hence it has the standard columns
-$code weight_primary$$,
-$code weight_id$$,
-$code age$$,
-$code time$$.
-In addition, it has the other columns listed below:
-
-$head weight_primary$$
-See $cref/grid_primary/grid_table/Table grid/grid_primary/$$.
+This table specifies the age-time weighting functions.
+It has the following columns:
 
 $head weight_id$$
-See $cref/grid_id/grid_table/Table grid/grid_id/$$.
+This column has type $code integer$$ and is the primary key for
+the $code weight$$ table.
 
-$head age$$
-See $cref/age/grid_table/Table grid/age/$$.
+$head weight_grid_id$$
+This column has type $code integer$$ and is the primary key for
+the $cref weight_grid$$ table.
+Each value $icode weight_grid_id$$ corresponds
+to a different weighting.
 
-$head time$$
-See $cref/time/grid_table/Table grid/time/$$.
+$subhead age$$
+This column 
+has type $code real$$ and is value is the age value for this grid point.
+For each fixed value of $icode weight_grid_id$$ and $icode time$$,
+the set of corresponding $icode age$$ values is constant; i.e.,
+the grid corresponding to $icode weight_grid_id$$ is rectangular.
+
+$subhead time$$
+This column 
+has type $code real$$ and is value is the time value for this grid point.
+For each fixed value of $icode smooth_grid_id$$ and $icode age$$,
+the set of corresponding $icode time$$ values is constant; i.e.,
+the grid corresponding to $icode smooth_grid_id$$ is rectangular.
+
 
 $head weight$$
 This column has type $code real$$.
@@ -44,7 +51,8 @@ For each row in the table, the value in this column
 is the weighting, at the corresponding age and time,
 and for the specified $icode weight_id$$,
 
-$children%example/weight_table.py
+$children%omh/table/weight_grid.omh
+	%example/weight_table.py
 %$$
 $head Example$$
 The file $cref weight_table.py$$ 
