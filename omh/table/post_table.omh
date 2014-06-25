@@ -59,9 +59,9 @@ the value $icode variable_index$$ is equal to the
 $cref/node_id/node_table/node_id/$$ for the 
 $cref/parent node/misc_table/misc_name/parent_node_id/$$ for this estimation.
 Note that the age-time grid for this variable will be the same as for 
-the $cref/smooth_grid_id/rate_table/smooth_grid_id/$$ that corresponds
+the $cref/smooth_grid_id/rate_prior/smooth_grid_id/$$ that corresponds
 to this $icode rate$$ with 
-$cref/is_parent/rate_table/is_parent/$$ one (true).
+$cref/is_parent/rate_prior/is_parent/$$ one (true).
 
 
 $subhead child_rate$$
@@ -72,9 +72,9 @@ the value $icode variable_index$$ is equal to the
 $cref/node_id/node_table/node_id/$$ for one of the children of the 
 parent node.
 Note that the age-time grid for this variable will be the same as for 
-the $cref/smooth_grid_id/rate_table/smooth_grid_id/$$ that corresponds
+the $cref/smooth_grid_id/rate_prior/smooth_grid_id/$$ that corresponds
 to this $icode rate$$ with 
-$cref/is_parent/rate_table/is_parent/$$ zero (false).
+$cref/is_parent/rate_prior/is_parent/$$ zero (false).
 
 $head age$$
 This column has type $code real$$ and is the age 

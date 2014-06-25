@@ -17,7 +17,7 @@ from misc_table        import *
 from multiplier_table  import *
 from node_table        import *
 from post_table        import *
-from rate_table        import *
+from rate_prior        import *
 from smooth_table      import *
 from variable_table    import *
 from weight_table      import *

@@ -8,16 +8,16 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin rate_table$$ 
+$begin rate_prior$$ 
 $spell
 $$
 $index rate, table$$
 $index table, rate$$
 
-$section The Rate Table$$
-The $code rate$$ table has the following columns:
+$section The Rate Prior Table$$
+The $code rate_prior$$ table has the following columns:
 
-$head rate_id$$
+$head rate_prior_id$$
 This column has type $code integer$$ 
 and is the primary key for this table.
 
@@ -42,10 +42,10 @@ It specifies the prior for this rate when fitting the parent
 (fixed effect) or children (random effect) depending on 
 $icode is_parent$$.
 
-$children%example/rate_table.py
+$children%example/rate_prior.py
 %$$
 $head Example$$
-The file $cref rate_table.py$$ 
+The file $cref rate_prior.py$$ 
 contains an example $code rate$$ table.
 
 $end
