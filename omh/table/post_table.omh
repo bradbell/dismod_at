@@ -33,11 +33,9 @@ there is one and only one sample.
 Sample number zero corresponds to the for variables
 (and is not a random sample from the posterior).
 
-$head variable_id$$
-This column has type $code integer$$ and its value is the primary key in the 
-$cref variable_table$$.
-We use $cref/variable_type/variable_table/variable_type/$$ for the
-corresponding variable type.
+$head variable_type$$
+This column has type $code text$$ and its value is either
+$code multiplier$$ or $code rate$$.
 
 $head variable_index$$
 This column has type $code integer$$ and its meaning depends on the 
@@ -51,30 +49,13 @@ Note that the age-time grid for this variable will be the same as for
 the $cref/smooth_grid_id/multiplier_table/smooth_grid_id/$$ that corresponds
 to this $icode multiplier_id$$.
 
-$subhead parent_rate$$
-If $icode variable_type$$ is $codei%parent%_rate%$$
-(where $icode rate$$ is one of $code iota$$, $code rho$$, $code chi$$
-$code omega$$)
+$subhead rate$$
+If $icode variable_type$$ is $code rate$$,
 the value $icode variable_index$$ is equal to the 
-$cref/node_id/node_table/node_id/$$ for the 
-$cref/parent node/misc_table/misc_name/parent_node_id/$$ for this estimation.
+$cref/rate_prior_id/rate_prior/rate_prior_id/$$ for this variable.
 Note that the age-time grid for this variable will be the same as for 
 the $cref/smooth_grid_id/rate_prior/smooth_grid_id/$$ that corresponds
-to this $icode rate$$ with 
-$cref/is_parent/rate_prior/is_parent/$$ one (true).
-
-
-$subhead child_rate$$
-If $icode variable_type$$ is $codei%child%_rate%$$
-(where $icode rate$$ is one of $code iota$$, $code rho$$, $code chi$$
-$code omega$$)
-the value $icode variable_index$$ is equal to the 
-$cref/node_id/node_table/node_id/$$ for one of the children of the 
-parent node.
-Note that the age-time grid for this variable will be the same as for 
-the $cref/smooth_grid_id/rate_prior/smooth_grid_id/$$ that corresponds
-to this $icode rate$$ with 
-$cref/is_parent/rate_prior/is_parent/$$ zero (false).
+to this $icode rate_prior_id$$.
 
 $head age$$
 This column has type $code real$$ and is the age 
@@ -83,6 +64,10 @@ for the grid point corresponding to this sample.
 $head time$$
 This column has type $code real$$ and is the time 
 for the grid point corresponding to this sample.
+
+$head value$$
+This column has type $code real$$ is the value of the specified
+variable at the specified age and time.
 
 
 $children%example/post_table.py

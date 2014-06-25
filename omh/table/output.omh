@@ -14,8 +14,7 @@ $$
 
 $section Data Base Output Tables$$
 
-$childtable%omh/table/variable_table.omh
-	%omh/table/post_table.omh
+$childtable%omh/table/post_table.omh
 %$$
 
 $end

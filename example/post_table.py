@@ -33,7 +33,7 @@ def post_table() :
 		# required columns
 		'post_id',
 		'sample_number',
-		'variable_id',
+		'variable_type',
 		'variable_index',
 		'age',
 		'time'
@@ -41,7 +41,7 @@ def post_table() :
 	col_type = [
 		'integer primary key',  # post_id
 		'integer',              # sample_number
-		'integer',              # variable_id
+		'text',                 # variable_type
 		'integer',              # variable_index
 		'real',                 # age
 		'real'                  # time
@@ -55,17 +55,18 @@ def post_table() :
 	time_grid      = [ 1990., 2000.] 
 	for i in range(n_multiplier + n_rate) :
 		if i < n_multiplier :
-			variable_id = 0
+			variable_type = 'multilplier'
+			variable_index = i
 		else :
-			variable_id = i + 1 - n_multiplier
-		variable_index = 2 * i + 1
+			variable_type = 'rate'
+			variable_index = i - n_multiplier
 		for age in age_grid :
 			for time in time_grid :
 				post_id += 1
 				row_list.append( [
 					post_id,
 					sample_number,
-					variable_id,
+					variable_type,
 					variable_index,
 					age,
 					time
