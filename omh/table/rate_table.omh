@@ -1,0 +1,45 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin rate_table$$ 
+$spell
+	covariate
+$$
+$index rate, table$$
+$index table, rate$$
+
+$section The Rate Table$$
+The $code rate$$ table is used to identify rates.
+It has the following columns:
+
+$head rate_id$$
+This column has type $code integer$$ 
+and is the primary key for this table.
+
+$head rate_name$$
+The following values,
+and only the following values,
+appear in the $icode rate_name$$ column:
+$table
+$icode rate_name$$ $pre   $$ $cnext Description                   $rnext
+$code iota$$       $pre   $$ $cnext model incidence               $rnext
+$code rho$$        $pre   $$ $cnext model remission               $rnext
+$code chi$$        $pre   $$ $cnext model excess mortality        $rnext
+$code omega$$      $pre   $$ $cnext model other cause mortality
+$tend
+
+
+$children%example/rate_table.py
+%$$
+$head Example$$
+The file $cref rate_table.py$$ 
+contains an example $code rate$$ table.
+
+$end
