@@ -21,15 +21,17 @@ $head rate_prior_id$$
 This column has type $code integer$$ 
 and is the primary key for this table.
 
+$head rate_id$$
+This column has type $code integer$$ and is the primary key
+for the $cref rate_table$$.
+It identifies if this is for
+$code iota$$, $code rho$$, $code chi$$ or $code omega$$.
+
 $head is_parent$$
 This column has type $code integer$$ and is one, 
 if this row is for the parent node,
 and zero if it is for the child nodes.
-
-$head rate_name$$
-This column has type $code text$$ and is one of the following:
-$code iota$$, $code rho$$, $code chi$$ or $code omega$$.
-Each combination of $icode is_parent$$ and $icode rate_name$$ 
+Each combination of $icode is_parent$$ and $icode rate_id$$ 
 may appear only once.
 If a combination does not appear, the corresponding 
 rates are constrained to be zero for all ages and times.

@@ -29,33 +29,35 @@ $head multiplier_id$$
 This column has type $code integer$$ and is its value is the
 primary key for this table.
 
-$head multiplier_use$$
+$head multiplier_type$$
 This column has type $code text$$.
-The value $code mean$$ means this multiplier is used in data mean model
-and the value $code std$$ means it is used in the data noise model.
+The possible values are
+$table
+$icode multiplier_type$$ $cnext Description $rnext
+$code rate$$       $cnext covariate effects a model rate $rnext
+$code mean$$       $cnext covariate effects a measurement mean $rnext
+$code std$$        $cnext covariate effects a measurement standard deviation
+$tend
+
+$head multiplier_index$$
+This column has type $code integer$$ and its meaning depends 
+on the value of $icode multiplier_type$$
+
+$subhead rate$$
+If $icode multiplier_type$$ is $code rate$$,
+$icode multiplier_index$$ is the  
+$cref/rate_id/rate_table/rate_id/$$ that identifies
+the rate that this covariate and multiplier effects.
+
+$subhead mean, std$$
+If $icode multiplier_type$$ is $code mean$$ or $code std$$,
+$icode multiplier_index$$ is the  
+$cref/integrand_id/integrand_table/integrand_id/$$ that identifies
+the this covariate and multiplier effects.
 
 $head covariate_id$$
 This column has type $code integer$$ and is its value is the
 primary key for the $cref covariate_table$$.
-
-$head integrand_id$$
-This column has type $code integer$$ and is its value in the
-$cref integrand_table$$.
-If it is not $code null$$,
-it specifies the integrand for this covariate multiplier. 
-
-$head rate_name$$
-This column has type $code text$$ and is its value is one of the following
-$code null$$,
-$code iota$$,
-$code rho$$,
-$code chi$$, or
-$code omega$$.
-If it is not $code null$$,
-it specifies the rate for this covariate multiplier. 
-For each row,
-one and only one, of $icode rate_name$$ and $icode integrand_id$$ 
-must be $code null$$.
 
 $head smooth_grid_id$$
 This column has type $code integer$$ and its value in a row is a
