@@ -33,9 +33,10 @@ This column has type $code integer$$
 and is the primary key for this table.
 
 $head integrand_name$$
-The following values,
-and only the following values,
-appear in the $icode integrand_name$$ column:
+The following table lists the possible values for $icode integrand_name$$.
+Each name can only appear once in this table.
+Only the $cref/integrand_id/data_table/integrand_id/$$ that appear
+in the data table need appear in the integrand table.
 $table
 $icode integrand_name$$ $pre   $$ $cnext Description                   $rnext
 $code incidence$$       $cnext incidence rate                          $rnext

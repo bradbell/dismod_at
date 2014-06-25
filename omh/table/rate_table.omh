@@ -30,7 +30,9 @@ $head rate_name$$
 This column has type $code text$$ and is one of the following:
 $code iota$$, $code rho$$, $code chi$$ or $code omega$$.
 Each combination of $icode is_parent$$ and $icode rate_name$$ 
-must appear once and only once.
+may appear only once.
+If a combination does not appear, the corresponding 
+rates are constrained to be zero for all ages and times.
 
 $head smooth_grid_id$$
 This column has type $code integer$$ and its value in a row is a

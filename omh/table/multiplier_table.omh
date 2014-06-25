@@ -21,7 +21,9 @@ $index multiplier, covariate$$
 
 $section The Covariate Multiplier Table$$
 This table specifies the prior for the covariate multipliers.
-It has the following columns
+If this table is empty, there are no covariate multipliers
+in the model.
+This table has the following columns
 
 $head multiplier_id$$
 This column has type $code integer$$ and is its value is the
