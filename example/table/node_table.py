@@ -33,12 +33,12 @@ def node_table() :
 	# create the node table
 	ptype    = 'integer primary key'
 	col_name = [ 'node_id', 'node_name',     'parent_id' ]
-	col_type = [ ptype,     'text',          'integer'  ]
+	col_type = [ ptype,     'text',          'integer'   ]
 	row_list = [
-	           [ 0,         'world',         None       ],
-		       [ 1,         'north_america', 0          ],
-		       [ 2,         'united_states', 1          ],
-		       [ 3,         'canada',        1          ]
+	           [ 0,         'world',         None        ],
+		      [ 1,         'north_america', 0           ],
+		      [ 2,         'united_states', 1           ],
+		      [ 3,         'canada',        1           ]
 	]
 	tbl_name = 'node'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

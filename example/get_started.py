@@ -30,13 +30,55 @@ def rate_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	# start by creating the data file
+	# primary key type
+	ptype ='integer primary key'
+	# ------------------------------------------------------------------------
+	# create integrand table
+	omega_id = 1
+	col_name = [  'integrand_id', 'integrand_name'  ]
+	col_type = [   ptype,          'text'           ]
+	row_list = [ [ omega_id,       'omega'          ] ]
+	tbl_name = 'intergrand'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------
+	# create node table
+	world_id         = 0
+	north_america_id = 1
+	united_state_id  = 2
+	canada_id        = 3
+	col_name = [ 'node_id',          'node_name',     'parent_id'      ]
+	col_type = [ ptype,              'text',          'integer'        ]
+	row_list = [
+	           [ world_id,           'world',         None             ],
+		      [ north_america_id,   'north_america', world_id         ],
+		      [ united_states_id,   'united_states', north_america_id ],
+		      [ canada_id,          'canada',        north_america_id ]
+	]
+	tbl_name = 'node'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------ 
+	# create weight_grid table
+	constant_id = 0
+	ptype    = 'integer primary key'
+	col_name = [   'weight_grid_id', 'weight_grid_name'   ]
+	col_type = [   ptype,            'text'               ]
+	row_list = [ [ constant_id,      'constant'           ] ]
+	tbl_name = 'weight_grid'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------
+	# create a weight table
+	col_name = [  'weight_id', 'weight_grid_id', 'age',   'time',  'weight' ]
+	col_type = [  ptype,       'integer',        'real',  'real',  'real'   ]
+	row_list = [[ 1,            constant_id,     50.0,    2000.,   1.0    ] ]
+	tbl_name = 'weight'
+	# ------------------------------------------------------------------------
+	# create the data file
 	col_name = [
 		# required columns
 		'data_id',
 		'integrand_id',
-		'location_id',
-		'weight_id',
+		'node_id',
+		'weight_grid_id',
 		'meas_value',
 		'meas_stdev',
 		'meas_density',
@@ -45,17 +87,12 @@ def rate_table() :
 		'age_upper',
 		'time_lower',
 		'time_upper',
-		# covariates 
-		'x_sex',
-		'x_income',
-		# comments
-		'c_data_source',
 	]
 	col_type = [
 		'integer primary key',  # data_id
 		'integer',              # integrand_id
-		'integer',              # location_id
-		'integer',              # weight_id
+		'integer',              # node_id
+		'integer',              # weight_grid_id
 		'real',                 # meas_value
 		'real',                 # meas_stdev
 		'text',                 # meas_density
@@ -64,43 +101,39 @@ def rate_table() :
 		'real',                 # age_upper
 		'real',                 # time_lower
 		'real',                 # time_upper
-		'real',                 # x_sex
-		'real',                 # x_income
-		'text'                  # c_data_source
 	]
-	row_list = [ [
-		0,                      # data_id
-		1,                      # integrand_id
-		3,                      # location_id
-		4,                      # weight_id
-		1e-4,                   # meas_value
+	row = [
+		None,                   # data_id
+		omega_id,               # integrand_id
+		None,                   # node_id
+		constant_id,            # weight_grid_id
+		None,                   # meas_value
 		1e-5,                   # meas_stdev
-		'log_gaussina',         # meas_density
-		1e-5,                   # meas_eta
+		'gaussian',             # meas_density
+		1e-6,                   # meas_eta
 		0.0,                    # age_lower
 		100.0,                  # age_upper
-		2000.,                  # time_lower
-		2005.,                  # time_upper
-		0.5,                    # x_sex
-		1000.,                  # x_income
-		'www.healthdata.org'    # c_data_source
-	] ]
-
-	# create the data table
+		1990.0,                 # time_lower
+		2010.0,                 # time_upper
+	]
+	node_id_index          = 2
+	meas_value_index       = 4
+	row_list               = list()
+	#
+	row[node_id_index]     = north_america_id
+	row[meas_value_index]  = 1e-5
+	row_list.append( copy.copy(row) )
+	#
+	row[node_id_index]     = united_states_id
+	row[meas_value_index]  = 1.5e-5
+	row_list.append( copy.copy(row) )
+	#
+	row[node_id_index]     = canada_id
+	row[meas_value_index]  = 1.5e-5
+	row_list.append( copy.copy(row) )
+	#
 	tbl_name = 'data'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
-	# check values in table
-	columns = ','.join(col_name)
-	cmd     = 'SELECT ' + columns + ' FROM data'
-	count        = 0
-	cursor       = connection.cursor()
-	for row in cursor.execute(cmd) :
-		assert len(row) == len(col_name)
-		for j in range( len(row) ) :
-			assert row[j] == row_list[count][j]
-		count += 1
-	assert count == 1
-	#
-	print('data_table: OK')
+	print('get_started: OK')
 # END PYTHON
