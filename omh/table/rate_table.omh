@@ -14,7 +14,7 @@ $$
 $index rate, table$$
 $index table, rate$$
 
-$section The Miscellaneous Table$$
+$section The Rate Table$$
 The $code rate$$ table has the following columns:
 
 $head rate_id$$
