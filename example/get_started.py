@@ -143,6 +143,42 @@ def get_started() :
 	#
 	tbl_name = 'data'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	#
+	# -----------------------------------------------------------------------
+	# create the like table
+	ptype    = 'integer primary key'
+	col_name = [ 
+		'like_id', 
+		'like_name',	
+		'lower',	
+		'upper',	
+		'mean',	
+		'std',	
+		'density',
+		'eta'  
+	]
+	col_type = [ 
+		ptype,            # like_id 
+		'text',           # like_name	
+		'real',           # lower	
+		'real',           # upper	
+		'real',           # mean	
+		'real',           # std	
+		'text',           # density
+		'real'            # eta
+	]
+	uniform_01 = 1
+	row_list = [ [ 
+		uniform_01,       # like_id 
+		'uniform_01',     # like_name	
+		0.0,              # lower	
+		1.0,              # upper	
+		0.5,              # mean	
+		None,             # std	    (substititue for infinity for sql)
+		'gaussian',       # density (not used because std = infinity)
+		1e-6              # eta     (not used because std = infinity)
+	] ]
+	tbl_name = 'like'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# -----------------------------------------------------------------------
 	print('get_started: OK')
 # END PYTHON
