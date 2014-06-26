@@ -33,8 +33,8 @@ $childtable%omh/table/integrand_table.omh
 	%omh/table/smooth_grid.omh
 	%omh/table/smooth_table.omh
 	%omh/table/multiplier_table.omh
-	%omh/table/rate_prior.omh
 	%omh/table/rate_table.omh
+	%omh/table/rate_prior.omh
 	%omh/table/misc_table.omh
 %$$
 

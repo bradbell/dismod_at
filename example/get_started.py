@@ -215,10 +215,10 @@ def get_started() :
 		'integer',  # dtime_like_id
 	]
 	row_list = list()
-	smooth_grid_id = 1
+	constant_grid_id = 1
 	row_list  = [ [
 		None,            # smooth_id
-		smooth_grid_id,  # smooth_grid_id 
+		constant_grid_id,# smooth_grid_id 
 		50.0,            # age
 		2000.0,          # time
 		uniform_01_id,   # value_like_id
@@ -249,5 +249,28 @@ def get_started() :
 	tbl_name = 'multiplier'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ----------------------------------------------------------------------- 
+	# rate table
+	col_name = [ 'rate_id',      'rate_name'  ]
+	col_type = [ ptype,          'text'       ]
+	row_list = [
+	           [ None,           'iota'       ],
+	           [ None,           'rho'        ],
+	           [ None,           'chi'        ],
+	           [ None,           'omega'      ]
+	]
+	tbl_name = 'rate'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ----------------------------------------------------------------------- 
+	# rate_prior table
+	col_name = [ 'rate_prior_id','is_parent', 'rate_name', 'smooth_grid_id']
+	col_type = [ ptype,          'integer',   'text',      'integer'       ]
+	row_list = [
+	           [ 4,               1,           'omega',    constant_grid_id ],
+	           [ 8,               0,           'omega',    constant_grid_id ]
+	]
+	tbl_name = 'rate_prior'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ----------------------------------------------------------------------- 
+	#
 	print('get_started: OK')
 # END PYTHON
