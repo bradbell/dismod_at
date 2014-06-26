@@ -73,7 +73,15 @@ def get_started() :
 	row_list = [[ 1,            constant_id,     50.0,    2000.,   1.0    ] ]
 	tbl_name = 'weight'
 	# ------------------------------------------------------------------------
-	# create the data file
+	# create the covariate table
+	ptype    = 'integer primary key'
+	col_name = [ 'covariate_id', 'covariate_name',	'reference' ]
+	col_type = [ ptype,          'text',             'real'     ] 
+	row_list = [ ]
+	tbl_name = 'covariate'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------
+	# create the data table
 	col_name = [
 		# required columns
 		'data_id',
