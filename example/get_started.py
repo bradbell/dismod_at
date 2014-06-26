@@ -60,7 +60,6 @@ def get_started() :
 	# ------------------------------------------------------------------------ 
 	# create weight_grid table
 	constant_id = 0
-	ptype    = 'integer primary key'
 	col_name = [   'weight_grid_id', 'weight_grid_name'   ]
 	col_type = [   ptype,            'text'               ]
 	row_list = [ [ constant_id,      'constant'           ] ]
@@ -74,7 +73,6 @@ def get_started() :
 	tbl_name = 'weight'
 	# ------------------------------------------------------------------------
 	# create the covariate table
-	ptype    = 'integer primary key'
 	col_name = [ 'covariate_id', 'covariate_name',	'reference' ]
 	col_type = [ ptype,          'text',             'real'     ] 
 	row_list = [ ]
@@ -145,7 +143,6 @@ def get_started() :
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# create the like table
-	ptype    = 'integer primary key'
 	col_name = [ 
 		'like_id', 
 		'like_name',	
@@ -191,7 +188,6 @@ def get_started() :
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# create smooth_grid table
-	ptype    = 'integer primary key'
 	constant_id = 0
 	col_name = [ 'smooth_grid_id', 'smooth_grid_name' ]
 	col_type = [ ptype,            'text'             ]
@@ -230,6 +226,27 @@ def get_started() :
 		zero_id          # dtime_like_id
 	] ]
 	tbl_name = 'smooth'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------ 
+	# multiplier table
+	col_name = [ 
+		'multiplier_id', 
+		'multiplier_use',
+		'covariate_id', 
+		'integrand_id',
+		'rate_name',
+  		'smooth_grid_id'
+	]
+	col_type = [ 
+		ptype,     # multiplier_id
+		'text',    # multiplier_use
+		'integer', # covariate_id
+		'integer', # integrand_id
+		'text',    # rate_name
+  		'integer'  # smooth_grid_id'
+	]
+	row_list = [ ]
+	tbl_name = 'multiplier'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ----------------------------------------------------------------------- 
 	print('get_started: OK')
