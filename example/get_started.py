@@ -42,6 +42,7 @@ def get_started() :
 	covariate_list = [
 		{ 'name':'sex', 'reference':0.0 }
 	] 
+	data_list = []
 	row = {
 		'integrand':'mtother',
 		'weight':'constant',
@@ -53,7 +54,6 @@ def get_started() :
 		'time_lower':1990.0,
 		'time_upper':2010.0
 	}
-	data_list = []
 	row['node']       = 'north_america'
 	row['meas_value'] = 1e-5
 	data_list.append( copy.copy(row) )
@@ -64,63 +64,36 @@ def get_started() :
 	row['meas_value'] = 0.5e-5
 	data_list.append( copy.copy(row) )
 	#
+	like_list = [
+		{	'name':'uniform_01', 
+			'lower':0.0, 
+			'upper':1.0, 
+			'mean':0.1, 
+			'std':None,
+			'density':None,
+			'eta':None
+		},{	'name':'zero', 
+			'lower':0.0, 
+			'upper':0.0, 
+			'mean':0.0,
+			'std':None,
+			'density':None,
+			'eta':None
+		}
+	]
 	dismod_at.create_database(
 		file_name, 
 		node_list, 
 		weight_list, 
 		covariate_list,
-		data_list
+		data_list,
+		like_list
 	)
 	# -----------------------------------------------------------------------
 	new        = False
 	connection = dismod_at.create_connection(file_name, new)
+	ptype      = 'intger primary key'
 	#
-	# create the like table
-	col_name = [ 
-		'like_id', 
-		'like_name',	
-		'lower',	
-		'upper',	
-		'mean',	
-		'std',	
-		'density',
-		'eta'  
-	]
-	ptype    = 'integer primary key'
-	col_type = [ 
-		ptype,            # like_id 
-		'text',           # like_name	
-		'real',           # lower	
-		'real',           # upper	
-		'real',           # mean	
-		'real',           # std	
-		'text',           # density
-		'real'            # eta
-	]
-	uniform_01_id = 1
-	zero_id       = 2
-	row_list = [ [ 
-		uniform_01_id,    # like_id 
-		'uniform_01',     # like_name	
-		0.0,              # lower	
-		1.0,              # upper	
-		0.5,              # mean	
-		None,             # std	    (substititue for infinity for sql)
-		'gaussian',       # density (not used because std = infinity)
-		1e-6              # eta     (not used because std = infinity)
-	], [
-		zero_id,          # like_id 
-		'zero',           # like_name	
-		0.0,              # lower	
-		0.0,              # upper	
-		0.0,              # mean	
-		None,             # std	    (substititue for infinity for sql)
-		'gaussian',       # density (not used because std = infinity)
-		1e-6              # eta     (not used because std = infinity)
-	] ]
-	tbl_name = 'like'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# -----------------------------------------------------------------------
 	# create smooth_grid table
 	constant_id = 0
 	col_name = [ 'smooth_grid_id', 'smooth_grid_name' ]
@@ -150,6 +123,8 @@ def get_started() :
 	]
 	row_list = list()
 	constant_grid_id = 1
+	uniform_01_id = 1 # (kludge until smooth table in create_database)
+	zero_id       = 1 # (kludge until smooth table in create_database)
 	row_list  = [ [
 		None,            # smooth_id
 		constant_grid_id,# smooth_grid_id 

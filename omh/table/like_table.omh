@@ -44,6 +44,16 @@ for the likelihood.
 Note that the value $code null$$ is interpreted as plus infinity; i.e.,
 no upper limit.
 
+$head mean$$
+$index std, plus infinity$$
+$index infinity, plus std$$
+This column has type $code real$$ and specifies the mean
+for the likelihood.
+It must hold that
+$codei%
+	%lower% <= %mean% <= %upper%
+%$$
+
 $head std$$
 $index std, plus infinity$$
 $index infinity, plus std$$
@@ -60,12 +70,17 @@ $code gaussian$$,
 $code laplace$$,
 $code log_gaussian$$,
 or $code log_laplace$$. 
+Note that if $icode std$$ is $code null$$, this field is not used
+and can be $code null$$.
 
 $head eta$$
 This column has type $code real$$ and is only used in the
 cases where $icode density$$ is $code log_gaussian$$
 or $code log_laplace$$.
 In these cases, it is the offset in the corresponding density function.
+Note that if $icode std$$ is $code null$$, 
+or if $icode density$$ is $code gaussian$$ or $code laplace$$,
+this field is not used and can be $code null$$.
 
 $children%example/table/like_table.py
 %$$

@@ -268,7 +268,8 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #	%node_list%,
 #	%weight_list%,
 #	%covariate_list%,
-#	%data_list%
+#	%data_list%,
+#	%like_list%
 # )%$$
 #
 # $head Purpose$$
@@ -288,7 +289,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $table
 # Key     $cnext Value Type    $cnext Description                $rnext
 # name    $cnext str           $cnext name for the $th i$$ node  $rnext
-# parent  $cnext str           $cnext name ofr parent of the $th i$$ node
+# parent  $cnext str           $cnext name of parent of the $th i$$ node
 # $tend
 #
 # $head weight_list$$
@@ -301,7 +302,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # name   $cnext str           $cnext name of $th i$$ weighting  $rnext
 # age    $cnext list of float $cnext grid for age values        $rnext
 # time   $cnext list of float $cnext grid for time values       $rnext
-# fun    $cnext function      $cnext %icode%w%=%fun%(%a%, %t%) 
+# fun    $cnext function      $cnext $icode%w%=%fun%(%a%, %t%)%$$
 # $tend
 #
 # $head covariate_list$$
@@ -332,6 +333,20 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # time_lower   $cnext float       $cnext lower time limit            $rnext
 # time_lower   $cnext float       $cnext upper time limit
 # $tend
+#
+# $head like_list$$
+# This is a list of $code dict$$
+# that define the rows of the $cref like_table$$.
+# The dictionary $icode%like_list%[%i%]%$$ has the following:
+# $table
+# Key     $cnext Value Type    $cnext Description                $rnext 
+# name    $cnext str           $cnext name of $th i$$ likelihood $rnext 
+# lower   $cnext float         $cnext lower limit                $rnext 
+# upper   $cnext float         $cnext upper limit                $rnext 
+# std     $cnext float         $cnext standard deviation         $rnext 
+# density $cnext float         $cnext density function           $rnext 
+# eta     $cnext float         $cnext offset in log densities
+# $tend
 # 
 # $end
 def create_database(
@@ -339,7 +354,8 @@ def create_database(
 	node_list,
 	weight_list,
 	covariate_list,
-	data_list
+	data_list,
+	like_list
 ) :
 	# -----------------------------------------------------------------------
 	# primary key type
@@ -483,4 +499,43 @@ def create_database(
 	tbl_name = 'data'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
+	# create the like table
+	col_name = [ 
+		'like_id', 
+		'like_name',	
+		'lower',	
+		'upper',	
+		'mean',	
+		'std',	
+		'density',
+		'eta'  
+	]
+	col_type = [ 
+		ptype,            # like_id 
+		'text',           # like_name	
+		'real',           # lower	
+		'real',           # upper	
+		'real',           # mean	
+		'real',           # std	
+		'text',           # density
+		'real'            # eta
+	]
+	row_list = [ ]
+	for i in range( len( like_list ) ) :
+		like = like_list[i]
+		row  = [	
+			i, 
+			like['name'],
+			like['lower'],
+			like['upper'],
+			like['mean'],
+			like['std'],
+			like['density'],
+			like['eta']
+		]
+		row_list.append( row )
+	tbl_name = 'like'
+	create_table(connection, tbl_name, col_name, col_type, row_list)
+	# -----------------------------------------------------------------------
+
 	return
