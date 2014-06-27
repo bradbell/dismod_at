@@ -29,16 +29,15 @@ def get_started() :
 	file_name      = 'example.db'
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
-	cursor         = connection.cursor()
 	#
 	# primary key type
 	ptype ='integer primary key'
 	# ------------------------------------------------------------------------
 	# create integrand table
-	omega_id = 1
+	mtother_id = 1
 	col_name = [  'integrand_id', 'integrand_name'  ]
 	col_type = [   ptype,          'text'           ]
-	row_list = [ [ omega_id,       'omega'          ] ]
+	row_list = [ [ mtother_id,     'mtother'        ] ]
 	tbl_name = 'intergrand'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
@@ -51,9 +50,9 @@ def get_started() :
 	col_type = [ ptype,              'text',          'integer'        ]
 	row_list = [
 	           [ world_id,           'world',         None             ],
-		      [ north_america_id,   'north_america', world_id         ],
-		      [ united_states_id,   'united_states', north_america_id ],
-		      [ canada_id,          'canada',        north_america_id ]
+	           [ north_america_id,   'north_america', world_id         ],
+	           [ united_states_id,   'united_states', north_america_id ],
+	           [ canada_id,          'canada',        north_america_id ]
 	]
 	tbl_name = 'node'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
@@ -87,7 +86,7 @@ def get_started() :
 		'node_id',
 		'weight_grid_id',
 		'meas_value',
-		'meas_stdev',
+		'meas_std',
 		'meas_density',
 		'meas_eta',
 		'age_lower',
@@ -101,7 +100,7 @@ def get_started() :
 		'integer',              # node_id
 		'integer',              # weight_grid_id
 		'real',                 # meas_value
-		'real',                 # meas_stdev
+		'real',                 # meas_std
 		'text',                 # meas_density
 		'real',                 # meas_eta
 		'real',                 # age_lower
@@ -111,11 +110,11 @@ def get_started() :
 	]
 	row = [
 		None,                   # data_id
-		omega_id,               # integrand_id
+		mtother_id,             # integrand_id
 		None,                   # node_id
 		constant_id,            # weight_grid_id
 		None,                   # meas_value
-		1e-5,                   # meas_stdev
+		1e-5,                   # meas_std
 		'gaussian',             # meas_density
 		1e-6,                   # meas_eta
 		0.0,                    # age_lower

@@ -251,3 +251,166 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 		value_tuple = unicode_tuple(row, quote_text)
 		cmd = 'insert into ' + tbl_name + ' values ' + value_tuple
 		cursor.execute(cmd)
+# ==========================================================================-
+# $begin create_database$$ $newlinech #$$
+# $spell
+#	dismod
+#	covariate
+#	std
+#	str
+# $$
+#
+# $section Under Construction: Create a Dismod_at Database$$
+#
+# $head Syntax$$
+# $codei%create_database(
+#	%file_name%,
+#	%node_list%,
+#	%weight_list%,
+#	%covariate_list%,
+#	%data_list%,
+# )%$$
+#
+# $head Purpose$$
+# This routine makes it easy to create all the 
+# $cref input$$ tables in a $code dismod_at$$ database.
+# It is not necessary to use this routine, nor is it necessary
+# to use the same settings as this routine. For example,
+# the column order and the primary key values need not be as chosen
+# by this routine.
+#
+# $head file_name$$
+# is as $code str$$ containing the name of the file where the data base 
+# is stored.
+# If this file already exists, it is deleted and a database is created.
+#
+# $head node_list$$
+# This is a list of $code dict$$
+# that define the rows of the $cref node_table$$. 
+# If 
+# $codei%
+#	%name%   = node_list%[%i%]['name']
+#	%parent% = node_list%[%i%]['parent']
+# %$$ 
+# $icode name$$ is a $code str$$ name for the $th i$$ node and
+# $icode parent$$ is the $code int$$ for the corresponding parent node.
+# If the $th i$$ node does not have a parent, $icode parent$$ is $code None$$. 
+#
+# $head weight_list$$
+# This is a list of $code dict$$ that define the rows of the 
+# $cref weight_grid$$ table and $cref weight_table$$. 
+# If 
+# $codei%
+#	%name% = weight_list%[%i%]['name']
+#	%age%  = weight_list%[%i%]['age']
+#	%time% = weight_list%[%i%]['time']
+#	%fun%  = weight_list%[%i%]['fun']
+# %$$ 
+# $icode name$$ is a $code str$$ name for the $th i$$ weighting function,
+# $icode age$$ is a $code list$$ of $code float$$ ages,
+# $icode time$$ is a $code list$$ of $code float$$ times, and
+# $icode%fun%(%a%, %t%)%$$ is the weighting function.
+#
+# $head covariate_list$$
+# This is a list of $code dict$$ 
+# that define the rows of the $cref covariate_table$$.
+# If 
+# $codei%
+#	%name%      = covariate_list%[%i%]['name']
+#	%reference% = covariate_list%[%i%]['reference']
+# %$$ 
+# $icode name$$ is a $code str$$ name for the $th i$$ covariate and
+# $icode reference$$ is the $code float$$ reference value for the covariate.
+#
+# $head data_list$$
+# This is a list of $code dict$$ 
+# that define the rows of the $cref data_table$$.
+# If 
+# $codei%
+#	%integrand% = data_list%[%i%]['integrand']
+#	%node%      = data_list%[%i%]['node']
+# %$$ 
+# $icode integrand$$ is $code str$$ integrand for the $th i$$ data point,
+# $icode node$$ is $code str$$ node for the $th i$$ data point,
+# $icode weight$$ is $code str$$ weight for the $th i$$ data point,
+# $icode meas_value$$ is $code float$$ measurement for $th i$$ data point,
+# 
+# $end
+def create_database(
+	file_name,
+	node_list,
+	weight_list,
+	covariate_list,
+) :
+	# -----------------------------------------------------------------------
+	# primary key type
+	ptype ='integer primary key'
+	# -----------------------------------------------------------------------
+	# create database
+	new            = True
+	connection     = dismod_at.create_connection(file_name, new)
+	# ------------------------------------------------------------------------
+	# create integrand table
+	col_name = [  'integrand_id', 'integrand_name'  ]
+	col_type = [   ptype,          'text'           ]
+	row_list = [ 
+		[ None,   'incidence'   ],
+		[ None,   'remission'   ],
+		[ None,   'mtexcess'    ],
+		[ None,   'mtother'     ],
+		[ None,   'mtwith'      ],
+		[ None,   'prevalence'  ],
+		[ None,   'mtspecific'  ],
+		[ None,   'mtall'       ],
+		[ None,   'mtstandard'  ],
+		[ None,   'relrisk'     ]
+	]
+	tbl_name = 'intergrand'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------
+	# create node table
+	col_name = [ 'node_id', 'node_name', 'parent_id' ]
+	col_type = [ ptype,     'text',      'integer'   ]
+	row_list = []
+	for i in range( len(node_list) ) :
+		node = node_list[i]
+		row_list.append( i, node['name'], node['parent'] )
+	tbl_name = 'node'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------ 
+	# create weight_grid table
+	col_name = [   'weight_grid_id', 'weight_grid_name'   ]
+	col_type = [   ptype,            'text'               ]
+	row_list = [ ]
+	for i in range( len(weight_list) ) :
+		weight = weight_list[i]
+		row_list.append( i, weight['name'])
+	tbl_name = 'weight_grid'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------
+	# create weight table
+	col_name = [  'weight_id', 'weight_grid_id', 'age',   'time',  'weight' ]
+	col_type = [  ptype,       'integer',        'real',  'real',  'real'   ]
+	row_list = [ ]
+	for i in range( len(weight_list) ) :
+		weight = weight_list[i]
+		age    = weight['age']
+		time   = weight['time']
+		fun    = weight['fun']
+		for a in age :
+			for t in time :
+				w = fun(a, t)
+				row_list.append( [ None, i, a, t, w] )
+	tbl_name = 'weight'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------
+	# create covariate table
+	col_name = [ 'covariate_id', 'covariate_name',	'reference' ]
+	col_type = [ ptype,          'text',             'real'     ] 
+	row_list = [ ]
+	for i in range( len(covariate_list) ) :
+		covariate = covariate_list[i]
+		row_list.append( i, covariate['name'], covariate['reference'] )
+	tbl_name = 'covariate'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------ 
