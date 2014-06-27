@@ -254,6 +254,8 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # ==========================================================================-
 # $begin create_database$$ $newlinech #$$
 # $spell
+#	da
+#	dt
 #	dismod
 #	covariate
 #	std
@@ -304,6 +306,8 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # time   $cnext list of float $cnext grid for time values       $rnext
 # fun    $cnext function      $cnext $icode%w%=%fun%(%a%, %t%)%$$
 # $tend
+# The float $icode w$$ is the value of this weighting a the corresponding
+# float age $icode a$$ and float time $icode t$$.
 #
 # $head covariate_list$$
 # This is a list of $code dict$$
@@ -347,6 +351,22 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # density $cnext float         $cnext density function           $rnext 
 # eta     $cnext float         $cnext offset in log densities
 # $tend
+#
+# $head smooth_list$$
+# This is a list of $code dict$$
+# that define the rows of the $cref smooth_grid$$ table and
+# $cref smooth_table$$.
+# The dictionary $icode%smooth_list%[%i%]%$$ has the following:
+# $table
+# Key    $cnext Value Type    $cnext Description                $rnext
+# name   $cnext str           $cnext name of $th i$$ smoothing  $rnext
+# age    $cnext list of float $cnext grid for age values        $rnext
+# time   $cnext list of float $cnext grid for time values       $rnext
+# fun    $cnext function      $cnext $icode%(%v%,%da%,%dt%)%=%fun%(%a%, %t%)%$$
+# $tend
+# The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
+# are the likelihood names for the value, difference in age, 
+# and difference in time corresponding to this smoothing name.
 # 
 # $end
 def create_database(
@@ -355,7 +375,8 @@ def create_database(
 	weight_list,
 	covariate_list,
 	data_list,
-	like_list
+	like_list,
+	smooth_list
 ) :
 	# -----------------------------------------------------------------------
 	# primary key type
@@ -536,6 +557,58 @@ def create_database(
 		row_list.append( row )
 	tbl_name = 'like'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
+	#
+	global_like_name2id = {}
+	for i in range( len(row_list) ) :
+		global_like_name2id[ row_list[i][1] ] = i
+	# ------------------------------------------------------------------------ 
+	# create smooth_grid table
+	col_name = [   'smooth_grid_id', 'smooth_grid_name'   ]
+	col_type = [   ptype,            'text'               ]
+	row_list = [ ]
+	for i in range( len(smooth_list) ) :
+		smooth = smooth_list[i]
+		row_list.append( [ i, smooth['name'] ] )
+	tbl_name = 'smooth_grid'
+	create_table(connection, tbl_name, col_name, col_type, row_list)
+	#
+	global_smooth_grid_name2id = {}
+	for i in range( len(smooth_list) ) :
+		global_smooth_grid_name2id[ smooth_list[i]['name'] ] = i
+	# ------------------------------------------------------------------------
+	# create smooth table
+	col_name = [
+		'smooth_id', 
+		'smooth_grid_id', 
+		'age',  
+		'time',  
+		'value_like_id',
+		'dage_like_id',
+		'dtime_like_id',
+	]
+	col_type = [
+		ptype,      # smooth_id
+		'integer',  # smooth_grid_id
+		'real',     # age
+		'real',     # time
+		'integer',  # value_like_id
+		'integer',  # dage_like_id
+		'integer',  # dtime_like_id
+	]
+	row_list = [ ]
+	for i in range( len(smooth_list) ) :
+		smooth = smooth_list[i]
+		age    = smooth['age']
+		time   = smooth['time']
+		fun    = smooth['fun']
+		for a in age :
+			for t in time :
+				(v,da,dt) = fun(a, t)
+				v         = global_like_name2id[v]
+				da        = global_like_name2id[da]
+				dt        = global_like_name2id[dt]
+				row_list.append( [ None, i, a, t, v, da, dt] )
+	tbl_name = 'smooth'
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
-
 	return
