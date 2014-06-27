@@ -24,123 +24,57 @@ from __future__ import print_function
 def get_started() :
 	import dismod_at
 	import copy
+	def constant_weight_fun(a, t) :
+		return 1.0
 	#
-	# Connect to a new data base
-	file_name      = 'example.db'
-	new            = True
-	connection     = dismod_at.create_connection(file_name, new)
-	#
-	# primary key type
-	ptype ='integer primary key'
 	# ------------------------------------------------------------------------
-	# create integrand table
-	mtother_id = 1
-	col_name = [  'integrand_id', 'integrand_name'  ]
-	col_type = [   ptype,          'text'           ]
-	row_list = [ [ mtother_id,     'mtother'        ] ]
-	tbl_name = 'intergrand'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
-	# create node table
-	world_id         = 0
-	north_america_id = 1
-	united_states_id = 2
-	canada_id        = 3
-	col_name = [ 'node_id',          'node_name',     'parent_id'      ]
-	col_type = [ ptype,              'text',          'integer'        ]
-	row_list = [
-	           [ world_id,           'world',         None             ],
-	           [ north_america_id,   'north_america', world_id         ],
-	           [ united_states_id,   'united_states', north_america_id ],
-	           [ canada_id,          'canada',        north_america_id ]
+	file_name = 'example.db'
+	node_list = [
+		{ 'name':'world',         'parent':None },
+		{ 'name':'north_america', 'parent':'world' },
+		{ 'name':'united_states', 'parent':'north_america' },
+		{ 'name':'canada',        'parent':'north_america' }
 	]
-	tbl_name = 'node'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------ 
-	# create weight_grid table
-	constant_id = 0
-	col_name = [   'weight_grid_id', 'weight_grid_name'   ]
-	col_type = [   ptype,            'text'               ]
-	row_list = [ [ constant_id,      'constant'           ] ]
-	tbl_name = 'weight_grid'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
-	# create a weight table
-	col_name = [  'weight_id', 'weight_grid_id', 'age',   'time',  'weight' ]
-	col_type = [  ptype,       'integer',        'real',  'real',  'real'   ]
-	row_list = [[ 1,            constant_id,     50.0,    2000.,   1.0    ] ]
-	tbl_name = 'weight'
-	# ------------------------------------------------------------------------
-	# create the covariate table
-	col_name = [ 'covariate_id', 'covariate_name',	'reference' ]
-	col_type = [ ptype,          'text',             'real'     ] 
-	row_list = [ ]
-	tbl_name = 'covariate'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
-	# create the data table
-	col_name = [
-		# required columns
-		'data_id',
-		'integrand_id',
-		'node_id',
-		'weight_grid_id',
-		'meas_value',
-		'meas_std',
-		'meas_density',
-		'meas_eta',
-		'age_lower',
-		'age_upper',
-		'time_lower',
-		'time_upper',
+	fun = constant_weight_fun
+	weight_list = [
+		{ 'name':'constant',  'age':[50.], 'time':[2000.], 'fun':fun }
 	]
-	col_type = [
-		'integer primary key',  # data_id
-		'integer',              # integrand_id
-		'integer',              # node_id
-		'integer',              # weight_grid_id
-		'real',                 # meas_value
-		'real',                 # meas_std
-		'text',                 # meas_density
-		'real',                 # meas_eta
-		'real',                 # age_lower
-		'real',                 # age_upper
-		'real',                 # time_lower
-		'real',                 # time_upper
-	]
-	row = [
-		None,                   # data_id
-		mtother_id,             # integrand_id
-		None,                   # node_id
-		constant_id,            # weight_grid_id
-		None,                   # meas_value
-		1e-5,                   # meas_std
-		'gaussian',             # meas_density
-		1e-6,                   # meas_eta
-		0.0,                    # age_lower
-		100.0,                  # age_upper
-		1990.0,                 # time_lower
-		2010.0,                 # time_upper
-	]
-	node_id_index          = 2
-	meas_value_index       = 4
-	row_list               = list()
+	covariate_list = [
+		{ 'name':'sex', 'reference':0.0 }
+	] 
+	row = {
+		'integrand':'mtother',
+		'weight':'constant',
+		'meas_std':1e-5,
+		'meas_density':'gaussian',
+		'meas_eta':1e-6,
+		'age_lower':0.0,
+		'age_upper':100.0,
+		'time_lower':1990.0,
+		'time_upper':2010.0
+	}
+	data_list = []
+	row['node']       = 'north_america'
+	row['meas_value'] = 1e-5
+	data_list.append( copy.copy(row) )
+	row['node']       = 'united_states'
+	row['meas_value'] = 1.5e-5
+	data_list.append( copy.copy(row) )
+	row['node']       = 'canada'
+	row['meas_value'] = 0.5e-5
+	data_list.append( copy.copy(row) )
 	#
-	row[node_id_index]     = north_america_id
-	row[meas_value_index]  = 1e-5
-	row_list.append( copy.copy(row) )
-	#
-	row[node_id_index]     = united_states_id
-	row[meas_value_index]  = 1.5e-5
-	row_list.append( copy.copy(row) )
-	#
-	row[node_id_index]     = canada_id
-	row[meas_value_index]  = 1.5e-5
-	row_list.append( copy.copy(row) )
-	#
-	tbl_name = 'data'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_database(
+		file_name, 
+		node_list, 
+		weight_list, 
+		covariate_list,
+		data_list
+	)
 	# -----------------------------------------------------------------------
+	new        = False
+	connection = dismod_at.create_connection(file_name, new)
+	#
 	# create the like table
 	col_name = [ 
 		'like_id', 
@@ -152,6 +86,7 @@ def get_started() :
 		'density',
 		'eta'  
 	]
+	ptype    = 'integer primary key'
 	col_type = [ 
 		ptype,            # like_id 
 		'text',           # like_name	

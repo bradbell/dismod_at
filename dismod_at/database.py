@@ -268,16 +268,13 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #	%node_list%,
 #	%weight_list%,
 #	%covariate_list%,
-#	%data_list%,
+#	%data_list%
 # )%$$
 #
 # $head Purpose$$
 # This routine makes it easy to create all the 
 # $cref input$$ tables in a $code dismod_at$$ database.
-# It is not necessary to use this routine, nor is it necessary
-# to use the same settings as this routine. For example,
-# the column order and the primary key values need not be as chosen
-# by this routine.
+# This is only meant for small example and testing cases and is not efficient.
 #
 # $head file_name$$
 # is as $code str$$ containing the name of the file where the data base 
@@ -286,54 +283,55 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #
 # $head node_list$$
 # This is a list of $code dict$$
-# that define the rows of the $cref node_table$$. 
-# If 
-# $codei%
-#	%name%   = node_list%[%i%]['name']
-#	%parent% = node_list%[%i%]['parent']
-# %$$ 
-# $icode name$$ is a $code str$$ name for the $th i$$ node and
-# $icode parent$$ is the $code int$$ for the corresponding parent node.
-# If the $th i$$ node does not have a parent, $icode parent$$ is $code None$$. 
+# that define the rows of the $cref node_table$$.
+# The dictionary $icode%node_list%[%i%]%$$ has the following:
+# $table
+# Key     $cnext Value Type    $cnext Description                $rnext
+# name    $cnext str           $cnext name for the $th i$$ node  $rnext
+# parent  $cnext str           $cnext name ofr parent of the $th i$$ node
+# $tend
 #
 # $head weight_list$$
-# This is a list of $code dict$$ that define the rows of the 
-# $cref weight_grid$$ table and $cref weight_table$$. 
-# If 
-# $codei%
-#	%name% = weight_list%[%i%]['name']
-#	%age%  = weight_list%[%i%]['age']
-#	%time% = weight_list%[%i%]['time']
-#	%fun%  = weight_list%[%i%]['fun']
-# %$$ 
-# $icode name$$ is a $code str$$ name for the $th i$$ weighting function,
-# $icode age$$ is a $code list$$ of $code float$$ ages,
-# $icode time$$ is a $code list$$ of $code float$$ times, and
-# $icode%fun%(%a%, %t%)%$$ is the weighting function.
+# This is a list of $code dict$$
+# that define the rows of the $cref weight_grid$$ table and
+# $cref weight_table$$.
+# The dictionary $icode%weight_list%[%i%]%$$ has the following:
+# $table
+# Key    $cnext Value Type    $cnext Description                $rnext
+# name   $cnext str           $cnext name of $th i$$ weighting  $rnext
+# age    $cnext list of float $cnext grid for age values        $rnext
+# time   $cnext list of float $cnext grid for time values       $rnext
+# fun    $cnext function      $cnext %icode%w%=%fun%(%a%, %t%) 
+# $tend
 #
 # $head covariate_list$$
-# This is a list of $code dict$$ 
+# This is a list of $code dict$$
 # that define the rows of the $cref covariate_table$$.
-# If 
-# $codei%
-#	%name%      = covariate_list%[%i%]['name']
-#	%reference% = covariate_list%[%i%]['reference']
-# %$$ 
-# $icode name$$ is a $code str$$ name for the $th i$$ covariate and
-# $icode reference$$ is the $code float$$ reference value for the covariate.
+# The dictionary $icode%covariate_list%[%i%]%$$ has the following:
+# $table
+# Key       $cnext Value Type  $cnext Description                     $rnext
+# name      $cnext str         $cnext name for the $th i$$ covariate  $rnext
+# reference $cnext float       $cnext reference value for $th i$$ covariate
+# $tend
 #
 # $head data_list$$
 # This is a list of $code dict$$ 
 # that define the rows of the $cref data_table$$.
-# If 
-# $codei%
-#	%integrand% = data_list%[%i%]['integrand']
-#	%node%      = data_list%[%i%]['node']
-# %$$ 
-# $icode integrand$$ is $code str$$ integrand for the $th i$$ data point,
-# $icode node$$ is $code str$$ node for the $th i$$ data point,
-# $icode weight$$ is $code str$$ weight for the $th i$$ data point,
-# $icode meas_value$$ is $code float$$ measurement for $th i$$ data point,
+# The dictionary $icode%data_list%[%i%]%$$ has the following:
+# $table
+# Key          $cnext Value Type  $cnext Description                 $rnext 
+# integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext 
+# node         $cnext str         $cnext node in graph               $rnext 
+# weight       $cnext str         $cnext weighting function          $rnext 
+# meas_value   $cnext float       $cnext measured value              $rnext 
+# meas_std     $cnext float       $cnext standard deviation          $rnext 
+# meas_density $cnext str         $cnext density function            $rnext 
+# meas_eta     $cnext float       $cnext density function            $rnext 
+# age_lower    $cnext float       $cnext lower age limit             $rnext 
+# age_upper    $cnext float       $cnext upper age limit             $rnext 
+# time_lower   $cnext float       $cnext lower time limit            $rnext
+# time_lower   $cnext float       $cnext upper time limit
+# $tend
 # 
 # $end
 def create_database(
@@ -341,6 +339,7 @@ def create_database(
 	node_list,
 	weight_list,
 	covariate_list,
+	data_list
 ) :
 	# -----------------------------------------------------------------------
 	# primary key type
@@ -348,7 +347,7 @@ def create_database(
 	# -----------------------------------------------------------------------
 	# create database
 	new            = True
-	connection     = dismod_at.create_connection(file_name, new)
+	connection     = create_connection(file_name, new)
 	# ------------------------------------------------------------------------
 	# create integrand table
 	col_name = [  'integrand_id', 'integrand_name'  ]
@@ -366,17 +365,29 @@ def create_database(
 		[ None,   'relrisk'     ]
 	]
 	tbl_name = 'intergrand'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
+	#
+	global_integrand_name2id = {}
+	for i in range( len(row_list) ) :
+		global_integrand_name2id[ row_list[i][1] ] = i
 	# ------------------------------------------------------------------------
 	# create node table
+	global_node_name2id = {}
+	for i in range( len(node_list) ) :
+		global_node_name2id[ node_list[i]['name'] ] = i
+	#
 	col_name = [ 'node_id', 'node_name', 'parent_id' ]
 	col_type = [ ptype,     'text',      'integer'   ]
 	row_list = []
 	for i in range( len(node_list) ) :
-		node = node_list[i]
-		row_list.append( i, node['name'], node['parent'] )
+		node   = node_list[i]
+		name   = node['name']
+		parent = node['parent']
+		if parent!= None :
+			parent = global_node_name2id[parent]
+		row_list.append( [ i, name, parent ] )
 	tbl_name = 'node'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
 	# create weight_grid table
 	col_name = [   'weight_grid_id', 'weight_grid_name'   ]
@@ -384,9 +395,13 @@ def create_database(
 	row_list = [ ]
 	for i in range( len(weight_list) ) :
 		weight = weight_list[i]
-		row_list.append( i, weight['name'])
+		row_list.append( [ i, weight['name'] ] )
 	tbl_name = 'weight_grid'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
+	#
+	global_weight_grid_name2id = {}
+	for i in range( len(weight_list) ) :
+		global_weight_grid_name2id[ weight_list[i]['name'] ] = i
 	# ------------------------------------------------------------------------
 	# create weight table
 	col_name = [  'weight_id', 'weight_grid_id', 'age',   'time',  'weight' ]
@@ -402,7 +417,7 @@ def create_database(
 				w = fun(a, t)
 				row_list.append( [ None, i, a, t, w] )
 	tbl_name = 'weight'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create covariate table
 	col_name = [ 'covariate_id', 'covariate_name',	'reference' ]
@@ -410,7 +425,62 @@ def create_database(
 	row_list = [ ]
 	for i in range( len(covariate_list) ) :
 		covariate = covariate_list[i]
-		row_list.append( i, covariate['name'], covariate['reference'] )
+		row_list.append( [ i, covariate['name'], covariate['reference'] ] )
 	tbl_name = 'covariate'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
+	# create the data table
+	col_name = [
+		'data_id',
+		'integrand_id',
+		'node_id',
+		'weight_grid_id',
+		'meas_value',
+		'meas_std',
+		'meas_density',
+		'meas_eta',
+		'age_lower',
+		'age_upper',
+		'time_lower',
+		'time_upper',
+	]
+	col_type = [
+		ptype,                  # data_id
+		'integer',              # integrand_id
+		'integer',              # node_id
+		'integer',              # weight_grid_id
+		'real',                 # meas_value
+		'real',                 # meas_std
+		'text',                 # meas_density
+		'real',                 # meas_eta
+		'real',                 # age_lower
+		'real',                 # age_upper
+		'real',                 # time_lower
+		'real',                 # time_upper
+	]
+	row_list = [ ]
+	for i in range( len(data_list) ) :
+		data = data_list[i]
+		data_id      = i
+		integrand_id = global_integrand_name2id[ data['integrand'] ]
+		node_id      = global_node_name2id[ data['node'] ]
+		weight_grid_id = global_weight_grid_name2id[ data['weight'] ]
+		row = [ 
+			data_id,
+			integrand_id,
+			node_id,
+			weight_grid_id,
+			data['meas_value'],
+			data['meas_std'],
+			data['meas_density'],
+			data['meas_eta'],
+			data['age_lower'],
+			data['age_upper'],
+			data['time_lower'],
+			data['time_upper']
+		]
+		row_list.append(row)
+	tbl_name = 'data'
+	create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------ 
+	return
