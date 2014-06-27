@@ -59,17 +59,17 @@ def like_table() :
 		None,             # upper	
 		0,                # mean	
 		None,             # std	
-		'gaussian',       # density
+		None,             # density
 		None              # eta
 	],[
 		2,                # like_id 
 		'rate',           # like_name	
 		0.0,              # lower	
 		1.0,              # upper	
-		0,                # mean	
+		0.1,              # mean	
 		None,             # std	
-		'log_gaussian',   # density
-		1e-4              # eta
+		None,             # density
+		None              # eta
 	] ]
 
 	tbl_name = 'like'
