@@ -30,9 +30,9 @@ def smooth_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	# 
-	# create smooth_grid table
+	# create smooth table
 	ptype    = 'integer primary key'
-	col_name = [ 'smooth_grid_id', 'smooth_grid_name' ]
+	col_name = [ 'smooth_id', 'smooth_name' ]
 	col_type = [ ptype,            'text'          ]
 	row_list = [
 	           [ 0,                'constant'      ],
@@ -40,13 +40,13 @@ def smooth_table() :
 	           [ 2,                'time_only'     ],
 	           [ 3,                'age_time'      ] 
 	]
-	tbl_name = 'smooth_grid'
+	tbl_name = 'smooth'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# 
-	# smooth table column names
+	# smooth_prior table column names
 	col_name = [
+		'smooth_prior_id', 
 		'smooth_id', 
-		'smooth_grid_id', 
 		'age',  
 		'time',  
 		'value_like_id',
@@ -54,10 +54,10 @@ def smooth_table() :
 		'dtime_like_id',
 	]
 	#
-	# smooth table column types
+	# smooth_prior table column types
 	col_type = [
-		ptype,      # smooth_id
-		'integer',  # smooth_grid_id
+		ptype,      # smooth_prior_id
+		'integer',  # smooth_id
 		'real',     # age
 		'real',     # time
 		'integer',  # value_like_id
@@ -65,13 +65,13 @@ def smooth_table() :
 		'integer',  # dtime_like_id
 	]
 	#
-	# smooth table values
+	# smooth_prior table values
 	row_list = list()
 	default  = [
-		None,       # smooth_id
-		3,          # smooth_grid_id     (age_time)
-		None,       # age                (age  index is 2)
-		None,       # time               (time index is 3)
+		None,       # smooth_prior_id
+		3,          # smooth_id          (smooth_id == 3 is age_time)
+		None,       # age                (age  index is 2 in default)
+		None,       # time               (time index is 3 in default)
 		1,          # value_like_id
 		1,          # dage_like_id
 		1           # dtime_like_id
@@ -87,14 +87,14 @@ def smooth_table() :
 			age_time.append( (age, time) )
 	#
 	# write the table
-	tbl_name = 'smooth'
+	tbl_name = 'smooth_prior'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in the table
 	columns = ','.join(col_name)
-	cmd     = 'SELECT ' + columns + ' FROM smooth'
-	cmd    += ' JOIN smooth_grid USING(smooth_grid_id) '
-	cmd    += ' WHERE smooth_grid_name = "age_time"'
+	cmd     = 'SELECT ' + columns + ' FROM smooth_prior'
+	cmd    += ' JOIN smooth USING(smooth_id) '
+	cmd    += ' WHERE smooth_name = "age_time"'
 	count        = 0
 	cursor       = connection.cursor()
 	for row in cursor.execute(cmd) :

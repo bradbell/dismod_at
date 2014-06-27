@@ -1,0 +1,75 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin smooth_prior$$ 
+$spell
+	grid
+	agetime
+	std
+	dage
+	dtime
+$$
+$index smooth, prior table$$
+$index table, smooth prior$$
+$index prior, smooth table$$
+
+$section The Smoothing Prior Table$$
+This table specifies the smoothing prior for a function of age and time.
+It has the following columns:
+
+$head smooth_prior_id$$
+This column has type $code integer$$ and is the primary key for
+the $code smooth_prior$$ table.
+
+$head smooth_id$$
+This column has type $code integer$$ and is the primary key for
+the $cref smooth_table$$.
+Each value $icode smooth_id$$ corresponds to a different smoothing prior.
+
+$subhead age$$
+This column 
+has type $code real$$ and is value is the age value for this grid point.
+For each fixed value of $icode smooth_id$$ and $icode time$$,
+the set of corresponding $icode age$$ values is constant; i.e.,
+the grid corresponding to $icode smooth_id$$ is rectangular.
+
+$subhead time$$
+This column 
+has type $code real$$ and is value is the time value for this grid point.
+For each fixed value of $icode smooth_id$$ and $icode age$$,
+the set of corresponding $icode time$$ values is constant; i.e.,
+the grid corresponding to $icode smooth_id$$ is rectangular.
+
+$head value_like_id$$
+This column has type $code integer$$ and its value in a row is the
+$icode like_id$$, in the $cref like_table$$,
+for the prior that is used for 
+this smoothing at this age and time.
+
+$head dage_like_id$$
+This column has type $code integer$$ and its value in a row is the
+$icode like_id$$, in the $cref like_table$$,
+for the prior that is used for the 
+function's forward difference quotients w.r.t age. 
+The likelihood at the maximum age, for each time, is not used.
+
+$head dtime_like_id$$
+This column has type $code integer$$ and its value in a row is the
+$icode like_id$$, in the $cref like_table$$,
+for the prior that is used for the 
+function's forward difference quotients w.r.t time. 
+The likelihood at the maximum time, for each age, is not used.
+
+$comment example/table/smooth_table.py is included by smooth_table.omh$$
+$head Example$$
+The file $cref smooth_table.py$$ 
+contains an example $code smooth_prior$$ table.
+
+$end

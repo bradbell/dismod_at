@@ -59,10 +59,10 @@ $head covariate_id$$
 This column has type $code integer$$ and is its value is the
 primary key for the $cref covariate_table$$.
 
-$head smooth_grid_id$$
+$head smooth_id$$
 This column has type $code integer$$ and its value in a row is a
-$cref/smooth_grid_id/smooth_table/smooth_grid_id/$$ 
-in the $code smooth$$ table.
+$cref/smooth_id/smooth_table/smooth_id/$$ 
+in the $cref smooth_prior$$ table.
 It specifies the prior for this covariate multiplier
 (as a fixed effect).
 

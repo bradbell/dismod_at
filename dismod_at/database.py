@@ -357,8 +357,8 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #
 # $head smooth_list$$
 # This is a list of $code dict$$
-# that define the rows of the $cref smooth_grid$$ table and
-# $cref smooth_table$$.
+# that define the rows of the $cref smooth_table$$ and
+# $cref smooth_prior$$ table.
 # The dictionary $icode%smooth_list%[%i%]%$$ has the following:
 # $table
 # Key    $cnext Value Type    $cnext Description                $rnext
@@ -595,24 +595,24 @@ def create_database(
 	for i in range( len(row_list) ) :
 		global_like_name2id[ row_list[i][1] ] = i
 	# ------------------------------------------------------------------------ 
-	# create smooth_grid table
-	col_name = [   'smooth_grid_id', 'smooth_grid_name'   ]
-	col_type = [   ptype,            'text'               ]
+	# create smooth table
+	col_name = [   'smooth_id', 'smooth_name'   ]
+	col_type = [   ptype,       'text'          ]
 	row_list = [ ]
 	for i in range( len(smooth_list) ) :
 		smooth = smooth_list[i]
 		row_list.append( [ i, smooth['name'] ] )
-	tbl_name = 'smooth_grid'
+	tbl_name = 'smooth'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
-	global_smooth_grid_name2id = {}
+	global_smooth_name2id = {}
 	for i in range( len(smooth_list) ) :
-		global_smooth_grid_name2id[ smooth_list[i]['name'] ] = i
+		global_smooth_name2id[ smooth_list[i]['name'] ] = i
 	# ------------------------------------------------------------------------
-	# create smooth table
+	# create smooth prior table
 	col_name = [
+		'smooth_prior_id', 
 		'smooth_id', 
-		'smooth_grid_id', 
 		'age',  
 		'time',  
 		'value_like_id',
@@ -620,8 +620,8 @@ def create_database(
 		'dtime_like_id',
 	]
 	col_type = [
-		ptype,      # smooth_id
-		'integer',  # smooth_grid_id
+		ptype,      # smooth_prior_id
+		'integer',  # smooth_id
 		'real',     # age
 		'real',     # time
 		'integer',  # value_like_id
@@ -641,7 +641,7 @@ def create_database(
 				da        = global_like_name2id[da]
 				dt        = global_like_name2id[dt]
 				row_list.append( [ None, i, a, t, v, da, dt] )
-	tbl_name = 'smooth'
+	tbl_name = 'smooth_prior'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# create rate table
@@ -659,7 +659,7 @@ def create_database(
 		global_rate_name2id[ rate_list[i]['name'] ] = i
 	# ------------------------------------------------------------------------
 	# create rate_prior table
-	col_name = [ 'rate_prior_id', 'rate_id', 'is_parent',   'smooth_grid_id' ]
+	col_name = [ 'rate_prior_id', 'rate_id', 'is_parent',   'smooth_id' ]
 	col_type = [ ptype,           'integer', 'integer',     'integer'        ]
 	row_list = [ ]
 	for i in range( len(rate_list) ) :
@@ -669,8 +669,8 @@ def create_database(
 			is_parent = 1
 		else :
 			is_parent = 0
-		smooth_grid_id = global_smooth_grid_name2id[ rate['smooth'] ]
-		row_list.append( [ None, rate_id, is_parent, smooth_grid_id ] )
+		smooth_id = global_smooth_name2id[ rate['smooth'] ]
+		row_list.append( [ None, rate_id, is_parent, smooth_id ] )
 	tbl_name = 'rate_prior'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
@@ -680,14 +680,14 @@ def create_database(
 		'multiplier_type',
 		'multiplier_index',
 		'covariate_id', 
-  		'smooth_grid_id'
+  		'smooth_id'
 	]
 	col_type = [ 
 		ptype,     # multiplier_id
 		'text',    # multiplier_type
 		'integer', # multiplier_index
 		'integer', # covariate_id
-  		'integer'  # smooth_grid_id'
+  		'integer'  # smooth_id'
 	]
 	row_list = []
 	for i in range( len(multiplier_list) ) :
@@ -699,7 +699,7 @@ def create_database(
 		else : 
 			multiplier_index = global_integrand_name2id[ effected ]
 		covariate_id  = global_covariate_name2id[ multiplier['covariate'] ]
-		smooth_id     = global_smooth_grid_name2id[ multiplier['smooth'] ]
+		smooth_id     = global_smooth_name2id[ multiplier['smooth'] ]
 		row_list.append(
 			[i, multiplier_type, multiplier_index, covariate_id, smooth_id]
 		)

@@ -46,7 +46,7 @@ If $icode variable_type$$ is $code multiplier$$,
 the value $icode variable_index$$ is equal to the 
 $cref/multiplier_id/multiplier_table/multiplier_id/$$ for this variable.
 Note that the age-time grid for this variable will be the same as for 
-the $cref/smooth_grid_id/multiplier_table/smooth_grid_id/$$ that corresponds
+the $cref/smooth_id/multiplier_table/smooth_id/$$ that corresponds
 to this $icode multiplier_id$$.
 
 $subhead rate$$
@@ -54,7 +54,7 @@ If $icode variable_type$$ is $code rate$$,
 the value $icode variable_index$$ is equal to the 
 $cref/rate_prior_id/rate_prior/rate_prior_id/$$ for this variable.
 Note that the age-time grid for this variable will be the same as for 
-the $cref/smooth_grid_id/rate_prior/smooth_grid_id/$$ that corresponds
+the $cref/smooth_id/rate_prior/smooth_id/$$ that corresponds
 to this $icode rate_prior_id$$.
 
 $head age$$
