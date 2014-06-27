@@ -37,9 +37,9 @@ $head node_id$$
 This column has type $code integer$$ and identifies the node
 for this measurement.
 
-$head weight_grid_id$$
+$head weight_id$$
 This column has type $code integer$$ and its value identifies a
-$cref/weight_grid_id/weight_table/weight_grid_id/$$ value int the
+$cref/weight_id/weight_table/weight_id/$$ value in the
 $code weight$$ table.
 
 $head meas_value$$

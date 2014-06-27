@@ -1,0 +1,59 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin weight_grid$$ 
+$spell
+	agetime
+	grid
+$$
+$index weight, grid table$$
+$index table, grid weight$$
+$index grid, weight table$$
+
+$section The Weight Grid Table$$
+This table specifies the age-time weighting functions on a grid.
+It has the following columns:
+
+$head weight_grid_id$$
+This column has type $code integer$$ and is the primary key for
+the $code weight_grid$$ table.
+
+$head weight_id$$
+This column has type $code integer$$ and is the primary key for
+the $cref weight_table$$.
+Each value $icode weight_id$$ corresponds to a different weighting.
+
+$subhead age$$
+This column 
+has type $code real$$ and is value is the age value for this grid point.
+For each fixed value of $icode weight_id$$ and $icode time$$,
+the set of corresponding $icode age$$ values is constant; i.e.,
+the grid corresponding to $icode weight_id$$ is rectangular.
+
+$subhead time$$
+This column 
+has type $code real$$ and is value is the time value for this grid point.
+For each fixed value of $icode weight_id$$ and $icode age$$,
+the set of corresponding $icode time$$ values is constant; i.e.,
+the grid corresponding to $icode weight_id$$ is rectangular.
+
+
+$head weight$$
+This column has type $code real$$.
+For each row in the table, the value in this column
+is the weighting, at the corresponding age and time,
+and for the specified $icode weight_id$$,
+
+$comment example/table/weight_table.py is included by weight_table.omh$$
+$head Example$$
+The file $cref weight_table.py$$ 
+contains an example $code weight_grid$$ table.
+
+$end

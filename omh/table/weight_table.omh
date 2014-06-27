@@ -8,48 +8,21 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin weight_table$$ 
+$begin weight_table$$
 $spell
-	agetime
 	grid
 $$
-$index weight, table$$
-$index table, weight$$
 
-$section The Weight Table$$
-This table specifies the age-time weighting functions.
-It has the following columns:
+$section Smoothing Grid Table$$
 
 $head weight_id$$
-This column has type $code integer$$ and is the primary key for
-the $code weight$$ table.
+This column has type $code integer$$ and is the primary key for 
+the this table.
 
-$head weight_grid_id$$
-This column has type $code integer$$ and is the primary key for
-the $cref weight_grid$$ table.
-Each value $icode weight_grid_id$$ corresponds
-to a different weighting.
-
-$subhead age$$
-This column 
-has type $code real$$ and is value is the age value for this grid point.
-For each fixed value of $icode weight_grid_id$$ and $icode time$$,
-the set of corresponding $icode age$$ values is constant; i.e.,
-the grid corresponding to $icode weight_grid_id$$ is rectangular.
-
-$subhead time$$
-This column 
-has type $code real$$ and is value is the time value for this grid point.
-For each fixed value of $icode smooth_grid_id$$ and $icode age$$,
-the set of corresponding $icode time$$ values is constant; i.e.,
-the grid corresponding to $icode smooth_grid_id$$ is rectangular.
-
-
-$head weight$$
-This column has type $code real$$.
-For each row in the table, the value in this column
-is the weighting, at the corresponding age and time,
-and for the specified $icode weight_id$$,
+$head weight_name$$ 
+This column has type $code text$$ and has a different value for every row; 
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
 
 $children%example/table/weight_table.py
 %$$

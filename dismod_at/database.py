@@ -299,8 +299,8 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #
 # $head weight_list$$
 # This is a list of $code dict$$
-# that define the rows of the $cref weight_grid$$ table and
-# $cref weight_table$$.
+# that define the rows of the $cref weight_table$$ and
+# $cref weight_grid$$ table.
 # The dictionary $icode%weight_list%[%i%]%$$ has the following:
 # $table
 # Key    $cnext Value Type    $cnext Description                $rnext
@@ -455,23 +455,23 @@ def create_database(
 	tbl_name = 'node'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
-	# create weight_grid table
-	col_name = [   'weight_grid_id', 'weight_grid_name'   ]
-	col_type = [   ptype,            'text'               ]
+	# create weight table
+	col_name = [   'weight_id', 'weight_name'   ]
+	col_type = [   ptype,       'text'          ]
 	row_list = [ ]
 	for i in range( len(weight_list) ) :
 		weight = weight_list[i]
 		row_list.append( [ i, weight['name'] ] )
-	tbl_name = 'weight_grid'
+	tbl_name = 'weight'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
-	global_weight_grid_name2id = {}
+	global_weight_name2id = {}
 	for i in range( len(weight_list) ) :
-		global_weight_grid_name2id[ weight_list[i]['name'] ] = i
+		global_weight_name2id[ weight_list[i]['name'] ] = i
 	# ------------------------------------------------------------------------
 	# create weight table
-	col_name = [  'weight_id', 'weight_grid_id', 'age',   'time',  'weight' ]
-	col_type = [  ptype,       'integer',        'real',  'real',  'real'   ]
+	col_name = [  'weight_grid_id', 'weight_id', 'age',   'time',  'weight' ]
+	col_type = [  ptype,            'integer',   'real',  'real',  'real'   ]
 	row_list = [ ]
 	for i in range( len(weight_list) ) :
 		weight = weight_list[i]
@@ -482,7 +482,7 @@ def create_database(
 			for t in time :
 				w = fun(a, t)
 				row_list.append( [ None, i, a, t, w] )
-	tbl_name = 'weight'
+	tbl_name = 'weight_grid'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create covariate table
@@ -504,7 +504,7 @@ def create_database(
 		'data_id',
 		'integrand_id',
 		'node_id',
-		'weight_grid_id',
+		'weight_id',
 		'meas_value',
 		'meas_std',
 		'meas_density',
@@ -518,7 +518,7 @@ def create_database(
 		ptype,                  # data_id
 		'integer',              # integrand_id
 		'integer',              # node_id
-		'integer',              # weight_grid_id
+		'integer',              # weight_id
 		'real',                 # meas_value
 		'real',                 # meas_std
 		'text',                 # meas_density
@@ -534,12 +534,12 @@ def create_database(
 		data_id      = i
 		integrand_id = global_integrand_name2id[ data['integrand'] ]
 		node_id      = global_node_name2id[ data['node'] ]
-		weight_grid_id = global_weight_grid_name2id[ data['weight'] ]
+		weight_id    = global_weight_name2id[ data['weight'] ]
 		row = [ 
 			data_id,
 			integrand_id,
 			node_id,
-			weight_grid_id,
+			weight_id,
 			data['meas_value'],
 			data['meas_std'],
 			data['meas_density'],
