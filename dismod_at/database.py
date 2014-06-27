@@ -260,6 +260,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #	covariate
 #	std
 #	str
+#	bool
 # $$
 #
 # $section Under Construction: Create a Dismod_at Database$$
@@ -381,6 +382,18 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # parent $cnext bool          $cnext is this a parent prior     $rnext
 # smooth $cnext str           $cnext smoothing name
 # $tend
+#
+# $head multiplier_list$$
+# This is a list of $code dict$$
+# that define the rows of the $cref multiplier_table$$.
+# The dictionary $icode%rate_list%[%i%]%$$ has the following:
+# $table
+# Key       $cnext Value Type  $cnext Description                $rnext
+# covariate $cnext str         $cnext is the covariate column    $rnext
+# type      $cnext str         $cnext rate, mean, or std         $rnext
+# effected  $cnext str         $cnext integrand or rate effected $rnext
+# smooth    $cnext str         $cnext smoothing name
+# $tend
 # 
 # $end
 def create_database(
@@ -391,7 +404,8 @@ def create_database(
 	data_list,
 	like_list,
 	smooth_list,
-	rate_list
+	rate_list,
+	multiplier_list
 ) :
 	# -----------------------------------------------------------------------
 	# primary key type
@@ -480,6 +494,10 @@ def create_database(
 		row_list.append( [ i, covariate['name'], covariate['reference'] ] )
 	tbl_name = 'covariate'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
+	#
+	global_covariate_name2id = {}
+	for i in range( len(covariate_list) ) :
+		global_covariate_name2id[ covariate_list[i]['name'] ] = i
 	# ------------------------------------------------------------------------ 
 	# create the data table
 	col_name = [
@@ -654,6 +672,38 @@ def create_database(
 		smooth_grid_id = global_smooth_grid_name2id[ rate['smooth'] ]
 		row_list.append( [ None, rate_id, is_parent, smooth_grid_id ] )
 	tbl_name = 'rate_prior'
+	create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------ 
+	# multiplier table
+	col_name = [ 
+		'multiplier_id', 
+		'multiplier_type',
+		'multiplier_index',
+		'covariate_id', 
+  		'smooth_grid_id'
+	]
+	col_type = [ 
+		ptype,     # multiplier_id
+		'text',    # multiplier_type
+		'integer', # multiplier_index
+		'integer', # covariate_id
+  		'integer'  # smooth_grid_id'
+	]
+	row_list = []
+	for i in range( len(multiplier_list) ) :
+		multiplier      = multiplier_list[i]
+		multiplier_type = multiplier['type']
+		effected        = multiplier['effected']
+		if multiplier_type == 'rate' :
+			multiplier_index = global_rate_name2id[ effected ]
+		else : 
+			multiplier_index = global_integrand_name2id[ effected ]
+		covariate_id  = global_covariate_name2id[ multiplier['covariate'] ]
+		smooth_id     = global_smooth_grid_name2id[ multiplier['smooth'] ]
+		row_list.append(
+			[i, multiplier_type, multiplier_index, covariate_id, smooth_id]
+		)
+	tbl_name = 'multiplier'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	return

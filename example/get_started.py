@@ -100,6 +100,13 @@ def get_started() :
 			'smooth':'constant'
 		}
 	]
+	multiplier_list = [
+		{	'covariate':'sex',
+			'type':'rate',
+			'effected':'omega',
+			'smooth':'constant'
+		}
+	]
 	dismod_at.create_database(
 		file_name, 
 		node_list, 
@@ -108,34 +115,9 @@ def get_started() :
 		data_list,
 		like_list,
 		smooth_list,
-		rate_list
+		rate_list,
+		multiplier_list
 	)
 	# -----------------------------------------------------------------------
-	new        = False
-	connection = dismod_at.create_connection(file_name, new)
-	ptype      = 'intger primary key'
-	#
-	# ------------------------------------------------------------------------ 
-	# multiplier table
-	col_name = [ 
-		'multiplier_id', 
-		'multiplier_use',
-		'covariate_id', 
-		'integrand_id',
-		'rate_name',
-  		'smooth_grid_id'
-	]
-	col_type = [ 
-		ptype,     # multiplier_id
-		'text',    # multiplier_use
-		'integer', # covariate_id
-		'integer', # integrand_id
-		'text',    # rate_name
-  		'integer'  # smooth_grid_id'
-	]
-	row_list = [ ]
-	tbl_name = 'multiplier'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	#
 	print('get_started: OK')
 # END PYTHON

@@ -33,27 +33,24 @@ def multiplier_table() :
 	# create a multiplier table
 	col_name = [ 
 		'multiplier_id', 
-		'multiplier_use',
+		'multiplier_type',
+		'multiplier_index',
 		'covariate_id', 
-		'integrand_id',
-		'rate_name',
   		'smooth_grid_id'
 	]
 	ptype    = 'integer primary key'
 	col_type = [ 
 		ptype,     # multiplier_id
-		'text',    # multiplier_use
+		'text',    # multiplier_type
+		'integer', # multiplier_index
 		'integer', # covariate_id
-		'integer', # integrand_id
-		'text',    # rate_name
   		'integer'  # smooth_grid_id'
 	]
 	row_list = [ [
 		0,      # multiplier_id
-		'mean', # muitiplier_use
+		'mean', # muitiplier_type
+		2,      # multiplier_index = integrand_id
 		1,      # covariate_id
-		None,   # integrand_id
-		'iota', # rate_name
 		2       # smooth_grid_id'
 	] ]
 	tbl_name = 'multiplier'
