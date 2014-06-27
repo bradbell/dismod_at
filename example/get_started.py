@@ -90,6 +90,16 @@ def get_started() :
 			'fun':constant_smooth_fun
 		}
 	] 
+	rate_list = [
+		{	'name':'omega',
+			'parent':True,
+			'smooth':'constant'
+		},{
+			'name':'omega',
+			'parent':False,
+			'smooth':'constant'
+		}
+	]
 	dismod_at.create_database(
 		file_name, 
 		node_list, 
@@ -97,7 +107,8 @@ def get_started() :
 		covariate_list,
 		data_list,
 		like_list,
-		smooth_list
+		smooth_list,
+		rate_list
 	)
 	# -----------------------------------------------------------------------
 	new        = False
@@ -125,30 +136,6 @@ def get_started() :
 	row_list = [ ]
 	tbl_name = 'multiplier'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ----------------------------------------------------------------------- 
-	# rate table
-	col_name = [ 'rate_id',      'rate_name'  ]
-	col_type = [ ptype,          'text'       ]
-	row_list = [
-	           [ None,           'iota'       ],
-	           [ None,           'rho'        ],
-	           [ None,           'chi'        ],
-	           [ None,           'omega'      ]
-	]
-	tbl_name = 'rate'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ----------------------------------------------------------------------- 
-	# rate_prior table
-	constant_grid_id = 1 # (kludge until rate prior in create_database)
-	col_name = [ 'rate_prior_id','is_parent', 'rate_name', 'smooth_grid_id']
-	col_type = [ ptype,          'integer',   'text',      'integer'       ]
-	row_list = [
-	           [ 4,               1,           'omega',    constant_grid_id ],
-	           [ 8,               0,           'omega',    constant_grid_id ]
-	]
-	tbl_name = 'rate_prior'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ----------------------------------------------------------------------- 
 	#
 	print('get_started: OK')
 # END PYTHON
