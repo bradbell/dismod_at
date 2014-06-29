@@ -77,7 +77,6 @@ int main(int argc, char **argv){
       sqlite3_close(db);
       return(1);
   }
-# if 0
   // For some unknown reason: this request generates the erorr message 
   //  SQL error: no such table column: mytable.one
   const char *column_name[] = { "one", "two" };
@@ -89,7 +88,7 @@ int main(int argc, char **argv){
      int Autoinc;
      rc = sqlite3_table_column_metadata(
       db,
-      "example", 
+      "main", 
       "mytable", 
       column_name[j], 
       &zDataType, 
@@ -105,7 +104,6 @@ int main(int argc, char **argv){
     }
     printf("name = %s, type = %s\n", column_name[j], zDataType);
   }
-# endif
   rc = sqlite3_exec(db, "select one,two from mytable", callback, 0, &zErrMsg);
   if( rc!=SQLITE_OK ){
     fprintf(stderr, "SQL error: %s\n", zErrMsg);
