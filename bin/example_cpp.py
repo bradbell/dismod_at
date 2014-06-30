@@ -1,4 +1,4 @@
-#! /bin/bash -e
+#! /bin/env python
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
@@ -9,36 +9,36 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-if [ "$0" != 'bin/example_c.sh' ]
-then
-	echo 'bin/example_c.sh: must be executed from its parent directory.'
-	exit 1
-fi
-# -----------------------------------------------
-# bash function that echos and executes a command
-echo_eval() {
-	echo $*
-	eval $*
-}
+import sys
+import os
+import shutil
 # ------------------------------------------------------------------------
-if [ -e junk ]
-then
-	echo_eval rm -r junk
-fi
-echo_eval mkdir junk
-echo_eval cd junk
+if sys.argv[0] != 'bin/example_cpp.py' :
+	msg = 'bin/example_cpp.py: must be executed from its parent directory.'
+	sys.exit(msg)
+# ------------------------------------------------------------------------
+if os.path.isfile('junk') :
+	os.remove('junk')
+if os.path.isdir('junk' ) :
+	shutil.rmtree('junk')
+os.mkdir('junk')
+os.chdir('junk')
 # ------------------------------------------------------------------------
 # create a database and a table 
-cat << EOF > example.sql
+fp  = open('example.sql', 'w')
+sql = '''
 create table mytable(one text, two int);
 insert into mytable values('hello',   1);
 insert into mytable values('goodbye', 2);
 select * from mytable;
-EOF
-echo_eval sqlite3 example.db < example.sql
+'''
+fp.write(sql);
+fp.close();
+os.system('sqlite3 example.db < example.sql')
 # ------------------------------------------------------------------------
-# program that executes one sql statement
-cat << EOF > example.cpp
+# C++ program that executes one sql statement
+fp  = open('example.cpp', 'w')
+cpp = r'''
 # include <stdio.h>
 #include <sqlite3.h>
 
@@ -77,8 +77,6 @@ int main(int argc, char **argv){
       sqlite3_close(db);
       return(1);
   }
-  // For some unknown reason: this request generates the erorr message 
-  //  SQL error: no such table column: mytable.one
   const char *column_name[] = { "one", "two" };
   for(j = 0; j < 2; j++)
   {  const char *zDataType;
@@ -112,6 +110,8 @@ int main(int argc, char **argv){
   sqlite3_close(db);
   return 0;
 }
-EOF
-echo_eval g++ example.cpp -lsqlite3 -o example
-echo_eval ./example
+'''
+fp.write(cpp)
+fp.close()
+os.system('g++ example.cpp -lsqlite3 -o example')
+os.system('./example')
