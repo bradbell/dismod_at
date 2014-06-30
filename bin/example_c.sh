@@ -38,7 +38,7 @@ EOF
 echo_eval sqlite3 example.db < example.sql
 # ------------------------------------------------------------------------
 # program that executes one sql statement
-cat << EOF > example.c
+cat << EOF > example.cpp
 # include <stdio.h>
 #include <sqlite3.h>
 
@@ -113,5 +113,5 @@ int main(int argc, char **argv){
   return 0;
 }
 EOF
-echo_eval gcc example.c -lsqlite3 -o example
+echo_eval g++ example.cpp -lsqlite3 -o example
 echo_eval ./example
