@@ -50,31 +50,31 @@ bool get_table_column_xam(void)
 	exec_sql_cmd(db, "insert into  mytable values('hello',    1,       2.0)");
 	exec_sql_cmd(db, "insert into  mytable values('goodbye',  3,       4.0)");
 	string table_name   = "mytable";
-	string table_column;
+	string column_name;
 
 	// text 
-	table_column = "one";
+	column_name = "one";
 	CppAD::vector<string> text_result;
 	dismod_at::get_table_column(
-		db, table_name, table_column, text_result
+		db, table_name, column_name, text_result
 	);
 	ok &= text_result[0] == "hello";
 	ok &= text_result[1] == "goodbye";
 
 	// int 
-	table_column = "two";
+	column_name = "two";
 	CppAD::vector<int> int_result;
 	dismod_at::get_table_column(
-		db, table_name, table_column, int_result
+		db, table_name, column_name, int_result
 	);
 	ok &= int_result[0] == 1;
 	ok &= int_result[1] == 3;
 
 	// real 
-	table_column = "three";
+	column_name = "three";
 	CppAD::vector<double> real_result;
 	dismod_at::get_table_column(
-		db, table_name, table_column, real_result
+		db, table_name, column_name, real_result
 	);
 	ok &= real_result[0] == 2.0;
 	ok &= real_result[1] == 4.0;
