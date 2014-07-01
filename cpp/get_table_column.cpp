@@ -37,16 +37,19 @@ std::string get_table_column_type(
 
 
 namespace {
-	typedef CppAD::vector<std::string> vector_text;
+	typedef int (*callback_type)(void*, int, char**, char**);
 
-	int callback_text(void *result, int argc, char **argv, char **azColName)
-	{	int i;
+	template <class Element>
+	int callback(void *result, int argc, char **argv, char **azColName)
+	{	typedef CppAD::vector<Element> vector;
+		int i;
 		assert( argc == 1 );
 		assert( result != nullptr );
-		vector_text* text_result = static_cast<vector_text*>(result);
+		vector* text_result = static_cast<vector*>(result);
 		text_result->push_back( argv[0] );
   		return 0;
   	}
+	template int callback<std::string>(void*, int, char**, char**);
 }
 
 void dismod_at::get_table_column_text(
@@ -56,9 +59,10 @@ void dismod_at::get_table_column_text(
 	CppAD::vector<std::string>& text_result           )
 {	using std::cerr;
 	using std::endl;
+	using std::string;
 
 	// check the type for this column
-	std::string col_type = get_table_column_type(db, table_name, column_name);
+	string col_type = get_table_column_type(db, table_name, column_name);
 	assert( col_type == "text" );
 
 	// set for callback to use
@@ -66,15 +70,16 @@ void dismod_at::get_table_column_text(
 	void* result = static_cast<void*>(&text_result);
 
 	// sql command: select column_name from table_name
-	std::string cmd = "select ";
+	string cmd = "select ";
 	cmd += column_name;
 	cmd += " from ";
 	cmd += table_name;
 
 	// execute sql command
-	char* zErrMsg = nullptr;
-	void* NotUsed = nullptr;
-	int rc = sqlite3_exec(db, cmd.c_str(), callback_text, result, &zErrMsg);
+	char* zErrMsg     = nullptr;
+	void* NotUsed     = nullptr;
+	callback_type fun = callback<string>;
+	int rc = sqlite3_exec(db, cmd.c_str(), fun, result, &zErrMsg);
 	if( rc )
 	{	assert(zErrMsg != nullptr );
 		cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
