@@ -84,7 +84,7 @@ see http://www.gnu.org/licenses/agpl.txt
 EOF
 	;;
 
-	cmake | sh | py | R )
+	cmake | txt | sh | py | R )
 	cat << EOF  >> bin/add_copyright.$$
 # \$Id:\$
 #  --------------------------------------------------------------------------
