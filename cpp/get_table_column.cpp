@@ -50,6 +50,40 @@ namespace {
   		return 0;
   	}
 	template int callback<std::string>(void*, int, char**, char**);
+
+	template <class Element>
+	void get_table_column(
+		sqlite3*                    db                    , 
+		const std::string&          table_name            ,
+		const std::string&          column_name           ,
+		CppAD::vector<Element>&     vector_result         )
+	{	using std::cerr;
+		using std::endl;
+	
+		// check that initial vector is empty
+		assert( vector_result.size() == 0 );
+	
+		// sql command: select column_name from table_name
+		std::string cmd = "select ";
+		cmd            += column_name;
+		cmd            += " from ";
+		cmd            += table_name;
+	
+		// execute sql command
+		char* zErrMsg     = nullptr;
+		void* NotUsed     = nullptr;
+		callback_type fun = callback<Element>;
+		void* result      = static_cast<void*>(&vector_result);
+		int rc = sqlite3_exec(db, cmd.c_str(), fun, result, &zErrMsg);
+		if( rc )
+		{	assert(zErrMsg != nullptr );
+			cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+			sqlite3_free(zErrMsg);
+			sqlite3_close(db);
+			exit(1);
+		}
+		return;
+	}
 }
 
 void dismod_at::get_table_column_text(
@@ -57,35 +91,16 @@ void dismod_at::get_table_column_text(
 	const std::string&          table_name            ,
 	const std::string&          column_name           ,
 	CppAD::vector<std::string>& vector_result         )
-{	using std::cerr;
-	using std::endl;
-	using std::string;
-
+{
 	// check that initial vector is empty
 	assert( vector_result.size() == 0 );
 
 	// check the type for this column
-	string col_type = get_table_column_type(db, table_name, column_name);
+	std::string col_type = get_table_column_type(db, table_name, column_name);
 	assert( col_type == "text" );
 
-	// sql command: select column_name from table_name
-	string cmd = "select ";
-	cmd += column_name;
-	cmd += " from ";
-	cmd += table_name;
+	// Use template function for rest
+	get_table_column(db, table_name, column_name, vector_result);
 
-	// execute sql command
-	char* zErrMsg     = nullptr;
-	void* NotUsed     = nullptr;
-	callback_type fun = callback<string>;
-	void* result      = static_cast<void*>(&vector_result);
-	int rc = sqlite3_exec(db, cmd.c_str(), fun, result, &zErrMsg);
-	if( rc )
-	{	assert(zErrMsg != nullptr );
-		cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
-		sqlite3_free(zErrMsg);
-		sqlite3_close(db);
-		exit(1);
-	}
 	return;
 }
