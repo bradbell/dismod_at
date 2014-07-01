@@ -51,31 +51,44 @@ bool get_table_column_xam(void)
 	exec_sql_cmd(db, "insert into  mytable values('goodbye',  3,       4.0)");
 	string table_name   = "mytable";
 	string column_name;
+	string column_type;
 
 	// text 
 	column_name = "one";
+	column_type = dismod_at::get_table_column_type(
+		db, table_name, column_name
+	);
 	CppAD::vector<string> text_result;
 	dismod_at::get_table_column(
 		db, table_name, column_name, text_result
 	);
+	ok &= column_type    == "text";
 	ok &= text_result[0] == "hello";
 	ok &= text_result[1] == "goodbye";
 
 	// int 
 	column_name = "two";
+	column_type = dismod_at::get_table_column_type(
+		db, table_name, column_name
+	);
 	CppAD::vector<int> int_result;
 	dismod_at::get_table_column(
 		db, table_name, column_name, int_result
 	);
+	ok &= column_type   == "int";
 	ok &= int_result[0] == 1;
 	ok &= int_result[1] == 3;
 
 	// real 
 	column_name = "three";
 	CppAD::vector<double> real_result;
+	column_type = dismod_at::get_table_column_type(
+		db, table_name, column_name
+	);
 	dismod_at::get_table_column(
 		db, table_name, column_name, real_result
 	);
+	ok &= column_type    == "real";
 	ok &= real_result[0] == 2.0;
 	ok &= real_result[1] == 4.0;
 

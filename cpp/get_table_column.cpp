@@ -3,39 +3,6 @@
 # include <sqlite3.h>
 # include <dismod_at/get_table_column.hpp>
 
-std::string get_table_column_type(
-	sqlite3*           db          ,
-	const std::string& table_name  ,
-	const std::string& column_name )
-{	// check the type for this column
-	using std::cerr;
-	using std::endl;
-
-	const char *zDataType;
-	const char *zCollSeq;
-	int NotNull;
-	int PrimaryKey;
-	int Autoinc;
-	int rc = sqlite3_table_column_metadata(
-		db,
-		"main",
-		table_name.c_str(),
-		column_name.c_str(),
-		&zDataType, 
-		&zCollSeq, 
-		&NotNull, 
-		&PrimaryKey, 
-		&Autoinc
-	);
-	if( rc ){
-		cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
-		sqlite3_close(db);
-		exit(1);
-	}
-	return std::string(zDataType);
-}
-
-
 namespace {
 	typedef int (*callback_type)(void*, int, char**, char**);
 
@@ -93,7 +60,42 @@ namespace {
 	}
 }
 
-void dismod_at::get_table_column(
+namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
+
+std::string get_table_column_type(
+	sqlite3*           db          ,
+	const std::string& table_name  ,
+	const std::string& column_name )
+{	// check the type for this column
+	using std::cerr;
+	using std::endl;
+
+	const char *zDataType;
+	const char *zCollSeq;
+	int NotNull;
+	int PrimaryKey;
+	int Autoinc;
+	int rc = sqlite3_table_column_metadata(
+		db,
+		"main",
+		table_name.c_str(),
+		column_name.c_str(),
+		&zDataType, 
+		&zCollSeq, 
+		&NotNull, 
+		&PrimaryKey, 
+		&Autoinc
+	);
+	if( rc ){
+		cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+		sqlite3_close(db);
+		exit(1);
+	}
+	return std::string(zDataType);
+}
+
+
+void get_table_column(
 	sqlite3*                    db                  , 
 	const std::string&          table_name          ,
 	const std::string&          column_name         ,
@@ -112,7 +114,7 @@ void dismod_at::get_table_column(
 	return;
 }
 
-void dismod_at::get_table_column(
+void get_table_column(
 	sqlite3*                    db                 , 
 	const std::string&          table_name         ,
 	const std::string&          column_name        ,
@@ -131,7 +133,7 @@ void dismod_at::get_table_column(
 	return;
 }
 
-void dismod_at::get_table_column(
+void get_table_column(
 	sqlite3*                    db                 , 
 	const std::string&          table_name         ,
 	const std::string&          column_name        ,
@@ -149,3 +151,5 @@ void dismod_at::get_table_column(
 
 	return;
 }
+
+} // END DISMOD_AT_NAMESPACE
