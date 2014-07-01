@@ -130,3 +130,22 @@ void dismod_at::get_table_column(
 
 	return;
 }
+
+void dismod_at::get_table_column(
+	sqlite3*                    db                 , 
+	const std::string&          table_name         ,
+	const std::string&          column_name        ,
+	CppAD::vector<double>&      double_result      )
+{
+	// check that initial vector is empty
+	assert( double_result.size() == 0 );
+
+	// check the type for this column
+	std::string col_type = get_table_column_type(db, table_name, column_name);
+	assert( col_type == "real" );
+
+	// Use template function for rest
+	get_column(db, table_name, column_name, double_result);
+
+	return;
+}

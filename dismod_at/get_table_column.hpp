@@ -27,6 +27,12 @@ namespace dismod_at {
 		const std::string&          column_name           ,
 		CppAD::vector<int>&         int_result    
 	);
+	extern void get_table_column(
+		sqlite3*                    db                    , 
+		const std::string&          table_name            ,
+		const std::string&          column_name           ,
+		CppAD::vector<double>&      double_result    
+	);
 }
 
 # endif

@@ -70,6 +70,15 @@ bool get_table_column_xam(void)
 	ok &= int_result[0] == 1;
 	ok &= int_result[1] == 3;
 
+	// real 
+	table_column = "three";
+	CppAD::vector<double> real_result;
+	dismod_at::get_table_column(
+		db, table_name, table_column, real_result
+	);
+	ok &= real_result[0] == 2.0;
+	ok &= real_result[1] == 4.0;
+
 	// close database and return
 	sqlite3_close(db);
 	return ok;
