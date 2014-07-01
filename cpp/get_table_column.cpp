@@ -45,8 +45,8 @@ namespace {
 		int i;
 		assert( argc == 1 );
 		assert( result != nullptr );
-		vector* text_result = static_cast<vector*>(result);
-		text_result->push_back( argv[0] );
+		vector* vector_result = static_cast<vector*>(result);
+		vector_result->push_back( argv[0] );
   		return 0;
   	}
 	template int callback<std::string>(void*, int, char**, char**);
@@ -56,18 +56,17 @@ void dismod_at::get_table_column_text(
 	sqlite3*                    db                    , 
 	const std::string&          table_name            ,
 	const std::string&          column_name           ,
-	CppAD::vector<std::string>& text_result           )
+	CppAD::vector<std::string>& vector_result         )
 {	using std::cerr;
 	using std::endl;
 	using std::string;
 
+	// check that initial vector is empty
+	assert( vector_result.size() == 0 );
+
 	// check the type for this column
 	string col_type = get_table_column_type(db, table_name, column_name);
 	assert( col_type == "text" );
-
-	// set for callback to use
-	assert( text_result.size() == 0 );
-	void* result = static_cast<void*>(&text_result);
 
 	// sql command: select column_name from table_name
 	string cmd = "select ";
@@ -79,6 +78,7 @@ void dismod_at::get_table_column_text(
 	char* zErrMsg     = nullptr;
 	void* NotUsed     = nullptr;
 	callback_type fun = callback<string>;
+	void* result      = static_cast<void*>(&vector_result);
 	int rc = sqlite3_exec(db, cmd.c_str(), fun, result, &zErrMsg);
 	if( rc )
 	{	assert(zErrMsg != nullptr );
