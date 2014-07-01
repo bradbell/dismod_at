@@ -31,6 +31,7 @@ ENDIF( NOT extra_cxx_flags )
 MESSAGE(STATUS "extra_cxx_flags = ${extra_cxx_flags}")
 
 
+ADD_SUBDIRECTORY(cpp)
 ADD_SUBDIRECTORY(example/cpp)
 
 ADD_CUSTOM_TARGET(check DEPENDS check_cpp)
