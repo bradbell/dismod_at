@@ -54,7 +54,7 @@ bool get_table_column_xam(void)
 	string table_name   = "mytable";
 	string table_column = "one";
 	CppAD::vector<string> text_result;
-	dismod_at::get_table_column_text(
+	dismod_at::get_table_column(
 		db, table_name, table_column, text_result
 	);
 	ok &= text_result[0] == "hello";

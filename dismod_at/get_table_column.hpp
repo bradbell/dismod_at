@@ -15,11 +15,11 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 
 namespace dismod_at {
-	extern void get_table_column_text(
+	extern void get_table_column(
 		sqlite3*                    db                    , 
 		const std::string&          table_name            ,
 		const std::string&          column_name           ,
-		CppAD::vector<std::string>& text_result
+		CppAD::vector<std::string>& vector_result
 	);
 }
 

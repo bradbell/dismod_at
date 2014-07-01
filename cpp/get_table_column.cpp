@@ -52,7 +52,7 @@ namespace {
 	template int callback<std::string>(void*, int, char**, char**);
 
 	template <class Element>
-	void get_table_column(
+	void get_column(
 		sqlite3*                    db                    , 
 		const std::string&          table_name            ,
 		const std::string&          column_name           ,
@@ -86,7 +86,7 @@ namespace {
 	}
 }
 
-void dismod_at::get_table_column_text(
+void dismod_at::get_table_column(
 	sqlite3*                    db                    , 
 	const std::string&          table_name            ,
 	const std::string&          column_name           ,
@@ -100,7 +100,7 @@ void dismod_at::get_table_column_text(
 	assert( col_type == "text" );
 
 	// Use template function for rest
-	get_table_column(db, table_name, column_name, vector_result);
+	get_column(db, table_name, column_name, vector_result);
 
 	return;
 }
