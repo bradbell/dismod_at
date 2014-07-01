@@ -19,7 +19,13 @@ namespace dismod_at {
 		sqlite3*                    db                    , 
 		const std::string&          table_name            ,
 		const std::string&          column_name           ,
-		CppAD::vector<std::string>& vector_result
+		CppAD::vector<std::string>& text_result   
+	);
+	extern void get_table_column(
+		sqlite3*                    db                    , 
+		const std::string&          table_name            ,
+		const std::string&          column_name           ,
+		CppAD::vector<int>&         int_result    
 	);
 }
 

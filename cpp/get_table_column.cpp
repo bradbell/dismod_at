@@ -39,6 +39,13 @@ std::string get_table_column_type(
 namespace {
 	typedef int (*callback_type)(void*, int, char**, char**);
 
+	char*  convert(const std::string& not_used, char* v)
+	{	return v; }
+	int    convert(const int&         not_used, char* v)
+	{	return std::atoi(v); }
+	double convert(const double&      not_used, char* v)
+	{	return std::atof(v); }
+
 	template <class Element>
 	int callback(void *result, int argc, char **argv, char **azColName)
 	{	typedef CppAD::vector<Element> vector;
@@ -46,7 +53,7 @@ namespace {
 		assert( argc == 1 );
 		assert( result != nullptr );
 		vector* vector_result = static_cast<vector*>(result);
-		vector_result->push_back( argv[0] );
+		vector_result->push_back( convert(Element(), argv[0] ) );
   		return 0;
   	}
 	template int callback<std::string>(void*, int, char**, char**);
@@ -87,20 +94,39 @@ namespace {
 }
 
 void dismod_at::get_table_column(
-	sqlite3*                    db                    , 
-	const std::string&          table_name            ,
-	const std::string&          column_name           ,
-	CppAD::vector<std::string>& vector_result         )
+	sqlite3*                    db                  , 
+	const std::string&          table_name          ,
+	const std::string&          column_name         ,
+	CppAD::vector<std::string>& text_result         )
 {
 	// check that initial vector is empty
-	assert( vector_result.size() == 0 );
+	assert( text_result.size() == 0 );
 
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
 	assert( col_type == "text" );
 
 	// Use template function for rest
-	get_column(db, table_name, column_name, vector_result);
+	get_column(db, table_name, column_name, text_result);
+
+	return;
+}
+
+void dismod_at::get_table_column(
+	sqlite3*                    db                 , 
+	const std::string&          table_name         ,
+	const std::string&          column_name        ,
+	CppAD::vector<int>&         int_result         )
+{
+	// check that initial vector is empty
+	assert( int_result.size() == 0 );
+
+	// check the type for this column
+	std::string col_type = get_table_column_type(db, table_name, column_name);
+	assert( col_type == "int" );
+
+	// Use template function for rest
+	get_column(db, table_name, column_name, int_result);
 
 	return;
 }

@@ -49,17 +49,27 @@ bool get_table_column_xam(void)
 	exec_sql_cmd(db, "create table mytable(one text,   two int, three real)");
 	exec_sql_cmd(db, "insert into  mytable values('hello',    1,       2.0)");
 	exec_sql_cmd(db, "insert into  mytable values('goodbye',  3,       4.0)");
-
-	// test text column
 	string table_name   = "mytable";
-	string table_column = "one";
+	string table_column;
+
+	// text 
+	table_column = "one";
 	CppAD::vector<string> text_result;
 	dismod_at::get_table_column(
 		db, table_name, table_column, text_result
 	);
 	ok &= text_result[0] == "hello";
 	ok &= text_result[1] == "goodbye";
-	//
+
+	// int 
+	table_column = "two";
+	CppAD::vector<int> int_result;
+	dismod_at::get_table_column(
+		db, table_name, table_column, int_result
+	);
+	ok &= int_result[0] == 1;
+	ok &= int_result[1] == 3;
+
 	// close database and return
 	sqlite3_close(db);
 	return ok;
