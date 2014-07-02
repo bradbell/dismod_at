@@ -1,0 +1,21 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2013-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin dismod_at$$
+$spell
+	dismod
+$$
+
+$section Dismod_at Developer Documentation$$
+
+$childtable%cpp/get_table_column.cpp
+%$$
+
+$end
