@@ -8,6 +8,79 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
+/*
+$begin get_table_column$$
+$spell
+	sqlite
+	const
+	std
+	CppAD
+$$
+
+$section Get The Type and Values in a Table Column$$
+
+$head Syntax$$
+$icode%column_type% = get_table_column_type(%db%, %table_name%, %column_name%)
+%$$
+$codei%get_table_column(%db%, %table_name%, %column_name%, %result%)
+%$$
+
+$head db$$
+This argument has prototype
+$codei%
+	sqlite3* %db%
+%$$
+and is the database we are getting information from.
+
+$head table_name$$
+This argument has prototype
+$codei%
+	const std::string& %table_name%
+%$$
+and is the name of the table we are getting information from.
+
+$head column_name$$
+This argument has prototype
+$codei%
+	const std::string& %column_name%
+%$$
+and is the name of the column we are getting information from.
+
+$head column_type$$
+This return value has prototype
+$codei%
+	std::string %column_type%
+%$$
+Its value is either $code text$$, $code int$$, or $code real$$
+depending on the type of the column in the database.
+
+$head result$$
+The input size of this vector must be zero.
+Upon return it contains the values in the specified column.
+
+$subhead text$$
+If the column has type $code text$$, this argument has 
+prototype
+$codei%
+	CppAD::vector<std::string>& %result%
+%$$
+
+$subhead int$$
+If the column has type $code int$$, this argument has 
+prototype
+$codei%
+	CppAD::vector<int>& %result%
+%$$
+
+$subhead real$$
+If the column has type $code real$$, this argument has 
+prototype
+$codei%
+	CppAD::vector<double>& %result%
+%$$
+
+$end
+*/
 # include <iostream>
 # include <cassert>
 # include <sqlite3.h>
