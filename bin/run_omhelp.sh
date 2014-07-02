@@ -14,15 +14,11 @@ then
 	echo 'bin/run_omhelp.sh must be run from its parent directory'
 	exit 1
 fi
-top_source_dir=''
-for dir in doc devel
-do
-	if [ -e "$dir" ]
-	then
-		rm -r $dir
-	fi
-	mkdir $dir
-	cd $dir
-	top_source_dir="../$top_source_dir"
-	omhelp $top_source_dir/$dir.omh -debug -noframe -xml
-done
+dir='doc'
+if [ -e "$dir" ]
+then
+	rm -r $dir
+fi
+mkdir $dir
+cd $dir
+omhelp ../$dir.omh -debug -noframe -xml
