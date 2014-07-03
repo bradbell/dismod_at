@@ -22,9 +22,7 @@ namespace dismod_at {
 		omega_enum,
 		number_rate_enum
 	};
-	extern CppAD::vector<rate_enum> get_rate_table(
-		sqlite3*                    db
-	);
+	extern CppAD::vector<rate_enum> get_rate_table(sqlite3*  db);
 }
 
 # endif
