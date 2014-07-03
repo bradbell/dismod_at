@@ -51,7 +51,7 @@ This return value has prototype
 $codei%
 	std::string %column_type%
 %$$
-Its value is either $code text$$, $code int$$, or $code real$$
+Its value is either $code text$$, $code integer$$, or $code real$$
 depending on the type of the column in the database.
 
 $head result$$
@@ -65,8 +65,8 @@ $codei%
 	CppAD::vector<std::string>& %result%
 %$$
 
-$subhead int$$
-If the column has type $code int$$, this argument has 
+$subhead integer$$
+If the column has type $code integer$$, this argument has 
 prototype
 $codei%
 	CppAD::vector<int>& %result%
@@ -80,6 +80,7 @@ $codei%
 %$$
 
 $end
+------------------------------------------------------------------------------
 */
 # include <iostream>
 # include <cassert>
@@ -174,7 +175,13 @@ std::string get_table_column_type(
 		sqlite3_close(db);
 		exit(1);
 	}
-	return std::string(zDataType);
+	std::string rvalue(zDataType);
+
+	// sqlite seems to use int for its integer type
+	if( rvalue == "int" )
+		rvalue = "integer";
+	assert( rvalue == "integer" || rvalue == "text" || rvalue == "real" );
+	return rvalue;
 }
 
 
@@ -208,7 +215,7 @@ void get_table_column(
 
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
-	assert( col_type == "int" );
+	assert( col_type == "integer" );
 
 	// Use template function for rest
 	get_column(db, table_name, column_name, int_result);

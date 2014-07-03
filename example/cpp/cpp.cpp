@@ -25,17 +25,19 @@ $end
 */
 # include <iostream>
 # include <cassert>
+# include <cstring>
 
 
 // prototype for each of the tests
 extern bool get_table_column_xam(void);
+extern bool get_rate_table_xam(void);
 
 // anonymous namespace
 namespace {
 	// function that runs one test
 	static size_t Run_ok_count    = 0;
 	static size_t Run_error_count = 0;
-	void Run(bool test_fun(void), std::string test_name)
+	void Run(bool test_fun(void), const char* test_name)
 	{	using std::cout;
 		using std::endl;
 		//
@@ -43,7 +45,7 @@ namespace {
 		cout.width( width );
 		cout.setf( std::ios_base::left );
 		cout << test_name << ':';
-		assert( test_name.size() < size_t(width) );
+		assert( std::strlen(test_name) < size_t(width) );
 		//
 		bool ok = test_fun();
 		if( ok )
@@ -63,6 +65,7 @@ namespace {
 int main(void)
 {
 	RUN(get_table_column_xam);
+	RUN(get_rate_table_xam);
 
 	// summary report
 	using std::cout;

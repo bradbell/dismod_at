@@ -209,7 +209,7 @@ def get_name2type(connection, tbl_name) :
 # is a $code list$$ of $code str$$
 # where the elements are the column names in the table that is created.
 #
-# $subhead col_type$$
+# $head col_type$$
 # is a $code list$$ of $code str$$ where the elements are the column types
 # in the same order as $icode col_name$$.
 # The valid types are
@@ -218,7 +218,7 @@ def get_name2type(connection, tbl_name) :
 # There must be one, and only one, column with type
 # $code integer primary key$$.
 #
-# $subhead row_list$$
+# $head row_list$$
 # is a possibly empty $code list$$ of rows contain data that is written 
 # to the table.
 # Each row is itself a list containing the data for one row of the
@@ -249,6 +249,86 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 	quote_text = True
 	for row in row_list :
 		value_tuple = unicode_tuple(row, quote_text)
+		cmd = 'insert into ' + tbl_name + ' values ' + value_tuple
+		cursor.execute(cmd)
+# ==========================================================================-
+# $begin create_table_$$ $newlinech #$$
+# $spell
+#	dismod
+#	str
+#	tbl
+# $$
+# $index create_table, database$$
+# $index table, database create$$
+# $index database, create_table$$
+#
+# $section Create a Database Table$$
+#
+# $head Syntax$$
+# $codei%dismod_at.create_table_(
+#	%connection%, %tbl_name%, %col_name%, %col_type%, %row_list% 
+# )%$$
+#
+# $head connection$$
+# is a $cref/connection/create_connection/connection/$$ for this database.
+#
+# $head tbl_name$$
+# is a $code str$$ that specifies the name of the table.
+#
+# $head col_name$$
+# is a $code list$$ of $code str$$
+# where the elements are the column names in the table that is created.
+#
+# $subhead tbl_name_id$$
+# The column $icode%tbl_name%_id%$$ is added as the first column
+# of the table and should not be included in $icode col_name$$.
+#
+# $head col_type$$
+# is a $code list$$ of $code str$$ where the elements are the column types
+# in the same order as $icode col_name$$.
+# The valid types are
+# $code integer$$, $code real$$, $code text$$.
+#
+# $subhead tbl_name_id$$
+# The column with name $icode%tbl_name%_id%$$ will have type
+# $code integer primary key$$.
+#
+# $head row_list$$
+# is a possibly empty $code list$$ of rows contain data that is written 
+# to the table.
+# Each row is itself a list containing the data for one row of the
+# table in the same order as $icode col_name$$.
+# Note that the special value $code None$$ gets converted to $code null$$.
+#
+# $subhead tbl_name_id$$
+# The column with name $icode%tbl_name%_id%$$ will have value starting
+# with zero for the first rwo and incrementing by one for each row.
+#
+#
+# $comment%example/rate_table.py is include by omh/table/rate_table.omh%$$
+# $head Example$$
+# The file $cref rate_table.py$$ creates an example use of
+# $code create_table_$$.
+#
+# $end
+# ---------------------------------------------------------------------------
+def create_table_(connection, tbl_name, col_name, col_type, row_list) :
+	#
+	cmd       = 'create table ' + tbl_name + '('
+	n_col     = len( col_name )
+	cmd      += '\n\t' + tbl_name + '_id integer primary key'
+	for j in range(n_col) :
+		cmd   += ',\n\t' + col_name[j] + ' ' + col_type[j]
+	cmd += '\n\t);'
+	#
+	cursor  = connection.cursor()
+	cursor.execute(cmd)
+	#
+	quote_text = True
+	for i in range( len(row_list) ) :
+		row_cpy     = copy.copy(row_list[i])
+		row_cpy.insert(0, i)
+		value_tuple = unicode_tuple(row_cpy, quote_text)
 		cmd = 'insert into ' + tbl_name + ' values ' + value_tuple
 		cursor.execute(cmd)
 # ==========================================================================-

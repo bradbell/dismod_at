@@ -31,17 +31,11 @@ def rate_table() :
 	cursor         = connection.cursor()
 	#
 	# create the rate table
-	ptype    = 'integer primary key'
-	col_name = [ 'rate_id',      'rate_name'  ]
-	col_type = [ ptype,          'text'       ]
-	row_list = [
-	           [ None,           'iota'       ],
-	           [ None,           'rho'        ],
-	           [ None,           'chi'        ],
-	           [ None,           'omega'      ]
-	]
+	col_name = [ 'rate_name'  ]
+	col_type = [ 'text'       ]
+	row_list = [ ['iota'], ['rho'], ['chi'], ['omega'] ]
 	tbl_name = 'rate'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	cmd = 'SELECT rate_id, rate_name FROM rate'
@@ -49,15 +43,12 @@ def rate_table() :
 	fetchall = cursor.fetchall()
 	assert len(fetchall) == len(row_list)
 	for i in range( len(fetchall) ) :
-		row   = row_list[i]
+		row   = copy.copy( row_list[i] )
+		row.insert(0, i)
 		check = fetchall[i]
 		assert len(row) == len(check)
 		for j in range( len(check) ) :
-			if col_type[j] == ptype :
-				# check default value for primary key
-				assert check[j] == i + 1
-			else :
-				assert row[j] == check[j]
+			assert row[j] == check[j]
 	#
 	print('rate_table: OK')
 # END PYTHON

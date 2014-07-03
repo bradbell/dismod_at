@@ -85,7 +85,7 @@ bool get_table_column_xam(void)
 	dismod_at::get_table_column(
 		db, table_name, column_name, int_result
 	);
-	ok &= column_type   == "int";
+	ok &= column_type   == "integer";
 	ok &= int_result[0] == 1;
 	ok &= int_result[1] == 3;
 

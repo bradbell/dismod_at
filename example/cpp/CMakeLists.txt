@@ -17,6 +17,7 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_EXECUTABLE(cpp EXCLUDE_FROM_ALL 
 	cpp.cpp
 	get_table_column_xam.cpp
+	get_rate_table_xam.cpp
 )
 SET_TARGET_PROPERTIES(cpp PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
 LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )

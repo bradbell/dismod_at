@@ -22,6 +22,7 @@ It has the following columns:
 $head rate_id$$
 This column has type $code integer$$ 
 and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
 
 $head rate_name$$
 The following values,
