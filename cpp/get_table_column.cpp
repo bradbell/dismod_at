@@ -15,11 +15,18 @@ $spell
 	const
 	std
 	CppAD
+	dismod
+	hpp
 $$
 
-$section Get The Type and Values in a Table Column$$
+$section C++: Get The Type and Values in a Table Column$$
+$index get, table column$$
+$index column, get table$$
+$index table, get column$$
 
 $head Syntax$$
+$codei%# include <dismod_at/get_table_column.hpp>
+%$$
 $icode%column_type% = get_table_column_type(%db%, %table_name%, %column_name%)
 %$$
 $codei%get_table_column(%db%, %table_name%, %column_name%, %result%)

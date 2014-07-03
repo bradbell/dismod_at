@@ -28,23 +28,7 @@ $end
 # include <cstdio>
 # include <sqlite3.h>
 # include <dismod_at/get_rate_table.hpp>
-
-
-namespace {
-	void exec_sql_cmd(sqlite3* db, const char* sql_cmd)
-	{	char* zErrMsg                              = nullptr;
-		int (*callback)(void*, int, char**,char**) = nullptr;
-    	void* callback_arg                         = nullptr;
-		int rc = sqlite3_exec(db, sql_cmd, callback, callback_arg, &zErrMsg);
-		if( rc )
-		{	assert(zErrMsg != nullptr );
-			std::cerr << "SQL error: " << sqlite3_errmsg(db) << std::endl;
-			sqlite3_free(zErrMsg);
-			sqlite3_close(db);
-			exit(1);
-		}
-	}
-}
+# include <dismod_at/exec_sql_cmd.hpp>
 
 bool get_rate_table_xam(void)
 {
@@ -82,7 +66,7 @@ bool get_rate_table_xam(void)
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
-		exec_sql_cmd(db, sql_cmd[i]);
+		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
 
 	// get the rate table

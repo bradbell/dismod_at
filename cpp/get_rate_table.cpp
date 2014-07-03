@@ -6,7 +6,10 @@ $spell
 	cpp
 $$
 
-$section Get the Rate Table Information$$
+$section C++: Get the Rate Table Information$$
+$index get, rate table$$
+$index rate, get table$$
+$index table, get rate$$
 
 $head Syntax$$
 $codei # include <get_rate_table>
