@@ -302,7 +302,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #
 # $subhead tbl_name_id$$
 # The column with name $icode%tbl_name%_id%$$ will have value starting
-# with zero for the first rwo and incrementing by one for each row.
+# with zero for the first row and incrementing by one for each row.
 #
 #
 # $comment%example/rate_table.py is include by omh/table/rate_table.omh%$$
@@ -313,6 +313,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $end
 # ---------------------------------------------------------------------------
 def create_table_(connection, tbl_name, col_name, col_type, row_list) :
+	import copy
 	#
 	cmd       = 'create table ' + tbl_name + '('
 	n_col     = len( col_name )

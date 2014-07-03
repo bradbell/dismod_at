@@ -43,8 +43,10 @@ is the enum value for the corresponding
 $cref/rate_name/rate_table/rate_name/$$.
 
 
+$children%example/cpp/get_rate_table_xam.cpp
+%$$
 $head Example$$
-The file $cref rate_table.py$$ contains an example that uses
+The file $cref get_rate_table_xam.cpp$$ contains an example that uses
 this function.
 
 $end

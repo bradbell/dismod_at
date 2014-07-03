@@ -79,6 +79,12 @@ $codei%
 	CppAD::vector<double>& %result%
 %$$
 
+$children%example/cpp/get_table_column_xam.cpp
+%$$
+$head Example$$
+The file $cref get_table_column_xam.cpp$$ contains an example that uses
+this function.
+
 $end
 ------------------------------------------------------------------------------
 */

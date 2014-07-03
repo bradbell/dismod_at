@@ -8,11 +8,27 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
+/*
+$begin get_rate_table_xam.cpp$$
+$spell
+	xam
+$$
+
+$section get_rate_table: Example and Test$$
+
+$code
+$verbatim%example/cpp/get_rate_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$$
+
+$end
+*/
+// BEGIN C++
 # include <iostream>
 # include <fstream>
 # include <cstdio>
 # include <sqlite3.h>
 # include <dismod_at/get_rate_table.hpp>
+
 
 namespace {
 	void exec_sql_cmd(sqlite3* db, const char* sql_cmd)
@@ -80,3 +96,4 @@ bool get_rate_table_xam(void)
 	sqlite3_close(db);
 	return ok;
 }
+// END C++
