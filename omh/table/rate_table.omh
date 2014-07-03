@@ -40,7 +40,7 @@ $tend
 $children%example/table/rate_table.py
 %$$
 $head Example$$
-The file $cref rate_table.py$$ 
-contains an example $code rate$$ table.
+The files $cref rate_table.py$$  and $cref get_rate_table_xam.cpp$$
+contain an example $code rate$$ tables.
 
 $end

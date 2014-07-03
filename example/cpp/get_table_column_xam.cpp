@@ -14,7 +14,9 @@ $spell
 	xam
 $$
 
-$section get_table_column_xam: Example and Test$$
+$section C++ get_table_column_xam: Example and Test$$
+$index get_table_column, example$$
+$index example, get_table_column$$
 
 $code
 $verbatim%example/cpp/get_table_column_xam.cpp%0%// BEGIN C++%// END C++%1%$$

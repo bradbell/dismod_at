@@ -14,7 +14,9 @@ $spell
 	xam
 $$
 
-$section get_rate_table: Example and Test$$
+$section C++ get_rate_table: Example and Test$$
+$index example, C++ get_rate_table$$
+$index get_rate_table, C++ example$$
 
 $code
 $verbatim%example/cpp/get_rate_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$

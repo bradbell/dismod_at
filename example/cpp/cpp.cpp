@@ -12,6 +12,9 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin cpp.cpp$$
 
 $sectin Run C++ Examples$$
+$index C++, run examples$$
+$index run, C++ examples$$
+$index examples, run C++$$
 
 $head Syntax$$
 $code example/cpp/cpp$$
