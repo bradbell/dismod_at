@@ -24,6 +24,7 @@
 from __future__ import print_function
 def weight_table() :
 	import dismod_at
+	import copy
 	#
 	file_name      = 'example.db'
 	new            = True
@@ -31,37 +32,33 @@ def weight_table() :
 	cursor         = connection.cursor()
 	# 
 	# create weight table
-	ptype    = 'integer primary key'
-	col_name = [ 'weight_id', 'weight_name'   ]
-	col_type = [ ptype,       'text'          ]
-	row_list = [
-	           [ 0,           'constant'      ],
-	           [ 1,           'age_linear'    ],
-	           [ 2,           'bilinear'      ] 
-	]
+	col_name = [ 'weight_name'   ]
+	col_type = [ 'text'          ]
+	row_list = [ [ 'constant'   ], [ 'age_linear' ], [ 'bilinear'   ] ]
 	tbl_name = 'weight'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
-	# create a weight_grid table
-	col_name = [ 'weight_grid_id','weight_id', 'age',  'time',  'weight' ]
-	col_type = [ ptype,           'integer',   'real', 'real',  'real'   ]
+	# create weight_grid table
+	col_name = [ 'weight_id', 'age',  'time',  'weight' ]
+	col_type = [ 'integer',   'real', 'real',  'real'   ]
 	row_list = [
 	           # constant
-	           [ 1,               0,          50.0,    2000.,   1.0      ],
+	           [ 0,          50.0,    2000.,   1.0      ],
 	           # age_linear  
-	           [ 2,               1,           0.0,    2000.,   0.5      ],
-	           [ 3,               1,         100.0,    2000.,   1.5      ],
+	           [ 1,           0.0,    2000.,   0.5      ],
+	           [ 1,         100.0,    2000.,   1.5      ],
 	           # bilinear 
-	           [ 4,               2,           0.0,    1990.,   0.5      ],
-	           [ 5,               2,         100.0,    1990.,   1.0      ],
-	           [ 6,               2,           0.0,    2010.,   1.0      ],
-	           [ 7,               2,         100.0,    2010.,   1.5      ]
+	           [ 2,           0.0,    1990.,   0.5      ],
+	           [ 2,         100.0,    1990.,   1.0      ],
+	           [ 2,           0.0,    2010.,   1.0      ],
+	           [ 2,         100.0,    2010.,   1.5      ]
 	]
 	tbl_name = 'weight_grid'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
-	# check values in the uniform weight table
+	# check values in the bilinear weight table
 	columns = ','.join(col_name)
+	columns = 'weight_grid_id,' + columns
 	cmd     = 'SELECT ' + columns + ' FROM weight_grid'
 	cmd    += ' INNER JOIN weight USING (weight_id)'
 	cmd    += ' WHERE weight_name = "bilinear"' 
@@ -69,9 +66,11 @@ def weight_table() :
 	count        = 3
 	cursor       = connection.cursor()
 	for row in cursor.execute(cmd) :
-		assert len(row) == len(col_name)
+		check = copy.copy( row_list[count] )
+		check.insert(0, count)
+		assert len(row) == len(check)
 		for j in range( len(row) ) :
-			assert row[j] == row_list[count][j]
+			assert row[j] == check[j]
 		count += 1
 	assert count == len( row_list )
 	#

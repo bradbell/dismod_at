@@ -24,6 +24,7 @@ It has the following columns:
 $head weight_grid_id$$
 This column has type $code integer$$ and is the primary key for
 the $code weight_grid$$ table.
+Its initial value is zero, and it increments by one for each row.
 
 $head weight_id$$
 This column has type $code integer$$ and is the primary key for

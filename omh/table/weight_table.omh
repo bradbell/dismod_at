@@ -13,11 +13,12 @@ $spell
 	grid
 $$
 
-$section Smoothing Grid Table$$
+$section The Weight Table$$
 
 $head weight_id$$
 This column has type $code integer$$ and is the primary key for 
 the this table.
+Its initial value is zero, and it increments by one for each row.
 
 $head weight_name$$ 
 This column has type $code text$$ and has a different value for every row; 

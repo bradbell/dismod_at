@@ -597,22 +597,22 @@ def create_database(
 		global_like_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------ 
 	# create weight table
-	col_name = [   'weight_id', 'weight_name'   ]
-	col_type = [   ptype,       'text'          ]
+	col_name = [ 'weight_name'   ]
+	col_type = [ 'text'          ]
 	row_list = [ ]
 	for i in range( len(weight_list) ) :
 		weight = weight_list[i]
-		row_list.append( [ i, weight['name'] ] )
+		row_list.append( [ weight['name'] ] )
 	tbl_name = 'weight'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_weight_name2id = {}
 	for i in range( len(weight_list) ) :
 		global_weight_name2id[ weight_list[i]['name'] ] = i
 	# ------------------------------------------------------------------------
-	# create weight table
-	col_name = [  'weight_grid_id', 'weight_id', 'age',   'time',  'weight' ]
-	col_type = [  ptype,            'integer',   'real',  'real',  'real'   ]
+	# create weight grid table
+	col_name = [  'weight_id', 'age',   'time',  'weight' ]
+	col_type = [  'integer',   'real',  'real',  'real'   ]
 	row_list = [ ]
 	for i in range( len(weight_list) ) :
 		weight = weight_list[i]
@@ -622,9 +622,9 @@ def create_database(
 		for a in age :
 			for t in time :
 				w = fun(a, t)
-				row_list.append( [ None, i, a, t, w] )
+				row_list.append( [ i, a, t, w] )
 	tbl_name = 'weight_grid'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create covariate table
 	col_name = [ 'covariate_id', 'covariate_name',	'reference' ]
