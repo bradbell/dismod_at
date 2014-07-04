@@ -25,42 +25,26 @@ $$
 $end
 */
 // BEGIN C++
-# include <iostream>
-# include <fstream>
-# include <cstdio>
 # include <sqlite3.h>
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
+# include <dismod_at/open_connection.hpp>
 
 bool get_density_table_xam(void)
 {
 	bool   ok = true;
-	using  std::cerr;
-	using  std::cout;
 	using  std::endl;
 	using  std::string;
 	using  CppAD::vector;	
-	const char* file_name = "example.db";
 
-	// delete old version of database
-	std::ifstream ifile(file_name);
-	if( ifile )
-	{	ifile.close();
-		std::remove(file_name);
-	}
-
-	// open a new database
-	sqlite3* db;
-	int rc = sqlite3_open(file_name, &db);
-	if( rc )
-	{	cerr << "Can't create database: " << file_name << endl;
-		sqlite3_close(db);
-		exit(1);
-	}
+	string   file_name = "example.db";
+	bool     new_file  = true;
+	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
 
 	// sql commands
 	const char* sql_cmd[] = { 
-		"create table density(density_id integer primary key, density_name text)",
+		"create table density"
+		"(density_id integer primary key, density_name text)",
 		"insert into density values(0, 'log_laplace')",
 		"insert into density values(1, 'log_gaussian')",
 		"insert into density values(2, 'laplace')",

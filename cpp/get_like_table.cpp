@@ -7,7 +7,7 @@ $spell
 	std
 $$
 
-$section C++: Get the Node Table Information$$
+$section C++: Get the Likelihood Table Information$$
 $index get, like table$$
 $index like, get table$$
 $index table, get like$$

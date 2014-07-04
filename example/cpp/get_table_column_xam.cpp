@@ -25,37 +25,19 @@ $$
 $end
 */
 // BEGIN C++
-# include <iostream>
-# include <fstream>
-# include <cstdio>
 # include <sqlite3.h>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
+# include <dismod_at/open_connection.hpp>
 
 bool get_table_column_xam(void)
 {
 	bool     ok = true;
-	using    std::cerr;
-	using    std::cout;
-	using    std::endl;
 	using    std::string;
-	const char* file_name = "example.db";
 
-	// delete old version of database
-	std::ifstream ifile(file_name);
-	if( ifile )
-	{	ifile.close();
-		std::remove(file_name);
-	}
-
-	// open a new database
-	sqlite3* db;
-	int rc = sqlite3_open(file_name, &db);
-	if( rc )
-	{	cerr << "Can't create database: " << file_name << endl;
-		sqlite3_close(db);
-		exit(1);
-	}
+	string   file_name = "example.db";
+	bool     new_file  = true;
+	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
 
 	// create three columns one with each type of data
 	void (*exec_sql)(sqlite3*, const string&) = dismod_at::exec_sql_cmd;
