@@ -24,6 +24,7 @@
 from __future__ import print_function
 def integrand_table() :
 	import dismod_at
+	import copy
 	#
 	file_name      = 'example.db'
 	new            = True
@@ -31,16 +32,11 @@ def integrand_table() :
 	cursor         = connection.cursor()
 	#
 	# create the integrand table
-	ptype    = 'integer primary key'
-	col_name = [ 'integrand_id', 'integrand_name' ]
-	col_type = [ ptype,          'text',          ]
-	row_list = [
-	           [ None,           'incidence',     ],
-	           [ None,           'remission',     ],
-	           [ None,           'mtall',         ]
-	]
+	col_name = [ 'integrand_name' ]
+	col_type = [ 'text'           ]
+	row_list = [ [ 'incidence' ], [ 'remission' ], [ 'mtall' ] ]
 	tbl_name = 'integrand'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	cmd = 'SELECT integrand_id, integrand_name FROM integrand'
@@ -48,15 +44,12 @@ def integrand_table() :
 	fetchall = cursor.fetchall()
 	assert len(fetchall) == len(row_list)
 	for i in range( len(fetchall) ) :
-		row   = row_list[i]
+		row   = copy.copy(row_list[i])
 		check = fetchall[i]
+		row.insert(0, i)
 		assert len(row) == len(check)
 		for j in range( len(check) ) :
-			if col_type[j] == ptype :
-				# check default value for primary key
-				assert check[j] == i + 1
-			else :
-				assert row[j] == check[j]
+			assert row[j] == check[j]
 	#
 	print('integrand_table: OK')
 # END PYTHON

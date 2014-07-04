@@ -497,26 +497,26 @@ def create_database(
 	connection     = create_connection(file_name, new)
 	# ------------------------------------------------------------------------
 	# create integrand table
-	col_name = [  'integrand_id', 'integrand_name'  ]
-	col_type = [   ptype,          'text'           ]
+	col_name = [  'integrand_name'  ]
+	col_type = [  'text'            ]
 	row_list = [ 
-		[ None,   'incidence'   ],
-		[ None,   'remission'   ],
-		[ None,   'mtexcess'    ],
-		[ None,   'mtother'     ],
-		[ None,   'mtwith'      ],
-		[ None,   'prevalence'  ],
-		[ None,   'mtspecific'  ],
-		[ None,   'mtall'       ],
-		[ None,   'mtstandard'  ],
-		[ None,   'relrisk'     ]
+		[ 'incidence'   ],
+		[ 'remission'   ],
+		[ 'mtexcess'    ],
+		[ 'mtother'     ],
+		[ 'mtwith'      ],
+		[ 'prevalence'  ],
+		[ 'mtspecific'  ],
+		[ 'mtall'       ],
+		[ 'mtstandard'  ],
+		[ 'relrisk'     ]
 	]
 	tbl_name = 'intergrand'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_integrand_name2id = {}
 	for i in range( len(row_list) ) :
-		global_integrand_name2id[ row_list[i][1] ] = i
+		global_integrand_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------
 	# create node table
 	global_node_name2id = {}
@@ -734,7 +734,7 @@ def create_database(
 	#
 	global_rate_name2id = {}
 	for i in range( len(row_list) ) :
-		global_rate_name2id[ rowlist[i][0] ] = i
+		global_rate_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------
 	# create rate_prior table
 	col_name = [ 'rate_prior_id', 'rate_id', 'is_parent',   'smooth_id' ]
