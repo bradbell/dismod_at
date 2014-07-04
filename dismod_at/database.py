@@ -495,6 +495,28 @@ def create_database(
 	# create database
 	new            = True
 	connection     = create_connection(file_name, new)
+	# -----------------------------------------------------------------------
+	# create rate table
+	col_name = [  'rate_name'   ]
+	col_type = [  'text'        ]
+	row_list = [ ['iota'], ['rho'], ['chi'], ['omega'] ]
+	tbl_name = 'rate'
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	#
+	global_rate_name2id = {}
+	for i in range( len(row_list) ) :
+		global_rate_name2id[ row_list[i][0] ] = i
+	# -----------------------------------------------------------------------
+	# create density table
+	col_name = [  'density_name'   ]
+	col_type = [  'text'        ]
+	row_list = [ ['gaussian'], ['laplace'], ['log_gaussian'], ['log_laplace'] ]
+	tbl_name = 'density'
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	#
+	global_density_name2id = {}
+	for i in range( len(row_list) ) :
+		global_density_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------
 	# create integrand table
 	col_name = [  'integrand_name'  ]
@@ -724,17 +746,6 @@ def create_database(
 				row_list.append( [ None, i, a, t, v, da, dt] )
 	tbl_name = 'smooth_prior'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
-	# -----------------------------------------------------------------------
-	# create rate table
-	col_name = [  'rate_name'   ]
-	col_type = [  'text'        ]
-	row_list = [ ['iota'], ['rho'], ['chi'], ['omega'] ]
-	tbl_name = 'rate'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
-	#
-	global_rate_name2id = {}
-	for i in range( len(row_list) ) :
-		global_rate_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------
 	# create rate_prior table
 	col_name = [ 'rate_prior_id', 'rate_id', 'is_parent',   'smooth_id' ]
