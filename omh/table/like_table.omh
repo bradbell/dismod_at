@@ -29,6 +29,11 @@ This column has type $code text$$ and has a different value for every row;
 i.e., the names are unique and can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
 
+$head density_id$$
+This column has type $code integer$$ and its value is the
+$cref density_table$$ primary key that identifies the
+density function for this likelihood.
+
 $head lower$$
 $index lower, minus infinity$$
 $index infinity, minus lower$$
@@ -57,26 +62,21 @@ $codei%
 %$$
 
 $head std$$
-$index std, plus infinity$$
-$index infinity, plus std$$
+$index std$$
 This column has type $code real$$ and specifies the standard deviation
 (before truncation by the lower and upper limits)
 for the likelihood.
-Note that the value $code null$$ is interpreted as plus infinity; i.e.,
-the uniform distribution between the lower and upper limits.
-
-$head density_id$$
-This column has type $code integer$$ and its value is the
-$cref density_table$$ primary key that identifies the
-density function for this likelihood.
+In the case where $icode density$$ is $code uniform$$,
+this value is not used and can be $code null$$.
+Otherwise, this value must be a positive number.
 
 $head eta$$
 This column has type $code real$$ and is only used in the
 cases where $icode density$$ is $code log_gaussian$$
 or $code log_laplace$$.
 In these cases, it is the offset in the corresponding density function.
-Note that if $icode std$$ is $code null$$, 
-or if $icode density$$ is $code gaussian$$ or $code laplace$$,
+In the case where $code density$$ is 
+$code uniform$$, $code gaussian$$ or $code laplace$$,
 this field is not used and can be $code null$$.
 
 $children%example/table/like_table.py

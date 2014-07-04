@@ -68,18 +68,18 @@ def get_started() :
 	#
 	like_list = [
 		{	'name':'uniform_01', 
+			'density':'uniform',
 			'lower':0.0, 
 			'upper':1.0, 
 			'mean':0.1, 
 			'std':None,
-			'density':'gaussian',
 			'eta':None
 		},{	'name':'zero', 
+			'density':'uniform',
 			'lower':0.0, 
 			'upper':0.0, 
 			'mean':0.0,
 			'std':None,
-			'density':'gaussian',
 			'eta':None
 		}
 	]

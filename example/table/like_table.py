@@ -34,27 +34,28 @@ def like_table() :
 	# create the like table
 	ptype    = 'integer primary key'
 	col_name = [ 
-		'like_name', 'lower', 'upper', 'mean', 'std',   'density_id', 'eta' 
+		'like_name', 'density_id', 'lower', 'upper', 'mean', 'std',   'eta' 
 	]
 	col_type = [ 
-		'text',      'real',  'real',  'real', 'real', 'integer',     'real'
+		'text',      'integer',    'real',  'real',  'real', 'real',  'real'
 	]
+	uniform_density_id = 0;
 	row_list = [ [ 
-		'none',           # like_name	
-		None,             # lower	
-		None,             # upper	
-		0,                # mean	
-		None,             # std	
-		None,             # density
-		None              # eta
+		'none',              # like_name	
+		uniform_density_id,   # density_id 
+		None,                # lower	
+		None,                # upper	
+		0,                   # mean	
+		None,                # std	
+		None                 # eta
 	],[
-		'rate',           # like_name	
-		0.0,              # lower	
-		1.0,              # upper	
-		0.1,              # mean	
-		None,             # std	
-		None,             # density
-		None              # eta
+		'rate',              # like_name	
+		uniform_density_id,  # density_id
+		0.0,                 # lower	
+		1.0,                 # upper	
+		0.1,                 # mean	
+		None,                # std	
+		None                 # eta
 	] ]
 	tbl_name = 'like'
 	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
