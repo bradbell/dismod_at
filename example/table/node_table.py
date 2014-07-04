@@ -34,10 +34,10 @@ def node_table() :
 	col_name = [ 'node_name',     'parent'    ]
 	col_type = [ 'text',          'integer'   ]
 	row_list = [
-	           [ 'world',         -1          ],
-		       [ 'north_america', 0           ],
-		       [ 'united_states', 1           ],
-		       [ 'canada',        1           ]
+		[ 'world',         -1          ],
+		[ 'north_america', 0           ],
+		[ 'united_states', 1           ],
+		[ 'canada',        1           ]
 	]
 	tbl_name = 'node'
 	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)

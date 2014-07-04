@@ -377,7 +377,7 @@ def create_table_(connection, tbl_name, col_name, col_type, row_list) :
 # name    $cnext str           $cnext name for the $th i$$ node  $rnext
 # parent  $cnext str           $cnext name of parent of the $th i$$ node
 # $tend
-# Note that if the i-th node does not have a parent, the emtpy string
+# Note that if the i-th node does not have a parent, the empty string
 # should be used for the parent of that node.
 #
 # $head weight_list$$
