@@ -71,6 +71,7 @@ prototype
 $codei%
 	CppAD::vector<std::string>& %result%
 %$$
+It is an error for any for any of the text values to be $code null$$.
 
 $subhead integer$$
 If the column has type $code integer$$, this argument has 
@@ -78,6 +79,7 @@ prototype
 $codei%
 	CppAD::vector<int>& %result%
 %$$
+It is an error for any for any of the integer values to be $code null$$.
 
 $subhead real$$
 If the column has type $code real$$, this argument has 
@@ -85,6 +87,8 @@ prototype
 $codei%
 	CppAD::vector<double>& %result%
 %$$
+It a real value is $code null$$, it is returned as the $code double$$
+value $code nan$$.
 
 $children%example/cpp/get_table_column_xam.cpp
 %$$
@@ -104,11 +108,20 @@ namespace {
 	typedef int (*callback_type)(void*, int, char**, char**);
 
 	char*  convert(const std::string& not_used, char* v)
-	{	return v; }
-	int    convert(const int&         not_used, char* v)
-	{	return std::atoi(v); }
-	double convert(const double&      not_used, char* v)
-	{	return std::atof(v); }
+	{	// no text values should be null
+		assert( v != nullptr );
+		return v;
+	}
+	int    convert(const int& not_used, char* v)
+	{	// no integer values should be null
+		assert( v != nullptr );
+		return std::atoi(v); 
+	}
+	double convert(const double& not_used, char* v)
+	{	if( v == nullptr )
+			return std::atof("nan");	
+		return std::atof(v);
+	}
 
 	template <class Element>
 	int callback(void *result, int argc, char **argv, char **azColName)
