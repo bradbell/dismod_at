@@ -28,14 +28,14 @@ This column has type $code text$$ and has a different value for every row;
 i.e., the names are unique and can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
 
-$head parent_id$$
+$head parent$$
 This column has type $code integer$$ and is the $icode node_id$$
 of the parent for this node.
-If this node has no parents, $icode parent_id$$ is $code null$$.
+If this node has no parents, $icode parent$$ is $code null$$.
 
 $subhead Child Group$$
 The child group for node $icode p$$ is the sent of $icode node_id$$ values 
-such that the corresponding $icode parent_id$$ is equal to $icode p$$.
+such that the corresponding $icode parent$$ is equal to $icode p$$.
 
 $children%example/table/node_table.py
 %$$

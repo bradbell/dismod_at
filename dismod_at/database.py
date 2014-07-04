@@ -545,7 +545,7 @@ def create_database(
 	for i in range( len(node_list) ) :
 		global_node_name2id[ node_list[i]['name'] ] = i
 	#
-	col_name = [ 'node_name', 'parent_id' ]
+	col_name = [ 'node_name', 'parent' ]
 	col_type = [ 'text',      'integer'   ]
 	row_list = []
 	for i in range( len(node_list) ) :

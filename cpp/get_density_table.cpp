@@ -29,11 +29,11 @@ and is an open connection to the database.
 $head density_enum$$
 This is an enum type with the following values:
 $table
-$icode density$$        $pre  $$ $cnext Corresponding String    $rnext
-$code gaussian_enum$$    $pre  $$ $cnext $code "gaussian"$$          $rnext        
-$code laplace_enum$$     $pre  $$ $cnext $code "laplace"$$           $rnext        
-$code log_gaussian_enum$$     $pre  $$ $cnext $code "log_gaussian"$$           $rnext        
-$code log_laplace_enum$$   $pre  $$ $cnext $code "log_laplace"$$
+$icode density$$          $pre  $$ $cnext Corresponding String    $rnext
+$code gaussian_enum$$     $pre  $$ $cnext $code "gaussian"$$      $rnext
+$code laplace_enum$$      $pre  $$ $cnext $code "laplace"$$       $rnext        
+$code log_gaussian_enum$$ $pre  $$ $cnext $code "log_gaussian"$$  $rnext
+$code log_laplace_enum$$  $pre  $$ $cnext $code "log_laplace"$$
 $tend        
 The number of these enum values is $code number_density_enum$$.
 

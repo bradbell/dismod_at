@@ -31,7 +31,7 @@ def node_table() :
 	cursor         = connection.cursor()
 	#
 	# create the node table
-	col_name = [ 'node_name',     'parent_id' ]
+	col_name = [ 'node_name',     'parent'    ]
 	col_type = [ 'text',          'integer'   ]
 	row_list = [
 	           [ 'world',         None        ],
