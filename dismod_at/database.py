@@ -726,18 +726,15 @@ def create_database(
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# create rate table
-	col_name = [   'rate_id', 'rate_name'   ]
-	col_type = [   ptype,     'text'        ]
-	row_list = [ ]
-	for i in range( len(rate_list) ) :
-		rate = rate_list[i]
-		row_list.append( [ i, rate['name'] ] )
+	col_name = [  'rate_name'   ]
+	col_type = [  'text'        ]
+	row_list = [ ['iota'], ['rho'], ['chi'], ['omega'] ]
 	tbl_name = 'rate'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_rate_name2id = {}
-	for i in range( len(rate_list) ) :
-		global_rate_name2id[ rate_list[i]['name'] ] = i
+	for i in range( len(row_list) ) :
+		global_rate_name2id[ rowlist[i][0] ] = i
 	# ------------------------------------------------------------------------
 	# create rate_prior table
 	col_name = [ 'rate_prior_id', 'rate_id', 'is_parent',   'smooth_id' ]
