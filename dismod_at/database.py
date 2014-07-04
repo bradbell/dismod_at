@@ -562,6 +562,34 @@ def create_database(
 	tbl_name = 'node'
 	create_table_(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
+	# create the like table
+	col_name = [ 
+		'like_name', 'lower', 'upper', 'mean', 'std',  'density_id', 'eta'  
+	]
+	col_type = [ 
+		'text',       'real', 'real',  'real', 'real', 'integer',    'real'
+	]
+	row_list = [ ]
+	for i in range( len( like_list ) ) :
+		like         = like_list[i]
+		density_id   = global_density_name2id[ like['density'] ]
+		row  = [	
+			like['name'],
+			like['lower'],
+			like['upper'],
+			like['mean'],
+			like['std'],
+			density_id,
+			like['eta']
+		]
+		row_list.append( row )
+	tbl_name = 'like'
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	#
+	global_like_name2id = {}
+	for i in range( len(row_list) ) :
+		global_like_name2id[ row_list[i][0] ] = i
+	# ------------------------------------------------------------------------ 
 	# create weight table
 	col_name = [   'weight_id', 'weight_name'   ]
 	col_type = [   ptype,       'text'          ]
@@ -660,48 +688,6 @@ def create_database(
 		row_list.append(row)
 	tbl_name = 'data'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------ 
-	# create the like table
-	col_name = [ 
-		'like_id', 
-		'like_name',	
-		'lower',	
-		'upper',	
-		'mean',	
-		'std',	
-		'density',
-		'eta'  
-	]
-	col_type = [ 
-		ptype,            # like_id 
-		'text',           # like_name	
-		'real',           # lower	
-		'real',           # upper	
-		'real',           # mean	
-		'real',           # std	
-		'text',           # density
-		'real'            # eta
-	]
-	row_list = [ ]
-	for i in range( len( like_list ) ) :
-		like = like_list[i]
-		row  = [	
-			i, 
-			like['name'],
-			like['lower'],
-			like['upper'],
-			like['mean'],
-			like['std'],
-			like['density'],
-			like['eta']
-		]
-		row_list.append( row )
-	tbl_name = 'like'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
-	#
-	global_like_name2id = {}
-	for i in range( len(row_list) ) :
-		global_like_name2id[ row_list[i][1] ] = i
 	# ------------------------------------------------------------------------ 
 	# create smooth table
 	col_name = [   'smooth_id', 'smooth_name'   ]

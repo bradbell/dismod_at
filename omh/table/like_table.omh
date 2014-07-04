@@ -22,6 +22,7 @@ It has the following columns:
 
 $head like_id$$
 This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
 
 $head like_name$$
 This column has type $code text$$ and has a different value for every row; 
@@ -48,6 +49,7 @@ $head mean$$
 $index std, plus infinity$$
 $index infinity, plus std$$
 This column has type $code real$$ and specifies the mean
+(before truncation by the lower and upper limits)
 for the likelihood.
 It must hold that
 $codei%
@@ -58,20 +60,15 @@ $head std$$
 $index std, plus infinity$$
 $index infinity, plus std$$
 This column has type $code real$$ and specifies the standard deviation
+(before truncation by the lower and upper limits)
 for the likelihood.
 Note that the value $code null$$ is interpreted as plus infinity; i.e.,
 the uniform distribution between the lower and upper limits.
 
-$head density$$
-This column has type $code text$$ and identifies density function used
-for this measurement.
-It must be one of the following:
-$code gaussian$$, 
-$code laplace$$,
-$code log_gaussian$$,
-or $code log_laplace$$. 
-Note that if $icode std$$ is $code null$$, this field is not used
-and can be $code null$$.
+$head density_id$$
+This column has type $code integer$$ and its value is the
+$cref density_table$$ primary key that identifies the
+density function for this likelihood.
 
 $head eta$$
 This column has type $code real$$ and is only used in the

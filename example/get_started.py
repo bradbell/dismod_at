@@ -72,14 +72,14 @@ def get_started() :
 			'upper':1.0, 
 			'mean':0.1, 
 			'std':None,
-			'density':None,
+			'density':'gaussian',
 			'eta':None
 		},{	'name':'zero', 
 			'lower':0.0, 
 			'upper':0.0, 
 			'mean':0.0,
 			'std':None,
-			'density':None,
+			'density':'gaussian',
 			'eta':None
 		}
 	]
