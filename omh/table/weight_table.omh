@@ -25,10 +25,10 @@ This column has type $code text$$ and has a different value for every row;
 i.e., the names are unique and can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
 
-$children%example/table/weight_table.py
+$comment%example/table/weight_grid.py is included by weight_grid.omh
 %$$
 $head Example$$
-The file $cref weight_table.py$$ 
+The file $cref weight_grid.py$$ 
 contains an example $code weight$$ table.
 
 $end

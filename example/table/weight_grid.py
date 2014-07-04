@@ -8,21 +8,21 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin weight_table.py$$ $newlinech #$$
+# $begin weight_grid.py$$ $newlinech #$$
 #
-# $section weight_table: Example and Test$$
+# $section weight_grid: Example and Test$$
 #
-# $index weight, example$$
-# $index example, weight table$$
-# $index table, weight example$$
+# $index weight, grid example$$
+# $index example, weight grid$$
+# $index grid, weight example$$
 #
 # $code
-# $verbatim%example/table/weight_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/weight_grid.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-def weight_table() :
+def weight_grid() :
 	import dismod_at
 	import copy
 	#
@@ -74,5 +74,5 @@ def weight_table() :
 		count += 1
 	assert count == len( row_list )
 	#
-	print('weight_table: OK')
+	print('weight_grid: OK')
 # END PYTHON

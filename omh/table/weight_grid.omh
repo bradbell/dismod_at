@@ -52,9 +52,10 @@ For each row in the table, the value in this column
 is the weighting, at the corresponding age and time,
 and for the specified $icode weight_id$$,
 
-$comment example/table/weight_table.py is included by weight_table.omh$$
+$children%example/table/weight_grid.py
+%$$
 $head Example$$
-The file $cref weight_table.py$$ 
+The file $cref weight_grid.py$$ 
 contains an example $code weight_grid$$ table.
 
 $end
