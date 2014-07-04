@@ -22,6 +22,7 @@ example.table.node_table()
 example.table.post_table()
 example.table.rate_prior()
 example.table.rate_table()
+example.table.density_table()
 example.table.smooth_table()
 example.table.weight_table()
 #

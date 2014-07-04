@@ -1,0 +1,46 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Density Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin density_table$$ 
+$spell
+	covariate
+$$
+$index density, table$$
+$index table, density$$
+
+$section The Density Table$$
+The $code density$$ table is used to identify densities.
+It has the following columns:
+
+$head density_id$$
+This column has type $code integer$$ 
+and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+$head density_name$$
+The following values,
+and only the following values,
+appear in the $icode density_name$$ column:
+$table
+$icode density_name$$ $pre   $$ $cnext Description                   $rnext
+$code gaussian$$       $pre   $$ $cnext Gaussian density               $rnext
+$code laplace$$        $pre   $$ $cnext Laplace density               $rnext
+$code log_gaussian$$        $pre   $$ $cnext Log-Gaussian density        $rnext
+$code log_laplace$$      $pre   $$ $cnext Log-Laplace density
+$tend
+
+
+$children%example/table/density_table.py
+%$$
+$head Example$$
+The files $cref density_table.py$$  and $cref get_density_table_xam.cpp$$
+contain an example $code density$$ tables.
+
+$end
