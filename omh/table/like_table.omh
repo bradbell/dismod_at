@@ -82,7 +82,7 @@ this field is not used and can be $code null$$.
 $children%example/table/like_table.py
 %$$
 $head Example$$
-The file $cref like_table.py$$ 
-contains an example $code like$$ table.
+The files $cref like_table.py$$ and $cref get_like_table_xam.cpp$$
+contain example $code like$$ tables.
 
 $end

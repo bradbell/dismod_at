@@ -40,7 +40,7 @@ such that the corresponding $icode parent$$ is equal to $icode p$$.
 $children%example/table/node_table.py
 %$$
 $head Example$$
-The file $cref node_table.py$$ 
-contains an example $code node$$ table.
+The files $cref node_table.py$$ and $cref get_node_table_xam.cpp$$
+contain example $code node$$ tables.
 
 $end
