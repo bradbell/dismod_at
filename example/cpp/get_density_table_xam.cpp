@@ -64,7 +64,8 @@ bool get_density_table_xam(void)
 		"insert into density values(0, 'log_laplace')",
 		"insert into density values(1, 'log_gaussian')",
 		"insert into density values(2, 'laplace')",
-		"insert into density values(3, 'gaussian')"
+		"insert into density values(3, 'gaussian')",
+		"insert into density values(4, 'uniform')"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -72,12 +73,14 @@ bool get_density_table_xam(void)
 
 
 	// get the density table
-	vector<dismod_at::density_enum> density_table = dismod_at::get_density_table(db);
-	ok  &= density_table.size() == 4;
+	vector<dismod_at::density_enum>
+		density_table = dismod_at::get_density_table(db);
+	ok  &= density_table.size() == 5;
 	ok  &= density_table[0] == dismod_at::log_laplace_enum;
 	ok  &= density_table[1] == dismod_at::log_gaussian_enum;
 	ok  &= density_table[2] == dismod_at::laplace_enum;
 	ok  &= density_table[3] == dismod_at::gaussian_enum;
+	ok  &= density_table[4] == dismod_at::uniform_enum;
  
 	// close database and return
 	sqlite3_close(db);

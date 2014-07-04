@@ -30,6 +30,7 @@ $head density_enum$$
 This is an enum type with the following values:
 $table
 $icode density$$          $pre  $$ $cnext Corresponding String    $rnext
+$code uniform_enum$$      $pre  $$ $cnext $code "gaussian"$$      $rnext
 $code gaussian_enum$$     $pre  $$ $cnext $code "gaussian"$$      $rnext
 $code laplace_enum$$      $pre  $$ $cnext $code "laplace"$$       $rnext        
 $code log_gaussian_enum$$ $pre  $$ $cnext $code "log_gaussian"$$  $rnext
@@ -86,6 +87,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // density names in same order as enum type in get_density_table.hpp
 const char* density_enum2name[] = {
+	"uniform",
 	"gaussian",
 	"laplace",
 	"log_gaussian",
@@ -126,7 +128,7 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 			}
 		}
 		if( ! found )
-		{	string s = "density_name is not iota, rho, chi, or omega.";
+		{	string s = density_name[i] + " is not a valid density_name.";
 			error_exit(i+1, s);
 		}
 	}

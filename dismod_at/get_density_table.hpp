@@ -16,6 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	enum density_enum {
+		uniform_enum,
 		gaussian_enum,
 		laplace_enum,
 		log_gaussian_enum,

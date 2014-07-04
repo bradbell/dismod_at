@@ -29,11 +29,12 @@ The following values,
 and only the following values,
 appear in the $icode density_name$$ column:
 $table
-$icode density_name$$ $pre   $$ $cnext Description                   $rnext
-$code gaussian$$       $pre   $$ $cnext Gaussian density               $rnext
-$code laplace$$        $pre   $$ $cnext Laplace density               $rnext
-$code log_gaussian$$        $pre   $$ $cnext Log-Gaussian density        $rnext
-$code log_laplace$$      $pre   $$ $cnext Log-Laplace density
+$icode density_name$$  $pre   $$ $cnext Description            $rnext
+$code uniform$$        $pre   $$ $cnext Flat density           $rnext
+$code gaussian$$       $pre   $$ $cnext Gaussian density       $rnext
+$code laplace$$        $pre   $$ $cnext Laplace density        $rnext
+$code log_gaussian$$   $pre   $$ $cnext Log-Gaussian density   $rnext
+$code log_laplace$$    $pre   $$ $cnext Log-Laplace density
 $tend
 
 

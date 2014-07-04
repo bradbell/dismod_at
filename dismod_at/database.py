@@ -512,7 +512,13 @@ def create_database(
 	# create density table
 	col_name = [  'density_name'   ]
 	col_type = [  'text'        ]
-	row_list = [ ['gaussian'], ['laplace'], ['log_gaussian'], ['log_laplace'] ]
+	row_list = [ 
+		['uniform'],
+		['gaussian'], 
+		['laplace'], 
+		['log_gaussian'], 
+		['log_laplace'] 
+	]
 	tbl_name = 'density'
 	create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
