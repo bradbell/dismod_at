@@ -34,7 +34,7 @@ def node_table() :
 	col_name = [ 'node_name',     'parent'    ]
 	col_type = [ 'text',          'integer'   ]
 	row_list = [
-	           [ 'world',         None        ],
+	           [ 'world',         -1          ],
 		       [ 'north_america', 0           ],
 		       [ 'united_states', 1           ],
 		       [ 'canada',        1           ]

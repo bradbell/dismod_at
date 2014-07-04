@@ -377,6 +377,8 @@ def create_table_(connection, tbl_name, col_name, col_type, row_list) :
 # name    $cnext str           $cnext name for the $th i$$ node  $rnext
 # parent  $cnext str           $cnext name of parent of the $th i$$ node
 # $tend
+# Note that if the i-th node does not have a parent, the emtpy string
+# should be used for the parent of that node.
 #
 # $head weight_list$$
 # This is a list of $code dict$$
@@ -552,7 +554,9 @@ def create_database(
 		node   = node_list[i]
 		name   = node['name']
 		parent = node['parent']
-		if parent!= None :
+		if parent == '' :
+			parent = -1
+		else :
 			parent = global_node_name2id[parent]
 		row_list.append( [ name, parent ] )
 	tbl_name = 'node'

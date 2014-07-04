@@ -12,8 +12,9 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(cpp_lib EXCLUDE_FROM_ALL 
 	exec_sql_cmd.cpp
 	get_integrand_table.cpp
-	get_rate_table.cpp
 	get_density_table.cpp
+	get_node_table.cpp
+	get_rate_table.cpp
 	get_table_column.cpp
 )
 SET_TARGET_PROPERTIES(cpp_lib PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")

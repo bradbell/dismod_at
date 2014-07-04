@@ -31,7 +31,7 @@ The names are intended to be easier for a human to remember than the ids.
 $head parent$$
 This column has type $code integer$$ and is the $icode node_id$$
 of the parent for this node.
-If this node has no parents, $icode parent$$ is $code null$$.
+If this node has no parents, $icode parent$$ is $code -1$$.
 
 $subhead Child Group$$
 The child group for node $icode p$$ is the sent of $icode node_id$$ values 

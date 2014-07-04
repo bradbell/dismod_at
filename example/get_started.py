@@ -32,7 +32,7 @@ def get_started() :
 	# ------------------------------------------------------------------------
 	file_name = 'example.db'
 	node_list = [
-		{ 'name':'world',         'parent':None },
+		{ 'name':'world',         'parent':'' },
 		{ 'name':'north_america', 'parent':'world' },
 		{ 'name':'united_states', 'parent':'north_america' },
 		{ 'name':'canada',        'parent':'north_america' }
