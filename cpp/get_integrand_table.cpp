@@ -35,16 +35,24 @@ and is an open connection to the database.
 
 $head integrand_enum$$
 This is an enum type with the following values:
-$code incidence_enum$$,
-$code remission_enum$$,
-$code mtexcess_enum$$,
-$code mtother_enum$$,
-$code mtwith_enum$$,
-$code prevalence_enum$$,
-$code mtspecific_enum$$,
-$code mtall_enum$$,
-$code mtstandard_enum$$,
-$code relrisk_enum$$.
+$table
+$icode integrand$$      $pre  $$ $cnext Corresponding String    $rnext
+$code incidence_enum$$  $pre  $$ $cnext $code "incidence"$$     $rnext
+$code remission_enum$$  $pre  $$ $cnext $code "remission"$$     $rnext
+$code mtexcess_enum$$   $pre  $$ $cnext $code "mtexcess"$$      $rnext
+$code mtother_enum$$    $pre  $$ $cnext $code "mtother"$$       $rnext
+$code mtwith_enum$$     $pre  $$ $cnext $code "mtwith"$$        $rnext
+$code prevalence_enum$$ $pre  $$ $cnext $code "prevalence"$$    $rnext
+$code mtspecific_enum$$ $pre  $$ $cnext $code "mtspecific"$$    $rnext
+$code mtall_enum$$      $pre  $$ $cnext $code "mtall"$$         $rnext
+$code mtstandard_enum$$ $pre  $$ $cnext $code "mtstandard"$$    $rnext
+$code relrisk_enum$$    $pre  $$ $cnext $code "relrisk"$$
+$tend
+
+$head integrand_enum2name$$
+This is a global variable. If $icode%integrand% < number_integrand_enum%$$, 
+$codei%integrand_enum2name[%integrand%]%$$ is the string corresponding
+to the $icode integrand$$ enum value.
 
 $head integrand_table$$
 The return value $icode integrand_table$$ has prototype
@@ -88,6 +96,19 @@ namespace {
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
+// rate names in same order as enum type in get_integrand_table.hpp
+const char* integrand_enum2name[] = {
+	"incidence",
+	"remission",
+	"mtexcess",
+	"mtother",
+	"mtwith",
+	"prevalence",
+	"mtspecific",
+	"mtall",
+	"mtstandard",
+	"relrisk"
+};
 CppAD::vector<integrand_enum> get_integrand_table(sqlite3* db)
 {	using std::string;
 
@@ -101,44 +122,17 @@ CppAD::vector<integrand_enum> get_integrand_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, integrand_name);
 	assert( integrand_id.size() == integrand_name.size() );
 
-	integrand_enum enum_list[] = {
-		incidence_enum,
-		remission_enum,
-		mtexcess_enum,
-		mtother_enum,
-		mtwith_enum,
-		prevalence_enum,
-		mtspecific_enum,
-		mtall_enum,
-		mtstandard_enum,
-		relrisk_enum
-	};
-	const char* name_list[] = {
-		"incidence",
-		"remission",
-		"mtexcess",
-		"mtother",
-		"mtwith",
-		"prevalence",
-		"mtspecific",
-		"mtall",
-		"mtstandard",
-		"relrisk"
-	};
-	size_t n_list = sizeof(enum_list) / sizeof(enum_list[0]);
-	
 	size_t n_out = integrand_name.size();
 	CppAD::vector<integrand_enum> integrand_table(n_out);
-	size_t n_integrand = integrand_id.size();
 	for(size_t i = 0; i < n_out; i++)
 	{	if( integrand_id[i] != i )
 		{	string s = "integrand_id must start at zero and increment by one.";
 			error_exit(i+1, s);
 		}
 		bool found = false;
-		for(size_t j = 0; j < n_list; j++)
-		{	if( integrand_name[i] == name_list[j] )
-			{	integrand_table[i] = enum_list[j];
+		for(size_t j = 0; j < number_integrand_enum; j++)
+		{	if( integrand_name[i] == integrand_enum2name[j] )
+			{	integrand_table[i] = integrand_enum(j);
 				found = true;
 			}
 		}

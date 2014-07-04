@@ -28,10 +28,19 @@ and is an open connection to the database.
 
 $head rate_enum$$
 This is an enum type with the following values:
-$code iota_enum$$,
-$code rho_enum$$,
-$code chi_enum$$,
-$code omega_enum$$.
+$table
+$icode rate$$        $pre  $$ $cnext Corresponding String    $rnext
+$code iota_enum$$    $pre  $$ $cnext $code "iota"$$          $rnext        
+$code rho_enum$$     $pre  $$ $cnext $code "rho"$$           $rnext        
+$code chi_enum$$     $pre  $$ $cnext $code "chi"$$           $rnext        
+$code omega_enum$$   $pre  $$ $cnext $code "omega"$$
+$tend        
+The number of these enum values is $code number_rate_enum$$.
+
+$head rate_enum2name$$
+This is a global variable. If $icode%rate% < number_rate_enum%$$, 
+$codei%rate_enum2name[%rate%]%$$ is the string corresponding
+to the $icode rate$$ enum value.
 
 $head rate_table$$
 The return value $icode rate_table$$ has prototype
@@ -75,6 +84,14 @@ namespace {
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
+// rate names in same order as enum type in get_rate_table.hpp
+const char* rate_enum2name[] = {
+	"iota",
+	"rho",
+	"chi",
+	"omega"
+};
+
 CppAD::vector<rate_enum> get_rate_table(sqlite3* db)
 {	using std::string;
 
@@ -101,15 +118,14 @@ CppAD::vector<rate_enum> get_rate_table(sqlite3* db)
 		{	string s = "rate_id must start at zero and increment by one.";
 			error_exit(i+1, s);
 		}
-		if( rate_name[i] == "iota" )
-			rate_table[i] = iota_enum;
-		else if( rate_name[i] == "rho" )
-			rate_table[i] = rho_enum;
-		else if( rate_name[i] == "chi" )
-			rate_table[i] = chi_enum;
-		else if( rate_name[i] == "omega" )
-			rate_table[i] = omega_enum;
-		else
+		bool found = false;
+		for( size_t j = 0; j < number_rate_enum; j++)
+		{	if( rate_enum2name[j] == rate_name[i] )
+			{	rate_table[i] = rate_enum(j);
+				found         = true;
+			}
+		}
+		if( ! found )
 		{	string s = "rate_name is not iota, rho, chi, or omega.";
 			error_exit(i+1, s);
 		}
