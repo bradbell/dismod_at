@@ -225,10 +225,10 @@ def get_name2type(connection, tbl_name) :
 # table in the same order as $icode col_name$$.
 # Note that the special value $code None$$ gets converted to $code null$$.
 #
-# $comment%example/create_table.py
+# $children%example/table/create_table.py
 # %$$
 # $head Example$$
-# The file $comment create_table.py$$ creates an example use of
+# The file $cref create_table.py$$ is an example and use of
 # $code create_table$$.
 #
 # $end
