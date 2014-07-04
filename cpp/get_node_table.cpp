@@ -2,8 +2,9 @@
 $begin get_node_table$$
 $spell
 	sqlite
-	enum
+	struct
 	cpp
+	std
 $$
 
 $section C++: Get the Node Table Information$$
