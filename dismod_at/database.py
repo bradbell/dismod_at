@@ -410,11 +410,11 @@ def create_table_(connection, tbl_name, col_name, col_type, row_list) :
 # $table
 # Key          $cnext Value Type  $cnext Description                 $rnext 
 # integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext 
+# density      $cnext str         $cnext density function            $rnext 
 # node         $cnext str         $cnext node in graph               $rnext 
 # weight       $cnext str         $cnext weighting function          $rnext 
 # meas_value   $cnext float       $cnext measured value              $rnext 
 # meas_std     $cnext float       $cnext standard deviation          $rnext 
-# meas_density $cnext str         $cnext density function            $rnext 
 # meas_eta     $cnext float       $cnext density function            $rnext 
 # age_lower    $cnext float       $cnext lower age limit             $rnext 
 # age_upper    $cnext float       $cnext upper age limit             $rnext 
@@ -606,11 +606,11 @@ def create_database(
 	col_name = [
 		'data_id',
 		'integrand_id',
+		'density_id',
 		'node_id',
 		'weight_id',
 		'meas_value',
 		'meas_std',
-		'meas_density',
 		'meas_eta',
 		'age_lower',
 		'age_upper',
@@ -620,11 +620,11 @@ def create_database(
 	col_type = [
 		ptype,                  # data_id
 		'integer',              # integrand_id
+		'integer',              # density_id
 		'integer',              # node_id
 		'integer',              # weight_id
 		'real',                 # meas_value
 		'real',                 # meas_std
-		'text',                 # meas_density
 		'real',                 # meas_eta
 		'real',                 # age_lower
 		'real',                 # age_upper
@@ -636,16 +636,17 @@ def create_database(
 		data = data_list[i]
 		data_id      = i
 		integrand_id = global_integrand_name2id[ data['integrand'] ]
+		density_id   = global_density_name2id[ data['density'] ]
 		node_id      = global_node_name2id[ data['node'] ]
 		weight_id    = global_weight_name2id[ data['weight'] ]
 		row = [ 
 			data_id,
 			integrand_id,
+			density_id,
 			node_id,
 			weight_id,
 			data['meas_value'],
 			data['meas_std'],
-			data['meas_density'],
 			data['meas_eta'],
 			data['age_lower'],
 			data['age_upper'],

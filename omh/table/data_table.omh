@@ -33,6 +33,11 @@ This column has type $code integer$$ and its value is the
 $cref integrand_table$$ primary key that identifies
 the integrand for this measurement.
 
+$head density_id$$
+This column has type $code integer$$ and its value is the
+$cref density_table$$ primary key that identifies
+the density function for this measurement.
+
 $head node_id$$
 This column has type $code integer$$ and identifies the node
 for this measurement.
@@ -51,15 +56,6 @@ $head meas_std$$
 This column has type $code real$$ and is the standard deviation 
 for this measurement value.
 This standard for this measurement and is in the same units at the data.
-
-$head meas_density$$
-This column has type $code text$$ and identifies density function used
-for this measurement.
-It must be one of the following:
-$code gaussian$$, 
-$code laplace$$,
-$code log_gaussian$$,
-or $code log_laplace$$. 
 
 $head meas_eta$$
 This column has type $code real$$ and is only used in the

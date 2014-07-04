@@ -33,11 +33,11 @@ def data_table() :
 		# required columns
 		'data_id',
 		'integrand_id',
+		'density_id',
 		'node_id',
 		'weight_grid_id',
 		'meas_value',
 		'meas_std',
-		'meas_density',
 		'meas_eta',
 		'age_lower',
 		'age_upper',
@@ -52,11 +52,11 @@ def data_table() :
 	col_type = [
 		'integer primary key',  # data_id
 		'integer',              # integrand_id
+		'integer',              # density_id
 		'integer',              # node_id
 		'integer',              # weight_grid_id
 		'real',                 # meas_value
 		'real',                 # meas_std
-		'text',                 # meas_density
 		'real',                 # meas_eta
 		'real',                 # age_lower
 		'real',                 # age_upper
@@ -69,11 +69,11 @@ def data_table() :
 	row_list = [ [
 		0,                      # data_id
 		1,                      # integrand_id
+		0,                      # density_id
 		3,                      # node_id
 		4,                      # weight_grid_id
 		1e-4,                   # meas_value
 		1e-5,                   # meas_std
-		'log_gaussian',         # meas_density
 		1e-5,                   # meas_eta
 		0.0,                    # age_lower
 		100.0,                  # age_upper

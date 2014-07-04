@@ -47,9 +47,9 @@ def get_started() :
 	data_list = []
 	row = {
 		'integrand':'mtother',
+		'density':'gaussian',
 		'weight':'constant',
 		'meas_std':1e-5,
-		'meas_density':'gaussian',
 		'meas_eta':1e-6,
 		'age_lower':0.0,
 		'age_upper':100.0,
