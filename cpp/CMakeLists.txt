@@ -11,6 +11,7 @@
 SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(cpp_lib EXCLUDE_FROM_ALL 
 	exec_sql_cmd.cpp
+	get_integrand_table.cpp
 	get_rate_table.cpp
 	get_table_column.cpp
 )

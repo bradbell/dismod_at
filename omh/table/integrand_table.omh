@@ -31,6 +31,7 @@ It has the following columns:
 $head integrand_id$$
 This column has type $code integer$$ 
 and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
 
 $head integrand_name$$
 The following table lists the possible values for $icode integrand_name$$.

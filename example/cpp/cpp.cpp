@@ -32,8 +32,9 @@ $end
 
 
 // prototype for each of the tests
-extern bool get_table_column_xam(void);
+extern bool get_integrand_table_xam(void);
 extern bool get_rate_table_xam(void);
+extern bool get_table_column_xam(void);
 
 // anonymous namespace
 namespace {
@@ -67,8 +68,9 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
-	RUN(get_table_column_xam);
+	RUN(get_integrand_table_xam);
 	RUN(get_rate_table_xam);
+	RUN(get_table_column_xam);
 
 	// summary report
 	using std::cout;

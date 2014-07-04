@@ -9,17 +9,17 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_rate_table_xam.cpp$$
+$begin get_integrand_table_xam.cpp$$
 $spell
 	xam
 $$
 
-$section C++ get_rate_table: Example and Test$$
-$index example, C++ get_rate_table$$
-$index get_rate_table, C++ example$$
+$section C++ get_integrand_table: Example and Test$$
+$index example, C++ get_integrand_table$$
+$index get_integrand_table, C++ example$$
 
 $code
-$verbatim%example/cpp/get_rate_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/cpp/get_integrand_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -29,10 +29,10 @@ $end
 # include <fstream>
 # include <cstdio>
 # include <sqlite3.h>
-# include <dismod_at/get_rate_table.hpp>
+# include <dismod_at/get_integrand_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 
-bool get_rate_table_xam(void)
+bool get_integrand_table_xam(void)
 {
 	bool   ok = true;
 	using  std::cerr;
@@ -60,24 +60,26 @@ bool get_rate_table_xam(void)
 
 	// sql commands
 	const char* sql_cmd[] = { 
-		"create table rate(rate_id integer primary key, rate_name text)",
-		"insert into rate values(0, 'omega')",
-		"insert into rate values(1, 'chi')",
-		"insert into rate values(2, 'rho')",
-		"insert into rate values(3, 'iota')"
+		"create table integrand"
+		"(integrand_id integer primary key, integrand_name text)",
+		"insert into integrand values(0, 'mtall')",
+		"insert into integrand values(1, 'prevalence')",
+		"insert into integrand values(2, 'remission')",
+		"insert into integrand values(3, 'incidence')",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
 
-	// get the rate table
-	vector<dismod_at::rate_enum> rate_table = dismod_at::get_rate_table(db);
-	ok  &= rate_table.size() == 4;
-	ok  &= rate_table[0] == dismod_at::omega_enum;
-	ok  &= rate_table[1] == dismod_at::chi_enum;
-	ok  &= rate_table[2] == dismod_at::rho_enum;
-	ok  &= rate_table[3] == dismod_at::iota_enum;
+	// get the integrand table
+	vector<dismod_at::integrand_enum> integrand_table = 
+		dismod_at::get_integrand_table(db);
+	ok  &= integrand_table.size() == 4;
+	ok  &= integrand_table[0] == dismod_at::mtall_enum;
+	ok  &= integrand_table[1] == dismod_at::prevalence_enum;
+	ok  &= integrand_table[2] == dismod_at::remission_enum;
+	ok  &= integrand_table[3] == dismod_at::incidence_enum;
  
 	// close database and return
 	sqlite3_close(db);

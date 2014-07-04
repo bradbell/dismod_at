@@ -16,6 +16,7 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 # Program cpp, not installed, and depends on following source files
 ADD_EXECUTABLE(cpp EXCLUDE_FROM_ALL 
 	cpp.cpp
+	get_integrand_table_xam.cpp
 	get_table_column_xam.cpp
 	get_rate_table_xam.cpp
 )
