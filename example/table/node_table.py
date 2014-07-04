@@ -31,25 +31,26 @@ def node_table() :
 	cursor         = connection.cursor()
 	#
 	# create the node table
-	ptype    = 'integer primary key'
-	col_name = [ 'node_id', 'node_name',     'parent_id' ]
-	col_type = [ ptype,     'text',          'integer'   ]
+	col_name = [ 'node_name',     'parent_id' ]
+	col_type = [ 'text',          'integer'   ]
 	row_list = [
-	           [ 0,         'world',         None        ],
-		      [ 1,         'north_america', 0           ],
-		      [ 2,         'united_states', 1           ],
-		      [ 3,         'canada',        1           ]
+	           [ 'world',         None        ],
+		       [ 'north_america', 0           ],
+		       [ 'united_states', 1           ],
+		       [ 'canada',        1           ]
 	]
 	tbl_name = 'node'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	columns  = ','.join(col_name)
+	columns  = 'node_id,' + columns
 	cmd      = 'SELECT ' + columns + ' FROM node'
-	count        = 0
-	cursor       = connection.cursor()
+	count    = 0
+	cursor   = connection.cursor()
 	for row in cursor.execute(cmd) :
-		assert len(row) == len(col_name)
+		row_list[count].insert(0, count)
+		assert len(row) == len(col_name) + 1
 		for j in range( len(row) ) :
 			assert row[j] == row_list[count][j]
 		count += 1

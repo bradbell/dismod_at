@@ -21,6 +21,7 @@ The $code node$$ table has the following columns:
 
 $head node_id$$
 This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
 
 $head node_name$$
 This column has type $code text$$ and has a different value for every row; 

@@ -545,8 +545,8 @@ def create_database(
 	for i in range( len(node_list) ) :
 		global_node_name2id[ node_list[i]['name'] ] = i
 	#
-	col_name = [ 'node_id', 'node_name', 'parent_id' ]
-	col_type = [ ptype,     'text',      'integer'   ]
+	col_name = [ 'node_name', 'parent_id' ]
+	col_type = [ 'text',      'integer'   ]
 	row_list = []
 	for i in range( len(node_list) ) :
 		node   = node_list[i]
@@ -554,9 +554,9 @@ def create_database(
 		parent = node['parent']
 		if parent!= None :
 			parent = global_node_name2id[parent]
-		row_list.append( [ i, name, parent ] )
+		row_list.append( [ name, parent ] )
 	tbl_name = 'node'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
 	# create weight table
 	col_name = [   'weight_id', 'weight_name'   ]
