@@ -42,7 +42,7 @@ def density_table() :
 		['log_laplace'] 
 	]
 	tbl_name = 'density'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	cmd = 'SELECT density_id, density_name FROM density'

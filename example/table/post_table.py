@@ -69,7 +69,7 @@ def post_table() :
 
 	# create the post table
 	tbl_name = 'post'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	columns = ','.join(col_name)

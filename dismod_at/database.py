@@ -182,7 +182,7 @@ def get_name2type(connection, tbl_name) :
 		col_name2type[key]  =  value
 	return col_name2type
 # ==========================================================================-
-# $begin create_table_$$ $newlinech #$$
+# $begin create_table$$ $newlinech #$$
 # $spell
 #	dismod
 #	str
@@ -195,7 +195,7 @@ def get_name2type(connection, tbl_name) :
 # $section Create a Database Table$$
 #
 # $head Syntax$$
-# $codei%dismod_at.create_table_(
+# $codei%dismod_at.create_table(
 #	%connection%, %tbl_name%, %col_name%, %col_type%, %row_list% 
 # )%$$
 #
@@ -236,13 +236,14 @@ def get_name2type(connection, tbl_name) :
 #
 #
 # $children%example/table/create_table.py 
+# %$$
 # $head Example$$
 # The file $cref create_table.py$$ is an example use of
-# $code create_table_$$.
+# $code create_table$$.
 #
 # $end
 # ---------------------------------------------------------------------------
-def create_table_(connection, tbl_name, col_name, col_type, row_list) :
+def create_table(connection, tbl_name, col_name, col_type, row_list) :
 	import copy
 	#
 	cmd       = 'create table ' + tbl_name + '('
@@ -440,7 +441,7 @@ def create_database(
 	col_type = [  'text'        ]
 	row_list = [ ['iota'], ['rho'], ['chi'], ['omega'] ]
 	tbl_name = 'rate'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_rate_name2id = {}
 	for i in range( len(row_list) ) :
@@ -457,7 +458,7 @@ def create_database(
 		['log_laplace'] 
 	]
 	tbl_name = 'density'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_density_name2id = {}
 	for i in range( len(row_list) ) :
@@ -479,7 +480,7 @@ def create_database(
 		[ 'relrisk'     ]
 	]
 	tbl_name = 'intergrand'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_integrand_name2id = {}
 	for i in range( len(row_list) ) :
@@ -493,7 +494,7 @@ def create_database(
 		covariate = covariate_list[i]
 		row_list.append( [ covariate['name'], covariate['reference'] ] )
 	tbl_name = 'covariate'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_covariate_name2id = {}
 	for i in range( len(covariate_list) ) :
@@ -517,7 +518,7 @@ def create_database(
 			parent = global_node_name2id[parent]
 		row_list.append( [ name, parent ] )
 	tbl_name = 'node'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
 	# create the like table
 	col_name = [ 
@@ -541,7 +542,7 @@ def create_database(
 		]
 		row_list.append( row )
 	tbl_name = 'like'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_like_name2id = {}
 	for i in range( len(row_list) ) :
@@ -555,7 +556,7 @@ def create_database(
 		weight = weight_list[i]
 		row_list.append( [ weight['name'] ] )
 	tbl_name = 'weight'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_weight_name2id = {}
 	for i in range( len(weight_list) ) :
@@ -575,7 +576,7 @@ def create_database(
 				w = fun(a, t)
 				row_list.append( [ i, a, t, w] )
 	tbl_name = 'weight_grid'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
 	# create smooth table
 	col_name = [ 'smooth_name'   ]
@@ -585,7 +586,7 @@ def create_database(
 		smooth = smooth_list[i]
 		row_list.append( [ smooth['name'] ] )
 	tbl_name = 'smooth'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_smooth_name2id = {}
 	for i in range( len(smooth_list) ) :
@@ -622,7 +623,7 @@ def create_database(
 				dt        = global_like_name2id[dt]
 				row_list.append( [ i, a, t, v, da, dt] )
 	tbl_name = 'smooth_grid'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create rate_prior table
 	col_name = [ 'rate_id', 'is_parent',   'smooth_id' ]
@@ -638,7 +639,7 @@ def create_database(
 		smooth_id = global_smooth_name2id[ rate['smooth'] ]
 		row_list.append( [ rate_id, is_parent, smooth_id ] )
 	tbl_name = 'rate_prior'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
 	# multiplier table
 	col_name = [ 
@@ -672,7 +673,7 @@ def create_database(
 			[multiplier_type, rate_id, integrand_id, covariate_id, smooth_id]
 		)
 	tbl_name = 'multiplier'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
 	# create the data table
 	col_name = [
@@ -724,7 +725,7 @@ def create_database(
 		]
 		row_list.append(row)
 	tbl_name = 'data'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create run table
 	col_name = [ 'parent_node_id' ]
@@ -732,6 +733,6 @@ def create_database(
 	parent_node_id = global_node_name2id[ parent_node ]
 	row_list = [ [parent_node_id] ]
 	tbl_name = 'run'
-	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	return

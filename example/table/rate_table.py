@@ -36,7 +36,7 @@ def rate_table() :
 	col_type = [ 'text'       ]
 	row_list = [ ['iota'], ['rho'], ['chi'], ['omega'] ]
 	tbl_name = 'rate'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	cmd = 'SELECT rate_id, rate_name FROM rate'

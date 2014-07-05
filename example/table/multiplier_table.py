@@ -60,7 +60,7 @@ def multiplier_table() :
 		2       # smooth_id
 	] ]
 	tbl_name = 'multiplier'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in the uniform multiplier table
 	columns = ','.join(col_name)

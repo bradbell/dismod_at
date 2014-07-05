@@ -41,7 +41,7 @@ def smooth_grid() :
 	           [ 'age_time'      ] 
 	]
 	tbl_name = 'smooth'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# 
 	# smooth_grid table column names
 	col_name = [
@@ -85,7 +85,7 @@ def smooth_grid() :
 	#
 	# write the table
 	tbl_name = 'smooth_grid'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in the table
 	columns = ','.join(col_name)

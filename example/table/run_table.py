@@ -36,7 +36,7 @@ def run_table() :
 	col_type = [ 'integer',       ]
 	row_list = [ [ 0 ] ]
 	tbl_name = 'run'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	columns  = ','.join(col_name)

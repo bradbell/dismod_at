@@ -36,7 +36,7 @@ def weight_grid() :
 	col_type = [ 'text'          ]
 	row_list = [ [ 'constant'   ], [ 'age_linear' ], [ 'bilinear'   ] ]
 	tbl_name = 'weight'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# create weight_grid table
 	col_name = [ 'weight_id', 'age',  'time',  'weight' ]
@@ -54,7 +54,7 @@ def weight_grid() :
 	           [ 2,         100.0,    2010.,   1.5      ]
 	]
 	tbl_name = 'weight_grid'
-	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in the bilinear weight table
 	columns = ','.join(col_name)
