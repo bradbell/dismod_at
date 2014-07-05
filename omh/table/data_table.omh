@@ -92,6 +92,7 @@ $icode covariate_id$$.
 $children%example/table/data_table.py
 %$$
 $head Example$$
-The file $cref data_table.py$$ creates an example $code data$$ table.
+The files $cref data_table.py$$ and $cref get_data_table_xam.cpp$$
+create example $code data$$ tables.
 
 $end
