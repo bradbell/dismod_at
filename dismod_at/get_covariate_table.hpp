@@ -16,7 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	struct covariate_struct {
-		std::string name;
+		std::string covariate_name;
 		double      reference;
 	};
 	extern CppAD::vector<covariate_struct> get_covariate_table(sqlite3*  db);

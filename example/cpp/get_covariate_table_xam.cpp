@@ -58,11 +58,11 @@ bool get_covariate_table_xam(void)
 		covariate_table = dismod_at::get_covariate_table(db);
 	ok  &= covariate_table.size() == 2;
 	//
-	ok  &= covariate_table[0].name      == "sex";
-	ok  &= covariate_table[0].reference == 0.0;
+	ok  &= covariate_table[0].covariate_name  == "sex";
+	ok  &= covariate_table[0].reference       == 0.0;
  	//
-	ok  &= covariate_table[1].name      == "income";
-	ok  &= covariate_table[1].reference == 2000.0;
+	ok  &= covariate_table[1].covariate_name  == "income";
+	ok  &= covariate_table[1].reference       == 2000.0;
 	//
 	// close database and return
 	sqlite3_close(db);

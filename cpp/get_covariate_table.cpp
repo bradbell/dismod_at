@@ -31,9 +31,13 @@ and is an open connection to the database.
 $head covariate_struct$$
 This is a structure with the following fields
 $table
-$code std::string name$$   $pre  $$ $cnext 
-	The $cref/covariate_name/covariate_table/covariate_name/$$ for this covariate  $rnext
-$code double reference$$         $pre  $$ $cnext 
+Type  $cnext Field $cnext Description
+$rnext
+$code std::string$$ $cnext $code covariate_name$$ $cnext 
+	The $cref/covariate_name/covariate_table/covariate_name/$$ 
+	for this covariate  
+$rnext
+$code double$$ $cnext $code reference$$  $cnext 
 	The $cref/reference/covariate_table/reference/$$ 
 	value for this covariate
 $tend        
@@ -92,8 +96,8 @@ CppAD::vector<covariate_struct> get_covariate_table(sqlite3* db)
 		{	string s = "covariate_id must start at zero and increment by one.";
 			table_error_exit("covariate", i, s);
 		}
-		covariate_table[i].name      = covariate_name[i];
-		covariate_table[i].reference = reference[i];
+		covariate_table[i].covariate_name  = covariate_name[i];
+		covariate_table[i].reference       = reference[i];
 	}
 	return covariate_table;
 }
