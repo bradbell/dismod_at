@@ -686,6 +686,54 @@ def create_database(
 				row_list.append( [ i, a, t, v, da, dt] )
 	tbl_name = 'smooth_grid'
 	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------
+	# create rate_prior table
+	col_name = [ 'rate_id', 'is_parent',   'smooth_id' ]
+	col_type = [ 'integer', 'integer',     'integer'        ]
+	row_list = [ ]
+	for i in range( len(rate_list) ) :
+		rate     = rate_list[i]
+		rate_id  = global_rate_name2id[ rate['name'] ]
+		if rate['parent'] :
+			is_parent = 1
+		else :
+			is_parent = 0
+		smooth_id = global_smooth_name2id[ rate['smooth'] ]
+		row_list.append( [ rate_id, is_parent, smooth_id ] )
+	tbl_name = 'rate_prior'
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------ 
+	# multiplier table
+	col_name = [ 
+		'multiplier_id', 
+		'multiplier_type',
+		'multiplier_index',
+		'covariate_id', 
+  		'smooth_id'
+	]
+	col_type = [ 
+		ptype,     # multiplier_id
+		'text',    # multiplier_type
+		'integer', # multiplier_index
+		'integer', # covariate_id
+  		'integer'  # smooth_id'
+	]
+	row_list = []
+	for i in range( len(multiplier_list) ) :
+		multiplier      = multiplier_list[i]
+		multiplier_type = multiplier['type']
+		effected        = multiplier['effected']
+		if multiplier_type == 'rate' :
+			multiplier_index = global_rate_name2id[ effected ]
+		else : 
+			multiplier_index = global_integrand_name2id[ effected ]
+		covariate_id  = global_covariate_name2id[ multiplier['covariate'] ]
+		smooth_id     = global_smooth_name2id[ multiplier['smooth'] ]
+		row_list.append(
+			[i, multiplier_type, multiplier_index, covariate_id, smooth_id]
+		)
+	tbl_name = 'multiplier'
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
 	# create the data table
 	col_name = [
@@ -740,54 +788,6 @@ def create_database(
 		]
 		row_list.append(row)
 	tbl_name = 'data'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
-	# create rate_prior table
-	col_name = [ 'rate_prior_id', 'rate_id', 'is_parent',   'smooth_id' ]
-	col_type = [ ptype,           'integer', 'integer',     'integer'        ]
-	row_list = [ ]
-	for i in range( len(rate_list) ) :
-		rate     = rate_list[i]
-		rate_id  = global_rate_name2id[ rate['name'] ]
-		if rate['parent'] :
-			is_parent = 1
-		else :
-			is_parent = 0
-		smooth_id = global_smooth_name2id[ rate['smooth'] ]
-		row_list.append( [ None, rate_id, is_parent, smooth_id ] )
-	tbl_name = 'rate_prior'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------ 
-	# multiplier table
-	col_name = [ 
-		'multiplier_id', 
-		'multiplier_type',
-		'multiplier_index',
-		'covariate_id', 
-  		'smooth_id'
-	]
-	col_type = [ 
-		ptype,     # multiplier_id
-		'text',    # multiplier_type
-		'integer', # multiplier_index
-		'integer', # covariate_id
-  		'integer'  # smooth_id'
-	]
-	row_list = []
-	for i in range( len(multiplier_list) ) :
-		multiplier      = multiplier_list[i]
-		multiplier_type = multiplier['type']
-		effected        = multiplier['effected']
-		if multiplier_type == 'rate' :
-			multiplier_index = global_rate_name2id[ effected ]
-		else : 
-			multiplier_index = global_integrand_name2id[ effected ]
-		covariate_id  = global_covariate_name2id[ multiplier['covariate'] ]
-		smooth_id     = global_smooth_name2id[ multiplier['smooth'] ]
-		row_list.append(
-			[i, multiplier_type, multiplier_index, covariate_id, smooth_id]
-		)
-	tbl_name = 'multiplier'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	return
