@@ -50,9 +50,9 @@ bool get_weight_grid_xam(void)
 	"create table weight_grid("
 		" weight_grid_id integer primary key,"
 		" weight_id      integer, "
-		" age          real,"
-		" time         real,"
-		" weight       real)",
+		" age            real,"
+		" time           real,"
+		" weight         real)",
 	//                 weight_grid_id, weight_id,   age,   time, weight
 	"insert into weight_grid values(0,         0,  50.0, 2000.0,    1.0)",
 	"insert into weight_grid values(1,         1,   0.0, 1980.0,    0.5)",

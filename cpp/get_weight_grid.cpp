@@ -31,7 +31,7 @@ $head weight_grid_struct$$
 This is a structure with the following fields
 $table
 $code int weight_id$$   $pre  $$ $cnext 
-	The $cref/weight_id/weight_grid/weight_id/$$ for this weighting function
+	The $cref/weight_id/weight_grid/weight_id/$$ for this weighting.
 $rnext
 $code double age$$      $pre  $$ $cnext 
 	The $cref/age/weight_grid/age/$$ for this weight value

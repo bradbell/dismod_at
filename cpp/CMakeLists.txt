@@ -16,6 +16,8 @@ ADD_LIBRARY(cpp_lib EXCLUDE_FROM_ALL
 	get_like_table.cpp
 	get_node_table.cpp
 	get_rate_table.cpp
+	get_smooth_grid.cpp
+	get_smooth_table.cpp
 	get_table_column.cpp
 	get_weight_grid.cpp
 	get_weight_table.cpp
