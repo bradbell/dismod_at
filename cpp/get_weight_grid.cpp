@@ -13,7 +13,7 @@ $index weight, get grid$$
 $index grid, get weight$$
 
 $head Syntax$$
-$codei # include <get_weight_grid>
+$codei%# include <get_weight_grid>
 %$$
 $icode%weight_grid% = get_weight_grid(%db%)%$$
 

@@ -13,7 +13,7 @@ $index weight, get table$$
 $index table, get weight$$
 
 $head Syntax$$
-$codei # include <get_weight_table>
+$codei%# include <get_weight_table>
 %$$
 $icode%weight_table% = get_weight_table(%db%)%$$
 

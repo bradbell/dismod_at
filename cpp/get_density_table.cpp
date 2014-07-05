@@ -12,7 +12,7 @@ $index density, get table$$
 $index table, get density$$
 
 $head Syntax$$
-$codei # include <get_density_table>
+$codei%# include <get_density_table>
 %$$
 $icode%density_table% = get_density_table(%db%)%$$
 

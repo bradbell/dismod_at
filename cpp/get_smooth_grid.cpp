@@ -15,7 +15,7 @@ $index smooth, get grid$$
 $index grid, get smooth$$
 
 $head Syntax$$
-$codei # include <get_smooth_grid>
+$codei%# include <get_smooth_grid>
 %$$
 $icode%smooth_grid% = get_smooth_grid(%db%)%$$
 

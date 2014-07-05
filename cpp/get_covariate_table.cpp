@@ -14,7 +14,7 @@ $index covariate, get table$$
 $index table, get covariate$$
 
 $head Syntax$$
-$codei # include <get_covariate_table>
+$codei%# include <get_covariate_table>
 %$$
 $icode%covariate_table% = get_covariate_table(%db%)%$$
 

@@ -29,6 +29,7 @@ $childtable%
 	%cpp/get_weight_grid.cpp
 	%cpp/get_smooth_table.cpp
 	%cpp/get_smooth_grid.cpp
+	%cpp/get_rate_prior.cpp
 %$$
 
 $end

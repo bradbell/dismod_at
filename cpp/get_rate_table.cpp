@@ -12,7 +12,7 @@ $index rate, get table$$
 $index table, get rate$$
 
 $head Syntax$$
-$codei # include <get_rate_table>
+$codei%# include <get_rate_table>
 %$$
 $icode%rate_table% = get_rate_table(%db%)%$$
 

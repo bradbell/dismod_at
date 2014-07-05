@@ -13,7 +13,7 @@ $index node, get table$$
 $index table, get node$$
 
 $head Syntax$$
-$codei # include <get_node_table>
+$codei%# include <get_node_table>
 %$$
 $icode%node_table% = get_node_table(%db%)%$$
 

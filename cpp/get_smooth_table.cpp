@@ -13,7 +13,7 @@ $index smooth, get table$$
 $index table, get smooth$$
 
 $head Syntax$$
-$codei # include <get_smooth_table>
+$codei%# include <get_smooth_table>
 %$$
 $icode%smooth_table% = get_smooth_table(%db%)%$$
 

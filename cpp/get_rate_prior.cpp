@@ -13,7 +13,7 @@ $index rate, get prior$$
 $index prior, get rate$$
 
 $head Syntax$$
-$codei # include <get_rate_prior>
+$codei%# include <get_rate_prior>
 %$$
 $icode%rate_prior% = get_rate_prior(%db%)%$$
 
