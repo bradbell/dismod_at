@@ -37,6 +37,7 @@ extern bool get_density_table_xam(void);
 extern bool get_integrand_table_xam(void);
 extern bool get_like_table_xam(void);
 extern bool get_node_table_xam(void);
+extern bool get_rate_prior_xam(void);
 extern bool get_rate_table_xam(void);
 extern bool get_smooth_grid_xam(void);
 extern bool get_table_column_xam(void);
@@ -79,6 +80,7 @@ int main(void)
 	RUN(get_integrand_table_xam);
 	RUN(get_like_table_xam);
 	RUN(get_node_table_xam);
+	RUN(get_rate_prior_xam);
 	RUN(get_rate_table_xam);
 	RUN(get_smooth_grid_xam);
 	RUN(get_table_column_xam);

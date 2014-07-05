@@ -80,30 +80,30 @@ CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3* db)
 	string column_name = "weight_grid_id";
 	CppAD::vector<int>    weight_grid_id;
 	get_table_column(db, table_name, column_name, weight_grid_id);
-	size_t n_weight = weight_grid_id.size();
+	size_t n_grid = weight_grid_id.size();
 
 	column_name        =  "weight_id";
 	CppAD::vector<int>     weight_id;
 	get_table_column(db, table_name, column_name, weight_id);
-	assert( weight_id.size() == n_weight );
+	assert( weight_id.size() == n_grid );
 
 	column_name        =  "age";
 	CppAD::vector<double>  age;
 	get_table_column(db, table_name, column_name, age);
-	assert( age.size() == n_weight );
+	assert( age.size() == n_grid );
 
 	column_name        =  "time";
 	CppAD::vector<double>  time;
 	get_table_column(db, table_name, column_name, time);
-	assert( time.size() == n_weight );
+	assert( time.size() == n_grid );
 
 	column_name        =  "weight";
 	CppAD::vector<double>  weight;
 	get_table_column(db, table_name, column_name, weight);
-	assert( weight.size() == n_weight );
+	assert( weight.size() == n_grid );
 
-	CppAD::vector<weight_grid_struct> weight_grid(n_weight);
-	for(size_t i = 0; i < n_weight; i++)
+	CppAD::vector<weight_grid_struct> weight_grid(n_grid);
+	for(size_t i = 0; i < n_grid; i++)
 	{	if( weight_grid_id[i] != i )
 		{	string s = 
 			"weight_grid_id must start at zero and increment by one.";
