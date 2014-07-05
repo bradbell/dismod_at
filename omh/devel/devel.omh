@@ -23,6 +23,8 @@ $childtable%
 	%cpp/get_integrand_table.cpp
 	%cpp/get_node_table.cpp
 	%cpp/get_like_table.cpp
+	%cpp/get_weight_table.cpp
+	%cpp/get_weight_grid.cpp
 %$$
 
 $end

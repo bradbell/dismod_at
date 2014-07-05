@@ -23,7 +23,7 @@ example.table.post_table()
 example.table.rate_prior()
 example.table.rate_table()
 example.table.density_table()
-example.table.smooth_table()
+example.table.smooth_grid()
 example.table.weight_grid()
 #
 example.get_started()

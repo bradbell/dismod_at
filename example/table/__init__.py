@@ -20,5 +20,5 @@ from post_table        import *
 from rate_prior        import *
 from rate_table        import *
 from density_table     import *
-from smooth_table      import *
+from smooth_grid       import *
 from weight_grid       import *

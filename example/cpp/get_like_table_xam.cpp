@@ -43,9 +43,10 @@ bool get_like_table_xam(void)
 	// sql commands
 	// assume that density_id for uniform density is 0.
 	const char* sql_cmd[] = { 
-		"create table like(like_id integer primary key,"
-			" like_name  text, "
-			" density_id integer, "
+		"create table like("
+			" like_id       integer primary key,"
+			" like_name    text,"
+			" density_id   integer,"
 			" lower        real,"
 			" upper        real,"
 			" mean         real,"

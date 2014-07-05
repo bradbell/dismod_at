@@ -22,6 +22,7 @@ ADD_EXECUTABLE(cpp EXCLUDE_FROM_ALL
 	get_node_table_xam.cpp
 	get_rate_table_xam.cpp
 	get_table_column_xam.cpp
+	get_weight_grid_xam.cpp
 )
 SET_TARGET_PROPERTIES(cpp PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
 LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )

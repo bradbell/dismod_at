@@ -8,7 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin smooth_prior$$ 
+$begin smooth_grid$$ 
 $spell
 	grid
 	agetime
@@ -20,18 +20,19 @@ $index smooth, prior table$$
 $index table, smooth prior$$
 $index prior, smooth table$$
 
-$section The Smoothing Prior Table$$
-This table specifies the smoothing prior for a function of age and time.
+$section The Smoothing Grid Table$$
+This table specifies the smoothing grid for a function of age and time.
 It has the following columns:
 
-$head smooth_prior_id$$
+$head smooth_grid_id$$
 This column has type $code integer$$ and is the primary key for
-the $code smooth_prior$$ table.
+the $code smooth_grid$$ table.
+Its initial value is zero, and it increments by one for each row.
 
 $head smooth_id$$
 This column has type $code integer$$ and is the primary key for
 the $cref smooth_table$$.
-Each value $icode smooth_id$$ corresponds to a different smoothing prior.
+Each value $icode smooth_id$$ corresponds to a different smoothing.
 
 $subhead age$$
 This column 
@@ -49,27 +50,27 @@ the grid corresponding to $icode smooth_id$$ is rectangular.
 
 $head value_like_id$$
 This column has type $code integer$$ and its value in a row is the
-$icode like_id$$, in the $cref like_table$$,
-for the prior that is used for 
-this smoothing at this age and time.
+$cref/like_id/like_table/like_id/$$ for
+the funciton values for this smoothing, age, and time.
 
 $head dage_like_id$$
 This column has type $code integer$$ and its value in a row is the
-$icode like_id$$, in the $cref like_table$$,
-for the prior that is used for the 
-function's forward difference quotients w.r.t age. 
+$cref/like_id/like_table/like_id/$$ for
+function's forward difference quotients w.r.t age,
+for this smoothing, age, and time.
 The likelihood at the maximum age, for each time, is not used.
 
 $head dtime_like_id$$
 This column has type $code integer$$ and its value in a row is the
-$icode like_id$$, in the $cref like_table$$,
-for the prior that is used for the 
-function's forward difference quotients w.r.t time. 
+$cref/like_id/like_table/like_id/$$ for
+function's forward difference quotients w.r.t time,
+for this smoothing, age, and time.
 The likelihood at the maximum time, for each age, is not used.
 
-$comment example/table/smooth_table.py is included by smooth_table.omh$$
+$children%example/table/smooth_grid.py
+%$$
 $head Example$$
-The file $cref smooth_table.py$$ 
-contains an example $code smooth_prior$$ table.
+The file $cref smooth_grid.py$$ 
+contains an example $code smooth_grid$$ table.
 
 $end

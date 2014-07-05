@@ -8,20 +8,20 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin smooth_table.py$$ $newlinech #$$
+# $begin smooth_grid.py$$ $newlinech #$$
 #
-# $section smooth_table: Example and Test$$
+# $section smooth_grid: Example and Test$$
 #
 # $index smooth, example$$
 # $index example, smooth table$$
 #
 # $code
-# $verbatim%example/table/smooth_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/smooth_grid.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-def smooth_table() :
+def smooth_grid() :
 	import dismod_at
 	import copy
 	#
@@ -32,20 +32,19 @@ def smooth_table() :
 	# 
 	# create smooth table
 	ptype    = 'integer primary key'
-	col_name = [ 'smooth_id', 'smooth_name' ]
-	col_type = [ ptype,            'text'          ]
+	col_name = [ 'smooth_name' ]
+	col_type = [ 'text'        ]
 	row_list = [
-	           [ 0,                'constant'      ],
-	           [ 1,                'age_only'      ],
-	           [ 2,                'time_only'     ],
-	           [ 3,                'age_time'      ] 
+	           [ 'constant'      ],
+	           [ 'age_only'      ],
+	           [ 'time_only'     ],
+	           [ 'age_time'      ] 
 	]
 	tbl_name = 'smooth'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	# 
-	# smooth_prior table column names
+	# smooth_grid table column names
 	col_name = [
-		'smooth_prior_id', 
 		'smooth_id', 
 		'age',  
 		'time',  
@@ -54,9 +53,8 @@ def smooth_table() :
 		'dtime_like_id',
 	]
 	#
-	# smooth_prior table column types
+	# smooth_grid table column types
 	col_type = [
-		ptype,      # smooth_prior_id
 		'integer',  # smooth_id
 		'real',     # age
 		'real',     # time
@@ -65,49 +63,49 @@ def smooth_table() :
 		'integer',  # dtime_like_id
 	]
 	#
-	# smooth_prior table values
+	# smooth_grid table values
 	row_list = list()
 	default  = [
-		None,       # smooth_prior_id
 		3,          # smooth_id          (smooth_id == 3 is age_time)
-		None,       # age                (age  index is 2 in default)
-		None,       # time               (time index is 3 in default)
+		None,       # age                (age  index is 1 in default)
+		None,       # time               (time index is 2 in default)
 		1,          # value_like_id
-		1,          # dage_like_id
-		1           # dtime_like_id
+		2,          # dage_like_id
+		3           # dtime_like_id
 	]
 	age_grid  = [ 0.0, 50.0, 100.0 ]
 	time_grid = [ 1980., 1990., 2000., 2010 ]  
 	age_time  = list()
 	for age in age_grid :
 		for time in time_grid :
-			default[2] = age
-			default[3] = time
+			default[1] = age
+			default[2] = time
 			row_list.append( copy.copy(default) )
 			age_time.append( (age, time) )
 	#
 	# write the table
-	tbl_name = 'smooth_prior'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	tbl_name = 'smooth_grid'
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in the table
 	columns = ','.join(col_name)
-	cmd     = 'SELECT ' + columns + ' FROM smooth_prior'
+	columns = 'smooth_grid_id,' + columns
+	cmd     = 'SELECT ' + columns + ' FROM smooth_grid'
 	cmd    += ' JOIN smooth USING(smooth_id) '
 	cmd    += ' WHERE smooth_name = "age_time"'
 	count        = 0
 	cursor       = connection.cursor()
 	for row in cursor.execute(cmd) :
-		assert len(row) == len(col_name)
-		for j in range( len(row) ) :
-			if j == 2 :
-				assert row[j] == age_time[count][0]
-			elif j == 3 :
-				assert row[j] == age_time[count][1]
-			elif j > 3 :
-				assert row[j] == row_list[count][j]
+		assert len(row) == 7
+		assert row[0] == count
+		assert row[1] == 3
+		assert row[2] == age_time[count][0]
+		assert row[3] == age_time[count][1]
+		assert row[4] == 1
+		assert row[5] == 2
+		assert row[6] == 3
 		count += 1
 	assert count == len(row_list)
 	#
-	print('smooth_table: OK')
+	print('smooth_grid: OK')
 # END PYTHON

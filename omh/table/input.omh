@@ -31,10 +31,10 @@ $childtable%
 	%omh/table/like_table.omh
 	%omh/table/weight_table.omh
 	%omh/table/weight_grid.omh
+	%omh/table/smooth_table.omh
+	%omh/table/smooth_grid.omh
 	%omh/table/covariate_table.omh
 	%omh/table/data_table.omh
-	%omh/table/smooth_table.omh
-	%omh/table/smooth_prior.omh
 	%omh/table/rate_prior.omh
 	%omh/table/multiplier_table.omh
 	%omh/table/misc_table.omh

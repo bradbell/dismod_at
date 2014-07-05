@@ -13,20 +13,21 @@ $spell
 	grid
 $$
 
-$section Smoothing Grid Table$$
+$section The Smoothing Table$$
 
 $head smooth_id$$
 This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
 
 $head smooth_name$$ 
 This column has type $code text$$ and has a different value for every row; 
 i.e., the names are unique and can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
 
-$children%example/table/smooth_table.py
+$comment%example/table/smooth_grid.py is included by smooth_grid.omh
 %$$
 $head Example$$
-The file $cref smooth_table.py$$ 
+The file $cref smooth_grid.py$$ 
 contains an example $code smooth$$ table.
 
 $end

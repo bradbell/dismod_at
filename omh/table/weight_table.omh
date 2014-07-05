@@ -28,7 +28,7 @@ The names are intended to be easier for a human to remember than the ids.
 $comment%example/table/weight_grid.py is included by weight_grid.omh
 %$$
 $head Example$$
-The file $cref weight_grid.py$$ 
-contains an example $code weight$$ table.
+The files $cref weight_grid.py$$ and $cref get_weight_grid_xam.cpp$$
+contain example $code weight$$ tables.
 
 $end

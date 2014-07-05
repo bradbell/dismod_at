@@ -33,7 +33,7 @@ $table
 $code std::string name$$   $pre  $$ $cnext 
 	The $cref/like_name/like_table/like_name/$$ for this likelihood  $rnext
 $code int density_id$$     $pre  $$ $cnext 
-	The $cref/density_id/density_table/density_id/$$ for this likelihood $rnext
+	The $cref/density_id/like_table/density_id/$$ for this likelihood $rnext
 $code double lower$$       $pre  $$ $cnext
 	The $cref/lower/like_table/lower/$$ limit for this likelihood  $rnext
 $code double upper$$        $pre  $$ $cnext

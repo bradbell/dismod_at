@@ -31,14 +31,14 @@ This column has type $code integer$$ and is the primary key for
 the $cref weight_table$$.
 Each value $icode weight_id$$ corresponds to a different weighting.
 
-$subhead age$$
+$head age$$
 This column 
 has type $code real$$ and is value is the age value for this grid point.
 For each fixed value of $icode weight_id$$ and $icode time$$,
 the set of corresponding $icode age$$ values is constant; i.e.,
 the grid corresponding to $icode weight_id$$ is rectangular.
 
-$subhead time$$
+$head time$$
 This column 
 has type $code real$$ and is value is the time value for this grid point.
 For each fixed value of $icode weight_id$$ and $icode age$$,
@@ -55,7 +55,7 @@ and for the specified $icode weight_id$$,
 $children%example/table/weight_grid.py
 %$$
 $head Example$$
-The file $cref weight_grid.py$$ 
-contains an example $code weight_grid$$ table.
+The files $cref weight_grid.py$$ and $cref get_weight_grid_xam.cpp$$
+contain example $code weight_grid$$ tables.
 
 $end

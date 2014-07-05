@@ -38,6 +38,7 @@ extern bool get_like_table_xam(void);
 extern bool get_node_table_xam(void);
 extern bool get_rate_table_xam(void);
 extern bool get_table_column_xam(void);
+extern bool get_weight_grid_xam(void);
 
 // anonymous namespace
 namespace {
@@ -61,7 +62,7 @@ namespace {
 		}
 		else
 		{	cout << "Error" << endl; 
-			Run_ok_count++;
+			Run_error_count++;
 		}
 	}
 }
@@ -77,6 +78,7 @@ int main(void)
 	RUN(get_node_table_xam);
 	RUN(get_rate_table_xam);
 	RUN(get_table_column_xam);
+	RUN(get_weight_grid_xam);
 
 	// summary report
 	using std::cout;

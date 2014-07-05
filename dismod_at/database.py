@@ -441,7 +441,7 @@ def create_table_(connection, tbl_name, col_name, col_type, row_list) :
 # $head smooth_list$$
 # This is a list of $code dict$$
 # that define the rows of the $cref smooth_table$$ and
-# $cref smooth_prior$$ table.
+# $cref smooth_grid$$ tables.
 # The dictionary $icode%smooth_list%[%i%]%$$ has the following:
 # $table
 # Key    $cnext Value Type    $cnext Description                $rnext
@@ -625,6 +625,53 @@ def create_database(
 				row_list.append( [ i, a, t, w] )
 	tbl_name = 'weight_grid'
 	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------ 
+	# create smooth table
+	col_name = [ 'smooth_name'   ]
+	col_type = [ 'text'          ]
+	row_list = [ ]
+	for i in range( len(smooth_list) ) :
+		smooth = smooth_list[i]
+		row_list.append( [ smooth['name'] ] )
+	tbl_name = 'smooth'
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	#
+	global_smooth_name2id = {}
+	for i in range( len(smooth_list) ) :
+		global_smooth_name2id[ smooth_list[i]['name'] ] = i
+	# ------------------------------------------------------------------------
+	# create smooth grid table
+	col_name = [
+		'smooth_id', 
+		'age',  
+		'time',  
+		'value_like_id',
+		'dage_like_id',
+		'dtime_like_id',
+	]
+	col_type = [
+		'integer',  # smooth_id
+		'real',     # age
+		'real',     # time
+		'integer',  # value_like_id
+		'integer',  # dage_like_id
+		'integer',  # dtime_like_id
+	]
+	row_list = [ ]
+	for i in range( len(smooth_list) ) :
+		smooth = smooth_list[i]
+		age    = smooth['age']
+		time   = smooth['time']
+		fun    = smooth['fun']
+		for a in age :
+			for t in time :
+				(v,da,dt) = fun(a, t)
+				v         = global_like_name2id[v]
+				da        = global_like_name2id[da]
+				dt        = global_like_name2id[dt]
+				row_list.append( [ i, a, t, v, da, dt] )
+	tbl_name = 'smooth_grid'
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create covariate table
 	col_name = [ 'covariate_id', 'covariate_name',	'reference' ]
@@ -693,55 +740,6 @@ def create_database(
 		]
 		row_list.append(row)
 	tbl_name = 'data'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------ 
-	# create smooth table
-	col_name = [   'smooth_id', 'smooth_name'   ]
-	col_type = [   ptype,       'text'          ]
-	row_list = [ ]
-	for i in range( len(smooth_list) ) :
-		smooth = smooth_list[i]
-		row_list.append( [ i, smooth['name'] ] )
-	tbl_name = 'smooth'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
-	#
-	global_smooth_name2id = {}
-	for i in range( len(smooth_list) ) :
-		global_smooth_name2id[ smooth_list[i]['name'] ] = i
-	# ------------------------------------------------------------------------
-	# create smooth prior table
-	col_name = [
-		'smooth_prior_id', 
-		'smooth_id', 
-		'age',  
-		'time',  
-		'value_like_id',
-		'dage_like_id',
-		'dtime_like_id',
-	]
-	col_type = [
-		ptype,      # smooth_prior_id
-		'integer',  # smooth_id
-		'real',     # age
-		'real',     # time
-		'integer',  # value_like_id
-		'integer',  # dage_like_id
-		'integer',  # dtime_like_id
-	]
-	row_list = [ ]
-	for i in range( len(smooth_list) ) :
-		smooth = smooth_list[i]
-		age    = smooth['age']
-		time   = smooth['time']
-		fun    = smooth['fun']
-		for a in age :
-			for t in time :
-				(v,da,dt) = fun(a, t)
-				v         = global_like_name2id[v]
-				da        = global_like_name2id[da]
-				dt        = global_like_name2id[dt]
-				row_list.append( [ None, i, a, t, v, da, dt] )
-	tbl_name = 'smooth_prior'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create rate_prior table
