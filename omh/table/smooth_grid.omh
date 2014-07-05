@@ -70,7 +70,7 @@ The likelihood at the maximum time, for each age, is not used.
 $children%example/table/smooth_grid.py
 %$$
 $head Example$$
-The file $cref smooth_grid.py$$ 
-contains an example $code smooth_grid$$ table.
+The files $cref smooth_grid.py$$ and $cref get_smooth_grid_xam.cpp$$
+contain example $code smooth$$ tables.
 
 $end

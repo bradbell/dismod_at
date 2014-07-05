@@ -27,7 +27,7 @@ The names are intended to be easier for a human to remember than the ids.
 $comment%example/table/smooth_grid.py is included by smooth_grid.omh
 %$$
 $head Example$$
-The file $cref smooth_grid.py$$ 
-contains an example $code smooth$$ table.
+The files $cref smooth_grid.py$$ and $cref get_smooth_grid_xam.cpp$$
+contain example $code smooth$$ tables.
 
 $end

@@ -38,7 +38,7 @@ the covariate value that corresponds to no adjustment.
 $children%example/table/covariate_table.py
 %$$
 $head Example$$
-The file $cref covariate_table.py$$ 
-contains an example $code covariate$$ table.
+The files $cref covariate_table.py$$  and $cref get_covariate_table_xam.cpp$$
+contain example $code covariate$$ tables.
 
 $end

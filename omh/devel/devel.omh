@@ -21,6 +21,7 @@ $childtable%
 	%cpp/get_rate_table.cpp
 	%cpp/get_density_table.cpp
 	%cpp/get_integrand_table.cpp
+	%cpp/get_covariate_table.cpp
 	%cpp/get_node_table.cpp
 	%cpp/get_like_table.cpp
 	%cpp/get_weight_table.cpp
