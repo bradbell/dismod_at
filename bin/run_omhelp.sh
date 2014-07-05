@@ -21,4 +21,14 @@ then
 fi
 mkdir $dir
 cd $dir
-omhelp ../$dir.omh -debug -noframe -xml
+#
+echo "omhelp ../$dir.omh -debug -noframe -xml > omhelp.log"
+omhelp ../$dir.omh -debug -noframe -xml > omhelp.log
+#
+if grep '^OMhelp Warning:' omhelp.log
+then
+	exit 1
+else
+	echo 'run_omhelp.sh: OK'
+fi
+exit 0

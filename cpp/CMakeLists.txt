@@ -15,6 +15,7 @@ ADD_LIBRARY(cpp_lib EXCLUDE_FROM_ALL
 	get_density_table.cpp
 	get_integrand_table.cpp
 	get_like_table.cpp
+	get_multiplier_table.cpp
 	get_node_table.cpp
 	get_rate_prior.cpp
 	get_rate_table.cpp
