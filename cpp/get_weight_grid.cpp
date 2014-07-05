@@ -30,16 +30,18 @@ and is an open connection to the database.
 $head weight_grid_struct$$
 This is a structure with the following fields
 $table
-$code int weight_id$$   $pre  $$ $cnext 
+Type $cnext Field $cnext Description
+$rnext
+$code int$$ $cnext $code weight_id$$   $pre  $$ $cnext 
 	The $cref/weight_id/weight_grid/weight_id/$$ for this weighting.
 $rnext
-$code double age$$      $pre  $$ $cnext 
+$code double$$ $cnext $code age$$      $pre  $$ $cnext 
 	The $cref/age/weight_grid/age/$$ for this weight value
 $rnext
-$code double time$$      $pre  $$ $cnext 
+$code double$$ $cnext $code time$$      $pre  $$ $cnext 
 	The $cref/time/weight_grid/time/$$ for this weight value
 $rnext
-$code double weight$$    $pre  $$ $cnext 
+$code double$$ $cnext $code weight$$    $pre  $$ $cnext 
 	The $cref/weight/weight_grid/weight/$$ value
 $tend        
 
