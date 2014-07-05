@@ -27,6 +27,7 @@
 from __future__ import print_function
 def covariate_table() :
 	import dismod_at
+	import copy
 	#
 	file_name      = 'example.db'
 	new            = True
@@ -34,24 +35,25 @@ def covariate_table() :
 	cursor         = connection.cursor()
 	#
 	# create the covariate table
-	ptype    = 'integer primary key'
-	col_name = [ 'covariate_id', 'covariate_name',	'reference' ]
-	col_type = [ ptype,          'text',             'real'     ] 
+	col_name = [ 'covariate_name',	'reference' ]
+	col_type = [ 'text',             'real'     ] 
 	row_list = [
-	           [ 1,              'sex',              0.0        ],
-	           [ 2,              'income',           2000.0     ]
+	           [ 'sex',              0.0        ],
+	           [ 'income',           2000.0     ]
 	]
 	tbl_name = 'covariate'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	columns = ','.join(col_name)
+	columns = 'covariate_id,' + columns
 	cmd     = 'SELECT ' + columns + ' FROM covariate'
 	cursor.execute(cmd)
 	fetchall = cursor.fetchall()
 	assert len(fetchall) == len(row_list)
 	for i in range( len(fetchall) ) :
-		row   = row_list[i]
+		row   = copy.copy( row_list[i] )
+		row.insert(0, i)
 		check = fetchall[i]
 		assert len(row) == len(check)
 		for j in range( len(check) ) :

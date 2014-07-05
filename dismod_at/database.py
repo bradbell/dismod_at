@@ -548,6 +548,20 @@ def create_database(
 	for i in range( len(row_list) ) :
 		global_integrand_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------
+	# create covariate table
+	col_name = [ 'covariate_name',	'reference' ]
+	col_type = [ 'text',             'real'     ] 
+	row_list = [ ]
+	for i in range( len(covariate_list) ) :
+		covariate = covariate_list[i]
+		row_list.append( [ covariate['name'], covariate['reference'] ] )
+	tbl_name = 'covariate'
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	#
+	global_covariate_name2id = {}
+	for i in range( len(covariate_list) ) :
+		global_covariate_name2id[ covariate_list[i]['name'] ] = i
+	# ------------------------------------------------------------------------
 	# create node table
 	global_node_name2id = {}
 	for i in range( len(node_list) ) :
@@ -672,20 +686,6 @@ def create_database(
 				row_list.append( [ i, a, t, v, da, dt] )
 	tbl_name = 'smooth_grid'
 	create_table_(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
-	# create covariate table
-	col_name = [ 'covariate_id', 'covariate_name',	'reference' ]
-	col_type = [ ptype,          'text',             'real'     ] 
-	row_list = [ ]
-	for i in range( len(covariate_list) ) :
-		covariate = covariate_list[i]
-		row_list.append( [ i, covariate['name'], covariate['reference'] ] )
-	tbl_name = 'covariate'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
-	#
-	global_covariate_name2id = {}
-	for i in range( len(covariate_list) ) :
-		global_covariate_name2id[ covariate_list[i]['name'] ] = i
 	# ------------------------------------------------------------------------ 
 	# create the data table
 	col_name = [
