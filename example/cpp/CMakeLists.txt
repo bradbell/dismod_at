@@ -17,6 +17,7 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_EXECUTABLE(cpp EXCLUDE_FROM_ALL 
 	cpp.cpp
 	get_covariate_table_xam.cpp
+	get_data_table_xam.cpp
 	get_density_table_xam.cpp
 	get_integrand_table_xam.cpp
 	get_like_table_xam.cpp

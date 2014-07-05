@@ -31,6 +31,7 @@ $childtable%
 	%cpp/get_smooth_grid.cpp
 	%cpp/get_rate_prior.cpp
 	%cpp/get_multiplier_table.cpp
+	%cpp/get_data_table.cpp
 %$$
 
 $end

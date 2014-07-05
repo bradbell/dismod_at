@@ -33,6 +33,7 @@ $end
 
 // prototype for each of the tests
 extern bool get_covariate_table_xam(void);
+extern bool get_data_table_xam(void);
 extern bool get_density_table_xam(void);
 extern bool get_integrand_table_xam(void);
 extern bool get_like_table_xam(void);
@@ -77,6 +78,7 @@ namespace {
 int main(void)
 {
 	RUN(get_covariate_table_xam);
+	RUN(get_data_table_xam);
 	RUN(get_density_table_xam);
 	RUN(get_integrand_table_xam);
 	RUN(get_like_table_xam);
