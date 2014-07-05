@@ -64,13 +64,13 @@ bool get_like_table_xam(void)
 	vector<dismod_at::like_struct> like_table = dismod_at::get_like_table(db);
 	ok  &= like_table.size() == 2;
 	//
-	ok  &= like_table[0].name       == "none";
+	ok  &= like_table[0].like_name  == "none";
 	ok  &= like_table[0].density_id == 0;
 	ok  &= like_table[0].lower      == std::atof("-inf");
 	ok  &= like_table[0].upper      == std::atof("+inf");
 	ok  &= like_table[0].mean       == 0.0;
 	//
-	ok  &= like_table[1].name       == "rate";
+	ok  &= like_table[1].like_name  == "rate";
 	ok  &= like_table[1].density_id == 1;
 	ok  &= like_table[1].lower      == 0.0;
 	ok  &= like_table[1].upper      == 1.0;

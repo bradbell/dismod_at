@@ -40,19 +40,24 @@ and is an open connection to the database.
 $head like_struct$$
 This is a structure with the following fields
 $table
-$code std::string name$$   $pre  $$ $cnext 
-	The $cref/like_name/like_table/like_name/$$ for this likelihood  $rnext
-$code int density_id$$     $pre  $$ $cnext 
-	The $cref/density_id/like_table/density_id/$$ for this likelihood $rnext
-$code double lower$$       $pre  $$ $cnext
-	The $cref/lower/like_table/lower/$$ limit for this likelihood  $rnext
-$code double upper$$        $pre  $$ $cnext
+Type $cnext Field $cnext Description
+$rnext
+$code std::string$$ $cnext $code like_name$$   $cnext 
+	The $cref/like_name/like_table/like_name/$$ for this likelihood  
+$rnext
+$code int$$ $cnext $code density_id$$  $cnext 
+	The $cref/density_id/like_table/density_id/$$ for this likelihood 
+$rnext
+$code double$$ $cnext $code lower$$ $cnext
+	The $cref/lower/like_table/lower/$$ limit for this likelihood  
+$rnext
+$code double$$ $cnext $code upper$$         $cnext
 	The $cref/upper/like_table/upper/$$ limit for this likelihood  $rnext
-$code double mean$$         $pre  $$ $cnext
+$code double$$ $cnext $code mean$$          $cnext
 	The $cref/mean/like_table/mean/$$ for this likelihood  $rnext
-$code double std$$          $pre  $$ $cnext
+$code double$$ $cnext $code std$$           $cnext
 	The $cref/std/like_table/std/$$ for this likelihood  $rnext
-$code double eta$$          $pre  $$ $cnext
+$code double$$ $cnext $code eta$$           $cnext
 	The $cref/eta/like_table/eta/$$ for this likelihood 
 $tend        
 
@@ -138,7 +143,7 @@ CppAD::vector<like_struct> get_like_table(sqlite3* db)
 		{	string s = "like_id must start at zero and increment by one.";
 			table_error_exit("like", i, s);
 		}
-		like_table[i].name       = like_name[i];
+		like_table[i].like_name  = like_name[i];
 		like_table[i].density_id = density_id[i];
 		//
 		like_table[i].lower      = lower[i];

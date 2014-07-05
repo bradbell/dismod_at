@@ -16,7 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	struct like_struct {
-		std::string name;
+		std::string like_name;
 		int         density_id;
 		double      lower;
 		double      upper;
