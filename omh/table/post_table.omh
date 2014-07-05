@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin post_table$$ 
 $spell
+	covariate
 $$
 $index post, table$$
 $index table, post$$
@@ -22,48 +23,45 @@ $head post_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
+$head run_id$$
+This column has type $code integer$$,
+is non-decreasing with row number,
+and is the value of 
+$cref/run_id/run_table/run_id/$$ that this row corresponds to.
+
 $head sample_number$$
-This column has type $code integer$$ and is 
-non-decreasing with row number.
-For each value of $icode sample_number$$, 
-each variable,
-each age for that variable,
-and each time for that variable,
-there is one and only one sample.
-Sample number zero corresponds to the for variables
-(and is not a random sample from the posterior).
+This column has type $code integer$$,
+is non-decreasing with row number,
+and increments each time a sample of all the variables is completed.
+The samples corresponding to $icode sample_number$$ zero are the
+maximum likelihood estimate.
+The other samples are random from the posterior distribution.
 
 $head variable_type$$
 This column has type $code text$$ and its value is either
 $code multiplier$$ or $code rate$$.
 
-$head variable_index$$
-This column has type $code integer$$ and its meaning depends on the 
-variable type:
-
-$subhead multiplier$$
+$head multiplier_id$$
 If $icode variable_type$$ is $code multiplier$$,
-the value $icode variable_index$$ is equal to the 
-$cref/multiplier_id/multiplier_table/multiplier_id/$$ for this variable.
-Note that the age-time grid for this variable will be the same as for 
-the $cref/smooth_id/multiplier_table/smooth_id/$$ that corresponds
-to this $icode multiplier_id$$.
-
-$subhead rate$$
+this is the $cref/multiplier_id/multiplier_table/multiplier_id/$$ that
+defines this covariate multiplier.
 If $icode variable_type$$ is $code rate$$,
-the value $icode variable_index$$ is equal to the 
-$cref/rate_prior_id/rate_prior/rate_prior_id/$$ for this variable.
-Note that the age-time grid for this variable will be the same as for 
-the $cref/smooth_id/rate_prior/smooth_id/$$ that corresponds
-to this $icode rate_prior_id$$.
+this column should be $code -1$$.
+
+$head rate_prior_id$$
+If $icode variable_type$$ is $code rate$$,
+this is the $cref/rate_prior_id/rate_prior/rate_prior_id/$$ that
+defines this rate variable.
+If $icode variable_type$$ is $code multiplier$$,
+this column should be $code -1$$.
 
 $head age$$
 This column has type $code real$$ and is the age 
-for the grid point corresponding to this sample.
+for the grid point corresponding to this value.
 
 $head time$$
 This column has type $code real$$ and is the time 
-for the grid point corresponding to this sample.
+for the grid point corresponding to this value.
 
 $head value$$
 This column has type $code real$$ is the value of the specified
