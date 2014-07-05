@@ -32,24 +32,26 @@ and is an open connection to the database.
 $head smooth_grid_struct$$
 This is a structure with the following fields
 $table
-$code int smooth_id$$   $pre  $$ $cnext 
+Type $cnext Field $cnext Description
+$rnext
+$code int$$ $cnext $code smooth_id$$   $pre  $$ $cnext 
 	The $cref/smooth_id/smooth_grid/smooth_id/$$ for this smoothing. 
 $rnext
-$code double age$$      $pre  $$ $cnext 
+$code double$$ $cnext $code age$$      $pre  $$ $cnext 
 	The $cref/age/smooth_grid/age/$$ for this grid point
 $rnext
-$code double time$$      $pre  $$ $cnext 
+$code double$$ $cnext $code time$$      $pre  $$ $cnext 
 	The $cref/time/smooth_grid/time/$$ for this grid point
 $rnext
-$code int value_like_id$$    $pre  $$ $cnext 
+$code int$$ $cnext $code value_like_id$$    $pre  $$ $cnext 
 	The $cref/value_like_id/smooth_grid/value_like_id/$$
 	for this smoothing, age, and time.
 $rnext
-$code int dage_like_id$$    $pre  $$ $cnext 
+$code int$$ $cnext $code dage_like_id$$    $pre  $$ $cnext 
 	The $cref/dage_like_id/smooth_grid/dage_like_id/$$
 	for this smoothing, age, and time.
 $rnext
-$code int dtime_like_id$$    $pre  $$ $cnext 
+$code int$$ $cnext $code dtime_like_id$$    $pre  $$ $cnext 
 	The $cref/dtime_like_id/smooth_grid/dtime_like_id/$$
 	for this smoothing, age, and time.
 $tend        
