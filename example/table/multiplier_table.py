@@ -24,6 +24,7 @@
 from __future__ import print_function
 def multiplier_table() :
 	import dismod_at
+	import copy
 	#
 	file_name      = 'example.db'
 	new            = True
@@ -32,38 +33,47 @@ def multiplier_table() :
 	# 
 	# create a multiplier table
 	col_name = [ 
-		'multiplier_id', 
 		'multiplier_type',
-		'multiplier_index',
+		'rate_id',
+		'integrand_id',
 		'covariate_id', 
-  		'smooth_grid_id'
+  		'smooth_id'
 	]
-	ptype    = 'integer primary key'
 	col_type = [ 
-		ptype,     # multiplier_id
 		'text',    # multiplier_type
-		'integer', # multiplier_index
+		'integer', # rate_id
+		'integer', # integrand_id
 		'integer', # covariate_id
-  		'integer'  # smooth_grid_id'
+  		'integer'  # smooth_id'
 	]
 	row_list = [ [
-		0,      # multiplier_id
 		'mean', # muitiplier_type
-		2,      # multiplier_index = integrand_id
+		-1,     # rate_id (-1 becasue this is an integrand multiplier)
+		2,      # integrand_id
 		1,      # covariate_id
-		2       # smooth_grid_id'
+		2       # smooth_id
+	],[
+		'rate', # muitiplier_type
+		1,      # rate_id 
+		-1,     # integrand_id (-1 because this is a rate multiplier)
+		2,      # covariate_id
+		2       # smooth_id
 	] ]
 	tbl_name = 'multiplier'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in the uniform multiplier table
 	columns = ','.join(col_name)
+	columns = 'multiplier_id,' + columns
 	cmd    = 'SELECT ' + columns + ' FROM multiplier'
 	cursor = connection.cursor()
 	count  = 0
 	for row in cursor.execute(cmd) :
+		check = row_list[count]
+		check.insert(0, count)
+		assert len(row) == len(check)
 		for j in range( len(row) ) :
-			assert row[j] == row_list[count][j]
+			assert row[j] == check[j]
 		count += 1
 	assert count == len( row_list )
 	#

@@ -705,16 +705,16 @@ def create_database(
 	# ------------------------------------------------------------------------ 
 	# multiplier table
 	col_name = [ 
-		'multiplier_id', 
 		'multiplier_type',
-		'multiplier_index',
+		'rate_id',
+		'integrand_id', 
 		'covariate_id', 
   		'smooth_id'
 	]
 	col_type = [ 
-		ptype,     # multiplier_id
 		'text',    # multiplier_type
-		'integer', # multiplier_index
+		'integer', # rate_id
+		'integer', # integrand_id
 		'integer', # covariate_id
   		'integer'  # smooth_id'
 	]
@@ -724,16 +724,18 @@ def create_database(
 		multiplier_type = multiplier['type']
 		effected        = multiplier['effected']
 		if multiplier_type == 'rate' :
-			multiplier_index = global_rate_name2id[ effected ]
+			rate_id      = global_rate_name2id[ effected ]
+			integrand_id = -1
 		else : 
-			multiplier_index = global_integrand_name2id[ effected ]
+			integrand_id = global_integrand_name2id[ effected ]
+			rate_id      = -1
 		covariate_id  = global_covariate_name2id[ multiplier['covariate'] ]
 		smooth_id     = global_smooth_name2id[ multiplier['smooth'] ]
 		row_list.append(
-			[i, multiplier_type, multiplier_index, covariate_id, smooth_id]
+			[multiplier_type, rate_id, integrand_id, covariate_id, smooth_id]
 		)
 	tbl_name = 'multiplier'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
 	# create the data table
 	col_name = [

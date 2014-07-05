@@ -20,14 +20,14 @@ $index table, covariate$$
 $index multiplier, covariate$$
 
 $section The Covariate Multiplier Table$$
-This table specifies the prior for the covariate multipliers.
-If this table is empty, there are no covariate multipliers
-in the model.
+This table specifies the covariate multipliers and their priors.
+If this table is empty, there are no covariate multipliers in the model.
 This table has the following columns
 
 $head multiplier_id$$
 This column has type $code integer$$ and is its value is the
 primary key for this table.
+Its initial value is zero, and it increments by one for each row.
 
 $head multiplier_type$$
 This column has type $code text$$.
@@ -39,32 +39,35 @@ $code mean$$       $cnext covariate effects a measurement mean $rnext
 $code std$$        $cnext covariate effects a measurement standard deviation
 $tend
 
-$head multiplier_index$$
-This column has type $code integer$$ and its meaning depends 
-on the value of $icode multiplier_type$$
-
-$subhead rate$$
+$head rate_id$$
 If $icode multiplier_type$$ is $code rate$$,
-$icode multiplier_index$$ is the  
-$cref/rate_id/rate_table/rate_id/$$ that identifies
+$icode rate_id$$ is the  
+$cref/rate_id/rate_table/rate_id/$$ that determines
 the rate that this covariate and multiplier effects.
-
-$subhead mean, std$$
 If $icode multiplier_type$$ is $code mean$$ or $code std$$,
-$icode multiplier_index$$ is the  
-$cref/integrand_id/integrand_table/integrand_id/$$ that identifies
-the this covariate and multiplier effects.
+this column should be $code -1$$. 
+
+$head integrand_id$$
+If $icode multiplier_type$$ is $code mean$$ or $code std$$, 
+$icode integrand_id$$ is the  
+$cref/integrand_id/integrand_table/integrand_id/$$ that determines
+which measurement integrand this multiplier effects.
+If $icode multiplier_type$$ is $code rate$$,
+this column should be $code -1$$. 
 
 $head covariate_id$$
-This column has type $code integer$$ and is its value is the
-primary key for the $cref covariate_table$$.
+This column has type $code integer$$ and is a
+$cref/covariate_id/covariate_table/covariate_id/$$
+in the $code covariate$$ table.
+This specifies the covariate column in the
+$cref data_table$$ that this multiplier acts on.
 
 $head smooth_id$$
-This column has type $code integer$$ and its value in a row is a
+This column has type $code integer$$ and its value is a
 $cref/smooth_id/smooth_grid/smooth_id/$$ 
 in the $code smooth_grid$$ table.
-It specifies the prior for this covariate multiplier
-(as a fixed effect).
+It specifies the smoothing uses as a prior for this covariate multiplier.
+(Note that all covariate multipliers are fixed effects.)
 
 $children%example/table/multiplier_table.py
 %$$
