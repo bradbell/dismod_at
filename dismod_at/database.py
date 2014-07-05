@@ -275,7 +275,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #	bool
 # $$
 #
-# $section Under Construction: Create a Dismod_at Database$$
+# $section Create a Dismod_at Database$$
 #
 # $head Syntax$$
 # $codei%create_database(
