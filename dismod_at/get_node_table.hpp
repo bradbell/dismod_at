@@ -16,7 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	struct node_struct {
-		std::string name;
+		std::string node_name;
 		int         parent;
 	};
 	extern CppAD::vector<node_struct> get_node_table(sqlite3*  db);

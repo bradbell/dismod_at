@@ -30,10 +30,13 @@ and is an open connection to the database.
 $head node_struct$$
 This is a structure with the following fields
 $table
-$code std::string name$$   $pre  $$ $cnext 
-	The $cref/node_name/node_table/node_name/$$ for this node  $rnext
-$code int parent$$         $pre  $$ $cnext 
-	The $cref/node_id/node_table/node_id/$$ for this node's parent
+Type $cnext Field $cnext Description 
+$rnext
+$code std::string$$ $cnext $code node_name$$  $cnext 
+	The $cref/node_name/node_table/node_name/$$ for this node  
+$rnext
+$code int$$ $cnext $code parent$$  $cnext 
+	The $cref/parent/node_table/parent/$$ $icode node_id$$
 $tend        
 
 $head node_table$$
@@ -91,8 +94,8 @@ CppAD::vector<node_struct> get_node_table(sqlite3* db)
 		{	string s = "node_id must start at zero and increment by one.";
 			table_error_exit("node", i, s);
 		}
-		node_table[i].name   = node_name[i];
-		node_table[i].parent = parent[i];
+		node_table[i].node_name  = node_name[i];
+		node_table[i].parent     = parent[i];
 	}
 	return node_table;
 }

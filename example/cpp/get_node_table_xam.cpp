@@ -58,10 +58,10 @@ bool get_node_table_xam(void)
 	vector<dismod_at::node_struct> node_table = dismod_at::get_node_table(db);
 	ok  &= node_table.size() == 4;
 	//
-	ok  &= node_table[0].name == "world";
-	ok  &= node_table[1].name == "north_america";
-	ok  &= node_table[2].name == "united_states";
-	ok  &= node_table[3].name == "canada";
+	ok  &= node_table[0].node_name == "world";
+	ok  &= node_table[1].node_name == "north_america";
+	ok  &= node_table[2].node_name == "united_states";
+	ok  &= node_table[3].node_name == "canada";
 	//
 	ok  &= node_table[0].parent == -1;
 	ok  &= node_table[1].parent == 0;
