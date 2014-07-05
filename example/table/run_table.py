@@ -8,49 +8,50 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin misc_table.py$$ $newlinech #$$
+# $begin run_table.py$$ $newlinech #$$
 #
-# $section misc_table: Example and Test$$
+# $section run_table: Example and Test$$
 #
-# $index misc, , example$$
-# $index example, misc table$$
-# $index table, misc example$$
+# $index run, , example$$
+# $index example, run table$$
+# $index table, run example$$
 #
 # $code
-# $verbatim%example/table/misc_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/run_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-def misc_table() :
+def run_table() :
 	import dismod_at
+	import copy
 	#
 	file_name      = 'example.db'
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	# create the misc table
-	ptype    = 'integer primary key'
-	col_name = [ 'misc_id','misc_name',          'misc_integer', 'misc_real' ]
-	col_type = [ ptype,    'text',               'integer',      'real'      ]
-	row_list = [
-	           [ 0,        'parent_node_id',     3,              None        ],
-	]
-	tbl_name = 'misc'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# create the run table
+	col_name = [ 'parent_node_id' ]
+	col_type = [ 'integer',       ]
+	row_list = [ [ 0 ] ]
+	tbl_name = 'run'
+	dismod_at.create_table_(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	columns  = ','.join(col_name)
-	cmd      = 'SELECT ' + columns + ' FROM misc'
+	columns  = 'run_id,' + columns
+	cmd      = 'SELECT ' + columns + ' FROM run'
 	count        = 0
 	cursor       = connection.cursor()
 	for row in cursor.execute(cmd) :
-		assert len(row) == len(col_name)
+		check = copy.copy( row_list[count] )
+		check.insert(0, count)
+		assert len(row) == len(check)
 		for j in range( len(row) ) :
-			assert row[j] == row_list[count][j]
+			assert row[j] == check[j]
 		count += 1
 	assert count == len( row_list )
 	#
-	print('misc_table: OK')
+	print('run_table: OK')
 # END PYTHON

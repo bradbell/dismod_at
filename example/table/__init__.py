@@ -13,12 +13,12 @@ from covariate_table   import *
 from data_table        import *
 from integrand_table   import *
 from like_table        import *
-from misc_table        import *
 from multiplier_table  import *
 from node_table        import *
 from post_table        import *
 from rate_prior        import *
 from rate_table        import *
+from run_table         import *
 from density_table     import *
 from smooth_grid       import *
 from weight_grid       import *

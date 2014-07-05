@@ -349,6 +349,7 @@ def create_table_(connection, tbl_name, col_name, col_type, row_list) :
 # $head Syntax$$
 # $codei%create_database(
 #	%file_name%,
+#   %parent_node%,
 #	%node_list%,
 #	%weight_list%,
 #	%covariate_list%,
@@ -367,6 +368,11 @@ def create_table_(connection, tbl_name, col_name, col_type, row_list) :
 # is as $code str$$ containing the name of the file where the data base 
 # is stored.
 # If this file already exists, it is deleted and a database is created.
+#
+# $head parent_node$$
+# Is the name of the parent node for this analysis; i.e.,
+# the random effects will correspond to the children of this node; 
+# see description of $icode node_list$$ below.
 #
 # $head node_list$$
 # This is a list of $code dict$$
@@ -481,6 +487,7 @@ def create_table_(connection, tbl_name, col_name, col_type, row_list) :
 # $end
 def create_database(
 	file_name,
+	parent_node,
 	node_list,
 	weight_list,
 	covariate_list,
@@ -739,7 +746,6 @@ def create_database(
 	# ------------------------------------------------------------------------ 
 	# create the data table
 	col_name = [
-		'data_id',
 		'integrand_id',
 		'density_id',
 		'node_id',
@@ -753,7 +759,6 @@ def create_database(
 		'time_upper',
 	]
 	col_type = [
-		ptype,                  # data_id
 		'integer',              # integrand_id
 		'integer',              # density_id
 		'integer',              # node_id
@@ -775,7 +780,6 @@ def create_database(
 		node_id      = global_node_name2id[ data['node'] ]
 		weight_id    = global_weight_name2id[ data['weight'] ]
 		row = [ 
-			data_id,
 			integrand_id,
 			density_id,
 			node_id,
@@ -790,6 +794,14 @@ def create_database(
 		]
 		row_list.append(row)
 	tbl_name = 'data'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------
+	# create run table
+	col_name = [ 'parent_node_id' ]
+	col_type = [ 'integer'        ]
+	parent_node_id = global_node_name2id[ parent_node ]
+	row_list = [ [parent_node_id] ]
+	tbl_name = 'run'
+	create_table_(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	return

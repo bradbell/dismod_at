@@ -27,25 +27,27 @@ see $cref/meas_value/data_table/meas_value/$$ below.
 $head data_id$$
 This column has type $code integer$$ and is the primary key for the 
 $code data$$ table. 
+Its initial value is zero, and it increments by one for each row.
 
 $head integrand_id$$
-This column has type $code integer$$ and its value is the
-$cref integrand_table$$ primary key that identifies
+This column has type $code integer$$ and is the
+$cref/integrand_id/integrand_table/integrand_id/$$ that identifies
 the integrand for this measurement.
 
 $head density_id$$
-This column has type $code integer$$ and its value is the
-$cref density_table$$ primary key that identifies
+This column has type $code integer$$ and is the
+$cref/density_id/density_table/density_id/$$ that identifies
 the density function for this measurement.
 
 $head node_id$$
-This column has type $code integer$$ and identifies the node
-for this measurement.
+This column has type $code integer$$ and is the 
+$cref/node_id/node_table/node_id/$$ that identifies
+the node for this measurement.
 
 $head weight_id$$
-This column has type $code integer$$ and its value identifies a
-$cref/weight_id/weight_table/weight_id/$$ value in the
-$code weight$$ table.
+This column has type $code integer$$ and is the
+$cref/weight_id/weight_grid/weight_id/$$ that identifies
+the weighting used for this measurement.
 
 $head meas_value$$
 This column has type $code real$$ and is the measured value
@@ -59,36 +61,33 @@ This standard for this measurement and is in the same units at the data.
 
 $head meas_eta$$
 This column has type $code real$$ and is only used in the
-cases where $icode meas_density$$ is $code log_gaussian$$
-or $code log_laplace$$.
+cases where $icode density_id$$ corresponds
+to $code log_gaussian$$ or $code log_laplace$$.
 In these cases, it is the offset in the corresponding density function.
 
 $head age_lower$$
 This column has type $code real$$ and is the lower age limit 
-for this measurement and must be between the 
-minimum and maximum age specified by the $code age_grid$$ table.
+for this measurement. 
 
 $head age_upper$$
 This column has type $code real$$ and is the upper age limit
-for this measurement and must be between the 
-minimum and maximum age specified by the $code age_grid$$ table.
+for this measurement. 
 
 $head time_lower$$
 This column has type $code real$$ and is the lower time limit 
-for this measurement and must be between the 
-minimum and maximum time specified by the $code time_grid$$ table.
+for this measurement. 
 
 $head time_upper$$
 This column has type $code real$$ and is the upper time limit
-for this measurement and must be between the 
-minimum and maximum time specified by the $code time_grid$$ table.
+for this measurement.
 
 $head Covariates$$
 The covariate columns have type $code real$$ and column names
 that begin with the two characters $code x_$$.
-The column $codei%x_%covariate_id%$$ contains
+For each valid $cref/covariate_id/covariate_table/covariate_id/$$,
+column $codei%x_%covariate_id%$$ contains
 the value, for this measurement, of the covariate specified by
-$icode covariate_id$$; see $cref covariate_table$$.
+$icode covariate_id$$.
 
 $children%example/table/data_table.py
 %$$

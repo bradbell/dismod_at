@@ -36,8 +36,8 @@ $childtable%
 	%omh/table/smooth_grid.omh
 	%omh/table/rate_prior.omh
 	%omh/table/multiplier_table.omh
-	%omh/table/misc_table.omh
 	%omh/table/data_table.omh
+	%omh/table/run_table.omh
 %$$
 
 $end

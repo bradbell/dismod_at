@@ -30,7 +30,8 @@ def get_started() :
 		return ('uniform_01', 'uniform_01', 'uniform_01')
 	#
 	# ------------------------------------------------------------------------
-	file_name = 'example.db'
+	file_name   = 'example.db'
+	parent_node = 'north_america'
 	node_list = [
 		{ 'name':'world',         'parent':'' },
 		{ 'name':'north_america', 'parent':'world' },
@@ -109,6 +110,7 @@ def get_started() :
 	]
 	dismod_at.create_database(
 		file_name, 
+		parent_node,
 		node_list, 
 		weight_list, 
 		covariate_list,
