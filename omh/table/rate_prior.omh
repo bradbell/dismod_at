@@ -48,7 +48,7 @@ or children (random effect) depending on $icode is_parent$$.
 $children%example/table/rate_prior.py
 %$$
 $head Example$$
-The file $cref rate_prior.py$$ 
-contains an example $code rate$$ table.
+The files $cref rate_prior.py$$ and $cref get_rate_prior_xam.cpp$$
+contain example $code rate$$ tables.
 
 $end

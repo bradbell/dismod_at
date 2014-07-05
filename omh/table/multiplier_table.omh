@@ -72,7 +72,7 @@ It specifies the smoothing uses as a prior for this covariate multiplier.
 $children%example/table/multiplier_table.py
 %$$
 $head Example$$
-The file $cref multiplier_table.py$$ 
-contains an example $code covariate$$ table.
+The files $cref multiplier_table.py$$ and $cref get_multiplier_table_xam.cpp$$
+contain example $code covariate$$ tables.
 
 $end
