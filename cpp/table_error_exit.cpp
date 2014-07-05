@@ -10,8 +10,15 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
 $begin table_error_exit$$
+$spell
+	dismod
+	hpp
+$$
 
-$section Print Table Error Message and Exit$$
+$section C++: Print Table Error Message and Exit$$
+$index table, error exit$$
+$index error, table exit$$
+$index exit, table error$$
 
 $head Syntax$$
 $codei%# include <dismod_at/table_error_exit.hpp>
@@ -27,9 +34,9 @@ It the name of the table where the error occurred.
 
 $head row_id$$
 Is the row identifier value $icode%table_name%_id%$$; 
-i.e., it startes at zero and increments by one between rows.
+i.e., it starts at zero and increments by one between rows.
 
-$head messae$$
+$head message$$
 Is the error message. An addition line identifying the 
 row is added to the message.
 

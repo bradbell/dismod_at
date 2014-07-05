@@ -16,7 +16,8 @@ $$
 $section Dismod_at Developer Documentation$$
 
 $childtable%
-	cpp/exec_sql_cmd.cpp
+	cpp/table_error_exit.cpp
+	%cpp/exec_sql_cmd.cpp
 	%cpp/get_table_column.cpp
 	%cpp/get_rate_table.cpp
 	%cpp/get_density_table.cpp
