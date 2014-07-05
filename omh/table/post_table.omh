@@ -20,7 +20,7 @@ for all the model variables.
 
 $head post_id$$
 This column has type $code integer$$ and is the primary key for this table.
-It is also the row number in the table.
+Its initial value is zero, and it increments by one for each row.
 
 $head sample_number$$
 This column has type $code integer$$ and is 
@@ -68,7 +68,6 @@ for the grid point corresponding to this sample.
 $head value$$
 This column has type $code real$$ is the value of the specified
 variable at the specified age and time.
-
 
 $children%example/table/post_table.py
 %$$
