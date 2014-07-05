@@ -68,19 +68,8 @@ $end
 # include <cppad/vector.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_weight_grid.hpp>
+# include <dismod_at/table_error_exit.hpp>
 
-namespace {
-	void error_exit(size_t row, std::string msg)
-	{	using std::cerr;
-		using std::endl;
-		cerr << msg << endl;
-		cerr << "Error detected in weight grid";
-		if( row > 0 )
-			cerr << " at row " << row;
-		cerr << "." << endl;
-		exit(1);
-	}
-}
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -118,7 +107,7 @@ CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3* db)
 	{	if( weight_grid_id[i] != i )
 		{	string s = 
 			"weight_grid_id must start at zero and increment by one.";
-			error_exit(i+1, s);
+			table_error_exit("weight_grid", i, s);
 		}
 		weight_grid[i].weight_id = weight_id[i];
 		weight_grid[i].age       = age[i];

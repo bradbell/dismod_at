@@ -79,19 +79,8 @@ $end
 # include <cppad/vector.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_smooth_grid.hpp>
+# include <dismod_at/table_error_exit.hpp>
 
-namespace {
-	void error_exit(size_t row, std::string msg)
-	{	using std::cerr;
-		using std::endl;
-		cerr << msg << endl;
-		cerr << "Error detected in smooth grid";
-		if( row > 0 )
-			cerr << " at row " << row;
-		cerr << "." << endl;
-		exit(1);
-	}
-}
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -140,7 +129,7 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(sqlite3* db)
 	{	if( smooth_grid_id[i] != i )
 		{	string s = 
 			"smooth_grid_id must start at zero and increment by one.";
-			error_exit(i+1, s);
+			table_error_exit("smooth_grid", i, s);
 		}
 		smooth_grid[i].smooth_id      = smooth_id[i];
 		smooth_grid[i].age            = age[i];

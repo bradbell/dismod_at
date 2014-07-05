@@ -68,19 +68,8 @@ $end
 # include <cppad/vector.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_rate_table.hpp>
+# include <dismod_at/table_error_exit.hpp>
 
-namespace {
-	void error_exit(size_t row, std::string msg)
-	{	using std::cerr;
-		using std::endl;
-		cerr << msg << endl;
-		cerr << "Error detected in rate table";
-		if( row > 0 )
-			cerr << " at row " << row;
-		cerr << "." << endl;
-		exit(1);
-	}
-}
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -105,10 +94,10 @@ CppAD::vector<rate_enum> get_rate_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, rate_name);
 
 	if( rate_id.size() != size_t( number_rate_enum ) )
-	{	std::stringstream ss;
-		ss << "rate table does not have ";
-		ss << size_t( number_rate_enum) << " rows.";
-		error_exit(0, ss.str());
+	{	using std::cerr;
+		cerr << "rate table does not have ";
+		cerr << size_t( number_rate_enum) << "rows." << std::endl;
+		exit(1);
 	}
 	assert( rate_id.size() == rate_name.size() );
 
@@ -116,7 +105,7 @@ CppAD::vector<rate_enum> get_rate_table(sqlite3* db)
 	for(size_t i = 0; i < number_rate_enum; i++)
 	{	if( rate_id[i] != i )
 		{	string s = "rate_id must start at zero and increment by one.";
-			error_exit(i+1, s);
+			table_error_exit("rate", i, s);
 		}
 		bool found = false;
 		for( size_t j = 0; j < number_rate_enum; j++)
@@ -127,7 +116,7 @@ CppAD::vector<rate_enum> get_rate_table(sqlite3* db)
 		}
 		if( ! found )
 		{	string s = "rate_name is not iota, rho, chi, or omega.";
-			error_exit(i+1, s);
+			table_error_exit("rate", i, s);
 		}
 	}
 	return rate_table;

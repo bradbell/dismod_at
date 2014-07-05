@@ -80,19 +80,8 @@ $end
 # include <cppad/vector.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_integrand_table.hpp>
+# include <dismod_at/table_error_exit.hpp>
 
-namespace {
-	void error_exit(size_t row, std::string msg)
-	{	using std::cerr;
-		using std::endl;
-		cerr << msg << endl;
-		cerr << "Error detected in integrand table";
-		if( row > 0 )
-			cerr << " at row " << row;
-		cerr << "." << endl;
-		exit(1);
-	}
-} 
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -127,7 +116,7 @@ CppAD::vector<integrand_enum> get_integrand_table(sqlite3* db)
 	for(size_t i = 0; i < n_out; i++)
 	{	if( integrand_id[i] != i )
 		{	string s = "integrand_id must start at zero and increment by one.";
-			error_exit(i+1, s);
+			table_error_exit("integrand", i, s);
 		}
 		bool found = false;
 		for(size_t j = 0; j < number_integrand_enum; j++)
@@ -138,7 +127,7 @@ CppAD::vector<integrand_enum> get_integrand_table(sqlite3* db)
 		}
 		if( ! found )
 		{	string s = "integrand_name is not a valid choice.";
-			error_exit(i+1, s);
+			table_error_exit("integrand", i, s);
 		}
 	}
 	return integrand_table;

@@ -69,19 +69,8 @@ $end
 # include <cppad/vector.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_density_table.hpp>
+# include <dismod_at/table_error_exit.hpp>
 
-namespace {
-	void error_exit(size_t row, std::string msg)
-	{	using std::cerr;
-		using std::endl;
-		cerr << msg << endl;
-		cerr << "Error detected in density table";
-		if( row > 0 )
-			cerr << " at row " << row;
-		cerr << "." << endl;
-		exit(1);
-	}
-}
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -107,10 +96,10 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, density_name);
 
 	if( density_id.size() != size_t( number_density_enum ) )
-	{	std::stringstream ss;
-		ss << "density table does not have ";
-		ss << size_t( number_density_enum) << " rows.";
-		error_exit(0, ss.str());
+	{	using std::cerr;
+		cerr << "density table does not have ";
+		cerr << size_t( number_density_enum) << "rows." << std::endl;
+		exit(1);
 	}
 	assert( density_id.size() == density_name.size() );
 
@@ -118,7 +107,7 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 	for(size_t i = 0; i < number_density_enum; i++)
 	{	if( density_id[i] != i )
 		{	string s = "density_id must start at zero and increment by one.";
-			error_exit(i+1, s);
+			table_error_exit("density", i, s);
 		}
 		bool found = false;
 		for( size_t j = 0; j < number_density_enum; j++)
@@ -129,7 +118,7 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 		}
 		if( ! found )
 		{	string s = density_name[i] + " is not a valid density_name.";
-			error_exit(i+1, s);
+			table_error_exit("density", i, s);
 		}
 	}
 	return density_table;

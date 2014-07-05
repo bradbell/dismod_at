@@ -62,19 +62,8 @@ $end
 # include <cppad/vector.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_covariate_table.hpp>
+# include <dismod_at/table_error_exit.hpp>
 
-namespace {
-	void error_exit(size_t row, std::string msg)
-	{	using std::cerr;
-		using std::endl;
-		cerr << msg << endl;
-		cerr << "Error detected in covariate table";
-		if( row > 0 )
-			cerr << " at row " << row;
-		cerr << "." << endl;
-		exit(1);
-	}
-}
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -101,7 +90,7 @@ CppAD::vector<covariate_struct> get_covariate_table(sqlite3* db)
 	for(size_t i = 0; i < n_covariate; i++)
 	{	if( covariate_id[i] != i )
 		{	string s = "covariate_id must start at zero and increment by one.";
-			error_exit(i+1, s);
+			table_error_exit("covariate", i, s);
 		}
 		covariate_table[i].name      = covariate_name[i];
 		covariate_table[i].reference = reference[i];

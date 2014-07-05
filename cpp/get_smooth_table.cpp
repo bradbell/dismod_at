@@ -52,19 +52,8 @@ $end
 # include <cppad/vector.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_smooth_table.hpp>
+# include <dismod_at/table_error_exit.hpp>
 
-namespace {
-	void error_exit(size_t row, std::string msg)
-	{	using std::cerr;
-		using std::endl;
-		cerr << msg << endl;
-		cerr << "Error detected in smooth table";
-		if( row > 0 )
-			cerr << " at row " << row;
-		cerr << "." << endl;
-		exit(1);
-	}
-}
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -85,7 +74,7 @@ CppAD::vector<std::string> get_smooth_table(sqlite3* db)
 	for(size_t i = 0; i < n_smooth; i++)
 	{	if( smooth_id[i] != i )
 		{	string s = "smooth_id must start at zero and increment by one.";
-			error_exit(i+1, s);
+			table_error_exit("smooth", i, s);
 		}
 	}
 	return smooth_name;

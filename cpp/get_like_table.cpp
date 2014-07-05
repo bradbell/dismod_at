@@ -71,19 +71,8 @@ $end
 # include <cppad/vector.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_like_table.hpp>
+# include <dismod_at/table_error_exit.hpp>
 
-namespace {
-	void error_exit(size_t row, std::string msg)
-	{	using std::cerr;
-		using std::endl;
-		cerr << msg << endl;
-		cerr << "Error detected in like table";
-		if( row > 0 )
-			cerr << " at row " << row;
-		cerr << "." << endl;
-		exit(1);
-	}
-}
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -137,7 +126,7 @@ CppAD::vector<like_struct> get_like_table(sqlite3* db)
 	for(size_t i = 0; i < n_like; i++)
 	{	if( like_id[i] != i )
 		{	string s = "like_id must start at zero and increment by one.";
-			error_exit(i+1, s);
+			table_error_exit("like", i, s);
 		}
 		like_table[i].name       = like_name[i];
 		like_table[i].density_id = density_id[i];
