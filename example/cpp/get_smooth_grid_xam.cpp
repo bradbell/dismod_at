@@ -52,17 +52,17 @@ bool get_smooth_grid_xam(void)
 	"create table smooth_grid("
 		" smooth_grid_id integer primary key,"
 		" smooth_id      integer, "
-		" age            real,"
-		" time           real,"
+		" age_id         integer,"
+		" time_id        integer,"
 		" value_like_id  integer,"
 		" dage_like_id   integer,"
 		" dtime_like_id  integer)",
-	//                 smooth_grid_id, smooth_id,   age,   time,   like_ids
-	"insert into smooth_grid values(0,         0,  50.0, 2000.0,   1, 2, 3)",
-	"insert into smooth_grid values(1,         3,   0.0, 1980.0,   1, 2, 3)",
-	"insert into smooth_grid values(2,         3, 100.0, 1980.0,   1, 2, 3)",
-	"insert into smooth_grid values(3,         3,   0.0, 2010.0,   1, 2, 3)",
-	"insert into smooth_grid values(4,         3, 100.0, 2010.0,   1, 2, 3)",
+	//                 smooth_grid_id, smooth_id,age_id,time_id,   like_ids
+	"insert into smooth_grid values(0,         0,     1,      1,   1, 2, 3)",
+	"insert into smooth_grid values(1,         3,     0,      0,   1, 2, 3)",
+	"insert into smooth_grid values(2,         3,     2,      0,   1, 2, 3)",
+	"insert into smooth_grid values(3,         3,     0,      2,   1, 2, 3)",
+	"insert into smooth_grid values(4,         3,     2,      2,   1, 2, 3)",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -82,36 +82,36 @@ bool get_smooth_grid_xam(void)
 	ok  &= smooth_grid.size() == 5;
 	//
 	ok  &= smooth_grid[0].smooth_id     == 0;
-	ok  &= smooth_grid[0].age           == 50.0;
-	ok  &= smooth_grid[0].time          == 2000.0;
+	ok  &= smooth_grid[0].age_id        == 1;
+	ok  &= smooth_grid[0].time_id       == 1;
 	ok  &= smooth_grid[0].value_like_id == 1;
 	ok  &= smooth_grid[0].dage_like_id  == 2;
 	ok  &= smooth_grid[0].dtime_like_id == 3;
 	//
 	ok  &= smooth_grid[1].smooth_id     == 3;
-	ok  &= smooth_grid[1].age           == 0.0;
-	ok  &= smooth_grid[1].time          == 1980.0;
+	ok  &= smooth_grid[1].age_id        == 0;
+	ok  &= smooth_grid[1].time_id       == 0;
 	ok  &= smooth_grid[1].value_like_id == 1;
 	ok  &= smooth_grid[1].dage_like_id  == 2;
 	ok  &= smooth_grid[1].dtime_like_id == 3;
 	//
 	ok  &= smooth_grid[2].smooth_id     == 3;
-	ok  &= smooth_grid[2].age           == 100.0;
-	ok  &= smooth_grid[2].time          == 1980.0;
+	ok  &= smooth_grid[2].age_id        == 2;
+	ok  &= smooth_grid[2].time_id       == 0;
 	ok  &= smooth_grid[2].value_like_id == 1;
 	ok  &= smooth_grid[2].dage_like_id  == 2;
 	ok  &= smooth_grid[2].dtime_like_id == 3;
 	//
 	ok  &= smooth_grid[3].smooth_id     == 3;
-	ok  &= smooth_grid[3].age           == 0.0;
-	ok  &= smooth_grid[3].time          == 2010.0;
+	ok  &= smooth_grid[3].age_id        == 0;
+	ok  &= smooth_grid[3].time_id       == 2;
 	ok  &= smooth_grid[3].value_like_id == 1;
 	ok  &= smooth_grid[3].dage_like_id  == 2;
 	ok  &= smooth_grid[3].dtime_like_id == 3;
 	//
 	ok  &= smooth_grid[4].smooth_id     == 3;
-	ok  &= smooth_grid[4].age           == 100.0;
-	ok  &= smooth_grid[4].time          == 2010.0;
+	ok  &= smooth_grid[4].age_id        == 2;
+	ok  &= smooth_grid[4].time_id       == 2;
 	ok  &= smooth_grid[4].value_like_id == 1;
 	ok  &= smooth_grid[4].dage_like_id  == 2;
 	ok  &= smooth_grid[4].dtime_like_id == 3;

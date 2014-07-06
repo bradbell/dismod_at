@@ -37,11 +37,11 @@ $rnext
 $code int$$ $cnext $code smooth_id$$   $pre  $$ $cnext 
 	The $cref/smooth_id/smooth_grid/smooth_id/$$ for this smoothing. 
 $rnext
-$code double$$ $cnext $code age$$      $pre  $$ $cnext 
-	The $cref/age/smooth_grid/age/$$ for this grid point
+$code int$$ $cnext $code age_id$$      $pre  $$ $cnext 
+	The $cref/age_id/smooth_grid/age_id/$$ for this grid point
 $rnext
-$code double$$ $cnext $code time$$      $pre  $$ $cnext 
-	The $cref/time/smooth_grid/time/$$ for this grid point
+$code int$$ $cnext $code time_id$$      $pre  $$ $cnext 
+	The $cref/time_id/smooth_grid/time_id/$$ for this grid point
 $rnext
 $code int$$ $cnext $code value_like_id$$    $pre  $$ $cnext 
 	The $cref/value_like_id/smooth_grid/value_like_id/$$
@@ -98,15 +98,15 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(sqlite3* db)
 	get_table_column(db, table_name, column_name, smooth_id);
 	assert( smooth_id.size() == n_smooth );
 
-	column_name        =  "age";
-	CppAD::vector<double>  age;
-	get_table_column(db, table_name, column_name, age);
-	assert( age.size() == n_smooth );
+	column_name        =  "age_id";
+	CppAD::vector<int>     age_id;
+	get_table_column(db, table_name, column_name, age_id);
+	assert( age_id.size() == n_smooth );
 
-	column_name        =  "time";
-	CppAD::vector<double>  time;
-	get_table_column(db, table_name, column_name, time);
-	assert( time.size() == n_smooth );
+	column_name        =  "time_id";
+	CppAD::vector<int>     time_id;
+	get_table_column(db, table_name, column_name, time_id);
+	assert( time_id.size() == n_smooth );
 
 	column_name        =  "value_like_id";
 	CppAD::vector<int>     value_like_id;
@@ -127,8 +127,8 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(sqlite3* db)
 	CppAD::vector<smooth_grid_struct> smooth_grid(n_smooth);
 	for(size_t i = 0; i < n_smooth; i++)
 	{	smooth_grid[i].smooth_id      = smooth_id[i];
-		smooth_grid[i].age            = age[i];
-		smooth_grid[i].time           = time[i];
+		smooth_grid[i].age_id         = age_id[i];
+		smooth_grid[i].time_id        = time_id[i];
 		smooth_grid[i].value_like_id  = value_like_id[i];
 		smooth_grid[i].dage_like_id   = dage_like_id[i];
 		smooth_grid[i].dtime_like_id  = dtime_like_id[i];

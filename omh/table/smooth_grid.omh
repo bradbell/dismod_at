@@ -15,13 +15,14 @@ $spell
 	std
 	dage
 	dtime
+	smoothings
 $$
 $index smooth, prior table$$
 $index table, smooth prior$$
 $index prior, smooth table$$
 
 $section The Smoothing Grid Table$$
-This table specifies the smoothing grid for a function of age and time.
+This table specifies smoothings for functions of age and time.
 It has the following columns:
 
 $head smooth_grid_id$$
@@ -34,19 +35,21 @@ This column has type $code integer$$ and is the primary key for
 the $cref smooth_table$$.
 Each value $icode smooth_id$$ corresponds to a different smoothing.
 
-$head age$$
-This column 
-has type $code real$$ and is value is the age value for this grid point.
-For each fixed value of $icode smooth_id$$ and $icode time$$,
-the set of corresponding $icode age$$ values is constant; i.e.,
-the grid corresponding to $icode smooth_id$$ is rectangular.
+$head age_id$$
+This column has type $code integer$$ and is a
+$cref/age_id/age_table/age_id/$$ in the age table.
+Each $icode age_id$$ value corresponds to a specific age.
+For each fixed value of $icode weight_id$$ and $icode time_id$$,
+the set of corresponding $icode age_id$$ values is constant; i.e.,
+the grid corresponding to $icode weight_id$$ is rectangular.
 
-$head time$$
-This column 
-has type $code real$$ and is value is the time value for this grid point.
-For each fixed value of $icode smooth_id$$ and $icode age$$,
-the set of corresponding $icode time$$ values is constant; i.e.,
-the grid corresponding to $icode smooth_id$$ is rectangular.
+$head time_id$$
+This column has type $code integer$$ and is a
+$cref/time_id/time_table/time_id/$$ in the time table.
+Each $icode time_id$$ value corresponds to a specific time.
+For each fixed value of $icode weight_id$$ and $icode age_id$$,
+the set of corresponding $icode time_id$$ values is constant; i.e.,
+the grid corresponding to $icode weight_id$$ is rectangular.
 
 $head value_like_id$$
 This column has type $code integer$$ and its value in a row is the

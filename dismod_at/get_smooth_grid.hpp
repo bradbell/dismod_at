@@ -18,8 +18,8 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 	struct smooth_grid_struct {
 		int    smooth_id;
-		double age;
-		double time;
+		int    age_id;
+		int    time_id;
 		int    value_like_id;
 		int    dage_like_id;
 		int    dtime_like_id;

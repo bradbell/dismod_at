@@ -222,7 +222,12 @@ void get_table_column(
 
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
-	assert( col_type == "text" );
+	if( col_type != "text" )
+	{	std::cerr << "get_table_column: for table = " << table_name 
+		<< ", column = " << column_name << std::endl
+		<< "expect type to be text, not " << col_type << std::endl;
+		exit(1);
+	}
 
 	// Use template function for rest
 	get_column(db, table_name, column_name, text_result);
@@ -241,7 +246,12 @@ void get_table_column(
 
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
-	assert( col_type == "integer" );
+	if( col_type != "integer" )
+	{	std::cerr << "get_table_column: for table = " << table_name 
+		<< ", column = " << column_name << std::endl
+		<< "expect type to be integer, not " << col_type << std::endl;
+		exit(1);
+	}
 
 	// Use template function for rest
 	get_column(db, table_name, column_name, int_result);
@@ -260,7 +270,12 @@ void get_table_column(
 
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
-	assert( col_type == "real" );
+	if( col_type != "real" )
+	{	std::cerr << "get_table_column: for table = " << table_name 
+		<< ", column = " << column_name << std::endl
+		<< "expect type to be real, not " << col_type << std::endl;
+		exit(1);
+	}
 
 	// Use template function for rest
 	get_column(db, table_name, column_name, double_result);

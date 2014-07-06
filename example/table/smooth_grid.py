@@ -38,7 +38,7 @@ def smooth_grid() :
 	           [ 'constant'      ],
 	           [ 'age_only'      ],
 	           [ 'time_only'     ],
-	           [ 'age_time'      ] 
+	           [ 'bilinear'      ] 
 	]
 	tbl_name = 'smooth'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
@@ -46,8 +46,8 @@ def smooth_grid() :
 	# smooth_grid table column names
 	col_name = [
 		'smooth_id', 
-		'age',  
-		'time',  
+		'age_id',  
+		'time_id',  
 		'value_like_id',
 		'dage_like_id',
 		'dtime_like_id',
@@ -56,8 +56,8 @@ def smooth_grid() :
 	# smooth_grid table column types
 	col_type = [
 		'integer',  # smooth_id
-		'real',     # age
-		'real',     # time
+		'integer',  # age_id
+		'integer',  # time_id
 		'integer',  # value_like_id
 		'integer',  # dage_like_id
 		'integer',  # dtime_like_id
@@ -66,22 +66,20 @@ def smooth_grid() :
 	# smooth_grid table values
 	row_list = list()
 	default  = [
-		3,          # smooth_id          (smooth_id == 3 is age_time)
-		None,       # age                (age  index is 1 in default)
-		None,       # time               (time index is 2 in default)
+		3,          # smooth_id          (smooth_id == 3 is bilinear)
+		None,       # age_id             (age_id  index is 1 in default)
+		None,       # time_id            (time_id index is 2 in default)
 		1,          # value_like_id
 		2,          # dage_like_id
 		3           # dtime_like_id
 	]
-	age_grid  = [ 0.0, 50.0, 100.0 ]
-	time_grid = [ 1980., 1990., 2000., 2010 ]  
-	age_time  = list()
-	for age in age_grid :
-		for time in time_grid :
-			default[1] = age
-			default[2] = time
+	age_time_list = list()
+	for age_id in [0, 1, 2] :
+		for time_id in [0, 1] :
+			default[1] = age_id
+			default[2] = time_id
 			row_list.append( copy.copy(default) )
-			age_time.append( (age, time) )
+			age_time_list.append( (age_id, time_id) )
 	#
 	# write the table
 	tbl_name = 'smooth_grid'
@@ -92,15 +90,15 @@ def smooth_grid() :
 	columns = 'smooth_grid_id,' + columns
 	cmd     = 'SELECT ' + columns + ' FROM smooth_grid'
 	cmd    += ' JOIN smooth USING(smooth_id) '
-	cmd    += ' WHERE smooth_name = "age_time"'
+	cmd    += ' WHERE smooth_name = "bilinear"'
 	count        = 0
 	cursor       = connection.cursor()
 	for row in cursor.execute(cmd) :
 		assert len(row) == 7
 		assert row[0] == count
 		assert row[1] == 3
-		assert row[2] == age_time[count][0]
-		assert row[3] == age_time[count][1]
+		assert row[2] == age_time_list[count][0]
+		assert row[3] == age_time_list[count][1]
 		assert row[4] == 1
 		assert row[5] == 2
 		assert row[6] == 3
