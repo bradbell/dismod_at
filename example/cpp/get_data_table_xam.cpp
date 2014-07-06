@@ -43,10 +43,6 @@ bool get_data_table_xam(void)
 
 	// sql commands
 	const char* sql_cmd[] = { 
-	"create table covariate"
-	"(covariate_id integer primary key, covariate_name text, reference real)",
-	"insert into covariate values(0, 'sex',      0.0)",
-	"insert into covariate values(1, 'income',   2000.0)",
 	"create table data("
 		" data_id        integer primary key,"
 		" integrand_id   integer,"
@@ -86,8 +82,9 @@ bool get_data_table_xam(void)
 
 
 	// get the data table
+	size_t n_covariate = 2; // number of covariates 
 	vector<dismod_at::data_struct> 
-		data_table = dismod_at::get_data_table(db);
+		data_table = dismod_at::get_data_table(db, n_covariate);
 	ok  &= data_table.size() == 1;
 	//
 	ok  &= data_table[0].integrand_id      == 1;

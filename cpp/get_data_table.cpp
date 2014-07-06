@@ -12,6 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin get_data_table$$
 $spell
 	covariate
+	covariates
 	sqlite
 	struct
 	cpp
@@ -27,7 +28,7 @@ $index table, get data$$
 $head Syntax$$
 $codei%# include <get_data_table>
 %$$
-$icode%data_table% = get_data_table(%db%)%$$
+$icode%data_table% = get_data_table(%db%, %n_covariate%)%$$
 
 $head Purpose$$
 To read the $cref data_table$$ and return it as a C++ data structure.
@@ -38,6 +39,16 @@ $codei%
 	sqlite3* %db%
 %$$
 and is an open connection to the database.
+
+$head n_covariate$$
+This argument has prototype
+$codei%
+	size_t n_covariate
+%$$
+It is the number of covariates; i.e., the number of rows
+in the $cref covariate_table$$.
+It is also the number of columns in the data table that 
+have column names beginning with $code x_$$.
 
 $head data_struct$$
 This is a structure with the following fields
@@ -101,9 +112,6 @@ is the value of the covariate specified by
 $cref/covariate_id/covariate_table/covariate_id/$$
 and the measurement specified by $icode data_id$$.
 
-$head Testing$$
-Note that this routine requires the $cref covariate_table$$ to exist.
-
 $children%example/cpp/get_data_table_xam.cpp
 %$$
 $head Example$$
@@ -122,7 +130,7 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<data_struct> get_data_table(sqlite3* db)
+CppAD::vector<data_struct> get_data_table(sqlite3* db, size_t n_covariate)
 {	using std::string;
 	// TODO: This could be more efficient if we only allcated one temporary
 	// column at a time (to use with get_table column
@@ -187,11 +195,6 @@ CppAD::vector<data_struct> get_data_table(sqlite3* db)
 	CppAD::vector<double>     time_upper;
 	get_table_column(db, table_name, column_name, time_upper);
 	assert( n_data == time_upper.size() );
-
-	// determine the number of covariates
-	CppAD::vector<covariate_struct> 
-		covariate_table = get_covariate_table(db);
-	size_t n_covariate = covariate_table.size();
 
 	// fill in all but the covariate values
 	CppAD::vector<data_struct> data_table(n_data);
