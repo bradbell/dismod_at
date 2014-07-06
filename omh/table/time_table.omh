@@ -1,0 +1,32 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin time_table$$
+$spell
+	grid
+$$
+
+$section The Time Table$$
+
+$head time_id$$
+This column has type $code integer$$ and is the primary key for 
+the this table.
+Its initial value is zero, and it increments by one for each row.
+
+$head time$$ 
+This column has type $code real$$ and is a set of time values.
+
+$children%example/table/time_table.py
+%$$
+$head Example$$
+The files $cref time_table.py$$ and $cref get_time_table_xam.cpp$$
+contain example $code time$$ tables.
+
+$end

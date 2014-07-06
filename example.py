@@ -11,9 +11,11 @@
 # -------------------------------------------------------------------------- */
 import example
 #
+example.table.age_table()
 example.table.create_table()
 example.table.covariate_table()
 example.table.data_table()
+example.table.density_table()
 example.table.integrand_table()
 example.table.like_table()
 example.table.multiplier_table()
@@ -22,8 +24,8 @@ example.table.post_table()
 example.table.rate_prior()
 example.table.rate_table()
 example.table.run_table()
-example.table.density_table()
 example.table.smooth_grid()
+example.table.time_table()
 example.table.weight_grid()
 #
 example.get_started()

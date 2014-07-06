@@ -1,0 +1,32 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin age_table$$
+$spell
+	grid
+$$
+
+$section The Age Table$$
+
+$head age_id$$
+This column has type $code integer$$ and is the primary key for 
+the this table.
+Its initial value is zero, and it increments by one for each row.
+
+$head age$$ 
+This column has type $code real$$ and is a set of age values.
+
+$children%example/table/age_table.py
+%$$
+$head Example$$
+The files $cref age_table.py$$ and $cref get_age_table_xam.cpp$$
+contain example $code age$$ tables.
+
+$end

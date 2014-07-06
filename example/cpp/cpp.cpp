@@ -32,6 +32,7 @@ $end
 
 
 // prototype for each of the tests
+extern bool get_age_table_xam(void);
 extern bool get_covariate_table_xam(void);
 extern bool get_data_table_xam(void);
 extern bool get_density_table_xam(void);
@@ -43,6 +44,7 @@ extern bool get_rate_prior_xam(void);
 extern bool get_rate_table_xam(void);
 extern bool get_smooth_grid_xam(void);
 extern bool get_table_column_xam(void);
+extern bool get_time_table_xam(void);
 extern bool get_weight_grid_xam(void);
 
 // anonymous namespace
@@ -77,6 +79,7 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
+	RUN(get_age_table_xam);
 	RUN(get_covariate_table_xam);
 	RUN(get_data_table_xam);
 	RUN(get_density_table_xam);
@@ -88,6 +91,7 @@ int main(void)
 	RUN(get_rate_table_xam);
 	RUN(get_smooth_grid_xam);
 	RUN(get_table_column_xam);
+	RUN(get_time_table_xam);
 	RUN(get_weight_grid_xam);
 
 	// summary report

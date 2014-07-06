@@ -12,6 +12,7 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(cpp_lib EXCLUDE_FROM_ALL 
 	check_table_id.cpp
 	exec_sql_cmd.cpp
+	get_age_table.cpp
 	get_covariate_table.cpp
 	get_data_table.cpp
 	get_density_table.cpp
@@ -24,6 +25,7 @@ ADD_LIBRARY(cpp_lib EXCLUDE_FROM_ALL
 	get_smooth_grid.cpp
 	get_smooth_table.cpp
 	get_table_column.cpp
+	get_time_table.cpp
 	get_weight_grid.cpp
 	get_weight_table.cpp
 	open_connection.cpp

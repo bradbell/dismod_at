@@ -23,13 +23,13 @@ mkdir $dir
 cd $dir
 #
 echo "omhelp ../$dir.omh -debug -noframe -xml > omhelp.log"
-if ! omhelp ../$dir.omh -debug -noframe -xml > omhelp.log
+if ! omhelp ../$dir.omh -debug -noframe -xml > ../omhelp.log
 then
-	cat omhelp.log
+	cat ../omhelp.log
 	exit 1
 fi
 #
-if grep '^OMhelp Warning:' omhelp.log
+if grep '^OMhelp Warning:' ../omhelp.log
 then
 	exit 1
 else

@@ -16,6 +16,7 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 # Program cpp, not installed, and depends on following source files
 ADD_EXECUTABLE(cpp EXCLUDE_FROM_ALL 
 	cpp.cpp
+	get_age_table_xam.cpp
 	get_covariate_table_xam.cpp
 	get_data_table_xam.cpp
 	get_density_table_xam.cpp
@@ -27,6 +28,7 @@ ADD_EXECUTABLE(cpp EXCLUDE_FROM_ALL
 	get_rate_table_xam.cpp
 	get_smooth_grid_xam.cpp
 	get_table_column_xam.cpp
+	get_time_table_xam.cpp
 	get_weight_grid_xam.cpp
 )
 SET_TARGET_PROPERTIES(cpp PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
