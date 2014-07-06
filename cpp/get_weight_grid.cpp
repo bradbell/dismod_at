@@ -35,11 +35,11 @@ $rnext
 $code int$$ $cnext $code weight_id$$   $pre  $$ $cnext 
 	The $cref/weight_id/weight_grid/weight_id/$$ for this weighting.
 $rnext
-$code double$$ $cnext $code age$$      $pre  $$ $cnext 
-	The $cref/age/weight_grid/age/$$ for this weight value
+$code int$$ $cnext $code age_id$$      $pre  $$ $cnext 
+	The $cref/age_id/weight_grid/age_id/$$ for this weight value
 $rnext
-$code double$$ $cnext $code time$$      $pre  $$ $cnext 
-	The $cref/time/weight_grid/time/$$ for this weight value
+$code int$$ $cnext $code time_id$$      $pre  $$ $cnext 
+	The $cref/time_id/weight_grid/time_id/$$ for this weight value
 $rnext
 $code double$$ $cnext $code weight$$    $pre  $$ $cnext 
 	The $cref/weight/weight_grid/weight/$$ value
@@ -87,15 +87,15 @@ CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3* db)
 	get_table_column(db, table_name, column_name, weight_id);
 	assert( weight_id.size() == n_grid );
 
-	column_name        =  "age";
-	CppAD::vector<double>  age;
-	get_table_column(db, table_name, column_name, age);
-	assert( age.size() == n_grid );
+	column_name        =  "age_id";
+	CppAD::vector<int>     age_id;
+	get_table_column(db, table_name, column_name, age_id);
+	assert( age_id.size() == n_grid );
 
-	column_name        =  "time";
-	CppAD::vector<double>  time;
-	get_table_column(db, table_name, column_name, time);
-	assert( time.size() == n_grid );
+	column_name        =  "time_id";
+	CppAD::vector<int>     time_id;
+	get_table_column(db, table_name, column_name, time_id);
+	assert( time_id.size() == n_grid );
 
 	column_name        =  "weight";
 	CppAD::vector<double>  weight;
@@ -105,8 +105,8 @@ CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3* db)
 	CppAD::vector<weight_grid_struct> weight_grid(n_grid);
 	for(size_t i = 0; i < n_grid; i++)
 	{	weight_grid[i].weight_id = weight_id[i];
-		weight_grid[i].age       = age[i];
-		weight_grid[i].time      = time[i];
+		weight_grid[i].age_id    = age_id[i];
+		weight_grid[i].time_id   = time_id[i];
 		weight_grid[i].weight    = weight[i];
 	}
 	return weight_grid;

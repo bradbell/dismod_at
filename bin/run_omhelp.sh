@@ -14,16 +14,16 @@ then
 	echo 'bin/run_omhelp.sh must be run from its parent directory'
 	exit 1
 fi
-dir='doc'
-if [ -e "$dir" ]
+if [ -e doc ]
 then
-	rm -r $dir
+	rm -r doc
 fi
-mkdir $dir
-cd $dir
+mkdir doc
+echo 'cd doc'
+cd doc
 #
-echo "omhelp ../$dir.omh -debug -noframe -xml > omhelp.log"
-if ! omhelp ../$dir.omh -debug -noframe -xml > ../omhelp.log
+echo "omhelp ../doc.omh -debug -noframe -xml > ../omhelp.log"
+if ! omhelp ../doc.omh -debug -noframe -xml > ../omhelp.log
 then
 	cat ../omhelp.log
 	exit 1

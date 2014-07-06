@@ -50,15 +50,15 @@ bool get_weight_grid_xam(void)
 	"create table weight_grid("
 		" weight_grid_id integer primary key,"
 		" weight_id      integer, "
-		" age            real,"
-		" time           real,"
+		" age_id         integer,"
+		" time_id        integer,"
 		" weight         real)",
-	//                 weight_grid_id, weight_id,   age,   time, weight
-	"insert into weight_grid values(0,         0,  50.0, 2000.0,    1.0)",
-	"insert into weight_grid values(1,         1,   0.0, 1980.0,    0.5)",
-	"insert into weight_grid values(2,         1, 100.0, 1980.0,    1.0)",
-	"insert into weight_grid values(3,         1,   0.0, 2010.0,    1.0)",
-	"insert into weight_grid values(4,         1, 100.0, 2010.0,    1.5)",
+	//                 weight_grid_id, weight_id,age_id,time_id, weight
+	"insert into weight_grid values(0,         0,     1,      1,    1.0)",
+	"insert into weight_grid values(1,         1,     0,      0,    0.5)",
+	"insert into weight_grid values(2,         1,     2,      0,    1.0)",
+	"insert into weight_grid values(3,         1,     0,      2,    1.0)",
+	"insert into weight_grid values(4,         1,     2,      2,    1.5)",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -76,28 +76,28 @@ bool get_weight_grid_xam(void)
 	ok  &= weight_grid.size() == 5;
 	//
 	ok  &= weight_grid[0].weight_id == 0;
-	ok  &= weight_grid[0].age       == 50.0;
-	ok  &= weight_grid[0].time      == 2000.0;
+	ok  &= weight_grid[0].age_id    == 1;
+	ok  &= weight_grid[0].time_id   == 1;
 	ok  &= weight_grid[0].weight    == 1.0; 
 	//
 	ok  &= weight_grid[1].weight_id == 1;
-	ok  &= weight_grid[1].age       == 0.0;
-	ok  &= weight_grid[1].time      == 1980.0;
+	ok  &= weight_grid[1].age_id    == 0;
+	ok  &= weight_grid[1].time_id   == 0;
 	ok  &= weight_grid[1].weight    == 0.5; 
 	//
 	ok  &= weight_grid[2].weight_id == 1;
-	ok  &= weight_grid[2].age       == 100.0;
-	ok  &= weight_grid[2].time      == 1980.0;
+	ok  &= weight_grid[2].age_id    == 2;
+	ok  &= weight_grid[2].time_id   == 0;
 	ok  &= weight_grid[2].weight    == 1.0; 
 	//
 	ok  &= weight_grid[3].weight_id == 1;
-	ok  &= weight_grid[3].age       == 0.0;
-	ok  &= weight_grid[3].time      == 2010.0;
+	ok  &= weight_grid[3].age_id    == 0;
+	ok  &= weight_grid[3].time_id   == 2;
 	ok  &= weight_grid[3].weight    == 1.0; 
 	//
 	ok  &= weight_grid[4].weight_id == 1;
-	ok  &= weight_grid[4].age       == 100.0;
-	ok  &= weight_grid[4].time      == 2010.0;
+	ok  &= weight_grid[4].age_id    == 2;
+	ok  &= weight_grid[4].time_id   == 2;
 	ok  &= weight_grid[4].weight    == 1.5; 
  	//
 	// close database and return

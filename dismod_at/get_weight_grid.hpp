@@ -18,8 +18,8 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 	struct weight_grid_struct {
 		int    weight_id;
-		double age;
-		double time;
+		int    age_id;
+		int    time_id;
 		double weight;
 	};
 	extern CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3*  db);

@@ -39,19 +39,19 @@ def weight_grid() :
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# create weight_grid table
-	col_name = [ 'weight_id', 'age',  'time',  'weight' ]
-	col_type = [ 'integer',   'real', 'real',  'real'   ]
+	col_name = [ 'weight_id', 'age_id',  'time_id',  'weight' ]
+	col_type = [ 'integer',   'integer', 'integer',  'real'   ]
 	row_list = [
 	           # constant
-	           [ 0,          50.0,    2000.,   1.0      ],
+	           [ 0,             1,        1,   1.0      ],
 	           # age_linear  
-	           [ 1,           0.0,    2000.,   0.5      ],
-	           [ 1,         100.0,    2000.,   1.5      ],
+	           [ 1,             0,        1,   0.5      ],
+	           [ 1,             2,        1,   1.5      ],
 	           # bilinear 
-	           [ 2,           0.0,    1990.,   0.5      ],
-	           [ 2,         100.0,    1990.,   1.0      ],
-	           [ 2,           0.0,    2010.,   1.0      ],
-	           [ 2,         100.0,    2010.,   1.5      ]
+	           [ 2,             0,        0,   0.5      ],
+	           [ 2,             2,        0,   1.0      ],
+	           [ 2,             0,        2,   1.0      ],
+	           [ 2,             2,        2,   1.5      ]
 	]
 	tbl_name = 'weight_grid'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

@@ -27,24 +27,25 @@ the $code weight_grid$$ table.
 Its initial value is zero, and it increments by one for each row.
 
 $head weight_id$$
-This column has type $code integer$$ and is the primary key for
-the $cref weight_table$$.
-Each value $icode weight_id$$ corresponds to a different weighting.
+This column has type $code integer$$ and is a 
+$cref/weight_id/weight_table/weight_id/$$ in the weight table.
+Each $icode weight_id$$ value corresponds to a different weighting.
 
-$head age$$
-This column 
-has type $code real$$ and is value is the age value for this grid point.
-For each fixed value of $icode weight_id$$ and $icode time$$,
-the set of corresponding $icode age$$ values is constant; i.e.,
+$head age_id$$
+This column has type $code integer$$ and is a
+$cref/age_id/age_table/age_id/$$ in the age table.
+Each $icode age_id$$ value corresponds to a specific age.
+For each fixed value of $icode weight_id$$ and $icode time_id$$,
+the set of corresponding $icode age_id$$ values is constant; i.e.,
 the grid corresponding to $icode weight_id$$ is rectangular.
 
-$head time$$
-This column 
-has type $code real$$ and is value is the time value for this grid point.
-For each fixed value of $icode weight_id$$ and $icode age$$,
-the set of corresponding $icode time$$ values is constant; i.e.,
+$head time_id$$
+This column has type $code integer$$ and is a
+$cref/time_id/time_table/time_id/$$ in the time table.
+Each $icode time_id$$ value corresponds to a specific time.
+For each fixed value of $icode weight_id$$ and $icode age_id$$,
+the set of corresponding $icode time_id$$ values is constant; i.e.,
 the grid corresponding to $icode weight_id$$ is rectangular.
-
 
 $head weight$$
 This column has type $code real$$.
