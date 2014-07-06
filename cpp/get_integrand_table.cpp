@@ -81,6 +81,7 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_integrand_table.hpp>
 # include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/check_table_id.hpp>
 
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
@@ -102,23 +103,16 @@ CppAD::vector<integrand_enum> get_integrand_table(sqlite3* db)
 {	using std::string;
 
 	string table_name  = "integrand";
-	string column_name = "integrand_id";
-	CppAD::vector<int>  integrand_id;
-	get_table_column(db, table_name, column_name, integrand_id);
+	size_t n_integrand = check_table_id(db, table_name);
 	
-	column_name        =  "integrand_name";
+	string column_name =  "integrand_name";
 	CppAD::vector<string>  integrand_name;
 	get_table_column(db, table_name, column_name, integrand_name);
-	assert( integrand_id.size() == integrand_name.size() );
+	assert( n_integrand == integrand_name.size() );
 
-	size_t n_out = integrand_name.size();
-	CppAD::vector<integrand_enum> integrand_table(n_out);
-	for(size_t i = 0; i < n_out; i++)
-	{	if( integrand_id[i] != i )
-		{	string s = "integrand_id must start at zero and increment by one.";
-			table_error_exit("integrand", i, s);
-		}
-		bool found = false;
+	CppAD::vector<integrand_enum> integrand_table(n_integrand);
+	for(size_t i = 0; i < n_integrand; i++)
+	{	bool found = false;
 		for(size_t j = 0; j < number_integrand_enum; j++)
 		{	if( integrand_name[i] == integrand_enum2name[j] )
 			{	integrand_table[i] = integrand_enum(j);

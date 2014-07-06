@@ -11,6 +11,8 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin table_error_exit$$
 $spell
+	const
+	std
 	dismod
 	hpp
 $$
@@ -30,15 +32,19 @@ Print an error message and exit the program with a non-zero
 error status.
 
 $head table_name$$
-It the name of the table where the error occurred.
+This argument has prototype
+$codei%
+	const std::string& %table_name%
+%$$
+It is the name of the table where the error occurred.
 
 $head row_id$$
-Is the row identifier value $icode%table_name%_id%$$; 
+This argument has prototype
+$codei%
+	size_t %row_id%
+%$$
+It is the row identifier value $icode%table_name%_id%$$; 
 i.e., it starts at zero and increments by one between rows.
-
-$head message$$
-Is the error message. An addition line identifying the 
-row is added to the message.
 
 $end
 ------------------------------------------------------------------------------

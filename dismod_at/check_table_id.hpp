@@ -8,16 +8,14 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_TABLE_ERROR_EXIT_HPP
-# define DISMOD_AT_TABLE_ERROR_EXIT_HPP
+# ifndef DISMOD_AT_CHECK_TABLE_ID_HPP
+# define DISMOD_AT_CHECK_TABLE_ID_HPP
 
 # include <string>
+# include <sqlite3.h>
+
 namespace dismod_at {
-	extern void table_error_exit(
-		const std::string& table_name ,
-		size_t             row_id     ,
-		const std::string& message
-	);
+	extern size_t check_table_id(sqlite3* db, const std::string& table_name);
 }
 
 # endif

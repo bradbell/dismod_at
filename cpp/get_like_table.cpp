@@ -87,6 +87,7 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_like_table.hpp>
 # include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/check_table_id.hpp>
 
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
@@ -95,12 +96,9 @@ CppAD::vector<like_struct> get_like_table(sqlite3* db)
 {	using std::string;
 
 	string table_name  = "like";
-	string column_name = "like_id";
-	CppAD::vector<int>    like_id;
-	get_table_column(db, table_name, column_name, like_id);
-	size_t n_like = like_id.size();
+	size_t n_like      = check_table_id(db, table_name);
 
-	column_name        =  "like_name";
+	string column_name =  "like_name";
 	CppAD::vector<string>  like_name;
 	get_table_column(db, table_name, column_name, like_name);
 	assert( like_name.size() == n_like );
@@ -139,11 +137,7 @@ CppAD::vector<like_struct> get_like_table(sqlite3* db)
 	double plus_infinity  = std::atof("+inf");
 	CppAD::vector<like_struct> like_table(n_like);
 	for(size_t i = 0; i < n_like; i++)
-	{	if( like_id[i] != i )
-		{	string s = "like_id must start at zero and increment by one.";
-			table_error_exit("like", i, s);
-		}
-		like_table[i].like_name  = like_name[i];
+	{	like_table[i].like_name  = like_name[i];
 		like_table[i].density_id = density_id[i];
 		//
 		like_table[i].lower      = lower[i];

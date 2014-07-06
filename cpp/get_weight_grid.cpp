@@ -71,6 +71,7 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_weight_grid.hpp>
 # include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/check_table_id.hpp>
 
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
@@ -79,12 +80,9 @@ CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3* db)
 {	using std::string;
 
 	string table_name  = "weight_grid";
-	string column_name = "weight_grid_id";
-	CppAD::vector<int>    weight_grid_id;
-	get_table_column(db, table_name, column_name, weight_grid_id);
-	size_t n_grid = weight_grid_id.size();
+	size_t n_grid      = check_table_id(db, table_name);
 
-	column_name        =  "weight_id";
+	string column_name =  "weight_id";
 	CppAD::vector<int>     weight_id;
 	get_table_column(db, table_name, column_name, weight_id);
 	assert( weight_id.size() == n_grid );
@@ -106,12 +104,7 @@ CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3* db)
 
 	CppAD::vector<weight_grid_struct> weight_grid(n_grid);
 	for(size_t i = 0; i < n_grid; i++)
-	{	if( weight_grid_id[i] != i )
-		{	string s = 
-			"weight_grid_id must start at zero and increment by one.";
-			table_error_exit("weight_grid", i, s);
-		}
-		weight_grid[i].weight_id = weight_id[i];
+	{	weight_grid[i].weight_id = weight_id[i];
 		weight_grid[i].age       = age[i];
 		weight_grid[i].time      = time[i];
 		weight_grid[i].weight    = weight[i];

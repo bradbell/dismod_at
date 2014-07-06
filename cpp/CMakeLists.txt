@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(cpp_lib EXCLUDE_FROM_ALL 
+	check_table_id.cpp
 	exec_sql_cmd.cpp
 	get_covariate_table.cpp
 	get_data_table.cpp

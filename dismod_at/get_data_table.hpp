@@ -16,7 +16,6 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	struct data_struct {
-		int         data_id;
 		int         integrand_id;
 		int         density_id;
 		int         node_id;

@@ -70,7 +70,7 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/table_error_exit.hpp>
-
+# include <dismod_at/check_table_id.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -87,29 +87,23 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 {	using std::string;
 
 	string table_name  = "density";
-	string column_name = "density_id";
-	CppAD::vector<int>  density_id;
-	get_table_column(db, table_name, column_name, density_id);
-	
-	column_name        =  "density_name";
-	CppAD::vector<string>  density_name;
-	get_table_column(db, table_name, column_name, density_name);
+	size_t n_density   = check_table_id(db, table_name);
 
-	if( density_id.size() != size_t( number_density_enum ) )
+	if( n_density != size_t( number_density_enum ) )
 	{	using std::cerr;
 		cerr << "density table does not have ";
 		cerr << size_t( number_density_enum) << "rows." << std::endl;
 		exit(1);
 	}
-	assert( density_id.size() == density_name.size() );
+
+	string column_name =  "density_name";
+	CppAD::vector<string>  density_name;
+	get_table_column(db, table_name, column_name, density_name);
+	assert( n_density == density_name.size() );
 
 	CppAD::vector<density_enum> density_table(number_density_enum);
 	for(size_t i = 0; i < number_density_enum; i++)
-	{	if( density_id[i] != i )
-		{	string s = "density_id must start at zero and increment by one.";
-			table_error_exit("density", i, s);
-		}
-		bool found = false;
+	{	bool found = false;
 		for( size_t j = 0; j < number_density_enum; j++)
 		{	if( density_enum2name[j] == density_name[i] )
 			{	density_table[i] = density_enum(j);

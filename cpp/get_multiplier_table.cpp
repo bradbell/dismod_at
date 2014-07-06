@@ -90,6 +90,7 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_multiplier_table.hpp>
 # include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/check_table_id.hpp>
 
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
@@ -97,13 +98,10 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 CppAD::vector<multiplier_struct> get_multiplier_table(sqlite3* db)
 {	using std::string;
 
-	string table_name  = "multiplier";
-	string column_name = "multiplier_id";
-	CppAD::vector<int>    multiplier_id;
-	get_table_column(db, table_name, column_name, multiplier_id);
-	size_t n_multiplier = multiplier_id.size();
+	string table_name   = "multiplier";
+	size_t n_multiplier = check_table_id(db, table_name);
 
-	column_name        =  "multiplier_type";
+	string column_name  = "multiplier_type";
 	CppAD::vector<string>  multiplier_type;
 	get_table_column(db, table_name, column_name, multiplier_type);
 	assert( multiplier_type.size() == n_multiplier );
@@ -130,11 +128,7 @@ CppAD::vector<multiplier_struct> get_multiplier_table(sqlite3* db)
 
 	CppAD::vector<multiplier_struct> multiplier_table(n_multiplier);
 	for(size_t i = 0; i < n_multiplier; i++)
-	{	if( multiplier_id[i] != i )
-		{	string s = "multiplier_id must start at zero and increment by one.";
-			table_error_exit("multiplier", i, s);
-		}
-		multiplier_table[i].multiplier_type = multiplier_type[i];
+	{	multiplier_table[i].multiplier_type = multiplier_type[i];
 		multiplier_table[i].rate_id         = rate_id[i];
 		multiplier_table[i].integrand_id    = integrand_id[i];
 		multiplier_table[i].covariate_id    = covariate_id[i];

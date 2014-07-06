@@ -69,7 +69,7 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/table_error_exit.hpp>
-
+# include <dismod_at/check_table_id.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -84,30 +84,23 @@ const char* rate_enum2name[] = {
 CppAD::vector<rate_enum> get_rate_table(sqlite3* db)
 {	using std::string;
 
-	string table_name  = "rate";
-	string column_name = "rate_id";
-	CppAD::vector<int>  rate_id;
-	get_table_column(db, table_name, column_name, rate_id);
-	
-	column_name        =  "rate_name";
-	CppAD::vector<string>  rate_name;
-	get_table_column(db, table_name, column_name, rate_name);
-
-	if( rate_id.size() != size_t( number_rate_enum ) )
+	string table_name   = "rate";
+	size_t n_rate       = check_table_id(db, table_name);
+	if( n_rate != size_t( number_rate_enum ) )
 	{	using std::cerr;
 		cerr << "rate table does not have ";
 		cerr << size_t( number_rate_enum) << "rows." << std::endl;
 		exit(1);
 	}
-	assert( rate_id.size() == rate_name.size() );
+
+	string column_name  = "rate_name";
+	CppAD::vector<string>  rate_name;
+	get_table_column(db, table_name, column_name, rate_name);
+	assert( n_rate == rate_name.size() );
 
 	CppAD::vector<rate_enum> rate_table(number_rate_enum);
 	for(size_t i = 0; i < number_rate_enum; i++)
-	{	if( rate_id[i] != i )
-		{	string s = "rate_id must start at zero and increment by one.";
-			table_error_exit("rate", i, s);
-		}
-		bool found = false;
+	{	bool found = false;
 		for( size_t j = 0; j < number_rate_enum; j++)
 		{	if( rate_enum2name[j] == rate_name[i] )
 			{	rate_table[i] = rate_enum(j);

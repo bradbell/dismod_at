@@ -127,6 +127,7 @@ $end
 # include <dismod_at/get_data_table.hpp>
 # include <dismod_at/get_covariate_table.hpp>
 # include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/check_table_id.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -136,12 +137,9 @@ CppAD::vector<data_struct> get_data_table(sqlite3* db, size_t n_covariate)
 	// column at a time (to use with get_table column
 
 	string table_name  = "data";
-	string column_name = "data_id";
-	CppAD::vector<int>    data_id;
-	get_table_column(db, table_name, column_name, data_id);
-	size_t n_data = data_id.size();
+	size_t n_data      = check_table_id(db, table_name);
 
-	column_name        = "integrand_id";
+	string column_name = "integrand_id";
 	CppAD::vector<int>    integrand_id;
 	get_table_column(db, table_name, column_name, integrand_id);
 	assert( n_data == integrand_id.size() );
@@ -199,12 +197,7 @@ CppAD::vector<data_struct> get_data_table(sqlite3* db, size_t n_covariate)
 	// fill in all but the covariate values
 	CppAD::vector<data_struct> data_table(n_data);
 	for(size_t i = 0; i < n_data; i++)
-	{	if( data_id[i] != i )
-		{	string s = "data_id must start at zero and increment by one.";
-			table_error_exit("data", i, s);
-		}
-		data_table[i].data_id       = data_id[i];
-		data_table[i].integrand_id  = integrand_id[i];
+	{	data_table[i].integrand_id  = integrand_id[i];
 		data_table[i].density_id    = density_id[i];
 		data_table[i].node_id       = node_id[i];
 		data_table[i].weight_id     = weight_id[i];

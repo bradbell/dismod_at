@@ -73,24 +73,21 @@ $end
 -----------------------------------------------------------------------------
 */
 
+# include <sqlite3.h>
 # include <cppad/vector.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_covariate_table.hpp>
-# include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/check_table_id.hpp>
 
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<covariate_struct> get_covariate_table(sqlite3* db)
 {	using std::string;
+	string table_name         = "covariate";
+	size_t n_covariate = check_table_id(db, table_name);
 
-	string table_name  = "covariate";
-	string column_name = "covariate_id";
-	CppAD::vector<int>    covariate_id;
-	get_table_column(db, table_name, column_name, covariate_id);
-	size_t n_covariate = covariate_id.size();
-
-	column_name        =  "covariate_name";
+	string column_name        =  "covariate_name";
 	CppAD::vector<string>  covariate_name;
 	get_table_column(db, table_name, column_name, covariate_name);
 	assert( n_covariate == covariate_name.size() );
@@ -102,11 +99,7 @@ CppAD::vector<covariate_struct> get_covariate_table(sqlite3* db)
 
 	CppAD::vector<covariate_struct> covariate_table(n_covariate);
 	for(size_t i = 0; i < n_covariate; i++)
-	{	if( covariate_id[i] != i )
-		{	string s = "covariate_id must start at zero and increment by one.";
-			table_error_exit("covariate", i, s);
-		}
-		covariate_table[i].covariate_name  = covariate_name[i];
+	{	covariate_table[i].covariate_name  = covariate_name[i];
 		covariate_table[i].reference       = reference[i];
 	}
 	return covariate_table;

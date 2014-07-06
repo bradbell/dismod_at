@@ -64,6 +64,7 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_node_table.hpp>
 # include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/check_table_id.hpp>
 
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
@@ -72,29 +73,21 @@ CppAD::vector<node_struct> get_node_table(sqlite3* db)
 {	using std::string;
 
 	string table_name  = "node";
-	string column_name = "node_id";
-	CppAD::vector<int>    node_id;
-	get_table_column(db, table_name, column_name, node_id);
+	size_t n_node      = check_table_id(db, table_name);
 
-	column_name        =  "node_name";
+	string column_name = "node_name";
 	CppAD::vector<string>  node_name;
 	get_table_column(db, table_name, column_name, node_name);
-
-	column_name        =  "parent";
-	CppAD::vector<int>     parent;
-	get_table_column(db, table_name, column_name, parent);
-
-	size_t n_node = node_id.size();
 	assert( n_node == node_name.size() );
+
+	column_name        = "parent";
+	CppAD::vector<int>   parent;
+	get_table_column(db, table_name, column_name, parent);
 	assert( n_node == parent.size() );
 
 	CppAD::vector<node_struct> node_table(n_node);
 	for(size_t i = 0; i < n_node; i++)
-	{	if( node_id[i] != i )
-		{	string s = "node_id must start at zero and increment by one.";
-			table_error_exit("node", i, s);
-		}
-		node_table[i].node_name  = node_name[i];
+	{	node_table[i].node_name  = node_name[i];
 		node_table[i].parent     = parent[i];
 	}
 	return node_table;
