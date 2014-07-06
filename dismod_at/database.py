@@ -305,6 +305,14 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # the random effects will correspond to the children of this node; 
 # see description of $icode node_list$$ below.
 #
+# $head age_list$$
+# is a $code list$$ of $code float$$ in increasing order that
+# specifiy the age grid values.
+#
+# $head time_list$$
+# is a $code list$$ of $code float$$ in increasing order that
+# specifiy the time grid values.
+#
 # $head node_list$$
 # This is a list of $code dict$$
 # that define the rows of the $cref node_table$$.
@@ -323,11 +331,11 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $cref weight_grid$$ table.
 # The dictionary $icode%weight_list%[%i%]%$$ has the following:
 # $table
-# Key    $cnext Value Type    $cnext Description                $rnext
-# name   $cnext str           $cnext name of $th i$$ weighting  $rnext
-# age    $cnext list of float $cnext grid for age values        $rnext
-# time   $cnext list of float $cnext grid for time values       $rnext
-# fun    $cnext function      $cnext $icode%w%=%fun%(%a%, %t%)%$$
+# Key     $cnext Value Type    $cnext Description                $rnext
+# name    $cnext str           $cnext name of $th i$$ weighting  $rnext
+# age_id  $cnext list of int   $cnext indices for age values     $rnext
+# time_id $cnext list of int   $cnext grid for time values       $rnext
+# fun     $cnext function      $cnext $icode%w%=%fun%(%a%, %t%)%$$
 # $tend
 # The float $icode w$$ is the value of this weighting a the corresponding
 # float age $icode a$$ and float time $icode t$$.
@@ -381,11 +389,11 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $cref smooth_grid$$ tables.
 # The dictionary $icode%smooth_list%[%i%]%$$ has the following:
 # $table
-# Key    $cnext Value Type    $cnext Description                $rnext
-# name   $cnext str           $cnext name of $th i$$ smoothing  $rnext
-# age    $cnext list of float $cnext grid for age values        $rnext
-# time   $cnext list of float $cnext grid for time values       $rnext
-# fun    $cnext function      $cnext $icode%(%v%,%da%,%dt%)%=%fun%(%a%, %t%)%$$
+# Key     $cnext Value Type  $cnext Description                $rnext
+# name    $cnext str         $cnext name of $th i$$ smoothing  $rnext
+# age_id  $cnext list of int $cnext indices for age values     $rnext
+# time_id $cnext list of int $cnext indices for time values    $rnext
+# fun     $cnext function    $cnext $icode%(%v%,%da%,%dt%)%=%fun%(%a%, %t%)%$$
 # $tend
 # The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
 # are the likelihood names for the value, difference in age, 
@@ -419,6 +427,8 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 def create_database(
 	file_name,
 	parent_node,
+	age_list,
+	time_list,
 	node_list,
 	weight_list,
 	covariate_list,
@@ -429,12 +439,27 @@ def create_database(
 	multiplier_list
 ) :
 	# -----------------------------------------------------------------------
-	# primary key type
-	ptype ='integer primary key'
-	# -----------------------------------------------------------------------
 	# create database
 	new            = True
 	connection     = create_connection(file_name, new)
+	# -----------------------------------------------------------------------
+	# age table
+	col_name = [ 'age' ]
+	col_type = [ 'real' ]
+	row_list = []
+	for age in age_list :
+		row_list.append( [age] )
+	tbl_name = 'age'
+	create_table(connection, tbl_name, col_name, col_type, row_list)
+	# -----------------------------------------------------------------------
+	# time table
+	col_name = [ 'time' ]
+	col_type = [ 'real' ]
+	row_list = []
+	for time in time_list :
+		row_list.append( [time] )
+	tbl_name = 'time'
+	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# create rate table
 	col_name = [  'rate_name'   ]
@@ -563,18 +588,18 @@ def create_database(
 		global_weight_name2id[ weight_list[i]['name'] ] = i
 	# ------------------------------------------------------------------------
 	# create weight grid table
-	col_name = [  'weight_id', 'age',   'time',  'weight' ]
-	col_type = [  'integer',   'real',  'real',  'real'   ]
+	col_name = [  'weight_id', 'age_id',   'time_id',  'weight' ]
+	col_type = [  'integer',   'integer',  'integer',  'real'   ]
 	row_list = [ ]
 	for i in range( len(weight_list) ) :
-		weight = weight_list[i]
-		age    = weight['age']
-		time   = weight['time']
+		weight  = weight_list[i]
+		age_id  = weight['age_id']
+		time_id = weight['time_id']
 		fun    = weight['fun']
-		for a in age :
-			for t in time :
-				w = fun(a, t)
-				row_list.append( [ i, a, t, w] )
+		for j in age_id :
+			for k in time_id :
+				w = fun(age_list[j], time_list[k])
+				row_list.append( [ i, j, k, w] )
 	tbl_name = 'weight_grid'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
@@ -595,33 +620,33 @@ def create_database(
 	# create smooth grid table
 	col_name = [
 		'smooth_id', 
-		'age',  
-		'time',  
+		'age_id',  
+		'time_id',  
 		'value_like_id',
 		'dage_like_id',
 		'dtime_like_id',
 	]
 	col_type = [
 		'integer',  # smooth_id
-		'real',     # age
-		'real',     # time
+		'integer',  # age_id
+		'integer',  # time_id
 		'integer',  # value_like_id
 		'integer',  # dage_like_id
 		'integer',  # dtime_like_id
 	]
 	row_list = [ ]
 	for i in range( len(smooth_list) ) :
-		smooth = smooth_list[i]
-		age    = smooth['age']
-		time   = smooth['time']
-		fun    = smooth['fun']
-		for a in age :
-			for t in time :
-				(v,da,dt) = fun(a, t)
+		smooth  = smooth_list[i]
+		age_id  = smooth['age_id']
+		time_id = smooth['time_id']
+		fun     = smooth['fun']
+		for j in age_id :
+			for k in time_id :
+				(v,da,dt) = fun(age_list[j], time_list[k])
 				v         = global_like_name2id[v]
 				da        = global_like_name2id[da]
 				dt        = global_like_name2id[dt]
-				row_list.append( [ i, a, t, v, da, dt] )
+				row_list.append( [ i, j, k, v, da, dt] )
 	tbl_name = 'smooth_grid'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------

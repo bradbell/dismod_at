@@ -32,6 +32,8 @@ def get_started() :
 	# ------------------------------------------------------------------------
 	file_name   = 'example.db'
 	parent_node = 'north_america'
+	age_list    = [ 50.0 ]
+	time_list   = [ 2000.0 ]
 	node_list = [
 		{ 'name':'world',         'parent':'' },
 		{ 'name':'north_america', 'parent':'world' },
@@ -40,7 +42,7 @@ def get_started() :
 	]
 	fun = constant_weight_fun
 	weight_list = [
-		{ 'name':'constant',  'age':[50.], 'time':[2000.], 'fun':fun }
+		{ 'name':'constant',  'age_id':[0], 'time_id':[0], 'fun':fun }
 	]
 	covariate_list = [
 		{ 'name':'sex', 'reference':0.0 }
@@ -86,8 +88,8 @@ def get_started() :
 	]
 	smooth_list = [
 		{	'name':'constant',
-			'age':[50.0],
-			'time':[2000.],
+			'age_id':[0],
+			'time_id':[0],
 			'fun':constant_smooth_fun
 		}
 	] 
@@ -111,6 +113,8 @@ def get_started() :
 	dismod_at.create_database(
 		file_name, 
 		parent_node,
+		age_list,
+		time_list,
 		node_list, 
 		weight_list, 
 		covariate_list,
