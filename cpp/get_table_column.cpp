@@ -101,8 +101,8 @@ $end
 */
 # include <iostream>
 # include <cassert>
-# include <sqlite3.h>
-# include <dismod_at/get_table_column.hpp>
+
+# include <dismod_at/dismod_at.hpp>
 
 namespace {
 	typedef int (*callback_type)(void*, int, char**, char**);
@@ -169,6 +169,8 @@ namespace {
 		return;
 	}
 }
+
+# include <dismod_at/dismod_at.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

@@ -44,7 +44,8 @@ $end
 */
 # include <iostream>
 # include <fstream>
-# include <dismod_at/open_connection.hpp>
+
+# include <dismod_at/dismod_at.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 

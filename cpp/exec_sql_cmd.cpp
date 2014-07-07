@@ -56,7 +56,8 @@ $end
 # include <cstdlib>
 # include <iostream>
 # include <cassert>
-# include <dismod_at/exec_sql_cmd.hpp>
+
+# include <dismod_at/dismod_at.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 

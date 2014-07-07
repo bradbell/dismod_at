@@ -48,6 +48,8 @@ extern bool get_time_table_xam(void);
 extern bool get_weight_grid_xam(void);
 
 // anonymous namespace
+# include <dismod_at/dismod_at.hpp>
+
 namespace {
 	// function that runs one test
 	static size_t Run_ok_count    = 0;

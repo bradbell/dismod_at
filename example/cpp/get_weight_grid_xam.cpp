@@ -25,11 +25,7 @@ $$
 $end
 */
 // BEGIN C++
-# include <sqlite3.h>
-# include <dismod_at/get_weight_grid.hpp>
-# include <dismod_at/get_weight_table.hpp>
-# include <dismod_at/exec_sql_cmd.hpp>
-# include <dismod_at/open_connection.hpp>
+# include <dismod_at/dismod_at.hpp>
 
 bool get_weight_grid_xam(void)
 {

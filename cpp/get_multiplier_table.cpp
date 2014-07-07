@@ -86,12 +86,9 @@ $end
 */
 
 # include <cmath>
-# include <cppad/vector.hpp>
-# include <dismod_at/get_table_column.hpp>
-# include <dismod_at/get_multiplier_table.hpp>
-# include <dismod_at/table_error_exit.hpp>
-# include <dismod_at/check_table_id.hpp>
 
+
+# include <dismod_at/dismod_at.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

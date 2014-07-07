@@ -52,6 +52,8 @@ $end
 # include <iostream>
 # include <cstdlib>
 
+# include <dismod_at/dismod_at.hpp>
+
 namespace dismod_at {
 	void table_error_exit(
 		const std::string& table_name , 

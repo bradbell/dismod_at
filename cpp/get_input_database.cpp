@@ -44,23 +44,9 @@ $end
 -----------------------------------------------------------------------------
 */
 
-# include <dismod_at/get_input_database.hpp>
-# include <dismod_at/get_age_table.hpp>
-# include <dismod_at/get_covariate_table.hpp>
-# include <dismod_at/get_data_table.hpp>
-# include <dismod_at/get_density_table.hpp>
-# include <dismod_at/get_integrand_table.hpp>
-# include <dismod_at/get_like_table.hpp>
-# include <dismod_at/get_multiplier_table.hpp>
-# include <dismod_at/get_node_table.hpp>
-# include <dismod_at/get_rate_prior.hpp>
-# include <dismod_at/get_rate_table.hpp>
-# include <dismod_at/get_smooth_grid.hpp>
-# include <dismod_at/get_smooth_table.hpp>
-# include <dismod_at/get_time_table.hpp>
-# include <dismod_at/get_weight_grid.hpp>
-# include <dismod_at/get_weight_table.hpp>
 
+
+# include <dismod_at/dismod_at.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

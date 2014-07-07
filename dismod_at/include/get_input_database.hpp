@@ -15,14 +15,14 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <sqlite3.h>
 # include <cppad/vector.hpp>
 
-# include <dismod_at/get_covariate_table.hpp>
-# include <dismod_at/get_data_table.hpp>
-# include <dismod_at/get_like_table.hpp>
-# include <dismod_at/get_multiplier_table.hpp>
-# include <dismod_at/get_node_table.hpp>
-# include <dismod_at/get_rate_prior.hpp>
-# include <dismod_at/get_smooth_grid.hpp>
-# include <dismod_at/get_weight_grid.hpp>
+# include "get_covariate_table.hpp"
+# include "get_data_table.hpp"
+# include "get_like_table.hpp"
+# include "get_multiplier_table.hpp"
+# include "get_node_table.hpp"
+# include "get_rate_prior.hpp"
+# include "get_smooth_grid.hpp"
+# include "get_weight_grid.hpp"
 
 namespace dismod_at {
 	struct input_struct {

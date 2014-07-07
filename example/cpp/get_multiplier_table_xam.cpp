@@ -25,10 +25,7 @@ $$
 $end
 */
 // BEGIN C++
-# include <sqlite3.h>
-# include <dismod_at/get_multiplier_table.hpp>
-# include <dismod_at/exec_sql_cmd.hpp>
-# include <dismod_at/open_connection.hpp>
+# include <dismod_at/dismod_at.hpp>
 
 bool get_multiplier_table_xam(void)
 {
