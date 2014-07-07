@@ -50,7 +50,6 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void get_input_database(sqlite3* db, input_struct& input_database)
 {	using CppAD::vector;
-	using std::string;
 	
 	input_database.age_table         = get_age_table(db);
 	input_database.time_table        = get_time_table(db);
@@ -62,15 +61,15 @@ void get_input_database(sqlite3* db, input_struct& input_database)
 	input_database.covariate_table   = get_covariate_table(db);
 	input_database.node_table        = get_node_table(db);
 	input_database.like_table        = get_like_table(db);
-	input_database.weight_grid_table = get_weight_grid_table(db);
-	input_database.smooth_grid_table = get_smooth_grid_table(db);
-	input_database.rate_prior_table  = get_rate_prior_table(db);
+	input_database.weight_grid       = get_weight_grid(db);
+	input_database.smooth_grid       = get_smooth_grid(db);
+	input_database.rate_prior        = get_rate_prior(db);
 	input_database.multiplier_table  = get_multiplier_table(db);
 	//
 	size_t n_covariate = input_database.covariate_table.size();
-	input_database.data_table        = get_data_table(db);
+	input_database.data_table        = get_data_table(db, n_covariate);
 
-	return age;
+	return;
 }
 
 } // END DISMOD_AT_NAMESPACE

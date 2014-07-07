@@ -21,6 +21,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "include/get_covariate_table.hpp"
 # include "include/get_data_table.hpp"
 # include "include/get_density_table.hpp"
+# include "include/get_input_database.hpp"
 # include "include/get_integrand_table.hpp"
 # include "include/get_like_table.hpp"
 # include "include/get_multiplier_table.hpp"

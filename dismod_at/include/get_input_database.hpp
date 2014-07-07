@@ -15,6 +15,9 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <sqlite3.h>
 # include <cppad/vector.hpp>
 
+# include "get_rate_table.hpp"
+# include "get_integrand_table.hpp"
+# include "get_density_table.hpp"
 # include "get_covariate_table.hpp"
 # include "get_data_table.hpp"
 # include "get_like_table.hpp"
@@ -26,22 +29,22 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	struct input_struct {
-		CppAD::vector<double>             age_table
-		CppAD::vector<double>             time_table
-		CppAD::vector<rate_enum>          rate_table
-		CppAD::vector<density_enum>       density_table
-		CppAD::vector<integrand_enum>     integrand_table
-		CppAD::vector<string>             weight_table
-		CppAD::vector<string>             smooth_table
-		//
-		CppAD::vector<covariate_struct>   covariate_table
-		CppAD::vector<node_struct>        node_table
-		CppAD::vector<like_struct>        like_table
-		CppAD::vector<weight_grid_struct> weight_grid_table
-		CppAD::vector<smooth_grid_struct> smooth_grid_table
-		CppAD::vector<rate_prior_struct>  rate_prior_table
-		CppAD::vector<multiplier_struct>  multiplier_table
-		CppAD::vector<data_struct>        data_table
+		CppAD::vector<double>             age_table;
+		CppAD::vector<double>             time_table;
+		CppAD::vector<rate_enum>          rate_table;
+		CppAD::vector<density_enum>       density_table;
+		CppAD::vector<integrand_enum>     integrand_table;
+		CppAD::vector<std::string>        weight_table;
+		CppAD::vector<std::string>        smooth_table;
+		//;
+		CppAD::vector<covariate_struct>   covariate_table;
+		CppAD::vector<node_struct>        node_table;
+		CppAD::vector<like_struct>        like_table;
+		CppAD::vector<weight_grid_struct> weight_grid;
+		CppAD::vector<smooth_grid_struct> smooth_grid;
+		CppAD::vector<rate_prior_struct>  rate_prior;
+		CppAD::vector<multiplier_struct>  multiplier_table;
+		CppAD::vector<data_struct>        data_table;
 	};
 	extern void get_input_database(
 		sqlite3*      db            , 

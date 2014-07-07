@@ -16,6 +16,7 @@ ADD_LIBRARY(cpp_lib EXCLUDE_FROM_ALL
 	get_covariate_table.cpp
 	get_data_table.cpp
 	get_density_table.cpp
+	get_input_database.cpp
 	get_integrand_table.cpp
 	get_like_table.cpp
 	get_multiplier_table.cpp
