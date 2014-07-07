@@ -23,7 +23,7 @@ $index rate, get prior$$
 $index prior, get rate$$
 
 $head Syntax$$
-$icode%rate_prior% = get_rate_prior(%db%)%$$
+$icode%rate_prior_table% = get_rate_prior(%db%)%$$
 
 $head Purpose$$
 To read the $cref rate_prior$$ and return it as a C++ data structure.

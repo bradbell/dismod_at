@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_input_database$$
+$begin get_input_table$$
 $spell
 	sqlite
 	enum
@@ -26,10 +26,10 @@ $head Under Construction$$
 This routine is under construction and not yet used.
 
 $head Syntax$$
-$icode%get_input_database(%db%)%$$
+$icode%get_input_table(%db%)%$$
 
 $head Purpose$$
-To read the $cref database$$ and return it as a C++ data structure.
+To read all the input tables and return it as a C++ data structure.
 
 $head db$$
 The argument $icode db$$ has prototype
@@ -48,26 +48,26 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-void get_input_database(sqlite3* db, input_struct& input_database)
+void get_input_table(sqlite3* db, input_table_struct& input_table)
 {	using CppAD::vector;
 	
-	input_database.age_table         = get_age_table(db);
-	input_database.time_table        = get_time_table(db);
-	input_database.rate_table        = get_rate_table(db);
-	input_database.density_table     = get_density_table(db);
-	input_database.integrand_table   = get_integrand_table(db);
-	input_database.weight_table      = get_weight_table(db);
-	input_database.smooth_table      = get_smooth_table(db);
-	input_database.covariate_table   = get_covariate_table(db);
-	input_database.node_table        = get_node_table(db);
-	input_database.like_table        = get_like_table(db);
-	input_database.weight_grid       = get_weight_grid(db);
-	input_database.smooth_grid       = get_smooth_grid(db);
-	input_database.rate_prior        = get_rate_prior(db);
-	input_database.multiplier_table  = get_multiplier_table(db);
+	input_table.age         = get_age_table(db);
+	input_table.time        = get_time_table(db);
+	input_table.rate        = get_rate_table(db);
+	input_table.density     = get_density_table(db);
+	input_table.integrand   = get_integrand_table(db);
+	input_table.weight      = get_weight_table(db);
+	input_table.smooth      = get_smooth_table(db);
+	input_table.covariate   = get_covariate_table(db);
+	input_table.node        = get_node_table(db);
+	input_table.like        = get_like_table(db);
+	input_table.weight_grid = get_weight_grid(db);
+	input_table.smooth_grid = get_smooth_grid(db);
+	input_table.rate_prior  = get_rate_prior(db);
+	input_table.multiplier  = get_multiplier_table(db);
 	//
-	size_t n_covariate = input_database.covariate_table.size();
-	input_database.data_table        = get_data_table(db, n_covariate);
+	size_t n_covariate = input_table.covariate.size();
+	input_table.data        = get_data_table(db, n_covariate);
 
 	return;
 }

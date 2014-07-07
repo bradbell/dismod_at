@@ -25,7 +25,7 @@ $index smooth, get grid$$
 $index grid, get smooth$$
 
 $head Syntax$$
-$icode%smooth_grid% = get_smooth_grid(%db%)%$$
+$icode%smooth_grid_table% = get_smooth_grid(%db%)%$$
 
 $head Purpose$$
 To read the $cref smooth_grid$$ and return it as a C++ data structure.
