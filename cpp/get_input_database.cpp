@@ -26,8 +26,6 @@ $head Under Construction$$
 This routine is under construction and not yet used.
 
 $head Syntax$$
-$codei%# include <get_input_database>
-%$$
 $icode%get_input_database(%db%)%$$
 
 $head Purpose$$

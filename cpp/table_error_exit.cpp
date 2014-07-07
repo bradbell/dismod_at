@@ -23,8 +23,6 @@ $index error, table exit$$
 $index exit, table error$$
 
 $head Syntax$$
-$codei%# include <dismod_at/table_error_exit.hpp>
-%$$
 $codei%table_error_exit(%table_name%, %row_id%, %message%)%$$
 
 $head Purpose$$

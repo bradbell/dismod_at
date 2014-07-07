@@ -23,8 +23,6 @@ $index time, get table$$
 $index table, get time$$
 
 $head Syntax$$
-$codei%# include <get_time_table>
-%$$
 $icode%time_table% = get_time_table(%db%)%$$
 
 $head Purpose$$

@@ -23,8 +23,6 @@ $index check, table id$$
 $index id, check table$$
 
 $head Syntax$$
-$codei%# include <dismod_at/check_table_id.hpp>
-%$$
 $icode%n_row% = check_table_id(%table_name%)%$$
 
 $head Purpose$$

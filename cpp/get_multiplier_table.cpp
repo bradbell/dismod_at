@@ -24,8 +24,6 @@ $index multiplier, get table$$
 $index table, get multiplier$$
 
 $head Syntax$$
-$codei%# include <get_multiplier_table>
-%$$
 $icode%multiplier_table% = get_multiplier_table(%db%)%$$
 
 $head Purpose$$

@@ -26,8 +26,6 @@ $index data, get table$$
 $index table, get data$$
 
 $head Syntax$$
-$codei%# include <get_data_table>
-%$$
 $icode%data_table% = get_data_table(%db%, %n_covariate%)%$$
 
 $head Purpose$$

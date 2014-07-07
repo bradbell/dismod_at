@@ -23,8 +23,6 @@ $index like, get table$$
 $index table, get like$$
 
 $head Syntax$$
-$codei%# include <get_like_table>
-%$$
 $icode%like_table% = get_like_table(%db%)%$$
 
 $head Purpose$$

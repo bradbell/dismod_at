@@ -26,8 +26,6 @@ $index execute, sql command$$
 $index C++, execute sql$$
 
 $head Syntax$$
-$codei%# include <dismod_at/exec_sql_cmd.hpp>
-%$$
 $codei%dismod_at::exec_sql_cmd(%db%, %sql_cmd%)%$$
 
 $head Purpose$$

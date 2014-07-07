@@ -29,8 +29,6 @@ $index integrand, get table$$
 $index table, get integrand$$
 
 $head Syntax$$
-$codei%# include <get_integrand_table>
-%$$
 $icode%integrand_table% = get_integrand_table(%db%)%$$
 
 $head Purpose$$

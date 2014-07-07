@@ -23,8 +23,6 @@ $index age, get table$$
 $index table, get age$$
 
 $head Syntax$$
-$codei%# include <get_age_table>
-%$$
 $icode%age_table% = get_age_table(%db%)%$$
 
 $head Purpose$$
