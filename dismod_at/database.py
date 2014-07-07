@@ -307,11 +307,11 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #
 # $head age_list$$
 # is a $code list$$ of $code float$$ in increasing order that
-# specifiy the age grid values.
+# specify the age grid values.
 #
 # $head time_list$$
 # is a $code list$$ of $code float$$ in increasing order that
-# specifiy the time grid values.
+# specify the time grid values.
 #
 # $head node_list$$
 # This is a list of $code dict$$
