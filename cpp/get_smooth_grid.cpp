@@ -37,6 +37,17 @@ $codei%
 %$$
 and is an open connection to the database.
 
+$head smooth_grid$$
+The return value $icode smooth_grid$$ has prototype
+$codei%
+	CppAD::vector<smooth_grid_struct>  %smooth_grid%
+%$$
+For each $cref/smooth_grid_id/smooth_grid/smooth_grid_id/$$,
+$codei%
+	%smooth_grid%[%smooth_grid_id%]
+%$$
+is the information for a specific smoothing and specific age and time.
+
 $head smooth_grid_struct$$
 This is a structure with the following fields
 $table
@@ -63,17 +74,6 @@ $code int$$ $cnext $code dtime_like_id$$    $pre  $$ $cnext
 	The $cref/dtime_like_id/smooth_grid/dtime_like_id/$$
 	for this smoothing, age, and time.
 $tend        
-
-$head smooth_grid$$
-The return value $icode smooth_grid$$ has prototype
-$codei%
-	CppAD::vector<smooth_grid_struct>  %smooth_grid%
-%$$
-For each $cref/smooth_grid_id/smooth_grid/smooth_grid_id/$$,
-$codei%
-	%smooth_grid%[%smooth_grid_id%]
-%$$
-is the information for a specific smoothing and specific age and time.
 
 $children%example/cpp/get_smooth_grid_xam.cpp
 %$$

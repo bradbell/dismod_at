@@ -48,6 +48,26 @@ in the $cref covariate_table$$.
 It is also the number of columns in the data table that 
 have column names beginning with $code x_$$.
 
+$head data_table$$
+The return value $icode data_table$$ has prototype
+$codei%
+	CppAD::vector<data_struct>  %data_table%
+%$$
+For each $cref/data_id/data_table/data_id/$$,
+$codei%
+	%data_table%[%data_id%]
+%$$
+is the information for the corresponding data.
+
+$subhead x$$
+The value
+$codei%
+	%data_table%[%data_id%].x[%covariate_id%]
+%$$
+is the value of the covariate specified by
+$cref/covariate_id/covariate_table/covariate_id/$$
+and the measurement specified by $icode data_id$$.
+
 $head data_struct$$
 This is a structure with the following fields
 $table
@@ -89,26 +109,6 @@ $rnext
 $code CppAD::vector<double>$$ $cnext $code covariate$$ $cnext
 	The $cref/covariate/data_table/Covariates/$$ values for this measurement
 $tend        
-
-$head data_table$$
-The return value $icode data_table$$ has prototype
-$codei%
-	CppAD::vector<data_struct>  %data_table%
-%$$
-For each $cref/data_id/data_table/data_id/$$,
-$codei%
-	%data_table%[%data_id%]
-%$$
-is the information for the corresponding data.
-
-$subhead x$$
-The value
-$codei%
-	%data_table%[%data_id%].x[%covariate_id%]
-%$$
-is the value of the covariate specified by
-$cref/covariate_id/covariate_table/covariate_id/$$
-and the measurement specified by $icode data_id$$.
 
 $children%example/cpp/get_data_table_xam.cpp
 %$$

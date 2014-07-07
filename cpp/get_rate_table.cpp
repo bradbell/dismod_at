@@ -34,6 +34,18 @@ $codei%
 %$$
 and is an open connection to the database.
 
+$head rate_table$$
+The return value $icode rate_table$$ has prototype
+$codei%
+	CppAD::vector<rate_enum>  %rate_table%
+%$$
+For each $cref/rate_id/rate_table/rate_id/$$,
+$codei%
+	%rate_table%[%rate_id%]
+%$$
+is the enum value for the corresponding
+$cref/rate_name/rate_table/rate_name/$$.
+
 $head rate_enum$$
 This is an enum type with the following values:
 $table
@@ -49,18 +61,6 @@ $head rate_enum2name$$
 This is a global variable. If $icode%rate% < number_rate_enum%$$, 
 $codei%rate_enum2name[%rate%]%$$ is the string corresponding
 to the $icode rate$$ enum value.
-
-$head rate_table$$
-The return value $icode rate_table$$ has prototype
-$codei%
-	CppAD::vector<rate_enum>  %rate_table%
-%$$
-For each $cref/rate_id/rate_table/rate_id/$$,
-$codei%
-	%rate_table%[%rate_id%]
-%$$
-is the enum value for the corresponding
-$cref/rate_name/rate_table/rate_name/$$.
 
 
 $children%example/cpp/get_rate_table_xam.cpp

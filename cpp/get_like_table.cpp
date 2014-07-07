@@ -35,6 +35,17 @@ $codei%
 %$$
 and is an open connection to the database.
 
+$head like_table$$
+The return value $icode like_table$$ has prototype
+$codei%
+	CppAD::vector<like_struct>  %like_table%
+%$$
+For each $cref/like_id/like_table/like_id/$$,
+$codei%
+	%like_table%[%like_id%]
+%$$
+is the information for the corresponding likelihood.
+
 $head like_struct$$
 This is a structure with the following fields
 $table
@@ -58,17 +69,6 @@ $code double$$ $cnext $code std$$           $cnext
 $code double$$ $cnext $code eta$$           $cnext
 	The $cref/eta/like_table/eta/$$ for this likelihood 
 $tend        
-
-$head like_table$$
-The return value $icode like_table$$ has prototype
-$codei%
-	CppAD::vector<like_struct>  %like_table%
-%$$
-For each $cref/like_id/like_table/like_id/$$,
-$codei%
-	%like_table%[%like_id%]
-%$$
-is the information for the corresponding likelihood.
 
 $children%example/cpp/get_like_table_xam.cpp
 %$$

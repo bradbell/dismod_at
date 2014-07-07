@@ -41,6 +41,18 @@ $codei%
 %$$
 and is an open connection to the database.
 
+$head integrand_table$$
+The return value $icode integrand_table$$ has prototype
+$codei%
+	CppAD::vector<integrand_enum>  %integrand_table%
+%$$
+For each $cref/integrand_id/integrand_table/integrand_id/$$,
+$codei%
+	%integrand_table%[%integrand_id%]
+%$$
+is the enum value for the corresponding
+$cref/integrand_name/integrand_table/integrand_name/$$.
+
 $head integrand_enum$$
 This is an enum type with the following values:
 $table
@@ -61,18 +73,6 @@ $head integrand_enum2name$$
 This is a global variable. If $icode%integrand% < number_integrand_enum%$$, 
 $codei%integrand_enum2name[%integrand%]%$$ is the string corresponding
 to the $icode integrand$$ enum value.
-
-$head integrand_table$$
-The return value $icode integrand_table$$ has prototype
-$codei%
-	CppAD::vector<integrand_enum>  %integrand_table%
-%$$
-For each $cref/integrand_id/integrand_table/integrand_id/$$,
-$codei%
-	%integrand_table%[%integrand_id%]
-%$$
-is the enum value for the corresponding
-$cref/integrand_name/integrand_table/integrand_name/$$.
 
 
 $children%example/cpp/get_integrand_table_xam.cpp

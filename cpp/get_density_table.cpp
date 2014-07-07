@@ -34,6 +34,18 @@ $codei%
 %$$
 and is an open connection to the database.
 
+$head density_table$$
+The return value $icode density_table$$ has prototype
+$codei%
+	CppAD::vector<density_enum>  %density_table%
+%$$
+For each $cref/density_id/density_table/density_id/$$,
+$codei%
+	%density_table%[%density_id%]
+%$$
+is the enum value for the corresponding
+$cref/density_name/density_table/density_name/$$.
+
 $head density_enum$$
 This is an enum type with the following values:
 $table
@@ -50,18 +62,6 @@ $head density_enum2name$$
 This is a global variable. If $icode%density% < number_density_enum%$$, 
 $codei%density_enum2name[%density%]%$$ is the string corresponding
 to the $icode density$$ enum value.
-
-$head density_table$$
-The return value $icode density_table$$ has prototype
-$codei%
-	CppAD::vector<density_enum>  %density_table%
-%$$
-For each $cref/density_id/density_table/density_id/$$,
-$codei%
-	%density_table%[%density_id%]
-%$$
-is the enum value for the corresponding
-$cref/density_name/density_table/density_name/$$.
 
 
 $children%example/cpp/get_density_table_xam.cpp
