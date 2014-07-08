@@ -26,6 +26,12 @@ $head parent_node_id$$
 This is the $cref/node_id/node_table/node_id/$$ for 
 the parent node for the run specified by $icode run_id$$.
 
+$head max_sample_number$$
+Is the maximum posterior
+$cref/sample_number/post_table/sample_number/$$.
+If it is zero, then only the maximum likelihood estimate is 
+stored in $cref post_table$$.
+
 $children%example/table/run_table.py
 %$$
 $head Example$$

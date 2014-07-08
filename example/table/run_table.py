@@ -32,9 +32,9 @@ def run_table() :
 	cursor         = connection.cursor()
 	#
 	# create the run table
-	col_name = [ 'parent_node_id' ]
-	col_type = [ 'integer',       ]
-	row_list = [ [ 0 ] ]
+	col_name = [ 'parent_node_id', 'max_sample_number' ]
+	col_type = [ 'integer',        'integer'           ]
+	row_list = [ [ 0, 100 ] ]
 	tbl_name = 'run'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#

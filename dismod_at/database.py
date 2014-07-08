@@ -281,7 +281,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $head Syntax$$
 # $codei%create_database(
 #	%file_name%,
-#   %parent_node%,
+#	%run_list%,
 #	%node_list%,
 #	%weight_list%,
 #	%covariate_list%,
@@ -301,10 +301,18 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # is stored.
 # If this file already exists, it is deleted and a database is created.
 #
-# $head parent_node$$
-# Is the name of the parent node for this analysis; i.e.,
-# the random effects will correspond to the children of this node; 
-# see description of $icode node_list$$ below.
+# $head run_list$$
+# This is a list of $code dict$$
+# that define the rows of the $cref run_table$$.
+# The dictionary $icode%run_list%[%i%]%$$ has the following:
+# $table
+# Key     $cnext Value Type    $cnext Description                $rnext
+# parent_node       $cnext int $cnext name of parent for this analysis $rnext
+# max_sample_number $cnext int $cnext maximum 
+#	$cref/sample_number/post_table/sample_number/$$
+# $tend
+# Note that if the i-th node does not have a parent, the empty string
+# should be used for the parent of that node.
 #
 # $head age_list$$
 # is a $code list$$ of $code float$$ in increasing order that
@@ -435,7 +443,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $end
 def create_database(
 	file_name,
-	parent_node,
+	run_list,
 	age_list,
 	time_list,
 	node_list,
@@ -768,10 +776,13 @@ def create_database(
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create run table
-	col_name = [ 'parent_node_id' ]
-	col_type = [ 'integer'        ]
-	parent_node_id = global_node_name2id[ parent_node ]
-	row_list = [ [parent_node_id] ]
+	col_name = [ 'parent_node_id', 'max_sample_number' ]
+	col_type = [ 'integer',        'integer'           ]
+	row_list = []
+	for run in run_list :
+		parent_node_id    = global_node_name2id[ run['parent_node' ] ]
+		max_sample_number = run['max_sample_number']
+		row_list.append( [parent_node_id, max_sample_number] )
 	tbl_name = 'run'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------

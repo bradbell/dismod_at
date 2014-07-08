@@ -81,9 +81,15 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, parent_node_id);
 	assert( n_run == parent_node_id.size() );
 
+	column_name =        "max_sample_number";
+	CppAD::vector<int>    max_sample_number;
+	get_table_column(db, table_name, column_name, max_sample_number);
+	assert( n_run == max_sample_number.size() );
+
 	CppAD::vector<run_struct> run_table(n_run);
 	for(size_t i = 0; i < n_run; i++)
-	{	run_table[i].parent_node_id  = parent_node_id[i];
+	{	run_table[i].parent_node_id     = parent_node_id[i];
+		run_table[i].max_sample_number  = max_sample_number[i];
 	}
 	return run_table;
 }

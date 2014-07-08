@@ -33,7 +33,9 @@ def constant_smooth_fun(a, t) :
 #
 # ------------------------------------------------------------------------
 file_name   = 'example.db'
-parent_node = 'north_america'
+run_list    = [ 
+	{ 'parent_node':'north_america', 'max_sample_number':100 }
+]
 age_list    = [ 50.0 ]
 time_list   = [ 2000.0 ]
 node_list = [
@@ -115,7 +117,7 @@ multiplier_list = [
 ]
 dismod_at.create_database(
 	file_name, 
-	parent_node,
+	run_list,
 	age_list,
 	time_list,
 	node_list, 
