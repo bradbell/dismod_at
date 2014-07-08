@@ -15,7 +15,7 @@ $section Disease Rates as Functions of Age and Time$$
 $childtable%omh/table/input.omh
 	%omh/table/output.omh
 	%omh/database.omh
-	%omh/devel/devel.omh 
+	%omh/devel.omh 
 %$$
 
 $end

@@ -1,0 +1,40 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2013-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin devel$$
+$spell
+	dismod
+$$
+
+$section Dismod_at Developer Documentation$$
+
+$childtable%
+	devel/table_error_exit.cpp
+	%devel/check_table_id.cpp
+	%devel/exec_sql_cmd.cpp
+	%devel/get_table_column.cpp
+	%devel/get_age_table.cpp
+	%devel/get_time_table.cpp
+	%devel/get_rate_table.cpp
+	%devel/get_density_table.cpp
+	%devel/get_integrand_table.cpp
+	%devel/get_covariate_table.cpp
+	%devel/get_node_table.cpp
+	%devel/get_like_table.cpp
+	%devel/get_weight_table.cpp
+	%devel/get_weight_grid.cpp
+	%devel/get_smooth_table.cpp
+	%devel/get_smooth_grid.cpp
+	%devel/get_rate_prior.cpp
+	%devel/get_multiplier_table.cpp
+	%devel/get_data_table.cpp
+%$$
+
+$end
