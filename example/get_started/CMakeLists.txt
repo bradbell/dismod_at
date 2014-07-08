@@ -20,7 +20,7 @@ LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )
 SET_TARGET_PROPERTIES(
 	get_started PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
-TARGET_LINK_LIBRARIES(get_started sqlite3 cpp_lib)
+TARGET_LINK_LIBRARIES(get_started sqlite3 devel_lib)
 #
 CONFIGURE_FILE(
 	${CMAKE_CURRENT_SOURCE_DIR}/get_started.py.in

@@ -15,7 +15,7 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 
 # Program cpp, not installed, and depends on following source files
 ADD_EXECUTABLE(cpp EXCLUDE_FROM_ALL 
-	cpp.cpp
+	devel.cpp
 	get_age_table_xam.cpp
 	get_covariate_table_xam.cpp
 	get_data_table_xam.cpp
@@ -36,5 +36,5 @@ LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )
 SET_TARGET_PROPERTIES(
 	cpp PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
-TARGET_LINK_LIBRARIES(cpp sqlite3 cpp_lib)
-ADD_CUSTOM_TARGET(check_cpp cpp DEPENDS cpp ) 
+TARGET_LINK_LIBRARIES(cpp sqlite3 devel_lib)
+ADD_CUSTOM_TARGET(check_devel cpp DEPENDS cpp ) 

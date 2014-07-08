@@ -35,4 +35,4 @@ ADD_SUBDIRECTORY(devel)
 ADD_SUBDIRECTORY(example/get_started)
 ADD_SUBDIRECTORY(example/devel)
 
-ADD_CUSTOM_TARGET(check DEPENDS check_get_started check_cpp)
+ADD_CUSTOM_TARGET(check DEPENDS check_get_started check_devel)

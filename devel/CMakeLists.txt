@@ -9,7 +9,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 SET(CMAKE_BUILD_TYPE DEBUG)
-ADD_LIBRARY(cpp_lib EXCLUDE_FROM_ALL 
+ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL 
 	check_table_id.cpp
 	exec_sql_cmd.cpp
 	get_age_table.cpp
@@ -32,4 +32,4 @@ ADD_LIBRARY(cpp_lib EXCLUDE_FROM_ALL
 	open_connection.cpp
 	table_error_exit.cpp
 )
-SET_TARGET_PROPERTIES(cpp_lib PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
+SET_TARGET_PROPERTIES(devel_lib PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
