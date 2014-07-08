@@ -44,4 +44,18 @@ FOREACH(target cpp get_started)
 ENDFOREACH(target)
 #
 ADD_CUSTOM_TARGET(check_cpp cpp DEPENDS cpp ) 
-ADD_CUSTOM_TARGET(check_get_started get_started DEPENDS get_started)
+#
+CONFIGURE_FILE(
+	${CMAKE_SOURCE_DIR}/example/get_started.py.in
+	${CMAKE_CURRENT_BINARY_DIR}/get_started.py
+)
+ADD_CUSTOM_TARGET( 
+	run_get_started_py 
+	python get_started.py
+)
+ADD_CUSTOM_TARGET(
+	check_get_started 
+	get_started example.db
+	DEPENDS 
+	get_started run_get_started_py
+)

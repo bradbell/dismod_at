@@ -266,6 +266,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # ==========================================================================-
 # $begin create_database$$ $newlinech #$$
 # $spell
+#	len
 #	da
 #	dt
 #	dismod
@@ -366,8 +367,16 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # age_lower    $cnext float       $cnext lower age limit             $rnext 
 # age_upper    $cnext float       $cnext upper age limit             $rnext 
 # time_lower   $cnext float       $cnext lower time limit            $rnext
-# time_lower   $cnext float       $cnext upper time limit
+# time_lower   $cnext float       $cnext upper time limit            $rnext
+# $icode c_0$$ $cnext float       $cnext value of first covariate    $rnext
+# ...          $cnext ...         $cnext  ...                        $rnext
+# $icode c_J$$ $cnext float       $cnext value of last covariate
 # $tend
+# Note that $icode%J% = len(%covariate_list%) - 1%$$ and for
+# $icode%j% = 0 , %...% , %J%$$,
+# $codei%
+#	%c_j% = %covariate_list%[%j%]['name']
+# %$$
 #
 # $head like_list$$
 # This is a list of $code dict$$
@@ -443,7 +452,7 @@ def create_database(
 	new            = True
 	connection     = create_connection(file_name, new)
 	# -----------------------------------------------------------------------
-	# age table
+	# create age table
 	col_name = [ 'age' ]
 	col_type = [ 'real' ]
 	row_list = []
@@ -452,7 +461,7 @@ def create_database(
 	tbl_name = 'age'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
-	# time table
+	# create time table
 	col_name = [ 'time' ]
 	col_type = [ 'real' ]
 	row_list = []
@@ -504,7 +513,7 @@ def create_database(
 		[ 'mtstandard'  ],
 		[ 'relrisk'     ]
 	]
-	tbl_name = 'intergrand'
+	tbl_name = 'integrand'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_integrand_name2id = {}
@@ -714,6 +723,8 @@ def create_database(
 		'time_lower',
 		'time_upper',
 	]
+	for j in range( len(covariate_list) ) :
+		col_name.append( 'x_%s' % j )
 	col_type = [
 		'integer',              # integrand_id
 		'integer',              # density_id
@@ -727,6 +738,8 @@ def create_database(
 		'real',                 # time_lower
 		'real',                 # time_upper
 	]
+	for j in range( len(covariate_list) )  :
+		col_type.append( 'real' )
 	row_list = [ ]
 	for i in range( len(data_list) ) :
 		data = data_list[i]
@@ -748,6 +761,8 @@ def create_database(
 			data['time_lower'],
 			data['time_upper']
 		]
+		for j in range( len(covariate_list) ) :
+			row.append( data[ covariate_list[j]['name'] ] )
 		row_list.append(row)
 	tbl_name = 'data'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
