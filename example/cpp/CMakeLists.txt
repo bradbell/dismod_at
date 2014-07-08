@@ -31,9 +31,17 @@ ADD_EXECUTABLE(cpp EXCLUDE_FROM_ALL
 	get_time_table_xam.cpp
 	get_weight_grid_xam.cpp
 )
-SET_TARGET_PROPERTIES(cpp PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
-LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )
-TARGET_LINK_LIBRARIES(cpp sqlite3 cpp_lib)
 
-# make check_cpp will run cpp program
-ADD_CUSTOM_TARGET(check_cpp cpp  DEPENDS cpp cpp_lib)
+ADD_EXECUTABLE(get_started EXCLUDE_FROM_ALL
+	get_started.cpp
+)
+LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )
+FOREACH(target cpp get_started)
+	SET_TARGET_PROPERTIES(
+		${target} PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
+	)
+	TARGET_LINK_LIBRARIES(${target} sqlite3 cpp_lib)
+ENDFOREACH(target)
+#
+ADD_CUSTOM_TARGET(check_cpp cpp DEPENDS cpp ) 
+ADD_CUSTOM_TARGET(check_get_started get_started DEPENDS get_started)
