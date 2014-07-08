@@ -32,7 +32,12 @@ MESSAGE(STATUS "extra_cxx_flags = ${extra_cxx_flags}")
 
 
 ADD_SUBDIRECTORY(devel)
-ADD_SUBDIRECTORY(example/get_started)
+ADD_SUBDIRECTORY(example/table)
 ADD_SUBDIRECTORY(example/devel)
+ADD_SUBDIRECTORY(example/get_started)
 
-ADD_CUSTOM_TARGET(check DEPENDS check_get_started check_devel)
+ADD_CUSTOM_TARGET(check DEPENDS 
+	check_table
+	check_devel
+	check_get_started 
+)

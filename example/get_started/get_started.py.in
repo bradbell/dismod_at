@@ -23,7 +23,7 @@
 from __future__ import print_function
 #
 import sys
-sys.path.append("@CMAKE_SOURCE_DIR@")
+sys.path.append('@CMAKE_SOURCE_DIR@')
 import dismod_at
 import copy
 def constant_weight_fun(a, t) :
