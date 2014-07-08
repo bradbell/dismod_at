@@ -19,6 +19,7 @@ $childtable%
 	devel/table_error_exit.cpp
 	%devel/check_table_id.cpp
 	%devel/exec_sql_cmd.cpp
+	%devel/get_run_table.cpp
 	%devel/get_table_column.cpp
 	%devel/get_age_table.cpp
 	%devel/get_time_table.cpp

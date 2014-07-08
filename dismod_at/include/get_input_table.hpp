@@ -24,6 +24,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_multiplier_table.hpp"
 # include "get_node_table.hpp"
 # include "get_rate_prior.hpp"
+# include "get_run_table.hpp"
 # include "get_smooth_grid.hpp"
 # include "get_weight_grid.hpp"
 
@@ -37,6 +38,7 @@ namespace dismod_at {
 		CppAD::vector<std::string>        weight;
 		CppAD::vector<std::string>        smooth;
 		//;
+		CppAD::vector<run_struct>         run;
 		CppAD::vector<covariate_struct>   covariate;
 		CppAD::vector<node_struct>        node;
 		CppAD::vector<like_struct>        like;

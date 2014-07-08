@@ -58,6 +58,7 @@ void get_input_table(sqlite3* db, input_table_struct& input_table)
 	input_table.integrand   = get_integrand_table(db);
 	input_table.weight      = get_weight_table(db);
 	input_table.smooth      = get_smooth_table(db);
+	input_table.run         = get_run_table(db);
 	input_table.covariate   = get_covariate_table(db);
 	input_table.node        = get_node_table(db);
 	input_table.like        = get_like_table(db);

@@ -28,6 +28,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "include/get_node_table.hpp"
 # include "include/get_rate_prior.hpp"
 # include "include/get_rate_table.hpp"
+# include "include/get_run_table.hpp"
 # include "include/get_smooth_grid.hpp"
 # include "include/get_smooth_table.hpp"
 # include "include/get_table_column.hpp"

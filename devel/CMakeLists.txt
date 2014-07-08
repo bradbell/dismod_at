@@ -23,6 +23,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	get_node_table.cpp
 	get_rate_prior.cpp
 	get_rate_table.cpp
+	get_run_table.cpp
 	get_smooth_grid.cpp
 	get_smooth_table.cpp
 	get_table_column.cpp

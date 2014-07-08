@@ -29,7 +29,7 @@ the parent node for the run specified by $icode run_id$$.
 $children%example/table/run_table.py
 %$$
 $head Example$$
-The file $cref run_table.py$$ 
-contains an example $code run$$ table.
+The files $cref run_table.py$$  and $cref get_run_table_xam.cpp$$
+contain example $code run$$ tables.
 
 $end
