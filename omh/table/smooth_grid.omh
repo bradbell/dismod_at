@@ -61,14 +61,16 @@ This column has type $code integer$$ and its value in a row is the
 $cref/like_id/like_table/like_id/$$ for
 function's forward difference quotients w.r.t age,
 for this smoothing, age, and time.
-The likelihood at the maximum age, for each time, is not used.
+The likelihood at the maximum age, for each time, is not used and
+the corresponding $icode dage_like_id$$ must be $code -1$$.
 
 $head dtime_like_id$$
 This column has type $code integer$$ and its value in a row is the
 $cref/like_id/like_table/like_id/$$ for
 function's forward difference quotients w.r.t time,
 for this smoothing, age, and time.
-The likelihood at the maximum time, for each age, is not used.
+The likelihood at the maximum time, for each age, is not used and
+the corresponding $icode dtime_like_id$$ must be $code -1$$.
 
 $children%example/table/smooth_grid.py
 %$$

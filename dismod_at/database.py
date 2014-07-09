@@ -415,6 +415,9 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
 # are the likelihood names for the value, difference in age, 
 # and difference in time corresponding to this smoothing name.
+# Note that $icode age_id$$ and $code time_id$$ must be in increasing order,
+# $icode da$$ is not used when age $icode%a% = %age_id%[-1]%$$ and
+# $icode dt$$ is not used when time $icode%t% = %time_id%[-1]%$$.
 #
 # $head rate_list$$
 # This is a list of $code dict$$
@@ -669,6 +672,10 @@ def create_database(
 				v         = global_like_name2id[v]
 				da        = global_like_name2id[da]
 				dt        = global_like_name2id[dt]
+				if j == age_id[-1] :
+					da = -1
+				if k == time_id[-1] :
+					dt = -1
 				row_list.append( [ i, j, k, v, da, dt] )
 	tbl_name = 'smooth_grid'
 	create_table(connection, tbl_name, col_name, col_type, row_list)

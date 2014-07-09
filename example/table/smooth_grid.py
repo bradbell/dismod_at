@@ -74,11 +74,16 @@ def smooth_grid() :
 		3           # dtime_like_id
 	]
 	age_time_list = list()
-	for age_id in [0, 1, 2] :            # n_age is 3
+	for age_id in [0, 1, 2] :             # n_age is 3
 		for time_id in [0, 1] :          # n_time is 2
 			default[1] = age_id
 			default[2] = time_id
-			row_list.append( copy.copy(default) )
+			row        = copy.copy(default)
+			if age_id == 2 :
+				row[4] = -1 # dage_like
+			if time_id == 1 :
+				row[5] = -1 # dtime_like
+			row_list.append( row )
 			age_time_list.append( (age_id, time_id) )
 	#
 	# write the table
@@ -100,8 +105,14 @@ def smooth_grid() :
 		assert row[2] == age_time_list[count][0]
 		assert row[3] == age_time_list[count][1]
 		assert row[4] == 1
-		assert row[5] == 2
-		assert row[6] == 3
+		if row[2] == 2 :
+			assert row[5] == -1
+		else :
+			assert row[5] == 2
+		if row[3] == 1 :
+			assert row[6] == -1
+		else :
+			assert row[6] == 3
 		count += 1
 	assert count == len(row_list)
 	#

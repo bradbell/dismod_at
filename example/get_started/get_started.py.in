@@ -29,6 +29,7 @@ import copy
 def constant_weight_fun(a, t) :
 	return 1.0
 def constant_smooth_fun(a, t) :
+	# note that the da and dt values are not used
 	return ('uniform_01', 'uniform_01', 'uniform_01')
 #
 # ------------------------------------------------------------------------
