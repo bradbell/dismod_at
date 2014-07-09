@@ -93,6 +93,11 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, prevalence_zero);
 	assert( n_run == prevalence_zero.size() );
 
+	column_name         =  "ode_step_size";
+	CppAD::vector<double>   ode_step_size;
+	get_table_column(db, table_name, column_name, ode_step_size);
+	assert( n_run == ode_step_size.size() );
+
 	column_name =        "n_sample";
 	CppAD::vector<int>    n_sample;
 	get_table_column(db, table_name, column_name, n_sample);
@@ -102,6 +107,7 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 	for(size_t i = 0; i < n_run; i++)
 	{	run_table[i].parent_node      = parent_node[i];
 		run_table[i].prevalence_zero  = prevalence_zero[i];
+		run_table[i].ode_step_size    = ode_step_size[i];
 		run_table[i].n_sample         = n_sample[i];
 	}
 	return run_table;
