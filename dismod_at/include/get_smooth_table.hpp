@@ -16,7 +16,12 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 
 namespace dismod_at {
-	extern CppAD::vector<std::string> get_smooth_table(sqlite3*  db);
+	struct smooth_struct {
+		std::string smooth_name;
+		int         n_age;
+		int         n_time;
+	};
+	extern CppAD::vector<smooth_struct> get_smooth_table(sqlite3*  db);
 }
 
 # endif

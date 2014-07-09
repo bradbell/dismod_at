@@ -38,15 +38,29 @@ and is an open connection to the database.
 $head smooth_table$$
 The return value $icode smooth_table$$ has prototype
 $codei%
-	CppAD::vector<std::string>  %smooth_table%
+	CppAD::vector<smooth_struct>  %smooth_table%
 %$$
 For each $cref/smooth_id/smooth_table/smooth_id/$$,
 $codei%
 	%smooth_table%[%smooth_id%]
 %$$
-is the string for the corresponding
-$cref/smooth_name/smooth_table/smooth_name/$$.
+is the information for the corresponding
+$cref/smooth_id/smooth_table/smooth_id/$$.
 
+$head smooth_sruct$$
+This is a structure with the following fields
+$table
+Type $cnext Field $cnext Description
+$rnext
+$code std::string$$ $cnext $code smooth_name$$ $cnext
+	The $cref/smooth_name/smooth_table/smooth_name/$$ for this smoothing.
+$rnext
+$code std::string$$ $cnext $code n_age$$ $cnext
+	The $cref/n_age/smooth_table/n_age/$$ for this smoothing.
+$rnext
+$code std::string$$ $cnext $code n_time$$ $cnext
+	The $cref/n_time/smooth_table/n_time/$$ for this smoothing.
+$tend
 $comment%example/devel/get_smooth_grid_xam.cpp in included by smooth_grid.omh
 %$$
 $head Example$$
@@ -63,27 +77,34 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<std::string> get_smooth_table(sqlite3* db)
+CppAD::vector<smooth_struct> get_smooth_table(sqlite3* db)
 {	using std::string;
 
 	string table_name  = "smooth";
-	string column_name = "smooth_id";
-	CppAD::vector<int>    smooth_id;
-	get_table_column(db, table_name, column_name, smooth_id);
-	size_t n_smooth = smooth_id.size();
-	
-	column_name        =  "smooth_name";
-	CppAD::vector<string>  smooth_name;
+	size_t n_smooth = check_table_id(db, table_name);
+
+	std::string column_name =  "smooth_name";
+	CppAD::vector<string>       smooth_name;
 	get_table_column(db, table_name, column_name, smooth_name);
 	assert( smooth_name.size() == n_smooth );
 
+	column_name        =  "n_age";
+	CppAD::vector<int>     n_age;
+	get_table_column(db, table_name, column_name, n_age);
+	assert( n_age.size() == n_smooth );
+
+	column_name        =  "n_time";
+	CppAD::vector<int>     n_time;
+	get_table_column(db, table_name, column_name, n_time);
+	assert( n_time.size() == n_smooth );
+
+	CppAD::vector<smooth_struct> smooth_table(n_smooth);
 	for(size_t i = 0; i < n_smooth; i++)
-	{	if( smooth_id[i] != i )
-		{	string s = "smooth_id must start at zero and increment by one.";
-			table_error_exit("smooth", i, s);
-		}
+	{	smooth_table[i].smooth_name   = smooth_name[i];
+		smooth_table[i].n_age         = n_age[i];
+		smooth_table[i].n_time        = n_time[i];
 	}
-	return smooth_name;
+	return smooth_table;
 }
 
 } // END DISMOD_AT_NAMESPACE

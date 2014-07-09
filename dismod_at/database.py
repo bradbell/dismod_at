@@ -621,12 +621,15 @@ def create_database(
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
 	# create smooth table
-	col_name = [ 'smooth_name'   ]
-	col_type = [ 'text'          ]
+	col_name = [ 'smooth_name', 'n_age',   'n_time'   ]
+	col_type = [ 'text',        'integer', 'integer'  ]
 	row_list = [ ]
 	for i in range( len(smooth_list) ) :
 		smooth = smooth_list[i]
-		row_list.append( [ smooth['name'] ] )
+		name   = smooth['name']
+		n_age  = len( smooth['age_id'] )
+		n_time = len( smooth['time_id'] )
+		row_list.append( [ name, n_age, n_time ] )
 	tbl_name = 'smooth'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#

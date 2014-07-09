@@ -32,13 +32,13 @@ def smooth_grid() :
 	# 
 	# create smooth table
 	ptype    = 'integer primary key'
-	col_name = [ 'smooth_name' ]
-	col_type = [ 'text'        ]
+	col_name = [ 'smooth_name', 'n_age',   'n_time'   ]
+	col_type = [ 'text',        'integer', 'integer'  ]
 	row_list = [
-	           [ 'constant'      ],
-	           [ 'age_only'      ],
-	           [ 'time_only'     ],
-	           [ 'bilinear'      ] 
+	           [ 'constant',    1,          1         ],
+	           [ 'age_only',    3,          1         ],
+	           [ 'time_only',   1,          2         ],
+	           [ 'bilinear',    3,          2         ] 
 	]
 	tbl_name = 'smooth'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
@@ -74,8 +74,8 @@ def smooth_grid() :
 		3           # dtime_like_id
 	]
 	age_time_list = list()
-	for age_id in [0, 1, 2] :
-		for time_id in [0, 1] :
+	for age_id in [0, 1, 2] :            # n_age is 3
+		for time_id in [0, 1] :          # n_time is 2
 			default[1] = age_id
 			default[2] = time_id
 			row_list.append( copy.copy(default) )

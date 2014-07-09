@@ -39,11 +39,15 @@ bool get_smooth_grid_xam(void)
 
 	// sql commands
 	const char* sql_cmd[] = { 
-	"create table smooth(smooth_id integer primary key, smooth_name text)",
-	"insert into smooth values(0, 'constant')",
-	"insert into smooth values(1, 'age_only')",
-	"insert into smooth values(2, 'time_only')",
-	"insert into smooth values(3, 'age_time')",
+	"create table smooth("
+		"smooth_id   integer primary key,"
+		"smooth_name text,"
+		"n_age       int,"
+		"n_time      int)",
+	"insert into smooth values(0, 'constant',  1, 1)",
+	"insert into smooth values(1, 'age_only',  2, 1)",
+	"insert into smooth values(2, 'time_only', 1, 2)",
+	"insert into smooth values(3, 'age_time',  2, 2)",
 	//
 	"create table smooth_grid("
 		" smooth_grid_id integer primary key,"
@@ -65,13 +69,25 @@ bool get_smooth_grid_xam(void)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
 	// get the smooth table
-	vector<string> smooth_table = dismod_at::get_smooth_table(db);
+	vector<dismod_at::smooth_struct> 
+		smooth_table = dismod_at::get_smooth_table(db);
 	ok  &= smooth_table.size() == 4;
-	ok  &= smooth_table[0] == "constant";
-	ok  &= smooth_table[1] == "age_only";
-	ok  &= smooth_table[2] == "time_only";
-	ok  &= smooth_table[3] == "age_time";
-
+	ok  &= smooth_table[0].smooth_name == "constant";
+	ok  &= smooth_table[0].n_age       == 1;
+	ok  &= smooth_table[0].n_time      == 1;
+	//
+	ok  &= smooth_table[1].smooth_name == "age_only";
+	ok  &= smooth_table[1].n_age       == 2;
+	ok  &= smooth_table[1].n_time      == 1;
+	//
+	ok  &= smooth_table[2].smooth_name == "time_only";
+	ok  &= smooth_table[2].n_age       == 1;
+	ok  &= smooth_table[2].n_time      == 2;
+	//
+	ok  &= smooth_table[3].smooth_name == "age_time";
+	ok  &= smooth_table[3].n_age       == 2;
+	ok  &= smooth_table[3].n_time      == 2;
+	//
 	// get the smooth_grid table
 	vector<dismod_at::smooth_grid_struct> 
 		smooth_grid = dismod_at::get_smooth_grid(db);
