@@ -25,6 +25,14 @@ This column has type $code text$$ and has a different value for every row;
 i.e., the names are unique and can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
 
+$head n_age$$
+This column has type $code integer$$ and is the number of age values
+in this smoothing grid. It must be greater than zero.
+
+$head n_time$$
+This column has type $code integer$$ and is the number of _time values
+in this smoothing grid. It must be greater than zero.
+
 $comment%example/table/weight_grid.py is included by weight_grid.omh
 %$$
 $head Example$$

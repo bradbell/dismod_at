@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin get_smooth_table$$
 $spell
+	struct
 	sqlite
 	enum
 	cpp
@@ -47,7 +48,7 @@ $codei%
 is the information for the corresponding
 $cref/smooth_id/smooth_table/smooth_id/$$.
 
-$head smooth_sruct$$
+$head smooth_struct$$
 This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
@@ -63,6 +64,7 @@ $code std::string$$ $cnext $code n_time$$ $cnext
 $tend
 $comment%example/devel/get_smooth_grid_xam.cpp in included by smooth_grid.omh
 %$$
+
 $head Example$$
 The file $cref get_smooth_grid_xam.cpp$$ contains an example that uses
 this function.

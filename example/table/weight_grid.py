@@ -32,9 +32,13 @@ def weight_grid() :
 	cursor         = connection.cursor()
 	# 
 	# create weight table
-	col_name = [ 'weight_name'   ]
-	col_type = [ 'text'          ]
-	row_list = [ [ 'constant'   ], [ 'age_linear' ], [ 'bilinear'   ] ]
+	col_name = [ 'weight_name', 'n_age',   'ntime'   ]
+	col_type = [ 'text',        'integer', 'integer' ]
+	row_list = [ 
+	           [ 'constant',    1,          1        ], 
+	           [ 'age_linear',  2,          1        ], 
+	           [ 'bilinear',    2,          2        ] 
+	]
 	tbl_name = 'weight'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#

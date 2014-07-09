@@ -16,7 +16,12 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 
 namespace dismod_at {
-	extern CppAD::vector<std::string> get_weight_table(sqlite3*  db);
+	struct weight_struct {
+		std::string weight_name;
+		int         n_age;
+		int         n_time;
+	};
+	extern CppAD::vector<weight_struct> get_weight_table(sqlite3*  db);
 }
 
 # endif

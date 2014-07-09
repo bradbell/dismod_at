@@ -39,9 +39,13 @@ bool get_weight_grid_xam(void)
 
 	// sql commands
 	const char* sql_cmd[] = { 
-	"create table weight(weight_id integer primary key, weight_name text)",
-	"insert into weight values(0, 'constant')",
-	"insert into weight values(1, 'bilinear')",
+	"create table weight("
+		"weight_id   integer primary key,"
+		"weight_name text,"
+		"n_age       int,"
+		"n_time      int)",
+	"insert into weight values(0, 'constant',  1,  1)",
+	"insert into weight values(1, 'bilinear',  2,  2)",
 	//
 	"create table weight_grid("
 		" weight_grid_id integer primary key,"
@@ -61,11 +65,18 @@ bool get_weight_grid_xam(void)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
 	// get the weight table
-	vector<string> weight_table = dismod_at::get_weight_table(db);
+	vector<dismod_at::weight_struct> 
+		weight_table = dismod_at::get_weight_table(db);
 	ok  &= weight_table.size() == 2;
-	ok  &= weight_table[0] == "constant";
-	ok  &= weight_table[1] == "bilinear";
-
+	//
+	ok  &= weight_table[0].weight_name == "constant";
+	ok  &= weight_table[0].n_age  == 1;
+	ok  &= weight_table[0].n_time == 1;
+	//
+	ok  &= weight_table[1].weight_name == "bilinear";
+	ok  &= weight_table[1].n_age  == 2;
+	ok  &= weight_table[1].n_time == 2;
+	//
 	// get the weight_grid table
 	vector<dismod_at::weight_grid_struct> 
 		weight_grid = dismod_at::get_weight_grid(db);

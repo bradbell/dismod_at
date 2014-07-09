@@ -591,12 +591,15 @@ def create_database(
 		global_like_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------ 
 	# create weight table
-	col_name = [ 'weight_name'   ]
-	col_type = [ 'text'          ]
+	col_name = [ 'weight_name', 'n_age',   'n_time'   ]
+	col_type = [ 'text',        'integer', 'integer'  ]
 	row_list = [ ]
 	for i in range( len(weight_list) ) :
 		weight = weight_list[i]
-		row_list.append( [ weight['name'] ] )
+		name   = weight['name']
+		n_age  = len( weight['age_id'] )
+		n_time = len( weight['time_id'] )
+		row_list.append( [ name, n_age, n_time ] )
 	tbl_name = 'weight'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#

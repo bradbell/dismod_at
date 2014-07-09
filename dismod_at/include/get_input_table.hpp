@@ -27,6 +27,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_run_table.hpp"
 # include "get_smooth_grid.hpp"
 # include "get_smooth_table.hpp"
+# include "get_weight_table.hpp"
 # include "get_weight_grid.hpp"
 
 namespace dismod_at {
@@ -36,8 +37,8 @@ namespace dismod_at {
 		CppAD::vector<rate_enum>          rate;
 		CppAD::vector<density_enum>       density;
 		CppAD::vector<integrand_enum>     integrand;
-		CppAD::vector<std::string>        weight;
 		//;
+		CppAD::vector<weight_struct>      weight;
 		CppAD::vector<smooth_struct>      smooth;
 		CppAD::vector<run_struct>         run;
 		CppAD::vector<covariate_struct>   covariate;
