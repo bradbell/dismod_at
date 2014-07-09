@@ -40,11 +40,12 @@ bool get_run_table_xam(void)
 	// sql commands
 	const char* sql_cmd[] = { 
 	"create table run"
-	"(run_id       integer primary key,"
-		" node_id  integer,"
-		" n_sample integer)",
-	"insert into run values(0, 4, 500)",
-	"insert into run values(1, 5, 500)"
+	"(run_id                integer primary key,"
+		" parent_node      integer,"
+		" prevalence_zero  integer,"
+		" n_sample          integer)",
+	"insert into run values(0, 4, 1, 500)",
+	"insert into run values(1, 5, 1, 500)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -56,11 +57,13 @@ bool get_run_table_xam(void)
 		run_table = dismod_at::get_run_table(db);
 	ok  &= run_table.size() == 2;
 	//
-	ok  &= run_table[0].node_id == 4;
-	ok  &= run_table[0].n_sample == 500;
+	ok  &= run_table[0].parent_node     == 4;
+	ok  &= run_table[0].prevalence_zero == 1;
+	ok  &= run_table[0].n_sample        == 500;
 	//
-	ok  &= run_table[1].node_id == 5;
-	ok  &= run_table[1].n_sample == 500;
+	ok  &= run_table[1].parent_node     == 5;
+	ok  &= run_table[1].prevalence_zero == 1;
+	ok  &= run_table[1].n_sample        == 500;
 	//
 	// close database and return
 	sqlite3_close(db);

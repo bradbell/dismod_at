@@ -35,17 +35,6 @@ $codei%
 %$$
 and is an open connection to the database.
 
-$head run_struct$$
-This is a structure with the following fields
-$table
-Type  $cnext Field $cnext Description
-$rnext
-$code int$$ $cnext $code node_id$$ $cnext 
-	The $cref/node_id/run_table/node_id/$$ 
-	for this run  
-$rnext
-$tend        
-
 $head run_table$$
 The return value $icode run_table$$ has prototype
 $codei%
@@ -56,6 +45,24 @@ $codei%
 	%run_table%[%run_id%]
 %$$
 is the information for the corresponding run.
+
+$head run_struct$$
+This is a structure with the following fields
+$table
+Type  $cnext Field $cnext Description
+$rnext
+$code int$$ $cnext $code parent_node$$ $cnext 
+	The $cref/parent_node/run_table/parent_node/$$ 
+	for this run  
+$rnext
+$code int$$ $cnext $code prevalence_zero$$ $cnext 
+	The $cref/prevalence_zero/run_table/prevalence_zero/$$ 
+	for this run  
+$rnext
+$code int$$ $cnext $code n_sample$$ $cnext 
+	The $cref/n_sample/run_table/n_sample/$$ 
+	for this run  
+$tend        
 
 $children%example/devel/get_run_table_xam.cpp
 %$$
@@ -76,10 +83,15 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 	string table_name         = "run";
 	size_t n_run = check_table_id(db, table_name);
 
-	string column_name =  "node_id";
-	CppAD::vector<int>    node_id;
-	get_table_column(db, table_name, column_name, node_id);
-	assert( n_run == node_id.size() );
+	string column_name =  "parent_node";
+	CppAD::vector<int>    parent_node;
+	get_table_column(db, table_name, column_name, parent_node);
+	assert( n_run == parent_node.size() );
+
+	column_name       =  "prevalence_zero";
+	CppAD::vector<int>    prevalence_zero;
+	get_table_column(db, table_name, column_name, prevalence_zero);
+	assert( n_run == prevalence_zero.size() );
 
 	column_name =        "n_sample";
 	CppAD::vector<int>    n_sample;
@@ -88,8 +100,9 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 
 	CppAD::vector<run_struct> run_table(n_run);
 	for(size_t i = 0; i < n_run; i++)
-	{	run_table[i].node_id   = node_id[i];
-		run_table[i].n_sample  = n_sample[i];
+	{	run_table[i].parent_node      = parent_node[i];
+		run_table[i].prevalence_zero  = prevalence_zero[i];
+		run_table[i].n_sample         = n_sample[i];
 	}
 	return run_table;
 }

@@ -34,9 +34,6 @@ def constant_smooth_fun(a, t) :
 #
 # ------------------------------------------------------------------------
 file_name   = 'example.db'
-run_list    = [ 
-	{ 'parent_node':'north_america', 'n_sample':100 }
-]
 age_list    = [ 50.0 ]
 time_list   = [ 2000.0 ]
 node_list = [
@@ -116,9 +113,14 @@ multiplier_list = [
 		'smooth':'constant'
 	}
 ]
+run_list    = [ 
+	{	'parent_node':'north_america', 
+		'prevalence_zero':'constant',
+		'n_sample':100 
+	}
+]
 dismod_at.create_database(
 	file_name, 
-	run_list,
 	age_list,
 	time_list,
 	node_list, 
@@ -128,7 +130,8 @@ dismod_at.create_database(
 	like_list,
 	smooth_list,
 	rate_list,
-	multiplier_list
+	multiplier_list,
+	run_list
 )
 # -----------------------------------------------------------------------
 print('get_started: OK')

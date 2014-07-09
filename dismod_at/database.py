@@ -281,14 +281,17 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $head Syntax$$
 # $codei%create_database(
 #	%file_name%,
-#	%run_list%,
+#	%age_list%
+#	%time_list%
 #	%node_list%,
 #	%weight_list%,
 #	%covariate_list%,
 #	%data_list%,
 #	%like_list%,
 #	%smooth_list%,
-#	%rate_list%
+#	%rate_list%,
+#	%multiplier_list%,
+#	%run_list%
 # )%$$
 #
 # $head Purpose$$
@@ -300,19 +303,6 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # is as $code str$$ containing the name of the file where the data base 
 # is stored.
 # If this file already exists, it is deleted and a database is created.
-#
-# $head run_list$$
-# This is a list of $code dict$$
-# that define the rows of the $cref run_table$$.
-# The dictionary $icode%run_list%[%i%]%$$ has the following:
-# $table
-# Key     $cnext Value Type    $cnext Description                $rnext
-# parent_node       $cnext int $cnext name of parent for this analysis $rnext
-# n_sample          $cnext int $cnext number of posterior
-#	$cref/samples/post_table/sample/$$
-# $tend
-# Note that if the i-th node does not have a parent, the empty string
-# should be used for the parent of that node.
 #
 # $head age_list$$
 # is a $code list$$ of $code float$$ in increasing order that
@@ -442,11 +432,24 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # effected  $cnext str         $cnext integrand or rate effected $rnext
 # smooth    $cnext str         $cnext smoothing name
 # $tend
+#
+# $head run_list$$
+# This is a list of $code dict$$
+# that define the rows of the $cref run_table$$.
+# The dictionary $icode%run_list%[%i%]%$$ has the following:
+# $table
+# Key     $cnext Value Type    $cnext Description                $rnext
+# parent_node       $cnext int $cnext name of parent for this analysis $rnext
+# prevalence_zero   $cnext int $cnext name of prevalence zero smoothing $rnext
+# n_sample          $cnext int $cnext number of posterior
+#	$cref/samples/post_table/sample/$$
+# $tend
+# Note that if the i-th node does not have a parent, the empty string
+# should be used for the parent of that node.
 # 
 # $end
 def create_database(
 	file_name,
-	run_list,
 	age_list,
 	time_list,
 	node_list,
@@ -456,7 +459,8 @@ def create_database(
 	like_list,
 	smooth_list,
 	rate_list,
-	multiplier_list
+	multiplier_list,
+	run_list
 ) :
 	# -----------------------------------------------------------------------
 	# create database
@@ -789,13 +793,14 @@ def create_database(
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create run table
-	col_name = [ 'node_id', 'n_sample' ]
-	col_type = [ 'integer', 'integer'           ]
+	col_name = [ 'parent_node',  'prevalence_zero', 'n_sample' ]
+	col_type = [ 'integer',      'integer',         'integer'  ]
 	row_list = []
 	for run in run_list :
-		node_id  = global_node_name2id[ run['parent_node' ] ]
-		n_sample = run['n_sample']
-		row_list.append( [node_id, n_sample] )
+		parent_node     = global_node_name2id[ run['parent_node' ] ]
+		prevalence_zero = global_smooth_name2id[ run['prevalence_zero'] ]
+		n_sample        = run['n_sample']
+		row_list.append( [node_id, prevalence_zero, n_sample] )
 	tbl_name = 'run'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
