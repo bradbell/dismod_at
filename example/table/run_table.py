@@ -32,7 +32,7 @@ def run_table() :
 	cursor         = connection.cursor()
 	#
 	# create the run table
-	col_name = [ 'parent_node_id', 'max_sample_number' ]
+	col_name = [ 'node_id', 'n_sample' ]
 	col_type = [ 'integer',        'integer'           ]
 	row_list = [ [ 0, 100 ] ]
 	tbl_name = 'run'

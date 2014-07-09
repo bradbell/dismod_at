@@ -40,8 +40,8 @@ This is a structure with the following fields
 $table
 Type  $cnext Field $cnext Description
 $rnext
-$code int$$ $cnext $code parent_node_id$$ $cnext 
-	The $cref/parent_node_id/run_table/parent_node_id/$$ 
+$code int$$ $cnext $code node_id$$ $cnext 
+	The $cref/node_id/run_table/node_id/$$ 
 	for this run  
 $rnext
 $tend        
@@ -76,20 +76,20 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 	string table_name         = "run";
 	size_t n_run = check_table_id(db, table_name);
 
-	string column_name =  "parent_node_id";
-	CppAD::vector<int>    parent_node_id;
-	get_table_column(db, table_name, column_name, parent_node_id);
-	assert( n_run == parent_node_id.size() );
+	string column_name =  "node_id";
+	CppAD::vector<int>    node_id;
+	get_table_column(db, table_name, column_name, node_id);
+	assert( n_run == node_id.size() );
 
-	column_name =        "max_sample_number";
-	CppAD::vector<int>    max_sample_number;
-	get_table_column(db, table_name, column_name, max_sample_number);
-	assert( n_run == max_sample_number.size() );
+	column_name =        "n_sample";
+	CppAD::vector<int>    n_sample;
+	get_table_column(db, table_name, column_name, n_sample);
+	assert( n_run == n_sample.size() );
 
 	CppAD::vector<run_struct> run_table(n_run);
 	for(size_t i = 0; i < n_run; i++)
-	{	run_table[i].parent_node_id     = parent_node_id[i];
-		run_table[i].max_sample_number  = max_sample_number[i];
+	{	run_table[i].node_id   = node_id[i];
+		run_table[i].n_sample  = n_sample[i];
 	}
 	return run_table;
 }

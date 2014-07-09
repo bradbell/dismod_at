@@ -16,8 +16,8 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	struct run_struct {
-		int parent_node_id;
-		int max_sample_number;
+		int node_id;
+		int n_sample;
 	};
 	extern CppAD::vector<run_struct> get_run_table(sqlite3*  db);
 }

@@ -34,7 +34,7 @@ def constant_smooth_fun(a, t) :
 # ------------------------------------------------------------------------
 file_name   = 'example.db'
 run_list    = [ 
-	{ 'parent_node':'north_america', 'max_sample_number':100 }
+	{ 'parent_node':'north_america', 'n_sample':100 }
 ]
 age_list    = [ 50.0 ]
 time_list   = [ 2000.0 ]

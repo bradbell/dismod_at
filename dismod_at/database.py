@@ -308,8 +308,8 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $table
 # Key     $cnext Value Type    $cnext Description                $rnext
 # parent_node       $cnext int $cnext name of parent for this analysis $rnext
-# max_sample_number $cnext int $cnext maximum 
-#	$cref/sample_number/post_table/sample_number/$$
+# n_sample          $cnext int $cnext number of posterior
+#	$cref/samples/post_table/sample/$$
 # $tend
 # Note that if the i-th node does not have a parent, the empty string
 # should be used for the parent of that node.
@@ -776,13 +776,13 @@ def create_database(
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create run table
-	col_name = [ 'parent_node_id', 'max_sample_number' ]
-	col_type = [ 'integer',        'integer'           ]
+	col_name = [ 'node_id', 'n_sample' ]
+	col_type = [ 'integer', 'integer'           ]
 	row_list = []
 	for run in run_list :
-		parent_node_id    = global_node_name2id[ run['parent_node' ] ]
-		max_sample_number = run['max_sample_number']
-		row_list.append( [parent_node_id, max_sample_number] )
+		node_id  = global_node_name2id[ run['parent_node' ] ]
+		n_sample = run['n_sample']
+		row_list.append( [node_id, n_sample] )
 	tbl_name = 'run'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------

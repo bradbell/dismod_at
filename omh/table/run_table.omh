@@ -22,13 +22,13 @@ This column has type $code integer$$
 and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$head parent_node_id$$
+$head node_id$$
 This is the $cref/node_id/node_table/node_id/$$ for 
-the parent node for the run specified by $icode run_id$$.
+the parent node for this $icode run_id$$.
 
-$head max_sample_number$$
-Is the maximum posterior
-$cref/sample_number/post_table/sample_number/$$.
+$head n_sample$$
+Is the number of posterior
+$cref/samples/post_table/sample/$$.
 If it is zero, then only the maximum likelihood estimate is 
 stored in $cref post_table$$.
 

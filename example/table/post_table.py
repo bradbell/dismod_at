@@ -32,7 +32,7 @@ def post_table() :
 	col_name = [
 		# required columns
 		'run_id',
-		'sample_number',
+		'sample',
 		'variable_type',
 		'multiplier_id',
 		'rate_prior_id',
@@ -41,7 +41,7 @@ def post_table() :
 	]
 	col_type = [
 		'integer',              # run_id
-		'integer',              # sample_number
+		'integer',              # sample
 		'text',                 # variable_type
 		'integer',              # multiplier_id
 		'integer',              # rate_prior_id
@@ -49,7 +49,7 @@ def post_table() :
 		'real'                  # time
 	]
 	run_id         = 0
-	sample_number  = 0
+	sample         = 0
 	n_multiplier   = 2
 	n_rate         = 8
 	row_list       = list()
@@ -68,7 +68,7 @@ def post_table() :
 			for time in time_grid :
 				row_list.append( [
 					run_id,
-					sample_number,
+					sample,
 					variable_type,
 					multiplier_id,
 					rate_prior_id,

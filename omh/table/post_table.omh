@@ -29,13 +29,13 @@ is non-decreasing with row number,
 and is the value of 
 $cref/run_id/run_table/run_id/$$ that this row corresponds to.
 
-$head sample_number$$
+$head sample$$
 This column has type $code integer$$,
 is non-decreasing with row number,
 and increments each time a sample of all the variables is completed.
-The samples corresponding to $icode sample_number$$ zero are the
+The rows corresponding to $icode sample$$ zero are the
 maximum likelihood estimate.
-The other samples are random from the posterior distribution.
+The other rows are random from the posterior distribution.
 
 $head variable_type$$
 This column has type $code text$$ and its value is either

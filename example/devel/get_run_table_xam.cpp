@@ -40,9 +40,9 @@ bool get_run_table_xam(void)
 	// sql commands
 	const char* sql_cmd[] = { 
 	"create table run"
-	"(run_id integer primary key,"
-		" parent_node_id integer,"
-		" max_sample_number integer)",
+	"(run_id       integer primary key,"
+		" node_id  integer,"
+		" n_sample integer)",
 	"insert into run values(0, 4, 500)",
 	"insert into run values(1, 5, 500)"
 	};
@@ -56,11 +56,11 @@ bool get_run_table_xam(void)
 		run_table = dismod_at::get_run_table(db);
 	ok  &= run_table.size() == 2;
 	//
-	ok  &= run_table[0].parent_node_id == 4;
-	ok  &= run_table[0].max_sample_number == 500;
+	ok  &= run_table[0].node_id == 4;
+	ok  &= run_table[0].n_sample == 500;
 	//
-	ok  &= run_table[1].parent_node_id == 5;
-	ok  &= run_table[1].max_sample_number == 500;
+	ok  &= run_table[1].node_id == 5;
+	ok  &= run_table[1].n_sample == 500;
 	//
 	// close database and return
 	sqlite3_close(db);
