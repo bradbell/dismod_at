@@ -9,10 +9,15 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin dismod_at$$
+$latex 
+	\newcommand{\R}[1]{ {\rm #1} }
+	\newcommand{\B}[1]{ {\bf #1} }
+$$
 
 $section Disease Rates as Functions of Age and Time$$
 
 $childtable%omh/table/input.omh
+	%omh/model/model.omh
 	%omh/table/output.omh
 	%omh/database.omh
 	%omh/devel.omh 

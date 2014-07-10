@@ -31,6 +31,11 @@ $head prevalence_zero$$
 This column has type $code integer$$ 
 and is the $cref/smooth_id/smooth_table/smooth_id/$$ for 
 prevalence at age zero for this $icode run_id$$.
+Note that the 
+$cref/n_age/smooth_table/n_age/$$ must be one where
+$icode%smooth_id% = %prevalence_zero%$$.
+This is because prevalence at age zero is only a function of age,
+not of time.
 
 $head ode_step_size$$
 This column has type $code real$$ 
