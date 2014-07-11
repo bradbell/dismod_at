@@ -6,7 +6,7 @@ $$
 $section Integrating in One Dimension$$
 
 
-$head Setting$$
+$head Notation$$
 $table
 $latex s$$     $cnext 
 	Dimension we are integrating w.r.t. (age or time) 
@@ -17,15 +17,31 @@ $rnext
 $latex w_k$$   $cnext
 	value of the weighting function at $latex s_k$$
 $rnext
-$latex f_k$$   $cnext
-	value of the measurement integrand $latex s_k$$
+$latex s_L$$ $cnext
+	lower value of $latex s$$ for piecewise 
+	linear interpolation of $latex f(s)$$, $latex s_k \leq S_L$$.
+$rnext
+$latex s_U$$ $cnext
+	upper value of $latex s$$ for piecewise 
+	linear interpolation of $latex f(s)$$, $latex s_{k+1} \leq s_U$$.
+$rnext
+$latex f_L$$   $cnext
+	value of the measurement integrand at $latex s_L$$
+$rnext
+$latex f_U$$   $cnext
+	value of the measurement integrand at $latex s_U$$
 $rnext
 $tend
+$latex \[
+f_k = \frac{ s_U - s_k } { s_U - s_L } f_L
+    + \frac{ s_k - s_L } { s_U - s_L } f_U
+\] $$
 
-$head Objective$$
+
+$head Integral$$
 We wish to evaluate the integral between grid point
 of the product of the linear interpolants
-$latex w(t)$$ and $latex f(t)$$; i.e.
+$latex w(s)$$ and $latex f(s)$$; i.e.
 $latex \[
 I_k = 
 ( s_{k+1} - s_k )^{-2} \int_{s(k)}^{s(k+1)}  \;
@@ -78,7 +94,22 @@ It follows that
 $latex \[
 	I_k = c_k f_k + c_{k+1} f_{k+1}
 \] $$
-
+Translating the back to coefficients of $latex f_L$$ and $latex f_U$$ 
+we have
+$latex \[
+I_k = 
+\left( 
+c_k  \frac{ s_U - s_k } { s_U - s_L }  +
++
+c_{k+1}  \frac{ s_U - s_{k+1} } { s_U - s_L } 
+\right) f_L 
++ 
+\left(
+c_k  \frac{ s_k - s_L } { s_U - s_L } 
++
+c_{k+1}  \frac{ s_{k+1} - s_L } { s_U - s_L } 
+\right) f_U
+\] $$
 
 
 $end
