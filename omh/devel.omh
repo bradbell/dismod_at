@@ -16,26 +16,26 @@ $$
 $section Dismod_at Developer Documentation$$
 
 $childtable%
-	devel/table_error_exit.cpp
-	%devel/check_table_id.cpp
-	%devel/exec_sql_cmd.cpp
-	%devel/get_run_table.cpp
-	%devel/get_table_column.cpp
-	%devel/get_age_table.cpp
-	%devel/get_time_table.cpp
-	%devel/get_rate_table.cpp
-	%devel/get_density_table.cpp
-	%devel/get_integrand_table.cpp
-	%devel/get_covariate_table.cpp
-	%devel/get_node_table.cpp
-	%devel/get_like_table.cpp
-	%devel/get_weight_table.cpp
-	%devel/get_weight_grid.cpp
-	%devel/get_smooth_table.cpp
-	%devel/get_smooth_grid.cpp
-	%devel/get_rate_prior.cpp
-	%devel/get_multiplier_table.cpp
-	%devel/get_data_table.cpp
+	devel/table/table_error_exit.cpp
+	%devel/table/check_table_id.cpp
+	%devel/table/exec_sql_cmd.cpp
+	%devel/table/get_run_table.cpp
+	%devel/table/get_table_column.cpp
+	%devel/table/get_age_table.cpp
+	%devel/table/get_time_table.cpp
+	%devel/table/get_rate_table.cpp
+	%devel/table/get_density_table.cpp
+	%devel/table/get_integrand_table.cpp
+	%devel/table/get_covariate_table.cpp
+	%devel/table/get_node_table.cpp
+	%devel/table/get_like_table.cpp
+	%devel/table/get_weight_table.cpp
+	%devel/table/get_weight_grid.cpp
+	%devel/table/get_smooth_table.cpp
+	%devel/table/get_smooth_grid.cpp
+	%devel/table/get_rate_prior.cpp
+	%devel/table/get_multiplier_table.cpp
+	%devel/table/get_data_table.cpp
 %$$
 
 $end
