@@ -8,19 +8,16 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin dismod_at$$
-$latex 
-	\newcommand{\R}[1]{ {\rm #1} }
-	\newcommand{\B}[1]{ {\bf #1} }
+$begin devel$$
+$spell
+	dismod
 $$
 
-$section Disease Rates as Functions of Age and Time$$
+$section Dismod_at Developer Documentation$$
 
-$childtable%omh/table/input.omh
-	%omh/model/model.omh
-	%omh/table/output.omh
-	%omh/database.omh
-	%devel/devel.omh 
+$childtable%
+	devel/table/table.omh
+	%devel/model/model.omh
 %$$
 
 $end
