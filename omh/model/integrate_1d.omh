@@ -85,29 +85,29 @@ d^{-1} I_k & =  &
 Defining
 $latex \[
 \begin{array}{rcl}
-c_k & = & \frac{1}{2} w_1  - \frac{1}{3} ( w_1 - w_0 ) 
+c_0 & = & \frac{d}{2} w_1  - \frac{d}{3} ( w_1 - w_0 ) 
 \\
-c_{k+1} & = & \frac{1}{2} w_0  + \frac{1}{3} ( w_1 - w_0 ) 
+c_1 & = & \frac{d}{2} w_0  + \frac{d}{3} ( w_1 - w_0 ) 
 \end{array}
 \] $$
 It follows that
 $latex \[
-	I_k = c_k f_0 + c_{k+1} f_1
+	I_k = c_0 f_0 + c_1 f_1
 \] $$
-Translating back to coefficients of $latex \bar{f}_0$$ and $latex \bar{f}_1$$ 
+Translating this to coefficients of $latex \bar{f}_0$$ and $latex \bar{f}_1$$ 
 we have
 $latex \[
 I_k = 
 \left( 
-c_k  \frac{ \bar{s}_1 - s_0 } { \bar{s}_1 - \bar{s}_0 }  +
+c_0  \frac{ \bar{s}_1 - s_0 } { \bar{s}_1 - \bar{s}_0 }  +
 +
-c_{k+1}  \frac{ \bar{s}_1 - s_1 } { \bar{s}_1 - \bar{s}_0 } 
+c_1  \frac{ \bar{s}_1 - s_1 } { \bar{s}_1 - \bar{s}_0 } 
 \right) \bar{f}_0 
 + 
 \left(
-c_k  \frac{ s_0 - \bar{s}_0 } { \bar{s}_1 - \bar{s}_0 } 
+c_0  \frac{ s_0 - \bar{s}_0 } { \bar{s}_1 - \bar{s}_0 } 
 +
-c_{k+1}  \frac{ s_1 - \bar{s}_0 } { \bar{s}_1 - \bar{s}_0 } 
+c_1  \frac{ s_1 - \bar{s}_0 } { \bar{s}_1 - \bar{s}_0 } 
 \right) \bar{f}_1
 \] $$
 
