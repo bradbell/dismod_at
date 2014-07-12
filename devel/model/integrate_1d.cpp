@@ -98,9 +98,11 @@ d^{-1} I( v_0, v_1) =
 We define
 $latex \[
 \begin{array}{rcl}
-	b_0 & = & w_1 / 2 - ( w_1 - w_0 ) / 3 
-	\\
-	b_0 & = & w_0 / 2 + ( w_1 - w_0 ) / 3 
+b_0 & = & w_1 / 2 - ( w_1 - w_0 ) / 3 
+= ( w_1 + 2 w_0 ) / 6
+\\
+b_1 & = & w_0 / 2 + ( w_1 - w_0 ) / 3 
+= ( w_0 + 2 w_1 ) / 6
 \end{array}
 \] $$
 Using the definition of $latex v(s)$$ to replace 
@@ -128,3 +130,13 @@ I( v_0 , v_1 ) = c_0 v_0 + c_1 v_1
 $end
 ------------------------------------------------------------------------------
 */
+namespace dismod_at { // BEGIN DIMSOD_AT_NAMESPACE
+
+std::pair<double,double> integrate_1d(
+	const std::pair<double,double>&  q ,
+	const std::pair<double,double>&  r ,
+	const std::pair<double,double>&  w )
+{
+}
+
+} // END DISMOD_AT_NAMESPACE
