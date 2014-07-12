@@ -1,4 +1,4 @@
-$begin model_integrate_1d$$
+$begin theory_integrate_1d$$
 $spell
 	interpolants
 $$
@@ -8,9 +8,6 @@ $section Integrating in One Dimension$$
 
 $head Notation$$
 $table
-$latex s$$     $cnext 
-	Dimension we are integrating w.r.t. (age or time) 
-$rnext
 $latex s_0, s_1$$   $cnext 
 	computational grid points
 $rnext
@@ -23,9 +20,15 @@ $rnext
 $latex \bar{f}_0, \bar{f}_1$$   $cnext
 	value of the measurement integrand at $latex \bar{s}_0, \bar{s}_1$$
 $tend
+We assume that $latex \bar{s}_0 \leq s_0 < s_1 \leq \bar{s}_1$$
+and define $latex f_0$$, $latex f_1$$ by
 $latex \[
 f_0 = \frac{ \bar{s}_1 - s_0 } { \bar{s}_1 - \bar{s}_0 } \bar{f}_0
     + \frac{ s_0 - \bar{s}_0 } { \bar{s}_1 - \bar{s}_0 } \bar{f}_1
+\] $$
+$latex \[
+f_1 = \frac{ \bar{s}_1 - s_1 } { \bar{s}_1 - \bar{s}_0 } \bar{f}_0
+    + \frac{ s_1 - \bar{s}_0 } { \bar{s}_1 - \bar{s}_0 } \bar{f}_1
 \] $$
 
 
@@ -85,29 +88,29 @@ d^{-1} I_k & =  &
 Defining
 $latex \[
 \begin{array}{rcl}
-c_0 & = & \frac{d}{2} w_1  - \frac{d}{3} ( w_1 - w_0 ) 
+b_0 & = & w_1 / 2  - ( w_1 - w_0 ) / 3
 \\
-c_1 & = & \frac{d}{2} w_0  + \frac{d}{3} ( w_1 - w_0 ) 
+b_1 & = & w_0 / 2  + ( w_1 - w_0 )  / 3
 \end{array}
 \] $$
 It follows that
 $latex \[
-	I_k = c_0 f_0 + c_1 f_1
+	d^{-1} I_k = b_0 f_0 + b_1 f_1
 \] $$
 Translating this to coefficients of $latex \bar{f}_0$$ and $latex \bar{f}_1$$ 
 we have
 $latex \[
 I_k = 
-\left( 
-c_0  \frac{ \bar{s}_1 - s_0 } { \bar{s}_1 - \bar{s}_0 }  +
+d \left( 
+b_0  \frac{ \bar{s}_1 - s_0 } { \bar{s}_1 - \bar{s}_0 } 
 +
-c_1  \frac{ \bar{s}_1 - s_1 } { \bar{s}_1 - \bar{s}_0 } 
+b_1  \frac{ \bar{s}_1 - s_1 } { \bar{s}_1 - \bar{s}_0 } 
 \right) \bar{f}_0 
 + 
-\left(
-c_0  \frac{ s_0 - \bar{s}_0 } { \bar{s}_1 - \bar{s}_0 } 
+d \left(
+b_0  \frac{ s_0 - \bar{s}_0 } { \bar{s}_1 - \bar{s}_0 } 
 +
-c_1  \frac{ s_1 - \bar{s}_0 } { \bar{s}_1 - \bar{s}_0 } 
+b_1  \frac{ s_1 - \bar{s}_0 } { \bar{s}_1 - \bar{s}_0 } 
 \right) \bar{f}_1
 \] $$
 
