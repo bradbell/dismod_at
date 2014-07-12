@@ -32,6 +32,8 @@ $end
 
 
 // prototype for each of the tests
+extern bool integrate_1d_xam(void);
+//
 extern bool get_age_table_xam(void);
 extern bool get_covariate_table_xam(void);
 extern bool get_data_table_xam(void);
@@ -82,6 +84,8 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
+	RUN(integrate_1d_xam);
+	//
 	RUN(get_age_table_xam);
 	RUN(get_covariate_table_xam);
 	RUN(get_data_table_xam);

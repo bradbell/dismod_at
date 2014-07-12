@@ -1,3 +1,13 @@
+// $Id$
+/* --------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-------------------------------------------------------------------------- */
 /*
 $begin integrate_1d$$
 $spell
@@ -19,6 +29,12 @@ $latex \[
 $latex \[
 	w(s) = ( r_2 - r_1 )^{-1} [ ( r_2 - s ) w_1 + ( s - r_1 ) w_2 ] 
 \] $$
+where $latex q_1 \leq r_1 < r_2 \leq q_2$$.
+Note that 
+$latex v(q_1) = v_1$$,
+$latex v(q_2) = v_2$$,
+$latex w(r_1) = w_1$$, and
+$latex w(r_2) = w_2$$,
 We wish to compute the coefficients $latex c_1, c_2$$ such that
 $latex \[
 I( v_1, v_2 ) = \int_{r(0)}^{r(1)} v(s) w(s) \; \B{d} s = c_1 v_1 + c_2 v_2
@@ -45,6 +61,12 @@ $codei%
 with the following identification;
 $latex c_1 = $$ $icode%c%.first%$$ and 
 $latex c_2 = $$ $icode%c%.second%$$.
+
+$children%example/devel/integrate_1d_xam.cpp
+%$$
+$head Example$$
+The file $cref integrate_1d_xam.cpp$$ contains an example and test
+of using this routine.
 
 $head Method$$
 Using the notation $latex d = r_2 - r_1$$,
@@ -130,6 +152,9 @@ I( v_1 , v_2 ) = c_1 v_1 + c_2 v_2
 $end
 ------------------------------------------------------------------------------
 */
+# include <utility>
+# include <dismod_at/dismod_at.hpp>
+
 namespace dismod_at { // BEGIN DIMSOD_AT_NAMESPACE
 
 std::pair<double,double> integrate_1d(
@@ -137,6 +162,20 @@ std::pair<double,double> integrate_1d(
 	const std::pair<double,double>&  r ,
 	const std::pair<double,double>&  w )
 {
+	assert( q.first  <= r.first  );
+	assert( r.first  <  r.second );
+	assert( r.second <= q.second );
+
+	double dr = r.second - r.first;
+	double dq = q.second - q.first;
+	double b1 = ( w.second + 2.0 * w.first  ) / 6.0;
+	double b2 = ( w.first  + 2.0 * w.second ) / 6.0;
+
+	std::pair<double,double> c;
+	c.first  = ( b1*(q.second-r.first) + b2*(q.second-r.second) ) * dr / dq;
+	c.second = ( b1*(r.first-q.first)  + b2*(r.second-q.first)  ) * dr / dq;
+
+	return c;
 }
 
 } // END DISMOD_AT_NAMESPACE
