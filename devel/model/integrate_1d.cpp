@@ -19,32 +19,46 @@ $$
 $section Compute One Dimensional Integration Coefficients$$
 
 $head Syntax$$
-$icode%c% = dismod_at::integrate_1d(%q%, %r%, %w%)%$$
+$icode%c% = dismod_at::integrate_1d(%r%, %s%, %w%)%$$
+
+$head See Also$$
+$cref integrate_2d$$
 
 $head Purpose$$
-Define the functions
-$latex \[
-	v(s) = ( q_2 - q_1 )^{-1} [ ( q_2 - s ) v_1 + ( s - q_1 ) v_2 ] 
-\] $$
-$latex \[
-	w(s) = ( r_2 - r_1 )^{-1} [ ( r_2 - s ) w_1 + ( s - r_1 ) w_2 ] 
-\] $$
-where $latex q_1 \leq r_1 < r_2 \leq q_2$$.
-Note that 
-$latex v(q_1) = v_1$$,
-$latex v(q_2) = v_2$$,
-$latex w(r_1) = w_1$$, and
-$latex w(r_2) = w_2$$,
-We wish to compute the coefficients $latex c_1, c_2$$ such that
-$latex \[
-I( v_1, v_2 ) = \int_{r(1)}^{r(2)} v(s) w(s) \; \B{d} s = c_1 v_1 + c_2 v_2
-\] $$
-where the coefficients $latex c_1, c_2$$ do not depend on the value of 
-$latex v_1$$ or $latex v_2$$.
+The function $latex U(r)$$ is linear and defined on a larger
+interval that surrounds an interval we are integrating over.
+This routine computes the integral of
+$latex U(r)$$ times weighting $icode w$$ on the smaller interval.
+$pre
 
-$head q, r, w$$
+$$
+The function $latex U(r)$$ is linear and define on the larger interval by
+$latex \[
+	U(r) = ( r_2 - r_1 )^{-1} [ ( r_2 - r ) u_1 + ( r - r_1 ) u_2 ] 
+\] $$
+The product of $latex U(r)$$ times the weighting is defined on the
+smaller interval by
+$latex \[
+V(r) = ( s_2 - s_1 )^{-1} [
+	w_1 U( s_1 ) ( s_2 - r ) + w_2 U( s_2 ) ( r - s_1 )
+]
+\] $$
+where $latex r_1 \leq s_1 < s_2 \leq r_2 $$.
+Note that 
+$latex U( r_1 ) = u_1$$, $latex U( r_2 ) = u_2 $$,
+$latex V( s_1 ) = w_1 U( s_1 )$$, and $latex V( r_2 ) = w_2 U( s_2 ) $$.
+This routine computes coefficients
+$latex c_1, c_2$$ such that
+$latex \[
+	I  = \int_{s(1)}^{s(2)} V(r) \; \B{d} r = c_1 u_1 + c_2 u_2
+\] $$
+where the coefficients 
+$latex c_1, c_2$$ do not depend on the values
+$latex u_1, u_2$$.
+
+$head r, s, w$$
 For $icode x$$ in the set of arguments
-$codei%{ %q%, %r%, %w% }%$$,
+$codei%{ %r%, %s%, %w% }%$$,
 the argument has prototype
 $codei%
 	const std::pair<double, double>& %x%
@@ -69,85 +83,43 @@ The file $cref integrate_1d_xam.cpp$$ contains an example and test
 of using this routine.
 
 $head Method$$
-Using the notation $latex d = r_2 - r_1$$,
+Using the notation $latex d = s_2 - s_1$$,
 the integral is given by
 $latex \[
-I( v_1, v_2 ) = \int_0^d v(s + r_1) w(s + r_1) \; \B{d} s 
+I = \int_0^d V(r + s_1) \; \B{d} r
 \] $$
-Using the fact that the functions 
-$latex v(s)$$ and $latex w(s)$$ are linear, we have
+Using the notation 
+$latex v_1 = w_1 U( s_1 )$$ and
+$latex v_2 = w_2 U( s_2 )$$,
 $latex \[
-I( v_1, v_2) =  d^{-2} \int_0^d 
-	[ ( w_2 - w_1 ) s + w_1 d ] 
-		( [ v( r_2 ) - v( r_1 ) ] s + v( r_1 ) d )
-			\; \B{d} s
+I 
+=  d^{-1} \int_0^d [ v_1 (d - r) + v_2 d ] \; \B{d} r
+= d ( v_1 + v_2 ) / 2
 \] $$
-Grouping terms that have the same order in $latex s$$, we obtain
+Using the definition for $latex v_1$$ and $latex v_2$$ we have
 $latex \[
-I( v_1, v_2) =  d^{-2} \int_0^d  \left(
-	[ ( w_2 - w_1 ) [ v( r_2 ) - v( r_1) ]  s^2 
-	+
-	w_1 d [ v( r_2 ) - v( r_1) ]  s 
-	+
-	v( r_1 ) d ( w_2 - w_1 )  s 
-	+
-	w_1 d v( r_1 ) d
-\right) \; \B{d} s
+	I = (d / 2) [  w_1 U( s_1 ) + w_2 U( s_2 ) ]
 \] $$
-Doing the integration we have
-$latex \[
-d^{-1} I( v_1, v_2) =  
-	( w_2 - w_1 ) [ v( r_2 ) - v( r_1) ] / 3
-	+
-	w_1 [ v( r_2 ) - v( r_1) ] / 2
-	+
-	v( r_1 ) ( w_2 - w_1 )  / 2
-	+
-	w_1 v( r_1 ) 
-\] $$
-$latex \[
-d^{-1} I( v_1, v_2) =  
-	( w_2 - w_1 ) [ v( r_2 ) - v( r_1) ] / 3
-	+
-	[ w_1 v( r_2 ) +  v( r_1 ) w_2 ] / 2
-\] $$
-$latex \[
-d^{-1} I( v_1, v_2) =  
-	[ w_2 / 2 - ( w_2 - w_1 ) / 3 ] v( r_1 )
-	+
-	[ w_1 / 2 + ( w_2 - w_1 ) / 3 ] v( r_2 )
-\] $$
+Using the definition for $latex U(r)$$ we obtain
 We define
 $latex \[
-\begin{array}{rcl}
-b_1 & = & w_2 / 2 - ( w_2 - w_1 ) / 3 
-= ( w_2 + 2 w_1 ) / 6
-\\
-b_2 & = & w_1 / 2 + ( w_2 - w_1 ) / 3 
-= ( w_1 + 2 w_2 ) / 6
-\end{array}
+I = \frac{1}{2} \frac{s_2 - s_1}{r_2 - r_1} [ 
+	w_1 ( r_2 - s_1 ) u_1 + w_1 ( s_1 - r_1 ) u_2 +
+	w_2 ( r_2 - s_2 ) u_1 + w_2 ( s_2 - r_1 ) u_2 
+]
 \] $$
-Using the definition of $latex v(s)$$ to replace 
-$latex v( r_1 )$$ and $latex v( r_2 )$$, we have
+Using the definitions
 $latex \[
-d^{-1} I( v_1, v_2) =  
-b_1 \frac{( q_2 - r_1 ) v_1 + ( r_1 - q_1 ) v_2 }{ q_2 - q_1 }
-+
-b_2 \frac{( q_2 - r_2 ) v_1 + ( r_2 - q_1 ) v_2 }{ q_2 - q_1 }
+c_1 = \frac{1}{2} \frac{s_2 - s_1}{r_2 - r_1} 
+	[ w_1 ( r_2 - s_1 ) + w_2 ( r_2 - s_2 ) ]
 \] $$
-Finally, making the definitions
 $latex \[
-\begin{array}{rcl}
-c_1 & = &
-[  b_1 ( q_2 - r_1 ) + b_2 ( q_2 - r_2 ) ] \; d / ( q_2 - q_1 )
-\\
-c_2 & = &
-[ b_1 ( r_1 - q_1 ) + b_2 ( r_2 - q_1 ) ] \; d / ( q_2 - q_1 )
-\end{array}
+c_2 = \frac{1}{2} \frac{s_2 - s_1}{r_2 - r_1} 
+	[ w_1 ( s_1 - r_1 ) + w_2 ( s_2 - r_1 ) ]
 \] $$
 We obtain the desired conclusion
 $latex \[
-I( v_1 , v_2 ) = c_1 v_1 + c_2 v_2
+I = c_1 u_1 + c_2 u_2
 \] $$
 $end
 ------------------------------------------------------------------------------
@@ -158,23 +130,26 @@ $end
 namespace dismod_at { // BEGIN DIMSOD_AT_NAMESPACE
 
 std::pair<double,double> integrate_1d(
-	const std::pair<double,double>&  q ,
 	const std::pair<double,double>&  r ,
+	const std::pair<double,double>&  s ,
 	const std::pair<double,double>&  w )
 {
-	assert( q.first  <= r.first  );
-	assert( r.first  <  r.second );
-	assert( r.second <= q.second );
+	double r1 = r.first;
+	double r2 = r.second;
+	double s1 = s.first;
+	double s2 = s.second;
+	double w1 = w.first;
+	double w2 = w.second;
 
-	double dr = r.second - r.first;
-	double dq = q.second - q.first;
-	double b1 = ( w.second + 2.0 * w.first  ) / 6.0;
-	double b2 = ( w.first  + 2.0 * w.second ) / 6.0;
+	assert( r1 <= s1 && s1 < s2 && s2 <= r2 );
+
+	double q = (s2 - s1) / ( 2.0 * (r2 - r1) );
 
 	std::pair<double,double> c;
-	c.first  = ( b1*(q.second-r.first) + b2*(q.second-r.second) ) * dr / dq;
-	c.second = ( b1*(r.first-q.first)  + b2*(r.second-q.first)  ) * dr / dq;
+	c.first  = q * ( w1 * (r2 - s1) + w2 * (r2 - s2) );
+	c.second = q * ( w1 * (s1 - r1) + w2 * (s2 - r1) );
 
+ 
 	return c;
 }
 

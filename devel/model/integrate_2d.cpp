@@ -22,6 +22,9 @@ $section Compute Two Dimensional Integration Coefficients$$
 $head Syntax$$
 $icode%c% = dismod_at::integrate_2d(%a%, %t%, %b%, %s%, %w%)%$$
 
+$head See Also$$
+$cref integrate_1d$$
+
 $head Purpose$$
 The function $latex U(a,t)$$ is bilinear and defined on a larger rectangle
 that surrounds a rectangle we are integrating over.

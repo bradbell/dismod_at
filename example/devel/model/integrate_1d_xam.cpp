@@ -14,9 +14,9 @@ $spell
 	xam
 $$
 
-$section C++ integrate_d1: Example and Test$$
-$index example, C++ integrate_d1$$
-$index integrate_d1, C++ example$$
+$section C++ integrate_1d: Example and Test$$
+$index example, C++ integrate_1d$$
+$index integrate_1d, C++ example$$
 
 $code
 $verbatim%example/devel/model/integrate_1d_xam.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -31,14 +31,23 @@ $end
 # include <dismod_at/dismod_at.hpp>
 
 namespace {
-	double integral(double s, double a, double b)
-	{	// w(s) = a * s + b
-		// v(s) = b * s + a
-		// v(s) * w(s) = a*b*s^2 + (a*a + b*b)*s + a*b
-		// integral v(s)*w(s) = a*b*s^3/3 + (a*a+b*b)*s^2/2 + a*b*s
-		double s2 = s * s / 2.0;
-		double s3 = s * s * s / 3.0; 
-		return a*b*s3 + (a*a+b*b)*s2 + a*b*s;
+	double U(double r, const std::pair<double,double>& u)
+	{	return u.first + u.second * r; }
+	double integral(
+		const std::pair<double,double>& r ,
+		const std::pair<double,double>& s , 
+		const std::pair<double,double>& w ,
+		const std::pair<double,double>& u )
+	{
+		double s1 = s.first;
+		double s2 = s.second;
+		double u1 = U(s1, u);
+		double u2 = U(s2, u);
+		double w1 = w.first;
+		double w2 = w.second;
+		double v1 = w1 * u1;
+		double v2 = w2 * u2;
+		return (s2 - s1) * (v1 + v2) / 2.0;
 	}
 }
 bool integrate_1d_xam(void)
@@ -49,25 +58,27 @@ bool integrate_1d_xam(void)
 	double a  = 0.2;
 	double b  = 1.5;
 
-	std::pair<double,double> q, r, v, w, c;
+	std::pair<double,double> r, s, w, c;
 	//
-	q.first  =  0.1;
-	q.second =  1.0; 
+	r.first  =  0.1;
+	r.second =  1.1; 
+	s.first  =  0.2;
+	s.second =  0.6;
+	w.first  =  0.9;
+	w.second =  1.2;
 	//
-	r.first  =  0.2;
-	r.second =  0.4;
+	c = dismod_at::integrate_1d(r, s, w);
 	//
-	w.first  =  a * r.first  + b; // w( r.first ) 
-	w.second =  a * r.second + b; // w( r.second ) 
+	std::pair<double,double> u;
+	u.first  = 1.3;
+	u.second = 1.6;
 	//
-	c = dismod_at::integrate_1d(q, r, w);
+	double u1 = U(r.first,  u);
+	double u2 = U(r.second, u);
 	//
-	// compute the integral using the coefficients
-	double v1 =  b * q.first  + a;
-	double v2 =  b * q.second + a;
-	double I  = c.first * v1 + c.second * v2;
+	double I  = c.first * u1 + c.second * u2;
 	//
-	double check = integral(r.second, a, b) - integral(r.first, a, b);
+	double check = integral(r, s, w, u);
 	ok = std::fabs( 1.0 - I / check ) < eps * 100;
 	return ok;
 }

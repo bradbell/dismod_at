@@ -14,9 +14,9 @@ $spell
 	xam
 $$
 
-$section C++ integrate_d1: Example and Test$$
-$index example, C++ integrate_d1$$
-$index integrate_d1, C++ example$$
+$section C++ integrate_1d: Example and Test$$
+$index example, C++ integrate_1d$$
+$index integrate_1d, C++ example$$
 
 $code
 $verbatim%example/devel/model/integrate_2d_xam.cpp%0%// BEGIN C++%// END C++%1%$$
