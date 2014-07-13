@@ -58,7 +58,7 @@ $codei%
 %$$
 is the information for the corresponding node.
 
-$children%example/devel/get_node_table_xam.cpp
+$children%example/devel/table/get_node_table_xam.cpp
 %$$
 $head Example$$
 The file $cref get_node_table_xam.cpp$$ contains an example that uses

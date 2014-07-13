@@ -9,17 +9,18 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_age_table_xam.cpp$$
+$begin get_covariate_table_xam.cpp$$
 $spell
+	covariate
 	xam
 $$
 
-$section C++ get_age_table: Example and Test$$
-$index example, C++ get_age_table$$
-$index get_age_table, C++ example$$
+$section C++ get_covariate_table: Example and Test$$
+$index example, C++ get_covariate_table$$
+$index get_covariate_table, C++ example$$
 
 $code
-$verbatim%example/devel/get_age_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/get_covariate_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -27,7 +28,7 @@ $end
 // BEGIN C++
 # include <dismod_at/dismod_at.hpp>
 
-bool get_age_table_xam(void)
+bool get_covariate_table_xam(void)
 {
 	bool   ok = true;
 	using  std::string;
@@ -39,29 +40,27 @@ bool get_age_table_xam(void)
 
 	// sql commands
 	const char* sql_cmd[] = { 
-		"create table age(age_id integer primary key, age real)",
-		"insert into age values(0, 0.0)"    ,
-		"insert into age values(1, 20.0)"   ,
-		"insert into age values(2, 40.0)"   ,
-		"insert into age values(3, 60.0)"   ,
-		"insert into age values(4, 80.0)"   ,
-		"insert into age values(5,100.0)"
+	"create table covariate"
+	"(covariate_id integer primary key, covariate_name text, reference real)",
+	"insert into covariate values(0, 'sex',      0.0)",
+	"insert into covariate values(1, 'income',   2000.0)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
 
-	// get the age table
-	vector<double> age_table = dismod_at::get_age_table(db);
-	ok  &= age_table.size() == 6;
-	ok  &= age_table[0] == 0.0;
-	ok  &= age_table[1] == 20.0;
-	ok  &= age_table[2] == 40.0;
-	ok  &= age_table[3] == 60.0;
-	ok  &= age_table[4] == 80.0;
-	ok  &= age_table[5] == 100.0;
- 
+	// get the covariate table
+	vector<dismod_at::covariate_struct> 
+		covariate_table = dismod_at::get_covariate_table(db);
+	ok  &= covariate_table.size() == 2;
+	//
+	ok  &= covariate_table[0].covariate_name  == "sex";
+	ok  &= covariate_table[0].reference       == 0.0;
+ 	//
+	ok  &= covariate_table[1].covariate_name  == "income";
+	ok  &= covariate_table[1].reference       == 2000.0;
+	//
 	// close database and return
 	sqlite3_close(db);
 	return ok;

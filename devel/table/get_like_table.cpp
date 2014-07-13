@@ -70,7 +70,7 @@ $code double$$ $cnext $code eta$$           $cnext
 	The $cref/eta/like_table/eta/$$ for this likelihood 
 $tend        
 
-$children%example/devel/get_like_table_xam.cpp
+$children%example/devel/table/get_like_table_xam.cpp
 %$$
 $head Example$$
 The file $cref get_like_table_xam.cpp$$ contains an example that uses

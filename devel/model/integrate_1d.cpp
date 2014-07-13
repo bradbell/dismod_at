@@ -37,32 +37,32 @@ $latex w(r_1) = w_1$$, and
 $latex w(r_2) = w_2$$,
 We wish to compute the coefficients $latex c_1, c_2$$ such that
 $latex \[
-I( v_1, v_2 ) = \int_{r(0)}^{r(1)} v(s) w(s) \; \B{d} s = c_1 v_1 + c_2 v_2
+I( v_1, v_2 ) = \int_{r(1)}^{r(2)} v(s) w(s) \; \B{d} s = c_1 v_1 + c_2 v_2
 \] $$
 where the coefficients $latex c_1, c_2$$ do not depend on the value of 
 $latex v_1$$ or $latex v_2$$.
 
-$head Arguments$$
+$head q, r, w$$
 For $icode x$$ in the set of arguments
 $codei%{ %q%, %r%, %w% }%$$,
 the argument has prototype
 $codei%
 	const std::pair<double, double>& %x%
 %$$
-with the following identification;
-$latex x_0 = $$ $icode%x%.first%$$ and 
-$latex x_1 = $$ $icode%x%.second%$$.
+with the following identifications;
+$latex x_1 = $$ $icode%x%.first%$$ and 
+$latex x_2 = $$ $icode%x%.second%$$.
 
-$head Return$$
+$head c$$
 The return value has prototype
 $codei%
 	std::pair<double, double> %c%
 %$$
-with the following identification;
+with the following identifications;
 $latex c_1 = $$ $icode%c%.first%$$ and 
 $latex c_2 = $$ $icode%c%.second%$$.
 
-$children%example/devel/integrate_1d_xam.cpp
+$children%example/devel/model/integrate_1d_xam.cpp
 %$$
 $head Example$$
 The file $cref integrate_1d_xam.cpp$$ contains an example and test
@@ -72,7 +72,7 @@ $head Method$$
 Using the notation $latex d = r_2 - r_1$$,
 the integral is given by
 $latex \[
-I( v_1, v_2 ) = \int_0^d v(s + r_2) w(s + r_2) \; \B{d} s 
+I( v_1, v_2 ) = \int_0^d v(s + r_1) w(s + r_1) \; \B{d} s 
 \] $$
 Using the fact that the functions 
 $latex v(s)$$ and $latex w(s)$$ are linear, we have

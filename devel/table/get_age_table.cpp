@@ -47,7 +47,7 @@ $codei%
 is the age for the corresponding
 $cref/age/age_table/age/$$.
 
-$children%example/devel/get_age_table_xam.cpp 
+$children%example/devel/table/get_age_table_xam.cpp 
 %$$
 $head Example$$
 The file $cref get_age_table_xam.cpp$$ contains an example that uses

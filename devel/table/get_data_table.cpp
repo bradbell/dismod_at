@@ -110,7 +110,7 @@ $code CppAD::vector<double>$$ $cnext $code covariate$$ $cnext
 	The $cref/covariate/data_table/Covariates/$$ values for this measurement
 $tend        
 
-$children%example/devel/get_data_table_xam.cpp
+$children%example/devel/table/get_data_table_xam.cpp
 %$$
 $head Example$$
 The file $cref get_data_table_xam.cpp$$ contains an example that uses

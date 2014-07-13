@@ -16,22 +16,23 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 # Program cpp, not installed, and depends on following source files
 ADD_EXECUTABLE(cpp EXCLUDE_FROM_ALL 
 	devel.cpp
-	integrate_1d_xam.cpp
-	get_age_table_xam.cpp
-	get_covariate_table_xam.cpp
-	get_data_table_xam.cpp
-	get_density_table_xam.cpp
-	get_integrand_table_xam.cpp
-	get_like_table_xam.cpp
-	get_multiplier_table_xam.cpp
-	get_node_table_xam.cpp
-	get_rate_prior_xam.cpp
-	get_rate_table_xam.cpp
-	get_run_table_xam.cpp
-	get_smooth_grid_xam.cpp
-	get_table_column_xam.cpp
-	get_time_table_xam.cpp
-	get_weight_grid_xam.cpp
+	model/integrate_1d_xam.cpp
+	model/integrate_2d_xam.cpp
+	table/get_age_table_xam.cpp
+	table/get_covariate_table_xam.cpp
+	table/get_data_table_xam.cpp
+	table/get_density_table_xam.cpp
+	table/get_integrand_table_xam.cpp
+	table/get_like_table_xam.cpp
+	table/get_multiplier_table_xam.cpp
+	table/get_node_table_xam.cpp
+	table/get_rate_prior_xam.cpp
+	table/get_rate_table_xam.cpp
+	table/get_run_table_xam.cpp
+	table/get_smooth_grid_xam.cpp
+	table/get_table_column_xam.cpp
+	table/get_time_table_xam.cpp
+	table/get_weight_grid_xam.cpp
 )
 
 LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )

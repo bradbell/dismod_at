@@ -19,7 +19,7 @@ $index example, C++ get_like_table$$
 $index get_like_table, C++ example$$
 
 $code
-$verbatim%example/devel/get_like_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/get_like_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

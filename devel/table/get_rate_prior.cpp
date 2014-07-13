@@ -60,7 +60,7 @@ $codei%
 specifies the smoothing to use for one rate
 as a parent or as a child.
 
-$children%example/devel/get_rate_prior_xam.cpp
+$children%example/devel/table/get_rate_prior_xam.cpp
 %$$
 $head Example$$
 The file $cref get_rate_prior_xam.cpp$$ contains an example that uses

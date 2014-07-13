@@ -63,7 +63,7 @@ $code std::string$$ $cnext $code n_time$$ $cnext
 	The $cref/n_time/weight_table/n_time/$$ for this weighting.
 $tend
 
-$comment%example/devel/get_weight_grid_xam.cpp in included by weight_grid.omh
+$comment%example/devel/table/get_weight_grid_xam.cpp in included by weight_grid.omh
 %$$
 $head Example$$
 The file $cref get_weight_grid_xam.cpp$$ contains an example that uses

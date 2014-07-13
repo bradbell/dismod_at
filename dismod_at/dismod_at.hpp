@@ -16,6 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 
 # include "include/integrate_1d.hpp"
+# include "include/integrate_2d.hpp"
 
 # include "include/check_table_id.hpp"
 # include "include/exec_sql_cmd.hpp"

@@ -19,7 +19,7 @@ $index example, C++ get_rate_prior$$
 $index get_rate_prior, C++ example$$
 
 $code
-$verbatim%example/devel/get_rate_prior_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/get_rate_prior_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

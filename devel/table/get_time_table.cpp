@@ -47,7 +47,7 @@ $codei%
 is the time for the corresponding
 $cref/time/time_table/time/$$.
 
-$children%example/devel/get_time_table_xam.cpp 
+$children%example/devel/table/get_time_table_xam.cpp 
 %$$
 $head Example$$
 The file $cref get_time_table_xam.cpp$$ contains an example that uses

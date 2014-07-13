@@ -19,7 +19,7 @@ $index example, C++ get_smooth_grid$$
 $index get_smooth_grid, C++ example$$
 
 $code
-$verbatim%example/devel/get_smooth_grid_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/get_smooth_grid_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

@@ -64,7 +64,7 @@ $codei%
 %$$
 is the information for a specific weighting and specific age and time.
 
-$children%example/devel/get_weight_grid_xam.cpp
+$children%example/devel/table/get_weight_grid_xam.cpp
 %$$
 $head Example$$
 The file $cref get_weight_grid_xam.cpp$$ contains an example that uses

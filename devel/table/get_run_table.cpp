@@ -64,7 +64,7 @@ $code int$$ $cnext $code n_sample$$ $cnext
 	for this run  
 $tend        
 
-$children%example/devel/get_run_table_xam.cpp
+$children%example/devel/table/get_run_table_xam.cpp
 %$$
 $head Example$$
 The file $cref get_run_table_xam.cpp$$ contains an example that uses

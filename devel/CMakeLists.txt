@@ -11,6 +11,7 @@
 SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL 
 	model/integrate_1d.cpp
+	model/integrate_2d.cpp
 	table/check_table_id.cpp
 	table/exec_sql_cmd.cpp
 	table/get_age_table.cpp

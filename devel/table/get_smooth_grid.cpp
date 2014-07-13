@@ -75,7 +75,7 @@ $code int$$ $cnext $code dtime_like_id$$    $pre  $$ $cnext
 	for this smoothing, age, and time.
 $tend        
 
-$children%example/devel/get_smooth_grid_xam.cpp
+$children%example/devel/table/get_smooth_grid_xam.cpp
 %$$
 $head Example$$
 The file $cref get_smooth_grid_xam.cpp$$ contains an example that uses

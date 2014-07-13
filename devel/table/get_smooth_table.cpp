@@ -62,7 +62,7 @@ $rnext
 $code std::string$$ $cnext $code n_time$$ $cnext
 	The $cref/n_time/smooth_table/n_time/$$ for this smoothing.
 $tend
-$comment%example/devel/get_smooth_grid_xam.cpp in included by smooth_grid.omh
+$comment%example/devel/table/get_smooth_grid_xam.cpp in included by smooth_grid.omh
 %$$
 
 $head Example$$

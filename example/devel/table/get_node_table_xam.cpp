@@ -9,17 +9,17 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_time_table_xam.cpp$$
+$begin get_node_table_xam.cpp$$
 $spell
 	xam
 $$
 
-$section C++ get_time_table: Example and Test$$
-$index example, C++ get_time_table$$
-$index get_time_table, C++ example$$
+$section C++ get_node_table: Example and Test$$
+$index example, C++ get_node_table$$
+$index get_node_table, C++ example$$
 
 $code
-$verbatim%example/devel/get_time_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/get_node_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -27,7 +27,7 @@ $end
 // BEGIN C++
 # include <dismod_at/dismod_at.hpp>
 
-bool get_time_table_xam(void)
+bool get_node_table_xam(void)
 {
 	bool   ok = true;
 	using  std::string;
@@ -39,25 +39,32 @@ bool get_time_table_xam(void)
 
 	// sql commands
 	const char* sql_cmd[] = { 
-		"create table time(time_id integer primary key, time real)",
-		"insert into time values(0, 1980.0)"   ,
-		"insert into time values(1, 1990.0)"   ,
-		"insert into time values(2, 2000.0)"   ,
-		"insert into time values(3, 2010.0)"
+		"create table node"
+		"(node_id integer primary key, node_name text, parent int)",
+		"insert into node values(0, 'world',          -1)",
+		"insert into node values(1, 'north_america',  0)",
+		"insert into node values(2, 'united_states',  1)",
+		"insert into node values(3, 'canada',         1)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
 
-	// get the time table
-	vector<double> time_table = dismod_at::get_time_table(db);
-	ok  &= time_table.size() == 4;
-	ok  &= time_table[0] == 1980.0;
-	ok  &= time_table[1] == 1990.0;
-	ok  &= time_table[2] == 2000.0;
-	ok  &= time_table[3] == 2010.0;
- 
+	// get the node table
+	vector<dismod_at::node_struct> node_table = dismod_at::get_node_table(db);
+	ok  &= node_table.size() == 4;
+	//
+	ok  &= node_table[0].node_name == "world";
+	ok  &= node_table[1].node_name == "north_america";
+	ok  &= node_table[2].node_name == "united_states";
+	ok  &= node_table[3].node_name == "canada";
+	//
+	ok  &= node_table[0].parent == -1;
+	ok  &= node_table[1].parent == 0;
+	ok  &= node_table[2].parent == 1;
+	ok  &= node_table[3].parent == 1;
+ 	//
 	// close database and return
 	sqlite3_close(db);
 	return ok;

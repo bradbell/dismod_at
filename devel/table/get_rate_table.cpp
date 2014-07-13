@@ -63,7 +63,7 @@ $codei%rate_enum2name[%rate%]%$$ is the string corresponding
 to the $icode rate$$ enum value.
 
 
-$children%example/devel/get_rate_table_xam.cpp
+$children%example/devel/table/get_rate_table_xam.cpp
 %$$
 $head Example$$
 The file $cref get_rate_table_xam.cpp$$ contains an example that uses

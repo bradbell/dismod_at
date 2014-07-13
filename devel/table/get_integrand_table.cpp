@@ -75,7 +75,7 @@ $codei%integrand_enum2name[%integrand%]%$$ is the string corresponding
 to the $icode integrand$$ enum value.
 
 
-$children%example/devel/get_integrand_table_xam.cpp
+$children%example/devel/table/get_integrand_table_xam.cpp
 %$$
 $head Example$$
 The file $cref get_integrand_table_xam.cpp$$ contains an example that uses

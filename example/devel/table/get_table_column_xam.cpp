@@ -19,7 +19,7 @@ $index get_table_column, example$$
 $index example, get_table_column$$
 
 $code
-$verbatim%example/devel/get_table_column_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/get_table_column_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

@@ -20,7 +20,7 @@ $index example, C++ get_data_table$$
 $index get_data_table, C++ example$$
 
 $code
-$verbatim%example/devel/get_data_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/get_data_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

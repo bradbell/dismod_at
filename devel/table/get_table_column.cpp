@@ -88,7 +88,7 @@ $codei%
 It a real value is $code null$$, it is returned as the $code double$$
 value $code nan$$.
 
-$children%example/devel/get_table_column_xam.cpp
+$children%example/devel/table/get_table_column_xam.cpp
 %$$
 $head Example$$
 The file $cref get_table_column_xam.cpp$$ contains an example that uses

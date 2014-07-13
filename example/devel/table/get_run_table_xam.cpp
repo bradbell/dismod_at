@@ -9,17 +9,17 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_integrand_table_xam.cpp$$
+$begin get_run_table_xam.cpp$$
 $spell
 	xam
 $$
 
-$section C++ get_integrand_table: Example and Test$$
-$index example, C++ get_integrand_table$$
-$index get_integrand_table, C++ example$$
+$section C++ get_run_table: Example and Test$$
+$index example, C++ get_run_table$$
+$index get_run_table, C++ example$$
 
 $code
-$verbatim%example/devel/get_integrand_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/get_run_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -27,7 +27,7 @@ $end
 // BEGIN C++
 # include <dismod_at/dismod_at.hpp>
 
-bool get_integrand_table_xam(void)
+bool get_run_table_xam(void)
 {
 	bool   ok = true;
 	using  std::string;
@@ -39,27 +39,35 @@ bool get_integrand_table_xam(void)
 
 	// sql commands
 	const char* sql_cmd[] = { 
-		"create table integrand"
-		"(integrand_id integer primary key, integrand_name text)",
-		"insert into integrand values(0, 'mtall')",
-		"insert into integrand values(1, 'prevalence')",
-		"insert into integrand values(2, 'remission')",
-		"insert into integrand values(3, 'incidence')",
+	"create table run"
+	"(run_id                integer primary key,"
+		" parent_node      integer,"
+		" prevalence_zero  integer,"
+		" ode_step_size    real,"
+		" n_sample          integer)",
+	"insert into run values(0, 4, 1, 0.5,  500)",
+	"insert into run values(1, 5, 1, 0.25, 500)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
 
-	// get the integrand table
-	vector<dismod_at::integrand_enum> integrand_table = 
-		dismod_at::get_integrand_table(db);
-	ok  &= integrand_table.size() == 4;
-	ok  &= integrand_table[0] == dismod_at::mtall_enum;
-	ok  &= integrand_table[1] == dismod_at::prevalence_enum;
-	ok  &= integrand_table[2] == dismod_at::remission_enum;
-	ok  &= integrand_table[3] == dismod_at::incidence_enum;
- 
+	// get the run table
+	vector<dismod_at::run_struct> 
+		run_table = dismod_at::get_run_table(db);
+	ok  &= run_table.size() == 2;
+	//
+	ok  &= run_table[0].parent_node     == 4;
+	ok  &= run_table[0].prevalence_zero == 1;
+	ok  &= run_table[0].ode_step_size   == 0.5;
+	ok  &= run_table[0].n_sample        == 500;
+	//
+	ok  &= run_table[1].parent_node     == 5;
+	ok  &= run_table[1].prevalence_zero == 1;
+	ok  &= run_table[1].ode_step_size   == 0.25;
+	ok  &= run_table[1].n_sample        == 500;
+	//
 	// close database and return
 	sqlite3_close(db);
 	return ok;

@@ -64,7 +64,7 @@ $codei%density_enum2name[%density%]%$$ is the string corresponding
 to the $icode density$$ enum value.
 
 
-$children%example/devel/get_density_table_xam.cpp
+$children%example/devel/table/get_density_table_xam.cpp
 %$$
 $head Example$$
 The file $cref get_density_table_xam.cpp$$ contains an example that uses

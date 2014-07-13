@@ -19,7 +19,7 @@ $index example, C++ integrate_d1$$
 $index integrate_d1, C++ example$$
 
 $code
-$verbatim%example/devel/integrate_1d_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/model/integrate_1d_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

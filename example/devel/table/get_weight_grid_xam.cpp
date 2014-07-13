@@ -19,7 +19,7 @@ $index example, C++ get_weight_grid$$
 $index get_weight_grid, C++ example$$
 
 $code
-$verbatim%example/devel/get_weight_grid_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/get_weight_grid_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

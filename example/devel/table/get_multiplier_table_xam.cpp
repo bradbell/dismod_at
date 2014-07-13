@@ -19,7 +19,7 @@ $index example, C++ get_multiplier_table$$
 $index get_multiplier_table, C++ example$$
 
 $code
-$verbatim%example/devel/get_multiplier_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/get_multiplier_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

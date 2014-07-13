@@ -73,7 +73,7 @@ $codei%
 %$$
 is the information for the corresponding multiplier.
 
-$children%example/devel/get_multiplier_table_xam.cpp
+$children%example/devel/table/get_multiplier_table_xam.cpp
 %$$
 $head Example$$
 The file $cref get_multiplier_table_xam.cpp$$ contains an example that uses
