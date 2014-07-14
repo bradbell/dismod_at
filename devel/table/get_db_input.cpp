@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_input_table$$
+$begin get_db_input$$
 $spell
 	struct
 	sqlite
@@ -27,7 +27,7 @@ $head Under Construction$$
 This routine is under construction and not yet used.
 
 $head Syntax$$
-$icode%input% = get_input_table(%db%)%$$
+$icode%input% = get_db_input(%db%)%$$
 
 $head Purpose$$
 To read all the input tables and return it as a C++ data structure
@@ -41,10 +41,10 @@ $codei%
 and is an open connection to the database.
 
 $head Return$$
-The return value has type $code input_table_struct$$
+The return value has type $code db_input_struct$$
 which is defined by
 $code
-$verbatim%dismod_at/include/get_input_table.hpp%0%// BEGIN STRUCT%// END STRUCT%$$
+$verbatim%dismod_at/include/get_db_input.hpp%0%// BEGIN STRUCT%// END STRUCT%$$
 $$
 $pre
 $$
@@ -62,27 +62,27 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-void get_input_table(sqlite3* db, input_table_struct& input_table)
+void get_db_input(sqlite3* db, db_input_struct& db_input)
 {	using CppAD::vector;
 	
-	input_table.age_table         = get_age_table(db);
-	input_table.time_table        = get_time_table(db);
-	input_table.rate_table        = get_rate_table(db);
-	input_table.density_table     = get_density_table(db);
-	input_table.integrand_table   = get_integrand_table(db);
-	input_table.weight_table      = get_weight_table(db);
-	input_table.smooth_table      = get_smooth_table(db);
-	input_table.run_table         = get_run_table(db);
-	input_table.covariate_table   = get_covariate_table(db);
-	input_table.node_table        = get_node_table(db);
-	input_table.like_table        = get_like_table(db);
-	input_table.weight_grid_table = get_weight_grid(db);
-	input_table.smooth_grid_table = get_smooth_grid(db);
-	input_table.rate_prior_table  = get_rate_prior(db);
-	input_table.multiplier_table  = get_multiplier_table(db);
+	db_input.age_table         = get_age_table(db);
+	db_input.time_table        = get_time_table(db);
+	db_input.rate_table        = get_rate_table(db);
+	db_input.density_table     = get_density_table(db);
+	db_input.integrand_table   = get_integrand_table(db);
+	db_input.weight_table      = get_weight_table(db);
+	db_input.smooth_table      = get_smooth_table(db);
+	db_input.run_table         = get_run_table(db);
+	db_input.covariate_table   = get_covariate_table(db);
+	db_input.node_table        = get_node_table(db);
+	db_input.like_table        = get_like_table(db);
+	db_input.weight_grid_table = get_weight_grid(db);
+	db_input.smooth_grid_table = get_smooth_grid(db);
+	db_input.rate_prior_table  = get_rate_prior(db);
+	db_input.multiplier_table  = get_multiplier_table(db);
 	//
-	size_t n_covariate = input_table.covariate_table.size();
-	input_table.data_table        = get_data_table(db, n_covariate);
+	size_t n_covariate = db_input.covariate_table.size();
+	db_input.data_table        = get_data_table(db, n_covariate);
 
 	return;
 }

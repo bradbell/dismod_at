@@ -32,7 +32,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	// BEGIN STRUCT
-	struct input_table_struct {
+	struct db_input_struct {
 		CppAD::vector<double>             age_table;
 		CppAD::vector<double>             time_table;
 		CppAD::vector<rate_enum>          rate_table;
@@ -52,9 +52,9 @@ namespace dismod_at {
 		CppAD::vector<data_struct>        data_table;
 	};
 	// END STRUCT
-	extern void get_input_table(
+	extern void get_db_input(
 		sqlite3*      db            , 
-		input_table_struct& input_table
+		db_input_struct& db_input
 	);
 }
 

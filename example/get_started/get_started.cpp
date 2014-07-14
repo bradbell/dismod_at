@@ -16,8 +16,8 @@ int main(int argc, const char* argv[])
 	bool new_file         = false;
 	sqlite3* db           = dismod_at::open_connection(file_name, new_file);
 	//
-	dismod_at::input_table_struct input_table;
-	dismod_at::get_input_table(db, input_table);
+	dismod_at::db_input_struct db_input;
+	dismod_at::get_db_input(db, db_input);
 	//
 	std::cout << "get_started.cpp: OK" << std::endl;
 	return 0;
