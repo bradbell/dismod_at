@@ -56,10 +56,9 @@ private:
 	vector<info_struct> info_;
 public:
 	smooth_info(
-		const vector<double>&        age_table    ,
-		const vector<double>&        time_table   ,
-		const vector<smooth_struct>& smooth_table ,
-		const vector<smooth_grid>&   smooth_grid
+		const input_table_struct&    input        ,
+		const size_t n_age_ode&      n_age_ode    ,
+		const size_t n_time_ode&     n_time_ode
 	);
 
 
