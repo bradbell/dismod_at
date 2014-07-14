@@ -24,7 +24,6 @@ $head age$$
 This column has type $code real$$ and is a set of age values.
 The values in the age column are strictly increasing; i.e.,
 the value in each row is greater than the value in the previous row.
-Furthermore, the age in the first row is zero.
 
 $children%example/table/age_table.py
 %$$

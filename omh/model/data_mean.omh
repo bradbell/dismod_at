@@ -46,7 +46,7 @@ population.
 $head p_0$$
 We use $latex p_0 (t)$$ to denote the value if prevalence at age zero
 as a function of time; see
-$cref/prevalence_zero/run_table/prevalence_zero/$$.
+$cref/initial_prevalence/run_table/initial_prevalence/$$.
 
 $head Differential Equation$$
 The with condition and susceptible fractions at age zero are

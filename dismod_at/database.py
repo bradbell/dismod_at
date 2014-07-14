@@ -440,7 +440,8 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $table
 # Key     $cnext Value Type    $cnext Description                $rnext
 # parent_node       $cnext int $cnext name of parent for this analysis $rnext
-# prevalence_zero   $cnext int $cnext name of prevalence zero smoothing $rnext
+# initial_prevalence $cnext int $cnext 
+#	name of initial prevalence smoothing $rnext
 # ode_step_size     $cnext double
 #	$cnext used to approximation ODE solution $rnext
 # n_sample          $cnext int $cnext number of posterior
@@ -795,15 +796,15 @@ def create_database(
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create run table
-	col_name = [ 'parent_node','prevalence_zero','ode_step_size','n_sample' ]
-	col_type = [ 'integer',    'integer',        'real',         'integer'  ]
+	col_name = [ 'parent_node','initial_prevalence','ode_step_size','n_sample']
+	col_type = [ 'integer',    'integer',           'real',         'integer']
 	row_list = []
 	for run in run_list :
-		parent_node     = global_node_name2id[ run['parent_node' ] ]
-		prevalence_zero = global_smooth_name2id[ run['prevalence_zero'] ]
-		ode_step_size   = run['ode_step_size']
-		n_sample        = run['n_sample']
-		row_list.append( [ node_id,prevalence_zero,ode_step_size,n_sample ] )
+		parent_node        = global_node_name2id[ run['parent_node' ] ]
+		initial_prevalence = global_smooth_name2id[ run['initial_prevalence'] ]
+		ode_step_size      = run['ode_step_size']
+		n_sample           = run['n_sample']
+		row_list.append( [ node_id,initial_prevalence,ode_step_size,n_sample ] )
 	tbl_name = 'run'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------

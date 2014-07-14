@@ -55,8 +55,8 @@ $code int$$ $cnext $code parent_node$$ $cnext
 	The $cref/parent_node/run_table/parent_node/$$ 
 	for this run  
 $rnext
-$code int$$ $cnext $code prevalence_zero$$ $cnext 
-	The $cref/prevalence_zero/run_table/prevalence_zero/$$ 
+$code int$$ $cnext $code initial_prevalence$$ $cnext 
+	The $cref/initial_prevalence/run_table/initial_prevalence/$$ 
 	for this run  
 $rnext
 $code int$$ $cnext $code n_sample$$ $cnext 
@@ -88,10 +88,10 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, parent_node);
 	assert( n_run == parent_node.size() );
 
-	column_name       =  "prevalence_zero";
-	CppAD::vector<int>    prevalence_zero;
-	get_table_column(db, table_name, column_name, prevalence_zero);
-	assert( n_run == prevalence_zero.size() );
+	column_name       =  "initial_prevalence";
+	CppAD::vector<int>    initial_prevalence;
+	get_table_column(db, table_name, column_name, initial_prevalence);
+	assert( n_run == initial_prevalence.size() );
 
 	column_name         =  "ode_step_size";
 	CppAD::vector<double>   ode_step_size;
@@ -105,10 +105,10 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 
 	CppAD::vector<run_struct> run_table(n_run);
 	for(size_t i = 0; i < n_run; i++)
-	{	run_table[i].parent_node      = parent_node[i];
-		run_table[i].prevalence_zero  = prevalence_zero[i];
-		run_table[i].ode_step_size    = ode_step_size[i];
-		run_table[i].n_sample         = n_sample[i];
+	{	run_table[i].parent_node         = parent_node[i];
+		run_table[i].initial_prevalence  = initial_prevalence[i];
+		run_table[i].ode_step_size       = ode_step_size[i];
+		run_table[i].n_sample            = n_sample[i];
 	}
 	return run_table;
 }

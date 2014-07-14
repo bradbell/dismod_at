@@ -27,15 +27,18 @@ This column has type $code integer$$
 and is the $cref/node_id/node_table/node_id/$$ for 
 the parent node for this $icode run_id$$.
 
-$head prevalence_zero$$
+$head initial_prevalence$$
 This column has type $code integer$$ 
 and is the $cref/smooth_id/smooth_table/smooth_id/$$ for 
-prevalence at age zero for this $icode run_id$$.
+prevalence at the initial age for this $icode run_id$$.
+The initial age is defined as the value of
+$cref/age/age_table/age/$$ corresponding to
+$icode%age_id% = 0%$$.
 Note that the 
 $cref/n_age/smooth_table/n_age/$$ must be one where
-$icode%smooth_id% = %prevalence_zero%$$.
-This is because prevalence at age zero is only a function of age,
-not of time.
+$icode%smooth_id% = %initial_prevalence%$$.
+This is because prevalence at the initial age
+is only a function of time, not of age.
 
 $head ode_step_size$$
 This column has type $code real$$ 
