@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin get_db_input$$
 $spell
+	dage
 	struct
 	sqlite
 	enum
@@ -31,7 +32,13 @@ $icode%input% = get_db_input(%db%)%$$
 
 $head Purpose$$
 To read all the input tables and return it as a C++ data structure
-and check for consistency between the tables..
+and check that all occurrences of $icode%table_name%_id%$$ are with in
+the limit for the corresponding table.
+
+$head Remark$$
+Note that this routine only checks limits, and not positional dependent limits.
+For example, $code -1$$ might appear anywhere in 
+$cref/dage_like_id/smooth_grid/dage_like_id/$$.
 
 $head db$$
 The argument $icode db$$ has prototype
@@ -60,6 +67,20 @@ $end
 
 # include <dismod_at/dismod_at.hpp>
 
+# define DISMOD_AT_CHECK_PRIMARY_ID(in_table, in_name, primary_table, lower)\
+for(size_t i = 0; i < db_input.in_table ## _table.size(); i++) \
+{	int id_value = db_input.in_table ## _table[i].in_name; \
+	int upper = int( db_input.primary_table ## _table.size() ) - 1; \
+	bool ok   = lower <= id_value && id_value <= upper; \
+	if( ! ok ) \
+	{	std::cerr << #in_name << "=" << id_value << " does not appear as " \
+		<< #primary_table "_id in " << #primary_table " table" << std::endl \
+		<< "Detected in " << #in_table << " table at " #in_table "_id =" \
+		<< i << std::endl; \
+		exit(1); \
+	} \
+}
+
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void get_db_input(sqlite3* db, db_input_struct& db_input)
@@ -83,6 +104,37 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	//
 	size_t n_covariate = db_input.covariate_table.size();
 	db_input.data_table        = get_data_table(db, n_covariate);
+
+	// node table
+	DISMOD_AT_CHECK_PRIMARY_ID(node, parent, node, -1);
+
+	// like table
+	DISMOD_AT_CHECK_PRIMARY_ID(like, density_id, density, 0);
+
+	// weight_grid table
+	DISMOD_AT_CHECK_PRIMARY_ID(weight_grid, weight_id, weight, 0);
+
+	// smooth_grid table
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, smooth_id, smooth, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, value_like_id, like, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dage_like_id, like, -1);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dtime_like_id, like, -1);
+
+	// rate_prior table
+	DISMOD_AT_CHECK_PRIMARY_ID(rate_prior, rate_id, rate, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(rate_prior, smooth_id, smooth, 0);
+
+	// multiplier table
+	DISMOD_AT_CHECK_PRIMARY_ID(multiplier, rate_id, rate, -1);
+	DISMOD_AT_CHECK_PRIMARY_ID(multiplier, integrand_id, integrand, -1);
+	DISMOD_AT_CHECK_PRIMARY_ID(multiplier, covariate_id, covariate, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(multiplier, smooth_id, smooth, 0);
+	
+	// data table
+	DISMOD_AT_CHECK_PRIMARY_ID(data, integrand_id, integrand, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(data, density_id, density, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(data, node_id, node, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(data, weight_id, weight, 0);
 
 	return;
 }
