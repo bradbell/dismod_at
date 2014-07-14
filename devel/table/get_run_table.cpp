@@ -59,6 +59,10 @@ $code int$$ $cnext $code initial_prevalence$$ $cnext
 	The $cref/initial_prevalence/run_table/initial_prevalence/$$ 
 	for this run  
 $rnext
+$code double$$ $cnext $code ode_step_size$$ $cnext 
+	The $cref/ode_step_size/run_table/ode_step_size/$$ 
+	for this run  
+$rnext
 $code int$$ $cnext $code n_sample$$ $cnext 
 	The $cref/n_sample/run_table/n_sample/$$ 
 	for this run  

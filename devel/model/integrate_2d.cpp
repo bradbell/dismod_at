@@ -37,8 +37,8 @@ The function $latex U(a, t)$$ is defined on the larger rectangle by
 $latex \[
 U(a, t) = 
 	u_{11} \frac{ ( a_2 - a )( t_2 - t ) }{( a_2 - a_1 )( t_2 - t_1 )} +
-	u_{21} \frac{ ( a - a_1 )( t_2 - t ) }{( a_2 - a_1 )( t_2 - t_1 )} +
 	u_{12} \frac{ ( a_2 - a )( t - t_1 ) }{( a_2 - a_1 )( t_2 - t_1 )} +
+	u_{21} \frac{ ( a - a_1 )( t_2 - t ) }{( a_2 - a_1 )( t_2 - t_1 )} +
 	u_{22} \frac{ ( a - a_1 )( t - t_1 ) }{( a_2 - a_1 )( t_2 - t_1 )}
 \] $$
 The product of $latex U(a, t)$$ times the weighting is defined
@@ -50,11 +50,11 @@ V(a, t)
 ( a_2 - a_1 )^{-1} ( t_2 - t_1 )^{-1} \left[ 
 	w_{11} U( b_1 , s_1 )( b_2 - a )( s_2 - t )
 	+
-	w_{21} U( b_2 , s_1 )( a - b_1 )( s_2 - t )
+	w_{12} U( b_1, s_2 )( b_2 - a )( t - s_1 )
 \right]
 \\ & + &
 ( a_2 - a_1 )^{-1} ( t_2 - t_1 )^{-1} \left[ 
-	w_{12} U( b_1, s_2 )( b_2 - a )( t - s_1 )
+	w_{21} U( b_2 , s_1 )( a - b_1 )( s_2 - t )
 	+
 	w_{22} U( b_2, s_2 )( a - b_1 )( t - s_1 )
 \right]
@@ -68,17 +68,17 @@ $latex U( a_i , t_j ) = u_{ij}$$
 and 
 $latex V( b_i , s_j ) = w_{ij} U ( b_i , s_j )$$.
 This routine computes coefficients
-$latex c_{11}, c_{21}, c_{12}, c_{22}$$ such that
+$latex c_{11}, c_{12}, c_{21}, c_{22}$$ such that
 $latex \[
 	I
 	=
 	\int_{s(1)}^{s(2)} \int_{a(1)}^{a(2)} V(a, t) \; \B{d} a \; \B{d} t
 	=
-	c_{11} u_{11} + c_{21} u_{21} + c_{12} u_{12} + c_{22} u_{22}
+	c_{11} u_{11} + c_{12} u_{12} + c_{21} u_{21} + c_{22} u_{22}
 \] $$
 where the coefficients
-$latex c_{11}, c_{21}, c_{12}, c_{22}$$ do not depend on the values
-$latex u_{11}, u_{21}, u_{12}, u_{22}$$. 
+$latex c_{11}, c_{12}, c_{21}, c_{22}$$ do not depend on the values
+$latex u_{11}, u_{12}, u_{21}, u_{22}$$. 
 
 
 $head a, t, b, s$$
@@ -99,8 +99,8 @@ $codei%
 %$$
 with size four and the following identifications:
 $latex w_{11} = $$ $icode%w%[0]%$$,
-$latex w_{21} = $$ $icode%w%[1]%$$,
-$latex w_{12} = $$ $icode%w%[2]%$$, and
+$latex w_{12} = $$ $icode%w%[1]%$$,
+$latex w_{21} = $$ $icode%w%[2]%$$, and
 $latex w_{22} = $$ $icode%w%[3]%$$.
  
 $head c$$
@@ -110,8 +110,8 @@ $codei%
 %$$
 with size four and the following identifications:
 $latex c_{11} = $$ $icode%c%[0]%$$,
-$latex c_{21} = $$ $icode%c%[1]%$$,
-$latex c_{12} = $$ $icode%c%[2]%$$, and
+$latex c_{12} = $$ $icode%c%[1]%$$,
+$latex c_{21} = $$ $icode%c%[2]%$$, and
 $latex c_{22} = $$ $icode%c%[3]%$$.
 
 $children%example/devel/model/integrate_2d_xam.cpp
@@ -129,27 +129,27 @@ I  = \int_0^e \int_0^d V( a + b1 , t + s_1 ) \; \B{d} a \; \B{d} t
 Using the notation $latex v_{ij} = w_{ij} U( b_i , s_j )$$,
 $latex \[
 (d e) I  = \int_0^e \int_0^d  \left[
-	v_{11} (d - a)(e - t) + v_{21} a (e - t) + v_{12} (d - a) t + v_{22} at
+	v_{11} (d - a)(e - t) + v_{12} (d - a) t + v_{21} a (e - t) + v_{22} at
 \right]
 \; \B{d} a \; \B{d} t
 \] $$
 Doing the integration w.r.t. $latex a$$ we have
 $latex \[
 e I  = ( d  / 2 ) \int_0^e \left[
-	v_{11} (e - t) + v_{21} (e - t) + v_{12} t + v_{22} t
+	v_{11} (e - t) + v_{12} t + v_{21} (e - t) + v_{22} t
 \right]
 \; \B{d} t
 \] $$
 Doing the integration w.r.t. $latex t$$ we have
 $latex \[
-I  = ( d e / 4 ) ( v_{11} + v_{21} + v_{12} + v_{22} )
+I  = ( d e / 4 ) ( v_{11} + v_{12} + v_{21} + v_{22} )
 \] $$
 Using the definitions for $latex v_{ij}$$ we obtain
 $latex \[
 I = ( d e / 4 ) \left[  
 	w_{11} U( b_1 , s_1 ) + 
+	w_{12} U( b_1 , s_2 ) + 
 	w_{21} U( b_2 , s_1 ) + 
-	w_{21} U( b_1 , s_2 ) + 
 	w_{22} U( b_2 , s_2 )
 \right]
 \] $$
@@ -159,7 +159,7 @@ r = \frac{1}{4} \frac{ b_2 - b_1 }{ a_2 - a_1} \frac{ s_2 - s_1 }{ t_2 - t_1}
 \] $$
 together with definition for $latex U(a, t)$$ to obtain
 $latex \[
-I = c_{11} u_{11} + c_{21} u_{21} + c_{12} u_{12} + c_{22} u_{22}
+I = c_{11} u_{11} + c_{12} u_{12} + c_{21} u_{21} + c_{22} u_{22}
 \] $$
 where
 $latex \[
@@ -167,32 +167,32 @@ $latex \[
 c_{11} & = &
 r [ 
 	w_{11} ( a_2 - b_1 ) ( t_2 - s_1 ) +
-	w_{21} ( a_2 - b_2 ) ( t_2 - s_1 ) +
 	w_{12} ( a_2 - b_1 ) ( t_2 - s_2 ) +
+	w_{21} ( a_2 - b_2 ) ( t_2 - s_1 ) +
 	w_{22} ( a_2 - b_2 ) ( t_2 - s_2 )
-]
-\\
-c_{21} & = &
-r [ 
-	w_{11} ( b_1 - a_1 ) ( t_2 - s_1 ) +
-	w_{21} ( b_2 - a_1 ) ( t_2 - s_1 ) +
-	w_{12} ( b_1 - a_1 ) ( t_2 - s_2 ) +
-	w_{22} ( b_2 - a_1 ) ( t_2 - s_2 )
 ]
 \\
 c_{12} & = &
 r [ 
 	w_{11} ( a_2 - b_1 ) ( s_1 - t_1 ) +
-	w_{21} ( a_2 - b_2 ) ( s_1 - t_1 ) +
 	w_{12} ( a_2 - b_1 ) ( s_2 - t_1 ) +
+	w_{21} ( a_2 - b_2 ) ( s_1 - t_1 ) +
 	w_{22} ( a_2 - b_2 ) ( s_2 - t_1 )
+]
+\\
+c_{21} & = &
+r [ 
+	w_{11} ( b_1 - a_1 ) ( t_2 - s_1 ) +
+	w_{12} ( b_1 - a_1 ) ( t_2 - s_2 ) +
+	w_{21} ( b_2 - a_1 ) ( t_2 - s_1 ) +
+	w_{22} ( b_2 - a_1 ) ( t_2 - s_2 )
 ]
 \\
 c_{22} & = &
 r [ 
 	w_{11} ( b_1 - a_1 ) ( s_1 - t_1 ) +
-	w_{21} ( b_2 - a_1 ) ( s_1 - t_1 ) +
 	w_{12} ( b_1 - a_1 ) ( s_2 - t_1 ) +
+	w_{21} ( b_2 - a_1 ) ( s_1 - t_1 ) +
 	w_{22} ( b_2 - a_1 ) ( s_2 - t_1 )
 ]
 \end{array}
@@ -226,40 +226,40 @@ CppAD::vector<double> integrate_2d(
 	assert( t1 <= s1 && s1 < s2 && s2 <= t2 );
 	//
 	double w11 = w[0];
-	double w21 = w[1];
-	double w12 = w[2];
+	double w12 = w[1];
+	double w21 = w[2];
 	double w22 = w[3];
 	//
 	double r   = (b2 - b1)*(s2 - s1) / (4 * (a2 - a1)*(t2 - t1) );
 	//
 	double c11 = w11 * (a2 - b1) * (t2 - s1);
-	c11       += w21 * (a2 - b2) * (t2 - s1);
 	c11       += w12 * (a2 - b1) * (t2 - s2);
+	c11       += w21 * (a2 - b2) * (t2 - s1);
 	c11       += w22 * (a2 - b2) * (t2 - s2);
 	c11       *= r;
 	//
-	double c21 = w11 * (b1 - a1) * (t2 - s1);
-	c21       += w21 * (b2 - a1) * (t2 - s1);
-	c21       += w12 * (b1 - a1) * (t2 - s2);
-	c21       += w22 * (b2 - a1) * (t2 - s2);
-	c21       *= r;
-	//
 	double c12 = w11 * (a2 - b1) * (s1 - t1);
-	c12       += w21 * (a2 - b2) * (s1 - t1);
 	c12       += w12 * (a2 - b1) * (s2 - t1);
+	c12       += w21 * (a2 - b2) * (s1 - t1);
 	c12       += w22 * (a2 - b2) * (s2 - t1);
 	c12       *= r;
 	//
+	double c21 = w11 * (b1 - a1) * (t2 - s1);
+	c21       += w12 * (b1 - a1) * (t2 - s2);
+	c21       += w21 * (b2 - a1) * (t2 - s1);
+	c21       += w22 * (b2 - a1) * (t2 - s2);
+	c21       *= r;
+	//
 	double c22 = w11 * (b1 - a1) * (s1 - t1);
-	c22       += w21 * (b2 - a1) * (s1 - t1);
 	c22       += w12 * (b1 - a1) * (s2 - t1);
+	c22       += w21 * (b2 - a1) * (s1 - t1);
 	c22       += w22 * (b2 - a1) * (s2 - t1);
 	c22       *= r;
 	//
 	CppAD::vector<double> c(4);
 	c[0] = c11;
-	c[1] = c21;
-	c[2] = c12;
+	c[1] = c12;
+	c[2] = c21;
 	c[3] = c22;
 	//
 	return c;

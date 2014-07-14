@@ -45,23 +45,23 @@ namespace {
 		double s2 = s.second;
 		//
 		double w11 =  w[0];
-		double w21 =  w[1];
-		double w12 =  w[2];
+		double w12 =  w[1];
+		double w21 =  w[2];
 		double w22 =  w[3];
 		//
 		double u11 =  U(b1, s1, u);
-		double u21 =  U(b2, s1, u);
 		double u12 =  U(b1, s2, u);
+		double u21 =  U(b2, s1, u);
 		double u22 =  U(b2, s2, u);
 		//
 		double v11 = w11 * u11;
-		double v21 = w21 * u21;
 		double v12 = w12 * u12;
+		double v21 = w21 * u21;
 		double v22 = w22 * u22;
 		//
 		double r = (b2 - b1) * (s2 - s1) / 4.0;
 		//
-		return r * (v11 + v21 + v12 + v22);
+		return r * (v11 + v12 + v21 + v22);
 	}
 }
 bool integrate_2d_xam(void)
@@ -97,11 +97,11 @@ bool integrate_2d_xam(void)
 	u[3] = 2.1;
 	//
 	double u11 =  U(a.first,  t.first, u);
-	double u21 =  U(a.second, t.first, u);
 	double u12 =  U(a.first,  t.second, u);
+	double u21 =  U(a.second, t.first, u);
 	double u22 =  U(a.second, t.second, u);
 	//
-	double I     = c[0] * u11 + c[1] * u21 + c[2] * u12 + c[3] * u22;
+	double I     = c[0] * u11 + c[1] * u12 + c[2] * u21 + c[3] * u22;
 	double check = integral(b, s, w, u); 
 	//
 	ok = std::fabs( 1.0 - I / check ) < eps * 100;
