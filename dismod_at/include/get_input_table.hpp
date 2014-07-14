@@ -31,25 +31,27 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_weight_grid.hpp"
 
 namespace dismod_at {
+	// BEGIN STRUCT
 	struct input_table_struct {
-		CppAD::vector<double>             age;
-		CppAD::vector<double>             time;
-		CppAD::vector<rate_enum>          rate;
-		CppAD::vector<density_enum>       density;
-		CppAD::vector<integrand_enum>     integrand;
-		//;
-		CppAD::vector<weight_struct>      weight;
-		CppAD::vector<smooth_struct>      smooth;
-		CppAD::vector<run_struct>         run;
-		CppAD::vector<covariate_struct>   covariate;
-		CppAD::vector<node_struct>        node;
-		CppAD::vector<like_struct>        like;
-		CppAD::vector<weight_grid_struct> weight_grid;
-		CppAD::vector<smooth_grid_struct> smooth_grid;
-		CppAD::vector<rate_prior_struct>  rate_prior;
-		CppAD::vector<multiplier_struct>  multiplier;
-		CppAD::vector<data_struct>        data;
+		CppAD::vector<double>             age_table;
+		CppAD::vector<double>             time_table;
+		CppAD::vector<rate_enum>          rate_table;
+		CppAD::vector<density_enum>       density_table;
+		CppAD::vector<integrand_enum>     integrand_table;
+		//
+		CppAD::vector<weight_struct>      weight_table;
+		CppAD::vector<smooth_struct>      smooth_table;
+		CppAD::vector<run_struct>         run_table;
+		CppAD::vector<covariate_struct>   covariate_table;
+		CppAD::vector<node_struct>        node_table;
+		CppAD::vector<like_struct>        like_table;
+		CppAD::vector<weight_grid_struct> weight_grid_table;
+		CppAD::vector<smooth_grid_struct> smooth_grid_table;
+		CppAD::vector<rate_prior_struct>  rate_prior_table;
+		CppAD::vector<multiplier_struct>  multiplier_table;
+		CppAD::vector<data_struct>        data_table;
 	};
+	// END STRUCT
 	extern void get_input_table(
 		sqlite3*      db            , 
 		input_table_struct& input_table
