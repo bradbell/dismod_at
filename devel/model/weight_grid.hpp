@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin smooth2ode$$
+$begin weight$$
 
 $section Interpolate From Smoothing Grid to ODE Grid$$
 
@@ -18,7 +18,7 @@ $end
 
 namespace { // BEGIN_DISMOD_AT_NAMESPACE
 
-class smooth2ode_grid {
+class weight_grid {
 	using CppAD::vector;
 	struct ode_weight_struct {
 		// minimm age index for interpolating an ode grid point

@@ -26,7 +26,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 
 
-smooth_info::smooth2ode_grid(
+smooth_info::weight_grid(
 	const db_input_struct&       db_input      ,
 	const size_t n_age_ode&      n_age_ode     ,
 	const size_t n_time_ode&     n_time_ode    )
