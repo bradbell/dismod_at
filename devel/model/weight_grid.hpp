@@ -13,6 +13,27 @@ $begin weight$$
 
 $section Interpolate From Smoothing Grid to ODE Grid$$
 
+$begin Syntax$$
+$codei%weight_grid %wg%(
+	%weight_id%,
+	%age_table%,
+	%time_table%,
+	%weight_grid_table%
+)%$$
+$icode%wg%.weight_id()
+%$$
+$icode%wg%.age_grid()
+%$$
+$icode%wg%.time_grid()
+%$$
+$icode%wg%.weight_grid()
+%$$
+
+$head Purpose$$
+Extracts the information for one weighting from
+the database input tables.
+
+
 $end
 */
 
@@ -20,46 +41,34 @@ namespace { // BEGIN_DISMOD_AT_NAMESPACE
 
 class weight_grid {
 	using CppAD::vector;
-	struct ode_weight_struct {
-		// minimm age index for interpolating an ode grid point
-		size_t age_index_;
-		// minimum time index for interpolating an ode grid point 
-		size_t time_index_;
-		// weight for minimum age and time
-		double weight_00_;
-		// weight for minimum age and maximum time
-		double weight_01_;
-		// weight for maximum age and minimum time
-		double weight_10_;
-		// weight for maximum age and maximum time
-		double weight_11_;
-	}
-	struct info_struct {
-		// age_id in age table for this smoothing
-		vector<size_t> age_id;
-		// time_id in age table for this smoothing
-		vector<size_t> time_id;
-		// ode grid weights for this smoothing
-		vector<ode_weight_struct> ode_weight;
-	};
 private:
-	// number of ages in the ode grid
-	const size_t              n_age_ode_;
-	// number of times in the ode grid
-	const size_t              n_time_ode_;
-	// copy of the age table
-	const vector<double>      age_table_;
-	// copy of the time table
-	const vector<double>      time_table_;
-
-	// information for each smoothing
-	vector<info_struct> info_;
+	// id value for this weighting
+	size_t         weight_id_;
+	// grid of age values for this weighting
+	vector<double> age_grid_;
+	// grid of time values for this weighting
+	vector<double> time_grid_;
+	// vector of weights for each age, time pair
+	vector<double> weight_grid_;
 public:
-	smooth_info(
-		const db_input_struct&       db_input     ,
-		const size_t n_age_ode&      n_age_ode    ,
-		const size_t n_time_ode&     n_time_ode
+	weight_grid(
+	size_t                            weight_id         ,
+	const vector<double>&             age_table         ,
+	const vector<double>&             time_table        ,
+	const vector<weight_grid_struct>& weight_grid_table i
 	);
+
+	size_t weight_id(void) const
+	{	return weight_id_; }
+
+	const vector<double>& age_grid(void) const
+	{	return age_grid_; }
+
+	const vector<double>& time_grid(void) const
+	{	return time_grid_; }
+
+	const vector<double>& weight_grid(void) const
+	{	return weight_grid_; }
 
 
 } // END_DISMOD_AT_NAMESPACE
