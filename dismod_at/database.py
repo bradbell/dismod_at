@@ -327,7 +327,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $head weight_list$$
 # This is a list of $code dict$$
 # that define the rows of the $cref weight_table$$ and
-# $cref weight_grid$$ table.
+# $cref weight_grid_table$$.
 # The dictionary $icode%weight_list%[%i%]%$$ has the following:
 # $table
 # Key     $cnext Value Type    $cnext Description                $rnext

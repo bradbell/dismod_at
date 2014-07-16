@@ -41,16 +41,16 @@ $table
 Type $cnext Field $cnext Description
 $rnext
 $code int$$ $cnext $code weight_id$$   $pre  $$ $cnext 
-	The $cref/weight_id/weight_grid/weight_id/$$ for this weighting.
+	The $cref/weight_id/weight_grid_table/weight_id/$$ for this weighting.
 $rnext
 $code int$$ $cnext $code age_id$$      $pre  $$ $cnext 
-	The $cref/age_id/weight_grid/age_id/$$ for this weight value
+	The $cref/age_id/weight_grid_table/age_id/$$ for this weight value
 $rnext
 $code int$$ $cnext $code time_id$$      $pre  $$ $cnext 
-	The $cref/time_id/weight_grid/time_id/$$ for this weight value
+	The $cref/time_id/weight_grid_table/time_id/$$ for this weight value
 $rnext
 $code double$$ $cnext $code weight$$    $pre  $$ $cnext 
-	The $cref/weight/weight_grid/weight/$$ value
+	The $cref/weight/weight_grid_table/weight/$$ value
 $tend        
 
 $head weight_grid$$
@@ -58,7 +58,7 @@ The return value $icode weight_grid$$ has prototype
 $codei%
 	CppAD::vector<weight_grid_struct>  %weight_grid%
 %$$
-For each $cref/weight_grid_id/weight_grid/weight_grid_id/$$,
+For each $cref/weight_grid_id/weight_grid_table/weight_grid_id/$$,
 $codei%
 	%weight_grid%[%weight_grid_id%]
 %$$

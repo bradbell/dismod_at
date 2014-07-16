@@ -46,7 +46,7 @@ the node for this measurement.
 
 $head weight_id$$
 This column has type $code integer$$ and is the
-$cref/weight_id/weight_grid/weight_id/$$ that identifies
+$cref/weight_id/weight_grid_table/weight_id/$$ that identifies
 the weighting used for this measurement.
 
 $head meas_value$$
