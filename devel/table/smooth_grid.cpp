@@ -14,36 +14,47 @@ $spell
 	const
 	CppAD
 	struct
-	wg
 $$
 
 $section Extract Information for One Weighting Function$$
 
 $head Syntax$$
-$codei%smooth_grid %wg%(
+$codei%smooth_grid %s%(
 	%smooth_id%,
 	%smooth_grid_table%
 )%$$
-$icode%n_age%   = %wg%.age_size()
+$icode%n_age%   = %sg%.age_size()
 %$$
-$icode%n_time%  = %wg%.time_size()
+$icode%n_time%  = %sg%.time_size()
 %$$
-$icode%a_id%    = %wg%.age_id(%i%)
+$icode%a_id%    = %sg%.age_id(%i%)
 %$$
-$icode%t_id%    = %wg%.time_id(%j%)
+$icode%t_id%    = %sg%.time_id(%j%)
 %$$
-$icode%v_like%  = %wg%.value_like_id(%i%, %j%)
+$icode%v_like%  = %sg%.value_like_id(%i%, %j%)
 %$$
-$icode%a_like%  = %wg%.dage_like_id(%i%, %j%)
+$icode%a_like%  = %sg%.dage_like_id(%i%, %j%)
 %$$
-$icode%t_like%  = %wg%.dtime_like_id(%i%, %j%)
+$icode%t_like%  = %sg%.dtime_like_id(%i%, %j%)
 %$$
 
 $head Purpose$$
 Extracts the information for one smoothing from
 the $cref smooth_grid_table$$.
-In addition, this routine checks the $code smooth_grid$$ table
+
+$head Assumptions$$
+$list number$$
+Checks the $code smooth_grid$$ table
 $cref/rectangular grid/smooth_grid/Rectangular Grid/$$ assumption.
+$lnext
+Checks that 
+$cref/dage_like_id/smooth_grid/d_age_like_id/$$ is $code -1$$
+for the maximum age points and only the maximum age points.
+$lnext
+Checks that 
+$cref/dtime_like_id/smooth_grid/d_time_like_id/$$ is $code -1$$
+for the maximum time points and on the maximum time points.
+$lend
 
 $head Constructor$$
 
@@ -53,7 +64,7 @@ $codei%
 	size_t %smooth_id%
 %$$
 and is the $cref/smooth_id/smooth_grid_table/smooth_id/$$ for the
-smoothing that $icode wg$$ corresponds to.
+smoothing that $icode sg$$ corresponds to.
 
 $subhead smooth_grid_table$$
 This argument has prototype
@@ -62,10 +73,10 @@ $codei%
 %$$
 an is the $cref smooth_grid_table$$.
 
-$subhead wg$$
+$subhead sg$$
 This result has type $code smooth_grid$$.
 All of the functions calls in the syntax above are $code const$$; i.e.,
-they do not modify $icode wg$$.
+they do not modify $icode sg$$.
 
 $head n_age$$
 This result has prototype
@@ -104,7 +115,7 @@ and is the $th i$$ $cref/age_id/smooth_grid_table/age_id/$$
 for this smoothing and increases with $icode i$$; i.e.,
 for $icode%i% < %n_age%-2%$$
 $codei%
-	%wg%.age_id(%i%) < %wg%.age_id(%i%+1)
+	%sg%.age_id(%i%) < %sg%.age_id(%i%+1)
 %$$.
 
 $head t_id$$
@@ -116,7 +127,7 @@ and is the $th j$$ $cref/time_id/smooth_grid_table/time_id/$$
 for this smoothing and increases with $icode j$$; i.e.,
 for $icode%j% < %n_time%-2%$$
 $codei%
-	%wg%.time_id(%j%) < %wg%.time_id(%j%+1)
+	%sg%.time_id(%j%) < %sg%.time_id(%j%+1)
 %$$.
 
 $head v_like$$
@@ -275,12 +286,26 @@ smooth_grid::smooth_grid(
 				<< " is not -1" << endl;
 				exit(1);
 			}
+			if( j_age != n_age -1 && dage_like_id_[index] == -1 )
+			{	cerr << "smooth_grid table with smooth_grid_id = " << i
+				<< endl << "age_id = " << age_id_[j_age]
+				<< " is not maximum age for smooth_id = " << smooth_id
+				<< endl << " but dage_like_id = -1 " << endl;
+				exit(1);
+			}
 			if( j_time == n_time -1 && dtime_like_id_[index] != -1 )
 			{	cerr << "smooth_grid table with smooth_grid_id = " << i
 				<< endl << "time_id = " << time_id_[j_time]
 				<< " is maximum time for smooth_id = " << smooth_id
 				<< endl << " but dtime_like_id = " << dtime_like_id_[index]
 				<< " is not -1" << endl;
+				exit(1);
+			}
+			if( j_time != n_time -1 && dtime_like_id_[index] == -1 )
+			{	cerr << "smooth_grid table with smooth_grid_id = " << i
+				<< endl << "time_id = " << time_id_[j_time]
+				<< " is not maximum time for smooth_id = " << smooth_id
+				<< endl << " but dtime_like_id = -1 " << endl;
 				exit(1);
 			}
 		}

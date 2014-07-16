@@ -14,7 +14,7 @@
 SET(CMAKE_BUILD_TYPE DEBUG)
 
 # Program cpp, not installed, and depends on following source files
-ADD_EXECUTABLE(cpp EXCLUDE_FROM_ALL 
+ADD_EXECUTABLE(devel EXCLUDE_FROM_ALL 
 	devel.cpp
 	model/integrate_1d_xam.cpp
 	model/integrate_2d_xam.cpp
@@ -33,12 +33,13 @@ ADD_EXECUTABLE(cpp EXCLUDE_FROM_ALL
 	table/get_table_column_xam.cpp
 	table/get_time_table_xam.cpp
 	table/get_weight_grid_xam.cpp
+	table/smooth_grid_xam.cpp
 	table/weight_grid_xam.cpp
 )
 
 LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )
 SET_TARGET_PROPERTIES(
-	cpp PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
+	devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
-TARGET_LINK_LIBRARIES(cpp sqlite3 devel_lib)
-ADD_CUSTOM_TARGET(check_devel cpp DEPENDS cpp ) 
+TARGET_LINK_LIBRARIES(devel sqlite3 devel_lib)
+ADD_CUSTOM_TARGET(check_devel devel DEPENDS devel ) 

@@ -50,6 +50,7 @@ extern bool get_smooth_grid_xam(void);
 extern bool get_table_column_xam(void);
 extern bool get_time_table_xam(void);
 extern bool get_weight_grid_xam(void);
+extern bool smooth_grid_xam(void);
 extern bool weight_grid_xam(void);
 
 // anonymous namespace
@@ -104,6 +105,7 @@ int main(void)
 	RUN(get_table_column_xam);
 	RUN(get_time_table_xam);
 	RUN(get_weight_grid_xam);
+	RUN(smooth_grid_xam);
 	RUN(weight_grid_xam);
 
 	// summary report
