@@ -53,10 +53,10 @@ For each row in the table, the value in this column
 is the weighting, at the corresponding age and time,
 and for the specified $icode weight_id$$,
 
-$children%example/table/weight_grid.py
+$children%example/table/weight_grid_table.py
 %$$
 $head Example$$
-The files $cref weight_grid.py$$ and $cref get_weight_grid_xam.cpp$$
+The files $cref weight_grid_table.py$$ and $cref get_weight_grid_xam.cpp$$
 contain example $code weight_grid$$ tables.
 
 $end
