@@ -33,6 +33,7 @@ ADD_EXECUTABLE(cpp EXCLUDE_FROM_ALL
 	table/get_table_column_xam.cpp
 	table/get_time_table_xam.cpp
 	table/get_weight_grid_xam.cpp
+	table/weight_grid_xam.cpp
 )
 
 LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )

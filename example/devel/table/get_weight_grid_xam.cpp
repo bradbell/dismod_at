@@ -79,33 +79,33 @@ bool get_weight_grid_xam(void)
 	//
 	// get the weight_grid table
 	vector<dismod_at::weight_grid_struct> 
-		weight_grid = dismod_at::get_weight_grid(db);
-	ok  &= weight_grid.size() == 5;
+		weight_grid_table = dismod_at::get_weight_grid(db);
+	ok  &= weight_grid_table.size() == 5;
 	//
-	ok  &= weight_grid[0].weight_id == 0;
-	ok  &= weight_grid[0].age_id    == 1;
-	ok  &= weight_grid[0].time_id   == 1;
-	ok  &= weight_grid[0].weight    == 1.0; 
+	ok  &= weight_grid_table[0].weight_id == 0;
+	ok  &= weight_grid_table[0].age_id    == 1;
+	ok  &= weight_grid_table[0].time_id   == 1;
+	ok  &= weight_grid_table[0].weight    == 1.0; 
 	//
-	ok  &= weight_grid[1].weight_id == 1;
-	ok  &= weight_grid[1].age_id    == 0;
-	ok  &= weight_grid[1].time_id   == 0;
-	ok  &= weight_grid[1].weight    == 0.5; 
+	ok  &= weight_grid_table[1].weight_id == 1;
+	ok  &= weight_grid_table[1].age_id    == 0;
+	ok  &= weight_grid_table[1].time_id   == 0;
+	ok  &= weight_grid_table[1].weight    == 0.5; 
 	//
-	ok  &= weight_grid[2].weight_id == 1;
-	ok  &= weight_grid[2].age_id    == 2;
-	ok  &= weight_grid[2].time_id   == 0;
-	ok  &= weight_grid[2].weight    == 1.0; 
+	ok  &= weight_grid_table[2].weight_id == 1;
+	ok  &= weight_grid_table[2].age_id    == 2;
+	ok  &= weight_grid_table[2].time_id   == 0;
+	ok  &= weight_grid_table[2].weight    == 1.0; 
 	//
-	ok  &= weight_grid[3].weight_id == 1;
-	ok  &= weight_grid[3].age_id    == 0;
-	ok  &= weight_grid[3].time_id   == 2;
-	ok  &= weight_grid[3].weight    == 1.0; 
+	ok  &= weight_grid_table[3].weight_id == 1;
+	ok  &= weight_grid_table[3].age_id    == 0;
+	ok  &= weight_grid_table[3].time_id   == 2;
+	ok  &= weight_grid_table[3].weight    == 1.0; 
 	//
-	ok  &= weight_grid[4].weight_id == 1;
-	ok  &= weight_grid[4].age_id    == 2;
-	ok  &= weight_grid[4].time_id   == 2;
-	ok  &= weight_grid[4].weight    == 1.5; 
+	ok  &= weight_grid_table[4].weight_id == 1;
+	ok  &= weight_grid_table[4].age_id    == 2;
+	ok  &= weight_grid_table[4].time_id   == 2;
+	ok  &= weight_grid_table[4].weight    == 1.5; 
  	//
 	// close database and return
 	sqlite3_close(db);
