@@ -35,23 +35,29 @@ $head age_id$$
 This column has type $code integer$$ and is a
 $cref/age_id/age_table/age_id/$$ in the age table.
 Each $icode age_id$$ value corresponds to a specific age.
-For each fixed value of $icode weight_id$$ and $icode time_id$$,
-the set of corresponding $icode age_id$$ values is constant; i.e.,
-the grid corresponding to $icode weight_id$$ is rectangular.
 
 $head time_id$$
 This column has type $code integer$$ and is a
 $cref/time_id/time_table/time_id/$$ in the time table.
 Each $icode time_id$$ value corresponds to a specific time.
-For each fixed value of $icode weight_id$$ and $icode age_id$$,
-the set of corresponding $icode time_id$$ values is constant; i.e.,
-the grid corresponding to $icode weight_id$$ is rectangular.
 
 $head weight$$
 This column has type $code real$$.
 For each row in the table, the value in this column
 is the weighting, at the corresponding age and time,
 and for the specified $icode weight_id$$,
+
+$head Rectangular Grid$$
+For each fixed value of $icode weight_id$$ 
+the set of $icode%age_id$$, $icode time_id$$ pairs is rectangular.
+In other words,
+if an $icode age_id$$ value appears,
+it appears once with each $icode time_id$$ 
+that appears with this $icode weight_id$$.
+This also means,
+if a $icode time_id$$ value appears,
+it appears once with each $icode age_id$$ 
+that appears with this $icode weight_id$$.
 
 $children%example/table/weight_grid_table.py
 %$$

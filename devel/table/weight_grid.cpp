@@ -38,6 +38,8 @@ $icode%w%      = %wg%.weight(%i%, %j%)
 $head Purpose$$
 Extracts the information for one weighting from
 the $cref weight_grid_table$$.
+In addition, this routine checks the $code weight_grid$$ table
+$cref/rectangular grid/weight_grid/Rectangular Grid/$$ assumption.
 
 $head Constructor$$
 
@@ -160,7 +162,7 @@ size_t weight_grid::age_id(size_t i) const
 size_t weight_grid::time_id(size_t j) const
 {	return time_id_[j]; }
 //
-const double weight_grid::weight(size_t i, size_t j) const
+double weight_grid::weight(size_t i, size_t j) const
 {	assert( i < age_id_.size() );
 	assert( j < time_id_.size() );
 	return weight_[ i * time_id_.size() + j]; 
@@ -221,7 +223,7 @@ weight_grid::weight_grid(
 		}
 	}
 
-	// make sure they all appear once
+	// make sure each age, time pair appears once
 	for(i = 0; i < n_age * n_time; i++)
 	{	if( count[i] != 1 )
 		{	size_t j_time = i % n_time;

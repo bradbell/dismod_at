@@ -33,6 +33,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	table/get_weight_grid.cpp
 	table/get_weight_table.cpp
 	table/open_connection.cpp
+	table/smooth_grid.cpp
 	table/table_error_exit.cpp
 	table/weight_grid.cpp
 )
