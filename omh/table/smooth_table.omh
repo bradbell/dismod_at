@@ -32,10 +32,10 @@ $head n_time$$
 This column has type $code integer$$ and is the number of _time values
 in this smoothing grid. It must be greater than zero.
 
-$comment%example/table/smooth_grid.py is included by smooth_grid.omh
+$comment%example/table/smooth_grid_table.py is included by smooth_grid.omh
 %$$
 $head Example$$
-The files $cref smooth_grid.py$$ and $cref get_smooth_grid_xam.cpp$$
+The files $cref smooth_grid_table.py$$ and $cref get_smooth_grid_xam.cpp$$
 contain example $code smooth$$ tables.
 
 $end

@@ -8,20 +8,20 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin smooth_grid.py$$ $newlinech #$$
+# $begin smooth_grid_table.py$$ $newlinech #$$
 #
-# $section smooth_grid: Example and Test$$
+# $section smooth_grid_table: Example and Test$$
 #
-# $index smooth, example$$
-# $index example, smooth table$$
+# $index smooth_grid_table, example$$
+# $index example, smooth_grid_table$$
 #
 # $code
-# $verbatim%example/table/smooth_grid.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/smooth_grid_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-def smooth_grid() :
+def smooth_grid_table() :
 	import dismod_at
 	import copy
 	#
@@ -116,5 +116,5 @@ def smooth_grid() :
 		count += 1
 	assert count == len(row_list)
 	#
-	print('smooth_grid: OK')
+	print('smooth_grid_table: OK')
 # END PYTHON
