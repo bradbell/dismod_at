@@ -26,7 +26,7 @@ $head Syntax$$
 $icode%weight_grid_table% = get_weight_grid(%db%)%$$
 
 $head Purpose$$
-To read the $cref weight_grid$$ and return it as a C++ data structure.
+To read the $cref weight_grid_table$$ and return it as a C++ data structure.
 
 $head db$$
 The argument $icode db$$ has prototype

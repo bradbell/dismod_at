@@ -28,7 +28,7 @@ $head Syntax$$
 $icode%smooth_grid_table% = get_smooth_grid(%db%)%$$
 
 $head Purpose$$
-To read the $cref smooth_grid$$ and return it as a C++ data structure.
+To read the $cref smooth_grid_table$$ and return it as a C++ data structure.
 
 $head db$$
 The argument $icode db$$ has prototype
@@ -42,7 +42,7 @@ The return value $icode smooth_grid$$ has prototype
 $codei%
 	CppAD::vector<smooth_grid_struct>  %smooth_grid%
 %$$
-For each $cref/smooth_grid_id/smooth_grid/smooth_grid_id/$$,
+For each $cref/smooth_grid_id/smooth_grid_table/smooth_grid_id/$$,
 $codei%
 	%smooth_grid%[%smooth_grid_id%]
 %$$
@@ -54,24 +54,24 @@ $table
 Type $cnext Field $cnext Description
 $rnext
 $code int$$ $cnext $code smooth_id$$   $pre  $$ $cnext 
-	The $cref/smooth_id/smooth_grid/smooth_id/$$ for this smoothing. 
+	The $cref/smooth_id/smooth_grid_table/smooth_id/$$ for this smoothing. 
 $rnext
 $code int$$ $cnext $code age_id$$      $pre  $$ $cnext 
-	The $cref/age_id/smooth_grid/age_id/$$ for this grid point
+	The $cref/age_id/smooth_grid_table/age_id/$$ for this grid point
 $rnext
 $code int$$ $cnext $code time_id$$      $pre  $$ $cnext 
-	The $cref/time_id/smooth_grid/time_id/$$ for this grid point
+	The $cref/time_id/smooth_grid_table/time_id/$$ for this grid point
 $rnext
 $code int$$ $cnext $code value_like_id$$    $pre  $$ $cnext 
-	The $cref/value_like_id/smooth_grid/value_like_id/$$
+	The $cref/value_like_id/smooth_grid_table/value_like_id/$$
 	for this smoothing, age, and time.
 $rnext
 $code int$$ $cnext $code dage_like_id$$    $pre  $$ $cnext 
-	The $cref/dage_like_id/smooth_grid/dage_like_id/$$
+	The $cref/dage_like_id/smooth_grid_table/dage_like_id/$$
 	for this smoothing, age, and time.
 $rnext
 $code int$$ $cnext $code dtime_like_id$$    $pre  $$ $cnext 
-	The $cref/dtime_like_id/smooth_grid/dtime_like_id/$$
+	The $cref/dtime_like_id/smooth_grid_table/dtime_like_id/$$
 	for this smoothing, age, and time.
 $tend        
 

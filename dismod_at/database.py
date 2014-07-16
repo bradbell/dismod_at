@@ -393,7 +393,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $head smooth_list$$
 # This is a list of $code dict$$
 # that define the rows of the $cref smooth_table$$ and
-# $cref smooth_grid$$ tables.
+# $cref smooth_grid_table$$.
 # The dictionary $icode%smooth_list%[%i%]%$$ has the following:
 # $table
 # Key     $cnext Value Type  $cnext Description                $rnext

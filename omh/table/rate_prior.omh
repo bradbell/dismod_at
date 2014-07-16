@@ -39,7 +39,7 @@ rates are constrained to be zero for all ages and times.
 
 $head smooth_id$$
 This column has type $code integer$$ and its value in a row is a
-$cref/smooth_id/smooth_grid/smooth_id/$$ 
+$cref/smooth_id/smooth_grid_table/smooth_id/$$ 
 in the $code smooth_grid$$ table.
 It specifies the smoothing used as a prior for this rate 
 when fitting the parent (fixed effect) 

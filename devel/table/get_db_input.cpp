@@ -38,7 +38,7 @@ the limit for the corresponding table.
 $head Remark$$
 Note that this routine only checks limits, and not positional dependent limits.
 For example, $code -1$$ might appear anywhere in 
-$cref/dage_like_id/smooth_grid/dage_like_id/$$.
+$cref/dage_like_id/smooth_grid_table/dage_like_id/$$.
 
 $head db$$
 The argument $icode db$$ has prototype
