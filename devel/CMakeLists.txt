@@ -34,5 +34,6 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	table/get_weight_table.cpp
 	table/open_connection.cpp
 	table/table_error_exit.cpp
+	table/weight_grid.cpp
 )
 SET_TARGET_PROPERTIES(devel_lib PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")

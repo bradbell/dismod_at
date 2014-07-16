@@ -15,9 +15,11 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <string>
 # include <cppad/vector.hpp>
 
+// devel/model directory
 # include "include/integrate_1d.hpp"
 # include "include/integrate_2d.hpp"
 
+// devel/table directory
 # include "include/check_table_id.hpp"
 # include "include/exec_sql_cmd.hpp"
 # include "include/get_age_table.hpp"
@@ -40,5 +42,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "include/get_weight_table.hpp"
 # include "include/open_connection.hpp"
 # include "include/table_error_exit.hpp"
+# include "include/weight_grid.hpp"
 
 # endif

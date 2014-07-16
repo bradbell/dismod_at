@@ -8,6 +8,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
+# ifndef DISMOD_AT_WEIGHT_GRID_HPP
+# define DISMOD_AT_WEIGHT_GRID_HPP
 /*
 $begin weight$$
 
@@ -117,28 +119,29 @@ and is the weighting for the corresponding age and time indices.
 
 $end
 */
+# include <cppad/cppad.hpp>
+# include <dismod_at/include/get_weight_grid.hpp>
 
-namespace { // BEGIN_DISMOD_AT_NAMESPACE
+namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class weight_grid {
-	using CppAD::vector;
 private:
 	// grid of age values for this weighting
-	vector<size_t> age_id_;
+	CppAD::vector<size_t> age_id_;
 	// grid of time values for this weighting
-	vector<size_t> time_id_;
+	CppAD::vector<size_t> time_id_;
 	// vector of weights for each age, time pair
-	vector<double> weight;
+	CppAD::vector<double> weight_;
 public:
 	weight_grid(
-	size_t                            weight_id         ,
-	const vector<weight_grid_struct>& weight_grid_table
+	size_t                                   weight_id         ,
+	const CppAD::vector<weight_grid_struct>& weight_grid_table
 	);
 	//
 	size_t age_size(void) const
 	{	return age_id_.size(); }
 	size_t time_size(void) const
-	{	return time_id.size(); }
+	{	return time_id_.size(); }
 	//
 	size_t age_id(size_t i) const
 	{	return age_id_[i]; }
@@ -152,4 +155,8 @@ public:
 		return weight_[ i * time_id_.size() + j]; 
 	}
 
+};
+
 } // END_DISMOD_AT_NAMESPACE
+
+# endif
