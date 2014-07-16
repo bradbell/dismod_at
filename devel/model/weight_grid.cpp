@@ -1,3 +1,13 @@
+// $Id$
+/* --------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-------------------------------------------------------------------------- */
 
 namespace {
 	void unique_insert_sort(
@@ -14,7 +24,7 @@ namespace {
 		if( vec[i] == element )
 			return;
 		vec.push_back( vec[n-1] );
-		j = n - 1;
+		size_t j = n - 1;
 		while( j > i )
 			vec[j] = vec[j-1];
 		vec[i] = element;
@@ -45,12 +55,9 @@ weight_grid::weight_grid(
 		}
 	}
 
-	// set weight_id_
-	weight_id_ = weight_id;
-
-	// set age_grid_ 
+	// number of age and time points for this weighting
 	size_t n_age  = age_id_.size();
-	size_t n_time  = time_id_.size();
+	size_t n_time = time_id_.size();
 
 	// set weight_grid_ and count number of times each 
 	// age, time pair appears for this weight_id
@@ -70,7 +77,7 @@ weight_grid::weight_grid(
 			id            = weight_grid_table[i].time_id;
 			size_t j_time = n_time;
 			for(j = 0; j < n_time; j++ )
-				if( time_id == time_id_[j] )
+				if( is == time_id_[j] )
 					j_time = j;
 			assert( j_time < n_time );
 			size_t index = j_age * n_time + j_time;
@@ -92,7 +99,6 @@ weight_grid::weight_grid(
 		}
 	}
 }
-
 
 
 } // END_DISMOD_AT_NAMESPACE

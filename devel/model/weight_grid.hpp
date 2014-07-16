@@ -11,25 +11,108 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin weight$$
 
-$section Interpolate From Smoothing Grid to ODE Grid$$
+$section Extract Information for One Weighting Function$$
 
 $begin Syntax$$
 $codei%weight_grid %wg%(
 	%weight_id%,
 	%weight_grid_table%
 )%$$
-$icode%wg%.weight_id()
+$icode%n_age%  = %wg%.age_size()
 %$$
-$icode%wg%.age_id()
+$icode%n_time% = %wg%.time_size()
 %$$
-$icode%wg%.time_id()
+$icode%a_id%   = %wg%.age_id(%i%)
 %$$
-$icode%wg%.weight()
+$icode%t_id%   = %wg%.time_id(%j%)
+%$$
+$icode%w%      = %wg%.weight(%i%, %j%)
 %$$
 
 $head Purpose$$
 Extracts the information for one weighting from
-the database input tables.
+the $cref weight_grid_table$$.
+
+$head Constructor$$
+
+$subhead weight_id$$
+This argument has prototype
+$codei%
+	size_t %weight_id%
+%$$
+and is the $cref/weight_id/weight_grid_table/weight_id/$$ for the
+weighting that $icode wg$$ corresponds to.
+
+$subhead weight_grid_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<weight_grid_struct>& %weight_grid_table%
+%$$
+an is the $cref weight_grid_table$$.
+
+$subhead wg$$
+This result has type $code weight_grid$$.
+All of the funcition calls below are $code const$$; i.e.,
+they do not modify $icode wg$$.
+
+$head n_age$$
+This result has prototype
+$codei%
+	size_t %n_age%
+%$$
+and is the number of age values for this weighting.
+
+$head n_time$$
+This result has prototype
+$codei%
+	size_t %n_time%
+%$$
+and is the number of time values for this weighting.
+
+$head i$$
+The argument $icode i$$ has prototype
+$codei%
+	size_t %i%
+%$$
+and is the age index; $icode%i% < %n_age%$$.
+
+$head j$$
+The argument $icode j$$ has prototype
+$codei%
+	size_t %j%
+%$$
+and is the time index; $icode%j% < %n_time%$$.
+
+$head a_id$$
+This return value has prototype
+$codei%
+	size_t %a_id%
+%$$
+and is the $th i$$ $cref/age_id/weight_grid_table/age_id/$$ 
+for this weighting and increases with $icode i$$; i.e.,
+for $icode%i% < %n_age%-2$$
+$codei%
+	%wg%.age_id(%i%) < %wg%.age_id(%i%+1)
+%$$.
+
+$head t_id$$
+This return value has prototype
+$codei%
+	size_t %t_id%
+%$$
+and is the $th j$$ $cref/time_id/weight_grid_table/time_id/$$ 
+for this weighting and increases with $icode j$$; i.e.,
+for $icode%j% < %n_time%-2$$
+$codei%
+	%wg%.time_id(%j%) < %wg%.time_id(%j%+1)
+%$$.
+
+$head w$$
+This return value has prototype
+$codei%
+	double %w%
+%$$
+and is the weighting for the corresponding age and time indices.
 
 
 $end
@@ -40,8 +123,6 @@ namespace { // BEGIN_DISMOD_AT_NAMESPACE
 class weight_grid {
 	using CppAD::vector;
 private:
-	// id value for this weighting
-	size_t         weight_id_;
 	// grid of age values for this weighting
 	vector<size_t> age_id_;
 	// grid of time values for this weighting
@@ -53,18 +134,22 @@ public:
 	size_t                            weight_id         ,
 	const vector<weight_grid_struct>& weight_grid_table
 	);
+	//
+	size_t age_size(void) const
+	{	return age_id_.size(); }
+	size_t time_size(void) const
+	{	return time_id.size(); }
+	//
+	size_t age_id(size_t i) const
+	{	return age_id_[i]; }
 
-	size_t weight_id(void) const
-	{	return weight_id_; }
-
-	const vector<size_t>& age_id(void) const
-	{	return age_id_; }
-
-	const vector<size_t>& time_id(void) const
-	{	return time_id_; }
-
-	const vector<double>& weight(void) const
-	{	return weight_; }
-
+	size_t time_id(size_t j) const
+	{	return time_id_[j]; }
+	//
+	const double weight(size_t i, size_t j) const
+	{	assert( i < age_id_.size() );
+		assert( j < time_id_.size() );
+		return weight_[ i * time_id_.size() + j]; 
+	}
 
 } // END_DISMOD_AT_NAMESPACE
