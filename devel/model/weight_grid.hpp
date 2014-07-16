@@ -16,17 +16,15 @@ $section Interpolate From Smoothing Grid to ODE Grid$$
 $begin Syntax$$
 $codei%weight_grid %wg%(
 	%weight_id%,
-	%age_table%,
-	%time_table%,
 	%weight_grid_table%
 )%$$
 $icode%wg%.weight_id()
 %$$
-$icode%wg%.age_grid()
+$icode%wg%.age_id()
 %$$
-$icode%wg%.time_grid()
+$icode%wg%.time_id()
 %$$
-$icode%wg%.weight_grid()
+$icode%wg%.weight()
 %$$
 
 $head Purpose$$
@@ -45,30 +43,28 @@ private:
 	// id value for this weighting
 	size_t         weight_id_;
 	// grid of age values for this weighting
-	vector<double> age_grid_;
+	vector<size_t> age_id_;
 	// grid of time values for this weighting
-	vector<double> time_grid_;
+	vector<size_t> time_id_;
 	// vector of weights for each age, time pair
-	vector<double> weight_grid_;
+	vector<double> weight;
 public:
 	weight_grid(
 	size_t                            weight_id         ,
-	const vector<double>&             age_table         ,
-	const vector<double>&             time_table        ,
-	const vector<weight_grid_struct>& weight_grid_table i
+	const vector<weight_grid_struct>& weight_grid_table
 	);
 
 	size_t weight_id(void) const
 	{	return weight_id_; }
 
-	const vector<double>& age_grid(void) const
-	{	return age_grid_; }
+	const vector<size_t>& age_id(void) const
+	{	return age_id_; }
 
-	const vector<double>& time_grid(void) const
-	{	return time_grid_; }
+	const vector<size_t>& time_id(void) const
+	{	return time_id_; }
 
-	const vector<double>& weight_grid(void) const
-	{	return weight_grid_; }
+	const vector<double>& weight(void) const
+	{	return weight_; }
 
 
 } // END_DISMOD_AT_NAMESPACE

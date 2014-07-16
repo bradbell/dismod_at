@@ -25,24 +25,23 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 weight_grid::weight_grid(
 	size_t                            weight_id         ,
-	const vector<double>&             age_table         ,
-	const vector<double>&             time_table        ,
 	const vector<weight_grid_struct>& weight_grid_table )
-{	size_t i, j;
+{	size_t i, j, id;
 
 	using std::cerr;
 	using std::endl;
 	using std::string;
 
 	// determine the vector age_id and time_id vectors for this weight_id
-	vector<size_t> age_id_vec, time_id_vec;
+	assert( age_id_.size() == 0 );
+	assert( time_id_.size() == 0 );
 	size_t n_weight_grid = weight_grid_table.size();
 	for( i = 0; i < n_weight_grid; i++)
 	{	if( weight_grid_table[i].weight_id == weight_id )
-		{	size_t age_id  = weight_grid_table[i].age_id;
-			size_t time_id = weight_grid_table[i].age_id;
-			unique_insert_sort( age_id_vec,  age_id );
-			unique_insert_sort( time_id_vec, time_id );
+		{	id  = weight_grid_table[i].age_id;
+			unique_insert_sort( age_id_,  id );
+			id  = weight_grid_table[i].time_id;
+			unique_insert_sort( time_id_, id );
 		}
 	}
 
@@ -50,16 +49,8 @@ weight_grid::weight_grid(
 	weight_id_ = weight_id;
 
 	// set age_grid_ 
-	size_t n_age  = age_id_vec.size();
-	age_grid_.resize(n_age);
-	for(i = 0; i < n_age; i++)
-		age_grid_[i] = age_table[ age_id_vec[i] ];
-
-	// set time_grid_ 
-	size_t n_time  = time_id_vec.size();
-	time_grid_.resize(n_time);
-	for(i = 0; i < n_time; i++)
-		time_grid_[i] = time_table[ time_id_vec[i] ];
+	size_t n_age  = age_id_.size();
+	size_t n_time  = time_id_.size();
 
 	// set weight_grid_ and count number of times each 
 	// age, time pair appears for this weight_id
@@ -69,22 +60,23 @@ weight_grid::weight_grid(
 		count[i] = 0;
 	for( i = 0; i < n_weight_grid; i++)
 	{	if( weight_grid_table[i].weight_id == weight_id )
-		{	size_t age_id  = weight_grid_table[i].age_id;
-			size_t time_id = weight_grid_table[i].age_id;
+		{	id           = weight_grid_table[i].age_id;
 			size_t j_age = n_age;
 			for(j = 0; j < n_age; j++ )
-				if( age_id == age_id_vec[j] )
+				if( id == age_id_[j] )
 					j_age = j;
 			assert( j_age < n_age );
+			//
+			id            = weight_grid_table[i].time_id;
 			size_t j_time = n_time;
 			for(j = 0; j < n_time; j++ )
-				if( time_id == time_id_vec[j] )
+				if( time_id == time_id_[j] )
 					j_time = j;
 			assert( j_time < n_time );
 			size_t index = j_age * n_time + j_time;
 			count[index]++;
 			//
-			weight_grid_[index] = weight_grid_table[i].weight;
+			weight_[index] = weight_grid_table[i].weight;
 		}
 	}
 
@@ -94,8 +86,8 @@ weight_grid::weight_grid(
 		{	size_t j_time = i % n_time;
 			size_t j_age  = (i - j_time) / n_time;
 			cerr << "weight_grid table with weight_id = " << weight_id
-			<< endl << "age_id = " << age_id_vec[j_age]
-			<< ", time_id = " << time_id_vec[j_time] << " appears "
+			<< endl << "age_id = " << age_id_[j_age]
+			<< ", time_id = " << time_id_[j_time] << " appears "
 			<< count[i] << " times (not 1 time)." << endl 
 		}
 	}
