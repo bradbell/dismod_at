@@ -49,7 +49,7 @@ and for the specified $icode weight_id$$,
 
 $head Rectangular Grid$$
 For each fixed value of $icode weight_id$$ 
-the set of $icode%age_id$$, $icode time_id$$ pairs is rectangular.
+the set of $icode age_id$$, $icode time_id$$ pairs is rectangular.
 In other words,
 if an $icode age_id$$ value appears,
 it appears once with each $icode time_id$$ 

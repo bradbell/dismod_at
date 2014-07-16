@@ -11,6 +11,9 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin smooth_grid$$
 $spell
+	sg
+	dage
+	dtime
 	const
 	CppAD
 	struct
@@ -20,9 +23,9 @@ $section Extract Information for One Weighting Function$$
 
 $head Syntax$$
 $codei%smooth_grid %s%(
-	%smooth_id%,
-	%smooth_grid_table%
-)%$$
+	%smooth_id%           ,
+	%smooth_grid_table%   )
+%$$
 $icode%n_age%   = %sg%.age_size()
 %$$
 $icode%n_time%  = %sg%.time_size()
@@ -45,14 +48,14 @@ the $cref smooth_grid_table$$.
 $head Assumptions$$
 $list number$$
 Checks the $code smooth_grid$$ table
-$cref/rectangular grid/smooth_grid/Rectangular Grid/$$ assumption.
+$cref/rectangular grid/smooth_grid_table/Rectangular Grid/$$ assumption.
 $lnext
 Checks that 
-$cref/dage_like_id/smooth_grid/d_age_like_id/$$ is $code -1$$
+$cref/dage_like_id/smooth_grid_table/dage_like_id/$$ is $code -1$$
 for the maximum age points and only the maximum age points.
 $lnext
 Checks that 
-$cref/dtime_like_id/smooth_grid/d_time_like_id/$$ is $code -1$$
+$cref/dtime_like_id/smooth_grid_table/dtime_like_id/$$ is $code -1$$
 for the maximum time points and on the maximum time points.
 $lend
 
@@ -116,7 +119,7 @@ for this smoothing and increases with $icode i$$; i.e.,
 for $icode%i% < %n_age%-2%$$
 $codei%
 	%sg%.age_id(%i%) < %sg%.age_id(%i%+1)
-%$$.
+%$$
 
 $head t_id$$
 This return value has prototype
@@ -128,7 +131,7 @@ for this smoothing and increases with $icode j$$; i.e.,
 for $icode%j% < %n_time%-2%$$
 $codei%
 	%sg%.time_id(%j%) < %sg%.time_id(%j%+1)
-%$$.
+%$$
 
 $head v_like$$
 This return value has prototype
@@ -136,7 +139,7 @@ $codei%
 	size_t %v_like%
 %$$
 and is the 
-$cref/value_like_id/smooth_grid/value_like_id/$$ 
+$cref/value_like_id/smooth_grid_table/value_like_id/$$ 
 for the corresponding age and time indices.
 
 $head a_like$$
@@ -145,16 +148,7 @@ $codei%
 	size_t %a_like%
 %$$
 and is the 
-$cref/dage_like_id/smooth_grid/dage_like_id/$$ 
-for the corresponding age and time indices.
-
-$head a_like$$
-This return value has prototype
-$codei%
-	size_t %a_like%
-%$$
-and is the 
-$cref/dage_like_id/smooth_grid/dage_like_id/$$ 
+$cref/dage_like_id/smooth_grid_table/dage_like_id/$$ 
 for the corresponding age and time indices.
 
 $head t_like$$
@@ -163,8 +157,14 @@ $codei%
 	size_t %t_like%
 %$$
 and is the 
-$cref/dtime_like_id/smooth_grid/dtime_like_id/$$ 
+$cref/dtime_like_id/smooth_grid_table/dtime_like_id/$$ 
 for the corresponding age and time indices.
+
+$children%example/devel/table/smooth_grid_xam.cpp
+%$$
+$head Example$$
+The file $cref smooth_grid_xam.cpp$$ contains an example that uses
+this function.
 
 $end
 */

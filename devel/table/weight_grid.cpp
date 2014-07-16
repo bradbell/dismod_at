@@ -21,9 +21,9 @@ $section Extract Information for One Weighting Function$$
 
 $head Syntax$$
 $codei%weight_grid %wg%(
-	%weight_id%,
-	%weight_grid_table%
-)%$$
+	%weight_id%         ,
+	%weight_grid_table% )
+%$$
 $icode%n_age%  = %wg%.age_size()
 %$$
 $icode%n_time% = %wg%.time_size()
@@ -39,7 +39,7 @@ $head Purpose$$
 Extracts the information for one weighting from
 the $cref weight_grid_table$$.
 In addition, this routine checks the $code weight_grid$$ table
-$cref/rectangular grid/weight_grid/Rectangular Grid/$$ assumption.
+$cref/rectangular grid/weight_grid_table/Rectangular Grid/$$ assumption.
 
 $head Constructor$$
 
@@ -101,7 +101,7 @@ for this weighting and increases with $icode i$$; i.e.,
 for $icode%i% < %n_age%-2%$$
 $codei%
 	%wg%.age_id(%i%) < %wg%.age_id(%i%+1)
-%$$.
+%$$
 
 $head t_id$$
 This return value has prototype
@@ -113,7 +113,7 @@ for this weighting and increases with $icode j$$; i.e.,
 for $icode%j% < %n_time%-2%$$
 $codei%
 	%wg%.time_id(%j%) < %wg%.time_id(%j%+1)
-%$$.
+%$$
 
 $head w$$
 This return value has prototype
@@ -122,12 +122,17 @@ $codei%
 %$$
 and is the weighting for the corresponding age and time indices.
 
+$children%example/devel/table/weight_grid_xam.cpp
+%$$
+$head Example$$
+The file $cref weight_grid_xam.cpp$$ contains an example that uses
+this function.
 
 $end
 */
 # include <dismod_at/dismod_at.hpp>
 
-namespace {
+amespace {
 	void unique_insert_sort(
 		CppAD::vector<size_t>& vec     ,
 		size_t                 element )

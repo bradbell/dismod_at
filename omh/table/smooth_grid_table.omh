@@ -68,7 +68,7 @@ the corresponding $icode dtime_like_id$$ must be $code -1$$.
 
 $head Rectangular Grid$$
 For each fixed value of $icode smooth_id$$ 
-the set of $icode%age_id$$, $icode time_id$$ pairs is rectangular.
+the set of $icode age_id$$, $icode time_id$$ pairs is rectangular.
 In other words,
 if an $icode age_id$$ value appears,
 it appears once with each $icode time_id$$ 

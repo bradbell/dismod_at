@@ -37,6 +37,7 @@ $childtable%
 	%devel/table/get_multiplier_table.cpp
 	%devel/table/get_data_table.cpp
 	%devel/table/get_db_input.cpp
+	%devel/table/smooth_grid.cpp
 	%devel/table/weight_grid.cpp
 %$$
 
