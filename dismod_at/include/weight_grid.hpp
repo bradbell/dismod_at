@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_WEIGHT_GRID_HPP
 
 # include <cppad/cppad.hpp>
-# include <dismod_at/include/get_weight_grid.hpp>
+# include "get_weight_grid.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 

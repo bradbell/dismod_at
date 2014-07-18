@@ -18,6 +18,7 @@ see http://www.gnu.org/licenses/agpl.txt
 // devel/model directory
 # include "include/integrate_1d.hpp"
 # include "include/integrate_2d.hpp"
+# include "include/interp_weight.hpp"
 
 // devel/table directory
 # include "include/check_table_id.hpp"

@@ -132,7 +132,7 @@ $end
 */
 # include <dismod_at/dismod_at.hpp>
 
-amespace {
+namespace {
 	void unique_insert_sort(
 		CppAD::vector<size_t>& vec     ,
 		size_t                 element )
