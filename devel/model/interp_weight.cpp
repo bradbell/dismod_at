@@ -10,6 +10,13 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
 $begin interp_weight$$
+$spell
+	wg
+	const
+	CppAD
+	interp
+	dismod
+$$
 
 $index interpolate, weight$$
 $index weight, interpolate$$
