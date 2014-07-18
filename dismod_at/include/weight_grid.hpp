@@ -29,6 +29,11 @@ public:
 	size_t                                   weight_id         ,
 	const CppAD::vector<weight_grid_struct>& weight_grid_table
 	);
+	weight_grid(
+	const CppAD::vector<size_t>& age_id    ,
+	const CppAD::vector<size_t>& time_id   ,
+	const CppAD::vector<double>& weight
+	);
 	//
 	size_t age_size(void) const;
 	size_t time_size(void) const;

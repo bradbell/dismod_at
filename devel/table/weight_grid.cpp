@@ -24,6 +24,11 @@ $codei%weight_grid %wg%(
 	%weight_id%         ,
 	%weight_grid_table% )
 %$$
+$code%weight_grid %wg%(
+	%age_id%,
+	%time_id%,
+	%weight%
+%)$$
 $icode%n_age%  = %wg%.age_size()
 %$$
 $icode%n_time% = %wg%.time_size()
@@ -41,7 +46,7 @@ the $cref weight_grid_table$$.
 In addition, this routine checks the $code weight_grid$$ table
 $cref/rectangular grid/weight_grid_table/Rectangular Grid/$$ assumption.
 
-$head Constructor$$
+$head Constructor From Table$$
 
 $subhead weight_id$$
 This argument has prototype
@@ -62,6 +67,41 @@ $subhead wg$$
 This result has type $code weight_grid$$.
 All of the functions calls in the syntax above are $code const$$; i.e.,
 they do not modify $icode wg$$.
+
+$head Constructor From Vectors$$
+This constructor is used for testing purposes only:
+
+$subhead age_id$$
+This argument has prototype
+$codei%
+	const CppAD::vector<size_t>& %age_id%
+%$$
+It specifies the age grid indices; i.e.
+$codei%
+	%wg%.age_id(%i%) = %age_id%[%i%]
+%$$ 
+
+
+$subhead time_id$$
+This argument has prototype
+$codei%
+	const CppAD::vector<size_t>& %time_id%
+%$$
+It specifies the time grid indices; i.e.
+$codei%
+	%wg%.time_id(%i%) = %time_id%[%i%]
+%$$ 
+
+$subhead weight$$
+This argument has prototype
+$codei%
+	const CppAD::vector<size_t>& %weight%
+%$$
+It specifies the weight grid values in row major order; i.e.
+$codei%
+	%wg%.weight(%i%, %j%) = %time_id%[%i%*%n_time% + %j%]
+%$$ 
+
 
 $head n_age$$
 This result has prototype
@@ -173,7 +213,18 @@ double weight_grid::weight(size_t i, size_t j) const
 	return weight_[ i * time_id_.size() + j]; 
 }
 
-// Constructor
+// Vector Constructor
+weight_grid::weight_grid(
+	const CppAD::vector<size_t>& age_id    ,
+	const CppAD::vector<size_t>& time_id   ,
+	const CppAD::vector<double>& weight
+	)
+	{	age_id_  = age_id;
+		time_id_ = time_id;
+		weight_  = weight;
+	}
+
+// Table Constructor
 weight_grid::weight_grid(
 	size_t                                   weight_id         ,
 	const CppAD::vector<weight_grid_struct>& weight_grid_table )
