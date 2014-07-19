@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin interp_weight$$
 $spell
+	interpolant
 	wg
 	const
 	CppAD
@@ -25,7 +26,7 @@ $index interp_weight$$
 $section Interpolate Weight Grid$$
 
 $head Syntax$$
-$codei%interp_weight(
+$codei%weight% = interp_weight(
 	%age%, %time%, %wg%, %age_table%, %time_table%, %i_wg%, %j_wg%
 )%$$
 
@@ -103,6 +104,20 @@ $icode%
 %$$.
 Its output value satisfies the condition above,
 or is as close as possible under the limits for $icode j_wg$$.
+
+$head weight$$
+The return value has prototype
+$codei%
+	double %weight%
+%$$
+It is the value of the bilinear interpolant at the specified
+$icode age$$ and $icode time$$.
+
+$children%example/devel/model/interp_weight_xam.cpp
+%$$
+$head Example$$
+The file $cref interp_weight_xam.cpp$$ contains an example and test
+of using this routine.
 
 $end
 ------------------------------------------------------------------------------

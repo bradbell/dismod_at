@@ -24,11 +24,8 @@ $codei%weight_grid %wg%(
 	%weight_id%         ,
 	%weight_grid_table% )
 %$$
-$code%weight_grid %wg%(
-	%age_id%,
-	%time_id%,
-	%weight%
-%)$$
+$codei%weight_grid %wg%( %age_id%, %time_id%, %weight%)
+%$$
 $icode%n_age%  = %wg%.age_size()
 %$$
 $icode%n_time% = %wg%.time_size()

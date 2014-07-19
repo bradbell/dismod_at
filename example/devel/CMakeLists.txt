@@ -18,6 +18,7 @@ ADD_EXECUTABLE(devel EXCLUDE_FROM_ALL
 	devel.cpp
 	model/integrate_1d_xam.cpp
 	model/integrate_2d_xam.cpp
+	model/interp_weight_xam.cpp
 	table/get_age_table_xam.cpp
 	table/get_covariate_table_xam.cpp
 	table/get_data_table_xam.cpp
