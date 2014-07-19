@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL 
+	model/eigen_ode2.cpp
 	model/integrate_1d.cpp
 	model/integrate_2d.cpp
 	model/interp_weight.cpp

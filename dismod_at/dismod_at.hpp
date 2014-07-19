@@ -16,6 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 
 // devel/model directory
+# include "include/eigen_ode2.hpp"
 # include "include/integrate_1d.hpp"
 # include "include/integrate_2d.hpp"
 # include "include/interp_weight.hpp"

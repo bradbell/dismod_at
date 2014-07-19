@@ -32,6 +32,7 @@ $end
 
 
 // prototype for each of the tests
+extern bool eigen_ode2_xam(void);
 extern bool integrate_1d_xam(void);
 extern bool integrate_2d_xam(void);
 extern bool interp_weight_xam(void);
@@ -88,6 +89,7 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
+	RUN(eigen_ode2_xam);
 	RUN(integrate_1d_xam);
 	RUN(integrate_2d_xam);
 	RUN(interp_weight_xam);
