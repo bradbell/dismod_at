@@ -226,6 +226,7 @@ $end
 # include <cmath>
 # include <algorithm>
 # include <dismod_at/dismod_at.hpp>
+# include <cppad/cppad.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -234,8 +235,10 @@ void eigen_ode2(
 	const CppAD::vector<double>& a   , 
 	const CppAD::vector<double>& yi  ,
 	      CppAD::vector<double>& yf  )
-{	using std::fabs;
-	using std::exp;
+{	using CppAD::abs;
+	using CppAD::exp;
+	using CppAD::sqrt;
+	//
 	assert( a.size() == 4 );
 	assert( yi.size() == 2 );
 	assert( yf.size() == 2 );
@@ -246,12 +249,12 @@ void eigen_ode2(
 	double yi1 = yi[0], yi2 = yi[1];
 
 	// sqrt root of double precision machine epsilon
-	double eps = std::sqrt( std::numeric_limits<double>::epsilon() );
+	double eps = sqrt( std::numeric_limits<double>::epsilon() );
 
 	// determine maximum abosolute value in matrix
-	double norm_a = fabs( a0 );
+	double norm_a = abs( a0 );
 	for(i = 1; i < 4; i++)
-		norm_a = std::max( norm_a, fabs(a[i]) );
+		norm_a += abs(a[i]);
 	if( norm_a == 0.0 )
 	{	yf = yi; 
 		return;
@@ -259,14 +262,13 @@ void eigen_ode2(
 
 	// discriminant in the quadratic equation for eigen-values
 	double disc = (a0 - a3)*(a0 - a3) + 4.0*a1*a2;
+	assert( disc >= 0.0 );
+	double root_disc = sqrt( disc );
 
-	// possible negative discriminant due to round-off
-	double root_disc = std::sqrt( std::max(0.0, disc) );
-
-	if( std::sqrt( a1 * a2 ) < eps * norm_a )
+	if( sqrt( a1 * a2 ) < eps * norm_a )
 	{	// in this case will will use splitting; i.e., approxiamte
 		// a[1] or a[2] as being zero.
-		bool switch_y = fabs( a1 ) > fabs( a2 );
+		bool switch_y = abs( a1 ) > abs( a2 );
 		if( switch_y )
 		{	std::swap(a0, a3);
 			std::swap(a1, a2);
@@ -277,7 +279,7 @@ void eigen_ode2(
 		double order_1  = tf;
 		double order_2  = order_1 * (a0 - a3) * tf / 2.0; 
 		double term     = order_1 + order_2;
-		if( fabs(order_2) > eps * order_1 )
+		if( abs(order_2) > eps * order_1 )
 			term = (exp( (a0 - a3) * tf ) - 1.0) / (a0 - a3);
 
 		double yf1 = yi1 * exp( a0 * tf );
