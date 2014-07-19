@@ -266,28 +266,24 @@ void eigen_ode2(
 	assert( disc >= 0.0 );
 	double root_disc = sqrt( disc );
 
-	if( sqrt( a1 * a2 ) < eps * norm_a )
-	{	// in this case will will use splitting; i.e., approxiamte
-		double order_1  = tf;
-		double a_diff   = CondExpGt(abs(a1), abs(a2), a3 - a0, a0 - a3);
-		double order_2  = order_1 * a_diff * tf / 2.0; 
-		double approx   = order_1 + order_2;
-		double exact    = (exp( a_diff * tf ) - 1.0) / a_diff;
-		double term     = CondExpGt(abs(order_2), eps*order_1, exact, approx);
+	// in this case will will use splitting; i.e., approxiamte
+	double order_1  = tf;
+	double a_diff   = CondExpGt(abs(a1), abs(a2), a3 - a0, a0 - a3);
+	double order_2  = order_1 * a_diff * tf / 2.0; 
+	double approx   = order_1 + order_2;
+	double exact    = (exp( a_diff * tf ) - 1.0) / a_diff;
+	double term     = CondExpGt(abs(order_2), eps*order_1, exact, approx);
 
-		// a[1] = 0: term = { exp[ (a0 - a3)*tf ] - 1 } / (a0 - a3)
-		double yf1_a1_0 = yi1 * exp( a0 * tf );
-		double yf2_a1_0 = exp( a3 * tf )*( yi2 + a2 * yi1 * term );
+	// a[1] = 0: term = { exp[ (a0 - a3)*tf ] - 1 } / (a0 - a3)
+	double yf1_a1_0 = yi1 * exp( a0 * tf );
+	double yf2_a1_0 = exp( a3 * tf )*( yi2 + a2 * yi1 * term );
 
-		// a[2] = 0: term = { exp[ (a3 - a0)*tf ] - 1 } / (a3 - a0)
-		double yf2_a2_0 = yi2 * exp( a3 * tf );
-		double yf1_a2_0 = exp( a0 * tf )*( yi1 + a1 * yi2 * term );
+	// a[2] = 0: term = { exp[ (a3 - a0)*tf ] - 1 } / (a3 - a0)
+	double yf2_a2_0 = yi2 * exp( a3 * tf );
+	double yf1_a2_0 = exp( a0 * tf )*( yi1 + a1 * yi2 * term );
 
-		yf[0] = CondExpGt(abs(a1), abs(a2), yf1_a2_0, yf1_a1_0);
-		yf[1] = CondExpGt(abs(a1), abs(a2), yf2_a2_0, yf2_a1_0);
-
-		return;
-	}
+	double yf1_split = CondExpGt(abs(a1), abs(a2), yf1_a2_0, yf1_a1_0);
+	double yf2_split = CondExpGt(abs(a1), abs(a2), yf2_a2_0, yf2_a1_0);
 
 	// use eigen vectors
 	double lambda_plus  = ((a0 + a3) + root_disc) / 2.0;
@@ -302,11 +298,17 @@ void eigen_ode2(
 	double zf_plus      = zi_plus  * exp( lambda_plus  * tf );
 	double zf_minus     = zi_minus * exp( lambda_minus * tf );
 	//
-	double yf2          = (zf_plus - zf_minus) * a2 / root_disc;
- 	double yf1          = zf_plus - u_plus * yf2;
+	double yf2_eigen    = (zf_plus - zf_minus) * a2 / root_disc;
+ 	double yf1_eigen    = zf_plus - u_plus * yf2_eigen;
 	//
-	yf[0] = yf1;
-	yf[1] = yf2;
+	if( sqrt( a1 * a2 ) < eps * norm_a )
+	{	yf[0] = yf1_split;
+		yf[1] = yf2_split;
+	}
+	else
+	{	yf[0] = yf1_eigen;
+		yf[1] = yf2_eigen;
+	}
 	//
 	return;
 }
