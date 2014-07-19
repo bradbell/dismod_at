@@ -239,6 +239,7 @@ void eigen_ode2(
 	using CppAD::exp;
 	using CppAD::sqrt;
 	using CppAD::CondExpGt;
+	using CppAD::CondExpEq;
 	//
 	assert( a.size() == 4 );
 	assert( yi.size() == 2 );
@@ -256,10 +257,6 @@ void eigen_ode2(
 	double norm_a = abs( a0 );
 	for(i = 1; i < 4; i++)
 		norm_a += abs(a[i]);
-	if( norm_a == 0.0 )
-	{	yf = yi; 
-		return;
-	}
 
 	// discriminant in the quadratic equation for eigen-values
 	double disc = (a0 - a3)*(a0 - a3) + 4.0*a1*a2;
@@ -301,14 +298,11 @@ void eigen_ode2(
 	double yf2_eigen    = (zf_plus - zf_minus) * a2 / root_disc;
  	double yf1_eigen    = zf_plus - u_plus * yf2_eigen;
 	//
-	if( sqrt( a1 * a2 ) < eps * norm_a )
-	{	yf[0] = yf1_split;
-		yf[1] = yf2_split;
-	}
-	else
-	{	yf[0] = yf1_eigen;
-		yf[1] = yf2_eigen;
-	}
+	yf[0] = CondExpGt( sqrt(a1*a2), eps*norm_a, yf1_eigen, yf1_split);
+	yf[0] = CondExpEq(      norm_a,        0.0,     yi[0],     yf[0]);
+	//
+	yf[1] = CondExpGt( sqrt(a1*a2), eps*norm_a, yf2_eigen, yf2_split);
+	yf[1] = CondExpEq(      norm_a,        0.0,     yi[1],     yf[1]);
 	//
 	return;
 }
