@@ -238,6 +238,7 @@ void eigen_ode2(
 {	using CppAD::abs;
 	using CppAD::exp;
 	using CppAD::sqrt;
+	using CppAD::CondExpGt;
 	//
 	assert( a.size() == 4 );
 	assert( yi.size() == 2 );
@@ -267,32 +268,24 @@ void eigen_ode2(
 
 	if( sqrt( a1 * a2 ) < eps * norm_a )
 	{	// in this case will will use splitting; i.e., approxiamte
-		// a[1] or a[2] as being zero.
-		bool switch_y = abs( a1 ) > abs( a2 );
-		if( switch_y )
-		{	std::swap(a0, a3);
-			std::swap(a1, a2);
-			std::swap(yi1, yi2);
-		}
-
-		// approximation term = { exp[ (a0 - a3)*tf ] - 1 } / (a0 - a3)
 		double order_1  = tf;
-		double order_2  = order_1 * (a0 - a3) * tf / 2.0; 
-		double term     = order_1 + order_2;
-		if( abs(order_2) > eps * order_1 )
-			term = (exp( (a0 - a3) * tf ) - 1.0) / (a0 - a3);
+		double a_diff   = CondExpGt(abs(a1), abs(a2), a3 - a0, a0 - a3);
+		double order_2  = order_1 * a_diff * tf / 2.0; 
+		double approx   = order_1 + order_2;
+		double exact    = (exp( a_diff * tf ) - 1.0) / a_diff;
+		double term     = CondExpGt(abs(order_2), eps*order_1, exact, approx);
 
-		double yf1 = yi1 * exp( a0 * tf );
-		double yf2 = exp( a3 * tf )*( yi2 + a2 * yi1 * term );
+		// a[1] = 0: term = { exp[ (a0 - a3)*tf ] - 1 } / (a0 - a3)
+		double yf1_a1_0 = yi1 * exp( a0 * tf );
+		double yf2_a1_0 = exp( a3 * tf )*( yi2 + a2 * yi1 * term );
 
-		if( switch_y )
-		{	yf[0] = yf2;
-			yf[1] = yf1;
-		}
-		else
-		{	yf[0] = yf1;
-			yf[1] = yf2;
-		}
+		// a[2] = 0: term = { exp[ (a3 - a0)*tf ] - 1 } / (a3 - a0)
+		double yf2_a2_0 = yi2 * exp( a3 * tf );
+		double yf1_a2_0 = exp( a0 * tf )*( yi1 + a1 * yi2 * term );
+
+		yf[0] = CondExpGt(abs(a1), abs(a2), yf1_a2_0, yf1_a1_0);
+		yf[1] = CondExpGt(abs(a1), abs(a2), yf2_a2_0, yf2_a1_0);
+
 		return;
 	}
 
