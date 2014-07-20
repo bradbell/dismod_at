@@ -223,8 +223,6 @@ It returns true for success and false for failure.
 $end 
 ---------------------------------------------------------------------------
 */
-# include <cmath>
-# include <algorithm>
 # include <dismod_at/dismod_at.hpp>
 # include <cppad/cppad.hpp>
 
@@ -240,6 +238,7 @@ void eigen_ode2(
 	using CppAD::sqrt;
 	using CppAD::CondExpGt;
 	using CppAD::CondExpEq;
+	using CppAD::numeric_limits;
 	//
 	assert( a.size() == 4 );
 	assert( yi.size() == 2 );
@@ -251,7 +250,7 @@ void eigen_ode2(
 	double yi1 = yi[0], yi2 = yi[1];
 
 	// sqrt root of double precision machine epsilon
-	double eps = sqrt( std::numeric_limits<double>::epsilon() );
+	double eps = sqrt( numeric_limits<double>::epsilon() );
 
 	// determine maximum abosolute value in matrix
 	double norm_a = abs( a0 );
