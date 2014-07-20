@@ -45,20 +45,20 @@ and there is at least one non-zero entry in the matrix.
 (In the case where $latex A = 0$$, we have $latex y( t_f ) = y(0)$$.)
 
 $head Float$$
-The type $icode Float$$ must be one ofthe following:
+The type $icode Float$$ must be one of the following:
 $code double$$, $code CppAD::AD<double>$$
 
 $head tf$$
 This argument has prototype
 $codei%
-	const Float& %tf%
+	const %Float%& %tf%
 %$$
 It specifies the final time; i.e. $latex t_f$$.
 
 $head a$$
 This argument has prototype
 $codei%
-	const CppAD::vector<Float>& %a%
+	const CppAD::vector<%Float%>& %a%
 %$$
 and size four.
 It specifies the matrix $latex A$$ 
@@ -80,7 +80,7 @@ A
 $head yi$$
 This argument has prototype
 $codei%
-	const CppAD::vector<Float>& %yi%
+	const CppAD::vector<%Float%>& %yi%
 %$$
 and size two.
 It specifies the vector $latex y( 0 )$$, to be specific,
@@ -92,7 +92,7 @@ $latex y_2 ( 0 ) =$$ $icode%yi%[1]%$$.
 $head yf$$
 This argument has prototype
 $codei%
-	CppAD::vector<Float>& %yf%
+	CppAD::vector<%Float%>& %yf%
 %$$
 and size two.
 The input value of its elements does not matter.
