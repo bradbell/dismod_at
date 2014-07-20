@@ -14,11 +14,12 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 
 namespace dismod_at {
+	template <class Float>
 	extern void eigen_ode2(
-		double tf                        , 
-		const CppAD::vector<double>& a   , 
-		const CppAD::vector<double>& yi  ,
-		      CppAD::vector<double>& yf
+		const Float&                 tf  , 
+		const CppAD::vector<Float>&  a   , 
+		const CppAD::vector<Float>&  yi  ,
+		      CppAD::vector<Float>&  yf
 	);
 }
 # endif

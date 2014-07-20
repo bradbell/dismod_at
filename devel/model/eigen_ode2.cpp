@@ -228,11 +228,12 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
+template <class Float>
 void eigen_ode2(
-	double tf                        , 
-	const CppAD::vector<double>& a   , 
-	const CppAD::vector<double>& yi  ,
-	      CppAD::vector<double>& yf  )
+	const Float&                 tf  , 
+	const CppAD::vector<Float>&  a   , 
+	const CppAD::vector<Float>&  yi  ,
+	      CppAD::vector<Float>&  yf  )
 {	using CppAD::abs;
 	using CppAD::exp;
 	using CppAD::sqrt;
@@ -246,56 +247,56 @@ void eigen_ode2(
 	assert( a[1] * a[2] >= 0.0 );
 
 	size_t i;
-	double a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3];
-	double yi1 = yi[0], yi2 = yi[1];
+	Float a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3];
+	Float yi1 = yi[0], yi2 = yi[1];
 
 	// sqrt root of double precision machine epsilon
-	double eps = sqrt( numeric_limits<double>::epsilon() );
+	Float eps = sqrt( numeric_limits<Float>::epsilon() );
 
 	// determine maximum abosolute value in matrix
-	double norm_a = abs( a0 );
+	Float norm_a = abs( a0 );
 	for(i = 1; i < 4; i++)
 		norm_a += abs(a[i]);
 
 	// discriminant in the quadratic equation for eigen-values
-	double disc = (a0 - a3)*(a0 - a3) + 4.0*a1*a2;
+	Float disc = (a0 - a3)*(a0 - a3) + 4.0*a1*a2;
 	assert( disc >= 0.0 );
-	double root_disc = sqrt( disc );
+	Float root_disc = sqrt( disc );
 
 	// in this case will will use splitting; i.e., approxiamte
-	double order_1  = tf;
-	double a_diff   = CondExpGt(abs(a1), abs(a2), a3 - a0, a0 - a3);
-	double order_2  = order_1 * a_diff * tf / 2.0; 
-	double approx   = order_1 + order_2;
-	double exact    = (exp( a_diff * tf ) - 1.0) / a_diff;
-	double term     = CondExpGt(abs(order_2), eps*order_1, exact, approx);
+	Float order_1  = tf;
+	Float a_diff   = CondExpGt(abs(a1), abs(a2), a3 - a0, a0 - a3);
+	Float order_2  = order_1 * a_diff * tf / 2.0; 
+	Float approx   = order_1 + order_2;
+	Float exact    = (exp( a_diff * tf ) - 1.0) / a_diff;
+	Float term     = CondExpGt(abs(order_2), eps*order_1, exact, approx);
 
 	// a[1] = 0: term = { exp[ (a0 - a3)*tf ] - 1 } / (a0 - a3)
-	double yf1_a1_0 = yi1 * exp( a0 * tf );
-	double yf2_a1_0 = exp( a3 * tf )*( yi2 + a2 * yi1 * term );
+	Float yf1_a1_0 = yi1 * exp( a0 * tf );
+	Float yf2_a1_0 = exp( a3 * tf )*( yi2 + a2 * yi1 * term );
 
 	// a[2] = 0: term = { exp[ (a3 - a0)*tf ] - 1 } / (a3 - a0)
-	double yf2_a2_0 = yi2 * exp( a3 * tf );
-	double yf1_a2_0 = exp( a0 * tf )*( yi1 + a1 * yi2 * term );
+	Float yf2_a2_0 = yi2 * exp( a3 * tf );
+	Float yf1_a2_0 = exp( a0 * tf )*( yi1 + a1 * yi2 * term );
 
-	double yf1_split = CondExpGt(abs(a1), abs(a2), yf1_a2_0, yf1_a1_0);
-	double yf2_split = CondExpGt(abs(a1), abs(a2), yf2_a2_0, yf2_a1_0);
+	Float yf1_split = CondExpGt(abs(a1), abs(a2), yf1_a2_0, yf1_a1_0);
+	Float yf2_split = CondExpGt(abs(a1), abs(a2), yf2_a2_0, yf2_a1_0);
 
 	// use eigen vectors
-	double lambda_plus  = ((a0 + a3) + root_disc) / 2.0;
-	double lambda_minus = ((a0 + a3) - root_disc) / 2.0;
+	Float lambda_plus  = ((a0 + a3) + root_disc) / 2.0;
+	Float lambda_minus = ((a0 + a3) - root_disc) / 2.0;
 	//
-	double u_plus       = (lambda_plus  - a0) / a2;
-	double u_minus      = (lambda_minus - a0) / a2;
+	Float u_plus       = (lambda_plus  - a0) / a2;
+	Float u_minus      = (lambda_minus - a0) / a2;
 	//
-	double zi_plus      = yi1 + u_plus  * yi2;
-	double zi_minus     = yi1 + u_minus * yi2;
+	Float zi_plus      = yi1 + u_plus  * yi2;
+	Float zi_minus     = yi1 + u_minus * yi2;
 	//
-	double zf_plus      = zi_plus  * exp( lambda_plus  * tf );
-	double zf_minus     = zi_minus * exp( lambda_minus * tf );
+	Float zf_plus      = zi_plus  * exp( lambda_plus  * tf );
+	Float zf_minus     = zi_minus * exp( lambda_minus * tf );
 	//
-	double yf2_eigen    = (zf_plus - zf_minus) * a2 / root_disc;
- 	double yf1_eigen    = zf_plus - u_plus * yf2_eigen;
+	Float yf2_eigen    = (zf_plus - zf_minus) * a2 / root_disc;
+ 	Float yf1_eigen    = zf_plus - u_plus * yf2_eigen;
 	//
 	yf[0] = CondExpGt( sqrt(a1*a2), eps*norm_a, yf1_eigen, yf1_split);
 	yf[0] = CondExpEq(      norm_a,        0.0,     yi[0],     yf[0]);
@@ -305,5 +306,13 @@ void eigen_ode2(
 	//
 	return;
 }
+
+// instantiate double version
+template void eigen_ode2<double>(
+	const double&                 tf  , 
+	const CppAD::vector<double>&  a   , 
+	const CppAD::vector<double>&  yi  ,
+	      CppAD::vector<double>&  yf
+);
 
 } // END DISMOD_AT_NAMESPACE
