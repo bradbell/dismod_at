@@ -24,22 +24,16 @@ $$
 $end
 */
 // BEGIN C++
-# include <cmath>
-
-// Runge45 requires fabs to be defined (not std::fabs)
-// <cppad/cppad.hpp> defines this for doubles, but runge_45.hpp does not. 
-using std::fabs;
-# include <cppad/runge_45.hpp>
-
 # include <dismod_at/dismod_at.hpp>
 	
 namespace {
+	typedef CppAD::AD<double> Float;
 	class Fun {
-		typedef CppAD::vector<double> vector;
+		typedef CppAD::vector<Float> vector;
 	private:
 		vector a_;
 	public:
-		void Ode(const double& t, const vector& y, vector& yp)
+		void Ode(const Float& t, const vector& y, vector& yp)
 		{	yp[0] = a_[0] * y[0] + a_[1] * y[1]; 
 			yp[1] = a_[2] * y[0] + a_[3] * y[1]; 
 			return;
@@ -53,10 +47,10 @@ namespace {
 
 bool eigen_ode2_xam(void)
 {	bool ok = true;
-	typedef CppAD::vector<double> vector;
+	typedef CppAD::vector<Float> vector;
 	//
 	// solve ODE using eigen_ode2
-	double tf = 0.25;
+	Float tf = 0.25;
 	vector a(4), yi(2), yf(2);
 	a[0] = -3.0;  a[1] = 0.0;
 	a[2] = 0.0;   a[3] = -4.0;
@@ -68,7 +62,7 @@ bool eigen_ode2_xam(void)
 	Fun F;
 	F.set(a);
 	size_t M  = 20;
-	double ti = 0.0;
+	Float ti = 0.0;
 	vector xi = yi;
 	vector xf = CppAD::Runge45(F, M, ti, tf, yi);
 	//

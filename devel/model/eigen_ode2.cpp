@@ -44,17 +44,21 @@ $latex \[
 and there is at least one non-zero entry in the matrix.
 (In the case where $latex A = 0$$, we have $latex y( t_f ) = y(0)$$.)
 
+$head Float$$
+The type $icode Float$$ must be one ofthe following:
+$code double$$, $code CppAD::AD<double>$$
+
 $head tf$$
 This argument has prototype
 $codei%
-	double %tf%
+	const Float& %tf%
 %$$
 It specifies the final time; i.e. $latex t_f$$.
 
 $head a$$
 This argument has prototype
 $codei%
-	const CppAD::vector<double>& %a%
+	const CppAD::vector<Float>& %a%
 %$$
 and size four.
 It specifies the matrix $latex A$$ 
@@ -76,7 +80,7 @@ A
 $head yi$$
 This argument has prototype
 $codei%
-	const CppAD::vector<double>& %yi%
+	const CppAD::vector<Float>& %yi%
 %$$
 and size two.
 It specifies the vector $latex y( 0 )$$, to be specific,
@@ -88,7 +92,7 @@ $latex y_2 ( 0 ) =$$ $icode%yi%[1]%$$.
 $head yf$$
 This argument has prototype
 $codei%
-	CppAD::vector<double>& %yf%
+	CppAD::vector<Float>& %yf%
 %$$
 and size two.
 The input value of its elements does not matter.
@@ -250,7 +254,7 @@ void eigen_ode2(
 	Float a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3];
 	Float yi1 = yi[0], yi2 = yi[1];
 
-	// sqrt root of double precision machine epsilon
+	// sqrt root of Float machine epsilon
 	Float eps = sqrt( numeric_limits<Float>::epsilon() );
 
 	// determine maximum abosolute value in matrix
@@ -298,21 +302,27 @@ void eigen_ode2(
 	Float yf2_eigen    = (zf_plus - zf_minus) * a2 / root_disc;
  	Float yf1_eigen    = zf_plus - u_plus * yf2_eigen;
 	//
+	Float zero(0.0);
 	yf[0] = CondExpGt( sqrt(a1*a2), eps*norm_a, yf1_eigen, yf1_split);
-	yf[0] = CondExpEq(      norm_a,        0.0,     yi[0],     yf[0]);
+	yf[0] = CondExpEq(      norm_a,       zero,     yi[0],     yf[0]);
 	//
 	yf[1] = CondExpGt( sqrt(a1*a2), eps*norm_a, yf2_eigen, yf2_split);
-	yf[1] = CondExpEq(      norm_a,        0.0,     yi[1],     yf[1]);
+	yf[1] = CondExpEq(      norm_a,       zero,     yi[1],     yf[1]);
 	//
 	return;
 }
 
-// instantiate double version
-template void eigen_ode2<double>(
-	const double&                 tf  , 
-	const CppAD::vector<double>&  a   , 
-	const CppAD::vector<double>&  yi  ,
-	      CppAD::vector<double>&  yf
-);
+// instantiation macro
+# define DISMOD_AT_INSTANTIATE_EIGEN_ODE2(Float)  \
+	template void eigen_ode2<Float>(             \
+		const Float&                 tf  ,       \
+		const CppAD::vector<Float>&  a   ,       \
+		const CppAD::vector<Float>&  yi  ,       \
+	      	CppAD::vector<Float>&    yf          \
+	);
+
+// instantiations
+DISMOD_AT_INSTANTIATE_EIGEN_ODE2(double)
+DISMOD_AT_INSTANTIATE_EIGEN_ODE2( CppAD::AD<double> )
 
 } // END DISMOD_AT_NAMESPACE
