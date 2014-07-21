@@ -30,8 +30,15 @@ private:
 	CppAD::vector<size_t> dtime_like_id_;
 public:
 	smooth_grid(
-	size_t                                   smooth_id         ,
-	const CppAD::vector<smooth_grid_struct>& smooth_grid_table
+		size_t                                   smooth_id         ,
+		const CppAD::vector<smooth_grid_struct>& smooth_grid_table
+	);
+	smooth_grid(
+		const CppAD::vector<size_t>&  age_id         ,
+		const CppAD::vector<size_t>&  time_id        ,
+		const CppAD::vector<size_t>&  value_like_id  ,
+		const CppAD::vector<size_t>&  dage_like_id   ,
+		const CppAD::vector<size_t>&  dtime_like_id 
 	);
 	//
 	size_t age_size(void) const;

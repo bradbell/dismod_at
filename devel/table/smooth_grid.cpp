@@ -22,9 +22,11 @@ $$
 $section Extract Information for One Weighting Function$$
 
 $head Syntax$$
-$codei%smooth_grid %s%(
-	%smooth_id%           ,
-	%smooth_grid_table%   )
+$codei%smooth_grid %sg%(%smooth_id%, %smooth_grid_table% )
+%$$
+$codei%smooth_grid %sg%(
+	%age_id%, %time_id%, %value_like_id%, %dage_like_id%, %dtime_like_id%
+)
 %$$
 $icode%n_age%   = %sg%.age_size()
 %$$
@@ -59,7 +61,7 @@ $cref/dtime_like_id/smooth_grid_table/dtime_like_id/$$ is $code -1$$
 for the maximum time points and on the maximum time points.
 $lend
 
-$head Constructor$$
+$head Constructor From Table$$
 
 $subhead smooth_id$$
 This argument has prototype
@@ -80,6 +82,43 @@ $subhead sg$$
 This result has type $code smooth_grid$$.
 All of the functions calls in the syntax above are $code const$$; i.e.,
 they do not modify $icode sg$$.
+
+$head Constructor From Vectors$$
+This constructor is used for testing purposes only:
+
+$subhead age_id$$
+This argument has prototype
+$codei%
+	const CppAD::vector<size_t>& %age_id%
+%$$
+It specifies the age grid indices; i.e.
+$codei%
+	%sg%.age_id(%i%) = %age_id%[%i%]
+%$$ 
+
+$subhead time_id$$
+This argument has prototype
+$codei%
+	const CppAD::vector<size_t>& %time_id%
+%$$
+It specifies the time grid indices; i.e.
+$codei%
+	%sg%.time_id(%i%) = %time_id%[%i%]
+%$$ 
+
+$subhead like_id$$
+These arguments have prototype
+$codei%
+	const CppAD::vector<size_t>& %value_like_id%
+	const CppAD::vector<size_t>& %dage_like_id%
+	const CppAD::vector<size_t>& %dtime_like_id%
+%$$
+They specify the likelihood indices grid indices; i.e.
+$codei%
+	%sg%.value_like_id(%i%) = %value_like_id%[%i%]
+	%sg%.dage_like_id(%i%)  = %dage_like_id%[%i%]
+	%sg%.dtime_like_id(%i%) = %dtime_like_id%[%i%]
+%$$ 
 
 $head n_age$$
 This result has prototype
@@ -220,6 +259,21 @@ size_t smooth_grid::dtime_like_id(size_t i, size_t j) const
 	assert( j < time_id_.size() );
 	return dtime_like_id_[ i * time_id_.size() + j]; 
 }
+
+// Vector Constructor
+smooth_grid::smooth_grid(
+	const CppAD::vector<size_t>& age_id        ,
+	const CppAD::vector<size_t>& time_id       ,
+	const CppAD::vector<size_t>& value_like_id ,
+	const CppAD::vector<size_t>& dage_like_id  ,
+	const CppAD::vector<size_t>& dtime_like_id )
+	{	age_id_        = age_id;
+		time_id_       = time_id;
+		value_like_id_ = value_like_id;
+		dage_like_id_  = dage_like_id;
+		dtime_like_id_ = dtime_like_id;
+	}
+
 
 // Constructor
 smooth_grid::smooth_grid(
