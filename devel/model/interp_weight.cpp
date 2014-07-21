@@ -86,9 +86,9 @@ $codei%
 %$$
 and is between $code 0$$ and $icode%n_age%-1%$$ inclusive.
 Its input value is a hint as to where to start searching for
-$icode%
+$codei%
 	%a%(%i_wg%) <= %age% < %a%(%i_wg%+1)
-%$$.
+%$$
 Its output value satisfies the condition above,
 or is as close as possible under the limits for $icode i_wg$$.
 
@@ -99,9 +99,9 @@ $codei%
 %$$
 and is between $code 0$$ and $icode%n_time%-1%$$ inclusive.
 Its input value is a hint as to where to start searching for
-$icode%
+$codei%
 	%t%(%j_wg%) <= %time% < %t%(%j_wg%+1)
-%$$.
+%$$
 Its output value satisfies the condition above,
 or is as close as possible under the limits for $icode j_wg$$.
 
@@ -110,7 +110,8 @@ The return value has prototype
 $codei%
 	double %weight%
 %$$
-It is the value of the bilinear interpolant at the specified
+It is the value of the 
+$cref/bilinear interpolant/glossary/Bilinear Interpolant/$$ at the specified
 $icode age$$ and $icode time$$.
 
 $children%example/devel/model/interp_weight_xam.cpp

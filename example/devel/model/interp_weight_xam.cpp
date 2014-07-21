@@ -32,7 +32,7 @@ $end
 bool interp_weight_xam(void)
 {
 	bool   ok = true;
-	size_t i, j, k;
+	size_t i, j;
 	using  std::string;
 	using  CppAD::vector;	
 
@@ -54,9 +54,7 @@ bool interp_weight_xam(void)
 	vector<double> weight(n_age * n_time);
 	for(i = 0; i < n_age; i++)
 	{	for(j = 0; j < n_time; j++)
-		{	k = i * n_time + j;
 			weight[i * n_time + j] = i * j + 1;
-		}
 	}
 	dismod_at::weight_grid wg(age_id, time_id, weight);
 
@@ -72,7 +70,7 @@ bool interp_weight_xam(void)
 	);
 	double w_check  = 2.5 * 1.5 + 1.0;
 
-	ok = fabs( 1.0 - w_value / w_check  ) < 10.0 * eps;
+	ok = std::fabs( 1.0 - w_value / w_check  ) < 10.0 * eps;
 
 	return ok;
 }

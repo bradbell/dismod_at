@@ -36,6 +36,7 @@ extern bool eigen_ode2_xam(void);
 extern bool integrate_1d_xam(void);
 extern bool integrate_2d_xam(void);
 extern bool interp_weight_xam(void);
+extern bool smooth2ode_xam(void);
 //
 extern bool get_age_table_xam(void);
 extern bool get_covariate_table_xam(void);
@@ -93,6 +94,7 @@ int main(void)
 	RUN(integrate_1d_xam);
 	RUN(integrate_2d_xam);
 	RUN(interp_weight_xam);
+	RUN(smooth2ode_xam);
 	//
 	RUN(get_age_table_xam);
 	RUN(get_covariate_table_xam);

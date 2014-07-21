@@ -60,7 +60,7 @@ namespace dismod_at {
 
 		size_t n_row = table_id.size();
 		for(size_t i = 0; i < n_row; i++)
-		{	if( table_id[i] != i )
+		{	if( table_id[i] != int(i) )
 			{	string msg = table_name + "_id must start at zero";
 				msg       += " and increment by one.";
 				table_error_exit(table_name, i, msg);

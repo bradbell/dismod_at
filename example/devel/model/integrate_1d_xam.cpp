@@ -55,9 +55,6 @@ bool integrate_1d_xam(void)
 	bool   ok = true;
 	double eps = std::numeric_limits<double>::epsilon();
 
-	double a  = 0.2;
-	double b  = 1.5;
-
 	std::pair<double,double> r, s, w, c;
 	//
 	r.first  =  0.1;

@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin smooth2ode$$
 $spell
+	interpolant
 	struct
 	sg
 	const
@@ -35,6 +36,8 @@ $codei%
 	%n_age_sg%       = %sg%.age_size()
 	%n_time_sg%      = %sg%.time_size()
 %$$
+The only other $icode sg$$ functions that are used are used by 
+$code smooth2ode$$ are: $icode%sg%.age_id%$$ and $icode%sg%.time_id%$$,
 
 $head age_table$$
 This argument has prototype
@@ -87,7 +90,7 @@ in the run table.
 $head coefficient$$
 The return value has prototype
 $codei%
-	CppAD::vector<smooth2ode_struct>& coefficient
+	CppAD::vector<smooth2ode_struct>& %coefficient%
 %$$
 It size is equal to the number of ode grid points; i.e.
 $codei%
@@ -140,7 +143,8 @@ for $icode%i_sg% = 0 , %...%, %n_age_sg%-1%$$,
 and $icode%j_sg% = 0 , %...%, %n_time_sg%-1%$$,
 $icode%v%[%i_sg%, %j_sg%]%$$ is the value of a variable
 at the corresponding smoothing grid points.
-The value of this variable at the $icode%(%i%, %j%)%$$ ode grid point is
+The value of the $cref/bilinear interpolant/glossary/Bilinear Interpolant/$$
+at the $codei%(%i%, %j%)%$$ ode grid point is
 $codei%
 	%c_00% * %v%(%i_sg%,   %j_sg%  )   +
 	%c_10% * %v%(%i_sg%+1, %j_sg%  )   +
@@ -157,7 +161,18 @@ $icode j_sg$$ are the field values corresponding to
 $codei%
 	%coefficient%[ %i% * %n_time_ode% + %j% ]
 %$$
+Note that if $icode%i_sg%+1 >= %n_age_sg%$$,
+then $icode%c_10%$$ and $icode%c_11%$$ are zero.
+Furthermore 
+Note that if $icode%j_sg%+1 >= %n_time_sg%$$,
+then $icode%c_01%$$ and $icode%c_11%$$ are zero.
 
+
+$children%example/devel/model/smooth2ode_xam.cpp
+%$$
+$head Example$$
+The file $cref smooth2ode_xam.cpp$$ contains an example and test
+of using this routine.
 
 $end
 -----------------------------------------------------------------------------
@@ -178,16 +193,10 @@ CppAD::vector<smooth2ode_struct> smooth2ode(
 # ifndef NDEBUG
 	double age_min = age_table[0];
 	double age_max = age_table[ age_table.size() - 1];
-	i = 1;
-	while( age_min + (i-1) * ode_step_size < age_max )
-		i++;
-	assert( i == n_age_ode );
+	assert( age_max  <= age_min + (n_age_ode-1) * ode_step_size );
 	double time_min = time_table[0];
 	double time_max = time_table[ time_table.size() - 1];
-	j = 1;
-	while( time_min + (j-1) * ode_step_size < time_max )
-		i++;
-	assert( j == n_time_ode );
+	assert( time_max  <= time_min + (n_time_ode-1) * ode_step_size );
 # endif
 	// smoothing grid information
 	size_t i_sg        = 0;
@@ -202,7 +211,7 @@ CppAD::vector<smooth2ode_struct> smooth2ode(
 	// compute the coefficients for each computational grid point
 	CppAD::vector<smooth2ode_struct> coefficient( n_age_ode * n_time_ode );
 	for(i = 0; i < n_age_ode; i++)
-	{	double age   = i * ode_step_size;
+	{	double age   = i * ode_step_size + age_table[0];
 		//
 		if( age <= age_min_sg )
 			i_sg = 0;
@@ -223,7 +232,7 @@ CppAD::vector<smooth2ode_struct> smooth2ode(
 		//
 		for(j = 0; j < n_time_ode; j++)
 		{	// ode grid information
-			double time  = j * ode_step_size;
+			double time  = j * ode_step_size + time_table[0];
 			//
 			if( time <= time_min_sg )
 				j_sg = 0;
@@ -289,9 +298,7 @@ CppAD::vector<smooth2ode_struct> smooth2ode(
 			}
 		}
 	}
-	
-
-
+	return coefficient;
 }
 
 } // END DISMOD_AT_NAMESPACE

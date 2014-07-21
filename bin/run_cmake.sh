@@ -14,6 +14,6 @@ then
 fi
 cd build
 cmake \
-	-D extra_cxx_flags='-std=c++11' \
+	-D extra_cxx_flags='-std=c++11 -Wall' \
 	-D cppad_prefix=$HOME/prefix/cppad \
 	..
