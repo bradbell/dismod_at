@@ -26,7 +26,7 @@ $index interp_weight$$
 $section Interpolate Weight Grid$$
 
 $head Syntax$$
-$codei%weight% = interp_weight(
+$icode%weight% = interp_weight(
 	%age%, %time%, %wg%, %age_table%, %time_table%, %i_wg%, %j_wg%
 )%$$
 
@@ -64,7 +64,7 @@ and is the age values corresponding to the weight grid.
 We use the following notation below:
 For $icode%i_wg% = 0 , %...%, %n_age%-1%$$,
 $codei%
-	%a%(%i_wg%) = %age_table% [ %wg%.age_id(%i%) ]
+	%a%(%i_wg%) = %age_table% [ %wg%.age_id(%i_wg%) ]
 %$$
 
 $head time_table$$
@@ -76,7 +76,7 @@ and is the time values corresponding to the weight grid.
 We use the following notation below:
 For $icode%j_wg% = 0 , %...%, %n_time%-1%$$,
 $codei%
-	%t%(%j_wg%) = %time_table% [ %wg%.time_id(%j%) ]
+	%t%(%j_wg%) = %time_table% [ %wg%.time_id(%j_wg%) ]
 %$$
 
 $head i_wg$$

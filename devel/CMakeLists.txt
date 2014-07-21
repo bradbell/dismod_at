@@ -14,6 +14,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	model/integrate_1d.cpp
 	model/integrate_2d.cpp
 	model/interp_weight.cpp
+	model/smooth2ode.cpp
 	table/check_table_id.cpp
 	table/exec_sql_cmd.cpp
 	table/get_age_table.cpp

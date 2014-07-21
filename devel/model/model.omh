@@ -20,6 +20,7 @@ $childtable%
 	%devel/model/interp_weight.cpp
 	%devel/model/integrate_1d.cpp
 	%devel/model/integrate_2d.cpp
+	%devel/model/smooth2ode.cpp
 %$$
 
 $end

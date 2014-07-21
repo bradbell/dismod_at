@@ -6,7 +6,8 @@ $$
 $section Dismod Age Time Model$$
 
 $childtable%
-	omh/model/data_mean.omh
+	omh/model/data_mean.omh%
+	omh/model/glossary.omh
 %$$
 
 $end

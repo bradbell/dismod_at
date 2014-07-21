@@ -230,7 +230,7 @@ $end
 # include <dismod_at/dismod_at.hpp>
 # include <cppad/cppad.hpp>
 
-namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
+namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 template <class Float>
 void eigen_ode2(
