@@ -313,12 +313,12 @@ void eigen_ode2(
 }
 
 // instantiation macro
-# define DISMOD_AT_INSTANTIATE_EIGEN_ODE2(Float)  \
-	template void eigen_ode2<Float>(             \
+# define DISMOD_AT_INSTANTIATE_EIGEN_ODE2(Float)   \
+	template void eigen_ode2<Float>(              \
 		const Float&                 tf  ,       \
 		const CppAD::vector<Float>&  a   ,       \
 		const CppAD::vector<Float>&  yi  ,       \
-	      	CppAD::vector<Float>&    yf          \
+		      CppAD::vector<Float>&  yf          \
 	);
 
 // instantiations
