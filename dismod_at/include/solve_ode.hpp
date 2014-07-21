@@ -25,8 +25,8 @@ namespace dismod_at {
 		const CppAD::vector<Float>&  chi       ,
 		const CppAD::vector<Float>&  omega     ,
 		const CppAD::vector<Float>&  p_zero    ,
-		      CppAD::vector<Float>&  S         ,
-		      CppAD::vector<Float>&  C
+		      CppAD::vector<Float>&  S_out     ,
+		      CppAD::vector<Float>&  C_out
 	);
 }
 

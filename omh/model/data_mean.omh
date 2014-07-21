@@ -59,13 +59,13 @@ the functions $latex S(a,t)$$ and $latex C(a,t)$$ for $latex a > 0$$
 are defined by
 $latex \[
 \begin{array}{rcl}
-\frac{ \B{d} }{ \B{d} a }  
+( \B{d} / \B{d} a )
 S(a, a+c) 
 & = & 
 - [ \iota (a, a+c) + \omega (a, a+c) ] S(a, a+c) 
 + \rho(a, a+c) C(a, a+c) 
 \\
-\frac{ \B{d} }{ \B{d} a }  
+( \B{d} / \B{d} a )
 C(a, a+c) 
 & = & 
 + \iota(a, a+c) S(a, a+c)  
