@@ -33,8 +33,8 @@ namespace {
 	using CppAD::vector;
 	typedef CppAD::AD<double> Float;
 	Float  step_size = 1.0;
-	size_t n_age     = 2;
-	size_t n_time    = 2;
+	size_t n_age     = 4;
+	size_t n_time    = 3;
 	size_t n_grid    = n_age * n_time;
 	vector<Float> iota(n_grid), rho(n_grid), chi(n_grid), omega(n_grid);
 
@@ -63,9 +63,9 @@ namespace {
 
 	class Fun {
 	private:
-		double c_;
+		Float c_;
 	public:
-		void set_c(double c)
+		void set_c(Float c)
 		{	c_ = c; }
 		void Ode(const Float& a, const vector<Float>& y, vector<Float>& yp)
 		{	Float t = a + c_;
@@ -99,12 +99,12 @@ bool solve_ode_xam(void)
 	for(i = 0; i < n_age; i++)
 	{	double ri = double(i) / double(n_age - 1);
 		for(j = 0; j < n_time; j++)
-		{	// double rj = double(j) / double(n_time - 1);
+		{	double rj = double(j) / double(n_time - 1);
 			k        = i * n_time +  j;
-			iota[k]  = 1.00 * ri;
-			rho[k]   = 0.90;
-			chi[k]   = 0.00; 
-			omega[k] = 0.00; 
+			iota[k]  = 0.10 * ri * ri;
+			rho[k]   = 0.09 * rj * rj;
+			chi[k]   = 0.08 * ri; 
+			omega[k] = 0.07 * rj; 
 		}
 	}
 	for(j = 0; j < n_time; j++)
@@ -114,23 +114,35 @@ bool solve_ode_xam(void)
 		n_age, n_time, step_size, iota, rho, chi, omega, p_zero, S_out, C_out
 	);
 
-	// check integral along diagonal
+	// check integral along diagonal starting at age zero, time zero
+	assert( n_age > n_time );
 	Fun F;
 	F.set_c(0.0);
 	size_t M = 100;
 	Float ai = 0.0;
-	Float af = (n_age-1) * step_size;
+	Float af = (n_time-1) * step_size;
 	vector<Float> yi(2);
 	yi[0] = 1.0 - p_zero[0];
 	yi[1] = p_zero[0];
 	vector<Float> yf = CppAD::Runge45(F, M, ai, af, yi);
-	i = n_age - 1;
+	i = n_time - 1;
 	j = n_time - 1;
-	// ok &= abs( 1.0 - S_out[ i * n_time + j] / yf[0] ) < 1e-6;
-	// ok &= abs( 1.0 - C_out[ i * n_time + j] / yf[1] ) < 1e-6;
-	std::cout << std::endl;
-	std::cout << 1.0 - S_out[ i * n_time + j] / yf[0]  << std::endl;
-	std::cout << 1.0 - C_out[ i * n_time + j] / yf[1]  << std::endl;
+	ok &= abs( 1.0 - S_out[ i * n_time + j] / yf[0] ) < 1e-3;
+	ok &= abs( 1.0 - C_out[ i * n_time + j] / yf[1] ) < 1e-3;
+	// std::cout << 1.0 - S_out[ i * n_time + j] / yf[0]  << std::endl;
+	// std::cout << 1.0 - C_out[ i * n_time + j] / yf[1]  << std::endl;
+
+	// check integral for a negative cohort
+	F.set_c(-step_size);
+	af = af + step_size;
+	yf = CppAD::Runge45(F, M, ai, af, yi);
+	i = n_time;
+	j = n_time - 1;
+	ok &= abs( 1.0 - S_out[ i * n_time + j] / yf[0] ) < 1e-3;
+	ok &= abs( 1.0 - C_out[ i * n_time + j] / yf[1] ) < 1e-3;
+	// std::cout << 1.0 - S_out[ i * n_time + j] / yf[0]  << std::endl;
+	// std::cout << 1.0 - C_out[ i * n_time + j] / yf[1]  << std::endl;
+	
 
 	return ok;
 }
