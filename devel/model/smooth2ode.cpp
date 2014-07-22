@@ -23,13 +23,21 @@ $$
 $section Interpolation from Smoothing to Ode Grid$$
 
 $head Syntax$$
-$codei%dismod_at::smooth2ode %sg2ode%(
+$codei%dismod_at::smooth2ode %sg2ode%<%Float%>(
 %sg%, %age_table%, %time_table%, %n_age_ode%, %n_time_ode%, %ode_step_size%
 )
 %$$
 $icode%var_ode% = %sg2ode%.interpolate( %var_sg% )%$$
 
-$head sg$$
+$head Float$$
+The type $icode Float$$ must be one of the following:
+$code double$$, $code CppAD::AD<double>$$
+
+$head smooth2ode$$
+This constructs an object that interpolates from 
+the specified smoothing grid to the ode grid.
+
+$subhead sg$$
 This argument has prototype
 $codei%
 	const dismod_at::smooth_grid& %sg%
@@ -42,21 +50,21 @@ $codei%
 The only other $icode sg$$ functions that are used are used by 
 $code smooth2ode$$ are: $icode%sg%.age_id%$$ and $icode%sg%.time_id%$$,
 
-$head age_table$$
+$subhead age_table$$
 This argument has prototype
 $codei%
 	const CppAD::vector<double>& %age_table%
 %$$
 and is the age values corresponding to the $icode age_id$$ values.
 
-$head time_table$$
+$subhead time_table$$
 This argument has prototype
 $codei%
 	const CppAD::vector<double>& %time_table%
 %$$
 and is the time values corresponding to the $icode time_id$$ values.
 
-$head n_age_ode$$
+$subhead n_age_ode$$
 This argument has prototype
 $codei%
 	size_t %n_age_ode%
@@ -64,7 +72,7 @@ $codei%
 It is the number of points in the
 $cref/ode age grid/glossary/Ode Grid/Age, a_i/$$.
 
-$head n_time_ode$$
+$subhead n_time_ode$$
 This argument has prototype
 $codei%
 	size_t %n_time_ode%
@@ -72,7 +80,7 @@ $codei%
 It is the number of points in the
 $cref/ode time grid/glossary/Ode Grid/Time, t_j/$$.
 
-$head ode_step_size$$
+$subhead ode_step_size$$
 This argument has prototype
 $codei%
 	double %ode_step_size%
@@ -80,7 +88,11 @@ $codei%
 and is the value of $cref/ode_step_size/run_table/ode_step_size/$$
 in the run table.
 
-$head var_sg$$
+$head interpolate$$
+This is a $code const$$ function 
+that interpolates from the smoothing grid to the ode grid.
+
+$subhead var_sg$$
 This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %var_sg%
@@ -97,7 +109,7 @@ $codei%
 	%time% = %time_table%[ %sg%.time_id(%j_sg%) ] 
 %$$
 
-$head var_ode$$
+$subhead var_ode$$
 This return value has prototype
 $codei%
 	const CppAD::vector<%Float%>& %var_ode%
@@ -255,7 +267,7 @@ ode_step_size_(ode_step_size)
 
 template <class Float>
 CppAD::vector<Float> smooth2ode<Float>::interpolate(
-	const CppAD::vector<Float>& var_sg )
+	const CppAD::vector<Float>& var_sg ) const
 {	size_t i, j, k;
 	assert( var_sg.size() == n_age_sg_ * n_time_sg_ );
 	CppAD::vector<Float> var_ode( n_age_ode_ * n_time_ode_ );

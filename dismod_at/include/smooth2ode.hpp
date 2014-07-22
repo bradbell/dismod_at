@@ -45,7 +45,7 @@ public:
 	);
 	CppAD::vector<Float> interpolate(
 		const CppAD::vector<Float>&   var_sg
-	);
+	) const;
 };
 
 } // END_DISMOD_AT_NAMESPACE
