@@ -160,29 +160,29 @@ void solve_ode(
 	}
 
 	// set S and C at initial time and all ages
-	CppAD::vector<Float> a_previous(4), a(4), a_next(4), yi(2), yf(2);
-	a_previous[0] = - ( iota[0] + omega[0] );
-	a_previous[1] = + rho[0];
-	a_previous[2] = + iota[0];
-	a_previous[3] = - ( rho[0] + chi[0] + omega[0] );
+	CppAD::vector<Float> b_previous(4), b(4), b_next(4), yi(2), yf(2);
+	b_previous[0] = - ( iota[0] + omega[0] );
+	b_previous[1] = + rho[0];
+	b_previous[2] = + iota[0];
+	b_previous[3] = - ( rho[0] + chi[0] + omega[0] );
 	yi[0]         = S_out[0];
 	yi[1]         = C_out[0];
 	j = 0;
 	for(i = 1; i < n_age; i++) 
 	{	ij        = i * n_time + j;	
-		a_next[0] = - ( iota[ij] + omega[ij] );
-		a_next[1] = + rho[ij];
-		a_next[2] = + iota[ij];
-		a_next[3] = - ( rho[ij] + chi[ij] + omega[ij] );
+		b_next[0] = - ( iota[ij] + omega[ij] );
+		b_next[1] = + rho[ij];
+		b_next[2] = + iota[ij];
+		b_next[3] = - ( rho[ij] + chi[ij] + omega[ij] );
 		//
 		for(ell = 0; ell < 4; ell++)
-			a[ell] = (a_previous[ell] + a_next[ell]) / 2.0;
+			b[ell] = (b_previous[ell] + b_next[ell]) / 2.0;
 		//
-		eigen_ode2(step_size, a, yi, yf);
+		eigen_ode2(step_size, b, yi, yf);
 		//
 		S_out[ij]  = yf[0];
 		C_out[ij]  = yf[1];
-		a_previous = a_next;
+		b_previous = b_next;
 		yi         = yf;
 	}
 
@@ -191,29 +191,29 @@ void solve_ode(
 	{	j = 0;
 		i = k;
 		ij = i * n_time + j;
-		a_previous[0] = - ( iota[ij] + omega[ij] );
-		a_previous[1] = + rho[ij];
-		a_previous[2] = + iota[ij];
-		a_previous[3] = - ( rho[ij] + chi[ij] + omega[ij] );
+		b_previous[0] = - ( iota[ij] + omega[ij] );
+		b_previous[1] = + rho[ij];
+		b_previous[2] = + iota[ij];
+		b_previous[3] = - ( rho[ij] + chi[ij] + omega[ij] );
 		yi[0]         = S_out[ij];
 		yi[1]         = C_out[ij];
 		while( (i + 1 < n_age) & (j + 1 < n_time) )
 		{	i++;
 			j++;
 			ij = i * n_time + j;
-			a_next[0] = - ( iota[ij] + omega[ij] );
-			a_next[1] = + rho[ij];
-			a_next[2] = + iota[ij];
-			a_next[3] = - ( rho[ij] + chi[ij] + omega[ij] );
+			b_next[0] = - ( iota[ij] + omega[ij] );
+			b_next[1] = + rho[ij];
+			b_next[2] = + iota[ij];
+			b_next[3] = - ( rho[ij] + chi[ij] + omega[ij] );
 			//
 			for(ell = 0; ell < 4; ell++)
-				a[ell] = (a_previous[ell] + a_next[ell]) / 2.0;
+				b[ell] = (b_previous[ell] + b_next[ell]) / 2.0;
 			//
-			eigen_ode2(step_size, a, yi, yf);
+			eigen_ode2(step_size, b, yi, yf);
 			//
 			S_out[ij]  = yf[0];
 			C_out[ij]  = yf[1];
-			a_previous = a_next;
+			b_previous = b_next;
 			yi         = yf;
 		}
 	}
@@ -222,29 +222,29 @@ void solve_ode(
 	{	i = 0;
 		j = k;
 		ij = i * n_time + j;
-		a_previous[0] = - ( iota[ij] + omega[ij] );
-		a_previous[1] = + rho[ij];
-		a_previous[2] = + iota[ij];
-		a_previous[3] = - ( rho[ij] + chi[ij] + omega[ij] );
+		b_previous[0] = - ( iota[ij] + omega[ij] );
+		b_previous[1] = + rho[ij];
+		b_previous[2] = + iota[ij];
+		b_previous[3] = - ( rho[ij] + chi[ij] + omega[ij] );
 		yi[0]         = S_out[ij];
 		yi[1]         = C_out[ij];
 		while( (i + 1 < n_age) & (j + 1 < n_time) )
 		{	i++;
 			j++;
 			ij = i * n_time + j;
-			a_next[0] = - ( iota[ij] + omega[ij] );
-			a_next[1] = + rho[ij];
-			a_next[2] = + iota[ij];
-			a_next[3] = - ( rho[ij] + chi[ij] + omega[ij] );
+			b_next[0] = - ( iota[ij] + omega[ij] );
+			b_next[1] = + rho[ij];
+			b_next[2] = + iota[ij];
+			b_next[3] = - ( rho[ij] + chi[ij] + omega[ij] );
 			//
 			for(ell = 0; ell < 4; ell++)
-				a[ell] = (a_previous[ell] + a_next[ell]) / 2.0;
+				b[ell] = (b_previous[ell] + b_next[ell]) / 2.0;
 			//
-			eigen_ode2(step_size, a, yi, yf);
+			eigen_ode2(step_size, b, yi, yf);
 			//
 			S_out[ij]  = yf[0];
 			C_out[ij]  = yf[1];
-			a_previous = a_next;
+			b_previous = b_next;
 			yi         = yf;
 		}
 	}
