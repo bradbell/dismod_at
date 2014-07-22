@@ -17,21 +17,24 @@ $spell
 	const
 	dismod
 	CppAD
+	var
 $$
 
-$section Coefficients for Interpolation from Smoothing to Ode Grid$$
+$section Interpolation from Smoothing to Ode Grid$$
 
 $head Syntax$$
-$icode%coefficient% = dismod_at::smooth2ode(
+$codei%dismod_at::smooth2ode %sg2ode%(
 %sg%, %age_table%, %time_table%, %n_age_ode%, %n_time_ode%, %ode_step_size%
-)%$$
+)
+%$$
+$icode%var_ode% = %sg2ode%.interpolate( %var_sg% )%$$
 
 $head sg$$
 This argument has prototype
 $codei%
 	const dismod_at::smooth_grid& %sg%
 %$$
-and is the weight grid. We use the following notation below:
+and is the smoothing grid. We use the following notation below:
 $codei%
 	%n_age_sg%       = %sg%.age_size()
 	%n_time_sg%      = %sg%.time_size()
@@ -44,24 +47,14 @@ This argument has prototype
 $codei%
 	const CppAD::vector<double>& %age_table%
 %$$
-and is the age values corresponding to the weight grid.
-We use the following notation below:
-For $icode%i_sg% = 0 , %...%, %n_age_sg%-1%$$,
-$codei%
-	%a%(%i_sg%) = %age_table% [ %sg%.age_id(%i_sg%) ]
-%$$
+and is the age values corresponding to the $icode age_id$$ values.
 
 $head time_table$$
 This argument has prototype
 $codei%
 	const CppAD::vector<double>& %time_table%
 %$$
-and is the time values corresponding to the weight grid.
-We use the following notation below:
-For $icode%j_sg% = 0 , %...%, %n_time_sg%-1%$$,
-$codei%
-	%t%(%j_sg%) = %time_table% [ %sg%.time_id(%j_sg%) ]
-%$$
+and is the time values corresponding to the $icode time_id$$ values.
 
 $head n_age_ode$$
 This argument has prototype
@@ -87,86 +80,39 @@ $codei%
 and is the value of $cref/ode_step_size/run_table/ode_step_size/$$
 in the run table.
 
-$head coefficient$$
-The return value has prototype
+$head var_sg$$
+This argument has prototype
 $codei%
-	CppAD::vector<smooth2ode_struct>& %coefficient%
+	const CppAD::vector<%Float%>& %var_sg%
 %$$
-It size is equal to the number of ode grid points; i.e.
+and its size is $icode%n_age_sg%*%n_time_sg%$$.
+For $icode%i_sg% = 0 , %...%, %n_age_sg%-1%$$,
+$icode%j_sg% = 0 , %...%, %n_time_sg%-1%$$,
 $codei%
-	%coefficient%.size() == %n_age_ode% * %n_time_ode%
+	%var_sg%[ %i_sg% * %n_time_sg% + %j_sg% ]
 %$$
+is the value of the variable (being interpolated) at
+$codei%
+	%age%  = %age_table%[  %sg%.age_id(%i_sg%) ] 
+	%time% = %time_table%[ %sg%.time_id(%j_sg%) ] 
+%$$
+
+$head var_ode$$
+This return value has prototype
+$codei%
+	const CppAD::vector<%Float%>& %var_ode%
+%$$
+and its size is $icode%n_age_ode%*%n_time_ode%$$.
 For $icode%i% = 0 , %...%, %n_age_ode%-1%$$,
-and $icode%j% = 0 , %...%, %n_time_ode%-1%$$,
+$icode%j% = 0 , %...%, %n_time_ode%-1%$$,
 $codei%
-	%coefficient%[ %i% * %n_time_ode% + %j% ]
+	%var_sg%[ %i_sg% * %n_time_sg% + %j_sg% ]
 %$$
-is the interpolation coefficients for ode age
-$cref/a_i/glossary/Ode Grid/Age, a_i/$$ and time
-$cref/t_j/glossary/Ode Grid/Time, t_j/$$.
-This is an $code smooth2ode_struct$$ with the following fields:
-
-$subhead i_sg$$
-This field has type $code size_t$$ and 
-contains the $icode sg$$ age index for interpolating
-from the smoothing grid to the ode grid.
-
-$subhead j_sg$$
-This field has type $code size_t$$ and 
-contains the $icode sg$$ time index for interpolating
-from the smoothing grid to the ode grid.
-
-$subhead c_00$$
-This file has type $code double$$ and contains
-the coefficient for the smoothing grid index
-$codei%(%i_sg%, %j_sg%)%$$.
-
-$subhead c_10$$
-This file has type $code double$$ and contains
-the coefficient for the smoothing grid index
-$codei%(%i_sg%+1, %j_sg%)%$$.
-
-$subhead c_01$$
-This file has type $code double$$ and contains
-the coefficient for the smoothing grid index
-$codei%(%i_sg%, %j_sg%+1)%$$.
-
-$subhead c_11$$
-This file has type $code double$$ and contains
-the coefficient for the smoothing grid index
-$codei%(%i_sg%+1, %j_sg%+1)%$$.
-
-
-$head Interpolation$$
-Suppose that 
-for $icode%i_sg% = 0 , %...%, %n_age_sg%-1%$$,
-and $icode%j_sg% = 0 , %...%, %n_time_sg%-1%$$,
-$icode%v%[%i_sg%, %j_sg%]%$$ is the value of a variable
-at the corresponding smoothing grid points.
-The value of the $cref/bilinear interpolant/glossary/Bilinear Interpolant/$$
-at the $codei%(%i%, %j%)%$$ ode grid point is
+is the value of the interpolated value for the variable at
 $codei%
-	%c_00% * %v%(%i_sg%,   %j_sg%  )   +
-	%c_10% * %v%(%i_sg%+1, %j_sg%  )   +
-	%c_01% * %v%(%i_sg%,   %j_sg%+1)   +
-	%c_11% * %v%(%i_sg%+1, %j_sg%+1) 
+	%age%  = %age_table%[0] + %i% * %ode_step_size%
+	%time% = %time_table%[0] + %j% * %ode_step_size%
 %$$
-where 
-$icode c_00$$, 
-$icode c_10$$, 
-$icode c_01$$, 
-$icode c_11$$, 
-$icode i_sg$$,
-$icode j_sg$$ are the field values corresponding to 
-$codei%
-	%coefficient%[ %i% * %n_time_ode% + %j% ]
-%$$
-Note that if $icode%i_sg%+1 >= %n_age_sg%$$,
-then $icode%c_10%$$ and $icode%c_11%$$ are zero.
-Furthermore 
-Note that if $icode%j_sg%+1 >= %n_time_sg%$$,
-then $icode%c_01%$$ and $icode%c_11%$$ are zero.
-
 
 $children%example/devel/model/smooth2ode_xam.cpp
 %$$
@@ -181,13 +127,20 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<smooth2ode_struct> smooth2ode(
+template <class Float>
+smooth2ode<Float>::smooth2ode(
 	const smooth_grid&                          sg            ,
 	const CppAD::vector<double>&                age_table     ,
 	const CppAD::vector<double>&                time_table    ,
 	size_t                                      n_age_ode     ,
 	size_t                                      n_time_ode    ,
 	double                                      ode_step_size )
+: 
+n_age_sg_( sg.age_size() )     ,
+n_time_sg_( sg.time_size() )   ,
+n_age_ode_(n_age_ode)          ,
+n_time_ode_(n_time_ode)        ,
+ode_step_size_(ode_step_size) 
 {	size_t i, j;	
 	//
 # ifndef NDEBUG
@@ -209,7 +162,7 @@ CppAD::vector<smooth2ode_struct> smooth2ode(
 	double time_max_sg = time_table[ sg.time_id(j_sg) ];
 
 	// compute the coefficients for each computational grid point
-	CppAD::vector<smooth2ode_struct> coefficient( n_age_ode * n_time_ode );
+	coefficient_.resize( n_age_ode * n_time_ode );
 	for(i = 0; i < n_age_ode; i++)
 	{	double age   = i * ode_step_size + age_table[0];
 		//
@@ -253,8 +206,8 @@ CppAD::vector<smooth2ode_struct> smooth2ode(
 
 			// coefficient index information
 			size_t index = i * n_time_ode + j;
-			coefficient[index].i_sg = i_sg;
-			coefficient[index].j_sg = j_sg;
+			coefficient_[index].i_sg = i_sg;
+			coefficient_[index].j_sg = j_sg;
 
 			double a0, a1, ca0, ca1;
 			a0  = age_table[  sg.age_id(i_sg) ];
@@ -273,32 +226,65 @@ CppAD::vector<smooth2ode_struct> smooth2ode(
 			}
 
 			if( two_age & two_time )
-			{	coefficient[index].c_00 = ca0 * ct0;
-				coefficient[index].c_10 = ca1 * ct0;
-				coefficient[index].c_01 = ca0 * ct1;
-				coefficient[index].c_11 = ca1 * ct1;
+			{	coefficient_[index].c_00 = ca0 * ct0;
+				coefficient_[index].c_10 = ca1 * ct0;
+				coefficient_[index].c_01 = ca0 * ct1;
+				coefficient_[index].c_11 = ca1 * ct1;
 			}
 			else if( two_age )
-			{	coefficient[index].c_00 = ca0;
-				coefficient[index].c_10 = ca1;
-				coefficient[index].c_01 = 0.0;
-				coefficient[index].c_11 = 0.0;
+			{	coefficient_[index].c_00 = ca0;
+				coefficient_[index].c_10 = ca1;
+				coefficient_[index].c_01 = 0.0;
+				coefficient_[index].c_11 = 0.0;
 			}
 			else if( two_time )
-			{	coefficient[index].c_00 = ct0;
-				coefficient[index].c_10 = 0.0;
-				coefficient[index].c_01 = ct1;
-				coefficient[index].c_11 = 0.0;
+			{	coefficient_[index].c_00 = ct0;
+				coefficient_[index].c_10 = 0.0;
+				coefficient_[index].c_01 = ct1;
+				coefficient_[index].c_11 = 0.0;
 			}
 			else
-			{	coefficient[index].c_00 = 1.0;
-				coefficient[index].c_10 = 0.0;
-				coefficient[index].c_01 = 0.0;
-				coefficient[index].c_11 = 0.0;
+			{	coefficient_[index].c_00 = 1.0;
+				coefficient_[index].c_10 = 0.0;
+				coefficient_[index].c_01 = 0.0;
+				coefficient_[index].c_11 = 0.0;
 			}
 		}
 	}
-	return coefficient;
 }
 
+template <class Float>
+CppAD::vector<Float> smooth2ode<Float>::interpolate(
+	const CppAD::vector<Float>& var_sg )
+{	size_t i, j, k;
+	assert( var_sg.size() == n_age_sg_ * n_time_sg_ );
+	CppAD::vector<Float> var_ode( n_age_ode_ * n_time_ode_ );
+	for(i = 0; i < n_age_ode_; i++)
+	{	for(j = 0; j < n_time_ode_; j++)
+		{	k = i * n_time_ode_ + j;
+			size_t i_sg = coefficient_[k].i_sg;
+			size_t j_sg = coefficient_[k].j_sg;
+			double c_00 = coefficient_[k].c_00;
+			double c_10 = coefficient_[k].c_10;
+			double c_01 = coefficient_[k].c_01;
+			double c_11 = coefficient_[k].c_11;
+			Float  sum  = 0.0;
+			sum      += c_00 * var_sg[i_sg*n_time_sg_ + j_sg];
+			if( c_10 != 0.0 )
+				sum += c_10 * var_sg[(i_sg+1)*n_time_sg_ + j_sg];
+			if( c_01 != 0.0 )
+				sum += c_01 * var_sg[i_sg*n_time_sg_ + (j_sg+1)];
+			if( c_11 != 0.0 )
+				sum += c_11 * var_sg[(i_sg+1)*n_time_sg_ + (j_sg+1)];
+			var_ode[ i * n_time_ode_ + j ] = sum;
+		}
+	}
+	return var_ode;
+}
+
+// instantiation 
+template class smooth2ode<double>;
+template class smooth2ode< CppAD::AD<double> >;
+
 } // END DISMOD_AT_NAMESPACE
+

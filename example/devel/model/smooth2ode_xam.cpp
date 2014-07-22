@@ -35,27 +35,27 @@ bool smooth2ode_xam(void)
 	size_t i, j;
 	using  std::string;
 	using  CppAD::vector;	
-	using  dismod_at::smooth2ode_struct;
+	typedef CppAD::AD<double> Float;
 
 	double eps = std::numeric_limits<double>::epsilon();
 
 	// use smooth_grid test constructor
-	size_t n_age  = 4;
-	size_t n_time = 3;
-	vector<size_t> age_id(n_age),    time_id(n_time);
-	vector<double> age_table(n_age), time_table(n_time);
-	for(i = 0; i < n_age; i++)
+	size_t n_age_sg  = 4;
+	size_t n_time_sg = 3;
+	vector<size_t> age_id(n_age_sg),    time_id(n_time_sg);
+	vector<double> age_table(n_age_sg), time_table(n_time_sg);
+	for(i = 0; i < n_age_sg; i++)
 	{	age_id[i]    = i;
 		age_table[i] = 10.0 * i;
 	}
-	for(j = 0; j < n_time; j++)
+	for(j = 0; j < n_time_sg; j++)
 	{	time_id[j]    = j;
 		time_table[j] = 1990.0 + 10 * j;
 	}
 	// these values are not used
-	vector<size_t> value_like_id(n_age * n_time);
-	vector<size_t> dage_like_id(n_age * n_time);
-	vector<size_t> dtime_like_id(n_age * n_time);
+	vector<size_t> value_like_id(n_age_sg * n_time_sg);
+	vector<size_t> dage_like_id(n_age_sg * n_time_sg);
+	vector<size_t> dtime_like_id(n_age_sg * n_time_sg);
 	// vector constructor
 	dismod_at::smooth_grid sg(
 		age_id, time_id, value_like_id, dage_like_id, dtime_like_id
@@ -64,48 +64,59 @@ bool smooth2ode_xam(void)
 	// parameters for the ode grid
 	double ode_step_size    = 2.0;
 	size_t n_age_ode = 1;
-	while( age_table[0] + (n_age_ode-1)*ode_step_size < age_table[n_age-1] )
-			n_age_ode++;
+	double age_min = age_table[0];
+	double age_max = age_table[ age_table.size() - 1 ];
+	while(age_min + (n_age_ode-1)*ode_step_size < age_max )
+		n_age_ode++;
 	size_t n_time_ode = 1;
-	while( time_table[0] + (n_time_ode-1)*ode_step_size < time_table[n_time-1] )
-			n_time_ode++;
+	double time_min = time_table[0];
+	double time_max = time_table[ time_table.size() - 1 ];
+	while(time_min + (n_time_ode-1)*ode_step_size < time_max )
+		n_time_ode++;
 
-	// compute the interpolation coefficients on the Ode Grid
-	vector<smooth2ode_struct> coefficient = dismod_at::smooth2ode(
+	// construct the interpolation object
+	dismod_at::smooth2ode<Float> sg2ode(
 		sg, age_table, time_table, n_age_ode, n_time_ode, ode_step_size
 	);
 
-	// check minimum age an time
-	smooth2ode_struct sg_00 = coefficient[ 0 * n_time_ode + 0 ];
-	ok  &= sg_00.i_sg == 0;
-	ok  &= sg_00.j_sg == 0;
-	ok  &= std::fabs(sg_00.c_00 - 1.0) < 10. * eps;
-	ok  &= std::fabs(sg_00.c_10 - 0.0) < 10. * eps;
-	ok  &= std::fabs(sg_00.c_01 - 0.0) < 10. * eps;
-	ok  &= std::fabs(sg_00.c_11 - 0.0) < 10. * eps;
+	// variable values on smoothing grid
+	CppAD::vector<Float> var_sg(n_age_sg * n_time_sg);
+	for(i = 0; i < n_age_sg; i++)
+	{	for(j = 0; j < n_time_sg; j++)
+			var_sg[i * n_time_sg + j] = i*i + j*j;
+	}
 
-	// check another point
-	size_t i_sg    = n_age - 2;
-	size_t j_sg    = n_time - 2;
-	i              = size_t(i_sg * 10.0 / ode_step_size + 1.0);
-	j              = size_t(j_sg * 10.0 / ode_step_size + 1.0);
-	double age     = i * ode_step_size + age_table[0];
-	double time    = j * ode_step_size + time_table[0];
-	double age_sg  = i_sg * 10.0 + age_table[0];
-	double time_sg = j_sg * 10.0 + time_table[0];
-	double check;
+	// interpolate from smoothing to ode grid
+	CppAD::vector<Float> var_ode = sg2ode.interpolate(var_sg);
+
+	// check one point
+	size_t i_ode = 6;
+	size_t j_ode = 7;
+	double age   = age_table[0] + ode_step_size * i_ode;
+	double time  = time_table[0] + ode_step_size * j_ode;
+	Float  v_ode = var_ode[ i_ode * n_time_ode + j_ode ];
+	size_t i_sg  = 0;
+	while( age_table[ age_id[i_sg+1] ] < age )
+		i_sg++;
+	size_t j_sg  = 0;
+	while( time_table[ time_id[j_sg+1] ] < time )
+		j_sg++;
+	Float sum = 0.0;
+	double a0  = age_table[ age_id[i_sg] ];
+	double a1  = age_table[ age_id[i_sg+1] ];
+	double t0  = time_table[ time_id[j_sg] ];
+	double t1  = time_table[ time_id[j_sg+1] ];
+	sum  += (a1-age)*(t1-time)*var_sg[i_sg * n_time_sg + j_sg];
+	sum  += (age-a0)*(t1-time)*var_sg[(i_sg+1) * n_time_sg + j_sg];
+	sum  += (a1-age)*(time-t0)*var_sg[i_sg * n_time_sg + (j_sg+1)];
+	sum  += (age-a0)*(time-t0)*var_sg[(i_sg+1) * n_time_sg + (j_sg+1)];
+	sum /= (a1 - a0) * (t1 - t0);
 	//
-	smooth2ode_struct sg_ij = coefficient[ i * n_time_ode + j ];
-	ok   &= sg_ij.i_sg == i_sg;
-	ok   &= sg_ij.j_sg == j_sg;
-	check = (age_sg + 10.0 - age) * (time_sg + 10 - time) / 100.0;
-	ok   &= std::fabs(sg_ij.c_00 - check) < 10. * eps;
-	check = (age - age_sg) * (time_sg + 10 - time) / 100.0;
-	ok   &= std::fabs(sg_ij.c_10 - check) < 10. * eps;
-	check = (age_sg + 10.0 - age) * (time - time_sg) / 100.0;
-	ok   &= std::fabs(sg_ij.c_01 - check) < 10. * eps;
-	check = (age - age_sg) * (time - time_sg) / 100.0;
-	ok   &= std::fabs(sg_ij.c_11 - check) < 10. * eps;
+	ok  &= abs( 1.0 - sum / v_ode ) < 10. * eps;
+	//
+	// std::cout << std::endl;
+	// std::cout << "sum = " << sum << std::endl;
+	// std::cout << "v_ode = " << v_ode << std::endl;
 
 	return ok;
 }
