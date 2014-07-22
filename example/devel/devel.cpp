@@ -54,6 +54,7 @@ extern bool get_table_column_xam(void);
 extern bool get_time_table_xam(void);
 extern bool get_weight_grid_xam(void);
 extern bool smooth_grid_xam(void);
+extern bool solve_ode_xam(void);
 extern bool weight_grid_xam(void);
 
 // anonymous namespace
@@ -95,6 +96,7 @@ int main(void)
 	RUN(integrate_2d_xam);
 	RUN(interp_weight_xam);
 	RUN(smooth2ode_xam);
+	RUN(solve_ode_xam);
 	//
 	RUN(get_age_table_xam);
 	RUN(get_covariate_table_xam);

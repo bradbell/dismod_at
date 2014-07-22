@@ -146,6 +146,8 @@ void solve_ode(
 	assert( p_zero.size() == n_time );
 	assert( S_out.size() == 0 );
 	assert( C_out.size() == 0 );
+	S_out.resize( n_age * n_time );
+	C_out.resize( n_age * n_time );
 	size_t i, j, ij, k, ell;
 
 	// set S and C at initial age for all times
