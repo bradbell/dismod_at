@@ -31,16 +31,16 @@ namespace {
 	class Fun {
 		typedef CppAD::vector<Float> vector;
 	private:
-		vector a_;
+		vector b_;
 	public:
 		void Ode(const Float& t, const vector& y, vector& yp)
-		{	yp[0] = a_[0] * y[0] + a_[1] * y[1]; 
-			yp[1] = a_[2] * y[0] + a_[3] * y[1]; 
+		{	yp[0] = b_[0] * y[0] + b_[1] * y[1]; 
+			yp[1] = b_[2] * y[0] + b_[3] * y[1]; 
 			return;
 		}
-		void set(const vector& a)
-		{	a_.resize( a.size() );
-			a_ = a;
+		void set(const vector& b)
+		{	b_.resize( b.size() );
+			b_ = b;
 		}
 	};
 }
@@ -51,41 +51,41 @@ bool eigen_ode2_xam(void)
 	//
 	// solve ODE using eigen_ode2
 	Float tf = 0.25;
-	vector a(4), yi(2), yf(2);
-	a[0] = -3.0;  a[1] = 0.0;
-	a[2] = 0.0;   a[3] = -4.0;
+	vector b(4), yi(2), yf(2);
+	b[0] = -3.0;  b[1] = 0.0;
+	b[2] = 0.0;   b[3] = -4.0;
 	yi[0] = 1.0;
 	yi[1] = 2.0;
-	dismod_at::eigen_ode2(tf, a, yi, yf);
+	dismod_at::eigen_ode2(tf, b, yi, yf);
 	//
 	// solve ODE using Runge45
 	Fun F;
-	F.set(a);
+	F.set(b);
 	size_t M  = 20;
 	Float ti = 0.0;
 	vector xi = yi;
 	vector xf = CppAD::Runge45(F, M, ti, tf, yi);
 	//
 	// splitting case:
-	// a[0] = -3.0 , a[1] =  0.0
-	// a[2] =  0.0 , a[3] = -4.0
+	// b[0] = -3.0 , b[1] =  0.0
+	// b[2] =  0.0 , b[3] = -4.0
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
 	//
 	// switch during splitting case:
-	a[0] = -3.0 , a[1] =  1.0;
-	a[2] =  0.0 , a[3] = -4.0;
-	F.set(a);
-	dismod_at::eigen_ode2(tf, a, yi, yf);
+	b[0] = -3.0 , b[1] =  1.0;
+	b[2] =  0.0 , b[3] = -4.0;
+	F.set(b);
+	dismod_at::eigen_ode2(tf, b, yi, yf);
 	xf = CppAD::Runge45(F, M, ti, tf, yi);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
 	//
 	// eigen vector case 
-	a[0] = -3.0 , a[1] =  0.5;
-	a[2] =  1.0 , a[3] = -4.0;
-	F.set(a);
-	dismod_at::eigen_ode2(tf, a, yi, yf);
+	b[0] = -3.0 , b[1] =  0.5;
+	b[2] =  1.0 , b[3] = -4.0;
+	F.set(b);
+	dismod_at::eigen_ode2(tf, b, yi, yf);
 	xf = CppAD::Runge45(F, M, ti, tf, yi);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
