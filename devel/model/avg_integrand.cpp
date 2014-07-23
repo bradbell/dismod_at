@@ -56,35 +56,35 @@ $codei%
 	const CppAD::vector<dismod_at::weight_grid>& %wg_vec%
 %$$
 For each $cref/weight_id/weight_table/weight_id/$$,
-$code%
+$codei%
 	%wg_vec%[ %weight_id% ]
 %$$
 is the corresponding $cref weight_grid$$ information.
 
 $subhead data_table$$
 This argument has prototype
-$code%
+$codei%
 	const CppAD::vector<data_struct>&  %data_table%
 %$$
 and is the $cref/data_table/get_data_table/data_table/$$.
 
 $subhead integrand_table$$
 This argument has prototype
-$code%
+$codei%
 	const CppAD::vector<integrand_enum>&  %integrand_table%
 %$$
 and is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
 
 $subhead age_table$$
 This argument has prototype
-$code%
+$codei%
 	const CppAD::vector<double>&  %age_table%
 %$$
 and is the $cref/age_table/get_age_table/age_table/$$.
 
 $subhead time_table$$
 This argument has prototype
-$code%
+$codei%
 	const CppAD::vector<double>&  %time_table%
 %$$
 and is the $cref/time_table/get_time_table/time_table/$$.
