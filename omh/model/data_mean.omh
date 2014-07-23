@@ -16,7 +16,7 @@ $index mean, data model$$
 $index model, mean data$$
 $index data, mean model$$
 
-$head Model Rate Function$$
+$head Rate Functions$$
 
 $subhead iota(a,t)$$
 We use $codei%iota(%a%, %t%)%$$ and $latex \iota(a,t)$$

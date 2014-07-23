@@ -9,12 +9,20 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin integrand$$
+$begin integrand_avg$$
+$spell
+	struct
+	enum
+	const
+	wg_vec
+	CppAD
+	dismod
+$$
 
 $section Integrand Average For Each Data Point$$
 
 $head Syntax$$
-$codei%dismod_at::integrand_avg %avg_int%(
+$codei%dismod_at::integrand_avg %avg%(
 	%wg_vec%, 
 	%data_table%, 
 	%integrand_table%,
@@ -25,9 +33,13 @@ $codei%dismod_at::integrand_avg %avg_int%(
 	%ode_step_size%
 )%$$
 $codei%
-%data_mean% = avg_int%.compute(
+%data_mean% = %avg%.compute(
 	%data_id%, %iota%, %rho%, %chi%, %omega%, %S%, %C%
 )%$$
+
+$head Notation$$
+We use $icode a_min$$ for the minimum age in $cref age_table$$
+and $icode t_min$$ for the minimum time in $cref time_table$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -35,10 +47,138 @@ $code double$$, $code CppAD::AD<double>$$
 
 $head integrand_avg$$
 This constructs an object that can evaluate the 
-$cref/average integrand/model_data_mean/Average Integrand$$ 
+$cref/average integrand/model_data_mean/Average Integrand/$$ 
 for each data point. 
 
+$subhead wg_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<dismod_at::weight_grid>& %wg_vec%
+%$$
+For each $cref/weight_id/weight_table/weight_id/$$,
+$code%
+	%wg_vec%[ %weight_id% ]
+%$$
+is the corresponding $cref weight_grid$$ information.
 
+$subhead data_table$$
+This argument has prototype
+$code%
+	const CppAD::vector<data_struct>&  %data_table%
+%$$
+and is the $cref/data_table/get_data_table/data_table/$$.
+
+$subhead integrand_table$$
+This argument has prototype
+$code%
+	const CppAD::vector<integrand_enum>&  %integrand_table%
+%$$
+and is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
+
+$subhead age_table$$
+This argument has prototype
+$code%
+	const CppAD::vector<double>&  %age_table%
+%$$
+and is the $cref/age_table/get_age_table/age_table/$$.
+
+$subhead time_table$$
+This argument has prototype
+$code%
+	const CppAD::vector<double>&  %time_table%
+%$$
+and is the $cref/time_table/get_time_table/time_table/$$.
+
+$subhead n_age_ode$$
+This argument has prototype
+$codei%
+	size_t %n_age_ode%
+%$$
+It is the number of points in the
+$cref/ode age grid/glossary/Ode Grid/Age, a_i/$$.
+
+$subhead n_time_ode$$
+This argument has prototype
+$codei%
+	size_t %n_time_ode%
+%$$
+It is the number of points in the
+$cref/ode time grid/glossary/Ode Grid/Time, t_j/$$.
+
+$subhead ode_step_size$$
+This argument has prototype
+$codei%
+	double %ode_step_size%
+%$$
+and is the value of $cref/ode_step_size/run_table/ode_step_size/$$
+in the run table.
+
+
+$head compute$$
+This is a $code const$$ function that compute the 
+$cref/average integrand/model_data_mean/Average Integrand/$$ for 
+a set of data points that have the same 
+$cref/rate functions/model_data_mean/Rate Functions/$$.
+
+$subhead data_id$$
+This argument has prototype
+$codei%
+	const CppAD::vector<size_t>& %data_id%
+%$$
+We use the notation $icode n_avg$$ here and below.
+For $icode%i_avg% = 0 , %...%, %n_avg%-1%$$,
+$codei%
+	%data_id%[ %i_avg% ]
+%$$
+is the $cref/data_id/data_table/data_id/$$ for the $th i_avg$$
+result of this call to $code compute$$.
+
+$head rate$$
+For $icode rate$$ equal to $icode iota$$, $icode rho$$, $icode chi$$
+and $icode omega$$,
+this argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %rate%
+%$$
+and size $icode%n_age_ode%*%n_time_ode%$$.
+For $icode%i% = 0 , %...%, %n_age_ode%-1%$$,
+and $icode%j% = 0 , %...%, %n_time_ode%-1%$$,
+$codei% 
+	%rate%[ %i% * %n_time_ode% + %j% ]
+%$$
+is the value of the corresponding rate 
+at age $icode%a_i% = %a_min% + %i%*%ode_step_size%$$
+and time $icode%t_j% = %t_min% + %j%*%ode_step_size%$$;
+see the $cref/rate functions/model_data_mean/Rate Functions/$$. 
+
+$head S, C$$
+These arguments have prototypes
+$codei%
+	const CppAD::vector<%Float%>& %S%
+	const CppAD::vector<%Float%>& %C%
+%$$
+and their input sizes are zero.
+Upon return they have size is $icode%n_age_ode%*%n_time_ode%$$ and
+for $icode%i% = 0 , %...%, %n_age_ode%-1%$$,
+$icode%j% = 0 , %...%, %n_time_ode%-1%$$,
+$codei% 
+	%S%[ %i% * %n_time% + %j% ]  ,  %C%[ %i% * %n_time% + %j% ]
+%$$
+is the value of $latex S(a,t)$$ and $latex C(a,t)$$
+at age $icode%a_min% + %i%*%ode_step_size%$$
+and time $icode%t_min% + %j%*%ode_step_size%$$.
+
+$head data_mean$$
+The return value has prototype
+$codei%
+	CppAD::vector<%Float%> %data_mean%
+%$$
+For $icode%i_avg% = 0 , %...% , %n_avg%-1%$$,
+$icode%data_mean%[%i_avg%]%$$ is the 
+$cref/average integrand/model_data_mean/Average Integrand/$$ for
+the data point with 
+$cref/data_id/data_table/data_id/$$ equal to
+$icode%data_id%[%i_avg%]%$$.
 
 $end
 -----------------------------------------------------------------------------

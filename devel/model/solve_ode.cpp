@@ -86,7 +86,7 @@ $codei%
 is the value of the corresponding rate 
 at age $icode%a_i% = %a_min% + %i%*%step_size%$$
 and time $icode%t_j% = %t_min% + %j%*%step_size%$$;
-see the $cref/model rate functions/model_data_mean/Model Rate Function/$$. 
+see the $cref/rate functions/model_data_mean/Rate Functions/$$. 
 
 $head p_zero$$
 This argument has prototype
@@ -104,8 +104,8 @@ at time $icode%t_j% = %t_min% + %j%*%step_size%$$.
 $head S_out, C_out$$
 These arguments have prototypes
 $codei%
-	const CppAD::vector<%Float%>& %S_out%
-	const CppAD::vector<%Float%>& %C_out%
+	CppAD::vector<%Float%>& %S_out%
+	CppAD::vector<%Float%>& %C_out%
 %$$
 and their input sizes are zero.
 Upon return they have size is $icode%n_age%*%n_time%$$ and
