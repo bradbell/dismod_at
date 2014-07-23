@@ -18,7 +18,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-class integrand_avg {
+class avg_integrand {
 	typedef struct {
 		integrand_enum        integrand;
 		size_t                i_min;
@@ -34,7 +34,7 @@ private:
 	// effectively const (computed by constructor)
 	CppAD::vector<ode_point> data_info_;
 public:
-	integrand_avg(
+	avg_integrand(
 		const CppAD::vector<weight_grid>&    wg_vec          ,                 
 		const CppAD::vector<data_struct>&    data_table      ,
 		const CppAD::vector<integrand_enum>& integrand_table ,

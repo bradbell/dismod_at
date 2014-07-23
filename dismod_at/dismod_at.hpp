@@ -17,7 +17,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 // devel/model directory
 # include "include/eigen_ode2.hpp"
-# include "include/integrand_avg.hpp"
+# include "include/avg_integrand.hpp"
 # include "include/integrate_1d.hpp"
 # include "include/integrate_2d.hpp"
 # include "include/interp_weight.hpp"

@@ -22,7 +22,7 @@ $childtable%
 	%devel/model/integrate_2d.cpp
 	%devel/model/smooth2ode.cpp
 	%devel/model/solve_ode.cpp
-	%devel/model/integrand_avg.cpp
+	%devel/model/avg_integrand.cpp
 %$$
 
 $end

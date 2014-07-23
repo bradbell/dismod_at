@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin integrand_avg$$
+$begin avg_integrand$$
 $spell
 	struct
 	enum
@@ -22,7 +22,7 @@ $$
 $section Integrand Average For Each Data Point$$
 
 $head Syntax$$
-$codei%dismod_at::integrand_avg %avg%(
+$codei%dismod_at::avg_integrand %avg%(
 	%wg_vec%, 
 	%data_table%, 
 	%integrand_table%,
@@ -45,7 +45,7 @@ $head Float$$
 The type $icode Float$$ must be one of the following:
 $code double$$, $code CppAD::AD<double>$$
 
-$head integrand_avg$$
+$head avg_integrand$$
 This constructs an object that can evaluate the 
 $cref/average integrand/model_data_mean/Average Integrand/$$ 
 for each data point. 
@@ -187,7 +187,7 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-integrand_avg::integrand_avg(
+avg_integrand::avg_integrand(
 	const CppAD::vector<weight_grid>&    wg_vec          ,                 
 	const CppAD::vector<data_struct>&    data_table      ,
 	const CppAD::vector<integrand_enum>& integrand_table ,
@@ -388,7 +388,7 @@ ode_step_size_(ode_step_size)
 }
 
 template <class Float>
-CppAD::vector<Float> integrand_avg::compute(
+CppAD::vector<Float> avg_integrand::compute(
 		const CppAD::vector<size_t>&  data_id  ,
 		const CppAD::vector<Float>&   iota     ,
 		const CppAD::vector<Float>&   rho      ,
