@@ -39,17 +39,38 @@ Each name can only appear once in this table.
 Only the $cref/integrand_id/data_table/integrand_id/$$ that appear
 in the data table need appear in the integrand table.
 $table
-$icode integrand_name$$ $pre   $$ $cnext Description                   $rnext
-$code incidence$$       $cnext incidence rate                          $rnext
-$code remission$$       $cnext remission rate                          $rnext
-$code mtexcess$$        $cnext excess mortality rate                   $rnext
-$code mtother$$         $cnext other cause mortality rate              $rnext
-$code mtwith$$          $cnext with condition mortality rate           $rnext
-$code prevalence$$      $cnext prevalence                              $rnext
-$code mtspecific$$      $cnext cause specific mortality rate           $rnext
-$code mtall$$           $cnext all-cause mortality rate                $rnext
-$code mtstandard$$      $cnext standardized mortality ratio            $rnext
-$code relrisk$$         $cnext relative risk ratio
+$icode integrand_name$$ $pre   $$ $cnext Description $cnext  $pre  $$ 
+	Definition
+$rnext
+$code incidence$$       $cnext incidence rate $cnext $pre  $$
+	$icode iota$$
+$rnext
+$code remission$$       $cnext remission rate $cnext $pre  $$
+	$icode rho$$
+$rnext
+$code mtexcess$$        $cnext excess mortality rate $cnext $pre  $$
+	$icode chi$$
+$rnext
+$code mtother$$         $cnext other cause mortality rate $cnext $pre  $$
+	$icode omega$$
+$rnext
+$code mtwith$$          $cnext with condition mortality rate $cnext $pre  $$
+	$icode%omega% + %chi%$$
+$rnext
+$code prevalence$$      $cnext prevalence $cnext $pre  $$
+	$icode%P% = %C% / (%S% + %C%)%$$
+$rnext
+$code mtspecific$$      $cnext cause specific mortality rate $cnext $pre  $$
+	$icode%chi% * %P%$$
+$rnext
+$code mtall$$           $cnext all-cause mortality rate $cnext $pre  $$
+	$icode%omega% + %chi% * %P%$$
+$rnext
+$code mtstandard$$      $cnext standardized mortality ratio $cnext $pre  $$
+	$codei%[ %omega% + %chi% ] / [ %omega% + %chi% * %P% ]%$$
+$rnext
+$code relrisk$$         $cnext relative risk ratio $cnext $pre  $$
+	$codei%[ %omega% + %chi% ] / %omega%$$
 $tend
 
 $children%example/table/integrand_table.py
