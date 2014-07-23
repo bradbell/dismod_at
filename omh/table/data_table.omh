@@ -68,18 +68,24 @@ In these cases, it is the offset in the corresponding density function.
 $head age_lower$$
 This column has type $code real$$ and is the lower age limit 
 for this measurement. 
+It must be greater than or equal the minimum $cref age_table$$ value.
 
 $head age_upper$$
 This column has type $code real$$ and is the upper age limit
 for this measurement. 
+It must be greater than or equal the corresponding $icode age_lower$$
+and less than or equal the maximum $cref age_table$$ value.
 
 $head time_lower$$
 This column has type $code real$$ and is the lower time limit 
 for this measurement. 
+It must be greater than or equal the minimum $cref time_table$$ value.
 
 $head time_upper$$
 This column has type $code real$$ and is the upper time limit
 for this measurement.
+It must be greater than or equal the corresponding $icode time_lower$$
+and less than or equal the maximum $cref time_table$$ value.
 
 $head Covariates$$
 The covariate columns have type $code real$$ and column names
