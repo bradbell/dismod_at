@@ -139,8 +139,7 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-template <class Float>
-smooth2ode<Float>::smooth2ode(
+smooth2ode::smooth2ode(
 	const smooth_grid&                          sg            ,
 	const CppAD::vector<double>&                age_table     ,
 	const CppAD::vector<double>&                time_table    ,
@@ -266,7 +265,7 @@ ode_step_size_(ode_step_size)
 }
 
 template <class Float>
-CppAD::vector<Float> smooth2ode<Float>::interpolate(
+CppAD::vector<Float> smooth2ode::interpolate(
 	const CppAD::vector<Float>& var_sg ) const
 {	size_t i, j, k;
 	assert( var_sg.size() == n_age_sg_ * n_time_sg_ );
@@ -295,8 +294,13 @@ CppAD::vector<Float> smooth2ode<Float>::interpolate(
 }
 
 // instantiation 
-template class smooth2ode<double>;
-template class smooth2ode< CppAD::AD<double> >;
+# define DISMOD_AT_INSTANTIATE_SMOOTH2ODE_IMPLEMENT(Float)  \
+template CppAD::vector<Float> smooth2ode::interpolate<Float>( \
+	const CppAD::vector<Float>& var_sg                      \
+) const;
+
+DISMOD_AT_INSTANTIATE_SMOOTH2ODE_IMPLEMENT( double )
+DISMOD_AT_INSTANTIATE_SMOOTH2ODE_IMPLEMENT( CppAD::AD<double> )
 
 } // END DISMOD_AT_NAMESPACE
 

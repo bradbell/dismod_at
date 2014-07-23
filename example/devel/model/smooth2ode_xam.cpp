@@ -75,7 +75,7 @@ bool smooth2ode_xam(void)
 		n_time_ode++;
 
 	// construct the interpolation object
-	dismod_at::smooth2ode<Float> sg2ode(
+	dismod_at::smooth2ode sg2ode(
 		sg, age_table, time_table, n_age_ode, n_time_ode, ode_step_size
 	);
 

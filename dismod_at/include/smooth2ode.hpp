@@ -16,7 +16,6 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-template <class Float>
 class smooth2ode {
 	typedef struct {
 		size_t i_sg;
@@ -43,6 +42,7 @@ public:
 		size_t                                      n_time_ode    ,
 		double                                      ode_step_size
 	);
+	template <class Float>
 	CppAD::vector<Float> interpolate(
 		const CppAD::vector<Float>&   var_sg
 	) const;
