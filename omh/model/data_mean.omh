@@ -139,14 +139,20 @@ $head t_i$$
 We use $latex t_i$$ for the upper time limit;
 see $cref/time_upper/data_table/time_upper/$$.
 
-$head Averaged Integrand Ibar_i$$
+$head Average Integrand$$
 The model for the $th i$$ measurement, 
 not counting integrand effects or measurement noise, is
 $latex \[
-\bar{I}_i = 
-\frac{1}{ b(i) - a(i)} \frac{1}{ t(i) - s(i)}
-\int_{a(i)}^{b(i)}      \int_{s(i)}^{t(i)}
-w_i (a,t) I_i (a, t) \; \B{d} t \; \B{d} a 
+\left[
+\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
+	w_i (a,t) I_i (a, t) \; \B{d} t \; \B{d} a 
+\right]
+\;
+\left[
+\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)} w_i (a,t) \; \B{d} t \; \B{d} a 
+\right]^{-1}
 \] $$
-
+Note that in the case where 
+$latex a(i) = b(i)$$, $latex s(i) = t(i)$$, or both,
+the average is defined as the limiting value.
 $end

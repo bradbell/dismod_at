@@ -13,6 +13,32 @@ $begin integrand$$
 
 $section Integrand Average For Each Data Point$$
 
+$head Syntax$$
+$codei%dismod_at::integrand_avg %avg_int%(
+	%wg_vec%, 
+	%data_table%, 
+	%integrand_table%,
+	%age_table%,
+	%time_table%,
+	%n_age_ode%,
+	%n_time_ode%,
+	%ode_step_size%
+)%$$
+$codei%
+%data_mean% = avg_int%.compute(
+	%data_id%, %iota%, %rho%, %chi%, %omega%, %S%, %C%
+)%$$
+
+$head Float$$
+The type $icode Float$$ must be one of the following:
+$code double$$, $code CppAD::AD<double>$$
+
+$head integrand_avg$$
+This constructs an object that can evaluate the 
+$cref/average integrand/model_data_mean/Average Integrand$$ 
+for each data point. 
+
+
 
 $end
 -----------------------------------------------------------------------------
