@@ -285,12 +285,15 @@ smooth_grid::smooth_grid(
 	using std::endl;
 	using std::string;
 
+	// check that -1 is not a valid positive int
+	assert( -1 == int( size_t(-1) ) );
+
 	// determine the vector age_id and time_id vectors for this smooth_id
 	assert( age_id_.size() == 0 );
 	assert( time_id_.size() == 0 );
 	size_t n_smooth = smooth_grid_table.size();
-	for( i = 0; i < n_smooth; i++)
-	{	if( smooth_grid_table[i].smooth_id == smooth_id )
+	for(i = 0; i < n_smooth; i++)
+	{	if( smooth_grid_table[i].smooth_id == int( smooth_id ) )
 		{	id  = smooth_grid_table[i].age_id;
 			unique_insert_sort( age_id_,  id );
 			id  = smooth_grid_table[i].time_id;
@@ -311,7 +314,7 @@ smooth_grid::smooth_grid(
 	for(i = 0; i < n_age * n_time; i++)
 		count[i] = 0;
 	for( i = 0; i < n_smooth; i++)
-	{	if( smooth_grid_table[i].smooth_id == smooth_id )
+	{	if( smooth_grid_table[i].smooth_id == int( smooth_id ) )
 		{	id           = smooth_grid_table[i].age_id;
 			size_t j_age = n_age;
 			for(j = 0; j < n_age; j++ )
@@ -332,7 +335,7 @@ smooth_grid::smooth_grid(
 			dage_like_id_[index]  = smooth_grid_table[i].dage_like_id;
 			dtime_like_id_[index] = smooth_grid_table[i].dtime_like_id;
 			//
-			if( j_age == n_age -1 && dage_like_id_[index] != -1 )
+			if( j_age == n_age -1 && dage_like_id_[index] != size_t(-1) )
 			{	cerr << "smooth_grid table with smooth_grid_id = " << i
 				<< endl << "age_id = " << age_id_[j_age]
 				<< " is maximum age for smooth_id = " << smooth_id
@@ -340,14 +343,14 @@ smooth_grid::smooth_grid(
 				<< " is not -1" << endl;
 				exit(1);
 			}
-			if( j_age != n_age -1 && dage_like_id_[index] == -1 )
+			if( j_age != n_age -1 && dage_like_id_[index] == size_t(-1) )
 			{	cerr << "smooth_grid table with smooth_grid_id = " << i
 				<< endl << "age_id = " << age_id_[j_age]
 				<< " is not maximum age for smooth_id = " << smooth_id
 				<< endl << " but dage_like_id = -1 " << endl;
 				exit(1);
 			}
-			if( j_time == n_time -1 && dtime_like_id_[index] != -1 )
+			if( j_time == n_time -1 && dtime_like_id_[index] != size_t(-1) )
 			{	cerr << "smooth_grid table with smooth_grid_id = " << i
 				<< endl << "time_id = " << time_id_[j_time]
 				<< " is maximum time for smooth_id = " << smooth_id
@@ -355,7 +358,7 @@ smooth_grid::smooth_grid(
 				<< " is not -1" << endl;
 				exit(1);
 			}
-			if( j_time != n_time -1 && dtime_like_id_[index] == -1 )
+			if( j_time != n_time -1 && dtime_like_id_[index] == size_t(-1) )
 			{	cerr << "smooth_grid table with smooth_grid_id = " << i
 				<< endl << "time_id = " << time_id_[j_time]
 				<< " is not maximum time for smooth_id = " << smooth_id

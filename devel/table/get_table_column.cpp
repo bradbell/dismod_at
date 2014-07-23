@@ -124,7 +124,6 @@ namespace {
 	template <class Element>
 	int callback(void *result, int argc, char **argv, char **azColName)
 	{	typedef CppAD::vector<Element> vector;
-		int i;
 		assert( argc == 1 );
 		assert( result != nullptr );
 		vector* vector_result = static_cast<vector*>(result);
@@ -153,7 +152,6 @@ namespace {
 	
 		// execute sql command
 		char* zErrMsg     = nullptr;
-		void* NotUsed     = nullptr;
 		callback_type fun = callback<Element>;
 		void* result      = static_cast<void*>(&vector_result);
 		int rc = sqlite3_exec(db, cmd.c_str(), fun, result, &zErrMsg);

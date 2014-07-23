@@ -234,7 +234,7 @@ weight_grid::weight_grid(
 	assert( time_id_.size() == 0 );
 	size_t n_weight = weight_grid_table.size();
 	for( i = 0; i < n_weight; i++)
-	{	if( weight_grid_table[i].weight_id == weight_id )
+	{	if( weight_grid_table[i].weight_id == int(weight_id) )
 		{	id  = weight_grid_table[i].age_id;
 			unique_insert_sort( age_id_,  id );
 			id  = weight_grid_table[i].time_id;
@@ -253,7 +253,7 @@ weight_grid::weight_grid(
 	for(i = 0; i < n_age * n_time; i++)
 		count[i] = 0;
 	for( i = 0; i < n_weight; i++)
-	{	if( weight_grid_table[i].weight_id == weight_id )
+	{	if( weight_grid_table[i].weight_id == int(weight_id) )
 		{	id           = weight_grid_table[i].age_id;
 			size_t j_age = n_age;
 			for(j = 0; j < n_age; j++ )

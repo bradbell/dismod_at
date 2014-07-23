@@ -85,14 +85,14 @@ bool smooth_grid_xam(void)
 	//
 	ok  &= sg.dage_like_id(0, 1)  ==  2;
 	ok  &= sg.dage_like_id(1, 1)  ==  3;
-	ok  &= sg.dage_like_id(2, 1)  == -1;
+	ok  &= sg.dage_like_id(2, 1)  == size_t(-1);
 	ok  &= sg.dage_like_id(0, 0)  ==  6;
 	ok  &= sg.dage_like_id(1, 0)  ==  8;
-	ok  &= sg.dage_like_id(2, 0)  == -1;
+	ok  &= sg.dage_like_id(2, 0)  == size_t(-1);
 	//
-	ok  &= sg.dtime_like_id(0, 1) == -1;
-	ok  &= sg.dtime_like_id(1, 1) == -1;
-	ok  &= sg.dtime_like_id(2, 1) == -1;
+	ok  &= sg.dtime_like_id(0, 1) == size_t(-1);
+	ok  &= sg.dtime_like_id(1, 1) == size_t(-1);
+	ok  &= sg.dtime_like_id(2, 1) == size_t(-1);
 	ok  &= sg.dtime_like_id(0, 0) ==  7;
 	ok  &= sg.dtime_like_id(1, 0) ==  9;
 	ok  &= sg.dtime_like_id(2, 0) ==  3;
