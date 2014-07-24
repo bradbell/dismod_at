@@ -9,18 +9,18 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin smooth2ode_xam.cpp$$
+$begin solve_ode_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ smooth2ode: Example and Test$$
-$index example, C++ smooth2ode$$
-$index smooth2ode, C++ example$$
+$section C++ solve_ode: Example and Test$$
+$index example, C++ solve_ode$$
+$index solve_ode, C++ example$$
 
 $code
-$verbatim%example/devel/model/smooth2ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/model/solve_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

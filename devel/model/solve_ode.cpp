@@ -119,6 +119,14 @@ at age $icode%a_min% + %i%*%step_size%$$
 and time $icode%t_min% + %j%*%step_size%$$.
 
 
+$children%
+	example/devel/model/solve_ode_xam.cpp
+%$$
+$head Example$$
+The file $cref solve_ode_xam.cpp$$ contains
+and example and test of $code solve_ode$$.
+It returns true for success and false for failure.
+
 $end
 -----------------------------------------------------------------------------
 */
