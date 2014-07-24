@@ -180,6 +180,15 @@ the data point with
 $cref/data_id/data_table/data_id/$$ equal to
 $icode%data_id%[%i_avg%]%$$.
 
+
+$children%
+	example/devel/model/avg_integrand_xam.cpp
+%$$
+$head Example$$
+The file $cref avg_integrand_xam.cpp$$ contains
+and example and test of $code avg_integrand$$.
+It returns true for success and false for failure.
+
 $end
 -----------------------------------------------------------------------------
 */
