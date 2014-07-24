@@ -123,15 +123,10 @@ $cref/rate functions/model_data_mean/Rate Functions/$$.
 $subhead data_id$$
 This argument has prototype
 $codei%
-	const CppAD::vector<size_t>& %data_id%
+	size_t %data_id%
 %$$
-We use the notation $icode n_avg$$ here and below.
-For $icode%i_avg% = 0 , %...%, %n_avg%-1%$$,
-$codei%
-	%data_id%[ %i_avg% ]
-%$$
-is the $cref/data_id/data_table/data_id/$$ for the $th i_avg$$
-result of this call to $code compute$$.
+and is the $cref/data_id/data_table/data_id/$$ for we are computing
+the model value for.
 
 $head rate$$
 For $icode rate$$ equal to $icode iota$$, $icode rho$$, $icode chi$$
@@ -171,14 +166,11 @@ and time $icode%t_min% + %j%*%ode_step_size%$$.
 $head data_mean$$
 The return value has prototype
 $codei%
-	CppAD::vector<%Float%> %data_mean%
+	%Float% %data_mean%
 %$$
-For $icode%i_avg% = 0 , %...% , %n_avg%-1%$$,
-$icode%data_mean%[%i_avg%]%$$ is the 
-$cref/average integrand/model_data_mean/Average Integrand/$$ for
-the data point with 
-$cref/data_id/data_table/data_id/$$ equal to
-$icode%data_id%[%i_avg%]%$$.
+and is the $cref/average integrand/model_data_mean/Average Integrand/$$ for
+the data point with the specified
+$cref/data_id/data_table/data_id/$$. 
 
 
 $children%
@@ -397,8 +389,8 @@ ode_step_size_(ode_step_size)
 }
 
 template <class Float>
-CppAD::vector<Float> avg_integrand::compute(
-		const CppAD::vector<size_t>&  data_id  ,
+Float avg_integrand::compute(
+		size_t                        data_id  ,
 		const CppAD::vector<Float>&   iota     ,
 		const CppAD::vector<Float>&   rho      ,
 		const CppAD::vector<Float>&   chi      ,
@@ -406,8 +398,7 @@ CppAD::vector<Float> avg_integrand::compute(
 		const CppAD::vector<Float>&   S        ,
 		const CppAD::vector<Float>&   C
 	) const
-{	size_t i, j, k;
-
+{
 	size_t n_ode = n_age_ode_ * n_time_ode_;
 	assert( iota.size()  == n_ode );
 	assert( rho.size()   == n_ode );
@@ -416,72 +407,165 @@ CppAD::vector<Float> avg_integrand::compute(
 	assert( S.size()     == n_ode );
 	assert( C.size()     == n_ode );
 
-	// prevalence for each ode point
-	CppAD::vector<Float> P(n_ode);
-	for(k = 0; k < n_ode; k++)
-		P[k] = C[k] / ( S[k] + C[k]);
+	// constructor information for this data point
+	const ode_point& info = data_info_[ data_id ];
+	size_t i_min  = info.i_min;
+	size_t j_min  = info.j_min;
+	size_t n_age  = info.n_age;
+	size_t n_time = info.n_time;
 
-	size_t n_avg = data_id.size();
-	CppAD::vector<Float> avg(n_avg);
+	// initailize summation
+	Float sum = 0.0;
 
-	for(size_t i_avg = 0; i_avg < n_avg; i_avg++)
-	{	// constructor information for this data point
-		const ode_point& info = data_info_[ data_id[i_avg] ];
-
-		Float sum = 0.0;
-		for(i = 0; i < info.n_age; i++)
-		{	size_t i_ode = info.i_min + i;
-			for(j = 0; j < info.n_time; j++)
-			{	size_t j_ode = info.j_min + j;
-				k            = i_ode * n_time_ode_ + j_ode;
-				double I_k;
-				switch( info.integrand )
-				{
-					case incidence_enum:
-					I_k = iota[k]; 
-					break;
-
-					case remission_enum:
-					I_k = rho[k]; 
-					break;
-
-					case mtexcess_enum:
-					I_k = chi[k]; 
-					break;
-
-					case mtother_enum:
-					I_k = omega[k]; 
-					break;
-
-					case prevalence_enum:
-					I_k = P[k]; 
-					break;
-
-					case mtspecific_enum:
-					I_k = chi[k] * P[k]; 
-					break;
-
-					case mtall_enum:
-					I_k = omega[k] + chi[k] * P[k]; 
-					break;
-
-					case mtstandard_enum:
-					I_k = (omega[k] + chi[k]) / (omega[k] + chi[k] * P[k]); 
-					break;
-
-					case mtstandard_enum:
-					I_k = (omega[k] + chi[k]) / omega[k];
-					break;
-
-					default:
-					assert(false);
-				}
-				sum += info.c[ i * info.n_time + j] * I_k;
+	switch( info.integrand )
+	{	
+		case incidence_enum:
+		for(size_t i = 0; i < n_age; i++)
+		{	size_t i_ode = i_min + i;
+			for(size_t j = 0; j < n_time; j++)
+			{	size_t j_ode    = j_min + j;
+				size_t k        = i_ode * n_time_ode_ + j_ode;
+				size_t ell      = i * n_time + j;
+				//
+				Float incidence = iota[k]; 
+				sum            += info.c[ell] * incidence;
 			}
 		}
-		avg[i_avg] = sum;
+		break;
+
+		case remission_enum:
+		for(size_t i = 0; i < n_age; i++)
+		{	size_t i_ode = i_min + i;
+			for(size_t j = 0; j < n_time; j++)
+			{	size_t j_ode    = j_min + j;
+				size_t k        = i_ode * n_time_ode_ + j_ode;
+				size_t ell      = i * n_time + j;
+				//
+				Float remission = rho[k]; 
+				sum            += info.c[ell] * remission;
+			}
+		}
+		break;
+
+		case mtexcess_enum:
+		for(size_t i = 0; i < n_age; i++)
+		{	size_t i_ode = i_min + i;
+			for(size_t j = 0; j < n_time; j++)
+			{	size_t j_ode    = j_min + j;
+				size_t k        = i_ode * n_time_ode_ + j_ode;
+				size_t ell      = i * n_time + j;
+				//
+				Float mtexcess  = chi[k]; 
+				sum            += info.c[ell] * mtexcess;
+			}
+		}
+		break;
+
+		case mtother_enum:
+		for(size_t i = 0; i < n_age; i++)
+		{	size_t i_ode = i_min + i;
+			for(size_t j = 0; j < n_time; j++)
+			{	size_t j_ode    = j_min + j;
+				size_t k        = i_ode * n_time_ode_ + j_ode;
+				size_t ell      = i * n_time + j;
+				//
+				Float mtother   = omega[k]; 
+				sum            += info.c[ell] * mtother;
+			}
+		}
+		break;
+
+		case mtwith_enum:
+		for(size_t i = 0; i < n_age; i++)
+		{	size_t i_ode = i_min + i;
+			for(size_t j = 0; j < n_time; j++)
+			{	size_t j_ode    = j_min + j;
+				size_t k        = i_ode * n_time_ode_ + j_ode;
+				size_t ell      = i * n_time + j;
+				//
+				Float mtwith    = omega[k] + chi[k]; 
+				sum            += info.c[ell] * mtwith;
+			}
+		}
+		break;
+
+		case prevalence_enum:
+		for(size_t i = 0; i < n_age; i++)
+		{	size_t i_ode = i_min + i;
+			for(size_t j = 0; j < n_time; j++)
+			{	size_t j_ode     = j_min + j;
+				size_t k         = i_ode * n_time_ode_ + j_ode;
+				size_t ell       = i * n_time + j;
+				//
+				Float prevalence = C[k] / (S[k] + C[k]); 
+				sum             += info.c[ell] * prevalence;
+			}
+		}
+		break;
+
+		case mtspecific_enum:
+		for(size_t i = 0; i < n_age; i++)
+		{	size_t i_ode = i_min + i;
+			for(size_t j = 0; j < n_time; j++)
+			{	size_t j_ode     = j_min + j;
+				size_t k         = i_ode * n_time_ode_ + j_ode;
+				size_t ell       = i * n_time + j;
+				//
+				Float prevalence = C[k] / (S[k] + C[k]); 
+				Float mtspecific = chi[k] * prevalence; 
+				sum             += info.c[ell] * mtspecific;
+			}
+		}
+		break;
+
+		case mtall_enum:
+		for(size_t i = 0; i < n_age; i++)
+		{	size_t i_ode = i_min + i;
+			for(size_t j = 0; j < n_time; j++)
+			{	size_t j_ode     = j_min + j;
+				size_t k         = i_ode * n_time_ode_ + j_ode;
+				size_t ell       = i * n_time + j;
+				//
+				Float prevalence = C[k] / (S[k] + C[k]); 
+				Float mtall      = omega[k] + chi[k] * prevalence; 
+				sum             += info.c[ell] * mtall;
+			}
+		}
+		break;
+
+		case mtstandard_enum:
+		for(size_t i = 0; i < n_age; i++)
+		{	size_t i_ode = i_min + i;
+			for(size_t j = 0; j < n_time; j++)
+			{	size_t j_ode     = j_min + j;
+				size_t k         = i_ode * n_time_ode_ + j_ode;
+				size_t ell       = i * n_time + j;
+				//
+				Float prevalence = C[k] / (S[k] + C[k]); 
+				Float mtall      = omega[k] + chi[k] * prevalence; 
+				Float mtstandard = (omega[k] + chi[k]) / mtall;
+				sum             += info.c[ell] * mtstandard;
+			}
+		}
+		break;
+
+		case relrisk_enum:
+		for(size_t i = 0; i < n_age; i++)
+		{	size_t i_ode = i_min + i;
+			for(size_t j = 0; j < n_time; j++)
+			{	size_t j_ode    = j_min + j;
+				size_t k        = i_ode * n_time_ode_ + j_ode;
+				size_t ell      = i * n_time + j;
+				Float relrisk   = (omega[k] + chi[k]);
+				sum            += info.c[ell] * relrisk;
+			}
+		}
+		break;
+
+		default:
+		assert(false);
 	}
-	return avg;
+	return sum;
 }
 
 } // END DISMOD_AT_NAMESPACE

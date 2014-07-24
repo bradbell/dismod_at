@@ -45,8 +45,8 @@ public:
 		double                               ode_step_size
 	);
 	template <class Float>
-	CppAD::vector<Float> compute(
-		const CppAD::vector<size_t>&  data_id  ,
+	Float compute(
+		size_t                        data_id  ,
 		const CppAD::vector<Float>&   iota     ,
 		const CppAD::vector<Float>&   rho      ,
 		const CppAD::vector<Float>&   chi      ,
