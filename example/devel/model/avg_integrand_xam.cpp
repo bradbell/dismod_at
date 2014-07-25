@@ -36,6 +36,7 @@ bool avg_integrand_xam(void)
 	using  CppAD::vector;	
 	typedef CppAD::AD<double> Float;
 	Float eps = CppAD::numeric_limits<Float>::epsilon();
+	Float nan = CppAD::nan( Float(0) );
 	//
 	size_t n_age_table   = 11;
 	size_t n_time_table  = 4;
@@ -51,8 +52,8 @@ bool avg_integrand_xam(void)
 	size_t n_time_grid  = 2;
 	vector<size_t> age_id(n_age_grid), time_id(n_time_grid);
 	age_id[0]   = 0;  // age 0
-	age_id[1]   = 6;  // age 50
-	age_id[2]   = 11; // age 100
+	age_id[1]   = 5;  // age 50
+	age_id[2]   = 10; // age 100
 	time_id[0]  = 0;  // 1980
 	time_id[1]  = 3;  // 2100
 	//
@@ -66,15 +67,75 @@ bool avg_integrand_xam(void)
 	vector<dismod_at::weight_grid> wg_vec(1);
 	wg_vec[0] = wg;
 	//
+	size_t n_integrand = dismod_at::number_integrand_enum;
+	vector<dismod_at::integrand_enum> integrand_table(n_integrand);
+	for(i = 0; i < n_integrand; i++)
+			integrand_table[i] = dismod_at::integrand_enum(i);
+	//
 	vector<dismod_at::data_struct> data_table(1);
-	data_table[0].integrand_id = 0;
-	data_table[0].weight_id    = 0;
-	data_table[0].age_lower    = 10.0;
-	data_table[0].age_upper    = 90.0;
-	data_table[0].time_lower   = 1990.0;
-	data_table[0].time_lower   = 2000.0;
+	size_t data_id = 0;
+	data_table[data_id].integrand_id = dismod_at::mtother_enum;
+	data_table[data_id].weight_id    = 0;
+	data_table[data_id].age_lower    = 40.0;
+	data_table[data_id].age_upper    = 90.0;
+	data_table[data_id].time_lower   = 1990.0;
+	data_table[data_id].time_upper   = 2000.0;
+	//
+	double age_min       = age_table[0];
+	double age_max       = age_table[n_age_table-1];
+	double ode_step_size = 1.0;
+	size_t n_age_ode     =  1;
+	while( age_min + (n_age_ode-1) * ode_step_size < age_max )
+			n_age_ode++; 
+	//
+	double time_min       = time_table[0];
+	double time_max       = time_table[n_time_table-1];
+	size_t n_time_ode     =  1;
+	while( time_min + (n_time_ode-1) * ode_step_size < time_max )
+			n_time_ode++; 
 	
-	
+	dismod_at::avg_integrand avg(
+		wg_vec,
+		data_table,
+		integrand_table,
+		age_table,
+		time_table,
+		n_age_ode,
+		n_time_ode,
+		ode_step_size
+	);
+
+	// normally S and C solve ODE but that is not necessary for these tests.
+
+	// test measuring omega
+	size_t n_ode = n_age_ode * n_time_ode;
+	vector<Float> iota(n_ode), rho(n_ode), chi(n_ode), omega(n_ode);
+	vector<Float> S(n_ode), C(n_ode);
+	for(k = 0; k < n_ode; k++)
+		iota[k] = rho[k] = chi[k] = omega[k] = S[k] = C[k] = nan;
+	for(i = 0; i < n_age_ode; i++)
+	{	double age = age_min + i * ode_step_size;	
+		for(j = 0; j < n_time_ode; j++)
+		{	double time     = time_min + j * ode_step_size;
+			k               = i * n_time_ode + j;
+			omega[k]        = age * time / (age_max * time_max);
+		}
+	} 
+	data_id          = 0;
+	Float data_mean  = avg.compute(data_id, iota, rho, chi, omega, S, C);
+	double a0        = data_table[data_id].age_lower;
+	double a1        = data_table[data_id].age_upper; 
+	double t0        = data_table[data_id].time_lower;
+	double t1        = data_table[data_id].time_upper; 
+	double term_a    = (a1*a1 - a0*a0) / (2.0 * age_max);
+	double term_t    = (t1*t1 - t0*t0) / (2.0 * time_max);
+	double integral  = term_a * term_t;
+	double check     = integral / ( (a1 - a0) * (t1 - t0) );
+	ok              &= abs( 1.0 - data_mean / check ) <= 1e-2;
+
+	// std::cout << std::endl;
+	// std::cout << "relerr    = " << 1.0 - data_mean / check  << std::endl;
+
 	return ok;
 }
 // END C++

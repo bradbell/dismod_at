@@ -271,7 +271,7 @@ ode_step_size_(ode_step_size)
 		size_t i_min = 0;
 		while(age_min + i_min * ode_step_size < age_lower )
 			i_min++;
-		i_min = std::min(i_min, n_time_ode - 2);
+		i_min = std::min(i_min, n_age_ode - 2);
 		size_t n_age = 0;
 		while( age_min + (i_min + n_age) * ode_step_size < age_upper )
 			n_age++;
@@ -381,7 +381,7 @@ ode_step_size_(ode_step_size)
 			}
 		}
 		double sum = 0.0;
-		for(k = 0; i < n_age * n_time; k++)
+		for(k = 0; k < n_age * n_time; k++)
 			sum += c_sum[k];
 
 		// set the information for this data point
@@ -576,5 +576,21 @@ Float avg_integrand::compute(
 	}
 	return sum;
 }
+
+// instantiation macro
+# define DISMOD_AT_INSTANTIATE_AVG_INTEGRAND_COMPUTE(Float) \
+	template Float avg_integrand::compute(                  \
+		size_t                        data_id  ,            \
+		const CppAD::vector<Float>&   iota     ,            \
+		const CppAD::vector<Float>&   rho      ,            \
+		const CppAD::vector<Float>&   chi      ,            \
+		const CppAD::vector<Float>&   omega    ,            \
+		const CppAD::vector<Float>&   S        ,            \
+		const CppAD::vector<Float>&   C                     \
+	) const;
+// instantiations
+DISMOD_AT_INSTANTIATE_AVG_INTEGRAND_COMPUTE(double)
+DISMOD_AT_INSTANTIATE_AVG_INTEGRAND_COMPUTE( CppAD::AD<double> )
+
 
 } // END DISMOD_AT_NAMESPACE
