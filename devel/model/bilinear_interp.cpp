@@ -147,7 +147,8 @@ double bilinear_interp(
 	size_t n_x  = x_grid.size();
 	size_t n_y  = y_grid.size();
 	assert( z_grid.size() == n_x * n_y );
-
+	assert( i < n_x );
+	assert( j < n_y );
 
 	if( n_x == 1 && n_y == 1 )
 		return z_grid[0];
