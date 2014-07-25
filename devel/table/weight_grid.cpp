@@ -90,7 +90,7 @@ $codei%
 $subhead weight$$
 This argument has prototype
 $codei%
-	const CppAD::vector<size_t>& %weight%
+	const CppAD::vector<double>& %weight%
 %$$
 It specifies the weight grid values in row major order; i.e.
 $codei%
@@ -208,17 +208,27 @@ double weight_grid::weight(size_t i, size_t j) const
 	return weight_[ i * time_id_.size() + j]; 
 }
 
+// Assignment operator
+void weight_grid::operator=(const weight_grid& wg)
+{	age_id_ =  wg.age_id_;
+	time_id_ = wg.time_id_;
+	weight_  = wg.weight_;
+}
+// Default constructor
+weight_grid::weight_grid(void)
+: age_id_(0),
+time_id_(0) ,
+weight_(0)
+{ }
 // Vector Constructor
 weight_grid::weight_grid(
 	const CppAD::vector<size_t>& age_id    ,
 	const CppAD::vector<size_t>& time_id   ,
-	const CppAD::vector<double>& weight
-	)
-	{	age_id_  = age_id;
-		time_id_ = time_id;
-		weight_  = weight;
-	}
-
+	const CppAD::vector<double>& weight    )
+{	age_id_  = age_id;
+	time_id_ = time_id;
+	weight_  = weight;
+}
 // Table Constructor
 weight_grid::weight_grid(
 	size_t                                   weight_id         ,

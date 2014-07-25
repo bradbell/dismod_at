@@ -25,14 +25,16 @@ private:
 	// vector of weights for each age, time pair
 	CppAD::vector<double> weight_;
 public:
+	void operator=(const weight_grid& wg);
+	weight_grid(void);
 	weight_grid(
-	size_t                                   weight_id         ,
-	const CppAD::vector<weight_grid_struct>& weight_grid_table
+		const CppAD::vector<size_t>& age_id    ,
+		const CppAD::vector<size_t>& time_id   ,
+		const CppAD::vector<double>& weight
 	);
 	weight_grid(
-	const CppAD::vector<size_t>& age_id    ,
-	const CppAD::vector<size_t>& time_id   ,
-	const CppAD::vector<double>& weight
+		size_t                                   weight_id         ,
+		const CppAD::vector<weight_grid_struct>& weight_grid_table
 	);
 	//
 	size_t age_size(void) const;

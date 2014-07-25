@@ -35,7 +35,7 @@ private:
 	CppAD::vector<ode_point> data_info_;
 public:
 	avg_integrand(
-		const CppAD::vector<weight_grid>&    wg_vec          ,                 
+		const CppAD::vector<weight_grid>&    wg_vec          ,
 		const CppAD::vector<data_struct>&    data_table      ,
 		const CppAD::vector<integrand_enum>& integrand_table ,
 		const CppAD::vector<double>&         age_table       ,
