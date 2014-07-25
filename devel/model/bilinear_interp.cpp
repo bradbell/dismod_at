@@ -51,7 +51,7 @@ $codei%
 	const CppAD::vector<double>& %x_grid%
 %$$
 and is the $icode x$$ values corresponding to the $icode z_grid$$.
-We use the following notaiton:
+We use the following notation:
 $codei%
 	%n_x% = %x_grid%.size()
 %$$
@@ -63,7 +63,7 @@ $codei%
 	const CppAD::vector<double>& %y_grid%
 %$$
 and is the $icode y$$ values corresponding to the $icode z_grid$$.
-We use the following notaiton:
+We use the following notation:
 $codei%
 	%n_y% = %y_grid%.size()
 %$$
@@ -120,7 +120,7 @@ It is the value of the
 $cref/bilinear interpolant/glossary/Bilinear Interpolant/$$ at the specified
 $icode x$$ and $icode y$$.
 
-$children%example/devel/model/bilinear_interp.cpp
+$children%example/devel/model/bilinear_interp_xam.cpp
 %$$
 $head Example$$
 The file $cref bilinear_interp_xam.cpp$$ contains an example and test
@@ -226,7 +226,7 @@ double bilinear_interp(
 	}
 	if( two_y )
 	{	z00 = (y1 - y) * z00;
-		z01 = (y - y0) * z10;
+		z01 = (y - y0) * z01;
 		return (z00 + z01) /dy;
 	}
 	return z00;

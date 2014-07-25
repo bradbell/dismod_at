@@ -50,7 +50,7 @@ bool bilinear_interp_xam(void)
 			z_grid[i * n_y + j] = x_grid[i] * y_grid[j] + 1.0;
 	}
 
-	// point at which to interpolate the function
+	// check case where both x and y are interpolated
 	double x = 10.0 * 2.5;
 	double y = 1990.0 + 10 * 1.5;
 	i = 0;
@@ -64,6 +64,42 @@ bool bilinear_interp_xam(void)
 
 	double z_check  = x * y + 1.0;
 	ok = std::fabs( 1.0 - z / z_check  ) < 10.0 * eps;
+
+	// check case where only y is interpolated ( x < x_grid[0] )
+	x = x_grid[0] - 10.; 
+	y = 1990.0 + 10 * 1.5;
+	z = dismod_at::bilinear_interp(
+		x, y, x_grid, y_grid, z_grid, i, j
+	);
+	z_check  = x_grid[0] * y + 1.0;
+	ok       =  i == 0; 
+	ok       = y_grid[j] <= y && y <= y_grid[j+1];
+	ok       = std::fabs( 1.0 - z / z_check  ) < 10.0 * eps;
+
+	// check case where only x is interpolated ( y_grid[n_y-1] < y )
+	x = 10.0 * 2.5;
+	y = y_grid[n_y-1] + 10.0;
+	z = dismod_at::bilinear_interp(
+		x, y, x_grid, y_grid, z_grid, i, j
+	);
+	z_check  = x * y_grid[n_y-1] + 1.0;
+	ok       = x_grid[i] <= x && x <= x_grid[i+1];
+	ok       = j == (n_y-1); 
+	ok       = std::fabs( 1.0 - z / z_check  ) < 10.0 * eps;
+
+
+	// check case where no interpolation is done
+	// ( x_grid[n_x-1] < x and y < y_grid[0] )
+	x = x_grid[n_x-1] + 10.0;
+	y = y_grid[0]     - 10.0;
+	z = dismod_at::bilinear_interp(
+		x, y, x_grid, y_grid, z_grid, i, j
+	);
+	z_check  = x_grid[n_x-1] * y_grid[0] + 1.0;
+	ok       = i == (n_x-1);
+	ok       = j == 0;
+	ok       = std::fabs( 1.0 - z / z_check  ) < 10.0 * eps;
+
 
 	return ok;
 }
