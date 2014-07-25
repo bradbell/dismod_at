@@ -58,19 +58,61 @@ bool interp_weight_xam(void)
 	}
 	dismod_at::weight_grid wg(age_id, time_id, weight);
 
-	// point at which to interpolate the function
-	double age = 10.0 * 2.5;            // i = 2.5
-	double time = 1990.0 + 10 * 1.5;    // j = 1.5
-	size_t i_wg = 2;
-	size_t j_wg = 1;
-
-	// evaluate the interpolant
+	// case where interpolating in both directions
+	double age     = 10.0 * 2.5;
+	double time    = 1990.0 + 10 * 1.5;
+	size_t i_wg    = 0;
+	size_t j_wg    = 0;
 	double w_value = dismod_at::interp_weight(
 		age, time, wg, age_table, time_table, i_wg, j_wg
 	);
-	double w_check  = 2.5 * 1.5 + 1.0;
+	size_t i_check = 0;
+	size_t j_check = 0;
+	double w_check  = dismod_at::bilinear_interp(
+		age, time, age_table, time_table, weight, i_check, j_check
+	);
+	ok &= i_wg == i_check;
+	ok &= j_wg == j_check;
+	ok &= std::fabs( 1.0 - w_value / w_check  ) < 10.0 * eps;
 
-	ok = std::fabs( 1.0 - w_value / w_check  ) < 10.0 * eps;
+	// case where interpolate in time only
+	age     = age_table[n_age-1] + 10;
+	time    = 1990.0 + 10 * 1.5;
+	w_value = dismod_at::interp_weight(
+		age, time, wg, age_table, time_table, i_wg, j_wg
+	);
+	w_check  = dismod_at::bilinear_interp(
+		age, time, age_table, time_table, weight, i_check, j_check
+	);
+	ok &= i_wg == i_check;
+	ok &= j_wg == j_check;
+	ok &= std::fabs( 1.0 - w_value / w_check  ) < 10.0 * eps;
+
+	// case where interpolate in age only
+	age     = 10.0 * 2.5;
+	time    = time_table[0] - 10.0;
+	w_value = dismod_at::interp_weight(
+		age, time, wg, age_table, time_table, i_wg, j_wg
+	);
+	w_check  = dismod_at::bilinear_interp(
+		age, time, age_table, time_table, weight, i_check, j_check
+	);
+	ok &= i_wg == i_check;
+	ok &= j_wg == j_check;
+	ok &= std::fabs( 1.0 - w_value / w_check  ) < 10.0 * eps;
+
+	// case where no interpolation is done
+	age     = age_table[0] - 10.0;
+	time    = time_table[n_time-1] + 10.0;
+	w_value = dismod_at::interp_weight(
+		age, time, wg, age_table, time_table, i_wg, j_wg
+	);
+	w_check  = dismod_at::bilinear_interp(
+		age, time, age_table, time_table, weight, i_check, j_check
+	);
+	ok &= i_wg == i_check;
+	ok &= j_wg == j_check;
+	ok &= std::fabs( 1.0 - w_value / w_check  ) < 10.0 * eps;
 
 	return ok;
 }

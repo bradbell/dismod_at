@@ -211,13 +211,13 @@ double interp_weight(
 	}
 	if( two_age )
 	{	w00 = (a1 - age) * w00;
-		w10 = (age - a1) * w10;
+		w10 = (age - a0) * w10;
 		return (w00 + w10) / da;;
 	}
 	if( two_time )
 	{	w00 = (t1 - time) * w00;
-		w10 = (time - t1) * w10;
-		return (w00 + w10) / dt;;
+		w01 = (time - t0) * w01;
+		return (w00 + w01) / dt;;
 	}
 	return w00;
 }
