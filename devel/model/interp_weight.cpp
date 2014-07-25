@@ -202,22 +202,22 @@ double interp_weight(
 	}
 	if( two_age & two_time )
 	{	double w11 = wg.weight(i_wg+1, j_wg+1);
-		w00  = (a1 - age) * (t1 - time) * w00 / (da * dt);
-		w10  = (age - a0) * (t1 - time) * w10 / (da * dt);
-		w01  = (a1 - age) * (time - t0) * w01 / (da * dt);
-		w11  = (age - a0) * (time - t0) * w11 / (da * dt);
+		w00  = (a1 - age) * (t1 - time) * w00;
+		w10  = (age - a0) * (t1 - time) * w10;
+		w01  = (a1 - age) * (time - t0) * w01;
+		w11  = (age - a0) * (time - t0) * w11;
 
-		return w00 + w10 + w01 + w11;
+		return (w00 + w10 + w01 + w11) / (da * dt);
 	}
 	if( two_age )
-	{	w00 = (a1 - age) * w00 / da;
-		w10 = (age - a1) * w10 / da;
-		return w00 + w10;
+	{	w00 = (a1 - age) * w00;
+		w10 = (age - a1) * w10;
+		return (w00 + w10) / da;;
 	}
 	if( two_time )
-	{	w00 = (t1 - time) * w00 / dt;
-		w10 = (time - t1) * w10 / dt;
-		return w00 + w10;
+	{	w00 = (t1 - time) * w00;
+		w10 = (time - t1) * w10;
+		return (w00 + w10) / dt;;
 	}
 	return w00;
 }
