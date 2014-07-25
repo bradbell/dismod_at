@@ -291,6 +291,8 @@ ode_step_size_(ode_step_size)
 
 		// sum of coefficients for each ode grid point within limits
 		CppAD::vector<double> c_sum(n_age * n_time);
+		for(k = 0; k < n_age * n_time; k++)
+			c_sum[k] = 0.0;
 
 		// weight grid for this data point
 		const weight_grid& wg( wg_vec[ data_table[data_id].weight_id ] );
@@ -357,9 +359,9 @@ ode_step_size_(ode_step_size)
 					);
 					c_pair = integrate_1d(a_pair, b_pair, w_pair);
 					c[0]   = c_pair.first  * (t2 - t) / d;
-					c[1]   = c_pair.first  * (t - t2) / d;
+					c[1]   = c_pair.first  * (t - t1) / d;
 					c[2]   = c_pair.second * (t2 - t) / d;
-					c[3]   = c_pair.second * (t - t2) / d;
+					c[3]   = c_pair.second * (t - t1) / d;
 				}
 				else 
 				{	w[0] = interp_weight(
@@ -383,6 +385,7 @@ ode_step_size_(ode_step_size)
 		double sum = 0.0;
 		for(k = 0; k < n_age * n_time; k++)
 			sum += c_sum[k];
+		assert( sum > 0.0 );
 
 		// set the information for this data point
 		data_info_[data_id].integrand = integrand;

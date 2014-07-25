@@ -46,6 +46,7 @@ This column has type $code real$$.
 For each row in the table, the value in this column
 is the weighting, at the corresponding age and time,
 and for the specified $icode weight_id$$,
+Each value in this column must be greater than zero.
 
 $head Rectangular Grid$$
 For each fixed value of $icode weight_id$$ 

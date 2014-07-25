@@ -29,11 +29,24 @@ $end
 # include <limits>
 # include <dismod_at/dismod_at.hpp>
 
+namespace {
+	double check_avg(const dismod_at::data_struct& data_row)
+	{	double a0 = data_row.age_lower;
+		double a1 = data_row.age_upper;
+		double t0 = data_row.time_lower;
+		double t1 = data_row.time_upper;
+		// integral of age * time from a0 to a1 and t0 to t1
+		// divided by (a1 - a0) time (t1 - t0) is
+		return (a0 + a1) * (t0 + t1) / 4.0;
+	}
+}
+
 bool avg_integrand_xam(void)
 {	bool   ok = true;
 	size_t i, j, k;
-	using  CppAD::abs;	
-	using  CppAD::vector;	
+	using CppAD::abs;	
+	using CppAD::vector;	
+	using std::cout;
 	typedef CppAD::AD<double> Float;
 	Float eps = CppAD::numeric_limits<Float>::epsilon();
 	Float nan = CppAD::nan( Float(0) );
@@ -72,15 +85,6 @@ bool avg_integrand_xam(void)
 	for(i = 0; i < n_integrand; i++)
 			integrand_table[i] = dismod_at::integrand_enum(i);
 	//
-	vector<dismod_at::data_struct> data_table(1);
-	size_t data_id = 0;
-	data_table[data_id].integrand_id = dismod_at::mtother_enum;
-	data_table[data_id].weight_id    = 0;
-	data_table[data_id].age_lower    = 40.0;
-	data_table[data_id].age_upper    = 90.0;
-	data_table[data_id].time_lower   = 1990.0;
-	data_table[data_id].time_upper   = 2000.0;
-	//
 	double age_min       = age_table[0];
 	double age_max       = age_table[n_age_table-1];
 	double ode_step_size = 1.0;
@@ -93,6 +97,31 @@ bool avg_integrand_xam(void)
 	size_t n_time_ode     =  1;
 	while( time_min + (n_time_ode-1) * ode_step_size < time_max )
 			n_time_ode++; 
+	//
+	vector<dismod_at::data_struct> data_table(3);
+	size_t data_id = 0;
+	data_table[data_id].integrand_id = dismod_at::mtother_enum;
+	data_table[data_id].weight_id    = 0;
+	data_table[data_id].age_lower    = 40.0;
+	data_table[data_id].age_upper    = 90.0;
+	data_table[data_id].time_lower   = 1990.0;
+	data_table[data_id].time_upper   = 2000.0;
+	//
+	data_id++;
+	data_table[data_id].integrand_id = dismod_at::mtother_enum;
+	data_table[data_id].weight_id    = 0;
+	data_table[data_id].age_lower    = age_max;
+	data_table[data_id].age_upper    = age_max;
+	data_table[data_id].time_lower   = 1990.0;
+	data_table[data_id].time_upper   = 2000.0;
+	//
+	data_id++;
+	data_table[data_id].integrand_id = dismod_at::prevalence_enum;
+	data_table[data_id].weight_id    = 0;
+	data_table[data_id].age_lower    = 40.0;
+	data_table[data_id].age_upper    = 90.0;
+	data_table[data_id].time_lower   = time_min;
+	data_table[data_id].time_upper   = time_min;
 	
 	dismod_at::avg_integrand avg(
 		wg_vec,
@@ -119,22 +148,18 @@ bool avg_integrand_xam(void)
 		{	double time     = time_min + j * ode_step_size;
 			k               = i * n_time_ode + j;
 			omega[k]        = age * time / (age_max * time_max);
+			C[k]            = omega[k];
+			S[k]            = 1.0 - C[k];
 		}
 	} 
-	data_id          = 0;
-	Float data_mean  = avg.compute(data_id, iota, rho, chi, omega, S, C);
-	double a0        = data_table[data_id].age_lower;
-	double a1        = data_table[data_id].age_upper; 
-	double t0        = data_table[data_id].time_lower;
-	double t1        = data_table[data_id].time_upper; 
-	double term_a    = (a1*a1 - a0*a0) / (2.0 * age_max);
-	double term_t    = (t1*t1 - t0*t0) / (2.0 * time_max);
-	double integral  = term_a * term_t;
-	double check     = integral / ( (a1 - a0) * (t1 - t0) );
-	ok              &= abs( 1.0 - data_mean / check ) <= 1e-2;
+	for(data_id = 0; data_id < data_table.size(); data_id++)
+	{	Float data_mean = avg.compute(data_id, iota, rho, chi, omega, S, C);
+		double check = check_avg(data_table[data_id]) / (age_max * time_max);
+		ok          &= abs( 1.0 - data_mean / check ) <= 1e-2;
+		// cout << std::endl;
+		// cout << "relerr    = " << 1.0 - data_mean / check  << std::endl;
+	}
 
-	// std::cout << std::endl;
-	// std::cout << "relerr    = " << 1.0 - data_mean / check  << std::endl;
 
 	return ok;
 }

@@ -113,6 +113,10 @@ CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3* db)
 		weight_grid[i].age_id    = age_id[i];
 		weight_grid[i].time_id   = time_id[i];
 		weight_grid[i].weight    = weight[i];
+		if( weight[i] <= 0.0 )
+		{	string message = "weight is less than or equal zero.";
+			table_error_exit(table_name, i, message);
+		}
 	}
 	return weight_grid;
 }
