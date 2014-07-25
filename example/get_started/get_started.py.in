@@ -108,7 +108,7 @@ rate_list = [
 ]
 multiplier_list = [
 	{	'covariate':'sex',
-		'type':'rate',
+		'type':'rate_mean',
 		'effected':'omega',
 		'smooth':'constant'
 	}

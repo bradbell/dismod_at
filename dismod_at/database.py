@@ -428,7 +428,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $table
 # Key       $cnext Value Type  $cnext Description                $rnext
 # covariate $cnext str         $cnext is the covariate column    $rnext
-# type      $cnext str         $cnext rate, mean, or std         $rnext
+# type      $cnext str  $cnext rate_mean, meas_mean, or meas_std $rnext
 # effected  $cnext str         $cnext integrand or rate effected $rnext
 # smooth    $cnext str         $cnext smoothing name
 # $tend
@@ -723,7 +723,7 @@ def create_database(
 		multiplier      = multiplier_list[i]
 		multiplier_type = multiplier['type']
 		effected        = multiplier['effected']
-		if multiplier_type == 'rate' :
+		if multiplier_type == 'rate_mean' :
 			rate_id      = global_rate_name2id[ effected ]
 			integrand_id = -1
 		else : 

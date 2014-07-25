@@ -47,8 +47,8 @@ bool get_multiplier_table_xam(void)
 			" integrand_id       integer,"
 			" covariate_id       integer,"
 			" smooth_id          integer)",
-		"insert into multiplier values(0, 'mean', -1,  2, 1, 2)",
-		"insert into multiplier values(1, 'rate',  1, -1, 2, 2)"
+		"insert into multiplier values(0, 'meas_mean', -1,  2, 1, 2)",
+		"insert into multiplier values(1, 'rate_mean',  1, -1, 2, 2)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -59,8 +59,8 @@ bool get_multiplier_table_xam(void)
 		multiplier_table = dismod_at::get_multiplier_table(db);
 	ok  &= multiplier_table.size() == 2;
 	//
-	ok  &= multiplier_table[0].multiplier_type  == "mean";
-	ok  &= multiplier_table[1].multiplier_type  == "rate";
+	ok  &= multiplier_table[0].multiplier_type  == "meas_mean";
+	ok  &= multiplier_table[1].multiplier_type  == "rate_mean";
 	//
 	ok  &= multiplier_table[0].rate_id == -1;
 	ok  &= multiplier_table[1].rate_id == 1;

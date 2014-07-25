@@ -128,6 +128,13 @@ CppAD::vector<multiplier_struct> get_multiplier_table(sqlite3* db)
 		multiplier_table[i].integrand_id    = integrand_id[i];
 		multiplier_table[i].covariate_id    = covariate_id[i];
 		multiplier_table[i].smooth_id       = smooth_id[i];
+		if( multiplier_type[i] != "rate_mean" &&
+		    multiplier_type[i] != "meas_mean" &&
+		    multiplier_type[i] != "meas_std"  )
+		{	string message = "multiplier_type is not one of the following\n"
+			"'rate_mean', 'meas_mean', 'meas_std'.";
+			table_error_exit(table_name, i, message);
+		}
 	}
 	return multiplier_table;
 }

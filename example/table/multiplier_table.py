@@ -47,17 +47,17 @@ def multiplier_table() :
   		'integer'  # smooth_id'
 	]
 	row_list = [ [
-		'mean', # muitiplier_type
-		-1,     # rate_id (-1 becasue this is an integrand multiplier)
-		2,      # integrand_id
-		1,      # covariate_id
-		2       # smooth_id
+		'meas_mean', # muitiplier_type
+		-1,          # rate_id (-1 becasue this is an measurement covariate)
+		2,           # integrand_id
+		1,           # covariate_id
+		2            # smooth_id
 	],[
-		'rate', # muitiplier_type
-		1,      # rate_id 
-		-1,     # integrand_id (-1 because this is a rate multiplier)
-		2,      # covariate_id
-		2       # smooth_id
+		'rate_mean',  # muitiplier_type
+		1,            # rate_id 
+		-1,           # integrand_id (-1 because this is a rate covariate)
+		2,            # covariate_id
+		2             # smooth_id
 	] ]
 	tbl_name = 'multiplier'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

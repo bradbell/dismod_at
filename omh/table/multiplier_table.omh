@@ -15,9 +15,9 @@ $spell
 	dtime
 	covariate
 $$
-$index covariate, table$$
-$index table, covariate$$
-$index multiplier, covariate$$
+$index multiplier, table$$
+$index table, multiplier$$
+$index covariate, multiplier$$
 
 $section The Covariate Multiplier Table$$
 This table specifies the covariate multipliers and their priors.
@@ -34,25 +34,25 @@ This column has type $code text$$.
 The possible values are
 $table
 $icode multiplier_type$$ $cnext Description $rnext
-$code rate$$       $cnext covariate effects a model rate $rnext
-$code mean$$       $cnext covariate effects a measurement mean $rnext
-$code std$$        $cnext covariate effects a measurement standard deviation
+$code rate_mean$$  $cnext covariate effects a model rate $rnext
+$code meas_mean$$  $cnext covariate effects a measurement mean $rnext
+$code meas_std$$   $cnext covariate effects a measurement standard deviation
 $tend
 
 $head rate_id$$
-If $icode multiplier_type$$ is $code rate$$,
+If $icode multiplier_type$$ is $code rate_mean$$,
 $icode rate_id$$ is the  
 $cref/rate_id/rate_table/rate_id/$$ that determines
 the rate that this covariate and multiplier effects.
-If $icode multiplier_type$$ is $code mean$$ or $code std$$,
+If $icode multiplier_type$$ is $code meas_mean$$ or $code meas_std$$,
 this column should be $code -1$$. 
 
 $head integrand_id$$
-If $icode multiplier_type$$ is $code mean$$ or $code std$$, 
+If $icode multiplier_type$$ is $code meas_mean$$ or $code meas_std$$, 
 $icode integrand_id$$ is the  
 $cref/integrand_id/integrand_table/integrand_id/$$ that determines
 which measurement integrand this multiplier effects.
-If $icode multiplier_type$$ is $code rate$$,
+If $icode multiplier_type$$ is $code rate_mean$$,
 this column should be $code -1$$. 
 
 $head covariate_id$$
