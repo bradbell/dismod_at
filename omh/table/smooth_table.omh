@@ -11,6 +11,8 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin smooth_table$$
 $spell
 	grid
+	dage
+	dtime
 $$
 
 $section The Smoothing Table$$
@@ -31,6 +33,28 @@ in this smoothing grid. It must be greater than zero.
 $head n_time$$
 This column has type $code integer$$ and is the number of _time values
 in this smoothing grid. It must be greater than zero.
+
+$head multiply_value$$
+This column has type $code integer$$ and its value is the
+$cref/like_id/like_table/like_id/$$ for
+the multiplier of the function value smoothing in the 
+$code smooth_grid$$ table for this 
+$cref/smooth_id/smooth_grid_table/smooth_id/$$.
+
+$head multiply_dage$$
+This column has type $code integer$$ and its value is the
+$cref/like_id/like_table/like_id/$$ for
+the multiplier of the age forward difference smoothing in the 
+$code smooth_grid$$ table for this 
+$cref/smooth_id/smooth_grid_table/smooth_id/$$.
+
+$head multiply_dtime$$
+This column has type $code integer$$ and its value is the
+$cref/like_id/like_table/like_id/$$ for
+the multiplier of the time forward difference smoothing in the 
+$code smooth_grid$$ table for this 
+$cref/smooth_id/smooth_grid_table/smooth_id/$$.
+
 
 $comment%example/table/smooth_grid_table.py is included by smooth_grid_table.omh
 %$$

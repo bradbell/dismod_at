@@ -114,6 +114,11 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	// weight_grid table
 	DISMOD_AT_CHECK_PRIMARY_ID(weight_grid, weight_id, weight, 0);
 
+	// smooth table
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth, multiply_value, like, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth, multiply_dage,  like, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth, multiply_dtime, like, 0);
+
 	// smooth_grid table
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, smooth_id, smooth, 0);
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, value_like_id, like, 0);

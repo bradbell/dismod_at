@@ -266,6 +266,8 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # ==========================================================================-
 # $begin create_database$$ $newlinech #$$
 # $spell
+#	dage
+#	dtime
 #	len
 #	da
 #	dt
@@ -400,6 +402,12 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # name    $cnext str         $cnext name of $th i$$ smoothing  $rnext
 # age_id  $cnext list of int $cnext indices for age values     $rnext
 # time_id $cnext list of int $cnext indices for time values    $rnext
+# multiply_value $cnext int   $cnext 
+#	$cref/multiply_value/smooth_table/multiply_value/$$ $rnext
+# multiply_dage $cnext int   $cnext 
+#	$cref/multiply_dage/smooth_table/multiply_dage/$$ $rnext
+# multiply_dtime $cnext int   $cnext 
+#	$cref/multiply_dtime/smooth_table/multiply_dtime/$$ $rnext
 # fun     $cnext function    $cnext $icode%(%v%,%da%,%dt%)%=%fun%(%a%, %t%)%$$
 # $tend
 # The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
@@ -634,15 +642,22 @@ def create_database(
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
 	# create smooth table
-	col_name = [ 'smooth_name', 'n_age',   'n_time'   ]
-	col_type = [ 'text',        'integer', 'integer'  ]
+	col_name = [ 'smooth_name', 'n_age',   'n_time', 'multiply_value',
+		'multiply_dage', 'multiply_dtime'    ]
+	col_type = [ 'text',        'integer', 'integer', 'integer',
+  		'integer',       'integer'           ]
 	row_list = [ ]
 	for i in range( len(smooth_list) ) :
-		smooth = smooth_list[i]
-		name   = smooth['name']
-		n_age  = len( smooth['age_id'] )
-		n_time = len( smooth['time_id'] )
-		row_list.append( [ name, n_age, n_time ] )
+		smooth        = smooth_list[i]
+		name          = smooth['name']
+		n_age         = len( smooth['age_id'] )
+		n_time        = len( smooth['time_id'] )
+		multiply_value = smooth['multiply_value']
+		multiply_dage  = smooth['multiply_dage']
+		multiply_dtime = smooth['multiply_dtime']
+		row_list.append( [ 
+		name, n_age, n_time, multiply_value, multiply_dage, multiply_dtime 
+		] )
 	tbl_name = 'smooth'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
