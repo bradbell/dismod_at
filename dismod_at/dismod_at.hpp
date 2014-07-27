@@ -24,6 +24,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "include/interp_weight.hpp"
 # include "include/smooth2ode.hpp"
 # include "include/solve_ode.hpp"
+# include "include/variable_vec.hpp"
 
 // devel/table directory
 # include "include/check_table_id.hpp"
