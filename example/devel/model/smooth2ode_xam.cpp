@@ -39,7 +39,7 @@ bool smooth2ode_xam(void)
 
 	double eps = std::numeric_limits<double>::epsilon();
 
-	// use smooth_grid test constructor
+	// use smooth_info test constructor
 	size_t n_age_sg  = 4;
 	size_t n_time_sg = 3;
 	vector<size_t> age_id(n_age_sg),    time_id(n_time_sg);
@@ -61,7 +61,7 @@ bool smooth2ode_xam(void)
 	size_t multiply_dtime = -1;
 
 	// testing constructor
-	dismod_at::smooth_grid sg(
+	dismod_at::smooth_info sg(
 		age_id, 
 		time_id, 
 		value_like_id, 

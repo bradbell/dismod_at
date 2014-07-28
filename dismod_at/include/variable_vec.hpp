@@ -13,7 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <cppad/vector.hpp>
 # include "get_smooth_table.hpp"
-# include "smooth_grid.hpp"
+# include "smooth_info.hpp"
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -23,7 +23,7 @@ class variable_vec {
 		// offset in vec_ where this subvector starts
 		size_t offset_;
 		// smoothing used for each subvector
-		const smooth_grid& sg_;
+		const smooth_info& sg_;
 	};
 private:
 	// Informaiton for each subvector
@@ -33,7 +33,7 @@ private:
 	CppAD::vector<Float> vec_;
 public:
 	variable_vec(
-		const CppAD::vector<smooth_grid>& sg
+		const CppAD::vector<smooth_info>& sg
 	);
 };
 

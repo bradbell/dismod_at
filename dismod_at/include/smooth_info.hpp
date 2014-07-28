@@ -17,7 +17,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-class smooth_grid {
+class smooth_info {
 private:
 	// grid of age values for this smoothing
 	CppAD::vector<size_t> age_id_;
@@ -37,13 +37,13 @@ private:
 	size_t multiply_dtime_;
 public:
 	// constructor
-	smooth_grid(
+	smooth_info(
 		size_t                                   smooth_id         ,
 		const CppAD::vector<smooth_struct>&      smooth_table      ,
 		const CppAD::vector<smooth_grid_struct>& smooth_grid_table
 	);
 	// testing constructor
-	smooth_grid(
+	smooth_info(
 		const CppAD::vector<size_t>&  age_id         ,
 		const CppAD::vector<size_t>&  time_id        ,
 		const CppAD::vector<size_t>&  value_like_id  ,

@@ -9,17 +9,17 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin smooth_grid_xam.cpp$$
+$begin smooth_info_xam.cpp$$
 $spell
 	xam
 $$
 
-$section C++ smooth_grid: Example and Test$$
-$index example, C++ smooth_grid$$
-$index smooth_grid, C++ example$$
+$section C++ smooth_info: Example and Test$$
+$index example, C++ smooth_info$$
+$index smooth_info, C++ example$$
 
 $code
-$verbatim%example/devel/table/smooth_grid_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/smooth_info_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -27,7 +27,7 @@ $end
 // BEGIN C++
 # include <dismod_at/dismod_at.hpp>
 
-bool smooth_grid_xam(void)
+bool smooth_info_xam(void)
 {
 	bool   ok = true;
 	using  std::string;
@@ -76,9 +76,9 @@ bool smooth_grid_xam(void)
 	vector<dismod_at::smooth_grid_struct> 
 		smooth_grid_table = dismod_at::get_smooth_grid(db);
 
-	// extract the smooth_grid information
+	// extract the smoothing information
 	size_t smooth_id = 0;
-	dismod_at::smooth_grid  sg(smooth_id, smooth_table, smooth_grid_table);
+	dismod_at::smooth_info  sg(smooth_id, smooth_table, smooth_grid_table);
 
 	ok  &= sg.age_size()  == 3;
 	ok  &= sg.time_size() == 2;

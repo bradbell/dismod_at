@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_SMOOTH2ODE_HPP
 
 # include <cppad/cppad.hpp>
-# include "smooth_grid.hpp"
+# include "smooth_info.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -35,7 +35,7 @@ private:
 	CppAD::vector<ode_point> coefficient_;
 public:
 	smooth2ode(
-		const smooth_grid&                          sg            ,
+		const smooth_info&                          sg            ,
 		const CppAD::vector<double>&                age_table     ,
 		const CppAD::vector<double>&                time_table    ,
 		size_t                                      n_age_ode     ,

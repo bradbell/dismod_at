@@ -40,7 +40,7 @@ the specified smoothing grid to the ode grid.
 $subhead sg$$
 This argument has prototype
 $codei%
-	const dismod_at::smooth_grid& %sg%
+	const dismod_at::smooth_info& %sg%
 %$$
 and is the smoothing grid. We use the following notation below:
 $codei%
@@ -140,7 +140,7 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 smooth2ode::smooth2ode(
-	const smooth_grid&                          sg            ,
+	const smooth_info&                          sg            ,
 	const CppAD::vector<double>&                age_table     ,
 	const CppAD::vector<double>&                time_table    ,
 	size_t                                      n_age_ode     ,

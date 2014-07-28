@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin smooth_grid$$
+$begin smooth_info$$
 $spell
 	sg
 	dage
@@ -22,9 +22,9 @@ $$
 $section Extract Information for One Smoothing$$
 
 $head Syntax$$
-$codei%smooth_grid %sg%(%smooth_id%, %smooth_table%, %smooth_grid_table% )
+$codei%smooth_info %sg%(%smooth_id%, %smooth_table%, %smooth_grid_table% )
 %$$
-$codei%smooth_grid %sg%(
+$codei%smooth_info %sg%(
 	%age_id%,
 	%time_id%,
 	%value_like_id%,
@@ -91,7 +91,7 @@ $codei%
 an is the $cref smooth_grid_table$$.
 
 $subhead sg$$
-This result has type $code smooth_grid$$.
+This result has type $code smooth_info$$.
 All of the functions calls in the syntax above are $code const$$; i.e.,
 they do not modify $icode sg$$.
 
@@ -231,10 +231,10 @@ $cref/multiply_dage/smooth_table/multiply_dage/$$, and
 $cref/multiply_dtime/smooth_table/multiply_dtime/$$ 
 for this smoothing.
 
-$children%example/devel/table/smooth_grid_xam.cpp
+$children%example/devel/table/smooth_info_xam.cpp
 %$$
 $head Example$$
-The file $cref smooth_grid_xam.cpp$$ contains an example that uses
+The file $cref smooth_info_xam.cpp$$ contains an example that uses
 this function.
 
 $end
@@ -265,42 +265,42 @@ namespace {
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-size_t smooth_grid::age_size(void) const
+size_t smooth_info::age_size(void) const
 {	return age_id_.size(); }
-size_t smooth_grid::time_size(void) const
+size_t smooth_info::time_size(void) const
 {	return time_id_.size(); }
 //
-size_t smooth_grid::age_id(size_t i) const
+size_t smooth_info::age_id(size_t i) const
 {	return age_id_[i]; }
 
-size_t smooth_grid::time_id(size_t j) const
+size_t smooth_info::time_id(size_t j) const
 {	return time_id_[j]; }
 //
-size_t smooth_grid::value_like_id(size_t i, size_t j) const
+size_t smooth_info::value_like_id(size_t i, size_t j) const
 {	assert( i < age_id_.size() );
 	assert( j < time_id_.size() );
 	return value_like_id_[ i * time_id_.size() + j]; 
 }
-size_t smooth_grid::dage_like_id(size_t i, size_t j) const
+size_t smooth_info::dage_like_id(size_t i, size_t j) const
 {	assert( i < age_id_.size() );
 	assert( j < time_id_.size() );
 	return dage_like_id_[ i * time_id_.size() + j]; 
 }
-size_t smooth_grid::dtime_like_id(size_t i, size_t j) const
+size_t smooth_info::dtime_like_id(size_t i, size_t j) const
 {	assert( i < age_id_.size() );
 	assert( j < time_id_.size() );
 	return dtime_like_id_[ i * time_id_.size() + j]; 
 }
 //
-size_t smooth_grid::multiply_value(void) const
+size_t smooth_info::multiply_value(void) const
 {	return multiply_value_; }
-size_t smooth_grid::multiply_dage(void)  const
+size_t smooth_info::multiply_dage(void)  const
 {	return multiply_dage_; }
-size_t smooth_grid::multiply_dtime(void) const
+size_t smooth_info::multiply_dtime(void) const
 {	return multiply_dtime_; }
 //
 // Testing Constructor
-smooth_grid::smooth_grid(
+smooth_info::smooth_info(
 	const CppAD::vector<size_t>& age_id         ,
 	const CppAD::vector<size_t>& time_id        ,
 	const CppAD::vector<size_t>& value_like_id  ,
@@ -319,7 +319,7 @@ smooth_grid::smooth_grid(
 		multiply_dtime_  = multiply_dtime;
 	}
 // Constructor
-smooth_grid::smooth_grid(
+smooth_info::smooth_info(
 	size_t                                   smooth_id         ,
 	const CppAD::vector<smooth_struct>&      smooth_table      ,
 	const CppAD::vector<smooth_grid_struct>& smooth_grid_table )
