@@ -40,28 +40,28 @@ bool smooth2ode_xam(void)
 	double eps = std::numeric_limits<double>::epsilon();
 
 	// use smooth_info test constructor
-	size_t n_age_sg  = 4;
-	size_t n_time_sg = 3;
-	vector<size_t> age_id(n_age_sg),    time_id(n_time_sg);
-	vector<double> age_table(n_age_sg), time_table(n_time_sg);
-	for(i = 0; i < n_age_sg; i++)
+	size_t n_age_si  = 4;
+	size_t n_time_si = 3;
+	vector<size_t> age_id(n_age_si),    time_id(n_time_si);
+	vector<double> age_table(n_age_si), time_table(n_time_si);
+	for(i = 0; i < n_age_si; i++)
 	{	age_id[i]    = i;
 		age_table[i] = 10.0 * i;
 	}
-	for(j = 0; j < n_time_sg; j++)
+	for(j = 0; j < n_time_si; j++)
 	{	time_id[j]    = j;
 		time_table[j] = 1990.0 + 10 * j;
 	}
 	// these values are not used
-	vector<size_t> value_like_id(n_age_sg * n_time_sg);
-	vector<size_t> dage_like_id(n_age_sg * n_time_sg);
-	vector<size_t> dtime_like_id(n_age_sg * n_time_sg);
+	vector<size_t> value_like_id(n_age_si * n_time_si);
+	vector<size_t> dage_like_id(n_age_si * n_time_si);
+	vector<size_t> dtime_like_id(n_age_si * n_time_si);
 	size_t multiply_value = -1;
 	size_t multiply_dage  = -1;
 	size_t multiply_dtime = -1;
 
 	// testing constructor
-	dismod_at::smooth_info sg(
+	dismod_at::smooth_info s_info(
 		age_id, 
 		time_id, 
 		value_like_id, 
@@ -86,19 +86,19 @@ bool smooth2ode_xam(void)
 		n_time_ode++;
 
 	// construct the interpolation object
-	dismod_at::smooth2ode sg2ode(
-		sg, age_table, time_table, n_age_ode, n_time_ode, ode_step_size
+	dismod_at::smooth2ode si2ode(
+		s_info, age_table, time_table, n_age_ode, n_time_ode, ode_step_size
 	);
 
 	// variable values on smoothing grid
-	CppAD::vector<Float> var_sg(n_age_sg * n_time_sg);
-	for(i = 0; i < n_age_sg; i++)
-	{	for(j = 0; j < n_time_sg; j++)
-			var_sg[i * n_time_sg + j] = i*i + j*j;
+	CppAD::vector<Float> var_si(n_age_si * n_time_si);
+	for(i = 0; i < n_age_si; i++)
+	{	for(j = 0; j < n_time_si; j++)
+			var_si[i * n_time_si + j] = i*i + j*j;
 	}
 
 	// interpolate from smoothing to ode grid
-	CppAD::vector<Float> var_ode = sg2ode.interpolate(var_sg);
+	CppAD::vector<Float> var_ode = si2ode.interpolate(var_si);
 
 	// check one point
 	size_t i_ode = 6;
@@ -106,21 +106,21 @@ bool smooth2ode_xam(void)
 	double age   = age_table[0] + ode_step_size * i_ode;
 	double time  = time_table[0] + ode_step_size * j_ode;
 	Float  v_ode = var_ode[ i_ode * n_time_ode + j_ode ];
-	size_t i_sg  = 0;
-	while( age_table[ age_id[i_sg+1] ] < age )
-		i_sg++;
-	size_t j_sg  = 0;
-	while( time_table[ time_id[j_sg+1] ] < time )
-		j_sg++;
+	size_t i_si  = 0;
+	while( age_table[ age_id[i_si+1] ] < age )
+		i_si++;
+	size_t j_si  = 0;
+	while( time_table[ time_id[j_si+1] ] < time )
+		j_si++;
 	Float sum = 0.0;
-	double a0  = age_table[ age_id[i_sg] ];
-	double a1  = age_table[ age_id[i_sg+1] ];
-	double t0  = time_table[ time_id[j_sg] ];
-	double t1  = time_table[ time_id[j_sg+1] ];
-	sum  += (a1-age)*(t1-time)*var_sg[i_sg * n_time_sg + j_sg];
-	sum  += (age-a0)*(t1-time)*var_sg[(i_sg+1) * n_time_sg + j_sg];
-	sum  += (a1-age)*(time-t0)*var_sg[i_sg * n_time_sg + (j_sg+1)];
-	sum  += (age-a0)*(time-t0)*var_sg[(i_sg+1) * n_time_sg + (j_sg+1)];
+	double a0  = age_table[ age_id[i_si] ];
+	double a1  = age_table[ age_id[i_si+1] ];
+	double t0  = time_table[ time_id[j_si] ];
+	double t1  = time_table[ time_id[j_si+1] ];
+	sum  += (a1-age)*(t1-time)*var_si[i_si * n_time_si + j_si];
+	sum  += (age-a0)*(t1-time)*var_si[(i_si+1) * n_time_si + j_si];
+	sum  += (a1-age)*(time-t0)*var_si[i_si * n_time_si + (j_si+1)];
+	sum  += (age-a0)*(time-t0)*var_si[(i_si+1) * n_time_si + (j_si+1)];
 	sum /= (a1 - a0) * (t1 - t0);
 	//
 	ok  &= abs( 1.0 - sum / v_ode ) < 10. * eps;

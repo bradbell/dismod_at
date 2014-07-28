@@ -78,42 +78,42 @@ bool smooth_info_xam(void)
 
 	// extract the smoothing information
 	size_t smooth_id = 0;
-	dismod_at::smooth_info  sg(smooth_id, smooth_table, smooth_grid_table);
+	dismod_at::smooth_info  s_info(smooth_id, smooth_table, smooth_grid_table);
 
-	ok  &= sg.age_size()  == 3;
-	ok  &= sg.time_size() == 2;
+	ok  &= s_info.age_size()  == 3;
+	ok  &= s_info.time_size() == 2;
 	//
-	ok  &= sg.age_id(0)   == 0;
-	ok  &= sg.age_id(1)   == 2;
-	ok  &= sg.age_id(2)   == 4;
+	ok  &= s_info.age_id(0)   == 0;
+	ok  &= s_info.age_id(1)   == 2;
+	ok  &= s_info.age_id(2)   == 4;
 	//
-	ok  &= sg.time_id(0)  == 0;
-	ok  &= sg.time_id(1)  == 1;
+	ok  &= s_info.time_id(0)  == 0;
+	ok  &= s_info.time_id(1)  == 1;
 	//
-	ok  &= sg.value_like_id(0, 1) ==  1;
-	ok  &= sg.value_like_id(1, 1) ==  2;
-	ok  &= sg.value_like_id(2, 1) ==  3;
-	ok  &= sg.value_like_id(0, 0) ==  5;
-	ok  &= sg.value_like_id(1, 0) ==  7;
-	ok  &= sg.value_like_id(2, 0) ==  1;
+	ok  &= s_info.value_like_id(0, 1) ==  1;
+	ok  &= s_info.value_like_id(1, 1) ==  2;
+	ok  &= s_info.value_like_id(2, 1) ==  3;
+	ok  &= s_info.value_like_id(0, 0) ==  5;
+	ok  &= s_info.value_like_id(1, 0) ==  7;
+	ok  &= s_info.value_like_id(2, 0) ==  1;
 	//
-	ok  &= sg.dage_like_id(0, 1)  ==  2;
-	ok  &= sg.dage_like_id(1, 1)  ==  3;
-	ok  &= sg.dage_like_id(2, 1)  == size_t(-1);
-	ok  &= sg.dage_like_id(0, 0)  ==  6;
-	ok  &= sg.dage_like_id(1, 0)  ==  8;
-	ok  &= sg.dage_like_id(2, 0)  == size_t(-1);
+	ok  &= s_info.dage_like_id(0, 1)  ==  2;
+	ok  &= s_info.dage_like_id(1, 1)  ==  3;
+	ok  &= s_info.dage_like_id(2, 1)  == size_t(-1);
+	ok  &= s_info.dage_like_id(0, 0)  ==  6;
+	ok  &= s_info.dage_like_id(1, 0)  ==  8;
+	ok  &= s_info.dage_like_id(2, 0)  == size_t(-1);
 	//
-	ok  &= sg.dtime_like_id(0, 1) == size_t(-1);
-	ok  &= sg.dtime_like_id(1, 1) == size_t(-1);
-	ok  &= sg.dtime_like_id(2, 1) == size_t(-1);
-	ok  &= sg.dtime_like_id(0, 0) ==  7;
-	ok  &= sg.dtime_like_id(1, 0) ==  9;
-	ok  &= sg.dtime_like_id(2, 0) ==  3;
+	ok  &= s_info.dtime_like_id(0, 1) == size_t(-1);
+	ok  &= s_info.dtime_like_id(1, 1) == size_t(-1);
+	ok  &= s_info.dtime_like_id(2, 1) == size_t(-1);
+	ok  &= s_info.dtime_like_id(0, 0) ==  7;
+	ok  &= s_info.dtime_like_id(1, 0) ==  9;
+	ok  &= s_info.dtime_like_id(2, 0) ==  3;
 	//
-	ok  &= sg.multiply_value()    == size_t(-1);
-	ok  &= sg.multiply_dage()     == size_t(-1);
-	ok  &= sg.multiply_dtime()    == size_t(-1);
+	ok  &= s_info.multiply_value()    == size_t(-1);
+	ok  &= s_info.multiply_dage()     == size_t(-1);
+	ok  &= s_info.multiply_dtime()    == size_t(-1);
  	//
 	// close database and return
 	sqlite3_close(db);
