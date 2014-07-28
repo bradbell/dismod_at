@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin smooth_info$$
 $spell
-	sg
+	s_info
 	dage
 	dtime
 	const
@@ -22,9 +22,9 @@ $$
 $section Extract Information for One Smoothing$$
 
 $head Syntax$$
-$codei%smooth_info %sg%(%smooth_id%, %smooth_table%, %smooth_grid_table% )
+$codei%smooth_info %s_info%(%smooth_id%, %smooth_table%, %smooth_grid_table% )
 %$$
-$codei%smooth_info %sg%(
+$codei%smooth_info %s_info%(
 	%age_id%,
 	%time_id%,
 	%value_like_id%,
@@ -35,17 +35,17 @@ $codei%smooth_info %sg%(
 	%multiply_dtime%,
 )
 %$$
-$icode%n_age%   = %sg%.age_size()
+$icode%n_age%   = %s_info%.age_size()
 %$$
-$icode%n_time%  = %sg%.time_size()
+$icode%n_time%  = %s_info%.time_size()
 %$$
-$icode%a_id%    = %sg%.age_id(%i%)
+$icode%a_id%    = %s_info%.age_id(%i%)
 %$$
-$icode%t_id%    = %sg%.time_id(%j%)
+$icode%t_id%    = %s_info%.time_id(%j%)
 %$$
-$icode%i_type%  = %sg%.%type%_like_id(%i%, %j%)
+$icode%i_type%  = %s_info%.%type%_like_id(%i%, %j%)
 %$$
-$icode%m_type%  = %sg%.multiply_%type%()
+$icode%m_type%  = %s_info%.multiply_%type%()
 %$$
 
 $head Purpose$$
@@ -74,7 +74,7 @@ $codei%
 	size_t %smooth_id%
 %$$
 and is the $cref/smooth_id/smooth_grid_table/smooth_id/$$ for the
-smoothing that $icode sg$$ corresponds to.
+smoothing that $icode s_info$$ corresponds to.
 
 $subhead smooth_table$$
 This argument has prototype
@@ -90,10 +90,10 @@ $codei%
 %$$
 an is the $cref smooth_grid_table$$.
 
-$subhead sg$$
+$subhead s_info$$
 This result has type $code smooth_info$$.
 All of the functions calls in the syntax above are $code const$$; i.e.,
-they do not modify $icode sg$$.
+they do not modify $icode s_info$$.
 
 $head Testing Constructor$$
 This constructor is used for testing purposes only:
@@ -105,7 +105,7 @@ $codei%
 %$$
 It specifies the age grid indices; i.e.
 $codei%
-	%sg%.age_id(%i%) = %age_id%[%i%]
+	%s_info%.age_id(%i%) = %age_id%[%i%]
 %$$ 
 
 $subhead time_id$$
@@ -115,7 +115,7 @@ $codei%
 %$$
 It specifies the time grid indices; i.e.
 $codei%
-	%sg%.time_id(%i%) = %time_id%[%i%]
+	%s_info%.time_id(%i%) = %time_id%[%i%]
 %$$ 
 
 $subhead type_like_id$$
@@ -127,9 +127,9 @@ const CppAD::vector<size_t>& %value_like_id%, %dage_like_id%, %dtime_like_id%
 %$$
 They specify the likelihood grid indices; i.e.
 $codei%
-	%sg%.value_like_id(%i%) = %value_like_id%[%i%]
-	%sg%.dage_like_id(%i%)  = %dage_like_id%[%i%]
-	%sg%.dtime_like_id(%i%) = %dtime_like_id%[%i%]
+	%s_info%.value_like_id(%i%) = %value_like_id%[%i%]
+	%s_info%.dage_like_id(%i%)  = %dage_like_id%[%i%]
+	%s_info%.dtime_like_id(%i%) = %dtime_like_id%[%i%]
 %$$ 
 
 
@@ -142,9 +142,9 @@ $codei%
 %$$
 They specify the likelihood indices for the multiplies; i.e.,
 $codei%
-	%sg%.multiply_value()  = %multiply_value%
-	%sg%.multiply_dage()   = %multiply_dage%
-	%sg%.multiply_dtime()  = %multiply_dtime%
+	%s_info%.multiply_value()  = %multiply_value%
+	%s_info%.multiply_dage()   = %multiply_dage%
+	%s_info%.multiply_dtime()  = %multiply_dtime%
 %$$ 
 
 $head n_age$$
@@ -184,7 +184,7 @@ and is the $th i$$ $cref/age_id/smooth_grid_table/age_id/$$
 for this smoothing and increases with $icode i$$; i.e.,
 for $icode%i% < %n_age%-2%$$
 $codei%
-	%sg%.age_id(%i%) < %sg%.age_id(%i%+1)
+	%s_info%.age_id(%i%) < %s_info%.age_id(%i%+1)
 %$$
 
 $head t_id$$
@@ -196,7 +196,7 @@ and is the $th j$$ $cref/time_id/smooth_grid_table/time_id/$$
 for this smoothing and increases with $icode j$$; i.e.,
 for $icode%j% < %n_time%-2%$$
 $codei%
-	%sg%.time_id(%j%) < %sg%.time_id(%j%+1)
+	%s_info%.time_id(%j%) < %s_info%.time_id(%j%+1)
 %$$
 
 $head i, j$$
