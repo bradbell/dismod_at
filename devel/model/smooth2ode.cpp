@@ -13,7 +13,7 @@ $begin smooth2ode$$
 $spell
 	interpolant
 	struct
-	sg
+	s_info
 	const
 	dismod
 	CppAD
@@ -23,11 +23,11 @@ $$
 $section Interpolation from Smoothing to Ode Grid$$
 
 $head Syntax$$
-$codei%dismod_at::smooth2ode %sg2ode%(
-	%sg%, %age_table%, %time_table%, %n_age_ode%, %n_time_ode%, %ode_step_size%
+$codei%dismod_at::smooth2ode %si2ode%(
+	%s_info%, %age_table%, %time_table%, %n_age_ode%, %n_time_ode%, %ode_step_size%
 )%$$
 $codei%
-%var_ode% = %sg2ode%.interpolate( %var_sg% )%$$
+%var_ode% = %si2ode%.interpolate( %var_si% )%$$
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -37,18 +37,18 @@ $head smooth2ode$$
 This constructs an object that interpolates from 
 the specified smoothing grid to the ode grid.
 
-$subhead sg$$
+$subhead s_info$$
 This argument has prototype
 $codei%
-	const dismod_at::smooth_info& %sg%
+	const dismod_at::smooth_info& %s_info%
 %$$
 and is the smoothing grid. We use the following notation below:
 $codei%
-	%n_age_sg%       = %sg%.age_size()
-	%n_time_sg%      = %sg%.time_size()
+	%n_age_si%       = %s_info%.age_size()
+	%n_time_si%      = %s_info%.time_size()
 %$$
-The only other $icode sg$$ functions that are used are used by 
-$code smooth2ode$$ are: $icode%sg%.age_id%$$ and $icode%sg%.time_id%$$,
+The only other $icode s_info$$ functions that are used are used by 
+$code smooth2ode$$ are: $icode%s_info%.age_id%$$ and $icode%s_info%.time_id%$$,
 
 $subhead age_table$$
 This argument has prototype
@@ -92,21 +92,21 @@ $head interpolate$$
 This is a $code const$$ function 
 that interpolates from the smoothing grid to the ode grid.
 
-$subhead var_sg$$
+$subhead var_si$$
 This argument has prototype
 $codei%
-	const CppAD::vector<%Float%>& %var_sg%
+	const CppAD::vector<%Float%>& %var_si%
 %$$
-and its size is $icode%n_age_sg%*%n_time_sg%$$.
-For $icode%i_sg% = 0 , %...%, %n_age_sg%-1%$$,
-$icode%j_sg% = 0 , %...%, %n_time_sg%-1%$$,
+and its size is $icode%n_age_si%*%n_time_si%$$.
+For $icode%i_si% = 0 , %...%, %n_age_si%-1%$$,
+$icode%j_si% = 0 , %...%, %n_time_si%-1%$$,
 $codei%
-	%var_sg%[ %i_sg% * %n_time_sg% + %j_sg% ]
+	%var_si%[ %i_si% * %n_time_si% + %j_si% ]
 %$$
 is the value of the variable (being interpolated) at
 $codei%
-	%age%  = %age_table%[  %sg%.age_id(%i_sg%) ] 
-	%time% = %time_table%[ %sg%.time_id(%j_sg%) ] 
+	%age%  = %age_table%[  %s_info%.age_id(%i_si%) ] 
+	%time% = %time_table%[ %s_info%.time_id(%j_si%) ] 
 %$$
 
 $subhead var_ode$$
@@ -118,7 +118,7 @@ and its size is $icode%n_age_ode%*%n_time_ode%$$.
 For $icode%i% = 0 , %...%, %n_age_ode%-1%$$,
 $icode%j% = 0 , %...%, %n_time_ode%-1%$$,
 $codei%
-	%var_sg%[ %i_sg% * %n_time_sg% + %j_sg% ]
+	%var_si%[ %i_si% * %n_time_si% + %j_si% ]
 %$$
 is the value of the interpolated value for the variable at
 $codei%
@@ -140,15 +140,15 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 smooth2ode::smooth2ode(
-	const smooth_info&                          sg            ,
+	const smooth_info&                          s_info        ,
 	const CppAD::vector<double>&                age_table     ,
 	const CppAD::vector<double>&                time_table    ,
 	size_t                                      n_age_ode     ,
 	size_t                                      n_time_ode    ,
 	double                                      ode_step_size )
 : 
-n_age_sg_( sg.age_size() )     ,
-n_time_sg_( sg.time_size() )   ,
+n_age_si_( s_info.age_size() )     ,
+n_time_si_( s_info.time_size() )   ,
 n_age_ode_(n_age_ode)          ,
 n_time_ode_(n_time_ode)        ,
 ode_step_size_(ode_step_size) 
@@ -163,75 +163,75 @@ ode_step_size_(ode_step_size)
 	assert( time_max  <= time_min + (n_time_ode-1) * ode_step_size );
 # endif
 	// smoothing grid information
-	size_t i_sg        = 0;
-	size_t j_sg        = 0;
-	double age_min_sg  = age_table[ sg.age_id(i_sg) ];
-	double time_min_sg = time_table[ sg.time_id(j_sg) ];
-	i_sg               = sg.age_size() - 1;
-	j_sg               = sg.time_size() - 1;
-	double age_max_sg  = age_table[ sg.age_id(i_sg) ];
-	double time_max_sg = time_table[ sg.time_id(j_sg) ];
+	size_t i_si        = 0;
+	size_t j_si        = 0;
+	double age_min_si  = age_table[ s_info.age_id(i_si) ];
+	double time_min_si = time_table[ s_info.time_id(j_si) ];
+	i_si               = s_info.age_size() - 1;
+	j_si               = s_info.time_size() - 1;
+	double age_max_si  = age_table[ s_info.age_id(i_si) ];
+	double time_max_si = time_table[ s_info.time_id(j_si) ];
 
 	// compute the coefficients for each computational grid point
 	coefficient_.resize( n_age_ode * n_time_ode );
 	for(i = 0; i < n_age_ode; i++)
 	{	double age   = i * ode_step_size + age_table[0];
 		//
-		if( age <= age_min_sg )
-			i_sg = 0;
-		else if( age_max_sg <= age )
-			i_sg = sg.age_size() - 1;
+		if( age <= age_min_si )
+			i_si = 0;
+		else if( age_max_si <= age )
+			i_si = s_info.age_size() - 1;
 		else
-		{	assert( sg.age_size() > 1 );
-			while( age < age_table[ sg.age_id(i_sg) ] )
-			{	assert( 0 < i_sg ); 
-				i_sg--;
+		{	assert( s_info.age_size() > 1 );
+			while( age < age_table[ s_info.age_id(i_si) ] )
+			{	assert( 0 < i_si ); 
+				i_si--;
 			}
-			while( age_table[ sg.age_id(i_sg+1) ] < age )
-			{	i_sg++;
-				assert( i_sg+1 < sg.age_size() );
+			while( age_table[ s_info.age_id(i_si+1) ] < age )
+			{	i_si++;
+				assert( i_si+1 < s_info.age_size() );
 			}
 		}
-		bool two_age   = (age_min_sg < age) & ( age < age_max_sg); 
+		bool two_age   = (age_min_si < age) & ( age < age_max_si); 
 		//
 		for(j = 0; j < n_time_ode; j++)
 		{	// ode grid information
 			double time  = j * ode_step_size + time_table[0];
 			//
-			if( time <= time_min_sg )
-				j_sg = 0;
-			else if( time_max_sg <= time )
-				j_sg = sg.time_size() - 1;
+			if( time <= time_min_si )
+				j_si = 0;
+			else if( time_max_si <= time )
+				j_si = s_info.time_size() - 1;
 			else
-			{	assert( sg.time_size() > 1 );
-				while( time < time_table[ sg.time_id(j_sg) ] )
-				{	assert( 0 < j_sg ); 
-					j_sg--;
+			{	assert( s_info.time_size() > 1 );
+				while( time < time_table[ s_info.time_id(j_si) ] )
+				{	assert( 0 < j_si ); 
+					j_si--;
 				}
-				while( time_table[ sg.time_id(j_sg+1) ] < time )
-				{	j_sg++;
-					assert( j_sg+1 < sg.time_size() );
+				while( time_table[ s_info.time_id(j_si+1) ] < time )
+				{	j_si++;
+					assert( j_si+1 < s_info.time_size() );
 				}
 			}
-			bool two_time   = (time_min_sg < time) & ( time < time_max_sg); 
+			bool two_time   = (time_min_si < time) & ( time < time_max_si); 
 
 			// coefficient index information
 			size_t index = i * n_time_ode + j;
-			coefficient_[index].i_sg = i_sg;
-			coefficient_[index].j_sg = j_sg;
+			coefficient_[index].i_si = i_si;
+			coefficient_[index].j_si = j_si;
 
 			double a0, a1, ca0, ca1;
-			a0  = age_table[  sg.age_id(i_sg) ];
+			a0  = age_table[  s_info.age_id(i_si) ];
 			if( two_age )
-			{	a1  = age_table[  sg.age_id(i_sg+1) ];
+			{	a1  = age_table[  s_info.age_id(i_si+1) ];
 				ca0  = (a1 - age) / (a1 - a0);
 				ca1  = (age - a0) / (a1 - a0);
 			}
 
 			double t0, t1, ct0, ct1;
-			t0  = time_table[  sg.time_id(j_sg) ];
+			t0  = time_table[  s_info.time_id(j_si) ];
 			if( two_time )
-			{	t1  = time_table[  sg.time_id(j_sg+1) ];
+			{	t1  = time_table[  s_info.time_id(j_si+1) ];
 				ct0  = (t1 - time) / (t1 - t0);
 				ct1  = (time - t0) / (t1 - t0);
 			}
@@ -266,27 +266,27 @@ ode_step_size_(ode_step_size)
 
 template <class Float>
 CppAD::vector<Float> smooth2ode::interpolate(
-	const CppAD::vector<Float>& var_sg ) const
+	const CppAD::vector<Float>& var_si ) const
 {	size_t i, j, k;
-	assert( var_sg.size() == n_age_sg_ * n_time_sg_ );
+	assert( var_si.size() == n_age_si_ * n_time_si_ );
 	CppAD::vector<Float> var_ode( n_age_ode_ * n_time_ode_ );
 	for(i = 0; i < n_age_ode_; i++)
 	{	for(j = 0; j < n_time_ode_; j++)
 		{	k = i * n_time_ode_ + j;
-			size_t i_sg = coefficient_[k].i_sg;
-			size_t j_sg = coefficient_[k].j_sg;
+			size_t i_si = coefficient_[k].i_si;
+			size_t j_si = coefficient_[k].j_si;
 			double c_00 = coefficient_[k].c_00;
 			double c_10 = coefficient_[k].c_10;
 			double c_01 = coefficient_[k].c_01;
 			double c_11 = coefficient_[k].c_11;
 			Float  sum  = 0.0;
-			sum      += c_00 * var_sg[i_sg*n_time_sg_ + j_sg];
+			sum      += c_00 * var_si[i_si*n_time_si_ + j_si];
 			if( c_10 != 0.0 )
-				sum += c_10 * var_sg[(i_sg+1)*n_time_sg_ + j_sg];
+				sum += c_10 * var_si[(i_si+1)*n_time_si_ + j_si];
 			if( c_01 != 0.0 )
-				sum += c_01 * var_sg[i_sg*n_time_sg_ + (j_sg+1)];
+				sum += c_01 * var_si[i_si*n_time_si_ + (j_si+1)];
 			if( c_11 != 0.0 )
-				sum += c_11 * var_sg[(i_sg+1)*n_time_sg_ + (j_sg+1)];
+				sum += c_11 * var_si[(i_si+1)*n_time_si_ + (j_si+1)];
 			var_ode[ i * n_time_ode_ + j ] = sum;
 		}
 	}
@@ -296,7 +296,7 @@ CppAD::vector<Float> smooth2ode::interpolate(
 // instantiation 
 # define DISMOD_AT_INSTANTIATE_SMOOTH2ODE_IMPLEMENT(Float)  \
 template CppAD::vector<Float> smooth2ode::interpolate<Float>( \
-	const CppAD::vector<Float>& var_sg                      \
+	const CppAD::vector<Float>& var_si                      \
 ) const;
 
 DISMOD_AT_INSTANTIATE_SMOOTH2ODE_IMPLEMENT( double )

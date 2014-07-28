@@ -18,16 +18,16 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class smooth2ode {
 	typedef struct {
-		size_t i_sg;
-		size_t j_sg;
+		size_t i_si;
+		size_t j_si;
 		double c_00;
 		double c_10;
 		double c_01;
 		double c_11;
 	} ode_point;
 private:
-	const size_t              n_age_sg_;
-	const size_t              n_time_sg_;
+	const size_t              n_age_si_;
+	const size_t              n_time_si_;
 	const size_t              n_age_ode_;
 	const size_t              n_time_ode_;
 	const double              ode_step_size_;
@@ -35,7 +35,7 @@ private:
 	CppAD::vector<ode_point> coefficient_;
 public:
 	smooth2ode(
-		const smooth_info&                          sg            ,
+		const smooth_info&                          s_info        ,
 		const CppAD::vector<double>&                age_table     ,
 		const CppAD::vector<double>&                time_table    ,
 		size_t                                      n_age_ode     ,
@@ -44,7 +44,7 @@ public:
 	);
 	template <class Float>
 	CppAD::vector<Float> interpolate(
-		const CppAD::vector<Float>&   var_sg
+		const CppAD::vector<Float>&   var_si
 	) const;
 };
 
