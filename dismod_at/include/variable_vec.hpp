@@ -12,6 +12,8 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_VARIABLE_VEC_HPP
 
 # include <cppad/vector.hpp>
+# include "get_smooth_table.hpp"
+# include "smooth_grid.hpp"
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -20,12 +22,8 @@ class variable_vec {
 	struct subvector {
 		// offset in vec_ where this subvector starts
 		size_t offset_;
-		// multipliers for smoothing standard deviations
-		size_t multiply_value_;
-		size_t multiply_dage_;
-		size_t multiply_dtime_;
 		// smoothing used for each subvector
-		smooth_grid& sg_;
+		const smooth_grid& sg_;
 	};
 private:
 	// Informaiton for each subvector
@@ -34,7 +32,9 @@ private:
 	// value for all the variables
 	CppAD::vector<Float> vec_;
 public:
-	variable_vec(void);
+	variable_vec(
+		const CppAD::vector<smooth_grid>& sg
+	);
 };
 
 } // END DISMOD_AT_NAMESPACE:

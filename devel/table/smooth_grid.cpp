@@ -19,13 +19,20 @@ $spell
 	struct
 $$
 
-$section Extract Information for One Weighting Function$$
+$section Extract Information for One Smoothing$$
 
 $head Syntax$$
-$codei%smooth_grid %sg%(%smooth_id%, %smooth_grid_table% )
+$codei%smooth_grid %sg%(%smooth_id%, %smooth_table%, %smooth_grid_table% )
 %$$
 $codei%smooth_grid %sg%(
-	%age_id%, %time_id%, %value_like_id%, %dage_like_id%, %dtime_like_id%
+	%age_id%,
+	%time_id%,
+	%value_like_id%,
+	%dage_like_id%,
+	%dtime_like_id%
+	%multiply_value%,
+	%multiply_dage%,
+	%multiply_dtime%,
 )
 %$$
 $icode%n_age%   = %sg%.age_size()
@@ -36,11 +43,9 @@ $icode%a_id%    = %sg%.age_id(%i%)
 %$$
 $icode%t_id%    = %sg%.time_id(%j%)
 %$$
-$icode%v_like%  = %sg%.value_like_id(%i%, %j%)
+$icode%i_type%  = %sg%.%type%_like_id(%i%, %j%)
 %$$
-$icode%a_like%  = %sg%.dage_like_id(%i%, %j%)
-%$$
-$icode%t_like%  = %sg%.dtime_like_id(%i%, %j%)
+$icode%m_type%  = %sg%.multiply_%type%()
 %$$
 
 $head Purpose$$
@@ -71,6 +76,13 @@ $codei%
 and is the $cref/smooth_id/smooth_grid_table/smooth_id/$$ for the
 smoothing that $icode sg$$ corresponds to.
 
+$subhead smooth_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<smooth_struct>& %smooth_table%
+%$$
+an is the $cref smooth_table$$.
+
 $subhead smooth_grid_table$$
 This argument has prototype
 $codei%
@@ -83,7 +95,7 @@ This result has type $code smooth_grid$$.
 All of the functions calls in the syntax above are $code const$$; i.e.,
 they do not modify $icode sg$$.
 
-$head Constructor From Vectors$$
+$head Testing Constructor$$
 This constructor is used for testing purposes only:
 
 $subhead age_id$$
@@ -106,18 +118,33 @@ $codei%
 	%sg%.time_id(%i%) = %time_id%[%i%]
 %$$ 
 
-$subhead like_id$$
-These arguments have prototype
+$subhead type_like_id$$
+For $icode type$$ equal to 
+$code value$$, $code dage$$ and $code dtime$$
+these arguments have prototype
 $codei%
-	const CppAD::vector<size_t>& %value_like_id%
-	const CppAD::vector<size_t>& %dage_like_id%
-	const CppAD::vector<size_t>& %dtime_like_id%
+const CppAD::vector<size_t>& %value_like_id%, %dage_like_id%, %dtime_like_id%
 %$$
-They specify the likelihood indices grid indices; i.e.
+They specify the likelihood grid indices; i.e.
 $codei%
 	%sg%.value_like_id(%i%) = %value_like_id%[%i%]
 	%sg%.dage_like_id(%i%)  = %dage_like_id%[%i%]
 	%sg%.dtime_like_id(%i%) = %dtime_like_id%[%i%]
+%$$ 
+
+
+$subhead multiply_type$$
+For $icode type$$ equal to 
+$code value$$, $code dage$$ and $code dtime$$
+these arguments have prototype
+$codei%
+	const size_t %multiply_value%, %multiply_dage%, %multiply_dtime%
+%$$
+They specify the likelihood indices for the multiplies; i.e.,
+$codei%
+	%sg%.multiply_value()  = %multiply_value%
+	%sg%.multiply_dage()   = %multiply_dage%
+	%sg%.multiply_dtime()  = %multiply_dtime%
 %$$ 
 
 $head n_age$$
@@ -172,32 +199,37 @@ $codei%
 	%sg%.time_id(%j%) < %sg%.time_id(%j%+1)
 %$$
 
-$head v_like$$
-This return value has prototype
+$head i, j$$
+These arguments have prototype
 $codei%
-	size_t %v_like%
-%$$
-and is the 
-$cref/value_like_id/smooth_grid_table/value_like_id/$$ 
-for the corresponding age and time indices.
+	size_t %i%, %j%
+%%$$
 
-$head a_like$$
-This return value has prototype
+$head i_type$$
+For $icode type$$ equal to 
+$code value$$, $code dage$$ and $code dtime$$
+these return values have prototypes
 $codei%
-	size_t %a_like%
+	size_t %i_value%, %i_dage%, %i_dtime%
 %$$
-and is the 
-$cref/dage_like_id/smooth_grid_table/dage_like_id/$$ 
-for the corresponding age and time indices.
-
-$head t_like$$
-This return value has prototype
-$codei%
-	size_t %t_like%
-%$$
-and is the 
+and are the 
+$cref/value_like_id/smooth_grid_table/value_like_id/$$,
+$cref/dage_like_id/smooth_grid_table/dage_like_id/$$, and
 $cref/dtime_like_id/smooth_grid_table/dtime_like_id/$$ 
-for the corresponding age and time indices.
+corresponding to age index $icode i$$ and time index $icode j$$.
+
+$head m_type$$
+For $icode type$$ equal to 
+$code value$$, $code dage$$ and $code dtime$$
+these return values have prototypes
+$codei%
+	size_t %m_value%, %m_dage%, %m_dtime%
+%$$
+and are the 
+$cref/multiply_value/smooth_table/multiply_value/$$,
+$cref/multiply_dage/smooth_table/multiply_dage/$$, and
+$cref/multiply_dtime/smooth_table/multiply_dtime/$$ 
+for this smoothing.
 
 $children%example/devel/table/smooth_grid_xam.cpp
 %$$
@@ -259,25 +291,37 @@ size_t smooth_grid::dtime_like_id(size_t i, size_t j) const
 	assert( j < time_id_.size() );
 	return dtime_like_id_[ i * time_id_.size() + j]; 
 }
-
-// Vector Constructor
+//
+size_t smooth_grid::multiply_value(void) const
+{	return multiply_value_; }
+size_t smooth_grid::multiply_dage(void)  const
+{	return multiply_dage_; }
+size_t smooth_grid::multiply_dtime(void) const
+{	return multiply_dtime_; }
+//
+// Testing Constructor
 smooth_grid::smooth_grid(
-	const CppAD::vector<size_t>& age_id        ,
-	const CppAD::vector<size_t>& time_id       ,
-	const CppAD::vector<size_t>& value_like_id ,
-	const CppAD::vector<size_t>& dage_like_id  ,
-	const CppAD::vector<size_t>& dtime_like_id )
-	{	age_id_        = age_id;
-		time_id_       = time_id;
-		value_like_id_ = value_like_id;
-		dage_like_id_  = dage_like_id;
-		dtime_like_id_ = dtime_like_id;
+	const CppAD::vector<size_t>& age_id         ,
+	const CppAD::vector<size_t>& time_id        ,
+	const CppAD::vector<size_t>& value_like_id  ,
+	const CppAD::vector<size_t>& dage_like_id   ,
+	const CppAD::vector<size_t>& dtime_like_id  ,
+	size_t                       multiply_value ,
+	size_t                       multiply_dage  ,
+	size_t                       multiply_dtime )
+	{	age_id_          = age_id;
+		time_id_         = time_id;
+		value_like_id_   = value_like_id;
+		dage_like_id_    = dage_like_id;
+		dtime_like_id_   = dtime_like_id;
+		multiply_value_  = multiply_value;
+		multiply_dage_   = multiply_dage;
+		multiply_dtime_  = multiply_dtime;
 	}
-
-
 // Constructor
 smooth_grid::smooth_grid(
 	size_t                                   smooth_id         ,
+	const CppAD::vector<smooth_struct>&      smooth_table      ,
 	const CppAD::vector<smooth_grid_struct>& smooth_grid_table )
 {	size_t i, j, id;
 
@@ -288,7 +332,12 @@ smooth_grid::smooth_grid(
 	// check that -1 is not a valid positive int
 	assert( -1 == int( size_t(-1) ) );
 
-	// determine the vector age_id and time_id vectors for this smooth_id
+	// only use of smooth_table is to determine multiplier likelihoods
+	multiply_value_ = smooth_table[smooth_id].multiply_value;
+	multiply_dage_  = smooth_table[smooth_id].multiply_dage;
+	multiply_dtime_ = smooth_table[smooth_id].multiply_dtime;
+
+	// determine the age_id_ and time_id_ vectors for this smooth_id
 	assert( age_id_.size() == 0 );
 	assert( time_id_.size() == 0 );
 	size_t n_smooth = smooth_grid_table.size();
@@ -305,7 +354,7 @@ smooth_grid::smooth_grid(
 	size_t n_age  = age_id_.size();
 	size_t n_time = time_id_.size();
 
-	// set likelihoods and count number of times each 
+	// set smoothing likelihoods and count number of times each 
 	// age, time pair appears for this smooth_id
 	CppAD::vector<size_t> count(n_age * n_time );
 	value_like_id_.resize(n_age  * n_time );
@@ -382,6 +431,5 @@ smooth_grid::smooth_grid(
 	}
 
 }
-
 
 } // END_DISMOD_AT_NAMESPACE

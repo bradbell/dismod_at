@@ -12,6 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_SMOOTH_GRID_HPP
 
 # include <cppad/cppad.hpp>
+# include <dismod_at/include/get_smooth_table.hpp>
 # include <dismod_at/include/get_smooth_grid.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -22,34 +23,50 @@ private:
 	CppAD::vector<size_t> age_id_;
 	// grid of time values for this smoothing
 	CppAD::vector<size_t> time_id_;
-	// likelihood for function values
+	// like_id for function values
 	CppAD::vector<size_t> value_like_id_;
-	// likelihood for function difference in age direction
+	// like_id for function difference in age direction
 	CppAD::vector<size_t> dage_like_id_;
-	// likelihood for function difference in time direction
+	// like_id for function difference in time direction
 	CppAD::vector<size_t> dtime_like_id_;
+	// like_id for multiplier of value likelihood standard deviations
+	size_t multiply_value_;
+	// like_id for multiplier of dage likelihood standard deviations
+	size_t multiply_dage_;
+	// like_id for multiplier of dtime likelihood standard deviations
+	size_t multiply_dtime_;
 public:
+	// constructor
 	smooth_grid(
 		size_t                                   smooth_id         ,
+		const CppAD::vector<smooth_struct>&      smooth_table      ,
 		const CppAD::vector<smooth_grid_struct>& smooth_grid_table
 	);
+	// testing constructor
 	smooth_grid(
 		const CppAD::vector<size_t>&  age_id         ,
 		const CppAD::vector<size_t>&  time_id        ,
 		const CppAD::vector<size_t>&  value_like_id  ,
 		const CppAD::vector<size_t>&  dage_like_id   ,
-		const CppAD::vector<size_t>&  dtime_like_id 
+		const CppAD::vector<size_t>&  dtime_like_id  ,
+		size_t                        multiply_value ,
+		size_t                        multiply_dage  ,
+		size_t                        multiply_dtime
 	);
 	//
-	size_t age_size(void) const;
+	size_t age_size(void)  const;
 	size_t time_size(void) const;
 	//
-	size_t age_id(size_t i) const;
+	size_t age_id(size_t i)  const;
 	size_t time_id(size_t j) const;
 	//
 	size_t value_like_id(size_t i, size_t j) const;
-	size_t dage_like_id(size_t i, size_t j) const;
+	size_t dage_like_id(size_t i, size_t j)  const;
 	size_t dtime_like_id(size_t i, size_t j) const;
+	//
+	size_t multiply_value(void) const;
+	size_t multiply_dage(void)  const;
+	size_t multiply_dtime(void) const;
 };
 
 } // END_DISMOD_AT_NAMESPACE
