@@ -109,7 +109,7 @@ rate_list = [
 		'smooth':'constant'
 	}
 ]
-multiplier_list = [
+mulcov_list = [
 	{	'covariate':'sex',
 		'type':'rate_mean',
 		'effected':'omega',
@@ -134,7 +134,7 @@ dismod_at.create_database(
 	like_list,
 	smooth_list,
 	rate_list,
-	multiplier_list,
+	mulcov_list,
 	run_list
 )
 # -----------------------------------------------------------------------

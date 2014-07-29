@@ -12,6 +12,7 @@ import sqlite3
 # ============================================================================
 # $begin unicode_tuple$$ $newlinech #$$
 # $spell
+#	mulcov
 #	iterable
 #	unicode
 #	tuple
@@ -88,6 +89,7 @@ def unicode_tuple(iterable, quote_string) :
 # ============================================================================
 # $begin create_connection$$ $newlinech #$$
 # $spell
+#	mulcov
 #	str
 #	sqlite
 #	dismod
@@ -128,6 +130,7 @@ def create_connection(file_name, new) :
 # ==========================================================================-
 # $begin get_name2type$$ $newlinech #$$
 # $spell
+#	mulcov
 #	dismod
 #	str
 #	tbl
@@ -184,6 +187,7 @@ def get_name2type(connection, tbl_name) :
 # ==========================================================================-
 # $begin create_table$$ $newlinech #$$
 # $spell
+#	mulcov
 #	dismod
 #	str
 #	tbl
@@ -266,6 +270,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # ==========================================================================-
 # $begin create_database$$ $newlinech #$$
 # $spell
+#	mulcov
 #	mulstd
 #	dage
 #	dtime
@@ -293,7 +298,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #	%like_list%,
 #	%smooth_list%,
 #	%rate_list%,
-#	%multiplier_list%,
+#	%mulcov_list%,
 #	%run_list%
 # )%$$
 #
@@ -430,9 +435,9 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # smooth $cnext str           $cnext smoothing name
 # $tend
 #
-# $head multiplier_list$$
+# $head mulcov_list$$
 # This is a list of $code dict$$
-# that define the rows of the $cref multiplier_table$$.
+# that define the rows of the $cref mulcov_table$$.
 # The dictionary $icode%rate_list%[%i%]%$$ has the following:
 # $table
 # Key       $cnext Value Type  $cnext Description                $rnext
@@ -471,7 +476,7 @@ def create_database(
 	like_list,
 	smooth_list,
 	rate_list,
-	multiplier_list,
+	mulcov_list,
 	run_list
 ) :
 	# -----------------------------------------------------------------------
@@ -719,38 +724,38 @@ def create_database(
 	tbl_name = 'rate_prior'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
-	# multiplier table
+	# mulcov table
 	col_name = [ 
-		'multiplier_type',
+		'mulcov_type',
 		'rate_id',
 		'integrand_id', 
 		'covariate_id', 
   		'smooth_id'
 	]
 	col_type = [ 
-		'text',    # multiplier_type
+		'text',    # mulcov_type
 		'integer', # rate_id
 		'integer', # integrand_id
 		'integer', # covariate_id
   		'integer'  # smooth_id'
 	]
 	row_list = []
-	for i in range( len(multiplier_list) ) :
-		multiplier      = multiplier_list[i]
-		multiplier_type = multiplier['type']
-		effected        = multiplier['effected']
-		if multiplier_type == 'rate_mean' :
+	for i in range( len(mulcov_list) ) :
+		mulcov          = mulcov_list[i]
+		mulcov_type     = mulcov['type']
+		effected        = mulcov['effected']
+		if mulcov_type == 'rate_mean' :
 			rate_id      = global_rate_name2id[ effected ]
 			integrand_id = -1
 		else : 
 			integrand_id = global_integrand_name2id[ effected ]
 			rate_id      = -1
-		covariate_id  = global_covariate_name2id[ multiplier['covariate'] ]
-		smooth_id     = global_smooth_name2id[ multiplier['smooth'] ]
+		covariate_id  = global_covariate_name2id[ mulcov['covariate'] ]
+		smooth_id     = global_smooth_name2id[ mulcov['smooth'] ]
 		row_list.append(
-			[multiplier_type, rate_id, integrand_id, covariate_id, smooth_id]
+			[mulcov_type, rate_id, integrand_id, covariate_id, smooth_id]
 		)
-	tbl_name = 'multiplier'
+	tbl_name = 'mulcov'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
 	# create the data table

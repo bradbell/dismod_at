@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin devel_table$$
 $spell
+	mulcov
 	dismod
 $$
 
@@ -34,7 +35,7 @@ $childtable%
 	%devel/table/get_smooth_table.cpp
 	%devel/table/get_smooth_grid.cpp
 	%devel/table/get_rate_prior.cpp
-	%devel/table/get_multiplier_table.cpp
+	%devel/table/get_mulcov_table.cpp
 	%devel/table/get_data_table.cpp
 	%devel/table/get_db_input.cpp
 	%devel/table/smooth_info.cpp

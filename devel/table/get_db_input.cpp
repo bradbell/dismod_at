@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin get_db_input$$
 $spell
+	mulcov
 	dage
 	struct
 	sqlite
@@ -100,7 +101,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.weight_grid_table = get_weight_grid(db);
 	db_input.smooth_grid_table = get_smooth_grid(db);
 	db_input.rate_prior_table  = get_rate_prior(db);
-	db_input.multiplier_table  = get_multiplier_table(db);
+	db_input.mulcov_table  = get_mulcov_table(db);
 	//
 	size_t n_covariate = db_input.covariate_table.size();
 	db_input.data_table        = get_data_table(db, n_covariate);
@@ -129,11 +130,11 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(rate_prior, rate_id, rate, 0);
 	DISMOD_AT_CHECK_PRIMARY_ID(rate_prior, smooth_id, smooth, 0);
 
-	// multiplier table
-	DISMOD_AT_CHECK_PRIMARY_ID(multiplier, rate_id, rate, -1);
-	DISMOD_AT_CHECK_PRIMARY_ID(multiplier, integrand_id, integrand, -1);
-	DISMOD_AT_CHECK_PRIMARY_ID(multiplier, covariate_id, covariate, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(multiplier, smooth_id, smooth, 0);
+	// mulcov table
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, rate_id, rate, -1);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, integrand_id, integrand, -1);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, covariate_id, covariate, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, smooth_id, smooth, 0);
 	
 	// data table
 	DISMOD_AT_CHECK_PRIMARY_ID(data, integrand_id, integrand, 0);

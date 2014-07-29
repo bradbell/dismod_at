@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin post_table$$ 
 $spell
+	mulcov
 	covariate
 $$
 $index post, table$$
@@ -39,11 +40,11 @@ The other rows are random from the posterior distribution.
 
 $head variable_type$$
 This column has type $code text$$ and its value is either
-$code multiplier$$ or $code rate$$.
+$code mulcov$$ or $code rate$$.
 
-$head multiplier_id$$
-If $icode variable_type$$ is $code multiplier$$,
-this is the $cref/multiplier_id/multiplier_table/multiplier_id/$$ that
+$head mulcov_id$$
+If $icode variable_type$$ is $code mulcov$$,
+this is the $cref/mulcov_id/mulcov_table/mulcov_id/$$ that
 defines this covariate multiplier.
 If $icode variable_type$$ is $code rate$$,
 this column should be $code -1$$.
@@ -52,7 +53,7 @@ $head rate_prior_id$$
 If $icode variable_type$$ is $code rate$$,
 this is the $cref/rate_prior_id/rate_prior/rate_prior_id/$$ that
 defines this rate variable.
-If $icode variable_type$$ is $code multiplier$$,
+If $icode variable_type$$ is $code mulcov$$,
 this column should be $code -1$$.
 
 $head age$$

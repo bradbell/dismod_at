@@ -36,7 +36,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "include/get_db_input.hpp"
 # include "include/get_integrand_table.hpp"
 # include "include/get_like_table.hpp"
-# include "include/get_multiplier_table.hpp"
+# include "include/get_mulcov_table.hpp"
 # include "include/get_node_table.hpp"
 # include "include/get_rate_prior.hpp"
 # include "include/get_rate_table.hpp"

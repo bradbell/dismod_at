@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin input$$
 $spell
+	mulcov
 	std
 	dismod
 $$
@@ -37,7 +38,7 @@ $childtable%
 	%omh/table/smooth_table.omh
 	%omh/table/smooth_grid_table.omh
 	%omh/table/rate_prior.omh
-	%omh/table/multiplier_table.omh
+	%omh/table/mulcov_table.omh
 	%omh/table/data_table.omh
 	%omh/table/run_table.omh
 %$$

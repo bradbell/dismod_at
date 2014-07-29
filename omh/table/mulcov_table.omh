@@ -8,15 +8,16 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin multiplier_table$$ 
+$begin mulcov_table$$ 
 $spell
+	mulcov
 	std
 	dage
 	dtime
 	covariate
 $$
-$index multiplier, table$$
-$index table, multiplier$$
+$index mulcov, table$$
+$index table, mulcov$$
 $index covariate, multiplier$$
 
 $section The Covariate Multiplier Table$$
@@ -24,35 +25,35 @@ This table specifies the covariate multipliers and their priors.
 If this table is empty, there are no covariate multipliers in the model.
 This table has the following columns
 
-$head multiplier_id$$
+$head mulcov_id$$
 This column has type $code integer$$ and is its value is the
 primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$head multiplier_type$$
+$head mulcov_type$$
 This column has type $code text$$.
 The possible values are
 $table
-$icode multiplier_type$$ $cnext Description $rnext
+$icode mulcov_type$$ $cnext Description $rnext
 $code rate_mean$$  $cnext covariate effects a model rate $rnext
 $code meas_mean$$  $cnext covariate effects a measurement mean $rnext
 $code meas_std$$   $cnext covariate effects a measurement standard deviation
 $tend
 
 $head rate_id$$
-If $icode multiplier_type$$ is $code rate_mean$$,
+If $icode mulcov_type$$ is $code rate_mean$$,
 $icode rate_id$$ is the  
 $cref/rate_id/rate_table/rate_id/$$ that determines
 the rate that this covariate and multiplier effects.
-If $icode multiplier_type$$ is $code meas_mean$$ or $code meas_std$$,
+If $icode mulcov_type$$ is $code meas_mean$$ or $code meas_std$$,
 this column should be $code -1$$. 
 
 $head integrand_id$$
-If $icode multiplier_type$$ is $code meas_mean$$ or $code meas_std$$, 
+If $icode mulcov_type$$ is $code meas_mean$$ or $code meas_std$$, 
 $icode integrand_id$$ is the  
 $cref/integrand_id/integrand_table/integrand_id/$$ that determines
 which measurement integrand this multiplier effects.
-If $icode multiplier_type$$ is $code rate_mean$$,
+If $icode mulcov_type$$ is $code rate_mean$$,
 this column should be $code -1$$. 
 
 $head covariate_id$$
@@ -69,10 +70,10 @@ in the $code smooth_grid$$ table.
 It specifies the smoothing uses as a prior for this covariate multiplier.
 (Note that all covariate multipliers are fixed effects.)
 
-$children%example/table/multiplier_table.py
+$children%example/table/mulcov_table.py
 %$$
 $head Example$$
-The files $cref multiplier_table.py$$ and $cref get_multiplier_table_xam.cpp$$
+The files $cref mulcov_table.py$$ and $cref get_mulcov_table_xam.cpp$$
 contain example $code covariate$$ tables.
 
 $end

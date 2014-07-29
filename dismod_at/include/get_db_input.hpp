@@ -21,7 +21,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_covariate_table.hpp"
 # include "get_data_table.hpp"
 # include "get_like_table.hpp"
-# include "get_multiplier_table.hpp"
+# include "get_mulcov_table.hpp"
 # include "get_node_table.hpp"
 # include "get_rate_prior.hpp"
 # include "get_run_table.hpp"
@@ -48,7 +48,7 @@ namespace dismod_at {
 		CppAD::vector<weight_grid_struct> weight_grid_table;
 		CppAD::vector<smooth_grid_struct> smooth_grid_table;
 		CppAD::vector<rate_prior_struct>  rate_prior_table;
-		CppAD::vector<multiplier_struct>  multiplier_table;
+		CppAD::vector<mulcov_struct>      mulcov_table;
 		CppAD::vector<data_struct>        data_table;
 	};
 	// END STRUCT

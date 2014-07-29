@@ -27,7 +27,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	table/get_db_input.cpp
 	table/get_integrand_table.cpp
 	table/get_like_table.cpp
-	table/get_multiplier_table.cpp
+	table/get_mulcov_table.cpp
 	table/get_node_table.cpp
 	table/get_rate_prior.cpp
 	table/get_rate_table.cpp

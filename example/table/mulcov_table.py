@@ -8,21 +8,24 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin multiplier_table.py$$ $newlinech #$$
+# $begin mulcov_table.py$$ $newlinech #$$
+# $spell
+#	mulcov
+# $$
 #
-# $section multiplier_table: Example and Test$$
+# $section mulcov_table: Example and Test$$
 #
-# $index multiplier, example$$
-# $index example, multiplier table$$
-# $index table, multiplier example$$
+# $index mulcov, example$$
+# $index example, mulcov table$$
+# $index table, mulcov example$$
 #
 # $code
-# $verbatim%example/table/multiplier_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/mulcov_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-def multiplier_table() :
+def mulcov_table() :
 	import dismod_at
 	import copy
 	#
@@ -31,16 +34,16 @@ def multiplier_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	# 
-	# create a multiplier table
+	# create a mulcov table
 	col_name = [ 
-		'multiplier_type',
+		'mulcov_type',
 		'rate_id',
 		'integrand_id',
 		'covariate_id', 
   		'smooth_id'
 	]
 	col_type = [ 
-		'text',    # multiplier_type
+		'text',    # mulcov_type
 		'integer', # rate_id
 		'integer', # integrand_id
 		'integer', # covariate_id
@@ -59,13 +62,13 @@ def multiplier_table() :
 		2,            # covariate_id
 		2             # smooth_id
 	] ]
-	tbl_name = 'multiplier'
+	tbl_name = 'mulcov'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
-	# check values in the uniform multiplier table
+	# check values in the uniform mulcov table
 	columns = ','.join(col_name)
-	columns = 'multiplier_id,' + columns
-	cmd    = 'SELECT ' + columns + ' FROM multiplier'
+	columns = 'mulcov_id,' + columns
+	cmd    = 'SELECT ' + columns + ' FROM mulcov'
 	cursor = connection.cursor()
 	count  = 0
 	for row in cursor.execute(cmd) :
@@ -77,5 +80,5 @@ def multiplier_table() :
 		count += 1
 	assert count == len( row_list )
 	#
-	print('multiplier_table: OK')
+	print('mulcov_table: OK')
 # END PYTHON
