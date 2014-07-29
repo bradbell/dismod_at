@@ -12,6 +12,43 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/cppad.hpp>
 # include <dismod_at/dismod_at.hpp>
 
+/*
+$begin varaible_vec$$
+$spell
+	dismod
+	vec
+	mulcov
+	const
+	CppAD
+	struct
+	enum
+$$
+
+$section The Variable Vector Class$$
+
+$head Syntax$$
+$codei%dismod_at::variable_vec %vec%(
+	%run_table%, %node_table%, %data_table%, %smooth_table%,
+	%mulcov_table%, %rate_table%, %integrand_table%
+)%$$
+
+$head Constructor$$
+The constructor arguments have prototype
+$codei%
+	const CppAD::vector<run_struct>&      %run_table%
+	const CppAD::vector<node_struct>&     %node_table%
+	const CppAD::vector<data_struct>&     %data_table%
+	const CppAD::vector<smooth_struct>&   %smooth_table%
+	const CppAD::vector<mulcov_struct>&   %mulcov_table%
+	const CppAD::vector<rate_enum>&       %rate_table%
+	const CppAD::vector<integrand_enum>&  %integrand_table%
+%$$
+and are the corresponding tables; e.g., see
+$cref/run_table/get_run_table/run_table/$$.
+
+$end
+*/
+
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 template <class Float>
