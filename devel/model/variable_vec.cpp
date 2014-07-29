@@ -126,6 +126,31 @@ variable_vec<Float>::variable_vec(
 			}
 		}
 	}
+
+	// meas_std_mulcov_
+	meas_std_mulcov_.resize( n_integrand );
+	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
+	{	assert( meas_std_mulcov_[integrand_id].size() == 0 );
+		for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
+		{	bool match = mulcov_table[mulcov_id].mulcov_type == "meas_std";
+			match &= mulcov_table[mulcov_id].integrand_id == integrand_id;
+			if( match )
+			{	mulcov_pair info;
+				info.covariate_id = mulcov_table[mulcov_id].covariate_id;
+				info.smooth_id    = mulcov_table[mulcov_id].smooth_id;
+				for(size_t i = 0; i < meas_std_mulcov_.size(); i++)
+				{	size_t tmp = meas_std_mulcov_[i].covariate_id;	
+					if(info.covariate_id == tmp )
+					{	string table_name = "mulcov";
+						string message = 
+							"This meas_std covaraite appears twice";
+						table_error_exit(table_name, mulcov_id, message);
+					}
+				}
+				meas_std_mulcov_.pushback(info);
+			}
+		}
+	}
 }
 
 } // END DISMOD_AT_NAMESPACE
