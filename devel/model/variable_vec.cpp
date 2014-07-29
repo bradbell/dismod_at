@@ -23,7 +23,9 @@ variable_vec<Float>::variable_vec(
 	const CppAD::vector<mulcov_struct>&   mulcov_table      ,
 	const CppAD::vector<rate_enum>&       rate_table        ,
 	const CppAD::vector<integrand_enum>&  integrand_table
-)
+) :
+data_table_( data_table )     ,
+smooth_table_( smooth_table )
 {	using std::string;
 
 	size_t n_run       = run_table.size();

@@ -26,6 +26,12 @@ template <class Float>
 class variable_vec {
 	typedef struct { size_t covariate_id; size_t smooth_id; } mulcov_pair;
 private:
+	// The data table
+	const CppAD::vector<data_struct>& data_table_; 
+
+	// The smoothing table
+	const CppAD::vector<smooth_struct>& smooth_table_; 
+
 	// The parent node is node_id_[0]. The child nodes are node_id_[i] for
 	// i = 1 , ... , node_id_.size() - 1  (set by constructor only)
 	CppAD::vector<size_t> node_id_;
@@ -39,8 +45,7 @@ private:
 
 	// The smoothing standard deviation multipliers come frist in vec_
 	// and there are three per smoothing; i.e., mulstd_value, mulstd_dage,
-	// and mulstd_dtime.  (set by constructor only)
-	CppAD::vector<smooth_struct> smooth_table_; 
+	// and mulstd_dtime in smooth_table_.
 
 	// The rate_mean covariate multipliers come next in vec_ and
 	// each rate has its own vector of these multipliers.  
