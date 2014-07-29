@@ -30,11 +30,11 @@ private:
 	// like_id for function difference in time direction
 	CppAD::vector<size_t> dtime_like_id_;
 	// like_id for multiplier of value likelihood standard deviations
-	size_t multiply_value_;
+	size_t mulstd_value_;
 	// like_id for multiplier of dage likelihood standard deviations
-	size_t multiply_dage_;
+	size_t mulstd_dage_;
 	// like_id for multiplier of dtime likelihood standard deviations
-	size_t multiply_dtime_;
+	size_t mulstd_dtime_;
 public:
 	// constructor
 	smooth_info(
@@ -49,9 +49,9 @@ public:
 		const CppAD::vector<size_t>&  value_like_id  ,
 		const CppAD::vector<size_t>&  dage_like_id   ,
 		const CppAD::vector<size_t>&  dtime_like_id  ,
-		size_t                        multiply_value ,
-		size_t                        multiply_dage  ,
-		size_t                        multiply_dtime
+		size_t                        mulstd_value   ,
+		size_t                        mulstd_dage    ,
+		size_t                        mulstd_dtime
 	);
 	//
 	size_t age_size(void)  const;
@@ -64,9 +64,9 @@ public:
 	size_t dage_like_id(size_t i, size_t j)  const;
 	size_t dtime_like_id(size_t i, size_t j) const;
 	//
-	size_t multiply_value(void) const;
-	size_t multiply_dage(void)  const;
-	size_t multiply_dtime(void) const;
+	size_t mulstd_value(void) const;
+	size_t mulstd_dage(void)  const;
+	size_t mulstd_dtime(void) const;
 };
 
 } // END_DISMOD_AT_NAMESPACE

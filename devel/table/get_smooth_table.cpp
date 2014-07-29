@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin get_smooth_table$$
 $spell
+	mulstd
 	dage
 	dtime
 	struct
@@ -64,14 +65,14 @@ $rnext
 $code std::string$$ $cnext $code n_time$$ $cnext
 	The $cref/n_time/smooth_table/n_time/$$ for this smoothing.
 $rnext
-$code std::string$$ $cnext $code multiply_value$$ $cnext
-	The $cref/multiply_value/smooth_table/multiply_value/$$ for this smoothing.
+$code std::string$$ $cnext $code mulstd_value$$ $cnext
+	The $cref/mulstd_value/smooth_table/mulstd_value/$$ for this smoothing.
 $rnext
-$code std::string$$ $cnext $code multiply_dage$$ $cnext
-	The $cref/multiply_dage/smooth_table/multiply_dage/$$ for this smoothing.
+$code std::string$$ $cnext $code mulstd_dage$$ $cnext
+	The $cref/mulstd_dage/smooth_table/mulstd_dage/$$ for this smoothing.
 $rnext
-$code std::string$$ $cnext $code multiply_dtime$$ $cnext
-	The $cref/multiply_dtime/smooth_table/multiply_dtime/$$ for this smoothing.
+$code std::string$$ $cnext $code mulstd_dtime$$ $cnext
+	The $cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ for this smoothing.
 $tend
 $comment%example/devel/table/get_smooth_grid_xam.cpp in included by smooth_grid.omh
 %$$
@@ -111,29 +112,29 @@ CppAD::vector<smooth_struct> get_smooth_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, n_time);
 	assert( n_time.size() == n_smooth );
 
-	column_name        =  "multiply_value";
-	CppAD::vector<int>     multiply_value;
-	get_table_column(db, table_name, column_name, multiply_value);
-	assert( multiply_value.size() == n_smooth );
+	column_name        =  "mulstd_value";
+	CppAD::vector<int>     mulstd_value;
+	get_table_column(db, table_name, column_name, mulstd_value);
+	assert( mulstd_value.size() == n_smooth );
 
-	column_name        =  "multiply_dage";
-	CppAD::vector<int>     multiply_dage;
-	get_table_column(db, table_name, column_name, multiply_dage);
-	assert( multiply_dage.size() == n_smooth );
+	column_name        =  "mulstd_dage";
+	CppAD::vector<int>     mulstd_dage;
+	get_table_column(db, table_name, column_name, mulstd_dage);
+	assert( mulstd_dage.size() == n_smooth );
 
-	column_name        =  "multiply_dtime";
-	CppAD::vector<int>     multiply_dtime;
-	get_table_column(db, table_name, column_name, multiply_dtime);
-	assert( multiply_dtime.size() == n_smooth );
+	column_name        =  "mulstd_dtime";
+	CppAD::vector<int>     mulstd_dtime;
+	get_table_column(db, table_name, column_name, mulstd_dtime);
+	assert( mulstd_dtime.size() == n_smooth );
 
 	CppAD::vector<smooth_struct> smooth_table(n_smooth);
 	for(size_t i = 0; i < n_smooth; i++)
 	{	smooth_table[i].smooth_name   = smooth_name[i];
 		smooth_table[i].n_age         = n_age[i];
 		smooth_table[i].n_time        = n_time[i];
-		smooth_table[i].multiply_value = multiply_value[i];
-		smooth_table[i].multiply_dage  = multiply_dage[i];
-		smooth_table[i].multiply_dtime = multiply_dtime[i];
+		smooth_table[i].mulstd_value   = mulstd_value[i];
+		smooth_table[i].mulstd_dage    = mulstd_dage[i];
+		smooth_table[i].mulstd_dtime   = mulstd_dtime[i];
 	}
 	return smooth_table;
 }

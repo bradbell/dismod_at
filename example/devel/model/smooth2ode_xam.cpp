@@ -56,9 +56,9 @@ bool smooth2ode_xam(void)
 	vector<size_t> value_like_id(n_age_si * n_time_si);
 	vector<size_t> dage_like_id(n_age_si * n_time_si);
 	vector<size_t> dtime_like_id(n_age_si * n_time_si);
-	size_t multiply_value = -1;
-	size_t multiply_dage  = -1;
-	size_t multiply_dtime = -1;
+	size_t mulstd_value   = -1;
+	size_t mulstd_dage    = -1;
+	size_t mulstd_dtime   = -1;
 
 	// testing constructor
 	dismod_at::smooth_info s_info(
@@ -67,9 +67,9 @@ bool smooth2ode_xam(void)
 		value_like_id, 
 		dage_like_id, 
 		dtime_like_id,
-		multiply_value,
-		multiply_dage,
-		multiply_dtime
+		mulstd_value,
+		mulstd_dage,
+		mulstd_dtime
 	);
 
 	// parameters for the ode grid

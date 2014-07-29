@@ -266,6 +266,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # ==========================================================================-
 # $begin create_database$$ $newlinech #$$
 # $spell
+#	mulstd
 #	dage
 #	dtime
 #	len
@@ -402,12 +403,12 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # name    $cnext str         $cnext name of $th i$$ smoothing  $rnext
 # age_id  $cnext list of int $cnext indices for age values     $rnext
 # time_id $cnext list of int $cnext indices for time values    $rnext
-# multiply_value $cnext int   $cnext 
-#	$cref/multiply_value/smooth_table/multiply_value/$$ $rnext
-# multiply_dage $cnext int   $cnext 
-#	$cref/multiply_dage/smooth_table/multiply_dage/$$ $rnext
-# multiply_dtime $cnext int   $cnext 
-#	$cref/multiply_dtime/smooth_table/multiply_dtime/$$ $rnext
+# mulstd_value   $cnext int   $cnext 
+#	$cref/mulstd_value/smooth_table/mulstd_value/$$ $rnext
+# mulstd_dage   $cnext int   $cnext 
+#	$cref/mulstd_dage/smooth_table/mulstd_dage/$$ $rnext
+# mulstd_dtime   $cnext int   $cnext 
+#	$cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ $rnext
 # fun     $cnext function    $cnext $icode%(%v%,%da%,%dt%)%=%fun%(%a%, %t%)%$$
 # $tend
 # The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
@@ -642,8 +643,8 @@ def create_database(
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
 	# create smooth table
-	col_name = [ 'smooth_name', 'n_age',   'n_time', 'multiply_value',
-		'multiply_dage', 'multiply_dtime'    ]
+	col_name = [ 'smooth_name', 'n_age',   'n_time', 'mulstd_value',
+		'mulstd_dage', 'mulstd_dtime'    ]
 	col_type = [ 'text',        'integer', 'integer', 'integer',
   		'integer',       'integer'           ]
 	row_list = [ ]
@@ -652,11 +653,11 @@ def create_database(
 		name          = smooth['name']
 		n_age         = len( smooth['age_id'] )
 		n_time        = len( smooth['time_id'] )
-		multiply_value = smooth['multiply_value']
-		multiply_dage  = smooth['multiply_dage']
-		multiply_dtime = smooth['multiply_dtime']
+		mulstd_value   = smooth['mulstd_value']
+		mulstd_dage    = smooth['mulstd_dage']
+		mulstd_dtime   = smooth['mulstd_dtime']
 		row_list.append( [ 
-		name, n_age, n_time, multiply_value, multiply_dage, multiply_dtime 
+		name, n_age, n_time, mulstd_value, mulstd_dage, mulstd_dtime   
 		] )
 	tbl_name = 'smooth'
 	create_table(connection, tbl_name, col_name, col_type, row_list)

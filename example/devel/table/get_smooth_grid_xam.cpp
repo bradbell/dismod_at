@@ -44,9 +44,9 @@ bool get_smooth_grid_xam(void)
 		"smooth_name     text,"
 		"n_age           int,"
 		"n_time          int,"
-		"multiply_value  int,"
-		"multiply_dage   int,"
-		"multiply_dtime  int)",
+		"mulstd_value    int,"
+		"mulstd_dage     int,"
+		"mulstd_dtime    int)",
 	"insert into smooth values(0, 'constant',  1, 1, 0, 1, 2)",
 	"insert into smooth values(1, 'age_only',  2, 1, 3, 4, 5)",
 	"insert into smooth values(2, 'time_only', 1, 2, 6, 7, 8)",
@@ -78,30 +78,30 @@ bool get_smooth_grid_xam(void)
 	ok  &= smooth_table[0].smooth_name    == "constant";
 	ok  &= smooth_table[0].n_age          == 1;
 	ok  &= smooth_table[0].n_time         == 1;
-	ok  &= smooth_table[0].multiply_value == 0;
-	ok  &= smooth_table[0].multiply_dage  == 1;
-	ok  &= smooth_table[0].multiply_dtime == 2;
+	ok  &= smooth_table[0].mulstd_value   == 0;
+	ok  &= smooth_table[0].mulstd_dage    == 1;
+	ok  &= smooth_table[0].mulstd_dtime   == 2;
 	//
 	ok  &= smooth_table[1].smooth_name    == "age_only";
 	ok  &= smooth_table[1].n_age          == 2;
 	ok  &= smooth_table[1].n_time         == 1;
-	ok  &= smooth_table[1].multiply_value == 3;
-	ok  &= smooth_table[1].multiply_dage  == 4;
-	ok  &= smooth_table[1].multiply_dtime == 5;
+	ok  &= smooth_table[1].mulstd_value   == 3;
+	ok  &= smooth_table[1].mulstd_dage    == 4;
+	ok  &= smooth_table[1].mulstd_dtime   == 5;
 	//
 	ok  &= smooth_table[2].smooth_name    == "time_only";
 	ok  &= smooth_table[2].n_age          == 1;
 	ok  &= smooth_table[2].n_time         == 2;
-	ok  &= smooth_table[2].multiply_value == 6;
-	ok  &= smooth_table[2].multiply_dage  == 7;
-	ok  &= smooth_table[2].multiply_dtime == 8;
+	ok  &= smooth_table[2].mulstd_value   == 6;
+	ok  &= smooth_table[2].mulstd_dage    == 7;
+	ok  &= smooth_table[2].mulstd_dtime   == 8;
 	//
 	ok  &= smooth_table[3].smooth_name    == "age_time";
 	ok  &= smooth_table[3].n_age          == 2;
 	ok  &= smooth_table[3].n_time         == 2;
-	ok  &= smooth_table[3].multiply_value == 9;
-	ok  &= smooth_table[3].multiply_dage  == 10;
-	ok  &= smooth_table[3].multiply_dtime == 11;
+	ok  &= smooth_table[3].mulstd_value   == 9;
+	ok  &= smooth_table[3].mulstd_dage    == 10;
+	ok  &= smooth_table[3].mulstd_dtime   == 11;
 	//
 	// get the smooth_grid table
 	vector<dismod_at::smooth_grid_struct> 

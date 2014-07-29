@@ -32,8 +32,8 @@ def smooth_grid_table() :
 	# 
 	# create smooth table
 	ptype    = 'integer primary key'
-	col_name = [ 'smooth_name', 'n_age',   'n_time', 'multiply_value',
-		'multiply_dage', 'multiply_dtime'   ]
+	col_name = [ 'smooth_name', 'n_age',   'n_time', 'mulstd_value',
+		'mulstd_dage', 'mulstd_dtime'   ]
 	col_type = [ 'text',        'integer', 'integer','integer',
 		'integer',      'integer'         ]
 	row_list = [

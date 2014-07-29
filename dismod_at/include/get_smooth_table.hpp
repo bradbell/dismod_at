@@ -20,9 +20,9 @@ namespace dismod_at {
 		std::string smooth_name;
 		int         n_age;
 		int         n_time;
-		int         multiply_value;
-		int         multiply_dage;
-		int         multiply_dtime;
+		int         mulstd_value;
+		int         mulstd_dage;
+		int         mulstd_dtime;
 	};
 	extern CppAD::vector<smooth_struct> get_smooth_table(sqlite3*  db);
 }

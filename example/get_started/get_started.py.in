@@ -93,9 +93,9 @@ smooth_list = [
 	{	'name':'constant',
 		'age_id':[0],
 		'time_id':[0],
-		'multiply_value':-1,
-		'multiply_dage':-1,
-		'multiply_dtime':-1,
+		'mulstd_value':-1,
+		'mulstd_dage':-1,
+		'mulstd_dtime':-1,
 		'fun':constant_smooth_fun
 	}
 ] 

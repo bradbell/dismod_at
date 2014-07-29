@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin smooth_info$$
 $spell
+	mulstd
 	s_info
 	dage
 	dtime
@@ -30,9 +31,9 @@ $codei%smooth_info %s_info%(
 	%value_like_id%,
 	%dage_like_id%,
 	%dtime_like_id%
-	%multiply_value%,
-	%multiply_dage%,
-	%multiply_dtime%,
+	%mulstd_value%,
+	%mulstd_dage%,
+	%mulstd_dtime%,
 )
 %$$
 $icode%n_age%   = %s_info%.age_size()
@@ -45,7 +46,7 @@ $icode%t_id%    = %s_info%.time_id(%j%)
 %$$
 $icode%i_type%  = %s_info%.%type%_like_id(%i%, %j%)
 %$$
-$icode%m_type%  = %s_info%.multiply_%type%()
+$icode%m_type%  = %s_info%.mulstd_%type%()
 %$$
 
 $head Purpose$$
@@ -133,18 +134,18 @@ $codei%
 %$$ 
 
 
-$subhead multiply_type$$
+$subhead mulstd_type$$
 For $icode type$$ equal to 
 $code value$$, $code dage$$ and $code dtime$$
 these arguments have prototype
 $codei%
-	const size_t %multiply_value%, %multiply_dage%, %multiply_dtime%
+	const size_t %mulstd_value%, %mulstd_dage%, %mulstd_dtime%
 %$$
 They specify the likelihood indices for the multiplies; i.e.,
 $codei%
-	%s_info%.multiply_value()  = %multiply_value%
-	%s_info%.multiply_dage()   = %multiply_dage%
-	%s_info%.multiply_dtime()  = %multiply_dtime%
+	%s_info%.mulstd_value()  = %mulstd_value%
+	%s_info%.mulstd_dage()   = %mulstd_dage%
+	%s_info%.mulstd_dtime()  = %mulstd_dtime%
 %$$ 
 
 $head n_age$$
@@ -226,9 +227,9 @@ $codei%
 	size_t %m_value%, %m_dage%, %m_dtime%
 %$$
 and are the 
-$cref/multiply_value/smooth_table/multiply_value/$$,
-$cref/multiply_dage/smooth_table/multiply_dage/$$, and
-$cref/multiply_dtime/smooth_table/multiply_dtime/$$ 
+$cref/mulstd_value/smooth_table/mulstd_value/$$,
+$cref/mulstd_dage/smooth_table/mulstd_dage/$$, and
+$cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ 
 for this smoothing.
 
 $children%example/devel/table/smooth_info_xam.cpp
@@ -292,12 +293,12 @@ size_t smooth_info::dtime_like_id(size_t i, size_t j) const
 	return dtime_like_id_[ i * time_id_.size() + j]; 
 }
 //
-size_t smooth_info::multiply_value(void) const
-{	return multiply_value_; }
-size_t smooth_info::multiply_dage(void)  const
-{	return multiply_dage_; }
-size_t smooth_info::multiply_dtime(void) const
-{	return multiply_dtime_; }
+size_t smooth_info::mulstd_value(void) const
+{	return mulstd_value_; }
+size_t smooth_info::mulstd_dage(void)  const
+{	return mulstd_dage_; }
+size_t smooth_info::mulstd_dtime(void) const
+{	return mulstd_dtime_; }
 //
 // Testing Constructor
 smooth_info::smooth_info(
@@ -306,17 +307,17 @@ smooth_info::smooth_info(
 	const CppAD::vector<size_t>& value_like_id  ,
 	const CppAD::vector<size_t>& dage_like_id   ,
 	const CppAD::vector<size_t>& dtime_like_id  ,
-	size_t                       multiply_value ,
-	size_t                       multiply_dage  ,
-	size_t                       multiply_dtime )
+	size_t                       mulstd_value   ,
+	size_t                       mulstd_dage    ,
+	size_t                       mulstd_dtime   )
 	{	age_id_          = age_id;
 		time_id_         = time_id;
 		value_like_id_   = value_like_id;
 		dage_like_id_    = dage_like_id;
 		dtime_like_id_   = dtime_like_id;
-		multiply_value_  = multiply_value;
-		multiply_dage_   = multiply_dage;
-		multiply_dtime_  = multiply_dtime;
+		mulstd_value_    = mulstd_value;
+		mulstd_dage_     = mulstd_dage;
+		mulstd_dtime_    = mulstd_dtime;
 	}
 // Constructor
 smooth_info::smooth_info(
@@ -333,9 +334,9 @@ smooth_info::smooth_info(
 	assert( -1 == int( size_t(-1) ) );
 
 	// only use of smooth_table is to determine multiplier likelihoods
-	multiply_value_ = smooth_table[smooth_id].multiply_value;
-	multiply_dage_  = smooth_table[smooth_id].multiply_dage;
-	multiply_dtime_ = smooth_table[smooth_id].multiply_dtime;
+	mulstd_value_   = smooth_table[smooth_id].mulstd_value;
+	mulstd_dage_    = smooth_table[smooth_id].mulstd_dage;
+	mulstd_dtime_   = smooth_table[smooth_id].mulstd_dtime;
 
 	// determine the age_id_ and time_id_ vectors for this smooth_id
 	assert( age_id_.size() == 0 );

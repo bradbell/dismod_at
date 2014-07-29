@@ -44,9 +44,9 @@ bool smooth_info_xam(void)
 		" smooth_name    text,   "
 		" n_age          integer,"
 		" n_time         integer,"
-		" multiply_value integer,"
-		" multiply_dage  integer,"
-		" multiply_dtime integer)",
+		" mulstd_value   integer,"
+		" mulstd_dage    integer,"
+		" mulstd_dtime   integer)",
 	"insert into smooth values(0, 'bilinear', 3, 2, -1, -1, -1)",
 
 	"create table smooth_grid("
@@ -111,9 +111,9 @@ bool smooth_info_xam(void)
 	ok  &= s_info.dtime_like_id(1, 0) ==  9;
 	ok  &= s_info.dtime_like_id(2, 0) ==  3;
 	//
-	ok  &= s_info.multiply_value()    == size_t(-1);
-	ok  &= s_info.multiply_dage()     == size_t(-1);
-	ok  &= s_info.multiply_dtime()    == size_t(-1);
+	ok  &= s_info.mulstd_value()    == size_t(-1);
+	ok  &= s_info.mulstd_dage()     == size_t(-1);
+	ok  &= s_info.mulstd_dtime()    == size_t(-1);
  	//
 	// close database and return
 	sqlite3_close(db);

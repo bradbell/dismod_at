@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin smooth_table$$
 $spell
+	mulstd
 	grid
 	dage
 	dtime
@@ -34,7 +35,7 @@ $head n_time$$
 This column has type $code integer$$ and is the number of _time values
 in this smoothing grid. It must be greater than zero.
 
-$head multiply_value$$
+$head mulstd_value$$
 This column has type $code integer$$ and its value is the
 $cref/like_id/like_table/like_id/$$ for the variable that multiplies the 
 $cref/value_like_id/smooth_grid_table/value_like_id/$$ standard deviations
@@ -43,7 +44,7 @@ $cref/smooth_id/smooth_grid_table/smooth_id/$$.
 If this value is $code -1$$,
 the corresponding multiplier is the always one (and is not a variable).
 
-$head multiply_dage$$
+$head mulstd_dage$$
 This column has type $code integer$$ and its value is the
 $cref/like_id/like_table/like_id/$$ for the variable that multiplies the 
 $cref/dage_like_id/smooth_grid_table/dage_like_id/$$ standard deviations
@@ -52,7 +53,7 @@ $cref/smooth_id/smooth_grid_table/smooth_id/$$.
 If this value is $code -1$$,
 the corresponding multiplier is the always one (and is not a variable).
 
-$head multiply_dtime$$
+$head mulstd_dtime$$
 This column has type $code integer$$ and its value is the
 $cref/like_id/like_table/like_id/$$ for the variable that multiplies the 
 $cref/dtime_like_id/smooth_grid_table/dtime_like_id/$$ standard deviations
