@@ -11,6 +11,10 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin avg_integrand$$
 $spell
+	mtexcess
+	mtother
+	mtwith
+	relrisk
 	struct
 	enum
 	const
@@ -137,7 +141,7 @@ $codei%
 and is the $cref/data_id/data_table/data_id/$$ for we are computing
 the model value for.
 
-$head rate$$
+$subhead rate$$
 For $icode rate$$ equal to $icode iota$$, $icode rho$$, $icode chi$$
 and $icode omega$$,
 this argument has prototype
@@ -155,15 +159,25 @@ at age $icode%a_i% = %a_min% + %i%*%ode_step_size%$$
 and time $icode%t_j% = %t_min% + %j%*%ode_step_size%$$;
 see the $cref/rate functions/model_data_mean/Rate Functions/$$. 
 
-$head S, C$$
+$subhead S, C$$
 These arguments have prototypes
 $codei%
 	const CppAD::vector<%Float%>& %S%
 	const CppAD::vector<%Float%>& %C%
 %$$
-and their input sizes are zero.
-Upon return they have size is $icode%n_age_ode%*%n_time_ode%$$ and
-for $icode%i% = 0 , %...%, %n_age_ode%-1%$$,
+These vectors are not used if the
+$cref/integrand_id/data_table/integrand_id/$$ for this $icode data_id$$ 
+corresponds to
+$cref/integrand_name/integrand_table/integrand_name/$$
+$code incidence$$,
+$code remission$$,
+$code mtexcess$$,
+$code mtother$$,
+$code mtwith$$, or
+$code relrisk$$. 
+Otherwise, the vectors $icode S$$ and $icode C$$ have size 
+and size $icode%n_age_ode%*%n_time_ode%$$.
+For $icode%i% = 0 , %...%, %n_age_ode%-1%$$,
 $icode%j% = 0 , %...%, %n_time_ode%-1%$$,
 $codei% 
 	%S%[ %i% * %n_time% + %j% ]  ,  %C%[ %i% * %n_time% + %j% ]
@@ -416,8 +430,22 @@ Float avg_integrand::compute(
 	assert( rho.size()   == n_ode );
 	assert( chi.size()   == n_ode );
 	assert( omega.size() == n_ode );
-	assert( S.size()     == n_ode );
-	assert( C.size()     == n_ode );
+# ifndef NDEBUG
+	switch( data_info_[data_id].integrand )
+	{
+		case incidence_enum:
+		case remission_enum:
+		case mtexcess_enum:
+		case mtother_enum:
+		case mtwith_enum:
+		case relrisk_enum:
+		break;
+
+		default:
+		assert( S.size() == n_ode );
+		assert( C.size() == n_ode );
+	}
+# endif
 
 	// constructor information for this data point
 	const ode_point& info = data_info_[ data_id ];
