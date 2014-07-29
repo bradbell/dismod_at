@@ -17,6 +17,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_data_table.hpp"
 # include "get_smooth_table.hpp"
 # include "get_mulcov_table.hpp"
+# include "get_rate_table.hpp"
 # include "smooth_info.hpp"
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
@@ -70,7 +71,8 @@ public:
 		const CppAD::vector<node_struct>&    node_table     ,
 		const CppAD::vector<data_struct>&    data_table     ,
 		const CppAD::vector<smooth_struct>&  smooth_table   ,
-		const CppAD::vector<mulcov_struct>&  mulcov_table
+		const CppAD::vector<mulcov_struct>&  mulcov_table   ,
+		const CppAD::vector<rate_enum>&      rate_table
 	);
 };
 
