@@ -12,6 +12,9 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_VARIABLE_VEC_HPP
 
 # include <cppad/vector.hpp>
+# include "get_run_table.hpp"
+# include "get_node_table.hpp"
+# include "get_data_table.hpp"
 # include "get_smooth_table.hpp"
 # include "smooth_info.hpp"
 
@@ -20,13 +23,16 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 template <class Float>
 class variable_vec {
 private:
-	// Number of child nodes
-	// (set by constructor only)
-	size_t n_child_;
+	// The parent and child nodes. If there is less than two children for this
+	// parent, child_node_id_ will have size one and its element will be
+	// set to the parent node id (set by constructor only)
+	size_t parent_node_id_;
+	CppAD::vector<size_t> child_node_id_;
 
 	// Mapping from the data_id to the child node index, so we know which
-	// rates to use for each data point. Note that n_child_ is used for
-	// parent node.  (set by constructor only)
+	// rates to use for each data point. Note that child_node_id.size()
+	// is used for parent node data and child_node_id.size() + 1 is used
+	// for nodes that are not below the parent.  (set by constructor only)
 	CppAD::vector<size_t> data_id2child_index_;
 
 	// The smoothing standard deviation multipliers come frist in vec_
@@ -60,7 +66,11 @@ private:
 	// value of all the variables
 	CppAD::vector<Float> vec_;
 public:
-	variable_vec(void);
+	variable_vec(
+		const CppAD::vector<run_struct>&     run_table   ,
+		const CppAD::vector<node_struct>&    node_table  ,
+		const CppAD::vector<data_struct>&    data_table
+	);
 };
 
 } // END DISMOD_AT_NAMESPACE:
