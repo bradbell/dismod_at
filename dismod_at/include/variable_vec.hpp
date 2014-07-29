@@ -29,8 +29,8 @@ private:
 	// The data table
 	const CppAD::vector<data_struct>& data_table_; 
 
-	// The smoothing table
-	const CppAD::vector<smooth_struct>& smooth_table_; 
+	// The smoothing information
+	const CppAD::vector<smooth_info>& smooth_info_vec_; 
 
 	// The parent node is node_id_[0]. The child nodes are node_id_[i] for
 	// i = 1 , ... , node_id_.size() - 1  (set by constructor only)
@@ -75,10 +75,10 @@ public:
 		const CppAD::vector<run_struct>&      run_table         ,
 		const CppAD::vector<node_struct>&     node_table        ,
 		const CppAD::vector<data_struct>&     data_table        ,
-		const CppAD::vector<smooth_struct>&   smooth_table      ,
 		const CppAD::vector<mulcov_struct>&   mulcov_table      ,
 		const CppAD::vector<rate_enum>&       rate_table        ,
-		const CppAD::vector<integrand_enum>&  integrand_table
+		const CppAD::vector<integrand_enum>&  integrand_table   ,
+		const CppAD::vector<smooth_info>&     smooth_info_vec
 	);
 };
 

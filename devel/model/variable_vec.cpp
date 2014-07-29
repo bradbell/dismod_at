@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin varaible_vec$$
 $spell
+	var
 	dismod
 	vec
 	mulcov
@@ -27,24 +28,38 @@ $$
 $section The Variable Vector Class$$
 
 $head Syntax$$
-$codei%dismod_at::variable_vec %vec%(
-	%run_table%, %node_table%, %data_table%, %smooth_table%,
+$codei%dismod_at::variable_vec %var%(
+	%run_table%,    %node_table%, %data_table%, 
 	%mulcov_table%, %rate_table%, %integrand_table%
+	%smooth_info_vec%,
 )%$$
 
-$head Constructor$$
-The constructor arguments have prototype
+$head name_table$$
+For $icode name$$ equal to 
+$code run$$, $code node$$, $code data$$, $code mulcov$$, $code rate$$,
+and $code integrand$$ these arguments have prototype
 $codei%
 	const CppAD::vector<run_struct>&      %run_table%
 	const CppAD::vector<node_struct>&     %node_table%
 	const CppAD::vector<data_struct>&     %data_table%
-	const CppAD::vector<smooth_struct>&   %smooth_table%
 	const CppAD::vector<mulcov_struct>&   %mulcov_table%
 	const CppAD::vector<rate_enum>&       %rate_table%
-	const CppAD::vector<integrand_enum>&  %integrand_table%
+	const CppAD::vector<integrand_enum>&  %integrand_table%,
 %$$
 and are the corresponding tables; e.g., see
 $cref/run_table/get_run_table/run_table/$$.
+
+$head smooth_info_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<smooth_info>&     %smooth_info_vec%
+%$$
+and is size is the number of rows in the $cref smooth_table$$.
+For each $cref/smooth_id/smooth_table/smooth_id/$$,
+$codei%
+	%smooth_info_vec%[%smooth_id%]
+%$$ 
+is the $cref smooth_info$$ for the corresponding $icode smooth_id$$.
 
 $end
 */
@@ -56,22 +71,22 @@ variable_vec<Float>::variable_vec(
 	const CppAD::vector<run_struct>&      run_table         ,
 	const CppAD::vector<node_struct>&     node_table        ,
 	const CppAD::vector<data_struct>&     data_table        ,
-	const CppAD::vector<smooth_struct>&   smooth_table      ,
 	const CppAD::vector<mulcov_struct>&   mulcov_table      ,
 	const CppAD::vector<rate_enum>&       rate_table        ,
-	const CppAD::vector<integrand_enum>&  integrand_table
+	const CppAD::vector<integrand_enum>&  integrand_table   ,
+	const CppAD::vector<smooth_info>&     smooth_info_vec
 ) :
 data_table_( data_table )     ,
-smooth_table_( smooth_table )
+smooth_info_vec_( smooth_info_vec )
 {	using std::string;
 
 	size_t n_run       = run_table.size();
 	size_t n_node      = node_table.size();
 	size_t n_data      = data_table.size();
-	size_t n_smooth    = smooth_table.size();
 	size_t n_mulcov    = mulcov_table.size();
 	size_t n_rate      = rate_table.size();
 	size_t n_integrand = integrand_table.size();
+	size_t n_smooth    = smooth_info_vec.size();
 	assert( n_run == 1 );
 	assert( n_rate == number_rate_enum );
 
@@ -112,9 +127,6 @@ smooth_table_( smooth_table )
 		else
 			data_id2node_index_[data_id] = j;
 	}
-
-	// smooth_table_
-	smooth_table_ = smooth_table;
 
 	// rate_mean_mulcov_
 	rate_mean_mulcov_.resize( n_rate );
