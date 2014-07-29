@@ -67,12 +67,13 @@ private:
 	CppAD::vector<Float> vec_;
 public:
 	variable_vec(
-		const CppAD::vector<run_struct>&     run_table      ,
-		const CppAD::vector<node_struct>&    node_table     ,
-		const CppAD::vector<data_struct>&    data_table     ,
-		const CppAD::vector<smooth_struct>&  smooth_table   ,
-		const CppAD::vector<mulcov_struct>&  mulcov_table   ,
-		const CppAD::vector<rate_enum>&      rate_table
+		const CppAD::vector<run_struct>&      run_table         ,
+		const CppAD::vector<node_struct>&     node_table        ,
+		const CppAD::vector<data_struct>&     data_table        ,
+		const CppAD::vector<smooth_struct>&   smooth_table      ,
+		const CppAD::vector<mulcov_struct>&   mulcov_table      ,
+		const CppAD::vector<rate_enum>&       rate_table        ,
+		const CppAD::vector<integrand_enum>&  integrand_table
 	);
 };
 

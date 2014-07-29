@@ -16,21 +16,23 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 template <class Float>
 variable_vec<Float>::variable_vec(
-	const CppAD::vector<run_struct>&     run_table      ,
-	const CppAD::vector<node_struct>&    node_table     ,
-	const CppAD::vector<data_struct>&    data_table     ,
-	const CppAD::vector<smooth_struct>&  smooth_table   ,
-	const CppAD::vector<mulcov_struct>&  mulcov_table   ,
-	const CppAD::vector<rate_enum>&      rate_table
+	const CppAD::vector<run_struct>&      run_table         ,
+	const CppAD::vector<node_struct>&     node_table        ,
+	const CppAD::vector<data_struct>&     data_table        ,
+	const CppAD::vector<smooth_struct>&   smooth_table      ,
+	const CppAD::vector<mulcov_struct>&   mulcov_table      ,
+	const CppAD::vector<rate_enum>&       rate_table        ,
+	const CppAD::vector<integrand_enum>&  integrand_table
 )
 {	using std::string;
 
-	size_t n_run    = run_table.size();
-	size_t n_node   = node_table.size();
-	size_t n_data   = data_table.size();
-	size_t n_smooth = smooth_table.size();
-	size_t n_mulcov = mulcov_table.size();
-	size_t n_rate   = rate_table.size();
+	size_t n_run       = run_table.size();
+	size_t n_node      = node_table.size();
+	size_t n_data      = data_table.size();
+	size_t n_smooth    = smooth_table.size();
+	size_t n_mulcov    = mulcov_table.size();
+	size_t n_rate      = rate_table.size();
+	size_t n_integrand = integrand_table.size();
 	assert( n_run == 1 );
 	assert( n_rate == number_rate_enum );
 
@@ -96,6 +98,31 @@ variable_vec<Float>::variable_vec(
 					}
 				}
 				rate_mean_mulcov_.pushback(info);
+			}
+		}
+	}
+
+	// meas_mean_mulcov_
+	meas_mean_mulcov_.resize( n_integrand );
+	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
+	{	assert( meas_mean_mulcov_[integrand_id].size() == 0 );
+		for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
+		{	bool match = mulcov_table[mulcov_id].mulcov_type == "meas_mean";
+			match &= mulcov_table[mulcov_id].integrand_id == integrand_id;
+			if( match )
+			{	mulcov_pair info;
+				info.covariate_id = mulcov_table[mulcov_id].covariate_id;
+				info.smooth_id    = mulcov_table[mulcov_id].smooth_id;
+				for(size_t i = 0; i < meas_mean_mulcov_.size(); i++)
+				{	size_t tmp = meas_mean_mulcov_[i].covariate_id;	
+					if(info.covariate_id == tmp )
+					{	string table_name = "mulcov";
+						string message = 
+							"This meas_mean covaraite appears twice";
+						table_error_exit(table_name, mulcov_id, message);
+					}
+				}
+				meas_mean_mulcov_.pushback(info);
 			}
 		}
 	}
