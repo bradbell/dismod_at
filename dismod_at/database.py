@@ -12,7 +12,6 @@ import sqlite3
 # ============================================================================
 # $begin unicode_tuple$$ $newlinech #$$
 # $spell
-#	mulcov
 #	iterable
 #	unicode
 #	tuple
@@ -89,7 +88,6 @@ def unicode_tuple(iterable, quote_string) :
 # ============================================================================
 # $begin create_connection$$ $newlinech #$$
 # $spell
-#	mulcov
 #	str
 #	sqlite
 #	dismod
@@ -130,7 +128,6 @@ def create_connection(file_name, new) :
 # ==========================================================================-
 # $begin get_name2type$$ $newlinech #$$
 # $spell
-#	mulcov
 #	dismod
 #	str
 #	tbl
@@ -187,7 +184,6 @@ def get_name2type(connection, tbl_name) :
 # ==========================================================================-
 # $begin create_table$$ $newlinech #$$
 # $spell
-#	mulcov
 #	dismod
 #	str
 #	tbl

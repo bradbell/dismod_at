@@ -10,7 +10,6 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin input$$
 $spell
-	mulcov
 	std
 	dismod
 $$

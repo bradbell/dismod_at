@@ -11,7 +11,6 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin get_db_input$$
 $spell
-	mulcov
 	dage
 	struct
 	sqlite
@@ -101,7 +100,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.weight_grid_table = get_weight_grid(db);
 	db_input.smooth_grid_table = get_smooth_grid(db);
 	db_input.rate_prior_table  = get_rate_prior(db);
-	db_input.mulcov_table  = get_mulcov_table(db);
+	db_input.mulcov_table      = get_mulcov_table(db);
 	//
 	size_t n_covariate = db_input.covariate_table.size();
 	db_input.data_table        = get_data_table(db, n_covariate);
