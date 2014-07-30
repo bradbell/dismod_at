@@ -15,6 +15,10 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin varaible_vec$$
 $spell
+	op
+	mulstd
+	dage
+	dtime
 	var
 	dismod
 	vec
@@ -28,11 +32,16 @@ $$
 $section The Variable Vector Class$$
 
 $head Syntax$$
-$codei%dismod_at::variable_vec %var%(
-	%run_table%,    %node_table%, %data_table%, 
-	%mulcov_table%, %rate_table%, %integrand_table%
-	%smooth_info_vec%,
-)%$$
+$codei%dismod_at::variable_vec<%Float%> %var%(
+	%run_table%,  %node_table%, %data_table%, %mulcov_table%, %rate_table%, 
+	%integrand_table%, %smooth_info_vec%
+)
+%$$
+$icode%var%.%op%_mulstd(%mulstd%)
+%$$
+
+$head Float$$
+The type $icode Float$$ is $code double$$ or $code CppAD::AD<double>$$.
 
 $head name_table$$
 For $icode name$$ equal to 
@@ -60,6 +69,23 @@ $codei%
 	%smooth_info_vec%[%smooth_id%]
 %$$ 
 is the $cref smooth_info$$ for the corresponding $icode smooth_id$$.
+
+$head op_mulstd$$
+For $icode op$$ equal to $code set$$ and $code get$$,
+the argument has the following respective prototype:
+$codei%
+	const CppAD::vector<%Float%>& %mulstd%
+	      CppAD::vector<%Float%>& %mulstd%
+%$$
+The size of $icode mulstd$$ is the $codei%3 * %n_smooth%$$
+where $icode%n_smooth% = %smooth_info_vec%.size()%$$.
+For $icode%smooth_id% = 0, %...%, %n_smooth%$$,
+$icode%mulstd%[3 * %i_smooth% + j ]%$$ 
+is the $th j$$ standard deviation multiplier for smoothing $icode smooth_id$$
+where $icode%j% = 0%$$ for the value smoothing,
+$icode%j% = 1%$$ for the dage smoothing,
+and $icode%j% = 2%$$ for the dtime smoothing.
+
 
 $end
 */
@@ -127,6 +153,10 @@ smooth_info_vec_( smooth_info_vec )
 		else
 			data_id2node_index_[data_id] = j;
 	}
+
+	// mulstd
+	offset_mulstd_ = 0;
+	number_mulstd_ = 3 * smooth_info_vec.size();
 
 	// rate_mean_mulcov_
 	rate_mean_mulcov_.resize( n_rate );
@@ -202,6 +232,21 @@ smooth_info_vec_( smooth_info_vec )
 			}
 		}
 	}
+}
+
+template <class Float>
+void variable_vec<Float>::set_mulstd(const CppAD::vector<Float>& mulstd)
+{	assert( mulstd.size() == number_mulstd_ );
+	for(size_t i = 0; i < number_mulstd_; i++)
+		vec_[ offset_mulstd_ + i] = mulstd[i];
+	return;
+}
+template <class Float>
+void variable_vec<Float>::get_mulstd(CppAD::vector<Float>& mulstd)
+{	assert( mulstd.size() == number_mulstd_ );
+	for(size_t i = 0; i < number_mulstd_; i++)
+		mulstd[i] = vec_[ offset_mulstd_ + i];
+	return;
 }
 
 } // END DISMOD_AT_NAMESPACE
