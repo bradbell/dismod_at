@@ -86,6 +86,13 @@ where $icode%j% = 0%$$ for the value smoothing,
 $icode%j% = 1%$$ for the dage smoothing,
 and $icode%j% = 2%$$ for the dtime smoothing.
 
+$children%
+	example/devel/model/variable_vec_xam.cpp
+%$$
+$head Example$$
+The file $cref variable_vec_xam.cpp$$ contains
+and example and test of $code variable_vec$$.
+It returns true for success and false for failure.
 
 $end
 */
