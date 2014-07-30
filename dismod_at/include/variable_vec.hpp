@@ -12,7 +12,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_VARIABLE_VEC_HPP
 
 # include <cppad/vector.hpp>
-# include "get_run_table.hpp"
 # include "get_node_table.hpp"
 # include "get_data_table.hpp"
 # include "get_smooth_table.hpp"
@@ -74,7 +73,7 @@ private:
 	CppAD::vector<Float> vec_;
 public:
 	variable_vec(
-		const CppAD::vector<run_struct>&      run_table         ,
+		size_t                                parent_node_id    ,
 		const CppAD::vector<node_struct>&     node_table        ,
 		const CppAD::vector<data_struct>&     data_table        ,
 		const CppAD::vector<mulcov_struct>&   mulcov_table      ,

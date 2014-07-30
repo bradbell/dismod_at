@@ -22,7 +22,7 @@ This column has type $code integer$$
 and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$head parent_node$$
+$head parent_node_id$$
 This column has type $code integer$$ 
 and is the $cref/node_id/node_table/node_id/$$ for 
 the parent node for this $icode run_id$$.

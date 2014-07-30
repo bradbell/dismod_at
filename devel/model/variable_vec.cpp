@@ -33,8 +33,13 @@ $section The Variable Vector Class$$
 
 $head Syntax$$
 $codei%dismod_at::variable_vec<%Float%> %var%(
-	%run_table%,  %node_table%, %data_table%, %mulcov_table%, %rate_table%, 
-	%integrand_table%, %smooth_info_vec%
+	%parent_node_id%,
+	%node_table%,
+	%data_table%,
+	%mulcov_table%,
+	%rate_table%,
+	%integrand_table%,
+	%smooth_info_vec%
 )
 %$$
 $icode%var%.%op%_mulstd(%mulstd%)
@@ -43,12 +48,19 @@ $icode%var%.%op%_mulstd(%mulstd%)
 $head Float$$
 The type $icode Float$$ is $code double$$ or $code CppAD::AD<double>$$.
 
+$head parent_node_id$$
+This argument has prototype
+$codei%
+	size_t %parent_node_id%
+%$$
+and is the 
+$cref/parent_node_id/run_table/parent_node_id/$$.
+
 $head name_table$$
 For $icode name$$ equal to 
 $code run$$, $code node$$, $code data$$, $code mulcov$$, $code rate$$,
 and $code integrand$$ these arguments have prototype
 $codei%
-	const CppAD::vector<run_struct>&      %run_table%
 	const CppAD::vector<node_struct>&     %node_table%
 	const CppAD::vector<data_struct>&     %data_table%
 	const CppAD::vector<mulcov_struct>&   %mulcov_table%
@@ -101,7 +113,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 template <class Float>
 variable_vec<Float>::variable_vec(
-	const CppAD::vector<run_struct>&      run_table         ,
+	size_t                                parent_node_id    ,
 	const CppAD::vector<node_struct>&     node_table        ,
 	const CppAD::vector<data_struct>&     data_table        ,
 	const CppAD::vector<mulcov_struct>&   mulcov_table      ,
@@ -113,18 +125,13 @@ data_table_( data_table )     ,
 smooth_info_vec_( smooth_info_vec )
 {	using std::string;
 
-	size_t n_run       = run_table.size();
 	size_t n_node      = node_table.size();
 	size_t n_data      = data_table.size();
 	size_t n_mulcov    = mulcov_table.size();
 	size_t n_rate      = rate_table.size();
 	size_t n_integrand = integrand_table.size();
 	size_t n_smooth    = smooth_info_vec.size();
-	assert( n_run == 1 );
 	assert( n_rate == number_rate_enum );
-
-	// parent_node_id_
-	size_t parent_node_id = run_table[0].parent_node;
 
 	// child_node_id_
 	assert( node_id_.size() == 0 );

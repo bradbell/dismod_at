@@ -28,9 +28,11 @@ $end
 // BEGIN C++
 # include <dismod_at/dismod_at.hpp>
 
-void variable_vec_xam(void)
+bool variable_vec_xam(void)
 {	bool ok = true;
 	using CppAD::vector;
+
+	size_t parent_node_id = 0;
 
 	return ok;
 }

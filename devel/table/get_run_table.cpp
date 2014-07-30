@@ -51,8 +51,8 @@ This is a structure with the following fields
 $table
 Type  $cnext Field $cnext Description
 $rnext
-$code int$$ $cnext $code parent_node$$ $cnext 
-	The $cref/parent_node/run_table/parent_node/$$ 
+$code int$$ $cnext $code parent_node_id$$ $cnext 
+	The $cref/parent_node_id/run_table/parent_node_id/$$ 
 	for this run  
 $rnext
 $code int$$ $cnext $code initial_prevalence$$ $cnext 
@@ -87,10 +87,10 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 	string table_name         = "run";
 	size_t n_run = check_table_id(db, table_name);
 
-	string column_name =  "parent_node";
-	CppAD::vector<int>    parent_node;
-	get_table_column(db, table_name, column_name, parent_node);
-	assert( n_run == parent_node.size() );
+	string column_name =  "parent_node_id";
+	CppAD::vector<int>    parent_node_id;
+	get_table_column(db, table_name, column_name, parent_node_id);
+	assert( n_run == parent_node_id.size() );
 
 	column_name       =  "initial_prevalence";
 	CppAD::vector<int>    initial_prevalence;
@@ -109,7 +109,7 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 
 	CppAD::vector<run_struct> run_table(n_run);
 	for(size_t i = 0; i < n_run; i++)
-	{	run_table[i].parent_node         = parent_node[i];
+	{	run_table[i].parent_node_id      = parent_node_id[i];
 		run_table[i].initial_prevalence  = initial_prevalence[i];
 		run_table[i].ode_step_size       = ode_step_size[i];
 		run_table[i].n_sample            = n_sample[i];

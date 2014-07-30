@@ -32,8 +32,12 @@ def run_table() :
 	cursor         = connection.cursor()
 	#
 	# create the run table
-	col_name = ['parent_node','initial_prevalence','ode_step_size','n_sample']
-	col_type = ['integer',    'integer',           'real',         'integer' ]
+	col_name = [
+		'parent_node_id','initial_prevalence','ode_step_size','n_sample'
+	]
+	col_type = [
+		'integer',       'integer',           'real',         'integer' 
+	]
 	row_list = [ [ 0, 1, 0.5, 100 ] ]
 	tbl_name = 'run'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
