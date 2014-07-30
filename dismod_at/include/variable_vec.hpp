@@ -25,11 +25,6 @@ template <class Float>
 class variable_vec {
 	typedef struct { size_t covariate_id; size_t smooth_id; } mulcov_pair;
 private:
-	// The data table
-	const CppAD::vector<data_struct>& data_table_; 
-
-	// The smoothing information
-	const CppAD::vector<smooth_info>& smooth_info_vec_; 
 
 	// The parent node is node_id_[0]. The child nodes are node_id_[i] for
 	// i = 1 , ... , node_id_.size() - 1  (set by constructor only)
@@ -74,12 +69,11 @@ private:
 public:
 	variable_vec(
 		size_t                                parent_node_id    ,
+		size_t                                n_smooth          ,
+		size_t                                n_integrand       ,
 		const CppAD::vector<node_struct>&     node_table        ,
 		const CppAD::vector<data_struct>&     data_table        ,
-		const CppAD::vector<mulcov_struct>&   mulcov_table      ,
-		const CppAD::vector<rate_enum>&       rate_table        ,
-		const CppAD::vector<integrand_enum>&  integrand_table   ,
-		const CppAD::vector<smooth_info>&     smooth_info_vec
+		const CppAD::vector<mulcov_struct>&   mulcov_table
 	);
 	void set_mulstd( const CppAD::vector<Float>&    mulstd );
 	void get_mulstd(       CppAD::vector<Float>&    mulstd );

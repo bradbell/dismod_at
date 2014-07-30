@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin varaible_vec$$
 $spell
+	integrands
 	op
 	mulstd
 	dage
@@ -33,13 +34,7 @@ $section The Variable Vector Class$$
 
 $head Syntax$$
 $codei%dismod_at::variable_vec<%Float%> %var%(
-	%parent_node_id%,
-	%node_table%,
-	%data_table%,
-	%mulcov_table%,
-	%rate_table%,
-	%integrand_table%,
-	%smooth_info_vec%
+	%parent_node_id%, %n_smooth%, %node_table%, %data_table%, %mulcov_table%
 )
 %$$
 $icode%var%.%op%_mulstd(%mulstd%)
@@ -56,31 +51,46 @@ $codei%
 and is the 
 $cref/parent_node_id/run_table/parent_node_id/$$.
 
-$head name_table$$
-For $icode name$$ equal to 
-$code run$$, $code node$$, $code data$$, $code mulcov$$, $code rate$$,
-and $code integrand$$ these arguments have prototype
-$codei%
-	const CppAD::vector<node_struct>&     %node_table%
-	const CppAD::vector<data_struct>&     %data_table%
-	const CppAD::vector<mulcov_struct>&   %mulcov_table%
-	const CppAD::vector<rate_enum>&       %rate_table%
-	const CppAD::vector<integrand_enum>&  %integrand_table%,
-%$$
-and are the corresponding tables; e.g., see
-$cref/run_table/get_run_table/run_table/$$.
-
-$head smooth_info_vec$$
+$head n_smooth$$
 This argument has prototype
 $codei%
-	const CppAD::vector<smooth_info>&     %smooth_info_vec%
+	size_t %n_smooth%
 %$$
-and is size is the number of rows in the $cref smooth_table$$.
-For each $cref/smooth_id/smooth_table/smooth_id/$$,
+and is the number of smoothing; i.e., the size of
+$cref/smooth_table/get_smooth_table/smooth_table/$$.
+
+$head n_integrand$$
+This argument has prototype
 $codei%
-	%smooth_info_vec%[%smooth_id%]
-%$$ 
-is the $cref smooth_info$$ for the corresponding $icode smooth_id$$.
+	size_t %n_integrand%
+%$$
+and is the number of integrands; i.e., the size of
+$cref/integrand_table/get_integrand_table/integrand_table/$$.
+
+$head node_table$$
+This argument has prototype
+$code%
+	const CppAD::vector<node_struct>&  %node_table%
+%$$
+and is the $cref/node_table/get_node_table/node_table/$$.
+Only the $code parent$$ field of each
+$cref/node_struct/get_node_table/node_struct/$$ is used.
+
+$head data_table$$
+This argument has prototype
+$code%
+	const CppAD::vector<data_struct>&  %data_table%
+%$$
+and is the $cref/data_table/get_data_table/data_table/$$.
+Only the $code node_id$$ field of each
+$cref/data_struct/get_data_table/data_struct/$$ is used.
+
+$head mulcov_table$$
+This argument has prototype
+$code%
+	const CppAD::vector<mulcov_struct>&  %mulcov_table%
+%$$
+and is the $cref/mulcov_table/get_mulcov_table/mulcov_table/$$.
 
 $head op_mulstd$$
 For $icode op$$ equal to $code set$$ and $code get$$,
@@ -89,8 +99,7 @@ $codei%
 	const CppAD::vector<%Float%>& %mulstd%
 	      CppAD::vector<%Float%>& %mulstd%
 %$$
-The size of $icode mulstd$$ is the $codei%3 * %n_smooth%$$
-where $icode%n_smooth% = %smooth_info_vec%.size()%$$.
+The size of $icode mulstd$$ is the $codei%3 * %n_smooth%$$.
 For $icode%smooth_id% = 0, %...%, %n_smooth%$$,
 $icode%mulstd%[3 * %i_smooth% + j ]%$$ 
 is the $th j$$ standard deviation multiplier for smoothing $icode smooth_id$$
@@ -114,24 +123,17 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 template <class Float>
 variable_vec<Float>::variable_vec(
 	size_t                                parent_node_id    ,
+	size_t                                n_smooth          ,
+	size_t                                n_integrand       ,
 	const CppAD::vector<node_struct>&     node_table        ,
 	const CppAD::vector<data_struct>&     data_table        ,
-	const CppAD::vector<mulcov_struct>&   mulcov_table      ,
-	const CppAD::vector<rate_enum>&       rate_table        ,
-	const CppAD::vector<integrand_enum>&  integrand_table   ,
-	const CppAD::vector<smooth_info>&     smooth_info_vec
-) :
-data_table_( data_table )     ,
-smooth_info_vec_( smooth_info_vec )
+	const CppAD::vector<mulcov_struct>&   mulcov_table 
+)
 {	using std::string;
 
 	size_t n_node      = node_table.size();
 	size_t n_data      = data_table.size();
 	size_t n_mulcov    = mulcov_table.size();
-	size_t n_rate      = rate_table.size();
-	size_t n_integrand = integrand_table.size();
-	size_t n_smooth    = smooth_info_vec.size();
-	assert( n_rate == number_rate_enum );
 
 	// child_node_id_
 	assert( node_id_.size() == 0 );
@@ -144,9 +146,9 @@ smooth_info_vec_( smooth_info_vec )
 	// data_id2child_index_
 	data_id2node_index_.resize( data_table.size() );
 	for(size_t data_id = 0; data_id < n_data; data_id++)
-	{	size_t node_id = data_table[data_id].node_id;
+	{	int    node_id = data_table[data_id].node_id;
 		size_t j       = 0;
-		bool   more    = true;
+		bool   more    = node_id != -1;
 		while( more )
 		{	bool found = false;
 			while( (! found) &&  j < node_id_.size() )
@@ -158,11 +160,11 @@ smooth_info_vec_( smooth_info_vec )
 				more = false;
 			else 
 			{	node_id = node_table[node_id].parent;
-				more    = node_id != size_t(-1);
+				more    = node_id != -1;
 				j       = 0;
 			}
 		}
-		if( node_id == size_t(-1) )
+		if( node_id == -1 )
 			data_id2node_index_[data_id] = size_t(-1);
 		else
 			data_id2node_index_[data_id] = j;
@@ -170,11 +172,11 @@ smooth_info_vec_( smooth_info_vec )
 
 	// mulstd
 	offset_mulstd_ = 0;
-	number_mulstd_ = 3 * smooth_info_vec.size();
+	number_mulstd_ = 3 * n_smooth;
 
 	// rate_mean_mulcov_
-	rate_mean_mulcov_.resize( n_rate );
-	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	rate_mean_mulcov_.resize( number_rate_enum );
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	assert( rate_mean_mulcov_[rate_id].size() == 0 );
 		for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
 		{	bool match = mulcov_table[mulcov_id].mulcov_type == "rate_mean";
