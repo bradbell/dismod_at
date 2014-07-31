@@ -33,7 +33,6 @@ bool pack_var_xam(void)
 {	bool ok = true;
 	using CppAD::vector;
 
-	size_t parent_node_id = 0;
 	size_t n_smooth       = 2;
 	size_t n_integrand    = 2;
 	//

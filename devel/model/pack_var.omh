@@ -1,0 +1,16 @@
+$begin pack_var$$
+$spell
+	var
+$$
+
+$section Packing Variables into a Single Vector$$
+
+$childtable%devel/model/pack_var.cpp
+	%example/devel/model/pack_var_xam.cpp
+%$$
+$head Example$$
+The file $cref pack_var_xam.cpp$$ contains
+and example and test of $code pack_var$$.
+It returns true for success and false for failure.
+
+$end

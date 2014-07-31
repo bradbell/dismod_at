@@ -13,37 +13,23 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/dismod_at.hpp>
 
 /*
-$begin varaible_vec$$
+$begin pack_var_ctor$$
 $spell
 	dismod
 	var
-	mulstd
 	const
 	integrands
-	dage
-	dtime
 $$
 
-$section Packing Variables Into a Single Vector$$
+$section Pack Variables Constructor$$
 
 $head Syntax$$
 $codei%dismod_at::pack_var %var%(
-	%parent_node_id%, %n_smooth%, %n_integrand%
+	%n_smooth%, %n_integrand%
 )
 %$$
 $icode%size%  = %var%.size()
 %$$
-$icode%index% = %var%.%type%_mulstd(%smooth_id%)
-%$$
-All the functions above, except for the constructor, are $code const$$.
-
-$head parent_node_id$$
-This argument has prototype
-$codei%
-	size_t %parent_node_id%
-%$$
-and is the 
-$cref/parent_node_id/run_table/parent_node_id/$$.
 
 $head n_smooth$$
 This argument has prototype
@@ -62,41 +48,13 @@ and is the number of integrands; i.e., the size of
 $cref/integrand_table/get_integrand_table/integrand_table/$$.
 
 $head size$$
-This return value has prototype
+This function is $code const$$.
+Its return value has prototype
 $codei%
 	size_t %size%
 %$$
 and is the total number of variables; i.e.,
 the number of elements in the packed variable vector.
-
-$head type_mulstd$$
-These functions are defined for $icode type$$ equal to
-$code value$$, $code dage$$, and $code dtime$$.
-
-$subhead smooth_id$$
-This argument has prototype
-$codei%
-	size_t %smooth_id%
-%$$
-and is the 
-$cref/smooth_id/smooth_table/smooth_id/$$.
-
-$subhead index$$
-The return value has prototype
-$codei%
-	size_t index
-%$$
-and is the unique index for the correspond smoothing standard
-deviation multiplier in a packed variable vector.
-
-
-$children%
-	example/devel/model/pack_var_xam.cpp
-%$$
-$head Example$$
-The file $cref pack_var_xam.cpp$$ contains
-and example and test of $code pack_var$$.
-It returns true for success and false for failure.
 
 $end
 */
@@ -122,6 +80,54 @@ n_integrand_( n_integrand )
 // size
 size_t pack_var::size(void) const
 {	return size_; }
+
+/*
+$begin pack_var_mulstd$$
+$spell
+	var
+	mulstd
+	dage
+	dtime
+	const
+	dismod
+$$
+
+$section Pack Variables Standard Deviations Multipliers$$
+
+$head Syntax$$
+$icode%index% = %var%.value_mulstd(%smooth_id%)
+%$$
+$icode%index% = %var%.dage_mulstd(%smooth_id%)
+%$$
+$icode%index% = %var%.dtime_mulstd(%smooth_id%)
+%$$
+
+$head var$$
+This object has prototype
+$codei%
+	const dismod_at::pack_var %var%
+%$$.
+
+$head smooth_id$$
+This argument has prototype
+$codei%
+	size_t %smooth_id%
+%$$
+and is the 
+$cref/smooth_id/smooth_table/smooth_id/$$.
+
+$subhead index$$
+The return value has prototype
+$codei%
+	size_t index
+%$$
+and is the unique index for the correspond smoothing standard
+deviation multiplier in a packed variable vector.
+
+
+$end
+
+*/
 
 // mulstd
 size_t pack_var::value_mulstd(size_t smooth_id) const

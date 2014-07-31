@@ -23,8 +23,6 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 class pack_var {
 private:
-	// parent node
-	const size_t parent_node_id_;
 	// number of smoothings
 	const size_t n_smooth_;
 	// number of integrands
@@ -39,9 +37,9 @@ private:
 	size_t size_;
 public:
 	pack_var(
-		size_t        parent_node_id    ,
-		size_t        n_smooth          ,
-		size_t        n_integrand
+		size_t        n_smooth                          ,
+		size_t        n_integrand                       ,
+		const CppAD::vector<mulcov_struct> mulcov_table 
 	);
 	// size
 	size_t size(void) const;
@@ -49,6 +47,7 @@ public:
 	size_t value_mulstd(size_t smooth_id) const;
 	size_t  dage_mulstd(size_t smooth_id) const;
 	size_t dtime_mulstd(size_t smooth_id) const;
+	// meas_mean_mulcov_
 };
 
 } // END DISMOD_AT_NAMESPACE:
