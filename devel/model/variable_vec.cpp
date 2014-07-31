@@ -38,7 +38,7 @@ $codei%dismod_at::variable_vec<%Float%> %var%(
 	%node_table%, %data_table%, %mulcov_table%
 )
 %$$
-$icode%var%.%op%_mulstd(%mulstd%)
+$icode%var%.%op%_%type%_mulstd(%mulstd%, %smooth_id%)
 %$$
 
 $head Float$$
@@ -93,20 +93,36 @@ $code%
 %$$
 and is the $cref/mulcov_table/get_mulcov_table/mulcov_table/$$.
 
-$head op_mulstd$$
-For $icode op$$ equal to $code set$$ and $code get$$,
-the argument has the following respective prototype:
+$head op_type_mulstd$$
+These functions  set and get the standard deviation multiplier.
+
+$subhead op$$
+The $icode op$$ is either $code set$$ or $code get$$ depending
+on if we are setting or getting $icode mulstd$$.
+
+$subhead type$$
+The $icode type$$ of smoothing multiplier is
+$code value$$, $code dage$$, or $code dtime$$.
+
+$subhead mulstd$$
+For $icode%op% = set%$$, the argument $icode mulstd$$ has prototype
 $codei%
-	const CppAD::vector<%Float%>& %mulstd%
-	      CppAD::vector<%Float%>& %mulstd%
+	const %Float%& %mulstd%
 %$$
-The size of $icode mulstd$$ is the $codei%3 * %n_smooth%$$.
-For $icode%smooth_id% = 0, %...%, %n_smooth%$$,
-$icode%mulstd%[3 * %i_smooth% + j ]%$$ 
-is the $th j$$ standard deviation multiplier for smoothing $icode smooth_id$$
-where $icode%j% = 0%$$ for the value smoothing,
-$icode%j% = 1%$$ for the dage smoothing,
-and $icode%j% = 2%$$ for the dtime smoothing.
+For $icode%op% = get%$$, it has prototype
+$codei%
+	const %Float%& %mulstd%
+%$$
+and is the standard deviation multiplier.
+
+$subhead smooth_id$$
+This argument has prototype
+$codei%
+	size_t %smooth_id%
+%$$
+and is the 
+$cref/smooth_id/smooth_table/smooth_id/$$.
+
 
 $children%
 	example/devel/model/variable_vec_xam.cpp
@@ -129,7 +145,10 @@ variable_vec<Float>::variable_vec(
 	const CppAD::vector<node_struct>&     node_table        ,
 	const CppAD::vector<data_struct>&     data_table        ,
 	const CppAD::vector<mulcov_struct>&   mulcov_table 
-)
+) :
+parent_node_id_( parent_node_id ) ,
+n_smooth_( n_smooth )             ,
+n_integrand_( n_integrand )
 {	using std::string;
 
 	size_t n_node      = node_table.size();
@@ -172,8 +191,6 @@ variable_vec<Float>::variable_vec(
 	}
 
 	// mulstd
-	offset_mulstd_ = 0;
-	number_mulstd_ = 3 * n_smooth;
 
 # if 0
 	// rate_mean_mulcov_
@@ -253,23 +270,22 @@ variable_vec<Float>::variable_vec(
 # endif
 
 	// set size of vec_
-	vec_.resize( number_mulstd_ );
+	vec_.resize( n_smooth_ );
 }
 
-template <class Float>
-void variable_vec<Float>::set_mulstd(const CppAD::vector<Float>& mulstd)
-{	assert( mulstd.size() == number_mulstd_ );
-	for(size_t i = 0; i < number_mulstd_; i++)
-		vec_[ offset_mulstd_ + i] = mulstd[i];
-	return;
+template <class Float> void variable_vec<Float>::
+set_value_mulstd( const Float& mulstd, size_t smooth_id )
+{	assert( smooth_id < n_smooth_ );
+	vec_[ offset_value_mulstd_ + smooth_id] = mulstd; 
 }
-template <class Float>
-void variable_vec<Float>::get_mulstd(CppAD::vector<Float>& mulstd)
-{	assert( mulstd.size() == number_mulstd_ );
-	for(size_t i = 0; i < number_mulstd_; i++)
-		mulstd[i] = vec_[ offset_mulstd_ + i];
-	return;
+template <class Float> void variable_vec<Float>::
+get_value_mulstd( Float& mulstd, size_t smooth_id )
+{	assert( smooth_id < n_smooth_ );
+	mulstd = vec_[ offset_value_mulstd_ + smooth_id];
 }
+
+
+
 
 // instantiations
 template class variable_vec<double>;

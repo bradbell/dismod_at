@@ -25,6 +25,12 @@ template <class Float>
 class variable_vec {
 	typedef struct { size_t covariate_id; size_t smooth_id; } mulcov_pair;
 private:
+	// parent node
+	size_t parent_node_id_;
+	// number of smoothings
+	size_t n_smooth_;
+	// number of integrands
+	size_t n_integrand_;
 
 	// The parent node is node_id_[0]. The child nodes are node_id_[i] for
 	// i = 1 , ... , node_id_.size() - 1  (set by constructor only)
@@ -40,8 +46,7 @@ private:
 	// The smoothing standard deviation multipliers come frist in vec_
 	// and there are three per smoothing; i.e., mulstd_value, mulstd_dage,
 	// and mulstd_dtime in smooth_table_. (set by constructor only)
-	size_t offset_mulstd_;
-	size_t number_mulstd_;
+	size_t offset_value_mulstd_;
 
 	// The rate_mean covariate multipliers come next in vec_ and
 	// each rate has its own vector of these multipliers.  
@@ -75,8 +80,8 @@ public:
 		const CppAD::vector<data_struct>&     data_table        ,
 		const CppAD::vector<mulcov_struct>&   mulcov_table
 	);
-	void set_mulstd( const CppAD::vector<Float>&    mulstd );
-	void get_mulstd(       CppAD::vector<Float>&    mulstd );
+	void set_value_mulstd(const Float& mulstd, size_t smooth_id);
+	void get_value_mulstd(      Float& mulstd, size_t smooth_id);
 };
 
 } // END DISMOD_AT_NAMESPACE:

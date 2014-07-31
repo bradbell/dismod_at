@@ -32,7 +32,6 @@ $end
 bool variable_vec_xam(void)
 {	bool ok = true;
 	using CppAD::vector;
-	size_t j;
 
 	size_t parent_node_id = 0;
 	size_t n_smooth       = 2;
@@ -66,22 +65,22 @@ bool variable_vec_xam(void)
 	mulcov_table[1].covariate_id = 1;
 	mulcov_table[1].smooth_id    = 1;
 	//
+	// constructor
 	typedef CppAD::AD<double> Float;
 	dismod_at::variable_vec<Float> var(
 		parent_node_id, n_smooth, n_integrand, 
 		node_table, data_table, mulcov_table
 	);
 	//
-	vector<Float> mulstd_set(3 * n_smooth ), mulstd_get(3 * n_smooth);
-	for(size_t i_smooth = 0; i_smooth < n_smooth; i_smooth++)
-	{	for(j = 0; j < 3; j++)
-			mulstd_set[ 3 * i_smooth + j ] = Float(i_smooth + j);
+	// mulstd
+	Float mulstd;
+	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
+	{	mulstd = Float(smooth_id);
+		var.set_value_mulstd(mulstd  , smooth_id);
 	}
-	var.set_mulstd( mulstd_set );
-	var.get_mulstd( mulstd_get );
-	for(size_t i_smooth = 0; i_smooth < n_smooth; i_smooth++)
-	{	for(j = 0; j < 3; j++)
-			ok &= mulstd_get[ 3 * i_smooth + j ] == Float(i_smooth + j);
+	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
+	{	var.get_value_mulstd(mulstd , smooth_id);
+		ok    &= mulstd == Float(smooth_id);
 	}
 
 	return ok;
