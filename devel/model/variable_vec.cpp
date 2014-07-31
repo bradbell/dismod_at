@@ -34,7 +34,8 @@ $section The Variable Vector Class$$
 
 $head Syntax$$
 $codei%dismod_at::variable_vec<%Float%> %var%(
-	%parent_node_id%, %n_smooth%, %node_table%, %data_table%, %mulcov_table%
+	%parent_node_id%, %n_smooth%, %n_integrand%,
+	%node_table%, %data_table%, %mulcov_table%
 )
 %$$
 $icode%var%.%op%_mulstd(%mulstd%)
@@ -133,7 +134,7 @@ variable_vec<Float>::variable_vec(
 
 	size_t n_node      = node_table.size();
 	size_t n_data      = data_table.size();
-	size_t n_mulcov    = mulcov_table.size();
+	// size_t n_mulcov    = mulcov_table.size();
 
 	// child_node_id_
 	assert( node_id_.size() == 0 );
@@ -174,6 +175,7 @@ variable_vec<Float>::variable_vec(
 	offset_mulstd_ = 0;
 	number_mulstd_ = 3 * n_smooth;
 
+# if 0
 	// rate_mean_mulcov_
 	rate_mean_mulcov_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
@@ -248,6 +250,10 @@ variable_vec<Float>::variable_vec(
 			}
 		}
 	}
+# endif
+
+	// set size of vec_
+	vec_.resize( number_mulstd_ );
 }
 
 template <class Float>
@@ -264,5 +270,9 @@ void variable_vec<Float>::get_mulstd(CppAD::vector<Float>& mulstd)
 		mulstd[i] = vec_[ offset_mulstd_ + i];
 	return;
 }
+
+// instantiations
+template class variable_vec<double>;
+template class variable_vec< CppAD::AD<double> >;
 
 } // END DISMOD_AT_NAMESPACE

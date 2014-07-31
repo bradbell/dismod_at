@@ -26,13 +26,17 @@ $$
 $end
 */
 // BEGIN C++
+# include <cppad/cppad.hpp>
 # include <dismod_at/dismod_at.hpp>
 
 bool variable_vec_xam(void)
 {	bool ok = true;
 	using CppAD::vector;
+	size_t j;
 
 	size_t parent_node_id = 0;
+	size_t n_smooth       = 2;
+	size_t n_integrand    = 2;
 	//
 	size_t n_node = 4;
 	vector<dismod_at::node_struct> node_table(n_node);
@@ -61,7 +65,24 @@ bool variable_vec_xam(void)
 	mulcov_table[1].integrand_id = 1;
 	mulcov_table[1].covariate_id = 1;
 	mulcov_table[1].smooth_id    = 1;
-	
+	//
+	typedef CppAD::AD<double> Float;
+	dismod_at::variable_vec<Float> var(
+		parent_node_id, n_smooth, n_integrand, 
+		node_table, data_table, mulcov_table
+	);
+	//
+	vector<Float> mulstd_set(3 * n_smooth ), mulstd_get(3 * n_smooth);
+	for(size_t i_smooth = 0; i_smooth < n_smooth; i_smooth++)
+	{	for(j = 0; j < 3; j++)
+			mulstd_set[ 3 * i_smooth + j ] = Float(i_smooth + j);
+	}
+	var.set_mulstd( mulstd_set );
+	var.get_mulstd( mulstd_get );
+	for(size_t i_smooth = 0; i_smooth < n_smooth; i_smooth++)
+	{	for(j = 0; j < 3; j++)
+			ok &= mulstd_get[ 3 * i_smooth + j ] == Float(i_smooth + j);
+	}
 
 	return ok;
 }
