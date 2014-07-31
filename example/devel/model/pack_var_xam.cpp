@@ -38,7 +38,7 @@ bool pack_var_xam(void)
 	//
 	// constructor
 	dismod_at::pack_var var(
-		parent_node_id, n_smooth, n_integrand
+		n_smooth, n_integrand
 	);
 	//
 	// packed vector

@@ -37,9 +37,8 @@ private:
 	size_t size_;
 public:
 	pack_var(
-		size_t        n_smooth                          ,
-		size_t        n_integrand                       ,
-		const CppAD::vector<mulcov_struct> mulcov_table 
+		size_t        n_smooth    ,
+		size_t        n_integrand 
 	);
 	// size
 	size_t size(void) const;

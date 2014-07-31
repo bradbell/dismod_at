@@ -62,11 +62,9 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 pack_var::pack_var(
-	size_t      parent_node_id    ,
 	size_t      n_smooth          ,
 	size_t      n_integrand
 ) :
-parent_node_id_( parent_node_id ) ,
 n_smooth_( n_smooth )             ,
 n_integrand_( n_integrand ) 
 {	
