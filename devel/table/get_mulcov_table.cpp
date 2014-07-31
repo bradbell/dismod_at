@@ -17,6 +17,7 @@ $spell
 	cpp
 	std
 	covariate
+	enum
 $$
 
 $section C++: Get the Covariate Multiplier Table Information$$
@@ -42,9 +43,9 @@ This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
 $rnext
-$code std::string$$ $cnext $code mulcov_type$$   $pre  $$ $cnext 
-	The $cref/mulcov_type/mulcov_table/mulcov_type/$$ 
-	for this multiplier
+$code mulcov_type_enum$$ $pre  $$ $cnext $code mulcov_type$$   $pre  $$ $cnext 
+	The $cref/mulcov_type/get_mulcov_table/mulcov_struct/mulcov_type/$$ 
+	for this multiplier.
 $rnext
 $code int$$ $cnext $code rate_id$$     $pre  $$ $cnext 
 	The $cref/rate_id/mulcov_table/rate_id/$$ 
@@ -62,6 +63,15 @@ $code int$$ $cnext $code smooth_id$$     $pre  $$ $cnext
 	The $cref/smooth_id/mulcov_table/smooth_id/$$ 
 	for this multiplier 
 $tend        
+
+$subhead mulcov_type$$
+The $code mulcov_type_enum$$ possible values are
+$code rate_mean_enum$$,
+$code meas_mean_enum$$, and
+$code meas_std_enum$$.
+These correspond to the values in the 
+$cref/mulcov_type/mulcov_table/mulcov_type/$$ column of the
+$code mulcov_type$$ table.
 
 $head mulcov_table$$
 The return value $icode mulcov_table$$ has prototype
@@ -124,14 +134,19 @@ CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
 
 	CppAD::vector<mulcov_struct>     mulcov_table(n_mulcov);
 	for(size_t i = 0; i < n_mulcov; i++)
-	{	mulcov_table[i].mulcov_type     = mulcov_type[i];
+	{
 		mulcov_table[i].rate_id         = rate_id[i];
 		mulcov_table[i].integrand_id    = integrand_id[i];
 		mulcov_table[i].covariate_id    = covariate_id[i];
 		mulcov_table[i].smooth_id       = smooth_id[i];
-		if( mulcov_type[i] != "rate_mean" &&
-		    mulcov_type[i] != "meas_mean" &&
-		    mulcov_type[i] != "meas_std"  )
+		//
+		if( mulcov_type[i] == "rate_mean" )
+			mulcov_table[i].mulcov_type = rate_mean_enum;
+		else if( mulcov_type[i] == "meas_mean" )
+			mulcov_table[i].mulcov_type = meas_mean_enum;
+		else if( mulcov_type[i] == "meas_std" )
+			mulcov_table[i].mulcov_type = meas_std_enum;
+		else
 		{	string message = "mulcov_type is not one of the following\n"
 			"'rate_mean', 'meas_mean', 'meas_std'.";
 			table_error_exit(table_name, i, message);

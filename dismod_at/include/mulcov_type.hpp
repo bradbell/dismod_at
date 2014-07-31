@@ -8,22 +8,16 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_GET_MULCOV_TABLE_HPP
-# define DISMOD_AT_GET_MULCOV_TABLE_HPP
-
-# include <sqlite3.h>
-# include <cppad/vector.hpp>
-# include "mulcov_type.hpp"
+# ifndef DISMOD_AT_MULCOV_TYPE_HPP
+# define DISMOD_AT_MULCOV_TYPE_HPP
 
 namespace dismod_at {
-	struct mulcov_struct {
-		mulcov_type_enum mulcov_type;
-		int              rate_id;
-		int              integrand_id;
-		int              covariate_id;
-		int              smooth_id;
+	enum mulcov_type_enum {
+		rate_mean_enum,
+		meas_mean_enum,
+		meas_std_enum,
+		number_mulcov_type_enum
 	};
-	extern CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3*  db);
 }
 
 # endif

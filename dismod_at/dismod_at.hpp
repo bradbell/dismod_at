@@ -27,6 +27,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "include/pack_var.hpp"
 
 // devel/table directory
+# include "include/mulcov_type.hpp"
 # include "include/check_table_id.hpp"
 # include "include/exec_sql_cmd.hpp"
 # include "include/get_age_table.hpp"

@@ -60,8 +60,8 @@ bool get_mulcov_table_xam(void)
 		mulcov_table = dismod_at::get_mulcov_table(db);
 	ok  &= mulcov_table.size() == 2;
 	//
-	ok  &= mulcov_table[0].mulcov_type  == "meas_mean";
-	ok  &= mulcov_table[1].mulcov_type  == "rate_mean";
+	ok  &= mulcov_table[0].mulcov_type  == dismod_at::meas_mean_enum;
+	ok  &= mulcov_table[1].mulcov_type  == dismod_at::rate_mean_enum;
 	//
 	ok  &= mulcov_table[0].rate_id == -1;
 	ok  &= mulcov_table[1].rate_id == 1;
