@@ -24,7 +24,7 @@ $childtable%
 	%devel/model/smooth2ode.cpp
 	%devel/model/solve_ode.cpp
 	%devel/model/avg_integrand.cpp
-	%devel/model/variable_vec.cpp
+	%devel/model/pack_var.cpp
 %$$
 
 $end

@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin pack_var_xam.cpp$$
 $spell
-	vec
+	var
 $$
 
 $section C++ pack_var: Example and Test$$

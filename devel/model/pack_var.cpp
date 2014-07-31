@@ -15,6 +15,13 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin varaible_vec$$
 $spell
+	dismod
+	var
+	mulstd
+	const
+	integrands
+	dage
+	dtime
 $$
 
 $section Packing Variables Into a Single Vector$$
@@ -79,7 +86,7 @@ The return value has prototype
 $codei%
 	size_t index
 %$$
-and is the unique index for the correpsonding smoothing standard
+and is the unique index for the correspond smoothing standard
 deviation multiplier in a packed variable vector.
 
 
