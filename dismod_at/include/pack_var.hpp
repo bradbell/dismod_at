@@ -47,6 +47,9 @@ private:
 	// meas_std_mulcov infromation
 	CppAD::vector< CppAD::vector<mulcov_info> > meas_std_mulcov_info_;
 
+	// rate_mean_mulcov infromation
+	CppAD::vector< CppAD::vector<mulcov_info> > rate_mean_mulcov_info_;
+
 	// total number of elements in the packed vector
 	size_t size_;
 public:
@@ -69,6 +72,10 @@ public:
 	// meas_std_mulcov_
 	size_t      meas_std_mulcov_n_cov(size_t integrand_id) const;
 	mulcov_info meas_std_mulcov_info(size_t integrand_id, size_t j) const;
+
+	// rate_mean_mulcov_
+	size_t      rate_mean_mulcov_n_cov(size_t integrand_id) const;
+	mulcov_info rate_mean_mulcov_info(size_t integrand_id, size_t j) const;
 };
 
 } // END DISMOD_AT_NAMESPACE:

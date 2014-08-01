@@ -141,6 +141,44 @@ n_integrand_( n_integrand )
 		}
 	}
 
+	// rate_mean_mulcov_info_ 
+	rate_mean_mulcov_info_.resize( number_rate_enum );
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	{	size_t mulcov_id;
+		for(mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
+		{	bool match;
+			match  = mulcov_table[mulcov_id].mulcov_type  == rate_mean_enum;
+			match &= mulcov_table[mulcov_id].rate_id == int(rate_id);
+			if( match )
+			{	size_t covariate_id = size_t(
+					mulcov_table[mulcov_id].covariate_id
+				); 
+				CppAD::vector<mulcov_info>& info_vec = 
+					rate_mean_mulcov_info_[rate_id];
+				for(size_t j = 0; j < info_vec.size(); j++)
+				{	if( info_vec[j].covariate_id == covariate_id )
+					{	string msg = "covariate_id appears twice with "
+							"mulcov_type equal to 'rate_mean'";
+						string table_name = "mulcov";
+						table_error_exit(table_name, mulcov_id, msg);
+					}
+				}
+				size_t smooth_id = mulcov_table[mulcov_id].smooth_id;
+				size_t n_age     = smooth_table[smooth_id].n_age;
+				size_t n_time    = smooth_table[smooth_id].n_time;
+				//
+				mulcov_info info;
+				info.covariate_id = covariate_id;
+				info.smooth_id    = smooth_id;
+				info.n_var        = n_age * n_time;
+				info.offset       = offset; 
+				info_vec.push_back(info);
+				//
+				offset           += info.n_var;
+			}
+		}
+	}
+
 	// size is final offset
 	size_ = offset;
 };
@@ -150,6 +188,7 @@ size_t pack_var::size(void) const
 {	return size_; }
 
 /*
+------------------------------------------------------------------------------
 $begin pack_var_mulstd$$
 $spell
 	var
@@ -202,6 +241,7 @@ size_t pack_var::mulstd(size_t smooth_id) const
 }
 
 /*
+------------------------------------------------------------------------------
 $begin pack_var_meas$$
 $spell
 	std
@@ -324,6 +364,105 @@ pack_var::mulcov_info
 pack_var::meas_std_mulcov_info(size_t integrand_id, size_t j) const
 {	assert( integrand_id < n_integrand_ );
 	return meas_std_mulcov_info_[integrand_id][j];
+}
+
+/*
+------------------------------------------------------------------------------
+$begin pack_var_rate$$
+$spell
+	std
+	cov
+	var
+	mulcov
+	dismod
+	const
+	covariate
+$$
+
+$section Pack Variables: Rate Multipliers$$
+
+$head Syntax$$
+$icode%n_cov% = %var%.rate_mean_mulcov_n_cov(%rate_id%)
+%$$
+$icode%n_cov% = %var%.rate_std_mulcov_n_cov(%rate_id%)
+%$$
+
+$head mulcov_info$$
+The type $code dismod_at::pack-var::mulcov_info$$ is defined as follows:
+$code
+$verbatim%dismod_at/include/pack_var.hpp
+%5%// BEGIN MULCOV_INFO%// END MULCOV_INFO%$$
+$$
+
+$head var$$
+This object has prototype
+$codei%
+	const dismod_at::pack_var %var%
+%$$
+
+$head rate_id$$
+This argument has prototype 
+$codei%
+	size_t %rate_id%
+%$$
+and it specifies the 
+$cref/rate_id/rate_table/rate_id/$$ the covariate
+multiplier.
+
+$head n_cov$$
+This return value has prototype
+$codei%
+	size_t %n_cov%
+%$$ 
+and is the number of covariate multipliers for the specified 
+$icode rate_id$$.
+This is referred to as $codei%n_cov(%rate_id%)%$$ below.
+
+$head j$$
+This argument has prototype
+$codei%
+	size_t %j%
+%$$
+and $icode%j% < n_cov(%rate_id%)%$$.
+
+$head info$$
+this return value has prototype
+$codei%
+	mulcov_info %info%
+%$$
+
+$subhead covariate_id$$
+is the $cref/covariate_id/covariate_table/covariate_id/$$ for the
+$th j$$ covariate multiplier for this $icode rate_id$$.
+
+$subhead smooth_id$$
+is the $cref/smooth_id/smooth_table/smooth_id/$$ for the
+$th j$$ covariate multiplier fro this $icode rate_id$$.
+
+$subhead n_var$$
+is the number of variables for this covariate multiplier; i.e.
+the product of the number are age and time points corresponding to
+this $icode smooth_id$$.
+
+$subhead offset$$
+is the offset in the packed variable vector where the
+$icode n_var$$ variables begin (for this covariate multiplier).
+
+$head Example$$
+See $cref/pack_var Example/pack_var/Example/$$.
+
+$end
+*/
+size_t 
+pack_var::rate_mean_mulcov_n_cov(size_t rate_id) const
+{	assert( rate_id < number_rate_enum );
+	return rate_mean_mulcov_info_[rate_id].size();
+}
+//
+pack_var::mulcov_info 
+pack_var::rate_mean_mulcov_info(size_t rate_id, size_t j) const
+{	assert( rate_id < number_rate_enum );
+	return rate_mean_mulcov_info_[rate_id][j];
 }
 
 } // END DISMOD_AT_NAMESPACE
