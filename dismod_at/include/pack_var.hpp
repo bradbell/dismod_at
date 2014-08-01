@@ -38,11 +38,14 @@ private:
 	// number of integrands
 	const size_t n_integrand_;
 
-	// offsets for mulstd variables
+	// offset for mulstd variables
 	size_t offset_mulstd_;
 
-	// meas_mean_mulcov
+	// meas_mean_mulcov infromation
 	CppAD::vector< CppAD::vector<mulcov_info> > meas_mean_mulcov_info_;
+
+	// meas_std_mulcov infromation
+	CppAD::vector< CppAD::vector<mulcov_info> > meas_std_mulcov_info_;
 
 	// total number of elements in the packed vector
 	size_t size_;
@@ -62,6 +65,10 @@ public:
 	// meas_mean_mulcov_
 	size_t      meas_mean_mulcov_n_cov(size_t integrand_id) const;
 	mulcov_info meas_mean_mulcov_info(size_t integrand_id, size_t j) const;
+
+	// meas_std_mulcov_
+	size_t      meas_std_mulcov_n_cov(size_t integrand_id) const;
+	mulcov_info meas_std_mulcov_info(size_t integrand_id, size_t j) const;
 };
 
 } // END DISMOD_AT_NAMESPACE:
