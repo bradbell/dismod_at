@@ -56,22 +56,22 @@ This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
 $rnext
-$code std::string$$ $cnext $code smooth_name$$ $cnext
+$code std::string$$ $pre  $$ $cnext $code smooth_name$$ $cnext
 	The $cref/smooth_name/smooth_table/smooth_name/$$ for this smoothing.
 $rnext
-$code std::string$$ $cnext $code n_age$$ $cnext
+$code int$$ $cnext $code n_age$$ $cnext
 	The $cref/n_age/smooth_table/n_age/$$ for this smoothing.
 $rnext
-$code std::string$$ $cnext $code n_time$$ $cnext
+$code int$$ $cnext $code n_time$$ $cnext
 	The $cref/n_time/smooth_table/n_time/$$ for this smoothing.
 $rnext
-$code std::string$$ $cnext $code mulstd_value$$ $cnext
+$code int$$ $cnext $code mulstd_value$$ $cnext
 	The $cref/mulstd_value/smooth_table/mulstd_value/$$ for this smoothing.
 $rnext
-$code std::string$$ $cnext $code mulstd_dage$$ $cnext
+$code int$$ $cnext $code mulstd_dage$$ $cnext
 	The $cref/mulstd_dage/smooth_table/mulstd_dage/$$ for this smoothing.
 $rnext
-$code std::string$$ $cnext $code mulstd_dtime$$ $cnext
+$code int$$ $cnext $code mulstd_dtime$$ $cnext
 	The $cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ for this smoothing.
 $tend
 $comment%example/devel/table/get_smooth_grid_xam.cpp in included by smooth_grid.omh

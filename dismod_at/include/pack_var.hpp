@@ -22,9 +22,18 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 class pack_var {
+	// BEGIN MULCOV_INFO
+	typedef struct { 
+		size_t covariate_id;
+		size_t smooth_id; 
+		size_t n_var; 
+		size_t offset; 
+	} mulcov_info;
+	// END MULCOV_INFO
 private:
 	// number of smoothings
 	const size_t n_smooth_;
+
 	// number of integrands
 	const size_t n_integrand_;
 
@@ -33,20 +42,28 @@ private:
 	size_t offset_dage_mulstd_;
 	size_t offset_dtime_mulstd_;
 
+	// meas_mean_mulcov
+	CppAD::vector< CppAD::vector<mulcov_info> > meas_mean_mulcov_info_;
+
 	// total number of elements in the packed vector
 	size_t size_;
 public:
 	pack_var(
-		size_t        n_smooth    ,
-		size_t        n_integrand 
+		size_t                              n_integrand  ,
+		const CppAD::vector<smooth_struct>& smooth_table ,
+		const CppAD::vector<mulcov_struct>& mulcov_table 
 	);
 	// size
 	size_t size(void) const;
+
 	// mulstd
 	size_t value_mulstd(size_t smooth_id) const;
 	size_t  dage_mulstd(size_t smooth_id) const;
 	size_t dtime_mulstd(size_t smooth_id) const;
+
 	// meas_mean_mulcov_
+	size_t      meas_mean_mulcov_n_cov(size_t integrand_id) const;
+	mulcov_info meas_mean_mulcov_info(size_t integrand_id, size_t j) const;
 };
 
 } // END DISMOD_AT_NAMESPACE:

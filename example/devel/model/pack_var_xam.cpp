@@ -33,12 +33,29 @@ bool pack_var_xam(void)
 {	bool ok = true;
 	using CppAD::vector;
 
-	size_t n_smooth       = 2;
 	size_t n_integrand    = 2;
+	//
+	size_t n_smooth = 2;
+	vector<dismod_at::smooth_struct> smooth_table(n_smooth);
+	smooth_table[0].n_age  = 2;
+	smooth_table[0].n_time = 1;
+	smooth_table[1].n_age  = 2;
+	smooth_table[1].n_time = 3;
+	//
+	size_t n_mulcov = 2;
+	vector<dismod_at::mulcov_struct> mulcov_table(n_mulcov);
+	mulcov_table[0].rate_id = -1;
+	mulcov_table[0].integrand_id = 0;
+	mulcov_table[0].covariate_id = 0;
+	mulcov_table[0].smooth_id    = 0;
+	mulcov_table[1].rate_id = -1;
+	mulcov_table[1].integrand_id = 1;
+	mulcov_table[1].covariate_id = 1;
+	mulcov_table[1].smooth_id    = 1;
 	//
 	// constructor
 	dismod_at::pack_var var(
-		n_smooth, n_integrand
+		n_integrand, smooth_table, mulcov_table
 	);
 	//
 	// packed vector

@@ -149,6 +149,7 @@ CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
 		else
 		{	string message = "mulcov_type is not one of the following\n"
 			"'rate_mean', 'meas_mean', 'meas_std'.";
+			table_name = "mulcov";
 			table_error_exit(table_name, i, message);
 		}
 	}
