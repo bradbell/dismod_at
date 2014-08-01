@@ -62,20 +62,47 @@ bool pack_var_xam(void)
 	size_t size = var.size();
 	CppAD::vector<double> vec(size);
 
-	// set values
-	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	vec[ var.value_mulstd(smooth_id) ] = smooth_id + 0;
-		vec[ var.dage_mulstd(smooth_id) ]  = smooth_id + 1;
-		vec[ var.dtime_mulstd(smooth_id) ] = smooth_id + 2;
-	}
+	// some temporary variables
+	dismod_at::pack_var::mulcov_info info;
 
-	// check values
+	// ---------------------------------------------------------------------
+	// set mulstd
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	ok &= vec[ var.value_mulstd(smooth_id) ] == smooth_id + 0;
-		ok &= vec[ var.dage_mulstd(smooth_id) ]  == smooth_id + 1;
-		ok &= vec[ var.dtime_mulstd(smooth_id) ] == smooth_id + 2;
+	{	size_t offset    =	var.mulstd(smooth_id);
+		vec[offset + 0 ] = smooth_id + 0; // value multiplier
+		vec[offset + 1 ] = smooth_id + 1; // dage  multiplier
+		vec[offset + 2 ] = smooth_id + 2; // dtime multiplier
 	}
-
+	// set meas_mean_mulcov
+	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
+	{	size_t n_cov = var.meas_mean_mulcov_n_cov(integrand_id);
+		for(size_t j = 0; j < n_cov; j++)
+		{	info          = var.meas_mean_mulcov_info(integrand_id, j);
+			size_t offset = info.offset;
+			size_t n_var  = info.n_var;
+			for(size_t k = 0; k < n_var; k++)
+				vec[offset + k] = integrand_id + 3 + k;
+		}
+	}
+	// ---------------------------------------------------------------------
+	// check mulstd
+	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
+	{	size_t offset =	var.mulstd(smooth_id);
+		ok &= vec[ offset + 0 ] == smooth_id + 0;
+		ok &= vec[ offset + 1 ] == smooth_id + 1;
+		ok &= vec[ offset + 2 ] == smooth_id + 2;
+	}
+	// check meas_mean_mulcov
+	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
+	{	size_t n_cov = var.meas_mean_mulcov_n_cov(integrand_id);
+		for(size_t j = 0; j < n_cov; j++)
+		{	info          = var.meas_mean_mulcov_info(integrand_id, j);
+			size_t offset = info.offset;
+			size_t n_var  = info.n_var;
+			for(size_t k = 0; k < n_var; k++)
+				ok &= vec[offset + k] == integrand_id + 3 + k;
+		}
+	}
 
 	return ok;
 }

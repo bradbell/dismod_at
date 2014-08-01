@@ -22,6 +22,7 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 class pack_var {
+public:
 	// BEGIN MULCOV_INFO
 	typedef struct { 
 		size_t covariate_id;
@@ -38,9 +39,7 @@ private:
 	const size_t n_integrand_;
 
 	// offsets for mulstd variables
-	size_t offset_value_mulstd_;
-	size_t offset_dage_mulstd_;
-	size_t offset_dtime_mulstd_;
+	size_t offset_mulstd_;
 
 	// meas_mean_mulcov
 	CppAD::vector< CppAD::vector<mulcov_info> > meas_mean_mulcov_info_;
@@ -53,13 +52,12 @@ public:
 		const CppAD::vector<smooth_struct>& smooth_table ,
 		const CppAD::vector<mulcov_struct>& mulcov_table 
 	);
-	// size
+
+	// size of entire packed vector
 	size_t size(void) const;
 
 	// mulstd
-	size_t value_mulstd(size_t smooth_id) const;
-	size_t  dage_mulstd(size_t smooth_id) const;
-	size_t dtime_mulstd(size_t smooth_id) const;
+	size_t mulstd(size_t smooth_id) const;
 
 	// meas_mean_mulcov_
 	size_t      meas_mean_mulcov_n_cov(size_t integrand_id) const;

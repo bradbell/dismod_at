@@ -24,7 +24,7 @@ $spell
 	integrands
 $$
 
-$section Pack Variables Constructor$$
+$section Pack Variables: Constructor$$
 
 $head Syntax$$
 $codei%dismod_at::pack_var %var%(
@@ -69,6 +69,9 @@ $codei%
 and is the total number of variables; i.e.,
 the number of elements in the packed variable vector.
 
+$head Example$$
+See $cref/pack_var Example/pack_var/Example/$$.
+
 $end
 */
 
@@ -83,11 +86,11 @@ n_smooth_( smooth_table.size() ) ,
 n_integrand_( n_integrand ) 
 {	using std::string;
 
-	// mulstd
+	// initialize offset
 	size_t offset = 0;
-	offset_value_mulstd_  = offset; offset += n_smooth_;
-	offset_dage_mulstd_   = offset; offset += n_smooth_;
-	offset_dtime_mulstd_  = offset; offset += n_smooth_;
+
+	// mulstd
+	offset_mulstd_  = offset; offset += 3 * n_smooth_;
 
 	// meas_mean_mulcov
 	meas_mean_mulcov_info_.resize( n_integrand );
@@ -124,6 +127,8 @@ n_integrand_( n_integrand )
 			}
 		}
 	}
+
+	// size is final offset
 	size_ = offset;
 };
 
@@ -142,21 +147,17 @@ $spell
 	dismod
 $$
 
-$section Pack Variables Standard Deviations Multipliers$$
+$section Pack Variables: Standard Deviations Multipliers$$
 
 $head Syntax$$
-$icode%index% = %var%.value_mulstd(%smooth_id%)
-%$$
-$icode%index% = %var%.dage_mulstd(%smooth_id%)
-%$$
-$icode%index% = %var%.dtime_mulstd(%smooth_id%)
+$icode%offset% = %var%.mulstd(%smooth_id%)
 %$$
 
 $head var$$
 This object has prototype
 $codei%
 	const dismod_at::pack_var %var%
-%$$.
+%$$
 
 $head smooth_id$$
 This argument has prototype
@@ -166,29 +167,25 @@ $codei%
 and is the 
 $cref/smooth_id/smooth_table/smooth_id/$$.
 
-$subhead index$$
+$subhead offset$$
 The return value has prototype
 $codei%
-	size_t index
+	size_t offset
 %$$
-and is the unique index for the correspond smoothing standard
-deviation multiplier in a packed variable vector.
+and is the offset (index) in the packed variable vector
+where the three variables for this smoothing begin.
+The three variables for each smoothing are the
+value, dage, and dtime standard deviation multipliers.
 
+$head Example$$
+See $cref/pack_var Example/pack_var/Example/$$.
 
 $end
 
 */
-size_t pack_var::value_mulstd(size_t smooth_id) const
+size_t pack_var::mulstd(size_t smooth_id) const
 {	assert( smooth_id < n_smooth_ );
-	return offset_value_mulstd_ + smooth_id;
-}
-size_t pack_var::dage_mulstd(size_t smooth_id) const
-{	assert( smooth_id < n_smooth_ );
-	return offset_dage_mulstd_ + smooth_id;
-}
-size_t pack_var::dtime_mulstd(size_t smooth_id) const
-{	assert( smooth_id < n_smooth_ );
-	return offset_dtime_mulstd_ + smooth_id;
+	return offset_mulstd_ + 3 * smooth_id;
 }
 
 /*
@@ -202,7 +199,7 @@ $spell
 	covariate
 $$
 
-$section Pack Variables Measurement Mean Multipliers$$
+$section Pack Variables: Measurement Mean Multipliers$$
 
 $head Syntax$$
 $icode%n_cov% = %var%.meas_mean_mulcov_n_cov(%integrand_id%)
@@ -216,11 +213,12 @@ $code
 $verbatim%dismod_at/include/pack_var.hpp
 %5%// BEGIN MULCOV_INFO%// END MULCOV_INFO%$$
 $$
+
 $head var$$
 This object has prototype
 $codei%
 	const dismod_at::pack_var %var%
-%$$.
+%$$
 
 $head integrand_id$$
 This argument has prototype 
@@ -267,7 +265,11 @@ the product of the number are age and time points corresponding to
 this $icode smooth_id$$.
 
 $subhead offset$$
-is the offset of the $icode n_var$$ variables in the packed variable vector.
+is the offset in the packed variable vector where the
+$icode n_var$$ variables begin (for this covariate multiplier).
+
+$head Example$$
+See $cref/pack_var Example/pack_var/Example/$$.
 
 $end
 */
