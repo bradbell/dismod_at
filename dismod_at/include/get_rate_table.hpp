@@ -22,7 +22,12 @@ namespace dismod_at {
 		omega_enum,
 		number_rate_enum
 	};
-	extern CppAD::vector<rate_enum> get_rate_table(sqlite3*  db);
+	struct rate_struct {
+		rate_enum  rate_name;
+		int        parent_smooth_id;
+		int        child_smooth_id;
+	};
+	extern CppAD::vector<rate_struct> get_rate_table(sqlite3*  db);
 }
 
 # endif

@@ -36,6 +36,23 @@ $code chi$$        $pre   $$ $cnext model excess mortality        $rnext
 $code omega$$      $pre   $$ $cnext model other cause mortality
 $tend
 
+$head parent_smooth_id$$
+This column has type $code integer$$ and its value is a
+$cref/smooth_id/smooth_grid_table/smooth_id/$$ 
+in the $code smooth_grid$$ table.
+It specifies the smoothing used as a prior for this rate 
+when fitting the parent (fixed effects).
+
+$head child_smooth_id$$
+This column has type $code integer$$ and its value is a
+$cref/smooth_id/smooth_grid_table/smooth_id/$$ 
+in the $code smooth_grid$$ table.
+It specifies the smoothing used as a prior for this rate 
+when fitting the children (random effects).
+This smoothing must have the same
+$cref/age_id/smooth_grid_table/age_id/$$ and
+$cref/time_id/smooth_grid_table/time_id/$$ values
+as the corresponding parent smoothing.
 
 $children%example/table/rate_table.py
 %$$

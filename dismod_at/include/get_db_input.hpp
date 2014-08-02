@@ -35,7 +35,7 @@ namespace dismod_at {
 	struct db_input_struct {
 		CppAD::vector<double>             age_table;
 		CppAD::vector<double>             time_table;
-		CppAD::vector<rate_enum>          rate_table;
+		CppAD::vector<rate_struct>        rate_table;
 		CppAD::vector<density_enum>       density_table;
 		CppAD::vector<integrand_enum>     integrand_table;
 		//

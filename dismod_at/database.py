@@ -425,10 +425,10 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $cref rate_prior$$ table.
 # The dictionary $icode%rate_list%[%i%]%$$ has the following:
 # $table
-# Key    $cnext Value Type    $cnext Description                $rnext
-# name   $cnext str           $cnext iota, rho, chi, or omega   $rnext
-# parent $cnext bool          $cnext is this a parent prior     $rnext
-# smooth $cnext str           $cnext smoothing name
+# Key           $cnext Value Type  $cnext Description                $rnext
+# name          $cnext str         $cnext iota, rho, chi, or omega   $rnext
+# parent_smooth $cnext str         $cnext parent smoothing           $rnext
+# child_smooth  $cnext str         $cnext child smoothing
 # $tend
 #
 # $head mulcov_list$$
@@ -497,17 +497,6 @@ def create_database(
 		row_list.append( [time] )
 	tbl_name = 'time'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
-	# -----------------------------------------------------------------------
-	# create rate table
-	col_name = [  'rate_name'   ]
-	col_type = [  'text'        ]
-	row_list = [ ['iota'], ['rho'], ['chi'], ['omega'] ]
-	tbl_name = 'rate'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
-	#
-	global_rate_name2id = {}
-	for i in range( len(row_list) ) :
-		global_rate_name2id[ row_list[i][0] ] = i
 	# -----------------------------------------------------------------------
 	# create density table
 	col_name = [  'density_name'   ]
@@ -704,18 +693,34 @@ def create_database(
 	tbl_name = 'smooth_grid'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
+	# create rate table
+	col_name = [  'rate_name', 'parent_smooth_id', 'child_smooth_id'  ]
+	col_type = [  'text',      'integer',         'integer'          ]
+	row_list = [ ]
+	for i in range( len(rate_list) ) :
+		rate             = rate_list[i]
+		rate_name        = rate['name']
+		parent_smooth_id = global_smooth_name2id[ rate['parent_smooth'] ]
+		child_smooth_id  = global_smooth_name2id[ rate['child_smooth'] ]
+		row_list.append( [ rate_name, parent_smooth_id, child_smooth_id ] )
+	tbl_name = 'rate'
+	create_table(connection, tbl_name, col_name, col_type, row_list)
+	global_rate_name2id = {}
+	for i in range( len(row_list) ) :
+		global_rate_name2id[ row_list[i][0] ] = i
+	# ------------------------------------------------------------------------
+	# -----------------------------------------------------------------------
 	# create rate_prior table
 	col_name = [ 'rate_id', 'is_parent',   'smooth_id' ]
 	col_type = [ 'integer', 'integer',     'integer'        ]
 	row_list = [ ]
-	for i in range( len(rate_list) ) :
-		rate     = rate_list[i]
-		rate_id  = global_rate_name2id[ rate['name'] ]
-		if rate['parent'] :
-			is_parent = 1
-		else :
-			is_parent = 0
-		smooth_id = global_smooth_name2id[ rate['smooth'] ]
+	for rate_id in range( len(rate_list) ) :
+		rate      = rate_list[rate_id]
+		is_parent = 1
+		smooth_id = global_smooth_name2id[ rate['parent_smooth'] ]
+		row_list.append( [ rate_id, is_parent, smooth_id ] )
+		is_parent = 0
+		smooth_id = global_smooth_name2id[ rate['child_smooth'] ]
 		row_list.append( [ rate_id, is_parent, smooth_id ] )
 	tbl_name = 'rate_prior'
 	create_table(connection, tbl_name, col_name, col_type, row_list)

@@ -101,12 +101,20 @@ smooth_list = [
 ] 
 rate_list = [
 	{	'name':'omega',
-		'parent':True,
-		'smooth':'constant'
+		'parent_smooth':'constant',
+		'child_smooth':'constant'
 	},{
-		'name':'omega',
-		'parent':False,
-		'smooth':'constant'
+		'name':'iota',
+		'parent_smooth':'constant',
+		'child_smooth':'constant'
+	},{
+		'name':'rho',
+		'parent_smooth':'constant',
+		'child_smooth':'constant'
+	},{
+		'name':'chi',
+		'parent_smooth':'constant',
+		'child_smooth':'constant'
 	}
 ]
 mulcov_list = [

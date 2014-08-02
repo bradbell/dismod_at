@@ -32,14 +32,19 @@ def rate_table() :
 	cursor         = connection.cursor()
 	#
 	# create the rate table
-	col_name = [ 'rate_name'  ]
-	col_type = [ 'text'       ]
-	row_list = [ ['iota'], ['rho'], ['chi'], ['omega'] ]
+	col_name = [ 'rate_name', 'parent_smooth_id', 'child_smooth_id'  ]
+	col_type = [ 'text',      'integer',          'integer'          ]
+	row_list = [ 
+		['iota',  0,   1], 
+		['rho',   0,   1], 
+		['chi',   0,   1], 
+		['omega', 0,   1]
+	]
 	tbl_name = 'rate'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
-	cmd = 'SELECT rate_id, rate_name FROM rate'
+	cmd='select rate_id,rate_name,parent_smooth_id,child_smooth_id from rate'
 	cursor.execute(cmd)
 	fetchall = cursor.fetchall()
 	assert len(fetchall) == len(row_list)
