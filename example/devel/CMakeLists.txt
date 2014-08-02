@@ -33,7 +33,6 @@ ADD_EXECUTABLE(devel EXCLUDE_FROM_ALL
 	table/get_like_table_xam.cpp
 	table/get_mulcov_table_xam.cpp
 	table/get_node_table_xam.cpp
-	table/get_rate_prior_xam.cpp
 	table/get_rate_table_xam.cpp
 	table/get_run_table_xam.cpp
 	table/get_smooth_grid_xam.cpp

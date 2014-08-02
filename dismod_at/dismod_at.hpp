@@ -39,7 +39,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "include/get_like_table.hpp"
 # include "include/get_mulcov_table.hpp"
 # include "include/get_node_table.hpp"
-# include "include/get_rate_prior.hpp"
 # include "include/get_rate_table.hpp"
 # include "include/get_run_table.hpp"
 # include "include/get_smooth_grid.hpp"

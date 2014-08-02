@@ -421,8 +421,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #
 # $head rate_list$$
 # This is a list of $code dict$$
-# that define the rows of the $cref rate_table$$ and
-# $cref rate_prior$$ table.
+# that define the rows of the $cref rate_table$$.
 # The dictionary $icode%rate_list%[%i%]%$$ has the following:
 # $table
 # Key           $cnext Value Type  $cnext Description                $rnext
@@ -709,22 +708,6 @@ def create_database(
 	for i in range( len(row_list) ) :
 		global_rate_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------
-	# -----------------------------------------------------------------------
-	# create rate_prior table
-	col_name = [ 'rate_id', 'is_parent',   'smooth_id' ]
-	col_type = [ 'integer', 'integer',     'integer'        ]
-	row_list = [ ]
-	for rate_id in range( len(rate_list) ) :
-		rate      = rate_list[rate_id]
-		is_parent = 1
-		smooth_id = global_smooth_name2id[ rate['parent_smooth'] ]
-		row_list.append( [ rate_id, is_parent, smooth_id ] )
-		is_parent = 0
-		smooth_id = global_smooth_name2id[ rate['child_smooth'] ]
-		row_list.append( [ rate_id, is_parent, smooth_id ] )
-	tbl_name = 'rate_prior'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------ 
 	# mulcov table
 	col_name = [ 
 		'mulcov_type',

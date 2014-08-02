@@ -99,7 +99,6 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.like_table        = get_like_table(db);
 	db_input.weight_grid_table = get_weight_grid(db);
 	db_input.smooth_grid_table = get_smooth_grid(db);
-	db_input.rate_prior_table  = get_rate_prior(db);
 	db_input.mulcov_table      = get_mulcov_table(db);
 	//
 	size_t n_covariate = db_input.covariate_table.size();
@@ -125,9 +124,6 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dage_like_id, like, -1);
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dtime_like_id, like, -1);
 
-	// rate_prior table
-	DISMOD_AT_CHECK_PRIMARY_ID(rate_prior, rate_id, rate, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(rate_prior, smooth_id, smooth, 0);
 
 	// mulcov table
 	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, rate_id, rate, -1);

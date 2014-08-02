@@ -20,6 +20,10 @@ $section The Posterior Table$$
 The posterior table contains a simulation of the posterior distribution
 for all the model variables.
 
+$head Under Construction$$
+This documentation is out of data and should follow the structure of
+$cref pack_var$$.
+
 $head post_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
@@ -49,9 +53,9 @@ defines this covariate multiplier.
 If $icode variable_type$$ is $code rate$$,
 this column should be $code -1$$.
 
-$head rate_prior_id$$
+$head rate_id$$
 If $icode variable_type$$ is $code rate$$,
-this is the $cref/rate_prior_id/rate_prior/rate_prior_id/$$ that
+this is the $cref/rate_id/rate_table/rate_id/$$ that
 defines this rate variable.
 If $icode variable_type$$ is $code mulcov$$,
 this column should be $code -1$$.

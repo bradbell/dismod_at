@@ -30,7 +30,6 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	table/get_like_table.cpp
 	table/get_mulcov_table.cpp
 	table/get_node_table.cpp
-	table/get_rate_prior.cpp
 	table/get_rate_table.cpp
 	table/get_run_table.cpp
 	table/get_smooth_grid.cpp

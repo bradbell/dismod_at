@@ -33,7 +33,6 @@ $childtable%
 	%devel/table/get_weight_grid.cpp
 	%devel/table/get_smooth_table.cpp
 	%devel/table/get_smooth_grid.cpp
-	%devel/table/get_rate_prior.cpp
 	%devel/table/get_mulcov_table.cpp
 	%devel/table/get_data_table.cpp
 	%devel/table/get_db_input.cpp

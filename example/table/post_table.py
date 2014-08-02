@@ -35,7 +35,7 @@ def post_table() :
 		'sample',
 		'variable_type',
 		'mulcov_id',
-		'rate_prior_id',
+		'rate_id',
 		'age',
 		'time'
 	]
@@ -44,7 +44,7 @@ def post_table() :
 		'integer',              # sample
 		'text',                 # variable_type
 		'integer',              # mulcov_id
-		'integer',              # rate_prior_id
+		'integer',              # rate_id        
 		'real',                 # age
 		'real'                  # time
 	]
@@ -59,7 +59,7 @@ def post_table() :
 		if i < n_mulcov :
 			variable_type = 'multilplier'
 			mulcov_id  = i
-			rate_prior_id  = -1
+			rate_id    = -1
 		else :
 			variable_type = 'rate'
 			rate_prior_id  = i - n_mulcov
@@ -71,7 +71,7 @@ def post_table() :
 					sample,
 					variable_type,
 					mulcov_id,
-					rate_prior_id,
+					rate_id,
 					age,
 					time
 				] )
