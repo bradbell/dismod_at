@@ -202,7 +202,7 @@ r [
 $end
 ------------------------------------------------------------------------------
 */
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/integrate_2d.hpp>
 
 namespace dismod_at { // BEGIN DIMSOD_AT_NAMESPACE
 
