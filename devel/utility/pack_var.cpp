@@ -52,7 +52,7 @@ $cref/parent_node/run_table/parent_node_id/$$.
 $head smooth_table$$
 This argument has prototype
 $codei%
-	CppAD::vector<smooth_struct>& %smooth_table%
+	const CppAD::vector<smooth_struct>& %smooth_table%
 %$$
 and is the
 $cref/smooth_table/get_smooth_table/smooth_table/$$.
@@ -62,7 +62,7 @@ $code n_age$$, $code n_time$$.
 $head mulcov_table$$
 This argument has prototype
 $codei%
-	CppAD::vector<mulcov_struct>& %mulcov_table%
+	const CppAD::vector<mulcov_struct>& %mulcov_table%
 %$$
 and is the
 $cref/mulcov_table/get_mulcov_table/mulcov_table/$$.

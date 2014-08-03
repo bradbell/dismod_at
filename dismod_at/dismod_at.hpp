@@ -25,6 +25,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "include/smooth2ode.hpp"
 # include "include/solve_ode.hpp"
 # include "include/pack_var.hpp"
+# include "include/child_data.hpp"
 
 // devel/table directory
 # include "include/mulcov_type.hpp"

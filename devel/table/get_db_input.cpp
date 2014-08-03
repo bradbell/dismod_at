@@ -118,12 +118,14 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dage,  like, -1);
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dtime, like, -1);
 
+	// run table
+	DISMOD_AT_CHECK_PRIMARY_ID(run, parent_node_id,  node, 0);
+
 	// smooth_grid table
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, smooth_id, smooth, 0);
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, value_like_id, like, 0);
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dage_like_id, like, -1);
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dtime_like_id, like, -1);
-
 
 	// mulcov table
 	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, rate_id, rate, -1);

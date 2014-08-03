@@ -25,6 +25,7 @@ $childtable%
 	%devel/utility/solve_ode.cpp
 	%devel/utility/avg_integrand.cpp
 	%devel/utility/pack_var.omh
+	%devel/utility/child_data.cpp
 %$$
 
 $end
