@@ -12,8 +12,8 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_CHILD_DATA_HPP
 
 # include <cppad/cppad.hpp>
-# include <dismod_at/include/get_node_table.hpp>
-# include <dismod_at/include/get_data_table.hpp>
+# include "get_node_table.hpp"
+# include "get_data_table.hpp"
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

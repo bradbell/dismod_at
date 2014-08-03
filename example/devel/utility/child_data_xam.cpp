@@ -27,7 +27,7 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/child_data.hpp>
 
 bool child_data_xam(void)
 {	bool ok = true;
