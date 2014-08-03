@@ -26,7 +26,9 @@ $$
 $end
 */
 // BEGIN C++
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/get_covariate_table.hpp>
+# include <dismod_at/include/exec_sql_cmd.hpp>
+# include <dismod_at/include/open_connection.hpp>
 
 bool get_covariate_table_xam(void)
 {
