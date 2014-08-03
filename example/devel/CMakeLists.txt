@@ -25,6 +25,8 @@ ADD_EXECUTABLE(devel EXCLUDE_FROM_ALL
 	utility/smooth2ode_xam.cpp
 	utility/solve_ode_xam.cpp
 	utility/pack_var_xam.cpp
+	utility/child_data_xam.cpp
+
 	table/get_age_table_xam.cpp
 	table/get_covariate_table_xam.cpp
 	table/get_data_table_xam.cpp

@@ -49,6 +49,7 @@ $codei%
 	const CppAD::vector<node_struct>& %node_table%
 %$$
 and is the $cref/node_table/get_node_table/node_table/$$.
+Only the following fields of this table are used: $code parent$$.
 
 $head data_table$$
 This argument has prototype
@@ -73,7 +74,9 @@ $codei%
 	size_t %child_id%
 %$$
 and is less than $icode n_child$$.
-Note that if $icode%n_child% == 0%$$,
+Note that the corresponding node order is the order that the
+children appear in $icode node_table$$.
+Also note that if $icode%n_child% == 0%$$,
 there is no valid value for $icode child_id$$.
 
 $head node_id$$
@@ -131,7 +134,9 @@ child_data::child_data(
 	}
 
 	// data2child_id
-	for(size_t data_id = 0; data_id < data_table.size(); data_id++)
+	size_t n_data = data_table.size();
+	data_id2child_.resize(n_data);
+	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	size_t node_id = size_t( data_table[data_id].node_id );
 		bool   more    = true;
 		bool   found   = false;

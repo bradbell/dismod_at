@@ -40,6 +40,7 @@ extern bool integrate_2d_xam(void);
 extern bool interp_weight_xam(void);
 extern bool smooth2ode_xam(void);
 extern bool pack_var_xam(void);
+extern bool child_data_xam(void);
 //
 extern bool get_age_table_xam(void);
 extern bool get_covariate_table_xam(void);
@@ -102,6 +103,7 @@ int main(void)
 	RUN(smooth2ode_xam);
 	RUN(solve_ode_xam);
 	RUN(pack_var_xam);
+	RUN(child_data_xam);
 	//
 	RUN(get_age_table_xam);
 	RUN(get_covariate_table_xam);
