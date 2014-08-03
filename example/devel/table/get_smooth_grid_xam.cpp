@@ -25,7 +25,10 @@ $$
 $end
 */
 // BEGIN C++
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/get_smooth_table.hpp>
+# include <dismod_at/include/get_smooth_grid.hpp>
+# include <dismod_at/include/exec_sql_cmd.hpp>
+# include <dismod_at/include/open_connection.hpp>
 
 bool get_smooth_grid_xam(void)
 {
