@@ -97,7 +97,10 @@ $end
 # include <cmath>
 
 
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/get_mulcov_table.hpp>
+# include <dismod_at/include/get_table_column.hpp>
+# include <dismod_at/include/check_table_id.hpp>
+# include <dismod_at/include/table_error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
