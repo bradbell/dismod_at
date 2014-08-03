@@ -227,8 +227,8 @@ It returns true for success and false for failure.
 $end 
 ---------------------------------------------------------------------------
 */
-# include <dismod_at/dismod_at.hpp>
-# include <cppad/cppad.hpp>
+# include <cppad/cppad.hpp> 
+# include <dismod_at/include/eigen_ode2.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

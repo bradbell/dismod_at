@@ -24,7 +24,8 @@ $$
 $end
 */
 // BEGIN C++
-# include <dismod_at/dismod_at.hpp>
+# include <cppad/cppad.hpp>
+# include <dismod_at/include/eigen_ode2.hpp>
 	
 namespace {
 	typedef CppAD::AD<double> Float;
