@@ -25,20 +25,20 @@ These are comment columns and are ignored by $code dismod_at$$.
 
 $childtable%
 	omh/table/age_table.omh
-	%omh/table/time_table.omh
-	%omh/table/rate_table.omh
+	%omh/table/covariate_table.omh
+	%omh/table/data_table.omh
 	%omh/table/density_table.omh
 	%omh/table/integrand_table.omh
-	%omh/table/covariate_table.omh
-	%omh/table/node_table.omh
 	%omh/table/like_table.omh
-	%omh/table/weight_table.omh
-	%omh/table/weight_grid_table.omh
-	%omh/table/smooth_table.omh
-	%omh/table/smooth_grid_table.omh
 	%omh/table/mulcov_table.omh
-	%omh/table/data_table.omh
+	%omh/table/node_table.omh
+	%omh/table/rate_table.omh
 	%omh/table/run_table.omh
+	%omh/table/smooth_grid_table.omh
+	%omh/table/smooth_table.omh
+	%omh/table/time_table.omh
+	%omh/table/weight_grid_table.omh
+	%omh/table/weight_table.omh
 %$$
 
 $end

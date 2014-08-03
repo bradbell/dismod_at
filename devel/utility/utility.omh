@@ -16,16 +16,16 @@ $$
 $section Dismod_at Developer Utility Documentation$$
 
 $childtable%
-	devel/utility/eigen_ode2.cpp
+	devel/utility/avg_integrand.cpp
 	%devel/utility/bilinear_interp.cpp
-	%devel/utility/interp_weight.cpp
+	%devel/utility/child_data.cpp
+	%devel/utility/eigen_ode2.cpp
 	%devel/utility/integrate_1d.cpp
 	%devel/utility/integrate_2d.cpp
+	%devel/utility/interp_weight.cpp
+	%devel/utility/pack_var.omh
 	%devel/utility/smooth2ode.cpp
 	%devel/utility/solve_ode.cpp
-	%devel/utility/avg_integrand.cpp
-	%devel/utility/pack_var.omh
-	%devel/utility/child_data.cpp
 %$$
 
 $end
