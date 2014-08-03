@@ -126,7 +126,7 @@ $codei%
 	%time% = %time_table%[0] + %j% * %ode_step_size%
 %$$
 
-$children%example/devel/model/smooth2ode_xam.cpp
+$children%example/devel/utility/smooth2ode_xam.cpp
 %$$
 $head Example$$
 The file $cref smooth2ode_xam.cpp$$ contains an example and test

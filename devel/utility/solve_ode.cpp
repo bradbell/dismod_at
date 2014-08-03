@@ -120,7 +120,7 @@ and time $icode%t_min% + %j%*%step_size%$$.
 
 
 $children%
-	example/devel/model/solve_ode_xam.cpp
+	example/devel/utility/solve_ode_xam.cpp
 %$$
 $head Example$$
 The file $cref solve_ode_xam.cpp$$ contains

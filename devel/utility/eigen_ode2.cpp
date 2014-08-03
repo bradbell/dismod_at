@@ -217,7 +217,7 @@ y_1(t) & = & z_+ (t) - u_+ y_2 (t)
 \] $$
 
 $children%
-	example/devel/model/eigen_ode2_xam.cpp
+	example/devel/utility/eigen_ode2_xam.cpp
 %$$
 $head Example$$
 The file $cref eigen_ode2_xam.cpp$$ contains

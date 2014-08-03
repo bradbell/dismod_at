@@ -114,7 +114,7 @@ $latex c_{12} = $$ $icode%c%[1]%$$,
 $latex c_{21} = $$ $icode%c%[2]%$$, and
 $latex c_{22} = $$ $icode%c%[3]%$$.
 
-$children%example/devel/model/integrate_2d_xam.cpp
+$children%example/devel/utility/integrate_2d_xam.cpp
 %$$
 $head Example$$
 The file $cref integrate_2d_xam.cpp$$ contains an example and test

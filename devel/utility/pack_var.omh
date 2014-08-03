@@ -5,8 +5,8 @@ $$
 
 $section Packing Variables into a Single Vector$$
 
-$childtable%devel/model/pack_var.cpp
-	%example/devel/model/pack_var_xam.cpp
+$childtable%devel/utility/pack_var.cpp
+	%example/devel/utility/pack_var_xam.cpp
 %$$
 $head Example$$
 The file $cref pack_var_xam.cpp$$ contains

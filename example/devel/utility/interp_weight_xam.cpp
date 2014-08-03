@@ -20,7 +20,7 @@ $index example, C++ interp_weight$$
 $index interp_weight, C++ example$$
 
 $code
-$verbatim%example/devel/model/interp_weight_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/utility/interp_weight_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

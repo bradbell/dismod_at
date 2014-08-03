@@ -10,15 +10,15 @@
 # ---------------------------------------------------------------------------
 SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL 
-	model/avg_integrand.cpp
-	model/bilinear_interp.cpp
-	model/eigen_ode2.cpp
-	model/integrate_1d.cpp
-	model/integrate_2d.cpp
-	model/interp_weight.cpp
-	model/smooth2ode.cpp
-	model/solve_ode.cpp
-	model/pack_var.cpp
+	utility/avg_integrand.cpp
+	utility/bilinear_interp.cpp
+	utility/eigen_ode2.cpp
+	utility/integrate_1d.cpp
+	utility/integrate_2d.cpp
+	utility/interp_weight.cpp
+	utility/smooth2ode.cpp
+	utility/solve_ode.cpp
+	utility/pack_var.cpp
 	table/check_table_id.cpp
 	table/exec_sql_cmd.cpp
 	table/get_age_table.cpp

@@ -120,7 +120,7 @@ It is the value of the
 $cref/bilinear interpolant/glossary/Bilinear Interpolant/$$ at the specified
 $icode x$$ and $icode y$$.
 
-$children%example/devel/model/bilinear_interp_xam.cpp
+$children%example/devel/utility/bilinear_interp_xam.cpp
 %$$
 $head Example$$
 The file $cref bilinear_interp_xam.cpp$$ contains an example and test

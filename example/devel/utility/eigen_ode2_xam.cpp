@@ -19,7 +19,7 @@ $index test, eigen_ode2$$
 $index example, eigen_ode2$$
 
 $code
-$verbatim%example/devel/model/eigen_ode2_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/utility/eigen_ode2_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 $end
 */

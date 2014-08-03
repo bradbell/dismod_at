@@ -197,7 +197,7 @@ $cref/data_id/data_table/data_id/$$.
 
 
 $children%
-	example/devel/model/avg_integrand_xam.cpp
+	example/devel/utility/avg_integrand_xam.cpp
 %$$
 $head Example$$
 The file $cref avg_integrand_xam.cpp$$ contains

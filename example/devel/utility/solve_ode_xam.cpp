@@ -20,7 +20,7 @@ $index example, C++ solve_ode$$
 $index solve_ode, C++ example$$
 
 $code
-$verbatim%example/devel/model/solve_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/utility/solve_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

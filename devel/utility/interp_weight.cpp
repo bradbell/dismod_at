@@ -114,7 +114,7 @@ It is the value of the
 $cref/bilinear interpolant/glossary/Bilinear Interpolant/$$ at the specified
 $icode age$$ and $icode time$$.
 
-$children%example/devel/model/interp_weight_xam.cpp
+$children%example/devel/utility/interp_weight_xam.cpp
 %$$
 $head Example$$
 The file $cref interp_weight_xam.cpp$$ contains an example and test

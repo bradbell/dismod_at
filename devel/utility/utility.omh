@@ -8,23 +8,23 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin devel_model$$
+$begin devel_utility$$
 $spell
 	dismod
 $$
 
-$section Dismod_at Developer Model Documentation$$
+$section Dismod_at Developer Utility Documentation$$
 
 $childtable%
-	devel/model/eigen_ode2.cpp
-	%devel/model/bilinear_interp.cpp
-	%devel/model/interp_weight.cpp
-	%devel/model/integrate_1d.cpp
-	%devel/model/integrate_2d.cpp
-	%devel/model/smooth2ode.cpp
-	%devel/model/solve_ode.cpp
-	%devel/model/avg_integrand.cpp
-	%devel/model/pack_var.omh
+	devel/utility/eigen_ode2.cpp
+	%devel/utility/bilinear_interp.cpp
+	%devel/utility/interp_weight.cpp
+	%devel/utility/integrate_1d.cpp
+	%devel/utility/integrate_2d.cpp
+	%devel/utility/smooth2ode.cpp
+	%devel/utility/solve_ode.cpp
+	%devel/utility/avg_integrand.cpp
+	%devel/utility/pack_var.omh
 %$$
 
 $end

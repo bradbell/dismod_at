@@ -20,7 +20,7 @@ $index example, C++ smooth2ode$$
 $index smooth2ode, C++ example$$
 
 $code
-$verbatim%example/devel/model/smooth2ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/utility/smooth2ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

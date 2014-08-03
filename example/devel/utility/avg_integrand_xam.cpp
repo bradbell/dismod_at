@@ -20,7 +20,7 @@ $index example, C++ avg_integrand$$
 $index avg_integrand, C++ example$$
 
 $code
-$verbatim%example/devel/model/avg_integrand_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/utility/avg_integrand_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

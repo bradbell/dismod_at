@@ -19,7 +19,7 @@ $index example, C++ pack_var$$
 $index pack_var, C++ example$$
 
 $code
-$verbatim%example/devel/model/pack_var_xam.cpp
+$verbatim%example/devel/utility/pack_var_xam.cpp
 %0%// BEGIN C++%// END C++%1%$$
 $$
 

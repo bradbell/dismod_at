@@ -20,7 +20,7 @@ $index example, C++ bilinear_interp$$
 $index bilinear_interp, C++ example$$
 
 $code
-$verbatim%example/devel/model/bilinear_interp_xam.cpp
+$verbatim%example/devel/utility/bilinear_interp_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 

@@ -76,7 +76,7 @@ with the following identifications;
 $latex c_1 = $$ $icode%c%.first%$$ and 
 $latex c_2 = $$ $icode%c%.second%$$.
 
-$children%example/devel/model/integrate_1d_xam.cpp
+$children%example/devel/utility/integrate_1d_xam.cpp
 %$$
 $head Example$$
 The file $cref integrate_1d_xam.cpp$$ contains an example and test
