@@ -25,7 +25,7 @@ $section Pack Variables: Constructor$$
 
 $head Syntax$$
 $codei%dismod_at::pack_var %var%(
-	%n_integrand%, %smooth_table%, %mulcov_table%
+	%n_integrand%, %n_child%, %smooth_table%, %mulcov_table%, %rate_table%
 )
 %$$
 $icode%size%  = %var%.size()
@@ -38,6 +38,16 @@ $codei%
 %$$
 and is the number of integrands; i.e., the size of
 $cref/integrand_table/get_integrand_table/integrand_table/$$.
+
+$head n_child$$
+This argument has prototype
+$codei%
+	size_t %n_child%
+%$$
+and is the number of children; i.e., the size of
+$cref/child group/node_table/parent/Child Group/$$
+corresponding to the
+$cref/parent_node/run_table/parent_node_id/$$.
 
 $head smooth_table$$
 This argument has prototype
@@ -79,11 +89,14 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 pack_var::pack_var(
 	size_t                               n_integrand  ,
+	size_t                               n_child      ,
 	const CppAD::vector<smooth_struct>&  smooth_table ,
-	const CppAD::vector<mulcov_struct>&  mulcov_table 
+	const CppAD::vector<mulcov_struct>&  mulcov_table ,
+	const CppAD::vector<rate_struct>&    rate_table 
 ) :
-n_smooth_( smooth_table.size() ) ,
-n_integrand_( n_integrand ) 
+n_smooth_   ( smooth_table.size() ) ,
+n_integrand_( n_integrand )         ,
+n_child_    ( n_child )
 {	using std::string;
 
 	// initialize offset
@@ -91,6 +104,31 @@ n_integrand_( n_integrand )
 
 	// offset_mulstd_
 	offset_mulstd_  = offset; offset += 3 * n_smooth_;
+
+	// rate_offset
+	rate_offset_.resize( number_rate_enum );
+	rate_n_var_.resize( number_rate_enum );
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	{	size_t parent_smooth_id = rate_table[rate_id].parent_smooth_id;
+		size_t child_smooth_id  = rate_table[rate_id].child_smooth_id;
+		size_t n_age = smooth_table[child_smooth_id].n_age;
+		if( int(n_age) != smooth_table[parent_smooth_id].n_age )
+		{	string message = "rate table: parent_smooth_id and child_smooth_id"
+				" corresponding to different n_age in smooth table";
+			table_error_exit("rate", rate_id, message);
+		}
+		size_t n_time = smooth_table[child_smooth_id].n_time;
+		if( int(n_time) != smooth_table[parent_smooth_id].n_time )
+		{	string message = "rate table: parent_smooth_id and child_smooth_id"
+				" corresponding to different n_time in smooth table";
+			table_error_exit("rate", rate_id, message);
+		}
+		size_t n_tmp = 1;
+		if( n_child > 0 )
+			n_tmp = n_child;
+		rate_n_var_[rate_id]  = n_age * n_time;
+		rate_offset_[rate_id] = offset; offset += n_tmp * n_age * n_time;
+	}
 
 	// meas_mean_mulcov_info_ and meas_std_mulcov_info_ 
 	meas_mean_mulcov_info_.resize( n_integrand );
@@ -242,7 +280,7 @@ size_t pack_var::mulstd(size_t smooth_id) const
 
 /*
 ------------------------------------------------------------------------------
-$begin pack_var_meas$$
+$begin pack_var_meas_mulcov$$
 $spell
 	std
 	cov
@@ -297,8 +335,8 @@ $codei%
 	size_t %integrand_id%
 %$$
 and it specifies the 
-$cref/integrand_id/integrand_table/integrand_id/$$ the covariate
-multiplier.
+$cref/integrand_id/integrand_table/integrand_id/$$ for the covariate
+multipliers.
 
 $head n_cov$$
 This return value has prototype
@@ -368,7 +406,7 @@ pack_var::meas_std_mulcov_info(size_t integrand_id, size_t j) const
 
 /*
 ------------------------------------------------------------------------------
-$begin pack_var_rate$$
+$begin pack_var_rate_mulcov$$
 $spell
 	std
 	cov
@@ -384,7 +422,7 @@ $section Pack Variables: Rate Multipliers$$
 $head Syntax$$
 $icode%n_cov% = %var%.rate_mean_mulcov_n_cov(%rate_id%)
 %$$
-$icode%n_cov% = %var%.rate_std_mulcov_n_cov(%rate_id%)
+$icode%info% = %var%.rate_mean_mulcov_info(%rate_id%)
 %$$
 
 $head mulcov_info$$
@@ -406,8 +444,8 @@ $codei%
 	size_t %rate_id%
 %$$
 and it specifies the 
-$cref/rate_id/rate_table/rate_id/$$ the covariate
-multiplier.
+$cref/rate_id/rate_table/rate_id/$$ for the covariate
+multipliers.
 
 $head n_cov$$
 This return value has prototype
@@ -464,5 +502,83 @@ pack_var::rate_mean_mulcov_info(size_t rate_id, size_t j) const
 {	assert( rate_id < number_rate_enum );
 	return rate_mean_mulcov_info_[rate_id][j];
 }
+/*
+------------------------------------------------------------------------------
+$begin pack_var_rate$$
+$spell
+	std
+	cov
+	var
+	mulcov
+	dismod
+	const
+	covariate
+$$
+
+$section Pack Variables: Rates$$
+
+$head Syntax$$
+$icode%n_var% = %var%.rate_n_var(%rate_id%)
+%$$
+$icode%offset% = %var%.rate_offset(%rate_id%, %j%)
+%$$
+
+$head var$$
+This object has prototype
+$codei%
+	const dismod_at::pack_var %var%
+%$$
+
+$head rate_id$$
+This argument has prototype 
+$codei%
+	size_t %rate_id%
+%$$
+and it specifies the 
+$cref/rate_id/rate_table/rate_id/$$ the rate values.
+
+$head j$$
+This argument has prototype
+$codei%
+	size_t %j%
+%$$
+If $cref/n_child/pack_var_ctor/n_child/$$ is zero or one,
+$icode j$$ must be zero.
+Otherwise $icode%j% < %n_child%$$.
+
+$head n_var$$
+this return value has prototype
+$codei%
+	size_t %n_var%
+%$$
+and is the number of packed variables for each $icode rate_id$$
+and each $icode j$$.
+
+$head offset$$
+this return value has prototype
+$codei%
+	size_t %offset%
+%$$
+and is the offset (index) in the packed variable vector for the
+specified $icode rate_id$$.
+If $cref/n_child/pack_var_ctor/n_child/$$ is zero or one,
+this is the rate vector for the
+$cref/parent_node/run_table/parent_node_id/$$.
+Otherwise, it is the rate vector for the $th j$$ child node.
+
+$head Example$$
+See $cref/pack_var Example/pack_var/Example/$$.
+
+$end
+*/
+size_t pack_var::rate_n_var(size_t rate_id) const
+{	assert( rate_id < number_rate_enum );
+	return rate_n_var_[rate_id];
+}
+size_t pack_var::rate_offset(size_t rate_id, size_t j) const
+{	assert( j == 0 || j < n_child_ );
+	return rate_offset_[rate_id] + rate_n_var_[rate_id] * j;
+}
+
 
 } // END DISMOD_AT_NAMESPACE

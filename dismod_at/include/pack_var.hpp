@@ -38,8 +38,15 @@ private:
 	// number of integrands
 	const size_t n_integrand_;
 
+	// number of children
+	const size_t n_child_;
+
 	// offset for mulstd variables
 	size_t offset_mulstd_;
+
+	// offset for rate variables
+	CppAD::vector<size_t> rate_offset_;
+	CppAD::vector<size_t> rate_n_var_;
 
 	// meas_mean_mulcov infromation
 	CppAD::vector< CppAD::vector<mulcov_info> > meas_mean_mulcov_info_;
@@ -55,8 +62,10 @@ private:
 public:
 	pack_var(
 		size_t                              n_integrand  ,
+		size_t                              n_child      ,
 		const CppAD::vector<smooth_struct>& smooth_table ,
-		const CppAD::vector<mulcov_struct>& mulcov_table 
+		const CppAD::vector<mulcov_struct>& mulcov_table ,
+		const CppAD::vector<rate_struct>&   rate_table 
 	);
 
 	// size of entire packed vector
@@ -64,6 +73,10 @@ public:
 
 	// mulstd
 	size_t mulstd(size_t smooth_id) const;
+
+	// rate
+	size_t rate_n_var(size_t rate_id) const;
+	size_t rate_offset(size_t rate_id, size_t j) const;
 
 	// meas_mean_mulcov_
 	size_t      meas_mean_mulcov_n_cov(size_t integrand_id) const;

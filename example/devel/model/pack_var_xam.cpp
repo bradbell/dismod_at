@@ -33,12 +33,13 @@ bool pack_var_xam(void)
 {	bool ok = true;
 	using CppAD::vector;
 
-	size_t n_integrand    = 4;
+	size_t n_integrand     = 4;
+	size_t n_child         = 2;
 	//
 	size_t n_smooth = 4;
 	vector<dismod_at::smooth_struct> smooth_table(n_smooth);
 	smooth_table[0].n_age  = 2;
-	smooth_table[0].n_time = 1;
+	smooth_table[0].n_time = 3;
 	smooth_table[1].n_age  = 2;
 	smooth_table[1].n_time = 3;
 	smooth_table[2].n_age  = 1;
@@ -69,9 +70,23 @@ bool pack_var_xam(void)
 	mulcov_table[3].covariate_id = 3;
 	mulcov_table[3].smooth_id    = 3;
 	//
+	vector<dismod_at::rate_struct> rate_table(dismod_at::number_rate_enum);
+	rate_table[0].rate_name        = dismod_at::iota_enum;
+	rate_table[0].parent_smooth_id = 0;
+	rate_table[0].child_smooth_id  = 1;
+	rate_table[0].rate_name        = dismod_at::rho_enum;
+	rate_table[0].parent_smooth_id = 0;
+	rate_table[0].child_smooth_id  = 1;
+	rate_table[0].rate_name        = dismod_at::chi_enum;
+	rate_table[0].parent_smooth_id = 0;
+	rate_table[0].child_smooth_id  = 1;
+	rate_table[0].rate_name        = dismod_at::omega_enum;
+	rate_table[0].parent_smooth_id = 0;
+	rate_table[0].child_smooth_id  = 1;
+	//
 	// constructor
 	dismod_at::pack_var var(
-		n_integrand, smooth_table, mulcov_table
+		n_integrand, n_child, smooth_table, mulcov_table, rate_table
 	);
 	//
 	// packed vector
@@ -89,6 +104,16 @@ bool pack_var_xam(void)
 		vec[offset + 1 ] = smooth_id + 1; // dage  multiplier
 		vec[offset + 2 ] = smooth_id + 2; // dtime multiplier
 	}
+	// set rates 
+	size_t n_rate = dismod_at::number_rate_enum;
+	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	{	size_t n_var = var.rate_n_var(rate_id);
+		for(size_t j = 0; j < std::max(n_child, size_t(1));  j++)
+		{	size_t offset = var.rate_offset(rate_id, j);
+			for(size_t k = 0; k < n_var; k++)
+				vec[offset + k] = rate_id + 3 + k;
+		}
+	}
 	// set meas_mean_mulcov
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	size_t n_cov = var.meas_mean_mulcov_n_cov(integrand_id);
@@ -97,7 +122,7 @@ bool pack_var_xam(void)
 			size_t offset = info.offset;
 			size_t n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-				vec[offset + k] = integrand_id + 3 + k;
+				vec[offset + k] = integrand_id + 4 + k;
 		}
 	}
 	// set meas_std_mulcov
@@ -108,11 +133,10 @@ bool pack_var_xam(void)
 			size_t offset = info.offset;
 			size_t n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-				vec[offset + k] = integrand_id + 4 + k;
+				vec[offset + k] = integrand_id + 5 + k;
 		}
 	}
 	// set rate_mean_mulcov
-	size_t n_rate = 4;
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	size_t n_cov = var.rate_mean_mulcov_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
@@ -120,7 +144,7 @@ bool pack_var_xam(void)
 			size_t offset = info.offset;
 			size_t n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-				vec[offset + k] = rate_id + 5 + k;
+				vec[offset + k] = rate_id + 6 + k;
 		}
 	}
 	// ---------------------------------------------------------------------
@@ -130,6 +154,15 @@ bool pack_var_xam(void)
 		ok &= vec[ offset + 0 ] == smooth_id + 0;
 		ok &= vec[ offset + 1 ] == smooth_id + 1;
 		ok &= vec[ offset + 2 ] == smooth_id + 2;
+	}
+	// check rates 
+	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	{	size_t n_var = var.rate_n_var(rate_id);
+		for(size_t j = 0; j < std::max(n_child, size_t(1));  j++)
+		{	size_t offset = var.rate_offset(rate_id, j);
+			for(size_t k = 0; k < n_var; k++)
+				ok &= vec[offset + k] == rate_id + 3 + k;
+		}
 	}
 	// check meas_mean_mulcov
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
@@ -143,7 +176,7 @@ bool pack_var_xam(void)
 			size_t offset    = info.offset;
 			size_t n_var     = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-				ok &= vec[offset + k] == integrand_id + 3 + k;
+				ok &= vec[offset + k] == integrand_id + 4 + k;
 			size_t smooth_id = info.smooth_id;
 			size_t n_age     = smooth_table[smooth_id].n_age;
 			size_t n_time    = smooth_table[smooth_id].n_time;
@@ -162,7 +195,7 @@ bool pack_var_xam(void)
 			size_t offset    = info.offset;
 			size_t n_var     = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-				ok &= vec[offset + k] == integrand_id + 4 + k;
+				ok &= vec[offset + k] == integrand_id + 5 + k;
 			size_t smooth_id = info.smooth_id;
 			size_t n_age     = smooth_table[smooth_id].n_age;
 			size_t n_time    = smooth_table[smooth_id].n_time;
@@ -181,7 +214,7 @@ bool pack_var_xam(void)
 			size_t offset    = info.offset;
 			size_t n_var     = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-				ok &= vec[offset + k] == rate_id + 5 + k;
+				ok &= vec[offset + k] == rate_id + 6 + k;
 			size_t smooth_id = info.smooth_id;
 			size_t n_age     = smooth_table[smooth_id].n_age;
 			size_t n_time    = smooth_table[smooth_id].n_time;
