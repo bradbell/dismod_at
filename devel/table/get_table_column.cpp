@@ -99,8 +99,7 @@ $end
 */
 # include <iostream>
 # include <cassert>
-
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/get_table_column.hpp>
 
 namespace {
 	typedef int (*callback_type)(void*, int, char**, char**);

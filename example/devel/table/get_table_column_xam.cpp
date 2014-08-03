@@ -25,7 +25,9 @@ $$
 $end
 */
 // BEGIN C++
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/get_table_column.hpp>
+# include <dismod_at/include/exec_sql_cmd.hpp>
+# include <dismod_at/include/open_connection.hpp>
 
 bool get_table_column_xam(void)
 {
