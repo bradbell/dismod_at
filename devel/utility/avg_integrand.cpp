@@ -207,7 +207,11 @@ It returns true for success and false for failure.
 $end
 -----------------------------------------------------------------------------
 */
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/avg_integrand.hpp>
+# include <dismod_at/include/integrate_1d.hpp>
+# include <dismod_at/include/integrate_2d.hpp>
+# include <dismod_at/include/interp_weight.hpp>
+# include <dismod_at/include/table_error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
