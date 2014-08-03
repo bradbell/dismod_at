@@ -62,10 +62,12 @@ $cref get_age_table$$.
 $end
 -----------------------------------------------------------------------------
 */
+# include <dismod_at/include/get_db_input.hpp>
+# include <dismod_at/include/get_table_column.hpp>
+# include <dismod_at/include/check_table_id.hpp>
+# include <dismod_at/include/get_age_table.hpp>
+# include <dismod_at/include/get_time_table.hpp>
 
-
-
-# include <dismod_at/dismod_at.hpp>
 
 # define DISMOD_AT_CHECK_PRIMARY_ID(in_table, in_name, primary_table, lower)\
 for(size_t i = 0; i < db_input.in_table ## _table.size(); i++) \
