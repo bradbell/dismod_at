@@ -125,7 +125,8 @@ $end
 ------------------------------------------------------------------------------
 */
 # include <utility>
-# include <dismod_at/dismod_at.hpp>
+# include <cassert>
+# include <dismod_at/include/integrate_1d.hpp>
 
 namespace dismod_at { // BEGIN DIMSOD_AT_NAMESPACE
 
