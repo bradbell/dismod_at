@@ -20,7 +20,7 @@ namespace dismod_at {
 		size_t                       i_max     ,
 		size_t                       j_max     ,
 		const Float&                 step_size ,
-		const Float&                 p_ini     ,
+		const Float&                 pini      ,
 		const CppAD::vector<Float>&  iota      ,
 		const CppAD::vector<Float>&  rho       ,
 		const CppAD::vector<Float>&  chi       ,

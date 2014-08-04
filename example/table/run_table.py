@@ -33,10 +33,10 @@ def run_table() :
 	#
 	# create the run table
 	col_name = [
-		'parent_node_id','initial_prevalence','ode_step_size','n_sample'
+		'parent_node_id','pini_smooth_id', 'ode_step_size','n_sample'
 	]
 	col_type = [
-		'integer',       'integer',           'real',         'integer' 
+		'integer',       'integer',        'real',         'integer' 
 	]
 	row_list = [ [ 0, 1, 0.5, 100 ] ]
 	tbl_name = 'run'

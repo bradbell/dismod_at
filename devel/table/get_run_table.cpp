@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin get_run_table$$
 $spell
+	pini
 	sqlite
 	struct
 	cpp
@@ -55,8 +56,8 @@ $code int$$ $cnext $code parent_node_id$$ $cnext
 	The $cref/parent_node_id/run_table/parent_node_id/$$ 
 	for this run  
 $rnext
-$code int$$ $cnext $code initial_prevalence$$ $cnext 
-	The $cref/initial_prevalence/run_table/initial_prevalence/$$ 
+$code int$$ $cnext $code pini_smooth_id$$ $cnext 
+	The $cref/pini_smooth_id/run_table/pini_smooth_id/$$ 
 	for this run  
 $rnext
 $code double$$ $cnext $code ode_step_size$$ $cnext 
@@ -94,10 +95,10 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, parent_node_id);
 	assert( n_run == parent_node_id.size() );
 
-	column_name       =  "initial_prevalence";
-	CppAD::vector<int>    initial_prevalence;
-	get_table_column(db, table_name, column_name, initial_prevalence);
-	assert( n_run == initial_prevalence.size() );
+	column_name       =  "pini_smooth_id";
+	CppAD::vector<int>    pini_smooth_id;
+	get_table_column(db, table_name, column_name, pini_smooth_id);
+	assert( n_run == pini_smooth_id.size() );
 
 	column_name         =  "ode_step_size";
 	CppAD::vector<double>   ode_step_size;
@@ -112,7 +113,7 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 	CppAD::vector<run_struct> run_table(n_run);
 	for(size_t i = 0; i < n_run; i++)
 	{	run_table[i].parent_node_id      = parent_node_id[i];
-		run_table[i].initial_prevalence  = initial_prevalence[i];
+		run_table[i].pini_smooth_id      = pini_smooth_id[i];
 		run_table[i].ode_step_size       = ode_step_size[i];
 		run_table[i].n_sample            = n_sample[i];
 	}

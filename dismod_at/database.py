@@ -266,6 +266,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # ==========================================================================-
 # $begin create_database$$ $newlinech #$$
 # $spell
+#	pini
 #	mulcov
 #	mulstd
 #	dage
@@ -449,7 +450,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $table
 # Key     $cnext Value Type    $cnext Description                $rnext
 # parent_node       $cnext int $cnext name of parent for this analysis $rnext
-# initial_prevalence $cnext int $cnext 
+# pini_smooth     $cnext int $cnext 
 #	name of initial prevalence smoothing $rnext
 # ode_step_size     $cnext double
 #	$cnext used to approximation ODE solution $rnext
@@ -802,19 +803,19 @@ def create_database(
 	# ------------------------------------------------------------------------
 	# create run table
 	col_name = [ 
-		'parent_node_id','initial_prevalence','ode_step_size','n_sample'
+		'parent_node_id','pini_smooth_id', 'ode_step_size','n_sample'
 	]
 	col_type = [ 
-		'integer',       'integer',           'real',         'integer'
+		'integer',       'integer',        'real',         'integer'
 	]
 	row_list = []
 	for run in run_list :
 		parent_node_id     = global_node_name2id[ run['parent_node' ] ]
-		initial_prevalence = global_smooth_name2id[ run['initial_prevalence'] ]
+		pini_smooth_id     = global_smooth_name2id[ run['pini_smooth'] ]
 		ode_step_size      = run['ode_step_size']
 		n_sample           = run['n_sample']
 		row_list.append( [ 
-			parent_node_id, initial_prevalence, ode_step_size, n_sample 
+			parent_node_id, pini_smooth_id, ode_step_size, n_sample 
 		] )
 	tbl_name = 'run'
 	create_table(connection, tbl_name, col_name, col_type, row_list)

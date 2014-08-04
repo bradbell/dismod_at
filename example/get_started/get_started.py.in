@@ -126,7 +126,7 @@ mulcov_list = [
 ]
 run_list    = [ 
 	{	'parent_node':'north_america', 
-		'initial_prevalence':'constant',
+		'pini_smooth':'constant',
 		'ode_step_size':0.5, 
 		'n_sample':100 
 	}

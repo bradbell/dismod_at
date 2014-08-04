@@ -57,7 +57,7 @@ $codei%
 	size_t %pini_smooth_id%
 %$$
 and is the smoothing id for the
-$cref/initial_prevalence/run_table/initial_prevalence/$$.
+$cref/pini_smooth_id/run_table/pini_smooth_id/$$.
 
 $head smooth_table$$
 This argument has prototype
@@ -275,7 +275,7 @@ $codei%
 $subhead n_var$$
 is the number of initial prevalence variables; i.e.
 the number of time points corresponding to the
-$cref/initial_prevalence/run_table/initial_prevalence/$$ smoothing
+$cref/pini_smooth_id/run_table/pini_smooth_id/$$ smoothing
 (the number of age points for this smoothing is one).
 
 $subhead offset$$

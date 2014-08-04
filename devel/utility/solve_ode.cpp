@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin solve_ode$$
 $spell
-	p_ini
+	pini
 	dismod
 	CppAD
 	const
@@ -24,7 +24,7 @@ $codei%dismod_at::solve_ode(
 	%i_max%     , 
 	%j_max%     , 
 	%step_size% , 
-	%p_ini%     , 
+	%pini%      , 
 	%iota%      , 
 	%rho%       , 
 	%chi%       , 
@@ -93,12 +93,12 @@ $codei%
 	%t% = %t_min% + (%j_max% - %i_max% + %k%) * %step_size%
 %$$
 
-$head p_ini$$
+$head pini$$
 This argument has prototype
 $codei%
-	const %Float%& %p_ini%
+	const %Float%& %pini%
 %$$
-it is the $cref/initial prevalence/run_table/initial_prevalence/$$ at age 
+it is the $cref/pini_smooth_id/run_table/pini_smooth_id/$$ at age 
 $codei%
 	%a% = %a_min
 %$$ 
@@ -153,14 +153,14 @@ void solve_ode(
 	size_t                       i_max     ,
 	size_t                       j_max     ,
 	const Float&                 step_size ,
-	const Float&                 p_ini     ,
+	const Float&                 pini      ,
 	const CppAD::vector<Float>&  iota      ,
 	const CppAD::vector<Float>&  rho       ,
 	const CppAD::vector<Float>&  chi       ,
 	const CppAD::vector<Float>&  omega     ,
 	      CppAD::vector<Float>&  S_out     ,
 	      CppAD::vector<Float>&  C_out     )
-{	assert( p_ini <= 1.0 );
+{	assert( pini <= 1.0 );
 	assert( iota.size()  == i_max+1 );
 	assert( rho.size()   == i_max+1 );
 	assert( chi.size()   == i_max+1 );
@@ -171,8 +171,8 @@ void solve_ode(
 	C_out.resize( i_max+1 );
 
 	// set S and C at initial age 
-	C_out[0] = p_ini;
-	S_out[0] = 1.0 - p_ini;
+	C_out[0] = pini;
+	S_out[0] = 1.0 - pini;
 
 	// Cohort solutions starting at initial time
 	CppAD::vector<Float> b_previous(4), b_avg(4), b_next(4), yi(2), yf(2);
@@ -209,7 +209,7 @@ void solve_ode(
 		size_t                       i_max     ,  \
 		size_t                       j_max     ,  \
 		const Float&                 step_size ,  \
-		const Float&                 p_ini     ,  \
+		const Float&                 pini      ,  \
 		const CppAD::vector<Float>&  iota      ,  \
 		const CppAD::vector<Float>&  rho       ,  \
 		const CppAD::vector<Float>&  chi       ,  \
