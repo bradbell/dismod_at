@@ -26,13 +26,13 @@ class avg_integrand {
 		double                n_age;
 		double                n_time;
 		CppAD::vector<double> c;
-	} ode_point;
+	} ode_subgrid;
 private:
 	const size_t              n_age_ode_;
 	const size_t              n_time_ode_;
 	const double              ode_step_size_;
 	// effectively const (computed by constructor)
-	CppAD::vector<ode_point> data_info_;
+	CppAD::vector<ode_subgrid> data_info_;
 public:
 	avg_integrand(
 		const CppAD::vector<weight_grid>&    wg_vec          ,

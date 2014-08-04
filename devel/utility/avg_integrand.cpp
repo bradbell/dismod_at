@@ -452,7 +452,7 @@ Float avg_integrand::compute(
 # endif
 
 	// constructor information for this data point
-	const ode_point& info = data_info_[ data_id ];
+	const ode_subgrid& info = data_info_[ data_id ];
 	size_t i_min  = info.i_min;
 	size_t j_min  = info.j_min;
 	size_t n_age  = info.n_age;
