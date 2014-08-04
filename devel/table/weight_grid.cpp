@@ -165,7 +165,7 @@ this function.
 
 $end
 */
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/weight_grid.hpp>
 
 namespace {
 	void unique_insert_sort(

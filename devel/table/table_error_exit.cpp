@@ -49,8 +49,7 @@ $end
 */
 # include <iostream>
 # include <cstdlib>
-
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/table_error_exit.hpp>
 
 namespace dismod_at {
 	void table_error_exit(

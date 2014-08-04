@@ -165,7 +165,6 @@ namespace {
 	}
 }
 
-# include <dismod_at/dismod_at.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

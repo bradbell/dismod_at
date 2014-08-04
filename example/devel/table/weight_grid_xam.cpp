@@ -25,7 +25,9 @@ $$
 $end
 */
 // BEGIN C++
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/weight_grid.hpp>
+# include <dismod_at/include/exec_sql_cmd.hpp>
+# include <dismod_at/include/open_connection.hpp>
 
 bool weight_grid_xam(void)
 {
