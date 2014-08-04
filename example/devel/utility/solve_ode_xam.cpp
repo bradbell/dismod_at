@@ -72,7 +72,7 @@ bool solve_ode_xam(void)
 	// check integral along diagonal starting at age zero, time zero
 	size_t i_max  = 5;
 	size_t j_max  = 5; 
-	Float  p_zero = 0.5;
+	Float  p_ini  = 0.5;
 	vector<Float> S_out, C_out;
 	iota.resize(i_max+1);
 	rho.resize(i_max+1);
@@ -86,15 +86,15 @@ bool solve_ode_xam(void)
 		omega[k] = 0.07 * ri * ri; 
 	}
 	dismod_at::solve_ode(
-		i_max, j_max, step_size, p_zero, iota, rho, chi, omega, S_out, C_out
+		i_max, j_max, step_size, p_ini, iota, rho, chi, omega, S_out, C_out
 	);
 	Fun F;
 	size_t M = 100;
 	Float ai = 0.0;
 	Float af = i_max * step_size;
 	vector<Float> yi(2);
-	yi[0] = 1.0 - p_zero;
-	yi[1] = p_zero;
+	yi[0] = 1.0 - p_ini;
+	yi[1] = p_ini;
 	vector<Float> yf = CppAD::Runge45(F, M, ai, af, yi);
 	//
 	k = i_max;

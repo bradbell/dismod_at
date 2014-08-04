@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin solve_ode$$
 $spell
+	p_ini
 	dismod
 	CppAD
 	const
@@ -23,7 +24,7 @@ $codei%dismod_at::solve_ode(
 	%i_max%     , 
 	%j_max%     , 
 	%step_size% , 
-	%p_zero%    , 
+	%p_ini%     , 
 	%iota%      , 
 	%rho%       , 
 	%chi%       , 
@@ -92,10 +93,10 @@ $codei%
 	%t% = %t_min% + (%j_max% - %i_max% + %k%) * %step_size%
 %$$
 
-$head p_zero$$
+$head p_ini$$
 This argument has prototype
 $codei%
-	const %Float%& %p_zero%
+	const %Float%& %p_ini%
 %$$
 it is the $cref/initial prevalence/run_table/initial_prevalence/$$ at age 
 $codei%
@@ -152,14 +153,14 @@ void solve_ode(
 	size_t                       i_max     ,
 	size_t                       j_max     ,
 	const Float&                 step_size ,
-	const Float&                 p_zero    ,
+	const Float&                 p_ini     ,
 	const CppAD::vector<Float>&  iota      ,
 	const CppAD::vector<Float>&  rho       ,
 	const CppAD::vector<Float>&  chi       ,
 	const CppAD::vector<Float>&  omega     ,
 	      CppAD::vector<Float>&  S_out     ,
 	      CppAD::vector<Float>&  C_out     )
-{	assert( p_zero <= 1.0 );
+{	assert( p_ini <= 1.0 );
 	assert( iota.size()  == i_max+1 );
 	assert( rho.size()   == i_max+1 );
 	assert( chi.size()   == i_max+1 );
@@ -170,8 +171,8 @@ void solve_ode(
 	C_out.resize( i_max+1 );
 
 	// set S and C at initial age 
-	C_out[0] = p_zero;
-	S_out[0] = 1.0 - p_zero;
+	C_out[0] = p_ini;
+	S_out[0] = 1.0 - p_ini;
 
 	// Cohort solutions starting at initial time
 	CppAD::vector<Float> b_previous(4), b_avg(4), b_next(4), yi(2), yf(2);
@@ -208,7 +209,7 @@ void solve_ode(
 		size_t                       i_max     ,  \
 		size_t                       j_max     ,  \
 		const Float&                 step_size ,  \
-		const Float&                 p_zero    ,  \
+		const Float&                 p_ini     ,  \
 		const CppAD::vector<Float>&  iota      ,  \
 		const CppAD::vector<Float>&  rho       ,  \
 		const CppAD::vector<Float>&  chi       ,  \
