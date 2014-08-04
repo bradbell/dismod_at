@@ -240,7 +240,7 @@ this function.
 
 $end
 */
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/smooth_info.hpp>
 
 namespace {
 	void unique_insert_sort(
