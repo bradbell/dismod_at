@@ -135,7 +135,7 @@ of using this routine.
 $end
 -----------------------------------------------------------------------------
 */
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/smooth2ode.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

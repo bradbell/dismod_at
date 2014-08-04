@@ -27,7 +27,7 @@ $end
 */
 // BEGIN C++
 # include <limits>
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/smooth2ode.hpp>
 
 bool smooth2ode_xam(void)
 {
