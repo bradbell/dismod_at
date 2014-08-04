@@ -12,6 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin pack_var_ctor$$
 $spell
+	pini
 	mulcov
 	CppAD
 	struct
@@ -25,7 +26,8 @@ $section Pack Variables: Constructor$$
 
 $head Syntax$$
 $codei%dismod_at::pack_var %var%(
-	%n_integrand%, %n_child%, %smooth_table%, %mulcov_table%, %rate_table%
+	%n_integrand%,  %n_child%,      %pini_smooth_id%,
+	%smooth_table%, %mulcov_table%, %rate_table%
 )
 %$$
 $icode%size%  = %var%.size()
@@ -48,6 +50,14 @@ and is the number of children; i.e., the size of
 $cref/child group/node_table/parent/Child Group/$$
 corresponding to the
 $cref/parent_node/run_table/parent_node_id/$$.
+
+$head pini_smooth_id$$
+This argument has prototype
+$codei%
+	size_t %pini_smooth_id%
+%$$
+and is the smoothing id for the
+$cref/initial_prevalence/run_table/initial_prevalence/$$.
 
 $head smooth_table$$
 This argument has prototype
@@ -89,10 +99,11 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 pack_var::pack_var(
-	size_t                               n_integrand  ,
-	size_t                               n_child      ,
-	const CppAD::vector<smooth_struct>&  smooth_table ,
-	const CppAD::vector<mulcov_struct>&  mulcov_table ,
+	size_t                               n_integrand    ,
+	size_t                               n_child        ,
+	size_t                               pini_smooth_id ,
+	const CppAD::vector<smooth_struct>&  smooth_table   ,
+	const CppAD::vector<mulcov_struct>&  mulcov_table   ,
 	const CppAD::vector<rate_struct>&    rate_table 
 ) :
 n_smooth_   ( smooth_table.size() ) ,
@@ -102,6 +113,16 @@ n_child_    ( n_child )
 
 	// initialize offset
 	size_t offset = 0;
+
+	// pini
+	if( smooth_table[pini_smooth_id].n_age != 1 )
+	{	string message = "run table: the smoothing corresponding to initial"
+		"\nprevalence does not have n_age equal to 1";
+		std::cerr << message << std::endl;
+		exit(1);
+	}
+	pini_size_   = smooth_table[pini_smooth_id].n_time;
+	pini_offset_ = offset; offset += pini_size_;
 
 	// mulstd_offset_
 	mulstd_offset_  = offset; offset += 3 * n_smooth_;
@@ -225,6 +246,57 @@ n_child_    ( n_child )
 // size
 size_t pack_var::size(void) const
 {	return size_; }
+/*
+------------------------------------------------------------------------------
+$begin pack_var_pini$$
+$spell
+	var
+	pini
+	dage
+	dtime
+	const
+	dismod
+$$
+
+$section Pack Variables: Standard Deviations Multipliers$$
+
+$head Syntax$$
+$icode%n_var% = %var%.pini_size()
+%$$
+$icode%offset% = %var%.pini_offset()
+%$$
+
+$head var$$
+This object has prototype
+$codei%
+	const dismod_at::pack_var %var%
+%$$
+
+$subhead n_var$$
+is the number of initial prevalence variables; i.e.
+the number of time points corresponding to the
+$cref/initial_prevalence/run_table/initial_prevalence/$$ smoothing
+(the number of age points for this smoothing is one).
+
+$subhead offset$$
+The return value has prototype
+$codei%
+	size_t offset
+%$$
+and is the offset (index) in the packed variable vector
+where the variables for the initial prevalence begin.
+
+$head Example$$
+See $cref/pack_var Example/pack_var/Example/$$.
+
+$end
+
+*/
+size_t pack_var::pini_size(void) const
+{	return pini_size_; }
+size_t pack_var::pini_offset(void) const
+{	return pini_offset_; }
+
 
 /*
 ------------------------------------------------------------------------------
@@ -241,7 +313,7 @@ $$
 $section Pack Variables: Standard Deviations Multipliers$$
 
 $head Syntax$$
-$icode%offset% = %var%.mulstd(%smooth_id%)
+$icode%offset% = %var%.mulstd_offset(%smooth_id%)
 %$$
 
 $head var$$
@@ -274,7 +346,7 @@ See $cref/pack_var Example/pack_var/Example/$$.
 $end
 
 */
-size_t pack_var::mulstd(size_t smooth_id) const
+size_t pack_var::mulstd_offset(size_t smooth_id) const
 {	assert( smooth_id < n_smooth_ );
 	return mulstd_offset_ + 3 * smooth_id;
 }

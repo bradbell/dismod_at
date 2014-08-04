@@ -41,6 +41,10 @@ private:
 	// number of children
 	const size_t n_child_;
 
+	// offset for initial prevalence variables
+	size_t pini_size_;
+	size_t pini_offset_;
+
 	// offset for mulstd variables
 	size_t mulstd_offset_;
 
@@ -61,18 +65,23 @@ private:
 	size_t size_;
 public:
 	pack_var(
-		size_t                              n_integrand  ,
-		size_t                              n_child      ,
-		const CppAD::vector<smooth_struct>& smooth_table ,
-		const CppAD::vector<mulcov_struct>& mulcov_table ,
+		size_t                              n_integrand    ,
+		size_t                              n_child        ,
+		size_t                              pini_smooth_id ,
+		const CppAD::vector<smooth_struct>& smooth_table   ,
+		const CppAD::vector<mulcov_struct>& mulcov_table   ,
 		const CppAD::vector<rate_struct>&   rate_table 
 	);
 
 	// size of entire packed vector
 	size_t size(void) const;
 
+	// pini
+	size_t pini_size(void) const;
+	size_t pini_offset(void) const;
+
 	// mulstd
-	size_t mulstd(size_t smooth_id) const;
+	size_t mulstd_offset(size_t smooth_id) const;
 
 	// rate
 	size_t rate_n_var(size_t rate_id) const;
