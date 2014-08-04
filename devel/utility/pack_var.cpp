@@ -83,7 +83,8 @@ $end
 */
 
 # include <cppad/cppad.hpp>
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/pack_var.hpp>
+# include <dismod_at/include/table_error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

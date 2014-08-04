@@ -27,7 +27,7 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/pack_var.hpp>
 
 bool pack_var_xam(void)
 {	bool ok = true;
