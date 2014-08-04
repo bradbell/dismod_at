@@ -17,14 +17,14 @@ namespace dismod_at {
 
 	template <class Float>
 	extern void solve_ode(
-		size_t                       n_age     ,
-		size_t                       n_time    ,
+		size_t                       i_max     ,
+		size_t                       j_max     ,
 		const Float&                 step_size ,
+		const Float&                 p_zero    ,
 		const CppAD::vector<Float>&  iota      ,
 		const CppAD::vector<Float>&  rho       ,
 		const CppAD::vector<Float>&  chi       ,
 		const CppAD::vector<Float>&  omega     ,
-		const CppAD::vector<Float>&  p_zero    ,
 		      CppAD::vector<Float>&  S_out     ,
 		      CppAD::vector<Float>&  C_out
 	);
