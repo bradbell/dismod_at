@@ -103,8 +103,8 @@ n_child_    ( n_child )
 	// initialize offset
 	size_t offset = 0;
 
-	// offset_mulstd_
-	offset_mulstd_  = offset; offset += 3 * n_smooth_;
+	// mulstd_offset_
+	mulstd_offset_  = offset; offset += 3 * n_smooth_;
 
 	// rate_offset
 	rate_offset_.resize( number_rate_enum );
@@ -276,7 +276,7 @@ $end
 */
 size_t pack_var::mulstd(size_t smooth_id) const
 {	assert( smooth_id < n_smooth_ );
-	return offset_mulstd_ + 3 * smooth_id;
+	return mulstd_offset_ + 3 * smooth_id;
 }
 
 /*
