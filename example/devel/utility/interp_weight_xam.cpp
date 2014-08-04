@@ -27,7 +27,8 @@ $end
 */
 // BEGIN C++
 # include <limits>
-# include <dismod_at/dismod_at.hpp>
+# include <dismod_at/include/interp_weight.hpp>
+# include <dismod_at/include/bilinear_interp.hpp>
 
 bool interp_weight_xam(void)
 {
