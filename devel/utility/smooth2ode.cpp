@@ -23,12 +23,12 @@ $$
 $section Interpolation from Smoothing to Ode Grid$$
 
 $head Syntax$$
-$codei%dismod_at::smooth2ode %si2ode%(
+$codei%dismod_at::smooth2ode %s2ode%(
 	%n_age_ode%, %n_time_ode%, %ode_step_size% , %age_table%, %time_table%, 
 	%s_info%
 )%$$
 $codei%
-%var_ode% = %si2ode%.interpolate( %var_si%, %ode_index% )%$$
+%var_ode% = %s2ode%.interpolate( %var_si%, %ode_index% )%$$
 
 $head Float$$
 The type $icode Float$$ must be one of the following:

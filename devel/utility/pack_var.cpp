@@ -135,13 +135,13 @@ n_child_    ( n_child )
 		size_t child_smooth_id  = rate_table[rate_id].child_smooth_id;
 		size_t n_age = smooth_table[child_smooth_id].n_age;
 		if( int(n_age) != smooth_table[parent_smooth_id].n_age )
-		{	string message = "rate table: parent_smooth_id and child_smooth_id"
+		{	string message = "parent_smooth_id and child_smooth_id"
 				" corresponding to different n_age in smooth table";
 			table_error_exit("rate", rate_id, message);
 		}
 		size_t n_time = smooth_table[child_smooth_id].n_time;
 		if( int(n_time) != smooth_table[parent_smooth_id].n_time )
-		{	string message = "rate table: parent_smooth_id and child_smooth_id"
+		{	string message = "parent_smooth_id and child_smooth_id"
 				" corresponding to different n_time in smooth table";
 			table_error_exit("rate", rate_id, message);
 		}
