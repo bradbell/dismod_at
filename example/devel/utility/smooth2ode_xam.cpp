@@ -28,11 +28,12 @@ $end
 // BEGIN C++
 # include <limits>
 # include <dismod_at/include/smooth2ode.hpp>
+# include <dismod_at/include/bilinear_interp.hpp>
 
 bool smooth2ode_xam(void)
 {
 	bool   ok = true;
-	size_t i, j;
+	size_t i, j, k;
 	using  std::string;
 	using  CppAD::vector;	
 	typedef CppAD::AD<double> Float;
@@ -97,38 +98,54 @@ bool smooth2ode_xam(void)
 			var_si[i * n_time_si + j] = i*i + j*j;
 	}
 
+	// ode grid points at which to interpolate
+	CppAD::vector<size_t> ode_index;
+	i = 0;
+	j = 0;
+	while( i < n_age_ode && j < n_time_ode )
+	{	ode_index.push_back( i * n_time_ode + j );
+		i++;
+		j++;
+	}
+
 	// interpolate from smoothing to ode grid
-	CppAD::vector<Float> var_ode = si2ode.interpolate(var_si);
+	CppAD::vector<Float> var_ode = si2ode.interpolate(var_si, ode_index);
 
-	// check one point
-	size_t i_ode = 6;
-	size_t j_ode = 7;
-	double age   = age_table[0] + ode_step_size * i_ode;
-	double time  = time_table[0] + ode_step_size * j_ode;
-	Float  v_ode = var_ode[ i_ode * n_time_ode + j_ode ];
-	size_t i_si  = 0;
-	while( age_table[ age_id[i_si+1] ] < age )
-		i_si++;
-	size_t j_si  = 0;
-	while( time_table[ time_id[j_si+1] ] < time )
-		j_si++;
-	Float sum = 0.0;
-	double a0  = age_table[ age_id[i_si] ];
-	double a1  = age_table[ age_id[i_si+1] ];
-	double t0  = time_table[ time_id[j_si] ];
-	double t1  = time_table[ time_id[j_si+1] ];
-	sum  += (a1-age)*(t1-time)*var_si[i_si * n_time_si + j_si];
-	sum  += (age-a0)*(t1-time)*var_si[(i_si+1) * n_time_si + j_si];
-	sum  += (a1-age)*(time-t0)*var_si[i_si * n_time_si + (j_si+1)];
-	sum  += (age-a0)*(time-t0)*var_si[(i_si+1) * n_time_si + (j_si+1)];
-	sum /= (a1 - a0) * (t1 - t0);
+	// check result
+	ok &= var_ode.size() == ode_index.size();
 	//
-	ok  &= abs( 1.0 - sum / v_ode ) < 10. * eps;
+	CppAD::vector<double> vdbl_si(n_age_si * n_time_si);
+	CppAD::vector<double> age_si(n_age_si), time_si(n_time_si);
+	for(i = 0; i < n_age_si; i++)
+	{	age_si[i] = age_table[ age_id[i] ]; 	
+		for(j = 0; j < n_time_si; j++)
+			vdbl_si[i * n_time_si + j] = i*i + j*j;
+	}
+	for(j = 0; j < n_time_si; j++)
+		time_si[j] = time_table[ time_id[j] ];
 	//
-	// std::cout << std::endl;
-	// std::cout << "sum = " << sum << std::endl;
-	// std::cout << "v_ode = " << v_ode << std::endl;
-
+	size_t i_si = 0, j_si = 0;
+	for(k = 0; k < ode_index.size(); k++)
+ 	{
+		Float  v_ode = var_ode[k];
+		//
+		size_t i_ode  = ode_index[k] / n_time_ode;
+		size_t j_ode  = ode_index[k] % n_time_ode;
+		double age    = age_table[0]  + ode_step_size * i_ode;
+		double time   = time_table[0] + ode_step_size * j_ode;
+		double  check = dismod_at::bilinear_interp(
+			age, time, age_si, time_si, vdbl_si, i_si, j_si
+		);
+		//
+		if( check == 0.0 )
+			ok &= abs( v_ode ) <= 10. * eps ;
+		else
+			ok  &= abs( 1.0 - v_ode / Float(check) ) < 10. * eps;
+		//
+		// std::cout << std::endl;
+		// std::cout << "check = " << check << std::endl;
+		// std::cout << "v_ode = " << v_ode << std::endl;
+	}
 	return ok;
 }
 // END C++

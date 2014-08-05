@@ -27,7 +27,7 @@ $codei%dismod_at::smooth2ode %si2ode%(
 	%s_info%, %age_table%, %time_table%, %n_age_ode%, %n_time_ode%, %ode_step_size%
 )%$$
 $codei%
-%var_ode% = %si2ode%.interpolate( %var_si% )%$$
+%var_ode% = %si2ode%.interpolate( %var_si%, %ode_index% )%$$
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -36,7 +36,7 @@ $code double$$, $code CppAD::AD<double>$$
 $head smooth2ode$$
 This constructs an object that interpolates from 
 the specified smoothing grid to the ode grid.
-
+, %ode_index%
 $subhead s_info$$
 This argument has prototype
 $codei%
@@ -109,21 +109,37 @@ $codei%
 	%time% = %time_table%[ %s_info%.time_id(%j_si%) ] 
 %$$
 
+$subhead ode_index$$
+This argument has prototype
+$codei%
+	const CppAD::vector<size_t>& %ode_index%
+%$$
+For $icode%k% = 0 , %...%, %ode_index%.size()%$$
+the corresponding ode grid point age
+$cref/a_i/glossary/Ode Grid/Age, a_i/$$ is defined by
+$codei%
+	%i%(%k%) = int( %ode_index%[%k%] / %n_time_ode% )
+%$$
+and the ode grid point time
+$cref/t_i/glossary/Ode Grid/Time, t_j/$$ is defined by
+$codei%
+	%j%(%k%) = mod( %ode_index%[%k%], %n_time_ode% )
+%$$
+
 $subhead var_ode$$
 This return value has prototype
 $codei%
 	const CppAD::vector<%Float%>& %var_ode%
 %$$
-and its size is $icode%n_age_ode%*%n_time_ode%$$.
-For $icode%i% = 0 , %...%, %n_age_ode%-1%$$,
-$icode%j% = 0 , %...%, %n_time_ode%-1%$$,
+and its size is $icode%ode_index%.size()%$$.
+For $icode%k% = 0 , %...%, %ode_index%.size()-1%$$,
 $codei%
-	%var_si%[ %i_si% * %n_time_si% + %j_si% ]
+	%var_ode%[ %k% ]
 %$$
 is the value of the interpolated value for the variable at
 $codei%
-	%age%  = %age_table%[0] + %i% * %ode_step_size%
-	%time% = %time_table%[0] + %j% * %ode_step_size%
+	%age%  = %a_i% =  %age_table%[0] + %i%(%k%) * %ode_step_size%
+	%time% = %t_j% = %time_table%[0] + %j%(%k%) * %ode_step_size%
 %$$
 
 $children%example/devel/utility/smooth2ode_xam.cpp
@@ -158,6 +174,7 @@ ode_step_size_(ode_step_size)
 	double age_min = age_table[0];
 	double age_max = age_table[ age_table.size() - 1];
 	assert( age_max  <= age_min + (n_age_ode-1) * ode_step_size );
+	//
 	double time_min = time_table[0];
 	double time_max = time_table[ time_table.size() - 1];
 	assert( time_max  <= time_min + (n_time_ode-1) * ode_step_size );
@@ -266,29 +283,28 @@ ode_step_size_(ode_step_size)
 
 template <class Float>
 CppAD::vector<Float> smooth2ode::interpolate(
-	const CppAD::vector<Float>& var_si ) const
-{	size_t i, j, k;
-	assert( var_si.size() == n_age_si_ * n_time_si_ );
-	CppAD::vector<Float> var_ode( n_age_ode_ * n_time_ode_ );
-	for(i = 0; i < n_age_ode_; i++)
-	{	for(j = 0; j < n_time_ode_; j++)
-		{	k = i * n_time_ode_ + j;
-			size_t i_si = coefficient_[k].i_si;
-			size_t j_si = coefficient_[k].j_si;
-			double c_00 = coefficient_[k].c_00;
-			double c_10 = coefficient_[k].c_10;
-			double c_01 = coefficient_[k].c_01;
-			double c_11 = coefficient_[k].c_11;
-			Float  sum  = 0.0;
-			sum      += c_00 * var_si[i_si*n_time_si_ + j_si];
-			if( c_10 != 0.0 )
-				sum += c_10 * var_si[(i_si+1)*n_time_si_ + j_si];
-			if( c_01 != 0.0 )
-				sum += c_01 * var_si[i_si*n_time_si_ + (j_si+1)];
-			if( c_11 != 0.0 )
-				sum += c_11 * var_si[(i_si+1)*n_time_si_ + (j_si+1)];
-			var_ode[ i * n_time_ode_ + j ] = sum;
-		}
+	const CppAD::vector<Float>&  var_si    , 
+	const CppAD::vector<size_t>& ode_index ) const
+{	assert( var_si.size() == n_age_si_ * n_time_si_ );
+	//
+	CppAD::vector<Float> var_ode( ode_index.size() );
+	for(size_t k = 0; k < ode_index.size(); k ++)
+	{	size_t index = ode_index[k];
+		size_t i_si  = coefficient_[index].i_si;
+		size_t j_si  = coefficient_[index].j_si;
+		double c_00  = coefficient_[index].c_00;
+		double c_10  = coefficient_[index].c_10;
+		double c_01  = coefficient_[index].c_01;
+		double c_11  = coefficient_[index].c_11;
+		Float  sum   = 0.0;
+		sum      += c_00 * var_si[i_si*n_time_si_ + j_si];
+		if( c_10 != 0.0 )
+			sum += c_10 * var_si[(i_si+1)*n_time_si_ + j_si];
+		if( c_01 != 0.0 )
+			sum += c_01 * var_si[i_si*n_time_si_ + (j_si+1)];
+		if( c_11 != 0.0 )
+			sum += c_11 * var_si[(i_si+1)*n_time_si_ + (j_si+1)];
+		var_ode[k] = sum;
 	}
 	return var_ode;
 }
@@ -296,7 +312,8 @@ CppAD::vector<Float> smooth2ode::interpolate(
 // instantiation 
 # define DISMOD_AT_INSTANTIATE_SMOOTH2ODE_IMPLEMENT(Float)  \
 template CppAD::vector<Float> smooth2ode::interpolate<Float>( \
-	const CppAD::vector<Float>& var_si                      \
+	const CppAD::vector<Float>&  var_si    ,                  \
+	const CppAD::vector<size_t>& ode_index                    \
 ) const;
 
 DISMOD_AT_INSTANTIATE_SMOOTH2ODE_IMPLEMENT( double )

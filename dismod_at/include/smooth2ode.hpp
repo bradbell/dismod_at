@@ -44,7 +44,8 @@ public:
 	);
 	template <class Float>
 	CppAD::vector<Float> interpolate(
-		const CppAD::vector<Float>&   var_si
+		const CppAD::vector<Float>&    var_si    ,
+		const CppAD::vector<size_t>&   ode_index
 	) const;
 };
 
