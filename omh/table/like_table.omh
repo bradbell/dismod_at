@@ -24,6 +24,16 @@ $head like_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
+$subhead zero$$
+It is suggested that 
+$icode%like_id% == 0%$$ 
+correspond to lower and upper limits being zero.
+
+$subhead one$$
+It is suggested that 
+$icode%like_id% == 1%$$ 
+correspond to lower and upper limits being one.
+
 $head like_name$$
 This column has type $code text$$ and has a different value for every row; 
 i.e., the names are unique and can act as substitutes for the primary key.

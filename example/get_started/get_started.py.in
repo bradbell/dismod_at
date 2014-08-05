@@ -73,18 +73,25 @@ row['meas_value'] = 0.5e-5
 data_list.append( copy.copy(row) )
 #
 like_list = [
-	{	'name':'uniform_01', 
-		'density':'uniform',
-		'lower':0.0, 
-		'upper':1.0, 
-		'mean':0.1, 
-		'std':None,
-		'eta':None
-	},{	'name':'zero', 
+	{	'name':'zero', 
 		'density':'uniform',
 		'lower':0.0, 
 		'upper':0.0, 
 		'mean':0.0,
+		'std':None,
+		'eta':None
+	},{	'name':'one', 
+		'density':'uniform',
+		'lower':1.0, 
+		'upper':1.0, 
+		'mean':1.0,
+		'std':None,
+		'eta':None
+	},{	'name':'uniform_01', 
+		'density':'uniform',
+		'lower':0.0, 
+		'upper':1.0, 
+		'mean':0.1, 
 		'std':None,
 		'eta':None
 	}
@@ -93,9 +100,9 @@ smooth_list = [
 	{	'name':'constant',
 		'age_id':[0],
 		'time_id':[0],
-		'mulstd_value':-1,
-		'mulstd_dage':-1,
-		'mulstd_dtime':-1,
+		'mulstd_value':'one',
+		'mulstd_dage':'one',
+		'mulstd_dtime':'one',
 		'fun':constant_smooth_fun
 	}
 ] 

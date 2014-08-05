@@ -37,10 +37,10 @@ def smooth_grid_table() :
 	col_type = [ 'text',        'integer', 'integer','integer',
 		'integer',      'integer'         ]
 	row_list = [
-	           [ 'constant',    1,          1,        -1, -1, -1],
-	           [ 'age_only',    3,          1,        -1, -1, -1],
-	           [ 'time_only',   1,          2,        -1, -1, -1],
-	           [ 'bilinear',    3,          2,        -1, -1, -1] 
+	           [ 'constant',    1,          1,        1, 1, 1],
+	           [ 'age_only',    3,          1,        1, 1, 1],
+	           [ 'time_only',   1,          2,        1, 1, 1],
+	           [ 'bilinear',    3,          2,        1, 1, 1] 
 	]
 	tbl_name = 'smooth'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

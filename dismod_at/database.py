@@ -405,12 +405,12 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # name    $cnext str         $cnext name of $th i$$ smoothing  $rnext
 # age_id  $cnext list of int $cnext indices for age values     $rnext
 # time_id $cnext list of int $cnext indices for time values    $rnext
-# mulstd_value   $cnext int   $cnext 
-#	$cref/mulstd_value/smooth_table/mulstd_value/$$ $rnext
-# mulstd_dage   $cnext int   $cnext 
-#	$cref/mulstd_dage/smooth_table/mulstd_dage/$$ $rnext
-# mulstd_dtime   $cnext int   $cnext 
-#	$cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ $rnext
+# mulstd_value   $cnext str   $cnext 
+#	name for $cref/mulstd_value/smooth_table/mulstd_value/$$ smoothing $rnext
+# mulstd_dage   $cnext str   $cnext 
+#	name for $cref/mulstd_dage/smooth_table/mulstd_dage/$$ smoothing $rnext
+# mulstd_dtime   $cnext str   $cnext 
+#	name for $cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ smoothing $rnext
 # fun     $cnext function    $cnext $icode%(%v%,%da%,%dt%)%=%fun%(%a%, %t%)%$$
 # $tend
 # The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
@@ -643,9 +643,9 @@ def create_database(
 		name          = smooth['name']
 		n_age         = len( smooth['age_id'] )
 		n_time        = len( smooth['time_id'] )
-		mulstd_value   = smooth['mulstd_value']
-		mulstd_dage    = smooth['mulstd_dage']
-		mulstd_dtime   = smooth['mulstd_dtime']
+		mulstd_value   = global_like_name2id[ smooth['mulstd_value'] ]
+		mulstd_dage    = global_like_name2id[ smooth['mulstd_dage']  ]
+		mulstd_dtime   = global_like_name2id[ smooth['mulstd_dtime'] ]
 		row_list.append( [ 
 		name, n_age, n_time, mulstd_value, mulstd_dage, mulstd_dtime   
 		] )
