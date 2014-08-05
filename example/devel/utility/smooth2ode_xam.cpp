@@ -88,7 +88,8 @@ bool smooth2ode_xam(void)
 
 	// construct the interpolation object
 	dismod_at::smooth2ode si2ode(
-		s_info, age_table, time_table, n_age_ode, n_time_ode, ode_step_size
+		n_age_ode, n_time_ode, ode_step_size, age_table, time_table, 
+		s_info
 	);
 
 	// variable values on smoothing grid

@@ -24,7 +24,8 @@ $section Interpolation from Smoothing to Ode Grid$$
 
 $head Syntax$$
 $codei%dismod_at::smooth2ode %si2ode%(
-	%s_info%, %age_table%, %time_table%, %n_age_ode%, %n_time_ode%, %ode_step_size%
+	%n_age_ode%, %n_time_ode%, %ode_step_size% , %age_table%, %time_table%, 
+	%s_info%
 )%$$
 $codei%
 %var_ode% = %si2ode%.interpolate( %var_si%, %ode_index% )%$$
@@ -36,33 +37,6 @@ $code double$$, $code CppAD::AD<double>$$
 $head smooth2ode$$
 This constructs an object that interpolates from 
 the specified smoothing grid to the ode grid.
-, %ode_index%
-$subhead s_info$$
-This argument has prototype
-$codei%
-	const dismod_at::smooth_info& %s_info%
-%$$
-and is the smoothing grid. We use the following notation below:
-$codei%
-	%n_age_si%       = %s_info%.age_size()
-	%n_time_si%      = %s_info%.time_size()
-%$$
-The only other $icode s_info$$ functions that are used are used by 
-$code smooth2ode$$ are: $icode%s_info%.age_id%$$ and $icode%s_info%.time_id%$$,
-
-$subhead age_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>& %age_table%
-%$$
-and is the age values corresponding to the $icode age_id$$ values.
-
-$subhead time_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>& %time_table%
-%$$
-and is the time values corresponding to the $icode time_id$$ values.
 
 $subhead n_age_ode$$
 This argument has prototype
@@ -87,6 +61,33 @@ $codei%
 %$$
 and is the value of $cref/ode_step_size/run_table/ode_step_size/$$
 in the run table.
+
+$subhead age_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %age_table%
+%$$
+and is the age values corresponding to the $icode age_id$$ values.
+
+$subhead time_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %time_table%
+%$$
+and is the time values corresponding to the $icode time_id$$ values.
+
+$subhead s_info$$
+This argument has prototype
+$codei%
+	const dismod_at::smooth_info& %s_info%
+%$$
+and is the smoothing grid. We use the following notation below:
+$codei%
+	%n_age_si%       = %s_info%.age_size()
+	%n_time_si%      = %s_info%.time_size()
+%$$
+The only other $icode s_info$$ functions that are used are used by 
+$code smooth2ode$$ are: $icode%s_info%.age_id%$$ and $icode%s_info%.time_id%$$,
 
 $head interpolate$$
 This is a $code const$$ function 
@@ -156,18 +157,18 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 smooth2ode::smooth2ode(
-	const smooth_info&                          s_info        ,
-	const CppAD::vector<double>&                age_table     ,
-	const CppAD::vector<double>&                time_table    ,
 	size_t                                      n_age_ode     ,
 	size_t                                      n_time_ode    ,
-	double                                      ode_step_size )
+	double                                      ode_step_size ,
+	const CppAD::vector<double>&                age_table     ,
+	const CppAD::vector<double>&                time_table    ,
+	const smooth_info&                          s_info        )
 : 
+n_age_ode_(n_age_ode)              ,
+n_time_ode_(n_time_ode)            ,
+ode_step_size_(ode_step_size)      ,
 n_age_si_( s_info.age_size() )     ,
-n_time_si_( s_info.time_size() )   ,
-n_age_ode_(n_age_ode)          ,
-n_time_ode_(n_time_ode)        ,
-ode_step_size_(ode_step_size) 
+n_time_si_( s_info.time_size() )
 {	size_t i, j;	
 	//
 # ifndef NDEBUG

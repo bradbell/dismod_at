@@ -26,21 +26,21 @@ class smooth2ode {
 		double c_11;
 	} ode_point;
 private:
-	const size_t              n_age_si_;
-	const size_t              n_time_si_;
 	const size_t              n_age_ode_;
 	const size_t              n_time_ode_;
 	const double              ode_step_size_;
+	const size_t              n_age_si_;
+	const size_t              n_time_si_;
 	// effectively const (computed by constructor)
 	CppAD::vector<ode_point> coefficient_;
 public:
 	smooth2ode(
-		const smooth_info&                          s_info        ,
-		const CppAD::vector<double>&                age_table     ,
-		const CppAD::vector<double>&                time_table    ,
 		size_t                                      n_age_ode     ,
 		size_t                                      n_time_ode    ,
-		double                                      ode_step_size
+		double                                      ode_step_size ,
+		const CppAD::vector<double>&                age_table     ,
+		const CppAD::vector<double>&                time_table    ,
+		const smooth_info&                          s_info
 	);
 	template <class Float>
 	CppAD::vector<Float> interpolate(
