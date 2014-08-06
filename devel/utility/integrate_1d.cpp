@@ -19,7 +19,7 @@ $$
 $section Compute One Dimensional Integration Coefficients$$
 
 $head Syntax$$
-$icode%c% = dismod_at::integrate_1d(%r%, %s%, %w%)%$$
+$icode%c% = integrate_1d(%r%, %s%, %w%)%$$
 
 $head See Also$$
 $cref integrate_2d$$

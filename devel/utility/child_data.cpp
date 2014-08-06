@@ -20,7 +20,7 @@ $$
 $section Child Indices and Data Indices$$
 
 $head Syntax$$
-$codei%dismod_at::child_data %cd%(%parent_node_id%, %node_table%, %data_table%)
+$codei%child_data %cd%(%parent_node_id%, %node_table%, %data_table%)
 %$$
 $icode%n_child%  = %cd%.child_size()
 %$$
@@ -32,7 +32,7 @@ $icode%child%    = %cd%.data_id2child(%data_id%)
 $head cd$$
 Except for it's constructor, this object has prototype
 $codei%
-	const dismod_at::child_data %cd%
+	const child_data %cd%
 %$$
 
 $head parent_node_id$$

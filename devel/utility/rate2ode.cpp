@@ -14,7 +14,7 @@ $begin rate2ode$
 $section Interpolating the Rates onto the ODE grid$$
 
 $head Syntax$$
-$codei%dismod_at::rate2ode %r2ode%(
+$codei%rate2ode %r2ode%(
 	%n_age_ode%, %n_time_ode%, %ode_step_size% , %age_table%, %time_table%, 
 	%s_info_vec%, %rate_table%
 )%$$
@@ -70,7 +70,7 @@ and is the time values corresponding to the $icode time_id$$ values.
 $subhead s_info_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<dismod_at::smooth_info>& %s_info_vec%
+	const CppAD::vector<smooth_info>& %s_info_vec%
 %$$
 and its size is equal to $icode n_smooth$$ the number of rows in the
 $cref/smooth/smooth_table/$$ table.

@@ -20,7 +20,7 @@ $$
 $section Solving the Dismod Ordinary Differential Equation$$.
 
 $head Syntax$$
-$codei%dismod_at::solve_ode(
+$codei%solve_ode(
 	%i_max%     , 
 	%j_max%     , 
 	%step_size% , 

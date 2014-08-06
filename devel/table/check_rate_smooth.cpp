@@ -22,7 +22,7 @@ $$
 $section Check that Parent and Child Smoothing Have same Grid$$
 
 $head syntax$$
-$codei%dismod_at::check_rate_smooth(%rate_table%, %s_info_ptr%)%$$
+$codei%check_rate_smooth(%rate_table%, %s_info_ptr%)%$$
 
 $head Purpose$$
 For each 

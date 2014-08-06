@@ -25,7 +25,7 @@ $$
 $section Pack Variables: Constructor$$
 
 $head Syntax$$
-$codei%dismod_at::pack_var %var%(
+$codei%pack_var %var%(
 	%n_integrand%,  %n_child%,      %pini_smooth_id%,
 	%smooth_table%, %mulcov_table%, %rate_table%
 )
@@ -260,7 +260,7 @@ $icode%offset% = %var%.pini_offset()
 $head var$$
 This object has prototype
 $codei%
-	const dismod_at::pack_var %var%
+	const pack_var %var%
 %$$
 
 $subhead n_var$$
@@ -310,7 +310,7 @@ $icode%offset% = %var%.mulstd_offset(%smooth_id%)
 $head var$$
 This object has prototype
 $codei%
-	const dismod_at::pack_var %var%
+	const pack_var %var%
 %$$
 
 $head smooth_id$$
@@ -381,7 +381,7 @@ return information about the measurement standard deviation
 covariate multipliers.
 
 $head mulcov_info$$
-The type $code dismod_at::pack-var::mulcov_info$$ is defined as follows:
+The type $code pack-var::mulcov_info$$ is defined as follows:
 $code
 $verbatim%dismod_at/include/pack_var.hpp
 %5%// BEGIN MULCOV_INFO%// END MULCOV_INFO%$$
@@ -390,7 +390,7 @@ $$
 $head var$$
 This object has prototype
 $codei%
-	const dismod_at::pack_var %var%
+	const pack_var %var%
 %$$
 
 $head integrand_id$$
@@ -490,7 +490,7 @@ $icode%info% = %var%.rate_mean_mulcov_info(%rate_id%)
 %$$
 
 $head mulcov_info$$
-The type $code dismod_at::pack-var::mulcov_info$$ is defined as follows:
+The type $code pack-var::mulcov_info$$ is defined as follows:
 $code
 $verbatim%dismod_at/include/pack_var.hpp
 %5%// BEGIN MULCOV_INFO%// END MULCOV_INFO%$$
@@ -499,7 +499,7 @@ $$
 $head var$$
 This object has prototype
 $codei%
-	const dismod_at::pack_var %var%
+	const pack_var %var%
 %$$
 
 $head rate_id$$
@@ -590,7 +590,7 @@ $icode%offset% = %var%.rate_offset(%rate_id%, %j%)
 $head var$$
 This object has prototype
 $codei%
-	const dismod_at::pack_var %var%
+	const pack_var %var%
 %$$
 
 $head rate_id$$

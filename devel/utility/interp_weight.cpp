@@ -47,7 +47,7 @@ and is the time at which we are interpolating the weight grid values.
 $head wg$$
 This argument has prototype
 $codei%
-	const dismod_at::weight_grid& %wg%
+	const weight_grid& %wg%
 %$$
 and is the weight grid. We use the following notation below:
 $codei%

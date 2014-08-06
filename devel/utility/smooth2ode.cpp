@@ -23,7 +23,7 @@ $$
 $section Interpolation from Smoothing to Ode Grid$$
 
 $head Syntax$$
-$codei%dismod_at::smooth2ode %s2ode%(
+$codei%smooth2ode %s2ode%(
 	%n_age_ode%, %n_time_ode%, %ode_step_size% , %age_table%, %time_table%, 
 	%s_info%
 )%$$
@@ -79,7 +79,7 @@ and is the time values corresponding to the $icode time_id$$ values.
 $subhead s_info$$
 This argument has prototype
 $codei%
-	const dismod_at::smooth_info& %s_info%
+	const smooth_info& %s_info%
 %$$
 and is the smoothing grid. We use the following notation below:
 $codei%

@@ -26,7 +26,7 @@ $$
 $section Integrand Average For Each Data Point$$
 
 $head Syntax$$
-$codei%dismod_at::avg_integrand %avg%(
+$codei%avg_integrand %avg%(
 	%wg_vec%, 
 	%data_table%, 
 	%integrand_table%,
@@ -57,7 +57,7 @@ for each data point.
 $subhead wg_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<dismod_at::weight_grid>& %wg_vec%
+	const CppAD::vector<weight_grid>& %wg_vec%
 %$$
 For each $cref/weight_id/weight_table/weight_id/$$,
 $codei%

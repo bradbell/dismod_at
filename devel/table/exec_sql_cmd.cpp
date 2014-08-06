@@ -26,7 +26,7 @@ $index execute, sql command$$
 $index C++, execute sql$$
 
 $head Syntax$$
-$codei%dismod_at::exec_sql_cmd(%db%, %sql_cmd%)%$$
+$codei%exec_sql_cmd(%db%, %sql_cmd%)%$$
 
 $head Purpose$$
 Executes an SQL command and check for an error.

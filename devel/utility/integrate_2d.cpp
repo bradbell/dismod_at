@@ -20,7 +20,7 @@ $$
 $section Compute Two Dimensional Integration Coefficients$$
 
 $head Syntax$$
-$icode%c% = dismod_at::integrate_2d(%a%, %t%, %b%, %s%, %w%)%$$
+$icode%c% = integrate_2d(%a%, %t%, %b%, %s%, %w%)%$$
 
 $head See Also$$
 $cref integrate_1d$$
