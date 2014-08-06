@@ -77,6 +77,14 @@ $codei%
 and is the
 $cref/mulcov_table/get_mulcov_table/mulcov_table/$$.
 
+$head rate_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<rate_struct>& %rate_table%
+%$$
+and is the
+$cref/rate_table/get_rate_table/rate_table/$$.
+
 $head size$$
 This function is $code const$$.
 Its return value has prototype

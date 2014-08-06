@@ -72,16 +72,12 @@ bool pack_var_xam(void)
 	mulcov_table[3].smooth_id    = 3;
 	//
 	vector<dismod_at::rate_struct> rate_table(dismod_at::number_rate_enum);
-	rate_table[0].rate_name        = dismod_at::iota_enum;
 	rate_table[0].parent_smooth_id = 0;
 	rate_table[0].child_smooth_id  = 1;
-	rate_table[0].rate_name        = dismod_at::rho_enum;
 	rate_table[0].parent_smooth_id = 0;
 	rate_table[0].child_smooth_id  = 1;
-	rate_table[0].rate_name        = dismod_at::chi_enum;
 	rate_table[0].parent_smooth_id = 0;
 	rate_table[0].child_smooth_id  = 1;
-	rate_table[0].rate_name        = dismod_at::omega_enum;
 	rate_table[0].parent_smooth_id = 0;
 	rate_table[0].child_smooth_id  = 1;
 	//

@@ -40,9 +40,6 @@ This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description 
 $rnext
-$code rate_enum$$ $cnext $code rate_name$$  $cnext 
-	The $cref/rate_name/rate_table/rate_name/$$ for this rate  
-$rnext
 $code int$$ $cnext $code parent_smooth_id$$  $cnext 
 	The $cref/parent_smooth_id/rate_table/parent_smooth_id/$$ 
 $rnext
@@ -62,22 +59,10 @@ $codei%
 is the information value for the corresponding
 $cref/rate_id/rate_table/rate_id/$$.
 
-$head rate_enum$$
-This is an enum type with the following values:
-$table
-$icode rate$$        $pre  $$ $cnext Corresponding String    $rnext
-$code iota_enum$$    $pre  $$ $cnext $code "iota"$$          $rnext        
-$code rho_enum$$     $pre  $$ $cnext $code "rho"$$           $rnext        
-$code chi_enum$$     $pre  $$ $cnext $code "chi"$$           $rnext        
-$code omega_enum$$   $pre  $$ $cnext $code "omega"$$
-$tend        
-The number of these enum values is $code number_rate_enum$$.
-
-$head rate_enum2name$$
-This is a global variable. If $icode%rate% < number_rate_enum%$$, 
-$codei%rate_enum2name[%rate%]%$$ is the string corresponding
-to the $icode rate$$ enum value.
-
+$head Assumption$$
+This routine checks that the order of 
+$cref/rate_name/rate_table/rate_name/$$ is
+$code iota$$, $code rho$$, $code chi$$, $code omega$$.
 
 $children%example/devel/table/get_rate_table_xam.cpp
 %$$
@@ -97,16 +82,22 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-// rate names in same order as enum type in get_rate_table.hpp
-const char* rate_enum2name[] = {
-	"iota",
-	"rho",
-	"chi",
-	"omega"
-};
-
 CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 {	using std::string;
+
+	// rate names in same order as enum type in get_rate_table.hpp
+	// and in the documentation for rate_table.omh
+	const char* rate_enum2name[] = {
+		"iota",
+		"rho",
+		"chi",
+		"omega"
+	};
+	assert( string("iota")  == rate_enum2name[iota_enum] );
+	assert( string("rho")   == rate_enum2name[rho_enum] );
+	assert( string("chi")   == rate_enum2name[chi_enum] );
+	assert( string("omega") == rate_enum2name[omega_enum] );
+
 
 	string table_name   = "rate";
 	size_t n_rate       = check_table_id(db, table_name);
@@ -134,15 +125,10 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 
 	CppAD::vector<rate_struct> rate_table(number_rate_enum);
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	bool found = false;
-		for( size_t j = 0; j < number_rate_enum; j++)
-		{	if( rate_enum2name[j] == rate_name[rate_id] )
-			{	rate_table[rate_id].rate_name = rate_enum(j);
-				found                         = true;
-			}
-		}
-		if( ! found )
-		{	string message = "rate_name is not iota, rho, chi, or omega.";
+	{	if( rate_name[rate_id] != rate_enum2name[rate_id] )
+		{	string message = "expected rate_name to be ";
+			message += rate_enum2name[rate_id];
+			message += " but found " + rate_name[rate_id];
 			table_error_exit("rate", rate_id, message);
 		}
 		rate_table[rate_id].parent_smooth_id = parent_smooth_id[rate_id];

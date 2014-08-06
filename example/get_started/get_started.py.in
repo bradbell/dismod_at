@@ -107,10 +107,7 @@ smooth_list = [
 	}
 ] 
 rate_list = [
-	{	'name':'omega',
-		'parent_smooth':'constant',
-		'child_smooth':'constant'
-	},{
+	{
 		'name':'iota',
 		'parent_smooth':'constant',
 		'child_smooth':'constant'
@@ -120,6 +117,10 @@ rate_list = [
 		'child_smooth':'constant'
 	},{
 		'name':'chi',
+		'parent_smooth':'constant',
+		'child_smooth':'constant'
+	},{
+		'name':'omega',
 		'parent_smooth':'constant',
 		'child_smooth':'constant'
 	}

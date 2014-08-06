@@ -35,6 +35,7 @@ $code rho$$        $pre   $$ $cnext model remission               $rnext
 $code chi$$        $pre   $$ $cnext model excess mortality        $rnext
 $code omega$$      $pre   $$ $cnext model other cause mortality
 $tend
+In addition, these values must appear in the order above.
 
 $head parent_smooth_id$$
 This column has type $code integer$$ and its value is a

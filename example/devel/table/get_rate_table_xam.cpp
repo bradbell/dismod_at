@@ -46,10 +46,10 @@ bool get_rate_table_xam(void)
 			"rate_name        text,"
 			"parent_smooth_id int,"
 			"child_smooth_id  int)",
-		"insert into rate values(0, 'omega', 0, 1)",
-		"insert into rate values(1, 'chi',   0, 1)",
-		"insert into rate values(2, 'rho',   0, 1)",
-		"insert into rate values(3, 'iota',  0, 1)"
+		"insert into rate values(1, 'rho',   0, 1)",
+		"insert into rate values(2, 'chi',   0, 1)",
+		"insert into rate values(0, 'iota',  0, 1)",
+		"insert into rate values(3, 'omega', 0, 1)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -59,10 +59,6 @@ bool get_rate_table_xam(void)
 	// get the rate table
 	vector<dismod_at::rate_struct> rate_table = dismod_at::get_rate_table(db);
 	ok  &= rate_table.size() == 4;
-	ok  &= rate_table[0].rate_name == dismod_at::omega_enum;
-	ok  &= rate_table[1].rate_name == dismod_at::chi_enum;
-	ok  &= rate_table[2].rate_name == dismod_at::rho_enum;
-	ok  &= rate_table[3].rate_name == dismod_at::iota_enum;
 	for(size_t rate_id = 0; rate_id < 4; rate_id++)
 	{	ok &= rate_table[rate_id].parent_smooth_id == 0;
 		ok &= rate_table[rate_id].child_smooth_id  == 1;

@@ -23,7 +23,6 @@ namespace dismod_at {
 		number_rate_enum
 	};
 	struct rate_struct {
-		rate_enum  rate_name;
 		int        parent_smooth_id;
 		int        child_smooth_id;
 	};
