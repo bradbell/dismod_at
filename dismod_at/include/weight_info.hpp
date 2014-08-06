@@ -25,13 +25,17 @@ private:
 	// vector of weights for each age, time pair
 	CppAD::vector<double> weight_;
 public:
+	// assignment operator
 	void operator=(const weight_info& w_info);
+	// default constructor
 	weight_info(void);
+	// testing constructor
 	weight_info(
 		const CppAD::vector<size_t>& age_id    ,
 		const CppAD::vector<size_t>& time_id   ,
 		const CppAD::vector<double>& weight
 	);
+	// normal  constructor
 	weight_info(
 		size_t                                   weight_id         ,
 		const CppAD::vector<weight_grid_struct>& weight_grid_table

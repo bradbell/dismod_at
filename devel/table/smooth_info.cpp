@@ -25,28 +25,26 @@ $section Extract and Organize Information for One Smoothing$$
 $head Syntax$$
 $codei%smooth_info %s_info%(%smooth_id%, %smooth_table%, %smooth_grid_table% )
 %$$
-$codei%smooth_info %s_info%(
-	%age_id%,
-	%time_id%,
-	%value_like_id%,
-	%dage_like_id%,
-	%dtime_like_id%
-	%mulstd_value%,
-	%mulstd_dage%,
-	%mulstd_dtime%,
+$codei%smooth_info %s_test%(
+	%age_id%, %time_id%, %value_like_id%, %dage_like_id%, %dtime_like_id%,
+	%mulstd_value%, %mulstd_dage%, %mulstd_dtime%
 )
 %$$
-$icode%n_age%   = %s_info%.age_size()
+$codei%smooth_info %s_default%()
 %$$
-$icode%n_time%  = %s_info%.time_size()
+$icode%s_default% = %s_info%
 %$$
-$icode%a_id%    = %s_info%.age_id(%i%)
+$icode%n_age%     = %s_info%.age_size()
 %$$
-$icode%t_id%    = %s_info%.time_id(%j%)
+$icode%n_time%    = %s_info%.time_size()
 %$$
-$icode%i_type%  = %s_info%.%type%_like_id(%i%, %j%)
+$icode%a_id%      = %s_info%.age_id(%i%)
 %$$
-$icode%m_type%  = %s_info%.mulstd_%type%()
+$icode%t_id%      = %s_info%.time_id(%j%)
+%$$
+$icode%i_type%    = %s_info%.%type%_like_id(%i%, %j%)
+%$$
+$icode%m_type%    = %s_info%.mulstd_%type%()
 %$$
 
 $head Purpose$$
@@ -74,7 +72,13 @@ $cref/dtime_like_id/smooth_grid_table/dtime_like_id/$$ is $code -1$$
 for the maximum time points and on the maximum time points.
 $lend
 
-$head Constructor From Table$$
+$head s_info$$
+In all its uses, except during construction,
+this object has prototype
+$codei%
+	const smooth_info %s_info%
+%$$
+The mean of the corresponding constructor arguments are specified below:
 
 $subhead smooth_id$$
 This argument has prototype
@@ -103,8 +107,9 @@ This result has type $code smooth_info$$.
 All of the functions calls in the syntax above are $code const$$; i.e.,
 they do not modify $icode s_info$$.
 
-$head Testing Constructor$$
-This constructor is used for testing purposes only:
+$head w_test$$
+This constructor is used for testing purposes only.
+The meaning of its arguments are specified below:
 
 $subhead age_id$$
 This argument has prototype
@@ -155,6 +160,12 @@ $codei%
 	%s_info%.mulstd_dage()   = %mulstd_dage%
 	%s_info%.mulstd_dtime()  = %mulstd_dtime%
 %$$ 
+
+$head s_default$$
+This is the default constructor. It can be used to create
+an empty $code smooth_info$$ object that is later set equal
+to another $code weight_info$$ object.
+This is useful when creating vectors of such objects.
 
 $head n_age$$
 This result has prototype
@@ -307,7 +318,34 @@ size_t smooth_info::mulstd_dage(void)  const
 {	return mulstd_dage_; }
 size_t smooth_info::mulstd_dtime(void) const
 {	return mulstd_dtime_; }
-//
+
+// Assigmnet Operator
+void smooth_info::operator=(const smooth_info& s_info)
+{	age_id_          = s_info.age_id_;
+	time_id_         = s_info.time_id_;
+	value_like_id_   = s_info.value_like_id_;
+	dage_like_id_    = s_info.dage_like_id_;
+	dtime_like_id_   = s_info.dtime_like_id_;
+	mulstd_value_    = s_info.mulstd_value_;
+	mulstd_dage_     = s_info.mulstd_dage_;
+	mulstd_dtime_    = s_info.mulstd_dtime_;
+}
+
+
+// Default constructor
+smooth_info::smooth_info(void)
+:
+age_id_(0),
+time_id_(0),
+value_like_id_(0),
+dage_like_id_(0),
+dtime_like_id_(0),
+mulstd_value_(0),
+mulstd_dage_(0),
+mulstd_dtime_(0)
+{ }
+
+
 // Testing Constructor
 smooth_info::smooth_info(
 	const CppAD::vector<size_t>& age_id         ,
@@ -318,22 +356,23 @@ smooth_info::smooth_info(
 	size_t                       mulstd_value   ,
 	size_t                       mulstd_dage    ,
 	size_t                       mulstd_dtime   )
-	{	age_id_          = age_id;
-		time_id_         = time_id;
-		value_like_id_   = value_like_id;
-		dage_like_id_    = dage_like_id;
-		dtime_like_id_   = dtime_like_id;
-		mulstd_value_    = mulstd_value;
-		mulstd_dage_     = mulstd_dage;
-		mulstd_dtime_    = mulstd_dtime;
+{	age_id_          = age_id;
+	time_id_         = time_id;
+	value_like_id_   = value_like_id;
+	dage_like_id_    = dage_like_id;
+	dtime_like_id_   = dtime_like_id;
+	mulstd_value_    = mulstd_value;
+	mulstd_dage_     = mulstd_dage;
+	mulstd_dtime_    = mulstd_dtime;
 # ifndef NDEBUG
-		for(size_t i = 1; i < age_id.size(); i++)
-			assert( age_id[i-1] < age_id[i] );
-		for(size_t j = 1; j < time_id.size(); j++)
-			assert( time_id[j-1] < time_id[j] );
+	for(size_t i = 1; i < age_id.size(); i++)
+		assert( age_id[i-1] < age_id[i] );
+	for(size_t j = 1; j < time_id.size(); j++)
+		assert( time_id[j-1] < time_id[j] );
 # endif
-	}
-// Constructor
+}
+
+// Normal Constructor
 smooth_info::smooth_info(
 	size_t                                   smooth_id         ,
 	const CppAD::vector<smooth_struct>&      smooth_table      ,

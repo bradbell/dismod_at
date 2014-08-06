@@ -36,7 +36,11 @@ private:
 	// like_id for multiplier of dtime likelihood standard deviations
 	size_t mulstd_dtime_;
 public:
-	// constructor
+	// assignment operator
+	void operator=(const smooth_info& s_info);
+	// default constructor
+	smooth_info(void);
+	// normal constructor
 	smooth_info(
 		size_t                                   smooth_id         ,
 		const CppAD::vector<smooth_struct>&      smooth_table      ,

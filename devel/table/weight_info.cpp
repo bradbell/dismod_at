@@ -22,17 +22,21 @@ $section Extract and Organize Information for One Weighting Function$$
 $head Syntax$$
 $codei%weight_info %w_info%(%weight_id% , %weight_grid_table%)
 %$$
-$codei%weight_info %w_info%( %age_id%, %time_id%, %weight%)
+$codei%weight_info %w_test%( %age_id%, %time_id%, %weight%)
 %$$
-$icode%n_age%  = %w_info%.age_size()
+$codei%weight_info %w_default%()
 %$$
-$icode%n_time% = %w_info%.time_size()
+$icode%w_default% = %w_info%
 %$$
-$icode%a_id%   = %w_info%.age_id(%i%)
+$icode%n_age%     = %w_info%.age_size()
 %$$
-$icode%t_id%   = %w_info%.time_id(%j%)
+$icode%n_time%    = %w_info%.time_size()
 %$$
-$icode%w%      = %w_info%.weight(%i%, %j%)
+$icode%a_id%      = %w_info%.age_id(%i%)
+%$$
+$icode%t_id%      = %w_info%.time_id(%j%)
+%$$
+$icode%w%         = %w_info%.weight(%i%, %j%)
 %$$
 
 $head Purpose$$
@@ -41,7 +45,13 @@ the $cref weight_grid_table$$.
 In addition, this routine checks the $code weight_info$$ table
 $cref/rectangular grid/weight_grid_table/Rectangular Grid/$$ assumption.
 
-$head Constructor From Table$$
+$head w_info$$
+In all its uses, except during construction,
+this object has prototype
+$codei%
+	const weight_info %w_info%
+%$$
+The mean of the corresponding constructor arguments are specified below:
 
 $subhead weight_id$$
 This argument has prototype
@@ -63,8 +73,9 @@ This result has type $code weight_info$$.
 All of the functions calls in the syntax above are $code const$$; i.e.,
 they do not modify $icode w_info$$.
 
-$head Constructor From Vectors$$
-This constructor is used for testing purposes only:
+$head w_test$$
+This constructor is used for testing purposes only.
+The meaning of its arguments are specified below:
 
 $subhead age_id$$
 This argument has prototype
@@ -75,7 +86,6 @@ It specifies the age grid indices; i.e.
 $codei%
 	%w_info%.age_id(%i%) = %age_id%[%i%]
 %$$ 
-
 
 $subhead time_id$$
 This argument has prototype
@@ -97,6 +107,11 @@ $codei%
 	%w_info%.weight(%i%, %j%) = %time_id%[%i%*%n_time% + %j%]
 %$$ 
 
+$head w_default$$
+This is the default constructor. It can be used to create
+an empty $code weight_info$$ object that is later set equal
+to another $code weight_info$$ object.
+This is useful when creating vectors of such objects.
 
 $head n_age$$
 This result has prototype
@@ -214,13 +229,16 @@ void weight_info::operator=(const weight_info& w_info)
 	time_id_ = w_info.time_id_;
 	weight_  = w_info.weight_;
 }
+
 // Default constructor
 weight_info::weight_info(void)
-: age_id_(0),
+:
+age_id_(0),
 time_id_(0) ,
 weight_(0)
 { }
-// Vector Constructor
+
+// Testing Constructor
 weight_info::weight_info(
 	const CppAD::vector<size_t>& age_id    ,
 	const CppAD::vector<size_t>& time_id   ,
@@ -229,7 +247,7 @@ weight_info::weight_info(
 	time_id_ = time_id;
 	weight_  = weight;
 }
-// Table Constructor
+// Normal Constructor
 weight_info::weight_info(
 	size_t                                   weight_id         ,
 	const CppAD::vector<weight_grid_struct>& weight_grid_table )
