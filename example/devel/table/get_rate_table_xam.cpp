@@ -46,9 +46,9 @@ bool get_rate_table_xam(void)
 			"rate_name        text,"
 			"parent_smooth_id int,"
 			"child_smooth_id  int)",
+		"insert into rate values(0, 'iota',  0, 1)",
 		"insert into rate values(1, 'rho',   0, 1)",
 		"insert into rate values(2, 'chi',   0, 1)",
-		"insert into rate values(0, 'iota',  0, 1)",
 		"insert into rate values(3, 'omega', 0, 1)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);

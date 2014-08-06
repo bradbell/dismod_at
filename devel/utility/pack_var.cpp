@@ -25,12 +25,12 @@ $$
 $section Pack Variables: Constructor$$
 
 $head Syntax$$
-$codei%pack_var %var%(
+$codei%pack_var %var_info%(
 	%n_integrand%,  %n_child%,      %pini_smooth_id%,
 	%smooth_table%, %mulcov_table%, %rate_table%
 )
 %$$
-$icode%size%  = %var%.size()
+$icode%size%  = %var_info%.size()
 %$$
 
 $head n_integrand$$
@@ -260,15 +260,15 @@ $$
 $section Pack Variables: Standard Deviations Multipliers$$
 
 $head Syntax$$
-$icode%n_var% = %var%.pini_size()
+$icode%n_var% = %var_info%.pini_size()
 %$$
-$icode%offset% = %var%.pini_offset()
+$icode%offset% = %var_info%.pini_offset()
 %$$
 
 $head var$$
 This object has prototype
 $codei%
-	const pack_var %var%
+	const pack_var %var_info%
 %$$
 
 $subhead n_var$$
@@ -312,13 +312,13 @@ $$
 $section Pack Variables: Standard Deviations Multipliers$$
 
 $head Syntax$$
-$icode%offset% = %var%.mulstd_offset(%smooth_id%)
+$icode%offset% = %var_info%.mulstd_offset(%smooth_id%)
 %$$
 
 $head var$$
 This object has prototype
 $codei%
-	const pack_var %var%
+	const pack_var %var_info%
 %$$
 
 $head smooth_id$$
@@ -366,13 +366,13 @@ $$
 $section Pack Variables: Measurement Multipliers$$
 
 $head Syntax$$
-$icode%n_cov% = %var%.meas_mean_mulcov_n_cov(%integrand_id%)
+$icode%n_cov% = %var_info%.meas_mean_mulcov_n_cov(%integrand_id%)
 %$$
-$icode%n_cov% = %var%.meas_std_mulcov_n_cov(%integrand_id%)
+$icode%n_cov% = %var_info%.meas_std_mulcov_n_cov(%integrand_id%)
 %$$
-$icode%info% = %var%.meas_mean_mulcov_info(%integrand_id%, %j%)
+$icode%info% = %var_info%.meas_mean_mulcov_info(%integrand_id%, %j%)
 %$$
-$icode%info% = %var%.meas_std_mulcov_info(%integrand_id%, %j%)
+$icode%info% = %var_info%.meas_std_mulcov_info(%integrand_id%, %j%)
 %$$
 
 $head meas_mean$$
@@ -398,7 +398,7 @@ $$
 $head var$$
 This object has prototype
 $codei%
-	const pack_var %var%
+	const pack_var %var_info%
 %$$
 
 $head integrand_id$$
@@ -492,9 +492,9 @@ $$
 $section Pack Variables: Rate Multipliers$$
 
 $head Syntax$$
-$icode%n_cov% = %var%.rate_mean_mulcov_n_cov(%rate_id%)
+$icode%n_cov% = %var_info%.rate_mean_mulcov_n_cov(%rate_id%)
 %$$
-$icode%info% = %var%.rate_mean_mulcov_info(%rate_id%)
+$icode%info% = %var_info%.rate_mean_mulcov_info(%rate_id%)
 %$$
 
 $head mulcov_info$$
@@ -507,7 +507,7 @@ $$
 $head var$$
 This object has prototype
 $codei%
-	const pack_var %var%
+	const pack_var %var_info%
 %$$
 
 $head rate_id$$
@@ -590,15 +590,15 @@ $$
 $section Pack Variables: Rates$$
 
 $head Syntax$$
-$icode%n_var% = %var%.rate_n_var(%rate_id%)
+$icode%n_var% = %var_info%.rate_n_var(%rate_id%)
 %$$
-$icode%offset% = %var%.rate_offset(%rate_id%, %j%)
+$icode%offset% = %var_info%.rate_offset(%rate_id%, %j%)
 %$$
 
 $head var$$
 This object has prototype
 $codei%
-	const pack_var %var%
+	const pack_var %var_info%
 %$$
 
 $head rate_id$$
