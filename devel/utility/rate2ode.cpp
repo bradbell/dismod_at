@@ -11,23 +11,25 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin rate2ode$
 
-$section Interpolating the Rates onto the ODE grid$$
+$section Computing the Rates on the ODE grid$$
 
 $head Syntax$$
-$codei%rate2ode %r2ode%(
+$codei%rate2ode %rate_ode%(
 	%n_age_ode%, %n_time_ode%, %ode_step_size% , %age_table%, %time_table%, 
-	%s_info_vec%, %rate_table%
+	%s_info_ptr%, %rate_table%
 )%$$
 $codei%
-%rate_ode% = %r2ode%.interpolate(%rate_id%, %rate_si%, %ode_index% )%$$
+%rate% = %rate_ode%.compute(
+	%rate_id%, %data_id%, %var_info%, %var_vec%, %ode_index%
+)%$$
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
 $code double$$, $code CppAD::AD<double>$$
 
 $head rate2ode$$
-This constructs an object that interpolates from 
-the specified smoothing grid to the ode grid.
+This constructs an object that computes the rates on the
+ode grid.
 
 $subhead n_age_ode$$
 This argument has prototype
@@ -67,26 +69,32 @@ $codei%
 %$$
 and is the time values corresponding to the $icode time_id$$ values.
 
-$subhead s_info_vec$$
+$head s_info_ptr$$
 This argument has prototype
 $codei%
-	const CppAD::vector<smooth_info>& %s_info_vec%
+	const CppAD::vector<smooth_info*> %smooth_info_ptr%
 %$$
-and its size is equal to $icode n_smooth$$ the number of rows in the
-$cref/smooth/smooth_table/$$ table.
-For $icode%smooth_id% = 0 , %...%, %s_info_vec%.size()%$$,
+Let $icode n_smooth$$ be the number of rows in the
+$cref smooth_table$$.
+For $icode%smooth_id% = 0 , %...%, %n_smooth%-1%$$ the value
+$codei%
+	*(%smooth_info_ptr%[%smooth_id%])
+%$$
+is the $cref smooth_info$$ information for the corresponding
+$cref/smooth_id/smooth_grid_table/smooth_id/$$.
+For $icode%smooth_id% = 0 , %...%, %n_smooth%-1%$$,
 we use the following notation:
 $codei%
 	%si%                    = %smooth_id%
-	%n_age%(%si%)           = %s_info_vec%[%smooth_id%].age_size()
-	%n_time%(%si%)          = %s_info_vec%[%smooth_id%].time_size()
-	%age_id%(%si%, %i_si%)  = %s_info_vec%[%smooth_id%].age_id(%i_si%)
-	%time_id%(%si%, %j_si%) = %s_info_vec%[%smooth_id%].time_id(%j_si%)
+	%n_age%(%si%)           = %s_info_ptr%[%smooth_id%]->age_size()
+	%n_time%(%si%)          = %s_info_ptr%[%smooth_id%]->time_size()
+	%age_id%(%si%, %i_si%)  = %s_info_ptr%[%smooth_id%]->age_id(%i_si%)
+	%time_id%(%si%, %j_si%) = %s_info_ptr%[%smooth_id%]->time_id(%j_si%)
 %$$
 where $icode%i_si% < %n_age%(%si%)%$$ and
 $icode%j_si% < %n_time%(%si%)%$$.
 Note that these are the only functions of
-$icode%s_info_vec%[%smooth_id%]%$$ that are used.
+$icode%s_info_ptr%[%smooth_id%]%$$ that are used.
 
 $head rate_table$$
 This argument has prototype
@@ -96,9 +104,9 @@ $codei%
 and is the 
 $cref/rate_table/get_rate_table/rate_table/$$.
 
-$head interpolate$$
+$head compute$$
 This is a $code const$$ function 
-that interpolates rates from thier smoothing grid to the ode grid.
+that computes the value for one rate on a speicified set of ode grid points.
 
 $subhead rate_id$$
 This argument has prototype
@@ -106,27 +114,22 @@ $codei%
 	size_t %rate_id%
 %$$
 and is the $cref/rate_id/rate_table/rate_id/$$ for the 
-rate that we are interpolating.
+rate that we are computing.
 
-$subhead rate_si$$
+$subhead var_info$$
 This argument has prototype
 $codei%
-	const CppAD::vector<%Float%>& %rate_si%
+	const var_pack& var_info
 %$$
-and its size is $icode%n_age%(%si%)%*%n_time%(%si%)%$$ where 
+and is the $cref var_pack$$ information for this model.
+
+$subhead var_vec$$
+This argument has prototype
 $codei%
-	%si% = %rate_table%[%rate_id%].smooth_id
+	const CppAD::vector<%Float%>& %var_vec%
 %$$
-For $icode%i_si% = 0 , %...%, %n_age%(%si%)-1%$$,
-$icode%j_si% = 0 , %...%, %n_time%(%si%)-1%$$,
-$codei%
-	%rate_si%[ %i_si% * %n_time%(%si%) + %j_si% ]
-%$$
-is the value of the variable of the rate being interpolated at
-$codei%
-	%age%  =  %age_table%[  %age_id%(%si%, %i_si%) ] 
-	%time% = %time_table%[ %time_id%(%si%, %j_si%) ] 
-%$$
+and is the value for all the variables in the model,
+in the order and sizes prescribed by $icode var_info$$.
 
 $subhead ode_index$$
 This argument has prototype
@@ -145,17 +148,17 @@ $codei%
 	%j%(%k%) = mod( %ode_index%[%k%], %n_time_ode% )
 %$$
 
-$subhead rate_ode$$
+$subhead rate$$
 This return value has prototype
 $codei%
-	const CppAD::vector<%Float%>& %rate_ode%
+	const CppAD::vector<%Float%>& %rate%
 %$$
 and its size is $icode%ode_index%.size()%$$.
 For $icode%k% = 0 , %...%, %ode_index%.size()-1%$$,
 $codei%
-	%rate_ode%[ %k% ]
+	%rate%[ %k% ]
 %$$
-is the interpolated value for the rate at
+is the computed value for the rate at
 $codei%
 	%age%  = %a_i% =  %age_table%[0] + %i%(%k%) * %ode_step_size%
 	%time% = %t_j% = %time_table%[0] + %j%(%k%) * %ode_step_size%
@@ -180,14 +183,14 @@ rate2ode::rate2ode(
 	double                                      ode_step_size ,
 	const CppAD::vector<double>&                age_table     ,
 	const CppAD::vector<double>&                time_table    ,
-	const CppAD::vector<smooth_info>&           s_info_vec    ,
+	const CppAD::vector<smooth_info>&           s_info_ptr    ,
 	const CppAD::vector<rate_struct>&           rate_table    )
-{	size_t n_smooth = s_info_vec.size();
+{	size_t n_smooth = s_info_ptr.size();
 
 	// s2ode_ptr_
 	s2ode_ptr_.resize( n_smooth );
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	const smooth_info& s_info = s_info_vec[smooth_id];
+	{	const smooth_info& s_info = s_info_ptr[smooth_id];
 		s2ode_ptr[smooth_id] = new smooth2ode(
 			n_age_ode, n_time_ode, ode_step_size, age_table, time_table,
 			s_info
@@ -201,8 +204,8 @@ rate2ode::rate2ode(
 		rate_id2smooth_id[rate_id] = parent_smooth_id;
 
 		size_t child_smooth_id  = rate_table[rate_id].child_smooth_id;
-		const smooth_info& s_info_parent = s_info_vec[parent_smooth_id];
-		const smooth_info& s_info_child  = s_info_vec[child_smooth_id];
+		const smooth_info& s_info_parent = s_info_ptr[parent_smooth_id];
+		const smooth_info& s_info_child  = s_info_ptr[child_smooth_id];
 
 		// check that, as far as smooth_info is concerned,
 		// child_smooth_id is same as parent_smooth_id
