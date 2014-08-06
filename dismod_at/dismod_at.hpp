@@ -51,6 +51,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "include/open_connection.hpp"
 # include "include/smooth_info.hpp"
 # include "include/table_error_exit.hpp"
-# include "include/weight_grid.hpp"
+# include "include/weight_info.hpp"
 
 # endif

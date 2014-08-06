@@ -18,7 +18,7 @@ $spell
 	struct
 	enum
 	const
-	wg_vec
+	w_info_vec
 	CppAD
 	dismod
 $$
@@ -27,7 +27,7 @@ $section Integrand Average For Each Data Point$$
 
 $head Syntax$$
 $codei%avg_integrand %avg%(
-	%wg_vec%, 
+	%w_info_vec%, 
 	%data_table%, 
 	%integrand_table%,
 	%age_table%,
@@ -54,16 +54,16 @@ This constructs an object that can evaluate the
 $cref/average integrand/model_data_mean/Average Integrand/$$ 
 for each data point. 
 
-$subhead wg_vec$$
+$subhead w_info_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<weight_grid>& %wg_vec%
+	const CppAD::vector<weight_info>& %w_info_vec%
 %$$
 For each $cref/weight_id/weight_table/weight_id/$$,
 $codei%
-	%wg_vec%[ %weight_id% ]
+	%w_info_vec%[ %weight_id% ]
 %$$
-is the corresponding $cref weight_grid$$ information.
+is the corresponding $cref weight_info$$ information.
 
 $subhead data_table$$
 This argument has prototype
@@ -216,7 +216,7 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 avg_integrand::avg_integrand(
-	const CppAD::vector<weight_grid>&    wg_vec          ,                 
+	const CppAD::vector<weight_info>&    w_info_vec      ,                 
 	const CppAD::vector<data_struct>&    data_table      ,
 	const CppAD::vector<integrand_enum>& integrand_table ,
 	const CppAD::vector<double>&         age_table       ,
@@ -313,9 +313,9 @@ ode_step_size_(ode_step_size)
 			c_sum[k] = 0.0;
 
 		// weight grid for this data point
-		const weight_grid& wg( wg_vec[ data_table[data_id].weight_id ] );
-		size_t i_wg = 0;
-		size_t j_wg = 0;
+		const weight_info& w_info( w_info_vec[ data_table[data_id].weight_id ] );
+		size_t i_wi = 0;
+		size_t j_wi = 0;
 
 		// loop over all the ode rectangles that are within limits
 		CppAD::vector<double> w(4), c(4);
@@ -354,10 +354,10 @@ ode_step_size_(ode_step_size)
 					double a = age_lower;
 					double d = (a2 - a1);
 					w_pair.first = interp_weight(
-						a, t1, wg, age_table, time_table, i_wg, j_wg
+						a, t1, w_info, age_table, time_table, i_wi, j_wi
 					);
 					w_pair.second = interp_weight(
-						a, t2, wg, age_table, time_table, i_wg, j_wg
+						a, t2, w_info, age_table, time_table, i_wi, j_wi
 					);
 					c_pair = integrate_1d(t_pair, s_pair, w_pair);
 					c[0]   = c_pair.first  * (a2 - a) / d;
@@ -370,10 +370,10 @@ ode_step_size_(ode_step_size)
 					double t = time_lower;
 					double d = (t2 - t1);
 					w_pair.first = interp_weight(
-						a1, t, wg, age_table, time_table, i_wg, j_wg
+						a1, t, w_info, age_table, time_table, i_wi, j_wi
 					);
 					w_pair.second = interp_weight(
-						a2, t, wg, age_table, time_table, i_wg, j_wg
+						a2, t, w_info, age_table, time_table, i_wi, j_wi
 					);
 					c_pair = integrate_1d(a_pair, b_pair, w_pair);
 					c[0]   = c_pair.first  * (t2 - t) / d;
@@ -383,13 +383,13 @@ ode_step_size_(ode_step_size)
 				}
 				else 
 				{	w[0] = interp_weight(
-						a1, t1, wg, age_table, time_table, i_wg, j_wg);
+						a1, t1, w_info, age_table, time_table, i_wi, j_wi);
 					w[1] = interp_weight(
-						a1, t2, wg, age_table, time_table, i_wg, j_wg);
+						a1, t2, w_info, age_table, time_table, i_wi, j_wi);
 					w[2] = interp_weight(
-						a2, t1, wg, age_table, time_table, i_wg, j_wg);
+						a2, t1, w_info, age_table, time_table, i_wi, j_wi);
 					w[3] = interp_weight(
-						a2, t2, wg, age_table, time_table, i_wg, j_wg);
+						a2, t2, w_info, age_table, time_table, i_wi, j_wi);
 					//
 					c = integrate_2d(a_pair, t_pair, b_pair, s_pair, w);
 				}

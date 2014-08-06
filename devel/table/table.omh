@@ -38,7 +38,7 @@ $childtable%
 	%devel/table/get_weight_table.cpp
 	%devel/table/smooth_info.cpp
 	%devel/table/table_error_exit.cpp
-	%devel/table/weight_grid.cpp
+	%devel/table/weight_info.cpp
 %$$
 
 $end

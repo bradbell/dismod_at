@@ -14,7 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 # include "get_data_table.hpp"
 # include "get_integrand_table.hpp"
-# include "weight_grid.hpp"
+# include "weight_info.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -35,7 +35,7 @@ private:
 	CppAD::vector<ode_subgrid> data_info_;
 public:
 	avg_integrand(
-		const CppAD::vector<weight_grid>&    wg_vec          ,
+		const CppAD::vector<weight_info>&    w_info_vec      ,
 		const CppAD::vector<data_struct>&    data_table      ,
 		const CppAD::vector<integrand_enum>& integrand_table ,
 		const CppAD::vector<double>&         age_table       ,

@@ -9,36 +9,36 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin weight_grid$$
+$begin weight_info$$
 $spell
 	const
 	CppAD
 	struct
-	wg
+	w_info
 $$
 
 $section Extract and Organize Information for One Weighting Function$$
 
 $head Syntax$$
-$codei%weight_grid %wg%(%weight_id% , %weight_grid_table%)
+$codei%weight_info %w_info%(%weight_id% , %weight_grid_table%)
 %$$
-$codei%weight_grid %wg%( %age_id%, %time_id%, %weight%)
+$codei%weight_info %w_info%( %age_id%, %time_id%, %weight%)
 %$$
-$icode%n_age%  = %wg%.age_size()
+$icode%n_age%  = %w_info%.age_size()
 %$$
-$icode%n_time% = %wg%.time_size()
+$icode%n_time% = %w_info%.time_size()
 %$$
-$icode%a_id%   = %wg%.age_id(%i%)
+$icode%a_id%   = %w_info%.age_id(%i%)
 %$$
-$icode%t_id%   = %wg%.time_id(%j%)
+$icode%t_id%   = %w_info%.time_id(%j%)
 %$$
-$icode%w%      = %wg%.weight(%i%, %j%)
+$icode%w%      = %w_info%.weight(%i%, %j%)
 %$$
 
 $head Purpose$$
 Extracts the information for one weighting from
 the $cref weight_grid_table$$.
-In addition, this routine checks the $code weight_grid$$ table
+In addition, this routine checks the $code weight_info$$ table
 $cref/rectangular grid/weight_grid_table/Rectangular Grid/$$ assumption.
 
 $head Constructor From Table$$
@@ -49,7 +49,7 @@ $codei%
 	size_t %weight_id%
 %$$
 and is the $cref/weight_id/weight_grid_table/weight_id/$$ for the
-weighting that $icode wg$$ corresponds to.
+weighting that $icode w_info$$ corresponds to.
 
 $subhead weight_grid_table$$
 This argument has prototype
@@ -58,10 +58,10 @@ $codei%
 %$$
 an is the $cref weight_grid_table$$.
 
-$subhead wg$$
-This result has type $code weight_grid$$.
+$subhead w_info$$
+This result has type $code weight_info$$.
 All of the functions calls in the syntax above are $code const$$; i.e.,
-they do not modify $icode wg$$.
+they do not modify $icode w_info$$.
 
 $head Constructor From Vectors$$
 This constructor is used for testing purposes only:
@@ -73,7 +73,7 @@ $codei%
 %$$
 It specifies the age grid indices; i.e.
 $codei%
-	%wg%.age_id(%i%) = %age_id%[%i%]
+	%w_info%.age_id(%i%) = %age_id%[%i%]
 %$$ 
 
 
@@ -84,7 +84,7 @@ $codei%
 %$$
 It specifies the time grid indices; i.e.
 $codei%
-	%wg%.time_id(%i%) = %time_id%[%i%]
+	%w_info%.time_id(%i%) = %time_id%[%i%]
 %$$ 
 
 $subhead weight$$
@@ -94,7 +94,7 @@ $codei%
 %$$
 It specifies the weight grid values in row major order; i.e.
 $codei%
-	%wg%.weight(%i%, %j%) = %time_id%[%i%*%n_time% + %j%]
+	%w_info%.weight(%i%, %j%) = %time_id%[%i%*%n_time% + %j%]
 %$$ 
 
 
@@ -135,7 +135,7 @@ and is the $th i$$ $cref/age_id/weight_grid_table/age_id/$$
 for this weighting and increases with $icode i$$; i.e.,
 for $icode%i% < %n_age%-2%$$
 $codei%
-	%wg%.age_id(%i%) < %wg%.age_id(%i%+1)
+	%w_info%.age_id(%i%) < %w_info%.age_id(%i%+1)
 %$$
 
 $head t_id$$
@@ -147,7 +147,7 @@ and is the $th j$$ $cref/time_id/weight_grid_table/time_id/$$
 for this weighting and increases with $icode j$$; i.e.,
 for $icode%j% < %n_time%-2%$$
 $codei%
-	%wg%.time_id(%j%) < %wg%.time_id(%j%+1)
+	%w_info%.time_id(%j%) < %w_info%.time_id(%j%+1)
 %$$
 
 $head w$$
@@ -157,15 +157,15 @@ $codei%
 %$$
 and is the weighting for the corresponding age and time indices.
 
-$children%example/devel/table/weight_grid_xam.cpp
+$children%example/devel/table/weight_info_xam.cpp
 %$$
 $head Example$$
-The file $cref weight_grid_xam.cpp$$ contains an example that uses
+The file $cref weight_info_xam.cpp$$ contains an example that uses
 this function.
 
 $end
 */
-# include <dismod_at/include/weight_grid.hpp>
+# include <dismod_at/include/weight_info.hpp>
 
 namespace {
 	void unique_insert_sort(
@@ -191,37 +191,37 @@ namespace {
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-size_t weight_grid::age_size(void) const
+size_t weight_info::age_size(void) const
 {	return age_id_.size(); }
-size_t weight_grid::time_size(void) const
+size_t weight_info::time_size(void) const
 {	return time_id_.size(); }
 //
-size_t weight_grid::age_id(size_t i) const
+size_t weight_info::age_id(size_t i) const
 {	return age_id_[i]; }
 
-size_t weight_grid::time_id(size_t j) const
+size_t weight_info::time_id(size_t j) const
 {	return time_id_[j]; }
 //
-double weight_grid::weight(size_t i, size_t j) const
+double weight_info::weight(size_t i, size_t j) const
 {	assert( i < age_id_.size() );
 	assert( j < time_id_.size() );
 	return weight_[ i * time_id_.size() + j]; 
 }
 
 // Assignment operator
-void weight_grid::operator=(const weight_grid& wg)
-{	age_id_ =  wg.age_id_;
-	time_id_ = wg.time_id_;
-	weight_  = wg.weight_;
+void weight_info::operator=(const weight_info& w_info)
+{	age_id_ =  w_info.age_id_;
+	time_id_ = w_info.time_id_;
+	weight_  = w_info.weight_;
 }
 // Default constructor
-weight_grid::weight_grid(void)
+weight_info::weight_info(void)
 : age_id_(0),
 time_id_(0) ,
 weight_(0)
 { }
 // Vector Constructor
-weight_grid::weight_grid(
+weight_info::weight_info(
 	const CppAD::vector<size_t>& age_id    ,
 	const CppAD::vector<size_t>& time_id   ,
 	const CppAD::vector<double>& weight    )
@@ -230,7 +230,7 @@ weight_grid::weight_grid(
 	weight_  = weight;
 }
 // Table Constructor
-weight_grid::weight_grid(
+weight_info::weight_info(
 	size_t                                   weight_id         ,
 	const CppAD::vector<weight_grid_struct>& weight_grid_table )
 {	size_t i, j, id;

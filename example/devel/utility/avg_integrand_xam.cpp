@@ -75,10 +75,10 @@ bool avg_integrand_xam(void)
 	for(k = 0; k < n_age_grid * n_time_grid; k++)
 		weight[k] = 0.5;
 	//
-	// wg_vec
-	dismod_at::weight_grid wg(age_id, time_id, weight);
-	vector<dismod_at::weight_grid> wg_vec(1);
-	wg_vec[0] = wg;
+	// w_info_vec
+	dismod_at::weight_info w_info(age_id, time_id, weight);
+	vector<dismod_at::weight_info> w_info_vec(1);
+	w_info_vec[0] = w_info;
 	//
 	size_t n_integrand = dismod_at::number_integrand_enum;
 	vector<dismod_at::integrand_enum> integrand_table(n_integrand);
@@ -124,7 +124,7 @@ bool avg_integrand_xam(void)
 	data_table[data_id].time_upper   = time_min;
 	
 	dismod_at::avg_integrand avg(
-		wg_vec,
+		w_info_vec,
 		data_table,
 		integrand_table,
 		age_table,

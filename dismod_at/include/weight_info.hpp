@@ -8,15 +8,15 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_WEIGHT_GRID_HPP
-# define DISMOD_AT_WEIGHT_GRID_HPP
+# ifndef DISMOD_AT_WEIGHT_INFO_HPP
+# define DISMOD_AT_WEIGHT_INFO_HPP
 
 # include <cppad/cppad.hpp>
 # include "get_weight_grid.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-class weight_grid {
+class weight_info {
 private:
 	// grid of age values for this weighting
 	CppAD::vector<size_t> age_id_;
@@ -25,14 +25,14 @@ private:
 	// vector of weights for each age, time pair
 	CppAD::vector<double> weight_;
 public:
-	void operator=(const weight_grid& wg);
-	weight_grid(void);
-	weight_grid(
+	void operator=(const weight_info& w_info);
+	weight_info(void);
+	weight_info(
 		const CppAD::vector<size_t>& age_id    ,
 		const CppAD::vector<size_t>& time_id   ,
 		const CppAD::vector<double>& weight
 	);
-	weight_grid(
+	weight_info(
 		size_t                                   weight_id         ,
 		const CppAD::vector<weight_grid_struct>& weight_grid_table
 	);

@@ -9,27 +9,27 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin weight_grid_xam.cpp$$
+$begin weight_info_xam.cpp$$
 $spell
 	xam
 $$
 
-$section C++ weight_grid: Example and Test$$
-$index example, C++ weight_grid$$
+$section C++ weight_info: Example and Test$$
+$index example, C++ weight_info$$
 $index weight_grid, C++ example$$
 
 $code
-$verbatim%example/devel/table/weight_grid_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/weight_info_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
 // BEGIN C++
-# include <dismod_at/include/weight_grid.hpp>
+# include <dismod_at/include/weight_info.hpp>
 # include <dismod_at/include/exec_sql_cmd.hpp>
 # include <dismod_at/include/open_connection.hpp>
 
-bool weight_grid_xam(void)
+bool weight_info_xam(void)
 {
 	bool   ok = true;
 	using  std::string;
@@ -66,24 +66,24 @@ bool weight_grid_xam(void)
 
 	// extract the weight_grid information
 	size_t weight_id = 1;
-	dismod_at::weight_grid  wg(weight_id, weight_grid_table);
+	dismod_at::weight_info w_info(weight_id, weight_grid_table);
 
-	ok  &= wg.age_size()  == 3;
-	ok  &= wg.time_size() == 2;
+	ok  &= w_info.age_size()  == 3;
+	ok  &= w_info.time_size() == 2;
 	//
-	ok  &= wg.age_id(0)    == 0;
-	ok  &= wg.age_id(1)    == 2;
-	ok  &= wg.age_id(2)    == 4;
+	ok  &= w_info.age_id(0)    == 0;
+	ok  &= w_info.age_id(1)    == 2;
+	ok  &= w_info.age_id(2)    == 4;
 	//
-	ok  &= wg.time_id(0)   == 0;
-	ok  &= wg.time_id(1)   == 1;
+	ok  &= w_info.time_id(0)   == 0;
+	ok  &= w_info.time_id(1)   == 1;
 	//
-	ok  &= wg.weight(0,0)  == 0.50;
-	ok  &= wg.weight(1,0)  == 0.75;
-	ok  &= wg.weight(2,0)  == 1.00;
-	ok  &= wg.weight(0,1)  == 1.00;
-	ok  &= wg.weight(1,1)  == 1.25;
-	ok  &= wg.weight(2,1)  == 1.50;
+	ok  &= w_info.weight(0,0)  == 0.50;
+	ok  &= w_info.weight(1,0)  == 0.75;
+	ok  &= w_info.weight(2,0)  == 1.00;
+	ok  &= w_info.weight(0,1)  == 1.00;
+	ok  &= w_info.weight(1,1)  == 1.25;
+	ok  &= w_info.weight(2,1)  == 1.50;
  	//
 	// close database and return
 	sqlite3_close(db);
