@@ -124,14 +124,14 @@ bool avg_integrand_xam(void)
 	data_table[data_id].time_upper   = time_min;
 	
 	dismod_at::avg_integrand avg(
-		w_info_vec,
-		data_table,
-		integrand_table,
-		age_table,
-		time_table,
 		n_age_ode,
 		n_time_ode,
-		ode_step_size
+		ode_step_size,
+		age_table,
+		time_table,
+		integrand_table,
+		data_table,
+		w_info_vec
 	);
 
 	// normally S and C solve ODE but that is not necessary for these tests.

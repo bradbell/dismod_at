@@ -27,14 +27,14 @@ $section Integrand Average For Each Data Point$$
 
 $head Syntax$$
 $codei%avg_integrand %avg%(
-	%w_info_vec%, 
-	%data_table%, 
-	%integrand_table%,
-	%age_table%,
-	%time_table%,
 	%n_age_ode%,
 	%n_time_ode%,
-	%ode_step_size%
+	%ode_step_size%,
+	%age_table%,
+	%time_table%,
+	%integrand_table%,
+	%data_table%, 
+	%w_info_vec%
 )%$$
 $codei%
 %data_mean% = %avg%.compute(
@@ -53,54 +53,6 @@ $head avg_integrand$$
 This constructs an object that can evaluate the 
 $cref/average integrand/model_data_mean/Average Integrand/$$ 
 for each data point. 
-
-$subhead w_info_vec$$
-This argument has prototype
-$codei%
-	const CppAD::vector<weight_info>& %w_info_vec%
-%$$
-For each $cref/weight_id/weight_table/weight_id/$$,
-$codei%
-	%w_info_vec%[ %weight_id% ]
-%$$
-is the corresponding $cref weight_info$$ information.
-
-$subhead data_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<data_struct>&  %data_table%
-%$$
-and is the $cref/data_table/get_data_table/data_table/$$.
-Only the following field of each $code data_struct$$ are used
-by this routine:
-$code integrand_id$$,
-$code weight_id$$,
-$code age_lower$$,
-$code age_upper$$,
-$code time_lower$$, and
-$code time_upper$$.
-
-
-$subhead integrand_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<integrand_enum>&  %integrand_table%
-%$$
-and is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
-
-$subhead age_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>&  %age_table%
-%$$
-and is the $cref/age_table/get_age_table/age_table/$$.
-
-$subhead time_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>&  %time_table%
-%$$
-and is the $cref/time_table/get_time_table/time_table/$$.
 
 $subhead n_age_ode$$
 This argument has prototype
@@ -126,6 +78,52 @@ $codei%
 and is the value of $cref/ode_step_size/run_table/ode_step_size/$$
 in the run table.
 
+$subhead age_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>&  %age_table%
+%$$
+and is the $cref/age_table/get_age_table/age_table/$$.
+
+$subhead time_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>&  %time_table%
+%$$
+and is the $cref/time_table/get_time_table/time_table/$$.
+
+$subhead integrand_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<integrand_enum>&  %integrand_table%
+%$$
+and is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
+
+$subhead data_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<data_struct>&  %data_table%
+%$$
+and is the $cref/data_table/get_data_table/data_table/$$.
+Only the following field of each $code data_struct$$ are used
+by this routine:
+$code integrand_id$$,
+$code weight_id$$,
+$code age_lower$$,
+$code age_upper$$,
+$code time_lower$$, and
+$code time_upper$$.
+
+$subhead w_info_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<weight_info>& %w_info_vec%
+%$$
+For each $cref/weight_id/weight_table/weight_id/$$,
+$codei%
+	%w_info_vec%[ %weight_id% ]
+%$$
+is the corresponding $cref weight_info$$ information.
 
 $head compute$$
 This is a $code const$$ function that compute the 
@@ -216,14 +214,14 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 avg_integrand::avg_integrand(
-	const CppAD::vector<weight_info>&    w_info_vec      ,                 
-	const CppAD::vector<data_struct>&    data_table      ,
-	const CppAD::vector<integrand_enum>& integrand_table ,
-	const CppAD::vector<double>&         age_table       ,
-	const CppAD::vector<double>&         time_table      ,
 	size_t                               n_age_ode       ,
 	size_t                               n_time_ode      ,
-	double                               ode_step_size   )
+	double                               ode_step_size   ,
+	const CppAD::vector<double>&         age_table       ,
+	const CppAD::vector<double>&         time_table      ,
+	const CppAD::vector<integrand_enum>& integrand_table ,
+	const CppAD::vector<data_struct>&    data_table      ,
+	const CppAD::vector<weight_info>&    w_info_vec      )
 :
 n_age_ode_(n_age_ode)         ,
 n_time_ode_(n_time_ode)       ,

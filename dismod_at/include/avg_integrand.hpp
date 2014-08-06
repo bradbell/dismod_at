@@ -31,18 +31,19 @@ private:
 	const size_t              n_age_ode_;
 	const size_t              n_time_ode_;
 	const double              ode_step_size_;
-	// effectively const (computed by constructor)
+
+	// effectively const 
 	CppAD::vector<ode_subgrid> data_info_;
 public:
 	avg_integrand(
-		const CppAD::vector<weight_info>&    w_info_vec      ,
-		const CppAD::vector<data_struct>&    data_table      ,
-		const CppAD::vector<integrand_enum>& integrand_table ,
-		const CppAD::vector<double>&         age_table       ,
-		const CppAD::vector<double>&         time_table      ,
 		size_t                               n_age_ode       ,
 		size_t                               n_time_ode      ,
-		double                               ode_step_size
+		double                               ode_step_size   ,
+		const CppAD::vector<double>&         age_table       ,
+		const CppAD::vector<double>&         time_table      ,
+		const CppAD::vector<integrand_enum>& integrand_table ,
+		const CppAD::vector<data_struct>&    data_table      ,
+		const CppAD::vector<weight_info>&    w_info_vec
 	);
 	template <class Float>
 	Float compute(
