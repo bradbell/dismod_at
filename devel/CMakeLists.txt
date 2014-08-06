@@ -21,6 +21,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	utility/pack_var.cpp
 	utility/child_data.cpp
 
+	table/check_rate_smooth.cpp
 	table/check_table_id.cpp
 	table/exec_sql_cmd.cpp
 	table/get_age_table.cpp

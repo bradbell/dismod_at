@@ -16,7 +16,8 @@ $$
 $section Dismod_at Developer Table Documentation$$
 
 $childtable%
-	devel/table/check_table_id.cpp
+	devel/table/check_rate_smooth.cpp
+	%devel/table/check_table_id.cpp
 	%devel/table/exec_sql_cmd.cpp
 	%devel/table/get_age_table.cpp
 	%devel/table/get_covariate_table.cpp

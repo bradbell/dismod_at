@@ -31,7 +31,7 @@ $end
 # include <cstring>
 
 
-// prototype for each of the tests
+// utility subdirectory
 extern bool avg_integrand_xam(void);
 extern bool bilinear_interp_xam(void);
 extern bool eigen_ode2_xam(void);
@@ -41,7 +41,8 @@ extern bool interp_weight_xam(void);
 extern bool smooth2ode_xam(void);
 extern bool pack_var_xam(void);
 extern bool child_data_xam(void);
-//
+// table subdirectory
+extern bool check_rate_smooth_xam(void);
 extern bool get_age_table_xam(void);
 extern bool get_covariate_table_xam(void);
 extern bool get_data_table_xam(void);
@@ -94,6 +95,7 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
+	// utility subdirectory
 	RUN(avg_integrand_xam);
 	RUN(bilinear_interp_xam);
 	RUN(eigen_ode2_xam);
@@ -104,7 +106,8 @@ int main(void)
 	RUN(solve_ode_xam);
 	RUN(pack_var_xam);
 	RUN(child_data_xam);
-	//
+	// table subdirectory
+	RUN(check_rate_smooth_xam);
 	RUN(get_age_table_xam);
 	RUN(get_covariate_table_xam);
 	RUN(get_data_table_xam);

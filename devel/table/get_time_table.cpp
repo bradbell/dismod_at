@@ -47,6 +47,13 @@ $codei%
 is the time for the corresponding
 $cref/time/time_table/time/$$.
 
+$head Assumptions$$
+For $icode%time_id% = 1 , %...%, %time_table%.size()-2%$$,
+the following assumption is checked:
+$codei%
+	%time_table%[%time_id%] < %time_table[%time_id%+1]
+%$$
+
 $children%example/devel/table/get_time_table_xam.cpp 
 %$$
 $head Example$$
@@ -59,6 +66,7 @@ $end
 # include <dismod_at/include/get_time_table.hpp>
 # include <dismod_at/include/get_table_column.hpp>
 # include <dismod_at/include/check_table_id.hpp>
+# include <dismod_at/include/table_error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -72,6 +80,13 @@ CppAD::vector<double> get_time_table(sqlite3* db)
 	CppAD::vector<double>  time;
 	get_table_column(db, table_name, column_name, time);
 	assert( time.size() == n_time );
+
+	for(size_t time_id = 1; time_id < n_time; time_id++) if(
+		time[time_id-1] >= time[time_id]
+	)
+	{	string messtime = "time is not monotone increasing";
+		table_error_exit("time", time_id, messtime);
+	}
 
 	return time;
 }

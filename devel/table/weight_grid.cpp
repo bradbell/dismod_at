@@ -17,7 +17,7 @@ $spell
 	wg
 $$
 
-$section Extract Information for One Weighting Function$$
+$section Extract and Organize Information for One Weighting Function$$
 
 $head Syntax$$
 $codei%weight_grid %wg%(%weight_id% , %weight_grid_table%)

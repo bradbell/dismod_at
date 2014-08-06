@@ -20,7 +20,7 @@ $spell
 	struct
 $$
 
-$section Extract Information for One Smoothing$$
+$section Extract and Organize Information for One Smoothing$$
 
 $head Syntax$$
 $codei%smooth_info %s_info%(%smooth_id%, %smooth_table%, %smooth_grid_table% )
@@ -57,6 +57,13 @@ $head Assumptions$$
 $list number$$
 Checks the $code smooth_grid$$ table
 $cref/rectangular grid/smooth_grid_table/Rectangular Grid/$$ assumption.
+$lnext
+For each $cref/smooth_id/smooth_table/smooth_id/$$,
+check that the $cref smooth_table$$ values
+$cref/n_age/smooth_table/n_age/$$ and
+$cref/n_time/smooth_table/n_time/$$ are the number if age values
+and number of time values in the corresponding rectangular grid in
+$cref smooth_grid_table$$.
 $lnext
 Checks that 
 $cref/dage_like_id/smooth_grid_table/dage_like_id/$$ is $code -1$$
@@ -128,10 +135,11 @@ const CppAD::vector<size_t>& %value_like_id%, %dage_like_id%, %dtime_like_id%
 %$$
 They specify the likelihood grid indices; i.e.
 $codei%
-	%s_info%.value_like_id(%i%) = %value_like_id%[%i%]
-	%s_info%.dage_like_id(%i%)  = %dage_like_id%[%i%]
-	%s_info%.dtime_like_id(%i%) = %dtime_like_id%[%i%]
+	%s_info%.value_like_id(%i%, %j%) = %value_like_id%[%i%*%n_time% + %j%]
+	%s_info%.dage_like_id(%i%, %j%)  = %dage_like_id%[%i%*%n_time% + %j%]
+	%s_info%.dtime_like_id(%i%, %j%) = %dtime_like_id%[%i%*%n_time% + %j%]
 %$$ 
+where $icode%n_time% = %time_id%.size()%$$.
 
 
 $subhead mulstd_type$$
@@ -318,6 +326,12 @@ smooth_info::smooth_info(
 		mulstd_value_    = mulstd_value;
 		mulstd_dage_     = mulstd_dage;
 		mulstd_dtime_    = mulstd_dtime;
+# ifndef NDEBUG
+		for(size_t i = 1; i < age_id.size(); i++)
+			assert( age_id[i-1] < age_id[i] );
+		for(size_t j = 1; j < time_id.size(); j++)
+			assert( time_id[j-1] < time_id[j] );
+# endif
 	}
 // Constructor
 smooth_info::smooth_info(

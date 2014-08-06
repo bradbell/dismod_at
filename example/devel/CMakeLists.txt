@@ -27,6 +27,7 @@ ADD_EXECUTABLE(devel EXCLUDE_FROM_ALL
 	utility/pack_var_xam.cpp
 	utility/child_data_xam.cpp
 
+	table/check_rate_smooth_xam.cpp
 	table/get_age_table_xam.cpp
 	table/get_covariate_table_xam.cpp
 	table/get_data_table_xam.cpp

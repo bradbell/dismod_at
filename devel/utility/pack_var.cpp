@@ -131,20 +131,11 @@ n_child_    ( n_child )
 	rate_offset_.resize( number_rate_enum );
 	rate_n_var_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t parent_smooth_id = rate_table[rate_id].parent_smooth_id;
-		size_t child_smooth_id  = rate_table[rate_id].child_smooth_id;
-		size_t n_age = smooth_table[child_smooth_id].n_age;
-		if( int(n_age) != smooth_table[parent_smooth_id].n_age )
-		{	string message = "parent_smooth_id and child_smooth_id"
-				" corresponding to different n_age in smooth table";
-			table_error_exit("rate", rate_id, message);
-		}
+	{	// note that child_smooth_id would give the same results; see
+		// rate table documentation and check_rate_smooth function.
+		size_t child_smooth_id = rate_table[rate_id].child_smooth_id;
+		size_t n_age  = smooth_table[child_smooth_id].n_age;
 		size_t n_time = smooth_table[child_smooth_id].n_time;
-		if( int(n_time) != smooth_table[parent_smooth_id].n_time )
-		{	string message = "parent_smooth_id and child_smooth_id"
-				" corresponding to different n_time in smooth table";
-			table_error_exit("rate", rate_id, message);
-		}
 		size_t n_tmp = 1;
 		if( n_child > 0 )
 			n_tmp = n_child;
