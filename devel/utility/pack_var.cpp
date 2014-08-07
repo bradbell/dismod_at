@@ -50,6 +50,9 @@ and is the number of children; i.e., the size of
 $cref/child group/node_table/parent/Child Group/$$
 corresponding to the
 $cref/parent_node/run_table/parent_node_id/$$.
+In the special case where there is only one child,
+$icode n_child$$ must be zero.
+In this case, only the parent rates are estimated.
 
 $head pini_smooth_id$$
 This argument has prototype
@@ -119,6 +122,9 @@ n_integrand_    ( n_integrand )         ,
 n_child_        ( n_child )
 {	using std::string;
 
+	// check assumption
+	assert( n_child != 1 );
+
 	// initialize offset
 	size_t offset = 0;
 
@@ -137,19 +143,29 @@ n_child_        ( n_child )
 	mulstd_offset_  = offset; offset += 3 * n_smooth_;
 
 	// rate_offset
-	rate_offset_.resize( number_rate_enum );
-	rate_n_var_.resize( number_rate_enum );
+	rate_info_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	// note that child_smooth_id would give the same results; see
-		// rate table documentation and check_rate_smooth function.
-		size_t child_smooth_id = rate_table[rate_id].child_smooth_id;
-		size_t n_age  = smooth_table[child_smooth_id].n_age;
-		size_t n_time = smooth_table[child_smooth_id].n_time;
-		size_t n_tmp = 1;
-		if( n_child > 0 )
-			n_tmp = n_child;
-		rate_n_var_[rate_id]  = n_age * n_time;
-		rate_offset_[rate_id] = offset; offset += n_tmp * n_age * n_time;
+	{	rate_info_[rate_id].resize(n_child + 1);
+		for(size_t j = 0;  j <= n_child; j++)
+		{	size_t smooth_id;
+			if(j < n_child )
+				smooth_id = rate_table[rate_id].child_smooth_id;
+			else
+				smooth_id = rate_table[rate_id].parent_smooth_id;
+			size_t n_age  = smooth_table[smooth_id].n_age;
+			size_t n_time = smooth_table[smooth_id].n_time;
+			size_t n_var  = n_age * n_time;
+			rate_info_[rate_id][j].smooth_id = smooth_id;
+			rate_info_[rate_id][j].n_var     = n_var;
+			if( j < n_child || n_child == 0 )
+			{	rate_info_[rate_id][j].offset  = offset;
+				offset += n_var;
+			}
+			else
+			{	// set to a value that shouldi not be used
+				rate_info_[rate_id][j].offset  = size_t(-1);
+			}
+		}
 	}
 
 	// meas_mean_mulcov_info_ and meas_std_mulcov_info_ 
@@ -611,12 +627,20 @@ $spell
 $$
 
 $section Pack Variables: Rates$$
+$spell
+	subvec
+$$
 
 $head Syntax$$
-$icode%n_var% = %var_info%.rate_n_var(%rate_id%)
+$icode%info% = %var_info%.rate_info(%rate_id%, %j%)
 %$$
-$icode%offset% = %var_info%.rate_offset(%rate_id%, %j%)
-%$$
+
+$head subvec_info$$
+the type $code pack_var::subvec_info$$ is defined as follows:
+$code
+$verbatim%dismod_at/include/pack_var.hpp
+%5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
+$$
 
 $head var$$
 This object has prototype
@@ -637,42 +661,47 @@ This argument has prototype
 $codei%
 	size_t %j%
 %$$
-If $cref/n_child/pack_var_ctor/n_child/$$ is zero or one,
-$icode j$$ must be zero.
-Otherwise $icode%j% < %n_child%$$.
+and $icode%j% <= %n_child%$$.
 
-$head n_var$$
-this return value has prototype
+$head info$$
+The return value  has prototype
 $codei%
-	size_t %n_var%
+	subvec_info %info%
 %$$
-and is the number of packed variables for each $icode rate_id$$
-and each $icode j$$.
 
-$head offset$$
-this return value has prototype
-$codei%
-	size_t %offset%
-%$$
-and is the offset (index) in the packed variable vector for the
-specified $icode rate_id$$.
-If $cref/n_child/pack_var_ctor/n_child/$$ is zero or one,
+$subhead covariate_id$$
+This field is not used or set by $code rate_info$$.
+
+$subhead smooth_id$$
+is the $cref/smooth_id/smooth_table/smooth_id/$$ for the rate. 
+If $icode%j% == %n_child%$$,
+this smoothing corresponds to the parent rates.
+Otherwise it corresponds to the child rates and is the same 
+for all children.
+
+$subhead n_var$$
+is the number of packed variables for this $icode rate_id$$
+and is the same for each $icode j$$.
+
+$subhead offset$$
+is the offset (index) in the packed variable vector for the
+specified rates:
+If $icode%j% < %n_child%$$,
+it is the rate vector for the $th j$$ child node.
+If $icode%j% == %n_child% == 0%$$,
 this is the rate vector for the
 $cref/parent_node/run_table/parent_node_id/$$.
-Otherwise, it is the rate vector for the $th j$$ child node.
+If $icode%j% == %n_child% > 0%$$,
+this offset is not defined (and should not be used).
 
 $head Example$$
 See $cref/pack_var Example/pack_var/Example/$$.
 
 $end
 */
-size_t pack_var::rate_n_var(size_t rate_id) const
-{	assert( rate_id < number_rate_enum );
-	return rate_n_var_[rate_id];
-}
-size_t pack_var::rate_offset(size_t rate_id, size_t j) const
-{	assert( j == 0 || j < n_child_ );
-	return rate_offset_[rate_id] + rate_n_var_[rate_id] * j;
+pack_var::subvec_info pack_var::rate_info(size_t rate_id, size_t j) const
+{	assert( j <= n_child_ );
+	return rate_info_[rate_id][j];
 }
 
 

@@ -113,11 +113,11 @@ bool pack_var_xam(void)
 	// set rates 
 	size_t n_rate = dismod_at::number_rate_enum;
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	n_var = var_info.rate_n_var(rate_id);
-		for(size_t j = 0; j < std::max(n_child, size_t(1));  j++)
-		{	offset = var_info.rate_offset(rate_id, j);
-			for(size_t k = 0; k < n_var; k++)
-				var_vec[offset + k] = rate_id + 3 + k;
+	{	assert( n_child > 1 );
+		for(size_t j = 0; j < n_child;  j++)
+		{	info = var_info.rate_info(rate_id, j);
+			for(size_t k = 0; k < info.n_var; k++)
+				var_vec[info.offset + k] = rate_id + 3 + k;
 		}
 	}
 	// set meas_mean_mulcov
@@ -170,11 +170,10 @@ bool pack_var_xam(void)
 	}
 	// check rates 
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	n_var = var_info.rate_n_var(rate_id);
-		for(size_t j = 0; j < std::max(n_child, size_t(1));  j++)
-		{	offset = var_info.rate_offset(rate_id, j);
-			for(size_t k = 0; k < n_var; k++)
-				ok &= var_vec[offset + k] == rate_id + 3 + k;
+	{	for(size_t j = 0; j < n_child;  j++)
+		{	info = var_info.rate_info(rate_id, j);
+			for(size_t k = 0; k < info.n_var; k++)
+				ok &= var_vec[info.offset + k] == rate_id + 3 + k;
 		}
 	}
 	// check meas_mean_mulcov

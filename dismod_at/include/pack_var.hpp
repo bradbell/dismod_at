@@ -47,9 +47,8 @@ private:
 	// offset for mulstd variables
 	size_t mulstd_offset_;
 
-	// offset for rate variables
-	CppAD::vector<size_t> rate_offset_;
-	CppAD::vector<size_t> rate_n_var_;
+	// rate variable infromation
+	CppAD::vector< CppAD::vector<subvec_info> > rate_info_;
 
 	// meas_mean_mulcov infromation
 	CppAD::vector< CppAD::vector<subvec_info> > meas_mean_mulcov_info_;
@@ -82,8 +81,7 @@ public:
 	size_t mulstd_offset(size_t smooth_id) const;
 
 	// rate
-	size_t rate_n_var(size_t rate_id) const;
-	size_t rate_offset(size_t rate_id, size_t j) const;
+	subvec_info rate_info(size_t rate_id, size_t j) const;
 
 	// meas_mean_mulcov_
 	size_t      meas_mean_mulcov_n_cov(size_t integrand_id) const;
