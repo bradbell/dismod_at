@@ -386,6 +386,96 @@ size_t pack_var::mulstd_offset(size_t smooth_id) const
 {	assert( smooth_id < n_smooth_ );
 	return mulstd_offset_ + 3 * smooth_id;
 }
+/*
+------------------------------------------------------------------------------
+$begin pack_var_rate$$
+$spell
+	std
+	cov
+	var
+	mulcov
+	dismod
+	const
+	covariate
+$$
+
+$section Pack Variables: Rates$$
+$spell
+	subvec
+$$
+
+$head Syntax$$
+$icode%info% = %var_info%.rate_info(%rate_id%, %j%)
+%$$
+
+$head subvec_info$$
+the type $code pack_var::subvec_info$$ is defined as follows:
+$code
+$verbatim%dismod_at/include/pack_var.hpp
+%5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
+$$
+
+$head var$$
+This object has prototype
+$codei%
+	const pack_var %var_info%
+%$$
+
+$head rate_id$$
+This argument has prototype 
+$codei%
+	size_t %rate_id%
+%$$
+and it specifies the 
+$cref/rate_id/rate_table/rate_id/$$ the rate values.
+
+$head j$$
+This argument has prototype
+$codei%
+	size_t %j%
+%$$
+and $icode%j% <= %n_child%$$.
+
+$head info$$
+The return value  has prototype
+$codei%
+	subvec_info %info%
+%$$
+
+$subhead covariate_id$$
+This field is not used or set by $code rate_info$$.
+
+$subhead smooth_id$$
+is the $cref/smooth_id/smooth_table/smooth_id/$$ for the rate. 
+If $icode%j% == %n_child%$$,
+this smoothing corresponds to the parent rates.
+Otherwise it corresponds to the child rates and is the same 
+for all children.
+
+$subhead n_var$$
+is the number of packed variables for this $icode rate_id$$
+and is the same for each $icode j$$.
+
+$subhead offset$$
+is the offset (index) in the packed variable vector for the
+specified rates:
+If $icode%j% < %n_child%$$,
+it is the rate vector for the $th j$$ child node.
+If $icode%j% == %n_child% == 0%$$,
+this is the rate vector for the
+$cref/parent_node/run_table/parent_node_id/$$.
+If $icode%j% == %n_child% > 0%$$,
+this offset is not defined (and should not be used).
+
+$head Example$$
+See $cref/pack_var Example/pack_var/Example/$$.
+
+$end
+*/
+pack_var::subvec_info pack_var::rate_info(size_t rate_id, size_t j) const
+{	assert( j <= n_child_ );
+	return rate_info_[rate_id][j];
+}
 
 /*
 ------------------------------------------------------------------------------
@@ -612,96 +702,6 @@ pack_var::subvec_info
 pack_var::rate_mean_mulcov_info(size_t rate_id, size_t j) const
 {	assert( rate_id < number_rate_enum );
 	return rate_mean_mulcov_info_[rate_id][j];
-}
-/*
-------------------------------------------------------------------------------
-$begin pack_var_rate$$
-$spell
-	std
-	cov
-	var
-	mulcov
-	dismod
-	const
-	covariate
-$$
-
-$section Pack Variables: Rates$$
-$spell
-	subvec
-$$
-
-$head Syntax$$
-$icode%info% = %var_info%.rate_info(%rate_id%, %j%)
-%$$
-
-$head subvec_info$$
-the type $code pack_var::subvec_info$$ is defined as follows:
-$code
-$verbatim%dismod_at/include/pack_var.hpp
-%5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
-$$
-
-$head var$$
-This object has prototype
-$codei%
-	const pack_var %var_info%
-%$$
-
-$head rate_id$$
-This argument has prototype 
-$codei%
-	size_t %rate_id%
-%$$
-and it specifies the 
-$cref/rate_id/rate_table/rate_id/$$ the rate values.
-
-$head j$$
-This argument has prototype
-$codei%
-	size_t %j%
-%$$
-and $icode%j% <= %n_child%$$.
-
-$head info$$
-The return value  has prototype
-$codei%
-	subvec_info %info%
-%$$
-
-$subhead covariate_id$$
-This field is not used or set by $code rate_info$$.
-
-$subhead smooth_id$$
-is the $cref/smooth_id/smooth_table/smooth_id/$$ for the rate. 
-If $icode%j% == %n_child%$$,
-this smoothing corresponds to the parent rates.
-Otherwise it corresponds to the child rates and is the same 
-for all children.
-
-$subhead n_var$$
-is the number of packed variables for this $icode rate_id$$
-and is the same for each $icode j$$.
-
-$subhead offset$$
-is the offset (index) in the packed variable vector for the
-specified rates:
-If $icode%j% < %n_child%$$,
-it is the rate vector for the $th j$$ child node.
-If $icode%j% == %n_child% == 0%$$,
-this is the rate vector for the
-$cref/parent_node/run_table/parent_node_id/$$.
-If $icode%j% == %n_child% > 0%$$,
-this offset is not defined (and should not be used).
-
-$head Example$$
-See $cref/pack_var Example/pack_var/Example/$$.
-
-$end
-*/
-pack_var::subvec_info pack_var::rate_info(size_t rate_id, size_t j) const
-{	assert( j <= n_child_ );
-	return rate_info_[rate_id][j];
 }
 
 
