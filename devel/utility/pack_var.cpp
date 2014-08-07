@@ -167,7 +167,7 @@ n_child_        ( n_child )
 					mulcov_table[mulcov_id].covariate_id
 				); 
 				string mulcov_type;
-				CppAD::vector<mulcov_info>* info_vec = nullptr;
+				CppAD::vector<subvec_info>* info_vec = nullptr;
 				if( mulcov_table[mulcov_id].mulcov_type == meas_mean_enum )
 				{	info_vec    = &( meas_mean_mulcov_info_[integrand_id]) ;
 					mulcov_type = "'meas_mean'";
@@ -189,7 +189,7 @@ n_child_        ( n_child )
 				size_t n_age     = smooth_table[smooth_id].n_age;
 				size_t n_time    = smooth_table[smooth_id].n_time;
 				//
-				mulcov_info info;
+				subvec_info info;
 				info.covariate_id = covariate_id;
 				info.smooth_id    = smooth_id;
 				info.n_var        = n_age * n_time;
@@ -213,7 +213,7 @@ n_child_        ( n_child )
 			{	size_t covariate_id = size_t(
 					mulcov_table[mulcov_id].covariate_id
 				); 
-				CppAD::vector<mulcov_info>& info_vec = 
+				CppAD::vector<subvec_info>& info_vec = 
 					rate_mean_mulcov_info_[rate_id];
 				for(size_t j = 0; j < info_vec.size(); j++)
 				{	if( info_vec[j].covariate_id == covariate_id )
@@ -227,7 +227,7 @@ n_child_        ( n_child )
 				size_t n_age     = smooth_table[smooth_id].n_age;
 				size_t n_time    = smooth_table[smooth_id].n_time;
 				//
-				mulcov_info info;
+				subvec_info info;
 				info.covariate_id = covariate_id;
 				info.smooth_id    = smooth_id;
 				info.n_var        = n_age * n_time;
@@ -260,15 +260,19 @@ $spell
 $$
 
 $section Pack Variables: Initial Prevalence Information$$
+$spell
+	subvec
+	covariate
+$$
 
 $head Syntax$$
 $icode%info% = %var_info%.pini_info()%$$
 
-$head pinitial_info$$
-the type $code pack_var::pinitial_info$$ is defined as follows:
+$head subvec_info$$
+the type $code pack_var::subvec_info$$ is defined as follows:
 $code
 $verbatim%dismod_at/include/pack_var.hpp
-%5%// BEGIN PINITIAL_INFO%// END PINITIAL_INFO%$$
+%5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
 $head var$$
@@ -280,19 +284,22 @@ $codei%
 $head info$$
 The return value  has prototype
 $codei%
-	pinitial_info %info%
+	subvec_info %info%
 %$$
+
+$subhead covariate_id$$
+This field is not used or set by $code pini_info$$.
+
+$subhead smooth_id$$
+is the $cref/smooth_id/smooth_table/smooth_id/$$ for the
+initial prevalence variables;  i.e.,
+$cref/pini_smooth_id/run_table/pini_smooth_id/$$.
 
 $subhead n_var$$
 is the number of initial prevalence variables; i.e.
 the number of time points corresponding to the
 $cref/pini_smooth_id/run_table/pini_smooth_id/$$ smoothing
 (the number of age points for this smoothing is one).
-
-$subhead smooth_id$$
-is the $cref/smooth_id/smooth_table/smooth_id/$$ for the
-initial prevalence variables;  i.e.,
-$cref/pini_smooth_id/run_table/pini_smooth_id/$$.
 
 $subhead offset$$
 The return value has prototype
@@ -308,7 +315,7 @@ See $cref/pack_var Example/pack_var/Example/$$.
 $end
 
 */
-pack_var::pinitial_info pack_var::pini_info(void) const
+pack_var::subvec_info pack_var::pini_info(void) const
 {	return pini_info_; }
 
 /*
@@ -375,6 +382,7 @@ $spell
 	dismod
 	const
 	covariate
+	subvec
 $$
 
 $section Pack Variables: Measurement Multipliers$$
@@ -402,11 +410,11 @@ $code meas_std_mulcov_info$$
 return information about the measurement standard deviation
 covariate multipliers.
 
-$head mulcov_info$$
-The type $code pack_var::mulcov_info$$ is defined as follows:
+$head subvec_info$$
+The type $code pack_var::subvec_info$$ is defined as follows:
 $code
 $verbatim%dismod_at/include/pack_var.hpp
-%5%// BEGIN MULCOV_INFO%// END MULCOV_INFO%$$
+%5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
 $head var$$
@@ -443,7 +451,7 @@ and $icode%j% < n_cov(%integrand_id%)%$$.
 $head info$$
 this return value has prototype
 $codei%
-	mulcov_info %info%
+	subvec_info %info%
 %$$
 
 $subhead covariate_id$$
@@ -479,12 +487,12 @@ pack_var::meas_std_mulcov_n_cov(size_t integrand_id) const
 	return meas_std_mulcov_info_[integrand_id].size();
 }
 //
-pack_var::mulcov_info 
+pack_var::subvec_info 
 pack_var::meas_mean_mulcov_info(size_t integrand_id, size_t j) const
 {	assert( integrand_id < n_integrand_ );
 	return meas_mean_mulcov_info_[integrand_id][j];
 }
-pack_var::mulcov_info 
+pack_var::subvec_info 
 pack_var::meas_std_mulcov_info(size_t integrand_id, size_t j) const
 {	assert( integrand_id < n_integrand_ );
 	return meas_std_mulcov_info_[integrand_id][j];
@@ -501,6 +509,7 @@ $spell
 	dismod
 	const
 	covariate
+	subvec
 $$
 
 $section Pack Variables: Rate Multipliers$$
@@ -511,11 +520,11 @@ $icode%n_cov% = %var_info%.rate_mean_mulcov_n_cov(%rate_id%)
 $icode%info% = %var_info%.rate_mean_mulcov_info(%rate_id%)
 %$$
 
-$head mulcov_info$$
-The type $code pack_var::mulcov_info$$ is defined as follows:
+$head subvec_info$$
+The type $code pack_var::subvec_info$$ is defined as follows:
 $code
 $verbatim%dismod_at/include/pack_var.hpp
-%5%// BEGIN MULCOV_INFO%// END MULCOV_INFO%$$
+%5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
 $head var$$
@@ -552,7 +561,7 @@ and $icode%j% < n_cov(%rate_id%)%$$.
 $head info$$
 this return value has prototype
 $codei%
-	mulcov_info %info%
+	subvec_info %info%
 %$$
 
 $subhead covariate_id$$
@@ -583,7 +592,7 @@ pack_var::rate_mean_mulcov_n_cov(size_t rate_id) const
 	return rate_mean_mulcov_info_[rate_id].size();
 }
 //
-pack_var::mulcov_info 
+pack_var::subvec_info 
 pack_var::rate_mean_mulcov_info(size_t rate_id, size_t j) const
 {	assert( rate_id < number_rate_enum );
 	return rate_mean_mulcov_info_[rate_id][j];
