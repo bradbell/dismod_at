@@ -23,6 +23,13 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 class pack_var {
 public:
+	// BEGIN PINITIAL_INFO
+	typedef struct {
+		size_t smooth_id;
+		size_t n_var;
+		size_t offset;
+	} pinitial_info;
+	// END PINITIAL_INFO
 	// BEGIN MULCOV_INFO
 	typedef struct { 
 		size_t covariate_id;
@@ -41,9 +48,8 @@ private:
 	// number of children
 	const size_t n_child_;
 
-	// offset for initial prevalence variables
-	size_t pini_size_;
-	size_t pini_offset_;
+	// initial prevalence information
+	pinitial_info pini_info_;
 
 	// offset for mulstd variables
 	size_t mulstd_offset_;
@@ -77,8 +83,7 @@ public:
 	size_t size(void) const;
 
 	// pini
-	size_t pini_size(void) const;
-	size_t pini_offset(void) const;
+	pinitial_info pini_info(void) const;
 
 	// mulstd
 	size_t mulstd_offset(size_t smooth_id) const;

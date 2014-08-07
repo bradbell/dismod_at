@@ -114,23 +114,24 @@ pack_var::pack_var(
 	const CppAD::vector<mulcov_struct>&  mulcov_table   ,
 	const CppAD::vector<rate_struct>&    rate_table 
 ) :
-n_smooth_   ( smooth_table.size() ) ,
-n_integrand_( n_integrand )         ,
-n_child_    ( n_child )
+n_smooth_       ( smooth_table.size() ) ,
+n_integrand_    ( n_integrand )         ,
+n_child_        ( n_child )
 {	using std::string;
 
 	// initialize offset
 	size_t offset = 0;
 
-	// pini
+	// pini_info_
 	if( smooth_table[pini_smooth_id].n_age != 1 )
 	{	string message = "run table: the smoothing corresponding to initial"
 		"\nprevalence does not have n_age equal to 1";
 		std::cerr << message << std::endl;
 		exit(1);
 	}
-	pini_size_   = smooth_table[pini_smooth_id].n_time;
-	pini_offset_ = offset; offset += pini_size_;
+	pini_info_.smooth_id = pini_smooth_id;
+	pini_info_.n_var    = smooth_table[pini_smooth_id].n_time;
+	pini_info_.offset   = offset; offset += pini_info_.n_var;
 
 	// mulstd_offset_
 	mulstd_offset_  = offset; offset += 3 * n_smooth_;
@@ -255,15 +256,20 @@ $spell
 	dtime
 	const
 	dismod
+	pinitial
 $$
 
-$section Pack Variables: Standard Deviations Multipliers$$
+$section Pack Variables: Initial Prevalence Information$$
 
 $head Syntax$$
-$icode%n_var% = %var_info%.pini_size()
-%$$
-$icode%offset% = %var_info%.pini_offset()
-%$$
+$icode%info% = %var_info%.pini_info()%$$
+
+$head pinitial_info$$
+the type $code pack_var::pinitial_info$$ is defined as follows:
+$code
+$verbatim%dismod_at/include/pack_var.hpp
+%5%// BEGIN PINITIAL_INFO%// END PINITIAL_INFO%$$
+$$
 
 $head var$$
 This object has prototype
@@ -271,11 +277,22 @@ $codei%
 	const pack_var %var_info%
 %$$
 
+$head info$$
+The return value  has prototype
+$codei%
+	pinitial_info %info%
+%$$
+
 $subhead n_var$$
 is the number of initial prevalence variables; i.e.
 the number of time points corresponding to the
 $cref/pini_smooth_id/run_table/pini_smooth_id/$$ smoothing
 (the number of age points for this smoothing is one).
+
+$subhead smooth_id$$
+is the $cref/smooth_id/smooth_table/smooth_id/$$ for the
+initial prevalence variables;  i.e.,
+$cref/pini_smooth_id/run_table/pini_smooth_id/$$.
 
 $subhead offset$$
 The return value has prototype
@@ -291,11 +308,8 @@ See $cref/pack_var Example/pack_var/Example/$$.
 $end
 
 */
-size_t pack_var::pini_size(void) const
-{	return pini_size_; }
-size_t pack_var::pini_offset(void) const
-{	return pini_offset_; }
-
+pack_var::pinitial_info pack_var::pini_info(void) const
+{	return pini_info_; }
 
 /*
 ------------------------------------------------------------------------------
@@ -389,7 +403,7 @@ return information about the measurement standard deviation
 covariate multipliers.
 
 $head mulcov_info$$
-The type $code pack-var::mulcov_info$$ is defined as follows:
+The type $code pack_var::mulcov_info$$ is defined as follows:
 $code
 $verbatim%dismod_at/include/pack_var.hpp
 %5%// BEGIN MULCOV_INFO%// END MULCOV_INFO%$$
@@ -498,7 +512,7 @@ $icode%info% = %var_info%.rate_mean_mulcov_info(%rate_id%)
 %$$
 
 $head mulcov_info$$
-The type $code pack-var::mulcov_info$$ is defined as follows:
+The type $code pack_var::mulcov_info$$ is defined as follows:
 $code
 $verbatim%dismod_at/include/pack_var.hpp
 %5%// BEGIN MULCOV_INFO%// END MULCOV_INFO%$$

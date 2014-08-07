@@ -92,13 +92,15 @@ bool pack_var_xam(void)
 	CppAD::vector<double> var_vec(size);
 
 	// some temporary variables
-	dismod_at::pack_var::mulcov_info info;
+	dismod_at::pack_var::pinitial_info p_info;
+	dismod_at::pack_var::mulcov_info   m_info;
 	size_t n_var, offset;
 
 	// ---------------------------------------------------------------------
 	// set pini
-	n_var  = var_info.pini_size();
-	offset = var_info.pini_offset();
+	p_info = var_info.pini_info();
+	n_var  = p_info.n_var;
+	offset = p_info.offset;
 	for(size_t j = 0; j < n_var; j++)
 		var_vec[offset + j] = 1.0 / double(j + 2.0); 
 
@@ -123,9 +125,9 @@ bool pack_var_xam(void)
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	size_t n_cov = var_info.meas_mean_mulcov_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = var_info.meas_mean_mulcov_info(integrand_id, j);
-			offset = info.offset;
-			n_var  = info.n_var;
+		{	m_info = var_info.meas_mean_mulcov_info(integrand_id, j);
+			offset = m_info.offset;
+			n_var  = m_info.n_var;
 			for(size_t k = 0; k < n_var; k++)
 				var_vec[offset + k] = integrand_id + 4 + k;
 		}
@@ -134,9 +136,9 @@ bool pack_var_xam(void)
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	size_t n_cov = var_info.meas_std_mulcov_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = var_info.meas_std_mulcov_info(integrand_id, j);
-			offset = info.offset;
-			n_var  = info.n_var;
+		{	m_info = var_info.meas_std_mulcov_info(integrand_id, j);
+			offset = m_info.offset;
+			n_var  = m_info.n_var;
 			for(size_t k = 0; k < n_var; k++)
 				var_vec[offset + k] = integrand_id + 5 + k;
 		}
@@ -145,17 +147,19 @@ bool pack_var_xam(void)
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	size_t n_cov = var_info.rate_mean_mulcov_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = var_info.rate_mean_mulcov_info(rate_id, j);
-			offset = info.offset;
-			n_var  = info.n_var;
+		{	m_info = var_info.rate_mean_mulcov_info(rate_id, j);
+			offset = m_info.offset;
+			n_var  = m_info.n_var;
 			for(size_t k = 0; k < n_var; k++)
 				var_vec[offset + k] = rate_id + 6 + k;
 		}
 	}
 	// ---------------------------------------------------------------------
 	// check pini
-	n_var  = var_info.pini_size();
-	offset = var_info.pini_offset();
+	p_info = var_info.pini_info();
+	ok    &= p_info.smooth_id == pini_smooth_id;
+	n_var  = p_info.n_var;
+	offset = p_info.offset;
 	for(size_t j = 0; j < n_var; j++)
 		ok &= var_vec[offset + j] == 1.0 / double(j + 2.0); 
 	// check mulstd
@@ -182,12 +186,12 @@ bool pack_var_xam(void)
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = var_info.meas_mean_mulcov_info(integrand_id, j);
-			offset = info.offset;
-			n_var  = info.n_var;
+		{	m_info = var_info.meas_mean_mulcov_info(integrand_id, j);
+			offset = m_info.offset;
+			n_var  = m_info.n_var;
 			for(size_t k = 0; k < n_var; k++)
 				ok &= var_vec[offset + k] == integrand_id + 4 + k;
-			size_t smooth_id = info.smooth_id;
+			size_t smooth_id = m_info.smooth_id;
 			size_t n_age     = smooth_table[smooth_id].n_age;
 			size_t n_time    = smooth_table[smooth_id].n_time;
 			ok &= n_var == n_age * n_time;
@@ -201,12 +205,12 @@ bool pack_var_xam(void)
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = var_info.meas_std_mulcov_info(integrand_id, j);
-			offset = info.offset;
-			n_var  = info.n_var;
+		{	m_info = var_info.meas_std_mulcov_info(integrand_id, j);
+			offset = m_info.offset;
+			n_var  = m_info.n_var;
 			for(size_t k = 0; k < n_var; k++)
 				ok &= var_vec[offset + k] == integrand_id + 5 + k;
-			size_t smooth_id = info.smooth_id;
+			size_t smooth_id = m_info.smooth_id;
 			size_t n_age     = smooth_table[smooth_id].n_age;
 			size_t n_time    = smooth_table[smooth_id].n_time;
 			ok &= n_var == n_age * n_time;
@@ -220,12 +224,12 @@ bool pack_var_xam(void)
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = var_info.rate_mean_mulcov_info(rate_id, j);
-			offset = info.offset;
-			n_var  = info.n_var;
+		{	m_info = var_info.rate_mean_mulcov_info(rate_id, j);
+			offset = m_info.offset;
+			n_var  = m_info.n_var;
 			for(size_t k = 0; k < n_var; k++)
 				ok &= var_vec[offset + k] == rate_id + 6 + k;
-			size_t smooth_id = info.smooth_id;
+			size_t smooth_id = m_info.smooth_id;
 			size_t n_age     = smooth_table[smooth_id].n_age;
 			size_t n_time    = smooth_table[smooth_id].n_time;
 			ok &= n_var == n_age * n_time;
