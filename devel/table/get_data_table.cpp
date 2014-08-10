@@ -106,7 +106,7 @@ $rnext
 $code double$$ $cnext $code time_upper$$ $cnext 
 	The $cref/time_upper/data_table/time_upper/$$ for this measurement
 $rnext
-$code CppAD::vector<double>$$ $cnext $code covariate$$ $cnext
+$code CppAD::vector<double>$$ $pre  $$ $cnext $code x$$ $cnext
 	The $cref/covariate/data_table/Covariates/$$ values for this measurement
 $tend        
 

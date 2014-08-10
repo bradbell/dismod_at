@@ -623,7 +623,7 @@ $section Pack Variables: Rate Multipliers$$
 $head Syntax$$
 $icode%n_cov% = %var_info%.rate_mean_mulcov_n_cov(%rate_id%)
 %$$
-$icode%info% = %var_info%.rate_mean_mulcov_info(%rate_id%)
+$icode%info% = %var_info%.rate_mean_mulcov_info(%rate_id%, %j%)
 %$$
 
 $head subvec_info$$
