@@ -8,17 +8,15 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin devel$$
+$begin devel_model$$
 $spell
 	dismod
 $$
 
-$section Dismod_at Developer Documentation$$
+$section Dismod_at Developer Model Documentation$$
 
 $childtable%
-	devel/table/table.omh
-	%devel/utility/utility.omh
-	%devel/model/data_mean.omh
+	devel/model/data_mean.omh
 %$$
 
 $end

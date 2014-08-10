@@ -10,8 +10,11 @@
 # ---------------------------------------------------------------------------
 SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL 
+	model/data_mean.cpp
+
 	utility/avg_integrand.cpp
 	utility/bilinear_interp.cpp
+	utility/child_data.cpp
 	utility/eigen_ode2.cpp
 	utility/integrate_1d.cpp
 	utility/integrate_2d.cpp
@@ -19,7 +22,6 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	utility/smooth2ode.cpp
 	utility/solve_ode.cpp
 	utility/pack_var.cpp
-	utility/child_data.cpp
 
 	table/check_rate_smooth.cpp
 	table/check_table_id.cpp

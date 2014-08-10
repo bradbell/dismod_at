@@ -107,7 +107,7 @@ This result has type $code smooth_info$$.
 All of the functions calls in the syntax above are $code const$$; i.e.,
 they do not modify $icode s_info$$.
 
-$head w_test$$
+$head s_test$$
 This constructor is used for testing purposes only.
 The meaning of its arguments are specified below:
 

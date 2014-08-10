@@ -1,0 +1,63 @@
+// $Id$
+/* --------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-------------------------------------------------------------------------- */
+# ifndef DISMOD_AT_INTEGRAND_AVG_HPP
+# define DISMOD_AT_INTEGRAND_AVG_HPP
+
+# include <cppad/vector.hpp>
+# include "get_data_table.hpp"
+# include "get_integrand_table.hpp"
+# include "get_node_table.hpp"
+# include "weight_info.hpp"
+# include "smooth2ode.hpp"
+
+namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
+
+class data_mean {
+	// infromation for each data point
+	typedef struct {
+		integrand_enum        integrand;
+		size_t                child;
+		size_t                i_min;
+		size_t                j_min;
+		double                n_age;
+		double                n_time;
+		CppAD::vector<double> c_ode;
+	} data_ode_info;
+private:
+	const size_t              n_age_ode_;
+	const size_t              n_time_ode_;
+	const double              ode_step_size_;
+
+	// set by constructor and not changed
+	size_t                       n_child_;
+	CppAD::vector<smooth2ode*>   si2ode_vec_;
+	CppAD::vector<data_ode_info> data_info_; 
+public:
+	data_mean(
+		size_t                               parent_node_id  ,
+		size_t                               n_age_ode       ,
+		size_t                               n_time_ode      ,
+		double                               ode_step_size   ,
+		const CppAD::vector<double>&         age_table       ,
+		const CppAD::vector<double>&         time_table      ,
+		const CppAD::vector<integrand_enum>& integrand_table ,
+		const CppAD::vector<node_struct>&    node_table      ,
+		const CppAD::vector<data_struct>&    data_table      ,
+		const CppAD::vector<weight_info>&    w_info_vec      ,
+		const CppAD::vector<smooth_info>&    s_info_vec
+	);
+	// must delete the smooth2ode objects pointed to by si2ode_vec_
+	~data_mean(void);
+};
+
+} // END_DISMOD_AT_NAMESPACE
+
+# endif

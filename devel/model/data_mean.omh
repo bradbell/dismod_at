@@ -1,0 +1,11 @@
+$begin data_mean$$
+$spell
+	var
+$$
+
+$section Computing Data Means$$
+
+$childtable%devel/model/data_mean.cpp
+%$$
+
+$end
