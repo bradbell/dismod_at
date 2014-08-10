@@ -87,7 +87,7 @@ bool smooth2ode_xam(void)
 		n_time_ode++;
 
 	// construct the interpolation object
-	dismod_at::smooth2ode s2ode(
+	dismod_at::smooth2ode si2ode(
 		n_age_ode, n_time_ode, ode_step_size, age_table, time_table, 
 		s_info
 	);
@@ -110,7 +110,7 @@ bool smooth2ode_xam(void)
 	}
 
 	// interpolate from smoothing to ode grid
-	CppAD::vector<Float> var_ode = s2ode.interpolate(var_si, ode_index);
+	CppAD::vector<Float> var_ode = si2ode.interpolate(var_si, ode_index);
 
 	// check result
 	ok &= var_ode.size() == ode_index.size();
