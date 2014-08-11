@@ -49,6 +49,7 @@ $end
 */
 # include <iostream>
 # include <cstdlib>
+# include <cassert>
 # include <dismod_at/include/table_error_exit.hpp>
 
 namespace dismod_at {
@@ -63,6 +64,7 @@ namespace dismod_at {
 		if( row_id >= 0 )
 			cerr << " at " << table_name << "_id = " << row_id;
 		cerr << "." << endl;
+		assert(false);
 		exit(1);
 	}
 }

@@ -16,6 +16,9 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 # Program cpp, not installed, and depends on following source files
 ADD_EXECUTABLE(devel EXCLUDE_FROM_ALL 
 	devel.cpp
+
+	model/data_mean_xam.cpp
+	
 	utility/avg_integrand_xam.cpp
 	utility/bilinear_interp_xam.cpp
 	utility/eigen_ode2_xam.cpp

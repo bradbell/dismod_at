@@ -113,6 +113,7 @@ and is the $cref/data_table/get_data_table/data_table/$$.
 Only the following field of each $code data_struct$$ are used
 by this routine:
 $code integrand_id$$,
+$code node_id$$,
 $code weight_id$$,
 $code age_lower$$,
 $code age_upper$$,
@@ -311,7 +312,8 @@ data_table_    (data_table)
 			// clip to be within limits for this data point
 			double b1 = std::max(a1, age_lower);
 			double b2 = std::min(a2, age_upper);
-			bool   b1_equal_b2 = std::fabs(b1 - b2) * eps * ode_step_size; 
+			bool   b1_equal_b2 = 
+				std::fabs(b1 - b2) <= eps * ode_step_size; 
 			//
 			std::pair<double, double> a_pair(a1, a2);
 			std::pair<double, double> b_pair(b1, b2);
@@ -324,14 +326,14 @@ data_table_    (data_table)
 				// clip to be within limits for this data point
 				double s1 = std::max(t1, time_lower);
 				double s2 = std::min(t2, time_upper);
-				bool   s1_equal_s2 = std::fabs(s1 - s2) * eps * ode_step_size; 
+				bool   s1_equal_s2 = 
+					std::fabs(s1 - s2) <= eps * ode_step_size; 
 				//
 				std::pair<double, double> t_pair(t1, t2);
 				std::pair<double, double> s_pair(s1, s2);
 				//
 				if( b1_equal_b2 && s1_equal_s2 )
 				{	// case with no integration
-					assert( n_age = 2 && n_time == 2 );
 					double a = b1;
 					double t = s1;
 					double d = (a2 - a1) * (t2 - t1);
@@ -344,7 +346,6 @@ data_table_    (data_table)
 				}
 				else if( b1_equal_b2 )
 				{	// case where only integrate w.r.t time
-					assert( n_age == 2 );
 					double a = age_lower;
 					double d = (a2 - a1);
 
@@ -369,7 +370,6 @@ data_table_    (data_table)
 				}
 				else if( s1_equal_s2 )
 				{	// case where only integrate w.r.t. age
-					assert( n_time == 2 );
 					double t = time_lower;
 					double d = (t2 - t1);
 
