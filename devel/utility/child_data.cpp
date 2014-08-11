@@ -35,7 +35,9 @@ $codei%
 	const child_data %cd%
 %$$
 
-$head parent_node_id$$
+$head Constructor$$
+
+$subhead parent_node_id$$
 This argument has prototype
 $codei%
 	size_t %parent_node_id%
@@ -43,7 +45,7 @@ $codei%
 and is the run table
 $cref/parent_node_id/run_table/parent_node_id/$$.
 
-$head node_table$$
+$subhead node_table$$
 This argument has prototype
 $codei%
 	const CppAD::vector<node_struct>& %node_table%
@@ -51,7 +53,7 @@ $codei%
 and is the $cref/node_table/get_node_table/node_table/$$.
 Only the following fields of this table are used: $code parent$$.
 
-$head data_table$$
+$subhead data_table$$
 This argument has prototype
 $codei%
 	const CppAD::vector<data_struct>& %data_table%
@@ -59,16 +61,23 @@ $codei%
 and is the $cref/data_table/get_data_table/data_table/$$.
 Only the following fields of this table are used: $code node_id$$.
 
-$head n_child$$
+$head child_size$$
+
+$subhead n_child$$
 This return value has prototype
 $codei%
 	size_t %n_child%
 %$$
-and is the size of the 
-$cref/child group/node_table/parent/Child Group/$$
-for the specified parent node.
+and is the number of child areas that have their own separate rate values.
+If the
+$cref/child group/node_table/parent/Child Group/$$ corresponding to the
+for the specified parent node has two or more elements, 
+then $icode n_child$$ is the number of elements in this group.
+Otherwise, $icode n_child$$ is zero.
 
-$head child_id$$
+$head child_id2node_id$$
+
+$subhead child_id$$
 This argument has prototype
 $codei%
 	size_t %child_id%
@@ -79,7 +88,7 @@ children appear in $icode node_table$$.
 Also note that if $icode%n_child% == 0%$$,
 there is no valid value for $icode child_id$$.
 
-$head node_id$$
+$subhead node_id$$
 This return value has prototype
 $codei%
 	size_t %node_id%
@@ -87,7 +96,9 @@ $codei%
 and is the $cref/node_id/node_table/node_id/$$ for the
 corresponding $icode child_id$$.
 
-$head data_id$$
+$head data_id2child$$
+
+$subhead data_id$$
 This argument has prototype
 $codei%
 	size_t %data_id%
@@ -95,22 +106,33 @@ $codei%
 and is the $cref/data_id/data_table/data_id/$$ for a 
 row of the data table.
 
-$head child$$
+$subhead child$$
 This return value has prototype
 $codei%
 	size_t %child%
 %$$
 If $icode%child% < %n_child%$$,
 it is the $icode child_id$$ that this data is associated with; i.e.,
-the $cref/node_id/data_table/node_id/$$ for this data is below node
+the $cref/node_id/data_table/node_id/$$ for this data is a descendent
+of the node
 $codei%
 	%cd%.child_id2node_id(%child%)
 %$$
 in the $cref node_table$$.
+$pre
+
+$$
 If $icode%child% == %n_child%$$,
-this data's node is the $icode parent_node_id$$.
+this data's node is a descendant of the $icode parent_node_id$$.
+and it is not a descendent of any of the child nodes.
+This is the same as this data's node being the parent node except
+in the case where the size of the 
+$cref/child group/node_table/parent/Child Group/$$ is one
+$pre
+
+$$
 Otherwise $icode%child% == %n_child%+1%$$,
-and this data's node is not in the set of nodes below
+and this data's node is not a descendant of 
 the $icode parent_node_id$$.
 
 $end
@@ -132,6 +154,11 @@ child_data::child_data(
 		if( parent == parent_node_id )
 			child_id2node_id_.push_back(node_id);
 	}
+
+	// check for special case where there is only on child,
+	// which is the same as no children
+	if( child_id2node_id_.size() == 1 )
+		child_id2node_id_.resize(0);
 
 	// data2child_id
 	size_t n_data = data_table.size();

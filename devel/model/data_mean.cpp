@@ -483,12 +483,13 @@ $cref/integrands/data_table/integrand_id/$$:
 $codei%incidence%, %remission%, %mtexcess%, %mtother%, %mtwith%, %relrisk%$$.
 
 $subhead Node$$
-The
-$cref/node/data_table/node_id/$$
-for this data point must be below
-the 
-$cref/parent node/data_mean_ctor/parent_node_id/$$
-for this $icode avg_integrand$$ object.
+The $icode data_id$$ must correspond to a 
+$cref/node_id/data_table/node_id/$$ that is a descendant of the
+$cref/parent_node_id/data_mean_ctor/parent_node_id/$$; i.e.,
+the function $code data_id2child$$ returns a
+$cref/child/child_data/data_id2child/child/$$ value
+less than or equal 
+$cref/n_child/child_data/child_size/n_child/$$. 
 
 $head var_info$$
 This argument has prototype
@@ -533,14 +534,6 @@ Float data_mean::no_ode(
 	size_t n_time                      = data_info_[data_id ].n_time;
 	size_t child                       = data_info_[data_id ].child;
 	const CppAD::vector<double>& c_ode = data_info_[data_id ].c_ode;
-
-	// check for special case where n_child_ is one. In this case
-	size_t n_child_pack_var = n_child_;
-	if( n_child_ == 1 )
-	{	n_child_pack_var = 0;
-		child            = 0;
-	}
-
 
 	// ode subgrid that we need integrand at 
 	size_t n_ode = n_age * n_time;
@@ -598,16 +591,15 @@ Float data_mean::no_ode(
 		size_t smooth_id = info.smooth_id;
 		//
 		CppAD::vector<Float> rate_si(n_var);
-		if( child < n_child_pack_var || n_child_pack_var == 0 )
-		{	// rate is for a child of there is just one rate
+		if( child < n_child_ || n_child_ == 0 )
+		{	// rate is for a child or only the parent rate is being estimated
 			for(k = 0; k < n_var; k++)
 				rate_si[k] = var_vec[info.offset + k]; 
 		}
 		else
-		{	// rate is for parent and there is more than one rate
+		{	// rate is for parent and there are multiple children
 			assert( n_child_ > 1 );
-			assert( n_child_ == n_child_pack_var );
-			assert( child    == n_child_ );
+			assert( child  == n_child_ );
 			for(k = 0; k < n_var; k++)
 				rate_si[k] = Float(0);
 			for(size_t child_id = 0; child_id < n_child_; child_id++)
