@@ -87,6 +87,8 @@ $codei%
 %$$
 and is the
 $cref/rate_table/get_rate_table/rate_table/$$.
+Only the following fields of this table are used:
+$code parent_smooth_id$$, $code child_smooth_id$$.
 
 $head size$$
 This function is $code const$$.

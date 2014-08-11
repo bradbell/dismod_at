@@ -84,15 +84,26 @@ bool data_mean_xam(void)
 	w_info_vec[0] = w_info;
 	//
 	// s_info_vec
-	vector<size_t> 
-	value_like_id(n_grid), dage_like_id(n_grid), dtime_like_id(n_grid);
+	vector<dismod_at::smooth_info> s_info_vec(2);
+	//
+	vector<size_t> value_like_id_0(n_grid), 
+		dage_like_id_0(n_grid), dtime_like_id_0(n_grid);
 	size_t mulstd_value = 1, mulstd_dage = 1, mulstd_dtime = 1;
-	dismod_at::smooth_info s_info(
-		age_id, time_id, value_like_id, dage_like_id, dtime_like_id,
+	dismod_at::smooth_info s_info_0(
+		age_id, time_id, value_like_id_0, dage_like_id_0, dtime_like_id_0,
 		mulstd_value, mulstd_dage, mulstd_dtime
 	);
-	vector<dismod_at::smooth_info> s_info_vec(1);
-	s_info_vec[0] = s_info;
+	s_info_vec[0] = s_info_0;
+	//
+	vector<size_t> one_age_id(1);
+	one_age_id[0] = 0;
+	vector<size_t> value_like_id_1(n_time_grid), 
+		dage_like_id_1(n_time_grid), dtime_like_id_1(n_time_grid);
+	dismod_at::smooth_info s_info_1(
+		one_age_id, time_id, value_like_id_1, dage_like_id_1, dtime_like_id_1,
+		mulstd_value, mulstd_dage, mulstd_dtime
+	);
+	s_info_vec[1] = s_info_1;
 	//
 	// integrand_table
 	size_t n_integrand = dismod_at::number_integrand_enum;
@@ -151,6 +162,7 @@ bool data_mean_xam(void)
 	data_table[data_id].time_lower   = 1990.0;
 	data_table[data_id].time_upper   = 2000.0;
 	//
+	// avg_integrand
 	dismod_at::data_mean avg_integrand(
 		parent_node_id,
 		n_age_ode,
@@ -164,6 +176,27 @@ bool data_mean_xam(void)
 		w_info_vec,
 		s_info_vec
 	);
+	//
+	// var_info
+	size_t n_child        = 2;
+	size_t pini_smooth_id = 1; // only one age 
+	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
+	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
+	{	smooth_table[smooth_id].n_age  = s_info_vec[smooth_id].age_size();
+		smooth_table[smooth_id].n_time = s_info_vec[smooth_id].time_size();
+	}
+	vector<dismod_at::mulcov_struct> mulcov_table(0);
+	vector<dismod_at::rate_struct>   rate_table(dismod_at::number_rate_enum);
+	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
+	{	rate_table[rate_id].parent_smooth_id = 0;
+		rate_table[rate_id].child_smooth_id = 0;
+	}
+	dismod_at::pack_var var_info(
+		n_integrand, n_child, pini_smooth_id,
+		smooth_table, mulcov_table, rate_table
+	);
+
+
 
 	return ok;
 }
