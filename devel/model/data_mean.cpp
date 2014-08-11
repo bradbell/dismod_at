@@ -21,7 +21,7 @@ $$
 $section Data Mean: Constructor$$
 
 $head Syntax$$
-$codei%data_mean %data_avg%(
+$codei%data_mean %avg_integrand%(
 	%parent_node_id%,
 	%n_age_ode%,
 	%n_time_ode%,
@@ -153,6 +153,7 @@ $end
 # include <dismod_at/include/interp_weight.hpp>
 # include <dismod_at/include/table_error_exit.hpp>
 # include <dismod_at/include/child_data.hpp>
+# include <dismod_at/include/get_rate_table.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -180,9 +181,12 @@ data_mean::data_mean(
 :
 n_age_ode_     (n_age_ode)        ,
 n_time_ode_    (n_time_ode)       ,
-ode_step_size_ (ode_step_size)
+ode_step_size_ (ode_step_size)    ,
+data_table_    (data_table)
 {	using std::string;
 	size_t i, j, k;
+	//
+	double eps = std::numeric_limits<double>::epsilon() * 100.0;
 	//
 	assert( n_age_ode  > 1 );
 	assert( n_time_ode > 1 );
@@ -307,6 +311,7 @@ ode_step_size_ (ode_step_size)
 			// clip to be within limits for this data point
 			double b1 = std::max(a1, age_lower);
 			double b2 = std::min(a2, age_upper);
+			bool   b1_equal_b2 = std::fabs(b1 - b2) * eps * ode_step_size; 
 			//
 			std::pair<double, double> a_pair(a1, a2);
 			std::pair<double, double> b_pair(b1, b2);
@@ -319,11 +324,12 @@ ode_step_size_ (ode_step_size)
 				// clip to be within limits for this data point
 				double s1 = std::max(t1, time_lower);
 				double s2 = std::min(t2, time_upper);
+				bool   s1_equal_s2 = std::fabs(s1 - s2) * eps * ode_step_size; 
 				//
 				std::pair<double, double> t_pair(t1, t2);
 				std::pair<double, double> s_pair(s1, s2);
 				//
-				if( b1 == b2 && s1 == s2 )
+				if( b1_equal_b2 && s1_equal_s2 )
 				{	// case with no integration
 					assert( n_age = 2 && n_time == 2 );
 					double a = b1;
@@ -336,7 +342,7 @@ ode_step_size_ (ode_step_size)
 					c[2]     = (a - a1)*(t2 - t) / d;   // (a2, t1)
 					c[3]     = (a - a1)*(t - t1) / d;   // (a2, t2)
 				}
-				else if( b1 == b2 )
+				else if( b1_equal_b2 )
 				{	// case where only integrate w.r.t time
 					assert( n_age == 2 );
 					double a = age_lower;
@@ -361,7 +367,7 @@ ode_step_size_ (ode_step_size)
 					c[2]   = c_pair.first  * (a - a1) / d; // (a2, t1)
 					c[3]   = c_pair.second * (a - a1) / d; // (a2, t2)
 				}
-				else if( s1 == s2 )
+				else if( s1_equal_s2 )
 				{	// case where only integrate w.r.t. age
 					assert( n_time == 2 );
 					double t = time_lower;
@@ -433,6 +439,262 @@ ode_step_size_ (ode_step_size)
 			data_info_[data_id].c_ode[k] = c_sum[k] / sum;
 	}
 }
+/*
+-----------------------------------------------------------------------------
+$begin data_mean_no_ode$$
+
+$spell
+	integrands
+	mtexcess
+	mtother
+	mtwith
+	relrisk
+	var
+	vec
+	CppAD
+	const
+$$
+$section Data Mean for Integrands That Don't Require the ODE$$
+
+$head Syntax$$
+$icode%avg% = %avg_integrand%.no_ode(%data_id%, %var_info%, %var_vec%)%$$
+
+$head avg_integrand$$
+This object has prototype
+$codei%
+	const data_mean %avg_integrand%
+%$$
+
+$head Float$$
+The type $icode Float$$ must be one of the following:
+$code double$$, $code CppD::AD<double>$$.
+
+$head data_id$$
+This argument has prototype
+$codei%
+	size_t %data_id%
+%$$
+and is the $cref/data_id/data_table/data_id/$$ for we are computing
+the data mean for.
+
+$subhead Integrand$$
+The $icode data_id$$ must correspond to one of the following
+$cref/integrands/data_table/integrand_id/$$:
+$codei%incidence%, %remission%, %mtexcess%, %mtother%, %mtwith%, %relrisk%$$.
+
+$subhead Node$$
+The
+$cref/node/data_table/node_id/$$
+for this data point must be below
+the 
+$cref/parent node/data_mean_ctor/parent_node_id/$$
+for this $icode avg_integrand$$ object.
+
+$head var_info$$
+This argument has prototype
+$codei%
+	const pack_var& %var_info%
+%$$
+and is the $cref pack_var$$ information corresponding to 
+$icode var_vec$$.
+
+$head var_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %var_vec%
+%$$
+and is a vector of values for all of the model variables.
+
+$head avg$$
+This is the 
+$cref/average integrand/model_data_mean/Average Integrand/$$ 
+for the specified data point.
+
+$end
+*/
+
+template <class Float>
+Float data_mean::no_ode(
+		size_t                        data_id  ,
+		const pack_var&               var_info ,
+		const CppAD::vector<Float>&   var_vec
+	) const
+{	size_t i, j, k, ell;
+	assert( var_info.size() == var_vec.size() );
+
+	// data table infomation for this data point
+	integrand_enum integrand       = data_info_[ data_id].integrand;
+	const CppAD::vector<double>& x = data_table_[ data_id ] .x; 
+
+	// exrtra information for this data point
+	size_t i_min                       = data_info_[data_id ].i_min;
+	size_t j_min                       = data_info_[data_id ].j_min;
+	size_t n_age                       = data_info_[data_id ].n_age;
+	size_t n_time                      = data_info_[data_id ].n_time;
+	size_t child                       = data_info_[data_id ].child;
+	const CppAD::vector<double>& c_ode = data_info_[data_id ].c_ode;
+
+	// check for special case where n_child_ is one. In this case
+	size_t n_child_pack_var = n_child_;
+	if( n_child_ == 1 )
+	{	n_child_pack_var = 0;
+		child            = 0;
+	}
+
+
+	// ode subgrid that we need integrand at 
+	size_t n_ode = n_age * n_time;
+	CppAD::vector<size_t> ode_index(n_ode);
+	for(i = 0; i < n_age; i++)
+	{	for(j = 0; j < n_time; j++)
+		{	k = i * n_time + j;
+			ode_index[k] = (i_min + i) * n_time_ode_ + j_min + j;
+		}
+	}
+
+	// which rates are necessary for this integrand
+	CppAD::vector<size_t> rate_id(2);
+	rate_id[0] = number_rate_enum;
+	rate_id[1] = number_rate_enum;
+	switch(integrand)
+	{
+		case incidence_enum:
+		rate_id[0] = size_t (iota_enum);
+		break;
+
+		case remission_enum:
+		rate_id[0] = size_t (rho_enum);
+		break;
+
+		case mtexcess_enum:
+		rate_id[0] = size_t (chi_enum);
+		break;
+
+		case mtother_enum:
+		rate_id[0] = size_t (mtother_enum);
+		break;
+
+		case mtwith_enum:
+		case relrisk_enum:
+		rate_id[0] = size_t (chi_enum);
+		rate_id[1] = size_t (mtother_enum);
+		break;
+
+		default:
+		// use compute_yes_ode for these cases
+		assert( false );
+	}
+
+
+	// value for the rate on the ode subgrid
+	CppAD::vector< CppAD::vector<Float> > rate_ode(2);
+	for(ell = 0; ell < 2; ell++) if( rate_id[ell] < number_rate_enum )
+	{	rate_ode[ell].resize(n_ode);
+		//
+		// extract subvector infromation for this rate
+		pack_var::subvec_info info;
+		info             = var_info.rate_info(rate_id[ell], child);	
+		size_t n_var     = info.n_var;
+		size_t smooth_id = info.smooth_id;
+		//
+		CppAD::vector<Float> rate_si(n_var);
+		if( child < n_child_pack_var || n_child_pack_var == 0 )
+		{	// rate is for a child of there is just one rate
+			for(k = 0; k < n_var; k++)
+				rate_si[k] = var_vec[info.offset + k]; 
+		}
+		else
+		{	// rate is for parent and there is more than one rate
+			assert( n_child_ > 1 );
+			assert( n_child_ == n_child_pack_var );
+			assert( child    == n_child_ );
+			for(k = 0; k < n_var; k++)
+				rate_si[k] = Float(0);
+			for(size_t child_id = 0; child_id < n_child_; child_id++)
+			{	info = var_info.rate_info(rate_id[ell],child_id);	
+				for(k = 0; k < n_var; k++)
+					rate_si[k] += var_vec[info.offset + k];
+			}
+			double den = double(n_child_);
+			for(k = 0; k < n_var; k++)
+				rate_si[k] /= den;
+		}
+		//
+		// interpolate onto the ode grid
+		rate_ode[ell] = 
+			si2ode_vec_[smooth_id]->interpolate(rate_si, ode_index);
+		//
+		// include effect of rate covariates
+		size_t n_cov = var_info.rate_mean_mulcov_n_cov(rate_id[ell]);
+		for(size_t j = 0; j < n_cov; j++)
+		{	info       = var_info.rate_mean_mulcov_info(rate_id[ell], j);
+			n_var      = info.n_var;
+			smooth_id  = info.smooth_id;
+			double x_j = x[ info.covariate_id ];
+			//
+			CppAD::vector<Float> var_si(n_var);
+			for(k = 0; k < n_var; k++)
+				var_si[k] += var_vec[info.offset + k];
+			//
+			CppAD::vector<Float> var_ode = 
+				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
+			//
+			for(k = 0; k < n_ode; k++)
+				rate_ode[ell][k] *= exp( var_ode[k] * x_j );
+		}
+	}
+	CppAD::vector<Float> var_ode(n_ode);
+	switch(integrand)
+	{
+		case incidence_enum:
+		var_ode = rate_ode[0];
+		break;
+
+		case remission_enum:
+		var_ode =  rate_ode[0];
+		break;
+
+		case mtexcess_enum:
+		var_ode = rate_ode[0];
+		break;
+
+		case mtother_enum:
+		var_ode = rate_ode[0];
+		break;
+
+		case mtwith_enum:
+		for(k = 0; k < n_ode; k++)
+			var_ode[k] = rate_ode[0][k] + rate_ode[0][k];
+		break;
+
+		case relrisk_enum:
+		for(k = 0; k < n_ode; k++)
+		{	var_ode[k]  = 1.0;
+			var_ode[k] += rate_ode[0][k] / rate_ode[0][k];
+		}
+		break;
+
+		default:
+		assert( false );
+	}
+	Float sum = 0.0;
+	for(k = 0; k < n_ode; k++)
+		sum += c_ode[k] * var_ode[k];
+	//
+	return sum;
+}
+
+# define DISMOD_AT_INSTANTIATE_DATA_MEAN_NO_ODE(Float)      \
+	template Float data_mean::no_ode(                       \
+		size_t                        data_id  ,            \
+		const pack_var&               var_info ,            \
+		const CppAD::vector<Float>&   var_vec               \
+	) const;
+
+// instantiations
+DISMOD_AT_INSTANTIATE_DATA_MEAN_NO_ODE(double)
+DISMOD_AT_INSTANTIATE_DATA_MEAN_NO_ODE( CppAD::AD<double> )
+
 
 
 } // END DISMOD_AT_NAMESPACE

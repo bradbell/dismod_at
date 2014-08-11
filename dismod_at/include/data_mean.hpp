@@ -11,12 +11,14 @@ see http://www.gnu.org/licenses/agpl.txt
 # ifndef DISMOD_AT_INTEGRAND_AVG_HPP
 # define DISMOD_AT_INTEGRAND_AVG_HPP
 
+# include <limits>
 # include <cppad/vector.hpp>
 # include "get_data_table.hpp"
 # include "get_integrand_table.hpp"
 # include "get_node_table.hpp"
 # include "weight_info.hpp"
 # include "smooth2ode.hpp"
+# include "pack_var.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -32,9 +34,10 @@ class data_mean {
 		CppAD::vector<double> c_ode;
 	} data_ode_info;
 private:
-	const size_t              n_age_ode_;
-	const size_t              n_time_ode_;
-	const double              ode_step_size_;
+	const size_t                       n_age_ode_;
+	const size_t                       n_time_ode_;
+	const double                       ode_step_size_;
+	const CppAD::vector<data_struct>&  data_table_;
 
 	// set by constructor and not changed
 	size_t                       n_child_;
@@ -54,8 +57,15 @@ public:
 		const CppAD::vector<weight_info>&    w_info_vec      ,
 		const CppAD::vector<smooth_info>&    s_info_vec
 	);
-	// must delete the smooth2ode objects pointed to by si2ode_vec_
+	// destructor must delete the smooth2ode objects pointed to by si2ode_vec_
 	~data_mean(void);
+	// compute data mean for integrands that do not require S or C 
+	template <class Float>
+	Float no_ode(
+		size_t                        data_id  ,
+		const  pack_var&              var_info ,
+		const  CppAD::vector<Float>&  var_vec
+	) const;
 };
 
 } // END_DISMOD_AT_NAMESPACE

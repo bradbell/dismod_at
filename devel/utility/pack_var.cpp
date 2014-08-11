@@ -291,7 +291,7 @@ $verbatim%dismod_at/include/pack_var.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
-$head var$$
+$head var_info$$
 This object has prototype
 $codei%
 	const pack_var %var_info%
@@ -352,7 +352,7 @@ $head Syntax$$
 $icode%offset% = %var_info%.mulstd_offset(%smooth_id%)
 %$$
 
-$head var$$
+$head var_info$$
 This object has prototype
 $codei%
 	const pack_var %var_info%
@@ -415,7 +415,7 @@ $verbatim%dismod_at/include/pack_var.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
-$head var$$
+$head var_info$$
 This object has prototype
 $codei%
 	const pack_var %var_info%
@@ -523,7 +523,7 @@ $verbatim%dismod_at/include/pack_var.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
-$head var$$
+$head var_info$$
 This object has prototype
 $codei%
 	const pack_var %var_info%
@@ -633,7 +633,7 @@ $verbatim%dismod_at/include/pack_var.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
-$head var$$
+$head var_info$$
 This object has prototype
 $codei%
 	const pack_var %var_info%
