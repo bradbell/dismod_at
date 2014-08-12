@@ -43,7 +43,7 @@ namespace {
 
 bool data_mean_xam(void)
 {	bool   ok = true;
-	size_t i, j, k;
+	size_t i, k;
 	using CppAD::abs;	
 	using CppAD::vector;	
 	using std::cout;
@@ -55,22 +55,34 @@ bool data_mean_xam(void)
 	//
 	// age_table 
 	// (make sure that ode grid lands on last age table point)
-	size_t n_age_table   = int( 100. / ode_step_size + 1.5 );
-	vector<double> age_table(n_age_table);
-	for(i = 0; i < n_age_table; i++)
-		age_table[i] = ode_step_size * i;
+	double age = 0.0;
+	vector<double> age_table;
+	age_table.push_back(age);
+	while( age < 100. )
+	{	age += ode_step_size;
+		age_table.push_back(age);
+	}
+	size_t n_age_table = age_table.size();
+	double age_min     = age_table[0];
+	double age_max     = age_table[n_age_table - 1];
 	//
-	// time_table
+	// time_table 
 	// (make sure that ode grid lands on last time table point)
-	size_t n_time_table  = int( (2020 - 1980) / ode_step_size + 1.5 );
-	vector<double> time_table(n_time_table);
-	for(j = 0; j < n_time_table; j++)
-		time_table[j] = ode_step_size * j + 1980.0;
-	//
-	// age_id and time_id
-	size_t n_age_grid   = 3;
-	size_t n_time_grid  = 2;
-	vector<size_t> age_id(n_age_grid), time_id(n_time_grid);
+	double time = 1980.0;
+	vector<double> time_table;
+	time_table.push_back(time);
+	while( time < 2020.0 )
+	{	time += ode_step_size;
+		time_table.push_back(time);
+	}
+	size_t n_time_table = time_table.size();
+	double time_min     = time_table[0];
+	double time_max     = time_table[n_time_table - 1];
+
+	// age and time smoohting grid indices
+	size_t n_age_si   = 3;
+	size_t n_time_si  = 2;
+	vector<size_t> age_id(n_age_si), time_id(n_time_si);
 	age_id[0]   = 0;
 	age_id[1]   = n_age_table / 2;
 	age_id[2]   = n_age_table - 1;
@@ -79,9 +91,9 @@ bool data_mean_xam(void)
 	//
 	// w_info_vec
 	// weight value should not matter when constant
-	size_t n_grid = n_age_grid * n_time_grid;
-	vector<double> weight(n_grid);
-	for(k = 0; k < n_grid; k++)
+	size_t n_si = n_age_si * n_time_si;
+	vector<double> weight(n_si);
+	for(k = 0; k < n_si; k++)
 		weight[k] = 0.5;
 	dismod_at::weight_info w_info(age_id, time_id, weight);
 	vector<dismod_at::weight_info> w_info_vec(1);
@@ -90,8 +102,8 @@ bool data_mean_xam(void)
 	// s_info_vec
 	vector<dismod_at::smooth_info> s_info_vec(2);
 	//
-	vector<size_t> value_like_id_0(n_grid), 
-		dage_like_id_0(n_grid), dtime_like_id_0(n_grid);
+	vector<size_t> value_like_id_0(n_si), 
+		dage_like_id_0(n_si), dtime_like_id_0(n_si);
 	size_t mulstd_value = 1, mulstd_dage = 1, mulstd_dtime = 1;
 	dismod_at::smooth_info s_info_0(
 		age_id, time_id, value_like_id_0, dage_like_id_0, dtime_like_id_0,
@@ -101,8 +113,8 @@ bool data_mean_xam(void)
 	//
 	vector<size_t> one_age_id(1);
 	one_age_id[0] = 0;
-	vector<size_t> value_like_id_1(n_time_grid), 
-		dage_like_id_1(n_time_grid), dtime_like_id_1(n_time_grid);
+	vector<size_t> value_like_id_1(n_time_si), 
+		dage_like_id_1(n_time_si), dtime_like_id_1(n_time_si);
 	dismod_at::smooth_info s_info_1(
 		one_age_id, time_id, value_like_id_1, dage_like_id_1, dtime_like_id_1,
 		mulstd_value, mulstd_dage, mulstd_dtime
@@ -116,15 +128,11 @@ bool data_mean_xam(void)
 			integrand_table[i] = dismod_at::integrand_enum(i);
 	//
 	// n_age_ode
-	double age_min       = age_table[0];
-	double age_max       = age_table[n_age_table-1];
 	size_t n_age_ode     =  1;
 	while( age_min + (n_age_ode-1) * ode_step_size < age_max )
 			n_age_ode++; 
 	//
 	// n_time_ode
-	double time_min       = time_table[0];
-	double time_max       = time_table[n_time_table-1];
 	size_t n_time_ode     =  1;
 	while( time_min + (n_time_ode-1) * ode_step_size < time_max )
 			n_time_ode++; 
@@ -215,7 +223,7 @@ bool data_mean_xam(void)
 	for(size_t child_id = 0; child_id < n_child; child_id++)
 	{	info = var_info.rate_info(dismod_at::omega_enum, child_id);
 		dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
-		for(size_t i = 0; i < s_info.age_size(); i++)
+		for(i = 0; i < s_info.age_size(); i++)
 		{	double age = age_table[ s_info.age_id(i) ];
 			for(size_t j = 0; j < s_info.time_size(); j++)
 			{	double time    = time_table[ s_info.time_id(j) ];
