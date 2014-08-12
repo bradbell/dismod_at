@@ -48,8 +48,7 @@ bool data_mean_xam(void)
 	using CppAD::vector;	
 	using std::cout;
 	typedef CppAD::AD<double> Float;
-	Float eps = CppAD::numeric_limits<Float>::epsilon();
-	Float nan = CppAD::nan( Float(0) );
+	Float eps = CppAD::numeric_limits<Float>::epsilon() * 100;
 	//
 	// age_table 
 	size_t n_age_table   = 11;
@@ -112,7 +111,7 @@ bool data_mean_xam(void)
 			integrand_table[i] = dismod_at::integrand_enum(i);
 	//
 	// ode_step_size
-	double ode_step_size = 1.0;
+	double ode_step_size = 10.0;
 	//
 	// n_age_ode
 	double age_min       = age_table[0];
@@ -148,8 +147,8 @@ bool data_mean_xam(void)
 	data_table[data_id].integrand_id = dismod_at::mtother_enum;
 	data_table[data_id].node_id      = 0;
 	data_table[data_id].weight_id    = 0;
-	data_table[data_id].age_lower    = 40.0;
-	data_table[data_id].age_upper    = 90.0;
+	data_table[data_id].age_lower    = age_max;
+	data_table[data_id].age_upper    = age_max;
 	data_table[data_id].time_lower   = 1990.0;
 	data_table[data_id].time_upper   = 2000.0;
 	//
@@ -207,9 +206,19 @@ bool data_mean_xam(void)
 			for(size_t j = 0; j < s_info.time_size(); j++)
 			{	double time    = time_table[ s_info.time_id(j) ];
 				size_t index   = info.offset + i * s_info.time_size() + j; 
-				var_vec[index] = age * time;
+				var_vec[index] = age * time / (age_max*time_max);
 			}
 		}
+	}
+	// check results
+	for(data_id = 0; data_id < data_table.size(); data_id++)
+	{	Float data_mean = avg_integrand.no_ode(data_id, var_info, var_vec);
+		double check    = check_avg(data_table[data_id]) / (age_max*time_max);
+		ok             &= abs( 1.0 - data_mean / check ) <= eps;
+		cout << std::endl;
+		// cout << "data_mean = " << data_mean; 
+		// cout << ", check = " << check; 
+		// cout << ", relerr    = " << 1.0 - data_mean / check  << std::endl;
 	}
 
 	return ok;

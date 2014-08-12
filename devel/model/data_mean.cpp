@@ -577,13 +577,13 @@ Float data_mean::no_ode(
 		break;
 
 		case mtother_enum:
-		rate_id[0] = size_t (mtother_enum);
+		rate_id[0] = size_t (omega_enum);
 		break;
 
 		case mtwith_enum:
 		case relrisk_enum:
 		rate_id[0] = size_t (chi_enum);
-		rate_id[1] = size_t (mtother_enum);
+		rate_id[1] = size_t (omega_enum);
 		break;
 
 		default:
