@@ -59,10 +59,17 @@ $codei%
 is the information value for the corresponding
 $cref/rate_id/rate_table/rate_id/$$.
 
-$head Assumption$$
-This routine checks that the order of 
-$cref/rate_name/rate_table/rate_name/$$ is
-$code iota$$, $code rho$$, $code chi$$, $code omega$$.
+$head Rate Enum Values$$
+The $icode rate_table$$ can also be addressed 
+using the rate enum values as follows:
+$table 
+$icode rate_id$$    $cnext $icode rate_enum$$  $rnext
+0                   $cnext $code iota_enum$$   $rnext
+1                   $cnext $code rho_enum$$    $rnext
+2                   $cnext $code chi_enum$$    $rnext
+3                   $cnext $code omega_enum$$
+$tend
+
 
 $children%example/devel/table/get_rate_table_xam.cpp
 %$$

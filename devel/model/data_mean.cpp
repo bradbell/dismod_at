@@ -444,6 +444,8 @@ data_table_    (data_table)
 $begin data_mean_no_ode$$
 
 $spell
+	subvectors
+	enum
 	integrands
 	mtexcess
 	mtother
@@ -458,6 +460,7 @@ $section Data Mean for Integrands That Don't Require the ODE$$
 
 $head Syntax$$
 $icode%avg% = %avg_integrand%.no_ode(%data_id%, %var_info%, %var_vec%)%$$
+
 
 $head avg_integrand$$
 This object has prototype
@@ -476,11 +479,6 @@ $codei%
 %$$
 and is the $cref/data_id/data_table/data_id/$$ for we are computing
 the data mean for.
-
-$subhead Integrand$$
-The $icode data_id$$ must correspond to one of the following
-$cref/integrands/data_table/integrand_id/$$:
-$codei%incidence%, %remission%, %mtexcess%, %mtother%, %mtwith%, %relrisk%$$.
 
 $subhead Node$$
 The $icode data_id$$ must correspond to a 
@@ -506,11 +504,26 @@ $codei%
 %$$
 and is a vector of values for all of the model variables.
 
+$subhead Integrand and Rates$$
+The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
+$icode data_id$$ must be one of those listed in the table below.
+In addition, depending on the integrand, only the corresponding 
+$cref pack_var_rate$$ and $cref pack_var_rate_mulcov$$ subvectors of 
+$icode var_vec$$ are used:
+$table
+Integrand               $cnext Rates               $rnext
+$code incidence_enum$$  $cnext $code iota_enum$$   $rnext
+$code remission_enum$$  $cnext $code rho_enum$$    $rnext
+$code mtexcess_enum$$   $cnext $code chi_enum$$    $rnext
+$code mtother_enum$$    $cnext $code omega_enum$$  $rnext
+$code mtwith_enum$$     $cnext $code chi_enum$$, $code omega_enum$$ $rnext
+$code relrisk_enum$$    $cnext $code chi_enum$$, $code omega_enum$$ 
+$tend
+
 $head avg$$
 This is the 
 $cref/average integrand/model_data_mean/Average Integrand/$$ 
 for the specified data point.
-
 $end
 */
 

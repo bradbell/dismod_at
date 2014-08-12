@@ -195,8 +195,22 @@ bool data_mean_xam(void)
 		n_integrand, n_child, pini_smooth_id,
 		smooth_table, mulcov_table, rate_table
 	);
-
-
+	//
+	// var_vec
+	vector<double> var_vec( var_info.size() );
+	dismod_at::pack_var::subvec_info info;
+	for(size_t child_id = 0; child_id < n_child; child_id++)
+	{	info = var_info.rate_info(dismod_at::omega_enum, child_id);
+		dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
+		for(size_t i = 0; i < s_info.age_size(); i++)
+		{	double age = age_table[ s_info.age_id(i) ];
+			for(size_t j = 0; j < s_info.time_size(); j++)
+			{	double time    = time_table[ s_info.time_id(j) ];
+				size_t index   = info.offset + i * s_info.time_size() + j; 
+				var_vec[index] = age * time;
+			}
+		}
+	}
 
 	return ok;
 }

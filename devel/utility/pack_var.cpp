@@ -302,7 +302,7 @@ $codei%
 $head info$$
 The return value  has prototype
 $codei%
-	subvec_info %info%
+	pack_var::subvec_info %info%
 %$$
 
 $subhead covariate_id$$
@@ -441,7 +441,7 @@ and $icode%j% <= %n_child%$$.
 $head info$$
 The return value  has prototype
 $codei%
-	subvec_info %info%
+	pack_var::subvec_info %info%
 %$$
 
 $subhead covariate_id$$
@@ -559,7 +559,7 @@ and $icode%j% < n_cov(%integrand_id%)%$$.
 $head info$$
 this return value has prototype
 $codei%
-	subvec_info %info%
+	pack_var::subvec_info %info%
 %$$
 
 $subhead covariate_id$$
@@ -669,7 +669,7 @@ and $icode%j% < n_cov(%rate_id%)%$$.
 $head info$$
 this return value has prototype
 $codei%
-	subvec_info %info%
+	pack_var::subvec_info %info%
 %$$
 
 $subhead covariate_id$$
