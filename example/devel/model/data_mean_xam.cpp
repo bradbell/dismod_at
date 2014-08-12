@@ -215,10 +215,11 @@ bool data_mean_xam(void)
 	{	Float data_mean = avg_integrand.no_ode(data_id, var_info, var_vec);
 		double check    = check_avg(data_table[data_id]) / (age_max*time_max);
 		ok             &= abs( 1.0 - data_mean / check ) <= eps;
-		cout << std::endl;
-		// cout << "data_mean = " << data_mean; 
-		// cout << ", check = " << check; 
-		// cout << ", relerr    = " << 1.0 - data_mean / check  << std::endl;
+		if( data_id == 0 )
+			cout << "Under construction" << std::endl; 
+		cout << "data_mean = " << data_mean; 
+		cout << ", check = " << check; 
+		cout << ", relerr    = " << 1.0 - data_mean / check  << std::endl;
 	}
 
 	return ok;

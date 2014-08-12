@@ -264,7 +264,7 @@ data_table_    (data_table)
 
 		// determine minimum ode grid age index 
 		size_t i_min = 0;
-		while(age_min + i_min * ode_step_size < age_lower )
+		while(age_min + (i_min+1) * ode_step_size <= age_lower )
 			i_min++;
 		i_min = std::min(i_min, n_age_ode - 2);
 
@@ -277,7 +277,7 @@ data_table_    (data_table)
 
 		// determine minimum ode grid time index 
 		size_t j_min = 0;
-		while(time_min + j_min * ode_step_size < time_lower )
+		while(time_min + (j_min+1) * ode_step_size <= time_lower )
 			j_min++;
 		j_min  = std::min(j_min, n_age_ode - 2);
 
@@ -329,10 +329,13 @@ data_table_    (data_table)
 				bool   s1_equal_s2 = 
 					std::fabs(s1 - s2) <= eps * ode_step_size; 
 				//
+				// initialize contribution for this rectangle as zero
+				c[0] = c[1] = c[2] = c[3] = 0.0;
+				//
 				std::pair<double, double> t_pair(t1, t2);
 				std::pair<double, double> s_pair(s1, s2);
 				//
-				if( b1_equal_b2 && s1_equal_s2 )
+				if( age_lower == age_upper && time_lower == time_upper )
 				{	// case with no integration
 					double a = b1;
 					double t = s1;
@@ -344,74 +347,79 @@ data_table_    (data_table)
 					c[2]     = (a - a1)*(t2 - t) / d;   // (a2, t1)
 					c[3]     = (a - a1)*(t - t1) / d;   // (a2, t2)
 				}
-				else if( b1_equal_b2 )
+				else if( age_lower == age_upper )
 				{	// case where only integrate w.r.t time
-					double a = age_lower;
-					double d = (a2 - a1);
-
-					// weight at time t1
-					w_pair.first = interp_weight(
-						a, t1, w_info, age_table, time_table, i_wi, j_wi
-					);
-
-					// weight at time t2
-					w_pair.second = interp_weight(
-						a, t2, w_info, age_table, time_table, i_wi, j_wi
-					);
-
-					// coefficients for integrating w.r.t time
-					c_pair = integrate_1d(t_pair, s_pair, w_pair);
-
-					// translate to coefficients for sourrounding age points
-					c[0]   = c_pair.first  * (a2 - a) / d; // (a1, t1)
-					c[1]   = c_pair.second * (a2 - a) / d; // (a1, t2)
-					c[2]   = c_pair.first  * (a - a1) / d; // (a2, t1)
-					c[3]   = c_pair.second * (a - a1) / d; // (a2, t2)
+					if( ! s1_equal_s2 )
+					{	double a = age_lower;
+						double d = (a2 - a1);
+	
+						// weight at time t1
+						w_pair.first = interp_weight(
+							a, t1, w_info, age_table, time_table, i_wi, j_wi
+						);
+	
+						// weight at time t2
+						w_pair.second = interp_weight(
+							a, t2, w_info, age_table, time_table, i_wi, j_wi
+						);
+	
+						// coefficients for integrating w.r.t time
+						c_pair = integrate_1d(t_pair, s_pair, w_pair);
+	
+						// coefficients for sourrounding age points
+						c[0]   = c_pair.first  * (a2 - a) / d; // (a1, t1)
+						c[1]   = c_pair.second * (a2 - a) / d; // (a1, t2)
+						c[2]   = c_pair.first  * (a - a1) / d; // (a2, t1)
+						c[3]   = c_pair.second * (a - a1) / d; // (a2, t2)
+					}
 				}
-				else if( s1_equal_s2 )
+				else if( time_lower == time_upper )
 				{	// case where only integrate w.r.t. age
-					double t = time_lower;
-					double d = (t2 - t1);
-
-					// weight at age a1
-					w_pair.first = interp_weight(
-						a1, t, w_info, age_table, time_table, i_wi, j_wi
-					);
-
-					// weight at age a2
-					w_pair.second = interp_weight(
-						a2, t, w_info, age_table, time_table, i_wi, j_wi
-					);
-
-					// coefficients for integrating w.r.t. age
-					c_pair = integrate_1d(a_pair, b_pair, w_pair);
-
-					// translate to coefficient for sourrounding time poins
-					c[0]   = c_pair.first  * (t2 - t) / d; // (a1, t1)
-					c[1]   = c_pair.first  * (t - t1) / d; // (a1, t2)
-					c[2]   = c_pair.second * (t2 - t) / d; // (a2, t1)
-					c[3]   = c_pair.second * (t - t1) / d; // (a2, t2)
+					if( ! b1_equal_b2 )
+					{	double t = time_lower;
+						double d = (t2 - t1);
+	
+						// weight at age a1
+						w_pair.first = interp_weight(
+							a1, t, w_info, age_table, time_table, i_wi, j_wi
+						);
+	
+						// weight at age a2
+						w_pair.second = interp_weight(
+							a2, t, w_info, age_table, time_table, i_wi, j_wi
+						);
+	
+						// coefficients for integrating w.r.t. age
+						c_pair = integrate_1d(a_pair, b_pair, w_pair);
+	
+						// coefficients for sourrounding time poins
+						c[0]   = c_pair.first  * (t2 - t) / d; // (a1, t1)
+						c[1]   = c_pair.first  * (t - t1) / d; // (a1, t2)
+						c[2]   = c_pair.second * (t2 - t) / d; // (a2, t1)
+						c[3]   = c_pair.second * (t - t1) / d; // (a2, t2)
+					}
 				}
 				else 
 				{	// case where integrate w.r.t to age and time
-
-					// weight at (a1, t1)
-					w[0] = interp_weight(
-						a1, t1, w_info, age_table, time_table, i_wi, j_wi);
-
-					// weight at (a1, t2)
-					w[1] = interp_weight(
-						a1, t2, w_info, age_table, time_table, i_wi, j_wi);
-
-					// weight at (a2, t1)
-					w[2] = interp_weight(
-						a2, t1, w_info, age_table, time_table, i_wi, j_wi);
-
-					// weight at (a2, t2)
-					w[3] = interp_weight(
-						a2, t2, w_info, age_table, time_table, i_wi, j_wi);
-					//
-					c = integrate_2d(a_pair, t_pair, b_pair, s_pair, w);
+					if( ! ( b1_equal_b2 || s1_equal_s2) )
+					{	// weight at (a1, t1)
+						w[0] = interp_weight(
+							a1, t1, w_info, age_table, time_table, i_wi, j_wi);
+	
+						// weight at (a1, t2)
+						w[1] = interp_weight(
+							a1, t2, w_info, age_table, time_table, i_wi, j_wi);
+	
+						// weight at (a2, t1)
+						w[2] = interp_weight(
+							a2, t1, w_info, age_table, time_table, i_wi, j_wi);
+	
+						// weight at (a2, t2)
+						w[3] = interp_weight(
+							a2, t2, w_info, age_table, time_table, i_wi, j_wi);
+						//
+						c = integrate_2d(a_pair, t_pair, b_pair, s_pair, w);
+					}
 				}
 				// add this rectangle contribution
 				c_sum[     i * n_time + j   ]  += c[0];
