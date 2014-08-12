@@ -143,23 +143,35 @@ bool data_mean_xam(void)
 	size_t parent_node_id = 0;
 	//
 	// data_table
-	vector<dismod_at::data_struct> data_table(2);
+	vector<dismod_at::data_struct> data_table(3);
 	//
+	// parent node, time only integrantion.
 	size_t data_id = 0;
 	data_table[data_id].integrand_id = dismod_at::mtother_enum;
 	data_table[data_id].node_id      = 0;
 	data_table[data_id].weight_id    = 0;
-	data_table[data_id].age_lower    = age_max;
-	data_table[data_id].age_upper    = age_max;
+	data_table[data_id].age_lower    = 35.0;
+	data_table[data_id].age_upper    = 35.0;
 	data_table[data_id].time_lower   = 1990.0;
 	data_table[data_id].time_upper   = 2000.0;
 	//
+	// child node, age only integration
 	data_id++;
 	data_table[data_id].integrand_id = dismod_at::mtother_enum;
-	data_table[data_id].node_id      = 3;
+	data_table[data_id].node_id      = 2;
 	data_table[data_id].weight_id    = 0;
-	data_table[data_id].age_lower    = age_max;
-	data_table[data_id].age_upper    = age_max;
+	data_table[data_id].age_lower    = 35.0;
+	data_table[data_id].age_upper    = 55.0;
+	data_table[data_id].time_lower   = 1990.0;
+	data_table[data_id].time_upper   = 1990.0;
+	//
+	// descendant of child node, age and time integration
+	data_id++;
+	data_table[data_id].integrand_id = dismod_at::mtother_enum;
+	data_table[data_id].node_id      = 2;
+	data_table[data_id].weight_id    = 0;
+	data_table[data_id].age_lower    = 35.0;
+	data_table[data_id].age_upper    = 55.0;
 	data_table[data_id].time_lower   = 1990.0;
 	data_table[data_id].time_upper   = 2000.0;
 	//
@@ -217,11 +229,13 @@ bool data_mean_xam(void)
 	{	Float data_mean = avg_integrand.no_ode(data_id, var_info, var_vec);
 		double check    = check_avg(data_table[data_id]) / (age_max*time_max);
 		ok             &= abs( 1.0 - data_mean / check ) <= eps;
+		/*
 		if( data_id == 0 )
-			cout << "Under construction" << std::endl; 
+			cout << "Debugging" << std::endl; 
 		cout << "data_mean = " << data_mean; 
 		cout << ", check = " << check; 
 		cout << ", relerr    = " << 1.0 - data_mean / check  << std::endl;
+		*/
 	}
 
 	return ok;
