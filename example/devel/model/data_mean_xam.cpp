@@ -50,27 +50,32 @@ bool data_mean_xam(void)
 	typedef CppAD::AD<double> Float;
 	Float eps = CppAD::numeric_limits<Float>::epsilon() * 100;
 	//
+	// ode_step_size
+	double ode_step_size = 30.0;
+	//
 	// age_table 
-	size_t n_age_table   = 11;
+	// (make sure that ode grid lands on last age table point)
+	size_t n_age_table   = int( 100. / ode_step_size + 1.5 );
 	vector<double> age_table(n_age_table);
 	for(i = 0; i < n_age_table; i++)
-		age_table[i] = 10.0 * i;
+		age_table[i] = ode_step_size * i;
 	//
 	// time_table
-	size_t n_time_table  = 4;
+	// (make sure that ode grid lands on last time table point)
+	size_t n_time_table  = int( (2020 - 1980) / ode_step_size + 1.5 );
 	vector<double> time_table(n_time_table);
 	for(j = 0; j < n_time_table; j++)
-		time_table[j] = 10.0 * j + 1980.0;
+		time_table[j] = ode_step_size * j + 1980.0;
 	//
 	// age_id and time_id
 	size_t n_age_grid   = 3;
 	size_t n_time_grid  = 2;
 	vector<size_t> age_id(n_age_grid), time_id(n_time_grid);
-	age_id[0]   = 0;  // age 0
-	age_id[1]   = 5;  // age 50
-	age_id[2]   = 10; // age 100
-	time_id[0]  = 0;  // 1980
-	time_id[1]  = 3;  // 2100
+	age_id[0]   = 0;
+	age_id[1]   = n_age_table / 2;
+	age_id[2]   = n_age_table - 1;
+	time_id[0]  = 0;
+	time_id[1]  = n_time_table - 1;
 	//
 	// w_info_vec
 	// weight value should not matter when constant
@@ -109,9 +114,6 @@ bool data_mean_xam(void)
 	vector<dismod_at::integrand_enum> integrand_table(n_integrand);
 	for(i = 0; i < n_integrand; i++)
 			integrand_table[i] = dismod_at::integrand_enum(i);
-	//
-	// ode_step_size
-	double ode_step_size = 10.0;
 	//
 	// n_age_ode
 	double age_min       = age_table[0];
