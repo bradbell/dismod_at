@@ -610,26 +610,8 @@ Float data_mean::no_ode(
 		size_t smooth_id = info.smooth_id;
 		//
 		CppAD::vector<Float> rate_si(n_var);
-		if( child < n_child_ || n_child_ == 0 )
-		{	// rate is for a child or only the parent rate is being estimated
-			for(k = 0; k < n_var; k++)
-				rate_si[k] = var_vec[info.offset + k]; 
-		}
-		else
-		{	// rate is for parent and there are multiple children
-			assert( n_child_ > 1 );
-			assert( child  == n_child_ );
-			for(k = 0; k < n_var; k++)
-				rate_si[k] = Float(0);
-			for(size_t child_id = 0; child_id < n_child_; child_id++)
-			{	info = var_info.rate_info(rate_id[ell],child_id);	
-				for(k = 0; k < n_var; k++)
-					rate_si[k] += var_vec[info.offset + k];
-			}
-			double den = double(n_child_);
-			for(k = 0; k < n_var; k++)
-				rate_si[k] /= den;
-		}
+		for(k = 0; k < n_var; k++)
+			rate_si[k] = var_vec[info.offset + k]; 
 		//
 		// interpolate onto the ode grid
 		rate_ode[ell] = 
@@ -865,26 +847,8 @@ Float data_mean::yes_ode(
 		size_t smooth_id = info.smooth_id;
 		//
 		CppAD::vector<Float> rate_si(n_var);
-		if( child < n_child_ || n_child_ == 0 )
-		{	// rate is for a child or only the parent rate is being estimated
-			for(k = 0; k < n_var; k++)
-				rate_si[k] = var_vec[info.offset + k]; 
-		}
-		else
-		{	// rate is for parent and there are multiple children
-			assert( n_child_ > 1 );
-			assert( child  == n_child_ );
-			for(k = 0; k < n_var; k++)
-				rate_si[k] = Float(0);
-			for(size_t child_id = 0; child_id < n_child_; child_id++)
-			{	info = var_info.rate_info(rate_id, child_id);	
-				for(k = 0; k < n_var; k++)
-					rate_si[k] += var_vec[info.offset + k];
-			}
-			double den = double(n_child_);
-			for(k = 0; k < n_var; k++)
-				rate_si[k] /= den;
-		}
+		for(k = 0; k < n_var; k++)
+			rate_si[k] = var_vec[info.offset + k]; 
 		//
 		// interpolate onto the ode grid
 		rate_ode[rate_id] = 

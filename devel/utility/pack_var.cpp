@@ -159,14 +159,8 @@ n_child_        ( n_child )
 			size_t n_var  = n_age * n_time;
 			rate_info_[rate_id][j].smooth_id = smooth_id;
 			rate_info_[rate_id][j].n_var     = n_var;
-			if( j < n_child || n_child == 0 )
-			{	rate_info_[rate_id][j].offset  = offset;
-				offset += n_var;
-			}
-			else
-			{	// set to a value that shouldi not be used
-				rate_info_[rate_id][j].offset  = size_t(-1);
-			}
+			rate_info_[rate_id][j].offset    = offset;
+			offset += n_var;
 		}
 	}
 
@@ -463,11 +457,9 @@ is the offset (index) in the packed variable vector for the
 specified rates:
 If $icode%j% < %n_child%$$,
 it is the rate vector for the $th j$$ child node.
-If $icode%j% == %n_child% == 0%$$,
+If $icode%j% == %n_child%$$,
 this is the rate vector for the
 $cref/parent_node/run_table/parent_node_id/$$.
-If $icode%j% == %n_child% > 0%$$,
-this offset is not defined (and should not be used).
 
 $head Example$$
 See $cref/pack_var Example/pack_var/Example/$$.

@@ -174,7 +174,7 @@ bool data_mean_yes_ode(void)
 	vector<Float> var_vec( var_info.size() );
 	dismod_at::pack_var::subvec_info info;
 	size_t n_rate = dismod_at::number_rate_enum;
-	for(size_t child_id = 0; child_id < n_child; child_id++)
+	for(size_t child_id = 0; child_id <= n_child; child_id++)
 	{	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 		{	info = var_info.rate_info(rate_id, child_id);
 			for(k = 0; k < info.n_var; k++)
