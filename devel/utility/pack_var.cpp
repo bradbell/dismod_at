@@ -130,6 +130,9 @@ n_child_        ( n_child )
 	// initialize offset
 	size_t offset = 0;
 
+	// mulstd_offset_
+	mulstd_offset_  = offset; offset += 3 * n_smooth_;
+
 	// pini_info_
 	if( smooth_table[pini_smooth_id].n_age != 1 )
 	{	string message = "run table: the smoothing corresponding to initial"
@@ -140,9 +143,6 @@ n_child_        ( n_child )
 	pini_info_.smooth_id = pini_smooth_id;
 	pini_info_.n_var    = smooth_table[pini_smooth_id].n_time;
 	pini_info_.offset   = offset; offset += pini_info_.n_var;
-
-	// mulstd_offset_
-	mulstd_offset_  = offset; offset += 3 * n_smooth_;
 
 	// rate_offset
 	rate_info_.resize( number_rate_enum );
@@ -264,6 +264,59 @@ n_child_        ( n_child )
 // size
 size_t pack_var::size(void) const
 {	return size_; }
+
+/*
+------------------------------------------------------------------------------
+$begin pack_var_mulstd$$
+$spell
+	var
+	mulstd
+	dage
+	dtime
+	const
+	dismod
+$$
+
+$section Pack Variables: Standard Deviations Multipliers$$
+
+$head Syntax$$
+$icode%offset% = %var_info%.mulstd_offset(%smooth_id%)
+%$$
+
+$head var_info$$
+This object has prototype
+$codei%
+	const pack_var %var_info%
+%$$
+
+$head smooth_id$$
+This argument has prototype
+$codei%
+	size_t %smooth_id%
+%$$
+and is the 
+$cref/smooth_id/smooth_table/smooth_id/$$.
+
+$subhead offset$$
+The return value has prototype
+$codei%
+	size_t offset
+%$$
+and is the offset (index) in the packed variable vector
+where the three variables for this smoothing begin.
+The three variables for each smoothing are the
+value, dage, and dtime standard deviation multipliers.
+
+$head Example$$
+See $cref/pack_var Example/pack_var/Example/$$.
+
+$end
+
+*/
+size_t pack_var::mulstd_offset(size_t smooth_id) const
+{	assert( smooth_id < n_smooth_ );
+	return mulstd_offset_ + 3 * smooth_id;
+}
 /*
 ------------------------------------------------------------------------------
 $begin pack_var_pini$$
@@ -335,59 +388,6 @@ $end
 */
 pack_var::subvec_info pack_var::pini_info(void) const
 {	return pini_info_; }
-
-/*
-------------------------------------------------------------------------------
-$begin pack_var_mulstd$$
-$spell
-	var
-	mulstd
-	dage
-	dtime
-	const
-	dismod
-$$
-
-$section Pack Variables: Standard Deviations Multipliers$$
-
-$head Syntax$$
-$icode%offset% = %var_info%.mulstd_offset(%smooth_id%)
-%$$
-
-$head var_info$$
-This object has prototype
-$codei%
-	const pack_var %var_info%
-%$$
-
-$head smooth_id$$
-This argument has prototype
-$codei%
-	size_t %smooth_id%
-%$$
-and is the 
-$cref/smooth_id/smooth_table/smooth_id/$$.
-
-$subhead offset$$
-The return value has prototype
-$codei%
-	size_t offset
-%$$
-and is the offset (index) in the packed variable vector
-where the three variables for this smoothing begin.
-The three variables for each smoothing are the
-value, dage, and dtime standard deviation multipliers.
-
-$head Example$$
-See $cref/pack_var Example/pack_var/Example/$$.
-
-$end
-
-*/
-size_t pack_var::mulstd_offset(size_t smooth_id) const
-{	assert( smooth_id < n_smooth_ );
-	return mulstd_offset_ + 3 * smooth_id;
-}
 /*
 ------------------------------------------------------------------------------
 $begin pack_var_rate$$

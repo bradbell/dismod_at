@@ -41,11 +41,11 @@ private:
 	// number of children
 	const size_t n_child_;
 
-	// initial prevalence information
-	subvec_info pini_info_;
-
 	// offset for mulstd variables
 	size_t mulstd_offset_;
+
+	// initial prevalence information
+	subvec_info pini_info_;
 
 	// rate variable infromation
 	CppAD::vector< CppAD::vector<subvec_info> > rate_info_;
