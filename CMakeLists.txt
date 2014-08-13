@@ -9,7 +9,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR} )
 
@@ -34,10 +34,12 @@ MESSAGE(STATUS "extra_cxx_flags = ${extra_cxx_flags}")
 ADD_SUBDIRECTORY(devel)
 ADD_SUBDIRECTORY(example/table)
 ADD_SUBDIRECTORY(example/devel)
+ADD_SUBDIRECTORY(test/devel)
 ADD_SUBDIRECTORY(example/get_started)
 
 ADD_CUSTOM_TARGET(check DEPENDS 
 	check_example_table
 	check_example_devel
+	check_test_devel
 	check_get_started 
 )
