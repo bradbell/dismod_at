@@ -50,9 +50,6 @@ and is the number of children; i.e., the size of
 $cref/child group/node_table/parent/Child Group/$$
 corresponding to the
 $cref/parent_node/run_table/parent_node_id/$$.
-In the special case where there is only one child,
-$icode n_child$$ must be zero.
-In this case, only the parent rates are estimated.
 
 $head pini_smooth_id$$
 This argument has prototype
@@ -123,9 +120,6 @@ n_smooth_       ( smooth_table.size() ) ,
 n_integrand_    ( n_integrand )         ,
 n_child_        ( n_child )
 {	using std::string;
-
-	// check assumption
-	assert( n_child != 1 );
 
 	// initialize offset
 	size_t offset = 0;

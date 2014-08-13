@@ -68,12 +68,9 @@ This return value has prototype
 $codei%
 	size_t %n_child%
 %$$
-and is the number of child areas that have their own separate rate values.
-If the
+and is the size of the 
 $cref/child group/node_table/parent/Child Group/$$ corresponding to the
-for the specified parent node has two or more elements, 
-then $icode n_child$$ is the number of elements in this group.
-Otherwise, $icode n_child$$ is zero.
+for the specified parent node. 
 
 $head child_id2node_id$$
 
@@ -125,15 +122,7 @@ $$
 If $icode%child% == %n_child%$$,
 this data's node is a descendant of the $icode parent_node_id$$.
 and it is not a descendent of any of the child nodes.
-This is the same as this data's node being the parent node except
-in the case where the size of the 
-$cref/child group/node_table/parent/Child Group/$$ is one
-$pre
-
-$$
-Otherwise $icode%child% == %n_child%+1%$$,
-and this data's node is not a descendant of 
-the $icode parent_node_id$$.
+This is the same as this data's node being the parent node.
 
 $end
 */
@@ -154,11 +143,6 @@ child_data::child_data(
 		if( parent == parent_node_id )
 			child_id2node_id_.push_back(node_id);
 	}
-
-	// check for special case where there is only on child,
-	// which is the same as no children
-	if( child_id2node_id_.size() == 1 )
-		child_id2node_id_.resize(0);
 
 	// data2child_id
 	size_t n_data = data_table.size();
