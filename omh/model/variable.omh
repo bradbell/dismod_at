@@ -1,0 +1,84 @@
+$begin model_variable$$
+$spell
+	smoothings
+	var
+	mulstd
+	dage
+	dtime
+	pini
+	mulcov
+	covariate
+$$
+
+$section The Model Variables$$
+
+$latex Smoothing Size$$
+For each $icode smooth_id$$ there
+is a corresponding 
+number of age points,
+number of time points,
+and number of variables where
+$codei%
+	n_var_%smooth_id% = n_age_%smooth_id% * n_time_%smooth_id%
+%$$
+
+$latex Smoothing Multipliers$$
+For each $icode smooth_id$$ there are three variables:
+$codei%
+	mulstd_value_%smooth_id% 
+	mulstd_dage_%smooth_id% 
+	mulstd_dtime_%smooth_id%
+%$$
+These are the standard deviation multipliers
+$cref/mulstd_value/smooth_table/mulstd_value/$$,
+$cref/mulstd_dage/smooth_table/mulstd_dage/$$, and
+$cref/mulstd_dtime/smooth_table/mulstd_dtime/$$.
+
+$head Initial Prevalence$$
+We use $latex p_0 (t)$$ to denote prevalence at the initial age; i.e.,
+the first age in $cref age_table$$.
+The smoothing id for initial prevalence is
+$cref/pini_smooth_id/run_table/pini_smooth_id/$$.
+It follows that
+$codei%
+	n_age_%pini_smooth_id% = 1
+	n_var_%pini_smooth_id% = n_time_%pini_smooth_id%
+%$$.
+
+$head Number of Children$$
+The number of children $icode n_child$$ is the size of the 
+$cref/child group/node_table/parent/Child Group/$$ for which
+the parent node is
+$cref/parent_node_id/run_table/parent_node_id/$$.
+
+
+$head Rates$$
+For each $cref/rate_id/rate_table/rate_id/$$ there
+is a corresponding
+$cref/parent_smooth_id/rate_table/parent_smooth_id/$$ and
+$cref/child_smooth_id/rate_table/child_smooth_id/$$.
+For each rate, it is assumed that these smoothings have the
+same age and time points and we use
+$codei%
+	n_var_%rate_id% = n_age_%rate_id% * n_time_%rate_id%
+%$$
+to denote the corresponding number of variables,
+number of age points,
+and number of time points.
+Thus there are $icode%n_child% * n_var_%rate_id%$$
+child rate variables and $icode%n_var_%rate_id%$$
+parent rate variables for each $icode rate_id$$.
+
+$head Covariate Multipliers$$
+For each $cref/mulcov_id/mulcov_table/mulcov_id/$$
+there is a corresponding
+$cref/smooth_id/mulcov_table/smooth_id/$$.
+We use the notation
+$codei%
+	n_var_%mulcov_id% = n_age_%mulcov_id% * n_time_%mulcov_id%
+%$$
+the number of variables, number of age points, and number of time points,
+for the specified $icode mulcov_id$$.
+This is equal the values for the corresponding  $icode smooth_id$$.
+
+$end
