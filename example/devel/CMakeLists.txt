@@ -14,8 +14,8 @@
 SET(CMAKE_BUILD_TYPE DEBUG)
 
 # Program cpp, not installed, and depends on following source files
-ADD_EXECUTABLE(devel EXCLUDE_FROM_ALL 
-	devel.cpp
+ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL 
+	example_devel.cpp
 
 	model/data_mean_xam.cpp
 	
@@ -51,7 +51,7 @@ ADD_EXECUTABLE(devel EXCLUDE_FROM_ALL
 
 LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )
 SET_TARGET_PROPERTIES(
-	devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
+	example_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
-TARGET_LINK_LIBRARIES(devel sqlite3 devel_lib)
-ADD_CUSTOM_TARGET(check_devel devel DEPENDS devel ) 
+TARGET_LINK_LIBRARIES(example_devel sqlite3 devel_lib)
+ADD_CUSTOM_TARGET(check_example_devel example_devel DEPENDS example_devel ) 

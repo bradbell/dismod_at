@@ -37,7 +37,7 @@ ADD_SUBDIRECTORY(example/devel)
 ADD_SUBDIRECTORY(example/get_started)
 
 ADD_CUSTOM_TARGET(check DEPENDS 
-	check_table
-	check_devel
+	check_example_table
+	check_example_devel
 	check_get_started 
 )

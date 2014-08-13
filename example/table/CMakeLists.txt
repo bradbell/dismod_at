@@ -16,6 +16,6 @@ CONFIGURE_FILE(
 	${CMAKE_CURRENT_BINARY_DIR}/run_all.py
 )
 ADD_CUSTOM_TARGET( 
-	check_table 
+	check_example_table 
 	python run_all.py
 )
