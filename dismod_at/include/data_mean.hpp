@@ -66,6 +66,13 @@ public:
 		const  pack_var&              var_info ,
 		const  CppAD::vector<Float>&  var_vec
 	) const;
+	// compute data mean for integrands that require S or C 
+	template <class Float>
+	Float yes_ode(
+		size_t                        data_id  ,
+		const  pack_var&              var_info ,
+		const  CppAD::vector<Float>&  var_vec
+	) const;
 };
 
 } // END_DISMOD_AT_NAMESPACE
