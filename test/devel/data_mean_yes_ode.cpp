@@ -8,7 +8,6 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# include <limits>
 # include <dismod_at/include/data_mean.hpp>
 
 namespace {
@@ -30,10 +29,9 @@ bool data_mean_yes_ode(void)
 	using CppAD::vector;	
 	using std::cout;
 	typedef CppAD::AD<double> Float;
-	Float eps = CppAD::numeric_limits<Float>::epsilon() * 100;
 	//
 	// ode_step_size
-	double ode_step_size = 30.0;
+	double ode_step_size = 3.0;
 	//
 	// age_table 
 	// (make sure that ode grid lands on last age table point)
@@ -119,49 +117,21 @@ bool data_mean_yes_ode(void)
 	while( time_min + (n_time_ode-1) * ode_step_size < time_max )
 			n_time_ode++; 
 	//
-	// node_table:    0
-	//              1    2
-	//                  3  4
-	CppAD::vector<dismod_at::node_struct> node_table(5);
+	// node_table:
+	CppAD::vector<dismod_at::node_struct> node_table(1);
 	node_table[0].parent = -1;
-	node_table[1].parent =  0;
-	node_table[2].parent =  0;
-	node_table[3].parent =  2;
-	node_table[4].parent =  2;
 	//
 	// parent_node_id
 	size_t parent_node_id = 0;
 	//
 	// data_table
-	vector<dismod_at::data_struct> data_table(3);
-	//
-	// parent node, time only integrantion.
+	vector<dismod_at::data_struct> data_table(1);
 	size_t data_id = 0;
-	data_table[data_id].integrand_id = dismod_at::mtother_enum;
+	data_table[data_id].integrand_id = dismod_at::prevalence_enum;
 	data_table[data_id].node_id      = 0;
 	data_table[data_id].weight_id    = 0;
-	data_table[data_id].age_lower    = 35.0;
-	data_table[data_id].age_upper    = 35.0;
-	data_table[data_id].time_lower   = 1990.0;
-	data_table[data_id].time_upper   = 2000.0;
-	//
-	// child node, age only integration
-	data_id++;
-	data_table[data_id].integrand_id = dismod_at::mtother_enum;
-	data_table[data_id].node_id      = 2;
-	data_table[data_id].weight_id    = 0;
-	data_table[data_id].age_lower    = 35.0;
-	data_table[data_id].age_upper    = 55.0;
-	data_table[data_id].time_lower   = 1990.0;
-	data_table[data_id].time_upper   = 1990.0;
-	//
-	// descendant of child node, age and time integration
-	data_id++;
-	data_table[data_id].integrand_id = dismod_at::mtother_enum;
-	data_table[data_id].node_id      = 2;
-	data_table[data_id].weight_id    = 0;
-	data_table[data_id].age_lower    = 35.0;
-	data_table[data_id].age_upper    = 55.0;
+	data_table[data_id].age_lower    = 0.0;
+	data_table[data_id].age_upper    = 100.0;
 	data_table[data_id].time_lower   = 1990.0;
 	data_table[data_id].time_upper   = 2000.0;
 	//
@@ -200,33 +170,41 @@ bool data_mean_yes_ode(void)
 	);
 	//
 	// var_vec
-	vector<double> var_vec( var_info.size() );
+	double beta = 0.02;
+	vector<Float> var_vec( var_info.size() );
 	dismod_at::pack_var::subvec_info info;
+	size_t n_rate = dismod_at::number_rate_enum;
 	for(size_t child_id = 0; child_id < n_child; child_id++)
-	{	info = var_info.rate_info(dismod_at::omega_enum, child_id);
-		dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
-		for(i = 0; i < s_info.age_size(); i++)
-		{	double age = age_table[ s_info.age_id(i) ];
-			for(size_t j = 0; j < s_info.time_size(); j++)
-			{	double time    = time_table[ s_info.time_id(j) ];
-				size_t index   = info.offset + i * s_info.time_size() + j; 
-				var_vec[index] = age * time / (age_max*time_max);
+	{	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+		{	info = var_info.rate_info(rate_id, child_id);
+			for(k = 0; k < info.n_var; k++)
+			{	if( rate_id == size_t(dismod_at::iota_enum) )
+					var_vec[info.offset + k] = beta;
+				else
+					var_vec[info.offset + k] = 0.00;
 			}
 		}
 	}
-	// check results
-	for(data_id = 0; data_id < data_table.size(); data_id++)
-	{	Float data_mean = avg_integrand.no_ode(data_id, var_info, var_vec);
-		double check    = check_avg(data_table[data_id]) / (age_max*time_max);
-		ok             &= abs( 1.0 - data_mean / check ) <= eps;
-		/*
-		if( data_id == 0 )
-			cout << "Debugging" << std::endl; 
-		cout << "data_mean = " << data_mean; 
-		cout << ", check = " << check; 
-		cout << ", relerr    = " << 1.0 - data_mean / check  << std::endl;
-		*/
-	}
-
+	info = var_info.pini_info();
+	for(k = 0; k < info.n_var; k++)
+		var_vec[info.offset + k ] = 0.0;
+	/*
+	Solution is S(a) = exp( -beta * a ), P(a) = C(a) = 1.0 - exp( -beta * a )
+	int_b^c P(a) / (c - b) = [ a  + exp( -beta a ) / beta ]_b^c / (c - b)
+	*/
+	using CppAD::exp;
+	data_id = 0;
+	Float data_mean = avg_integrand.yes_ode(data_id, var_info, var_vec);
+	double b       = data_table[data_id].age_lower;
+	double c       = data_table[data_id].age_upper;
+	double check   = c - b + ( exp(-beta * c) - exp(-beta * b) ) / beta;
+	check         /= (c - b);
+	ok             &= abs( 1.0 - data_mean / check ) <= 1e-3;
+	/*
+	cout << "Debugging" << std::endl; 
+	cout << "data_mean = " << data_mean; 
+	cout << ", check = " << check; 
+	cout << ", relerr    = " << 1.0 - data_mean / check  << std::endl;
+	*/
 	return ok;
 }

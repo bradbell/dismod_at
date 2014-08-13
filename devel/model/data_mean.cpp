@@ -270,10 +270,9 @@ data_table_    (data_table)
 		i_min = std::min(i_min, n_age_ode - 2);
 
 		// determine number of ode age grid points
-		size_t n_age = 0;
-		while( age_min + (i_min + n_age) * ode_step_size < age_upper )
+		size_t n_age = 2;
+		while( age_min + (i_min + n_age - 1) * ode_step_size < age_upper )
 			n_age++;
-		n_age = std::max(n_age, size_t(2));
 		assert( i_min + n_age <= n_age_ode );
 
 		// determine minimum ode grid time index 
@@ -283,10 +282,9 @@ data_table_    (data_table)
 		j_min  = std::min(j_min, n_age_ode - 2);
 
 		// determine number of ode time grid point
-		size_t n_time = 0;
-		while( time_min + (j_min + n_time) * ode_step_size < time_upper )
+		size_t n_time = 2;
+		while( time_min + (j_min + n_time - 1) * ode_step_size < time_upper )
 			n_time++;
-		n_time = std::max(n_time, size_t(2));
 		assert( j_min + n_time <= n_time_ode );
 
 		// initialize coefficient sum for each ode grid point within limits
@@ -815,16 +813,17 @@ Float data_mean::yes_ode(
 	size_t child                       = data_info_[data_id ].child;
 	const CppAD::vector<double>& c_ode = data_info_[data_id ].c_ode;
 
-
 	CppAD::vector<size_t> ode_index, cohort_start;
 	// cohorts that end at maximum age index
 	for(j = 0; j < n_time_sub; j++)
 	{	size_t i_end, j_end, ik, jk;
-		i_end = i_min + n_age_sub; // cohort ends at this age index minus one
-		j_end = j_min + j + 1; // cohort ends at this time index minus one
+		i_end = i_min + n_age_sub - 1; // cohort ends at this age index 
+		j_end = j_min + j;             // cohort ends at this time index 
+		assert( i_end < n_age_ode_ );
+		assert( j_end < n_time_ode_ );
 		k     = ode_index.size();
 		cohort_start.push_back(k);
-		for(ik = 0; ik < i_end; ik++)
+		for(ik = 0; ik <= i_end; ik++)
 		{	if( i_end - ik < j_end )
 				jk = j_end - (i_end - ik);	
 			else
@@ -833,13 +832,17 @@ Float data_mean::yes_ode(
 		}
 	}
 	// cohorts that end at maximum time index
-	for(i = 0; i < n_age_sub; i++)
+	// (except for the one that also ends at maximum age)
+	for(i = 0; i < n_age_sub - 1; i++)
 	{	size_t i_end, j_end, ik, jk;
-		j_end = j_min + n_time_sub;
+		j_end = j_min + n_time_sub - 1;
 		i_end = i_min + i;
+		assert( i_end < n_age_ode_ );
+		assert( j_end < n_time_ode_ );
 		k     = ode_index.size();
 		cohort_start.push_back(k);
-		for(ik = 0; ik < i_end; ik++)
+		// note that this loop is empty when i = 0
+		for(ik = 0; ik <= i_end; ik++)
 		{	if( i_end - ik < j_end )
 				jk = j_end - (i_end - ik);	
 			else
@@ -923,18 +926,17 @@ Float data_mean::yes_ode(
 	// loop over the cohorts
 	size_t n_ode_sub = n_age_sub * n_time_sub;
 	CppAD::vector<Float> iota, rho, chi, omega, S_out, C_out;
-	CppAD::vector<Float> integrand_ode( n_ode_sub );
+	CppAD::vector<Float> integrand_sub( n_ode_sub );
 	Float zero = 0.0;
 	for(k = 0; k < n_ode_sub; k++)
-			integrand_ode[k] = CppAD::nan(zero);
+			integrand_sub[k] = CppAD::nan(zero);
 	for(ell = 0; ell < n_cohort; ell++)
-	{	size_t k_start, k_end;
+	{	size_t k_start, nk;
 		k_start  = cohort_start[ell];
 		if( ell+1 < n_cohort )
-			k_end = cohort_start[ell+1];
+			nk = cohort_start[ell+1] - cohort_start[ell] ;
 		else
-			k_end = ode_index.size();
-		size_t nk = k_end - k_start;
+			nk = ode_index.size() - cohort_start[ell];
 		iota.resize(nk);
 		rho.resize(nk);
 		chi.resize(nk);
@@ -962,24 +964,24 @@ Float data_mean::yes_ode(
 			size_t j = ode_index[k_start + k] % n_time_ode_;
 			if( i_min <= i && j_min <= j )
 			{	Float P   = C_out[k] / ( S_out[k]  + C_out[k]);
-				size_t ij = i * n_time_ode_ + j;
+				size_t ij = (i - i_min) * n_time_sub + (j - j_min);
 				switch(integrand)
 				{
 					case prevalence_enum:
-					integrand_ode[ij] = P;
+					integrand_sub[ij] = P;
 					break;
 
 					case mtspecific_enum:
-					integrand_ode[ij] = chi[k] * P;
+					integrand_sub[ij] = chi[k] * P;
 					break;
 
 					case mtall_enum:
-					integrand_ode[ij] = omega[k] + chi[k] * P;
+					integrand_sub[ij] = omega[k] + chi[k] * P;
 					break;
 
 					case mtstandard_enum:
-					integrand_ode[ij] = omega[k] + chi[k];
-					integrand_ode[ij] /= omega[k] + chi[k] * P;
+					integrand_sub[ij] = omega[k] + chi[k];
+					integrand_sub[ij] /= omega[k] + chi[k] * P;
 					break;
 
 					default:
@@ -991,8 +993,8 @@ Float data_mean::yes_ode(
 
 	Float sum = 0.0;
 	for(k = 0; k < n_ode_sub; k++)
-	{	// assert( ! CppAD::isnan( integrand_ode[k] );
-		sum += c_ode[k] * integrand_ode[k];
+	{	assert( ! CppAD::isnan( integrand_sub[k] ) );
+		sum += c_ode[k] * integrand_sub[k];
 	}
 	//
 	return sum;

@@ -218,7 +218,7 @@ bool data_mean_xam(void)
 	);
 	//
 	// var_vec
-	vector<double> var_vec( var_info.size() );
+	vector<Float> var_vec( var_info.size() );
 	dismod_at::pack_var::subvec_info info;
 	for(size_t child_id = 0; child_id < n_child; child_id++)
 	{	info = var_info.rate_info(dismod_at::omega_enum, child_id);
