@@ -1,5 +1,8 @@
 $begin model_variable$$
 $spell
+	subvectors
+	subvector
+	dismod
 	smoothings
 	var
 	mulstd
@@ -12,7 +15,23 @@ $$
 
 $section The Model Variables$$
 
-$latex Smoothing Size$$
+$head Purpose$$
+Below is a description of the model variables.
+The vector of model variables is broken into a set of subvectors 
+described below.
+For each subvector, there is a smoothing.
+The smoothing determines the number of elements in the subvector
+and the likelihood for each of these elements; see
+$cref/n_age/smooth_table/n_age/$$
+$cref/n_time/smooth_table/n_time/$$ and
+$cref/value_like_id/smooth_grid_table/value_like_id/$$.
+If the 
+$cref/lower/like_table/lower/$$ and 
+$cref/upper/like_table/upper/$$ limits are equal,
+the variable is know. Otherwise it is unknown ad
+is estimated by $code dismod_at$$. 
+
+$head Smoothing Size$$
 For each $icode smooth_id$$ there
 is a corresponding 
 number of age points,
@@ -22,7 +41,13 @@ $codei%
 	n_var_%smooth_id% = n_age_%smooth_id% * n_time_%smooth_id%
 %$$
 
-$latex Smoothing Multipliers$$
+$head Number of Children$$
+The number of children $icode n_child$$ is the size of the 
+$cref/child group/node_table/parent/Child Group/$$ for which
+the parent node is
+$cref/parent_node_id/run_table/parent_node_id/$$.
+
+$head Smoothing Multipliers$$
 For each $icode smooth_id$$ there are three variables:
 $codei%
 	mulstd_value_%smooth_id% 
@@ -35,21 +60,27 @@ $cref/mulstd_dage/smooth_table/mulstd_dage/$$, and
 $cref/mulstd_dtime/smooth_table/mulstd_dtime/$$.
 
 $head Initial Prevalence$$
-We use $latex p_0 (t)$$ to denote prevalence at the initial age; i.e.,
-the first age in $cref age_table$$.
+Let $latex p_0 (t)$$ to denote the 
+$cref/prevalence/model_data_mean/I_i (a, t)/prevalence/$$ 
+at the initial age; i.e., the first age in $cref age_table$$.
+Let $latex a_0$$ denotes the first age in the $cref age_table$$.
+The initial susceptible fraction
+$cref/S_i(a,t)/model_data_mean/S_i(a,t)/$$ is
+$latex \[
+	S_i ( a_0 , t ) = p_0 (t)
+\] $$ 
+and the initial with condition faction
+$cref/C_i(a,t)/model_data_mean/C_i(a,t)/$$ is 
+$latex \[
+	C_i ( a_0 , t ) = 1 - p_0 (t)
+\] $$
 The smoothing id for initial prevalence is
 $cref/pini_smooth_id/run_table/pini_smooth_id/$$.
 It follows that
 $codei%
 	n_age_%pini_smooth_id% = 1
 	n_var_%pini_smooth_id% = n_time_%pini_smooth_id%
-%$$.
-
-$head Number of Children$$
-The number of children $icode n_child$$ is the size of the 
-$cref/child group/node_table/parent/Child Group/$$ for which
-the parent node is
-$cref/parent_node_id/run_table/parent_node_id/$$.
+%$$
 
 
 $head Rates$$
@@ -65,20 +96,33 @@ $codei%
 to denote the corresponding number of variables,
 number of age points,
 and number of time points.
-Thus there are $icode%n_child% * n_var_%rate_id%$$
-child rate variables and $icode%n_var_%rate_id%$$
-parent rate variables for each $icode rate_id$$.
+There is one rate subvector for each child and 
+one rate subvector for the parent.
+The total number of variables for all the rate subvectors is
+$codei%
+	(%n_child% + 1) * n_var_%rate_id%
+%$$
 
 $head Covariate Multipliers$$
 For each $cref/mulcov_id/mulcov_table/mulcov_id/$$
-there is a corresponding
+there is a corresponding subvector and
 $cref/smooth_id/mulcov_table/smooth_id/$$.
 We use the notation
 $codei%
 	n_var_%mulcov_id% = n_age_%mulcov_id% * n_time_%mulcov_id%
 %$$
-the number of variables, number of age points, and number of time points,
-for the specified $icode mulcov_id$$.
-This is equal the values for the corresponding  $icode smooth_id$$.
+for the number of variables, number of age points, and number of time points,
+corresponding to this $icode mulcov_id$$; i.e.,
+the corresponding values for the $icode smooth_id$$
+for this covariate multiplier subvector.
+
+$head Random Effects, u$$
+We use $latex u$$ to denote vector that consisting of
+all the child rate subvectors.
+This is the vector of random effects for our model.
+
+$head Fixed Effects, theta$$
+We use $latex \theta$$ to denote the vector of fixed effects; i.e.,
+all of the model variables except for the random effects. 
 
 $end

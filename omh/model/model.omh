@@ -8,6 +8,7 @@ $section Dismod Age Time Model$$
 $childtable%
 	omh/model/variable.omh%
 	omh/model/data_mean.omh%
+	omh/model/residual.omh%
 	omh/model/glossary.omh
 %$$
 

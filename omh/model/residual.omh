@@ -1,0 +1,79 @@
+$begin model_residual$$
+$spell
+	jk
+	std
+	ij
+	covariate
+	mulcov
+$$
+
+$section The Model Weighted Residuals$$
+
+$head Data Table Notation$$
+
+$subhead i$$
+We use $latex i$$ to 
+denote the $cref/data_id/data_table/data_id/$$
+for a row in the data table.
+
+$subhead v_i$$
+We use $latex v_i$$ to denote the corresponding
+$cref/meas_value/data_table/meas_value/$$ value. 
+
+$subhead s_i$$
+We use $latex s_i$$ to denote the corresponding
+$cref/meas_std/data_table/meas_std/$$ value. 
+
+$subhead I_i$$
+We use $latex I_i$$ to denote the corresponding
+$cref/integrand_id/data_table/integrand_id/$$ value. 
+
+$subhead d_i$$
+We use $latex d_i$$ to denote the corresponding
+$cref/density_id/data_table/density_id/$$ value. 
+
+$subhead x_ij$$
+We use $latex x_{i,j}$$ to denote the corresponding
+$cref/covariate/data_table/Covariates/$$ values where $latex j$$
+denotes the $cref/covariate_id/covariate_table/covariate_id/$$.
+
+$head Covariate$$
+
+$subhead J_i$$
+There is a set of rows in the mulcov table such that
+$cref/integrand_id/mulcov_table/integrand_id/$$ is equal to $latex I_i$$.
+and 
+$cref/mulcov_type/mulcov_table/mulcov_type/$$ is equal to $code meas_mean$$.
+We use $latex J_i$$ to denote the corresponding set of
+$cref/covariate_id/mulcov_table/covariate_id/$$ values for
+which this is the case.
+
+$subhead beta_ij$$
+For each covariate index $latex j \in J_i$$,
+we use $latex \beta_{i,j} (a, t) $$ to denote the
+piecewise linear function corresponding to the
+$cref/covariate multiplier/model_variable/Covariate Multipliers/$$
+variables for the corresponding
+$cref/mulcov_id/mulcov_table/mulcov_id/$$.
+
+$subhead K_i$$
+There is a set of rows in the mulcov table such that
+$cref/integrand_id/mulcov_table/integrand_id/$$ is equal to $latex I_i$$.
+and 
+$cref/mulcov_type/mulcov_table/mulcov_type/$$ is equal to $code meas_std$$.
+We use $latex K_i$$ to denote the corresponding set of
+$cref/covariate_id/mulcov_table/covariate_id/$$ values for
+which this is the case.
+
+$subhead gamma_ij$$
+For each covariate index $latex j \in K_i$$,
+we use $latex \gamma_{i,j} (a, t) $$ to denote the
+piecewise linear function corresponding to the
+$cref/covariate multiplier/model_variable/Covariate Multipliers/$$
+variables for the corresponding
+$cref/mulcov_id/mulcov_table/mulcov_id/$$.
+
+
+
+
+$end
