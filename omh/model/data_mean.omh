@@ -63,7 +63,8 @@ denotes the $cref/covariate_id/covariate_table/covariate_id/$$.
 $subhead w_i$$
 We use $latex w_i (a, t)$$ for the weighting as a function of age and time
 that corresponds to the
-see $cref/weight_id/data_table/weight_id/$$.
+$cref/weight_id/data_table/weight_id/$$
+for this $icode data_id$$.
 
 $subhead n_i$$
 We use $latex n_i$$ to denote the corresponding
