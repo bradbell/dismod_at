@@ -32,6 +32,24 @@ $subhead L_i$$
 We use $latex L_i$$ to denote the corresponding
 $cref/like_id/data_table/like_id/$$ value. 
 
+$subhead eta_i$$
+We use $latex \eta_i$$ to denote the
+$cref/eta/like_table/eta/$$ value corresponding to $latex L_i$$.
+
+$subhead d_i$$
+We use $latex d_i$$ to denote the
+$cref/density_id/like_table/density_id/$$ corresponding to $latex L_i$$.
+
+$subhead a_i$$
+We use $latex a_i$$ to denote the average of
+$cref/age_lower/data_table/age_lower/$$ and
+$cref/age_upper/data_table/age_upper/$$ for this $icode data_id$$.
+
+$subhead t_i$$
+We use $latex t_i$$ to denote the average of
+$cref/time_lower/data_table/time_lower/$$ and
+$cref/time_upper/data_table/time_upper/$$ for this $icode data_id$$.
+
 $subhead x_ij$$
 We use $latex x_{i,j}$$ to denote the corresponding
 $cref/covariate/data_table/Covariates/$$ values where $latex j$$
@@ -73,10 +91,64 @@ $cref/covariate multiplier/model_variable/Covariate Multipliers/$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 
-$head Adjusted Data, y_i$$
+$head Effects$$
+We use $latex u$$ and $latex \theta$$ to denote the vector of
+$cref/random effects/model_variable/Random Effects, u/$$ and
+$cref/fixed effects/model_variable/Fixed Effects, theta/$$ respectively.
+
+$head Adjusted Measurement, y_i$$
 The adjusted data value is defined by
 $latex \[
-y_i = \exp \left( - \sum_{j \in J_i} x_{i,j} \beta{i,j} \right) v_i
+y_i ( u , \theta ) = \exp \left[ 
+	- \sum_{j \in J_i} x_{i,j} \beta{i,j} ( a_i , t_i )
+\right] v_i
 \] $$
+
+$head Adjusted Standard Deviation, sigma_i$$
+The adjusted standard deviation is defined by
+$latex \[
+\sigma_i ( u , \theta )
+= 
+s_i + \left[ 
+	\sum_{j \in K_i} x_{i,j} \gamma{i,j} ( a_i , t_i )
+\right] ( \eta_i + v_i )
+\] $$
+
+$head Average Integrand$$
+Let $latex A_i ( u , \theta )$$ denote the
+$cref/average integrand/model_data_mean/Average Integrand/$$ for this
+$icode data_id$$.
+
+$head Weighted Residual, r_i$$
+
+$subhead Linear Density$$
+The density is linear if $latex d_i$$ corresponds to 
+$cref/density_name/density_table/density_name/$$ $code gaussian$$
+or $code laplace$$.
+In this case the weighted residual is defined by
+$latex \[
+r_i ( u , \theta ) 
+= 
+\frac{ y_i - A_i ( u , \theta ) }{ \sigma_i ( u , \theta) } 
+\] $$
+
+$subhead Log Density$$
+The density is logarithmic if $latex d_i$$ corresponds to 
+$cref/density_name/density_table/density_name/$$ $code log_gaussian$$
+or $code log_laplace$$.
+In this case the weighted residual is defined by
+$latex \[
+r_i ( u , \theta ) 
+= 
+\frac{
+\log[ y_i ( u , \theta ) + \eta_i ] - \log[ A_i ( u , \theta ) + \eta_i ] 
+}{
+\log[ y_i ( u , \theta ) + \eta_i + \sigma_i (u , \theta )  ] 
+-
+\log[ y_i ( u , \theta ) + \eta_i ] 
+} 
+\] $$
+
+
 
 $end
