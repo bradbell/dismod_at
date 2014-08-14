@@ -1,3 +1,13 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
 $begin model_residual$$
 $spell
 	jk
@@ -99,18 +109,18 @@ $cref/fixed effects/model_variable/Fixed Effects, theta/$$ respectively.
 $head Adjusted Measurement, y_i$$
 The adjusted data value is defined by
 $latex \[
-y_i ( u , \theta ) = \exp \left[ 
-	- \sum_{j \in J_i} x_{i,j} \beta{i,j} ( a_i , t_i )
+y_i ( \theta ) = \exp \left[ 
+	- \sum_{j \in J_i} x_{i,j} \beta_{i,j} ( a_i , t_i )
 \right] v_i
 \] $$
 
 $head Adjusted Standard Deviation, sigma_i$$
 The adjusted standard deviation is defined by
 $latex \[
-\sigma_i ( u , \theta )
+\sigma_i ( \theta )
 = 
 s_i + \left[ 
-	\sum_{j \in K_i} x_{i,j} \gamma{i,j} ( a_i , t_i )
+	\sum_{j \in K_i} x_{i,j} \gamma_{i,j} ( a_i , t_i )
 \right] ( \eta_i + v_i )
 \] $$
 
@@ -129,7 +139,7 @@ In this case the weighted residual is defined by
 $latex \[
 r_i ( u , \theta ) 
 = 
-\frac{ y_i - A_i ( u , \theta ) }{ \sigma_i ( u , \theta) } 
+\frac{ y_i ( \theta )  - A_i ( u , \theta ) }{ \sigma_i ( \theta) } 
 \] $$
 
 $subhead Log Density$$
@@ -141,11 +151,11 @@ $latex \[
 r_i ( u , \theta ) 
 = 
 \frac{
-\log[ y_i ( u , \theta ) + \eta_i ] - \log[ A_i ( u , \theta ) + \eta_i ] 
+\log[ y_i ( \theta ) + \eta_i ] - \log[ A_i ( u , \theta ) + \eta_i ] 
 }{
-\log[ y_i ( u , \theta ) + \eta_i + \sigma_i (u , \theta )  ] 
+\log[ y_i ( \theta ) + \eta_i + \sigma_i ( \theta )  ] 
 -
-\log[ y_i ( u , \theta ) + \eta_i ] 
+\log[ y_i ( \theta ) + \eta_i ] 
 } 
 \] $$
 
