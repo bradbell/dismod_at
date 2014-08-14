@@ -361,12 +361,11 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $table
 # Key          $cnext Value Type  $cnext Description                 $rnext 
 # integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext 
-# density      $cnext str         $cnext density function            $rnext 
+# like         $cnext str         $cnext likelihood                  $rnext 
 # node         $cnext str         $cnext node in graph               $rnext 
 # weight       $cnext str         $cnext weighting function          $rnext 
 # meas_value   $cnext float       $cnext measured value              $rnext 
 # meas_std     $cnext float       $cnext standard deviation          $rnext 
-# meas_eta     $cnext float       $cnext density function            $rnext 
 # age_lower    $cnext float       $cnext lower age limit             $rnext 
 # age_upper    $cnext float       $cnext upper age limit             $rnext 
 # time_lower   $cnext float       $cnext lower time limit            $rnext
@@ -746,12 +745,11 @@ def create_database(
 	# create the data table
 	col_name = [
 		'integrand_id',
-		'density_id',
+		'like_id',
 		'node_id',
 		'weight_id',
 		'meas_value',
 		'meas_std',
-		'meas_eta',
 		'age_lower',
 		'age_upper',
 		'time_lower',
@@ -761,12 +759,11 @@ def create_database(
 		col_name.append( 'x_%s' % j )
 	col_type = [
 		'integer',              # integrand_id
-		'integer',              # density_id
+		'integer',              # like_id
 		'integer',              # node_id
 		'integer',              # weight_id
 		'real',                 # meas_value
 		'real',                 # meas_std
-		'real',                 # meas_eta
 		'real',                 # age_lower
 		'real',                 # age_upper
 		'real',                 # time_lower
@@ -779,17 +776,16 @@ def create_database(
 		data = data_list[i]
 		data_id      = i
 		integrand_id = global_integrand_name2id[ data['integrand'] ]
-		density_id   = global_density_name2id[ data['density'] ]
+		like_id      = global_like_name2id[ data['like'] ]
 		node_id      = global_node_name2id[ data['node'] ]
 		weight_id    = global_weight_name2id[ data['weight'] ]
 		row = [ 
 			integrand_id,
-			density_id,
+			like_id,
 			node_id,
 			weight_id,
 			data['meas_value'],
 			data['meas_std'],
-			data['meas_eta'],
 			data['age_lower'],
 			data['age_upper'],
 			data['time_lower'],

@@ -28,9 +28,9 @@ $subhead I_i$$
 We use $latex I_i$$ to denote the corresponding
 $cref/integrand_id/data_table/integrand_id/$$ value. 
 
-$subhead d_i$$
-We use $latex d_i$$ to denote the corresponding
-$cref/density_id/data_table/density_id/$$ value. 
+$subhead L_i$$
+We use $latex L_i$$ to denote the corresponding
+$cref/like_id/data_table/like_id/$$ value. 
 
 $subhead x_ij$$
 We use $latex x_{i,j}$$ to denote the corresponding
@@ -73,7 +73,10 @@ $cref/covariate multiplier/model_variable/Covariate Multipliers/$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 
-
-
+$head Adjusted Data, y_i$$
+The adjusted data value is defined by
+$latex \[
+y_i = \exp \left( - \sum_{j \in J_i} x_{i,j} \beta{i,j} \right) v_i
+\] $$
 
 $end

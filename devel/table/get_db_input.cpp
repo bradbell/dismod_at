@@ -138,9 +138,9 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	
 	// data table
 	DISMOD_AT_CHECK_PRIMARY_ID(data, integrand_id, integrand, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(data, density_id, density, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(data, node_id, node, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(data, weight_id, weight, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(data, like_id,      like,      0);
+	DISMOD_AT_CHECK_PRIMARY_ID(data, node_id,      node,      0);
+	DISMOD_AT_CHECK_PRIMARY_ID(data, weight_id,    weight,    0);
 
 	// rate table
 	DISMOD_AT_CHECK_PRIMARY_ID(rate, parent_smooth_id, smooth, 0);

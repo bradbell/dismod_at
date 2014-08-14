@@ -45,12 +45,11 @@ bool get_data_table_xam(void)
 	"create table data("
 		" data_id        integer primary key,"
 		" integrand_id   integer,"
-		" density_id     integer,"
+		" like_id        integer,"
 		" node_id        integer,"
 		" weight_id      integer,"
 		" meas_value     real,"
 		" meas_std       real,"
-		" meas_eta       real,"
 		" age_lower      real,"
 		" age_upper      real,"
 		" time_lower     real,"
@@ -61,12 +60,11 @@ bool get_data_table_xam(void)
 	"insert into data values("
 		"0,"                       // data_id
 		"1,"                       // integrand_id
-		"0,"                       // density_id
+		"0,"                       // like_id
 		"3,"                       // node_id
 		"4,"                       // weight_id
 		"1e-4,"                    // meas_value
 		"1e-5,"                    // meas_std
-		"1e-6,"                    // meas_eta
 		"10.0,"                    // age_lower
 		"90.0,"                    // age_upper
 		"2000,"                    // time_lower
@@ -87,12 +85,11 @@ bool get_data_table_xam(void)
 	ok  &= data_table.size() == 1;
 	//
 	ok  &= data_table[0].integrand_id      == 1;
-	ok  &= data_table[0].density_id        == 0;
+	ok  &= data_table[0].like_id           == 0;
 	ok  &= data_table[0].node_id           == 3;
 	ok  &= data_table[0].weight_id         == 4;
 	ok  &= data_table[0].meas_value        == 1e-4;
 	ok  &= data_table[0].meas_std          == 1e-5;
-	ok  &= data_table[0].meas_eta          == 1e-6;
 	ok  &= data_table[0].age_lower         == 10.0;
 	ok  &= data_table[0].age_upper         == 90.0;
 	ok  &= data_table[0].time_lower        == 2000.0;
