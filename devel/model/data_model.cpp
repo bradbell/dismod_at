@@ -531,7 +531,7 @@ $tend
 
 $head avg$$
 This is the 
-$cref/average integrand/model_data_mean/Average Integrand/$$ 
+$cref/average integrand/model_avg_integrand/Average Integrand/$$ 
 for the specified data point.
 $end
 */
@@ -757,7 +757,7 @@ $cref pack_var_rate_mulcov$$.
 
 $head avg$$
 This is the 
-$cref/average integrand/model_data_mean/Average Integrand/$$ 
+$cref/average integrand/model_avg_integrand/Average Integrand/$$ 
 for the specified data point.
 $end
 */

@@ -162,7 +162,7 @@ $latex \[
 
 $head Average Integrand$$
 Let $latex A_i ( u , \theta )$$ denote the
-$cref/average integrand/model_data_mean/Average Integrand/$$ for this
+$cref/average integrand/model_avg_integrand/Average Integrand/$$ for this
 $icode data_id$$.
 
 $head Weighted Residual, r_i$$

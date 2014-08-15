@@ -36,7 +36,7 @@ $codei%solve_ode(
 $head Purpose$$
 This routine determines the value of $latex C(a,t)$$ 
 and $latex S(a, t)$$ that solve the dismod
-$cref/differential equation/model_data_mean/Differential Equation/$$
+$cref/differential equation/model_avg_integrand/Differential Equation/$$
 for a subset of the $cref/ode grid/glossary/Ode Grid/$$ corresponding
 to a cohort (constant time minus age).
 
