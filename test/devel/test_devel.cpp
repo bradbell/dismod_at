@@ -12,8 +12,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cassert>
 # include <cstring>
 
-extern bool data_model_avg_yes_ode(void);
-
 // anonymous namespace
 namespace {
 	using std::cout;
@@ -47,7 +45,6 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
-	RUN(data_model_avg_yes_ode);
 
 	// summary report
 	int return_flag;

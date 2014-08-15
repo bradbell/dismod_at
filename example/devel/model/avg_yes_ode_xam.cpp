@@ -22,7 +22,7 @@ namespace {
 	}
 }
 
-bool data_model_avg_yes_ode(void)
+bool avg_yes_ode_xam(void)
 {	bool   ok = true;
 	size_t i, k;
 	using CppAD::abs;	
@@ -194,17 +194,17 @@ bool data_model_avg_yes_ode(void)
 	*/
 	using CppAD::exp;
 	data_id = 0;
-	Float data_model = dm.avg_yes_ode(data_id, var_info, var_vec);
+	Float avg = dm.avg_yes_ode(data_id, var_info, var_vec);
 	double b       = data_table[data_id].age_lower;
 	double c       = data_table[data_id].age_upper;
 	double check   = c - b + ( exp(-beta * c) - exp(-beta * b) ) / beta;
 	check         /= (c - b);
-	ok             &= abs( 1.0 - data_model / check ) <= 1e-3;
+	ok             &= abs( 1.0 - avg / check ) <= 1e-3;
 	/*
 	cout << "Debugging" << std::endl; 
-	cout << "data_model = " << data_model; 
+	cout << "avg = " << avg; 
 	cout << ", check = " << check; 
-	cout << ", relerr    = " << 1.0 - data_model / check  << std::endl;
+	cout << ", relerr    = " << 1.0 - avg / check  << std::endl;
 	*/
 	return ok;
 }
