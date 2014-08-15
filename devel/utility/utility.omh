@@ -16,8 +16,7 @@ $$
 $section Dismod_at Developer Utility Documentation$$
 
 $childtable%
-	devel/utility/avg_integrand.cpp
-	%devel/utility/bilinear_interp.cpp
+	devel/utility/bilinear_interp.cpp
 	%devel/utility/child_data.cpp
 	%devel/utility/eigen_ode2.cpp
 	%devel/utility/integrate_1d.cpp

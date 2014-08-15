@@ -19,7 +19,6 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 
 	model/data_model_xam.cpp
 	
-	utility/avg_integrand_xam.cpp
 	utility/bilinear_interp_xam.cpp
 	utility/eigen_ode2_xam.cpp
 	utility/integrate_1d_xam.cpp

@@ -16,7 +16,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 
 // devel/model directory
-# include "include/avg_integrand.hpp"
 # include "include/bilinear_interp.hpp"
 # include "include/child_data.hpp"
 # include "include/data_model.hpp"

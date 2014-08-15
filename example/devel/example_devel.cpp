@@ -33,7 +33,6 @@ $end
 // model subdirectory
 extern bool data_model_xam(void);
 // utility subdirectory
-extern bool avg_integrand_xam(void);
 extern bool bilinear_interp_xam(void);
 extern bool eigen_ode2_xam(void);
 extern bool integrate_1d_xam(void);
@@ -97,7 +96,6 @@ int main(void)
 	// model subdirectory
 	RUN(data_model_xam);
 	// utility subdirectory
-	RUN(avg_integrand_xam);
 	RUN(bilinear_interp_xam);
 	RUN(eigen_ode2_xam);
 	RUN(integrate_1d_xam);
