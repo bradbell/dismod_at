@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin data_mean_ctor$$
+$begin data_model_ctor$$
 $spell
 	vec
 	const
@@ -21,7 +21,7 @@ $$
 $section Data Mean: Constructor$$
 
 $head Syntax$$
-$codei%data_mean %avg_integrand%(
+$codei%data_model %avg_integrand%(
 	%parent_node_id%,
 	%n_age_ode%,
 	%n_time_ode%,
@@ -148,7 +148,7 @@ $code age_size$$, $code time_size$$, $code age_id$$, $code time_id$$.
 $end
 -----------------------------------------------------------------------------
 */
-# include <dismod_at/include/data_mean.hpp>
+# include <dismod_at/include/data_model.hpp>
 # include <dismod_at/include/integrate_1d.hpp>
 # include <dismod_at/include/integrate_2d.hpp>
 # include <dismod_at/include/interp_weight.hpp>
@@ -160,7 +160,7 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // destructor
-data_mean::~data_mean(void)
+data_model::~data_model(void)
 {	// must delete the smooth2ode objects pointed to by si2ode_vec_
 	size_t n_smooth = si2ode_vec_.size();
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
@@ -168,7 +168,7 @@ data_mean::~data_mean(void)
 }
 
 // consctructor
-data_mean::data_mean(
+data_model::data_model(
 	size_t                               parent_node_id  ,
 	size_t                               n_age_ode       ,
 	size_t                               n_time_ode      ,
@@ -448,7 +448,7 @@ data_table_    (data_table)
 }
 /*
 -----------------------------------------------------------------------------
-$begin data_mean_no_ode$$
+$begin data_model_no_ode$$
 
 $spell
 	subvectors
@@ -472,7 +472,7 @@ $icode%avg% = %avg_integrand%.no_ode(%data_id%, %var_info%, %var_vec%)%$$
 $head avg_integrand$$
 This object has prototype
 $codei%
-	const data_mean %avg_integrand%
+	const data_model %avg_integrand%
 %$$
 
 $head Float$$
@@ -490,7 +490,7 @@ the data mean for.
 $subhead Node$$
 The $icode data_id$$ must correspond to a 
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
-$cref/parent_node_id/data_mean_ctor/parent_node_id/$$; i.e.,
+$cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
 $cref/child/child_data/data_id2child/child/$$ value
 less than or equal 
@@ -534,7 +534,7 @@ for the specified data point.
 $end
 */
 template <class Float>
-Float data_mean::no_ode(
+Float data_model::no_ode(
 		size_t                        data_id  ,
 		const pack_var&               var_info ,
 		const CppAD::vector<Float>&   var_vec
@@ -678,7 +678,7 @@ Float data_mean::no_ode(
 }
 /*
 -----------------------------------------------------------------------------
-$begin data_mean_yes_ode$$
+$begin data_model_yes_ode$$
 
 $spell
 	mtspecific
@@ -701,7 +701,7 @@ $icode%avg% = %avg_integrand%.yes_ode(%data_id%, %var_info%, %var_vec%)%$$
 $head avg_integrand$$
 This object has prototype
 $codei%
-	const data_mean %avg_integrand%
+	const data_model %avg_integrand%
 %$$
 
 $head Float$$
@@ -719,7 +719,7 @@ the data mean for.
 $subhead Node$$
 The $icode data_id$$ must correspond to a 
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
-$cref/parent_node_id/data_mean_ctor/parent_node_id/$$; i.e.,
+$cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
 $cref/child/child_data/data_id2child/child/$$ value
 less than or equal 
@@ -760,7 +760,7 @@ $end
 */
 
 template <class Float>
-Float data_mean::yes_ode(
+Float data_model::yes_ode(
 		size_t                        data_id  ,
 		const pack_var&               var_info ,
 		const CppAD::vector<Float>&   var_vec
@@ -964,21 +964,21 @@ Float data_mean::yes_ode(
 	return sum;
 }
 
-# define DISMOD_AT_INSTANTIATE_DATA_MEAN(Float)             \
-	template Float data_mean::no_ode(                       \
+# define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)             \
+	template Float data_model::no_ode(                       \
 		size_t                        data_id  ,            \
 		const pack_var&               var_info ,            \
 		const CppAD::vector<Float>&   var_vec               \
 	) const;                                                \
-	template Float data_mean::yes_ode(                      \
+	template Float data_model::yes_ode(                      \
 		size_t                        data_id  ,            \
 		const pack_var&               var_info ,            \
 		const CppAD::vector<Float>&   var_vec               \
 	) const;
 
 // instantiations
-DISMOD_AT_INSTANTIATE_DATA_MEAN(double)
-DISMOD_AT_INSTANTIATE_DATA_MEAN( CppAD::AD<double> )
+DISMOD_AT_INSTANTIATE_DATA_MODEL(double)
+DISMOD_AT_INSTANTIATE_DATA_MODEL( CppAD::AD<double> )
 
 
 } // END DISMOD_AT_NAMESPACE

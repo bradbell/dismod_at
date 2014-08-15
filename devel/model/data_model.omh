@@ -1,11 +1,11 @@
-$begin data_mean$$
+$begin data_model$$
 $spell
 	var
 $$
 
 $section Computing Data Means$$
 
-$childtable%devel/model/data_mean.cpp
+$childtable%devel/model/data_model.cpp
 %$$
 
 $end

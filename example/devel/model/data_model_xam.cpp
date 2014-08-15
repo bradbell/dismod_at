@@ -9,25 +9,25 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin data_mean_xam.cpp$$
+$begin data_model_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ data_mean: Example and Test (Under Construction)$$
-$index example, C++ data_mean$$
-$index data_mean, C++ example$$
+$section C++ data_model: Example and Test (Under Construction)$$
+$index example, C++ data_model$$
+$index data_model, C++ example$$
 
 $code
-$verbatim%example/devel/utility/data_mean_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/utility/data_model_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
 // BEGIN C++
 # include <limits>
-# include <dismod_at/include/data_mean.hpp>
+# include <dismod_at/include/data_model.hpp>
 
 namespace {
 	double check_avg(const dismod_at::data_struct& data_row)
@@ -41,7 +41,7 @@ namespace {
 	}
 }
 
-bool data_mean_xam(void)
+bool data_model_xam(void)
 {	bool   ok = true;
 	size_t i, k;
 	using CppAD::abs;	
@@ -184,7 +184,7 @@ bool data_mean_xam(void)
 	data_table[data_id].time_upper   = 2000.0;
 	//
 	// avg_integrand
-	dismod_at::data_mean avg_integrand(
+	dismod_at::data_model avg_integrand(
 		parent_node_id,
 		n_age_ode,
 		n_time_ode,
@@ -234,15 +234,15 @@ bool data_mean_xam(void)
 	}
 	// check results
 	for(data_id = 0; data_id < data_table.size(); data_id++)
-	{	Float data_mean = avg_integrand.no_ode(data_id, var_info, var_vec);
+	{	Float data_model = avg_integrand.no_ode(data_id, var_info, var_vec);
 		double check    = check_avg(data_table[data_id]) / (age_max*time_max);
-		ok             &= abs( 1.0 - data_mean / check ) <= eps;
+		ok             &= abs( 1.0 - data_model / check ) <= eps;
 		/*
 		if( data_id == 0 )
 			cout << "Debugging" << std::endl; 
-		cout << "data_mean = " << data_mean; 
+		cout << "data_model = " << data_model; 
 		cout << ", check = " << check; 
-		cout << ", relerr    = " << 1.0 - data_mean / check  << std::endl;
+		cout << ", relerr    = " << 1.0 - data_model / check  << std::endl;
 		*/
 	}
 

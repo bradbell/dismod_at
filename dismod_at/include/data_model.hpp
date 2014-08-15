@@ -22,7 +22,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-class data_mean {
+class data_model {
 	// infromation for each data point
 	typedef struct {
 		integrand_enum        integrand;
@@ -44,7 +44,7 @@ private:
 	CppAD::vector<smooth2ode*>   si2ode_vec_;
 	CppAD::vector<data_ode_info> data_info_; 
 public:
-	data_mean(
+	data_model(
 		size_t                               parent_node_id  ,
 		size_t                               n_age_ode       ,
 		size_t                               n_time_ode      ,
@@ -58,7 +58,7 @@ public:
 		const CppAD::vector<smooth_info>&    s_info_vec
 	);
 	// destructor must delete the smooth2ode objects pointed to by si2ode_vec_
-	~data_mean(void);
+	~data_model(void);
 	// compute data mean for integrands that do not require S or C 
 	template <class Float>
 	Float no_ode(

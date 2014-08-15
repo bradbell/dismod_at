@@ -19,7 +19,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "include/avg_integrand.hpp"
 # include "include/bilinear_interp.hpp"
 # include "include/child_data.hpp"
-# include "include/data_mean.hpp"
+# include "include/data_model.hpp"
 # include "include/eigen_ode2.hpp"
 # include "include/integrate_1d.hpp"
 # include "include/integrate_2d.hpp"

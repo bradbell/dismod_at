@@ -31,7 +31,7 @@ $end
 # include <cstring>
 
 // model subdirectory
-extern bool data_mean_xam(void);
+extern bool data_model_xam(void);
 // utility subdirectory
 extern bool avg_integrand_xam(void);
 extern bool bilinear_interp_xam(void);
@@ -95,7 +95,7 @@ namespace {
 int main(void)
 {
 	// model subdirectory
-	RUN(data_mean_xam);
+	RUN(data_model_xam);
 	// utility subdirectory
 	RUN(avg_integrand_xam);
 	RUN(bilinear_interp_xam);
