@@ -449,7 +449,7 @@ data_table_    (data_table)
 }
 /*
 -----------------------------------------------------------------------------
-$begin data_model_no_ode$$
+$begin data_model_avg_no_ode$$
 
 $spell
 	dm
@@ -468,7 +468,7 @@ $$
 $section Average for Integrands That Don't Require the ODE$$
 
 $head Syntax$$
-$icode%avg% = %dm%.no_ode(%data_id%, %var_info%, %var_vec%)%$$
+$icode%avg% = %dm%.avg_no_ode(%data_id%, %var_info%, %var_vec%)%$$
 
 
 $head dm$$
@@ -536,7 +536,7 @@ for the specified data point.
 $end
 */
 template <class Float>
-Float data_model::no_ode(
+Float data_model::avg_no_ode(
 		size_t                        data_id  ,
 		const pack_var&               var_info ,
 		const CppAD::vector<Float>&   var_vec
@@ -595,7 +595,7 @@ Float data_model::no_ode(
 		break;
 
 		default:
-		// use compute_yes_ode for these cases
+		// use compute_avg_yes_ode for these cases
 		assert( false );
 	}
 
@@ -680,7 +680,7 @@ Float data_model::no_ode(
 }
 /*
 -----------------------------------------------------------------------------
-$begin data_model_yes_ode$$
+$begin data_model_avg_yes_ode$$
 
 $spell
 	dm
@@ -698,7 +698,7 @@ $$
 $section Average for Integrands That Require the ODE$$
 
 $head Syntax$$
-$icode%avg% = %dm%.yes_ode(%data_id%, %var_info%, %var_vec%)%$$
+$icode%avg% = %dm%.avg_yes_ode(%data_id%, %var_info%, %var_vec%)%$$
 
 
 $head dm$$
@@ -763,7 +763,7 @@ $end
 */
 
 template <class Float>
-Float data_model::yes_ode(
+Float data_model::avg_yes_ode(
 		size_t                        data_id  ,
 		const pack_var&               var_info ,
 		const CppAD::vector<Float>&   var_vec
@@ -968,12 +968,12 @@ Float data_model::yes_ode(
 }
 
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)             \
-	template Float data_model::no_ode(                       \
+	template Float data_model::avg_no_ode(                       \
 		size_t                        data_id  ,            \
 		const pack_var&               var_info ,            \
 		const CppAD::vector<Float>&   var_vec               \
 	) const;                                                \
-	template Float data_model::yes_ode(                      \
+	template Float data_model::avg_yes_ode(                      \
 		size_t                        data_id  ,            \
 		const pack_var&               var_info ,            \
 		const CppAD::vector<Float>&   var_vec               \

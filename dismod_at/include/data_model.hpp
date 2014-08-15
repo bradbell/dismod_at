@@ -59,16 +59,16 @@ public:
 	);
 	// destructor must delete the smooth2ode objects pointed to by si2ode_vec_
 	~data_model(void);
-	// compute data mean for integrands that do not require S or C 
+	// compute average for integrands that do not require S or C 
 	template <class Float>
-	Float no_ode(
+	Float avg_no_ode(
 		size_t                        data_id  ,
 		const  pack_var&              var_info ,
 		const  CppAD::vector<Float>&  var_vec
 	) const;
-	// compute data mean for integrands that require S or C 
+	// compute average for integrands that require S or C 
 	template <class Float>
-	Float yes_ode(
+	Float avg_yes_ode(
 		size_t                        data_id  ,
 		const  pack_var&              var_info ,
 		const  CppAD::vector<Float>&  var_vec

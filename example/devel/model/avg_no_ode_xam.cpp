@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin data_model_xam.cpp$$
+$begin avg_no_ode_xam.cpp$$
 $spell
 	interp
 	xam
@@ -20,7 +20,7 @@ $index example, C++ data_model$$
 $index data_model, C++ example$$
 
 $code
-$verbatim%example/devel/utility/data_model_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/utility/avg_no_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -234,7 +234,7 @@ bool data_model_xam(void)
 	}
 	// check results
 	for(data_id = 0; data_id < data_table.size(); data_id++)
-	{	Float data_model = dm.no_ode(data_id, var_info, var_vec);
+	{	Float data_model = dm.avg_no_ode(data_id, var_info, var_vec);
 		double check    = check_avg(data_table[data_id]) / (age_max*time_max);
 		ok             &= abs( 1.0 - data_model / check ) <= eps;
 		/*

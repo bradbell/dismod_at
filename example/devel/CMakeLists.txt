@@ -17,7 +17,7 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL 
 	example_devel.cpp
 
-	model/data_model_xam.cpp
+	model/avg_no_ode_xam.cpp
 	
 	utility/bilinear_interp_xam.cpp
 	utility/eigen_ode2_xam.cpp
