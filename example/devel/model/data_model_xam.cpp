@@ -15,7 +15,7 @@ $spell
 	xam
 $$
 
-$section C++ data_model: Example and Test (Under Construction)$$
+$section C++ data_model: Example and Test$$
 $index example, C++ data_model$$
 $index data_model, C++ example$$
 
@@ -183,8 +183,8 @@ bool data_model_xam(void)
 	data_table[data_id].time_lower   = 1990.0;
 	data_table[data_id].time_upper   = 2000.0;
 	//
-	// avg_integrand
-	dismod_at::data_model avg_integrand(
+	// data_model
+	dismod_at::data_model dm(
 		parent_node_id,
 		n_age_ode,
 		n_time_ode,
@@ -234,7 +234,7 @@ bool data_model_xam(void)
 	}
 	// check results
 	for(data_id = 0; data_id < data_table.size(); data_id++)
-	{	Float data_model = avg_integrand.no_ode(data_id, var_info, var_vec);
+	{	Float data_model = dm.no_ode(data_id, var_info, var_vec);
 		double check    = check_avg(data_table[data_id]) / (age_max*time_max);
 		ok             &= abs( 1.0 - data_model / check ) <= eps;
 		/*

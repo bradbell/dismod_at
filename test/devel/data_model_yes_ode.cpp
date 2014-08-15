@@ -135,8 +135,8 @@ bool data_model_yes_ode(void)
 	data_table[data_id].time_lower   = 1990.0;
 	data_table[data_id].time_upper   = 2000.0;
 	//
-	// avg_integrand
-	dismod_at::data_model avg_integrand(
+	// data_model
+	dismod_at::data_model dm(
 		parent_node_id,
 		n_age_ode,
 		n_time_ode,
@@ -194,7 +194,7 @@ bool data_model_yes_ode(void)
 	*/
 	using CppAD::exp;
 	data_id = 0;
-	Float data_model = avg_integrand.yes_ode(data_id, var_info, var_vec);
+	Float data_model = dm.yes_ode(data_id, var_info, var_vec);
 	double b       = data_table[data_id].age_lower;
 	double c       = data_table[data_id].age_upper;
 	double check   = c - b + ( exp(-beta * c) - exp(-beta * b) ) / beta;

@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin data_model_ctor$$
 $spell
+	dm
 	vec
 	const
 	enum
@@ -18,10 +19,10 @@ $spell
 	Cpp
 $$
 
-$section Data Mean: Constructor$$
+$section Data Model: Constructor$$
 
 $head Syntax$$
-$codei%data_model %avg_integrand%(
+$codei%data_model %dm%(
 	%parent_node_id%,
 	%n_age_ode%,
 	%n_time_ode%,
@@ -451,6 +452,7 @@ data_table_    (data_table)
 $begin data_model_no_ode$$
 
 $spell
+	dm
 	subvectors
 	enum
 	integrands
@@ -463,16 +465,16 @@ $spell
 	CppAD
 	const
 $$
-$section Data Mean for Integrands That Don't Require the ODE$$
+$section Average for Integrands That Don't Require the ODE$$
 
 $head Syntax$$
-$icode%avg% = %avg_integrand%.no_ode(%data_id%, %var_info%, %var_vec%)%$$
+$icode%avg% = %dm%.no_ode(%data_id%, %var_info%, %var_vec%)%$$
 
 
-$head avg_integrand$$
+$head dm$$
 This object has prototype
 $codei%
-	const data_model %avg_integrand%
+	const data_model %dm%
 %$$
 
 $head Float$$
@@ -681,6 +683,7 @@ Float data_model::no_ode(
 $begin data_model_yes_ode$$
 
 $spell
+	dm
 	mtspecific
 	mtall
 	mtstandard
@@ -692,16 +695,16 @@ $spell
 	CppAD
 	const
 $$
-$section Data Mean for Integrands That Require the ODE$$
+$section Average for Integrands That Require the ODE$$
 
 $head Syntax$$
-$icode%avg% = %avg_integrand%.yes_ode(%data_id%, %var_info%, %var_vec%)%$$
+$icode%avg% = %dm%.yes_ode(%data_id%, %var_info%, %var_vec%)%$$
 
 
-$head avg_integrand$$
+$head dm$$
 This object has prototype
 $codei%
-	const data_model %avg_integrand%
+	const data_model %dm%
 %$$
 
 $head Float$$
