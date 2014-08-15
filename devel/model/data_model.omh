@@ -3,7 +3,7 @@ $spell
 	var
 $$
 
-$section Computing Data Means$$
+$section Data Model$$
 
 $childtable%devel/model/data_model.cpp
 %$$

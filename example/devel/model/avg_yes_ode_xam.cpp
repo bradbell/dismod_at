@@ -8,6 +8,24 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
+/*
+$begin avg_yes_ode_xam.cpp$$
+$spell
+	interp
+	xam
+$$
+
+$section C++ avg_yes_ode: Example and Test$$
+$index example, C++ avg_yes_ode$$
+$index avg_yes_ode, C++ example$$
+
+$code
+$verbatim%example/devel/model/avg_yes_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$$
+
+$end
+*/
+// BEGIN C++
 # include <dismod_at/include/data_model.hpp>
 
 namespace {
@@ -208,3 +226,4 @@ bool avg_yes_ode_xam(void)
 	*/
 	return ok;
 }
+// END C++

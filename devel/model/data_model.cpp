@@ -533,6 +533,13 @@ $head avg$$
 This is the 
 $cref/average integrand/model_avg_integrand/Average Integrand/$$ 
 for the specified data point.
+
+$children%example/devel/model/avg_no_ode_xam.cpp
+%$$
+$head Example$$
+The file $cref avg_no_ode_xam.cpp$$ contains an example and test
+of using this routine.
+
 $end
 */
 template <class Float>
@@ -759,6 +766,13 @@ $head avg$$
 This is the 
 $cref/average integrand/model_avg_integrand/Average Integrand/$$ 
 for the specified data point.
+
+$children%example/devel/model/avg_yes_ode_xam.cpp
+%$$
+$head Example$$
+The file $cref avg_yes_ode_xam.cpp$$ contains an example and test
+of using this routine.
+
 $end
 */
 

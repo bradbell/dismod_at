@@ -20,7 +20,7 @@ $index example, C++ avg_no_ode$$
 $index avg_no_ode, C++ example$$
 
 $code
-$verbatim%example/devel/utility/avg_no_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/model/avg_no_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
