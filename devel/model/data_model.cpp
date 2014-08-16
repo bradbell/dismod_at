@@ -552,10 +552,10 @@ Float data_model::avg_no_ode(
 	assert( var_info.size() == var_vec.size() );
 
 	// data table infomation for this data point
-	integrand_enum integrand       = data_info_[ data_id].integrand;
-	const CppAD::vector<double>& x = data_table_[ data_id ] .x; 
+	const CppAD::vector<double>& x = data_table_[ data_id ].x; 
 
-	// exrtra information for this data point
+	// data_info information for this data point
+	integrand_enum integrand           = data_info_[ data_id].integrand;
 	size_t i_min                       = data_info_[data_id ].i_min;
 	size_t j_min                       = data_info_[data_id ].j_min;
 	size_t n_age                       = data_info_[data_id ].n_age;
@@ -636,7 +636,7 @@ Float data_model::avg_no_ode(
 			//
 			CppAD::vector<Float> var_si(n_var);
 			for(k = 0; k < n_var; k++)
-				var_si[k] += var_vec[info.offset + k];
+				var_si[k] = var_vec[info.offset + k];
 			//
 			CppAD::vector<Float> var_ode = 
 				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
@@ -802,9 +802,11 @@ Float data_model::avg_yes_ode(
 	size_t i, j, k, ell;
 	assert( var_info.size() == var_vec.size() );
 
-	// data infomation for this data point
+	// data table information for this data pont
+	const CppAD::vector<double>& x     = data_table_[ data_id ].x; 
+
+	// data_info infomation for this data point
 	integrand_enum integrand           = data_info_[ data_id].integrand;
-	const CppAD::vector<double>& x     = data_table_[ data_id ] .x; 
 	size_t i_min                       = data_info_[data_id ].i_min;
 	size_t j_min                       = data_info_[data_id ].j_min;
 	size_t n_age_sub                   = data_info_[data_id ].n_age;

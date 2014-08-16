@@ -145,9 +145,9 @@ $cref/fixed effects/model_variable/Fixed Effects, theta/$$ respectively.
 $head Adjusted Measurement, y_i$$
 The adjusted data value is defined by
 $latex \[
-y_i ( \theta ) = \exp \left[ 
+y_i ( \theta ) = \exp \left( 
 	- \sum_{j \in J_i} x_{i,j} \bar{\beta}_{i,j} 
-\right] v_i
+\right) v_i
 \] $$
 
 $head Adjusted Standard Deviation, delta_i$$
@@ -155,9 +155,11 @@ The adjusted standard deviation is defined by
 $latex \[
 \delta_i ( \theta )
 = 
-\sigma_i + \left[ 
+\exp \left( - \sum_{j \in J_i} x_{i,j} \bar{\beta}_{i,j} \right) \sigma_i 
++ 
+\left( 
 	\sum_{j \in K_i} x_{i,j} \bar{\gamma}_{i,j} 
-\right] ( \eta_i + v_i )
+\right) ( \eta_i + y_i )
 \] $$
 
 $head Average Integrand$$
