@@ -36,6 +36,7 @@ $code laplace$$        $pre   $$ $cnext Laplace density        $rnext
 $code log_gaussian$$   $pre   $$ $cnext Log-Gaussian density   $rnext
 $code log_laplace$$    $pre   $$ $cnext Log-Laplace density
 $tend
+In addition, these values must appear in the order above.
 
 
 $children%example/table/density_table.py

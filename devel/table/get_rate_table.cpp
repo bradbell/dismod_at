@@ -63,12 +63,17 @@ $head Rate Enum Values$$
 The $icode rate_table$$ can also be addressed 
 using the rate enum values as follows:
 $table 
-$icode rate_id$$    $cnext $icode rate_enum$$  $rnext
-0                   $cnext $code iota_enum$$   $rnext
-1                   $cnext $code rho_enum$$    $rnext
-2                   $cnext $code chi_enum$$    $rnext
-3                   $cnext $code omega_enum$$
+$icode rate_id$$    $pre  $$ $cnext $icode rate_enum$$  $cnext rate_name
+$rnext
+0                   $cnext $code iota_enum$$   $cnext $code iota$$
+$rnext
+1                   $cnext $code rho_enum$$    $cnext $code rho$$
+$rnext
+2                   $cnext $code chi_enum$$    $cnext $code chi$$
+$rnext
+3                   $cnext $code omega_enum$$  $cnext $code omega$$
 $tend
+The number of these enum values is $code number_rate_enum$$.
 
 
 $children%example/devel/table/get_rate_table_xam.cpp
