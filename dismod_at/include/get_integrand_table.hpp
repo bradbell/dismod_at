@@ -28,7 +28,11 @@ namespace dismod_at {
 		relrisk_enum,
 		number_integrand_enum
 	};
-	extern CppAD::vector<integrand_enum> get_integrand_table(sqlite3*  db);
+	struct integrand_struct {
+		integrand_enum integrand;
+		double         eta;
+	};
+	extern CppAD::vector<integrand_struct> get_integrand_table(sqlite3*  db);
 }
 
 # endif

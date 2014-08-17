@@ -288,6 +288,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #	%file_name%,
 #	%age_list%
 #	%time_list%
+#   %integrand_list%,
 #	%node_list%,
 #	%weight_list%,
 #	%covariate_list%,
@@ -316,6 +317,16 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $head time_list$$
 # is a $code list$$ of $code float$$ in increasing order that
 # specify the time grid values.
+#
+# $head integrand_list$$
+# This is a list of $code dict$$
+# that define the rows of the $cref integrand_table$$.
+# The dictionary $icode%integrand_list%[%i%]%$$ has the following:
+# $table
+# Key     $cnext Value Type $cnext Description                     $rnext
+# name    $cnext str        $cnext name for the $th i$$ integrand  $rnext
+# eta     $cnext str        $cnext offset in log transform fro this integrand
+# $tend
 #
 # $head node_list$$
 # This is a list of $code dict$$
@@ -466,6 +477,7 @@ def create_database(
 	file_name,
 	age_list,
 	time_list,
+	integrand_list,
 	node_list,
 	weight_list,
 	covariate_list,
@@ -499,6 +511,19 @@ def create_database(
 	tbl_name = 'time'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
+	# create integrand table
+	col_name = [ 'integrand_name', 'eta' ]
+	col_type = [ 'text',           'real']
+	row_list = []
+	for row in integrand_list :
+		row_list.append( [ row['name'], row['eta'] ]  )
+	tbl_name = 'integrand'
+	create_table(connection, tbl_name, col_name, col_type, row_list)
+	#
+	global_integrand_name2id = {}
+	for i in range( len(row_list) ) :
+		global_integrand_name2id[ row_list[i][0] ] = i
+	# -----------------------------------------------------------------------
 	# create density table
 	col_name = [  'density_name'   ]
 	col_type = [  'text'        ]
@@ -515,28 +540,6 @@ def create_database(
 	global_density_name2id = {}
 	for i in range( len(row_list) ) :
 		global_density_name2id[ row_list[i][0] ] = i
-	# ------------------------------------------------------------------------
-	# create integrand table
-	col_name = [  'integrand_name'  ]
-	col_type = [  'text'            ]
-	row_list = [ 
-		[ 'incidence'   ],
-		[ 'remission'   ],
-		[ 'mtexcess'    ],
-		[ 'mtother'     ],
-		[ 'mtwith'      ],
-		[ 'prevalence'  ],
-		[ 'mtspecific'  ],
-		[ 'mtall'       ],
-		[ 'mtstandard'  ],
-		[ 'relrisk'     ]
-	]
-	tbl_name = 'integrand'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
-	#
-	global_integrand_name2id = {}
-	for i in range( len(row_list) ) :
-		global_integrand_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------
 	# create covariate table
 	col_name = [ 'covariate_name',	'reference' ]

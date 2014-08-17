@@ -73,6 +73,15 @@ $code relrisk$$         $cnext relative risk ratio $cnext $pre  $$
 	$codei%[ %omega% + %chi% ] / %omega%$$
 $tend
 
+$head eta$$
+This column has type $code real$$.
+This is the offset in the log transformation for 
+rows of the $cref data_table$$ where
+$cref/integrand_id/data_table/integrand_id/$$ 
+matches the value in this table and the
+$cref/density_id/data_table/density_id/$$ corresponds to
+$code log_gaussian$$ or $code log_laplace$$.
+
 $children%example/table/integrand_table.py
 %$$
 $head Example$$

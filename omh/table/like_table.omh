@@ -84,7 +84,7 @@ $head eta$$
 This column has type $code real$$ and is only used in the
 cases where $icode density$$ is $code log_gaussian$$
 or $code log_laplace$$.
-In these cases, it is the offset in the corresponding density function.
+In these cases, it is the offset in the corresponding log transformation.
 In the case where $code density$$ is 
 $code uniform$$, $code gaussian$$ or $code laplace$$,
 this field is not used and can be $code null$$.

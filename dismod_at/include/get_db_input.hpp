@@ -36,7 +36,7 @@ namespace dismod_at {
 		CppAD::vector<double>             time_table;
 		CppAD::vector<rate_struct>        rate_table;
 		CppAD::vector<density_enum>       density_table;
-		CppAD::vector<integrand_enum>     integrand_table;
+		CppAD::vector<integrand_struct>   integrand_table;
 		//
 		CppAD::vector<weight_struct>      weight_table;
 		CppAD::vector<smooth_struct>      smooth_table;

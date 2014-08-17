@@ -36,6 +36,9 @@ def constant_smooth_fun(a, t) :
 file_name   = 'example.db'
 age_list    = [ 50.0 ]
 time_list   = [ 2000.0 ]
+integrand_list = [
+	{ 'name':'mtother',    'eta':1e-6 }
+]
 node_list = [
 	{ 'name':'world',         'parent':'' },
 	{ 'name':'north_america', 'parent':'world' },
@@ -149,6 +152,7 @@ dismod_at.create_database(
 	file_name, 
 	age_list,
 	time_list,
+	integrand_list,
 	node_list, 
 	weight_list, 
 	covariate_list,
