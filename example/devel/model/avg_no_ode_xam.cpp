@@ -101,25 +101,27 @@ bool avg_no_ode_xam(void)
 	//
 	// s_info_vec
 	vector<dismod_at::smooth_info> s_info_vec(2);
-	//
-	vector<size_t> value_like_id_0(n_si), 
-		dage_like_id_0(n_si), dtime_like_id_0(n_si);
 	size_t mulstd_value = 1, mulstd_dage = 1, mulstd_dtime = 1;
-	dismod_at::smooth_info s_info_0(
-		age_id, time_id, value_like_id_0, dage_like_id_0, dtime_like_id_0,
-		mulstd_value, mulstd_dage, mulstd_dtime
-	);
-	s_info_vec[0] = s_info_0;
-	//
-	vector<size_t> one_age_id(1);
-	one_age_id[0] = 0;
-	vector<size_t> value_like_id_1(n_time_si), 
-		dage_like_id_1(n_time_si), dtime_like_id_1(n_time_si);
-	dismod_at::smooth_info s_info_1(
-		one_age_id, time_id, value_like_id_1, dage_like_id_1, dtime_like_id_1,
-		mulstd_value, mulstd_dage, mulstd_dtime
-	);
-	s_info_vec[1] = s_info_1;
+	for(size_t smooth_id = 0; smooth_id < 2; smooth_id++)
+	{	vector<size_t> age_id_tmp;
+		if( smooth_id == 0 )
+		{	n_si       = n_age_si * n_time_si;
+			age_id_tmp = age_id;
+		}
+		else
+		{	n_si = n_time_si;
+			age_id_tmp.resize(1);
+			age_id_tmp[0] = 0;
+		}
+		//
+		vector<size_t> value_like_id(n_si), 
+			dage_like_id(n_si), dtime_like_id(n_si);
+		dismod_at::smooth_info s_info(
+			age_id_tmp, time_id, value_like_id, dage_like_id, dtime_like_id,
+			mulstd_value, mulstd_dage, mulstd_dtime
+		);
+		s_info_vec[smooth_id] = s_info;
+	}
 	//
 	// integrand_table
 	size_t n_integrand = dismod_at::number_integrand_enum;
