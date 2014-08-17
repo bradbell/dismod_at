@@ -76,8 +76,8 @@ $rnext
 $code int$$ $cnext $code integrand_id$$ $cnext 
 	The $cref/integrand_id/data_table/integrand_id/$$ for this measurement
 $rnext
-$code int$$ $cnext $code like_id$$ $cnext 
-	The $cref/like_id/data_table/like_id/$$ for this measurement
+$code int$$ $cnext $code density_id$$ $cnext 
+	The $cref/density_id/data_table/density_id/$$ for this measurement
 $rnext
 $code int$$ $cnext $code node_id$$ $cnext 
 	The $cref/node_id/data_table/node_id/$$ for this measurement
@@ -135,10 +135,10 @@ CppAD::vector<data_struct> get_data_table(sqlite3* db, size_t n_covariate)
 	get_table_column(db, table_name, column_name, integrand_id);
 	assert( n_data == integrand_id.size() );
 
-	column_name        = "like_id";
-	CppAD::vector<int>    like_id;
-	get_table_column(db, table_name, column_name, like_id);
-	assert( n_data == like_id.size() );
+	column_name        = "density_id";
+	CppAD::vector<int>    density_id;
+	get_table_column(db, table_name, column_name, density_id);
+	assert( n_data == density_id.size() );
 
 	column_name        = "node_id";
 	CppAD::vector<int>    node_id;
@@ -184,7 +184,7 @@ CppAD::vector<data_struct> get_data_table(sqlite3* db, size_t n_covariate)
 	CppAD::vector<data_struct> data_table(n_data);
 	for(size_t i = 0; i < n_data; i++)
 	{	data_table[i].integrand_id  = integrand_id[i];
-		data_table[i].like_id       = like_id[i];
+		data_table[i].density_id    = density_id[i];
 		data_table[i].node_id       = node_id[i];
 		data_table[i].weight_id     = weight_id[i];
 		data_table[i].meas_value    = meas_value[i];

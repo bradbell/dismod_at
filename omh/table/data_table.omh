@@ -34,10 +34,10 @@ This column has type $code integer$$ and is the
 $cref/integrand_id/integrand_table/integrand_id/$$ that identifies
 the integrand for this measurement.
 
-$head like_id$$
+$head density_id$$
 This column has type $code integer$$ and is the
-$cref/like_id/like_table/like_id/$$ that identifies
-the likelihood function for this measurement.
+$cref/density_id/like_table/density_id/$$ that identifies
+the density function for this measurement.
 
 $head node_id$$
 This column has type $code integer$$ and is the 

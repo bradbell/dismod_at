@@ -45,7 +45,7 @@ bool get_data_table_xam(void)
 	"create table data("
 		" data_id        integer primary key,"
 		" integrand_id   integer,"
-		" like_id        integer,"
+		" density_id     integer,"
 		" node_id        integer,"
 		" weight_id      integer,"
 		" meas_value     real,"
@@ -60,7 +60,7 @@ bool get_data_table_xam(void)
 	"insert into data values("
 		"0,"                       // data_id
 		"1,"                       // integrand_id
-		"0,"                       // like_id
+		"0,"                       // density_id
 		"3,"                       // node_id
 		"4,"                       // weight_id
 		"1e-4,"                    // meas_value
@@ -85,7 +85,7 @@ bool get_data_table_xam(void)
 	ok  &= data_table.size() == 1;
 	//
 	ok  &= data_table[0].integrand_id      == 1;
-	ok  &= data_table[0].like_id           == 0;
+	ok  &= data_table[0].density_id        == 0;
 	ok  &= data_table[0].node_id           == 3;
 	ok  &= data_table[0].weight_id         == 4;
 	ok  &= data_table[0].meas_value        == 1e-4;

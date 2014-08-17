@@ -55,7 +55,7 @@ covariate_list = [
 data_list = []
 row = {
 	'integrand':'mtother',
-	'like':'log_gaussian',
+	'density':'log_gaussian',
 	'weight':'constant',
 	'meas_std':1e-5,
 	'age_lower':0.0,

@@ -372,7 +372,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $table
 # Key          $cnext Value Type  $cnext Description                 $rnext 
 # integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext 
-# like         $cnext str         $cnext likelihood                  $rnext 
+# density      $cnext str         $cnext density                     $rnext 
 # node         $cnext str         $cnext node in graph               $rnext 
 # weight       $cnext str         $cnext weighting function          $rnext 
 # meas_value   $cnext float       $cnext measured value              $rnext 
@@ -750,7 +750,7 @@ def create_database(
 	# create the data table
 	col_name = [
 		'integrand_id',
-		'like_id',
+		'density_id',
 		'node_id',
 		'weight_id',
 		'meas_value',
@@ -764,7 +764,7 @@ def create_database(
 		col_name.append( 'x_%s' % j )
 	col_type = [
 		'integer',              # integrand_id
-		'integer',              # like_id
+		'integer',              # density_id
 		'integer',              # node_id
 		'integer',              # weight_id
 		'real',                 # meas_value
@@ -781,12 +781,12 @@ def create_database(
 		data = data_list[i]
 		data_id      = i
 		integrand_id = global_integrand_name2id[ data['integrand'] ]
-		like_id      = global_like_name2id[ data['like'] ]
+		density_id   = global_density_name2id[ data['density'] ]
 		node_id      = global_node_name2id[ data['node'] ]
 		weight_id    = global_weight_name2id[ data['weight'] ]
 		row = [ 
 			integrand_id,
-			like_id,
+			density_id,
 			node_id,
 			weight_id,
 			data['meas_value'],

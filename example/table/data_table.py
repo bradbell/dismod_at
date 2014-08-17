@@ -33,7 +33,7 @@ def data_table() :
 	col_name = [
 		# required columns
 		'integrand_id',
-		'like_id',
+		'density_id',
 		'node_id',
 		'weight_id',
 		'meas_value',
@@ -50,7 +50,7 @@ def data_table() :
 	]
 	col_type = [
 		'integer',              # integrand_id
-		'integer',              # like_id
+		'integer',              # density_id
 		'integer',              # node_id
 		'integer',              # weight_id
 		'real',                 # meas_value
@@ -65,7 +65,7 @@ def data_table() :
 	]
 	row_list = [ [
 		1,                      # integrand_id
-		0,                      # like_id
+		0,                      # density_id
 		3,                      # node_id
 		4,                      # weight_id
 		1e-4,                   # meas_value
