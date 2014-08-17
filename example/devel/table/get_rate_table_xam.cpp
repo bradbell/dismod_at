@@ -63,6 +63,10 @@ bool get_rate_table_xam(void)
 	{	ok &= rate_table[rate_id].parent_smooth_id == 0;
 		ok &= rate_table[rate_id].child_smooth_id  == 1;
 	}
+	ok &= rate_table[0].rate == dismod_at::iota_enum;
+	ok &= rate_table[1].rate == dismod_at::rho_enum;
+	ok &= rate_table[2].rate == dismod_at::chi_enum;
+	ok &= rate_table[3].rate == dismod_at::omega_enum;
  
 	// close database and return
 	sqlite3_close(db);

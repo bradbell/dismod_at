@@ -40,6 +40,9 @@ This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description 
 $rnext
+$code rate_enum$$ $cnext $code rate$$  $cnext
+	enum corresponding to $cref/rate_name/rate_table/rate_name/$$
+$rnext
 $code int$$ $cnext $code parent_smooth_id$$  $cnext 
 	The $cref/parent_smooth_id/rate_table/parent_smooth_id/$$ 
 $rnext
@@ -143,6 +146,7 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 			message += " but found " + rate_name[rate_id];
 			table_error_exit("rate", rate_id, message);
 		}
+		rate_table[rate_id].rate             = rate_enum(rate_id);
 		rate_table[rate_id].parent_smooth_id = parent_smooth_id[rate_id];
 		rate_table[rate_id].child_smooth_id  = child_smooth_id[rate_id];
 	}

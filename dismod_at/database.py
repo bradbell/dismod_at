@@ -429,6 +429,8 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # parent_smooth $cnext str         $cnext parent smoothing           $rnext
 # child_smooth  $cnext str         $cnext child smoothing
 # $tend
+# Furthermore the order of the rate names must be
+# iota, rho, chi, omega; i.e., the order in $cref rate_table$$.
 #
 # $head mulcov_list$$
 # This is a list of $code dict$$
