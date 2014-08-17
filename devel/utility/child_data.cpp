@@ -109,8 +109,10 @@ $codei%
 	size_t %child%
 %$$
 If $icode%child% < %n_child%$$,
-it is the $icode child_id$$ that this data is associated with; i.e.,
-the $cref/node_id/data_table/node_id/$$ for this data is a descendent
+it is the $icode child_id$$ that this $icode data_id$$ 
+is associated with; i.e.,
+the $cref/node_id/data_table/node_id/$$ for this
+$icode data_id$$ is a descendent
 of the node
 $codei%
 	%cd%.child_id2node_id(%child%)
@@ -120,9 +122,14 @@ $pre
 
 $$
 If $icode%child% == %n_child%$$,
-this data's node is a descendant of the $icode parent_node_id$$.
-and it is not a descendent of any of the child nodes.
-This is the same as this data's node being the parent node.
+the $cref/node_id/data_table/node_id/$$ for this $icode data_id$$ is
+the parent node.
+$pre
+
+$$
+If $icode%child% == %n_child%+1%$$,
+the $cref/node_id/data_table/node_id/$$ for this $icode data_id$$ is
+not a descendent of the parent node.
 
 $end
 */
@@ -144,25 +151,20 @@ child_data::child_data(
 			child_id2node_id_.push_back(node_id);
 	}
 
-	// data2child_id
+	// data_id2child_id
 	size_t n_data = data_table.size();
 	data_id2child_.resize(n_data);
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	size_t node_id = size_t( data_table[data_id].node_id );
-		bool   more    = true;
-		bool   found   = false;
-		size_t child;
+		bool   found   = parent_node_id == node_id;
+		size_t child   = child_id2node_id_.size();
+		bool   more    = ! found;
 		while(more)
-		{	child = child_id2node_id_.size();
-			for(size_t i = 0; i < child_id2node_id_.size(); i++)
+		{	for(size_t i = 0; i < child_id2node_id_.size(); i++)
 			{	if( child_id2node_id_[i] == node_id )
 				{	child = i;
 					found = true;
 				}
-			}
-			if( node_id == parent_node_id )
-			{	assert( child == child_id2node_id_.size() );
-				found = true;
 			}
 			more = (! found) && (node_id != size_t(-1));
 			if(more)

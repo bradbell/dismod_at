@@ -93,7 +93,7 @@ and is the $cref/time_table/get_time_table/time_table/$$.
 $head integrand_table$$
 This argument has prototype
 $codei%
-	const CppAD::vector<integrand_enum>&  %integrand_table%
+	const CppAD::vector<integrand_struct>&  %integrand_table%
 %$$
 and is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
 
@@ -170,17 +170,17 @@ data_model::~data_model(void)
 
 // consctructor
 data_model::data_model(
-	size_t                               parent_node_id  ,
-	size_t                               n_age_ode       ,
-	size_t                               n_time_ode      ,
-	double                               ode_step_size   ,
-	const CppAD::vector<double>&         age_table       ,
-	const CppAD::vector<double>&         time_table      ,
-	const CppAD::vector<integrand_enum>& integrand_table ,
-	const CppAD::vector<node_struct>&    node_table      ,
-	const CppAD::vector<data_struct>&    data_table      ,
-	const CppAD::vector<weight_info>&    w_info_vec      ,
-	const CppAD::vector<smooth_info>&    s_info_vec      )
+	size_t                                 parent_node_id  ,
+	size_t                                 n_age_ode       ,
+	size_t                                 n_time_ode      ,
+	double                                 ode_step_size   ,
+	const CppAD::vector<double>&           age_table       ,
+	const CppAD::vector<double>&           time_table      ,
+	const CppAD::vector<integrand_struct>& integrand_table ,
+	const CppAD::vector<node_struct>&      node_table      ,
+	const CppAD::vector<data_struct>&      data_table      ,
+	const CppAD::vector<weight_info>&      w_info_vec      ,
+	const CppAD::vector<smooth_info>&      s_info_vec      )
 :
 n_age_ode_     (n_age_ode)        ,
 n_time_ode_    (n_time_ode)       ,
@@ -223,13 +223,6 @@ data_table_    (data_table)
 	//
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	// information for this data point
-
-		// integrand
-		size_t  integrand_id     = data_table[data_id].integrand_id;
-		integrand_enum integrand = integrand_table[integrand_id];
-
-		// child of parent node that this data is associated with
-		size_t  child            = cd.data_id2child(data_id);
 
 		// age limits
 		double age_lower  = data_table[data_id].age_lower;
@@ -434,13 +427,27 @@ data_table_    (data_table)
 			sum += c_sum[k];
 		assert( sum > 0.0 );
 
+		// integrand and eta
+		size_t  integrand_id     = data_table[data_id].integrand_id;
+		integrand_enum integrand = integrand_table[integrand_id].integrand;
+		double eta               = integrand_table[integrand_id].eta;
+
+		// child of parent node that this data is associated with
+		size_t  child            = cd.data_id2child(data_id);
+
+		// density for this data point
+		size_t density_id    = data_table[data_id].density_id;
+		density_enum density = density_enum(density_id);
+
 		// set the information for this data point
 		data_info_[data_id].integrand = integrand;
+		data_info_[data_id].density   = density;
 		data_info_[data_id].child     = child;
 		data_info_[data_id].i_min     = i_min;
 		data_info_[data_id].j_min     = j_min;
 		data_info_[data_id].n_age     = n_age; 
 		data_info_[data_id].n_time    = n_time; 
+		data_info_[data_id].eta       = eta;
 		//
 		data_info_[data_id].c_ode.resize(n_age * n_time);
 		for(k = 0; k < n_age * n_time; k++)
@@ -487,7 +494,7 @@ $codei%
 	size_t %data_id%
 %$$
 and is the $cref/data_id/data_table/data_id/$$ for we are computing
-the data mean for.
+the average integrand for.
 
 $subhead Node$$
 The $icode data_id$$ must correspond to a 
@@ -562,6 +569,9 @@ Float data_model::avg_no_ode(
 	size_t n_time                      = data_info_[data_id ].n_time;
 	size_t child                       = data_info_[data_id ].child;
 	const CppAD::vector<double>& c_ode = data_info_[data_id ].c_ode;
+
+	// check that this data's node is a descendent of the parent node
+	assert( child <= n_child_ );
 
 	// ode subgrid that we need integrand at 
 	size_t n_ode = n_age * n_time;
@@ -724,7 +734,7 @@ $codei%
 	size_t %data_id%
 %$$
 and is the $cref/data_id/data_table/data_id/$$ for we are computing
-the data mean for.
+the average integrand for.
 
 $subhead Node$$
 The $icode data_id$$ must correspond to a 
@@ -813,6 +823,9 @@ Float data_model::avg_yes_ode(
 	size_t n_time_sub                  = data_info_[data_id ].n_time;
 	size_t child                       = data_info_[data_id ].child;
 	const CppAD::vector<double>& c_ode = data_info_[data_id ].c_ode;
+
+	// check that this data's node is a descendent of the parent node
+	assert( child <= n_child_ );
 
 	CppAD::vector<size_t> ode_index, cohort_start;
 	// cohorts that end at maximum age index
@@ -982,18 +995,240 @@ Float data_model::avg_yes_ode(
 	//
 	return sum;
 }
+/*
+-----------------------------------------------------------------------------
+$begin data_model_residual$$
 
-# define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)             \
-	template Float data_model::avg_no_ode(                       \
+$spell
+	dm
+	Integrands
+	wres
+	var
+	vec
+	const
+	CppAD
+	subvectors
+	mtspecific
+	mtall
+	mtstandard
+	mtexcess
+	mtwith
+	mtother
+	relrisk
+	xam
+$$
+$section Average for Integrands That Require the ODE$$
+
+$head Syntax$$
+$icode%wres% = %dm%.residual(%data_id%, %var_info%, %var_vec%, %avg%)%$$
+
+$head dm$$
+This object has prototype
+$codei%
+	const data_model %dm%
+%$$
+
+$head Float$$
+The type $icode Float$$ must be one of the following:
+$code double$$, $code CppD::AD<double>$$.
+
+$head data_id$$
+This argument has prototype
+$codei%
+	size_t %data_id%
+%$$
+and is the $cref/data_id/data_table/data_id/$$ for we are computing
+the weighted residual for.
+
+$subhead Node$$
+The $icode data_id$$ must correspond to a 
+$cref/node_id/data_table/node_id/$$ that is a descendant of the
+$cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
+the function $code data_id2child$$ returns a
+$cref/child/child_data/data_id2child/child/$$ value
+less than or equal 
+$cref/n_child/child_data/child_size/n_child/$$. 
+
+$head var_info$$
+This argument has prototype
+$codei%
+	const pack_var& %var_info%
+%$$
+and is the $cref pack_var$$ information corresponding to 
+$icode var_vec$$.
+
+$head var_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %var_vec%
+%$$
+and is a vector of values for all of the model variables.
+Only the $cref pack_var_meas_mulcov$$ subvectors of $icode var_vec$$ are used.
+
+$head avg$$
+This argument has prototype
+$codei%
+	const %Float%& %avg%
+%$$
+and is the 
+$cref/average integrand/model_avg_integrand/Average Integrand/$$ 
+for the specified data point.
+This can be calculated using the routine:
+$table
+routine                   $cnext integrand for this $icode data_id$$ 
+$rnext
+$cref data_model_avg_no_ode$$ $cnext 
+	prevalence, mtspecific, mtall, mtstandard
+$rnext
+$cref data_model_avg_yes_ode$$ $cnext 
+	incidence, remission, mtexcess, mtother, mtwith, relrisk
+
+$tend
+
+$head wres$$
+The return value has prototype
+$codei%
+	%Float%& %wres%
+%$$
+and is the
+$cref/weighted residual/model_residual/Weighted Residual, r_i/$$
+corresponding to this $icode data_id$$.
+
+$comment%example/devel/model/residual_xam.cpp
+%$$
+$head Example$$
+The file $code residual_xam.cpp$$ contains an example and test
+of using this routine.
+
+$end
+*/
+template <class Float>
+Float data_model::residual(
+		size_t                        data_id  ,
+		const pack_var&               var_info ,
+		const CppAD::vector<Float>&   var_vec  ,
+		const Float&                  avg
+	) const
+{	size_t i, j, k;
+	assert( var_info.size() == var_vec.size() );
+
+	// data table infomation for this data point
+	const CppAD::vector<double>& x = data_table_[ data_id ].x; 
+	double sigma                   = data_table_[ data_id ].meas_std;
+	size_t integrand_id            = data_table_[ data_id ].integrand_id;
+	double meas_value              = data_table_[ data_id ].meas_value;
+
+	// data_info information for this data point
+	density_enum   density             = data_info_[data_id].density;
+	double eta                         = data_info_[data_id].eta;
+	size_t i_min                       = data_info_[data_id].i_min;
+	size_t j_min                       = data_info_[data_id].j_min;
+	size_t n_age                       = data_info_[data_id].n_age;
+	size_t n_time                      = data_info_[data_id].n_time;
+	const CppAD::vector<double>& c_ode = data_info_[data_id].c_ode;
+
+	// ode subgrid that we covariates at 
+	size_t n_ode = n_age * n_time;
+	CppAD::vector<size_t> ode_index(n_ode);
+	for(i = 0; i < n_age; i++)
+	{	for(j = 0; j < n_time; j++)
+		{	k = i * n_time + j;
+			ode_index[k] = (i_min + i) * n_time_ode_ + j_min + j;
+		}
+	}
+
+	// measurement mean covaraites effect on the ode subgrid
+	CppAD::vector<Float> meas_cov_ode(n_ode);
+	for(k = 0; k < n_ode; k++)
+		meas_cov_ode[k] = 0.0;
+	size_t n_cov = var_info.meas_mean_mulcov_n_cov(integrand_id);
+	//
+	pack_var::subvec_info  info;
+	for(size_t j = 0; j < n_cov; j++)
+	{	info              = var_info.meas_mean_mulcov_info(integrand_id, j);
+		size_t n_var      = info.n_var;
+		size_t smooth_id  = info.smooth_id;
+		double x_j = x[ info.covariate_id ];
+		//
+		CppAD::vector<Float> var_si(n_var);
+		for(k = 0; k < n_var; k++)
+			var_si[k] = var_vec[info.offset + k];
+		//
+		CppAD::vector<Float> var_ode = 
+			si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
+		//
+		for(k = 0; k < n_ode; k++)
+			meas_cov_ode[k] += var_ode[k] * x_j;
+	}
+	Float mean_effect = 0.0;
+	for(k = 0; k < n_ode; k++)
+		mean_effect += c_ode[k] * meas_cov_ode[k];
+	Float adjust  = exp( - mean_effect ) * meas_value;
+
+	// measurement std covaraites effect on the ode subgrid
+	for(k = 0; k < n_ode; k++)
+		meas_cov_ode[k] = 0.0;
+	n_cov = var_info.meas_std_mulcov_n_cov(integrand_id);
+	for(size_t j = 0; j < n_cov; j++)
+	{	info              = var_info.meas_std_mulcov_info(integrand_id, j);
+		size_t n_var      = info.n_var;
+		size_t smooth_id  = info.smooth_id;
+		double x_j = x[ info.covariate_id ];
+		//
+		CppAD::vector<Float> var_si(n_var);
+		for(k = 0; k < n_var; k++)
+			var_si[k] = var_vec[info.offset + k];
+		//
+		CppAD::vector<Float> var_ode = 
+			si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
+		//
+		for(k = 0; k < n_ode; k++)
+			meas_cov_ode[k] += var_ode[k] * x_j;
+	}
+	Float std_effect = 0.0;
+	for(k = 0; k < n_ode; k++)
+		std_effect += c_ode[k] * meas_cov_ode[k];
+	Float delta  = exp( std_effect ) * sigma;
+	delta       += exp( std_effect ) * (adjust + eta);
+	//
+	Float wres;
+	switch( density )
+	{
+		case uniform_enum:
+		case gaussian_enum:
+		case laplace_enum:
+		wres = ( adjust - avg) / delta;
+		break;
+
+		case log_gaussian_enum:
+		case log_laplace_enum:
+		wres = ( log( adjust + eta ) - log( avg + eta ) );
+		wres /= log( 1.0 + delta / (adjust + eta) ); 
+		break;
+
+		default:
+		assert(false);
+	}
+	return wres;
+}
+
+# define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \
+	template Float data_model::avg_no_ode(                  \
 		size_t                        data_id  ,            \
 		const pack_var&               var_info ,            \
 		const CppAD::vector<Float>&   var_vec               \
 	) const;                                                \
-	template Float data_model::avg_yes_ode(                      \
+	template Float data_model::avg_yes_ode(                 \
 		size_t                        data_id  ,            \
 		const pack_var&               var_info ,            \
 		const CppAD::vector<Float>&   var_vec               \
-	) const;
+	) const;                                                \
+	template Float data_model::residual(                    \
+		size_t                        data_id  ,            \
+		const pack_var&               var_info ,            \
+		const CppAD::vector<Float>&   var_vec  ,            \
+		const Float&                  avg                   \
+	) const;                                                \
 
 // instantiations
 DISMOD_AT_INSTANTIATE_DATA_MODEL(double)

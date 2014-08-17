@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 # include "get_data_table.hpp"
 # include "get_integrand_table.hpp"
+# include "get_density_table.hpp"
 # include "get_node_table.hpp"
 # include "weight_info.hpp"
 # include "smooth2ode.hpp"
@@ -26,11 +27,13 @@ class data_model {
 	// infromation for each data point
 	typedef struct {
 		integrand_enum        integrand;
+		density_enum          density;
 		size_t                child;
 		size_t                i_min;
 		size_t                j_min;
-		double                n_age;
-		double                n_time;
+		size_t                n_age;
+		size_t                n_time;
+		double                eta;
 		CppAD::vector<double> c_ode;
 	} data_ode_info;
 private:
@@ -45,17 +48,17 @@ private:
 	CppAD::vector<data_ode_info> data_info_; 
 public:
 	data_model(
-		size_t                               parent_node_id  ,
-		size_t                               n_age_ode       ,
-		size_t                               n_time_ode      ,
-		double                               ode_step_size   ,
-		const CppAD::vector<double>&         age_table       ,
-		const CppAD::vector<double>&         time_table      ,
-		const CppAD::vector<integrand_enum>& integrand_table ,
-		const CppAD::vector<node_struct>&    node_table      ,
-		const CppAD::vector<data_struct>&    data_table      ,
-		const CppAD::vector<weight_info>&    w_info_vec      ,
-		const CppAD::vector<smooth_info>&    s_info_vec
+		size_t                                  parent_node_id  ,
+		size_t                                  n_age_ode       ,
+		size_t                                  n_time_ode      ,
+		double                                  ode_step_size   ,
+		const CppAD::vector<double>&            age_table       ,
+		const CppAD::vector<double>&            time_table      ,
+		const CppAD::vector<integrand_struct>&  integrand_table ,
+		const CppAD::vector<node_struct>&       node_table      ,
+		const CppAD::vector<data_struct>&       data_table      ,
+		const CppAD::vector<weight_info>&       w_info_vec      ,
+		const CppAD::vector<smooth_info>&       s_info_vec
 	);
 	// destructor must delete the smooth2ode objects pointed to by si2ode_vec_
 	~data_model(void);
@@ -72,6 +75,14 @@ public:
 		size_t                        data_id  ,
 		const  pack_var&              var_info ,
 		const  CppAD::vector<Float>&  var_vec
+	) const;
+	// compute weighted residual
+	template <class Float>
+	Float residual(
+		size_t                        data_id  ,
+		const  pack_var&              var_info ,
+		const  CppAD::vector<Float>&  var_vec  ,
+		const  Float&                 avg
 	) const;
 };
 
