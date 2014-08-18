@@ -112,18 +112,6 @@ $codei%
 	const CppAD::vector<data_struct>&  %data_table%
 %$$
 and is the $cref/data_table/get_data_table/data_table/$$.
-Only the following field of each $code data_struct$$ are used
-by this routine:
-$code integrand_id$$,
-$code density_id$$,
-$code node_id$$,
-$code weight_id$$,
-$code meas_value$$,
-$code meas_std$$,
-$code age_lower$$,
-$code age_upper$$,
-$code time_lower$$, and
-$code time_upper$$.
 
 $head w_info_vec$$
 This argument has prototype

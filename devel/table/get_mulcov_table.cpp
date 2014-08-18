@@ -44,8 +44,7 @@ $table
 Type $cnext Field $cnext Description
 $rnext
 $code mulcov_type_enum$$ $pre  $$ $cnext $code mulcov_type$$   $pre  $$ $cnext 
-	The $cref/mulcov_type/get_mulcov_table/mulcov_struct/mulcov_type/$$ 
-	for this multiplier.
+	See the description of $code mulcov_type$$ below.
 $rnext
 $code int$$ $cnext $code rate_id$$     $pre  $$ $cnext 
 	The $cref/rate_id/mulcov_table/rate_id/$$ 

@@ -43,7 +43,7 @@ namespace {
 
 bool avg_no_ode_xam(void)
 {	bool   ok = true;
-	size_t i, k;
+	size_t i, j, k;
 	using CppAD::abs;	
 	using CppAD::vector;	
 	using std::cout;
@@ -159,6 +159,7 @@ bool avg_no_ode_xam(void)
 	//
 	// parent node, time only integrantion.
 	size_t data_id = 0;
+	vector<double> x(0);
 	data_table[data_id].integrand_id = dismod_at::mtother_enum;
 	data_table[data_id].node_id      = 0;
 	data_table[data_id].weight_id    = 0;
@@ -169,6 +170,7 @@ bool avg_no_ode_xam(void)
 	data_table[data_id].meas_value   = 0.0;
 	data_table[data_id].meas_std     = 1e-3;
 	data_table[data_id].density_id   = dismod_at::uniform_enum;
+	data_table[data_id].x            = x;
 	//
 	// child node, age only integration
 	data_id++;
@@ -182,6 +184,7 @@ bool avg_no_ode_xam(void)
 	data_table[data_id].meas_value   = 0.0;
 	data_table[data_id].meas_std     = 1e-3;
 	data_table[data_id].density_id   = dismod_at::uniform_enum;
+	data_table[data_id].x            = x;
 	//
 	// descendant of child node, age and time integration
 	data_id++;
@@ -195,6 +198,7 @@ bool avg_no_ode_xam(void)
 	data_table[data_id].meas_value   = 0.0;
 	data_table[data_id].meas_std     = 1e-3;
 	data_table[data_id].density_id   = dismod_at::uniform_enum;
+	data_table[data_id].x            = x;
 	//
 	// data_model
 	dismod_at::data_model dm(
@@ -211,7 +215,7 @@ bool avg_no_ode_xam(void)
 		s_info_vec
 	);
 	//
-	// var_info
+	// smooth_table
 	size_t n_child        = 2;
 	size_t pini_smooth_id = 1; // only one age 
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
@@ -219,12 +223,15 @@ bool avg_no_ode_xam(void)
 	{	smooth_table[smooth_id].n_age  = s_info_vec[smooth_id].age_size();
 		smooth_table[smooth_id].n_time = s_info_vec[smooth_id].time_size();
 	}
+	// mul_cov
 	vector<dismod_at::mulcov_struct> mulcov_table(0);
+	// rate_table
 	vector<dismod_at::rate_struct>   rate_table(dismod_at::number_rate_enum);
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	rate_table[rate_id].parent_smooth_id = 0;
 		rate_table[rate_id].child_smooth_id = 0;
 	}
+	// var_info
 	dismod_at::pack_var var_info(
 		n_integrand, n_child, pini_smooth_id,
 		smooth_table, mulcov_table, rate_table
@@ -238,7 +245,7 @@ bool avg_no_ode_xam(void)
 		dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 		for(i = 0; i < s_info.age_size(); i++)
 		{	double age = age_table[ s_info.age_id(i) ];
-			for(size_t j = 0; j < s_info.time_size(); j++)
+			for(j = 0; j < s_info.time_size(); j++)
 			{	double time    = time_table[ s_info.time_id(j) ];
 				size_t index   = info.offset + i * s_info.time_size() + j; 
 				var_vec[index] = age * time / (age_max*time_max);

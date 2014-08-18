@@ -12,6 +12,8 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cassert>
 # include <cstring>
 
+extern bool rate_mean_mulcov(void);
+
 // anonymous namespace
 namespace {
 	using std::cout;
@@ -45,6 +47,7 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
+	RUN(rate_mean_mulcov);
 
 	// summary report
 	int return_flag;

@@ -16,6 +16,7 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 # Program cpp, not installed, and depends on following source files
 ADD_EXECUTABLE(test_devel EXCLUDE_FROM_ALL 
 	test_devel.cpp
+	rate_mean_mulcov.cpp
 )
 
 LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )

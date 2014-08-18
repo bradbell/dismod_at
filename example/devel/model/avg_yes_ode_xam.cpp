@@ -149,6 +149,7 @@ bool avg_yes_ode_xam(void)
 	// data_table
 	vector<dismod_at::data_struct> data_table(1);
 	size_t data_id = 0;
+	vector<double> x(0);
 	data_table[data_id].integrand_id = dismod_at::prevalence_enum;
 	data_table[data_id].node_id      = 0;
 	data_table[data_id].weight_id    = 0;
@@ -159,6 +160,7 @@ bool avg_yes_ode_xam(void)
 	data_table[data_id].meas_value   = 0.0;
 	data_table[data_id].meas_std     = 1e-3;
 	data_table[data_id].density_id   = dismod_at::uniform_enum;
+	data_table[data_id].x            = x;
 	//
 	// data_model
 	dismod_at::data_model dm(
@@ -175,7 +177,7 @@ bool avg_yes_ode_xam(void)
 		s_info_vec
 	);
 	//
-	// var_info
+	// smooth_table
 	size_t n_child        = 2;
 	size_t pini_smooth_id = 1; // only one age 
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
@@ -183,12 +185,15 @@ bool avg_yes_ode_xam(void)
 	{	smooth_table[smooth_id].n_age  = s_info_vec[smooth_id].age_size();
 		smooth_table[smooth_id].n_time = s_info_vec[smooth_id].time_size();
 	}
+	// mulcov_table
 	vector<dismod_at::mulcov_struct> mulcov_table(0);
+	// rate_table
 	vector<dismod_at::rate_struct>   rate_table(dismod_at::number_rate_enum);
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	rate_table[rate_id].parent_smooth_id = 0;
 		rate_table[rate_id].child_smooth_id = 0;
 	}
+	// var_info
 	dismod_at::pack_var var_info(
 		n_integrand, n_child, pini_smooth_id,
 		smooth_table, mulcov_table, rate_table
