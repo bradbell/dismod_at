@@ -9,18 +9,18 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin avg_no_ode_xam.cpp$$
+$begin residual_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ avg_no_ode: Example and Test$$
-$index example, C++ avg_no_ode$$
-$index avg_no_ode, C++ example$$
+$section C++ residual: Example and Test$$
+$index example, C++ residual$$
+$index residual, C++ example$$
 
 $code
-$verbatim%example/devel/model/avg_no_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/model/residual_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -29,19 +29,7 @@ $end
 # include <limits>
 # include <dismod_at/include/data_model.hpp>
 
-namespace {
-	double check_avg(const dismod_at::data_struct& data_row)
-	{	double a0 = data_row.age_lower;
-		double a1 = data_row.age_upper;
-		double t0 = data_row.time_lower;
-		double t1 = data_row.time_upper;
-		// integral of age * time from a0 to a1 and t0 to t1
-		// divided by (a1 - a0) time (t1 - t0) is
-		return (a0 + a1) * (t0 + t1) / 4.0;
-	}
-}
-
-bool avg_no_ode_xam(void)
+bool residual_xam(void)
 {	bool   ok = true;
 	size_t i, k;
 	using CppAD::abs;	
@@ -128,7 +116,7 @@ bool avg_no_ode_xam(void)
 	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
 	for(i = 0; i < n_integrand; i++)
 	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
-		integrand_table[i].eta       = 1e-6;
+		integrand_table[i].eta       = 1e-4;
 	}
 	//
 	// n_age_ode
@@ -141,60 +129,33 @@ bool avg_no_ode_xam(void)
 	while( time_min + (n_time_ode-1) * ode_step_size < time_max )
 			n_time_ode++; 
 	//
-	// node_table:    0
-	//              1    2
-	//                  3  4
-	CppAD::vector<dismod_at::node_struct> node_table(5);
+	// node_table:    
+	CppAD::vector<dismod_at::node_struct> node_table(1);
 	node_table[0].parent = -1;
-	node_table[1].parent =  0;
-	node_table[2].parent =  0;
-	node_table[3].parent =  2;
-	node_table[4].parent =  2;
 	//
 	// parent_node_id
 	size_t parent_node_id = 0;
 	//
 	// data_table
-	vector<dismod_at::data_struct> data_table(3);
+	vector<dismod_at::data_struct> data_table(2);
 	//
-	// parent node, time only integrantion.
-	size_t data_id = 0;
-	data_table[data_id].integrand_id = dismod_at::mtother_enum;
-	data_table[data_id].node_id      = 0;
-	data_table[data_id].weight_id    = 0;
-	data_table[data_id].age_lower    = 35.0;
-	data_table[data_id].age_upper    = 35.0;
-	data_table[data_id].time_lower   = 1990.0;
-	data_table[data_id].time_upper   = 2000.0;
-	data_table[data_id].meas_value   = 0.0;
-	data_table[data_id].meas_std     = 1e-3;
-	data_table[data_id].density_id   = dismod_at::uniform_enum;
-	//
-	// child node, age only integration
-	data_id++;
-	data_table[data_id].integrand_id = dismod_at::mtother_enum;
-	data_table[data_id].node_id      = 2;
-	data_table[data_id].weight_id    = 0;
-	data_table[data_id].age_lower    = 35.0;
-	data_table[data_id].age_upper    = 55.0;
-	data_table[data_id].time_lower   = 1990.0;
-	data_table[data_id].time_upper   = 1990.0;
-	data_table[data_id].meas_value   = 0.0;
-	data_table[data_id].meas_std     = 1e-3;
-	data_table[data_id].density_id   = dismod_at::uniform_enum;
-	//
-	// descendant of child node, age and time integration
-	data_id++;
-	data_table[data_id].integrand_id = dismod_at::mtother_enum;
-	data_table[data_id].node_id      = 2;
-	data_table[data_id].weight_id    = 0;
-	data_table[data_id].age_lower    = 35.0;
-	data_table[data_id].age_upper    = 55.0;
-	data_table[data_id].time_lower   = 1990.0;
-	data_table[data_id].time_upper   = 2000.0;
-	data_table[data_id].meas_value   = 0.0;
-	data_table[data_id].meas_std     = 1e-3;
-	data_table[data_id].density_id   = dismod_at::uniform_enum;
+	// parent node, time and age integrantion.
+	for(size_t data_id = 0; data_id < 2; data_id++) 
+	{
+		data_table[data_id].integrand_id = dismod_at::mtother_enum;
+		data_table[data_id].node_id    = 0;
+		data_table[data_id].weight_id  = 0;
+		data_table[data_id].age_lower  = 35.0;
+		data_table[data_id].age_upper  = 55.0;
+		data_table[data_id].time_lower = 1990.0;
+		data_table[data_id].time_upper = 2000.0;
+		data_table[data_id].meas_value = ( 50. * 1995) / (100.0 * 2000.0);
+		data_table[data_id].meas_std   = data_table[data_id].meas_value / 10.;
+		if( data_id == 0 )
+			data_table[data_id].density_id = dismod_at::gaussian_enum;
+		else
+			data_table[data_id].density_id = dismod_at::log_gaussian_enum;
+	}
 	//
 	// data_model
 	dismod_at::data_model dm(
@@ -212,7 +173,7 @@ bool avg_no_ode_xam(void)
 	);
 	//
 	// var_info
-	size_t n_child        = 2;
+	size_t n_child        = 0;
 	size_t pini_smooth_id = 1; // only one age 
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
@@ -246,16 +207,27 @@ bool avg_no_ode_xam(void)
 		}
 	}
 	// check results
-	for(data_id = 0; data_id < data_table.size(); data_id++)
-	{	Float avg = dm.avg_no_ode(data_id, var_info, var_vec);
-		double check    = check_avg(data_table[data_id]) / (age_max*time_max);
-		ok             &= abs( 1.0 - avg / check ) <= eps;
+	for(size_t data_id = 0; data_id < data_table.size(); data_id++)
+	{	Float avg         = dm.avg_no_ode(data_id, var_info, var_vec);
+		Float wres        = dm.residual(data_id, var_info, var_vec, avg);
+		double delta      = data_table[data_id].meas_std;
+		double y          = data_table[data_id].meas_value;
+		double eta        = 1e-4;
+		size_t density_id = data_table[data_id].density_id;
+		bool log_density = density_id == dismod_at::log_gaussian_enum;
+		log_density     |= density_id == dismod_at::log_laplace_enum;
+		Float check;
+		if( log_density )
+			check = (log(y+eta) - log(avg+eta)) / log(1.0 + delta/(y+eta));
+		else
+			check = (y - avg) / delta;
+		ok  &= abs( 1.0 - wres / check ) <= eps;
 		/*
 		if( data_id == 0 )
 			cout << "Debugging" << std::endl; 
-		cout << "avg = " << avg; 
+		cout << "wres = " << wres; 
 		cout << ", check = " << check; 
-		cout << ", relerr    = " << 1.0 - avg / check  << std::endl;
+		cout << ", relerr    = " << 1.0 - wres / check  << std::endl;
 		*/
 	}
 

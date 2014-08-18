@@ -156,6 +156,9 @@ bool avg_yes_ode_xam(void)
 	data_table[data_id].age_upper    = 100.0;
 	data_table[data_id].time_lower   = 1990.0;
 	data_table[data_id].time_upper   = 2000.0;
+	data_table[data_id].meas_value   = 0.0;
+	data_table[data_id].meas_std     = 1e-3;
+	data_table[data_id].density_id   = dismod_at::uniform_enum;
 	//
 	// data_model
 	dismod_at::data_model dm(

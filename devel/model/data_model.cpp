@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin data_model_ctor$$
 $spell
+	std
 	dm
 	vec
 	const
@@ -114,8 +115,11 @@ and is the $cref/data_table/get_data_table/data_table/$$.
 Only the following field of each $code data_struct$$ are used
 by this routine:
 $code integrand_id$$,
+$code density_id$$,
 $code node_id$$,
 $code weight_id$$,
+$code meas_value$$,
+$code meas_std$$,
 $code age_lower$$,
 $code age_upper$$,
 $code time_lower$$, and
@@ -1094,10 +1098,10 @@ and is the
 $cref/weighted residual/model_residual/Weighted Residual, r_i/$$
 corresponding to this $icode data_id$$.
 
-$comment%example/devel/model/residual_xam.cpp
+$children%example/devel/model/residual_xam.cpp
 %$$
 $head Example$$
-The file $code residual_xam.cpp$$ contains an example and test
+The file $cref residual_xam.cpp$$ contains an example and test
 of using this routine.
 
 $end
@@ -1188,8 +1192,8 @@ Float data_model::residual(
 	Float std_effect = 0.0;
 	for(k = 0; k < n_ode; k++)
 		std_effect += c_ode[k] * meas_cov_ode[k];
-	Float delta  = exp( std_effect ) * sigma;
-	delta       += exp( std_effect ) * (adjust + eta);
+	Float delta  = exp( mean_effect ) * sigma;
+	delta       += std_effect * (adjust + eta);
 	//
 	Float wres;
 	switch( density )
