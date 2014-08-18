@@ -20,22 +20,15 @@ namespace {
 		return r;
 	}
 	double check_avg(
-		double age_lower     , 
-		double time_lower    ,
-		double ode_step_size )
+		double a0 , 
+		double a1 ,
+		double t0 ,
+		double t1 )
 	{	double sum = 0;
-		sum += exp(
-			x_j * mulcov(age_lower,               time_lower)
-		);
-		sum += exp(
-			x_j * mulcov(age_lower,               time_lower+ode_step_size)
-		);
-		sum += exp(
-			x_j * mulcov(age_lower+ode_step_size,  time_lower)
-		);
-		sum += exp(
-			x_j * mulcov(age_lower+ode_step_size, time_lower+ode_step_size)
-		);
+		sum += exp( x_j * mulcov(a0, t0) );
+		sum += exp( x_j * mulcov(a0, t1) );
+		sum += exp( x_j * mulcov(a1, t0) );
+		sum += exp( x_j * mulcov(a1, t1) );
 		return sum / 4.0;
 	}
 }
@@ -155,10 +148,8 @@ bool rate_mean_mulcov(void)
 	// data_table
 	vector<dismod_at::data_struct> data_table(1);
 	//
-	// for this test, age_lower, age_upper, time_lower, time_upper is
-	// one square in the ode age time grid.
 	double age_lower  = age_min + ode_step_size;
-	double age_upper  = age_lower + ode_step_size;
+	double age_upper  = age_lower + 2.0 * ode_step_size;
 	double time_lower = time_min;
 	double time_upper = time_lower + ode_step_size;
 	size_t data_id = 0;
@@ -244,18 +235,24 @@ bool rate_mean_mulcov(void)
 	}
  
 	// check results
-	for(data_id = 0; data_id < data_table.size(); data_id++)
-	{	Float avg = dm.avg_no_ode(data_id, var_info, var_vec);
-		double check    = check_avg(age_lower, time_lower, ode_step_size);
-		ok             &= abs( 1.0 - avg / check ) <= eps;
-		/*
-		if( data_id == 0 )
-			cout << "Debugging" << std::endl; 
-		cout << "avg = " << avg; 
-		cout << ", check = " << check; 
-		cout << ", relerr    = " << 1.0 - avg / check  << std::endl;
-		*/
-	}
-
+	data_id = 0;
+	Float avg = dm.avg_no_ode(data_id, var_info, var_vec);
+	double check_1    = check_avg(
+		age_lower, age_lower + ode_step_size,
+		time_lower, time_lower + ode_step_size
+	);
+	double check_2    = check_avg(
+		age_lower + ode_step_size, age_lower + 2.0 *ode_step_size,
+		time_lower,                time_lower + ode_step_size
+	);
+	double check = (check_1 + check_2) / 2.0;
+	ok             &= abs( 1.0 - avg / check ) <= eps;
+	/*
+	if( data_id == 0 )
+		cout << "Debugging" << std::endl; 
+	cout << "avg = " << avg; 
+	cout << ", check = " << check; 
+	cout << ", relerr    = " << 1.0 - avg / check  << std::endl;
+	*/
 	return ok;
 }
