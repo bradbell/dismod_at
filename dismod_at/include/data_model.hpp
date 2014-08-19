@@ -8,8 +8,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_INTEGRAND_AVG_HPP
-# define DISMOD_AT_INTEGRAND_AVG_HPP
+# ifndef DISMOD_AT_DATA_MODEL_HPP
+# define DISMOD_AT_DATA_MODEL_HPP
 
 # include <limits>
 # include <cppad/vector.hpp>

@@ -151,6 +151,9 @@ z_i ( \theta )
 	\right) 
 	w_i (a,t) \; \B{d} t \; \B{d} a 
 \] $$
+Note that for $latex j \in K_i$$ it should hold that
+$latex 0 \leq x_{i,j}$$ and $latex 0 \leq \gamma_{i,j} (a, t)$$
+so that $latex 0 < z_i ( \theta ) \leq \delta_i ( \theta )$$.
 
 $head Average Integrand$$
 Let $latex A_i ( u , \theta )$$ denote the
