@@ -17,7 +17,7 @@ $spell
 	mulcov
 $$
 
-$section The Model Weighted Residuals$$
+$section The Model For Residuals Likelihood$$
 
 $head Data Table Notation$$
 
@@ -144,7 +144,7 @@ $latex \[
 = 
 z_i ( \theta ) 
 + 
-\frac{\eta_i + y_i ( \theta) }{\bar{w}_i} 
+\frac{ y_i ( \theta) + eta_i }{\bar{w}_i} 
 	\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
 	\left( 
 		\sum_{j \in K_i} x_{i,j} \gamma_{i,j} (a, t)
@@ -172,6 +172,16 @@ r_i ( u , \theta )
 = 
 \frac{ y_i ( \theta )  - A_i ( u , \theta ) }{ \delta_i ( \theta) } 
 \] $$
+If $cref/density_name/density_table/density_name/$$ is
+$code gaussian$$ ($code laplace$$),
+$latex \[
+	\B{p} \left[ y_i ( \theta ) \W{|} u , \theta \right]
+\] $$ 
+is a 
+$cref/Gaussian/model_density/Gaussian/$$ 
+($cref/Laplace/model_density/Laplace/$$) 
+density with mean
+$latex A_i (u, \theta)$$ and standard deviation $latex \delta_i ( \theta )$$.
 
 $subhead Log Density$$
 The density is logarithmic if $latex d_i$$ corresponds to 
@@ -188,6 +198,21 @@ r_i ( u , \theta )
 -
 \log[ y_i ( \theta ) + \eta_i ] 
 } 
+\] $$
+If $cref/density_name/density_table/density_name/$$ is
+$code log_gaussian$$ ($code log_laplace$$),
+$latex \[
+	\B{p} \left( [ \log [ y_i ( \theta ) + \eta_i ] \W{|} u , \theta \right)
+\] $$ 
+$cref/Gaussian/model_density/Gaussian/$$ 
+($cref/Laplace/model_density/Laplace/$$) 
+density with mean
+$latex \log [ A_i (u, \theta) + \eta_i ]$$ 
+and standard deviation 
+$latex \[
+\log[ y_i ( \theta ) + \eta_i + \delta_i ( \theta ) ]
+-
+\log[ y_i ( \theta ) + \eta_i ]
 \] $$
 
 
