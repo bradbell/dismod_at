@@ -1,0 +1,52 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the 
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin model_denisty$$
+
+$section The Model Density Functions$$
+
+$head Gaussian$$
+A random variable $latex z$$ has a Gaussian distribution with 
+mean $latex \mu$$ and standard deviation $latex \delta$$ if
+its probability density function  is given by
+$latex \[
+\B{p} ( z ) = 
+	\frac{1}{ \delta \sqrt{2 \pi} } 
+	\exp \left[ - \frac{1}{2} \left( \frac{z - \mu}{\delta} \right)^2 \right]
+\] $$
+for  $latex z \in [ -\infty , +\infty ]$$.
+The corresponding negative log-density function is
+$latex \[
+- \log [ \B{p} ( z ) ] = 
+	\log \left( \delta \sqrt{2 \pi} \right)  
+	+ 
+	\frac{1}{2} \left( \frac{z - \mu}{\delta} \right)^2
+\] $$
+
+$head Laplace$$
+A random variable $latex z$$ has a Laplace distribution with 
+mean $latex \mu$$ and standard deviation $latex \delta$$ if
+its probability density function  is given by
+$latex \[
+\B{p} ( z ) = 
+	\frac{1}{ \delta \sqrt{2} } 
+	\exp \left[ - \sqrt{2} \left| \frac{z - \mu}{\delta} \right| \; \right]
+\] $$
+for  $latex z \in [ -\infty , +\infty ]$$.
+The corresponding negative log-density function is
+$latex \[
+- \log [ \B{p} ( z ) ] = 
+	\log \left( \delta \sqrt{2} \right)  
+	+ 
+	\sqrt{2} \left| \frac{z - \mu}{\delta} \right| \;
+\] $$
+
+
+$end

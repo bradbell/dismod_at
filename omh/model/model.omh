@@ -19,6 +19,7 @@ $childtable%
 	omh/model/variable.omh%
 	omh/model/avg_integrand.omh%
 	omh/model/residual.omh%
+	omh/model/density.omh%
 	omh/model/glossary.omh
 %$$
 
