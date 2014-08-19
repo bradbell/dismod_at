@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
-dismod_ode: MCMC Estimation of Disease Rates as Functions of Age
-          Copyright (C) 2013 University of Washington
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
