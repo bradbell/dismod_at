@@ -1154,8 +1154,8 @@ Float data_model::residual(
 	}
 	Float mean_effect = 0.0;
 	for(k = 0; k < n_ode; k++)
-		mean_effect += c_ode[k] * meas_cov_ode[k];
-	Float adjust  = exp( - mean_effect ) * meas_value;
+		mean_effect += c_ode[k] * exp( - meas_cov_ode[k] );
+	Float adjust  = mean_effect * meas_value;
 
 	// measurement std covaraites effect on the ode subgrid
 	for(k = 0; k < n_ode; k++)
@@ -1180,7 +1180,7 @@ Float data_model::residual(
 	Float std_effect = 0.0;
 	for(k = 0; k < n_ode; k++)
 		std_effect += c_ode[k] * meas_cov_ode[k];
-	Float delta  = exp( mean_effect ) * sigma;
+	Float delta  = mean_effect * sigma;
 	delta       += std_effect * (adjust + eta);
 	//
 	Float wres;

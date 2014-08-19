@@ -19,16 +19,28 @@ namespace {
 		double r = 0.1 + a + t + a * t;
 		return r;
 	}
-	double check_avg(
+	double avg_mulcov(
 		double a0 , 
 		double a1 ,
 		double t0 ,
 		double t1 )
 	{	double sum = 0;
-		sum += exp( x_j * mulcov(a0, t0) );
-		sum += exp( x_j * mulcov(a0, t1) );
-		sum += exp( x_j * mulcov(a1, t0) );
-		sum += exp( x_j * mulcov(a1, t1) );
+		sum += x_j * mulcov(a0, t0);
+		sum += x_j * mulcov(a0, t1);
+		sum += x_j * mulcov(a1, t0);
+		sum += x_j * mulcov(a1, t1);
+		return sum / 4.0;
+	}
+	double exp_avg_mulcov(
+		double a0 , 
+		double a1 ,
+		double t0 ,
+		double t1 )
+	{	double sum = 0;
+		sum += exp( - x_j * mulcov(a0, t0) );
+		sum += exp( - x_j * mulcov(a0, t1) );
+		sum += exp( - x_j * mulcov(a1, t0) );
+		sum += exp( - x_j * mulcov(a1, t1) );
 		return sum / 4.0;
 	}
 }
@@ -116,10 +128,11 @@ bool rate_mean_mulcov(void)
 	//
 	// integrand_table
 	size_t n_integrand = dismod_at::number_integrand_enum;
+	double eta = 1e-6;
 	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
 	for(i = 0; i < n_integrand; i++)
 	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
-		integrand_table[i].eta       = 1e-6;
+		integrand_table[i].eta       = eta; 
 	}
 	//
 	// n_age_ode
@@ -192,12 +205,15 @@ bool rate_mean_mulcov(void)
 	}
 	// mul_cov
 	size_t omega_rate_id = dismod_at::omega_enum;
-	vector<dismod_at::mulcov_struct> mulcov_table(1);
-	mulcov_table[0].mulcov_type    = dismod_at::rate_mean_enum;
-	mulcov_table[0].rate_id        = omega_rate_id;
-	mulcov_table[0].integrand_id   = -1;
-	mulcov_table[0].covariate_id   = 0;
-	mulcov_table[0].smooth_id      = 0;
+	vector<dismod_at::mulcov_struct> mulcov_table(2);
+	mulcov_table[0].mulcov_type = dismod_at::meas_mean_enum;
+	mulcov_table[1].mulcov_type = dismod_at::meas_std_enum;
+	for(size_t mulcov_id = 0; mulcov_id < 2; mulcov_id++)
+	{	mulcov_table[mulcov_id].rate_id        = -1;
+		mulcov_table[mulcov_id].integrand_id   = dismod_at::mtother_enum;
+		mulcov_table[mulcov_id].covariate_id   = 0;
+		mulcov_table[mulcov_id].smooth_id      = 0;
+	}
 	// rate_table
 	vector<dismod_at::rate_struct>   rate_table(dismod_at::number_rate_enum);
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
@@ -223,36 +239,62 @@ bool rate_mean_mulcov(void)
 			}
 		}
 	}
-	info = var_info.rate_mean_mulcov_info(omega_rate_id, 0);
+	size_t mtother_id = dismod_at::mtother_enum;
 	dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
-	for(i = 0; i < s_info.age_size(); i++)
-	{	double age = age_table[ s_info.age_id(i) ];
-		for(j = 0; j < s_info.time_size(); j++)
-		{	double time    = time_table[ s_info.time_id(j) ];
-			size_t index   = info.offset + i * s_info.time_size() + j; 
-			var_vec[index] = mulcov(age, time);
+	for(k = 0; k < 2; k++)
+	{	if( k == 0 )
+			info = var_info.meas_mean_mulcov_info(mtother_id, 0);
+		else
+			info = var_info.meas_std_mulcov_info(mtother_id, 0);
+		for(i = 0; i < s_info.age_size(); i++)
+		{	double age = age_table[ s_info.age_id(i) ];
+			for(j = 0; j < s_info.time_size(); j++)
+			{	double time    = time_table[ s_info.time_id(j) ];
+				size_t index   = info.offset + i * s_info.time_size() + j; 
+				var_vec[index] = mulcov(age, time);
+			}
 		}
 	}
  
-	// check results
+	// evaluate residual
 	data_id = 0;
-	Float avg = dm.avg_no_ode(data_id, var_info, var_vec);
-	double check_1    = check_avg(
+	Float avg_integrand, wres;
+	avg_integrand = dm.avg_no_ode(data_id, var_info, var_vec);
+	wres          = dm.residual(data_id, var_info, var_vec, avg_integrand);
+	//
+	// average mean mulcov
+	double avg_mulcov_1 = exp_avg_mulcov(
 		age_lower, age_lower + ode_step_size,
 		time_lower, time_lower + ode_step_size
 	);
-	double check_2    = check_avg(
+	double avg_mulcov_2  = exp_avg_mulcov(
 		age_lower + ode_step_size, age_lower + 2.0 *ode_step_size,
 		time_lower,                time_lower + ode_step_size
 	);
-	double check = (check_1 + check_2) / 2.0;
-	ok             &= abs( 1.0 - avg / check ) <= eps;
-	/*
+	double avg_mean_mulcov = (avg_mulcov_1 + avg_mulcov_2) / 2.0;
+	//
+	// average std mulcov
+	avg_mulcov_1 = avg_mulcov(
+		age_lower, age_lower + ode_step_size,
+		time_lower, time_lower + ode_step_size
+	);
+	avg_mulcov_2  = avg_mulcov(
+		age_lower + ode_step_size, age_lower + 2.0 *ode_step_size,
+		time_lower,                time_lower + ode_step_size
+	);
+	double avg_std_mulcov = (avg_mulcov_1 + avg_mulcov_2) / 2.0;
+	//
+	// check residual
+	double v     = data_table[data_id].meas_value;
+	double sigma = data_table[data_id].meas_std;
+	double y     = avg_mean_mulcov * v;
+	double delta = avg_mean_mulcov * sigma + avg_std_mulcov  * (y + eta);
+	Float  check = (y - avg_integrand) / delta;
+	ok          &= abs( 1.0 - wres / check ) <= eps;
 	if( data_id == 0 )
 		cout << "Debugging" << std::endl; 
-	cout << "avg = " << avg; 
+	cout << "wres = " << wres; 
 	cout << ", check = " << check; 
-	cout << ", relerr    = " << 1.0 - avg / check  << std::endl;
-	*/
+	cout << ", relerr    = " << 1.0 - wres / check  << std::endl;
 	return ok;
 }

@@ -42,8 +42,8 @@ $subhead b_i$$
 We use $latex a_i$$ to denote the corresponding
 $cref/age_upper/data_table/age_upper/$$ value. 
 
-$subhead -_i$$
-We use $latex a_i$$ to denote the corresponding
+$subhead s_i$$
+We use $latex s_i$$ to denote the corresponding
 $cref/time_lower/data_table/time_lower/$$ value. 
 
 $subhead t_i$$
@@ -81,7 +81,7 @@ $cref/mulcov_type/mulcov_table/mulcov_type/$$ is equal to $code meas_mean$$.
 We use $latex J_i$$ to denote the corresponding set of
 $cref/covariate_id/mulcov_table/covariate_id/$$ values for
 which this is the case.
-
+ 
 $subhead beta_ij$$
 For each covariate index $latex j \in J_i$$,
 we use $latex \beta_{i,j} (a, t) $$ to denote the
@@ -89,19 +89,6 @@ piecewise linear function corresponding to the
 $cref/covariate multiplier/model_variable/Covariate Multipliers/$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
-We define
-$latex \[
-\bar{\beta}_ij 
-= 
-\left[
-\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
-	w_i (a,t) \beta_{i,j} (a, t) \; \B{d} t \; \B{d} a 
-\right]
-\;
-\left[
-\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)} w_i (a,t) \; \B{d} t \; \B{d} a 
-\right]^{-1}
-\] $$
 
 $subhead K_i$$
 There is a set of rows in the mulcov table such that
@@ -113,25 +100,12 @@ $cref/covariate_id/mulcov_table/covariate_id/$$ values for
 which this is the case.
 
 $subhead gamma_ij$$
-For each covariate index $latex j \in K_i$$,
+For each covariate index $latex j \in K_i$$ ,
 we use $latex \gamma_{i,j} (a, t) $$ to denote the
 piecewise linear function corresponding to the
 $cref/covariate multiplier/model_variable/Covariate Multipliers/$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
-We define
-$latex \[
-\bar{\gamma}_ij 
-= 
-\left[
-\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
-	w_i (a,t) \gamma_{i,j} (a, t) \; \B{d} t \; \B{d} a 
-\right]
-\;
-\left[
-\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)} w_i (a,t) \; \B{d} t \; \B{d} a 
-\right]^{-1}
-\] $$
 
 $head Effects$$
 We use $latex u$$ and $latex \theta$$ to denote the vector of
@@ -141,21 +115,41 @@ $cref/fixed effects/model_variable/Fixed Effects, theta/$$ respectively.
 $head Adjusted Measurement, y_i$$
 The adjusted data value is defined by
 $latex \[
-y_i ( \theta ) = \exp \left( 
-	- \sum_{j \in J_i} x_{i,j} \bar{\beta}_{i,j} 
-\right) v_i
+y_i ( \theta ) 
+= 
+\frac{v_i}{\bar{w}_i}
+\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
+\exp \left( 
+	- \sum_{j \in J_i} x_{i,j} \beta_{i,j} (a, t)
+\right)
+w_i (a,t) \; \B{d} t \; \B{d} a 
 \] $$
+where $latex \bar{w}_i$$ is the
+$cref/average weight/model_avg_integrand/Average Weight, wbar_i/$$.
 
 $head Adjusted Standard Deviation, delta_i$$
 The adjusted standard deviation is defined by
 $latex \[
+z_i ( \theta ) 
+= 
+\frac{\sigma_i}{\bar{w}_i}
+\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
+\exp \left( 
+	- \sum_{j \in J_i} x_{i,j} \beta_{i,j} (a, t )
+\right)
+w_i (a,t) \; \B{d} t \; \B{d} a 
+\] $$
+$latex \[
 \delta_i ( \theta )
 = 
-\exp \left( - \sum_{j \in J_i} x_{i,j} \bar{\beta}_{i,j} \right) \sigma_i 
+z_i ( \theta ) 
 + 
-\left( 
-	\sum_{j \in K_i} x_{i,j} \bar{\gamma}_{i,j} 
-\right) ( \eta_i + y_i )
+\frac{\eta_i + y_i ( \theta) }{\bar{w}_i} 
+	\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
+	\left( 
+		\sum_{j \in K_i} x_{i,j} \gamma_{i,j} (a, t)
+	\right) 
+	w_i (a,t) \; \B{d} t \; \B{d} a 
 \] $$
 
 $head Average Integrand$$
