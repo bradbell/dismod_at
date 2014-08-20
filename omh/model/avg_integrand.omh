@@ -232,7 +232,7 @@ $latex \[
 \int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)} w_i (a,t) \; \B{d} t \; \B{d} a 
 \] $$
 
-$head Average Integrand$$
+$head Average Integrand, A_i$$
 We use $latex u$$ and $latex \theta$$ to denote the vector of
 $cref/random effects/model_variable/Random Effects, u/$$ and
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$ respectively.
