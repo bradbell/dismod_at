@@ -22,12 +22,13 @@ $latex \[
 	\exp \left[ - \frac{1}{2} \left( \frac{z - \mu}{\delta} \right)^2 \right]
 \] $$
 for  $latex z \in [ -\infty , +\infty ]$$.
+
+$subhead Log$$
 The corresponding negative log-density function is
 $latex \[
-- \log [ \B{p} ( z ) ] = 
-	\log \left( \delta \sqrt{2 \pi} \right)  
-	+ 
-	\frac{1}{2} \left( \frac{z - \mu}{\delta} \right)^2
+\log [ \B{p} ( z ) ] = 
+	- \log \left( \delta \sqrt{2 \pi} \right)  
+	- \frac{1}{2} \left( \frac{z - \mu}{\delta} \right)^2
 \] $$
 
 $head Laplace$$
@@ -40,12 +41,13 @@ $latex \[
 	\exp \left[ - \sqrt{2} \left| \frac{z - \mu}{\delta} \right| \; \right]
 \] $$
 for  $latex z \in [ -\infty , +\infty ]$$.
+
+$subhead Log$$
 The corresponding negative log-density function is
 $latex \[
-- \log [ \B{p} ( z ) ] = 
-	\log \left( \delta \sqrt{2} \right)  
-	+ 
-	\sqrt{2} \left| \frac{z - \mu}{\delta} \right| \;
+\log [ \B{p} ( z ) ] = 
+	- \log \left( \delta \sqrt{2} \right)  
+	- \sqrt{2} \left| \frac{z - \mu}{\delta} \right| 
 \] $$
 
 
