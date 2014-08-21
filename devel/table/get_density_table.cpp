@@ -50,7 +50,7 @@ $head Density Enum Values$$
 The $icode density_table$$ can also be addressed 
 using the $code density_enum$$ values as follows:
 $table
-$icode density_id$$        $pre  $$ $cnext density_name          $rnext
+$icode density_id$$        $pre  $$ $cnext $icode density_name$$ $rnext
 $code uniform_enum$$       $pre  $$ $cnext $code uniform$$       $rnext
 $code gaussian_enum$$      $pre  $$ $cnext $code gaussian$$      $rnext
 $code laplace_enum$$       $pre  $$ $cnext $code laplace$$       $rnext
