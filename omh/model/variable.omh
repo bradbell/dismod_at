@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin model_variable$$
 $spell
+	std
 	subvectors
 	subvector
 	dismod
@@ -24,52 +25,101 @@ $spell
 $$
 
 $section The Model Variables$$
-
-$head Purpose$$
-Below is a description of the model variables.
-The vector of model variables is broken into a set of subvectors 
+This section describes the model variables.
+The vector of model variables are divided into a set of subvectors 
 described below.
-For each subvector, there is a smoothing.
+
+$head Notation$$
+
+$subhead Prior$$
+For variable there is a prior specified by its
+$table
+$cref/density_id/prior_table/density_id/$$ $cnext
+	density function corresponding for this prior
+$rnext
+$cref/lower/prior_table/lower/$$ $cnext
+	lower bound for this prior
+$rnext
+$cref/upper/prior_table/upper/$$ $cnext
+	upper bound for this prior
+$rnext
+$cref/mean/prior_table/mean/$$ $cnext
+	mean for this prior
+$rnext
+$cref/std/prior_table/std/$$ $cnext
+	standard deviation for this prior
+$rnext
+$cref/eta/prior_table/eta/$$ $cnext
+	offset in log transformation for this prior
+$tend
+
+$subhead Smoothing$$
+For each subvector, except the smoothing standard deviation multipliers,
+there is a smoothing.
 The smoothing determines the number of elements in the subvector
 and the prior for each of these elements; see
-$cref/n_age/smooth_table/n_age/$$
-$cref/n_time/smooth_table/n_time/$$ and
-$cref/value_prior_id/smooth_grid_table/value_prior_id/$$.
-If the 
-$cref/lower/prior_table/lower/$$ and 
-$cref/upper/prior_table/upper/$$ limits are equal,
-the variable is know. Otherwise it is unknown ad
-is estimated by $code dismod_at$$. 
+$table
+$cref/n_age/smooth_table/n_age/$$ $cnext 
+	number of age points 
+$rnext
+$cref/n_time/smooth_table/n_time/$$ $cnext
+	number of time points
+$rnext
+$icode%n_age% * %n_time%$$ $cnext
+	number of elements in the subvector
+$tend
+In addition, each element of the subvector corresponds to a single
+variable and has the following information:
+$table
+$cref/age_id/smooth_grid_table/age_id/$$ $cnext
+	identifies age value for this variable
+$rnext
+$cref/time_id/smooth_grid_table/time_id/$$ $cnext
+	identifies time value for this variable
+$rnext
+$cref/value_prior_id/smooth_grid_table/value_prior_id/$$ $cnext
+	identifies prior for value at this age and time
+$rnext
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$  $cnext
+	identifies prior for forward differences w.r.t age
+$rnext
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$  $cnext
+	identifies prior for forward differences w.r.t time
+$tend
+The prior standard deviations for 
+values, age differences, and time differences, are multiplied by 
+$latex \lambda_i^v$$,
+$latex \lambda_i^a$$, and
+$latex \lambda_i^t$$  respectively; see 
+$cref/lambda
+	/model_variable
+	/Fixed Effects, theta
+	/Smoothing Standard Deviation Multipliers, lambda
+/$$ 
+below.
 
-$head Smoothing Size$$
-For each $icode smooth_id$$ there
-is a corresponding 
-number of age points,
-number of time points,
-and number of variables where
-$codei%
-	n_var_%smooth_id% = n_age_%smooth_id% * n_time_%smooth_id%
-%$$
 
-$head Number of Children$$
+$subhead Number of Children$$
 The number of children $icode n_child$$ is the size of the 
 $cref/child group/node_table/parent/Child Group/$$ for which
 the parent node is
 $cref/parent_node_id/run_table/parent_node_id/$$.
 
-$head Smoothing Multipliers$$
-For each $icode smooth_id$$ there are three variables:
-$codei%
-	mulstd_value_%smooth_id% 
-	mulstd_dage_%smooth_id% 
-	mulstd_dtime_%smooth_id%
-%$$
-These are the standard deviation multipliers
+$head Fixed Effects, theta$$
+we use $latex \theta$$ to denote the vector of fixed effects; i.e.,
+all of the model variables except for the random effects. 
+Below is a list of the fixed effects subvectors.
+
+$subhead Smoothing Standard Deviation Multipliers, lambda$$
+For each $latex i = $$ $cref/smooth_id/smooth_table/smooth_id/$$,
+there are three smoothing standard deviation multiplier variables:
+$latex \lambda_i^v$$, $latex \lambda_i^a$$ and $latex \lambda_i^t$$.
+The corresponding priors as specified by
 $cref/mulstd_value/smooth_table/mulstd_value/$$,
 $cref/mulstd_dage/smooth_table/mulstd_dage/$$, and
 $cref/mulstd_dtime/smooth_table/mulstd_dtime/$$.
 
-$head Initial Prevalence$$
+$subhead Initial Prevalence$$
 Let $latex p_0 (t)$$ to denote the 
 $cref/prevalence/model_avg_integrand/I_i (a, t)/prevalence/$$ 
 at the initial age; i.e., the first age in $cref age_table$$.
@@ -84,55 +134,38 @@ $cref/C_i(a,t)/model_avg_integrand/C_i(a,t)/$$ is
 $latex \[
 	C_i ( a_0 , t ) = 1 - p_0 (t)
 \] $$
-The smoothing id for initial prevalence is
+The initial prevalence is a fixed effect subvector.
+Its smoothing is specified by
 $cref/pini_smooth_id/run_table/pini_smooth_id/$$.
-It follows that
-$codei%
-	n_age_%pini_smooth_id% = 1
-	n_var_%pini_smooth_id% = n_time_%pini_smooth_id%
-%$$
 
+$subhead Parent Rates$$
+For each rate
+$code iota$$, $code rho$$, $code chi$$, and $code omega$$ there is a 
+subvector corresponding to the parent value for the rate.
+The smoothing for each of these subvectors is specified by
+$cref/parent_smooth_id/rate_table/parent_smooth_id/$$.
 
-$head Rates$$
-For each $cref/rate_id/rate_table/rate_id/$$ there
-is a corresponding
-$cref/parent_smooth_id/rate_table/parent_smooth_id/$$ and
-$cref/child_smooth_id/rate_table/child_smooth_id/$$.
-For each rate, it is assumed that these smoothings have the
-same age and time points and we use
-$codei%
-	n_var_%rate_id% = n_age_%rate_id% * n_time_%rate_id%
-%$$
-to denote the corresponding number of variables,
-number of age points,
-and number of time points.
-There is one rate subvector for each child and 
-one rate subvector for the parent.
-The total number of variables for all the rate subvectors is
-$codei%
-	(%n_child% + 1) * n_var_%rate_id%
-%$$
-
-$head Covariate Multipliers$$
+$subhead Covariate Multipliers$$
 For each $cref/mulcov_id/mulcov_table/mulcov_id/$$
-there is a corresponding subvector and
+there is a corresponding subvector and its 
+smoothing is specified by the corresponding
 $cref/smooth_id/mulcov_table/smooth_id/$$.
-We use the notation
-$codei%
-	n_var_%mulcov_id% = n_age_%mulcov_id% * n_time_%mulcov_id%
-%$$
-for the number of variables, number of age points, and number of time points,
-corresponding to this $icode mulcov_id$$; i.e.,
-the corresponding values for the $icode smooth_id$$
-for this covariate multiplier subvector.
 
 $head Random Effects, u$$
-We use $latex u$$ to denote vector that consisting of
-all the child rate subvectors.
-This is the vector of random effects for our model.
+we use $latex u$$ to denote the vector of random effects; i.e.,
+all of the model variables except for the fixed effects. 
+Currently, the only random effects are the rates
+for the children.
 
-$head Fixed Effects, theta$$
-We use $latex \theta$$ to denote the vector of fixed effects; i.e.,
-all of the model variables except for the random effects. 
+$subhead Child Rates$$
+For each rate
+$code iota$$, $code rho$$, $code chi$$, and $code omega$$ 
+and each child, there is subvector of rate values.
+The smoothing from the subvector only depends on the rate
+(given a rate, it is the same for all children).
+The smoothing is specified by
+$cref/child_smooth_id/rate_table/child_smooth_id/$$.
+For each rate, it parent and child smoothings must have the
+same age and time points.
 
 $end

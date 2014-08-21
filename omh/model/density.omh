@@ -12,13 +12,14 @@ $begin model_density$$
 
 $section The Model Density Functions$$
 
-$head Gaussian$$
+$head Gaussian, G$$
 A random variable $latex z$$ has a Gaussian distribution with 
 mean $latex \mu$$ and standard deviation $latex \delta$$ if
 its probability density function  is given by
 $latex \[
-\B{p} ( z ) = 
-	\frac{1}{ \delta \sqrt{2 \pi} } 
+\B{p} ( z ) =
+G( \mu , \delta , z ) =
+\frac{1}{ \delta \sqrt{2 \pi} } 
 	\exp \left[ - \frac{1}{2} \left( \frac{z - \mu}{\delta} \right)^2 \right]
 \] $$
 for  $latex z \in [ -\infty , +\infty ]$$.
@@ -27,16 +28,18 @@ $subhead Log$$
 The corresponding negative log-density function is
 $latex \[
 \log [ \B{p} ( z ) ] = 
+\log [ G( \mu , \delta , z ) ] =
 	- \log \left( \delta \sqrt{2 \pi} \right)  
 	- \frac{1}{2} \left( \frac{z - \mu}{\delta} \right)^2
 \] $$
 
-$head Laplace$$
+$head Laplace, L$$
 A random variable $latex z$$ has a Laplace distribution with 
 mean $latex \mu$$ and standard deviation $latex \delta$$ if
 its probability density function  is given by
 $latex \[
 \B{p} ( z ) = 
+L ( \mu , \delta , z ) =
 	\frac{1}{ \delta \sqrt{2} } 
 	\exp \left[ - \sqrt{2} \left| \frac{z - \mu}{\delta} \right| \; \right]
 \] $$
@@ -46,6 +49,7 @@ $subhead Log$$
 The corresponding negative log-density function is
 $latex \[
 \log [ \B{p} ( z ) ] = 
+\log [ L( \mu , \delta , z ) ] =
 	- \log \left( \delta \sqrt{2} \right)  
 	- \sqrt{2} \left| \frac{z - \mu}{\delta} \right| 
 \] $$

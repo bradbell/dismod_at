@@ -65,7 +65,7 @@ $latex \[
 $subhead Gaussian$$
 For $latex i \in I$$, if $latex d_i$$ is $code gaussian$$,
 $latex \B{p} ( y_i \W{|} u , \theta )$$ is 
-$cref/Gaussian/model_density/Gaussian/$$ with mean 
+$cref/Gaussian/model_density/Gaussian, G/$$ with mean 
 $latex A_i ( u , \theta)$$ and standard deviation 
 $latex \delta_i ( \theta )$$; i.e.,
 $latex \[
@@ -87,7 +87,7 @@ is Gaussian with mean zero and standard deviation one.
 $subhead Laplace$$
 For $latex i \in I$$, if $latex d_i$$ is $code laplace$$,
 $latex \B{p} ( y_i \W{|} u , \theta )$$ is 
-$cref/Laplace/model_density/Laplace/$$ with mean 
+$cref/Laplace/model_density/Laplace, L/$$ with mean 
 $latex A_i ( u , \theta)$$ and standard deviation 
 $latex \delta_i ( \theta )$$; i.e.,
 $latex \[
@@ -109,7 +109,7 @@ is Laplace with mean zero and standard deviation one.
 $subhead Log-Gaussian$$
 For $latex i \in I$$, if $latex d_i$$ is $code log_gaussian$$,
 $latex \B{p} [ \log( y_i + \eta_i ) \W{|} u , \theta ]$$ is 
-log $cref/Gaussian/model_density/Gaussian/$$ with mean 
+log $cref/Gaussian/model_density/Gaussian, G/$$ with mean 
 $latex \log[ A_i ( u , \theta) + \eta_i ]$$ and standard deviation 
 $latex \[
 	\sigma_i ( \theta )
@@ -141,7 +141,7 @@ is Gaussian with mean zero and standard deviation one.
 $subhead Log-Laplace$$
 For $latex i \in I$$, if $latex d_i$$ is $code log_laplace$$,
 $latex \B{p} [ \log( y_i + \eta_i ) \W{|} u , \theta ]$$ is 
-log $cref/Laplace/model_density/Laplace/$$ with mean 
+log $cref/Laplace/model_density/Laplace, L/$$ with mean 
 $latex \log[ A_i ( u , \theta) + \eta_i ]$$ and standard deviation 
 $latex \[
 	\sigma_i ( \theta )

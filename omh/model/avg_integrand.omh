@@ -74,24 +74,29 @@ $cref/node_id/data_table/node_id/$$ value.
 
 $head Rate Functions$$
 
-$subhead m_i$$
-If $latex n_i$$ is equal to or a descendant of one of the children of the
-$cref/parent_node_id/run_table/parent_node_id/$$,
-we use $latex m_i$$ to denote that child's index
-(which is between zero and the number of children minus one).
-If $latex n_i$$ is equal to the 
-$cref/parent_node_id/run_table/parent_node_id/$$,
-we use $latex m_i$$ equal to the number of children
-(which signifies that this data is for the parent node).
-Otherwise, this data is not included in the analysis.
-
 $subhead q_ik$$
 We use $latex k$$ to denote a
-$cref/rate_id/rate_table/rate_id/$$ and 
-$latex q_{i,k} (a, t)$$ the piecewise linear rate function
-corresponding the $latex m_i$$ and the $icode%rate_id% = %k%$$.
-The these rate functions are determined by the model
-$cref/rate/model_variable/Rates/$$ variables.
+$cref/rate_id/rate_table/rate_id/$$.
+If $latex n_i$$ is equal to the 
+$cref/parent_node_id/run_table/parent_node_id/$$,
+$latex q_{i,k} (a, t)$$ is the piecewise linear rate function
+for the corresponding
+$cref/parent rate
+	/model_variable
+	/Fixed Effects, theta
+	/Parent Rates
+/$$
+If $latex n_i$$ is equal to or a descendant of one of the children of the
+parent node,
+$latex q_{i,k} (a, t)$$ is the piecewise linear rate function
+for the corresponding
+$cref/child rate
+	/model_variable
+	/Random Effects, u
+	/Child Rates
+/$$
+Otherwise $latex n_i$$ is not a descendant of the parent node
+and the corresponding data is not used.
 
 $subhead J_k$$
 For each rate index $latex k$$,
@@ -108,7 +113,11 @@ For each rate index $latex k$$,
 and each covariate index $latex j \in J_k$$,
 we use $latex \alpha_{j,k} (a, t)$$ to denote the 
 piecewise linear function corresponding to the
-$cref/covariate multiplier/model_variable/Covariate Multipliers/$$
+$cref/covariate multiplier
+	/model_variable
+	/Fixed Effects, theta
+	/Covariate Multipliers
+/$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 

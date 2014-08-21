@@ -86,7 +86,11 @@ $subhead beta_ij$$
 For each covariate index $latex j \in J_i$$,
 we use $latex \beta_{i,j} (a, t) $$ to denote the
 piecewise linear function corresponding to the
-$cref/covariate multiplier/model_variable/Covariate Multipliers/$$
+$cref/covariate multiplier
+	/model_variable/
+	Fixed Effects, theta/
+	Covariate Multipliers
+/$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 
@@ -103,7 +107,11 @@ $subhead gamma_ij$$
 For each covariate index $latex j \in K_i$$ ,
 we use $latex \gamma_{i,j} (a, t) $$ to denote the
 piecewise linear function corresponding to the
-$cref/covariate multiplier/model_variable/Covariate Multipliers/$$
+$cref/covariate multiplier
+	/model_variable/
+	Fixed Effects, theta/
+	Covariate Multipliers
+/$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 
@@ -178,8 +186,8 @@ $latex \[
 	\B{p} \left[ y_i ( \theta ) \W{|} u , \theta \right]
 \] $$ 
 is a 
-$cref/Gaussian/model_density/Gaussian/$$ 
-($cref/Laplace/model_density/Laplace/$$) 
+$cref/Gaussian/model_density/Gaussian, G/$$ 
+($cref/Laplace/model_density/Laplace, L/$$) 
 density with mean
 $latex A_i (u, \theta)$$ and standard deviation $latex \delta_i ( \theta )$$.
 
@@ -204,8 +212,8 @@ $code log_gaussian$$ ($code log_laplace$$),
 $latex \[
 	\B{p} \left( [ \log [ y_i ( \theta ) + \eta_i ] \W{|} u , \theta \right)
 \] $$ 
-$cref/Gaussian/model_density/Gaussian/$$ 
-($cref/Laplace/model_density/Laplace/$$) 
+$cref/Gaussian/model_density/Gaussian, G/$$ 
+($cref/Laplace/model_density/Laplace, L/$$) 
 density with mean
 $latex \log [ A_i (u, \theta) + \eta_i ]$$ 
 and standard deviation 
