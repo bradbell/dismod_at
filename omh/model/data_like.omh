@@ -11,7 +11,7 @@ $head Data Index, i$$
 The data indices $latex i$$ is the
 $cref/data_id/data_table/data_id/$$ in the data table.
 
-$head Included, I$$,
+$head Included, I$$
 We use $latex I$$ to denote those data indices $latex i$$
 such that the corresponding
 $cref/node_id/data_table/node_id/$$ is the
@@ -76,6 +76,13 @@ $latex \[
 	\frac{ y_i (\theta) - A_i ( u , \theta )}{\delta_i ( \theta )} 
 \right]^2
 \] $$
+Note that, given $latex u$$ and $latex \theta$$, the 
+$cref/linear weighted residual/
+	model_residual/
+	Weighted Residual, r_i/
+	Linear Density
+/$$
+is Gaussian with mean zero and standard deviation one.
 
 $subhead Laplace$$
 For $latex i \in I$$, if $latex d_i$$ is $code laplace$$,
@@ -91,10 +98,17 @@ $latex \[
 	\frac{ y_i (\theta) - A_i ( u , \theta )}{\delta_i ( \theta )} 
 \right|
 \] $$
+Note that, given $latex u$$ and $latex \theta$$, the 
+$cref/linear weighted residual/
+	model_residual/
+	Weighted Residual, r_i/
+	Linear Density
+/$$
+is Laplace with mean zero and standard deviation one.
 
 $subhead Log-Gaussian$$
 For $latex i \in I$$, if $latex d_i$$ is $code log_gaussian$$,
-$latex \B{p} ( \log( y_i + \eta_i ) \W{|} u , \theta )$$ is 
+$latex \B{p} [ \log( y_i + \eta_i ) \W{|} u , \theta ]$$ is 
 log $cref/Gaussian/model_density/Gaussian/$$ with mean 
 $latex \log[ A_i ( u , \theta) + \eta_i ]$$ and standard deviation 
 $latex \[
@@ -116,10 +130,17 @@ $latex \[
 } 
 \right]^2
 \] $$
+Note that, given $latex u$$ and $latex \theta$$, the 
+$cref/log weighted residual/
+	model_residual/
+	Weighted Residual, r_i/
+	Log Density
+/$$
+is Gaussian with mean zero and standard deviation one.
 
 $subhead Log-Laplace$$
 For $latex i \in I$$, if $latex d_i$$ is $code log_laplace$$,
-$latex \B{p} ( \log( y_i + \eta_i ) \W{|} u , \theta )$$ is 
+$latex \B{p} [ \log( y_i + \eta_i ) \W{|} u , \theta ]$$ is 
 log $cref/Laplace/model_density/Laplace/$$ with mean 
 $latex \log[ A_i ( u , \theta) + \eta_i ]$$ and standard deviation 
 $latex \[
@@ -141,5 +162,12 @@ $latex \[
 } 
 \right|
 \] $$
+Note that, given $latex u$$ and $latex \theta$$, the 
+$cref/log weighted residual/
+	model_residual/
+	Weighted Residual, r_i/
+	Log Density
+/$$
+is Laplace with mean zero and standard deviation one.
 
 $end
