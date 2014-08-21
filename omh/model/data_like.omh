@@ -79,7 +79,7 @@ $latex \[
 Note that, given $latex u$$ and $latex \theta$$, the 
 $cref/linear weighted residual/
 	model_residual/
-	Weighted Residual, r_i/
+	Weighted Residual, R_i/
 	Linear Density
 /$$
 is Gaussian with mean zero and standard deviation one.
@@ -101,7 +101,7 @@ $latex \[
 Note that, given $latex u$$ and $latex \theta$$, the 
 $cref/linear weighted residual/
 	model_residual/
-	Weighted Residual, r_i/
+	Weighted Residual, R_i/
 	Linear Density
 /$$
 is Laplace with mean zero and standard deviation one.
@@ -133,7 +133,7 @@ $latex \[
 Note that, given $latex u$$ and $latex \theta$$, the 
 $cref/log weighted residual/
 	model_residual/
-	Weighted Residual, r_i/
+	Weighted Residual, R_i/
 	Log Density
 /$$
 is Gaussian with mean zero and standard deviation one.
@@ -165,7 +165,7 @@ $latex \[
 Note that, given $latex u$$ and $latex \theta$$, the 
 $cref/log weighted residual/
 	model_residual/
-	Weighted Residual, r_i/
+	Weighted Residual, R_i/
 	Log Density
 /$$
 is Laplace with mean zero and standard deviation one.

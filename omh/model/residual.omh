@@ -160,7 +160,7 @@ Let $latex A_i ( u , \theta )$$ denote the
 $cref/average integrand/model_avg_integrand/Average Integrand, A_i/$$ for this
 $icode data_id$$.
 
-$head Weighted Residual, r_i$$
+$head Weighted Residual, R_i$$
 
 $subhead Linear Density$$
 The density is linear if $latex d_i$$ corresponds to 
@@ -168,7 +168,7 @@ $cref/density_name/density_table/density_name/$$ $code gaussian$$
 or $code laplace$$.
 In this case the weighted residual is defined by
 $latex \[
-r_i ( u , \theta ) 
+R_i ( u , \theta ) 
 = 
 \frac{ y_i ( \theta )  - A_i ( u , \theta ) }{ \delta_i ( \theta) } 
 \] $$
@@ -189,7 +189,7 @@ $cref/density_name/density_table/density_name/$$ $code log_gaussian$$
 or $code log_laplace$$.
 In this case the weighted residual is defined by
 $latex \[
-r_i ( u , \theta ) 
+R_i ( u , \theta ) 
 = 
 \frac{
 \log[ y_i ( \theta ) + \eta_i ] - \log[ A_i ( u , \theta ) + \eta_i ] 

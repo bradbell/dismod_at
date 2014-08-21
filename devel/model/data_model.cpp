@@ -1083,7 +1083,7 @@ $codei%
 	%Float%& %wres%
 %$$
 and is the
-$cref/weighted residual/model_residual/Weighted Residual, r_i/$$
+$cref/weighted residual/model_residual/Weighted Residual, R_i/$$
 corresponding to this $icode data_id$$.
 
 $children%example/devel/model/residual_xam.cpp
