@@ -1,0 +1,145 @@
+$begin model_data_like$$
+
+$section Model For Data Likelihood$$
+
+$head Effects, u, theta$$
+We use $latex u$$ and $latex \theta$$ to denote the vector of
+$cref/random effects/model_variable/Random Effects, u/$$ and
+$cref/fixed effects/model_variable/Fixed Effects, theta/$$ respectively.
+
+$head Data Index, i$$
+The data indices $latex i$$ is the
+$cref/data_id/data_table/data_id/$$ in the data table.
+
+$head Included, I$$,
+We use $latex I$$ to denote those data indices $latex i$$
+such that the corresponding
+$cref/node_id/data_table/node_id/$$ is the
+$cref/parent node/run_table/parent_node_id/$$
+or a descendant of the parent node.
+
+$head Data Vector, v$$
+For $latex i \in I$$, we use $latex v_i$$ to denote the data vector.
+This vector is the value of the data table
+$cref/meas_value/data_table/meas_value/$$ column.
+
+$head Adjusted Measurement, y$$
+For $latex i \in I$$, we use $latex y_i (\theta)$$ to denote the 
+$cref/adjusted measurement/model_residual/Adjusted Measurement, y_i/$$
+as a function of the fixed effects.
+
+$head Log Offset, eta$$
+For $latex i \in I$$, there is a corresponding
+$cref/integrand_id/data_table/integrand_id/$$ in the data table.
+This $icode integrand_id$$ corresponds to a certain value 
+$latex \eta_i$$ for
+$cref/eta/integrand_table/eta/$$ in the integrand table.
+
+$head Adjusted Standard Deviation, delta$$
+For $latex i \in I$$, we use $latex \delta_i (\theta)$$ to denote the 
+$cref/adjusted standard deviation/
+	model_residual/
+	Adjusted Standard Deviation, delta_i
+/$$
+as a function of the fixed effects.
+
+$head Average Integrand, A$$
+For $latex i \in I$$, we use $latex A_i (u, \theta)$$ to denote the 
+$cref/average integrand/model_avg_integrand/Average Integrand, A_i/$$
+as a function of the fixed and random effects.
+
+$head Density, d$$
+For $latex i \in I$$, we use $latex d_i$$ to denote the
+$cref/density/data_table/density_id/$$ corresponding to $latex v_i$$.
+
+$head Likelihood, ell$$
+For $latex i \in I$$, we use
+$latex \ell_i ( u , \theta )$$ to denote the log-likelihood of
+$latex v_i$$, for $latex i \in I$$, as a function of the effects.
+The components of the data vector are assumed to be independent; i.e.
+the log-likelihood of $latex v$$ is given by
+$latex \[
+	\ell( u , \theta ) = \sum_{i \in I} \ell_i ( u , \theta )
+\] $$
+
+$subhead Gaussian$$
+For $latex i \in I$$, if $latex d_i$$ is $code gaussian$$,
+$latex \B{p} ( y_i \W{|} u , \theta )$$ is 
+$cref/Gaussian/model_density/Gaussian/$$ with mean 
+$latex A_i ( u , \theta)$$ and standard deviation 
+$latex \delta_i ( \theta )$$; i.e.,
+$latex \[
+\ell_i ( u , \theta )
+=
+- \log \left[ \delta_i ( \theta ) \sqrt{2 \pi} \right]
+- \frac{1}{2} \left[ 
+	\frac{ y_i (\theta) - A_i ( u , \theta )}{\delta_i ( \theta )} 
+\right]^2
+\] $$
+
+$subhead Laplace$$
+For $latex i \in I$$, if $latex d_i$$ is $code laplace$$,
+$latex \B{p} ( y_i \W{|} u , \theta )$$ is 
+$cref/Laplace/model_density/Laplace/$$ with mean 
+$latex A_i ( u , \theta)$$ and standard deviation 
+$latex \delta_i ( \theta )$$; i.e.,
+$latex \[
+\ell_i ( u , \theta )
+=
+- \log \left[ \delta_i ( \theta ) \sqrt{2} \right]
+- \sqrt{2} \left| 
+	\frac{ y_i (\theta) - A_i ( u , \theta )}{\delta_i ( \theta )} 
+\right|
+\] $$
+
+$subhead Log-Gaussian$$
+For $latex i \in I$$, if $latex d_i$$ is $code log_gaussian$$,
+$latex \B{p} ( \log( y_i + \eta_i ) \W{|} u , \theta )$$ is 
+log $cref/Gaussian/model_density/Gaussian/$$ with mean 
+$latex \log[ A_i ( u , \theta) + \eta_i ]$$ and standard deviation 
+$latex \[
+	\sigma_i ( \theta )
+	=
+	\log[ y_i ( \theta ) + \eta_i + \delta_i ( \theta ) ]
+	-
+	\log[ y_i ( \theta ) + \eta_i ]
+\]$$; i.e.,
+$latex \[
+\ell_i ( u , \theta )
+=
+- \log \left[ \sigma_i ( \theta ) \sqrt{2 \pi} \right]
+- \frac{1}{2} \left[ 
+\frac{ 
+	\log [ y_i (\theta) + \eta_i ] - \log [ A_i ( u , \theta ) + \eta_i ]
+}{
+\sigma_i ( \theta ) 
+} 
+\right]^2
+\] $$
+
+$subhead Log-Laplace$$
+For $latex i \in I$$, if $latex d_i$$ is $code log_laplace$$,
+$latex \B{p} ( \log( y_i + \eta_i ) \W{|} u , \theta )$$ is 
+log $cref/Laplace/model_density/Laplace/$$ with mean 
+$latex \log[ A_i ( u , \theta) + \eta_i ]$$ and standard deviation 
+$latex \[
+	\sigma_i ( \theta )
+	=
+	\log[ y_i ( \theta ) + \eta_i + \delta_i ( \theta ) ]
+	-
+	\log[ y_i ( \theta ) + \eta_i ]
+\]$$; i.e.,
+$latex \[
+\ell_i ( u , \theta )
+=
+- \log \left[ \sigma_i ( \theta ) \sqrt{2} \right]
+- \sqrt{2} \left| 
+\frac{ 
+	\log [ y_i (\theta) + \eta_i ] - \log [ A_i ( u , \theta ) + \eta_i ]
+}{
+\sigma_i ( \theta )
+} 
+\right|
+\] $$
+
+$end
