@@ -64,17 +64,13 @@ $cref/rate_id/rate_table/rate_id/$$.
 
 $head Rate Enum Values$$
 The $icode rate_table$$ can also be addressed 
-using the rate enum values as follows:
+using the $code rate_enum$$ values as follows:
 $table 
-$icode rate_id$$    $pre  $$ $cnext $icode rate_enum$$  $cnext rate_name
-$rnext
-0                   $cnext $code iota_enum$$   $cnext $code iota$$
-$rnext
-1                   $cnext $code rho_enum$$    $cnext $code rho$$
-$rnext
-2                   $cnext $code chi_enum$$    $cnext $code chi$$
-$rnext
-3                   $cnext $code omega_enum$$  $cnext $code omega$$
+$icode rate_id$$    $pre  $$ $cnext $icode rate_name$$     $rnext
+$code iota_enum$$   $pre  $$ $cnext $code iota$$           $rnext
+$code rho_enum$$    $pre  $$ $cnext $code rho$$            $rnext
+$code chi_enum$$    $pre  $$ $cnext $code chi$$            $rnext
+$code omega_enum$$  $pre  $$ $cnext $code omega$$
 $tend
 The number of these enum values is $code number_rate_enum$$.
 

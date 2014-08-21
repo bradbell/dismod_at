@@ -46,20 +46,16 @@ $codei%
 is the enum value for the corresponding
 $cref/density_name/density_table/density_name/$$.
 
-$head density_enum$$
-The $icode density_table$$ has the following order:
+$head Density Enum Values$$ 
+The $icode density_table$$ can also be addressed 
+using the $code density_enum$$ values as follows:
 $table
-$icode density_id$$ $pre  $$ $cnext $icode density_enum$$  $cnext density_name
-$rnext
-0           $cnext $code uniform_enum$$  $cnext $code uniform$$
-$rnext
-1           $cnext $code gaussian_enum$$  $cnext $code gaussian$$
-$rnext
-2           $cnext $code laplace_enum$$  $cnext $code laplace$$
-$rnext
-3           $cnext $code log_gaussian_enum$$  $cnext $code log_gaussian$$
-$rnext
-4           $cnext $code log_laplace_enum$$  $cnext $code log_laplace$$
+$icode density_id$$        $pre  $$ $cnext density_name          $rnext
+$code uniform_enum$$       $pre  $$ $cnext $code uniform$$       $rnext
+$code gaussian_enum$$      $pre  $$ $cnext $code gaussian$$      $rnext
+$code laplace_enum$$       $pre  $$ $cnext $code laplace$$       $rnext
+$code log_gaussian_enum$$  $pre  $$ $cnext $code log_gaussian$$  $rnext
+$code log_laplace_enum$$   $pre  $$ $cnext $code log_laplace$$
 $tend        
 The number of these enum values is $code number_density_enum$$.
 
