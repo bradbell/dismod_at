@@ -23,17 +23,17 @@ private:
 	CppAD::vector<size_t> age_id_;
 	// grid of time values for this smoothing
 	CppAD::vector<size_t> time_id_;
-	// like_id for function values
-	CppAD::vector<size_t> value_like_id_;
-	// like_id for function difference in age direction
-	CppAD::vector<size_t> dage_like_id_;
-	// like_id for function difference in time direction
-	CppAD::vector<size_t> dtime_like_id_;
-	// like_id for multiplier of value likelihood standard deviations
+	// prior_id for function values
+	CppAD::vector<size_t> value_prior_id_;
+	// prior_id for function difference in age direction
+	CppAD::vector<size_t> dage_prior_id_;
+	// prior_id for function difference in time direction
+	CppAD::vector<size_t> dtime_prior_id_;
+	// prior_id for multiplier of value prior standard deviations
 	size_t mulstd_value_;
-	// like_id for multiplier of dage likelihood standard deviations
+	// prior_id for multiplier of dage prior standard deviations
 	size_t mulstd_dage_;
-	// like_id for multiplier of dtime likelihood standard deviations
+	// prior_id for multiplier of dtime prior standard deviations
 	size_t mulstd_dtime_;
 public:
 	// assignment operator
@@ -50,9 +50,9 @@ public:
 	smooth_info(
 		const CppAD::vector<size_t>&  age_id         ,
 		const CppAD::vector<size_t>&  time_id        ,
-		const CppAD::vector<size_t>&  value_like_id  ,
-		const CppAD::vector<size_t>&  dage_like_id   ,
-		const CppAD::vector<size_t>&  dtime_like_id  ,
+		const CppAD::vector<size_t>&  value_prior_id ,
+		const CppAD::vector<size_t>&  dage_prior_id  ,
+		const CppAD::vector<size_t>&  dtime_prior_id ,
 		size_t                        mulstd_value   ,
 		size_t                        mulstd_dage    ,
 		size_t                        mulstd_dtime
@@ -64,9 +64,9 @@ public:
 	size_t age_id(size_t i)  const;
 	size_t time_id(size_t j) const;
 	//
-	size_t value_like_id(size_t i, size_t j) const;
-	size_t dage_like_id(size_t i, size_t j)  const;
-	size_t dtime_like_id(size_t i, size_t j) const;
+	size_t value_prior_id(size_t i, size_t j) const;
+	size_t dage_prior_id(size_t i, size_t j)  const;
+	size_t dtime_prior_id(size_t i, size_t j) const;
 	//
 	size_t mulstd_value(void) const;
 	size_t mulstd_dage(void)  const;

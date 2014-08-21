@@ -60,10 +60,10 @@ bool get_smooth_grid_xam(void)
 		" smooth_id      integer, "
 		" age_id         integer,"
 		" time_id        integer,"
-		" value_like_id  integer,"
-		" dage_like_id   integer,"
-		" dtime_like_id  integer)",
-	//                 smooth_grid_id, smooth_id,age_id,time_id,   like_ids
+		" value_prior_id integer,"
+		" dage_prior_id  integer,"
+		" dtime_prior_id integer)",
+	//                 smooth_grid_id, smooth_id,age_id,time_id,   prior_ids
 	"insert into smooth_grid values(0,         0,     1,      1,   1,-1,-1)",
 	"insert into smooth_grid values(1,         3,     0,      0,   1, 2, 3)",
 	"insert into smooth_grid values(2,         3,     2,      0,   1,-1, 3)",
@@ -114,37 +114,37 @@ bool get_smooth_grid_xam(void)
 	ok  &= smooth_grid[0].smooth_id     ==  0;
 	ok  &= smooth_grid[0].age_id        ==  1;
 	ok  &= smooth_grid[0].time_id       ==  1;
-	ok  &= smooth_grid[0].value_like_id ==  1;
-	ok  &= smooth_grid[0].dage_like_id  == -1;
-	ok  &= smooth_grid[0].dtime_like_id == -1;
+	ok  &= smooth_grid[0].value_prior_id ==  1;
+	ok  &= smooth_grid[0].dage_prior_id == -1;
+	ok  &= smooth_grid[0].dtime_prior_id == -1;
 	//
 	ok  &= smooth_grid[1].smooth_id     ==  3;
 	ok  &= smooth_grid[1].age_id        ==  0;
 	ok  &= smooth_grid[1].time_id       ==  0;
-	ok  &= smooth_grid[1].value_like_id ==  1;
-	ok  &= smooth_grid[1].dage_like_id  ==  2;
-	ok  &= smooth_grid[1].dtime_like_id ==  3;
+	ok  &= smooth_grid[1].value_prior_id ==  1;
+	ok  &= smooth_grid[1].dage_prior_id ==  2;
+	ok  &= smooth_grid[1].dtime_prior_id ==  3;
 	//
 	ok  &= smooth_grid[2].smooth_id     ==  3;
 	ok  &= smooth_grid[2].age_id        ==  2;
 	ok  &= smooth_grid[2].time_id       ==  0;
-	ok  &= smooth_grid[2].value_like_id ==  1;
-	ok  &= smooth_grid[2].dage_like_id  == -1;
-	ok  &= smooth_grid[2].dtime_like_id ==  3;
+	ok  &= smooth_grid[2].value_prior_id ==  1;
+	ok  &= smooth_grid[2].dage_prior_id == -1;
+	ok  &= smooth_grid[2].dtime_prior_id ==  3;
 	//
 	ok  &= smooth_grid[3].smooth_id     ==  3;
 	ok  &= smooth_grid[3].age_id        ==  0;
 	ok  &= smooth_grid[3].time_id       ==  2;
-	ok  &= smooth_grid[3].value_like_id ==  1;
-	ok  &= smooth_grid[3].dage_like_id  ==  2;
-	ok  &= smooth_grid[3].dtime_like_id == -1;
+	ok  &= smooth_grid[3].value_prior_id ==  1;
+	ok  &= smooth_grid[3].dage_prior_id ==  2;
+	ok  &= smooth_grid[3].dtime_prior_id == -1;
 	//
 	ok  &= smooth_grid[4].smooth_id     ==  3;
 	ok  &= smooth_grid[4].age_id        ==  2;
 	ok  &= smooth_grid[4].time_id       ==  2;
-	ok  &= smooth_grid[4].value_like_id ==  1;
-	ok  &= smooth_grid[4].dage_like_id  == -1;
-	ok  &= smooth_grid[4].dtime_like_id == -1;
+	ok  &= smooth_grid[4].value_prior_id ==  1;
+	ok  &= smooth_grid[4].dage_prior_id == -1;
+	ok  &= smooth_grid[4].dtime_prior_id == -1;
 	//
 	// close database and return
 	sqlite3_close(db);

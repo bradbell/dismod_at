@@ -51,7 +51,7 @@ extern bool get_covariate_table_xam(void);
 extern bool get_data_table_xam(void);
 extern bool get_density_table_xam(void);
 extern bool get_integrand_table_xam(void);
-extern bool get_like_table_xam(void);
+extern bool get_prior_table_xam(void);
 extern bool get_mulcov_table_xam(void);
 extern bool get_node_table_xam(void);
 extern bool get_rate_table_xam(void);
@@ -118,7 +118,7 @@ int main(void)
 	RUN(get_data_table_xam);
 	RUN(get_density_table_xam);
 	RUN(get_integrand_table_xam);
-	RUN(get_like_table_xam);
+	RUN(get_prior_table_xam);
 	RUN(get_mulcov_table_xam);
 	RUN(get_node_table_xam);
 	RUN(get_rate_table_xam);

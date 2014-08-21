@@ -29,9 +29,9 @@ $childtable%
 	%omh/table/data_table.omh
 	%omh/table/density_table.omh
 	%omh/table/integrand_table.omh
-	%omh/table/like_table.omh
 	%omh/table/mulcov_table.omh
 	%omh/table/node_table.omh
+	%omh/table/prior_table.omh
 	%omh/table/rate_table.omh
 	%omh/table/run_table.omh
 	%omh/table/smooth_grid_table.omh

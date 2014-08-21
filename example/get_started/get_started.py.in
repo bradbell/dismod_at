@@ -74,7 +74,7 @@ row['node']       = 'canada'
 row['meas_value'] = 0.5e-5
 data_list.append( copy.copy(row) )
 #
-like_list = [
+prior_list = [
 	{	'name':'zero', 
 		'density':'uniform',
 		'lower':0.0, 
@@ -157,7 +157,7 @@ dismod_at.create_database(
 	weight_list, 
 	covariate_list,
 	data_list,
-	like_list,
+	prior_list,
 	smooth_list,
 	rate_list,
 	mulcov_list,

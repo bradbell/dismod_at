@@ -38,7 +38,7 @@ the limit for the corresponding table.
 $head Remark$$
 Note that this routine only checks limits, and not positional dependent limits.
 For example, $code -1$$ might appear anywhere in 
-$cref/dage_like_id/smooth_grid_table/dage_like_id/$$.
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$.
 
 $head db$$
 The argument $icode db$$ has prototype
@@ -98,7 +98,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.run_table         = get_run_table(db);
 	db_input.covariate_table   = get_covariate_table(db);
 	db_input.node_table        = get_node_table(db);
-	db_input.like_table        = get_like_table(db);
+	db_input.prior_table       = get_prior_table(db);
 	db_input.weight_grid_table = get_weight_grid(db);
 	db_input.smooth_grid_table = get_smooth_grid(db);
 	db_input.mulcov_table      = get_mulcov_table(db);
@@ -109,16 +109,16 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	// node table
 	DISMOD_AT_CHECK_PRIMARY_ID(node, parent, node, -1);
 
-	// like table
-	DISMOD_AT_CHECK_PRIMARY_ID(like, density_id, density, 0);
+	// prior table
+	DISMOD_AT_CHECK_PRIMARY_ID(prior, density_id, density, 0);
 
 	// weight_grid table
 	DISMOD_AT_CHECK_PRIMARY_ID(weight_grid, weight_id, weight, 0);
 
 	// smooth table
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_value, like, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dage,  like, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dtime, like, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_value, prior, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dage,  prior, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dtime, prior, 0);
 
 	// run table
 	DISMOD_AT_CHECK_PRIMARY_ID(run, parent_node_id,  node,   0);
@@ -126,9 +126,9 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 
 	// smooth_grid table
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, smooth_id, smooth, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, value_like_id, like, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dage_like_id, like, -1);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dtime_like_id, like, -1);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, value_prior_id, prior, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dage_prior_id, prior, -1);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dtime_prior_id, prior, -1);
 
 	// mulcov table
 	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, rate_id, rate, -1);

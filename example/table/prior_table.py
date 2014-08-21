@@ -8,21 +8,21 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin like_table.py$$ $newlinech #$$
+# $begin prior_table.py$$ $newlinech #$$
 #
-# $section like_table: Example and Test$$
+# $section prior_table: Example and Test$$
 #
-# $index like, , example$$
-# $index example, like table$$
-# $index table, like example$$
+# $index prior, , example$$
+# $index example, prior table$$
+# $index table, prior example$$
 #
 # $code
-# $verbatim%example/table/like_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/prior_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-def like_table() :
+def prior_table() :
 	import dismod_at
 	import copy
 	#
@@ -31,17 +31,17 @@ def like_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	# create the like table
+	# create the prior table
 	ptype    = 'integer primary key'
 	col_name = [ 
-		'like_name', 'density_id', 'lower', 'upper', 'mean', 'std',   'eta' 
+		'prior_name', 'density_id', 'lower', 'upper', 'mean', 'std',   'eta' 
 	]
 	col_type = [ 
 		'text',      'integer',    'real',  'real',  'real', 'real',  'real'
 	]
 	uniform_density_id = 0;
 	row_list = [ [ 
-		'none',              # like_name	
+		'none',              # prior_name	
 		uniform_density_id,   # density_id 
 		None,                # lower	
 		None,                # upper	
@@ -49,7 +49,7 @@ def like_table() :
 		None,                # std	
 		None                 # eta
 	],[
-		'rate',              # like_name	
+		'rate',              # prior_name	
 		uniform_density_id,  # density_id
 		0.0,                 # lower	
 		1.0,                 # upper	
@@ -57,13 +57,13 @@ def like_table() :
 		None,                # std	
 		None                 # eta
 	] ]
-	tbl_name = 'like'
+	tbl_name = 'prior'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# check values in table
 	columns = ','.join(col_name)
-	columns = 'like_id,' + columns
-	cmd     = 'SELECT ' + columns + ' FROM like'
+	columns = 'prior_id,' + columns
+	cmd     = 'SELECT ' + columns + ' FROM prior'
 	cursor.execute(cmd)
 	fetchall = cursor.fetchall()
 	assert len(fetchall) == len(row_list)
@@ -75,5 +75,5 @@ def like_table() :
 		for j in range( len(check) ) :
 			assert row[j] == check[j]
 	#
-	print('like_table: OK')
+	print('prior_table: OK')
 # END PYTHON

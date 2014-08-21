@@ -20,7 +20,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_density_table.hpp"
 # include "get_covariate_table.hpp"
 # include "get_data_table.hpp"
-# include "get_like_table.hpp"
+# include "get_prior_table.hpp"
 # include "get_mulcov_table.hpp"
 # include "get_node_table.hpp"
 # include "get_run_table.hpp"
@@ -43,7 +43,7 @@ namespace dismod_at {
 		CppAD::vector<run_struct>         run_table;
 		CppAD::vector<covariate_struct>   covariate_table;
 		CppAD::vector<node_struct>        node_table;
-		CppAD::vector<like_struct>        like_table;
+		CppAD::vector<prior_struct>       prior_table;
 		CppAD::vector<weight_grid_struct> weight_grid_table;
 		CppAD::vector<smooth_grid_struct> smooth_grid_table;
 		CppAD::vector<mulcov_struct>      mulcov_table;

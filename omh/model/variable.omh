@@ -31,13 +31,13 @@ The vector of model variables is broken into a set of subvectors
 described below.
 For each subvector, there is a smoothing.
 The smoothing determines the number of elements in the subvector
-and the likelihood for each of these elements; see
+and the prior for each of these elements; see
 $cref/n_age/smooth_table/n_age/$$
 $cref/n_time/smooth_table/n_time/$$ and
-$cref/value_like_id/smooth_grid_table/value_like_id/$$.
+$cref/value_prior_id/smooth_grid_table/value_prior_id/$$.
 If the 
-$cref/lower/like_table/lower/$$ and 
-$cref/upper/like_table/upper/$$ limits are equal,
+$cref/lower/prior_table/lower/$$ and 
+$cref/upper/prior_table/upper/$$ limits are equal,
 the variable is know. Otherwise it is unknown ad
 is estimated by $code dismod_at$$. 
 

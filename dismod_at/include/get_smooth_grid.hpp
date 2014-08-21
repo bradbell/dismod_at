@@ -20,9 +20,9 @@ namespace dismod_at {
 		int    smooth_id;
 		int    age_id;
 		int    time_id;
-		int    value_like_id;
-		int    dage_like_id;
-		int    dtime_like_id;
+		int    value_prior_id;
+		int    dage_prior_id;
+		int    dtime_prior_id;
 	};
 	extern CppAD::vector<smooth_grid_struct> get_smooth_grid(sqlite3*  db);
 }

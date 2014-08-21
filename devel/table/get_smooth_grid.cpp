@@ -62,16 +62,16 @@ $rnext
 $code int$$ $cnext $code time_id$$      $pre  $$ $cnext 
 	The $cref/time_id/smooth_grid_table/time_id/$$ for this grid point
 $rnext
-$code int$$ $cnext $code value_like_id$$    $pre  $$ $cnext 
-	The $cref/value_like_id/smooth_grid_table/value_like_id/$$
+$code int$$ $cnext $code value_prior_id$$    $pre  $$ $cnext 
+	The $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
 	for this smoothing, age, and time.
 $rnext
-$code int$$ $cnext $code dage_like_id$$    $pre  $$ $cnext 
-	The $cref/dage_like_id/smooth_grid_table/dage_like_id/$$
+$code int$$ $cnext $code dage_prior_id$$    $pre  $$ $cnext 
+	The $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
 	for this smoothing, age, and time.
 $rnext
-$code int$$ $cnext $code dtime_like_id$$    $pre  $$ $cnext 
-	The $cref/dtime_like_id/smooth_grid_table/dtime_like_id/$$
+$code int$$ $cnext $code dtime_prior_id$$    $pre  $$ $cnext 
+	The $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
 	for this smoothing, age, and time.
 $tend        
 
@@ -115,30 +115,30 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(sqlite3* db)
 	get_table_column(db, table_name, column_name, time_id);
 	assert( time_id.size() == n_smooth );
 
-	column_name        =  "value_like_id";
-	CppAD::vector<int>     value_like_id;
-	get_table_column(db, table_name, column_name, value_like_id);
-	assert( value_like_id.size() == n_smooth );
+	column_name        =  "value_prior_id";
+	CppAD::vector<int>     value_prior_id;
+	get_table_column(db, table_name, column_name, value_prior_id);
+	assert( value_prior_id.size() == n_smooth );
 
 
-	column_name        =  "dage_like_id";
-	CppAD::vector<int>     dage_like_id;
-	get_table_column(db, table_name, column_name, dage_like_id);
-	assert( dage_like_id.size() == n_smooth );
+	column_name        =  "dage_prior_id";
+	CppAD::vector<int>     dage_prior_id;
+	get_table_column(db, table_name, column_name, dage_prior_id);
+	assert( dage_prior_id.size() == n_smooth );
 
-	column_name        =  "dtime_like_id";
-	CppAD::vector<int>     dtime_like_id;
-	get_table_column(db, table_name, column_name, dtime_like_id);
-	assert( dtime_like_id.size() == n_smooth );
+	column_name        =  "dtime_prior_id";
+	CppAD::vector<int>     dtime_prior_id;
+	get_table_column(db, table_name, column_name, dtime_prior_id);
+	assert( dtime_prior_id.size() == n_smooth );
 
 	CppAD::vector<smooth_grid_struct> smooth_grid(n_smooth);
 	for(size_t i = 0; i < n_smooth; i++)
 	{	smooth_grid[i].smooth_id      = smooth_id[i];
 		smooth_grid[i].age_id         = age_id[i];
 		smooth_grid[i].time_id        = time_id[i];
-		smooth_grid[i].value_like_id  = value_like_id[i];
-		smooth_grid[i].dage_like_id   = dage_like_id[i];
-		smooth_grid[i].dtime_like_id  = dtime_like_id[i];
+		smooth_grid[i].value_prior_id = value_prior_id[i];
+		smooth_grid[i].dage_prior_id  = dage_prior_id[i];
+		smooth_grid[i].dtime_prior_id = dtime_prior_id[i];
 	}
 	return smooth_grid;
 }

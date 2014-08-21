@@ -8,33 +8,33 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin like_table$$ 
+$begin prior_table$$ 
 $spell
 	std
 $$
-$index like, table$$
-$index table, like$$
+$index prior, table$$
+$index table, prior$$
 
-$section The Likelihood Table$$
-The $code like$$ table is used to define 
-likelihoods for a single scalar value.
+$section The Prior Table$$
+The $code prior$$ table is used to define 
+priors for a single scalar value.
 It has the following columns:
 
-$head like_id$$
+$head prior_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
 $subhead zero$$
 It is suggested that 
-$icode%like_id% == 0%$$ 
+$icode%prior_id% == 0%$$ 
 correspond to lower and upper limits being zero.
 
 $subhead one$$
 It is suggested that 
-$icode%like_id% == 1%$$ 
+$icode%prior_id% == 1%$$ 
 correspond to lower and upper limits being one.
 
-$head like_name$$
+$head prior_name$$
 This column has type $code text$$ and has a different value for every row; 
 i.e., the names are unique and can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
@@ -42,13 +42,13 @@ The names are intended to be easier for a human to remember than the ids.
 $head density_id$$
 This column has type $code integer$$ and its value is the
 $cref density_table$$ primary key that identifies the
-density function for this likelihood.
+density function for this prior.
 
 $head lower$$
 $index lower, minus infinity$$
 $index infinity, minus lower$$
 This column has type $code real$$ and specifies a lower bound
-for the likelihood.
+for the prior.
 Note that the value $code null$$ is interpreted as minus infinity; i.e.,
 no lower limit.
 
@@ -56,7 +56,7 @@ $head upper$$
 $index upper, plus infinity$$
 $index infinity, plus upper$$
 This column has type $code real$$ and specifies a upper bound
-for the likelihood.
+for the prior.
 Note that the value $code null$$ is interpreted as plus infinity; i.e.,
 no upper limit.
 
@@ -65,7 +65,7 @@ $index std, plus infinity$$
 $index infinity, plus std$$
 This column has type $code real$$ and specifies the mean
 (before truncation by the lower and upper limits)
-for the likelihood.
+for the prior.
 It must hold that
 $codei%
 	%lower% <= %mean% <= %upper%
@@ -75,7 +75,7 @@ $head std$$
 $index std$$
 This column has type $code real$$ and specifies the standard deviation
 (before truncation by the lower and upper limits)
-for the likelihood.
+for the prior.
 In the case where $icode density$$ is $code uniform$$,
 this value is not used and can be $code null$$.
 Otherwise, this value must be a positive number.
@@ -89,10 +89,10 @@ In the case where $code density$$ is
 $code uniform$$, $code gaussian$$ or $code laplace$$,
 this field is not used and can be $code null$$.
 
-$children%example/table/like_table.py
+$children%example/table/prior_table.py
 %$$
 $head Example$$
-The files $cref like_table.py$$ and $cref get_like_table_xam.cpp$$
-contain example $code like$$ tables.
+The files $cref prior_table.py$$ and $cref get_prior_table_xam.cpp$$
+contain example $code prior$$ tables.
 
 $end

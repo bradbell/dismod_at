@@ -49,9 +49,9 @@ bool check_rate_smooth_xam(void)
 		time_id[j] = 3 * j;
 	//
 	size_t n_grid = n_age * n_time;
-	CppAD::vector<size_t> value_like_id(n_grid);
-	CppAD::vector<size_t> dage_like_id (n_grid);
-	CppAD::vector<size_t> dtime_like_id(n_grid);
+	CppAD::vector<size_t> value_prior_id(n_grid);
+	CppAD::vector<size_t> dage_prior_id (n_grid);
+	CppAD::vector<size_t> dtime_prior_id(n_grid);
 	size_t mulstd_value = 0;
 	size_t mulstd_dage = 0;
 	size_t mulstd_dtime = 0;
@@ -62,9 +62,9 @@ bool check_rate_smooth_xam(void)
 	{	s_info_ptr[smooth_id] = new dismod_at::smooth_info(
 			age_id, 
 			time_id, 
-			value_like_id, 
-			dage_like_id, 
-			dtime_like_id,
+			value_prior_id, 
+			dage_prior_id, 
+			dtime_prior_id,
 			mulstd_value,
 			mulstd_dage,
 			mulstd_dtime

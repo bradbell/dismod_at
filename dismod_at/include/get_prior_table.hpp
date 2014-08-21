@@ -15,8 +15,8 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 
 namespace dismod_at {
-	struct like_struct {
-		std::string like_name;
+	struct prior_struct {
+		std::string prior_name;
 		int         density_id;
 		double      lower;
 		double      upper;
@@ -24,7 +24,7 @@ namespace dismod_at {
 		double      std;
 		double      eta;
 	};
-	extern CppAD::vector<like_struct> get_like_table(sqlite3*  db);
+	extern CppAD::vector<prior_struct> get_prior_table(sqlite3*  db);
 }
 
 # endif

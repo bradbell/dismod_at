@@ -54,9 +54,9 @@ bool smooth2ode_xam(void)
 		time_table[j] = 1990.0 + 10 * j;
 	}
 	// these values are not used
-	vector<size_t> value_like_id(n_age_si * n_time_si);
-	vector<size_t> dage_like_id(n_age_si * n_time_si);
-	vector<size_t> dtime_like_id(n_age_si * n_time_si);
+	vector<size_t> value_prior_id(n_age_si * n_time_si);
+	vector<size_t> dage_prior_id(n_age_si * n_time_si);
+	vector<size_t> dtime_prior_id(n_age_si * n_time_si);
 	size_t mulstd_value   = 1;
 	size_t mulstd_dage    = 1;
 	size_t mulstd_dtime   = 1;
@@ -65,9 +65,9 @@ bool smooth2ode_xam(void)
 	dismod_at::smooth_info s_info(
 		age_id, 
 		time_id, 
-		value_like_id, 
-		dage_like_id, 
-		dtime_like_id,
+		value_prior_id, 
+		dage_prior_id, 
+		dtime_prior_id,
 		mulstd_value,
 		mulstd_dage,
 		mulstd_dtime

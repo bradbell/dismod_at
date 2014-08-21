@@ -28,7 +28,7 @@ $icode%smooth_id% == 0%$$
 correspond to 
 $icode%n_age% == 1%$$,
 $icode%n_time% == 1%$$, and
-the $cref/zero/like_table/like_id/zero/$$ likelihood. 
+the $cref/zero/prior_table/prior_id/zero/$$ prior. 
 
 $subhead one$$
 It is suggested that 
@@ -36,7 +36,7 @@ $icode%smooth_id% == 1%$$
 correspond to 
 $icode%n_age% == 1%$$,
 $icode%n_time% == 1%$$, and
-the $cref/one/like_table/like_id/one/$$ likelihood. 
+the $cref/one/prior_table/prior_id/one/$$ prior. 
 
 $head smooth_name$$ 
 This column has type $code text$$ and has a different value for every row; 
@@ -53,30 +53,30 @@ in this smoothing grid. It must be greater than zero.
 
 $head mulstd_value$$
 This column has type $code integer$$ and its value is the
-$cref/like_id/like_table/like_id/$$ for the variable that multiplies the 
-$cref/value_like_id/smooth_grid_table/value_like_id/$$ standard deviations
+$cref/prior_id/prior_table/prior_id/$$ for the variable that multiplies the 
+$cref/value_prior_id/smooth_grid_table/value_prior_id/$$ standard deviations
 for this
 $cref/smooth_id/smooth_grid_table/smooth_id/$$.
 If this variable is not needed, 
-use the $cref/one/like_table/like_id/one/$$ likelihood. 
+use the $cref/one/prior_table/prior_id/one/$$ prior. 
 
 $head mulstd_dage$$
 This column has type $code integer$$ and its value is the
-$cref/like_id/like_table/like_id/$$ for the variable that multiplies the 
-$cref/dage_like_id/smooth_grid_table/dage_like_id/$$ standard deviations
+$cref/prior_id/prior_table/prior_id/$$ for the variable that multiplies the 
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ standard deviations
 for this
 $cref/smooth_id/smooth_grid_table/smooth_id/$$.
 If this variable is not needed, 
-use the $cref/one/like_table/like_id/one/$$ likelihood. 
+use the $cref/one/prior_table/prior_id/one/$$ prior. 
 
 $head mulstd_dtime$$
 This column has type $code integer$$ and its value is the
-$cref/like_id/like_table/like_id/$$ for the variable that multiplies the 
-$cref/dtime_like_id/smooth_grid_table/dtime_like_id/$$ standard deviations
+$cref/prior_id/prior_table/prior_id/$$ for the variable that multiplies the 
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ standard deviations
 for this
 $cref/smooth_id/smooth_grid_table/smooth_id/$$.
 If this variable is not needed, 
-use the $cref/one/like_table/like_id/one/$$ likelihood. 
+use the $cref/one/prior_table/prior_id/one/$$ prior. 
 
 $comment%example/table/smooth_grid_table.py is included by smooth_grid_table.omh
 %$$

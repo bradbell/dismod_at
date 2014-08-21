@@ -9,27 +9,27 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_like_table_xam.cpp$$
+$begin get_prior_table_xam.cpp$$
 $spell
 	xam
 $$
 
-$section C++ get_like_table: Example and Test$$
-$index example, C++ get_like_table$$
-$index get_like_table, C++ example$$
+$section C++ get_prior_table: Example and Test$$
+$index example, C++ get_prior_table$$
+$index get_prior_table, C++ example$$
 
 $code
-$verbatim%example/devel/table/get_like_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/get_prior_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
 // BEGIN C++
-# include <dismod_at/include/get_like_table.hpp>
+# include <dismod_at/include/get_prior_table.hpp>
 # include <dismod_at/include/exec_sql_cmd.hpp>
 # include <dismod_at/include/open_connection.hpp>
 
-bool get_like_table_xam(void)
+bool get_prior_table_xam(void)
 {
 	bool   ok = true;
 	using  std::string;
@@ -42,40 +42,40 @@ bool get_like_table_xam(void)
 	// sql commands
 	// assume that density_id for uniform density is 0.
 	const char* sql_cmd[] = { 
-		"create table like("
-			" like_id       integer primary key,"
-			" like_name    text,"
+		"create table prior("
+			" prior_id      integer primary key,"
+			" prior_name    text,"
 			" density_id   integer,"
 			" lower        real,"
 			" upper        real,"
 			" mean         real,"
 			" std          real,"
 			" eta          real)",
-		"insert into like values(0, 'none', 0, null, null, 0.0, null, null)",
-		"insert into like values(1, 'rate', 1, 0.0,  1.0,  0.1, 1e-4, 1e-5)"
+		"insert into prior values(0, 'none', 0, null, null, 0.0, null, null)",
+		"insert into prior values(1, 'rate', 1, 0.0,  1.0,  0.1, 1e-4, 1e-5)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
 
-	// get the like table
-	vector<dismod_at::like_struct> like_table = dismod_at::get_like_table(db);
-	ok  &= like_table.size() == 2;
+	// get the prior table
+	vector<dismod_at::prior_struct> prior_table = dismod_at::get_prior_table(db);
+	ok  &= prior_table.size() == 2;
 	//
-	ok  &= like_table[0].like_name  == "none";
-	ok  &= like_table[0].density_id == 0;
-	ok  &= like_table[0].lower      == std::atof("-inf");
-	ok  &= like_table[0].upper      == std::atof("+inf");
-	ok  &= like_table[0].mean       == 0.0;
+	ok  &= prior_table[0].prior_name  == "none";
+	ok  &= prior_table[0].density_id == 0;
+	ok  &= prior_table[0].lower      == std::atof("-inf");
+	ok  &= prior_table[0].upper      == std::atof("+inf");
+	ok  &= prior_table[0].mean       == 0.0;
 	//
-	ok  &= like_table[1].like_name  == "rate";
-	ok  &= like_table[1].density_id == 1;
-	ok  &= like_table[1].lower      == 0.0;
-	ok  &= like_table[1].upper      == 1.0;
-	ok  &= like_table[1].mean       == 0.1;
-	ok  &= like_table[1].std        == 1e-4;
-	ok  &= like_table[1].eta        == 1e-5;
+	ok  &= prior_table[1].prior_name  == "rate";
+	ok  &= prior_table[1].density_id == 1;
+	ok  &= prior_table[1].lower      == 0.0;
+	ok  &= prior_table[1].upper      == 1.0;
+	ok  &= prior_table[1].mean       == 0.1;
+	ok  &= prior_table[1].std        == 1e-4;
+	ok  &= prior_table[1].eta        == 1e-5;
  	//
 	// close database and return
 	sqlite3_close(db);

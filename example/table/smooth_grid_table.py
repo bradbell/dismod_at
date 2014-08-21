@@ -50,9 +50,9 @@ def smooth_grid_table() :
 		'smooth_id', 
 		'age_id',  
 		'time_id',  
-		'value_like_id',
-		'dage_like_id',
-		'dtime_like_id',
+		'value_prior_id',
+		'dage_prior_id',
+		'dtime_prior_id',
 	]
 	#
 	# smooth_grid table column types
@@ -60,9 +60,9 @@ def smooth_grid_table() :
 		'integer',  # smooth_id
 		'integer',  # age_id
 		'integer',  # time_id
-		'integer',  # value_like_id
-		'integer',  # dage_like_id
-		'integer',  # dtime_like_id
+		'integer',  # value_prior_id
+		'integer',  # dage_prior_id
+		'integer',  # dtime_prior_id
 	]
 	#
 	# smooth_grid table values
@@ -71,9 +71,9 @@ def smooth_grid_table() :
 		3,          # smooth_id          (smooth_id == 3 is bilinear)
 		None,       # age_id             (age_id  index is 1 in default)
 		None,       # time_id            (time_id index is 2 in default)
-		1,          # value_like_id
-		2,          # dage_like_id
-		3           # dtime_like_id
+		1,          # value_prior_id
+		2,          # dage_prior_id
+		3           # dtime_prior_id
 	]
 	age_time_list = list()
 	for age_id in [0, 1, 2] :             # n_age is 3
@@ -82,9 +82,9 @@ def smooth_grid_table() :
 			default[2] = time_id
 			row        = copy.copy(default)
 			if age_id == 2 :
-				row[4] = -1 # dage_like
+				row[4] = -1 # dage_prior
 			if time_id == 1 :
-				row[5] = -1 # dtime_like
+				row[5] = -1 # dtime_prior
 			row_list.append( row )
 			age_time_list.append( (age_id, time_id) )
 	#

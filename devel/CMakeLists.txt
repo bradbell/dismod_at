@@ -32,7 +32,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	table/get_density_table.cpp
 	table/get_db_input.cpp
 	table/get_integrand_table.cpp
-	table/get_like_table.cpp
+	table/get_prior_table.cpp
 	table/get_mulcov_table.cpp
 	table/get_node_table.cpp
 	table/get_rate_table.cpp

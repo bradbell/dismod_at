@@ -293,7 +293,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #	%weight_list%,
 #	%covariate_list%,
 #	%data_list%,
-#	%like_list%,
+#	%prior_list%,
 #	%smooth_list%,
 #	%rate_list%,
 #	%mulcov_list%,
@@ -391,13 +391,13 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #	%c_j% = %covariate_list%[%j%]['name']
 # %$$
 #
-# $head like_list$$
+# $head prior_list$$
 # This is a list of $code dict$$
-# that define the rows of the $cref like_table$$.
-# The dictionary $icode%like_list%[%i%]%$$ has the following:
+# that define the rows of the $cref prior_table$$.
+# The dictionary $icode%prior_list%[%i%]%$$ has the following:
 # $table
 # Key     $cnext Value Type    $cnext Description                $rnext 
-# name    $cnext str           $cnext name of $th i$$ likelihood $rnext 
+# name    $cnext str           $cnext name of $th i$$ prior $rnext 
 # lower   $cnext float         $cnext lower limit                $rnext 
 # upper   $cnext float         $cnext upper limit                $rnext 
 # std     $cnext float         $cnext standard deviation         $rnext 
@@ -424,7 +424,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # fun     $cnext function    $cnext $icode%(%v%,%da%,%dt%)%=%fun%(%a%, %t%)%$$
 # $tend
 # The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
-# are the likelihood names for the value, difference in age, 
+# are the prior names for the value, difference in age, 
 # and difference in time corresponding to this smoothing name.
 # Note that $icode age_id$$ and $code time_id$$ must be in increasing order,
 # $icode da$$ is not used when age $icode%a% = %age_id%[-1]%$$ and
@@ -482,7 +482,7 @@ def create_database(
 	weight_list,
 	covariate_list,
 	data_list,
-	like_list,
+	prior_list,
 	smooth_list,
 	rate_list,
 	mulcov_list,
@@ -575,33 +575,33 @@ def create_database(
 	tbl_name = 'node'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------ 
-	# create the like table
+	# create the prior table
 	col_name = [ 
-		'like_name', 'lower', 'upper', 'mean', 'std',  'density_id', 'eta'  
+		'prior_name', 'lower', 'upper', 'mean', 'std',  'density_id', 'eta'  
 	]
 	col_type = [ 
 		'text',       'real', 'real',  'real', 'real', 'integer',    'real'
 	]
 	row_list = [ ]
-	for i in range( len( like_list ) ) :
-		like         = like_list[i]
-		density_id   = global_density_name2id[ like['density'] ]
+	for i in range( len( prior_list ) ) :
+		prior         = prior_list[i]
+		density_id   = global_density_name2id[ prior['density'] ]
 		row  = [	
-			like['name'],
-			like['lower'],
-			like['upper'],
-			like['mean'],
-			like['std'],
+			prior['name'],
+			prior['lower'],
+			prior['upper'],
+			prior['mean'],
+			prior['std'],
 			density_id,
-			like['eta']
+			prior['eta']
 		]
 		row_list.append( row )
-	tbl_name = 'like'
+	tbl_name = 'prior'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
-	global_like_name2id = {}
+	global_prior_name2id = {}
 	for i in range( len(row_list) ) :
-		global_like_name2id[ row_list[i][0] ] = i
+		global_prior_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------ 
 	# create weight table
 	col_name = [ 'weight_name', 'n_age',   'n_time'   ]
@@ -647,9 +647,9 @@ def create_database(
 		name          = smooth['name']
 		n_age         = len( smooth['age_id'] )
 		n_time        = len( smooth['time_id'] )
-		mulstd_value   = global_like_name2id[ smooth['mulstd_value'] ]
-		mulstd_dage    = global_like_name2id[ smooth['mulstd_dage']  ]
-		mulstd_dtime   = global_like_name2id[ smooth['mulstd_dtime'] ]
+		mulstd_value   = global_prior_name2id[ smooth['mulstd_value'] ]
+		mulstd_dage    = global_prior_name2id[ smooth['mulstd_dage']  ]
+		mulstd_dtime   = global_prior_name2id[ smooth['mulstd_dtime'] ]
 		row_list.append( [ 
 		name, n_age, n_time, mulstd_value, mulstd_dage, mulstd_dtime   
 		] )
@@ -665,17 +665,17 @@ def create_database(
 		'smooth_id', 
 		'age_id',  
 		'time_id',  
-		'value_like_id',
-		'dage_like_id',
-		'dtime_like_id',
+		'value_prior_id',
+		'dage_prior_id',
+		'dtime_prior_id',
 	]
 	col_type = [
 		'integer',  # smooth_id
 		'integer',  # age_id
 		'integer',  # time_id
-		'integer',  # value_like_id
-		'integer',  # dage_like_id
-		'integer',  # dtime_like_id
+		'integer',  # value_prior_id
+		'integer',  # dage_prior_id
+		'integer',  # dtime_prior_id
 	]
 	row_list = [ ]
 	for i in range( len(smooth_list) ) :
@@ -686,9 +686,9 @@ def create_database(
 		for j in age_id :
 			for k in time_id :
 				(v,da,dt) = fun(age_list[j], time_list[k])
-				v         = global_like_name2id[v]
-				da        = global_like_name2id[da]
-				dt        = global_like_name2id[dt]
+				v         = global_prior_name2id[v]
+				da        = global_prior_name2id[da]
+				dt        = global_prior_name2id[dt]
 				if j == age_id[-1] :
 					da = -1
 				if k == time_id[-1] :

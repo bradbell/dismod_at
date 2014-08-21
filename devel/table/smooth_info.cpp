@@ -26,7 +26,7 @@ $head Syntax$$
 $codei%smooth_info %s_info%(%smooth_id%, %smooth_table%, %smooth_grid_table% )
 %$$
 $codei%smooth_info %s_test%(
-	%age_id%, %time_id%, %value_like_id%, %dage_like_id%, %dtime_like_id%,
+	%age_id%, %time_id%, %value_prior_id%, %dage_prior_id%, %dtime_prior_id%,
 	%mulstd_value%, %mulstd_dage%, %mulstd_dtime%
 )
 %$$
@@ -42,7 +42,7 @@ $icode%a_id%      = %s_info%.age_id(%i%)
 %$$
 $icode%t_id%      = %s_info%.time_id(%j%)
 %$$
-$icode%i_type%    = %s_info%.%type%_like_id(%i%, %j%)
+$icode%i_type%    = %s_info%.%type%_prior_id(%i%, %j%)
 %$$
 $icode%m_type%    = %s_info%.mulstd_%type%()
 %$$
@@ -64,11 +64,11 @@ and number of time values in the corresponding rectangular grid in
 $cref smooth_grid_table$$.
 $lnext
 Checks that 
-$cref/dage_like_id/smooth_grid_table/dage_like_id/$$ is $code -1$$
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ is $code -1$$
 for the maximum age points and only the maximum age points.
 $lnext
 Checks that 
-$cref/dtime_like_id/smooth_grid_table/dtime_like_id/$$ is $code -1$$
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ is $code -1$$
 for the maximum time points and on the maximum time points.
 $lend
 
@@ -131,18 +131,18 @@ $codei%
 	%s_info%.time_id(%i%) = %time_id%[%i%]
 %$$ 
 
-$subhead type_like_id$$
+$subhead type_prior_id$$
 For $icode type$$ equal to 
 $code value$$, $code dage$$ and $code dtime$$
 these arguments have prototype
 $codei%
-const CppAD::vector<size_t>& %value_like_id%, %dage_like_id%, %dtime_like_id%
+const CppAD::vector<size_t>& %value_prior_id%, %dage_prior_id%, %dtime_prior_id%
 %$$
-They specify the likelihood grid indices; i.e.
+They specify the prior grid indices; i.e.
 $codei%
-	%s_info%.value_like_id(%i%, %j%) = %value_like_id%[%i%*%n_time% + %j%]
-	%s_info%.dage_like_id(%i%, %j%)  = %dage_like_id%[%i%*%n_time% + %j%]
-	%s_info%.dtime_like_id(%i%, %j%) = %dtime_like_id%[%i%*%n_time% + %j%]
+	%s_info%.value_prior_id(%i%, %j%) = %value_prior_id%[%i%*%n_time% + %j%]
+	%s_info%.dage_prior_id(%i%, %j%)  = %dage_prior_id%[%i%*%n_time% + %j%]
+	%s_info%.dtime_prior_id(%i%, %j%) = %dtime_prior_id%[%i%*%n_time% + %j%]
 %$$ 
 where $icode%n_time% = %time_id%.size()%$$.
 
@@ -154,7 +154,7 @@ these arguments have prototype
 $codei%
 	const size_t %mulstd_value%, %mulstd_dage%, %mulstd_dtime%
 %$$
-They specify the likelihood indices for the multiplies; i.e.,
+They specify the prior indices for the multiplies; i.e.,
 $codei%
 	%s_info%.mulstd_value()  = %mulstd_value%
 	%s_info%.mulstd_dage()   = %mulstd_dage%
@@ -233,9 +233,9 @@ $codei%
 	size_t %i_value%, %i_dage%, %i_dtime%
 %$$
 and are the 
-$cref/value_like_id/smooth_grid_table/value_like_id/$$,
-$cref/dage_like_id/smooth_grid_table/dage_like_id/$$, and
-$cref/dtime_like_id/smooth_grid_table/dtime_like_id/$$ 
+$cref/value_prior_id/smooth_grid_table/value_prior_id/$$,
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$, and
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ 
 corresponding to age index $icode i$$ and time index $icode j$$.
 
 $head m_type$$
@@ -296,20 +296,20 @@ size_t smooth_info::age_id(size_t i) const
 size_t smooth_info::time_id(size_t j) const
 {	return time_id_[j]; }
 //
-size_t smooth_info::value_like_id(size_t i, size_t j) const
+size_t smooth_info::value_prior_id(size_t i, size_t j) const
 {	assert( i < age_id_.size() );
 	assert( j < time_id_.size() );
-	return value_like_id_[ i * time_id_.size() + j]; 
+	return value_prior_id_[ i * time_id_.size() + j]; 
 }
-size_t smooth_info::dage_like_id(size_t i, size_t j) const
+size_t smooth_info::dage_prior_id(size_t i, size_t j) const
 {	assert( i < age_id_.size() );
 	assert( j < time_id_.size() );
-	return dage_like_id_[ i * time_id_.size() + j]; 
+	return dage_prior_id_[ i * time_id_.size() + j]; 
 }
-size_t smooth_info::dtime_like_id(size_t i, size_t j) const
+size_t smooth_info::dtime_prior_id(size_t i, size_t j) const
 {	assert( i < age_id_.size() );
 	assert( j < time_id_.size() );
-	return dtime_like_id_[ i * time_id_.size() + j]; 
+	return dtime_prior_id_[ i * time_id_.size() + j]; 
 }
 //
 size_t smooth_info::mulstd_value(void) const
@@ -323,9 +323,9 @@ size_t smooth_info::mulstd_dtime(void) const
 void smooth_info::operator=(const smooth_info& s_info)
 {	age_id_          = s_info.age_id_;
 	time_id_         = s_info.time_id_;
-	value_like_id_   = s_info.value_like_id_;
-	dage_like_id_    = s_info.dage_like_id_;
-	dtime_like_id_   = s_info.dtime_like_id_;
+	value_prior_id_  = s_info.value_prior_id_;
+	dage_prior_id_   = s_info.dage_prior_id_;
+	dtime_prior_id_  = s_info.dtime_prior_id_;
 	mulstd_value_    = s_info.mulstd_value_;
 	mulstd_dage_     = s_info.mulstd_dage_;
 	mulstd_dtime_    = s_info.mulstd_dtime_;
@@ -337,9 +337,9 @@ smooth_info::smooth_info(void)
 :
 age_id_(0),
 time_id_(0),
-value_like_id_(0),
-dage_like_id_(0),
-dtime_like_id_(0),
+value_prior_id_(0),
+dage_prior_id_(0),
+dtime_prior_id_(0),
 mulstd_value_(0),
 mulstd_dage_(0),
 mulstd_dtime_(0)
@@ -350,17 +350,17 @@ mulstd_dtime_(0)
 smooth_info::smooth_info(
 	const CppAD::vector<size_t>& age_id         ,
 	const CppAD::vector<size_t>& time_id        ,
-	const CppAD::vector<size_t>& value_like_id  ,
-	const CppAD::vector<size_t>& dage_like_id   ,
-	const CppAD::vector<size_t>& dtime_like_id  ,
+	const CppAD::vector<size_t>& value_prior_id ,
+	const CppAD::vector<size_t>& dage_prior_id  ,
+	const CppAD::vector<size_t>& dtime_prior_id ,
 	size_t                       mulstd_value   ,
 	size_t                       mulstd_dage    ,
 	size_t                       mulstd_dtime   )
 {	age_id_          = age_id;
 	time_id_         = time_id;
-	value_like_id_   = value_like_id;
-	dage_like_id_    = dage_like_id;
-	dtime_like_id_   = dtime_like_id;
+	value_prior_id_  = value_prior_id;
+	dage_prior_id_   = dage_prior_id;
+	dtime_prior_id_  = dtime_prior_id;
 	mulstd_value_    = mulstd_value;
 	mulstd_dage_     = mulstd_dage;
 	mulstd_dtime_    = mulstd_dtime;
@@ -386,7 +386,7 @@ smooth_info::smooth_info(
 	// check that -1 is not a valid positive int
 	assert( -1 == int( size_t(-1) ) );
 
-	// only use of smooth_table is to determine multiplier likelihoods
+	// only use of smooth_table is to determine multiplier priors
 	mulstd_value_   = smooth_table[smooth_id].mulstd_value;
 	mulstd_dage_    = smooth_table[smooth_id].mulstd_dage;
 	mulstd_dtime_   = smooth_table[smooth_id].mulstd_dtime;
@@ -408,12 +408,12 @@ smooth_info::smooth_info(
 	size_t n_age  = age_id_.size();
 	size_t n_time = time_id_.size();
 
-	// set smoothing likelihoods and count number of times each 
+	// set smoothing priors and count number of times each 
 	// age, time pair appears for this smooth_id
 	CppAD::vector<size_t> count(n_age * n_time );
-	value_like_id_.resize(n_age  * n_time );
-	dage_like_id_.resize(n_age  * n_time );
-	dtime_like_id_.resize(n_age  * n_time );
+	value_prior_id_.resize(n_age  * n_time );
+	dage_prior_id_.resize(n_age  * n_time );
+	dtime_prior_id_.resize(n_age  * n_time );
 	for(i = 0; i < n_age * n_time; i++)
 		count[i] = 0;
 	for( i = 0; i < n_smooth; i++)
@@ -434,38 +434,38 @@ smooth_info::smooth_info(
 			size_t index = j_age * n_time + j_time;
 			count[index]++;
 			//
-			value_like_id_[index] = smooth_grid_table[i].value_like_id;
-			dage_like_id_[index]  = smooth_grid_table[i].dage_like_id;
-			dtime_like_id_[index] = smooth_grid_table[i].dtime_like_id;
+			value_prior_id_[index] = smooth_grid_table[i].value_prior_id;
+			dage_prior_id_[index]  = smooth_grid_table[i].dage_prior_id;
+			dtime_prior_id_[index] = smooth_grid_table[i].dtime_prior_id;
 			//
-			if( j_age == n_age -1 && dage_like_id_[index] != size_t(-1) )
+			if( j_age == n_age -1 && dage_prior_id_[index] != size_t(-1) )
 			{	cerr << "smooth_grid table with smooth_grid_id = " << i
 				<< endl << "age_id = " << age_id_[j_age]
 				<< " is maximum age for smooth_id = " << smooth_id
-				<< endl << " but dage_like_id = " << dage_like_id_[index]
+				<< endl << " but dage_prior_id = " << dage_prior_id_[index]
 				<< " is not -1" << endl;
 				exit(1);
 			}
-			if( j_age != n_age -1 && dage_like_id_[index] == size_t(-1) )
+			if( j_age != n_age -1 && dage_prior_id_[index] == size_t(-1) )
 			{	cerr << "smooth_grid table with smooth_grid_id = " << i
 				<< endl << "age_id = " << age_id_[j_age]
 				<< " is not maximum age for smooth_id = " << smooth_id
-				<< endl << " but dage_like_id = -1 " << endl;
+				<< endl << " but dage_prior_id = -1 " << endl;
 				exit(1);
 			}
-			if( j_time == n_time -1 && dtime_like_id_[index] != size_t(-1) )
+			if( j_time == n_time -1 && dtime_prior_id_[index] != size_t(-1) )
 			{	cerr << "smooth_grid table with smooth_grid_id = " << i
 				<< endl << "time_id = " << time_id_[j_time]
 				<< " is maximum time for smooth_id = " << smooth_id
-				<< endl << " but dtime_like_id = " << dtime_like_id_[index]
+				<< endl << " but dtime_prior_id = " << dtime_prior_id_[index]
 				<< " is not -1" << endl;
 				exit(1);
 			}
-			if( j_time != n_time -1 && dtime_like_id_[index] == size_t(-1) )
+			if( j_time != n_time -1 && dtime_prior_id_[index] == size_t(-1) )
 			{	cerr << "smooth_grid table with smooth_grid_id = " << i
 				<< endl << "time_id = " << time_id_[j_time]
 				<< " is not maximum time for smooth_id = " << smooth_id
-				<< endl << " but dtime_like_id = -1 " << endl;
+				<< endl << " but dtime_prior_id = -1 " << endl;
 				exit(1);
 			}
 		}
