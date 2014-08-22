@@ -17,14 +17,23 @@ $spell
 	const
 	CppAD
 	struct
+	smoothings
+	pini
 $$
 
-$section Check that Parent and Child Smoothing Have same Grid$$
+$section Check Rate Smoothing Grid Assumptions$$
 
 $head syntax$$
 $codei%check_rate_smooth(%rate_table%, %s_info_ptr%)%$$
 
 $head Purpose$$
+If the assumptions below do not hold, 
+$code check_rate_smooth$$ exits with an error message.
+$list number$$
+The smoothings corresponding to
+$cref/pini/rate_table/rate_name/pini/$$ must have
+$cref/n_age/smooth_table/n_age/$$ equal to one.
+$lnext
 For each 
 $cref/rate_id/rate_table/rate_id/$$
 the corresponding
@@ -33,8 +42,7 @@ $cref/child_smooth_id/rate_table/child_smooth_id/$$ must have the
 same 
 $cref/age_id/smooth_grid_table/age_id/$$ and
 $cref/time_id/smooth_grid_table/time_id/$$ values.
-If this is not the case, $code check_rate_smooth$$ exits with an 
-error message.
+$lend
 
 $head rate_table$$
 This argument has prototype
@@ -84,6 +92,12 @@ void check_rate_smooth(
 		//
 		size_t n_age_parent = s_info_parent->age_size();
 		size_t n_age_child  = s_info_child->age_size();
+		//
+		if( rate_id == pini_enum && n_age_parent != 1 )
+		{	message = "parent_smooth_id corresponds to a smoothing"
+				" with n_age not equal to one";
+			table_error_exit("rate", rate_id, message);
+		}
 		if( n_age_parent != n_age_child )
 		{	message = "parent_smooth_id and child_smooth_id correspond to"
 				" differnt values of n_age in smooth table";

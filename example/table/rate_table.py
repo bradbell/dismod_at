@@ -35,10 +35,11 @@ def rate_table() :
 	col_name = [ 'rate_name', 'parent_smooth_id', 'child_smooth_id'  ]
 	col_type = [ 'text',      'integer',          'integer'          ]
 	row_list = [ 
-		['iota',  0,   1], 
-		['rho',   0,   1], 
-		['chi',   0,   1], 
-		['omega', 0,   1]
+		['pini',  0,   1], 
+		['iota',  2,   3], 
+		['rho',   2,   3], 
+		['chi',   2,   3], 
+		['omega', 2,   3]
 	]
 	tbl_name = 'rate'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

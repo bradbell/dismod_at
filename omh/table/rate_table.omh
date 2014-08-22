@@ -10,13 +10,15 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin rate_table$$ 
 $spell
+	pini
+	smoothings
 	covariate
 $$
 $index rate, table$$
 $index table, rate$$
 
 $section The Rate Table$$
-The $code rate$$ table is used to identify rates.
+The $code rate$$ table is used to set the smoothing for each of the rates.
 It has the following columns:
 
 $head rate_id$$
@@ -30,12 +32,23 @@ and only the following values,
 appear in the $icode rate_name$$ column:
 $table
 $icode rate_name$$ $pre   $$ $cnext Description                   $rnext
+$code pini$$       $pre   $$ $cnext initial prevalence            $rnext
 $code iota$$       $pre   $$ $cnext model incidence               $rnext
 $code rho$$        $pre   $$ $cnext model remission               $rnext
 $code chi$$        $pre   $$ $cnext model excess mortality        $rnext
 $code omega$$      $pre   $$ $cnext model other cause mortality
 $tend
 In addition, these values must appear in the order above.
+
+$subhead pini$$
+The initial prevalence is the prevalence at the initial age; i.e.,
+the value $cref/age/age_table/age/$$ corresponding to
+$icode%age_id% == 0%$$.
+If $icode rate_name$$ is $code pini$$, the 
+$icode parent_smooth_id$$ and $icode child_smooth_id$$ smoothings must have
+$cref/n_age/smooth_table/n_age/$$ equal to one.
+This is because prevalence at the initial age
+is only a function of time, and does not depend on age.
 
 $head parent_smooth_id$$
 This column has type $code integer$$ and its value is a
@@ -54,6 +67,8 @@ This smoothing must have the same
 $cref/age_id/smooth_grid_table/age_id/$$ and
 $cref/time_id/smooth_grid_table/time_id/$$ values
 as the corresponding parent smoothing.
+This is because prevalence at the initial age
+is only a function of time, not of age.
 
 $children%example/table/rate_table.py
 %$$

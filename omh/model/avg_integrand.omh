@@ -130,6 +130,10 @@ r_{i,k} (a , t)
 	q_{i,k} ( a, t )
 \] $$
 
+$subhead p_0$$
+We use $latex p_0 (t)$$ to denote the value of 
+prevalence at the initial age as a function of time; see
+$cref/pini/rate_table/rate_name/pini/$$.
 
 $subhead iota_i(a,t)$$
 We use $codei%iota_i(%a%, %t%)%$$ and $latex \iota_i (a,t)$$
@@ -160,10 +164,6 @@ $head C_i(a,t)$$
 We use $latex C_i (a,t)$$ to denote the with condition fraction of the
 population.
 
-$head p_0$$
-We use $latex p_0 (t)$$ to denote the value if prevalence at age zero
-as a function of time; see
-$cref/pini_smooth_id/run_table/pini_smooth_id/$$.
 
 $head Differential Equation$$
 The with condition and susceptible fractions at age zero are
@@ -171,7 +171,7 @@ $latex \[
 	C_i (0, t) =  p_0 (t) \; , \; S_i (0, t) = 1 - p_0 (t)
 \] $$
 We use $latex c$$ to denote cohort; i.e., $latex t = a + c$$,
-Given the rates and initial prevalence,
+Given the rates (initial prevalence is called a rate),
 the functions $latex S_i (a,t)$$ and $latex C_i (a,t)$$ for $latex a > 0$$ 
 are defined by
 $latex \[

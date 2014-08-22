@@ -105,20 +105,6 @@ $cref/child group/node_table/parent/Child Group/$$ for which
 the parent node is
 $cref/parent_node_id/run_table/parent_node_id/$$.
 
-$head Fixed Effects, theta$$
-we use $latex \theta$$ to denote the vector of fixed effects; i.e.,
-all of the model variables except for the random effects. 
-Below is a list of the fixed effects subvectors.
-
-$subhead Smoothing Standard Deviation Multipliers, lambda$$
-For each $latex i = $$ $cref/smooth_id/smooth_table/smooth_id/$$,
-there are three smoothing standard deviation multiplier variables:
-$latex \lambda_i^v$$, $latex \lambda_i^a$$ and $latex \lambda_i^t$$.
-The corresponding priors as specified by
-$cref/mulstd_value/smooth_table/mulstd_value/$$,
-$cref/mulstd_dage/smooth_table/mulstd_dage/$$, and
-$cref/mulstd_dtime/smooth_table/mulstd_dtime/$$.
-
 $subhead Initial Prevalence$$
 Let $latex p_0 (t)$$ to denote the 
 $cref/prevalence/model_avg_integrand/I_i (a, t)/prevalence/$$ 
@@ -134,13 +120,25 @@ $cref/C_i(a,t)/model_avg_integrand/C_i(a,t)/$$ is
 $latex \[
 	C_i ( a_0 , t ) = 1 - p_0 (t)
 \] $$
-The initial prevalence is a fixed effect subvector.
-Its smoothing is specified by
-$cref/pini_smooth_id/run_table/pini_smooth_id/$$.
+
+$head Fixed Effects, theta$$
+we use $latex \theta$$ to denote the vector of fixed effects; i.e.,
+all of the model variables except for the random effects. 
+Below is a list of the fixed effects subvectors.
+
+$subhead Smoothing Standard Deviation Multipliers, lambda$$
+For each $latex i = $$ $cref/smooth_id/smooth_table/smooth_id/$$,
+there are three smoothing standard deviation multiplier variables:
+$latex \lambda_i^v$$, $latex \lambda_i^a$$ and $latex \lambda_i^t$$.
+The corresponding priors as specified by
+$cref/mulstd_value/smooth_table/mulstd_value/$$,
+$cref/mulstd_dage/smooth_table/mulstd_dage/$$, and
+$cref/mulstd_dtime/smooth_table/mulstd_dtime/$$.
 
 $subhead Parent Rates$$
 For each rate
-$code iota$$, $code rho$$, $code chi$$, and $code omega$$ there is a 
+$code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$ 
+there is a 
 subvector corresponding to the parent value for the rate.
 The smoothing for each of these subvectors is specified by
 $cref/parent_smooth_id/rate_table/parent_smooth_id/$$.
@@ -159,9 +157,10 @@ for the children.
 
 $subhead Child Rates$$
 For each rate
-$code iota$$, $code rho$$, $code chi$$, and $code omega$$ 
-and each child, there is subvector of rate values.
-The smoothing from the subvector only depends on the rate
+$code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$ 
+there is a 
+subvector corresponding to the child value for the rate.
+The smoothing for the subvector only depends on the rate
 (given a rate, it is the same for all children).
 The smoothing is specified by
 $cref/child_smooth_id/rate_table/child_smooth_id/$$.

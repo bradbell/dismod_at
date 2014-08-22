@@ -16,6 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	enum rate_enum {
+		pini_enum,
 		iota_enum,
 		rho_enum,
 		chi_enum,

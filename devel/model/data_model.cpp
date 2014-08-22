@@ -760,7 +760,6 @@ $codei%
 %$$
 and is a vector of values for all of the model variables.
 Only the following subvectors of $icode var_vec$$ are used:
-$cref pack_var_pini$$,
 $cref pack_var_rate$$,
 $cref pack_var_rate_mulcov$$.
 
@@ -859,10 +858,11 @@ Float data_model::avg_yes_ode(
 	}
 	size_t n_index = ode_index.size();
 
-	// value for the rate on the ode subgrid
+	// value for the rates on the ode subgrid
 	CppAD::vector< CppAD::vector<Float> > rate_ode(number_rate_enum);
 	pack_var::subvec_info                 info;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	if( rate_id != pini_enum )
 	{	rate_ode[rate_id].resize(n_index);
 		//
 		// extract subvector infromation for this rate
@@ -901,8 +901,8 @@ Float data_model::avg_yes_ode(
 	size_t n_cohort = cohort_start.size();
 	CppAD::vector<size_t> pini_index( n_cohort );
 	for(ell = 0; ell < n_cohort; ell++)
-		pini_index[ell] = ode_index[ n_cohort ];
-	info = var_info.pini_info();
+		pini_index[ell] = ode_index[ cohort_start[ell] ];
+	info = var_info.rate_info(pini_enum, child);
 	CppAD::vector<Float> pini_si(info.n_var);
 	for(k = 0; k < info.n_var; k++)
 		pini_si[k] = var_vec[info.offset + k];

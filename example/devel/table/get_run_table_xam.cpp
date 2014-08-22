@@ -44,11 +44,10 @@ bool get_run_table_xam(void)
 	"create table run"
 	"(run_id                 integer primary key,"
 		" parent_node_id     integer,"
-		" pini_smooth_id     integer,"
 		" ode_step_size      real,"
 		" n_sample           integer)",
-	"insert into run values(0, 4, 1, 0.5,  500)",
-	"insert into run values(1, 5, 1, 0.25, 500)"
+	"insert into run values(0, 4, 0.5,  500)",
+	"insert into run values(1, 5, 0.25, 500)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -61,12 +60,10 @@ bool get_run_table_xam(void)
 	ok  &= run_table.size() == 2;
 	//
 	ok  &= run_table[0].parent_node_id     == 4;
-	ok  &= run_table[0].pini_smooth_id     == 1;
 	ok  &= run_table[0].ode_step_size      == 0.5;
 	ok  &= run_table[0].n_sample           == 500;
 	//
 	ok  &= run_table[1].parent_node_id     == 5;
-	ok  &= run_table[1].pini_smooth_id     == 1;
 	ok  &= run_table[1].ode_step_size      == 0.25;
 	ok  &= run_table[1].n_sample           == 500;
 	//

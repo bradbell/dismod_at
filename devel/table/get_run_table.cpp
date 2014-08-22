@@ -11,7 +11,6 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin get_run_table$$
 $spell
-	pini
 	sqlite
 	struct
 	cpp
@@ -56,10 +55,6 @@ $code int$$ $cnext $code parent_node_id$$ $cnext
 	The $cref/parent_node_id/run_table/parent_node_id/$$ 
 	for this run  
 $rnext
-$code int$$ $cnext $code pini_smooth_id$$ $cnext 
-	The $cref/pini_smooth_id/run_table/pini_smooth_id/$$ 
-	for this run  
-$rnext
 $code double$$ $cnext $code ode_step_size$$ $cnext 
 	The $cref/ode_step_size/run_table/ode_step_size/$$ 
 	for this run  
@@ -95,11 +90,6 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, parent_node_id);
 	assert( n_run == parent_node_id.size() );
 
-	column_name       =  "pini_smooth_id";
-	CppAD::vector<int>    pini_smooth_id;
-	get_table_column(db, table_name, column_name, pini_smooth_id);
-	assert( n_run == pini_smooth_id.size() );
-
 	column_name         =  "ode_step_size";
 	CppAD::vector<double>   ode_step_size;
 	get_table_column(db, table_name, column_name, ode_step_size);
@@ -113,7 +103,6 @@ CppAD::vector<run_struct> get_run_table(sqlite3* db)
 	CppAD::vector<run_struct> run_table(n_run);
 	for(size_t i = 0; i < n_run; i++)
 	{	run_table[i].parent_node_id      = parent_node_id[i];
-		run_table[i].pini_smooth_id      = pini_smooth_id[i];
 		run_table[i].ode_step_size       = ode_step_size[i];
 		run_table[i].n_sample            = n_sample[i];
 	}

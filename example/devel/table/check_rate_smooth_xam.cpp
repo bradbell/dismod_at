@@ -34,32 +34,41 @@ bool check_rate_smooth_xam(void)
 	size_t n_rate = size_t(dismod_at::number_rate_enum);
 	CppAD::vector<dismod_at::rate_struct> rate_table(n_rate);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	rate_table[rate_id].parent_smooth_id = 0;
-		rate_table[rate_id].child_smooth_id  = 1;
+	{	if( rate_id == dismod_at::pini_enum )
+		{	rate_table[rate_id].parent_smooth_id = 0;
+			rate_table[rate_id].child_smooth_id  = 1;
+		}
+		else
+		{	rate_table[rate_id].parent_smooth_id = 2;
+			rate_table[rate_id].child_smooth_id  = 3;
+		}
 	}
-	//
-	size_t n_age = 3;
-	CppAD::vector<size_t> age_id(n_age);
-	for(i = 0; i < n_age; i++)
-		age_id[i] = 2 * i;
-	//
-	size_t n_time = 4;
-	CppAD::vector<size_t> time_id(n_time);
-	for(j = 0; j < n_time; j++)
-		time_id[j] = 3 * j;
-	//
-	size_t n_grid = n_age * n_time;
-	CppAD::vector<size_t> value_prior_id(n_grid);
-	CppAD::vector<size_t> dage_prior_id (n_grid);
-	CppAD::vector<size_t> dtime_prior_id(n_grid);
-	size_t mulstd_value = 0;
-	size_t mulstd_dage = 0;
-	size_t mulstd_dtime = 0;
-	//
-	size_t n_smooth = 2;
+	size_t n_smooth = 4;
 	CppAD::vector<dismod_at::smooth_info*>  s_info_ptr(n_smooth);
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	s_info_ptr[smooth_id] = new dismod_at::smooth_info(
+	{
+		//
+		size_t n_age = 3;
+		if( smooth_id < 2 )
+			n_age = 1;
+		CppAD::vector<size_t> age_id(n_age);
+		for(i = 0; i < n_age; i++)
+			age_id[i] = 2 * i;
+		//
+		size_t n_time = 4;
+		CppAD::vector<size_t> time_id(n_time);
+		for(j = 0; j < n_time; j++)
+			time_id[j] = 3 * j;
+		//
+		size_t n_grid = n_age * n_time;
+		CppAD::vector<size_t> value_prior_id(n_grid);
+		CppAD::vector<size_t> dage_prior_id (n_grid);
+		CppAD::vector<size_t> dtime_prior_id(n_grid);
+		size_t mulstd_value = 0;
+		size_t mulstd_dage = 0;
+		size_t mulstd_dtime = 0;
+		//
+		s_info_ptr[smooth_id] = new dismod_at::smooth_info(
 			age_id, 
 			time_id, 
 			value_prior_id, 

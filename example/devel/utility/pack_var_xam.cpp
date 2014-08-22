@@ -35,7 +35,6 @@ bool pack_var_xam(void)
 
 	size_t n_integrand     = 4;
 	size_t n_child         = 2;
-	size_t pini_smooth_id  = 2;
 	//
 	size_t n_smooth = 4;
 	vector<dismod_at::smooth_struct> smooth_table(n_smooth);
@@ -72,18 +71,20 @@ bool pack_var_xam(void)
 	mulcov_table[3].smooth_id    = 3;
 	//
 	vector<dismod_at::rate_struct> rate_table(dismod_at::number_rate_enum);
-	rate_table[0].parent_smooth_id = 0;
-	rate_table[0].child_smooth_id  = 1;
-	rate_table[0].parent_smooth_id = 0;
-	rate_table[0].child_smooth_id  = 1;
-	rate_table[0].parent_smooth_id = 0;
-	rate_table[0].child_smooth_id  = 1;
-	rate_table[0].parent_smooth_id = 0;
-	rate_table[0].child_smooth_id  = 1;
+	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
+	{	size_t parent_smooth_id = 0;
+		size_t child_smooth_id   = 1;
+		if( rate_id == dismod_at::pini_enum )
+		{	parent_smooth_id = 2;
+			child_smooth_id  = 2;
+		}
+		rate_table[rate_id].parent_smooth_id = parent_smooth_id;
+		rate_table[rate_id].child_smooth_id  = child_smooth_id;
+	}
 	//
 	// constructor
 	dismod_at::pack_var var_info(
-		n_integrand, n_child, pini_smooth_id, 
+		n_integrand, n_child, 
 		smooth_table, mulcov_table, rate_table
 	);
 	//
@@ -96,13 +97,6 @@ bool pack_var_xam(void)
 	size_t n_var, offset;
 
 	// ---------------------------------------------------------------------
-	// set pini
-	info   = var_info.pini_info();
-	n_var  = info.n_var;
-	offset = info.offset;
-	for(size_t j = 0; j < n_var; j++)
-		var_vec[offset + j] = 1.0 / double(j + 2.0); 
-
 	// set mulstd
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	size_t offset    =	var_info.mulstd_offset(smooth_id);
@@ -153,13 +147,6 @@ bool pack_var_xam(void)
 		}
 	}
 	// ---------------------------------------------------------------------
-	// check pini
-	info   = var_info.pini_info();
-	ok    &= info.smooth_id == pini_smooth_id;
-	n_var  = info.n_var;
-	offset = info.offset;
-	for(size_t j = 0; j < n_var; j++)
-		ok &= var_vec[offset + j] == 1.0 / double(j + 2.0); 
 	// check mulstd
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	offset =	var_info.mulstd_offset(smooth_id);

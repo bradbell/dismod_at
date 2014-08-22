@@ -17,7 +17,6 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 	struct run_struct {
 		int    parent_node_id;
-		int    pini_smooth_id;
 		double ode_step_size;
 		int    n_sample;
 	};

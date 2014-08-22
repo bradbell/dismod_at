@@ -122,7 +122,6 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 
 	// run table
 	DISMOD_AT_CHECK_PRIMARY_ID(run, parent_node_id,  node,   0);
-	DISMOD_AT_CHECK_PRIMARY_ID(run, pini_smooth_id,  smooth, 0);
 
 	// smooth_grid table
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, smooth_id, smooth, 0);

@@ -117,6 +117,10 @@ smooth_list = [
 ] 
 rate_list = [
 	{
+		'name':'pini',
+		'parent_smooth':'constant',
+		'child_smooth':'constant'
+	},{
 		'name':'iota',
 		'parent_smooth':'constant',
 		'child_smooth':'constant'

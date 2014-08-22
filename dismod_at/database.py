@@ -435,18 +435,18 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # that define the rows of the $cref rate_table$$.
 # The dictionary $icode%rate_list%[%i%]%$$ has the following:
 # $table
-# Key           $cnext Value Type  $cnext Description                $rnext
-# name          $cnext str         $cnext iota, rho, chi, or omega   $rnext
-# parent_smooth $cnext str         $cnext parent smoothing           $rnext
-# child_smooth  $cnext str         $cnext child smoothing
+# Key           $cnext Value Type  $cnext Description                  $rnext
+# name          $cnext str     $cnext pini, iota, rho, chi, or omega   $rnext
+# parent_smooth $cnext str     $cnext parent smoothing                 $rnext
+# child_smooth  $cnext str     $cnext child smoothing
 # $tend
 # Furthermore the order of the rate names must be
-# iota, rho, chi, omega; i.e., the order in $cref rate_table$$.
+# pini, iota, rho, chi, omega; i.e., the order in $cref rate_table$$.
 #
 # $head mulcov_list$$
 # This is a list of $code dict$$
 # that define the rows of the $cref mulcov_table$$.
-# The dictionary $icode%rate_list%[%i%]%$$ has the following:
+# The dictionary $icode%mulcov_list%[%i%]%$$ has the following:
 # $table
 # Key       $cnext Value Type  $cnext Description                $rnext
 # covariate $cnext str         $cnext is the covariate column    $rnext

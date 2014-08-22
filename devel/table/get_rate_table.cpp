@@ -99,11 +99,13 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 	// rate names in same order as enum type in get_rate_table.hpp
 	// and in the documentation for rate_table.omh
 	const char* rate_enum2name[] = {
+		"pini",
 		"iota",
 		"rho",
 		"chi",
 		"omega"
 	};
+	assert( string("pini")  == rate_enum2name[pini_enum] );
 	assert( string("iota")  == rate_enum2name[iota_enum] );
 	assert( string("rho")   == rate_enum2name[rho_enum] );
 	assert( string("chi")   == rate_enum2name[chi_enum] );

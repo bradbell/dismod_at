@@ -179,7 +179,6 @@ bool avg_yes_ode_xam(void)
 	//
 	// smooth_table
 	size_t n_child        = 2;
-	size_t pini_smooth_id = 1; // only one age 
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
 	{	smooth_table[smooth_id].n_age  = s_info_vec[smooth_id].age_size();
@@ -190,12 +189,15 @@ bool avg_yes_ode_xam(void)
 	// rate_table
 	vector<dismod_at::rate_struct>   rate_table(dismod_at::number_rate_enum);
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
-	{	rate_table[rate_id].parent_smooth_id = 0;
-		rate_table[rate_id].child_smooth_id = 0;
+	{	size_t smooth_id = 0;
+		if( rate_id == dismod_at::pini_enum )
+			smooth_id = 1; // only one age
+		rate_table[rate_id].parent_smooth_id = smooth_id;
+		rate_table[rate_id].child_smooth_id = smooth_id;
 	}
 	// var_info
 	dismod_at::pack_var var_info(
-		n_integrand, n_child, pini_smooth_id,
+		n_integrand, n_child, 
 		smooth_table, mulcov_table, rate_table
 	);
 	//
@@ -215,9 +217,6 @@ bool avg_yes_ode_xam(void)
 			}
 		}
 	}
-	info = var_info.pini_info();
-	for(k = 0; k < info.n_var; k++)
-		var_vec[info.offset + k ] = 0.0;
 	/*
 	Solution is S(a) = exp( -beta * a ), P(a) = C(a) = 1.0 - exp( -beta * a )
 	int_b^c P(a) / (c - b) = [ a  + exp( -beta a ) / beta ]_b^c / (c - b)

@@ -73,7 +73,8 @@ and is the value of $cref/ode_step_size/run_table/ode_step_size/$$
 in the run table.
 
 $head rate$$
-For $icode rate$$ equal to $icode iota$$, $icode rho$$, $icode chi$$
+For $icode rate$$ equal to 
+$icode pini$$, $icode iota$$, $icode rho$$, $icode chi$$
 and $icode omega$$,
 this argument has prototype
 $codei%
@@ -92,22 +93,6 @@ and at time
 $codei%
 	%t% = %t_min% + (%j_max% - %i_max% + %k%) * %step_size%
 %$$
-
-$head pini$$
-This argument has prototype
-$codei%
-	const %Float%& %pini%
-%$$
-it is the $cref/pini_smooth_id/run_table/pini_smooth_id/$$ at age 
-$codei%
-	%a% = %a_min
-%$$ 
-and time 
-$codei%
-	%t% = %t_min% + (%j_max% - %i_max%) * %step_size%
-%$$
-Note that functions of time are constant for time less that 
-$icode t_min$$.
 
 $head S_out, C_out$$
 These arguments have prototypes

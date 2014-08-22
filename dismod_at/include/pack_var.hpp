@@ -44,9 +44,6 @@ private:
 	// mulstd variable offsets
 	size_t mulstd_offset_;
 
-	// initial prevalence information
-	subvec_info pini_info_;
-
 	// rate variable information
 	CppAD::vector< CppAD::vector<subvec_info> > rate_info_;
 
@@ -65,7 +62,6 @@ public:
 	pack_var(
 		size_t                              n_integrand    ,
 		size_t                              n_child        ,
-		size_t                              pini_smooth_id ,
 		const CppAD::vector<smooth_struct>& smooth_table   ,
 		const CppAD::vector<mulcov_struct>& mulcov_table   ,
 		const CppAD::vector<rate_struct>&   rate_table 
@@ -73,9 +69,6 @@ public:
 
 	// size of entire packed vector
 	size_t size(void) const;
-
-	// pini
-	subvec_info pini_info(void) const;
 
 	// mulstd
 	size_t mulstd_offset(size_t smooth_id) const;
