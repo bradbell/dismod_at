@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin mulcov_table$$ 
 $spell
+	pini
 	mulcov
 	std
 	dage
@@ -69,6 +70,14 @@ $cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
 It specifies the smoothing uses as a prior for this covariate multiplier.
 (Note that all covariate multipliers are fixed effects.)
+
+$subhead pini$$
+Consider the case where $icode mulcov_type$$ is $code rate_mean$$
+and $icode rate_id$$ corresponds to 
+$cref/rate_name/rate_table/rate_name/$$ $code pini$$.
+In this case, $icode smooth_id$$ should correspond to
+$cref/n_age/smooth_table/n_age/$$ equal to one because
+variation w.r.t. age will have no effect (for this covariate multiplier).
 
 $children%example/table/mulcov_table.py
 %$$
