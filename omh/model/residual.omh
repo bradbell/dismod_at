@@ -186,8 +186,8 @@ $latex \[
 	\B{p} \left[ y_i ( \theta ) \W{|} u , \theta \right]
 \] $$ 
 is a 
-$cref/Gaussian/model_density/Gaussian, G/$$ 
-($cref/Laplace/model_density/Laplace, L/$$) 
+$cref/Gaussian/model_density/Gaussian/$$ 
+($cref/Laplace/model_density/Laplace/$$) 
 density with mean
 $latex A_i (u, \theta)$$ and standard deviation $latex \delta_i ( \theta )$$.
 
@@ -212,8 +212,8 @@ $code log_gaussian$$ ($code log_laplace$$),
 $latex \[
 	\B{p} \left( [ \log [ y_i ( \theta ) + \eta_i ] \W{|} u , \theta \right)
 \] $$ 
-$cref/Gaussian/model_density/Gaussian, G/$$ 
-($cref/Laplace/model_density/Laplace, L/$$) 
+$cref/Gaussian/model_density/Gaussian/$$ 
+($cref/Laplace/model_density/Laplace/$$) 
 density with mean
 $latex \log [ A_i (u, \theta) + \eta_i ]$$ 
 and standard deviation 
