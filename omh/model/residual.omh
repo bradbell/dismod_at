@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin model_residual$$
 $spell
+	xbar
 	jk
 	std
 	ij
@@ -64,6 +65,11 @@ $cref/eta/integrand_table/eta/$$ value corresponding to $latex I_i$$.
 $subhead x_ij$$
 We use $latex x_{i,j}$$ to denote the corresponding
 $cref/covariate/data_table/Covariates/$$ values where $latex j$$
+denotes the $cref/covariate_id/covariate_table/covariate_id/$$.
+
+$subhead xbar_j$$
+We use $latex \bar{x}_j$$ to denote the covariate
+$cref/reference/covariate_table/reference/$$ value where $latex j$$
 denotes the $cref/covariate_id/covariate_table/covariate_id/$$.
 
 $subhead w_i$$
@@ -128,7 +134,7 @@ y_i ( \theta )
 \frac{v_i}{\bar{w}_i}
 \int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
 \exp \left( 
-	- \sum_{j \in J_i} x_{i,j} \beta_{i,j} (a, t)
+	- \sum_{j \in J_i} ( x_{i,j} - \bar{x}_j ) \beta_{i,j} (a, t)
 \right)
 w_i (a,t) \; \B{d} t \; \B{d} a 
 \] $$
@@ -143,7 +149,7 @@ z_i ( \theta )
 \frac{\sigma_i}{\bar{w}_i}
 \int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
 \exp \left( 
-	- \sum_{j \in J_i} x_{i,j} \beta_{i,j} (a, t )
+	- \sum_{j \in J_i} ( x_{i,j} - \bar{x}_j ) \beta_{i,j} (a, t )
 \right)
 w_i (a,t) \; \B{d} t \; \B{d} a 
 \] $$
@@ -155,12 +161,12 @@ z_i ( \theta )
 \frac{ y_i ( \theta) + \eta_i }{\bar{w}_i} 
 	\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
 	\left( 
-		\sum_{j \in K_i} x_{i,j} \gamma_{i,j} (a, t)
+		\sum_{j \in K_i} ( x_{i,j} - \bar{x}_j ) \gamma_{i,j} (a, t)
 	\right) 
 	w_i (a,t) \; \B{d} t \; \B{d} a 
 \] $$
 Note that for $latex j \in K_i$$ it should hold that
-$latex 0 \leq x_{i,j}$$ and $latex 0 \leq \gamma_{i,j} (a, t)$$
+$latex \bar{x}_j \leq x_{i,j}$$ and $latex 0 \leq \gamma_{i,j} (a, t)$$
 so that $latex 0 < z_i ( \theta ) \leq \delta_i ( \theta )$$.
 
 $head Average Integrand$$
