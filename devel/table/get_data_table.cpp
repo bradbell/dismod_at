@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin get_data_table$$
 $spell
+	const
 	covariate
 	covariates
 	sqlite
@@ -26,7 +27,7 @@ $index data, get table$$
 $index table, get data$$
 
 $head Syntax$$
-$icode%data_table% = get_data_table(%db%, %n_covariate%)%$$
+$icode%data_table% = get_data_table(%db%, %covariate_table%)%$$
 
 $head Purpose$$
 To read the $cref data_table$$ and return it as a C++ data structure.
@@ -38,15 +39,13 @@ $codei%
 %$$
 and is an open connection to the database.
 
-$head n_covariate$$
+$head covariate_table$$
 This argument has prototype
 $codei%
-	size_t n_covariate
+	const CppAD::vector<covariate_struct>& %covariate_table%
 %$$
-It is the number of covariates; i.e., the number of rows
-in the $cref covariate_table$$.
-It is also the number of columns in the data table that 
-have column names beginning with $code x_$$.
+and is the $cref/covariate_table/get_covariate_table/$$.
+Only the $code reference$$ column of this table is used.
 
 $head data_table$$
 The return value $icode data_table$$ has prototype
@@ -64,9 +63,12 @@ The value
 $codei%
 	%data_table%[%data_id%].x[%covariate_id%]
 %$$
-is the value of the covariate specified by
+is the value of the covariate corresponding to the
 $cref/covariate_id/covariate_table/covariate_id/$$
-and the measurement specified by $icode data_id$$.
+and the $icode data_id$$,
+minus the corresponding 
+$cref/reference/covariate_table/reference/$$ value
+corresponding to the $icode covariate_id$$.
 
 $head data_struct$$
 This is a structure with the following fields
@@ -122,7 +124,9 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<data_struct> get_data_table(sqlite3* db, size_t n_covariate)
+CppAD::vector<data_struct> get_data_table(
+	sqlite3*                               db              , 
+	const CppAD::vector<covariate_struct>& covariate_table )
 {	using std::string;
 	// TODO: This could be more efficient if we only allcated one temporary
 	// column at a time (to use with get_table column
@@ -180,6 +184,9 @@ CppAD::vector<data_struct> get_data_table(sqlite3* db, size_t n_covariate)
 	get_table_column(db, table_name, column_name, time_upper);
 	assert( n_data == time_upper.size() );
 
+	// number of covariate values
+	size_t n_covariate = covariate_table.size();
+
 	// fill in all but the covariate values
 	CppAD::vector<data_struct> data_table(n_data);
 	for(size_t i = 0; i < n_data; i++)
@@ -206,7 +213,7 @@ CppAD::vector<data_struct> get_data_table(sqlite3* db, size_t n_covariate)
 		CppAD::vector<double> x_j;
 		get_table_column(db, table_name, column_name, x_j);
 		for(size_t i = 0; i < n_data; i++)
-			data_table[i].x[j] = x_j[i];	
+			data_table[i].x[j] = x_j[i] - covariate_table[j].reference;	
 	}
 	return data_table;
 }

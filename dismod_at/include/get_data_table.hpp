@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <sqlite3.h>
 # include <cppad/vector.hpp>
+# include "get_covariate_table.hpp"
 
 namespace dismod_at {
 	struct data_struct {
@@ -29,8 +30,8 @@ namespace dismod_at {
 		CppAD::vector<double> x;
 	};
 	extern CppAD::vector<data_struct> get_data_table(
-		sqlite3*  db        , 
-		size_t n_covariate
+		sqlite3*                               db              , 
+		const CppAD::vector<covariate_struct>& covariate_table
 	);
 }
 

@@ -77,11 +77,15 @@ bool get_data_table_xam(void)
 	for(size_t i = 0; i < n_command; i++)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
+	// covariate table
+	vector<dismod_at::covariate_struct> covariate_table(2);
+	covariate_table[0].reference = -0.5;
+	covariate_table[1].reference =  0.0;
+
 
 	// get the data table
-	size_t n_covariate = 2; // number of covariates 
 	vector<dismod_at::data_struct> 
-		data_table = dismod_at::get_data_table(db, n_covariate);
+		data_table = dismod_at::get_data_table(db, covariate_table);
 	ok  &= data_table.size() == 1;
 	//
 	ok  &= data_table[0].integrand_id      == 1;
@@ -94,7 +98,7 @@ bool get_data_table_xam(void)
 	ok  &= data_table[0].age_upper         == 90.0;
 	ok  &= data_table[0].time_lower        == 2000.0;
 	ok  &= data_table[0].time_upper        == 2010.0;
-	ok  &= data_table[0].x[0]              == 0.5;
+	ok  &= data_table[0].x[0]              == 1.0;
 	ok  &= data_table[0].x[1]              == 1000.0;
 	//
 	// close database and return

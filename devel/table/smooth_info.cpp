@@ -93,14 +93,14 @@ This argument has prototype
 $codei%
 	const CppAD::vector<smooth_struct>& %smooth_table%
 %$$
-an is the $cref smooth_table$$.
+and is the $cref/smooth_table/get_smooth_table/$$.
 
 $subhead smooth_grid_table$$
 This argument has prototype
 $codei%
 	const CppAD::vector<smooth_grid_struct>& %smooth_grid_table%
 %$$
-an is the $cref smooth_grid_table$$.
+and is the $cref/smooth_grid_table/get_smooth_grid/$$.
 
 $subhead s_info$$
 This result has type $code smooth_info$$.

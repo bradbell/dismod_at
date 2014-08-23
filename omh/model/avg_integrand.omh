@@ -10,7 +10,6 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin model_avg_integrand$$
 $spell
-	xbar
 	wbar
 	mulcov
 	ik
@@ -61,11 +60,9 @@ $subhead x_ij$$
 We use $latex x_{i,j}$$ to denote the corresponding
 $cref/covariate/data_table/Covariates/$$ values where $latex j$$
 denotes the $cref/covariate_id/covariate_table/covariate_id/$$.
-
-$subhead xbar_j$$
-We use $latex \bar{x}_j$$ to denote the 
-$cref/reference/covariate_table/reference/$$ value where $latex j$$
-denotes the $cref/covariate_id/covariate_table/covariate_id/$$.
+Note that the covariate
+$cref/reference/covariate_table/reference/$$ has already
+been subtracted from these values.
 
 $subhead w_i$$
 We use $latex w_i (a, t)$$ for the weighting as a function of age and time
@@ -132,9 +129,8 @@ We use the notation
 $latex \[
 r_{i,k} (a , t) 
 = 
-\exp \left( 
-	\sum_{j \in J(k)} ( x_{i,j} - \bar{x}_j ) \alpha_{j,k} (a, t) 
-\right) q_{i,k} ( a, t )
+\exp \left( \sum_{j \in J(k)} x_{i,j} \alpha_{j,k} (a, t) \right) 
+	q_{i,k} ( a, t )
 \] $$
 
 $subhead p_0$$
