@@ -16,8 +16,8 @@ $index prior, table$$
 $index table, prior$$
 
 $section The Prior Table$$
-The $code prior$$ table is used to define 
-priors for a single scalar value.
+The $code prior$$ table is used to define the
+prior for a single $cref model_variable$$.
 It has the following columns:
 
 $head prior_id$$
@@ -61,8 +61,6 @@ Note that the value $code null$$ is interpreted as plus infinity; i.e.,
 no upper limit.
 
 $head mean$$
-$index std, plus infinity$$
-$index infinity, plus std$$
 This column has type $code real$$ and specifies the mean
 (before truncation by the lower and upper limits)
 for the prior.
@@ -72,7 +70,8 @@ $codei%
 %$$
 
 $head std$$
-$index std$$
+$index std, plus infinity$$
+$index infinity, plus std$$
 This column has type $code real$$ and specifies the standard deviation
 (before truncation by the lower and upper limits)
 for the prior.
