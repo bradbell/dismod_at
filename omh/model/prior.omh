@@ -18,8 +18,9 @@ one $icode prior_id$$.
 The prior for the variables are considered to be independent,
 hence their contributions to the log density are added.
 
-$head v$$
-We use $latex z$$ to denote the value of the variable 
+$head z$$
+We use $latex z$$ to denote the value of a
+$cref model_variable$$
 that this $code prior_id$$ corresponds to.
 
 $head mu$$
@@ -34,23 +35,15 @@ $head eta$$
 We use $latex \eta$$ to denote the log transformation offset
 $cref/eta/prior_table/eta/$$ corresponding to the $icode prior_id$$.
 
-$head lower$$
-We use $icode lower$$ to denote the 
+$head lower, a$$
+We use $latex a$$ to denote the 
 $cref/lower/prior_table/lower/$$ limit corresponding to the $icode prior_id$$.
-If it is not $code null$$, the constraint
-$codei%
-	%lower% <= %z%
-%$$
-is included.
+If it is $code null$$, $latex a = - \infty$$.
 
-$head upper$$
-We use $icode upper$$ to denote the 
+$head upper, b$$
+We use $latex b$$ to denote the 
 $cref/upper/prior_table/upper/$$ limit corresponding to the $icode prior_id$$.
-If it is not $code null$$, the constraint
-$codei%
-	%z% <= %upper% 
-%$$
-is included.
+If it is $code null$$, $latex b = + \infty$$.
 
 $head density$$
 The value $icode density$$ is 
@@ -60,33 +53,80 @@ $code laplace$$,
 $code log_gaussian$$, or 
 $code log_laplace$$
 depending on the value of $icode density_id$$ for this $icode prior_id$$.
+In all the case below,
+$latex \[
+	\B{p} ( z ) \propto f( z, \mu , \delta , \eta )
+\]$$
+means that 
+$latex \[
+\B{p} ( z )  = 
+	f( z , \mu , \delta , \eta ) \; \left/ \; \left[
+	\int f( z , \mu , \delta , \eta ) \B{d} z
+	\right] \right.
+\] $$
 
 $subhead uniform$$
 If $icode density$$ is $code uniform$$,
-no contribution is added to the log density for this variable.
+no contribution is added to the log density for this variable; i.e.
+$latex \[
+\B{p} ( z ) \propto \left\{ \begin{array}{ll}
+	1 & \R{if} \; \ell \leq z \leq u
+	\\
+	0 & \R{otherwise}
+\end{array} \right.
+\] $$
 
 $subhead gaussian$$
 If $icode density$$ is $code gaussian$$,
 $latex G( z , \mu , \delta )$$
-is added to the log density for this variable; see
-$cref/G/model_density/Gaussian/Log-Density, G/$$.
+is the contribution to the log density for this variable; i.e.,
+$latex \[
+\B{p} ( z ) \propto \left\{ \begin{array}{ll}
+	\exp [ G( z , \mu , \delta ) ] & \R{if} \; \ell \leq z \leq u
+	\\
+	0 & \R{otherwise}
+\end{array} \right.
+\] $$
+see $cref/G/model_density/Gaussian/Log-Density, G/$$.
+
 
 $subhead laplace$$
 If $icode density$$ is $code laplace$$,
 $latex L( z , \mu , \delta )$$
-is added to the log density for this variable; see
-$cref/L/model_density/Laplace/Log-Density, L/$$.
+is the contribution to the log density for this variable; i.e.,
+$latex \[
+\B{p} ( z ) \propto \left\{ \begin{array}{ll}
+	\exp [ L( z , \mu , \delta ) ] & \R{if} \; \ell \leq z \leq u
+	\\
+	0 & \R{otherwise}
+\end{array} \right.
+\] $$
+see $cref/L/model_density/Laplace/Log-Density, L/$$.
 
 $subhead log_gaussian$$
 If $icode density$$ is $code log_gaussian$$,
 $latex G_L ( z , \mu , \delta , \eta )$$
-is added to the log density for this variable; see
-$cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$.
+is the contribution to the log density for this variable; i.e.,
+$latex \[
+\B{p} ( z ) \propto \left\{ \begin{array}{ll}
+	\exp [ G_L ( z , \mu , \delta , \eta ) ] & \R{if} \; \ell \leq z \leq u
+	\\
+	0 & \R{otherwise}
+\end{array} \right.
+\] $$
+see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$.
 
 $subhead log_laplace$$
 If $icode density$$ is $code log_laplace$$,
 $latex L_L ( z , \mu , \delta , \eta )$$
-is added to the log density for this variable; see
-$cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$.
+is the contribution to the log density for this variable; 
+$latex \[
+\B{p} ( z ) \propto \left\{ \begin{array}{ll}
+	\exp [ L_L ( z , \mu , \delta , \eta ) ] & \R{if} \; \ell \leq z \leq u
+	\\
+	0 & \R{otherwise}
+\end{array} \right.
+\] $$
+see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$.
 
 $end
