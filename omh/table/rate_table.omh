@@ -10,6 +10,8 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin rate_table$$ 
 $spell
+	dage
+	dtime
 	pini
 	smoothings
 	covariate
@@ -67,8 +69,17 @@ This smoothing must have the same
 $cref/age_id/smooth_grid_table/age_id/$$ and
 $cref/time_id/smooth_grid_table/time_id/$$ values
 as the corresponding parent smoothing.
-This is because prevalence at the initial age
-is only a function of time, not of age.
+For each grid point there is a 
+$cref/value_prior_id/smooth_grid_table/value_prior_id/$$
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
+The 
+$cref/mean/prior_table/mean/$$ corresponding to these $icode prior_id$$
+are not used and can be $code null$$.
+The corresponding
+$cref/parent rate/model_variable/Fixed Effects, theta/Parent Rates/$$
+value, age difference, and time difference
+are instead used for the means.
 
 $children%example/table/rate_table.py
 %$$
