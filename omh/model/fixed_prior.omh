@@ -1,4 +1,4 @@
-$begin model_prior$$
+$begin model_fixed_prior$$
 $spell
 	mu
 	std
