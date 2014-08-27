@@ -1,19 +1,18 @@
-$begin model_fixed_prior$$
+$begin model_fixed_value$$
 $spell
 	mu
 	std
 $$
 
-$section The Prior For Fixed Effects$$
+$section The Prior Penalty for Fixed Effect Values$$
 
 $head Purpose$$
-Each component of the
+The value of each component of the
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$ 
 vector has a corresponding $cref/prior_id/prior_table/prior_id/$$ 
 attached to it.
-This section describes the contribution to the log density function,
-or the constraints, corresponding to one component of the
-fixed effects.
+This section defines the value penalty function which is used 
+to define the prior for the fixed effects.
 
 $head theta_j$$
 We use $latex \theta_j$$ to denote 
@@ -45,78 +44,72 @@ We use $latex b_j$$ to denote the
 $cref/upper/prior_table/upper/$$ limit corresponding to $icode prior_id$$.
 If it is $code null$$, $latex b_j = + \infty$$.
 
-$head Theta_j$$
-We define the set $latex \Theta_j \subset \B{R}$$ by
-$latex \[
-	\Theta_j = \left\{ \theta_j \in \B{R} \W{:} 
-		a_j \leq \theta_j \leq b_j
-	\right\}
-\] $$
-
-$head density$$
-The value $icode density$$ is 
-$code uniform$$,
-$code gaussian$$, 
-$code laplace$$, 
-$code log_gaussian$$, or 
-$code log_laplace$$
-depending on the value of $icode density_id$$ for this $icode prior_id$$.
-In all the cases below,
-$latex \[
-	\B{p} ( \theta_j ) \propto f( \theta_j , \mu_j , \delta_j , \eta_j )
-\]$$
-means that 
-$latex \[
-\B{p} ( \theta_j )  = 
-	f( \theta_j , \mu_j , \delta_j , \eta_j ) \; \left/ \; \left[
-	\int_{\Theta(j)} f( \theta_j , \mu_j , \delta_j , \eta_j ) \B{d} \theta_j 
-	\right] \right.
-\] $$
-if $latex \theta_j \in \Theta_j$$ and
-$latex \B{p} ( \theta_j ) = 0$$ otherwise.
-Furthermore, the density for all the fixed effects is given by
-$latex \[
-	\B{p} ( \theta ) = \prod_j \B{p} ( \theta_j )
-\] $$
+$head V_j^theta$$
+We use $icode density_id$$ to denote the
+$cref/density_id/prior_table/density_id/$$ corresponding to $icode prior_id$$.
+The definition of the value penalty function for $latex \theta_j$$
+is defined below under the corresponding
+$cref/density_name/density_table/density_name/$$.
 
 $subhead uniform$$
 If $icode density$$ is $code uniform$$,
-no contribution is added to the log density for this variable; i.e.
+the value penalty function is
 $latex \[
-\B{p} ( \theta_j ) \propto  1
+V_j^\theta ( \theta_j ) = 0
 \] $$
 
 $subhead gaussian$$
 If $icode density$$ is $code gaussian$$,
 see $cref/G/model_density/Gaussian/Log-Density, G/$$,
+the value penalty function is
 $latex \[
-\B{p} ( \theta_j ) \propto 
-	\exp [ G( u^j , \mu_j , \delta_j ) ]
+V_j^\theta ( \theta_j ) = - G( \theta_j , \mu_j , \delta_j ) 
 \] $$
 
 
 $subhead laplace$$
 If $icode density$$ is $code laplace$$,
 see $cref/L/model_density/Laplace/Log-Density, L/$$,
+the value penalty function is
 $latex \[
-\B{p} ( \theta_j ) \propto 
-	\exp [ L( u^j , \mu_j , \delta_j ) ]
+V_j^\theta ( \theta_j ) = - L( \theta_j , \mu_j , \delta_j ) 
 \] $$
 
 $subhead log_gaussian$$
 If $icode density$$ is $code log_gaussian$$,
 see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$,
+the value penalty function is
 $latex \[
-\B{p} ( \theta_j ) \propto 
-	\exp [ G_L ( u^j , \mu_j , \delta_j , \eta_j ) ] 
+V_j^\theta ( \theta_j ) = - G_L ( \theta_j , \mu_j , \delta_j , \eta_j ) 
 \] $$
 
 $subhead log_laplace$$
 If $icode density$$ is $code log_laplace$$,
 see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$,
+the value penalty function is
 $latex \[
-\B{p} ( \theta_j ) \propto 
-	\exp [ L_L ( u^j , \mu_j , \delta_j , \eta_j ) ]
+V_j^\theta ( \theta_j ) = - L_L ( \theta_j , \mu_j , \delta_j , \eta_j ) 
+\] $$
+
+$head Theta$$
+Let $latex n$$ be the number of fixed effects.
+We define the set $latex \Theta \subset \B{R}^n$$ by
+$latex \[
+	\Theta = \left\{ \theta \in \B{R}^n \W{:} 
+		a_j \leq \theta_j \leq b_j
+		\; \R{for} \; j = 0 , \ldots , n-1
+	\right\}
+\] $$
+
+$subhead V^\theta$$
+The value penalty for all of $latex \theta$$ is defined by
+$latex \[
+V^\theta ( \theta ) = \left\{ \begin{array}{ll}
+	\sum_{j=0}^{n-1} V_j^\theta ( \theta_j )
+		& \R{if} \; \theta \in \Theta
+	\\
+	+ \infty \; \R{otherwise}
+\end{array} \right.
 \] $$
 
 $end

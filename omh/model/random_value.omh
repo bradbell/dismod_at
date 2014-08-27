@@ -1,19 +1,18 @@
-$begin model_random_prior$$
+$begin model_random_value$$
 $spell
 	mu
 	std
 $$
 
-$section The Prior For Random Effects$$
+$section The Prior Penalty For Random Effect Values$$
 
 $head Purpose$$
-Each component of the
+The value of each  component of the
 $cref/random effects/model_variable/Random Effects, u/$$ 
 vector has a corresponding $cref/prior_id/prior_table/prior_id/$$ 
 attached to it.
-This section describes the contribution to the log density function,
-and the constraints, corresponding to one rate, age, time triple; i.e.
-$latex j$$ defined below.
+This section describes the value penalty function is used
+to define the prior for the random effects.
 
 $head theta$$
 We use $latex \theta$$ to denote the vector of
@@ -77,83 +76,63 @@ $cref/upper/prior_table/upper/$$ limit corresponding to
 random effects for the rate, age, and time specified by $icode j$$.
 If it is $code null$$, $latex b_j = + \infty$$.
 
-$head U_j$$
-We define the set $latex U_j \subset \B{R}^I$$ by
-$latex \[
-	U_j = \left\{ u^j \in \B{R}^I \W{:} 
-		\sum_{i=0}^{I-1} u_i^j = 0  
-		\W{\R{and}} 
-		a_j \leq u_i^j \leq b
-		\; \R{for} \; \R{all} \; i
-	\right\}
-\] $$
-
-$head density$$
-The value $icode density$$ is 
-$code uniform$$,
-$code gaussian$$, 
-$code laplace$$, 
-$code log_gaussian$$, or 
-$code log_laplace$$
-depending on the value of $icode density_id$$ for this $icode prior_id$$.
-In all the cases below,
-$latex \[
-	\B{p} ( u^j | \theta ) \propto f( u^j , \theta_j , \delta_j , \eta_j )
-\]$$
-means that 
-$latex \[
-\B{p} ( u^j | \theta_j )  = 
-	\prod_{i=1}^{I-1} f( u_i^j , \theta_j , \delta_j , \eta_j ) 
-	\; \left/ \; \left[
-	\prod_{i=1}^{I-1} \int_{U(j)} 
-		f( u^j , \theta_j , \delta_j , \eta_j ) \B{d} u^j 
-	\right] \right.
-\] $$
-if $latex u^j \in U_j$$ and 
-$latex \B{p} ( u^j | \theta_j ) = 0$$ otherwise.
-Furthermore, the density for all the random effects is given by
-$latex \[
-	\B{p} ( u ) = \prod_j \B{p} ( u^j )
-\] $$
+$head V_j^u$$
+We use $icode density_id$$ to denote the
+$cref/density_id/prior_table/density_id/$$ corresponding to 
+the rate, age, and time specified by $icode j$$.
+The definition of the value penalty function for $latex u^j$$
+is defined below under the corresponding
+$cref/density_name/density_table/density_name/$$.
 
 $subhead uniform$$
 If $icode density$$ is $code uniform$$,
 no contribution is added to the log density for this variable; i.e.
 $latex \[
-\B{p} ( u^j | \theta_j ) \propto  1
+V_j^u ( u^j | \theta_j ) =  0
 \] $$
 
 $subhead gaussian$$
 If $icode density$$ is $code gaussian$$,
 see $cref/G/model_density/Gaussian/Log-Density, G/$$,
 $latex \[
-\B{p} ( u^j | \theta_j ) \propto 
-	\exp [ G( u^j , \theta_j , \delta_j ) ]
+V_j^u ( u^j | \theta_j ) = - \sum_{i=0}^{I-1} G( u_i^j , \theta_j , \delta_j ) 
 \] $$
-
 
 $subhead laplace$$
 If $icode density$$ is $code laplace$$,
 see $cref/L/model_density/Laplace/Log-Density, L/$$,
 $latex \[
-\B{p} ( u^j | \theta_j ) \propto 
-	\exp [ L( u^j , \theta_j , \delta_j ) ]
+V_j^u ( u^j | \theta_j ) = - \sum_{i=0}^{I-1} L( u_i^j , \theta_j , \delta_j ) 
 \] $$
 
 $subhead log_gaussian$$
 If $icode density$$ is $code log_gaussian$$,
 see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$,
 $latex \[
-\B{p} ( u^j | \theta_j ) \propto 
-	\exp [ G_L ( u^j , \theta_j , \delta_j , \eta_j ) ] 
+V_j^u ( u^j | \theta_j ) 
+= 
+- \sum_{i=0}^{I-1} G_L ( u_i^j , \theta_j , \delta_j , \eta_j ) 
 \] $$
 
 $subhead log_laplace$$
 If $icode density$$ is $code log_laplace$$,
 see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$,
 $latex \[
-\B{p} ( u^j | \theta_j ) \propto 
-	\exp [ L_L ( u^j , \theta_j , \delta_j , \eta_j ) ]
+V_j^u ( u^j | \theta_j ) 
+= 
+- \sum_{i=0}^{I-1} L_L ( u_i^j , \theta_j , \delta_j , \eta_j ) 
+\] $$
+
+$head U$$
+Let $latex m$$ be the number of random effects.
+We define the set $latex U \subset \B{R}^m$$ by
+$latex \[
+	U = \left\{ u \in \B{R}^m \W{:} 
+		\R{for} \; \R{all} \; j \;
+		\sum_{i=0}^{I-1} u_i^j = 0  ,
+		\; \R{and} \; \R{for} \; \R{all} \; (i, j) \;
+		a_j \leq u_i^j \leq b_j
+	\right\}
 \] $$
 
 $end
