@@ -12,7 +12,8 @@ $cref/random effects/model_variable/Random Effects, u/$$
 vector has a corresponding $cref/prior_id/prior_table/prior_id/$$ 
 attached to it.
 This section describes the contribution to the log density function,
-and the constraints, corresponding to the random effects.
+and the constraints, corresponding to one rate, age, time triple; i.e.
+$latex j$$ defined below.
 
 $head theta$$
 We use $latex \theta$$ to denote the vector of
@@ -95,7 +96,7 @@ $code laplace$$,
 $code log_gaussian$$, or 
 $code log_laplace$$
 depending on the value of $icode density_id$$ for this $icode prior_id$$.
-In all the case below,
+In all the cases below,
 $latex \[
 	\B{p} ( u^j | \theta ) \propto f( u^j , \theta_j , \delta_j , \eta_j )
 \]$$
@@ -110,6 +111,10 @@ $latex \[
 \] $$
 if $latex u^j \in U_j$$ and 
 $latex \B{p} ( u^j | \theta_j ) = 0$$ otherwise.
+Furthermore, the density for all the random effects is given by
+$latex \[
+	\B{p} ( u ) = \prod_j \B{p} ( u^j )
+\] $$
 
 $subhead uniform$$
 If $icode density$$ is $code uniform$$,

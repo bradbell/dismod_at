@@ -22,28 +22,36 @@ $cref/fixed effects/model_variable/Fixed Effects, theta/$$ vector.
 We use $icode prior_id$$ for the prior that is attached to the 
 $th j$$ fixed effect.
 
-$head mu$$
+$head mu_j$$
 We use $latex \mu_j$$ to denote the 
 $cref/mean/prior_table/mean/$$ 
 corresponding to $icode prior_id$$.
 
-$head delta$$
-We use $latex \delta$$ to denote the standard deviation
+$head delta_j$$
+We use $latex \delta_j$$ to denote the standard deviation
 $cref/std/prior_table/std/$$ corresponding to $icode prior_id$$.
 
-$head eta$$
-We use $latex \eta$$ to denote the log transformation offset
+$head eta_j$$
+We use $latex \eta_j$$ to denote the log transformation offset
 $cref/eta/prior_table/eta/$$ corresponding to $icode prior_id$$.
 
-$head lower, a$$
-We use $latex a$$ to denote the 
+$head lower, a_j$$
+We use $latex a_j$$ to denote the 
 $cref/lower/prior_table/lower/$$ limit corresponding to $icode prior_id$$.
-If it is $code null$$, $latex a = - \infty$$.
+If it is $code null$$, $latex a_j = - \infty$$.
 
-$head upper, b$$
-We use $latex b$$ to denote the 
+$head upper, b_j$$
+We use $latex b_j$$ to denote the 
 $cref/upper/prior_table/upper/$$ limit corresponding to $icode prior_id$$.
-If it is $code null$$, $latex b = + \infty$$.
+If it is $code null$$, $latex b_j = + \infty$$.
+
+$head Theta_j$$
+We define the set $latex \Theta_j \subset \B{R}$$ by
+$latex \[
+	\Theta_j = \left\{ \theta_j \in \B{R} \W{:} 
+		a_j \leq \theta_j \leq b_j
+	\right\}
+\] $$
 
 $head density$$
 The value $icode density$$ is 
@@ -53,82 +61,62 @@ $code laplace$$,
 $code log_gaussian$$, or 
 $code log_laplace$$
 depending on the value of $icode density_id$$ for this $icode prior_id$$.
-In all the case below,
+In all the cases below,
 $latex \[
-	\B{p} ( \theta_j ) \propto f( \theta_j , \mu , \delta , \eta )
+	\B{p} ( \theta_j ) \propto f( \theta_j , \mu_j , \delta_j , \eta_j )
 \]$$
 means that 
 $latex \[
 \B{p} ( \theta_j )  = 
-	f( \theta_j , \mu , \delta , \eta ) \; \left/ \; \left[
-	\int f( \theta_j , \mu , \delta , \eta ) \B{d} \theta_j 
+	f( \theta_j , \mu_j , \delta_j , \eta_j ) \; \left/ \; \left[
+	\int_{\Theta(j)} f( \theta_j , \mu_j , \delta_j , \eta_j ) \B{d} \theta_j 
 	\right] \right.
+\] $$
+if $latex \theta_j \in \Theta_j$$ and
+$latex \B{p} ( \theta_j ) = 0$$ otherwise.
+Furthermore, the density for all the fixed effects is given by
+$latex \[
+	\B{p} ( \theta ) = \prod_j \B{p} ( \theta_j )
 \] $$
 
 $subhead uniform$$
 If $icode density$$ is $code uniform$$,
 no contribution is added to the log density for this variable; i.e.
 $latex \[
-\B{p} ( \theta_j ) \propto \left\{ \begin{array}{ll}
-	1 & \R{if} \; a \leq \theta_j \leq b
-	\\
-	0 & \R{otherwise}
-\end{array} \right.
+\B{p} ( \theta_j ) \propto  1
 \] $$
 
 $subhead gaussian$$
 If $icode density$$ is $code gaussian$$,
-$latex G( \theta_j , \mu , \delta )$$
-is the contribution to the log density for this variable; i.e.,
+see $cref/G/model_density/Gaussian/Log-Density, G/$$,
 $latex \[
-\B{p} ( \theta_j ) \propto \left\{ \begin{array}{ll}
-	\exp [ G( \theta_j , \mu , \delta ) ] & \R{if} \; a \leq \theta_j \leq b
-	\\
-	0 & \R{otherwise}
-\end{array} \right.
+\B{p} ( \theta_j ) \propto 
+	\exp [ G( u^j , \mu_j , \delta_j ) ]
 \] $$
-see $cref/G/model_density/Gaussian/Log-Density, G/$$.
 
 
 $subhead laplace$$
 If $icode density$$ is $code laplace$$,
-$latex L( \theta_j , \mu , \delta )$$
-is the contribution to the log density for this variable; i.e.,
+see $cref/L/model_density/Laplace/Log-Density, L/$$,
 $latex \[
-\B{p} ( \theta_j ) \propto \left\{ \begin{array}{ll}
-	\exp [ L( \theta_j , \mu , \delta ) ] & \R{if} \; a \leq \theta_j \leq b
-	\\
-	0 & \R{otherwise}
-\end{array} \right.
+\B{p} ( \theta_j ) \propto 
+	\exp [ L( u^j , \mu_j , \delta_j ) ]
 \] $$
-see $cref/L/model_density/Laplace/Log-Density, L/$$.
 
 $subhead log_gaussian$$
 If $icode density$$ is $code log_gaussian$$,
-$latex G_L ( \theta_j , \mu , \delta , \eta )$$
-is the contribution to the log density for this variable; i.e.,
+see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$,
 $latex \[
-\B{p} ( \theta_j ) \propto \left\{ \begin{array}{ll}
-	\exp [ G_L ( \theta_j , \mu , \delta , \eta ) ] & 
-		\R{if} \; a \leq \theta_j \leq b
-	\\
-	0 & \R{otherwise}
-\end{array} \right.
+\B{p} ( \theta_j ) \propto 
+	\exp [ G_L ( u^j , \mu_j , \delta_j , \eta_j ) ] 
 \] $$
-see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$.
 
 $subhead log_laplace$$
 If $icode density$$ is $code log_laplace$$,
-$latex L_L ( \theta_j , \mu , \delta , \eta )$$
-is the contribution to the log density for this variable; 
+see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$,
 $latex \[
-\B{p} ( \theta_j ) \propto \left\{ \begin{array}{ll}
-	\exp [ L_L ( \theta_j , \mu , \delta , \eta ) ] & 
-		\R{if} \; a \leq \theta_j \leq b
-	\\
-	0 & \R{otherwise}
-\end{array} \right.
+\B{p} ( \theta_j ) \propto 
+	\exp [ L_L ( u^j , \mu_j , \delta_j , \eta_j ) ]
 \] $$
-see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$.
 
 $end
