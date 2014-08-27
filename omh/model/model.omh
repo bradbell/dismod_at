@@ -22,6 +22,7 @@ $childtable%
 	omh/model/density.omh%
 	omh/model/data_like.omh%
 	omh/model/fixed_prior.omh%
+	omh/model/random_prior.omh%
 	omh/model/glossary.omh
 %$$
 
