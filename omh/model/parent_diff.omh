@@ -79,26 +79,6 @@ $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
 ( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
 for rate $latex i$$, and the specified age, time. 
 
-$head lower, ell_{j,k}$$
-We use 
-$latex \ell_{j,k}^a$$
-( $latex \ell_{j,k}^t$$ )
-to denote the 
-$cref/lower/prior_table/lower/$$ limit corresponding to 
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ 
-( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-for rate $latex i$$, and the specified age, time. 
-
-$head upper, u_{j,k}$$
-We use 
-$latex u_{j,k}^a$$
-( $latex u_{j,k}^t$$ )
-to denote the 
-$cref/upper/prior_table/upper/$$ limit corresponding to 
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ 
-( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-for rate $latex i$$, and the specified age, time. 
-
 $head V_{j,k}$$
 We use $icode density_id$$ to denote the
 $cref/density_id/prior_table/density_id/$$ corresponding to 
