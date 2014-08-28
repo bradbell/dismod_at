@@ -18,13 +18,13 @@ $head theta$$
 We use $latex \theta$$ to denote the vector of
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$.
 
-$head i$$
-We use $latex I$$ to denote the size of the
+$head c$$
+We use $latex C$$ to denote the size of the
 $cref/child group/node_table/parent/Child Group/$$
 corresponding to the 
 $cref/parent/run_table/parent_node_id/$$.
-For $latex i = 0 , \ldots , I-1$$, we use
-$latex i$$ to denote the corresponding child.
+For $latex c = 0 , \ldots , C-1$$, we use
+$latex c$$ to denote the corresponding child.
 
 $head j$$
 For each 
@@ -36,15 +36,11 @@ number of time points $cref/n_time/smooth_table/n_time/$$.
 We use the single index $latex j$$ (instead of three indices)
 to denote a each of the rate, age, and time triples.
 
-$head u^j$$
-We use $latex u_i^j$$ to denote the
+$head u_{c,j}$$
+We use $latex u_{c,j}$$ to denote the
 $cref/random effect/model_variable/Random Effects, u/$$ 
-for the rate, age and time specified by $latex j$$
-and the child specified by $latex i$$.
-We use $latex u^j \in \B{R}^I$$ to denote the vector
-$latex \[
-	u^j = ( u_0^j , \ldots , u_{I-1}^j )^\R{T}
-\] $$.
+for the child specified by $latex c$$ and
+the rate, age and time specified by $latex j$$.
 
 $head theta_j$$
 We use $latex \theta_j$$ to denote the 
@@ -64,23 +60,11 @@ $cref/eta/prior_table/eta/$$ corresponding to the
 $cref/child_smooth_id/rate_table/child_smooth_id/$$ and the 
 rate, age, and time specified by $icode j$$. 
 
-$head lower, a_j$$
-We use $latex a_j$$ to denote the 
-$cref/lower/prior_table/lower/$$ limit corresponding to 
-random effects for the rate, age, and time specified by $icode j$$.
-If it is $code null$$, $latex a_j = - \infty$$.
-
-$head upper, b_j$$
-We use $latex b_j$$ to denote the 
-$cref/upper/prior_table/upper/$$ limit corresponding to 
-random effects for the rate, age, and time specified by $icode j$$.
-If it is $code null$$, $latex b_j = + \infty$$.
-
-$head V_j^u$$
+$head V_c,j^u$$
 We use $icode density_id$$ to denote the
 $cref/density_id/prior_table/density_id/$$ corresponding to 
 the rate, age, and time specified by $icode j$$.
-The definition of the value penalty function for $latex u^j$$
+The definition of the value penalty function for $latex u_{c,j}$$
 is defined below under the corresponding
 $cref/density_name/density_table/density_name/$$.
 
@@ -88,51 +72,46 @@ $subhead uniform$$
 If $icode density$$ is $code uniform$$,
 no contribution is added to the log density for this variable; i.e.
 $latex \[
-V_j^u ( u^j | \theta_j ) =  0
+V_{c,j}^u ( u_{c,j} | \theta_j ) =  0
 \] $$
 
 $subhead gaussian$$
 If $icode density$$ is $code gaussian$$,
 see $cref/G/model_density/Gaussian/Log-Density, G/$$,
 $latex \[
-V_j^u ( u^j | \theta_j ) = - \sum_{i=0}^{I-1} G( u_i^j , \theta_j , \delta_j ) 
+V_{c,j}^u ( u_{c,j} | \theta_j ) = - G( u_{c,j} , \theta_j , \delta_j ) 
 \] $$
 
 $subhead laplace$$
 If $icode density$$ is $code laplace$$,
 see $cref/L/model_density/Laplace/Log-Density, L/$$,
 $latex \[
-V_j^u ( u^j | \theta_j ) = - \sum_{i=0}^{I-1} L( u_i^j , \theta_j , \delta_j ) 
+V_{c,j}^u ( u_{c,j} | \theta_j ) = - L( u_{c,j} , \theta_j , \delta_j ) 
 \] $$
 
 $subhead log_gaussian$$
 If $icode density$$ is $code log_gaussian$$,
 see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$,
 $latex \[
-V_j^u ( u^j | \theta_j ) 
+V_{c,j}^u ( u_{c,j} | \theta_j ) 
 = 
-- \sum_{i=0}^{I-1} G_L ( u_i^j , \theta_j , \delta_j , \eta_j ) 
+- G_L ( u_{c,j} , \theta_j , \delta_j , \eta_j ) 
 \] $$
 
 $subhead log_laplace$$
 If $icode density$$ is $code log_laplace$$,
 see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$,
 $latex \[
-V_j^u ( u^j | \theta_j ) 
+V_{c,j}^u ( u_{c,j} | \theta_j ) 
 = 
-- \sum_{i=0}^{I-1} L_L ( u_i^j , \theta_j , \delta_j , \eta_j ) 
+- L_L ( u_{c,j} , \theta_j , \delta_j , \eta_j ) 
 \] $$
 
-$head U$$
+$subhead V^u$$
 Let $latex m$$ be the number of random effects.
-We define the set $latex U \subset \B{R}^m$$ by
+The value penalty for all the random  effects $latex u$$ is defined by
 $latex \[
-	U = \left\{ u \in \B{R}^m \W{:} 
-		\R{for} \; \R{all} \; j \;
-		\sum_{i=0}^{I-1} u_i^j = 0  ,
-		\; \R{and} \; \R{for} \; \R{all} \; (i, j) \;
-		a_j \leq u_i^j \leq b_j
-	\right\}
+V^u ( u )  = \sum_{c=0}^{C-1} \sum_{j=0}^{m-1} V_{c,j}^u ( u_{c,j} | \theta_j )
 \] $$
 
 $end

@@ -34,16 +34,6 @@ $head eta_j$$
 We use $latex \eta_j$$ to denote the log transformation offset
 $cref/eta/prior_table/eta/$$ corresponding to $icode prior_id$$.
 
-$head lower, a_j$$
-We use $latex a_j$$ to denote the 
-$cref/lower/prior_table/lower/$$ limit corresponding to $icode prior_id$$.
-If it is $code null$$, $latex a_j = - \infty$$.
-
-$head upper, b_j$$
-We use $latex b_j$$ to denote the 
-$cref/upper/prior_table/upper/$$ limit corresponding to $icode prior_id$$.
-If it is $code null$$, $latex b_j = + \infty$$.
-
 $head V_j^theta$$
 We use $icode density_id$$ to denote the
 $cref/density_id/prior_table/density_id/$$ corresponding to $icode prior_id$$.
@@ -92,7 +82,6 @@ V_j^\theta ( \theta_j ) = - L_L ( \theta_j , \mu_j , \delta_j , \eta_j )
 \] $$
 
 $head Theta$$
-Let $latex n$$ be the number of fixed effects.
 We define the set $latex \Theta \subset \B{R}^n$$ by
 $latex \[
 	\Theta = \left\{ \theta \in \B{R}^n \W{:} 
@@ -102,14 +91,10 @@ $latex \[
 \] $$
 
 $subhead V^\theta$$
-The value penalty for all of $latex \theta$$ is defined by
+Let $latex n$$ be the number of fixed effects.
+The value penalty for all the fixed effects $latex \theta$$ is defined by
 $latex \[
-V^\theta ( \theta ) = \left\{ \begin{array}{ll}
-	\sum_{j=0}^{n-1} V_j^\theta ( \theta_j )
-		& \R{if} \; \theta \in \Theta
-	\\
-	+ \infty \; \R{otherwise}
-\end{array} \right.
+V^\theta ( \theta ) = \sum_{j=0}^{n-1} V_j^\theta ( \theta_j )
 \] $$
 
 $end

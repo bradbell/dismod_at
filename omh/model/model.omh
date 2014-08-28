@@ -23,7 +23,7 @@ $childtable%
 	omh/model/data_like.omh%
 	omh/model/fixed_value.omh%
 	omh/model/random_value.omh%
-	omh/model/parent_diff.omh%
+	omh/model/fixed_diff.omh%
 	omh/model/glossary.omh
 %$$
 
