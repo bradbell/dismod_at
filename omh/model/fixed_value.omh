@@ -1,18 +1,12 @@
 $begin model_fixed_value$$
 $spell
+	mulstd
 	mu
 	std
 $$
 
 $section The Prior Penalty for Fixed Effect Values$$
 
-$head Purpose$$
-The value of each component of the
-$cref/fixed effects/model_variable/Fixed Effects, theta/$$ 
-vector has a corresponding $cref/prior_id/prior_table/prior_id/$$ 
-attached to it.
-This section defines the value penalty function which is used 
-to define the prior for the fixed effects.
 
 $head theta_j$$
 We use $latex \theta_j$$ to denote 
@@ -21,6 +15,20 @@ $cref/fixed effects/model_variable/Fixed Effects, theta/$$ vector.
 We use $icode prior_id$$ for the prior that is attached to the 
 $th j$$ fixed effect.
 
+$head lambda_j$$
+If $latex \theta_j$$ is a 
+$cref/smoothing standard deviation multiplier
+	/model_variable
+	/Fixed Effects, theta
+	/Smoothing Standard Deviation Multipliers, lambda
+/$$
+then $latex \lambda_j = 1$$.
+Otherwise $latex \lambda_j$$
+is the $cref/mulstd_value/smooth_table/mulstd_value/$$ 
+multiplier for the 
+$cref/smooth_id/smooth_grid_table/smooth_id/$$ 
+corresponding to $latex \theta_j$$.
+	
 $head mu_j$$
 We use $latex \mu_j$$ to denote the 
 $cref/mean/prior_table/mean/$$ 
@@ -45,7 +53,7 @@ $subhead uniform$$
 If $icode density$$ is $code uniform$$,
 the value penalty function is
 $latex \[
-V_j^\theta ( \theta_j ) = 0
+V_j^\theta ( \theta ) = 0
 \] $$
 
 $subhead gaussian$$
@@ -53,7 +61,9 @@ If $icode density$$ is $code gaussian$$,
 see $cref/G/model_density/Gaussian/Log-Density, G/$$,
 the value penalty function is
 $latex \[
-V_j^\theta ( \theta_j ) = - G( \theta_j , \mu_j , \delta_j ) 
+V_j^\theta ( \theta ) 
+=
+- G \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \right) 
 \] $$
 
 
@@ -62,7 +72,9 @@ If $icode density$$ is $code laplace$$,
 see $cref/L/model_density/Laplace/Log-Density, L/$$,
 the value penalty function is
 $latex \[
-V_j^\theta ( \theta_j ) = - L( \theta_j , \mu_j , \delta_j ) 
+V_j^\theta ( \theta ) 
+=
+- L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \right) 
 \] $$
 
 $subhead log_gaussian$$
@@ -70,7 +82,11 @@ If $icode density$$ is $code log_gaussian$$,
 see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$,
 the value penalty function is
 $latex \[
-V_j^\theta ( \theta_j ) = - G_L ( \theta_j , \mu_j , \delta_j , \eta_j ) 
+V_j^\theta ( \theta ) 
+=
+- G_L \left( 
+	\theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} \eta_j 
+\right) 
 \] $$
 
 $subhead log_laplace$$
@@ -78,23 +94,18 @@ If $icode density$$ is $code log_laplace$$,
 see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$,
 the value penalty function is
 $latex \[
-V_j^\theta ( \theta_j ) = - L_L ( \theta_j , \mu_j , \delta_j , \eta_j ) 
-\] $$
-
-$head Theta$$
-We define the set $latex \Theta \subset \B{R}^n$$ by
-$latex \[
-	\Theta = \left\{ \theta \in \B{R}^n \W{:} 
-		a_j \leq \theta_j \leq b_j
-		\; \R{for} \; j = 0 , \ldots , n-1
-	\right\}
+V_j^\theta ( \theta ) 
+=
+- L_L \left( 
+	\theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} \eta_j 
+\right) 
 \] $$
 
 $subhead V^\theta$$
 Let $latex n$$ be the number of fixed effects.
 The value penalty for all the fixed effects $latex \theta$$ is defined by
 $latex \[
-V^\theta ( \theta ) = \sum_{j=0}^{n-1} V_j^\theta ( \theta_j )
+V^\theta ( \theta ) = \sum_{j=0}^{n-1} V_j^\theta ( \theta )
 \] $$
 
 $end
