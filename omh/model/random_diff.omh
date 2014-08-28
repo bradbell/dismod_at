@@ -1,5 +1,6 @@
-$begin model_fixed_diff$$
+$begin model_random_diff$$
 $spell
+	smoothings
 	covariate
 	covariates
 	mulcov
@@ -10,29 +11,24 @@ $spell
 	std
 $$
 
-$section The Prior Penalty For Fixed Effect Differences$$
+$section The Prior Penalty For Random Effect Differences$$
 
 $head k, K$$
-For each
-$cref/rate_id/rate_table/rate_id/$$ there is 
-$cref/parent_smooth_id/rate_table/parent_smooth_id/$$.
-In addition, for each 
-$cref/mulcov_id/mulcov_table/mulcov_id/$$
-there is a 
-$cref/smooth_id/mulcov_table/smooth_id/$$.
-We use $latex k$$ to index all the rates and covariates multipliers
-and $latex K$$ for the number of rates plus the number
-of covariate multipliers.
+We use $latex k$$ to denote a
+$cref/rate_id/rate_table/rate_id/$$
+and $latex K$$ for the number of rates. 
 
-$head lambda_k^a, lambda_k^t$$
+$head lambda_k$$
 We use 
 $latex \lambda_k^a$$
 ( $latex \lambda_k^t$$ )
 to denote the 
 $cref/mulstd_dage/smooth_table/mulstd_dage/$$
 ( $cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ )
-for $icode smooth_id$$ corresponding to $latex k$$.
-
+for the
+$cref/child_smooth_id/rate_table/child_smooth_id/$$
+corresponding to
+$icode%rate_id% = %k%$$
 
 $head Age, a_i,k$$
 Given $latex k$$, there is a corresponding number of age points
@@ -40,6 +36,8 @@ $cref/n_age/smooth_table/n_age/$$ $latex I(k)$$ for the corresponding
 $icode smooth_id$$.
 For $latex i = 0 , \ldots , I(k)-1$$,
 we use $latex a_{i,k}$$ to denote the corresponding age value.
+Note that, for each rate,
+this age grid is the same for both the parent and child smoothings.
 
 $head Time, t_j,k$$
 Given $latex k$$, there is a corresponding number of time points
@@ -47,10 +45,19 @@ $cref/n_time/smooth_table/n_time/$$ $latex J(k)$$ for the corresponding
 $icode smooth_id$$.
 For $latex j = 0 , \ldots , J(k)-1$$,
 we use $latex t_{j,k}$$ to denote the corresponding time value.
+Note that, for each rate,
+this time grid is the same for both the parent and child smoothings.
 
 $head theta_i,j,k$$
 Let $latex \theta_{i,j,k}$$ denote the fixed effect corresponding to 
-rate or covariate index $latex k$$, 
+rate index $latex k$$, 
+age index $latex i$$ and
+time index $latex j$$.
+
+$head u_i,j,k,c$$
+Let $latex u_{i,j,k,c}$$ denote the random effect corresponding to 
+child index $latex c$$,
+rate index $latex k$$, 
 age index $latex i$$ and
 time index $latex j$$.
 
@@ -61,26 +68,24 @@ $latex \[
 = 
 \frac{ \theta_{i+1,j,k} - \theta_{i,j,k} }{ a_{i+1,k} - a_{i,k} }
 \] $$
+$latex \[
+\Delta_{i,j,k,c}^a u
+= 
+\frac{ u_{i+1,j,k,c} - u_{i,j,k,c} }{ a_{i+1,k} - a_{i,k} }
+\] $$
 
-$subhead Delta^t$$
+$head Delta^t$$
 For $latex i = 0 , \ldots , J(k)-2$$ we define
 $latex \[
 \Delta_{i,j,k}^t \theta
 = 
 \frac{ \theta_{i,j+1,k} - \theta_{i,j,k} }{ t_{j+1,k} - t_{j,k} }
 \] $$
-
-$head mu_i,j,k$$
-We use 
-$latex \mu_{i,j,k}^a$$ 
-( $latex \mu_{i,j,k}^t$$ ) 
-to denote the 
-$cref/mean/prior_table/mean/$$ corresponding to the 
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ 
-( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-rate or covariate index $latex k$$, 
-age index $latex i$$ and
-time index $latex j$$.
+$latex \[
+\Delta_{i,j,k,c}^t u
+= 
+\frac{ u_{i,j+1,k,c} - u_{i,j,k,c} }{ t_{j+1,k} - t_{j,k} }
+\] $$
 
 $head delta_i,j,k$$
 We use 
@@ -90,7 +95,7 @@ to denote the
 $cref/std/prior_table/std/$$ corresponding to the 
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ 
 ( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-rate or covariate index $latex k$$, 
+rate index $latex k$$, 
 age index $latex i$$ and
 time index $latex j$$.
 
@@ -102,12 +107,12 @@ to denote the
 $cref/eta/prior_table/eta/$$ corresponding to the 
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ 
 ( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-rate or covariate index $latex k$$, 
+rate index $latex k$$, 
 age index $latex i$$ and
 time index $latex j$$.
 
 
-$head A_i,j,k^theta, T_i,j,k^theta$$
+$head A_i,j,k,c, T_i,j,k,c$$
 We use $icode density_id$$ to denote the
 $cref/density_id/prior_table/density_id/$$ corresponding to 
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ 
@@ -124,13 +129,13 @@ If $icode density$$ for
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ is $code uniform$$,
 for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
-A_{i,j,k}^\theta ( \theta ) =  0
+A_{i,j,k,c}^u ( u | \theta ) =  0
 \] $$
 If $icode density$$ for 
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ is $code uniform$$,
 for $latex j = 0 , \ldots , J(k)-2$$,
 $latex \[
-T_{i,j,k}^\theta ( \theta ) =  0
+T_{i,j,k,c}^\theta ( u | \theta ) =  0
 \] $$
 
 $subhead gaussian$$
@@ -139,22 +144,24 @@ $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ is $code gaussian$$,
 see $cref/G/model_density/Gaussian/Log-Density, G/$$,
 for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
-A_{i j,k}^\theta ( \theta ) 
+A_{i,j,k,c}^u ( u | \theta ) 
 =  
 - G \left( 
-	\Delta_{i,j,k}^a \theta 
-	\W{,} \mu_{i,j,k}^a \W{,} \lambda_k^a \delta_{i,j,k}^a 
+	\Delta_{i,j,k,c}^a u 
+	\W{,} \Delta_{i,j,k}^a \theta 
+	\W{,} \lambda_k^a \delta_{i,j,k}^a 
 \right)
 \] $$
 If $icode density$$ for 
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ is $code gaussian$$,
 for $latex j = 0 , \ldots , J(k)-2$$,
 $latex \[
-T_{i,j,k}^\theta ( \theta ) 
+T_{i,j,k,c}^u ( u | \theta ) 
 =
 - G \left( 
-	\Delta_{i,j,k}^t \theta 
-	\W{,} \mu_{i,j,k}^t \W{,} \lambda_k^a \delta_{i,j,k}^t 
+	\Delta_{i,j,k,c}^t u 
+	\W{,} \Delta_{i,j,k}^t \theta 
+	\W{,} \lambda_k^t \delta_{i,j,k}^t 
 \right)
 \] $$
 
@@ -164,22 +171,24 @@ $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ is $code laplace$$,
 see $cref/L/model_density/Laplace/Log-Density, L/$$,
 for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
-A_{i j,k}^\theta ( \theta ) 
+A_{i,j,k,c}^u ( u | \theta ) 
 =  
 - L \left( 
-	\Delta_{i,j,k}^a \theta 
-	\W{,} \mu_{i,j,k}^a \W{,} \lambda_k^a \delta_{i,j,k}^a 
+	\Delta_{i,j,k,c}^a u
+	\W{,} \Delta_{i,j,k}^a \theta 
+	\W{,} \lambda_k^a \delta_{i,j,k}^a 
 \right)
 \] $$
 If $icode density$$ for 
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ is $code laplace$$,
 for $latex j = 0 , \ldots , J(k)-2$$,
 $latex \[
-T_{i,j,k}^\theta ( \theta ) 
+T_{i,j,k,c}^u ( u | \theta ) 
 =
 - L \left( 
-	\Delta_{i,j,k}^t \theta 
-	\W{,} \mu_{i,j,k}^t \W{,} \lambda_k^a \delta_{i,j,k}^t 
+	\Delta_{i,j,k,c}^t u 
+	\W{,} \Delta_{i,j,k}^t \theta
+	\W{,} \lambda_k^t \delta_{i,j,k}^t 
 \right)
 \] $$
 
@@ -189,11 +198,11 @@ $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ is $code log_gaussian$$,
 see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$,
 for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
-A_{i j,k}^\theta ( \theta ) 
+A_{i,j,k,c}^u ( u | \theta ) 
 =  
 - G_L \left( 
-	\Delta_{i,j,k}^a \theta 
-	\W{,} \mu_{i,j,k}^a 
+	\Delta_{i,j,k,c}^a u
+	\W{,} \Delta_{i,j,k}^a \theta
 	\W{,} \lambda_k^a \delta_{i,j,k}^a 
 	\W{,} \eta_{i,j,k}^a 
 \right)
@@ -202,12 +211,12 @@ If $icode density$$ for
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ is $code gaussian$$,
 for $latex j = 0 , \ldots , J(k)-2$$,
 $latex \[
-T_{i,j,k}^\theta ( \theta ) 
+T_{i,j,k,c}^u ( u | \theta ) 
 =
 - G_L \left( 
-	\Delta_{i,j,k}^t \theta 
-	\W{,} \mu_{i,j,k}^t 
-	\W{,} \lambda_k^a \delta_{i,j,k}^t 
+	\Delta_{i,j,k,c}^t u
+	\W{,} \Delta_{i,j,k}^t \theta 
+	\W{,} \lambda_k^t \delta_{i,j,k}^t 
 	\W{,} \eta_{i,j,k}^t
 \right)
 \] $$
@@ -219,11 +228,11 @@ $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ is $code log_laplace$$,
 see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$,
 for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
-A_{i j,k}^\theta ( \theta ) 
+A_{i,j,k,c}^u ( u | \theta ) 
 =  
 - L_L \left( 
-	\Delta_{i,j,k}^a \theta 
-	\W{,} \mu_{i,j,k}^a 
+	\Delta_{i,j,k,c}^a u
+	\W{,} \Delta_{i,j,k}^a \theta 
 	\W{,} \lambda_k^a \delta_{i,j,k}^a 
 	\W{,} \eta_{i,j,k}^a 
 \right)
@@ -232,34 +241,34 @@ If $icode density$$ for
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ is $code laplace$$,
 for $latex j = 0 , \ldots , J(k)-2$$,
 $latex \[
-T_{i,j,k}^\theta ( \theta ) 
+T_{i,j,k,c}^u ( u | \theta ) 
 =
 - L_L \left( 
-	\Delta_{i,j,k}^t \theta 
-	\W{,} \mu_{i,j,k}^t 
-	\W{,} \lambda_k^a \delta_{i,j,k}^t 
+	\Delta_{i,j,k,c}^t u
+	\W{,} \Delta_{i,j,k}^t \theta
+	\W{,} \lambda_k^t \delta_{i,j,k}^t 
 	\W{,} \eta_{i,j,k}^t
 \right)
 \] $$
 
-$head A^theta$$
+$head A^u$$
 The age difference penalty 
 for the fixed effects $latex \theta$$ is defined by
 $latex \[
-A^\theta ( \theta ) 
+A^u ( u | \theta ) 
 = 
-\sum_{k=0}^{K-1} \sum_{i=0}^{I(k)-2} \sum_{j=0}^{J(k)-1} 
-	A_{i,j,k}^\theta ( \theta )
+\sum_{c=0}^{C-1} \sum_{k=0}^{K-1} \sum_{i=0}^{I(k)-2} \sum_{j=0}^{J(k)-1} 
+	A_{i,j,k,c}^u ( u | \theta )
 \] $$
 
-$head T^theta$$
+$head T^u$$
 The time difference penalty 
 for the fixed effects $latex \theta$$ is defined by
 $latex \[
-T^\theta ( \theta ) 
+T^u ( u | \theta ) 
 = 
-\sum_{k=0}^{K-1} \sum_{i=0}^{I(k)-1} \sum_{j=0}^{J(k)-2} 
-	T_{i,j,k}^\theta ( \theta )
+\sum_{c=0}^{C-1} \sum_{k=0}^{K-1} \sum_{i=0}^{I(k)-1} \sum_{j=0}^{J(k)-2} 
+	T_{i,j,k,c}^u ( u | \theta )
 \] $$
 
 $end
