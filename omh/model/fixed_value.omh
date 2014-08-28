@@ -26,7 +26,7 @@ then $latex \lambda_j = 1$$.
 Otherwise $latex \lambda_j$$
 is the $cref/mulstd_value/smooth_table/mulstd_value/$$ 
 multiplier for the 
-$cref/smooth_id/smooth_grid_table/smooth_id/$$ 
+$cref/parent_smooth_id/rate_table/parent_smooth_id/$$ 
 corresponding to $latex \theta_j$$.
 	
 $head mu_j$$

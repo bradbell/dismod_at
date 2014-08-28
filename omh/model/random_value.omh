@@ -1,22 +1,11 @@
 $begin model_random_value$$
 $spell
+	mulstd
 	mu
 	std
 $$
 
 $section The Prior Penalty For Random Effect Values$$
-
-$head Purpose$$
-The value of each  component of the
-$cref/random effects/model_variable/Random Effects, u/$$ 
-vector has a corresponding $cref/prior_id/prior_table/prior_id/$$ 
-attached to it.
-This section describes the value penalty function is used
-to define the prior for the random effects.
-
-$head theta$$
-We use $latex \theta$$ to denote the vector of
-$cref/fixed effects/model_variable/Fixed Effects, theta/$$.
 
 $head c$$
 We use $latex C$$ to denote the size of the
@@ -34,19 +23,29 @@ For each $icode child_smooth_id/$$ there is a corresponding
 number of age points $cref/n_age/smooth_table/n_age/$$ and 
 number of time points $cref/n_time/smooth_table/n_time/$$.
 We use the single index $latex j$$ (instead of three indices)
-to denote a each of the rate, age, and time triples.
+to denote a each possible combination of
+rate, age, and time index.
 
 $head u_{c,j}$$
-We use $latex u_{c,j}$$ to denote the
-$cref/random effect/model_variable/Random Effects, u/$$ 
+We use $latex u$$ for the vector of 
+$cref/random effects/model_variable/Random Effects, u/$$  and
+$latex u_{c,j}$$ the component
 for the child specified by $latex c$$ and
 the rate, age and time specified by $latex j$$.
 
 $head theta_j$$
-We use $latex \theta_j$$ to denote the 
-$cref/fixed effect/model_variable/Fixed Effects, theta/$$ 
+We use $latex \theta$$ for the vector of 
+$cref/fixed effects/model_variable/Fixed Effects, theta/$$  and
+$latex \theta_j$$ to denote the component
 that corresponds to the parent node and the
 rate, age, and time specified by $icode j$$
+
+$head lambda_j$$
+We use $latex \lambda_j$$
+for the $cref/mulstd_value/smooth_table/mulstd_value/$$ 
+multiplier for the 
+$cref/child_smooth_id/rate_table/child_smooth_id/$$ 
+corresponding to the rate specified by $latex j$$.
 
 $head delta_j$$
 We use $latex \delta_j$$ to denote the standard deviation
@@ -72,46 +71,60 @@ $subhead uniform$$
 If $icode density$$ is $code uniform$$,
 no contribution is added to the log density for this variable; i.e.
 $latex \[
-V_{c,j}^u ( u_{c,j} | \theta_j ) =  0
+V_{c,j}^u ( u | \theta) =  0
 \] $$
 
 $subhead gaussian$$
 If $icode density$$ is $code gaussian$$,
 see $cref/G/model_density/Gaussian/Log-Density, G/$$,
 $latex \[
-V_{c,j}^u ( u_{c,j} | \theta_j ) = - G( u_{c,j} , \theta_j , \delta_j ) 
+V_{c,j}^u ( u | \theta ) 
+=
+- G \left(
+	u_{c,j} \W{,} \theta_j \W{,} \lambda_j \delta_j 
+\right) 
 \] $$
 
 $subhead laplace$$
 If $icode density$$ is $code laplace$$,
 see $cref/L/model_density/Laplace/Log-Density, L/$$,
 $latex \[
-V_{c,j}^u ( u_{c,j} | \theta_j ) = - L( u_{c,j} , \theta_j , \delta_j ) 
+V_{c,j}^u ( u | \theta ) 
+=
+- L \left(
+	u_{c,j} \W{,} \theta_j \W{,} \lambda_j \delta_j 
+\right) 
 \] $$
 
 $subhead log_gaussian$$
 If $icode density$$ is $code log_gaussian$$,
 see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$,
 $latex \[
-V_{c,j}^u ( u_{c,j} | \theta_j ) 
+V_{c,j}^u ( u | \theta ) 
 = 
-- G_L ( u_{c,j} , \theta_j , \delta_j , \eta_j ) 
+- G_L \left(
+	u_{c,j} \W{,} \theta_j \W{,} \lambda_j \delta_j \W{,} \eta_j 
+\right) 
 \] $$
 
 $subhead log_laplace$$
 If $icode density$$ is $code log_laplace$$,
 see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$,
 $latex \[
-V_{c,j}^u ( u_{c,j} | \theta_j ) 
+V_{c,j}^u ( u | \theta ) 
 = 
-- L_L ( u_{c,j} , \theta_j , \delta_j , \eta_j ) 
+- L_L \left(
+	u_{c,j} \W{,} \theta_j \W{,} \lambda_j \delta_j \W{,} \eta_j 
+\right) 
 \] $$
 
 $subhead V^u$$
 Let $latex m$$ be the number of random effects.
 The value penalty for all the random  effects $latex u$$ is defined by
 $latex \[
-V^u ( u )  = \sum_{c=0}^{C-1} \sum_{j=0}^{m-1} V_{c,j}^u ( u_{c,j} | \theta_j )
+V^u ( u | \theta )  
+= 
+\sum_{c=0}^{C-1} \sum_{j=0}^{m-1} V_{c,j}^u ( u | \theta )
 \] $$
 
 $end
