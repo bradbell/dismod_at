@@ -1,6 +1,6 @@
 $begin model_data_like$$
 
-$section Model For Data Likelihood$$
+$section The Data Likelihood$$
 
 $head Effects, u, theta$$
 We use $latex u$$ and $latex \theta$$ to denote the vector of

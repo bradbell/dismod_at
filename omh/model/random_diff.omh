@@ -11,7 +11,7 @@ $spell
 	std
 $$
 
-$section The Prior Penalty For Random Effect Differences$$
+$section Prior Penalty For Random Effect Differences$$
 
 $head k, K$$
 We use $latex k$$ to denote a

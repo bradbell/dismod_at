@@ -13,7 +13,7 @@ $spell
 	dismod
 $$
 
-$section Dismod Age Time Model$$
+$section The Age-Time Dismod Model$$
 
 $childtable%
 	omh/model/variable.omh%

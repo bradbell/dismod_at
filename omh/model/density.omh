@@ -10,7 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin model_density$$
 
-$section The Model Density Functions$$
+$section The Density Functions$$
 
 $head Gaussian$$
 A random variable $latex z$$ has a Gaussian distribution with 

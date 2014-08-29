@@ -5,7 +5,7 @@ $spell
 	std
 $$
 
-$section The Prior Penalty for Fixed Effect Values$$
+$section Prior Penalty for Fixed Effect Values$$
 
 
 $head theta_j$$

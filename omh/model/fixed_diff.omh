@@ -10,7 +10,7 @@ $spell
 	std
 $$
 
-$section The Prior Penalty For Fixed Effect Differences$$
+$section Prior Penalty For Fixed Effect Differences$$
 
 $head k, K$$
 For each

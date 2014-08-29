@@ -5,7 +5,7 @@ $spell
 	std
 $$
 
-$section The Prior Penalty For Random Effect Values$$
+$section Prior Penalty For Random Effect Values$$
 
 $head c$$
 We use $latex C$$ to denote the size of the
