@@ -5,13 +5,15 @@ $spell
 	std
 $$
 
-$section Prior Penalty for Fixed Effect Values$$
+$section Penalty for Fixed Effect Values$$
 
 
 $head theta_j$$
 We use $latex \theta_j$$ to denote 
 one component of the
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$ vector.
+
+$head prior_id$$
 We use $icode prior_id$$ for the prior that is attached to the 
 $th j$$ fixed effect.
 
@@ -101,7 +103,7 @@ V_j^\theta ( \theta )
 \right) 
 \] $$
 
-$subhead V^\theta$$
+$head V^theta$$
 Let $latex n$$ be the number of fixed effects.
 The value penalty for all the fixed effects $latex \theta$$ is defined by
 $latex \[

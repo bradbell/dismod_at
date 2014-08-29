@@ -24,7 +24,7 @@ We use $latex k$$ to index all the rates and covariates multipliers
 and $latex K$$ for the number of rates plus the number
 of covariate multipliers.
 
-$head lambda_k^a, lambda_k^t$$
+$head lambda_k$$
 We use 
 $latex \lambda_k^a$$
 ( $latex \lambda_k^t$$ )
@@ -32,7 +32,6 @@ to denote the
 $cref/mulstd_dage/smooth_table/mulstd_dage/$$
 ( $cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ )
 for $icode smooth_id$$ corresponding to $latex k$$.
-
 
 $head Age, a_i,k$$
 Given $latex k$$, there is a corresponding number of age points

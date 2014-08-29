@@ -1,0 +1,83 @@
+$begin model_fixed_prior$$
+$spell
+	covariate
+	mulstd
+	dage
+	dtime
+$$
+
+$section Prior for Fixed Effect Values$$
+
+$head theta$$
+
+$subhead lambda$$
+We use $latex \lambda$$ to denote
+the sub-vector of the fixed effects that are 
+$cref/smoothing multipliers
+	/model_variable
+	/Fixed Effects, theta
+	/Smoothing Standard Deviation Multipliers, lambda
+/$$.
+
+$subhead beta$$
+We use $latex \beta$$ to denote
+the sub-vector of the fixed effects that are
+$cref/parent rates
+	/model_variable
+	/Fixed Effects, theta
+	/Parent Rates
+/$$
+or 
+$cref/covariate multipliers
+	/model_variable
+	/Fixed Effects, theta
+	/Covariate Multipliers
+/$$.
+
+$subhead theta$$
+We use $latex \theta$$ to denote the entire fixed effects vector; i.e.,
+$latex \theta = ( \lambda , \beta )$$.
+
+$head Bound Constraints$$
+
+$subhead theta_j$$
+We use $latex \theta_j$$ to denote 
+one component of  $latex \theta$$.
+
+$subhead theta_j^L$$
+We use $latex \theta_j^L$$ to denote the 
+$cref/lower/prior_table/lower/$$ limit 
+corresponding to the $icode prior_id$$ for the
+standard deviation multiplier $latex \theta_j$$.
+
+$subhead theta_j^U$$
+We use $latex \theta_j^U$$ to denote the 
+$cref/upper/prior_table/upper/$$ limit 
+corresponding to the $icode prior_id$$ for the
+standard deviation multiplier $latex \theta_j$$.
+
+$subhead Theta$$
+We define $latex \Theta$$ as the set of $latex \theta$$
+that satisfy all the bounds above; i.e.,
+$latex \[
+\Theta = \left\{ \theta \W{:} 
+	\theta_j^L \leq \theta_j \leq \theta_j^U \; \R{for} \; \R{all} \; j
+\right\}
+\] $$ 
+
+
+$head V^theta$$
+We use $latex V^\theta ( \theta )$$ to denote the 
+$cref/fixed effects value penalty/model_fixed_value/V^theta/$$ function.
+
+$head p(theta)$$
+We define the prior for the fixed effects by
+$latex \[
+\B{p} ( \theta ) = \frac{ 
+	V^\theta ( \theta )
+	}{
+	\int_{\Theta} V^\theta ( \theta ) \; \B{d} \theta
+}
+\] $$
+
+$end

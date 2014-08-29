@@ -25,6 +25,7 @@ $childtable%
 	omh/model/random_value.omh%
 	omh/model/fixed_diff.omh%
 	omh/model/random_diff.omh%
+	omh/model/fixed_prior.omh%
 	omh/model/glossary.omh
 %$$
 
