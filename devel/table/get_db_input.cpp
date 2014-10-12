@@ -63,10 +63,9 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <dismod_at/include/get_db_input.hpp>
-# include <dismod_at/include/get_table_column.hpp>
-# include <dismod_at/include/check_table_id.hpp>
 # include <dismod_at/include/get_age_table.hpp>
 # include <dismod_at/include/get_time_table.hpp>
+# include <dismod_at/include/check_pini_n_age.hpp>
 
 
 # define DISMOD_AT_CHECK_PRIMARY_ID(in_table, in_name, primary_table, lower)\
@@ -105,7 +104,10 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	//
 	size_t n_covariate = db_input.covariate_table.size();
 	db_input.data_table        = get_data_table(db, n_covariate);
-
+	//
+	// -----------------------------------------------------------------------
+	// check primary keys
+	//
 	// node table
 	DISMOD_AT_CHECK_PRIMARY_ID(node, parent, node, -1);
 
@@ -144,6 +146,10 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	// rate table
 	DISMOD_AT_CHECK_PRIMARY_ID(rate, parent_smooth_id, smooth, 0);
 	DISMOD_AT_CHECK_PRIMARY_ID(rate, parent_smooth_id, smooth, 0);
+
+	// -----------------------------------------------------------------------
+	// other checks 
+	check_pini_n_age(db_input.rate_table, db_input.smooth_table);
 
 	return;
 }

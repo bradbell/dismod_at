@@ -21,19 +21,10 @@ $spell
 	pini
 $$
 
-$section Check Rate Smoothing Grid Assumptions$$
+$section Check Initial Prevalence Grid Has One Age$$
 
 $head syntax$$
 $codei%check_pini_n_age(%rate_table%, %smooth_table%)%$$
-
-$head Purpose$$
-If the assumptions below do not hold, 
-$code check_pini_n_age$$ exits with an error message.
-$list number$$
-The smoothings corresponding to
-$cref/pini/rate_table/rate_name/pini/$$ must have
-$cref/n_age/smooth_table/n_age/$$ equal to one.
-$lend
 
 $head rate_table$$
 This argument has prototype
