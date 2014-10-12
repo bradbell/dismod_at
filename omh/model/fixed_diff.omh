@@ -61,7 +61,7 @@ $latex \[
 \frac{ \theta_{i+1,j,k} - \theta_{i,j,k} }{ a_{i+1,k} - a_{i,k} }
 \] $$
 
-$subhead Delta^t$$
+$head Delta^t$$
 For $latex i = 0 , \ldots , J(k)-2$$ we define
 $latex \[
 \Delta_{i,j,k}^t \theta

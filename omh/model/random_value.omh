@@ -26,7 +26,7 @@ We use the single index $latex j$$ (instead of three indices)
 to denote a each possible combination of
 rate, age, and time index.
 
-$head u_{c,j}$$
+$head u_c,j$$
 We use $latex u$$ for the vector of 
 $cref/random effects/model_variable/Random Effects, u/$$  and
 $latex u_{c,j}$$ the component
