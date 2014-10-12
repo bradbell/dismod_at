@@ -14,12 +14,12 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <string>
 # include <sqlite3.h>
 # include <dismod_at/include/get_rate_table.hpp>
-# include <dismod_at/include/smooth_info.hpp>
+# include <dismod_at/include/get_smooth_table.hpp>
 
 namespace dismod_at {
 	void check_rate_smooth(
-		const CppAD::vector<rate_struct>& rate_table  ,
-		const CppAD::vector<smooth_info*> s_info_vec
+		const CppAD::vector<rate_struct>&   rate_table  ,
+		const CppAD::vector<smooth_struct>& smooth_table
 	);
 }
 

@@ -46,52 +46,44 @@ For this table,
 only the fields $code parent_smooth_id$$ and $code child_smooth_id$$
 are used.
 
-$head s_info_ptr$$
+$head smooth_table$$
 This argument has prototype
 $codei%
-	const CppAD::vector<smooth_info*> %smooth_info_ptr%
+	const CppAD::vector<rate_struct>& %smooth_table%
 %$$
-Let $icode n_smooth$$ be the number of rows in the
-$cref smooth_table$$.
-For $icode%smooth_id% = 0 , %...%, %n_smooth%-1%$$ the value
-$codei%
-	*(%smooth_info_ptr%[%smooth_id%])
-%$$
-is the $cref smooth_info$$ information for the corresponding
-$cref/smooth_id/smooth_grid_table/smooth_id/$$.
+and it is the 
+$cref/smooth_table/get_smooth_table/smooth_table/$$.
+For this table, only the $code n_age$$ field is used.
 
 $end
 */
 # include <dismod_at/include/get_rate_table.hpp>
-# include <dismod_at/include/smooth_info.hpp>
+# include <dismod_at/include/get_smooth_table.hpp>
 # include <dismod_at/include/table_error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void check_rate_smooth(
-	const CppAD::vector<rate_struct>& rate_table  ,
-	const CppAD::vector<smooth_info*> s_info_ptr  )
-{	assert( rate_table.size() == number_rate_enum );
+	const CppAD::vector<rate_struct>&   rate_table    ,
+	const CppAD::vector<smooth_struct>& smooth_table  )
+{	assert( rate_table.size()   == number_rate_enum );
 	std::string message;
-
+	//
 	size_t rate_id = size_t( pini_enum );
 	size_t parent_smooth_id = rate_table[rate_id].parent_smooth_id;
 	size_t child_smooth_id  = rate_table[rate_id].child_smooth_id;
 	//
-	smooth_info* s_info_parent = s_info_ptr[parent_smooth_id];
-	smooth_info* s_info_child  = s_info_ptr[child_smooth_id];
-	//
-	size_t n_age_parent = s_info_parent->age_size();
-	size_t n_age_child  = s_info_child->age_size();
+	size_t n_age_parent = smooth_table[parent_smooth_id].n_age;
+	size_t n_age_child  = smooth_table[child_smooth_id].n_age;
 	//
 	if( n_age_parent != 1 )
-	{	message = "parent_smooth_id corresponds to a smoothing"
+	{	message = "parent_smooth_id, for pini, corresponds to a smoothing"
 			" with n_age not equal to one";
 		table_error_exit("rate", rate_id, message);
 	}
 	//
 	if( n_age_child != 1 )
-	{	message = "child_smooth_id corresponds to a smoothing"
+	{	message = "child_smooth_id, for pini, corresponds to a smoothing"
 			" with n_age not equal to one";
 		table_error_exit("rate", rate_id, message);
 	}
