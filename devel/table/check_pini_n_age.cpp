@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin check_rate_smooth$$
+$begin check_pini_n_age$$
 $spell
 	ptr
 	dismod
@@ -24,11 +24,11 @@ $$
 $section Check Rate Smoothing Grid Assumptions$$
 
 $head syntax$$
-$codei%check_rate_smooth(%rate_table%, %s_info_ptr%)%$$
+$codei%check_pini_n_age(%rate_table%, %smooth_table%)%$$
 
 $head Purpose$$
 If the assumptions below do not hold, 
-$code check_rate_smooth$$ exits with an error message.
+$code check_pini_n_age$$ exits with an error message.
 $list number$$
 The smoothings corresponding to
 $cref/pini/rate_table/rate_name/pini/$$ must have
@@ -63,7 +63,7 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-void check_rate_smooth(
+void check_pini_n_age(
 	const CppAD::vector<rate_struct>&   rate_table    ,
 	const CppAD::vector<smooth_struct>& smooth_table  )
 {	assert( rate_table.size()   == number_rate_enum );

@@ -9,25 +9,25 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin check_rate_smooth_xam.cpp$$
+$begin check_pini_n_age_xam.cpp$$
 $spell
 	xam
 $$
 
-$section C++ check_rate_smooth: Example and Test$$
-$index example, C++ check_rate_smooth$$
-$index check_rate_smooth, C++ example$$
+$section C++ check_pini_n_age: Example and Test$$
+$index example, C++ check_pini_n_age$$
+$index check_pini_n_age, C++ example$$
 
 $code
-$verbatim%example/devel/table/check_rate_smooth_xam.cpp
+$verbatim%example/devel/table/check_pini_n_age_xam.cpp
 %0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-# include <dismod_at/include/check_rate_smooth.hpp>
+# include <dismod_at/include/check_pini_n_age.hpp>
 
-bool check_rate_smooth_xam(void)
+bool check_pini_n_age_xam(void)
 {	bool ok = true;
 	//
 	// rate_table
@@ -52,7 +52,7 @@ bool check_rate_smooth_xam(void)
 	smooth_table[2].n_age = 2;
 	smooth_table[3].n_age = 2;
 	//
-	dismod_at::check_rate_smooth(rate_table, smooth_table);
+	dismod_at::check_pini_n_age(rate_table, smooth_table);
 	//
 	return ok;
 }

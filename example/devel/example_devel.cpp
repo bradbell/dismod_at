@@ -45,7 +45,7 @@ extern bool smooth2ode_xam(void);
 extern bool pack_var_xam(void);
 extern bool child_data_xam(void);
 // table subdirectory
-extern bool check_rate_smooth_xam(void);
+extern bool check_pini_n_age_xam(void);
 extern bool get_age_table_xam(void);
 extern bool get_covariate_table_xam(void);
 extern bool get_data_table_xam(void);
@@ -112,7 +112,7 @@ int main(void)
 	RUN(pack_var_xam);
 	RUN(child_data_xam);
 	// table subdirectory
-	RUN(check_rate_smooth_xam);
+	RUN(check_pini_n_age_xam);
 	RUN(get_age_table_xam);
 	RUN(get_covariate_table_xam);
 	RUN(get_data_table_xam);
