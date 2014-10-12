@@ -164,7 +164,5 @@ The smoothing for the subvector only depends on the rate
 (given a rate, it is the same for all children).
 The smoothing is specified by
 $cref/child_smooth_id/rate_table/child_smooth_id/$$.
-For each rate, it parent and child smoothings must have the
-same age and time points.
 
 $end

@@ -1,5 +1,6 @@
 $begin model_random_diff$$
 $spell
+	subvector
 	smoothings
 	covariate
 	covariates
@@ -33,23 +34,29 @@ $icode%rate_id% = %k%$$
 $head Age, a_i,k$$
 Given $latex k$$, there is a corresponding number of age points
 $cref/n_age/smooth_table/n_age/$$ $latex I(k)$$ for the corresponding
-$icode smooth_id$$.
+$cref/child_smooth_id/rate_table/child_smooth_id/$$.
 For $latex i = 0 , \ldots , I(k)-1$$,
 we use $latex a_{i,k}$$ to denote the corresponding age value.
-Note that, for each rate,
-this age grid is the same for both the parent and child smoothings.
 
 $head Time, t_j,k$$
 Given $latex k$$, there is a corresponding number of time points
 $cref/n_time/smooth_table/n_time/$$ $latex J(k)$$ for the corresponding
-$icode smooth_id$$.
+$cref/child_smooth_id/rate_table/child_smooth_id/$$.
 For $latex j = 0 , \ldots , J(k)-1$$,
 we use $latex t_{j,k}$$ to denote the corresponding time value.
-Note that, for each rate,
-this time grid is the same for both the parent and child smoothings.
 
-$head theta_i,j,k$$
-Let $latex \theta_{i,j,k}$$ denote the fixed effect corresponding to 
+$head r_i,j,k(theta)$$
+We use $latex q_k (a , t , \theta )$$ for the piecewise linear rate function
+of age and time corresponding to rate $latex k$$ and the fixed
+effects vector $latex \theta$$.
+This is determined by the subvector corresponding to the
+$cref/parent rates/model_variable/Fixed Effects, theta/Parent Rates/$$. 
+We define
+$latex \[
+	r_{i,j,k} ( \theta ) = q_k ( a_{i,k} , t_{j,k} , \theta )
+\]$$
+
+Let $latex a_{i,j,k}$$ denote the fixed effect corresponding to 
 rate index $latex k$$, 
 age index $latex i$$ and
 time index $latex j$$.
@@ -66,7 +73,7 @@ For $latex i = 0 , \ldots , I(k)-2$$ we define
 $latex \[
 \Delta_{i,j,k}^a \theta
 = 
-\frac{ \theta_{i+1,j,k} - \theta_{i,j,k} }{ a_{i+1,k} - a_{i,k} }
+\frac{ r_{i+1,j,k} ( \theta ) - r_{i,j,k} ( \theta ) }{ a_{i+1,k} - a_{i,k} }
 \] $$
 $latex \[
 \Delta_{i,j,k,c}^a u
@@ -79,7 +86,7 @@ For $latex i = 0 , \ldots , J(k)-2$$ we define
 $latex \[
 \Delta_{i,j,k}^t \theta
 = 
-\frac{ \theta_{i,j+1,k} - \theta_{i,j,k} }{ t_{j+1,k} - t_{j,k} }
+\frac{ r_{i,j+1,k} ( \theta ) - r_{i,j,k} ( \theta ) }{ t_{j+1,k} - t_{j,k} }
 \] $$
 $latex \[
 \Delta_{i,j,k,c}^t u

@@ -33,15 +33,6 @@ $list number$$
 The smoothings corresponding to
 $cref/pini/rate_table/rate_name/pini/$$ must have
 $cref/n_age/smooth_table/n_age/$$ equal to one.
-$lnext
-For each 
-$cref/rate_id/rate_table/rate_id/$$
-the corresponding
-$cref/parent_smooth_id/rate_table/parent_smooth_id/$$ and
-$cref/child_smooth_id/rate_table/child_smooth_id/$$ must have the
-same 
-$cref/age_id/smooth_grid_table/age_id/$$ and
-$cref/time_id/smooth_grid_table/time_id/$$ values.
 $lend
 
 $head rate_table$$
@@ -83,50 +74,26 @@ void check_rate_smooth(
 {	assert( rate_table.size() == number_rate_enum );
 	std::string message;
 
-	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
-	{	size_t parent_smooth_id = rate_table[rate_id].parent_smooth_id;
-		size_t child_smooth_id  = rate_table[rate_id].child_smooth_id;
-		//
-		smooth_info* s_info_parent = s_info_ptr[parent_smooth_id];
-		smooth_info* s_info_child  = s_info_ptr[child_smooth_id];
-		//
-		size_t n_age_parent = s_info_parent->age_size();
-		size_t n_age_child  = s_info_child->age_size();
-		//
-		if( rate_id == pini_enum && n_age_parent != 1 )
-		{	message = "parent_smooth_id corresponds to a smoothing"
-				" with n_age not equal to one";
-			table_error_exit("rate", rate_id, message);
-		}
-		if( n_age_parent != n_age_child )
-		{	message = "parent_smooth_id and child_smooth_id correspond to"
-				" differnt values of n_age in smooth table";
-			table_error_exit("rate", rate_id, message);
-		}
-		//
-		size_t n_time_parent = s_info_parent->time_size();
-		size_t n_time_child  = s_info_child->time_size();
-		if( n_time_parent != n_time_child )
-		{	message = "parent_smooth_id and child_smooth_id correspond to"
-				" differnt values of n_time in smooth table";
-			table_error_exit("rate", rate_id, message);
-		}
-		//
-		for(size_t i = 0; i < n_age_parent; i++) if(
-			s_info_parent->age_id(i) != s_info_child->age_id(i)
-		) 
-		{	message = "parent_smooth_id and child_smooth_id correspond to"
-				" age_id values in the smooth_grid table";
-			table_error_exit("rate", rate_id, message);
-		}
-		//
-		for(size_t j = 0; j < n_time_parent; j++) if(
-			s_info_parent->time_id(j) != s_info_child->time_id(j)
-		) 
-		{	message = "parent_smooth_id and child_smooth_id correspond to"
-				" time_id values in the smooth_grid table";
-			table_error_exit("rate", rate_id, message);
-		}
+	size_t rate_id = size_t( pini_enum );
+	size_t parent_smooth_id = rate_table[rate_id].parent_smooth_id;
+	size_t child_smooth_id  = rate_table[rate_id].child_smooth_id;
+	//
+	smooth_info* s_info_parent = s_info_ptr[parent_smooth_id];
+	smooth_info* s_info_child  = s_info_ptr[child_smooth_id];
+	//
+	size_t n_age_parent = s_info_parent->age_size();
+	size_t n_age_child  = s_info_child->age_size();
+	//
+	if( n_age_parent != 1 )
+	{	message = "parent_smooth_id corresponds to a smoothing"
+			" with n_age not equal to one";
+		table_error_exit("rate", rate_id, message);
+	}
+	//
+	if( n_age_child != 1 )
+	{	message = "child_smooth_id corresponds to a smoothing"
+			" with n_age not equal to one";
+		table_error_exit("rate", rate_id, message);
 	}
 }
 

@@ -1,5 +1,6 @@
 $begin model_random_value$$
 $spell
+	subvector
 	mulstd
 	mu
 	std
@@ -19,26 +20,42 @@ $head j$$
 For each 
 $cref/rate_id/rate_table/rate_id/$$ there is a corresponding
 $cref/child_smooth_id/rate_table/child_smooth_id/$$.
-For each $icode child_smooth_id/$$ there is a corresponding
+For each $icode child_smooth_id$$ there is a corresponding
 number of age points $cref/n_age/smooth_table/n_age/$$ and 
 number of time points $cref/n_time/smooth_table/n_time/$$.
 We use the single index $latex j$$ (instead of three indices)
 to denote a each possible combination of
 rate, age, and time index.
 
+$subhead k_j$$
+We use $latex k_j$$ to denote the $cref/rate_id/rate_table/rate_id/$$
+corresponding to index $latex j$$.
+
+$subhead a_j$$
+We use $latex a_j$$ to denote the $cref/age/age_table/age/$$
+corresponding to index $latex j$$.
+
+$subhead t_j$$
+We use $latex t_j$$ to denote the $cref/time/time_table/time/$$
+corresponding to index $latex j$$.
+
 $head u_c,j$$
-We use $latex u$$ for the vector of 
+We use $latex u$$ for the vector of the
 $cref/random effects/model_variable/Random Effects, u/$$  and
 $latex u_{c,j}$$ the component
 for the child specified by $latex c$$ and
 the rate, age and time specified by $latex j$$.
 
-$head theta_j$$
-We use $latex \theta$$ for the vector of 
-$cref/fixed effects/model_variable/Fixed Effects, theta/$$  and
-$latex \theta_j$$ to denote the component
-that corresponds to the parent node and the
-rate, age, and time specified by $icode j$$
+$head r_j(theta)$$
+We use $latex q_j (a , t , \theta )$$ for the piecewise linear rate function
+of age and time corresponding to rate $latex k_j$$ and the fixed
+effects vector $latex \theta$$.
+This is determined by the subvector corresponding to the
+$cref/parent rates/model_variable/Fixed Effects, theta/Parent Rates/$$. 
+We define
+$latex \[
+	r_j ( \theta ) = q_j ( a_j , t_j , \theta )
+\]$$
 
 $head lambda_j$$
 We use $latex \lambda_j$$
@@ -80,9 +97,9 @@ see $cref/G/model_density/Gaussian/Log-Density, G/$$,
 $latex \[
 V_{c,j}^u ( u | \theta ) 
 =
-- G \left(
-	u_{c,j} \W{,} \theta_j \W{,} \lambda_j \delta_j 
-\right) 
+- G \left[
+	u_{c,j} \W{,} r_j ( \theta ) \W{,} \lambda_j \delta_j 
+\right] 
 \] $$
 
 $subhead laplace$$
@@ -91,9 +108,9 @@ see $cref/L/model_density/Laplace/Log-Density, L/$$,
 $latex \[
 V_{c,j}^u ( u | \theta ) 
 =
-- L \left(
-	u_{c,j} \W{,} \theta_j \W{,} \lambda_j \delta_j 
-\right) 
+- L \left[
+	u_{c,j} \W{,} r_j ( \theta ) \W{,} \lambda_j \delta_j 
+\right] 
 \] $$
 
 $subhead log_gaussian$$
@@ -102,9 +119,9 @@ see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$,
 $latex \[
 V_{c,j}^u ( u | \theta ) 
 = 
-- G_L \left(
-	u_{c,j} \W{,} \theta_j \W{,} \lambda_j \delta_j \W{,} \eta_j 
-\right) 
+- G_L \left[
+	u_{c,j} \W{,} r_j ( \theta ) \W{,} \lambda_j \delta_j 
+\right] 
 \] $$
 
 $subhead log_laplace$$
@@ -113,9 +130,9 @@ see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$,
 $latex \[
 V_{c,j}^u ( u | \theta ) 
 = 
-- L_L \left(
-	u_{c,j} \W{,} \theta_j \W{,} \lambda_j \delta_j \W{,} \eta_j 
-\right) 
+- L_L \left[
+	u_{c,j} \W{,} r_j ( \theta ) \W{,} \lambda_j \delta_j 
+\right] 
 \] $$
 
 $subhead V^u$$

@@ -65,10 +65,6 @@ $cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
 It specifies the smoothing used as a prior for this rate 
 when fitting the children (random effects).
-This smoothing must have the same
-$cref/age_id/smooth_grid_table/age_id/$$ and
-$cref/time_id/smooth_grid_table/time_id/$$ values
-as the corresponding parent smoothing.
 For each grid point there is a 
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
