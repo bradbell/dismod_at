@@ -1,4 +1,4 @@
-$begin model_fixed_prior$$
+$begin fixed_prior$$
 $spell
 	covariate
 	mulstd
@@ -68,7 +68,7 @@ $latex \[
 
 $head V^theta$$
 We use $latex V^\theta ( \theta )$$ to denote the 
-$cref/fixed effects value penalty/model_fixed_value/V^theta/$$ function.
+$cref/fixed effects value penalty/fixed_value/V^theta/$$ function.
 
 $head p(theta)$$
 We define the prior for the fixed effects by

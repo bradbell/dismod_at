@@ -1,4 +1,4 @@
-$begin model_random_value$$
+$begin random_value$$
 $spell
 	subvector
 	mulstd

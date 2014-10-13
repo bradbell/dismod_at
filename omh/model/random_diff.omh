@@ -1,4 +1,4 @@
-$begin model_random_diff$$
+$begin random_diff$$
 $spell
 	subvector
 	smoothings
