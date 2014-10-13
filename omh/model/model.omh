@@ -17,9 +17,9 @@ $section The Age-Time Dismod Model$$
 
 $childtable%
 	omh/model/variable.omh%
-	omh/model/avg_integrand.omh%
-	omh/model/residual.omh%
 	omh/model/density.omh%
+	omh/model/avg_integrand.omh%
+	omh/model/data_like.omh%
 	omh/model/fixed_value.omh%
 	omh/model/random_value.omh%
 	omh/model/fixed_diff.omh%
