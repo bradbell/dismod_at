@@ -107,16 +107,16 @@ $cref/parent_node_id/run_table/parent_node_id/$$.
 
 $subhead Initial Prevalence$$
 Let $latex p_0 (t)$$ to denote the 
-$cref/prevalence/model_avg_integrand/I_i (a, t)/prevalence/$$ 
+$cref/prevalence/avg_integrand/I_i (a, t)/prevalence/$$ 
 at the initial age; i.e., the first age in $cref age_table$$.
 Let $latex a_0$$ denotes the first age in the $cref age_table$$.
 The initial susceptible fraction
-$cref/S_i(a,t)/model_avg_integrand/S_i(a,t)/$$ is
+$cref/S_i(a,t)/avg_integrand/S_i(a,t)/$$ is
 $latex \[
 	S_i ( a_0 , t ) = p_0 (t)
 \] $$ 
 and the initial with condition faction
-$cref/C_i(a,t)/model_avg_integrand/C_i(a,t)/$$ is 
+$cref/C_i(a,t)/avg_integrand/C_i(a,t)/$$ is 
 $latex \[
 	C_i ( a_0 , t ) = 1 - p_0 (t)
 \] $$

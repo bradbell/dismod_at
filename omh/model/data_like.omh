@@ -8,7 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin model_data_like$$
+$begin data_like$$
 $spell
 	jk
 	std
@@ -136,7 +136,7 @@ y_i ( \theta )
 w_i (a,t) \; \B{d} t \; \B{d} a 
 \] $$
 where $latex \bar{w}_i$$ is the
-$cref/average weight/model_avg_integrand/Average Weight, wbar_i/$$.
+$cref/average weight/avg_integrand/Average Weight, wbar_i/$$.
 
 $head Adjusted Standard Deviation, delta_i$$
 The adjusted standard deviation is defined by
@@ -168,7 +168,7 @@ so that $latex 0 < z_i ( \theta ) \leq \delta_i ( \theta )$$.
 
 $head Average Integrand$$
 Let $latex A_i ( u , \theta )$$ denote the
-$cref/average integrand/model_avg_integrand/Average Integrand, A_i/$$ for this
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$ for this
 $icode data_id$$.
 
 

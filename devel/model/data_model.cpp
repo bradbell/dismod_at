@@ -530,7 +530,7 @@ $tend
 
 $head avg$$
 This is the 
-$cref/average integrand/model_avg_integrand/Average Integrand, A_i/$$ 
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$ 
 for the specified data point.
 
 $children%example/devel/model/avg_no_ode_xam.cpp
@@ -765,7 +765,7 @@ $cref pack_var_rate_mulcov$$.
 
 $head avg$$
 This is the 
-$cref/average integrand/model_avg_integrand/Average Integrand, A_i/$$ 
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$ 
 for the specified data point.
 
 $children%example/devel/model/avg_yes_ode_xam.cpp
@@ -1063,7 +1063,7 @@ $codei%
 	const %Float%& %avg%
 %$$
 and is the 
-$cref/average integrand/model_avg_integrand/Average Integrand, A_i/$$ 
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$ 
 for the specified data point.
 This can be calculated using the routine:
 $table
@@ -1083,7 +1083,7 @@ $codei%
 	%Float%& %wres%
 %$$
 and is the
-$cref/weighted residual/model_data_like/Weighted Residual and Likelihood/$$
+$cref/weighted residual/data_like/Weighted Residual and Likelihood/$$
 corresponding to this $icode data_id$$.
 
 $children%example/devel/model/residual_xam.cpp
