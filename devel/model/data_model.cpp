@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin data_model_ctor$$
+$begin devel_data_model_ctor$$
 $spell
 	std
 	dm
@@ -448,7 +448,7 @@ data_table_    (data_table)
 }
 /*
 -----------------------------------------------------------------------------
-$begin data_model_avg_no_ode$$
+$begin devel_data_model_avg_no_ode$$
 
 $spell
 	dm
@@ -491,7 +491,7 @@ the average integrand for.
 $subhead Node$$
 The $icode data_id$$ must correspond to a 
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
-$cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
+$cref/parent_node_id/devel_data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
 $cref/child/child_data/data_id2child/child/$$ value
 less than or equal 
@@ -689,7 +689,7 @@ Float data_model::avg_no_ode(
 }
 /*
 -----------------------------------------------------------------------------
-$begin data_model_avg_yes_ode$$
+$begin devel_data_model_avg_yes_ode$$
 
 $spell
 	dm
@@ -731,7 +731,7 @@ the average integrand for.
 $subhead Node$$
 The $icode data_id$$ must correspond to a 
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
-$cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
+$cref/parent_node_id/devel_data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
 $cref/child/child_data/data_id2child/child/$$ value
 less than or equal 
@@ -989,7 +989,7 @@ Float data_model::avg_yes_ode(
 }
 /*
 -----------------------------------------------------------------------------
-$begin data_model_residual$$
+$begin devel_data_model_residual$$
 
 $spell
 	dm
@@ -1035,7 +1035,7 @@ the weighted residual for.
 $subhead Node$$
 The $icode data_id$$ must correspond to a 
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
-$cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
+$cref/parent_node_id/devel_data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
 $cref/child/child_data/data_id2child/child/$$ value
 less than or equal 
@@ -1069,10 +1069,10 @@ This can be calculated using the routine:
 $table
 routine                   $cnext integrand for this $icode data_id$$ 
 $rnext
-$cref data_model_avg_no_ode$$ $cnext 
+$cref devel_data_model_avg_no_ode$$ $cnext 
 	prevalence, mtspecific, mtall, mtstandard
 $rnext
-$cref data_model_avg_yes_ode$$ $cnext 
+$cref devel_data_model_avg_yes_ode$$ $cnext 
 	incidence, remission, mtexcess, mtother, mtwith, relrisk
 
 $tend
