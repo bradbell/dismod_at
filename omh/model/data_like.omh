@@ -185,11 +185,13 @@ the weighted residual is
 $latex \[
 R [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \] $$
-and the log-likelihood is
+and the likelihood is
 $latex \[
-\log [ \B{p} ( v_i | u , \theta )  ]
+\B{p} ( v_i | u , \theta )
 = 
+\exp \left(
 G [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+\right)
 \] $$
 See the model density definitions of 
 $cref/R/model_density/Gaussian/Weighted Residual, R/$$ 
@@ -202,11 +204,13 @@ the weighted residual is
 $latex \[
 R [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \] $$
-and the log-likelihood is
+and the likelihood is
 $latex \[
-\log [ \B{p} ( v_i | u , \theta )  ]
+\B{p} ( v_i | u , \theta ) 
 = 
+\exp \left(
 L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+\right)
 \] $$
 See the model density definitions of 
 $cref/R/model_density/Laplace/Weighted Residual, R/$$ 
@@ -220,11 +224,13 @@ the weighted residual is
 $latex \[
 R_L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \] $$
-and the log-likelihood is
+and the likelihood is
 $latex \[
-\log [ \B{p} ( v_i | u , \theta )  ]
+\B{p} ( v_i | u , \theta )
 = 
+\exp \left(
 G_L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+\right)
 \] $$
 See the model density definitions of 
 $cref/R_L/model_density/Log-Gaussian/Weighted Residual, R_L/$$ 
@@ -237,11 +243,13 @@ the weighted residual is
 $latex \[
 R_L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \] $$
-and the log-likelihood is
+and the likelihood is
 $latex \[
-\log [ \B{p} ( v_i | u , \theta )  ]
+\B{p} ( v_i | u , \theta )
 = 
+\exp \left(
 L_L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+\right)
 \] $$
 See the model density definitions of 
 $cref/R_L/model_density/Log-Laplace/Weighted Residual, R_L/$$ 
