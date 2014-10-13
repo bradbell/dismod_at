@@ -1009,7 +1009,7 @@ $spell
 	relrisk
 	xam
 $$
-$section Average for Integrands That Require the ODE$$
+$section Weighted Residuals for All Integrands$$
 
 $head Syntax$$
 $icode%wres% = %dm%.residual(%data_id%, %var_info%, %var_vec%, %avg%)%$$
@@ -1083,7 +1083,7 @@ $codei%
 	%Float%& %wres%
 %$$
 and is the
-$cref/weighted residual/model_residual/Weighted Residual, R_i/$$
+$cref/weighted residual/model_residual/Weighted Residual and Likelihood/$$
 corresponding to this $icode data_id$$.
 
 $children%example/devel/model/residual_xam.cpp

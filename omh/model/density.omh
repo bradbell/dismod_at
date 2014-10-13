@@ -10,7 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin model_density$$
 
-$section The Density Functions$$
+$section Weighted Residual and Density Functions$$
 
 $head Gaussian$$
 A random variable $latex z$$ has a Gaussian distribution with 
@@ -22,6 +22,12 @@ $latex \[
 	\exp \left[ - \frac{1}{2} \left( \frac{z - \mu}{\delta} \right)^2 \right]
 \] $$
 for  $latex z \in [ -\infty , +\infty ]$$.
+
+$subhead Weighted Residual, R$$
+The corresponding weight residual function is
+$latex \[
+R ( z, \mu , \delta ) = \frac{z - \mu}{\delta}
+\] $$
 
 $subhead Log-Density, G$$
 The corresponding negative log-density function is
@@ -42,6 +48,13 @@ $latex \[
 	\exp \left[ - \sqrt{2} \left| \frac{z - \mu}{\delta} \right| \; \right]
 \] $$
 for  $latex z \in [ -\infty , +\infty ]$$.
+
+$subhead Weighted Residual, R$$
+The corresponding weight residual function is
+the same as for the Gaussian case; i.e.,
+$latex \[
+R ( z, \mu , \delta ) = \frac{z - \mu}{\delta}
+\] $$
 
 $subhead Log-Density, L$$
 The corresponding negative log-density function is
@@ -76,6 +89,18 @@ for  $latex z \in [ -\eta , +\infty ]$$.
 Note that the mean of $latex \log( z + \eta )$$ is
 $latex \log( \mu + \eta )$$ and its standard deviation is
 $latex \sigma( \mu , \delta , \eta )$$. 
+
+$subhead Weighted Residual, R_L$$
+The corresponding weight residual function is
+$latex \[
+R_L ( z, \mu , \delta ) 
+= 
+\frac{
+	\log( z + \eta ) - \log( \mu + \eta )
+}{
+	\sigma( \mu , \delta , \eta )
+}
+\] $$
 
 $subhead Log-Density, G_L$$
 The corresponding log-density function is
@@ -116,6 +141,19 @@ for  $latex z \in [ -\eta , +\infty ]$$.
 Note that the mean of $latex \log( z + \eta )$$ is
 $latex \log( \mu + \eta )$$ and its standard deviation is
 $latex \sigma( \mu , \delta , \eta )$$. 
+
+$subhead Weighted Residual, R_L$$
+The corresponding weight residual function is
+the same as for the Log-Gaussian case; i.e.,
+$latex \[
+R_L ( z, \mu , \delta ) 
+= 
+\frac{
+	\log( z + \eta ) - \log( \mu + \eta )
+}{
+	\sigma( \mu , \delta , \eta )
+}
+\] $$
 
 $subhead Log-Density, L_L$$
 The corresponding log-density function is

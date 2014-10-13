@@ -17,7 +17,7 @@ $spell
 	mulcov
 $$
 
-$section The Weighted Residuals$$
+$section The Data Weighted Residuals and Likelihood Functions$$
 
 $head Data Table Notation$$
 
@@ -171,60 +171,82 @@ Let $latex A_i ( u , \theta )$$ denote the
 $cref/average integrand/model_avg_integrand/Average Integrand, A_i/$$ for this
 $icode data_id$$.
 
-$head Weighted Residual, R_i$$
 
-$subhead Linear Density$$
-The density is linear if $latex d_i$$ corresponds to 
-$cref/density_name/density_table/density_name/$$ $code gaussian$$
-or $code laplace$$.
-In this case the weighted residual is defined by
-$latex \[
-R_i ( u , \theta ) 
-= 
-\frac{ y_i ( \theta )  - A_i ( u , \theta ) }{ \delta_i ( \theta) } 
-\] $$
-If $cref/density_name/density_table/density_name/$$ is
-$code gaussian$$ ($code laplace$$),
-$latex \[
-	\B{p} \left[ y_i ( \theta ) \W{|} u , \theta \right]
-\] $$ 
-is a 
-$cref/Gaussian/model_density/Gaussian/$$ 
-($cref/Laplace/model_density/Laplace/$$) 
-density with mean
-$latex A_i (u, \theta)$$ and standard deviation $latex \delta_i ( \theta )$$.
+$head Weighted Residual and Likelihood$$
+The weighted residual and likelihood,
+given the random effects $latex u$$ and the fixed effects $latex \theta$$,
+depend on the 
+$cref/density_name/density_table/density_name/$$ 
+corresponding to $latex d_i$$.
 
-$subhead Log Density$$
-The density is logarithmic if $latex d_i$$ corresponds to 
-$cref/density_name/density_table/density_name/$$ $code log_gaussian$$
-or $code log_laplace$$.
-In this case the weighted residual is defined by
+$subhead gaussian$$
+If $latex d_i$$ corresponds to $code gaussian$$,
+the weighted residual is
 $latex \[
-R_i ( u , \theta ) 
+R [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+\] $$
+and the log-likelihood is
+$latex \[
+\log [ \B{p} ( v_i | u , \theta )  ]
 = 
-\frac{
-\log[ y_i ( \theta ) + \eta_i ] - \log[ A_i ( u , \theta ) + \eta_i ] 
-}{
-\log[ y_i ( \theta ) + \eta_i + \delta_i ( \theta )  ] 
--
-\log[ y_i ( \theta ) + \eta_i ] 
-} 
+G [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \] $$
-If $cref/density_name/density_table/density_name/$$ is
-$code log_gaussian$$ ($code log_laplace$$),
+See the model density definitions of 
+$cref/R/model_density/Gaussian/Weighted Residual, R/$$ 
+and 
+$cref/G/model_density/Gaussian/Log-Density, G/$$.
+
+$subhead laplace$$
+If $latex d_i$$ corresponds to $code laplace$$,
+the weighted residual is
 $latex \[
-	\B{p} \left( [ \log [ y_i ( \theta ) + \eta_i ] \W{|} u , \theta \right)
-\] $$ 
-$cref/Gaussian/model_density/Gaussian/$$ 
-($cref/Laplace/model_density/Laplace/$$) 
-density with mean
-$latex \log [ A_i (u, \theta) + \eta_i ]$$ 
-and standard deviation 
-$latex \[
-\log[ y_i ( \theta ) + \eta_i + \delta_i ( \theta ) ]
--
-\log[ y_i ( \theta ) + \eta_i ]
+R [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \] $$
+and the log-likelihood is
+$latex \[
+\log [ \B{p} ( v_i | u , \theta )  ]
+= 
+L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+\] $$
+See the model density definitions of 
+$cref/R/model_density/Laplace/Weighted Residual, R/$$ 
+and 
+$cref/L/model_density/Laplace/Log-Density, L/$$.
+
+
+$subhead log_gaussian$$
+If $latex d_i$$ corresponds to $code log_gaussian$$,
+the weighted residual is
+$latex \[
+R_L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+\] $$
+and the log-likelihood is
+$latex \[
+\log [ \B{p} ( v_i | u , \theta )  ]
+= 
+G_L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+\] $$
+See the model density definitions of 
+$cref/R_L/model_density/Log-Gaussian/Weighted Residual, R_L/$$ 
+and 
+$cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$.
+
+$subhead log_laplace$$
+If $latex d_i$$ corresponds to $code log_laplace$$,
+the weighted residual is
+$latex \[
+R_L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+\] $$
+and the log-likelihood is
+$latex \[
+\log [ \B{p} ( v_i | u , \theta )  ]
+= 
+L_L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+\] $$
+See the model density definitions of 
+$cref/R_L/model_density/Log-Laplace/Weighted Residual, R_L/$$ 
+and 
+$cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$.
 
 
 
