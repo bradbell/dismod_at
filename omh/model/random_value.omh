@@ -6,7 +6,7 @@ $spell
 	std
 $$
 
-$section Penalty For Random Effect Values$$
+$section The Random Effects Value Density Function$$
 
 $head c$$
 We use $latex C$$ to denote the size of the
@@ -80,7 +80,7 @@ $head V_c,j^u$$
 We use $icode density_id$$ to denote the
 $cref/density_id/prior_table/density_id/$$ corresponding to 
 the rate, age, and time specified by $icode j$$.
-The definition of the value penalty function for $latex u_{c,j}$$
+The definition of the value density function for $latex u_{c,j}$$
 is defined below under the corresponding
 $cref/density_name/density_table/density_name/$$.
 
@@ -88,7 +88,7 @@ $subhead uniform$$
 If $icode density$$ is $code uniform$$,
 no contribution is added to the log density for this variable; i.e.
 $latex \[
-V_{c,j}^u ( u | \theta) =  0
+V_{c,j}^u ( u | \theta) =  1
 \] $$
 
 $subhead gaussian$$
@@ -97,9 +97,9 @@ see $cref/G/model_density/Gaussian/Log-Density, G/$$,
 $latex \[
 V_{c,j}^u ( u | \theta ) 
 =
-- G \left[
+\exp \left( G \left[
 	u_{c,j} \W{,} r_j ( \theta ) \W{,} \lambda_j \delta_j 
-\right] 
+\right] \right)
 \] $$
 
 $subhead laplace$$
@@ -108,9 +108,9 @@ see $cref/L/model_density/Laplace/Log-Density, L/$$,
 $latex \[
 V_{c,j}^u ( u | \theta ) 
 =
-- L \left[
+\exp \left( L \left[
 	u_{c,j} \W{,} r_j ( \theta ) \W{,} \lambda_j \delta_j 
-\right] 
+\right] \right)
 \] $$
 
 $subhead log_gaussian$$
@@ -119,9 +119,9 @@ see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$,
 $latex \[
 V_{c,j}^u ( u | \theta ) 
 = 
-- G_L \left[
+\exp \left( G_L \left[
 	u_{c,j} \W{,} r_j ( \theta ) \W{,} \lambda_j \delta_j 
-\right] 
+\right] \right)
 \] $$
 
 $subhead log_laplace$$
@@ -130,18 +130,18 @@ see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$,
 $latex \[
 V_{c,j}^u ( u | \theta ) 
 = 
-- L_L \left[
+\exp \left( L_L \left[
 	u_{c,j} \W{,} r_j ( \theta ) \W{,} \lambda_j \delta_j 
-\right] 
+\right] \right)
 \] $$
 
 $subhead V^u$$
 Let $latex m$$ be the number of random effects.
-The value penalty for all the random  effects $latex u$$ is defined by
+The value density for all the random  effects $latex u$$ is defined by
 $latex \[
 V^u ( u | \theta )  
 = 
-\sum_{c=0}^{C-1} \sum_{j=0}^{m-1} V_{c,j}^u ( u | \theta )
+\prod_{c=0}^{C-1} \prod_{j=0}^{m-1} V_{c,j}^u ( u | \theta )
 \] $$
 
 $end

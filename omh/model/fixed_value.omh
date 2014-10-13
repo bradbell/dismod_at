@@ -5,7 +5,7 @@ $spell
 	std
 $$
 
-$section Penalty for Fixed Effect Values$$
+$section The Fixed Effects Value Density Function$$
 
 
 $head theta_j$$
@@ -47,67 +47,71 @@ $cref/eta/prior_table/eta/$$ corresponding to $icode prior_id$$.
 $head V_j^theta$$
 We use $icode density_id$$ to denote the
 $cref/density_id/prior_table/density_id/$$ corresponding to $icode prior_id$$.
-The definition of the value penalty function for $latex \theta_j$$
+The definition of the value density function for $latex \theta_j$$
 is defined below under the corresponding
 $cref/density_name/density_table/density_name/$$.
 
 $subhead uniform$$
 If $icode density$$ is $code uniform$$,
-the value penalty function is
+the value density function is
 $latex \[
-V_j^\theta ( \theta ) = 0
+V_j^\theta ( \theta ) = 1
 \] $$
 
 $subhead gaussian$$
 If $icode density$$ is $code gaussian$$,
 see $cref/G/model_density/Gaussian/Log-Density, G/$$,
-the value penalty function is
+the value density function is
 $latex \[
 V_j^\theta ( \theta ) 
 =
-- G \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \right) 
+\exp \left[
+	 G \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \right) 
+\right]
 \] $$
 
 
 $subhead laplace$$
 If $icode density$$ is $code laplace$$,
 see $cref/L/model_density/Laplace/Log-Density, L/$$,
-the value penalty function is
+the value density function is
 $latex \[
 V_j^\theta ( \theta ) 
 =
-- L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \right) 
+\exp \left[
+	 L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \right) 
+\right]
 \] $$
 
 $subhead log_gaussian$$
 If $icode density$$ is $code log_gaussian$$,
 see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$,
-the value penalty function is
+the value density function is
 $latex \[
 V_j^\theta ( \theta ) 
 =
-- G_L \left( 
-	\theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} \eta_j 
-\right) 
+\exp \left[
+ G_L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} \eta_j \right) 
+\right]
 \] $$
 
 $subhead log_laplace$$
 If $icode density$$ is $code log_laplace$$,
 see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$,
-the value penalty function is
+the value density function is
 $latex \[
 V_j^\theta ( \theta ) 
 =
-- L_L \left( 
-	\theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} \eta_j 
-\right) 
+\exp \left[
+L_L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} \eta_j \right) 
+\right]
 \] $$
 
 $head V^theta$$
 Let $latex n$$ be the number of fixed effects.
-The value penalty for all the fixed effects $latex \theta$$ is defined by
+The value density for all the fixed effects $latex \theta$$ is defined by
 $latex \[
-V^\theta ( \theta ) = \sum_{j=0}^{n-1} V_j^\theta ( \theta )
+V^\theta ( \theta ) = \prod_{j=0}^{n-1} V_j^\theta ( \theta )
 \] $$
 
 $end

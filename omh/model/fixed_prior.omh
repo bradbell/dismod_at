@@ -38,46 +38,117 @@ $subhead theta$$
 We use $latex \theta$$ to denote the entire fixed effects vector; i.e.,
 $latex \theta = ( \lambda , \beta )$$.
 
-$head Bound Constraints$$
+$head Value Constraints$$
 
-$subhead theta_j$$
-We use $latex \theta_j$$ to denote 
+$subhead theta_k$$
+We use $latex \theta_k$$ to denote 
 one component of  $latex \theta$$.
 
-$subhead theta_j^L$$
-We use $latex \theta_j^L$$ to denote the 
+$subhead theta_k^L$$
+We use $latex \theta_k^L$$ to denote the 
 $cref/lower/prior_table/lower/$$ limit 
-corresponding to the $icode prior_id$$ for the
-standard deviation multiplier $latex \theta_j$$.
+corresponding to the 
+$cref/value_prior_id/smooth_grid_table/value_prior_id/$$
+that corresponds to the fixed effect $latex \theta_k$$.
 
-$subhead theta_j^U$$
-We use $latex \theta_j^U$$ to denote the 
+$subhead theta_k^U$$
+We use $latex \theta_k^U$$ to denote the 
 $cref/upper/prior_table/upper/$$ limit 
-corresponding to the $icode prior_id$$ for the
-standard deviation multiplier $latex \theta_j$$.
+corresponding to the 
+$cref/value_prior_id/smooth_grid_table/value_prior_id/$$
+that corresponds to the fixed effect $latex \theta_k$$.
 
-$subhead Theta$$
-We define $latex \Theta$$ as the set of $latex \theta$$
-that satisfy all the bounds above; i.e.,
+
+$head Age Difference Limits$$
+The fixed effects corresponding to the standard deviations multipliers
+$cref/mulstd_value/smooth_table/mulstd_value/$$,
+$cref/mulstd_dage/smooth_table/mulstd_dage/$$, and
+$cref/mulstd_dtime/smooth_table/mulstd_dtime/$$
+are constant with respect to age and time.
+Hence the constraints
+below do not apply to the standard deviation multipliers.
+
+$subhead a_i(k)$$
+We use $latex a_{i(k)}$$ to denote the age corresponding to the
+$cref/age_id/smooth_grid_table/age_id/$$ for the fixed effect
+$latex \theta_k$$.
+If this is the maximum age for the corresponding
+$cref/smooth_id/smooth_table/smooth_id/$$,
+then there is no age difference for this fixed effect.
+Otherwise, we use $latex a_{i(k)+1}$$ to denote the next larger age
+in the smoothing grid and
+$latex \theta_{\ell(k)}$$ denote the corresponding component of 
+$latex \theta$$ corresponding to the next larger age.
+
+$subhead Delta^a$$
+If $latex a_{i(k)}$$ is not the maximum age, we use the notation
 $latex \[
-\Theta = \left\{ \theta \W{:} 
-	\theta_j^L \leq \theta_j \leq \theta_j^U \; \R{for} \; \R{all} \; j
-\right\}
-\] $$ 
+\Delta^a_k \theta = \frac{\theta_{\ell(k)} - \theta_k}{ a_{i(k)+1} - a_{i(k)} }
+\] $$
+
+$subhead L_k^a$$
+We use $latex L_k^a$$ to denote the 
+$cref/lower/prior_table/lower/$$ limit 
+corresponding to the 
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
+that corresponds to the fixed effect $latex \theta_k$$.
+
+$subhead U_k^a$$
+We use $latex U_k^a$$ to denote the 
+$cref/upper/prior_table/upper/$$ limit 
+corresponding to the 
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
+that corresponds to the fixed effect $latex \theta_k$$.
 
 
-$head V^theta$$
-We use $latex V^\theta ( \theta )$$ to denote the 
-$cref/fixed effects value penalty/fixed_value/V^theta/$$ function.
+$head Time Difference Limits$$
+The time difference $latex \Delta^t_k \theta$$,
+the index $latex j(k)$$, and limits
+$latex L_k^t$$ and $latex U_k^t$$ are defined in a fashion
+similar as for the age differences.
+
+$head Theta$$
+The constraint set $latex \Theta$$ is defined as the set of
+$latex \theta$$ such that the following conditions hold:
+
+$list number$$
+For all $latex k$$,
+$latex \[
+	\theta_k^L \leq \theta_k \leq \theta_k^U \; \R{for} \; \R{all} \; j
+\] $$
+$lnext
+For $latex k$$,
+that are not standard deviation multipliers,
+and such that $latex a_{i(k)}$$ is not the maximum age
+for the corresponding smoothing,
+$latex \[
+	L_k^a \leq \Delta^a_k \theta \leq U_k^a 
+\] $$
+$lnext
+For $latex k$$,
+that are not standard deviation multipliers,
+and such that $latex t_{j(k)}$$ is not the maximum time
+for the corresponding smoothing,
+$latex \[
+	L_k^t \leq \Delta^t_k \theta \leq U_k^t 
+\] $$
+$lend
 
 $head p(theta)$$
 We define the prior for the fixed effects by
 $latex \[
 \B{p} ( \theta ) = \frac{ 
-	V^\theta ( \theta )
+	V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
 	}{
-	\int_{\Theta} V^\theta ( \theta ) \; \B{d} \theta
+	\int_{\Theta} 
+	V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
+	\; \B{d} \theta
 }
 \] $$
+See 
+$cref/V^theta/fixed_value/V^theta/$$, 
+$cref/A^theta/fixed_diff/A^theta/$$, and
+$cref/T^theta/fixed_diff/T^theta/$$  for the definitions of
+$latex V^\theta$$, $latex A^\theta$$ and $latex T^\theta$$.
 
 $end

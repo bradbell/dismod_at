@@ -12,7 +12,7 @@ $spell
 	std
 $$
 
-$section Prior Penalty For Random Effect Differences$$
+$section Random Effects Difference Density Function$$
 
 $head k, K$$
 We use $latex k$$ to denote a
@@ -136,13 +136,13 @@ If $icode density$$ for
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ is $code uniform$$,
 for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
-A_{i,j,k,c}^u ( u | \theta ) =  0
+A_{i,j,k,c}^u ( u | \theta ) =  1
 \] $$
 If $icode density$$ for 
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ is $code uniform$$,
 for $latex j = 0 , \ldots , J(k)-2$$,
 $latex \[
-T_{i,j,k,c}^\theta ( u | \theta ) =  0
+T_{i,j,k,c}^\theta ( u | \theta ) =  1
 \] $$
 
 $subhead gaussian$$
@@ -153,11 +153,11 @@ for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
 A_{i,j,k,c}^u ( u | \theta ) 
 =  
-- G \left( 
+\exp \left[ G \left( 
 	\Delta_{i,j,k,c}^a u 
 	\W{,} \Delta_{i,j,k}^a \theta 
 	\W{,} \lambda_k^a \delta_{i,j,k}^a 
-\right)
+\right) \right]
 \] $$
 If $icode density$$ for 
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ is $code gaussian$$,
@@ -165,11 +165,11 @@ for $latex j = 0 , \ldots , J(k)-2$$,
 $latex \[
 T_{i,j,k,c}^u ( u | \theta ) 
 =
-- G \left( 
+\exp \left[ G \left( 
 	\Delta_{i,j,k,c}^t u 
 	\W{,} \Delta_{i,j,k}^t \theta 
 	\W{,} \lambda_k^t \delta_{i,j,k}^t 
-\right)
+\right) \right]
 \] $$
 
 $subhead laplace$$
@@ -180,11 +180,11 @@ for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
 A_{i,j,k,c}^u ( u | \theta ) 
 =  
-- L \left( 
+\exp \left[ L \left( 
 	\Delta_{i,j,k,c}^a u
 	\W{,} \Delta_{i,j,k}^a \theta 
 	\W{,} \lambda_k^a \delta_{i,j,k}^a 
-\right)
+\right) \right]
 \] $$
 If $icode density$$ for 
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ is $code laplace$$,
@@ -192,11 +192,11 @@ for $latex j = 0 , \ldots , J(k)-2$$,
 $latex \[
 T_{i,j,k,c}^u ( u | \theta ) 
 =
-- L \left( 
+\exp \left[ L \left( 
 	\Delta_{i,j,k,c}^t u 
 	\W{,} \Delta_{i,j,k}^t \theta
 	\W{,} \lambda_k^t \delta_{i,j,k}^t 
-\right)
+\right) \right]
 \] $$
 
 $subhead log_gaussian$$
@@ -207,12 +207,12 @@ for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
 A_{i,j,k,c}^u ( u | \theta ) 
 =  
-- G_L \left( 
+\exp \left[ G_L \left( 
 	\Delta_{i,j,k,c}^a u
 	\W{,} \Delta_{i,j,k}^a \theta
 	\W{,} \lambda_k^a \delta_{i,j,k}^a 
 	\W{,} \eta_{i,j,k}^a 
-\right)
+\right) \right]
 \] $$
 If $icode density$$ for 
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ is $code gaussian$$,
@@ -220,12 +220,12 @@ for $latex j = 0 , \ldots , J(k)-2$$,
 $latex \[
 T_{i,j,k,c}^u ( u | \theta ) 
 =
-- G_L \left( 
+\exp \left[ G_L \left( 
 	\Delta_{i,j,k,c}^t u
 	\W{,} \Delta_{i,j,k}^t \theta 
 	\W{,} \lambda_k^t \delta_{i,j,k}^t 
 	\W{,} \eta_{i,j,k}^t
-\right)
+\right) \right]
 \] $$
 
 
@@ -237,12 +237,12 @@ for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
 A_{i,j,k,c}^u ( u | \theta ) 
 =  
-- L_L \left( 
+\exp \left[ L_L \left( 
 	\Delta_{i,j,k,c}^a u
 	\W{,} \Delta_{i,j,k}^a \theta 
 	\W{,} \lambda_k^a \delta_{i,j,k}^a 
 	\W{,} \eta_{i,j,k}^a 
-\right)
+\right) \right]
 \] $$
 If $icode density$$ for 
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ is $code laplace$$,
@@ -250,16 +250,16 @@ for $latex j = 0 , \ldots , J(k)-2$$,
 $latex \[
 T_{i,j,k,c}^u ( u | \theta ) 
 =
-- L_L \left( 
+\exp \left[ L_L \left( 
 	\Delta_{i,j,k,c}^t u
 	\W{,} \Delta_{i,j,k}^t \theta
 	\W{,} \lambda_k^t \delta_{i,j,k}^t 
 	\W{,} \eta_{i,j,k}^t
-\right)
+\right) \right]
 \] $$
 
 $head A^u$$
-The age difference penalty 
+The age difference density 
 for the fixed effects $latex \theta$$ is defined by
 $latex \[
 A^u ( u | \theta ) 
@@ -269,7 +269,7 @@ A^u ( u | \theta )
 \] $$
 
 $head T^u$$
-The time difference penalty 
+The time difference density 
 for the fixed effects $latex \theta$$ is defined by
 $latex \[
 T^u ( u | \theta ) 
