@@ -54,15 +54,15 @@ $subhead theta_k$$
 We use $latex \theta_k$$ to denote 
 one component of  $latex \theta$$.
 
-$subhead theta_k^L$$
-We use $latex \theta_k^L$$ to denote the 
+$subhead L_k^v$$
+We use $latex L_k^v$$ to denote the 
 $cref/lower/prior_table/lower/$$ limit 
 corresponding to the 
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
 that corresponds to the fixed effect $latex \theta_k$$.
 
-$subhead theta_k^U$$
-We use $latex \theta_k^U$$ to denote the 
+$subhead U_k^v$$
+We use $latex U_k^v$$ to denote the 
 $cref/upper/prior_table/upper/$$ limit 
 corresponding to the 
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
@@ -124,7 +124,7 @@ $latex \theta$$ such that the following conditions hold:
 $list number$$
 For all $latex k$$,
 $latex \[
-	\theta_k^L \leq \theta_k \leq \theta_k^U \; \R{for} \; \R{all} \; j
+	L_k^v \leq \theta_k \leq U_k^v 
 \] $$
 $lnext
 For $latex k$$,

@@ -145,7 +145,7 @@ V_{c,j}^u ( u | \theta )
 \right] \right)
 \] $$
 
-$subhead V^u$$
+$head V^u$$
 Let $latex m$$ be the number of random effects.
 The value density for all the random  effects $latex u$$ is defined by
 $latex \[

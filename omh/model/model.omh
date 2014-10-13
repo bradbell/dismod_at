@@ -21,10 +21,11 @@ $childtable%
 	omh/model/avg_integrand.omh%
 	omh/model/data_like.omh%
 	omh/model/fixed_value.omh%
-	omh/model/random_value.omh%
 	omh/model/fixed_diff.omh%
-	omh/model/random_diff.omh%
 	omh/model/fixed_prior.omh%
+	omh/model/random_value.omh%
+	omh/model/random_diff.omh%
+	omh/model/random_prior.omh%
 	omh/model/glossary.omh
 %$$
 

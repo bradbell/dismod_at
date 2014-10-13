@@ -92,7 +92,7 @@ $latex \[
 \] $$
 
 $head Delta^t$$
-For $latex i = 0 , \ldots , J(k)-2$$ we define
+For $latex j = 0 , \ldots , J(k)-2$$ we define
 $latex \[
 \Delta_{i,j,k}^t \theta
 = 
