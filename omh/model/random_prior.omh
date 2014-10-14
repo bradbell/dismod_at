@@ -115,11 +115,19 @@ $latex \[
 \frac{ u_{i,j+1,k,c} - u_{i,j,k,c} }{ t_{j+1,k} - t_{j,k} }
 \] $$
 
-$head U$$
-The constraint set $latex U$$ is defined as the set of
+$head U(theta)$$
+The constraint set $latex U( \theta )$$ is defined as the set of
 $latex u$$ such that the following conditions hold:
 
 $list number$$
+Define $cref/S(u|theta)/random_value/S(u|theta)/$$,
+the sum, with respect to $latex c$$ of the difference between the random
+effects and the corresponding fixed effect.
+For all $latex i$$, $latex j$$, $latex k$$,
+$latex \[
+	S_{i,j,k} ( u | \theta ) = 0
+\] $$
+$lnext
 For all $latex i$$, $latex j$$, $latex k$$, $latex c$$,
 $latex \[
 	L_{i,j,k}^v \leq u_{i,j,k,c} \leq U_{i,j,k}^v 
@@ -145,7 +153,7 @@ $latex \[
 \B{p} ( u | \theta ) = \frac{ 
 	V^u ( u | \theta ) A^u ( u | \theta ) T^u ( u | \theta )
 	}{
-	\int_U
+	\int_{U( \theta )}
 	V^u ( u | \theta ) A^u ( u | \theta ) T^u ( u | \theta )
 	\; \B{d} u
 }

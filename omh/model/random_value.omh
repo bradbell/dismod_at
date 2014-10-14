@@ -154,4 +154,26 @@ V^u ( u | \theta )
 \prod_{c=0}^{C-1} \prod_{j=0}^{m-1} V_{c,j}^u ( u | \theta )
 \] $$
 
+$head S(u|theta)$$
+For each $cref/rate_id/rate_table/rate_id/$$ 
+$latex k = 0 , \ldots , K-1$$,
+there is a corresponding number of age points $latex I(k)$$ and
+number of time points $latex J(k)$$.
+The number of possible values for $latex j$$ above is
+$latex \[
+	N = \sum_{k=0}^{K-1} I(k) * J(k)
+\] $$
+The number of 
+$cref/random effects/model_variable/Random Effects, u/$$ is
+$latex N \times C$$; i.e., $latex u \in \B{R}^{N \times C}$$.
+Let $latex M$$ be the number of
+$cref/fixed effects/model_variable/Fixed Effects, theta/$$; i.e.,
+$latex \theta \in \B{R}^M$$.
+We define the function 
+$latex S : \B{R}^{N \times C} \times \B{R}^M \rightarrow \B{R}^N $$ by
+$latex \[
+	S_j (u | \theta ) = \sum_{c=0}^{C-1} \; u_{c,j} - r_j ( \theta )
+\] $$
+for $latex j = 0 , \ldots , N-1$$.
+
 $end
