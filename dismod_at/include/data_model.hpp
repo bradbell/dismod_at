@@ -76,9 +76,9 @@ public:
 		const  pack_var&              var_info ,
 		const  CppAD::vector<Float>&  var_vec
 	) const;
-	// compute weighted residual
+	// compute weighted residual and log-likelihood
 	template <class Float>
-	Float residual(
+	std::pair<Float, Float> data_like(
 		size_t                        data_id  ,
 		const  pack_var&              var_info ,
 		const  CppAD::vector<Float>&  var_vec  ,

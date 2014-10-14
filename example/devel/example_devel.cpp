@@ -33,7 +33,7 @@ $end
 // model subdirectory
 extern bool avg_no_ode_xam(void);
 extern bool avg_yes_ode_xam(void);
-extern bool residual_xam(void);
+extern bool data_like_xam(void);
 
 // utility subdirectory
 extern bool bilinear_interp_xam(void);
@@ -99,7 +99,7 @@ int main(void)
 	// model subdirectory
 	RUN(avg_no_ode_xam);
 	RUN(avg_yes_ode_xam);
-	RUN(residual_xam);
+	RUN(data_like_xam);
 
 	// utility subdirectory
 	RUN(bilinear_interp_xam);

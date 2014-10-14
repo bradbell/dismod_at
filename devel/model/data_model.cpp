@@ -989,9 +989,11 @@ Float data_model::avg_yes_ode(
 }
 /*
 -----------------------------------------------------------------------------
-$begin devel_data_model_residual$$
+$begin devel_data_model_like$$
 
 $spell
+	loglike
+	std
 	dm
 	Integrands
 	wres
@@ -1009,10 +1011,12 @@ $spell
 	relrisk
 	xam
 $$
-$section Weighted Residuals for All Integrands$$
+$section Weighted Residuals and Log-Likelihood for All Integrands$$
 
 $head Syntax$$
-$icode%wres% = %dm%.residual(%data_id%, %var_info%, %var_vec%, %avg%)%$$
+$icode%wres_loglike% = %dm%.data_like(
+	%data_id%, %var_info%, %var_vec%, %avg%
+)%$$
 
 $head dm$$
 This object has prototype
@@ -1030,7 +1034,7 @@ $codei%
 	size_t %data_id%
 %$$
 and is the $cref/data_id/data_table/data_id/$$ for we are computing
-the weighted residual for.
+the weighted residual and log-likelihood for.
 
 $subhead Node$$
 The $icode data_id$$ must correspond to a 
@@ -1077,25 +1081,35 @@ $cref devel_data_model_avg_yes_ode$$ $cnext
 
 $tend
 
-$head wres$$
+$head wres_loglike$$
 The return value has prototype
 $codei%
-	%Float%& %wres%
+	std::pair<%Float%, %Float%> %wres_loglike%
 %$$
-and is the
-$cref/weighted residual/data_like/Weighted Residual and Likelihood/$$
+with the following identifications;
+$codei%
+	%wres%    = %wres_loglike%.first
+	%loglike% = %wres_loglike%.second
+%$$
+The value $icode wres$$ is the
+$cref/weighted residual/data_like/Weighted Residual and Likelihood/$$,
+and $icode loglike$$ is the log of the likelihood,
 corresponding to this $icode data_id$$.
+In the special case where the
+$cref/density/density_table/$$ is $code uniform$$,
+$icode loglike$$ is zero; i.e., 
+the normalizing constant is not included in the log-likelihood.
 
-$children%example/devel/model/residual_xam.cpp
+$children%example/devel/model/data_like_xam.cpp
 %$$
 $head Example$$
-The file $cref residual_xam.cpp$$ contains an example and test
+The file $cref data_like_xam.cpp$$ contains an example and test
 of using this routine.
 
 $end
 */
 template <class Float>
-Float data_model::residual(
+std::pair<Float, Float> data_model::data_like(
 		size_t                        data_id  ,
 		const pack_var&               var_info ,
 		const CppAD::vector<Float>&   var_vec  ,
@@ -1184,24 +1198,50 @@ Float data_model::residual(
 	delta       += std_effect * (adjust + eta);
 	//
 	Float wres;
+	Float std_tmp = delta;
 	switch( density )
 	{
 		case uniform_enum:
 		case gaussian_enum:
 		case laplace_enum:
-		wres = ( adjust - avg) / delta;
+		wres = ( adjust - avg) / std_tmp;
 		break;
 
 		case log_gaussian_enum:
 		case log_laplace_enum:
-		wres = ( log( adjust + eta ) - log( avg + eta ) );
-		wres /= log( 1.0 + delta / (adjust + eta) ); 
+		std_tmp = log( 1.0 + delta / (adjust + eta) ); 
+		wres    = ( log( adjust + eta ) - log( avg + eta ) ) / std_tmp;
 		break;
 
 		default:
 		assert(false);
 	}
-	return wres;
+	Float loglike;
+	switch( density )
+	{
+		case uniform_enum:
+		loglike = 0.0;
+		break;
+
+		case gaussian_enum:
+		case log_gaussian_enum:
+ 		{	double pi2 = 8.0 * atan(1.0);
+			loglike   = - log( std_tmp * sqrt( pi2 ) ) - wres * wres/ 2.0;
+		}
+		break;  
+
+		case laplace_enum:
+		case log_laplace_enum:
+		{	double r2 = sqrt(2.0);
+			loglike   = - log( std_tmp * r2 ) - r2 * abs( wres );
+		}
+		break;
+
+		default:
+		assert(false);
+	}
+	//
+	return std::pair<Float, Float> (wres, loglike);
 }
 
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \
@@ -1215,7 +1255,7 @@ Float data_model::residual(
 		const pack_var&               var_info ,            \
 		const CppAD::vector<Float>&   var_vec               \
 	) const;                                                \
-	template Float data_model::residual(                    \
+	template std::pair<Float, Float> data_model::data_like( \
 		size_t                        data_id  ,            \
 		const pack_var&               var_info ,            \
 		const CppAD::vector<Float>&   var_vec  ,            \

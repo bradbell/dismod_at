@@ -9,18 +9,18 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin residual_xam.cpp$$
+$begin data_like_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ residual: Example and Test$$
-$index example, C++ residual$$
-$index residual, C++ example$$
+$section C++ data_like: Example and Test$$
+$index example, C++ data_like$$
+$index data_like, C++ example$$
 
 $code
-$verbatim%example/devel/model/residual_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/model/data_like_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -29,7 +29,7 @@ $end
 # include <limits>
 # include <dismod_at/include/data_model.hpp>
 
-bool residual_xam(void)
+bool data_like_xam(void)
 {	bool   ok = true;
 	size_t i, j, k;
 	using CppAD::abs;	
@@ -216,13 +216,18 @@ bool residual_xam(void)
 	// check results
 	for(size_t data_id = 0; data_id < data_table.size(); data_id++)
 	{	Float avg         = dm.avg_no_ode(data_id, var_info, var_vec);
-		Float wres        = dm.residual(data_id, var_info, var_vec, avg);
+		std::pair<Float, Float> wres_loglike
+		                  = dm.data_like(data_id, var_info, var_vec, avg);
+		Float  wres       = wres_loglike.first;
+		Float  loglike    = wres_loglike.second;
 		double delta      = data_table[data_id].meas_std;
 		double y          = data_table[data_id].meas_value;
 		double eta        = 1e-4;
 		size_t density_id = data_table[data_id].density_id;
 		bool log_density = density_id == dismod_at::log_gaussian_enum;
 		log_density     |= density_id == dismod_at::log_laplace_enum;
+
+		// check wres
 		Float check;
 		if( log_density )
 			check = (log(y+eta) - log(avg+eta)) / log(1.0 + delta/(y+eta));
@@ -235,6 +240,46 @@ bool residual_xam(void)
 		cout << "wres = " << wres; 
 		cout << ", check = " << check; 
 		cout << ", relerr    = " << 1.0 - wres / check  << std::endl;
+		*/
+		// check loglike
+		double pi =  3.14159265358979323846264338327950288;
+		switch( density_id )
+		{	case dismod_at::uniform_enum:
+			check = 0.0;
+			break;
+
+			case dismod_at::gaussian_enum:
+			check = - log( delta * sqrt(2.0 * pi) ) - wres * wres / 2.0; 
+			break;
+
+			case dismod_at::laplace_enum:
+			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * abs(wres); 
+			break;
+
+			case dismod_at::log_gaussian_enum:
+			delta = log(1.0 + delta / (y + eta) );
+			check = - log( delta * sqrt(2.0 * pi) ) - wres * wres / 2.0; 
+			break;
+
+			case dismod_at::log_laplace_enum:
+			delta = log(1.0 + delta / (y + eta) );
+			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * abs(wres); 
+			break;
+
+			default:
+			assert(false);
+		}
+		/*
+		cout << "loglike = " << loglike; 
+		cout << ", check = " << check; 
+		if( density_id == dismod_at::uniform_enum )
+			ok &= check == loglike;
+		else
+		{	Float relerr = 1.0 - loglike / check;
+			cout << ", relerr    = " << relerr;
+			ok &= abs( relerr ) <= eps;
+		}
+		cout << std::endl;
 		*/
 	}
 
