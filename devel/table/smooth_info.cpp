@@ -23,6 +23,10 @@ $$
 $section Extract and Organize Information for One Smoothing$$
 
 $head Syntax$$
+
+$subhead Constructors$$
+$codei%smooth_info %s_default%()
+%$$
 $codei%smooth_info %s_info%(%smooth_id%, %smooth_table%, %smooth_grid_table% )
 %$$
 $codei%smooth_info %s_test%(
@@ -30,10 +34,12 @@ $codei%smooth_info %s_test%(
 	%mulstd_value%, %mulstd_dage%, %mulstd_dtime%
 )
 %$$
-$codei%smooth_info %s_default%()
-%$$
+
+$subhead Assignment$$
 $icode%s_default% = %s_info%
 %$$
+
+$subhead Member Functions$$
 $icode%n_age%     = %s_info%.age_size()
 %$$
 $icode%n_time%    = %s_info%.time_size()
