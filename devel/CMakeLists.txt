@@ -11,7 +11,6 @@
 SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL 
 	model/data_model.cpp
-	model/density.cpp
 
 	utility/bilinear_interp.cpp
 	utility/child_data.cpp
