@@ -250,7 +250,10 @@ bool avg_no_ode_xam(void)
 			for(j = 0; j < s_info.time_size(); j++)
 			{	double time    = time_table[ s_info.time_id(j) ];
 				size_t index   = info.offset + i * s_info.time_size() + j; 
-				var_vec[index] = age * time / (age_max*time_max);
+				if( child_id == n_child )
+					var_vec[index] = age * time / (age_max*time_max);
+				else
+					var_vec[index] = 0.0;
 			}
 		}
 	}

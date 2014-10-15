@@ -23,7 +23,7 @@ $index weight, get grid$$
 $index grid, get weight$$
 
 $head Syntax$$
-$icode%weight_grid_table% = get_weight_grid(%db%)%$$
+$icode%weight_grid% = get_weight_grid(%db%)%$$
 
 $head Purpose$$
 To read the $cref weight_grid_table$$ and return it as a C++ data structure.

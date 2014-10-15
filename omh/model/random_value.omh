@@ -56,17 +56,6 @@ $latex u_{c,j}$$ the component
 for the child specified by $latex c$$ and
 the rate, age and time specified by $latex j$$.
 
-$head r_j(theta)$$
-We use $latex q_j (a , t , \theta )$$ for the piecewise linear rate function
-of age and time corresponding to rate $latex k_j$$ and the fixed
-effects vector $latex \theta$$.
-This is determined by the subvector corresponding to the
-$cref/parent rates/model_variable/Fixed Effects, theta/Parent Rates/$$. 
-We define
-$latex \[
-	r_j ( \theta ) = q_j ( a_j , t_j , \theta )
-\]$$
-
 $head lambda_j$$
 We use $latex \lambda_j$$
 for the $cref/mulstd_value/smooth_table/mulstd_value/$$ 
@@ -80,70 +69,18 @@ $cref/std/prior_table/std/$$ corresponding to the
 $cref/child_smooth_id/rate_table/child_smooth_id/$$ and the 
 rate, age, and time specified by $icode j$$. 
 
-$head eta_j$$
-We use $latex \eta_j$$ to denote the log transformation offset
-$cref/eta/prior_table/eta/$$ corresponding to the 
-$cref/child_smooth_id/rate_table/child_smooth_id/$$ and the 
-rate, age, and time specified by $icode j$$. 
-
 $head V_c,j^u$$
-We use $icode density_id$$ to denote the
-$cref/density_id/prior_table/density_id/$$ corresponding to 
-the rate, age, and time specified by $icode j$$.
-The definition of the value density function for $latex u_{c,j}$$
-is defined below under the corresponding
-$cref/density_name/density_table/density_name/$$.
-
-$subhead uniform$$
-If $icode density$$ is $code uniform$$,
-no contribution is added to the log density for this variable; i.e.
-$latex \[
-V_{c,j}^u ( u | \theta) =  1
-\] $$
-
-$subhead gaussian$$
-If $icode density$$ is $code gaussian$$,
-see $cref/G/model_density/Gaussian/Log-Density, G/$$,
+The $cref/child_smooth_id/rate_table/child_smooth_id/$$ must correspond to 
+$cref/value_prior_id/smooth_grid_table/value_prior_id/$$ that in turn
+correspond to gaussian densities.
+Furthermore, the mean for these densities must be zero.
+The definition of the value density function for $latex u_{c,j}$$ is 
 $latex \[
 V_{c,j}^u ( u | \theta ) 
 =
-\exp \left( G \left[
-	u_{c,j} \W{,} r_j ( \theta ) \W{,} \lambda_j \delta_j 
-\right] \right)
+\exp \left[ G ( u_{c,j} \W{,} 0 \W{,} \lambda_j \delta_j ) \right]
 \] $$
-
-$subhead laplace$$
-If $icode density$$ is $code laplace$$,
-see $cref/L/model_density/Laplace/Log-Density, L/$$,
-$latex \[
-V_{c,j}^u ( u | \theta ) 
-=
-\exp \left( L \left[
-	u_{c,j} \W{,} r_j ( \theta ) \W{,} \lambda_j \delta_j 
-\right] \right)
-\] $$
-
-$subhead log_gaussian$$
-If $icode density$$ is $code log_gaussian$$,
-see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$,
-$latex \[
-V_{c,j}^u ( u | \theta ) 
-= 
-\exp \left( G_L \left[
-	u_{c,j} \W{,} r_j ( \theta ) \W{,} \lambda_j \delta_j 
-\right] \right)
-\] $$
-
-$subhead log_laplace$$
-If $icode density$$ is $code log_laplace$$,
-see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$,
-$latex \[
-V_{c,j}^u ( u | \theta ) 
-= 
-\exp \left( L_L \left[
-	u_{c,j} \W{,} r_j ( \theta ) \W{,} \lambda_j \delta_j 
-\right] \right)
-\] $$
+see $cref/G/model_density/Gaussian/Log-Density, G/$$.
 
 $head V^u$$
 Let $latex m$$ be the number of random effects.
@@ -153,27 +90,5 @@ V^u ( u | \theta )
 = 
 \prod_{c=0}^{C-1} \prod_{j=0}^{m-1} V_{c,j}^u ( u | \theta )
 \] $$
-
-$head S(u|theta)$$
-For each $cref/rate_id/rate_table/rate_id/$$ 
-$latex k = 0 , \ldots , K-1$$,
-there is a corresponding number of age points $latex I(k)$$ and
-number of time points $latex J(k)$$.
-The number of possible values for $latex j$$ above is
-$latex \[
-	N = \sum_{k=0}^{K-1} I(k) * J(k)
-\] $$
-The number of 
-$cref/random effects/model_variable/Random Effects, u/$$ is
-$latex N \times C$$; i.e., $latex u \in \B{R}^{N \times C}$$.
-Let $latex M$$ be the number of
-$cref/fixed effects/model_variable/Fixed Effects, theta/$$; i.e.,
-$latex \theta \in \B{R}^M$$.
-We define the function 
-$latex S : \B{R}^{N \times C} \times \B{R}^M \rightarrow \B{R}^N $$ by
-$latex \[
-	S_j (u | \theta ) = \sum_{c=0}^{C-1} \; u_{c,j} - r_j ( \theta )
-\] $$
-for $latex j = 0 , \ldots , N-1$$.
 
 $end

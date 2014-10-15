@@ -140,8 +140,10 @@ bool avg_yes_ode_xam(void)
 			n_time_ode++; 
 	//
 	// node_table:
-	CppAD::vector<dismod_at::node_struct> node_table(1);
-	node_table[0].parent = -1;
+	CppAD::vector<dismod_at::node_struct> node_table(3);
+	node_table[0].parent = -1; // node zero has two children
+	node_table[1].parent = 0;
+	node_table[2].parent = 0;
 	//
 	// parent_node_id
 	size_t parent_node_id = 0;
@@ -151,7 +153,7 @@ bool avg_yes_ode_xam(void)
 	size_t data_id = 0;
 	vector<double> x(0);
 	data_table[data_id].integrand_id = dismod_at::prevalence_enum;
-	data_table[data_id].node_id      = 0;
+	data_table[data_id].node_id      = 1; // child node
 	data_table[data_id].weight_id    = 0;
 	data_table[data_id].age_lower    = 0.0;
 	data_table[data_id].age_upper    = 100.0;
@@ -202,7 +204,9 @@ bool avg_yes_ode_xam(void)
 	);
 	//
 	// var_vec
-	double beta = 0.02;
+	double beta_parent   = 0.01;
+	double random_effect = log(2.0); 
+	double beta          = beta_parent * exp( random_effect );
 	vector<Float> var_vec( var_info.size() );
 	dismod_at::pack_var::subvec_info info;
 	size_t n_rate = dismod_at::number_rate_enum;
@@ -211,7 +215,11 @@ bool avg_yes_ode_xam(void)
 		{	info = var_info.rate_info(rate_id, child_id);
 			for(k = 0; k < info.n_var; k++)
 			{	if( rate_id == size_t(dismod_at::iota_enum) )
-					var_vec[info.offset + k] = beta;
+				{	if( child_id == n_child )
+						var_vec[info.offset + k] = beta_parent;
+					else
+						var_vec[info.offset + k] = random_effect; 
+				}
 				else
 					var_vec[info.offset + k] = 0.00;
 			}

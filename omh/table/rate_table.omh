@@ -69,13 +69,21 @@ For each grid point there is a
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
-The 
-$cref/mean/prior_table/mean/$$ corresponding to these $icode prior_id$$
-are not used and can be $code null$$.
-The corresponding
-$cref/parent rate/model_variable/Fixed Effects, theta/Parent Rates/$$
-value, age difference, and time difference
-are instead used for the means.
+The following conditions must hold for each of these 
+$cref/prior_id/prior_table/prior_id/$$ values:
+
+$list number$$
+The $cref/density_id/prior_table/density_id/$$ must correspond
+to a $code gaussian$$ density.
+$lnext
+The $cref/mean/prior_table/mean/$$ must be zero.
+$lnext
+The $cref/lower/prior_table/lower/$$ limit must be $code null$$
+(which gets interpreted as minus infinity).
+$lnext
+The $cref/upper/prior_table/upper/$$ limit must be $code null$$
+(which gets interpreted as plus infinity).
+$lend
 
 $children%example/table/rate_table.py
 %$$

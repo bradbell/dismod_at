@@ -32,13 +32,20 @@ $icode%input% = get_db_input(%db%)%$$
 
 $head Purpose$$
 To read all the input tables and return it as a C++ data structure
-and check that all occurrences of $icode%table_name%_id%$$ are with in
-the limit for the corresponding table.
+and preform the following checks:
 
-$head Remark$$
-Note that this routine only checks limits, and not positional dependent limits.
+$subhead Primary Key$$
+Check that all occurrences of $icode%table_name%_id%$$ are with in
+the limit for the corresponding table.
+Note that this only checks limits, and not positional dependent limits.
 For example, $code -1$$ might appear anywhere in 
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$.
+
+$subhead Initial Prevalence Grid$$
+See $cref check_pini_n_age$$.
+
+$subhead Child Priors$$
+See $cref check_child_prior$$.
 
 $head db$$
 The argument $icode db$$ has prototype
@@ -66,6 +73,7 @@ $end
 # include <dismod_at/include/get_age_table.hpp>
 # include <dismod_at/include/get_time_table.hpp>
 # include <dismod_at/include/check_pini_n_age.hpp>
+# include <dismod_at/include/check_child_prior.hpp>
 
 
 # define DISMOD_AT_CHECK_PRIMARY_ID(in_table, in_name, primary_table, lower)\
@@ -149,7 +157,15 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 
 	// -----------------------------------------------------------------------
 	// other checks 
-	check_pini_n_age(db_input.rate_table, db_input.smooth_table);
+	check_pini_n_age(
+		db_input.rate_table       , 
+		db_input.smooth_table
+	);
+	check_child_prior(
+		db_input.rate_table        , 
+		db_input.smooth_grid_table , 
+		db_input.prior_table
+	);
 
 	return;
 }

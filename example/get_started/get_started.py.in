@@ -28,9 +28,12 @@ import dismod_at
 import copy
 def constant_weight_fun(a, t) :
 	return 1.0
-def constant_smooth_fun(a, t) :
+def smooth_uniform_01_fun(a, t) :
 	# note that the da and dt values are not used
 	return ('uniform_01', 'uniform_01', 'uniform_01')
+def smooth_gaussian_01_fun(a, t) :
+	# note that the da and dt values are not used
+	return ('gaussian_01', 'gaussian_01', 'gaussian_01')
 #
 # ------------------------------------------------------------------------
 file_name   = 'example.db'
@@ -96,6 +99,13 @@ prior_list = [
 		'mean':0.1, 
 		'std':None,
 		'eta':None
+	},{	'name':'gaussian_01', 
+		'density':'gaussian',
+		'lower':None, 
+		'upper':None, 
+		'mean':0.0, 
+		'std':1.0,
+		'eta':None
 	},{	'name':'log_gaussian', 
 		'density':'log_gaussian',
 		'lower':None, 
@@ -106,48 +116,55 @@ prior_list = [
 	}
 ]
 smooth_list = [
-	{	'name':'constant',
+	{	'name':'uniform_01_constant',
 		'age_id':[0],
 		'time_id':[0],
 		'mulstd_value':'one',
 		'mulstd_dage':'one',
 		'mulstd_dtime':'one',
-		'fun':constant_smooth_fun
+		'fun':smooth_uniform_01_fun
+	},{	'name':'gaussian_01_constant',
+		'age_id':[0],
+		'time_id':[0],
+		'mulstd_value':'one',
+		'mulstd_dage':'one',
+		'mulstd_dtime':'one',
+		'fun':smooth_gaussian_01_fun
 	}
 ] 
 rate_list = [
 	{
 		'name':'pini',
-		'parent_smooth':'constant',
-		'child_smooth':'constant'
+		'parent_smooth':'uniform_01_constant',
+		'child_smooth':'gaussian_01_constant'
 	},{
 		'name':'iota',
-		'parent_smooth':'constant',
-		'child_smooth':'constant'
+		'parent_smooth':'uniform_01_constant',
+		'child_smooth':'gaussian_01_constant'
 	},{
 		'name':'rho',
-		'parent_smooth':'constant',
-		'child_smooth':'constant'
+		'parent_smooth':'uniform_01_constant',
+		'child_smooth':'gaussian_01_constant'
 	},{
 		'name':'chi',
-		'parent_smooth':'constant',
-		'child_smooth':'constant'
+		'parent_smooth':'uniform_01_constant',
+		'child_smooth':'gaussian_01_constant'
 	},{
 		'name':'omega',
-		'parent_smooth':'constant',
-		'child_smooth':'constant'
+		'parent_smooth':'uniform_01_constant',
+		'child_smooth':'gaussian_01_constant'
 	}
 ]
 mulcov_list = [
 	{	'covariate':'sex',
 		'type':'rate_mean',
 		'effected':'omega',
-		'smooth':'constant'
+		'smooth':'uniform_01_constant'
 	}
 ]
 run_list    = [ 
 	{	'parent_node':'north_america', 
-		'pini_smooth':'constant',
+		'pini_smooth':'uniform_01_constant',
 		'ode_step_size':0.5, 
 		'n_sample':100 
 	}

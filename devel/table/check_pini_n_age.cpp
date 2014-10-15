@@ -11,13 +11,9 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin check_pini_n_age$$
 $spell
-	ptr
-	dismod
-	vec
 	const
 	CppAD
 	struct
-	smoothings
 	pini
 $$
 
@@ -40,7 +36,7 @@ are used.
 $head smooth_table$$
 This argument has prototype
 $codei%
-	const CppAD::vector<rate_struct>& %smooth_table%
+	const CppAD::vector<smooth_struct>& %smooth_table%
 %$$
 and it is the 
 $cref/smooth_table/get_smooth_table/smooth_table/$$.

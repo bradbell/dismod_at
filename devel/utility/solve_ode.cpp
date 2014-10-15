@@ -67,15 +67,22 @@ $cref/ode time grid/glossary/Ode Grid/Time, t_j/$$ index for this cohort.
 $head step_size$$
 This argument has prototype
 $codei%
-	const %Float% %step_size%
+	const %Float%& %step_size%
 %$$
 and is the value of $cref/ode_step_size/run_table/ode_step_size/$$
 in the run table.
 
+$head pini$$
+This argument has prototype
+$code%
+	const %Float%& %pini%
+%$$
+and is the initial prevalence for this cohort; i.e.
+$cref/p_0/avg_integrand/Rate Functions/p_0/$$ for this cohort.
+
 $head rate$$
 For $icode rate$$ equal to 
-$icode pini$$, $icode iota$$, $icode rho$$, $icode chi$$
-and $icode omega$$,
+$icode iota$$, $icode rho$$, $icode chi$$ and $icode omega$$,
 this argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %rate%

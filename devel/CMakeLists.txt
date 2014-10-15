@@ -23,6 +23,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	utility/solve_ode.cpp
 	utility/pack_var.cpp
 
+	table/check_child_prior.cpp
 	table/check_pini_n_age.cpp
 	table/check_table_id.cpp
 	table/exec_sql_cmd.cpp

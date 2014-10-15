@@ -157,12 +157,12 @@ for the children.
 
 $subhead Child Rates$$
 For each rate
-$code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$ 
+($code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$)
 there is a 
-subvector corresponding to the child value for the rate.
-The smoothing for the subvector only depends on the rate
-(given a rate, it is the same for all children).
-The smoothing is specified by
+subvector corresponding to the child random effects for the rate.
+The smoothing for the subvector only depends on the rate; i.e.,
+given a rate, it is the same for all children.
+This smoothing is specified by
 $cref/child_smooth_id/rate_table/child_smooth_id/$$.
 
 $end

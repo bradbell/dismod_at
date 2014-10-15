@@ -77,27 +77,30 @@ $cref/node_id/data_table/node_id/$$ value.
 
 $head Rate Functions$$
 
-$subhead q_ik$$
+$subhead q_k$$
 We use $latex k$$ to denote a
 $cref/rate_id/rate_table/rate_id/$$.
-If $latex n_i$$ is equal to the 
-$cref/parent_node_id/run_table/parent_node_id/$$,
-$latex q_{i,k} (a, t)$$ is the piecewise linear rate function
+The function $latex q_k (a, t)$$ is the piecewise linear rate function
 for the corresponding
 $cref/parent rate
 	/model_variable
 	/Fixed Effects, theta
 	/Parent Rates
 /$$
+
+$subhead u_i,k$$
 If $latex n_i$$ is equal to or a descendant of one of the children of the
 parent node,
-$latex q_{i,k} (a, t)$$ is the piecewise linear rate function
+$latex u_{i,k} (a, t)$$ is the piecewise linear random effect
 for the corresponding
 $cref/child rate
 	/model_variable
 	/Random Effects, u
 	/Child Rates
 /$$
+If $latex n_i$$ is the parent node,
+there is no random effect for this data and 
+$latex u_{i,k} (a, t) = 0$$.
 Otherwise $latex n_i$$ is not a descendant of the parent node
 and the corresponding data is not used.
 
@@ -129,35 +132,39 @@ We use the notation
 $latex \[
 r_{i,k} (a , t) 
 = 
-\exp \left( \sum_{j \in J(k)} x_{i,j} \alpha_{j,k} (a, t) \right) 
-	q_{i,k} ( a, t )
+\exp \left[ 
+	u_{i,k} (a, t) + \sum_{j \in J(k)} x_{i,j} \alpha_{j,k} (a, t) 
+\right] 
+q_{i,k} ( a, t )
 \] $$
 
 $subhead p_0$$
 We use $latex p_0 (t)$$ to denote the value of 
-prevalence at the initial age as a function of time; see
-$cref/pini/rate_table/rate_name/pini/$$.
+prevalence at the initial age as a function of time; i.e.,
+$latex r_{i,0} (a, t)$$.
+Note that this function is constant with respect to age $latex a$$; 
+see $cref/pini/rate_table/rate_name/pini/$$.
 
 $subhead iota_i(a,t)$$
 We use $codei%iota_i(%a%, %t%)%$$ and $latex \iota_i (a,t)$$
 to denote the adjusted incidence as a function of age and time; i.e.
-$latex r_{i,0} ( a, t )$$
+$latex r_{i,1} ( a, t )$$
 
 $subhead rho_i(a,t)$$
 We use $codei%rho_i(%a%, %t%)%$$ and $latex \rho_i (a,t)$$
 to denote the adjusted remission as a function of age and time; i.e.,
-$latex r_{i,1} ( a, t )$$
+$latex r_{i,2} ( a, t )$$
 
 $subhead chi_i(a,t)$$
 We use $codei%chi_i(%a%, %t%)%$$ and $latex \chi_i (a,t)$$
 to denote the adjusted excess mortality 
 (mortality due to the cause) as a function of age and time; i.e.,
-$latex r_{i,2} ( a, t )$$
+$latex r_{i,3} ( a, t )$$
 
 $subhead omega_i(a,t)$$
 We use $codei%omega_i(%a%, %t%)%$$ and $latex \omega_i (a,t)$$
 to denote the adjusted other cause mortality as a function of age and time;
-i.e., $latex r_{i,3} ( a, t )$$
+i.e., $latex r_{i,4} ( a, t )$$
 
 $head S_i(a,t)$$
 We use $latex S_i (a,t)$$ to denote the susceptible fraction

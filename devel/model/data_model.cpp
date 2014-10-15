@@ -614,9 +614,9 @@ Float data_model::avg_no_ode(
 	for(ell = 0; ell < 2; ell++) if( rate_id[ell] < number_rate_enum )
 	{	rate_ode[ell].resize(n_ode);
 		//
-		// extract subvector infromation for this rate
+		// extract subvector information for the parent rate
 		pack_var::subvec_info info;
-		info             = var_info.rate_info(rate_id[ell], child);	
+		info             = var_info.rate_info(rate_id[ell], n_child_);	
 		size_t n_var     = info.n_var;
 		size_t smooth_id = info.smooth_id;
 		//
@@ -628,6 +628,27 @@ Float data_model::avg_no_ode(
 		rate_ode[ell] = 
 			si2ode_vec_[smooth_id]->interpolate(rate_si, ode_index);
 		//
+		// initialize sum of effects to zero
+		CppAD::vector<Float> effect_ode(n_ode);
+		for(k = 0; k < n_ode; k++)
+			effect_ode[k] = 0.0;
+		//
+		// include child random effect
+		if( child < n_child_ )
+		{	info      = var_info.rate_info(rate_id[ell], child);	
+			n_var     = info.n_var;
+			smooth_id = info.smooth_id;
+			//
+			CppAD::vector<Float> var_si(n_var);
+			for(k = 0; k < n_var; k++)
+				var_si[k] = var_vec[info.offset + k];
+			//
+			CppAD::vector<Float> var_ode = 
+				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
+			//
+			for(k = 0; k < n_ode; k++)
+				effect_ode[k] += var_ode[k];
+		}
 		// include effect of rate covariates
 		size_t n_cov = var_info.rate_mean_mulcov_n_cov(rate_id[ell]);
 		for(size_t j = 0; j < n_cov; j++)
@@ -644,8 +665,10 @@ Float data_model::avg_no_ode(
 				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 			//
 			for(k = 0; k < n_ode; k++)
-				rate_ode[ell][k] *= exp( var_ode[k] * x_j );
+				effect_ode[k] += var_ode[k] * x_j;
 		}
+		for(k = 0; k < n_ode; k++)
+			rate_ode[ell][k] *= exp( effect_ode[k] );
 	}
 	CppAD::vector<Float> var_ode(n_ode);
 	switch(integrand)
@@ -862,11 +885,10 @@ Float data_model::avg_yes_ode(
 	CppAD::vector< CppAD::vector<Float> > rate_ode(number_rate_enum);
 	pack_var::subvec_info                 info;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	if( rate_id != pini_enum )
 	{	rate_ode[rate_id].resize(n_index);
 		//
-		// extract subvector infromation for this rate
-		info             = var_info.rate_info(rate_id, child);	
+		// extract subvector information for the parent rate
+		info             = var_info.rate_info(rate_id, n_child_);	
 		size_t n_var     = info.n_var;
 		size_t smooth_id = info.smooth_id;
 		//
@@ -877,6 +899,28 @@ Float data_model::avg_yes_ode(
 		// interpolate onto the ode grid
 		rate_ode[rate_id] = 
 			si2ode_vec_[smooth_id]->interpolate(rate_si, ode_index);
+		//
+		// initialize sum of effects to zero
+		CppAD::vector<Float> effect_ode(n_index);
+		for(k = 0; k < n_index; k++)
+			effect_ode[k] = 0.0;
+		//
+		// include child random effect
+		if( child < n_child_ )
+		{	info      = var_info.rate_info(rate_id, child);	
+			n_var     = info.n_var;
+			smooth_id = info.smooth_id;
+			//
+			CppAD::vector<Float> var_si(n_var);
+			for(k = 0; k < n_var; k++)
+				var_si[k] = var_vec[info.offset + k];
+			//
+			CppAD::vector<Float> var_ode = 
+				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
+			//
+			for(k = 0; k < n_index; k++)
+				effect_ode[k] += var_ode[k];
+		}
 		//
 		// include effect of rate covariates
 		size_t n_cov = var_info.rate_mean_mulcov_n_cov(rate_id);
@@ -894,24 +938,14 @@ Float data_model::avg_yes_ode(
 				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 			//
 			for(k = 0; k < n_index; k++)
-				rate_ode[rate_id][k] *= exp( var_ode[k] * x_j );
+				effect_ode[k] += var_ode[k] * x_j;
 		}
+		for(k = 0; k < n_index; k++)
+			rate_ode[rate_id][k] *= exp( effect_ode[k] );
 	}
-	// value of initail prevalence
-	size_t n_cohort = cohort_start.size();
-	CppAD::vector<size_t> pini_index( n_cohort );
-	for(ell = 0; ell < n_cohort; ell++)
-		pini_index[ell] = ode_index[ cohort_start[ell] ];
-	info = var_info.rate_info(pini_enum, child);
-	CppAD::vector<Float> pini_si(info.n_var);
-	for(k = 0; k < info.n_var; k++)
-		pini_si[k] = var_vec[info.offset + k];
-	//
-	// interpolate onto the ode grid
-	CppAD::vector<Float> pini_ode(n_cohort);
-	pini_ode = si2ode_vec_[info.smooth_id]->interpolate(pini_si, pini_index);
-	
+
 	// loop over the cohorts
+	size_t n_cohort = cohort_start.size();
 	size_t n_ode_sub = n_age_sub * n_time_sub;
 	CppAD::vector<Float> iota, rho, chi, omega, S_out, C_out;
 	CppAD::vector<Float> integrand_sub( n_ode_sub );
@@ -931,6 +965,7 @@ Float data_model::avg_yes_ode(
 		omega.resize(nk);
 		S_out.resize(0);
 		C_out.resize(0);
+		Float pini   = rate_ode[pini_enum][k_start];
 		for(k = 0; k < nk; k++)
 		{	iota[k]  = rate_ode[iota_enum][k_start + k];
 			rho[k]   = rate_ode[rho_enum][k_start + k];
@@ -940,7 +975,6 @@ Float data_model::avg_yes_ode(
 		size_t i_max     = ode_index[k_start + nk - 1] / n_time_ode_;
 		size_t j_max     = ode_index[k_start + nk - 1] % n_time_ode_;
 		Float  step_size = Float(ode_step_size_);
-		Float  pini      = pini_ode[ell];
 		//
 		solve_ode(
 			i_max, j_max, step_size, pini, iota, rho, chi, omega, S_out, C_out
