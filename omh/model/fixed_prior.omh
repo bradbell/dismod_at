@@ -144,21 +144,26 @@ $latex \[
 \] $$
 $lend
 
-$head p(theta)$$
-We define the prior for the fixed effects by
+$head Normalization Constant, C_theta$$
+The normalization constant for the fixed effects density is
 $latex \[
-\B{p} ( \theta ) = \frac{ 
+C_\theta 
+= 
+\int_{\Theta} 
 	V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
-	}{
-	\int_{\Theta} 
-	V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
-	\; \B{d} \theta
-}
+		\; \B{d} \theta
 \] $$
-See 
-$cref/V^theta/fixed_value/V^theta/$$, 
+See $cref/V^theta/fixed_value/V^theta/$$, 
 $cref/A^theta/fixed_diff/A^theta/$$, and
 $cref/T^theta/fixed_diff/T^theta/$$  for the definitions of
 $latex V^\theta$$, $latex A^\theta$$ and $latex T^\theta$$.
+
+$head p(theta)$$
+We define the prior for the fixed effects by
+$latex \[
+C_\theta \; \B{p} ( \theta ) 
+= 
+V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
+\] $$
 
 $end

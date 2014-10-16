@@ -13,9 +13,9 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <string>
 # include <sqlite3.h>
-# include <dismod_at/include/get_rate_table.hpp>
-# include <dismod_at/include/get_smooth_grid.hpp>
-# include <dismod_at/include/get_prior_table.hpp>
+# include "get_rate_table.hpp"
+# include "get_smooth_grid.hpp"
+# include "get_prior_table.hpp"
 
 namespace dismod_at {
 	void check_child_prior(

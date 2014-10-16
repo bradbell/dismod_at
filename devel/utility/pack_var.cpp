@@ -31,6 +31,10 @@ $codei%pack_var %var_info%(
 %$$
 $icode%size%  = %var_info%.size()
 %$$
+$icode%integrand_size%  = %var_info%.integrand_size()
+%$$
+$icode%child_size%  = %var_info%.child_size()
+%$$
 
 $head n_integrand$$
 This argument has prototype
@@ -86,6 +90,22 @@ $codei%
 %$$
 and is the total number of variables; i.e.,
 the number of elements in the packed variable vector.
+
+$head integrand_size$$
+This function is $code const$$.
+Its return value has prototype
+$codei%
+	size_t %integrand_size%
+%$$
+and is the value of $icode n_integrand$$ in the constructor.
+
+$head child_size$$
+This function is $code const$$.
+Its return value has prototype
+$codei%
+	size_t %child_size%
+%$$
+and is the value of $icode n_child$$ in the constructor.
 
 $head Example$$
 See $cref/pack_var Example/pack_var/Example/$$.
@@ -234,6 +254,14 @@ n_child_        ( n_child )
 // size
 size_t pack_var::size(void) const
 {	return size_; }
+
+// integrand_size
+size_t pack_var::integrand_size(void) const
+{	return n_integrand_; }
+
+// child_size
+size_t pack_var::child_size(void) const
+{	return n_child_; }
 
 /*
 ------------------------------------------------------------------------------

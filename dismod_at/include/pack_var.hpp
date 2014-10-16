@@ -70,6 +70,12 @@ public:
 	// size of entire packed vector
 	size_t size(void) const;
 
+	// number of integrands
+	size_t integrand_size(void) const;
+
+	// number of children
+	size_t child_size(void) const;
+
 	// mulstd
 	size_t mulstd_offset(size_t smooth_id) const;
 

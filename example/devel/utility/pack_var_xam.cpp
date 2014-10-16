@@ -88,6 +88,10 @@ bool pack_var_xam(void)
 		smooth_table, mulcov_table, rate_table
 	);
 	//
+	// check integrand_size and child_size
+	ok &= n_child == var_info.child_size();
+	ok &= n_integrand == var_info.integrand_size();
+	//
 	// packed vector
 	size_t size = var_info.size();
 	CppAD::vector<double> var_vec(size);
