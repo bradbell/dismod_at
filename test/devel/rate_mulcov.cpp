@@ -37,7 +37,6 @@ namespace {
 bool rate_mulcov(void)
 {	bool   ok = true;
 	size_t i, j, k;
-	using CppAD::abs;	
 	using CppAD::vector;	
 	using std::cout;
 	typedef CppAD::AD<double> Float;
@@ -256,7 +255,7 @@ bool rate_mulcov(void)
 	double check = (avg_mulcov_1 + avg_mulcov_2) / 2.0;
 	//
 	// check residual
-	ok          &= abs( 1.0 - avg_integrand / check ) <= eps;
+	ok          &= fabs( 1.0 - avg_integrand / check ) <= eps;
 	/*
 	if( data_id == 0 )
 		cout << "Debugging" << std::endl; 

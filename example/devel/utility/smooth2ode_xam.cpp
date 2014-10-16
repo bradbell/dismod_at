@@ -139,9 +139,9 @@ bool smooth2ode_xam(void)
 		);
 		//
 		if( check == 0.0 )
-			ok &= abs( v_ode ) <= 10. * eps ;
+			ok &= fabs( v_ode ) <= 10. * eps ;
 		else
-			ok  &= abs( 1.0 - v_ode / Float(check) ) < 10. * eps;
+			ok  &= fabs( 1.0 - v_ode / Float(check) ) < 10. * eps;
 		//
 		// std::cout << std::endl;
 		// std::cout << "check = " << check << std::endl;

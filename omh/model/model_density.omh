@@ -69,6 +69,7 @@ $head Log-Gaussian$$
 A random variable $latex z$$ has an offset log-Gaussian distribution with 
 transformed mean $latex \mu$$,
 transformed standard deviation $latex \delta$$,
+and offset $latex \eta$$,
 if its probability density function  is given by
 $latex \[
 \sigma( \mu, \delta , \eta ) 
@@ -93,7 +94,7 @@ $latex \sigma( \mu , \delta , \eta )$$.
 $subhead Weighted Residual, R_L$$
 The corresponding weight residual function is
 $latex \[
-R_L ( z, \mu , \delta ) 
+R_L ( z, \mu , \delta , \eta ) 
 = 
 \frac{
 	\log( z + \eta ) - \log( \mu + \eta )
@@ -121,6 +122,7 @@ $head Log-Laplace$$
 A random variable $latex z$$ has an offset log-Laplace distribution with 
 transformed mean $latex \mu$$,
 transformed standard deviation $latex \delta$$,
+and offset $latex \eta$$,
 if its probability density function  is given by
 $latex \[
 \sigma( \mu, \delta , \eta ) 
@@ -146,7 +148,7 @@ $subhead Weighted Residual, R_L$$
 The corresponding weight residual function is
 the same as for the Log-Gaussian case; i.e.,
 $latex \[
-R_L ( z, \mu , \delta ) 
+R_L ( z, \mu , \delta , \eta ) 
 = 
 \frac{
 	\log( z + \eta ) - \log( \mu + \eta )

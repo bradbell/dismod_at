@@ -149,6 +149,7 @@ $end
 # include <dismod_at/include/child_data.hpp>
 # include <dismod_at/include/get_rate_table.hpp>
 # include <dismod_at/include/solve_ode.hpp>
+# include <dismod_at/include/residual_density.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -1231,51 +1232,7 @@ std::pair<Float, Float> data_model::data_like(
 	Float delta  = mean_effect * sigma;
 	delta       += std_effect * (adjust + eta);
 	//
-	Float wres;
-	Float std_tmp = delta;
-	switch( density )
-	{
-		case uniform_enum:
-		case gaussian_enum:
-		case laplace_enum:
-		wres = ( adjust - avg) / std_tmp;
-		break;
-
-		case log_gaussian_enum:
-		case log_laplace_enum:
-		std_tmp = log( 1.0 + delta / (adjust + eta) ); 
-		wres    = ( log( adjust + eta ) - log( avg + eta ) ) / std_tmp;
-		break;
-
-		default:
-		assert(false);
-	}
-	Float loglike;
-	switch( density )
-	{
-		case uniform_enum:
-		loglike = 0.0;
-		break;
-
-		case gaussian_enum:
-		case log_gaussian_enum:
- 		{	double pi2 = 8.0 * atan(1.0);
-			loglike   = - log( std_tmp * sqrt( pi2 ) ) - wres * wres/ 2.0;
-		}
-		break;  
-
-		case laplace_enum:
-		case log_laplace_enum:
-		{	double r2 = sqrt(2.0);
-			loglike   = - log( std_tmp * r2 ) - r2 * abs( wres );
-		}
-		break;
-
-		default:
-		assert(false);
-	}
-	//
-	return std::pair<Float, Float> (wres, loglike);
+	return residual_density(density, adjust, avg, delta, Float(eta) );
 }
 
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \

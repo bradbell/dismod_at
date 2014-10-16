@@ -49,7 +49,6 @@ namespace {
 bool meas_mulcov(void)
 {	bool   ok = true;
 	size_t i, j, k;
-	using CppAD::abs;	
 	using CppAD::vector;	
 	using std::cout;
 	typedef CppAD::AD<double> Float;
@@ -295,7 +294,7 @@ bool meas_mulcov(void)
 	double y     = avg_mean_mulcov * v;
 	double delta = avg_mean_mulcov * sigma + avg_std_mulcov  * (y + eta);
 	Float  check = (y - avg_integrand) / delta;
-	ok          &= abs( 1.0 - wres / check ) <= eps;
+	ok          &= fabs( 1.0 - wres / check ) <= eps;
 	/*
 	if( data_id == 0 )
 		cout << "Debugging" << std::endl; 

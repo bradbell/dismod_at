@@ -23,6 +23,7 @@ $childtable%
 	%devel/utility/integrate_2d.cpp
 	%devel/utility/interp_weight.cpp
 	%devel/utility/pack_var.omh
+	%devel/utility/residual_density.cpp
 	%devel/utility/smooth2ode.cpp
 	%devel/utility/solve_ode.cpp
 %$$

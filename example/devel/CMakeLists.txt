@@ -22,14 +22,15 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	model/data_like_xam.cpp
 	
 	utility/bilinear_interp_xam.cpp
+	utility/child_data_xam.cpp
 	utility/eigen_ode2_xam.cpp
 	utility/integrate_1d_xam.cpp
 	utility/integrate_2d_xam.cpp
 	utility/interp_weight_xam.cpp
+	utility/pack_var_xam.cpp
+	utility/residual_density_xam.cpp
 	utility/smooth2ode_xam.cpp
 	utility/solve_ode_xam.cpp
-	utility/pack_var_xam.cpp
-	utility/child_data_xam.cpp
 
 	table/check_pini_n_age_xam.cpp
 	table/get_age_table_xam.cpp

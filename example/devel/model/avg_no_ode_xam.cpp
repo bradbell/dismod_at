@@ -261,7 +261,7 @@ bool avg_no_ode_xam(void)
 	for(data_id = 0; data_id < data_table.size(); data_id++)
 	{	Float avg = dm.avg_no_ode(data_id, var_info, var_vec);
 		double check    = check_avg(data_table[data_id]) / (age_max*time_max);
-		ok             &= abs( 1.0 - avg / check ) <= eps;
+		ok             &= fabs( 1.0 - avg / check ) <= eps;
 		/*
 		if( data_id == 0 )
 			cout << "Debugging" << std::endl; 

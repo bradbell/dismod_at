@@ -67,7 +67,6 @@ namespace {
 bool solve_ode_xam(void)
 {	bool   ok = true;
 	size_t k;
-	using  CppAD::abs;	
 	
 	// check integral along diagonal starting at age zero, time zero
 	size_t i_max  = 5;
@@ -98,8 +97,8 @@ bool solve_ode_xam(void)
 	vector<Float> yf = CppAD::Runge45(F, M, ai, af, yi);
 	//
 	k = i_max;
-	ok &= abs( 1.0 - S_out[k] / yf[0] ) < 1e-6;
-	ok &= abs( 1.0 - C_out[k] / yf[1] ) < 1e-6;
+	ok &= fabs( 1.0 - S_out[k] / yf[0] ) < 1e-6;
+	ok &= fabs( 1.0 - C_out[k] / yf[1] ) < 1e-6;
 	//
 	return ok;
 }

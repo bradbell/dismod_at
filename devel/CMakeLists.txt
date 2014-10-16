@@ -18,6 +18,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	utility/integrate_1d.cpp
 	utility/integrate_2d.cpp
 	utility/interp_weight.cpp
+	utility/residual_density.cpp
 	utility/smooth2ode.cpp
 	utility/solve_ode.cpp
 	utility/pack_var.cpp

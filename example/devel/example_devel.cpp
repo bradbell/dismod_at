@@ -37,13 +37,16 @@ extern bool data_like_xam(void);
 
 // utility subdirectory
 extern bool bilinear_interp_xam(void);
+extern bool child_data_xam(void);
 extern bool eigen_ode2_xam(void);
+extern bool pack_var_xam(void);
 extern bool integrate_1d_xam(void);
 extern bool integrate_2d_xam(void);
 extern bool interp_weight_xam(void);
+extern bool residual_density_xam(void);
 extern bool smooth2ode_xam(void);
-extern bool pack_var_xam(void);
-extern bool child_data_xam(void);
+extern bool solve_ode_xam(void);
+
 // table subdirectory
 extern bool check_pini_n_age_xam(void);
 extern bool get_age_table_xam(void);
@@ -61,7 +64,6 @@ extern bool get_table_column_xam(void);
 extern bool get_time_table_xam(void);
 extern bool get_weight_grid_xam(void);
 extern bool smooth_info_xam(void);
-extern bool solve_ode_xam(void);
 extern bool weight_info_xam(void);
 
 // anonymous namespace
@@ -103,14 +105,16 @@ int main(void)
 
 	// utility subdirectory
 	RUN(bilinear_interp_xam);
+	RUN(child_data_xam);
 	RUN(eigen_ode2_xam);
 	RUN(integrate_1d_xam);
 	RUN(integrate_2d_xam);
 	RUN(interp_weight_xam);
+	RUN(pack_var_xam);
+	RUN(residual_density_xam);
 	RUN(smooth2ode_xam);
 	RUN(solve_ode_xam);
-	RUN(pack_var_xam);
-	RUN(child_data_xam);
+
 	// table subdirectory
 	RUN(check_pini_n_age_xam);
 	RUN(get_age_table_xam);

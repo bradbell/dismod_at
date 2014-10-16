@@ -222,14 +222,24 @@ $subhead log_gaussian$$
 If $latex d_i$$ corresponds to $code log_gaussian$$,
 the weighted residual is
 $latex \[
-R_L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+R_L [ 
+	y_i ( \theta)        \W{,} 
+	A_i ( u, \theta )    \W{,} 
+	\delta_i ( \theta )  \W{,}
+	\eta_i
+]
 \] $$
 and the likelihood is
 $latex \[
 \B{p} ( v_i | u , \theta )
 = 
 \exp \left(
-G_L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+G_L [ 
+	y_i ( \theta)        \W{,} 
+	A_i ( u, \theta )    \W{,} 
+	\delta_i ( \theta )  \W{,}
+	\eta_i
+]
 \right)
 \] $$
 See the model density definitions of 
@@ -241,14 +251,24 @@ $subhead log_laplace$$
 If $latex d_i$$ corresponds to $code log_laplace$$,
 the weighted residual is
 $latex \[
-R_L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+R_L [ 
+	y_i ( \theta)        \W{,} 
+	A_i ( u, \theta )    \W{,} 
+	\delta_i ( \theta )  \W{,}
+	\eta_i
+]
 \] $$
 and the likelihood is
 $latex \[
 \B{p} ( v_i | u , \theta )
 = 
 \exp \left(
-L_L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+L_L [ 
+	y_i ( \theta)        \W{,} 
+	A_i ( u, \theta )    \W{,} 
+	\delta_i ( \theta )  \W{,}
+	\eta_i
+]
 \right)
 \] $$
 See the model density definitions of 

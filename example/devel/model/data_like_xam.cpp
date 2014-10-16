@@ -230,10 +230,10 @@ bool data_like_xam(void)
 		// check wres
 		Float check;
 		if( log_density )
-			check = (log(y+eta) - log(avg+eta)) / log(1.0 + delta/(y+eta));
+			check = (log(y+eta) - log(avg+eta)) / log(1.0 + delta/(avg+eta));
 		else
 			check = (y - avg) / delta;
-		ok  &= abs( 1.0 - wres / check ) <= eps;
+		ok  &= fabs( 1.0 - wres / check ) <= eps;
 		/*
 		if( data_id == 0 )
 			cout << "Debugging" << std::endl; 
@@ -253,31 +253,35 @@ bool data_like_xam(void)
 			break;
 
 			case dismod_at::laplace_enum:
-			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * abs(wres); 
+			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * fabs(wres); 
 			break;
 
 			case dismod_at::log_gaussian_enum:
-			delta = log(1.0 + delta / (y + eta) );
+			delta = log(1.0 + delta / (Value(avg) + eta) );
 			check = - log( delta * sqrt(2.0 * pi) ) - wres * wres / 2.0; 
 			break;
 
 			case dismod_at::log_laplace_enum:
-			delta = log(1.0 + delta / (y + eta) );
-			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * abs(wres); 
+			delta = log(1.0 + delta / (Value(avg) + eta) );
+			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * fabs(wres); 
 			break;
 
 			default:
 			assert(false);
 		}
-		/*
-		cout << "loglike = " << loglike; 
-		cout << ", check = " << check; 
 		if( density_id == dismod_at::uniform_enum )
 			ok &= check == loglike;
 		else
 		{	Float relerr = 1.0 - loglike / check;
+			ok &= fabs( relerr ) <= eps;
+		}
+		/*
+		cout << "loglike = " << loglike; 
+		cout << ", check = " << check; 
+		if( density_id != dismod_at::uniform_enum )
+		{	Float relerr = 1.0 - loglike / check;
 			cout << ", relerr    = " << relerr;
-			ok &= abs( relerr ) <= eps;
+			ok &= fabs( relerr ) <= eps;
 		}
 		cout << std::endl;
 		*/

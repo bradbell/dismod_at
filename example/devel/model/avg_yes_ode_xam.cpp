@@ -236,7 +236,7 @@ bool avg_yes_ode_xam(void)
 	double c       = data_table[data_id].age_upper;
 	double check   = c - b + ( exp(-beta * c) - exp(-beta * b) ) / beta;
 	check         /= (c - b);
-	ok             &= abs( 1.0 - avg / check ) <= 1e-3;
+	ok             &= fabs( 1.0 - avg / check ) <= 1e-3;
 	/*
 	cout << "Debugging" << std::endl; 
 	cout << "avg = " << avg; 
