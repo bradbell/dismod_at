@@ -20,6 +20,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "weight_info.hpp"
 # include "smooth2ode.hpp"
 # include "pack_var.hpp"
+# include "residual_density.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -78,7 +79,7 @@ public:
 	) const;
 	// compute weighted residual and log-likelihood
 	template <class Float>
-	std::pair<Float, Float> data_like(
+	residual_density_struct<Float> data_like(
 		size_t                        data_id  ,
 		const  pack_var&              var_info ,
 		const  CppAD::vector<Float>&  var_vec  ,

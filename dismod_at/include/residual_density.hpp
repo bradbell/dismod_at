@@ -15,8 +15,16 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/include/get_density_table.hpp>
 
 namespace dismod_at {
+
 	template <class Float>
-	std::pair<Float, Float> residual_density(
+	struct residual_density_struct {
+		Float wres;
+		Float logden_smooth;
+		Float logden_sub_abs; 
+	};
+	
+	template <class Float>
+	residual_density_struct<Float> residual_density(
 		density_enum density ,
 		const Float& z       , 
 		const Float& mu      , 

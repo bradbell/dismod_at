@@ -113,10 +113,9 @@ namespace {
 		double       mean    = prior.mean;
 		double       std     = prior.std;
 		double       eta     = prior.eta;
-		std::pair<Float, Float> wres_logden = residual_density(
-			density, variable, mean, std, eta 
-		);
-		return wres_logden.second; 
+		dismod_at::residual_density_struct<Float> wres_logden = 
+			residual_density( density, variable, mean, std, eta );
+		return wres_logden.logden_smooth - fabs( wres_logden.logden_sub_abs ); 
 	}
 
 

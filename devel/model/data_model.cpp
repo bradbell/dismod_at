@@ -1117,24 +1117,43 @@ $cref devel_data_model_avg_yes_ode$$ $cnext
 
 $tend
 
-$head wres_loglike$$
-The return value has prototype
+$head Weighted Residual$$
+The weighted residual (see $cref model_density$$) is given by the value
 $codei%
-	std::pair<%Float%, %Float%> %wres_loglike%
+	%Float% %wres%  = %wres_loglike%.wres
 %$$
-with the following identifications;
+
+$head Log-Density$$
+The log-likelihood represented by
+$code%
+	%Float% %logden_smooth%  = %wres_loglike%.logden_smooth
+	%Float% %logden_sub_abs% = %wres_loglike%.logden_sub_abs
+%$$
+The values $icode logden_smooth$$ and $icode logden_sub_abs$$
+are infinitely differentiable with
+respect to the model variables $cref var_vec$$; i.e., smooth.
+
+$head Uniform$$
+In the case where the density is uniform,
+both $icode logden_smooth$$ and $icode logden_sub_abs$$ are zero.
+
+$head Gaussian$$
+In the case where the density is  
+$cref/Gaussian/model_density/Gaussian/$$ or
+$cref/Log-Gaussian/model_density/Log-Gaussian/$$,
+the log-likelihood is equal to $icode logden_smooth$$ and
+$icode logden_sub_abs$$ is zero.
+
+$head Laplace$$
+In the case where the density is  
+$cref/Laplace/model_density/Laplace/$$ or
+$cref/Log-Laplace/model_density/Log-Laplace/$$ likelihoods,
+the log-likelihood is equal to
 $codei%
-	%wres%    = %wres_loglike%.first
-	%loglike% = %wres_loglike%.second
+	%logden_smooth% - fabs(%logden_sub_abs)%)
 %$$
-The value $icode wres$$ is the
-$cref/weighted residual/data_like/Weighted Residual and Likelihood/$$,
-and $icode loglike$$ is the log of the likelihood,
-corresponding to this $icode data_id$$.
-In the special case where the
-$cref/density/density_table/$$ is $code uniform$$,
-$icode loglike$$ is zero; i.e., 
-the normalizing constant is not included in the log-likelihood.
+This enables one to express the log-likelihood
+in terms of smooth functions (for optimization purposes).
 
 $children%example/devel/model/data_like_xam.cpp
 %$$
@@ -1145,7 +1164,7 @@ of using this routine.
 $end
 */
 template <class Float>
-std::pair<Float, Float> data_model::data_like(
+residual_density_struct<Float> data_model::data_like(
 		size_t                        data_id  ,
 		const pack_var&               var_info ,
 		const CppAD::vector<Float>&   var_vec  ,
@@ -1247,7 +1266,8 @@ std::pair<Float, Float> data_model::data_like(
 		const pack_var&               var_info ,            \
 		const CppAD::vector<Float>&   var_vec               \
 	) const;                                                \
-	template std::pair<Float, Float> data_model::data_like( \
+	template residual_density_struct<Float>                 \
+	data_model::data_like(                                  \
 		size_t                        data_id  ,            \
 		const pack_var&               var_info ,            \
 		const CppAD::vector<Float>&   var_vec  ,            \

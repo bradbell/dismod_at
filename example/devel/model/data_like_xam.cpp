@@ -216,10 +216,11 @@ bool data_like_xam(void)
 	// check results
 	for(size_t data_id = 0; data_id < data_table.size(); data_id++)
 	{	Float avg         = dm.avg_no_ode(data_id, var_info, var_vec);
-		std::pair<Float, Float> wres_loglike
+		dismod_at::residual_density_struct<Float> wres_loglike
 		                  = dm.data_like(data_id, var_info, var_vec, avg);
-		Float  wres       = wres_loglike.first;
-		Float  loglike    = wres_loglike.second;
+		Float  wres       = wres_loglike.wres;
+		Float  loglike    = wres_loglike.logden_smooth;
+		loglike          -= fabs( wres_loglike.logden_sub_abs );
 		double delta      = data_table[data_id].meas_std;
 		double y          = data_table[data_id].meas_value;
 		double eta        = 1e-4;

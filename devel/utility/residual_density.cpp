@@ -75,21 +75,47 @@ Is the offset in the Log-Gaussian and Log-Laplace $icode density$$ cases
 $head wres_logden$$
 The return value has prototype
 $codei%
-	std::pair<%Float%, %Float%> %wres_logden%
+	residual_density_struct<%Float%> %wres_logden%
 %$$
-with the following identifications;
-$codei%
-	%wres%   = %wres_logden%.first
-	%logden% = %wres_logden%.second
-%$$
-The value $icode wres$$ is the weighted residual
-and $icode logden$$ is the log of the density
-(see $cref model_density$$).
-In the special case where the
-$icode density$$ is $code uniform$$,
-$icode logden$$ is zero; i.e., 
-the normalizing constant is not included in the log-density.
 
+$head Weighted Residual$$
+The weighted residual (see $cref model_density$$) is given by the value
+$codei%
+	%Float% %wres%  = %wres_logden%.wres
+%$$
+
+$head Log-Density$$
+The log of the density function (see $cref model_density$$) 
+is represented by
+$code%
+	%Float% %logden_smooth%  = %wres_logden%.logden_smooth
+	%Float% %logden_sub_abs% = %wres_logden%.logden_sub_abs
+%$$
+The values $icode logden_smooth$$ and $icode logden_sub_abs$$
+are infinitely differentiable with
+respect to the model variables $cref var_vec$$; i.e., smooth.
+
+$head Uniform$$
+In the case where the density is uniform,
+both $icode logden_smooth$$ and $icode logden_sub_abs$$ are zero.
+
+$head Gaussian$$
+In the case where the density is  
+$cref/Gaussian/model_density/Gaussian/$$ or
+$cref/Log-Gaussian/model_density/Log-Gaussian/$$,
+the log-density is equal to $icode logden_smooth$$ and
+$icode logden_sub_abs$$ is zero.
+
+$head Laplace$$
+In the case where the density is  
+$cref/Laplace/model_density/Laplace/$$ or
+$cref/Log-Laplace/model_density/Log-Laplace/$$ likelihoods,
+the log-density is equal to
+$codei%
+	%logden_smooth% - fabs(%logden_sub_abs)%)
+%$$
+This enables one to express the log-density
+in terms of smooth functions (for optimization purposes).
 
 $end
 */
@@ -99,15 +125,14 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 template <class Float>
-std::pair<Float, Float> residual_density(
+residual_density_struct<Float> residual_density(
 	density_enum density ,
 	const Float& z       , 
 	const Float& mu      , 
 	const Float& delta   ,
 	const Float& eta     )
 { 
-	Float wres;
-	Float sigma;
+	Float wres, sigma;
 	switch( density )
 	{
 		case uniform_enum:
@@ -126,24 +151,27 @@ std::pair<Float, Float> residual_density(
 		default:
 		assert(false);
 	}
-	Float logden;
+	Float logden_smooth, logden_sub_abs;
 	switch( density )
 	{
 		case uniform_enum:
-		logden = 0.0;
+		logden_smooth  = 0.0;
+		logden_sub_abs = 0.0;
 		break;
 
 		case gaussian_enum:
 		case log_gaussian_enum:
  		{	double pi2 = 8.0 * std::atan(1.0);
-			logden     = - log( sigma * sqrt( pi2 ) ) - wres * wres/ 2.0;
+			logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres/ 2.0;
+			logden_sub_abs = 0.0;
 		}
 		break;  
 
 		case laplace_enum:
 		case log_laplace_enum:
 		{	double r2   = sqrt(2.0);
-			logden      = - log( sigma * r2 ) - r2 * fabs( wres );
+			logden_smooth  = - log( sigma * r2 );
+			logden_sub_abs = r2 * wres;
 		}
 		break;
 
@@ -151,17 +179,21 @@ std::pair<Float, Float> residual_density(
 		assert(false);
 	}
 	//
-	return std::pair<Float, Float> (wres, logden);
+	residual_density_struct<Float> wres_logden;
+	wres_logden.wres           = wres;
+	wres_logden.logden_smooth  = logden_smooth;
+	wres_logden.logden_sub_abs = logden_sub_abs;
+	return wres_logden;
 }
 
 // instantiation macro
-# define DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY(Float) \
-	template std::pair<Float, Float> residual_density( \
-		density_enum density ,                         \
-		const Float& z       ,                         \
-		const Float& mu      ,                         \
-		const Float& delta   ,                         \
-		const Float& eta                               \
+# define DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY(Float)        \
+	template residual_density_struct<Float> residual_density( \
+		density_enum density ,                                \
+		const Float& z       ,                                \
+		const Float& mu      ,                                \
+		const Float& delta   ,                                \
+		const Float& eta                                      \
 	);
 
 // instantiations
