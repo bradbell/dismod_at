@@ -782,7 +782,8 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %var_vec%
 %$$
-and is a vector of values for all of the model variables.
+and is a vector of values for all of the 
+$cref/model variables/model_variable/$$.
 Only the following subvectors of $icode var_vec$$ are used:
 $cref pack_var_rate$$,
 $cref pack_var_rate_mulcov$$.

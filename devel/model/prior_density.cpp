@@ -15,13 +15,8 @@ $section Compute Joint Prior Density for Fixed and Random Effects$$
 
 $head Syntax$$
 $icode%logden% = prior_density(
-	%var_vec%,
-	%var_info%,
-	%age_table%,
-	%time_table%, 
-	%prior_table%,
-	%smooth_table%,
-	%s_info_vec%
+	%var_info%, %var_vec%,
+	%age_table%, %time_table%, %prior_table%, %s_info_vec%
 )%$$
 
 $head Purpose$$
@@ -33,6 +28,66 @@ $latex \[
 See 
 $cref/p(u|theta)/random_prior/p(u|theta)/$$ and
 $cref/p(theta)/fixed_prior/p(theta)/$$.
+
+$head Float$$
+The type $icode Float$$ must be one of the following:
+$code double$$, $code CppD::AD<double>$$.
+
+$head var_info$$
+This argument has prototype
+$codei%
+	const pack_var& %var_info%
+%$$
+and is the $cref pack_var$$ information corresponding to 
+$icode var_vec$$.
+
+$head var_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %var_vec%
+%$$
+and is a vector of values for all of the 
+$cref/model variables/model_variable/$$.
+Only the following subvectors of $icode var_vec$$ are used:
+$cref pack_var_rate$$,
+$cref pack_var_rate_mulcov$$.
+
+$head age_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>&  %age_table%
+%$$
+and is the $cref/age_table/get_age_table/age_table/$$.
+
+$head time_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>&  %time_table%
+%$$
+and is the $cref/time_table/get_time_table/time_table/$$.
+
+$head prior_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>&  %prior_table%
+%$$
+and is the $cref/time_table/get_time_table/time_table/$$.
+Only to following fields are used
+$cref/density_id/prior_table/density_id/$$,
+$cref/mean/prior_table/mean/$$,
+$cref/std/prior_table/std/$$,
+$cref/eta/prior_table/eta/$$.
+
+$head s_info_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<smooth_info>& %s_info_vec%
+%$$
+For each $cref/smooth_id/smooth_table/smooth_id/$$,
+$codei%
+	%s_info_vec%[ %smooth_id% ]
+%$$
+is the corresponding $cref smooth_info$$ information.
 
 $end
 */
@@ -129,7 +184,6 @@ Float prior_density(
 	const CppAD::vector<double>&           age_table       ,
 	const CppAD::vector<double>&           time_table      ,
 	const CppAD::vector<prior_struct>&     prior_table     ,
-	const CppAD::vector<smooth_struct>&    smooth_table    ,
 	const CppAD::vector<smooth_info>&      s_info_vec      )
 {
 	// initialize the log of the prior density 
@@ -147,19 +201,19 @@ Float prior_density(
 		Float mulstd = var_vec[offset + 0];
 
 		// prior index for this multilier 
-		size_t prior_id = smooth_table[smooth_id].mulstd_value;
+		size_t prior_id = s_info_vec[smooth_id].mulstd_value();
 
 		// prior density for this multiplier
 		logden += log_prior_density( prior_table[prior_id], mulstd);
 
 		// multiplier for age difference smoothing
 		mulstd    = var_vec[offset + 1];
-		prior_id  = smooth_table[smooth_id].mulstd_dage;
+		prior_id  = s_info_vec[smooth_id].mulstd_dage();
 		logden   += log_prior_density( prior_table[prior_id], mulstd);
 
 		// multiplier for time difference smoothing
 		mulstd    = var_vec[offset + 2];
-		prior_id  = smooth_table[smooth_id].mulstd_dtime;
+		prior_id  = s_info_vec[smooth_id].mulstd_dtime();
 		logden   += log_prior_density( prior_table[prior_id], mulstd);
 	}
 

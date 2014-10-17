@@ -54,8 +54,9 @@ $icode%m_type%    = %s_info%.mulstd_%type%()
 %$$
 
 $head Purpose$$
-Extracts the information for one smoothing from
-the $cref smooth_grid_table$$.
+Extracts, combines, and organizes the information for one smoothing from
+the $cref/smooth/smooth_table/$$ and $cref/smooth_grid/smooth_grid_table/$$
+tables.
 
 $head Assumptions$$
 $list number$$
