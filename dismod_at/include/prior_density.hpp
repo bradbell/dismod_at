@@ -20,7 +20,13 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 
 	template <class Float>
-	Float prior_density(
+	struct prior_density_struct {
+		Float                smooth;
+		CppAD::vector<Float> sub_abs;
+	};
+
+	template <class Float>
+	prior_density_struct<Float> prior_density(
 		const CppAD::vector<Float>&            var_vec         ,
 		const pack_var&                        var_info        ,
 		const CppAD::vector<double>&           age_table       ,

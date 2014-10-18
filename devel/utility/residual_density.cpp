@@ -95,18 +95,18 @@ The values $icode logden_smooth$$ and $icode logden_sub_abs$$
 are infinitely differentiable with
 respect to the model variables $cref var_vec$$; i.e., smooth.
 
-$head Uniform$$
+$subhead Uniform$$
 In the case where the density is uniform,
 both $icode logden_smooth$$ and $icode logden_sub_abs$$ are zero.
 
-$head Gaussian$$
+$subhead Gaussian$$
 In the case where the density is  
 $cref/Gaussian/model_density/Gaussian/$$ or
 $cref/Log-Gaussian/model_density/Log-Gaussian/$$,
 the log-density is equal to $icode logden_smooth$$ and
 $icode logden_sub_abs$$ is zero.
 
-$head Laplace$$
+$subhead Laplace$$
 In the case where the density is  
 $cref/Laplace/model_density/Laplace/$$ or
 $cref/Log-Laplace/model_density/Log-Laplace/$$ likelihoods,
