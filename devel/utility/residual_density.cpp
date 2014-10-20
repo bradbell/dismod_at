@@ -11,6 +11,8 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin residual_density$$
 $spell
+	struct
+	fabs
 	wres
 	logden
 	enum
@@ -93,7 +95,7 @@ $code%
 %$$
 The values $icode logden_smooth$$ and $icode logden_sub_abs$$
 are infinitely differentiable with
-respect to the model variables $cref var_vec$$; i.e., smooth.
+respect to the $cref/model_variables/model_variable/$$; i.e., smooth.
 
 $subhead Uniform$$
 In the case where the density is uniform,

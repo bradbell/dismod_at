@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin devel_data_model_ctor$$
 $spell
+	logden
 	std
 	dm
 	vec
@@ -1028,6 +1029,8 @@ Float data_model::avg_yes_ode(
 $begin devel_data_model_like$$
 
 $spell
+	logden
+	fabs
 	loglike
 	std
 	dm
@@ -1131,7 +1134,8 @@ $code%
 %$$
 The values $icode logden_smooth$$ and $icode logden_sub_abs$$
 are infinitely differentiable with
-respect to the model variables $cref var_vec$$; i.e., smooth.
+respect to the model variables $cref/var_vec/devel_data_model_like/var_vec/$$; 
+i.e., smooth.
 
 $head Uniform$$
 In the case where the density is uniform,
