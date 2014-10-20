@@ -89,7 +89,7 @@ $codei%
 $head Log-Density$$
 The log of the density function (see $cref model_density$$) 
 is represented by
-$code%
+$codei%
 	%Float% %logden_smooth%  = %wres_logden%.logden_smooth
 	%Float% %logden_sub_abs% = %wres_logden%.logden_sub_abs
 %$$
