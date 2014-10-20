@@ -10,6 +10,16 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
 $begin prior_density$$
+$spell
+	logden
+	var_vec
+	CppAD
+	const
+	subvectors
+	std
+	struct
+	fabs
+$$
 
 $section Compute Joint Prior Density for Fixed and Random Effects$$
 
@@ -102,9 +112,10 @@ $code%
 %$$
 The value $icode smooth$$ and components of $icode logden_sub_abs$$
 are infinitely differentiable with
-respect to the model variables $cref var_vec$$; i.e., smooth.
+respect to the model variables $cref/var_vec/prior_density/var_vec/$$;
+i.e., smooth.
 The log of the prior density for all the 
-$cref/model_variable/model_variables/$$ is
+$cref/model_variables/model_variable/$$ is
 $codei%
 	%sum% = %smooth%;
 	for(size_t %i% = 0; %i% < %sub_abs%.size(); %i%++)
