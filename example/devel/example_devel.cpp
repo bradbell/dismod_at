@@ -34,6 +34,7 @@ $end
 extern bool avg_no_ode_xam(void);
 extern bool avg_yes_ode_xam(void);
 extern bool data_like_xam(void);
+extern bool prior_density_xam(void);
 
 // utility subdirectory
 extern bool bilinear_interp_xam(void);
@@ -102,6 +103,7 @@ int main(void)
 	RUN(avg_no_ode_xam);
 	RUN(avg_yes_ode_xam);
 	RUN(data_like_xam);
+	RUN(prior_density_xam);
 
 	// utility subdirectory
 	RUN(bilinear_interp_xam);

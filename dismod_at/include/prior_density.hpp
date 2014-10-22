@@ -27,12 +27,11 @@ namespace dismod_at {
 
 	template <class Float>
 	prior_density_struct<Float> prior_density(
-		const CppAD::vector<Float>&            var_vec         ,
 		const pack_var&                        var_info        ,
+		const CppAD::vector<Float>&            var_vec         ,
 		const CppAD::vector<double>&           age_table       ,
 		const CppAD::vector<double>&           time_table      ,
 		const CppAD::vector<prior_struct>&     prior_table     ,
-		const CppAD::vector<smooth_struct>&    smooth_table    ,
 		const CppAD::vector<smooth_info>&      s_info_vec
 	);
 

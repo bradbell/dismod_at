@@ -43,6 +43,8 @@ $codei%
 %$$
 and is the number of integrands; i.e., the size of
 $cref/integrand_table/get_integrand_table/integrand_table/$$.
+If $cref/mulcov_table/pack_var_ctor/mulcov_table/$$ has size zero,
+then $icode n_integrand$$ can be zero (a case used for testing purposes).
 
 $head n_child$$
 This argument has prototype
