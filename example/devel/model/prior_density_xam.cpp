@@ -122,7 +122,7 @@ bool prior_density_xam(void)
 	}
 	//
 	// s_info
-	size_t smooth_id_gaussian = 0;
+	size_t smooth_id_3_by_2 = 0;
 	s_info_vec[0] = dismod_at::smooth_info(
 			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
 			mulstd_value, mulstd_dage, mulstd_dtime
@@ -155,7 +155,7 @@ bool prior_density_xam(void)
 	}
 	//
 	// s_info
-	size_t smooth_id_log_laplace = 1;
+	size_t smooth_id_1_by_2 = 1;
 	s_info_vec[1] = dismod_at::smooth_info(
 			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
 			mulstd_value, mulstd_dage, mulstd_dtime
@@ -176,17 +176,17 @@ bool prior_density_xam(void)
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	if( rate_id == dismod_at::pini_enum )
 		{	// smoothing must have only one age	
-			rate_table[rate_id].parent_smooth_id = smooth_id_log_laplace;
-			rate_table[rate_id].child_smooth_id  = smooth_id_log_laplace;
+			rate_table[rate_id].parent_smooth_id = smooth_id_1_by_2;
+			rate_table[rate_id].child_smooth_id  = smooth_id_1_by_2;
 		}
 		else
-		{	rate_table[rate_id].parent_smooth_id = smooth_id_gaussian;
-			rate_table[rate_id].child_smooth_id  = smooth_id_gaussian;
+		{	rate_table[rate_id].parent_smooth_id = smooth_id_3_by_2;
+			rate_table[rate_id].child_smooth_id  = smooth_id_3_by_2;
 		}
 	}
 	// var_info
 	size_t n_integrand = 0;
-	size_t n_child     = 0;
+	size_t n_child     = 1;
 	dismod_at::pack_var var_info(
 		n_integrand, n_child, 
 		smooth_table, mulcov_table, rate_table
