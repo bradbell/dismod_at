@@ -58,7 +58,7 @@ bool prior_density_xam(void)
 	for(i = 0; i < n_time_table; i++)
 		time_table[i] = (2015 - 1975) * i / double(n_time_table - 1);
 	// ----------------------- prior table ---------------------------------
-	size_t n_prior_table = 5;
+	size_t n_prior_table = 6;
 	vector<dismod_at::prior_struct> prior_table(n_prior_table);
 	// prior_id = 0
 	prior_table[0].density_id = int( dismod_at::uniform_enum );
@@ -70,7 +70,7 @@ bool prior_density_xam(void)
 	prior_table[1].lower      = 1.0;
 	prior_table[1].mean       = 1.0;
 	prior_table[1].upper      = 1.0;
-	size_t prior_id_none = 2;
+	// size_t prior_id_none = 2;
 	prior_table[2].density_id = int( dismod_at::uniform_enum );
 	prior_table[2].lower      = -inf;
 	prior_table[2].mean       = 0.0;
@@ -87,6 +87,13 @@ bool prior_density_xam(void)
 	prior_table[4].mean       = 0.0;
 	prior_table[4].upper      = 1.0;
 	prior_table[4].std        = 0.5;
+	size_t prior_id_log_gaussian = 5;
+	prior_table[5].density_id = int( dismod_at::log_gaussian_enum );
+	prior_table[5].lower      = 0.01;
+	prior_table[5].mean       = 0.1;
+	prior_table[5].upper      = 1.0;
+	prior_table[5].std        = 0.5;
+	prior_table[5].eta        = 1e-3;
 	// -------------------------------------------------------------------
 	// smoothing information structurs
 	vector<size_t> age_id, time_id;
@@ -120,7 +127,7 @@ bool prior_density_xam(void)
 	{	for(j = 0; j < n_time; j++)
 		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian;
 			dage_prior_id[ i * n_time + j ]  = prior_id_laplace;
-			dtime_prior_id[ i * n_time + j ] = prior_id_none;
+			dtime_prior_id[ i * n_time + j ] = prior_id_log_gaussian;
 		}
 	}
 	//
@@ -153,7 +160,7 @@ bool prior_density_xam(void)
 	{	for(j = 0; j < n_time; j++)
 		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian;
 			dage_prior_id[ i * n_time + j ]  = prior_id_laplace;
-			dtime_prior_id[ i * n_time + j ] = prior_id_none;
+			dtime_prior_id[ i * n_time + j ] = prior_id_log_gaussian;
 		}
 	}
 	//
@@ -243,6 +250,9 @@ bool prior_density_xam(void)
 	double std_v  = prior_table[prior_id_gaussian].std ;
 	double mean_a = prior_table[prior_id_laplace].mean;
 	double std_a  = prior_table[prior_id_laplace].std ;
+	double mean_t = prior_table[prior_id_log_gaussian].mean;
+	double std_t  = prior_table[prior_id_log_gaussian].std ;
+	double eta_t  = prior_table[prior_id_log_gaussian].eta ;
 	size_t count_laplace = 0;
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
@@ -268,6 +278,19 @@ bool prior_density_xam(void)
 						check       -= log( std_a * sqrt_2 );
 						check       -= sqrt_2 * fabs(wres);
 						++count_laplace;
+					}
+					if( j + 1 < n_time )
+					{	double t0    = time_table[ s_info.time_id(j) ];
+						double t1    = time_table[ s_info.time_id(j+1) ];
+						double v0    = var;
+						double sigma = log(1.0 + std_t / (mean_t + eta_t));
+						index        = info.offset + i * n_time + j + 1;
+						double v1    = var_vec[index];
+						double dv_dt = (v1 - v0) / (t1 - t0);
+						wres         = log(dv_dt+eta_t) - log(mean_t+ eta_t);
+						wres        /= sigma;
+						check       -= log(sigma * sqrt_2pi);
+						check       -= wres * wres / 2.0;
 					}
 				}
 			}
