@@ -1113,7 +1113,7 @@ and is a vector of values for all of the model variables; i.e.,
 $latex (u , \theta)$$.
 Only the $cref pack_var_meas_mulcov$$ subvectors of $icode var_vec$$ are used
 by $code data_like$$ (note that other components of $latex (u, \theta )$$
-are used to compute $icode avg$$ documented below.
+are used to compute $icode avg$$ documented below).
 
 $head avg$$
 This argument has prototype
