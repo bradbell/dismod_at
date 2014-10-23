@@ -1057,6 +1057,18 @@ $icode%wres_loglike% = %dm%.data_like(
 	%data_id%, %var_info%, %var_vec%, %avg%
 )%$$
 
+$head Log-likelihood$$
+We use $latex y_i$$ to denote the measurement corresponding
+to this $cref/data_id/devel_data_model_like/data_id/$$.
+The log-likelihood computed by $code data_like$$ is the mapping
+$latex \[
+	\ell (u, \theta) = C + \log [ \B{p} ( y_i | u , \theta ) ]
+\] $$
+where $latex u$$ are the random effects,
+$latex \theta$$ are the fixed effects, and
+$latex C$$ is a constant that does 
+not depend on $latex ( u , \theta )$$.
+
 $head dm$$
 This object has prototype
 $codei%
@@ -1097,8 +1109,11 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %var_vec%
 %$$
-and is a vector of values for all of the model variables.
-Only the $cref pack_var_meas_mulcov$$ subvectors of $icode var_vec$$ are used.
+and is a vector of values for all of the model variables; i.e.,
+$latex (u , \theta)$$.
+Only the $cref pack_var_meas_mulcov$$ subvectors of $icode var_vec$$ are used
+by $code data_like$$ (note that other components of $latex (u, \theta )$$
+are used to compute $icode avg$$ documented below.
 
 $head avg$$
 This argument has prototype
@@ -1106,17 +1121,17 @@ $codei%
 	const %Float%& %avg%
 %$$
 and is the 
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$ 
-for the specified data point.
-This can be calculated using the routine:
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$,
+$latex A_i ( u , \theta )$$, for the specified data point.
+This can be calculated using:
 $table
 routine                   $cnext integrand for this $icode data_id$$ 
 $rnext
 $cref devel_data_model_avg_no_ode$$ $cnext 
-	prevalence, mtspecific, mtall, mtstandard
+	incidence, remission, mtexcess, mtother, mtwith, relrisk
 $rnext
 $cref devel_data_model_avg_yes_ode$$ $cnext 
-	incidence, remission, mtexcess, mtother, mtwith, relrisk
+	prevalence, mtspecific, mtall, mtstandard
 
 $tend
 
@@ -1128,7 +1143,7 @@ $codei%
 
 $head Log-Density$$
 The log-likelihood represented by
-$code%
+$codei%
 	%Float% %logden_smooth%  = %wres_loglike%.logden_smooth
 	%Float% %logden_sub_abs% = %wres_loglike%.logden_sub_abs
 %$$

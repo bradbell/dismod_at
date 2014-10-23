@@ -26,8 +26,8 @@ We use $latex i$$ to
 denote the $cref/data_id/data_table/data_id/$$
 for a row in the data table.
 
-$subhead v_i$$
-We use $latex v_i$$ to denote the corresponding
+$subhead y_i$$
+We use $latex y_i$$ to denote the corresponding
 $cref/meas_value/data_table/meas_value/$$ value. 
 
 $subhead sigma_i$$
@@ -123,12 +123,12 @@ We use $latex u$$ and $latex \theta$$ to denote the vector of
 $cref/random effects/model_variable/Random Effects, u/$$ and
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$ respectively.
 
-$head Adjusted Measurement, y_i$$
+$head Adjusted Measurement, v_i$$
 The adjusted data value is defined by
 $latex \[
-y_i ( \theta ) 
+v_i ( \theta ) 
 = 
-\frac{v_i}{\bar{w}_i}
+\frac{y_i}{\bar{w}_i}
 \int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
 \exp \left( 
 	- \sum_{j \in J_i} x_{i,j} \beta_{i,j} (a, t)
@@ -155,7 +155,7 @@ $latex \[
 = 
 z_i ( \theta ) 
 + 
-\frac{ y_i ( \theta) + \eta_i }{\bar{w}_i} 
+\frac{ v_i ( \theta) + \eta_i }{\bar{w}_i} 
 	\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
 	\left( 
 		\sum_{j \in K_i} x_{i,j} \gamma_{i,j} (a, t)
@@ -183,14 +183,14 @@ $subhead gaussian$$
 If $latex d_i$$ corresponds to $code gaussian$$,
 the weighted residual is
 $latex \[
-R [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+R [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \] $$
 and the likelihood is
 $latex \[
-\B{p} ( v_i | u , \theta )
+\B{p} ( y_i | u , \theta )
 = 
 \exp \left(
-G [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+G [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \right)
 \] $$
 See the model density definitions of 
@@ -202,14 +202,14 @@ $subhead laplace$$
 If $latex d_i$$ corresponds to $code laplace$$,
 the weighted residual is
 $latex \[
-R [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+R [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \] $$
 and the likelihood is
 $latex \[
-\B{p} ( v_i | u , \theta ) 
+\B{p} ( y_i | u , \theta ) 
 = 
 \exp \left(
-L [ y_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
+L [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \right)
 \] $$
 See the model density definitions of 
@@ -223,7 +223,7 @@ If $latex d_i$$ corresponds to $code log_gaussian$$,
 the weighted residual is
 $latex \[
 R_L [ 
-	y_i ( \theta)        \W{,} 
+	v_i ( \theta)        \W{,} 
 	A_i ( u, \theta )    \W{,} 
 	\delta_i ( \theta )  \W{,}
 	\eta_i
@@ -231,11 +231,11 @@ R_L [
 \] $$
 and the likelihood is
 $latex \[
-\B{p} ( v_i | u , \theta )
+\B{p} ( y_i | u , \theta )
 = 
 \exp \left(
 G_L [ 
-	y_i ( \theta)        \W{,} 
+	v_i ( \theta)        \W{,} 
 	A_i ( u, \theta )    \W{,} 
 	\delta_i ( \theta )  \W{,}
 	\eta_i
@@ -252,7 +252,7 @@ If $latex d_i$$ corresponds to $code log_laplace$$,
 the weighted residual is
 $latex \[
 R_L [ 
-	y_i ( \theta)        \W{,} 
+	v_i ( \theta)        \W{,} 
 	A_i ( u, \theta )    \W{,} 
 	\delta_i ( \theta )  \W{,}
 	\eta_i
@@ -260,11 +260,11 @@ R_L [
 \] $$
 and the likelihood is
 $latex \[
-\B{p} ( v_i | u , \theta )
+\B{p} ( y_i | u , \theta )
 = 
 \exp \left(
 L_L [ 
-	y_i ( \theta)        \W{,} 
+	v_i ( \theta)        \W{,} 
 	A_i ( u, \theta )    \W{,} 
 	\delta_i ( \theta )  \W{,}
 	\eta_i
