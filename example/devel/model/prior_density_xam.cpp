@@ -31,13 +31,17 @@ $end
 # include <dismod_at/include/prior_density.hpp>
 # include <dismod_at/include/get_density_table.hpp>
 
+# define DISMOD_AT_PRIOR_DENSITY_XAM_TRACE 0
+
 bool prior_density_xam(void)
 {	bool   ok = true;
 	size_t i, j;
 	using CppAD::vector;	
 	using std::cout;
+	using std::endl;
 	double eps = 100.0 * std::numeric_limits<double>::epsilon() * 100;
 	double inf = std::numeric_limits<double>::infinity();
+	double sqrt_2   = std::sqrt( 2.0 );
 	double sqrt_2pi = std::sqrt( 8.0 * std::atan(1.0) );
 	
 
@@ -77,13 +81,12 @@ bool prior_density_xam(void)
 	prior_table[3].mean       = 0.0;
 	prior_table[3].upper      = 1.0;
 	prior_table[3].std        = 0.5;
-	// size_t prior_id_log_laplace = 4;
-	prior_table[4].density_id = int( dismod_at::log_laplace_enum );
-	prior_table[4].lower      = 0.0;
-	prior_table[4].mean       = 0.01;
-	prior_table[4].upper      = 0.1;
-	prior_table[4].std        = 0.01;
-	prior_table[4].eta        = 0.001;
+	size_t prior_id_laplace = 4;
+	prior_table[4].density_id = int( dismod_at::laplace_enum );
+	prior_table[4].lower      = -1.0;
+	prior_table[4].mean       = 0.0;
+	prior_table[4].upper      = 1.0;
+	prior_table[4].std        = 0.5;
 	// -------------------------------------------------------------------
 	// smoothing information structurs
 	vector<size_t> age_id, time_id;
@@ -116,7 +119,7 @@ bool prior_density_xam(void)
 	for(i = 0; i < n_age; i++)
 	{	for(j = 0; j < n_time; j++)
 		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian;
-			dage_prior_id[ i * n_time + j ]  = prior_id_none;
+			dage_prior_id[ i * n_time + j ]  = prior_id_laplace;
 			dtime_prior_id[ i * n_time + j ] = prior_id_none;
 		}
 	}
@@ -149,7 +152,7 @@ bool prior_density_xam(void)
 	for(i = 0; i < n_age; i++)
 	{	for(j = 0; j < n_time; j++)
 		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian;
-			dage_prior_id[ i * n_time + j ]  = prior_id_none;
+			dage_prior_id[ i * n_time + j ]  = prior_id_laplace;
 			dtime_prior_id[ i * n_time + j ] = prior_id_none;
 		}
 	}
@@ -231,10 +234,16 @@ bool prior_density_xam(void)
 		var_info, var_vec,
 		age_table, time_table, prior_table, s_info_vec
 	);
+	double total_logden = logden.smooth;
+	for(i = 0; i < logden.sub_abs.size(); i++)
+		total_logden -= logden.sub_abs[i];
 	// --------------- check result ------------------------------------------
-	double check = 0.0;
-	double mean  = prior_table[prior_id_gaussian].mean;
-	double std   = prior_table[prior_id_gaussian].std ;
+	double check  = 0.0;
+	double mean_v = prior_table[prior_id_gaussian].mean;
+	double std_v  = prior_table[prior_id_gaussian].std ;
+	double mean_a = prior_table[prior_id_laplace].mean;
+	double std_a  = prior_table[prior_id_laplace].std ;
+	size_t count_laplace = 0;
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
 		{	info = var_info.rate_info(rate_id, child_id);
@@ -245,18 +254,36 @@ bool prior_density_xam(void)
 			{	for(j = 0; j < n_time; j++)
 				{	size_t index   = info.offset + i * n_time + j; 
 					double var     = var_vec[index];
-					double wres    = (var - mean) / std;
-					check         -= log(std * sqrt_2pi);
+					double wres    = (var - mean_v) / std_v;
+					check         -= log(std_v * sqrt_2pi);
 					check         -= wres * wres / 2.0;
+					if( i + 1 < n_age )
+					{	double a0    = age_table[ s_info.age_id(i) ];
+						double a1    = age_table[ s_info.age_id(i+1) ];
+						double v0    = var;
+						index        = info.offset + (i+1) * n_time + j;
+						double v1    = var_vec[index];
+						double dv_da = (v1 - v0) / (a1 - a0);
+						wres         = (dv_da - mean_a) / std_a;
+						check       -= log( std_a * sqrt_2 );
+						check       -= sqrt_2 * fabs(wres);
+						++count_laplace;
+					}
 				}
 			}
 		}
 	}
-	double relerr = 1.0 - logden.smooth / check;
-	// std::cout << "check = " << check << std::endl;
-	// std::cout << "logden.smooth = " << logden.smooth << std::endl;
-	// std::cout << "relerr = " << relerr << std::endl;
-	ok    &= fabs( relerr ) < eps;
+	double relerr = 1.0 - total_logden / check;
+	ok   &= count_laplace == logden.sub_abs.size();
+	ok   &= fabs( relerr ) < eps;
+# if DISMOD_AT_PRIOR_DENSITY_XAM_TRACE
+	cout << endl;
+	cout << "count_laplace = " << count_laplace << endl;
+	cout << "logden.sub_abs.size() = " << logden.sub_abs.size() << endl;
+	cout << "check = " << check << endl;
+	cout << "total_logden = " << total_logden << endl;
+	cout << "relerr = " << relerr << endl;
+# endif
 	return ok;
 }
 // END C++
