@@ -27,6 +27,7 @@ $end
 */
 // BEGIN C++
 # include <limits>
+# include <cmath>
 # include <dismod_at/include/prior_density.hpp>
 # include <dismod_at/include/get_density_table.hpp>
 
@@ -35,8 +36,10 @@ bool prior_density_xam(void)
 	size_t i, j;
 	using CppAD::vector;	
 	using std::cout;
-	typedef CppAD::AD<double> Float;
-	Float eps = CppAD::numeric_limits<Float>::epsilon() * 100;
+	double eps = 100.0 * std::numeric_limits<double>::epsilon() * 100;
+	double inf = std::numeric_limits<double>::infinity();
+	double sqrt_2pi = std::sqrt( 8.0 * std::atan(1.0) );
+	
 
 	// --------------------------------------------------------------------
 	// age_table 
@@ -51,27 +54,36 @@ bool prior_density_xam(void)
 	for(i = 0; i < n_time_table; i++)
 		time_table[i] = (2015 - 1975) * i / double(n_time_table - 1);
 	// ----------------------- prior table ---------------------------------
-	size_t n_prior_table = 4;
+	size_t n_prior_table = 5;
 	vector<dismod_at::prior_struct> prior_table(n_prior_table);
 	// prior_id = 0
 	prior_table[0].density_id = int( dismod_at::uniform_enum );
 	prior_table[0].lower      = 0.0;
+	prior_table[0].mean       = 0.0;
 	prior_table[0].upper      = 0.0;
 	// prior_id = 1
 	prior_table[1].density_id = int( dismod_at::uniform_enum );
 	prior_table[1].lower      = 1.0;
+	prior_table[1].mean       = 1.0;
 	prior_table[1].upper      = 1.0;
-	size_t prior_id_gaussian = 2;
-	prior_table[2].density_id = int( dismod_at::gaussian_enum );
-	prior_table[2].lower      = - 1.0;
-	prior_table[2].upper      = 1.0;
-	prior_table[2].std        = 0.5;
-	size_t prior_id_log_laplace = 3;
-	prior_table[3].density_id = int( dismod_at::log_laplace_enum );
-	prior_table[3].lower      = 0.0;
-	prior_table[3].upper      = 0.1;
-	prior_table[3].std        = 0.01;
-	prior_table[3].eta        = 0.001;
+	size_t prior_id_none = 2;
+	prior_table[2].density_id = int( dismod_at::uniform_enum );
+	prior_table[2].lower      = -inf;
+	prior_table[2].mean       = 0.0;
+	prior_table[2].upper      = +inf;
+	size_t prior_id_gaussian = 3;
+	prior_table[3].density_id = int( dismod_at::gaussian_enum );
+	prior_table[3].lower      = - 1.0;
+	prior_table[3].mean       = 0.0;
+	prior_table[3].upper      = 1.0;
+	prior_table[3].std        = 0.5;
+	// size_t prior_id_log_laplace = 4;
+	prior_table[4].density_id = int( dismod_at::log_laplace_enum );
+	prior_table[4].lower      = 0.0;
+	prior_table[4].mean       = 0.01;
+	prior_table[4].upper      = 0.1;
+	prior_table[4].std        = 0.01;
+	prior_table[4].eta        = 0.001;
 	// -------------------------------------------------------------------
 	// smoothing information structurs
 	vector<size_t> age_id, time_id;
@@ -104,8 +116,8 @@ bool prior_density_xam(void)
 	for(i = 0; i < n_age; i++)
 	{	for(j = 0; j < n_time; j++)
 		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian;
-			dage_prior_id[ i * n_time + j ]  = prior_id_gaussian;
-			dtime_prior_id[ i * n_time + j ] = prior_id_gaussian;
+			dage_prior_id[ i * n_time + j ]  = prior_id_none;
+			dtime_prior_id[ i * n_time + j ] = prior_id_none;
 		}
 	}
 	//
@@ -136,9 +148,9 @@ bool prior_density_xam(void)
 	dtime_prior_id.resize(n_grid);
 	for(i = 0; i < n_age; i++)
 	{	for(j = 0; j < n_time; j++)
-		{	value_prior_id[ i * n_time + j ] = prior_id_log_laplace;
-			dage_prior_id[ i * n_time + j ]  = prior_id_log_laplace;
-			dtime_prior_id[ i * n_time + j ] = prior_id_log_laplace;
+		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian;
+			dage_prior_id[ i * n_time + j ]  = prior_id_none;
+			dtime_prior_id[ i * n_time + j ] = prior_id_none;
 		}
 	}
 	//
@@ -174,7 +186,7 @@ bool prior_density_xam(void)
 	}
 	// var_info
 	size_t n_integrand = 0;
-	size_t n_child     = 1;
+	size_t n_child     = 0;
 	dismod_at::pack_var var_info(
 		n_integrand, n_child, 
 		smooth_table, mulcov_table, rate_table
@@ -197,11 +209,13 @@ bool prior_density_xam(void)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
 		{	info = var_info.rate_info(rate_id, child_id);
 			dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
-			for(i = 0; i < s_info.age_size(); i++)
+			n_age  = s_info.age_size();
+			n_time = s_info.time_size();
+			for(i = 0; i < n_age; i++)
 			{	double age = age_table[ s_info.age_id(i) ];
-				for(j = 0; j < s_info.time_size(); j++)
-				{	double time    = time_table[ s_info.time_id(j) ];
-					size_t index   = info.offset + i * s_info.time_size() + j; 
+				for(j = 0; j < n_time; j++)
+				{	double time = time_table[ s_info.time_id(j) ];
+					size_t index   = info.offset + i * n_time + j; 
 					var_vec[index] = age * time / (age_max * time_max);
 				}
 			}
@@ -218,7 +232,31 @@ bool prior_density_xam(void)
 		age_table, time_table, prior_table, s_info_vec
 	);
 	// --------------- check result ------------------------------------------
-	// 2DO
+	double check = 0.0;
+	double mean  = prior_table[prior_id_gaussian].mean;
+	double std   = prior_table[prior_id_gaussian].std ;
+	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
+	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
+		{	info = var_info.rate_info(rate_id, child_id);
+			dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
+			n_age  = s_info.age_size();
+			n_time = s_info.time_size();
+			for(i = 0; i < n_age; i++)
+			{	for(j = 0; j < n_time; j++)
+				{	size_t index   = info.offset + i * n_time + j; 
+					double var     = var_vec[index];
+					double wres    = (var - mean) / std;
+					check         -= log(std * sqrt_2pi);
+					check         -= wres * wres / 2.0;
+				}
+			}
+		}
+	}
+	double relerr = 1.0 - logden.smooth / check;
+	// std::cout << "check = " << check << std::endl;
+	// std::cout << "logden.smooth = " << logden.smooth << std::endl;
+	// std::cout << "relerr = " << relerr << std::endl;
+	ok    &= fabs( relerr ) < eps;
 	return ok;
 }
 // END C++
