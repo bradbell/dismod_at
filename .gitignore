@@ -1,0 +1,11 @@
+# temporary file used to make commits.
+git_commit.sh
+# directories that are automatically created
+build
+doc
+# vim swap files
+*.swp
+# log files
+*.log
+# python complilation files
+*.pyc

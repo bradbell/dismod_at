@@ -1,0 +1,34 @@
+$Id:$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-14 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin laplace$$
+
+$section C++ Optimization of The Laplace Approximation$$
+
+$head Purpose$$
+This section, and it subsections, describe a C++ implementation of
+the method that optimizes the Laplace Approximation and computes
+the corresponding approximation for the information matrix.
+This library can be used separately form the rest of $code dismod_at$$
+and this these sections describe how to do so.
+
+$head Reference$$
+$italic TMB: Automatic Differentiation and Laplace Approximation$$
+$pre
+$$
+$nospell
+Kasper Kristensen, Anders Nielsen, Casper W. Berg, Hans Skaug, Bradley M. Bell,
+$$
+$pre
+$$
+Journal of Statistical Software, Accepted 2015-02.
+
+
+$end

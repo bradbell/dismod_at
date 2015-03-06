@@ -9,11 +9,14 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin dismod_at$$
+$comment latex macros used for all sections$$
 $latex 
 	\newcommand{\R}[1]{ {\rm #1} }
 	\newcommand{\B}[1]{ {\bf #1} }
 	\newcommand{\W}[1]{ \; #1 \; }
 $$
+$comment automatic indexing command used for all sections$$
+$aindex section head subhead$$
 
 $section Disease Rates as Functions of Age and Time$$
 
@@ -21,7 +24,8 @@ $childtable%omh/table/input.omh
 	%omh/model/model.omh
 	%omh/table/output.omh
 	%omh/database.omh
-	%devel/devel.omh 
+	%omh/laplace/laplace.omh
+	%devel/devel.omh
 %$$
 
 $end
