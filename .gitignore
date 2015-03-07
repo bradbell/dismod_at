@@ -1,5 +1,9 @@
 # temporary file used to make commits.
 git_commit.sh
+# temporary file for all purposes
+junk
+# web version of documentation directory
+doc.tgz
 # directories that are automatically created
 build
 doc
