@@ -9,6 +9,9 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin laplace$$
+$spell
+	dismod
+$$
 
 $section C++ Optimization of The Laplace Approximation$$
 
