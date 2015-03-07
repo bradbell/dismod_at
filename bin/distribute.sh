@@ -32,7 +32,7 @@ echo_eval tar -czf doc.tgz doc
 echo_eval ssh.sh $remote_machine -p doc.tgz
 cat << EOF
 ------------------------------
-Enter the following commands: 
+Enter the following commands:
 	ssh.sh $remote_machine -l
 	rm -rf doc
 	tar -xzf doc.tgz
