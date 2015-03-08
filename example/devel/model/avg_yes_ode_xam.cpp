@@ -28,18 +28,6 @@ $end
 // BEGIN C++
 # include <dismod_at/include/data_model.hpp>
 
-namespace {
-	double check_avg(const dismod_at::data_struct& data_row)
-	{	double a0 = data_row.age_lower;
-		double a1 = data_row.age_upper;
-		double t0 = data_row.time_lower;
-		double t1 = data_row.time_upper;
-		// integral of age * time from a0 to a1 and t0 to t1
-		// divided by (a1 - a0) time (t1 - t0) is
-		return (a0 + a1) * (t0 + t1) / 4.0;
-	}
-}
-
 bool avg_yes_ode_xam(void)
 {	bool   ok = true;
 	size_t i, k;
