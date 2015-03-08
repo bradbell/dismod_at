@@ -4,8 +4,8 @@
 # dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
 #           Copyright (C) 2014-14 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
@@ -18,7 +18,7 @@ fi
 list=`git ls-files | sed -e '/^\.gitignore/d'`
 for file in $list
 do
-	text='Copyright (C) 2014-.. University of Washington' 
+	text='Copyright (C) 2014-.. University of Washington'
 	if ! grep "$text" $file > /dev/null
 	then
 		echo "copyright missing: use following command to correct this"
@@ -31,7 +31,7 @@ list=`git_commit.sh list | sed -e '/^\.gitignore/d'`
 ok='yes'
 for file in $list
 do
-	text='Copyright (C) 2014-15 University of Washington' 
+	text='Copyright (C) 2014-15 University of Washington'
 	if ! grep "$text" $file > /dev/null
 	then
 		sed -e 's|Copyright (C) 2014-..|Copyright (C) 2014-15|' -i.$$ $file
