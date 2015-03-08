@@ -20,6 +20,9 @@ $aindex section head subhead$$
 
 $section Disease Rates as Functions of Age and Time$$
 
+$head Under Construction$$
+This package is under construction and does not yet accomplish its purpose.
+
 $childtable%omh/table/input.omh
 	%omh/model/model.omh
 	%omh/table/output.omh
