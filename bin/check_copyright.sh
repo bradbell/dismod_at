@@ -27,6 +27,11 @@ do
 	fi
 done
 #
+if ! git_commit.sh list >> /dev/null
+then
+	git_commit.sh list
+	exit 1
+fi
 list=`git_commit.sh list | sed -e '/^\.gitignore/d'`
 ok='yes'
 for file in $list
