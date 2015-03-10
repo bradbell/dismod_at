@@ -1,10 +1,10 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -25,7 +25,7 @@ $head Under Construction$$
 
 $head Syntax$$
 $codei%joint_like %joint%(
-	// arguments in same order as for data_model constructor 
+	// arguments in same order as for data_model constructor
 	%parent_node_id%,
 	%n_age_ode%,
 	%n_time_ode%,
@@ -34,7 +34,7 @@ $codei%joint_like %joint%(
 	%time_table%,
 	%integrand_table%,
 	%node_table%,
-	%data_table%, 
+	%data_table%,
 	%w_info_vec%,
 	%s_info_vec%,
 	// arguments to prior_density that are not in data_model constructor
@@ -46,13 +46,13 @@ $head Purpose$$
 This object can be used to evaluate the joint likelihood of the
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$, $latex \theta$$,
 $cref/random effects/model_variable/Random Effects, u/$$, $latex u$$,
-and the 
-$cref/measurement vector/data_like/Data Table Notation/y_i/$$, $latex y$$ 
+and the
+$cref/measurement vector/data_like/Data Table Notation/y_i/$$, $latex y$$
 as a function of the fixed and random effects; i.e., to evaluate
 $latex \[
 	\B{p} ( y | u , \theta ) \B{p} ( u | \theta ) \B{p} ( \theta )
 \] $$
-up to a constant multiple that does not depend on 
+up to a constant multiple that does not depend on
 $latex u$$ or $latex \theta$$.
 
 $head parent_node_id$$
@@ -144,8 +144,8 @@ $codei%
 	%s_info_vec%[ %smooth_id% ]
 %$$
 is the corresponding $cref smooth_info$$ information.
-For each $icode%s_info_vec%[%smooth_id%]%$$ object, 
-only the following functions are used: 
+For each $icode%s_info_vec%[%smooth_id%]%$$ object,
+only the following functions are used:
 $code age_size$$, $code time_size$$, $code age_id$$, $code time_id$$.
 
 $head var_info$$

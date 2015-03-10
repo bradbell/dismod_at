@@ -1,10 +1,10 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -33,7 +33,7 @@ $codei%data_model %dm%(
 	%time_table%,
 	%integrand_table%,
 	%node_table%,
-	%data_table%, 
+	%data_table%,
 	%w_info_vec%,
 	%s_info_vec
 )%$$
@@ -135,8 +135,8 @@ $codei%
 	%s_info_vec%[ %smooth_id% ]
 %$$
 is the corresponding $cref smooth_info$$ information.
-For each $icode%s_info_vec%[%smooth_id%]%$$ object, 
-only the following functions are used: 
+For each $icode%s_info_vec%[%smooth_id%]%$$ object,
+only the following functions are used:
 $code age_size$$, $code time_size$$, $code age_id$$, $code time_id$$.
 
 $end
@@ -246,12 +246,12 @@ data_table_    (data_table)
 			table_error_exit("data", data_id, msg);
 		}
 		if( time_max < time_upper )
-		{	string msg = 
+		{	string msg =
 				"time_upper is greater than maximum time in time table";
 			table_error_exit("data", data_id, msg);
 		}
 
-		// determine minimum ode grid age index 
+		// determine minimum ode grid age index
 		size_t i_min = 0;
 		while(age_min + (i_min+1) * ode_step_size <= age_lower )
 			i_min++;
@@ -263,7 +263,7 @@ data_table_    (data_table)
 			n_age++;
 		assert( i_min + n_age <= n_age_ode );
 
-		// determine minimum ode grid time index 
+		// determine minimum ode grid time index
 		size_t j_min = 0;
 		while(time_min + (j_min+1) * ode_step_size <= time_lower )
 			j_min++;
@@ -299,8 +299,8 @@ data_table_    (data_table)
 			// clip to be within limits for this data point
 			double b1 = std::max(a1, age_lower);
 			double b2 = std::min(a2, age_upper);
-			bool   b1_equal_b2 = 
-				std::fabs(b1 - b2) <= eps * ode_step_size; 
+			bool   b1_equal_b2 =
+				std::fabs(b1 - b2) <= eps * ode_step_size;
 			//
 			std::pair<double, double> a_pair(a1, a2);
 			std::pair<double, double> b_pair(b1, b2);
@@ -313,8 +313,8 @@ data_table_    (data_table)
 				// clip to be within limits for this data point
 				double s1 = std::max(t1, time_lower);
 				double s2 = std::min(t2, time_upper);
-				bool   s1_equal_s2 = 
-					std::fabs(s1 - s2) <= eps * ode_step_size; 
+				bool   s1_equal_s2 =
+					std::fabs(s1 - s2) <= eps * ode_step_size;
 				//
 				// initialize contribution for this rectangle as zero
 				c[0] = c[1] = c[2] = c[3] = 0.0;
@@ -339,20 +339,20 @@ data_table_    (data_table)
 					if( ! s1_equal_s2 )
 					{	double a = age_lower;
 						double d = (a2 - a1);
-	
+
 						// weight at time t1
 						w_pair.first = interp_weight(
 							a, t1, w_info, age_table, time_table, i_wi, j_wi
 						);
-	
+
 						// weight at time t2
 						w_pair.second = interp_weight(
 							a, t2, w_info, age_table, time_table, i_wi, j_wi
 						);
-	
+
 						// coefficients for integrating w.r.t time
 						c_pair = integrate_1d(t_pair, s_pair, w_pair);
-	
+
 						// coefficients for sourrounding age points
 						c[0]   = c_pair.first  * (a2 - a) / d; // (a1, t1)
 						c[1]   = c_pair.second * (a2 - a) / d; // (a1, t2)
@@ -365,20 +365,20 @@ data_table_    (data_table)
 					if( ! b1_equal_b2 )
 					{	double t = time_lower;
 						double d = (t2 - t1);
-	
+
 						// weight at age a1
 						w_pair.first = interp_weight(
 							a1, t, w_info, age_table, time_table, i_wi, j_wi
 						);
-	
+
 						// weight at age a2
 						w_pair.second = interp_weight(
 							a2, t, w_info, age_table, time_table, i_wi, j_wi
 						);
-	
+
 						// coefficients for integrating w.r.t. age
 						c_pair = integrate_1d(a_pair, b_pair, w_pair);
-	
+
 						// coefficients for sourrounding time poins
 						c[0]   = c_pair.first  * (t2 - t) / d; // (a1, t1)
 						c[1]   = c_pair.first  * (t - t1) / d; // (a1, t2)
@@ -386,21 +386,21 @@ data_table_    (data_table)
 						c[3]   = c_pair.second * (t - t1) / d; // (a2, t2)
 					}
 				}
-				else 
+				else
 				{	// case where integrate w.r.t to age and time
 					if( ! ( b1_equal_b2 || s1_equal_s2) )
 					{	// weight at (a1, t1)
 						w[0] = interp_weight(
 							a1, t1, w_info, age_table, time_table, i_wi, j_wi);
-	
+
 						// weight at (a1, t2)
 						w[1] = interp_weight(
 							a1, t2, w_info, age_table, time_table, i_wi, j_wi);
-	
+
 						// weight at (a2, t1)
 						w[2] = interp_weight(
 							a2, t1, w_info, age_table, time_table, i_wi, j_wi);
-	
+
 						// weight at (a2, t2)
 						w[3] = interp_weight(
 							a2, t2, w_info, age_table, time_table, i_wi, j_wi);
@@ -439,8 +439,8 @@ data_table_    (data_table)
 		data_info_[data_id].child     = child;
 		data_info_[data_id].i_min     = i_min;
 		data_info_[data_id].j_min     = j_min;
-		data_info_[data_id].n_age     = n_age; 
-		data_info_[data_id].n_time    = n_time; 
+		data_info_[data_id].n_age     = n_age;
+		data_info_[data_id].n_time    = n_time;
 		data_info_[data_id].eta       = eta;
 		//
 		data_info_[data_id].c_ode.resize(n_age * n_time);
@@ -491,20 +491,20 @@ and is the $cref/data_id/data_table/data_id/$$ for we are computing
 the average integrand for.
 
 $subhead Node$$
-The $icode data_id$$ must correspond to a 
+The $icode data_id$$ must correspond to a
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
 $cref/parent_node_id/devel_data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
 $cref/child/child_data/data_id2child/child/$$ value
-less than or equal 
-$cref/n_child/child_data/child_size/n_child/$$. 
+less than or equal
+$cref/n_child/child_data/child_size/n_child/$$.
 
 $head var_info$$
 This argument has prototype
 $codei%
 	const pack_var& %var_info%
 %$$
-and is the $cref pack_var$$ information corresponding to 
+and is the $cref pack_var$$ information corresponding to
 $icode var_vec$$.
 
 $head var_vec$$
@@ -517,8 +517,8 @@ and is a vector of values for all of the model variables.
 $subhead Integrand and Rates$$
 The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
 $icode data_id$$ must be one of those listed in the table below.
-In addition, depending on the integrand, only the corresponding 
-$cref pack_var_rate$$ and $cref pack_var_rate_mulcov$$ subvectors of 
+In addition, depending on the integrand, only the corresponding
+$cref pack_var_rate$$ and $cref pack_var_rate_mulcov$$ subvectors of
 $icode var_vec$$ are used:
 $table
 Integrand               $cnext Rates               $rnext
@@ -527,12 +527,12 @@ $code remission_enum$$  $cnext $code rho_enum$$    $rnext
 $code mtexcess_enum$$   $cnext $code chi_enum$$    $rnext
 $code mtother_enum$$    $cnext $code omega_enum$$  $rnext
 $code mtwith_enum$$     $cnext $code chi_enum$$, $code omega_enum$$ $rnext
-$code relrisk_enum$$    $cnext $code chi_enum$$, $code omega_enum$$ 
+$code relrisk_enum$$    $cnext $code chi_enum$$, $code omega_enum$$
 $tend
 
 $head avg$$
-This is the 
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$ 
+This is the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 for the specified data point.
 
 $children%example/devel/model/avg_no_ode_xam.cpp
@@ -553,7 +553,7 @@ Float data_model::avg_no_ode(
 	assert( var_info.size() == var_vec.size() );
 
 	// data table infomation for this data point
-	const CppAD::vector<double>& x = data_table_[ data_id ].x; 
+	const CppAD::vector<double>& x = data_table_[ data_id ].x;
 
 	// data_info information for this data point
 	integrand_enum integrand           = data_info_[ data_id].integrand;
@@ -567,7 +567,7 @@ Float data_model::avg_no_ode(
 	// check that this data's node is a descendent of the parent node
 	assert( child <= n_child_ );
 
-	// ode subgrid that we need integrand at 
+	// ode subgrid that we need integrand at
 	size_t n_ode = n_age * n_time;
 	CppAD::vector<size_t> ode_index(n_ode);
 	for(i = 0; i < n_age; i++)
@@ -618,16 +618,16 @@ Float data_model::avg_no_ode(
 		//
 		// extract subvector information for the parent rate
 		pack_var::subvec_info info;
-		info             = var_info.rate_info(rate_id[ell], n_child_);	
+		info             = var_info.rate_info(rate_id[ell], n_child_);
 		size_t n_var     = info.n_var;
 		size_t smooth_id = info.smooth_id;
 		//
 		CppAD::vector<Float> rate_si(n_var);
 		for(k = 0; k < n_var; k++)
-			rate_si[k] = var_vec[info.offset + k]; 
+			rate_si[k] = var_vec[info.offset + k];
 		//
 		// interpolate onto the ode grid
-		rate_ode[ell] = 
+		rate_ode[ell] =
 			si2ode_vec_[smooth_id]->interpolate(rate_si, ode_index);
 		//
 		// initialize sum of effects to zero
@@ -637,7 +637,7 @@ Float data_model::avg_no_ode(
 		//
 		// include child random effect
 		if( child < n_child_ )
-		{	info      = var_info.rate_info(rate_id[ell], child);	
+		{	info      = var_info.rate_info(rate_id[ell], child);
 			n_var     = info.n_var;
 			smooth_id = info.smooth_id;
 			//
@@ -645,7 +645,7 @@ Float data_model::avg_no_ode(
 			for(k = 0; k < n_var; k++)
 				var_si[k] = var_vec[info.offset + k];
 			//
-			CppAD::vector<Float> var_ode = 
+			CppAD::vector<Float> var_ode =
 				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 			//
 			for(k = 0; k < n_ode; k++)
@@ -663,7 +663,7 @@ Float data_model::avg_no_ode(
 			for(k = 0; k < n_var; k++)
 				var_si[k] = var_vec[info.offset + k];
 			//
-			CppAD::vector<Float> var_ode = 
+			CppAD::vector<Float> var_ode =
 				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 			//
 			for(k = 0; k < n_ode; k++)
@@ -754,13 +754,13 @@ and is the $cref/data_id/data_table/data_id/$$ for we are computing
 the average integrand for.
 
 $subhead Node$$
-The $icode data_id$$ must correspond to a 
+The $icode data_id$$ must correspond to a
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
 $cref/parent_node_id/devel_data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
 $cref/child/child_data/data_id2child/child/$$ value
-less than or equal 
-$cref/n_child/child_data/child_size/n_child/$$. 
+less than or equal
+$cref/n_child/child_data/child_size/n_child/$$.
 
 $subhead Integrand$$
 The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
@@ -775,7 +775,7 @@ This argument has prototype
 $codei%
 	const pack_var& %var_info%
 %$$
-and is the $cref pack_var$$ information corresponding to 
+and is the $cref pack_var$$ information corresponding to
 $icode var_vec$$.
 
 $head var_vec$$
@@ -783,15 +783,15 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %var_vec%
 %$$
-and is a vector of values for all of the 
+and is a vector of values for all of the
 $cref/model variables/model_variable/$$.
 Only the following subvectors of $icode var_vec$$ are used:
 $cref pack_var_rate$$,
 $cref pack_var_rate_mulcov$$.
 
 $head avg$$
-This is the 
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$ 
+This is the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 for the specified data point.
 
 $children%example/devel/model/avg_yes_ode_xam.cpp
@@ -830,7 +830,7 @@ Float data_model::avg_yes_ode(
 	assert( var_info.size() == var_vec.size() );
 
 	// data table information for this data pont
-	const CppAD::vector<double>& x     = data_table_[ data_id ].x; 
+	const CppAD::vector<double>& x     = data_table_[ data_id ].x;
 
 	// data_info infomation for this data point
 	integrand_enum integrand           = data_info_[ data_id].integrand;
@@ -848,15 +848,15 @@ Float data_model::avg_yes_ode(
 	// cohorts that end at maximum age index
 	for(j = 0; j < n_time_sub; j++)
 	{	size_t i_end, j_end, ik, jk;
-		i_end = i_min + n_age_sub - 1; // cohort ends at this age index 
-		j_end = j_min + j;             // cohort ends at this time index 
+		i_end = i_min + n_age_sub - 1; // cohort ends at this age index
+		j_end = j_min + j;             // cohort ends at this time index
 		assert( i_end < n_age_ode_ );
 		assert( j_end < n_time_ode_ );
 		k     = ode_index.size();
 		cohort_start.push_back(k);
 		for(ik = 0; ik <= i_end; ik++)
 		{	if( i_end - ik < j_end )
-				jk = j_end - (i_end - ik);	
+				jk = j_end - (i_end - ik);
 			else
 				jk = 0;
 			ode_index.push_back( ik * n_time_ode_ + jk);
@@ -875,12 +875,12 @@ Float data_model::avg_yes_ode(
 		// note that this loop is empty when i = 0
 		for(ik = 0; ik <= i_end; ik++)
 		{	if( i_end - ik < j_end )
-				jk = j_end - (i_end - ik);	
+				jk = j_end - (i_end - ik);
 			else
 				jk = 0;
 			ode_index.push_back( ik * n_time_ode_ + jk);
 		}
-			 
+
 	}
 	size_t n_index = ode_index.size();
 
@@ -891,16 +891,16 @@ Float data_model::avg_yes_ode(
 	{	rate_ode[rate_id].resize(n_index);
 		//
 		// extract subvector information for the parent rate
-		info             = var_info.rate_info(rate_id, n_child_);	
+		info             = var_info.rate_info(rate_id, n_child_);
 		size_t n_var     = info.n_var;
 		size_t smooth_id = info.smooth_id;
 		//
 		CppAD::vector<Float> rate_si(n_var);
 		for(k = 0; k < n_var; k++)
-			rate_si[k] = var_vec[info.offset + k]; 
+			rate_si[k] = var_vec[info.offset + k];
 		//
 		// interpolate onto the ode grid
-		rate_ode[rate_id] = 
+		rate_ode[rate_id] =
 			si2ode_vec_[smooth_id]->interpolate(rate_si, ode_index);
 		//
 		// initialize sum of effects to zero
@@ -910,7 +910,7 @@ Float data_model::avg_yes_ode(
 		//
 		// include child random effect
 		if( child < n_child_ )
-		{	info      = var_info.rate_info(rate_id, child);	
+		{	info      = var_info.rate_info(rate_id, child);
 			n_var     = info.n_var;
 			smooth_id = info.smooth_id;
 			//
@@ -918,7 +918,7 @@ Float data_model::avg_yes_ode(
 			for(k = 0; k < n_var; k++)
 				var_si[k] = var_vec[info.offset + k];
 			//
-			CppAD::vector<Float> var_ode = 
+			CppAD::vector<Float> var_ode =
 				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 			//
 			for(k = 0; k < n_index; k++)
@@ -937,7 +937,7 @@ Float data_model::avg_yes_ode(
 			for(k = 0; k < n_var; k++)
 				var_si[k] = var_vec[info.offset + k];
 			//
-			CppAD::vector<Float> var_ode = 
+			CppAD::vector<Float> var_ode =
 				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 			//
 			for(k = 0; k < n_index; k++)
@@ -982,7 +982,7 @@ Float data_model::avg_yes_ode(
 		solve_ode(
 			i_max, j_max, step_size, pini, iota, rho, chi, omega, S_out, C_out
 		);
-		// 
+		//
 		// compute integrand on subgrid
 		for(k = 0; k < nk; k++)
 		{	size_t i = ode_index[k_start + k] / n_time_ode_;
@@ -1058,7 +1058,7 @@ $icode%wres_loglike% = %dm%.data_like(
 )%$$
 
 $head Log-likelihood$$
-We use $cref/y_i/data_like/Data Table Notation/y_i/$$ to denote the 
+We use $cref/y_i/data_like/Data Table Notation/y_i/$$ to denote the
 $cref/meas_value/data_table/meas_value/$$ corresponding
 to this $cref/data_id/devel_data_model_like/data_id/$$.
 The log-likelihood computed by $code data_like$$ is the mapping
@@ -1067,7 +1067,7 @@ $latex \[
 \] $$
 where $latex u$$ are the random effects,
 $latex \theta$$ are the fixed effects, and
-$latex C$$ is a constant that does 
+$latex C$$ is a constant that does
 not depend on $latex ( u , \theta )$$.
 
 $head dm$$
@@ -1089,20 +1089,20 @@ and is the $cref/data_id/data_table/data_id/$$ for we are computing
 the weighted residual and log-likelihood for.
 
 $subhead Node$$
-The $icode data_id$$ must correspond to a 
+The $icode data_id$$ must correspond to a
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
 $cref/parent_node_id/devel_data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
 $cref/child/child_data/data_id2child/child/$$ value
-less than or equal 
-$cref/n_child/child_data/child_size/n_child/$$. 
+less than or equal
+$cref/n_child/child_data/child_size/n_child/$$.
 
 $head var_info$$
 This argument has prototype
 $codei%
 	const pack_var& %var_info%
 %$$
-and is the $cref pack_var$$ information corresponding to 
+and is the $cref pack_var$$ information corresponding to
 $icode var_vec$$.
 
 $head var_vec$$
@@ -1121,17 +1121,17 @@ This argument has prototype
 $codei%
 	const %Float%& %avg%
 %$$
-and is the 
+and is the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$,
 $latex A_i ( u , \theta )$$, for the specified data point.
 This can be calculated using:
 $table
-routine                   $cnext integrand for this $icode data_id$$ 
+routine                   $cnext integrand for this $icode data_id$$
 $rnext
-$cref devel_data_model_avg_no_ode$$ $cnext 
+$cref devel_data_model_avg_no_ode$$ $cnext
 	incidence, remission, mtexcess, mtother, mtwith, relrisk
 $rnext
-$cref devel_data_model_avg_yes_ode$$ $cnext 
+$cref devel_data_model_avg_yes_ode$$ $cnext
 	prevalence, mtspecific, mtall, mtstandard
 
 $tend
@@ -1150,7 +1150,7 @@ $codei%
 %$$
 The values $icode logden_smooth$$ and $icode logden_sub_abs$$
 are infinitely differentiable with
-respect to the model variables $cref/var_vec/devel_data_model_like/var_vec/$$; 
+respect to the model variables $cref/var_vec/devel_data_model_like/var_vec/$$;
 i.e., smooth.
 
 $head Uniform$$
@@ -1158,14 +1158,14 @@ In the case where the density is uniform,
 both $icode logden_smooth$$ and $icode logden_sub_abs$$ are zero.
 
 $head Gaussian$$
-In the case where the density is  
+In the case where the density is
 $cref/Gaussian/model_density/Gaussian/$$ or
 $cref/Log-Gaussian/model_density/Log-Gaussian/$$,
 the log-likelihood is equal to $icode logden_smooth$$ and
 $icode logden_sub_abs$$ is zero.
 
 $head Laplace$$
-In the case where the density is  
+In the case where the density is
 $cref/Laplace/model_density/Laplace/$$ or
 $cref/Log-Laplace/model_density/Log-Laplace/$$ likelihoods,
 the log-likelihood is equal to
@@ -1194,7 +1194,7 @@ residual_density_struct<Float> data_model::data_like(
 	assert( var_info.size() == var_vec.size() );
 
 	// data table infomation for this data point
-	const CppAD::vector<double>& x = data_table_[ data_id ].x; 
+	const CppAD::vector<double>& x = data_table_[ data_id ].x;
 	double sigma                   = data_table_[ data_id ].meas_std;
 	size_t integrand_id            = data_table_[ data_id ].integrand_id;
 	double meas_value              = data_table_[ data_id ].meas_value;
@@ -1208,7 +1208,7 @@ residual_density_struct<Float> data_model::data_like(
 	size_t n_time                      = data_info_[data_id].n_time;
 	const CppAD::vector<double>& c_ode = data_info_[data_id].c_ode;
 
-	// ode subgrid that we covariates at 
+	// ode subgrid that we covariates at
 	size_t n_ode = n_age * n_time;
 	CppAD::vector<size_t> ode_index(n_ode);
 	for(i = 0; i < n_age; i++)
@@ -1235,7 +1235,7 @@ residual_density_struct<Float> data_model::data_like(
 		for(k = 0; k < n_var; k++)
 			var_si[k] = var_vec[info.offset + k];
 		//
-		CppAD::vector<Float> var_ode = 
+		CppAD::vector<Float> var_ode =
 			si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 		//
 		for(k = 0; k < n_ode; k++)
@@ -1260,7 +1260,7 @@ residual_density_struct<Float> data_model::data_like(
 		for(k = 0; k < n_var; k++)
 			var_si[k] = var_vec[info.offset + k];
 		//
-		CppAD::vector<Float> var_ode = 
+		CppAD::vector<Float> var_ode =
 			si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 		//
 		for(k = 0; k < n_ode; k++)

@@ -1,10 +1,10 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -35,7 +35,7 @@ and random effects $latex u$$ is
 $latex \[
 	\B{p} ( u | \theta ) \B{p} ( \theta )
 \] $$
-See 
+See
 $cref/p(u|theta)/random_prior/p(u|theta)/$$ and
 $cref/p(theta)/fixed_prior/p(theta)/$$.
 
@@ -48,7 +48,7 @@ This argument has prototype
 $codei%
 	const pack_var& %var_info%
 %$$
-and is the $cref pack_var$$ information corresponding to 
+and is the $cref pack_var$$ information corresponding to
 $icode var_vec$$.
 
 $head var_vec$$
@@ -56,7 +56,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %var_vec%
 %$$
-and is a vector of values for all of the 
+and is a vector of values for all of the
 $cref/model variables/model_variable/$$.
 Only the following subvectors of $icode var_vec$$ are used:
 $cref pack_var_rate$$,
@@ -104,7 +104,7 @@ The return value has prototype
 $codei%
 	prior_density_struct<%Float%> %logden%
 %$$
-The log of the density function (see $cref model_density$$) 
+The log of the density function (see $cref model_density$$)
 is represented by
 $codei%
 	%Float%                %smooth%   = %logden%.smooth
@@ -114,7 +114,7 @@ The value $icode smooth$$ and components of $icode logden_sub_abs$$
 are infinitely differentiable with
 respect to the model variables $cref/var_vec/prior_density/var_vec/$$;
 i.e., smooth.
-The log of the prior density for all the 
+The log of the prior density for all the
 $cref/model_variables/model_variable/$$ is
 $codei%
 	%sum% = %smooth%;
@@ -147,13 +147,13 @@ namespace {
 	using dismod_at::log_laplace_enum;
 	using dismod_at::number_density_enum;
 
-	// log_prior_density 
+	// log_prior_density
 	template <class Float>
 	residual_density_struct<Float> log_prior_density(
 		const prior_struct&   prior    ,
 		const Float&          variable )
 	{	assert ( 0 <= prior.density_id  );
-		assert ( prior.density_id < number_density_enum );	
+		assert ( prior.density_id < number_density_enum );
 
 		density_enum density = density_enum(prior.density_id);
 		Float        mean    = prior.mean;
@@ -250,7 +250,7 @@ prior_density_struct<Float> prior_density(
 	const CppAD::vector<prior_struct>&     prior_table     ,
 	const CppAD::vector<smooth_info>&      s_info_vec      )
 {
-	// initialize the log of the prior density as zero 
+	// initialize the log of the prior density as zero
 	prior_density_struct<Float> logden;
 	logden.smooth = 0.0;
 	assert( logden.sub_abs.size() == 0 );
@@ -269,7 +269,7 @@ prior_density_struct<Float> prior_density(
 		// multiplier for value smoothing
 		Float mulstd = var_vec[offset + 0];
 
-		// prior index for this multilier 
+		// prior index for this multilier
 		size_t prior_id           = s_info_vec[smooth_id].mulstd_value();
 		const prior_struct* prior = &prior_table[prior_id];
 
@@ -394,4 +394,4 @@ DISMOD_AT_INSTANTIATE_PRIOR_DENSITY(double)
 DISMOD_AT_INSTANTIATE_PRIOR_DENSITY( CppAD::AD<double> )
 
 } // BEGIN_DISMOD_AT_NAMESPACE
- 
+
