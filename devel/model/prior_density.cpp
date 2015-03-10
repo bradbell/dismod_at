@@ -21,7 +21,7 @@ $spell
 	fabs
 $$
 
-$section Compute Joint Prior Density for Fixed and Random Effects$$
+$section Compute Prior Density for the Fixed and Random Effects$$
 
 $head Syntax$$
 $icode%logden% = prior_density(

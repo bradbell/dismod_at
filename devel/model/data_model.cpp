@@ -1058,7 +1058,8 @@ $icode%wres_loglike% = %dm%.data_like(
 )%$$
 
 $head Log-likelihood$$
-We use $latex y_i$$ to denote the measurement corresponding
+We use $cref/y_i/data_like/Data Table Notation/y_i/$$ to denote the 
+$cref/meas_value/data_table/meas_value/$$ corresponding
 to this $cref/data_id/devel_data_model_like/data_id/$$.
 The log-likelihood computed by $code data_like$$ is the mapping
 $latex \[
