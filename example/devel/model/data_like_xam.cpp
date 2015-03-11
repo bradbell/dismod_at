@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -32,8 +32,8 @@ $end
 bool data_like_xam(void)
 {	bool   ok = true;
 	size_t i, j, k;
-	using CppAD::abs;	
-	using CppAD::vector;	
+	using CppAD::abs;
+	using CppAD::vector;
 	using std::cout;
 	typedef CppAD::AD<double> Float;
 	Float eps = CppAD::numeric_limits<Float>::epsilon() * 100;
@@ -41,7 +41,7 @@ bool data_like_xam(void)
 	// ode_step_size
 	double ode_step_size = 30.0;
 	//
-	// age_table 
+	// age_table
 	// (make sure that ode grid lands on last age table point)
 	double age = 0.0;
 	vector<double> age_table;
@@ -54,7 +54,7 @@ bool data_like_xam(void)
 	double age_min     = age_table[0];
 	double age_max     = age_table[n_age_table - 1];
 	//
-	// time_table 
+	// time_table
 	// (make sure that ode grid lands on last time table point)
 	double time = 1980.0;
 	vector<double> time_table;
@@ -102,7 +102,7 @@ bool data_like_xam(void)
 			age_id_tmp[0] = 0;
 		}
 		//
-		vector<size_t> value_prior_id(n_si), 
+		vector<size_t> value_prior_id(n_si),
 			dage_prior_id(n_si), dtime_prior_id(n_si);
 		dismod_at::smooth_info s_info(
 			age_id_tmp, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
@@ -122,14 +122,14 @@ bool data_like_xam(void)
 	// n_age_ode
 	size_t n_age_ode     =  1;
 	while( age_min + (n_age_ode-1) * ode_step_size < age_max )
-			n_age_ode++; 
+			n_age_ode++;
 	//
 	// n_time_ode
 	size_t n_time_ode     =  1;
 	while( time_min + (n_time_ode-1) * ode_step_size < time_max )
-			n_time_ode++; 
+			n_time_ode++;
 	//
-	// node_table:    
+	// node_table:
 	CppAD::vector<dismod_at::node_struct> node_table(1);
 	node_table[0].parent = -1;
 	//
@@ -141,7 +141,7 @@ bool data_like_xam(void)
 	//
 	// parent node, time and age integrantion.
 	vector<double> x(0);
-	for(size_t data_id = 0; data_id < 2; data_id++) 
+	for(size_t data_id = 0; data_id < 2; data_id++)
 	{
 		data_table[data_id].integrand_id = dismod_at::mtother_enum;
 		data_table[data_id].node_id    = 0;
@@ -194,7 +194,7 @@ bool data_like_xam(void)
 	}
 	// pack_info
 	dismod_at::pack_var pack_info(
-		n_integrand, n_child, 
+		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
 	//
@@ -208,7 +208,7 @@ bool data_like_xam(void)
 		{	double age = age_table[ s_info.age_id(i) ];
 			for(j = 0; j < s_info.time_size(); j++)
 			{	double time    = time_table[ s_info.time_id(j) ];
-				size_t index   = info.offset + i * s_info.time_size() + j; 
+				size_t index   = info.offset + i * s_info.time_size() + j;
 				pack_vec[index] = age * time / (age_max*time_max);
 			}
 		}
@@ -237,9 +237,9 @@ bool data_like_xam(void)
 		ok  &= fabs( 1.0 - wres / check ) <= eps;
 		/*
 		if( data_id == 0 )
-			cout << "Debugging" << std::endl; 
-		cout << "wres = " << wres; 
-		cout << ", check = " << check; 
+			cout << "Debugging" << std::endl;
+		cout << "wres = " << wres;
+		cout << ", check = " << check;
 		cout << ", relerr    = " << 1.0 - wres / check  << std::endl;
 		*/
 		// check loglike
@@ -250,21 +250,21 @@ bool data_like_xam(void)
 			break;
 
 			case dismod_at::gaussian_enum:
-			check = - log( delta * sqrt(2.0 * pi) ) - wres * wres / 2.0; 
+			check = - log( delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 			break;
 
 			case dismod_at::laplace_enum:
-			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * fabs(wres); 
+			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * fabs(wres);
 			break;
 
 			case dismod_at::log_gaussian_enum:
 			delta = log(1.0 + delta / (Value(avg) + eta) );
-			check = - log( delta * sqrt(2.0 * pi) ) - wres * wres / 2.0; 
+			check = - log( delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 			break;
 
 			case dismod_at::log_laplace_enum:
 			delta = log(1.0 + delta / (Value(avg) + eta) );
-			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * fabs(wres); 
+			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * fabs(wres);
 			break;
 
 			default:
@@ -277,8 +277,8 @@ bool data_like_xam(void)
 			ok &= fabs( relerr ) <= eps;
 		}
 		/*
-		cout << "loglike = " << loglike; 
-		cout << ", check = " << check; 
+		cout << "loglike = " << loglike;
+		cout << ", check = " << check;
 		if( density_id != dismod_at::uniform_enum )
 		{	Float relerr = 1.0 - loglike / check;
 			cout << ", relerr    = " << relerr;

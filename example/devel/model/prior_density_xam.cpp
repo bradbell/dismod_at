@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -36,23 +36,23 @@ $end
 bool prior_density_xam(void)
 {	bool   ok = true;
 	size_t i, j;
-	using CppAD::vector;	
+	using CppAD::vector;
 	using std::cout;
 	using std::endl;
 	double eps = 100.0 * std::numeric_limits<double>::epsilon() * 100;
 	double inf = std::numeric_limits<double>::infinity();
 	double sqrt_2   = std::sqrt( 2.0 );
 	double sqrt_2pi = std::sqrt( 8.0 * std::atan(1.0) );
-	
+
 
 	// --------------------------------------------------------------------
-	// age_table 
+	// age_table
 	size_t n_age_table = 10;
 	vector<double> age_table(n_age_table);
 	for(i = 0; i < n_age_table; i++)
 		age_table[i] = 100 * i / double(n_age_table - 1);
 	//
-	// time_table 
+	// time_table
 	size_t n_time_table = 5;
 	vector<double> time_table(n_time_table);
 	for(i = 0; i < n_time_table; i++)
@@ -185,7 +185,7 @@ bool prior_density_xam(void)
 	vector<dismod_at::rate_struct>   rate_table(dismod_at::number_rate_enum);
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	if( rate_id == dismod_at::pini_enum )
-		{	// smoothing must have only one age	
+		{	// smoothing must have only one age
 			rate_table[rate_id].parent_smooth_id = smooth_id_1_by_2;
 			rate_table[rate_id].child_smooth_id  = smooth_id_1_by_2;
 		}
@@ -198,7 +198,7 @@ bool prior_density_xam(void)
 	size_t n_integrand = 0;
 	size_t n_child     = 1;
 	dismod_at::pack_var pack_info(
-		n_integrand, n_child, 
+		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
 	// ----------------------- pack_vec -------------------------------------
@@ -225,7 +225,7 @@ bool prior_density_xam(void)
 			{	double age = age_table[ s_info.age_id(i) ];
 				for(j = 0; j < n_time; j++)
 				{	double time = time_table[ s_info.time_id(j) ];
-					size_t index   = info.offset + i * n_time + j; 
+					size_t index   = info.offset + i * n_time + j;
 					pack_vec[index] = age * time / (age_max * time_max);
 				}
 			}
@@ -262,7 +262,7 @@ bool prior_density_xam(void)
 			n_time = s_info.time_size();
 			for(i = 0; i < n_age; i++)
 			{	for(j = 0; j < n_time; j++)
-				{	size_t index   = info.offset + i * n_time + j; 
+				{	size_t index   = info.offset + i * n_time + j;
 					double var     = pack_vec[index];
 					double wres    = (var - mean_v) / std_v;
 					check         -= log(std_v * sqrt_2pi);

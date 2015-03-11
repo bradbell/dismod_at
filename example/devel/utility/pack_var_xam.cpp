@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -84,7 +84,7 @@ bool pack_var_xam(void)
 	//
 	// constructor
 	dismod_at::pack_var pack_info(
-		n_integrand, n_child, 
+		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
 	//
@@ -108,7 +108,7 @@ bool pack_var_xam(void)
 		pack_vec[offset + 1 ] = smooth_id + 1; // dage  multiplier
 		pack_vec[offset + 2 ] = smooth_id + 2; // dtime multiplier
 	}
-	// set rates 
+	// set rates
 	size_t n_rate = dismod_at::number_rate_enum;
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	for(size_t j = 0; j <= n_child;  j++)
@@ -158,7 +158,7 @@ bool pack_var_xam(void)
 		ok &= pack_vec[ offset + 1 ] == smooth_id + 1;
 		ok &= pack_vec[ offset + 2 ] == smooth_id + 2;
 	}
-	// check rates 
+	// check rates
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	for(size_t j = 0; j <= n_child;  j++)
 		{	info = pack_info.rate_info(rate_id, j);

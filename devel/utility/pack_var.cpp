@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -126,7 +126,7 @@ pack_var::pack_var(
 	size_t                               n_child        ,
 	const CppAD::vector<smooth_struct>&  smooth_table   ,
 	const CppAD::vector<mulcov_struct>&  mulcov_table   ,
-	const CppAD::vector<rate_struct>&    rate_table 
+	const CppAD::vector<rate_struct>&    rate_table
 ) :
 n_smooth_       ( smooth_table.size() ) ,
 n_integrand_    ( n_integrand )         ,
@@ -162,7 +162,7 @@ n_child_        ( n_child )
 		}
 	}
 
-	// meas_mean_mulcov_info_ and meas_std_mulcov_info_ 
+	// meas_mean_mulcov_info_ and meas_std_mulcov_info_
 	meas_mean_mulcov_info_.resize( n_integrand );
 	meas_std_mulcov_info_.resize( n_integrand );
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
@@ -175,7 +175,7 @@ n_child_        ( n_child )
 			if( match )
 			{	size_t covariate_id = size_t(
 					mulcov_table[mulcov_id].covariate_id
-				); 
+				);
 				string mulcov_type;
 				CppAD::vector<subvec_info>* info_vec = nullptr;
 				if( mulcov_table[mulcov_id].mulcov_type == meas_mean_enum )
@@ -203,7 +203,7 @@ n_child_        ( n_child )
 				info.covariate_id = covariate_id;
 				info.smooth_id    = smooth_id;
 				info.n_var        = n_age * n_time;
-				info.offset       = offset; 
+				info.offset       = offset;
 				info_vec->push_back(info);
 				//
 				offset           += info.n_var;
@@ -211,7 +211,7 @@ n_child_        ( n_child )
 		}
 	}
 
-	// rate_mean_mulcov_info_ 
+	// rate_mean_mulcov_info_
 	rate_mean_mulcov_info_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	size_t mulcov_id;
@@ -222,8 +222,8 @@ n_child_        ( n_child )
 			if( match )
 			{	size_t covariate_id = size_t(
 					mulcov_table[mulcov_id].covariate_id
-				); 
-				CppAD::vector<subvec_info>& info_vec = 
+				);
+				CppAD::vector<subvec_info>& info_vec =
 					rate_mean_mulcov_info_[rate_id];
 				for(size_t j = 0; j < info_vec.size(); j++)
 				{	if( info_vec[j].covariate_id == covariate_id )
@@ -241,7 +241,7 @@ n_child_        ( n_child )
 				info.covariate_id = covariate_id;
 				info.smooth_id    = smooth_id;
 				info.n_var        = n_age * n_time;
-				info.offset       = offset; 
+				info.offset       = offset;
 				info_vec.push_back(info);
 				//
 				offset           += info.n_var;
@@ -294,7 +294,7 @@ This argument has prototype
 $codei%
 	size_t %smooth_id%
 %$$
-and is the 
+and is the
 $cref/smooth_id/smooth_table/smooth_id/$$.
 
 $subhead offset$$
@@ -353,11 +353,11 @@ $codei%
 %$$
 
 $head rate_id$$
-This argument has prototype 
+This argument has prototype
 $codei%
 	size_t %rate_id%
 %$$
-and it specifies the 
+and it specifies the
 $cref/rate_id/rate_table/rate_id/$$ the rate values.
 
 $head j$$
@@ -377,10 +377,10 @@ $subhead covariate_id$$
 This field is not used or set by $code rate_info$$.
 
 $subhead smooth_id$$
-is the $cref/smooth_id/smooth_table/smooth_id/$$ for the rate. 
+is the $cref/smooth_id/smooth_table/smooth_id/$$ for the rate.
 If $icode%j% == %n_child%$$,
 this smoothing corresponds to the parent rates.
-Otherwise it corresponds to the child rates and is the same 
+Otherwise it corresponds to the child rates and is the same
 for all children.
 
 $subhead n_var$$
@@ -433,15 +433,15 @@ $icode%info% = %pack_info%.meas_std_mulcov_info(%integrand_id%, %j%)
 %$$
 
 $head meas_mean$$
-The functions 
-$code meas_mean_mulcov_n_cov$$ and 
-$code meas_mean_mulcov_info$$ 
+The functions
+$code meas_mean_mulcov_n_cov$$ and
+$code meas_mean_mulcov_info$$
 return information about the measurement mean covariate multipliers.
 
 $head meas_std$$
-The functions 
-$code meas_std_mulcov_n_cov$$ and 
-$code meas_std_mulcov_info$$ 
+The functions
+$code meas_std_mulcov_n_cov$$ and
+$code meas_std_mulcov_info$$
 return information about the measurement standard deviation
 covariate multipliers.
 
@@ -459,11 +459,11 @@ $codei%
 %$$
 
 $head integrand_id$$
-This argument has prototype 
+This argument has prototype
 $codei%
 	size_t %integrand_id%
 %$$
-and it specifies the 
+and it specifies the
 $cref/integrand_id/integrand_table/integrand_id/$$ for the covariate
 multipliers.
 
@@ -471,8 +471,8 @@ $head n_cov$$
 This return value has prototype
 $codei%
 	size_t %n_cov%
-%$$ 
-and is the number of covariate multipliers for the specified 
+%$$
+and is the number of covariate multipliers for the specified
 $icode integrand_id$$.
 This is referred to as $codei%n_cov(%integrand_id%)%$$ below.
 
@@ -511,23 +511,23 @@ See $cref/pack_var Example/pack_var/Example/$$.
 
 $end
 */
-size_t 
+size_t
 pack_var::meas_mean_mulcov_n_cov(size_t integrand_id) const
 {	assert( integrand_id < n_integrand_ );
 	return meas_mean_mulcov_info_[integrand_id].size();
 }
-size_t 
+size_t
 pack_var::meas_std_mulcov_n_cov(size_t integrand_id) const
 {	assert( integrand_id < n_integrand_ );
 	return meas_std_mulcov_info_[integrand_id].size();
 }
 //
-pack_var::subvec_info 
+pack_var::subvec_info
 pack_var::meas_mean_mulcov_info(size_t integrand_id, size_t j) const
 {	assert( integrand_id < n_integrand_ );
 	return meas_mean_mulcov_info_[integrand_id][j];
 }
-pack_var::subvec_info 
+pack_var::subvec_info
 pack_var::meas_std_mulcov_info(size_t integrand_id, size_t j) const
 {	assert( integrand_id < n_integrand_ );
 	return meas_std_mulcov_info_[integrand_id][j];
@@ -569,11 +569,11 @@ $codei%
 %$$
 
 $head rate_id$$
-This argument has prototype 
+This argument has prototype
 $codei%
 	size_t %rate_id%
 %$$
-and it specifies the 
+and it specifies the
 $cref/rate_id/rate_table/rate_id/$$ for the covariate
 multipliers.
 
@@ -581,8 +581,8 @@ $head n_cov$$
 This return value has prototype
 $codei%
 	size_t %n_cov%
-%$$ 
-and is the number of covariate multipliers for the specified 
+%$$
+and is the number of covariate multipliers for the specified
 $icode rate_id$$.
 This is referred to as $codei%n_cov(%rate_id%)%$$ below.
 
@@ -621,13 +621,13 @@ See $cref/pack_var Example/pack_var/Example/$$.
 
 $end
 */
-size_t 
+size_t
 pack_var::rate_mean_mulcov_n_cov(size_t rate_id) const
 {	assert( rate_id < number_rate_enum );
 	return rate_mean_mulcov_info_[rate_id].size();
 }
 //
-pack_var::subvec_info 
+pack_var::subvec_info
 pack_var::rate_mean_mulcov_info(size_t rate_id, size_t j) const
 {	assert( rate_id < number_rate_enum );
 	return rate_mean_mulcov_info_[rate_id][j];

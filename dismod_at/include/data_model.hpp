@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -46,7 +46,7 @@ private:
 	// set by constructor and not changed
 	size_t                       n_child_;
 	CppAD::vector<smooth2ode*>   si2ode_vec_;
-	CppAD::vector<data_ode_info> data_info_; 
+	CppAD::vector<data_ode_info> data_info_;
 public:
 	data_model(
 		size_t                                  parent_node_id  ,
@@ -63,14 +63,14 @@ public:
 	);
 	// destructor must delete the smooth2ode objects pointed to by si2ode_vec_
 	~data_model(void);
-	// compute average for integrands that do not require S or C 
+	// compute average for integrands that do not require S or C
 	template <class Float>
 	Float avg_no_ode(
 		size_t                        data_id  ,
 		const  pack_var&              pack_info ,
 		const  CppAD::vector<Float>&  pack_vec
 	) const;
-	// compute average for integrands that require S or C 
+	// compute average for integrands that require S or C
 	template <class Float>
 	Float avg_yes_ode(
 		size_t                        data_id  ,

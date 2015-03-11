@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -44,8 +44,8 @@ namespace {
 bool avg_no_ode_xam(void)
 {	bool   ok = true;
 	size_t i, j, k;
-	using CppAD::abs;	
-	using CppAD::vector;	
+	using CppAD::abs;
+	using CppAD::vector;
 	using std::cout;
 	typedef CppAD::AD<double> Float;
 	Float eps = CppAD::numeric_limits<Float>::epsilon() * 100;
@@ -53,7 +53,7 @@ bool avg_no_ode_xam(void)
 	// ode_step_size
 	double ode_step_size = 30.0;
 	//
-	// age_table 
+	// age_table
 	// (make sure that ode grid lands on last age table point)
 	double age = 0.0;
 	vector<double> age_table;
@@ -66,7 +66,7 @@ bool avg_no_ode_xam(void)
 	double age_min     = age_table[0];
 	double age_max     = age_table[n_age_table - 1];
 	//
-	// time_table 
+	// time_table
 	// (make sure that ode grid lands on last time table point)
 	double time = 1980.0;
 	vector<double> time_table;
@@ -114,7 +114,7 @@ bool avg_no_ode_xam(void)
 			age_id_tmp[0] = 0;
 		}
 		//
-		vector<size_t> value_prior_id(n_si), 
+		vector<size_t> value_prior_id(n_si),
 			dage_prior_id(n_si), dtime_prior_id(n_si);
 		dismod_at::smooth_info s_info(
 			age_id_tmp, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
@@ -134,12 +134,12 @@ bool avg_no_ode_xam(void)
 	// n_age_ode
 	size_t n_age_ode     =  1;
 	while( age_min + (n_age_ode-1) * ode_step_size < age_max )
-			n_age_ode++; 
+			n_age_ode++;
 	//
 	// n_time_ode
 	size_t n_time_ode     =  1;
 	while( time_min + (n_time_ode-1) * ode_step_size < time_max )
-			n_time_ode++; 
+			n_time_ode++;
 	//
 	// node_table:    0
 	//              1    2
@@ -235,7 +235,7 @@ bool avg_no_ode_xam(void)
 	}
 	// pack_info
 	dismod_at::pack_var pack_info(
-		n_integrand, n_child, 
+		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
 	//
@@ -249,7 +249,7 @@ bool avg_no_ode_xam(void)
 		{	double age = age_table[ s_info.age_id(i) ];
 			for(j = 0; j < s_info.time_size(); j++)
 			{	double time    = time_table[ s_info.time_id(j) ];
-				size_t index   = info.offset + i * s_info.time_size() + j; 
+				size_t index   = info.offset + i * s_info.time_size() + j;
 				if( child_id == n_child )
 					pack_vec[index] = age * time / (age_max*time_max);
 				else
@@ -264,9 +264,9 @@ bool avg_no_ode_xam(void)
 		ok             &= fabs( 1.0 - avg / check ) <= eps;
 		/*
 		if( data_id == 0 )
-			cout << "Debugging" << std::endl; 
-		cout << "avg = " << avg; 
-		cout << ", check = " << check; 
+			cout << "Debugging" << std::endl;
+		cout << "avg = " << avg;
+		cout << ", check = " << check;
 		cout << ", relerr    = " << 1.0 - avg / check  << std::endl;
 		*/
 	}
