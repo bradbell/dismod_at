@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -32,7 +32,8 @@ $codei%
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code CppAD::AD<double>$$
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
 
 $head smooth2ode$$
 This constructs an object that interpolates from 
@@ -297,7 +298,7 @@ CppAD::vector<Float> smooth2ode::interpolate(
 		double c_10  = coefficient_[index].c_10;
 		double c_01  = coefficient_[index].c_01;
 		double c_11  = coefficient_[index].c_11;
-		Float  sum   = 0.0;
+		Float  sum   = Float(0.0);
 		sum      += c_00 * var_si[i_si*n_time_si_ + j_si];
 		if( c_10 != 0.0 )
 			sum += c_10 * var_si[(i_si+1)*n_time_si_ + j_si];
@@ -311,14 +312,15 @@ CppAD::vector<Float> smooth2ode::interpolate(
 }
 
 // instantiation 
-# define DISMOD_AT_INSTANTIATE_SMOOTH2ODE_IMPLEMENT(Float)  \
+# define DISMOD_AT_INSTANTIATE_SMOOTH2ODE(Float)  \
 template CppAD::vector<Float> smooth2ode::interpolate<Float>( \
 	const CppAD::vector<Float>&  var_si    ,                  \
 	const CppAD::vector<size_t>& ode_index                    \
 ) const;
 
-DISMOD_AT_INSTANTIATE_SMOOTH2ODE_IMPLEMENT( double )
-DISMOD_AT_INSTANTIATE_SMOOTH2ODE_IMPLEMENT( CppAD::AD<double> )
+DISMOD_AT_INSTANTIATE_SMOOTH2ODE( double )
+DISMOD_AT_INSTANTIATE_SMOOTH2ODE( CppAD::AD<double> )
+DISMOD_AT_INSTANTIATE_SMOOTH2ODE( CppAD::AD< CppAD::AD<double> > )
 
 } // END DISMOD_AT_NAMESPACE
 

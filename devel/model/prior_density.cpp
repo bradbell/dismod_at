@@ -41,7 +41,8 @@ $cref/p(theta)/fixed_prior/p(theta)/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code CppD::AD<double>$$.
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
 
 $head var_info$$
 This argument has prototype
@@ -156,9 +157,9 @@ namespace {
 		assert ( prior.density_id < number_density_enum );
 
 		density_enum density = density_enum(prior.density_id);
-		Float        mean    = prior.mean;
-		Float        std     = prior.std;
-		Float        eta     = prior.eta;
+		Float        mean    = Float(prior.mean);
+		Float        std     = Float(prior.std);
+		Float        eta     = Float(prior.eta);
 		return residual_density( density, variable, mean, std, eta );
 	}
 
@@ -193,7 +194,7 @@ namespace {
 		// value smoothing
 		for(size_t i = 0; i < n_age; i++)
 		{	for(size_t j = 0; j < n_time; j++)
-			{	Float  var      = var_vec[offset + i * n_time + j];
+			{	Float  var      = Float(var_vec[offset + i * n_time + j]);
 				size_t prior_id           = s_info.value_prior_id(i, j);
 				const prior_struct& prior = prior_table[prior_id];
 				wres_logden               = log_prior_density(prior, var);
@@ -208,7 +209,7 @@ namespace {
 			for(size_t j = 0; j < n_time; j++)
 			{	Float  v0       = var_vec[offset + i * n_time + j];
 				Float  v1       = var_vec[offset + (i+1) * n_time + j];
-				Float  dv_da    = (v1 - v0) / (a1 - a0);
+				Float  dv_da    = Float((v1 - v0) / (a1 - a0));
 				size_t prior_id = s_info.dage_prior_id(i, j);
 				const prior_struct& prior = prior_table[prior_id];
 				wres_logden               = log_prior_density(prior, dv_da);
@@ -224,7 +225,7 @@ namespace {
 			{
 				Float  v0       = var_vec[offset + i * n_time + j];
 				Float  v1       = var_vec[offset + i * n_time + j + 1];
-				Float  dv_dt    = (v1 - v0) / (t1 - t0);
+				Float  dv_dt    = Float((v1 - v0) / (t1 - t0));
 				size_t prior_id = s_info.dtime_prior_id(i, j);
 				const prior_struct& prior = prior_table[prior_id];
 				wres_logden               = log_prior_density(prior, dv_dt);
@@ -267,7 +268,7 @@ prior_density_struct<Float> prior_density(
 		size_t offset = var_info.mulstd_offset(smooth_id);
 
 		// multiplier for value smoothing
-		Float mulstd = var_vec[offset + 0];
+		Float mulstd = Float(var_vec[offset + 0]);
 
 		// prior index for this multilier
 		size_t prior_id           = s_info_vec[smooth_id].mulstd_value();
@@ -392,6 +393,7 @@ prior_density_struct<Float> prior_density(
 // instantiations
 DISMOD_AT_INSTANTIATE_PRIOR_DENSITY(double)
 DISMOD_AT_INSTANTIATE_PRIOR_DENSITY( CppAD::AD<double> )
+DISMOD_AT_INSTANTIATE_PRIOR_DENSITY( CppAD::AD< CppAD::AD<double> > )
 
 } // BEGIN_DISMOD_AT_NAMESPACE
 

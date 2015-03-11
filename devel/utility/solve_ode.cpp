@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -46,7 +46,8 @@ and $icode t_min$$ for the minimum time in $cref time_table$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code CppAD::AD<double>$$
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
 
 $head i_max$$
 This argument has prototype
@@ -213,5 +214,6 @@ void solve_ode(
 // instantiations
 DISMOD_AT_INSTANTIATE_SOLVE_ODE(double)
 DISMOD_AT_INSTANTIATE_SOLVE_ODE( CppAD::AD<double> )
+DISMOD_AT_INSTANTIATE_SOLVE_ODE( CppAD::AD< CppAD::AD<double> > )
 
 } // END DISMOD_AT_NAMESPACE

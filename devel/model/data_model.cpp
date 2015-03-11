@@ -44,7 +44,8 @@ and $icode t_min$$ for the minimum time in $cref time_table$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code CppAD::AD<double>$$
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
 
 $head parent_node_id$$
 This argument has prototype
@@ -480,7 +481,8 @@ $codei%
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code CppD::AD<double>$$.
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
 
 $head data_id$$
 This argument has prototype
@@ -706,7 +708,7 @@ Float data_model::avg_no_ode(
 		default:
 		assert( false );
 	}
-	Float sum = 0.0;
+	Float sum = Float(0.0);
 	for(k = 0; k < n_ode; k++)
 		sum += c_ode[k] * var_ode[k];
 	//
@@ -743,7 +745,8 @@ $codei%
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code CppD::AD<double>$$.
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
 
 $head data_id$$
 This argument has prototype
@@ -952,7 +955,7 @@ Float data_model::avg_yes_ode(
 	size_t n_ode_sub = n_age_sub * n_time_sub;
 	CppAD::vector<Float> iota, rho, chi, omega, S_out, C_out;
 	CppAD::vector<Float> integrand_sub( n_ode_sub );
-	Float zero = 0.0;
+	Float zero = Float(0.0);
 	for(k = 0; k < n_ode_sub; k++)
 			integrand_sub[k] = CppAD::nan(zero);
 	for(ell = 0; ell < n_cohort; ell++)
@@ -968,7 +971,7 @@ Float data_model::avg_yes_ode(
 		omega.resize(nk);
 		S_out.resize(0);
 		C_out.resize(0);
-		Float pini   = rate_ode[pini_enum][k_start];
+		Float pini   = Float(rate_ode[pini_enum][k_start]);
 		for(k = 0; k < nk; k++)
 		{	iota[k]  = rate_ode[iota_enum][k_start + k];
 			rho[k]   = rate_ode[rho_enum][k_start + k];
@@ -1016,7 +1019,7 @@ Float data_model::avg_yes_ode(
 		}
 	}
 
-	Float sum = 0.0;
+	Float sum = Float(0.0);
 	for(k = 0; k < n_ode_sub; k++)
 	{	assert( ! CppAD::isnan( integrand_sub[k] ) );
 		sum += c_ode[k] * integrand_sub[k];
@@ -1078,7 +1081,8 @@ $codei%
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code CppD::AD<double>$$.
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
 
 $head data_id$$
 This argument has prototype
@@ -1241,10 +1245,10 @@ residual_density_struct<Float> data_model::data_like(
 		for(k = 0; k < n_ode; k++)
 			meas_cov_ode[k] += var_ode[k] * x_j;
 	}
-	Float mean_effect = 0.0;
+	Float mean_effect = Float(0.0);
 	for(k = 0; k < n_ode; k++)
 		mean_effect += c_ode[k] * exp( - meas_cov_ode[k] );
-	Float adjust  = mean_effect * meas_value;
+	Float adjust  = Float(mean_effect * meas_value);
 
 	// measurement std covaraites effect on the ode subgrid
 	for(k = 0; k < n_ode; k++)
@@ -1266,10 +1270,10 @@ residual_density_struct<Float> data_model::data_like(
 		for(k = 0; k < n_ode; k++)
 			meas_cov_ode[k] += var_ode[k] * x_j;
 	}
-	Float std_effect = 0.0;
+	Float std_effect = Float(0.0);
 	for(k = 0; k < n_ode; k++)
 		std_effect += c_ode[k] * meas_cov_ode[k];
-	Float delta  = mean_effect * sigma;
+	Float delta  = Float(mean_effect * sigma);
 	delta       += std_effect * (adjust + eta);
 	//
 	return residual_density(density, adjust, avg, delta, Float(eta) );
@@ -1297,6 +1301,7 @@ residual_density_struct<Float> data_model::data_like(
 // instantiations
 DISMOD_AT_INSTANTIATE_DATA_MODEL(double)
 DISMOD_AT_INSTANTIATE_DATA_MODEL( CppAD::AD<double> )
+DISMOD_AT_INSTANTIATE_DATA_MODEL( CppAD::AD< CppAD::AD<double> > )
 
 
 } // END DISMOD_AT_NAMESPACE

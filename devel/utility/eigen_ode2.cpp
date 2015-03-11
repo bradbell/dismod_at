@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -46,7 +46,8 @@ and there is at least one non-zero entry in the matrix.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code CppAD::AD<double>$$
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
 
 $head tf$$
 This argument has prototype
@@ -255,25 +256,25 @@ void eigen_ode2(
 	Float yi1 = yi[0], yi2 = yi[1];
 
 	// sqrt root of Float machine epsilon
-	Float eps = sqrt( numeric_limits<Float>::epsilon() );
+	Float eps = Float(sqrt( numeric_limits<Float>::epsilon() ));
 
 	// determine maximum abosolute value in matrix
-	Float norm_b = abs( b0 );
+	Float norm_b = Float(abs( b0 ));
 	for(i = 1; i < 4; i++)
 		norm_b += abs(b[i]);
 
 	// discriminant in the quadratic equation for eigen-values
-	Float disc = (b0 - b3)*(b0 - b3) + 4.0*b1*b2;
+	Float disc = Float((b0 - b3)*(b0 - b3) + 4.0*b1*b2);
 	assert( disc >= 0.0 );
-	Float root_disc = sqrt( disc );
+	Float root_disc = Float(sqrt( disc ));
 
 	// in this case will will use splitting; i.e., approxiamte
 	Float order_1  = tf;
-	Float b_diff   = CondExpGt(abs(b1), abs(b2), b3 - b0, b0 - b3);
+	Float b_diff   = Float(CondExpGt(abs(b1), abs(b2), b3 - b0, b0 - b3));
 	Float order_2  = order_1 * b_diff * tf / 2.0; 
-	Float approx   = order_1 + order_2;
-	Float exact    = (exp( b_diff * tf ) - 1.0) / b_diff;
-	Float term     = CondExpGt(abs(order_2), eps*order_1, exact, approx);
+	Float approx   = Float(order_1 + order_2);
+	Float exact    = Float((exp( b_diff * tf ) - 1.0) / b_diff);
+	Float term     = Float(CondExpGt(abs(order_2), eps*order_1, exact, approx));
 
 	// b[1] = 0: term = { exp[ (b0 - b3)*tf ] - 1 } / (b0 - b3)
 	Float yf1_b1_0 = yi1 * exp( b0 * tf );
@@ -287,17 +288,17 @@ void eigen_ode2(
 	Float yf2_split = CondExpGt(abs(b1), abs(b2), yf2_b2_0, yf2_b1_0);
 
 	// use eigen vectors
-	Float lambda_plus  = ((b0 + b3) + root_disc) / 2.0;
-	Float lambda_minus = ((b0 + b3) - root_disc) / 2.0;
+	Float lambda_plus  = Float(((b0 + b3) + root_disc) / 2.0);
+	Float lambda_minus = Float(((b0 + b3) - root_disc) / 2.0);
 	//
-	Float u_plus       = (lambda_plus  - b0) / b2;
-	Float u_minus      = (lambda_minus - b0) / b2;
+	Float u_plus       = Float((lambda_plus  - b0) / b2);
+	Float u_minus      = Float((lambda_minus - b0) / b2);
 	//
-	Float zi_plus      = yi1 + u_plus  * yi2;
-	Float zi_minus     = yi1 + u_minus * yi2;
+	Float zi_plus      = Float(yi1 + u_plus  * yi2);
+	Float zi_minus     = Float(yi1 + u_minus * yi2);
 	//
-	Float zf_plus      = zi_plus  * exp( lambda_plus  * tf );
-	Float zf_minus     = zi_minus * exp( lambda_minus * tf );
+	Float zf_plus      = Float(zi_plus  * exp( lambda_plus  * tf ));
+	Float zf_minus     = Float(zi_minus * exp( lambda_minus * tf ));
 	//
 	Float yf2_eigen    = (zf_plus - zf_minus) * b2 / root_disc;
  	Float yf1_eigen    = zf_plus - u_plus * yf2_eigen;
@@ -324,5 +325,6 @@ void eigen_ode2(
 // instantiations
 DISMOD_AT_INSTANTIATE_EIGEN_ODE2(double)
 DISMOD_AT_INSTANTIATE_EIGEN_ODE2( CppAD::AD<double> )
+DISMOD_AT_INSTANTIATE_EIGEN_ODE2( CppAD::AD< CppAD::AD<double> > )
 
 } // END DISMOD_AT_NAMESPACE

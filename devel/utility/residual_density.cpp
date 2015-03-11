@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -41,7 +41,8 @@ $cref/log_laplace_enum/model_density/Log-Laplace/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code CppD::AD<double>$$.
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
 
 $head z$$
 This argument has prototype
@@ -201,5 +202,6 @@ residual_density_struct<Float> residual_density(
 // instantiations
 DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY(double)
 DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY( CppAD::AD<double> )
+DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY( CppAD::AD< CppAD::AD<double> > )
 
 } // END DISMOD_AT_NAMESPACE

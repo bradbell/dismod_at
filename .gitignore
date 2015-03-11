@@ -2,6 +2,7 @@
 git_commit.sh
 # temporary file for all purposes
 junk
+junk.*
 # web version of documentation directory
 doc.tgz
 # directories that are automatically created
