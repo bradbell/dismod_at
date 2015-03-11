@@ -29,6 +29,8 @@ $codei%pack_var %pack_info%(
 	%smooth_table%, %mulcov_table%, %rate_table%
 )
 %$$
+$icode%pack_var %pack_copy%(%pack_info%)
+%$$.
 $icode%size%  = %pack_info%.size()
 %$$
 $icode%integrand_size%  = %pack_info%.integrand_size()
@@ -83,6 +85,10 @@ and is the
 $cref/rate_table/get_rate_table/rate_table/$$.
 Only the following fields of this table are used:
 $code parent_smooth_id$$, $code child_smooth_id$$.
+
+$head pack_copy$$
+This object is a copy of the $icode pack_info$$ object
+(and acts the same).
 
 $head size$$
 This function is $code const$$.
@@ -252,6 +258,8 @@ n_child_        ( n_child )
 	// size is final offset
 	size_ = offset;
 };
+
+// use default copy constructor
 
 // size
 size_t pack_var::size(void) const

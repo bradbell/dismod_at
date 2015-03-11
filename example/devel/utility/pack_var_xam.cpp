@@ -224,6 +224,27 @@ bool pack_var_xam(void)
 		}
 	}
 
+	// check copy constructor
+	dismod_at::pack_var pack_copy(pack_info);
+	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	{	size_t n_cov = pack_copy.rate_mean_mulcov_n_cov(rate_id);
+		size_t check = 0;
+		if( rate_id == 3 )
+			check = 1;
+		ok &= n_cov == check;
+		for(size_t j = 0; j < n_cov; j++)
+		{	info   = pack_copy.rate_mean_mulcov_info(rate_id, j);
+			offset = info.offset;
+			n_var  = info.n_var;
+			for(size_t k = 0; k < n_var; k++)
+				ok &= pack_vec[offset + k] == rate_id + 6 + k;
+			size_t smooth_id = info.smooth_id;
+			size_t n_age     = smooth_table[smooth_id].n_age;
+			size_t n_time    = smooth_table[smooth_id].n_time;
+			ok &= n_var == n_age * n_time;
+		}
+	}
+
 	return ok;
 }
 // END C++

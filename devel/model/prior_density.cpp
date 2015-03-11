@@ -19,6 +19,7 @@ $spell
 	std
 	struct
 	fabs
+	var
 $$
 
 $section Compute Prior Density for the Fixed and Random Effects$$
