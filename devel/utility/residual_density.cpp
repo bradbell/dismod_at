@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -88,7 +88,7 @@ $codei%
 %$$
 
 $head Log-Density$$
-The log of the density function (see $cref model_density$$) 
+The log of the density function (see $cref model_density$$)
 is represented by
 $codei%
 	%Float% %logden_smooth%  = %wres_logden%.logden_smooth
@@ -103,14 +103,14 @@ In the case where the density is uniform,
 both $icode logden_smooth$$ and $icode logden_sub_abs$$ are zero.
 
 $subhead Gaussian$$
-In the case where the density is  
+In the case where the density is
 $cref/Gaussian/model_density/Gaussian/$$ or
 $cref/Log-Gaussian/model_density/Log-Gaussian/$$,
 the log-density is equal to $icode logden_smooth$$ and
 $icode logden_sub_abs$$ is zero.
 
 $subhead Laplace$$
-In the case where the density is  
+In the case where the density is
 $cref/Laplace/model_density/Laplace/$$ or
 $cref/Log-Laplace/model_density/Log-Laplace/$$ likelihoods,
 the log-density is equal to
@@ -130,11 +130,11 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 template <class Float>
 residual_density_struct<Float> residual_density(
 	density_enum density ,
-	const Float& z       , 
-	const Float& mu      , 
+	const Float& z       ,
+	const Float& mu      ,
 	const Float& delta   ,
 	const Float& eta     )
-{ 
+{
 	Float wres, sigma;
 	switch( density )
 	{
@@ -147,7 +147,7 @@ residual_density_struct<Float> residual_density(
 
 		case log_gaussian_enum:
 		case log_laplace_enum:
-		sigma = log( 1.0 + delta / (mu + eta) ); 
+		sigma = log( 1.0 + delta / (mu + eta) );
 		wres  = ( log( z + eta ) - log( mu + eta ) ) / sigma;
 		break;
 
@@ -168,7 +168,7 @@ residual_density_struct<Float> residual_density(
 			logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres/ 2.0;
 			logden_sub_abs = 0.0;
 		}
-		break;  
+		break;
 
 		case laplace_enum:
 		case log_laplace_enum:

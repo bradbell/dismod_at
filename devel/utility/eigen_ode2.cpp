@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -28,8 +28,8 @@ $codei%eigen_ode2(%tf%, %b%, %yi%, %yf%)
 %$$
 
 $head Purpose$$
-Given $latex y( 0 ) \in \B{R}^2$$, 
-$latex B \in \B{R}^{2 \times 2}$$, 
+Given $latex y( 0 ) \in \B{R}^2$$,
+$latex B \in \B{R}^{2 \times 2}$$,
 and $latex t_f \in \B{R}_+$$,
 this routine uses the eigen vectors of $latex B$$ to solve for
 $latex y( t_f )$$ where
@@ -37,7 +37,7 @@ $latex \[
 	y' (t) = B y(t)
 \]$$
 We restrict our attention to the case where the off-diagonal elements
-of $latex  B$$ have the same sign; i.e. 
+of $latex  B$$ have the same sign; i.e.
 $latex \[
 	B_{1,2} B_{2,1} \geq 0
 \] $$
@@ -62,16 +62,16 @@ $codei%
 	const CppAD::vector<%Float%>& %b%
 %$$
 and size four.
-It specifies the matrix $latex B$$ 
+It specifies the matrix $latex B$$
 in row-major order; i.e.,
 $latex \[
 B
-= 
+=
 \left( \begin{array}{cc}
 	B_{1,1}  & B_{1,2} \\
 	B_{2,1}  & B_{2,1}
 \end{array} \right)
-= 
+=
 \left( \begin{array}{cc}
 	b_0  & b_1 \\
 	b_2  & b_3
@@ -97,7 +97,7 @@ $codei%
 %$$
 and size two.
 The input value of its elements does not matter.
-Upon return 
+Upon return
 $pre
 	$$
 $icode%yf%[0]%$$ $latex = y_1 ( t_f )$$,
@@ -106,13 +106,13 @@ $icode%yf%[1]%$$ $latex = y_2 ( t_f )$$.
 $head Method$$
 
 $subhead Eigenvalues$$
-A value $latex \lambda$$ 
+A value $latex \lambda$$
 is an eigen value of $latex B$$ if and only if:
 $latex \[
 \begin{array}{rcl}
-0 & = & ( b_0 - \lambda ) ( b_3 - \lambda )  - b_1 b_2 
+0 & = & ( b_0 - \lambda ) ( b_3 - \lambda )  - b_1 b_2
 \\
-0 & = & \lambda^2 - (b_0 + b_3) \lambda + b_0 b_3 - b_1 b_2 
+0 & = & \lambda^2 - (b_0 + b_3) \lambda + b_0 b_3 - b_1 b_2
 \\
 \lambda & = &  \frac{
 	(b_0 + b_3) \pm \sqrt{ (b_0 + b_3)^2 - 4 b_0 b_3 + 4 b_1 b_2 }
@@ -125,19 +125,19 @@ $latex \[
 \] $$
 
 $subhead Splitting Case$$
-Consider the case where one of the off diagonal elements is zero; 
+Consider the case where one of the off diagonal elements is zero;
 e.g. $latex b_1 = 0$$.
 It follows that
 $latex \[
 \begin{array}{rcl}
-y_1 ( t )   & = & y_1 ( 0 ) \exp ( b_0 t ) 
+y_1 ( t )   & = & y_1 ( 0 ) \exp ( b_0 t )
 \\
 y_2 ' ( t ) & = & b_3 y_2 (t) + b_2 y_1 ( t )
 \\
 y_2 (t)     & = & y_2 ( 0 ) \exp ( b_3 t ) +
 	\int_0^t \exp [ b_3 ( t - s ) ] b_2 y_1 (s) \B{d} s
 \\
-y_2 (t)     & = & y_2 ( 0 ) \exp ( b_3 t ) + 
+y_2 (t)     & = & y_2 ( 0 ) \exp ( b_3 t ) +
 	b_2 y_1 ( 0 ) \int_0^t \exp [ b_3 ( t - s ) + b_0 s  ] \B{d} s
 \\
 y_2 (t)     & = & y_2 ( 0 ) \exp ( b_3 t ) +
@@ -146,7 +146,7 @@ y_2 (t)     & = & y_2 ( 0 ) \exp ( b_3 t ) +
 \] $$
 In the case where $latex b_0 = b_3$$, we have
 $latex \[
-y_2 (t) = \exp ( b_3 t ) [ y_2 ( 0 ) + b_2 y_1 ( 0 ) t ] 
+y_2 (t) = \exp ( b_3 t ) [ y_2 ( 0 ) + b_2 y_1 ( 0 ) t ]
 \] $$
 In the case where $latex b_0 \neq b_3$$, we have
 $latex \[
@@ -159,7 +159,7 @@ $subhead Eigenvector$$
 Without loss of generality we assume that $latex | b_2 | > | b_1 | > 0$$.
 If this is not the case, switch to components of $latex y(t)$$
 and makes the corresponding changes to $latex B$$, and it will be the case.
-We can express an arbitrary left eigenvector of $latex B$$ 
+We can express an arbitrary left eigenvector of $latex B$$
 as $latex (1, u)$$ where $latex u \in \B{R}$$,
 $latex \[
 \begin{array}{rcl}
@@ -175,7 +175,7 @@ $latex \[
 =
 [ 1 \; , \; ( \lambda - b_0 ) / b_2  ] \; A
 \] $$
-where 
+where
 $latex \[
 \lambda =  \frac{
 	(b_0 + b_3) \pm \sqrt{ (b_0 - b_3)^2 + 4 b_1 b_2 }
@@ -189,7 +189,7 @@ $latex \[
 \begin{array}{rcl}
 	u_\pm & = & ( \lambda_\pm - b_0 ) / b_1
 	\\
-	z_\pm (t) & = & y_1 (t) + u_\pm y_2 (t) 
+	z_\pm (t) & = & y_1 (t) + u_\pm y_2 (t)
 \end{array}
 \] $$
 It follows that
@@ -197,8 +197,8 @@ $latex \[
 \begin{array}{rcl}
 z_\pm (t) & = &  (1, u_\pm ) y(t)
 \\
-z_\pm ' (t) 
-& = &  (1, u_\pm ) y'(t) =  (1, u_\pm ) A y (t) = \lambda_\pm z(t) 
+z_\pm ' (t)
+& = &  (1, u_\pm ) y'(t) =  (1, u_\pm ) A y (t) = \lambda_\pm z(t)
 \\
 z_\pm (t) & = & z_\pm (0) \exp( \lambda_\pm t )
 \end{array}
@@ -225,18 +225,18 @@ The file $cref eigen_ode2_xam.cpp$$ contains
 and example and test of $code eigen_ode2$$.
 It returns true for success and false for failure.
 
-$end 
+$end
 ---------------------------------------------------------------------------
 */
-# include <cppad/cppad.hpp> 
+# include <cppad/cppad.hpp>
 # include <dismod_at/include/eigen_ode2.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 template <class Float>
 void eigen_ode2(
-	const Float&                 tf  , 
-	const CppAD::vector<Float>&  b   , 
+	const Float&                 tf  ,
+	const CppAD::vector<Float>&  b   ,
 	const CppAD::vector<Float>&  yi  ,
 	      CppAD::vector<Float>&  yf  )
 {	using CppAD::abs;
@@ -271,7 +271,7 @@ void eigen_ode2(
 	// in this case will will use splitting; i.e., approxiamte
 	Float order_1  = tf;
 	Float b_diff   = Float(CondExpGt(abs(b1), abs(b2), b3 - b0, b0 - b3));
-	Float order_2  = order_1 * b_diff * tf / 2.0; 
+	Float order_2  = order_1 * b_diff * tf / 2.0;
 	Float approx   = Float(order_1 + order_2);
 	Float exact    = Float((exp( b_diff * tf ) - 1.0) / b_diff);
 	Float term     = Float(CondExpGt(abs(order_2), eps*order_1, exact, approx));

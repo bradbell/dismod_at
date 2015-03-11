@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -21,20 +21,20 @@ $section Solving the Dismod Ordinary Differential Equation$$.
 
 $head Syntax$$
 $codei%solve_ode(
-	%i_max%     , 
-	%j_max%     , 
-	%step_size% , 
-	%pini%      , 
-	%iota%      , 
-	%rho%       , 
-	%chi%       , 
-	%omega%     , 
-	%S_out%     , 
+	%i_max%     ,
+	%j_max%     ,
+	%step_size% ,
+	%pini%      ,
+	%iota%      ,
+	%rho%       ,
+	%chi%       ,
+	%omega%     ,
+	%S_out%     ,
 	%C_out%
 )%$$
 
 $head Purpose$$
-This routine determines the value of $latex C(a,t)$$ 
+This routine determines the value of $latex C(a,t)$$
 and $latex S(a, t)$$ that solve the dismod
 $cref/differential equation/avg_integrand/Differential Equation/$$
 for a subset of the $cref/ode grid/glossary/Ode Grid/$$ corresponding
@@ -54,7 +54,7 @@ This argument has prototype
 $codei%
 	size_t %i_max%
 %$$
-It is the maximum 
+It is the maximum
 $cref/ode age grid/glossary/Ode Grid/Age, a_i/$$ index for this cohort.
 
 $head j_max$$
@@ -62,7 +62,7 @@ This argument has prototype
 $codei%
 	size_t %j_max%
 %$$
-It is the maximum 
+It is the maximum
 $cref/ode time grid/glossary/Ode Grid/Time, t_j/$$ index for this cohort.
 
 $head step_size$$
@@ -82,7 +82,7 @@ and is the initial prevalence for this cohort; i.e.
 $cref/p_0/avg_integrand/Rate Functions/p_0/$$ for this cohort.
 
 $head rate$$
-For $icode rate$$ equal to 
+For $icode rate$$ equal to
 $icode iota$$, $icode rho$$, $icode chi$$ and $icode omega$$,
 this argument has prototype
 $codei%
@@ -90,7 +90,7 @@ $codei%
 %$$
 and size $icode%i_max%+1%$$.
 For $icode%k% = 0 , %...%, %i_max%$$,
-$codei% 
+$codei%
 	%rate%[ %k% ]
 %$$
 is the value of the corresponding rate at age
@@ -111,7 +111,7 @@ $codei%
 and their input sizes are zero.
 Upon return they have size is $icode%i_max% + 1%$$ and
 for $icode%k% = 0 , %...%, %i_max%$$,
-$codei% 
+$codei%
 	%S_out%[ %k% ]  ,  %C_out%[ %k% ]
 %$$
 is the value of $latex S(a,t)$$ and $latex C(a,t)$$
@@ -163,7 +163,7 @@ void solve_ode(
 	S_out.resize( i_max+1 );
 	C_out.resize( i_max+1 );
 
-	// set S and C at initial age 
+	// set S and C at initial age
 	C_out[0] = pini;
 	S_out[0] = 1.0 - pini;
 
@@ -174,7 +174,7 @@ void solve_ode(
 	b_previous[2] = + iota[0];
 	b_previous[3] = - ( rho[0] + chi[0] + omega[0] );
 	for(size_t k = 0; k < i_max; k++)
-	{	
+	{
 		yi[0]         = S_out[k];
 		yi[1]         = C_out[k];
 		//

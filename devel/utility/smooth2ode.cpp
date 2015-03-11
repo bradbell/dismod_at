@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -24,7 +24,7 @@ $section Interpolation from Smoothing to Ode Grid$$
 
 $head Syntax$$
 $codei%smooth2ode %si2ode%(
-	%n_age_ode%, %n_time_ode%, %ode_step_size% , %age_table%, %time_table%, 
+	%n_age_ode%, %n_time_ode%, %ode_step_size% , %age_table%, %time_table%,
 	%s_info%
 )%$$
 $codei%
@@ -36,7 +36,7 @@ $code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
 where $code AD$$ is $code CppAD::AD$$.
 
 $head smooth2ode$$
-This constructs an object that interpolates from 
+This constructs an object that interpolates from
 the specified smoothing grid to the ode grid.
 
 $subhead n_age_ode$$
@@ -87,11 +87,11 @@ $codei%
 	%n_age_si%       = %s_info%.age_size()
 	%n_time_si%      = %s_info%.time_size()
 %$$
-The only other $icode s_info$$ functions that are used are used by 
+The only other $icode s_info$$ functions that are used are used by
 $code smooth2ode$$ are: $icode%s_info%.age_id%$$ and $icode%s_info%.time_id%$$,
 
 $head interpolate$$
-This is a $code const$$ function 
+This is a $code const$$ function
 that interpolates from the smoothing grid to the ode grid.
 
 $subhead var_si$$
@@ -107,8 +107,8 @@ $codei%
 %$$
 is the value of the variable (being interpolated) at
 $codei%
-	%age%  = %age_table%[  %s_info%.age_id(%i_si%) ] 
-	%time% = %time_table%[ %s_info%.time_id(%j_si%) ] 
+	%age%  = %age_table%[  %s_info%.age_id(%i_si%) ]
+	%time% = %time_table%[ %s_info%.time_id(%j_si%) ]
 %$$
 
 $subhead ode_index$$
@@ -164,13 +164,13 @@ smooth2ode::smooth2ode(
 	const CppAD::vector<double>&                age_table     ,
 	const CppAD::vector<double>&                time_table    ,
 	const smooth_info&                          s_info        )
-: 
+:
 n_age_ode_       (n_age_ode)             ,
 n_time_ode_      (n_time_ode)            ,
 ode_step_size_   (ode_step_size)         ,
 n_age_si_        ( s_info.age_size() )   ,
 n_time_si_       ( s_info.time_size() )
-{	size_t i, j;	
+{	size_t i, j;
 	//
 # ifndef NDEBUG
 	double age_min = age_table[0];
@@ -203,7 +203,7 @@ n_time_si_       ( s_info.time_size() )
 		else
 		{	assert( s_info.age_size() > 1 );
 			while( age < age_table[ s_info.age_id(i_si) ] )
-			{	assert( 0 < i_si ); 
+			{	assert( 0 < i_si );
 				i_si--;
 			}
 			while( age_table[ s_info.age_id(i_si+1) ] < age )
@@ -211,7 +211,7 @@ n_time_si_       ( s_info.time_size() )
 				assert( i_si+1 < s_info.age_size() );
 			}
 		}
-		bool two_age   = (age_min_si < age) & ( age < age_max_si); 
+		bool two_age   = (age_min_si < age) & ( age < age_max_si);
 		//
 		for(j = 0; j < n_time_ode; j++)
 		{	// ode grid information
@@ -224,7 +224,7 @@ n_time_si_       ( s_info.time_size() )
 			else
 			{	assert( s_info.time_size() > 1 );
 				while( time < time_table[ s_info.time_id(j_si) ] )
-				{	assert( 0 < j_si ); 
+				{	assert( 0 < j_si );
 					j_si--;
 				}
 				while( time_table[ s_info.time_id(j_si+1) ] < time )
@@ -232,7 +232,7 @@ n_time_si_       ( s_info.time_size() )
 					assert( j_si+1 < s_info.time_size() );
 				}
 			}
-			bool two_time   = (time_min_si < time) & ( time < time_max_si); 
+			bool two_time   = (time_min_si < time) & ( time < time_max_si);
 
 			// coefficient index information
 			size_t index = i * n_time_ode + j;
@@ -285,7 +285,7 @@ n_time_si_       ( s_info.time_size() )
 
 template <class Float>
 CppAD::vector<Float> smooth2ode::interpolate(
-	const CppAD::vector<Float>&  var_si    , 
+	const CppAD::vector<Float>&  var_si    ,
 	const CppAD::vector<size_t>& ode_index ) const
 {	assert( var_si.size() == n_age_si_ * n_time_si_ );
 	//
@@ -311,7 +311,7 @@ CppAD::vector<Float> smooth2ode::interpolate(
 	return var_ode;
 }
 
-// instantiation 
+// instantiation
 # define DISMOD_AT_INSTANTIATE_SMOOTH2ODE(Float)  \
 template CppAD::vector<Float> smooth2ode::interpolate<Float>( \
 	const CppAD::vector<Float>&  var_si    ,                  \
