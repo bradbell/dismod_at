@@ -38,7 +38,7 @@ $codei%joint_like %joint%(
 	%w_info_vec%,
 	%s_info_vec%,
 	// arguments to prior_density that are not in data_model constructor
-	%var_info%,
+	%pack_info%,
 	%prior_table%,
 )%$$
 
@@ -148,10 +148,10 @@ For each $icode%s_info_vec%[%smooth_id%]%$$ object,
 only the following functions are used:
 $code age_size$$, $code time_size$$, $code age_id$$, $code time_id$$.
 
-$head var_info$$
+$head pack_info$$
 This argument has prototype
 $codei%
-	const pack_var& %var_info%
+	const pack_var& %pack_info%
 %$$
 and is the $cref pack_var$$ information corresponding to corresponding
 to this problem.
@@ -188,7 +188,7 @@ joint_like::joint_like(
 	const CppAD::vector<data_struct>&      data_table      ,
 	const CppAD::vector<weight_info>&      w_info_vec      ,
 	const CppAD::vector<smooth_info>&      s_info_vec      ,
-	const pack_var&                        var_info        ,
+	const pack_var&                        pack_info        ,
 	const CppAD::vector<prior_struct>&     prior_table     )
 :
 dm_(

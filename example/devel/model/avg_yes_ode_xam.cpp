@@ -185,31 +185,31 @@ bool avg_yes_ode_xam(void)
 		rate_table[rate_id].parent_smooth_id = smooth_id;
 		rate_table[rate_id].child_smooth_id = smooth_id;
 	}
-	// var_info
-	dismod_at::pack_var var_info(
+	// pack_info
+	dismod_at::pack_var pack_info(
 		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
 	//
-	// var_vec
+	// pack_vec
 	double beta_parent   = 0.01;
 	double random_effect = log(2.0);
 	double beta          = beta_parent * exp( random_effect );
-	vector<Float> var_vec( var_info.size() );
+	vector<Float> pack_vec( pack_info.size() );
 	dismod_at::pack_var::subvec_info info;
 	size_t n_rate = dismod_at::number_rate_enum;
 	for(size_t child_id = 0; child_id <= n_child; child_id++)
 	{	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-		{	info = var_info.rate_info(rate_id, child_id);
+		{	info = pack_info.rate_info(rate_id, child_id);
 			for(k = 0; k < info.n_var; k++)
 			{	if( rate_id == size_t(dismod_at::iota_enum) )
 				{	if( child_id == n_child )
-						var_vec[info.offset + k] = beta_parent;
+						pack_vec[info.offset + k] = beta_parent;
 					else
-						var_vec[info.offset + k] = random_effect;
+						pack_vec[info.offset + k] = random_effect;
 				}
 				else
-					var_vec[info.offset + k] = 0.00;
+					pack_vec[info.offset + k] = 0.00;
 			}
 		}
 	}
@@ -219,7 +219,7 @@ bool avg_yes_ode_xam(void)
 	*/
 	using CppAD::exp;
 	data_id = 0;
-	Float avg = dm.avg_yes_ode(data_id, var_info, var_vec);
+	Float avg = dm.avg_yes_ode(data_id, pack_info, pack_vec);
 	double b       = data_table[data_id].age_lower;
 	double c       = data_table[data_id].age_upper;
 	double check   = c - b + ( exp(-beta * c) - exp(-beta * b) ) / beta;

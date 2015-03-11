@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin prior_density$$
 $spell
 	logden
-	var_vec
+	pack_vec
 	CppAD
 	const
 	subvectors
@@ -25,7 +25,7 @@ $section Compute Prior Density for the Fixed and Random Effects$$
 
 $head Syntax$$
 $icode%logden% = prior_density(
-	%var_info%, %var_vec%,
+	%pack_info%, %pack_vec%,
 	%age_table%, %time_table%, %prior_table%, %s_info_vec%
 )%$$
 
@@ -44,22 +44,22 @@ The type $icode Float$$ must be one of the following:
 $code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
 where $code AD$$ is $code CppAD::AD$$.
 
-$head var_info$$
+$head pack_info$$
 This argument has prototype
 $codei%
-	const pack_var& %var_info%
+	const pack_var& %pack_info%
 %$$
 and is the $cref pack_var$$ information corresponding to
-$icode var_vec$$.
+$icode pack_vec$$.
 
-$head var_vec$$
+$head pack_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<%Float%>& %var_vec%
+	const CppAD::vector<%Float%>& %pack_vec%
 %$$
 and is a vector of values for all of the
 $cref/model variables/model_variable/$$.
-Only the following subvectors of $icode var_vec$$ are used:
+Only the following subvectors of $icode pack_vec$$ are used:
 $cref pack_var_rate$$,
 $cref pack_var_rate_mulcov$$.
 
@@ -113,7 +113,7 @@ $codei%
 %$$
 The value $icode smooth$$ and components of $icode logden_sub_abs$$
 are infinitely differentiable with
-respect to the model variables $cref/var_vec/prior_density/var_vec/$$;
+respect to the model variables $cref/pack_vec/prior_density/pack_vec/$$;
 i.e., smooth.
 The log of the prior density for all the
 $cref/model_variables/model_variable/$$ is
@@ -180,7 +180,7 @@ namespace {
 	void log_prior_density_on_grid(
 		prior_density_struct<Float>&           logden          ,
 		size_t                                 offset          ,
-		const CppAD::vector<Float>&            var_vec         ,
+		const CppAD::vector<Float>&            pack_vec         ,
 		const CppAD::vector<double>&           age_table       ,
 		const CppAD::vector<double>&           time_table      ,
 		const CppAD::vector<prior_struct>&     prior_table     ,
@@ -194,7 +194,7 @@ namespace {
 		// value smoothing
 		for(size_t i = 0; i < n_age; i++)
 		{	for(size_t j = 0; j < n_time; j++)
-			{	Float  var      = Float(var_vec[offset + i * n_time + j]);
+			{	Float  var      = Float(pack_vec[offset + i * n_time + j]);
 				size_t prior_id           = s_info.value_prior_id(i, j);
 				const prior_struct& prior = prior_table[prior_id];
 				wres_logden               = log_prior_density(prior, var);
@@ -207,8 +207,8 @@ namespace {
 			double a1 = age_table[ s_info.age_id(i+1) ];
 			assert( a1 > a0 );
 			for(size_t j = 0; j < n_time; j++)
-			{	Float  v0       = var_vec[offset + i * n_time + j];
-				Float  v1       = var_vec[offset + (i+1) * n_time + j];
+			{	Float  v0       = pack_vec[offset + i * n_time + j];
+				Float  v1       = pack_vec[offset + (i+1) * n_time + j];
 				Float  dv_da    = Float((v1 - v0) / (a1 - a0));
 				size_t prior_id = s_info.dage_prior_id(i, j);
 				const prior_struct& prior = prior_table[prior_id];
@@ -223,8 +223,8 @@ namespace {
 			assert( t1 > t0 );
 			for(size_t i = 0; i < n_age; i++)
 			{
-				Float  v0       = var_vec[offset + i * n_time + j];
-				Float  v1       = var_vec[offset + i * n_time + j + 1];
+				Float  v0       = pack_vec[offset + i * n_time + j];
+				Float  v1       = pack_vec[offset + i * n_time + j + 1];
 				Float  dv_dt    = Float((v1 - v0) / (t1 - t0));
 				size_t prior_id = s_info.dtime_prior_id(i, j);
 				const prior_struct& prior = prior_table[prior_id];
@@ -244,8 +244,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // prior_density
 template <class Float>
 prior_density_struct<Float> prior_density(
-	const pack_var&                        var_info        ,
-	const CppAD::vector<Float>&            var_vec         ,
+	const pack_var&                        pack_info        ,
+	const CppAD::vector<Float>&            pack_vec         ,
 	const CppAD::vector<double>&           age_table       ,
 	const CppAD::vector<double>&           time_table      ,
 	const CppAD::vector<prior_struct>&     prior_table     ,
@@ -265,10 +265,10 @@ prior_density_struct<Float> prior_density(
 	// smoothing multipliers
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	// offset for this smoothing
-		size_t offset = var_info.mulstd_offset(smooth_id);
+		size_t offset = pack_info.mulstd_offset(smooth_id);
 
 		// multiplier for value smoothing
-		Float mulstd = Float(var_vec[offset + 0]);
+		Float mulstd = Float(pack_vec[offset + 0]);
 
 		// prior index for this multilier
 		size_t prior_id           = s_info_vec[smooth_id].mulstd_value();
@@ -279,14 +279,14 @@ prior_density_struct<Float> prior_density(
 		add_to_logden(logden, prior->density_id, wres_logden);
 
 		// add multiplier for age difference smoothing
-		mulstd              = var_vec[offset + 1];
+		mulstd              = pack_vec[offset + 1];
 		prior_id            = s_info_vec[smooth_id].mulstd_dage();
 		prior               = &prior_table[prior_id];
 		wres_logden         = log_prior_density(*prior, mulstd);
 		add_to_logden(logden, prior->density_id, wres_logden);
 
 		// multiplier for time difference smoothing
-		mulstd              = var_vec[offset + 2];
+		mulstd              = pack_vec[offset + 2];
 		prior_id            = s_info_vec[smooth_id].mulstd_dtime();
 		prior               = &prior_table[prior_id];
 		wres_logden         = log_prior_density(*prior, mulstd);
@@ -295,11 +295,11 @@ prior_density_struct<Float> prior_density(
 
 	// rates
 	pack_var::subvec_info info;
-	size_t n_child = var_info.child_size();
+	size_t n_child = pack_info.child_size();
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	// for all children and parent
 		for(size_t child = 0; child <= n_child; child++)
-		{	info = var_info.rate_info(rate_id, child);
+		{	info = pack_info.rate_info(rate_id, child);
 			size_t smooth_id          = info.smooth_id;
 			size_t offset             = info.offset;
 			const smooth_info& s_info = s_info_vec[smooth_id];
@@ -307,7 +307,7 @@ prior_density_struct<Float> prior_density(
 			log_prior_density_on_grid(
 				logden      ,
 				offset      ,
-				var_vec     ,
+				pack_vec     ,
 				age_table   ,
 				time_table  ,
 				prior_table ,
@@ -318,9 +318,9 @@ prior_density_struct<Float> prior_density(
 
 	// rate covariate multipliers
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_cov = var_info.rate_mean_mulcov_n_cov( rate_id );
+	{	size_t n_cov = pack_info.rate_mean_mulcov_n_cov( rate_id );
 		for(size_t cov = 0; cov < n_cov; cov++)
-		{	info = var_info.rate_mean_mulcov_info(rate_id, cov);
+		{	info = pack_info.rate_mean_mulcov_info(rate_id, cov);
 			size_t smooth_id          = info.smooth_id;
 			size_t offset             = info.offset;
 			const smooth_info& s_info = s_info_vec[smooth_id];
@@ -328,7 +328,7 @@ prior_density_struct<Float> prior_density(
 			log_prior_density_on_grid(
 				logden      ,
 				offset      ,
-				var_vec     ,
+				pack_vec     ,
 				age_table   ,
 				time_table  ,
 				prior_table ,
@@ -338,11 +338,11 @@ prior_density_struct<Float> prior_density(
 	}
 
 	// measurement covariate multipliers
-	size_t n_integrand = var_info.integrand_size();
+	size_t n_integrand = pack_info.integrand_size();
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = var_info.meas_mean_mulcov_n_cov( integrand_id );
+	{	size_t n_cov = pack_info.meas_mean_mulcov_n_cov( integrand_id );
 		for(size_t cov = 0; cov < n_cov; cov++)
-		{	info = var_info.meas_mean_mulcov_info(integrand_id, cov);
+		{	info = pack_info.meas_mean_mulcov_info(integrand_id, cov);
 			size_t smooth_id          = info.smooth_id;
 			size_t offset             = info.offset;
 			const smooth_info& s_info = s_info_vec[smooth_id];
@@ -350,16 +350,16 @@ prior_density_struct<Float> prior_density(
 			log_prior_density_on_grid(
 				logden      ,
 				offset      ,
-				var_vec     ,
+				pack_vec     ,
 				age_table   ,
 				time_table  ,
 				prior_table ,
 				s_info
 			);
 		}
-		n_cov = var_info.meas_std_mulcov_n_cov( integrand_id );
+		n_cov = pack_info.meas_std_mulcov_n_cov( integrand_id );
 		for(size_t cov = 0; cov < n_cov; cov++)
-		{	info = var_info.meas_std_mulcov_info(integrand_id, cov);
+		{	info = pack_info.meas_std_mulcov_info(integrand_id, cov);
 			size_t smooth_id          = info.smooth_id;
 			size_t offset             = info.offset;
 			const smooth_info& s_info = s_info_vec[smooth_id];
@@ -367,7 +367,7 @@ prior_density_struct<Float> prior_density(
 			log_prior_density_on_grid(
 				logden      ,
 				offset      ,
-				var_vec     ,
+				pack_vec     ,
 				age_table   ,
 				time_table  ,
 				prior_table ,
@@ -382,8 +382,8 @@ prior_density_struct<Float> prior_density(
 # define DISMOD_AT_INSTANTIATE_PRIOR_DENSITY(Float)          \
 	template                                                 \
 	prior_density_struct<Float> prior_density<Float>(        \
-		const pack_var&                        var_info    , \
-		const CppAD::vector<Float>&            var_vec     , \
+		const pack_var&                        pack_info    , \
+		const CppAD::vector<Float>&            pack_vec     , \
 		const CppAD::vector<double>&           age_table   , \
 		const CppAD::vector<double>&           time_table  , \
 		const CppAD::vector<prior_struct>&     prior_table , \

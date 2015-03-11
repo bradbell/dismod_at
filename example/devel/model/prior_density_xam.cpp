@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -170,7 +170,7 @@ bool prior_density_xam(void)
 			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
 			mulstd_value, mulstd_dage, mulstd_dtime
 	);
-	// ----------------------- var_info --------------------------------
+	// ----------------------- pack_info --------------------------------
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
@@ -194,22 +194,22 @@ bool prior_density_xam(void)
 			rate_table[rate_id].child_smooth_id  = smooth_id_3_by_2;
 		}
 	}
-	// var_info
+	// pack_info
 	size_t n_integrand = 0;
 	size_t n_child     = 1;
-	dismod_at::pack_var var_info(
+	dismod_at::pack_var pack_info(
 		n_integrand, n_child, 
 		smooth_table, mulcov_table, rate_table
 	);
-	// ----------------------- var_vec -------------------------------------
-	vector<double> var_vec( var_info.size() );
+	// ----------------------- pack_vec -------------------------------------
+	vector<double> pack_vec( pack_info.size() );
 	dismod_at::pack_var::subvec_info info;
 	//
 	// mulstd
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
-	{	size_t offset  = var_info.mulstd_offset(smooth_id);
+	{	size_t offset  = pack_info.mulstd_offset(smooth_id);
 		for(i = 0; i < 3; i++)
-			var_vec[offset + i] = 1.0;
+			pack_vec[offset + i] = 1.0;
 	}
 	//
 	// rates
@@ -217,7 +217,7 @@ bool prior_density_xam(void)
 	double time_max = time_table[n_time_table - 1];
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
-		{	info = var_info.rate_info(rate_id, child_id);
+		{	info = pack_info.rate_info(rate_id, child_id);
 			dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 			n_age  = s_info.age_size();
 			n_time = s_info.time_size();
@@ -226,7 +226,7 @@ bool prior_density_xam(void)
 				for(j = 0; j < n_time; j++)
 				{	double time = time_table[ s_info.time_id(j) ];
 					size_t index   = info.offset + i * n_time + j; 
-					var_vec[index] = age * time / (age_max * time_max);
+					pack_vec[index] = age * time / (age_max * time_max);
 				}
 			}
 		}
@@ -238,7 +238,7 @@ bool prior_density_xam(void)
 	// -------------- compute prior density --------------------------------
 	dismod_at::prior_density_struct<double> logden;
 	logden = dismod_at::prior_density(
-		var_info, var_vec,
+		pack_info, pack_vec,
 		age_table, time_table, prior_table, s_info_vec
 	);
 	double total_logden = logden.smooth;
@@ -256,14 +256,14 @@ bool prior_density_xam(void)
 	size_t count_laplace = 0;
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
-		{	info = var_info.rate_info(rate_id, child_id);
+		{	info = pack_info.rate_info(rate_id, child_id);
 			dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 			n_age  = s_info.age_size();
 			n_time = s_info.time_size();
 			for(i = 0; i < n_age; i++)
 			{	for(j = 0; j < n_time; j++)
 				{	size_t index   = info.offset + i * n_time + j; 
-					double var     = var_vec[index];
+					double var     = pack_vec[index];
 					double wres    = (var - mean_v) / std_v;
 					check         -= log(std_v * sqrt_2pi);
 					check         -= wres * wres / 2.0;
@@ -272,7 +272,7 @@ bool prior_density_xam(void)
 						double a1    = age_table[ s_info.age_id(i+1) ];
 						double v0    = var;
 						index        = info.offset + (i+1) * n_time + j;
-						double v1    = var_vec[index];
+						double v1    = pack_vec[index];
 						double dv_da = (v1 - v0) / (a1 - a0);
 						wres         = (dv_da - mean_a) / std_a;
 						check       -= log( std_a * sqrt_2 );
@@ -285,7 +285,7 @@ bool prior_density_xam(void)
 						double v0    = var;
 						double sigma = log(1.0 + std_t / (mean_t + eta_t));
 						index        = info.offset + i * n_time + j + 1;
-						double v1    = var_vec[index];
+						double v1    = pack_vec[index];
 						double dv_dt = (v1 - v0) / (t1 - t0);
 						wres         = log(dv_dt+eta_t) - log(mean_t+ eta_t);
 						wres        /= sigma;

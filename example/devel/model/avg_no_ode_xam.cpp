@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -233,17 +233,17 @@ bool avg_no_ode_xam(void)
 		rate_table[rate_id].parent_smooth_id = smooth_id;
 		rate_table[rate_id].child_smooth_id = smooth_id;
 	}
-	// var_info
-	dismod_at::pack_var var_info(
+	// pack_info
+	dismod_at::pack_var pack_info(
 		n_integrand, n_child, 
 		smooth_table, mulcov_table, rate_table
 	);
 	//
-	// var_vec
-	vector<Float> var_vec( var_info.size() );
+	// pack_vec
+	vector<Float> pack_vec( pack_info.size() );
 	dismod_at::pack_var::subvec_info info;
 	for(size_t child_id = 0; child_id <= n_child; child_id++)
-	{	info = var_info.rate_info(dismod_at::omega_enum, child_id);
+	{	info = pack_info.rate_info(dismod_at::omega_enum, child_id);
 		dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 		for(i = 0; i < s_info.age_size(); i++)
 		{	double age = age_table[ s_info.age_id(i) ];
@@ -251,15 +251,15 @@ bool avg_no_ode_xam(void)
 			{	double time    = time_table[ s_info.time_id(j) ];
 				size_t index   = info.offset + i * s_info.time_size() + j; 
 				if( child_id == n_child )
-					var_vec[index] = age * time / (age_max*time_max);
+					pack_vec[index] = age * time / (age_max*time_max);
 				else
-					var_vec[index] = 0.0;
+					pack_vec[index] = 0.0;
 			}
 		}
 	}
 	// check results
 	for(data_id = 0; data_id < data_table.size(); data_id++)
-	{	Float avg = dm.avg_no_ode(data_id, var_info, var_vec);
+	{	Float avg = dm.avg_no_ode(data_id, pack_info, pack_vec);
 		double check    = check_avg(data_table[data_id]) / (age_max*time_max);
 		ok             &= fabs( 1.0 - avg / check ) <= eps;
 		/*

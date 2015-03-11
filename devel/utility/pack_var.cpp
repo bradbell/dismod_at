@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -24,16 +24,16 @@ $$
 $section Pack Variables: Constructor$$
 
 $head Syntax$$
-$codei%pack_var %var_info%(
+$codei%pack_var %pack_info%(
 	%n_integrand%,  %n_child%,
 	%smooth_table%, %mulcov_table%, %rate_table%
 )
 %$$
-$icode%size%  = %var_info%.size()
+$icode%size%  = %pack_info%.size()
 %$$
-$icode%integrand_size%  = %var_info%.integrand_size()
+$icode%integrand_size%  = %pack_info%.integrand_size()
 %$$
-$icode%child_size%  = %var_info%.child_size()
+$icode%child_size%  = %pack_info%.child_size()
 %$$
 
 $head n_integrand$$
@@ -280,13 +280,13 @@ $$
 $section Pack Variables: Standard Deviations Multipliers$$
 
 $head Syntax$$
-$icode%offset% = %var_info%.mulstd_offset(%smooth_id%)
+$icode%offset% = %pack_info%.mulstd_offset(%smooth_id%)
 %$$
 
-$head var_info$$
+$head pack_info$$
 This object has prototype
 $codei%
-	const pack_var %var_info%
+	const pack_var %pack_info%
 %$$
 
 $head smooth_id$$
@@ -336,7 +336,7 @@ $spell
 $$
 
 $head Syntax$$
-$icode%info% = %var_info%.rate_info(%rate_id%, %j%)
+$icode%info% = %pack_info%.rate_info(%rate_id%, %j%)
 %$$
 
 $head subvec_info$$
@@ -346,10 +346,10 @@ $verbatim%dismod_at/include/pack_var.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
-$head var_info$$
+$head pack_info$$
 This object has prototype
 $codei%
-	const pack_var %var_info%
+	const pack_var %pack_info%
 %$$
 
 $head rate_id$$
@@ -423,13 +423,13 @@ $$
 $section Pack Variables: Measurement Multipliers$$
 
 $head Syntax$$
-$icode%n_cov% = %var_info%.meas_mean_mulcov_n_cov(%integrand_id%)
+$icode%n_cov% = %pack_info%.meas_mean_mulcov_n_cov(%integrand_id%)
 %$$
-$icode%n_cov% = %var_info%.meas_std_mulcov_n_cov(%integrand_id%)
+$icode%n_cov% = %pack_info%.meas_std_mulcov_n_cov(%integrand_id%)
 %$$
-$icode%info% = %var_info%.meas_mean_mulcov_info(%integrand_id%, %j%)
+$icode%info% = %pack_info%.meas_mean_mulcov_info(%integrand_id%, %j%)
 %$$
-$icode%info% = %var_info%.meas_std_mulcov_info(%integrand_id%, %j%)
+$icode%info% = %pack_info%.meas_std_mulcov_info(%integrand_id%, %j%)
 %$$
 
 $head meas_mean$$
@@ -452,10 +452,10 @@ $verbatim%dismod_at/include/pack_var.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
-$head var_info$$
+$head pack_info$$
 This object has prototype
 $codei%
-	const pack_var %var_info%
+	const pack_var %pack_info%
 %$$
 
 $head integrand_id$$
@@ -550,9 +550,9 @@ $$
 $section Pack Variables: Rate Multipliers$$
 
 $head Syntax$$
-$icode%n_cov% = %var_info%.rate_mean_mulcov_n_cov(%rate_id%)
+$icode%n_cov% = %pack_info%.rate_mean_mulcov_n_cov(%rate_id%)
 %$$
-$icode%info% = %var_info%.rate_mean_mulcov_info(%rate_id%, %j%)
+$icode%info% = %pack_info%.rate_mean_mulcov_info(%rate_id%, %j%)
 %$$
 
 $head subvec_info$$
@@ -562,10 +562,10 @@ $verbatim%dismod_at/include/pack_var.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
-$head var_info$$
+$head pack_info$$
 This object has prototype
 $codei%
-	const pack_var %var_info%
+	const pack_var %pack_info%
 %$$
 
 $head rate_id$$

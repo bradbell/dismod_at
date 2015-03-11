@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -67,22 +67,22 @@ public:
 	template <class Float>
 	Float avg_no_ode(
 		size_t                        data_id  ,
-		const  pack_var&              var_info ,
-		const  CppAD::vector<Float>&  var_vec
+		const  pack_var&              pack_info ,
+		const  CppAD::vector<Float>&  pack_vec
 	) const;
 	// compute average for integrands that require S or C 
 	template <class Float>
 	Float avg_yes_ode(
 		size_t                        data_id  ,
-		const  pack_var&              var_info ,
-		const  CppAD::vector<Float>&  var_vec
+		const  pack_var&              pack_info ,
+		const  CppAD::vector<Float>&  pack_vec
 	) const;
 	// compute weighted residual and log-likelihood
 	template <class Float>
 	residual_density_struct<Float> data_like(
 		size_t                        data_id  ,
-		const  pack_var&              var_info ,
-		const  CppAD::vector<Float>&  var_vec  ,
+		const  pack_var&              pack_info ,
+		const  CppAD::vector<Float>&  pack_vec  ,
 		const  Float&                 avg
 	) const;
 };
