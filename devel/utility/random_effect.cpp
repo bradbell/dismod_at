@@ -36,7 +36,7 @@ where $code AD$$ is $code CppAD::AD$$.
 $head Order of Random Effects$$
 The order of the random effects is unspecified, except for the
 fact that $code set_random_effect$$ and $code get_random_effect$$
-are inverses of each other; i.e., if you set the random effects to a 
+are inverses of each other; i.e., if you set the random effects to a
 specific vector, and then do a get, you will get that vector back.
 
 $head pack_info$$

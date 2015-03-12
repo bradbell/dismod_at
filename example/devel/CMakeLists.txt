@@ -3,8 +3,8 @@
 # dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
 #           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
@@ -14,14 +14,14 @@
 SET(CMAKE_BUILD_TYPE DEBUG)
 
 # Program cpp, not installed, and depends on following source files
-ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL 
+ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	example_devel.cpp
 
 	model/avg_no_ode_xam.cpp
 	model/avg_yes_ode_xam.cpp
 	model/data_like_xam.cpp
 	model/prior_density_xam.cpp
-	
+
 	utility/bilinear_interp_xam.cpp
 	utility/child_data_xam.cpp
 	utility/eigen_ode2_xam.cpp
@@ -58,4 +58,4 @@ SET_TARGET_PROPERTIES(
 	example_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
 TARGET_LINK_LIBRARIES(example_devel sqlite3 devel_lib)
-ADD_CUSTOM_TARGET(check_example_devel example_devel DEPENDS example_devel ) 
+ADD_CUSTOM_TARGET(check_example_devel example_devel DEPENDS example_devel )
