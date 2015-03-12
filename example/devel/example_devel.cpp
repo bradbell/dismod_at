@@ -115,7 +115,7 @@ int main(void)
 	RUN(interp_weight_xam);
 	RUN(pack_var_xam);
 	RUN(residual_density_xam);
-	// RUN(random_effect_xam);
+	RUN(random_effect_xam);
 	RUN(smooth2ode_xam);
 	RUN(solve_ode_xam);
 

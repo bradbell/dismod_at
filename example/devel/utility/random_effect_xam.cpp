@@ -28,7 +28,7 @@ $end
 # include <dismod_at/include/random_effect.hpp>
 # include <dismod_at/include/get_rate_table.hpp>
 
-bool random_effect(void)
+bool random_effect_xam(void)
 {	bool ok = true;
 	using CppAD::vector;
 
@@ -56,7 +56,7 @@ bool random_effect(void)
 		rate_table[rate_id].child_smooth_id  = child_smooth_id;
 		size_t n_age  = smooth_table[child_smooth_id].n_age;
 		size_t n_time = smooth_table[child_smooth_id].n_time;
-		n_random_effect += n_age * n_time;
+		n_random_effect += n_child * n_age * n_time;
 	}
 	//
 	// construct pack_info, pack_vec, and subvec_info
@@ -68,7 +68,7 @@ bool random_effect(void)
 	dismod_at::pack_var::subvec_info subvec_info;
 	//
 	// check size_random_effect
-	ok &= n_random_effect != dismod_at::size_random_effect(pack_info);
+	ok &= n_random_effect == dismod_at::size_random_effect(pack_info);
 
 	// set value of random effects in pack_vec
 	size_t random_index = 0;
