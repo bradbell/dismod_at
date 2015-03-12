@@ -74,7 +74,7 @@ $codei%
 	CppAD::vector<%Float%>& %random_vec%
 %$$
 and its size is $icode size_random$$.
-It is a copy of the random effects in $icode pack_vec$$ 
+It is a copy of the random effects in $icode pack_vec$$
 as one contiguous vector in an unspecified order.
 
 
@@ -90,7 +90,7 @@ $codei%
 and its size is $icode%pack_info%.size()%$$.
 It specifies the value for all the $cref/model_variables/model_variable/$$
 in $cref pack_var$$ format.
-The input value of its random effects does not matter.  Upon return, 
+The input value of its random effects does not matter.  Upon return,
 the random effects correspond to the values in $icode random_vec$$.
 
 $subhead random_vec$$
@@ -99,7 +99,7 @@ $codei%
 	const CppAD::vector<%Float%>& %random_vec%
 %$$
 and its size is $icode size_random$$.
-It contains the random effects 
+It contains the random effects
 as one contiguous vector in an unspecified order.
 
 $children%
