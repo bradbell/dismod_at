@@ -16,12 +16,19 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	extern size_t size_random_effect(const pack_var& pack_info);
-
+	//
 	template <class Float>
 	extern void unpack_random_effect(
 		const pack_var&             pack_info  ,
 		const CppAD::vector<Float>& pack_vec   ,
 		CppAD::vector<Float>&       random_vec
+	);
+	//
+	template <class Float>
+	extern void pack_random_effect(
+		const pack_var&             pack_info  ,
+		CppAD::vector<Float>&       pack_vec   ,
+		const CppAD::vector<Float>& random_vec
 	);
 }
 

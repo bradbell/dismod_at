@@ -64,30 +64,31 @@ bool random_effect_xam(void)
 		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
-	CppAD::vector<double> pack_vec( pack_info.size() );
-	dismod_at::pack_var::subvec_info subvec_info;
 	//
 	// check size_random_effect
 	ok &= n_random_effect == dismod_at::size_random_effect(pack_info);
 
-	// set value of random effects in pack_vec
-	size_t random_index = 0;
-	for(size_t rate_id = 0; rate_id < dismod_at::number_rate_enum; rate_id++)
-	{	for(size_t j = 0; j < n_child; j++)
-		{	subvec_info = pack_info.rate_info(rate_id, j);
-			for(size_t k = 0; k < subvec_info.n_var; k++)
-				pack_vec[subvec_info.offset + k] = random_index++;
-		}
-	}
+	// pack_vec
+	CppAD::vector<double> pack_vec( pack_info.size() );
 
-	// copy random effects from pack_vec to randomvec
-	CppAD::vector<double> random_vec( n_random_effect );
+	// random_vec
+	CppAD::vector<double> random_vec(n_random_effect);
+
+	// set value of random effects in pack_vec
+	for(size_t i = 0; i < n_random_effect; i++)
+		random_vec[i] = double(i + 1);
+	dismod_at::pack_random_effect(pack_info, pack_vec, random_vec);
+
+	// clear random_vec 
+	for(size_t i = 0; i < n_random_effect; i++)
+		random_vec[i] = 0.0;
+
+	// get the random effects in pack_var 
 	dismod_at::unpack_random_effect(pack_info, pack_vec, random_vec);
 
 	// check value of random effects
-	// (this order is not specified and so this check may need to change).
 	for(size_t i = 0; i < n_random_effect; i++)
-		ok &= random_vec[i] == i;
+		ok &= random_vec[i] == double(i + 1);
 
 	return ok;
 }
