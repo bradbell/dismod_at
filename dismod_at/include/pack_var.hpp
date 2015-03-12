@@ -1,10 +1,10 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -24,11 +24,11 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 class pack_var {
 public:
 	// BEGIN SUBVEC_INFO
-	typedef struct { 
+	typedef struct {
 		size_t covariate_id;
-		size_t smooth_id; 
-		size_t n_var; 
-		size_t offset; 
+		size_t smooth_id;
+		size_t n_var;
+		size_t offset;
 	} subvec_info;
 	// END SUBVEC_INFO
 private:
@@ -64,7 +64,7 @@ public:
 		size_t                              n_child        ,
 		const CppAD::vector<smooth_struct>& smooth_table   ,
 		const CppAD::vector<mulcov_struct>& mulcov_table   ,
-		const CppAD::vector<rate_struct>&   rate_table 
+		const CppAD::vector<rate_struct>&   rate_table
 	);
 
 	// size of entire packed vector
