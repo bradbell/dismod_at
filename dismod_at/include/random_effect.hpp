@@ -18,7 +18,7 @@ namespace dismod_at {
 	extern size_t size_random_effect(const pack_var& pack_info);
 
 	template <class Float>
-	extern void get_random_effect(
+	extern void unpack_random_effect(
 		const pack_var&             pack_info  ,
 		const CppAD::vector<Float>& pack_vec   ,
 		CppAD::vector<Float>&       random_vec

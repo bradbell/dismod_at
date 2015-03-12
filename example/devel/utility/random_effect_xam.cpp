@@ -82,7 +82,7 @@ bool random_effect_xam(void)
 
 	// copy random effects from pack_vec to randomvec
 	CppAD::vector<double> random_vec( n_random_effect );
-	dismod_at::get_random_effect(pack_info, pack_vec, random_vec);
+	dismod_at::unpack_random_effect(pack_info, pack_vec, random_vec);
 
 	// check value of random effects
 	// (this order is not specified and so this check may need to change).

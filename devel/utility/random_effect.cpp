@@ -23,9 +23,9 @@ $section Setting and Getting the Random Effect Vector$$
 $head Syntax$$
 $icode%size_random% = size_random_effect(%pack_info%)
 %$$
-$codei%set_random_effect(%pack_info%, %pack_vec%, %random_vec%)
+$codei%pack_random_effect(%pack_info%, %pack_vec%, %random_vec%)
 %$$
-$codei%get_random_effect(%pack_info%, %pack_vec%, %random_vec%)
+$codei%unpack_random_effect(%pack_info%, %pack_vec%, %random_vec%)
 %$$
 
 $head Float$$
@@ -35,9 +35,10 @@ where $code AD$$ is $code CppAD::AD$$.
 
 $head Order of Random Effects$$
 The order of the random effects is unspecified, except for the
-fact that $code set_random_effect$$ and $code get_random_effect$$
-are inverses of each other; i.e., if you set the random effects to a
-specific vector, and then do a get, you will get that vector back.
+fact that $code pack_random_effect$$ and $code unpack_random_effect$$
+are inverses of each other; i.e., if you pack the random effects using a
+$icode random_vec$$, and then do a unpack, you will get that 
+$icode random_vec$$ back.
 
 $head pack_info$$
 This argument has prototype
@@ -55,7 +56,7 @@ $codei%
 It is the number of
 $cref/random effects/model_variable/Random Effects, u/$$ in the model.
 
-$head set_random_effect$$
+$head pack_random_effect$$
 This functions copies information from $icode pack_vec$$
 to $icode random_vec$$.
 
@@ -78,7 +79,7 @@ It is a copy of the random effects in $icode pack_vec$$
 as one contiguous vector in an unspecified order.
 
 
-$head get_random_effect$$
+$head unpack_random_effect$$
 This functions copies information from $icode random_vec$$
 to $icode pack_vec$$.
 
@@ -136,7 +137,7 @@ size_t size_random_effect(const pack_var&  pack_info)
 }
 
 template <class Float>
-void get_random_effect(
+void unpack_random_effect(
 	const pack_var&              pack_info  ,
 	const CppAD::vector<Float>&  pack_vec   ,
 	CppAD::vector<Float>&        random_vec )
@@ -161,7 +162,7 @@ void get_random_effect(
 }
 
 # define DISMOD_AT_INSTANTIATE_RANDOM_EFFECT(Float)           \
-	template void get_random_effect(                          \
+	template void unpack_random_effect(                          \
 	const pack_var&              pack_info  ,                 \
 	const CppAD::vector<Float>&  pack_vec   ,                 \
 	CppAD::vector<Float>&        random_vec                   \
