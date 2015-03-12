@@ -79,11 +79,11 @@ bool random_effect_xam(void)
 		random_vec[i] = double(i + 1);
 	dismod_at::pack_random_effect(pack_info, pack_vec, random_vec);
 
-	// clear random_vec 
+	// clear random_vec
 	for(size_t i = 0; i < n_random_effect; i++)
 		random_vec[i] = 0.0;
 
-	// get the random effects in pack_var 
+	// get the random effects in pack_var
 	dismod_at::unpack_random_effect(pack_info, pack_vec, random_vec);
 
 	// check value of random effects

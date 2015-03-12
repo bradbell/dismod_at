@@ -37,7 +37,7 @@ $head Order of Random Effects$$
 The order of the random effects is unspecified, except for the
 fact that $code pack_random_effect$$ and $code unpack_random_effect$$
 are inverses of each other; i.e., if you pack the random effects using a
-$icode random_vec$$, and then do a unpack, you will get that 
+$icode random_vec$$, and then do a unpack, you will get that
 $icode random_vec$$ back.
 
 $head pack_info$$
