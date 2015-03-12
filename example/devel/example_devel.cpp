@@ -44,6 +44,7 @@ extern bool pack_var_xam(void);
 extern bool integrate_1d_xam(void);
 extern bool integrate_2d_xam(void);
 extern bool interp_weight_xam(void);
+extern bool random_effect(void);
 extern bool residual_density_xam(void);
 extern bool smooth2ode_xam(void);
 extern bool solve_ode_xam(void);
@@ -114,6 +115,7 @@ int main(void)
 	RUN(interp_weight_xam);
 	RUN(pack_var_xam);
 	RUN(residual_density_xam);
+	// RUN(random_effect);
 	RUN(smooth2ode_xam);
 	RUN(solve_ode_xam);
 

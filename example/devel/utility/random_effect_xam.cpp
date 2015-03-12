@@ -26,6 +26,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include <dismod_at/include/random_effect.hpp>
+# include <dismod_at/include/get_rate_table.hpp>
 
 bool random_effect(void)
 {	bool ok = true;
@@ -58,14 +59,35 @@ bool random_effect(void)
 		n_random_effect += n_age * n_time;
 	}
 	//
-	// constructor
+	// construct pack_info, pack_vec, and subvec_info
 	dismod_at::pack_var pack_info(
 		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
+	CppAD::vector<double> pack_vec( pack_info.size() );
+	dismod_at::pack_var::subvec_info subvec_info;
 	//
-	// check number of random effects
-	ok &= n_random_effect == size_random_effect(pack_info);
+	// check size_random_effect
+	ok &= n_random_effect != dismod_at::size_random_effect(pack_info);
+
+	// set value of random effects in pack_vec
+	size_t random_index = 0;
+	for(size_t rate_id = 0; rate_id < dismod_at::number_rate_enum; rate_id++)
+	{	for(size_t j = 0; j < n_child; j++)
+		{	subvec_info = pack_info.rate_info(rate_id, j);
+			for(size_t k = 0; k < subvec_info.n_var; k++)
+				pack_vec[subvec_info.offset + k] = random_index++;
+		}
+	}
+
+	// copy random effects from pack_vec to randomvec
+	CppAD::vector<double> random_vec( n_random_effect );
+	dismod_at::get_random_effect(pack_info, pack_vec, random_vec);
+
+	// check value of random effects
+	// (this order is not specified and so this check may need to change).
+	for(size_t i = 0; i < n_random_effect; i++)
+		ok &= random_vec[i] == i;
 
 	return ok;
 }
