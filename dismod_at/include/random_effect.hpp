@@ -8,21 +8,12 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_BILINEAR_INTERP_HPP
-# define DISMOD_AT_BILINEAR_INTERP_HPP
-
-# include <cppad/vector.hpp>
+# ifndef DISMOD_AT_RANDOM_EFFECT_HPP
+# define DISMOD_AT_RANDOM_EFFECT_HPP
+# include <dismod_at/include/pack_var.hpp>
 
 namespace dismod_at {
-		double bilinear_interp(
-			double                         x          ,
-			double                         y          ,
-			const CppAD::vector<double>&   x_grid     ,
-			const CppAD::vector<double>&   y_grid     ,
-			const CppAD::vector<double>&   z_grid     ,
-			size_t&                        i          ,
-			size_t&                        j
-		);
+	extern size_t size_random_effect(const pack_var& pack_info);
 }
 
 # endif
