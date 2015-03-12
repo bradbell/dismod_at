@@ -76,6 +76,9 @@ public:
 	// number of children
 	size_t child_size(void) const;
 
+	// number of smoothings
+	size_t smooth_size(void) const;
+
 	// mulstd
 	size_t mulstd_offset(size_t smooth_id) const;
 

@@ -88,9 +88,10 @@ bool pack_var_xam(void)
 		smooth_table, mulcov_table, rate_table
 	);
 	//
-	// check integrand_size and child_size
+	// check integrand_size, child_size, and smooth_size
 	ok &= n_child == pack_info.child_size();
 	ok &= n_integrand == pack_info.integrand_size();
+	ok &= n_smooth == pack_info.smooth_size();
 	//
 	// packed vector
 	size_t size = pack_info.size();

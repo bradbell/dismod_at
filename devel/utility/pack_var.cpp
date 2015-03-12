@@ -30,12 +30,12 @@ $codei%pack_var %pack_info%(
 )
 %$$
 $icode%pack_var %pack_copy%(%pack_info%)
-%$$.
-$icode%size%  = %pack_info%.size()
+%$$
+$icode%size%            = %pack_info%.size()
 %$$
 $icode%integrand_size%  = %pack_info%.integrand_size()
 %$$
-$icode%child_size%  = %pack_info%.child_size()
+$icode%child_size%      = %pack_info%.child_size()
 %$$
 
 $head n_integrand$$
@@ -114,6 +114,14 @@ $codei%
 	size_t %child_size%
 %$$
 and is the value of $icode n_child$$ in the constructor.
+
+$head smooth_size$$
+This function is $code const$$.
+Its return value has prototype
+$codei%
+	size_t %smooth_size%
+%$$
+and is the value is $icode%smooth_table%.size()%$$ in the constructor.
 
 $head Example$$
 See $cref/pack_var Example/pack_var/Example/$$.
@@ -272,6 +280,10 @@ size_t pack_var::integrand_size(void) const
 // child_size
 size_t pack_var::child_size(void) const
 {	return n_child_; }
+
+// smooth_size
+size_t pack_var::smooth_size(void) const
+{	return n_smooth_; }
 
 /*
 ------------------------------------------------------------------------------
