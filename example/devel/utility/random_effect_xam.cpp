@@ -35,6 +35,9 @@ bool random_effect_xam(void)
 	size_t n_integrand     = 1;
 	size_t n_child         = 2;
 	//
+	// initialize
+	size_t n_random_effect = 0;
+	//
 	size_t n_smooth = 2;
 	vector<dismod_at::smooth_struct> smooth_table(n_smooth);
 	smooth_table[0].n_age  = 1;
@@ -45,7 +48,6 @@ bool random_effect_xam(void)
 	size_t n_mulcov = 0;
 	vector<dismod_at::mulcov_struct> mulcov_table(n_mulcov);
 	//
-	size_t n_random_effect = 0;
 	vector<dismod_at::rate_struct> rate_table(dismod_at::number_rate_enum);
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	size_t parent_smooth_id = 0;

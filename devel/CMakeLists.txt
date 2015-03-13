@@ -16,6 +16,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	utility/bilinear_interp.cpp
 	utility/child_data.cpp
 	utility/eigen_ode2.cpp
+	utility/fixed_effect.cpp
 	utility/integrate_1d.cpp
 	utility/integrate_2d.cpp
 	utility/interp_weight.cpp

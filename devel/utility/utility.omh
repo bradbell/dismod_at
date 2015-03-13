@@ -19,6 +19,7 @@ $childtable%
 	devel/utility/bilinear_interp.cpp
 	%devel/utility/child_data.cpp
 	%devel/utility/eigen_ode2.cpp
+	%devel/utility/fixed_effect.cpp
 	%devel/utility/integrate_1d.cpp
 	%devel/utility/integrate_2d.cpp
 	%devel/utility/interp_weight.cpp

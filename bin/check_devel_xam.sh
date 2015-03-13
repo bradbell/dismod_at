@@ -26,7 +26,7 @@ do
 done
 for dir in $dir_list
 do
-	list=`ls example/devel/$dir`
+	list=`ls example/devel/$dir | sed -e '/^junk$/d'`
 	for file in $list
 	do
 		if ! grep "$dir/$file" example/devel/CMakeLists.txt > /dev/null
@@ -42,3 +42,4 @@ do
 		fi
 	done
 done
+echo 'check_devel_xam.sh: OK'

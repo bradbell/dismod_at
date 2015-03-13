@@ -40,6 +40,7 @@ extern bool prior_density_xam(void);
 extern bool bilinear_interp_xam(void);
 extern bool child_data_xam(void);
 extern bool eigen_ode2_xam(void);
+extern bool fixed_effect_xam(void);
 extern bool pack_var_xam(void);
 extern bool integrate_1d_xam(void);
 extern bool integrate_2d_xam(void);
@@ -110,6 +111,7 @@ int main(void)
 	RUN(bilinear_interp_xam);
 	RUN(child_data_xam);
 	RUN(eigen_ode2_xam);
+	RUN(fixed_effect_xam);
 	RUN(integrate_1d_xam);
 	RUN(integrate_2d_xam);
 	RUN(interp_weight_xam);

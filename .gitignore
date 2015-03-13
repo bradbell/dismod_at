@@ -8,6 +8,8 @@ doc.tgz
 # directories that are automatically created
 build
 doc
+# directories that are used for stashing files
+new
 # vim swap files
 *.swp
 # log files

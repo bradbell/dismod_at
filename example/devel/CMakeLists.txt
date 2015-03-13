@@ -25,6 +25,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/bilinear_interp_xam.cpp
 	utility/child_data_xam.cpp
 	utility/eigen_ode2_xam.cpp
+	utility/fixed_effect_xam.cpp
 	utility/integrate_1d_xam.cpp
 	utility/integrate_2d_xam.cpp
 	utility/interp_weight_xam.cpp
