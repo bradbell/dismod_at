@@ -24,7 +24,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	utility/residual_density.cpp
 	utility/smooth2ode.cpp
 	utility/solve_ode.cpp
-	utility/pack_var.cpp
+	utility/pack_info.cpp
 
 	table/check_child_prior.cpp
 	table/check_pini_n_age.cpp

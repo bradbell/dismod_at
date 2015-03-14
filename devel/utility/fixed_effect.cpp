@@ -23,11 +23,11 @@ $section Setting and Getting the Fixed Effect Vector$$
 $head Under Construction$$
 
 $head Syntax$$
-$icode%size_fixed% = size_fixed_effect(%pack_info%)
+$icode%size_fixed% = size_fixed_effect(%pack_object%)
 %$$
-$codei%pack_fixed_effect(%pack_info%, %pack_vec%, %fixed_vec%)
+$codei%pack_fixed_effect(%pack_object%, %pack_vec%, %fixed_vec%)
 %$$
-$codei%unpack_fixed_effect(%pack_info%, %pack_vec%, %fixed_vec%)
+$codei%unpack_fixed_effect(%pack_object%, %pack_vec%, %fixed_vec%)
 %$$
 
 $head Float$$
@@ -42,12 +42,12 @@ are inverses of each other; i.e., if you pack the fixed effects using a
 $icode fixed_vec$$, and then do a unpack, you will get that
 $icode fixed_vec$$ back.
 
-$head pack_info$$
+$head pack_object$$
 This argument has prototype
 $codei%
-	const pack_var& %pack_info%
+	const pack_info& %pack_object%
 %$$
-It is the $cref pack_var$$ information corresponding
+It is the $cref pack_info$$ information corresponding
 to the $cref/model_variables/model_variable/$$.
 
 $head size_fixed$$
@@ -67,9 +67,9 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and its size is $icode%pack_info%.size()%$$.
+and its size is $icode%pack_object%.size()%$$.
 It specifies the value for all the $cref/model_variables/model_variable/$$
-in $cref pack_var$$ format.
+in $cref pack_info$$ format.
 
 $subhead fixed_vec$$
 This argument has prototype
@@ -90,9 +90,9 @@ This argument has prototype
 $codei%
 	CppAD::vector<%Float%>& %pack_vec%
 %$$
-and its size is $icode%pack_info%.size()%$$.
+and its size is $icode%pack_object%.size()%$$.
 It specifies the value for all the $cref/model_variables/model_variable/$$
-in $cref pack_var$$ format.
+in $cref pack_info$$ format.
 The input value of its fixed effects does not matter.  Upon return,
 the fixed effects correspond to the values in $icode fixed_vec$$.
 
@@ -115,41 +115,41 @@ contains an example and test that uses this routine.
 $end
 */
 
-# include <dismod_at/pack_var.hpp>
+# include <dismod_at/pack_info.hpp>
 # include <dismod_at/random_effect.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-size_t size_fixed_effect(const pack_var&  pack_info)
-{	assert( pack_info.size() > size_random_effect(pack_info) );
-	return pack_info.size() - size_random_effect(pack_info);
+size_t size_fixed_effect(const pack_info&  pack_object)
+{	assert( pack_object.size() > size_random_effect(pack_object) );
+	return pack_object.size() - size_random_effect(pack_object);
 }
 
 template <class Float>
 void unpack_fixed_effect(
-	const pack_var&              pack_info  ,
+	const pack_info&              pack_object  ,
 	const CppAD::vector<Float>&  pack_vec   ,
 	CppAD::vector<Float>&        fixed_vec )
-{	assert( fixed_vec.size() == size_fixed_effect(pack_info) );
-	size_t n_integrand = pack_info.integrand_size();
-	size_t n_child     = pack_info.child_size();
-	size_t n_smooth    = pack_info.smooth_size();
+{	assert( fixed_vec.size() == size_fixed_effect(pack_object) );
+	size_t n_integrand = pack_object.integrand_size();
+	size_t n_child     = pack_object.child_size();
+	size_t n_smooth    = pack_object.smooth_size();
 
 
-	pack_var::subvec_info info;
+	pack_info::subvec_info info;
 	size_t pack_index;
 	size_t fixed_index = 0;
 
 	// mulstd
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	pack_index = pack_info.mulstd_offset(smooth_id);
+	{	pack_index = pack_object.mulstd_offset(smooth_id);
 		for(size_t k = 0; k < 3; k++)
 			fixed_vec[fixed_index++] = pack_vec[pack_index++];
 	}
 
 	// parent rates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	info       = pack_info.rate_info(rate_id, n_child);
+	{	info       = pack_object.rate_info(rate_id, n_child);
 		pack_index = info.offset;
 		for(size_t k = 0; k < info.n_var; k++)
 			fixed_vec[fixed_index++] = pack_vec[pack_index++];
@@ -157,16 +157,16 @@ void unpack_fixed_effect(
 
 	// measurement mean and standard deviation covariates
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_info.meas_mean_mulcov_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_info.meas_mean_mulcov_info(integrand_id, j);
+		{	info       = pack_object.meas_mean_mulcov_info(integrand_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				fixed_vec[fixed_index++] = pack_vec[pack_index++];
 		}
-		n_cov = pack_info.meas_std_mulcov_n_cov(integrand_id);
+		n_cov = pack_object.meas_std_mulcov_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_info.meas_std_mulcov_info(integrand_id, j);
+		{	info       = pack_object.meas_std_mulcov_info(integrand_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				fixed_vec[fixed_index++] = pack_vec[pack_index++];
@@ -175,9 +175,9 @@ void unpack_fixed_effect(
 
 	// rate mean covariates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_cov = pack_info.rate_mean_mulcov_n_cov(rate_id);
+	{	size_t n_cov = pack_object.rate_mean_mulcov_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_info.rate_mean_mulcov_info(rate_id, j);
+		{	info       = pack_object.rate_mean_mulcov_info(rate_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				fixed_vec[fixed_index++] = pack_vec[pack_index++];
@@ -190,28 +190,28 @@ void unpack_fixed_effect(
 
 template <class Float>
 void pack_fixed_effect(
-	const pack_var&              pack_info  ,
+	const pack_info&              pack_object  ,
 	CppAD::vector<Float>&        pack_vec   ,
 	const CppAD::vector<Float>&  fixed_vec  )
-{	assert( fixed_vec.size() == size_fixed_effect(pack_info) );
-	size_t n_integrand = pack_info.integrand_size();
-	size_t n_child     = pack_info.child_size();
-	size_t n_smooth    = pack_info.smooth_size();
+{	assert( fixed_vec.size() == size_fixed_effect(pack_object) );
+	size_t n_integrand = pack_object.integrand_size();
+	size_t n_child     = pack_object.child_size();
+	size_t n_smooth    = pack_object.smooth_size();
 
-	pack_var::subvec_info info;
+	pack_info::subvec_info info;
 	size_t pack_index;
 	size_t fixed_index = 0;
 
 	// mulstd
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	pack_index = pack_info.mulstd_offset(smooth_id);
+	{	pack_index = pack_object.mulstd_offset(smooth_id);
 		for(size_t k = 0; k < 3; k++)
 			pack_vec[fixed_index++] = fixed_vec[pack_index++];
 	}
 
 	// parent rates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	info       = pack_info.rate_info(rate_id, n_child);
+	{	info       = pack_object.rate_info(rate_id, n_child);
 		pack_index = info.offset;
 		for(size_t k = 0; k < info.n_var; k++)
 			pack_vec[fixed_index++] = fixed_vec[pack_index++];
@@ -219,16 +219,16 @@ void pack_fixed_effect(
 
 	// measurement mean and standard deviation covariates
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_info.meas_mean_mulcov_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_info.meas_mean_mulcov_info(integrand_id, j);
+		{	info       = pack_object.meas_mean_mulcov_info(integrand_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				pack_vec[fixed_index++] = fixed_vec[pack_index++];
 		}
-		n_cov = pack_info.meas_std_mulcov_n_cov(integrand_id);
+		n_cov = pack_object.meas_std_mulcov_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_info.meas_std_mulcov_info(integrand_id, j);
+		{	info       = pack_object.meas_std_mulcov_info(integrand_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				pack_vec[fixed_index++] = fixed_vec[pack_index++];
@@ -237,9 +237,9 @@ void pack_fixed_effect(
 
 	// rate mean covariates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_cov = pack_info.rate_mean_mulcov_n_cov(rate_id);
+	{	size_t n_cov = pack_object.rate_mean_mulcov_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_info.rate_mean_mulcov_info(rate_id, j);
+		{	info       = pack_object.rate_mean_mulcov_info(rate_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				pack_vec[fixed_index++] = fixed_vec[pack_index++];
@@ -252,12 +252,12 @@ void pack_fixed_effect(
 
 # define DISMOD_AT_INSTANTIATE_FIXED_EFFECT(Float)           \
 	template void unpack_fixed_effect(                       \
-	const pack_var&              pack_info  ,                \
+	const pack_info&              pack_object  ,                \
 	const CppAD::vector<Float>&  pack_vec   ,                \
 	CppAD::vector<Float>&        fixed_vec                   \
 	);                                                       \
 	template void pack_fixed_effect(                         \
-	const pack_var&              pack_info  ,                \
+	const pack_info&              pack_object  ,                \
 	CppAD::vector<Float>&        pack_vec   ,                \
 	const CppAD::vector<Float>&  fixed_vec                   \
 	);

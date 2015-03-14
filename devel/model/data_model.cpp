@@ -468,7 +468,7 @@ $$
 $section Average for Integrands That Don't Require the ODE$$
 
 $head Syntax$$
-$icode%avg% = %data_object%.avg_no_ode(%data_id%, %pack_info%, %pack_vec%)%$$
+$icode%avg% = %data_object%.avg_no_ode(%data_id%, %pack_object%, %pack_vec%)%$$
 
 
 $head data_object$$
@@ -499,12 +499,12 @@ $cref/child/child_data/data_id2child/child/$$ value
 less than or equal
 $cref/n_child/child_data/child_size/n_child/$$.
 
-$head pack_info$$
+$head pack_object$$
 This argument has prototype
 $codei%
-	const pack_var& %pack_info%
+	const pack_info& %pack_object%
 %$$
-and is the $cref pack_var$$ information corresponding to
+and is the $cref pack_info$$ information corresponding to
 $icode pack_vec$$.
 
 $head pack_vec$$
@@ -518,7 +518,7 @@ $subhead Integrand and Rates$$
 The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
 $icode data_id$$ must be one of those listed in the table below.
 In addition, depending on the integrand, only the corresponding
-$cref pack_var_rate$$ and $cref pack_var_rate_mulcov$$ subvectors of
+$cref pack_info_rate$$ and $cref pack_info_rate_mulcov$$ subvectors of
 $icode pack_vec$$ are used:
 $table
 Integrand               $cnext Rates               $rnext
@@ -546,11 +546,11 @@ $end
 template <class Float>
 Float data_model::avg_no_ode(
 		size_t                        data_id  ,
-		const pack_var&               pack_info ,
+		const pack_info&               pack_object ,
 		const CppAD::vector<Float>&   pack_vec
 	) const
 {	size_t i, j, k, ell;
-	assert( pack_info.size() == pack_vec.size() );
+	assert( pack_object.size() == pack_vec.size() );
 
 	// data table infomation for this data point
 	const CppAD::vector<double>& x = data_table_[ data_id ].x;
@@ -617,8 +617,8 @@ Float data_model::avg_no_ode(
 	{	rate_ode[ell].resize(n_ode);
 		//
 		// extract subvector information for the parent rate
-		pack_var::subvec_info info;
-		info             = pack_info.rate_info(rate_id[ell], n_child_);
+		pack_info::subvec_info info;
+		info             = pack_object.rate_info(rate_id[ell], n_child_);
 		size_t n_var     = info.n_var;
 		size_t smooth_id = info.smooth_id;
 		//
@@ -637,7 +637,7 @@ Float data_model::avg_no_ode(
 		//
 		// include child random effect
 		if( child < n_child_ )
-		{	info      = pack_info.rate_info(rate_id[ell], child);
+		{	info      = pack_object.rate_info(rate_id[ell], child);
 			n_var     = info.n_var;
 			smooth_id = info.smooth_id;
 			//
@@ -652,9 +652,9 @@ Float data_model::avg_no_ode(
 				effect_ode[k] += var_ode[k];
 		}
 		// include effect of rate covariates
-		size_t n_cov = pack_info.rate_mean_mulcov_n_cov(rate_id[ell]);
+		size_t n_cov = pack_object.rate_mean_mulcov_n_cov(rate_id[ell]);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_info.rate_mean_mulcov_info(rate_id[ell], j);
+		{	info       = pack_object.rate_mean_mulcov_info(rate_id[ell], j);
 			n_var      = info.n_var;
 			smooth_id  = info.smooth_id;
 			double x_j = x[ info.covariate_id ];
@@ -731,7 +731,7 @@ $$
 $section Average for Integrands That Require the ODE$$
 
 $head Syntax$$
-$icode%avg% = %data_object%.avg_yes_ode(%data_id%, %pack_info%, %pack_vec%)%$$
+$icode%avg% = %data_object%.avg_yes_ode(%data_id%, %pack_object%, %pack_vec%)%$$
 
 
 $head data_object$$
@@ -770,12 +770,12 @@ $code mtspecific_enum$$,
 $code mtall_enum$$,
 $code mtstandard_enum$$.
 
-$head pack_info$$
+$head pack_object$$
 This argument has prototype
 $codei%
-	const pack_var& %pack_info%
+	const pack_info& %pack_object%
 %$$
-and is the $cref pack_var$$ information corresponding to
+and is the $cref pack_info$$ information corresponding to
 $icode pack_vec$$.
 
 $head pack_vec$$
@@ -786,8 +786,8 @@ $codei%
 and is a vector of values for all of the
 $cref/model variables/model_variable/$$.
 Only the following subvectors of $icode pack_vec$$ are used:
-$cref pack_var_rate$$,
-$cref pack_var_rate_mulcov$$.
+$cref pack_info_rate$$,
+$cref pack_info_rate_mulcov$$.
 
 $head avg$$
 This is the
@@ -806,7 +806,7 @@ $end
 template <class Float>
 Float data_model::avg_yes_ode(
 		size_t                        data_id  ,
-		const pack_var&               pack_info ,
+		const pack_info&               pack_object ,
 		const CppAD::vector<Float>&   pack_vec
 	) const
 {
@@ -827,7 +827,7 @@ Float data_model::avg_yes_ode(
 	}
 # endif
 	size_t i, j, k, ell;
-	assert( pack_info.size() == pack_vec.size() );
+	assert( pack_object.size() == pack_vec.size() );
 
 	// data table information for this data pont
 	const CppAD::vector<double>& x     = data_table_[ data_id ].x;
@@ -886,12 +886,12 @@ Float data_model::avg_yes_ode(
 
 	// value for the rates on the ode subgrid
 	CppAD::vector< CppAD::vector<Float> > rate_ode(number_rate_enum);
-	pack_var::subvec_info                 info;
+	pack_info::subvec_info                 info;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	rate_ode[rate_id].resize(n_index);
 		//
 		// extract subvector information for the parent rate
-		info             = pack_info.rate_info(rate_id, n_child_);
+		info             = pack_object.rate_info(rate_id, n_child_);
 		size_t n_var     = info.n_var;
 		size_t smooth_id = info.smooth_id;
 		//
@@ -910,7 +910,7 @@ Float data_model::avg_yes_ode(
 		//
 		// include child random effect
 		if( child < n_child_ )
-		{	info      = pack_info.rate_info(rate_id, child);
+		{	info      = pack_object.rate_info(rate_id, child);
 			n_var     = info.n_var;
 			smooth_id = info.smooth_id;
 			//
@@ -926,9 +926,9 @@ Float data_model::avg_yes_ode(
 		}
 		//
 		// include effect of rate covariates
-		size_t n_cov = pack_info.rate_mean_mulcov_n_cov(rate_id);
+		size_t n_cov = pack_object.rate_mean_mulcov_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_info.rate_mean_mulcov_info(rate_id, j);
+		{	info       = pack_object.rate_mean_mulcov_info(rate_id, j);
 			n_var      = info.n_var;
 			smooth_id  = info.smooth_id;
 			double x_j = x[ info.covariate_id ];
@@ -1053,7 +1053,7 @@ $section Weighted Residuals and Log-Likelihood for All Integrands$$
 
 $head Syntax$$
 $icode%wres_loglike% = %data_object%.data_like(
-	%data_id%, %pack_info%, %pack_vec%, %avg%
+	%data_id%, %pack_object%, %pack_vec%, %avg%
 )%$$
 
 $head Log-likelihood$$
@@ -1097,12 +1097,12 @@ $cref/child/child_data/data_id2child/child/$$ value
 less than or equal
 $cref/n_child/child_data/child_size/n_child/$$.
 
-$head pack_info$$
+$head pack_object$$
 This argument has prototype
 $codei%
-	const pack_var& %pack_info%
+	const pack_info& %pack_object%
 %$$
-and is the $cref pack_var$$ information corresponding to
+and is the $cref pack_info$$ information corresponding to
 $icode pack_vec$$.
 
 $head pack_vec$$
@@ -1112,7 +1112,7 @@ $codei%
 %$$
 and is a vector of values for all of the model variables; i.e.,
 $latex (u , \theta)$$.
-Only the $cref pack_var_meas_mulcov$$ subvectors of $icode pack_vec$$ are used
+Only the $cref pack_info_meas_mulcov$$ subvectors of $icode pack_vec$$ are used
 by $code data_like$$ (note that other components of $latex (u, \theta )$$
 are used to compute $icode avg$$ documented below).
 
@@ -1186,12 +1186,12 @@ $end
 template <class Float>
 residual_density_struct<Float> data_model::data_like(
 		size_t                        data_id  ,
-		const pack_var&               pack_info ,
+		const pack_info&               pack_object ,
 		const CppAD::vector<Float>&   pack_vec  ,
 		const Float&                  avg
 	) const
 {	size_t i, j, k;
-	assert( pack_info.size() == pack_vec.size() );
+	assert( pack_object.size() == pack_vec.size() );
 
 	// data table infomation for this data point
 	const CppAD::vector<double>& x = data_table_[ data_id ].x;
@@ -1222,11 +1222,11 @@ residual_density_struct<Float> data_model::data_like(
 	CppAD::vector<Float> meas_cov_ode(n_ode);
 	for(k = 0; k < n_ode; k++)
 		meas_cov_ode[k] = 0.0;
-	size_t n_cov = pack_info.meas_mean_mulcov_n_cov(integrand_id);
+	size_t n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id);
 	//
-	pack_var::subvec_info  info;
+	pack_info::subvec_info  info;
 	for(size_t j = 0; j < n_cov; j++)
-	{	info              = pack_info.meas_mean_mulcov_info(integrand_id, j);
+	{	info              = pack_object.meas_mean_mulcov_info(integrand_id, j);
 		size_t n_var      = info.n_var;
 		size_t smooth_id  = info.smooth_id;
 		double x_j = x[ info.covariate_id ];
@@ -1249,9 +1249,9 @@ residual_density_struct<Float> data_model::data_like(
 	// measurement std covaraites effect on the ode subgrid
 	for(k = 0; k < n_ode; k++)
 		meas_cov_ode[k] = 0.0;
-	n_cov = pack_info.meas_std_mulcov_n_cov(integrand_id);
+	n_cov = pack_object.meas_std_mulcov_n_cov(integrand_id);
 	for(size_t j = 0; j < n_cov; j++)
-	{	info              = pack_info.meas_std_mulcov_info(integrand_id, j);
+	{	info              = pack_object.meas_std_mulcov_info(integrand_id, j);
 		size_t n_var      = info.n_var;
 		size_t smooth_id  = info.smooth_id;
 		double x_j = x[ info.covariate_id ];
@@ -1278,18 +1278,18 @@ residual_density_struct<Float> data_model::data_like(
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \
 	template Float data_model::avg_no_ode(                  \
 		size_t                        data_id  ,            \
-		const pack_var&               pack_info ,            \
+		const pack_info&               pack_object ,            \
 		const CppAD::vector<Float>&   pack_vec               \
 	) const;                                                \
 	template Float data_model::avg_yes_ode(                 \
 		size_t                        data_id  ,            \
-		const pack_var&               pack_info ,            \
+		const pack_info&               pack_object ,            \
 		const CppAD::vector<Float>&   pack_vec               \
 	) const;                                                \
 	template residual_density_struct<Float>                 \
 	data_model::data_like(                                  \
 		size_t                        data_id  ,            \
-		const pack_var&               pack_info ,            \
+		const pack_info&               pack_object ,            \
 		const CppAD::vector<Float>&   pack_vec  ,            \
 		const Float&                  avg                   \
 	) const;                                                \

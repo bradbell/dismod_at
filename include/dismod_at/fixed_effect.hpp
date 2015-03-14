@@ -12,21 +12,21 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_FIXED_EFFECT_HPP
 
 # include <cppad/cppad.hpp>
-# include "pack_var.hpp"
+# include "pack_info.hpp"
 
 namespace dismod_at {
-	extern size_t size_fixed_effect(const pack_var& pack_info);
+	extern size_t size_fixed_effect(const pack_info& pack_object);
 	//
 	template <class Float>
 	extern void unpack_fixed_effect(
-		const pack_var&             pack_info  ,
+		const pack_info&             pack_object  ,
 		const CppAD::vector<Float>& pack_vec   ,
 		CppAD::vector<Float>&       fixed_vec
 	);
 	//
 	template <class Float>
 	extern void pack_fixed_effect(
-		const pack_var&             pack_info  ,
+		const pack_info&             pack_object  ,
 		CppAD::vector<Float>&       pack_vec   ,
 		const CppAD::vector<Float>& fixed_vec
 	);

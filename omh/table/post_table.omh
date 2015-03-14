@@ -22,7 +22,7 @@ for all the model variables.
 
 $head Under Construction$$
 This documentation is out of data and should follow the structure of
-$cref pack_var$$.
+$cref pack_info$$.
 
 $head post_id$$
 This column has type $code integer$$ and is the primary key for this table.

@@ -170,7 +170,7 @@ bool prior_density_xam(void)
 			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
 			mulstd_value, mulstd_dage, mulstd_dtime
 	);
-	// ----------------------- pack_info --------------------------------
+	// ----------------------- pack_object --------------------------------
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
@@ -194,20 +194,20 @@ bool prior_density_xam(void)
 			rate_table[rate_id].child_smooth_id  = smooth_id_3_by_2;
 		}
 	}
-	// pack_info
+	// pack_object
 	size_t n_integrand = 0;
 	size_t n_child     = 1;
-	dismod_at::pack_var pack_info(
+	dismod_at::pack_info pack_object(
 		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
 	// ----------------------- pack_vec -------------------------------------
-	vector<double> pack_vec( pack_info.size() );
-	dismod_at::pack_var::subvec_info info;
+	vector<double> pack_vec( pack_object.size() );
+	dismod_at::pack_info::subvec_info info;
 	//
 	// mulstd
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
-	{	size_t offset  = pack_info.mulstd_offset(smooth_id);
+	{	size_t offset  = pack_object.mulstd_offset(smooth_id);
 		for(i = 0; i < 3; i++)
 			pack_vec[offset + i] = 1.0;
 	}
@@ -217,7 +217,7 @@ bool prior_density_xam(void)
 	double time_max = time_table[n_time_table - 1];
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
-		{	info = pack_info.rate_info(rate_id, child_id);
+		{	info = pack_object.rate_info(rate_id, child_id);
 			dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 			n_age  = s_info.age_size();
 			n_time = s_info.time_size();
@@ -238,7 +238,7 @@ bool prior_density_xam(void)
 	// -------------- compute prior density --------------------------------
 	dismod_at::prior_density_struct<double> logden;
 	logden = dismod_at::prior_density(
-		pack_info, pack_vec,
+		pack_object, pack_vec,
 		age_table, time_table, prior_table, s_info_vec
 	);
 	double total_logden = logden.smooth;
@@ -256,7 +256,7 @@ bool prior_density_xam(void)
 	size_t count_laplace = 0;
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
-		{	info = pack_info.rate_info(rate_id, child_id);
+		{	info = pack_object.rate_info(rate_id, child_id);
 			dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 			n_age  = s_info.age_size();
 			n_time = s_info.time_size();

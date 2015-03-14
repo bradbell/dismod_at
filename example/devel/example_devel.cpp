@@ -41,7 +41,7 @@ extern bool bilinear_interp_xam(void);
 extern bool child_data_xam(void);
 extern bool eigen_ode2_xam(void);
 extern bool fixed_effect_xam(void);
-extern bool pack_var_xam(void);
+extern bool pack_info_xam(void);
 extern bool integrate_1d_xam(void);
 extern bool integrate_2d_xam(void);
 extern bool interp_weight_xam(void);
@@ -115,7 +115,7 @@ int main(void)
 	RUN(integrate_1d_xam);
 	RUN(integrate_2d_xam);
 	RUN(interp_weight_xam);
-	RUN(pack_var_xam);
+	RUN(pack_info_xam);
 	RUN(residual_density_xam);
 	RUN(random_effect_xam);
 	RUN(smooth2ode_xam);

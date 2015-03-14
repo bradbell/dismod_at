@@ -14,19 +14,19 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <limits>
 # include <cppad/vector.hpp>
 # include "data_model.hpp"
-# include "pack_var.hpp"
+# include "pack_info.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class joint_like {
 private:
 	const data_model&                  data_object_;
-	const pack_var&                    pack_info_;
+	const pack_info&                    pack_object_;
 	const CppAD::vector<prior_struct>& prior_table_;
 public:
 	data_model(
 		const data_model&                  data_object ,
-		const pack_var&                    pack_info   ,
+		const pack_info&                    pack_object   ,
 		const CppAD::vector<prior_struct>& prior_table
 	);
 };

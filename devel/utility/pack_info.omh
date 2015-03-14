@@ -8,19 +8,19 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin pack_var$$
+$begin pack_info$$
 $spell
 	var
 $$
 
 $section Packing Variables into a Single Vector$$
 
-$childtable%devel/utility/pack_var.cpp
-	%example/devel/utility/pack_var_xam.cpp
+$childtable%devel/utility/pack_info.cpp
+	%example/devel/utility/pack_info_xam.cpp
 %$$
 $head Example$$
-The file $cref pack_var_xam.cpp$$ contains
-and example and test of $code pack_var$$.
+The file $cref pack_info_xam.cpp$$ contains
+and example and test of $code pack_info$$.
 It returns true for success and false for failure.
 
 $end

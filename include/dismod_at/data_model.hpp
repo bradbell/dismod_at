@@ -19,7 +19,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_node_table.hpp"
 # include "weight_info.hpp"
 # include "smooth2ode.hpp"
-# include "pack_var.hpp"
+# include "pack_info.hpp"
 # include "residual_density.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -67,21 +67,21 @@ public:
 	template <class Float>
 	Float avg_no_ode(
 		size_t                        data_id  ,
-		const  pack_var&              pack_info ,
+		const  pack_info&              pack_object ,
 		const  CppAD::vector<Float>&  pack_vec
 	) const;
 	// compute average for integrands that require S or C
 	template <class Float>
 	Float avg_yes_ode(
 		size_t                        data_id  ,
-		const  pack_var&              pack_info ,
+		const  pack_info&              pack_object ,
 		const  CppAD::vector<Float>&  pack_vec
 	) const;
 	// compute weighted residual and log-likelihood
 	template <class Float>
 	residual_density_struct<Float> data_like(
 		size_t                        data_id  ,
-		const  pack_var&              pack_info ,
+		const  pack_info&              pack_object ,
 		const  CppAD::vector<Float>&  pack_vec  ,
 		const  Float&                 avg
 	) const;

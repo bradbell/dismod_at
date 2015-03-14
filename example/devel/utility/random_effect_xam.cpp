@@ -61,17 +61,17 @@ bool random_effect_xam(void)
 		n_random_effect += n_child * n_age * n_time;
 	}
 	//
-	// construct pack_info, pack_vec, and subvec_info
-	dismod_at::pack_var pack_info(
+	// construct pack_object, pack_vec, and subvec_info
+	dismod_at::pack_info pack_object(
 		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
 	//
 	// check size_random_effect
-	ok &= n_random_effect == dismod_at::size_random_effect(pack_info);
+	ok &= n_random_effect == dismod_at::size_random_effect(pack_object);
 
 	// pack_vec
-	CppAD::vector<double> pack_vec( pack_info.size() );
+	CppAD::vector<double> pack_vec( pack_object.size() );
 
 	// random_vec
 	CppAD::vector<double> random_vec(n_random_effect);
@@ -79,14 +79,14 @@ bool random_effect_xam(void)
 	// set value of random effects in pack_vec
 	for(size_t i = 0; i < n_random_effect; i++)
 		random_vec[i] = double(i + 1);
-	dismod_at::pack_random_effect(pack_info, pack_vec, random_vec);
+	dismod_at::pack_random_effect(pack_object, pack_vec, random_vec);
 
 	// clear random_vec
 	for(size_t i = 0; i < n_random_effect; i++)
 		random_vec[i] = 0.0;
 
-	// get the random effects in pack_var
-	dismod_at::unpack_random_effect(pack_info, pack_vec, random_vec);
+	// get the random effects in pack_info
+	dismod_at::unpack_random_effect(pack_object, pack_vec, random_vec);
 
 	// check value of random effects
 	for(size_t i = 0; i < n_random_effect; i++)

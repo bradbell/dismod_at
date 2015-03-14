@@ -21,11 +21,11 @@ $$
 $section Setting and Getting the Random Effect Vector$$
 
 $head Syntax$$
-$icode%size_random% = size_random_effect(%pack_info%)
+$icode%size_random% = size_random_effect(%pack_object%)
 %$$
-$codei%pack_random_effect(%pack_info%, %pack_vec%, %random_vec%)
+$codei%pack_random_effect(%pack_object%, %pack_vec%, %random_vec%)
 %$$
-$codei%unpack_random_effect(%pack_info%, %pack_vec%, %random_vec%)
+$codei%unpack_random_effect(%pack_object%, %pack_vec%, %random_vec%)
 %$$
 
 $head Float$$
@@ -40,12 +40,12 @@ are inverses of each other; i.e., if you pack the random effects using a
 $icode random_vec$$, and then do a unpack, you will get that
 $icode random_vec$$ back.
 
-$head pack_info$$
+$head pack_object$$
 This argument has prototype
 $codei%
-	const pack_var& %pack_info%
+	const pack_info& %pack_object%
 %$$
-It is the $cref pack_var$$ information corresponding
+It is the $cref pack_info$$ information corresponding
 to the $cref/model_variables/model_variable/$$.
 
 $head size_random$$
@@ -65,9 +65,9 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and its size is $icode%pack_info%.size()%$$.
+and its size is $icode%pack_object%.size()%$$.
 It specifies the value for all the $cref/model_variables/model_variable/$$
-in $cref pack_var$$ format.
+in $cref pack_info$$ format.
 
 $subhead random_vec$$
 This argument has prototype
@@ -88,9 +88,9 @@ This argument has prototype
 $codei%
 	CppAD::vector<%Float%>& %pack_vec%
 %$$
-and its size is $icode%pack_info%.size()%$$.
+and its size is $icode%pack_object%.size()%$$.
 It specifies the value for all the $cref/model_variables/model_variable/$$
-in $cref pack_var$$ format.
+in $cref pack_info$$ format.
 The input value of its random effects does not matter.  Upon return,
 the random effects correspond to the values in $icode random_vec$$.
 
@@ -113,22 +113,22 @@ contains an example and test that uses this routine.
 $end
 */
 
-# include <dismod_at/pack_var.hpp>
+# include <dismod_at/pack_info.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-size_t size_random_effect(const pack_var&  pack_info)
-{	size_t n_child = pack_info.child_size();
+size_t size_random_effect(const pack_info&  pack_object)
+{	size_t n_child = pack_object.child_size();
 	if( n_child == 0 )
 		return 0;
 	//
 	size_t sum = 0;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_var = pack_info.rate_info(rate_id, 0).n_var;
+	{	size_t n_var = pack_object.rate_info(rate_id, 0).n_var;
 		sum += n_var * n_child;
 # ifndef NDEBUG
 		for(size_t j = 0; j < n_child; j++)
-		{	pack_var::subvec_info info = pack_info.rate_info(rate_id, j);
+		{	pack_info::subvec_info info = pack_object.rate_info(rate_id, j);
 			assert( n_var == info.n_var );
 		}
 # endif
@@ -138,12 +138,12 @@ size_t size_random_effect(const pack_var&  pack_info)
 
 template <class Float>
 void unpack_random_effect(
-	const pack_var&              pack_info  ,
+	const pack_info&              pack_object  ,
 	const CppAD::vector<Float>&  pack_vec   ,
 	CppAD::vector<Float>&        random_vec )
 {
-	assert( random_vec.size() == size_random_effect(pack_info) );
-	size_t n_child = pack_info.child_size();
+	assert( random_vec.size() == size_random_effect(pack_object) );
+	size_t n_child = pack_object.child_size();
 
 	// empty vector case
 	if( n_child == 0 )
@@ -152,7 +152,7 @@ void unpack_random_effect(
 	size_t random_index = 0;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	for(size_t j = 0; j < n_child; j++)
-		{	pack_var::subvec_info info = pack_info.rate_info(rate_id, j);
+		{	pack_info::subvec_info info = pack_object.rate_info(rate_id, j);
 			size_t pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				random_vec[random_index++] = pack_vec[pack_index++];
@@ -163,12 +163,12 @@ void unpack_random_effect(
 
 template <class Float>
 void pack_random_effect(
-	const pack_var&              pack_info  ,
+	const pack_info&              pack_object  ,
 	CppAD::vector<Float>&        pack_vec   ,
 	const CppAD::vector<Float>&  random_vec )
 {
-	assert( random_vec.size() == size_random_effect(pack_info) );
-	size_t n_child = pack_info.child_size();
+	assert( random_vec.size() == size_random_effect(pack_object) );
+	size_t n_child = pack_object.child_size();
 
 	// empty vector case
 	if( n_child == 0 )
@@ -177,7 +177,7 @@ void pack_random_effect(
 	size_t random_index = 0;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	for(size_t j = 0; j < n_child; j++)
-		{	pack_var::subvec_info info = pack_info.rate_info(rate_id, j);
+		{	pack_info::subvec_info info = pack_object.rate_info(rate_id, j);
 			size_t pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				pack_vec[pack_index++] = random_vec[random_index++];
@@ -188,12 +188,12 @@ void pack_random_effect(
 
 # define DISMOD_AT_INSTANTIATE_RANDOM_EFFECT(Float)           \
 	template void unpack_random_effect(                       \
-	const pack_var&              pack_info  ,                 \
+	const pack_info&              pack_object  ,                 \
 	const CppAD::vector<Float>&  pack_vec   ,                 \
 	CppAD::vector<Float>&        random_vec                   \
 	);                                                        \
 	template void pack_random_effect(                         \
-	const pack_var&              pack_info  ,                 \
+	const pack_info&              pack_object  ,                 \
 	CppAD::vector<Float>&        pack_vec   ,                 \
 	const CppAD::vector<Float>&  random_vec                   \
 	);

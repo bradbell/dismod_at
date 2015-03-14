@@ -21,7 +21,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-class pack_var {
+class pack_info {
 public:
 	// BEGIN SUBVEC_INFO
 	typedef struct {
@@ -59,7 +59,7 @@ private:
 	// total number of elements in the packed vector
 	size_t size_;
 public:
-	pack_var(
+	pack_info(
 		size_t                              n_integrand    ,
 		size_t                              n_child        ,
 		const CppAD::vector<smooth_struct>& smooth_table   ,

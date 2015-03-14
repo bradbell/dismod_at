@@ -10,7 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 
 /*
-$begin pack_var_ctor$$
+$begin pack_info_ctor$$
 $spell
 	mulcov
 	CppAD
@@ -24,18 +24,18 @@ $$
 $section Pack Variables: Constructor$$
 
 $head Syntax$$
-$codei%pack_var %pack_info%(
+$codei%pack_info %pack_object%(
 	%n_integrand%,  %n_child%,
 	%smooth_table%, %mulcov_table%, %rate_table%
 )
 %$$
-$icode%pack_var %pack_copy%(%pack_info%)
+$icode%pack_info %pack_copy%(%pack_object%)
 %$$
-$icode%size%            = %pack_info%.size()
+$icode%size%            = %pack_object%.size()
 %$$
-$icode%integrand_size%  = %pack_info%.integrand_size()
+$icode%integrand_size%  = %pack_object%.integrand_size()
 %$$
-$icode%child_size%      = %pack_info%.child_size()
+$icode%child_size%      = %pack_object%.child_size()
 %$$
 
 $head n_integrand$$
@@ -45,7 +45,7 @@ $codei%
 %$$
 and is the number of integrands; i.e., the size of
 $cref/integrand_table/get_integrand_table/integrand_table/$$.
-If $cref/mulcov_table/pack_var_ctor/mulcov_table/$$ has size zero,
+If $cref/mulcov_table/pack_info_ctor/mulcov_table/$$ has size zero,
 then $icode n_integrand$$ can be zero (a case used for testing purposes).
 
 $head n_child$$
@@ -87,7 +87,7 @@ Only the following fields of this table are used:
 $code parent_smooth_id$$, $code child_smooth_id$$.
 
 $head pack_copy$$
-This object is a copy of the $icode pack_info$$ object
+This object is a copy of the $icode pack_object$$ object
 (and acts the same).
 
 $head size$$
@@ -124,18 +124,18 @@ $codei%
 and is the value is $icode%smooth_table%.size()%$$ in the constructor.
 
 $head Example$$
-See $cref/pack_var Example/pack_var/Example/$$.
+See $cref/pack_info Example/pack_info/Example/$$.
 
 $end
 */
 
 # include <cppad/cppad.hpp>
-# include <dismod_at/pack_var.hpp>
+# include <dismod_at/pack_info.hpp>
 # include <dismod_at/table_error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-pack_var::pack_var(
+pack_info::pack_info(
 	size_t                               n_integrand    ,
 	size_t                               n_child        ,
 	const CppAD::vector<smooth_struct>&  smooth_table   ,
@@ -270,24 +270,24 @@ n_child_        ( n_child )
 // use default copy constructor
 
 // size
-size_t pack_var::size(void) const
+size_t pack_info::size(void) const
 {	return size_; }
 
 // integrand_size
-size_t pack_var::integrand_size(void) const
+size_t pack_info::integrand_size(void) const
 {	return n_integrand_; }
 
 // child_size
-size_t pack_var::child_size(void) const
+size_t pack_info::child_size(void) const
 {	return n_child_; }
 
 // smooth_size
-size_t pack_var::smooth_size(void) const
+size_t pack_info::smooth_size(void) const
 {	return n_smooth_; }
 
 /*
 ------------------------------------------------------------------------------
-$begin pack_var_mulstd$$
+$begin pack_info_mulstd$$
 $spell
 	var
 	mulstd
@@ -300,13 +300,13 @@ $$
 $section Pack Variables: Standard Deviations Multipliers$$
 
 $head Syntax$$
-$icode%offset% = %pack_info%.mulstd_offset(%smooth_id%)
+$icode%offset% = %pack_object%.mulstd_offset(%smooth_id%)
 %$$
 
-$head pack_info$$
+$head pack_object$$
 This object has prototype
 $codei%
-	const pack_var %pack_info%
+	const pack_info %pack_object%
 %$$
 
 $head smooth_id$$
@@ -328,18 +328,18 @@ The three variables for each smoothing are the
 value, dage, and dtime standard deviation multipliers.
 
 $head Example$$
-See $cref/pack_var Example/pack_var/Example/$$.
+See $cref/pack_info Example/pack_info/Example/$$.
 
 $end
 
 */
-size_t pack_var::mulstd_offset(size_t smooth_id) const
+size_t pack_info::mulstd_offset(size_t smooth_id) const
 {	assert( smooth_id < n_smooth_ );
 	return mulstd_offset_ + 3 * smooth_id;
 }
 /*
 ------------------------------------------------------------------------------
-$begin pack_var_rate$$
+$begin pack_info_rate$$
 $spell
 	std
 	cov
@@ -356,20 +356,20 @@ $spell
 $$
 
 $head Syntax$$
-$icode%info% = %pack_info%.rate_info(%rate_id%, %j%)
+$icode%info% = %pack_object%.rate_info(%rate_id%, %j%)
 %$$
 
 $head subvec_info$$
-the type $code pack_var::subvec_info$$ is defined as follows:
+the type $code pack_info::subvec_info$$ is defined as follows:
 $code
-$verbatim%include/dismod_at/pack_var.hpp
+$verbatim%include/dismod_at/pack_info.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
-$head pack_info$$
+$head pack_object$$
 This object has prototype
 $codei%
-	const pack_var %pack_info%
+	const pack_info %pack_object%
 %$$
 
 $head rate_id$$
@@ -390,7 +390,7 @@ and $icode%j% <= %n_child%$$.
 $head info$$
 The return value  has prototype
 $codei%
-	pack_var::subvec_info %info%
+	pack_info::subvec_info %info%
 %$$
 
 $subhead covariate_id$$
@@ -417,18 +417,18 @@ this is the rate vector for the
 $cref/parent_node/run_table/parent_node_id/$$.
 
 $head Example$$
-See $cref/pack_var Example/pack_var/Example/$$.
+See $cref/pack_info Example/pack_info/Example/$$.
 
 $end
 */
-pack_var::subvec_info pack_var::rate_info(size_t rate_id, size_t j) const
+pack_info::subvec_info pack_info::rate_info(size_t rate_id, size_t j) const
 {	assert( j <= n_child_ );
 	return rate_info_[rate_id][j];
 }
 
 /*
 ------------------------------------------------------------------------------
-$begin pack_var_meas_mulcov$$
+$begin pack_info_meas_mulcov$$
 $spell
 	std
 	cov
@@ -443,13 +443,13 @@ $$
 $section Pack Variables: Measurement Multipliers$$
 
 $head Syntax$$
-$icode%n_cov% = %pack_info%.meas_mean_mulcov_n_cov(%integrand_id%)
+$icode%n_cov% = %pack_object%.meas_mean_mulcov_n_cov(%integrand_id%)
 %$$
-$icode%n_cov% = %pack_info%.meas_std_mulcov_n_cov(%integrand_id%)
+$icode%n_cov% = %pack_object%.meas_std_mulcov_n_cov(%integrand_id%)
 %$$
-$icode%info% = %pack_info%.meas_mean_mulcov_info(%integrand_id%, %j%)
+$icode%info% = %pack_object%.meas_mean_mulcov_info(%integrand_id%, %j%)
 %$$
-$icode%info% = %pack_info%.meas_std_mulcov_info(%integrand_id%, %j%)
+$icode%info% = %pack_object%.meas_std_mulcov_info(%integrand_id%, %j%)
 %$$
 
 $head meas_mean$$
@@ -466,16 +466,16 @@ return information about the measurement standard deviation
 covariate multipliers.
 
 $head subvec_info$$
-The type $code pack_var::subvec_info$$ is defined as follows:
+The type $code pack_info::subvec_info$$ is defined as follows:
 $code
-$verbatim%include/dismod_at/pack_var.hpp
+$verbatim%include/dismod_at/pack_info.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
-$head pack_info$$
+$head pack_object$$
 This object has prototype
 $codei%
-	const pack_var %pack_info%
+	const pack_info %pack_object%
 %$$
 
 $head integrand_id$$
@@ -506,7 +506,7 @@ and $icode%j% < n_cov(%integrand_id%)%$$.
 $head info$$
 this return value has prototype
 $codei%
-	pack_var::subvec_info %info%
+	pack_info::subvec_info %info%
 %$$
 
 $subhead covariate_id$$
@@ -527,35 +527,35 @@ is the offset in the packed variable vector where the
 $icode n_var$$ variables begin (for this covariate multiplier).
 
 $head Example$$
-See $cref/pack_var Example/pack_var/Example/$$.
+See $cref/pack_info Example/pack_info/Example/$$.
 
 $end
 */
 size_t
-pack_var::meas_mean_mulcov_n_cov(size_t integrand_id) const
+pack_info::meas_mean_mulcov_n_cov(size_t integrand_id) const
 {	assert( integrand_id < n_integrand_ );
 	return meas_mean_mulcov_info_[integrand_id].size();
 }
 size_t
-pack_var::meas_std_mulcov_n_cov(size_t integrand_id) const
+pack_info::meas_std_mulcov_n_cov(size_t integrand_id) const
 {	assert( integrand_id < n_integrand_ );
 	return meas_std_mulcov_info_[integrand_id].size();
 }
 //
-pack_var::subvec_info
-pack_var::meas_mean_mulcov_info(size_t integrand_id, size_t j) const
+pack_info::subvec_info
+pack_info::meas_mean_mulcov_info(size_t integrand_id, size_t j) const
 {	assert( integrand_id < n_integrand_ );
 	return meas_mean_mulcov_info_[integrand_id][j];
 }
-pack_var::subvec_info
-pack_var::meas_std_mulcov_info(size_t integrand_id, size_t j) const
+pack_info::subvec_info
+pack_info::meas_std_mulcov_info(size_t integrand_id, size_t j) const
 {	assert( integrand_id < n_integrand_ );
 	return meas_std_mulcov_info_[integrand_id][j];
 }
 
 /*
 ------------------------------------------------------------------------------
-$begin pack_var_rate_mulcov$$
+$begin pack_info_rate_mulcov$$
 $spell
 	std
 	cov
@@ -570,22 +570,22 @@ $$
 $section Pack Variables: Rate Multipliers$$
 
 $head Syntax$$
-$icode%n_cov% = %pack_info%.rate_mean_mulcov_n_cov(%rate_id%)
+$icode%n_cov% = %pack_object%.rate_mean_mulcov_n_cov(%rate_id%)
 %$$
-$icode%info% = %pack_info%.rate_mean_mulcov_info(%rate_id%, %j%)
+$icode%info% = %pack_object%.rate_mean_mulcov_info(%rate_id%, %j%)
 %$$
 
 $head subvec_info$$
-The type $code pack_var::subvec_info$$ is defined as follows:
+The type $code pack_info::subvec_info$$ is defined as follows:
 $code
-$verbatim%include/dismod_at/pack_var.hpp
+$verbatim%include/dismod_at/pack_info.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
-$head pack_info$$
+$head pack_object$$
 This object has prototype
 $codei%
-	const pack_var %pack_info%
+	const pack_info %pack_object%
 %$$
 
 $head rate_id$$
@@ -616,7 +616,7 @@ and $icode%j% < n_cov(%rate_id%)%$$.
 $head info$$
 this return value has prototype
 $codei%
-	pack_var::subvec_info %info%
+	pack_info::subvec_info %info%
 %$$
 
 $subhead covariate_id$$
@@ -637,18 +637,18 @@ is the offset in the packed variable vector where the
 $icode n_var$$ variables begin (for this covariate multiplier).
 
 $head Example$$
-See $cref/pack_var Example/pack_var/Example/$$.
+See $cref/pack_info Example/pack_info/Example/$$.
 
 $end
 */
 size_t
-pack_var::rate_mean_mulcov_n_cov(size_t rate_id) const
+pack_info::rate_mean_mulcov_n_cov(size_t rate_id) const
 {	assert( rate_id < number_rate_enum );
 	return rate_mean_mulcov_info_[rate_id].size();
 }
 //
-pack_var::subvec_info
-pack_var::rate_mean_mulcov_info(size_t rate_id, size_t j) const
+pack_info::subvec_info
+pack_info::rate_mean_mulcov_info(size_t rate_id, size_t j) const
 {	assert( rate_id < number_rate_enum );
 	return rate_mean_mulcov_info_[rate_id][j];
 }

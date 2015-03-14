@@ -24,7 +24,7 @@ $section Joint Likelihood$$
 $head Under Construction$$
 
 $head Syntax$$
-$codei%joint_like %joint_object%(%data_object%, %pack_info%, %prior_table%)%$$
+$codei%joint_like %joint_object%(%data_object%, %pack_object%, %prior_table%)%$$
 
 $head Purpose$$
 This object can be used to evaluate the joint likelihood of the
@@ -41,9 +41,9 @@ $latex u$$ or $latex \theta$$.
 
 $head References$$
 The $icode joint_object$$ will hold a reference to its arguments
-$icode data_object$$, $icode pack_info$$, and $icode prior_table$$.
+$icode data_object$$, $icode pack_object$$, and $icode prior_table$$.
 For this reason, $icode joint_object$$ cannot be used once after
-$icode data_object$$, $icode pack_info$$, or $icode prior_table$$
+$icode data_object$$, $icode pack_object$$, or $icode prior_table$$
 has been deleted.
 
 $head data_object$$
@@ -55,12 +55,12 @@ see $cref/data_model/devel_data_model/$$,
 and contains the information necessary for evaluation of
 $latex \B{p}( y | u , \theta )$$.
 
-$head pack_info$$
+$head pack_object$$
 This argument has prototype
 $codei%
-	const pack_var& %pack_info%
+	const pack_info& %pack_object%
 %$$
-and is the $cref pack_var$$ information corresponding to corresponding
+and is the $cref pack_info$$ information corresponding to corresponding
 to this problem.
 
 $head prior_table$$
@@ -85,11 +85,11 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 // consctructor
 joint_like::joint_like(
 	const data_model&                      data_object     ,
-	const pack_var&                        pack_info       ,
+	const pack_info&                        pack_object       ,
 	const CppAD::vector<prior_struct>&     prior_table     )
 :
 data_object_(data_object) ,
-pack_info_(pack_info)     ,
+pack_object_(pack_object)     ,
 prior_table_(prior_table)
 { }
 

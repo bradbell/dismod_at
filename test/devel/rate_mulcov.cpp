@@ -208,17 +208,17 @@ bool rate_mulcov(void)
 		rate_table[rate_id].parent_smooth_id = smooth_id;
 		rate_table[rate_id].child_smooth_id = smooth_id;
 	}
-	// pack_info
-	dismod_at::pack_var pack_info(
+	// pack_object
+	dismod_at::pack_info pack_object(
 		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
 	//
 	// pack_vec
-	vector<Float> pack_vec( pack_info.size() );
-	dismod_at::pack_var::subvec_info info;
+	vector<Float> pack_vec( pack_object.size() );
+	dismod_at::pack_info::subvec_info info;
 	for(size_t child_id = 0; child_id <= n_child; child_id++)
-	{	info = pack_info.rate_info(omega_rate_id, child_id);
+	{	info = pack_object.rate_info(omega_rate_id, child_id);
 		dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 		for(i = 0; i < s_info.age_size(); i++)
 		{	for(j = 0; j < s_info.time_size(); j++)
@@ -229,7 +229,7 @@ bool rate_mulcov(void)
 	}
 	size_t omega_id = dismod_at::omega_enum;
 	dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
-	info = pack_info.rate_mean_mulcov_info(omega_id, 0);
+	info = pack_object.rate_mean_mulcov_info(omega_id, 0);
 	for(i = 0; i < s_info.age_size(); i++)
 	{	double age = age_table[ s_info.age_id(i) ];
 		for(j = 0; j < s_info.time_size(); j++)
@@ -241,7 +241,7 @@ bool rate_mulcov(void)
 
 	// evaluate residual
 	data_id = 0;
-	Float avg_integrand = dm.avg_no_ode(data_id, pack_info, pack_vec);
+	Float avg_integrand = dm.avg_no_ode(data_id, pack_object, pack_vec);
 	//
 	// average mean mulcov
 	double avg_mulcov_1 = exp_avg_mulcov(

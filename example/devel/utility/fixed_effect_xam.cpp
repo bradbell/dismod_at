@@ -88,17 +88,17 @@ bool fixed_effect_xam(void)
 	mulcov_table[2].smooth_id    = 1;
 	n_fixed_effect += smooth_table[1].n_age * smooth_table[1].n_time;
 	//
-	// construct pack_info, pack_vec, and subvec_info
-	dismod_at::pack_var pack_info(
+	// construct pack_object, pack_vec, and subvec_info
+	dismod_at::pack_info pack_object(
 		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
 	//
 	// check size_fixed_effect
-	ok &= n_fixed_effect == dismod_at::size_fixed_effect(pack_info);
+	ok &= n_fixed_effect == dismod_at::size_fixed_effect(pack_object);
 
 	// pack_vec
-	CppAD::vector<double> pack_vec( pack_info.size() );
+	CppAD::vector<double> pack_vec( pack_object.size() );
 
 	// fixed_vec
 	CppAD::vector<double> fixed_vec(n_fixed_effect);
@@ -106,14 +106,14 @@ bool fixed_effect_xam(void)
 	// set value of fixed effects in pack_vec
 	for(size_t i = 0; i < n_fixed_effect; i++)
 		fixed_vec[i] = double(i + 1);
-	dismod_at::pack_fixed_effect(pack_info, pack_vec, fixed_vec);
+	dismod_at::pack_fixed_effect(pack_object, pack_vec, fixed_vec);
 
 	// clear fixed_vec
 	for(size_t i = 0; i < n_fixed_effect; i++)
 		fixed_vec[i] = 0.0;
 
-	// get the fixed effects in pack_var
-	dismod_at::unpack_fixed_effect(pack_info, pack_vec, fixed_vec);
+	// get the fixed effects in pack_info
+	dismod_at::unpack_fixed_effect(pack_object, pack_vec, fixed_vec);
 
 	// check value of fixed effects
 	for(size_t i = 0; i < n_fixed_effect; i++)
