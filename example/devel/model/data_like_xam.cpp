@@ -160,7 +160,7 @@ bool data_like_xam(void)
 	}
 	//
 	// data_model
-	dismod_at::data_model dm(
+	dismod_at::data_model data_object(
 		parent_node_id,
 		n_age_ode,
 		n_time_ode,
@@ -215,9 +215,9 @@ bool data_like_xam(void)
 	}
 	// check results
 	for(size_t data_id = 0; data_id < data_table.size(); data_id++)
-	{	Float avg         = dm.avg_no_ode(data_id, pack_info, pack_vec);
+	{	Float avg   = data_object.avg_no_ode(data_id, pack_info, pack_vec);
 		dismod_at::residual_density_struct<Float> wres_loglike
-		                  = dm.data_like(data_id, pack_info, pack_vec, avg);
+		            = data_object.data_like(data_id, pack_info, pack_vec, avg);
 		Float  wres       = wres_loglike.wres;
 		Float  loglike    = wres_loglike.logden_smooth;
 		loglike          -= fabs( wres_loglike.logden_sub_abs );

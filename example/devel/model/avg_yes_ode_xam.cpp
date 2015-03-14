@@ -153,7 +153,7 @@ bool avg_yes_ode_xam(void)
 	data_table[data_id].x            = x;
 	//
 	// data_model
-	dismod_at::data_model dm(
+	dismod_at::data_model data_object(
 		parent_node_id,
 		n_age_ode,
 		n_time_ode,
@@ -219,7 +219,7 @@ bool avg_yes_ode_xam(void)
 	*/
 	using CppAD::exp;
 	data_id = 0;
-	Float avg = dm.avg_yes_ode(data_id, pack_info, pack_vec);
+	Float avg      = data_object.avg_yes_ode(data_id, pack_info, pack_vec);
 	double b       = data_table[data_id].age_lower;
 	double c       = data_table[data_id].age_upper;
 	double check   = c - b + ( exp(-beta * c) - exp(-beta * b) ) / beta;

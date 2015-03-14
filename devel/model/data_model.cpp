@@ -13,7 +13,6 @@ $begin devel_data_model_ctor$$
 $spell
 	logden
 	std
-	dm
 	vec
 	const
 	enum
@@ -24,7 +23,7 @@ $$
 $section Data Model: Constructor$$
 
 $head Syntax$$
-$codei%data_model %dm%(
+$codei%data_model %data_object%(
 	%parent_node_id%,
 	%n_age_ode%,
 	%n_time_ode%,
@@ -454,7 +453,6 @@ data_table_    (data_table)
 $begin devel_data_model_avg_no_ode$$
 
 $spell
-	dm
 	subvectors
 	enum
 	integrands
@@ -470,13 +468,13 @@ $$
 $section Average for Integrands That Don't Require the ODE$$
 
 $head Syntax$$
-$icode%avg% = %dm%.avg_no_ode(%data_id%, %pack_info%, %pack_vec%)%$$
+$icode%avg% = %data_object%.avg_no_ode(%data_id%, %pack_info%, %pack_vec%)%$$
 
 
-$head dm$$
+$head data_object$$
 This object has prototype
 $codei%
-	const data_model %dm%
+	const data_model %data_object%
 %$$
 
 $head Float$$
@@ -719,7 +717,6 @@ Float data_model::avg_no_ode(
 $begin devel_data_model_avg_yes_ode$$
 
 $spell
-	dm
 	mtspecific
 	mtall
 	mtstandard
@@ -734,13 +731,13 @@ $$
 $section Average for Integrands That Require the ODE$$
 
 $head Syntax$$
-$icode%avg% = %dm%.avg_yes_ode(%data_id%, %pack_info%, %pack_vec%)%$$
+$icode%avg% = %data_object%.avg_yes_ode(%data_id%, %pack_info%, %pack_vec%)%$$
 
 
-$head dm$$
+$head data_object$$
 This object has prototype
 $codei%
-	const data_model %dm%
+	const data_model %data_object%
 %$$
 
 $head Float$$
@@ -1036,7 +1033,6 @@ $spell
 	fabs
 	loglike
 	std
-	dm
 	Integrands
 	wres
 	var
@@ -1056,7 +1052,7 @@ $$
 $section Weighted Residuals and Log-Likelihood for All Integrands$$
 
 $head Syntax$$
-$icode%wres_loglike% = %dm%.data_like(
+$icode%wres_loglike% = %data_object%.data_like(
 	%data_id%, %pack_info%, %pack_vec%, %avg%
 )%$$
 
@@ -1073,10 +1069,10 @@ $latex \theta$$ are the fixed effects, and
 $latex C$$ is a constant that does
 not depend on $latex ( u , \theta )$$.
 
-$head dm$$
+$head data_object$$
 This object has prototype
 $codei%
-	const data_model %dm%
+	const data_model %data_object%
 %$$
 
 $head Float$$
