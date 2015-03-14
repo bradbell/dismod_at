@@ -4,11 +4,11 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin post_table$$ 
+$begin post_table$$
 $spell
 	mulcov
 	covariate
@@ -31,7 +31,7 @@ Its initial value is zero, and it increments by one for each row.
 $head run_id$$
 This column has type $code integer$$,
 is non-decreasing with row number,
-and is the value of 
+and is the value of
 $cref/run_id/run_table/run_id/$$ that this row corresponds to.
 
 $head sample$$
@@ -61,11 +61,11 @@ If $icode variable_type$$ is $code mulcov$$,
 this column should be $code -1$$.
 
 $head age$$
-This column has type $code real$$ and is the age 
+This column has type $code real$$ and is the age
 for the grid point corresponding to this value.
 
 $head time$$
-This column has type $code real$$ and is the time 
+This column has type $code real$$ and is the time
 for the grid point corresponding to this value.
 
 $head value$$
@@ -75,7 +75,7 @@ variable at the specified age and time.
 $children%example/table/post_table.py
 %$$
 $head Example$$
-The file $cref post_table.py$$ 
+The file $cref post_table.py$$
 contains an example $code post$$ table.
 
 $end
