@@ -288,7 +288,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #	%file_name%,
 #	%age_list%
 #	%time_list%
-#   %integrand_list%,
+#	%integrand_list%,
 #	%node_list%,
 #	%weight_list%,
 #	%covariate_list%,

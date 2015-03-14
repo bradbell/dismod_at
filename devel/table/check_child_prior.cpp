@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin check_child_prior$$
 $spell
+	std
 	dage
 	dtime
 	const
@@ -31,13 +32,15 @@ $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
 for the last age point, and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ 
 for the last time point,
-are $code -1$$ and are not used.
+are $code -1$$ and there is no prior to check for these cases.
 
 $list number$$
 The $cref/density_id/prior_table/density_id/$$ must correspond
 to a $code gaussian$$ density.
 $lnext
 The $cref/mean/prior_table/mean/$$ must be zero.
+$lnext
+The $cref/std/prior_table/std/$$ must be greater than zero.
 $lnext
 The $cref/lower/prior_table/lower/$$ limit must be minus infinity.
 $lnext
@@ -112,6 +115,7 @@ void check_child_prior(
 			for(size_t i = 0; i < 3; i++) if( prior_id[i] != -1 )
 			{	int    density_id = prior_table[prior_id[i]].density_id; 
 				double mean       = prior_table[prior_id[i]].mean; 
+				double std        = prior_table[prior_id[i]].std; 
 				double lower      = prior_table[prior_id[i]].lower;
 				double upper      = prior_table[prior_id[i]].upper ;
 				bool   ok         = true;
@@ -121,6 +125,10 @@ void check_child_prior(
 				}
 				if( mean != 0.0 )
 				{	msg << name[i] << " mean not zero" << endl;
+					ok = false;
+				}
+				if( std <= 0.0 )
+				{	msg << name[i] << " std not greater than zero" << endl;
 					ok = false;
 				}
 				double inf = std::numeric_limits<double>::infinity();

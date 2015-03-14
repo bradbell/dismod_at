@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin rate_table$$ 
 $spell
+	std
 	dage
 	dtime
 	pini
@@ -77,6 +78,8 @@ The $cref/density_id/prior_table/density_id/$$ must correspond
 to a $code gaussian$$ density.
 $lnext
 The $cref/mean/prior_table/mean/$$ must be zero.
+$lnext
+The $cref/std/prior_table/std/$$ must be greater than zero.
 $lnext
 The $cref/lower/prior_table/lower/$$ limit must be $code null$$
 (which gets interpreted as minus infinity).
