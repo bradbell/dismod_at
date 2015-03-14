@@ -50,9 +50,9 @@ $end
 # include <iostream>
 
 # include <cppad/cppad.hpp>
-# include <dismod_at/include/table_error_exit.hpp>
-# include <dismod_at/include/get_table_column.hpp>
-# include <dismod_at/include/check_table_id.hpp>
+# include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/get_table_column.hpp>
+# include <dismod_at/check_table_id.hpp>
 
 namespace dismod_at {
 	size_t  check_table_id(sqlite3* db, const std::string& table_name )

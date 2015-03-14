@@ -180,7 +180,7 @@ this function.
 
 $end
 */
-# include <dismod_at/include/weight_info.hpp>
+# include <dismod_at/weight_info.hpp>
 
 namespace {
 	void unique_insert_sort(

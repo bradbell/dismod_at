@@ -27,7 +27,7 @@ $end
 */
 // BEGIN C++
 # include <limits>
-# include <dismod_at/include/data_model.hpp>
+# include <dismod_at/data_model.hpp>
 
 namespace {
 	double check_avg(const dismod_at::data_struct& data_row)

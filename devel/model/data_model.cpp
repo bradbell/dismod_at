@@ -143,15 +143,15 @@ $code age_size$$, $code time_size$$, $code age_id$$, $code time_id$$.
 $end
 -----------------------------------------------------------------------------
 */
-# include <dismod_at/include/data_model.hpp>
-# include <dismod_at/include/integrate_1d.hpp>
-# include <dismod_at/include/integrate_2d.hpp>
-# include <dismod_at/include/interp_weight.hpp>
-# include <dismod_at/include/table_error_exit.hpp>
-# include <dismod_at/include/child_data.hpp>
-# include <dismod_at/include/get_rate_table.hpp>
-# include <dismod_at/include/solve_ode.hpp>
-# include <dismod_at/include/residual_density.hpp>
+# include <dismod_at/data_model.hpp>
+# include <dismod_at/integrate_1d.hpp>
+# include <dismod_at/integrate_2d.hpp>
+# include <dismod_at/interp_weight.hpp>
+# include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/child_data.hpp>
+# include <dismod_at/get_rate_table.hpp>
+# include <dismod_at/solve_ode.hpp>
+# include <dismod_at/residual_density.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

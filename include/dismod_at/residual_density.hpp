@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_RESIDUAL_DENSITY_HPP
 
 # include <utility>
-# include <dismod_at/include/get_density_table.hpp>
+# include "get_density_table.hpp"
 
 namespace dismod_at {
 

@@ -44,9 +44,9 @@ For this table, only the $code n_age$$ field is used.
 
 $end
 */
-# include <dismod_at/include/get_rate_table.hpp>
-# include <dismod_at/include/get_smooth_table.hpp>
-# include <dismod_at/include/table_error_exit.hpp>
+# include <dismod_at/get_rate_table.hpp>
+# include <dismod_at/get_smooth_table.hpp>
+# include <dismod_at/table_error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

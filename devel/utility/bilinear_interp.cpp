@@ -131,7 +131,7 @@ $end
 */
 
 # include <cppad/nan.hpp>
-# include <dismod_at/include/bilinear_interp.hpp>
+# include <dismod_at/bilinear_interp.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 

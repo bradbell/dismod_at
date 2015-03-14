@@ -27,7 +27,7 @@ $end
 */
 // BEGIN C++
 # include <limits>
-# include <dismod_at/include/data_model.hpp>
+# include <dismod_at/data_model.hpp>
 
 bool data_like_xam(void)
 {	bool   ok = true;

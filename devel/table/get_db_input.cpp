@@ -58,7 +58,7 @@ $head Return$$
 The return value has type $code db_input_struct$$
 which is defined by
 $code
-$verbatim%dismod_at/include/get_db_input.hpp%0%// BEGIN STRUCT%// END STRUCT%$$
+$verbatim%include/dismod_at/get_db_input.hpp%0%// BEGIN STRUCT%// END STRUCT%$$
 $$
 $pre
 $$
@@ -69,11 +69,11 @@ $cref get_age_table$$.
 $end
 -----------------------------------------------------------------------------
 */
-# include <dismod_at/include/get_db_input.hpp>
-# include <dismod_at/include/get_age_table.hpp>
-# include <dismod_at/include/get_time_table.hpp>
-# include <dismod_at/include/check_pini_n_age.hpp>
-# include <dismod_at/include/check_child_prior.hpp>
+# include <dismod_at/get_db_input.hpp>
+# include <dismod_at/get_age_table.hpp>
+# include <dismod_at/get_time_table.hpp>
+# include <dismod_at/check_pini_n_age.hpp>
+# include <dismod_at/check_child_prior.hpp>
 
 
 # define DISMOD_AT_CHECK_PRIMARY_ID(in_table, in_name, primary_table, lower)\

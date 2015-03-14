@@ -130,8 +130,8 @@ $end
 */
 
 # include <cppad/cppad.hpp>
-# include <dismod_at/include/pack_var.hpp>
-# include <dismod_at/include/table_error_exit.hpp>
+# include <dismod_at/pack_var.hpp>
+# include <dismod_at/table_error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -362,7 +362,7 @@ $icode%info% = %pack_info%.rate_info(%rate_id%, %j%)
 $head subvec_info$$
 the type $code pack_var::subvec_info$$ is defined as follows:
 $code
-$verbatim%dismod_at/include/pack_var.hpp
+$verbatim%include/dismod_at/pack_var.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
@@ -468,7 +468,7 @@ covariate multipliers.
 $head subvec_info$$
 The type $code pack_var::subvec_info$$ is defined as follows:
 $code
-$verbatim%dismod_at/include/pack_var.hpp
+$verbatim%include/dismod_at/pack_var.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
@@ -578,7 +578,7 @@ $icode%info% = %pack_info%.rate_mean_mulcov_info(%rate_id%, %j%)
 $head subvec_info$$
 The type $code pack_var::subvec_info$$ is defined as follows:
 $code
-$verbatim%dismod_at/include/pack_var.hpp
+$verbatim%include/dismod_at/pack_var.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 

@@ -25,9 +25,9 @@ $$
 $end
 */
 // BEGIN C++
-# include <dismod_at/include/smooth_info.hpp>
-# include <dismod_at/include/exec_sql_cmd.hpp>
-# include <dismod_at/include/open_connection.hpp>
+# include <dismod_at/smooth_info.hpp>
+# include <dismod_at/exec_sql_cmd.hpp>
+# include <dismod_at/open_connection.hpp>
 
 bool smooth_info_xam(void)
 {

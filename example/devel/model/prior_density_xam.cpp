@@ -28,8 +28,8 @@ $end
 // BEGIN C++
 # include <limits>
 # include <cmath>
-# include <dismod_at/include/prior_density.hpp>
-# include <dismod_at/include/get_density_table.hpp>
+# include <dismod_at/prior_density.hpp>
+# include <dismod_at/get_density_table.hpp>
 
 # define DISMOD_AT_PRIOR_DENSITY_XAM_TRACE 0
 

@@ -28,7 +28,7 @@ $end
 # include <utility>
 # include <limits>
 # include <cmath>
-# include <dismod_at/include/integrate_2d.hpp>
+# include <dismod_at/integrate_2d.hpp>
 
 namespace {
 	double U(double a, double t, const CppAD::vector<double>& u)

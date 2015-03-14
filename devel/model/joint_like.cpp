@@ -171,7 +171,7 @@ $cref/eta/prior_table/eta/$$.
 $end
 -----------------------------------------------------------------------------
 */
-# include <dismod_at/include/joint_like.hpp>
+# include <dismod_at/joint_like.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

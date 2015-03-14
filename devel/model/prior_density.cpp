@@ -134,9 +134,9 @@ $end
 */
 
 # include <utility>
-# include <dismod_at/include/prior_density.hpp>
-# include <dismod_at/include/residual_density.hpp>
-# include <dismod_at/include/prior_density.hpp>
+# include <dismod_at/prior_density.hpp>
+# include <dismod_at/residual_density.hpp>
+# include <dismod_at/prior_density.hpp>
 
 namespace {
 	using dismod_at::residual_density_struct;

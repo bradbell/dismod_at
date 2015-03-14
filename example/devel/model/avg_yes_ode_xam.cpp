@@ -26,7 +26,7 @@ $$
 $end
 */
 // BEGIN C++
-# include <dismod_at/include/data_model.hpp>
+# include <dismod_at/data_model.hpp>
 
 bool avg_yes_ode_xam(void)
 {	bool   ok = true;

@@ -25,7 +25,7 @@ $$
 
 $end
 */
-# include <dismod_at/include/check_pini_n_age.hpp>
+# include <dismod_at/check_pini_n_age.hpp>
 
 bool check_pini_n_age_xam(void)
 {	bool ok = true;

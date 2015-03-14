@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <limits>
-# include <dismod_at/include/data_model.hpp>
+# include <dismod_at/data_model.hpp>
 
 // Testing rate covaraite multipliers
 

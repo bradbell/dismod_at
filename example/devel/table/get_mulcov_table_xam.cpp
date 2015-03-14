@@ -26,9 +26,9 @@ $$
 $end
 */
 // BEGIN C++
-# include <dismod_at/include/get_mulcov_table.hpp>
-# include <dismod_at/include/exec_sql_cmd.hpp>
-# include <dismod_at/include/open_connection.hpp>
+# include <dismod_at/get_mulcov_table.hpp>
+# include <dismod_at/exec_sql_cmd.hpp>
+# include <dismod_at/open_connection.hpp>
 
 bool get_mulcov_table_xam(void)
 {

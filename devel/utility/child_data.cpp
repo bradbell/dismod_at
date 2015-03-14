@@ -133,7 +133,7 @@ not a descendent of the parent node.
 
 $end
 */
-# include <dismod_at/include/child_data.hpp>
+# include <dismod_at/child_data.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

@@ -136,8 +136,8 @@ $end
 -----------------------------------------------------------------------------
 */
 
-# include <dismod_at/include/solve_ode.hpp>
-# include <dismod_at/include/eigen_ode2.hpp>
+# include <dismod_at/solve_ode.hpp>
+# include <dismod_at/eigen_ode2.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

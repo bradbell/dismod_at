@@ -229,7 +229,7 @@ $end
 ---------------------------------------------------------------------------
 */
 # include <cppad/cppad.hpp>
-# include <dismod_at/include/eigen_ode2.hpp>
+# include <dismod_at/eigen_ode2.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

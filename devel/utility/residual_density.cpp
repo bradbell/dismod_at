@@ -123,7 +123,7 @@ in terms of smooth functions (for optimization purposes).
 $end
 */
 # include <cppad/cppad.hpp>
-# include <dismod_at/include/residual_density.hpp>
+# include <dismod_at/residual_density.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

@@ -29,7 +29,7 @@ $end
 // BEGIN C++
 # include <limits>
 # include <cmath>
-# include <dismod_at/include/bilinear_interp.hpp>
+# include <dismod_at/bilinear_interp.hpp>
 
 bool bilinear_interp_xam(void)
 {

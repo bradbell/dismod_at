@@ -25,8 +25,8 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include <dismod_at/include/random_effect.hpp>
-# include <dismod_at/include/get_rate_table.hpp>
+# include <dismod_at/random_effect.hpp>
+# include <dismod_at/get_rate_table.hpp>
 
 bool random_effect_xam(void)
 {	bool ok = true;

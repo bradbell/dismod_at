@@ -28,7 +28,7 @@ $end
 # include <utility>
 # include <limits>
 # include <cmath>
-# include <dismod_at/include/integrate_1d.hpp>
+# include <dismod_at/integrate_1d.hpp>
 
 namespace {
 	double U(double r, const std::pair<double,double>& u)

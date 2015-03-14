@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <limits>
 # include <cmath>
-# include <dismod_at/include/residual_density.hpp>
+# include <dismod_at/residual_density.hpp>
 
 bool residual_density_xam(void)
 {	bool ok    = true;

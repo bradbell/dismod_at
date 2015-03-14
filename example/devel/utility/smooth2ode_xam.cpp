@@ -27,8 +27,8 @@ $end
 */
 // BEGIN C++
 # include <limits>
-# include <dismod_at/include/smooth2ode.hpp>
-# include <dismod_at/include/bilinear_interp.hpp>
+# include <dismod_at/smooth2ode.hpp>
+# include <dismod_at/bilinear_interp.hpp>
 
 bool smooth2ode_xam(void)
 {

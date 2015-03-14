@@ -27,7 +27,7 @@ $end
 */
 // BEGIN C++
 # include <limits>
-# include <dismod_at/include/solve_ode.hpp>
+# include <dismod_at/solve_ode.hpp>
 
 namespace {
 	using CppAD::vector;

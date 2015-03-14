@@ -50,7 +50,7 @@ $end
 # include <iostream>
 # include <cstdlib>
 # include <cassert>
-# include <dismod_at/include/table_error_exit.hpp>
+# include <dismod_at/table_error_exit.hpp>
 
 namespace dismod_at {
 	void table_error_exit(

@@ -11,7 +11,7 @@
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
-INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR} )
+INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 
 # cppad_prefix
 SET(cppad_prefix NOTFOUND CACHE PATH "prefix used during CppAD install")

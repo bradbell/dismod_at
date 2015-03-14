@@ -88,9 +88,9 @@ $end
 # include <cmath>
 
 
-# include <dismod_at/include/get_smooth_grid.hpp>
-# include <dismod_at/include/get_table_column.hpp>
-# include <dismod_at/include/check_table_id.hpp>
+# include <dismod_at/get_smooth_grid.hpp>
+# include <dismod_at/get_table_column.hpp>
+# include <dismod_at/check_table_id.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

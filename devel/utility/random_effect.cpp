@@ -113,7 +113,7 @@ contains an example and test that uses this routine.
 $end
 */
 
-# include <dismod_at/include/pack_var.hpp>
+# include <dismod_at/pack_var.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

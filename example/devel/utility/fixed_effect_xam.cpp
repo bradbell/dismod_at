@@ -25,8 +25,8 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include <dismod_at/include/fixed_effect.hpp>
-# include <dismod_at/include/get_rate_table.hpp>
+# include <dismod_at/fixed_effect.hpp>
+# include <dismod_at/get_rate_table.hpp>
 
 bool fixed_effect_xam(void)
 {	bool ok = true;
