@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -66,7 +66,7 @@ $codei%
 is the value of the covariate corresponding to the
 $cref/covariate_id/covariate_table/covariate_id/$$
 and the $icode data_id$$,
-minus the corresponding 
+minus the corresponding
 $cref/reference/covariate_table/reference/$$ value
 corresponding to the $icode covariate_id$$.
 
@@ -75,39 +75,39 @@ This is a structure with the following fields
 $table
 Type  $cnext Field $cnext Description
 $rnext
-$code int$$ $cnext $code integrand_id$$ $cnext 
+$code int$$ $cnext $code integrand_id$$ $cnext
 	The $cref/integrand_id/data_table/integrand_id/$$ for this measurement
 $rnext
-$code int$$ $cnext $code density_id$$ $cnext 
+$code int$$ $cnext $code density_id$$ $cnext
 	The $cref/density_id/data_table/density_id/$$ for this measurement
 $rnext
-$code int$$ $cnext $code node_id$$ $cnext 
+$code int$$ $cnext $code node_id$$ $cnext
 	The $cref/node_id/data_table/node_id/$$ for this measurement
 $rnext
-$code int$$ $cnext $code weight_id$$ $cnext 
+$code int$$ $cnext $code weight_id$$ $cnext
 	The $cref/weight_id/data_table/weight_id/$$ for this measurement
 $rnext
-$code double$$ $cnext $code meas_value$$ $cnext 
+$code double$$ $cnext $code meas_value$$ $cnext
 	The $cref/meas_value/data_table/meas_value/$$ for this measurement
 $rnext
-$code double$$ $cnext $code meas_std$$ $cnext 
+$code double$$ $cnext $code meas_std$$ $cnext
 	The $cref/meas_std/data_table/meas_std/$$ for this measurement
 $rnext
-$code double$$ $cnext $code age_lower$$ $cnext 
+$code double$$ $cnext $code age_lower$$ $cnext
 	The $cref/age_lower/data_table/age_lower/$$ for this measurement
 $rnext
-$code double$$ $cnext $code age_upper$$ $cnext 
+$code double$$ $cnext $code age_upper$$ $cnext
 	The $cref/age_upper/data_table/age_upper/$$ for this measurement
 $rnext
-$code double$$ $cnext $code time_lower$$ $cnext 
+$code double$$ $cnext $code time_lower$$ $cnext
 	The $cref/time_lower/data_table/time_lower/$$ for this measurement
 $rnext
-$code double$$ $cnext $code time_upper$$ $cnext 
+$code double$$ $cnext $code time_upper$$ $cnext
 	The $cref/time_upper/data_table/time_upper/$$ for this measurement
 $rnext
 $code CppAD::vector<double>$$ $pre  $$ $cnext $code x$$ $cnext
 	The $cref/covariate/data_table/Covariates/$$ values for this measurement
-$tend        
+$tend
 
 $children%example/devel/table/get_data_table_xam.cpp
 %$$
@@ -125,7 +125,7 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<data_struct> get_data_table(
-	sqlite3*                               db              , 
+	sqlite3*                               db              ,
 	const CppAD::vector<covariate_struct>& covariate_table )
 {	using std::string;
 	// TODO: This could be more efficient if we only allcated one temporary
@@ -213,7 +213,7 @@ CppAD::vector<data_struct> get_data_table(
 		CppAD::vector<double> x_j;
 		get_table_column(db, table_name, column_name, x_j);
 		for(size_t i = 0; i < n_data; i++)
-			data_table[i].x[j] = x_j[i] - covariate_table[j].reference;	
+			data_table[i].x[j] = x_j[i] - covariate_table[j].reference;
 	}
 	return data_table;
 }

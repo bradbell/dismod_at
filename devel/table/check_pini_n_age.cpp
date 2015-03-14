@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -27,7 +27,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<rate_struct>& %rate_table%
 %$$
-and it is the 
+and it is the
 $cref/rate_table/get_rate_table/rate_table/$$.
 For this table,
 only the fields $code parent_smooth_id$$ and $code child_smooth_id$$
@@ -38,7 +38,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<smooth_struct>& %smooth_table%
 %$$
-and it is the 
+and it is the
 $cref/smooth_table/get_smooth_table/smooth_table/$$.
 For this table, only the $code n_age$$ field is used.
 

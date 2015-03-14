@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -54,7 +54,7 @@ $codei%
 	%time_table%[%time_id%] < %time_table[%time_id%+1]
 %$$
 
-$children%example/devel/table/get_time_table_xam.cpp 
+$children%example/devel/table/get_time_table_xam.cpp
 %$$
 $head Example$$
 The file $cref get_time_table_xam.cpp$$ contains an example that uses
@@ -75,7 +75,7 @@ CppAD::vector<double> get_time_table(sqlite3* db)
 
 	string table_name  = "time";
 	size_t n_time      = check_table_id(db, table_name);
-	
+
 	string column_name =  "time";
 	CppAD::vector<double>  time;
 	get_table_column(db, table_name, column_name, time);

@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -33,14 +33,14 @@ bool smooth_info_xam(void)
 {
 	bool   ok = true;
 	using  std::string;
-	using  CppAD::vector;	
+	using  CppAD::vector;
 
 	string   file_name = "example.db";
 	bool     new_file  = true;
 	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
 
 	// sql commands
-	const char* sql_cmd[] = { 
+	const char* sql_cmd[] = {
 	"create table smooth("
 		" smooth_id      integer primary key,"
 		" smooth_name    text,   "
@@ -71,11 +71,11 @@ bool smooth_info_xam(void)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
 	// get the smooth table
-	vector<dismod_at::smooth_struct> 
+	vector<dismod_at::smooth_struct>
 		smooth_table = dismod_at::get_smooth_table(db);
 
 	// get the smooth_grid table
-	vector<dismod_at::smooth_grid_struct> 
+	vector<dismod_at::smooth_grid_struct>
 		smooth_grid_table = dismod_at::get_smooth_grid(db);
 
 	// extract the smoothing information

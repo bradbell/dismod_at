@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -41,14 +41,14 @@ This is a structure with the following fields
 $table
 Type  $cnext Field $cnext Description
 $rnext
-$code std::string$$ $cnext $code covariate_name$$ $cnext 
-	The $cref/covariate_name/covariate_table/covariate_name/$$ 
-	for this covariate  
+$code std::string$$ $cnext $code covariate_name$$ $cnext
+	The $cref/covariate_name/covariate_table/covariate_name/$$
+	for this covariate
 $rnext
-$code double$$ $cnext $code reference$$  $cnext 
-	The $cref/reference/covariate_table/reference/$$ 
+$code double$$ $cnext $code reference$$  $cnext
+	The $cref/reference/covariate_table/reference/$$
 	value for this covariate
-$tend        
+$tend
 
 $head covariate_table$$
 The return value $icode covariate_table$$ has prototype

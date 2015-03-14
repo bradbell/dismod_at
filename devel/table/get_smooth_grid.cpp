@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -53,27 +53,27 @@ This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
 $rnext
-$code int$$ $cnext $code smooth_id$$   $pre  $$ $cnext 
-	The $cref/smooth_id/smooth_grid_table/smooth_id/$$ for this smoothing. 
+$code int$$ $cnext $code smooth_id$$   $pre  $$ $cnext
+	The $cref/smooth_id/smooth_grid_table/smooth_id/$$ for this smoothing.
 $rnext
-$code int$$ $cnext $code age_id$$      $pre  $$ $cnext 
+$code int$$ $cnext $code age_id$$      $pre  $$ $cnext
 	The $cref/age_id/smooth_grid_table/age_id/$$ for this grid point
 $rnext
-$code int$$ $cnext $code time_id$$      $pre  $$ $cnext 
+$code int$$ $cnext $code time_id$$      $pre  $$ $cnext
 	The $cref/time_id/smooth_grid_table/time_id/$$ for this grid point
 $rnext
-$code int$$ $cnext $code value_prior_id$$    $pre  $$ $cnext 
+$code int$$ $cnext $code value_prior_id$$    $pre  $$ $cnext
 	The $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
 	for this smoothing, age, and time.
 $rnext
-$code int$$ $cnext $code dage_prior_id$$    $pre  $$ $cnext 
+$code int$$ $cnext $code dage_prior_id$$    $pre  $$ $cnext
 	The $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
 	for this smoothing, age, and time.
 $rnext
-$code int$$ $cnext $code dtime_prior_id$$    $pre  $$ $cnext 
+$code int$$ $cnext $code dtime_prior_id$$    $pre  $$ $cnext
 	The $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
 	for this smoothing, age, and time.
-$tend        
+$tend
 
 $children%example/devel/table/get_smooth_grid_xam.cpp
 %$$

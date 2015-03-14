@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -33,14 +33,14 @@ bool get_age_table_xam(void)
 {
 	bool   ok = true;
 	using  std::string;
-	using  CppAD::vector;	
+	using  CppAD::vector;
 
 	string   file_name = "example.db";
 	bool     new_file  = true;
 	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
 
 	// sql commands
-	const char* sql_cmd[] = { 
+	const char* sql_cmd[] = {
 		"create table age(age_id integer primary key, age real)",
 		"insert into age values(0, 0.0)"    ,
 		"insert into age values(1, 20.0)"   ,
@@ -63,7 +63,7 @@ bool get_age_table_xam(void)
 	ok  &= age_table[3] == 60.0;
 	ok  &= age_table[4] == 80.0;
 	ok  &= age_table[5] == 100.0;
- 
+
 	// close database and return
 	sqlite3_close(db);
 	return ok;

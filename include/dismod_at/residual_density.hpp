@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -20,14 +20,14 @@ namespace dismod_at {
 	struct residual_density_struct {
 		Float wres;
 		Float logden_smooth;
-		Float logden_sub_abs; 
+		Float logden_sub_abs;
 	};
-	
+
 	template <class Float>
 	residual_density_struct<Float> residual_density(
 		density_enum density ,
-		const Float& z       , 
-		const Float& mu      , 
+		const Float& z       ,
+		const Float& mu      ,
 		const Float& delta   ,
 		const Float& eta
 	);

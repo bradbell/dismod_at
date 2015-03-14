@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -34,7 +34,7 @@ This argument has prototype
 $codei%
 	double %x%
 %$$
-and is the $icode x$$ value at which we are 
+and is the $icode x$$ value at which we are
 interpolating the bilinear function.
 
 $head y$$
@@ -94,7 +94,7 @@ $codei%
 	%x_grid%[%i%] <= %x% < %x_grid%[%i%+1]
 %$$
 Its output value satisfies the condition above,
-or is as close as possible under the limits 
+or is as close as possible under the limits
 $codei%0 <= %i% < %n_x%$$.
 
 $head j$$
@@ -108,7 +108,7 @@ $codei%
 	%y_grid%[%j%] <= %y% < %y_grid%[%j%+1]
 %$$
 Its output value satisfies the condition above,
-or is as close as possible under the limits 
+or is as close as possible under the limits
 $codei%0 <= %j% < %n_y%$$.
 
 $head z$$
@@ -116,7 +116,7 @@ The return value has prototype
 $codei%
 	double %z%
 %$$
-It is the value of the 
+It is the value of the
 $cref/bilinear interpolant/glossary/Bilinear Interpolant/$$ at the specified
 $icode x$$ and $icode y$$.
 
@@ -162,7 +162,7 @@ double bilinear_interp(
 	else
 	{	assert( n_x > 1 );
 		while( x < x_grid[i] )
-		{	assert( 0 < i ); 
+		{	assert( 0 < i );
 			i--;
 		}
 		assert( i+1 < n_x );
@@ -180,7 +180,7 @@ double bilinear_interp(
 	else
 	{	assert( n_y > 1 );
 		while( y < y_grid[j] )
-		{	assert( 0 < j ); 
+		{	assert( 0 < j );
 			j--;
 		}
 		assert( j+1 < n_y );

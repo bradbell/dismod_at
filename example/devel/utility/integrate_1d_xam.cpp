@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -35,7 +35,7 @@ namespace {
 	{	return u.first + u.second * r; }
 	double integral(
 		const std::pair<double,double>& r ,
-		const std::pair<double,double>& s , 
+		const std::pair<double,double>& s ,
 		const std::pair<double,double>& w ,
 		const std::pair<double,double>& u )
 	{
@@ -58,7 +58,7 @@ bool integrate_1d_xam(void)
 	std::pair<double,double> r, s, w, c;
 	//
 	r.first  =  0.1;
-	r.second =  1.1; 
+	r.second =  1.1;
 	s.first  =  0.2;
 	s.second =  0.6;
 	w.first  =  0.9;

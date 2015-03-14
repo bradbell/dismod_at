@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -40,18 +40,18 @@ This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
 $rnext
-$code int$$ $cnext $code weight_id$$   $pre  $$ $cnext 
+$code int$$ $cnext $code weight_id$$   $pre  $$ $cnext
 	The $cref/weight_id/weight_grid_table/weight_id/$$ for this weighting.
 $rnext
-$code int$$ $cnext $code age_id$$      $pre  $$ $cnext 
+$code int$$ $cnext $code age_id$$      $pre  $$ $cnext
 	The $cref/age_id/weight_grid_table/age_id/$$ for this weight value
 $rnext
-$code int$$ $cnext $code time_id$$      $pre  $$ $cnext 
+$code int$$ $cnext $code time_id$$      $pre  $$ $cnext
 	The $cref/time_id/weight_grid_table/time_id/$$ for this weight value
 $rnext
-$code double$$ $cnext $code weight$$    $pre  $$ $cnext 
+$code double$$ $cnext $code weight$$    $pre  $$ $cnext
 	The $cref/weight/weight_grid_table/weight/$$ value
-$tend        
+$tend
 
 $head weight_grid$$
 The return value $icode weight_grid$$ has prototype

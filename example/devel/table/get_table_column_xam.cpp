@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -47,7 +47,7 @@ bool get_table_column_xam(void)
 	string column_name;
 	string column_type;
 
-	// text 
+	// text
 	column_name = "one";
 	column_type = dismod_at::get_table_column_type(
 		db, table_name, column_name
@@ -60,7 +60,7 @@ bool get_table_column_xam(void)
 	ok &= text_result[0] == "hello";
 	ok &= text_result[1] == "goodbye";
 
-	// int 
+	// int
 	column_name = "two";
 	column_type = dismod_at::get_table_column_type(
 		db, table_name, column_name
@@ -73,7 +73,7 @@ bool get_table_column_xam(void)
 	ok &= int_result[0] == 1;
 	ok &= int_result[1] == 3;
 
-	// real 
+	// real
 	column_name = "three";
 	CppAD::vector<double> real_result;
 	column_type = dismod_at::get_table_column_type(

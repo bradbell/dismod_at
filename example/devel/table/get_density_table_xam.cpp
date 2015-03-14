@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Density Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -34,14 +34,14 @@ bool get_density_table_xam(void)
 	bool   ok = true;
 	using  std::endl;
 	using  std::string;
-	using  CppAD::vector;	
+	using  CppAD::vector;
 
 	string   file_name = "example.db";
 	bool     new_file  = true;
 	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
 
 	// sql commands
-	const char* sql_cmd[] = { 
+	const char* sql_cmd[] = {
 		"create table density"
 		"(density_id integer primary key, density_name text)",
 		"insert into density values(0, 'uniform')"     ,
@@ -71,7 +71,7 @@ bool get_density_table_xam(void)
 	ok  &= dismod_at::density_enum(2) == dismod_at::laplace_enum;
 	ok  &= dismod_at::density_enum(3) == dismod_at::log_gaussian_enum;
 	ok  &= dismod_at::density_enum(4) == dismod_at::log_laplace_enum;
- 
+
 	// close database and return
 	sqlite3_close(db);
 	return ok;

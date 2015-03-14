@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -42,7 +42,7 @@ This argument has prototype
 $codei%
 	std::string& sql_cmd
 %$$
-It contains the command that is executed. 
+It contains the command that is executed.
 
 $head Error$$
 If an error occurs, and error message is printing and this routine
@@ -66,10 +66,10 @@ void exec_sql_cmd(sqlite3* db, const std::string& sql_cmd)
 	int (*callback)(void*, int, char**,char**) = nullptr;
 	void* callback_arg                         = nullptr;
 	int rc = sqlite3_exec(
-		db, 
-		sql_cmd.c_str(), 
-		callback, 
-		callback_arg, 
+		db,
+		sql_cmd.c_str(),
+		callback,
+		callback_arg,
 		&zErrMsg
 	);
 	if( rc )

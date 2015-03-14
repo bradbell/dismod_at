@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -60,17 +60,17 @@ namespace {
 			yp[0]         = - (iota_a + omega_a) * S_a + rho_a * C_a;
 			yp[1]         = + iota_a * S_a - (rho_a + chi_a + omega_a) * C_a;
 			return;
-		} 
+		}
 	};
 }
 
 bool solve_ode_xam(void)
 {	bool   ok = true;
 	size_t k;
-	
+
 	// check integral along diagonal starting at age zero, time zero
 	size_t i_max  = 5;
-	size_t j_max  = 5; 
+	size_t j_max  = 5;
 	Float  pini   = 0.5;
 	vector<Float> S_out, C_out;
 	iota.resize(i_max+1);
@@ -81,8 +81,8 @@ bool solve_ode_xam(void)
 	{	double ri = double(k) / double(i_max);
 		iota[k]  = 0.10 * ri * ri;
 		rho[k]   = 0.09 * ri * ri;
-		chi[k]   = 0.08 * ri * ri; 
-		omega[k] = 0.07 * ri * ri; 
+		chi[k]   = 0.08 * ri * ri;
+		omega[k] = 0.07 * ri * ri;
 	}
 	dismod_at::solve_ode(
 		i_max, j_max, step_size, pini, iota, rho, chi, omega, S_out, C_out

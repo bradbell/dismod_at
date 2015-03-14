@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -43,32 +43,32 @@ This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
 $rnext
-$code mulcov_type_enum$$ $pre  $$ $cnext $code mulcov_type$$   $pre  $$ $cnext 
+$code mulcov_type_enum$$ $pre  $$ $cnext $code mulcov_type$$   $pre  $$ $cnext
 	See the description of $code mulcov_type$$ below.
 $rnext
-$code int$$ $cnext $code rate_id$$     $pre  $$ $cnext 
-	The $cref/rate_id/mulcov_table/rate_id/$$ 
-	for this multiplier 
-$rnext
-$code int$$ $cnext $code integrand_id$$     $pre  $$ $cnext 
-	The $cref/integrand_id/mulcov_table/integrand_id/$$ 
+$code int$$ $cnext $code rate_id$$     $pre  $$ $cnext
+	The $cref/rate_id/mulcov_table/rate_id/$$
 	for this multiplier
 $rnext
-$code int$$ $cnext $code covariate_id$$     $pre  $$ $cnext 
-	The $cref/covariate_id/mulcov_table/covariate_id/$$ 
+$code int$$ $cnext $code integrand_id$$     $pre  $$ $cnext
+	The $cref/integrand_id/mulcov_table/integrand_id/$$
 	for this multiplier
 $rnext
-$code int$$ $cnext $code smooth_id$$     $pre  $$ $cnext 
-	The $cref/smooth_id/mulcov_table/smooth_id/$$ 
-	for this multiplier 
-$tend        
+$code int$$ $cnext $code covariate_id$$     $pre  $$ $cnext
+	The $cref/covariate_id/mulcov_table/covariate_id/$$
+	for this multiplier
+$rnext
+$code int$$ $cnext $code smooth_id$$     $pre  $$ $cnext
+	The $cref/smooth_id/mulcov_table/smooth_id/$$
+	for this multiplier
+$tend
 
 $subhead mulcov_type$$
 The $code mulcov_type_enum$$ possible values are
 $code rate_mean_enum$$,
 $code meas_mean_enum$$, and
 $code meas_std_enum$$.
-These correspond to the values in the 
+These correspond to the values in the
 $cref/mulcov_type/mulcov_table/mulcov_type/$$ column of the
 $code mulcov_type$$ table.
 

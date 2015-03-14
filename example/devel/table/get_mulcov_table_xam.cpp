@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -34,7 +34,7 @@ bool get_mulcov_table_xam(void)
 {
 	bool   ok = true;
 	using  std::string;
-	using  CppAD::vector;	
+	using  CppAD::vector;
 
 	string   file_name = "example.db";
 	bool     new_file  = true;
@@ -42,7 +42,7 @@ bool get_mulcov_table_xam(void)
 
 	// sql commands
 	// assume that density_id for uniform density is 0.
-	const char* sql_cmd[] = { 
+	const char* sql_cmd[] = {
 		"create table mulcov("
 			" mulcov_id          integer primary key,"
 			" mulcov_type        text,"
@@ -58,7 +58,7 @@ bool get_mulcov_table_xam(void)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
 	// get the mulcov table
-	vector<dismod_at::mulcov_struct> 
+	vector<dismod_at::mulcov_struct>
 		mulcov_table = dismod_at::get_mulcov_table(db);
 	ok  &= mulcov_table.size() == 2;
 	//

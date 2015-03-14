@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -45,14 +45,14 @@ and is an open connection to the database.
 $head integrand_struct$$
 This is a structure with the following fields
 $table
-Type $cnext Field $cnext Description 
+Type $cnext Field $cnext Description
 $rnext
 $code integrand_enum$$ $cnext $code integrand$$  $cnext
 enum corresponding to $cref/integrand_name/integrand_table/integrand_name/$$
 $rnext
-$code double$$ $cnext $code eta$$  $cnext 
-	The $cref/eta/integrand_table/eta/$$ 
-$tend        
+$code double$$ $cnext $code eta$$  $cnext
+	The $cref/eta/integrand_table/eta/$$
+$tend
 
 $head integrand_table$$
 The return value $icode integrand_table$$ has prototype
@@ -83,9 +83,9 @@ $code relrisk_enum$$    $pre  $$ $cnext $code relrisk$$
 $tend
 
 $head integrand_enum2name$$
-This is a global variable. 
+This is a global variable.
 If $icode%integrand%$$, is an $code integrand_enum$$ value,
-$codei%integrand_enum2name[%integrand%]%$$ is the 
+$codei%integrand_enum2name[%integrand%]%$$ is the
 $icode integrand_name$$ corresponding to the enum value.
 
 $children%example/devel/table/get_integrand_table_xam.cpp

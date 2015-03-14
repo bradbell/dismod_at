@@ -3,8 +3,8 @@
 # dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
 #           Copyright (C) 2014-14 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
@@ -22,7 +22,7 @@ MESSAGE(STATUS "cppad_prefix = ${cppad_prefix}")
 INCLUDE_DIRECTORIES( ${cppad_prefix}/include )
 
 # extra_cxx_flags
-SET(extra_cxx_flags NOTFOUND CACHE STRING 
+SET(extra_cxx_flags NOTFOUND CACHE STRING
 	"extra compiler flags (besides debug and release"
 )
 IF( NOT extra_cxx_flags )
@@ -37,9 +37,9 @@ ADD_SUBDIRECTORY(example/devel)
 ADD_SUBDIRECTORY(test/devel)
 ADD_SUBDIRECTORY(example/get_started)
 
-ADD_CUSTOM_TARGET(check DEPENDS 
+ADD_CUSTOM_TARGET(check DEPENDS
 	check_example_table
 	check_example_devel
 	check_test_devel
-	check_get_started 
+	check_get_started
 )

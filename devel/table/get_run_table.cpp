@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -51,18 +51,18 @@ This is a structure with the following fields
 $table
 Type  $cnext Field $cnext Description
 $rnext
-$code int$$ $cnext $code parent_node_id$$ $cnext 
-	The $cref/parent_node_id/run_table/parent_node_id/$$ 
-	for this run  
+$code int$$ $cnext $code parent_node_id$$ $cnext
+	The $cref/parent_node_id/run_table/parent_node_id/$$
+	for this run
 $rnext
-$code double$$ $cnext $code ode_step_size$$ $cnext 
-	The $cref/ode_step_size/run_table/ode_step_size/$$ 
-	for this run  
+$code double$$ $cnext $code ode_step_size$$ $cnext
+	The $cref/ode_step_size/run_table/ode_step_size/$$
+	for this run
 $rnext
-$code int$$ $cnext $code n_sample$$ $cnext 
-	The $cref/n_sample/run_table/n_sample/$$ 
-	for this run  
-$tend        
+$code int$$ $cnext $code n_sample$$ $cnext
+	The $cref/n_sample/run_table/n_sample/$$
+	for this run
+$tend
 
 $children%example/devel/table/get_run_table_xam.cpp
 %$$

@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -35,7 +35,7 @@ bool interp_weight_xam(void)
 	bool   ok = true;
 	size_t i, j;
 	using  std::string;
-	using  CppAD::vector;	
+	using  CppAD::vector;
 
 	double eps = std::numeric_limits<double>::epsilon();
 

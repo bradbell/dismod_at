@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -68,9 +68,9 @@ This return value has prototype
 $codei%
 	size_t %n_child%
 %$$
-and is the size of the 
+and is the size of the
 $cref/child group/node_table/parent/Child Group/$$ corresponding to the
-for the specified parent node. 
+for the specified parent node.
 
 $head child_id2node_id$$
 
@@ -100,7 +100,7 @@ This argument has prototype
 $codei%
 	size_t %data_id%
 %$$
-and is the $cref/data_id/data_table/data_id/$$ for a 
+and is the $cref/data_id/data_table/data_id/$$ for a
 row of the data table.
 
 $subhead child$$
@@ -109,7 +109,7 @@ $codei%
 	size_t %child%
 %$$
 If $icode%child% < %n_child%$$,
-it is the $icode child_id$$ that this $icode data_id$$ 
+it is the $icode child_id$$ that this $icode data_id$$
 is associated with; i.e.,
 the $cref/node_id/data_table/node_id/$$ for this
 $icode data_id$$ is a descendent

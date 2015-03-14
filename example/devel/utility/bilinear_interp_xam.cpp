@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -36,7 +36,7 @@ bool bilinear_interp_xam(void)
 	bool   ok = true;
 	size_t i, j;
 	using  std::string;
-	using  CppAD::vector;	
+	using  CppAD::vector;
 
 	double eps = std::numeric_limits<double>::epsilon();
 
@@ -67,13 +67,13 @@ bool bilinear_interp_xam(void)
 	ok = std::fabs( 1.0 - z / z_check  ) < 10.0 * eps;
 
 	// check case where only y is interpolated ( x < x_grid[0] )
-	x = x_grid[0] - 10.; 
+	x = x_grid[0] - 10.;
 	y = 1990.0 + 10 * 1.5;
 	z = dismod_at::bilinear_interp(
 		x, y, x_grid, y_grid, z_grid, i, j
 	);
 	z_check  = x_grid[0] * y + 1.0;
-	ok       =  i == 0; 
+	ok       =  i == 0;
 	ok       = y_grid[j] <= y && y <= y_grid[j+1];
 	ok       = std::fabs( 1.0 - z / z_check  ) < 10.0 * eps;
 
@@ -85,7 +85,7 @@ bool bilinear_interp_xam(void)
 	);
 	z_check  = x * y_grid[n_y-1] + 1.0;
 	ok       = x_grid[i] <= x && x <= x_grid[i+1];
-	ok       = j == (n_y-1); 
+	ok       = j == (n_y-1);
 	ok       = std::fabs( 1.0 - z / z_check  ) < 10.0 * eps;
 
 

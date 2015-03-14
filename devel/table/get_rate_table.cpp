@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -38,17 +38,17 @@ and is an open connection to the database.
 $head rate_struct$$
 This is a structure with the following fields
 $table
-Type $cnext Field $cnext Description 
+Type $cnext Field $cnext Description
 $rnext
 $code rate_enum$$ $cnext $code rate$$  $cnext
 	enum corresponding to $cref/rate_name/rate_table/rate_name/$$
 $rnext
-$code int$$ $cnext $code parent_smooth_id$$  $cnext 
-	The $cref/parent_smooth_id/rate_table/parent_smooth_id/$$ 
+$code int$$ $cnext $code parent_smooth_id$$  $cnext
+	The $cref/parent_smooth_id/rate_table/parent_smooth_id/$$
 $rnext
-$code int$$ $cnext $code child_smooth_id$$  $cnext 
-	The $cref/child_smooth_id/rate_table/child_smooth_id/$$ 
-$tend        
+$code int$$ $cnext $code child_smooth_id$$  $cnext
+	The $cref/child_smooth_id/rate_table/child_smooth_id/$$
+$tend
 
 $head rate_table$$
 The return value $icode rate_table$$ has prototype
@@ -63,9 +63,9 @@ is the information value for the corresponding
 $cref/rate_id/rate_table/rate_id/$$.
 
 $head Rate Enum Values$$
-The $icode rate_table$$ can also be addressed 
+The $icode rate_table$$ can also be addressed
 using the $code rate_enum$$ values as follows:
-$table 
+$table
 $icode rate_id$$    $pre  $$ $cnext $icode rate_name$$     $rnext
 $code iota_enum$$   $pre  $$ $cnext $code iota$$           $rnext
 $code rho_enum$$    $pre  $$ $cnext $code rho$$            $rnext

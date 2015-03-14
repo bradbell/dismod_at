@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -64,7 +64,7 @@ The input size of this vector must be zero.
 Upon return it contains the values in the specified column.
 
 $subhead text$$
-If the column has type $code text$$, this argument has 
+If the column has type $code text$$, this argument has
 prototype
 $codei%
 	CppAD::vector<std::string>& %result%
@@ -72,7 +72,7 @@ $codei%
 It is an error for any for any of the text values to be $code null$$.
 
 $subhead integer$$
-If the column has type $code integer$$, this argument has 
+If the column has type $code integer$$, this argument has
 prototype
 $codei%
 	CppAD::vector<int>& %result%
@@ -80,7 +80,7 @@ $codei%
 It is an error for any for any of the integer values to be $code null$$.
 
 $subhead real$$
-If the column has type $code real$$, this argument has 
+If the column has type $code real$$, this argument has
 prototype
 $codei%
 	CppAD::vector<double>& %result%
@@ -112,11 +112,11 @@ namespace {
 	int    convert(const int& not_used, char* v)
 	{	// no integer values should be null
 		assert( v != nullptr );
-		return std::atoi(v); 
+		return std::atoi(v);
 	}
 	double convert(const double& not_used, char* v)
 	{	if( v == nullptr )
-			return std::atof("nan");	
+			return std::atof("nan");
 		return std::atof(v);
 	}
 
@@ -133,22 +133,22 @@ namespace {
 
 	template <class Element>
 	void get_column(
-		sqlite3*                    db                    , 
+		sqlite3*                    db                    ,
 		const std::string&          table_name            ,
 		const std::string&          column_name           ,
 		CppAD::vector<Element>&     vector_result         )
 	{	using std::cerr;
 		using std::endl;
-	
+
 		// check that initial vector is empty
 		assert( vector_result.size() == 0 );
-	
+
 		// sql command: select column_name from table_name
 		std::string cmd = "select ";
 		cmd            += column_name;
 		cmd            += " from ";
 		cmd            += table_name;
-	
+
 		// execute sql command
 		char* zErrMsg     = nullptr;
 		callback_type fun = callback<Element>;
@@ -186,10 +186,10 @@ std::string get_table_column_type(
 		"main",
 		table_name.c_str(),
 		column_name.c_str(),
-		&zDataType, 
-		&zCollSeq, 
-		&NotNull, 
-		&PrimaryKey, 
+		&zDataType,
+		&zCollSeq,
+		&NotNull,
+		&PrimaryKey,
 		&Autoinc
 	);
 	if( rc ){
@@ -208,7 +208,7 @@ std::string get_table_column_type(
 
 
 void get_table_column(
-	sqlite3*                    db                  , 
+	sqlite3*                    db                  ,
 	const std::string&          table_name          ,
 	const std::string&          column_name         ,
 	CppAD::vector<std::string>& text_result         )
@@ -219,7 +219,7 @@ void get_table_column(
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
 	if( col_type != "text" )
-	{	std::cerr << "get_table_column: for table = " << table_name 
+	{	std::cerr << "get_table_column: for table = " << table_name
 		<< ", column = " << column_name << std::endl
 		<< "expect type to be text, not " << col_type << std::endl;
 		exit(1);
@@ -232,7 +232,7 @@ void get_table_column(
 }
 
 void get_table_column(
-	sqlite3*                    db                 , 
+	sqlite3*                    db                 ,
 	const std::string&          table_name         ,
 	const std::string&          column_name        ,
 	CppAD::vector<int>&         int_result         )
@@ -243,7 +243,7 @@ void get_table_column(
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
 	if( col_type != "integer" )
-	{	std::cerr << "get_table_column: for table = " << table_name 
+	{	std::cerr << "get_table_column: for table = " << table_name
 		<< ", column = " << column_name << std::endl
 		<< "expect type to be integer, not " << col_type << std::endl;
 		exit(1);
@@ -256,7 +256,7 @@ void get_table_column(
 }
 
 void get_table_column(
-	sqlite3*                    db                 , 
+	sqlite3*                    db                 ,
 	const std::string&          table_name         ,
 	const std::string&          column_name        ,
 	CppAD::vector<double>&      double_result      )
@@ -267,7 +267,7 @@ void get_table_column(
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
 	if( col_type != "real" )
-	{	std::cerr << "get_table_column: for table = " << table_name 
+	{	std::cerr << "get_table_column: for table = " << table_name
 		<< ", column = " << column_name << std::endl
 		<< "expect type to be real, not " << col_type << std::endl;
 		exit(1);

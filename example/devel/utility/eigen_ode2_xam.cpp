@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -26,7 +26,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include <dismod_at/eigen_ode2.hpp>
-	
+
 namespace {
 	typedef CppAD::AD<double> Float;
 	class Fun {
@@ -35,8 +35,8 @@ namespace {
 		vector b_;
 	public:
 		void Ode(const Float& t, const vector& y, vector& yp)
-		{	yp[0] = b_[0] * y[0] + b_[1] * y[1]; 
-			yp[1] = b_[2] * y[0] + b_[3] * y[1]; 
+		{	yp[0] = b_[0] * y[0] + b_[1] * y[1];
+			yp[1] = b_[2] * y[0] + b_[3] * y[1];
 			return;
 		}
 		void set(const vector& b)
@@ -82,7 +82,7 @@ bool eigen_ode2_xam(void)
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
 	//
-	// eigen vector case 
+	// eigen vector case
 	b[0] = -3.0 , b[1] =  0.5;
 	b[2] =  1.0 , b[3] = -4.0;
 	F.set(b);

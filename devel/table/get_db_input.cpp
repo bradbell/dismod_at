@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -38,7 +38,7 @@ $subhead Primary Key$$
 Check that all occurrences of $icode%table_name%_id%$$ are with in
 the limit for the corresponding table.
 Note that this only checks limits, and not positional dependent limits.
-For example, $code -1$$ might appear anywhere in 
+For example, $code -1$$ might appear anywhere in
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$.
 
 $subhead Initial Prevalence Grid$$
@@ -62,7 +62,7 @@ $verbatim%include/dismod_at/get_db_input.hpp%0%// BEGIN STRUCT%// END STRUCT%$$
 $$
 $pre
 $$
-Each of the tables above is defined by the corresponding get routine. 
+Each of the tables above is defined by the corresponding get routine.
 For example, the age table is the return value of
 $cref get_age_table$$.
 
@@ -94,7 +94,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void get_db_input(sqlite3* db, db_input_struct& db_input)
 {	using CppAD::vector;
-	
+
 	db_input.age_table         = get_age_table(db);
 	db_input.time_table        = get_time_table(db);
 	db_input.rate_table        = get_rate_table(db);
@@ -144,7 +144,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, integrand_id, integrand, -1);
 	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, covariate_id, covariate, 0);
 	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, smooth_id, smooth, 0);
-	
+
 	// data table
 	DISMOD_AT_CHECK_PRIMARY_ID(data, integrand_id, integrand, 0);
 	DISMOD_AT_CHECK_PRIMARY_ID(data, density_id,   density,   0);
@@ -156,14 +156,14 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(rate, parent_smooth_id, smooth, 0);
 
 	// -----------------------------------------------------------------------
-	// other checks 
+	// other checks
 	check_pini_n_age(
-		db_input.rate_table       , 
+		db_input.rate_table       ,
 		db_input.smooth_table
 	);
 	check_child_prior(
-		db_input.rate_table        , 
-		db_input.smooth_grid_table , 
+		db_input.rate_table        ,
+		db_input.smooth_grid_table ,
 		db_input.prior_table
 	);
 

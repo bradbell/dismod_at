@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -85,7 +85,7 @@ $codei%
 It specifies the age grid indices; i.e.
 $codei%
 	%w_info%.age_id(%i%) = %age_id%[%i%]
-%$$ 
+%$$
 
 $subhead time_id$$
 This argument has prototype
@@ -95,7 +95,7 @@ $codei%
 It specifies the time grid indices; i.e.
 $codei%
 	%w_info%.time_id(%i%) = %time_id%[%i%]
-%$$ 
+%$$
 
 $subhead weight$$
 This argument has prototype
@@ -105,7 +105,7 @@ $codei%
 It specifies the weight grid values in row major order; i.e.
 $codei%
 	%w_info%.weight(%i%, %j%) = %time_id%[%i%*%n_time% + %j%]
-%$$ 
+%$$
 
 $head w_default$$
 This is the default constructor. It can be used to create
@@ -146,7 +146,7 @@ This return value has prototype
 $codei%
 	size_t %a_id%
 %$$
-and is the $th i$$ $cref/age_id/weight_grid_table/age_id/$$ 
+and is the $th i$$ $cref/age_id/weight_grid_table/age_id/$$
 for this weighting and increases with $icode i$$; i.e.,
 for $icode%i% < %n_age%-2%$$
 $codei%
@@ -158,7 +158,7 @@ This return value has prototype
 $codei%
 	size_t %t_id%
 %$$
-and is the $th j$$ $cref/time_id/weight_grid_table/time_id/$$ 
+and is the $th j$$ $cref/time_id/weight_grid_table/time_id/$$
 for this weighting and increases with $icode j$$; i.e.,
 for $icode%j% < %n_time%-2%$$
 $codei%
@@ -220,7 +220,7 @@ size_t weight_info::time_id(size_t j) const
 double weight_info::weight(size_t i, size_t j) const
 {	assert( i < age_id_.size() );
 	assert( j < time_id_.size() );
-	return weight_[ i * time_id_.size() + j]; 
+	return weight_[ i * time_id_.size() + j];
 }
 
 // Assignment operator
@@ -274,7 +274,7 @@ weight_info::weight_info(
 	size_t n_age  = age_id_.size();
 	size_t n_time = time_id_.size();
 
-	// set weight_ and count number of times each 
+	// set weight_ and count number of times each
 	// age, time pair appears for this weight_id
 	CppAD::vector<size_t> count(n_age * n_time );
 	weight_.resize(n_age  * n_time );

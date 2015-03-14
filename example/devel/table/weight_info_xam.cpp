@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -33,14 +33,14 @@ bool weight_info_xam(void)
 {
 	bool   ok = true;
 	using  std::string;
-	using  CppAD::vector;	
+	using  CppAD::vector;
 
 	string   file_name = "example.db";
 	bool     new_file  = true;
 	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
 
 	// sql commands
-	const char* sql_cmd[] = { 
+	const char* sql_cmd[] = {
 	"create table weight_grid("
 		" weight_grid_id integer primary key,"
 		" weight_id      integer, "
@@ -61,7 +61,7 @@ bool weight_info_xam(void)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
 	// get the weight_grid table
-	vector<dismod_at::weight_grid_struct> 
+	vector<dismod_at::weight_grid_struct>
 		weight_grid_table = dismod_at::get_weight_grid(db);
 
 	// extract the weight_grid information

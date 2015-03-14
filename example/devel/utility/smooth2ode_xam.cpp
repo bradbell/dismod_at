@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -35,7 +35,7 @@ bool smooth2ode_xam(void)
 	bool   ok = true;
 	size_t i, j, k;
 	using  std::string;
-	using  CppAD::vector;	
+	using  CppAD::vector;
 	typedef CppAD::AD<double> Float;
 
 	double eps = std::numeric_limits<double>::epsilon();
@@ -63,10 +63,10 @@ bool smooth2ode_xam(void)
 
 	// testing constructor
 	dismod_at::smooth_info s_info(
-		age_id, 
-		time_id, 
-		value_prior_id, 
-		dage_prior_id, 
+		age_id,
+		time_id,
+		value_prior_id,
+		dage_prior_id,
 		dtime_prior_id,
 		mulstd_value,
 		mulstd_dage,
@@ -88,7 +88,7 @@ bool smooth2ode_xam(void)
 
 	// construct the interpolation object
 	dismod_at::smooth2ode si2ode(
-		n_age_ode, n_time_ode, ode_step_size, age_table, time_table, 
+		n_age_ode, n_time_ode, ode_step_size, age_table, time_table,
 		s_info
 	);
 
@@ -118,7 +118,7 @@ bool smooth2ode_xam(void)
 	CppAD::vector<double> vdbl_si(n_age_si * n_time_si);
 	CppAD::vector<double> age_si(n_age_si), time_si(n_time_si);
 	for(i = 0; i < n_age_si; i++)
-	{	age_si[i] = age_table[ age_id[i] ]; 	
+	{	age_si[i] = age_table[ age_id[i] ];
 		for(j = 0; j < n_time_si; j++)
 			vdbl_si[i * n_time_si + j] = i*i + j*j;
 	}

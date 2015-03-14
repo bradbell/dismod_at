@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -83,7 +83,7 @@ CppAD::vector<weight_struct> get_weight_table(sqlite3* db)
 
 	string table_name  = "weight";
 	size_t n_weight    = check_table_id(db, table_name);
-	
+
 	string column_name =  "weight_name";
 	CppAD::vector<string>  weight_name;
 	get_table_column(db, table_name, column_name, weight_name);

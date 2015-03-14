@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -46,8 +46,8 @@ $codei%
 is the enum value for the corresponding
 $cref/density_name/density_table/density_name/$$.
 
-$head Density Enum Values$$ 
-The $icode density_table$$ can also be addressed 
+$head Density Enum Values$$
+The $icode density_table$$ can also be addressed
 using the $code density_enum$$ values as follows:
 $table
 $icode density_id$$        $pre  $$ $cnext $icode density_name$$ $rnext
@@ -56,7 +56,7 @@ $code gaussian_enum$$      $pre  $$ $cnext $code gaussian$$      $rnext
 $code laplace_enum$$       $pre  $$ $cnext $code laplace$$       $rnext
 $code log_gaussian_enum$$  $pre  $$ $cnext $code log_gaussian$$  $rnext
 $code log_laplace_enum$$   $pre  $$ $cnext $code log_laplace$$
-$tend        
+$tend
 The number of these enum values is $code number_density_enum$$.
 
 $children%example/devel/table/get_density_table_xam.cpp

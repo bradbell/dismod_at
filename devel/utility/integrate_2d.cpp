@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -35,7 +35,7 @@ $pre
 $$
 The function $latex U(a, t)$$ is defined on the larger rectangle by
 $latex \[
-U(a, t) = 
+U(a, t) =
 	u_{11} \frac{ ( a_2 - a )( t_2 - t ) }{( a_2 - a_1 )( t_2 - t_1 )} +
 	u_{12} \frac{ ( a_2 - a )( t - t_1 ) }{( a_2 - a_1 )( t_2 - t_1 )} +
 	u_{21} \frac{ ( a - a_1 )( t_2 - t ) }{( a_2 - a_1 )( t_2 - t_1 )} +
@@ -45,27 +45,27 @@ The product of $latex U(a, t)$$ times the weighting is defined
 on the smaller rectangle by
 $latex \[
 \begin{array}{rcl}
-V(a, t) 
-& = & 
-( a_2 - a_1 )^{-1} ( t_2 - t_1 )^{-1} \left[ 
+V(a, t)
+& = &
+( a_2 - a_1 )^{-1} ( t_2 - t_1 )^{-1} \left[
 	w_{11} U( b_1 , s_1 )( b_2 - a )( s_2 - t )
 	+
 	w_{12} U( b_1, s_2 )( b_2 - a )( t - s_1 )
 \right]
 \\ & + &
-( a_2 - a_1 )^{-1} ( t_2 - t_1 )^{-1} \left[ 
+( a_2 - a_1 )^{-1} ( t_2 - t_1 )^{-1} \left[
 	w_{21} U( b_2 , s_1 )( a - b_1 )( s_2 - t )
 	+
 	w_{22} U( b_2, s_2 )( a - b_1 )( t - s_1 )
 \right]
 \end{array}
 \] $$
-where 
+where
 $latex a_1 \leq b_1 < b_2 \leq a_2$$ and
 $latex t_1 \leq s_1 < s_2 \leq t_2$$.
 Note that for $latex i = 1,2$$, $latex j = 1,2$$ we have
 $latex U( a_i , t_j ) = u_{ij}$$
-and 
+and
 $latex V( b_i , s_j ) = w_{ij} U ( b_i , s_j )$$.
 This routine computes coefficients
 $latex c_{11}, c_{12}, c_{21}, c_{22}$$ such that
@@ -78,7 +78,7 @@ $latex \[
 \] $$
 where the coefficients
 $latex c_{11}, c_{12}, c_{21}, c_{22}$$ do not depend on the values
-$latex u_{11}, u_{12}, u_{21}, u_{22}$$. 
+$latex u_{11}, u_{12}, u_{21}, u_{22}$$.
 
 
 $head a, t, b, s$$
@@ -89,9 +89,9 @@ $codei%
 	const std::pair<double, double>& %x%
 %$$
 with the following identifications;
-$latex x_1 = $$ $icode%x%.first%$$ and 
+$latex x_1 = $$ $icode%x%.first%$$ and
 $latex x_2 = $$ $icode%x%.second%$$.
- 
+
 $head w$$
 This argument has prototype
 $codei%
@@ -102,7 +102,7 @@ $latex w_{11} = $$ $icode%w%[0]%$$,
 $latex w_{12} = $$ $icode%w%[1]%$$,
 $latex w_{21} = $$ $icode%w%[2]%$$, and
 $latex w_{22} = $$ $icode%w%[3]%$$.
- 
+
 $head c$$
 The return value has prototype
 $codei%
@@ -121,7 +121,7 @@ The file $cref integrate_2d_xam.cpp$$ contains an example and test
 of using this routine.
 
 $head Method$$
-Using the notation 
+Using the notation
 $latex d = b_2 - b_1$$, and $latex e = s_2 - s_1$$,
 $latex \[
 I  = \int_0^e \int_0^d V( a + b1 , t + s_1 ) \; \B{d} a \; \B{d} t
@@ -146,10 +146,10 @@ I  = ( d e / 4 ) ( v_{11} + v_{12} + v_{21} + v_{22} )
 \] $$
 Using the definitions for $latex v_{ij}$$ we obtain
 $latex \[
-I = ( d e / 4 ) \left[  
-	w_{11} U( b_1 , s_1 ) + 
-	w_{12} U( b_1 , s_2 ) + 
-	w_{21} U( b_2 , s_1 ) + 
+I = ( d e / 4 ) \left[
+	w_{11} U( b_1 , s_1 ) +
+	w_{12} U( b_1 , s_2 ) +
+	w_{21} U( b_2 , s_1 ) +
 	w_{22} U( b_2 , s_2 )
 \right]
 \] $$
@@ -165,7 +165,7 @@ where
 $latex \[
 \begin{array}{rcl}
 c_{11} & = &
-r [ 
+r [
 	w_{11} ( a_2 - b_1 ) ( t_2 - s_1 ) +
 	w_{12} ( a_2 - b_1 ) ( t_2 - s_2 ) +
 	w_{21} ( a_2 - b_2 ) ( t_2 - s_1 ) +
@@ -173,7 +173,7 @@ r [
 ]
 \\
 c_{12} & = &
-r [ 
+r [
 	w_{11} ( a_2 - b_1 ) ( s_1 - t_1 ) +
 	w_{12} ( a_2 - b_1 ) ( s_2 - t_1 ) +
 	w_{21} ( a_2 - b_2 ) ( s_1 - t_1 ) +
@@ -181,7 +181,7 @@ r [
 ]
 \\
 c_{21} & = &
-r [ 
+r [
 	w_{11} ( b_1 - a_1 ) ( t_2 - s_1 ) +
 	w_{12} ( b_1 - a_1 ) ( t_2 - s_2 ) +
 	w_{21} ( b_2 - a_1 ) ( t_2 - s_1 ) +
@@ -189,7 +189,7 @@ r [
 ]
 \\
 c_{22} & = &
-r [ 
+r [
 	w_{11} ( b_1 - a_1 ) ( s_1 - t_1 ) +
 	w_{12} ( b_1 - a_1 ) ( s_2 - t_1 ) +
 	w_{21} ( b_2 - a_1 ) ( s_1 - t_1 ) +

@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -38,14 +38,14 @@ and is an open connection to the database.
 $head node_struct$$
 This is a structure with the following fields
 $table
-Type $cnext Field $cnext Description 
+Type $cnext Field $cnext Description
 $rnext
-$code std::string$$ $cnext $code node_name$$  $cnext 
-	The $cref/node_name/node_table/node_name/$$ for this node  
+$code std::string$$ $cnext $code node_name$$  $cnext
+	The $cref/node_name/node_table/node_name/$$ for this node
 $rnext
-$code int$$ $cnext $code parent$$  $cnext 
+$code int$$ $cnext $code parent$$  $cnext
 	The $cref/parent/node_table/parent/$$ $icode node_id$$
-$tend        
+$tend
 
 $head node_table$$
 The return value $icode node_table$$ has prototype

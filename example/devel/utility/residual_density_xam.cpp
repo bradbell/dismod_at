@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -61,7 +61,7 @@ bool residual_density_xam(void)
 	density     = dismod_at::log_gaussian_enum;
 	eta         = 3.0;
 	wres_logden = residual_density(density, z, mu, delta, eta);
-	sigma       = log(mu + eta + delta) - log(mu + eta); 
+	sigma       = log(mu + eta + delta) - log(mu + eta);
 	wres        = ( log(z + eta) - log(mu + eta) ) / sigma;
 	logden      = - log(sigma * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 	ok         &= fabs(1.0 - wres_logden.wres / wres) <= eps;
@@ -72,7 +72,7 @@ bool residual_density_xam(void)
 	density     = dismod_at::log_laplace_enum;
 	eta         = 3.0;
 	wres_logden = residual_density(density, z, mu, delta, eta);
-	sigma       = log(mu + eta + delta) - log(mu + eta); 
+	sigma       = log(mu + eta + delta) - log(mu + eta);
 	wres        = ( log(z + eta) - log(mu + eta) ) / sigma;
 	logden      = - log(sigma * sqrt(2.0) ) - sqrt(2.0) * fabs( wres );
 	ok         &= fabs(1.0 - wres_logden.wres / wres) <= eps;

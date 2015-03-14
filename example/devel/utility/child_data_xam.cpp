@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -43,7 +43,7 @@ bool child_data_xam(void)
 	node_table[1].parent =  0; // child_id = 0
 	node_table[2].parent =  0; // child_id = 1
 	node_table[3].parent =  2; // grand child node below child_id = 2
-	
+
 	// data_table
 	size_t n_data = 4;
 	CppAD::vector<dismod_at::data_struct> data_table(n_data);
@@ -66,8 +66,8 @@ bool child_data_xam(void)
 	// check data_id2child_id
 	ok &= cd.data_id2child(0) == 1;       // first  data child_id = 1
 	ok &= cd.data_id2child(1) == 1;       // second data child_id = 1
-	ok &= cd.data_id2child(2) == 0;       // third  data child_id = 
-	ok &= cd.data_id2child(3) == n_child; // fourth data in parent set 
+	ok &= cd.data_id2child(2) == 0;       // third  data child_id =
+	ok &= cd.data_id2child(3) == n_child; // fourth data in parent set
 
 	return ok;
 }

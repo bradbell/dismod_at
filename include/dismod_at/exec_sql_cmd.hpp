@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -15,7 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <string>
 namespace dismod_at {
 	extern void exec_sql_cmd(
-		sqlite3*           db, 
+		sqlite3*           db,
 		const std::string& sql_cmd
 	);
 }

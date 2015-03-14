@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -111,7 +111,7 @@ The return value has prototype
 $codei%
 	double %weight%
 %$$
-It is the value of the 
+It is the value of the
 $cref/bilinear interpolant/glossary/Bilinear Interpolant/$$ at the specified
 $icode age$$ and $icode time$$.
 
@@ -157,7 +157,7 @@ double interp_weight(
 	else
 	{	assert( n_age > 1 );
 		while( age < age_table[ w_info.age_id(i_wi) ] )
-		{	assert( 0 < i_wi ); 
+		{	assert( 0 < i_wi );
 			i_wi--;
 		}
 		while( age_table[ w_info.age_id(i_wi+1) ] < age )

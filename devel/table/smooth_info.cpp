@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -70,11 +70,11 @@ $cref/n_time/smooth_table/n_time/$$ are the number if age values
 and number of time values in the corresponding rectangular grid in
 $cref smooth_grid_table$$.
 $lnext
-Checks that 
+Checks that
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ is $code -1$$
 for the maximum age points and only the maximum age points.
 $lnext
-Checks that 
+Checks that
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ is $code -1$$
 for the maximum time points and on the maximum time points.
 $lend
@@ -126,7 +126,7 @@ $codei%
 It specifies the age grid indices; i.e.
 $codei%
 	%s_info%.age_id(%i%) = %age_id%[%i%]
-%$$ 
+%$$
 
 $subhead time_id$$
 This argument has prototype
@@ -136,10 +136,10 @@ $codei%
 It specifies the time grid indices; i.e.
 $codei%
 	%s_info%.time_id(%i%) = %time_id%[%i%]
-%$$ 
+%$$
 
 $subhead type_prior_id$$
-For $icode type$$ equal to 
+For $icode type$$ equal to
 $code value$$, $code dage$$ and $code dtime$$
 these arguments have prototype
 $codei%
@@ -150,12 +150,12 @@ $codei%
 	%s_info%.value_prior_id(%i%, %j%) = %value_prior_id%[%i%*%n_time% + %j%]
 	%s_info%.dage_prior_id(%i%, %j%)  = %dage_prior_id%[%i%*%n_time% + %j%]
 	%s_info%.dtime_prior_id(%i%, %j%) = %dtime_prior_id%[%i%*%n_time% + %j%]
-%$$ 
+%$$
 where $icode%n_time% = %time_id%.size()%$$.
 
 
 $subhead mulstd_type$$
-For $icode type$$ equal to 
+For $icode type$$ equal to
 $code value$$, $code dage$$ and $code dtime$$
 these arguments have prototype
 $codei%
@@ -166,7 +166,7 @@ $codei%
 	%s_info%.mulstd_value()  = %mulstd_value%
 	%s_info%.mulstd_dage()   = %mulstd_dage%
 	%s_info%.mulstd_dtime()  = %mulstd_dtime%
-%$$ 
+%$$
 
 $head s_default$$
 This is the default constructor. It can be used to create
@@ -207,7 +207,7 @@ This return value has prototype
 $codei%
 	size_t %a_id%
 %$$
-and is the $th i$$ $cref/age_id/smooth_grid_table/age_id/$$ 
+and is the $th i$$ $cref/age_id/smooth_grid_table/age_id/$$
 for this smoothing and increases with $icode i$$; i.e.,
 for $icode%i% < %n_age%-2%$$
 $codei%
@@ -219,7 +219,7 @@ This return value has prototype
 $codei%
 	size_t %t_id%
 %$$
-and is the $th j$$ $cref/time_id/smooth_grid_table/time_id/$$ 
+and is the $th j$$ $cref/time_id/smooth_grid_table/time_id/$$
 for this smoothing and increases with $icode j$$; i.e.,
 for $icode%j% < %n_time%-2%$$
 $codei%
@@ -233,29 +233,29 @@ $codei%
 %%$$
 
 $head i_type$$
-For $icode type$$ equal to 
+For $icode type$$ equal to
 $code value$$, $code dage$$ and $code dtime$$
 these return values have prototypes
 $codei%
 	size_t %i_value%, %i_dage%, %i_dtime%
 %$$
-and are the 
+and are the
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$,
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$, and
-$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ 
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
 corresponding to age index $icode i$$ and time index $icode j$$.
 
 $head m_type$$
-For $icode type$$ equal to 
+For $icode type$$ equal to
 $code value$$, $code dage$$ and $code dtime$$
 these return values have prototypes
 $codei%
 	size_t %m_value%, %m_dage%, %m_dtime%
 %$$
-and are the 
+and are the
 $cref/mulstd_value/smooth_table/mulstd_value/$$,
 $cref/mulstd_dage/smooth_table/mulstd_dage/$$, and
-$cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ 
+$cref/mulstd_dtime/smooth_table/mulstd_dtime/$$
 for this smoothing.
 
 $children%example/devel/table/smooth_info_xam.cpp
@@ -306,17 +306,17 @@ size_t smooth_info::time_id(size_t j) const
 size_t smooth_info::value_prior_id(size_t i, size_t j) const
 {	assert( i < age_id_.size() );
 	assert( j < time_id_.size() );
-	return value_prior_id_[ i * time_id_.size() + j]; 
+	return value_prior_id_[ i * time_id_.size() + j];
 }
 size_t smooth_info::dage_prior_id(size_t i, size_t j) const
 {	assert( i < age_id_.size() );
 	assert( j < time_id_.size() );
-	return dage_prior_id_[ i * time_id_.size() + j]; 
+	return dage_prior_id_[ i * time_id_.size() + j];
 }
 size_t smooth_info::dtime_prior_id(size_t i, size_t j) const
 {	assert( i < age_id_.size() );
 	assert( j < time_id_.size() );
-	return dtime_prior_id_[ i * time_id_.size() + j]; 
+	return dtime_prior_id_[ i * time_id_.size() + j];
 }
 //
 size_t smooth_info::mulstd_value(void) const
@@ -415,7 +415,7 @@ smooth_info::smooth_info(
 	size_t n_age  = age_id_.size();
 	size_t n_time = time_id_.size();
 
-	// set smoothing priors and count number of times each 
+	// set smoothing priors and count number of times each
 	// age, time pair appears for this smooth_id
 	CppAD::vector<size_t> count(n_age * n_time );
 	value_prior_id_.resize(n_age  * n_time );
