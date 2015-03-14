@@ -24,23 +24,7 @@ $section Joint Likelihood$$
 $head Under Construction$$
 
 $head Syntax$$
-$codei%joint_like %joint%(
-	// arguments in same order as for data_model constructor
-	%parent_node_id%,
-	%n_age_ode%,
-	%n_time_ode%,
-	%ode_step_size%,
-	%age_table%,
-	%time_table%,
-	%integrand_table%,
-	%node_table%,
-	%data_table%,
-	%w_info_vec%,
-	%s_info_vec%,
-	// arguments to prior_density that are not in data_model constructor
-	%pack_info%,
-	%prior_table%,
-)%$$
+$codei%joint_like %joint_object%(%data_object%, %pack_info%, %prior_table%)%$$
 
 $head Purpose$$
 This object can be used to evaluate the joint likelihood of the
@@ -50,103 +34,26 @@ and the
 $cref/measurement vector/data_like/Data Table Notation/y_i/$$, $latex y$$
 as a function of the fixed and random effects; i.e., to evaluate
 $latex \[
-	\B{p} ( y | u , \theta ) \B{p} ( u | \theta ) \B{p} ( \theta )
+f( u , \theta ) = \B{p}( y | u , \theta ) \B{p}( u | \theta ) \B{p}( \theta )
 \] $$
 up to a constant multiple that does not depend on
 $latex u$$ or $latex \theta$$.
 
-$head parent_node_id$$
-This argument has prototype
-$codei%
-	size_t %parent_node_id%
-%$$
-and is the run table
-$cref/parent_node_id/run_table/parent_node_id/$$.
+$head References$$
+The $icode joint_object$$ will hold a reference to its arguments
+$icode data_object$$, $icode pack_info$$, and $icode prior_table$$.
+For this reason, $icode joint_object$$ cannot be used once after
+$icode data_object$$, $icode pack_info$$, or $icode prior_table$$
+has been deleted.
 
-$head n_age_ode$$
+$head data_object$$
 This argument has prototype
 $codei%
-	size_t %n_age_ode%
+	const data_model& %data_object%
 %$$
-It is the number of points in the
-$cref/ode age grid/glossary/Ode Grid/Age, a_i/$$.
-
-$head n_time_ode$$
-This argument has prototype
-$codei%
-	size_t %n_time_ode%
-%$$
-It is the number of points in the
-$cref/ode time grid/glossary/Ode Grid/Time, t_j/$$.
-
-$head ode_step_size$$
-This argument has prototype
-$codei%
-	double %ode_step_size%
-%$$
-and is the value of $cref/ode_step_size/run_table/ode_step_size/$$
-in the run table.
-
-$head age_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>&  %age_table%
-%$$
-and is the $cref/age_table/get_age_table/age_table/$$.
-
-$head time_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>&  %time_table%
-%$$
-and is the $cref/time_table/get_time_table/time_table/$$.
-
-$head integrand_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<integrand_struct>&  %integrand_table%
-%$$
-and is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
-
-$head node_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<node_struct>& %node_table%
-%$$
-and is the $cref/node_table/get_node_table/node_table/$$.
-Only the $code parent$$ field of this table is used.
-
-$head data_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<data_struct>&  %data_table%
-%$$
-and is the $cref/data_table/get_data_table/data_table/$$.
-
-$head w_info_vec$$
-This argument has prototype
-$codei%
-	const CppAD::vector<weight_info>& %w_info_vec%
-%$$
-For each $cref/weight_id/weight_table/weight_id/$$,
-$codei%
-	%w_info_vec%[ %weight_id% ]
-%$$
-is the corresponding $cref weight_info$$ information.
-
-$head s_info_vec$$
-This argument has prototype
-$codei%
-	const CppAD::vector<smooth_info>& %s_info_vec%
-%$$
-For each $cref/smooth_id/smooth_table/smooth_id/$$,
-$codei%
-	%s_info_vec%[ %smooth_id% ]
-%$$
-is the corresponding $cref smooth_info$$ information.
-For each $icode%s_info_vec%[%smooth_id%]%$$ object,
-only the following functions are used:
-$code age_size$$, $code time_size$$, $code age_id$$, $code time_id$$.
+see $cref/data_model/devel_data_model/$$,
+and contains the information necessary for evaluation of
+$latex \B{p}( y | u , \theta )$$.
 
 $head pack_info$$
 This argument has prototype
@@ -177,33 +84,13 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // consctructor
 joint_like::joint_like(
-	size_t                                 parent_node_id  ,
-	size_t                                 n_age_ode       ,
-	size_t                                 n_time_ode      ,
-	double                                 ode_step_size   ,
-	const CppAD::vector<double>&           age_table       ,
-	const CppAD::vector<double>&           time_table      ,
-	const CppAD::vector<integrand_struct>& integrand_table ,
-	const CppAD::vector<node_struct>&      node_table      ,
-	const CppAD::vector<data_struct>&      data_table      ,
-	const CppAD::vector<weight_info>&      w_info_vec      ,
-	const CppAD::vector<smooth_info>&      s_info_vec      ,
-	const pack_var&                        pack_info        ,
+	const data_model&                      data_object     ,
+	const pack_var&                        pack_info       ,
 	const CppAD::vector<prior_struct>&     prior_table     )
 :
-dm_(
-	parent_node_id  ,
-	n_age_ode       ,
-	n_time_ode      ,
-	ode_step_size   ,
-	age_table       ,
-	time_table      ,
-	integrand_table ,
-	node_table      ,
-	data_table      ,
-	w_info_vec      ,
-	s_info_vec
-)
+data_object_(data_object) ,
+pack_info_(pack_info)     ,
+prior_table_(prior_table)
 { }
 
 
