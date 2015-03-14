@@ -1,10 +1,10 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
@@ -25,12 +25,12 @@ $head syntax$$
 $codei%check_child_prior(%rate_table%, %smooth_grid%, %prior_table%)%$$
 
 $head Purpose$$
-Checks the 
+Checks the
 $cref/child smoothing assumptions/rate_table/child_smooth_id/$$.
-Note that 
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ 
+Note that
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
 for the last age point, and
-$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ 
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
 for the last time point,
 are $code -1$$ and there is no prior to check for these cases.
 
@@ -52,7 +52,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<rate_struct>& %rate_table%
 %$$
-and it is the 
+and it is the
 $cref/rate_table/get_rate_table/rate_table/$$.
 For this table,
 only the $code child_smooth_id$$ field is used.
@@ -62,9 +62,9 @@ This argument has prototype
 $codei%
 	const CppAD::vector<smooth_grid_struct>& %smooth_grid%
 %$$
-and it is the 
+and it is the
 $cref/smooth_grid/get_smooth_grid/smooth_grid/$$.
-For this table, only the 
+For this table, only the
 $code value_prior_id$$, $code dage_prior_id$$, and $code dtime_prior_id$$
 fields are used.
 
@@ -73,10 +73,10 @@ This argument has prototype
 $codei%
 	const CppAD::vector<prior_struct>& %prior_table%
 %$$
-and it is the 
+and it is the
 $cref/prior_table/get_prior_table/prior_table/$$.
 For this table,
-only the 
+only the
 $code value_prior_id$$,
 $code dage_prior_id$$, and
 $code dtime_prior_id$$,
@@ -113,9 +113,9 @@ void check_child_prior(
 			name[2]     = "child dtime prior";
 			// skip dage and dtime priors for last age and last time
 			for(size_t i = 0; i < 3; i++) if( prior_id[i] != -1 )
-			{	int    density_id = prior_table[prior_id[i]].density_id; 
-				double mean       = prior_table[prior_id[i]].mean; 
-				double std        = prior_table[prior_id[i]].std; 
+			{	int    density_id = prior_table[prior_id[i]].density_id;
+				double mean       = prior_table[prior_id[i]].mean;
+				double std        = prior_table[prior_id[i]].std;
 				double lower      = prior_table[prior_id[i]].lower;
 				double upper      = prior_table[prior_id[i]].upper ;
 				bool   ok         = true;

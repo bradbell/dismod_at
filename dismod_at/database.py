@@ -1,10 +1,10 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
@@ -32,7 +32,7 @@ import sqlite3
 # and convert each element to a unicode value.
 #
 # $head quote_string$$
-# is either $code True$$ or $code False$$. 
+# is either $code True$$ or $code False$$.
 # If it is $code True$$, and an element is a $code str$$ or $code unicode$$,
 # it is surrounded by the single quote character.
 #
@@ -42,10 +42,10 @@ import sqlite3
 #
 # $head Infinity$$
 # If $icode u_j$$ is a $code float$$ and equal to plus infinity,
-# the corresponding tuple value has an exponent that is ten times the 
-# exponent for the maximum float. 
-# This is so that, when written by pythons $code sqlite$$ package, it 
-# gets converted to infinity. 
+# the corresponding tuple value has an exponent that is ten times the
+# exponent for the maximum float.
+# This is so that, when written by pythons $code sqlite$$ package, it
+# gets converted to infinity.
 # Minus infinity is handled in a similar fashion.
 #
 # $head u_tuple$$
@@ -54,9 +54,9 @@ import sqlite3
 # $codei%
 #	%u_tuple% = u'( %u_1%, %u_2%, %...%, %u_n% )'
 # %$$
-# where $icode n$$ is the number of elements 
+# where $icode n$$ is the number of elements
 # and $icode u_1$$ is the $th i$$ element.
-# 
+#
 # $end
 # --------------------------------------------------------------------------
 def unicode_infinity() :
@@ -66,7 +66,7 @@ def unicode_infinity() :
 	inf      = u'10e' + unicode(exponent)
 	return inf
 def unicode_tuple(iterable, quote_string) :
-	u_tuple = u'(' 
+	u_tuple = u'('
 	count   = 0
 	for element in iterable :
 		if count > 0 :
@@ -103,9 +103,9 @@ def unicode_tuple(iterable, quote_string) :
 # %$$
 #
 # $head file_name$$
-# is as $code str$$ containing the name of the file where the data base 
+# is as $code str$$ containing the name of the file where the data base
 # is stored.
-# 
+#
 # $head new$$
 # is either $code True$$ or $code False$$.
 # If it is true, and a data base with the same name already exists,
@@ -152,11 +152,11 @@ def create_connection(file_name, new) :
 # $head col_name2type$$
 # The return value is an ordered dictionary where the order is the
 # same as the order of the columns in the table.
-# The key is the column name and 
+# The key is the column name and
 # the value is one of the following:
 # $code integer$$, $code real$$, $code text$$, or
 # $code integer primary key$$.
-# 
+#
 # $end
 # ---------------------------------------------------------------------------
 def get_name2type(connection, tbl_name) :
@@ -196,7 +196,7 @@ def get_name2type(connection, tbl_name) :
 #
 # $head Syntax$$
 # $codei%dismod_at.create_table(
-#	%connection%, %tbl_name%, %col_name%, %col_type%, %row_list% 
+#	%connection%, %tbl_name%, %col_name%, %col_type%, %row_list%
 # )%$$
 #
 # $head connection$$
@@ -224,7 +224,7 @@ def get_name2type(connection, tbl_name) :
 # $code integer primary key$$.
 #
 # $head row_list$$
-# is a possibly empty $code list$$ of rows contain data that is written 
+# is a possibly empty $code list$$ of rows contain data that is written
 # to the table.
 # Each row is itself a list containing the data for one row of the
 # table in the same order as $icode col_name$$.
@@ -235,7 +235,7 @@ def get_name2type(connection, tbl_name) :
 # with zero for the first row and incrementing by one for each row.
 #
 #
-# $children%example/table/create_table.py 
+# $children%example/table/create_table.py
 # %$$
 # $head Example$$
 # The file $cref create_table.py$$ is an example use of
@@ -301,12 +301,12 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # )%$$
 #
 # $head Purpose$$
-# This routine makes it easy to create all the 
+# This routine makes it easy to create all the
 # $cref input$$ tables in a $code dismod_at$$ database.
 # This is only meant for small example and testing cases and is not efficient.
 #
 # $head file_name$$
-# is as $code str$$ containing the name of the file where the data base 
+# is as $code str$$ containing the name of the file where the data base
 # is stored.
 # If this file already exists, it is deleted and a database is created.
 #
@@ -366,19 +366,19 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $tend
 #
 # $head data_list$$
-# This is a list of $code dict$$ 
+# This is a list of $code dict$$
 # that define the rows of the $cref data_table$$.
 # The dictionary $icode%data_list%[%i%]%$$ has the following:
 # $table
-# Key          $cnext Value Type  $cnext Description                 $rnext 
-# integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext 
-# density      $cnext str         $cnext density                     $rnext 
-# node         $cnext str         $cnext node in graph               $rnext 
-# weight       $cnext str         $cnext weighting function          $rnext 
-# meas_value   $cnext float       $cnext measured value              $rnext 
-# meas_std     $cnext float       $cnext standard deviation          $rnext 
-# age_lower    $cnext float       $cnext lower age limit             $rnext 
-# age_upper    $cnext float       $cnext upper age limit             $rnext 
+# Key          $cnext Value Type  $cnext Description                 $rnext
+# integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext
+# density      $cnext str         $cnext density                     $rnext
+# node         $cnext str         $cnext node in graph               $rnext
+# weight       $cnext str         $cnext weighting function          $rnext
+# meas_value   $cnext float       $cnext measured value              $rnext
+# meas_std     $cnext float       $cnext standard deviation          $rnext
+# age_lower    $cnext float       $cnext lower age limit             $rnext
+# age_upper    $cnext float       $cnext upper age limit             $rnext
 # time_lower   $cnext float       $cnext lower time limit            $rnext
 # time_lower   $cnext float       $cnext upper time limit            $rnext
 # $icode c_0$$ $cnext float       $cnext value of first covariate    $rnext
@@ -396,12 +396,12 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # that define the rows of the $cref prior_table$$.
 # The dictionary $icode%prior_list%[%i%]%$$ has the following:
 # $table
-# Key     $cnext Value Type    $cnext Description                $rnext 
-# name    $cnext str           $cnext name of $th i$$ prior $rnext 
-# lower   $cnext float         $cnext lower limit                $rnext 
-# upper   $cnext float         $cnext upper limit                $rnext 
-# std     $cnext float         $cnext standard deviation         $rnext 
-# density $cnext float         $cnext density function           $rnext 
+# Key     $cnext Value Type    $cnext Description                $rnext
+# name    $cnext str           $cnext name of $th i$$ prior $rnext
+# lower   $cnext float         $cnext lower limit                $rnext
+# upper   $cnext float         $cnext upper limit                $rnext
+# std     $cnext float         $cnext standard deviation         $rnext
+# density $cnext float         $cnext density function           $rnext
 # eta     $cnext float         $cnext offset in log densities
 # $tend
 #
@@ -415,16 +415,16 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # name    $cnext str         $cnext name of $th i$$ smoothing  $rnext
 # age_id  $cnext list of int $cnext indices for age values     $rnext
 # time_id $cnext list of int $cnext indices for time values    $rnext
-# mulstd_value   $cnext str   $cnext 
+# mulstd_value   $cnext str   $cnext
 #	name for $cref/mulstd_value/smooth_table/mulstd_value/$$ smoothing $rnext
-# mulstd_dage   $cnext str   $cnext 
+# mulstd_dage   $cnext str   $cnext
 #	name for $cref/mulstd_dage/smooth_table/mulstd_dage/$$ smoothing $rnext
-# mulstd_dtime   $cnext str   $cnext 
+# mulstd_dtime   $cnext str   $cnext
 #	name for $cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ smoothing $rnext
 # fun     $cnext function    $cnext $icode%(%v%,%da%,%dt%)%=%fun%(%a%, %t%)%$$
 # $tend
 # The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
-# are the prior names for the value, difference in age, 
+# are the prior names for the value, difference in age,
 # and difference in time corresponding to this smoothing name.
 # Note that $icode age_id$$ and $code time_id$$ must be in increasing order,
 # $icode da$$ is not used when age $icode%a% = %age_id%[-1]%$$ and
@@ -462,7 +462,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $table
 # Key     $cnext Value Type    $cnext Description                $rnext
 # parent_node       $cnext int $cnext name of parent for this analysis $rnext
-# pini_smooth     $cnext int $cnext 
+# pini_smooth     $cnext int $cnext
 #	name of initial prevalence smoothing $rnext
 # ode_step_size     $cnext double
 #	$cnext used to approximation ODE solution $rnext
@@ -471,7 +471,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $tend
 # Note that if the i-th node does not have a parent, the empty string
 # should be used for the parent of that node.
-# 
+#
 # $end
 def create_database(
 	file_name,
@@ -527,12 +527,12 @@ def create_database(
 	# create density table
 	col_name = [  'density_name'   ]
 	col_type = [  'text'        ]
-	row_list = [ 
+	row_list = [
 		['uniform'],
-		['gaussian'], 
-		['laplace'], 
-		['log_gaussian'], 
-		['log_laplace'] 
+		['gaussian'],
+		['laplace'],
+		['log_gaussian'],
+		['log_laplace']
 	]
 	tbl_name = 'density'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
@@ -543,7 +543,7 @@ def create_database(
 	# ------------------------------------------------------------------------
 	# create covariate table
 	col_name = [ 'covariate_name',	'reference' ]
-	col_type = [ 'text',             'real'     ] 
+	col_type = [ 'text',             'real'     ]
 	row_list = [ ]
 	for i in range( len(covariate_list) ) :
 		covariate = covariate_list[i]
@@ -574,19 +574,19 @@ def create_database(
 		row_list.append( [ name, parent ] )
 	tbl_name = 'node'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------ 
+	# ------------------------------------------------------------------------
 	# create the prior table
-	col_name = [ 
-		'prior_name', 'lower', 'upper', 'mean', 'std',  'density_id', 'eta'  
+	col_name = [
+		'prior_name', 'lower', 'upper', 'mean', 'std',  'density_id', 'eta'
 	]
-	col_type = [ 
+	col_type = [
 		'text',       'real', 'real',  'real', 'real', 'integer',    'real'
 	]
 	row_list = [ ]
 	for i in range( len( prior_list ) ) :
 		prior         = prior_list[i]
 		density_id   = global_density_name2id[ prior['density'] ]
-		row  = [	
+		row  = [
 			prior['name'],
 			prior['lower'],
 			prior['upper'],
@@ -602,7 +602,7 @@ def create_database(
 	global_prior_name2id = {}
 	for i in range( len(row_list) ) :
 		global_prior_name2id[ row_list[i][0] ] = i
-	# ------------------------------------------------------------------------ 
+	# ------------------------------------------------------------------------
 	# create weight table
 	col_name = [ 'weight_name', 'n_age',   'n_time'   ]
 	col_type = [ 'text',        'integer', 'integer'  ]
@@ -635,7 +635,7 @@ def create_database(
 				row_list.append( [ i, j, k, w] )
 	tbl_name = 'weight_grid'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------ 
+	# ------------------------------------------------------------------------
 	# create smooth table
 	col_name = [ 'smooth_name', 'n_age',   'n_time', 'mulstd_value',
 		'mulstd_dage', 'mulstd_dtime'    ]
@@ -650,8 +650,8 @@ def create_database(
 		mulstd_value   = global_prior_name2id[ smooth['mulstd_value'] ]
 		mulstd_dage    = global_prior_name2id[ smooth['mulstd_dage']  ]
 		mulstd_dtime   = global_prior_name2id[ smooth['mulstd_dtime'] ]
-		row_list.append( [ 
-		name, n_age, n_time, mulstd_value, mulstd_dage, mulstd_dtime   
+		row_list.append( [
+		name, n_age, n_time, mulstd_value, mulstd_dage, mulstd_dtime
 		] )
 	tbl_name = 'smooth'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
@@ -662,9 +662,9 @@ def create_database(
 	# ------------------------------------------------------------------------
 	# create smooth grid table
 	col_name = [
-		'smooth_id', 
-		'age_id',  
-		'time_id',  
+		'smooth_id',
+		'age_id',
+		'time_id',
 		'value_prior_id',
 		'dage_prior_id',
 		'dtime_prior_id',
@@ -714,14 +714,14 @@ def create_database(
 		global_rate_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------
 	# mulcov table
-	col_name = [ 
+	col_name = [
 		'mulcov_type',
 		'rate_id',
-		'integrand_id', 
-		'covariate_id', 
+		'integrand_id',
+		'covariate_id',
   		'smooth_id'
 	]
-	col_type = [ 
+	col_type = [
 		'text',    # mulcov_type
 		'integer', # rate_id
 		'integer', # integrand_id
@@ -736,7 +736,7 @@ def create_database(
 		if mulcov_type == 'rate_mean' :
 			rate_id      = global_rate_name2id[ effected ]
 			integrand_id = -1
-		else : 
+		else :
 			integrand_id = global_integrand_name2id[ effected ]
 			rate_id      = -1
 		covariate_id  = global_covariate_name2id[ mulcov['covariate'] ]
@@ -746,7 +746,7 @@ def create_database(
 		)
 	tbl_name = 'mulcov'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------ 
+	# ------------------------------------------------------------------------
 	# create the data table
 	col_name = [
 		'integrand_id',
@@ -784,7 +784,7 @@ def create_database(
 		density_id   = global_density_name2id[ data['density'] ]
 		node_id      = global_node_name2id[ data['node'] ]
 		weight_id    = global_weight_name2id[ data['weight'] ]
-		row = [ 
+		row = [
 			integrand_id,
 			density_id,
 			node_id,
@@ -803,10 +803,10 @@ def create_database(
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create run table
-	col_name = [ 
+	col_name = [
 		'parent_node_id','pini_smooth_id', 'ode_step_size','n_sample'
 	]
-	col_type = [ 
+	col_type = [
 		'integer',       'integer',        'real',         'integer'
 	]
 	row_list = []
@@ -815,8 +815,8 @@ def create_database(
 		pini_smooth_id     = global_smooth_name2id[ run['pini_smooth'] ]
 		ode_step_size      = run['ode_step_size']
 		n_sample           = run['n_sample']
-		row_list.append( [ 
-			parent_node_id, pini_smooth_id, ode_step_size, n_sample 
+		row_list.append( [
+			parent_node_id, pini_smooth_id, ode_step_size, n_sample
 		] )
 	tbl_name = 'run'
 	create_table(connection, tbl_name, col_name, col_type, row_list)

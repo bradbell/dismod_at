@@ -1,14 +1,14 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin rate_table$$ 
+$begin rate_table$$
 $spell
 	std
 	dage
@@ -25,7 +25,7 @@ The $code rate$$ table is used to set the smoothing for each of the rates.
 It has the following columns:
 
 $head rate_id$$
-This column has type $code integer$$ 
+This column has type $code integer$$
 and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
@@ -47,7 +47,7 @@ $subhead pini$$
 The initial prevalence is the prevalence at the initial age; i.e.,
 the value $cref/age/age_table/age/$$ corresponding to
 $icode%age_id% == 0%$$.
-If $icode rate_name$$ is $code pini$$, the 
+If $icode rate_name$$ is $code pini$$, the
 $icode parent_smooth_id$$ and $icode child_smooth_id$$ smoothings must have
 $cref/n_age/smooth_table/n_age/$$ equal to one.
 This is because prevalence at the initial age
@@ -55,22 +55,22 @@ is only a function of time, and does not depend on age.
 
 $head parent_smooth_id$$
 This column has type $code integer$$ and its value is a
-$cref/smooth_id/smooth_grid_table/smooth_id/$$ 
+$cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
-It specifies the smoothing used as a prior for this rate 
+It specifies the smoothing used as a prior for this rate
 when fitting the parent (fixed effects).
 
 $head child_smooth_id$$
 This column has type $code integer$$ and its value is a
-$cref/smooth_id/smooth_grid_table/smooth_id/$$ 
+$cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
-It specifies the smoothing used as a prior for this rate 
+It specifies the smoothing used as a prior for this rate
 when fitting the children (random effects).
-For each grid point there is a 
+For each grid point there is a
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
-The following conditions must hold for each of these 
+The following conditions must hold for each of these
 $cref/prior_id/prior_table/prior_id/$$ values:
 
 $list number$$
