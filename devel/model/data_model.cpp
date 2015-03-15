@@ -1029,9 +1029,10 @@ Float data_model::avg_yes_ode(
 $begin devel_data_model_like$$
 
 $spell
+	struct
 	logden
 	fabs
-	loglike
+	logden
 	std
 	Integrands
 	wres
@@ -1052,7 +1053,7 @@ $$
 $section Weighted Residuals and Log-Likelihood for All Integrands$$
 
 $head Syntax$$
-$icode%wres_loglike% = %data_object%.data_like(
+$icode%wres_logden% = %data_object%.data_like(
 	%data_id%, %pack_object%, %pack_vec%, %avg%
 )%$$
 
@@ -1136,44 +1137,13 @@ $cref devel_data_model_avg_yes_ode$$ $cnext
 
 $tend
 
-$head Weighted Residual$$
-The weighted residual (see $cref model_density$$) is given by the value
+$head wres_logden$$
+The return value has prototype
 $codei%
-	%Float% %wres%  = %wres_loglike%.wres
+	residual_struct<%Float%> %wres_logden%
 %$$
-
-$head Log-Density$$
-The log-likelihood represented by
-$codei%
-	%Float% %logden_smooth%  = %wres_loglike%.logden_smooth
-	%Float% %logden_sub_abs% = %wres_loglike%.logden_sub_abs
-%$$
-The values $icode logden_smooth$$ and $icode logden_sub_abs$$
-are infinitely differentiable with
-respect to the model variables $cref/pack_vec/devel_data_model_like/pack_vec/$$;
-i.e., smooth.
-
-$head Uniform$$
-In the case where the density is uniform,
-both $icode logden_smooth$$ and $icode logden_sub_abs$$ are zero.
-
-$head Gaussian$$
-In the case where the density is
-$cref/Gaussian/model_density/Gaussian/$$ or
-$cref/Log-Gaussian/model_density/Log-Gaussian/$$,
-the log-likelihood is equal to $icode logden_smooth$$ and
-$icode logden_sub_abs$$ is zero.
-
-$head Laplace$$
-In the case where the density is
-$cref/Laplace/model_density/Laplace/$$ or
-$cref/Log-Laplace/model_density/Log-Laplace/$$ likelihoods,
-the log-likelihood is equal to
-$codei%
-	%logden_smooth% - fabs(%logden_sub_abs)%)
-%$$
-This enables one to express the log-likelihood
-in terms of smooth functions (for optimization purposes).
+see $cref/residual_struct/residual_density/wres_logden/residual_struct/$$.
+It contains the weighted residual and the corresponding log-density.
 
 $children%example/devel/model/data_like_xam.cpp
 %$$
@@ -1186,7 +1156,7 @@ $end
 template <class Float>
 residual_struct<Float> data_model::data_like(
 		size_t                        data_id  ,
-		const pack_info&               pack_object ,
+		const pack_info&              pack_object ,
 		const CppAD::vector<Float>&   pack_vec  ,
 		const Float&                  avg
 	) const

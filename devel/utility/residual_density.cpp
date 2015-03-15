@@ -81,7 +81,7 @@ $codei%
 	residual_struct<%Float%> %wres_logden%
 %$$
 
-$head residual_struct$$
+$subhead residual_struct$$
 This structure has the following fields:
 $table
 Type $cnext Field $cnext Description $rnext
