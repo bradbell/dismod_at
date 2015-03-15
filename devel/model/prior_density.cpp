@@ -11,7 +11,6 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin prior_density$$
 $spell
-	logden
 	pack_vec
 	CppAD
 	const
@@ -25,7 +24,7 @@ $$
 $section Compute Prior Density for the Fixed and Random Effects$$
 
 $head Syntax$$
-$icode%logden% = prior_density(
+$icode%residual_vec% = prior_density(
 	%pack_object%, %pack_vec%,
 	%age_table%, %time_table%, %prior_table%, %s_info_vec%
 )%$$
@@ -36,7 +35,7 @@ and random effects $latex u$$ is
 $latex \[
 	\B{p} ( u | \theta ) \B{p} ( \theta )
 \] $$
-See
+see
 $cref/p(u|theta)/random_prior/p(u|theta)/$$ and
 $cref/p(theta)/fixed_prior/p(theta)/$$.
 
@@ -101,28 +100,20 @@ $codei%
 %$$
 is the corresponding $cref smooth_info$$ information.
 
-$head logden$$
+$head residual_vec$$
 The return value has prototype
 $codei%
-	prior_density_struct<%Float%> %logden%
+	CppAD::vector< residual_struct<%Float%> > %residual_vec%
 %$$
-The log of the density function (see $cref model_density$$)
-is represented by
-$codei%
-	%Float%                %smooth%   = %logden%.smooth
-	CppAD::vector<%Float%> %sub_abs%  = %logden%.sub_abs
-%$$
-The value $icode smooth$$ and components of $icode logden_sub_abs$$
-are infinitely differentiable with
-respect to the model variables $cref/pack_vec/prior_density/pack_vec/$$;
-i.e., smooth.
-The log of the prior density for all the
-$cref/model_variables/model_variable/$$ is
-$codei%
-	%sum% = %smooth%;
-	for(size_t %i% = 0; %i% < %sub_abs%.size(); %i%++)
-		%sum% -= fabs( %sub_abs% );
-%$$.
+The size of $icode residual$$ is not equal to $icode pack_object.size()$$
+because there are priors on smoothing differences as well as values.
+The order of the residuals is unspecified (at this time).
+The log of the prior density for the 
+$cref/fixed/model_variable/Fixed Effects, theta/$$
+and $cref/random/model_variable/Random Effects, u/$$ effects,
+$latex \B{p}( u | \theta ) \B{p}( \theta )$$,
+is the sum of the log of the probabilities corresponding to all the
+$cref/residuals/residual_density/$$ in $icode residual_vec$$.
 
 $children%example/devel/model/prior_density_xam.cpp
 %$$
@@ -137,10 +128,10 @@ $end
 # include <dismod_at/prior_density.hpp>
 # include <dismod_at/residual_density.hpp>
 # include <dismod_at/prior_density.hpp>
+# include <dismod_at/smooth_info.hpp>
 
 namespace {
 	using dismod_at::residual_struct;
-	using dismod_at::prior_density_struct;
 	using dismod_at::prior_struct;
 	using dismod_at::smooth_info;
 
@@ -164,28 +155,16 @@ namespace {
 		return residual_density( density, variable, mean, std, eta );
 	}
 
-	// add_to_logden
-	template <class Float>
-	void add_to_logden(
-		prior_density_struct<Float>&    logden      ,
-		int                             density_id  ,
-		residual_struct<Float>& residual )
-	{	logden.smooth += residual.logden_smooth;
-		if( (density_id == laplace_enum) | (density_id == log_laplace_enum) )
-			logden.sub_abs.push_back( residual.logden_sub_abs );
-	}
-
-
 	// log_prior_on_grid
 	template <class Float>
 	void log_prior_density_on_grid(
-		prior_density_struct<Float>&           logden          ,
-		size_t                                 offset          ,
-		const CppAD::vector<Float>&            pack_vec         ,
-		const CppAD::vector<double>&           age_table       ,
-		const CppAD::vector<double>&           time_table      ,
-		const CppAD::vector<prior_struct>&     prior_table     ,
-		const smooth_info&                     s_info          )
+		CppAD::vector< residual_struct<Float> >& residual_vec    ,
+		size_t                                   offset          ,
+		const CppAD::vector<Float>&              pack_vec        ,
+		const CppAD::vector<double>&             age_table       ,
+		const CppAD::vector<double>&             time_table      ,
+		const CppAD::vector<prior_struct>&       prior_table     ,
+		const smooth_info&                       s_info          )
 	{	size_t n_age  = s_info.age_size();
 		size_t n_time = s_info.time_size();
 
@@ -199,7 +178,7 @@ namespace {
 				size_t prior_id           = s_info.value_prior_id(i, j);
 				const prior_struct& prior = prior_table[prior_id];
 				residual                  = log_prior_density(prior, var);
-				add_to_logden(logden, prior.density_id, residual);
+				residual_vec.push_back(residual);
 			}
 		}
 		// age difference smoothing
@@ -214,7 +193,7 @@ namespace {
 				size_t prior_id = s_info.dage_prior_id(i, j);
 				const prior_struct& prior = prior_table[prior_id];
 				residual                  = log_prior_density(prior, dv_da);
-				add_to_logden(logden, prior.density_id, residual);
+				residual_vec.push_back(residual);
 			}
 		}
 		// time difference smoothing
@@ -230,32 +209,28 @@ namespace {
 				size_t prior_id = s_info.dtime_prior_id(i, j);
 				const prior_struct& prior = prior_table[prior_id];
 				residual                  = log_prior_density(prior, dv_dt);
-				add_to_logden(logden, prior.density_id, residual);
+				residual_vec.push_back(residual);
 			}
 		}
 		return;
 	}
-
-
-
 }
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // prior_density
 template <class Float>
-prior_density_struct<Float> prior_density(
-	const pack_info&                        pack_object        ,
-	const CppAD::vector<Float>&            pack_vec         ,
+CppAD::vector< residual_struct<Float> > prior_density(
+	const pack_info&                       pack_object     ,
+	const CppAD::vector<Float>&            pack_vec        ,
 	const CppAD::vector<double>&           age_table       ,
 	const CppAD::vector<double>&           time_table      ,
 	const CppAD::vector<prior_struct>&     prior_table     ,
 	const CppAD::vector<smooth_info>&      s_info_vec      )
 {
 	// initialize the log of the prior density as zero
-	prior_density_struct<Float> logden;
-	logden.smooth = 0.0;
-	assert( logden.sub_abs.size() == 0 );
+	CppAD::vector< residual_struct<Float> > residual_vec;
+	assert( residual_vec.size() == 0 );
 
 	// used to get results from log_prior_density
 	residual_struct<Float> residual;
@@ -277,21 +252,21 @@ prior_density_struct<Float> prior_density(
 
 		// add prior density for this multipliers value
 		residual            = log_prior_density(*prior, mulstd);
-		add_to_logden(logden, prior->density_id, residual);
+		residual_vec.push_back(residual);
 
 		// add multiplier for age difference smoothing
 		mulstd              = pack_vec[offset + 1];
 		prior_id            = s_info_vec[smooth_id].mulstd_dage();
 		prior               = &prior_table[prior_id];
 		residual            = log_prior_density(*prior, mulstd);
-		add_to_logden(logden, prior->density_id, residual);
+		residual_vec.push_back(residual);
 
 		// multiplier for time difference smoothing
 		mulstd              = pack_vec[offset + 2];
 		prior_id            = s_info_vec[smooth_id].mulstd_dtime();
 		prior               = &prior_table[prior_id];
 		residual            = log_prior_density(*prior, mulstd);
-		add_to_logden(logden, prior->density_id, residual);
+		residual_vec.push_back(residual);
 	}
 
 	// rates
@@ -306,9 +281,9 @@ prior_density_struct<Float> prior_density(
 			const smooth_info& s_info = s_info_vec[smooth_id];
 
 			log_prior_density_on_grid(
-				logden      ,
+				residual_vec,
 				offset      ,
-				pack_vec     ,
+				pack_vec    ,
 				age_table   ,
 				time_table  ,
 				prior_table ,
@@ -327,9 +302,9 @@ prior_density_struct<Float> prior_density(
 			const smooth_info& s_info = s_info_vec[smooth_id];
 
 			log_prior_density_on_grid(
-				logden      ,
+				residual_vec,
 				offset      ,
-				pack_vec     ,
+				pack_vec    ,
 				age_table   ,
 				time_table  ,
 				prior_table ,
@@ -349,9 +324,9 @@ prior_density_struct<Float> prior_density(
 			const smooth_info& s_info = s_info_vec[smooth_id];
 
 			log_prior_density_on_grid(
-				logden      ,
+				residual_vec,
 				offset      ,
-				pack_vec     ,
+				pack_vec    ,
 				age_table   ,
 				time_table  ,
 				prior_table ,
@@ -366,9 +341,9 @@ prior_density_struct<Float> prior_density(
 			const smooth_info& s_info = s_info_vec[smooth_id];
 
 			log_prior_density_on_grid(
-				logden      ,
+				residual_vec,
 				offset      ,
-				pack_vec     ,
+				pack_vec    ,
 				age_table   ,
 				time_table  ,
 				prior_table ,
@@ -377,18 +352,18 @@ prior_density_struct<Float> prior_density(
 		}
 	}
 	//
-	return logden;
+	return residual_vec;
 }
 
-# define DISMOD_AT_INSTANTIATE_PRIOR_DENSITY(Float)          \
-	template                                                 \
-	prior_density_struct<Float> prior_density<Float>(        \
-		const pack_info&                        pack_object    , \
-		const CppAD::vector<Float>&            pack_vec     , \
-		const CppAD::vector<double>&           age_table   , \
-		const CppAD::vector<double>&           time_table  , \
-		const CppAD::vector<prior_struct>&     prior_table , \
-		const CppAD::vector<smooth_info>&      s_info_vec    \
+# define DISMOD_AT_INSTANTIATE_PRIOR_DENSITY(Float)               \
+	template                                                      \
+	CppAD::vector< residual_struct<Float> > prior_density<Float>( \
+		const pack_info&                       pack_object      , \
+		const CppAD::vector<Float>&            pack_vec         , \
+		const CppAD::vector<double>&           age_table        , \
+		const CppAD::vector<double>&           time_table       , \
+		const CppAD::vector<prior_struct>&     prior_table      , \
+		const CppAD::vector<smooth_info>&      s_info_vec         \
 	);
 
 // instantiations

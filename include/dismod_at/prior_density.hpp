@@ -16,19 +16,14 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_prior_table.hpp"
 # include "get_smooth_table.hpp"
 # include "smooth_info.hpp"
+# include "residual_density.hpp"
 
 namespace dismod_at {
 
 	template <class Float>
-	struct prior_density_struct {
-		Float                smooth;
-		CppAD::vector<Float> sub_abs;
-	};
-
-	template <class Float>
-	prior_density_struct<Float> prior_density(
-		const pack_info&                        pack_object        ,
-		const CppAD::vector<Float>&            pack_vec         ,
+	CppAD::vector< residual_struct<Float> > prior_density(
+		const pack_info&                       pack_object     ,
+		const CppAD::vector<Float>&            pack_vec        ,
 		const CppAD::vector<double>&           age_table       ,
 		const CppAD::vector<double>&           time_table      ,
 		const CppAD::vector<prior_struct>&     prior_table     ,

@@ -39,7 +39,7 @@ bool prior_density_xam(void)
 	using CppAD::vector;
 	using std::cout;
 	using std::endl;
-	double eps = 100.0 * std::numeric_limits<double>::epsilon() * 100;
+	double eps = std::numeric_limits<double>::epsilon() * 100;
 	double inf = std::numeric_limits<double>::infinity();
 	double sqrt_2   = std::sqrt( 2.0 );
 	double sqrt_2pi = std::sqrt( 8.0 * std::atan(1.0) );
@@ -236,14 +236,26 @@ bool prior_density_xam(void)
 	// meas_std_mulcov: none
 	// rate_mean_mulcov: none
 	// -------------- compute prior density --------------------------------
-	dismod_at::prior_density_struct<double> logden;
-	logden = dismod_at::prior_density(
+	CppAD::vector< dismod_at::residual_struct<double> > residual_vec;
+	residual_vec = dismod_at::prior_density(
 		pack_object, pack_vec,
 		age_table, time_table, prior_table, s_info_vec
 	);
-	double total_logden = logden.smooth;
-	for(i = 0; i < logden.sub_abs.size(); i++)
-		total_logden -= logden.sub_abs[i];
+	double logden    = 0.0;
+	size_t count_abs = 0;
+	for(i = 0; i < residual_vec.size(); i++)
+	{	logden += residual_vec[i].logden_smooth;
+		switch( residual_vec[i].density )
+		{	case dismod_at::laplace_enum:
+			case dismod_at::log_laplace_enum:
+			logden -= std::fabs( residual_vec[i].logden_sub_abs );
+			count_abs++;
+			break;
+
+			default:
+			break;
+		}
+	}
 	// --------------- check result ------------------------------------------
 	double check  = 0.0;
 	double mean_v = prior_table[prior_id_gaussian].mean;
@@ -296,16 +308,16 @@ bool prior_density_xam(void)
 			}
 		}
 	}
-	double relerr = 1.0 - total_logden / check;
-	ok   &= count_laplace == logden.sub_abs.size();
+	double relerr = 1.0 - logden / check;
+	ok   &= count_laplace == count_abs;
 	ok   &= fabs( relerr ) < eps;
 # if DISMOD_AT_PRIOR_DENSITY_XAM_TRACE
 	cout << endl;
 	cout << "count_laplace = " << count_laplace << endl;
-	cout << "logden.sub_abs.size() = " << logden.sub_abs.size() << endl;
-	cout << "check = " << check << endl;
-	cout << "total_logden = " << total_logden << endl;
-	cout << "relerr = " << relerr << endl;
+	cout << "count_abs     = " << count_abs << endl;
+	cout << "check         = " << check << endl;
+	cout << "logden        = " << logden << endl;
+	cout << "relerr        = " << relerr << endl;
 # endif
 	return ok;
 }
