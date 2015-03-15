@@ -81,36 +81,40 @@ $codei%
 	residual_struct<%Float%> %wres_logden%
 %$$
 
-$head Weighted Residual$$
-The weighted residual (see $cref model_density$$) is given by the value
-$codei%
-	%Float% %wres%  = %wres_logden%.wres
-%$$
-
-$head Log-Density$$
-The log of the density function (see $cref model_density$$)
-is represented by
-$codei%
-	%Float% %logden_smooth%  = %wres_logden%.logden_smooth
-	%Float% %logden_sub_abs% = %wres_logden%.logden_sub_abs
-%$$
-The values $icode logden_smooth$$ and $icode logden_sub_abs$$
-are infinitely differentiable with
-respect to the $cref/model_variables/model_variable/$$; i.e., smooth.
+$head residual_struct$$
+This structure has the following fields:
+$table
+Type $cnext Field $cnext Description $rnext
+$icode Float$$ $cnext
+	$code wres$$ $cnext
+	weighted residual
+$rnext
+$icode Float$$ $cnext
+	$code logden_smooth$$ $cnext
+	smooth term in corresponding log-density 
+$rnext
+$icode Float$$ $cnext
+	$code logden_sub_abs$$ $cnext
+	smooth term in absolute value in corresponding log-density 
+$rnext
+$icode density_enum$$ $cnext
+	$code density$$ $cnext
+	The type of density function
+$tend
 
 $subhead Uniform$$
-In the case where the density is uniform,
+In the case where the $icode density$$ is uniform,
 both $icode logden_smooth$$ and $icode logden_sub_abs$$ are zero.
 
 $subhead Gaussian$$
-In the case where the density is
+In the case where the $icode density$$ is
 $cref/Gaussian/model_density/Gaussian/$$ or
 $cref/Log-Gaussian/model_density/Log-Gaussian/$$,
 the log-density is equal to $icode logden_smooth$$ and
 $icode logden_sub_abs$$ is zero.
 
 $subhead Laplace$$
-In the case where the density is
+In the case where the $icode density$$ is
 $cref/Laplace/model_density/Laplace/$$ or
 $cref/Log-Laplace/model_density/Log-Laplace/$$ likelihoods,
 the log-density is equal to
@@ -186,6 +190,7 @@ residual_struct<Float> residual_density(
 	wres_logden.wres           = wres;
 	wres_logden.logden_smooth  = logden_smooth;
 	wres_logden.logden_sub_abs = logden_sub_abs;
+	wres_logden.density        = density;
 	return wres_logden;
 }
 
