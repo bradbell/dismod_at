@@ -1053,7 +1053,7 @@ $$
 $section Weighted Residuals and Log-Likelihood for All Integrands$$
 
 $head Syntax$$
-$icode%wres_logden% = %data_object%.data_like(
+$icode%residual% = %data_object%.data_like(
 	%data_id%, %pack_object%, %pack_vec%, %avg%
 )%$$
 
@@ -1137,12 +1137,12 @@ $cref devel_data_model_avg_yes_ode$$ $cnext
 
 $tend
 
-$head wres_logden$$
+$head residual$$
 The return value has prototype
 $codei%
-	residual_struct<%Float%> %wres_logden%
+	residual_struct<%Float%> %residual%
 %$$
-see $cref/residual_struct/residual_density/wres_logden/residual_struct/$$.
+see $cref/residual_struct/residual_density/residual/residual_struct/$$.
 It contains the weighted residual and the corresponding log-density.
 
 $children%example/devel/model/data_like_xam.cpp

@@ -25,7 +25,7 @@ $$
 $section Compute the Weighted Residual and Log-Density$$
 
 $head Syntax$$
-$icode%wres_logden% = residual_density(%density%, %z%, %mu%, %delta%, %eta%)%$$
+$icode%residual% = residual_density(%density%, %z%, %mu%, %delta%, %eta%)%$$
 
 $head density$$
 This argument has prototype
@@ -75,10 +75,10 @@ $head eta$$
 Is the offset in the Log-Gaussian and Log-Laplace $icode density$$ cases
 (and is not used in the other cases).
 
-$head wres_logden$$
+$head residual$$
 The return value has prototype
 $codei%
-	residual_struct<%Float%> %wres_logden%
+	residual_struct<%Float%> %residual%
 %$$
 
 $subhead residual_struct$$
@@ -186,12 +186,12 @@ residual_struct<Float> residual_density(
 		assert(false);
 	}
 	//
-	residual_struct<Float> wres_logden;
-	wres_logden.wres           = wres;
-	wres_logden.logden_smooth  = logden_smooth;
-	wres_logden.logden_sub_abs = logden_sub_abs;
-	wres_logden.density        = density;
-	return wres_logden;
+	residual_struct<Float> residual;
+	residual.wres           = wres;
+	residual.logden_smooth  = logden_smooth;
+	residual.logden_sub_abs = logden_sub_abs;
+	residual.density        = density;
+	return residual;
 }
 
 // instantiation macro

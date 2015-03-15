@@ -169,10 +169,10 @@ namespace {
 	void add_to_logden(
 		prior_density_struct<Float>&    logden      ,
 		int                             density_id  ,
-		residual_struct<Float>& wres_logden )
-	{	logden.smooth += wres_logden.logden_smooth;
+		residual_struct<Float>& residual )
+	{	logden.smooth += residual.logden_smooth;
 		if( (density_id == laplace_enum) | (density_id == log_laplace_enum) )
-			logden.sub_abs.push_back( wres_logden.logden_sub_abs );
+			logden.sub_abs.push_back( residual.logden_sub_abs );
 	}
 
 
@@ -190,7 +190,7 @@ namespace {
 		size_t n_time = s_info.time_size();
 
 		// used to get results from log_prior_density
-		residual_struct<Float> wres_logden;
+		residual_struct<Float> residual;
 
 		// value smoothing
 		for(size_t i = 0; i < n_age; i++)
@@ -198,8 +198,8 @@ namespace {
 			{	Float  var      = Float(pack_vec[offset + i * n_time + j]);
 				size_t prior_id           = s_info.value_prior_id(i, j);
 				const prior_struct& prior = prior_table[prior_id];
-				wres_logden               = log_prior_density(prior, var);
-				add_to_logden(logden, prior.density_id, wres_logden);
+				residual                  = log_prior_density(prior, var);
+				add_to_logden(logden, prior.density_id, residual);
 			}
 		}
 		// age difference smoothing
@@ -213,8 +213,8 @@ namespace {
 				Float  dv_da    = Float((v1 - v0) / (a1 - a0));
 				size_t prior_id = s_info.dage_prior_id(i, j);
 				const prior_struct& prior = prior_table[prior_id];
-				wres_logden               = log_prior_density(prior, dv_da);
-				add_to_logden(logden, prior.density_id, wres_logden);
+				residual                  = log_prior_density(prior, dv_da);
+				add_to_logden(logden, prior.density_id, residual);
 			}
 		}
 		// time difference smoothing
@@ -229,8 +229,8 @@ namespace {
 				Float  dv_dt    = Float((v1 - v0) / (t1 - t0));
 				size_t prior_id = s_info.dtime_prior_id(i, j);
 				const prior_struct& prior = prior_table[prior_id];
-				wres_logden               = log_prior_density(prior, dv_dt);
-				add_to_logden(logden, prior.density_id, wres_logden);
+				residual                  = log_prior_density(prior, dv_dt);
+				add_to_logden(logden, prior.density_id, residual);
 			}
 		}
 		return;
@@ -258,7 +258,7 @@ prior_density_struct<Float> prior_density(
 	assert( logden.sub_abs.size() == 0 );
 
 	// used to get results from log_prior_density
-	residual_struct<Float> wres_logden;
+	residual_struct<Float> residual;
 
 	// number of smoothings
 	size_t n_smooth = s_info_vec.size();
@@ -276,22 +276,22 @@ prior_density_struct<Float> prior_density(
 		const prior_struct* prior = &prior_table[prior_id];
 
 		// add prior density for this multipliers value
-		wres_logden         = log_prior_density(*prior, mulstd);
-		add_to_logden(logden, prior->density_id, wres_logden);
+		residual            = log_prior_density(*prior, mulstd);
+		add_to_logden(logden, prior->density_id, residual);
 
 		// add multiplier for age difference smoothing
 		mulstd              = pack_vec[offset + 1];
 		prior_id            = s_info_vec[smooth_id].mulstd_dage();
 		prior               = &prior_table[prior_id];
-		wres_logden         = log_prior_density(*prior, mulstd);
-		add_to_logden(logden, prior->density_id, wres_logden);
+		residual            = log_prior_density(*prior, mulstd);
+		add_to_logden(logden, prior->density_id, residual);
 
 		// multiplier for time difference smoothing
 		mulstd              = pack_vec[offset + 2];
 		prior_id            = s_info_vec[smooth_id].mulstd_dtime();
 		prior               = &prior_table[prior_id];
-		wres_logden         = log_prior_density(*prior, mulstd);
-		add_to_logden(logden, prior->density_id, wres_logden);
+		residual            = log_prior_density(*prior, mulstd);
+		add_to_logden(logden, prior->density_id, residual);
 	}
 
 	// rates
