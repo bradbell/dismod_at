@@ -15,8 +15,8 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-cd dismod_at/include
-list=`ls * | sed -e '/^junk/d'`
+cd include/dismod_at
+list=`ls *.hpp`
 for file in $list
 do
 	check=`echo $file | tr 'a-z' 'A-Z'`

@@ -8,8 +8,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_PACK_VAR_HPP
-# define DISMOD_AT_PACK_VAR_HPP
+# ifndef DISMOD_AT_PACK_INFO_HPP
+# define DISMOD_AT_PACK_INFO_HPP
 
 # include <cppad/vector.hpp>
 # include "get_node_table.hpp"
