@@ -1184,7 +1184,7 @@ of using this routine.
 $end
 */
 template <class Float>
-residual_density_struct<Float> data_model::data_like(
+residual_struct<Float> data_model::data_like(
 		size_t                        data_id  ,
 		const pack_info&               pack_object ,
 		const CppAD::vector<Float>&   pack_vec  ,
@@ -1286,7 +1286,7 @@ residual_density_struct<Float> data_model::data_like(
 		const pack_info&               pack_object ,            \
 		const CppAD::vector<Float>&   pack_vec               \
 	) const;                                                \
-	template residual_density_struct<Float>                 \
+	template residual_struct<Float>                 \
 	data_model::data_like(                                  \
 		size_t                        data_id  ,            \
 		const pack_info&               pack_object ,            \

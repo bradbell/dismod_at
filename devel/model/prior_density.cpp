@@ -139,7 +139,7 @@ $end
 # include <dismod_at/prior_density.hpp>
 
 namespace {
-	using dismod_at::residual_density_struct;
+	using dismod_at::residual_struct;
 	using dismod_at::prior_density_struct;
 	using dismod_at::prior_struct;
 	using dismod_at::smooth_info;
@@ -151,7 +151,7 @@ namespace {
 
 	// log_prior_density
 	template <class Float>
-	residual_density_struct<Float> log_prior_density(
+	residual_struct<Float> log_prior_density(
 		const prior_struct&   prior    ,
 		const Float&          variable )
 	{	assert ( 0 <= prior.density_id  );
@@ -169,7 +169,7 @@ namespace {
 	void add_to_logden(
 		prior_density_struct<Float>&    logden      ,
 		int                             density_id  ,
-		residual_density_struct<Float>& wres_logden )
+		residual_struct<Float>& wres_logden )
 	{	logden.smooth += wres_logden.logden_smooth;
 		if( (density_id == laplace_enum) | (density_id == log_laplace_enum) )
 			logden.sub_abs.push_back( wres_logden.logden_sub_abs );
@@ -190,7 +190,7 @@ namespace {
 		size_t n_time = s_info.time_size();
 
 		// used to get results from log_prior_density
-		residual_density_struct<Float> wres_logden;
+		residual_struct<Float> wres_logden;
 
 		// value smoothing
 		for(size_t i = 0; i < n_age; i++)
@@ -258,7 +258,7 @@ prior_density_struct<Float> prior_density(
 	assert( logden.sub_abs.size() == 0 );
 
 	// used to get results from log_prior_density
-	residual_density_struct<Float> wres_logden;
+	residual_struct<Float> wres_logden;
 
 	// number of smoothings
 	size_t n_smooth = s_info_vec.size();

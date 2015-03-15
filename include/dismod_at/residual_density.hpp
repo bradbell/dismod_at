@@ -17,14 +17,14 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 
 	template <class Float>
-	struct residual_density_struct {
+	struct residual_struct {
 		Float wres;
 		Float logden_smooth;
 		Float logden_sub_abs;
 	};
 
 	template <class Float>
-	residual_density_struct<Float> residual_density(
+	residual_struct<Float> residual_density(
 		density_enum density ,
 		const Float& z       ,
 		const Float& mu      ,

@@ -22,7 +22,7 @@ bool residual_density_xam(void)
 	using std::sqrt;
 	using std::fabs;
 	dismod_at::density_enum density;
-	dismod_at::residual_density_struct<double> wres_logden;
+	dismod_at::residual_struct<double> wres_logden;
 	double wres, logden, sigma, tmp;
 
 	double z     = 1.5;

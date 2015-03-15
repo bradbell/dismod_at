@@ -262,7 +262,7 @@ bool meas_mulcov(void)
 	// evaluate residual
 	data_id = 0;
 	Float avg_integrand = dm.avg_no_ode(data_id, pack_object, pack_vec);
-	dismod_at::residual_density_struct<Float> wres_loglike =
+	dismod_at::residual_struct<Float> wres_loglike =
 		dm.data_like(data_id, pack_object, pack_vec, avg_integrand);
 	Float wres = wres_loglike.wres;
 	//

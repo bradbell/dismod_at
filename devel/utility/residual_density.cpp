@@ -78,7 +78,7 @@ Is the offset in the Log-Gaussian and Log-Laplace $icode density$$ cases
 $head wres_logden$$
 The return value has prototype
 $codei%
-	residual_density_struct<%Float%> %wres_logden%
+	residual_struct<%Float%> %wres_logden%
 %$$
 
 $head Weighted Residual$$
@@ -128,7 +128,7 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 template <class Float>
-residual_density_struct<Float> residual_density(
+residual_struct<Float> residual_density(
 	density_enum density ,
 	const Float& z       ,
 	const Float& mu      ,
@@ -182,7 +182,7 @@ residual_density_struct<Float> residual_density(
 		assert(false);
 	}
 	//
-	residual_density_struct<Float> wres_logden;
+	residual_struct<Float> wres_logden;
 	wres_logden.wres           = wres;
 	wres_logden.logden_smooth  = logden_smooth;
 	wres_logden.logden_sub_abs = logden_sub_abs;
@@ -191,7 +191,7 @@ residual_density_struct<Float> residual_density(
 
 // instantiation macro
 # define DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY(Float)        \
-	template residual_density_struct<Float> residual_density( \
+	template residual_struct<Float> residual_density( \
 		density_enum density ,                                \
 		const Float& z       ,                                \
 		const Float& mu      ,                                \

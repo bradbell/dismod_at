@@ -216,7 +216,7 @@ bool data_like_xam(void)
 	// check results
 	for(size_t data_id = 0; data_id < data_table.size(); data_id++)
 	{	Float avg   = data_object.avg_no_ode(data_id, pack_object, pack_vec);
-		dismod_at::residual_density_struct<Float> wres_loglike
+		dismod_at::residual_struct<Float> wres_loglike
 		            = data_object.data_like(data_id, pack_object, pack_vec, avg);
 		Float  wres       = wres_loglike.wres;
 		Float  loglike    = wres_loglike.logden_smooth;
