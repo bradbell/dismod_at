@@ -39,7 +39,7 @@ $codei%data_model %data_object%(
 )%$$
 
 $head Reference$$
-The $icode data_table$$ is not copied, 
+The $icode data_table$$ is not copied,
 instead a reference to is stored in $icode data_object$$.
 Thus, $icode data_object$$ should not be used after $icode data_table$$
 is deleted.
