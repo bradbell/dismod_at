@@ -106,14 +106,14 @@ bool fixed_effect_xam(void)
 	// set value of fixed effects in pack_vec
 	for(size_t i = 0; i < n_fixed_effect; i++)
 		fixed_vec[i] = double(i + 1);
-	dismod_at::pack_fixed_effect(pack_object, pack_vec, fixed_vec);
+	dismod_at::put_fixed_effect(pack_object, pack_vec, fixed_vec);
 
 	// clear fixed_vec
 	for(size_t i = 0; i < n_fixed_effect; i++)
 		fixed_vec[i] = 0.0;
 
 	// get the fixed effects in pack_info
-	dismod_at::unpack_fixed_effect(pack_object, pack_vec, fixed_vec);
+	dismod_at::get_fixed_effect(pack_object, pack_vec, fixed_vec);
 
 	// check value of fixed effects
 	for(size_t i = 0; i < n_fixed_effect; i++)

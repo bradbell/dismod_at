@@ -23,9 +23,9 @@ $section Setting and Getting the Fixed Effect Vector$$
 $head Syntax$$
 $icode%size_fixed% = size_fixed_effect(%pack_object%)
 %$$
-$codei%pack_fixed_effect(%pack_object%, %pack_vec%, %fixed_vec%)
+$codei%put_fixed_effect(%pack_object%, %pack_vec%, %fixed_vec%)
 %$$
-$codei%unpack_fixed_effect(%pack_object%, %pack_vec%, %fixed_vec%)
+$codei%get_fixed_effect(%pack_object%, %pack_vec%, %fixed_vec%)
 %$$
 
 $head Float$$
@@ -35,7 +35,7 @@ where $code AD$$ is $code CppAD::AD$$.
 
 $head Order of Fixed Effects$$
 The order of the fixed effects is unspecified, except for the
-fact that $code pack_fixed_effect$$ and $code unpack_fixed_effect$$
+fact that $code put_fixed_effect$$ and $code get_fixed_effect$$
 are inverses of each other; i.e., if you pack the fixed effects using a
 $icode fixed_vec$$, and then do a unpack, you will get that
 $icode fixed_vec$$ back.
@@ -56,7 +56,7 @@ $codei%
 It is the number of
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$ in the model.
 
-$head pack_fixed_effect$$
+$head put_fixed_effect$$
 This functions copies information from $icode pack_vec$$
 to $icode fixed_vec$$.
 
@@ -79,7 +79,7 @@ It is a copy of the fixed effects in $icode pack_vec$$
 as one contiguous vector in an unspecified order.
 
 
-$head unpack_fixed_effect$$
+$head get_fixed_effect$$
 This functions copies information from $icode fixed_vec$$
 to $icode pack_vec$$.
 
@@ -124,7 +124,7 @@ size_t size_fixed_effect(const pack_info&  pack_object)
 }
 
 template <class Float>
-void unpack_fixed_effect(
+void get_fixed_effect(
 	const pack_info&              pack_object  ,
 	const CppAD::vector<Float>&  pack_vec   ,
 	CppAD::vector<Float>&        fixed_vec )
@@ -187,7 +187,7 @@ void unpack_fixed_effect(
 }
 
 template <class Float>
-void pack_fixed_effect(
+void put_fixed_effect(
 	const pack_info&              pack_object  ,
 	CppAD::vector<Float>&        pack_vec   ,
 	const CppAD::vector<Float>&  fixed_vec  )
@@ -249,12 +249,12 @@ void pack_fixed_effect(
 }
 
 # define DISMOD_AT_INSTANTIATE_FIXED_EFFECT(Float)           \
-	template void unpack_fixed_effect(                       \
+	template void get_fixed_effect(                       \
 	const pack_info&              pack_object  ,                \
 	const CppAD::vector<Float>&  pack_vec   ,                \
 	CppAD::vector<Float>&        fixed_vec                   \
 	);                                                       \
-	template void pack_fixed_effect(                         \
+	template void put_fixed_effect(                         \
 	const pack_info&              pack_object  ,                \
 	CppAD::vector<Float>&        pack_vec   ,                \
 	const CppAD::vector<Float>&  fixed_vec                   \

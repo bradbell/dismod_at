@@ -18,14 +18,14 @@ namespace dismod_at {
 	extern size_t size_fixed_effect(const pack_info& pack_object);
 	//
 	template <class Float>
-	extern void unpack_fixed_effect(
+	extern void get_fixed_effect(
 		const pack_info&             pack_object  ,
 		const CppAD::vector<Float>& pack_vec   ,
 		CppAD::vector<Float>&       fixed_vec
 	);
 	//
 	template <class Float>
-	extern void pack_fixed_effect(
+	extern void put_fixed_effect(
 		const pack_info&             pack_object  ,
 		CppAD::vector<Float>&       pack_vec   ,
 		const CppAD::vector<Float>& fixed_vec

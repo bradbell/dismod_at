@@ -27,12 +27,14 @@ do
 	fi
 done
 #
-if ! git_commit.sh list >> /dev/null
-then
-	git_commit.sh list
-	exit 1
-fi
-list=`git_commit.sh list | sed -e '/^\.gitignore/d'`
+list=`git status | sed -n \
+        -e '/^[#\t ]*deleted:/p' \
+        -e '/^[#\t ]*modified:/p' \
+        -e '/^[#\t ]*both modified:/p' \
+        -e '/^[#\t ]*renamed:/p' \
+        -e '/^[#\t ]*new file:/p' | \
+            sed -e 's/^.*: *//' -e 's/ -> /\n/' | \
+                sort -u`
 ok='yes'
 for file in $list
 do
