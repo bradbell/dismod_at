@@ -42,6 +42,7 @@ private:
 	const size_t                       n_time_ode_;
 	const double                       ode_step_size_;
 	const CppAD::vector<data_struct>&  data_table_;
+	const pack_info                    pack_object_;
 
 	// set by constructor and not changed
 	size_t                       n_child_;
@@ -59,7 +60,8 @@ public:
 		const CppAD::vector<node_struct>&       node_table      ,
 		const CppAD::vector<data_struct>&       data_table      ,
 		const CppAD::vector<weight_info>&       w_info_vec      ,
-		const CppAD::vector<smooth_info>&       s_info_vec
+		const CppAD::vector<smooth_info>&       s_info_vec      ,
+		const pack_info&                        pack_object
 	);
 	// destructor must delete the smooth2ode objects pointed to by si2ode_vec_
 	~data_model(void);
@@ -67,21 +69,18 @@ public:
 	template <class Float>
 	Float avg_no_ode(
 		size_t                        data_id  ,
-		const  pack_info&              pack_object ,
 		const  CppAD::vector<Float>&  pack_vec
 	) const;
 	// compute average for integrands that require S or C
 	template <class Float>
 	Float avg_yes_ode(
 		size_t                        data_id  ,
-		const  pack_info&              pack_object ,
 		const  CppAD::vector<Float>&  pack_vec
 	) const;
 	// compute weighted residual and log-likelihood
 	template <class Float>
 	residual_struct<Float> data_like(
 		size_t                        data_id  ,
-		const  pack_info&              pack_object ,
 		const  CppAD::vector<Float>&  pack_vec  ,
 		const  Float&                 avg
 	) const;

@@ -169,21 +169,6 @@ bool rate_mulcov(void)
 	data_table[data_id].density_id   = dismod_at::uniform_enum;
 	data_table[data_id].x            = x;
 	//
-	// data_model
-	dismod_at::data_model dm(
-		parent_node_id,
-		n_age_ode,
-		n_time_ode,
-		ode_step_size,
-		age_table,
-		time_table,
-		integrand_table,
-		node_table,
-		data_table,
-		w_info_vec,
-		s_info_vec
-	);
-	//
 	// smooth_table
 	size_t n_child        = 2;
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
@@ -214,6 +199,22 @@ bool rate_mulcov(void)
 		smooth_table, mulcov_table, rate_table
 	);
 	//
+	// data_model
+	dismod_at::data_model data_object(
+		parent_node_id,
+		n_age_ode,
+		n_time_ode,
+		ode_step_size,
+		age_table,
+		time_table,
+		integrand_table,
+		node_table,
+		data_table,
+		w_info_vec,
+		s_info_vec,
+		pack_object
+	);
+	//
 	// pack_vec
 	vector<Float> pack_vec( pack_object.size() );
 	dismod_at::pack_info::subvec_info info;
@@ -241,7 +242,7 @@ bool rate_mulcov(void)
 
 	// evaluate residual
 	data_id = 0;
-	Float avg_integrand = dm.avg_no_ode(data_id, pack_object, pack_vec);
+	Float avg_integrand = data_object.avg_no_ode(data_id, pack_vec);
 	//
 	// average mean mulcov
 	double avg_mulcov_1 = exp_avg_mulcov(

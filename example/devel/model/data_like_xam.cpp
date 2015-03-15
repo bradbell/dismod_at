@@ -159,21 +159,6 @@ bool data_like_xam(void)
 		data_table[data_id].x          = x;
 	}
 	//
-	// data_model
-	dismod_at::data_model data_object(
-		parent_node_id,
-		n_age_ode,
-		n_time_ode,
-		ode_step_size,
-		age_table,
-		time_table,
-		integrand_table,
-		node_table,
-		data_table,
-		w_info_vec,
-		s_info_vec
-	);
-	//
 	// smooth_table
 	size_t n_child        = 0;
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
@@ -198,6 +183,22 @@ bool data_like_xam(void)
 		smooth_table, mulcov_table, rate_table
 	);
 	//
+	// data_model
+	dismod_at::data_model data_object(
+		parent_node_id,
+		n_age_ode,
+		n_time_ode,
+		ode_step_size,
+		age_table,
+		time_table,
+		integrand_table,
+		node_table,
+		data_table,
+		w_info_vec,
+		s_info_vec,
+		pack_object
+	);
+	//
 	// pack_vec
 	vector<Float> pack_vec( pack_object.size() );
 	dismod_at::pack_info::subvec_info info;
@@ -215,9 +216,9 @@ bool data_like_xam(void)
 	}
 	// check results
 	for(size_t data_id = 0; data_id < data_table.size(); data_id++)
-	{	Float avg   = data_object.avg_no_ode(data_id, pack_object, pack_vec);
+	{	Float avg   = data_object.avg_no_ode(data_id, pack_vec);
 		dismod_at::residual_struct<Float> residual
-		            = data_object.data_like(data_id, pack_object, pack_vec, avg);
+		            = data_object.data_like(data_id, pack_vec, avg);
 		Float  wres       = residual.wres;
 		Float  loglike    = residual.logden_smooth;
 		loglike          -= fabs( residual.logden_sub_abs );

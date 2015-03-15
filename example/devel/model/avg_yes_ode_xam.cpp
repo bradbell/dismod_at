@@ -152,21 +152,6 @@ bool avg_yes_ode_xam(void)
 	data_table[data_id].density_id   = dismod_at::uniform_enum;
 	data_table[data_id].x            = x;
 	//
-	// data_model
-	dismod_at::data_model data_object(
-		parent_node_id,
-		n_age_ode,
-		n_time_ode,
-		ode_step_size,
-		age_table,
-		time_table,
-		integrand_table,
-		node_table,
-		data_table,
-		w_info_vec,
-		s_info_vec
-	);
-	//
 	// smooth_table
 	size_t n_child        = 2;
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
@@ -189,6 +174,22 @@ bool avg_yes_ode_xam(void)
 	dismod_at::pack_info pack_object(
 		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
+	);
+	//
+	// data_model
+	dismod_at::data_model data_object(
+		parent_node_id,
+		n_age_ode,
+		n_time_ode,
+		ode_step_size,
+		age_table,
+		time_table,
+		integrand_table,
+		node_table,
+		data_table,
+		w_info_vec,
+		s_info_vec,
+		pack_object
 	);
 	//
 	// pack_vec
@@ -219,7 +220,7 @@ bool avg_yes_ode_xam(void)
 	*/
 	using CppAD::exp;
 	data_id = 0;
-	Float avg      = data_object.avg_yes_ode(data_id, pack_object, pack_vec);
+	Float avg      = data_object.avg_yes_ode(data_id, pack_vec);
 	double b       = data_table[data_id].age_lower;
 	double c       = data_table[data_id].age_upper;
 	double check   = c - b + ( exp(-beta * c) - exp(-beta * b) ) / beta;

@@ -34,12 +34,15 @@ $codei%data_model %data_object%(
 	%node_table%,
 	%data_table%,
 	%w_info_vec%,
-	%s_info_vec
+	%s_info_vec%,
+	%pack_object%
 )%$$
 
-$head Notation$$
-We use $icode a_min$$ for the minimum age in $cref age_table$$
-and $icode t_min$$ for the minimum time in $cref time_table$$.
+$head Reference$$
+The $icode data_table$$ is not copied, 
+instead a reference to is stored in $icode data_object$$.
+Thus, $icode data_object$$ should not be used after $icode data_table$$
+is deleted.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -139,6 +142,14 @@ For each $icode%s_info_vec%[%smooth_id%]%$$ object,
 only the following functions are used:
 $code age_size$$, $code time_size$$, $code age_id$$, $code time_id$$.
 
+$head pack_object$$
+This argument has prototype
+$codei%
+	const pack_info& %pack_object%
+%$$
+and is the $cref pack_info$$ information corresponding to
+$icode pack_vec$$.
+
 $end
 -----------------------------------------------------------------------------
 */
@@ -174,12 +185,14 @@ data_model::data_model(
 	const CppAD::vector<node_struct>&      node_table      ,
 	const CppAD::vector<data_struct>&      data_table      ,
 	const CppAD::vector<weight_info>&      w_info_vec      ,
-	const CppAD::vector<smooth_info>&      s_info_vec      )
+	const CppAD::vector<smooth_info>&      s_info_vec      ,
+	const pack_info&                       pack_object     )
 :
 n_age_ode_     (n_age_ode)        ,
 n_time_ode_    (n_time_ode)       ,
 ode_step_size_ (ode_step_size)    ,
-data_table_    (data_table)
+data_table_    (data_table)       ,
+pack_object_   (pack_object)
 {	using std::string;
 	size_t i, j, k;
 	//
@@ -468,7 +481,7 @@ $$
 $section Average for Integrands That Don't Require the ODE$$
 
 $head Syntax$$
-$icode%avg% = %data_object%.avg_no_ode(%data_id%, %pack_object%, %pack_vec%)%$$
+$icode%avg% = %data_object%.avg_no_ode(%data_id%, %pack_vec%)%$$
 
 
 $head data_object$$
@@ -498,14 +511,6 @@ the function $code data_id2child$$ returns a
 $cref/child/child_data/data_id2child/child/$$ value
 less than or equal
 $cref/n_child/child_data/child_size/n_child/$$.
-
-$head pack_object$$
-This argument has prototype
-$codei%
-	const pack_info& %pack_object%
-%$$
-and is the $cref pack_info$$ information corresponding to
-$icode pack_vec$$.
 
 $head pack_vec$$
 This argument has prototype
@@ -546,11 +551,10 @@ $end
 template <class Float>
 Float data_model::avg_no_ode(
 		size_t                        data_id  ,
-		const pack_info&               pack_object ,
 		const CppAD::vector<Float>&   pack_vec
 	) const
 {	size_t i, j, k, ell;
-	assert( pack_object.size() == pack_vec.size() );
+	assert( pack_object_.size() == pack_vec.size() );
 
 	// data table infomation for this data point
 	const CppAD::vector<double>& x = data_table_[ data_id ].x;
@@ -618,7 +622,7 @@ Float data_model::avg_no_ode(
 		//
 		// extract subvector information for the parent rate
 		pack_info::subvec_info info;
-		info             = pack_object.rate_info(rate_id[ell], n_child_);
+		info             = pack_object_.rate_info(rate_id[ell], n_child_);
 		size_t n_var     = info.n_var;
 		size_t smooth_id = info.smooth_id;
 		//
@@ -637,7 +641,7 @@ Float data_model::avg_no_ode(
 		//
 		// include child random effect
 		if( child < n_child_ )
-		{	info      = pack_object.rate_info(rate_id[ell], child);
+		{	info      = pack_object_.rate_info(rate_id[ell], child);
 			n_var     = info.n_var;
 			smooth_id = info.smooth_id;
 			//
@@ -652,9 +656,9 @@ Float data_model::avg_no_ode(
 				effect_ode[k] += var_ode[k];
 		}
 		// include effect of rate covariates
-		size_t n_cov = pack_object.rate_mean_mulcov_n_cov(rate_id[ell]);
+		size_t n_cov = pack_object_.rate_mean_mulcov_n_cov(rate_id[ell]);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object.rate_mean_mulcov_info(rate_id[ell], j);
+		{	info       = pack_object_.rate_mean_mulcov_info(rate_id[ell], j);
 			n_var      = info.n_var;
 			smooth_id  = info.smooth_id;
 			double x_j = x[ info.covariate_id ];
@@ -731,7 +735,7 @@ $$
 $section Average for Integrands That Require the ODE$$
 
 $head Syntax$$
-$icode%avg% = %data_object%.avg_yes_ode(%data_id%, %pack_object%, %pack_vec%)%$$
+$icode%avg% = %data_object%.avg_yes_ode(%data_id%, %pack_vec%)%$$
 
 
 $head data_object$$
@@ -770,14 +774,6 @@ $code mtspecific_enum$$,
 $code mtall_enum$$,
 $code mtstandard_enum$$.
 
-$head pack_object$$
-This argument has prototype
-$codei%
-	const pack_info& %pack_object%
-%$$
-and is the $cref pack_info$$ information corresponding to
-$icode pack_vec$$.
-
 $head pack_vec$$
 This argument has prototype
 $codei%
@@ -806,7 +802,6 @@ $end
 template <class Float>
 Float data_model::avg_yes_ode(
 		size_t                        data_id  ,
-		const pack_info&               pack_object ,
 		const CppAD::vector<Float>&   pack_vec
 	) const
 {
@@ -827,7 +822,7 @@ Float data_model::avg_yes_ode(
 	}
 # endif
 	size_t i, j, k, ell;
-	assert( pack_object.size() == pack_vec.size() );
+	assert( pack_object_.size() == pack_vec.size() );
 
 	// data table information for this data pont
 	const CppAD::vector<double>& x     = data_table_[ data_id ].x;
@@ -891,7 +886,7 @@ Float data_model::avg_yes_ode(
 	{	rate_ode[rate_id].resize(n_index);
 		//
 		// extract subvector information for the parent rate
-		info             = pack_object.rate_info(rate_id, n_child_);
+		info             = pack_object_.rate_info(rate_id, n_child_);
 		size_t n_var     = info.n_var;
 		size_t smooth_id = info.smooth_id;
 		//
@@ -910,7 +905,7 @@ Float data_model::avg_yes_ode(
 		//
 		// include child random effect
 		if( child < n_child_ )
-		{	info      = pack_object.rate_info(rate_id, child);
+		{	info      = pack_object_.rate_info(rate_id, child);
 			n_var     = info.n_var;
 			smooth_id = info.smooth_id;
 			//
@@ -926,9 +921,9 @@ Float data_model::avg_yes_ode(
 		}
 		//
 		// include effect of rate covariates
-		size_t n_cov = pack_object.rate_mean_mulcov_n_cov(rate_id);
+		size_t n_cov = pack_object_.rate_mean_mulcov_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object.rate_mean_mulcov_info(rate_id, j);
+		{	info       = pack_object_.rate_mean_mulcov_info(rate_id, j);
 			n_var      = info.n_var;
 			smooth_id  = info.smooth_id;
 			double x_j = x[ info.covariate_id ];
@@ -1053,9 +1048,7 @@ $$
 $section Weighted Residual and Log-Likelihood for any Integrands$$
 
 $head Syntax$$
-$icode%residual% = %data_object%.data_like(
-	%data_id%, %pack_object%, %pack_vec%, %avg%
-)%$$
+$icode%residual% = %data_object%.data_like(%data_id%, %pack_vec%, %avg%)%$$
 
 $head Log-likelihood$$
 We use $cref/y_i/data_like/Data Table Notation/y_i/$$ to denote the
@@ -1097,14 +1090,6 @@ the function $code data_id2child$$ returns a
 $cref/child/child_data/data_id2child/child/$$ value
 less than or equal
 $cref/n_child/child_data/child_size/n_child/$$.
-
-$head pack_object$$
-This argument has prototype
-$codei%
-	const pack_info& %pack_object%
-%$$
-and is the $cref pack_info$$ information corresponding to
-$icode pack_vec$$.
 
 $head pack_vec$$
 This argument has prototype
@@ -1156,12 +1141,11 @@ $end
 template <class Float>
 residual_struct<Float> data_model::data_like(
 		size_t                        data_id  ,
-		const pack_info&              pack_object ,
 		const CppAD::vector<Float>&   pack_vec  ,
 		const Float&                  avg
 	) const
 {	size_t i, j, k;
-	assert( pack_object.size() == pack_vec.size() );
+	assert( pack_object_.size() == pack_vec.size() );
 
 	// data table infomation for this data point
 	const CppAD::vector<double>& x = data_table_[ data_id ].x;
@@ -1192,11 +1176,11 @@ residual_struct<Float> data_model::data_like(
 	CppAD::vector<Float> meas_cov_ode(n_ode);
 	for(k = 0; k < n_ode; k++)
 		meas_cov_ode[k] = 0.0;
-	size_t n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id);
+	size_t n_cov = pack_object_.meas_mean_mulcov_n_cov(integrand_id);
 	//
 	pack_info::subvec_info  info;
 	for(size_t j = 0; j < n_cov; j++)
-	{	info              = pack_object.meas_mean_mulcov_info(integrand_id, j);
+	{	info              = pack_object_.meas_mean_mulcov_info(integrand_id, j);
 		size_t n_var      = info.n_var;
 		size_t smooth_id  = info.smooth_id;
 		double x_j = x[ info.covariate_id ];
@@ -1219,9 +1203,9 @@ residual_struct<Float> data_model::data_like(
 	// measurement std covaraites effect on the ode subgrid
 	for(k = 0; k < n_ode; k++)
 		meas_cov_ode[k] = 0.0;
-	n_cov = pack_object.meas_std_mulcov_n_cov(integrand_id);
+	n_cov = pack_object_.meas_std_mulcov_n_cov(integrand_id);
 	for(size_t j = 0; j < n_cov; j++)
-	{	info              = pack_object.meas_std_mulcov_info(integrand_id, j);
+	{	info              = pack_object_.meas_std_mulcov_info(integrand_id, j);
 		size_t n_var      = info.n_var;
 		size_t smooth_id  = info.smooth_id;
 		double x_j = x[ info.covariate_id ];
@@ -1248,19 +1232,16 @@ residual_struct<Float> data_model::data_like(
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \
 	template Float data_model::avg_no_ode(                  \
 		size_t                        data_id  ,            \
-		const pack_info&               pack_object ,            \
-		const CppAD::vector<Float>&   pack_vec               \
+		const CppAD::vector<Float>&   pack_vec              \
 	) const;                                                \
 	template Float data_model::avg_yes_ode(                 \
 		size_t                        data_id  ,            \
-		const pack_info&               pack_object ,            \
-		const CppAD::vector<Float>&   pack_vec               \
+		const CppAD::vector<Float>&   pack_vec              \
 	) const;                                                \
-	template residual_struct<Float>                 \
+	template residual_struct<Float>                         \
 	data_model::data_like(                                  \
 		size_t                        data_id  ,            \
-		const pack_info&               pack_object ,            \
-		const CppAD::vector<Float>&   pack_vec  ,            \
+		const CppAD::vector<Float>&   pack_vec  ,           \
 		const Float&                  avg                   \
 	) const;                                                \
 
