@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -23,7 +23,7 @@ $section Disease Rates as Functions of Age and Time$$
 $head Under Construction$$
 This package is under construction and does not yet accomplish its purpose.
 Furthermore, the following sections are in an incomplete state:
-$cref/joint likelihood/devel_joint_like_ctor/$$,
+$cref/joint likelihood/devel_joint_like/$$,
 $cref/Laplace Approximation/laplace/Under Construction/$$.
 
 $childtable%omh/table/input.omh

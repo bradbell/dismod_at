@@ -4,21 +4,17 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the
+This program is distributed under the terms of the 
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin devel_model$$
-$spell
-	dismod
-$$
+$begin devel_joint_like$$
 
-$section Dismod_at Developer Model Documentation$$
+$section Joint Likelihood of Fixed Effects, Random Effects and Data$$
 
-$childtable%
-	devel/model/data_model.omh%
-	devel/model/prior_density.cpp%
-	devel/model/joint_like.omh
+$head Under Construction$$
+
+$childtable%devel/model/joint_like.cpp
 %$$
 
 $end

@@ -20,8 +20,6 @@ $$
 
 $section Setting and Getting the Fixed Effect Vector$$
 
-$head Under Construction$$
-
 $head Syntax$$
 $icode%size_fixed% = size_fixed_effect(%pack_object%)
 %$$

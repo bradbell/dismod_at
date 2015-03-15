@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin devel_joint_like_ctor$$
+$begin joint_like_ctor$$
 $spell
 	vec
 	var
@@ -20,8 +20,6 @@ $spell
 $$
 
 $section Joint Likelihood$$
-
-$head Under Construction$$
 
 $head Syntax$$
 $codei%joint_like %joint_object%(%data_object%, %pack_object%, %prior_table%)%$$
@@ -92,6 +90,76 @@ data_object_(data_object) ,
 pack_object_(pack_object)     ,
 prior_table_(prior_table)
 { }
+
+/*
+-----------------------------------------------------------------------------
+$begin joint_like_eval$$
+$spell
+	CppAD
+	const
+	vec
+	eval
+	struct
+$$
+
+$section Evaluating the Joint Likelihood$$
+
+$head Syntax$$
+$icode%residual_vec% = %joint_object%.eval(%fixed_vec%, %random_vec%)%$$
+
+$head Float$$
+The type $icode Float$$ must be one of the following:
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
+
+$head fixed_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %fixed_vec%
+%$$
+Its order is the same as for 
+$cref/pack_fixed_effect/fixed_effect/pack_fixed_effect/$$.
+
+$head random_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %random_vec%
+%$$
+Its order is the same as for 
+$cref/pack_random_effect/random_effect/pack_random_effect/$$.
+
+$head residual_vec$$
+The return value has prototype
+$codei%
+	CppAD::vector< residual_struct<%Float%> > %residual_vec%
+%$$
+The order of the residuals is unspecified (at this time).
+The log of the prior density for the
+$cref/fixed/model_variable/Fixed Effects, theta/$$
+and $cref/random/model_variable/Random Effects, u/$$ effects,
+and the data
+$cref/measurement vector/data_like/Data Table Notation/y_i/$$, $latex y$$,
+$latex \[
+	\B{p}( y | u , \theta ) \B{p}( u | \theta ) \B{p}( \theta )
+\] $$
+is the sum of the log of the probabilities corresponding to all the
+$cref/residuals/residual_density/$$ in $icode residual_vec$$.
+
+$end
+-----------------------------------------------------------------------------
+*/
+
+template <class Float>
+CppAD::vector< residual_struct<Float> > joint_like::eval(
+	const CppAD::vector<Float>&  fixed_vec  ,
+	const CppAD::vector<Float>&  random_vec )
+{	// local vector used to evaluate the residuals
+	static CppAD::vector<Float> pack_vec;
+	assert( pack_object_.size() != 0 );
+	if( pack_vec.size() == 0 )
+		pack_vec.resize( pack_object_.size() );
+}
+
 
 
 } // END DISMOD_AT_NAMESPACE

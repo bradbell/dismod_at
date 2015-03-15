@@ -1050,7 +1050,7 @@ $spell
 	relrisk
 	xam
 $$
-$section Weighted Residuals and Log-Likelihood for All Integrands$$
+$section Weighted Residual and Log-Likelihood for any Integrands$$
 
 $head Syntax$$
 $icode%residual% = %data_object%.data_like(
