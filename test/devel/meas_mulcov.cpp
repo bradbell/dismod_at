@@ -262,9 +262,9 @@ bool meas_mulcov(void)
 	// evaluate residual
 	data_id = 0;
 	Float avg_integrand = dm.avg_no_ode(data_id, pack_object, pack_vec);
-	dismod_at::residual_struct<Float> wres_loglike =
+	dismod_at::residual_struct<Float> wres_logden =
 		dm.data_like(data_id, pack_object, pack_vec, avg_integrand);
-	Float wres = wres_loglike.wres;
+	Float wres = wres_logden.wres;
 	//
 	// average mean mulcov
 	double avg_mulcov_1 = exp_avg_mulcov(
