@@ -91,11 +91,11 @@ $icode Float$$ $cnext
 $rnext
 $icode Float$$ $cnext
 	$code logden_smooth$$ $cnext
-	smooth term in corresponding log-density 
+	smooth term in corresponding log-density
 $rnext
 $icode Float$$ $cnext
 	$code logden_sub_abs$$ $cnext
-	smooth term in absolute value in corresponding log-density 
+	smooth term in absolute value in corresponding log-density
 $rnext
 $icode density_enum$$ $cnext
 	$code density$$ $cnext

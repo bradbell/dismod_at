@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -18,9 +18,10 @@ namespace dismod_at {
 
 	template <class Float>
 	struct residual_struct {
-		Float wres;
-		Float logden_smooth;
-		Float logden_sub_abs;
+		Float        wres;
+		Float        logden_smooth;
+		Float        logden_sub_abs;
+		density_enum density;
 	};
 
 	template <class Float>
