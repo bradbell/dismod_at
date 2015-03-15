@@ -117,7 +117,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %fixed_vec%
 %$$
-Its order is the same as for 
+Its order is the same as for
 $cref/pack_fixed_effect/fixed_effect/pack_fixed_effect/$$.
 
 $head random_vec$$
@@ -125,7 +125,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %random_vec%
 %$$
-Its order is the same as for 
+Its order is the same as for
 $cref/pack_random_effect/random_effect/pack_random_effect/$$.
 
 $head residual_vec$$
