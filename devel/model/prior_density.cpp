@@ -108,7 +108,7 @@ $codei%
 The size of $icode residual$$ is not equal to $icode pack_object.size()$$
 because there are priors on smoothing differences as well as values.
 The order of the residuals is unspecified (at this time).
-The log of the prior density for the 
+The log of the prior density for the
 $cref/fixed/model_variable/Fixed Effects, theta/$$
 and $cref/random/model_variable/Random Effects, u/$$ effects,
 $latex \B{p}( u | \theta ) \B{p}( \theta )$$,
