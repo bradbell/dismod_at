@@ -216,7 +216,7 @@ The log of the prior density for the
 $cref/fixed/model_variable/Fixed Effects, theta/$$
 and $cref/random/model_variable/Random Effects, u/$$ effects,
 $latex \B{p}( u | \theta ) \B{p}( \theta )$$,
-is the sum of the log of the probabilities corresponding to all the
+is the sum of the log of the densities corresponding to all the
 $cref/residuals/residual_density/$$ in $icode residual_vec$$.
 
 $children%example/devel/model/prior_density_xam.cpp

@@ -532,6 +532,10 @@ $code relrisk_enum$$    $cnext $code chi_enum$$, $code omega_enum$$
 $tend
 
 $head avg$$
+The return value has prototype
+$codei%
+	%Float% avg
+%$$
 This is the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 for the specified data point.
@@ -546,9 +550,8 @@ $end
 */
 template <class Float>
 Float data_model::avg_no_ode(
-		size_t                        data_id  ,
-		const CppAD::vector<Float>&   pack_vec
-	) const
+	size_t                        data_id  ,
+	const CppAD::vector<Float>&   pack_vec ) const
 {	size_t i, j, k, ell;
 	assert( pack_object_.size() == pack_vec.size() );
 
@@ -782,6 +785,10 @@ $cref pack_info_rate$$,
 $cref pack_info_rate_mulcov$$.
 
 $head avg$$
+The return value has prototype
+$codei%
+	%Float% avg
+%$$
 This is the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 for the specified data point.
@@ -797,9 +804,8 @@ $end
 
 template <class Float>
 Float data_model::avg_yes_ode(
-		size_t                        data_id  ,
-		const CppAD::vector<Float>&   pack_vec
-	) const
+	size_t                        data_id  ,
+	const CppAD::vector<Float>&   pack_vec ) const
 {
 # ifndef NDEBUG
 	switch( data_info_[data_id].integrand )
@@ -1136,10 +1142,9 @@ $end
 */
 template <class Float>
 residual_struct<Float> data_model::like_one(
-		size_t                        data_id  ,
-		const CppAD::vector<Float>&   pack_vec  ,
-		const Float&                  avg
-	) const
+	size_t                        data_id  ,
+	const CppAD::vector<Float>&   pack_vec ,
+	const Float&                  avg      ) const
 {	size_t i, j, k;
 	assert( pack_object_.size() == pack_vec.size() );
 
@@ -1224,7 +1229,114 @@ residual_struct<Float> data_model::like_one(
 	//
 	return residual_density(density, adjust, avg, delta, Float(eta) );
 }
+/*
+-------------------------------------------------------------------------------
+$begin data_model_like_all$$
+$spell
+	vec
+	CppAD
+	const
+	struct
+$$
 
+$section All the Weighted Residuals and Log-Likelihoods$$
+
+$head Syntax$$
+$icode%residual_vec% = %data_object%.like_all(%pack_vec%)%$$
+
+$head Data Table Notation$$
+
+$subhead i$$
+We use $icode i$$ to 
+denote the $cref/data_id/data_table/data_id/$$
+for a row in the data table.
+
+$subhead y_i$$
+We use $icode y_i$$ to denote the corresponding
+$cref/meas_value/data_table/meas_value/$$. 
+
+$subhead n_i$$
+We use $icode n_i$$ to denote the corresponding
+$cref/node_id/data_table/node_id/$$. 
+
+$subhead I$$
+We use $icode I$$ to denote the set of $icode data_id$$
+such that $icode n_i$$ is equal to
+$cref/parent node/run_table/parent_node_id/$$,
+or is a descendent of the parent node; i.e.,
+$codei%
+	data_id2child(%data_id%) <= %n_child%
+%$$
+see $cref/data_id2child/child_data/data_id2child/$$.
+
+
+$head Float$$
+The type $icode Float$$ must be one of the following:
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
+
+$head pack_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %pack_vec%
+%$$
+and is a vector of values for all of the model variables; i.e.,
+$latex (u , \theta)$$.
+
+$head residual_vec$$
+The return value has prototype
+$codei%
+	CppAD::vector< residual_struct<%Float%> > %residual_vec%
+%$$
+The size of $icode residual$$ is equal the number of elements in $icode I$$.
+The order of the residuals is unspecified (at this time).
+The log of the density 
+$latex \B{p}( y | u , \theta )$$,
+is the sum of the log of the densities corresponding to all the
+$cref/residuals/residual_density/$$ in $icode residual_vec$$.
+
+$end
+*/
+template <class Float>
+CppAD::vector< residual_struct<Float> > data_model::like_all(
+	const CppAD::vector<Float>& pack_vec
+) const
+{	CppAD::vector< residual_struct<Float> > residual_vec;
+
+	// loop over data that is for parent node or one of its descendents
+	for(size_t data_id = 0; data_id < data_table_.size(); data_id++)
+	if( data_info_[data_id].child <= n_child_ )
+	{	// compute avgerage of integrand for this data
+		Float avg;
+		integrand_enum integrand  = data_info_[ data_id].integrand;
+		switch( integrand )
+		{	case incidence_enum:
+			case remission_enum:
+			case mtexcess_enum:
+			case mtother_enum:
+			case mtwith_enum:
+			case relrisk_enum:
+			avg = avg_no_ode(data_id, pack_vec);
+			break;
+
+			case prevalence_enum:
+			case mtspecific_enum:
+			case mtall_enum:
+			case mtstandard_enum:
+			avg = avg_yes_ode(data_id, pack_vec);
+			break;
+
+			default:
+			assert(false);
+		}
+		// compute its residual and log likelihood
+		residual_struct<Float> residual = like_one(data_id, pack_vec, avg);
+		residual_vec.push_back( residual );
+	}
+	return residual_vec;
+}
+
+// ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \
 	template Float data_model::avg_no_ode(                  \
 		size_t                        data_id  ,            \
@@ -1237,8 +1349,12 @@ residual_struct<Float> data_model::like_one(
 	template residual_struct<Float>                         \
 	data_model::like_one(                                   \
 		size_t                        data_id  ,            \
-		const CppAD::vector<Float>&   pack_vec  ,           \
+		const CppAD::vector<Float>&   pack_vec ,            \
 		const Float&                  avg                   \
+	) const;                                                \
+	template CppAD::vector< residual_struct<Float> >        \
+	data_model::like_all(                                   \
+		const CppAD::vector<Float>&   pack_vec              \
 	) const;                                                \
 
 // instantiations

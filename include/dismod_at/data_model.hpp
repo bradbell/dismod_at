@@ -77,12 +77,17 @@ public:
 		size_t                        data_id  ,
 		const  CppAD::vector<Float>&  pack_vec
 	) const;
-	// compute weighted residual and log-likelihood
+	// compute weighted residual and log-likelihood for one data points
 	template <class Float>
 	residual_struct<Float> like_one(
 		size_t                        data_id  ,
 		const  CppAD::vector<Float>&  pack_vec  ,
 		const  Float&                 avg
+	) const;
+	// compute weighted residual and log-likelihood for all data points
+	template <class Float>
+	CppAD::vector< residual_struct<Float> > like_all(
+		const  CppAD::vector<Float>&  pack_vec
 	) const;
 };
 

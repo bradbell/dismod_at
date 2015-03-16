@@ -19,14 +19,14 @@ dir_list=''
 list=`ls example/devel`
 for name in $list
 do
-	if [ -d example/devel/$name ]
+	if [ -d example/devel/$name ] && [ "$name" != 'new' ]
 	then
 		dir_list="$dir_list $name"
 	fi
 done
 for dir in $dir_list
 do
-	list=`ls example/devel/$dir | sed -e '/^junk$/d'`
+	list=`ls example/devel/$dir | sed -e '/^junk$/d' -e '/^new$/d'`
 	for file in $list
 	do
 		if ! grep "$dir/$file" example/devel/CMakeLists.txt > /dev/null

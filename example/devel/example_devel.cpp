@@ -33,6 +33,7 @@ $end
 // model subdirectory
 extern bool avg_no_ode_xam(void);
 extern bool avg_yes_ode_xam(void);
+extern bool like_all_xam(void);
 extern bool like_one_xam(void);
 extern bool prior_density_xam(void);
 
@@ -104,6 +105,7 @@ int main(void)
 	// model subdirectory
 	RUN(avg_no_ode_xam);
 	RUN(avg_yes_ode_xam);
+	RUN(like_all_xam);
 	RUN(like_one_xam);
 	RUN(prior_density_xam);
 
