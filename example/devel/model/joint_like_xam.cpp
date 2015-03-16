@@ -340,23 +340,23 @@ bool joint_like_xam(void)
 	dismod_at::put_random_effect(pack_object, pack_vec, random_vec);
 	//
 	dismod_at::joint_like joint_object(pack_object, data_object, prior_object);
-	CppAD::vector< dismod_at::residual_struct<double> > 
+	CppAD::vector< dismod_at::residual_struct<double> >
 		joint_residual_vec = joint_object.eval(fixed_vec, random_vec);
 	// -------------- check -------------------------------------------------
-	CppAD::vector< dismod_at::residual_struct<double> > 
+	CppAD::vector< dismod_at::residual_struct<double> >
 		prior_residual_vec = prior_object.eval(pack_vec);
-	CppAD::vector< dismod_at::residual_struct<double> > 
+	CppAD::vector< dismod_at::residual_struct<double> >
 		data_residual_vec = data_object.like_all(pack_vec);
 	//
 	size_t n_prior = prior_residual_vec.size();
 	size_t n_data  = data_residual_vec.size();
 	ok &= joint_residual_vec.size() == n_prior + n_data;
-	// use unspecified fact that prior comes first 
+	// use unspecified fact that prior comes first
 	for(i = 0; i < n_prior; i++)
 		ok &= res_equal( joint_residual_vec[i], prior_residual_vec[i] );
 	for(i = 0; i < n_data; i++)
 		ok &= res_equal( joint_residual_vec[i+n_prior], data_residual_vec[i] );
-	
+
 	return ok;
 }
 // END C++
