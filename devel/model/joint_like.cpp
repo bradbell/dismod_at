@@ -170,7 +170,7 @@ CppAD::vector< residual_struct<Float> > joint_like::eval(
 	CppAD::vector< residual_struct<Float> > data_residual_vec;
 	data_residual_vec = data_object_.like_all(pack_vec);
 	size_t n_data = data_residual_vec.size();
- 
+
 	// combine as one vector
 	CppAD::vector< residual_struct<Float> >& residual_vec(n_prior + n_data);
 	for(size_t i = 0; i < n_prior; i++)
