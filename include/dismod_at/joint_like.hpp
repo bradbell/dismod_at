@@ -15,19 +15,27 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 # include "data_model.hpp"
 # include "pack_info.hpp"
+# include "prior_density.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class joint_like {
 private:
-	const data_model&                  data_object_;
-	const pack_info&                    pack_object_;
-	const CppAD::vector<prior_struct>& prior_table_;
+	const pack_info&         pack_object_;
+	const data_model&        data_object_;
+	const prior_density&     prior_object_;
 public:
-	data_model(
-		const data_model&                  data_object ,
-		const pack_info&                    pack_object   ,
-		const CppAD::vector<prior_struct>& prior_table
+	// constructor
+	joint_like(
+		const pack_info&      pack_object  ,
+		const data_model&     data_object  ,
+		const prior_density&  prior_object
+	);
+	// evaluate joint likelihood
+	template <class Float>
+	CppAD::vector< residual_struct<Float> > eval(
+		const CppAD::vector<Float>& fixed_vec ,
+		const CppAD::vector<Float>& random_vec
 	);
 };
 

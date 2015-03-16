@@ -22,7 +22,7 @@ $$
 $section Joint Likelihood$$
 
 $head Syntax$$
-$codei%joint_like %joint_object%(%data_object%, %pack_object%, %prior_table%)%$$
+$codei%joint_like %joint_object%(%data_object%, %prior_object%)%$$
 
 $head Purpose$$
 This object can be used to evaluate the joint likelihood of the
@@ -82,13 +82,13 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // consctructor
 joint_like::joint_like(
-	const data_model&                      data_object     ,
-	const pack_info&                        pack_object       ,
-	const CppAD::vector<prior_struct>&     prior_table     )
+	const pack_info&      pack_object  ,
+	const data_model&     data_object  ,
+	const prior_density&  prior_object )
 :
-data_object_(data_object) ,
-pack_object_(pack_object)     ,
-prior_table_(prior_table)
+pack_object_(pack_object)  ,
+data_object_(data_object)  ,
+prior_object_(prior_object)
 { }
 
 /*
@@ -153,11 +153,33 @@ template <class Float>
 CppAD::vector< residual_struct<Float> > joint_like::eval(
 	const CppAD::vector<Float>&  fixed_vec  ,
 	const CppAD::vector<Float>&  random_vec )
-{	// local vector used to evaluate the residuals
-	static CppAD::vector<Float> pack_vec;
-	assert( pack_object_.size() != 0 );
-	if( pack_vec.size() == 0 )
-		pack_vec.resize( pack_object_.size() );
+{	CppAD::vector<Float> pack_vec( pack_object_.size() );
+
+	// fixed_vec -> pack_vec
+	get_fixed_effect(pack_object_, pack_vec, fixed_vec);
+
+	// random_vec -> pack_vec
+	get_random_effect(pack_object_, pack_vec, random_vec);
+
+	// prior density
+	CppAD::vector< residual_struct<Float> > prior_residual_vec;
+	prior_residual_vec = prior_object_.eval(pack_vec);
+	size_t n_prior = prior_residual_vec.size();
+
+	// data likelihood
+	CppAD::vector< residual_struct<Float> > data_residual_vec;
+	data_residual_vec = data_object_.like_all(pack_vec);
+	size_t n_data = data_residual_vec.size();
+ 
+	// combine as one vector
+	CppAD::vector< residual_struct<Float> >& residual_vec(n_prior + n_data);
+	for(size_t i = 0; i < n_prior; i++)
+		residual_vec[i] = prior_residual_vec[i];
+	for(size_t i = 0; i < n_data; i++)
+		residual_vec[n_prior + i] = data_residual_vec[i];
+
+	// result
+	return residual_vec;
 }
 
 
