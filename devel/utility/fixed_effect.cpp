@@ -204,7 +204,7 @@ void put_fixed_effect(
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	pack_index = pack_object.mulstd_offset(smooth_id);
 		for(size_t k = 0; k < 3; k++)
-			pack_vec[fixed_index++] = fixed_vec[pack_index++];
+			pack_vec[pack_index++] = fixed_vec[fixed_index++];
 	}
 
 	// parent rates
@@ -212,7 +212,7 @@ void put_fixed_effect(
 	{	info       = pack_object.rate_info(rate_id, n_child);
 		pack_index = info.offset;
 		for(size_t k = 0; k < info.n_var; k++)
-			pack_vec[fixed_index++] = fixed_vec[pack_index++];
+			pack_vec[pack_index++] = fixed_vec[fixed_index++];
 	}
 
 	// measurement mean and standard deviation covariates
@@ -222,14 +222,14 @@ void put_fixed_effect(
 		{	info       = pack_object.meas_mean_mulcov_info(integrand_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
-				pack_vec[fixed_index++] = fixed_vec[pack_index++];
+				pack_vec[pack_index++] = fixed_vec[fixed_index++];
 		}
 		n_cov = pack_object.meas_std_mulcov_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
 		{	info       = pack_object.meas_std_mulcov_info(integrand_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
-				pack_vec[fixed_index++] = fixed_vec[pack_index++];
+				pack_vec[pack_index++] = fixed_vec[fixed_index++];
 		}
 	}
 
@@ -240,7 +240,7 @@ void put_fixed_effect(
 		{	info       = pack_object.rate_mean_mulcov_info(rate_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
-				pack_vec[fixed_index++] = fixed_vec[pack_index++];
+				pack_vec[pack_index++] = fixed_vec[fixed_index++];
 		}
 	}
 	assert( fixed_index == fixed_vec.size() );

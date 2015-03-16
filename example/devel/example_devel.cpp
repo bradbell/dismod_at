@@ -46,6 +46,7 @@ extern bool pack_info_xam(void);
 extern bool integrate_1d_xam(void);
 extern bool integrate_2d_xam(void);
 extern bool interp_weight_xam(void);
+extern bool joint_like_xam(void);
 extern bool random_effect_xam(void);
 extern bool residual_density_xam(void);
 extern bool smooth2ode_xam(void);
@@ -117,6 +118,7 @@ int main(void)
 	RUN(integrate_1d_xam);
 	RUN(integrate_2d_xam);
 	RUN(interp_weight_xam);
+	RUN(joint_like_xam);
 	RUN(pack_info_xam);
 	RUN(residual_density_xam);
 	RUN(random_effect_xam);

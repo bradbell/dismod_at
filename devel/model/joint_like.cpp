@@ -22,7 +22,9 @@ $$
 $section Joint Likelihood$$
 
 $head Syntax$$
-$codei%joint_like %joint_object%(%data_object%, %prior_object%)%$$
+$codei%joint_like %joint_object%(
+	%pack_object%, %data_object%, %prior_object%
+)%$$
 
 $head Purpose$$
 This object can be used to evaluate the joint likelihood of the
@@ -77,6 +79,8 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <dismod_at/joint_like.hpp>
+# include <dismod_at/fixed_effect.hpp>
+# include <dismod_at/random_effect.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -152,14 +156,14 @@ $end
 template <class Float>
 CppAD::vector< residual_struct<Float> > joint_like::eval(
 	const CppAD::vector<Float>&  fixed_vec  ,
-	const CppAD::vector<Float>&  random_vec )
+	const CppAD::vector<Float>&  random_vec ) const
 {	CppAD::vector<Float> pack_vec( pack_object_.size() );
 
 	// fixed_vec -> pack_vec
-	get_fixed_effect(pack_object_, pack_vec, fixed_vec);
+	put_fixed_effect(pack_object_, pack_vec, fixed_vec);
 
 	// random_vec -> pack_vec
-	get_random_effect(pack_object_, pack_vec, random_vec);
+	put_random_effect(pack_object_, pack_vec, random_vec);
 
 	// prior density
 	CppAD::vector< residual_struct<Float> > prior_residual_vec;
@@ -172,7 +176,7 @@ CppAD::vector< residual_struct<Float> > joint_like::eval(
 	size_t n_data = data_residual_vec.size();
 
 	// combine as one vector
-	CppAD::vector< residual_struct<Float> >& residual_vec(n_prior + n_data);
+	CppAD::vector< residual_struct<Float> > residual_vec(n_prior + n_data);
 	for(size_t i = 0; i < n_prior; i++)
 		residual_vec[i] = prior_residual_vec[i];
 	for(size_t i = 0; i < n_data; i++)
@@ -182,6 +186,16 @@ CppAD::vector< residual_struct<Float> > joint_like::eval(
 	return residual_vec;
 }
 
+# define DISMOD_AT_INSTANTIATE_JOINT_LIKE(Float)                     \
+	template                                                         \
+	CppAD::vector< residual_struct<Float> > joint_like::eval<Float>( \
+		const CppAD::vector<Float>&   fixed_vec  ,                   \
+		const CppAD::vector<Float>&   random_vec                     \
+	) const;
 
+// instantiations
+DISMOD_AT_INSTANTIATE_JOINT_LIKE(double)
+DISMOD_AT_INSTANTIATE_JOINT_LIKE( CppAD::AD<double> )
+DISMOD_AT_INSTANTIATE_JOINT_LIKE( CppAD::AD< CppAD::AD<double> > )
 
 } // END DISMOD_AT_NAMESPACE

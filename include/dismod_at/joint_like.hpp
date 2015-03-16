@@ -36,7 +36,7 @@ public:
 	CppAD::vector< residual_struct<Float> > eval(
 		const CppAD::vector<Float>& fixed_vec ,
 		const CppAD::vector<Float>& random_vec
-	);
+	) const;
 };
 
 } // END_DISMOD_AT_NAMESPACE
