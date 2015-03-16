@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin devel_data_model_ctor$$
+$begin data_model_ctor$$
 $spell
 	logden
 	std
@@ -458,7 +458,7 @@ pack_object_   (pack_object)
 }
 /*
 -----------------------------------------------------------------------------
-$begin devel_data_model_avg_no_ode$$
+$begin data_model_avg_no_ode$$
 
 $spell
 	subvectors
@@ -472,8 +472,9 @@ $spell
 	vec
 	CppAD
 	const
+	Doesn't
 $$
-$section Average for Integrands That Don't Require the ODE$$
+$section One Average Integrand That Doesn't Require the ODE$$
 
 $head Syntax$$
 $icode%avg% = %data_object%.avg_no_ode(%data_id%, %pack_vec%)%$$
@@ -501,7 +502,7 @@ the average integrand for.
 $subhead Node$$
 The $icode data_id$$ must correspond to a
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
-$cref/parent_node_id/devel_data_model_ctor/parent_node_id/$$; i.e.,
+$cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
 $cref/child/child_data/data_id2child/child/$$ value
 less than or equal
@@ -713,7 +714,7 @@ Float data_model::avg_no_ode(
 }
 /*
 -----------------------------------------------------------------------------
-$begin devel_data_model_avg_yes_ode$$
+$begin data_model_avg_yes_ode$$
 
 $spell
 	mtspecific
@@ -727,7 +728,7 @@ $spell
 	CppAD
 	const
 $$
-$section Average for Integrands That Require the ODE$$
+$section One Average Integrand That Requires the ODE$$
 
 $head Syntax$$
 $icode%avg% = %data_object%.avg_yes_ode(%data_id%, %pack_vec%)%$$
@@ -755,7 +756,7 @@ the average integrand for.
 $subhead Node$$
 The $icode data_id$$ must correspond to a
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
-$cref/parent_node_id/devel_data_model_ctor/parent_node_id/$$; i.e.,
+$cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
 $cref/child/child_data/data_id2child/child/$$ value
 less than or equal
@@ -1016,7 +1017,7 @@ Float data_model::avg_yes_ode(
 }
 /*
 -----------------------------------------------------------------------------
-$begin devel_data_model_like$$
+$begin data_model_like$$
 
 $spell
 	struct
@@ -1040,7 +1041,7 @@ $spell
 	relrisk
 	xam
 $$
-$section Weighted Residual and Log-Likelihood for any Integrands$$
+$section One Weighted Residual and Log-Likelihood for any Integrands$$
 
 $head Syntax$$
 $icode%residual% = %data_object%.data_like(%data_id%, %pack_vec%, %avg%)%$$
@@ -1048,7 +1049,7 @@ $icode%residual% = %data_object%.data_like(%data_id%, %pack_vec%, %avg%)%$$
 $head Log-likelihood$$
 We use $cref/y_i/data_like/Data Table Notation/y_i/$$ to denote the
 $cref/meas_value/data_table/meas_value/$$ corresponding
-to this $cref/data_id/devel_data_model_like/data_id/$$.
+to this $cref/data_id/data_model_like/data_id/$$.
 The log-likelihood computed by $code data_like$$ is the mapping
 $latex \[
 	\ell (u, \theta) = C + \log [ \B{p} ( y_i | u , \theta ) ]
@@ -1080,7 +1081,7 @@ the weighted residual and log-likelihood for.
 $subhead Node$$
 The $icode data_id$$ must correspond to a
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
-$cref/parent_node_id/devel_data_model_ctor/parent_node_id/$$; i.e.,
+$cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
 $cref/child/child_data/data_id2child/child/$$ value
 less than or equal
@@ -1109,10 +1110,10 @@ This can be calculated using:
 $table
 routine                   $cnext integrand for this $icode data_id$$
 $rnext
-$cref devel_data_model_avg_no_ode$$ $cnext
+$cref data_model_avg_no_ode$$ $cnext
 	incidence, remission, mtexcess, mtother, mtwith, relrisk
 $rnext
-$cref devel_data_model_avg_yes_ode$$ $cnext
+$cref data_model_avg_yes_ode$$ $cnext
 	prevalence, mtspecific, mtall, mtstandard
 
 $tend
