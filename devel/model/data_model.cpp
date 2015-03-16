@@ -1247,17 +1247,17 @@ $icode%residual_vec% = %data_object%.like_all(%pack_vec%)%$$
 $head Data Table Notation$$
 
 $subhead i$$
-We use $icode i$$ to 
+We use $icode i$$ to
 denote the $cref/data_id/data_table/data_id/$$
 for a row in the data table.
 
 $subhead y_i$$
 We use $icode y_i$$ to denote the corresponding
-$cref/meas_value/data_table/meas_value/$$. 
+$cref/meas_value/data_table/meas_value/$$.
 
 $subhead n_i$$
 We use $icode n_i$$ to denote the corresponding
-$cref/node_id/data_table/node_id/$$. 
+$cref/node_id/data_table/node_id/$$.
 
 $subhead I$$
 We use $icode I$$ to denote the set of $icode data_id$$
@@ -1290,7 +1290,7 @@ $codei%
 %$$
 The size of $icode residual$$ is equal the number of elements in $icode I$$.
 The order of the residuals is unspecified (at this time).
-The log of the density 
+The log of the density
 $latex \B{p}( y | u , \theta )$$,
 is the sum of the log of the densities corresponding to all the
 $cref/residuals/residual_density/$$ in $icode residual_vec$$.
