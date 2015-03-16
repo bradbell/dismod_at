@@ -38,18 +38,22 @@ list=`git status | sed -n \
 ok='yes'
 for file in $list
 do
-	text='Copyright (C) 2014-15 University of Washington'
-	if ! grep "$text" $file > /dev/null
+	if [ -e "$file" ]
 	then
-		sed -e 's|Copyright (C) 2014-..|Copyright (C) 2014-15|' -i.$$ $file
-		if diff $file.$$ $file
+		text='Copyright (C) 2014-15 University of Washington'
+		if ! grep "$text" $file > /dev/null
 		then
-			echo 'bin/check_copyright.sh: program error'
-			exit 1
-		else
-			rm  $file.$$
+			echo $file
+			sed -e 's|Copyright (C) 2014-..|Copyright (C) 2014-15|' -i.$$ $file
+			if diff $file.$$ $file
+			then
+				echo 'bin/check_copyright.sh: program error'
+				exit 1
+			else
+				rm  $file.$$
+			fi
+			ok='no'
 		fi
-		ok='no'
 	fi
 done
 #

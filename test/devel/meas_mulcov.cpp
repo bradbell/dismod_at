@@ -264,7 +264,7 @@ bool meas_mulcov(void)
 	data_id = 0;
 	Float avg_integrand = data_object.avg_no_ode(data_id, pack_vec);
 	dismod_at::residual_struct<Float> residual    =
-		data_object.data_like(data_id, pack_vec, avg_integrand);
+		data_object.like_one(data_id, pack_vec, avg_integrand);
 	Float wres = residual.wres;
 	//
 	// average mean mulcov

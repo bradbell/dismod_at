@@ -9,18 +9,16 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin data_like_xam.cpp$$
+$begin like_one_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ data_like: Example and Test$$
-$index example, C++ data_like$$
-$index data_like, C++ example$$
+$section C++ like_one: Example and Test$$
 
 $code
-$verbatim%example/devel/model/data_like_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/model/like_one_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -29,7 +27,7 @@ $end
 # include <limits>
 # include <dismod_at/data_model.hpp>
 
-bool data_like_xam(void)
+bool like_one_xam(void)
 {	bool   ok = true;
 	size_t i, j, k;
 	using CppAD::abs;
@@ -218,7 +216,7 @@ bool data_like_xam(void)
 	for(size_t data_id = 0; data_id < data_table.size(); data_id++)
 	{	Float avg   = data_object.avg_no_ode(data_id, pack_vec);
 		dismod_at::residual_struct<Float> residual
-		            = data_object.data_like(data_id, pack_vec, avg);
+		            = data_object.like_one(data_id, pack_vec, avg);
 		Float  wres       = residual.wres;
 		Float  loglike    = residual.logden_smooth;
 		loglike          -= fabs( residual.logden_sub_abs );

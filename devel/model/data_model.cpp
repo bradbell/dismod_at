@@ -1017,7 +1017,7 @@ Float data_model::avg_yes_ode(
 }
 /*
 -----------------------------------------------------------------------------
-$begin data_model_like$$
+$begin data_model_like_one$$
 
 $spell
 	struct
@@ -1044,13 +1044,13 @@ $$
 $section One Weighted Residual and Log-Likelihood for any Integrands$$
 
 $head Syntax$$
-$icode%residual% = %data_object%.data_like(%data_id%, %pack_vec%, %avg%)%$$
+$icode%residual% = %data_object%.like_one(%data_id%, %pack_vec%, %avg%)%$$
 
 $head Log-likelihood$$
 We use $cref/y_i/data_like/Data Table Notation/y_i/$$ to denote the
 $cref/meas_value/data_table/meas_value/$$ corresponding
-to this $cref/data_id/data_model_like/data_id/$$.
-The log-likelihood computed by $code data_like$$ is the mapping
+to this $cref/data_id/data_table/data_id/$$.
+The log-likelihood computed by $code like_one$$ is the mapping
 $latex \[
 	\ell (u, \theta) = C + \log [ \B{p} ( y_i | u , \theta ) ]
 \] $$
@@ -1095,7 +1095,7 @@ $codei%
 and is a vector of values for all of the model variables; i.e.,
 $latex (u , \theta)$$.
 Only the $cref pack_info_meas_mulcov$$ subvectors of $icode pack_vec$$ are used
-by $code data_like$$ (note that other components of $latex (u, \theta )$$
+by $code like_one$$ (note that other components of $latex (u, \theta )$$
 are used to compute $icode avg$$ documented below).
 
 $head avg$$
@@ -1126,16 +1126,16 @@ $codei%
 see $cref/residual_struct/residual_density/residual/residual_struct/$$.
 It contains the weighted residual and the corresponding log-density.
 
-$children%example/devel/model/data_like_xam.cpp
+$children%example/devel/model/like_one_xam.cpp
 %$$
 $head Example$$
-The file $cref data_like_xam.cpp$$ contains an example and test
+The file $cref like_one_xam.cpp$$ contains an example and test
 of using this routine.
 
 $end
 */
 template <class Float>
-residual_struct<Float> data_model::data_like(
+residual_struct<Float> data_model::like_one(
 		size_t                        data_id  ,
 		const CppAD::vector<Float>&   pack_vec  ,
 		const Float&                  avg
@@ -1235,7 +1235,7 @@ residual_struct<Float> data_model::data_like(
 		const CppAD::vector<Float>&   pack_vec              \
 	) const;                                                \
 	template residual_struct<Float>                         \
-	data_model::data_like(                                  \
+	data_model::like_one(                                   \
 		size_t                        data_id  ,            \
 		const CppAD::vector<Float>&   pack_vec  ,           \
 		const Float&                  avg                   \

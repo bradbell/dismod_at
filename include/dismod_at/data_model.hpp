@@ -79,7 +79,7 @@ public:
 	) const;
 	// compute weighted residual and log-likelihood
 	template <class Float>
-	residual_struct<Float> data_like(
+	residual_struct<Float> like_one(
 		size_t                        data_id  ,
 		const  CppAD::vector<Float>&  pack_vec  ,
 		const  Float&                 avg

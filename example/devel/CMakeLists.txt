@@ -19,7 +19,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 
 	model/avg_no_ode_xam.cpp
 	model/avg_yes_ode_xam.cpp
-	model/data_like_xam.cpp
+	model/like_one_xam.cpp
 	model/prior_density_xam.cpp
 
 	utility/bilinear_interp_xam.cpp
