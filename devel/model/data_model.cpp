@@ -44,11 +44,6 @@ instead a reference to is stored in $icode data_object$$.
 Thus, $icode data_object$$ should not be used after $icode data_table$$
 is deleted.
 
-$head Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
-where $code AD$$ is $code CppAD::AD$$.
-
 $head parent_node_id$$
 This argument has prototype
 $codei%

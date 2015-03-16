@@ -235,12 +235,12 @@ bool prior_density_xam(void)
 	// meas_mean_mulcov: none
 	// meas_std_mulcov: none
 	// rate_mean_mulcov: none
+	dismod_at::prior_density prior_object(
+		pack_object, age_table, time_table, prior_table, s_info_vec
+	);
 	// -------------- compute prior density --------------------------------
 	CppAD::vector< dismod_at::residual_struct<double> > residual_vec;
-	residual_vec = dismod_at::prior_density(
-		pack_object, pack_vec,
-		age_table, time_table, prior_table, s_info_vec
-	);
+	residual_vec = prior_object.eval(pack_vec);
 	double logden    = 0.0;
 	size_t count_abs = 0;
 	for(i = 0; i < residual_vec.size(); i++)

@@ -19,17 +19,42 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "residual_density.hpp"
 
 namespace dismod_at {
+	class prior_density {
+	private:
+		// data
+		const pack_info                    pack_object_;
+		const CppAD::vector<double>        age_table_;
+		const CppAD::vector<double>        time_table_;
+		const CppAD::vector<prior_struct>  prior_table_;
+		const CppAD::vector<smooth_info>   s_info_vec_;
 
-	template <class Float>
-	CppAD::vector< residual_struct<Float> > prior_density(
-		const pack_info&                       pack_object     ,
-		const CppAD::vector<Float>&            pack_vec        ,
-		const CppAD::vector<double>&           age_table       ,
-		const CppAD::vector<double>&           time_table      ,
-		const CppAD::vector<prior_struct>&     prior_table     ,
-		const CppAD::vector<smooth_info>&      s_info_vec
-	);
+		// functions
+		template <class Float>
+		residual_struct<Float> log_prior_density(
+			const prior_struct& prior   ,
+			const Float&        variable
+		) const;
+		template <class Float>
+		void log_prior_density_on_grid(
+			CppAD::vector< residual_struct<Float> >& residual_vec ,
+			size_t                                   offset       ,
+			const CppAD::vector<Float>&              pack_vec     ,
+			const smooth_info&                       s_info
+		) const;
+	public:
+		prior_density(
+			const pack_info&                       pack_object     ,
+			const CppAD::vector<double>&           age_table       ,
+			const CppAD::vector<double>&           time_table      ,
+			const CppAD::vector<prior_struct>&     prior_table     ,
+			const CppAD::vector<smooth_info>&      s_info_vec
+		);
+		template <class Float>
+		CppAD::vector< residual_struct<Float> > eval(
+			const CppAD::vector<Float>& pack_vec
+		) const;
 
+	};
 }
 
 # endif
