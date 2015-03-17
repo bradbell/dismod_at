@@ -25,7 +25,9 @@ $$
 $section Compute the Weighted Residual and Log-Density$$
 
 $head Syntax$$
-$icode%residual% = residual_density(%density%, %z%, %mu%, %delta%, %eta%)%$$
+$icode%residual% = residual_density(
+	%type%, %density%, %z%, %mu%, %delta%, %eta%
+)%$$
 
 $head density$$
 This argument has prototype
@@ -99,7 +101,25 @@ $icode Float$$ $cnext
 $rnext
 $icode density_enum$$ $cnext
 	$code density$$ $cnext
-	The type of density function
+	type of density function; see 
+	$cref/density_enum/get_density_table/density_enum/$$
+$rnext
+$icode residual_type_enum$$ $cnext
+	$code type$$ $cnext
+	type of residual; see below
+$tend
+
+$subhead residual_type$$
+The possible $code residual_type_enum$$ values are
+$table
+$cref/data_model_enum/data_model_like_all/residual_vec/data_model_enum/$$
+	$cnext this a data residual 
+$rnext
+$cref/fixed_prior_enum/prior_density_eval/residual_vec/fixed_prior_enum/$$
+	$cnext this a residual in the fixed effects prior
+$rnext
+$cref/random_prior_enum/prior_density_eval/residual_vec/random_prior_enum/$$
+	$cnext this a residual in the random effects prior
 $tend
 
 $subhead Uniform$$
@@ -133,11 +153,12 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 template <class Float>
 residual_struct<Float> residual_density(
-	density_enum density ,
-	const Float& z       ,
-	const Float& mu      ,
-	const Float& delta   ,
-	const Float& eta     )
+	residual_type_enum type    ,
+	density_enum       density ,
+	const Float&       z       ,
+	const Float&       mu      ,
+	const Float&       delta   ,
+	const Float&       eta     )
 {
 	Float wres, sigma;
 	switch( density )
@@ -191,17 +212,19 @@ residual_struct<Float> residual_density(
 	residual.logden_smooth  = logden_smooth;
 	residual.logden_sub_abs = logden_sub_abs;
 	residual.density        = density;
+	residual.type           = type;
 	return residual;
 }
 
 // instantiation macro
 # define DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY(Float)        \
-	template residual_struct<Float> residual_density( \
-		density_enum density ,                                \
-		const Float& z       ,                                \
-		const Float& mu      ,                                \
-		const Float& delta   ,                                \
-		const Float& eta                                      \
+	template residual_struct<Float> residual_density(         \
+		residual_type_enum type    ,                          \
+		density_enum       density ,                          \
+		const Float&       z       ,                          \
+		const Float&       mu      ,                          \
+		const Float&       delta   ,                          \
+		const Float&       eta                                \
 	);
 
 // instantiations

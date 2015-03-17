@@ -31,12 +31,14 @@ namespace dismod_at {
 		// functions
 		template <class Float>
 		residual_struct<Float> log_prior_density(
+			residual_type_enum  type    ,
 			const prior_struct& prior   ,
 			const Float&        variable
 		) const;
 		template <class Float>
 		void log_prior_density_on_grid(
 			CppAD::vector< residual_struct<Float> >& residual_vec ,
+			residual_type_enum  type                              ,
 			size_t                                   offset       ,
 			const CppAD::vector<Float>&              pack_vec     ,
 			const smooth_info&                       s_info
