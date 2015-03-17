@@ -101,7 +101,7 @@ $icode Float$$ $cnext
 $rnext
 $icode density_enum$$ $cnext
 	$code density$$ $cnext
-	type of density function; see 
+	type of density function; see
 	$cref/density_enum/get_density_table/density_enum/$$
 $rnext
 $icode residual_type_enum$$ $cnext
@@ -113,7 +113,7 @@ $subhead residual_type$$
 The possible $code residual_type_enum$$ values are
 $table
 $cref/data_model_enum/data_model_like_all/residual_vec/data_model_enum/$$
-	$cnext this a data residual 
+	$cnext this a data residual
 $rnext
 $cref/fixed_prior_enum/prior_density_eval/residual_vec/fixed_prior_enum/$$
 	$cnext this a residual in the fixed effects prior
