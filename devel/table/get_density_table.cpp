@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -46,7 +46,7 @@ $codei%
 is the enum value for the corresponding
 $cref/density_name/density_table/density_name/$$.
 
-$head Density Enum Values$$
+$head density_enum$$
 The $icode density_table$$ can also be addressed
 using the $code density_enum$$ values as follows:
 $table

@@ -87,15 +87,15 @@ $table
 Type $cnext Field $cnext Description $rnext
 $icode Float$$ $cnext
 	$code wres$$ $cnext
-	weighted residual
+	$cref/weighted residual/wres_density/$$
 $rnext
 $icode Float$$ $cnext
 	$code logden_smooth$$ $cnext
-	smooth term in corresponding log-density
+	this smooth term is in $cref/log-density/wres_density/$$
 $rnext
 $icode Float$$ $cnext
 	$code logden_sub_abs$$ $cnext
-	smooth term in absolute value in corresponding log-density
+	absolute value of this smooth term is in log-density
 $rnext
 $icode density_enum$$ $cnext
 	$code density$$ $cnext

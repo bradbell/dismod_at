@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -63,7 +63,7 @@ $code int$$ $cnext $code smooth_id$$     $pre  $$ $cnext
 	for this multiplier
 $tend
 
-$subhead mulcov_type$$
+$subhead mulcov_type_enum$$
 The $code mulcov_type_enum$$ possible values are
 $code rate_mean_enum$$,
 $code meas_mean_enum$$, and

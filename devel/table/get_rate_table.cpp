@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -62,7 +62,7 @@ $codei%
 is the information value for the corresponding
 $cref/rate_id/rate_table/rate_id/$$.
 
-$head Rate Enum Values$$
+$head rate_enum$$
 The $icode rate_table$$ can also be addressed
 using the $code rate_enum$$ values as follows:
 $table
