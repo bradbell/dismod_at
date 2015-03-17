@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
@@ -21,17 +21,17 @@ $section The Random Effects Value Density Function$$
 $head c$$
 We use $latex C$$ to denote the size of the
 $cref/child group/node_table/parent/Child Group/$$
-corresponding to the 
+corresponding to the
 $cref/parent/run_table/parent_node_id/$$.
 For $latex c = 0 , \ldots , C-1$$, we use
 $latex c$$ to denote the corresponding child.
 
 $head j$$
-For each 
+For each
 $cref/rate_id/rate_table/rate_id/$$ there is a corresponding
 $cref/child_smooth_id/rate_table/child_smooth_id/$$.
 For each $icode child_smooth_id$$ there is a corresponding
-number of age points $cref/n_age/smooth_table/n_age/$$ and 
+number of age points $cref/n_age/smooth_table/n_age/$$ and
 number of time points $cref/n_time/smooth_table/n_time/$$.
 We use the single index $latex j$$ (instead of three indices)
 to denote a each possible combination of
@@ -58,25 +58,25 @@ the rate, age and time specified by $latex j$$.
 
 $head lambda_j$$
 We use $latex \lambda_j$$
-for the $cref/mulstd_value/smooth_table/mulstd_value/$$ 
-multiplier for the 
-$cref/child_smooth_id/rate_table/child_smooth_id/$$ 
+for the $cref/mulstd_value/smooth_table/mulstd_value/$$
+multiplier for the
+$cref/child_smooth_id/rate_table/child_smooth_id/$$
 corresponding to the rate specified by $latex j$$.
 
 $head delta_j$$
 We use $latex \delta_j$$ to denote the standard deviation
-$cref/std/prior_table/std/$$ corresponding to the 
-$cref/child_smooth_id/rate_table/child_smooth_id/$$ and the 
-rate, age, and time specified by $icode j$$. 
+$cref/std/prior_table/std/$$ corresponding to the
+$cref/child_smooth_id/rate_table/child_smooth_id/$$ and the
+rate, age, and time specified by $icode j$$.
 
 $head V_c,j^u$$
-The $cref/child_smooth_id/rate_table/child_smooth_id/$$ must correspond to 
+The $cref/child_smooth_id/rate_table/child_smooth_id/$$ must correspond to
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$ that in turn
 correspond to gaussian densities.
 Furthermore, the mean for these densities must be zero.
-The definition of the value density function for $latex u_{c,j}$$ is 
+The definition of the value density function for $latex u_{c,j}$$ is
 $latex \[
-V_{c,j}^u ( u | \theta ) 
+V_{c,j}^u ( u | \theta )
 =
 \exp \left[ G ( u_{c,j} \W{,} 0 \W{,} \lambda_j \delta_j ) \right]
 \] $$
@@ -86,8 +86,8 @@ $head V^u$$
 Let $latex m$$ be the number of random effects.
 The value density for all the random  effects $latex u$$ is defined by
 $latex \[
-V^u ( u | \theta )  
-= 
+V^u ( u | \theta )
+=
 \prod_{c=0}^{C-1} \prod_{j=0}^{m-1} V_{c,j}^u ( u | \theta )
 \] $$
 

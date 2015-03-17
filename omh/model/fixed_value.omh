@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
@@ -19,16 +19,16 @@ $section The Fixed Effects Value Density Function$$
 
 
 $head theta_j$$
-We use $latex \theta_j$$ to denote 
+We use $latex \theta_j$$ to denote
 one component of the
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$ vector.
 
 $head prior_id$$
-We use $icode prior_id$$ for the prior that is attached to the 
+We use $icode prior_id$$ for the prior that is attached to the
 $th j$$ fixed effect.
 
 $head lambda_j$$
-If $latex \theta_j$$ is a 
+If $latex \theta_j$$ is a
 $cref/smoothing standard deviation multiplier
 	/model_variable
 	/Fixed Effects, theta
@@ -36,14 +36,14 @@ $cref/smoothing standard deviation multiplier
 /$$
 then $latex \lambda_j = 1$$.
 Otherwise $latex \lambda_j$$
-is the $cref/mulstd_value/smooth_table/mulstd_value/$$ 
-multiplier for the 
-$cref/parent_smooth_id/rate_table/parent_smooth_id/$$ 
+is the $cref/mulstd_value/smooth_table/mulstd_value/$$
+multiplier for the
+$cref/parent_smooth_id/rate_table/parent_smooth_id/$$
 corresponding to $latex \theta_j$$.
-	
+
 $head mu_j$$
-We use $latex \mu_j$$ to denote the 
-$cref/mean/prior_table/mean/$$ 
+We use $latex \mu_j$$ to denote the
+$cref/mean/prior_table/mean/$$
 corresponding to $icode prior_id$$.
 
 $head delta_j$$
@@ -73,10 +73,10 @@ If $icode density$$ is $code gaussian$$,
 see $cref/G/wres_density/Gaussian/Log-Density, G/$$,
 the value density function is
 $latex \[
-V_j^\theta ( \theta ) 
+V_j^\theta ( \theta )
 =
 \exp \left[
-	 G \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \right) 
+	 G \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \right)
 \right]
 \] $$
 
@@ -86,10 +86,10 @@ If $icode density$$ is $code laplace$$,
 see $cref/L/wres_density/Laplace/Log-Density, L/$$,
 the value density function is
 $latex \[
-V_j^\theta ( \theta ) 
+V_j^\theta ( \theta )
 =
 \exp \left[
-	 L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \right) 
+	 L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \right)
 \right]
 \] $$
 
@@ -98,10 +98,10 @@ If $icode density$$ is $code log_gaussian$$,
 see $cref/G_L/wres_density/Log-Gaussian/Log-Density, G_L/$$,
 the value density function is
 $latex \[
-V_j^\theta ( \theta ) 
+V_j^\theta ( \theta )
 =
 \exp \left[
- G_L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} \eta_j \right) 
+ G_L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} \eta_j \right)
 \right]
 \] $$
 
@@ -110,10 +110,10 @@ If $icode density$$ is $code log_laplace$$,
 see $cref/L_L/wres_density/Log-Laplace/Log-Density, L_L/$$,
 the value density function is
 $latex \[
-V_j^\theta ( \theta ) 
+V_j^\theta ( \theta )
 =
 \exp \left[
-L_L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} \eta_j \right) 
+L_L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} \eta_j \right)
 \right]
 \] $$
 

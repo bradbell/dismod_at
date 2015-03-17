@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
@@ -13,12 +13,12 @@ $begin wres_density$$
 $section Weighted Residual and Density Functions$$
 
 $head Gaussian$$
-A random variable $latex z$$ has a Gaussian distribution with 
+A random variable $latex z$$ has a Gaussian distribution with
 mean $latex \mu$$ and standard deviation $latex \delta$$ if
 its probability density function  is given by
 $latex \[
 \B{p} ( z ) =
-\frac{1}{ \delta \sqrt{2 \pi} } 
+\frac{1}{ \delta \sqrt{2 \pi} }
 	\exp \left[ - \frac{1}{2} \left( \frac{z - \mu}{\delta} \right)^2 \right]
 \] $$
 for  $latex z \in [ -\infty , +\infty ]$$.
@@ -33,18 +33,18 @@ $subhead Log-Density, G$$
 The corresponding negative log-density function is
 $latex \[
 G( z, \mu , \delta ) =
-\log [ \B{p} ( z ) ] = 
-- \log \left( \delta \sqrt{2 \pi} \right)  
+\log [ \B{p} ( z ) ] =
+- \log \left( \delta \sqrt{2 \pi} \right)
 - \frac{1}{2} \left( \frac{z - \mu}{\delta} \right)^2
 \] $$
 
 $head Laplace$$
-A random variable $latex z$$ has a Laplace distribution with 
+A random variable $latex z$$ has a Laplace distribution with
 mean $latex \mu$$ and standard deviation $latex \delta$$ if
 its probability density function  is given by
 $latex \[
-\B{p} ( z ) = 
-\frac{1}{ \delta \sqrt{2} } 
+\B{p} ( z ) =
+\frac{1}{ \delta \sqrt{2} }
 	\exp \left[ - \sqrt{2} \left| \frac{z - \mu}{\delta} \right| \; \right]
 \] $$
 for  $latex z \in [ -\infty , +\infty ]$$.
@@ -60,26 +60,26 @@ $subhead Log-Density, L$$
 The corresponding negative log-density function is
 $latex \[
 L( z, \mu , \delta ) =
-\log [ \B{p} ( z ) ] = 
-- \log \left( \delta \sqrt{2} \right)  
-- \sqrt{2} \left| \frac{z - \mu}{\delta} \right| 
+\log [ \B{p} ( z ) ] =
+- \log \left( \delta \sqrt{2} \right)
+- \sqrt{2} \left| \frac{z - \mu}{\delta} \right|
 \] $$
 
 $head Log-Gaussian$$
-A random variable $latex z$$ has an offset log-Gaussian distribution with 
+A random variable $latex z$$ has an offset log-Gaussian distribution with
 transformed mean $latex \mu$$,
 transformed standard deviation $latex \delta$$,
 and offset $latex \eta$$,
 if its probability density function  is given by
 $latex \[
-\sigma( \mu, \delta , \eta ) 
-= 
+\sigma( \mu, \delta , \eta )
+=
 \log [ \mu + \eta + \delta ] - \log [ \mu + \eta ]
 \] $$
 $latex \[
 \B{p} [ \log( z + \eta ) ] =
-\frac{1}{ \sigma( \mu , \delta , \eta ) \sqrt{2 \pi} } 
-\exp \left( - \frac{1}{2} \left[ 
+\frac{1}{ \sigma( \mu , \delta , \eta ) \sqrt{2 \pi} }
+\exp \left( - \frac{1}{2} \left[
 \frac{
 	\log( z + \eta )  - \log( \mu + \eta )
 }{
@@ -89,13 +89,13 @@ $latex \[
 for  $latex z \in [ -\eta , +\infty ]$$.
 Note that the mean of $latex \log( z + \eta )$$ is
 $latex \log( \mu + \eta )$$ and its standard deviation is
-$latex \sigma( \mu , \delta , \eta )$$. 
+$latex \sigma( \mu , \delta , \eta )$$.
 
 $subhead Weighted Residual, R_L$$
 The corresponding weight residual function is
 $latex \[
-R_L ( z, \mu , \delta , \eta ) 
-= 
+R_L ( z, \mu , \delta , \eta )
+=
 \frac{
 	\log( z + \eta ) - \log( \mu + \eta )
 }{
@@ -107,9 +107,9 @@ $subhead Log-Density, G_L$$
 The corresponding log-density function is
 $latex \[
 G_L ( z, \mu , \delta , \eta ) =
-\log ( \B{p} [ \log( z + \eta ) ] ) = 
+\log ( \B{p} [ \log( z + \eta ) ] ) =
 - \log \left[ \sigma( \mu , \delta , \eta ) \sqrt{2 \pi} \right]
-- \frac{1}{2} \left[ 
+- \frac{1}{2} \left[
 \frac{
 	\log( z + \eta ) - \log( \mu + \eta )
 }{
@@ -119,20 +119,20 @@ G_L ( z, \mu , \delta , \eta ) =
 
 
 $head Log-Laplace$$
-A random variable $latex z$$ has an offset log-Laplace distribution with 
+A random variable $latex z$$ has an offset log-Laplace distribution with
 transformed mean $latex \mu$$,
 transformed standard deviation $latex \delta$$,
 and offset $latex \eta$$,
 if its probability density function  is given by
 $latex \[
-\sigma( \mu, \delta , \eta ) 
-= 
+\sigma( \mu, \delta , \eta )
+=
 \log [ \mu + \eta + \delta ] - \log [ \mu + \eta ]
 \] $$
 $latex \[
 \B{p} [ \log( z + \eta ) ] =
-\frac{1}{ \sigma( \mu , \delta , \eta ) \sqrt{2} } 
-\exp \left( - \sqrt{2} \left| 
+\frac{1}{ \sigma( \mu , \delta , \eta ) \sqrt{2} }
+\exp \left( - \sqrt{2} \left|
 \frac{
 	\log( z + \eta )  - \log( \mu + \eta )
 }{
@@ -142,14 +142,14 @@ $latex \[
 for  $latex z \in [ -\eta , +\infty ]$$.
 Note that the mean of $latex \log( z + \eta )$$ is
 $latex \log( \mu + \eta )$$ and its standard deviation is
-$latex \sigma( \mu , \delta , \eta )$$. 
+$latex \sigma( \mu , \delta , \eta )$$.
 
 $subhead Weighted Residual, R_L$$
 The corresponding weight residual function is
 the same as for the Log-Gaussian case; i.e.,
 $latex \[
-R_L ( z, \mu , \delta , \eta ) 
-= 
+R_L ( z, \mu , \delta , \eta )
+=
 \frac{
 	\log( z + \eta ) - \log( \mu + \eta )
 }{
@@ -161,7 +161,7 @@ $subhead Log-Density, L_L$$
 The corresponding log-density function is
 $latex \[
 L_L ( z, \mu , \delta , \eta ) =
-\log ( \B{p} [ \log( z + \eta ) ] ) = 
+\log ( \B{p} [ \log( z + \eta ) ] ) =
 - \log \left[ \sigma( \mu , \delta , \eta ) \sqrt{2} \right]
 - \frac{1}{2} \left|
 \frac{

@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
@@ -22,29 +22,29 @@ $section The Data Weighted Residuals and Likelihood Functions$$
 $head Data Table Notation$$
 
 $subhead i$$
-We use $latex i$$ to 
+We use $latex i$$ to
 denote the $cref/data_id/data_table/data_id/$$
 for a row in the data table.
 
 $subhead y_i$$
 We use $latex y_i$$ to denote the corresponding
-$cref/meas_value/data_table/meas_value/$$ value. 
+$cref/meas_value/data_table/meas_value/$$ value.
 
 $subhead sigma_i$$
 We use $latex \sigma_i$$ to denote the corresponding
-$cref/meas_std/data_table/meas_std/$$ value. 
+$cref/meas_std/data_table/meas_std/$$ value.
 
 $subhead a_i$$
 We use $latex a_i$$ to denote the corresponding
-$cref/age_lower/data_table/age_lower/$$ value. 
+$cref/age_lower/data_table/age_lower/$$ value.
 
 $subhead b_i$$
 We use $latex a_i$$ to denote the corresponding
-$cref/age_upper/data_table/age_upper/$$ value. 
+$cref/age_upper/data_table/age_upper/$$ value.
 
 $subhead s_i$$
 We use $latex s_i$$ to denote the corresponding
-$cref/time_lower/data_table/time_lower/$$ value. 
+$cref/time_lower/data_table/time_lower/$$ value.
 
 $subhead t_i$$
 We use $latex a_i$$ to denote the corresponding
@@ -55,7 +55,7 @@ $cref/density_id/data_table/density_id/$$ value.
 
 $subhead I_i$$
 We use $latex I_i$$ to denote the corresponding
-$cref/integrand_id/data_table/integrand_id/$$ value. 
+$cref/integrand_id/data_table/integrand_id/$$ value.
 
 $subhead eta_i$$
 We use $latex \eta_i$$ to denote the
@@ -79,12 +79,12 @@ $head Covariate$$
 $subhead J_i$$
 There is a set of rows in the mulcov table such that
 $cref/integrand_id/mulcov_table/integrand_id/$$ is equal to $latex I_i$$.
-and 
+and
 $cref/mulcov_type/mulcov_table/mulcov_type/$$ is equal to $code meas_mean$$.
 We use $latex J_i$$ to denote the corresponding set of
 $cref/covariate_id/mulcov_table/covariate_id/$$ values for
 which this is the case.
- 
+
 $subhead beta_ij$$
 For each covariate index $latex j \in J_i$$,
 we use $latex \beta_{i,j} (a, t) $$ to denote the
@@ -100,7 +100,7 @@ $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 $subhead K_i$$
 There is a set of rows in the mulcov table such that
 $cref/integrand_id/mulcov_table/integrand_id/$$ is equal to $latex I_i$$.
-and 
+and
 $cref/mulcov_type/mulcov_table/mulcov_type/$$ is equal to $code meas_std$$.
 We use $latex K_i$$ to denote the corresponding set of
 $cref/covariate_id/mulcov_table/covariate_id/$$ values for
@@ -126,14 +126,14 @@ $cref/fixed effects/model_variable/Fixed Effects, theta/$$ respectively.
 $head Adjusted Measurement, v_i$$
 The adjusted data value is defined by
 $latex \[
-v_i ( \theta ) 
-= 
+v_i ( \theta )
+=
 \frac{y_i}{\bar{w}_i}
 \int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
-\exp \left( 
+\exp \left(
 	- \sum_{j \in J_i} x_{i,j} \beta_{i,j} (a, t)
 \right)
-w_i (a,t) \; \B{d} t \; \B{d} a 
+w_i (a,t) \; \B{d} t \; \B{d} a
 \] $$
 where $latex \bar{w}_i$$ is the
 $cref/average weight/avg_integrand/Average Weight, wbar_i/$$.
@@ -141,26 +141,26 @@ $cref/average weight/avg_integrand/Average Weight, wbar_i/$$.
 $head Adjusted Standard Deviation, delta_i$$
 The adjusted standard deviation is defined by
 $latex \[
-z_i ( \theta ) 
-= 
+z_i ( \theta )
+=
 \frac{\sigma_i}{\bar{w}_i}
 \int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
-\exp \left( 
+\exp \left(
 	- \sum_{j \in J_i} x_{i,j} \beta_{i,j} (a, t )
 \right)
-w_i (a,t) \; \B{d} t \; \B{d} a 
+w_i (a,t) \; \B{d} t \; \B{d} a
 \] $$
 $latex \[
 \delta_i ( \theta )
-= 
-z_i ( \theta ) 
-+ 
-\frac{ v_i ( \theta) + \eta_i }{\bar{w}_i} 
+=
+z_i ( \theta )
++
+\frac{ v_i ( \theta) + \eta_i }{\bar{w}_i}
 	\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
-	\left( 
+	\left(
 		\sum_{j \in K_i} x_{i,j} \gamma_{i,j} (a, t)
-	\right) 
-	w_i (a,t) \; \B{d} t \; \B{d} a 
+	\right)
+	w_i (a,t) \; \B{d} t \; \B{d} a
 \] $$
 Note that for $latex j \in K_i$$ it should hold that
 $latex 0 \leq x_{i,j}$$ and $latex 0 \leq \gamma_{i,j} (a, t)$$
@@ -175,8 +175,8 @@ $icode data_id$$.
 $head Weighted Residual and Likelihood$$
 The weighted residual and likelihood,
 given the random effects $latex u$$ and the fixed effects $latex \theta$$,
-depend on the 
-$cref/density_name/density_table/density_name/$$ 
+depend on the
+$cref/density_name/density_table/density_name/$$
 corresponding to $latex d_i$$.
 
 $subhead gaussian$$
@@ -188,14 +188,14 @@ R [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 and the likelihood is
 $latex \[
 \B{p} ( y_i | u , \theta )
-= 
+=
 \exp \left(
 G [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \right)
 \] $$
-See the model density definitions of 
-$cref/R/wres_density/Gaussian/Weighted Residual, R/$$ 
-and 
+See the model density definitions of
+$cref/R/wres_density/Gaussian/Weighted Residual, R/$$
+and
 $cref/G/wres_density/Gaussian/Log-Density, G/$$.
 
 $subhead laplace$$
@@ -206,15 +206,15 @@ R [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \] $$
 and the likelihood is
 $latex \[
-\B{p} ( y_i | u , \theta ) 
-= 
+\B{p} ( y_i | u , \theta )
+=
 \exp \left(
 L [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \right)
 \] $$
-See the model density definitions of 
-$cref/R/wres_density/Laplace/Weighted Residual, R/$$ 
-and 
+See the model density definitions of
+$cref/R/wres_density/Laplace/Weighted Residual, R/$$
+and
 $cref/L/wres_density/Laplace/Log-Density, L/$$.
 
 
@@ -222,9 +222,9 @@ $subhead log_gaussian$$
 If $latex d_i$$ corresponds to $code log_gaussian$$,
 the weighted residual is
 $latex \[
-R_L [ 
-	v_i ( \theta)        \W{,} 
-	A_i ( u, \theta )    \W{,} 
+R_L [
+	v_i ( \theta)        \W{,}
+	A_i ( u, \theta )    \W{,}
 	\delta_i ( \theta )  \W{,}
 	\eta_i
 ]
@@ -232,28 +232,28 @@ R_L [
 and the likelihood is
 $latex \[
 \B{p} ( y_i | u , \theta )
-= 
+=
 \exp \left(
-G_L [ 
-	v_i ( \theta)        \W{,} 
-	A_i ( u, \theta )    \W{,} 
+G_L [
+	v_i ( \theta)        \W{,}
+	A_i ( u, \theta )    \W{,}
 	\delta_i ( \theta )  \W{,}
 	\eta_i
 ]
 \right)
 \] $$
-See the model density definitions of 
-$cref/R_L/wres_density/Log-Gaussian/Weighted Residual, R_L/$$ 
-and 
+See the model density definitions of
+$cref/R_L/wres_density/Log-Gaussian/Weighted Residual, R_L/$$
+and
 $cref/G_L/wres_density/Log-Gaussian/Log-Density, G_L/$$.
 
 $subhead log_laplace$$
 If $latex d_i$$ corresponds to $code log_laplace$$,
 the weighted residual is
 $latex \[
-R_L [ 
-	v_i ( \theta)        \W{,} 
-	A_i ( u, \theta )    \W{,} 
+R_L [
+	v_i ( \theta)        \W{,}
+	A_i ( u, \theta )    \W{,}
 	\delta_i ( \theta )  \W{,}
 	\eta_i
 ]
@@ -261,19 +261,19 @@ R_L [
 and the likelihood is
 $latex \[
 \B{p} ( y_i | u , \theta )
-= 
+=
 \exp \left(
-L_L [ 
-	v_i ( \theta)        \W{,} 
-	A_i ( u, \theta )    \W{,} 
+L_L [
+	v_i ( \theta)        \W{,}
+	A_i ( u, \theta )    \W{,}
 	\delta_i ( \theta )  \W{,}
 	\eta_i
 ]
 \right)
 \] $$
-See the model density definitions of 
-$cref/R_L/wres_density/Log-Laplace/Weighted Residual, R_L/$$ 
-and 
+See the model density definitions of
+$cref/R_L/wres_density/Log-Laplace/Weighted Residual, R_L/$$
+and
 $cref/L_L/wres_density/Log-Laplace/Log-Density, L_L/$$.
 
 
