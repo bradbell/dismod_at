@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -80,7 +80,7 @@ V_{c,j}^u ( u | \theta )
 =
 \exp \left[ G ( u_{c,j} \W{,} 0 \W{,} \lambda_j \delta_j ) \right]
 \] $$
-see $cref/G/model_density/Gaussian/Log-Density, G/$$.
+see $cref/G/wres_density/Gaussian/Log-Density, G/$$.
 
 $head V^u$$
 Let $latex m$$ be the number of random effects.

@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -17,7 +17,7 @@ $section The Age-Time Dismod Model$$
 
 $childtable%
 	omh/model/model_variable.omh%
-	omh/model/model_density.omh%
+	omh/model/wres_density.omh%
 	omh/model/avg_integrand.omh%
 	omh/model/data_like.omh%
 	omh/model/fixed_value.omh%

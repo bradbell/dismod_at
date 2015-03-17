@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -70,7 +70,7 @@ V_j^\theta ( \theta ) = 1
 
 $subhead gaussian$$
 If $icode density$$ is $code gaussian$$,
-see $cref/G/model_density/Gaussian/Log-Density, G/$$,
+see $cref/G/wres_density/Gaussian/Log-Density, G/$$,
 the value density function is
 $latex \[
 V_j^\theta ( \theta ) 
@@ -83,7 +83,7 @@ V_j^\theta ( \theta )
 
 $subhead laplace$$
 If $icode density$$ is $code laplace$$,
-see $cref/L/model_density/Laplace/Log-Density, L/$$,
+see $cref/L/wres_density/Laplace/Log-Density, L/$$,
 the value density function is
 $latex \[
 V_j^\theta ( \theta ) 
@@ -95,7 +95,7 @@ V_j^\theta ( \theta )
 
 $subhead log_gaussian$$
 If $icode density$$ is $code log_gaussian$$,
-see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$,
+see $cref/G_L/wres_density/Log-Gaussian/Log-Density, G_L/$$,
 the value density function is
 $latex \[
 V_j^\theta ( \theta ) 
@@ -107,7 +107,7 @@ V_j^\theta ( \theta )
 
 $subhead log_laplace$$
 If $icode density$$ is $code log_laplace$$,
-see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$,
+see $cref/L_L/wres_density/Log-Laplace/Log-Density, L_L/$$,
 the value density function is
 $latex \[
 V_j^\theta ( \theta ) 

@@ -34,10 +34,10 @@ $codei%
 %$$
 It specifies one for the following density value
 $code uniform_enum$$,
-$cref/gaussian_enum/model_density/Gaussian/$$,
-$cref/laplace_enum/model_density/Laplace/$$,
-$cref/log_gaussian_enum/model_density/Log-Gaussian/$$,
-$cref/log_laplace_enum/model_density/Log-Laplace/$$.
+$cref/gaussian_enum/wres_density/Gaussian/$$,
+$cref/laplace_enum/wres_density/Laplace/$$,
+$cref/log_gaussian_enum/wres_density/Log-Gaussian/$$,
+$cref/log_laplace_enum/wres_density/Log-Laplace/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -108,15 +108,15 @@ both $icode logden_smooth$$ and $icode logden_sub_abs$$ are zero.
 
 $subhead Gaussian$$
 In the case where the $icode density$$ is
-$cref/Gaussian/model_density/Gaussian/$$ or
-$cref/Log-Gaussian/model_density/Log-Gaussian/$$,
+$cref/Gaussian/wres_density/Gaussian/$$ or
+$cref/Log-Gaussian/wres_density/Log-Gaussian/$$,
 the log-density is equal to $icode logden_smooth$$ and
 $icode logden_sub_abs$$ is zero.
 
 $subhead Laplace$$
 In the case where the $icode density$$ is
-$cref/Laplace/model_density/Laplace/$$ or
-$cref/Log-Laplace/model_density/Log-Laplace/$$ likelihoods,
+$cref/Laplace/wres_density/Laplace/$$ or
+$cref/Log-Laplace/wres_density/Log-Laplace/$$ likelihoods,
 the log-density is equal to
 $codei%
 	%logden_smooth% - fabs(%logden_sub_abs)%)

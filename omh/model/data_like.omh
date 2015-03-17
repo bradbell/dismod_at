@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -194,9 +194,9 @@ G [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \right)
 \] $$
 See the model density definitions of 
-$cref/R/model_density/Gaussian/Weighted Residual, R/$$ 
+$cref/R/wres_density/Gaussian/Weighted Residual, R/$$ 
 and 
-$cref/G/model_density/Gaussian/Log-Density, G/$$.
+$cref/G/wres_density/Gaussian/Log-Density, G/$$.
 
 $subhead laplace$$
 If $latex d_i$$ corresponds to $code laplace$$,
@@ -213,9 +213,9 @@ L [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
 \right)
 \] $$
 See the model density definitions of 
-$cref/R/model_density/Laplace/Weighted Residual, R/$$ 
+$cref/R/wres_density/Laplace/Weighted Residual, R/$$ 
 and 
-$cref/L/model_density/Laplace/Log-Density, L/$$.
+$cref/L/wres_density/Laplace/Log-Density, L/$$.
 
 
 $subhead log_gaussian$$
@@ -243,9 +243,9 @@ G_L [
 \right)
 \] $$
 See the model density definitions of 
-$cref/R_L/model_density/Log-Gaussian/Weighted Residual, R_L/$$ 
+$cref/R_L/wres_density/Log-Gaussian/Weighted Residual, R_L/$$ 
 and 
-$cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$.
+$cref/G_L/wres_density/Log-Gaussian/Log-Density, G_L/$$.
 
 $subhead log_laplace$$
 If $latex d_i$$ corresponds to $code log_laplace$$,
@@ -272,9 +272,9 @@ L_L [
 \right)
 \] $$
 See the model density definitions of 
-$cref/R_L/model_density/Log-Laplace/Weighted Residual, R_L/$$ 
+$cref/R_L/wres_density/Log-Laplace/Weighted Residual, R_L/$$ 
 and 
-$cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$.
+$cref/L_L/wres_density/Log-Laplace/Log-Density, L_L/$$.
 
 
 

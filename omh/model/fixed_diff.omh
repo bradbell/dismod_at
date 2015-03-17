@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -145,7 +145,7 @@ T_{i,j,k}^\theta ( \theta ) =  1
 $subhead gaussian$$
 If $icode density$$ for 
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ is $code gaussian$$,
-see $cref/G/model_density/Gaussian/Log-Density, G/$$,
+see $cref/G/wres_density/Gaussian/Log-Density, G/$$,
 for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
 A_{i j,k}^\theta ( \theta ) 
@@ -170,7 +170,7 @@ T_{i,j,k}^\theta ( \theta )
 $subhead laplace$$
 If $icode density$$ for 
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ is $code laplace$$,
-see $cref/L/model_density/Laplace/Log-Density, L/$$,
+see $cref/L/wres_density/Laplace/Log-Density, L/$$,
 for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
 A_{i j,k}^\theta ( \theta ) 
@@ -195,7 +195,7 @@ T_{i,j,k}^\theta ( \theta )
 $subhead log_gaussian$$
 If $icode density$$ for 
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ is $code log_gaussian$$,
-see $cref/G_L/model_density/Log-Gaussian/Log-Density, G_L/$$,
+see $cref/G_L/wres_density/Log-Gaussian/Log-Density, G_L/$$,
 for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
 A_{i j,k}^\theta ( \theta ) 
@@ -225,7 +225,7 @@ T_{i,j,k}^\theta ( \theta )
 $subhead log_laplace$$
 If $icode density$$ for 
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ is $code log_laplace$$,
-see $cref/L_L/model_density/Log-Laplace/Log-Density, L_L/$$,
+see $cref/L_L/wres_density/Log-Laplace/Log-Density, L_L/$$,
 for $latex i = 0 , \ldots , I(k)-2$$,
 $latex \[
 A_{i j,k}^\theta ( \theta ) 
