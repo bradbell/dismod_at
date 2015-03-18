@@ -12,8 +12,6 @@ $begin devel_joint_like$$
 
 $section Joint Likelihood of Fixed Effects, Random Effects and Data$$
 
-$head Under Construction$$
-
 $childtable%devel/model/joint_like.cpp
 %$$
 

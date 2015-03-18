@@ -23,14 +23,13 @@ $section Disease Rates as Functions of Age and Time$$
 $head Under Construction$$
 This package is under construction and does not yet accomplish its purpose.
 Furthermore, the following sections are in an incomplete state:
-$cref/joint likelihood/devel_joint_like/$$,
+$cref/Get Data Base Input Information/get_db_input/Under Construction/$$,
 $cref/Laplace Approximation/laplace/Under Construction/$$.
 
 $childtable%omh/table/input.omh
 	%omh/model/model.omh
 	%omh/table/output.omh
 	%omh/database.omh
-	%omh/laplace/laplace.omh
 	%devel/devel.omh
 %$$
 
