@@ -83,7 +83,7 @@ $codei%
 	residual_struct<%Float%> %residual%
 %$$
 
-$subhead residual_struct$$
+$head residual_struct$$
 This structure has the following fields:
 $table
 Type $cnext Field $cnext Description $rnext
@@ -109,7 +109,7 @@ $icode residual_type_enum$$ $cnext
 	type of residual; see below
 $tend
 
-$subhead residual_type$$
+$head residual_type$$
 The possible $code residual_type_enum$$ values are
 $table
 $cref/data_model_enum/data_model_like_all/residual_vec/data_model_enum/$$
@@ -122,18 +122,18 @@ $cref/random_prior_enum/prior_density_eval/residual_vec/random_prior_enum/$$
 	$cnext this a residual in the random effects prior
 $tend
 
-$subhead Uniform$$
+$head Uniform$$
 In the case where the $icode density$$ is uniform,
 both $icode logden_smooth$$ and $icode logden_sub_abs$$ are zero.
 
-$subhead Gaussian$$
+$head Gaussian$$
 In the case where the $icode density$$ is
 $cref/Gaussian/wres_density/Gaussian/$$ or
 $cref/Log-Gaussian/wres_density/Log-Gaussian/$$,
 the log-density is equal to $icode logden_smooth$$ and
 $icode logden_sub_abs$$ is zero.
 
-$subhead Laplace$$
+$head Laplace$$
 In the case where the $icode density$$ is
 $cref/Laplace/wres_density/Laplace/$$ or
 $cref/Log-Laplace/wres_density/Log-Laplace/$$ likelihoods,

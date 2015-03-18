@@ -41,6 +41,7 @@ namespace {
 		result     &= left.logden_smooth == right.logden_smooth;
 		result     &= left.logden_sub_abs == right.logden_sub_abs;
 		result     &= left.density == right.density;
+		result     &= left.type    == right.type;
 		return result;
 	}
 }

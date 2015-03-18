@@ -1129,7 +1129,7 @@ The return value has prototype
 $codei%
 	residual_struct<%Float%> %residual%
 %$$
-see $cref/residual_struct/residual_density/residual/residual_struct/$$.
+see $cref/residual_struct/residual_density/residual_struct/$$.
 It contains the weighted residual and the corresponding log-density.
 
 $children%example/devel/model/like_one_xam.cpp

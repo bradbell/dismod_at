@@ -104,6 +104,7 @@ $spell
 	vec
 	eval
 	struct
+	enum
 $$
 
 $section Evaluating the Joint Likelihood$$
@@ -138,16 +139,44 @@ $codei%
 	CppAD::vector< residual_struct<%Float%> > %residual_vec%
 %$$
 The order of the residuals is unspecified (at this time).
+
+$subhead data_model_enum$$
+The log of the likelihood density for the
+$cref/measurement vector/data_like/Data Table Notation/y_i/$$
+given the fixed and random effects,
+$latex \B{p}( y | u , \theta )$$,
+is the sum of the log of the log densities
+$cref/residuals/residual_density/$$ with
+$codei%
+	%residual_vec%[%i%].type == data_model_enum
+%$$
+
+$subhead random_prior_enum$$
 The log of the prior density for the
-$cref/fixed/model_variable/Fixed Effects, theta/$$
-and $cref/random/model_variable/Random Effects, u/$$ effects,
-and the data
-$cref/measurement vector/data_like/Data Table Notation/y_i/$$, $latex y$$,
-$latex \[
-	\B{p}( y | u , \theta ) \B{p}( u | \theta ) \B{p}( \theta )
-\] $$
-is the sum of the log of the probabilities corresponding to all the
-$cref/residuals/residual_density/$$ in $icode residual_vec$$.
+and $cref/random effects/model_variable/Random Effects, u/$$
+given the fixed effects,
+$latex \B{p}( u | \theta )$$,
+is the sum of the log of the log densities
+$cref/residuals/residual_density/$$ with
+$codei%
+	%residual_vec%[%i%].type == random_prior_enum
+%$$
+
+$subhead fixed_prior_enum$$
+The log of the prior density for the
+$cref/fixed effects/model_variable/Fixed Effects, theta/$$,
+$latex \B{p}( \theta )$$,
+is the sum of the log of the log densities
+$cref/residuals/residual_density/$$ with
+$codei%
+	%residual_vec%[%i%].type == fixed_prior_enum
+%$$
+
+$children%example/devel/model/joint_like_xam.cpp
+%$$
+$head Example$$
+The file $cref joint_like_xam.cpp$$ contains an example and test
+of using this routine.
 
 $end
 -----------------------------------------------------------------------------
