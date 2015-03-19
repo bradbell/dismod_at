@@ -9,16 +9,18 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin joint_like_xam.cpp$$
+$begin prior_density_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ joint_like: Example and Test$$
+$section C++ prior_density: Example and Test$$
+$index example, C++ prior_density$$
+$index prior_density, C++ example$$
 
 $code
-$verbatim%example/devel/model/joint_like_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/model/prior_density_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -28,98 +30,33 @@ $end
 # include <cmath>
 # include <dismod_at/prior_density.hpp>
 # include <dismod_at/get_density_table.hpp>
-# include <dismod_at/data_model.hpp>
-# include <dismod_at/fixed_effect.hpp>
-# include <dismod_at/random_effect.hpp>
-# include <dismod_at/joint_like.hpp>
 
-namespace {
-	bool res_equal(
-		const dismod_at::residual_struct<double>& left  ,
-		const dismod_at::residual_struct<double>& right )
-	{	bool result = left.wres == right.wres;
-		result     &= left.logden_smooth == right.logden_smooth;
-		result     &= left.logden_sub_abs == right.logden_sub_abs;
-		result     &= left.density == right.density;
-		result     &= left.type    == right.type;
-		return result;
-	}
-}
+# define DISMOD_AT_PRIOR_DENSITY_XAM_TRACE 0
 
-bool joint_like_xam(void)
+bool prior_fixed_xam(void)
 {	bool   ok = true;
-	size_t i, j, k;
+	size_t i, j;
 	using CppAD::vector;
 	using std::cout;
 	using std::endl;
+	double eps = std::numeric_limits<double>::epsilon() * 100;
 	double inf = std::numeric_limits<double>::infinity();
-	//
-	// ode_step_size
-	double ode_step_size = 30.0;
+	double sqrt_2   = std::sqrt( 2.0 );
+	double sqrt_2pi = std::sqrt( 8.0 * std::atan(1.0) );
+
+
 	// --------------------------------------------------------------------
 	// age_table
 	size_t n_age_table = 10;
 	vector<double> age_table(n_age_table);
 	for(i = 0; i < n_age_table; i++)
 		age_table[i] = 100 * i / double(n_age_table - 1);
-	double age_min = age_table[0];
-	double age_max = age_table[n_age_table-1];
 	//
 	// time_table
-	size_t n_time_table = 6;
+	size_t n_time_table = 5;
 	vector<double> time_table(n_time_table);
 	for(i = 0; i < n_time_table; i++)
-		time_table[i] = 1975 + (2015 - 1975) * i / double(n_time_table - 1);
-	double time_min = time_table[0];
-	double time_max = time_table[n_time_table-1];
-	//
-	// integrand_table
-	size_t n_integrand = dismod_at::number_integrand_enum;
-	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
-	for(i = 0; i < n_integrand; i++)
-	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
-		integrand_table[i].eta       = 1e-4;
-	}
-	//
-	// n_age_ode
-	size_t n_age_ode     =  1;
-	while( age_min + (n_age_ode-1) * ode_step_size < age_max )
-			n_age_ode++;
-	//
-	// n_time_ode
-	size_t n_time_ode     =  1;
-	while( time_min + (n_time_ode-1) * ode_step_size < time_max )
-			n_time_ode++;
-	//
-	// node_table:
-	CppAD::vector<dismod_at::node_struct> node_table(1);
-	node_table[0].parent = -1;
-	//
-	// parent_node_id
-	size_t parent_node_id = 0;
-	//
-	// data_table
-	vector<dismod_at::data_struct> data_table(2);
-	//
-	// parent node, time and age integrantion.
-	vector<double> x(0);
-	for(size_t data_id = 0; data_id < 2; data_id++)
-	{
-		data_table[data_id].integrand_id = dismod_at::mtother_enum;
-		data_table[data_id].node_id    = 0;
-		data_table[data_id].weight_id  = 0;
-		data_table[data_id].age_lower  = 35.0;
-		data_table[data_id].age_upper  = 55.0;
-		data_table[data_id].time_lower = 1990.0;
-		data_table[data_id].time_upper = 2000.0;
-		data_table[data_id].meas_value = ( 50. * 1995) / (100.0 * 2000.0);
-		data_table[data_id].meas_std   = data_table[data_id].meas_value / 10.;
-		if( data_id == 0 )
-			data_table[data_id].density_id = dismod_at::gaussian_enum;
-		else
-			data_table[data_id].density_id = dismod_at::log_gaussian_enum;
-		data_table[data_id].x          = x;
-	}
+		time_table[i] = (2015 - 1975) * i / double(n_time_table - 1);
 	// ----------------------- prior table ---------------------------------
 	size_t n_prior_table = 6;
 	vector<dismod_at::prior_struct> prior_table(n_prior_table);
@@ -200,16 +137,6 @@ bool joint_like_xam(void)
 			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
 			mulstd_value, mulstd_dage, mulstd_dtime
 	);
-	//
-	// w_info_vec
-	// weight value should not matter when constant
-	size_t n_si = n_age * n_time;
-	vector<double> weight(n_si);
-	for(k = 0; k < n_si; k++)
-		weight[k] = 0.5;
-	dismod_at::weight_info w_info_0(age_id, time_id, weight);
-	vector<dismod_at::weight_info> w_info_vec;
-	w_info_vec.push_back( w_info_0 );
 	// ------------------ second smoothing -----------------------------------
 	// age_id
 	n_age = 1;
@@ -243,15 +170,6 @@ bool joint_like_xam(void)
 			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
 			mulstd_value, mulstd_dage, mulstd_dtime
 	);
-	//
-	// w_info_vec
-	// weight value should not matter when constant
-	n_si = n_age * n_time;
-	weight.resize(n_si);
-	for(k = 0; k < n_si; k++)
-		weight[k] = 0.5;
-	dismod_at::weight_info w_info_1(age_id, time_id, weight);
-	w_info_vec.push_back( w_info_1 );
 	// ----------------------- pack_object --------------------------------
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
@@ -277,26 +195,11 @@ bool joint_like_xam(void)
 		}
 	}
 	// pack_object
+	size_t n_integrand = 0;
 	size_t n_child     = 1;
 	dismod_at::pack_info pack_object(
 		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
-	);
-	// ----------------------------------------------------------------------
-	// data_model
-	dismod_at::data_model data_object(
-		parent_node_id,
-		n_age_ode,
-		n_time_ode,
-		ode_step_size,
-		age_table,
-		time_table,
-		integrand_table,
-		node_table,
-		data_table,
-		w_info_vec,
-		s_info_vec,
-		pack_object
 	);
 	// ----------------------- pack_vec -------------------------------------
 	vector<double> pack_vec( pack_object.size() );
@@ -310,6 +213,8 @@ bool joint_like_xam(void)
 	}
 	//
 	// rates
+	double age_max  = age_table[n_age_table - 1];
+	double time_max = time_table[n_time_table - 1];
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
 		{	info = pack_object.rate_info(rate_id, child_id);
@@ -333,31 +238,86 @@ bool joint_like_xam(void)
 	dismod_at::prior_density prior_object(
 		pack_object, age_table, time_table, prior_table, s_info_vec
 	);
-	// -------------- joint likelihood -------------------------------------
-	size_t n_fixed  = dismod_at::size_fixed_effect(pack_object);
-	size_t n_random = dismod_at::size_random_effect(pack_object);
-	CppAD::vector<double> fixed_vec(n_fixed), random_vec(n_random);
-	dismod_at::put_fixed_effect(pack_object, pack_vec, fixed_vec);
-	dismod_at::put_random_effect(pack_object, pack_vec, random_vec);
-	//
-	dismod_at::joint_like joint_object(pack_object, data_object, prior_object);
-	CppAD::vector< dismod_at::residual_struct<double> >
-		joint_residual_vec = joint_object.eval(fixed_vec, random_vec);
-	// -------------- check -------------------------------------------------
-	CppAD::vector< dismod_at::residual_struct<double> >
-		prior_residual_vec = prior_object.eval(pack_vec);
-	CppAD::vector< dismod_at::residual_struct<double> >
-		data_residual_vec = data_object.like_all(pack_vec);
-	//
-	size_t n_prior = prior_residual_vec.size();
-	size_t n_data  = data_residual_vec.size();
-	ok &= joint_residual_vec.size() == n_prior + n_data;
-	// use unspecified fact that prior comes first
-	for(i = 0; i < n_prior; i++)
-		ok &= res_equal( joint_residual_vec[i], prior_residual_vec[i] );
-	for(i = 0; i < n_data; i++)
-		ok &= res_equal( joint_residual_vec[i+n_prior], data_residual_vec[i] );
+	// -------------- compute prior density --------------------------------
+	CppAD::vector< dismod_at::residual_struct<double> > residual_vec;
+	residual_vec = prior_object.fixed(pack_vec);
+	double logden    = 0.0;
+	size_t count_abs = 0;
+	for(i = 0; i < residual_vec.size(); i++)
+	{	logden += residual_vec[i].logden_smooth;
+		switch( residual_vec[i].density )
+		{	case dismod_at::laplace_enum:
+			case dismod_at::log_laplace_enum:
+			logden -= std::fabs( residual_vec[i].logden_sub_abs );
+			count_abs++;
+			break;
 
+			default:
+			break;
+		}
+	}
+	// --------------- check result ------------------------------------------
+	double check  = 0.0;
+	double mean_v = prior_table[prior_id_gaussian].mean;
+	double std_v  = prior_table[prior_id_gaussian].std ;
+	double mean_a = prior_table[prior_id_laplace].mean;
+	double std_a  = prior_table[prior_id_laplace].std ;
+	double mean_t = prior_table[prior_id_log_gaussian].mean;
+	double std_t  = prior_table[prior_id_log_gaussian].std ;
+	double eta_t  = prior_table[prior_id_log_gaussian].eta ;
+	size_t count_laplace = 0;
+	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
+	{	size_t child_id = n_child;
+		info = pack_object.rate_info(rate_id, child_id);
+		dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
+		n_age  = s_info.age_size();
+		n_time = s_info.time_size();
+		for(i = 0; i < n_age; i++)
+		{	for(j = 0; j < n_time; j++)
+			{	size_t index   = info.offset + i * n_time + j;
+				double var     = pack_vec[index];
+				double wres    = (var - mean_v) / std_v;
+				check         -= log(std_v * sqrt_2pi);
+				check         -= wres * wres / 2.0;
+				if( i + 1 < n_age )
+				{	double a0    = age_table[ s_info.age_id(i) ];
+					double a1    = age_table[ s_info.age_id(i+1) ];
+					double v0    = var;
+					index        = info.offset + (i+1) * n_time + j;
+					double v1    = pack_vec[index];
+					double dv_da = (v1 - v0) / (a1 - a0);
+					wres         = (dv_da - mean_a) / std_a;
+					check       -= log( std_a * sqrt_2 );
+					check       -= sqrt_2 * fabs(wres);
+					++count_laplace;
+				}
+				if( j + 1 < n_time )
+				{	double t0    = time_table[ s_info.time_id(j) ];
+					double t1    = time_table[ s_info.time_id(j+1) ];
+					double v0    = var;
+					double sigma = log(1.0 + std_t / (mean_t + eta_t));
+					index        = info.offset + i * n_time + j + 1;
+					double v1    = pack_vec[index];
+					double dv_dt = (v1 - v0) / (t1 - t0);
+					wres         = log(dv_dt+eta_t) - log(mean_t+ eta_t);
+					wres        /= sigma;
+					check       -= log(sigma * sqrt_2pi);
+					check       -= wres * wres / 2.0;
+				}
+			}
+		}
+	}
+	double relerr = 1.0 - logden / check;
+	ok   &= count_laplace == count_abs;
+	ok   &= fabs( relerr ) < eps;
+# if DISMOD_AT_PRIOR_DENSITY_XAM_TRACE
+	cout << endl;
+	cout << "count_laplace = " << count_laplace << endl;
+	cout << "count_abs     = " << count_abs << endl;
+	cout << "check         = " << check << endl;
+	cout << "logden        = " << logden << endl;
+	cout << "relerr        = " << relerr << endl;
+# endif
 	return ok;
 }
 // END C++

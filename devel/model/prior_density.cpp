@@ -173,34 +173,14 @@ void prior_density::log_prior_density_on_grid(
 }
 /*
 ------------------------------------------------------------------------------
-$begin prior_density_eval$$
+$begin prior_fixed_effect$$
 $spell
-	enum
-	eval
-	pack_vec
-	CppAD
-	const
-	subvectors
-	std
-	struct
-	fabs
-	var
 $$
 
-$section Evaluate Prior Density for the Fixed and Random Effects$$
+$section Evaluate Prior Density for the Fixed Effects$$
 
 $head Syntax$$
-$icode%residual_vec% = prior_object%.eval(%pack_vec%)%$$
-
-$head Purpose$$
-The joint prior density for the fixed effects $latex \theta$$
-and random effects $latex u$$ is
-$latex \[
-	\B{p} ( u | \theta ) \B{p} ( \theta )
-\] $$
-see
-$cref/p(u|theta)/random_prior/p(u|theta)/$$ and
-$cref/p(theta)/fixed_prior/p(theta)/$$.
+$icode%residual_vec% = prior_object%.fixed(%pack_vec%)%$$
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -212,44 +192,28 @@ The return value has prototype
 $codei%
 	CppAD::vector< residual_struct<%Float%> > %residual_vec%
 %$$
-The size of $icode residual$$ is not equal to $icode pack_object_.size()$$
+The size of $icode residual$$ is not equal to the number of fixed effects
 because there are priors on smoothing differences as well as values.
 The order of the residuals is unspecified (at this time).
 
-$subhead fixed_prior_enum$$
+$head p(theta)$$
 The log of the prior density for the
 $cref/fixed/model_variable/Fixed Effects, theta/$$
 $latex \B{p}( \theta )$$,
-is the sum of the log of the densities corresponding to all the
-$cref/residuals/residual_density/$$
-$icode%residual_vec%[%i%]%$$ such that
-$codei%
-	%residual_vec%[%i%].type == fixed_prior_enum
-%$$
-
-$subhead random_prior_enum$$
-The log of the prior density for the
-and $cref/random/model_variable/Random Effects, u/$$ effects
-given the fixed effect,
-$latex \B{p}( u | \theta )$$,
-is the sum of the log of the densities corresponding to all the
-$cref/residuals/residual_density/$$
-$icode%residual_vec%[%i%]%$$ such that
-$codei%
-	%residual_vec%[%i%].type == random_prior_enum
-%$$
+is the sum of all the log densities corresponding to the
+$cref/residuals/residual_density/$$.
 
 
-$children%example/devel/model/prior_density_xam.cpp
+$children%example/devel/model/prior_fixed_xam.cpp
 %$$
 $head Example$$
-The file $cref prior_density_xam.cpp$$ contains an example and test
+The file $cref prior_fixed_xam.cpp$$ contains an example and test
 of using this routine.
 
 $end
 */
 template <class Float>
-CppAD::vector< residual_struct<Float> > prior_density::eval(
+CppAD::vector< residual_struct<Float> > prior_density::fixed(
 	const CppAD::vector<Float>&            pack_vec        ) const
 {
 	// initialize the log of the prior density as zero
@@ -257,14 +221,13 @@ CppAD::vector< residual_struct<Float> > prior_density::eval(
 	assert( residual_vec.size() == 0 );
 
 	// used to get results from log_prior_density
-	residual_type_enum     type;
+	residual_type_enum     type  = fixed_prior_enum;
 	residual_struct<Float> residual;
 
 	// number of smoothings
 	size_t n_smooth = s_info_vec_.size();
 
 	// smoothing multipliers
-	type  = fixed_prior_enum;
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	// offset for this smoothing
 		size_t offset = pack_object_.mulstd_offset(smooth_id);
@@ -299,26 +262,21 @@ CppAD::vector< residual_struct<Float> > prior_density::eval(
 	pack_info::subvec_info info;
 	size_t n_child = pack_object_.child_size();
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	// for all children and parent
-		for(size_t child = 0; child <= n_child; child++)
-		{	if( child == n_child )
-				type = fixed_prior_enum;
-			else
-				type = random_prior_enum;
+	{	// child value that corresponds to the parent
+		size_t child = n_child;
 
-			info = pack_object_.rate_info(rate_id, child);
-			size_t smooth_id          = info.smooth_id;
-			size_t offset             = info.offset;
-			const smooth_info& s_info = s_info_vec_[smooth_id];
+		info = pack_object_.rate_info(rate_id, child);
+		size_t smooth_id          = info.smooth_id;
+		size_t offset             = info.offset;
+		const smooth_info& s_info = s_info_vec_[smooth_id];
 
-			log_prior_density_on_grid(
-				residual_vec,
-				type        ,
-				offset      ,
-				pack_vec    ,
-				s_info
-			);
-		}
+		log_prior_density_on_grid(
+			residual_vec,
+			type        ,
+			offset      ,
+			pack_vec    ,
+			s_info
+		);
 	}
 
 	// rate covariate multipliers
@@ -376,14 +334,102 @@ CppAD::vector< residual_struct<Float> > prior_density::eval(
 			);
 		}
 	}
-	//
+	return residual_vec;
+}
+/*
+------------------------------------------------------------------------------
+$begin prior_random_effect$$
+$spell
+	enum
+	eval
+	pack_vec
+	CppAD
+	const
+	subvectors
+	std
+	struct
+	fabs
+	var
+$$
+
+$section Evaluate Prior Density for the Random Effects$$
+
+$head Syntax$$
+$icode%residual_vec% = prior_object%.random(%pack_vec%)%$$
+
+$head Float$$
+The type $icode Float$$ must be one of the following:
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
+
+$head residual_vec$$
+The return value has prototype
+$codei%
+	CppAD::vector< residual_struct<%Float%> > %residual_vec%
+%$$
+The size of $icode residual$$ is not equal to the number of random effects
+because there are priors on smoothing differences as well as values.
+The order of the residuals is unspecified (at this time).
+
+$head p(u|theta)$$
+The log of the prior density for the
+and $cref/random/model_variable/Random Effects, u/$$ effects
+given the fixed effect,
+$latex \B{p}( u | \theta )$$,
+is the sum of the all the log densities corresponding to the
+$cref/residuals/residual_density/$$.
+
+
+$children%example/devel/model/prior_random_xam.cpp
+%$$
+$head Example$$
+The file $cref prior_random_xam.cpp$$ contains an example and test
+of using this routine.
+
+$end
+*/
+template <class Float>
+CppAD::vector< residual_struct<Float> > prior_density::random(
+	const CppAD::vector<Float>&            pack_vec        ) const
+{
+	// initialize the log of the prior density as zero
+	CppAD::vector< residual_struct<Float> > residual_vec;
+	assert( residual_vec.size() == 0 );
+
+	// used to get results from log_prior_density
+	residual_type_enum     type = random_prior_enum;
+
+	// rates
+	pack_info::subvec_info info;
+	size_t n_child = pack_object_.child_size();
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	{	// for all children and parent
+		for(size_t child = 0; child < n_child; child++)
+		{	info = pack_object_.rate_info(rate_id, child);
+			size_t smooth_id          = info.smooth_id;
+			size_t offset             = info.offset;
+			const smooth_info& s_info = s_info_vec_[smooth_id];
+
+			log_prior_density_on_grid(
+				residual_vec,
+				type        ,
+				offset      ,
+				pack_vec    ,
+				s_info
+			);
+		}
+	}
 	return residual_vec;
 }
 
-# define DISMOD_AT_INSTANTIATE_PRIOR_DENSITY(Float)                     \
-	template                                                            \
-	CppAD::vector< residual_struct<Float> > prior_density::eval<Float>( \
-		const CppAD::vector<Float>&   pack_vec                          \
+# define DISMOD_AT_INSTANTIATE_PRIOR_DENSITY(Float)                       \
+	template                                                              \
+	CppAD::vector< residual_struct<Float> > prior_density::fixed<Float>(  \
+		const CppAD::vector<Float>&   pack_vec                            \
+	) const;                                                              \
+	template                                                              \
+	CppAD::vector< residual_struct<Float> > prior_density::random<Float>( \
+		const CppAD::vector<Float>&   pack_vec                            \
 	) const;
 
 // instantiations

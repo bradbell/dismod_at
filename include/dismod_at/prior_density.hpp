@@ -52,7 +52,11 @@ namespace dismod_at {
 			const CppAD::vector<smooth_info>&      s_info_vec
 		);
 		template <class Float>
-		CppAD::vector< residual_struct<Float> > eval(
+		CppAD::vector< residual_struct<Float> > fixed(
+			const CppAD::vector<Float>& pack_vec
+		) const;
+		template <class Float>
+		CppAD::vector< residual_struct<Float> > random(
 			const CppAD::vector<Float>& pack_vec
 		) const;
 

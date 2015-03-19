@@ -33,7 +33,7 @@ $end
 
 # define DISMOD_AT_PRIOR_DENSITY_XAM_TRACE 0
 
-bool prior_density_xam(void)
+bool prior_random_xam(void)
 {	bool   ok = true;
 	size_t i, j;
 	using CppAD::vector;
@@ -240,7 +240,7 @@ bool prior_density_xam(void)
 	);
 	// -------------- compute prior density --------------------------------
 	CppAD::vector< dismod_at::residual_struct<double> > residual_vec;
-	residual_vec = prior_object.eval(pack_vec);
+	residual_vec = prior_object.random(pack_vec);
 	double logden    = 0.0;
 	size_t count_abs = 0;
 	for(i = 0; i < residual_vec.size(); i++)
@@ -267,7 +267,7 @@ bool prior_density_xam(void)
 	double eta_t  = prior_table[prior_id_log_gaussian].eta ;
 	size_t count_laplace = 0;
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
-	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
+	{	for(size_t child_id = 0; child_id < n_child; child_id++)
 		{	info = pack_object.rate_info(rate_id, child_id);
 			dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 			n_age  = s_info.age_size();
