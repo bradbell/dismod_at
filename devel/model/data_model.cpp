@@ -1227,9 +1227,7 @@ residual_struct<Float> data_model::like_one(
 	Float delta  = Float(mean_effect * sigma);
 	delta       += std_effect * (adjust + eta);
 	//
-	return residual_density(
-		data_model_enum, density, adjust, avg, delta, Float(eta)
-	);
+	return residual_density( density, adjust, avg, delta, Float(eta) );
 }
 /*
 -------------------------------------------------------------------------------
@@ -1297,15 +1295,6 @@ The log of the density
 $latex \B{p}( y | u , \theta )$$,
 is the sum of the log of the densities corresponding to all the
 $cref/residuals/residual_density/$$ in $icode residual_vec$$.
-
-$subhead data_model_enum$$
-For all the
-$cref/residuals/residual_density/$$
-$icode%residual_vec%[%i%]%$$ in $icode residual_vec$$,
-$codei%
-	%residual_vec%[%i%].residual_type == data_model_enum
-%$$
-
 
 $end
 */

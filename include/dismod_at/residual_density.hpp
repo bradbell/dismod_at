@@ -16,11 +16,6 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 
-	enum residual_type_enum {
-		data_model_enum,
-		fixed_prior_enum,
-		random_prior_enum
-	};
 
 	template <class Float>
 	struct residual_struct {
@@ -28,12 +23,10 @@ namespace dismod_at {
 		Float              logden_smooth;
 		Float              logden_sub_abs;
 		density_enum       density;
-		residual_type_enum type;
 	};
 
 	template <class Float>
 	residual_struct<Float> residual_density(
-		residual_type_enum type    ,
 		density_enum       density ,
 		const Float&       z       ,
 		const Float&       mu      ,

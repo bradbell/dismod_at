@@ -101,7 +101,6 @@ s_info_vec_(s_info_vec)
 // private
 template <class Float>
 residual_struct<Float> prior_density::log_prior_density(
-	residual_type_enum    type     ,
 	const prior_struct&   prior    ,
 	const Float&          variable ) const
 {	assert ( 0 <= prior.density_id  );
@@ -111,14 +110,13 @@ residual_struct<Float> prior_density::log_prior_density(
 	Float        mean    = Float(prior.mean);
 	Float        std     = Float(prior.std);
 	Float        eta     = Float(prior.eta);
-	return residual_density(type, density, variable, mean, std, eta );
+	return residual_density(density, variable, mean, std, eta );
 }
 
 // private
 template <class Float>
 void prior_density::log_prior_density_on_grid(
 	CppAD::vector< residual_struct<Float> >& residual_vec    ,
-	residual_type_enum                       type            ,
 	size_t                                   offset          ,
 	const CppAD::vector<Float>&              pack_vec        ,
 	const smooth_info&                       s_info          ) const
@@ -134,7 +132,7 @@ void prior_density::log_prior_density_on_grid(
 		{	Float  var      = Float(pack_vec[offset + i * n_time + j]);
 			size_t prior_id           = s_info.value_prior_id(i, j);
 			const prior_struct& prior = prior_table_[prior_id];
-			residual                  = log_prior_density(type, prior, var);
+			residual                  = log_prior_density(prior, var);
 			residual_vec.push_back(residual);
 		}
 	}
@@ -149,7 +147,7 @@ void prior_density::log_prior_density_on_grid(
 			Float  dv_da    = Float((v1 - v0) / (a1 - a0));
 			size_t prior_id = s_info.dage_prior_id(i, j);
 			const prior_struct& prior = prior_table_[prior_id];
-			residual                  = log_prior_density(type, prior, dv_da);
+			residual                  = log_prior_density(prior, dv_da);
 			residual_vec.push_back(residual);
 		}
 	}
@@ -165,7 +163,7 @@ void prior_density::log_prior_density_on_grid(
 			Float  dv_dt    = Float((v1 - v0) / (t1 - t0));
 			size_t prior_id = s_info.dtime_prior_id(i, j);
 			const prior_struct& prior = prior_table_[prior_id];
-			residual                  = log_prior_density(type, prior, dv_dt);
+			residual                  = log_prior_density(prior, dv_dt);
 			residual_vec.push_back(residual);
 		}
 	}
@@ -221,7 +219,6 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 	assert( residual_vec.size() == 0 );
 
 	// used to get results from log_prior_density
-	residual_type_enum     type  = fixed_prior_enum;
 	residual_struct<Float> residual;
 
 	// number of smoothings
@@ -240,21 +237,21 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 		const prior_struct* prior = &prior_table_[prior_id];
 
 		// add prior density for this multipliers value
-		residual            = log_prior_density(type, *prior, mulstd);
+		residual            = log_prior_density(*prior, mulstd);
 		residual_vec.push_back(residual);
 
 		// add multiplier for age difference smoothing
 		mulstd              = pack_vec[offset + 1];
 		prior_id            = s_info_vec_[smooth_id].mulstd_dage();
 		prior               = &prior_table_[prior_id];
-		residual            = log_prior_density(type, *prior, mulstd);
+		residual            = log_prior_density(*prior, mulstd);
 		residual_vec.push_back(residual);
 
 		// multiplier for time difference smoothing
 		mulstd              = pack_vec[offset + 2];
 		prior_id            = s_info_vec_[smooth_id].mulstd_dtime();
 		prior               = &prior_table_[prior_id];
-		residual            = log_prior_density(type, *prior, mulstd);
+		residual            = log_prior_density(*prior, mulstd);
 		residual_vec.push_back(residual);
 	}
 
@@ -272,7 +269,6 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 
 		log_prior_density_on_grid(
 			residual_vec,
-			type        ,
 			offset      ,
 			pack_vec    ,
 			s_info
@@ -280,7 +276,6 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 	}
 
 	// rate covariate multipliers
-	type = fixed_prior_enum;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	size_t n_cov = pack_object_.rate_mean_mulcov_n_cov( rate_id );
 		for(size_t cov = 0; cov < n_cov; cov++)
@@ -291,7 +286,6 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 
 			log_prior_density_on_grid(
 				residual_vec,
-				type        ,
 				offset      ,
 				pack_vec    ,
 				s_info
@@ -300,7 +294,6 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 	}
 
 	// measurement covariate multipliers
-	type = fixed_prior_enum;
 	size_t n_integrand = pack_object_.integrand_size();
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	size_t n_cov = pack_object_.meas_mean_mulcov_n_cov( integrand_id );
@@ -312,7 +305,6 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 
 			log_prior_density_on_grid(
 				residual_vec,
-				type        ,
 				offset      ,
 				pack_vec    ,
 				s_info
@@ -327,7 +319,6 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 
 			log_prior_density_on_grid(
 				residual_vec,
-				type        ,
 				offset      ,
 				pack_vec    ,
 				s_info
@@ -396,9 +387,6 @@ CppAD::vector< residual_struct<Float> > prior_density::random(
 	CppAD::vector< residual_struct<Float> > residual_vec;
 	assert( residual_vec.size() == 0 );
 
-	// used to get results from log_prior_density
-	residual_type_enum     type = random_prior_enum;
-
 	// rates
 	pack_info::subvec_info info;
 	size_t n_child = pack_object_.child_size();
@@ -412,7 +400,6 @@ CppAD::vector< residual_struct<Float> > prior_density::random(
 
 			log_prior_density_on_grid(
 				residual_vec,
-				type        ,
 				offset      ,
 				pack_vec    ,
 				s_info
