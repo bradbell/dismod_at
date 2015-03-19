@@ -8,11 +8,11 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin devel_prior_density$$
+$begin devel_prior_model$$
 
 $section Prior of Fixed Effects and Random Effects$$
 
-$childtable%devel/model/prior_density.cpp
+$childtable%devel/model/prior_model.cpp
 %$$
 
 $end

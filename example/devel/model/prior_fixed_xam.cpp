@@ -26,7 +26,7 @@ $end
 // BEGIN C++
 # include <limits>
 # include <cmath>
-# include <dismod_at/prior_density.hpp>
+# include <dismod_at/prior_model.hpp>
 # include <dismod_at/get_density_table.hpp>
 
 # define DISMOD_AT_PRIOR_DENSITY_XAM_TRACE 0
@@ -233,7 +233,7 @@ bool prior_fixed_xam(void)
 	// meas_mean_mulcov: none
 	// meas_std_mulcov: none
 	// rate_mean_mulcov: none
-	dismod_at::prior_density prior_object(
+	dismod_at::prior_model prior_object(
 		pack_object, age_table, time_table, prior_table, s_info_vec
 	);
 	// -------------- compute prior density --------------------------------

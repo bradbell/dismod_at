@@ -19,7 +19,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "residual_density.hpp"
 
 namespace dismod_at {
-	class prior_density {
+	class prior_model {
 	private:
 		// data
 		const pack_info                    pack_object_;
@@ -30,19 +30,19 @@ namespace dismod_at {
 
 		// functions
 		template <class Float>
-		residual_struct<Float> log_prior_density(
+		residual_struct<Float> log_piror(
 			const prior_struct& prior   ,
 			const Float&        variable
 		) const;
 		template <class Float>
-		void log_prior_density_on_grid(
+		void log_piror_on_grid(
 			CppAD::vector< residual_struct<Float> >& residual_vec ,
 			size_t                                   offset       ,
 			const CppAD::vector<Float>&              pack_vec     ,
 			const smooth_info&                       s_info
 		) const;
 	public:
-		prior_density(
+		prior_model(
 			const pack_info&                       pack_object     ,
 			const CppAD::vector<double>&           age_table       ,
 			const CppAD::vector<double>&           time_table      ,

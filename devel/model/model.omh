@@ -17,7 +17,7 @@ $section Dismod_at Developer Model Documentation$$
 
 $childtable%
 	devel/model/data_model.omh%
-	devel/model/prior_density.omh
+	devel/model/prior_model.omh
 %$$
 
 $end

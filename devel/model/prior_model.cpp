@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin prior_density$$
+$begin prior_model$$
 $spell
 	pack_vec
 	CppAD
@@ -24,7 +24,7 @@ $$
 $section Construct Prior Density Object$$
 
 $head Syntax$$
-$codei%prior_density %prior_object%(
+$codei%prior_model %prior_object%(
 	%pack_object%, %age_table%, %time_table%, %prior_table%, %s_info_vec%
 )%$$
 
@@ -77,14 +77,14 @@ $end
 */
 
 # include <utility>
-# include <dismod_at/prior_density.hpp>
+# include <dismod_at/prior_model.hpp>
 # include <dismod_at/residual_density.hpp>
-# include <dismod_at/prior_density.hpp>
+# include <dismod_at/prior_model.hpp>
 # include <dismod_at/smooth_info.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-prior_density::prior_density(
+prior_model::prior_model(
 	const pack_info&                       pack_object     ,
 	const CppAD::vector<double>&           age_table       ,
 	const CppAD::vector<double>&           time_table      ,
@@ -100,7 +100,7 @@ s_info_vec_(s_info_vec)
 
 // private
 template <class Float>
-residual_struct<Float> prior_density::log_prior_density(
+residual_struct<Float> prior_model::log_piror(
 	const prior_struct&   prior    ,
 	const Float&          variable ) const
 {	assert ( 0 <= prior.density_id  );
@@ -115,7 +115,7 @@ residual_struct<Float> prior_density::log_prior_density(
 
 // private
 template <class Float>
-void prior_density::log_prior_density_on_grid(
+void prior_model::log_piror_on_grid(
 	CppAD::vector< residual_struct<Float> >& residual_vec    ,
 	size_t                                   offset          ,
 	const CppAD::vector<Float>&              pack_vec        ,
@@ -123,7 +123,7 @@ void prior_density::log_prior_density_on_grid(
 {	size_t n_age  = s_info.age_size();
 	size_t n_time = s_info.time_size();
 
-	// used to get results from log_prior_density
+	// used to get results from log_piror
 	residual_struct<Float> residual;
 
 	// value smoothing
@@ -132,7 +132,7 @@ void prior_density::log_prior_density_on_grid(
 		{	Float  var      = Float(pack_vec[offset + i * n_time + j]);
 			size_t prior_id           = s_info.value_prior_id(i, j);
 			const prior_struct& prior = prior_table_[prior_id];
-			residual                  = log_prior_density(prior, var);
+			residual                  = log_piror(prior, var);
 			residual_vec.push_back(residual);
 		}
 	}
@@ -147,7 +147,7 @@ void prior_density::log_prior_density_on_grid(
 			Float  dv_da    = Float((v1 - v0) / (a1 - a0));
 			size_t prior_id = s_info.dage_prior_id(i, j);
 			const prior_struct& prior = prior_table_[prior_id];
-			residual                  = log_prior_density(prior, dv_da);
+			residual                  = log_piror(prior, dv_da);
 			residual_vec.push_back(residual);
 		}
 	}
@@ -163,7 +163,7 @@ void prior_density::log_prior_density_on_grid(
 			Float  dv_dt    = Float((v1 - v0) / (t1 - t0));
 			size_t prior_id = s_info.dtime_prior_id(i, j);
 			const prior_struct& prior = prior_table_[prior_id];
-			residual                  = log_prior_density(prior, dv_dt);
+			residual                  = log_piror(prior, dv_dt);
 			residual_vec.push_back(residual);
 		}
 	}
@@ -214,14 +214,14 @@ of using this routine.
 $end
 */
 template <class Float>
-CppAD::vector< residual_struct<Float> > prior_density::fixed(
+CppAD::vector< residual_struct<Float> > prior_model::fixed(
 	const CppAD::vector<Float>&            pack_vec        ) const
 {
 	// initialize the log of the prior density as zero
 	CppAD::vector< residual_struct<Float> > residual_vec;
 	assert( residual_vec.size() == 0 );
 
-	// used to get results from log_prior_density
+	// used to get results from log_piror
 	residual_struct<Float> residual;
 
 	// number of smoothings
@@ -240,21 +240,21 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 		const prior_struct* prior = &prior_table_[prior_id];
 
 		// add prior density for this multipliers value
-		residual            = log_prior_density(*prior, mulstd);
+		residual            = log_piror(*prior, mulstd);
 		residual_vec.push_back(residual);
 
 		// add multiplier for age difference smoothing
 		mulstd              = pack_vec[offset + 1];
 		prior_id            = s_info_vec_[smooth_id].mulstd_dage();
 		prior               = &prior_table_[prior_id];
-		residual            = log_prior_density(*prior, mulstd);
+		residual            = log_piror(*prior, mulstd);
 		residual_vec.push_back(residual);
 
 		// multiplier for time difference smoothing
 		mulstd              = pack_vec[offset + 2];
 		prior_id            = s_info_vec_[smooth_id].mulstd_dtime();
 		prior               = &prior_table_[prior_id];
-		residual            = log_prior_density(*prior, mulstd);
+		residual            = log_piror(*prior, mulstd);
 		residual_vec.push_back(residual);
 	}
 
@@ -270,7 +270,7 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 		size_t offset             = info.offset;
 		const smooth_info& s_info = s_info_vec_[smooth_id];
 
-		log_prior_density_on_grid(
+		log_piror_on_grid(
 			residual_vec,
 			offset      ,
 			pack_vec    ,
@@ -287,7 +287,7 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 			size_t offset             = info.offset;
 			const smooth_info& s_info = s_info_vec_[smooth_id];
 
-			log_prior_density_on_grid(
+			log_piror_on_grid(
 				residual_vec,
 				offset      ,
 				pack_vec    ,
@@ -306,7 +306,7 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 			size_t offset             = info.offset;
 			const smooth_info& s_info = s_info_vec_[smooth_id];
 
-			log_prior_density_on_grid(
+			log_piror_on_grid(
 				residual_vec,
 				offset      ,
 				pack_vec    ,
@@ -320,7 +320,7 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 			size_t offset             = info.offset;
 			const smooth_info& s_info = s_info_vec_[smooth_id];
 
-			log_prior_density_on_grid(
+			log_piror_on_grid(
 				residual_vec,
 				offset      ,
 				pack_vec    ,
@@ -376,7 +376,7 @@ of using this routine.
 $end
 */
 template <class Float>
-CppAD::vector< residual_struct<Float> > prior_density::random(
+CppAD::vector< residual_struct<Float> > prior_model::random(
 	const CppAD::vector<Float>&            pack_vec        ) const
 {
 	// initialize the log of the prior density as zero
@@ -394,7 +394,7 @@ CppAD::vector< residual_struct<Float> > prior_density::random(
 			size_t offset             = info.offset;
 			const smooth_info& s_info = s_info_vec_[smooth_id];
 
-			log_prior_density_on_grid(
+			log_piror_on_grid(
 				residual_vec,
 				offset      ,
 				pack_vec    ,
@@ -407,11 +407,11 @@ CppAD::vector< residual_struct<Float> > prior_density::random(
 
 # define DISMOD_AT_INSTANTIATE_PRIOR_DENSITY(Float)                       \
 	template                                                              \
-	CppAD::vector< residual_struct<Float> > prior_density::fixed<Float>(  \
+	CppAD::vector< residual_struct<Float> > prior_model::fixed<Float>(  \
 		const CppAD::vector<Float>&   pack_vec                            \
 	) const;                                                              \
 	template                                                              \
-	CppAD::vector< residual_struct<Float> > prior_density::random<Float>( \
+	CppAD::vector< residual_struct<Float> > prior_model::random<Float>( \
 		const CppAD::vector<Float>&   pack_vec                            \
 	) const;
 
