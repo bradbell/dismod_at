@@ -199,8 +199,8 @@ The order of the residuals is unspecified (at this time).
 
 $head p(theta)$$
 The log of the prior density for the
-$cref/fixed/model_variable/Fixed Effects, theta/$$
-$latex \B{p}( \theta )$$,
+$cref/fixed effects/model_variable/Fixed Effects, theta/$$,
+$latex \log \; \B{p}( \theta )$$,
 is the sum of all the log densities corresponding to the
 $cref/residuals/residual_density/$$.
 
@@ -360,9 +360,9 @@ The order of the residuals is unspecified (at this time).
 
 $head p(u|theta)$$
 The log of the prior density for the
-and $cref/random/model_variable/Random Effects, u/$$ effects
-given the fixed effect,
-$latex \B{p}( u | \theta )$$,
+and $cref/random effects/model_variable/Random Effects, u/$$
+given the fixed effects,
+$latex \log \; \B{p}( u | \theta )$$,
 is the sum of the all the log densities corresponding to the
 $cref/residuals/residual_density/$$.
 
