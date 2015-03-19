@@ -173,6 +173,9 @@ void prior_density::log_prior_density_on_grid(
 ------------------------------------------------------------------------------
 $begin prior_fixed_effect$$
 $spell
+	vec
+	Cpp
+	struct
 $$
 
 $section Evaluate Prior Density for the Fixed Effects$$
@@ -331,16 +334,9 @@ CppAD::vector< residual_struct<Float> > prior_density::fixed(
 ------------------------------------------------------------------------------
 $begin prior_random_effect$$
 $spell
-	enum
-	eval
-	pack_vec
-	CppAD
-	const
-	subvectors
-	std
+	vec
+	Cpp
 	struct
-	fabs
-	var
 $$
 
 $section Evaluate Prior Density for the Random Effects$$

@@ -9,18 +9,16 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin prior_density_xam.cpp$$
+$begin prior_fixed_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ prior_density: Example and Test$$
-$index example, C++ prior_density$$
-$index prior_density, C++ example$$
+$section C++ prior_fixed: Example and Test$$
 
 $code
-$verbatim%example/devel/model/prior_density_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/model/prior_fixed_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
