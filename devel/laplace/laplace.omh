@@ -35,5 +35,9 @@ $pre
 $$
 Journal of Statistical Software, Accepted 2015-02.
 
+$childtable%
+	devel/laplace/cppad_conjgrad.cpp
+%$$
+
 
 $end
