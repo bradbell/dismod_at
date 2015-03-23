@@ -29,7 +29,7 @@ $head Under Construction$$
 
 $head Purpose$$
 Uses a CppAD function object,
-and the 
+and the
 $href%http://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method
 	nonlinear conjugate gradient method
 %$$,
@@ -86,11 +86,11 @@ CppAD::vector<Float> cppad_conjgrad(
 	assert( fun.Range()  == 1 );
 	size_t n = fun.Domain();
 	size_t m = fun.Range();
-	
+
 	// initial x vector
 	vector<Float> xcur = xin;
 
-	// initial function value 
+	// initial function value
 	vector<Float> fcur = fun.Forward(0, xcur);
 
 	// initial gradient
@@ -123,7 +123,7 @@ CppAD::vector<Float> cppad_conjgrad(
 		for(size_t j = 0; j < n; j++)
 			xnext[j] = xcur[j] + alpha * scur[j];
 
-		// next function value 
+		// next function value
 		fnext = fun.Forward(0, xnext);
 
 		// next gradient value
