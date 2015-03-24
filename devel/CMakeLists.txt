@@ -11,6 +11,7 @@
 SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	laplace/cppad_conjgrad
+	laplace/optimize_random.cpp
 
 	model/data_model.cpp
 	model/prior_model.cpp

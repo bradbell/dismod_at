@@ -25,7 +25,7 @@ This package is under construction and does not yet accomplish its purpose.
 Furthermore, the following sections are in an incomplete state:
 $cref/Get Data Base Input Information/get_db_input/Under Construction/$$,
 $cref/Laplace Approximation/laplace/Under Construction/$$,
-$cref/Conjugate Gradient/cppad_conjgrad/Under Construction/$$.
+$cref/Optimize Random Effects/optimize_random/Under Construction/$$.
 
 $childtable%omh/table/input.omh
 	%omh/model/model.omh

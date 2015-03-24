@@ -16,4 +16,5 @@ cd build
 cmake \
 	-D extra_cxx_flags='-std=c++11 -Wall -g' \
 	-D cppad_prefix=$HOME/prefix/cppad \
+	-D ipopt_prefix=$HOME/prefix/ipopt \
 	..

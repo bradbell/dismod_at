@@ -21,6 +21,14 @@ ENDIF( NOT cppad_prefix )
 MESSAGE(STATUS "cppad_prefix = ${cppad_prefix}")
 INCLUDE_DIRECTORIES( ${cppad_prefix}/include )
 
+# ipopt_prefix
+SET(ipopt_prefix NOTFOUND CACHE PATH "prefix used during CppAD install")
+IF( NOT ipopt_prefix )
+	MESSAGE(FATAL_ERROR "ipopt_prefix not set by cmake command")
+ENDIF( NOT ipopt_prefix )
+MESSAGE(STATUS "ipopt_prefix = ${ipopt_prefix}")
+INCLUDE_DIRECTORIES( ${ipopt_prefix}/include )
+
 # extra_cxx_flags
 SET(extra_cxx_flags NOTFOUND CACHE STRING
 	"extra compiler flags (besides debug and release"
