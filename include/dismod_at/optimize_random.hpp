@@ -22,8 +22,6 @@ $$
 
 $section Given the Fixed Effects, Optimize the Random Effects$$
 
-$head Under Construction$$
-
 $head Syntax$$
 $icode%random_out% = optimize_random(%fixed_vec%, %random_in%, %neglogden%)%$$
 

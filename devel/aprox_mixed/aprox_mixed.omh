@@ -36,7 +36,8 @@ $$
 Journal of Statistical Software, Accepted 2015-02.
 
 $childtable%
-	include/dismod_at/optimize_random.hpp
+	include/dismod_at/optimize_random.hpp%
+	devel/aprox_mixed/cppad_conjgrad.cpp
 %$$
 
 
