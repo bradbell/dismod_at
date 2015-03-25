@@ -23,9 +23,7 @@ $section Given the Fixed Effects, Optimize the Random Effects$$
 $head Under Construction$$
 
 $head Syntax$$
-$icode%random_out% = optimize_random(
-	%fixed_vec%, %random_in%, %logden%,
-)%$$
+$icode%random_out% = optimize_random(%fixed_vec%, %random_in%, %logden%)%$$
 
 $head fixed_vec$$
 This argument to $code optimize_random$$ has prototype 
@@ -58,7 +56,7 @@ the corresponding log-density is for
 the data and the random effects given the fixed effects; i.e.,
 $latex \[
 	\B{p} ( y, u | \theta ) = \B{p}(y | u , \theta ) \B{p} ( u | \theta )
-\] $$.
+\] $$
 The sequence of operations computed by $icode random_logden$$ 
 must be the same for all values of $icode u$$.
 
@@ -112,6 +110,7 @@ $end
 */
 # include <cppad/cppad.hpp>
 # include <cppad/ipopt/solve.hpp>
+# include <dismod_at/optimize_random.hpp>
 
 # define DISMOD_AT_IPOPT_INFINITY 1e19
 
@@ -149,7 +148,7 @@ namespace {
 			// compute log-density vector
 			ad_vector logden_vec   = logden_(fixed_vec_, u);
 
-			// initial objective function
+			// initialize smooth part of negative log-likelihood
 			size_t k = 0;
 			fg[k++]  = - logden_vec[0];
 
@@ -160,6 +159,7 @@ namespace {
 				fg[k++] = x[ n_random_ + j] - logden_vec[1 + j]; 	
 				fg[k++] = x[ n_random_ + j] + logden_vec[1 + j]; 	
 				//
+				// smooth contribution to log-likelihood
 				fg[0]  += x[ n_random_ + j];
 			}
 
