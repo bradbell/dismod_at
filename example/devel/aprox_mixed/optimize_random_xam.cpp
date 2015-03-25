@@ -18,7 +18,7 @@ $$
 $section C++ optimize_random: Example and Test$$
 
 $code
-$verbatim%example/devel/utility/optimize_random_xam.cpp
+$verbatim%example/devel/aprox_mixed/optimize_random_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -86,7 +86,7 @@ bool optimize_random_xam(void)
 	vector<double> data(n_data), fixed_vec(n_data), random_in(n_data);
 
 	for(size_t i = 0; i < n_data; i++)
-	{	data[i]      = double(i);
+	{	data[i]      = double(i + 1);
 		fixed_vec[i] = 1.0;
 		random_in[i] = 0.0;
 	}
@@ -101,8 +101,9 @@ bool optimize_random_xam(void)
 
 	// check the result
 	for(size_t i = 0; i < n_data; i++)
-	{	std::cout << random_out[i] / data[i] - 1.0 << std::endl;
-		ok &= CppAD::abs(random_out[i] / data[i] - 1.0) < 1e-4;
+	{	// debugging print out
+		// std::cout << random_out[i] / data[i] - 1.0 << std::endl;
+		ok &= CppAD::abs(random_out[i] / data[i] - 1.0) < 1e-10;
 	}
 
 	return ok;

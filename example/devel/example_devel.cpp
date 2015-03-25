@@ -107,7 +107,7 @@ namespace {
 int main(void)
 {
 	// aprox_mixed subdirectory
-	// RUN(optimize_random_xam); not yet working
+	RUN(optimize_random_xam);
 
 	// model subdirectory
 	RUN(avg_no_ode_xam);

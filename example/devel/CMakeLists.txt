@@ -13,12 +13,15 @@
 # Release or deug build
 SET(CMAKE_BUILD_TYPE DEBUG)
 
+# get linking flags using pkg-config
+FIND_PACKAGE(PkgConfig)
+pkg_check_modules(ipopt ipopt)
+LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 
-# Program cpp, not installed, and depends on following source files
-#	The following example does not yet link.
-#		aprox_mixed/optimize_random_xam.cpp
 ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	example_devel.cpp
+
+	aprox_mixed/optimize_random_xam.cpp
 
 	model/avg_no_ode_xam.cpp
 	model/avg_yes_ode_xam.cpp
@@ -59,9 +62,9 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	table/weight_info_xam.cpp
 )
 
-LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )
+LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp ${ipopt_LIBRARY_DIRS} )
 SET_TARGET_PROPERTIES(
 	example_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
-TARGET_LINK_LIBRARIES(example_devel sqlite3 devel_lib)
+TARGET_LINK_LIBRARIES(example_devel sqlite3 devel_lib ${ipopt_LIBRARIES} )
 ADD_CUSTOM_TARGET(check_example_devel example_devel DEPENDS example_devel )
