@@ -26,14 +26,14 @@ $head Syntax$$
 $icode%random_out% = optimize_random(%fixed_vec%, %random_in%, %logden%)%$$
 
 $head fixed_vec$$
-This argument to $code optimize_random$$ has prototype 
+This argument to $code optimize_random$$ has prototype
 $codei%
 	const CppAD::vector<double>& %fixed_vec%
 %$$
 It is the vector of fixed effects values.
 
 $head random_in$$
-This argument to $code optimize_random$$ has prototype 
+This argument to $code optimize_random$$ has prototype
 $codei%
 	const CppAD::vector<double>& %random_in%
 %$$
@@ -46,18 +46,18 @@ This argument has prototype
 $codei%
 	%Logden%& %logden%
 %$$
-where $icode Logden$$ is a special class such that 
+where $icode Logden$$ is a special class such that
 $icode logden$$ supports the following syntax:
 $codei%
 	%logden_vec% = %logden%(%theta%, %u%)
 %$$
 Up to a constant that does not depend on the fixed or random effects,
-the corresponding log-density is for 
+the corresponding log-density is for
 the data and the random effects given the fixed effects; i.e.,
 $latex \[
 	\B{p} ( y, u | \theta ) = \B{p}(y | u , \theta ) \B{p} ( u | \theta )
 \] $$
-The sequence of operations computed by $icode random_logden$$ 
+The sequence of operations computed by $icode random_logden$$
 must be the same for all values of $icode u$$.
 
 $subhead Float$$
@@ -66,14 +66,14 @@ $code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
 where $code AD$$ is $code CppAD::AD$$.
 
 $subhead theta$$
-This argument has prototype 
+This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %theta%
 %$$
 It has the same size and element values as the vector $icode fixed_vec$$.
 
 $subhead u$$
-This argument has prototype 
+This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %u%
 %$$
@@ -91,12 +91,12 @@ $icode%
 where $icode%s% = %logden%.size()%$$.
 
 $head random_out$$
-This return value has prototype 
+This return value has prototype
 $codei%
 	CppAD::vector<double> %random_out%
 %$$
 It maximizes the density for the random effects, given the data
-and the fixed effects; i.e., 
+and the fixed effects; i.e.,
 $latex \[
 \B{p} ( u | y , \theta )
 =
@@ -123,7 +123,7 @@ namespace {
 	template <class Logden>
 	class FG_eval {
 	private:
-		const size_t     n_random_; 
+		const size_t     n_random_;
 		const d_vector&  fixed_vec_;
 		Logden&          logden_;
 	public:
@@ -132,7 +132,7 @@ namespace {
 			size_t           n_random        ,
 			const d_vector&  fixed_vec       ,
 			Logden&          logden
-		) : 
+		) :
 		n_random_( n_random )     ,
 		fixed_vec_( fixed_vec )   ,
 		logden_( logden )
@@ -156,14 +156,14 @@ namespace {
 			size_t n_abs   = logden_vec.size()-1;
 			for(size_t j = 0; j < n_abs; j++)
 			{	// x[ n_random_ + j] >= abs(log_den[1 + j]
-				fg[k++] = x[ n_random_ + j] - logden_vec[1 + j]; 	
-				fg[k++] = x[ n_random_ + j] + logden_vec[1 + j]; 	
+				fg[k++] = x[ n_random_ + j] - logden_vec[1 + j];
+				fg[k++] = x[ n_random_ + j] + logden_vec[1 + j];
 				//
 				// smooth contribution to log-likelihood
 				fg[0]  += x[ n_random_ + j];
 			}
 
-		}	
+		}
 	};
 }
 
@@ -184,7 +184,7 @@ vector<double> optimize_random(
 
 	// number of independent variable is number of random effects
 	// plus number of log-density terms that require absolute values
-	size_t nx = n_random + n_abs; 
+	size_t nx = n_random + n_abs;
 
 	// set initial x vector
 	d_vector xi(nx);
@@ -224,7 +224,7 @@ vector<double> optimize_random(
 
 	return solution.x;
 }
-	
+
 
 
 } // END_DISMOD_AT_NAMESPACE
