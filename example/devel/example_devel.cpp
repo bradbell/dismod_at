@@ -30,6 +30,9 @@ $end
 # include <cassert>
 # include <cstring>
 
+// approx_mixed subdirectory
+extern bool optimize_random_xam(void);
+
 // model subdirectory
 extern bool avg_no_ode_xam(void);
 extern bool avg_yes_ode_xam(void);
@@ -103,6 +106,9 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
+	// aprox_mixed subdirectory
+	// RUN(optimize_random_xam); not yet working
+
 	// model subdirectory
 	RUN(avg_no_ode_xam);
 	RUN(avg_yes_ode_xam);

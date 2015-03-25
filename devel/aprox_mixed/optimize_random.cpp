@@ -15,7 +15,7 @@ $spell
 	const
 	CppAD
 	struct
-	logden
+	neglogden
 $$
 
 $section Given the Fixed Effects, Optimize the Random Effects$$
@@ -23,7 +23,7 @@ $section Given the Fixed Effects, Optimize the Random Effects$$
 $head Under Construction$$
 
 $head Syntax$$
-$icode%random_out% = optimize_random(%fixed_vec%, %random_in%, %logden%)%$$
+$icode%random_out% = optimize_random(%fixed_vec%, %random_in%, %neglogden%)%$$
 
 $head fixed_vec$$
 This argument to $code optimize_random$$ has prototype
@@ -40,30 +40,38 @@ $codei%
 The input value of this vector is the starting point for the optimization
 of the random effects.
 
+$head Float$$
+The type $icode Float$$ must be one of the following:
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
 
-$head logden$$
+$head neglogden$$
 This argument has prototype
 $codei%
-	%Logden%& %logden%
+	%Neglogden%& %neglogden%
 %$$
-where $icode Logden$$ is a special class such that
-$icode logden$$ supports the following syntax:
+where $icode Neglogden$$ is a special class such that
+$icode neglogden$$ supports the following syntax:
 $codei%
-	%logden_vec% = %logden%(%theta%, %u%)
+	%s%             = %neglogden%.size()
+	%neglogden_vec% = %neglogden%(%theta%, %u%)
 %$$
 Up to a constant that does not depend on the fixed or random effects,
-the corresponding log-density is for
+the corresponding negative log-density is for
 the data and the random effects given the fixed effects; i.e.,
 $latex \[
 	\B{p} ( y, u | \theta ) = \B{p}(y | u , \theta ) \B{p} ( u | \theta )
 \] $$
-The sequence of operations computed by $icode random_logden$$
+The sequence of operations computed by $icode random_neglogden$$
 must be the same for all values of $icode u$$.
 
-$subhead Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
-where $code AD$$ is $code CppAD::AD$$.
+$subhead s$$
+This return value has prototype
+$codei%
+	size_t %s%
+%$$
+It is the size of the vector $icode neglogden_vec$$
+returned by any call to $icode neglogden$$.
 
 $subhead theta$$
 This argument has prototype
@@ -79,16 +87,17 @@ $codei%
 %$$
 It has the same size as $icode random_vec$$ and its element values will vary.
 
-$subhead logden_vec$$
+$subhead neglogden_vec$$
 This result has prototype
 $codei%
-	CppAD::vector<%Float%> %logden_vec%
+	CppAD::vector<%Float%> %neglogden_vec%
 %$$
-The corresponding log-density function is
+The corresponding negative log-density function is
 $icode%
-	%logden_vec%[0]% - abs(%logden_vec%[1]) - %...% - abs(%logden_vec%[%s%-1])
+	%neglogden_vec%[0]%
+		+ abs(%neglogden_vec%[1]) + %...% + abs(%neglogden_vec%[%s%-1])
 %$$
-where $icode%s% = %logden%.size()%$$.
+where $icode%s% = %neglogden%.size()%$$.
 
 $head random_out$$
 This return value has prototype
@@ -120,23 +129,24 @@ namespace {
 	typedef vector<double>        d_vector;
 	typedef vector< AD<double> >  ad_vector;
 
-	template <class Logden>
+	template <class Neglogden>
 	class FG_eval {
 	private:
 		const size_t     n_random_;
 		const d_vector&  fixed_vec_;
-		Logden&          logden_;
+		Neglogden&       neglogden_;
 	public:
 		// constructor
 		FG_eval(
 			size_t           n_random        ,
 			const d_vector&  fixed_vec       ,
-			Logden&          logden
+			Neglogden&       neglogden
 		) :
 		n_random_( n_random )     ,
 		fixed_vec_( fixed_vec )   ,
-		logden_( logden )
+		neglogden_( neglogden )
 		{ }
+
 		// evaluate objective and constraints
 		void operator()(ad_vector& fg, const ad_vector& x)
 		{
@@ -146,18 +156,18 @@ namespace {
 				u[j] = x[j];
 
 			// compute log-density vector
-			ad_vector logden_vec   = logden_(fixed_vec_, u);
+			ad_vector neglogden_vec   = neglogden_(fixed_vec_, u);
 
 			// initialize smooth part of negative log-likelihood
 			size_t k = 0;
-			fg[k++]  = - logden_vec[0];
+			fg[k++]  = neglogden_vec[0];
 
 			// terms corresponding to data likelihood absolute values
-			size_t n_abs   = logden_vec.size()-1;
+			size_t n_abs   = neglogden_vec.size()-1;
 			for(size_t j = 0; j < n_abs; j++)
 			{	// x[ n_random_ + j] >= abs(log_den[1 + j]
-				fg[k++] = x[ n_random_ + j] - logden_vec[1 + j];
-				fg[k++] = x[ n_random_ + j] + logden_vec[1 + j];
+				fg[k++] = x[ n_random_ + j] - neglogden_vec[1 + j];
+				fg[k++] = x[ n_random_ + j] + neglogden_vec[1 + j];
 				//
 				// smooth contribution to log-likelihood
 				fg[0]  += x[ n_random_ + j];
@@ -169,18 +179,20 @@ namespace {
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-template <class Logden>
+template <class Neglogden>
 vector<double> optimize_random(
 	const vector<double>& fixed_vec       ,
 	const vector<double>& random_in       ,
-	Logden&               logden          )
+	Neglogden&            neglogden       )
 {
 	// number of random effects
 	size_t n_random = random_in.size();
 
 	// determine initial density vector
-	d_vector logden_vec = logden(fixed_vec, random_in);
-	size_t n_abs = logden_vec.size() - 1;
+	d_vector neglogden_vec = neglogden(fixed_vec, random_in);
+
+	// number of absolute value terms in objective
+	size_t n_abs = neglogden_vec.size() - 1;
 
 	// number of independent variable is number of random effects
 	// plus number of log-density terms that require absolute values
@@ -191,7 +203,7 @@ vector<double> optimize_random(
 	for(size_t j = 0; j < n_random; j++)
 		xi[j] = random_in[j];
 	for(size_t j = 0; j < n_abs; j++)
-		xi[n_random + j] = CppAD::abs( logden_vec[j] );
+		xi[n_random + j] = CppAD::abs( neglogden_vec[j] );
 
 	// set lower and upper limits for x
 	d_vector xl(nx), xu(nx);
@@ -208,7 +220,7 @@ vector<double> optimize_random(
 	}
 
 	// construct fg_evlution object
-	FG_eval<Logden> fg_eval(n_random, fixed_vec, logden);
+	FG_eval<Neglogden> fg_eval(n_random, fixed_vec, neglogden);
 
 	// optimizer options
 	std::string options;
@@ -224,7 +236,5 @@ vector<double> optimize_random(
 
 	return solution.x;
 }
-
-
 
 } // END_DISMOD_AT_NAMESPACE

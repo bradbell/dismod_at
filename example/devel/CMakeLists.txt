@@ -13,7 +13,10 @@
 # Release or deug build
 SET(CMAKE_BUILD_TYPE DEBUG)
 
+
 # Program cpp, not installed, and depends on following source files
+#	The following example does not yet link.
+#		aprox_mixed/optimize_random_xam.cpp
 ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	example_devel.cpp
 
