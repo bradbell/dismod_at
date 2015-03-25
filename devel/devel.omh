@@ -19,7 +19,7 @@ $childtable%
 	devel/table/table.omh
 	%devel/utility/utility.omh
 	%devel/model/model.omh
-	%devel/laplace/laplace.omh
+	%devel/aprox_mixed/aprox_mixed.omh
 %$$
 
 $end

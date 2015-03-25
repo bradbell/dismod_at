@@ -8,12 +8,12 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin laplace$$
+$begin aprox_mixed$$
 $spell
 	dismod
 $$
 
-$section C++ Optimization of The Laplace Approximation$$
+$section Optimize Laplace Approximation for Mixed Effects Models$$
 
 $head Under Construction$$
 
@@ -36,7 +36,7 @@ $$
 Journal of Statistical Software, Accepted 2015-02.
 
 $childtable%
-	devel/laplace/optimize_random.cpp
+	devel/aprox_mixed/optimize_random.cpp
 %$$
 
 
