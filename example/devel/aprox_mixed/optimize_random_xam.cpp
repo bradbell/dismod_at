@@ -56,7 +56,7 @@ namespace {
 
 			for(size_t i = 0; i < y_.size(); i++)
 			{	Float mu     = u[i];
-				Float sigma  = theta[i];	
+				Float sigma  = theta[i];
 				Float res    = (y_[i] - mu) / sigma;
 
 				if( i % 2 )
