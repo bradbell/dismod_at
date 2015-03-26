@@ -47,7 +47,7 @@ namespace {
 		approx_derived(const vector<double>& y) : y_(y)
 		{ }
 	private:
-		// implementation of joint_density 
+		// implementation of joint_density
 		template <class Float>
 		vector<Float> implement_joint_density(
 			const vector<Float>& theta  ,

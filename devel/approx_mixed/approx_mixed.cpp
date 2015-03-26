@@ -10,7 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
 $begin approx_mixed_notation$$
-$spell 
+$spell
 	CppAD
 	vec
 $$
@@ -36,12 +36,12 @@ where $icode%s% = %vec%.size()%$$.
 $head Fixed Effects, theta$$
 For each $code approx_mixed$$ object, there is a vector of fixed effects.
 The number of the fixed effects, and their order in the vector, does not vary.
-We sometimes use $latex \theta$$ to denote the vector of fixed effects. 
+We sometimes use $latex \theta$$ to denote the vector of fixed effects.
 
 $head Random Effects, u$$
 For each $code approx_mixed$$ object, there is a vector of random effects.
 The number of the random effects, and their order in the vector, does not vary.
-We sometimes use $latex u$$ to denote the vector of random effects. 
+We sometimes use $latex u$$ to denote the vector of random effects.
 
 $end
 -------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ This is an object of a class that is derived from the
 $code approx_mixed$$ base class.
 
 $head Virtual Function$$
-This is a pure virtual function and must be implemented 
+This is a pure virtual function and must be implemented
 in the derived class with prototype
 $codei%
 	virtual CppAD::vector<%Float%> joint_density(
@@ -93,7 +93,7 @@ This result has prototype
 $codei%
 	CppAD::vector<%Float%> %vec%
 %$$
-It is a 
+It is a
 $cref/negative log-density vector
 	/approx_mixed_notation
 	/Negative Log-Density Vector
