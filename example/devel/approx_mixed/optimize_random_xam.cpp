@@ -18,7 +18,7 @@ $$
 $section C++ optimize_random: Example and Test$$
 
 $code
-$verbatim%example/devel/aprox_mixed/optimize_random_xam.cpp
+$verbatim%example/devel/approx_mixed/optimize_random_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 

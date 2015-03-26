@@ -115,7 +115,7 @@ where the normalization constant $latex C( \theta )$$
 does not depend on the random effects $latex u$$.
 
 $children%
-	example/devel/aprox_mixed/optimize_random_xam.cpp
+	example/devel/approx_mixed/optimize_random_xam.cpp
 %$$
 $head Example$$
 The file $cref optimize_random_xam.cpp$$ contains an example

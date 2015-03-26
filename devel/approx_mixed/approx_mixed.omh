@@ -8,7 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin aprox_mixed$$
+$begin approx_mixed$$
 $spell
 	dismod
 $$
@@ -37,7 +37,7 @@ Journal of Statistical Software, Accepted 2015-02.
 
 $childtable%
 	include/dismod_at/optimize_random.hpp%
-	devel/aprox_mixed/cppad_conjgrad.cpp
+	devel/approx_mixed/cppad_conjgrad.cpp
 %$$
 
 

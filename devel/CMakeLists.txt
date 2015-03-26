@@ -10,7 +10,7 @@
 # ---------------------------------------------------------------------------
 SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
-	aprox_mixed/cppad_conjgrad
+	approx_mixed/cppad_conjgrad
 
 	model/data_model.cpp
 	model/prior_model.cpp

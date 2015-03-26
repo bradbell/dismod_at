@@ -106,7 +106,7 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
-	// aprox_mixed subdirectory
+	// approx_mixed subdirectory
 	RUN(optimize_random_xam);
 
 	// model subdirectory
