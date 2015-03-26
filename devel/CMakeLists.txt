@@ -11,6 +11,7 @@
 SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	approx_mixed/cppad_conjgrad
+	approx_mixed/approx_mixed.cpp
 
 	model/data_model.cpp
 	model/prior_model.cpp

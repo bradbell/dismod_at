@@ -26,30 +26,36 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include <dismod_at/optimize_random.hpp>
+# include <dismod_at/approx_mixed.hpp>
+
+# define DISMOD_AT_IMPLEMENT_JOINT_DENSITY(Float)     \
+	virtual vector< Float > joint_density(     \
+		const vector< Float >& fixed_vec  ,    \
+		const vector< Float >& random_vec )    \
+		{	return implement_joint_density(fixed_vec, random_vec); }
 
 namespace {
 	using CppAD::vector;
 	using CppAD::log;
 	using CppAD::AD;
 
-	class Neglogden {
+	class approx_derived : public dismod_at::approx_mixed {
 	private:
 		const vector<double>& y_;
 	public:
 		// constructor
-		Neglogden(const vector<double>& y) : y_(y)
+		approx_derived(const vector<double>& y) : y_(y)
 		{ }
-
-		// function object
+	private:
+		// implementation of joint_density 
 		template <class Float>
-		vector<Float> operator()(
+		vector<Float> implement_joint_density(
 			const vector<Float>& theta  ,
 			const vector<Float>& u      )
-		{	vector<Float> neglogden_vec(1);
+		{	vector<Float> vec(1);
 
 			// initialize part of log-density that is alwasy smooth
-			neglogden_vec[0] = Float(0.0);
+			vec[0] = Float(0.0);
 
 			// compute this factor once
 			Float sqrt_2 = CppAD::sqrt( Float(2.0) );
@@ -62,19 +68,23 @@ namespace {
 				if( i % 2 )
 				{	// This is a Gaussian term, so entire density is smooth
 					// (do not need 2*pi inside of log)
-					neglogden_vec[0]  += (log(sigma) + res*res) / Float(2.0);
+					vec[0]  += (log(sigma) + res*res) / Float(2.0);
 				}
 				else
 				{	// This term is Laplace distributed
 					// (do not need sqrt(2) inside of log)
-					neglogden_vec[0] += log(sigma);
+					vec[0] += log(sigma);
 
 					// part of the density that need absolute value
-					neglogden_vec.push_back(sqrt_2 * res);
+					vec.push_back(sqrt_2 * res);
 				}
 			}
-			return neglogden_vec;
+			return vec;
 		}
+	public:
+		DISMOD_AT_IMPLEMENT_JOINT_DENSITY( double )
+		DISMOD_AT_IMPLEMENT_JOINT_DENSITY( AD<double> )
+		DISMOD_AT_IMPLEMENT_JOINT_DENSITY( AD< AD<double> > )
 	};
 }
 
@@ -91,12 +101,12 @@ bool optimize_random_xam(void)
 		random_in[i] = 0.0;
 	}
 
-	// object that computes negative log-density
-	Neglogden neglogden(data);
+	// object that is derived from approx_mixed
+	approx_derived approx_object(data);
 
 	// determine the optimal random effects
-	vector<double> random_out = dismod_at::optimize_random(
-		fixed_vec, random_in, neglogden
+	vector<double> random_out = approx_object.optimize_random(
+		fixed_vec, random_in
 	);
 
 	// check the result

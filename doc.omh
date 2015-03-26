@@ -24,8 +24,7 @@ $head Under Construction$$
 This package is under construction and does not yet accomplish its purpose.
 Furthermore, the following sections are in an incomplete state:
 $cref/Get Data Base Input Information/get_db_input/Under Construction/$$,
-$cref/Laplace Approximation/approx_mixed/Under Construction/$$,
-$cref/conjugate gradient/cppad_conjgrad/Under Construction/$$.
+$cref/Laplace Approximation/approx_mixed/Under Construction/$$.
 
 $childtable%omh/table/input.omh
 	%omh/model/model.omh
