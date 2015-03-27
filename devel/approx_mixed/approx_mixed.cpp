@@ -66,8 +66,8 @@ This is a pure virtual function and must be implemented
 in the derived class with prototype
 $codei%
 	virtual CppAD::vector<%Float%> joint_density(
-		const vector<%Float%>& fixed_vec  ,
-		const vector<%Float%>& random_vec )
+		const CppAD::vector<%Float%>& %fixed_vec%  ,
+		const CppAD::vector<%Float%>& %random_vec% )
 %$$
 for each of the possible
 $cref/Float/approx_mixed_notation/Float/$$ cases.
