@@ -97,10 +97,10 @@ It is a
 $cref/negative log-density vector
 	/approx_mixed_notation
 	/Negative Log-Density Vector
-/$$ for The corresponding negative log-density function is the joint
-density of the data and random effects; i.e.,
+/$$ 
+corresponding to the joint density of the data and random effects; i.e.,
 $latex \[
-	\B{p}( y, u | \theta) = \B{p}( y | u , \theta) \B{p} ( \theta )
+	\B{p}( y, u | \theta) = \B{p}( y | u , \theta) \B{p} ( u | \theta )
 \] $$
 
 $end
