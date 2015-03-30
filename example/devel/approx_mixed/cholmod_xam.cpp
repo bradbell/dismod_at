@@ -22,11 +22,11 @@ inv(A) = [ 24, -18, -6; -18, 21, 3; -6, 3, 9] / det(A)
 namespace {
 	void add_T_entry(cholmod_triplet *T, int r, int c, double x)
 	{	size_t k = T->nnz;
-	
+
 		((int*)T->i)[k] = r;
 		((int*)T->j)[k] = c;
 		((double*)T->x)[k] = x;
-	
+
 		T->nnz++;
 	}
 }
