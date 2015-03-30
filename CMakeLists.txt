@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -28,6 +28,14 @@ IF( NOT ipopt_prefix )
 ENDIF( NOT ipopt_prefix )
 MESSAGE(STATUS "ipopt_prefix = ${ipopt_prefix}")
 INCLUDE_DIRECTORIES( ${ipopt_prefix}/include )
+
+# suitesparse_prefix
+SET(suitesparse_prefix NOTFOUND CACHE PATH "prefix used during CppAD install")
+IF( NOT suitesparse_prefix )
+	MESSAGE(FATAL_ERROR "suitesparse_prefix not set by cmake command")
+ENDIF( NOT suitesparse_prefix )
+MESSAGE(STATUS "suitesparse_prefix = ${suitesparse_prefix}")
+INCLUDE_DIRECTORIES( ${suitesparse_prefix}/include )
 
 # extra_cxx_flags
 SET(extra_cxx_flags NOTFOUND CACHE STRING

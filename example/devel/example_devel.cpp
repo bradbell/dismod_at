@@ -12,9 +12,6 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin cpp.cpp$$
 
 $sectin Run C++ Examples$$
-$index C++, run examples$$
-$index run, C++ examples$$
-$index examples, run C++$$
 
 $head Syntax$$
 $code example/devel/cpp$$
@@ -31,6 +28,7 @@ $end
 # include <cstring>
 
 // approx_mixed subdirectory
+extern bool cholmod_xam(void);
 extern bool optimize_random_xam(void);
 
 // model subdirectory
@@ -107,6 +105,7 @@ namespace {
 int main(void)
 {
 	// approx_mixed subdirectory
+	RUN(cholmod_xam);
 	RUN(optimize_random_xam);
 
 	// model subdirectory
