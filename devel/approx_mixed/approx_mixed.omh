@@ -9,109 +9,44 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin approx_mixed$$
-$latex \newcommand{\dtheta}[1]{ \frac{\R{d}}{\R{d} \theta_{ #1}} }$$
-
-
-$section Laplace Approximation for Mixed Effects Models$$
 $spell
-	Kasper Kristensen
-	Anders Nielsen
-	Casper Berg
-	Hans Skaug
-	Bradley Bell
+	CppAD
+	vec
 $$
+
+$section approx_mixed: Laplace Approximation For Mixed Effects Models$$
 
 $head Under Construction$$
 
-$head Reference$$
-TMB: Automatic Differentiation and Laplace Approximation,
-Kasper Kristensen, Anders Nielsen, Casper W. Berg, Hans Skaug, Bradley M. Bell,
-Journal of Statistical Software, Accepted 2015-02.
+$head Float$$
+For any function or operation,
+the type $icode Float$$ is one of the following:
+$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
+where $code AD$$ is $code CppAD::AD$$.
 
-$head Notation$$
-The reference above defines $latex f(u, \theta )$$
-to be the negative log-likelihood of
-$latex y$$, $latex u$$ and $latex \theta$$.
-We use a different notation and define
-$latex f(u , \theta)$$ to be the negative log-likelihood of
-$latex y$$ and $latex u$$ given $latex \theta$$,
-and define $latex g( \theta )$$ to be the prior likelihood for $latex \theta$$.
-The function $latex f(u, \theta)$$ is assumed to be smooth,
-while $latex g(x)$$ can have absolute values in it
-(corresponding to the Laplace likelihoods).
+$head Negative Log-Density Vector$$
+If $icode vec$$ is a density vector corresponding to $latex \B{p}(x)$$,
+the corresponding negative log-density is given by
+$pre
+	$$
+$latex - \log [ \B{p} (x) ] = $$
+$icode%vec%[0] + CppAD::abs(%vec%[1]) + %...% CppAD::abs(%vec%[%s%-1])
+%$$
+where $icode%s% = %vec%.size()%$$.
 
-$head Objective$$
-Using this notation, the Laplace approximation as a function of the
-fixed effects $latex \theta$$ and the random effects $latex u$$ is
-$latex \[
-h( u, \theta )
-=
-- \frac{n}{2} \log ( 2 \pi )
-+ \frac{1}{2} \log \det f_{uu}^{(2)} ( u , \theta )
-+ f( u , \theta )
-+ g( \theta )
-\] $$
-Given the fixed effects,
-the corresponding random effects that maximize the joint likelihood
-is denoted by
-$latex \[
-	\hat{u} ( \theta ) = \R{argmax} \; f( u , \theta ) \; \R{w.r.t.} \; u
-\] $$
-The objective, as a function of the fixed effects, is
-$latex \[
-	L ( \theta ) = h \left[ \hat{u} ( \theta ) , \theta \right]
-\] $$
+$head Fixed Effects, theta$$
+For each $code approx_mixed$$ object, there is a vector of fixed effects.
+The number of the fixed effects, and their order in the vector, does not vary.
+We sometimes use $latex \theta$$ to denote the vector of fixed effects.
 
-$head Derivative of Objective$$
-Because $latex f(u, \theta)$$ is smooth, we obtain
-$latex \[
-	f_u^{(1)} [ \hat{u} ( \theta ) , \theta ] = 0
-\] $$
-$latex \[
-\hat{u}^{(1)} ( \theta )
-=
-- f_{uu}^{(2)} \left[ \hat{u} ( \theta ) , \theta \right]^{-1}
-	f_{u \theta}^{(2)} \left[ \hat{u} ( \theta )  , \theta \right]
-\] $$
-To simplify notation, we sometimes abbreviate
-$latex \hat{u} ( \theta )$$ as just $latex \hat{u}$$.
-The total derivative of the objective w.r.t $latex \theta$$ is
-$latex \[
-\dtheta{} L( \theta )
-=
-\frac{1}{2}
-\dtheta{}
-\left[ \log \det f_{uu}^{(2)} ( \hat{u} , \theta )  \right]
-+
-\dtheta{} f( \hat{u} , \theta ) + \dtheta{} g ( \theta )
-\] $$
-The derivative of the joint likelihood is given by
-$latex \[
-\dtheta{} f( \hat{u} , \theta )
-=
-f_\theta^{(1)} ( \hat{u} , \theta ) +
-f_u^{(1)} ( \hat{u} , \theta ) \hat{u}^{(1)} ( \theta )
-\] $$
-The derivative of the log of the determinant of a symmetric matrix
-is equal to its inverse. Hence,
-$latex \[
-\dtheta{j}
-\left[ \log \det f_{uu}^{(2)} ( \hat{u} , \theta )  \right]
-=
-\R{trace} \left[
-	f_{uu}^{(2)} ( \hat{u} , \theta )^{-1}
-	\dtheta{j}
-	f_{uu}^{(2)} ( \hat{u} , \theta )
-\right]
-\] $$
-Note that $latex g( \theta )$$ may not be smooth, but it will be represented
-in terms of a smooth part and a sum of absolute value of smooth functions.
-Thus we will only need the derivative of its smooth parts,
-and the smooth functions inside the absolute value.
-
+$head Random Effects, u$$
+For each $code approx_mixed$$ object, there is a vector of random effects.
+The number of the random effects, and their order in the vector, does not vary.
+We sometimes use $latex u$$ to denote the vector of random effects.
 
 $childtable%
-	devel/approx_mixed/approx_mixed.cpp
+	devel/approx_mixed/joint_density.omh%
+	devel/approx_mixed/theory.omh
 %$$
 
 

@@ -1,0 +1,70 @@
+$Id:$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+/*
+$begin approx_mixed_joint_density$$
+$spell
+	vec
+	CppAD
+	const
+$$
+
+$section Compute Joint Density for the Data and Random Effect$$
+
+$head Syntax$$
+$icode%vec% = %approx_object%.joint_density(%fixed_vec%, %random_vec%)%$$
+
+$head approx_object$$
+This is an object of a class that is derived from the
+$code approx_mixed$$ base class.
+
+$head Virtual Function$$
+This is a pure virtual function and must be implemented
+in the derived class with prototype
+$codei%
+	virtual CppAD::vector<%Float%> joint_density(
+		const CppAD::vector<%Float%>& %fixed_vec%  ,
+		const CppAD::vector<%Float%>& %random_vec% )
+%$$
+for each of the possible
+$cref/Float/approx_mixed/Float/$$ cases.
+
+$head fixed_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %fixed_vec%
+%$$
+It contains a value for the
+$cref/fixed effects/approx_mixed/Fixed Effects, theta/$$ vector.
+
+$head random_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %random_vec%
+%$$
+It contains a value for the
+$cref/random effects/approx_mixed/Random Effects, u/$$ vector.
+
+$head vec$$
+This result has prototype
+$codei%
+	CppAD::vector<%Float%> %vec%
+%$$
+It is a
+$cref/negative log-density vector
+	/approx_mixed
+	/Negative Log-Density Vector
+/$$
+corresponding to the joint density of the data and random effects; i.e.,
+$latex \[
+	\B{p}( y, u | \theta) = \B{p}( y | u , \theta) \B{p} ( u | \theta )
+\] $$
+
+$end
