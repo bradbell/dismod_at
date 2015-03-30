@@ -28,7 +28,7 @@ $end
 # include <cppad/cppad.hpp>
 # include <dismod_at/approx_mixed.hpp>
 
-# define DISMOD_AT_IMPLEMENT_JOINT_DENSITY(Float)     \
+# define IMPLEMENT_JOINT_DENSITY(Float)        \
 	virtual vector< Float > joint_density(     \
 		const vector< Float >& fixed_vec  ,    \
 		const vector< Float >& random_vec )    \
@@ -82,9 +82,9 @@ namespace {
 			return vec;
 		}
 	public:
-		DISMOD_AT_IMPLEMENT_JOINT_DENSITY( double )
-		DISMOD_AT_IMPLEMENT_JOINT_DENSITY( AD<double> )
-		DISMOD_AT_IMPLEMENT_JOINT_DENSITY( AD< AD<double> > )
+		IMPLEMENT_JOINT_DENSITY( double )
+		IMPLEMENT_JOINT_DENSITY( AD<double> )
+		IMPLEMENT_JOINT_DENSITY( AD< AD<double> > )
 	};
 }
 

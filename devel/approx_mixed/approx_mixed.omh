@@ -36,16 +36,19 @@ where $icode%s% = %vec%.size()%$$.
 
 $head Fixed Effects, theta$$
 For each $code approx_mixed$$ object, there is a vector of fixed effects.
-The number of the fixed effects, and their order in the vector, does not vary.
+The number of the fixed effects, and their order in constant
+(for each $code approx_mixed$$ object).
 We sometimes use $latex \theta$$ to denote the vector of fixed effects.
 
 $head Random Effects, u$$
 For each $code approx_mixed$$ object, there is a vector of random effects.
-The number of the random effects, and their order in the vector, does not vary.
+The number of the random effects, and their order is constant
+(for each $code approx_mixed$$ object).
 We sometimes use $latex u$$ to denote the vector of random effects.
 
 $childtable%
 	devel/approx_mixed/joint_density.omh%
+	devel/approx_mixed/optimize_random.cpp%
 	devel/approx_mixed/theory.omh
 %$$
 

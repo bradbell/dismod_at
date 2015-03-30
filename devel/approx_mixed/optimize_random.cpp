@@ -10,6 +10,68 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/approx_mixed.hpp>
 # include <cppad/ipopt/solve.hpp>
+/*
+$begin approx_mixed_optimize_random$$
+$spell
+	vec
+	const
+	CppAD
+$$
+
+$section Optimize Random Effects$$
+
+$head Syntax$$
+$icode%random_out% =%$$
+$icode%approx_object%.optimize_random(%fixed_vec%, %random_in%)%$$
+
+$head Purpose$$
+This routine maximizes the
+$cref/joint density/approx_mixed_joint_density/$$ corresponding to the
+object $icode approx_object$$.
+
+$head approx_object$$
+We use $icode approx_object$$ to denote an object of a class that is
+derived from the $code approx_mixed$$ base class.
+The derived class must implement the
+$cref/joint_density/approx_mixed_joint_density/$$ virtual functions.
+
+$head fixed_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %fixed_vec%
+%$$
+It specifies the value of the
+$cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
+vector $latex \theta$$.
+
+$head random_in$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %random_in%
+%$$
+It specifies the initial value used for the optimization of the
+$cref/random effects/approx_mixed/Random Effects, u/$$
+vector $latex u$$.
+
+$head random_out$$
+This argument has prototype
+$codei%
+	CppAD::vector<double> %random_out%
+%$$
+It is the final value (obtained by optimization) of the
+$cref/random effects/approx_mixed/Random Effects, u/$$
+vector $latex u$$.
+
+$children%
+	example/devel/approx_mixed/optimize_random_xam.cpp
+%$$
+$head Example$$
+The file $cref optimize_random_xam.cpp$$ contains an example
+and test of this procedure.
+It returns true, if the test passes, and false otherwise.
+
+$end
+*/
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 

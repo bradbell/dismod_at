@@ -26,17 +26,26 @@ TMB: Automatic Differentiation and Laplace Approximation,
 Kasper Kristensen, Anders Nielsen, Casper W. Berg, Hans Skaug, Bradley M. Bell,
 Journal of Statistical Software, Accepted 2015-02.
 
-$head Notation$$
+$head f(u, theta)$$
 The reference above defines $latex f(u, \theta )$$
 to be the negative log-likelihood of
-$latex y$$, $latex u$$ and $latex \theta$$.
+$latex y$$, $latex u$$ and $latex \theta$$; i.e.,
+$latex \[
+	- \log [ \B{p} ( y | u , \theta ) \B{p} ( u | theta ) \B{p} ( \theta ) ]
+\] $$
 We use a different notation and define
-$latex f(u , \theta)$$ to be the negative log-likelihood of
-$latex y$$ and $latex u$$ given $latex \theta$$,
-and define $latex g( \theta )$$ to be the prior likelihood for $latex \theta$$.
+$latex \[
+	f(u , \theta ) - \log [ \B{p} ( y | u , \theta ) \B{p} ( u | theta ) ]
+\] $$
 The function $latex f(u, \theta)$$ is assumed to be smooth,
-while $latex g(x)$$ can have absolute values in it
-(corresponding to the Laplace likelihoods).
+
+$head g(theta)$$
+We use the notation
+$latex \[
+	g( \theta ) = - \log [ \B{p} ( \theta )
+\]$$
+The function $latex g(x)$$ may be non-smooth because it
+can have absolute values in it (corresponding to the Laplace likelihoods).
 
 $head Objective$$
 Using this notation, the Laplace approximation as a function of the
