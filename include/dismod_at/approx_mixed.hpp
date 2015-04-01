@@ -20,17 +20,35 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		const CppAD::vector< Float >& random_vec ) = 0;
 
 class approx_mixed {
+private:
+	// private typedefs
+	typedef CppAD::AD<double>                a1_double;
+	typedef CppAD::AD< CppAD::AD<double> >   a2_double;
+	typedef CppAD::vector<double>            d_vector;
+	typedef CppAD::vector<a1_double>         a1d_vector;
+	typedef CppAD::vector<a2_double>         a2d_vector;
+	//
+	// private data
+	const size_t n_fixed_;        // number of fixed effects
+	const size_t n_random_;       // number of random effects
+	CppAD::ADFun<a1_double> a1_f; // joint likelihood of fixed, random effects
 public:
+	// constructor
+	approx_mixed(
+		const d_vector& fixed_vec ,
+		const d_vector& random_in
+	);
+
 	// density for data and random effects
 	// (pure vritual function so must be defined by derived class)
 	DISMOD_AT_DEFINE_JOINT_DENSITY( double )
-	DISMOD_AT_DEFINE_JOINT_DENSITY( CppAD::AD<double> )
-	DISMOD_AT_DEFINE_JOINT_DENSITY( CppAD::AD< CppAD::AD<double> > )
+	DISMOD_AT_DEFINE_JOINT_DENSITY( a1_double )
+	DISMOD_AT_DEFINE_JOINT_DENSITY( a2_double )
 
 	// optimize_random
-	CppAD::vector<double> optimize_random(
-		const CppAD::vector<double>& fixed_vec ,
-		const CppAD::vector<double>& random_in
+	d_vector optimize_random(
+		const d_vector& fixed_vec ,
+		const d_vector& random_in
 	);
 };
 

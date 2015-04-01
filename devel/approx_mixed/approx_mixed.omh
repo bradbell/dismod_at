@@ -49,6 +49,7 @@ We sometimes use $latex u$$ to denote the vector of random effects.
 $childtable%
 	devel/approx_mixed/joint_density.omh%
 	devel/approx_mixed/optimize_random.cpp%
+	devel/approx_mixed/hessian_random.cpp%
 	devel/approx_mixed/theory.omh
 %$$
 

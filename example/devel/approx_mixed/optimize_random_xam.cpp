@@ -44,7 +44,13 @@ namespace {
 		const vector<double>& y_;
 	public:
 		// constructor
-		approx_derived(const vector<double>& y) : y_(y)
+		approx_derived(
+			const vector<double>& fixed_vec  ,
+			const vector<double>& random_vec ,
+			const vector<double>& y           ) 
+			: 
+			dismod_at::approx_mixed(fixed_vec, random_vec) ,
+			y_(y)
 		{ }
 	private:
 		// implementation of joint_density
@@ -102,7 +108,7 @@ bool optimize_random_xam(void)
 	}
 
 	// object that is derived from approx_mixed
-	approx_derived approx_object(data);
+	approx_derived approx_object(fixed_vec, random_in, data);
 
 	// determine the optimal random effects
 	vector<double> random_out = approx_object.optimize_random(

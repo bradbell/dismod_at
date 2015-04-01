@@ -79,7 +79,10 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // helper class used by optimize_random
 class optimize_random_eval {
 public:
+	// same as approx_mixed::d_vector
 	typedef CppAD::vector<double>              Dvector;
+
+	// same as approx_mixed::a1d_vector
 	typedef CppAD::vector< CppAD::AD<double> > ADvector;
 private:
 	const size_t     n_abs_;
@@ -134,49 +137,48 @@ public:
 // ----------------------------------------------------------------------------
 // optimize_random
 CppAD::vector<double> approx_mixed::optimize_random(
-	const CppAD::vector<double>& fixed_vec       ,
-	const CppAD::vector<double>& random_in       )
-{	typedef CppAD::vector<double>   Dvector;
-
+	const d_vector& fixed_vec       ,
+	const d_vector& random_in       )
+{	
 	// number of random effects
-	size_t n_random = random_in.size();
+	assert( n_random_ == random_in.size() );
 
 	// determine initial density vector
-	Dvector vec = joint_density(fixed_vec, random_in);
+	d_vector vec = joint_density(fixed_vec, random_in);
 
 	// number of absolute value terms in objective
 	size_t n_abs = vec.size() - 1;
 
 	// number of independent variable is number of random effects
 	// plus number of log-density terms that require absolute values
-	size_t nx = n_random + n_abs;
+	size_t nx = n_random_ + n_abs;
 
 	// set initial x vector
-	Dvector xi(nx);
-	for(size_t j = 0; j < n_random; j++)
+	d_vector xi(nx);
+	for(size_t j = 0; j < n_random_; j++)
 		xi[j] = random_in[j];
 	for(size_t j = 0; j < n_abs; j++)
-		xi[n_random + j] = CppAD::abs( vec[j] );
+		xi[n_random_ + j] = CppAD::abs( vec[j] );
 
 	// ipopts default value for infinity (use options to change it)
 	double ipopt_infinity = 1e19;
 
 	// set lower and upper limits for x
-	Dvector xl(nx), xu(nx);
+	d_vector xl(nx), xu(nx);
 	for(size_t j = 0; j < nx; j++)
 	{	xl[j] = - ipopt_infinity;
 		xu[j] = + ipopt_infinity;
 	}
 
 	// set limits for abs contraint representation
-	Dvector gl(2*n_abs), gu(2*n_abs);
+	d_vector gl(2*n_abs), gu(2*n_abs);
 	for(size_t j = 0; j < 2*n_abs; j++)
 	{	gl[j] = 0.0;
 		gu[j] = + ipopt_infinity;
 	}
 
 	// construct fg_eval  object
-	optimize_random_eval fg_eval(n_abs, n_random, fixed_vec, *this);
+	optimize_random_eval fg_eval(n_abs, n_random_, fixed_vec, *this);
 
 	// optimizer options
 	std::string options;
@@ -185,7 +187,7 @@ CppAD::vector<double> approx_mixed::optimize_random(
 	options += "String  derivative_test second-order\n";
 
 	// return solution
-	CppAD::ipopt::solve_result<Dvector> solution;
+	CppAD::ipopt::solve_result<d_vector> solution;
 
 	// solve the optimization problem
 	CppAD::ipopt::solve(
@@ -194,7 +196,6 @@ CppAD::vector<double> approx_mixed::optimize_random(
 
 	return solution.x;
 }
-
 
 
 } // END_DISMOD_AT_NAMESPACE

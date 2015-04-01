@@ -26,18 +26,20 @@ TMB: Automatic Differentiation and Laplace Approximation,
 Kasper Kristensen, Anders Nielsen, Casper W. Berg, Hans Skaug, Bradley M. Bell,
 Journal of Statistical Software, Accepted 2015-02.
 
-$head f(u, theta)$$
-The reference above defines $latex f(u, \theta )$$
+$head f(theta, u)$$
+The reference above defines $latex f( \theta, u)$$
 to be the negative log-likelihood of
 $latex y$$, $latex u$$ and $latex \theta$$; i.e.,
 $latex \[
-	- \log [ \B{p} ( y | u , \theta ) \B{p} ( u | theta ) \B{p} ( \theta ) ]
+	- \log [ \B{p} ( y |  \theta, u ) \B{p} ( u | theta ) \B{p} ( \theta ) ]
 \] $$
 We use a different notation and define
 $latex \[
-	f(u , \theta ) - \log [ \B{p} ( y | u , \theta ) \B{p} ( u | theta ) ]
+	f( \theta, u ) = - \log [ \B{p} ( y |  \theta, u ) \B{p} ( u | theta ) ]
 \] $$
-The function $latex f(u, \theta)$$ is assumed to be smooth,
+The function $latex f(\theta, u)$$ is assumed to be smooth.
+Note that $cref/joint_density/approx_mixed_joint_density/$$ allows for
+non-smooth terms in the form of Laplace densities.
 
 $head g(theta)$$
 We use the notation
@@ -51,18 +53,18 @@ $head Objective$$
 Using this notation, the Laplace approximation as a function of the
 fixed effects $latex \theta$$ and the random effects $latex u$$ is
 $latex \[
-h( u, \theta )
+h( \theta, u )
 =
 - \frac{n}{2} \log ( 2 \pi )
-+ \frac{1}{2} \log \det f_{uu}^{(2)} ( u , \theta )
-+ f( u , \theta )
++ \frac{1}{2} \log \det f_{uu}^{(2)} ( \theta, u )
++ f( \theta, u )
 + g( \theta )
 \] $$
 Given the fixed effects,
 the corresponding random effects that maximize the joint likelihood
 is denoted by
 $latex \[
-	\hat{u} ( \theta ) = \R{argmax} \; f( u , \theta ) \; \R{w.r.t.} \; u
+	\hat{u} ( \theta ) = \R{argmax} \; f( \theta, u ) \; \R{w.r.t.} \; u
 \] $$
 The objective, as a function of the fixed effects, is
 $latex \[
@@ -70,7 +72,7 @@ $latex \[
 \] $$
 
 $head Derivative of Objective$$
-Because $latex f(u, \theta)$$ is smooth, we obtain
+Because $latex f(\theta, u)$$ is smooth, we obtain
 $latex \[
 	f_u^{(1)} [ \hat{u} ( \theta ) , \theta ] = 0
 \] $$
