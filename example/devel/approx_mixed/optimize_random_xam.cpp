@@ -47,8 +47,8 @@ namespace {
 		approx_derived(
 			const vector<double>& fixed_vec  ,
 			const vector<double>& random_vec ,
-			const vector<double>& y           ) 
-			: 
+			const vector<double>& y           )
+			:
 			dismod_at::approx_mixed(fixed_vec, random_vec) ,
 			y_(y)
 		{ }

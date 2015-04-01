@@ -54,7 +54,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<double>& %random_vec%
 %$$
-It specifies the value of the 
+It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$.
 

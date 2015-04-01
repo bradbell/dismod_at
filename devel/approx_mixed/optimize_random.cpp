@@ -139,7 +139,7 @@ public:
 CppAD::vector<double> approx_mixed::optimize_random(
 	const d_vector& fixed_vec       ,
 	const d_vector& random_in       )
-{	
+{
 	// number of random effects
 	assert( n_random_ == random_in.size() );
 
