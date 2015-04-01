@@ -30,10 +30,9 @@ $cref/joint density/approx_mixed_joint_density/$$ corresponding to the
 object $icode approx_object$$.
 
 $head approx_object$$
-We use $icode approx_object$$ to denote an object of a class that is
+We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$ 
+to denote an object of a class that is
 derived from the $code approx_mixed$$ base class.
-The derived class must implement the
-$cref/joint_density/approx_mixed_joint_density/$$ virtual functions.
 
 $head fixed_vec$$
 This argument has prototype
@@ -63,7 +62,7 @@ $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$.
 
 $head Laplace Likelihood$$
-This optimization properly handels the case where
+This optimization properly handles the case where
 the joint density contains Laplace likelihood terms.
 
 $children%

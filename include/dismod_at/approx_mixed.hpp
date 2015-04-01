@@ -32,6 +32,7 @@ private:
 	const size_t n_random_;       // number of random effects
 
 	// joint likelihood of fixed, random effects f(theta, u)
+	// (set by record_joint).
 	CppAD::ADFun<a1_double> joint_;
 	// --------------------------------------------------------
 	// private functions

@@ -22,11 +22,12 @@ $head Syntax$$
 $icode%vec% = %approx_object%.joint_density(%fixed_vec%, %random_vec%)%$$
 
 $head approx_object$$
-This is an object of a class that is derived from the
-$code approx_mixed$$ base class.
+We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$ 
+to denote an object of a class that is
+derived from the $code approx_mixed$$ base class.
 
 $head Virtual Function$$
-This is a pure virtual function and must be implemented
+These are pure virtual functions and must be implemented
 in the derived class with prototype
 $codei%
 	virtual CppAD::vector<%Float%> joint_density(

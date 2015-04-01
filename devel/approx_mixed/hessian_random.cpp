@@ -35,10 +35,9 @@ $latex \[
 \] $$
 
 $head approx_object$$
-We use $icode approx_object$$ to denote an object of a class that is
+We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$ 
+to denote an object of a class that is
 derived from the $code approx_mixed$$ base class.
-The derived class must implement the
-$cref/joint_density/approx_mixed_joint_density/$$ virtual functions.
 
 $head fixed_vec$$
 This argument has prototype

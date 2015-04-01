@@ -10,6 +10,51 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/approx_mixed.hpp>
 
+/*
+$begin approx_mixed_record_joint$$
+$spell
+	vec
+	const
+	Cpp
+$$
+
+$section approx_mixed: Record the Joint Density Evaluator Function$$
+
+$head Syntax$$
+$codei%record_joint(%fixed_vec%, %random_vec%)%$$
+
+$head Private$$
+This function is $code private$$ to the $code approx_mixed$$ class
+and cannot be used by a derived 
+$cref/approx_object/approx_mixed_derived_ctor/approx_object/$$. 
+
+$head fixed_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %fixed_vec%
+%$$
+It specifies the value of the
+$cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
+vector $latex \theta$$ at which the member variable
+$codei%
+	CppAD::ADFun<a1_double> joint_
+%$$ is recorded.
+
+$head random_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %random_vec%
+%$$
+It specifies the value of the
+$cref/random effects/approx_mixed/Random Effects, u/$$
+vector $latex u$$ at which the member variable
+$codei%
+	CppAD::ADFun<a1_double> joint_
+%$$ is recorded.
+
+$end
+*/
+
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void approx_mixed::record_joint(
@@ -42,7 +87,7 @@ void approx_mixed::record_joint(
 	for(i = 0; i < n_abs; i++)
 		sum[0] += abs( vec[1 + j] );
 
-	// set a1d_f(theta, u)
+	// set f(theta, u)
 	joint_.Dependent(both, sum);
 }
 
