@@ -30,7 +30,7 @@ $cref/joint density/approx_mixed_joint_density/$$ corresponding to the
 object $icode approx_object$$.
 
 $head approx_object$$
-We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$ 
+We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
 to denote an object of a class that is
 derived from the $code approx_mixed$$ base class.
 

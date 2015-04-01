@@ -25,8 +25,8 @@ $codei%record_joint(%fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code approx_mixed$$ class
-and cannot be used by a derived 
-$cref/approx_object/approx_mixed_derived_ctor/approx_object/$$. 
+and cannot be used by a derived
+$cref/approx_object/approx_mixed_derived_ctor/approx_object/$$.
 
 $head fixed_vec$$
 This argument has prototype
