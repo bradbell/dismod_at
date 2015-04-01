@@ -54,7 +54,7 @@ namespace {
 			const vector<Float>& u      )
 		{	vector<Float> vec(1);
 
-			// initialize part of log-density that is alwasy smooth
+			// initialize part of log-density that is always smooth
 			vec[0] = Float(0.0);
 
 			// compute this factor once
