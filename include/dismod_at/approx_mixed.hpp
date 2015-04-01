@@ -41,7 +41,7 @@ private:
 	);
 public:
 	// constructor
-	approx_mixed(size_t n_fixed, size_t n_random) 
+	approx_mixed(size_t n_fixed, size_t n_random)
 	:
 	n_fixed_(n_fixed)   ,
 	n_random_(n_random)
