@@ -45,11 +45,11 @@ namespace {
 	public:
 		// constructor
 		approx_derived(
-			const vector<double>& fixed_vec  ,
-			const vector<double>& random_vec ,
+			size_t n_fixed                    ,
+			size_t n_random                   ,
 			const vector<double>& y           )
 			:
-			dismod_at::approx_mixed(fixed_vec, random_vec) ,
+			dismod_at::approx_mixed(n_fixed, n_random) ,
 			y_(y)
 		{ }
 	private:
@@ -108,7 +108,7 @@ bool optimize_random_xam(void)
 	}
 
 	// object that is derived from approx_mixed
-	approx_derived approx_object(fixed_vec, random_in, data);
+	approx_derived approx_object(n_data, n_data, data);
 
 	// determine the optimal random effects
 	vector<double> random_out = approx_object.optimize_random(

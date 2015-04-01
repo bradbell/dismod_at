@@ -62,6 +62,10 @@ It is the final value (obtained by optimization) of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$.
 
+$head Laplace Likelihood$$
+This optimization properly handels the case where
+the joint density contains Laplace likelihood terms.
+
 $children%
 	example/devel/approx_mixed/optimize_random_xam.cpp
 %$$
@@ -122,7 +126,7 @@ public:
 		fg[k++]  = vec[0];
 
 		// terms corresponding to data likelihood absolute values
-		size_t n_abs   = vec.size()-1;
+		size_t n_abs   = vec.size() - 1;
 		for(size_t j = 0; j < n_abs; j++)
 		{	// x[ n_random_ + j] >= abs(log_den[1 + j]
 			fg[k++] = x[ n_random_ + j] - vec[1 + j];

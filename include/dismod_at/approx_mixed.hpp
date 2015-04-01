@@ -21,24 +21,31 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class approx_mixed {
 private:
-	// private typedefs
+	// private typedefs -------------------------------------
 	typedef CppAD::AD<double>                a1_double;
 	typedef CppAD::AD< CppAD::AD<double> >   a2_double;
 	typedef CppAD::vector<double>            d_vector;
 	typedef CppAD::vector<a1_double>         a1d_vector;
 	typedef CppAD::vector<a2_double>         a2d_vector;
-	//
-	// private data
+	// private data -------------------------------------------
 	const size_t n_fixed_;        // number of fixed effects
 	const size_t n_random_;       // number of random effects
-	CppAD::ADFun<a1_double> a1_f; // joint likelihood of fixed, random effects
+
+	// joint likelihood of fixed, random effects f(theta, u)
+	CppAD::ADFun<a1_double> joint_;
+	// --------------------------------------------------------
+	// private functions
+	void record_joint(
+		const d_vector& fixed_vec ,
+		const d_vector& random_vec
+	);
 public:
 	// constructor
-	approx_mixed(
-		const d_vector& fixed_vec ,
-		const d_vector& random_in
-	);
-
+	approx_mixed(size_t n_fixed, size_t n_random) 
+	:
+	n_fixed_(n_fixed)   ,
+	n_random_(n_random)
+	{ }
 	// density for data and random effects
 	// (pure vritual function so must be defined by derived class)
 	DISMOD_AT_DEFINE_JOINT_DENSITY( double )

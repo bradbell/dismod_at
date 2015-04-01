@@ -12,7 +12,7 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	approx_mixed/cppad_conjgrad
 	approx_mixed/optimize_random.cpp
-	approx_mixed/constructor.cpp
+	approx_mixed/record_joint.cpp
 
 	model/data_model.cpp
 	model/prior_model.cpp
