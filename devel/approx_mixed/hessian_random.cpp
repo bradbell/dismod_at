@@ -84,7 +84,7 @@ the entire vector must be the same as for
 a previous call to $code hessian_random$$.
 If it's input size is zero,
 upon return it contains the row indices for the Hessian elements
-that are possibly non-zero (and will have the same size as $icode row_out$$). 
+that are possibly non-zero (and will have the same size as $icode row_out$$).
 
 $head val_out$$
 This argument has prototype
