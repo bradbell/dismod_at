@@ -21,25 +21,66 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class approx_mixed {
 private:
-	// private typedefs -------------------------------------
+/*
+------------------------------------------------------------------------------
+$begin approx_mixed_private$$
+$spell
+	typedef
+	CppAD
+	vec
+	const
+$$
+
+$section approx_mixed Private Declarations$$
+
+$head typedef$$
+$index a1_double$$
+$index a2_double$$
+$index d_vector$$
+$index a1d_vector$$
+$index a2d_vector$$
+$codep */ 
 	typedef CppAD::AD<double>                a1_double;
 	typedef CppAD::AD< CppAD::AD<double> >   a2_double;
 	typedef CppAD::vector<double>            d_vector;
 	typedef CppAD::vector<a1_double>         a1d_vector;
 	typedef CppAD::vector<a2_double>         a2d_vector;
-	// private data -------------------------------------------
-	const size_t n_fixed_;        // number of fixed effects
-	const size_t n_random_;       // number of random effects
-
-	// joint likelihood of fixed, random effects f(theta, u)
-	// (set by record_joint).
-	CppAD::ADFun<a1_double> joint_;
-	// --------------------------------------------------------
-	// private functions
-	void record_joint(
+/* $$
+$head n_fixed_$$
+The number of fixed effects is given by
+$codep */
+	const size_t n_fixed_;
+/* $$
+$head n_random_$$
+The number of random effects is given by
+$codep */
+	const size_t n_random_;
+/* $$
+$head hessian_$$
+The Hessian of the joint likelihood w.r.t. the random effects
+$latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix by
+the following variables:
+$codep */
+	CppAD::ADFun<double>  hessian_;     // computes the hessian values
+	CppAD::vector<size_t> hessian_row_; // row indices corresponding to values
+	CppAD::vector<size_t> hessian_col_; // corresponding column indices 
+/* $$
+$head record_hessian$$
+See $cref approx_mixed_record_hessian$$.
+$codep */
+	void record_hessian(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);
+/* $$
+
+$childtable%devel/approx_mixed/record_hessian.cpp
+%devel/approx_mixed/hessian_random.cpp
+%$$
+
+$end
+-------------------------------------------------------------------------------
+*/
 public:
 	// constructor
 	approx_mixed(size_t n_fixed, size_t n_random)
