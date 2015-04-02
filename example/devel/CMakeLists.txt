@@ -31,6 +31,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	example_devel.cpp
 
 	approx_mixed/cholmod_xam.cpp
+	approx_mixed/hessian_random_xam.cpp
 	approx_mixed/optimize_random_xam.cpp
 
 	model/avg_no_ode_xam.cpp

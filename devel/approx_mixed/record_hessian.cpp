@@ -106,7 +106,7 @@ void approx_mixed::record_hessian(
 	a2_sum[0]    = a2_vec[0];
 	size_t n_abs = a2_vec.size() - 1;
 	for(i = 0; i < n_abs; i++)
-		a2_sum[0] += abs( a2_vec[1 + j] );
+		a2_sum[0] += abs( a2_vec[1 + i] );
 	CppAD::ADFun<a1_double> a1_f;
 	a1_f.Dependent(a2_u, a2_sum);
 

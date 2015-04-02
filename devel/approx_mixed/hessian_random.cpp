@@ -26,11 +26,6 @@ $icode%approx_object%.hessian_random(
 	%fixed_vec%, %random_vec%, %row_out%, %col_out%, %val_out%
 )%$$
 
-$head Private$$
-This function is $code private$$ to the $code approx_mixed$$ class
-and cannot be used by a derived
-$cref/approx_object/approx_mixed_derived_ctor/approx_object/$$.
-
 $head Purpose$$
 This routine computes the Hessian of the negative log of the joint density
 $cref/f(theta, u)/approx_mixed_theory/f(theta, u)/$$

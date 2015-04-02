@@ -73,21 +73,7 @@ $codep */
 		const d_vector& random_vec
 	);
 /* $$
-$head hessian_random$$
-See $cref approx_mixed_hessian_random$$.
-$codep */
-	// hessian_random
-	void hessian_random(
-		const d_vector&         fixed_vec   ,
-		const d_vector&         random_vec  ,
-		CppAD::vector<size_t>&  row_out     ,
-		CppAD::vector<size_t>&  col_out     ,
-		d_vector&               val_out
-	);
-/* $$
-
 $childtable%devel/approx_mixed/record_hessian.cpp
-%devel/approx_mixed/hessian_random.cpp
 %$$
 
 $end
@@ -110,6 +96,14 @@ public:
 	d_vector optimize_random(
 		const d_vector& fixed_vec ,
 		const d_vector& random_in
+	);
+	// hessian_random
+	void hessian_random(
+		const d_vector&         fixed_vec   ,
+		const d_vector&         random_vec  ,
+		CppAD::vector<size_t>&  row_out     ,
+		CppAD::vector<size_t>&  col_out     ,
+		d_vector&               val_out
 	);
 };
 

@@ -29,6 +29,7 @@ $end
 
 // approx_mixed subdirectory
 extern bool cholmod_xam(void);
+extern bool hessian_random_xam(void);
 extern bool optimize_random_xam(void);
 
 // model subdirectory
@@ -106,6 +107,7 @@ int main(void)
 {
 	// approx_mixed subdirectory
 	RUN(cholmod_xam);
+	RUN(hessian_random_xam);
 	RUN(optimize_random_xam);
 
 	// model subdirectory

@@ -50,6 +50,7 @@ $childtable%
 	devel/approx_mixed/derived_ctor.omh%
 	devel/approx_mixed/joint_density.omh%
 	devel/approx_mixed/optimize_random.cpp%
+	devel/approx_mixed/hessian_random.cpp%
 	devel/approx_mixed/theory.omh%
 	include/dismod_at/approx_mixed.hpp
 %$$
