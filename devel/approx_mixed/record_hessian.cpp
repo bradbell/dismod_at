@@ -126,7 +126,7 @@ void approx_mixed::record_hessian(
 	// determine row and column indices in lower triangle of Hessian
 	hessian_row_.clear();
 	hessian_col_.clear();
-	std::set<size_t>::iterator itr;	
+	std::set<size_t>::iterator itr;
 	for(i = 0; i < n_random_; i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	j = *itr;

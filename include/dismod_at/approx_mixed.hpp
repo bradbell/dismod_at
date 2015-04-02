@@ -39,7 +39,7 @@ $index a2_double$$
 $index d_vector$$
 $index a1d_vector$$
 $index a2d_vector$$
-$codep */ 
+$codep */
 	typedef CppAD::AD<double>                a1_double;
 	typedef CppAD::AD< CppAD::AD<double> >   a2_double;
 	typedef CppAD::vector<double>            d_vector;
@@ -63,7 +63,7 @@ the following variables:
 $codep */
 	CppAD::ADFun<double>  hessian_;     // computes the hessian values
 	CppAD::vector<size_t> hessian_row_; // row indices corresponding to values
-	CppAD::vector<size_t> hessian_col_; // corresponding column indices 
+	CppAD::vector<size_t> hessian_col_; // corresponding column indices
 /* $$
 $head record_hessian$$
 See $cref approx_mixed_record_hessian$$.
