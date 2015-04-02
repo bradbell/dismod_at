@@ -49,7 +49,7 @@ vector $latex u$$ at which the recording is made.
 $head hessian_$$
 The input value of the member variable
 $codei%
-	CppAD::ADFun<a1_double> hessian_
+	CppAD::ADFun<double> hessian_
 %$$
 does not matter.
 Upon return it contains the corresponding recording of
