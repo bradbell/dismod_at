@@ -143,7 +143,8 @@ CppAD::vector<double> approx_mixed::optimize_random(
 	const d_vector& fixed_vec       ,
 	const d_vector& random_in       )
 {
-	// number of random effects
+	// number of fixed and random effects
+	assert( n_fixed_  == fixed_vec.size() );
 	assert( n_random_ == random_in.size() );
 
 	// determine initial density vector

@@ -145,7 +145,7 @@ void approx_mixed::record_hessian(
 		a1_u[j] = a1_both[n_fixed_ + j];
 	a1_w[0] = 1.0;
 	CppAD::sparse_hessian_work work;
-	size_t n_sweep = a1_f.SparseHessian(
+	a1_f.SparseHessian(
 		a1_u, a1_w, pattern, hessian_row_, hessian_col_, a1_hes, work
 	);
 
