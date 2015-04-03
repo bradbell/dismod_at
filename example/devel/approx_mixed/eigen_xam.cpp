@@ -69,6 +69,6 @@ bool eigen_xam(void)
 		b(j, 0) = 0.0;
 		for(size_t i = 0; i < n; i++)
 			ok &= CppAD::abs( x(i,0) / A_inv[i*n + j] - 1.0 ) <= eps;
-	} 
+	}
 	return ok;
 }
