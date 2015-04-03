@@ -13,29 +13,33 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 
-# cppad_prefix
-SET(cppad_prefix NOTFOUND CACHE PATH "prefix used during CppAD install")
-IF( NOT cppad_prefix )
-	MESSAGE(FATAL_ERROR "cppad_prefix not set by cmake command")
-ENDIF( NOT cppad_prefix )
-MESSAGE(STATUS "cppad_prefix = ${cppad_prefix}")
-INCLUDE_DIRECTORIES( ${cppad_prefix}/include )
+# ----------------------------------------------------------------------------
+# get_prefix(package)
+#
+# ${package}_prefix: (out)
+# set to its value (as a path) on the cmake command line.
+# If it is not present a fatal error message is generated.
+#
+# ${${package}_prefix}/include:
+# is added to the set of include directories.
+#
+MACRO(get_prefix package)
+	SET(${package}_prefix NOTFOUND CACHE PATH
+		"prefix used during install of ${package}"
+	)
+	IF( NOT ${package}_prefix )
+		MESSAGE(FATAL_ERROR "${package}_prefix not set by cmake command")
+	ENDIF( NOT ${package}_prefix )
+	MESSAGE(STATUS "${package}_prefix = ${${package}_prefix}")
+	INCLUDE_DIRECTORIES( ${${package}_prefix}/include )
+ENDMACRO(get_prefix)
+# ----------------------------------------------------------------------------
 
-# ipopt_prefix
-SET(ipopt_prefix NOTFOUND CACHE PATH "prefix used during CppAD install")
-IF( NOT ipopt_prefix )
-	MESSAGE(FATAL_ERROR "ipopt_prefix not set by cmake command")
-ENDIF( NOT ipopt_prefix )
-MESSAGE(STATUS "ipopt_prefix = ${ipopt_prefix}")
-INCLUDE_DIRECTORIES( ${ipopt_prefix}/include )
-
-# suitesparse_prefix
-SET(suitesparse_prefix NOTFOUND CACHE PATH "prefix used during CppAD install")
-IF( NOT suitesparse_prefix )
-	MESSAGE(FATAL_ERROR "suitesparse_prefix not set by cmake command")
-ENDIF( NOT suitesparse_prefix )
-MESSAGE(STATUS "suitesparse_prefix = ${suitesparse_prefix}")
-INCLUDE_DIRECTORIES( ${suitesparse_prefix}/include )
+# get package prefixes
+get_prefix(cppad)
+get_prefix(eigen)
+get_prefix(ipopt)
+get_prefix(suitesparse)
 
 # extra_cxx_flags
 SET(extra_cxx_flags NOTFOUND CACHE STRING

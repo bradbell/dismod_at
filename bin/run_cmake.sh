@@ -18,6 +18,7 @@ cmake \
 	-D CMAKE_VERBOSE_MAKEFILE=$verbose \
 	-D extra_cxx_flags='-std=c++11 -Wall -g' \
 	-D cppad_prefix=$HOME/prefix/cppad \
+	-D eigen_prefix=$HOME/prefix/eigen \
 	-D ipopt_prefix=$HOME/prefix/ipopt \
 	-D suitesparse_prefix=$HOME/prefix/suitesparse \
 	..
