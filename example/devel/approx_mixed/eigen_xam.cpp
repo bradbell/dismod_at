@@ -28,7 +28,7 @@ bool eigen_xam(void)
 	typedef Eigen::Matrix<real, Dynamic, Dynamic> real_dense_matrix;
 
 	// size of the matrix
-	int n = 3;
+	size_t n = 3;
 
 	double A_inv[] = {
 		 24.0, -18.0, -6.0,
