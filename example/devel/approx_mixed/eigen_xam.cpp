@@ -53,22 +53,29 @@ bool eigen_xam(void)
 	A.insert(2, 2) = 5.0;
 
 	// compute cholesky factor
-	Eigen::SimplicialCholesky<real_sparse_matrix> chol(A);
+	Eigen::SimplicialLDLT<real_sparse_matrix> chol(A);
 	real det = chol.determinant();
 	ok      &= det == 36.;
+
+	real_dense_matrix diag = chol.vectorD();
+	ok &= size_t( diag.size() ) == n;  
+	real log_det = 0.0;
+	for(size_t i = 0; i < n; i++)
+		log_det += log( diag(i) );
+	ok &= abs( exp(log_det) / det - 1.0 ) < eps;
 
 	// initialize dense column vector as zero
 	real_dense_matrix b(n, 1);
 	for(size_t i = 0; i < n; i++)
-		b(i, 0) = 0.0;
+		b(i) = 0.0;
 
 	// check computation of the inverse of A
 	for(size_t j = 0; j < n; j++)
-	{	b(j, 0) = 1.0;
+	{	b(j) = 1.0;
 		real_dense_matrix x = chol.solve(b);
-		b(j, 0) = 0.0;
+		b(j) = 0.0;
 		for(size_t i = 0; i < n; i++)
-			ok &= CppAD::abs( x(i,0) / A_inv[i*n + j] - 1.0 ) <= eps;
+			ok &= CppAD::abs( x(i) / A_inv[i*n + j] - 1.0 ) <= eps;
 	}
 	return ok;
 }
