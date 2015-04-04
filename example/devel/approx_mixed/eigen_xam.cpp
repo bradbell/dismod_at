@@ -58,7 +58,7 @@ bool eigen_xam(void)
 	ok      &= det == 36.;
 
 	real_dense_matrix diag = chol.vectorD();
-	ok &= size_t( diag.size() ) == n;  
+	ok &= size_t( diag.size() ) == n;
 	real log_det = 0.0;
 	for(size_t i = 0; i < n; i++)
 		log_det += log( diag(i) );
