@@ -48,7 +48,7 @@ bool eigen_xam(void)
 	A_vec[4] = 1.0; // A(2, 1)
 	A_vec[5] = 5.0; // A(2, 2)
 	CppAD::Independent( A_vec );
-	
+
 
 	// convert to an Eigen spares matrix
 	real_sparse_matrix A(n, n);
@@ -71,8 +71,8 @@ bool eigen_xam(void)
 		log_det[0] += log( diag(i) );
 
 	// Stop tape and create function
-	CppAD::ADFun<double>(A_vec, log_det); 
-	
+	CppAD::ADFun<double>(A_vec, log_det);
+
 	// check function value
 	ok &= abs( exp(log_det[0]) / 36. - 1.0 ) < eps;
 
