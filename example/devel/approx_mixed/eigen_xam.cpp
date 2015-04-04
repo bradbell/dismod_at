@@ -38,31 +38,43 @@ bool eigen_xam(void)
 	for(size_t i = 0; i < sizeof(A_inv)/sizeof(A_inv[0]); i++)
 		A_inv[i] /= 36.;
 
-	// declare spares matrix
+	// Start tape of function that maps non-zeros in lower triangle of a
+	// positive definate A to the log of its determinant
+	CppAD::vector<real> A_vec(n * (n + 1) / 2 );
+	A_vec[0] = 5.0; // A(0, 0)
+	A_vec[1] = 4.0; // A(1, 0)
+	A_vec[2] = 5.0; // A(1, 1)
+	A_vec[3] = 2.0; // A(2, 0)
+	A_vec[4] = 1.0; // A(2, 1)
+	A_vec[5] = 5.0; // A(2, 2)
+	CppAD::Independent( A_vec );
+	
+
+	// convert to an Eigen spares matrix
 	real_sparse_matrix A(n, n);
 
 	// create Matrix
-	A.insert(0, 0) = 5.0;
-	A.insert(0, 1) = 4.0;
-	A.insert(0, 2) = 2.0;
-	A.insert(1, 0) = 4.0;
-	A.insert(1, 1) = 5.0;
-	A.insert(1, 2) = 1.0;
-	A.insert(2, 0) = 2.0;
-	A.insert(2, 1) = 1.0;
-	A.insert(2, 2) = 5.0;
+	A.insert(0, 0) = A_vec[0];
+	A.insert(1, 0) = A_vec[1];
+	A.insert(1, 1) = A_vec[2];
+	A.insert(2, 0) = A_vec[3];
+	A.insert(2, 1) = A_vec[4];
+	A.insert(2, 2) = A_vec[5];
 
-	// compute cholesky factor
-	Eigen::SimplicialLDLT<real_sparse_matrix> chol(A);
-	real det = chol.determinant();
-	ok      &= det == 36.;
-
+	// Compute the log of determinant using lower triangle of A
+	Eigen::SimplicialLDLT<real_sparse_matrix, Eigen::Lower> chol(A);
 	real_dense_matrix diag = chol.vectorD();
 	ok &= size_t( diag.size() ) == n;
-	real log_det = 0.0;
+	CppAD::vector<real> log_det(1);
+	log_det[0] = 0.0;
 	for(size_t i = 0; i < n; i++)
-		log_det += log( diag(i) );
-	ok &= abs( exp(log_det) / det - 1.0 ) < eps;
+		log_det[0] += log( diag(i) );
+
+	// Stop tape and create function
+	CppAD::ADFun<double>(A_vec, log_det); 
+	
+	// check function value
+	ok &= abs( exp(log_det[0]) / 36. - 1.0 ) < eps;
 
 	// initialize dense column vector as zero
 	real_dense_matrix b(n, 1);
