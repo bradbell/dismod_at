@@ -42,7 +42,7 @@ derived from the $code approx_mixed$$ base class.
 $head fixed_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<double>& %fixed_vec%
+	const CppAD::vector< AD<double> >& %fixed_vec%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
@@ -51,7 +51,7 @@ vector $latex \theta$$.
 $head random_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<double>& %random_vec%
+	const CppAD::vector< AD<double> >& %random_vec%
 %$$
 It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
@@ -84,18 +84,18 @@ that are possibly non-zero (and will have the same size as $icode row_out$$).
 $head val_out$$
 This argument has prototype
 $codei%
-	CppAD::vector<size_t>& %val_out%
+	CppAD::vector< AD<double> >& %val_out%
 %$$
 If the input size of this array is non-zero, it must have the same size
 as for a previous call to $code hessian_random$$.
 Upon return, it contains the value of the Hessian elements
 that are possibly non-zero (and will have the same size as $icode row_out$$).
 
-$comment%
+$children%
 	example/devel/approx_mixed/hessian_random_xam.cpp
 %$$
 $head Example$$
-The file $code hessian_random_xam.cpp$$ contains an example
+The file $cref hessian_random_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 
@@ -107,11 +107,11 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // ----------------------------------------------------------------------------
 // hessian_random
 void approx_mixed::hessian_random(
-	const d_vector&        fixed_vec   ,
-	const d_vector&        random_vec  ,
-	CppAD::vector<size_t>& row_out     ,
-	CppAD::vector<size_t>& col_out     ,
-	d_vector&              val_out     )
+	const a1d_vector&        fixed_vec   ,
+	const a1d_vector&        random_vec  ,
+	CppAD::vector<size_t>&   row_out     ,
+	CppAD::vector<size_t>&   col_out     ,
+	a1d_vector&              val_out     )
 {
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );
@@ -131,7 +131,7 @@ void approx_mixed::hessian_random(
 	assert( row_out.size() == val_out.size() );
 
 	// create a d_vector containing (theta, u)
-	d_vector both( n_fixed_ + n_random_ );
+	a1d_vector both( n_fixed_ + n_random_ );
 	for(size_t j = 0; j < n_fixed_; j++)
 		both[j] = fixed_vec[j];
 	for(size_t j = 0; j < n_random_; j++)

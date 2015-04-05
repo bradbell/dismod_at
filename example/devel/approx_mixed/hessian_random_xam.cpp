@@ -91,6 +91,7 @@ namespace {
 		IMPLEMENT_JOINT_DENSITY( double )
 		IMPLEMENT_JOINT_DENSITY( AD<double> )
 		IMPLEMENT_JOINT_DENSITY( AD< AD<double> > )
+		IMPLEMENT_JOINT_DENSITY( AD< AD< AD<double> > > )
 	};
 }
 
@@ -100,7 +101,8 @@ bool hessian_random_xam(void)
 	double eps = 100. * std::numeric_limits<double>::epsilon();
 
 	size_t n_data = 10;
-	vector<double> data(n_data), fixed_vec(n_data), random_vec(n_data);
+	vector<double> data(n_data);
+	vector< AD<double> > fixed_vec(n_data), random_vec(n_data);
 
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]      = double(i + 1);
@@ -113,7 +115,7 @@ bool hessian_random_xam(void)
 
 	// compute Hessian with respect to random effects
 	vector<size_t> row, col;
-	vector<double> val;
+	vector< AD<double> > val;
 	approx_object.hessian_random(fixed_vec, random_vec, row, col, val);
 
 	// check the result
@@ -126,9 +128,9 @@ bool hessian_random_xam(void)
 		size_t j = col[k];
 		ok      &= (i == j);
 		//
-		double sigma  = fixed_vec[i];
+		double sigma  = Value( fixed_vec[i] );
 		double check  = 1.0 / (sigma * sigma);
-		ok           &= fabs( val[k] / check - 1.0) <= eps;
+		ok           &= fabs( Value( val[k] ) / check - 1.0) <= eps;
 	}
 
 	return ok;

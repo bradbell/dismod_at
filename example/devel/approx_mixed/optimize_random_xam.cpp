@@ -91,6 +91,7 @@ namespace {
 		IMPLEMENT_JOINT_DENSITY( double )
 		IMPLEMENT_JOINT_DENSITY( AD<double> )
 		IMPLEMENT_JOINT_DENSITY( AD< AD<double> > )
+		IMPLEMENT_JOINT_DENSITY( AD< AD< AD<double> > > )
 	};
 }
 

@@ -39,12 +39,15 @@ $index a2_double$$
 $index d_vector$$
 $index a1d_vector$$
 $index a2d_vector$$
+$index a3d_vector$$
 $codep */
-	typedef CppAD::AD<double>                a1_double;
-	typedef CppAD::AD< CppAD::AD<double> >   a2_double;
-	typedef CppAD::vector<double>            d_vector;
-	typedef CppAD::vector<a1_double>         a1d_vector;
-	typedef CppAD::vector<a2_double>         a2d_vector;
+	typedef CppAD::AD<double>          a1_double;
+	typedef CppAD::AD<a1_double>       a2_double;
+	typedef CppAD::AD<a2_double>       a3_double;
+	typedef CppAD::vector<double>      d_vector;
+	typedef CppAD::vector<a1_double>   a1d_vector;
+	typedef CppAD::vector<a2_double>   a2d_vector;
+	typedef CppAD::vector<a3_double>   a3d_vector;
 /* $$
 $head n_fixed_$$
 The number of fixed effects is given by
@@ -61,16 +64,16 @@ The Hessian of the joint likelihood w.r.t. the random effects
 $latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix by
 the following variables:
 $codep */
-	CppAD::ADFun<double>  hessian_;     // computes the hessian values
-	CppAD::vector<size_t> hessian_row_; // row indices corresponding to values
-	CppAD::vector<size_t> hessian_col_; // corresponding column indices
+	CppAD::ADFun<a1_double> hessian_;    // computes the hessian values
+	CppAD::vector<size_t>  hessian_row_; // row indices corresponding to values
+	CppAD::vector<size_t>  hessian_col_; // corresponding column indices
 /* $$
 $head record_hessian$$
 See $cref approx_mixed_record_hessian$$.
 $codep */
 	void record_hessian(
-		const d_vector& fixed_vec ,
-		const d_vector& random_vec
+		const a1d_vector& fixed_vec ,
+		const a1d_vector& random_vec
 	);
 /* $$
 $childtable%devel/approx_mixed/record_hessian.cpp
@@ -91,6 +94,7 @@ public:
 	DISMOD_AT_DEFINE_JOINT_DENSITY( double )
 	DISMOD_AT_DEFINE_JOINT_DENSITY( a1_double )
 	DISMOD_AT_DEFINE_JOINT_DENSITY( a2_double )
+	DISMOD_AT_DEFINE_JOINT_DENSITY( a3_double )
 
 	// optimize_random
 	d_vector optimize_random(
@@ -99,11 +103,11 @@ public:
 	);
 	// hessian_random
 	void hessian_random(
-		const d_vector&         fixed_vec   ,
-		const d_vector&         random_vec  ,
+		const a1d_vector&       fixed_vec   ,
+		const a1d_vector&       random_vec  ,
 		CppAD::vector<size_t>&  row_out     ,
 		CppAD::vector<size_t>&  col_out     ,
-		d_vector&               val_out
+		a1d_vector&             val_out
 	);
 };
 
