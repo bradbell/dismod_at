@@ -44,31 +44,33 @@ non-smooth terms in the form of Laplace densities.
 $head g(theta)$$
 We use the notation
 $latex \[
-	g( \theta ) = - \log [ \B{p} ( \theta )
+	g( \theta ) = - \log [ \B{p} ( \theta ) ]
 \]$$
 The function $latex g(x)$$ may be non-smooth because it
 can have absolute values in it (corresponding to the Laplace likelihoods).
 
-$head Objective$$
-Using this notation, the Laplace approximation as a function of the
-fixed effects $latex \theta$$ and the random effects $latex u$$ is
+$head Laplace Approximation$$
+Using this notation, the part of the Laplace approximation that 
+depends on the random effects $latex u$$ is
 $latex \[
 h( \theta, u )
 =
-- \frac{n}{2} \log ( 2 \pi )
 + \frac{1}{2} \log \det f_{uu}^{(2)} ( \theta, u )
 + f( \theta, u )
-+ g( \theta )
 \] $$
 Given the fixed effects,
 the corresponding random effects that maximize the joint likelihood
-is denoted by
+are denoted by
 $latex \[
-	\hat{u} ( \theta ) = \R{argmax} \; f( \theta, u ) \; \R{w.r.t.} \; u
+	\hat{u} ( \theta ) = \R{argmin} \; f( \theta, u ) \; \R{w.r.t.} \; u
 \] $$
-The objective, as a function of the fixed effects, is
+The Laplace approximation objective, as a function of the fixed effects, is
 $latex \[
-	L ( \theta ) = h \left[ \hat{u} ( \theta ) , \theta \right]
+L ( \theta ) 
+= 
+h \left[ \hat{u} ( \theta ) , \theta \right]
+- \frac{n}{2} \log ( 2 \pi )
++ g( \theta )
 \] $$
 
 $head Derivative of Objective$$
@@ -76,47 +78,49 @@ Because $latex f(\theta, u)$$ is smooth, we obtain
 $latex \[
 	f_u^{(1)} [ \hat{u} ( \theta ) , \theta ] = 0
 \] $$
+We define  the function 
 $latex \[
-\hat{u}^{(1)} ( \theta )
+U ( \beta , \theta )
+=
+\hat{u} ( \theta )
+- f_{uu}^{(2)} \left[ \hat{u} ( \theta ) , \theta \right]^{-1}
+	f_u^{(1)} \left[ \hat{u} ( \theta )  , \beta \right]
+\] $$
+It follows that $latex U( \theta , \theta ) = \hat{u} ( \theta )$$ 
+and
+$latex \[
+U_{\beta}^{(1)} ( \theta, \theta )
 =
 - f_{uu}^{(2)} \left[ \hat{u} ( \theta ) , \theta \right]^{-1}
 	f_{u \theta}^{(2)} \left[ \hat{u} ( \theta )  , \theta \right]
-\] $$
-To simplify notation, we sometimes abbreviate
-$latex \hat{u} ( \theta )$$ as just $latex \hat{u}$$.
-The total derivative of the objective w.r.t $latex \theta$$ is
-$latex \[
-\dtheta{} L( \theta )
 =
-\frac{1}{2}
-\dtheta{}
-\left[ \log \det f_{uu}^{(2)} ( \hat{u} , \theta )  \right]
-+
-\dtheta{} f( \hat{u} , \theta ) + \dtheta{} g ( \theta )
+\hat{u}^{(1)} ( \theta )
 \] $$
-The derivative of the joint likelihood is given by
+Given these facts we define
 $latex \[
-\dtheta{} f( \hat{u} , \theta )
+H( \beta , \theta )
 =
-f_\theta^{(1)} ( \hat{u} , \theta ) +
-f_u^{(1)} ( \hat{u} , \theta ) \hat{u}^{(1)} ( \theta )
++ \frac{1}{2} \log \det f_{uu}^{(2)} [ \beta, U( \beta , \theta ) ]
++ f[ \beta, U( \beta , \theta ) ]
 \] $$
-The derivative of the log of the determinant of a symmetric matrix
-is equal to its inverse. Hence,
+It follows that
 $latex \[
-\dtheta{j}
-\left[ \log \det f_{uu}^{(2)} ( \hat{u} , \theta )  \right]
-=
-\R{trace} \left[
-	f_{uu}^{(2)} ( \hat{u} , \theta )^{-1}
-	\dtheta{j}
-	f_{uu}^{(2)} ( \hat{u} , \theta )
-\right]
+\frac{d}{d \theta } \left( h [ \theta , \hat{u} ( \theta ) ]  \right)
+= 
+H_{\beta}^{(1)} ( \theta , \theta )
 \] $$
-Note that $latex g( \theta )$$ may not be smooth, but it will be represented
-in terms of a smooth part and a sum of absolute value of smooth functions.
-Thus we will only need the derivative of its smooth parts,
-and the smooth functions inside the absolute value.
-
+This formula enables us to use AD to compute the derivatives of
+$latex \[
+	h [ \theta , \hat{u} ( \theta ) ] 
+\] $$
+without having to differentiate the iterative process that computes
+$latex \hat{u} ( \theta )$$.
+The rest of the objective $latex L( \theta )$$ is
+$latex \[
+- \frac{n}{2} \log ( 2 \pi ) + g( \theta )
+\] $$
+Note that $latex g( \theta )$$ may not be smooth, but it can be represented
+in the optimization process as the sum of absolute values of 
+smoothing functions that can be differentiated.
 
 $end
