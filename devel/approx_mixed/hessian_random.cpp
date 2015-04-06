@@ -80,6 +80,11 @@ a previous call to $code hessian_random$$.
 If it's input size is zero,
 upon return it contains the row indices for the Hessian elements
 that are possibly non-zero (and will have the same size as $icode row_out$$).
+Note that only the lower triangle of the Hessian is computed and hence
+$codei%
+	%col_out%[%k%] <= %row_out%[%k%]
+%$$
+for all $icode%k% = 0 , %...%, %row_out%.size()-1%$$
 
 $head val_out$$
 This argument has prototype

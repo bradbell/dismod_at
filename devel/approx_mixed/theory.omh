@@ -73,41 +73,41 @@ h \left[ \hat{u} ( \theta ) , \theta \right]
 + g( \theta )
 \] $$
 
-$head Smooth Part, H(beta, theta)$$
+$head Smooth Part, H(beta, theta, u)$$
 Because $latex f(\theta, u)$$ is smooth, we obtain
 $latex \[
 	f_u^{(1)} [ \hat{u} ( \theta ) , \theta ] = 0
 \] $$
 We define  the function
 $latex \[
-U ( \beta , \theta )
+U ( \beta , \theta , u )
 =
-\hat{u} ( \theta )
-- f_{uu}^{(2)} \left[ \hat{u} ( \theta ) , \theta \right]^{-1}
-	f_u^{(1)} \left[ \hat{u} ( \theta )  , \beta \right]
+u - f_{uu}^{(2)} ( \theta , u )^{-1} f_u^{(1)} ( \beta , u  )
 \] $$
-It follows that $latex U( \theta , \theta ) = \hat{u} ( \theta )$$
-and
+It follows that 
 $latex \[
-U_{\beta}^{(1)} ( \theta, \theta )
+	U \left[ \theta , \theta , \hat{u} ( \theta ) \right] = \hat{u} ( \theta )
+\]$$
+$latex \[
+U_{\beta}^{(1)} \left[ \theta, \theta , \hat{u} ( \theta ) \right]
 =
-- f_{uu}^{(2)} \left[ \hat{u} ( \theta ) , \theta \right]^{-1}
-	f_{u \theta}^{(2)} \left[ \hat{u} ( \theta )  , \theta \right]
+- f_{uu}^{(2)} \left[ \theta , \hat{u} ( \theta ) \right]^{-1}
+	f_{u \theta}^{(2)} \left[ \theta , \hat{u} ( \theta )  \right]
 =
 \hat{u}^{(1)} ( \theta )
 \] $$
 Given these facts we define
 $latex \[
-H( \beta , \theta )
+H( \beta , \theta , u)
 =
-+ \frac{1}{2} \log \det f_{uu}^{(2)} [ \beta, U( \beta , \theta ) ]
-+ f[ \beta, U( \beta , \theta ) ]
++ \frac{1}{2} \log \det f_{uu}^{(2)} [ \beta, U( \beta , \theta , u) ]
++ f[ \beta, U( \beta , \theta , u) ]
 \] $$
 It follows that
 $latex \[
 \frac{d}{d \theta } \left( h [ \theta , \hat{u} ( \theta ) ]  \right)
 =
-H_{\beta}^{(1)} ( \theta , \theta )
+H_{\beta}^{(1)} \left[ \theta , \theta , \hat{u} ( \theta ) \right]
 \] $$
 This formula enables us to use AD to compute the derivatives of
 $latex \[
@@ -115,6 +115,8 @@ $latex \[
 \] $$
 without having to differentiate the iterative process that computes
 $latex \hat{u} ( \theta )$$.
+Note that the iterative process may not have a fixed operation sequence
+and might need to be re-taped for each value of $latex \theta$$.
 
 $head Non-smooth Part$$
 The rest of the objective $latex L( \theta )$$ is
