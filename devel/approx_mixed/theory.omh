@@ -84,7 +84,7 @@ U ( \beta , \theta , u )
 =
 u - f_{uu}^{(2)} ( \theta , u )^{-1} f_u^{(1)} ( \beta , u  )
 \] $$
-It follows that 
+It follows that
 $latex \[
 	U \left[ \theta , \theta , \hat{u} ( \theta ) \right] = \hat{u} ( \theta )
 \]$$
