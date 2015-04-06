@@ -31,11 +31,11 @@ The reference above defines $latex f( \theta, u)$$
 to be the negative log-likelihood of
 $latex y$$, $latex u$$ and $latex \theta$$; i.e.,
 $latex \[
-	- \log [ \B{p} ( y |  \theta, u ) \B{p} ( u | theta ) \B{p} ( \theta ) ]
+	- \log [ \B{p} ( y |  \theta, u ) \B{p} ( u | \theta ) \B{p} ( \theta ) ]
 \] $$
 We use a different notation and define
 $latex \[
-	f( \theta, u ) = - \log [ \B{p} ( y |  \theta, u ) \B{p} ( u | theta ) ]
+	f( \theta, u ) = - \log [ \B{p} ( y |  \theta, u ) \B{p} ( u | \theta ) ]
 \] $$
 The function $latex f(\theta, u)$$ is assumed to be smooth.
 Note that $cref/joint_density/approx_mixed_joint_density/$$ allows for
@@ -49,7 +49,7 @@ $latex \[
 The function $latex g(x)$$ may be non-smooth because it
 can have absolute values in it (corresponding to the Laplace likelihoods).
 
-$head Laplace Approximation$$
+$head Objective, L(theta)$$
 Using this notation, the part of the Laplace approximation that
 depends on the random effects $latex u$$ is
 $latex \[
@@ -73,7 +73,7 @@ h \left[ \hat{u} ( \theta ) , \theta \right]
 + g( \theta )
 \] $$
 
-$head Derivative of Objective$$
+$head Smooth Part, H(beta, theta)$$
 Because $latex f(\theta, u)$$ is smooth, we obtain
 $latex \[
 	f_u^{(1)} [ \hat{u} ( \theta ) , \theta ] = 0
@@ -115,6 +115,8 @@ $latex \[
 \] $$
 without having to differentiate the iterative process that computes
 $latex \hat{u} ( \theta )$$.
+
+$head Non-smooth Part$$
 The rest of the objective $latex L( \theta )$$ is
 $latex \[
 - \frac{n}{2} \log ( 2 \pi ) + g( \theta )
