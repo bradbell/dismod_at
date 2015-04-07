@@ -37,6 +37,8 @@ We use a different notation and define
 $latex \[
 	f( \theta, u ) = - \log [ \B{p} ( y |  \theta, u ) \B{p} ( u | \theta ) ]
 \] $$
+
+$subhead Smoothness Assumption$$
 The function $latex f(\theta, u)$$ is assumed to be smooth.
 Note that $cref/joint_density/approx_mixed_joint_density/$$ allows for
 non-smooth terms in the form of Laplace densities.

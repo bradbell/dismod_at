@@ -19,7 +19,7 @@ $spell
 	xam
 $$
 
-$section Hessian With Respect to Random Effects$$
+$section Hessian of Joint Likelihood$$
 
 $head Syntax$$
 $icode%approx_object%.hessian_random(
@@ -29,10 +29,10 @@ $icode%approx_object%.hessian_random(
 $head Purpose$$
 This routine computes the Hessian of the negative log of the joint density
 $cref/f(theta, u)/approx_mixed_theory/f(theta, u)/$$
-with respect to the random effects vector $latex u$$; i.e.
-$latex \[
-	f_{uu}^{(2)} ( \theta, u )
-\] $$
+with respect to the random effects vector $latex u$$
+$latex f_{uu}^{(2)} ( \theta, u )$$ and the cross terms 
+$latex f_{u \theta}^{(2)} ( \theta , u )$$.
+
 
 $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
@@ -80,11 +80,29 @@ a previous call to $code hessian_random$$.
 If it's input size is zero,
 upon return it contains the row indices for the Hessian elements
 that are possibly non-zero (and will have the same size as $icode row_out$$).
-Note that only the lower triangle of the Hessian is computed and hence
+
+$head Index Subset$$
+Let $icode%n_fixed% = %fixed_vec%.size()%$$,
+and $icode%n_random% = %random_vec%.size()%$$.
+Suppose $icode i$$, $icode j$$, and $icode k$$ are such that
 $codei%
-	%col_out%[%k%] <= %row_out%[%k%]
+	%i% = %row_out%[%k%]
+	%j% = %col_out%[%k%]
 %$$
-for all $icode%k% = 0 , %...%, %row_out%.size()-1%$$
+$list number$$
+Only the lower triangle of the Hessian is computed; i.e.,
+$codei%i% >= %j%$$.
+$lnext
+If index $icode%j% < %n_fixed%$$, it corresponds to index $icode j$$
+in the $icode fixed_vec$$.
+$lnext
+If index $icode%j% >= %n_fixed%$$, it corresponds to index 
+$icode%j% - %n_fixed%$$ in the $icode random_vec$$.
+$lnext
+The second partials w.r.t. the fixed effects are not computed.
+Hence $icode%i% >= %n_fixed%$$, and it corresponds to index
+$icode%i% - %n_fixed%$$ in the $icode random_vec$$.
+$lend
 
 $head val_out$$
 This argument has prototype
