@@ -108,13 +108,10 @@ bool hessian_random_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
-	double sqrt_2 = CppAD::sqrt(2.0);
 
 	size_t n_data = 10;
-	size_t n_fixed = n_data;
-	size_t n_random = n_data;
 	vector<double> data(n_data);
-	vector< AD<double> > fixed_vec(n_fixed), random_vec(n_random);
+	vector< AD<double> > fixed_vec(n_data), random_vec(n_data);
 
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]      = double(i + 1);
@@ -123,7 +120,7 @@ bool hessian_random_xam(void)
 	}
 
 	// object that is derived from approx_mixed
-	approx_derived approx_object(n_fixed, n_random, data);
+	approx_derived approx_object(n_data, n_data, data);
 
 	// compute Hessian with respect to random effects
 	vector<size_t> row, col;
@@ -134,42 +131,19 @@ bool hessian_random_xam(void)
 	size_t K = row.size();
 	ok &= col.size() == K;
 	ok &= val.size() == K;
+
+	// The Laplace terms are known to have zero Hessian w.r.t random effects
+	ok &= K == (n_data + 1) / 2;
 	for(size_t k = 0; k < K; k++)
 	{	size_t i = row[k];
 		size_t j = col[k];
-		double check;
-		if( i == j )
-		{	// must be a random effects case
-			ok      &= (i >= n_fixed);
-			// must be a Guassian case (Laplace cases are know to be zero)
-			ok      &= i % 2 == 0;
-			//
-			double sigma  = Value( fixed_vec[i-n_fixed] );
-			check  = 1.0 / (sigma * sigma);
-		}
-		else if( i == j + n_fixed )
-		{	// cross partial w.r.t mu and sigma
-			double sigma  = Value( fixed_vec[i-n_fixed] );
-			double mu     = Value( random_vec[j] );
-			double res    = (data[i-n_fixed] - mu) / sigma;
-			if( i % 2 == 0 )
-			{	// Gaussian likelihood case
-				// Note that there is a factor of 1 / sigma in res
-				check  = 2.0 * res / (sigma * sigma);
-			}
-			else
-			{	// Laplace likelihood case
-				check  = sqrt_2 * CppAD::sign(res) / (sigma * sigma);
-			}
-		}
-		else
-		{	ok &= false;
-		}
-		ok  &= fabs( Value( val[k] ) / check - 1.0) <= eps;
+		ok      &= (i == j);
+		//
+		double sigma  = Value( fixed_vec[i] );
+		double check  = 1.0 / (sigma * sigma);
+		ok           &= fabs( Value( val[k] ) / check - 1.0) <= eps;
 	}
-	size_t n_random_cases = (n_data + 1) / 2;
-	size_t n_cross_cases  = n_data;
-	ok &= K == n_random_cases + n_cross_cases;
+
 	return ok;
 }
 // END C++
