@@ -31,7 +31,7 @@ $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$.
 $head fixed_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a1_double>& %fixed_vec%
+	const CppAD::vector<double>& %fixed_vec%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
@@ -40,7 +40,7 @@ vector $latex \theta$$ at which the recording is made.
 $head random_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a1_double>& %random_vec%
+	const CppAD::vector<double>& %random_vec%
 %$$
 It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
@@ -80,16 +80,16 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void approx_mixed::record_hessian(
-	const a1d_vector& fixed_vec  ,
-	const a1d_vector& random_vec )
+	const d_vector& fixed_vec  ,
+	const d_vector& random_vec )
 {	size_t i, j;
 
 	//	create an a2d_vector containing (theta, u)
 	a2d_vector a2_both( n_fixed_ + n_random_ );
 	for(j = 0; j < n_fixed_; j++)
-		a2_both[j] = fixed_vec[j];
+		a2_both[j] = a2_double( fixed_vec[j] );
 	for(j = 0; j < n_random_; j++)
-		a2_both[n_fixed_ + j] = random_vec[j];
+		a2_both[n_fixed_ + j] = a2_double( random_vec[j] );
 
 	// start recording f_uu (theta, u) using a2_double operations
 	CppAD::Independent( a2_both );

@@ -124,7 +124,15 @@ void approx_mixed::hessian_random(
 
 	// make sure hessian has been recorded
 	if( hessian_.size_var() == 0 )
-		record_hessian(fixed_vec, random_vec);
+	{	// make sure we do not record these operations at a1_double level.
+		d_vector theta(n_fixed_), u(n_random_);
+		for(size_t j = 0; j < n_fixed_; j++)
+			theta[j] = Value( Var2Par( fixed_vec[j] ) );
+		for(size_t j = 0; j < n_random_; j++)
+			u[j] = Value( Var2Par( random_vec[j] ) );
+
+		record_hessian(theta, u);
+	}
 
 	// size of outputs
 	size_t n_nonzero = hessian_row_.size();

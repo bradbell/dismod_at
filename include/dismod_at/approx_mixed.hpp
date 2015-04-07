@@ -72,8 +72,8 @@ $head record_hessian$$
 See $cref approx_mixed_record_hessian$$.
 $codep */
 	void record_hessian(
-		const a1d_vector& fixed_vec ,
-		const a1d_vector& random_vec
+		const d_vector& fixed_vec ,
+		const d_vector& random_vec
 	);
 /* $$
 $childtable%devel/approx_mixed/record_hessian.cpp
