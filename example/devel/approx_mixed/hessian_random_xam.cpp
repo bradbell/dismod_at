@@ -19,7 +19,7 @@ $section C++ hessian_random: Example and Test$$
 
 $head Warning$$
 This example contains Laplace distributed terms in the
-joint likelihood and hence does not satisfy the 
+joint likelihood and hence does not satisfy the
 $cref/smoothness assumption
 	/approx_mixed_theory
 	/f(theta, u)

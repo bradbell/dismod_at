@@ -65,7 +65,7 @@ $latex f^{(2)} ( \theta , u )$$ is as a sparse matrix by
 the following variables:
 $codep */
 	CppAD::ADFun<a1_double> hessian_;     // computes the hessian values
-	CppAD::vector<size_t>   hessian_row_; // corresponding row indices 
+	CppAD::vector<size_t>   hessian_row_; // corresponding row indices
 	CppAD::vector<size_t>   hessian_col_; // corresponding column indices
 /* $$
 $head record_hessian$$

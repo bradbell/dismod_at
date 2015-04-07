@@ -137,7 +137,7 @@ void approx_mixed::record_hessian(
 	for(i = n_fixed_; i < n_both; i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	j = *itr;
-			// only compute lower triangular part 
+			// only compute lower triangular part
 			// and exclude the upper block f_{theta theta}^{(2)} (theta, u)
 			if( i >= n_fixed_ && i >= j )
 			{	hessian_row_.push_back(i);

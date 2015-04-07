@@ -30,7 +30,7 @@ $head Purpose$$
 This routine computes the Hessian of the negative log of the joint density
 $cref/f(theta, u)/approx_mixed_theory/f(theta, u)/$$
 with respect to the random effects vector $latex u$$
-$latex f_{uu}^{(2)} ( \theta, u )$$ and the cross terms 
+$latex f_{uu}^{(2)} ( \theta, u )$$ and the cross terms
 $latex f_{u \theta}^{(2)} ( \theta , u )$$.
 
 
@@ -96,7 +96,7 @@ $lnext
 If index $icode%j% < %n_fixed%$$, it corresponds to index $icode j$$
 in the $icode fixed_vec$$.
 $lnext
-If index $icode%j% >= %n_fixed%$$, it corresponds to index 
+If index $icode%j% >= %n_fixed%$$, it corresponds to index
 $icode%j% - %n_fixed%$$ in the $icode random_vec$$.
 $lnext
 The second partials w.r.t. the fixed effects are not computed.
