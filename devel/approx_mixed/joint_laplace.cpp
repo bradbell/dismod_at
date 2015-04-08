@@ -76,7 +76,7 @@ CppAD::AD<double> approx_mixed::joint_laplace(
 )
 {
 	// evaluate gradient f_u^{(1)} (beta , u )
-	a1d_vector grad = gradient_random(beta, u); 
+	a1d_vector grad = gradient_random(beta, u);
 
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	CppAD::vector<size_t> row, col;
@@ -94,7 +94,7 @@ CppAD::AD<double> approx_mixed::joint_laplace(
 	for(size_t k = 0; k < K; k++)
 		hessian.insert(row[k], col[k]) = val[k];
 
-	// compute an LDL^T Cholesky factorization of f_{uu}^{(2)}(theta, u) 
+	// compute an LDL^T Cholesky factorization of f_{uu}^{(2)}(theta, u)
 	Eigen::SimplicialLDLT<sparse_matrix, Eigen::Lower> chol;
 	chol.analyzePattern(hessian);
 	chol.factorize(hessian);
@@ -110,10 +110,10 @@ CppAD::AD<double> approx_mixed::joint_laplace(
 	for(size_t j = 0; j < n_random_; j++)
 		U[j] = u[j] - newton_step(j);
 
-	// evaluate hessian f_{uu}^{(2)}(beta, U) 
+	// evaluate hessian f_{uu}^{(2)}(beta, U)
 	hessian_random(beta, U, row, col, val);
 
-	// compute an LDL^T Cholesky factorization of f_{uu}^{(2)}(beta, U) 
+	// compute an LDL^T Cholesky factorization of f_{uu}^{(2)}(beta, U)
 	for(size_t k = 0; k < K; k++)
 		hessian.coeffRef(row[k], col[k]) = val[k];
 	chol.factorize(hessian);
