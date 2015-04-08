@@ -23,10 +23,10 @@ $section approx_mixed: Joint Part of the Laplace Approximation Objective$$
 $head Syntax$$
 $icode%H% = %approx_object%.joint_laplace(%beta%, %theta%, %u%)%$$
 
-$head Purppose$$
+$head Purpose$$
 This routine evaluates the joint laplace of the Laplace approximation objective
 $cref/H(beta, theta, u)/approx_mixed_theory
-	/Joint Part
+	/Objective, Joint Part
 	/H(beta, theta, u)
 /$$.
 
@@ -61,6 +61,14 @@ $codei%
 It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
+
+$children%
+	example/devel/approx_mixed/joint_laplace_xam.cpp
+%$$
+$head Example$$
+The file $cref joint_laplace_xam.cpp$$ contains an example
+and test of this procedure.
+It returns true, if the test passes, and false otherwise.
 
 $end
 */

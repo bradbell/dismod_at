@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin joing_laplace_xam.cpp$$
+$begin joint_laplace_xam.cpp$$
 $spell
 	interp
 	xam
@@ -17,7 +17,8 @@ $$
 
 $section C++ joint_laplace: Example and Test$$
 
-$verbatim%example/devel/approx_mixed/joint_laplace.cpp
+$code
+$verbatim%example/devel/approx_mixed/joint_laplace_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 

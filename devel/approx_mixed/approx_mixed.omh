@@ -55,6 +55,7 @@ $childtable%
 	devel/approx_mixed/optimize_random.cpp%
 	devel/approx_mixed/gradient_random.cpp%
 	devel/approx_mixed/hessian_random.cpp%
+	devel/approx_mixed/joint_laplace.cpp%
 	devel/approx_mixed/theory.omh%
 	include/dismod_at/approx_mixed.hpp
 %$$
