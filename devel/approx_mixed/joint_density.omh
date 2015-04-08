@@ -26,6 +26,14 @@ We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
 to denote an object of a class that is
 derived from the $code approx_mixed$$ base class.
 
+$head Float$$
+The type $icode Float$$ below is any one of the following:
+$code double$$,
+$code AD<double>$$,
+$code AD< AD<double> >$$,
+$code AD< AD< AD<double> > >$$,
+where $code AD$$ is $code CppAD::AD$$.
+
 $head Virtual Function$$
 These are pure virtual functions and must be implemented
 in the derived class with prototype
@@ -34,8 +42,7 @@ $codei%
 		const CppAD::vector<%Float%>& %fixed_vec%  ,
 		const CppAD::vector<%Float%>& %random_vec% )
 %$$
-for each of the possible
-$cref/Float/approx_mixed/Float/$$ cases.
+for each of the possible $icode Float$$ cases.
 
 $head fixed_vec$$
 This argument has prototype
