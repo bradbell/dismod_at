@@ -26,7 +26,7 @@ TMB: Automatic Differentiation and Laplace Approximation,
 Kasper Kristensen, Anders Nielsen, Casper W. Berg, Hans Skaug, Bradley M. Bell,
 Journal of Statistical Software, Accepted 2015-02.
 
-$head f(theta, u)$$
+$head Joint Density, f(theta, u)$$
 The reference above defines $latex f( \theta, u)$$
 to be the negative log-likelihood of
 $latex y$$, $latex u$$ and $latex \theta$$; i.e.,
@@ -43,7 +43,7 @@ The function $latex f(\theta, u)$$ is assumed to be smooth.
 Note that $cref/joint_density/approx_mixed_joint_density/$$ allows for
 non-smooth terms in the form of Laplace densities.
 
-$head g(theta)$$
+$head Fixed Density, g(theta)$$
 We use the notation
 $latex \[
 	g( \theta ) = - \log [ \B{p} ( \theta ) ]

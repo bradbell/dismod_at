@@ -70,9 +70,11 @@ $cref/negative log-density vector
 	/approx_mixed
 	/Negative Log-Density Vector
 /$$
-corresponding to the joint density of the data and random effects; i.e.,
+corresponding to the joint density
+$cref/f(theta, u)/approx_mixed_theory/Joint Density, f(theta, u)/$$
+of the data and random effects; i.e.,
 $latex \[
-	\B{p}( y, u | \theta) = \B{p}( y | u , \theta) \B{p} ( u | \theta )
+	f( \theta , u) = - \log [ \B{p}( y | \theta, u) \B{p} ( u | \theta ) ]
 \] $$
 
 $end

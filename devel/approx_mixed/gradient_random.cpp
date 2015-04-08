@@ -26,7 +26,7 @@ $icode%grad% = %approx_object%.gradient_random( %fixed_vec%, %random_vec%)%$$
 
 $head Purpose$$
 This routine computes the gradient of the negative log of the joint density
-$cref/f(theta, u)/approx_mixed_theory/f(theta, u)/$$
+$cref/f(theta, u)/approx_mixed_theory/Joint Density, f(theta, u)/$$
 with respect to the random effects vector $latex u$$; i.e.
 $latex \[
 	f_u^{(1)} ( \theta, u )
