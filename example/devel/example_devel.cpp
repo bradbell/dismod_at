@@ -32,6 +32,7 @@ extern bool cholmod_xam(void);
 extern bool eigen_xam(void);
 extern bool gradient_random_xam(void);
 extern bool hessian_random_xam(void);
+extern bool joint_laplace_xam(void);
 extern bool optimize_random_xam(void);
 
 // model subdirectory
@@ -112,6 +113,7 @@ int main(void)
 	RUN(eigen_xam);
 	RUN(gradient_random_xam);
 	RUN(hessian_random_xam);
+	RUN(joint_laplace_xam);
 	RUN(optimize_random_xam);
 
 	// model subdirectory

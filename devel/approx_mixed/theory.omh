@@ -59,6 +59,7 @@ h( \theta, u )
 =
 + \frac{1}{2} \log \det f_{uu}^{(2)} ( \theta, u )
 + f( \theta, u )
+- \frac{n}{2} \log ( 2 \pi )
 \] $$
 Given the fixed effects,
 the corresponding random effects that maximize the joint likelihood
@@ -71,7 +72,6 @@ $latex \[
 L ( \theta )
 =
 h \left[ \hat{u} ( \theta ) , \theta \right]
-- \frac{n}{2} \log ( 2 \pi )
 + g( \theta )
 \] $$
 
@@ -109,6 +109,7 @@ H( \beta , \theta , u)
 =
 + \frac{1}{2} \log \det f_{uu}^{(2)} [ \beta, U( \beta , \theta , u) ]
 + f[ \beta, U( \beta , \theta , u) ]
+- \frac{n}{2} \log ( 2 \pi )
 \] $$
 It follows that
 $latex \[
@@ -128,7 +129,7 @@ and might need to be re-taped for each value of $latex \theta$$.
 $head Objective, Fixed Effects Part$$
 The rest of the objective $latex L( \theta )$$ is
 $latex \[
-- \frac{n}{2} \log ( 2 \pi ) + g( \theta )
+	g( \theta )
 \] $$
 Note that $latex g( \theta )$$ may not be smooth, but it can be represented
 in the optimization process as the sum of absolute values of

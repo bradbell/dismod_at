@@ -89,7 +89,7 @@ CppAD::AD<double> approx_mixed::joint_laplace(
 	typedef Eigen::SparseMatrix<a1_double>             sparse_matrix;
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
-	sparse_matrix hessian;
+	sparse_matrix hessian(n_random_, n_random_);
 	size_t K = row.size();
 	for(size_t k = 0; k < K; k++)
 		hessian.insert(row[k], col[k]) = val[k];
@@ -131,8 +131,12 @@ CppAD::AD<double> approx_mixed::joint_laplace(
 	for(size_t i = 0; i < n_abs; i++)
 		sum += abs( vec[1 + i] );
 
+	// constant term
+	double pi   = CppAD::atan(1.0) * 4.0;
+	double constant_term = CppAD::log(2.0 * pi) * double(n_random_) / 2.0;
+
 	// return H(beta, theta, u)
-	return logdet / 2.0 + sum;
+	return logdet / 2.0 + sum - constant_term;
 }
 
 
