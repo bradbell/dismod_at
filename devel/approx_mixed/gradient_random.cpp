@@ -56,7 +56,7 @@ $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$.
 
 $head grad$$
-The return value has prototype 
+The return value has prototype
 $codei%
 	CppAD::vector< AD<double> >& %grad%
 %$$
