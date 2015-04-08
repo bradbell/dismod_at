@@ -96,7 +96,7 @@ bool joint_laplace_xam(void)
 	size_t n_fixed  = n_data;
 	size_t n_random = n_data;
 	vector<double> data(n_data), fixed_vec(n_fixed), random_vec(n_random);
-	vector< AD<double> > 
+	vector< AD<double> >
 		a1_beta(n_fixed), a1_theta(n_fixed), a1_uhat(n_random);
 
 	for(size_t i = 0; i < n_data; i++)
