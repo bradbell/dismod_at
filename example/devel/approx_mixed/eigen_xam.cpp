@@ -62,7 +62,9 @@ bool eigen_xam(void)
 	A.insert(2, 2) = A_vec[5];
 
 	// Compute the log of determinant using lower triangle of A
-	Eigen::SimplicialLDLT<real_sparse_matrix, Eigen::Lower> chol(A);
+	Eigen::SimplicialLDLT<real_sparse_matrix, Eigen::Lower> chol;
+	chol.analyzePattern(A);
+	chol.factorize(A);
 	real_dense_matrix diag = chol.vectorD();
 	ok &= size_t( diag.size() ) == n;
 	CppAD::vector<real> log_det(1);

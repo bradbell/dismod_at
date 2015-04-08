@@ -92,7 +92,8 @@ $codep */
 		const d_vector& random_vec
 	);
 /* $$
-$childtable%devel/approx_mixed/record_hessian.cpp
+$childtable%devel/approx_mixed/record_gradient.cpp
+	%devel/approx_mixed/record_hessian.cpp
 %$$
 
 $end
@@ -117,6 +118,11 @@ public:
 		const d_vector& fixed_vec ,
 		const d_vector& random_in
 	);
+	// gradient_random
+	a1d_vector gradient_random(
+		const a1d_vector&       fixed_vec   ,
+		const a1d_vector&       random_vec
+	);
 	// hessian_random
 	void hessian_random(
 		const a1d_vector&       fixed_vec   ,
@@ -125,10 +131,11 @@ public:
 		CppAD::vector<size_t>&  col_out     ,
 		a1d_vector&             val_out
 	);
-	// gradient_random
-	a1d_vector gradient_random(
-		const a1d_vector&       fixed_vec   ,
-		const a1d_vector&       random_vec
+	// joint_laplace
+	a1_double joint_laplace(
+		const a1d_vector& beta   ,
+		const a1d_vector& theta  ,
+		const a1d_vector& u
 	);
 };
 
