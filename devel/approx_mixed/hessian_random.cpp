@@ -143,7 +143,7 @@ void approx_mixed::hessian_random(
 	assert( row_out.size() == col_out.size() );
 	assert( row_out.size() == val_out.size() );
 
-	// create a d_vector containing (theta, u)
+	// create an a1d_vector containing (theta, u)
 	a1d_vector both( n_fixed_ + n_random_ );
 	for(size_t j = 0; j < n_fixed_; j++)
 		both[j] = fixed_vec[j];

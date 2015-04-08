@@ -9,13 +9,13 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin hessian_random_xam.cpp$$
+$begin gradient_random_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ hessian_random: Example and Test$$
+$section C++ gradient_random: Example and Test$$
 
 $head Warning$$
 This example contains Laplace distributed terms in the
@@ -27,7 +27,7 @@ $cref/smoothness assumption
 /$$.
 
 $code
-$verbatim%example/devel/approx_mixed/hessian_random_xam.cpp
+$verbatim%example/devel/approx_mixed/gradient_random_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -104,10 +104,11 @@ namespace {
 	};
 }
 
-bool hessian_random_xam(void)
+bool gradient_random_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
+	double sqrt_2 = std::sqrt( 2.0 );
 
 	size_t n_data   = 10;
 	size_t n_fixed  = n_data;
@@ -124,26 +125,22 @@ bool hessian_random_xam(void)
 	// object that is derived from approx_mixed
 	approx_derived approx_object(n_fixed, n_random, data);
 
-	// compute Hessian with respect to random effects
-	vector<size_t> row, col;
-	vector< AD<double> > val;
-	approx_object.hessian_random(fixed_vec, random_vec, row, col, val);
-
-	// check the result
-	size_t K = row.size();
-	ok &= col.size() == K;
-	ok &= val.size() == K;
+	// compute gradient with respect to random effects
+	vector< AD<double> > grad =
+		approx_object.gradient_random(fixed_vec, random_vec);
 
 	// The Laplace terms are known to have zero Hessian w.r.t random effects
-	ok &= K == (n_random + 1) / 2;
-	for(size_t k = 0; k < K; k++)
-	{	size_t i = row[k];
-		size_t j = col[k];
-		ok      &= (i == j);
+	for(size_t i = 0; i < n_random; i++)
+	{	double sigma  = Value( fixed_vec[i] );
+		double mu     = Value( random_vec[i] );
+		double res    = (data[i] - mu) / sigma;
+		double check;
+		if( i % 2 == 0 )
+			check  = - res / sigma;
+		else
+			check  = - sqrt_2 * CppAD::sign(res) / sigma;
 		//
-		double sigma  = Value( fixed_vec[i] );
-		double check  = 1.0 / (sigma * sigma);
-		ok           &= fabs( Value( val[k] ) / check - 1.0) <= eps;
+		ok           &= fabs( grad[i] / check - 1.0) <= eps;
 	}
 
 	return ok;

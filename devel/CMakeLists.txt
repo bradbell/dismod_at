@@ -12,8 +12,10 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	approx_mixed/cppad_conjgrad
 	approx_mixed/optimize_random.cpp
-	approx_mixed/record_hessian.cpp
+	approx_mixed/gradient_random.cpp
 	approx_mixed/hessian_random.cpp
+	approx_mixed/record_gradient.cpp
+	approx_mixed/record_hessian.cpp
 
 	model/data_model.cpp
 	model/prior_model.cpp
