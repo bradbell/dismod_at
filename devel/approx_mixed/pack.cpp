@@ -53,16 +53,16 @@ $codei%
 	CppAD::vector<%Float%>& %both_vec%
 %$$
 The size of this vector must be equal to
-$cref/n_fixed_/approx_mixed_private/n_fixed_/$$ 
+$cref/n_fixed_/approx_mixed_private/n_fixed_/$$
 +
 $cref/n_random_/approx_mixed_private/n_random_/$$.
 The input size of its elements does not matter.
 Upon return,
 for $icode%j% = 0 , %...%, %n_fixed_%-1
-	%both_vec%[%j%] = %fixed_vec%[%j%] 
+	%both_vec%[%j%] = %fixed_vec%[%j%]
 %$$
 For $icode%k% = 0 , %...%, %n_random_%-1
-	%both_vec%[%n_fixed% + %k%] = %random_vec%[%k%] 
+	%both_vec%[%n_fixed% + %k%] = %random_vec%[%k%]
 %$$
 
 $end
