@@ -132,7 +132,12 @@ CppAD::AD<double> approx_mixed::joint_laplace(
 		logdet += log( diag(j) );
 
 	// f[beta, U(beta, theta, u)]
-	a1d_vector vec = joint_density(beta, U);
+	a1d_vector both(n_fixed_ + n_random_);
+	for(size_t j = 0; j < n_fixed_; j++)
+		both[j] = beta[j];
+	for(size_t j = 0; j < n_random_; j++)
+		both[n_fixed_ + j] = U[j];
+	a1d_vector vec = a1_joint_density_.Forward(0, both);
 	a1_double sum = vec[0];
 	size_t n_abs = vec.size() - 1;
 	for(size_t i = 0; i < n_abs; i++)
