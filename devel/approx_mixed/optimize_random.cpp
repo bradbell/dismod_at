@@ -152,7 +152,12 @@ CppAD::vector<double> approx_mixed::optimize_random(
 	assert( n_random_ == random_in.size() );
 
 	// determine initial density vector
-	d_vector vec = joint_density(fixed_vec, random_in);
+	d_vector both(n_fixed_ + n_random_);
+	for(size_t j = 0; j < n_fixed_; j++)
+		both[j] = fixed_vec[j];
+	for(size_t j = 0; j < n_random_; j++)
+		both[n_fixed_ + j] = random_in[j];
+	d_vector vec = a0_joint_density_.Forward(0, both);
 
 	// number of absolute value terms in objective
 	size_t n_abs = vec.size() - 1;
