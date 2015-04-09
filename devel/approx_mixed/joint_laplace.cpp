@@ -24,7 +24,7 @@ $head Syntax$$
 $icode%H% = %approx_object%.joint_laplace(%beta%, %theta%, %u%)%$$
 
 $head Purpose$$
-This routine evaluates the joint laplace of the Laplace approximation objective
+This routine evaluates the joint part of the Laplace approximation objective
 $cref/H(beta, theta, u)/approx_mixed_theory
 	/Objective, Joint Part
 	/H(beta, theta, u)
@@ -80,8 +80,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 CppAD::AD<double> approx_mixed::joint_laplace(
 	const a1d_vector& beta  ,
 	const a1d_vector& theta ,
-	const a1d_vector& u
-)
+	const a1d_vector& u     )
 {
 	// evaluate gradient f_u^{(1)} (beta , u )
 	a1d_vector grad = gradient_random(beta, u);

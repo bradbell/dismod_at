@@ -134,7 +134,7 @@ $codep */
 		const a1d_vector& theta  ,
 		const a1d_vector& u
 	);
-	friend bool ::joint_laplace(void);
+	friend bool ::joint_laplace_xam(void);
 /* $$
 $childtable%devel/approx_mixed/record_gradient.cpp
 	%devel/approx_mixed/record_hessian.cpp
