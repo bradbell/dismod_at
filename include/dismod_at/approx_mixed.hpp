@@ -12,15 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_APPROX_MIXED_HPP
 # include <cppad/cppad.hpp>
 
-# define DISMOD_AT_DEFINE_JOINT_DENSITY(Float)        \
-	virtual CppAD::vector< Float > joint_density(     \
-		const CppAD::vector< Float >& fixed_vec  ,    \
-		const CppAD::vector< Float >& random_vec ) = 0;
 //
-# define DISMOD_AT_DEFINE_FIXED_DENSITY(Float)        \
-	virtual CppAD::vector< Float > fixed_density(     \
-		const CppAD::vector< Float >& fixed_vec  ) = 0 ;
-
 extern bool gradient_random_xam(void);
 extern bool hessian_random_xam(void);
 extern bool joint_laplace_xam(void);
@@ -30,21 +22,18 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 class optimize_random_eval;
 
 class approx_mixed {
-private:
+public:
 /*
-------------------------------------------------------------------------------
-$begin approx_mixed_private$$
+$begin approx_mixed_public$$
 $spell
-	eval
+	const
+	vec
 	typedef
 	CppAD
-	vec
-	const
-	bool
-	xam
+	ctor
 $$
 
-$section approx_mixed Private Declarations$$
+$section approx_mixed Public Declarations$$
 
 $head typedef$$
 $index a1_double$$
@@ -62,6 +51,69 @@ $codep */
 	typedef CppAD::vector<a2_double>   a2d_vector;
 	typedef CppAD::vector<a3_double>   a3d_vector;
 /* $$
+$head constructor$$
+Construct an $code approx_mixed$$ derived class object; see
+$cref/derived_ctor/approx_mixed_derived_ctor/$$.
+$codep */
+	approx_mixed(size_t n_fixed, size_t n_random)
+	:
+	n_fixed_(n_fixed)   ,
+	n_random_(n_random)
+	{ }
+/* $$
+$head initialize$$
+Directly after construction, use this function to initialize
+the derived class object; see $cref/initialize/approx_mixed_initialize/$$.
+$codep */
+	void initialize(const d_vector& fixed_vec, const d_vector& random_vec);
+/* $$
+$head joint_density$$
+This is a pure virtual function so it must be defined by derived class;
+see $cref/joint_density/approx_mixed_joint_density/$$.
+$codep */
+	virtual CppAD::vector<a3_double> joint_density(
+		const CppAD::vector<a3_double>& fixed_vec  ,
+		const CppAD::vector<a3_double>& random_vec
+	) = 0;
+/* $$
+$head fixed_density$$
+These are pure virtual functions so they must be defined by derived class;
+see $cref/fixed_density/approx_mixed_fixed_density/$$.
+$codep */
+	virtual CppAD::vector<double> fixed_density(
+		const CppAD::vector<double>& fixed_vec
+	) = 0 ;
+	virtual CppAD::vector<a1_double> fixed_density(
+		const CppAD::vector<a1_double>& fixed_vec
+	) = 0 ;
+/* $$
+$head optimize_random$$
+Given the fixed effects, optimize with respect to the random effects;
+see  $cref/optimize_random/approx_mixed_optimize_random/$$.
+$codep */
+	d_vector optimize_random(
+		const d_vector& fixed_vec ,
+		const d_vector& random_in
+	);
+/* $$
+$end
+*/
+private:
+/*
+------------------------------------------------------------------------------
+$begin approx_mixed_private$$
+$spell
+	eval
+	typedef
+	CppAD
+	vec
+	const
+	bool
+	xam
+$$
+
+$section approx_mixed Private Declarations$$
+
 $head n_fixed_$$
 The number of fixed effects is given by
 $codep */
@@ -167,29 +219,6 @@ $childtable%devel/approx_mixed/record_joint.cpp
 $end
 -------------------------------------------------------------------------------
 */
-public:
-	// constructor
-	approx_mixed(size_t n_fixed, size_t n_random)
-	:
-	n_fixed_(n_fixed)   ,
-	n_random_(n_random)
-	{ }
-	// joint density for data and random effects given the fixed effects
-	// (pure vritual function so must be defined by derived class)
-	DISMOD_AT_DEFINE_JOINT_DENSITY( a3_double )
-	// prior density for fixed effects
-	// (pure vritual function so must be defined by derived class)
-	DISMOD_AT_DEFINE_FIXED_DENSITY( double )
-	DISMOD_AT_DEFINE_FIXED_DENSITY( a1_double )
-	//
-	// initailization that requires calling virtual functions
-	void initialize(const d_vector& fixed_vec, const d_vector& random_vec);
-	//
-	// optimize_random
-	d_vector optimize_random(
-		const d_vector& fixed_vec ,
-		const d_vector& random_in
-	);
 };
 
 } // END_DISMOD_AT_NAMESPACE

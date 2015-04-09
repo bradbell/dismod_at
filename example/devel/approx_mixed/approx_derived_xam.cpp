@@ -28,12 +28,6 @@ $end
 # include <cppad/cppad.hpp>
 # include <dismod_at/approx_mixed.hpp>
 
-# define IMPLEMENT_JOINT_DENSITY(Float)        \
-	virtual vector< Float > joint_density(     \
-		const vector< Float >& fixed_vec  ,    \
-		const vector< Float >& random_vec )    \
-		{	return implement_joint_density(fixed_vec, random_vec); }
-
 # define IMPLEMENT_FIXED_DENSITY(Float)        \
 	virtual vector< Float > fixed_density(     \
 		const vector< Float >& fixed_vec  )    \
@@ -105,7 +99,10 @@ namespace {
 			}
 			return vec;
 		}
-		IMPLEMENT_JOINT_DENSITY( AD< AD< AD<double> > > )
+		virtual vector< a3_double > joint_density(
+			const vector< a3_double >& fixed_vec  ,
+			const vector< a3_double >& random_vec )
+		{	return implement_joint_density(fixed_vec, random_vec); }
 		//
 		IMPLEMENT_FIXED_DENSITY( double )
 		IMPLEMENT_FIXED_DENSITY( AD<double> )
