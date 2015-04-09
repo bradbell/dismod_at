@@ -22,6 +22,9 @@ see http://www.gnu.org/licenses/agpl.txt
 		const CppAD::vector< Float >& fixed_vec  ) = 0 ;
 
 extern bool gradient_random_xam(void);
+extern bool hessian_random_xam(void);
+extern bool joint_laplace_xam(void);
+
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class approx_mixed {
@@ -109,9 +112,35 @@ $codep */
 	);
 	friend bool ::gradient_random_xam(void);
 /* $$
+$head hessian_random$$
+See $cref approx_mixed_hessian_random$$
+$codep */
+	// hessian_random
+	void hessian_random(
+		const a1d_vector&       fixed_vec   ,
+		const a1d_vector&       random_vec  ,
+		CppAD::vector<size_t>&  row_out     ,
+		CppAD::vector<size_t>&  col_out     ,
+		a1d_vector&             val_out
+	);
+	friend bool ::hessian_random_xam(void);
+/* $$
+$head joint_laplace$$
+See $cref approx_mixed_joint_laplace$$
+$codep */
+	// joint_laplace
+	a1_double joint_laplace(
+		const a1d_vector& beta   ,
+		const a1d_vector& theta  ,
+		const a1d_vector& u
+	);
+	friend bool ::joint_laplace(void);
+/* $$
 $childtable%devel/approx_mixed/record_gradient.cpp
 	%devel/approx_mixed/record_hessian.cpp
 	%devel/approx_mixed/gradient_random.cpp
+	%devel/approx_mixed/hessian_random.cpp
+	%devel/approx_mixed/joint_laplace.cpp
 %$$
 
 $end
@@ -134,25 +163,11 @@ public:
 	// (pure vritual function so must be defined by derived class)
 	DISMOD_AT_DEFINE_FIXED_DENSITY( double )
 	DISMOD_AT_DEFINE_FIXED_DENSITY( a1_double )
-
+	//
 	// optimize_random
 	d_vector optimize_random(
 		const d_vector& fixed_vec ,
 		const d_vector& random_in
-	);
-	// hessian_random
-	void hessian_random(
-		const a1d_vector&       fixed_vec   ,
-		const a1d_vector&       random_vec  ,
-		CppAD::vector<size_t>&  row_out     ,
-		CppAD::vector<size_t>&  col_out     ,
-		a1d_vector&             val_out
-	);
-	// joint_laplace
-	a1_double joint_laplace(
-		const a1d_vector& beta   ,
-		const a1d_vector& theta  ,
-		const a1d_vector& u
 	);
 };
 
