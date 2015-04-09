@@ -30,6 +30,7 @@ LINK_DIRECTORIES(
 ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	example_devel.cpp
 
+	approx_mixed/approx_derived_xam.cpp
 	approx_mixed/cholmod_xam.cpp
 	approx_mixed/eigen_xam.cpp
 	approx_mixed/gradient_random_xam.cpp

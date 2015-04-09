@@ -12,12 +12,16 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_APPROX_MIXED_HPP
 # include <cppad/cppad.hpp>
 
-namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
-
 # define DISMOD_AT_DEFINE_JOINT_DENSITY(Float)        \
 	virtual CppAD::vector< Float > joint_density(     \
 		const CppAD::vector< Float >& fixed_vec  ,    \
 		const CppAD::vector< Float >& random_vec ) = 0;
+//
+# define DISMOD_AT_DEFINE_FIXED_DENSITY(Float)        \
+	virtual CppAD::vector< Float > fixed_density(     \
+		const CppAD::vector< Float >& fixed_vec  ) = 0 ;
+
+namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class approx_mixed {
 private:
@@ -106,12 +110,16 @@ public:
 	n_fixed_(n_fixed)   ,
 	n_random_(n_random)
 	{ }
-	// density for data and random effects
+	// joint density for data and random effects given the fixed effects
 	// (pure vritual function so must be defined by derived class)
 	DISMOD_AT_DEFINE_JOINT_DENSITY( double )
 	DISMOD_AT_DEFINE_JOINT_DENSITY( a1_double )
 	DISMOD_AT_DEFINE_JOINT_DENSITY( a2_double )
 	DISMOD_AT_DEFINE_JOINT_DENSITY( a3_double )
+	// prior density for fixed effects
+	// (pure vritual function so must be defined by derived class)
+	DISMOD_AT_DEFINE_FIXED_DENSITY( double )
+	DISMOD_AT_DEFINE_FIXED_DENSITY( a1_double )
 
 	// optimize_random
 	d_vector optimize_random(

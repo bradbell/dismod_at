@@ -43,6 +43,12 @@ $end
 		const vector< Float >& random_vec )    \
 		{	return implement_joint_density(fixed_vec, random_vec); }
 
+// fixed density not used by this example
+# define IMPLEMENT_FIXED_DENSITY(Float)        \
+	virtual vector< Float > fixed_density(     \
+		const vector< Float >& fixed_vec  )    \
+		{	assert(false); }
+
 namespace {
 	using CppAD::vector;
 	using CppAD::log;
@@ -101,6 +107,9 @@ namespace {
 		IMPLEMENT_JOINT_DENSITY( AD<double> )
 		IMPLEMENT_JOINT_DENSITY( AD< AD<double> > )
 		IMPLEMENT_JOINT_DENSITY( AD< AD< AD<double> > > )
+		//
+		IMPLEMENT_FIXED_DENSITY( double )
+		IMPLEMENT_FIXED_DENSITY( AD<double> )
 	};
 }
 
