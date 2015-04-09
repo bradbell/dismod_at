@@ -25,7 +25,7 @@ $icode%approx_object%.initialize(%fixed_vec%, %random_vec%)%$$
 
 $head Purpose$$
 Some of the $code approx_mixed$$ initialization requires calling the
-derived class version of the 
+derived class version of the
 $cref/joint_density/approx_mixed_joint_density/$$ function.
 Hence this initialization cannot be done until
 after the $cref/derived constructor/approx_mixed_derived_ctor/$$ completes.
