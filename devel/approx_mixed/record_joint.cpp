@@ -89,7 +89,7 @@ void approx_mixed::record_joint(
 	// compute joint_density using a3_double operations
 	a3d_vector a3_vec = joint_density(a3_theta, a3_u);
 
-	// save the recording 
+	// save the recording
 	a2_joint_density_.Dependent(a3_both, a3_vec);
 
 	// optimize the recording
@@ -106,7 +106,7 @@ void approx_mixed::record_joint(
 	// compute joint_density using a3_double operations
 	a2d_vector a2_vec = a2_joint_density_.Forward(0, a2_both);
 
-	// save the result 
+	// save the result
 	a1_joint_density_.Dependent(a2_both, a2_vec);
 
 	// optimize the recording
@@ -123,7 +123,7 @@ void approx_mixed::record_joint(
 	// compute joint_density using a3_double operations
 	a1d_vector a1_vec = a1_joint_density_.Forward(0, a1_both);
 
-	// save the result 
+	// save the result
 	a0_joint_density_.Dependent(a1_both, a1_vec);
 
 	// optimize the recording
