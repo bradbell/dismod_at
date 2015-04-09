@@ -27,6 +27,8 @@ extern bool joint_laplace_xam(void);
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
+class optimize_random_eval;
+
 class approx_mixed {
 private:
 /*
@@ -76,6 +78,7 @@ $codep */
 	CppAD::ADFun<double>      a0_joint_density_;
 	CppAD::ADFun<a1_double>   a1_joint_density_;
 	CppAD::ADFun<a2_double>   a2_joint_density_;
+	friend optimize_random_eval;
 /* $$
 $head gradient_$$
 The gradient of the joint likelihood w.r.t. the random effects
@@ -172,6 +175,7 @@ public:
 	{ }
 	// joint density for data and random effects given the fixed effects
 	// (pure vritual function so must be defined by derived class)
+	DISMOD_AT_DEFINE_JOINT_DENSITY( double )
 	DISMOD_AT_DEFINE_JOINT_DENSITY( a1_double )
 	DISMOD_AT_DEFINE_JOINT_DENSITY( a2_double )
 	DISMOD_AT_DEFINE_JOINT_DENSITY( a3_double )

@@ -89,6 +89,7 @@ public:
 	typedef CppAD::vector< CppAD::AD<double> > ADvector;
 private:
 	const size_t     n_abs_;
+	const size_t     n_fixed_;
 	const size_t     n_random_;
 	ADvector         fixed_vec_;
 	approx_mixed&    approx_object_;
@@ -100,11 +101,12 @@ public:
 		const Dvector&   fixed_vec       ,
 		approx_mixed&    approx_object
 	) :
-	n_abs_        ( n_abs )           ,
-	n_random_     ( n_random )        ,
+	n_abs_        ( n_abs )            ,
+	n_fixed_      ( fixed_vec.size() ) ,
+	n_random_     ( n_random )         ,
 	approx_object_( approx_object )
-	{	fixed_vec_.resize( fixed_vec.size() );
-		for(size_t i = 0; i < fixed_vec.size(); i++)
+	{	fixed_vec_.resize( n_fixed_ );
+		for(size_t i = 0; i < n_fixed_; i++)
 			fixed_vec_[i] = fixed_vec[i];
 	}
 
@@ -113,12 +115,14 @@ public:
 	{	assert( fg.size() == 1 + 2 * n_abs_ );
 
 		// extract the random effects from x
-		ADvector random_vec(n_random_);
+		ADvector both(n_fixed_ + n_random_);
+		for(size_t j = 0; j < n_fixed_; j++)
+			both[j] = fixed_vec_[j];
 		for(size_t j = 0; j < n_random_; j++)
-			random_vec[j] = x[j];
+			both[n_fixed_ + j] = x[j];
 
 		// compute log-density vector
-		ADvector vec = approx_object_.joint_density(fixed_vec_, random_vec);
+		ADvector vec = approx_object_.a1_joint_density_.Forward(0, both);
 
 		// initialize smooth part of negative log-likelihood
 		size_t k = 0;
