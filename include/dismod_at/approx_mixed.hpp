@@ -160,6 +160,16 @@ $codep */
 	CppAD::vector<size_t>   hessian_row_; // corresponding row indices
 	CppAD::vector<size_t>   hessian_col_; // corresponding column indices
 /* $$
+$head pack$$
+See $cref approx_mixed_pack$$.
+$codep */
+	template <class Float>
+	void pack(
+		const CppAD::vector<Float>& fixed_vec  ,
+		const CppAD::vector<Float>& random_vec ,
+		CppAD::vector<Float>&       both
+	) const;
+/* $$
 $head record_joint$$
 See $cref approx_mixed_record_joint$$.
 $codep */
@@ -218,7 +228,8 @@ $codep */
 	);
 	friend bool ::joint_laplace_xam(void);
 /* $$
-$childtable%devel/approx_mixed/record_joint.cpp
+$childtable%devel/approx_mixed/pack.cpp
+	%devel/approx_mixed/record_joint.cpp
 	%devel/approx_mixed/record_gradient.cpp
 	%devel/approx_mixed/record_hessian.cpp
 	%devel/approx_mixed/gradient_random.cpp
