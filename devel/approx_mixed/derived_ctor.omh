@@ -18,6 +18,9 @@ $section approx_mixed Derived Class Constructor$$
 $head Syntax$$
 $icode%approx_derived% %approx_object%(%n_fixed%, %n_random%, %...%)%$$
 
+$head See Also$$
+$cref/initialize/approx_mixed_initialize/$$
+
 $head approx_derived$$
 This is the name of the class derived in the following fashion:
 $codei%

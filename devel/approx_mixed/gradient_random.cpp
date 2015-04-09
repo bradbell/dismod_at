@@ -87,14 +87,9 @@ CppAD::vector< CppAD::AD<double> > approx_mixed::gradient_random(
 
 	// make sure gradient has been recorded
 	if( gradient_.size_var() == 0 )
-	{	// make sure we do not record these operations at a1_double level.
-		d_vector theta(n_fixed_), u(n_random_);
-		for(size_t j = 0; j < n_fixed_; j++)
-			theta[j] = Value( Var2Par( fixed_vec[j] ) );
-		for(size_t j = 0; j < n_random_; j++)
-			u[j] = Value( Var2Par( random_vec[j] ) );
-
-		record_gradient(theta, u);
+	{	std::cerr << "approx_mixed::initialize was not called before"
+		<< " approx_mixed::gradient_random" << std::endl;
+		exit(1);
 	}
 
 	// create an a1d_vector containing (theta, u)

@@ -164,6 +164,9 @@ public:
 	DISMOD_AT_DEFINE_FIXED_DENSITY( double )
 	DISMOD_AT_DEFINE_FIXED_DENSITY( a1_double )
 	//
+	// initailization that requires calling virtual functions
+	void initialize(const d_vector& fixed_vec, const d_vector& random_vec);
+	//
 	// optimize_random
 	d_vector optimize_random(
 		const d_vector& fixed_vec ,

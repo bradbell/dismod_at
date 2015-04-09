@@ -119,6 +119,7 @@ bool joint_laplace_xam(void)
 
 	// object that is derived from approx_mixed
 	approx_derived approx_object(n_fixed, n_random, data);
+	approx_object.initialize(fixed_vec, random_vec);
 
 	// optimize the random effects
 	vector<double> uhat = approx_object.optimize_random(fixed_vec, random_vec);

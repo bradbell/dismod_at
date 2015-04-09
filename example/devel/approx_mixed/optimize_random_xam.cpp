@@ -119,6 +119,7 @@ bool optimize_random_xam(void)
 
 	// object that is derived from approx_mixed
 	approx_derived approx_object(n_data, n_data, data);
+	approx_object.initialize(fixed_vec, random_in);
 
 	// determine the optimal random effects
 	vector<double> random_out = approx_object.optimize_random(

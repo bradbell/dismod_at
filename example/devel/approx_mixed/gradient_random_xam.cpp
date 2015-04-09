@@ -123,16 +123,18 @@ bool gradient_random_xam(void)
 	size_t n_fixed  = n_data;
 	size_t n_random = n_data;
 	vector<double> data(n_data);
+	vector<double> theta(n_fixed), u(n_random);
 	vector< AD<double> > fixed_vec(n_fixed), random_vec(n_random);
 
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]      = double(i + 1);
-		fixed_vec[i] = std::sqrt( double(i + 1) );
-		random_vec[i] = 0.0;
+		fixed_vec[i] = theta[i] =std::sqrt( double(i + 1) );
+		random_vec[i] = u[i] = 0.0;
 	}
 
 	// object that is derived from approx_mixed
 	approx_derived approx_object(n_fixed, n_random, data);
+	approx_object.initialize(theta, u);
 
 	// compute gradient with respect to random effects
 	vector< AD<double> > grad =

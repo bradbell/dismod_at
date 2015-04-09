@@ -134,6 +134,7 @@ bool approx_derived_xam(void)
 
 	// object that is derived from approx_mixed
 	approx_derived approx_object(n_data, n_data, data);
+	approx_object.initialize(fixed_vec, random_vec);
 
 	// Evaluate the joint density
 	vector<double> vec(1);
