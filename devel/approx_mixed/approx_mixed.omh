@@ -41,11 +41,6 @@ The number of the random effects, and their order is constant
 We sometimes use $latex u$$ to denote the vector of random effects.
 
 $childtable%
-	devel/approx_mixed/derived_ctor.omh%
-	devel/approx_mixed/initialize.cpp%
-	devel/approx_mixed/joint_density.omh%
-	devel/approx_mixed/fixed_density.omh%
-	devel/approx_mixed/optimize_random.cpp%
 	devel/approx_mixed/theory.omh%
 	include/dismod_at/approx_mixed.hpp
 %$$

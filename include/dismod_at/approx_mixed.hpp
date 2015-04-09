@@ -96,6 +96,13 @@ $codep */
 		const d_vector& random_in
 	);
 /* $$
+$childtable%
+	devel/approx_mixed/derived_ctor.omh%
+	devel/approx_mixed/initialize.cpp%
+	devel/approx_mixed/joint_density.omh%
+	devel/approx_mixed/fixed_density.omh%
+	devel/approx_mixed/optimize_random.cpp
+%$$
 $end
 */
 private:
