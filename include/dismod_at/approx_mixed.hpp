@@ -35,21 +35,23 @@ $$
 
 $section approx_mixed Public Declarations$$
 
-$head typedef$$
-$index a1_double$$
-$index a2_double$$
-$index d_vector$$
-$index a1d_vector$$
-$index a2d_vector$$
-$index a3d_vector$$
+$head AD Types$$
+$mindex a1_double a2_double a3_double a4_double$$
 $codep */
 	typedef CppAD::AD<double>          a1_double;
 	typedef CppAD::AD<a1_double>       a2_double;
 	typedef CppAD::AD<a2_double>       a3_double;
+	typedef CppAD::AD<a3_double>       a4_double;
+/* $$
+
+$head Vector Types$$
+$mindex d_vector a1d_vector a2d_vector a3d_vector a4d_vector$$
+$codep */
 	typedef CppAD::vector<double>      d_vector;
 	typedef CppAD::vector<a1_double>   a1d_vector;
 	typedef CppAD::vector<a2_double>   a2d_vector;
 	typedef CppAD::vector<a3_double>   a3d_vector;
+	typedef CppAD::vector<a4_double>   a4d_vector;
 /* $$
 $head constructor$$
 Construct an $code approx_mixed$$ derived class object; see
