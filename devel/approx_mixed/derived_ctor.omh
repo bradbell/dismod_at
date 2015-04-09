@@ -47,7 +47,7 @@ $children%
 	example/devel/approx_mixed/approx_derived_xam.cpp
 %$$
 $head Example$$
-This file $cref approx_derived_xam.cpp$$ contains an example 
+This file $cref approx_derived_xam.cpp$$ contains an example
 that uses this derived class.
 
 $end

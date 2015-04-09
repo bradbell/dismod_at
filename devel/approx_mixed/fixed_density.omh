@@ -35,7 +35,7 @@ These are pure virtual functions and must be implemented
 in the derived class with prototype
 $codei%
 	virtual CppAD::vector<%Float%> fixed_density(
-		const CppAD::vector<%Float%>& %fixed_vec%  
+		const CppAD::vector<%Float%>& %fixed_vec%
 	)
 %$$
 for each of the possible $icode Float$$ cases.
@@ -65,7 +65,7 @@ $latex \[
 \] $$
 
 $head Example$$
-This file $cref approx_derived_xam.cpp$$ contains an example 
+This file $cref approx_derived_xam.cpp$$ contains an example
 of defining this virtual function.
 
 $end

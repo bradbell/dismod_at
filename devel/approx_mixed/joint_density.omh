@@ -78,7 +78,7 @@ $latex \[
 \] $$
 
 $head Example$$
-This file $cref approx_derived_xam.cpp$$ contains an example 
+This file $cref approx_derived_xam.cpp$$ contains an example
 of defining this virtual function.
 
 $end

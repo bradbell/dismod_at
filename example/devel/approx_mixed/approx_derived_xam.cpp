@@ -160,10 +160,10 @@ bool approx_derived_xam(void)
 		sum          += std::log( std::sqrt(2.0) * sigma );
 		//
 		double check  = std::sqrt(2.0) * (sigma - 1.0);
-		ok  &= fabs( vec[1+i] / check - 1.0) < eps;   
+		ok  &= fabs( vec[1+i] / check - 1.0) < eps;
 	}
 	ok &= std::fabs( vec[0] / sum - 1.0 ) < eps;
- 
+
 	return ok;
 }
 // END C++
