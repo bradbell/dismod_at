@@ -69,6 +69,14 @@ The number of random effects is given by
 $codep */
 	const size_t n_random_;
 /* $$
+$head joint_density_$$
+Records the $cref/joint_density/approx_mixed_joint_density/$$ function
+$latex f( \theta , u )$$ for different levels of AD:
+$codep */
+	CppAD::ADFun<double>      a0_joint_density_;
+	CppAD::ADFun<a1_double>   a1_joint_density_;
+	CppAD::ADFun<a2_double>   a2_joint_density_;
+/* $$
 $head gradient_$$
 The gradient of the joint likelihood w.r.t. the random effects
 $latex f_u^{(1)} ( \theta , u )^T$$. Because this is a simple vector
@@ -85,6 +93,14 @@ $codep */
 	CppAD::ADFun<a1_double> hessian_;     // computes the hessian values
 	CppAD::vector<size_t>   hessian_row_; // corresponding row indices
 	CppAD::vector<size_t>   hessian_col_; // corresponding column indices
+/* $$
+$head record_joint$$
+See $cref approx_mixed_record_joint$$.
+$codep */
+	void record_joint(
+		const d_vector& fixed_vec ,
+		const d_vector& random_vec
+	);
 /* $$
 $head record_gradient$$
 See $cref approx_mixed_record_gradient$$.
@@ -136,7 +152,8 @@ $codep */
 	);
 	friend bool ::joint_laplace_xam(void);
 /* $$
-$childtable%devel/approx_mixed/record_gradient.cpp
+$childtable%devel/approx_mixed/record_joint.cpp
+	%devel/approx_mixed/record_gradient.cpp
 	%devel/approx_mixed/record_hessian.cpp
 	%devel/approx_mixed/gradient_random.cpp
 	%devel/approx_mixed/hessian_random.cpp
@@ -155,7 +172,6 @@ public:
 	{ }
 	// joint density for data and random effects given the fixed effects
 	// (pure vritual function so must be defined by derived class)
-	DISMOD_AT_DEFINE_JOINT_DENSITY( double )
 	DISMOD_AT_DEFINE_JOINT_DENSITY( a1_double )
 	DISMOD_AT_DEFINE_JOINT_DENSITY( a2_double )
 	DISMOD_AT_DEFINE_JOINT_DENSITY( a3_double )

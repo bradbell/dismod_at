@@ -67,12 +67,24 @@ void approx_mixed::initialize(
 	{	std::cerr << "approx_mixed::initialize was called twice" << std::endl;
 		exit(1);
 	}
-	assert( hessian_.size_var() == 0 );
 	//
+	// joint_density_
+	assert( a2_joint_density_.size_var() == 0 );
+	assert( a1_joint_density_.size_var() == 0 );
+	assert( a0_joint_density_.size_var() == 0 );
+	record_joint(fixed_vec, random_vec);
+	assert( a2_joint_density_.size_var() > 0 );
+	assert( a1_joint_density_.size_var() > 0 );
+	assert( a0_joint_density_.size_var() > 0 );
+	//
+	// gradient_
+	assert( gradient_.size_var() == 0 );
 	record_gradient(fixed_vec, random_vec);
-	record_hessian(fixed_vec, random_vec);
-	//
 	assert( gradient_.size_var() > 0 );
+	//
+	// hessian_
+	assert( hessian_.size_var() == 0 );
+	record_hessian(fixed_vec, random_vec);
 	assert( hessian_.size_var() > 0 );
 }
 
