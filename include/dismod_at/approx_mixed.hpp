@@ -21,6 +21,7 @@ see http://www.gnu.org/licenses/agpl.txt
 	virtual CppAD::vector< Float > fixed_density(     \
 		const CppAD::vector< Float >& fixed_vec  ) = 0 ;
 
+extern bool gradient_random_xam(void);
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class approx_mixed {
@@ -33,6 +34,8 @@ $spell
 	CppAD
 	vec
 	const
+	bool
+	xam
 $$
 
 $section approx_mixed Private Declarations$$
@@ -96,8 +99,19 @@ $codep */
 		const d_vector& random_vec
 	);
 /* $$
+$head gradient_random$$
+See $cref approx_mixed_gradient_random$$
+$codep */
+	// gradient_random
+	a1d_vector gradient_random(
+		const a1d_vector&       fixed_vec   ,
+		const a1d_vector&       random_vec
+	);
+	friend bool ::gradient_random_xam(void);
+/* $$
 $childtable%devel/approx_mixed/record_gradient.cpp
 	%devel/approx_mixed/record_hessian.cpp
+	%devel/approx_mixed/gradient_random.cpp
 %$$
 
 $end
@@ -125,11 +139,6 @@ public:
 	d_vector optimize_random(
 		const d_vector& fixed_vec ,
 		const d_vector& random_in
-	);
-	// gradient_random
-	a1d_vector gradient_random(
-		const a1d_vector&       fixed_vec   ,
-		const a1d_vector&       random_vec
 	);
 	// hessian_random
 	void hessian_random(
