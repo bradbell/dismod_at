@@ -73,9 +73,9 @@ $head joint_density$$
 This is a pure virtual function so it must be defined by derived class;
 see $cref/joint_density/approx_mixed_joint_density/$$.
 $codep */
-	virtual CppAD::vector<a3_double> joint_density(
-		const CppAD::vector<a3_double>& fixed_vec  ,
-		const CppAD::vector<a3_double>& random_vec
+	virtual CppAD::vector<a4_double> joint_density(
+		const CppAD::vector<a4_double>& fixed_vec  ,
+		const CppAD::vector<a4_double>& random_vec
 	) = 0;
 /* $$
 $head fixed_density$$
@@ -140,6 +140,7 @@ $codep */
 	CppAD::ADFun<double>      a0_joint_density_;
 	CppAD::ADFun<a1_double>   a1_joint_density_;
 	CppAD::ADFun<a2_double>   a2_joint_density_;
+	CppAD::ADFun<a3_double>   a3_joint_density_;
 	friend optimize_random_eval;
 /* $$
 $head gradient_$$

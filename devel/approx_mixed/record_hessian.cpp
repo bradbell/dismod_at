@@ -103,7 +103,12 @@ void approx_mixed::record_hessian(
 
 	// compute f(u) using a3_double operations
 	CppAD::Independent(a3_u);
-	a3d_vector a3_vec = joint_density(a3_theta, a3_u);
+	a3d_vector a3_both(n_fixed_ + n_random_);
+	for(j = 0; j < n_fixed_; j++)
+		a3_both[j] = a2_both[j];
+	for(j = 0; j < n_random_; j++)
+		a3_both[n_fixed_ + j] = a3_u[j];
+	a3d_vector a3_vec = a3_joint_density_.Forward(0, a3_both);
 	a3d_vector a3_sum(1);
 	a3_sum[0]    = a3_vec[0];
 	size_t n_abs = a3_vec.size() - 1;

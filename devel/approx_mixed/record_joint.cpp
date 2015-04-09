@@ -47,7 +47,7 @@ $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
 $head joint_density_$$
-For $icode%k% = 0, 1, 2%$$, the input value of the member variable
+For $icode%k% = 0, 1, 2, 3%$$, the input value of the member variable
 $codei%
 	CppAD::ADFun<a%k%_double> a%k%_joint_density_
 %$$
@@ -65,31 +65,47 @@ void approx_mixed::record_joint(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {	size_t j;
+	// ------------------------------------------------------------------
+	// record a3_joint_density_
+	// ------------------------------------------------------------------
+	// combine into one vector
+	a4d_vector a4_both( n_fixed_ + n_random_ );
+	for(j = 0; j < n_fixed_; j++)
+		a4_both[j] = a4_double( fixed_vec[j] );
+	for(j = 0; j < n_random_; j++)
+		a4_both[n_fixed_ + j] = a4_double( random_vec[j] );
+
+	// start recording a4_double operations
+	CppAD::Independent(a4_both);
+
+	// extract the fixed and random effects
+	a4d_vector a4_theta(n_fixed_), a4_u(n_random_);
+	for(j = 0; j < n_fixed_; j++)
+		a4_theta[j] = a4_both[j];
+	for(j = 0; j < n_random_; j++)
+		a4_u[j] = a4_both[n_fixed_ + j];
+
+	// compute joint_density using a4_double operations
+	a4d_vector a4_vec = joint_density(a4_theta, a4_u);
+
+	// save the recording
+	a3_joint_density_.Dependent(a4_both, a4_vec);
+
+	// optimize the recording
+	a3_joint_density_.optimize();
 
 	// ------------------------------------------------------------------
 	// record a2_joint_density_
 	// ------------------------------------------------------------------
-	// combine into one vector
 	a3d_vector a3_both( n_fixed_ + n_random_ );
-	for(j = 0; j < n_fixed_; j++)
-		a3_both[j] = a3_double( fixed_vec[j] );
-	for(j = 0; j < n_random_; j++)
-		a3_both[n_fixed_ + j] = a3_double( random_vec[j] );
-
-	// start recording a3_double operations
+	for(size_t j = 0; j < n_fixed_ + n_random_; j++)
+		a3_both[j] = Value( a4_both[j] );
 	CppAD::Independent(a3_both);
 
-	// extract the fixed and random effects
-	a3d_vector a3_theta(n_fixed_), a3_u(n_random_);
-	for(j = 0; j < n_fixed_; j++)
-		a3_theta[j] = a3_both[j];
-	for(j = 0; j < n_random_; j++)
-		a3_u[j] = a3_both[n_fixed_ + j];
-
 	// compute joint_density using a3_double operations
-	a3d_vector a3_vec = joint_density(a3_theta, a3_u);
+	a3d_vector a3_vec = a3_joint_density_.Forward(0, a3_both);
 
-	// save the recording
+	// save the result
 	a2_joint_density_.Dependent(a3_both, a3_vec);
 
 	// optimize the recording
