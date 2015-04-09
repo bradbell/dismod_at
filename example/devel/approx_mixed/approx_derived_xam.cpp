@@ -57,7 +57,6 @@ namespace {
 			dismod_at::approx_mixed(n_fixed, n_random) ,
 			y_(y)
 		{ }
-	private:
 		// implementation of joint_density
 		template <class Float>
 		vector<Float> implement_joint_density(
@@ -106,10 +105,6 @@ namespace {
 			}
 			return vec;
 		}
-	public:
-		IMPLEMENT_JOINT_DENSITY( double )
-		IMPLEMENT_JOINT_DENSITY( AD<double> )
-		IMPLEMENT_JOINT_DENSITY( AD< AD<double> > )
 		IMPLEMENT_JOINT_DENSITY( AD< AD< AD<double> > > )
 		//
 		IMPLEMENT_FIXED_DENSITY( double )
@@ -138,7 +133,7 @@ bool approx_derived_xam(void)
 
 	// Evaluate the joint density
 	vector<double> vec(1);
-	vec = approx_object.joint_density(fixed_vec, random_vec);
+	vec = approx_object.implement_joint_density(fixed_vec, random_vec);
 
 	// check the joint density
 	double sum = 0.0;

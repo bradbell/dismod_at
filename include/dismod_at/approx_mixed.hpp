@@ -35,6 +35,7 @@ private:
 ------------------------------------------------------------------------------
 $begin approx_mixed_private$$
 $spell
+	eval
 	typedef
 	CppAD
 	vec
@@ -175,9 +176,6 @@ public:
 	{ }
 	// joint density for data and random effects given the fixed effects
 	// (pure vritual function so must be defined by derived class)
-	DISMOD_AT_DEFINE_JOINT_DENSITY( double )
-	DISMOD_AT_DEFINE_JOINT_DENSITY( a1_double )
-	DISMOD_AT_DEFINE_JOINT_DENSITY( a2_double )
 	DISMOD_AT_DEFINE_JOINT_DENSITY( a3_double )
 	// prior density for fixed effects
 	// (pure vritual function so must be defined by derived class)
