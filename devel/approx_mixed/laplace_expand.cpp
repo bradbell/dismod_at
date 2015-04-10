@@ -24,7 +24,7 @@ $head Syntax$$
 $icode%H% = %approx_object%.laplace_expand(%beta%, %theta%, %u%)%$$
 
 $head Purpose$$
-This routine evaluates the expanded joint part of the 
+This routine evaluates the expanded joint part of the
 Laplace approximation objective
 $cref/H(beta, theta, u)/approx_mixed_theory
 	/Objective, Joint Part
