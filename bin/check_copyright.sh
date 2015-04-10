@@ -15,7 +15,7 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-list=`git ls-files | sed -e '/^\.gitignore/d'`
+list=`git ls-files | sed -e '/^\.gitignore/d' -e '\/ipopt_xam.cpp$/d'`
 for file in $list
 do
 	text='Copyright (C) 2014-.. University of Washington'
@@ -34,6 +34,7 @@ list=`git status | sed -n \
         -e '/^[#\t ]*renamed:/p' \
         -e '/^[#\t ]*new file:/p' | \
             sed -e 's/^.*: *//' -e 's/ -> /\n/' | \
+			see -e '/\/ipopt_xam.cpp$$/d' | \
                 sort -u`
 ok='yes'
 for file in $list

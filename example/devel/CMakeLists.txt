@@ -35,6 +35,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	approx_mixed/eigen_xam.cpp
 	approx_mixed/gradient_random_xam.cpp
 	approx_mixed/hessian_random_xam.cpp
+	approx_mixed/ipopt_xam.cpp
 	approx_mixed/laplace_expand_xam.cpp
 	approx_mixed/optimize_random_xam.cpp
 
