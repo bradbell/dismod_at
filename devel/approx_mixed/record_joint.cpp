@@ -64,26 +64,20 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 void approx_mixed::record_joint(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	size_t j;
+{
 	// ------------------------------------------------------------------
 	// record a3_joint_density_
 	// ------------------------------------------------------------------
 	// combine into one vector
 	a4d_vector a4_both( n_fixed_ + n_random_ );
-	for(j = 0; j < n_fixed_; j++)
-		a4_both[j] = a4_double( fixed_vec[j] );
-	for(j = 0; j < n_random_; j++)
-		a4_both[n_fixed_ + j] = a4_double( random_vec[j] );
+	pack(fixed_vec, random_vec, a4_both);
 
 	// start recording a4_double operations
 	CppAD::Independent(a4_both);
 
 	// extract the fixed and random effects
 	a4d_vector a4_theta(n_fixed_), a4_u(n_random_);
-	for(j = 0; j < n_fixed_; j++)
-		a4_theta[j] = a4_both[j];
-	for(j = 0; j < n_random_; j++)
-		a4_u[j] = a4_both[n_fixed_ + j];
+	unpack(a4_theta, a4_u, a4_both);
 
 	// compute joint_density using a4_double operations
 	a4d_vector a4_vec = joint_density(a4_theta, a4_u);

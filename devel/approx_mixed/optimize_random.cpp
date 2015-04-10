@@ -8,8 +8,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# include <dismod_at/approx_mixed.hpp>
 # include <cppad/ipopt/solve.hpp>
+# include <dismod_at/approx_mixed.hpp>
 /*
 $begin approx_mixed_optimize_random$$
 $spell
@@ -115,14 +115,13 @@ public:
 	{	assert( fg.size() == 1 + 2 * n_abs_ );
 
 		// extract the random effects from x
-		ADvector both(n_fixed_ + n_random_);
-		for(size_t j = 0; j < n_fixed_; j++)
-			both[j] = fixed_vec_[j];
+		ADvector random_vec(n_random_), both_vec(n_fixed_ + n_random_);
 		for(size_t j = 0; j < n_random_; j++)
-			both[n_fixed_ + j] = x[j];
+			random_vec[j] = x[j];
+		approx_object_.pack(fixed_vec_, random_vec, both_vec);
 
 		// compute log-density vector
-		ADvector vec = approx_object_.a1_joint_density_.Forward(0, both);
+		ADvector vec = approx_object_.a1_joint_density_.Forward(0, both_vec);
 
 		// initialize smooth part of negative log-likelihood
 		size_t k = 0;
@@ -152,12 +151,9 @@ CppAD::vector<double> approx_mixed::optimize_random(
 	assert( n_random_ == random_in.size() );
 
 	// determine initial density vector
-	d_vector both(n_fixed_ + n_random_);
-	for(size_t j = 0; j < n_fixed_; j++)
-		both[j] = fixed_vec[j];
-	for(size_t j = 0; j < n_random_; j++)
-		both[n_fixed_ + j] = random_in[j];
-	d_vector vec = a0_joint_density_.Forward(0, both);
+	d_vector both_vec(n_fixed_ + n_random_);
+	pack(fixed_vec, random_in, both_vec);
+	d_vector vec = a0_joint_density_.Forward(0, both_vec);
 
 	// number of absolute value terms in objective
 	size_t n_abs = vec.size() - 1;

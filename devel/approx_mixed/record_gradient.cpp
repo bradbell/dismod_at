@@ -67,45 +67,35 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 void approx_mixed::record_gradient(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	size_t i, j;
-
+{
 	//	create an a2d_vector containing (theta, u)
 	a2d_vector a2_both( n_fixed_ + n_random_ );
-	for(j = 0; j < n_fixed_; j++)
-		a2_both[j] = a2_double( fixed_vec[j] );
-	for(j = 0; j < n_random_; j++)
-		a2_both[n_fixed_ + j] = a2_double( random_vec[j] );
+	pack(fixed_vec, random_vec, a2_both);
 
 	// start recording f_uu (theta, u) using a2_double operations
 	CppAD::Independent( a2_both );
 
 	// create an a3d_vector containing theta and u
 	a3d_vector a3_theta(n_fixed_), a3_u(n_random_);
-	for(j = 0; j < n_fixed_; j++)
-		a3_theta[j] = a2_both[j];
-	for(j = 0; j < n_random_; j++)
-		a3_u[j] = a2_both[n_fixed_ + j];
+	unpack(a3_theta, a3_u, a2_both);
 
 	// compute f(u) using a3_double operations
 	CppAD::Independent(a3_u);
 	a3d_vector a3_both(n_fixed_ + n_random_);
-	for(j = 0; j < n_fixed_; j++)
-		a3_both[j] = a2_both[j];
-	for(j = 0; j < n_random_; j++)
-		a3_both[n_fixed_ + j] = a3_u[j];
+	pack(a3_theta, a3_u, a3_both);
+	//
 	a3d_vector a3_vec = a3_joint_density_.Forward(0, a3_both);
 	a3d_vector a3_sum(1);
 	a3_sum[0]    = a3_vec[0];
 	size_t n_abs = a3_vec.size() - 1;
-	for(i = 0; i < n_abs; i++)
+	for(size_t i = 0; i < n_abs; i++)
 		a3_sum[0] += abs( a3_vec[1 + i] );
 	CppAD::ADFun<a2_double> a2_f;
 	a2_f.Dependent(a3_u, a3_sum);
 
 	// zero order forward mode
-	a2d_vector a2_u(n_random_);
-	for(j = 0; j < n_random_; j++)
-		a2_u[j] = a2_both[n_fixed_ + j];
+	a2d_vector a2_theta(n_fixed_), a2_u(n_random_);
+	unpack(a2_theta, a2_u, a2_both);
 	a2_f.Forward(0, a2_u);
 
 	// first order reverse

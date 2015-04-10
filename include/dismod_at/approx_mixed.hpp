@@ -123,6 +123,16 @@ $$
 
 $section approx_mixed Private Declarations$$
 
+$childtable%include/dismod_at/approx_pack.hpp
+	%include/dismod_at/approx_unpack.hpp
+	%devel/approx_mixed/record_joint.cpp
+	%devel/approx_mixed/record_gradient.cpp
+	%devel/approx_mixed/record_hessian.cpp
+	%devel/approx_mixed/gradient_random.cpp
+	%devel/approx_mixed/hessian_random.cpp
+	%devel/approx_mixed/joint_laplace.cpp
+%$$
+
 $head n_fixed_$$
 The number of fixed effects is given by
 $codep */
@@ -163,21 +173,21 @@ $codep */
 $head pack$$
 See $cref approx_mixed_pack$$.
 $codep */
-	template <class Float>
+	template <class Float_unpack, class Float_pack>
 	void pack(
-		const CppAD::vector<Float>& fixed_vec  ,
-		const CppAD::vector<Float>& random_vec ,
-		CppAD::vector<Float>&       both
+		const CppAD::vector<Float_unpack>& fixed_vec  ,
+		const CppAD::vector<Float_unpack>& random_vec ,
+		CppAD::vector<Float_pack>&         both_vec
 	) const;
 /* $$
 $head unpack$$
 See $cref approx_mixed_unpack$$.
 $codep */
-	template <class Float>
+	template <class Float_unpack, class Float_pack>
 	void unpack(
-		CppAD::vector<Float>&       fixed_vec  ,
-		CppAD::vector<Float>&       random_vec ,
-		const CppAD::vector<Float>& both
+		CppAD::vector<Float_unpack>&       fixed_vec  ,
+		CppAD::vector<Float_unpack>&       random_vec ,
+		const CppAD::vector<Float_pack>&   both_vec
 	) const;
 /* $$
 $head record_joint$$
@@ -238,15 +248,6 @@ $codep */
 	);
 	friend bool ::joint_laplace_xam(void);
 /* $$
-$childtable%include/dismod_at/approx_pack.hpp
-	%include/dismod_at/approx_unpack.hpp
-	%devel/approx_mixed/record_joint.cpp
-	%devel/approx_mixed/record_gradient.cpp
-	%devel/approx_mixed/record_hessian.cpp
-	%devel/approx_mixed/gradient_random.cpp
-	%devel/approx_mixed/hessian_random.cpp
-	%devel/approx_mixed/joint_laplace.cpp
-%$$
 
 $end
 -------------------------------------------------------------------------------
@@ -254,5 +255,8 @@ $end
 };
 
 } // END_DISMOD_AT_NAMESPACE
+
+# include <dismod_at/approx_pack.hpp>
+# include <dismod_at/approx_unpack.hpp>
 
 # endif

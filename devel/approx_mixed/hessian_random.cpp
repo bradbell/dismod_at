@@ -138,15 +138,12 @@ void approx_mixed::hessian_random(
 	assert( row_out.size() == val_out.size() );
 
 	// create an a1d_vector containing (theta, u)
-	a1d_vector both( n_fixed_ + n_random_ );
-	for(size_t j = 0; j < n_fixed_; j++)
-		both[j] = fixed_vec[j];
-	for(size_t j = 0; j < n_random_; j++)
-		both[n_fixed_ + j] = random_vec[j];
+	a1d_vector both_vec( n_fixed_ + n_random_ );
+	pack(fixed_vec, random_vec, both_vec);
 
 	// compute the sparse Hessian
 	size_t order = 0;
-	val_out = hessian_.Forward(order, both);
+	val_out = hessian_.Forward(order, both_vec);
 	assert( val_out.size() == n_nonzero );
 
 	if( row_out.size() == 0 )

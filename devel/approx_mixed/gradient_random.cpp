@@ -9,7 +9,6 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/approx_mixed.hpp>
-# include <dismod_at/approx_pack.hpp>
 /*
 $begin approx_mixed_gradient_random$$
 $spell
