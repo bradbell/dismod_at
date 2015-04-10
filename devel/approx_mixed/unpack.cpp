@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/approx_mixed.hpp>
 
 /*
-$begin approx_mixed_pack$$
+$begin approx_mixed_unpack$$
 $spell
 	vec
 	const
@@ -21,7 +21,7 @@ $$
 $section approx_mixed: Pack Fixed Effect and Random Effects Into One Vector$$
 
 $head Syntax$$
-$codei%pack(%fixed_vec%, %random_vec%, %both_vec%)%$$
+$codei%unpack(%fixed_vec%, %random_vec%, %both_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code approx_mixed$$ class
@@ -34,31 +34,32 @@ This can be any type.
 $head fixed_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<%Float%>& %fixed_vec%
+	CppAD::vector<%Float%>& %fixed_vec%
 %$$
-It specifies the value of the
+The input value of its elements does not matter.
+Upon return, it contains the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$.
+corresponding to $icode both_vec$$.
 
 $head random_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<%Float%>& %random_vec%
+	CppAD::vector<%Float%>& %random_vec%
 %$$
-It specifies the value of the
+The input value of its elements does not matter.
+Upon return, it contains the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$.
+corresponding to $icode both_vec$$.
 
 $head both_vec$$
 This argument has prototype
 $codei%
-	CppAD::vector<%Float%>& %both_vec%
+	const CppAD::vector<%Float%>& %both_vec%
 %$$
 The size of this vector must be equal to
 $cref/n_fixed_/approx_mixed_private/n_fixed_/$$
 +
 $cref/n_random_/approx_mixed_private/n_random_/$$.
-The input value of its elements does not matter.
-Upon return, it contains the fixed effects and random effects 
-as one vector.
 
 $end
 */

@@ -170,6 +170,16 @@ $codep */
 		CppAD::vector<Float>&       both
 	) const;
 /* $$
+$head unpack$$
+See $cref approx_mixed_unpack$$.
+$codep */
+	template <class Float>
+	void unpack(
+		CppAD::vector<Float>&       fixed_vec  ,
+		CppAD::vector<Float>&       random_vec ,
+		const CppAD::vector<Float>& both
+	) const;
+/* $$
 $head record_joint$$
 See $cref approx_mixed_record_joint$$.
 $codep */
@@ -229,6 +239,7 @@ $codep */
 	friend bool ::joint_laplace_xam(void);
 /* $$
 $childtable%devel/approx_mixed/pack.cpp
+	%devel/approx_mixed/unpack.cpp
 	%devel/approx_mixed/record_joint.cpp
 	%devel/approx_mixed/record_gradient.cpp
 	%devel/approx_mixed/record_hessian.cpp
