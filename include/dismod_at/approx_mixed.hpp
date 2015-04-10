@@ -15,7 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 //
 extern bool gradient_random_xam(void);
 extern bool hessian_random_xam(void);
-extern bool joint_laplace_xam(void);
+extern bool laplace_expand_xam(void);
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -130,7 +130,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/record_hessian.cpp
 	%devel/approx_mixed/gradient_random.cpp
 	%devel/approx_mixed/hessian_random.cpp
-	%devel/approx_mixed/joint_laplace.cpp
+	%devel/approx_mixed/laplace_expand.cpp
 %$$
 
 $head n_fixed_$$
@@ -237,16 +237,16 @@ $codep */
 	);
 	friend bool ::hessian_random_xam(void);
 /* $$
-$head joint_laplace$$
-See $cref approx_mixed_joint_laplace$$
+$head laplace_expand$$
+See $cref approx_mixed_laplace_expand$$
 $codep */
-	// joint_laplace
-	a2_double joint_laplace(
+	// laplace_expand
+	a2_double laplace_expand(
 		const a2d_vector& beta   ,
 		const a2d_vector& theta  ,
 		const a2d_vector& u
 	);
-	friend bool ::joint_laplace_xam(void);
+	friend bool ::laplace_expand_xam(void);
 /* $$
 
 $end

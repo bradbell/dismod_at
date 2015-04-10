@@ -11,24 +11,27 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/approx_mixed.hpp>
 
 /*
-$begin approx_mixed_joint_laplace$$
+$begin approx_mixed_laplace_expand$$
 $spell
 	vec
 	const
 	Cpp
 $$
 
-$section approx_mixed: Joint Part of the Laplace Approximation Objective$$
+$section approx_mixed: Expanded Joint Part of the Laplace Approximation$$
 
 $head Syntax$$
-$icode%H% = %approx_object%.joint_laplace(%beta%, %theta%, %u%)%$$
+$icode%H% = %approx_object%.laplace_expand(%beta%, %theta%, %u%)%$$
 
 $head Purpose$$
-This routine evaluates the joint part of the Laplace approximation objective
+This routine evaluates the expanded joint part of the 
+Laplace approximation objective
 $cref/H(beta, theta, u)/approx_mixed_theory
 	/Objective, Joint Part
 	/H(beta, theta, u)
 /$$.
+This is called expanded because the actual objective
+only has $latex \theta$$ as an argument.
 
 $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
@@ -63,10 +66,10 @@ $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
 $children%
-	example/devel/approx_mixed/joint_laplace_xam.cpp
+	example/devel/approx_mixed/laplace_expand_xam.cpp
 %$$
 $head Example$$
-The file $cref joint_laplace_xam.cpp$$ contains an example
+The file $cref laplace_expand_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 
@@ -77,7 +80,7 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-approx_mixed::a2_double approx_mixed::joint_laplace(
+approx_mixed::a2_double approx_mixed::laplace_expand(
 	const a2d_vector& beta  ,
 	const a2d_vector& theta ,
 	const a2d_vector& u     )

@@ -9,16 +9,16 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin joint_laplace_xam.cpp$$
+$begin laplace_expand_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ joint_laplace: Example and Test$$
+$section C++ laplace_expand: Example and Test$$
 
 $code
-$verbatim%example/devel/approx_mixed/joint_laplace_xam.cpp
+$verbatim%example/devel/approx_mixed/laplace_expand_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -94,7 +94,7 @@ namespace {
 	};
 }
 
-bool joint_laplace_xam(void)
+bool laplace_expand_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -127,7 +127,7 @@ bool joint_laplace_xam(void)
 		a2_uhat[i] = a2_double( uhat[i] );
 
 	// compute joint part of Laplace approximation
-	a2_double a2_laplace = approx_object.joint_laplace(
+	a2_double a2_laplace = approx_object.laplace_expand(
 		a2_beta, a2_theta, a2_uhat
 	);
 
