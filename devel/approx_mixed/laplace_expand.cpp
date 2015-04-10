@@ -45,7 +45,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
-vector $latex \beta$$ at which the recording is made.
+vector $latex \beta$$ at which $latex H( \beta , \theta , u)$$ is evaluated.
 
 $head theta$$
 This argument has prototype
@@ -54,7 +54,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
-vector $latex \theta$$ at which the recording is made.
+vector $latex \theta$$ at which $latex H( \beta , \theta , u)$$ is evaluated.
 
 $head u$$
 This argument has prototype
@@ -63,7 +63,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
-vector $latex u$$ at which the recording is made.
+vector $latex u$$ at which $latex H( \beta , \theta , u)$$ is evaluated.
 
 $children%
 	example/devel/approx_mixed/laplace_expand_xam.cpp

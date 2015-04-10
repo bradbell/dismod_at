@@ -14,6 +14,7 @@ $latex \newcommand{\dtheta}[1]{ \frac{\R{d}}{\R{d} \theta_{ #1}} }$$
 
 $section Laplace Approximation for Mixed Effects Models$$
 $spell
+	uhat
 	Kasper Kristensen
 	Anders Nielsen
 	Casper Berg
@@ -117,6 +118,8 @@ $latex \[
 =
 H_{\beta}^{(1)} \left[ \theta , \theta , \hat{u} ( \theta ) \right]
 \] $$
+
+$subhead h[theta, u^(theta)]$$
 This formula enables us to use AD to compute the derivatives of
 $latex \[
 	h [ \theta , \hat{u} ( \theta ) ]
