@@ -238,8 +238,8 @@ $codep */
 	);
 	friend bool ::joint_laplace_xam(void);
 /* $$
-$childtable%devel/approx_mixed/pack.cpp
-	%devel/approx_mixed/unpack.cpp
+$childtable%include/dismod_at/approx_pack.hpp
+	%include/dismod_at/approx_unpack.hpp
 	%devel/approx_mixed/record_joint.cpp
 	%devel/approx_mixed/record_gradient.cpp
 	%devel/approx_mixed/record_hessian.cpp

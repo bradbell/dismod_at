@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/approx_mixed.hpp>
-# include <cppad/ipopt/solve.hpp>
+# include <dismod_at/approx_pack.hpp>
 /*
 $begin approx_mixed_gradient_random$$
 $spell
@@ -93,15 +93,12 @@ CppAD::vector< CppAD::AD<double> > approx_mixed::gradient_random(
 	}
 
 	// create an a1d_vector containing (theta, u)
-	a1d_vector both( n_fixed_ + n_random_ );
-	for(size_t j = 0; j < n_fixed_; j++)
-		both[j] = fixed_vec[j];
-	for(size_t j = 0; j < n_random_; j++)
-		both[n_fixed_ + j] = random_vec[j];
+	a1d_vector both_vec( n_fixed_ + n_random_ );
+	pack(fixed_vec, random_vec, both_vec);
 
 	// compute the gradient
 	size_t order = 0;
-	return gradient_.Forward(order, both);
+	return gradient_.Forward(order, both_vec);
 }
 
 

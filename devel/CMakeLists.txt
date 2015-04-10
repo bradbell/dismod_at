@@ -16,11 +16,9 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	approx_mixed/initialize.cpp
 	approx_mixed/joint_laplace.cpp
 	approx_mixed/optimize_random.cpp
-	approx_mixed/pack.cpp
 	approx_mixed/record_gradient.cpp
 	approx_mixed/record_hessian.cpp
 	approx_mixed/record_joint.cpp
-	approx_mixed/unpack.cpp
 
 	model/data_model.cpp
 	model/prior_model.cpp
