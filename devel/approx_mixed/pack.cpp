@@ -57,7 +57,7 @@ $cref/n_fixed_/approx_mixed_private/n_fixed_/$$
 +
 $cref/n_random_/approx_mixed_private/n_random_/$$.
 The input value of its elements does not matter.
-Upon return, it contains the fixed effects and random effects 
+Upon return, it contains the fixed effects and random effects
 as one vector.
 
 $end
