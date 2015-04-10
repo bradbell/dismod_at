@@ -159,14 +159,14 @@ $latex f_u^{(1)} ( \theta , u )^T$$. Because this is a simple vector
 there is no difference between the gradient and the derivative; i.e.,
 the transpose does not matter.
 $codep */
-	CppAD::ADFun<a1_double> gradient_;   // computes the gradient values
+	CppAD::ADFun<a2_double> gradient_;   // computes the gradient values
 /* $$
 $head hessian_$$
 The Hessian of the joint likelihood w.r.t. the random effects
 $latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix by
 the following variables:
 $codep */
-	CppAD::ADFun<a1_double> hessian_;     // computes the hessian values
+	CppAD::ADFun<a2_double> hessian_;     // computes the hessian values
 	CppAD::vector<size_t>   hessian_row_; // corresponding row indices
 	CppAD::vector<size_t>   hessian_col_; // corresponding column indices
 /* $$
@@ -218,9 +218,9 @@ $head gradient_random$$
 See $cref approx_mixed_gradient_random$$
 $codep */
 	// gradient_random
-	a1d_vector gradient_random(
-		const a1d_vector&       fixed_vec   ,
-		const a1d_vector&       random_vec
+	a2d_vector gradient_random(
+		const a2d_vector&       fixed_vec   ,
+		const a2d_vector&       random_vec
 	);
 	friend bool ::gradient_random_xam(void);
 /* $$
@@ -229,11 +229,11 @@ See $cref approx_mixed_hessian_random$$
 $codep */
 	// hessian_random
 	void hessian_random(
-		const a1d_vector&       fixed_vec   ,
-		const a1d_vector&       random_vec  ,
+		const a2d_vector&       fixed_vec   ,
+		const a2d_vector&       random_vec  ,
 		CppAD::vector<size_t>&  row_out     ,
 		CppAD::vector<size_t>&  col_out     ,
-		a1d_vector&             val_out
+		a2d_vector&             val_out
 	);
 	friend bool ::hessian_random_xam(void);
 /* $$
@@ -241,10 +241,10 @@ $head joint_laplace$$
 See $cref approx_mixed_joint_laplace$$
 $codep */
 	// joint_laplace
-	a1_double joint_laplace(
-		const a1d_vector& beta   ,
-		const a1d_vector& theta  ,
-		const a1d_vector& u
+	a2_double joint_laplace(
+		const a2d_vector& beta   ,
+		const a2d_vector& theta  ,
+		const a2d_vector& u
 	);
 	friend bool ::joint_laplace_xam(void);
 /* $$

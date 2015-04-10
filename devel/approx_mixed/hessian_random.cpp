@@ -41,7 +41,7 @@ derived from the $code approx_mixed$$ base class.
 $head fixed_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector< AD<double> >& %fixed_vec%
+	const CppAD::vector<a2_double>& %fixed_vec%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
@@ -50,7 +50,7 @@ vector $latex \theta$$.
 $head random_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector< AD<double> >& %random_vec%
+	const CppAD::vector<a2_double>& %random_vec%
 %$$
 It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
@@ -88,7 +88,7 @@ for all $icode%k% = 0 , %...%, %row_out%.size()-1%$$
 $head val_out$$
 This argument has prototype
 $codei%
-	CppAD::vector< AD<double> >& %val_out%
+	CppAD::vector<a2_double>& %val_out%
 %$$
 If the input size of this array is non-zero, it must have the same size
 as for a previous call to $code hessian_random$$.
@@ -111,11 +111,11 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // ----------------------------------------------------------------------------
 // hessian_random
 void approx_mixed::hessian_random(
-	const a1d_vector&        fixed_vec   ,
-	const a1d_vector&        random_vec  ,
+	const a2d_vector&        fixed_vec   ,
+	const a2d_vector&        random_vec  ,
 	CppAD::vector<size_t>&   row_out     ,
 	CppAD::vector<size_t>&   col_out     ,
-	a1d_vector&              val_out     )
+	a2d_vector&              val_out     )
 {
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );
@@ -137,8 +137,8 @@ void approx_mixed::hessian_random(
 	assert( row_out.size() == col_out.size() );
 	assert( row_out.size() == val_out.size() );
 
-	// create an a1d_vector containing (theta, u)
-	a1d_vector both_vec( n_fixed_ + n_random_ );
+	// create an a2d_vector containing (theta, u)
+	a2d_vector both_vec( n_fixed_ + n_random_ );
 	pack(fixed_vec, random_vec, both_vec);
 
 	// compute the sparse Hessian

@@ -39,7 +39,7 @@ derived from the $code approx_mixed$$ base class.
 $head fixed_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector< AD<double> >& %fixed_vec%
+	const CppAD::vector<a2_double>& %fixed_vec%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
@@ -48,7 +48,7 @@ vector $latex \theta$$.
 $head random_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector< AD<double> >& %random_vec%
+	const CppAD::vector<a2_double>& %random_vec%
 %$$
 It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
@@ -57,7 +57,7 @@ vector $latex u$$.
 $head grad$$
 The return value has prototype
 $codei%
-	CppAD::vector< AD<double> >& %grad%
+	CppAD::vector<a2_double>& %grad%
 %$$
 It contains the gradient $latex f_u^{(1)} ( \theta , u )$$.
 
@@ -76,9 +76,9 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // ----------------------------------------------------------------------------
 // gradient_random
-CppAD::vector< CppAD::AD<double> > approx_mixed::gradient_random(
-	const a1d_vector&        fixed_vec   ,
-	const a1d_vector&        random_vec  )
+CppAD::vector<approx_mixed::a2_double> approx_mixed::gradient_random(
+	const a2d_vector&        fixed_vec   ,
+	const a2d_vector&        random_vec  )
 {
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );
@@ -91,8 +91,8 @@ CppAD::vector< CppAD::AD<double> > approx_mixed::gradient_random(
 		exit(1);
 	}
 
-	// create an a1d_vector containing (theta, u)
-	a1d_vector both_vec( n_fixed_ + n_random_ );
+	// create an a2d_vector containing (theta, u)
+	a2d_vector both_vec( n_fixed_ + n_random_ );
 	pack(fixed_vec, random_vec, both_vec);
 
 	// compute the gradient

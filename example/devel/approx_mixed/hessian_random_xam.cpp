@@ -115,13 +115,14 @@ bool hessian_random_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
+	typedef AD< AD<double> > a2_double;
 
 	size_t n_data   = 10;
 	size_t n_fixed  = n_data;
 	size_t n_random = n_data;
 	vector<double> data(n_data);
 	vector<double> theta(n_fixed), u(n_random);
-	vector< AD<double> > fixed_vec(n_fixed), random_vec(n_random);
+	vector<a2_double> fixed_vec(n_fixed), random_vec(n_random);
 
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]      = double(i + 1);
@@ -135,7 +136,7 @@ bool hessian_random_xam(void)
 
 	// compute Hessian with respect to random effects
 	vector<size_t> row, col;
-	vector< AD<double> > val;
+	vector<a2_double> val;
 	approx_object.hessian_random(fixed_vec, random_vec, row, col, val);
 
 	// check the result
@@ -150,9 +151,9 @@ bool hessian_random_xam(void)
 		size_t j = col[k];
 		ok      &= (i == j);
 		//
-		double sigma  = Value( fixed_vec[i] );
-		double check  = 1.0 / (sigma * sigma);
-		ok           &= fabs( Value( val[k] ) / check - 1.0) <= eps;
+		a2_double sigma  = fixed_vec[i];
+		a2_double check  = a2_double(1.0) / (sigma * sigma);
+		ok           &= abs( val[k] / check - 1.0) <= eps;
 	}
 
 	return ok;

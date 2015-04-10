@@ -49,15 +49,12 @@ vector $latex u$$ at which the recording is made.
 $head gradient_$$
 The input value of the member variable
 $codei%
-	CppAD::ADFun<a1_double> gradient_
+	CppAD::ADFun<a2_double> gradient_
 %$$
 does not matter.
 Upon return it contains the corresponding recording for the gradient
 $latex f_u^{(1)} ( \theta , u )$$.
 
-$head joint_density$$
-The member function $code joint_density$$ called
-with arguments of type $code a3d_vector$$.
 
 $end
 */
@@ -68,43 +65,41 @@ void approx_mixed::record_gradient(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {
-	//	create an a2d_vector containing (theta, u)
-	a2d_vector a2_both( n_fixed_ + n_random_ );
-	pack(fixed_vec, random_vec, a2_both);
+	//	create an a3d_vector containing (theta, u)
+	a3d_vector a3_both( n_fixed_ + n_random_ );
+	pack(fixed_vec, random_vec, a3_both);
 
-	// start recording f_uu (theta, u) using a2_double operations
-	CppAD::Independent( a2_both );
+	// start recording f_uu (theta, u) using a3_double operations
+	CppAD::Independent( a3_both );
 
-	// create an a3d_vector containing theta and u
-	a3d_vector a3_theta(n_fixed_), a3_u(n_random_);
-	unpack(a3_theta, a3_u, a2_both);
+	// create an a4d_vector containing theta and u
+	a4d_vector a4_theta(n_fixed_), a4_u(n_random_);
+	unpack(a4_theta, a4_u, a3_both);
 
-	// compute f(u) using a3_double operations
-	CppAD::Independent(a3_u);
-	a3d_vector a3_both(n_fixed_ + n_random_);
-	pack(a3_theta, a3_u, a3_both);
+	// compute f(u) using a4_double operations
+	CppAD::Independent(a4_u);
 	//
-	a3d_vector a3_vec = a3_joint_density_.Forward(0, a3_both);
-	a3d_vector a3_sum(1);
-	a3_sum[0]    = a3_vec[0];
-	size_t n_abs = a3_vec.size() - 1;
+	a4d_vector a4_vec = joint_density(a4_theta, a4_u);
+	a4d_vector a4_sum(1);
+	a4_sum[0]    = a4_vec[0];
+	size_t n_abs = a4_vec.size() - 1;
 	for(size_t i = 0; i < n_abs; i++)
-		a3_sum[0] += abs( a3_vec[1 + i] );
-	CppAD::ADFun<a2_double> a2_f;
-	a2_f.Dependent(a3_u, a3_sum);
+		a4_sum[0] += abs( a4_vec[1 + i] );
+	CppAD::ADFun<a3_double> a3_f;
+	a3_f.Dependent(a4_u, a4_sum);
 
 	// zero order forward mode
-	a2d_vector a2_theta(n_fixed_), a2_u(n_random_);
-	unpack(a2_theta, a2_u, a2_both);
-	a2_f.Forward(0, a2_u);
+	a3d_vector a3_theta(n_fixed_), a3_u(n_random_);
+	unpack(a3_theta, a3_u, a3_both);
+	a3_f.Forward(0, a3_u);
 
 	// first order reverse
-	a2d_vector a2_grad(n_random_), a2_w(1);
-	a2_w[0] = a2_double( 1.0 );
-	a2_grad = a2_f.Reverse(1, a2_w);
+	a3d_vector a3_grad(n_random_), a3_w(1);
+	a3_w[0] = a3_double( 1.0 );
+	a3_grad = a3_f.Reverse(1, a3_w);
 
 	// complete recording of f_u^{(1)} (u, theta)
-	gradient_.Dependent(a2_both, a2_grad);
+	gradient_.Dependent(a3_both, a3_grad);
 
 	// optimize the recording
 	gradient_.optimize();

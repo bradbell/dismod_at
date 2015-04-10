@@ -38,7 +38,7 @@ derived from the $code approx_mixed$$ base class.
 $head beta$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a1_double>& %beta%
+	const CppAD::vector<a2_double>& %beta%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
@@ -47,7 +47,7 @@ vector $latex \beta$$ at which the recording is made.
 $head theta$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a1_double>& %theta%
+	const CppAD::vector<a2_double>& %theta%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
@@ -56,7 +56,7 @@ vector $latex \theta$$ at which the recording is made.
 $head u$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a1_double>& %u%
+	const CppAD::vector<a2_double>& %u%
 %$$
 It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
@@ -77,23 +77,23 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-CppAD::AD<double> approx_mixed::joint_laplace(
-	const a1d_vector& beta  ,
-	const a1d_vector& theta ,
-	const a1d_vector& u     )
+approx_mixed::a2_double approx_mixed::joint_laplace(
+	const a2d_vector& beta  ,
+	const a2d_vector& theta ,
+	const a2d_vector& u     )
 {
 	// evaluate gradient f_u^{(1)} (beta , u )
-	a1d_vector grad = gradient_random(beta, u);
+	a2d_vector grad = gradient_random(beta, u);
 
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	CppAD::vector<size_t> row, col;
-	a1d_vector val;
+	a2d_vector val;
 	hessian_random(theta, u, row, col, val);
 
 	// declare eigen matrix types
 	using Eigen::Dynamic;
-	typedef Eigen::Matrix<a1_double, Dynamic, Dynamic> dense_matrix;
-	typedef Eigen::SparseMatrix<a1_double>             sparse_matrix;
+	typedef Eigen::Matrix<a2_double, Dynamic, Dynamic> dense_matrix;
+	typedef Eigen::SparseMatrix<a2_double>             sparse_matrix;
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
 	sparse_matrix hessian(n_random_, n_random_);
@@ -113,7 +113,7 @@ CppAD::AD<double> approx_mixed::joint_laplace(
 	dense_matrix newton_step = chol.solve(rhs);
 
 	// compute U(beta, theta, u)
-	a1d_vector U(n_random_);
+	a2d_vector U(n_random_);
 	for(size_t j = 0; j < n_random_; j++)
 		U[j] = u[j] - newton_step(j);
 
@@ -127,15 +127,15 @@ CppAD::AD<double> approx_mixed::joint_laplace(
 
 	// logdet f_{uu}^{(2)} [beta, U(beta, theta, u)]
 	dense_matrix diag = chol.vectorD();
-	a1_double logdet = 0.0;
+	a2_double logdet = a2_double(0.0);
 	for(size_t j = 0; j < n_random_; j++)
 		logdet += log( diag(j) );
 
 	// f[beta, U(beta, theta, u)]
-	a1d_vector both(n_fixed_ + n_random_);
+	a2d_vector both(n_fixed_ + n_random_);
 	pack(beta, U, both);
-	a1d_vector vec = a1_joint_density_.Forward(0, both);
-	a1_double sum = vec[0];
+	a2d_vector vec = a2_joint_density_.Forward(0, both);
+	a2_double sum = vec[0];
 	size_t n_abs = vec.size() - 1;
 	for(size_t i = 0; i < n_abs; i++)
 		sum += abs( vec[1 + i] );
