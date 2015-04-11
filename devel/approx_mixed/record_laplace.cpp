@@ -152,7 +152,8 @@ void approx_mixed::record_laplace(
 	a2d_vector H(1);
 	H[0] = logdet / 2.0 + sum - constant_term;
 
-	// complete recording of f_u^{(1)} (u, theta)
+
+	// complete recording of H(beta, theta, u)
 	laplace_.Dependent(beta_theta_u, H);
 
 	// optimize the recording
