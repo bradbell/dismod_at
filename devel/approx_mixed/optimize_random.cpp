@@ -193,6 +193,7 @@ CppAD::vector<double> approx_mixed::optimize_random(
 	std::string options;
 	options += "Integer print_level 0\n";
 	options += "String  sb          yes\n";
+	options += "Sparse  true        reverse\n";
 	options += "String  derivative_test second-order\n";
 
 	// return solution

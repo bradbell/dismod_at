@@ -28,14 +28,14 @@ $icode%fixed_out% =%$$
 $icode%approx_object%.optimize_fixed(%fixed_in%, %random_in%)%$$
 
 $head Purpose$$
-This routine maximizes the Laplace approximation for the 
+This routine maximizes the Laplace approximation for the
 negative log-likelihood
 $cref/L(theta)/approx_mixed_theory/Objective, L(theta)/$$
 $latex \[
-L( \theta ) \approx - \log \left[ 
+L( \theta ) \approx - \log \left[
 	\int \B{p} ( y | \theta , u) \B{p} ( u | \theta ) \B{p} ( \theta ) \R{d} u
 \right]
-\] $$ 
+\] $$
 
 $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
@@ -83,14 +83,21 @@ It returns true, if the test passes, and false otherwise.
 $end
 */
 
+
+namespace { // BEGIN_EMPTY_NAMESPACE
+	// types used by this file
+	typedef Ipopt::Number  Number;
+	typedef Ipopt::Index   Index;
+	typedef Ipopt::TNLP::IndexStyleEnum IndexStyleEnum;
+
+	// derived from the Ipopt base class for non-linear programming problems.
+	class ipopt_nlp_derived_class : public Ipopt::TNLP {
+
+
+	};
+} // END_EMPTY_NAMESPACE
+
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
-
-// ----------------------------------------------------------------------------
-// class derived from the Ipopt base class for non-linear programming problems.
-class ipopt_nlp_derived_class : public TNLP {
-public:
-};
-
 // ----------------------------------------------------------------------------
 // optimize_fixed
 CppAD::vector<double> approx_mixed::optimize_fixed(
