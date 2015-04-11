@@ -69,7 +69,7 @@ vector $latex u$$ at which the partial is evaluated.
 $head H_beta$$
 The return value has prototype
 $codei%
-	a1d_double %H_beta%
+	a1d_vector %H_beta%
 %$$
 and is the value of the partial derivative.
 

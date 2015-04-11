@@ -12,9 +12,20 @@
 # include <cassert>
 # include <coin/IpTNLP.hpp>
 
-using namespace Ipopt;
 
 namespace { // BEGIN_EMPTY_NAMESPACE
+
+using Ipopt::SmartPtr;
+
+typedef Ipopt::TNLP                      TNLP;
+typedef Ipopt::Index                     Index;
+typedef Ipopt::Number                    Number;
+typedef Ipopt::SolverReturn              SolverReturn;
+typedef Ipopt::IpoptData                 IpoptData;
+typedef Ipopt::IpoptCalculatedQuantities IpoptCalculatedQuantities;
+typedef Ipopt::IpoptApplication          IpoptApplication;
+typedef Ipopt::ApplicationReturnStatus   ApplicationReturnStatus;
+
 /** C++ Example NLP for interfacing a problem with IPOPT.
  *
  * min_x f(x) = -(x2-2)^2
@@ -297,12 +308,12 @@ bool ipopt_xam(void)
   ApplicationReturnStatus status;
 
   status = app->Initialize();
-  ok &= status == Solve_Succeeded;
+  ok &= status == Ipopt::Solve_Succeeded;
   status = app->OptimizeTNLP(mynlp);
-  ok &= status == Solve_Succeeded;
+  ok &= status == Ipopt::Solve_Succeeded;
 
   /*
-  if (status == Solve_Succeeded) {
+  if (status == Ipopt::Solve_Succeeded) {
     // Retrieve some statistics about the solve
     Index iter_count = app->Statistics()->IterationCount();
     Number final_obj = app->Statistics()->FinalObjective();

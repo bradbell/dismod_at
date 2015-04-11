@@ -53,7 +53,7 @@ $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$.
 
 $head random_out$$
-This argument has prototype
+The return value  has prototype
 $codei%
 	CppAD::vector<double> %random_out%
 %$$
