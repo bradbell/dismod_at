@@ -85,7 +85,7 @@ void approx_mixed::record_laplace(
 	}
 	for(size_t j = 0; j < n_random_; j++)
 		u[j] = beta_theta_u[2 * n_fixed_ + j];
-	
+
 	// evaluate gradient f_u^{(1)} (beta , u )
 	a2d_vector grad = gradient_random(beta, u);
 

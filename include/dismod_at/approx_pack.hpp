@@ -81,7 +81,7 @@ $codei%
 If present, the size of this vector must be equal to
 $icode%n_fixed_% + %n_random_%$$.
 The input value of its elements does not matter.
-Upon return, it contains the values in 
+Upon return, it contains the values in
 $icode fixed_one$$ and $icode random_vec$$  as one vector.
 
 $head three_vec$$
@@ -92,7 +92,7 @@ $codei%
 If present, the size of this vector must be equal to
 $codei%2*%n_fixed_% + %n_random_%$$.
 The input value of its elements does not matter.
-Upon return, it contains the values in 
+Upon return, it contains the values in
 $icode fixed_one$$, $icode fixed_two$$, and $icode random_vec$$ as one vector.
 
 $end
