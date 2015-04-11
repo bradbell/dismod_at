@@ -86,6 +86,11 @@ void approx_mixed::initialize(
 	assert( hessian_.size_var() == 0 );
 	record_hessian(fixed_vec, random_vec);
 	assert( hessian_.size_var() > 0 );
+	//
+	// laplace_
+	assert( laplace_.size_var() == 0 );
+	record_laplace(fixed_vec, random_vec);
+	assert( laplace_.size_var() > 0 );
 }
 
 } // END_DISMOD_AT_NAMESPACE

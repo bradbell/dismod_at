@@ -9,16 +9,16 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin laplace_expand_xam.cpp$$
+$begin laplace_eval_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ laplace_expand: Example and Test$$
+$section C++ laplace_eval: Example and Test$$
 
 $code
-$verbatim%example/devel/approx_mixed/laplace_expand_xam.cpp
+$verbatim%example/devel/approx_mixed/laplace_eval_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -94,27 +94,27 @@ namespace {
 	};
 }
 
-bool laplace_expand_xam(void)
+bool laplace_eval_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
 	double sqrt_2pi = CppAD::sqrt(8.0 * CppAD::atan(1.0) );
-	typedef AD< AD<double> > a2_double;
+	typedef dismod_at::approx_mixed::a1_double a1_double;
 
 	size_t n_data   = 10;
 	size_t n_fixed  = n_data;
 	size_t n_random = n_data;
 	vector<double> data(n_data), fixed_vec(n_fixed), random_vec(n_random);
-	vector<a2_double>
-		a2_beta(n_fixed), a2_theta(n_fixed), a2_uhat(n_random);
+	vector<a1_double>
+		a1_beta(n_fixed), a1_theta(n_fixed), a1_uhat(n_random);
 
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]       = double(i + 1);
 		fixed_vec[i]  = std::sqrt( double(i + 1) );
 		random_vec[i] = i / double(n_data);
 		//
-		a2_beta[i]    = a2_double( fixed_vec[i] );
-		a2_theta[i]   = a2_beta[i];
+		a1_beta[i]    = a1_double( fixed_vec[i] );
+		a1_theta[i]   = a1_beta[i];
 	}
 
 	// object that is derived from approx_mixed
@@ -124,11 +124,11 @@ bool laplace_expand_xam(void)
 	// optimize the random effects
 	vector<double> uhat = approx_object.optimize_random(fixed_vec, random_vec);
 	for(size_t i = 0; i < n_data; i++)
-		a2_uhat[i] = a2_double( uhat[i] );
+		a1_uhat[i] = a1_double( uhat[i] );
 
 	// compute joint part of Laplace approximation
-	a2_double a2_laplace = approx_object.laplace_expand(
-		a2_beta, a2_theta, a2_uhat
+	a1_double a1_laplace = approx_object.laplace_eval(
+		a1_beta, a1_theta, a1_uhat
 	);
 
 	// For this case the Laplace approximation is exactly equal the integral
@@ -142,7 +142,7 @@ bool laplace_expand_xam(void)
 		double res    = (data[i] - zero) / delta;
 		check        += CppAD::log(sqrt_2pi * delta) + res*res / 2.0;
 	}
-	ok &= abs( a2_laplace / a2_double(check) - a2_double(1.0) ) < eps;
+	ok &= abs( a1_laplace / a1_double(check) - a1_double(1.0) ) < eps;
 
 	return ok;
 }

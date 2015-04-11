@@ -33,7 +33,7 @@ extern bool eigen_xam(void);
 extern bool gradient_random_xam(void);
 extern bool hessian_random_xam(void);
 extern bool ipopt_xam(void);
-extern bool laplace_expand_xam(void);
+extern bool laplace_eval_xam(void);
 extern bool optimize_random_xam(void);
 
 // model subdirectory
@@ -115,7 +115,7 @@ int main(void)
 	RUN(gradient_random_xam);
 	RUN(hessian_random_xam);
 	RUN(ipopt_xam);
-	RUN(laplace_expand_xam);
+	RUN(laplace_eval_xam);
 	RUN(optimize_random_xam);
 
 	// model subdirectory
