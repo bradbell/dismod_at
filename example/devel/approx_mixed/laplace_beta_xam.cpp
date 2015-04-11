@@ -19,14 +19,14 @@ $section C++ laplace_beta: Example and Test$$
 
 $head Model$$
 $latex \[
-	\B{p}( y_i | theta , u ) \sim \B{N} ( u_i , \theta_i^2 )
+	\B{p}( y_i | theta , u ) \sim \B{N} ( u_i + \theta_0 , \theta_1^2 )
 \] $$
 $latex \[
 	\B{p}( u_i | theta ) \sim \B{N} ( 0 , 1 )
 \] $$
 It follows that the Laplace approximation is exact and
 $latex \[
-	\B{p}( y_i | theta ) \sim \B{N} ( 0, 1 + \theta_i^2 )
+	\B{p}( y_i | theta ) \sim \B{N} ( \theta_0 , 1 + \theta_1^2 )
 \] $$
 
 $code
@@ -57,7 +57,8 @@ namespace {
 			:
 			dismod_at::approx_mixed(n_fixed, n_random) ,
 			y_(y)
-		{ }
+		{	assert( n_fixed == 2);
+		}
 	private:
 		// implementation of joint_density
 		template <class Float>
@@ -73,8 +74,8 @@ namespace {
 			Float sqrt_2pi = Float( CppAD::sqrt(8.0 * CppAD::atan(1.0) ) );
 
 			for(size_t i = 0; i < y_.size(); i++)
-			{	Float mu     = u[i];
-				Float sigma  = theta[i];
+			{	Float mu     = u[i] + theta[0];
+				Float sigma  = theta[1];
 				Float res    = (y_[i] - mu) / sigma;
 
 				// p(y_i | u, theta)
@@ -113,19 +114,21 @@ bool laplace_beta_xam(void)
 	typedef dismod_at::approx_mixed::a1_double a1_double;
 
 	size_t n_data   = 10;
-	size_t n_fixed  = n_data;
+	size_t n_fixed  = 2;
 	size_t n_random = n_data;
 	vector<double> data(n_data), fixed_vec(n_fixed), random_vec(n_random);
 	vector<a1_double>
 		a1_beta(n_fixed), a1_theta(n_fixed), a1_uhat(n_random);
 
+	fixed_vec[0] = 2.0;
+	fixed_vec[1] = 1.0;
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]       = double(i + 1);
-		fixed_vec[i]  = std::sqrt( double(i + 1) );
 		random_vec[i] = i / double(n_data);
-		//
-		a1_beta[i]    = a1_double( fixed_vec[i] );
-		a1_theta[i]   = a1_beta[i];
+	}
+	for(size_t j = 0; j < n_fixed; j++)
+	{	a1_beta[j]    = a1_double( fixed_vec[j] );
+		a1_theta[j]   = a1_beta[j];
 	}
 
 	// object that is derived from approx_mixed
@@ -145,21 +148,33 @@ bool laplace_beta_xam(void)
 	// For this case the Laplace approximation is exactly equal the integral
 	// p(y | theta ) = integral of p(y | theta , u) p(u | theta) du
 	// Furthermore p(y | theta ) is simple to calculate directly
-	double zero   = 0.0;
+	double mu         = fixed_vec[0];
+	double sigma      = fixed_vec[1];
+	//
+	double d_mu_0     = 1.0;
+	double d_sigma_1  = 1.0;
+	//
+	double delta      = CppAD::sqrt( sigma * sigma + 1.0 );
+	double d_delta_1  = d_sigma_1 * sigma / delta;
+	//
+	double d_sum_0    = 0.0;
+	double d_sum_1    = 0.0;
 	for(size_t i = 0; i < n_random; i++)
-	{	double sigma  = fixed_vec[i];
-		double delta  = CppAD::sqrt( sigma * sigma + 1.0 );
-		double res    = (data[i] - zero) / delta;
+	{	double res    = (data[i] - mu) / delta;
 		// - log p( y_i | theta ) = log(sqrt_2pi * delta) + res*res / 2.0;
 		// so compute partials w.r.t. sigma = theta_i
-		double d_sigma  = 1.0;
-		double d_delta  = d_sigma * sigma / delta;
-		double d_res    = - d_delta * (data[i] - zero) / ( delta * delta) ;
-		double d_log    = d_delta / delta;
-		double d_square = d_res * res;
-		double check    = d_log + d_square;
-		ok &= abs( a1_H_beta[i] / a1_double(check) - a1_double(1.0) ) < eps;
+		double d_res_0    = - d_mu_0 / delta;
+		double d_res_1    = - d_delta_1 * (data[i] - mu) / ( delta * delta) ;
+		//
+		double d_log_1    = d_delta_1 / delta;
+		double d_square_0 = d_res_0 * res;
+		double d_square_1 = d_res_1 * res;
+		//
+		d_sum_0          += d_square_0;
+		d_sum_1          += d_log_1 + d_square_1;
 	}
+	ok &= abs( a1_H_beta[0] / a1_double(d_sum_0) - a1_double(1.0) ) < eps;
+	ok &= abs( a1_H_beta[1] / a1_double(d_sum_1) - a1_double(1.0) ) < eps;
 
 	return ok;
 }

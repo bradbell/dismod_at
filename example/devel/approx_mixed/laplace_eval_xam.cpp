@@ -20,14 +20,14 @@ $section C++ laplace_eval: Example and Test$$
 
 $head Model$$
 $latex \[
-	\B{p}( y_i | theta , u ) \sim \B{N} ( u_i , \theta_i^2 )
+	\B{p}( y_i | theta , u ) \sim \B{N} ( u_i + \theta_0 , \theta_1^2 )
 \] $$
 $latex \[
 	\B{p}( u_i | theta ) \sim \B{N} ( 0 , 1 )
 \] $$
 It follows that the Laplace approximation is exact and
 $latex \[
-	\B{p}( y_i | theta ) \sim \B{N} ( 0, 1 + \theta_i^2 )
+	\B{p}( y_i | theta ) \sim \B{N} ( \theta_0 , 1 + \theta_1^2 )
 \] $$
 
 $code
@@ -58,7 +58,8 @@ namespace {
 			:
 			dismod_at::approx_mixed(n_fixed, n_random) ,
 			y_(y)
-		{ }
+		{	assert( n_fixed == 2);
+		}
 	private:
 		// implementation of joint_density
 		template <class Float>
@@ -74,8 +75,8 @@ namespace {
 			Float sqrt_2pi = Float( CppAD::sqrt(8.0 * CppAD::atan(1.0) ) );
 
 			for(size_t i = 0; i < y_.size(); i++)
-			{	Float mu     = u[i];
-				Float sigma  = theta[i];
+			{	Float mu     = u[i] + theta[0];
+				Float sigma  = theta[1];
 				Float res    = (y_[i] - mu) / sigma;
 
 				// p(y_i | u, theta)
@@ -115,19 +116,21 @@ bool laplace_eval_xam(void)
 	typedef dismod_at::approx_mixed::a1_double a1_double;
 
 	size_t n_data   = 10;
-	size_t n_fixed  = n_data;
+	size_t n_fixed  = 2;
 	size_t n_random = n_data;
 	vector<double> data(n_data), fixed_vec(n_fixed), random_vec(n_random);
 	vector<a1_double>
 		a1_beta(n_fixed), a1_theta(n_fixed), a1_uhat(n_random);
 
+	fixed_vec[0] = 2.0;
+	fixed_vec[1] = 1.0;
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]       = double(i + 1);
-		fixed_vec[i]  = std::sqrt( double(i + 1) );
 		random_vec[i] = i / double(n_data);
-		//
-		a1_beta[i]    = a1_double( fixed_vec[i] );
-		a1_theta[i]   = a1_beta[i];
+	}
+	for(size_t j = 0; j < n_fixed; j++)
+	{	a1_beta[j]    = a1_double( fixed_vec[j] );
+		a1_theta[j]   = a1_beta[j];
 	}
 
 	// object that is derived from approx_mixed
@@ -146,13 +149,12 @@ bool laplace_eval_xam(void)
 
 	// For this case the Laplace approximation is exactly equal the integral
 	// p(y | theta ) = integral of p(y | theta , u) p(u | theta) du
-	// Furthermore p(y | theta ) is simple to calculate directly
-	double zero  = 0.0;
+	double mu    = fixed_vec[0];
 	double sum   = 0.0;
+	double sigma  = fixed_vec[1];
+	double delta  = CppAD::sqrt( sigma * sigma + 1.0 );
 	for(size_t i = 0; i < n_random; i++)
-	{	double sigma  = fixed_vec[i];
-		double delta  = CppAD::sqrt( sigma * sigma + 1.0 );
-		double res    = (data[i] - zero) / delta;
+	{	double res    = (data[i] - mu) / delta;
 		sum          += CppAD::log(sqrt_2pi * delta) + res*res / 2.0;
 	}
 	ok &= abs( a1_H / a1_double(sum) - a1_double(1.0) ) < eps;
