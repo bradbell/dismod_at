@@ -11,22 +11,25 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/approx_mixed.hpp>
 
 /*
-$begin approx_mixed_laplace_eval$$
+$begin approx_mixed_laplace_beta$$
 $spell
-	eval
 	vec
 	const
 	Cpp
 $$
 
-$section approx_mixed: Evaluate Joint Part of the Laplace Approximation$$
+$section approx_mixed: Partial of Laplace Approximation w.r.t beta$$
 
 $head Syntax$$
-$icode%H% = %approx_object%.laplace_eval(%beta%, %theta%, %u%)%$$
+$icode%H_beta% = %approx_object%.laplace_beta(%beta%, %theta%, %u%)%$$
 
 $head Purpose$$
-This routine evaluates the joint part of the Laplace approximation objective
-$cref/H(beta, theta, u)/approx_mixed_theory
+This routine evaluates the partial w.r.t. $latex \beta$$ of the 
+joint part of the Laplace Approximation; i.e.,
+$latex \[
+	H_\beta^{(1)} ( \beta , \theta , u )
+\]$$
+See $cref/H(beta, theta, u)/approx_mixed_theory
 	/Objective, Joint Part
 	/H(beta, theta, u)
 /$$.
@@ -43,7 +46,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
-vector $latex \beta$$ at which $latex H( \beta , \theta , u)$$ is evaluated.
+vector $latex \beta$$ at which the partial is evaluated.
 
 $head theta$$
 This argument has prototype
@@ -52,7 +55,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
-vector $latex \theta$$ at which $latex H( \beta , \theta , u)$$ is evaluated.
+vector $latex \theta$$ at which the partial is evaluated.
 
 $head u$$
 This argument has prototype
@@ -61,25 +64,20 @@ $codei%
 %$$
 It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
-vector $latex u$$ at which $latex H( \beta , \theta , u)$$ is evaluated.
+vector $latex u$$ at which the partial is evaluated.
 
-$head H$$
+$head H_beta$$
 The return value has prototype
 $codei%
-	a1_double %H%
+	a1d_double %H_beta%
 %$$
-and is the value of the expanded expression of the joint part
-of the Laplace approximation
-$cref/H(beta, theta, u)/approx_mixed_theory
-	/Objective, Joint Part
-	/H(beta, theta, u)
-/$$.
+and is the value of the partial derivative.
 
 $children%
-	example/devel/approx_mixed/laplace_eval_xam.cpp
+	example/devel/approx_mixed/laplace_beta_xam.cpp
 %$$
 $head Example$$
-The file $cref laplace_eval_xam.cpp$$ contains an example
+The file $cref laplace_beta_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 
@@ -90,19 +88,30 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-approx_mixed::a1_double approx_mixed::laplace_eval(
+approx_mixed::a1d_vector approx_mixed::laplace_beta(
 	const a1d_vector& beta  ,
 	const a1d_vector& theta ,
 	const a1d_vector& u     )
 {	assert( laplace_.Domain() == 2 * n_fixed_ + n_random_ );
 	assert( laplace_.Range() == 1 );
 
-	// evaluate H(beta, theta, u)
+	// evaluate the gradient of H(beta, theta, u)
 	a1d_vector beta_theta_u(2 * n_fixed_ + n_random_);
 	pack(beta, theta, u, beta_theta_u);
-	a1d_vector H = laplace_.Forward(0, beta_theta_u);
 
-	return H[0];
+	// execute a zero order forward sweep 
+	laplace_.Forward(0, beta_theta_u);
+
+	// compute the gradient H w.r.t (beta, theta, u) 
+	a1d_vector w(1);
+	w[0] = a1_double(1.0);
+	a1d_vector H_beta_theta_u = laplace_.Reverse(1, w);
+
+	// extract H_beta
+	a1d_vector H_beta(n_fixed_), H_theta(n_fixed_), H_u(n_random_);
+	unpack(H_beta, H_theta, H_u, H_beta_theta_u);
+	
+	return H_beta;
 }
 
 

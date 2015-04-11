@@ -37,6 +37,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	approx_mixed/hessian_random_xam.cpp
 	approx_mixed/ipopt_xam.cpp
 	approx_mixed/laplace_eval_xam.cpp
+	approx_mixed/laplace_beta_xam.cpp
 	approx_mixed/optimize_random_xam.cpp
 
 	model/avg_no_ode_xam.cpp

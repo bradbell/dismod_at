@@ -9,14 +9,13 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin laplace_eval_xam.cpp$$
+$begin laplace_beta_xam.cpp$$
 $spell
-	eval
 	interp
 	xam
 $$
 
-$section C++ laplace_eval: Example and Test$$
+$section C++ laplace_beta: Example and Test$$
 
 $head Model$$
 $latex \[
@@ -31,7 +30,7 @@ $latex \[
 \] $$
 
 $code
-$verbatim%example/devel/approx_mixed/laplace_eval_xam.cpp
+$verbatim%example/devel/approx_mixed/laplace_beta_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -107,11 +106,10 @@ namespace {
 	};
 }
 
-bool laplace_eval_xam(void)
+bool laplace_beta_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
-	double sqrt_2pi = CppAD::sqrt(8.0 * CppAD::atan(1.0) );
 	typedef dismod_at::approx_mixed::a1_double a1_double;
 
 	size_t n_data   = 10;
@@ -139,23 +137,29 @@ bool laplace_eval_xam(void)
 	for(size_t i = 0; i < n_data; i++)
 		a1_uhat[i] = a1_double( uhat[i] );
 
-	// compute joint part of Laplace approximation
-	a1_double a1_H = approx_object.laplace_eval(
+	// compute partial of joint part of Laplace approximation w.r.t beta
+	vector<a1_double> a1_H_beta = approx_object.laplace_beta(
 		a1_beta, a1_theta, a1_uhat
 	);
 
 	// For this case the Laplace approximation is exactly equal the integral
 	// p(y | theta ) = integral of p(y | theta , u) p(u | theta) du
 	// Furthermore p(y | theta ) is simple to calculate directly
-	double zero  = 0.0;
-	double sum   = 0.0;
+	double zero   = 0.0;
 	for(size_t i = 0; i < n_random; i++)
 	{	double sigma  = fixed_vec[i];
 		double delta  = CppAD::sqrt( sigma * sigma + 1.0 );
 		double res    = (data[i] - zero) / delta;
-		sum          += CppAD::log(sqrt_2pi * delta) + res*res / 2.0;
+		// - log p( y_i | theta ) = log(sqrt_2pi * delta) + res*res / 2.0;
+		// so compute partials w.r.t. sigma = theta_i
+		double d_sigma  = 1.0;
+		double d_delta  = d_sigma * sigma / delta;
+		double d_res    = - d_delta * (data[i] - zero) / ( delta * delta) ;
+		double d_log    = d_delta / delta;
+		double d_square = d_res * res;
+		double check    = d_log + d_square;
+		ok &= abs( a1_H_beta[i] / a1_double(check) - a1_double(1.0) ) < eps;
 	}
-	ok &= abs( a1_H / a1_double(sum) - a1_double(1.0) ) < eps;
 
 	return ok;
 }

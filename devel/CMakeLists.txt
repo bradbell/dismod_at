@@ -15,6 +15,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	approx_mixed/hessian_random.cpp
 	approx_mixed/initialize.cpp
 	approx_mixed/laplace_eval.cpp
+	approx_mixed/laplace_beta.cpp
 	approx_mixed/optimize_random.cpp
 	approx_mixed/record_gradient.cpp
 	approx_mixed/record_hessian.cpp

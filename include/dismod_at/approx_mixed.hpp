@@ -16,6 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 extern bool gradient_random_xam(void);
 extern bool hessian_random_xam(void);
 extern bool laplace_eval_xam(void);
+extern bool laplace_beta_xam(void);
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -132,6 +133,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/gradient_random.cpp
 	%devel/approx_mixed/hessian_random.cpp
 	%devel/approx_mixed/laplace_eval.cpp
+	%devel/approx_mixed/laplace_beta.cpp
 %$$
 
 $head n_fixed_$$
@@ -200,9 +202,16 @@ See $cref approx_mixed_unpack$$.
 $codep */
 	template <class Float_unpack, class Float_pack>
 	void unpack(
-		CppAD::vector<Float_unpack>&       fixed_vec  ,
+		CppAD::vector<Float_unpack>&       fixed_one  ,
 		CppAD::vector<Float_unpack>&       random_vec ,
 		const CppAD::vector<Float_pack>&   both_vec
+	) const;
+	template <class Float_unpack, class Float_pack>
+	void unpack(
+		CppAD::vector<Float_unpack>&       fixed_one  ,
+		CppAD::vector<Float_unpack>&       fixed_two  ,
+		CppAD::vector<Float_unpack>&       random_vec ,
+		const CppAD::vector<Float_pack>&   three_vec
 	) const;
 /* $$
 $head record_joint$$
@@ -270,6 +279,17 @@ $codep */
 		const a1d_vector& u
 	);
 	friend bool ::laplace_eval_xam(void);
+/* $$
+$head laplace_beta$$
+See $cref approx_mixed_laplace_beta$$
+$codep */
+	// laplace_beta
+	a1d_vector laplace_beta(
+		const a1d_vector& beta   ,
+		const a1d_vector& theta  ,
+		const a1d_vector& u
+	);
+	friend bool ::laplace_beta_xam(void);
 /* $$
 
 $end
