@@ -11,79 +11,65 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/approx_mixed.hpp>
 
 /*
-$begin approx_mixed_laplace_expand$$
+$begin approx_mixed_record_laplace$$
 $spell
 	vec
 	const
 	Cpp
 $$
 
-$section approx_mixed: Expanded Joint Part of the Laplace Approximation$$
+$section approx_mixed: Record Joint Part of Laplace Approximation$$
 
 $head Syntax$$
-$icode%H% = %approx_object%.laplace_expand(%beta%, %theta%, %u%)%$$
+$codei%record_laplace(%fixed_vec%, %random_vec%)%$$
 
-$head Purpose$$
-This routine evaluates the expanded joint part of the
-Laplace approximation objective
-$cref/H(beta, theta, u)/approx_mixed_theory
-	/Objective, Joint Part
-	/H(beta, theta, u)
-/$$.
-This is called expanded because the actual objective
-only has $latex \theta$$ as an argument.
+$head Private$$
+This function is $code private$$ to the $code approx_mixed$$ class
+and cannot be used by a derived
+$cref/approx_object/approx_mixed_derived_ctor/approx_object/$$.
 
-$head approx_object$$
-We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
-to denote an object of a class that is
-derived from the $code approx_mixed$$ base class.
-
-$head beta$$
+$head fixed_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a2_double>& %beta%
+	const CppAD::vector<double>& %fixed_vec%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
-vector $latex \beta$$ at which $latex H( \beta , \theta , u)$$ is evaluated.
+vector $latex \theta$$ at which the recording is made.
 
-$head theta$$
+$head random_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a2_double>& %theta%
-%$$
-It specifies the value of the
-$cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
-vector $latex \theta$$ at which $latex H( \beta , \theta , u)$$ is evaluated.
-
-$head u$$
-This argument has prototype
-$codei%
-	const CppAD::vector<a2_double>& %u%
+	const CppAD::vector<double>& %random_vec%
 %$$
 It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
-vector $latex u$$ at which $latex H( \beta , \theta , u)$$ is evaluated.
+vector $latex u$$ at which the recording is made.
 
-$head H$$
-The return value has prototype
+$head laplace_$$
+The input value of the member variable
 $codei%
-	a2_double %H%
+	CppAD::ADFun<a1_double> laplace_
 %$$
-and is the value of the expanded expression of the joint part
-of the Laplace approximation
-$cref/H(beta, theta, u)/approx_mixed_theory
+does not matter.
+Upon return it contains the corresponding recording for the
+joint part of the Laplace approximation objective,
+$cref/h[theta, u^(theta)]/approx_mixed_theory
 	/Objective, Joint Part
-	/H(beta, theta, u)
+	/h[theta, u^(theta)]
 /$$.
 
-$children%
-	example/devel/approx_mixed/laplace_expand_xam.cpp
-%$$
-$head Example$$
-The file $cref laplace_expand_xam.cpp$$ contains an example
-and test of this procedure.
-It returns true, if the test passes, and false otherwise.
+$subhead Packing$$
+The domain space has dimension 
+$codei%
+	laplace_.Domain() = 2 * %n_fixed_% + %n_random_%
+%$$.
+If $icode x$$ is an element of the domain,
+For $icode j$$ between zero and $code n_fixed_-1$$,
+$icode%x%[%j%] = %beta%[%j%]%$$,
+$icode%x%[%j% + n_fixed_] = %theta%[%j%]%$$,
+$icode%x%[%k% + 2*n_fixed_] = %u%[%k%]%$$.
+
 
 $end
 */
@@ -92,11 +78,31 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-approx_mixed::a2_double approx_mixed::laplace_expand(
-	const a2d_vector& beta  ,
-	const a2d_vector& theta ,
-	const a2d_vector& u     )
+void approx_mixed::record_laplace(
+	const d_vector& fixed_vec  ,
+	const d_vector& random_vec )
 {
+	//	create an a2d_vector containing (beta, theta, u)
+	a2d_vector beta_theta_u( 2 * n_fixed_ + n_random_ );
+	for(size_t j = 0; j < n_fixed_; j++)
+	{	beta_theta_u[j]            = a2_double( fixed_vec[j] );
+		beta_theta_u[n_fixed_ + j] = a2_double( fixed_vec[j] );
+	}
+	for(size_t j = 0; j < n_random_; j++)
+		beta_theta_u[2 * n_fixed_ + j] = random_vec[j];
+
+	// start recording a2_double operations
+	CppAD::Independent( beta_theta_u );
+
+	// split back out to beta, theta, u
+	a2d_vector beta(n_fixed_), theta(n_fixed_), u(n_random_);
+	for(size_t j = 0; j < n_fixed_; j++)
+	{	beta[j]  = beta_theta_u[j];
+		theta[j] = beta_theta_u[n_fixed_ + j];
+	}
+	for(size_t j = 0; j < n_random_; j++)
+		u[j] = beta_theta_u[2 * n_fixed_ + j];
+	
 	// evaluate gradient f_u^{(1)} (beta , u )
 	a2d_vector grad = gradient_random(beta, u);
 
@@ -159,8 +165,15 @@ approx_mixed::a2_double approx_mixed::laplace_expand(
 	double pi   = CppAD::atan(1.0) * 4.0;
 	double constant_term = CppAD::log(2.0 * pi) * double(n_random_) / 2.0;
 
-	// return H(beta, theta, u)
-	return logdet / 2.0 + sum - constant_term;
+	// H(beta, theta, u)
+	a2d_vector H(1);
+	H[0] = logdet / 2.0 + sum - constant_term;
+
+	// complete recording of f_u^{(1)} (u, theta)
+	laplace_.Dependent(beta_theta_u, H);
+
+	// optimize the recording
+	laplace_.optimize();
 }
 
 

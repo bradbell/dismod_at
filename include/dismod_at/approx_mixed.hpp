@@ -170,6 +170,13 @@ $codep */
 	CppAD::vector<size_t>   hessian_row_; // corresponding row indices
 	CppAD::vector<size_t>   hessian_col_; // corresponding column indices
 /* $$
+$head laplace_$$
+The Joint part of of the Laplace approximation; i.e.,
+$latex H( \beta , \theta , u)$$.
+$codep */
+	CppAD::ADFun<a1_double> laplace_;     // computes H(beta, theta, u)
+/* $$
+
 $head pack$$
 See $cref approx_mixed_pack$$.
 $codep */
@@ -210,6 +217,14 @@ $head record_hessian$$
 See $cref approx_mixed_record_hessian$$.
 $codep */
 	void record_hessian(
+		const d_vector& fixed_vec ,
+		const d_vector& random_vec
+	);
+/* $$
+$head record_laplace$$
+See $cref approx_mixed_record_laplace$$.
+$codep */
+	void record_laplace(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);
