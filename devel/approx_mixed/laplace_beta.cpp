@@ -24,7 +24,7 @@ $head Syntax$$
 $icode%H_beta% = %approx_object%.laplace_beta(%beta%, %theta%, %u%)%$$
 
 $head Purpose$$
-This routine evaluates the partial w.r.t. $latex \beta$$ of the 
+This routine evaluates the partial w.r.t. $latex \beta$$ of the
 joint part of the Laplace Approximation; i.e.,
 $latex \[
 	H_\beta^{(1)} ( \beta , \theta , u )
@@ -99,10 +99,10 @@ approx_mixed::a1d_vector approx_mixed::laplace_beta(
 	a1d_vector beta_theta_u(2 * n_fixed_ + n_random_);
 	pack(beta, theta, u, beta_theta_u);
 
-	// execute a zero order forward sweep 
+	// execute a zero order forward sweep
 	laplace_.Forward(0, beta_theta_u);
 
-	// compute the gradient H w.r.t (beta, theta, u) 
+	// compute the gradient H w.r.t (beta, theta, u)
 	a1d_vector w(1);
 	w[0] = a1_double(1.0);
 	a1d_vector H_beta_theta_u = laplace_.Reverse(1, w);
@@ -110,7 +110,7 @@ approx_mixed::a1d_vector approx_mixed::laplace_beta(
 	// extract H_beta
 	a1d_vector H_beta(n_fixed_), H_theta(n_fixed_), H_u(n_random_);
 	unpack(H_beta, H_theta, H_u, H_beta_theta_u);
-	
+
 	return H_beta;
 }
 
