@@ -59,18 +59,6 @@ $cref/h[theta, u^(theta)]/approx_mixed_theory
 	/h[theta, u^(theta)]
 /$$.
 
-$subhead Packing$$
-The domain space has dimension 
-$codei%
-	laplace_.Domain() = 2 * %n_fixed_% + %n_random_%
-%$$.
-If $icode x$$ is an element of the domain,
-For $icode j$$ between zero and $code n_fixed_-1$$,
-$icode%x%[%j%] = %beta%[%j%]%$$,
-$icode%x%[%j% + n_fixed_] = %theta%[%j%]%$$,
-$icode%x%[%k% + 2*n_fixed_] = %u%[%k%]%$$.
-
-
 $end
 */
 # include <Eigen/Sparse>
@@ -84,12 +72,7 @@ void approx_mixed::record_laplace(
 {
 	//	create an a2d_vector containing (beta, theta, u)
 	a2d_vector beta_theta_u( 2 * n_fixed_ + n_random_ );
-	for(size_t j = 0; j < n_fixed_; j++)
-	{	beta_theta_u[j]            = a2_double( fixed_vec[j] );
-		beta_theta_u[n_fixed_ + j] = a2_double( fixed_vec[j] );
-	}
-	for(size_t j = 0; j < n_random_; j++)
-		beta_theta_u[2 * n_fixed_ + j] = random_vec[j];
+	pack(fixed_vec, fixed_vec, random_vec, beta_theta_u);
 
 	// start recording a2_double operations
 	CppAD::Independent( beta_theta_u );

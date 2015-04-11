@@ -128,6 +128,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/record_joint.cpp
 	%devel/approx_mixed/record_gradient.cpp
 	%devel/approx_mixed/record_hessian.cpp
+	%devel/approx_mixed/record_laplace.cpp
 	%devel/approx_mixed/gradient_random.cpp
 	%devel/approx_mixed/hessian_random.cpp
 	%devel/approx_mixed/laplace_expand.cpp
@@ -171,7 +172,7 @@ $codep */
 	CppAD::vector<size_t>   hessian_col_; // corresponding column indices
 /* $$
 $head laplace_$$
-The Joint part of of the Laplace approximation; i.e.,
+The Joint part of the Laplace approximation; i.e.,
 $latex H( \beta , \theta , u)$$.
 $codep */
 	CppAD::ADFun<a1_double> laplace_;     // computes H(beta, theta, u)
@@ -182,9 +183,16 @@ See $cref approx_mixed_pack$$.
 $codep */
 	template <class Float_unpack, class Float_pack>
 	void pack(
-		const CppAD::vector<Float_unpack>& fixed_vec  ,
+		const CppAD::vector<Float_unpack>& fixed_one  ,
 		const CppAD::vector<Float_unpack>& random_vec ,
 		CppAD::vector<Float_pack>&         both_vec
+	) const;
+	template <class Float_unpack, class Float_pack>
+	void pack(
+		const CppAD::vector<Float_unpack>& fixed_one  ,
+		const CppAD::vector<Float_unpack>& fixed_two  ,
+		const CppAD::vector<Float_unpack>& random_vec ,
+		CppAD::vector<Float_pack>&         three_vec
 	) const;
 /* $$
 $head unpack$$
