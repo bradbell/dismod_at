@@ -208,19 +208,19 @@ $head n$$
 is the number of variables in the problem (dimension of x).
 
 $head x_l$$
-the lower bounds for $icode x$$ (has size $icode n$$).
+set to the lower bounds for $icode x$$ (has size $icode n$$).
 
 $head x_u$$
-the upper bounds for $icode x$$ (has size $icode n$$).
+set to the upper bounds for $icode x$$ (has size $icode n$$).
 
 $head m$$
 is the number of constraints in the problem (dimension of g(x)).
 
 $head g_l$$
-the lower bounds for $icode g(x)$$ (has size $icode m$$).
+set to the lower bounds for $icode g(x)$$ (has size $icode m$$).
 
 $head g_u$$
-the upper bounds for $icode g(x)$$ (has size $icode m$$).
+set to the upper bounds for $icode g(x)$$ (has size $icode m$$).
 
 $head Example$$
 $codep */
@@ -244,6 +244,81 @@ bool ipopt_xam_nlp::get_bounds_info(
 	g_l[0] = 0.0;
 	g_u[0] = 0.0;
 	//
+	return true;
+}
+/* $$
+$end
+-------------------------------------------------------------------------------
+$begin ipopt_xam_get_starting_point$$
+$spell
+	init
+	ipopt_xam_nlp
+	bool
+$$
+
+$section Return Initial Values Where Optimization is Started$$
+
+$head Syntax$$
+$codei%get_starting_point(
+	%n%, %init_x%, %x%, %init_z%, %z_L%, %z_U%, %m%, %init_lambda%, %lambda%
+)%$$
+
+$head n$$
+is the number of variables in the problem (dimension of x).
+
+$head init_x$$
+if true, the ipopt options specify that the this routine
+will provide an initial value for $icode x$$.
+
+$head x$$
+if $icode init_x$$ is true,
+set to the initial value for the primal variables (has size $icode n$$).
+
+$head init_z$$
+if true, the ipopt options specify that the this routine
+will provide an initial value for $icode x$$ upper and lower bound
+multipliers.
+
+$head z_L$$
+if $icode init_z$$ is true,
+set to the initial value for the lower bound multipliers (has size $icode n$$).
+
+$head z_U$$
+if $icode init_z$$ is true,
+set to the initial value for the upper bound multipliers (has size $icode n$$).
+
+$head init_lambda$$
+if true, the ipopt options specify that the this routine
+will provide an initial value for $icode g(x)$$ upper and lower bound
+multipliers.
+
+$head lambda$$
+if $icode init_lambda$$ is true,
+set to the initial value for the $icode g(x)$$ multipliers
+(has size $icode m$$).
+
+$head Example$$
+$codep */
+bool ipopt_xam_nlp::get_starting_point(
+	Index           n            ,  // in
+	bool            init_x       ,  // in
+	Number*         x            ,  // out
+	bool            init_z       ,  // in
+	Number*         z_L          ,  // out
+	Number*         z_U          ,  // out
+	Index           m            ,  // out
+	bool            init_lambda  ,  // in
+	Number*         lambda       )  // out
+}
+{
+	assert( n == 2 );
+	assert( init_x == true );
+	x[0] = 0.5;
+	x[1] = 1.5;
+	assert( init_z == false );
+	assert( m == 1 );
+	assert( init_lambda == false );
+
 	return true;
 }
 /* $$
