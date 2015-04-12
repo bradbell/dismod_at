@@ -21,7 +21,7 @@ $nospell
 $codep */
 # include <coin/IpIpoptApplication.hpp>
 # include <coin/IpTNLP.hpp>
-namespace { 
+namespace {
 	// Ipopt types used by this file
 	typedef Ipopt::Number  Number;
 	typedef Ipopt::Index   Index;
@@ -38,18 +38,18 @@ namespace {
 		virtual ~ipopt_xam_nlp(void);
 		//
 		virtual bool get_nlp_info(
-			Index&          n            , 
-			Index&          m            , 
+			Index&          n            ,
+			Index&          m            ,
 			Index&          nnz_jac_g    ,
-			Index&          nnz_h_lag    , 
+			Index&          nnz_h_lag    ,
 			IndexStyleEnum& index_style
 		);
 		virtual bool get_bounds_info(
-				Index       n        , 
-				Number*     x_l      , 
+				Index       n        ,
+				Number*     x_l      ,
 				Number*     x_u      ,
-				Index       m        , 
-				Number*     g_l      , 
+				Index       m        ,
+				Number*     g_l      ,
 				Number*     g_u
 		);
 		virtual bool get_starting_point(
@@ -64,55 +64,55 @@ namespace {
 			Number*         lambda
 		);
 		virtual bool eval_f(
-			Index           n        , 
-			const Number*   x        , 
-			bool            new_x    , 
+			Index           n        ,
+			const Number*   x        ,
+			bool            new_x    ,
 			Number&         obj_value
 		);
 		virtual bool eval_grad_f(
-			Index           n        , 
-			const Number*   x        , 
-			bool            new_x    , 
+			Index           n        ,
+			const Number*   x        ,
+			bool            new_x    ,
 			Number*         grad_f
 		);
 		virtual bool eval_g(
-			Index           n        , 
-			const Number*   x        , 
-			bool            new_x    , 
+			Index           n        ,
+			const Number*   x        ,
+			bool            new_x    ,
 			Index           m        ,
 			Number*         g
 		);
 		virtual bool eval_jac_g(
-			Index           n        , 
-			const Number*   x        , 
+			Index           n        ,
+			const Number*   x        ,
 			bool            new_x    ,
-			Index           m        , 
-			Index           nele_jac , 
-			Index*          iRow     , 
+			Index           m        ,
+			Index           nele_jac ,
+			Index*          iRow     ,
 			Index*          jCol     ,
 			Number*         values
 		);
 		virtual bool eval_h(
 			Index         n              ,
-			const Number* x              , 
+			const Number* x              ,
 			bool          new_x          ,
-			Number        obj_factor     , 
+			Number        obj_factor     ,
 			Index         m              ,
 			const Number* lambda         ,
-			bool          new_lambda     , 
-			Index         nele_hess      , 
+			bool          new_lambda     ,
+			Index         nele_hess      ,
 			Index*        iRow           ,
-			Index*        jCol           , 
+			Index*        jCol           ,
 			Number*       values
 		);
 		virtual void finalize_solution(
 			Ipopt::SolverReturn               status    ,
-			Index                             n         , 
-			const Number*                     x         , 
-			const Number*                     z_L       , 
+			Index                             n         ,
+			const Number*                     x         ,
+			const Number*                     z_L       ,
 			const Number*                     z_U       ,
-			Index                             m         , 
-			const Number*                     g         , 
+			Index                             m         ,
+			const Number*                     g         ,
 			const Number*                     lambda    ,
 			Number                            obj_value ,
 			const Ipopt::IpoptData*           ip_data   ,
@@ -171,7 +171,7 @@ is set to the number of nonzero entries in the Hessian of the Lagrangian
 $latex f(x) + \lambda^\R{T} g(x)$$.
 
 $head index_style$$
-is set to the numbering style used for row/col entries in the sparse matrix 
+is set to the numbering style used for row/col entries in the sparse matrix
 format (C_STYLE: 0-based, FORTRAN_STYLE: 1-based).
 
 $head Example$$
@@ -236,11 +236,11 @@ bool ipopt_xam_nlp::get_bounds_info(
 	x_l[0] = -1.0;
 	x_u[0] = 1.0;
 	//
-	x_l[1] = -1.0e19; // default -infinity 
-	x_u[1] = 1.0e19;  // default +infinity 
+	x_l[1] = -1.0e19; // default -infinity
+	x_u[1] = 1.0e19;  // default +infinity
 	//
 	assert( m == 1 );
-	// 
+	//
 	g_l[0] = 0.0;
 	g_u[0] = 0.0;
 	//
