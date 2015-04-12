@@ -26,24 +26,24 @@ We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
 to denote an object of a class that is
 derived from the $code approx_mixed$$ base class.
 
-$head a4_double$$
-The type $icode a4_double$$ below is one of the
+$head a5_double$$
+The type $icode a5_double$$ below is one of the
 see $cref/AD Types/approx_mixed_public/AD Types/$$.
 
 $head Virtual Function$$
 The following virtual functions and must be implemented
 in the derived class:
 $codei%
-	virtual CppAD::vector<a4_double> joint_density(
-		const CppAD::vector<a4_double>& %fixed_vec%  ,
-		const CppAD::vector<a4_double>& %random_vec%
+	virtual CppAD::vector<a5_double> joint_density(
+		const CppAD::vector<a5_double>& %fixed_vec%  ,
+		const CppAD::vector<a5_double>& %random_vec%
 	)
 %$$
 
 $head fixed_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a4_double>& %fixed_vec%
+	const CppAD::vector<a5_double>& %fixed_vec%
 %$$
 It contains a value for the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$ vector.
@@ -51,7 +51,7 @@ $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$ vector.
 $head random_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a4_double>& %random_vec%
+	const CppAD::vector<a5_double>& %random_vec%
 %$$
 It contains a value for the
 $cref/random effects/approx_mixed/Random Effects, u/$$ vector.
@@ -59,7 +59,7 @@ $cref/random effects/approx_mixed/Random Effects, u/$$ vector.
 $head vec$$
 This result has prototype
 $codei%
-	CppAD::vector<a4_double> %vec%
+	CppAD::vector<a5_double> %vec%
 %$$
 It is a
 $cref/negative log-density vector

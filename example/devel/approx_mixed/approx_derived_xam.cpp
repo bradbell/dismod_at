@@ -96,9 +96,9 @@ namespace {
 			return vec;
 		}
 		//
-		virtual vector<a4_double> joint_density(
-			const vector<a4_double>& fixed_vec  ,
-			const vector<a4_double>& random_vec )
+		virtual vector<a5_double> joint_density(
+			const vector<a5_double>& fixed_vec  ,
+			const vector<a5_double>& random_vec )
 		{	return implement_joint_density(fixed_vec, random_vec); }
 		//
 		virtual vector<double> fixed_density(

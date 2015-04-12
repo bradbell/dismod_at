@@ -99,29 +99,32 @@ void approx_mixed::record_joint(
 	// record a3_joint_density_
 	// ------------------------------------------------------------------
 	// combine into one vector
-	a4d_vector a4_both( n_fixed_ + n_random_ );
-	pack(fixed_vec, random_vec, a4_both);
+	a5d_vector a5_both( n_fixed_ + n_random_ );
+	pack(fixed_vec, random_vec, a5_both);
 
-	// start recording a4_double operations
-	Independent(a4_both);
+	// start recording a5_double operations
+	Independent(a5_both);
 
 	// extract the fixed and random effects
-	a4d_vector a4_theta(n_fixed_), a4_u(n_random_);
-	unpack(a4_theta, a4_u, a4_both);
+	a5d_vector a5_theta(n_fixed_), a5_u(n_random_);
+	unpack(a5_theta, a5_u, a5_both);
 
-	// compute joint_density using a4_double operations
-	a4d_vector a4_vec = joint_density(a4_theta, a4_u);
+	// compute joint_density using a5_double operations
+	a5d_vector a5_vec = joint_density(a5_theta, a5_u);
 
 	// save the recording
-	a3_joint_density_.Dependent(a4_both, a4_vec);
+	a4_joint_density_.Dependent(a5_both, a5_vec);
 
 	// optimize the recording
-	a3_joint_density_.optimize();
+	a4_joint_density_.optimize();
 	// ------------------------------------------------------------------
 	//
 	// both
 	d_vector both(n_fixed_ + n_random_);
 	pack(fixed_vec, random_vec, both);
+	//
+	// record a3_joint_density_
+	record_next_joint(both, a4_joint_density_, a3_joint_density_);
 	//
 	// record a2_joint_density_
 	record_next_joint(both, a3_joint_density_, a2_joint_density_);

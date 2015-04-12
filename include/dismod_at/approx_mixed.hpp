@@ -37,12 +37,13 @@ $$
 $section approx_mixed Public Declarations$$
 
 $head AD Types$$
-$mindex a1_double a2_double a3_double a4_double$$
+$index a_double$$ 
 $codep */
 	typedef CppAD::AD<double>          a1_double;
 	typedef CppAD::AD<a1_double>       a2_double;
 	typedef CppAD::AD<a2_double>       a3_double;
 	typedef CppAD::AD<a3_double>       a4_double;
+	typedef CppAD::AD<a4_double>       a5_double;
 /* $$
 
 $head Vector Types$$
@@ -53,6 +54,7 @@ $codep */
 	typedef CppAD::vector<a2_double>   a2d_vector;
 	typedef CppAD::vector<a3_double>   a3d_vector;
 	typedef CppAD::vector<a4_double>   a4d_vector;
+	typedef CppAD::vector<a5_double>   a5d_vector;
 /* $$
 $head constructor$$
 Construct an $code approx_mixed$$ derived class object; see
@@ -74,9 +76,9 @@ $head joint_density$$
 This is a pure virtual function so it must be defined by derived class;
 see $cref/joint_density/approx_mixed_joint_density/$$.
 $codep */
-	virtual CppAD::vector<a4_double> joint_density(
-		const CppAD::vector<a4_double>& fixed_vec  ,
-		const CppAD::vector<a4_double>& random_vec
+	virtual CppAD::vector<a5_double> joint_density(
+		const CppAD::vector<a5_double>& fixed_vec  ,
+		const CppAD::vector<a5_double>& random_vec
 	) = 0;
 /* $$
 $head fixed_density$$
@@ -155,6 +157,7 @@ $codep */
 	CppAD::ADFun<a1_double>   a1_joint_density_;
 	CppAD::ADFun<a2_double>   a2_joint_density_;
 	CppAD::ADFun<a3_double>   a3_joint_density_;
+	CppAD::ADFun<a4_double>   a4_joint_density_;
 	friend optimize_random_eval;
 /* $$
 $head gradient_$$

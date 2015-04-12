@@ -99,7 +99,9 @@ void approx_mixed::record_hes_ran(
 	// compute f(u) using a4_double operations
 	CppAD::Independent(a4_u);
 	//
-	a4d_vector a4_vec = joint_density(a4_theta, a4_u);
+	a4d_vector a4_both(n_fixed_ + n_random_);
+	pack(a4_theta, a4_u, a4_both);
+	a4d_vector a4_vec = a4_joint_density_.Forward(0, a4_both);
 	a4d_vector a4_sum(1);
 	a4_sum[0]    = a4_vec[0];
 	size_t n_abs = a4_vec.size() - 1;
