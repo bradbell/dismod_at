@@ -793,7 +793,7 @@ Algorithm converged to a point of local infeasibility. Problem may be
 infeasible.
 
 $subhead USER_REQUESTED_STOP$$
-A user call-back function returned false, i.e., 
+A user call-back function returned false, i.e.,
 the user code requested a premature termination of the optimization.
 
 $subhead DIVERGING_ITERATES$$
