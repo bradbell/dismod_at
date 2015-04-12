@@ -504,9 +504,7 @@ is the number of non-zero elements in the Jacobian of $icode g(x)$$; i.e.,
 the same as
 $cref/nnz_jac_g/ipopt_xam_get_nlp_info/nnz_jac_g/$$.
 
-$head values is NULL$$
-
-$subhead iRow$$
+$head iRow$$
 If $icode values$$ is $code NULL$$,
 $icode iRow$$ has size $icode nele_jac$$ and is set to the
 row indices for the non-zero entries in the Jacobian of the constraints
@@ -546,7 +544,7 @@ bool ipopt_xam_nlp::eval_jac_g(
 		//
 		iRow[1] = 1;
 		jRow[1] = 2;
- 		//
+		//
 		return true;
 	}
 	assert( n == 2 );
@@ -555,6 +553,119 @@ bool ipopt_xam_nlp::eval_jac_g(
 	//
 	values[0] = - 2.0 * x1;
 	values[1] = - 1.0;
+	//
+	return true;
+}
+/* $$
+$end
+-------------------------------------------------------------------------------
+$begin ipopt_xam_eval_h$$
+$spell
+	ipopt_xam_nlp
+	bool
+	eval
+	const
+	obj
+	nele_hess
+	nnz
+$$
+
+$section Compute the Hessian of the Lagrangian$$
+
+$head Syntax$$
+$codei%eval_h(
+	%n%, %x%, %new_x%,%obj_factor%, %m%, %lambda%, %new_lambda%,
+	%nele_hess%, %iRow%, %jCol%, %values%
+)%$$
+
+$head Lagrangian$$
+The Lagrangian is defined to be
+$latex \[
+	L(x) = \alpha f(x) + \sum_{i=0}^{m-1} \lambda_i g_i (x)
+\] $$
+
+$head n$$
+is the number of variables in the problem (dimension of x).
+
+$head x$$
+is the value for the primal variables at which the
+Hessian of the Lagrangian is computed (has size $icode n$$).
+
+$head new_x$$
+if true, no Ipopt evaluation method was previous called with the same
+value for $icode x$$.
+
+$head obj_factor$$
+is the factor $latex \alpha$$ that multiplies the objective $latex f(x)$$
+in the definition of the Lagrangian.
+
+$head m$$
+is the number of constraints in the problem (dimension of g(x)).
+
+$head lambda$$
+is the value of the constraint multipliers $latex \lambda$$
+at which the Hessian is to be evaluated (has size $icode m$$).
+
+$head new_lambda$$
+if true, no Ipopt evaluation method was previous called with the same
+value for $icode lambda$$.
+
+$head nele_hess$$
+is the number of non-zero elements in the Hessian $latex L^{(2)} (x)$$; i.e.,
+the same as
+$cref/nnz_h_lag/ipopt_xam_get_nlp_info/nnz_h_lag/$$.
+
+$head iRow$$
+If $icode values$$ is $code NULL$$,
+$icode iRow$$ has size $icode nele_hess$$ and is set to the
+row indices for the non-zero entries in the Hessian
+$latex L^{(2)} (x)$$.
+
+$head jCol$$
+If $icode values$$ is $code NULL$$,
+$icode jCol$$ has size $icode nele_hess$$ and is set to the
+column indices for the non-zero entries in the Hessian
+$latex L^{(2)} (x)$$.
+
+$head values$$
+If $icode values$$ is not $code NULL$$,
+it has size $icode nele_hess$$ and $icode%values%[%k%]%$$
+is set to the value of element of the Hessian $latex L^{(2)} (x)$$
+with row index $icode%iRow%[%k%]%$$
+and column index $icode%jRow%[%k%]%$$.
+
+$head Example$$
+$codep */
+	virtual bool eval_h(
+		Index         n              ,
+		const Number* x              ,
+		bool          new_x          ,
+		Number        obj_factor     ,
+		Index         m              ,
+		const Number* lambda         ,
+		bool          new_lambda     ,
+		Index         nele_hess      ,
+		Index*        iRow           ,
+		Index*        jCol           ,
+		Number*       values
+	);
+{
+	assert( nele_hess == 2 );
+	if( values == CPPAD_NULL )
+	{
+		iRow[0] = 1;
+		jRow[0] = 1;
+		//
+		iRow[1] = 2;
+		jRow[1] = 2;
+ 		//
+		return true;
+	}
+	assert( n == 2 );
+	assert( m == 1 );
+	//
+	values[0] = - 2.0 * lambda[0];
+	values[1] = - 2.0 * obj_factor;
 	//
 	return true;
 }
