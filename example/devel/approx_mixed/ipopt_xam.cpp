@@ -193,7 +193,7 @@ bool ipopt_xam_nlp::get_nlp_info(
 	m           = 1;
 	nnz_jac_g   = 2;
 	nnz_h_lag   = 2;
-	index_style = FORTRAN_STYLE;
+	index_style = C_STYLE;
 	return true;
 }
 /* $$
@@ -381,8 +381,7 @@ bool ipopt_xam_nlp::eval_f(
 	Number&         obj_value )  // out
 {
 	assert( n == 2 );
-	Number x2 = x[1];
-	obj_value = - (x2 - 2.0) * (x2 - 2.0);
+	obj_value = - (x[1] - 2.0) * (x[1] - 2.0);
 
 	return true;
 }
@@ -431,9 +430,8 @@ bool ipopt_xam_nlp::eval_grad_f(
 	Number*         grad_f    )  // out
 {
 	assert( n == 2 );
-	Number x2 = x[1];
 	grad_f[0] = 0.0;
-	grad_f[1] = - 2.0 * (x2 - 2.0);
+	grad_f[1] = - 2.0 * (x[1] - 2.0);
 	return true;
 }
 /* $$
@@ -485,12 +483,10 @@ bool ipopt_xam_nlp::eval_g(
 {
 	assert( n == 2 );
 	//
-	Number x1 = x[0];
-	Number x2 = x[1];
 	//
 	assert( m = 1 );
 	//
-	g[0] = - (x1 * x1 + x2 - 1.0);
+	g[0] = - (x[0] * x[0] + x[1] - 1.0);
 	//
 	return true;
 }
@@ -573,19 +569,18 @@ bool ipopt_xam_nlp::eval_jac_g(
 	assert( nele_jac == 2 );
 	if( values == NULL )
 	{
-		iRow[0] = 1;
-		jCol[0] = 1;
+		iRow[0] = 0;
+		jCol[0] = 0;
 		//
-		iRow[1] = 1;
-		jCol[1] = 2;
+		iRow[1] = 0;
+		jCol[1] = 1;
 		//
 		return true;
 	}
 	assert( n == 2 );
-	Number x1 = x[0];
 	assert( m == 1 );
 	//
-	values[0] = - 2.0 * x1;
+	values[0] = - 2.0 * x[0];
 	values[1] = - 1.0;
 	//
 	return true;
@@ -691,11 +686,11 @@ bool ipopt_xam_nlp::eval_h(
 	assert( nele_hess == 2 );
 	if( values == NULL )
 	{
-		iRow[0] = 1;
-		jCol[0] = 1;
+		iRow[0] = 0;
+		jCol[0] = 0;
 		//
-		iRow[1] = 2;
-		jCol[1] = 2;
+		iRow[1] = 1;
+		jCol[1] = 1;
 		//
 		return true;
 	}
