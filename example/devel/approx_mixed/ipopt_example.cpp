@@ -367,5 +367,101 @@ bool ipopt_xam_nlp::eval_f(
 }
 /* $$
 $end
+-------------------------------------------------------------------------------
+$begin ipopt_xam_eval_grad_f$$
+$spell
+	ipopt_xam_nlp
+	bool
+	eval
+	const
+$$
+
+$section Compute Value of Constraint Functions$$
+
+$head Syntax$$
+$codei%eval_grad_f(%n%, %x%, %new_x%, %grad_f%)%$$
+
+$head n$$
+is the number of variables in the problem (dimension of x).
+
+$head x$$
+is the value for the primal variables (has size $icode n$$).
+
+$head new_x$$
+if true, no Ipopt evaluation method was previous called with the same
+value for $icode x$$.
+
+$head grad_f$$
+is set to the value for the gradient $latex \nabla f(x)$$
+(has size $icode m$$).
+
+$head Example$$
+$codep */
+bool ipopt_xam_nlp::eval_grad_f(
+	Index           n         ,  // in
+	const Number*   x         ,  // in
+	bool            new_x     ,  // in
+	Number*         grad_f    )  // out
+{
+	assert( n == 2 );
+	Number x2 = x[1];
+	grad_f[0] = 0.0;
+	grad_f[1] = - 2.0 * (x2 - 2.0);
+	return true;
+}
+/* $$
+$end
+-------------------------------------------------------------------------------
+$begin ipopt_xam_eval_g$$
+$spell
+	ipopt_xam_nlp
+	bool
+	const
+	eval
+$$
+
+$section Compute Value of Constraint Functions$$
+
+$head Syntax$$
+$codei%eval_g(%n%, %x%, %new_x%, %m%, %g%)%$$
+
+$head n$$
+is the number of variables in the problem (dimension of x).
+
+$head x$$
+is the value for the primal variables (has size $icode n$$).
+
+$head new_x$$
+if true, no Ipopt evaluation method was previous called with the same
+value for $icode x$$.
+
+$head m$$
+is the number of constraints in the problem (dimension of g(x)).
+
+$head g$$
+is set to the value for the constraint functions (has size $icode m$$).
+
+$head Example$$
+$codep */
+bool ipopt_xam_nlp::eval_g(
+	Index           n        ,  // in
+	const Number*   x        ,  // in
+	bool            new_x    ,  // in
+	Index           m        ,  // in
+	Number*         g        )  // out
+{
+	assert( n == 2 );
+	//
+	Number x1 = x[0];
+	Number x2 = x[1];
+	//
+	assert( m = 1 );
+	//
+	g[0] = - (x1 * x1 + x2 - 1.0);
+	//
+	return true;
+}
+/* $$
+$end
 */
 }
