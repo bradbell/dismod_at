@@ -21,6 +21,7 @@ $nospell
 $codep */
 # include <coin/IpIpoptApplication.hpp>
 # include <coin/IpTNLP.hpp>
+# include <cassert>
 namespace {
 	// Ipopt types used by this file
 	typedef Ipopt::Number  Number;
@@ -192,7 +193,7 @@ bool ipopt_xam_nlp::get_nlp_info(
 	m           = 1;
 	nnz_jac_g   = 2;
 	nnz_h_lag   = 2;
-	index_style = C_STYLE;
+	index_style = FORTRAN_STYLE;
 	return true;
 }
 /* $$
@@ -324,7 +325,6 @@ bool ipopt_xam_nlp::get_starting_point(
 	Index           m            ,  // out
 	bool            init_lambda  ,  // in
 	Number*         lambda       )  // out
-}
 {
 	assert( n == 2 );
 	assert( init_x == true );
@@ -551,7 +551,7 @@ If $icode values$$ is not $code NULL$$,
 it has size $icode nele_jac$$ and $icode%values%[%k%]%$$
 is set to the value of element of the Jacobian $latex g^{(1)} (x)$$
 with row index $icode%iRow%[%k%]%$$
-and column index $icode%jRow%[%k%]%$$.
+and column index $icode%jCol%[%k%]%$$.
 
 $head ok$$
 if set to false, the optimization will terminate with status set to
@@ -571,13 +571,13 @@ bool ipopt_xam_nlp::eval_jac_g(
 	Number*         values   )  // out
 {
 	assert( nele_jac == 2 );
-	if( values == CPPAD_NULL )
+	if( values == NULL )
 	{
 		iRow[0] = 1;
-		jRow[0] = 1;
+		jCol[0] = 1;
 		//
 		iRow[1] = 1;
-		jRow[1] = 2;
+		jCol[1] = 2;
 		//
 		return true;
 	}
@@ -666,7 +666,7 @@ If $icode values$$ is not $code NULL$$,
 it has size $icode nele_hess$$ and $icode%values%[%k%]%$$
 is set to the value of element of the Hessian $latex L^{(2)} (x)$$
 with row index $icode%iRow%[%k%]%$$
-and column index $icode%jRow%[%k%]%$$.
+and column index $icode%jCol%[%k%]%$$.
 
 $head ok$$
 if set to false, the optimization will terminate with status set to
@@ -675,7 +675,7 @@ $cref/USER_REQUESTED_STOP
 
 $head Source$$
 $codep */
-bool eval_h(
+bool ipopt_xam_nlp::eval_h(
 	Index         n              ,  // in
 	const Number* x              ,  // in
 	bool          new_x          ,  // in
@@ -689,13 +689,13 @@ bool eval_h(
 	Number*       values         )  // out
 {
 	assert( nele_hess == 2 );
-	if( values == CPPAD_NULL )
+	if( values == NULL )
 	{
 		iRow[0] = 1;
-		jRow[0] = 1;
+		jCol[0] = 1;
 		//
 		iRow[1] = 2;
-		jRow[1] = 2;
+		jCol[1] = 2;
 		//
 		return true;
 	}
@@ -812,7 +812,7 @@ the NLP; see also option check_derivatives_for_naninf.
 
 $head Source$$
 $codep */
-void finalize_solution(
+void ipopt_xam_nlp::finalize_solution(
 	Ipopt::SolverReturn               status    ,  // in
 	Index                             n         ,  // in
 	const Number*                     x         ,  // in
@@ -829,7 +829,7 @@ void finalize_solution(
 
 	assert( n == 2 );
 	assert( m == 1 );
-	cout << "finalize_solution: << endl;
+	cout << "finalize_solution:" << endl;
 	cout << "x =   (" << x[0]   << ", " << x[1]   << ")" << endl;
 	cout << "z_L = (" << z_L[0] << ", " << z_L[1] << ")" << endl;
 	cout << "z_U = (" << z_U[0] << ", " << z_U[1] << ")" << endl;
@@ -867,24 +867,24 @@ bool ipopt_xam_run()
 	using Ipopt::SmartPtr;
 
 	// Create an instance of the example problem
-	SmartPtr<Ipopt::TNLP> = new ipopt_xam_nlp();
+	SmartPtr<Ipopt::TNLP> xam_nlp = new ipopt_xam_nlp();
 
 	// Create an instance of an IpoptApplication
-	SmartPtr<Ipopt::IpoptApplication> app = Ipopt::IpoptApplicationFactory();
+	SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
 
 	// Turn off all Ipopt printed output
 	app->Options()->SetIntegerValue("print_level", 0);
 	app->Options()->SetStringValue("sb", "yes");
 
 	// variable to hold status values returned by app
-	Ipopt::ApplicationReturnStatue status;
+	Ipopt::ApplicationReturnStatus status;
 
 	// initialize app
 	status = app->Initialize();
 	ok    &= status == Ipopt::Solve_Succeeded;
 
 	// solve the problem
-	status = app->OptimizeTNLP(ipopt_xam_nlp);
+	status = app->OptimizeTNLP(xam_nlp);
 	ok    &= status == Ipopt::Solve_Succeeded;
 
 	return ok;
@@ -892,4 +892,3 @@ bool ipopt_xam_run()
 /* $$
 $end
 */
-}
