@@ -497,7 +497,7 @@ is the number of constraints in the problem (dimension of g(x)).
 
 $head nele_jac$$
 is the number of non-zero elements in the Jacobian of $icode g(x)$$; i.e.,
-the same as 
+the same as
 $cref/nnz_jac_g/ipopt_xam_get_nlp_info/nnz_jac_g/$$.
 
 $head values is NULL$$
@@ -505,18 +505,18 @@ $head values is NULL$$
 $subhead iRow$$
 If $icode values$$ is $code NULL$$,
 $icode iRow$$ has size $icode nele_jac$$ and is set to the
-row indices for the non-zero entries in the Jacobian of the constraints 
+row indices for the non-zero entries in the Jacobian of the constraints
 $latex g^{(1)} (x)$$.
 
 $head jCol$$
 If $icode values$$ is $code NULL$$,
 $icode jCol$$ has size $icode nele_jac$$ and is set to the
-column indices for the non-zero entries in the Jacobian of the constraints 
+column indices for the non-zero entries in the Jacobian of the constraints
 $latex g^{(1)} (x)$$.
 
 $head values$$
 If $icode values$$ is not $code NULL$$,
-it has size $icode nele_jac$$ and $icode%values%[%k%]%$$ 
+it has size $icode nele_jac$$ and $icode%values%[%k%]%$$
 is set to the value of element of the Jacobian $latex g^{(1)} (x)$$
 with row index $icode%iRow%[%k%]%$$
 and column index $icode%jRow%[%k%]%$$.
