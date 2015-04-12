@@ -54,7 +54,10 @@ $codei%
 %$$
 does not matter.
 Upon return it contains the corresponding recording for the lower triangle of
-$latex f_{uu}^{(2)} ( \theta , u )$$.
+$latex \[
+	f_{uu}^{(2)} ( \theta , u )
+\]$$
+see $cref/f(theta, u)/approx_mixed_theory/Joint Density, f(theta, u)/$$.
 Note that the matrix is symmetric and hence can be recovered from
 its lower triangle.
 
