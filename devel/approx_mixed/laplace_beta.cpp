@@ -9,7 +9,6 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/approx_mixed.hpp>
-
 /*
 $begin approx_mixed_laplace_beta$$
 $spell
@@ -83,9 +82,6 @@ It returns true, if the test passes, and false otherwise.
 
 $end
 */
-# include <Eigen/Sparse>
-# include <dismod_at/approx_mixed.hpp>
-
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 approx_mixed::a1d_vector approx_mixed::laplace_beta(

@@ -85,8 +85,6 @@ It returns true, if the test passes, and false otherwise.
 
 $end
 */
-# include <Eigen/Sparse>
-# include <dismod_at/approx_mixed.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
