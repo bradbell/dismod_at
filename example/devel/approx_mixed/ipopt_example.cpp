@@ -463,5 +463,98 @@ bool ipopt_xam_nlp::eval_g(
 }
 /* $$
 $end
+-------------------------------------------------------------------------------
+$begin ipopt_xam_eval_jac_g$$
+$spell
+	ipopt_xam_nlp
+	bool
+	eval
+	const
+	nele_jac
+	Jacobian
+	nnz
+$$
+
+$section Compute Value of Constraint Functions$$
+
+$head Syntax$$
+$codei%eval_jac_g(
+	%n%, %x%, %new_x%, %m%, %nele_jac%, %iRow%, %jCol%, %values%
+)%$$
+
+$head n$$
+is the number of variables in the problem (dimension of x).
+
+$head x$$
+is the value for the primal variables (has size $icode n$$).
+
+$head new_x$$
+if true, no Ipopt evaluation method was previous called with the same
+value for $icode x$$.
+
+$head m$$
+is the number of constraints in the problem (dimension of g(x)).
+
+$head nele_jac$$
+is the number of non-zero elements in the Jacobian of $icode g(x)$$; i.e.,
+the same as 
+$cref/nnz_jac_g/ipopt_xam_get_nlp_info/nnz_jac_g/$$.
+
+$head values is NULL$$
+
+$subhead iRow$$
+If $icode values$$ is $code NULL$$,
+$icode iRow$$ has size $icode nele_jac$$ and is set to the
+row indices for the non-zero entries in the Jacobian of the constraints 
+$latex g^{(1)} (x)$$.
+
+$head jCol$$
+If $icode values$$ is $code NULL$$,
+$icode jCol$$ has size $icode nele_jac$$ and is set to the
+column indices for the non-zero entries in the Jacobian of the constraints 
+$latex g^{(1)} (x)$$.
+
+$head values$$
+If $icode values$$ is not $code NULL$$,
+it has size $icode nele_jac$$ and $icode%values%[%k%]%$$ 
+is set to the value of element of the Jacobian $latex g^{(1)} (x)$$
+with row index $icode%iRow%[%k%]%$$
+and column index $icode%jRow%[%k%]%$$.
+
+
+$head Example$$
+$codep */
+bool ipopt_xam_nlp::eval_jac_g(
+	Index           n        ,  // in
+	const Number*   x        ,  // in
+	bool            new_x    ,  // in
+	Index           m        ,  // in
+	Index           nele_jac ,  // in
+	Index*          iRow     ,  // out
+	Index*          jCol     ,  // out
+	Number*         values   )  // out
+{
+	assert( nele_jac == 2 );
+	if( values == CPPAD_NULL )
+	{
+		iRow[0] = 1;
+		jRow[0] = 1;
+		//
+		iRow[1] = 1;
+		jRow[1] = 2;
+ 		//
+		return true;
+	}
+	assert( n == 2 );
+	Number x1 = x[0];
+	assert( m == 1 );
+	//
+	values[0] = - 2.0 * x1;
+	values[1] = - 1.0;
+	//
+	return true;
+}
+/* $$
+$end
 */
 }
