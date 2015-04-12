@@ -42,7 +42,8 @@ We sometimes use $latex u$$ to denote the vector of random effects.
 
 $childtable%
 	devel/approx_mixed/theory.omh%
-	include/dismod_at/approx_mixed.hpp
+	include/dismod_at/approx_mixed.hpp%
+	example/devel/approx_mixed/ipopt_example.omh
 %$$
 
 
