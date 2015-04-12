@@ -324,5 +324,48 @@ bool ipopt_xam_nlp::get_starting_point(
 /* $$
 $end
 -------------------------------------------------------------------------------
+$begin ipopt_xam_eval_f$$
+$spell
+	ipopt_xam_nlp
+	bool
+	eval
+	obj
+	const
+$$
+
+$section Compute Value of Objective$$
+
+$head Syntax$$
+$codei%eval_f(%n%, %x%, %new_x%, %obj_value%)%$$
+
+$head n$$
+is the number of variables in the problem (dimension of x).
+
+$head x$$
+is the value for the primal variables (has size $icode n$$).
+
+$head new_x$$
+if true, no Ipopt evaluation method was previous called with the same
+value for $icode x$$.
+
+$head obj_val$$
+set to the initial value of the objective function $icode f(x)$$.
+
+$head Example$$
+$codep */
+bool ipopt_xam_nlp::eval_f(
+	Index           n         ,  // in
+	const Number*   x         ,  // in
+	bool            new_x     ,  // in
+	Number&         obj_value )  // out
+{
+	assert( n == 2 );
+	Number x2 = x[1];
+	obj_value = - (x2 - 2.0) * (x2 - 2.0);
+
+	return true;
+}
+/* $$
+$end
 */
 }
