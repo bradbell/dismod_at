@@ -32,6 +32,9 @@ namespace {
 	class ipopt_xam_nlp : public Ipopt::TNLP
 	{
 	public:
+		// did finalize_solution agree that the solution had converged
+		bool finalize_solution_ok_;
+		//
 		// default constructor
 		ipopt_xam_nlp(void);
 		//
@@ -722,6 +725,8 @@ $spell
 	std
 	cout
 	endl
+	fabs
+	tol
 $$
 
 $section Get Solution Results$$
@@ -819,18 +824,33 @@ void ipopt_xam_nlp::finalize_solution(
 	Number                            obj_value ,  // in
 	const Ipopt::IpoptData*           ip_data   ,  // in
 	Ipopt::IpoptCalculatedQuantities* ip_cq     )  // in
-{	using std::cout;
-	using std::endl;
+{	bool ok = true;
 
-	assert( n == 2 );
-	assert( m == 1 );
-	cout << "finalize_solution:" << endl;
-	cout << "x =   (" << x[0]   << ", " << x[1]   << ")" << endl;
-	cout << "z_L = (" << z_L[0] << ", " << z_L[1] << ")" << endl;
-	cout << "z_U = (" << z_U[0] << ", " << z_U[1] << ")" << endl;
-	cout << "g(x)   = " << g[0] << endl;
-	cout << "lambda = " << lambda[0] << endl;
-	cout << "f(x)   = " << obj_value << endl;
+	// default tolerance
+	double tol = 1e-08;
+
+	// check problem dimensions
+	ok &= n == 2;
+	ok &= m == 1;
+
+	// check that x is feasible
+	ok &= (-1.0 <= x[0]) && (x[0] <= +1.0);
+
+	// check that the bound multipliers are feasible
+	ok &= (0.0 <= z_L[0]) && (0.0 <= z_L[1]);
+	ok &= (0.0 <= z_U[0]) && (0.0 <= z_U[1]);
+
+	// check that the constraint on g(x) is satisfied
+	ok &= std::fabs( x[0] * x[0] + x[1] - 1.0 ) <= 10. * tol;
+
+	// Check the partial of the Lagrangian w.r.t x[0]
+	ok &= std::fabs(- lambda[0] * 2.0 * x[0] - z_L[0] + z_U[0] ) <= 10. * tol;
+
+	// Check the partial of the Lagrangian w.r.t x[1]
+	ok &= std::fabs( 2.0 * (x[1] - 2.0) + lambda[0]) <= 10. * tol;
+
+	// set member variable finalize_solution_ok_
+	finalize_solution_ok_ = ok;
 }
 /* $$
 $end
@@ -863,7 +883,7 @@ bool ipopt_xam_run()
 	using Ipopt::SmartPtr;
 
 	// Create an instance of the example problem
-	SmartPtr<Ipopt::TNLP> xam_nlp = new ipopt_xam_nlp();
+	SmartPtr<ipopt_xam_nlp> xam_nlp = new ipopt_xam_nlp;
 
 	// Create an instance of an IpoptApplication
 	SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
@@ -882,6 +902,7 @@ bool ipopt_xam_run()
 	// solve the problem
 	status = app->OptimizeTNLP(xam_nlp);
 	ok    &= status == Ipopt::Solve_Succeeded;
+	ok    &= xam_nlp->finalize_solution_ok_;
 
 	return ok;
 }
