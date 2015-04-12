@@ -702,7 +702,7 @@ $head n$$
 is the number of variables in the problem (dimension of x).
 
 $head x$$
-is the final value (best value found) for the primal variables 
+is the final value (best value found) for the primal variables
 (has size $icode n$$).
 
 $head z_L$$
@@ -733,7 +733,7 @@ These status values are in the $code Ipopt$$ namespace; e.g.,
 $code SUCCESS$$ is short for $code Ipopt::SUCCESS$$:
 
 $subhead SUCCESS$$
-Algorithm terminated successfully at a locally optimal point, 
+Algorithm terminated successfully at a locally optimal point,
 satisfying the convergence tolerances (can be specified by options).
 
 $subhead MAXITER_EXCEEDED$$
@@ -755,7 +755,7 @@ infeasible.
 
 $subhead USER_REQUESTED_STOP$$
 The user call-back function intermediate callback (see Section 3.3.4)
-returned false, i.e., the user code requested a premature termination of 
+returned false, i.e., the user code requested a premature termination of
 the optimization.
 
 $subhead DIVERGING_ITERATES$$
