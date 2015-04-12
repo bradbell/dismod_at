@@ -26,6 +26,6 @@ $latex \[
 \end{array}
 \]$$
 
-$childtable%example/devel/approx_mixed/ipopt_example.cpp%$$
+$childtable%example/devel/approx_mixed/ipopt_xam.cpp%$$
 
 $end

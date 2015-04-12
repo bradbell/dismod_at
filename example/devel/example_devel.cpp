@@ -116,7 +116,6 @@ int main(void)
 	RUN(eigen_xam);
 	RUN(gradient_random_xam);
 	RUN(hessian_random_xam);
-	RUN(ipopt_xam);
 	RUN(ipopt_xam_run);
 	RUN(laplace_beta_xam);
 	RUN(laplace_eval_xam);
