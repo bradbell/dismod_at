@@ -58,6 +58,36 @@ $latex f ( \theta , u )$$.
 
 $end
 */
+namespace {
+	using CppAD::AD;
+	using CppAD::ADFun;
+	using CppAD::vector;
+	using CppAD::Independent;
+
+	template <class Float>
+	void record_next_joint(
+		const vector<double>&      arg                   ,
+		ADFun< AD<Float> >&        ad_float_record       ,
+		ADFun<Float>&              float_record          )
+	{
+		// copy of arg with type AD<Float>
+		vector< AD<Float> > ad_arg( arg.size() );
+		for(size_t j = 0; j < arg.size(); j++)
+			ad_arg[j] = AD<Float> ( arg[j] );
+
+		// independent variables for this recording
+		Independent(ad_arg);
+
+		// compute joint_density using AD<Float> operations
+		vector< AD<Float> >  ad_vec = ad_float_record.Forward(0, ad_arg);
+
+		// save the recording
+		float_record.Dependent(ad_arg, ad_vec);
+
+		// optimize the recording
+		float_record.optimize();
+	}
+}
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -73,7 +103,7 @@ void approx_mixed::record_joint(
 	pack(fixed_vec, random_vec, a4_both);
 
 	// start recording a4_double operations
-	CppAD::Independent(a4_both);
+	Independent(a4_both);
 
 	// extract the fixed and random effects
 	a4d_vector a4_theta(n_fixed_), a4_u(n_random_);
@@ -87,57 +117,21 @@ void approx_mixed::record_joint(
 
 	// optimize the recording
 	a3_joint_density_.optimize();
-
 	// ------------------------------------------------------------------
+	//
+	// both
+	d_vector both(n_fixed_ + n_random_);
+	pack(fixed_vec, random_vec, both);
+	//
 	// record a2_joint_density_
-	// ------------------------------------------------------------------
-	a3d_vector a3_both( n_fixed_ + n_random_ );
-	for(size_t j = 0; j < n_fixed_ + n_random_; j++)
-		a3_both[j] = Value( a4_both[j] );
-	CppAD::Independent(a3_both);
-
-	// compute joint_density using a3_double operations
-	a3d_vector a3_vec = a3_joint_density_.Forward(0, a3_both);
-
-	// save the result
-	a2_joint_density_.Dependent(a3_both, a3_vec);
-
-	// optimize the recording
-	a2_joint_density_.optimize();
-
-	// ------------------------------------------------------------------
+	record_next_joint(both, a3_joint_density_, a2_joint_density_);
+	//
 	// record a1_joint_density_
-	// ------------------------------------------------------------------
-	a2d_vector a2_both( n_fixed_ + n_random_ );
-	for(size_t j = 0; j < n_fixed_ + n_random_; j++)
-		a2_both[j] = Value( a3_both[j] );
-	CppAD::Independent(a2_both);
-
-	// compute joint_density using a3_double operations
-	a2d_vector a2_vec = a2_joint_density_.Forward(0, a2_both);
-
-	// save the result
-	a1_joint_density_.Dependent(a2_both, a2_vec);
-
-	// optimize the recording
-	a1_joint_density_.optimize();
-
-	// ------------------------------------------------------------------
+	record_next_joint(both, a2_joint_density_, a1_joint_density_);
+	//
 	// record a0_joint_density_
-	// ------------------------------------------------------------------
 	a1d_vector a1_both( n_fixed_ + n_random_ );
-	for(size_t j = 0; j < n_fixed_ + n_random_; j++)
-		a1_both[j] = Value( a2_both[j] );
-	CppAD::Independent(a1_both);
-
-	// compute joint_density using a3_double operations
-	a1d_vector a1_vec = a1_joint_density_.Forward(0, a1_both);
-
-	// save the result
-	a0_joint_density_.Dependent(a1_both, a1_vec);
-
-	// optimize the recording
-	a0_joint_density_.optimize();
+	record_next_joint(both, a1_joint_density_, a0_joint_density_);
 }
 
 

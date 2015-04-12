@@ -91,7 +91,7 @@ approx_mixed::a1d_vector approx_mixed::laplace_beta(
 {	assert( laplace_.Domain() == 2 * n_fixed_ + n_random_ );
 	assert( laplace_.Range() == 1 );
 
-	// evaluate the gradient of H(beta, theta, u)
+	// pack all the arguments into one vector.
 	a1d_vector beta_theta_u(2 * n_fixed_ + n_random_);
 	pack(beta, theta, u, beta_theta_u);
 
