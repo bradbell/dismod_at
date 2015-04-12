@@ -63,49 +63,40 @@ vector $latex u$$.
 $head fixed_out$$
 Thre return value has prototype
 $codei%
-	CppAD::vector<double> %random_out%
+	CppAD::vector<double> %fixed_out%
 %$$
 It is the final value (obtained by optimization) of the
 fixed effects vector $latex \theta$$.
 
-$head Laplace Likelihood$$
-This optimization properly handles the case where
-the joint density contains Laplace likelihood terms.
+$head Laplace Approximation$$
+The $cref/theory/approx_mixed_throey/$$ for the
+Laplace approximation optimization only includes the case where
+the $cref/joint density/approx_mixed_joint_density/$$ is smooth. 
 
 $children%
 	example/devel/approx_mixed/optimize_fixed_xam.cpp
 %$$
 $head Example$$
-The file $cref optimize_andom_xam.cpp$$ contains an example
+The file $cref optimize_fixed_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
-
 $end
 */
-
-
-namespace { // BEGIN_EMPTY_NAMESPACE
-	// types used by this file
-	typedef Ipopt::Number  Number;
-	typedef Ipopt::Index   Index;
-	typedef Ipopt::TNLP::IndexStyleEnum IndexStyleEnum;
-
-	// derived from the Ipopt base class for non-linear programming problems.
-	class ipopt_nlp_derived_class : public Ipopt::TNLP {
-
-
-	};
-} // END_EMPTY_NAMESPACE
-
-namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // ----------------------------------------------------------------------------
-// optimize_fixed
-CppAD::vector<double> approx_mixed::optimize_fixed(
-	const d_vector& fixed_in        ,
-	const d_vector& random_in       )
-{
-}
+namespace { // BEGIN_EMPTY_NAMESPACE
+
+// types used by this file
+typedef Ipopt::Number                Number;
+typedef Ipopt::Index                 Index;
+typedef Ipopt::TNLP::IndexStyleEnum  IndexStyleEnum;
+
+// ----------------------------------------------------------------------------
+// derived from the Ipopt base class for non-linear programming problems.
+class ipopt_nlp_fixed : public Ipopt::TNLP { // BEGIN_IPOPT_NLP_FIXED
 
 
-} // END_DISMOD_AT_NAMESPACE
+}; // END_IPOPT_NLP_FIXED
+}  // END_EMPTY_NAMESPACE
+// ----------------------------------------------------------------------------
+
 
