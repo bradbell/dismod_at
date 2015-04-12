@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/approx_mixed.hpp>
 
 /*
-$begin approx_mixed_record_hessian$$
+$begin approx_mixed_record_hes_ran$$
 $spell
 	hes
 	vec
@@ -22,7 +22,7 @@ $$
 $section approx_mixed: Record Hessian of Joint Density w.r.t Random Effects$$
 
 $head Syntax$$
-$codei%record_hessian(%fixed_vec%, %random_vec%)%$$
+$codei%record_hes_ran(%fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code approx_mixed$$ class
@@ -77,7 +77,7 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void approx_mixed::record_hessian(
+void approx_mixed::record_hes_ran(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {	size_t i, j;

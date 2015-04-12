@@ -84,7 +84,7 @@ void approx_mixed::initialize(
 	//
 	// hes_ran_
 	assert( hes_ran_.size_var() == 0 );
-	record_hessian(fixed_vec, random_vec);
+	record_hes_ran(fixed_vec, random_vec);
 	assert( hes_ran_.size_var() > 0 );
 	//
 	// laplace_

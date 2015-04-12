@@ -129,7 +129,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%include/dismod_at/approx_unpack.hpp
 	%devel/approx_mixed/record_joint.cpp
 	%devel/approx_mixed/record_gradient.cpp
-	%devel/approx_mixed/record_hessian.cpp
+	%devel/approx_mixed/record_hes_ran.cpp
 	%devel/approx_mixed/record_laplace.cpp
 	%devel/approx_mixed/gradient_random.cpp
 	%devel/approx_mixed/hessian_random.cpp
@@ -231,10 +231,10 @@ $codep */
 		const d_vector& random_vec
 	);
 /* $$
-$head record_hessian$$
-See $cref approx_mixed_record_hessian$$.
+$head record_hes_ran$$
+See $cref approx_mixed_record_hes_ran$$.
 $codep */
-	void record_hessian(
+	void record_hes_ran(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);

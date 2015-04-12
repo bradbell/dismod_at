@@ -18,7 +18,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	approx_mixed/laplace_beta.cpp
 	approx_mixed/optimize_random.cpp
 	approx_mixed/record_gradient.cpp
-	approx_mixed/record_hessian.cpp
+	approx_mixed/record_hes_ran.cpp
 	approx_mixed/record_joint.cpp
 	approx_mixed/record_laplace.cpp
 
