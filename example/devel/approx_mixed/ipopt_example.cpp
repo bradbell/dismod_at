@@ -839,5 +839,57 @@ void finalize_solution(
 }
 /* $$
 $end
+-------------------------------------------------------------------------------
+$begin ipopt_xam_run$$
+$spell
+	ipopt_xam_run
+	bool
+	eval
+	const
+	Ptr
+	nlp
+	sb
+$$
+
+$section Ipopt: Example and Test$$
+
+$head Syntax$$
+$icode%ok% = ipopt_xam_run()%$$
+
+$head ok$$
+This return value is true, if the test passes,
+and false otherwise.
+
+$head Source$$
+$codep */
+bool ipopt_xam_run()
+{	bool ok = true;
+	using Ipopt::SmartPtr;
+
+	// Create an instance of the example problem
+	SmartPtr<Ipopt::TNLP> = new ipopt_xam_nlp();
+
+	// Create an instance of an IpoptApplication
+	SmartPtr<Ipopt::IpoptApplication> app = Ipopt::IpoptApplicationFactory();
+
+	// Turn off all Ipopt printed output
+	app->Options()->SetIntegerValue("print_level", 0);
+	app->Options()->SetStringValue("sb", "yes");
+
+	// variable to hold status values returned by app
+	Ipopt::ApplicationReturnStatue status;
+
+	// initialize app
+	status = app->Initialize();
+	ok    &= status == Ipopt::Solve_Succeeded;
+
+	// solve the problem
+	status = app->OptimizeTNLP(ipopt_xam_nlp);
+	ok    &= status == Ipopt::Solve_Succeeded;
+
+	return ok;
+}
+/* $$
+$end
 */
 }
