@@ -155,7 +155,7 @@ $$
 $section Return Information About Problem Sizes$$
 
 $head Syntax$$
-$codei%get_nlp_info(%n%, %m%, %nnz_jac_g%, %nnz_h_lag%, %index_style%)%$$
+$icode%ok% = get_nlp_info(%n%, %m%, %nnz_jac_g%, %nnz_h_lag%, %index_style%)%$$
 
 $head n$$
 is set to the number of variables in the problem (dimension of x).
@@ -174,7 +174,12 @@ $head index_style$$
 is set to the numbering style used for row/col entries in the sparse matrix
 format (C_STYLE: 0-based, FORTRAN_STYLE: 1-based).
 
-$head Example$$
+$head ok$$
+if set to false, the optimization will terminate with status set to
+$cref/USER_REQUESTED_STOP
+	/ipopt_xam_finalize_solution/status/USER_REQUESTED_STOP/$$.
+
+$head Source$$
 $codep */
 bool ipopt_xam_nlp::get_nlp_info(
 	Index&          n            ,  // out
@@ -202,7 +207,7 @@ $$
 $section Return Optimization Bounds$$
 
 $head Syntax$$
-$codei%get_bounds_info(%n%, %x_l%, %x_u%, %m%, %g_l%, %g_u%)%$$
+$icode%ok% = get_bounds_info(%n%, %x_l%, %x_u%, %m%, %g_l%, %g_u%)%$$
 
 $head n$$
 is the number of variables in the problem (dimension of x).
@@ -222,7 +227,12 @@ set to the lower bounds for $icode g(x)$$ (has size $icode m$$).
 $head g_u$$
 set to the upper bounds for $icode g(x)$$ (has size $icode m$$).
 
-$head Example$$
+$head ok$$
+if set to false, the optimization will terminate with status set to
+$cref/USER_REQUESTED_STOP
+	/ipopt_xam_finalize_solution/status/USER_REQUESTED_STOP/$$.
+
+$head Source$$
 $codep */
 bool ipopt_xam_nlp::get_bounds_info(
 		Index       n        ,   // in
@@ -259,7 +269,7 @@ $$
 $section Return Initial Values Where Optimization is Started$$
 
 $head Syntax$$
-$codei%get_starting_point(
+$icode%ok% = get_starting_point(
 	%n%, %init_x%, %x%, %init_z%, %z_L%, %z_U%, %m%, %init_lambda%, %lambda%
 )%$$
 
@@ -297,7 +307,12 @@ if $icode init_lambda$$ is true,
 set to the initial value for the $icode g(x)$$ multipliers
 (has size $icode m$$).
 
-$head Example$$
+$head ok$$
+if set to false, the optimization will terminate with status set to
+$cref/USER_REQUESTED_STOP
+	/ipopt_xam_finalize_solution/status/USER_REQUESTED_STOP/$$.
+
+$head Source$$
 $codep */
 bool ipopt_xam_nlp::get_starting_point(
 	Index           n            ,  // in
@@ -336,7 +351,7 @@ $$
 $section Compute Value of Objective$$
 
 $head Syntax$$
-$codei%eval_f(%n%, %x%, %new_x%, %obj_value%)%$$
+$icode%ok% = eval_f(%n%, %x%, %new_x%, %obj_value%)%$$
 
 $head n$$
 is the number of variables in the problem (dimension of x).
@@ -352,7 +367,12 @@ value for $icode x$$.
 $head obj_val$$
 set to the initial value of the objective function f(x).
 
-$head Example$$
+$head ok$$
+if set to false, the optimization will terminate with status set to
+$cref/USER_REQUESTED_STOP
+	/ipopt_xam_finalize_solution/status/USER_REQUESTED_STOP/$$.
+
+$head Source$$
 $codep */
 bool ipopt_xam_nlp::eval_f(
 	Index           n         ,  // in
@@ -380,7 +400,7 @@ $$
 $section Compute Gradient of the Objective$$
 
 $head Syntax$$
-$codei%eval_grad_f(%n%, %x%, %new_x%, %grad_f%)%$$
+$icode%ok% = eval_grad_f(%n%, %x%, %new_x%, %grad_f%)%$$
 
 $head n$$
 is the number of variables in the problem (dimension of x).
@@ -397,7 +417,12 @@ $head grad_f$$
 is set to the value for the gradient $latex \nabla f(x)$$
 (has size $icode m$$).
 
-$head Example$$
+$head ok$$
+if set to false, the optimization will terminate with status set to
+$cref/USER_REQUESTED_STOP
+	/ipopt_xam_finalize_solution/status/USER_REQUESTED_STOP/$$.
+
+$head Source$$
 $codep */
 bool ipopt_xam_nlp::eval_grad_f(
 	Index           n         ,  // in
@@ -425,7 +450,7 @@ $$
 $section Compute Value of Constraint Functions$$
 
 $head Syntax$$
-$codei%eval_g(%n%, %x%, %new_x%, %m%, %g%)%$$
+$icode%ok% = eval_g(%n%, %x%, %new_x%, %m%, %g%)%$$
 
 $head n$$
 is the number of variables in the problem (dimension of x).
@@ -444,7 +469,12 @@ is the number of constraints in the problem (dimension of g(x)).
 $head g$$
 is set to the value for the constraint functions (has size $icode m$$).
 
-$head Example$$
+$head ok$$
+if set to false, the optimization will terminate with status set to
+$cref/USER_REQUESTED_STOP
+	/ipopt_xam_finalize_solution/status/USER_REQUESTED_STOP/$$.
+
+$head Source$$
 $codep */
 bool ipopt_xam_nlp::eval_g(
 	Index           n        ,  // in
@@ -481,7 +511,7 @@ $$
 $section Compute Jacobian of Constraint Functions$$
 
 $head Syntax$$
-$codei%eval_jac_g(
+$icode%ok% = eval_jac_g(
 	%n%, %x%, %new_x%, %m%, %nele_jac%, %iRow%, %jCol%, %values%
 )%$$
 
@@ -523,8 +553,12 @@ is set to the value of element of the Jacobian $latex g^{(1)} (x)$$
 with row index $icode%iRow%[%k%]%$$
 and column index $icode%jRow%[%k%]%$$.
 
+$head ok$$
+if set to false, the optimization will terminate with status set to
+$cref/USER_REQUESTED_STOP
+	/ipopt_xam_finalize_solution/status/USER_REQUESTED_STOP/$$.
 
-$head Example$$
+$head Source$$
 $codep */
 bool ipopt_xam_nlp::eval_jac_g(
 	Index           n        ,  // in
@@ -573,7 +607,7 @@ $$
 $section Compute the Hessian of the Lagrangian$$
 
 $head Syntax$$
-$codei%eval_h(
+$icode%ok% = eval_h(
 	%n%, %x%, %new_x%,%obj_factor%, %m%, %lambda%, %new_lambda%,%$$
 $icode%nele_hess%, %iRow%, %jCol%, %values%
 )%$$
@@ -634,7 +668,12 @@ is set to the value of element of the Hessian $latex L^{(2)} (x)$$
 with row index $icode%iRow%[%k%]%$$
 and column index $icode%jRow%[%k%]%$$.
 
-$head Example$$
+$head ok$$
+if set to false, the optimization will terminate with status set to
+$cref/USER_REQUESTED_STOP
+	/ipopt_xam_finalize_solution/status/USER_REQUESTED_STOP/$$.
+
+$head Source$$
 $codep */
 bool eval_h(
 	Index         n              ,  // in
@@ -754,9 +793,8 @@ Algorithm converged to a point of local infeasibility. Problem may be
 infeasible.
 
 $subhead USER_REQUESTED_STOP$$
-The user call-back function intermediate callback (see Section 3.3.4)
-returned false, i.e., the user code requested a premature termination of
-the optimization.
+A user call-back function returned false, i.e., 
+the user code requested a premature termination of the optimization.
 
 $subhead DIVERGING_ITERATES$$
 It seems that the iterates diverge.
@@ -772,7 +810,7 @@ $subhead INVALID_NUMBER_DETECTED$$
 Algorithm received an invalid number (such as NaN or Inf) from
 the NLP; see also option check_derivatives_for_naninf.
 
-$head Example$$
+$head Source$$
 $codep */
 void finalize_solution(
 	Ipopt::SolverReturn               status    ,  // in
