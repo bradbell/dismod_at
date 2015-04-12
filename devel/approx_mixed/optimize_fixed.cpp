@@ -71,7 +71,7 @@ fixed effects vector $latex \theta$$.
 $head Laplace Approximation$$
 The $cref/theory/approx_mixed_throey/$$ for the
 Laplace approximation optimization only includes the case where
-the $cref/joint density/approx_mixed_joint_density/$$ is smooth. 
+the $cref/joint density/approx_mixed_joint_density/$$ is smooth.
 
 $children%
 	example/devel/approx_mixed/optimize_fixed_xam.cpp
