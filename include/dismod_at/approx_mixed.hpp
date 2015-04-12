@@ -37,7 +37,7 @@ $$
 $section approx_mixed Public Declarations$$
 
 $head AD Types$$
-$index a_double$$ 
+$index a_double$$
 $codep */
 	typedef CppAD::AD<double>          a1_double;
 	typedef CppAD::AD<a1_double>       a2_double;
