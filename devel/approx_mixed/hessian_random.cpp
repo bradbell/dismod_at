@@ -122,16 +122,16 @@ void approx_mixed::hessian_random(
 	assert( n_random_ == random_vec.size() );
 
 	// make sure hessian has been recorded
-	if( hessian_.size_var() == 0 )
+	if( hes_ran_.size_var() == 0 )
 	{	std::cerr << "approx_mixed::initialize was not called before"
 		<< " approx_mixed::hessian_random" << std::endl;
 		exit(1);
 	}
 
 	// size of outputs
-	size_t n_nonzero = hessian_row_.size();
-	assert( hessian_col_.size() == n_nonzero );
-	assert( hessian_.Range()    == n_nonzero );
+	size_t n_nonzero = hes_ran_row_.size();
+	assert( hes_ran_col_.size() == n_nonzero );
+	assert( hes_ran_.Range()    == n_nonzero );
 
 	// make sure outputs have proper dimension
 	assert( row_out.size() == col_out.size() );
@@ -143,22 +143,22 @@ void approx_mixed::hessian_random(
 
 	// compute the sparse Hessian
 	size_t order = 0;
-	val_out = hessian_.Forward(order, both_vec);
+	val_out = hes_ran_.Forward(order, both_vec);
 	assert( val_out.size() == n_nonzero );
 
 	if( row_out.size() == 0 )
 	{	row_out.resize(n_nonzero);
 		col_out.resize(n_nonzero);
 		for(size_t k = 0; k < n_nonzero; k++)
-		{	row_out[k] = hessian_row_[k];
-			col_out[k] = hessian_col_[k];
+		{	row_out[k] = hes_ran_row_[k];
+			col_out[k] = hes_ran_col_[k];
 		}
 	}
 # ifndef NDEUBG
 	else
 	{	for(size_t k = 0; k < n_nonzero; k++)
-		{	assert( row_out[k] == hessian_row_[k] );
-			assert( col_out[k] == hessian_col_[k] );
+		{	assert( row_out[k] == hes_ran_row_[k] );
+			assert( col_out[k] == hes_ran_col_[k] );
 		}
 	}
 # endif

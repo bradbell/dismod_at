@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin approx_mixed_record_hessian$$
 $spell
+	hes
 	vec
 	const
 	Cpp
@@ -46,10 +47,10 @@ It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
-$head hessian_$$
+$head hes_ran_$$
 The input value of the member variable
 $codei%
-	CppAD::ADFun<a2_double> hessian_
+	CppAD::ADFun<a2_double> hes_ran_
 %$$
 does not matter.
 Upon return it contains the corresponding recording for the lower triangle of
@@ -57,18 +58,18 @@ $latex f_{uu}^{(2)} ( \theta , u )$$.
 Note that the matrix is symmetric and hence can be recovered from
 its lower triangle.
 
-$head hessian_row_, hessian_col_$$
+$head hes_ran_row_, hes_ran_col_$$
 The input value of the member variables
 $codei%
-	CppAD::vector<size_t> hessian_row_, hessian_col_
+	CppAD::vector<size_t> hes_ran_row_, hes_ran_col_
 %$$
 do not matter.
 Upon return the contain the row indices and column indices
-for the sparse Hessian represented by $code hessian_$$; i.e.
-$codei%hessian_row_[%i%]%$$ and $codei%hessian_col_[%i%]%$$
+for the sparse Hessian represented by $code hes_ran_$$; i.e.
+$codei%hes_ran_row_[%i%]%$$ and $codei%hes_ran_col_[%i%]%$$
 are the row and column indices for the Hessian element
 that corresponds to the $th i$$ component of the function
-corresponding to $code hessian_$$.
+corresponding to $code hes_ran_$$.
 
 
 $end
@@ -118,20 +119,20 @@ void approx_mixed::record_hessian(
 	sparsity_pattern pattern = a3_f.RevSparseHes(n_random_, s);
 
 	// determine row and column indices in lower triangle of Hessian
-	hessian_row_.clear();
-	hessian_col_.clear();
+	hes_ran_row_.clear();
+	hes_ran_col_.clear();
 	std::set<size_t>::iterator itr;
 	for(i = 0; i < n_random_; i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	j = *itr;
 			// only compute lower triangular part
 			if( i >= j )
-			{	hessian_row_.push_back(i);
-				hessian_col_.push_back(j);
+			{	hes_ran_row_.push_back(i);
+				hes_ran_col_.push_back(j);
 			}
 		}
 	}
-	size_t K = hessian_row_.size();
+	size_t K = hes_ran_row_.size();
 
 	// compute lower triangle of sparse Hessian f_uu^2 (u)
 	a3d_vector a3_theta(n_fixed_), a3_u(n_random_), a3_w(1), a3_hes(K);
@@ -140,14 +141,14 @@ void approx_mixed::record_hessian(
 	a3_w[0] = 1.0;
 	CppAD::sparse_hessian_work work;
 	a3_f.SparseHessian(
-		a3_u, a3_w, pattern, hessian_row_, hessian_col_, a3_hes, work
+		a3_u, a3_w, pattern, hes_ran_row_, hes_ran_col_, a3_hes, work
 	);
 
 	// complete recording of f_uu^2 (u, theta)
-	hessian_.Dependent(a3_both, a3_hes);
+	hes_ran_.Dependent(a3_both, a3_hes);
 
 	// optimize the recording
-	hessian_.optimize();
+	hes_ran_.optimize();
 }
 
 

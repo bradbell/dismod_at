@@ -113,6 +113,7 @@ private:
 ------------------------------------------------------------------------------
 $begin approx_mixed_private$$
 $spell
+	hes
 	eval
 	typedef
 	CppAD
@@ -164,14 +165,14 @@ the transpose does not matter.
 $codep */
 	CppAD::ADFun<a2_double> gradient_;   // computes the gradient values
 /* $$
-$head hessian_$$
+$head hes_ran_$$
 The Hessian of the joint likelihood w.r.t. the random effects
 $latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix by
 the following variables:
 $codep */
-	CppAD::ADFun<a2_double> hessian_;     // computes the hessian values
-	CppAD::vector<size_t>   hessian_row_; // corresponding row indices
-	CppAD::vector<size_t>   hessian_col_; // corresponding column indices
+	CppAD::ADFun<a2_double> hes_ran_;     // computes the hessian values
+	CppAD::vector<size_t>   hes_ran_row_; // corresponding row indices
+	CppAD::vector<size_t>   hes_ran_col_; // corresponding column indices
 /* $$
 $head laplace_$$
 The Joint part of the Laplace approximation; i.e.,

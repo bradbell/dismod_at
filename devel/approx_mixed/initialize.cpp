@@ -82,10 +82,10 @@ void approx_mixed::initialize(
 	record_gradient(fixed_vec, random_vec);
 	assert( gradient_.size_var() > 0 );
 	//
-	// hessian_
-	assert( hessian_.size_var() == 0 );
+	// hes_ran_
+	assert( hes_ran_.size_var() == 0 );
 	record_hessian(fixed_vec, random_vec);
-	assert( hessian_.size_var() > 0 );
+	assert( hes_ran_.size_var() > 0 );
 	//
 	// laplace_
 	assert( laplace_.size_var() == 0 );
