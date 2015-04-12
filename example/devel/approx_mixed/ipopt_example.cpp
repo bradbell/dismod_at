@@ -342,14 +342,15 @@ $head n$$
 is the number of variables in the problem (dimension of x).
 
 $head x$$
-is the value for the primal variables (has size $icode n$$).
+is the value for the primal variables at which the objective
+$latex f(x)$$ is computed (has size $icode n$$).
 
 $head new_x$$
 if true, no Ipopt evaluation method was previous called with the same
 value for $icode x$$.
 
 $head obj_val$$
-set to the initial value of the objective function $icode f(x)$$.
+set to the initial value of the objective function $latex f(x)$$.
 
 $head Example$$
 $codep */
@@ -376,7 +377,7 @@ $spell
 	const
 $$
 
-$section Compute Value of Constraint Functions$$
+$section Compute Gradient of the Objective$$
 
 $head Syntax$$
 $codei%eval_grad_f(%n%, %x%, %new_x%, %grad_f%)%$$
@@ -385,7 +386,8 @@ $head n$$
 is the number of variables in the problem (dimension of x).
 
 $head x$$
-is the value for the primal variables (has size $icode n$$).
+is the value for the primal variables at which the gradient
+$latex \nabla f(x)$$ is computed (has size $icode n$$).
 
 $head new_x$$
 if true, no Ipopt evaluation method was previous called with the same
@@ -429,7 +431,8 @@ $head n$$
 is the number of variables in the problem (dimension of x).
 
 $head x$$
-is the value for the primal variables (has size $icode n$$).
+is the value for the primal variables at which the constraints
+$latex g(x)$$ is computed (has size $icode n$$).
 
 $head new_x$$
 if true, no Ipopt evaluation method was previous called with the same
@@ -475,7 +478,7 @@ $spell
 	nnz
 $$
 
-$section Compute Value of Constraint Functions$$
+$section Compute Jacobian of Constraint Functions$$
 
 $head Syntax$$
 $codei%eval_jac_g(
@@ -486,7 +489,8 @@ $head n$$
 is the number of variables in the problem (dimension of x).
 
 $head x$$
-is the value for the primal variables (has size $icode n$$).
+is the value for the primal variables at which the Jacobian
+of the constraints $latex \nabla g(x)$$ is computed (has size $icode n$$).
 
 $head new_x$$
 if true, no Ipopt evaluation method was previous called with the same

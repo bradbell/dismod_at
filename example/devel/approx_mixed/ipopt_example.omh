@@ -15,6 +15,17 @@ $$
 
 $section Example Use of Ipopt$$
 
+$head Problem$$
+$latex \[
+\begin{array}{ll}
+	\R{minimize} & - ( x_2 - 2 )^2 \; \R{w.r.t} \; x \in \B{R}^2
+	\\
+	\R{subject\; to} &  0 = x_1^2 + x_2 - 1
+	\\
+	& -1 \leq x_1 \leq 1
+\end{array}
+\]$$
+
 $childtable%example/devel/approx_mixed/ipopt_example.cpp%$$
 
 $end
