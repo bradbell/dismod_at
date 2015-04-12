@@ -343,14 +343,14 @@ is the number of variables in the problem (dimension of x).
 
 $head x$$
 is the value for the primal variables at which the objective
-$latex f(x)$$ is computed (has size $icode n$$).
+f(x) is computed (has size $icode n$$).
 
 $head new_x$$
 if true, no Ipopt evaluation method was previous called with the same
 value for $icode x$$.
 
 $head obj_val$$
-set to the initial value of the objective function $latex f(x)$$.
+set to the initial value of the objective function f(x).
 
 $head Example$$
 $codep */
@@ -574,8 +574,8 @@ $section Compute the Hessian of the Lagrangian$$
 
 $head Syntax$$
 $codei%eval_h(
-	%n%, %x%, %new_x%,%obj_factor%, %m%, %lambda%, %new_lambda%,
-	%nele_hess%, %iRow%, %jCol%, %values%
+	%n%, %x%, %new_x%,%obj_factor%, %m%, %lambda%, %new_lambda%,%$$
+$icode%nele_hess%, %iRow%, %jCol%, %values%
 )%$$
 
 $head Lagrangian$$
@@ -596,7 +596,7 @@ if true, no Ipopt evaluation method was previous called with the same
 value for $icode x$$.
 
 $head obj_factor$$
-is the factor $latex \alpha$$ that multiplies the objective $latex f(x)$$
+is the factor $latex \alpha$$ that multiplies the objective f(x)
 in the definition of the Lagrangian.
 
 $head m$$
@@ -636,19 +636,18 @@ and column index $icode%jRow%[%k%]%$$.
 
 $head Example$$
 $codep */
-	virtual bool eval_h(
-		Index         n              ,
-		const Number* x              ,
-		bool          new_x          ,
-		Number        obj_factor     ,
-		Index         m              ,
-		const Number* lambda         ,
-		bool          new_lambda     ,
-		Index         nele_hess      ,
-		Index*        iRow           ,
-		Index*        jCol           ,
-		Number*       values
-	);
+bool eval_h(
+	Index         n              ,  // in
+	const Number* x              ,  // in
+	bool          new_x          ,  // in
+	Number        obj_factor     ,  // in
+	Index         m              ,  // in
+	const Number* lambda         ,  // in
+	bool          new_lambda     ,  // in
+	Index         nele_hess      ,  // in
+	Index*        iRow           ,  // out
+	Index*        jCol           ,  // out
+	Number*       values         )  // out
 {
 	assert( nele_hess == 2 );
 	if( values == CPPAD_NULL )
@@ -658,7 +657,7 @@ $codep */
 		//
 		iRow[1] = 2;
 		jRow[1] = 2;
- 		//
+		//
 		return true;
 	}
 	assert( n == 2 );
@@ -668,6 +667,137 @@ $codep */
 	values[1] = - 2.0 * obj_factor;
 	//
 	return true;
+}
+/* $$
+$end
+-------------------------------------------------------------------------------
+$begin ipopt_xam_finalize_solution$$
+$spell
+	ipopt_xam_nlp
+	bool
+	eval
+	const
+	obj
+	ip
+	cq
+	namespace
+	infeasibility
+	doesn't
+	Inf
+	naninf
+	std
+	cout
+	endl
+$$
+
+$section Get Solution Results$$
+
+$head Syntax$$
+$codei%finalize_solution(
+	%status%, %n%, %x%, %z_L%, %z_U%, %m%, %g%,%$$
+$icode%lambda%, %obj_value%, %ip_data%, %ip_cq%
+)%$$
+
+$head n$$
+is the number of variables in the problem (dimension of x).
+
+$head x$$
+is the final value (best value found) for the primal variables 
+(has size $icode n$$).
+
+$head z_L$$
+is the final value for the $icode x$$ lower bound constraint multipliers
+(has size $icode n$$).
+
+$head z_U$$
+is the final value for the $icode x$$ upper bound constraint multipliers
+(has size $icode n$$).
+
+$head m$$
+is the number of constraints in the problem (dimension of g(x)).
+
+$head lambda$$
+is the final value for the g(x) constraint multipliers $latex \lambda$$.
+
+$head obj_value$$
+is the value of the objective f(x) at the final $icode x$$ value.
+
+$head ip_data$$
+Unspecified; i.e., not part of the Ipopt user API.
+
+$head ip_cq$$
+Unspecified; i.e., not part of the Ipopt user API.
+
+$head status$$
+These status values are in the $code Ipopt$$ namespace; e.g.,
+$code SUCCESS$$ is short for $code Ipopt::SUCCESS$$:
+
+$subhead SUCCESS$$
+Algorithm terminated successfully at a locally optimal point, 
+satisfying the convergence tolerances (can be specified by options).
+
+$subhead MAXITER_EXCEEDED$$
+Maximum number of iterations exceeded (can be specified by an option).
+
+$subhead CPUTIME_EXCEEDED$$
+Maximum number of CPU seconds exceeded (can be specified by an option).
+
+$subhead STOP_AT_TINY_STEP$$
+Algorithm proceeds with very little progress.
+
+$subhead STOP_AT_ACCEPTABLE_POINT$$
+Algorithm stopped at a point that was converged, not to desired
+tolerances, but to acceptable tolerances (see the acceptable-... options).
+
+$subhead LOCAL_INFEASIBILITY$$
+Algorithm converged to a point of local infeasibility. Problem may be
+infeasible.
+
+$subhead USER_REQUESTED_STOP$$
+The user call-back function intermediate callback (see Section 3.3.4)
+returned false, i.e., the user code requested a premature termination of 
+the optimization.
+
+$subhead DIVERGING_ITERATES$$
+It seems that the iterates diverge.
+
+$subhead RESTORATION_FAILURE$$
+Restoration phase failed, algorithm doesn't know how to proceed.
+
+$subhead ERROR_IN_STEP_COMPUTATION$$
+An unrecoverable error occurred while Ipopt tried to compute
+the search direction.
+
+$subhead INVALID_NUMBER_DETECTED$$
+Algorithm received an invalid number (such as NaN or Inf) from
+the NLP; see also option check_derivatives_for_naninf.
+
+$head Example$$
+$codep */
+void finalize_solution(
+	Ipopt::SolverReturn               status    ,  // in
+	Index                             n         ,  // in
+	const Number*                     x         ,  // in
+	const Number*                     z_L       ,  // in
+	const Number*                     z_U       ,  // in
+	Index                             m         ,  // in
+	const Number*                     g         ,  // in
+	const Number*                     lambda    ,  // in
+	Number                            obj_value ,  // in
+	const Ipopt::IpoptData*           ip_data   ,  // in
+	Ipopt::IpoptCalculatedQuantities* ip_cq     )  // in
+{	using std::cout;
+	using std::endl;
+
+	assert( n == 2 );
+	assert( m == 1 );
+	cout << "finalize_solution: << endl;
+	cout << "x =   (" << x[0]   << ", " << x[1]   << ")" << endl;
+	cout << "z_L = (" << z_L[0] << ", " << z_L[1] << ")" << endl;
+	cout << "z_U = (" << z_U[0] << ", " << z_U[1] << ")" << endl;
+	cout << "g(x)   = " << g[0] << endl;
+	cout << "lambda = " << lambda[0] << endl;
+	cout << "f(x)   = " << obj_value << endl;
 }
 /* $$
 $end
