@@ -136,7 +136,7 @@ H_{\beta}^{(1)} \left[ \theta , \theta , \hat{u} ( \theta ) \right]
 \] $$
 Note that using $latex f[ \beta , U( \beta , \theta , u) ]$$ could
 be replaced by $latex f( \beta , u)$$
-because at $latex f_u^{(1)} [ \theta , hat{u} ( \theta ) ] = 0$$.
+because at $latex f_u^{(1)} [ \theta , \hat{u} ( \theta ) ] = 0$$.
 We have not done this in-order to make the second partial of $latex H$$
 w.r.t. $latex \beta$$ a more accurate approximation of the
 Hessian of the joint part of the objective.
