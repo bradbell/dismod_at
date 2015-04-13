@@ -116,14 +116,14 @@ bool gradient_random_xam(void)
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
 	double sqrt_2 = std::sqrt( 2.0 );
-	typedef AD< AD<double> > a2_double;
+	typedef AD< AD< AD<double> > > a3_double;
 
 	size_t n_data   = 10;
 	size_t n_fixed  = n_data;
 	size_t n_random = n_data;
 	vector<double> data(n_data);
 	vector<double> theta(n_fixed), u(n_random);
-	vector<a2_double> fixed_vec(n_fixed), random_vec(n_random);
+	vector<a3_double> fixed_vec(n_fixed), random_vec(n_random);
 
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]      = double(i + 1);
@@ -136,15 +136,15 @@ bool gradient_random_xam(void)
 	approx_object.initialize(theta, u);
 
 	// compute gradient with respect to random effects
-	vector<a2_double> grad =
+	vector<a3_double> grad =
 		approx_object.gradient_random(fixed_vec, random_vec);
 
 	// The Laplace terms are known to have zero Hessian w.r.t random effects
 	for(size_t i = 0; i < n_random; i++)
-	{	a2_double sigma  = fixed_vec[i];
-		a2_double mu     = random_vec[i];
-		a2_double res    = (a2_double(data[i]) - mu) / sigma;
-		a2_double check;
+	{	a3_double sigma  = fixed_vec[i];
+		a3_double mu     = random_vec[i];
+		a3_double res    = (a3_double(data[i]) - mu) / sigma;
+		a3_double check;
 		if( i % 2 == 0 )
 			check  = - res / sigma;
 		else

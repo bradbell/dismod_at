@@ -166,14 +166,14 @@ $latex f_u^{(1)} ( \theta , u )^T$$. Because this is a simple vector
 there is no difference between the gradient and the derivative; i.e.,
 the transpose does not matter.
 $codep */
-	CppAD::ADFun<a2_double> gradient_;   // computes the gradient values
+	CppAD::ADFun<a3_double> gradient_;   // computes the gradient values
 /* $$
 $head hes_ran_$$
 The Hessian of the joint likelihood w.r.t. the random effects
 $latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix by
 the following variables:
 $codep */
-	CppAD::ADFun<a2_double> hes_ran_;     // computes the hessian values
+	CppAD::ADFun<a3_double> hes_ran_;     // computes the hessian values
 	CppAD::vector<size_t>   hes_ran_row_; // corresponding row indices
 	CppAD::vector<size_t>   hes_ran_col_; // corresponding column indices
 /* $$
@@ -253,10 +253,11 @@ $codep */
 $head gradient_random$$
 See $cref approx_mixed_gradient_random$$
 $codep */
+public: // begin temporary kludge
 	// gradient_random
-	a2d_vector gradient_random(
-		const a2d_vector&       fixed_vec   ,
-		const a2d_vector&       random_vec
+	a3d_vector gradient_random(
+		const a3d_vector&       fixed_vec   ,
+		const a3d_vector&       random_vec
 	);
 	friend bool ::gradient_random_xam(void);
 /* $$
@@ -265,13 +266,14 @@ See $cref approx_mixed_hessian_random$$
 $codep */
 	// hessian_random
 	void hessian_random(
-		const a2d_vector&       fixed_vec   ,
-		const a2d_vector&       random_vec  ,
+		const a3d_vector&       fixed_vec   ,
+		const a3d_vector&       random_vec  ,
 		CppAD::vector<size_t>&  row_out     ,
 		CppAD::vector<size_t>&  col_out     ,
-		a2d_vector&             val_out
+		a3d_vector&             val_out
 	);
 	friend bool ::hessian_random_xam(void);
+private: // end temporary kludge
 /* $$
 $head laplace_eval$$
 See $cref approx_mixed_laplace_eval$$

@@ -64,6 +64,49 @@ $end
 # include <Eigen/Sparse>
 # include <dismod_at/approx_mixed.hpp>
 
+namespace {
+	typedef dismod_at::approx_mixed::a2d_vector a2d_vector;
+	typedef dismod_at::approx_mixed::a3d_vector a3d_vector;
+
+	a2d_vector a2_gradient_random(
+		dismod_at::approx_mixed& object, a2d_vector& a2_beta, a2d_vector& a2_u
+	)
+	{
+		a3d_vector a3_beta( a2_beta.size() ), a3_u( a2_u.size() );
+		for(size_t j = 0; j < a2_beta.size(); j++)
+			a3_beta[j] = a2_beta[j];
+		for(size_t j = 0; j < a2_u.size(); j++)
+			a3_u[j] = a2_u[j];
+		a3d_vector a3_vec = object.gradient_random(a3_beta, a3_u);
+		a2d_vector a2_vec( a3_vec.size() );
+		for(size_t j = 0; j < a3_vec.size(); j++)
+			a2_vec[j] = Value( a3_vec[j] );
+		return a2_vec;
+	}
+	void a2_hessian_random(
+		dismod_at::approx_mixed& object,
+		a2d_vector& a2_beta,
+		a2d_vector& a2_u,
+		CppAD::vector<size_t>& row,
+		CppAD::vector<size_t>& col,
+		a2d_vector& a2_val
+	)
+	{
+		a3d_vector a3_beta( a2_beta.size() ), 
+			a3_u( a2_u.size() ), a3_val( a2_val.size() );
+		for(size_t j = 0; j < a2_beta.size(); j++)
+			a3_beta[j] = a2_beta[j];
+		for(size_t j = 0; j < a2_u.size(); j++)
+			a3_u[j] = a2_u[j];
+		object.hessian_random(a3_beta, a3_u, row, col, a3_val);
+		a2_val.resize( a3_val.size() );
+		for(size_t j = 0; j < a3_val.size(); j++)
+			a2_val[j] = Value( a3_val[j] );
+		return;
+	}
+  
+}
+
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void approx_mixed::record_laplace(
@@ -82,12 +125,12 @@ void approx_mixed::record_laplace(
 	unpack(beta, theta, u, beta_theta_u);
 
 	// evaluate gradient f_u^{(1)} (beta , u )
-	a2d_vector grad = gradient_random(beta, u);
+	a2d_vector grad = a2_gradient_random(*this, beta, u);
 
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	CppAD::vector<size_t> row, col;
 	a2d_vector val;
-	hessian_random(theta, u, row, col, val);
+	a2_hessian_random(*this, theta, u, row, col, val);
 
 	// declare eigen matrix types
 	using Eigen::Dynamic;
@@ -117,7 +160,7 @@ void approx_mixed::record_laplace(
 		U[j] = u[j] - newton_step(j);
 
 	// evaluate hessian f_{uu}^{(2)}(beta, U)
-	hessian_random(beta, U, row, col, val);
+	a2_hessian_random(*this, beta, U, row, col, val);
 
 	// compute an LDL^T Cholesky factorization of f_{uu}^{(2)}(beta, U)
 	for(size_t k = 0; k < K; k++)
