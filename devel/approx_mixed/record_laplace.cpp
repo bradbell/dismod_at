@@ -86,7 +86,6 @@ void approx_mixed::record_laplace(
 	a3d_vector beta(n_fixed_), theta(n_fixed_), u(n_random_);
 	unpack(beta, theta, u, beta_theta_u);
 
-
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	CppAD::vector<size_t> row, col;
 	a3d_vector val;
@@ -117,23 +116,40 @@ void approx_mixed::record_laplace(
 	for(size_t j = 0; j < n_random_; j++)
 		U[j] = u[j] - newton_step(j);
 
-	// evaluate hessian f_{uu}^{(2)}(beta, U)
+	// evaluate hessian f_{uu}^{(2)}(beta, U) and compute its factorization
 	hessian_random(beta, U, row, col, val);
-
-	// compute an LDL^T Cholesky factorization of f_{uu}^{(2)}(beta, U)
 	for(size_t k = 0; k < K; k++)
 		hessian.coeffRef(row[k], col[k]) = val[k];
 	chol.factorize(hessian);
 
-	// logdet f_{uu}^{(2)} [beta, U(beta, theta, u)]
+	// evaluate gradient f_u^{(1)} (beta , U )
+	grad = gradient_random(beta, U);
+
+	// newton_step = f_{uu}^{(2)} (beta , U)^{-1} f_u^{(1)} (beta, U)
+	for(size_t j = 0; j < n_random_; j++)
+		rhs(j) = grad[j];
+	newton_step = chol.solve(rhs);
+
+	// compute W(beta, theta, u)
+	a3d_vector W(n_random_);
+	for(size_t j = 0; j < n_random_; j++)
+		W[j] = U[j] - newton_step(j);
+
+	// evaluate hessian f_{uu}^{(2)}(beta, W) and compute its factorization
+	hessian_random(beta, W, row, col, val);
+	for(size_t k = 0; k < K; k++)
+		hessian.coeffRef(row[k], col[k]) = val[k];
+	chol.factorize(hessian);
+
+	// logdet f_{uu}^{(2)} (beta, W)]
 	dense_matrix diag = chol.vectorD();
 	a3_double logdet = a3_double(0.0);
 	for(size_t j = 0; j < n_random_; j++)
 		logdet += log( diag(j) );
 
-	// f[beta, U(beta, theta, u)]
+	// f[beta, W(beta, theta, u)]
 	a3d_vector both(n_fixed_ + n_random_);
-	pack(beta, U, both);
+	pack(beta, W, both);
 	a3d_vector vec = a3_joint_density_.Forward(0, both);
 	a3_double sum = vec[0];
 	size_t n_abs = vec.size() - 1;
@@ -155,6 +171,5 @@ void approx_mixed::record_laplace(
 	// optimize the recording
 	laplace_.optimize();
 }
-
 
 } // END_DISMOD_AT_NAMESPACE

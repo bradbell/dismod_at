@@ -169,7 +169,6 @@ bool hessian_fixed_xam(void)
 	ok &= hes.size() == 4;
 	size_t check_count = 0;
 	size_t non_zero    = 0;
-	std::cout << "This test not yet working" << std::endl;
 	for(size_t i = 0; i < 2; i++)
 	{	for(size_t j = 0; j <= i; j++)
 		{	// only check lower triangle non-zero values
@@ -177,10 +176,7 @@ bool hessian_fixed_xam(void)
 			{	non_zero++;
 				for(size_t k = 0; k < K; k++)
 				{	if( row[k] == i && col[k] == j )
-					{	if( i != 1 || j != 1 )
-						ok &= abs( val[k] / hes[ i * 2 + j] - 1.0 ) <= eps;
-						std::cout << "val = " << val[k]
-						<< ", hes = " << hes[ i * 2 + j ] << std::endl;
+					{	ok &= abs( val[k] / hes[i*n_fixed+j] - 1.0 ) <= eps;
 						check_count++;
 					}
 				}
