@@ -70,6 +70,11 @@ void approx_mixed::record_laplace(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {
+	// declare eigen matrix types
+	using Eigen::Dynamic;
+	typedef Eigen::Matrix<a3_double, Dynamic, Dynamic> dense_matrix;
+	typedef Eigen::SparseMatrix<a3_double>             sparse_matrix;
+
 	//	create an a3d_vector containing (beta, theta, u)
 	a3d_vector beta_theta_u( 2 * n_fixed_ + n_random_ );
 	pack(fixed_vec, fixed_vec, random_vec, beta_theta_u);
@@ -81,18 +86,11 @@ void approx_mixed::record_laplace(
 	a3d_vector beta(n_fixed_), theta(n_fixed_), u(n_random_);
 	unpack(beta, theta, u, beta_theta_u);
 
-	// evaluate gradient f_u^{(1)} (beta , u )
-	a3d_vector grad = gradient_random(beta, u);
 
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	CppAD::vector<size_t> row, col;
 	a3d_vector val;
 	hessian_random(theta, u, row, col, val);
-
-	// declare eigen matrix types
-	using Eigen::Dynamic;
-	typedef Eigen::Matrix<a3_double, Dynamic, Dynamic> dense_matrix;
-	typedef Eigen::SparseMatrix<a3_double>             sparse_matrix;
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
 	sparse_matrix hessian(n_random_, n_random_);
@@ -104,6 +102,9 @@ void approx_mixed::record_laplace(
 	Eigen::SimplicialLDLT<sparse_matrix, Eigen::Lower> chol;
 	chol.analyzePattern(hessian);
 	chol.factorize(hessian);
+
+	// evaluate gradient f_u^{(1)} (beta , u )
+	a3d_vector grad = gradient_random(beta, u);
 
 	// newton_step = f_{uu}^{(2)} (theta , u)^{-1} f_u^{(1)} (beta, u)
 	dense_matrix rhs(n_random_, 1);

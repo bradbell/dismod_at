@@ -82,11 +82,21 @@ h \left[ \hat{u} ( \theta ) , \theta \right]
 \] $$
 
 $head Joint Part of Objective$$
+
+$subhead Implicit Differentiation$$
 We refer to $latex h( \theta , u )$$ as the joint part of the objective.
 Because $latex f(\theta, u)$$ is smooth, we obtain
 $latex \[
 	f_u^{(1)} [ \hat{u} ( \theta ) , \theta ] = 0
 \] $$
+From this equation it follows that
+$latex \[
+\hat{u}^{(1)} ( \theta )
+=
+- f_{uu}^{(2)} \left[ \theta , \hat{u} ( \theta ) \right]^{-1}
+	f_{u \theta}^{(2)} \left[ \theta , \hat{u} ( \theta )  \right]
+\]$$
+
 
 $subhead U(beta, theta, u)$$
 We define  the function
