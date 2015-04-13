@@ -26,7 +26,7 @@ $icode%approx_object%.hessian_fixed(
 )%$$
 
 $head Purpose$$
-This routine computes the Hessian of the negative log of the 
+This routine computes the Hessian of the negative log of the
 joint part of the objective
 $cref/H(beta, theta, u)/
 	approx_mixed_theory/Joint Part of Objective/H(beta, theta, u)/$$
@@ -54,7 +54,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<double>& %random_vec%
 %$$
-Given the fixed effects $latex \theta$$, it is the corresponding optimal value 
+Given the fixed effects $latex \theta$$, it is the corresponding optimal value
 for the random effects vector; i.e.,
 $cref/u^(theta)/approx_mixed_theory/Objective/u^(theta)/$$.
 

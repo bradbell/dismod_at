@@ -148,7 +148,7 @@ bool hessian_fixed_xam(void)
 	// p(y | theta ) = integral of p(y | theta , u) p(u | theta) du
 	// record the function L(theta) = p(y | theta)
 	typedef AD<double> a1_double;
-	vector<a1_double> a1_fixed_vec(n_fixed), a1_L(1); 
+	vector<a1_double> a1_fixed_vec(n_fixed), a1_L(1);
 	a1_fixed_vec[0]  = fixed_vec[0];
 	a1_fixed_vec[1]  = fixed_vec[1];
 	CppAD::Independent(a1_fixed_vec);
@@ -187,10 +187,10 @@ bool hessian_fixed_xam(void)
 			}
 		}
 	}
-	// should be only two non 
+	// should be only two non
 	ok &= check_count == non_zero;
 	ok &= K == non_zero;
- 
+
 	return ok;
 }
 // END C++
