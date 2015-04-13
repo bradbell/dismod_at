@@ -47,7 +47,7 @@ $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
 $head joint_density_$$
-For $icode%k% = 0, 1, 2, 3%$$, the input value of the member variable
+For $icode%k% = 0, 1, 2, 3, 4%$$ the input value of the member variable
 $codei%
 	CppAD::ADFun<a%k%_double> a%k%_joint_density_
 %$$

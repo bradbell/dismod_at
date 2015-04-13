@@ -89,7 +89,7 @@ void approx_mixed::record_hes_ran(
 	a4d_vector a4_both( n_fixed_ + n_random_ );
 	pack(fixed_vec, random_vec, a4_both);
 
-	// start recording f_uu (theta, u) using a4_double operations
+	// start recording using a4_double operations
 	CppAD::Independent( a4_both );
 
 	// create an a5d_vector containing theta and u
@@ -106,17 +106,19 @@ void approx_mixed::record_hes_ran(
 	size_t n_abs = a5_vec.size() - 1;
 	for(i = 0; i < n_abs; i++)
 		a5_sum[0] += abs( a5_vec[1 + i] );
+
+	// create an ADFun object corresponding to f(u)
 	CppAD::ADFun<a4_double> a4_f;
 	a4_f.Dependent(a5_u, a5_sum);
 
-	// compute sparsity pattern corresponding to f_u^1 (u)
+	// compute sparsity pattern corresponding to f_u^{(1)} (u)
 	typedef CppAD::vector< std::set<size_t> > sparsity_pattern;
 	sparsity_pattern r(n_random_);
 	for(i = 0; i < n_random_; i++)
 		r[i].insert(i);
 	a4_f.ForSparseJac(n_random_, r);
 
-	// compute sparsity pattern corresponding to f_uu^2 (u)
+	// compute sparsity pattern corresponding to f_uu^{(2)} (u)
 	sparsity_pattern s(1);
 	assert( s[0].empty() );
 	s[0].insert(0);

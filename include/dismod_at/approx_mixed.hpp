@@ -133,6 +133,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/record_gradient.cpp
 	%devel/approx_mixed/record_hes_ran.cpp
 	%devel/approx_mixed/record_laplace.cpp
+	%devel/approx_mixed/record_hes_fix.cpp
 	%devel/approx_mixed/gradient_random.cpp
 	%devel/approx_mixed/hessian_random.cpp
 	%devel/approx_mixed/laplace_eval.cpp
@@ -170,8 +171,8 @@ $codep */
 /* $$
 $head hes_ran_$$
 The Hessian of the joint likelihood w.r.t. the random effects
-$latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix by
-the following variables:
+$latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix
+represented by the following variables:
 $codep */
 	CppAD::ADFun<a3_double> hes_ran_;     // computes the hessian values
 	CppAD::vector<size_t>   hes_ran_row_; // corresponding row indices
@@ -182,6 +183,15 @@ The Joint part of the Laplace approximation; i.e.,
 $latex H( \beta , \theta , u)$$.
 $codep */
 	CppAD::ADFun<a2_double> laplace_;     // computes H(beta, theta, u)
+/* $$
+$head hes_fix_$$
+The Hessian of the joint likelihood w.r.t. the fixed effects
+$latex H_{\beta \beta}^{(2)} ( \beta, \theta , u )$$ is as a sparse matrix
+represented by the following variables:
+$codep */
+	CppAD::ADFun<double>    hes_fix_;     // computes the hessian values
+	CppAD::vector<size_t>   hes_fix_row_; // corresponding row indices
+	CppAD::vector<size_t>   hes_fix_col_; // corresponding column indices
 /* $$
 
 $head pack$$
@@ -246,6 +256,14 @@ $head record_laplace$$
 See $cref approx_mixed_record_laplace$$.
 $codep */
 	void record_laplace(
+		const d_vector& fixed_vec ,
+		const d_vector& random_vec
+	);
+/* $$
+$head record_hes_fix$$
+See $cref approx_mixed_record_hes_fix$$.
+$codep */
+	void record_hes_fix(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);
