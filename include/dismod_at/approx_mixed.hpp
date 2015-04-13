@@ -181,7 +181,7 @@ $head laplace_$$
 The Joint part of the Laplace approximation; i.e.,
 $latex H( \beta , \theta , u)$$.
 $codep */
-	CppAD::ADFun<a1_double> laplace_;     // computes H(beta, theta, u)
+	CppAD::ADFun<a2_double> laplace_;     // computes H(beta, theta, u)
 /* $$
 
 $head pack$$
@@ -253,7 +253,6 @@ $codep */
 $head gradient_random$$
 See $cref approx_mixed_gradient_random$$
 $codep */
-public: // begin temporary kludge
 	// gradient_random
 	a3d_vector gradient_random(
 		const a3d_vector&       fixed_vec   ,
@@ -273,16 +272,15 @@ $codep */
 		a3d_vector&             val_out
 	);
 	friend bool ::hessian_random_xam(void);
-private: // end temporary kludge
 /* $$
 $head laplace_eval$$
 See $cref approx_mixed_laplace_eval$$
 $codep */
 	// laplace_eval
-	a1_double laplace_eval(
-		const a1d_vector& beta   ,
-		const a1d_vector& theta  ,
-		const a1d_vector& u
+	a2_double laplace_eval(
+		const a2d_vector& beta   ,
+		const a2d_vector& theta  ,
+		const a2d_vector& u
 	);
 	friend bool ::laplace_eval_xam(void);
 /* $$
@@ -290,10 +288,10 @@ $head laplace_beta$$
 See $cref approx_mixed_laplace_beta$$
 $codep */
 	// laplace_beta
-	a1d_vector laplace_beta(
-		const a1d_vector& beta   ,
-		const a1d_vector& theta  ,
-		const a1d_vector& u
+	a2d_vector laplace_beta(
+		const a2d_vector& beta   ,
+		const a2d_vector& theta  ,
+		const a2d_vector& u
 	);
 	friend bool ::laplace_beta_xam(void);
 /* $$

@@ -113,14 +113,14 @@ bool laplace_eval_xam(void)
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
 	double sqrt_2pi = CppAD::sqrt(8.0 * CppAD::atan(1.0) );
-	typedef dismod_at::approx_mixed::a1_double a1_double;
+	typedef dismod_at::approx_mixed::a2_double a2_double;
 
 	size_t n_data   = 10;
 	size_t n_fixed  = 2;
 	size_t n_random = n_data;
 	vector<double> data(n_data), fixed_vec(n_fixed), random_vec(n_random);
-	vector<a1_double>
-		a1_beta(n_fixed), a1_theta(n_fixed), a1_uhat(n_random);
+	vector<a2_double>
+		a2_beta(n_fixed), a2_theta(n_fixed), a2_uhat(n_random);
 
 	fixed_vec[0] = 2.0;
 	fixed_vec[1] = 1.0;
@@ -129,8 +129,8 @@ bool laplace_eval_xam(void)
 		random_vec[i] = i / double(n_data);
 	}
 	for(size_t j = 0; j < n_fixed; j++)
-	{	a1_beta[j]    = a1_double( fixed_vec[j] );
-		a1_theta[j]   = a1_beta[j];
+	{	a2_beta[j]    = a2_double( fixed_vec[j] );
+		a2_theta[j]   = a2_beta[j];
 	}
 
 	// object that is derived from approx_mixed
@@ -140,11 +140,11 @@ bool laplace_eval_xam(void)
 	// optimize the random effects
 	vector<double> uhat = approx_object.optimize_random(fixed_vec, random_vec);
 	for(size_t i = 0; i < n_data; i++)
-		a1_uhat[i] = a1_double( uhat[i] );
+		a2_uhat[i] = a2_double( uhat[i] );
 
 	// compute joint part of Laplace approximation
-	a1_double a1_H = approx_object.laplace_eval(
-		a1_beta, a1_theta, a1_uhat
+	a2_double a2_H = approx_object.laplace_eval(
+		a2_beta, a2_theta, a2_uhat
 	);
 
 	// For this case the Laplace approximation is exactly equal the integral
@@ -157,7 +157,7 @@ bool laplace_eval_xam(void)
 	{	double res    = (data[i] - mu) / delta;
 		sum          += CppAD::log(sqrt_2pi * delta) + res*res / 2.0;
 	}
-	ok &= abs( a1_H / a1_double(sum) - a1_double(1.0) ) < eps;
+	ok &= abs( a2_H / a2_double(sum) - a2_double(1.0) ) < eps;
 
 	return ok;
 }

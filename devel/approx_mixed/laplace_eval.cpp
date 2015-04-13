@@ -39,7 +39,7 @@ derived from the $code approx_mixed$$ base class.
 $head beta$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a1_double>& %beta%
+	const CppAD::vector<a2_double>& %beta%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
@@ -48,7 +48,7 @@ vector $latex \beta$$ at which $latex H( \beta , \theta , u)$$ is evaluated.
 $head theta$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a1_double>& %theta%
+	const CppAD::vector<a2_double>& %theta%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
@@ -57,7 +57,7 @@ vector $latex \theta$$ at which $latex H( \beta , \theta , u)$$ is evaluated.
 $head u$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a1_double>& %u%
+	const CppAD::vector<a2_double>& %u%
 %$$
 It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
@@ -66,7 +66,7 @@ vector $latex u$$ at which $latex H( \beta , \theta , u)$$ is evaluated.
 $head H$$
 The return value has prototype
 $codei%
-	a1_double %H%
+	a2_double %H%
 %$$
 and is the value of the expanded expression of the joint part
 of the Laplace approximation
@@ -88,17 +88,17 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-approx_mixed::a1_double approx_mixed::laplace_eval(
-	const a1d_vector& beta  ,
-	const a1d_vector& theta ,
-	const a1d_vector& u     )
+approx_mixed::a2_double approx_mixed::laplace_eval(
+	const a2d_vector& beta  ,
+	const a2d_vector& theta ,
+	const a2d_vector& u     )
 {	assert( laplace_.Domain() == 2 * n_fixed_ + n_random_ );
 	assert( laplace_.Range() == 1 );
 
 	// evaluate H(beta, theta, u)
-	a1d_vector beta_theta_u(2 * n_fixed_ + n_random_);
+	a2d_vector beta_theta_u(2 * n_fixed_ + n_random_);
 	pack(beta, theta, u, beta_theta_u);
-	a1d_vector H = laplace_.Forward(0, beta_theta_u);
+	a2d_vector H = laplace_.Forward(0, beta_theta_u);
 
 	return H[0];
 }
