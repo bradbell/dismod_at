@@ -159,7 +159,7 @@ bool laplace_beta_xam(void)
 	//
 	double d_sum_0    = 0.0;
 	double d_sum_1    = 0.0;
-	for(size_t i = 0; i < n_random; i++)
+	for(size_t i = 0; i < n_data; i++)
 	{	double res    = (data[i] - mu) / delta;
 		// - log p( y_i | theta ) = log(sqrt_2pi * delta) + res*res / 2.0;
 		// so compute partials w.r.t. sigma = theta_i

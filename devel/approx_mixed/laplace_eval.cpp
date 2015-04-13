@@ -27,7 +27,7 @@ $icode%H% = %approx_object%.laplace_eval(%beta%, %theta%, %u%)%$$
 $head Purpose$$
 This routine evaluates the joint part of the Laplace approximation objective
 $cref/H(beta, theta, u)/approx_mixed_theory
-	/Objective, Joint Part
+	/Joint Part of Objective
 	/H(beta, theta, u)
 /$$.
 
@@ -71,7 +71,7 @@ $codei%
 and is the value of the expanded expression of the joint part
 of the Laplace approximation
 $cref/H(beta, theta, u)/approx_mixed_theory
-	/Objective, Joint Part
+	/Joint Part of Objective
 	/H(beta, theta, u)
 /$$.
 

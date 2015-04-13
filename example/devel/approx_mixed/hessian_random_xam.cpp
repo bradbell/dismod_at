@@ -139,7 +139,7 @@ bool hessian_random_xam(void)
 	vector<a3_double> val;
 	approx_object.hessian_random(fixed_vec, random_vec, row, col, val);
 
-	// check the result
+	// check size of result vectors
 	size_t K = row.size();
 	ok &= col.size() == K;
 	ok &= val.size() == K;

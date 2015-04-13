@@ -55,7 +55,7 @@ does not matter.
 Upon return it contains the corresponding recording for the
 joint part of the Laplace approximation objective,
 $cref/h[theta, u^(theta)]/approx_mixed_theory
-	/Objective, Joint Part
+	/Joint Part of Objective
 	/h[theta, u^(theta)]
 /$$.
 

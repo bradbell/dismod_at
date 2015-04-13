@@ -91,6 +91,11 @@ void approx_mixed::initialize(
 	assert( laplace_.size_var() == 0 );
 	record_laplace(fixed_vec, random_vec);
 	assert( laplace_.size_var() > 0 );
+	//
+	// hes_fix_
+	assert( hes_fix_.size_var() == 0 );
+	record_hes_fix(fixed_vec, random_vec);
+	assert( hes_fix_.size_var() > 0 );
 }
 
 } // END_DISMOD_AT_NAMESPACE

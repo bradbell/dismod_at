@@ -51,9 +51,11 @@ $latex \[
 The function $latex g(x)$$ may be non-smooth because it
 can have absolute values in it (corresponding to the Laplace likelihoods).
 
-$head Objective, L(theta)$$
+$head Objective$$
+
+$subhead h(theta, u)$$
 Using this notation, the part of the Laplace approximation that
-depends on the random effects $latex u$$ is
+depends on both the fixed and random effects $latex u$$ is
 $latex \[
 h( \theta, u )
 =
@@ -61,12 +63,16 @@ h( \theta, u )
 + f( \theta, u )
 - \frac{n}{2} \log ( 2 \pi )
 \] $$
+
+$subhead u^(theta)$$
 Given the fixed effects,
 the corresponding random effects that maximize the joint likelihood
 are denoted by
 $latex \[
 	\hat{u} ( \theta ) = \R{argmin} \; f( \theta, u ) \; \R{w.r.t.} \; u
 \] $$
+
+$subhead L(theta)$$
 The Laplace approximation objective, as a function of the fixed effects, is
 $latex \[
 L ( \theta )
@@ -75,7 +81,8 @@ h \left[ \hat{u} ( \theta ) , \theta \right]
 + g( \theta )
 \] $$
 
-$head Objective, Joint Part$$
+$head Joint Part of Objective$$
+We refer to $latex h( \theta , u )$$ as the joint part of the objective.
 Because $latex f(\theta, u)$$ is smooth, we obtain
 $latex \[
 	f_u^{(1)} [ \hat{u} ( \theta ) , \theta ] = 0

@@ -29,7 +29,7 @@ $latex \[
 	H_\beta^{(1)} ( \beta , \theta , u )
 \]$$
 See $cref/H(beta, theta, u)/approx_mixed_theory
-	/Objective, Joint Part
+	/Joint Part of Objective
 	/H(beta, theta, u)
 /$$.
 
