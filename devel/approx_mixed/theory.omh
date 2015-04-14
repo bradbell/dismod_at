@@ -136,7 +136,7 @@ W ( \beta , \theta , u )
 =
 U( \beta , \theta , u )
 -
-f_{uu}^{(2)} [ \beta , U( \beta , \theta , u) ]^{-1} 
+f_{uu}^{(2)} [ \beta , U( \beta , \theta , u) ]^{-1}
 	f_u^{(1)} [ \beta , U( \beta , \theta , u)  ]
 \] $$
 It follows that
