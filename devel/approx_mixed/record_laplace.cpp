@@ -52,11 +52,11 @@ $codei%
 	CppAD::ADFun<a2_double> laplace_
 %$$
 does not matter.
-Upon return it contains the corresponding recording for the
-joint part of the Laplace approximation objective,
-$cref/h[theta, u^(theta)]/approx_mixed_theory
+Upon return it contains a second order accurate recording for the
+joint part of the Laplace approximation objective; see
+$cref/derivatives of G/approx_mixed_theory
 	/Joint Part of Objective
-	/h[theta, u^(theta)]
+	/Derivatives of G
 /$$.
 
 $end

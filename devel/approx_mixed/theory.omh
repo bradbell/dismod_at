@@ -72,19 +72,24 @@ $latex \[
 	\hat{u} ( \theta ) = \R{argmin} \; f( \theta, u ) \; \R{w.r.t.} \; u
 \] $$
 
+$subhead G(theta)$$
+We refer to
+$latex \[
+	G( \theta ) = h[ \theta , \hat{u} ( \theta ) ]
+\] $$
+as  the joint part of the objective.
+
 $subhead L(theta)$$
 The Laplace approximation objective, as a function of the fixed effects, is
 $latex \[
 L ( \theta )
 =
-h \left[ \hat{u} ( \theta ) , \theta \right]
-+ g( \theta )
+G( \theta ) + g( \theta )
 \] $$
 
 $head Joint Part of Objective$$
 
 $subhead Implicit Differentiation$$
-We refer to $latex h( \theta , u )$$ as the joint part of the objective.
 Because $latex f(\theta, u)$$ is smooth, we obtain
 $latex \[
 	f_u^{(1)} [ \hat{u} ( \theta ) , \theta ] = 0
@@ -96,7 +101,20 @@ $latex \[
 - f_{uu}^{(2)} \left[ \theta , \hat{u} ( \theta ) \right]^{-1}
 	f_{u \theta}^{(2)} \left[ \theta , \hat{u} ( \theta )  \right]
 \]$$
-
+We define the function
+$latex \[
+F( \theta , u )
+=
+- f_{uu}^{(2)} ( \theta , u)^{-1} f_{u \theta}^{(2)} ( \theta , u )
+\] $$
+Let $latex F^i ( \theta , u )$$ denote the $th i$$ row of
+$latex F ( \theta , u )$$ as a column vector.
+$latex \[
+u_i^{(2)} ( \theta ) =
+F_\theta^i [ \theta , \hat{u} ( \theta ) ]
++
+F_u^i [ \theta , \hat{u} ( \theta ) ] u^{(1)} ( \theta )^{\R{T}}
+\] $$
 
 $subhead U(beta, theta, u)$$
 We define  the function
@@ -109,7 +127,7 @@ It follows that
 $latex \[
 	U \left[ \theta , \theta , \hat{u} ( \theta ) \right] = \hat{u} ( \theta )
 \]$$
-
+and
 $latex \[
 U_{\beta}^{(1)} \left[ \theta, \theta , \hat{u} ( \theta ) \right]
 =
@@ -119,13 +137,40 @@ U_{\beta}^{(1)} \left[ \theta, \theta , \hat{u} ( \theta ) \right]
 \hat{u}^{(1)} ( \theta )
 \] $$
 
+$subhead W(beta, theta, u)$$
+We define  the function
+$latex \[
+W ( \beta , \theta , u )
+=
+U( \beta , \theta , u )
+-
+f_{uu}^{(2)} ( \beta , u )^{-1} f_u^{(1)} [ \beta , U( \beta , \theta , u)  ]
+\] $$
+It follows that
+$latex \[
+	W \left[ \theta , \theta , \hat{u} ( \theta ) \right] = \hat{u} ( \theta )
+\] $$
+and
+$latex \[
+W_{\beta} [ \theta , \theta , \hat{u} ( \theta ) ]
+=
+-
+f_{uu}^{(2)} \left[ \theta , \hat{u} ( \theta ) \right]^{-1}
+	f_{u \theta}^{(2)} [ \beta , \hat{u} ( \theta )  ]
+=
+\hat{u}^{(1)} ( \theta )
+\] $$
+I think that the second partials of $latex W^i$$ w.r.t
+$latex \beta$$ are equal to $latex u_i^{(2)} ( \theta )$$,
+but I have not yet proven so.
+
 $subhead H(beta, theta, u)$$
 Given these facts we define
 $latex \[
 H( \beta , \theta , u)
 =
-+ \frac{1}{2} \log \det f_{uu}^{(2)} [ \beta, U( \beta , \theta , u) ]
-+ f[ \beta, U( \beta , \theta , u) ]
++ \frac{1}{2} \log \det f_{uu}^{(2)} [ \beta, W( \beta , \theta , u) ]
++ f[ \beta, W( \beta , \theta , u) ]
 - \frac{n}{2} \log ( 2 \pi )
 \] $$
 It follows that
@@ -134,30 +179,18 @@ $latex \[
 =
 H_{\beta}^{(1)} \left[ \theta , \theta , \hat{u} ( \theta ) \right]
 \] $$
-Note that using $latex f[ \beta , U( \beta , \theta , u) ]$$ could
-be replaced by $latex f( \beta , u)$$
-because at $latex f_u^{(1)} [ \theta , \hat{u} ( \theta ) ] = 0$$.
-We have not done this in-order to make the second partial of $latex H$$
-w.r.t. $latex \beta$$ a more accurate approximation of the
-Hessian of the joint part of the objective.
+Note that, for first partials to agree, $latex W$$ could be replaced
+by $latex U$$ and
+$latex f[ \beta , U( \beta , \theta , u) ]$$.
+Also note that for function values; neither $latex U$$ or $latex W$$
+need to be computed.
 
-$subhead h[theta, u^(theta)]$$
+$subhead Derivatives of G$$
 This formula enables us to use AD to compute the derivatives of
-$latex \[
-	h [ \theta , \hat{u} ( \theta ) ]
-\] $$
+$latex G( \theta ) = h[ \theta , \hat{u} ( \theta ) ]$$
 without having to differentiate the iterative process that computes
 $latex \hat{u} ( \theta )$$.
-Note that the iterative process may not have a fixed operation sequence
+Also note that the iterative process may not have a fixed operation sequence
 and might need to be re-taped for each value of $latex \theta$$.
-
-$head Objective, Fixed Effects Part$$
-The rest of the objective $latex L( \theta )$$ is
-$latex \[
-	g( \theta )
-\] $$
-Note that $latex g( \theta )$$ may not be smooth, but it can be represented
-in the optimization process as the sum of absolute values of
-smoothing functions that can be differentiated.
 
 $end
