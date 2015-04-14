@@ -197,7 +197,19 @@ void approx_mixed::record_laplace(
 
 	// complete recording of H(beta, theta, u)
 	if( order == 0 )
-	{	laplace_0_.Dependent(beta_theta_u, H);
+	{	CppAD::ADFun<a2_double> a2f(beta_theta_u, H);
+		//
+		a1d_vector a1_beta_theta_u( 2 * n_fixed_ + n_random_), a1_H(1);
+		a2d_vector a2_beta_theta_u( 2 * n_fixed_ + n_random_), a2_H(1);
+		//
+		pack(fixed_vec, fixed_vec, random_vec, a1_beta_theta_u);
+		CppAD::Independent(a1_beta_theta_u);
+		for(size_t j = 0; j < 2 * n_fixed_ + n_random_; j++)
+			a2_beta_theta_u[j] = a1_beta_theta_u[j];
+		a2_H     = a2f.Forward(0, a2_beta_theta_u);
+		a1_H[0]  = Value( a2_H[0] );
+		//
+		laplace_0_.Dependent(a1_beta_theta_u, a1_H);
 		laplace_0_.optimize();
 	}
 	else if( order == 1 )

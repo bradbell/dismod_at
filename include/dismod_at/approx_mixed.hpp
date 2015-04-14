@@ -185,7 +185,7 @@ For $icode%k% = 0 , 1, 2%$$, $codei%laplace_%k%_%$$ is $th k$$ order accurate
 in $latex \beta$$ recording of the Joint part of the Laplace approximation;
 i.e., $latex H( \beta , \theta , u)$$.
 $codep */
-	CppAD::ADFun<a2_double> laplace_0_;     // for computing H
+	CppAD::ADFun<double>    laplace_0_;     // for computing H
 	CppAD::ADFun<a2_double> laplace_1_;     // for computing H_beta
 	CppAD::ADFun<a2_double> laplace_2_;     // for computing H_beta_beta
 /* $$
@@ -301,10 +301,10 @@ $head laplace_eval$$
 See $cref approx_mixed_laplace_eval$$
 $codep */
 	// laplace_eval
-	a2_double laplace_eval(
-		const a2d_vector& beta   ,
-		const a2d_vector& theta  ,
-		const a2d_vector& u
+	double laplace_eval(
+		const d_vector& beta   ,
+		const d_vector& theta  ,
+		const d_vector& u
 	);
 	friend bool ::laplace_eval_xam(void);
 /* $$

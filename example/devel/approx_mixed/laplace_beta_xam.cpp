@@ -19,14 +19,14 @@ $section C++ laplace_beta: Example and Test$$
 
 $head Model$$
 $latex \[
-	\B{p}( y_i | theta , u ) \sim \B{N} ( u_i + \theta_0 , \theta_1^2 )
+	\B{p}( y_i | \theta , u ) \sim \B{N} ( u_i + \theta_0 , \theta_1^2 )
 \] $$
 $latex \[
-	\B{p}( u_i | theta ) \sim \B{N} ( 0 , 1 )
+	\B{p}( u_i | \theta ) \sim \B{N} ( 0 , 1 )
 \] $$
 It follows that the Laplace approximation is exact and
 $latex \[
-	\B{p}( y_i | theta ) \sim \B{N} ( \theta_0 , 1 + \theta_1^2 )
+	\B{p}( y_i | \theta ) \sim \B{N} \left( \theta_0 , 1 + \theta_1^2 \right)
 \] $$
 
 $code
