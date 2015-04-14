@@ -127,9 +127,7 @@ bool laplace_eval_xam(void)
 		random_vec[i] = i / double(n_data);
 	}
 	for(size_t j = 0; j < n_fixed; j++)
-	{	beta[j]    = double( fixed_vec[j] );
-		theta[j]   = beta[j];
-	}
+		beta[j] = theta[j] = fixed_vec[j];
 
 	// object that is derived from approx_mixed
 	approx_derived approx_object(n_fixed, n_random, data);

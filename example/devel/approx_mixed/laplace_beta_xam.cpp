@@ -111,14 +111,12 @@ bool laplace_beta_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
-	typedef dismod_at::approx_mixed::a2_double a2_double;
 
 	size_t n_data   = 10;
 	size_t n_fixed  = 2;
 	size_t n_random = n_data;
 	vector<double> data(n_data), fixed_vec(n_fixed), random_vec(n_random);
-	vector<a2_double>
-		a2_beta(n_fixed), a2_theta(n_fixed), a2_uhat(n_random);
+	vector<double> beta(n_fixed), theta(n_fixed), uhat(n_random);
 
 	fixed_vec[0] = 2.0;
 	fixed_vec[1] = 1.0;
@@ -127,23 +125,17 @@ bool laplace_beta_xam(void)
 		random_vec[i] = i / double(n_data);
 	}
 	for(size_t j = 0; j < n_fixed; j++)
-	{	a2_beta[j]    = a2_double( fixed_vec[j] );
-		a2_theta[j]   = a2_beta[j];
-	}
+		beta[j] = theta[j] = fixed_vec[j];
 
 	// object that is derived from approx_mixed
 	approx_derived approx_object(n_fixed, n_random, data);
 	approx_object.initialize(fixed_vec, random_vec);
 
 	// optimize the random effects
-	vector<double> uhat = approx_object.optimize_random(fixed_vec, random_vec);
-	for(size_t i = 0; i < n_data; i++)
-		a2_uhat[i] = a2_double( uhat[i] );
+	uhat = approx_object.optimize_random(fixed_vec, random_vec);
 
 	// compute partial of joint part of Laplace approximation w.r.t beta
-	vector<a2_double> a2_H_beta = approx_object.laplace_beta(
-		a2_beta, a2_theta, a2_uhat
-	);
+	vector<double> H_beta = approx_object.laplace_beta(beta, theta, uhat);
 
 	// For this case the Laplace approximation is exactly equal the integral
 	// p(y | theta ) = integral of p(y | theta , u) p(u | theta) du
@@ -173,8 +165,7 @@ bool laplace_beta_xam(void)
 		d_sum_0          += d_square_0;
 		d_sum_1          += d_log_1 + d_square_1;
 	}
-	ok &= abs( a2_H_beta[0] / a2_double(d_sum_0) - a2_double(1.0) ) < eps;
-	ok &= abs( a2_H_beta[1] / a2_double(d_sum_1) - a2_double(1.0) ) < eps;
+	ok &= abs( H_beta[0] / d_sum_0 - 1.0 )  < eps;
 
 	return ok;
 }

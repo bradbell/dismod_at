@@ -42,7 +42,7 @@ derived from the $code approx_mixed$$ base class.
 $head beta$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a2_double>& %beta%
+	const CppAD::vector<double>& %beta%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
@@ -51,7 +51,7 @@ vector $latex \beta$$ at which the partial is evaluated.
 $head theta$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a2_double>& %theta%
+	const CppAD::vector<double>& %theta%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
@@ -60,7 +60,7 @@ vector $latex \theta$$ at which the partial is evaluated.
 $head u$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a2_double>& %u%
+	const CppAD::vector<double>& %u%
 %$$
 It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
@@ -69,7 +69,7 @@ vector $latex u$$ at which the partial is evaluated.
 $head H_beta$$
 The return value has prototype
 $codei%
-	a2d_vector %H_beta%
+	d_vector %H_beta%
 %$$
 and is the value of the partial derivative.
 
@@ -85,27 +85,27 @@ $end
 */
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-approx_mixed::a2d_vector approx_mixed::laplace_beta(
-	const a2d_vector& beta  ,
-	const a2d_vector& theta ,
-	const a2d_vector& u     )
+approx_mixed::d_vector approx_mixed::laplace_beta(
+	const d_vector& beta  ,
+	const d_vector& theta ,
+	const d_vector& u     )
 {	assert( laplace_1_.Domain() == 2 * n_fixed_ + n_random_ );
 	assert( laplace_1_.Range() == 1 );
 
 	// pack all the arguments into one vector.
-	a2d_vector beta_theta_u(2 * n_fixed_ + n_random_);
+	d_vector beta_theta_u(2 * n_fixed_ + n_random_);
 	pack(beta, theta, u, beta_theta_u);
 
 	// execute a zero order forward sweep
 	laplace_1_.Forward(0, beta_theta_u);
 
 	// compute the gradient H w.r.t (beta, theta, u)
-	a2d_vector w(1);
-	w[0] = a2_double(1.0);
-	a2d_vector H_beta_theta_u = laplace_1_.Reverse(1, w);
+	d_vector w(1);
+	w[0] = 1.0;
+	d_vector H_beta_theta_u = laplace_1_.Reverse(1, w);
 
 	// extract H_beta
-	a2d_vector H_beta(n_fixed_), H_theta(n_fixed_), H_u(n_random_);
+	d_vector H_beta(n_fixed_), H_theta(n_fixed_), H_u(n_random_);
 	unpack(H_beta, H_theta, H_u, H_beta_theta_u);
 
 	return H_beta;

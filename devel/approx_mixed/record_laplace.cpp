@@ -196,7 +196,7 @@ void approx_mixed::record_laplace(
 	H[0] = logdet / 2.0 + sum - constant_term;
 
 	// complete recording of H(beta, theta, u)
-	if( order == 0 )
+	if( order <= 1 )
 	{	CppAD::ADFun<a2_double> a2f(beta_theta_u, H);
 		//
 		a1d_vector a1_beta_theta_u( 2 * n_fixed_ + n_random_), a1_H(1);
@@ -208,13 +208,15 @@ void approx_mixed::record_laplace(
 			a2_beta_theta_u[j] = a1_beta_theta_u[j];
 		a2_H     = a2f.Forward(0, a2_beta_theta_u);
 		a1_H[0]  = Value( a2_H[0] );
-		//
-		laplace_0_.Dependent(a1_beta_theta_u, a1_H);
-		laplace_0_.optimize();
-	}
-	else if( order == 1 )
-	{	laplace_1_.Dependent(beta_theta_u, H);
-		laplace_1_.optimize();
+		if( order == 0 )
+		{	laplace_0_.Dependent(a1_beta_theta_u, a1_H);
+			laplace_0_.optimize();
+		}
+		else
+		{	assert( order == 1 );
+			laplace_1_.Dependent(a1_beta_theta_u, a1_H);
+			laplace_1_.optimize();
+		}
 	}
 	else
 	{	assert(order == 2 );

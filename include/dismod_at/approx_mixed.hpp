@@ -186,7 +186,7 @@ in $latex \beta$$ recording of the Joint part of the Laplace approximation;
 i.e., $latex H( \beta , \theta , u)$$.
 $codep */
 	CppAD::ADFun<double>    laplace_0_;     // for computing H
-	CppAD::ADFun<a2_double> laplace_1_;     // for computing H_beta
+	CppAD::ADFun<double>    laplace_1_;     // for computing H_beta
 	CppAD::ADFun<a2_double> laplace_2_;     // for computing H_beta_beta
 /* $$
 $head hes_fix_$$
@@ -312,10 +312,10 @@ $head laplace_beta$$
 See $cref approx_mixed_laplace_beta$$
 $codep */
 	// laplace_beta
-	a2d_vector laplace_beta(
-		const a2d_vector& beta   ,
-		const a2d_vector& theta  ,
-		const a2d_vector& u
+	d_vector laplace_beta(
+		const d_vector& beta   ,
+		const d_vector& theta  ,
+		const d_vector& u
 	);
 	friend bool ::laplace_beta_xam(void);
 /* $$
