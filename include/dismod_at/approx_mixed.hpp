@@ -180,11 +180,14 @@ $codep */
 	CppAD::vector<size_t>   hes_ran_row_; // corresponding row indices
 	CppAD::vector<size_t>   hes_ran_col_; // corresponding column indices
 /* $$
-$head laplace_$$
-The Joint part of the Laplace approximation; i.e.,
-$latex H( \beta , \theta , u)$$.
+$head laplace_k_$$
+For $icode%k% = 0 , 1, 2$$, $codei%laplace_%k%_$$ is $th k$$ order accurate
+in $latex \beta$$ recording of the Joint part of the Laplace approximation;
+i.e., $latex H( \beta , \theta , u)$$.
 $codep */
-	CppAD::ADFun<a2_double> laplace_;     // computes H(beta, theta, u)
+	CppAD::ADFun<a2_double> laplace_0_;     // for computing H
+	CppAD::ADFun<a2_double> laplace_1_;     // for computing H_beta
+	CppAD::ADFun<a2_double> laplace_2_;     // for computing H_beta_beta
 /* $$
 $head hes_fix_$$
 The Hessian of the joint likelihood w.r.t. the fixed effects
@@ -258,6 +261,7 @@ $head record_laplace$$
 See $cref approx_mixed_record_laplace$$.
 $codep */
 	void record_laplace(
+		size_t          order     ,
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);

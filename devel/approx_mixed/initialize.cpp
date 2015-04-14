@@ -87,10 +87,20 @@ void approx_mixed::initialize(
 	record_hes_ran(fixed_vec, random_vec);
 	assert( hes_ran_.size_var() > 0 );
 	//
-	// laplace_
-	assert( laplace_.size_var() == 0 );
-	record_laplace(fixed_vec, random_vec);
-	assert( laplace_.size_var() > 0 );
+	// laplace_0_
+	assert( laplace_0_.size_var() == 0 );
+	record_laplace(0, fixed_vec, random_vec);
+	assert( laplace_0_.size_var() > 0 );
+	//
+	// laplace_1_
+	assert( laplace_1_.size_var() == 0 );
+	record_laplace(1, fixed_vec, random_vec);
+	assert( laplace_1_.size_var() > 0 );
+	//
+	// laplace_0_
+	assert( laplace_2_.size_var() == 0 );
+	record_laplace(2, fixed_vec, random_vec);
+	assert( laplace_2_.size_var() > 0 );
 	//
 	// hes_fix_
 	assert( hes_fix_.size_var() == 0 );

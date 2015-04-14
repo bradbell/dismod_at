@@ -32,6 +32,7 @@ See $cref/H(beta, theta, u)/approx_mixed_theory
 	/Joint Part of Objective
 	/H(beta, theta, u)
 /$$.
+This approximation is first order accurate w.r.t $latex \beta$$.
 
 $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
@@ -88,20 +89,20 @@ approx_mixed::a2d_vector approx_mixed::laplace_beta(
 	const a2d_vector& beta  ,
 	const a2d_vector& theta ,
 	const a2d_vector& u     )
-{	assert( laplace_.Domain() == 2 * n_fixed_ + n_random_ );
-	assert( laplace_.Range() == 1 );
+{	assert( laplace_1_.Domain() == 2 * n_fixed_ + n_random_ );
+	assert( laplace_1_.Range() == 1 );
 
 	// pack all the arguments into one vector.
 	a2d_vector beta_theta_u(2 * n_fixed_ + n_random_);
 	pack(beta, theta, u, beta_theta_u);
 
 	// execute a zero order forward sweep
-	laplace_.Forward(0, beta_theta_u);
+	laplace_1_.Forward(0, beta_theta_u);
 
 	// compute the gradient H w.r.t (beta, theta, u)
 	a2d_vector w(1);
 	w[0] = a2_double(1.0);
-	a2d_vector H_beta_theta_u = laplace_.Reverse(1, w);
+	a2d_vector H_beta_theta_u = laplace_1_.Reverse(1, w);
 
 	// extract H_beta
 	a2d_vector H_beta(n_fixed_), H_theta(n_fixed_), H_u(n_random_);

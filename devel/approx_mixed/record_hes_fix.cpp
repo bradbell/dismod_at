@@ -99,7 +99,9 @@ void approx_mixed::record_hes_fix(
 	// compute H(beta) using a2_double operations
 	CppAD::Independent(a2_beta);
 	a2d_vector a2_H(1);
-	a2_H[0] = laplace_eval(a2_beta, a2_theta, a2_u);
+	a2d_vector a2_beta_theta_u( 2 * n_fixed_ + n_random_ );
+	pack(a2_beta, a2_theta, a2_u, a2_beta_theta_u);
+	a2_H = laplace_2_.Forward(0, a2_beta_theta_u);
 
 	// create an ADFun object corresponding to H(beta)
 	CppAD::ADFun<a1_double> a1_f;

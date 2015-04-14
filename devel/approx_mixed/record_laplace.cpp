@@ -21,12 +21,27 @@ $$
 $section approx_mixed: Record Joint Part of Laplace Approximation$$
 
 $head Syntax$$
-$codei%record_laplace(%fixed_vec%, %random_vec%)%$$
+$codei%record_laplace(%order%, %fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code approx_mixed$$ class
 and cannot be used by a derived
 $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$.
+
+$head order$$
+This argument has prototype
+$icode%
+	size_t %order%
+%$$
+It specifies the order of accuracy when approximating
+$cref/u^(theta)/approx_mixed_theory/Objective/u^(theta)/$$
+and must be zero, one, or two.
+The zero order recroding is shortest, but can only compute
+$cref/G(theta)/approx_mixed_theory/Objective/G(theta)/$$.
+The first order recroding is longer, and can compute
+both $latex G( \theta )$$ and its derivative.
+The second order recroding is longest, and can compute
+both $latex G( \theta )$$ and its derivative and its Hessian.
 
 $head fixed_vec$$
 This argument has prototype
@@ -46,13 +61,13 @@ It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
-$head laplace_$$
+$head laplace_order_$$
 The input value of the member variable
 $codei%
-	CppAD::ADFun<a2_double> laplace_
+	CppAD::ADFun<a2_double> laplace_%order%_
 %$$
 does not matter.
-Upon return it contains a second order accurate recording for the
+Upon return it contains a an recording for the
 joint part of the Laplace approximation objective; see
 $cref/derivatives of G/approx_mixed_theory
 	/Joint Part of Objective
@@ -67,9 +82,11 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void approx_mixed::record_laplace(
+	size_t          order      ,
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{
+{	assert( order <= 2 );
+
 	// declare eigen matrix types
 	using Eigen::Dynamic;
 	typedef Eigen::Matrix<a3_double, Dynamic, Dynamic> dense_matrix;
@@ -102,45 +119,59 @@ void approx_mixed::record_laplace(
 	chol.analyzePattern(hessian);
 	chol.factorize(hessian);
 
-	// evaluate gradient f_u^{(1)} (beta , u )
-	a3d_vector grad = gradient_random(beta, u);
+	// First order section -------------------------------------------------
+	a3d_vector U(n_random_), grad(n_random_);
+	dense_matrix rhs(n_random_, 1), newton_step(n_random_, 1);
+	if( order < 1 )
+	{	for(size_t j = 0; j < n_random_; j++)
+			U[j] = u[j];
+	}
+	else
+	{	// evaluate gradient f_u^{(1)} (beta , u )
+		grad = gradient_random(beta, u);
 
-	// newton_step = f_{uu}^{(2)} (theta , u)^{-1} f_u^{(1)} (beta, u)
-	dense_matrix rhs(n_random_, 1);
-	for(size_t j = 0; j < n_random_; j++)
-		rhs(j) = grad[j];
-	dense_matrix newton_step = chol.solve(rhs);
+		// newton_step = f_{uu}^{(2)} (theta , u)^{-1} f_u^{(1)} (beta, u)
+		for(size_t j = 0; j < n_random_; j++)
+			rhs(j) = grad[j];
+		newton_step = chol.solve(rhs);
 
-	// compute U(beta, theta, u)
-	a3d_vector U(n_random_);
-	for(size_t j = 0; j < n_random_; j++)
-		U[j] = u[j] - newton_step(j);
+		// compute U(beta, theta, u)
+		for(size_t j = 0; j < n_random_; j++)
+			U[j] = u[j] - newton_step(j);
 
-	// evaluate hessian f_{uu}^{(2)}(beta, U) and compute its factorization
-	hessian_random(beta, U, row, col, val);
-	for(size_t k = 0; k < K; k++)
-		hessian.coeffRef(row[k], col[k]) = val[k];
-	chol.factorize(hessian);
-
-	// evaluate gradient f_u^{(1)} (beta , U )
-	grad = gradient_random(beta, U);
-
-	// newton_step = f_{uu}^{(2)} (beta , U)^{-1} f_u^{(1)} (beta, U)
-	for(size_t j = 0; j < n_random_; j++)
-		rhs(j) = grad[j];
-	newton_step = chol.solve(rhs);
-
-	// compute W(beta, theta, u)
+		// evaluate hessian f_{uu}^{(2)}(beta, U) and compute its factorization
+		hessian_random(beta, U, row, col, val);
+		for(size_t k = 0; k < K; k++)
+			hessian.coeffRef(row[k], col[k]) = val[k];
+		chol.factorize(hessian);
+	}
+	// Second order section --------------------------------------------------
 	a3d_vector W(n_random_);
-	for(size_t j = 0; j < n_random_; j++)
-		W[j] = U[j] - newton_step(j);
+	if( order < 1 )
+	{	for(size_t j = 0; j < n_random_; j++)
+			W[j] = U[j];
+	}
+	else
+	{	// evaluate gradient f_u^{(1)} (beta , U )
+		grad = gradient_random(beta, U);
 
-	// evaluate hessian f_{uu}^{(2)}(beta, W) and compute its factorization
-	hessian_random(beta, W, row, col, val);
-	for(size_t k = 0; k < K; k++)
-		hessian.coeffRef(row[k], col[k]) = val[k];
-	chol.factorize(hessian);
+		// newton_step = f_{uu}^{(2)} (beta , U)^{-1} f_u^{(1)} (beta, U)
+		for(size_t j = 0; j < n_random_; j++)
+			rhs(j) = grad[j];
+		newton_step = chol.solve(rhs);
 
+		// compute W(beta, theta, u)
+		for(size_t j = 0; j < n_random_; j++)
+			W[j] = U[j] - newton_step(j);
+
+		// evaluate hessian f_{uu}^{(2)}(beta, W) and compute its factorization
+		hessian_random(beta, W, row, col, val);
+		for(size_t k = 0; k < K; k++)
+			hessian.coeffRef(row[k], col[k]) = val[k];
+		chol.factorize(hessian);
+	}
+	// Back to all orders ----------------------------------------------------
+	//
 	// logdet f_{uu}^{(2)} (beta, W)]
 	dense_matrix diag = chol.vectorD();
 	a3_double logdet = a3_double(0.0);
@@ -164,12 +195,20 @@ void approx_mixed::record_laplace(
 	a3d_vector H(1);
 	H[0] = logdet / 2.0 + sum - constant_term;
 
-
 	// complete recording of H(beta, theta, u)
-	laplace_.Dependent(beta_theta_u, H);
-
-	// optimize the recording
-	laplace_.optimize();
+	if( order == 0 )
+	{	laplace_0_.Dependent(beta_theta_u, H);
+		laplace_0_.optimize();
+	}
+	else if( order == 1 )
+	{	laplace_1_.Dependent(beta_theta_u, H);
+		laplace_1_.optimize();
+	}
+	else
+	{	assert(order == 2 );
+		laplace_2_.Dependent(beta_theta_u, H);
+		laplace_2_.optimize();
+	}
 }
 
 } // END_DISMOD_AT_NAMESPACE

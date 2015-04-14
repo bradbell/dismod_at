@@ -30,6 +30,7 @@ $cref/H(beta, theta, u)/approx_mixed_theory
 	/Joint Part of Objective
 	/H(beta, theta, u)
 /$$.
+This evaluate is only zero order accurate w.r.t $latex \beta$$.
 
 $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
@@ -68,8 +69,7 @@ The return value has prototype
 $codei%
 	a2_double %H%
 %$$
-and is the value of the expanded expression of the joint part
-of the Laplace approximation
+and is the value of the the joint part of the Laplace approximation
 $cref/H(beta, theta, u)/approx_mixed_theory
 	/Joint Part of Objective
 	/H(beta, theta, u)
@@ -92,13 +92,13 @@ approx_mixed::a2_double approx_mixed::laplace_eval(
 	const a2d_vector& beta  ,
 	const a2d_vector& theta ,
 	const a2d_vector& u     )
-{	assert( laplace_.Domain() == 2 * n_fixed_ + n_random_ );
-	assert( laplace_.Range() == 1 );
+{	assert( laplace_0_.Domain() == 2 * n_fixed_ + n_random_ );
+	assert( laplace_0_.Range() == 1 );
 
 	// evaluate H(beta, theta, u)
 	a2d_vector beta_theta_u(2 * n_fixed_ + n_random_);
 	pack(beta, theta, u, beta_theta_u);
-	a2d_vector H = laplace_.Forward(0, beta_theta_u);
+	a2d_vector H = laplace_0_.Forward(0, beta_theta_u);
 
 	return H[0];
 }
