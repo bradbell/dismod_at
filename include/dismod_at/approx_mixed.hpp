@@ -181,7 +181,7 @@ $codep */
 	CppAD::vector<size_t>   hes_ran_col_; // corresponding column indices
 /* $$
 $head laplace_k_$$
-For $icode%k% = 0 , 1, 2$$, $codei%laplace_%k%_$$ is $th k$$ order accurate
+For $icode%k% = 0 , 1, 2%$$, $codei%laplace_%k%_%$$ is $th k$$ order accurate
 in $latex \beta$$ recording of the Joint part of the Laplace approximation;
 i.e., $latex H( \beta , \theta , u)$$.
 $codep */

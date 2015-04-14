@@ -36,11 +36,11 @@ $icode%
 It specifies the order of accuracy when approximating
 $cref/u^(theta)/approx_mixed_theory/Objective/u^(theta)/$$
 and must be zero, one, or two.
-The zero order recroding is shortest, but can only compute
+The zero order recording is shortest, but can only compute
 $cref/G(theta)/approx_mixed_theory/Objective/G(theta)/$$.
-The first order recroding is longer, and can compute
+The first order recording is longer, and can compute
 both $latex G( \theta )$$ and its derivative.
-The second order recroding is longest, and can compute
+The second order recording is longest, and can compute
 both $latex G( \theta )$$ and its derivative and its Hessian.
 
 $head fixed_vec$$

@@ -69,7 +69,7 @@ The return value has prototype
 $codei%
 	a2_double %H%
 %$$
-and is the value of the the joint part of the Laplace approximation
+and is the value of the joint part of the Laplace approximation
 $cref/H(beta, theta, u)/approx_mixed_theory
 	/Joint Part of Objective
 	/H(beta, theta, u)

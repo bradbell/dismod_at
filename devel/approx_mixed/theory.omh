@@ -92,7 +92,7 @@ $head Joint Part of Objective$$
 $subhead Implicit Differentiation$$
 Because $latex f(\theta, u)$$ is smooth, we obtain
 $latex \[
-	f_u^{(1)} [ \hat{u} ( \theta ) , \theta ] = 0
+	f_u^{(1)} [ \theta , \hat{u} ( \theta ) ] = 0
 \] $$
 From this equation it follows that
 $latex \[
@@ -106,14 +106,6 @@ $latex \[
 F( \theta , u )
 =
 - f_{uu}^{(2)} ( \theta , u)^{-1} f_{u \theta}^{(2)} ( \theta , u )
-\] $$
-Let $latex F^i ( \theta , u )$$ denote the $th i$$ row of
-$latex F ( \theta , u )$$ as a column vector.
-$latex \[
-u_i^{(2)} ( \theta ) =
-F_\theta^i [ \theta , \hat{u} ( \theta ) ]
-+
-F_u^i [ \theta , \hat{u} ( \theta ) ] u^{(1)} ( \theta )^{\R{T}}
 \] $$
 
 $subhead U(beta, theta, u)$$
@@ -144,7 +136,8 @@ W ( \beta , \theta , u )
 =
 U( \beta , \theta , u )
 -
-f_{uu}^{(2)} ( \beta , u )^{-1} f_u^{(1)} [ \beta , U( \beta , \theta , u)  ]
+f_{uu}^{(2)} [ \beta , U( \beta , \theta , u) ]^{-1} 
+	f_u^{(1)} [ \beta , U( \beta , \theta , u)  ]
 \] $$
 It follows that
 $latex \[
