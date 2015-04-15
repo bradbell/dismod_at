@@ -8,11 +8,6 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# include <dismod_at/approx_mixed.hpp>
-# include <coin/IpIpoptApplication.hpp>
-# include <coin/IpTNLP.hpp>
-# include <cppad/ipopt/solve_result.hpp>
-
 /*
 $begin approx_mixed_optimize_fixed$$
 $spell
@@ -25,12 +20,14 @@ $section Optimize Fixed Effects$$
 
 $head Syntax$$
 $icode%fixed_out% =%$$
-$icode%approx_object%.optimize_fixed(%fixed_in%, %random_in%)%$$
+$icode%approx_object%.optimize_fixed(
+	%fixed_lower%, %fixed_in%, %fixed_upper%, %random_in%
+)%$$
 
 $head Purpose$$
 This routine maximizes the Laplace approximation for the
 negative log-likelihood
-$cref/L(theta)/approx_mixed_theory/Objective, L(theta)/$$
+$cref/L(theta)/approx_mixed_theory/Objective/L(theta)/$$
 $latex \[
 L( \theta ) \approx - \log \left[
 	\int \B{p} ( y | \theta , u) \B{p} ( u | \theta ) \B{p} ( \theta ) \R{d} u
@@ -42,12 +39,30 @@ We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
 to denote an object of a class that is
 derived from the $code approx_mixed$$ base class.
 
-$head fixed_vec$$
+$head fixed_lower$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %fixed_lower%
+%$$
+It specifies the lower bound for the
+$cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
+vector $latex \theta$$.
+
+$head fixed_in$$
 This argument has prototype
 $codei%
 	const CppAD::vector<double>& %fixed_in%
 %$$
-It specifies the initial value used for the optimization of the
+It specifies the initial value for the
+$cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
+vector $latex \theta$$ during the optimization process.
+
+$head fixed_upper$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %fixed_upper%
+%$$
+It specifies the upper bound for the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
 vector $latex \theta$$.
 
@@ -66,7 +81,12 @@ $codei%
 	CppAD::vector<double> %fixed_out%
 %$$
 It is the final value (obtained by optimization) of the
-fixed effects vector $latex \theta$$.
+fixed effects vector.
+This vector satisfies its bounds; i.e.,
+$codei%
+	%fixed_lower%[%j%]% <= %fixed_out%[%j%] <= %fixed_upper%[%j%]
+%$$
+for $icode%j% = 0 , %...%, %n_fixed_%-1%$$.
 
 $head Laplace Approximation$$
 The $cref/theory/approx_mixed_throey/$$ for the
