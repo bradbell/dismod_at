@@ -85,7 +85,7 @@ namespace {
 			const vector<a5_double>& fixed_vec  ,
 			const vector<a5_double>& random_vec )
 		{	return implement_joint_density(fixed_vec, random_vec); }
-		// 
+		//
 		// improper constant prior
 		virtual vector<a1_double> fixed_density(
 			const vector<a1_double>& fixed_vec  )

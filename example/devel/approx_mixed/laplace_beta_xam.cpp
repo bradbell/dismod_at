@@ -18,7 +18,7 @@ $$
 $section C++ laplace_beta: Example and Test$$
 
 $head Private$$
-This example is not part of the 
+This example is not part of the
 $cref/approx_mixed public API/approx_mixed_public/$$.
 
 $head Model$$
