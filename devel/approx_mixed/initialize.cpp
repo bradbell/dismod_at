@@ -63,7 +63,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 void approx_mixed::initialize(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	if( gradient_.size_var() != 0 )
+{	if( grad_ran_.size_var() != 0 )
 	{	std::cerr << "approx_mixed::initialize was called twice" << std::endl;
 		exit(1);
 	}
@@ -77,10 +77,10 @@ void approx_mixed::initialize(
 	assert( a1_joint_density_.size_var() > 0 );
 	assert( a0_joint_density_.size_var() > 0 );
 	//
-	// gradient_
-	assert( gradient_.size_var() == 0 );
-	record_gradient(fixed_vec, random_vec);
-	assert( gradient_.size_var() > 0 );
+	// grad_ran_
+	assert( grad_ran_.size_var() == 0 );
+	record_grad_ran(fixed_vec, random_vec);
+	assert( grad_ran_.size_var() > 0 );
 	//
 	// hes_ran_
 	assert( hes_ran_.size_var() == 0 );

@@ -85,7 +85,7 @@ CppAD::vector<approx_mixed::a3_double> approx_mixed::gradient_random(
 	assert( n_random_ == random_vec.size() );
 
 	// make sure gradient has been recorded
-	if( gradient_.size_var() == 0 )
+	if( grad_ran_.size_var() == 0 )
 	{	std::cerr << "approx_mixed::initialize was not called before"
 		<< " approx_mixed::gradient_random" << std::endl;
 		exit(1);
@@ -97,7 +97,7 @@ CppAD::vector<approx_mixed::a3_double> approx_mixed::gradient_random(
 
 	// compute the gradient
 	size_t order = 0;
-	return gradient_.Forward(order, both_vec);
+	return grad_ran_.Forward(order, both_vec);
 }
 
 

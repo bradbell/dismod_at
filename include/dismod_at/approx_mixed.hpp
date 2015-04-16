@@ -131,7 +131,7 @@ $section approx_mixed Private Declarations$$
 $childtable%include/dismod_at/approx_pack.hpp
 	%include/dismod_at/approx_unpack.hpp
 	%devel/approx_mixed/record_joint.cpp
-	%devel/approx_mixed/record_gradient.cpp
+	%devel/approx_mixed/record_grad_ran.cpp
 	%devel/approx_mixed/record_hes_ran.cpp
 	%devel/approx_mixed/record_laplace.cpp
 	%devel/approx_mixed/record_hes_fix.cpp
@@ -169,7 +169,7 @@ $latex f_u^{(1)} ( \theta , u )^T$$. Because this is a simple vector
 there is no difference between the gradient and the derivative; i.e.,
 the transpose does not matter.
 $codep */
-	CppAD::ADFun<a3_double> gradient_;   // computes the gradient values
+	CppAD::ADFun<a3_double> grad_ran_;   // computes the gradient values
 /* $$
 $head hes_ran_$$
 The Hessian of the joint likelihood w.r.t. the random effects
@@ -241,10 +241,10 @@ $codep */
 		const d_vector& random_vec
 	);
 /* $$
-$head record_gradient$$
-See $cref approx_mixed_record_gradient$$.
+$head record_grad_ran$$
+See $cref approx_mixed_record_grad_ran$$.
 $codep */
-	void record_gradient(
+	void record_grad_ran(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);

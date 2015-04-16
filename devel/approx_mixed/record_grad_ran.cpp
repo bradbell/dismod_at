@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/approx_mixed.hpp>
 
 /*
-$begin approx_mixed_record_gradient$$
+$begin approx_mixed_record_grad_ran$$
 $spell
 	vec
 	const
@@ -21,7 +21,7 @@ $$
 $section approx_mixed: Record Gradient of Joint Density w.r.t Random Effects$$
 
 $head Syntax$$
-$codei%record_gradient(%fixed_vec%, %random_vec%)%$$
+$codei%record_grad_ran(%fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code approx_mixed$$ class
@@ -49,7 +49,7 @@ vector $latex u$$ at which the recording is made.
 $head gradient_$$
 The input value of the member variable
 $codei%
-	CppAD::ADFun<a3_double> gradient_
+	CppAD::ADFun<a3_double> grad_ran_
 %$$
 does not matter.
 Upon return it contains the corresponding recording for the gradient
@@ -61,7 +61,7 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void approx_mixed::record_gradient(
+void approx_mixed::record_grad_ran(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {
@@ -100,10 +100,10 @@ void approx_mixed::record_gradient(
 	a4_grad = a4_f.Reverse(1, a4_w);
 
 	// complete recording of f_u^{(1)} (u, theta)
-	gradient_.Dependent(a4_both, a4_grad);
+	grad_ran_.Dependent(a4_both, a4_grad);
 
 	// optimize the recording
-	gradient_.optimize();
+	grad_ran_.optimize();
 }
 
 
