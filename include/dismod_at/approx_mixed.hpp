@@ -163,7 +163,7 @@ $codep */
 	CppAD::ADFun<a4_double>   a4_joint_density_;
 	friend optimize_random_eval;
 /* $$
-$head gradient_$$
+$head grad_ran_$$
 The gradient of the joint likelihood w.r.t. the random effects
 $latex f_u^{(1)} ( \theta , u )^T$$. Because this is a simple vector
 there is no difference between the gradient and the derivative; i.e.,

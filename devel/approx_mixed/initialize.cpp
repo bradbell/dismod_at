@@ -16,6 +16,8 @@ $spell
 	vec
 	const
 	Cpp
+	var
+	hes
 $$
 
 $section approx_mixed: Initialization After Constructor$$
@@ -54,6 +56,31 @@ It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$ at which certain $code CppAD::ADFun$$
 objects are recorded.
+
+$head Member Variables$$
+The following $code approx_mixed$$ member variables are
+$code CppAD::ADFun$$ functions that are assumed to be empty when
+$code initialize$$ is called; i.e.,
+the corresponding $code size_var()$$ is zero.
+They will contain the corresponding recordings when $code initialize$$ returns:
+$list number$$
+For $icode%k% = 0%, ... ,% 4%$$,
+the member variable $codei%a%k%_joint_density_%$$ is the corresponding
+$cref/joint_density_/approx_mixed_private/joint_density_/$$.
+$lnext
+The member variable
+$cref/grad_ran_/approx_mixed_private/grad_ran_/$$.
+$lnext
+The member variable
+$cref/hes_ran_/approx_mixed_private/hes_ran_/$$.
+$lnext
+For $icode%k% = 0%, ... ,% 2%$$,
+the member variable $codei%laplace_%k%_%$$ is the $th k$$ order
+$cref/Laplace approximation/approx_mixed_private/laplace_k_/$$.
+$lnext
+The member variable
+$cref/hes_fix_/approx_mixed_private/hes_fix_/$$.
+$lend
 
 $end
 */
