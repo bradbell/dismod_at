@@ -18,12 +18,14 @@ extern bool hessian_random_xam(void);
 extern bool laplace_eval_xam(void);
 extern bool laplace_beta_xam(void);
 extern bool hessian_fixed_xam(void);
+namespace dismod_at {
+	class optimize_random_eval;
+}
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-class optimize_random_eval;
-
 class approx_mixed {
+	friend optimize_random_eval;
 public:
 /*
 $begin approx_mixed_public$$
@@ -86,9 +88,6 @@ $head fixed_density$$
 These are pure virtual functions so they must be defined by derived class;
 see $cref/fixed_density/approx_mixed_fixed_density/$$.
 $codep */
-	virtual CppAD::vector<double> fixed_density(
-		const CppAD::vector<double>& fixed_vec
-	) = 0 ;
 	virtual CppAD::vector<a1_double> fixed_density(
 		const CppAD::vector<a1_double>& fixed_vec
 	) = 0 ;
@@ -135,6 +134,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/record_hes_ran.cpp
 	%devel/approx_mixed/record_laplace.cpp
 	%devel/approx_mixed/record_hes_fix.cpp
+	%devel/approx_mixed/record_fixed.cpp
 	%devel/approx_mixed/gradient_random.cpp
 	%devel/approx_mixed/hessian_random.cpp
 	%devel/approx_mixed/hessian_fixed.cpp
@@ -153,15 +153,18 @@ $codep */
 	const size_t n_random_;
 /* $$
 $head joint_density_$$
-Records the $cref/joint_density/approx_mixed_joint_density/$$ function
-$latex f( \theta , u )$$ for different levels of AD:
+Recording of the $cref/joint_density/approx_mixed_joint_density/$$ function
+which evaluates a
+$cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
+corresponding to
+$cref/f(theta, u)/approx_mixed_theory/Joint Density, f(theta, u)/$$
+for different levels of AD:
 $codep */
 	CppAD::ADFun<double>      a0_joint_density_;
 	CppAD::ADFun<a1_double>   a1_joint_density_;
 	CppAD::ADFun<a2_double>   a2_joint_density_;
 	CppAD::ADFun<a3_double>   a3_joint_density_;
 	CppAD::ADFun<a4_double>   a4_joint_density_;
-	friend optimize_random_eval;
 /* $$
 $head grad_ran_$$
 The gradient of the joint likelihood w.r.t. the random effects
@@ -197,6 +200,15 @@ $codep */
 	CppAD::ADFun<double>    hes_fix_;     // computes the hessian values
 	CppAD::vector<size_t>   hes_fix_row_; // corresponding row indices
 	CppAD::vector<size_t>   hes_fix_col_; // corresponding column indices
+/* $$
+$head fixed_density_$$
+Recording of the $cref/fixed_density/approx_mixed_fixed_density/$$ function
+which evaluates a
+$cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
+corresponding to
+$cref/g(theta)/approx_mixed_theory/Fixed Density, g(theta)/$$.
+$codep */
+	CppAD::ADFun<double>      fixed_density_;
 /* $$
 
 $head pack$$
@@ -273,6 +285,11 @@ $codep */
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);
+/* $$
+$head record_fixed$$
+See $cref approx_mixed_record_fixed$$.
+$codep */
+	void record_fixed(const d_vector& fixed_vec);
 /* $$
 $head gradient_random$$
 See $cref approx_mixed_gradient_random$$

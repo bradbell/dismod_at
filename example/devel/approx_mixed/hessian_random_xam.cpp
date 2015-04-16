@@ -17,14 +17,10 @@ $$
 
 $section C++ hessian_random: Example and Test$$
 
-$head Warning$$
-This example contains Laplace distributed terms in the
-joint likelihood and hence does not satisfy the
-$cref/smoothness assumption
-	/approx_mixed_theory
-	/Joint Density, f(theta, u)
-	/Smoothness Assumption
-/$$.
+
+$head Private$$
+This example is not part of the 
+$cref/approx_mixed public API/approx_mixed_public/$$.
 
 $code
 $verbatim%example/devel/approx_mixed/hessian_random_xam.cpp
@@ -97,16 +93,11 @@ namespace {
 			const vector<a5_double>& random_vec )
 		{	return implement_joint_density(fixed_vec, random_vec); }
 		//
-		virtual vector<double> fixed_density(
-			const vector<double>& fixed_vec  )
-		{	assert(false);
-			return vector<double>();
-		}
-		//
 		virtual vector<a1_double> fixed_density(
 			const vector<a1_double>& fixed_vec  )
-		{	assert(false);
-			return vector<a1_double>();
+		{	a1d_vector vec(1);
+			vec[0] = 0.0;
+			return vec;
 		}
 	};
 }

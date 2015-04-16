@@ -117,22 +117,36 @@ bool approx_derived_xam(void)
 	double pi  = 4.0 * std::atan(1.0);
 	double eps = 100. * std::numeric_limits<double>::epsilon();
 
-	size_t n_data = 10;
-	vector<double> data(n_data), fixed_vec(n_data), random_vec(n_data);
+	typedef dismod_at::approx_mixed::a1_double a1_double;
+	typedef dismod_at::approx_mixed::a5_double a5_double;
+
+	size_t n_data   = 10;
+	size_t n_fixed  = n_data;
+	size_t n_random = n_data;
+	vector<double>    data(n_data);
+	vector<double>    fixed_vec(n_fixed), random_vec(n_random);
+	vector<a1_double> a1_fixed(n_fixed), a1_random(n_random);
+	vector<a5_double> a5_fixed(n_fixed), a5_random(n_random);
 
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]       = double(i + 1);
+		//
 		fixed_vec[i]  = 1.0;
+		a1_fixed[i]   = a1_double(1.0);
+		a5_fixed[i]   = a5_double(1.0);
+		//
 		random_vec[i] = 0.0;
+		a1_random[i]  = a1_double(0.0);
+		a5_random[i]  = a5_double(0.0);
 	}
 
 	// object that is derived from approx_mixed
-	approx_derived approx_object(n_data, n_data, data);
+	approx_derived approx_object(n_fixed, n_random, data);
 	approx_object.initialize(fixed_vec, random_vec);
 
 	// Evaluate the joint density
-	vector<double> vec(1);
-	vec = approx_object.implement_joint_density(fixed_vec, random_vec);
+	vector<a5_double> a5_vec(1);
+	a5_vec = approx_object.implement_joint_density(a5_fixed, a5_random);
 
 	// check the joint density
 	double sum = 0.0;
@@ -142,22 +156,22 @@ bool approx_derived_xam(void)
 		double res    = (data[i] - mu) / sigma;
 		sum          += (std::log(2 * pi * sigma * sigma) + res * res) / 2.0;
 	}
-	ok &= std::fabs( vec[0] / sum - 1.0 ) < eps;
+	ok &= abs( a5_vec[0] / a5_double(sum) - a5_double(1.0) ) < eps;
 
-	// Evaluate the joint density
-	vec.resize(1 + n_data);
-	vec = approx_object.fixed_density(fixed_vec);
+	// Evaluate the fixed density
+	vector<a1_double> a1_vec(1 + n_fixed);
+	a1_vec = approx_object.fixed_density(a1_fixed);
 
 	// check the fixed density
 	sum = 0.0;
-	for(size_t i = 0; i < n_data; i++)
-	{	double sigma  = fixed_vec[i];
+	for(size_t j = 0; j < n_fixed; j++)
+	{	double sigma  = fixed_vec[j];
 		sum          += std::log( std::sqrt(2.0) * sigma );
 		//
 		double check  = std::sqrt(2.0) * (sigma - 1.0);
-		ok  &= fabs( vec[1+i] / check - 1.0) < eps;
+		ok  &= abs( a1_vec[1+j] / check - 1.0 ) < eps;
 	}
-	ok &= std::fabs( vec[0] / sum - 1.0 ) < eps;
+	ok &= abs( a1_vec[0] / sum - 1.0 ) < eps;
 
 	return ok;
 }

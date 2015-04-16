@@ -53,8 +53,11 @@ $codei%
 %$$
 does not matter.
 Upon return it contains the corresponding recording for the
-$cref/joint_density/approx_mixed_joint_density/$$
-$latex f ( \theta , u )$$.
+$cref/joint_density/approx_mixed_joint_density/$$.
+Note that the function result is the
+$cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
+corresponding to the function
+$cref/f(theta , u )/approx_mixed_theory/Joint Density, f(theta, u)/$$.
 
 $end
 */

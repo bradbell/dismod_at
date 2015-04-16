@@ -18,6 +18,10 @@ $$
 
 $section C++ hessian_fixed: Example and Test$$
 
+$head Private$$
+This example is not part of the 
+$cref/approx_mixed public API/approx_mixed_public/$$.
+
 $head Model$$
 $latex \[
 	\B{p}( y_i | \theta , u ) \sim \B{N} ( u_i + \theta_0 , \theta_1^2 )
@@ -94,16 +98,11 @@ namespace {
 			const vector<a5_double>& random_vec )
 		{	return implement_joint_density(fixed_vec, random_vec); }
 		//
-		virtual vector<double> fixed_density(
-			const vector<double>& fixed_vec  )
-		{	assert(false);
-			return vector<double>();
-		}
-		//
 		virtual vector<a1_double> fixed_density(
 			const vector<a1_double>& fixed_vec  )
-		{	assert(false);
-			return vector<a1_double>();
+		{	a1d_vector vec(1);
+			vec[0] = 0.0;
+			return vec;
 		}
 	};
 }

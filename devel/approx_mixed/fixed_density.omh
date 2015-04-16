@@ -19,31 +19,29 @@ $$
 $section Prior Density for the Fixed Effects$$
 
 $head Syntax$$
-$icode%vec% = %approx_object%.fixed_density(%fixed_vec%, %random_vec%)%$$
+$icode%vec% = %approx_object%.fixed_density(%fixed_vec%)%$$
 
 $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
 to denote an object of a class that is
 derived from the $code approx_mixed$$ base class.
 
-$head Float$$
-The type $icode Float$$ below is any one of the following:
-$code double$$, $code CppAD:AD<double>$$.
+$head a1_double$$
+The type $icode a1_double$$ below is one of the
+see $cref/AD Types/approx_mixed_public/AD Types/$$.
 
 $head Virtual Function$$
-These are pure virtual functions and must be implemented
-in the derived class with prototype
+The following virtual function must be implemented in the derived class:
 $codei%
-	virtual CppAD::vector<%Float%> fixed_density(
-		const CppAD::vector<%Float%>& %fixed_vec%
+	virtual CppAD::vector<a1_double> fixed_density(
+		const CppAD::vector<a1_double>& %fixed_vec%
 	)
 %$$
-for each of the possible $icode Float$$ cases.
 
 $head fixed_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<%Float%>& %fixed_vec%
+	const CppAD::vector<a1_double>& %fixed_vec%
 %$$
 It contains a value for the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$ vector.
