@@ -30,7 +30,6 @@ $cref/H(beta, theta, u)/approx_mixed_theory
 	/Joint Part of Objective
 	/H(beta, theta, u)
 /$$.
-This evaluate is only zero order accurate w.r.t $latex \beta$$.
 
 $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
