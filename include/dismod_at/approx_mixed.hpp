@@ -17,7 +17,7 @@ extern bool gradient_random_xam(void);
 extern bool hessian_random_xam(void);
 extern bool laplace_eval_xam(void);
 extern bool laplace_beta_xam(void);
-extern bool hessian_fixed_xam(void);
+extern bool laplace_hes_fix_xam(void);
 namespace dismod_at {
 	class optimize_random_eval;
 }
@@ -137,7 +137,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/record_fixed.cpp
 	%devel/approx_mixed/gradient_random.cpp
 	%devel/approx_mixed/hessian_random.cpp
-	%devel/approx_mixed/hessian_fixed.cpp
+	%devel/approx_mixed/laplace_hes_fix.cpp
 	%devel/approx_mixed/laplace_eval.cpp
 	%devel/approx_mixed/laplace_beta.cpp
 %$$
@@ -336,18 +336,18 @@ $codep */
 	);
 	friend bool ::laplace_beta_xam(void);
 /* $$
-$head hessian_fixed$$
-See $cref approx_mixed_hessian_fixed$$
+$head laplace_hes_fix$$
+See $cref approx_mixed_laplace_hes_fix$$
 $codep */
-	// hessian_fixed
-	void hessian_fixed(
+	// laplace_hes_fix
+	void laplace_hes_fix(
 		const d_vector&         fixed_vec   ,
 		const d_vector&         random_vec  ,
 		CppAD::vector<size_t>&  row_out     ,
 		CppAD::vector<size_t>&  col_out     ,
 		d_vector&               val_out
 	);
-	friend bool ::hessian_fixed_xam(void);
+	friend bool ::laplace_hes_fix_xam(void);
 /* $$
 
 $end

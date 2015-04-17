@@ -9,14 +9,15 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin hessian_fixed_xam.cpp$$
+$begin laplace_hes_fix_xam.cpp$$
 $spell
+	hes
 	eval
 	interp
 	xam
 $$
 
-$section C++ hessian_fixed: Example and Test$$
+$section C++ laplace_hes_fix: Example and Test$$
 
 $head Private$$
 This example is not part of the
@@ -35,7 +36,7 @@ $latex \[
 \] $$
 
 $code
-$verbatim%example/devel/approx_mixed/hessian_fixed_xam.cpp
+$verbatim%example/devel/approx_mixed/laplace_hes_fix_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -107,7 +108,7 @@ namespace {
 	};
 }
 
-bool hessian_fixed_xam(void)
+bool laplace_hes_fix_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -136,7 +137,7 @@ bool hessian_fixed_xam(void)
 	// compute Hessian of joint part of Laplace approximation
 	vector<size_t> row, col;
 	vector<double> val;
-	approx_object.hessian_fixed(fixed_vec, random_vec, row, col, val);
+	approx_object.laplace_hes_fix(fixed_vec, random_vec, row, col, val);
 
 	// check size of result vectors
 	size_t K = row.size();

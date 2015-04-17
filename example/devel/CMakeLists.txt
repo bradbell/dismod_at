@@ -34,7 +34,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	approx_mixed/cholmod_xam.cpp
 	approx_mixed/eigen_xam.cpp
 	approx_mixed/gradient_random_xam.cpp
-	approx_mixed/hessian_fixed_xam.cpp
+	approx_mixed/laplace_hes_fix_xam.cpp
 	approx_mixed/hessian_random_xam.cpp
 	approx_mixed/ipopt_xam.cpp
 	approx_mixed/laplace_eval_xam.cpp

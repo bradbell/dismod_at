@@ -31,7 +31,7 @@ $end
 extern bool cholmod_xam(void);
 extern bool eigen_xam(void);
 extern bool gradient_random_xam(void);
-extern bool hessian_fixed_xam(void);
+extern bool laplace_hes_fix_xam(void);
 extern bool hessian_random_xam(void);
 extern bool ipopt_xam(void);
 extern bool ipopt_xam_run(void);
@@ -116,7 +116,7 @@ int main(void)
 	RUN(cholmod_xam);
 	RUN(eigen_xam);
 	RUN(gradient_random_xam);
-	RUN(hessian_fixed_xam);
+	RUN(laplace_hes_fix_xam);
 	RUN(hessian_random_xam);
 	RUN(ipopt_xam_run);
 	RUN(laplace_beta_xam);

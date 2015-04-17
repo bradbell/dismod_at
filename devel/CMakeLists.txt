@@ -12,7 +12,7 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	approx_mixed/cppad_conjgrad
 	approx_mixed/gradient_random.cpp
-	approx_mixed/hessian_fixed.cpp
+	approx_mixed/laplace_hes_fix.cpp
 	approx_mixed/hessian_random.cpp
 	approx_mixed/initialize.cpp
 	approx_mixed/laplace_eval.cpp
