@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 /*
-$begin approx_mixed_fixed_density$$
+$begin approx_mixed_prior_density$$
 $spell
 	vec
 	CppAD
@@ -19,7 +19,7 @@ $$
 $section Prior Density for the Fixed Effects$$
 
 $head Syntax$$
-$icode%vec% = %approx_object%.fixed_density(%fixed_vec%)%$$
+$icode%vec% = %approx_object%.prior_density(%fixed_vec%)%$$
 
 $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
@@ -33,7 +33,7 @@ see $cref/AD Types/approx_mixed_public/AD Types/$$.
 $head Virtual Function$$
 The following virtual function must be implemented in the derived class:
 $codei%
-	virtual CppAD::vector<a1_double> fixed_density(
+	virtual CppAD::vector<a1_double> prior_density(
 		const CppAD::vector<a1_double>& %fixed_vec%
 	)
 %$$

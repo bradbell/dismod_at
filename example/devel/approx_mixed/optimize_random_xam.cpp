@@ -87,7 +87,7 @@ namespace {
 		{	return implement_joint_density(fixed_vec, random_vec); }
 		//
 		// improper constant prior
-		virtual vector<a1_double> fixed_density(
+		virtual vector<a1_double> prior_density(
 			const vector<a1_double>& fixed_vec  )
 		{	a1d_vector vec(1);
 			vec[0] = 0.0;

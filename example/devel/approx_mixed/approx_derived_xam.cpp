@@ -71,9 +71,9 @@ namespace {
 			}
 			return vec;
 		}
-		// implementation of fixed_density
+		// implementation of prior_density
 		template <class Float>
-		vector<Float> implement_fixed_density(
+		vector<Float> implement_prior_density(
 			const vector<Float>& theta  )
 		{	vector<Float> vec(1);
 
@@ -101,13 +101,13 @@ namespace {
 			const vector<a5_double>& random_vec )
 		{	return implement_joint_density(fixed_vec, random_vec); }
 		//
-		virtual vector<double> fixed_density(
+		virtual vector<double> prior_density(
 			const vector<double>& fixed_vec  )
-		{	return implement_fixed_density(fixed_vec); }
+		{	return implement_prior_density(fixed_vec); }
 		//
-		virtual vector<a1_double> fixed_density(
+		virtual vector<a1_double> prior_density(
 			const vector<a1_double>& fixed_vec  )
-		{	return implement_fixed_density(fixed_vec); }
+		{	return implement_prior_density(fixed_vec); }
 	};
 }
 
@@ -160,7 +160,7 @@ bool approx_derived_xam(void)
 
 	// Evaluate the fixed density
 	vector<a1_double> a1_vec(1 + n_fixed);
-	a1_vec = approx_object.fixed_density(a1_fixed);
+	a1_vec = approx_object.prior_density(a1_fixed);
 
 	// check the fixed density
 	sum = 0.0;

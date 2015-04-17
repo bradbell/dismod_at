@@ -84,11 +84,11 @@ $codep */
 		const CppAD::vector<a5_double>& random_vec
 	) = 0;
 /* $$
-$head fixed_density$$
+$head prior_density$$
 These are pure virtual functions so they must be defined by derived class;
-see $cref/fixed_density/approx_mixed_fixed_density/$$.
+see $cref/prior_density/approx_mixed_prior_density/$$.
 $codep */
-	virtual CppAD::vector<a1_double> fixed_density(
+	virtual CppAD::vector<a1_double> prior_density(
 		const CppAD::vector<a1_double>& fixed_vec
 	) = 0 ;
 /* $$
@@ -105,7 +105,7 @@ $childtable%
 	devel/approx_mixed/derived_ctor.omh%
 	devel/approx_mixed/initialize.cpp%
 	devel/approx_mixed/joint_density.omh%
-	devel/approx_mixed/fixed_density.omh%
+	devel/approx_mixed/prior_density.omh%
 	devel/approx_mixed/optimize_random.cpp
 %$$
 $end
@@ -134,7 +134,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/record_hes_ran.cpp
 	%devel/approx_mixed/record_laplace.cpp
 	%devel/approx_mixed/record_hes_fix.cpp
-	%devel/approx_mixed/record_fixed.cpp
+	%devel/approx_mixed/record_prior.cpp
 	%devel/approx_mixed/joint_grad_ran.cpp
 	%devel/approx_mixed/joint_hes_fix.cpp
 	%devel/approx_mixed/laplace_hes_fix.cpp
@@ -201,14 +201,14 @@ $codep */
 	CppAD::vector<size_t>   hes_fix_row_; // corresponding row indices
 	CppAD::vector<size_t>   hes_fix_col_; // corresponding column indices
 /* $$
-$head fixed_density_$$
-Recording of the $cref/fixed_density/approx_mixed_fixed_density/$$ function
+$head prior_density_$$
+Recording of the $cref/prior_density/approx_mixed_prior_density/$$ function
 which evaluates a
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to
 $cref/g(theta)/approx_mixed_theory/Fixed Density, g(theta)/$$.
 $codep */
-	CppAD::ADFun<double>      fixed_density_;
+	CppAD::ADFun<double>      prior_density_;
 /* $$
 
 $head pack$$
@@ -286,10 +286,10 @@ $codep */
 		const d_vector& random_vec
 	);
 /* $$
-$head record_fixed$$
-See $cref approx_mixed_record_fixed$$.
+$head record_prior$$
+See $cref approx_mixed_record_prior$$.
 $codep */
-	void record_fixed(const d_vector& fixed_vec);
+	void record_prior(const d_vector& fixed_vec);
 /* $$
 $head joint_grad_ran$$
 See $cref approx_mixed_joint_grad_ran$$

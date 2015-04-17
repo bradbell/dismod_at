@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/approx_mixed.hpp>
 
 /*
-$begin approx_mixed_record_fixed$$
+$begin approx_mixed_record_prior$$
 $spell
 	vec
 	const
@@ -37,14 +37,14 @@ It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
 vector $latex \theta$$ at which the recording is made.
 
-$head fixed_density_$$
+$head prior_density_$$
 The input value of the member variable
 $codei%
-	CppAD::ADFun<double> fixed_density_
+	CppAD::ADFun<double> prior_density_
 %$$
 does not matter.
 Upon return it contains the corresponding recording for the
-$cref/fixed_density/approx_mixed_fixed_density/$$.
+$cref/prior_density/approx_mixed_prior_density/$$.
 Note that the function result is the
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to the function
@@ -54,7 +54,7 @@ $end
 */
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void approx_mixed::record_fixed(const d_vector& fixed_vec  )
+void approx_mixed::record_prior(const d_vector& fixed_vec  )
 {	assert( fixed_vec.size() == n_fixed_ );
 
 	// convert to an a1d_vector
@@ -65,14 +65,14 @@ void approx_mixed::record_fixed(const d_vector& fixed_vec  )
 	// start recording a1_double operations
 	Independent(a1_theta);
 
-	// compute fixed_density
-	a1d_vector a1_vec = fixed_density(a1_theta);
+	// compute prior_density
+	a1d_vector a1_vec = prior_density(a1_theta);
 
 	// save the recording
-	fixed_density_.Dependent(a1_theta, a1_vec);
+	prior_density_.Dependent(a1_theta, a1_vec);
 
 	// optimize the recording
-	fixed_density_.optimize();
+	prior_density_.optimize();
 }
 
 
