@@ -30,7 +30,7 @@ $end
 // approx_mixed subdirectory
 extern bool cholmod_xam(void);
 extern bool eigen_xam(void);
-extern bool gradient_random_xam(void);
+extern bool joint_grad_ran_xam(void);
 extern bool laplace_hes_fix_xam(void);
 extern bool joint_hes_fix_xam(void);
 extern bool ipopt_xam(void);
@@ -115,7 +115,7 @@ int main(void)
 	// approx_mixed subdirectory
 	RUN(cholmod_xam);
 	RUN(eigen_xam);
-	RUN(gradient_random_xam);
+	RUN(joint_grad_ran_xam);
 	RUN(laplace_hes_fix_xam);
 	RUN(joint_hes_fix_xam);
 	RUN(ipopt_xam_run);

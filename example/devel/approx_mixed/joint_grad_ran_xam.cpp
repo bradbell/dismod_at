@@ -9,20 +9,20 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin gradient_random_xam.cpp$$
+$begin joint_grad_ran_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ gradient_random: Example and Test$$
+$section C++ joint_grad_ran: Example and Test$$
 
 $head Private$$
 This example is not part of the
 $cref/approx_mixed public API/approx_mixed_public/$$.
 
 $code
-$verbatim%example/devel/approx_mixed/gradient_random_xam.cpp
+$verbatim%example/devel/approx_mixed/joint_grad_ran_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -101,7 +101,7 @@ namespace {
 	};
 }
 
-bool gradient_random_xam(void)
+bool joint_grad_ran_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -127,7 +127,7 @@ bool gradient_random_xam(void)
 
 	// compute gradient with respect to random effects
 	vector<a3_double> grad =
-		approx_object.gradient_random(fixed_vec, random_vec);
+		approx_object.joint_grad_ran(fixed_vec, random_vec);
 
 	// The Laplace terms are known to have zero Hessian w.r.t random effects
 	for(size_t i = 0; i < n_random; i++)

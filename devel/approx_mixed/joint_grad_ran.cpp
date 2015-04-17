@@ -10,7 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/approx_mixed.hpp>
 /*
-$begin approx_mixed_gradient_random$$
+$begin approx_mixed_joint_grad_ran$$
 $spell
 	vec
 	const
@@ -18,10 +18,10 @@ $spell
 	xam
 $$
 
-$section Hessian With Respect to Random Effects$$
+$section Gradient of Joint Density With Respect to Random Effects$$
 
 $head Syntax$$
-$icode%grad% = %approx_object%.gradient_random( %fixed_vec%, %random_vec%)%$$
+$icode%grad% = %approx_object%.joint_grad_ran( %fixed_vec%, %random_vec%)%$$
 
 $head Purpose$$
 This routine computes the gradient of the negative log of the joint density
@@ -62,10 +62,10 @@ $codei%
 It contains the gradient $latex f_u^{(1)} ( \theta , u )$$.
 
 $children%
-	example/devel/approx_mixed/gradient_random_xam.cpp
+	example/devel/approx_mixed/joint_grad_ran_xam.cpp
 %$$
 $head Example$$
-The file $cref gradient_random_xam.cpp$$ contains an example
+The file $cref joint_grad_ran_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 
@@ -75,8 +75,8 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // ----------------------------------------------------------------------------
-// gradient_random
-CppAD::vector<approx_mixed::a3_double> approx_mixed::gradient_random(
+// joint_grad_ran
+CppAD::vector<approx_mixed::a3_double> approx_mixed::joint_grad_ran(
 	const a3d_vector&        fixed_vec   ,
 	const a3d_vector&        random_vec  )
 {
@@ -87,7 +87,7 @@ CppAD::vector<approx_mixed::a3_double> approx_mixed::gradient_random(
 	// make sure gradient has been recorded
 	if( grad_ran_.size_var() == 0 )
 	{	std::cerr << "approx_mixed::initialize was not called before"
-		<< " approx_mixed::gradient_random" << std::endl;
+		<< " approx_mixed::joint_grad_ran" << std::endl;
 		exit(1);
 	}
 

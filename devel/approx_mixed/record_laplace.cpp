@@ -128,7 +128,7 @@ void approx_mixed::record_laplace(
 	}
 	else
 	{	// evaluate gradient f_u^{(1)} (beta , u )
-		grad = gradient_random(beta, u);
+		grad = joint_grad_ran(beta, u);
 
 		// newton_step = f_{uu}^{(2)} (theta , u)^{-1} f_u^{(1)} (beta, u)
 		for(size_t j = 0; j < n_random_; j++)
@@ -153,7 +153,7 @@ void approx_mixed::record_laplace(
 	}
 	else
 	{	// evaluate gradient f_u^{(1)} (beta , U )
-		grad = gradient_random(beta, U);
+		grad = joint_grad_ran(beta, U);
 
 		// newton_step = f_{uu}^{(2)} (beta , U)^{-1} f_u^{(1)} (beta, U)
 		for(size_t j = 0; j < n_random_; j++)

@@ -13,7 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/cppad.hpp>
 
 //
-extern bool gradient_random_xam(void);
+extern bool joint_grad_ran_xam(void);
 extern bool joint_hes_fix_xam(void);
 extern bool laplace_eval_xam(void);
 extern bool laplace_beta_xam(void);
@@ -135,7 +135,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/record_laplace.cpp
 	%devel/approx_mixed/record_hes_fix.cpp
 	%devel/approx_mixed/record_fixed.cpp
-	%devel/approx_mixed/gradient_random.cpp
+	%devel/approx_mixed/joint_grad_ran.cpp
 	%devel/approx_mixed/joint_hes_fix.cpp
 	%devel/approx_mixed/laplace_hes_fix.cpp
 	%devel/approx_mixed/laplace_eval.cpp
@@ -291,15 +291,15 @@ See $cref approx_mixed_record_fixed$$.
 $codep */
 	void record_fixed(const d_vector& fixed_vec);
 /* $$
-$head gradient_random$$
-See $cref approx_mixed_gradient_random$$
+$head joint_grad_ran$$
+See $cref approx_mixed_joint_grad_ran$$
 $codep */
-	// gradient_random
-	a3d_vector gradient_random(
+	// joint_grad_ran
+	a3d_vector joint_grad_ran(
 		const a3d_vector&       fixed_vec   ,
 		const a3d_vector&       random_vec
 	);
-	friend bool ::gradient_random_xam(void);
+	friend bool ::joint_grad_ran_xam(void);
 /* $$
 $head joint_hes_fix$$
 See $cref approx_mixed_joint_hes_fix$$
