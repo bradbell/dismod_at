@@ -32,7 +32,7 @@ extern bool cholmod_xam(void);
 extern bool eigen_xam(void);
 extern bool gradient_random_xam(void);
 extern bool laplace_hes_fix_xam(void);
-extern bool hessian_random_xam(void);
+extern bool joint_hes_fix_xam(void);
 extern bool ipopt_xam(void);
 extern bool ipopt_xam_run(void);
 extern bool laplace_beta_xam(void);
@@ -117,7 +117,7 @@ int main(void)
 	RUN(eigen_xam);
 	RUN(gradient_random_xam);
 	RUN(laplace_hes_fix_xam);
-	RUN(hessian_random_xam);
+	RUN(joint_hes_fix_xam);
 	RUN(ipopt_xam_run);
 	RUN(laplace_beta_xam);
 	RUN(laplace_eval_xam);

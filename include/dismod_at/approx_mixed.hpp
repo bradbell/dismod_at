@@ -14,7 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 //
 extern bool gradient_random_xam(void);
-extern bool hessian_random_xam(void);
+extern bool joint_hes_fix_xam(void);
 extern bool laplace_eval_xam(void);
 extern bool laplace_beta_xam(void);
 extern bool laplace_hes_fix_xam(void);
@@ -136,7 +136,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/record_hes_fix.cpp
 	%devel/approx_mixed/record_fixed.cpp
 	%devel/approx_mixed/gradient_random.cpp
-	%devel/approx_mixed/hessian_random.cpp
+	%devel/approx_mixed/joint_hes_fix.cpp
 	%devel/approx_mixed/laplace_hes_fix.cpp
 	%devel/approx_mixed/laplace_eval.cpp
 	%devel/approx_mixed/laplace_beta.cpp
@@ -301,18 +301,18 @@ $codep */
 	);
 	friend bool ::gradient_random_xam(void);
 /* $$
-$head hessian_random$$
-See $cref approx_mixed_hessian_random$$
+$head joint_hes_fix$$
+See $cref approx_mixed_joint_hes_fix$$
 $codep */
-	// hessian_random
-	void hessian_random(
+	// joint_hes_fix
+	void joint_hes_fix(
 		const a3d_vector&       fixed_vec   ,
 		const a3d_vector&       random_vec  ,
 		CppAD::vector<size_t>&  row_out     ,
 		CppAD::vector<size_t>&  col_out     ,
 		a3d_vector&             val_out
 	);
-	friend bool ::hessian_random_xam(void);
+	friend bool ::joint_hes_fix_xam(void);
 /* $$
 $head laplace_eval$$
 See $cref approx_mixed_laplace_eval$$
