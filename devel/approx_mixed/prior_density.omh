@@ -57,7 +57,7 @@ $cref/negative log-density vector
 	/Negative Log-Density Vector
 /$$
 corresponding to the fixed density
-$cref/g(theta)/approx_mixed_theory/Fixed Density, g(theta)/$$; i.e.,
+$cref/g(theta)/approx_mixed_theory/Prior Density, g(theta)/$$; i.e.,
 $latex \[
 	g( \theta ) = - \log [ \B{p} ( \theta ) ]
 \] $$

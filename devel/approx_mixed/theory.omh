@@ -43,7 +43,7 @@ The function $latex f(\theta, u)$$ is assumed to be smooth.
 Note that $cref/joint_density/approx_mixed_joint_density/$$ allows for
 non-smooth terms in the form of Laplace densities.
 
-$head Fixed Density, g(theta)$$
+$head Prior Density, g(theta)$$
 We use the notation
 $latex \[
 	g( \theta ) = - \log [ \B{p} ( \theta ) ]

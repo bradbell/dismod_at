@@ -206,7 +206,7 @@ Recording of the $cref/prior_density/approx_mixed_prior_density/$$ function
 which evaluates a
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to
-$cref/g(theta)/approx_mixed_theory/Fixed Density, g(theta)/$$.
+$cref/g(theta)/approx_mixed_theory/Prior Density, g(theta)/$$.
 $codep */
 	CppAD::ADFun<double>      prior_density_;
 /* $$

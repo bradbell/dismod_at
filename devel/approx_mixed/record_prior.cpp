@@ -48,7 +48,7 @@ $cref/prior_density/approx_mixed_prior_density/$$.
 Note that the function result is the
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to the function
-$cref/g(theta)/approx_mixed_theory/Fixed Density, g(theta)/$$.
+$cref/g(theta)/approx_mixed_theory/Prior Density, g(theta)/$$.
 
 $end
 */
