@@ -158,11 +158,11 @@ bool approx_derived_xam(void)
 	}
 	ok &= abs( a5_vec[0] / a5_double(sum) - a5_double(1.0) ) < eps;
 
-	// Evaluate the fixed density
+	// Evaluate the prior density
 	vector<a1_double> a1_vec(1 + n_fixed);
 	a1_vec = approx_object.prior_density(a1_fixed);
 
-	// check the fixed density
+	// check the prior density
 	sum = 0.0;
 	for(size_t j = 0; j < n_fixed; j++)
 	{	double sigma  = fixed_vec[j];

@@ -56,11 +56,8 @@ $cref/negative log-density vector
 	/approx_mixed
 	/Negative Log-Density Vector
 /$$
-corresponding to the fixed density
-$cref/g(theta)/approx_mixed_theory/Prior Density, g(theta)/$$; i.e.,
-$latex \[
-	g( \theta ) = - \log [ \B{p} ( \theta ) ]
-\] $$
+corresponding to the prior density
+$cref/g(theta)/approx_mixed_theory/Prior Density, g(theta)/$$.
 
 $head Example$$
 This file $cref approx_derived_xam.cpp$$ contains an example
