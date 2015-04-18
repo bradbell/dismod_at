@@ -64,12 +64,14 @@ ipopt_fixed::ipopt_fixed(
 	const d_vector&     fixed_in      ,
 	const d_vector&     fixed_upper   ,
 	const d_vector&     random_in     ,
-	const approx_mixed& approx_object ) :
-fixed_lower_   ( fixed_lower );
-fixed_in_      ( fixed_in    );
-fixed_upper_   ( fixed_upper );
-random_in_     ( random_in   );
-approx_object_ ( approx_object );
+	approx_mixed&       approx_object ) :
+n_fixed_       ( fixed_in.size()  )   ,
+n_random_      ( random_in.size() )   ,
+fixed_lower_   ( fixed_lower      )   ,
+fixed_in_      ( fixed_in         )   ,
+fixed_upper_   ( fixed_upper      )   ,
+random_in_     ( random_in        )   ,
+approx_object_ ( approx_object    )
 { }
 ipopt_fixed::~ipopt_fixed(void)
 { }
