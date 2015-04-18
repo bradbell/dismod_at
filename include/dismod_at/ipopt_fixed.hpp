@@ -54,7 +54,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		approx_mixed&   approx_object_;   // approx_mixed for this problem
 		//
 		// set during constructor, otherwise const
-		size_t prior_n_abs_;      // number of absolute values in prior
+		size_t prior_n_abs_;    // number of absolute values in prior
+		size_t prior_nnz_jac_;  // number of non-zeros in Jacobian of prior
 		//
 	public:
 		//

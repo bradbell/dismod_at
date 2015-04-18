@@ -78,7 +78,14 @@ approx_object_ ( approx_object    )
 	d_vector prior_vec = approx_object_.prior_eval(fixed_in);
 	assert( prior_vec.size() > 0 );
 	//
+	// set prior_n_abs_
 	prior_n_abs_ = prior_vec.size() - 1;
+	//
+	// set prior_nnz_jac_
+	CppAD::vector<size_t> row, col;
+	d_vector val;
+	approx_object.prior_jac(fixed_in, row, col, val);
+	prior_nnz_jac_ = row.size();
 }
 ipopt_fixed::~ipopt_fixed(void)
 { }
@@ -134,7 +141,7 @@ bool ipopt_fixed::get_nlp_info(
 {
 	n           = n_fixed_;
 	m           = 2 * prior_n_abs_;
-	nnz_jac_g   = 2;
+	nnz_jac_g   = 2 * prior_nnz_jac_;
 	nnz_h_lag   = 2;
 	index_style = C_STYLE;
 	return true;
