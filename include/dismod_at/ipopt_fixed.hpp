@@ -31,17 +31,32 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 	// ipopt_fixed
 	class ipopt_fixed : public Ipopt::TNLP
 	{
-	public:
+	private:
+		// approx_mixed types used by this class
+		typedef approx_mixed::d_vector     d_vector;
+		//
 		// Ipopt types used by this class
-		typedef Ipopt::Number  Number;
-		typedef Ipopt::Index   Index;
+		typedef Ipopt::Number               Number;
+		typedef Ipopt::Index                Index;
 		typedef Ipopt::TNLP::IndexStyleEnum IndexStyleEnum;
+		//
+		// private member variables
+		const d_vector& fixed_lower_;
+		const d_vector& fixed_in_;
+		const d_vector& fixed_upper_;
+		const d_vector& random_in;
+	public:
 		//
 		// did finalize_solution agree that the solution had converged
 		bool finalize_solution_ok_;
 		//
 		// default constructor
-		ipopt_fixed(void);
+		ipopt_fixed(
+			const d_vector& fixed_lower ,
+			const d_vector& fixed_in    ,
+			const d_vector& fixed_upper ,
+			const d_vector& random_in
+		);
 		//
 		// default destructor
 		virtual ~ipopt_fixed(void);

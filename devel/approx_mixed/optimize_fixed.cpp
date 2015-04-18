@@ -107,6 +107,7 @@ $end
 */
 # include <coin/IpIpoptApplication.hpp>
 # include <dismod_at/approx_mixed.hpp>
+# include <dismod_at/ipopt_fixed.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -119,7 +120,9 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	using Ipopt::SmartPtr;
 
 	// Create an instance of the example problem
-	SmartPtr<ipopt_fixed_nlp> xam_nlp = new ipopt_fixed_nlp;
+	SmartPtr<ipopt_fixed> xam_nlp = new ipopt_fixed(
+		fixed_lower, fixed_in, fixed_upper, random_in
+	);
 
 	// Create an instance of an IpoptApplication
 	SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
@@ -140,7 +143,8 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	ok    &= status == Ipopt::Solve_Succeeded;
 	ok    &= xam_nlp->finalize_solution_ok_;
 
-	return ok;
+	d_vector fixed_out;
+	return fixed_out;
 }
 
 } // END_DISMOD_AT_NAMESPACE

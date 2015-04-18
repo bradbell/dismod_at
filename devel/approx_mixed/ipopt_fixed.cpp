@@ -15,12 +15,52 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 $begin ipopt_fixed_ctor$$
 $spell
 	ipopt
+	const
+	CppAD
 $$
 
 $section Ipopt Example: Constructor and Destructor$$
 
+$head Syntax$$
+$codei%ipopt_fixed %ipopt_object%(
+	%fixed_lower%, %fixed_in%, %fixed_upper%, %random_in%)
+%$$
+
+$head Prototype$$
+The arguments has prototype
+$codei%
+	const CppAD::vector<double>& %fixed_lower%, %fixed_in%, %fixed_upper%
+	const CppAD::vector<double>& %random_in%
+%$$
+
+$head References$$
+The values of the arguments are stored by reference and hence
+the arguments must not be deleted while $icode ipopt_object$$
+is still being used.
+
+$head fixed_lower$$
+specifies the lower limits for the
+$cref/fixed_effects/model_variable/Fixed Effects, theta/$$.
+
+$head fixed_in$$
+specifies the initial value (during optimization) for the fixed effects.
+
+$head fixed_upper$$
+specifies the upper limits for the fixed effects.
+
+$head random_in$$
+specifies the initial value (for initial optimization) of the random effects.
+
 $codep */
-ipopt_fixed::ipopt_fixed(void)
+ipopt_fixed::ipopt_fixed(
+	const d_vector& fixed_lower ,
+	const d_vector& fixed_in    ,
+	const d_vector& fixed_upper ,
+	const d_vector& random_in   ) :
+fixed_lower_ ( fixed_lower );
+fixed_in_    ( fixed_in    );
+fixed_upper_ ( fixed_upper );
+random_in_   ( random_in   );
 { }
 ipopt_fixed::~ipopt_fixed(void)
 { }
