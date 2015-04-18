@@ -19,6 +19,8 @@ $spell
 	ipopt
 	const
 	CppAD
+	nnz_jac
+	Jacobian
 $$
 
 $section Ipopt Example: Constructor and Destructor$$
@@ -60,7 +62,19 @@ $head approx_object$$
 The argument $icode approx_object$$ is an object of a class that is
 derived from the $code approx_mixed$$ base class.
 
-$codep */
+$head Non-Const Member Variables$$
+The following member variables are set by the constructor
+and should not be modified.
+
+$subhead prior_n_abs_$$
+number of absolute value terms in the
+$cref/prior_density/approx_mixed_prior_density/$$.
+
+$head prior_nnz_jac_$$
+number of non-zeros in the Jacobian of the prior density.
+
+$end
+*/
 ipopt_fixed::ipopt_fixed(
 	const d_vector&     fixed_lower   ,
 	const d_vector&     fixed_in      ,

@@ -82,6 +82,9 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 void approx_mixed::record_prior(const d_vector& fixed_vec  )
 {	assert( fixed_vec.size() == n_fixed_ );
 
+	// ------------------------------------------------------------------------
+	// prior_density_
+	// ------------------------------------------------------------------------
 	// convert to an a1d_vector
 	a1d_vector a1_theta(n_fixed_);
 	for(size_t j = 0; j < n_fixed_; j++)
@@ -99,6 +102,9 @@ void approx_mixed::record_prior(const d_vector& fixed_vec  )
 	// optimize the recording
 	prior_density_.optimize();
 
+	// ------------------------------------------------------------------------
+	// prior_jac_row_, prior_jac_col_, prior_jac_work_
+	// ------------------------------------------------------------------------
 	// compute the sparsity pattern for the Jacobian
 	typedef CppAD::vector< std::set<size_t> > sparsity_pattern;
 	sparsity_pattern r(n_fixed_);
@@ -110,7 +116,7 @@ void approx_mixed::record_prior(const d_vector& fixed_vec  )
 	prior_jac_row_.clear();
 	prior_jac_col_.clear();
 	std::set<size_t>::iterator itr;
-	for(size_t i = 0; i < a1_vec.size(); i++)
+	for(size_t i = 0; i < prior_density_.Range(); i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	size_t j = *itr;
 			prior_jac_row_.push_back(i);
@@ -127,6 +133,44 @@ void approx_mixed::record_prior(const d_vector& fixed_vec  )
 		prior_jac_col_  ,
 		jac             ,
 		prior_jac_work_
+	);
+	// ------------------------------------------------------------------------
+	// prior_hes_row_, prior_hes_col_, prior_hes_work_
+	// ------------------------------------------------------------------------
+	// no need to recalculate forward sparsity pattern.
+	//
+	// sparsity pattern for the Hessian
+	sparsity_pattern s(1);
+	for(size_t i = 0; i < prior_density_.Range(); i++ )
+		s[0].insert(i);
+	pattern.clear();
+	pattern = prior_density_.RevSparseHes(n_fixed_, s);
+
+	// determine row and column indices in lower triangle of Hessian
+	prior_hes_row_.clear();
+	prior_hes_col_.clear();
+	for(size_t i = 0; i < n_fixed_; i++)
+	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
+		{	size_t j = *itr;
+			// only compute lower triangular part
+			if( i >= j )
+			{	prior_hes_row_.push_back(i);
+				prior_hes_col_.push_back(j);
+			}
+		}
+	}
+	size_t K = prior_hes_row_.size();
+
+	// compute the work vector for reuse during Hessian sparsity calculations
+	d_vector weight( prior_density_.Range() ), hes(K);
+	prior_density_.SparseHessian(
+		fixed_vec       ,
+		weight          ,
+		pattern         ,
+		prior_hes_row_  ,
+		prior_hes_col_  ,
+		hes             ,
+		prior_hes_work_
 	);
 
 	return;

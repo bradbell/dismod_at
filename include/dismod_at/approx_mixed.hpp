@@ -20,6 +20,7 @@ extern bool laplace_beta_xam(void);
 extern bool laplace_hes_fix_xam(void);
 extern bool prior_eval_xam(void);
 extern bool prior_jac_xam(void);
+extern bool prior_hes_xam(void);
 namespace dismod_at {
 	// Ipopt NLP clases that use the approx_mixed information for optimization
 	class optimize_random_eval;
@@ -233,8 +234,10 @@ $codep */
 	CppAD::ADFun<double>    prior_density_; // computes prior density
 	CppAD::vector<size_t>   prior_jac_row_; // prior jacobian row indices
 	CppAD::vector<size_t>   prior_jac_col_; // prior jacobian column indices
-	// work space used for computation of sparse Jacobians.
 	CppAD::sparse_jacobian_work prior_jac_work_;
+	CppAD::vector<size_t>   prior_hes_row_; // prior hessian row indices
+	CppAD::vector<size_t>   prior_hes_col_; // prior hessian column indices
+	CppAD::sparse_hessian_work prior_hes_work_;
 /* $$
 
 $head pack$$
@@ -384,8 +387,6 @@ $codep */
 /* $$
 $end
 -------------------------------------------------------------------------------
-*/
-/* $$
 $head prior_jac$$
 See $cref approx_mixed_prior_jac$$
 $codep */
@@ -397,6 +398,20 @@ $codep */
 		d_vector&              val_out
 	);
 	friend bool ::prior_jac_xam(void);
+/* $$
+$end
+-------------------------------------------------------------------------------
+$head prior_hes$$
+See $cref approx_mixed_prior_hes$$
+$codep */
+	// prior_hes
+	void prior_hes(
+		const d_vector&        fixed_vec   ,
+		CppAD::vector<size_t>& row_out     ,
+		CppAD::vector<size_t>& col_out     ,
+		d_vector&              val_out
+	);
+	friend bool ::prior_hes_xam(void);
 /* $$
 $end
 -------------------------------------------------------------------------------
