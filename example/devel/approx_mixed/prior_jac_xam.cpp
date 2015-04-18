@@ -9,21 +9,21 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin prior_eval_xam.cpp$$
+$begin prior_jac_xam.cpp$$
 $spell
-	eval
+	jac
 	interp
 	xam
 $$
 
-$section C++ prior_eval: Example and Test$$
+$section C++ prior_jac: Example and Test$$
 
 $head Private$$
 This example is not part of the
 $cref/approx_mixed public API/approx_mixed_public/$$.
 
 $code
-$verbatim%example/devel/approx_mixed/prior_eval_xam.cpp
+$verbatim%example/devel/approx_mixed/prior_jac_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -113,7 +113,7 @@ namespace {
 	};
 }
 
-bool prior_eval_xam(void)
+bool prior_jac_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -135,22 +135,29 @@ bool prior_eval_xam(void)
 	approx_derived approx_object(n_fixed, n_random, data);
 	approx_object.initialize(fixed_vec, random_vec);
 
-	// compute prior negative log-density vector
-	CppAD::vector<double> vec = approx_object.prior_eval(fixed_vec);
+	// compute prior jacobian
+	CppAD::vector<size_t> row, col;
+	CppAD::vector<double> val;
+	approx_object.prior_jac(fixed_vec, row, col, val);
 
-	// check smooth part
-	double check = CppAD::log(2.0);
-	ok &= CppAD::abs( vec[0] / check - 1.0 ) <= eps;
+	// initialize count of comparisions
+	CppAD::vector<bool> found(3);
+	for(size_t i = 0; i < 3; i++)
+		found[i] = false;
 
-	// check number of absolute values
-	ok &= vec.size() == n_fixed + 1;
-
-	// check argument to absolute value
-	for(size_t j = 0; j < n_fixed; j++)
-	{	// note that the true value is not equal to 1.0 so can deivide by check
-		check = sqrt_2 * ( fixed_vec[j] - 1.0 );
-		ok &= CppAD::abs( vec[1 + j] / check - 1.0 ) <= eps;
+	// check derivative w.r.t fixed_vec[0]
+	for(size_t k = 0; k < row.size(); k++)
+	{	size_t i = row[k];
+		size_t j = col[k];
+		double check = sqrt_2;
+		ok      &= i == j+1;
+		ok      &= ! found[i];
+		ok      &= ( val[k] / check - 1.0) <= eps;
+		found[i] = true;
 	}
+	ok &= found[0] == false;
+	ok &= found[1];
+	ok &= found[2];
 
 	return ok;
 }

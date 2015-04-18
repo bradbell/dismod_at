@@ -19,6 +19,7 @@ extern bool laplace_eval_xam(void);
 extern bool laplace_beta_xam(void);
 extern bool laplace_hes_fix_xam(void);
 extern bool prior_eval_xam(void);
+extern bool prior_jac_xam(void);
 namespace dismod_at {
 	// Ipopt NLP clases that use the approx_mixed information for optimization
 	class optimize_random_eval;
@@ -131,6 +132,9 @@ private:
 ------------------------------------------------------------------------------
 $begin approx_mixed_private$$
 $spell
+	jac
+	Jacobians
+	jacobian
 	hes
 	eval
 	typedef
@@ -157,6 +161,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/laplace_beta.cpp
 	%devel/approx_mixed/laplace_hes_fix.cpp
 	%devel/approx_mixed/prior_eval.cpp
+	%devel/approx_mixed/prior_jac.cpp
 %$$
 
 $head n_fixed_$$
@@ -225,7 +230,11 @@ $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to
 $cref/g(theta)/approx_mixed_theory/Prior Density, g(theta)/$$.
 $codep */
-	CppAD::ADFun<double>      prior_density_;
+	CppAD::ADFun<double>    prior_density_; // computes prior density
+	CppAD::vector<size_t>   prior_jac_row_; // prior jacobian row indices
+	CppAD::vector<size_t>   prior_jac_col_; // prior jacobian column indices
+	// work space used for computation of sparse Jacobians.
+	CppAD::sparse_jacobian_work prior_jac_work_;
 /* $$
 
 $head pack$$
@@ -372,6 +381,22 @@ $codep */
 	// prior_eval
 	d_vector prior_eval(const d_vector& fixed_vec);
 	friend bool ::prior_eval_xam(void);
+/* $$
+$end
+-------------------------------------------------------------------------------
+*/
+/* $$
+$head prior_jac$$
+See $cref approx_mixed_prior_jac$$
+$codep */
+	// prior_jac
+	void prior_jac(
+		const d_vector&        fixed_vec   ,
+		CppAD::vector<size_t>& row_out     ,
+		CppAD::vector<size_t>& col_out     ,
+		d_vector&              val_out
+	);
+	friend bool ::prior_jac_xam(void);
 /* $$
 $end
 -------------------------------------------------------------------------------

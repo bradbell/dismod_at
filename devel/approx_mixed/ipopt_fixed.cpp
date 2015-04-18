@@ -14,6 +14,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /* $$
 $begin ipopt_fixed_ctor$$
 $spell
+	vec
+	eval
 	ipopt
 	const
 	CppAD

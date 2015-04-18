@@ -21,6 +21,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	approx_mixed/optimize_fixed.cpp
 	approx_mixed/optimize_random.cpp
 	approx_mixed/prior_eval.cpp
+	approx_mixed/prior_jac.cpp
 	approx_mixed/record_prior.cpp
 	approx_mixed/record_grad_ran.cpp
 	approx_mixed/record_hes_fix.cpp

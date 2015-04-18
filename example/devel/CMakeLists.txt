@@ -41,6 +41,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	approx_mixed/laplace_beta_xam.cpp
 	approx_mixed/optimize_random_xam.cpp
 	approx_mixed/prior_eval_xam.cpp
+	approx_mixed/prior_jac_xam.cpp
 
 	model/avg_no_ode_xam.cpp
 	model/avg_yes_ode_xam.cpp

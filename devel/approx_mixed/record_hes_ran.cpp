@@ -67,7 +67,7 @@ $codei%
 	CppAD::vector<size_t> hes_ran_row_, hes_ran_col_
 %$$
 do not matter.
-Upon return the contain the row indices and column indices
+Upon return they contain the row indices and column indices
 for the sparse Hessian represented by $code hes_ran_$$; i.e.
 $codei%hes_ran_row_[%i%]%$$ and $codei%hes_ran_col_[%i%]%$$
 are the row and column indices for the Hessian element
