@@ -101,12 +101,24 @@ $codep */
 		const d_vector& random_in
 	);
 /* $$
+$head optimize_fixed$$
+Optimize the total objective with respect to the fixed effects;
+see  $cref/optimize_fixed/approx_mixed_optimize_fixed/$$.
+$codep */
+	d_vector optimize_fixed(
+		const d_vector& fixed_lower ,
+		const d_vector& fixed_in    ,
+		const d_vector& fixed_upper ,
+		const d_vector& random_in
+	);
+/* $$
 $childtable%
 	devel/approx_mixed/derived_ctor.omh%
 	devel/approx_mixed/initialize.cpp%
 	devel/approx_mixed/joint_density.omh%
 	devel/approx_mixed/prior_density.omh%
-	devel/approx_mixed/optimize_random.cpp
+	devel/approx_mixed/optimize_random.cpp%
+	devel/approx_mixed/optimize_fixed.cpp
 %$$
 $end
 */

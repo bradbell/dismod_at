@@ -8,18 +8,21 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
+# include <dismod_at/ipopt_fixed.hpp>
+
+namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /* $$
 $begin ipopt_fixed_ctor$$
 $spell
-	ipopt_fixed_nlp
+	ipopt
 $$
 
 $section Ipopt Example: Constructor and Destructor$$
 
 $codep */
-ipopt_fixed_nlp::ipopt_fixed_nlp(void)
+ipopt_fixed::ipopt_fixed(void)
 { }
-ipopt_fixed_nlp::~ipopt_fixed_nlp(void)
+ipopt_fixed::~ipopt_fixed(void)
 { }
 /* $$
 $end
@@ -64,7 +67,7 @@ $cref/USER_REQUESTED_STOP
 
 $head Source$$
 $codep */
-bool ipopt_fixed_nlp::get_nlp_info(
+bool ipopt_fixed::get_nlp_info(
 	Index&          n            ,  // out
 	Index&          m            ,  // out
 	Index&          nnz_jac_g    ,  // out
@@ -83,7 +86,7 @@ $end
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_get_bounds_info$$
 $spell
-	ipopt_fixed_nlp
+	ipopt
 	bool
 $$
 
@@ -117,7 +120,7 @@ $cref/USER_REQUESTED_STOP
 
 $head Source$$
 $codep */
-bool ipopt_fixed_nlp::get_bounds_info(
+bool ipopt_fixed::get_bounds_info(
 		Index       n        ,   // in
 		Number*     x_l      ,   // out
 		Number*     x_u      ,   // out
@@ -145,7 +148,7 @@ $end
 $begin ipopt_fixed_get_starting_point$$
 $spell
 	init
-	ipopt_fixed_nlp
+	ipopt
 	bool
 $$
 
@@ -197,7 +200,7 @@ $cref/USER_REQUESTED_STOP
 
 $head Source$$
 $codep */
-bool ipopt_fixed_nlp::get_starting_point(
+bool ipopt_fixed::get_starting_point(
 	Index           n            ,  // in
 	bool            init_x       ,  // in
 	Number*         x            ,  // out
@@ -223,7 +226,7 @@ $end
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_f$$
 $spell
-	ipopt_fixed_nlp
+	ipopt
 	bool
 	eval
 	obj
@@ -256,7 +259,7 @@ $cref/USER_REQUESTED_STOP
 
 $head Source$$
 $codep */
-bool ipopt_fixed_nlp::eval_f(
+bool ipopt_fixed::eval_f(
 	Index           n         ,  // in
 	const Number*   x         ,  // in
 	bool            new_x     ,  // in
@@ -272,7 +275,7 @@ $end
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_grad_f$$
 $spell
-	ipopt_fixed_nlp
+	ipopt
 	bool
 	eval
 	const
@@ -305,7 +308,7 @@ $cref/USER_REQUESTED_STOP
 
 $head Source$$
 $codep */
-bool ipopt_fixed_nlp::eval_grad_f(
+bool ipopt_fixed::eval_grad_f(
 	Index           n         ,  // in
 	const Number*   x         ,  // in
 	bool            new_x     ,  // in
@@ -321,7 +324,7 @@ $end
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_g$$
 $spell
-	ipopt_fixed_nlp
+	ipopt
 	bool
 	const
 	eval
@@ -356,7 +359,7 @@ $cref/USER_REQUESTED_STOP
 
 $head Source$$
 $codep */
-bool ipopt_fixed_nlp::eval_g(
+bool ipopt_fixed::eval_g(
 	Index           n        ,  // in
 	const Number*   x        ,  // in
 	bool            new_x    ,  // in
@@ -377,7 +380,7 @@ $end
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_jac_g$$
 $spell
-	ipopt_fixed_nlp
+	ipopt
 	bool
 	eval
 	const
@@ -438,7 +441,7 @@ $cref/USER_REQUESTED_STOP
 
 $head Source$$
 $codep */
-bool ipopt_fixed_nlp::eval_jac_g(
+bool ipopt_fixed::eval_jac_g(
 	Index           n        ,  // in
 	const Number*   x        ,  // in
 	bool            new_x    ,  // in
@@ -472,7 +475,7 @@ $end
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_h$$
 $spell
-	ipopt_fixed_nlp
+	ipopt
 	bool
 	eval
 	const
@@ -552,7 +555,7 @@ $cref/USER_REQUESTED_STOP
 
 $head Source$$
 $codep */
-bool ipopt_fixed_nlp::eval_h(
+bool ipopt_fixed::eval_h(
 	Index         n              ,  // in
 	const Number* x              ,  // in
 	bool          new_x          ,  // in
@@ -589,7 +592,7 @@ $end
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_finalize_solution$$
 $spell
-	ipopt_fixed_nlp
+	ipopt
 	bool
 	eval
 	const
@@ -691,7 +694,7 @@ the NLP; see also option check_derivatives_for_naninf.
 
 $head Source$$
 $codep */
-void ipopt_fixed_nlp::finalize_solution(
+void ipopt_fixed::finalize_solution(
 	Ipopt::SolverReturn               status    ,  // in
 	Index                             n         ,  // in
 	const Number*                     x         ,  // in
@@ -735,3 +738,4 @@ void ipopt_fixed_nlp::finalize_solution(
 $end
 -------------------------------------------------------------------------------
 */
+} // END_DISMOD_AT_NAMESPACE

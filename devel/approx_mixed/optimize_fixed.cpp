@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin approx_mixed_optimize_fixed$$
 $spell
+	xam
 	vec
 	const
 	CppAD
@@ -76,7 +77,7 @@ $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$.
 
 $head fixed_out$$
-Thre return value has prototype
+The return value has prototype
 $codei%
 	CppAD::vector<double> %fixed_out%
 %$$
@@ -89,29 +90,31 @@ $codei%
 for $icode%j% = 0 , %...%, %n_fixed_%-1%$$.
 
 $head Laplace Approximation$$
-The $cref/theory/approx_mixed_throey/$$ for the
+The $cref/theory/approx_mixed_theory/$$ for the
 Laplace approximation optimization only includes the case where
 the $cref/joint density/approx_mixed_joint_density/$$ is smooth.
 
-$children%
+$comment%
 	example/devel/approx_mixed/optimize_fixed_xam.cpp
 %$$
+
 $head Example$$
-The file $cref optimize_fixed_xam.cpp$$ contains an example
+The file $code optimize_fixed_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 $end
 ------------------------------------------------------------------------------
 */
 # include <coin/IpIpoptApplication.hpp>
+# include <dismod_at/approx_mixed.hpp>
 
-namespace { // BEGIN_EMPTY_NAMESPACE
-	// types used by this file
-	typedef Ipopt::Number                Number;
-	typedef Ipopt::Index                 Index;
-	typedef Ipopt::TNLP::IndexStyleEnum  IndexStyleEnum;
-}
-bool ipopt_fixed_run()
+namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
+
+CppAD::vector<double> approx_mixed::optimize_fixed(
+	const d_vector& fixed_lower ,
+	const d_vector& fixed_in    ,
+	const d_vector& fixed_upper ,
+	const d_vector& random_in   )
 {	bool ok = true;
 	using Ipopt::SmartPtr;
 
@@ -139,3 +142,5 @@ bool ipopt_fixed_run()
 
 	return ok;
 }
+
+} // END_DISMOD_AT_NAMESPACE
