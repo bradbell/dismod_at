@@ -72,7 +72,12 @@ fixed_in_      ( fixed_in         )   ,
 fixed_upper_   ( fixed_upper      )   ,
 random_in_     ( random_in        )   ,
 approx_object_ ( approx_object    )
-{ }
+{	// prior density at the initial random effects vector
+	d_vector prior_vec = approx_object_.prior_eval(fixed_in);
+	assert( prior_vec.size() > 0 );
+	//
+	prior_n_abs_ = prior_vec.size() - 1;
+}
 ipopt_fixed::~ipopt_fixed(void)
 { }
 /* $$
@@ -125,8 +130,8 @@ bool ipopt_fixed::get_nlp_info(
 	Index&          nnz_h_lag    ,  // out
 	IndexStyleEnum& index_style  )  // out
 {
-	n           = 2;
-	m           = 1;
+	n           = n_fixed_;
+	m           = 2 * prior_n_abs_;
 	nnz_jac_g   = 2;
 	nnz_h_lag   = 2;
 	index_style = C_STYLE;

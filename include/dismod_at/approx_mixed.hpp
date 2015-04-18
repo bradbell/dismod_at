@@ -20,13 +20,16 @@ extern bool laplace_beta_xam(void);
 extern bool laplace_hes_fix_xam(void);
 extern bool prior_eval_xam(void);
 namespace dismod_at {
+	// Ipopt NLP clases that use the approx_mixed information for optimization
 	class optimize_random_eval;
+	class ipopt_fixed;
 }
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class approx_mixed {
 	friend optimize_random_eval;
+	friend ipopt_fixed;
 public:
 /*
 $begin approx_mixed_public$$

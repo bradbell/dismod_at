@@ -41,14 +41,21 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		typedef Ipopt::Index                Index;
 		typedef Ipopt::TNLP::IndexStyleEnum IndexStyleEnum;
 		//
-		// private member variables
+		// private member variables set during constructor
 		const size_t n_fixed_;            // number of fixed effects
 		const size_t n_random_;           // number of random effects
+		//
 		const d_vector& fixed_lower_;     // fixed effects lower limits
 		const d_vector& fixed_in_;        // fixed effects initial value
 		const d_vector& fixed_upper_;     // fixed effects upper limit
 		const d_vector& random_in_;       // random effects initial value
+		//
+		// set during constructor, may be modified by self when evaluating.
 		approx_mixed&   approx_object_;   // approx_mixed for this problem
+		//
+		// set during constructor, otherwise const
+		size_t prior_n_abs_;      // number of absolute values in prior
+		//
 	public:
 		//
 		// did finalize_solution agree that the solution had converged
