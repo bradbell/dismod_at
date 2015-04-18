@@ -14,6 +14,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /* $$
 $begin ipopt_fixed_ctor$$
 $spell
+	hes
 	vec
 	eval
 	ipopt
@@ -73,6 +74,15 @@ $cref/prior_density/approx_mixed_prior_density/$$.
 $head prior_nnz_jac_$$
 number of non-zeros in the Jacobian of the prior density.
 
+$head lag_hes_row_$$
+The row indices for the sparse representation of the Hessian
+of the Lagrangian (for any Lagrange multiplier values).
+
+$head lag_hes_col_$$
+The column indices for the sparse representation of the Hessian
+of the Lagrangian (for any Lagrange multiplier values).
+
+
 $end
 */
 ipopt_fixed::ipopt_fixed(
@@ -91,15 +101,30 @@ approx_object_ ( approx_object    )
 {	// prior density at the initial random effects vector
 	d_vector prior_vec = approx_object_.prior_eval(fixed_in);
 	assert( prior_vec.size() > 0 );
-	//
+	// -----------------------------------------------------------------------
 	// set prior_n_abs_
+	// -----------------------------------------------------------------------
 	prior_n_abs_ = prior_vec.size() - 1;
-	//
+	// -----------------------------------------------------------------------
 	// set prior_nnz_jac_
-	CppAD::vector<size_t> row, col;
-	d_vector val;
-	approx_object.prior_jac(fixed_in, row, col, val);
-	prior_nnz_jac_ = row.size();
+	// -----------------------------------------------------------------------
+	s_vector prior_row, prior_col;
+	d_vector prior_val;
+	approx_object.prior_jac(fixed_in, prior_row, prior_col, prior_val);
+	prior_nnz_jac_ = prior_row.size();
+	// -----------------------------------------------------------------------
+	// 2DO: set lag_hes_row_, lag_hes_col_
+	// -----------------------------------------------------------------------
+	// row and column indices for contribution from joint density
+	s_vector joint_row, joint_col;
+	d_vector joint_val;
+	approx_object.laplace_hes_fix(
+		fixed_in, random_in, joint_row, joint_col, joint_val
+	);
+	// row and column indices for contribution form prior density
+	prior_row.clear();
+	prior_col.clear();
+	prior_val.clear();
 }
 ipopt_fixed::~ipopt_fixed(void)
 { }

@@ -35,6 +35,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 	private:
 		// approx_mixed types used by this class
 		typedef approx_mixed::d_vector     d_vector;
+		typedef CppAD::vector<size_t>      s_vector;
 		//
 		// Ipopt types used by this class
 		typedef Ipopt::Number               Number;
@@ -56,6 +57,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		// set during constructor, otherwise const
 		size_t prior_n_abs_;    // number of absolute values in prior
 		size_t prior_nnz_jac_;  // number of non-zeros in Jacobian of prior
+		s_vector lag_hes_row_;  // row indices for Hessian of Lagrangian
+		s_vector lag_hes_col_;  // column indices for Hessian of Lagrangian
 		//
 	public:
 		//
