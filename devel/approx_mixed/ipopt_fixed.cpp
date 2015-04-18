@@ -23,14 +23,17 @@ $section Ipopt Example: Constructor and Destructor$$
 
 $head Syntax$$
 $codei%ipopt_fixed %ipopt_object%(
-	%fixed_lower%, %fixed_in%, %fixed_upper%, %random_in%)
-%$$
+	%fixed_lower%, %fixed_in%, %fixed_upper%, %random_in%, %approx_object%
+)%$$
 
 $head Prototype$$
 The arguments has prototype
 $codei%
-	const CppAD::vector<double>& %fixed_lower%, %fixed_in%, %fixed_upper%
+	const CppAD::vector<double>& %fixed_lower%
+	const CppAD::vector<double>& %fixed_in%
+	const CppAD::vector<double>& %fixed_upper%
 	const CppAD::vector<double>& %random_in%
+	approx_mixed&                %approx_object%
 %$$
 
 $head References$$
@@ -51,16 +54,22 @@ specifies the upper limits for the fixed effects.
 $head random_in$$
 specifies the initial value (for initial optimization) of the random effects.
 
+$head approx_object$$
+The argument $icode approx_object$$ is an object of a class that is
+derived from the $code approx_mixed$$ base class.
+
 $codep */
 ipopt_fixed::ipopt_fixed(
-	const d_vector& fixed_lower ,
-	const d_vector& fixed_in    ,
-	const d_vector& fixed_upper ,
-	const d_vector& random_in   ) :
-fixed_lower_ ( fixed_lower );
-fixed_in_    ( fixed_in    );
-fixed_upper_ ( fixed_upper );
-random_in_   ( random_in   );
+	const d_vector&     fixed_lower   ,
+	const d_vector&     fixed_in      ,
+	const d_vector&     fixed_upper   ,
+	const d_vector&     random_in     ,
+	const approx_mixed& approx_object ) :
+fixed_lower_   ( fixed_lower );
+fixed_in_      ( fixed_in    );
+fixed_upper_   ( fixed_upper );
+random_in_     ( random_in   );
+approx_object_ ( approx_object );
 { }
 ipopt_fixed::~ipopt_fixed(void)
 { }

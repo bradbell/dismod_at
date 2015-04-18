@@ -52,10 +52,11 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		//
 		// default constructor
 		ipopt_fixed(
-			const d_vector& fixed_lower ,
-			const d_vector& fixed_in    ,
-			const d_vector& fixed_upper ,
-			const d_vector& random_in
+			const d_vector& fixed_lower   ,
+			const d_vector& fixed_in      ,
+			const d_vector& fixed_upper   ,
+			const d_vector& random_in     ,
+			approx_mixed&   approx_object
 		);
 		//
 		// default destructor

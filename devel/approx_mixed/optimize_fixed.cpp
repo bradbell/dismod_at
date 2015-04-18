@@ -119,9 +119,12 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 {	bool ok = true;
 	using Ipopt::SmartPtr;
 
+	// create a reference to this object
+	approx_mixed& approx_object(*this);
+
 	// Create an instance of the example problem
 	SmartPtr<ipopt_fixed> xam_nlp = new ipopt_fixed(
-		fixed_lower, fixed_in, fixed_upper, random_in
+		fixed_lower, fixed_in, fixed_upper, random_in, approx_object
 	);
 
 	// Create an instance of an IpoptApplication
