@@ -407,6 +407,7 @@ $codep */
 	// prior_hes
 	void prior_hes(
 		const d_vector&        fixed_vec   ,
+		const d_vector&        weight      ,
 		CppAD::vector<size_t>& row_out     ,
 		CppAD::vector<size_t>& col_out     ,
 		d_vector&              val_out
