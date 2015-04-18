@@ -18,6 +18,7 @@ extern bool joint_hes_fix_xam(void);
 extern bool laplace_eval_xam(void);
 extern bool laplace_beta_xam(void);
 extern bool laplace_hes_fix_xam(void);
+extern bool prior_eval_xam(void);
 namespace dismod_at {
 	class optimize_random_eval;
 }
@@ -149,9 +150,10 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/record_prior.cpp
 	%devel/approx_mixed/joint_grad_ran.cpp
 	%devel/approx_mixed/joint_hes_fix.cpp
-	%devel/approx_mixed/laplace_hes_fix.cpp
 	%devel/approx_mixed/laplace_eval.cpp
 	%devel/approx_mixed/laplace_beta.cpp
+	%devel/approx_mixed/laplace_hes_fix.cpp
+	%devel/approx_mixed/prior_eval.cpp
 %$$
 
 $head n_fixed_$$
@@ -361,7 +363,13 @@ $codep */
 	);
 	friend bool ::laplace_hes_fix_xam(void);
 /* $$
-
+$head prior_eval$$
+See $cref approx_mixed_prior_eval$$
+$codep */
+	// prior_eval
+	d_vector prior_eval(const d_vector& fixed_vec);
+	friend bool ::prior_eval_xam(void);
+/* $$
 $end
 -------------------------------------------------------------------------------
 */

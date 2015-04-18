@@ -38,6 +38,7 @@ extern bool ipopt_xam_run(void);
 extern bool laplace_beta_xam(void);
 extern bool laplace_eval_xam(void);
 extern bool optimize_random_xam(void);
+extern bool prior_eval_xam(void);
 
 // model subdirectory
 extern bool avg_no_ode_xam(void);
@@ -122,6 +123,7 @@ int main(void)
 	RUN(laplace_beta_xam);
 	RUN(laplace_eval_xam);
 	RUN(optimize_random_xam);
+	RUN(prior_eval_xam);
 
 	// model subdirectory
 	RUN(avg_no_ode_xam);
