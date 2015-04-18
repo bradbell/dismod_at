@@ -127,8 +127,6 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 			const Ipopt::IpoptData*           ip_data   ,
 			Ipopt::IpoptCalculatedQuantities* ip_cq
 		);
-	
-	
 	};
 } // END_DISMOD_AT_NAMESPACE
 
