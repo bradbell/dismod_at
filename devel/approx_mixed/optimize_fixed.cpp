@@ -101,22 +101,41 @@ The file $cref optimize_fixed_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 $end
+------------------------------------------------------------------------------
 */
-// ----------------------------------------------------------------------------
+# include <coin/IpIpoptApplication.hpp>
+
 namespace { // BEGIN_EMPTY_NAMESPACE
+	// types used by this file
+	typedef Ipopt::Number                Number;
+	typedef Ipopt::Index                 Index;
+	typedef Ipopt::TNLP::IndexStyleEnum  IndexStyleEnum;
+}
+bool ipopt_fixed_run()
+{	bool ok = true;
+	using Ipopt::SmartPtr;
 
-// types used by this file
-typedef Ipopt::Number                Number;
-typedef Ipopt::Index                 Index;
-typedef Ipopt::TNLP::IndexStyleEnum  IndexStyleEnum;
+	// Create an instance of the example problem
+	SmartPtr<ipopt_fixed_nlp> xam_nlp = new ipopt_fixed_nlp;
 
-// ----------------------------------------------------------------------------
-// derived from the Ipopt base class for non-linear programming problems.
-class ipopt_nlp_fixed : public Ipopt::TNLP { // BEGIN_IPOPT_NLP_FIXED
+	// Create an instance of an IpoptApplication
+	SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
 
+	// Turn off all Ipopt printed output
+	app->Options()->SetIntegerValue("print_level", 0);
+	app->Options()->SetStringValue("sb", "yes");
 
-}; // END_IPOPT_NLP_FIXED
-}  // END_EMPTY_NAMESPACE
-// ----------------------------------------------------------------------------
+	// variable to hold status values returned by app
+	Ipopt::ApplicationReturnStatus status;
 
+	// initialize app
+	status = app->Initialize();
+	ok    &= status == Ipopt::Solve_Succeeded;
 
+	// solve the problem
+	status = app->OptimizeTNLP(xam_nlp);
+	ok    &= status == Ipopt::Solve_Succeeded;
+	ok    &= xam_nlp->finalize_solution_ok_;
+
+	return ok;
+}
