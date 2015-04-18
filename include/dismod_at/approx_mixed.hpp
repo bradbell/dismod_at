@@ -163,6 +163,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/laplace_hes_fix.cpp
 	%devel/approx_mixed/prior_eval.cpp
 	%devel/approx_mixed/prior_jac.cpp
+	%devel/approx_mixed/prior_hes.cpp
 %$$
 
 $head n_fixed_$$
