@@ -46,8 +46,8 @@ This argument has prototype
 $codei%
 	const CppAD::vector<double>& %weight%
 %$$
-It specifies the value of the weights for the 
-components of the 
+It specifies the value of the weights for the
+components of the
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to the $cref/prior_density/approx_mixed_prior_density/$$.
 It has the same size as the corresponding return value
