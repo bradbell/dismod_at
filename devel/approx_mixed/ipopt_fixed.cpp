@@ -138,12 +138,26 @@ is still being used.
 $head fixed_lower$$
 specifies the lower limits for the
 $cref/fixed_effects/model_variable/Fixed Effects, theta/$$.
+Note that
+$code%
+	- std::numeric_limits<double>::infinity()
+%$$
+is used for minus infinity; i.e., no lower bound.
 
 $head fixed_in$$
 specifies the initial value (during optimization) for the fixed effects.
+It must hold for each $icode j$$ that
+$codei%
+	%fixed_lower%[%j%] <= %fixed_in%[%j%] <= %fixed_upper%[%j%]
+%$$
 
 $head fixed_upper$$
 specifies the upper limits for the fixed effects.
+Note that
+$code%
+	std::numeric_limits<double>::infinity()
+%$$
+is used for plus infinity; i.e., no upper bound.
 
 $head random_in$$
 specifies the initial value (for initial optimization) of the random effects.
@@ -188,12 +202,25 @@ fixed_upper_   ( fixed_upper      )   ,
 random_in_     ( random_in        )   ,
 approx_object_ ( approx_object    )
 {
-	// prior density at the initial fixed effects vector
-	d_vector prior_vec = approx_object_.prior_eval(fixed_in);
-	assert( prior_vec.size() > 0 );
+	// -----------------------------------------------------------------------
+	// set nlp_lower_bound_inf_, nlp_upper_bound_inf_
+	// -----------------------------------------------------------------------
+	nlp_lower_bound_inf_ = - 1e19;
+	nlp_upper_bound_inf_ = + 1e19;
+	double inf           = std::numeric_limits<double>::infinity();
+	for(size_t j = 0; j < n_fixed_; j++)
+	{	if( fixed_lower[j] != - inf ) nlp_lower_bound_inf_ =
+				std::min(nlp_lower_bound_inf_, fixed_lower[j] );
+		//
+		if( fixed_upper[j] != inf ) nlp_upper_bound_inf_ =
+				std::max(nlp_upper_bound_inf_, fixed_upper[j] );
+	}
 	// -----------------------------------------------------------------------
 	// set prior_n_abs_
 	// -----------------------------------------------------------------------
+	// prior density at the initial fixed effects vector
+	d_vector prior_vec = approx_object_.prior_eval(fixed_in);
+	assert( prior_vec.size() > 0 );
 	prior_n_abs_ = prior_vec.size() - 1;
 	// -----------------------------------------------------------------------
 	// set prior_nnz_jac_
@@ -344,25 +371,28 @@ bool ipopt_fixed::get_bounds_info(
 {
 	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
 	for(size_t j = 0; j < n_fixed_; j++)
-	{	x_l[j] = fixed_lower_[j];
-		x_u[j] = fixed_upper_[j];
-		// map infinity to crazy value required by ipopt
-		if( x_l[j] == - std::numeric_limits<Number>::infinity() )
-			x_l[j] = DISMOD_AT_NLP_LOWER_BOUND_INF;
-		if( x_u[j] == + std::numeric_limits<Number>::infinity() )
-			x_l[j] = DISMOD_AT_NLP_UPPER_BOUND_INF;
+	{	// map infinity to crazy value required by ipopt
+		if( fixed_lower_[j] == - std::numeric_limits<double>::infinity() )
+			x_l[j] = nlp_lower_bound_inf_;
+		else
+			x_l[j] = fixed_lower_[j];
+		//
+		if( fixed_upper_[j] == std::numeric_limits<double>::infinity() )
+			x_l[j] = nlp_upper_bound_inf_;
+		else
+			x_u[j] = fixed_upper_[j];
 	}
 	// auxillary varibles for absolute value terms
 	for(size_t j = 0; j < prior_n_abs_; j++)
-	{	x_l[n_fixed_ + j] = DISMOD_AT_NLP_LOWER_BOUND_INF;
-		x_u[n_fixed_ + j] = DISMOD_AT_NLP_UPPER_BOUND_INF;
+	{	x_l[n_fixed_ + j] = nlp_lower_bound_inf_;
+		x_u[n_fixed_ + j] = nlp_upper_bound_inf_;
 	}
 	//
 	// constraints for absolute value terms
 	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
 	for(size_t j = 0; j < 2 * prior_n_abs_; j++)
 	{	g_l[j] = 0.0;
-		g_u[j] = DISMOD_AT_NLP_UPPER_BOUND_INF;
+		g_u[j] = nlp_upper_bound_inf_;
 	}
 	//
 	return true;

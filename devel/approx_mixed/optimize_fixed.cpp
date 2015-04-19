@@ -48,6 +48,11 @@ $codei%
 It specifies the lower bound for the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
 vector $latex \theta$$.
+Note that
+$code%
+	- std::numeric_limits<double>::infinity()
+%$$
+is used for minus infinity; i.e., no lower bound.
 
 $head fixed_in$$
 This argument has prototype
@@ -57,6 +62,10 @@ $codei%
 It specifies the initial value for the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
 vector $latex \theta$$ during the optimization process.
+It must hold for each $icode j$$ that
+$codei%
+	%fixed_lower%[%j%] <= %fixed_in%[%j%] <= %fixed_upper%[%j%]
+%$$
 
 $head fixed_upper$$
 This argument has prototype
@@ -66,6 +75,11 @@ $codei%
 It specifies the upper bound for the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
 vector $latex \theta$$.
+Note that
+$code%
+	std::numeric_limits<double>::infinity()
+%$$
+is used for plus infinity; i.e., no upper bound.
 
 $head random_in$$
 This argument has prototype
@@ -119,11 +133,20 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 {	bool ok = true;
 	using Ipopt::SmartPtr;
 
+# ifndef NDEBUG
+	assert( fixed_lower.size() == fixed_in.size() );
+	assert( fixed_lower.size() == fixed_upper.size() );
+	for(size_t j = 0; j < fixed_lower.size(); j++)
+	{	assert( fixed_lower[j] <= fixed_in[j] );
+		assert( fixed_in[j]    <= fixed_upper[j] );
+	}
+# endif
+
 	// create a reference to this object
 	approx_mixed& approx_object(*this);
 
 	// Create an instance of the example problem
-	SmartPtr<ipopt_fixed> xam_nlp = new ipopt_fixed(
+	SmartPtr<ipopt_fixed> fixed_nlp = new ipopt_fixed(
 		fixed_lower, fixed_in, fixed_upper, random_in, approx_object
 	);
 
@@ -134,6 +157,11 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	app->Options()->SetIntegerValue("print_level", 0);
 	app->Options()->SetStringValue("sb", "yes");
 
+	// Set values used for minus and plus infinity
+	app->Options()->SetNumericValue(
+		"nlp_lower_bound_inf", fixed_nlp->nlp_lower_bound_inf()
+	);
+
 	// variable to hold status values returned by app
 	Ipopt::ApplicationReturnStatus status;
 
@@ -142,9 +170,9 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	ok    &= status == Ipopt::Solve_Succeeded;
 
 	// solve the problem
-	status = app->OptimizeTNLP(xam_nlp);
+	status = app->OptimizeTNLP(fixed_nlp);
 	ok    &= status == Ipopt::Solve_Succeeded;
-	ok    &= xam_nlp->finalize_solution_ok_;
+	ok    &= fixed_nlp->finalize_solution_ok_;
 
 	d_vector fixed_out;
 	return fixed_out;

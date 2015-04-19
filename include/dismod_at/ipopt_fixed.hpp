@@ -15,9 +15,19 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin ipopt_fixed$$
 $spell
 	Ipopt
+	nlp
+	inf
 $$
 
 $section Ipopt NLP Class Used to Optimize Fixed Effects$$
+
+$head nlp_lower_bound_inf()$$
+This member function returns the $code double$$ value used
+for minus infinity as a lower bound.
+
+$head nlp_upper_bound_inf()$$
+This member function returns the $code double$$ value used
+for plus infinity as an upper bound.
 
 $childtable%devel/approx_mixed/ipopt_fixed.cpp%$$
 
@@ -26,9 +36,6 @@ $end
 */
 # include <coin/IpTNLP.hpp>
 # include <dismod_at/approx_mixed.hpp>
-
-# define DISMOD_AT_NLP_LOWER_BOUND_INF -1e19
-# define DISMOD_AT_NLP_UPPER_BOUND_INF  1e19
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 	//
@@ -44,27 +51,36 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		typedef Ipopt::Number               Number;
 		typedef Ipopt::Index                Index;
 		typedef Ipopt::TNLP::IndexStyleEnum IndexStyleEnum;
-		//
-		// private member variables set during constructor
+		// ---------------------------------------------------------------
+		// member variables set during constructor
 		const size_t n_fixed_;            // number of fixed effects
 		const size_t n_random_;           // number of random effects
 		//
-		// set by constructor initialization
 		const d_vector& fixed_lower_;     // fixed effects lower limits
 		const d_vector& fixed_in_;        // fixed effects initial value
 		const d_vector& fixed_upper_;     // fixed effects upper limit
 		const d_vector& random_in_;       // random effects initial value
 		approx_mixed&   approx_object_;   // approx_mixed for this problem
-		//
+		// ---------------------------------------------------------------
 		// set during constructor, otherwise const
+		double nlp_lower_bound_inf_;      // Ipopt's code for - infinity
+		double nlp_upper_bound_inf_;      // Ipopt's code for + infinity
+		//
 		size_t prior_n_abs_;     // number of absolute values in prior
 		size_t prior_nnz_jac_;   // number of non-zeros in Jacobian of prior
+		//
 		s_vector lag_hes_row_;   // row indices for Hessian of Lagrangian
 		s_vector lag_hes_col_;   // column indices for Hessian of Lagrangian
 		s_vector prior_2_lag_;   // maps prior_hes_row_ index to lag_hes_row_
 		s_vector laplace_2_lag_; // maps laplace_hes_row_ index to lag_hes_row_
 		//
 	public:
+		// get minus infinity
+		double nlp_lower_bound_inf(void) const
+		{	return nlp_lower_bound_inf_; }
+		// get plus infinity
+		double nlp_upper_bound_inf(void) const
+		{	return nlp_upper_bound_inf_; }
 		//
 		// did finalize_solution agree that the solution had converged
 		bool finalize_solution_ok_;
