@@ -60,11 +60,12 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		const d_vector& fixed_in_;        // fixed effects initial value
 		const d_vector& fixed_upper_;     // fixed effects upper limit
 		const d_vector& random_in_;       // random effects initial value
+		//
 		approx_mixed&   approx_object_;   // approx_mixed for this problem
 		// ---------------------------------------------------------------
 		// set during constructor, otherwise const
-		double nlp_lower_bound_inf_;      // Ipopt's code for - infinity
-		double nlp_upper_bound_inf_;      // Ipopt's code for + infinity
+		double nlp_lower_bound_inf_;  // Ipopt's code for - infinity
+		double nlp_upper_bound_inf_;  // Ipopt's code for + infinity
 		//
 		size_t prior_n_abs_;     // number of absolute values in prior
 		size_t prior_nnz_jac_;   // number of non-zeros in Jacobian of prior
@@ -73,7 +74,17 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		s_vector lag_hes_col_;   // column indices for Hessian of Lagrangian
 		s_vector prior_2_lag_;   // maps prior_hes_row_ index to lag_hes_row_
 		s_vector laplace_2_lag_; // maps laplace_hes_row_ index to lag_hes_row_
-		//
+		// ---------------------------------------------------------------
+		// temporaries
+		d_vector        fixed_tmp_;      // size n_fixed_
+		d_vector        random_tmp_;     // size n_random_
+		d_vector        prior_vec_tmp_;  // size prior_n_abs_ + 1
+		// ---------------------------------------------------------------
+		// set by eval_f only (constructor does not modify)
+		double   objective_opt_; // so var optimal objective value
+		d_vector fixed_opt_;     // so far optimal fixed effects
+		d_vector random_opt_;    // random effects corresponding to fixed_opt_
+		// ---------------------------------------------------------------
 	public:
 		// get minus infinity
 		double nlp_lower_bound_inf(void) const

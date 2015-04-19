@@ -258,6 +258,13 @@ approx_object_ ( approx_object    )
 		laplace_2_lag_   ,
 		prior_2_lag_
 	);
+	// -----------------------------------------------------------------------
+	// set size of fixed_tmp_, random_tmp_, prior_vec_tmp_
+	// -----------------------------------------------------------------------
+	fixed_tmp_.resize( n_fixed_ );
+	random_tmp_.resize( n_random_ );
+	prior_vec_tmp_.resize( prior_n_abs_ + 1 );
+	// -----------------------------------------------------------------------
 }
 ipopt_fixed::~ipopt_fixed(void)
 { }
@@ -370,6 +377,8 @@ bool ipopt_fixed::get_bounds_info(
 		Number*     g_u      )   // out
 {
 	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
+	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
+
 	for(size_t j = 0; j < n_fixed_; j++)
 	{	// map infinity to crazy value required by ipopt
 		if( fixed_lower_[j] == - std::numeric_limits<double>::infinity() )
@@ -389,7 +398,6 @@ bool ipopt_fixed::get_bounds_info(
 	}
 	//
 	// constraints for absolute value terms
-	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
 	for(size_t j = 0; j < 2 * prior_n_abs_; j++)
 	{	g_l[j] = 0.0;
 		g_u[j] = nlp_upper_bound_inf_;
@@ -517,25 +525,72 @@ $head obj_val$$
 set to the initial value of the objective function f(x).
 
 $head ok$$
-if set to false, the optimization will terminate with status set to
+returns true.
+If set to false, the optimization would terminate with status set to
 $cref/USER_REQUESTED_STOP
 	/ipopt_fixed_finalize_solution/status/USER_REQUESTED_STOP/$$.
 
-$head Source$$
-$codep */
+$end
+-------------------------------------------------------------------------------
+*/
 bool ipopt_fixed::eval_f(
 	Index           n         ,  // in
 	const Number*   x         ,  // in
 	bool            new_x     ,  // in
 	Number&         obj_value )  // out
 {
-	assert( n == 2 );
-	obj_value = - (x[1] - 2.0) * (x[1] - 2.0);
+	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
+	//
+	// check if we are initializing optimal value so far
+	if( fixed_opt_.size() == 0 )
+	{	objective_opt_ = std::numeric_limits<double>::infinity();
+		fixed_opt_.resize(n_fixed_);
+		random_opt_.resize(n_random_);
 
+		// using random_in_ for initial random effects
+		random_tmp_ = random_in_;
+	}
+	else
+	{	// using so far optimal random effects
+		random_tmp_ = random_opt_;
+	}
+	//
+	// value of fixed effects corresponding to this x
+	for(size_t j = 0; j < n_fixed_; j++)
+		fixed_tmp_[j] = x[j];
+	//
+	// compute the optimal random effects corresponding to fixed effects
+	random_tmp_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
+	//
+	// compute joint part of the Laplace objective
+	double H = approx_object_.laplace_eval(
+		fixed_tmp_, fixed_tmp_, random_tmp_
+	);
+	//
+	// prior part of objective
+	prior_vec_tmp_ = approx_object_.prior_eval(fixed_tmp_);
+	//
+	// only include smooth part of prior in objective
+	obj_value = H + prior_vec_tmp_[0];
+	//
+	// use contraints to represent absolute value part
+	for(size_t j = 0; j < prior_n_abs_; j++)
+		obj_value += x[n_fixed_ + j];
+	//
+	// compute the true objective (without constraints)
+	double obj_tmp = H + prior_vec_tmp_[0];
+	for(size_t j = 0; j < prior_n_abs_; j++)
+		obj_tmp += CppAD::abs( prior_vec_tmp_[1+j] );
+	//
+	// check if so far optimal
+	if( obj_tmp < objective_opt_ )
+	{	objective_opt_ = obj_tmp;
+		fixed_opt_     = fixed_tmp_;
+		random_opt_    = random_tmp_;
+	}
 	return true;
 }
-/* $$
-$end
+/*
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_grad_f$$
 $spell
