@@ -15,6 +15,7 @@ $spell
 	vec
 	const
 	CppAD
+	std
 $$
 
 $section Optimize Fixed Effects$$

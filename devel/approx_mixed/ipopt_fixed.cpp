@@ -111,6 +111,7 @@ $spell
 	CppAD
 	nnz_jac
 	Jacobian
+	std
 $$
 
 $section Ipopt Example: Constructor and Destructor$$
@@ -259,11 +260,12 @@ approx_object_ ( approx_object    )
 		prior_2_lag_
 	);
 	// -----------------------------------------------------------------------
-	// set size of fixed_tmp_, random_tmp_, prior_vec_tmp_
+	// set size of fixed_tmp_, random_tmp_, prior_vec_tmp_, H_beta_tmp_
 	// -----------------------------------------------------------------------
 	fixed_tmp_.resize( n_fixed_ );
 	random_tmp_.resize( n_random_ );
 	prior_vec_tmp_.resize( prior_n_abs_ + 1 );
+	H_beta_tmp_.resize( n_fixed_ );
 	// -----------------------------------------------------------------------
 }
 ipopt_fixed::~ipopt_fixed(void)
@@ -305,8 +307,7 @@ is set to the numbering style used for row/col entries in the sparse matrix
 format (C_STYLE: 0-based, FORTRAN_STYLE: 1-based).
 
 $head ok$$
-is set to true.
-If set to false, the optimization would terminate with status set to
+If set to false, the optimization will terminate with status set to
 $cref/USER_REQUESTED_STOP
 	/ipopt_fixed_finalize_solution/status/USER_REQUESTED_STOP/$$.
 
@@ -360,8 +361,7 @@ $head g_u$$
 set to the upper bounds for $icode g(x)$$ (has size $icode m$$).
 
 $head ok$$
-is set to true.
-If set to false, the optimization would terminate with status set to
+If set to false, the optimization will terminate with status set to
 $cref/USER_REQUESTED_STOP
 	/ipopt_fixed_finalize_solution/status/USER_REQUESTED_STOP/$$.
 
@@ -425,7 +425,7 @@ $head n$$
 is the number of variables in the problem (dimension of x).
 
 $head init_x$$
-if true, the ipopt options specify that the this routine
+assumed true which means the ipopt options specify that the this routine
 will provide an initial value for $icode x$$.
 
 $head x$$
@@ -458,8 +458,7 @@ set to the initial value for the $icode g(x)$$ multipliers
 (has size $icode m$$).
 
 $head ok$$
-is set to true.
-If set to false, the optimization would terminate with status set to
+If set to false, the optimization will terminate with status set to
 $cref/USER_REQUESTED_STOP
 	/ipopt_fixed_finalize_solution/status/USER_REQUESTED_STOP/$$.
 
@@ -525,8 +524,7 @@ $head obj_val$$
 set to the initial value of the objective function f(x).
 
 $head ok$$
-returns true.
-If set to false, the optimization would terminate with status set to
+If set to false, the optimization will terminate with status set to
 $cref/USER_REQUESTED_STOP
 	/ipopt_fixed_finalize_solution/status/USER_REQUESTED_STOP/$$.
 
@@ -560,14 +558,16 @@ bool ipopt_fixed::eval_f(
 		fixed_tmp_[j] = x[j];
 	//
 	// compute the optimal random effects corresponding to fixed effects
-	random_tmp_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
+	if( new_x )
+		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
 	//
 	// compute joint part of the Laplace objective
 	double H = approx_object_.laplace_eval(
-		fixed_tmp_, fixed_tmp_, random_tmp_
+		fixed_tmp_, fixed_tmp_, random_cur_
 	);
 	//
 	// prior part of objective
+	// (2DO: cache prior_vec_tmp_ for constraint evaluation with same x)
 	prior_vec_tmp_ = approx_object_.prior_eval(fixed_tmp_);
 	//
 	// only include smooth part of prior in objective
@@ -586,7 +586,7 @@ bool ipopt_fixed::eval_f(
 	if( obj_tmp < objective_opt_ )
 	{	objective_opt_ = obj_tmp;
 		fixed_opt_     = fixed_tmp_;
-		random_opt_    = random_tmp_;
+		random_opt_    = random_cur_;
 	}
 	return true;
 }
@@ -621,25 +621,61 @@ is set to the value for the gradient $latex \nabla f(x)$$
 (has size $icode m$$).
 
 $head ok$$
-if set to false, the optimization will terminate with status set to
+If set to false, the optimization will terminate with status set to
 $cref/USER_REQUESTED_STOP
 	/ipopt_fixed_finalize_solution/status/USER_REQUESTED_STOP/$$.
 
-$head Source$$
-$codep */
+$end
+-------------------------------------------------------------------------------
+*/
 bool ipopt_fixed::eval_grad_f(
 	Index           n         ,  // in
 	const Number*   x         ,  // in
 	bool            new_x     ,  // in
 	Number*         grad_f    )  // out
 {
-	assert( n == 2 );
-	grad_f[0] = 0.0;
-	grad_f[1] = - 2.0 * (x[1] - 2.0);
+	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
+	//
+	// fixed effects
+	for(size_t j = 0; j < n_fixed_; j++)
+		fixed_tmp_[j] = x[j];
+	//
+	// compute the optimal random effects corresponding to fixed effects
+	if( new_x )
+	{	if( fixed_opt_.size() == 0 )
+			random_tmp_ = random_in_;
+		else
+			random_tmp_ = random_opt_;
+		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
+	}
+	//
+	// Jacobian for joint part of the Lalpace objective
+	H_beta_tmp_ = approx_object_.laplace_beta(
+		fixed_tmp_, fixed_tmp_, random_cur_
+	);
+	//
+	// Jacobian of prior part of objective
+	// (2DO: do not revaluate when eval_jac_g had same x)
+	approx_object_.prior_jac(
+		fixed_tmp_, prior_jac_row_, prior_jac_col_, prior_jac_val_
+	);
+
+	//
+	// set grad_f
+	for(size_t j = 0; j < n_fixed_; j++)
+		grad_f[j] = H_beta_tmp_[j];
+	for(size_t j = 0; j < prior_n_abs_; j++)
+		grad_f[n_fixed_ + j] = 1.0;
+	for(size_t k = 0; k < prior_jac_row_.size(); k++)
+	{	if( prior_jac_row_[k] == 0 )
+		{	size_t j = prior_jac_col_[k];
+			grad_f[j] += prior_jac_val_[k];
+		}
+	}
+	//
 	return true;
 }
-/* $$
-$end
+/*
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_g$$
 $spell

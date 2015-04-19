@@ -79,11 +79,20 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		d_vector        fixed_tmp_;      // size n_fixed_
 		d_vector        random_tmp_;     // size n_random_
 		d_vector        prior_vec_tmp_;  // size prior_n_abs_ + 1
+		d_vector        H_beta_tmp_;     // size n_fixed_
 		// ---------------------------------------------------------------
 		// set by eval_f only (constructor does not modify)
 		double   objective_opt_; // so var optimal objective value
 		d_vector fixed_opt_;     // so far optimal fixed effects
 		d_vector random_opt_;    // random effects corresponding to fixed_opt_
+		// ---------------------------------------------------------------
+		// set by eval_grad_f or eval_jac_g (constructor does not modify)
+		s_vector prior_jac_row_; // row indices for Jacobian of prior
+		s_vector prior_jac_col_; // column indices for Jacobian of prior
+		d_vector prior_jac_val_; // values for Jacobian of prior
+		// ---------------------------------------------------------------
+		// set by any eval routine when new_x is true
+		d_vector random_cur_; // random effects corresponding to current x
 		// ---------------------------------------------------------------
 	public:
 		// get minus infinity
