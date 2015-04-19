@@ -37,6 +37,7 @@ extern bool ipopt_xam(void);
 extern bool ipopt_xam_run(void);
 extern bool laplace_beta_xam(void);
 extern bool laplace_eval_xam(void);
+extern bool optimize_fixed_xam(void);
 extern bool optimize_random_xam(void);
 extern bool prior_eval_xam(void);
 extern bool prior_jac_xam(void);
@@ -124,6 +125,7 @@ int main(void)
 	RUN(ipopt_xam_run);
 	RUN(laplace_beta_xam);
 	RUN(laplace_eval_xam);
+	RUN(optimize_fixed_xam);
 	RUN(optimize_random_xam);
 	RUN(prior_eval_xam);
 	RUN(prior_jac_xam);

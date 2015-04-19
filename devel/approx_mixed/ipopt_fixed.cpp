@@ -258,6 +258,8 @@ approx_object_ ( approx_object    )
 	);
 	//
 	// merge to form sparsity for Lagrangian
+	laplace_2_lag_.resize( laplace_hes_row_.size() );
+	prior_2_lag_.resize( prior_hes_row_.size() );
 	merge_sparse(
 		laplace_hes_row_      ,
 		laplace_hes_col_      ,
@@ -268,6 +270,12 @@ approx_object_ ( approx_object    )
 		laplace_2_lag_        ,
 		prior_2_lag_
 	);
+# ifndef NDEBUG
+	for(size_t k = 0; k < laplace_hes_row_.size(); k++)
+		assert( laplace_2_lag_[k] < lag_hes_row_.size() );
+	for(size_t k = 0; k < prior_hes_row_.size(); k++)
+		assert( prior_2_lag_[k] < lag_hes_row_.size() );
+# endif
 	// -----------------------------------------------------------------------
 	// set nnz_h_lag_
 	// -----------------------------------------------------------------------
@@ -280,7 +288,7 @@ approx_object_ ( approx_object    )
 	random_tmp_.resize( n_random_ );
 	prior_vec_tmp_.resize( prior_n_abs_ + 1 );
 	H_beta_tmp_.resize( n_fixed_ );
-	weight_tmp_.resize( 2 * prior_n_abs_ );
+	weight_tmp_.resize( prior_n_abs_ + 1 );
 	// -----------------------------------------------------------------------
 }
 ipopt_fixed::~ipopt_fixed(void)
@@ -402,7 +410,7 @@ bool ipopt_fixed::get_bounds_info(
 			x_l[j] = fixed_lower_[j];
 		//
 		if( fixed_upper_[j] == std::numeric_limits<double>::infinity() )
-			x_l[j] = nlp_upper_bound_inf_;
+			x_u[j] = nlp_upper_bound_inf_;
 		else
 			x_u[j] = fixed_upper_[j];
 	}
@@ -1027,8 +1035,8 @@ bool ipopt_fixed::eval_h(
 	//
 	// Hessian of Langrange multiplied weighted prior w.r.t. fixed effects
 	weight_tmp_[0] = obj_factor;
-	for(size_t j = 0; j < 2 * prior_n_abs_; j++)
-		weight_tmp_[1 + j] = lambda[j];
+	for(size_t j = 0; j < prior_n_abs_; j++)
+		weight_tmp_[1 + j] = lambda[2 * j + 1] - lambda[2 * j];
 	approx_object_.prior_hes(
 		fixed_tmp_, weight_tmp_, prior_hes_row_, prior_hes_col_, prior_hes_val_
 	);

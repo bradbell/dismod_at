@@ -100,7 +100,7 @@ It is the final value (obtained by optimization) of the
 fixed effects vector.
 This vector satisfies its bounds; i.e.,
 $codei%
-	%fixed_lower%[%j%]% <= %fixed_out%[%j%] <= %fixed_upper%[%j%]
+	%fixed_lower%[%j%] <= %fixed_out%[%j%] <= %fixed_upper%[%j%]
 %$$
 for $icode%j% = 0 , %...%, %n_fixed_%-1%$$.
 
@@ -109,12 +109,12 @@ The $cref/theory/approx_mixed_theory/$$ for the
 Laplace approximation optimization only includes the case where
 the $cref/joint density/approx_mixed_joint_density/$$ is smooth.
 
-$comment%
+$children%
 	example/devel/approx_mixed/optimize_fixed_xam.cpp
 %$$
 
 $head Example$$
-The file $code optimize_fixed_xam.cpp$$ contains an example
+The file $cref optimize_fixed_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 $end
@@ -154,8 +154,8 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	// Create an instance of an IpoptApplication
 	SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
 
-	// Turn off all Ipopt printed output
-	app->Options()->SetIntegerValue("print_level", 0);
+	// To turn off all Ipopt printed output, set print_level=0 and sb=yes.
+	app->Options()->SetIntegerValue("print_level", 5);
 	app->Options()->SetStringValue("sb", "yes");
 
 	// Set values used for minus and plus infinity
