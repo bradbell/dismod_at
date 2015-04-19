@@ -565,7 +565,7 @@ bool ipopt_fixed::eval_f(
 	//
 	// value of fixed effects corresponding to this x
 	for(size_t j = 0; j < n_fixed_; j++)
-		fixed_tmp_[j] = x[j];
+		fixed_tmp_[j] = double( x[j] );
 	//
 	// compute the optimal random effects corresponding to fixed effects
 	if( new_x )
@@ -581,7 +581,7 @@ bool ipopt_fixed::eval_f(
 	prior_vec_tmp_ = approx_object_.prior_eval(fixed_tmp_);
 	//
 	// only include smooth part of prior in objective
-	obj_value = H + prior_vec_tmp_[0];
+	obj_value = Number( H + prior_vec_tmp_[0] );
 	//
 	// use contraints to represent absolute value part
 	for(size_t j = 0; j < prior_n_abs_; j++)
@@ -648,7 +648,7 @@ bool ipopt_fixed::eval_grad_f(
 	//
 	// fixed effects
 	for(size_t j = 0; j < n_fixed_; j++)
-		fixed_tmp_[j] = x[j];
+		fixed_tmp_[j] = double( x[j] );
 	//
 	// compute the optimal random effects corresponding to fixed effects
 	if( new_x )
@@ -673,13 +673,13 @@ bool ipopt_fixed::eval_grad_f(
 	//
 	// set grad_f
 	for(size_t j = 0; j < n_fixed_; j++)
-		grad_f[j] = H_beta_tmp_[j];
+		grad_f[j] = Number( H_beta_tmp_[j] );
 	for(size_t j = 0; j < prior_n_abs_; j++)
-		grad_f[n_fixed_ + j] = 1.0;
+		grad_f[n_fixed_ + j] = Number( 1.0 );
 	for(size_t k = 0; k < prior_jac_row_.size(); k++)
 	{	if( prior_jac_row_[k] == 0 )
 		{	size_t j = prior_jac_col_[k];
-			grad_f[j] += prior_jac_val_[k];
+			grad_f[j] += Number( prior_jac_val_[k] );
 		}
 	}
 	//
@@ -737,7 +737,7 @@ bool ipopt_fixed::eval_g(
 	//
 	// fixed effects
 	for(size_t j = 0; j < n_fixed_; j++)
-		fixed_tmp_[j] = x[j];
+		fixed_tmp_[j] = double( x[j] );
 	//
 	// prior part of objective
 	// (2DO: cache prior_vec_tmp_ for eval_f with same x)
@@ -746,9 +746,9 @@ bool ipopt_fixed::eval_g(
 	// convert absolute value terms to constraint
 	for(size_t j = 0; j < prior_n_abs_; j++)
 	{	// x[n_fixed_ + j] >= prior_vec_tmp_[1 + j];
-		g[2 * j]     = x[n_fixed_ + j] - prior_vec_tmp_[1 + j]; // >= 0
+		g[2 * j] = Number(x[n_fixed_ + j] - prior_vec_tmp_[1 + j]); // >= 0
 		// x[n_fixed_ + j] >= - prior_vec_tmp_[1 + j]
-		g[2 * j + 1] = x[n_fixed_ + j] + prior_vec_tmp_[1 + j]; // >= 0
+		g[2*j+1] = Number(x[n_fixed_ + j] + prior_vec_tmp_[1 + j]); // >= 0
 	}
 	//
 	return true;
@@ -835,7 +835,7 @@ bool ipopt_fixed::eval_jac_g(
 	//
 	// fixed effects
 	for(size_t j = 0; j < n_fixed_; j++)
-		fixed_tmp_[j] = x[j];
+		fixed_tmp_[j] = double( x[j] );
 	//
 	if( values == NULL )
 	{	// just return row and column indices
@@ -848,11 +848,11 @@ bool ipopt_fixed::eval_jac_g(
 			}
 		}
 		for(size_t j = 0; j < prior_n_abs_; j++)
-		{	iRow[ell] = 2 * j;
-			jCol[ell] = n_fixed_ + j;
+		{	iRow[ell] = Index( 2 * j );
+			jCol[ell] = Index( n_fixed_ + j);
 			ell++;
-			iRow[ell] = 2 * j + 1;
-			jCol[ell] = n_fixed_ + j;
+			iRow[ell] = Index( 2 * j + 1);
+			jCol[ell] = Index(n_fixed_ + j);
 			ell++;
 		}
 		return true;
