@@ -224,12 +224,23 @@ approx_object_ ( approx_object    )
 	assert( prior_vec.size() > 0 );
 	prior_n_abs_ = prior_vec.size() - 1;
 	// -----------------------------------------------------------------------
-	// set prior_nnz_jac_
+	// set prior_jac_row_, prior_jac_col_, prior_jac_val_
 	// -----------------------------------------------------------------------
-	s_vector prior_row, prior_col;
-	d_vector prior_val;
-	approx_object.prior_jac(fixed_in, prior_row, prior_col, prior_val);
-	prior_nnz_jac_ = prior_row.size();
+	approx_object.prior_jac(
+		fixed_in, prior_jac_row_, prior_jac_col_, prior_jac_val_
+	);
+	// -----------------------------------------------------------------------
+	// set nnz_jac_g_
+	// -----------------------------------------------------------------------
+	nnz_jac_g_ = 0;
+	for(size_t k = 0; k < prior_jac_row_.size(); k++)
+	{	if( prior_jac_row_[k] != 0 )
+		{	 // this is an absolute value term
+			nnz_jac_g_ += 2;
+		}
+	}
+	// derivative w.r.t auxillary variables
+	nnz_jac_g_ += 2 * prior_n_abs_;
 	// -----------------------------------------------------------------------
 	// set lag_hes_row_, lag_hes_col_, laplace_2_lag_, prior_2_lag_
 	// -----------------------------------------------------------------------
@@ -240,9 +251,8 @@ approx_object_ ( approx_object    )
 		fixed_in, random_in, laplace_row, laplace_col, laplace_val
 	);
 	// row and column indices for contribution form prior density
-	prior_row.clear();
-	prior_col.clear();
-	prior_val.clear();
+	s_vector prior_row, prior_col;
+	d_vector prior_val;
 	d_vector weight( n_fixed_ );
 	for(size_t i = 0; i < weight.size(); i++)
 		weight[i] = 1.0;
@@ -323,7 +333,7 @@ bool ipopt_fixed::get_nlp_info(
 {
 	n           = n_fixed_;
 	m           = 2 * prior_n_abs_;
-	nnz_jac_g   = 2 * prior_nnz_jac_;
+	nnz_jac_g   = nnz_jac_g_;
 	nnz_h_lag   = lag_hes_row_.size();
 	index_style = C_STYLE;
 	//
@@ -483,13 +493,13 @@ bool ipopt_fixed::get_starting_point(
 	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
 
 	// prior density at the initial fixed effects vector
-	d_vector vec = approx_object_.prior_eval(fixed_in_);
-	assert( vec.size() > 1 + prior_n_abs_ );
+	prior_vec_tmp_ = approx_object_.prior_eval(fixed_in_);
+	assert( prior_vec_tmp_.size() > 1 + prior_n_abs_ );
 
 	for(size_t j = 0; j < n_fixed_; j++)
 		x[j] = fixed_in_[j];
 	for(size_t j = 0; j < prior_n_abs_; j++)
-		x[n_fixed_ + j] = CppAD::abs( vec[1 + j] );
+		x[n_fixed_ + j] = CppAD::abs( prior_vec_tmp_[1 + j] );
 
 	return true;
 }
@@ -806,8 +816,9 @@ if set to false, the optimization will terminate with status set to
 $cref/USER_REQUESTED_STOP
 	/ipopt_fixed_finalize_solution/status/USER_REQUESTED_STOP/$$.
 
-$head Source$$
-$codep */
+$end
+-------------------------------------------------------------------------------
+*/
 bool ipopt_fixed::eval_jac_g(
 	Index           n        ,  // in
 	const Number*   x        ,  // in
@@ -818,27 +829,57 @@ bool ipopt_fixed::eval_jac_g(
 	Index*          jCol     ,  // out
 	Number*         values   )  // out
 {
-	assert( nele_jac == 2 );
+	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
+	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
+	assert( size_t(nele_jac) == nnz_jac_g_ );
+	//
+	// fixed effects
+	for(size_t j = 0; j < n_fixed_; j++)
+		fixed_tmp_[j] = x[j];
+	//
 	if( values == NULL )
-	{
-		iRow[0] = 0;
-		jCol[0] = 0;
-		//
-		iRow[1] = 0;
-		jCol[1] = 1;
-		//
+	{	// just return row and column indices
+		size_t ell = 0;
+		for(size_t k = 0; k < prior_jac_row_.size(); k++)
+		{	if( prior_jac_row_[k] != 0 )
+			{	iRow[ell+1] = iRow[ell] = Index( prior_jac_row_[k] );
+				jCol[ell+1] = jCol[ell] = Index( prior_jac_col_[k] );
+				ell += 2;
+			}
+		}
+		for(size_t j = 0; j < prior_n_abs_; j++)
+		{	iRow[ell] = 2 * j;
+			jCol[ell] = n_fixed_ + j;
+			ell++;
+			iRow[ell] = 2 * j + 1;
+			jCol[ell] = n_fixed_ + j;
+			ell++;
+		}
 		return true;
 	}
-	assert( n == 2 );
-	assert( m == 1 );
 	//
-	values[0] = - 2.0 * x[0];
-	values[1] = - 1.0;
+	// Jacobian of prior part of objective
+	// (2DO: do not revaluate when eval_grad_f had same x)
+	approx_object_.prior_jac(
+		fixed_tmp_, prior_jac_row_, prior_jac_col_, prior_jac_val_
+	);
+	size_t ell = 0;
+	for(size_t k = 0; k < prior_jac_row_.size(); k++)
+	{	if( prior_jac_row_[k] != 0 )
+		{	values[ell] = Number( prior_jac_val_[k] );
+			ell++;
+			values[ell] = Number( - prior_jac_val_[k] );
+			ell++;
+		}
+		for(size_t j = 0; j < prior_n_abs_; j++)
+		{	values[ell+1] = values[ell] = Number(1.0);
+			ell += 2;
+		}
+	}
 	//
 	return true;
 }
-/* $$
-$end
+/*
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_h$$
 $spell

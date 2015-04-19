@@ -68,7 +68,11 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		double nlp_upper_bound_inf_;  // Ipopt's code for + infinity
 		//
 		size_t prior_n_abs_;     // number of absolute values in prior
-		size_t prior_nnz_jac_;   // number of non-zeros in Jacobian of prior
+		size_t nnz_jac_g_;       // number non-zeros in Jacobian of constraints
+		//
+		s_vector prior_jac_row_; // row indices for Jacobian of prior
+		s_vector prior_jac_col_; // column indices for Jacobian of prior
+		d_vector prior_jac_val_; // values for Jacobian of prior
 		//
 		s_vector lag_hes_row_;   // row indices for Hessian of Lagrangian
 		s_vector lag_hes_col_;   // column indices for Hessian of Lagrangian
@@ -86,10 +90,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		d_vector fixed_opt_;     // so far optimal fixed effects
 		d_vector random_opt_;    // random effects corresponding to fixed_opt_
 		// ---------------------------------------------------------------
-		// set by eval_grad_f or eval_jac_g (constructor does not modify)
-		s_vector prior_jac_row_; // row indices for Jacobian of prior
-		s_vector prior_jac_col_; // column indices for Jacobian of prior
-		d_vector prior_jac_val_; // values for Jacobian of prior
+		// set by constructor
 		// ---------------------------------------------------------------
 		// set by any eval routine when new_x is true
 		d_vector random_cur_; // random effects corresponding to current x
