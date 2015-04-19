@@ -187,7 +187,8 @@ fixed_in_      ( fixed_in         )   ,
 fixed_upper_   ( fixed_upper      )   ,
 random_in_     ( random_in        )   ,
 approx_object_ ( approx_object    )
-{	// prior density at the initial random effects vector
+{
+	// prior density at the initial fixed effects vector
 	d_vector prior_vec = approx_object_.prior_eval(fixed_in);
 	assert( prior_vec.size() > 0 );
 	// -----------------------------------------------------------------------
@@ -353,8 +354,8 @@ bool ipopt_fixed::get_bounds_info(
 	}
 	// auxillary varibles for absolute value terms
 	for(size_t j = 0; j < prior_n_abs_; j++)
-	{	x_l[j] = DISMOD_AT_NLP_LOWER_BOUND_INF;
-		x_u[j] = DISMOD_AT_NLP_UPPER_BOUND_INF;
+	{	x_l[n_fixed_ + j] = DISMOD_AT_NLP_LOWER_BOUND_INF;
+		x_u[n_fixed_ + j] = DISMOD_AT_NLP_UPPER_BOUND_INF;
 	}
 	//
 	// constraints for absolute value terms
@@ -394,7 +395,8 @@ if $icode init_x$$ is true,
 set to the initial value for the primal variables (has size $icode n$$).
 
 $head init_z$$
-if true, the ipopt options specify that the this routine
+assumes $icode init_z$$ is false.
+If it were true, the ipopt options specify that the this routine
 will provide an initial value for $icode x$$ upper and lower bound
 multipliers.
 
@@ -407,7 +409,8 @@ if $icode init_z$$ is true,
 set to the initial value for the upper bound multipliers (has size $icode n$$).
 
 $head init_lambda$$
-if true, the ipopt options specify that the this routine
+assumes $icode init_lambda$$ is false.
+If it were true, the ipopt options specify that the this routine
 will provide an initial value for $icode g(x)$$ upper and lower bound
 multipliers.
 
@@ -417,12 +420,14 @@ set to the initial value for the $icode g(x)$$ multipliers
 (has size $icode m$$).
 
 $head ok$$
-if set to false, the optimization will terminate with status set to
+is set to true.
+If set to false, the optimization would terminate with status set to
 $cref/USER_REQUESTED_STOP
 	/ipopt_fixed_finalize_solution/status/USER_REQUESTED_STOP/$$.
 
-$head Source$$
-$codep */
+$end
+-------------------------------------------------------------------------------
+*/
 bool ipopt_fixed::get_starting_point(
 	Index           n            ,  // in
 	bool            init_x       ,  // in
@@ -434,18 +439,24 @@ bool ipopt_fixed::get_starting_point(
 	bool            init_lambda  ,  // in
 	Number*         lambda       )  // out
 {
-	assert( n == 2 );
 	assert( init_x == true );
-	x[0] = 0.5;
-	x[1] = 1.5;
 	assert( init_z == false );
-	assert( m == 1 );
 	assert( init_lambda == false );
+	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
+	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
+
+	// prior density at the initial fixed effects vector
+	d_vector vec = approx_object_.prior_eval(fixed_in_);
+	assert( vec.size() > 1 + prior_n_abs_ );
+
+	for(size_t j = 0; j < n_fixed_; j++)
+		x[j] = fixed_in_[j];
+	for(size_t j = 0; j < prior_n_abs_; j++)
+		x[n_fixed_ + j] = CppAD::abs( vec[1 + j] );
 
 	return true;
 }
-/* $$
-$end
+/*
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_f$$
 $spell
