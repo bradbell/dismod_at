@@ -154,8 +154,8 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	// Create an instance of an IpoptApplication
 	SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
 
-	// To turn off all Ipopt printed output, set print_level=0 and sb=yes.
-	app->Options()->SetIntegerValue("print_level", 5);
+	// app->Options()->SetIntegerValue("print_level", 5);
+	app->Options()->SetIntegerValue("print_level", 0);
 	app->Options()->SetStringValue("sb", "yes");
 
 	// Set values used for minus and plus infinity

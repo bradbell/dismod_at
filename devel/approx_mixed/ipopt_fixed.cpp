@@ -1183,7 +1183,8 @@ void ipopt_fixed::finalize_solution(
 
 	// check that x is feasible and same as fixed_opt_
 	for(size_t j = 0; j < n_fixed_; j++)
-	{	fixed_tmp_ = double( x[j] );
+	{	fixed_tmp_[j] = double( x[j] );
+		//
 		ok &= fixed_lower_[j] <= (1.0 + tol) * fixed_tmp_[j];
 		ok &= fixed_tmp_[j]   <= (1.0 + tol) * fixed_upper_[j];
 		//

@@ -51,8 +51,6 @@ $end
 # include <cppad/cppad.hpp>
 # include <dismod_at/approx_mixed.hpp>
 
-# define THIS_EXAMPLE_IS_WORKING 0
-
 namespace {
 	using CppAD::vector;
 	using CppAD::log;
@@ -157,12 +155,10 @@ bool optimize_fixed_xam(void)
 	approx_derived approx_object(n_fixed, n_random, data);
 	approx_object.initialize(fixed_in, random_in);
 
-# if THIS_EXAMPLE_IS_WORKING
 	// optimize the fixed effects
 	vector<double> fixed_out = approx_object.optimize_fixed(
 		fixed_lower, fixed_in, fixed_upper, random_in
 	);
-# endif
 
 	return ok;
 }
