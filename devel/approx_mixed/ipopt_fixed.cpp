@@ -270,12 +270,14 @@ is set to the numbering style used for row/col entries in the sparse matrix
 format (C_STYLE: 0-based, FORTRAN_STYLE: 1-based).
 
 $head ok$$
-if set to false, the optimization will terminate with status set to
+is set to true.
+If set to false, the optimization would terminate with status set to
 $cref/USER_REQUESTED_STOP
 	/ipopt_fixed_finalize_solution/status/USER_REQUESTED_STOP/$$.
 
-$head Source$$
-$codep */
+$end
+-------------------------------------------------------------------------------
+*/
 bool ipopt_fixed::get_nlp_info(
 	Index&          n            ,  // out
 	Index&          m            ,  // out
@@ -288,10 +290,10 @@ bool ipopt_fixed::get_nlp_info(
 	nnz_jac_g   = 2 * prior_nnz_jac_;
 	nnz_h_lag   = lag_hes_row_.size();
 	index_style = C_STYLE;
+	//
 	return true;
 }
-/* $$
-$end
+/*
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_get_bounds_info$$
 $spell
@@ -323,12 +325,14 @@ $head g_u$$
 set to the upper bounds for $icode g(x)$$ (has size $icode m$$).
 
 $head ok$$
-if set to false, the optimization will terminate with status set to
+is set to true.
+If set to false, the optimization would terminate with status set to
 $cref/USER_REQUESTED_STOP
 	/ipopt_fixed_finalize_solution/status/USER_REQUESTED_STOP/$$.
 
-$head Source$$
-$codep */
+$end
+-------------------------------------------------------------------------------
+*/
 bool ipopt_fixed::get_bounds_info(
 		Index       n        ,   // in
 		Number*     x_l      ,   // out
@@ -337,22 +341,32 @@ bool ipopt_fixed::get_bounds_info(
 		Number*     g_l      ,   // out
 		Number*     g_u      )   // out
 {
-	assert( n == 2 );
-	x_l[0] = -1.0;
-	x_u[0] = 1.0;
+	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
+	for(size_t j = 0; j < n_fixed_; j++)
+	{	x_l[j] = fixed_lower_[j];
+		x_u[j] = fixed_upper_[j];
+		// map infinity to crazy value required by ipopt
+		if( x_l[j] == - std::numeric_limits<Number>::infinity() )
+			x_l[j] = DISMOD_AT_NLP_LOWER_BOUND_INF;
+		if( x_u[j] == + std::numeric_limits<Number>::infinity() )
+			x_l[j] = DISMOD_AT_NLP_UPPER_BOUND_INF;
+	}
+	// auxillary varibles for absolute value terms
+	for(size_t j = 0; j < prior_n_abs_; j++)
+	{	x_l[j] = DISMOD_AT_NLP_LOWER_BOUND_INF;
+		x_u[j] = DISMOD_AT_NLP_UPPER_BOUND_INF;
+	}
 	//
-	x_l[1] = -1.0e19; // default -infinity
-	x_u[1] = 1.0e19;  // default +infinity
-	//
-	assert( m == 1 );
-	//
-	g_l[0] = 0.0;
-	g_u[0] = 0.0;
+	// constraints for absolute value terms
+	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
+	for(size_t j = 0; j < 2 * prior_n_abs_; j++)
+	{	g_l[j] = 0.0;
+		g_u[j] = DISMOD_AT_NLP_UPPER_BOUND_INF;
+	}
 	//
 	return true;
 }
-/* $$
-$end
+/*
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_get_starting_point$$
 $spell

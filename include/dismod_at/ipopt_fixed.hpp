@@ -27,6 +27,9 @@ $end
 # include <coin/IpTNLP.hpp>
 # include <dismod_at/approx_mixed.hpp>
 
+# define DISMOD_AT_NLP_LOWER_BOUND_INF -1e19
+# define DISMOD_AT_NLP_UPPER_BOUND_INF  1e19
+
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 	//
 	// ipopt_fixed
