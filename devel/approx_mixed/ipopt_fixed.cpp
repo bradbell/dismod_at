@@ -567,7 +567,7 @@ bool ipopt_fixed::eval_f(
 	);
 	//
 	// prior part of objective
-	// (2DO: cache prior_vec_tmp_ for constraint evaluation with same x)
+	// (2DO: cache prior_vec_tmp_ for eval_g with same x)
 	prior_vec_tmp_ = approx_object_.prior_eval(fixed_tmp_);
 	//
 	// only include smooth part of prior in objective
@@ -712,8 +712,9 @@ if set to false, the optimization will terminate with status set to
 $cref/USER_REQUESTED_STOP
 	/ipopt_fixed_finalize_solution/status/USER_REQUESTED_STOP/$$.
 
-$head Source$$
-$codep */
+$end
+-------------------------------------------------------------------------------
+*/
 bool ipopt_fixed::eval_g(
 	Index           n        ,  // in
 	const Number*   x        ,  // in
@@ -721,17 +722,28 @@ bool ipopt_fixed::eval_g(
 	Index           m        ,  // in
 	Number*         g        )  // out
 {
-	assert( n == 2 );
+	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
+	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
 	//
+	// fixed effects
+	for(size_t j = 0; j < n_fixed_; j++)
+		fixed_tmp_[j] = x[j];
 	//
-	assert( m = 1 );
+	// prior part of objective
+	// (2DO: cache prior_vec_tmp_ for eval_f with same x)
+	prior_vec_tmp_ = approx_object_.prior_eval(fixed_tmp_);
 	//
-	g[0] = - (x[0] * x[0] + x[1] - 1.0);
+	// convert absolute value terms to constraint
+	for(size_t j = 0; j < prior_n_abs_; j++)
+	{	// x[n_fixed_ + j] >= prior_vec_tmp_[1 + j];
+		g[2 * j]     = x[n_fixed_ + j] - prior_vec_tmp_[1 + j]; // >= 0
+		// x[n_fixed_ + j] >= - prior_vec_tmp_[1 + j]
+		g[2 * j + 1] = x[n_fixed_ + j] + prior_vec_tmp_[1 + j]; // >= 0
+	}
 	//
 	return true;
 }
-/* $$
-$end
+/*
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_jac_g$$
 $spell
