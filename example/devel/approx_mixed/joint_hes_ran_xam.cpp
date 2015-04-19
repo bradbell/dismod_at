@@ -9,14 +9,14 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin joint_hes_fix_xam.cpp$$
+$begin joint_hes_ran_xam.cpp$$
 $spell
 	hes
 	interp
 	xam
 $$
 
-$section C++ joint_hes_fix: Example and Test$$
+$section C++ joint_hes_ran: Example and Test$$
 
 
 $head Private$$
@@ -24,7 +24,7 @@ This example is not part of the
 $cref/approx_mixed public API/approx_mixed_public/$$.
 
 $code
-$verbatim%example/devel/approx_mixed/joint_hes_fix_xam.cpp
+$verbatim%example/devel/approx_mixed/joint_hes_ran_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -103,7 +103,7 @@ namespace {
 	};
 }
 
-bool joint_hes_fix_xam(void)
+bool joint_hes_ran_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -129,7 +129,7 @@ bool joint_hes_fix_xam(void)
 	// compute Hessian with respect to random effects
 	vector<size_t> row, col;
 	vector<a3_double> val;
-	approx_object.joint_hes_fix(fixed_vec, random_vec, row, col, val);
+	approx_object.joint_hes_ran(fixed_vec, random_vec, row, col, val);
 
 	// check size of result vectors
 	size_t K = row.size();

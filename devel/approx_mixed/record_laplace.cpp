@@ -106,7 +106,7 @@ void approx_mixed::record_laplace(
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	CppAD::vector<size_t> row, col;
 	a3d_vector val;
-	joint_hes_fix(theta, u, row, col, val);
+	joint_hes_ran(theta, u, row, col, val);
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
 	sparse_matrix hessian(n_random_, n_random_);
@@ -140,7 +140,7 @@ void approx_mixed::record_laplace(
 			U[j] = u[j] - newton_step(j);
 
 		// evaluate hessian f_{uu}^{(2)}(beta, U) and compute its factorization
-		joint_hes_fix(beta, U, row, col, val);
+		joint_hes_ran(beta, U, row, col, val);
 		for(size_t k = 0; k < K; k++)
 			hessian.coeffRef(row[k], col[k]) = val[k];
 		chol.factorize(hessian);
@@ -165,7 +165,7 @@ void approx_mixed::record_laplace(
 			W[j] = U[j] - newton_step(j);
 
 		// evaluate hessian f_{uu}^{(2)}(beta, W) and compute its factorization
-		joint_hes_fix(beta, W, row, col, val);
+		joint_hes_ran(beta, W, row, col, val);
 		for(size_t k = 0; k < K; k++)
 			hessian.coeffRef(row[k], col[k]) = val[k];
 		chol.factorize(hessian);

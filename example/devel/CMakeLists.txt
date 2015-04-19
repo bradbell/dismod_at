@@ -35,7 +35,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	approx_mixed/eigen_xam.cpp
 	approx_mixed/joint_grad_ran_xam.cpp
 	approx_mixed/laplace_hes_fix_xam.cpp
-	approx_mixed/joint_hes_fix_xam.cpp
+	approx_mixed/joint_hes_ran_xam.cpp
 	approx_mixed/ipopt_xam.cpp
 	approx_mixed/laplace_eval_xam.cpp
 	approx_mixed/laplace_beta_xam.cpp
