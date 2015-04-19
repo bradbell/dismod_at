@@ -499,7 +499,7 @@ bool ipopt_fixed::get_starting_point(
 
 	// prior density at the initial fixed effects vector
 	prior_vec_tmp_ = approx_object_.prior_eval(fixed_in_);
-	assert( prior_vec_tmp_.size() > 1 + prior_n_abs_ );
+	assert( prior_vec_tmp_.size() == 1 + prior_n_abs_ );
 
 	for(size_t j = 0; j < n_fixed_; j++)
 		x[j] = fixed_in_[j];
@@ -670,7 +670,7 @@ bool ipopt_fixed::eval_grad_f(
 	);
 	//
 	// Jacobian of prior part of objective
-	// (2DO: do not revaluate when eval_jac_g had same x)
+	// (2DO: do not revaluate when eval_jac_g has same x)
 	approx_object_.prior_jac(
 		fixed_tmp_, prior_jac_row_, prior_jac_col_, prior_jac_val_
 	);
@@ -1016,7 +1016,8 @@ bool ipopt_fixed::eval_h(
 		laplace_hes_row_, laplace_hes_col_, laplace_hes_val_
 	);
 	for(size_t k = 0; k < laplace_hes_row_.size(); k++)
-		values[ laplace_2_lag_[k] ] += obj_factor * laplace_hes_val_[k];
+		values[ laplace_2_lag_[k] ] +=
+			obj_factor * Number( laplace_hes_val_[k] );
 	//
 	// Hessian of Langrange multiplied weighted prior w.r.t. fixed effects
 	weight_tmp_[0] = obj_factor;
@@ -1026,7 +1027,7 @@ bool ipopt_fixed::eval_h(
 		fixed_tmp_, weight_tmp_, prior_hes_row_, prior_hes_col_, prior_hes_val_
 	);
 	for(size_t k = 0; k < prior_hes_row_.size(); k++)
-		values[ prior_2_lag_[k] ] += prior_hes_val_[k];
+		values[ prior_2_lag_[k] ] += Number( prior_hes_val_[k] );
 	//
 	return true;
 }
@@ -1134,8 +1135,9 @@ $subhead INVALID_NUMBER_DETECTED$$
 Algorithm received an invalid number (such as NaN or Inf) from
 the NLP; see also option check_derivatives_for_naninf.
 
-$head Source$$
-$codep */
+$end
+-------------------------------------------------------------------------------
+*/
 void ipopt_fixed::finalize_solution(
 	Ipopt::SolverReturn               status    ,  // in
 	Index                             n         ,  // in
@@ -1149,35 +1151,72 @@ void ipopt_fixed::finalize_solution(
 	const Ipopt::IpoptData*           ip_data   ,  // in
 	Ipopt::IpoptCalculatedQuantities* ip_cq     )  // in
 {	bool ok = true;
+	//
+	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
+	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
 
 	// default tolerance
 	double tol = 1e-08;
 
-	// check problem dimensions
-	ok &= n == 2;
-	ok &= m == 1;
-
 	// check that x is feasible
-	ok &= (-1.0 <= x[0]) && (x[0] <= +1.0);
+	for(size_t j = 0; j < n_fixed_; j++)
+	{	fixed_tmp_ = double( x[j] );
+		ok &= fixed_lower_[j] <= (1.0 + tol) * fixed_tmp_[j];
+		ok &= fixed_tmp_[j]   <= (1.0 + tol) * fixed_upper_[j];
+	}
 
 	// check that the bound multipliers are feasible
-	ok &= (0.0 <= z_L[0]) && (0.0 <= z_L[1]);
-	ok &= (0.0 <= z_U[0]) && (0.0 <= z_U[1]);
+	for(size_t j = 0; j < n_fixed_ + prior_n_abs_; j++)
+	{	ok &= 0.0 <= z_L[j];
+		ok &= 0.0 <= z_U[j];
+	}
 
-	// check that the constraint on g(x) is satisfied
-	ok &= std::fabs( x[0] * x[0] + x[1] - 1.0 ) <= 10. * tol;
+	// prior density at the final fixed effects vector
+	prior_vec_tmp_ = approx_object_.prior_eval(fixed_in_);
+	assert( prior_vec_tmp_.size() == 1 + prior_n_abs_ );
 
-	// Check the partial of the Lagrangian w.r.t x[0]
-	ok &= std::fabs(- lambda[0] * 2.0 * x[0] - z_L[0] + z_U[0] ) <= 10. * tol;
+	// check that the constraint on g(x) are satisfied
+	for(size_t j = 0; j < 2 * prior_n_abs_; j++)
+	{	double check = (1.0 + tol) * double( x[n_fixed_ + j] );
+		ok &= check - prior_vec_tmp_[j] >= 0.0;
+		ok &= check + prior_vec_tmp_[j] >= 0.0;
+	}
 
-	// Check the partial of the Lagrangian w.r.t x[1]
-	ok &= std::fabs( 2.0 * (x[1] - 2.0) + lambda[0]) <= 10. * tol;
+	// Evaluate gradient of f w.r.t x
+	CppAD::vector<Number> grad_f(n);
+	bool new_x = true;
+	eval_grad_f(n, x, new_x, grad_f.data() );
+
+	// Evaluate gradient of g w.r.t x
+	CppAD::vector<Index> iRow(nnz_jac_g_), jCol(nnz_jac_g_);
+	iRow.data();
+	eval_jac_g(
+		n, x, new_x, m, nnz_jac_g_,
+		iRow.data(), jCol.data(), NULL
+	);
+	CppAD::vector<Number> values(nnz_jac_g_);
+	eval_jac_g(
+		n, x, new_x, m, nnz_jac_g_,
+		iRow.data(), jCol.data(), values.data()
+	);
+
+	// Check the partial of the Lagrangian w.r.t x
+	for(size_t j = 0; j < n_fixed_ + prior_n_abs_; j++)
+	{	Number sum = grad_f[j];
+		for(size_t k = 0; k < nnz_jac_g_; k++)
+		{	if( jCol[k] == Index(j) )
+			{	Number factor = Number( 1.0 );
+				Index  i      = iRow[k];
+				if( i > 0 )
+					factor = lambda[i-1];
+				sum += factor * values[k];
+			}
+			sum += z_U[j] - z_L[j];
+		}
+		ok &= CppAD::abs( double(sum) ) <= 10. * tol;
+	}
 
 	// set member variable finalize_solution_ok_
 	finalize_solution_ok_ = ok;
 }
-/* $$
-$end
--------------------------------------------------------------------------------
-*/
 } // END_DISMOD_AT_NAMESPACE
