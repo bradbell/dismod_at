@@ -29,6 +29,10 @@ $head nlp_upper_bound_inf()$$
 This member function returns the $code double$$ value used
 for plus infinity as an upper bound.
 
+$head fixed_opt()$$
+This member function returns the optimal solution (so far)
+for the fixed effects.
+
 $childtable%devel/approx_mixed/ipopt_fixed.cpp%$$
 
 $end
@@ -112,6 +116,9 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		// get plus infinity
 		double nlp_upper_bound_inf(void) const
 		{	return nlp_upper_bound_inf_; }
+		// optimal solution so far
+		d_vector fixed_opt(void) const
+		{	return fixed_opt_; }
 		//
 		// did finalize_solution agree that the solution had converged
 		bool finalize_solution_ok_;

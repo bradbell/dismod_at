@@ -551,7 +551,8 @@ bool ipopt_fixed::eval_f(
 	const Number*   x         ,  // in
 	bool            new_x     ,  // in
 	Number&         obj_value )  // out
-{
+{	double tol = 1e-8;
+
 	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
 	//
 	// check if we are initializing optimal value so far
@@ -598,7 +599,12 @@ bool ipopt_fixed::eval_f(
 		obj_tmp += CppAD::abs( prior_vec_tmp_[1+j] );
 	//
 	// check if so far optimal
-	if( obj_tmp < objective_opt_ )
+	bool feasible = true;
+	for(size_t j = 0; j < n_fixed_; j++)
+	{	feasible &= fixed_tmp_[j] <= (1.0 + tol) * fixed_upper_[j];
+		feasible &= fixed_lower_[j] <= (1.0 + tol) * fixed_tmp_[j];
+	}
+	if( feasible && obj_tmp < objective_opt_ )
 	{	objective_opt_ = obj_tmp;
 		fixed_opt_     = fixed_tmp_;
 		random_opt_    = random_cur_;
@@ -1158,11 +1164,14 @@ void ipopt_fixed::finalize_solution(
 	// default tolerance
 	double tol = 1e-08;
 
-	// check that x is feasible
+	// check that x is feasible and same as fixed_opt_
 	for(size_t j = 0; j < n_fixed_; j++)
 	{	fixed_tmp_ = double( x[j] );
 		ok &= fixed_lower_[j] <= (1.0 + tol) * fixed_tmp_[j];
 		ok &= fixed_tmp_[j]   <= (1.0 + tol) * fixed_upper_[j];
+		//
+		ok &= fixed_tmp_[j] <= (1.0 + tol) * fixed_opt_[j];
+		ok &= fixed_opt_[j] <= (1.0 + tol) * fixed_tmp_[j];
 	}
 
 	// check that the bound multipliers are feasible

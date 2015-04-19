@@ -169,14 +169,25 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	// initialize app
 	status = app->Initialize();
 	ok    &= status == Ipopt::Solve_Succeeded;
+	if( ! ok )
+	{	std::cerr << "optimize_fixed: initalization failed" << std::endl;
+		exit(1);
+	}
 
 	// solve the problem
 	status = app->OptimizeTNLP(fixed_nlp);
 	ok    &= status == Ipopt::Solve_Succeeded;
+	if( ! ok )
+	{	std::cerr << "optimize_fixed: ipopt failed to converge" << std::endl;
+		exit(1);
+	}
 	ok    &= fixed_nlp->finalize_solution_ok_;
-
-	d_vector fixed_out;
-	return fixed_out;
+	if( ! ok )
+	{	std::cerr << "optimize_fixed: solution check failed" << std::endl;
+		exit(1);
+	}
+	//
+	return fixed_nlp->fixed_opt();
 }
 
 } // END_DISMOD_AT_NAMESPACE
