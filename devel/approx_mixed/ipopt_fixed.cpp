@@ -61,40 +61,49 @@ namespace {
 			{	assert( row_one[k_one] == row_two[k_two] );
 				assert( col_one[k_one] == col_two[k_two] );
 				//
-				row_out.push_back( row_one[k_one] );
-				col_out.push_back( col_one[k_one] );
-				//
 				one_2_out[k_one] = row_out.size();
 				two_2_out[k_two] = row_out.size();
+				//
+				row_out.push_back( row_one[k_one] );
+				col_out.push_back( col_one[k_one] );
 				//
 				k_one++;
 				k_two++;
 			}
 			else if( key_one[k_one] < key_two[k_two] )
-			{	row_out.push_back( row_one[k_one] );
+			{	one_2_out[k_one] = row_out.size();
+				//
+				row_out.push_back( row_one[k_one] );
 				col_out.push_back( col_one[k_one] );
-				one_2_out[k_one] = row_out.size();
+				//
 				k_one++;
 			}
 			else
 			{	assert( key_two[k_two] < key_one[k_one] );
+				two_2_out[k_two] = row_out.size();
+				//
 				row_out.push_back( row_two[k_two] );
 				col_out.push_back( col_two[k_two] );
-				two_2_out[k_two] = row_out.size();
+				//
 				k_two++;
 			}
 		}
 		while( k_one < n_one )
-		{	row_out.push_back( row_one[k_one] );
+		{	one_2_out[k_one] = row_out.size();
+			//
+			row_out.push_back( row_one[k_one] );
 			col_out.push_back( col_one[k_one] );
+			//
 			k_one++;
 		}
 		while( k_two < n_two )
-		{	row_out.push_back( row_two[k_two] );
+		{	two_2_out[k_two] = row_out.size();
+			//
+			row_out.push_back( row_two[k_two] );
 			col_out.push_back( col_two[k_two] );
+			//
 			k_two++;
 		}
-		//
 		return;
 	}
 }
