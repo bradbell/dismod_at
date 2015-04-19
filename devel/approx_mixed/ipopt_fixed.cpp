@@ -244,31 +244,35 @@ approx_object_ ( approx_object    )
 	// -----------------------------------------------------------------------
 	// set lag_hes_row_, lag_hes_col_, laplace_2_lag_, prior_2_lag_
 	// -----------------------------------------------------------------------
-	// row and column indices for contribution from joint density
-	s_vector laplace_row, laplace_col;
-	d_vector laplace_val;
+	// row and column indices for contribution from Laplace approximation
 	approx_object.laplace_hes_fix(
-		fixed_in, random_in, laplace_row, laplace_col, laplace_val
+		fixed_in, random_in,
+		laplace_hes_row_, laplace_hes_col_, laplace_hes_val_
 	);
 	// row and column indices for contribution form prior density
-	s_vector prior_row, prior_col;
-	d_vector prior_val;
 	d_vector weight( n_fixed_ );
 	for(size_t i = 0; i < weight.size(); i++)
 		weight[i] = 1.0;
-	approx_object.prior_hes(fixed_in, weight, prior_row, prior_col, prior_val);
+	approx_object.prior_hes(
+		fixed_in, weight, prior_hes_row_, prior_hes_col_, prior_hes_val_
+	);
 	//
 	// merge to form sparsity for Lagrangian
 	merge_sparse(
-		laplace_row      ,
-		laplace_col      ,
-		prior_row        ,
-		prior_col        ,
-		lag_hes_row_     ,
-		lag_hes_col_     ,
-		laplace_2_lag_   ,
+		laplace_hes_row_      ,
+		laplace_hes_col_      ,
+		prior_hes_row_        ,
+		prior_hes_col_        ,
+		lag_hes_row_          ,
+		lag_hes_col_          ,
+		laplace_2_lag_        ,
 		prior_2_lag_
 	);
+	// -----------------------------------------------------------------------
+	// set nnz_h_lag_
+	// -----------------------------------------------------------------------
+	nnz_h_lag_ = lag_hes_row_.size();
+	assert( nnz_h_lag_ == lag_hes_col_.size() );
 	// -----------------------------------------------------------------------
 	// set size of fixed_tmp_, random_tmp_, prior_vec_tmp_, H_beta_tmp_
 	// -----------------------------------------------------------------------
@@ -276,6 +280,7 @@ approx_object_ ( approx_object    )
 	random_tmp_.resize( n_random_ );
 	prior_vec_tmp_.resize( prior_n_abs_ + 1 );
 	H_beta_tmp_.resize( n_fixed_ );
+	weight_tmp_.resize( 2 * prior_n_abs_ );
 	// -----------------------------------------------------------------------
 }
 ipopt_fixed::~ipopt_fixed(void)
@@ -334,7 +339,7 @@ bool ipopt_fixed::get_nlp_info(
 	n           = n_fixed_;
 	m           = 2 * prior_n_abs_;
 	nnz_jac_g   = nnz_jac_g_;
-	nnz_h_lag   = lag_hes_row_.size();
+	nnz_h_lag   = nnz_h_lag_;
 	index_style = C_STYLE;
 	//
 	return true;
@@ -833,10 +838,6 @@ bool ipopt_fixed::eval_jac_g(
 	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
 	assert( size_t(nele_jac) == nnz_jac_g_ );
 	//
-	// fixed effects
-	for(size_t j = 0; j < n_fixed_; j++)
-		fixed_tmp_[j] = double( x[j] );
-	//
 	if( values == NULL )
 	{	// just return row and column indices
 		size_t ell = 0;
@@ -857,6 +858,10 @@ bool ipopt_fixed::eval_jac_g(
 		}
 		return true;
 	}
+	//
+	// fixed effects
+	for(size_t j = 0; j < n_fixed_; j++)
+		fixed_tmp_[j] = double( x[j] );
 	//
 	// Jacobian of prior part of objective
 	// (2DO: do not revaluate when eval_grad_f had same x)
@@ -961,8 +966,9 @@ if set to false, the optimization will terminate with status set to
 $cref/USER_REQUESTED_STOP
 	/ipopt_fixed_finalize_solution/status/USER_REQUESTED_STOP/$$.
 
-$head Source$$
-$codep */
+$end
+-------------------------------------------------------------------------------
+*/
 bool ipopt_fixed::eval_h(
 	Index         n              ,  // in
 	const Number* x              ,  // in
@@ -976,27 +982,55 @@ bool ipopt_fixed::eval_h(
 	Index*        jCol           ,  // out
 	Number*       values         )  // out
 {
-	assert( nele_hess == 2 );
+	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
+	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
+	assert( size_t(nele_hess) == nnz_h_lag_ );
 	if( values == NULL )
-	{
-		iRow[0] = 0;
-		jCol[0] = 0;
-		//
-		iRow[1] = 1;
-		jCol[1] = 1;
-		//
+	{	for(size_t k = 0; k < nnz_h_lag_; k++)
+		{	iRow[k] = Index( lag_hes_row_[k] );
+			jCol[k] = Index( lag_hes_col_[k] );
+		}
 		return true;
 	}
-	assert( n == 2 );
-	assert( m == 1 );
 	//
-	values[0] = - 2.0 * lambda[0];
-	values[1] = - 2.0 * obj_factor;
+	// fixed effects
+	for(size_t j = 0; j < n_fixed_; j++)
+		fixed_tmp_[j] = double( x[j] );
+	//
+	// compute the optimal random effects corresponding to fixed effects
+	if( new_x )
+	{	if( fixed_opt_.size() == 0 )
+			random_tmp_ = random_in_;
+		else
+			random_tmp_ = random_opt_;
+		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
+	}
+	//
+	// initialize return value
+	for(size_t k = 0; k < nnz_h_lag_; k++)
+		values[k] = Number( 0.0 );
+	//
+	// compute Hessian of Laplace approximation w.r.t. fixed effects
+	approx_object_.laplace_hes_fix(
+		fixed_tmp_, random_cur_,
+		laplace_hes_row_, laplace_hes_col_, laplace_hes_val_
+	);
+	for(size_t k = 0; k < laplace_hes_row_.size(); k++)
+		values[ laplace_2_lag_[k] ] += obj_factor * laplace_hes_val_[k];
+	//
+	// Hessian of Langrange multiplied weighted prior w.r.t. fixed effects
+	weight_tmp_[0] = obj_factor;
+	for(size_t j = 0; j < 2 * prior_n_abs_; j++)
+		weight_tmp_[1 + j] = lambda[j];
+	approx_object_.prior_hes(
+		fixed_tmp_, weight_tmp_, prior_hes_row_, prior_hes_col_, prior_hes_val_
+	);
+	for(size_t k = 0; k < prior_hes_row_.size(); k++)
+		values[ prior_2_lag_[k] ] += prior_hes_val_[k];
 	//
 	return true;
 }
-/* $$
-$end
+/*
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_finalize_solution$$
 $spell
