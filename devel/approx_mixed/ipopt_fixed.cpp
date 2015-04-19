@@ -10,6 +10,95 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/ipopt_fixed.hpp>
 
+namespace {
+
+	// merge two (row, col) sparsity patterns into one
+	void merge_sparse(
+		const CppAD::vector<size_t>& row_one      , // first sparsity pattern
+		const CppAD::vector<size_t>& col_one      ,
+		const CppAD::vector<size_t>& row_two      , // second sparsity pattern
+		const CppAD::vector<size_t>& col_two      ,
+		CppAD::vector<size_t>&       row_out      , // merged sparsity pattern
+		CppAD::vector<size_t>&       col_out      ,
+		CppAD::vector<size_t>&       one_2_out    , // maps first into merged
+		CppAD::vector<size_t>&       two_2_out    ) // maps second into merged
+	{	assert( row_out.size() == 0 );
+		assert( col_out.size() == 0 );
+		//
+		assert( row_one.size() == col_one.size() );
+		assert( row_one.size() == one_2_out.size() );
+		//
+		assert( row_two.size() == col_two.size() );
+		assert( row_two.size() == two_2_out.size() );
+		//
+		//
+		size_t n_one = row_one.size();
+		size_t n_two = row_two.size();
+		//
+		// compute maximum column index
+		size_t max_col = 0;
+		for(size_t k = 0; k < n_one; k++)
+			max_col = std::max( col_one[k], max_col );
+		for(size_t k = 0; k < n_two; k++)
+			max_col = std::max( col_two[k], max_col );
+		//
+		// keys for sorting
+		CppAD::vector<size_t> key_one(n_one), key_two(n_two);
+		for(size_t k = 0; k < n_one; k++)
+			key_one[k] = row_one[k] * max_col + col_one[k];
+		for(size_t k = 0; k < n_two; k++)
+			key_two[k] = row_two[k] * max_col + col_two[k];
+		//
+		// sort both
+		CppAD::vector<size_t> ind_one(n_one), ind_two(n_two);
+		CppAD::index_sort(key_one, ind_one);
+		CppAD::index_sort(key_two, ind_two);
+		//
+		// now merge into row_out and col_out
+		size_t k_one = 0, k_two = 0;
+		while( k_one < n_one && k_two < n_two )
+		{	if( key_one[k_one] == key_two[k_two] )
+			{	assert( row_one[k_one] == row_two[k_two] );
+				assert( col_one[k_one] == col_two[k_two] );
+				//
+				row_out.push_back( row_one[k_one] );
+				col_out.push_back( col_one[k_one] );
+				//
+				one_2_out[k_one] = row_out.size();
+				two_2_out[k_two] = row_out.size();
+				//
+				k_one++;
+				k_two++;
+			}
+			else if( key_one[k_one] < key_two[k_two] )
+			{	row_out.push_back( row_one[k_one] );
+				col_out.push_back( col_one[k_one] );
+				one_2_out[k_one] = row_out.size();
+				k_one++;
+			}
+			else
+			{	assert( key_two[k_two] < key_one[k_one] );
+				row_out.push_back( row_two[k_two] );
+				col_out.push_back( col_two[k_two] );
+				two_2_out[k_two] = row_out.size();
+				k_two++;
+			}
+		}
+		while( k_one < n_one )
+		{	row_out.push_back( row_one[k_one] );
+			col_out.push_back( col_one[k_one] );
+			k_one++;
+		}
+		while( k_two < n_two )
+		{	row_out.push_back( row_two[k_two] );
+			col_out.push_back( col_two[k_two] );
+			k_two++;
+		}
+		//
+		return;
+	}
+}
+
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /* $$
 $begin ipopt_fixed_ctor$$
@@ -113,18 +202,34 @@ approx_object_ ( approx_object    )
 	approx_object.prior_jac(fixed_in, prior_row, prior_col, prior_val);
 	prior_nnz_jac_ = prior_row.size();
 	// -----------------------------------------------------------------------
-	// 2DO: set lag_hes_row_, lag_hes_col_
+	// set lag_hes_row_, lag_hes_col_, laplace_2_lag_, prior_2_lag_
 	// -----------------------------------------------------------------------
 	// row and column indices for contribution from joint density
-	s_vector joint_row, joint_col;
-	d_vector joint_val;
+	s_vector laplace_row, laplace_col;
+	d_vector laplace_val;
 	approx_object.laplace_hes_fix(
-		fixed_in, random_in, joint_row, joint_col, joint_val
+		fixed_in, random_in, laplace_row, laplace_col, laplace_val
 	);
 	// row and column indices for contribution form prior density
 	prior_row.clear();
 	prior_col.clear();
 	prior_val.clear();
+	d_vector weight( n_fixed_ );
+	for(size_t i = 0; i < weight.size(); i++)
+		weight[i] = 1.0;
+	approx_object.prior_hes(fixed_in, weight, prior_row, prior_col, prior_val);
+	//
+	// merge to form sparsity for Lagrangian
+	merge_sparse(
+		laplace_row      ,
+		laplace_col      ,
+		prior_row        ,
+		prior_col        ,
+		lag_hes_row_     ,
+		lag_hes_col_     ,
+		laplace_2_lag_   ,
+		prior_2_lag_
+	);
 }
 ipopt_fixed::~ipopt_fixed(void)
 { }
@@ -181,7 +286,7 @@ bool ipopt_fixed::get_nlp_info(
 	n           = n_fixed_;
 	m           = 2 * prior_n_abs_;
 	nnz_jac_g   = 2 * prior_nnz_jac_;
-	nnz_h_lag   = 2;
+	nnz_h_lag   = lag_hes_row_.size();
 	index_style = C_STYLE;
 	return true;
 }
