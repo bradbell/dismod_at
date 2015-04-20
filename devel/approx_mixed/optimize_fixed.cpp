@@ -154,9 +154,11 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	// Create an instance of an IpoptApplication
 	SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
 
-	// app->Options()->SetIntegerValue("print_level", 5);
-	app->Options()->SetIntegerValue("print_level", 0);
+	// Set options
+	app->Options()->SetIntegerValue("print_level", 0); // default is 5
 	app->Options()->SetStringValue("sb", "yes");
+	app->Options()->SetStringValue("derivative_test", "second-order");
+	app->Options()->SetStringValue("derivative_test_print_all", "yes");
 
 	// Set values used for minus and plus infinity
 	app->Options()->SetNumericValue(
