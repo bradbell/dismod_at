@@ -33,6 +33,14 @@ It follows that the Laplace approximation is exact and
 $latex \[
 	\B{p}( y_i | \theta ) \sim \B{N} \left( \theta_0 , 1 + \theta_1^2 \right)
 \] $$
+The corresponding objective for the fixed effects is equivalent to:
+$latex \[
+F( \theta ) = \frac{1}{2} \left[
+	( \theta_0 - 4 )^2 + ( \theta_1 - 4 )^2 +
+		N \log \left( 1 + \theta_1^2 \right) +
+		( 1 + \theta_1^2)^{-1} \sum_{i=0}^{N-1} ( y_i - \theta_0 )^2
+\right]
+\] $$
 The constraints on the fixed effect are
 $latex \[
 	- \infty \leq \theta_0 \leq + \infty
@@ -136,6 +144,7 @@ bool optimize_fixed_xam(void)
 {
 	bool   ok = true;
 	double inf = std::numeric_limits<double>::infinity();
+	double tol = 1e-8;
 
 	size_t n_data   = 10;
 	size_t n_fixed  = 2;
@@ -143,7 +152,7 @@ bool optimize_fixed_xam(void)
 	vector<double>
 		fixed_lower(n_fixed), fixed_in(n_fixed), fixed_upper(n_fixed);
 	fixed_lower[0] = - inf; fixed_in[0] = 2.0; fixed_upper[0] = inf;
-	fixed_lower[1] = .01;   fixed_in[1] = 0.5; fixed_upper[1] = 100.;
+	fixed_lower[1] = .01;   fixed_in[1] = 0.5; fixed_upper[1] = inf;
 	//
 	vector<double> data(n_data), random_in(n_random);
 	for(size_t i = 0; i < n_data; i++)
@@ -159,6 +168,27 @@ bool optimize_fixed_xam(void)
 	vector<double> fixed_out = approx_object.optimize_fixed(
 		fixed_lower, fixed_in, fixed_upper, random_in
 	);
+
+	// results of optimization
+	double theta_0 = fixed_out[0];
+	double theta_1 = fixed_out[1];
+
+	// compute partials of F
+	double sum   = 0.0;
+	double sumsq = 0.0;
+	for(size_t i = 0; i < n_data; i++)
+	{	sum   += theta_0 - data[i];
+		sumsq += (theta_0 - data[i]) * (theta_0 - data[i]);
+	}
+	double den = 1.0 + theta_1 * theta_1;
+	double F_0 = theta_0 - 4.0 + sum / den;
+	double F_1 = theta_1 - 4.0;
+	F_1       += double(n_data) * theta_1 / den;
+	F_1       -= sumsq * theta_1  / (den * den);
+
+	// Note that no constraints are active, so the partials should be zero.
+	ok &= CppAD::abs( F_0 ) <= tol;
+	ok &= CppAD::abs( F_1 ) <= tol;
 
 	return ok;
 }

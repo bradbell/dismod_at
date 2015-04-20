@@ -165,6 +165,7 @@ bool laplace_beta_xam(void)
 		d_sum_1          += d_log_1 + d_square_1;
 	}
 	ok &= abs( H_beta[0] / d_sum_0 - 1.0 )  < eps;
+	ok &= abs( H_beta[1] / d_sum_1 - 1.0 )  < eps;
 
 	return ok;
 }
