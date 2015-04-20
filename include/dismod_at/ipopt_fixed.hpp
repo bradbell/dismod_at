@@ -21,6 +21,9 @@ $$
 
 $section Ipopt NLP Class Used to Optimize Fixed Effects$$
 
+$head Private$$
+This class is not part of the $cref approx_mixed$$ API.
+
 $head nlp_lower_bound_inf()$$
 This member function returns the $code double$$ value used
 for minus infinity as a lower bound.
@@ -33,7 +36,9 @@ $head fixed_opt()$$
 This member function returns the optimal solution (so far)
 for the fixed effects.
 
-$childtable%devel/approx_mixed/ipopt_fixed.cpp%$$
+$childtable%devel/approx_mixed/ipopt_fixed.cpp
+	%example/devel/approx_mixed/ipopt_xam.omh
+%$$
 
 $end
 -----------------------------------------------------------------------------

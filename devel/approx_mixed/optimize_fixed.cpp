@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin approx_mixed_optimize_fixed$$
 $spell
+	ipopt
 	xam
 	vec
 	const
@@ -109,14 +110,20 @@ The $cref/theory/approx_mixed_theory/$$ for the
 Laplace approximation optimization only includes the case where
 the $cref/joint density/approx_mixed_joint_density/$$ is smooth.
 
-$children%
-	example/devel/approx_mixed/optimize_fixed_xam.cpp
+$children%example/devel/approx_mixed/optimize_fixed_xam.cpp
+	%include/dismod_at/ipopt_fixed.hpp
 %$$
 
 $head Example$$
 The file $cref optimize_fixed_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
+
+$head ipopt_fixed$$
+The  class $cref ipopt_fixed$$ is used by $code optimize_fixed$$
+to optimize the fixed effects.
+It's specifications are not part of the $cref approx_mixed$$ public interface.
+
 $end
 ------------------------------------------------------------------------------
 */
