@@ -26,7 +26,7 @@ $section Compute the Weighted Residual and Log-Density$$
 
 $head Syntax$$
 $icode%residual% = residual_density(
-	%%density%, %z%, %mu%, %delta%, %eta%
+	%density%, %z%, %mu%, %delta%, %eta%
 )%$$
 
 $head density$$

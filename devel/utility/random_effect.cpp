@@ -143,6 +143,8 @@ void get_random_effect(
 	CppAD::vector<Float>&        random_vec )
 {
 	assert( random_vec.size() == size_random_effect(pack_object) );
+	assert( pack_vec.size()   == pack_object.size() );
+	//
 	size_t n_child = pack_object.child_size();
 
 	// empty vector case
@@ -168,6 +170,8 @@ void put_random_effect(
 	const CppAD::vector<Float>&  random_vec )
 {
 	assert( random_vec.size() == size_random_effect(pack_object) );
+	assert( pack_vec.size()   == pack_object.size() );
+	//
 	size_t n_child = pack_object.child_size();
 
 	// empty vector case

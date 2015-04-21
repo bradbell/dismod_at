@@ -129,6 +129,8 @@ void get_fixed_effect(
 	const CppAD::vector<Float>&  pack_vec   ,
 	CppAD::vector<Float>&        fixed_vec )
 {	assert( fixed_vec.size() == size_fixed_effect(pack_object) );
+	assert( pack_vec.size()  == pack_object.size() );
+	//
 	size_t n_integrand = pack_object.integrand_size();
 	size_t n_child     = pack_object.child_size();
 	size_t n_smooth    = pack_object.smooth_size();
@@ -192,6 +194,8 @@ void put_fixed_effect(
 	CppAD::vector<Float>&        pack_vec   ,
 	const CppAD::vector<Float>&  fixed_vec  )
 {	assert( fixed_vec.size() == size_fixed_effect(pack_object) );
+	assert( pack_vec.size()  == pack_object.size() );
+	//
 	size_t n_integrand = pack_object.integrand_size();
 	size_t n_child     = pack_object.child_size();
 	size_t n_smooth    = pack_object.smooth_size();
