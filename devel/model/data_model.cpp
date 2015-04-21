@@ -1245,6 +1245,12 @@ $icode%residual_vec% = %data_object%.like_all(%pack_vec%)%$$
 
 $head Data Table Notation$$
 
+$head data_object$$
+This object has prototype
+$codei%
+	const data_model %data_object%
+%$$
+
 $subhead i$$
 We use $icode i$$ to
 denote the $cref/data_id/data_table/data_id/$$

@@ -28,13 +28,19 @@ $codei%prior_model %prior_object%(
 	%pack_object%, %age_table%, %time_table%, %prior_table%, %s_info_vec%
 )%$$
 
+$head prior_object$$
+This object has prototype
+$codei%
+	prior_model %prior_object%
+%$$
+
 $head pack_object$$
 This argument has prototype
 $codei%
 	const pack_info& %pack_object%
 %$$
-and is the $cref pack_info$$ information corresponding to
-$icode pack_vec$$.
+and is the $cref pack_info$$ information corresponding to the
+$icode pack_vec$$ used by $icode prior_object$$.
 
 $head age_table$$
 This argument has prototype
@@ -177,6 +183,7 @@ $spell
 	vec
 	Cpp
 	struct
+	const
 $$
 
 $section Evaluate Prior Density for the Fixed Effects$$
@@ -187,6 +194,21 @@ $icode%residual_vec% = %prior_object%.fixed(%pack_vec%)%$$
 $head Float$$
 The type $icode Float$$ must be one of the following:
 $code double$$, $code AD<double>$$, or $cref a5_double$$.
+
+$head prior_object$$
+This object has prototype
+$codei%
+	const prior_model %prior_object%
+%$$
+
+$head pack_vec$$
+This vector has prototype
+$codei%
+	const CppAD::vector<%Float%>& %pack_vec%
+%$$
+and is a packed vector corresponding to the information in
+$cref/pack_object/prior_model/pack_object/$$ for this
+$icode prior_object$$.
 
 $head residual_vec$$
 The return value has prototype
@@ -337,6 +359,7 @@ $spell
 	vec
 	Cpp
 	struct
+	const
 $$
 
 $section Evaluate Prior Density for the Random Effects$$
@@ -347,6 +370,21 @@ $icode%residual_vec% = %prior_object%.random(%pack_vec%)%$$
 $head Float$$
 The type $icode Float$$ must be one of the following:
 $code double$$, $code AD<double>$$, or $cref a5_double$$.
+
+$head prior_object$$
+This object has prototype
+$codei%
+	const prior_model %prior_object%
+%$$
+
+$head pack_vec$$
+This vector has prototype
+$codei%
+	const CppAD::vector<%Float%>& %pack_vec%
+%$$
+and is a packed vector corresponding to the information in
+$cref/pack_object/prior_model/pack_object/$$ for this
+$icode prior_object$$.
 
 $head residual_vec$$
 The return value has prototype

@@ -77,7 +77,7 @@ We refer to
 $latex \[
 	G( \theta ) = h[ \theta , \hat{u} ( \theta ) ]
 \] $$
-as  the joint part of the objective.
+as the prior part of the objective.
 
 $subhead L(theta)$$
 The Laplace approximation objective, as a function of the fixed effects, is
