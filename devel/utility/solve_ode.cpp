@@ -46,8 +46,7 @@ and $icode t_min$$ for the minimum time in $cref time_table$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
-where $code AD$$ is $code CppAD::AD$$.
+$code double$$, $code AD<double>$$, or $cref a5_double$$.
 
 $head i_max$$
 This argument has prototype
@@ -138,6 +137,7 @@ $end
 
 # include <dismod_at/solve_ode.hpp>
 # include <dismod_at/eigen_ode2.hpp>
+# include <dismod_at/a5_double.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -214,6 +214,6 @@ void solve_ode(
 // instantiations
 DISMOD_AT_INSTANTIATE_SOLVE_ODE(double)
 DISMOD_AT_INSTANTIATE_SOLVE_ODE( CppAD::AD<double> )
-DISMOD_AT_INSTANTIATE_SOLVE_ODE( CppAD::AD< CppAD::AD<double> > )
+DISMOD_AT_INSTANTIATE_SOLVE_ODE( a5_double )
 
 } // END DISMOD_AT_NAMESPACE

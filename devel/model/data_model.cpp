@@ -157,6 +157,7 @@ $end
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/solve_ode.hpp>
 # include <dismod_at/residual_density.hpp>
+# include <dismod_at/a5_double.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -488,8 +489,7 @@ $codei%
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
-where $code AD$$ is $code CppAD::AD$$.
+$code double$$, $code AD<double>$$, or $cref a5_double$$.
 
 $head data_id$$
 This argument has prototype
@@ -745,8 +745,7 @@ $codei%
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
-where $code AD$$ is $code CppAD::AD$$.
+$code double$$, $code AD<double>$$, or $cref a5_double$$.
 
 $head data_id$$
 This argument has prototype
@@ -1073,8 +1072,7 @@ $codei%
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
-where $code AD$$ is $code CppAD::AD$$.
+$code double$$, $code AD<double>$$, or $cref a5_double$$.
 
 $head data_id$$
 This argument has prototype
@@ -1273,8 +1271,7 @@ see $cref/data_id2child/child_data/data_id2child/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
-where $code AD$$ is $code CppAD::AD$$.
+$code double$$, $code AD<double>$$, or $cref a5_double$$.
 
 $head pack_vec$$
 This argument has prototype
@@ -1361,7 +1358,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 // instantiations
 DISMOD_AT_INSTANTIATE_DATA_MODEL(double)
 DISMOD_AT_INSTANTIATE_DATA_MODEL( CppAD::AD<double> )
-DISMOD_AT_INSTANTIATE_DATA_MODEL( CppAD::AD< CppAD::AD<double> > )
+DISMOD_AT_INSTANTIATE_DATA_MODEL( a5_double )
 
 
 } // END DISMOD_AT_NAMESPACE

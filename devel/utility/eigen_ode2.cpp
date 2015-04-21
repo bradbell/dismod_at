@@ -46,8 +46,7 @@ and there is at least one non-zero entry in the matrix.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
-where $code AD$$ is $code CppAD::AD$$.
+$code double$$, $code AD<double>$$, or $cref a5_double$$.
 
 $head tf$$
 This argument has prototype
@@ -230,6 +229,7 @@ $end
 */
 # include <cppad/cppad.hpp>
 # include <dismod_at/eigen_ode2.hpp>
+# include <dismod_at/a5_double.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -325,6 +325,6 @@ void eigen_ode2(
 // instantiations
 DISMOD_AT_INSTANTIATE_EIGEN_ODE2(double)
 DISMOD_AT_INSTANTIATE_EIGEN_ODE2( CppAD::AD<double> )
-DISMOD_AT_INSTANTIATE_EIGEN_ODE2( CppAD::AD< CppAD::AD<double> > )
+DISMOD_AT_INSTANTIATE_EIGEN_ODE2( a5_double )
 
 } // END DISMOD_AT_NAMESPACE

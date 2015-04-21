@@ -43,8 +43,7 @@ $cref/log_laplace_enum/wres_density/Log-Laplace/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
-where $code AD$$ is $code CppAD::AD$$.
+$code double$$, $code AD<double>$$, or $cref a5_double$$.
 
 $head z$$
 This argument has prototype
@@ -131,6 +130,7 @@ $end
 */
 # include <cppad/cppad.hpp>
 # include <dismod_at/residual_density.hpp>
+# include <dismod_at/a5_double.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -210,6 +210,6 @@ residual_struct<Float> residual_density(
 // instantiations
 DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY(double)
 DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY( CppAD::AD<double> )
-DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY( CppAD::AD< CppAD::AD<double> > )
+DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY( a5_double )
 
 } // END DISMOD_AT_NAMESPACE

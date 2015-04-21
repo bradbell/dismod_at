@@ -30,8 +30,7 @@ $codei%get_fixed_effect(%pack_object%, %pack_vec%, %fixed_vec%)
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
-where $code AD$$ is $code CppAD::AD$$.
+$code double$$, $code AD<double>$$, or $cref a5_double$$.
 
 $head Order of Fixed Effects$$
 The order of the fixed effects is unspecified, except for the
@@ -115,6 +114,7 @@ $end
 
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/random_effect.hpp>
+# include <dismod_at/a5_double.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -263,7 +263,7 @@ void put_fixed_effect(
 // instantiations
 DISMOD_AT_INSTANTIATE_FIXED_EFFECT(double)
 DISMOD_AT_INSTANTIATE_FIXED_EFFECT( CppAD::AD<double> )
-DISMOD_AT_INSTANTIATE_FIXED_EFFECT( CppAD::AD< CppAD::AD<double> > )
+DISMOD_AT_INSTANTIATE_FIXED_EFFECT( a5_double )
 
 
 } // END DISMOD_AT_NAMESPACE

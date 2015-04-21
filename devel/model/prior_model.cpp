@@ -81,6 +81,7 @@ $end
 # include <dismod_at/residual_density.hpp>
 # include <dismod_at/prior_model.hpp>
 # include <dismod_at/smooth_info.hpp>
+# include <dismod_at/a5_double.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -185,8 +186,7 @@ $icode%residual_vec% = prior_object%.fixed(%pack_vec%)%$$
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
-where $code AD$$ is $code CppAD::AD$$.
+$code double$$, $code AD<double>$$, or $cref a5_double$$.
 
 $head residual_vec$$
 The return value has prototype
@@ -346,8 +346,7 @@ $icode%residual_vec% = prior_object%.random(%pack_vec%)%$$
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, $code AD< AD<double> >$$,
-where $code AD$$ is $code CppAD::AD$$.
+$code double$$, $code AD<double>$$, or $cref a5_double$$.
 
 $head residual_vec$$
 The return value has prototype
@@ -418,7 +417,7 @@ CppAD::vector< residual_struct<Float> > prior_model::random(
 // instantiations
 DISMOD_AT_INSTANTIATE_PRIOR_DENSITY(double)
 DISMOD_AT_INSTANTIATE_PRIOR_DENSITY( CppAD::AD<double> )
-DISMOD_AT_INSTANTIATE_PRIOR_DENSITY( CppAD::AD< CppAD::AD<double> > )
+DISMOD_AT_INSTANTIATE_PRIOR_DENSITY( a5_double )
 
 } // BEGIN_DISMOD_AT_NAMESPACE
 

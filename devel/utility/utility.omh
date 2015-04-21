@@ -15,8 +15,8 @@ $$
 
 $section Dismod_at Developer Utility Documentation$$
 
-$childtable%
-	devel/utility/bilinear_interp.cpp
+$childtable%include/dismod_at/a5_double.hpp
+	%devel/utility/bilinear_interp.cpp
 	%devel/utility/child_data.cpp
 	%devel/utility/eigen_ode2.cpp
 	%devel/utility/fixed_effect.cpp
