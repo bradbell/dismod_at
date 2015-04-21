@@ -10,7 +10,6 @@
 # ---------------------------------------------------------------------------
 SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
-	approx_mixed/cppad_conjgrad
 	approx_mixed/joint_grad_ran.cpp
 	approx_mixed/laplace_hes_fix.cpp
 	approx_mixed/joint_hes_ran.cpp

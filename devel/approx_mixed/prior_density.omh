@@ -49,7 +49,7 @@ $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$ vector.
 $head vec$$
 This result has prototype
 $codei%
-	CppAD::vector<%Float%> %vec%
+	CppAD::vector<%a1_double%> %vec%
 %$$
 It is a
 $cref/negative log-density vector

@@ -16,8 +16,6 @@ $$
 
 $section approx_mixed: Laplace Approximation For Mixed Effects Models$$
 
-$head Under Construction$$
-
 $head Negative Log-Density Vector$$
 If $icode vec$$ is a density vector corresponding to $latex \B{p}(x)$$,
 the corresponding negative log-density is given by
