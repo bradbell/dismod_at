@@ -19,10 +19,19 @@ $spell
 	namespace
 	dismod
 	typedef
+	hpp
 $$
 
 $section a5_double$$
 
+$head Syntax$$
+$codei%# include <dismod_at/a5_double.hpp>%$$
+
+$head Purpose$$
+Defines the type $code a5_double$$ as five levels of $code AD$$ in
+the CppAD package.
+
+$head Source Code$$
 $codep */
 namespace dismod_at {
 	typedef
