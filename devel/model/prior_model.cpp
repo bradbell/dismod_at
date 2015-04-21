@@ -182,7 +182,7 @@ $$
 $section Evaluate Prior Density for the Fixed Effects$$
 
 $head Syntax$$
-$icode%residual_vec% = prior_object%.fixed(%pack_vec%)%$$
+$icode%residual_vec% = %prior_object%.fixed(%pack_vec%)%$$
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -342,7 +342,7 @@ $$
 $section Evaluate Prior Density for the Random Effects$$
 
 $head Syntax$$
-$icode%residual_vec% = prior_object%.random(%pack_vec%)%$$
+$icode%residual_vec% = %prior_object%.random(%pack_vec%)%$$
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
