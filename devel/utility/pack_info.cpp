@@ -123,6 +123,18 @@ $codei%
 %$$
 and is the value is $icode%smooth_table%.size()%$$ in the constructor.
 
+$head Age-Time Order$$
+When an function of age and time is stored with a specified $icode offset$$
+in a packed vector,
+it is in time major order; i.e.,
+for $icode%i% = 0%, ... , n_age%-1%$$,
+for $icode%j% = 0%, ... , n_time%-1%$$,
+$codei%
+	%offset% + %i% * %n_time% + %j%
+%$$
+is the index in the packed vector of the corresponding age-time point.
+
+
 $head Example$$
 See $cref/pack_info Example/pack_info/Example/$$.
 
@@ -171,7 +183,7 @@ n_child_        ( n_child )
 			rate_info_[rate_id][j].offset    = offset;
 			offset += n_var;
 			//
-			// check_rate_table should alread have checked this assumption
+			// check_rate_table should already have checked this assumption
 			assert( rate_id != pini_enum || n_age == 1 );
 		}
 	}
@@ -325,7 +337,8 @@ $codei%
 and is the offset (index) in the packed variable vector
 where the three variables for this smoothing begin.
 The three variables for each smoothing are the
-value, dage, and dtime standard deviation multipliers.
+value, dage, and dtime standard deviation multipliers
+(and should always be used in that order).
 
 $head Example$$
 See $cref/pack_info Example/pack_info/Example/$$.

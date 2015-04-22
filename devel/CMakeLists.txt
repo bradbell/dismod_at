@@ -45,6 +45,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	utility/smooth2ode.cpp
 	utility/solve_ode.cpp
 	utility/pack_info.cpp
+	utility/pack_prior.cpp
 
 	table/check_child_prior.cpp
 	table/check_pini_n_age.cpp
