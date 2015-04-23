@@ -34,9 +34,9 @@ namespace dismod_at {
 		// const member variables
 		const size_t                       n_fixed_;
 		const size_t                       n_random_;
+		const pack_info&                   pack_object_;
 		const CppAD::vector<prior_struct>& prior_table_;
 		const CppAD::vector<smooth_info>&  s_info_vec_;
-		const pack_info&                   pack_object_;
 		const data_model&                  data_object_;
 		const prior_model&                 prior_object_;
 		//
@@ -45,6 +45,7 @@ namespace dismod_at {
 		//
 		// set by run_fit
 		CppAD::vector<double>              optimal_fixed_;
+		CppAD::vector<double>              optimal_random_;
 		//
 		// temporaries in joint_density
 		a5d_vector                                  a5_pack_vec_tmp_;
@@ -71,14 +72,18 @@ namespace dismod_at {
 	public:
 		// constructor
 		fit_model(
+			const pack_info&                   pack_object  ,
 			const CppAD::vector<prior_struct>& prior_table  ,
 			const CppAD::vector<smooth_info>&  s_info_vec   ,
-			const pack_info&                   pack_object  ,
 			const data_model&                  data_object  ,
 			const prior_model&                 prior_object
 		);
 		// run fit
 		void run_fit(void);
+		// get_optimal_fixed
+		CppAD::vector<double> get_optimal_fixed(void);
+		// get_optimal_random
+		CppAD::vector<double> get_optimal_random(void);
 	};
 }
 

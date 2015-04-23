@@ -17,7 +17,8 @@ $section Dismod_at Developer Model Documentation$$
 
 $childtable%
 	devel/model/data_model.omh%
-	devel/model/prior_model.cpp
+	devel/model/prior_model.cpp%
+	devel/model/fit_model.cpp
 %$$
 
 $end

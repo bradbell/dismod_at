@@ -13,9 +13,90 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/pack_prior.hpp>
 /*
 $begin fit_model$$
+$spell
+	vec
+	const
+	CppAD
+	struct
+$$
+
+$section Fit the Fixed and Random Effects to the Model and Data$$
 
 $head Syntax$$
+$codei%fit_model %fit_object%(
+	%pack_object%, %prior_table%, %s_info_vec%, %data_object%, %prior_object%
+)
+%$$
+$codei%fit_object.run_fit()
+%$$
+$icode%optimal_fixed% = %fit_object%.get_optimal_fixed()
+%$$
+$icode%optimal_random% = %fit_object%.get_optimal_random()
+%$$
 
+$head fit_object$$
+This object has prototype
+$codei%
+	fit_model %fit_object%
+%$$
+
+$head pack_object$$
+This argument has prototype
+$codei%
+	const pack_info& %pack_object%
+%$$
+and is the $cref pack_info$$ information corresponding to the
+$cref/model_variables/model_variable/$$.
+
+$head prior_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<prior_struct>&  %prior_table%
+%$$
+and is the $cref/prior_table/get_prior_table/prior_table/$$.
+
+$head s_info_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<smooth_info>& %s_info_vec%
+%$$
+For each $cref/smooth_id/smooth_table/smooth_id/$$,
+$codei%
+	%s_info_vec%[ %smooth_id% ]
+%$$
+is the corresponding $cref smooth_info$$ information.
+
+$head data_object$$
+This object has prototype
+$codei%
+	const data_model %data_object%
+%$$
+It contains the model for the data density;
+see $cref/data_model/devel_data_model/$$.
+
+$head prior_object$$
+This object has prototype
+$codei%
+	const prior_model %prior_object%
+%$$
+It contains the model for the prior density; see $cref prior_model$$.
+
+$head run_fit$$
+Run the optimization process to determine the optimal fixed and random effects.
+
+$head optimal_fixed$$
+This return value has prototype
+$codei%
+	CppAD::vector<double> %optimal_fixed%
+%$$
+It is the optimal $cref/fixed effects/fixed_effect/$$ vector.
+
+$head optimal_random$$
+This return value has prototype
+$codei%
+	CppAD::vector<double> %optimal_random%
+%$$
+It is the optimal $cref/random effects/random_effect/$$ vector.
 
 $end
 */
@@ -27,9 +108,9 @@ namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 // ===========================================================================
 // constructor
 fit_model::fit_model(
+	const pack_info&                   pack_object  ,
 	const CppAD::vector<prior_struct>& prior_table  ,
 	const CppAD::vector<smooth_info>&  s_info_vec   ,
-	const pack_info&                   pack_object  ,
 	const data_model&                  data_object  ,
 	const prior_model&                 prior_object ) :
 // base class constructor
@@ -39,9 +120,9 @@ approx_mixed(
 ) ,
 n_fixed_       ( size_fixed_effect(pack_object)  )  ,
 n_random_      ( size_random_effect(pack_object) )  ,
+pack_object_   ( pack_object )                      ,
 prior_table_   ( prior_table )                      ,
 s_info_vec_    ( s_info_vec  )                      ,
-pack_object_   ( pack_object )                      ,
 data_object_   ( data_object )                      ,
 prior_object_  ( prior_object )
 {	value_prior_ = pack_value_prior(pack_object, s_info_vec);
@@ -82,7 +163,16 @@ void fit_model::run_fit(void)
 	optimal_fixed_ = optimize_fixed(
 		fixed_lower, fixed_in, fixed_upper, random_in
 	);
+	optimal_random_ = optimize_random(optimal_fixed_, random_in);
 }
+// ---------------------------------------------------------------------------
+// get_optimal_fixed
+CppAD::vector<double> fit_model::get_optimal_fixed(void)
+{	return optimal_fixed_; }
+// ---------------------------------------------------------------------------
+// get_optimal_random
+CppAD::vector<double> fit_model::get_optimal_random(void)
+{	return optimal_random_; }
 // ===========================================================================
 // private functions
 // ===========================================================================
