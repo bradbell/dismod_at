@@ -11,11 +11,16 @@ see http://www.gnu.org/licenses/agpl.txt
 
 /*
 $begin pack_prior$$
+$spell
+	vec
+	const
+	CppAD
+$$
 
 $section Prior Ids In Same Order As Packed Variables$$
 
 $head Syntax$$
-$codei%value_prior% = pack_value_prior(%pack_object%, %s_info_vec%)%$$
+$icode%value_prior% = pack_value_prior(%pack_object%, %s_info_vec%)%$$
 
 $head pack_object$$
 This argument has prototype
@@ -23,7 +28,7 @@ $codei%
 	const pack_info& %pack_object%
 %$$
 and is the $cref pack_info$$ information corresponding to
-the $cref model_variables$$.
+the $cref/model_variables/model_variable/$$.
 
 $head s_info_vec$$
 This argument has prototype
@@ -46,7 +51,7 @@ $cref/prior_id/prior_table/prior_id/$$ corresponding to the
 $th i$$ model variable in the order determined by $icode pack_object$$.
 
 $children%
-	example/devel/utility/pack_prior.cpp
+	example/devel/utility/pack_prior_xam.cpp
 %$$
 $head Example$$
 The file $cref pack_prior_xam.cpp$$
