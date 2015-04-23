@@ -11,10 +11,20 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/a5_double.hpp>
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/pack_prior.hpp>
+/*
+$begin fit_model$$
+
+$head Syntax$$
+
+
+$end
+*/
 
 namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 
-// ---------------------------------------------------------------------------
+// ===========================================================================
+// public functions
+// ===========================================================================
 // constructor
 fit_model::fit_model(
 	const CppAD::vector<prior_struct>& prior_table  ,
@@ -37,7 +47,7 @@ prior_object_  ( prior_object )
 {	value_prior_ = pack_value_prior(pack_object, s_info_vec);
 }
 // ---------------------------------------------------------------------------
-// optimize
+// run_fit
 void fit_model::run_fit(void)
 {	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
@@ -73,7 +83,9 @@ void fit_model::run_fit(void)
 		fixed_lower, fixed_in, fixed_upper, random_in
 	);
 }
-// ---------------------------------------------------------------------------
+// ===========================================================================
+// private functions
+// ===========================================================================
 // joint_density
 fit_model::a5d_vector fit_model::joint_density(
 	const a5d_vector& fixed_vec   ,

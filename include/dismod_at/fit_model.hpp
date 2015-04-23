@@ -29,8 +29,8 @@ namespace dismod_at {
 		typedef CppAD::vector<a1_double>   a1d_vector;
 		typedef CppAD::vector<a5_double>   a5d_vector;
 		//
+	// =======================================================================
 	private:
-		// ---------------------------------------------------------------
 		// const member variables
 		const size_t                       n_fixed_;
 		const size_t                       n_random_;
@@ -58,6 +58,16 @@ namespace dismod_at {
 		CppAD::vector< residual_struct<a1_double> > prior_fix_tmp_;
 		a1d_vector                                  prior_den_tmp_;
 		// ---------------------------------------------------------------
+		// pass joint density to base class
+		virtual a5d_vector joint_density(
+			const a5d_vector& fixed_vec   ,
+			const a5d_vector& random_vec
+		);
+		// pass prior density to base class
+		virtual a1d_vector prior_density(
+			const a1d_vector& fixed_vec
+		);
+	// =======================================================================
 	public:
 		// constructor
 		fit_model(
@@ -69,16 +79,6 @@ namespace dismod_at {
 		);
 		// run fit
 		void run_fit(void);
-		//
-		// pass joint density to base class
-		virtual a5d_vector joint_density(
-			const a5d_vector& fixed_vec   ,
-			const a5d_vector& random_vec
-		);
-		// pass prior density to base class
-		virtual a1d_vector prior_density(
-			const a1d_vector& fixed_vec
-		);
 	};
 }
 
