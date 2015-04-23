@@ -10,13 +10,14 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/a5_double.hpp>
 # include <dismod_at/fit_fixed.hpp>
+# include <dismod_at/pack_prior.hpp>
 
 namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 
 // ---------------------------------------------------------------------------
 // constructor
 fit_fixed::fit_fixed(
-	const CppAD::vector<prior_struct>& prior_table ,
+	const CppAD::vector<prior_struct>& prior_table  ,
 	const CppAD::vector<smooth_info>&  s_info_vec   ,
 	const pack_info&                   pack_object  ,
 	const data_model&                  data_object  ,
@@ -26,10 +27,13 @@ approx_mixed(
 	size_fixed_effect(pack_object) , // n_fixed
 	size_random_effect(pack_object)  // n_random
 ) ,
-pack_object_( pack_object )     ,
-data_object_( data_object )     ,
-prior_object_( prior_object )
-{ }
+prior_table_   ( prior_table  )   ,
+s_info_vec_    ( s_info_vec   )   ,
+pack_object_   ( pack_object  )   ,
+data_object_   ( data_object )    ,
+prior_object_  ( prior_object )
+{	value_prior_ = pack_value_prior(pack_object, s_info_vec);
+}
 // ---------------------------------------------------------------------------
 // joint_density
 fit_fixed::a5d_vector fit_fixed::joint_density(

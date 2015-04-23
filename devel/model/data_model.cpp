@@ -143,7 +143,7 @@ $codei%
 	const pack_info& %pack_object%
 %$$
 and is the $cref pack_info$$ information corresponding to
-$icode pack_vec$$.
+the $cref/model_variables/model_variable/$$.
 
 $end
 -----------------------------------------------------------------------------

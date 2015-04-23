@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -14,7 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/smooth_info.hpp>
 
 namespace dismod_at {
-	CppAD::vector<size_t> pack_prior(
+	CppAD::vector<size_t> pack_value_prior(
 		const pack_info&                     pack_object  ,
 		const CppAD::vector<smooth_info>&    s_info_vec
 	);

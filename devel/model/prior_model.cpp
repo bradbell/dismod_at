@@ -40,7 +40,7 @@ $codei%
 	const pack_info& %pack_object%
 %$$
 and is the $cref pack_info$$ information corresponding to the
-$icode pack_vec$$ used by $icode prior_object$$.
+$cref/model_variables/model_variable/$$.
 
 $head age_table$$
 This argument has prototype

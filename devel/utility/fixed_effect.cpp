@@ -125,9 +125,9 @@ size_t size_fixed_effect(const pack_info&  pack_object)
 
 template <class Float>
 void get_fixed_effect(
-	const pack_info&              pack_object  ,
-	const CppAD::vector<Float>&  pack_vec   ,
-	CppAD::vector<Float>&        fixed_vec )
+	const pack_info&             pack_object  ,
+	const CppAD::vector<Float>&  pack_vec     ,
+	CppAD::vector<Float>&        fixed_vec    )
 {	assert( fixed_vec.size() == size_fixed_effect(pack_object) );
 	assert( pack_vec.size()  == pack_object.size() );
 	//
@@ -190,9 +190,9 @@ void get_fixed_effect(
 
 template <class Float>
 void put_fixed_effect(
-	const pack_info&              pack_object  ,
-	CppAD::vector<Float>&        pack_vec   ,
-	const CppAD::vector<Float>&  fixed_vec  )
+	const pack_info&             pack_object  ,
+	CppAD::vector<Float>&        pack_vec     ,
+	const CppAD::vector<Float>&  fixed_vec    )
 {	assert( fixed_vec.size() == size_fixed_effect(pack_object) );
 	assert( pack_vec.size()  == pack_object.size() );
 	//
@@ -252,16 +252,16 @@ void put_fixed_effect(
 	return;
 }
 
-# define DISMOD_AT_INSTANTIATE_FIXED_EFFECT(Float)           \
+# define DISMOD_AT_INSTANTIATE_FIXED_EFFECT(Float)        \
 	template void get_fixed_effect(                       \
-	const pack_info&              pack_object  ,                \
-	const CppAD::vector<Float>&  pack_vec   ,                \
-	CppAD::vector<Float>&        fixed_vec                   \
-	);                                                       \
-	template void put_fixed_effect(                         \
-	const pack_info&              pack_object  ,                \
-	CppAD::vector<Float>&        pack_vec   ,                \
-	const CppAD::vector<Float>&  fixed_vec                   \
+	const pack_info&             pack_object  ,           \
+	const CppAD::vector<Float>&  pack_vec     ,           \
+	CppAD::vector<Float>&        fixed_vec                \
+	);                                                    \
+	template void put_fixed_effect(                       \
+	const pack_info&             pack_object  ,           \
+	CppAD::vector<Float>&        pack_vec     ,           \
+	const CppAD::vector<Float>&  fixed_vec                \
 	);
 
 // instantiations

@@ -30,10 +30,16 @@ namespace dismod_at {
 		typedef CppAD::vector<a5_double>   a5d_vector;
 		//
 	private:
+		// ---------------------------------------------------------------
 		// const member variables
-		const pack_info&    pack_object_;
-		const data_model&   data_object_;
-		const prior_model&  prior_object_;
+		const CppAD::vector<prior_struct>& prior_table_;
+		const CppAD::vector<smooth_info>&  s_info_vec_;
+		const pack_info&                   pack_object_;
+		const data_model&                  data_object_;
+		const prior_model&                 prior_object_;
+		//
+		// set during constructor and otherwise const
+		CppAD::vector<size_t>              value_prior_;
 		//
 		// temporaries in joint_density
 		a5d_vector                                  a5_pack_vec_tmp_;
@@ -45,10 +51,11 @@ namespace dismod_at {
 		a1d_vector                                  a1_pack_vec_tmp_;
 		CppAD::vector< residual_struct<a1_double> > prior_fix_tmp_;
 		a1d_vector                                  prior_den_tmp_;
+		// ---------------------------------------------------------------
 	public:
 		// constructor
 		fit_fixed(
-			const CppAD::vector<prior_struct>& prior_table ,
+			const CppAD::vector<prior_struct>& prior_table  ,
 			const CppAD::vector<smooth_info>&  s_info_vec   ,
 			const pack_info&                   pack_object  ,
 			const data_model&                  data_object  ,

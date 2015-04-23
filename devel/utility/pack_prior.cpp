@@ -14,6 +14,43 @@ $begin pack_prior$$
 
 $section Prior Ids In Same Order As Packed Variables$$
 
+$head Syntax$$
+$codei%value_prior% = pack_value_prior(%pack_object%, %s_info_vec%)%$$
+
+$head pack_object$$
+This argument has prototype
+$codei%
+	const pack_info& %pack_object%
+%$$
+and is the $cref pack_info$$ information corresponding to
+the $cref model_variables$$.
+
+$head s_info_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<smooth_info>& %s_info_vec%
+%$$
+For each $cref/smooth_id/smooth_table/smooth_id/$$,
+$codei%
+	%s_info_vec%[ %smooth_id% ]
+%$$
+is the corresponding $cref smooth_info$$ information.
+
+$head value_prior$$
+The return value has prototype
+$codei%
+	CppAD::vector<size_t> %value_prior%
+%$$
+The element $icode%value_prior%[%i%]%$$ is the
+$cref/prior_id/prior_table/prior_id/$$ corresponding to the
+$th i$$ model variable in the order determined by $icode pack_object$$.
+
+$children%
+	example/devel/utility/pack_prior.cpp
+%$$
+$head Example$$
+The file $cref pack_prior_xam.cpp$$
+contains an example and test that uses this routine.
 
 $end
 */
@@ -40,7 +77,7 @@ namespace {
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-CppAD::vector<size_t> pack_prior(
+CppAD::vector<size_t> pack_value_prior(
 	const pack_info&                     pack_object  ,
 	const CppAD::vector<smooth_info>&    s_info_vec   )
 {	pack_info::subvec_info info;
