@@ -27,12 +27,51 @@ approx_mixed(
 	size_fixed_effect(pack_object) , // n_fixed
 	size_random_effect(pack_object)  // n_random
 ) ,
-prior_table_   ( prior_table  )   ,
-s_info_vec_    ( s_info_vec   )   ,
-pack_object_   ( pack_object  )   ,
-data_object_   ( data_object )    ,
+n_fixed_       ( size_fixed_effect(pack_object)  )  ,
+n_random_      ( size_random_effect(pack_object) )  ,
+prior_table_   ( prior_table )                      ,
+s_info_vec_    ( s_info_vec  )                      ,
+pack_object_   ( pack_object )                      ,
+data_object_   ( data_object )                      ,
 prior_object_  ( prior_object )
 {	value_prior_ = pack_value_prior(pack_object, s_info_vec);
+}
+// ---------------------------------------------------------------------------
+// optimize
+void fit_fixed::run_fit(void)
+{	size_t n_var = n_fixed_ + n_random_;
+	assert( pack_object_.size() == n_var );
+	assert( value_prior_.size() == n_var );
+	CppAD::vector<double> pack_vec( n_var );
+
+	// fixed_lower
+	CppAD::vector<double> fixed_lower(n_fixed_);
+	for(size_t i = 0; i < n_var; i++)
+		pack_vec[i] = prior_table_[ value_prior_[i] ].lower;
+	get_fixed_effect(pack_object_, pack_vec, fixed_lower);
+
+	// fixed_in
+	CppAD::vector<double> fixed_in(n_fixed_);
+	for(size_t i = 0; i < n_var; i++)
+		pack_vec[i] = prior_table_[ value_prior_[i] ].mean;
+	get_fixed_effect(pack_object_, pack_vec, fixed_in);
+
+	// fixed_upper
+	CppAD::vector<double> fixed_upper(n_fixed_);
+	for(size_t i = 0; i < n_var; i++)
+		pack_vec[i] = prior_table_[ value_prior_[i] ].upper;
+	get_fixed_effect(pack_object_, pack_vec, fixed_upper);
+
+	// random_in
+	CppAD::vector<double> random_in(n_random_);
+	for(size_t i = 0; i < n_var; i++)
+		pack_vec[i] = prior_table_[ value_prior_[i] ].mean;
+	get_random_effect(pack_object_, pack_vec, random_in);
+
+	// store result
+	optimal_fixed_ = optimize_fixed(
+		fixed_lower, fixed_in, fixed_upper, random_in
+	);
 }
 // ---------------------------------------------------------------------------
 // joint_density

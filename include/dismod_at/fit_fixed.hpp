@@ -32,6 +32,8 @@ namespace dismod_at {
 	private:
 		// ---------------------------------------------------------------
 		// const member variables
+		const size_t                       n_fixed_;
+		const size_t                       n_random_;
 		const CppAD::vector<prior_struct>& prior_table_;
 		const CppAD::vector<smooth_info>&  s_info_vec_;
 		const pack_info&                   pack_object_;
@@ -41,11 +43,15 @@ namespace dismod_at {
 		// set during constructor and otherwise const
 		CppAD::vector<size_t>              value_prior_;
 		//
+		// set by run_fit
+		CppAD::vector<double>              optimal_fixed_;
+		//
 		// temporaries in joint_density
 		a5d_vector                                  a5_pack_vec_tmp_;
 		CppAD::vector< residual_struct<a5_double> > data_like_tmp_;
 		CppAD::vector< residual_struct<a5_double> > prior_ran_tmp_;
 		a5d_vector                                  joint_den_tmp_;
+		//
 		// temporaries in prior_density
 		a1d_vector                                  random_vec_tmp_;
 		a1d_vector                                  a1_pack_vec_tmp_;
@@ -61,6 +67,9 @@ namespace dismod_at {
 			const data_model&                  data_object  ,
 			const prior_model&                 prior_object
 		);
+		// run fit
+		void run_fit(void);
+		//
 		// pass joint density to base class
 		virtual a5d_vector joint_density(
 			const a5d_vector& fixed_vec   ,
