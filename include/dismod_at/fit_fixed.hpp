@@ -48,9 +48,11 @@ namespace dismod_at {
 	public:
 		// constructor
 		fit_fixed(
-			const pack_info&   pack_object    ,
-			const data_model&  data_object    ,
-			const prior_model& prior_object
+			const CppAD::vector<prior_struct>& prior_table ,
+			const CppAD::vector<smooth_info>&  s_info_vec   ,
+			const pack_info&                   pack_object  ,
+			const data_model&                  data_object  ,
+			const prior_model&                 prior_object
 		);
 		// pass joint density to base class
 		virtual a5d_vector joint_density(

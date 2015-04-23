@@ -10,7 +10,6 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # ifndef DISMOD_AT_PACK_PRIOR_HPP
 # define DISMOD_AT_PACK_PRIOR_HPP
-# include <cppad/cppad.hpp>
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/smooth_info.hpp>
 
