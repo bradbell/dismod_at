@@ -9,14 +9,14 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/a5_double.hpp>
-# include <dismod_at/fit_fixed.hpp>
+# include <dismod_at/fit_model.hpp>
 # include <dismod_at/pack_prior.hpp>
 
 namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 
 // ---------------------------------------------------------------------------
 // constructor
-fit_fixed::fit_fixed(
+fit_model::fit_model(
 	const CppAD::vector<prior_struct>& prior_table  ,
 	const CppAD::vector<smooth_info>&  s_info_vec   ,
 	const pack_info&                   pack_object  ,
@@ -38,7 +38,7 @@ prior_object_  ( prior_object )
 }
 // ---------------------------------------------------------------------------
 // optimize
-void fit_fixed::run_fit(void)
+void fit_model::run_fit(void)
 {	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
 	assert( value_prior_.size() == n_var );
@@ -75,7 +75,7 @@ void fit_fixed::run_fit(void)
 }
 // ---------------------------------------------------------------------------
 // joint_density
-fit_fixed::a5d_vector fit_fixed::joint_density(
+fit_model::a5d_vector fit_model::joint_density(
 	const a5d_vector& fixed_vec   ,
 	const a5d_vector& random_vec  )
 {	// check if temporay needs to be sized
@@ -139,7 +139,7 @@ fit_fixed::a5d_vector fit_fixed::joint_density(
 }
 // ---------------------------------------------------------------------------
 // prior_density
-fit_fixed::a1d_vector fit_fixed::prior_density(
+fit_model::a1d_vector fit_model::prior_density(
 	const a1d_vector& fixed_vec   )
 {	// check if this temporay needs to be sized
 	if( random_vec_tmp_.size() == 0 )

@@ -30,7 +30,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	approx_mixed/record_laplace.cpp
 
 	model/data_model.cpp
-	model/fit_fixed.cpp
+	model/fit_model.cpp
 	model/prior_model.cpp
 
 	utility/bilinear_interp.cpp

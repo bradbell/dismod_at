@@ -21,8 +21,8 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 
-	// declare fit_fixed class
-	class fit_fixed : public approx_mixed {
+	// declare fit_model class
+	class fit_model : public approx_mixed {
 	public:
 		// type declarations
 		typedef CppAD::AD<double>          a1_double;
@@ -60,7 +60,7 @@ namespace dismod_at {
 		// ---------------------------------------------------------------
 	public:
 		// constructor
-		fit_fixed(
+		fit_model(
 			const CppAD::vector<prior_struct>& prior_table  ,
 			const CppAD::vector<smooth_info>&  s_info_vec   ,
 			const pack_info&                   pack_object  ,
