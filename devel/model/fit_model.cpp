@@ -98,6 +98,12 @@ $codei%
 %$$
 It is the optimal $cref/random effects/random_effect/$$ vector.
 
+$children%example/devel/model/fit_model_xam.cpp
+%$$
+$head Example$$
+The file $cref fit_model_xam.cpp$$ contains an example and test
+of using this routine.
+
 $end
 */
 

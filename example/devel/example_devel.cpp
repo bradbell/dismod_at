@@ -46,6 +46,7 @@ extern bool prior_hes_xam(void);
 // model subdirectory
 extern bool avg_no_ode_xam(void);
 extern bool avg_yes_ode_xam(void);
+extern bool fit_model_xam(void);
 extern bool like_all_xam(void);
 extern bool like_one_xam(void);
 extern bool prior_fixed_xam(void);
@@ -135,6 +136,7 @@ int main(void)
 	// model subdirectory
 	RUN(avg_no_ode_xam);
 	RUN(avg_yes_ode_xam);
+	// RUN(fit_model_xam); 2DO: get this to run
 	RUN(like_all_xam);
 	RUN(like_one_xam);
 	RUN(prior_fixed_xam);

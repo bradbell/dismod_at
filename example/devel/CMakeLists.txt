@@ -47,6 +47,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 
 	model/avg_no_ode_xam.cpp
 	model/avg_yes_ode_xam.cpp
+	model/fit_model_xam.cpp
 	model/like_one_xam.cpp
 	model/like_all_xam.cpp
 	model/prior_fixed_xam.cpp
