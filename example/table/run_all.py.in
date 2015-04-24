@@ -10,7 +10,7 @@
 # ---------------------------------------------------------------------------
 import sys
 import os
-sys.path.append('@CMAKE_SOURCE_DIR@')
+sys.path.append('@CMAKE_SOURCE_DIR@/python')
 sys.path.append('@CMAKE_CURRENT_SOURCE_DIR@')
 file_list=os.listdir('@CMAKE_CURRENT_SOURCE_DIR@')
 #

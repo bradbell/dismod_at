@@ -13,7 +13,7 @@ $begin database$$
 $section Python Database Utilities$$
 
 $childtable%
-	dismod_at/database.py
+	python/dismod_at/database.py
 %$$
 
 $end
