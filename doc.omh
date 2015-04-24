@@ -28,7 +28,7 @@ $cref/Get Data Base Input Information/get_db_input/Under Construction/$$.
 $childtable%omh/table/input.omh
 	%omh/model/model.omh
 	%omh/table/output.omh
-	%omh/database.omh
+	%omh/python/python.omh
 	%devel/devel.omh
 %$$
 
