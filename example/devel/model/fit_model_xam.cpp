@@ -210,13 +210,6 @@ bool fit_model_xam(void)
 		integrand_table[i].eta       = 1e-6;
 	}
 	//
-	// pack_object
-	size_t n_child     = 1;
-	dismod_at::pack_info pack_object(
-		n_integrand, n_child,
-		smooth_table, mulcov_table, rate_table
-	);
-	//
 	// node_table:    0
 	//              1    2
 	//                  3  4
@@ -229,6 +222,13 @@ bool fit_model_xam(void)
 	//
 	// parent_node_id
 	size_t parent_node_id = 0;
+	//
+	// pack_object
+	size_t n_child     = 2;
+	dismod_at::pack_info pack_object(
+		n_integrand, n_child,
+		smooth_table, mulcov_table, rate_table
+	);
 	//
 	// w_info_vec (the constant one)
 	vector<double> weight(1);

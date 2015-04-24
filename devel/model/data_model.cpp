@@ -200,6 +200,7 @@ pack_object_   (pack_object)
 	// set n_child_
 	child_data cd(parent_node_id, node_table, data_table);
 	n_child_ = cd.child_size();
+	assert( n_child_ == pack_object.child_size() );
 	//
 	// si2ode_vec_ has same size as s_info_vec
 	size_t n_smooth = s_info_vec.size();

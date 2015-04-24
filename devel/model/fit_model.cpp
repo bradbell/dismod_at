@@ -131,7 +131,28 @@ prior_table_   ( prior_table )                      ,
 s_info_vec_    ( s_info_vec  )                      ,
 data_object_   ( data_object )                      ,
 prior_object_  ( prior_object )
-{	value_prior_ = pack_value_prior(pack_object, s_info_vec);
+{
+	// value_prior_
+	value_prior_ = pack_value_prior(pack_object, s_info_vec);
+	size_t n_var = n_fixed_ + n_random_;
+	assert( pack_object_.size() == n_var );
+	assert( value_prior_.size() == n_var );
+	// ---------------------------------------------------------------------
+	// initialize the aprox_mixed object
+	//
+	CppAD::vector<double> pack_vec( n_var );
+	// fixed_vec
+	CppAD::vector<double> fixed_vec(n_fixed_);
+	for(size_t i = 0; i < n_var; i++)
+		pack_vec[i] = prior_table_[ value_prior_[i] ].mean;
+	get_fixed_effect(pack_object_, pack_vec, fixed_vec);
+	// random_vec
+	CppAD::vector<double> random_vec(n_random_);
+	for(size_t i = 0; i < n_var; i++)
+		pack_vec[i] = prior_table_[ value_prior_[i] ].mean;
+	get_random_effect(pack_object_, pack_vec, random_vec);
+	//
+	initialize(fixed_vec, random_vec);
 }
 // ---------------------------------------------------------------------------
 // run_fit
