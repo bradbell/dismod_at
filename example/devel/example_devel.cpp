@@ -28,6 +28,7 @@ $end
 # include <cstring>
 
 // approx_mixed subdirectory
+extern bool approx_derived_xam(void);
 extern bool cholmod_xam(void);
 extern bool eigen_xam(void);
 extern bool joint_grad_ran_xam(void);
@@ -119,6 +120,7 @@ namespace {
 int main(void)
 {
 	// approx_mixed subdirectory
+	RUN(approx_derived_xam);
 	RUN(cholmod_xam);
 	RUN(eigen_xam);
 	RUN(joint_grad_ran_xam);

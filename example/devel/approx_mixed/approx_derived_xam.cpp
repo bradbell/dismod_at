@@ -131,13 +131,13 @@ bool approx_derived_xam(void)
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]       = double(i + 1);
 		//
-		fixed_vec[i]  = 1.0;
-		a1_fixed[i]   = a1_double(1.0);
-		a5_fixed[i]   = a5_double(1.0);
+		fixed_vec[i]  = 1.5;
+		a1_fixed[i]   = a1_double( fixed_vec[i] );
+		a5_fixed[i]   = a5_double( fixed_vec[i] );
 		//
 		random_vec[i] = 0.0;
-		a1_random[i]  = a1_double(0.0);
-		a5_random[i]  = a5_double(0.0);
+		a1_random[i]  = a1_double( random_vec[i] );
+		a5_random[i]  = a5_double( random_vec[i] );
 	}
 
 	// object that is derived from approx_mixed
