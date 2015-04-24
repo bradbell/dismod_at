@@ -120,16 +120,15 @@ void approx_mixed::laplace_hes_fix(
 	CppAD::vector<size_t>&   col_out     ,
 	d_vector&                val_out     )
 {
-	// number of fixed and random effects
-	assert( n_fixed_  == fixed_vec.size() );
-	assert( n_random_ == random_vec.size() );
-
-	// make sure hessian has been recorded
+	// make initilaize has been called
 	if( hes_fix_.size_var() == 0 )
 	{	std::cerr << "approx_mixed::initialize was not called before"
 		<< " approx_mixed::laplace_hes_fix" << std::endl;
 		exit(1);
 	}
+	// number of fixed and random effects
+	assert( n_fixed_  == fixed_vec.size() );
+	assert( n_random_ == random_vec.size() );
 
 	// size of outputs
 	size_t n_nonzero = hes_fix_row_.size();

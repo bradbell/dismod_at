@@ -146,6 +146,12 @@ CppAD::vector<double> approx_mixed::optimize_random(
 	const d_vector& fixed_vec       ,
 	const d_vector& random_in       )
 {
+	// make sure initialize has been called
+	if( grad_ran_.size_var() == 0 )
+	{	std::cerr << "approx_mixed::initialize was not called before"
+		<< " approx_mixed::optimize_random" << std::endl;
+		exit(1);
+	}
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );
 	assert( n_random_ == random_in.size() );

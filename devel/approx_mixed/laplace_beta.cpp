@@ -88,7 +88,15 @@ approx_mixed::d_vector approx_mixed::laplace_beta(
 	const d_vector& beta  ,
 	const d_vector& theta ,
 	const d_vector& u     )
-{	assert( laplace_1_.Domain() == 2 * n_fixed_ + n_random_ );
+{
+	// make sure initialize has been called
+	if( grad_ran_.size_var() == 0 )
+	{	std::cerr << "approx_mixed::initialize was not called before"
+		<< " approx_mixed::laplace_beta" << std::endl;
+		exit(1);
+	}
+
+	assert( laplace_1_.Domain() == 2 * n_fixed_ + n_random_ );
 	assert( laplace_1_.Range() == 1 );
 
 	// pack all the arguments into one vector.

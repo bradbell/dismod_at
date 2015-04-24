@@ -91,7 +91,14 @@ double approx_mixed::laplace_eval(
 	const d_vector& beta  ,
 	const d_vector& theta ,
 	const d_vector& u     )
-{	assert( laplace_0_.Domain() == 2 * n_fixed_ + n_random_ );
+{
+	// make sure initialize has been called
+	if( grad_ran_.size_var() == 0 )
+	{	std::cerr << "approx_mixed::initialize was not called before"
+		<< " approx_mixed::laplace_eval" << std::endl;
+		exit(1);
+	}
+	assert( laplace_0_.Domain() == 2 * n_fixed_ + n_random_ );
 	assert( laplace_0_.Range() == 1 );
 
 	// evaluate H(beta, theta, u)

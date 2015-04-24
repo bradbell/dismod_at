@@ -140,6 +140,12 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	const d_vector& random_in   )
 {	bool ok = true;
 	using Ipopt::SmartPtr;
+	// make sure initialize has been called
+	if( grad_ran_.size_var() == 0 )
+	{	std::cerr << "approx_mixed::initialize was not called before"
+		<< " approx_mixed::optimize_fixed" << std::endl;
+		exit(1);
+	}
 
 # ifndef NDEBUG
 	assert( fixed_lower.size() == fixed_in.size() );

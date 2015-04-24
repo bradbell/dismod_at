@@ -117,7 +117,7 @@ void approx_mixed::prior_hes(
 	CppAD::vector<size_t>& col_out     ,
 	d_vector&              val_out     )
 {
-	// make sure prior_density_ has been recorded
+	// make sure initialize has been called
 	if( prior_density_.size_var() == 0 )
 	{	std::cerr << "approx_mixed::initialize was not called before"
 		<< " approx_mixed::prior_hes" << std::endl;

@@ -70,6 +70,12 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 CppAD::vector<double> approx_mixed::prior_eval(const d_vector& fixed_vec)
 {	assert( prior_density_.Domain() == n_fixed_ );
+	// make sure initialize has been called
+	if( grad_ran_.size_var() == 0 )
+	{	std::cerr << "approx_mixed::initialize was not called before"
+		<< " approx_mixed::prior_eval" << std::endl;
+		exit(1);
+	}
 	return prior_density_.Forward(0, fixed_vec);
 }
 

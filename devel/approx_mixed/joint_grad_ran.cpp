@@ -80,16 +80,16 @@ CppAD::vector<approx_mixed::a3_double> approx_mixed::joint_grad_ran(
 	const a3d_vector&        fixed_vec   ,
 	const a3d_vector&        random_vec  )
 {
-	// number of fixed and random effects
-	assert( n_fixed_  == fixed_vec.size() );
-	assert( n_random_ == random_vec.size() );
-
-	// make sure gradient has been recorded
+	// make sure initialize has been called
 	if( grad_ran_.size_var() == 0 )
 	{	std::cerr << "approx_mixed::initialize was not called before"
 		<< " approx_mixed::joint_grad_ran" << std::endl;
 		exit(1);
 	}
+
+	// number of fixed and random effects
+	assert( n_fixed_  == fixed_vec.size() );
+	assert( n_random_ == random_vec.size() );
 
 	// create an a3d_vector containing (theta, u)
 	a3d_vector both_vec( n_fixed_ + n_random_ );
