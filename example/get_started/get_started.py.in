@@ -3,8 +3,8 @@
 # dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
 #           Copyright (C) 2014-14 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
@@ -54,7 +54,7 @@ weight_list = [
 ]
 covariate_list = [
 	{ 'name':'sex', 'reference':0.0 }
-] 
+]
 data_list = []
 row = {
 	'integrand':'mtother',
@@ -78,39 +78,39 @@ row['meas_value'] = 0.5e-5
 data_list.append( copy.copy(row) )
 #
 prior_list = [
-	{	'name':'zero', 
+	{	'name':'zero',
 		'density':'uniform',
-		'lower':0.0, 
-		'upper':0.0, 
+		'lower':0.0,
+		'upper':0.0,
 		'mean':0.0,
 		'std':None,
 		'eta':None
-	},{	'name':'one', 
+	},{	'name':'one',
 		'density':'uniform',
-		'lower':1.0, 
-		'upper':1.0, 
+		'lower':1.0,
+		'upper':1.0,
 		'mean':1.0,
 		'std':None,
 		'eta':None
-	},{	'name':'uniform_01', 
+	},{	'name':'uniform_01',
 		'density':'uniform',
-		'lower':0.0, 
-		'upper':1.0, 
-		'mean':0.1, 
+		'lower':0.0,
+		'upper':1.0,
+		'mean':0.1,
 		'std':None,
 		'eta':None
-	},{	'name':'gaussian_01', 
+	},{	'name':'gaussian_01',
 		'density':'gaussian',
-		'lower':None, 
-		'upper':None, 
-		'mean':0.0, 
+		'lower':None,
+		'upper':None,
+		'mean':0.0,
 		'std':1.0,
 		'eta':None
-	},{	'name':'log_gaussian', 
+	},{	'name':'log_gaussian',
 		'density':'log_gaussian',
-		'lower':None, 
-		'upper':None, 
-		'mean':0.0, 
+		'lower':None,
+		'upper':None,
+		'mean':0.0,
 		'std':None,
 		'eta':1e-6
 	}
@@ -131,7 +131,7 @@ smooth_list = [
 		'mulstd_dtime':'one',
 		'fun':smooth_gaussian_01_fun
 	}
-] 
+]
 rate_list = [
 	{
 		'name':'pini',
@@ -162,20 +162,20 @@ mulcov_list = [
 		'smooth':'uniform_01_constant'
 	}
 ]
-run_list    = [ 
-	{	'parent_node':'north_america', 
+run_list    = [
+	{	'parent_node':'north_america',
 		'pini_smooth':'uniform_01_constant',
-		'ode_step_size':0.5, 
-		'n_sample':100 
+		'ode_step_size':0.5,
+		'n_sample':100
 	}
 ]
 dismod_at.create_database(
-	file_name, 
+	file_name,
 	age_list,
 	time_list,
 	integrand_list,
-	node_list, 
-	weight_list, 
+	node_list,
+	weight_list,
 	covariate_list,
 	data_list,
 	prior_list,
