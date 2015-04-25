@@ -273,10 +273,9 @@ fit_model::a1d_vector fit_model::prior_density(
 {	// check if this temporay needs to be sized
 	if( random_vec_tmp_.size() == 0 )
 		random_vec_tmp_.resize( size_random_effect(pack_object_) );
-	if( prior_fix_tmp_.size() == 0 )
-		prior_fix_tmp_.resize( size_fixed_effect(pack_object_) );
 	if( a1_pack_vec_tmp_.size() == 0 )
 		a1_pack_vec_tmp_.resize( pack_object_.size() );
+	// if( prior_fix_tmp_.size() == 0 )
 	//
 	// set random_vec_tmp_ to nan
 	for(size_t i = 0; i < random_vec_tmp_.size(); i++)
@@ -287,6 +286,7 @@ fit_model::a1d_vector fit_model::prior_density(
 	put_random_effect(pack_object_, a1_pack_vec_tmp_, random_vec_tmp_);
 	//
 	// evaluate the fixed effects prior
+	// (size is determined the the first time this vector is assigned)
 	prior_fix_tmp_  = prior_object_.fixed(a1_pack_vec_tmp_);
 	//
 	// number of data and prior residuals

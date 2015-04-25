@@ -259,7 +259,7 @@ approx_object_ ( approx_object    )
 		laplace_hes_row_, laplace_hes_col_, laplace_hes_val_
 	);
 	// row and column indices for contribution form prior density
-	d_vector weight( n_fixed_ );
+	d_vector weight( 1 + prior_n_abs_ );
 	for(size_t i = 0; i < weight.size(); i++)
 		weight[i] = 1.0;
 	approx_object.prior_hes(

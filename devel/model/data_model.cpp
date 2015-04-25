@@ -44,6 +44,12 @@ instead a reference to is stored in $icode data_object$$.
 Thus, $icode data_object$$ should not be used after $icode data_table$$
 is deleted.
 
+$head data_object$$
+This object has prototype
+$codei%
+	data_model %data_object%
+%$$
+
 $head parent_node_id$$
 This argument has prototype
 $codei%

@@ -53,12 +53,17 @@ then
 	echo "./test_one.sh: Cannot find $file."
 	exit 1
 fi
-dir=`echo $file | sed -e 's|/[^/]*$||'`
-name=`echo $file | sed -e 's|.*/lib||' -e 's|[.][^.]*$||'`
-dismod_at_lib="-L $dir -l$name"
+lib_dir=`echo $file | sed -e 's|/[^/]*$||'`
+lib_name=`echo $file | sed -e 's|.*/lib||' -e 's|[.][^.]*$||'`
+dismod_at_lib="-L $lib_dir -l$lib_name"
 #
 # libarary flags necessary to use ipopt
 ipopt_libs=`pkg-config --libs ipopt`
+#
+# build library
+pushd ../../build
+make $lib_name
+popd
 #
 # compile
 echo_eval g++ \

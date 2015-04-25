@@ -138,8 +138,7 @@ int main(void)
 	// model subdirectory
 	RUN(avg_no_ode_xam);
 	RUN(avg_yes_ode_xam);
-	// fit_model_xam does not work (yet)
-	// RUN(fit_model_xam);
+	RUN(fit_model_xam);
 	RUN(like_all_xam);
 	RUN(like_one_xam);
 	RUN(prior_fixed_xam);
