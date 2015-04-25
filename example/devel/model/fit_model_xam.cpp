@@ -89,7 +89,7 @@ bool fit_model_xam(void)
 	size_t mulstd_value, mulstd_dage, mulstd_dtime;
 	size_t n_age, n_time, n_grid;
 
-	vector<dismod_at::smooth_info> s_info_vec(3);
+	vector<dismod_at::smooth_info> s_info_vec(4);
 	// ------------------ first and second smoothing --------------------------
 	// age_id
 	n_age = 3;
@@ -139,7 +139,7 @@ bool fit_model_xam(void)
 			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
 			mulstd_value, mulstd_dage, mulstd_dtime
 	);
-	// ------------------ third smoothing -----------------------------------
+	// ------------------ third and fourth smoothing --------------------------
 	// age_id
 	n_age = 1;
 	age_id.resize(n_age);
@@ -175,6 +175,17 @@ bool fit_model_xam(void)
 			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
 			mulstd_value, mulstd_dage, mulstd_dtime
 	);
+	//
+	// smooth_id_12_none
+	for(i = 0; i < n_age; i++)
+	{	for(j = 0; j < n_time; j++)
+			value_prior_id[ i * n_time + j ] = prior_id_none;
+	}
+	size_t smooth_id_12_none = 3;
+	s_info_vec[smooth_id_12_none] = dismod_at::smooth_info(
+			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
+			mulstd_value, mulstd_dage, mulstd_dtime
+	);
 	// --------------------------------------------------------------------
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
@@ -195,12 +206,14 @@ bool fit_model_xam(void)
 			rate_table[rate_id].child_smooth_id  = smooth_id_12_gaussian;
 		}
 		else
-		{	rate_table[rate_id].parent_smooth_id = smooth_id_32_gaussian;
-			rate_table[rate_id].child_smooth_id  = smooth_id_32_gaussian;
+		{	// eventually plan to use smooth_id_32_gaussian here
+			rate_table[rate_id].parent_smooth_id = smooth_id_12_gaussian;
+			rate_table[rate_id].child_smooth_id  = smooth_id_12_gaussian;
 		}
 	}
 	// change parent iota smoothing to be none
-	rate_table[dismod_at::iota_enum].parent_smooth_id = smooth_id_32_none;
+	// evantually plan tu use smooth_id_32_none here
+	rate_table[dismod_at::iota_enum].parent_smooth_id = smooth_id_12_none;
 	//
 	// integrand_table
 	size_t n_integrand = dismod_at::number_integrand_enum;
