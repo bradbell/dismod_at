@@ -46,6 +46,20 @@ sed \
 	-e "s|// summary report|RUN($fun_name);\n\t&|" \
 	< example_devel.cpp > junk.cpp
 #
+# dismod_at library flags
+file='../../build/devel/libdevel_lib.a'
+if [ ! -e "$file" ]
+then
+	echo "./test_one.sh: Cannot find $file."
+	exit 1
+fi
+dir=`echo $file | sed -e 's|/[^/]*$||'`
+name=`echo $file | sed -e 's|.*/lib||' -e 's|[.][^.]*$||'`
+dismod_at_lib="-L $dir -l$name"
+#
+# libarary flags necessary to use ipopt
+ipopt_libs=`pkg-config --libs ipopt`
+#
 # compile
 echo_eval g++ \
 	-g \
@@ -54,7 +68,8 @@ echo_eval g++ \
 	-I $HOME/prefix/cppad/include \
 	junk.cpp \
 	$dir_file \
-	-L ../../build/devel -ldevel_lib \
+	$dismod_at_lib \
+	$ipopt_libs \
 	-o junk
 #
 # run
