@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin prior_model$$
+$begin prior_model_ctor$$
 $spell
 	pack_vec
 	CppAD
@@ -200,15 +200,15 @@ This object has prototype
 $codei%
 	const prior_model %prior_object%
 %$$
+see $cref/prior_object constructor/prior_model_ctor/prior_object/$$.
 
 $head pack_vec$$
 This vector has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and is a packed vector corresponding to the information in
-$cref/pack_object/prior_model/pack_object/$$ for this
-$icode prior_object$$.
+and is all the $cref/model variables/model_variable/$$ in the order
+specified by $cref pack_info$$.
 
 $head residual_vec$$
 The return value has prototype
@@ -376,15 +376,15 @@ This object has prototype
 $codei%
 	const prior_model %prior_object%
 %$$
+see $cref/prior_object constructor/prior_model_ctor/prior_object/$$.
 
 $head pack_vec$$
 This vector has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and is a packed vector corresponding to the information in
-$cref/pack_object/prior_model/pack_object/$$ for this
-$icode prior_object$$.
+and is all the $cref/model variables/model_variable/$$ in the order
+specified by $cref pack_info$$.
 
 $head residual_vec$$
 The return value has prototype

@@ -142,6 +142,8 @@ residual_struct<Float> residual_density(
 	const Float&       delta   ,
 	const Float&       eta     )
 {
+	assert( delta > 0.0 );
+
 	Float wres, sigma;
 	switch( density )
 	{

@@ -487,6 +487,8 @@ This object has prototype
 $codei%
 	const data_model %data_object%
 %$$
+see $cref/data_object constructor/data_model_ctor/data_object/$$.
+
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -514,7 +516,8 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and is a vector of values for all of the model variables.
+and is all the $cref/model variables/model_variable/$$ in the order
+specified by $cref pack_info$$.
 
 $subhead Integrand and Rates$$
 The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
@@ -743,6 +746,7 @@ This object has prototype
 $codei%
 	const data_model %data_object%
 %$$
+see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -778,8 +782,8 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and is a vector of values for all of the
-$cref/model variables/model_variable/$$.
+and is all the $cref/model variables/model_variable/$$ in the order
+specified by $cref pack_info$$.
 Only the following subvectors of $icode pack_vec$$ are used:
 $cref pack_info_rate$$,
 $cref pack_info_rate_mulcov$$.
@@ -1070,6 +1074,7 @@ This object has prototype
 $codei%
 	const data_model %data_object%
 %$$
+see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -1097,7 +1102,8 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and is a vector of values for all of the model variables; i.e.,
+and is all the $cref/model variables/model_variable/$$ in the order
+specified by $cref pack_info$$; i.e.,
 $latex (u , \theta)$$.
 Only the $cref pack_info_meas_mulcov$$ subvectors of $icode pack_vec$$ are used
 by $code like_one$$ (note that other components of $latex (u, \theta )$$
@@ -1152,6 +1158,7 @@ residual_struct<Float> data_model::like_one(
 	double sigma                   = data_table_[ data_id ].meas_std;
 	size_t integrand_id            = data_table_[ data_id ].integrand_id;
 	double meas_value              = data_table_[ data_id ].meas_value;
+	assert( sigma > 0.0 );
 
 	// data_info information for this data point
 	density_enum   density             = data_info_[data_id].density;
@@ -1251,6 +1258,7 @@ This object has prototype
 $codei%
 	const data_model %data_object%
 %$$
+see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $subhead i$$
 We use $icode i$$ to
@@ -1285,7 +1293,8 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and is a vector of values for all of the model variables; i.e.,
+and is all the $cref/model variables/model_variable/$$ in the order
+specified by $cref pack_info$$; i.e.,
 $latex (u , \theta)$$.
 
 $head residual_vec$$

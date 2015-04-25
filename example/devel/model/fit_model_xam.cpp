@@ -56,31 +56,39 @@ bool fit_model_xam(void)
 	vector<dismod_at::prior_struct> prior_table(n_prior_table);
 	//
 	// prior_id_zero (identically zero prior)
+	prior_table[0].prior_name = "zero";
 	prior_table[0].density_id = int( dismod_at::uniform_enum );
 	prior_table[0].lower      = 0.0;
 	prior_table[0].mean       = 0.0;
 	prior_table[0].upper      = 0.0;
+	prior_table[0].std        = 1.0;
 	//
 	// prior_id_one (identically one prior)
+	prior_table[1].prior_name = "one";
 	prior_table[1].density_id = int( dismod_at::uniform_enum );
 	prior_table[1].lower      = 1.0;
 	prior_table[1].mean       = 1.0;
 	prior_table[1].upper      = 1.0;
+	prior_table[1].std        = 1.0;
+	//
 	size_t prior_id_one       = 1;
 	//
 	// prior_id_none (no prior)
+	prior_table[2].prior_name = "none";
 	prior_table[2].density_id = int( dismod_at::uniform_enum );
 	prior_table[2].lower      = - inf;
 	prior_table[2].mean       = 0.0;
 	prior_table[2].upper      = + inf;
+	prior_table[2].std        = 1.0;
 	size_t prior_id_none      = 2;
 	//
 	// prior_id_gaussian (Gaussian mean 0.01 and standard deviation 0.002)
+	prior_table[3].prior_name = "N(1e-2, 4e-6)";
 	prior_table[3].density_id = int( dismod_at::gaussian_enum );
 	prior_table[3].lower      = -inf;
 	prior_table[3].mean       = 0.01;
-	prior_table[3].std        = 0.002;
 	prior_table[3].upper      = +inf;
+	prior_table[3].std        = 0.002;
 	size_t prior_id_gaussian  = 3;
 	// -------------------------------------------------------------------
 	// smoothing information
