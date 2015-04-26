@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
@@ -29,15 +29,15 @@ and of $latex N$$ time values
 $latex \[
 	\{ t_j \; | \; j = 0, \ldots , N-1 \} \; .
 \] $$
-In addition, 
-we are given a grid of values to be interpolated 
+In addition,
+we are given a grid of values to be interpolated
 $latex \[
 	\{ v_{i,j} \; | \; i = 0, \ldots , M-1 , j = 0 , \ldots , N-1 \} \; .
 \] $$
 This constitutes an Interpolation Grid.
 
 $subhead Interpolant$$
-The corresponding interpolant at age $latex \alpha$$ and time 
+The corresponding interpolant at age $latex \alpha$$ and time
 $latex \theta$$, $latex v( \alpha , \theta )$$ is defined as follows:
 
 $list number$$
@@ -45,51 +45,51 @@ Case where there is an index pair $latex i < M-1$$, $latex j < N-1$$ such that
 $latex a_i \leq \alpha \leq a_{i+1}$$ and
 $latex t_j \leq \theta \leq t_{j+1}$$:
 $latex \[
-v( \alpha , \theta ) 
+v( \alpha , \theta )
 =
-\frac{a_{i+1} - \alpha}{a_{i+1} - a_i} 
+\frac{a_{i+1} - \alpha}{a_{i+1} - a_i}
 	\frac{t_{j+1} - \theta}{t_{j+1} - t_j} v_{i,j}
 +
-\frac{\alpha - a_i}{a_{i+1} - a_i} 
+\frac{\alpha - a_i}{a_{i+1} - a_i}
 	\frac{t_{j+1} - \theta}{t_{j+1} - t_j} v_{i+1,j}
 +
-\frac{a_{i+1} - \theta}{a_{i+1} - a_i} 
+\frac{a_{i+1} - \theta}{a_{i+1} - a_i}
 	\frac{\theta - t_j}{t_{j+1} - t_j} v_{i+1,j}
 +
-\frac{\alpha - a_i}{a_{i+1} - a_i} 
+\frac{\alpha - a_i}{a_{i+1} - a_i}
 	\frac{\theta - t_j}{t_{j+1} - t_j} v_{i+1,j+1}
 \] $$
 
-$lnext 
-Case where $latex i = 0$$ and $latex \alpha < a_i$$ 
+$lnext
+Case where $latex i = 0$$ and $latex \alpha < a_i$$
 or $latex i = M-1$$ and $latex a_i < \alpha$$ and
 there is an index $latex j < N-1$$ such that
 $latex t_j \leq \theta \leq t_{j+1}$$:
 $latex \[
-v( \alpha , \theta ) 
+v( \alpha , \theta )
 =
 \frac{t_{j+1} - \theta}{t_{j+1} - t_j} v_{i,j}
 +
 \frac{\theta - t_j}{t_{j+1} - t_j} v_{i,j+1}
 \] $$
 
-$lnext 
-Case where $latex j = 0$$ and $latex \theta < t_j$$ 
+$lnext
+Case where $latex j = 0$$ and $latex \theta < t_j$$
 or $latex j = N-1$$ and $latex t_j < \theta$$ and
 there is an index $latex i < M-1$$ such that
 $latex a_i \leq \alpha \leq a_{i+1}$$:
 $latex \[
-v( \alpha , \theta ) 
+v( \alpha , \theta )
 =
 \frac{a_{i+1} - \alpha}{a_{i+1} - a_i} v_{i,j}
 +
 \frac{\alpha - a_i}{a_{i+1} - a_i}  v_{i+1,j}
 \] $$
 
-$lnext 
-Case where $latex i = 0$$ and $latex \alpha < a_i$$ 
+$lnext
+Case where $latex i = 0$$ and $latex \alpha < a_i$$
 or $latex i = M-1$$ and $latex a_i < \alpha$$.
-Furthermore, $latex j = 0$$ and $latex \theta < t_j$$ 
+Furthermore, $latex j = 0$$ and $latex \theta < t_j$$
 or $latex j = N-1$$ and $latex t_j < \theta$$:
 $latex \[
 v( \alpha , \theta )  = v_{i,j}
@@ -102,7 +102,7 @@ $lend
 $head Ode Grid$$
 $index ode, grid$$
 $index grid, ode$$
-We use the notation $latex \Delta s$$ for the 
+We use the notation $latex \Delta s$$ for the
 $cref/ode_step_size/fit_table/ode_step_size/$$.
 We use $latex a_\R{min}$$ and $latex a_\R{max}$$ to denote
 the minimum and maximum
@@ -121,14 +121,14 @@ $latex \[
 
 $subhead Age, a_i$$
 We define $latex a_i = a_\R{min} + i \Delta s$$ and
-the Ode Age Grid is 
+the Ode Age Grid is
 $latex \[
 	\{ a_i \; | \; i = 0, \ldots , M-1 \} \; .
 \] $$
 
 $subhead Time, t_j$$
 We define $latex t_j = t_\R{min} + j \Delta s$$ and
-the Ode Time Grid is 
+the Ode Time Grid is
 $latex \[
 	\{ t_j \; | \; j = 0, \ldots , N-1 \} \; .
 \] $$

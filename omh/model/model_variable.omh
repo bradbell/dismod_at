@@ -4,7 +4,7 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ $$
 
 $section The Model Variables$$
 This section describes the model variables.
-The vector of model variables are divided into a set of subvectors 
+The vector of model variables are divided into a set of subvectors
 described below.
 
 $head Notation$$
@@ -59,8 +59,8 @@ there is a smoothing.
 The smoothing determines the number of elements in the subvector
 and the prior for each of these elements; see
 $table
-$cref/n_age/smooth_table/n_age/$$ $cnext 
-	number of age points 
+$cref/n_age/smooth_table/n_age/$$ $cnext
+	number of age points
 $rnext
 $cref/n_time/smooth_table/n_time/$$ $cnext
 	number of time points
@@ -86,44 +86,44 @@ $rnext
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$  $cnext
 	identifies prior for forward differences w.r.t time
 $tend
-The prior standard deviations for 
-values, age differences, and time differences, are multiplied by 
+The prior standard deviations for
+values, age differences, and time differences, are multiplied by
 $latex \lambda_i^v$$,
 $latex \lambda_i^a$$, and
-$latex \lambda_i^t$$  respectively; see 
+$latex \lambda_i^t$$  respectively; see
 $cref/lambda
 	/model_variable
 	/Fixed Effects, theta
 	/Smoothing Standard Deviation Multipliers, lambda
-/$$ 
+/$$
 below.
 
 
 $subhead Number of Children$$
-The number of children $icode n_child$$ is the size of the 
+The number of children $icode n_child$$ is the size of the
 $cref/child group/node_table/parent/Child Group/$$ for which
 the parent node is
 $cref/parent_node_id/fit_table/parent_node_id/$$.
 
 $subhead Initial Prevalence$$
-Let $latex p_0 (t)$$ to denote the 
-$cref/prevalence/avg_integrand/I_i (a, t)/prevalence/$$ 
+Let $latex p_0 (t)$$ to denote the
+$cref/prevalence/avg_integrand/I_i (a, t)/prevalence/$$
 at the initial age; i.e., the first age in $cref age_table$$.
 Let $latex a_0$$ denotes the first age in the $cref age_table$$.
 The initial susceptible fraction
 $cref/S_i(a,t)/avg_integrand/S_i(a,t)/$$ is
 $latex \[
 	S_i ( a_0 , t ) = p_0 (t)
-\] $$ 
+\] $$
 and the initial with condition faction
-$cref/C_i(a,t)/avg_integrand/C_i(a,t)/$$ is 
+$cref/C_i(a,t)/avg_integrand/C_i(a,t)/$$ is
 $latex \[
 	C_i ( a_0 , t ) = 1 - p_0 (t)
 \] $$
 
 $head Fixed Effects, theta$$
 we use $latex \theta$$ to denote the vector of fixed effects; i.e.,
-all of the model variables except for the random effects. 
+all of the model variables except for the random effects.
 Below is a list of the fixed effects subvectors.
 
 $subhead Smoothing Standard Deviation Multipliers, lambda$$
@@ -137,28 +137,28 @@ $cref/mulstd_dtime/smooth_table/mulstd_dtime/$$.
 
 $subhead Parent Rates$$
 For each rate
-$code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$ 
-there is a 
+$code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$
+there is a
 subvector corresponding to the parent value for the rate.
 The smoothing for each of these subvectors is specified by
 $cref/parent_smooth_id/rate_table/parent_smooth_id/$$.
 
 $subhead Covariate Multipliers$$
 For each $cref/mulcov_id/mulcov_table/mulcov_id/$$
-there is a corresponding subvector and its 
+there is a corresponding subvector and its
 smoothing is specified by the corresponding
 $cref/smooth_id/mulcov_table/smooth_id/$$.
 
 $head Random Effects, u$$
 we use $latex u$$ to denote the vector of random effects; i.e.,
-all of the model variables except for the fixed effects. 
+all of the model variables except for the fixed effects.
 Currently, the only random effects are the rates
 for the children.
 
 $subhead Child Rates$$
 For each rate
 ($code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$)
-there is a 
+there is a
 subvector corresponding to the child random effects for the rate.
 The smoothing for the subvector only depends on the rate; i.e.,
 given a rate, it is the same for all children.

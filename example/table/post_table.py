@@ -3,8 +3,8 @@
 # dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
 #           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
@@ -44,7 +44,7 @@ def post_table() :
 		'integer',              # sample
 		'text',                 # variable_type
 		'integer',              # mulcov_id
-		'integer',              # rate_id        
+		'integer',              # rate_id
 		'real',                 # age
 		'real'                  # time
 	]
@@ -54,7 +54,7 @@ def post_table() :
 	n_rate         = 8
 	row_list       = list()
 	age_grid       = [ 0.0, 100.0]
-	time_grid      = [ 1990., 2000.] 
+	time_grid      = [ 1990., 2000.]
 	for i in range(n_mulcov + n_rate) :
 		if i < n_mulcov :
 			variable_type = 'multilplier'

@@ -3,8 +3,8 @@
 # dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
 #           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
@@ -36,7 +36,7 @@ def fit_table() :
 		'parent_node_id','ode_step_size','n_sample'
 	]
 	col_type = [
-		'integer',       'real',         'integer' 
+		'integer',       'real',         'integer'
 	]
 	row_list = [ [ 0, 0.5, 100 ] ]
 	tbl_name = 'fit'

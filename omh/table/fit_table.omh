@@ -4,11 +4,11 @@ dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin fit_table$$ 
+$begin fit_table$$
 $spell
 $$
 $index run, table$$
@@ -18,25 +18,25 @@ $section The Run Table$$
 The $code run$$ table has the following columns:
 
 $head fit_id$$
-This column has type $code integer$$ 
+This column has type $code integer$$
 and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
 $head parent_node_id$$
-This column has type $code integer$$ 
-and is the $cref/node_id/node_table/node_id/$$ for 
+This column has type $code integer$$
+and is the $cref/node_id/node_table/node_id/$$ for
 the parent node for this $icode fit_id$$.
 
 $head ode_step_size$$
-This column has type $code real$$ 
+This column has type $code real$$
 and is the step size used to integrand the ordinary differential equation.
 The step size is the same in age and time because it is along cohort lines.
 
 $head n_sample$$
-This column has type $code integer$$ 
+This column has type $code integer$$
 and is the number of posterior
 $cref/samples/post_table/sample/$$.
-If it is zero, then only the maximum likelihood estimate is 
+If it is zero, then only the maximum likelihood estimate is
 stored in $cref post_table$$.
 
 $children%example/table/fit_table.py
