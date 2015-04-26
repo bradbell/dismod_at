@@ -179,8 +179,15 @@ void fit_model::run_fit(void)
 	get_random_effect(pack_object_, pack_vec, random_in);
 
 	// optimal fixed effects
+	std::string options =
+		"Integer print_level               0\n"
+		"String  sb                        yes\n"
+		"String  derivative_test           second-order\n"
+		"String  derivative_test_print_all yes\n"
+		"Numeric tol                       1e-8\n"
+	;
 	CppAD::vector<double> optimal_fixed = optimize_fixed(
-		fixed_lower, fixed_in, fixed_upper, random_in
+		options, fixed_lower, fixed_in, fixed_upper, random_in
 	);
 
 	// optimal random effects

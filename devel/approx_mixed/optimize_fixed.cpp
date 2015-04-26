@@ -24,7 +24,7 @@ $section Optimize Fixed Effects$$
 $head Syntax$$
 $icode%fixed_out% =%$$
 $icode%approx_object%.optimize_fixed(
-	%fixed_lower%, %fixed_in%, %fixed_upper%, %random_in%
+	%options%, %fixed_lower%, %fixed_in%, %fixed_upper%, %random_in%
 )%$$
 
 $head Purpose$$
@@ -41,6 +41,40 @@ $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
 to denote an object of a class that is
 derived from the $code approx_mixed$$ base class.
+
+$head options$$
+The argument $icode options$$ has prototype
+$codei%
+	const std::string %options%
+%$$
+It contains a list of options.
+Each option, including the last option,
+is terminated by the $code '\n'$$ character.
+Each line consists of three tokens separated by one or more spaces.
+
+$subhead String$$
+You can set any Ipopt string option using a line with the following syntax:
+$codei%
+	String %name% %value%
+%$$
+Here $icode name$$ is any valid Ipopt string option
+and $icode value$$ is its setting.
+
+$subhead Numeric$$
+You can set any Ipopt numeric option using a line with the following syntax:
+$codei%
+	Numeric %name% %value%
+%$$
+Here $icode name$$ is any valid Ipopt numeric option
+and $icode value$$ is its setting.
+
+$subhead Integer$$
+You can set any Ipopt integer option using a line with the following syntax:
+$codei%
+	Integer %name% %value%
+%$$
+Here $icode name$$ is any valid Ipopt integer option
+and $icode value$$ is its setting.
 
 $head fixed_lower$$
 This argument has prototype
@@ -134,10 +168,11 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 CppAD::vector<double> approx_mixed::optimize_fixed(
-	const d_vector& fixed_lower ,
-	const d_vector& fixed_in    ,
-	const d_vector& fixed_upper ,
-	const d_vector& random_in   )
+	const std::string& options     ,
+	const d_vector&    fixed_lower ,
+	const d_vector&    fixed_in    ,
+	const d_vector&    fixed_upper ,
+	const d_vector&    random_in   )
 {	bool ok = true;
 	using Ipopt::SmartPtr;
 	// make sure initialize has been called
@@ -168,10 +203,57 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
 
 	// Set options
+	size_t begin_1, end_1, begin_2, end_2, begin_3, end_3;
+	begin_1     = 0;
+	while( options[begin_1] == ' ')
+		begin_1++;
+	while( begin_1 < options.size() )
+	{ 	// split this line into tokens
+		end_1   = options.find_first_of(" \n", begin_1);
+		begin_2 = end_1;
+		while( options[begin_2] == ' ')
+			begin_2++;
+		end_2   = options.find_first_of(" \n", begin_2);
+		begin_3 = end_2;
+		while( options[begin_3] == ' ')
+			begin_3++;
+		end_3   = options.find_first_of(" \n", begin_3);
+
+		// check for errors
+		assert( end_3 != std::string::npos );
+		assert( begin_1 < end_1 && end_1 <= begin_2 );
+		assert( begin_2 < end_2 && end_2 <= begin_3 );
+		assert( begin_3 < end_3 );
+
+		// get the three tokens
+		std::string tok_1 = options.substr(begin_1, end_1 - begin_1);
+		std::string tok_2 = options.substr(begin_2, end_2 - begin_2);
+		std::string tok_3 = options.substr(begin_3, end_3 - begin_3);
+
+		// switch on option type
+		if ( tok_1 == "String" )
+			app->Options()->SetStringValue(tok_2.c_str(), tok_3.c_str());
+		else if ( tok_1 == "Numeric" )
+		{	Ipopt::Number value = std::atof( tok_3.c_str() );
+			app->Options()->SetNumericValue(tok_2.c_str(), value);
+		}
+		else if ( tok_1 == "Integer" )
+		{	Ipopt::Index value = std::atoi( tok_3.c_str() );
+			app->Options()->SetIntegerValue(tok_2.c_str(), value);
+		}
+		else assert(false);
+		//
+		// next line
+		begin_1 = end_3;
+		while( options[begin_1] == ' ' || options[begin_1] == '\n' )
+			begin_1++;
+	}
+# if 0
 	app->Options()->SetIntegerValue("print_level", 0); // default is 5
 	app->Options()->SetStringValue("sb", "yes");
 	app->Options()->SetStringValue("derivative_test", "second-order");
 	app->Options()->SetStringValue("derivative_test_print_all", "yes");
+# endif
 
 	// Set values used for minus and plus infinity
 	app->Options()->SetNumericValue(
