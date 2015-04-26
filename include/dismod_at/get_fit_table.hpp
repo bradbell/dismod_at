@@ -18,7 +18,7 @@ namespace dismod_at {
 	struct fit_struct {
 		int    parent_node_id;
 		double ode_step_size;
-		int    n_sample;
+		double tolerance;
 	};
 	extern CppAD::vector<fit_struct> get_fit_table(sqlite3*  db);
 }

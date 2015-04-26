@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -162,11 +162,11 @@ mulcov_list = [
 		'smooth':'uniform_01_constant'
 	}
 ]
-run_list    = [
+fit_list    = [
 	{	'parent_node':'north_america',
 		'pini_smooth':'uniform_01_constant',
 		'ode_step_size':0.5,
-		'n_sample':100
+		'tolerance':1e-8
 	}
 ]
 dismod_at.create_database(
@@ -182,7 +182,7 @@ dismod_at.create_database(
 	smooth_list,
 	rate_list,
 	mulcov_list,
-	run_list
+	fit_list
 )
 # -----------------------------------------------------------------------
 print('get_started: OK')

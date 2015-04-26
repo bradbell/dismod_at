@@ -45,9 +45,9 @@ bool get_fit_table_xam(void)
 	"(fit_id                 integer primary key,"
 		" parent_node_id     integer,"
 		" ode_step_size      real,"
-		" n_sample           integer)",
-	"insert into fit values(0, 4, 0.5,  500)",
-	"insert into fit values(1, 5, 0.25, 500)"
+		" tolerance          real)",
+	"insert into fit values(0, 4, 0.5,  1e-8)",
+	"insert into fit values(1, 5, 0.25, 1e-8)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -61,11 +61,11 @@ bool get_fit_table_xam(void)
 	//
 	ok  &= fit_table[0].parent_node_id     == 4;
 	ok  &= fit_table[0].ode_step_size      == 0.5;
-	ok  &= fit_table[0].n_sample           == 500;
+	ok  &= fit_table[0].tolerance          == 1e-8;
 	//
 	ok  &= fit_table[1].parent_node_id     == 5;
 	ok  &= fit_table[1].ode_step_size      == 0.25;
-	ok  &= fit_table[1].n_sample           == 500;
+	ok  &= fit_table[1].tolerance          == 1e-8;
 	//
 	// close database and return
 	sqlite3_close(db);

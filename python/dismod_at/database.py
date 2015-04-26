@@ -297,7 +297,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #	%smooth_list%,
 #	%rate_list%,
 #	%mulcov_list%,
-#	%run_list%
+#	%fit_list%
 # )%$$
 #
 # $head Purpose$$
@@ -455,10 +455,10 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # smooth    $cnext str         $cnext smoothing name
 # $tend
 #
-# $head run_list$$
+# $head fit_list$$
 # This is a list of $code dict$$
 # that define the rows of the $cref fit_table$$.
-# The dictionary $icode%run_list%[%i%]%$$ has the following:
+# The dictionary $icode%fit_list%[%i%]%$$ has the following:
 # $table
 # Key     $cnext Value Type    $cnext Description                $rnext
 # parent_node       $cnext int $cnext name of parent for this analysis $rnext
@@ -466,7 +466,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #	name of initial prevalence smoothing $rnext
 # ode_step_size     $cnext double
 #	$cnext used to approximation ODE solution $rnext
-# n_sample          $cnext int $cnext number of posterior
+# tolerance         $cnext int $cnext number of posterior
 #	$cref/samples/post_table/sample/$$
 # $tend
 # Note that if the i-th node does not have a parent, the empty string
@@ -486,7 +486,7 @@ def create_database(
 	smooth_list,
 	rate_list,
 	mulcov_list,
-	run_list
+	fit_list
 ) :
 	# -----------------------------------------------------------------------
 	# create database
@@ -804,19 +804,19 @@ def create_database(
 	# ------------------------------------------------------------------------
 	# create fit table
 	col_name = [
-		'parent_node_id','pini_smooth_id', 'ode_step_size','n_sample'
+		'parent_node_id','pini_smooth_id', 'ode_step_size','tolerance'
 	]
 	col_type = [
 		'integer',       'integer',        'real',         'integer'
 	]
 	row_list = []
-	for run in run_list :
-		parent_node_id     = global_node_name2id[ run['parent_node' ] ]
-		pini_smooth_id     = global_smooth_name2id[ run['pini_smooth'] ]
-		ode_step_size      = run['ode_step_size']
-		n_sample           = run['n_sample']
+	for fit in fit_list :
+		parent_node_id     = global_node_name2id[ fit['parent_node' ] ]
+		pini_smooth_id     = global_smooth_name2id[ fit['pini_smooth'] ]
+		ode_step_size      = fit['ode_step_size']
+		tolerance          = fit['tolerance']
 		row_list.append( [
-			parent_node_id, pini_smooth_id, ode_step_size, n_sample
+			parent_node_id, pini_smooth_id, ode_step_size, tolerance
 		] )
 	tbl_name = 'fit'
 	create_table(connection, tbl_name, col_name, col_type, row_list)

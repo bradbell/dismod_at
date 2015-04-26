@@ -60,20 +60,20 @@ $codei%
 Here $icode name$$ is any valid Ipopt string option
 and $icode value$$ is its setting.
 
-$subhead Numeric$$
-You can set any Ipopt numeric option using a line with the following syntax:
-$codei%
-	Numeric %name% %value%
-%$$
-Here $icode name$$ is any valid Ipopt numeric option
-and $icode value$$ is its setting.
-
 $subhead Integer$$
 You can set any Ipopt integer option using a line with the following syntax:
 $codei%
 	Integer %name% %value%
 %$$
 Here $icode name$$ is any valid Ipopt integer option
+and $icode value$$ is its setting.
+
+$subhead Numeric$$
+You can set any Ipopt numeric option using a line with the following syntax:
+$codei%
+	Numeric %name% %value%
+%$$
+Here $icode name$$ is any valid Ipopt numeric option
 and $icode value$$ is its setting.
 
 $head fixed_lower$$

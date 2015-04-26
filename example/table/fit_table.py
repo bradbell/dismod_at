@@ -29,10 +29,10 @@ def fit_table() :
 	#
 	# create the fit table
 	col_name = [
-		'parent_node_id','ode_step_size','n_sample'
+		'parent_node_id','ode_step_size','tolerance'
 	]
 	col_type = [
-		'integer',       'real',         'integer'
+		'integer',       'real',         'real'
 	]
 	row_list = [ [ 0, 0.5, 100 ] ]
 	tbl_name = 'fit'

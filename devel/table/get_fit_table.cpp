@@ -56,8 +56,8 @@ $code double$$ $cnext $code ode_step_size$$ $cnext
 	The $cref/ode_step_size/fit_table/ode_step_size/$$
 	for this fit
 $rnext
-$code int$$ $cnext $code n_sample$$ $cnext
-	The $cref/n_sample/fit_table/n_sample/$$
+$code double$$ $cnext $code tolerance$$ $cnext
+	The $cref/tolerance/fit_table/tolerance/$$
 	for this fit
 $tend
 
@@ -92,16 +92,16 @@ CppAD::vector<fit_struct> get_fit_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, ode_step_size);
 	assert( n_fit == ode_step_size.size() );
 
-	column_name =        "n_sample";
-	CppAD::vector<int>    n_sample;
-	get_table_column(db, table_name, column_name, n_sample);
-	assert( n_fit == n_sample.size() );
+	column_name =         "tolerance";
+	CppAD::vector<double>  tolerance;
+	get_table_column(db, table_name, column_name, tolerance);
+	assert( n_fit == tolerance.size() );
 
 	CppAD::vector<fit_struct> fit_table(n_fit);
 	for(size_t i = 0; i < n_fit; i++)
 	{	fit_table[i].parent_node_id      = parent_node_id[i];
 		fit_table[i].ode_step_size       = ode_step_size[i];
-		fit_table[i].n_sample            = n_sample[i];
+		fit_table[i].tolerance           = tolerance[i];
 	}
 	return fit_table;
 }

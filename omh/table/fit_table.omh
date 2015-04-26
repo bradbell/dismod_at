@@ -10,9 +10,8 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin fit_table$$
 $spell
+	tol
 $$
-$index run, table$$
-$index table, run$$
 
 $section The Fit Table$$
 The $code fit$$ table has the following columns:
@@ -32,12 +31,11 @@ This column has type $code real$$
 and is the step size used to integrand the ordinary differential equation.
 The step size is the same in age and time because it is along cohort lines.
 
-$head n_sample$$
-This column has type $code integer$$
-and is the number of posterior
-$cref/samples/post_table/sample/$$.
-If it is zero, then only the maximum likelihood estimate is
-stored in $cref post_table$$.
+$head tolerance$$
+This column has type $code real$$
+and is the
+$href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
+desired relative convergence tolerance $code tol$$.
 
 $children%example/table/fit_table.py
 %$$
