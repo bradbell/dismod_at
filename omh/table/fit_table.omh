@@ -1,14 +1,14 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin run_table$$ 
+$begin fit_table$$ 
 $spell
 $$
 $index run, table$$
@@ -17,7 +17,7 @@ $index table, run$$
 $section The Run Table$$
 The $code run$$ table has the following columns:
 
-$head run_id$$
+$head fit_id$$
 This column has type $code integer$$ 
 and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
@@ -25,7 +25,7 @@ Its initial value is zero, and it increments by one for each row.
 $head parent_node_id$$
 This column has type $code integer$$ 
 and is the $cref/node_id/node_table/node_id/$$ for 
-the parent node for this $icode run_id$$.
+the parent node for this $icode fit_id$$.
 
 $head ode_step_size$$
 This column has type $code real$$ 
@@ -39,10 +39,10 @@ $cref/samples/post_table/sample/$$.
 If it is zero, then only the maximum likelihood estimate is 
 stored in $cref post_table$$.
 
-$children%example/table/run_table.py
+$children%example/table/fit_table.py
 %$$
 $head Example$$
-The files $cref run_table.py$$  and $cref get_run_table_xam.cpp$$
+The files $cref fit_table.py$$  and $cref get_fit_table_xam.cpp$$
 contain example $code run$$ tables.
 
 $end

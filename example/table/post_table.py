@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 # 
 # This program is distributed under the terms of the 
@@ -31,7 +31,7 @@ def post_table() :
 	#
 	col_name = [
 		# required columns
-		'run_id',
+		'fit_id',
 		'sample',
 		'variable_type',
 		'mulcov_id',
@@ -40,7 +40,7 @@ def post_table() :
 		'time'
 	]
 	col_type = [
-		'integer',              # run_id
+		'integer',              # fit_id
 		'integer',              # sample
 		'text',                 # variable_type
 		'integer',              # mulcov_id
@@ -48,7 +48,7 @@ def post_table() :
 		'real',                 # age
 		'real'                  # time
 	]
-	run_id         = 0
+	fit_id         = 0
 	sample         = 0
 	n_mulcov       = 2
 	n_rate         = 8
@@ -67,7 +67,7 @@ def post_table() :
 		for age in age_grid :
 			for time in time_grid :
 				row_list.append( [
-					run_id,
+					fit_id,
 					sample,
 					variable_type,
 					mulcov_id,

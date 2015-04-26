@@ -59,8 +59,8 @@ This argument has prototype
 $codei%
 	double %ode_step_size%
 %$$
-and is the value of $cref/ode_step_size/run_table/ode_step_size/$$
-in the run table.
+and is the value of $cref/ode_step_size/fit_table/ode_step_size/$$
+in the fit table.
 
 $subhead age_table$$
 This argument has prototype

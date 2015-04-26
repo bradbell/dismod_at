@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -42,8 +42,8 @@ This argument has prototype
 $codei%
 	size_t %parent_node_id%
 %$$
-and is the run table
-$cref/parent_node_id/run_table/parent_node_id/$$.
+and is the fit table
+$cref/parent_node_id/fit_table/parent_node_id/$$.
 
 $subhead node_table$$
 This argument has prototype

@@ -55,8 +55,8 @@ This argument has prototype
 $codei%
 	size_t %parent_node_id%
 %$$
-and is the run table
-$cref/parent_node_id/run_table/parent_node_id/$$.
+and is the fit table
+$cref/parent_node_id/fit_table/parent_node_id/$$.
 
 $head n_age_ode$$
 This argument has prototype
@@ -79,8 +79,8 @@ This argument has prototype
 $codei%
 	double %ode_step_size%
 %$$
-and is the value of $cref/ode_step_size/run_table/ode_step_size/$$
-in the run table.
+and is the value of $cref/ode_step_size/fit_table/ode_step_size/$$
+in the fit table.
 
 $head age_table$$
 This argument has prototype
@@ -1282,7 +1282,7 @@ $cref/node_id/data_table/node_id/$$.
 $subhead I$$
 We use $icode I$$ to denote the set of $icode data_id$$
 such that $icode n_i$$ is equal to
-$cref/parent node/run_table/parent_node_id/$$,
+$cref/parent node/fit_table/parent_node_id/$$,
 or is a descendent of the parent node; i.e.,
 $codei%
 	data_id2child(%data_id%) <= %n_child%

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -15,12 +15,12 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 
 namespace dismod_at {
-	struct run_struct {
+	struct fit_struct {
 		int    parent_node_id;
 		double ode_step_size;
 		int    n_sample;
 	};
-	extern CppAD::vector<run_struct> get_run_table(sqlite3*  db);
+	extern CppAD::vector<fit_struct> get_fit_table(sqlite3*  db);
 }
 
 # endif

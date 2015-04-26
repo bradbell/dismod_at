@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the 
@@ -103,7 +103,7 @@ $head Ode Grid$$
 $index ode, grid$$
 $index grid, ode$$
 We use the notation $latex \Delta s$$ for the 
-$cref/ode_step_size/run_table/ode_step_size/$$.
+$cref/ode_step_size/fit_table/ode_step_size/$$.
 We use $latex a_\R{min}$$ and $latex a_\R{max}$$ to denote
 the minimum and maximum
 $cref/age/age_table/age/$$ values in the age table.

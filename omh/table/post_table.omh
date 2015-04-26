@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -28,11 +28,11 @@ $head post_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$head run_id$$
+$head fit_id$$
 This column has type $code integer$$,
 is non-decreasing with row number,
 and is the value of
-$cref/run_id/run_table/run_id/$$ that this row corresponds to.
+$cref/fit_id/fit_table/fit_id/$$ that this row corresponds to.
 
 $head sample$$
 This column has type $code integer$$,

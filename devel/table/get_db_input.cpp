@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -102,7 +102,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.integrand_table   = get_integrand_table(db);
 	db_input.weight_table      = get_weight_table(db);
 	db_input.smooth_table      = get_smooth_table(db);
-	db_input.run_table         = get_run_table(db);
+	db_input.fit_table         = get_fit_table(db);
 	db_input.covariate_table   = get_covariate_table(db);
 	db_input.node_table        = get_node_table(db);
 	db_input.prior_table       = get_prior_table(db);
@@ -130,8 +130,8 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dage,  prior, 0);
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dtime, prior, 0);
 
-	// run table
-	DISMOD_AT_CHECK_PRIMARY_ID(run, parent_node_id,  node,   0);
+	// fit table
+	DISMOD_AT_CHECK_PRIMARY_ID(fit, parent_node_id,  node,   0);
 
 	// smooth_grid table
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, smooth_id, smooth, 0);

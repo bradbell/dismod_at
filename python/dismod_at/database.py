@@ -457,7 +457,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #
 # $head run_list$$
 # This is a list of $code dict$$
-# that define the rows of the $cref run_table$$.
+# that define the rows of the $cref fit_table$$.
 # The dictionary $icode%run_list%[%i%]%$$ has the following:
 # $table
 # Key     $cnext Value Type    $cnext Description                $rnext
@@ -802,7 +802,7 @@ def create_database(
 	tbl_name = 'data'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
-	# create run table
+	# create fit table
 	col_name = [
 		'parent_node_id','pini_smooth_id', 'ode_step_size','n_sample'
 	]
@@ -818,7 +818,7 @@ def create_database(
 		row_list.append( [
 			parent_node_id, pini_smooth_id, ode_step_size, n_sample
 		] )
-	tbl_name = 'run'
+	tbl_name = 'fit'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	return
