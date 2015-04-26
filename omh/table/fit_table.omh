@@ -14,8 +14,8 @@ $$
 $index run, table$$
 $index table, run$$
 
-$section The Run Table$$
-The $code run$$ table has the following columns:
+$section The Fit Table$$
+The $code fit$$ table has the following columns:
 
 $head fit_id$$
 This column has type $code integer$$

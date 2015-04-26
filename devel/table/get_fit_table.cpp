@@ -17,10 +17,7 @@ $spell
 	std
 $$
 
-$section C++: Get the Run Table Information$$
-$index get, fit table$$
-$index run, get table$$
-$index table, get run$$
+$section C++: Get the Fit Table Information$$
 
 $head Syntax$$
 $icode%fit_table% = get_fit_table(%db%)%$$
