@@ -29,9 +29,7 @@ $codei%fit_model %fit_object%(
 %$$
 $codei%fit_object.run_fit()
 %$$
-$icode%optimal_fixed% = %fit_object%.get_optimal_fixed()
-%$$
-$icode%optimal_random% = %fit_object%.get_optimal_random()
+$icode%solution% = %fit_object%.get_solution()
 %$$
 
 $head fit_object$$
@@ -84,19 +82,13 @@ It contains the model for the prior density; see $cref prior_model$$.
 $head run_fit$$
 Run the optimization process to determine the optimal fixed and random effects.
 
-$head optimal_fixed$$
+$head solution$$
 This return value has prototype
 $codei%
-	CppAD::vector<double> %optimal_fixed%
+	CppAD::vector<double> %solution%
 %$$
-It is the optimal $cref/fixed effects/fixed_effect/$$ vector.
-
-$head optimal_random$$
-This return value has prototype
-$codei%
-	CppAD::vector<double> %optimal_random%
-%$$
-It is the optimal $cref/random effects/random_effect/$$ vector.
+It is the optimal $cref/variable values/model_variable/$$ in
+$cref pack_info$$ format.
 
 $children%example/devel/model/fit_model_xam.cpp
 %$$
@@ -186,20 +178,25 @@ void fit_model::run_fit(void)
 		pack_vec[i] = prior_table_[ value_prior_[i] ].mean;
 	get_random_effect(pack_object_, pack_vec, random_in);
 
-	// store result
-	optimal_fixed_ = optimize_fixed(
+	// optimal fixed effects
+	CppAD::vector<double> optimal_fixed = optimize_fixed(
 		fixed_lower, fixed_in, fixed_upper, random_in
 	);
-	optimal_random_ = optimize_random(optimal_fixed_, random_in);
+
+	// optimal random effects
+	CppAD::vector<double> optimal_random = optimize_random(
+		optimal_fixed, random_in
+	);
+
+	// solution_
+	solution_.resize( pack_object_.size() );
+	put_fixed_effect(pack_object_, solution_, optimal_fixed);
+	put_random_effect(pack_object_, solution_, optimal_random);
 }
 // ---------------------------------------------------------------------------
-// get_optimal_fixed
-CppAD::vector<double> fit_model::get_optimal_fixed(void)
-{	return optimal_fixed_; }
-// ---------------------------------------------------------------------------
-// get_optimal_random
-CppAD::vector<double> fit_model::get_optimal_random(void)
-{	return optimal_random_; }
+// get_solution
+CppAD::vector<double> fit_model::get_solution(void)
+{	return solution_; }
 // ===========================================================================
 // private functions
 // ===========================================================================

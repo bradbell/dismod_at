@@ -43,9 +43,8 @@ namespace dismod_at {
 		// set during constructor and otherwise const
 		CppAD::vector<size_t>              value_prior_;
 		//
-		// set by run_fit
-		CppAD::vector<double>              optimal_fixed_;
-		CppAD::vector<double>              optimal_random_;
+		// solution found by run_fit and in pack_info form
+		CppAD::vector<double>              solution_;
 		//
 		// temporaries in joint_density
 		a5d_vector                                  a5_pack_vec_tmp_;
@@ -80,10 +79,8 @@ namespace dismod_at {
 		);
 		// run fit
 		void run_fit(void);
-		// get_optimal_fixed
-		CppAD::vector<double> get_optimal_fixed(void);
-		// get_optimal_random
-		CppAD::vector<double> get_optimal_random(void);
+		// get_solution
+		CppAD::vector<double> get_solution(void);
 	};
 }
 

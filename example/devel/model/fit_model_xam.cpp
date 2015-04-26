@@ -37,6 +37,7 @@ bool fit_model_xam(void)
 	using std::cout;
 	using std::endl;
 	double inf = std::numeric_limits<double>::infinity();
+	double tol = 1e-8;
 
 
 	// --------------------------------------------------------------------
@@ -97,14 +98,12 @@ bool fit_model_xam(void)
 	size_t mulstd_value, mulstd_dage, mulstd_dtime;
 	size_t n_age, n_time, n_grid;
 
-	vector<dismod_at::smooth_info> s_info_vec(4);
-	// ------------------ first and second smoothing --------------------------
+	vector<dismod_at::smooth_info> s_info_vec(1);
+	// ------------------------- smoothing --------------------------------
 	// age_id
-	n_age = 3;
+	n_age = 1;
 	age_id.resize(n_age);
-	age_id[0] = 0;
-	age_id[1] = n_age_table / 2;
-	age_id[2] = n_age_table - 1;
+	age_id[0] = n_age_table / 2;
 	//
 	// time_id
 	n_time = 2;
@@ -125,72 +124,14 @@ bool fit_model_xam(void)
 	for(i = 0; i < n_age; i++)
 	{	for(j = 0; j < n_time; j++)
 		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian;
-			dage_prior_id[ i * n_time + j ]  = prior_id_none;
-			dtime_prior_id[ i * n_time + j ] = prior_id_none;
-		}
-	}
-	//
-	// smooth_id_32_gaussian
-	size_t smooth_id_32_gaussian = 0;
-	s_info_vec[smooth_id_32_gaussian] = dismod_at::smooth_info(
-			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
-			mulstd_value, mulstd_dage, mulstd_dtime
-	);
-	//
-	// smooth_id_32_none
-	for(i = 0; i < n_age; i++)
-	{	for(j = 0; j < n_time; j++)
-			value_prior_id[ i * n_time + j ] = prior_id_none;
-	}
-	size_t smooth_id_32_none = 1;
-	s_info_vec[smooth_id_32_none] = dismod_at::smooth_info(
-			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
-			mulstd_value, mulstd_dage, mulstd_dtime
-	);
-	// ------------------ third and fourth smoothing --------------------------
-	// age_id
-	n_age = 1;
-	age_id.resize(n_age);
-	age_id[0] = n_age_table / 2;
-	//
-	// time_id
-	n_time = 2;
-	time_id.resize(n_time);
-	time_id[0] = 0;
-	time_id[1] = n_time_table - 1;
-	//
-	// scalar prior_id
-	mulstd_value = prior_id_one;
-	mulstd_dage  = prior_id_one;
-	mulstd_dtime = prior_id_one;
-	//
-	// prior_id valeus on an n_age * n_time grid
-	n_grid = n_age * n_time;
-	value_prior_id.resize(n_grid);
-	dage_prior_id.resize(n_grid);
-	dtime_prior_id.resize(n_grid);
-	for(i = 0; i < n_age; i++)
-	{	for(j = 0; j < n_time; j++)
-		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian;
-			dage_prior_id[ i * n_time + j ]  = prior_id_none;
-			dtime_prior_id[ i * n_time + j ] = prior_id_none;
+			dage_prior_id[ i * n_time + j ]  = prior_id_gaussian;
+			dtime_prior_id[ i * n_time + j ] = prior_id_gaussian;
 		}
 	}
 	//
 	// smooth_id_12_gaussian
-	size_t smooth_id_12_gaussian = 2;
+	size_t smooth_id_12_gaussian = 0;
 	s_info_vec[smooth_id_12_gaussian] = dismod_at::smooth_info(
-			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
-			mulstd_value, mulstd_dage, mulstd_dtime
-	);
-	//
-	// smooth_id_12_none
-	for(i = 0; i < n_age; i++)
-	{	for(j = 0; j < n_time; j++)
-			value_prior_id[ i * n_time + j ] = prior_id_none;
-	}
-	size_t smooth_id_12_none = 3;
-	s_info_vec[smooth_id_12_none] = dismod_at::smooth_info(
 			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
 			mulstd_value, mulstd_dage, mulstd_dtime
 	);
@@ -200,6 +141,9 @@ bool fit_model_xam(void)
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
 	{	smooth_table[smooth_id].n_age  = s_info_vec[smooth_id].age_size();
 		smooth_table[smooth_id].n_time = s_info_vec[smooth_id].time_size();
+		smooth_table[smooth_id].mulstd_value = mulstd_value;
+		smooth_table[smooth_id].mulstd_dage  = mulstd_dage;
+		smooth_table[smooth_id].mulstd_dtime = mulstd_dtime;
 	}
 	//
 	// mulcov_table
@@ -214,14 +158,11 @@ bool fit_model_xam(void)
 			rate_table[rate_id].child_smooth_id  = smooth_id_12_gaussian;
 		}
 		else
-		{	// eventually plan to use smooth_id_32_gaussian here
+		{	// eventually plan to use a 3 by 2 smoothing here
 			rate_table[rate_id].parent_smooth_id = smooth_id_12_gaussian;
 			rate_table[rate_id].child_smooth_id  = smooth_id_12_gaussian;
 		}
 	}
-	// change parent iota smoothing to be none
-	// evantually plan tu use smooth_id_32_none here
-	rate_table[dismod_at::iota_enum].parent_smooth_id = smooth_id_12_none;
 	//
 	// integrand_table
 	size_t n_integrand = dismod_at::number_integrand_enum;
@@ -263,20 +204,40 @@ bool fit_model_xam(void)
 	w_info_vec[0] = w_info;
 	//
 	// data_table
-	vector<dismod_at::data_struct> data_table(1);
-	size_t data_id = 0;
-	vector<double> x(0);
-	data_table[data_id].integrand_id = dismod_at::mtother_enum;
-	data_table[data_id].node_id      = 0;
-	data_table[data_id].weight_id    = 0;
-	data_table[data_id].age_lower    = 50.0;
-	data_table[data_id].age_upper    = 50.0;
-	data_table[data_id].time_lower   = 2000.0;
-	data_table[data_id].time_upper   = 2000.0;
-	data_table[data_id].meas_value   = 3e-2;
-	data_table[data_id].meas_std     = 3e-3;
-	data_table[data_id].density_id   = dismod_at::gaussian_enum;
-	data_table[data_id].x            = x;
+	vector<double> x(0); // empty set of covariates
+	dismod_at::integrand_enum integrand_vec[] = {
+		dismod_at::prevalence_enum , // rate_id = 0
+		dismod_at::incidence_enum  , // rate_id = 1
+		dismod_at::remission_enum  , // rate_id = 2
+		dismod_at::mtexcess_enum   , // rate_id = 3
+		dismod_at::mtother_enum      // rate_id = 4
+	};
+	size_t n_data = sizeof(integrand_vec) / sizeof(integrand_vec[0]);
+	vector<dismod_at::data_struct> data_table(n_data);
+	for(size_t data_id = 0; data_id < n_data; data_id++)
+	{	double meas_value = 1e-2 * data_id;
+		double meas_std   = 0.20 * meas_value;
+		data_table[data_id].integrand_id = integrand_vec[data_id];
+		data_table[data_id].node_id      = 0;
+		data_table[data_id].weight_id    = 0;
+		if( data_id == 0 )
+		{	// prevalence at age zero is zero
+			assert( meas_value == 0.0 );
+			meas_std                         = 1e-2;
+			data_table[data_id].age_lower    = 0.0;
+			data_table[data_id].age_upper    = 0.0;
+		}
+		else
+		{	data_table[data_id].age_lower    = 50.0;
+			data_table[data_id].age_upper    = 50.0;
+		}
+		data_table[data_id].time_lower   = 2000.0;
+		data_table[data_id].time_upper   = 2000.0;
+		data_table[data_id].meas_value   = meas_value;
+		data_table[data_id].meas_std     = meas_std;
+		data_table[data_id].density_id   = dismod_at::gaussian_enum;
+		data_table[data_id].x            = x;
+	}
 	//
 	// prior_object
 	dismod_at::prior_model prior_object(
@@ -310,6 +271,23 @@ bool fit_model_xam(void)
 		prior_object
 	);
 	fit_object.run_fit();
+	CppAD::vector<double> solution = fit_object.get_solution();
+# if 0
+	// test not yet passing
+	for(size_t data_id = 0; data_id < n_data; data_id++)
+	{	double meas_value = data_table[data_id].meas_value;
+		size_t rate_id    = data_id;
+		dismod_at::pack_info::subvec_info info;
+		info = pack_object.rate_info(rate_id, n_child);
+		size_t offset = info.offset;
+		size_t n_var  = info.n_var;
+		for(size_t i = 0; i < n_var; i++)
+		{	double relerr = solution[offset + i] / meas_value - 1.0;
+			ok    &= CppAD::abs( relerr ) <= tol;
+			std::cout << "relerr = " << relerr << std::endl;
+		}
+	}
+# endif
 	return ok;
 }
 // END C++

@@ -106,6 +106,30 @@ namespace {
 		}
 		return;
 	}
+
+	// --------------------------------------------------------------------
+	bool check_near_equal(double x, double y, double tol)
+	{	bool flag = true;
+		if( x >= 0.0 )
+			flag &= (1.0 - tol) * x <= y && y <= (1.0 + tol) * x;
+		else
+			flag &= (1.0 + tol) * x <= y && y <= (1.0 - tol) * x;
+		return flag;
+	}
+	bool check_in_limits(double lower, double x, double upper, double tol)
+	{	bool flag = true;
+		if( upper >= 0.0 )
+			flag &= x <= (1.0 + tol) * upper;
+		else
+			flag &= x <= (1.0 - tol) * upper;
+		//
+		if( lower >= 0.0 )
+			flag &= (1.0 - tol) * lower <= x;
+		else
+			flag &= (1.0 + tol) * lower <= x;
+		//
+		return flag;
+	}
 }
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -1184,12 +1208,8 @@ void ipopt_fixed::finalize_solution(
 	// check that x is feasible and same as fixed_opt_
 	for(size_t j = 0; j < n_fixed_; j++)
 	{	fixed_tmp_[j] = double( x[j] );
-		//
-		ok &= fixed_lower_[j] <= (1.0 + tol) * fixed_tmp_[j];
-		ok &= fixed_tmp_[j]   <= (1.0 + tol) * fixed_upper_[j];
-		//
-		ok &= fixed_tmp_[j] <= (1.0 + tol) * fixed_opt_[j];
-		ok &= fixed_opt_[j] <= (1.0 + tol) * fixed_tmp_[j];
+		check_near_equal(fixed_tmp_[j],  fixed_opt_[j], tol);
+		check_in_limits(fixed_lower_[j], fixed_tmp_[j], fixed_upper_[j], tol);
 	}
 
 	// check that the bound multipliers are feasible
