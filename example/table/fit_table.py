@@ -12,10 +12,6 @@
 #
 # $section fit_table: Example and Test$$
 #
-# $index run, , example$$
-# $index example, fit table$$
-# $index table, run example$$
-#
 # $code
 # $verbatim%example/table/fit_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
