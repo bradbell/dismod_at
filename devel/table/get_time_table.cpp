@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -51,7 +51,7 @@ $head Assumptions$$
 For $icode%time_id% = 1 , %...%, %time_table%.size()-2%$$,
 the following assumption is checked:
 $codei%
-	%time_table%[%time_id%] < %time_table[%time_id%+1]
+	%time_table%[%time_id%] < %time_table%[%time_id%+1]
 %$$
 
 $children%example/devel/table/get_time_table_xam.cpp

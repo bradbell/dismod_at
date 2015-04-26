@@ -15,6 +15,7 @@ $spell
 	sqlite
 	enum
 	cpp
+	pini
 $$
 
 $section C++: Get the Rate Table Information$$
@@ -67,6 +68,7 @@ The $icode rate_table$$ can also be addressed
 using the $code rate_enum$$ values as follows:
 $table
 $icode rate_id$$    $pre  $$ $cnext $icode rate_name$$     $rnext
+$code pini_enum$$   $pre  $$ $cnext $code pini$$           $rnext
 $code iota_enum$$   $pre  $$ $cnext $code iota$$           $rnext
 $code rho_enum$$    $pre  $$ $cnext $code rho$$            $rnext
 $code chi_enum$$    $pre  $$ $cnext $code chi$$            $rnext

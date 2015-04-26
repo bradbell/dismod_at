@@ -165,7 +165,7 @@ n_child_        ( n_child )
 	// mulstd_offset_
 	mulstd_offset_  = offset; offset += 3 * n_smooth_;
 
-	// rate_offset
+	// rate_info_
 	rate_info_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	rate_info_[rate_id].resize(n_child + 1);
