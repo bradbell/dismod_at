@@ -30,12 +30,12 @@ namespace dismod_at {
 
 		// functions
 		template <class Float>
-		residual_struct<Float> log_piror(
+		residual_struct<Float> log_prior(
 			const prior_struct& prior   ,
 			const Float&        variable
 		) const;
 		template <class Float>
-		void log_piror_on_grid(
+		void log_prior_on_grid(
 			CppAD::vector< residual_struct<Float> >& residual_vec ,
 			size_t                                   offset       ,
 			const CppAD::vector<Float>&              pack_vec     ,

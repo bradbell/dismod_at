@@ -37,7 +37,6 @@ bool fit_model_xam(void)
 	using std::cout;
 	using std::endl;
 	double inf = std::numeric_limits<double>::infinity();
-	double tol = 1e-8;
 
 
 	// --------------------------------------------------------------------
@@ -81,7 +80,6 @@ bool fit_model_xam(void)
 	prior_table[2].mean       = 0.0;
 	prior_table[2].upper      = + inf;
 	prior_table[2].std        = 1.0;
-	size_t prior_id_none      = 2;
 	//
 	// prior_id_gaussian (Gaussian mean 0.01 and standard deviation 0.002)
 	prior_table[3].prior_name = "N(1e-2, 4e-6)";
@@ -274,6 +272,7 @@ bool fit_model_xam(void)
 	CppAD::vector<double> solution = fit_object.get_solution();
 # if 0
 	// test not yet passing
+	double tol = 1e-8;
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	double meas_value = data_table[data_id].meas_value;
 		size_t rate_id    = data_id;
