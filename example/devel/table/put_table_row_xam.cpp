@@ -44,7 +44,8 @@ bool put_table_row_xam(void)
 	"(fit_id                 integer primary key,"
 		" parent_node_id     integer,"
 		" ode_step_size      real,"
-		" tolerance          real)",
+		" tolerance          real,"
+		" max_num_iter       integer)",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -52,23 +53,26 @@ bool put_table_row_xam(void)
 
 	// setup for put_table_row
 	std::string table_name = "fit";
-	CppAD::vector<std::string> column_names(3), row_values(3);
+	CppAD::vector<std::string> column_names(4), row_values(4);
 
 	// column names as a vector
 	column_names[0] = "parent_node_id";
 	column_names[1] = "ode_step_size";
 	column_names[2] = "tolerance";
+	column_names[3] = "max_num_iter";
 
 	// insert first row in the fit table
 	row_values[0]   = "4";
-	row_values[1]   = "0.5";
+	row_values[1]   = "0.4";
 	row_values[2]   = "1e-8";
+	row_values[3]   = "400";
 	dismod_at::put_table_row(db, table_name, column_names, row_values);
 
 	// insert second row in the fit table
 	row_values[0]   = "5";
-	row_values[1]   = "0.25";
+	row_values[1]   = "0.5";
 	row_values[2]   = "1e-8";
+	row_values[3]   = "500";
 	dismod_at::put_table_row(db, table_name, column_names, row_values);
 
 	// get the fit table
@@ -77,12 +81,14 @@ bool put_table_row_xam(void)
 	ok  &= fit_table.size() == 2;
 	//
 	ok  &= fit_table[0].parent_node_id     == 4;
-	ok  &= fit_table[0].ode_step_size      == 0.5;
+	ok  &= fit_table[0].ode_step_size      == 0.4;
 	ok  &= fit_table[0].tolerance          == 1e-8;
+	ok  &= fit_table[0].max_num_iter       == 400;
 	//
 	ok  &= fit_table[1].parent_node_id     == 5;
-	ok  &= fit_table[1].ode_step_size      == 0.25;
+	ok  &= fit_table[1].ode_step_size      == 0.5;
 	ok  &= fit_table[1].tolerance          == 1e-8;
+	ok  &= fit_table[1].max_num_iter       == 500;
 	//
 	// close database and return
 	sqlite3_close(db);

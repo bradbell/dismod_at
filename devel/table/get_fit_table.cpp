@@ -59,6 +59,10 @@ $rnext
 $code double$$ $cnext $code tolerance$$ $cnext
 	The $cref/tolerance/fit_table/tolerance/$$
 	for this fit
+$rnext
+$code int$$ $cnext $code max_num_iter$$ $cnext
+	The $cref/max_num_iter/fit_table/max_num_iter/$$
+	for this fit
 $tend
 
 $children%example/devel/table/get_fit_table_xam.cpp
@@ -97,11 +101,17 @@ CppAD::vector<fit_struct> get_fit_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, tolerance);
 	assert( n_fit == tolerance.size() );
 
+	column_name =         "max_num_iter";
+	CppAD::vector<int>     max_num_iter;
+	get_table_column(db, table_name, column_name, max_num_iter);
+	assert( n_fit == max_num_iter.size() );
+
 	CppAD::vector<fit_struct> fit_table(n_fit);
 	for(size_t i = 0; i < n_fit; i++)
 	{	fit_table[i].parent_node_id      = parent_node_id[i];
 		fit_table[i].ode_step_size       = ode_step_size[i];
 		fit_table[i].tolerance           = tolerance[i];
+		fit_table[i].max_num_iter        = max_num_iter[i];
 	}
 	return fit_table;
 }

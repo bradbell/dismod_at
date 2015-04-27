@@ -19,6 +19,7 @@ namespace dismod_at {
 		int    parent_node_id;
 		double ode_step_size;
 		double tolerance;
+		size_t max_num_iter;
 	};
 	extern CppAD::vector<fit_struct> get_fit_table(sqlite3*  db);
 }

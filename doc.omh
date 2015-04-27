@@ -8,7 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin dismod_at$$
+$begin dismod_at_package$$
 $comment latex macros used for all sections$$
 $latex
 	\newcommand{\R}[1]{ {\rm #1} }
@@ -18,7 +18,10 @@ $$
 $comment automatic indexing command used for all sections$$
 $aindex section head subhead$$
 
-$section Disease Rates as Functions of Age and Time$$
+$spell
+	dismod
+$$
+$section dismod_at: Estimating Disease Rates as Functions of Age and Time$$
 
 $head Under Construction$$
 This package is under construction and does not yet accomplish its purpose.

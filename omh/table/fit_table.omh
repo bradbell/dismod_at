@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin fit_table$$
 $spell
+	num_iter
 	tol
 $$
 
@@ -28,7 +29,7 @@ the parent node for this $icode fit_id$$.
 
 $head ode_step_size$$
 This column has type $code real$$
-and is the step size used to integrand the ordinary differential equation.
+and is the step size used to integrate the ordinary differential equation.
 The step size is the same in age and time because it is along cohort lines.
 
 $head tolerance$$
@@ -36,6 +37,13 @@ This column has type $code real$$
 and is the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
 desired relative convergence tolerance $code tol$$.
+
+$head max_num_iter$$
+This column has type $code real$$
+and is the
+$href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
+maximum number of iterations $code max_iter$$.
+
 
 $children%example/table/fit_table.py
 %$$
