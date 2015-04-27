@@ -83,6 +83,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	table/get_time_table_xam.cpp
 	table/get_weight_grid_xam.cpp
 	table/smooth_info_xam.cpp
+	table/put_table_row_xam.cpp
 	table/weight_info_xam.cpp
 )
 

@@ -75,9 +75,14 @@ echo_eval g++ \
 	$dir_file \
 	$dismod_at_lib \
 	$ipopt_libs \
+	-lsqlite3 \
 	-o junk
 #
 # run
 echo "./junk"
 ./junk
-
+#
+if [ -e 'example.db' ]
+then
+	echo_eval rm example.db
+fi

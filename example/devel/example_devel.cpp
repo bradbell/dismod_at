@@ -84,6 +84,7 @@ extern bool get_smooth_grid_xam(void);
 extern bool get_table_column_xam(void);
 extern bool get_time_table_xam(void);
 extern bool get_weight_grid_xam(void);
+extern bool put_table_row_xam(void);
 extern bool smooth_info_xam(void);
 extern bool weight_info_xam(void);
 
@@ -175,6 +176,7 @@ int main(void)
 	RUN(get_table_column_xam);
 	RUN(get_time_table_xam);
 	RUN(get_weight_grid_xam);
+	RUN(put_table_row_xam);
 	RUN(smooth_info_xam);
 	RUN(weight_info_xam);
 

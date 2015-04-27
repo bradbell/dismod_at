@@ -302,7 +302,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # $head Purpose$$
 # This routine makes it easy to create and set the values for all the
 # $cref input$$ tables in a $code dismod_at$$ database.
-# In addtion, it creates, but does not set the valuse for,
+# In addition, it creates, but does not set the values for,
 # all the $cref output$$ tables.
 # This is only meant for small example and testing cases and is not efficient.
 #

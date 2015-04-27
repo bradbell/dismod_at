@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -29,7 +29,8 @@ $head Syntax$$
 $codei%exec_sql_cmd(%db%, %sql_cmd%)%$$
 
 $head Purpose$$
-Executes an SQL command and check for an error.
+Executes an SQL command that does not return any information
+(and check for an error).
 
 $head db$$
 The argument $icode db$$ has prototype
