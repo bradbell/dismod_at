@@ -1,10 +1,10 @@
 # $Id$
 #  --------------------------------------------------------------------------
-# dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+# dismod_at: Estimating Disease Rates as Functions of Age and Time
 #           Copyright (C) 2014-14 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
@@ -29,7 +29,7 @@ def smooth_grid_table() :
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
-	# 
+	#
 	# create smooth table
 	ptype    = 'integer primary key'
 	col_name = [ 'smooth_name', 'n_age',   'n_time', 'mulstd_value',
@@ -40,16 +40,16 @@ def smooth_grid_table() :
 	           [ 'constant',    1,          1,        1, 1, 1],
 	           [ 'age_only',    3,          1,        1, 1, 1],
 	           [ 'time_only',   1,          2,        1, 1, 1],
-	           [ 'bilinear',    3,          2,        1, 1, 1] 
+	           [ 'bilinear',    3,          2,        1, 1, 1]
 	]
 	tbl_name = 'smooth'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# 
+	#
 	# smooth_grid table column names
 	col_name = [
-		'smooth_id', 
-		'age_id',  
-		'time_id',  
+		'smooth_id',
+		'age_id',
+		'time_id',
 		'value_prior_id',
 		'dage_prior_id',
 		'dtime_prior_id',

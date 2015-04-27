@@ -3,8 +3,8 @@
 # dismod_at: Estimating Disease Density Estimation as Functions of Age and Time
 #           Copyright (C) 2014-14 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
@@ -34,12 +34,12 @@ def density_table() :
 	# create the density table
 	col_name = [ 'density_name'  ]
 	col_type = [ 'text'       ]
-	row_list = [ 
+	row_list = [
 		['uniform'],
-		['gaussian'], 
-		['laplace'], 
-		['log_gaussian'], 
-		['log_laplace'] 
+		['gaussian'],
+		['laplace'],
+		['log_gaussian'],
+		['log_laplace']
 	]
 	tbl_name = 'density'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

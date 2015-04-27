@@ -1,10 +1,10 @@
 # $Id$
 #  --------------------------------------------------------------------------
-# dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+# dismod_at: Estimating Disease Rates as Functions of Age and Time
 #           Copyright (C) 2014-14 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
@@ -29,14 +29,14 @@ def weight_grid_table() :
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
-	# 
+	#
 	# create weight table
 	col_name = [ 'weight_name', 'n_age',   'ntime'   ]
 	col_type = [ 'text',        'integer', 'integer' ]
-	row_list = [ 
-	           [ 'constant',    1,          1        ], 
-	           [ 'age_linear',  2,          1        ], 
-	           [ 'bilinear',    2,          2        ] 
+	row_list = [
+	           [ 'constant',    1,          1        ],
+	           [ 'age_linear',  2,          1        ],
+	           [ 'bilinear',    2,          2        ]
 	]
 	tbl_name = 'weight'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
@@ -47,10 +47,10 @@ def weight_grid_table() :
 	row_list = [
 	           # constant
 	           [ 0,             1,        1,   1.0      ],
-	           # age_linear  
+	           # age_linear
 	           [ 1,             0,        1,   0.5      ],
 	           [ 1,             2,        1,   1.5      ],
-	           # bilinear 
+	           # bilinear
 	           [ 2,             0,        0,   0.5      ],
 	           [ 2,             2,        0,   1.0      ],
 	           [ 2,             0,        2,   1.0      ],
@@ -64,7 +64,7 @@ def weight_grid_table() :
 	columns = 'weight_grid_id,' + columns
 	cmd     = 'SELECT ' + columns + ' FROM weight_grid'
 	cmd    += ' INNER JOIN weight USING (weight_id)'
-	cmd    += ' WHERE weight_name = "bilinear"' 
+	cmd    += ' WHERE weight_name = "bilinear"'
 	#
 	count        = 3
 	cursor       = connection.cursor()

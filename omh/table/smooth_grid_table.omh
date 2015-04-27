@@ -1,14 +1,14 @@
 $Id$
 -----------------------------------------------------------------------------
-dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+dismod_at: Estimating Disease Rates as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin smooth_grid_table$$ 
+$begin smooth_grid_table$$
 $spell
 	grid
 	agetime
@@ -67,15 +67,15 @@ The prior at the maximum time, for each age, is not used and
 the corresponding $icode dtime_prior_id$$ must be $code -1$$.
 
 $head Rectangular Grid$$
-For each fixed value of $icode smooth_id$$ 
+For each fixed value of $icode smooth_id$$
 the set of $icode age_id$$, $icode time_id$$ pairs is rectangular.
 In other words,
 if an $icode age_id$$ value appears,
-it appears once with each $icode time_id$$ 
+it appears once with each $icode time_id$$
 that appears with this $icode smooth_id$$.
 This also means,
 if a $icode time_id$$ value appears,
-it appears once with each $icode age_id$$ 
+it appears once with each $icode age_id$$
 that appears with this $icode smooth_id$$.
 
 $children%example/table/smooth_grid_table.py

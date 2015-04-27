@@ -1,11 +1,11 @@
 #! /bin/env python
 # $Id$
 #  --------------------------------------------------------------------------
-# dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+# dismod_at: Estimating Disease Rates as Functions of Age and Time
 #           Copyright (C) 2014-14 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
@@ -24,7 +24,7 @@ if os.path.isdir('junk' ) :
 os.mkdir('junk')
 os.chdir('junk')
 # ------------------------------------------------------------------------
-# create a database and a table 
+# create a database and a table
 fp  = open('example.sql', 'w')
 sql = '''
 create table mytable(one text, two int);
@@ -86,13 +86,13 @@ int main(int argc, char **argv){
      int Autoinc;
      rc = sqlite3_table_column_metadata(
       db,
-      "main", 
-      "mytable", 
-      column_name[j], 
-      &zDataType, 
-      &zCollSeq, 
-      &NotNull, 
-      &PrimaryKey, 
+      "main",
+      "mytable",
+      column_name[j],
+      &zDataType,
+      &zCollSeq,
+      &NotNull,
+      &PrimaryKey,
       &Autoinc
     );
     if( rc ){

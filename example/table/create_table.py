@@ -1,10 +1,10 @@
 # $Id$
 #  --------------------------------------------------------------------------
-# dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+# dismod_at: Estimating Disease Rates as Functions of Age and Time
 #           Copyright (C) 2014-14 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
@@ -42,7 +42,7 @@ def create_table() :
 	name_tuple        = '( temp_id, temp_name )'
 	col_name = [ 'temp_name'          ]
 	col_type = [ 'text'               ]
-	row_list = [ 
+	row_list = [
 	           [ inverted_exclamation ],
 	           [ cent_sign            ],
 	           [ pound_sign           ]

@@ -1,14 +1,14 @@
 $Id$
 -----------------------------------------------------------------------------
-dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+dismod_at: Estimating Disease Rates as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin prior_table$$ 
+$begin prior_table$$
 $spell
 	std
 $$
@@ -25,17 +25,17 @@ This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
 $subhead zero$$
-It is suggested that 
-$icode%prior_id% == 0%$$ 
+It is suggested that
+$icode%prior_id% == 0%$$
 correspond to lower and upper limits being zero.
 
 $subhead one$$
-It is suggested that 
-$icode%prior_id% == 1%$$ 
+It is suggested that
+$icode%prior_id% == 1%$$
 correspond to lower and upper limits being one.
 
 $head prior_name$$
-This column has type $code text$$ and has a different value for every row; 
+This column has type $code text$$ and has a different value for every row;
 i.e., the names are unique and can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
 
@@ -84,7 +84,7 @@ This column has type $code real$$ and is only used in the
 cases where $icode density$$ is $code log_gaussian$$
 or $code log_laplace$$.
 In these cases, it is the offset in the corresponding log transformation.
-In the case where $code density$$ is 
+In the case where $code density$$ is
 $code uniform$$, $code gaussian$$ or $code laplace$$,
 this field is not used and can be $code null$$.
 

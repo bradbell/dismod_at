@@ -1,10 +1,10 @@
 $Id$
 -----------------------------------------------------------------------------
-dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+dismod_at: Estimating Disease Rates as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
@@ -25,8 +25,8 @@ Each row of the data file corresponds to one measurement;
 see $cref/meas_value/data_table/meas_value/$$ below.
 
 $head data_id$$
-This column has type $code integer$$ and is the primary key for the 
-$code data$$ table. 
+This column has type $code integer$$ and is the primary key for the
+$code data$$ table.
 Its initial value is zero, and it increments by one for each row.
 
 $head integrand_id$$
@@ -40,7 +40,7 @@ $cref/density_id/prior_table/density_id/$$ that identifies
 the density function for this measurement.
 
 $head node_id$$
-This column has type $code integer$$ and is the 
+This column has type $code integer$$ and is the
 $cref/node_id/node_table/node_id/$$ that identifies
 the node for this measurement.
 
@@ -51,28 +51,28 @@ the weighting used for this measurement.
 
 $head meas_value$$
 This column has type $code real$$ and is the measured value
-for each row of the $code data$$ table; 
-i.e., the measurement of the integrand, node,  etc. 
+for each row of the $code data$$ table;
+i.e., the measurement of the integrand, node,  etc.
 
 $head meas_std$$
-This column has type $code real$$ and is the standard deviation 
+This column has type $code real$$ and is the standard deviation
 for this measurement value.
 This standard for this measurement and is in the same units at the data.
 
 $head age_lower$$
-This column has type $code real$$ and is the lower age limit 
-for this measurement. 
+This column has type $code real$$ and is the lower age limit
+for this measurement.
 It must be greater than or equal the minimum $cref age_table$$ value.
 
 $head age_upper$$
 This column has type $code real$$ and is the upper age limit
-for this measurement. 
+for this measurement.
 It must be greater than or equal the corresponding $icode age_lower$$
 and less than or equal the maximum $cref age_table$$ value.
 
 $head time_lower$$
-This column has type $code real$$ and is the lower time limit 
-for this measurement. 
+This column has type $code real$$ and is the lower time limit
+for this measurement.
 It must be greater than or equal the minimum $cref time_table$$ value.
 
 $head time_upper$$

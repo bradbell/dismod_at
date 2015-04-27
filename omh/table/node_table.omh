@@ -1,14 +1,14 @@
 $Id$
 -----------------------------------------------------------------------------
-dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+dismod_at: Estimating Disease Rates as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin node_table$$ 
+$begin node_table$$
 $spell
 $$
 $index node, table$$
@@ -24,7 +24,7 @@ This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
 $head node_name$$
-This column has type $code text$$ and has a different value for every row; 
+This column has type $code text$$ and has a different value for every row;
 i.e., the names are unique and can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
 
@@ -34,7 +34,7 @@ of the parent for this node.
 If this node has no parents, $icode parent$$ is $code -1$$.
 
 $subhead Child Group$$
-The child group for node $icode p$$ is the sent of $icode node_id$$ values 
+The child group for node $icode p$$ is the sent of $icode node_id$$ values
 such that the corresponding $icode parent$$ is equal to $icode p$$.
 
 $children%example/table/node_table.py

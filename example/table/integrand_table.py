@@ -1,10 +1,10 @@
 # $Id$
 #  --------------------------------------------------------------------------
-# dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+# dismod_at: Estimating Disease Rates as Functions of Age and Time
 #           Copyright (C) 2014-14 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
@@ -34,10 +34,10 @@ def integrand_table() :
 	# create the integrand table
 	col_name = [ 'integrand_name' , 'eta'   ]
 	col_type = [ 'text',            'real'  ]
-	row_list = [ 
-		[ 'incidence' , 1e-6 ], 
-		[ 'remission' , 1e-6 ], 
-		[ 'mtall',      1e-6 ] 
+	row_list = [
+		[ 'incidence' , 1e-6 ],
+		[ 'remission' , 1e-6 ],
+		[ 'mtall',      1e-6 ]
 	]
 	tbl_name = 'integrand'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

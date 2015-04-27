@@ -1,14 +1,14 @@
 $Id$
 -----------------------------------------------------------------------------
-dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+dismod_at: Estimating Disease Rates as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin weight_grid_table$$ 
+$begin weight_grid_table$$
 $spell
 	agetime
 	grid
@@ -27,7 +27,7 @@ the $code weight_grid$$ table.
 Its initial value is zero, and it increments by one for each row.
 
 $head weight_id$$
-This column has type $code integer$$ and is a 
+This column has type $code integer$$ and is a
 $cref/weight_id/weight_table/weight_id/$$ in the weight table.
 Each $icode weight_id$$ value corresponds to a different weighting.
 
@@ -49,15 +49,15 @@ and for the specified $icode weight_id$$,
 Each value in this column must be greater than zero.
 
 $head Rectangular Grid$$
-For each fixed value of $icode weight_id$$ 
+For each fixed value of $icode weight_id$$
 the set of $icode age_id$$, $icode time_id$$ pairs is rectangular.
 In other words,
 if an $icode age_id$$ value appears,
-it appears once with each $icode time_id$$ 
+it appears once with each $icode time_id$$
 that appears with this $icode weight_id$$.
 This also means,
 if a $icode time_id$$ value appears,
-it appears once with each $icode age_id$$ 
+it appears once with each $icode age_id$$
 that appears with this $icode weight_id$$.
 
 $children%example/table/weight_grid_table.py

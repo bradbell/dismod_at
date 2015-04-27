@@ -1,10 +1,10 @@
 # $Id$
 #  --------------------------------------------------------------------------
-# dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+# dismod_at: Estimating Disease Rates as Functions of Age and Time
 #           Copyright (C) 2014-14 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
@@ -34,11 +34,11 @@ def rate_table() :
 	# create the rate table
 	col_name = [ 'rate_name', 'parent_smooth_id', 'child_smooth_id'  ]
 	col_type = [ 'text',      'integer',          'integer'          ]
-	row_list = [ 
-		['pini',  0,   1], 
-		['iota',  2,   3], 
-		['rho',   2,   3], 
-		['chi',   2,   3], 
+	row_list = [
+		['pini',  0,   1],
+		['iota',  2,   3],
+		['rho',   2,   3],
+		['chi',   2,   3],
 		['omega', 2,   3]
 	]
 	tbl_name = 'rate'

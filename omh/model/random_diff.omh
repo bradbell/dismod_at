@@ -1,10 +1,10 @@
 $Id$
 -----------------------------------------------------------------------------
-dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+dismod_at: Estimating Disease Rates as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
@@ -27,13 +27,13 @@ $section Random Effects Difference Density Function$$
 $head k, K$$
 We use $latex k$$ to denote a
 $cref/rate_id/rate_table/rate_id/$$
-and $latex K$$ for the number of rates. 
+and $latex K$$ for the number of rates.
 
 $head lambda_k$$
-We use 
+We use
 $latex \lambda_k^a$$
 ( $latex \lambda_k^t$$ )
-to denote the 
+to denote the
 $cref/mulstd_dage/smooth_table/mulstd_dage/$$
 ( $cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ )
 for the
@@ -56,9 +56,9 @@ For $latex j = 0 , \ldots , J(k)-1$$,
 we use $latex t_{j,k}$$ to denote the corresponding time value.
 
 $head u_i,j,k,c$$
-Let $latex u_{i,j,k,c}$$ denote the random effect corresponding to 
+Let $latex u_{i,j,k,c}$$ denote the random effect corresponding to
 child index $latex c$$,
-rate index $latex k$$, 
+rate index $latex k$$,
 age index $latex i$$ and
 time index $latex j$$.
 
@@ -66,7 +66,7 @@ $head Delta^a$$
 For $latex i = 0 , \ldots , I(k)-2$$ we define
 $latex \[
 \Delta_{i,j,k,c}^a u
-= 
+=
 \frac{ u_{i+1,j,k,c} - u_{i,j,k,c} }{ a_{i+1,k} - a_{i,k} }
 \] $$
 
@@ -74,66 +74,66 @@ $head Delta^t$$
 For $latex j = 0 , \ldots , J(k)-2$$ we define
 $latex \[
 \Delta_{i,j,k,c}^t u
-= 
+=
 \frac{ u_{i,j+1,k,c} - u_{i,j,k,c} }{ t_{j+1,k} - t_{j,k} }
 \] $$
 
 $head delta_i,j,k$$
-We use 
-$latex \delta_{i,j,k}^a$$ 
-( $latex \delta_{i,j,k}^t$$ ) 
-to denote the 
-$cref/std/prior_table/std/$$ corresponding to the 
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ 
+We use
+$latex \delta_{i,j,k}^a$$
+( $latex \delta_{i,j,k}^t$$ )
+to denote the
+$cref/std/prior_table/std/$$ corresponding to the
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
 ( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-rate index $latex k$$, 
+rate index $latex k$$,
 age index $latex i$$ and
 time index $latex j$$.
 
 $head A_i,j,k,c, T_i,j,k,c$$
-The $cref/child_smooth_id/rate_table/child_smooth_id/$$ must correspond to 
+The $cref/child_smooth_id/rate_table/child_smooth_id/$$ must correspond to
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
-$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ 
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
 that in turn correspond to gaussian densities.
 Furthermore, the mean for these densities must be zero.
 For $latex i = 0 , \ldots , I(k)-2$$,
-the definition of the 
+the definition of the
 age difference density function for $latex u_{i,j,k,c}$$ is
 $latex \[
-A_{i,j,k,c}^u ( u | \theta ) 
-=  
-\exp \left[ G \left( 
-	\Delta_{i,j,k,c}^a u \W{,} 0 \W{,} \lambda_k^a \delta_{i,j,k}^a 
+A_{i,j,k,c}^u ( u | \theta )
+=
+\exp \left[ G \left(
+	\Delta_{i,j,k,c}^a u \W{,} 0 \W{,} \lambda_k^a \delta_{i,j,k}^a
 \right) \right]
 \] $$
 For $latex j = 0 , \ldots , J(k)-2$$,
-the definition of the 
+the definition of the
 time difference density function for $latex u_{i,j,k,c}$$ is
 $latex \[
-T_{i,j,k,c}^u ( u | \theta ) 
+T_{i,j,k,c}^u ( u | \theta )
 =
-\exp \left[ G \left( 
-	\Delta_{i,j,k,c}^t u \W{,} 0 \W{,} \lambda_k^t \delta_{i,j,k}^t 
+\exp \left[ G \left(
+	\Delta_{i,j,k,c}^t u \W{,} 0 \W{,} \lambda_k^t \delta_{i,j,k}^t
 \right) \right]
 \] $$
 
 $head A^u$$
-The age difference density 
+The age difference density
 for the fixed effects $latex \theta$$ is defined by
 $latex \[
-A^u ( u | \theta ) 
-= 
-\sum_{c=0}^{C-1} \sum_{k=0}^{K-1} \sum_{i=0}^{I(k)-2} \sum_{j=0}^{J(k)-1} 
+A^u ( u | \theta )
+=
+\sum_{c=0}^{C-1} \sum_{k=0}^{K-1} \sum_{i=0}^{I(k)-2} \sum_{j=0}^{J(k)-1}
 	A_{i,j,k,c}^u ( u | \theta )
 \] $$
 
 $head T^u$$
-The time difference density 
+The time difference density
 for the fixed effects $latex \theta$$ is defined by
 $latex \[
-T^u ( u | \theta ) 
-= 
-\sum_{c=0}^{C-1} \sum_{k=0}^{K-1} \sum_{i=0}^{I(k)-1} \sum_{j=0}^{J(k)-2} 
+T^u ( u | \theta )
+=
+\sum_{c=0}^{C-1} \sum_{k=0}^{K-1} \sum_{i=0}^{I(k)-1} \sum_{j=0}^{J(k)-2}
 	T_{i,j,k,c}^u ( u | \theta )
 \] $$
 

@@ -1,14 +1,14 @@
 $Id$
 -----------------------------------------------------------------------------
-dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+dismod_at: Estimating Disease Rates as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin mulcov_table$$ 
+$begin mulcov_table$$
 $spell
 	pini
 	mulcov
@@ -43,19 +43,19 @@ $tend
 
 $head rate_id$$
 If $icode mulcov_type$$ is $code rate_mean$$,
-$icode rate_id$$ is the  
+$icode rate_id$$ is the
 $cref/rate_id/rate_table/rate_id/$$ that determines
 the rate that this covariate and multiplier effects.
 If $icode mulcov_type$$ is $code meas_mean$$ or $code meas_std$$,
-this column should be $code -1$$. 
+this column should be $code -1$$.
 
 $head integrand_id$$
-If $icode mulcov_type$$ is $code meas_mean$$ or $code meas_std$$, 
-$icode integrand_id$$ is the  
+If $icode mulcov_type$$ is $code meas_mean$$ or $code meas_std$$,
+$icode integrand_id$$ is the
 $cref/integrand_id/integrand_table/integrand_id/$$ that determines
 which measurement integrand this multiplier effects.
 If $icode mulcov_type$$ is $code rate_mean$$,
-this column should be $code -1$$. 
+this column should be $code -1$$.
 
 $head covariate_id$$
 This column has type $code integer$$ and is a
@@ -66,14 +66,14 @@ $cref data_table$$ that this multiplier acts on.
 
 $head smooth_id$$
 This column has type $code integer$$ and its value is a
-$cref/smooth_id/smooth_grid_table/smooth_id/$$ 
+$cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
 It specifies the smoothing uses as a prior for this covariate multiplier.
 (Note that all covariate multipliers are fixed effects.)
 
 $subhead pini$$
 Consider the case where $icode mulcov_type$$ is $code rate_mean$$
-and $icode rate_id$$ corresponds to 
+and $icode rate_id$$ corresponds to
 $cref/rate_name/rate_table/rate_name/$$ $code pini$$.
 In this case, $icode smooth_id$$ should correspond to
 $cref/n_age/smooth_table/n_age/$$ equal to one because

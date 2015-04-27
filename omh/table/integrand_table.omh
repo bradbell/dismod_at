@@ -1,14 +1,14 @@
 $Id$
 -----------------------------------------------------------------------------
-dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+dismod_at: Estimating Disease Rates as Functions of Age and Time
           Copyright (C) 2014-14 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
-This program is distributed under the terms of the 
+This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin integrand_table$$ 
+$begin integrand_table$$
 $spell
 	dismod
 	integrands
@@ -29,7 +29,7 @@ The $code integrand$$ table is used to identify data integrands.
 It has the following columns:
 
 $head integrand_id$$
-This column has type $code integer$$ 
+This column has type $code integer$$
 and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
@@ -39,7 +39,7 @@ Each name can only appear once in this table.
 Only the $cref/integrand_id/data_table/integrand_id/$$ that appear
 in the data table need appear in the integrand table.
 $table
-$icode integrand_name$$ $pre   $$ $cnext Description $cnext  $pre  $$ 
+$icode integrand_name$$ $pre   $$ $cnext Description $cnext  $pre  $$
 	Definition
 $rnext
 $code incidence$$       $cnext incidence rate $cnext $pre  $$
@@ -75,9 +75,9 @@ $tend
 
 $head eta$$
 This column has type $code real$$.
-This is the offset in the log transformation for 
+This is the offset in the log transformation for
 rows of the $cref data_table$$ where
-$cref/integrand_id/data_table/integrand_id/$$ 
+$cref/integrand_id/data_table/integrand_id/$$
 matches the value in this table and the
 $cref/density_id/data_table/density_id/$$ corresponds to
 $code log_gaussian$$ or $code log_laplace$$.

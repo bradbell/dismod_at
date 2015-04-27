@@ -1,10 +1,10 @@
 # $Id$
 #  --------------------------------------------------------------------------
-# dismod_at: Estimating Disease Rate Estimation as Functions of Age and Time
+# dismod_at: Estimating Disease Rates as Functions of Age and Time
 #           Copyright (C) 2014-14 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
-# 
-# This program is distributed under the terms of the 
+#
+# This program is distributed under the terms of the
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
@@ -36,7 +36,7 @@ def covariate_table() :
 	#
 	# create the covariate table
 	col_name = [ 'covariate_name',	'reference' ]
-	col_type = [ 'text',             'real'     ] 
+	col_type = [ 'text',             'real'     ]
 	row_list = [
 	           [ 'sex',              0.0        ],
 	           [ 'income',           2000.0     ]
