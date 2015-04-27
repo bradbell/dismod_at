@@ -296,13 +296,14 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 #	%prior_list%,
 #	%smooth_list%,
 #	%rate_list%,
-#	%mulcov_list%,
-#	%fit_list%
+#	%mulcov_list%
 # )%$$
 #
 # $head Purpose$$
-# This routine makes it easy to create all the
+# This routine makes it easy to create and set the values for all the
 # $cref input$$ tables in a $code dismod_at$$ database.
+# In addtion, it creates, but does not set the valuse for,
+# all the $cref output$$ tables.
 # This is only meant for small example and testing cases and is not efficient.
 #
 # $head file_name$$
@@ -455,23 +456,6 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 # smooth    $cnext str         $cnext smoothing name
 # $tend
 #
-# $head fit_list$$
-# This is a list of $code dict$$
-# that define the rows of the $cref fit_table$$.
-# The dictionary $icode%fit_list%[%i%]%$$ has the following:
-# $table
-# Key     $cnext Value Type    $cnext Description                $rnext
-# parent_node       $cnext int $cnext name of parent for this analysis $rnext
-# pini_smooth     $cnext int $cnext
-#	name of initial prevalence smoothing $rnext
-# ode_step_size     $cnext double
-#	$cnext used to approximation ODE solution $rnext
-# tolerance         $cnext int $cnext number of posterior
-#	$cref/samples/post_table/sample/$$
-# $tend
-# Note that if the i-th node does not have a parent, the empty string
-# should be used for the parent of that node.
-#
 # $end
 def create_database(
 	file_name,
@@ -485,8 +469,7 @@ def create_database(
 	prior_list,
 	smooth_list,
 	rate_list,
-	mulcov_list,
-	fit_list
+	mulcov_list
 ) :
 	# -----------------------------------------------------------------------
 	# create database
@@ -807,18 +790,11 @@ def create_database(
 		'parent_node_id','pini_smooth_id', 'ode_step_size','tolerance'
 	]
 	col_type = [
-		'integer',       'integer',        'real',         'integer'
+		'integer',       'integer',        'real',         'real'
 	]
 	row_list = []
-	for fit in fit_list :
-		parent_node_id     = global_node_name2id[ fit['parent_node' ] ]
-		pini_smooth_id     = global_smooth_name2id[ fit['pini_smooth'] ]
-		ode_step_size      = fit['ode_step_size']
-		tolerance          = fit['tolerance']
-		row_list.append( [
-			parent_node_id, pini_smooth_id, ode_step_size, tolerance
-		] )
 	tbl_name = 'fit'
 	create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
+	# 2DO: creat post table
 	return

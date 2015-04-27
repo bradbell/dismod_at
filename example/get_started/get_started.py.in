@@ -162,13 +162,6 @@ mulcov_list = [
 		'smooth':'uniform_01_constant'
 	}
 ]
-fit_list    = [
-	{	'parent_node':'north_america',
-		'pini_smooth':'uniform_01_constant',
-		'ode_step_size':0.5,
-		'tolerance':1e-8
-	}
-]
 dismod_at.create_database(
 	file_name,
 	age_list,
@@ -181,8 +174,7 @@ dismod_at.create_database(
 	prior_list,
 	smooth_list,
 	rate_list,
-	mulcov_list,
-	fit_list
+	mulcov_list
 )
 # -----------------------------------------------------------------------
 print('get_started: OK')
