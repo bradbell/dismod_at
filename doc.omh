@@ -37,6 +37,13 @@ $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
 $lnext
 The python version of the $cref pack_info$$,
 $code python/dismod_at/pack_info.py$$, needs to be completed.
+$lnext
+Change the $cref post_table$$ to the $code variable_table$$.
+It will contain maximum likelihood estimates and samples of the
+model variables in $cref pack_info$$ format.
+$lnext
+Finish implementation and testing of the
+$cref/dismod_at executable/dismod_at_exe/$$.
 $lend
 
 $childtable%omh/table/input.omh

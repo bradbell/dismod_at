@@ -14,6 +14,11 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin fit_model$$
 $spell
+	str
+	num_iter
+	std
+	Ipopt
+	tol
 	vec
 	const
 	CppAD
@@ -27,7 +32,7 @@ $codei%fit_model %fit_object%(
 	%pack_object%, %prior_table%, %s_info_vec%, %data_object%, %prior_object%
 )
 %$$
-$codei%fit_object.run_fit()
+$codei%fit_object.run_fit(%tolerance_str%, %max_num_iter_str%)
 %$$
 $icode%solution% = %fit_object%.get_solution()
 %$$
@@ -81,6 +86,20 @@ It contains the model for the prior density; see $cref prior_model$$.
 
 $head run_fit$$
 Run the optimization process to determine the optimal fixed and random effects.
+
+$subhead tolerance_str$$
+This argument has prototype
+$code
+	const std::string& %tolerance_str%
+%$$
+and is the Ipopt relative tolerance $code tol$$ for the fit.
+
+$subhead max_num_iter_str$$
+This argument has prototype
+$code
+	const std::string& %max_num_iter_str%
+%$$
+and is the Ipopt maximum number of iterations $code max_iter$$ for the fit.
 
 $head solution$$
 This return value has prototype
@@ -148,7 +167,9 @@ prior_object_  ( prior_object )
 }
 // ---------------------------------------------------------------------------
 // run_fit
-void fit_model::run_fit(void)
+void fit_model::run_fit(
+	const std::string& tolerance_str    ,
+	const std::string& max_num_iter_str )
 {	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
 	assert( value_prior_.size() == n_var );
@@ -178,18 +199,23 @@ void fit_model::run_fit(void)
 		pack_vec[i] = prior_table_[ value_prior_[i] ].mean;
 	get_random_effect(pack_object_, pack_vec, random_in);
 
-	// optimal fixed effects
+	// Ipopt options (2DO: also set options for random effects optimzation)
 	std::string options =
 		"Integer print_level               0\n"
 		"String  sb                        yes\n"
 		"String  derivative_test           second-order\n"
 		"String  derivative_test_print_all yes\n"
-		"Numeric tol                       1e-8\n"
 	;
+	options += "Numeric tol ";
+	options += tolerance_str + "\n";
+	options += "Integer max_iter ";
+	options += max_num_iter_str + "\n";
+	//
+	// optimal fixed effects
 	CppAD::vector<double> optimal_fixed = optimize_fixed(
 		options, fixed_lower, fixed_in, fixed_upper, random_in
 	);
-
+	//
 	// optimal random effects
 	CppAD::vector<double> optimal_random = optimize_random(
 		optimal_fixed, random_in

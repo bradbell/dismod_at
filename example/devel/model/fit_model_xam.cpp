@@ -275,7 +275,9 @@ bool fit_model_xam(void)
 		data_object,
 		prior_object
 	);
-	fit_object.run_fit();
+	std::string tolerance_str    = "1e-8";
+	std::string max_num_iter_str = "100";
+	fit_object.run_fit(tolerance_str, max_num_iter_str);
 	CppAD::vector<double> solution = fit_object.get_solution();
 	// test not yet passing
 	double tol = 1e-8;

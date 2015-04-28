@@ -22,7 +22,7 @@ $$
 $section C++: Get the Data Base Input Tables$$
 
 $head Syntax$$
-$codei%get_db_input(%db%, %input_table%)%$$
+$codei%get_db_input(%db%, %db_input%)%$$
 
 $head Purpose$$
 Read all the input tables and return them as a C++ data structure.
@@ -48,10 +48,10 @@ $codei%
 %$$
 and is an open connection to the database.
 
-$head input_table$$
+$head db_input$$
 The return value has prototype
 $codei%
-	db_input_struct& %input_table%
+	db_input_struct& %db_input%
 %$$
 where $code db_input_struct$$ is defined by
 $code

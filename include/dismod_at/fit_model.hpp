@@ -78,7 +78,10 @@ namespace dismod_at {
 			const prior_model&                 prior_object
 		);
 		// run fit
-		void run_fit(void);
+		void run_fit(
+			const std::string& tolerance_str    ,
+			const std::string& max_num_iter_str
+		);
 		// get_solution
 		CppAD::vector<double> get_solution(void);
 	};

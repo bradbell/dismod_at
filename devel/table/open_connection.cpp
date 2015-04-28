@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -10,6 +10,12 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
 $begin open_connection$$
+$spell
+	sqlite
+	const
+	std
+	bool
+$$
 
 $section Open An Sqlite3 Database Connection$$
 
@@ -25,7 +31,7 @@ It is the name of the file where the data base is
 (or will be) stored.
 
 $head new_file$$
-This argument has protoype
+This argument has prototype
 $codei%
 	bool %new_file%
 %$$
