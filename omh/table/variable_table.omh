@@ -1,0 +1,57 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin variable_table$$
+$spell
+	mulcov
+	covariate
+$$
+
+$section The Variable Table$$
+The variable table contains samples of the
+$cref/model variables/model_variable/$$.
+
+$head variable_id$$
+This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+$head fit_id$$
+This column has type $code integer$$,
+is non-decreasing with row number,
+and is the value of
+$cref/fit_id/fit_table/fit_id/$$ that this row corresponds to.
+
+$head sample$$
+This column has type $code integer$$.
+For each fixed $icode fit_id$$ value,
+$icode sample$$ is non-decreasing with row number,
+and increments each time a sample of all the model variables is completed.
+For each $icode fit_id$$ there is a row with $icode%sample% == 0%$$
+and it corresponds to the maximum likelihood estimate for that $icode fit_id$$.
+The other rows are random samples from the posterior distribution
+corresponding to the maximum likelihood estimate specified by $icode fit_id$$.
+
+$head offset$$
+This column has type $code integer$$.
+For each fixed $icode fit_id$$ value, and fixed $icode sample$$ value,
+$icode offset$$ is non-decreasing with row number,
+starts with zero, and increments by one with each row.
+It is the offset of the particular variable in a $cref pack_info$$ vector.
+
+$head value$$
+This column has type $code real$$ is the value of the corresponding variable.
+
+$children%example/table/variable_table.py
+%$$
+$head Example$$
+The file $cref variable_table.py$$
+contains an example $code variable$$ table.
+
+$end

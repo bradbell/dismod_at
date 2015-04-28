@@ -17,8 +17,12 @@ fi
 list=`git ls-files`
 for file in $list
 do
-	if grep "$1" $file > /dev/null
+	# make git has not staged a delete of this file
+	if [ -e "$file" ]
 	then
-		echo $file
+		if grep "$1" $file > /dev/null
+		then
+			echo $file
+		fi
 	fi
 done
