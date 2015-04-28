@@ -19,20 +19,14 @@ $spell
 	std
 $$
 
-$section C++: Get the Data Base Input Information$$
-$index get, input tables$$
-$index table, get input$$
-$index input, get tables$$
-
-$head Under Construction$$
-This routine is under construction and not yet used.
+$section C++: Get the Data Base Input Tables$$
 
 $head Syntax$$
-$icode%input% = get_db_input(%db%)%$$
+$codei%get_db_input(%db%, %input_table%)%$$
 
 $head Purpose$$
-To read all the input tables and return it as a C++ data structure
-and preform the following checks:
+Read all the input tables and return them as a C++ data structure.
+In addition, preform the following checks:
 
 $subhead Primary Key$$
 Check that all occurrences of $icode%table_name%_id%$$ are with in
@@ -54,17 +48,25 @@ $codei%
 %$$
 and is an open connection to the database.
 
-$head Return$$
-The return value has type $code db_input_struct$$
-which is defined by
+$head input_table$$
+The return value has prototype
+$codei%
+	db_input_struct& %input_table%
+%$$
+where $code db_input_struct$$ is defined by
 $code
 $verbatim%include/dismod_at/get_db_input.hpp%0%// BEGIN STRUCT%// END STRUCT%$$
 $$
 $pre
 $$
-Each of the tables above is defined by the corresponding get routine.
-For example, the age table is the return value of
-$cref get_age_table$$.
+Each $icode%name%_table%$$ above is defined by the corresponding
+$codei%get_%name%_table%$$ routine.
+For example, $codei%age_table%$$ is the return value of
+$cref get_age_table$$ routine.
+All of the tables must be empty when $code get_db_input$$ is called; i.e.,
+the size of the corresponding vector must be zero.
+Upon return, each table will have the corresponding database $icode db$$
+information.
 
 $end
 -----------------------------------------------------------------------------
@@ -94,7 +96,21 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void get_db_input(sqlite3* db, db_input_struct& db_input)
 {	using CppAD::vector;
-
+	//
+	assert( db_input.age_table.size() == 0 );
+	assert( db_input.time_table.size() == 0 );
+	assert( db_input.rate_table.size() == 0 );
+	assert( db_input.density_table.size() == 0 );
+	assert( db_input.integrand_table.size() == 0 );
+	assert( db_input.weight_table.size() == 0 );
+	assert( db_input.smooth_table.size() == 0 );
+	assert( db_input.covariate_table.size() == 0 );
+	assert( db_input.node_table.size() == 0 );
+	assert( db_input.prior_table.size() == 0 );
+	assert( db_input.weight_grid_table.size() == 0 );
+	assert( db_input.smooth_grid_table.size() == 0 );
+	assert( db_input.mulcov_table.size() == 0 );
+	//
 	db_input.age_table         = get_age_table(db);
 	db_input.time_table        = get_time_table(db);
 	db_input.rate_table        = get_rate_table(db);
@@ -102,7 +118,6 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.integrand_table   = get_integrand_table(db);
 	db_input.weight_table      = get_weight_table(db);
 	db_input.smooth_table      = get_smooth_table(db);
-	db_input.fit_table         = get_fit_table(db);
 	db_input.covariate_table   = get_covariate_table(db);
 	db_input.node_table        = get_node_table(db);
 	db_input.prior_table       = get_prior_table(db);
@@ -110,8 +125,8 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.smooth_grid_table = get_smooth_grid(db);
 	db_input.mulcov_table      = get_mulcov_table(db);
 	//
-	size_t n_covariate = db_input.covariate_table.size();
-	db_input.data_table        = get_data_table(db, n_covariate);
+	size_t n_covariate   = db_input.covariate_table.size();
+	db_input.data_table  = get_data_table(db, n_covariate);
 	//
 	// -----------------------------------------------------------------------
 	// check primary keys
@@ -129,9 +144,6 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_value, prior, 0);
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dage,  prior, 0);
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dtime, prior, 0);
-
-	// fit table
-	DISMOD_AT_CHECK_PRIMARY_ID(fit, parent_node_id,  node,   0);
 
 	// smooth_grid table
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, smooth_id, smooth, 0);

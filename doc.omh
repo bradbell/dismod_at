@@ -9,24 +9,35 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin dismod_at_package$$
-$comment latex macros used for all sections$$
+$comment BEGIN: settings used by all section ---------------------------- $$
 $latex
 	\newcommand{\R}[1]{ {\rm #1} }
 	\newcommand{\B}[1]{ {\bf #1} }
 	\newcommand{\W}[1]{ \; #1 \; }
 $$
-$comment automatic indexing command used for all sections$$
 $aindex section head subhead$$
+$comment END: settings used by all section ---------------------------- $$
 
 $spell
+	py
+	dage
+	dtime
 	dismod
 $$
 $section dismod_at: Estimating Disease Rates as Functions of Age and Time$$
 
-$head Under Construction$$
-This package is under construction and does not yet accomplish its purpose.
-Furthermore, the following sections are in an incomplete state:
-$cref/Get Data Base Input Information/get_db_input/Under Construction/$$.
+$head 2DO List$$
+The following tasks need to be done before the first release of this package:
+$list number$$
+Create an install procedure.
+$lnext
+Include lower and upper limit for the smoothing difference priors
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
+$lnext
+The python version of the $cref pack_info$$,
+$code python/dismod_at/pack_info.py$$, needs to be completed.
+$lend
 
 $childtable%omh/table/input.omh
 	%omh/model/model.omh
