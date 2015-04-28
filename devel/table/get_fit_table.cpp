@@ -15,6 +15,7 @@ $spell
 	struct
 	cpp
 	std
+	num_iter
 $$
 
 $section C++: Get the Fit Table Information$$

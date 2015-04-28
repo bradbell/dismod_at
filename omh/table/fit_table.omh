@@ -12,6 +12,7 @@ $begin fit_table$$
 $spell
 	num_iter
 	tol
+	dismod
 $$
 
 $section The Fit Table$$
@@ -19,31 +20,34 @@ The $code fit$$ table has the following columns:
 
 $head fit_id$$
 This column has type $code integer$$
-and is the primary key for this table.
-Its initial value is zero, and it increments by one for each row.
+and is the primary key for this table; i.e., it identifies rows.
+Each row of this table corresponds to a run of the
+$cref/dismod_at executable/dismod_at_exe/$$.
 
 $head parent_node_id$$
 This column has type $code integer$$
-and is the $cref/node_id/node_table/node_id/$$ for
-the parent node for this $icode fit_id$$.
+and is the parent $cref/node_id/node_table/node_id/$$ for this
+run of the $cref/dismod_at/dismod_at_exe/parent_node/$$ executable.
 
 $head ode_step_size$$
 This column has type $code real$$
-and is the step size used to integrate the ordinary differential equation.
+and is the numerical ode step size for this
+run of the $cref/dismod_at/dismod_at_exe/ode_step_size/$$ executable.
 The step size is the same in age and time because it is along cohort lines.
 
 $head tolerance$$
 This column has type $code real$$
 and is the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
-desired relative convergence tolerance $code tol$$.
+maximum number of iterations $code max_iter$$ for this
+run of the $cref/dismod_at/dismod_at_exe/ode_step_size/$$ executable.
 
 $head max_num_iter$$
-This column has type $code real$$
+This column has type $code integer$$
 and is the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
-maximum number of iterations $code max_iter$$.
-
+desired relative convergence tolerance $code tol$$ for this
+run of the $cref/dismod_at/dismod_at_exe/ode_step_size/$$ executable.
 
 $children%example/table/fit_table.py
 %$$
