@@ -10,82 +10,6 @@
 # -------------------------------------------------------------------------- */
 import sqlite3
 # ============================================================================
-# $begin unicode_tuple$$ $newlinech #$$
-# $spell
-#	iterable
-#	unicode
-#	tuple
-#	str
-#	dismod
-#	sqlite
-# $$
-# $index convert, iterable to string$$
-# $index string, version of iterable$$
-#
-# $section Convert an Iterable Object to a Unicode String$$
-#
-# $head Syntax$$
-# $icode%u_tuple% = dismod_at.unicode_tuple(%iterable%, %quote_string%)%$$
-#
-# $head iterable$$
-# is any object where we can iterate over its elements
-# and convert each element to a unicode value.
-#
-# $head quote_string$$
-# is either $code True$$ or $code False$$.
-# If it is $code True$$, and an element is a $code str$$ or $code unicode$$,
-# it is surrounded by the single quote character.
-#
-# $head None$$
-# The value $code None$$ is converted to the unicode string $code null$$
-# (always without quotes).
-#
-# $head Infinity$$
-# If $icode u_j$$ is a $code float$$ and equal to plus infinity,
-# the corresponding tuple value has an exponent that is ten times the
-# exponent for the maximum float.
-# This is so that, when written by pythons $code sqlite$$ package, it
-# gets converted to infinity.
-# Minus infinity is handled in a similar fashion.
-#
-# $head u_tuple$$
-# is a unicode string representation of the tuple containing the elements.
-# To be specific it is given by
-# $codei%
-#	%u_tuple% = u'( %u_1%, %u_2%, %...%, %u_n% )'
-# %$$
-# where $icode n$$ is the number of elements
-# and $icode u_1$$ is the $th i$$ element.
-#
-# $end
-# --------------------------------------------------------------------------
-def unicode_infinity() :
-	import sys
-	import math
-	exponent = int( math.log( sys.float_info.max ) / math.log(10.) ) + 10
-	inf      = u'10e' + unicode(exponent)
-	return inf
-def unicode_tuple(iterable, quote_string) :
-	u_tuple = u'('
-	count   = 0
-	for element in iterable :
-		if count > 0 :
-			u_tuple += u','
-		count += 1
-		#
-		if element == None :
-			u_tuple += u' null'
-		elif isinstance(element, float) and element == float('inf') :
-			u_tuple += u' ' + unicode_infinity()
-		elif isinstance(element, float) and element == - float('inf') :
-			u_tuple += u' -' + unicode_infinity()
-		elif quote_string and isinstance(element, basestring) :
-			u_tuple += u' ' + u"'" + unicode(element) + u"'"
-		else :
-			u_tuple += u' ' + unicode(element)
-	u_tuple     += u' )'
-	return u_tuple
-# ============================================================================
 # $begin create_connection$$ $newlinech #$$
 # $spell
 #	str
@@ -243,6 +167,7 @@ def get_name2type(connection, tbl_name) :
 #
 # $end
 # ---------------------------------------------------------------------------
+import dismod_at
 def create_table(connection, tbl_name, col_name, col_type, row_list) :
 	import copy
 	#
@@ -260,7 +185,7 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 	for i in range( len(row_list) ) :
 		row_cpy     = copy.copy(row_list[i])
 		row_cpy.insert(0, i)
-		value_tuple = unicode_tuple(row_cpy, quote_text)
+		value_tuple = dismod_at.unicode_tuple(row_cpy, quote_text)
 		cmd = 'insert into ' + tbl_name + ' values ' + value_tuple
 		cursor.execute(cmd)
 # ==========================================================================-

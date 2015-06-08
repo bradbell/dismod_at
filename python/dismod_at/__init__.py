@@ -12,9 +12,11 @@
 #
 # $section Python Utilities$$
 #
-# $childtable%python/dismod_at/database.py
+# $childtable%python/dismod_at/unicode_tuple.py
+#	%python/dismod_at/database.py
 # %$$
 #
 # $end
 # -----------------------------------------------------------------------------
+from unicode_tuple import unicode_tuple
 from database import *
