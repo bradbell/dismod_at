@@ -46,7 +46,7 @@ $childtable%omh/table/input.omh
 	%omh/model/model.omh
 	%omh/table/output.omh
 	%devel/dismod_at.cpp
-	%omh/python/python.omh
+	%python/dismod_at/__init__.py
 	%devel/devel.omh
 %$$
 
