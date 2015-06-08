@@ -29,7 +29,7 @@ $codei%pack_info %pack_object%(
 	%smooth_table%, %mulcov_table%, %rate_table%
 )
 %$$
-$icode%pack_info %pack_copy%(%pack_object%)
+$codei%pack_info %pack_copy%(%pack_object%)
 %$$
 $icode%size%            = %pack_object%.size()
 %$$
