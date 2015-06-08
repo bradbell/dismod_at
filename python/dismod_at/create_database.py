@@ -8,91 +8,6 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-import sqlite3
-# ==========================================================================-
-# $begin create_table$$ $newlinech #$$
-# $spell
-#	dismod
-#	str
-#	tbl
-# $$
-# $index create_table, database$$
-# $index table, database create$$
-# $index database, create_table$$
-#
-# $section Create a Database Table$$
-#
-# $head Syntax$$
-# $codei%dismod_at.create_table(
-#	%connection%, %tbl_name%, %col_name%, %col_type%, %row_list%
-# )%$$
-#
-# $head connection$$
-# is a $cref/connection/create_connection/connection/$$ for this database.
-#
-# $head tbl_name$$
-# is a $code str$$ that specifies the name of the table.
-#
-# $head col_name$$
-# is a $code list$$ of $code str$$
-# where the elements are the column names in the table that is created.
-#
-# $subhead tbl_name_id$$
-# The column $icode%tbl_name%_id%$$ is added as the first column
-# of the table and should not be included in $icode col_name$$.
-#
-# $head col_type$$
-# is a $code list$$ of $code str$$ where the elements are the column types
-# in the same order as $icode col_name$$.
-# The valid types are
-# $code integer$$, $code real$$, $code text$$.
-#
-# $subhead tbl_name_id$$
-# The column with name $icode%tbl_name%_id%$$ will have type
-# $code integer primary key$$.
-#
-# $head row_list$$
-# is a possibly empty $code list$$ of rows contain data that is written
-# to the table.
-# Each row is itself a list containing the data for one row of the
-# table in the same order as $icode col_name$$.
-# Note that the special value $code None$$ gets converted to $code null$$.
-#
-# $subhead tbl_name_id$$
-# The column with name $icode%tbl_name%_id%$$ will have value starting
-# with zero for the first row and incrementing by one for each row.
-#
-#
-# $children%example/table/create_table.py
-# %$$
-# $head Example$$
-# The file $cref create_table.py$$ is an example use of
-# $code create_table$$.
-#
-# $end
-# ---------------------------------------------------------------------------
-import dismod_at
-def create_table(connection, tbl_name, col_name, col_type, row_list) :
-	import copy
-	#
-	cmd       = 'create table ' + tbl_name + '('
-	n_col     = len( col_name )
-	cmd      += '\n\t' + tbl_name + '_id integer primary key'
-	for j in range(n_col) :
-		cmd   += ',\n\t' + col_name[j] + ' ' + col_type[j]
-	cmd += '\n\t);'
-	#
-	cursor  = connection.cursor()
-	cursor.execute(cmd)
-	#
-	quote_text = True
-	for i in range( len(row_list) ) :
-		row_cpy     = copy.copy(row_list[i])
-		row_cpy.insert(0, i)
-		value_tuple = dismod_at.unicode_tuple(row_cpy, quote_text)
-		cmd = 'insert into ' + tbl_name + ' values ' + value_tuple
-		cursor.execute(cmd)
-# ==========================================================================-
 # $begin create_database$$ $newlinech #$$
 # $spell
 #	pini
@@ -300,6 +215,7 @@ def create_database(
 	rate_list,
 	mulcov_list
 ) :
+	import dismod_at
 	# -----------------------------------------------------------------------
 	# create database
 	new            = True
@@ -312,7 +228,7 @@ def create_database(
 	for age in age_list :
 		row_list.append( [age] )
 	tbl_name = 'age'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# create time table
 	col_name = [ 'time' ]
@@ -321,7 +237,7 @@ def create_database(
 	for time in time_list :
 		row_list.append( [time] )
 	tbl_name = 'time'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# create integrand table
 	col_name = [ 'integrand_name', 'eta' ]
@@ -330,7 +246,7 @@ def create_database(
 	for row in integrand_list :
 		row_list.append( [ row['name'], row['eta'] ]  )
 	tbl_name = 'integrand'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_integrand_name2id = {}
 	for i in range( len(row_list) ) :
@@ -347,7 +263,7 @@ def create_database(
 		['log_laplace']
 	]
 	tbl_name = 'density'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_density_name2id = {}
 	for i in range( len(row_list) ) :
@@ -361,7 +277,7 @@ def create_database(
 		covariate = covariate_list[i]
 		row_list.append( [ covariate['name'], covariate['reference'] ] )
 	tbl_name = 'covariate'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_covariate_name2id = {}
 	for i in range( len(covariate_list) ) :
@@ -385,7 +301,7 @@ def create_database(
 			parent = global_node_name2id[parent]
 		row_list.append( [ name, parent ] )
 	tbl_name = 'node'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create the prior table
 	col_name = [
@@ -409,7 +325,7 @@ def create_database(
 		]
 		row_list.append( row )
 	tbl_name = 'prior'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_prior_name2id = {}
 	for i in range( len(row_list) ) :
@@ -426,7 +342,7 @@ def create_database(
 		n_time = len( weight['time_id'] )
 		row_list.append( [ name, n_age, n_time ] )
 	tbl_name = 'weight'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_weight_name2id = {}
 	for i in range( len(weight_list) ) :
@@ -446,7 +362,7 @@ def create_database(
 				w = fun(age_list[j], time_list[k])
 				row_list.append( [ i, j, k, w] )
 	tbl_name = 'weight_grid'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create smooth table
 	col_name = [ 'smooth_name', 'n_age',   'n_time', 'mulstd_value',
@@ -466,7 +382,7 @@ def create_database(
 		name, n_age, n_time, mulstd_value, mulstd_dage, mulstd_dtime
 		] )
 	tbl_name = 'smooth'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_smooth_name2id = {}
 	for i in range( len(smooth_list) ) :
@@ -507,7 +423,7 @@ def create_database(
 					dt = -1
 				row_list.append( [ i, j, k, v, da, dt] )
 	tbl_name = 'smooth_grid'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create rate table
 	col_name = [  'rate_name', 'parent_smooth_id', 'child_smooth_id'  ]
@@ -520,7 +436,7 @@ def create_database(
 		child_smooth_id  = global_smooth_name2id[ rate['child_smooth'] ]
 		row_list.append( [ rate_name, parent_smooth_id, child_smooth_id ] )
 	tbl_name = 'rate'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	global_rate_name2id = {}
 	for i in range( len(row_list) ) :
 		global_rate_name2id[ row_list[i][0] ] = i
@@ -557,7 +473,7 @@ def create_database(
 			[mulcov_type, rate_id, integrand_id, covariate_id, smooth_id]
 		)
 	tbl_name = 'mulcov'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create the data table
 	col_name = [
@@ -612,7 +528,7 @@ def create_database(
 			row.append( data[ covariate_list[j]['name'] ] )
 		row_list.append(row)
 	tbl_name = 'data'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create fit table
 	col_name = [
@@ -623,7 +539,7 @@ def create_database(
 	]
 	row_list = []
 	tbl_name = 'fit'
-	create_table(connection, tbl_name, col_name, col_type, row_list)
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# 2DO: creat post table
 	return
