@@ -13,6 +13,7 @@
 # $section Python Utilities$$
 #
 # $childtable%python/dismod_at/create_connection.py
+#	%python/dismod_at/get_name2type.py
 #	%python/dismod_at/unicode_tuple.py
 #	%python/dismod_at/database.py
 # %$$
@@ -20,5 +21,6 @@
 # $end
 # -----------------------------------------------------------------------------
 from create_connection import create_connection
+from get_name2type     import get_name2type
 from unicode_tuple     import unicode_tuple
 from database import *

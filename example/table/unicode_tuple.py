@@ -21,7 +21,7 @@
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
-import dismod_at
+#
 def unicode_tuple() :
 	import dismod_at
 	#

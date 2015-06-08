@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -39,7 +39,6 @@ def create_table() :
 	pound_sign           = unichr( 10 * 16 + 3 ) # 00a3
 	#
 	# create table
-	name_tuple        = '( temp_id, temp_name )'
 	col_name = [ 'temp_name'          ]
 	col_type = [ 'text'               ]
 	row_list = [

@@ -10,62 +10,6 @@
 # -------------------------------------------------------------------------- */
 import sqlite3
 # ==========================================================================-
-# $begin get_name2type$$ $newlinech #$$
-# $spell
-#	dismod
-#	str
-#	tbl
-# $$
-# $index table, column names and type$$
-# $index name, table column$$
-# $index type, table column$$
-# $index column, name and type$$
-#
-# $section Get Column Names and Types$$
-#
-# $head Syntax$$
-# $icode%col_name2type% = dismod_at.get_name2type(%connection%, %tbl_name%)
-# %$$
-#
-# $head connection$$
-# is a $cref/connection/create_connection/connection/$$ for this database.
-#
-# $head table_name$$
-# is a $code str$$ that specifies the name of the table.
-#
-# $head col_name2type$$
-# The return value is an ordered dictionary where the order is the
-# same as the order of the columns in the table.
-# The key is the column name and
-# the value is one of the following:
-# $code integer$$, $code real$$, $code text$$, or
-# $code integer primary key$$.
-#
-# $end
-# ---------------------------------------------------------------------------
-def get_name2type(connection, tbl_name) :
-	import collections
-	#
-	cmd        = 'pragma table_info(' + tbl_name + ');'
-	cursor    = connection.cursor()
-	cid       = 0
-	found_pk  = False
-	col_name2type = collections.OrderedDict()
-	for row in cursor.execute(cmd) :
-		assert cid == row[0]
-		cid       += 1
-		#
-		key        = row[1]
-		value      = row[2]
-		pk         = row[5]
-		if pk == 1 :
-			assert found_pk == False
-			assert value == 'integer'
-			value           =  'integer primary key'
-			found_ok        = True
-		col_name2type[key]  =  value
-	return col_name2type
-# ==========================================================================-
 # $begin create_table$$ $newlinech #$$
 # $spell
 #	dismod
