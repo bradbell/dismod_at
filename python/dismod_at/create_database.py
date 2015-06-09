@@ -44,10 +44,10 @@
 # )%$$
 #
 # $head Purpose$$
-# This routine makes it easy to create and set the values for all the
-# $cref input$$ tables in a $code dismod_at$$ database.
-# In addition, it creates, but does not set the values for,
-# all the $cref output$$ tables.
+# This routine makes it easy to create a $code dismod_at$$ database
+# with all of its $cref input$$ and $cref output$$ tables.
+# In addition, it sets all of the values in the input tables,
+# but the output tables are left empty.
 # This is only meant for small example and testing cases and is not efficient.
 #
 # $head file_name$$
@@ -221,6 +221,8 @@ def create_database(
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
 	# -----------------------------------------------------------------------
+	# Input Tables
+	# -----------------------------------------------------------------------
 	# create age table
 	col_name = [ 'age' ]
 	col_type = [ 'real' ]
@@ -303,7 +305,7 @@ def create_database(
 	tbl_name = 'node'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
-	# create the prior table
+	# create prior table
 	col_name = [
 		'prior_name', 'lower', 'upper', 'mean', 'std',  'density_id', 'eta'
 	]
@@ -348,7 +350,7 @@ def create_database(
 	for i in range( len(weight_list) ) :
 		global_weight_name2id[ weight_list[i]['name'] ] = i
 	# ------------------------------------------------------------------------
-	# create weight grid table
+	# create weight_grid table
 	col_name = [  'weight_id', 'age_id',   'time_id',  'weight' ]
 	col_type = [  'integer',   'integer',  'integer',  'real'   ]
 	row_list = [ ]
@@ -388,7 +390,7 @@ def create_database(
 	for i in range( len(smooth_list) ) :
 		global_smooth_name2id[ smooth_list[i]['name'] ] = i
 	# ------------------------------------------------------------------------
-	# create smooth grid table
+	# create smooth_grid table
 	col_name = [
 		'smooth_id',
 		'age_id',
@@ -441,7 +443,7 @@ def create_database(
 	for i in range( len(row_list) ) :
 		global_rate_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------
-	# mulcov table
+	# create mulcov table
 	col_name = [
 		'mulcov_type',
 		'rate_id',
@@ -475,7 +477,7 @@ def create_database(
 	tbl_name = 'mulcov'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
-	# create the data table
+	# create data table
 	col_name = [
 		'integrand_id',
 		'density_id',
@@ -529,17 +531,28 @@ def create_database(
 		row_list.append(row)
 	tbl_name = 'data'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# -----------------------------------------------------------------------
+	# Output Tables
 	# ------------------------------------------------------------------------
 	# create fit table
 	col_name = [
-		'parent_node_id','pini_smooth_id', 'ode_step_size','tolerance'
+		'parent_node_id', 'ode_step_size', 'tolerance', 'max_num_iter'
 	]
 	col_type = [
-		'integer',       'integer',        'real',         'real'
+		'integer',        'real',          'real',      'integer'
 	]
 	row_list = []
 	tbl_name = 'fit'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
-	# 2DO: creat post table
+	# create variable table
+	col_name = [
+		'sample',  'offset',  'value',
+	]
+	col_type = [
+		'integer', 'integer', 'real'
+	]
+	row_list = []
+	tbl_name = 'variable'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	return

@@ -19,6 +19,12 @@ $aindex section head subhead$$
 $comment END: settings used by all section ---------------------------- $$
 
 $spell
+	suitesparse
+	devel
+	cholmod
+	xam
+	cpp
+	colpack
 	py
 	dage
 	dtime
@@ -40,6 +46,11 @@ $code python/dismod_at/pack_info.py$$, needs to be completed.
 $lnext
 Finish implementation and testing of the
 $cref/dismod_at executable/dismod_at_exe/$$.
+$lnext
+If the prefix for suitesparse is not specified, do not compile or run
+	example/devel/approx_mixed/cholmod_xam.cpp
+$lnext
+Exclude colpack from a sandbox copy of CppAD used to build dismod_at.
 $lend
 
 $childtable%omh/table/input.omh
