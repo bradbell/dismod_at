@@ -2,7 +2,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -14,25 +14,40 @@ then
 	echo 'bin/run_omhelp.sh must be run from its parent directory'
 	exit 1
 fi
-if [ -e doc ]
-then
-	rm -r doc
-fi
-mkdir doc
-echo 'cd doc'
-cd doc
+# -----------------------------------------------------------------------------
+# bash function that echos and executes a command
+echo_eval() {
+	echo $*
+	eval $*
+}
+# -----------------------------------------------------------------------------
+echo_eval rm -rf doc
+echo_eval mkdir doc
+echo_eval cd doc
 #
-echo "omhelp ../doc.omh -debug -noframe -xml > ../omhelp.log"
-if ! omhelp ../doc.omh -debug -noframe -xml > ../omhelp.log
-then
-	cat ../omhelp.log
-	exit 1
-fi
-#
-if grep '^OMhelp Warning:' ../omhelp.log
-then
-	exit 1
-else
-	echo 'run_omhelp.sh: OK'
-fi
+for xml_flag in '-xml' ''
+do
+	if [ "$xml_flag" == '-xml' ]
+	then
+		ext='xml'
+	else
+		ext='htm'
+	fi
+	for print_flag in '-printable' ''
+	do
+		cmd="omhelp ../doc.omh -debug -noframe $xml_flag $print_flag"
+		echo "$cmd > omhelp.$ext.log"
+		if ! $cmd  > ../omhelp.$ext.log
+		then
+			cat ../omhelp.$ext.log
+			exit 1
+		fi
+		#
+		if grep '^OMhelp Warning:' ../omhelp.$ext.log
+		then
+			exit 1
+		fi
+	done
+done
+echo 'run_omhelp.sh: OK'
 exit 0
