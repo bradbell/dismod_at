@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -24,6 +24,7 @@ from __future__ import print_function
 def smooth_grid_table() :
 	import dismod_at
 	import copy
+	import collections
 	#
 	file_name      = 'example.db'
 	new            = True
@@ -32,10 +33,16 @@ def smooth_grid_table() :
 	#
 	# create smooth table
 	ptype    = 'integer primary key'
-	col_name = [ 'smooth_name', 'n_age',   'n_time', 'mulstd_value',
-		'mulstd_dage', 'mulstd_dtime'   ]
-	col_type = [ 'text',        'integer', 'integer','integer',
-		'integer',      'integer'         ]
+	col_name2type = collections.OrderedDict( [
+		('smooth_name',    'text'    ),
+		('n_age',          'integer' ),
+		('n_time',         'integer' ),
+		('mulstd_value',   'integer' ),
+		('mulstd_dage',    'integer' ),
+		('mulstd_dtime',   'integer' )
+	] )
+	col_name = col_name2type.keys()
+	col_type = col_name2type.values()
 	row_list = [
 	           [ 'constant',    1,          1,        1, 1, 1],
 	           [ 'age_only',    3,          1,        1, 1, 1],
@@ -46,24 +53,16 @@ def smooth_grid_table() :
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	# smooth_grid table column names
-	col_name = [
-		'smooth_id',
-		'age_id',
-		'time_id',
-		'value_prior_id',
-		'dage_prior_id',
-		'dtime_prior_id',
-	]
-	#
-	# smooth_grid table column types
-	col_type = [
-		'integer',  # smooth_id
-		'integer',  # age_id
-		'integer',  # time_id
-		'integer',  # value_prior_id
-		'integer',  # dage_prior_id
-		'integer',  # dtime_prior_id
-	]
+	col_name2type = collections.OrderedDict( [
+		('smooth_id',       'integer' ),
+		('age_id',          'integer' ),
+		('time_id',         'integer' ),
+		('value_prior_id',  'integer' ),
+		('dage_prior_id',   'integer' ),
+		('dtime_prior_id',  'integer' )
+	] )
+	col_name = col_name2type.keys()
+	col_type = col_name2type.values()
 	#
 	# smooth_grid table values
 	row_list = list()

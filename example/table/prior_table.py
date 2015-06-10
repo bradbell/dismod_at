@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -25,6 +25,7 @@ from __future__ import print_function
 def prior_table() :
 	import dismod_at
 	import copy
+	import collections
 	#
 	file_name      = 'example.db'
 	new            = True
@@ -33,16 +34,21 @@ def prior_table() :
 	#
 	# create the prior table
 	ptype    = 'integer primary key'
-	col_name = [
-		'prior_name', 'density_id', 'lower', 'upper', 'mean', 'std',   'eta'
-	]
-	col_type = [
-		'text',      'integer',    'real',  'real',  'real', 'real',  'real'
-	]
+	col_name2type = collections.OrderedDict( [
+		('prior_name',  'text'    ),
+		('density_id',  'integer' ),
+		('lower',       'real'    ),
+		('upper',       'real'    ),
+		('mean',        'real'    ),
+		('std',         'real'    ),
+		('eta',         'real'    )
+	] )
+	col_name = col_name2type.keys()
+	col_type = col_name2type.values()
 	uniform_density_id = 0;
 	row_list = [ [
 		'none',              # prior_name
-		uniform_density_id,   # density_id
+		uniform_density_id,  # density_id
 		None,                # lower
 		None,                # upper
 		0,                   # mean
