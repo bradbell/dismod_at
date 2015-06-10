@@ -29,12 +29,12 @@
 # is a $code str$$ that specifies the name of the table.
 #
 # $head col_name$$
-# is a list of strings containing the column names in the same as they
+# is a list of strings containing the column names in the same order as they
 # appear in the table.
 #
 # $head col_type$$
 # is a list of strings containing the column types in the same order as
-# $icode col_name$$.
+# the columns appear in the table.
 # The possible values for the column types are
 # $code integer$$, $code real$$, $code text$$, or
 # $code integer primary key$$.
