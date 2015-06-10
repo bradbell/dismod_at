@@ -8,21 +8,21 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin get_name2type.py$$ $newlinech #$$
+# $begin get_name_type.py$$ $newlinech #$$
 # $spell
 #	unicode
 # $$
 #
-# $section get_name2type: Example and Test$$
+# $section get_name_type: Example and Test$$
 #
 # $code
-# $verbatim%example/table/get_name2type.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/get_name_type.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
 from __future__ import print_function
 #
-def get_name2type() :
+def get_name_type() :
 	import dismod_at
 	#
 	file_name      = 'example.db'
@@ -39,19 +39,14 @@ def get_name2type() :
 	tbl_name = 'temp'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
+	check_name = [ 'temp_id' ] + col_name
+	check_type = [ 'integer primary key'] + col_type
+	#
 	# get the column names and corresponding types
-	name2type = dismod_at.get_name2type(connection, tbl_name)
+	(col_name, col_type) = dismod_at.get_name_type(connection, tbl_name)
 	#
-	# check results
-	count = 0
-	for name in name2type :
-		if count == 0 :
-			assert name == 'temp_id'
-			assert name2type[name] == 'integer primary key'
-		else :
-			assert name == col_name[count-1]
-			assert name2type[name] == col_type[count-1]
-		count += 1
+	assert col_name == check_name
+	assert col_type == check_type
 	#
-	print('get_name2type: OK')
+	print('get_name_type: OK')
 # END PYTHON
