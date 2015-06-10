@@ -248,12 +248,6 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 		while( options[begin_1] == ' ' || options[begin_1] == '\n' )
 			begin_1++;
 	}
-# if 0
-	app->Options()->SetIntegerValue("print_level", 0); // default is 5
-	app->Options()->SetStringValue("sb", "yes");
-	app->Options()->SetStringValue("derivative_test", "second-order");
-	app->Options()->SetStringValue("derivative_test_print_all", "yes");
-# endif
 
 	// Set values used for minus and plus infinity
 	app->Options()->SetNumericValue(

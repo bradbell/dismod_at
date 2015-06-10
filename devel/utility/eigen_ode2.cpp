@@ -76,6 +76,10 @@ B
 	b_2  & b_3
 \end{array} \right)
 \] $$
+While the case where all the components of $latex B$$ are zero has
+a simple solution, the eigen-values representation is not differentiable for
+this case. Hence, it is an error for all the components of
+$icode b$$ to be zero.
 
 $head yi$$
 This argument has prototype
@@ -265,7 +269,8 @@ void eigen_ode2(
 
 	// discriminant in the quadratic equation for eigen-values
 	Float disc = Float((b0 - b3)*(b0 - b3) + 4.0*b1*b2);
-	assert( disc >= 0.0 );
+	// must be greater than zero for derivatives to exist
+	assert( disc > 0.0 );
 	Float root_disc = Float(sqrt( disc ));
 
 	// in this case will will use splitting; i.e., approxiamte

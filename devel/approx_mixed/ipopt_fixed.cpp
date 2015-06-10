@@ -1258,8 +1258,8 @@ void ipopt_fixed::finalize_solution(
 					factor = lambda[i-1];
 				sum += factor * values[k];
 			}
-			sum += z_U[j] - z_L[j];
 		}
+		sum += z_U[j] - z_L[j];
 		ok &= CppAD::abs( double(sum) ) <= 10. * tol;
 	}
 
