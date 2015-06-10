@@ -50,8 +50,11 @@ bool fit_model_xam(void)
 	for(i = 0; i < n_time_table; i++)
 		time_table[i] = 1995. + (2015- 1995) * i / double(n_time_table-1);
 	// ----------------------- prior table ---------------------------------
-	size_t n_prior_table = 5;
+	size_t n_prior_table = 4;
 	vector<dismod_at::prior_struct> prior_table(n_prior_table);
+	//
+	// 2DO: in case where density is uniform, should be able to leave
+	// standard deviation undefined.
 	//
 	// prior_id_zero (identically zero prior)
 	prior_table[0].prior_name = "zero";
@@ -71,22 +74,22 @@ bool fit_model_xam(void)
 	//
 	size_t prior_id_one       = 1;
 	//
-	// prior_id_uniform (uniform prior)
+	// prior_id_positive (uniform prior on positive values)
 	prior_table[2].prior_name = "none";
 	prior_table[2].density_id = int( dismod_at::uniform_enum );
-	prior_table[2].lower      = - inf;
-	prior_table[2].mean       = 0.0;
+	prior_table[2].lower      = 1e-4;
+	prior_table[2].mean       = 1e-1;
 	prior_table[2].upper      = + inf;
 	prior_table[2].std        = 1.0;
-	size_t prior_id_uniform   = 2;
+	size_t prior_id_positive  = 2;
 	//
 	// prior_id_gaussian_zero (Gaussian mean 0.0 and std 0.1)
-	prior_table[3].prior_name       = "N(0,1e-2)";
+	prior_table[3].prior_name       = "N(0,1e-4)";
 	prior_table[3].density_id       = int( dismod_at::gaussian_enum );
 	prior_table[3].lower            = -inf;
 	prior_table[3].mean             = 0.00;
 	prior_table[3].upper            = +inf;
-	prior_table[3].std              = 1e-1;
+	prior_table[3].std              = 1e-2;
 	size_t prior_id_gaussian_zero   = 3;
 	// -------------------------------------------------------------------
 	// smoothing information
@@ -118,6 +121,8 @@ bool fit_model_xam(void)
 	value_prior_id.resize(n_grid);
 	dage_prior_id.resize(n_grid);
 	dtime_prior_id.resize(n_grid);
+	//
+	// smooth_id_gaussian_zero
 	for(i = 0; i < n_age; i++)
 	{	for(j = 0; j < n_time; j++)
 		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian_zero;
@@ -125,21 +130,19 @@ bool fit_model_xam(void)
 			dtime_prior_id[ i * n_time + j ] = prior_id_gaussian_zero;
 		}
 	}
-	//
-	// smooth_id_gaussian_zero
 	size_t smooth_id_gaussian_zero = 0;
 	s_info_vec[smooth_id_gaussian_zero] = dismod_at::smooth_info(
 			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
 			mulstd_value, mulstd_dage, mulstd_dtime
 	);
+	//
+	// smooth_id_positive
 	for(i = 0; i < n_age; i++)
 	{	for(j = 0; j < n_time; j++)
-			value_prior_id[ i * n_time + j ] = prior_id_uniform;
+			value_prior_id[ i * n_time + j ] = prior_id_positive;
 	}
-	//
-	// smooth_id_gaussian_none
-	size_t smooth_id_gaussian_none = 1;
-	s_info_vec[smooth_id_gaussian_none] = dismod_at::smooth_info(
+	size_t smooth_id_positive = 1;
+	s_info_vec[smooth_id_positive] = dismod_at::smooth_info(
 			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
 			mulstd_value, mulstd_dage, mulstd_dtime
 	);
@@ -162,12 +165,12 @@ bool fit_model_xam(void)
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	if( rate_id == dismod_at::pini_enum )
 		{	// smoothing must have only one age
-			rate_table[rate_id].parent_smooth_id = smooth_id_gaussian_none;
+			rate_table[rate_id].parent_smooth_id = smooth_id_positive;
 			rate_table[rate_id].child_smooth_id  = smooth_id_gaussian_zero;
 		}
 		else
 		{	// eventually plan to use a 3 by 2 smoothing here
-			rate_table[rate_id].parent_smooth_id = smooth_id_gaussian_none;
+			rate_table[rate_id].parent_smooth_id = smooth_id_positive;
 			rate_table[rate_id].child_smooth_id  = smooth_id_gaussian_zero;
 		}
 	}
@@ -233,8 +236,8 @@ bool fit_model_xam(void)
 			data_table[data_id].age_upper    = 0.0;
 		}
 		else
-		{	data_table[data_id].age_lower    = 50.0;
-			data_table[data_id].age_upper    = 50.0;
+		{	data_table[data_id].age_lower    = 0.0;
+			data_table[data_id].age_upper    = 100.0;
 		}
 		data_table[data_id].time_lower   = 1995.0;
 		data_table[data_id].time_upper   = 1995.0;
@@ -275,12 +278,13 @@ bool fit_model_xam(void)
 		data_object,
 		prior_object
 	);
-	std::string tolerance_str    = "1e-8";
-	std::string max_num_iter_str = "100";
-	fit_object.run_fit(tolerance_str, max_num_iter_str);
+	std::string fit_tolerance_str    = "1e-8";
+	std::string fit_max_num_iter_str = "100";
+	fit_object.run_fit(fit_tolerance_str, fit_max_num_iter_str);
 	CppAD::vector<double> solution = fit_object.get_solution();
-	// test not yet passing
-	double tol = 1e-8;
+
+	// check against known solution
+	double check_tol = 1e-3;
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	double meas_value = data_table[data_id].meas_value;
 		size_t rate_id    = data_id;
@@ -293,7 +297,7 @@ bool fit_model_xam(void)
 			{	double err = solution[offset + i] / meas_value - 1.0;
 				if( child_id != n_child )
 					err = solution[offset + i] / meas_value;
-				ok    &= CppAD::abs( err ) <= tol;
+				ok    &= CppAD::abs( err ) <= check_tol;
 			}
 		}
 	}

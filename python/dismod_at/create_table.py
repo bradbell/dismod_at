@@ -31,10 +31,8 @@
 # $head col_name$$
 # is a $code list$$ of $code str$$
 # where the elements are the column names in the table that is created.
-#
-# $subhead tbl_name_id$$
-# The column $icode%tbl_name%_id%$$ is added as the first column
-# of the table and should not be included in $icode col_name$$.
+# The column name for the primary key, $icode%tbl_name%_id%$$ must
+# not be included in the list.
 #
 # $head col_type$$
 # is a $code list$$ of $code str$$ where the elements are the column types
@@ -42,21 +40,19 @@
 # The valid types are
 # $code integer$$, $code real$$, $code text$$.
 #
-# $subhead tbl_name_id$$
-# The column with name $icode%tbl_name%_id%$$ will have type
-# $code integer primary key$$.
-#
 # $head row_list$$
 # is a possibly empty $code list$$ of rows contain data that is written
 # to the table.
 # Each row is itself a list containing the data for one row of the
 # table in the same order as $icode col_name$$.
 # Note that the special value $code None$$ gets converted to $code null$$.
+# Also note that the primary key column is not included.
 #
-# $subhead tbl_name_id$$
-# The column with name $icode%tbl_name%_id%$$ will have value starting
-# with zero for the first row and incrementing by one for each row.
-#
+# $head tbl_name_id$$
+# A column with name $icode%tbl_name%_id%$$ and type
+# $code integer primary key$$ is included as the first column in the table.
+# Its values start with zero (for the first row) and
+# increment by one for each row.
 #
 # $children%example/table/create_table.py
 # %$$

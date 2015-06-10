@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -25,44 +25,32 @@ from __future__ import print_function
 def data_table() :
 	import dismod_at
 	import copy
+	import collections
 	#
 	file_name      = 'example.db'
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
 	#
-	col_name = [
+	col_name2type = collections.OrderedDict([
 		# required columns
-		'integrand_id',
-		'density_id',
-		'node_id',
-		'weight_id',
-		'meas_value',
-		'meas_std',
-		'age_lower',
-		'age_upper',
-		'time_lower',
-		'time_upper',
+		('integrand_id', 'integer'),
+		('density_id',   'integer'),
+		('node_id',      'integer'),
+		('weight_id',    'integer'),
+		('meas_value',   'real'   ),
+		('meas_std',     'real'   ),
+		('age_lower',    'real'   ),
+		('age_upper',    'real'   ),
+		('time_lower',   'real'   ),
+		('time_upper',   'real'   ),
 		# covariates
-		'x_sex',
-		'x_income',
+		('x_sex',        'real'   ),
+		('x_income',     'real'   ),
 		# comments
-		'c_data_source',
-	]
-	col_type = [
-		'integer',              # integrand_id
-		'integer',              # density_id
-		'integer',              # node_id
-		'integer',              # weight_id
-		'real',                 # meas_value
-		'real',                 # meas_std
-		'real',                 # age_lower
-		'real',                 # age_upper
-		'real',                 # time_lower
-		'real',                 # time_upper
-		'real',                 # x_sex
-		'real',                 # x_income
-		'text'                  # c_data_source
-	]
+		('c_data_source','text'   )
+	] )
+	col_name = col_name2type.keys()
+	col_type = col_name2type.values()
 	row_list = [ [
 		1,                      # integrand_id
 		0,                      # density_id

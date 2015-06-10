@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -28,6 +28,7 @@ from __future__ import print_function
 def mulcov_table() :
 	import dismod_at
 	import copy
+	import collections
 	#
 	file_name      = 'example.db'
 	new            = True
@@ -35,20 +36,15 @@ def mulcov_table() :
 	cursor         = connection.cursor()
 	#
 	# create a mulcov table
-	col_name = [
-		'mulcov_type',
-		'rate_id',
-		'integrand_id',
-		'covariate_id',
-  		'smooth_id'
-	]
-	col_type = [
-		'text',    # mulcov_type
-		'integer', # rate_id
-		'integer', # integrand_id
-		'integer', # covariate_id
-  		'integer'  # smooth_id'
-	]
+	col_name2type = collections.OrderedDict( [
+		('mulcov_type',  'text'    ),
+		('rate_id',      'integer' ),
+		('integrand_id', 'integer' ),
+		('covariate_id', 'integer' ),
+  		('smooth_id',    'integer' )
+	] )
+	col_name = col_name2type.keys()
+	col_type = col_name2type.values()
 	row_list = [ [
 		'meas_mean', # muitiplier_type
 		-1,          # rate_id (-1 becasue this is an measurement covariate)
