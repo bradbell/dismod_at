@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -41,20 +41,18 @@ def node_table() :
 	]
 	tbl_name = 'node'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------
+	# include primary key in test
+	check_name = [ tbl_name + '_id' ] + col_name
+	check_type = [ 'integer primary key' ] + col_type
+	check_list = list()
+	for i in range( len(row_list) ) :
+		check_list.append( [i] + row_list[i] )
 	#
-	# check values in table
-	columns  = ','.join(col_name)
-	columns  = 'node_id,' + columns
-	cmd      = 'SELECT ' + columns + ' FROM node'
-	count    = 0
-	cursor   = connection.cursor()
-	for row in cursor.execute(cmd) :
-		row_list[count].insert(0, count)
-		assert len(row) == len(col_name) + 1
-		for j in range( len(row) ) :
-			assert row[j] == row_list[count][j]
-		count += 1
-	assert count == len( row_list )
-	#
+	row_list = dismod_at.get_row_list(
+		connection, tbl_name, check_name, check_type
+	)
+	assert row_list == check_list
+	# ------------------------------------------------------------------------
 	print('node_table: OK')
 # END PYTHON

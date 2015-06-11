@@ -84,8 +84,6 @@ def get_row_list(connection, tbl_name, col_name, col_type) :
 	for row in cursor.execute(cmd) :
 		row_tmp = list()
 		for j in range(n_col) :
-			c_type  = col_type[j]
-			c_value = row[j]
-			row_tmp.append( convertor[c_type]( c_value ) )
+			row_tmp.append( row[j] )
 		row_list.append(row_tmp)
 	return row_list

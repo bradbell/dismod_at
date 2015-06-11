@@ -70,21 +70,18 @@ def data_table() :
 	# create the data table
 	tbl_name = 'data'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------
+	# include primary key in test
+	check_name = [ tbl_name + '_id' ] + col_name
+	check_type = [ 'integer primary key' ] + col_type
+	check_list = list()
+	for i in range( len(row_list) ) :
+		check_list.append( [i] + row_list[i] )
 	#
-	# check values in table
-	columns = ','.join(col_name)
-	columns = 'data_id,' + columns
-	cmd     = 'SELECT ' + columns + ' FROM data'
-	count        = 0
-	cursor       = connection.cursor()
-	for row in cursor.execute(cmd) :
-		check = copy.copy( row_list[count] )
-		check.insert(0, count)
-		assert len(row) == len(check)
-		for j in range( len(row) ) :
-			assert row[j] == check[j]
-		count += 1
-	assert count == len( row_list )
-	#
+	row_list = dismod_at.get_row_list(
+		connection, tbl_name, check_name, check_type
+	)
+	assert row_list == check_list
+	# ------------------------------------------------------------------------
 	print('data_table: OK')
 # END PYTHON
