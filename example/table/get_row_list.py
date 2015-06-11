@@ -45,7 +45,7 @@ def get_row_list() :
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	n_row = len(row_list)
 	#
-	# reverse the order of the rows
+	# reverse the order of the columns
 	col_name = [ 'reference',   'covariate_name' ]
 	n_col    = len(col_name)
 	row_list = dismod_at.get_row_list(connection, tbl_name, col_name)
