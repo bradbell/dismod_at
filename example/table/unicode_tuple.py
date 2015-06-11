@@ -20,7 +20,6 @@
 # $$
 # $end
 # BEGIN PYTHON
-from __future__ import print_function
 #
 def unicode_tuple() :
 	import dismod_at

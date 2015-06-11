@@ -19,5 +19,5 @@ CONFIGURE_FILE(
 )
 ADD_CUSTOM_TARGET(
 	check_get_started
-	python get_started.py
+	python3 get_started.py
 )

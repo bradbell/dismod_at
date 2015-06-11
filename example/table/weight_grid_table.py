@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -20,7 +20,6 @@
 # $$
 # $end
 # BEGIN PYTHON
-from __future__ import print_function
 def weight_grid_table() :
 	import dismod_at
 	import copy

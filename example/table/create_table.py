@@ -25,7 +25,6 @@
 # $$
 # $end
 # BEGIN PYTHON
-from __future__ import print_function
 def create_table() :
 	import dismod_at
 	#
@@ -34,9 +33,9 @@ def create_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	inverted_exclamation = unichr( 10 * 16 + 1 ) # 00a1
-	cent_sign            = unichr( 10 * 16 + 2 ) # 00a2
-	pound_sign           = unichr( 10 * 16 + 3 ) # 00a3
+	inverted_exclamation = chr( 10 * 16 + 1 ) # 00a1
+	cent_sign            = chr( 10 * 16 + 2 ) # 00a2
+	pound_sign           = chr( 10 * 16 + 3 ) # 00a3
 	#
 	# create table
 	col_name = [ 'temp_name'          ]

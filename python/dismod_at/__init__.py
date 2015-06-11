@@ -22,9 +22,9 @@
 #
 # $end
 # -----------------------------------------------------------------------------
-from create_connection import create_connection
-from create_table      import create_table
-from get_name_type     import get_name_type
-from get_row_list      import get_row_list
-from unicode_tuple     import unicode_tuple
-from create_database   import create_database
+from .create_connection import create_connection
+from .create_table      import create_table
+from .get_name_type     import get_name_type
+from .get_row_list      import get_row_list
+from .unicode_tuple     import unicode_tuple
+from .create_database   import create_database

@@ -21,7 +21,6 @@
 # $$
 # $end
 # BEGIN PYTHON
-from __future__ import print_function
 def prior_table() :
 	import dismod_at
 	import copy
@@ -43,8 +42,8 @@ def prior_table() :
 		('std',         'real'    ),
 		('eta',         'real'    )
 	] )
-	col_name = col_name2type.keys()
-	col_type = col_name2type.values()
+	col_name = list(col_name2type.keys())
+	col_type = list(col_name2type.values())
 	uniform_density_id = 0;
 	row_list = [ [
 		'none',              # prior_name

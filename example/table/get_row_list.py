@@ -24,7 +24,6 @@
 # $$
 # $end
 # BEGIN PYTHON
-from __future__ import print_function
 def get_row_list() :
 	import dismod_at
 	import copy
@@ -54,7 +53,7 @@ def get_row_list() :
 	for i in range(n_row) :
 		assert len(row_list[i] ) == n_col
 		assert isinstance( row_list[i][0], float)
-		assert isinstance( row_list[i][1], unicode)
+		assert isinstance( row_list[i][1], str)
 	assert row_list[0][0] == 0.0
 	assert row_list[0][1] == 'sex'
 	assert row_list[1][0] == 2000.0

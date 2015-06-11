@@ -67,7 +67,7 @@ def unicode_infinity() :
 	import sys
 	import math
 	exponent = int( math.log( sys.float_info.max ) / math.log(10.) ) + 10
-	inf      = u'10e' + unicode(exponent)
+	inf      = u'10e' + str(exponent)
 	return inf
 def unicode_tuple(iterable, quote_string) :
 	u_tuple = u'('
@@ -83,9 +83,9 @@ def unicode_tuple(iterable, quote_string) :
 			u_tuple += u' ' + unicode_infinity()
 		elif isinstance(element, float) and element == - float('inf') :
 			u_tuple += u' -' + unicode_infinity()
-		elif quote_string and isinstance(element, basestring) :
-			u_tuple += u' ' + u"'" + unicode(element) + u"'"
+		elif quote_string and isinstance(element, str) :
+			u_tuple += u' ' + u"'" + str(element) + u"'"
 		else :
-			u_tuple += u' ' + unicode(element)
+			u_tuple += u' ' + str(element)
 	u_tuple     += u' )'
 	return u_tuple

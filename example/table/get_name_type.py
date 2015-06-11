@@ -20,7 +20,6 @@
 # $$
 # $end
 # BEGIN PYTHON
-from __future__ import print_function
 #
 def get_name_type() :
 	import dismod_at

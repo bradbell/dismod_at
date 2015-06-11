@@ -24,7 +24,6 @@
 # $$
 # $end
 # BEGIN PYTHON
-from __future__ import print_function
 def mulcov_table() :
 	import dismod_at
 	import copy
@@ -43,8 +42,8 @@ def mulcov_table() :
 		('covariate_id', 'integer' ),
   		('smooth_id',    'integer' )
 	] )
-	col_name = col_name2type.keys()
-	col_type = col_name2type.values()
+	col_name = list(col_name2type.keys())
+	col_type = list(col_name2type.values())
 	row_list = [ [
 		'meas_mean', # muitiplier_type
 		-1,          # rate_id (-1 becasue this is an measurement covariate)

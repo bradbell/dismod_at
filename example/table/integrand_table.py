@@ -21,7 +21,6 @@
 # $$
 # $end
 # BEGIN PYTHON
-from __future__ import print_function
 def integrand_table() :
 	import dismod_at
 	import copy

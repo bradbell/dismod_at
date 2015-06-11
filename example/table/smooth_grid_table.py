@@ -20,7 +20,6 @@
 # $$
 # $end
 # BEGIN PYTHON
-from __future__ import print_function
 def smooth_grid_table() :
 	import dismod_at
 	import copy
@@ -41,8 +40,8 @@ def smooth_grid_table() :
 		('mulstd_dage',    'integer' ),
 		('mulstd_dtime',   'integer' )
 	] )
-	col_name = col_name2type.keys()
-	col_type = col_name2type.values()
+	col_name = list(col_name2type.keys())
+	col_type = list(col_name2type.values())
 	row_list = [
 	           [ 'constant',    1,          1,        1, 1, 1],
 	           [ 'age_only',    3,          1,        1, 1, 1],
@@ -61,8 +60,8 @@ def smooth_grid_table() :
 		('dage_prior_id',   'integer' ),
 		('dtime_prior_id',  'integer' )
 	] )
-	col_name = col_name2type.keys()
-	col_type = col_name2type.values()
+	col_name = list(col_name2type.keys())
+	col_type = list(col_name2type.values())
 	#
 	# smooth_grid table values
 	row_list = list()

@@ -17,7 +17,6 @@
 # $$
 # $end
 # BEGIN PYTHON
-from __future__ import print_function
 def variable_table() :
 	import dismod_at
 	#
