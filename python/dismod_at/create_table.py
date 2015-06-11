@@ -45,8 +45,20 @@
 # to the table.
 # Each row is itself a list containing the data for one row of the
 # table in the same order as $icode col_name$$.
-# Note that the special value $code None$$ gets converted to $code null$$.
-# Also note that the primary key column is not included.
+# Note that the primary key column is not included in $icode row_list$$.
+# The python type corresponding to the values in $icode row_list$$ are
+# as follows:
+# $table
+# $icode col_type$$ $pre  $$ $cnext  Python           $rnext
+# $code integer$$            $cnext  $code int$$      $rnext
+# $code real$$               $cnext  $code float$$    $rnext
+# $code text$$               $cnext  $code str$$
+# $tend
+# Note that the special value
+# $codei%
+#	%row_list%[%i%][%j%] ==  None
+# %$$
+# gets converted to $code null$$ in the table.
 #
 # $head tbl_name_id$$
 # A column with name $icode%tbl_name%_id%$$ and type

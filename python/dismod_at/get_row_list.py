@@ -11,7 +11,6 @@
 # $begin get_row_list$$ $newlinech #$$
 # $spell
 #	Sql
-#	unicode
 #	dismod
 #	str
 #	tbl
@@ -52,7 +51,7 @@
 # Sql Table $pre  $$ $cnext  Python           $rnext
 # $code integer$$    $cnext  $code int$$      $rnext
 # $code real$$       $cnext  $code float$$    $rnext
-# $code text$$       $cnext  $code unicode$$  $rnext
+# $code text$$       $cnext  $code str$$      $rnext
 # $code null$$       $cnext  $code None$$
 # $tend
 # You can determine the type for all the columns in the table using
