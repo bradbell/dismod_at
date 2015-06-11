@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 # $begin get_row_list$$ $newlinech #$$
 # $spell
+#	Sql
 #	unicode
 #	dismod
 #	str
@@ -19,9 +20,8 @@
 # $section Get Data From a Table$$
 #
 # $head Syntax$$
-# $icode%row_list% = dismod_at.get_row_list(
-#	%connection%, %tbl_name%, %col_name%, %col_type%
-# )%$$
+# $icode%row_list% = dismod_at.get_row_list(%$$
+# $icode%connection%, %tbl_name%, %col_name%)%$$
 #
 # $head connection$$
 # is a $cref/connection/create_connection/connection/$$ for this database.
@@ -36,27 +36,29 @@
 # retrieving data from.
 # We use the notation $icode n_col$$ for the number of columns in
 # $icode col_name$$.
-#
-# $head col_type$$
-# is a list of strings, with length $icode n_col$$,
-# and containing the types for the corresponding columns.
-# The possible values for the column types are
-# $code integer$$, $code real$$, $code text$$, or
-# $code integer primary key$$.
+# You can determine the name of all the columns in the table using
+# $cref get_name_type$$.
 #
 # $head row_list$$
 # This is a list of lists with length $icode n_row$$.
 # In addition, for each $icode i$$, $icode%row_list%[%i%]%$$ is a list
 # with length $icode n_col$$.
-# If follows that $icode I$$ is also the number of rows in the table and that
 # The value $icode%row_list%[%i%][%j%]%$$ corresponds to
 # primary key $icode%tbl_name%_id = %i%$$,
-# column $icode%col_name%[%j%]%$$ and has type specified by
-# $icode%col_type%[%j%]%$$.
-# Note that $code integer$$ and $code integer primary key$$ values
-# are represented using $code int$$,
-# $code real$$ values are represented using $code float$$,
-# and $code text$$ values are represented using $code unicode$$.
+# and column $icode%col_name%[%j%]%$$.
+# The python type corresponding to the values in the table are
+# as follows:
+# $table
+# Sql Table $pre  $$ $cnext  Python           $rnext
+# $code integer$$    $cnext  $code int$$      $rnext
+# $code real$$       $cnext  $code float$$    $rnext
+# $code text$$       $cnext  $code unicode$$  $rnext
+# $code null$$       $cnext  $code None$$
+# $tend
+# You can determine the type for all the columns in the table using
+# $cref get_name_type$$.
+# Note that the type $code integer primary key$$ corresponds to
+# $code integer$$ above.
 #
 # $children%example/table/get_row_list.py
 # %$$
@@ -66,20 +68,13 @@
 #
 # $end
 # ---------------------------------------------------------------------------
-def get_row_list(connection, tbl_name, col_name, col_type) :
+def get_row_list(connection, tbl_name, col_name) :
 	import collections
 	#
-	convertor = {
-		'integer primary key':int,
-		'integer':int,
-		'real':float,
-		'text':unicode
-	}
 	cursor    = connection.cursor()
 	n_col     = len(col_name)
 	columns   = ','.join(col_name)
 	cmd       = 'SELECT ' + columns + ' FROM ' + tbl_name
-	count     = 0
 	row_list  = list()
 	for row in cursor.execute(cmd) :
 		row_tmp = list()

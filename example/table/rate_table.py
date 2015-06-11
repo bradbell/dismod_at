@@ -46,14 +46,11 @@ def rate_table() :
 	# ------------------------------------------------------------------------
 	# include primary key in test
 	check_name = [ tbl_name + '_id' ] + col_name
-	check_type = [ 'integer primary key' ] + col_type
 	check_list = list()
 	for i in range( len(row_list) ) :
 		check_list.append( [i] + row_list[i] )
 	#
-	row_list = dismod_at.get_row_list(
-		connection, tbl_name, check_name, check_type
-	)
+	row_list = dismod_at.get_row_list(connection, tbl_name, check_name)
 	assert row_list == check_list
 	# ------------------------------------------------------------------------
 	print('rate_table: OK')

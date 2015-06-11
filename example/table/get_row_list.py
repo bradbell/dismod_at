@@ -47,9 +47,8 @@ def get_row_list() :
 	#
 	# reverse the order of the rows
 	col_name = [ 'reference',   'covariate_name' ]
-	col_type = [ 'real',        'text'           ]
 	n_col    = len(col_name)
-	row_list = dismod_at.get_row_list(connection, tbl_name, col_name, col_type)
+	row_list = dismod_at.get_row_list(connection, tbl_name, col_name)
 	#
 	assert len(row_list) == n_row
 	for i in range(n_row) :
