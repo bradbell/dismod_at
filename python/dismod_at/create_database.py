@@ -68,7 +68,7 @@
 # that define the rows of the $cref integrand_table$$.
 # The dictionary $icode%integrand_list%[%i%]%$$ has the following:
 # $table
-# Key     $cnext Value Type $cnext Description                     $rnext
+# Key     $cnext Value Type $pre  $$ $cnext Description            $rnext
 # name    $cnext str        $cnext name for the $th i$$ integrand  $rnext
 # eta     $cnext str        $cnext offset in log transform fro this integrand
 # $tend
@@ -78,7 +78,7 @@
 # that define the rows of the $cref node_table$$.
 # The dictionary $icode%node_list%[%i%]%$$ has the following:
 # $table
-# Key     $cnext Value Type    $cnext Description                $rnext
+# Key     $cnext Value Type    $pre  $$ $cnext Description       $rnext
 # name    $cnext str           $cnext name for the $th i$$ node  $rnext
 # parent  $cnext str           $cnext name of parent of the $th i$$ node
 # $tend
@@ -91,10 +91,10 @@
 # $cref weight_grid_table$$.
 # The dictionary $icode%weight_list%[%i%]%$$ has the following:
 # $table
-# Key     $cnext Value Type    $cnext Description                $rnext
+# Key     $cnext Value Type    $pre  $$ $cnext Description       $rnext
 # name    $cnext str           $cnext name of $th i$$ weighting  $rnext
-# age_id  $cnext list of int   $cnext indices for age values     $rnext
-# time_id $cnext list of int   $cnext grid for time values       $rnext
+# age_id  $cnext list of int   $cnext indices for age grid       $rnext
+# time_id $cnext list of int   $cnext indices for time grid      $rnext
 # fun     $cnext function      $cnext $icode%w%=%fun%(%a%, %t%)%$$
 # $tend
 # The float $icode w$$ is the value of this weighting a the corresponding
@@ -105,7 +105,7 @@
 # that define the rows of the $cref covariate_table$$.
 # The dictionary $icode%covariate_list%[%i%]%$$ has the following:
 # $table
-# Key       $cnext Value Type  $cnext Description                     $rnext
+# Key       $cnext Value Type  $pre  $$ $cnext Description            $rnext
 # name      $cnext str         $cnext name for the $th i$$ covariate  $rnext
 # reference $cnext float       $cnext reference value for $th i$$ covariate
 # $tend
@@ -115,7 +115,7 @@
 # that define the rows of the $cref data_table$$.
 # The dictionary $icode%data_list%[%i%]%$$ has the following:
 # $table
-# Key          $cnext Value Type  $cnext Description                 $rnext
+# Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
 # integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext
 # density      $cnext str         $cnext density                     $rnext
 # node         $cnext str         $cnext node in graph               $rnext
@@ -141,7 +141,7 @@
 # that define the rows of the $cref prior_table$$.
 # The dictionary $icode%prior_list%[%i%]%$$ has the following:
 # $table
-# Key     $cnext Value Type    $cnext Description                $rnext
+# Key     $cnext Value Type    $pre  $$ $cnext Description       $rnext
 # name    $cnext str           $cnext name of $th i$$ prior $rnext
 # lower   $cnext float         $cnext lower limit                $rnext
 # upper   $cnext float         $cnext upper limit                $rnext
@@ -156,7 +156,7 @@
 # $cref smooth_grid_table$$.
 # The dictionary $icode%smooth_list%[%i%]%$$ has the following:
 # $table
-# Key     $cnext Value Type  $cnext Description                $rnext
+# Key     $cnext Value Type  $pre  $$ $cnext Description       $rnext
 # name    $cnext str         $cnext name of $th i$$ smoothing  $rnext
 # age_id  $cnext list of int $cnext indices for age values     $rnext
 # time_id $cnext list of int $cnext indices for time values    $rnext
@@ -180,7 +180,7 @@
 # that define the rows of the $cref rate_table$$.
 # The dictionary $icode%rate_list%[%i%]%$$ has the following:
 # $table
-# Key           $cnext Value Type  $cnext Description                  $rnext
+# Key           $cnext Value Type  $pre  $$ $cnext Description         $rnext
 # name          $cnext str     $cnext pini, iota, rho, chi, or omega   $rnext
 # parent_smooth $cnext str     $cnext parent smoothing                 $rnext
 # child_smooth  $cnext str     $cnext child smoothing
@@ -193,7 +193,7 @@
 # that define the rows of the $cref mulcov_table$$.
 # The dictionary $icode%mulcov_list%[%i%]%$$ has the following:
 # $table
-# Key       $cnext Value Type  $cnext Description                $rnext
+# Key       $cnext Value Type  $pre  $$ $cnext Description       $rnext
 # covariate $cnext str         $cnext is the covariate column    $rnext
 # type      $cnext str  $cnext rate_mean, meas_mean, or meas_std $rnext
 # effected  $cnext str         $cnext integrand or rate effected $rnext
