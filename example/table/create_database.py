@@ -289,8 +289,41 @@ def create_database() :
 		[ 'gaussian_01_constant', 1, 1, 1, 1, 1 ]
 	]
 	assert row_list == check_list
-
-
+	#
+	# smooth_grid_table
+	tbl_name = 'smooth_grid'
+	col_name = [
+		'smooth_id',      'age_id',        'time_id',
+		'value_prior_id', 'dage_prior_id', 'dtime_prior_id'
+	]
+	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
+	check_list = [
+		[ 0, 0, 0, 2, -1, -1 ],
+		[ 1, 0, 0, 3, -1, -1 ]
+	]
+	assert row_list == check_list
+	#
+	# rate_table
+	tbl_name = 'rate'
+	col_name = [ 'rate_name', 'parent_smooth_id', 'child_smooth_id' ]
+	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
+	check_list = [
+		[ 'pini',   0, 1 ],
+		[ 'iota',   0, 1 ],
+		[ 'rho',    0, 1 ],
+		[ 'chi',    0, 1 ],
+		[ 'omega',  0, 1 ]
+	]
+	assert row_list == check_list
+	#
+	# mulcov_table
+	tbl_name = 'mulcov'
+	col_name = [
+		'mulcov_type', 'rate_id', 'integrand_id', 'covariate_id', 'smooth_id'
+	]
+	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
+	check_list = [ [ 'rate_mean', 4, -1, 0, 0 ] ]
+	assert row_list == check_list
 	# -----------------------------------------------------------------------
 	print('create_database: OK')
 # END PYTHON
