@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin input$$
 $spell
+	tbl
 	std
 	dismod
 $$
@@ -17,11 +18,15 @@ $$
 $section Data Base Input Tables$$
 
 $head Comment Columns$$
-$index comment, column$$
-$index column, comment$$
 Any input table may have any number of columns with names that begin
 with the two characters $code c_$$.
 These are comment columns and are ignored by $code dismod_at$$.
+
+$head Primary Key$$
+Any table has a name $icode tbl_name$$ and a column with type
+$code integer primary key$$ and name $icode%tbl_name%_id%$$.
+The values in this column start at zero and increment by one
+for each row in the table.
 
 $childtable%
 	omh/table/age_table.omh

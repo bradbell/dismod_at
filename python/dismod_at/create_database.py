@@ -50,6 +50,13 @@
 # but the output tables are left empty.
 # This is only meant for small example and testing cases and is not efficient.
 #
+# $head Primary Key$$
+# For each of the lists above, the order of the
+# elements in the corresponding table is the same as the corresponding list.
+# For example, $icode%age_list%[%i%]%$$ corresponds to the $th i$$ row
+# of the $code age$$ table which has
+# $cref/primary key/input/Primary Key/$$ value $icode%age_id% = %i%$$.
+#
 # $head file_name$$
 # is as $code str$$ containing the name of the file where the data base
 # is stored.
@@ -186,7 +193,8 @@
 # child_smooth  $cnext str     $cnext child smoothing
 # $tend
 # Furthermore the order of the rate names must be
-# pini, iota, rho, chi, omega; i.e., the order in $cref rate_table$$.
+# pini, iota, rho, chi, omega; i.e., the only order allowed for
+# the $cref rate_table$$.
 #
 # $head mulcov_list$$
 # This is a list of $code dict$$
