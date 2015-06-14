@@ -41,12 +41,13 @@ bool get_fit_table_xam(void)
 
 	// sql commands
 	const char* sql_cmd[] = {
-	"create table fit"
-	"(fit_id                 integer primary key,"
+	"create table fit("
+		"fit_id              integer primary key,"
 		" parent_node_id     integer,"
 		" ode_step_size      real,"
 		" tolerance          real,"
-		" max_num_iter       integer)",
+		" max_num_iter       integer"
+	")",
 	"insert into fit values(0, 4, 0.5,  1e-8, 500)",
 	"insert into fit values(1, 5, 0.25, 1e-8, 500)"
 	};

@@ -40,12 +40,13 @@ bool put_table_row_xam(void)
 
 	// create the fit table
 	const char* sql_cmd[] = {
-	"create table fit"
-	"(fit_id                 integer primary key,"
+	"create table fit("
+		"fit_id              integer primary key,"
 		" parent_node_id     integer,"
 		" ode_step_size      real,"
 		" tolerance          real,"
-		" max_num_iter       integer)",
+		" max_num_iter       integer"
+	")"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)

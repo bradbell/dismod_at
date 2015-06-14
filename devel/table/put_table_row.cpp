@@ -21,8 +21,9 @@ $$
 $section C++: Insert New Row at End of a Table$$
 
 $head Syntax$$
-$codei%table_name_id% = put_table_row(%$$
-$icode%db%, %table_name%, %col_name_vec%, %row_val_vec%)%$$
+$icode%table_name_id% = put_table_row(
+	%db%, %table_name%, %col_name_vec%, %row_val_vec%
+)%$$
 
 $head db$$
 This argument has prototype
