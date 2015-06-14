@@ -20,34 +20,50 @@ echo_eval() {
 	echo $*
 	eval $*
 }
+if [ "$1" != 'htm' ] && [ "$1" != 'xml' ]
+then
+	echo "usage: bin/run_omhelp.sh (htm|xml) [printable]"
+	exit 1
+fi
+if [ "$2" != '' ] && [ "$2" != 'printable' ]
+then
+	echo "usage: bin/run_omhelp.sh (htm|xml) [printable]"
+	exit 1
+fi
+ext="$1"
+if [ "$2" == 'printable' ]
+then
+	printable='yes'
+else
+	printable='no'
+fi
 # -----------------------------------------------------------------------------
-echo_eval rm -rf doc
-echo_eval mkdir doc
+if [ ! -e 'doc' ]
+then
+	echo_eval mkdir doc
+fi
 echo_eval cd doc
 #
-for xml_flag in '-xml' ''
-do
-	if [ "$xml_flag" == '-xml' ]
-	then
-		ext='xml'
-	else
-		ext='htm'
-	fi
-	for print_flag in '-printable' ''
-	do
-		cmd="omhelp ../doc.omh -debug -noframe $xml_flag $print_flag"
-		echo "$cmd > omhelp.$ext.log"
-		if ! $cmd  > ../omhelp.$ext.log
-		then
-			cat ../omhelp.$ext.log
-			exit 1
-		fi
-		#
-		if grep '^OMhelp Warning:' ../omhelp.$ext.log
-		then
-			exit 1
-		fi
-	done
-done
+flags=''
+if [ "$ext" == 'xml' ]
+then
+	flags="$flags -xml"
+fi
+if [ "$printable" == 'yes' ]
+then
+	flags="$flags -printable"
+fi
+cmd="omhelp ../doc.omh -debug -noframe $flags"
+echo "$cmd > omhelp.$ext.log"
+if ! $cmd  > ../omhelp.$ext.log
+then
+	cat ../omhelp.$ext.log
+	exit 1
+fi
+#
+if grep '^OMhelp Warning:' ../omhelp.$ext.log
+then
+	exit 1
+fi
 echo 'run_omhelp.sh: OK'
 exit 0
