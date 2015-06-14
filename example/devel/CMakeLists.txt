@@ -66,6 +66,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/residual_density_xam.cpp
 	utility/smooth2ode_xam.cpp
 	utility/solve_ode_xam.cpp
+	utility/to_string_xam.cpp
 
 	table/check_pini_n_age_xam.cpp
 	table/get_age_table_xam.cpp

@@ -75,6 +75,7 @@ $end
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/get_table_column.hpp>
+# include <dismod_at/to_string.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -86,9 +87,7 @@ void put_table_row(
 {
 	size_t n_col = column_names.size();
 	size_t n_row = check_table_id(db, table_name);
-	assert( 0 <= int(n_row) && double(n_row) < 1e99 );
-	char row_id[100];
-	sprintf(row_id, "%d", int(n_row));
+	std::string row_id = to_string(n_row);
 	//
 	std::string name_list  = "(";
 	std::string value_list = "(";
