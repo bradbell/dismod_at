@@ -15,13 +15,14 @@ $spell
 	const
 	std
 	CppAD
+	vec
 $$
 
 $section C++: Insert New Row at End of a Table$$
 
 $head Syntax$$
-$codei%put_table_row(%db%, %table_name%, %column_names%, %row_values%)
-%$$
+$codei%table_name_id% = put_table_row(%$$
+$icode%db%, %table_name%, %col_name_vec%, %row_val_vec%)%$$
 
 $head db$$
 This argument has prototype
@@ -37,23 +38,23 @@ $codei%
 %$$
 and is the name of the table we are putting information into.
 
-$head column_names$$
+$head col_name_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<std::string>& %column_names%
+	const CppAD::vector<std::string>& %col_name_vec%
 %$$
 and is a vector of the names for the column names in this table.
 The size of this vector must be the number of columns in the table
 minus one and the primary key column is not included.
 
-$head row_values$$
+$head row_val_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<std::string>& %row_values%
+	const CppAD::vector<std::string>& %row_val_vec%
 %$$
 and is a vector of the values we are inserting into the table.
 It must have the same size, and be in the same order,
-as $icode column_names$$.
+as $icode col_name_vec$$.
 There cannot be any single quote characters $code '$$
 in any of the values.
 
@@ -61,6 +62,13 @@ $head Primary Key$$
 The primary key for this table name must have column name
 $icode%table_name%_id%$$.
 This key starts with zero, and increment by one between rows.
+
+$head table_name_id$$
+The return value has prototype
+$codei%
+	size_t %table_name_id%
+%$$
+It is the value of the primary key $icode%table_name%_id%$$ for this row.
 
 $children%example/devel/table/put_table_row_xam.cpp
 %$$
@@ -79,37 +87,40 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void put_table_row(
+size_t put_table_row(
 	sqlite3*                          db           ,
 	const std::string&                table_name   ,
-	const CppAD::vector<std::string>& column_names ,
-	const CppAD::vector<std::string>& row_values   )
+	const CppAD::vector<std::string>& col_name_vec ,
+	const CppAD::vector<std::string>& row_val_vec  )
 {
-	size_t n_col = column_names.size();
+	size_t n_col = col_name_vec.size();
 	size_t n_row = check_table_id(db, table_name);
-	std::string row_id = to_string(n_row);
+	std::string table_name_id = to_string(n_row);
 	//
 	std::string name_list  = "(";
 	std::string value_list = "(";
 	name_list            += table_name + "_id";
-	value_list           += row_id;
+	value_list           += table_name_id;
 	for(size_t i = 0; i < n_col; i++)
-	{	// add this column to name_list
+	{	// check that there are not single quotes in the value
+		assert( row_val_vec[i].find('\'') == std::string::npos );
+
+		// add this column to name_list
 		name_list += ",";
-		name_list += column_names[i];
+		name_list += col_name_vec[i];
 
 		// add this column to value_list
 		std::string column_type = get_table_column_type(
-			db, table_name, column_names[i]
+			db, table_name, col_name_vec[i]
 		);
 		if( column_type == "text" )
 		{	value_list += ",'";
-			value_list += row_values[i];
+			value_list += row_val_vec[i];
 			value_list += "'";
 		}
 		else
 		{	value_list += ",";
-			value_list += row_values[i];
+			value_list += row_val_vec[i];
 		}
 	}
 	name_list  += ")";
@@ -121,7 +132,8 @@ void put_table_row(
 	cmd            +=  value_list + ";";
 	//
 	exec_sql_cmd(db, cmd);
-	return;
+	//
+	return n_row;
 }
 
 } // END_DISMOD_AT_NAMESPACE

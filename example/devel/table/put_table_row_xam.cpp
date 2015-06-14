@@ -53,27 +53,33 @@ bool put_table_row_xam(void)
 
 	// setup for put_table_row
 	std::string table_name = "fit";
-	CppAD::vector<std::string> column_names(4), row_values(4);
+	CppAD::vector<std::string> col_name_vec(4), row_val_vec(4);
 
 	// column names as a vector
-	column_names[0] = "parent_node_id";
-	column_names[1] = "ode_step_size";
-	column_names[2] = "tolerance";
-	column_names[3] = "max_num_iter";
+	col_name_vec[0] = "parent_node_id";
+	col_name_vec[1] = "ode_step_size";
+	col_name_vec[2] = "tolerance";
+	col_name_vec[3] = "max_num_iter";
 
 	// insert first row in the fit table
-	row_values[0]   = "4";
-	row_values[1]   = "0.4";
-	row_values[2]   = "1e-8";
-	row_values[3]   = "400";
-	dismod_at::put_table_row(db, table_name, column_names, row_values);
+	row_val_vec[0]   = "4";
+	row_val_vec[1]   = "0.4";
+	row_val_vec[2]   = "1e-8";
+	row_val_vec[3]   = "400";
+	size_t fit_id = dismod_at::put_table_row(
+		db, table_name, col_name_vec, row_val_vec
+	);
+	ok &= fit_id == 0;
 
 	// insert second row in the fit table
-	row_values[0]   = "5";
-	row_values[1]   = "0.5";
-	row_values[2]   = "1e-8";
-	row_values[3]   = "500";
-	dismod_at::put_table_row(db, table_name, column_names, row_values);
+	row_val_vec[0]  = "5";
+	row_val_vec[1]  = "0.5";
+	row_val_vec[2]  = "1e-8";
+	row_val_vec[3]  = "500";
+	fit_id = dismod_at::put_table_row(
+		db, table_name, col_name_vec, row_val_vec
+	);
+	ok &= fit_id == 1;
 
 	// get the fit table
 	vector<dismod_at::fit_struct>

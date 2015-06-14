@@ -15,11 +15,11 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 
 namespace dismod_at {
-	extern void put_table_row(
+	extern size_t put_table_row(
 		sqlite3*                           db            ,
 		const std::string&                 table_name    ,
-		const CppAD::vector<std::string>&  column_names  ,
-		const CppAD::vector<std::string>&  row_values
+		const CppAD::vector<std::string>&  col_name_vec  ,
+		const CppAD::vector<std::string>&  row_val_vec
 	);
 }
 
