@@ -34,13 +34,12 @@ MACRO(get_prefix package)
 	INCLUDE_DIRECTORIES( ${${package}_prefix}/include )
 ENDMACRO(get_prefix)
 # ----------------------------------------------------------------------------
-
 # get package prefixes
 get_prefix(cppad)
 get_prefix(eigen)
 get_prefix(ipopt)
 get_prefix(suitesparse)
-
+# ----------------------------------------------------------------------------
 # extra_cxx_flags
 SET(extra_cxx_flags NOTFOUND CACHE STRING
 	"extra compiler flags (besides debug and release"
@@ -49,14 +48,18 @@ IF( NOT extra_cxx_flags )
 	MESSAGE(FATAL_ERROR "extra_cxx_flags not set by cmake command")
 ENDIF( NOT extra_cxx_flags )
 MESSAGE(STATUS "extra_cxx_flags = ${extra_cxx_flags}")
-
-
+# ----------------------------------------------------------------------------
+# set ipopt_LIBRARY_DIRS
+FIND_PACKAGE(PkgConfig)
+pkg_check_modules(ipopt ipopt)
+# ----------------------------------------------------------------------------
+# subdirectories
 ADD_SUBDIRECTORY(devel)
 ADD_SUBDIRECTORY(example/table)
 ADD_SUBDIRECTORY(example/devel)
 ADD_SUBDIRECTORY(test/devel)
 ADD_SUBDIRECTORY(example/get_started)
-
+# ----------------------------------------------------------------------------
 ADD_CUSTOM_TARGET(check DEPENDS
 	check_example_table
 	check_example_devel

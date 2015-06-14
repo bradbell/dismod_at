@@ -13,10 +13,6 @@
 # Release or deug build
 SET(CMAKE_BUILD_TYPE DEBUG)
 
-# get linking flags using pkg-config
-FIND_PACKAGE(PkgConfig)
-pkg_check_modules(ipopt ipopt)
-
 # no pkg-config file for SuiteSparse so explicitly set corresponding values
 SET(suitesparse_LIBRARY_DIRS ${suitesparse_prefix}/lib )
 SET(suitesparse_LIBRARIES "cholmod;amd;camd;colamd;ccolamd;suitesparseconfig" )
