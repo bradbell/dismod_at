@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin check_table_id$$
 $spell
+	sqlite
 	dismod
 	hpp
 	const
@@ -18,17 +19,21 @@ $spell
 $$
 
 $section C++: Check That table_id Column Has Proper Values$$
-$index table, check id$$
-$index check, table id$$
-$index id, check table$$
 
 $head Syntax$$
-$icode%n_row% = check_table_id(%table_name%)%$$
+$icode%n_row% = check_table_id(%db%, %table_name%)%$$
 
 $head Purpose$$
 Check that the column $icode%table_name%_id%$$
 starts at zero and increments by one between rows.
 It not, an error message is printed and the program exists.
+
+$head db$$
+The argument $icode db$$ has prototype
+$codei%
+	sqlite3* %db%
+%$$
+and is an open connection to the database.
 
 $head table_name$$
 This argument has prototype
@@ -43,6 +48,12 @@ $codei%
 	size_t %n_row%
 %$$
 It is the number of rows in the table.
+
+$head Speed$$
+Note that if one only wants to determine $icode n_row$$,
+it should be faster to use $cref get_column_max$$ to find the maximum
+value of $icode%table_name%_id%$$ (the primary key) and then add one;
+see $cref/primary key/input/Primary Key/$$.
 
 $end
 ------------------------------------------------------------------------------

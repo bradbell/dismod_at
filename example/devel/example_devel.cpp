@@ -72,6 +72,7 @@ extern bool to_string_xam(void);
 // table subdirectory
 extern bool check_pini_n_age_xam(void);
 extern bool get_age_table_xam(void);
+extern bool get_column_max_xam(void);
 extern bool get_covariate_table_xam(void);
 extern bool get_data_table_xam(void);
 extern bool get_density_table_xam(void);
@@ -165,6 +166,7 @@ int main(void)
 	// table subdirectory
 	RUN(check_pini_n_age_xam);
 	RUN(get_age_table_xam);
+	RUN(get_column_max_xam);
 	RUN(get_covariate_table_xam);
 	RUN(get_data_table_xam);
 	RUN(get_density_table_xam);
