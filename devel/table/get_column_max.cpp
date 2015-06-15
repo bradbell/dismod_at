@@ -74,7 +74,10 @@ namespace {
 		assert( argc == 1 );
 		assert( result != nullptr );
 		std::string* str_ptr = static_cast<std::string*>(result);
-		*str_ptr = argv[0];
+		if( argv[0] == nullptr )
+			*str_ptr = "";
+		else
+			*str_ptr = argv[0];
   		return 0;
   	}
 }
@@ -105,6 +108,7 @@ std::string get_column_max(
 		sqlite3_close(db);
 		exit(1);
 	}
+	assert( count_callback == 1 );
 	return max_str;
 }
 

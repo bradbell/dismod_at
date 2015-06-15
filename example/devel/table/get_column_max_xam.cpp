@@ -36,32 +36,43 @@ bool get_column_max_xam(void)
 	bool     new_file  = true;
 	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
 
-	// create the covariate table
+	// create the mytable table
 	const char* sql_cmd[] = {
-	"create table covariate("
-		"covariate_id       integer primary key, "
-		"covariate_name     text, "
-		"reference          real"
+	"create table mytable("
+		"mytable_id        integer primary key, "
+		"name_one          real, "
+		"name_two          real, "
+		"name_three        real"
 	")",
-	"insert into covariate values(0, 'income', 1000.0)",
-	"insert into covariate values(1, 'weight', 100.00)"
+	"insert into mytable values(0, 3.0, 1.0, null)",
+	"insert into mytable values(1, 2.0, 2.0, null)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 	//
-	// check covariate_id
-	string table_name  = "covariate";
-	string column_name = "covariate_id";
+	// check mytable_id
+	string table_name  = "mytable";
+	string column_name = "mytable_id";
 	string max_str     = dismod_at::get_column_max(
 		db, table_name, column_name
 	);
 	ok              &= std::atoi(max_str.c_str()) == 1;
 
-	// check reference
-	column_name = "reference";
+	// check name_one
+	column_name = "name_one";
 	max_str     = dismod_at::get_column_max(db, table_name, column_name);
-	ok          &= std::atof(max_str.c_str()) == 1000.0;
+	ok          &= std::atof(max_str.c_str()) == 3.0;
+
+	// check name_two
+	column_name = "name_two";
+	max_str     = dismod_at::get_column_max(db, table_name, column_name);
+	ok          &= std::atof(max_str.c_str()) == 2.0;
+
+	// check name_three
+	column_name = "name_three";
+	max_str     = dismod_at::get_column_max(db, table_name, column_name);
+	ok          &= max_str == "";
 
 	// close database and return
 	sqlite3_close(db);
