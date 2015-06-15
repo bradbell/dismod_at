@@ -27,55 +27,74 @@ import dismod_at
 import copy
 def constant_weight_fun(a, t) :
 	return 1.0
-def smooth_uniform_01_fun(a, t) :
-	# note that the da and dt values are not used
-	return ('uniform_01', 'uniform_01', 'uniform_01')
-def smooth_gaussian_01_fun(a, t) :
-	# note that the da and dt values are not used
-	return ('gaussian_01', 'gaussian_01', 'gaussian_01')
+def gaussian_zero_fun(a, t) :
+	# note that the a, t values are not used
+	return ('gaussian_zero', 'gaussian_zero', 'gaussian_zero')
+def uniform_positive_fun(a, t) :
+	# note that the a, t values are not used
+	return ('uniform_positive', 'uniform_positive', 'uniform_positive')
 #
 # ------------------------------------------------------------------------
+# name of the database
 file_name   = 'example.db'
-age_list    = [ 50.0 ]
-time_list   = [ 2000.0 ]
+#
+# age table
+age_list    = [ 0.0, 20.0, 40.0, 60.0, 80.0, 100.0 ]
+#
+# time table
+time_list   = [ 1995.0, 2005.0, 2015.0 ]
+#
+# integrand table
 integrand_list = [
-	{ 'name':'mtother',    'eta':1e-6 }
+	{ 'name':'incidence',   'eta':1e-6 },
+	{ 'name':'remission',   'eta':1e-6 },
+	{ 'name':'mtexcess',    'eta':1e-6 },
+	{ 'name':'mtother',     'eta':1e-6 },
+	{ 'name':'prevalence',  'eta':1e-6 }
 ]
+#
+# node table
 node_list = [
 	{ 'name':'world',         'parent':'' },
 	{ 'name':'north_america', 'parent':'world' },
 	{ 'name':'united_states', 'parent':'north_america' },
 	{ 'name':'canada',        'parent':'north_america' }
 ]
+#
+# weight table
 fun = constant_weight_fun
 weight_list = [
 	{ 'name':'constant',  'age_id':[0], 'time_id':[0], 'fun':fun }
 ]
-covariate_list = [
-	{ 'name':'sex', 'reference':0.0 }
-]
-data_list = []
-row = {
-	'integrand':'mtother',
-	'density':'log_gaussian',
-	'weight':'constant',
-	'meas_std':1e-5,
-	'age_lower':0.0,
-	'age_upper':100.0,
-	'time_lower':1990.0,
-	'time_upper':2010.0,
-	'sex':0.5
-}
-row['node']       = 'north_america'
-row['meas_value'] = 1e-5
-data_list.append( copy.copy(row) )
-row['node']       = 'united_states'
-row['meas_value'] = 1.5e-5
-data_list.append( copy.copy(row) )
-row['node']       = 'canada'
-row['meas_value'] = 0.5e-5
-data_list.append( copy.copy(row) )
 #
+# covariate table
+covariate_list = list()
+#
+# data table
+data_list = list()
+row = {
+	'node':'world',
+	'density':'gaussian',
+	'weight':'constant',
+	'time_lower':1995.0,
+	'time_upper':1995.0
+}
+for data_id in range( len(integrand_list) ) :
+	meas_value = 1e-2 * (data_id + 1)
+	meas_std   = 0.2 * meas_value
+	integrand  = integrand_list[data_id]['name']
+	row['meas_value'] = meas_value
+	row['meas_std']   = meas_std
+	row['integrand']  = integrand
+	if integrand == 'prevalence' :
+		row['age_lower'] = 0.0
+		row['age_upper'] = 0.0
+	else :
+		row['age_lower'] = 0.0
+		row['age_upper'] = 100.0
+	data_list.append( copy.copy(row) )
+#
+# prior_table
 prior_list = [
 	{	'name':'zero',
 		'density':'uniform',
@@ -91,76 +110,73 @@ prior_list = [
 		'mean':1.0,
 		'std':None,
 		'eta':None
-	},{	'name':'uniform_01',
+	},{	'name':'uniform_positive',
 		'density':'uniform',
-		'lower':0.0,
-		'upper':1.0,
-		'mean':0.1,
+		'lower':1e-4,
+		'upper':float('inf'),
+		'mean':1e-1,
 		'std':None,
 		'eta':None
-	},{	'name':'gaussian_01',
+	},{	'name':'gaussian_zero',
 		'density':'gaussian',
 		'lower':None,
 		'upper':None,
 		'mean':0.0,
-		'std':1.0,
+		'std':1e-2,
 		'eta':None
-	},{	'name':'log_gaussian',
-		'density':'log_gaussian',
-		'lower':None,
-		'upper':None,
-		'mean':0.0,
-		'std':None,
-		'eta':1e-6
 	}
 ]
+#
+# smooth table
+middle_age  = int( (len(age_list) + 1) / 2 )
+middle_time = int( (len(time_list) + 1) / 2 )
 smooth_list = [
-	{	'name':'uniform_01_constant',
-		'age_id':[0],
-		'time_id':[0],
+	{	'name':'gaussian_zero',
+		'age_id':[ middle_age ],
+		'time_id':[ middle_time ],
 		'mulstd_value':'one',
 		'mulstd_dage':'one',
 		'mulstd_dtime':'one',
-		'fun':smooth_uniform_01_fun
-	},{	'name':'gaussian_01_constant',
-		'age_id':[0],
-		'time_id':[0],
+		'fun':gaussian_zero_fun
+	},{	'name':'uniform_positive',
+		'age_id':[ middle_age ],
+		'time_id':[ middle_time ],
 		'mulstd_value':'one',
 		'mulstd_dage':'one',
 		'mulstd_dtime':'one',
-		'fun':smooth_gaussian_01_fun
+		'fun':uniform_positive_fun
 	}
 ]
+#
+# rate table
 rate_list = [
 	{
 		'name':'pini',
-		'parent_smooth':'uniform_01_constant',
-		'child_smooth':'gaussian_01_constant'
+		'parent_smooth':'uniform_positive',
+		'child_smooth':'gaussian_zero'
 	},{
 		'name':'iota',
-		'parent_smooth':'uniform_01_constant',
-		'child_smooth':'gaussian_01_constant'
+		'parent_smooth':'uniform_positive',
+		'child_smooth':'gaussian_zero'
 	},{
 		'name':'rho',
-		'parent_smooth':'uniform_01_constant',
-		'child_smooth':'gaussian_01_constant'
+		'parent_smooth':'uniform_positive',
+		'child_smooth':'gaussian_zero'
 	},{
 		'name':'chi',
-		'parent_smooth':'uniform_01_constant',
-		'child_smooth':'gaussian_01_constant'
+		'parent_smooth':'uniform_positive',
+		'child_smooth':'gaussian_zero'
 	},{
 		'name':'omega',
-		'parent_smooth':'uniform_01_constant',
-		'child_smooth':'gaussian_01_constant'
+		'parent_smooth':'uniform_positive',
+		'child_smooth':'gaussian_zero'
 	}
 ]
-mulcov_list = [
-	{	'covariate':'sex',
-		'type':'rate_mean',
-		'effected':'omega',
-		'smooth':'uniform_01_constant'
-	}
-]
+#
+# mulcov table
+mulcov_list = []
+#
+# create database
 dismod_at.create_database(
 	file_name,
 	age_list,
