@@ -33,8 +33,7 @@ bool residual_density_xam(void)
 	// uniform
 	density     = dismod_at::uniform_enum;
 	residual    = residual_density(density, z, mu, delta, eta);
-	wres        = (z - mu) / delta;
-	ok         &= fabs(1.0 - residual.wres / wres) <= eps;
+	ok         &= residual.wres           == 0.0;
 	ok         &= residual.logden_smooth  == 0.0;
 	ok         &= residual.logden_sub_abs == 0.0;
 	ok         &= residual.density == density;

@@ -57,7 +57,7 @@ This argument has prototype
 $codei%
 	const %Float%& mu
 %$$
-For the uniform, Gaussian, and Laplace cases,
+For the Gaussian, and Laplace cases,
 it specifies the mean of the distribution.
 For the Log-Gaussian and Log-Laplace cases,
 it specifies the transformed mean.
@@ -67,8 +67,8 @@ This argument has prototype
 $codei%
 	const %Float%& delta
 %$$
-For the uniform, Gaussian, and Laplace cases,
-it specifies the mean of the standard deviation of the distribution.
+For Gaussian, and Laplace cases,
+it specifies the standard deviation of the distribution.
 For the Log-Gaussian and Log-Laplace cases,
 it specifies the transformed standard deviation.
 
@@ -106,7 +106,9 @@ $tend
 
 $head Uniform$$
 In the case where the $icode density$$ is uniform,
-both $icode logden_smooth$$ and $icode logden_sub_abs$$ are zero.
+$icode wres$$,
+$icode logden_smooth$$,
+and $icode logden_sub_abs$$ are all set zero.
 
 $head Gaussian$$
 In the case where the $icode density$$ is
@@ -148,6 +150,9 @@ residual_struct<Float> residual_density(
 	switch( density )
 	{
 		case uniform_enum:
+		wres = 0.0;
+		break;
+
 		case gaussian_enum:
 		case laplace_enum:
 		sigma = delta;

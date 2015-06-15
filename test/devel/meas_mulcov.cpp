@@ -178,7 +178,7 @@ bool meas_mulcov(void)
 	data_table[data_id].time_upper   = time_upper;
 	data_table[data_id].meas_value   = 0.0;
 	data_table[data_id].meas_std     = 1e-3;
-	data_table[data_id].density_id   = dismod_at::uniform_enum;
+	data_table[data_id].density_id   = dismod_at::gaussian_enum;
 	data_table[data_id].x            = x;
 	//
 	// smooth_table
