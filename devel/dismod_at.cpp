@@ -37,15 +37,25 @@ $cref/node_id/node_table/node_id/$$ for this fit.
 Otherwise it specifies the parent
 $cref/node_name/node_table/node_name/$$.
 
+$head n_age_ode$$
+is a positive integer specifying the number of points in the
+$cref/ode age grid/glossary/Ode Grid/Age, a_i/$$.
+
+$subhead n_time_ode$$
+is a positive integer specifying the number of points in the
+$cref/ode time grid/glossary/Ode Grid/Time, t_j/$$.
+
 $head ode_step_size$$
-is the step size used to integrate the ordinary differential equation.
+is a floating point number specifying the step size used to integrate the
+ordinary differential equation.
 The step size is the same in age and time because it is along cohort lines.
 
 $head tolerance$$
-is the desired relative convergence tolerance (requested of Ipopt).
+is a floating point number specifying the desired relative convergence
+tolerance (requested of Ipopt).
 
 $head max_num_iter$$
-is the maximum number of iterations.
+is a positive integer specifying the maximum number of iterations.
 The algorithm terminates with an error message if the number of
 iterations exceeded this number.
 
@@ -188,22 +198,27 @@ int main(int n_arg, const char** argv)
 	fit_object.run_fit(tolerance_arg, max_num_iter_arg);
 	vector<double> solution = fit_object.get_solution();
 	// ------------------- fit_table ------------------------------------
-	vector<string> col_name_vec(4), row_val_vec(4);
+	vector<string> col_name_vec(6), row_val_vec(6);
 	string table_name = "fit";
 	col_name_vec[0]   = "parent_node_id";
-	col_name_vec[1]   = "ode_step_size";
-	col_name_vec[2]   = "tolerance";
-	col_name_vec[3]   = "max_num_iter";
+	col_name_vec[1]   = "n_age_ode";
+	col_name_vec[2]   = "n_time_ode";
+	col_name_vec[3]   = "ode_step_size";
+	col_name_vec[4]   = "tolerance";
+	col_name_vec[5]   = "max_num_iter";
 	//
 	row_val_vec[0]    = dismod_at::to_string( parent_node_id );
-	row_val_vec[1]    = ode_step_size_arg;
-	row_val_vec[2]    = tolerance_arg;
-	row_val_vec[3]    = max_num_iter_arg;
+	row_val_vec[1]    = n_age_ode_arg;
+	row_val_vec[2]    = n_time_ode_arg;
+	row_val_vec[3]    = ode_step_size_arg;
+	row_val_vec[4]    = tolerance_arg;
+	row_val_vec[5]    = max_num_iter_arg;
 	size_t fit_id     = dismod_at::put_table_row(
 		db, table_name, col_name_vec, row_val_vec
 	);
 	// ----------------- variable_table ----------------------------------
 	table_name      = "variable";
+	col_name_vec.resize(4);
 	col_name_vec[0] = "fit_id";
 	col_name_vec[1] = "sample";
 	col_name_vec[2] = "offset";
@@ -217,6 +232,7 @@ int main(int n_arg, const char** argv)
 	if( max_str.size() > 0 )
 		sample = std::atoi( max_str.c_str() );
 	//
+	row_val_vec.resize(4);
 	row_val_vec[0]  = dismod_at::to_string( fit_id );
 	row_val_vec[1]  = dismod_at::to_string( sample + 1 );
 	for(size_t offset = 0; offset < solution.size(); offset++)

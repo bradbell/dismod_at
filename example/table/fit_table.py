@@ -20,6 +20,7 @@
 def fit_table() :
 	import dismod_at
 	import copy
+	import collections
 	#
 	file_name      = 'example.db'
 	new            = True
@@ -27,13 +28,17 @@ def fit_table() :
 	cursor         = connection.cursor()
 	#
 	# create the fit table
-	col_name = [
-		'parent_node_id','ode_step_size','tolerance'
-	]
-	col_type = [
-		'integer',       'real',         'real'
-	]
-	row_list = [ [ 0, 0.5, 100 ] ]
+	col_name2type = collections.OrderedDict([
+		('parent_node_id', 'integer'),
+		('n_age_ode',      'integer'),
+		('n_time_ode',     'integer'),
+		('ode_step_size',  'real'   ),
+		('tolerance',      'real'   ),
+		('max_num_iter',   'integer')
+	])
+	col_name = list(col_name2type.keys())
+	col_type = list(col_name2type.values())
+	row_list = [ [ 0, 5, 6, 0.5, 1e-5, 100 ] ]
 	tbl_name = 'fit'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------

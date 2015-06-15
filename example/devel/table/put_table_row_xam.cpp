@@ -24,7 +24,7 @@ $end
 */
 // BEGIN C++
 # include <dismod_at/put_table_row.hpp>
-# include <dismod_at/get_fit_table.hpp>
+# include <dismod_at/get_covariate_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
 
@@ -38,64 +38,49 @@ bool put_table_row_xam(void)
 	bool     new_file  = true;
 	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
 
-	// create the fit table
-	const char* sql_cmd[] = {
-	"create table fit("
-		"fit_id              integer primary key,"
-		" parent_node_id     integer,"
-		" ode_step_size      real,"
-		" tolerance          real,"
-		" max_num_iter       integer"
-	")"
-	};
-	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
-	for(size_t i = 0; i < n_command; i++)
-		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
+	// create the covariate table
+	const char* sql_cmd =
+	"create table covariate("
+		"covariate_id       integer primary key, "
+		"covariate_name     text, "
+		"reference          real"
+	")";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
 
 	// setup for put_table_row
-	std::string table_name = "fit";
-	CppAD::vector<std::string> col_name_vec(4), row_val_vec(4);
+	std::string table_name = "covariate";
+	CppAD::vector<std::string> col_name_vec(2), row_val_vec(2);
 
 	// column names as a vector
-	col_name_vec[0] = "parent_node_id";
-	col_name_vec[1] = "ode_step_size";
-	col_name_vec[2] = "tolerance";
-	col_name_vec[3] = "max_num_iter";
+	col_name_vec[0] = "covariate_name";
+	col_name_vec[1] = "reference";
 
-	// insert first row in the fit table
-	row_val_vec[0]   = "4";
-	row_val_vec[1]   = "0.4";
-	row_val_vec[2]   = "1e-8";
-	row_val_vec[3]   = "400";
-	size_t fit_id = dismod_at::put_table_row(
+	// insert first row in the covariate table
+	row_val_vec[0]   = "income";
+	row_val_vec[1]   = "1000.00";
+	size_t covariate_id = dismod_at::put_table_row(
 		db, table_name, col_name_vec, row_val_vec
 	);
-	ok &= fit_id == 0;
+	ok &= covariate_id == 0;
 
-	// insert second row in the fit table
-	row_val_vec[0]  = "5";
-	row_val_vec[1]  = "0.5";
-	row_val_vec[2]  = "1e-8";
-	row_val_vec[3]  = "500";
-	fit_id = dismod_at::put_table_row(
+	// insert second row in the covariate table
+	row_val_vec[0]  = "weight";
+	row_val_vec[1]  = "100.00";
+	covariate_id = dismod_at::put_table_row(
 		db, table_name, col_name_vec, row_val_vec
 	);
-	ok &= fit_id == 1;
+	ok &= covariate_id == 1;
 
-	// get the fit table
-	vector<dismod_at::fit_struct>
-		fit_table = dismod_at::get_fit_table(db);
-	ok  &= fit_table.size() == 2;
+	// get the covariate table
+	vector<dismod_at::covariate_struct>
+		covariate_table = dismod_at::get_covariate_table(db);
+	ok  &= covariate_table.size() == 2;
 	//
-	ok  &= fit_table[0].parent_node_id     == 4;
-	ok  &= fit_table[0].ode_step_size      == 0.4;
-	ok  &= fit_table[0].tolerance          == 1e-8;
-	ok  &= fit_table[0].max_num_iter       == 400;
+	ok  &= covariate_table[0].covariate_name == "income";
+	ok  &= covariate_table[0].reference      == 1000.;
 	//
-	ok  &= fit_table[1].parent_node_id     == 5;
-	ok  &= fit_table[1].ode_step_size      == 0.5;
-	ok  &= fit_table[1].tolerance          == 1e-8;
-	ok  &= fit_table[1].max_num_iter       == 500;
+	ok  &= covariate_table[1].covariate_name == "weight";
+	ok  &= covariate_table[1].reference      == 100.;
 	//
 	// close database and return
 	sqlite3_close(db);

@@ -17,9 +17,11 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 	struct fit_struct {
 		int    parent_node_id;
+		int    n_age_ode;
+		int    n_time_ode;
 		double ode_step_size;
 		double tolerance;
-		size_t max_num_iter;
+		int    max_num_iter;
 	};
 	extern CppAD::vector<fit_struct> get_fit_table(sqlite3*  db);
 }

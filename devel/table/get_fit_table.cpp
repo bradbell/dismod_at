@@ -53,6 +53,14 @@ $code int$$ $cnext $code parent_node_id$$ $cnext
 	The $cref/parent_node_id/fit_table/parent_node_id/$$
 	for this fit
 $rnext
+$code int$$ $cnext $code n_age_ode$$ $cnext
+	The $cref/n_age_ode/fit_table/n_age_ode/$$
+	for this fit
+$rnext
+$code int$$ $cnext $code n_time_ode$$ $cnext
+	The $cref/n_age_ode/fit_table/n_age_ode/$$
+	for this fit
+$rnext
 $code double$$ $cnext $code ode_step_size$$ $cnext
 	The $cref/ode_step_size/fit_table/ode_step_size/$$
 	for this fit
@@ -92,6 +100,16 @@ CppAD::vector<fit_struct> get_fit_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, parent_node_id);
 	assert( n_fit == parent_node_id.size() );
 
+	column_name         =  "n_age_ode";
+	CppAD::vector<int>    n_age_ode;
+	get_table_column(db, table_name, column_name, n_age_ode);
+	assert( n_fit == n_age_ode.size() );
+
+	column_name         =  "n_time_ode";
+	CppAD::vector<int>    n_time_ode;
+	get_table_column(db, table_name, column_name, n_time_ode);
+	assert( n_fit == n_time_ode.size() );
+
 	column_name         =  "ode_step_size";
 	CppAD::vector<double>   ode_step_size;
 	get_table_column(db, table_name, column_name, ode_step_size);
@@ -110,6 +128,8 @@ CppAD::vector<fit_struct> get_fit_table(sqlite3* db)
 	CppAD::vector<fit_struct> fit_table(n_fit);
 	for(size_t i = 0; i < n_fit; i++)
 	{	fit_table[i].parent_node_id      = parent_node_id[i];
+		fit_table[i].n_age_ode           = n_age_ode[i];
+		fit_table[i].n_time_ode          = n_time_ode[i];
 		fit_table[i].ode_step_size       = ode_step_size[i];
 		fit_table[i].tolerance           = tolerance[i];
 		fit_table[i].max_num_iter        = max_num_iter[i];

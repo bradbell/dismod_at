@@ -544,10 +544,20 @@ def create_database(
 	# ------------------------------------------------------------------------
 	# create fit table
 	col_name = [
-		'parent_node_id', 'ode_step_size', 'tolerance', 'max_num_iter'
+		'parent_node_id',
+		'n_age_ode',
+		'n_time_ode',
+		'ode_step_size',
+		'tolerance',
+		'max_num_iter'
 	]
 	col_type = [
-		'integer',        'real',          'real',      'integer'
+		'integer',     # parent_node_id
+		'integer',     # n_age_ode
+		'integer',     # n_time_ode
+		'real',        # ode_step_size
+		'real',        # tolerance
+		'integer'      # max_num_iter
 	]
 	row_list = []
 	tbl_name = 'fit'

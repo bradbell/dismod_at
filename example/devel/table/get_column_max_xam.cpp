@@ -36,49 +36,32 @@ bool get_column_max_xam(void)
 	bool     new_file  = true;
 	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
 
-	// create the fit table
+	// create the covariate table
 	const char* sql_cmd[] = {
-	"create table fit("
-		"fit_id              integer primary key,"
-		" parent_node_id     integer,"
-		" ode_step_size      real,"
-		" tolerance          real,"
-		" max_num_iter       integer"
+	"create table covariate("
+		"covariate_id       integer primary key, "
+		"covariate_name     text, "
+		"reference          real"
 	")",
-	"insert into fit values(0, 4, 0.5,  1e-8, 500)",
-	"insert into fit values(1, 5, 0.25, 1e-8, 400)"
+	"insert into covariate values(0, 'income', 1000.0)",
+	"insert into covariate values(1, 'weight', 100.00)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
-
-	// check fit_id
-	string table_name  = "fit";
-	string column_name = "fit_id";
+	//
+	// check covariate_id
+	string table_name  = "covariate";
+	string column_name = "covariate_id";
 	string max_str     = dismod_at::get_column_max(
 		db, table_name, column_name
 	);
 	ok              &= std::atoi(max_str.c_str()) == 1;
 
-	// check parent_node_id
-	column_name = "parent_node_id";
+	// check reference
+	column_name = "reference";
 	max_str     = dismod_at::get_column_max(db, table_name, column_name);
-	ok          &= std::atoi(max_str.c_str()) == 5;
-
-	// check max_num_iter
-	column_name = "max_num_iter";
-	max_str     = dismod_at::get_column_max(db, table_name, column_name);
-	ok          &= std::atoi(max_str.c_str()) == 500;
-
-	// check ode_step_size
-	column_name = "ode_step_size";
-	max_str     = dismod_at::get_column_max(db, table_name, column_name);
-	ok          &= std::atof(max_str.c_str()) == 0.5;
-
-	// check tolerance
-	column_name = "tolerance";
-	max_str     = dismod_at::get_column_max(db, table_name, column_name);
-	ok          &= std::atof(max_str.c_str()) == 1e-8;
+	ok          &= std::atof(max_str.c_str()) == 1000.0;
 
 	// close database and return
 	sqlite3_close(db);

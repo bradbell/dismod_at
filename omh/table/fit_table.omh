@@ -29,6 +29,16 @@ This column has type $code integer$$
 and is the parent $cref/node_id/node_table/node_id/$$ for this
 run of the $cref/dismod_at/dismod_at_exe/parent_node/$$ executable.
 
+$head n_age_ode$$
+This column has type $code integer$$ and
+is a positive integer specifying the number of points in the
+$cref/ode age grid/glossary/Ode Grid/Age, a_i/$$.
+
+$subhead n_time_ode$$
+This column has type $code integer$$ and
+is a positive integer specifying the number of points in the
+$cref/ode time grid/glossary/Ode Grid/Time, t_j/$$.
+
 $head ode_step_size$$
 This column has type $code real$$
 and is the numerical ode step size for this

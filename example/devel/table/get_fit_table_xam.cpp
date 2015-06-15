@@ -44,12 +44,14 @@ bool get_fit_table_xam(void)
 	"create table fit("
 		"fit_id              integer primary key,"
 		" parent_node_id     integer,"
+		" n_age_ode          integer,"
+		" n_time_ode         integer,"
 		" ode_step_size      real,"
 		" tolerance          real,"
 		" max_num_iter       integer"
 	")",
-	"insert into fit values(0, 4, 0.5,  1e-8, 500)",
-	"insert into fit values(1, 5, 0.25, 1e-8, 500)"
+	"insert into fit values(0, 4, 3, 5, 0.5,  1e-8, 500)",
+	"insert into fit values(1, 5, 3, 5, 0.25, 1e-8, 500)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -62,11 +64,15 @@ bool get_fit_table_xam(void)
 	ok  &= fit_table.size() == 2;
 	//
 	ok  &= fit_table[0].parent_node_id     == 4;
+	ok  &= fit_table[0].n_age_ode          == 3;
+	ok  &= fit_table[0].n_time_ode         == 5;
 	ok  &= fit_table[0].ode_step_size      == 0.5;
 	ok  &= fit_table[0].tolerance          == 1e-8;
 	ok  &= fit_table[0].max_num_iter       == 500;
 	//
 	ok  &= fit_table[1].parent_node_id     == 5;
+	ok  &= fit_table[1].n_age_ode          == 3;
+	ok  &= fit_table[1].n_time_ode         == 5;
 	ok  &= fit_table[1].ode_step_size      == 0.25;
 	ok  &= fit_table[1].tolerance          == 1e-8;
 	ok  &= fit_table[1].max_num_iter       == 500;
