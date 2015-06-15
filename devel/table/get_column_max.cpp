@@ -11,16 +11,18 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin get_column_max$$
 $spell
+	max
 	str
 	sqlite
 	const
 	std
+	cmd
 $$
 
 $section C++: Get The Maximum Values in a Table Column$$
 
 $head Syntax$$
-$icode%max_str% = get_column_max(%db%, %table_name%, %column_name%)%$$
+$icode%max_str% = get_column_max(%db%, %select_cmd%, %column_name%)%$$
 
 $head db$$
 This argument has prototype
@@ -29,12 +31,19 @@ $codei%
 %$$
 and is the database we are getting information from.
 
-$head table_name$$
+$head select_cmd$$
 This argument has prototype
 $codei%
-	const std::string& %table_name%
+	const std::string& %select_cmd%
 %$$
-and is the name of the table we are getting information from.
+and is a SQL select command that results in a table,
+that has a column named $icode column_name$$.
+For example, if you want to take the maximum over all the rows
+in table $icode table_name$$,
+you could use the following for $icode select_cmd$$:
+$codei%
+	select * from %table_name%
+%$$.
 
 $head column_name$$
 This argument has prototype
@@ -85,16 +94,17 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 std::string get_column_max(
 	sqlite3*                    db                    ,
-	const std::string&          table_name            ,
+	const std::string&          select_cmd            ,
 	const std::string&          column_name           )
 {	using std::cerr;
 	using std::endl;
 
-	// sql command: select max(column_name) from table_name
+	// sql command: select max(column_name) from ( select_cmd ) sub
 	std::string cmd = "select max(";
 	cmd            += column_name;
-	cmd            += ") from ";
-	cmd            += table_name;
+	cmd            += ") from (";
+	cmd            += select_cmd;
+	cmd            += ") sub";
 
 	// execute sql command
 	count_callback = 0;

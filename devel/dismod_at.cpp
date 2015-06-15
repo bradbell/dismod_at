@@ -228,13 +228,12 @@ int main(int n_arg, const char** argv)
 	string max_str = dismod_at::get_column_max(
 		db, table_name, col_name_vec[1]
 	);
-	int sample = -1;
-	if( max_str.size() > 0 )
-		sample = std::atoi( max_str.c_str() );
+	// maximum likelihood sample
+	size_t sample = 0;
 	//
 	row_val_vec.resize(4);
 	row_val_vec[0]  = dismod_at::to_string( fit_id );
-	row_val_vec[1]  = dismod_at::to_string( sample + 1 );
+	row_val_vec[1]  = dismod_at::to_string( sample );
 	for(size_t offset = 0; offset < solution.size(); offset++)
 	{	row_val_vec[2] = dismod_at::to_string( offset );
 		row_val_vec[3] = dismod_at::to_string( solution[offset] );

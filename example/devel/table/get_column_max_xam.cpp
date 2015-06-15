@@ -52,27 +52,33 @@ bool get_column_max_xam(void)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 	//
 	// check mytable_id
-	string table_name  = "mytable";
+	string select_cmd  = "select * from mytable";
 	string column_name = "mytable_id";
 	string max_str     = dismod_at::get_column_max(
-		db, table_name, column_name
+		db, select_cmd, column_name
 	);
 	ok              &= std::atoi(max_str.c_str()) == 1;
 
 	// check name_one
 	column_name = "name_one";
-	max_str     = dismod_at::get_column_max(db, table_name, column_name);
+	max_str     = dismod_at::get_column_max(db, select_cmd, column_name);
 	ok          &= std::atof(max_str.c_str()) == 3.0;
 
 	// check name_two
 	column_name = "name_two";
-	max_str     = dismod_at::get_column_max(db, table_name, column_name);
+	max_str     = dismod_at::get_column_max(db, select_cmd, column_name);
 	ok          &= std::atof(max_str.c_str()) == 2.0;
 
 	// check name_three
 	column_name = "name_three";
-	max_str     = dismod_at::get_column_max(db, table_name, column_name);
+	max_str     = dismod_at::get_column_max(db, select_cmd, column_name);
 	ok          &= max_str == "";
+
+	// check a case where select_cmd limits the number of records
+	select_cmd  = "select * from mytable where mytable_id=0";
+	column_name = "name_two";
+	max_str     = dismod_at::get_column_max(db, select_cmd, column_name);
+	ok          &= std::atof(max_str.c_str()) == 1.0;
 
 	// close database and return
 	sqlite3_close(db);
