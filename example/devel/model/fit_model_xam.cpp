@@ -64,6 +64,7 @@ bool fit_model_xam(void)
 	prior_table[0].mean       = 0.0;
 	prior_table[0].upper      = 0.0;
 	prior_table[0].std        = nan;
+	prior_table[0].eta        = nan;
 	//
 	// prior_id_one (identically one prior)
 	prior_table[1].prior_name = "one";
@@ -72,6 +73,7 @@ bool fit_model_xam(void)
 	prior_table[1].mean       = 1.0;
 	prior_table[1].upper      = 1.0;
 	prior_table[1].std        = nan;
+	prior_table[1].eta        = nan;
 	//
 	size_t prior_id_one       = 1;
 	//
@@ -82,6 +84,7 @@ bool fit_model_xam(void)
 	prior_table[2].mean       = 1e-1;
 	prior_table[2].upper      = + inf;
 	prior_table[2].std        = nan;
+	prior_table[2].eta        = nan;
 	size_t prior_id_positive  = 2;
 	//
 	// prior_id_gaussian_zero (Gaussian mean 0.0 and std 1e-2)
@@ -91,6 +94,7 @@ bool fit_model_xam(void)
 	prior_table[3].mean             = 0.00;
 	prior_table[3].upper            = +inf;
 	prior_table[3].std              = 1e-2;
+	prior_table[3].eta              = nan;
 	size_t prior_id_gaussian_zero   = 3;
 	// -------------------------------------------------------------------
 	// smoothing information

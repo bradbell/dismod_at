@@ -564,12 +564,8 @@ def create_database(
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create variable table
-	col_name = [
-		'sample',  'offset',  'value',
-	]
-	col_type = [
-		'integer', 'integer', 'real'
-	]
+	col_name = [ 'fit_id',  'sample',  'offset',  'value' ]
+	col_type = [ 'integer', 'integer', 'integer', 'real'  ]
 	row_list = []
 	tbl_name = 'variable'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

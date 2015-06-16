@@ -34,7 +34,7 @@ def gaussian_zero_fun(a, t) :
 	return ('gaussian_zero', 'gaussian_zero', 'gaussian_zero')
 def uniform_positive_fun(a, t) :
 	# note that the a, t values are not used
-	return ('uniform_positive', 'uniform_positive', 'uniform_positive')
+	return ('uniform_positive', 'gaussian_zero', 'gaussian_zero')
 # ------------------------------------------------------------------------
 # name of the database
 file_name   = 'example.db'
@@ -130,18 +130,17 @@ prior_list = [
 #
 # smooth table
 middle_age  = int( (len(age_list) + 1) / 2 )
-middle_time = int( (len(time_list) + 1) / 2 )
 smooth_list = [
 	{	'name':'gaussian_zero',
 		'age_id':[ middle_age ],
-		'time_id':[ middle_time ],
+		'time_id':[ 0, len(time_list) - 1 ],
 		'mulstd_value':'one',
 		'mulstd_dage':'one',
 		'mulstd_dtime':'one',
 		'fun':gaussian_zero_fun
 	},{	'name':'uniform_positive',
 		'age_id':[ middle_age ],
-		'time_id':[ middle_time ],
+		'time_id':[ 0, len(time_list) - 1 ],
 		'mulstd_value':'one',
 		'mulstd_dage':'one',
 		'mulstd_dtime':'one',
@@ -211,7 +210,7 @@ cmd     = [
 	max_num_iter
 ]
 print( ' '.join(cmd) )
-# subprocess.call( cmd )
+subprocess.call( cmd )
 # -----------------------------------------------------------------------
-print('get_started: command above not yet working')
+print('get_started: OK')
 # END PYTHON
