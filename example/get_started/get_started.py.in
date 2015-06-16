@@ -19,12 +19,14 @@
 # $verbatim%example/get_started.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
+# ---------------------------------------------------------------------------
 # BEGIN PYTHON
-#
 import sys
 sys.path.append('@CMAKE_SOURCE_DIR@/python')
 import dismod_at
 import copy
+import subprocess
+# ---------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
 def gaussian_zero_fun(a, t) :
@@ -33,7 +35,6 @@ def gaussian_zero_fun(a, t) :
 def uniform_positive_fun(a, t) :
 	# note that the a, t values are not used
 	return ('uniform_positive', 'uniform_positive', 'uniform_positive')
-#
 # ------------------------------------------------------------------------
 # name of the database
 file_name   = 'example.db'
@@ -192,5 +193,25 @@ dismod_at.create_database(
 	mulcov_list
 )
 # -----------------------------------------------------------------------
-print('get_started: OK')
+program       = '@CMAKE_BINARY_DIR@/devel/dismod_at'
+parent_node   = 'world'
+n_age_ode     = '6'
+n_time_ode    = '2'
+ode_step_size = '20'
+tolerance     = '1e-8'
+max_num_iter  = '100'
+cmd     = [
+	program,
+	file_name,
+	parent_node,
+	n_age_ode,
+	n_time_ode,
+	ode_step_size,
+	tolerance,
+	max_num_iter
+]
+print( ' '.join(cmd) )
+# subprocess.call( cmd )
+# -----------------------------------------------------------------------
+print('get_started: command above not yet working')
 # END PYTHON

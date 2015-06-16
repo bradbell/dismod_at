@@ -119,6 +119,8 @@ void approx_mixed::prior_jac(
 		}
 	}
 # endif
+	// just checking to see if example/devel/model/fit_model_xam is this case
+	assert( row_out.size() != 0 );
 
 	CppAD::vector< std::set<size_t> > not_used;
 	prior_density_.SparseJacobianForward(

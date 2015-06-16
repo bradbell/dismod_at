@@ -144,7 +144,6 @@ residual_struct<Float> residual_density(
 	const Float&       delta   ,
 	const Float&       eta     )
 {
-	assert( delta > 0.0 );
 
 	Float wres, sigma;
 	switch( density )
@@ -155,12 +154,14 @@ residual_struct<Float> residual_density(
 
 		case gaussian_enum:
 		case laplace_enum:
+		assert( delta > 0.0 );
 		sigma = delta;
 		wres  = ( z - mu) / sigma;
 		break;
 
 		case log_gaussian_enum:
 		case log_laplace_enum:
+		assert( delta > 0.0 );
 		sigma = log( 1.0 + delta / (mu + eta) );
 		wres  = ( log( z + eta ) - log( mu + eta ) ) / sigma;
 		break;

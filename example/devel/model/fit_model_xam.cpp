@@ -35,6 +35,7 @@ bool fit_model_xam(void)
 	size_t i, j;
 	using CppAD::vector;
 	double inf = std::numeric_limits<double>::infinity();
+	double nan = std::numeric_limits<double>::quiet_NaN();
 
 
 	// --------------------------------------------------------------------
@@ -62,7 +63,7 @@ bool fit_model_xam(void)
 	prior_table[0].lower      = 0.0;
 	prior_table[0].mean       = 0.0;
 	prior_table[0].upper      = 0.0;
-	prior_table[0].std        = 1.0;
+	prior_table[0].std        = nan;
 	//
 	// prior_id_one (identically one prior)
 	prior_table[1].prior_name = "one";
@@ -70,7 +71,7 @@ bool fit_model_xam(void)
 	prior_table[1].lower      = 1.0;
 	prior_table[1].mean       = 1.0;
 	prior_table[1].upper      = 1.0;
-	prior_table[1].std        = 1.0;
+	prior_table[1].std        = nan;
 	//
 	size_t prior_id_one       = 1;
 	//
@@ -80,11 +81,11 @@ bool fit_model_xam(void)
 	prior_table[2].lower      = 1e-4;
 	prior_table[2].mean       = 1e-1;
 	prior_table[2].upper      = + inf;
-	prior_table[2].std        = 1.0;
+	prior_table[2].std        = nan;
 	size_t prior_id_positive  = 2;
 	//
-	// prior_id_gaussian_zero (Gaussian mean 0.0 and std 0.1)
-	prior_table[3].prior_name       = "N(0,1e-4)";
+	// prior_id_gaussian_zero (Gaussian mean 0.0 and std 1e-2)
+	prior_table[3].prior_name       = "gaussian_0_1e-4";
 	prior_table[3].density_id       = int( dismod_at::gaussian_enum );
 	prior_table[3].lower            = -inf;
 	prior_table[3].mean             = 0.00;
