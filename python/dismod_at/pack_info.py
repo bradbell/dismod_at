@@ -19,8 +19,11 @@
 #
 # $head Syntax$$
 # $icode%pack_object% = dismod_at.pack_info(
-#	%n_integrand%, %n_child%, %smooth_table%, %mulcov_table%, %rate_table%
+#	%n_integrand%, %n_child%, %smooth_dict%, %mulcov_dict%, %rate_dict%
 # %$$
+#
+# $head See Also$$
+# see $cref get_table_dict$$.
 #
 # $head n_integrand$$
 # This is a non-negative $code int$$
@@ -45,6 +48,10 @@
 # $codei%
 #	%smooth_dict%[%smooth_id%][smooth_id]% == %smooth_id%
 # %$$
+#
+# $subhead Remark$$
+# Only the $cref/n_age/smooth_table/n_age/$$
+# and $cref/n_time/smooth_table/n_time/$$ columns are used.
 #
 # $head mulcov_dict$$
 # This is a list of dictionaries.
@@ -90,11 +97,11 @@ class pack_info :
 
 		# mulstd_offset_
 		self.mulstd_offset_ = offset
-		offset        += 3 * n_smooth_
+		offset        += 3 * self.n_smooth_
 
 		# rate_info_
 		self.rate_info_ = list()
-		for rate_id in range( number_rate_enum_ ) :
+		for rate_id in range( self.number_rate_enum_ ) :
 			self.rate_info_.append( list() )
 			for j in range(n_child + 1) :
 				self.rate_info_[rate_id].append( dict() )
@@ -129,23 +136,23 @@ class pack_info :
 					n_age        = smooth_dict[smooth_id]['n_age']
 					n_time       = smooth_dict[smooth_id]['n_time']
 					info         = {
-						'covaraite_id' : covaraite_id ,
+						'covariate_id' : covaraite_id ,
 						'smooth_id'    : smooth_id ,
 						'n_var'        : n_age * n_time,
 						'offset'       : offset
 					}
 					if mulcov_type == 'meas_mean' :
-						info_list = meas_mean_mulcov_info_
+						info_list = self.meas_mean_mulcov_info_
 					elif mulcov_type == 'meas_std' :
-						info_list = meas_std_mulcov_info_
-					for j in range( len(info) ) :
-						if info_list[j].covariate_id == covaraite_id :
+						info_list = self.meas_std_mulcov_info_
+					for j in range( len(info_list) ) :
+						if info_list[j]['covariate_id'] == covaraite_id :
 							msg  = 'mulcov_dict: '
 							msg += 'covariate_id appears twice with '
 							msg += 'mulcov_type equal to ' + mulcov_type
 							sys.exit(msg)
 					info_list.append(info)
-					offset += info.n_var
+					offset += info['n_var']
 
 		# rate_mean_mulcov_info_
 		self.rate_mean_mulcov_info_ = list()
@@ -160,7 +167,7 @@ class pack_info :
 					n_age        = smooth_dict[smooth_id]['n_age']
 					n_time       = smooth_dict[smooth_id]['n_time']
 					info         = {
-						'covaraite_id' : covaraite_id ,
+						'covariate_id' : covaraite_id ,
 						'smooth_id'    : smooth_id ,
 						'n_var'        : n_age * n_time,
 						'offset'       : offset
@@ -173,7 +180,7 @@ class pack_info :
 							msg += 'mulcov_type equal to rate_mean'
 							sys.exit(msg)
 					info_list.append(info)
-					offset += info.n_var
+					offset += info['n_var']
 
 		# size is final offset
 		size_ = offset
@@ -182,7 +189,7 @@ class pack_info :
 		return size_
 	# ------------------------------------------------------------------------
 	def mulstd_offset(smooth_id) :
-		assert smooth_id < n_smooth_
+		assert smooth_id < self.n_smooth_
 		return mulstd_offset_ + 3 * smooth_id
 	# ------------------------------------------------------------------------
 	def rate_info(rate_id, j) :
@@ -191,14 +198,14 @@ class pack_info :
 	# ------------------------------------------------------------------------
 	def meas_mean_mulcov_n_cov(integrand_id) :
 		assert integrand_id < n_integrand_
-		return len(meas_mean_mulcov_info_)
+		return len(self.meas_mean_mulcov_info_)
 	def meas_mean_mulcov_info(integrand_id, j) :
 		assert integrand_id < n_integrand_
-		return meas_mean_mulcov_info[integrand_id][j]
+		return self.meas_mean_mulcov_info[integrand_id][j]
 	# ------------------------------------------------------------------------
 	def meas_std_mulcov_n_cov(integrand_id) :
 		assert integrand_id < n_integrand_
-		return len(meas_std_mulcov_info_)
+		return len(self.meas_std_mulcov_info_)
 	def meas_std_mulcov_info(integrand_id, j) :
 		assert integrand_id < n_integrand_
 		return meas_std_mulcov_info[integrand_id][j]
