@@ -19,7 +19,8 @@
 # BEGIN PYTHON
 def pack_info() :
 	import dismod_at
-	#
+	# -------------------------------------------------------------------------
+	# constructor
 	n_integrand = 4
 	n_child     = 2
 	smooth_dict =  [
@@ -60,9 +61,27 @@ def pack_info() :
 		{ 'rate_name':'chi',   'parent_smooth_id':0, 'child_smooth_id':1 },
 		{ 'rate_name':'omega', 'parent_smooth_id':0, 'child_smooth_id':1 }
 	]
-	#
-	# constructor
 	pack_object = dismod_at.pack_info(
 		n_integrand, n_child, smooth_dict, mulcov_dict, rate_dict
 	)
+	# -------------------------------------------------------------------------
+	# packed list
+	size      = pack_object.size()
+	pack_list =  size * [0.0]
+	# -------------------------------------------------------------------------
+	# set mulstd
+	n_smooth = len(smooth_dict)
+	for smooth_id in range(n_smooth) :
+		offset = pack_object.mulstd_offset(smooth_id)
+		pack_list[offset + 0] = float(smooth_id + 0) # value multiplier
+		pack_list[offset + 1] = float(smooth_id + 1) # dage  multiplier
+		pack_list[offset + 2] = float(smooth_id + 2) # dtime multiplier
+	# -------------------------------------------------------------------------
+	# check mulstd
+	for smooth_id in range(n_smooth) :
+		offset = pack_object.mulstd_offset(smooth_id)
+		assert pack_list[offset + 0] == float(smooth_id + 0)
+		assert pack_list[offset + 1] == float(smooth_id + 1)
+		assert pack_list[offset + 2] == float(smooth_id + 2)
+
 # END PYTHON

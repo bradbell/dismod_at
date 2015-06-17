@@ -21,6 +21,7 @@
 # $icode%pack_object% = dismod_at.pack_info(
 #	%n_integrand%, %n_child%, %smooth_dict%, %mulcov_dict%, %rate_dict%
 # %$$
+# $icode%size% = %pack_object%.size()%$$
 #
 # $head See Also$$
 # see $cref get_table_dict$$.
@@ -72,6 +73,10 @@
 # $codei%
 #	%rate_dict%[%rate_id%][rate_id]% == %rate_id%
 # %$$
+#
+# $head size$$
+# this return value is a $code int$$ equal to the number of
+# $cref/model_variables/model_variable/$$.
 #
 # $end
 # ----------------------------------------------------------------------------
@@ -183,38 +188,32 @@ class pack_info :
 					offset += info['n_var']
 
 		# size is final offset
-		size_ = offset
+		self.size_ = offset
 	# ------------------------------------------------------------------------
-	def size() :
-		return size_
+	def size(self) :
+		return self.size_
 	# ------------------------------------------------------------------------
-	def mulstd_offset(smooth_id) :
+	def mulstd_offset(self, smooth_id) :
 		assert smooth_id < self.n_smooth_
-		return mulstd_offset_ + 3 * smooth_id
+		return self.mulstd_offset_ + 3 * smooth_id
 	# ------------------------------------------------------------------------
-	def rate_info(rate_id, j) :
-		assert j < n_child_
-		return rate_info_[rate_id][j]
+	def rate_info(self, rate_id, j) :
+		assert j < self.n_child_
+		return self.rate_info_[rate_id][j]
 	# ------------------------------------------------------------------------
-	def meas_mean_mulcov_n_cov(integrand_id) :
-		assert integrand_id < n_integrand_
+	def meas_mean_mulcov_n_cov(self, integrand_id) :
 		return len(self.meas_mean_mulcov_info_)
-	def meas_mean_mulcov_info(integrand_id, j) :
-		assert integrand_id < n_integrand_
+	def meas_mean_mulcov_info(self, integrand_id, j) :
 		return self.meas_mean_mulcov_info[integrand_id][j]
 	# ------------------------------------------------------------------------
-	def meas_std_mulcov_n_cov(integrand_id) :
-		assert integrand_id < n_integrand_
+	def meas_std_mulcov_n_cov(self, integrand_id) :
 		return len(self.meas_std_mulcov_info_)
 	def meas_std_mulcov_info(integrand_id, j) :
-		assert integrand_id < n_integrand_
 		return meas_std_mulcov_info[integrand_id][j]
 	# ------------------------------------------------------------------------
-	def rate_mean_mulcov_n_cov(integrand_id) :
-		assert integrand_id < n_integrand_
+	def rate_mean_mulcov_n_cov(self, integrand_id) :
 		return len(rate_mean_mulcov_info_)
 	def rate_mean_mulcov_info(integrand_id, j) :
-		assert integrand_id < n_integrand_
 		return rate_mean_mulcov_info[integrand_id][j]
 # ----------------------------------------------------------------------------
 
