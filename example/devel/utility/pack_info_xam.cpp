@@ -66,7 +66,7 @@ bool pack_info_xam(void)
 	mulcov_table[2].smooth_id    = 2;
 	mulcov_table[3].mulcov_type  = dismod_at::rate_mean_enum;
 	mulcov_table[3].rate_id      = 3;
-	mulcov_table[3].integrand_id = 3;
+	mulcov_table[3].integrand_id = -1;
 	mulcov_table[3].covariate_id = 3;
 	mulcov_table[3].smooth_id    = 3;
 	//
