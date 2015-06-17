@@ -21,8 +21,14 @@ def pack_info() :
 	import dismod_at
 	# -------------------------------------------------------------------------
 	# constructor
-	n_integrand = 4
-	n_child     = 2
+	n_integrand    = 4
+	parent_node_id = 1
+	node_dict   = [
+		{ 'parent':-1 },
+		{ 'parent': 0 },
+		{ 'parent': 1 },
+		{ 'parent': 1 }
+	]
 	smooth_dict =  [
 		{ 'n_age':2, 'n_time':3 },
 		{ 'n_age':2, 'n_time':3 },
@@ -62,7 +68,12 @@ def pack_info() :
 		{ 'rate_name':'omega', 'parent_smooth_id':0, 'child_smooth_id':1 }
 	]
 	pack_object = dismod_at.pack_info(
-		n_integrand, n_child, smooth_dict, mulcov_dict, rate_dict
+		n_integrand,
+		parent_node_id,
+		node_dict,
+		smooth_dict,
+		mulcov_dict,
+		rate_dict
 	)
 	# -------------------------------------------------------------------------
 	# packed list
@@ -80,7 +91,8 @@ def pack_info() :
 		count                += 3
 	#
 	# set rates
-	n_rate = 5
+	n_rate  = 5
+	n_child = pack_object.n_child()
 	for rate_id in range(n_rate) :
 		for child_id in range(n_child + 1) :
 			info = pack_object.rate_info(rate_id, child_id)

@@ -19,9 +19,16 @@
 #
 # $head Syntax$$
 # $icode%pack_object% = dismod_at.pack_info(
-#	%n_integrand%, %n_child%, %smooth_dict%, %mulcov_dict%, %rate_dict%
+#	%n_integrand%,
+#	%parent_node_id%,
+#	%node_dict%,
+#	%smooth_dict%,
+#	%mulcov_dict%,
+#	%rate_dict%
+# )%$$
+# $icode%size% = %pack_object%.size()
 # %$$
-# $icode%size% = %pack_object%.size()%$$
+# $icode%n_child% = %pack_object%.n_child()%$$
 #
 # $head See Also$$
 # see $cref get_table_dict$$.
@@ -33,24 +40,24 @@
 # If the $cref mulcov_table$$ has size zero,
 # then $icode n_integrand$$ can be zero (a case used for testing purposes).
 #
-# $head n_child$$
-# This is a non-negative $code int$$
-# that is the number of children; i.e., the size of
-# $cref/child group/node_table/parent/Child Group/$$
-# corresponding to the
-# $cref/parent_node/fit_table/parent_node_id/$$.
+# $head parent_node_id$$
+# is an $code in$$ corresponding to the
+# $cref/parent_node_id/fit_table/parent_node_id/$$ for this fit.
+#
+# $head node_dict$$
+# This is a list of dictionaries.
+# For each primary key value $icode node_id$$
+# and column name $icode col_name$$ in the $cref node_table$$,
+# $icode%node_dict%[%node_id%][%col_name%]%$$
+# is the corresponding value.
+# Only the $cref/parent/node_table/parent/$$ column is used.
 #
 # $head smooth_dict$$
 # This is a list of dictionaries.
 # For each primary key value $icode smooth_id$$
 # and column name $icode col_name$$ in the $cref smooth_table$$,
 # $icode%smooth_dict%[%smooth_id%][%col_name%]%$$
-# is the corresponding value. Note that
-# $codei%
-#	%smooth_dict%[%smooth_id%][smooth_id]% == %smooth_id%
-# %$$
-#
-# $subhead Remark$$
+# is the corresponding value.
 # Only the $cref/n_age/smooth_table/n_age/$$
 # and $cref/n_time/smooth_table/n_time/$$ columns are used.
 #
@@ -59,24 +66,26 @@
 # For each primary key value $icode mulcov_id$$
 # and column name $icode col_name$$ in the $cref mulcov_table$$,
 # $icode%mulcov_dict%[%mulcov_id%][%col_name%]%$$
-# is the corresponding value. Note that
-# $codei%
-#	%mulcov_dict%[%mulcov_id%][mulcov_id]% == %mulcov_id%
-# %$$
+# is the corresponding value.
+# The primary key column $icode%col_name% == mulcov_id%$$ is not used.
 #
 # $head rate_dict$$
 # This is a list of dictionaries.
 # For each primary key value $icode rate_id$$
 # and column name $icode col_name$$ in the $cref rate_table$$,
 # $icode%rate_dict%[%rate_id%][%col_name%]%$$
-# is the corresponding value. Note that
-# $codei%
-#	%rate_dict%[%rate_id%][rate_id]% == %rate_id%
-# %$$
+# is the corresponding value.
+# The primary key column $icode%col_name% == rate_id%$$ is not used.
 #
 # $head size$$
 # this return value is a $code int$$ equal to the number of
 # $cref/model_variables/model_variable/$$.
+#
+# $head n_child$$
+# This is a non-negative $code int$$
+# that is the number of children; i.e., the size of
+# $cref/child group/node_table/parent/Child Group/$$
+# corresponding to $icode parent_node_id$$.
 #
 # $end
 # ----------------------------------------------------------------------------
@@ -122,7 +131,9 @@
 # $section Pack Variables: Rates$$
 #
 # $head Syntax$$
-# $icode%info% = %pack_object%.rate_info(%rate_id%, %child_id%)%$$
+# $icode%info% = %pack_object%.rate_info(%rate_id%, %child_id%)
+# %$$
+# $icode%node_id% = %pack_object%.child2node(%child_id%)%$$
 #
 # $head pack_object$$
 # This object was constructed using $cref pack_info_ctor$$.
@@ -131,7 +142,7 @@
 # This is an $code int$$ that specifies the
 # $cref/rate_id/rate_table/rate_id/$$ for the rate values.
 #
-# $head j$$
+# $head child_id$$
 # This is an $code int$$.
 # If $icode%child_id% < %n_child%$$, these rates are for the corresponding
 # child node.
@@ -154,6 +165,17 @@
 # $subhead offset$$
 # $icode%info%['offset']%$$ is an $code int$$ equal to the
 # index in the packed variable list where the variables begin.
+#
+# $head node_id$$
+# Is the $cref node_table$$ primary key value for this $icode child_id$$.
+# Note that if $icode child_id$$ is equal to
+# $cref/n_child/pack_info_ctor/n_child/$$,
+# $icode node_id$$ is equal to
+# $cref/parent_node_id/pack_info_ctor/parent_node_id/$$.
+# Otherwise,
+# $codei%
+#	%parent_node_id% = %node_dict%[%node_id%]['parent']
+# %$$
 #
 # $head Example$$
 # See $cref/pack_info Example/pack_info/Example/$$.
@@ -308,7 +330,13 @@ import pdb
 class pack_info :
 	# ------------------------------------------------------------------------
 	def __init__(
-		self, n_integrand, n_child, smooth_dict, mulcov_dict, rate_dict
+		self,
+		n_integrand,
+		parent_node_id,
+		node_dict,
+		smooth_dict,
+		mulcov_dict,
+		rate_dict
 	) :
 		# initialize offset
 		offset = 0;
@@ -322,8 +350,14 @@ class pack_info :
 		# n_integrand_
 		self.n_integrand_ = n_integrand
 
+		# child2node_
+		self.child2node_ = list()
+		for node_id in range( len(node_dict) ) :
+			if node_dict[node_id]['parent'] == parent_node_id :
+				self.child2node_.append( node_id )
+
 		# n_child_
-		self.n_child_ = n_child
+		self.n_child_ = len( self.child2node_ )
 
 		# mulstd_offset_
 		self.mulstd_offset_ = offset
@@ -333,9 +367,9 @@ class pack_info :
 		self.rate_info_ = list()
 		for rate_id in range( self.n_rate_ ) :
 			self.rate_info_.append( list() )
-			for child_id in range(n_child + 1) :
+			for child_id in range(self.n_child_ + 1) :
 				self.rate_info_[rate_id].append( dict() )
-				if child_id < n_child :
+				if child_id < self.n_child_ :
 					smooth_id = rate_dict[rate_id]['child_smooth_id']
 				else :
 					smooth_id = rate_dict[rate_id]['parent_smooth_id']
@@ -420,6 +454,8 @@ class pack_info :
 	# ------------------------------------------------------------------------
 	def size(self) :
 		return self.size_
+	def n_child(self) :
+		return self.n_child_
 	# ------------------------------------------------------------------------
 	def mulstd_offset(self, smooth_id) :
 		assert smooth_id < self.n_smooth_
@@ -427,6 +463,8 @@ class pack_info :
 	# ------------------------------------------------------------------------
 	def rate_info(self, rate_id, child_id) :
 		return self.rate_info_[rate_id][child_id]
+	def child2node(self, child_id) :
+		return self.child2node_[child_id]
 	# ------------------------------------------------------------------------
 	def meas_mean_mulcov_n_cov(self, integrand_id) :
 		return len(self.meas_mean_mulcov_info_[integrand_id])
