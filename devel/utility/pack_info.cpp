@@ -455,7 +455,7 @@ $spell
 	subvec
 $$
 
-$section Devel Pack Variables: Measurement Multipliers$$
+$section Devel Pack Variables: Measurement Covariate Multipliers$$
 
 $head Syntax$$
 $icode%n_cov% = %pack_object%.meas_mean_mulcov_n_cov(%integrand_id%)
@@ -583,7 +583,7 @@ $spell
 	subvec
 $$
 
-$section Devel Pack Variables: Rate Multipliers$$
+$section Devel Pack Variables: Rate Covariate Multipliers$$
 
 $head Syntax$$
 $icode%n_cov% = %pack_object%.rate_mean_mulcov_n_cov(%rate_id%)

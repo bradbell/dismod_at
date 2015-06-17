@@ -68,6 +68,7 @@ def pack_info() :
 	# packed list
 	size      = pack_object.size()
 	pack_list =  size * [0.0]
+	count     = 0
 	# -------------------------------------------------------------------------
 	# set mulstd
 	n_smooth = len(smooth_dict)
@@ -76,6 +77,7 @@ def pack_info() :
 		pack_list[offset + 0] = float(smooth_id + 0) # value multiplier
 		pack_list[offset + 1] = float(smooth_id + 1) # dage  multiplier
 		pack_list[offset + 2] = float(smooth_id + 2) # dtime multiplier
+		count                += 3
 	#
 	# set rates
 	n_rate = 5
@@ -84,6 +86,7 @@ def pack_info() :
 			info = pack_object.rate_info(rate_id, j)
 			for k in range( info['n_var'] ) :
 				pack_list[info['offset'] + k] = float(rate_id + 3 + j + k)
+				count += 1
 	#
 	# set meas_mean_mulcov
 	for integrand_id in range(n_integrand) :
@@ -92,6 +95,7 @@ def pack_info() :
 			info = pack_object.meas_mean_mulcov_info(integrand_id, j)
 			for k in range( info['n_var'] ) :
 				pack_list[info['offset'] + k] = float(integrand_id + 4 + j + k)
+				count += 1
 	#
 	# set meas_std_mulcov
 	for integrand_id in range(n_integrand) :
@@ -100,6 +104,16 @@ def pack_info() :
 			info = pack_object.meas_std_mulcov_info(integrand_id, j)
 			for k in range( info['n_var'] ) :
 				pack_list[info['offset'] + k] = float(integrand_id + 5 + j + k)
+				count += 1
+	#
+	# set rate_mean_mulcov
+	for rate_id in range(n_rate) :
+		n_cov = pack_object.rate_mean_mulcov_n_cov(integrand_id)
+		for j in range(n_cov) :
+			info = pack_object.rate_mean_mulcov_info(integrand_id, j)
+			for k in range( info['n_var'] ) :
+				pack_list[info['offset'] + k] = float(integrand_id + 6 + j + k)
+				count += 1
 	# -------------------------------------------------------------------------
 	# check mulstd
 	for smooth_id in range(n_smooth) :
@@ -117,7 +131,7 @@ def pack_info() :
 			for k in range( info['n_var'] ) :
 				assert pack_list[offset + k] == float(rate_id + 3 + j + k)
 	#
-	# set meas_mean_mulcov
+	# check meas_mean_mulcov
 	for integrand_id in range(n_integrand) :
 		n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id)
 		for j in range(n_cov) :
@@ -126,7 +140,7 @@ def pack_info() :
 			for k in range( info['n_var'] ) :
 				assert pack_list[offset + k] == float(integrand_id + 4 + j + k)
 	#
-	# set meas_std_mulcov
+	# check meas_std_mulcov
 	for integrand_id in range(n_integrand) :
 		n_cov = pack_object.meas_std_mulcov_n_cov(integrand_id)
 		for j in range(n_cov) :
@@ -134,4 +148,13 @@ def pack_info() :
 			offset = info['offset']
 			for k in range( info['n_var'] ) :
 				assert pack_list[offset + k] == float(integrand_id + 5 + j + k)
+	#
+	# check rate_mean_mulcov
+	for rate_id in range(n_rate) :
+		n_cov = pack_object.rate_mean_mulcov_n_cov(integrand_id)
+		for j in range(n_cov) :
+			info   = pack_object.rate_mean_mulcov_info(integrand_id, j)
+			offset = info['offset']
+			for k in range( info['n_var'] ) :
+				assert pack_list[offset + k] == float(integrand_id + 6 + j + k)
 # END PYTHON

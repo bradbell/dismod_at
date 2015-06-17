@@ -170,7 +170,7 @@
 # 	covariate
 # $$
 #
-# $section Pack Variables: Measurement Multipliers$$
+# $section Pack Variables: Measurement Covariate Multipliers$$
 #
 # $head Syntax$$
 # $icode%n_cov% = %pack_object%.meas_mean_mulcov_n_cov(%integrand_id%)
@@ -241,6 +241,69 @@
 #
 # $end
 # ----------------------------------------------------------------------------
+# $begin pack_info_rate_mulcov$$ $newlinech #$$
+# $spell
+# 	std
+# 	cov
+# 	var
+# 	mulcov
+# 	dismod
+# 	covariate
+# $$
+#
+# $section Pack Variables: Rate Covariate Multipliers$$
+#
+# $head Syntax$$
+# $icode%n_cov% = %pack_object%.rate_mean_mulcov_n_cov(%integrand_id%)
+# %$$
+# $icode%info% = %pack_object%.rate_mean_mulcov_info(%integrand_id%, %j%)
+# %$$
+#
+# $head pack_object$$
+# This object was constructed using $cref pack_info_ctor$$.
+#
+# $head rate_id$$
+# This is an $code int$$ that specifies the
+# $cref/rate_id/rate_table/rate_id/$$ for the
+# covariate multipliers.
+#
+# $head n_cov$$
+# This $code int$$
+# is the number of covariate multipliers for the specified
+# $icode rate_id$$.
+# It is referred to as $codei%n_cov(%rate_id%)%$$ below.
+#
+# $head j$$
+# This in an $code int$$
+# and $icode%j% < n_cov(%rate_id%)%$$.
+#
+# $head info$$
+# The return value is the $code info$$
+# is a dictionary with the following keys:
+#
+# $subhead covariate_id$$
+# $icode%info%['covariate_id']%$$ is an $code int$$ that specifies the
+# $cref/covariate_id/covariate_table/covariate_id/$$ for the
+# $th j$$ covariate multiplier for this $icode rate_id$$.
+#
+# $subhead smooth_id$$
+# $icode%info%['smooth_id']%$$ is an $code int$$ that specifies the
+# $cref/smooth_id/smooth_table/smooth_id/$$ for the
+# $th j$$ covariate multiplier for this $icode rate_id$$.
+#
+# $subhead n_var$$
+# $icode%info%['n_var']%$$ is an $code int$$ equal to the
+# number of variables for this covariate multiplier.
+#
+# $subhead offset$$
+# $icode%info%['offset']%$$ is an $code int$$ equal to the
+# index in the packed variable list where the variables begin.
+#
+# $head Example$$
+# See $cref/pack_info Example/pack_info/Example/$$.
+#
+# $end
+# ----------------------------------------------------------------------------
 import pdb
 class pack_info :
 	# ------------------------------------------------------------------------
@@ -250,8 +313,8 @@ class pack_info :
 		# initialize offset
 		offset = 0;
 
-		# number_rate_enum_ (pini, iota, rho, chi, omega)
-		self.number_rate_enum_ = 5
+		# number of rates (pini, iota, rho, chi, omega)
+		self.n_rate_ = 5
 
 		# n_smooth_
 		self.n_smooth_ = len(smooth_dict)
@@ -268,7 +331,7 @@ class pack_info :
 
 		# rate_info_
 		self.rate_info_ = list()
-		for rate_id in range( self.number_rate_enum_ ) :
+		for rate_id in range( self.n_rate_ ) :
 			self.rate_info_.append( list() )
 			for j in range(n_child + 1) :
 				self.rate_info_[rate_id].append( dict() )
@@ -325,11 +388,12 @@ class pack_info :
 
 		# rate_mean_mulcov_info_
 		self.rate_mean_mulcov_info_ = list()
-		for integrand_id in range(n_integrand) :
+		for rate_id in range(self.n_rate_) :
+			self.rate_mean_mulcov_info_.append( list() )
 			for mulcov_id in range( len(mulcov_dict) ) :
 				match  = mulcov_dict[mulcov_id]['mulcov_type'] == 'rate_mean'
-				tmp_id = int( mulcov_dict[mulcov_id]['integrand_id'] )
-				match &= tmp_id == integrand_id
+				tmp_id = int( mulcov_dict[mulcov_id]['rate_id'] )
+				match &= tmp_id == rate_id
 				if match :
 					covaraite_id = mulcov_dict[mulcov_id]['covariate_id']
 					smooth_id    = mulcov_dict[mulcov_id]['smooth_id']
@@ -341,8 +405,8 @@ class pack_info :
 						'n_var'        : n_age * n_time,
 						'offset'       : offset
 					}
-					info_list = rate_mean_mulcov_info_
-					for j in range( len(info) ) :
+					info_list = self.rate_mean_mulcov_info_[rate_id]
+					for j in range( len(info_list) ) :
 						if info_list[j].covariate_id == covaraite_id :
 							msg  = 'mulcov_dict: '
 							msg += 'covariate_id appears twice with '
