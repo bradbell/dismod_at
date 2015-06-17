@@ -426,7 +426,6 @@ class pack_info :
 		return self.mulstd_offset_ + 3 * smooth_id
 	# ------------------------------------------------------------------------
 	def rate_info(self, rate_id, j) :
-		assert j < self.n_child_
 		return self.rate_info_[rate_id][j]
 	# ------------------------------------------------------------------------
 	def meas_mean_mulcov_n_cov(self, integrand_id) :
@@ -439,10 +438,10 @@ class pack_info :
 	def meas_std_mulcov_info(self, integrand_id, j) :
 		return self.meas_std_mulcov_info_[integrand_id][j]
 	# ------------------------------------------------------------------------
-	def rate_mean_mulcov_n_cov(self, integrand_id) :
-		return len(self.rate_mean_mulcov_info_[integrand_id])
-	def rate_mean_mulcov_info(self, integrand_id, j) :
-		return self.rate_mean_mulcov_info_[integrand_id][j]
+	def rate_mean_mulcov_n_cov(self, rate_id) :
+		return len(self.rate_mean_mulcov_info_[rate_id])
+	def rate_mean_mulcov_info(self, rate_id, j) :
+		return self.rate_mean_mulcov_info_[rate_id][j]
 # ----------------------------------------------------------------------------
 
 

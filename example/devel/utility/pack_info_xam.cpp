@@ -102,12 +102,15 @@ bool pack_info_xam(void)
 	size_t n_var, offset;
 
 	// ---------------------------------------------------------------------
+	size_t count = 0;
+
 	// set mulstd
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	size_t offset    =	pack_object.mulstd_offset(smooth_id);
 		pack_vec[offset + 0 ] = smooth_id + 0; // value multiplier
 		pack_vec[offset + 1 ] = smooth_id + 1; // dage  multiplier
 		pack_vec[offset + 2 ] = smooth_id + 2; // dtime multiplier
+		count += 3;
 	}
 	// set rates
 	size_t n_rate = dismod_at::number_rate_enum;
@@ -115,7 +118,9 @@ bool pack_info_xam(void)
 	{	for(size_t j = 0; j <= n_child;  j++)
 		{	info = pack_object.rate_info(rate_id, j);
 			for(size_t k = 0; k < info.n_var; k++)
-				pack_vec[info.offset + k] = rate_id + 3 + j + k;
+			{	pack_vec[info.offset + k] = rate_id + 3 + j + k;
+				count++;
+			}
 		}
 	}
 	// set meas_mean_mulcov
@@ -126,7 +131,9 @@ bool pack_info_xam(void)
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-				pack_vec[offset + k] = integrand_id + 4 + k;
+			{	pack_vec[offset + k] = integrand_id + 4 + k;
+				count++;
+			}
 		}
 	}
 	// set meas_std_mulcov
@@ -137,7 +144,9 @@ bool pack_info_xam(void)
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-				pack_vec[offset + k] = integrand_id + 5 + k;
+			{	pack_vec[offset + k] = integrand_id + 5 + k;
+				count++;
+			}
 		}
 	}
 	// set rate_mean_mulcov
@@ -148,10 +157,15 @@ bool pack_info_xam(void)
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-				pack_vec[offset + k] = rate_id + 6 + k;
+			{	pack_vec[offset + k] = rate_id + 6 + k;
+				count++;
+			}
 		}
 	}
 	// ---------------------------------------------------------------------
+	// check size
+	ok &= size == count;
+	//
 	// check mulstd
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	offset =	pack_object.mulstd_offset(smooth_id);
