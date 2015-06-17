@@ -49,9 +49,10 @@ IF( NOT extra_cxx_flags )
 ENDIF( NOT extra_cxx_flags )
 MESSAGE(STATUS "extra_cxx_flags = ${extra_cxx_flags}")
 # ----------------------------------------------------------------------------
-# set ipopt_LIBRARY_DIRS
+# set cppad_LIBRARY_DIRS, cppad_LIBRARIES
+# (note CppAD must be installed with ipopt_prefix specified)
 FIND_PACKAGE(PkgConfig)
-pkg_check_modules(ipopt ipopt)
+pkg_check_modules(cppad REQUIRED cppad)
 # ----------------------------------------------------------------------------
 # subdirectories
 ADD_SUBDIRECTORY(devel)

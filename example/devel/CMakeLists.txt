@@ -18,7 +18,7 @@ SET(suitesparse_LIBRARY_DIRS ${suitesparse_prefix}/lib )
 SET(suitesparse_LIBRARIES "cholmod;amd;camd;colamd;ccolamd;suitesparseconfig" )
 
 LINK_DIRECTORIES(
-	${ipopt_LIBRARY_DIRS}
+	${cppad_LIBRARY_DIRS}
 	${suitesparse_LIBRARY_DIRS}
 	${dismod_at_BINARY_DIR}/cpp
 )
@@ -85,14 +85,14 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	table/weight_info_xam.cpp
 )
 
-LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp ${ipopt_LIBRARY_DIRS} )
+LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp ${cppad_LIBRARY_DIRS} )
 SET_TARGET_PROPERTIES(
 	example_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
 TARGET_LINK_LIBRARIES(example_devel
 	sqlite3
 	devel_lib
-	${ipopt_LIBRARIES}
+	${cppad_LIBRARIES}
 	${suitesparse_LIBRARIES}
 )
 ADD_CUSTOM_TARGET(check_example_devel example_devel DEPENDS example_devel )
