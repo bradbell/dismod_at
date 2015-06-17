@@ -77,11 +77,26 @@ def pack_info() :
 		pack_list[offset + 1] = float(smooth_id + 1) # dage  multiplier
 		pack_list[offset + 2] = float(smooth_id + 2) # dtime multiplier
 	# -------------------------------------------------------------------------
+	# set rates
+	n_rate = 5
+	for rate_id in range(n_rate) :
+		for j in range(n_child) :
+			info = pack_object.rate_info(rate_id, j)
+			for k in range( info['n_var'] ) :
+				pack_list[info['offset'] + k] = float(rate_id + 3 + j + k)
+	# -------------------------------------------------------------------------
 	# check mulstd
 	for smooth_id in range(n_smooth) :
 		offset = pack_object.mulstd_offset(smooth_id)
 		assert pack_list[offset + 0] == float(smooth_id + 0)
 		assert pack_list[offset + 1] == float(smooth_id + 1)
 		assert pack_list[offset + 2] == float(smooth_id + 2)
-
+	# -------------------------------------------------------------------------
+	# check rates
+	n_rate = 5
+	for rate_id in range(n_rate) :
+		for j in range(n_child) :
+			info = pack_object.rate_info(rate_id, j)
+			for k in range( info['n_var'] ) :
+				assert pack_list[info['offset'] + k] == rate_id + 3 + j + k
 # END PYTHON

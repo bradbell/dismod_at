@@ -12,6 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin devel_pack_info_ctor$$
 $spell
+	Devel
 	mulcov
 	CppAD
 	struct
@@ -21,7 +22,7 @@ $spell
 	integrands
 $$
 
-$section Variable Packing Information: Constructor$$
+$section Devel Variable Packing Information: Constructor$$
 
 $head Syntax$$
 $codei%pack_info %pack_object%(
@@ -301,6 +302,7 @@ size_t pack_info::smooth_size(void) const
 ------------------------------------------------------------------------------
 $begin devel_pack_info_mulstd$$
 $spell
+	Devel
 	var
 	mulstd
 	dage
@@ -309,11 +311,10 @@ $spell
 	dismod
 $$
 
-$section Pack Variables: Standard Deviations Multipliers$$
+$section Devel Pack Variables: Standard Deviations Multipliers$$
 
 $head Syntax$$
-$icode%offset% = %pack_object%.mulstd_offset(%smooth_id%)
-%$$
+$icode%offset% = %pack_object%.mulstd_offset(%smooth_id%)%$$
 
 $head pack_object$$
 This object has prototype
@@ -327,7 +328,8 @@ $codei%
 	size_t %smooth_id%
 %$$
 and is the
-$cref/smooth_id/smooth_table/smooth_id/$$.
+$cref/smooth_id/smooth_table/smooth_id/$$
+for this multiplier.
 
 $subhead offset$$
 The return value has prototype
@@ -354,6 +356,7 @@ size_t pack_info::mulstd_offset(size_t smooth_id) const
 ------------------------------------------------------------------------------
 $begin devel_pack_info_rate$$
 $spell
+	Devel
 	std
 	cov
 	var
@@ -361,12 +364,10 @@ $spell
 	dismod
 	const
 	covariate
-$$
-
-$section Pack Variables: Rates$$
-$spell
 	subvec
 $$
+
+$section Devel Pack Variables: Rates$$
 
 $head Syntax$$
 $icode%info% = %pack_object%.rate_info(%rate_id%, %j%)
@@ -443,6 +444,7 @@ pack_info::subvec_info pack_info::rate_info(size_t rate_id, size_t j) const
 ------------------------------------------------------------------------------
 $begin devel_pack_info_meas_mulcov$$
 $spell
+	Devel
 	std
 	cov
 	var
@@ -453,7 +455,7 @@ $spell
 	subvec
 $$
 
-$section Pack Variables: Measurement Multipliers$$
+$section Devel Pack Variables: Measurement Multipliers$$
 
 $head Syntax$$
 $icode%n_cov% = %pack_object%.meas_mean_mulcov_n_cov(%integrand_id%)
@@ -570,6 +572,7 @@ pack_info::meas_std_mulcov_info(size_t integrand_id, size_t j) const
 ------------------------------------------------------------------------------
 $begin devel_pack_info_rate_mulcov$$
 $spell
+	Devel
 	std
 	cov
 	var
@@ -580,7 +583,7 @@ $spell
 	subvec
 $$
 
-$section Pack Variables: Rate Multipliers$$
+$section Devel Pack Variables: Rate Multipliers$$
 
 $head Syntax$$
 $icode%n_cov% = %pack_object%.rate_mean_mulcov_n_cov(%rate_id%)

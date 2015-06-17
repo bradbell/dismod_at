@@ -19,7 +19,7 @@
 #	%python/dismod_at/get_table_dict.py
 #	%python/dismod_at/unicode_tuple.py
 #	%python/dismod_at/create_database.py
-#	%python/dismod_at/pack_info.py
+#	%python/dismod_at/pack_info.omh
 # %$$
 #
 # $end

@@ -80,6 +80,86 @@
 #
 # $end
 # ----------------------------------------------------------------------------
+# $begin pack_info_mulstd$$ $newlinech #$$
+# $spell
+#	var
+#	mulstd
+#	dage
+#	dtime
+#	const
+#	dismod
+# $$
+#
+# $section Pack Variables: Standard Deviations Multipliers$$
+#
+# $head Syntax$$
+# $icode%offset% = %pack_object%.mulstd_offset(%smooth_id%)%$$
+#
+# $head pack_object$$
+# This object was constructed using $cref pack_info_ctor$$.
+#
+# $head smooth_id$$
+# This is an $code int$$ that specifies the
+# $cref/smooth_id/smooth_table/smooth_id/$$ for this multiplier.
+#
+# $head offset$$
+# The return value is the $code int$$
+# offset (index) in the packed variable list
+# where the three variables for this smoothing begin.
+# The three variables for each smoothing are the
+# value, dage, and dtime standard deviation multipliers
+# (and should always be used in that order).
+#
+# $head Example$$
+# See $cref/pack_info Example/pack_info/Example/$$.
+#
+# $end
+# ----------------------------------------------------------------------------
+# $begin pack_info_rate$$ $newlinech #$$
+# $spell
+# $$
+#
+# $section Pack Variables: Rates$$
+#
+# $head Syntax$$
+# $icode%info% = %pack_object%.rate_info(%rate_id%, %j%)%$$
+#
+# $head pack_object$$
+# This object was constructed using $cref pack_info_ctor$$.
+#
+# $head rate_id$$
+# This is an $code int$$ that specifies the
+# $cref/rate_id/rate_table/rate_id/$$ for the rate values.
+#
+# $head j$$
+# This is an $code int$$.
+# If $icode%j% < %n_child%$$, these rates are for the corresponding
+# child node.
+# If $icode%j% == %n_child%$$, these rates are for the
+# parent node.
+#
+# $head info$$
+# The return value is the $code info$$
+# is a dictionary with the following keys:
+#
+# $subhead smooth_id$$
+# $icode%info%['smooth_id']%$$ is an $code int$$ equal to the
+# $cref/smooth_id/smooth_table/smooth_id/$$ for the rate.
+# Note that the smoothing is the same for all child rates.
+#
+# $subhead n_var$$
+# $icode%info%['n_var']%$$ is an $code int$$ equal to the
+# the number of variables for this $icode rate_id$$ and index $icode j$$.
+#
+# $subhead offset$$
+# $icode%info%['offset']%$$ is an $code int$$ equal to the
+# the index in the packed variable list where the variables begin.
+#
+# $head Example$$
+# See $cref/pack_info Example/pack_info/Example/$$.
+#
+# $end
+# ----------------------------------------------------------------------------
 class pack_info :
 	# ------------------------------------------------------------------------
 	def __init__(
