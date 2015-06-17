@@ -86,7 +86,6 @@
 #	mulstd
 #	dage
 #	dtime
-#	const
 #	dismod
 # $$
 #
@@ -117,6 +116,7 @@
 # ----------------------------------------------------------------------------
 # $begin pack_info_rate$$ $newlinech #$$
 # $spell
+#	var
 # $$
 #
 # $section Pack Variables: Rates$$
@@ -149,17 +149,99 @@
 #
 # $subhead n_var$$
 # $icode%info%['n_var']%$$ is an $code int$$ equal to the
-# the number of variables for this $icode rate_id$$ and index $icode j$$.
+# number of variables for this $icode rate_id$$ and index $icode j$$.
 #
 # $subhead offset$$
 # $icode%info%['offset']%$$ is an $code int$$ equal to the
-# the index in the packed variable list where the variables begin.
+# index in the packed variable list where the variables begin.
 #
 # $head Example$$
 # See $cref/pack_info Example/pack_info/Example/$$.
 #
 # $end
 # ----------------------------------------------------------------------------
+# $begin pack_info_meas_mulcov$$ $newlinech #$$
+# $spell
+# 	std
+# 	cov
+# 	var
+# 	mulcov
+# 	dismod
+# 	covariate
+# $$
+#
+# $section Pack Variables: Measurement Multipliers$$
+#
+# $head Syntax$$
+# $icode%n_cov% = %pack_object%.meas_mean_mulcov_n_cov(%integrand_id%)
+# %$$
+# $icode%n_cov% = %pack_object%.meas_std_mulcov_n_cov(%integrand_id%)
+# %$$
+# $icode%info% = %pack_object%.meas_mean_mulcov_info(%integrand_id%, %j%)
+# %$$
+# $icode%info% = %pack_object%.meas_std_mulcov_info(%integrand_id%, %j%)
+# %$$
+#
+# $head meas_mean$$
+# The functions
+# $code meas_mean_mulcov_n_cov$$ and
+# $code meas_mean_mulcov_info$$
+# return information about the measurement mean covariate multipliers.
+#
+# $head meas_std$$
+# The functions
+# $code meas_std_mulcov_n_cov$$ and
+# $code meas_std_mulcov_info$$
+# return information about the measurement standard deviation
+# covariate multipliers.
+#
+# $head pack_object$$
+# This object was constructed using $cref pack_info_ctor$$.
+#
+# $head integrand_id$$
+# This is an $code int$$ that specifies the
+# $cref/integrand_id/integrand_table/integrand_id/$$ for the
+# covariate multipliers.
+#
+# $head n_cov$$
+# This $code int$$
+# is the number of covariate multipliers for the specified
+# $icode integrand_id$$.
+# It is referred to as $codei%n_cov(%integrand_id%)%$$ below.
+#
+# $head j$$
+# This in an $code int$$
+# and $icode%j% < n_cov(%integrand_id%)%$$.
+#
+# $head info$$
+# The return value is the $code info$$
+# is a dictionary with the following keys:
+#
+# $subhead covariate_id$$
+# $icode%info%['covariate_id']%$$ is an $code int$$ that specifies the
+# $cref/covariate_id/covariate_table/covariate_id/$$ for the
+# $th j$$ covariate multiplier for this $icode integrand_id$$.
+#
+# $subhead smooth_id$$
+# $icode%info%['smooth_id']%$$ is an $code int$$ that specifies the
+# $cref/smooth_id/smooth_table/smooth_id/$$ for the
+# $th j$$ covariate multiplier for this $icode integrand_id$$.
+#
+# $subhead n_var$$
+# $icode%info%['n_var']%$$ is an $code int$$ equal to the
+# number of variables for this covariate multiplier.
+#
+# $subhead offset$$
+# $icode%info%['offset']%$$ is an $code int$$ equal to the
+# index in the packed variable list where the variables begin.
+#
+#
+# $head Example$$
+# See $cref/pack_info Example/pack_info/Example/$$.
+#
+# $end
+# ----------------------------------------------------------------------------
+import pdb
 class pack_info :
 	# ------------------------------------------------------------------------
 	def __init__(
@@ -207,8 +289,10 @@ class pack_info :
 
 		# meas_mean_mulcov_info_ and meas_std_mulcov_info_
 		self.meas_mean_mulcov_info_ = list()
-		self.meas_std_mulcov_info_ = list()
+		self.meas_std_mulcov_info_  = list()
 		for integrand_id in range(n_integrand) :
+			self.meas_mean_mulcov_info_.append( list() )
+			self.meas_std_mulcov_info_.append( list() )
 			for mulcov_id in range( len(mulcov_dict) ) :
 				match  = mulcov_dict[mulcov_id]['mulcov_type'] == 'meas_mean'
 				match |= mulcov_dict[mulcov_id]['mulcov_type'] == 'meas_std'
@@ -227,9 +311,9 @@ class pack_info :
 						'offset'       : offset
 					}
 					if mulcov_type == 'meas_mean' :
-						info_list = self.meas_mean_mulcov_info_
+						info_list = self.meas_mean_mulcov_info_[integrand_id]
 					elif mulcov_type == 'meas_std' :
-						info_list = self.meas_std_mulcov_info_
+						info_list = self.meas_std_mulcov_info_[integrand_id]
 					for j in range( len(info_list) ) :
 						if info_list[j]['covariate_id'] == covaraite_id :
 							msg  = 'mulcov_dict: '
@@ -282,19 +366,19 @@ class pack_info :
 		return self.rate_info_[rate_id][j]
 	# ------------------------------------------------------------------------
 	def meas_mean_mulcov_n_cov(self, integrand_id) :
-		return len(self.meas_mean_mulcov_info_)
+		return len(self.meas_mean_mulcov_info_[integrand_id])
 	def meas_mean_mulcov_info(self, integrand_id, j) :
-		return self.meas_mean_mulcov_info[integrand_id][j]
+		return self.meas_mean_mulcov_info_[integrand_id][j]
 	# ------------------------------------------------------------------------
 	def meas_std_mulcov_n_cov(self, integrand_id) :
-		return len(self.meas_std_mulcov_info_)
-	def meas_std_mulcov_info(integrand_id, j) :
-		return meas_std_mulcov_info[integrand_id][j]
+		return len(self.meas_std_mulcov_info_[integrand_id])
+	def meas_std_mulcov_info(self, integrand_id, j) :
+		return self.meas_std_mulcov_info_[integrand_id][j]
 	# ------------------------------------------------------------------------
 	def rate_mean_mulcov_n_cov(self, integrand_id) :
-		return len(rate_mean_mulcov_info_)
-	def rate_mean_mulcov_info(integrand_id, j) :
-		return rate_mean_mulcov_info[integrand_id][j]
+		return len(self.rate_mean_mulcov_info_[integrand_id])
+	def rate_mean_mulcov_info(self, integrand_id, j) :
+		return self.rate_mean_mulcov_info_[integrand_id][j]
 # ----------------------------------------------------------------------------
 
 
