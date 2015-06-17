@@ -48,7 +48,7 @@ This argument has prototype
 $codei%
 	const pack_info& %pack_object%
 %$$
-and is the $cref pack_info$$ information corresponding to the
+and is the $cref devel_pack_info$$ information corresponding to the
 $cref/model_variables/model_variable/$$.
 
 $head prior_table$$
@@ -107,7 +107,7 @@ $codei%
 	CppAD::vector<double> %solution%
 %$$
 It is the optimal $cref/variable values/model_variable/$$ in
-$cref pack_info$$ format.
+$cref devel_pack_info$$ format.
 
 $children%example/devel/model/fit_model_xam.cpp
 %$$

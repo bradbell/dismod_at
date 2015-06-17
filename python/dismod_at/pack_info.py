@@ -8,7 +8,7 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin pack_info_py_ctor$$ $newlinech #$$
+# $begin pack_info_ctor$$ $newlinech #$$
 # $spell
 #	dismod
 #	mulcov

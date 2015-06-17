@@ -41,7 +41,7 @@ Include lower and upper limit for the smoothing difference priors
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
 $lnext
-The python version of the $cref pack_info$$,
+The python version of the $cref devel_pack_info$$,
 $code python/dismod_at/pack_info.py$$, needs to be completed.
 $lnext
 Finish implementation and testing of the

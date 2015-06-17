@@ -43,7 +43,7 @@ This column has type $code integer$$.
 For each fixed $icode fit_id$$ value, and fixed $icode sample$$ value,
 $icode offset$$ is non-decreasing with row number,
 starts with zero, and increments by one with each row.
-It is the offset of the particular variable in a $cref pack_info$$ vector.
+It is the offset of the particular variable in a $cref devel_pack_info$$ vector.
 
 $head value$$
 This column has type $code real$$ is the value of the corresponding variable.

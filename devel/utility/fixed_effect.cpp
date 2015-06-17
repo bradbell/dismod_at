@@ -44,7 +44,7 @@ This argument has prototype
 $codei%
 	const pack_info& %pack_object%
 %$$
-It is the $cref pack_info$$ information corresponding
+It is the $cref devel_pack_info$$ information corresponding
 to the $cref/model_variables/model_variable/$$.
 
 $head size_fixed$$
@@ -66,7 +66,7 @@ $codei%
 %$$
 and its size is $icode%pack_object%.size()%$$.
 It specifies the value for all the $cref/model_variables/model_variable/$$
-in $cref pack_info$$ format.
+in $cref devel_pack_info$$ format.
 
 $subhead fixed_vec$$
 This argument has prototype
@@ -89,7 +89,7 @@ $codei%
 %$$
 and its size is $icode%pack_object%.size()%$$.
 It specifies the value for all the $cref/model_variables/model_variable/$$
-in $cref pack_info$$ format.
+in $cref devel_pack_info$$ format.
 The input value of its fixed effects does not matter.  Upon return,
 the fixed effects correspond to the values in $icode fixed_vec$$.
 

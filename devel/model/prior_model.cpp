@@ -39,7 +39,7 @@ This argument has prototype
 $codei%
 	const pack_info& %pack_object%
 %$$
-and is the $cref pack_info$$ information corresponding to the
+and is the $cref devel_pack_info$$ information corresponding to the
 $cref/model_variables/model_variable/$$.
 
 $head age_table$$
@@ -208,7 +208,7 @@ $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
 and is all the $cref/model variables/model_variable/$$ in the order
-specified by $cref pack_info$$.
+specified by $cref devel_pack_info$$.
 
 $head residual_vec$$
 The return value has prototype
@@ -384,7 +384,7 @@ $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
 and is all the $cref/model variables/model_variable/$$ in the order
-specified by $cref pack_info$$.
+specified by $cref devel_pack_info$$.
 
 $head residual_vec$$
 The return value has prototype
