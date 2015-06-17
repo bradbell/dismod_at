@@ -21,7 +21,7 @@ $spell
 	integrands
 $$
 
-$section Pack Variables: Constructor$$
+$section Variable Packing Information: Constructor$$
 
 $head Syntax$$
 $codei%pack_info %pack_object%(

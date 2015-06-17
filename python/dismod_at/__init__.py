@@ -19,6 +19,7 @@
 #	%python/dismod_at/get_table_dict.py
 #	%python/dismod_at/unicode_tuple.py
 #	%python/dismod_at/create_database.py
+#	%python/dismod_at/pack_info.py
 # %$$
 #
 # $end
@@ -30,3 +31,4 @@ from .get_row_list      import get_row_list
 from .get_table_dict    import get_table_dict
 from .unicode_tuple     import unicode_tuple
 from .create_database   import create_database
+from .pack_info         import pack_info
