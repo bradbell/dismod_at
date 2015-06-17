@@ -8,19 +8,18 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin get_row_list$$ $newlinech #$$
+# $begin get_table_dict$$ $newlinech #$$
 # $spell
-#	Sql
 #	dismod
-#	str
 #	tbl
+#	str
+#	Sql
 # $$
 #
-# $section Get Data From a Table$$
+# $section Get All Data From a Table$$
 #
 # $head Syntax$$
-# $icode%row_list% = dismod_at.get_row_list(%$$
-# $icode%connection%, %tbl_name%, %col_name%)%$$
+# $icode%table_dict% = dismod_at.get_table_dict(%connection%, %tbl_name%)%$$
 #
 # $head connection$$
 # is a $cref/connection/create_connection/connection/$$ for this database.
@@ -30,22 +29,13 @@
 # We use the notation $icode n_row$$ for the number of rows in
 # the table.
 #
-# $head col_name$$
-# is a list of strings containing the names of the columns that we are
-# retrieving data from.
-# We use the notation $icode n_col$$ for the number of columns in
-# $icode col_name$$.
-# You can determine the name of all the columns in the table using
-# $cref get_name_type$$.
-#
-# $head row_list$$
-# This is a list, with length $icode n_row$$,
-# where each element of the list is a list.
-# In addition, for each $icode i$$, $icode%row_list%[%i%]%$$ is a list
-# with length $icode n_col$$.
-# The value $icode%row_list%[%i%][%j%]%$$ corresponds to
+# $head table_dict$$
+# This is a list, with length $icode n_row$$, where each element
+# of the list is a dictionary.
+# For all the dictionaries, the set of keys is the column names in the table.
+# The value $icode%row_list%[%i%][%col_name%]%$$ corresponds to
 # primary key $icode%tbl_name%_id = %i%$$,
-# and column $icode%col_name%[%j%]%$$.
+# and the column with name $icode col_name$$.
 # The python type corresponding to the values in the table are
 # as follows:
 # $table
@@ -60,25 +50,20 @@
 # Note that the type $code integer primary key$$ corresponds to
 # $code integer$$ above.
 #
-# $children%example/table/get_row_list.py
+# $children%example/table/get_table_dict.py
 # %$$
 # $head Example$$
-# The file $cref get_row_list.py$$ is an example use of
-# $code get_row_list$$.
+# The file $cref get_table_dict.py$$ is an example use of
+# $code get_table_dict$$.
 #
 # $end
 # ---------------------------------------------------------------------------
-def get_row_list(connection, tbl_name, col_name) :
-	import collections
+def get_table_dict(connection, tbl_name) :
+	import dismod_at
 	#
-	cursor    = connection.cursor()
-	n_col     = len(col_name)
-	columns   = ','.join(col_name)
-	cmd       = 'SELECT ' + columns + ' FROM ' + tbl_name
-	row_list  = list()
-	for row in cursor.execute(cmd) :
-		row_tmp = list()
-		for j in range(n_col) :
-			row_tmp.append( row[j] )
-		row_list.append(row_tmp)
-	return row_list
+	(col_name, col_type) = dismod_at.get_name_type(connection, tbl_name)
+	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
+	table_dict = list()
+	for row in row_list :
+		table_dict.append( dict( zip(col_name, row) ) )
+	return table_dict
