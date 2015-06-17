@@ -43,8 +43,7 @@ def get_table_dict() :
 	table_dict = dismod_at.get_table_dict(connection, tbl_name)
 	assert len(table_dict) == n_row
 	for i in range(n_row) :
-		assert len( table_dict[i] )            == 3
-		assert table_dict[i]['covariate_id']   == i
+		assert len( table_dict[i] )            == 2
 		assert table_dict[i]['covariate_name'] == row_list[i][0]
 		assert table_dict[i]['reference']      == row_list[i][1]
 	#

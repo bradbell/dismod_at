@@ -32,10 +32,11 @@
 # $head table_dict$$
 # This is a list, with length $icode n_row$$, where each element
 # of the list is a dictionary.
-# For all the dictionaries, the set of keys is the column names in the table.
-# The value $icode%row_list%[%i%][%col_name%]%$$ corresponds to
-# primary key $icode%tbl_name%_id = %i%$$,
-# and the column with name $icode col_name$$.
+# For each dictionaries, the set of keys is the column names in the table
+# (excluding the primary key $icode%tbl_name%_id%$$).
+# The value $icode%table_dict%[%i%][%col_name%]%$$ corresponds to
+# and the column with name $icode col_name$$ and primary key
+# $icode%table_name%_id = %i%$$.
 # The python type corresponding to the values in the table are
 # as follows:
 # $table
@@ -47,8 +48,6 @@
 # $tend
 # You can determine the type for all the columns in the table using
 # $cref get_name_type$$.
-# Note that the type $code integer primary key$$ corresponds to
-# $code integer$$ above.
 #
 # $children%example/table/get_table_dict.py
 # %$$
@@ -62,6 +61,9 @@ def get_table_dict(connection, tbl_name) :
 	import dismod_at
 	#
 	(col_name, col_type) = dismod_at.get_name_type(connection, tbl_name)
+	assert col_name[0] == tbl_name + '_id'
+	del col_name[0]
+	#
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
 	table_dict = list()
 	for row in row_list :
