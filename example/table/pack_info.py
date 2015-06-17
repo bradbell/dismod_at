@@ -82,10 +82,11 @@ def pack_info() :
 	# set rates
 	n_rate = 5
 	for rate_id in range(n_rate) :
-		for j in range(n_child + 1) :
-			info = pack_object.rate_info(rate_id, j)
+		for child_id in range(n_child + 1) :
+			info = pack_object.rate_info(rate_id, child_id)
 			for k in range( info['n_var'] ) :
-				pack_list[info['offset'] + k] = float(rate_id + 3 + j + k)
+				value = float(rate_id + 3 + child_id + k)
+				pack_list[info['offset'] + k] = value
 				count += 1
 	#
 	# set meas_mean_mulcov
@@ -128,11 +129,12 @@ def pack_info() :
 	# check rates
 	n_rate = 5
 	for rate_id in range(n_rate) :
-		for j in range(n_child) :
-			info   = pack_object.rate_info(rate_id, j)
+		for child_id in range(n_child) :
+			info   = pack_object.rate_info(rate_id, child_id)
 			offset = info['offset']
 			for k in range( info['n_var'] ) :
-				assert pack_list[offset + k] == float(rate_id + 3 + j + k)
+				value = float(rate_id + 3 + child_id + k)
+				assert pack_list[offset + k] == value
 	#
 	# check meas_mean_mulcov
 	for integrand_id in range(n_integrand) :

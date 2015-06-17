@@ -122,7 +122,7 @@
 # $section Pack Variables: Rates$$
 #
 # $head Syntax$$
-# $icode%info% = %pack_object%.rate_info(%rate_id%, %j%)%$$
+# $icode%info% = %pack_object%.rate_info(%rate_id%, %child_id%)%$$
 #
 # $head pack_object$$
 # This object was constructed using $cref pack_info_ctor$$.
@@ -133,9 +133,9 @@
 #
 # $head j$$
 # This is an $code int$$.
-# If $icode%j% < %n_child%$$, these rates are for the corresponding
+# If $icode%child_id% < %n_child%$$, these rates are for the corresponding
 # child node.
-# If $icode%j% == %n_child%$$, these rates are for the
+# If $icode%child_id% == %n_child%$$, these rates are for the
 # parent node.
 #
 # $head info$$
@@ -333,18 +333,18 @@ class pack_info :
 		self.rate_info_ = list()
 		for rate_id in range( self.n_rate_ ) :
 			self.rate_info_.append( list() )
-			for j in range(n_child + 1) :
+			for child_id in range(n_child + 1) :
 				self.rate_info_[rate_id].append( dict() )
-				if j < n_child :
+				if child_id < n_child :
 					smooth_id = rate_dict[rate_id]['child_smooth_id']
 				else :
 					smooth_id = rate_dict[rate_id]['parent_smooth_id']
 				n_age  = smooth_dict[smooth_id]['n_age']
 				n_time = smooth_dict[smooth_id]['n_time']
 				n_var  = n_age * n_time
-				self.rate_info_[rate_id][j]['smooth_id'] = smooth_id
-				self.rate_info_[rate_id][j]['n_var']     = n_var
-				self.rate_info_[rate_id][j]['offset']    = offset
+				self.rate_info_[rate_id][child_id]['smooth_id'] = smooth_id
+				self.rate_info_[rate_id][child_id]['n_var']     = n_var
+				self.rate_info_[rate_id][child_id]['offset']    = offset
 				offset += n_var
 				#
 				# check assumption about pini smoothing
@@ -425,8 +425,8 @@ class pack_info :
 		assert smooth_id < self.n_smooth_
 		return self.mulstd_offset_ + 3 * smooth_id
 	# ------------------------------------------------------------------------
-	def rate_info(self, rate_id, j) :
-		return self.rate_info_[rate_id][j]
+	def rate_info(self, rate_id, child_id) :
+		return self.rate_info_[rate_id][child_id]
 	# ------------------------------------------------------------------------
 	def meas_mean_mulcov_n_cov(self, integrand_id) :
 		return len(self.meas_mean_mulcov_info_[integrand_id])
