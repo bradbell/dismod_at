@@ -11,6 +11,7 @@
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
+SET(dismod_at_version "20150618" )
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 
 # ----------------------------------------------------------------------------

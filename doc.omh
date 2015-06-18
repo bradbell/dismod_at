@@ -30,11 +30,16 @@ $spell
 	dtime
 	dismod
 $$
-$section dismod_at: Estimating Disease Rates as Functions of Age and Time$$
+$section Disease Rates as Functions of Age and Time: dismod_at-20150618$$
 
 $head Wish List$$
 $list number$$
 Create an install procedure.
+$lnext
+Construct an algorithmic differentiable way to handle cases where product of
+remission and incidence are zero.
+$lnext
+Add Computation of the weighted residuals.
 $lnext
 Add sampling of the
 $cref/model variables/model_variable/$$
@@ -48,7 +53,7 @@ If the prefix for suitesparse is not specified, do not compile or run
 	example/devel/approx_mixed/cholmod_xam.cpp
 $lend
 
-$childtable%example/get_started/get_started.py.in
+$childtable%omh/install/unix.omh
 	%omh/table/input.omh
 	%omh/model/model.omh
 	%omh/table/output.omh

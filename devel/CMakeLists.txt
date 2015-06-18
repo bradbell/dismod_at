@@ -79,5 +79,5 @@ SET_TARGET_PROPERTIES(devel_lib PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
 #
 LINK_DIRECTORIES( ${cppad_LIBRARY_DIRS} )
 ADD_EXECUTABLE( dismod_at dismod_at.cpp )
-SET_TARGET_PROPERTIES( dismod_at PROPERTIES COMPILE_FLAS "${extra_cxx_flags}" )
+SET_TARGET_PROPERTIES( dismod_at PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}" )
 TARGET_LINK_LIBRARIES( dismod_at sqlite3 devel_lib ${cppad_LIBRARIES} )

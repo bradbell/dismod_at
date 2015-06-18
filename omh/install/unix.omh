@@ -1,0 +1,90 @@
+$Id:$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin install_unix$$
+$spell
+	make make
+	dismod
+	cmake
+	CppAD
+	Ipopt
+	config
+	eigen
+$$
+
+$section Installing dismod_at in Unix$$
+
+$head Requirements$$
+The following programs are required when installing dismod_at:
+
+$subhead C++ Compiler$$
+The $code dismod_at$$ program can be compiled by any C++98 compliant compiler;
+e.g., $code g++$$.
+
+$subhead cmake$$
+$href%http://www.cmake.org/%cmake%$$,
+a program that installs other programs.
+
+$subhead pkg-config$$
+The $href%http://www.freedesktop.org/wiki/Software/pkg-config/%pkg-config%$$
+program must be installed.
+
+$subhead python3$$
+The $href%http://www.python.org/%python3%$$,
+programming language.
+
+$subhead SQLite$$
+The $href%href%http://sqlite.org/%sqlite3%$$ version
+of SQLite.
+
+$subhead CppAD$$
+The $href%http://www.coin-or.org/CppAD/%cppad%$$
+C++ algorithmic differentiation package.
+Note that CppAD must be installed with the Ipopt prefix specified; see
+the CppAD install instructions.
+
+$subhead eigen$$
+The $href%http://eigen.tuxfamily.org%eigen%$$
+linear algebra package.
+
+$subhead Ipopt$$
+The $href%https://projects.coin-or.org/Ipopt%Ipopt%$$
+optimization package.
+
+$head Download$$
+$href%dismod_at-20150517.tgz%$$
+
+$head Cmake Settings$$
+The following is a list of the cmake settings in $code bin/run_cmake.sh$$.
+You should change these settings so they correspond to your machine:
+$code
+$verbatim%bin/run_cmake.sh%0%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
+$$
+
+$head Build and Test$$
+After changing $code bin/run_cmake.sh$$ to work for your system,
+execute the following commands:
+$codep
+	bin/run_cmake.sh
+	cd build
+	make
+	make check
+$$
+
+
+$children%example/get_started/get_started.py.in
+%$$
+$head Example$$
+The file $cref get_started.py$$ contains an example and test
+of $code dismod_at$$. This is run as part of the $code make check$$
+command above.
+
+
+$end

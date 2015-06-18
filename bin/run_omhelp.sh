@@ -42,7 +42,28 @@ if [ ! -e 'doc' ]
 then
 	echo_eval mkdir doc
 fi
+# -----------------------------------------------------------------------------
+version=`bin/version.sh get`
+if [ ! -e "doc/dismod_at-$version.tgz" ]
+then
+	echo_eval rm -rf "doc/dismod_at-$version"
+	echo_eval mkdir "doc/dismod_at-$version"
+	for file in `git ls-files`
+	do
+		sub_dir=`echo $file | sed -e 's|/[^/]*$||'`
+		if [ "$sub_dir" != "$file" ]
+		then
+			if [ ! -e doc/dismod_at-$version/$sub_dir ]
+			then
+				mkdir -p doc/dismod_at-$version/$sub_dir
+			fi
+		fi
+		cp $file doc/dismod_at-$version/$file
+	done
+	echo_eval tar -czf doc/dismod_at-$version.tgz doc/dismod_at-$version
+fi
 echo_eval cd doc
+# -----------------------------------------------------------------------------
 #
 flags=''
 if [ "$ext" == 'xml' ]
