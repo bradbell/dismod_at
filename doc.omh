@@ -32,28 +32,24 @@ $spell
 $$
 $section dismod_at: Estimating Disease Rates as Functions of Age and Time$$
 
-$head 2DO List$$
-The following tasks need to be done before the first release of this package:
+$head Wish List$$
 $list number$$
 Create an install procedure.
+$lnext
+Add sampling of the
+$cref/model variables/model_variable/$$
+from the posterior distribution.
 $lnext
 Include lower and upper limit for the smoothing difference priors
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
 $lnext
-The python version of the $cref devel_pack_info$$,
-$code python/dismod_at/pack_info.py$$, needs to be completed.
-$lnext
-Finish implementation and testing of the
-$cref/dismod_at executable/dismod_at_exe/$$.
-$lnext
 If the prefix for suitesparse is not specified, do not compile or run
 	example/devel/approx_mixed/cholmod_xam.cpp
-$lnext
-Exclude colpack from a sandbox copy of CppAD used to build dismod_at.
 $lend
 
-$childtable%omh/table/input.omh
+$childtable%example/get_started/get_started.py.in
+	%omh/table/input.omh
 	%omh/model/model.omh
 	%omh/table/output.omh
 	%devel/dismod_at.cpp
