@@ -133,7 +133,6 @@
 # $head Syntax$$
 # $icode%info% = %pack_object%.rate_info(%rate_id%, %child_id%)
 # %$$
-# $icode%node_id% = %pack_object%.child2node(%child_id%)%$$
 #
 # $head pack_object$$
 # This object was constructed using $cref pack_info_ctor$$.
@@ -152,6 +151,13 @@
 # $head info$$
 # The return value is the $code info$$
 # is a dictionary with the following keys:
+#
+# $subhead node_id$$
+# $icode%info%['node_id']%$$ is an $code int$$ equal to the
+# $cref/node_id/node_table/node_id/$$ for this $icode child_id$$.
+# Note that if $icode%child_id% == %n_child%$$,
+# $icode%info%['node_id']%$$ is
+# $cref/parent_node_id/pack_info_ctor/parent_node_id/$$.
 #
 # $subhead smooth_id$$
 # $icode%info%['smooth_id']%$$ is an $code int$$ equal to the
@@ -355,9 +361,10 @@ class pack_info :
 		for node_id in range( len(node_dict) ) :
 			if node_dict[node_id]['parent'] == parent_node_id :
 				self.child2node_.append( node_id )
+		self.child2node_.append( parent_node_id )
 
 		# n_child_
-		self.n_child_ = len( self.child2node_ )
+		self.n_child_ = len( self.child2node_ ) - 1
 
 		# mulstd_offset_
 		self.mulstd_offset_ = offset
@@ -373,9 +380,11 @@ class pack_info :
 					smooth_id = rate_dict[rate_id]['child_smooth_id']
 				else :
 					smooth_id = rate_dict[rate_id]['parent_smooth_id']
-				n_age  = smooth_dict[smooth_id]['n_age']
-				n_time = smooth_dict[smooth_id]['n_time']
-				n_var  = n_age * n_time
+				node_id = self.child2node_[child_id]
+				n_age   = smooth_dict[smooth_id]['n_age']
+				n_time  = smooth_dict[smooth_id]['n_time']
+				n_var   = n_age * n_time
+				self.rate_info_[rate_id][child_id]['node_id']   = node_id
 				self.rate_info_[rate_id][child_id]['smooth_id'] = smooth_id
 				self.rate_info_[rate_id][child_id]['n_var']     = n_var
 				self.rate_info_[rate_id][child_id]['offset']    = offset
@@ -463,8 +472,6 @@ class pack_info :
 	# ------------------------------------------------------------------------
 	def rate_info(self, rate_id, child_id) :
 		return self.rate_info_[rate_id][child_id]
-	def child2node(self, child_id) :
-		return self.child2node_[child_id]
 	# ------------------------------------------------------------------------
 	def meas_mean_mulcov_n_cov(self, integrand_id) :
 		return len(self.meas_mean_mulcov_info_[integrand_id])
