@@ -15,9 +15,6 @@
 #
 # $section Getting Started Using dismod_at$$
 #
-# $index get_started, example$$
-# $index example, get_started$$
-#
 # $code
 # $verbatim%
 #	example/get_started/get_started.py.in
@@ -182,6 +179,17 @@ smooth_list = [
 # mulcov table
 mulcov_list = []
 #
+# fit table
+fit_list= [
+	{	'parent_node':'world',
+		'n_age_ode':6,
+		'n_time_ode':2,
+		'ode_step_size':20.0,
+		'tolerance':1e-8,
+		'max_num_iter':100
+	}
+]
+#
 # create database
 dismod_at.create_database(
 	file_name,
@@ -195,26 +203,13 @@ dismod_at.create_database(
 	prior_list,
 	smooth_list,
 	rate_list,
-	mulcov_list
+	mulcov_list,
+	fit_list
 )
 # -----------------------------------------------------------------------
-program       = '@CMAKE_BINARY_DIR@/devel/dismod_at'
-parent_node   = 'world'
-n_age_ode     = '6'
-n_time_ode    = '2'
-ode_step_size = '20'
-tolerance     = '1e-8'
-max_num_iter  = '100'
-cmd     = [
-	program,
-	file_name,
-	parent_node,
-	n_age_ode,
-	n_time_ode,
-	ode_step_size,
-	tolerance,
-	max_num_iter
-]
+program   = '@CMAKE_BINARY_DIR@/devel/dismod_at'
+fit_id    = '0'
+cmd       = [ program, 'fit', file_name, fit_id ]
 print( ' '.join(cmd) )
 subprocess.call( cmd )
 # -----------------------------------------------------------------------
@@ -231,7 +226,7 @@ variable_dict = dismod_at.get_table_dict(connection, 'variable')
 n_integrand = len( integrand_list )
 parent_node_id = None
 for i in range( len(node_list) ) :
-	if  node_list[i]['name'] == parent_node :
+	if  node_list[i]['name'] == fit_list[0]['parent_node'] :
 		parent_node_id = i
 assert parent_node_id != None
 #

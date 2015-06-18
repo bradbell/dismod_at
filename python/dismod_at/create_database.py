@@ -10,6 +10,8 @@
 # -------------------------------------------------------------------------- */
 # $begin create_database$$ $newlinech #$$
 # $spell
+#	num_iter
+#	Ipopt
 #	pini
 #	mulcov
 #	mulstd
@@ -40,7 +42,8 @@
 #	%prior_list%,
 #	%smooth_list%,
 #	%rate_list%,
-#	%mulcov_list%
+#	%mulcov_list%,
+#	%fit_list%
 # )%$$
 #
 # $head Purpose$$
@@ -208,6 +211,20 @@
 # smooth    $cnext str         $cnext smoothing name
 # $tend
 #
+# $head fit_list$$
+# This is a list of $code dict$$
+# that define the rows of the $cref fit_table$$.
+# The dictionary $icode%fit_list%[%i%]%$$ has the following:
+# $table
+# Key           $cnext Value Type  $pre  $$ $cnext Description       $rnext
+# parent_node   $cnext str   $cnext parent node for this fit         $rnext
+# n_age_ode     $cnext int   $cnext number point in ode age grid     $rnext
+# n_time_ode    $cnext int   $cnext number point in ode age grid     $rnext
+# ode_step_size $cnext float $cnext numerical integration step size  $rnext
+# tolerance     $cnext float $cnext Ipopt convergence criteria       $rnext
+# max_num_iter  $cnext float $cnext maximum number of Ipopt iterations
+# $tend
+#
 # $end
 def create_database(
 	file_name,
@@ -221,7 +238,8 @@ def create_database(
 	prior_list,
 	smooth_list,
 	rate_list,
-	mulcov_list
+	mulcov_list,
+	fit_list
 ) :
 	import dismod_at
 	# -----------------------------------------------------------------------
@@ -560,6 +578,22 @@ def create_database(
 		'integer'      # max_num_iter
 	]
 	row_list = []
+	for i in range( len(fit_list) ) :
+		parent_node_id = global_node_name2id[ fit_list[i]['parent_node'] ]
+		n_age_ode      = fit_list[i]['n_age_ode']
+		n_time_ode     = fit_list[i]['n_time_ode']
+		ode_step_size  = fit_list[i]['ode_step_size']
+		tolerance      = fit_list[i]['tolerance']
+		max_num_iter   = fit_list[i]['max_num_iter']
+		row = [
+			parent_node_id,
+			n_age_ode,
+			n_time_ode,
+			ode_step_size,
+			tolerance,
+			max_num_iter
+		]
+		row_list.append(row)
 	tbl_name = 'fit'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------

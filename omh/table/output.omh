@@ -14,8 +14,7 @@ $$
 
 $section Data Base Output Tables$$
 
-$childtable%omh/table/fit_table.omh
-	%omh/table/variable_table.omh
+$childtable%omh/table/variable_table.omh
 %$$
 
 $end

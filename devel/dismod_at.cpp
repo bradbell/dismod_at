@@ -20,8 +20,13 @@ $$
 $section The Dismod Age Time Executable$$
 
 $head Syntax$$
-$codei%dismod_at %file_name%$$
-$icode%parent_node% %ode_step_size% %tolerance% %max_num_iter%$$
+$codei%dismod_at %command% %file_name% %fit_id%$$
+
+$head command$$
+The only valid value (so far) for $icode command$$
+is $code fit$$.
+Other commands, such as sample from the
+posterior distribution, are planned for the future.
 
 $head file_name$$
 Is an
@@ -30,34 +35,9 @@ $code dismod_at$$ $cref input$$ and $code output$$ tables.
 The input tables are not modified and result are written to the
 output tables.
 
-$head parent_node$$
-If all of the characters in $icode parent_node$$ are decimal digits,
-then  it specifies the parent
-$cref/node_id/node_table/node_id/$$ for this fit.
-Otherwise it specifies the parent
-$cref/node_name/node_table/node_name/$$.
-
-$head n_age_ode$$
-is a positive integer specifying the number of points in the
-$cref/ode age grid/glossary/Ode Grid/Age, a_i/$$.
-
-$subhead n_time_ode$$
-is a positive integer specifying the number of points in the
-$cref/ode time grid/glossary/Ode Grid/Time, t_j/$$.
-
-$head ode_step_size$$
-is a floating point number specifying the step size used to integrate the
-ordinary differential equation.
-The step size is the same in age and time because it is along cohort lines.
-
-$head tolerance$$
-is a floating point number specifying the desired relative convergence
-tolerance (requested of Ipopt).
-
-$head max_num_iter$$
-is a positive integer specifying the maximum number of iterations.
-The algorithm terminates with an error message if the number of
-iterations exceeded this number.
+$head fit_id$$
+This is a non-negative integer and specifies which row of the
+$cref/fit_table/fit_table/fit_id/$$ will be used for this fit.
 
 $end
 */
@@ -80,59 +60,48 @@ int main(int n_arg, const char** argv)
 	using std::string;
 
 	// ---------------- command line arguments ---------------------------
-	const char* usage =
-	"dismod_at \\\n"
-	"\tfile_name      \\\n"
-	"\tparent_node    \\\n"
-	"\tn_age_ode      \\\n"
-	"\tn_time_ode     \\\n"
-	"\tode_step_size  \\\n"
-	"\ttolerance      \\\n"
-	"\tmax_num_iter\n";
-	if( n_arg != 8 )
+	const char* usage = "dismod_at command file_name fit_id";
+	if( n_arg != 4 )
 	{	cerr << usage << endl <<
-		"Expected 7 command line argument but found " << n_arg - 1 << endl;
+		"Expected 3 command line argument but found " << n_arg - 1 << endl;
 		exit(1);
 	}
 	size_t i_arg = 0;
+	const string command_arg       = argv[++i_arg];
 	const string file_name_arg     = argv[++i_arg];
-	const string parent_node_arg   = argv[++i_arg];
-	const string n_age_ode_arg     = argv[++i_arg];
-	const string n_time_ode_arg    = argv[++i_arg];
-	const string ode_step_size_arg = argv[++i_arg];
-	const string tolerance_arg     = argv[++i_arg];
-	const string max_num_iter_arg  = argv[++i_arg];
-	//
+	const string fit_id_arg        = argv[++i_arg];
+	// ------------------------------------------------------------------
+	if( command_arg != "fit" )
+	{	cerr << usage << endl <<
+		"Only the 'fit' command is supported (so far)" << endl;
+		exit(1);
+	}
 	// --------------- get the input tables -----------------------------
 	bool new_file = false;
 	sqlite3* db   = dismod_at::open_connection(file_name_arg, new_file);
 	dismod_at::db_input_struct db_input;
 	get_db_input(db, db_input);
-	//
-	// --------------- parent_node_id -----------------------------------
-	// parent_node_id
-	size_t parent_node_id;
-	bool is_id = true;
-	for(size_t i = 0; i < parent_node_arg.size(); i++)
-		is_id &= std::isdigit( parent_node_arg[i] );
-	if( is_id )
-		parent_node_id = std::atoi( parent_node_arg.c_str() );
-	else
-	{	parent_node_id = db_input.node_table.size();
-		for(size_t id = 0; id < db_input.node_table.size(); id++)
-			if( db_input.node_table[id].node_name == parent_node_arg )
-				parent_node_id = id;
-		if( parent_node_id == db_input.node_table.size() )
-		{	cerr << "dismod_at: cannot find node_name " << parent_node_arg
-			<< endl << "in " << file_name_arg << " node table" << endl;
-		}
+	// ----------------- fit_id -----------------------------------------
+	size_t fit_id = static_cast<size_t>( std::atoi( fit_id_arg.c_str() ) );
+	if( fit_id >= db_input.fit_table.size() )
+	{	cerr << usage << endl <<
+		"Invalid value for fit_id (not in fit table)" << endl;
+		exit(1);
 	}
 	// ---------------------------------------------------------------------
-	size_t n_age_ode     = std::atoi( n_age_ode_arg.c_str() );
-	size_t n_time_ode    = std::atoi( n_time_ode_arg.c_str() );
-	double ode_step_size = std::atof( ode_step_size_arg.c_str() );
+	size_t parent_node_id = size_t(db_input.fit_table[fit_id].parent_node_id);
+	size_t n_age_ode      = size_t(db_input.fit_table[fit_id].n_age_ode);
+	size_t n_time_ode     = size_t(db_input.fit_table[fit_id].n_time_ode);
+	double ode_step_size  = db_input.fit_table[fit_id].ode_step_size;
+	// 2DO: remove need to conver these two values to strings
+	string tolerance_str  = dismod_at::to_string(
+		db_input.fit_table[fit_id].tolerance
+	);
+	string max_num_iter_str = dismod_at::to_string(
+		db_input.fit_table[fit_id].max_num_iter
+	);
 	dismod_at::child_data child_object(
-		parent_node_id      ,
+		parent_node_id ,
 		db_input.node_table ,
 		db_input.data_table
 	);
@@ -195,43 +164,19 @@ int main(int n_arg, const char** argv)
 		data_object          ,
 		prior_object
 	);
-	fit_object.run_fit(tolerance_arg, max_num_iter_arg);
+	fit_object.run_fit(tolerance_str, max_num_iter_str);
 	vector<double> solution = fit_object.get_solution();
-	// ------------------- fit_table ------------------------------------
-	vector<string> col_name_vec(6), row_val_vec(6);
-	string table_name = "fit";
-	col_name_vec[0]   = "parent_node_id";
-	col_name_vec[1]   = "n_age_ode";
-	col_name_vec[2]   = "n_time_ode";
-	col_name_vec[3]   = "ode_step_size";
-	col_name_vec[4]   = "tolerance";
-	col_name_vec[5]   = "max_num_iter";
-	//
-	row_val_vec[0]    = dismod_at::to_string( parent_node_id );
-	row_val_vec[1]    = n_age_ode_arg;
-	row_val_vec[2]    = n_time_ode_arg;
-	row_val_vec[3]    = ode_step_size_arg;
-	row_val_vec[4]    = tolerance_arg;
-	row_val_vec[5]    = max_num_iter_arg;
-	size_t fit_id     = dismod_at::put_table_row(
-		db, table_name, col_name_vec, row_val_vec
-	);
 	// ----------------- variable_table ----------------------------------
-	table_name      = "variable";
-	col_name_vec.resize(4);
-	col_name_vec[0] = "fit_id";
-	col_name_vec[1] = "sample";
-	col_name_vec[2] = "offset";
-	col_name_vec[3] = "value";
+	CppAD::vector<string> col_name_vec(4), row_val_vec(4);
+	string table_name = "variable";
+	col_name_vec[0]   = "fit_id";
+	col_name_vec[1]   = "sample";
+	col_name_vec[2]   = "offset";
+	col_name_vec[3]   = "value";
 	//
-	// determine the maximum value of sample (so far)
-	string max_str = dismod_at::get_column_max(
-		db, table_name, col_name_vec[1]
-	);
 	// maximum likelihood sample
 	size_t sample = 0;
 	//
-	row_val_vec.resize(4);
 	row_val_vec[0]  = dismod_at::to_string( fit_id );
 	row_val_vec[1]  = dismod_at::to_string( sample );
 	for(size_t offset = 0; offset < solution.size(); offset++)

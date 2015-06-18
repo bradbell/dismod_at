@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -20,12 +20,35 @@ then
 	exit 1
 fi
 name="$1"
+# ---------------------------------------------------------------------------
+# 7 is lenght of ${name} in text below
+wgt=''
+wlt=''
+len=`expr length $name`
+if [ $len -gt 7 ]
+then
+	diff=`expr $len - 7`
+	echo "$diff"
+	for i in $(seq 1 $diff)
+	do
+		wgt="$wgt "
+	done
+fi
+if [ $len -lt 7 ]
+then
+	diff=`expr 7 - $len`
+	for i in $(seq 1 $diff)
+	do
+		wlt="$wlt "
+	done
+fi
 cat << EOF
-omh/table/${name}_table.omh:              documentation for this table.
-dismod_at/include/get_${name}_table.hpp:  C++ struct for this table.
-devel/get_${name}_table.cpp:              read this table in C++
-dismod_at/database.py:                    create_database all tables.
-example/table/${name}_table.py:           example for this table
-example/get_started/get_started.py.in:    calls create_database.
-example/devel/get_${name}_table_xam.cpp:  C++ example.
+omh/table/${name}_table.omh:$wlt              documentation for $name table.
+dismod_at/include/get_${name}_table.hpp:$wlt  C++ struct for $name table.
+devel/get_${name}_table.cpp:$wlt              read $name table in C++.
+python/dismod_at/create_database.py:$wgt      create all tables in_database.
+example/table/${name}_table.py:$wlt           example for $name table
+example/table/create_database.py:$wgt         example for create_database.py
+example/get_started/get_started.py.in:$wgt    calls create_database.
+example/devel/get_${name}_table_xam.cpp:$wlt  C++ example for $name table.
 EOF

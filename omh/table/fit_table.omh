@@ -21,48 +21,44 @@ The $code fit$$ table has the following columns:
 $head fit_id$$
 This column has type $code integer$$
 and is the primary key for this table; i.e., it identifies rows.
-Each row of this table corresponds to a run of the
+Each row of this table corresponds to a fit using the
 $cref/dismod_at executable/dismod_at_exe/$$.
 
 $head parent_node_id$$
 This column has type $code integer$$
-and is the parent $cref/node_id/node_table/node_id/$$ for this
-run of the $cref/dismod_at/dismod_at_exe/parent_node/$$ executable.
+and is the parent $cref/node_id/node_table/node_id/$$.
 
 $head n_age_ode$$
 This column has type $code integer$$ and
 is a positive integer specifying the number of points in the
 $cref/ode age grid/glossary/Ode Grid/Age, a_i/$$.
 
-$subhead n_time_ode$$
+$head n_time_ode$$
 This column has type $code integer$$ and
 is a positive integer specifying the number of points in the
 $cref/ode time grid/glossary/Ode Grid/Time, t_j/$$.
 
 $head ode_step_size$$
 This column has type $code real$$
-and is the numerical ode step size for this
-run of the $cref/dismod_at/dismod_at_exe/ode_step_size/$$ executable.
+and is the numerical ode step size.
 The step size is the same in age and time because it is along cohort lines.
 
 $head tolerance$$
-This column has type $code real$$
+This column has type $code integer$$
 and is the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
-maximum number of iterations $code max_iter$$ for this
-run of the $cref/dismod_at/dismod_at_exe/ode_step_size/$$ executable.
+desired relative convergence tolerance $code tol$$.
 
 $head max_num_iter$$
 This column has type $code integer$$
 and is the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
-desired relative convergence tolerance $code tol$$ for this
-run of the $cref/dismod_at/dismod_at_exe/ode_step_size/$$ executable.
+maximum number of iterations $code max_iter$$.
 
 $children%example/table/fit_table.py
 %$$
 $head Example$$
 The files $cref fit_table.py$$  and $cref get_fit_table_xam.cpp$$
-contain example $code run$$ tables.
+contain example of this table.
 
 $end
