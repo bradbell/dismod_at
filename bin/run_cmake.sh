@@ -32,6 +32,7 @@ then
 fi
 cd build
 cmake \
+	-Wno-dev \
 	-D CMAKE_VERBOSE_MAKEFILE=$verbose_makefile \
 	-D extra_cxx_flags="$extra_cxx_flags" \
 	-D dismod_at_prefix="$dismod_at_prefix" \
