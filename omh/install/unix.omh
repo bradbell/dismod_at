@@ -25,10 +25,10 @@ $$
 $section Installing dismod_at in Unix$$
 
 $head Download$$
-Download the tarball $href%dismod_at-20150617.tgz%$$
+Download the tarball $href%dismod_at-20150619.tgz%$$
 and then extract it using the command
 $codei%
-	tar -xzf dismod_at-20150617
+	tar -xzf dismod_at-20150619
 %$$
 
 $head System Requirements$$
@@ -64,7 +64,7 @@ The $href%http://eigen.tuxfamily.org%eigen%$$
 linear algebra package.
 The commands
 $codei%
-	cd dismod_at-20150618
+	cd dismod_at-20150619
 	bin/install_eigen.sh
 %$$
 can be used for this purpose.
@@ -79,7 +79,7 @@ The $href%https://projects.coin-or.org/Ipopt%Ipopt%$$
 optimization package.
 The commands
 $codei%
-	cd dismod_at-20150618
+	cd dismod_at-20150619
 	bin/install_ipopt.sh
 %$$
 can be used for this purpose.
@@ -94,7 +94,7 @@ The $href%http://www.coin-or.org/CppAD/%cppad%$$
 C++ algorithmic differentiation package.
 The commands
 $codei%
-	cd dismod_at-20150618
+	cd dismod_at-20150619
 	bin/install_cppad.sh
 %$$
 can be used for this purpose.
