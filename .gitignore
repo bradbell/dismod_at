@@ -3,6 +3,8 @@ git_commit.sh
 # temporary file for all purposes
 junk
 junk.*
+# cmake confiuration files
+include/dismod_at/configure.hpp
 # web version of documentation directory
 doc.tgz
 # directories that are automatically created

@@ -26,6 +26,7 @@ $end
 # include <iostream>
 # include <cassert>
 # include <cstring>
+# include <dismod_at/configure.hpp>
 
 // approx_mixed subdirectory
 extern bool approx_derived_xam(void);
@@ -122,9 +123,11 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
+# if DISMOD_AT_HAS_SUITESPARSE
+	RUN(cholmod_xam);
+# endif
 	// approx_mixed subdirectory
 	RUN(approx_derived_xam);
-	RUN(cholmod_xam);
 	RUN(eigen_xam);
 	RUN(joint_grad_ran_xam);
 	RUN(laplace_hes_fix_xam);

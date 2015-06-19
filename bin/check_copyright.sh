@@ -38,7 +38,7 @@ list=`git status | sed -n \
 ok='yes'
 for file in $list
 do
-	if [ -e "$file" ]
+	if [ -e "$file" ] && [ "$file" != '.gitignore' ]
 	then
 		text='Copyright (C) 2014-15 University of Washington'
 		if ! grep "$text" $file > /dev/null

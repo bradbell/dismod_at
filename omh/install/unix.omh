@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin install_unix$$
 $spell
+	cppad
 	make make
 	dismod
 	cmake
@@ -31,8 +32,8 @@ $codei%
 %$$
 
 $head System Requirements$$
-The following programs are required by dismod_at.
-These should all have standard system installs:
+The following programs are required by dismod_at
+and should have standard system installs:
 
 $subhead C++ Compiler$$
 The $code dismod_at$$ program can be compiled by any C++98 compliant compiler;
@@ -55,9 +56,8 @@ The $href%href%http://sqlite.org/%sqlite3%$$ version
 of SQLite.
 
 $head Special Requirements$$
-The following programs are required by dismod_at.
-These either do not have standard system installs,
-or else they require special setting during the install process:
+The following programs are required by dismod_at
+and may not have standard system installs:
 
 $subhead eigen$$
 The $href%http://eigen.tuxfamily.org%eigen%$$
@@ -92,8 +92,17 @@ $$
 $subhead CppAD$$
 The $href%http://www.coin-or.org/CppAD/%cppad%$$
 C++ algorithmic differentiation package.
-Note that CppAD must be installed with the Ipopt prefix specified; see
-the CppAD install instructions.
+The commands
+$codei%
+	cd dismod_at-20150618
+	bin/install_cppad.sh
+%$$
+can be used for this purpose.
+If necessary, first adjust the setting
+of the following variables in that script.
+$code
+$verbatim%bin/install_cppad.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
+$$
 
 $head Cmake Settings$$
 The following is a list of the cmake settings in $code bin/run_cmake.sh$$.

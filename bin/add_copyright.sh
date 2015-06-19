@@ -100,8 +100,8 @@ EOF
 	;;
 
 	*)
-	echo "bin/add_copyright.sh: $file_name does not end in .ext where"
-	echo 'ext is one of the following: omh cmake sh py R'
+	echo "bin/add_copyright.sh: $file_name extension is one of"
+	echo 'cpp, hpp, omh, cmake, txt, sh, py, R'
 	exit 1
 esac
 # -----------------------------------------------------------------------------

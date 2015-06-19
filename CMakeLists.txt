@@ -39,7 +39,12 @@ ENDMACRO(get_prefix)
 get_prefix(cppad)
 get_prefix(eigen)
 get_prefix(ipopt)
-get_prefix(suitesparse)
+IF( suitesparse_prefix )
+	SET(dismod_at_has_suitesparse 1)
+	get_prefix(suitesparse)
+ELSE( suitesparse_prefix )
+	SET(dismod_at_has_suitesparse 0)
+ENDIF( suitesparse_prefix )
 # ----------------------------------------------------------------------------
 # extra_cxx_flags
 SET(extra_cxx_flags NOTFOUND CACHE STRING
@@ -50,10 +55,15 @@ IF( NOT extra_cxx_flags )
 ENDIF( NOT extra_cxx_flags )
 MESSAGE(STATUS "extra_cxx_flags = ${extra_cxx_flags}")
 # ----------------------------------------------------------------------------
-# set cppad_LIBRARY_DIRS, cppad_LIBRARIES
+# set ipopt_LIBRARY_DIRS, ipopt_LIBRARIES
 # (note CppAD must be installed with ipopt_prefix specified)
 FIND_PACKAGE(PkgConfig)
-pkg_check_modules(cppad REQUIRED cppad)
+pkg_check_modules(ipopt REQUIRED ipopt)
+# ----------------------------------------------------------------------------
+CONFIGURE_FILE(
+	${CMAKE_CURRENT_SOURCE_DIR}/include/dismod_at/configure.hpp.in
+	${CMAKE_CURRENT_SOURCE_DIR}/include/dismod_at/configure.hpp
+)
 # ----------------------------------------------------------------------------
 # subdirectories
 ADD_SUBDIRECTORY(devel)

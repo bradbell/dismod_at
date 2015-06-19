@@ -12,12 +12,14 @@
 verbose_makefile='0'                # use '0' for no and '1' for yes
 extra_cxx_flags='-std=c++11 -Wall'  # extra c++ flags
 #
-# prefixes where the corresponding required packages are installed
-cppad_prefix="$HOME/prefix/cppad"
-eigen_prefix="$HOME/prefix/eigen"
-#
-# prefixes for optional packages, use empty string if not installed.
-suitesparse_prefix="$HOME/prefix/suitesparse"
+# prefix where the corresponding required packages are installed
+eigen_prefix="$HOME/prefix/dismod_at"
+ipopt_prefix="$HOME/prefix/dismod_at"
+cppad_prefix="$HOME/prefix/dismod_at"
+# prefix where the corresponding optional packages are installed
+# (use NOTFOUND if the package is not installed)
+# suitesparse_prefix="$HOME/prefix/suitesparse"
+suitesparse_prefix="NOTFOUND"
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 if [ ! -e build ]
@@ -29,6 +31,7 @@ cmake \
 	-D CMAKE_VERBOSE_MAKEFILE=$verbose_makefile \
 	-D extra_cxx_flags="$extra_cxx_flags" \
 	-D cppad_prefix="$cppad_prefix" \
+	-D ipopt_prefix="$cppad_prefix" \
 	-D eigen_prefix="$eigen_prefix" \
 	-D suitesparse_prefix="$suitesparse_prefix" \
 	..
