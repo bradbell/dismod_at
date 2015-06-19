@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # ifndef DISMOD_AT_CONFIGURE_HPP
 # define DISMOD_AT_CONFIGURE_HPP
 
+# define DISMOD_AT_VERSION         "@dismod_at_version@"
 # define DISMOD_AT_HAS_SUITESPARSE @dismod_at_has_suitesparse@
 
 # endif

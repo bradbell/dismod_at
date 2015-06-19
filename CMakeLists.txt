@@ -35,7 +35,13 @@ MACRO(get_prefix package)
 	INCLUDE_DIRECTORIES( ${${package}_prefix}/include )
 ENDMACRO(get_prefix)
 # ----------------------------------------------------------------------------
-# get package prefixes
+IF( dismod_at_prefix )
+	MESSAGE(STATUS "dismod_at_prefix = ${dismod_at_prefix}")
+ELSE( dismod_at_prefix )
+	MESSAGE(FATAL_ERROR "dismod_at_prefix not set by cmake command")
+ENDIF( NOT dismod_at_prefix )
+# ----------------------------------------------------------------------------
+# get other package prefixes
 get_prefix(cppad)
 get_prefix(eigen)
 get_prefix(ipopt)

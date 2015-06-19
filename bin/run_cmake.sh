@@ -12,10 +12,14 @@
 verbose_makefile='0'                # use '0' for no and '1' for yes
 extra_cxx_flags='-std=c++11 -Wall'  # extra c++ flags
 #
+# prefix where dismod_at will be installed
+dismod_at_prefix="$HOME/prefix/dismod_at"
+#
 # prefix where the corresponding required packages are installed
 eigen_prefix="$HOME/prefix/dismod_at"
 ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
+#
 # prefix where the corresponding optional packages are installed
 # (use NOTFOUND if the package is not installed)
 # suitesparse_prefix="$HOME/prefix/suitesparse"
@@ -30,6 +34,7 @@ cd build
 cmake \
 	-D CMAKE_VERBOSE_MAKEFILE=$verbose_makefile \
 	-D extra_cxx_flags="$extra_cxx_flags" \
+	-D dismod_at_prefix="$dismod_at_prefix" \
 	-D cppad_prefix="$cppad_prefix" \
 	-D ipopt_prefix="$cppad_prefix" \
 	-D eigen_prefix="$eigen_prefix" \

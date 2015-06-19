@@ -51,6 +51,7 @@ $end
 # include <dismod_at/put_table_row.hpp>
 # include <dismod_at/to_string.hpp>
 # include <dismod_at/get_column_max.hpp>
+# include <dismod_at/configure.hpp>
 
 int main(int n_arg, const char** argv)
 {	// ---------------- using statements ----------------------------------
@@ -62,7 +63,8 @@ int main(int n_arg, const char** argv)
 	// ---------------- command line arguments ---------------------------
 	const char* usage = "dismod_at command file_name fit_id";
 	if( n_arg != 4 )
-	{	cerr << usage << endl <<
+	{	cerr << "dismod_at-" << DISMOD_AT_VERSION << endl
+		<< "\t" << usage << endl <<
 		"Expected 3 command line argument but found " << n_arg - 1 << endl;
 		exit(1);
 	}
