@@ -104,21 +104,34 @@ $code
 $verbatim%bin/install_cppad.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
 $$
 
-$head Cmake Settings$$
+$head dismod_at$$
+
+$subhead Setup$$
 The following is a list of the cmake settings in $code bin/run_cmake.sh$$.
 You should change these settings so they correspond to your machine:
 $code
-$verbatim%bin/run_cmake.sh%0%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
+$verbatim%bin/run_cmake.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
 $$
 
-$head Build and Test$$
+$subhead Build$$
 After changing $code bin/run_cmake.sh$$ to work for your system,
 execute the following commands:
 $codep
 	bin/run_cmake.sh
 	cd build
 	make
+$$
+
+$subhead Test$$
+The following command will run the examples and tests:
+$codep
 	make check
+$$
+
+$subhead Install$$
+The following command will install the dismod_at:
+$codep
+	make install
 $$
 
 
