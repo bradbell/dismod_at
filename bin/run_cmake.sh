@@ -9,19 +9,20 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-verbose_makefile='0'                # use '0' for no and '1' for yes
-extra_cxx_flags='-std=c++11 -Wall'  # extra c++ flags
-#
+# use '1' for verbose make output
+verbose_makefile='0'
+# commannd used to execute python3 on this machine
+python_three_command='python3'
+# extra c++ flags used during compliation
+extra_cxx_flags='-std=c++11 -Wall'
 # prefix where dismod_at will be installed
 dismod_at_prefix="$HOME/prefix/dismod_at"
-#
-# prefix where the corresponding required packages are installed
+# prefixes where the required packages were installed
 eigen_prefix="$HOME/prefix/dismod_at"
 ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
-#
-# prefix where the corresponding optional packages are installed
-# (use NOTFOUND if the package is not installed)
+# prefixes where the optional packages were installed
+# (use NOTFOUND if a package is not installed)
 # suitesparse_prefix="$HOME/prefix/suitesparse"
 suitesparse_prefix="NOTFOUND"
 # END USER_SETTINGS
@@ -34,6 +35,7 @@ cd build
 cmake \
 	-Wno-dev \
 	-D CMAKE_VERBOSE_MAKEFILE=$verbose_makefile \
+	-D python_three_command=$python_three_command \
 	-D extra_cxx_flags="$extra_cxx_flags" \
 	-D dismod_at_prefix="$dismod_at_prefix" \
 	-D cppad_prefix="$cppad_prefix" \

@@ -35,11 +35,17 @@ MACRO(get_prefix package)
 	INCLUDE_DIRECTORIES( ${${package}_prefix}/include )
 ENDMACRO(get_prefix)
 # ----------------------------------------------------------------------------
+IF( python_three_command )
+	MESSAGE(STATUS "python_three_command = ${python_three_command}")
+ELSE( python_three_command )
+	MESSAGE(FATAL_ERROR "python_three_command not set by cmake command")
+ENDIF( python_three_command )
+# ----------------------------------------------------------------------------
 IF( dismod_at_prefix )
 	MESSAGE(STATUS "dismod_at_prefix = ${dismod_at_prefix}")
 ELSE( dismod_at_prefix )
 	MESSAGE(FATAL_ERROR "dismod_at_prefix not set by cmake command")
-ENDIF( NOT dismod_at_prefix )
+ENDIF( dismod_at_prefix )
 # ----------------------------------------------------------------------------
 # get other package prefixes
 get_prefix(cppad)

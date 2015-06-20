@@ -17,5 +17,5 @@ CONFIGURE_FILE(
 )
 ADD_CUSTOM_TARGET(
 	check_example_table
-	python3 run_all.py
+	${python_three_command} run_all.py
 )
