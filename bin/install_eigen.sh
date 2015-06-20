@@ -10,6 +10,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
+# prefix below which eigen will be installed
 eigen_prefix="$HOME/prefix/dismod_at"
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
@@ -60,4 +61,8 @@ echo_eval cd build
 echo_eval cmake -Wno-dev -DCMAKE_INSTALL_PREFIX=$eigen_prefix ..
 echo_eval make install
 # --------------------------------------------------------------------------
-echo_eval ln -s $eigen_prefix/include/eigen3/Eigen $eigen_prefix/include/Eigen
+include_dir="$eigen_prefix/include"
+if [ ! -h $include_dir/Eigen ]
+then
+	echo_eval ln -s $include_dir/eigen3/Eigen $include_dir/Eigen
+fi

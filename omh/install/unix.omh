@@ -9,7 +9,9 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin install_unix$$
+$dollar @$$
 $spell
+	pkgconfig
 	cppad
 	make make
 	dismod
@@ -38,6 +40,7 @@ and should have standard system installs:
 $subhead C++ Compiler$$
 The $code dismod_at$$ program can be compiled by any C++98 compliant compiler;
 e.g., $code g++$$.
+(Note that a C++11 compiler would be better.)
 
 $subhead cmake$$
 $href%http://www.cmake.org/%cmake%$$,
@@ -113,11 +116,25 @@ $code
 $verbatim%bin/run_cmake.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
 $$
 
-$subhead Build$$
+$subhead Run Cmake$$
 After changing $code bin/run_cmake.sh$$ to work for your system,
-execute the following commands:
+execute the following command:
 $codep
 	bin/run_cmake.sh
+$$
+It is possible that, when running the $code bin/run_cmake.sh$$ command,
+you will get the message $code package 'ipopt' not found$$.
+In this case, you need to execute the following command
+$codei%
+	PKG_CONFIG_PATH="@PKG_CONFIG_PATH:%ipopt_prefix%/%lib%/pkgconfig"
+%$$
+where $icode ipopt_prefix$$ is the prefix for the Ipopt install and
+$icode lib$$ is $code lib$$ or $code lib64$$ depending on which directory
+exists.
+
+$subhead Build$$
+The following commands will build the dismod_at executable:
+$codep
 	cd build
 	make
 $$

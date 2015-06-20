@@ -10,7 +10,10 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
+# prefix below which cppad will be installed
 cppad_prefix="$HOME/prefix/dismod_at"
+# extra c++ flags used during compliation
+extra_cxx_flags='-std=c++11 -Wall'
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 if [ $0 != 'bin/install_cppad.sh' ]
@@ -62,7 +65,7 @@ echo_eval cd build
 cmake_args="-D CMAKE_VERBOSE_MAKEFILE=0"
 cmake_args="$cmake_args -D cmake_install_prefix=$cppad_prefix"
 cmake_args="$cmake_args -D cmake_install_libdirs=$libdirs"
-echo "cmake $cmake_args -D cppad_cxx_flags='-Wall -std=c++11' .."
-cmake $cmake_args -D cppad_cxx_flags='-Wall -std=c++11' ..
+echo "cmake $cmake_args -D cppad_cxx_flags='$extra_cxx_flags=c++11' .."
+cmake $cmake_args -D cppad_cxx_flags=\"$extra_cxx_flags\" ..
 #
 echo_eval make install

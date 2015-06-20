@@ -10,6 +10,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
+# prefix below which ipopt will be installed
 ipopt_prefix="$HOME/prefix/dismod_at"
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------

@@ -21,10 +21,9 @@ dismod_at_prefix="$HOME/prefix/dismod_at"
 eigen_prefix="$HOME/prefix/dismod_at"
 ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
-# prefixes where the optional packages were installed
-# (use NOTFOUND if a package is not installed)
-# suitesparse_prefix="$HOME/prefix/suitesparse"
-suitesparse_prefix="NOTFOUND"
+# prefixes where suitesparse was installed (use NOTFOUND if not installed)
+suitesparse_prefix="$HOME/prefix/suitesparse"
+# suitesparse_prefix="NOTFOUND"
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 if [ ! -e build ]

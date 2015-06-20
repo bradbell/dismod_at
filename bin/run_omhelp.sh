@@ -60,9 +60,12 @@ then
 		fi
 		cp $file doc/dismod_at-$version/$file
 	done
-	echo_eval tar -czf doc/dismod_at-$version.tgz doc/dismod_at-$version
+	echo_eval cd doc
+	echo_eval tar -czf dismod_at-$version.tgz dismod_at-$version
+	echo_eval rm -r dismod_at-$version
+else
+	echo_eval cd doc
 fi
-echo_eval cd doc
 # -----------------------------------------------------------------------------
 #
 flags=''
