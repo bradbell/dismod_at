@@ -65,7 +65,7 @@ echo_eval cd build
 cmake_args="-D CMAKE_VERBOSE_MAKEFILE=0"
 cmake_args="$cmake_args -D cmake_install_prefix=$cppad_prefix"
 cmake_args="$cmake_args -D cmake_install_libdirs=$libdirs"
-echo "cmake $cmake_args -D cppad_cxx_flags='$extra_cxx_flags=c++11' .."
-cmake $cmake_args -D cppad_cxx_flags=\"$extra_cxx_flags\" ..
+echo "cmake $cmake_args -D cppad_cxx_flags='$extra_cxx_flags' .."
+cmake $cmake_args -D cppad_cxx_flags="$extra_cxx_flags" ..
 #
 echo_eval make install
