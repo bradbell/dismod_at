@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -12,8 +12,9 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cassert>
 # include <cstring>
 
-extern bool rate_mulcov(void);
+extern bool data_model_subset(void);
 extern bool meas_mulcov(void);
+extern bool rate_mulcov(void);
 
 // anonymous namespace
 namespace {
@@ -48,8 +49,9 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
-	RUN(rate_mulcov);
+	RUN(data_model_subset);
 	RUN(meas_mulcov);
+	RUN(rate_mulcov);
 
 	// summary report
 	int return_flag;

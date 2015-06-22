@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-14 University of Washington
+#           Copyright (C) 2014-15 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -15,9 +15,10 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 
 # Program cpp, not installed, and depends on following source files
 ADD_EXECUTABLE(test_devel EXCLUDE_FROM_ALL
-	test_devel.cpp
-	rate_mulcov.cpp
+	data_model_subset.cpp
 	meas_mulcov.cpp
+	rate_mulcov.cpp
+	test_devel.cpp
 )
 
 LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )
