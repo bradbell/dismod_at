@@ -34,7 +34,8 @@ $section Disease Rates as Functions of Age and Time: dismod_at-20150619$$
 
 $head Wish List$$
 $list number$$
-Create an install procedure.
+Implement the $cref/max_difference/covariate_table/max_difference/$$
+limits on which data that is included.
 $lnext
 Construct an algorithmic differentiable way to handle cases where product of
 remission and incidence are zero.
