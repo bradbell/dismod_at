@@ -28,7 +28,6 @@ len=`expr length $name`
 if [ $len -gt 7 ]
 then
 	diff=`expr $len - 7`
-	echo "$diff"
 	for i in $(seq 1 $diff)
 	do
 		wgt="$wgt "
@@ -43,12 +42,12 @@ then
 	done
 fi
 cat << EOF
-omh/table/${name}_table.omh:$wlt              documentation for $name table.
-dismod_at/include/get_${name}_table.hpp:$wlt  C++ struct for $name table.
-devel/get_${name}_table.cpp:$wlt              read $name table in C++.
-python/dismod_at/create_database.py:$wgt      create all tables in_database.
-example/table/${name}_table.py:$wlt           example for $name table
-example/table/create_database.py:$wgt         example for create_database.py
-example/get_started/get_started.py.in:$wgt    calls create_database.
-example/devel/get_${name}_table_xam.cpp:$wlt  C++ example for $name table.
+omh/table/${name}_table.omh$wlt                   user doc for $name table
+include/dismod_at/get_${name}_table.hpp$wlt       C++ struct for $name table
+devel/table/get_${name}_table.cpp$wlt             read $name table in C++
+python/dismod_at/create_database.py$wgt           create all tables
+example/table/${name}_table.py$wlt                $name table example
+example/table/create_database.py$wgt              create_database.py example
+example/get_started/get_started.py.in$wgt         calls create_database
+example/devel/table/get_${name}_table_xam.cpp$wlt C++ example for $name table
 EOF
