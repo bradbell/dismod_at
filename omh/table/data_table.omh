@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -17,8 +17,6 @@ $spell
 	std
 	dismod
 $$
-$index data, table$$
-$index table, data$$
 
 $section The Data Table$$
 Each row of the data file corresponds to one measurement;
@@ -88,6 +86,9 @@ For each valid $cref/covariate_id/covariate_table/covariate_id/$$,
 column $codei%x_%covariate_id%$$ contains
 the value, for this measurement, of the covariate specified by
 $icode covariate_id$$.
+The covariate value $code null$$ is interpreted as the
+$cref/reference/covariate_table/reference/$$ value for
+the corresponding covariate.
 
 $children%example/table/data_table.py
 %$$

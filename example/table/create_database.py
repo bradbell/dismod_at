@@ -56,7 +56,7 @@ def create_database() :
 	]
 	# covariate_list
 	covariate_list = [
-		{ 'name':'sex', 'reference':0.0 }
+		{ 'name':'sex', 'reference':0.0, 'max_difference':0.6 }
 	]
 	# data_list
 	data_list = []

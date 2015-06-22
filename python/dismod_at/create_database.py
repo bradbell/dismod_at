@@ -118,6 +118,8 @@
 # Key       $cnext Value Type  $pre  $$ $cnext Description            $rnext
 # name      $cnext str         $cnext name for the $th i$$ covariate  $rnext
 # reference $cnext float       $cnext reference value for $th i$$ covariate
+# $rnext
+# max_difference $cnext float $cnext maximum difference for $th i$$ covariate
 # $tend
 #
 # $head data_list$$
@@ -298,12 +300,16 @@ def create_database(
 		global_density_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------
 	# create covariate table
-	col_name = [ 'covariate_name',	'reference' ]
-	col_type = [ 'text',             'real'     ]
+	col_name = [ 'covariate_name',	'reference', 'max_difference' ]
+	col_type = [ 'text',             'real',     'real'           ]
 	row_list = [ ]
 	for i in range( len(covariate_list) ) :
-		covariate = covariate_list[i]
-		row_list.append( [ covariate['name'], covariate['reference'] ] )
+		row       = [
+			covariate_list[i]['name'],
+			covariate_list[i]['reference'],
+			covariate_list[i]['max_difference']
+		]
+		row_list.append(row)
 	tbl_name = 'covariate'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#

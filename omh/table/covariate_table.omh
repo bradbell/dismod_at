@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -11,9 +11,8 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin covariate_table$$
 $spell
 	covariate
+	covariates
 $$
-$index covariate, table$$
-$index table, covariate$$
 
 $section The Covariate Table$$
 The $code covariate$$ table is used to identify
@@ -34,6 +33,21 @@ $head reference$$
 The column has type $code real$$ and is
 the reference value for the corresponding covariate; i.e.,
 the covariate value that corresponds to no adjustment.
+
+$head max_difference$$
+The column has type $code real$$ and is
+the maximum absolute difference,
+from the reference value for the corresponding covariate.
+The value $icode max_difference$$ must be greater than or equal zero.
+Data for which the
+$cref/covariate/data_table/Covariates/$$
+corresponding to this $icode covariate_id$$
+has a maximum absolute difference greater than $icode max_difference$$,
+is not included.
+The covariate value $code null$$ is interpreted
+as the reference value and hence not excluded.
+In addition, the $icode max_difference$$ value $code null$$ is interpreted
+as plus infinity and hence no exclusion is done for such covariates.
 
 $children%example/table/covariate_table.py
 %$$

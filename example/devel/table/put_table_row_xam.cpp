@@ -43,21 +43,24 @@ bool put_table_row_xam(void)
 	"create table covariate("
 		"covariate_id       integer primary key, "
 		"covariate_name     text, "
-		"reference          real"
+		"reference          real, "
+		"max_difference     real"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 
 	// setup for put_table_row
 	std::string table_name = "covariate";
-	CppAD::vector<std::string> col_name_vec(2), row_val_vec(2);
+	CppAD::vector<std::string> col_name_vec(3), row_val_vec(3);
 
 	// column names as a vector
 	col_name_vec[0] = "covariate_name";
 	col_name_vec[1] = "reference";
+	col_name_vec[2] = "max_difference";
 
 	// insert first row in the covariate table
 	row_val_vec[0]   = "income";
 	row_val_vec[1]   = "1000.00";
+	row_val_vec[2]   = "null";
 	size_t covariate_id = dismod_at::put_table_row(
 		db, table_name, col_name_vec, row_val_vec
 	);
@@ -66,6 +69,7 @@ bool put_table_row_xam(void)
 	// insert second row in the covariate table
 	row_val_vec[0]  = "weight";
 	row_val_vec[1]  = "100.00";
+	row_val_vec[2]  = "200.00";
 	covariate_id = dismod_at::put_table_row(
 		db, table_name, col_name_vec, row_val_vec
 	);
@@ -78,9 +82,12 @@ bool put_table_row_xam(void)
 	//
 	ok  &= covariate_table[0].covariate_name == "income";
 	ok  &= covariate_table[0].reference      == 1000.;
+	// for max_difference, null is intrepreted as plus infinity
+	ok  &= covariate_table[0].max_difference == std::atof("+inf");
 	//
 	ok  &= covariate_table[1].covariate_name == "weight";
 	ok  &= covariate_table[1].reference      == 100.;
+	ok  &= covariate_table[1].max_difference == 200;
 	//
 	// close database and return
 	sqlite3_close(db);

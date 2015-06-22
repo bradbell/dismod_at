@@ -59,6 +59,11 @@ as $icode col_name_vec$$.
 There cannot be any single quote characters $code '$$
 in any of the values.
 
+$subhead null$$
+The special value $code null$$ can be used for $code integer$$ and
+$code real$$ columns. If it is used for a $code text$$ column,
+it will be interpreted as the text $code 'null'$$ and not a missing value.
+
 $head Primary Key$$
 The primary key for this table name must have column name
 $icode%table_name%_id%$$.

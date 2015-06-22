@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -16,8 +16,6 @@ $spell
 $$
 
 $section C++ get_covariate_table: Example and Test$$
-$index example, C++ get_covariate_table$$
-$index get_covariate_table, C++ example$$
 
 $code
 $verbatim%example/devel/table/get_covariate_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -42,10 +40,13 @@ bool get_covariate_table_xam(void)
 
 	// sql commands
 	const char* sql_cmd[] = {
-	"create table covariate"
-	"(covariate_id integer primary key, covariate_name text, reference real)",
-	"insert into covariate values(0, 'sex',      0.0)",
-	"insert into covariate values(1, 'income',   2000.0)"
+	"create table covariate("
+		" covariate_id   integer primary key,"
+		" covariate_name text,"
+		" reference      real,"
+		" max_difference real)",
+	"insert into covariate values(0, 'sex',     0.0,     0.6 )",
+	"insert into covariate values(1, 'income',  2000.0,  null)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -59,9 +60,11 @@ bool get_covariate_table_xam(void)
 	//
 	ok  &= covariate_table[0].covariate_name  == "sex";
 	ok  &= covariate_table[0].reference       == 0.0;
+	ok  &= covariate_table[0].max_difference  == 0.6;
  	//
 	ok  &= covariate_table[1].covariate_name  == "income";
 	ok  &= covariate_table[1].reference       == 2000.0;
+	ok  &= covariate_table[1].max_difference  == std::atof("+inf");
 	//
 	// close database and return
 	sqlite3_close(db);

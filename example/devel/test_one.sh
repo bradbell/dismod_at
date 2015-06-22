@@ -70,7 +70,7 @@ echo_eval g++ \
 	-g \
 	-O0 \
 	-I ../../include \
-	-I $HOME/prefix/cppad/include \
+	-I $HOME/prefix/dismod_at/include \
 	junk.cpp \
 	$dir_file \
 	$dismod_at_lib \

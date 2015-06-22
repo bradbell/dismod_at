@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -19,9 +19,6 @@ $spell
 $$
 
 $section C++: Get the Covariate Table Information$$
-$index get, covariate table$$
-$index covariate, get table$$
-$index table, get covariate$$
 
 $head Syntax$$
 $icode%covariate_table% = get_covariate_table(%db%)%$$
@@ -48,6 +45,10 @@ $rnext
 $code double$$ $cnext $code reference$$  $cnext
 	The $cref/reference/covariate_table/reference/$$
 	value for this covariate
+$rnext
+$code double$$ $cnext $code max_difference$$  $cnext
+	The $cref/max_difference/covariate_table/max_difference/$$
+	value for this covariate
 $tend
 
 $head covariate_table$$
@@ -73,6 +74,8 @@ $end
 
 
 
+# include <cmath>
+# include <limits>
 # include <dismod_at/get_covariate_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
@@ -81,6 +84,8 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<covariate_struct> get_covariate_table(sqlite3* db)
 {	using std::string;
+	double plus_infinity = std::numeric_limits<double>::infinity();
+
 	string table_name         = "covariate";
 	size_t n_covariate = check_table_id(db, table_name);
 
@@ -94,10 +99,18 @@ CppAD::vector<covariate_struct> get_covariate_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, reference);
 	assert( n_covariate == reference.size() );
 
+	column_name           =  "max_difference";
+	CppAD::vector<double>     max_difference;
+	get_table_column(db, table_name, column_name, max_difference);
+	assert( n_covariate == max_difference.size() );
+
 	CppAD::vector<covariate_struct> covariate_table(n_covariate);
 	for(size_t i = 0; i < n_covariate; i++)
 	{	covariate_table[i].covariate_name  = covariate_name[i];
 		covariate_table[i].reference       = reference[i];
+		covariate_table[i].max_difference  = max_difference[i];
+		if( std::isnan( max_difference[i] ) )
+			covariate_table[i].max_difference  = plus_infinity;
 	}
 	return covariate_table;
 }

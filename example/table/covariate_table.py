@@ -34,11 +34,11 @@ def covariate_table() :
 	cursor         = connection.cursor()
 	#
 	# create the covariate table
-	col_name = [ 'covariate_name',	'reference' ]
-	col_type = [ 'text',             'real'     ]
+	col_name = [ 'covariate_name',	'reference', 'max_difference' ]
+	col_type = [ 'text',             'real',     'real'           ]
 	row_list = [
-	           [ 'sex',              0.0        ],
-	           [ 'income',           2000.0     ]
+	           [ 'sex',              0.0,        0.6              ],
+	           [ 'income',           2000.0,     None             ]
 	]
 	tbl_name = 'covariate'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
