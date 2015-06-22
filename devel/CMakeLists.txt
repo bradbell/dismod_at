@@ -50,6 +50,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	table/check_child_prior.cpp
 	table/check_pini_n_age.cpp
 	table/check_table_id.cpp
+	table/data_subset.cpp
 	table/exec_sql_cmd.cpp
 	table/get_age_table.cpp
 	table/get_column_max.cpp
