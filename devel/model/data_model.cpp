@@ -737,7 +737,7 @@ $$
 $section One Average Integrand That Requires the ODE$$
 
 $head Syntax$$
-$icode%avg% = %data_object%.avg_yes_ode(%data_id%, %pack_vec%)%$$
+$icode%avg% = %data_object%.avg_yes_ode(%sample_id%, %pack_vec%)%$$
 
 
 $head data_object$$
@@ -751,22 +751,13 @@ $head Float$$
 The type $icode Float$$ must be one of the following:
 $code double$$, $code AD<double>$$, or $cref a5_double$$.
 
-$head data_id$$
+$head sample_id$$
 This argument has prototype
 $codei%
-	size_t %data_id%
+	size_t %sample_id%
 %$$
-and is the $cref/data_id/data_table/data_id/$$ for we are computing
-the average integrand for.
-
-$subhead Node$$
-The $icode data_id$$ must correspond to a
-$cref/node_id/data_table/node_id/$$ that is a descendant of the
-$cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
-the function $code data_id2child$$ returns a
-$cref/child/child_info/data_id2child/child/$$ value
-less than or equal
-$cref/n_child/child_info/child_size/n_child/$$.
+and is the $cref/sample_id/data_subset/data_sample/sample_id/$$
+we are computing the average integrand for.
 
 $subhead Integrand$$
 The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
@@ -807,9 +798,10 @@ $end
 
 template <class Float>
 Float data_model::avg_yes_ode(
-	size_t                        data_id  ,
-	const CppAD::vector<Float>&   pack_vec ) const
+	size_t                        sample_id ,
+	const CppAD::vector<Float>&   pack_vec  ) const
 {
+	size_t data_id = data_sample_[sample_id].data_id;
 # ifndef NDEBUG
 	switch( data_info_[data_id].integrand )
 	{
@@ -830,7 +822,7 @@ Float data_model::avg_yes_ode(
 	assert( pack_object_.size() == pack_vec.size() );
 
 	// data table information for this data pont
-	const CppAD::vector<double>& x     = data_table_[ data_id ].x;
+	const CppAD::vector<double>& x     = data_sample_[sample_id].x;
 
 	// data_info infomation for this data point
 	integrand_enum integrand           = data_info_[ data_id].integrand;
@@ -1337,7 +1329,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 			case mtspecific_enum:
 			case mtall_enum:
 			case mtstandard_enum:
-			avg = avg_yes_ode(data_id, pack_vec);
+			avg = avg_yes_ode(sample_id, pack_vec);
 			break;
 
 			default:
