@@ -95,7 +95,7 @@ int main(int n_arg, const char** argv)
 	size_t n_age_ode      = size_t(db_input.fit_table[fit_id].n_age_ode);
 	size_t n_time_ode     = size_t(db_input.fit_table[fit_id].n_time_ode);
 	double ode_step_size  = db_input.fit_table[fit_id].ode_step_size;
-	// 2DO: remove need to conver these two values to strings
+	// 2DO: remove need to convert these two strings to values in run_fit
 	string tolerance_str  = dismod_at::to_string(
 		db_input.fit_table[fit_id].tolerance
 	);
@@ -111,6 +111,12 @@ int main(int n_arg, const char** argv)
 	size_t n_integrand = db_input.integrand_table.size();
 	size_t n_weight    = db_input.weight_table.size();
 	size_t n_smooth    = db_input.smooth_table.size();
+	// data_sample
+	vector<dismod_at::data_subset_struct> data_sample = data_subset(
+		db_input.data_table,
+		db_input.covariate_table,
+		child_object
+	);
 	// w_info_vec
 	vector<dismod_at::weight_info> w_info_vec(n_weight);
 	for(size_t weight_id = 0; weight_id < n_weight; weight_id++)
@@ -154,6 +160,7 @@ int main(int n_arg, const char** argv)
 		db_input.integrand_table ,
 		db_input.node_table      ,
 		db_input.data_table      ,
+		data_sample              ,
 		w_info_vec               ,
 		s_info_vec               ,
 		pack_object

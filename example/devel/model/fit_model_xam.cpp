@@ -218,6 +218,9 @@ bool fit_model_xam(void)
 	vector<dismod_at::weight_info> w_info_vec(1);
 	w_info_vec[0] = w_info;
 	//
+	// covariate table
+	vector<dismod_at::covariate_struct> covariate_table(0);
+	//
 	// data_table
 	vector<double> x(0); // empty set of covariates
 	dismod_at::integrand_enum integrand_vec[] = {
@@ -256,6 +259,18 @@ bool fit_model_xam(void)
 	dismod_at::prior_model prior_object(
 		pack_object, age_table, time_table, prior_table, s_info_vec
 	);
+	// child_info
+	dismod_at::child_info child_object(
+		parent_node_id ,
+		node_table ,
+		data_table
+	);
+	// data_subset
+	vector<dismod_at::data_subset_struct> data_sample = data_subset(
+		data_table,
+		covariate_table,
+		child_object
+	);
 	//
 	// data_model
 	size_t n_age_ode = 6;
@@ -271,6 +286,7 @@ bool fit_model_xam(void)
 		integrand_table,
 		node_table,
 		data_table,
+		data_sample,
 		w_info_vec,
 		s_info_vec,
 		pack_object

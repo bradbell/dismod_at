@@ -147,6 +147,12 @@ bool rate_mulcov(void)
 	// parent_node_id
 	size_t parent_node_id = 0;
 	//
+	// covariate table
+	vector<dismod_at::covariate_struct> covariate_table(1);
+	covariate_table[0].covariate_name  = "sex";
+	covariate_table[0].reference       = 0.0;
+	covariate_table[0].max_difference  = 0.6;
+	//
 	// data_table
 	vector<dismod_at::data_struct> data_table(1);
 	//
@@ -198,6 +204,18 @@ bool rate_mulcov(void)
 		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
+	// child_info
+	dismod_at::child_info child_object(
+		parent_node_id ,
+		node_table ,
+		data_table
+	);
+	// data_subset
+	vector<dismod_at::data_subset_struct> data_sample = data_subset(
+		data_table,
+		covariate_table,
+		child_object
+	);
 	//
 	// data_model
 	dismod_at::data_model data_object(
@@ -210,6 +228,7 @@ bool rate_mulcov(void)
 		integrand_table,
 		node_table,
 		data_table,
+		data_sample,
 		w_info_vec,
 		s_info_vec,
 		pack_object

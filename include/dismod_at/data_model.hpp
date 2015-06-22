@@ -14,6 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <limits>
 # include <cppad/vector.hpp>
 # include "get_data_table.hpp"
+# include "data_subset.hpp"
 # include "get_integrand_table.hpp"
 # include "get_density_table.hpp"
 # include "get_node_table.hpp"
@@ -38,11 +39,12 @@ class data_model {
 		CppAD::vector<double> c_ode;
 	} data_ode_info;
 private:
-	const size_t                       n_age_ode_;
-	const size_t                       n_time_ode_;
-	const double                       ode_step_size_;
-	const CppAD::vector<data_struct>&  data_table_;
-	const pack_info                    pack_object_;
+	const size_t                              n_age_ode_;
+	const size_t                              n_time_ode_;
+	const double                              ode_step_size_;
+	const CppAD::vector<data_struct>&         data_table_;
+	const CppAD::vector<data_subset_struct>&  data_sample_;
+	const pack_info                           pack_object_;
 
 	// set by constructor and not changed
 	size_t                       n_child_;
@@ -50,18 +52,19 @@ private:
 	CppAD::vector<data_ode_info> data_info_;
 public:
 	data_model(
-		size_t                                  parent_node_id  ,
-		size_t                                  n_age_ode       ,
-		size_t                                  n_time_ode      ,
-		double                                  ode_step_size   ,
-		const CppAD::vector<double>&            age_table       ,
-		const CppAD::vector<double>&            time_table      ,
-		const CppAD::vector<integrand_struct>&  integrand_table ,
-		const CppAD::vector<node_struct>&       node_table      ,
-		const CppAD::vector<data_struct>&       data_table      ,
-		const CppAD::vector<weight_info>&       w_info_vec      ,
-		const CppAD::vector<smooth_info>&       s_info_vec      ,
-		const pack_info&                        pack_object
+		size_t                                   parent_node_id  ,
+		size_t                                   n_age_ode       ,
+		size_t                                   n_time_ode      ,
+		double                                   ode_step_size   ,
+		const CppAD::vector<double>&             age_table       ,
+		const CppAD::vector<double>&             time_table      ,
+		const CppAD::vector<integrand_struct>&   integrand_table ,
+		const CppAD::vector<node_struct>&        node_table      ,
+		const CppAD::vector<data_struct>&        data_table      ,
+		const CppAD::vector<data_subset_struct>& data_sample     ,
+		const CppAD::vector<weight_info>&        w_info_vec      ,
+		const CppAD::vector<smooth_info>&        s_info_vec      ,
+		const pack_info&                         pack_object
 	);
 	// destructor must delete the smooth2ode objects pointed to by si2ode_vec_
 	~data_model(void);

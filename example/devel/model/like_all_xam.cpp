@@ -134,6 +134,9 @@ bool like_all_xam(void)
 	// parent_node_id
 	size_t parent_node_id = 0;
 	//
+	// covariate table
+	vector<dismod_at::covariate_struct> covariate_table(0);
+	//
 	// data_table
 	vector<dismod_at::data_struct> data_table(2);
 	//
@@ -180,6 +183,18 @@ bool like_all_xam(void)
 		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
+	// child_info
+	dismod_at::child_info child_object(
+		parent_node_id ,
+		node_table ,
+		data_table
+	);
+	// data_subset
+	vector<dismod_at::data_subset_struct> data_sample = data_subset(
+		data_table,
+		covariate_table,
+		child_object
+	);
 	//
 	// data_model
 	dismod_at::data_model data_object(
@@ -192,6 +207,7 @@ bool like_all_xam(void)
 		integrand_table,
 		node_table,
 		data_table,
+		data_sample,
 		w_info_vec,
 		s_info_vec,
 		pack_object

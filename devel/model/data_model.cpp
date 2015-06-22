@@ -177,23 +177,25 @@ data_model::~data_model(void)
 
 // consctructor
 data_model::data_model(
-	size_t                                 parent_node_id  ,
-	size_t                                 n_age_ode       ,
-	size_t                                 n_time_ode      ,
-	double                                 ode_step_size   ,
-	const CppAD::vector<double>&           age_table       ,
-	const CppAD::vector<double>&           time_table      ,
-	const CppAD::vector<integrand_struct>& integrand_table ,
-	const CppAD::vector<node_struct>&      node_table      ,
-	const CppAD::vector<data_struct>&      data_table      ,
-	const CppAD::vector<weight_info>&      w_info_vec      ,
-	const CppAD::vector<smooth_info>&      s_info_vec      ,
-	const pack_info&                       pack_object     )
+	size_t                                   parent_node_id  ,
+	size_t                                   n_age_ode       ,
+	size_t                                   n_time_ode      ,
+	double                                   ode_step_size   ,
+	const CppAD::vector<double>&             age_table       ,
+	const CppAD::vector<double>&             time_table      ,
+	const CppAD::vector<integrand_struct>&   integrand_table ,
+	const CppAD::vector<node_struct>&        node_table      ,
+	const CppAD::vector<data_struct>&        data_table      ,
+	const CppAD::vector<data_subset_struct>& data_sample     ,
+	const CppAD::vector<weight_info>&        w_info_vec      ,
+	const CppAD::vector<smooth_info>&        s_info_vec      ,
+	const pack_info&                         pack_object     )
 :
 n_age_ode_     (n_age_ode)        ,
 n_time_ode_    (n_time_ode)       ,
 ode_step_size_ (ode_step_size)    ,
 data_table_    (data_table)       ,
+data_sample_   (data_sample)      ,
 pack_object_   (pack_object)
 {	using std::string;
 	size_t i, j, k;
