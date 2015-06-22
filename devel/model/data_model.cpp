@@ -487,8 +487,7 @@ $$
 $section One Average Integrand That Doesn't Require the ODE$$
 
 $head Syntax$$
-$icode%avg% = %data_object%.avg_no_ode(%data_id%, %pack_vec%)%$$
-
+$icode%avg% = %data_object%.avg_no_ode(%sample_id%, %pack_vec%)%$$
 
 $head data_object$$
 This object has prototype
@@ -502,22 +501,13 @@ $head Float$$
 The type $icode Float$$ must be one of the following:
 $code double$$, $code AD<double>$$, or $cref a5_double$$.
 
-$head data_id$$
+$head sample_id$$
 This argument has prototype
 $codei%
-	size_t %data_id%
+	size_t %sample_id%
 %$$
-and is the $cref/data_id/data_table/data_id/$$ for we are computing
-the average integrand for.
-
-$subhead Node$$
-The $icode data_id$$ must correspond to a
-$cref/node_id/data_table/node_id/$$ that is a descendant of the
-$cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
-the function $code data_id2child$$ returns a
-$cref/child/child_info/data_id2child/child/$$ value
-less than or equal
-$cref/n_child/child_info/child_size/n_child/$$.
+and is the $cref/sample_id/data_subset/data_sample/sample_id/$$
+we are computing the average integrand for.
 
 $head pack_vec$$
 This argument has prototype
@@ -562,15 +552,16 @@ $end
 */
 template <class Float>
 Float data_model::avg_no_ode(
-	size_t                        data_id  ,
-	const CppAD::vector<Float>&   pack_vec ) const
+	size_t                        sample_id ,
+	const CppAD::vector<Float>&   pack_vec  ) const
 {	size_t i, j, k, ell;
 	assert( pack_object_.size() == pack_vec.size() );
 
 	// data table infomation for this data point
-	const CppAD::vector<double>& x = data_table_[ data_id ].x;
+	const CppAD::vector<double>& x = data_sample_[ sample_id ].x;
 
 	// data_info information for this data point
+	size_t data_id = data_sample_[sample_id].data_id;
 	integrand_enum integrand           = data_info_[ data_id].integrand;
 	size_t i_min                       = data_info_[data_id ].i_min;
 	size_t j_min                       = data_info_[data_id ].j_min;
@@ -1325,12 +1316,13 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 ) const
 {	CppAD::vector< residual_struct<Float> > residual_vec;
 
-	// loop over data that is for parent node or one of its descendents
-	for(size_t data_id = 0; data_id < data_table_.size(); data_id++)
-	if( data_info_[data_id].child <= n_child_ )
-	{	// compute avgerage of integrand for this data
+	// loop over the subsampled data
+	for(size_t sample_id = 0; sample_id < data_sample_.size(); sample_id++)
+	{	size_t data_id = data_sample_[sample_id].data_id;
+
+		// compute avgerage of integrand for this data
 		Float avg;
-		integrand_enum integrand  = data_info_[ data_id].integrand;
+		integrand_enum integrand  = data_info_[data_id].integrand;
 		switch( integrand )
 		{	case incidence_enum:
 			case remission_enum:
@@ -1338,7 +1330,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 			case mtother_enum:
 			case mtwith_enum:
 			case relrisk_enum:
-			avg = avg_no_ode(data_id, pack_vec);
+			avg = avg_no_ode(sample_id, pack_vec);
 			break;
 
 			case prevalence_enum:

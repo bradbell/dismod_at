@@ -27,9 +27,8 @@ $icode%data_sample% = data_subset(
 	%data_table%, %covariate_table%, %child_object%
 )%$$
 
-$head Purpose$$
-This routine subsamples the data, and
-modifies the covariate values, in the following ways:
+$head Limit$$
+This routine subsamples the data, in the following way:
 $list number$$
 Only data corresponding to nodes that are descendants of the
 $cref/parent_node/fit_table/parent_node_id/$$ are included.
@@ -37,11 +36,13 @@ $lnext
 Only data for which the covariates satisfy the
 $cref/max_difference/covariate_table/max_difference/$$ criteria
 are included.
-$lnext
-The
+$lend
+
+$head Covariate Reference$$
+The subsampled data rows are the same as the corresponding original
+data row except that for each covariate, its
 $cref/reference/covariate_table/reference/$$ value is subtracted
-from each of the covariate values.
-$lend.
+from the value of the covariate in $icode data_table$$.
 
 $head data_table$$
 This argument has prototype
@@ -73,28 +74,38 @@ the conditions above.
 The structure has all the fields that are present in
 $cref/data_struct/get_data_table/data_struct/$$.
 
+$subhead n_sample$$
+We use the notation $icode%n_sample% = %data_sample%.size()%$$.
+
+$subhead sample_id$$
+We use the notation $icode sample_id$$ for an index between
+zero and $icode%n_sample%-1%$$,
+
 $subhead data_id$$
 There an extra field in $code data_struct$$ that has
 name $code data_id$$, type $code int$$.
-The values in this field for $icode data_sample$$ is equal to the
+The values in this field are equal to the
 $icode data_id$$ for the corresponding row of $cref data_table$$.
-The value of $icode%data_sample%[%i%].data_id%$$ increases with $icode i$$;
-i.e., for each $icode i$$ between zero and $icode%data_sample%.size()-2%$$,
+The value of
 $codei%
-	%data_sample%[%i%].data_id < %data_sample%[%i%+1].data_id
+	%data_sample%[%sample_id%].data_id
+%$$
+increases with $icode sample_id$$;
+i.e., for each $icode sample_id$$ less than $icode%n_sample%-2%$$,
+$codei%
+	%data_sample%[%sample_id%].data_id < %data_sample%[%sample_id%+1].data_id
 %$$
 
 $subhead x$$
-For each $icode i$$ between zero and $icode%data_sample%.size()-1%$$,
-we use
+For each $icode sample_id$$ we use
 $codei%
-	row(%i%) = %data_table%[ %data_sample%[%i%].data_id ]
+	row(%sample_id%) = %data_table%[ %data_sample%[%sample_id%].data_id ]
 %$$
 to denote the corresponding row of $icode data_table$$.
 For each $cref/covariate_id/covariate_table/covariate_id/$$,
 $codei%
-	%data_sample%[%i%].x[%covariate_id%] =
-		row(%i%).x[%covariate_id%] - reference(%covariate_id%)
+	%data_sample%[%sample_id%].x[%covariate_id%] =
+		row(%sample_id%).x[%covariate_id%] - reference(%covariate_id%)
 %$$
 where $codei%reference(%covariate_id%)%$$ is the
 $cref/reference/covariate_table/reference/$$ value for the
@@ -104,11 +115,12 @@ $cref/max_difference/covariate_table/max_difference/$$
 value is $code null$$ in the covariate table,
 or the covariate value is $code null$$ in the data table,
 $codei%
-	%data_sample%[%i%].x[%covariate_id%] = 0
+	%data_sample%[%sample_id%].x[%covariate_id%] = 0
 %$$
 Also note that
 $codei%
-	| %data_sample%[%i%].x[%covariate_id%] | <= max_difference(%covariate_id%)
+	| %data_sample%[%sample_id%].x[%covariate_id%] | <=
+		max_difference(%covariate_id%)
 %$$
 where $codei%max_difference(%covariate_id%)%$$ is the
 maximum difference for the corresponding $icode covariate_id$$.
