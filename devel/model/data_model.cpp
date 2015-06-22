@@ -221,8 +221,8 @@ pack_object_   (pack_object)
 	}
 	//
 	// data_ode_info_ has same size as data_table
-	size_t n_data = data_table.size();
-	data_info_.resize( n_data );
+	size_t n_sample = data_sample.size();
+	data_info_.resize( n_sample );
 	//
 	// limits of the ode grid
 	double age_min    = age_table[0];
@@ -233,7 +233,6 @@ pack_object_   (pack_object)
 	assert( age_max  <= age_min  + n_age_ode * ode_step_size );
 	assert( time_max <= time_min + n_time_ode * ode_step_size );
 	//
-	size_t n_sample = data_sample.size();
 	for(size_t sample_id = 0; sample_id < n_sample; sample_id++)
 	{	// information for this data point
 		size_t data_id = data_sample[sample_id].data_id;
@@ -454,18 +453,18 @@ pack_object_   (pack_object)
 		density_enum density = density_enum(density_id);
 
 		// set the information for this data point
-		data_info_[data_id].integrand = integrand;
-		data_info_[data_id].density   = density;
-		data_info_[data_id].child     = child;
-		data_info_[data_id].i_min     = i_min;
-		data_info_[data_id].j_min     = j_min;
-		data_info_[data_id].n_age     = n_age;
-		data_info_[data_id].n_time    = n_time;
-		data_info_[data_id].eta       = eta;
+		data_info_[sample_id].integrand = integrand;
+		data_info_[sample_id].density   = density;
+		data_info_[sample_id].child     = child;
+		data_info_[sample_id].i_min     = i_min;
+		data_info_[sample_id].j_min     = j_min;
+		data_info_[sample_id].n_age     = n_age;
+		data_info_[sample_id].n_time    = n_time;
+		data_info_[sample_id].eta       = eta;
 		//
-		data_info_[data_id].c_ode.resize(n_age * n_time);
+		data_info_[sample_id].c_ode.resize(n_age * n_time);
 		for(k = 0; k < n_age * n_time; k++)
-			data_info_[data_id].c_ode[k] = c_sum[k] / sum;
+			data_info_[sample_id].c_ode[k] = c_sum[k] / sum;
 	}
 }
 /*
@@ -563,14 +562,13 @@ Float data_model::avg_no_ode(
 	const CppAD::vector<double>& x = data_sample_[ sample_id ].x;
 
 	// data_info information for this data point
-	size_t data_id = data_sample_[sample_id].data_id;
-	integrand_enum integrand           = data_info_[ data_id].integrand;
-	size_t i_min                       = data_info_[data_id ].i_min;
-	size_t j_min                       = data_info_[data_id ].j_min;
-	size_t n_age                       = data_info_[data_id ].n_age;
-	size_t n_time                      = data_info_[data_id ].n_time;
-	size_t child                       = data_info_[data_id ].child;
-	const CppAD::vector<double>& c_ode = data_info_[data_id ].c_ode;
+	integrand_enum integrand           = data_info_[sample_id].integrand;
+	size_t i_min                       = data_info_[sample_id].i_min;
+	size_t j_min                       = data_info_[sample_id].j_min;
+	size_t n_age                       = data_info_[sample_id].n_age;
+	size_t n_time                      = data_info_[sample_id].n_time;
+	size_t child                       = data_info_[sample_id].child;
+	const CppAD::vector<double>& c_ode = data_info_[sample_id].c_ode;
 
 	// check that this data's node is a descendent of the parent node
 	assert( child <= n_child_ );
@@ -803,9 +801,8 @@ Float data_model::avg_yes_ode(
 	size_t                        sample_id ,
 	const CppAD::vector<Float>&   pack_vec  ) const
 {
-	size_t data_id = data_sample_[sample_id].data_id;
 # ifndef NDEBUG
-	switch( data_info_[data_id].integrand )
+	switch( data_info_[sample_id].integrand )
 	{
 		case incidence_enum:
 		case remission_enum:
@@ -827,13 +824,13 @@ Float data_model::avg_yes_ode(
 	const CppAD::vector<double>& x     = data_sample_[sample_id].x;
 
 	// data_info infomation for this data point
-	integrand_enum integrand           = data_info_[ data_id].integrand;
-	size_t i_min                       = data_info_[data_id ].i_min;
-	size_t j_min                       = data_info_[data_id ].j_min;
-	size_t n_age_sub                   = data_info_[data_id ].n_age;
-	size_t n_time_sub                  = data_info_[data_id ].n_time;
-	size_t child                       = data_info_[data_id ].child;
-	const CppAD::vector<double>& c_ode = data_info_[data_id ].c_ode;
+	integrand_enum integrand           = data_info_[sample_id].integrand;
+	size_t i_min                       = data_info_[sample_id].i_min;
+	size_t j_min                       = data_info_[sample_id].j_min;
+	size_t n_age_sub                   = data_info_[sample_id].n_age;
+	size_t n_time_sub                  = data_info_[sample_id].n_time;
+	size_t child                       = data_info_[sample_id].child;
+	const CppAD::vector<double>& c_ode = data_info_[sample_id].c_ode;
 
 	// check that this data's node is a descendent of the parent node
 	assert( child <= n_child_ );
@@ -1138,7 +1135,6 @@ residual_struct<Float> data_model::like_one(
 	assert( pack_object_.size() == pack_vec.size() );
 
 	// data_id
-	size_t data_id = data_sample_[sample_id].data_id;
 
 	// data table infomation for this data point
 	const CppAD::vector<double>& x = data_sample_[sample_id].x;
@@ -1148,13 +1144,13 @@ residual_struct<Float> data_model::like_one(
 	assert( sigma > 0.0 );
 
 	// data_info information for this data point
-	density_enum   density             = data_info_[data_id].density;
-	double eta                         = data_info_[data_id].eta;
-	size_t i_min                       = data_info_[data_id].i_min;
-	size_t j_min                       = data_info_[data_id].j_min;
-	size_t n_age                       = data_info_[data_id].n_age;
-	size_t n_time                      = data_info_[data_id].n_time;
-	const CppAD::vector<double>& c_ode = data_info_[data_id].c_ode;
+	density_enum   density             = data_info_[sample_id].density;
+	double eta                         = data_info_[sample_id].eta;
+	size_t i_min                       = data_info_[sample_id].i_min;
+	size_t j_min                       = data_info_[sample_id].j_min;
+	size_t n_age                       = data_info_[sample_id].n_age;
+	size_t n_time                      = data_info_[sample_id].n_time;
+	const CppAD::vector<double>& c_ode = data_info_[sample_id].c_ode;
 
 	// ode subgrid that we covariates at
 	size_t n_ode = n_age * n_time;
@@ -1306,11 +1302,9 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 
 	// loop over the subsampled data
 	for(size_t sample_id = 0; sample_id < data_sample_.size(); sample_id++)
-	{	size_t data_id = data_sample_[sample_id].data_id;
-
-		// compute avgerage of integrand for this data
+	{	// compute avgerage of integrand for this data
 		Float avg;
-		integrand_enum integrand  = data_info_[data_id].integrand;
+		integrand_enum integrand  = data_info_[sample_id].integrand;
 		switch( integrand )
 		{	case incidence_enum:
 			case remission_enum:
@@ -1341,16 +1335,16 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \
 	template Float data_model::avg_no_ode(                  \
-		size_t                        data_id  ,            \
+		size_t                        sample_id,            \
 		const CppAD::vector<Float>&   pack_vec              \
 	) const;                                                \
 	template Float data_model::avg_yes_ode(                 \
-		size_t                        data_id  ,            \
+		size_t                        sample_id,            \
 		const CppAD::vector<Float>&   pack_vec              \
 	) const;                                                \
 	template residual_struct<Float>                         \
 	data_model::like_one(                                   \
-		size_t                        data_id  ,            \
+		size_t                        sample_id,            \
 		const CppAD::vector<Float>&   pack_vec ,            \
 		const Float&                  avg                   \
 	) const;                                                \
