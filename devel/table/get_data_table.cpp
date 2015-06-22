@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -27,7 +27,7 @@ $index data, get table$$
 $index table, get data$$
 
 $head Syntax$$
-$icode%data_table% = get_data_table(%db%, %covariate_table%)%$$
+$icode%data_table% = get_data_table(%db%, %n_covariate%)%$$
 
 $head Purpose$$
 To read the $cref data_table$$ and return it as a C++ data structure.
@@ -39,13 +39,12 @@ $codei%
 %$$
 and is an open connection to the database.
 
-$head covariate_table$$
+$head n_covariate$$
 This argument has prototype
 $codei%
-	const CppAD::vector<covariate_struct>& %covariate_table%
+	size_t n_covariate
 %$$
-and is the $cref/covariate_table/get_covariate_table/$$.
-Only the $code reference$$ column of this table is used.
+and is the size of the $cref/covariate_table/get_covariate_table/$$.
 
 $head data_table$$
 The return value $icode data_table$$ has prototype
@@ -65,10 +64,7 @@ $codei%
 %$$
 is the value of the covariate corresponding to the
 $cref/covariate_id/covariate_table/covariate_id/$$
-and the $icode data_id$$,
-minus the corresponding
-$cref/reference/covariate_table/reference/$$ value
-corresponding to the $icode covariate_id$$.
+and the $icode data_id$$.
 
 $head data_struct$$
 This is a structure with the following fields
@@ -124,9 +120,7 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<data_struct> get_data_table(
-	sqlite3*                               db              ,
-	const CppAD::vector<covariate_struct>& covariate_table )
+CppAD::vector<data_struct> get_data_table(sqlite3* db, size_t n_covariate)
 {	using std::string;
 	// TODO: This could be more efficient if we only allcated one temporary
 	// column at a time (to use with get_table column
@@ -184,9 +178,6 @@ CppAD::vector<data_struct> get_data_table(
 	get_table_column(db, table_name, column_name, time_upper);
 	assert( n_data == time_upper.size() );
 
-	// number of covariate values
-	size_t n_covariate = covariate_table.size();
-
 	// fill in all but the covariate values
 	CppAD::vector<data_struct> data_table(n_data);
 	for(size_t i = 0; i < n_data; i++)
@@ -213,7 +204,7 @@ CppAD::vector<data_struct> get_data_table(
 		CppAD::vector<double> x_j;
 		get_table_column(db, table_name, column_name, x_j);
 		for(size_t i = 0; i < n_data; i++)
-			data_table[i].x[j] = x_j[i] - covariate_table[j].reference;
+			data_table[i].x[j] = x_j[i];
 	}
 	return data_table;
 }
