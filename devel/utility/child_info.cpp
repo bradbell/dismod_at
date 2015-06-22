@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin child_data$$
+$begin child_info$$
 $spell
 	dismod
 	const
@@ -20,19 +20,19 @@ $$
 $section Child Indices and Data Indices$$
 
 $head Syntax$$
-$codei%child_data %cd%(%parent_node_id%, %node_table%, %data_table%)
+$codei%child_info %child_object%(%parent_node_id%, %node_table%, %data_table%)
 %$$
-$icode%n_child%  = %cd%.child_size()
+$icode%n_child%  = %child_object%.child_size()
 %$$
-$icode%node_id%  = %cd%.child_id2node_id(%child_id%)
+$icode%node_id%  = %child_object%.child_id2node_id(%child_id%)
 %$$
-$icode%child%    = %cd%.data_id2child(%data_id%)
+$icode%child%    = %child_object%.data_id2child(%data_id%)
 %$$
 
-$head cd$$
+$head child_object$$
 Except for it's constructor, this object has prototype
 $codei%
-	const child_data %cd%
+	const child_info %child_object%
 %$$
 
 $head Constructor$$
@@ -115,7 +115,7 @@ the $cref/node_id/data_table/node_id/$$ for this
 $icode data_id$$ is a descendent
 of the node
 $codei%
-	%cd%.child_id2node_id(%child%)
+	%child_object%.child_id2node_id(%child%)
 %$$
 in the $cref node_table$$.
 $pre
@@ -133,11 +133,11 @@ not a descendent of the parent node.
 
 $end
 */
-# include <dismod_at/child_data.hpp>
+# include <dismod_at/child_info.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-child_data::child_data(
+child_info::child_info(
 	size_t                            parent_node_id ,
 	const CppAD::vector<node_struct>& node_table     ,
 	const CppAD::vector<data_struct>& data_table     )
@@ -177,13 +177,13 @@ child_data::child_data(
 
 }
 
-size_t child_data::child_size(void) const
+size_t child_info::child_size(void) const
 {	return child_id2node_id_.size(); }
 
-size_t child_data::child_id2node_id(size_t child_id) const
+size_t child_info::child_id2node_id(size_t child_id) const
 {	return child_id2node_id_[child_id]; }
 
-size_t child_data::data_id2child(size_t data_id) const
+size_t child_info::data_id2child(size_t data_id) const
 {	return data_id2child_[data_id]; }
 
 

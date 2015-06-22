@@ -34,7 +34,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	model/prior_model.cpp
 
 	utility/bilinear_interp.cpp
-	utility/child_data.cpp
+	utility/child_info.cpp
 	utility/eigen_ode2.cpp
 	utility/fixed_effect.cpp
 	utility/integrate_1d.cpp

@@ -47,7 +47,7 @@ $end
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/get_db_input.hpp>
 # include <dismod_at/fit_model.hpp>
-# include <dismod_at/child_data.hpp>
+# include <dismod_at/child_info.hpp>
 # include <dismod_at/put_table_row.hpp>
 # include <dismod_at/to_string.hpp>
 # include <dismod_at/get_column_max.hpp>
@@ -102,7 +102,7 @@ int main(int n_arg, const char** argv)
 	string max_num_iter_str = dismod_at::to_string(
 		db_input.fit_table[fit_id].max_num_iter
 	);
-	dismod_at::child_data child_object(
+	dismod_at::child_info child_object(
 		parent_node_id ,
 		db_input.node_table ,
 		db_input.data_table

@@ -159,7 +159,7 @@ $end
 # include <dismod_at/integrate_2d.hpp>
 # include <dismod_at/interp_weight.hpp>
 # include <dismod_at/table_error_exit.hpp>
-# include <dismod_at/child_data.hpp>
+# include <dismod_at/child_info.hpp>
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/solve_ode.hpp>
 # include <dismod_at/residual_density.hpp>
@@ -204,8 +204,8 @@ pack_object_   (pack_object)
 	assert( n_time_ode > 1 );
 	//
 	// set n_child_
-	child_data cd(parent_node_id, node_table, data_table);
-	n_child_ = cd.child_size();
+	child_info child_object(parent_node_id, node_table, data_table);
+	n_child_ = child_object.child_size();
 	assert( n_child_ == pack_object.child_size() );
 	//
 	// si2ode_vec_ has same size as s_info_vec
@@ -443,7 +443,7 @@ pack_object_   (pack_object)
 		double eta               = integrand_table[integrand_id].eta;
 
 		// child of parent node that this data is associated with
-		size_t  child            = cd.data_id2child(data_id);
+		size_t  child            = child_object.data_id2child(data_id);
 
 		// density for this data point
 		size_t density_id    = data_table[data_id].density_id;
@@ -513,9 +513,9 @@ The $icode data_id$$ must correspond to a
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
 $cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
-$cref/child/child_data/data_id2child/child/$$ value
+$cref/child/child_info/data_id2child/child/$$ value
 less than or equal
-$cref/n_child/child_data/child_size/n_child/$$.
+$cref/n_child/child_info/child_size/n_child/$$.
 
 $head pack_vec$$
 This argument has prototype
@@ -771,9 +771,9 @@ The $icode data_id$$ must correspond to a
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
 $cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
-$cref/child/child_data/data_id2child/child/$$ value
+$cref/child/child_info/data_id2child/child/$$ value
 less than or equal
-$cref/n_child/child_data/child_size/n_child/$$.
+$cref/n_child/child_info/child_size/n_child/$$.
 
 $subhead Integrand$$
 The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
@@ -1099,9 +1099,9 @@ The $icode data_id$$ must correspond to a
 $cref/node_id/data_table/node_id/$$ that is a descendant of the
 $cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
 the function $code data_id2child$$ returns a
-$cref/child/child_data/data_id2child/child/$$ value
+$cref/child/child_info/data_id2child/child/$$ value
 less than or equal
-$cref/n_child/child_data/child_size/n_child/$$.
+$cref/n_child/child_info/child_size/n_child/$$.
 
 $head pack_vec$$
 This argument has prototype
@@ -1287,7 +1287,7 @@ or is a descendent of the parent node; i.e.,
 $codei%
 	data_id2child(%data_id%) <= %n_child%
 %$$
-see $cref/data_id2child/child_data/data_id2child/$$.
+see $cref/data_id2child/child_info/data_id2child/$$.
 
 
 $head Float$$

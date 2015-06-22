@@ -56,7 +56,7 @@ extern bool prior_random_xam(void);
 
 // utility subdirectory
 extern bool bilinear_interp_xam(void);
-extern bool child_data_xam(void);
+extern bool child_info_xam(void);
 extern bool eigen_ode2_xam(void);
 extern bool fixed_effect_xam(void);
 extern bool pack_info_xam(void);
@@ -152,7 +152,7 @@ int main(void)
 
 	// utility subdirectory
 	RUN(bilinear_interp_xam);
-	RUN(child_data_xam);
+	RUN(child_info_xam);
 	RUN(eigen_ode2_xam);
 	RUN(fixed_effect_xam);
 	RUN(integrate_1d_xam);
