@@ -233,16 +233,18 @@ pack_object_   (pack_object)
 	assert( age_max  <= age_min  + n_age_ode * ode_step_size );
 	assert( time_max <= time_min + n_time_ode * ode_step_size );
 	//
-	for(size_t data_id = 0; data_id < n_data; data_id++)
+	size_t n_sample = data_sample.size();
+	for(size_t sample_id = 0; sample_id < n_sample; sample_id++)
 	{	// information for this data point
+		size_t data_id = data_sample[sample_id].data_id;
 
 		// age limits
-		double age_lower  = data_table[data_id].age_lower;
+		double age_lower  = data_sample[sample_id].age_lower;
 		if( age_lower < age_min )
 		{	string msg = "age_lower is less than minimum age in age table";
 			table_error_exit("data", data_id, msg);
 		}
-		double age_upper  = data_table[data_id].age_upper;
+		double age_upper  = data_sample[sample_id].age_upper;
 		if( age_upper < age_lower )
 		{	string msg = "age_upper is less than age_lower";
 			table_error_exit("data", data_id, msg);
@@ -253,12 +255,12 @@ pack_object_   (pack_object)
 		}
 
 		// time limits
-		double time_lower  = data_table[data_id].time_lower;
+		double time_lower  = data_sample[sample_id].time_lower;
 		if( time_lower < time_min )
 		{	string msg = "time_lower is less than minimum time in time table";
 			table_error_exit("data", data_id, msg);
 		}
-		double time_upper  = data_table[data_id].time_upper;
+		double time_upper  = data_sample[sample_id].time_upper;
 		if( time_upper < time_lower )
 		{	string msg = "time_upper is less than time_lower";
 			table_error_exit("data", data_id, msg);
@@ -299,7 +301,7 @@ pack_object_   (pack_object)
 			c_sum[k] = 0.0;
 
 		// weighting for this data point
-		size_t weight_id = data_table[data_id].weight_id;
+		size_t weight_id = data_sample[sample_id].weight_id;
 		const weight_info& w_info( w_info_vec[weight_id] );
 
 		// indices used to interpolate weighting
@@ -440,7 +442,7 @@ pack_object_   (pack_object)
 		assert( sum > 0.0 );
 
 		// integrand and eta
-		size_t  integrand_id     = data_table[data_id].integrand_id;
+		size_t  integrand_id     = data_sample[sample_id].integrand_id;
 		integrand_enum integrand = integrand_table[integrand_id].integrand;
 		double eta               = integrand_table[integrand_id].eta;
 
@@ -448,7 +450,7 @@ pack_object_   (pack_object)
 		size_t  child            = child_object.data_id2child(data_id);
 
 		// density for this data point
-		size_t density_id    = data_table[data_id].density_id;
+		size_t density_id    = data_sample[sample_id].density_id;
 		density_enum density = density_enum(density_id);
 
 		// set the information for this data point
