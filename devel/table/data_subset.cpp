@@ -170,6 +170,7 @@ CppAD::vector<data_subset_struct> data_subset(
 			one_sample.node_id      = data_table[data_id].node_id;
 			one_sample.weight_id    = data_table[data_id].weight_id;
 			one_sample.meas_value   = data_table[data_id].meas_value;
+			one_sample.meas_std     = data_table[data_id].meas_std;
 			one_sample.age_lower    = data_table[data_id].age_lower;
 			one_sample.age_upper    = data_table[data_id].age_upper;
 			one_sample.time_lower   = data_table[data_id].time_lower;

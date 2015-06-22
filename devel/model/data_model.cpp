@@ -1047,12 +1047,12 @@ $$
 $section One Weighted Residual and Log-Likelihood for any Integrands$$
 
 $head Syntax$$
-$icode%residual% = %data_object%.like_one(%data_id%, %pack_vec%, %avg%)%$$
+$icode%residual% = %data_object%.like_one(%sample_id%, %pack_vec%, %avg%)%$$
 
 $head Log-likelihood$$
 We use $cref/y_i/data_like/Data Table Notation/y_i/$$ to denote the
 $cref/meas_value/data_table/meas_value/$$ corresponding
-to this $cref/data_id/data_table/data_id/$$.
+to this $cref/sample_id/data_subset/data_sample/sample_id/$$.
 The log-likelihood computed by $code like_one$$ is the mapping
 $latex \[
 	\ell (u, \theta) = C + \log [ \B{p} ( y_i | u , \theta ) ]
@@ -1073,22 +1073,13 @@ $head Float$$
 The type $icode Float$$ must be one of the following:
 $code double$$, $code AD<double>$$, or $cref a5_double$$.
 
-$head data_id$$
+$head sample_id$$
 This argument has prototype
 $codei%
-	size_t %data_id%
+	size_t %sample_id%
 %$$
-and is the $cref/data_id/data_table/data_id/$$ for we are computing
-the weighted residual and log-likelihood for.
-
-$subhead Node$$
-The $icode data_id$$ must correspond to a
-$cref/node_id/data_table/node_id/$$ that is a descendant of the
-$cref/parent_node_id/data_model_ctor/parent_node_id/$$; i.e.,
-the function $code data_id2child$$ returns a
-$cref/child/child_info/data_id2child/child/$$ value
-less than or equal
-$cref/n_child/child_info/child_size/n_child/$$.
+and is the $cref/sample_id/data_subset/data_sample/sample_id/$$
+we are computing the weighted residual and log-likelihood for.
 
 $head pack_vec$$
 This argument has prototype
@@ -1112,7 +1103,7 @@ $cref/average integrand/avg_integrand/Average Integrand, A_i/$$,
 $latex A_i ( u , \theta )$$, for the specified data point.
 This can be calculated using:
 $table
-routine                   $cnext integrand for this $icode data_id$$
+routine                   $cnext integrand for this $icode sample_id$$
 $rnext
 $cref data_model_avg_no_ode$$ $cnext
 	incidence, remission, mtexcess, mtother, mtwith, relrisk
@@ -1140,17 +1131,20 @@ $end
 */
 template <class Float>
 residual_struct<Float> data_model::like_one(
-	size_t                        data_id  ,
-	const CppAD::vector<Float>&   pack_vec ,
-	const Float&                  avg      ) const
+	size_t                        sample_id ,
+	const CppAD::vector<Float>&   pack_vec  ,
+	const Float&                  avg       ) const
 {	size_t i, j, k;
 	assert( pack_object_.size() == pack_vec.size() );
 
+	// data_id
+	size_t data_id = data_sample_[sample_id].data_id;
+
 	// data table infomation for this data point
-	const CppAD::vector<double>& x = data_table_[ data_id ].x;
-	double sigma                   = data_table_[ data_id ].meas_std;
-	size_t integrand_id            = data_table_[ data_id ].integrand_id;
-	double meas_value              = data_table_[ data_id ].meas_value;
+	const CppAD::vector<double>& x = data_sample_[sample_id].x;
+	double sigma                   = data_sample_[sample_id].meas_std;
+	size_t integrand_id            = data_sample_[sample_id].integrand_id;
+	double meas_value              = data_sample_[sample_id].meas_value;
 	assert( sigma > 0.0 );
 
 	// data_info information for this data point
@@ -1338,7 +1332,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 			assert(false);
 		}
 		// compute its residual and log likelihood
-		residual_struct<Float> residual = like_one(data_id, pack_vec, avg);
+		residual_struct<Float> residual = like_one(sample_id, pack_vec, avg);
 		residual_vec.push_back( residual );
 	}
 	return residual_vec;
