@@ -229,6 +229,7 @@ bool like_all_xam(void)
 		}
 	}
 	// check results
+	ok &= data_table.size() == data_sample.size();
 	CppAD::vector< dismod_at::residual_struct<Float> >
 		residual_vec = data_object.like_all(pack_vec);
 	for(size_t data_id = 0; data_id < data_table.size(); data_id++)

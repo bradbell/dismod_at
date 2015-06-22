@@ -229,6 +229,7 @@ bool like_one_xam(void)
 		}
 	}
 	// check results
+	ok &= data_table.size() == data_sample.size();
 	for(size_t data_id = 0; data_id < data_table.size(); data_id++)
 	{	Float avg   = data_object.avg_no_ode(data_id, pack_vec);
 		dismod_at::residual_struct<Float> residual

@@ -235,6 +235,7 @@ bool avg_yes_ode_xam(void)
 	int_b^c P(a) / (c - b) = [ a  + exp( -beta a ) / beta ]_b^c / (c - b)
 	*/
 	using CppAD::exp;
+	ok            &= data_table.size() == data_sample.size();
 	data_id = 0;
 	Float avg      = data_object.avg_yes_ode(data_id, pack_vec);
 	double b       = data_table[data_id].age_lower;
