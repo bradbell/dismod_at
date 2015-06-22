@@ -159,11 +159,11 @@ int main(int n_arg, const char** argv)
 		db_input.time_table      ,
 		db_input.integrand_table ,
 		db_input.node_table      ,
-		db_input.data_table      ,
 		data_sample              ,
 		w_info_vec               ,
 		s_info_vec               ,
-		pack_object
+		pack_object              ,
+		child_object
 	);
 	// ------------------ run fit_model ------------------------------------
 	dismod_at::fit_model fit_object(

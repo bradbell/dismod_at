@@ -13,7 +13,6 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <limits>
 # include <cppad/vector.hpp>
-# include "get_data_table.hpp"
 # include "data_subset.hpp"
 # include "get_integrand_table.hpp"
 # include "get_density_table.hpp"
@@ -42,7 +41,6 @@ private:
 	const size_t                              n_age_ode_;
 	const size_t                              n_time_ode_;
 	const double                              ode_step_size_;
-	const CppAD::vector<data_struct>&         data_table_;
 	const CppAD::vector<data_subset_struct>&  data_sample_;
 	const pack_info                           pack_object_;
 
@@ -60,11 +58,11 @@ public:
 		const CppAD::vector<double>&             time_table      ,
 		const CppAD::vector<integrand_struct>&   integrand_table ,
 		const CppAD::vector<node_struct>&        node_table      ,
-		const CppAD::vector<data_struct>&        data_table      ,
 		const CppAD::vector<data_subset_struct>& data_sample     ,
 		const CppAD::vector<weight_info>&        w_info_vec      ,
 		const CppAD::vector<smooth_info>&        s_info_vec      ,
-		const pack_info&                         pack_object
+		const pack_info&                         pack_object     ,
+		const child_info&                        child_object
 	);
 	// destructor must delete the smooth2ode objects pointed to by si2ode_vec_
 	~data_model(void);

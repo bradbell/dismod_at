@@ -32,17 +32,10 @@ $codei%data_model %data_object%(
 	%time_table%,
 	%integrand_table%,
 	%node_table%,
-	%data_table%,
 	%w_info_vec%,
 	%s_info_vec%,
 	%pack_object%
 )%$$
-
-$head Reference$$
-The $icode data_table$$ is not copied,
-instead a reference to is stored in $icode data_object$$.
-Thus, $icode data_object$$ should not be used after $icode data_table$$
-is deleted.
 
 $head data_object$$
 This object has prototype
@@ -111,12 +104,13 @@ $codei%
 and is the $cref/node_table/get_node_table/node_table/$$.
 Only the $code parent$$ field of this table is used.
 
-$head data_table$$
+$head data_sample$$
 This argument has prototype
 $codei%
-	const CppAD::vector<data_struct>&  %data_table%
+	const CppAD::vector<data_subset_struct>&  %data_sample%
 %$$
-and is the $cref/data_table/get_data_table/data_table/$$.
+and is the sub-sampled version of the data table; see
+$cref/data_sample/data_subset/data_sample/$$.
 
 $head w_info_vec$$
 This argument has prototype
@@ -150,6 +144,14 @@ $codei%
 %$$
 and is the $cref devel_pack_info$$ information corresponding to
 the $cref/model_variables/model_variable/$$.
+
+$head child_object$$
+This argument has prototype
+$codei%
+	const child_info& %child_object%
+%$$
+and is the $cref child_info$$ information corresponding to
+parent node, node table, and data table.
 
 $end
 -----------------------------------------------------------------------------
@@ -185,16 +187,15 @@ data_model::data_model(
 	const CppAD::vector<double>&             time_table      ,
 	const CppAD::vector<integrand_struct>&   integrand_table ,
 	const CppAD::vector<node_struct>&        node_table      ,
-	const CppAD::vector<data_struct>&        data_table      ,
 	const CppAD::vector<data_subset_struct>& data_sample     ,
 	const CppAD::vector<weight_info>&        w_info_vec      ,
 	const CppAD::vector<smooth_info>&        s_info_vec      ,
-	const pack_info&                         pack_object     )
+	const pack_info&                         pack_object     ,
+	const child_info&                        child_object    )
 :
 n_age_ode_     (n_age_ode)        ,
 n_time_ode_    (n_time_ode)       ,
 ode_step_size_ (ode_step_size)    ,
-data_table_    (data_table)       ,
 data_sample_   (data_sample)      ,
 pack_object_   (pack_object)
 {	using std::string;
@@ -206,7 +207,6 @@ pack_object_   (pack_object)
 	assert( n_time_ode > 1 );
 	//
 	// set n_child_
-	child_info child_object(parent_node_id, node_table, data_table);
 	n_child_ = child_object.child_size();
 	assert( n_child_ == pack_object.child_size() );
 	//
@@ -220,7 +220,7 @@ pack_object_   (pack_object)
 		);
 	}
 	//
-	// data_ode_info_ has same size as data_table
+	// data_ode_info_ has same size as data_sample
 	size_t n_sample = data_sample.size();
 	data_info_.resize( n_sample );
 	//
@@ -520,7 +520,8 @@ specified by $cref devel_pack_info$$.
 
 $subhead Integrand and Rates$$
 The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
-$icode data_id$$ must be one of those listed in the table below.
+$cref/sample_id/data_subset/data_sample/sample_id/$$
+must be one of those listed in the table below.
 In addition, depending on the integrand, only the corresponding
 $cref devel_pack_info_rate$$ and $cref devel_pack_info_rate_mulcov$$ subvectors of
 $icode pack_vec$$ are used:
@@ -761,7 +762,8 @@ we are computing the average integrand for.
 
 $subhead Integrand$$
 The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
-$icode data_id$$ must be one of the following:
+$cref/sample_id/data_subset/data_sample/sample_id/$$
+must be one of the following:
 $code prevalence_enum$$,
 $code mtspecific_enum$$,
 $code mtall_enum$$,
@@ -1134,8 +1136,6 @@ residual_struct<Float> data_model::like_one(
 {	size_t i, j, k;
 	assert( pack_object_.size() == pack_vec.size() );
 
-	// data_id
-
 	// data table infomation for this data point
 	const CppAD::vector<double>& x = data_sample_[sample_id].x;
 	double sigma                   = data_sample_[sample_id].meas_std;
@@ -1244,8 +1244,8 @@ $codei%
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $subhead i$$
-We use $icode i$$ to
-denote the $cref/data_id/data_table/data_id/$$
+We use $icode i$$ to denote the
+$cref/sample_id/data_subset/data_sample/sample_id/$$
 for a row in the data table.
 
 $subhead y_i$$
@@ -1255,17 +1255,6 @@ $cref/meas_value/data_table/meas_value/$$.
 $subhead n_i$$
 We use $icode n_i$$ to denote the corresponding
 $cref/node_id/data_table/node_id/$$.
-
-$subhead I$$
-We use $icode I$$ to denote the set of $icode data_id$$
-such that $icode n_i$$ is equal to
-$cref/parent node/fit_table/parent_node_id/$$,
-or is a descendent of the parent node; i.e.,
-$codei%
-	data_id2child(%data_id%) <= %n_child%
-%$$
-see $cref/data_id2child/child_info/data_id2child/$$.
-
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -1285,7 +1274,8 @@ The return value has prototype
 $codei%
 	CppAD::vector< residual_struct<%Float%> > %residual_vec%
 %$$
-The size of $icode residual$$ is equal the number of elements in $icode I$$.
+The size of $icode residual$$ is equal the number of samples
+$cref/n_sample/data_subset/data_sample/n_sample/$$.
 The order of the residuals is unspecified (at this time).
 The log of the density
 $latex \B{p}( y | u , \theta )$$,

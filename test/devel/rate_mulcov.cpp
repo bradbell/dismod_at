@@ -227,11 +227,11 @@ bool rate_mulcov(void)
 		time_table,
 		integrand_table,
 		node_table,
-		data_table,
 		data_sample,
 		w_info_vec,
 		s_info_vec,
-		pack_object
+		pack_object,
+		child_object
 	);
 	//
 	// pack_vec
