@@ -25,5 +25,5 @@ LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )
 SET_TARGET_PROPERTIES(
 	test_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
-TARGET_LINK_LIBRARIES(test_devel sqlite3 devel_lib)
+TARGET_LINK_LIBRARIES(test_devel devel_lib sqlite3)
 ADD_CUSTOM_TARGET(check_test_devel test_devel DEPENDS test_devel )

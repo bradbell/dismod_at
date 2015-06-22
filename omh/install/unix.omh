@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin install_unix$$
 $dollar @$$
 $spell
+	tgz
 	pkgconfig
 	cppad
 	make make
@@ -27,10 +28,10 @@ $$
 $section Installing dismod_at in Unix$$
 
 $head Download$$
-Download the tarball $href%dismod_at-20150619.tgz%$$
+Download the tarball $href%dismod_at-20150622.tgz%$$
 and then extract it using the command
 $codei%
-	tar -xzf dismod_at-20150619
+	tar -xzf dismod_at-20150622.tgz
 %$$
 
 $head System Requirements$$
@@ -41,6 +42,10 @@ $subhead C++ Compiler$$
 The $code dismod_at$$ program can be compiled by any C++98 compliant compiler;
 e.g., $code g++$$.
 (Note that a C++11 compiler would be better.)
+
+$subhead Fortran Compiler$$
+A fortran compiler is required by $code ipopt$$ which in turn
+is required by $code dismod_at$$.
 
 $subhead cmake$$
 $href%http://www.cmake.org/%cmake%$$,
@@ -67,7 +72,7 @@ The $href%http://eigen.tuxfamily.org%eigen%$$
 linear algebra package.
 The commands
 $codei%
-	cd dismod_at-20150619
+	cd dismod_at-20150622
 	bin/install_eigen.sh
 %$$
 can be used for this purpose.
@@ -82,7 +87,7 @@ The $href%https://projects.coin-or.org/Ipopt%Ipopt%$$
 optimization package.
 The commands
 $codei%
-	cd dismod_at-20150619
+	cd dismod_at-20150622
 	bin/install_ipopt.sh
 %$$
 can be used for this purpose.
@@ -97,7 +102,7 @@ The $href%http://www.coin-or.org/CppAD/%cppad%$$
 C++ algorithmic differentiation package.
 The commands
 $codei%
-	cd dismod_at-20150619
+	cd dismod_at-20150622
 	bin/install_cppad.sh
 %$$
 can be used for this purpose.
