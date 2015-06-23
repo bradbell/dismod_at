@@ -103,7 +103,7 @@ $subhead Number of Children$$
 The number of children $icode n_child$$ is the size of the
 $cref/child group/node_table/parent/Child Group/$$ for which
 the parent node is
-$cref/parent_node_id/fit_table/parent_node_id/$$.
+$cref/parent_node_id/fit_command/parent_node_id/$$.
 
 $subhead Initial Prevalence$$
 Let $latex p_0 (t)$$ to denote the

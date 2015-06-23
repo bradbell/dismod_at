@@ -42,7 +42,7 @@
 #
 # $head parent_node_id$$
 # is an $code in$$ corresponding to the
-# $cref/parent_node_id/fit_table/parent_node_id/$$ for this fit.
+# $cref/parent_node_id/fit_command/parent_node_id/$$ for the fit command.
 #
 # $head node_dict$$
 # This is a list of dictionaries.

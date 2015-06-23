@@ -42,8 +42,9 @@ This argument has prototype
 $codei%
 	size_t %parent_node_id%
 %$$
-and is the fit table
-$cref/parent_node_id/fit_table/parent_node_id/$$.
+and is the
+$cref/parent_node_id/fit_command/parent_node_id/$$.
+for the fit command.
 
 $subhead node_table$$
 This argument has prototype

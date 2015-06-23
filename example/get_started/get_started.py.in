@@ -189,17 +189,6 @@ rate_list = [
 	}
 ]
 # --------------------------------------------------------------------------
-# fit table
-fit_list= [
-	{	'parent_node':   'world',
-		'n_age_ode':     6,
-		'n_time_ode':    2,
-		'ode_step_size': 20.0,
-		'tolerance':     1e-8,
-		'max_num_iter':  100
-	}
-]
-# --------------------------------------------------------------------------
 # create database
 dismod_at.create_database(
 	file_name,
@@ -213,8 +202,7 @@ dismod_at.create_database(
 	prior_list,
 	smooth_list,
 	rate_list,
-	mulcov_list,
-	fit_list
+	mulcov_list
 )
 # -----------------------------------------------------------------------
 program        = '@CMAKE_BINARY_DIR@/devel/dismod_at'

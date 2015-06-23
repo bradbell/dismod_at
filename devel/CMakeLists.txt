@@ -63,7 +63,6 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	table/get_mulcov_table.cpp
 	table/get_node_table.cpp
 	table/get_rate_table.cpp
-	table/get_fit_table.cpp
 	table/get_smooth_grid.cpp
 	table/get_smooth_table.cpp
 	table/get_table_column.cpp

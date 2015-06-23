@@ -31,7 +31,7 @@ $head Limit$$
 This routine subsamples the data, in the following way:
 $list number$$
 Only data corresponding to nodes that are descendants of the
-$cref/parent_node/fit_table/parent_node_id/$$ are included.
+$cref/parent_node/fit_command/parent_node_id/$$ are included.
 $lnext
 Only data for which the covariates satisfy the
 $cref/max_difference/covariate_table/max_difference/$$ criteria

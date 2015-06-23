@@ -12,7 +12,7 @@ $begin fit_result_table$$
 $spell
 $$
 
-$section The Fit Arg Table$$
+$section The Fit Result Table$$
 The $code fit_result$$ table is created during a
 $cref fit_command$$ and records its results.
 It has the following columns:

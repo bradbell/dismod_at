@@ -173,17 +173,6 @@ def create_database() :
 			'smooth':'uniform_01_constant'
 		}
 	]
-	#
-	# fit_list
-	fit_list= [
-		{	'parent_node':'world',
-			'n_age_ode':6,
-			'n_time_ode':2,
-			'ode_step_size':20.0,
-			'tolerance':1e-8,
-			'max_num_iter':100
-		}
-	]
 	dismod_at.create_database(
 		file_name,
 		age_list,
@@ -196,8 +185,7 @@ def create_database() :
 		prior_list,
 		smooth_list,
 		rate_list,
-		mulcov_list,
-		fit_list
+		mulcov_list
 	)
 	# -----------------------------------------------------------------------
 	# Check database
@@ -335,20 +323,6 @@ def create_database() :
 	]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
 	check_list = [ [ 'rate_mean', 4, -1, 0, 0 ] ]
-	assert row_list == check_list
-	#
-	# fit_table
-	tbl_name = 'fit'
-	col_name = [
-		'parent_node_id',
-		'n_age_ode',
-		'n_time_ode',
-		'ode_step_size',
-		'tolerance',
-		'max_num_iter'
-	]
-	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
-	check_list = [ [ 0, 6, 2, 20.0, 1e-8, 100 ] ]
 	assert row_list == check_list
 	# -----------------------------------------------------------------------
 	print('create_database: OK')

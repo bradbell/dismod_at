@@ -48,8 +48,9 @@ This argument has prototype
 $codei%
 	size_t %parent_node_id%
 %$$
-and is the fit table
-$cref/parent_node_id/fit_table/parent_node_id/$$.
+and is the
+$cref/parent_node_id/fit_command/parent_node_id/$$.
+in the fit command.
 
 $head n_age_ode$$
 This argument has prototype
@@ -72,8 +73,8 @@ This argument has prototype
 $codei%
 	double %ode_step_size%
 %$$
-and is the value of $cref/ode_step_size/fit_table/ode_step_size/$$
-in the fit table.
+and is the value of $cref/ode_step_size/fit_command/ode_step_size/$$
+in the fit command.
 
 $head age_table$$
 This argument has prototype

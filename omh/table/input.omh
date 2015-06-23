@@ -28,19 +28,11 @@ $code integer primary key$$ and name $icode%tbl_name%_id%$$.
 The values in this column start at zero and increment by one
 for each row in the table.
 
-$head Constant$$
-The results in the $cref variable_table$$ depend on all the input
-table and can't be properly interpreted if the input tables change.
-There is one exception to this rule,
-extra rows can be added to the $cref fit_table$$
-(to control more fits with the same inputs).
-
 $childtable%
 	omh/table/age_table.omh
 	%omh/table/covariate_table.omh
 	%omh/table/data_table.omh
 	%omh/table/density_table.omh
-	%omh/table/fit_table.omh
 	%omh/table/integrand_table.omh
 	%omh/table/mulcov_table.omh
 	%omh/table/node_table.omh

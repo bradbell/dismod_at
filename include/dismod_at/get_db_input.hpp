@@ -18,7 +18,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_covariate_table.hpp"
 # include "get_data_table.hpp"
 # include "get_density_table.hpp"
-# include "get_fit_table.hpp"
 # include "get_integrand_table.hpp"
 # include "get_mulcov_table.hpp"
 # include "get_node_table.hpp"
@@ -38,7 +37,6 @@ namespace dismod_at {
 		CppAD::vector<covariate_struct>   covariate_table;
 		CppAD::vector<data_struct>        data_table;
 		CppAD::vector<density_enum>       density_table;
-		CppAD::vector<fit_struct>         fit_table;
 		CppAD::vector<integrand_struct>   integrand_table;
 		CppAD::vector<mulcov_struct>      mulcov_table;
 		CppAD::vector<node_struct>        node_table;

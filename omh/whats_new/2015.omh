@@ -1,0 +1,27 @@
+$Id:$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin whats_new_2015$$
+
+$section Change and Additioins to Dismod_at$$
+
+$head 06-23$$
+The $cref fit_command$$ was changed so that there can only be
+on set of results in the data base.
+This also replaced the $code fit_table$$ with the
+$cref fit_arg_table$$ and the $code variable_table$$ with the
+$cref fit_result_table$$.
+
+
+$head 06-22$$
+First version of $code dismod_at$$ is available to be downloaded and installed;
+see $cref install_unix$$.
+
+$end

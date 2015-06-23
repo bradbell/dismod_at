@@ -69,8 +69,8 @@ This argument has prototype
 $codei%
 	const %Float%& %step_size%
 %$$
-and is the value of $cref/ode_step_size/fit_table/ode_step_size/$$
-in the fit table.
+and is the value of $cref/ode_step_size/fit_command/ode_step_size/$$
+in the fit command.
 
 $head pini$$
 This argument has prototype
