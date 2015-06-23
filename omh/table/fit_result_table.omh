@@ -1,0 +1,32 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin fit_result_table$$
+$spell
+$$
+
+$section The Fit Arg Table$$
+The $code fit_result$$ table is created during a
+$cref fit_command$$ and records its results.
+It has the following columns:
+
+$head fit_result_id$$
+This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+$head fit_result_value$$
+This column has type $code real$$ and is
+the maximum likelihood estimate for the
+$cref model_variable$$ corresponding to index $icode fit_result_id$$.
+
+$head Example$$
+See the $cref get_started.py$$ example and test.
+
+$end
