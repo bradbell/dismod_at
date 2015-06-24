@@ -18,6 +18,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_mulcov_table.hpp"
 # include "get_rate_table.hpp"
 # include "smooth_info.hpp"
+# include "child_info.hpp"
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -96,6 +97,18 @@ public:
 	// rate_mean_mulcov_
 	size_t      rate_mean_mulcov_n_cov(size_t integrand_id) const;
 	subvec_info rate_mean_mulcov_info(size_t integrand_id, size_t j) const;
+
+	// varialbe_name
+	std::string variable_name(
+		size_t                              index          ,
+		size_t                              parent_node_id ,
+		const CppAD::vector<double>&        age_table      ,
+		const CppAD::vector<double>&        time_table     ,
+		const CppAD::vector<node_struct>    node_table     ,
+		const CppAD::vector<smooth_struct>& smooth_table   ,
+		const CppAD::vector<smooth_info>&   s_info_vec     ,
+		const child_info&                   child_object
+	) const;
 };
 
 } // END DISMOD_AT_NAMESPACE:

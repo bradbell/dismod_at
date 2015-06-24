@@ -145,6 +145,7 @@ $end
 # include <cppad/cppad.hpp>
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/to_string.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -668,6 +669,189 @@ pack_info::rate_mean_mulcov_info(size_t rate_id, size_t j) const
 {	assert( rate_id < number_rate_enum );
 	return rate_mean_mulcov_info_[rate_id][j];
 }
+/*
+$begin devel_pack_info_variable_name$$
+$spell
+	vec
+	const
+	struct
+	CppAD
+	std
+$$
 
+$section Human Readable Name for a Model Variable$$
+
+$head Syntax$$
+$icode%name% = %pack_object%.variable_name(
+	%index%,
+	%parent_node_id%,
+	%age_table%,
+	%time_table%
+	%node_table%
+	%smooth_table%,
+	%s_info_vec%,
+	%child_object%
+)%$$
+
+$head index$$
+The argument $icode index$$ has prototype
+$codei%
+	size_t %index%
+%$$
+and is its index for this model variable in a packed vector.
+
+$subhead parent_node_id$$
+This argument has prototype
+$codei%
+	size_t %parent_node_id%
+%$$
+and is the
+$cref/parent_node_id/fit_command/parent_node_id/$$.
+for the fit command.
+
+$head age_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>&  %age_table%
+%$$
+and is the $cref/age_table/get_age_table/age_table/$$.
+
+$head time_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>&  %time_table%
+%$$
+and is the $cref/time_table/get_time_table/time_table/$$.
+
+$head node_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<node_struct>& %node_table%
+%$$
+and is the $cref/node_table/get_node_table/node_table/$$.
+
+$head smooth_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<smooth_struct>& %smooth_table%
+%$$
+and is the
+$cref/smooth_table/get_smooth_table/smooth_table/$$.
+Only the $cref/smooth_name/smooth_table/smooth_name/$$ field is used.
+
+$head s_info_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<smooth_info>& %s_info_vec%
+%$$
+For each $cref/smooth_id/smooth_table/smooth_id/$$,
+$codei%
+	%s_info_vec%[ %smooth_id% ]
+%$$
+is the corresponding $cref smooth_info$$ information.
+
+$head child_object$$
+This argument has prototype
+$codei%
+	const child_info& %child_object%
+%$$
+and is the $cref child_info$$ information corresponding to
+parent node, node table, and data table.
+
+$head name$$
+The return value has prototype
+$codei%
+	std::string %name%
+%$$
+and is a human readable name for the model variable.
+
+$childtable%example/devel/utility/variable_name_xam.cpp
+%$$
+$head Example$$
+The file $cref variable_name_xam.cpp$$ contains
+and example and test of $code pack_info$$.
+It returns true for success and false for failure.
+
+$end
+*/
+std::string
+pack_info::variable_name(
+	size_t                              index          ,
+	size_t                              parent_node_id ,
+	const CppAD::vector<double>&        age_table      ,
+	const CppAD::vector<double>&        time_table     ,
+	const CppAD::vector<node_struct>    node_table     ,
+	const CppAD::vector<smooth_struct>& smooth_table   ,
+	const CppAD::vector<smooth_info>&   s_info_vec     ,
+	const child_info&                   child_object   ) const
+{	using std::string;
+	std::string name;
+	const char* rate_id2name[] = {
+		"pini", "iota", "rho", "chi", "omega"
+	};
+
+	size_t base = 0;
+	//
+	// mulstd case
+	size_t n_mulstd = 3 * n_smooth_;
+	if( index < base + n_mulstd )
+	{	name = "mulstd/";
+		//
+		size_t smooth_id = index / 3;
+		name += smooth_table[smooth_id].smooth_name;
+		//
+		switch( index % 3 )
+		{	case 0:
+			name += "/value";
+			break;
+
+			case 1:
+			name += "/dage";
+			break;
+
+			case 2:
+			name += "/dtime";
+			break;
+		}
+		return name;
+	}
+	base += n_mulstd;
+	//
+	// rate case
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	{	for(size_t j = 0; j <= n_child_; j++)
+		{	size_t n_var = rate_info_[rate_id][j].n_var;
+			if( index < base + n_var )
+			{	name  = rate_id2name[rate_id];
+				//
+				name += "(";
+				size_t smooth_id = rate_info_[rate_id][j].smooth_id;
+				size_t offset    = rate_info_[rate_id][j].offset;
+				size_t n_age     = s_info_vec[smooth_id].age_size();
+				size_t n_time    = s_info_vec[smooth_id].time_size();
+				assert( n_var == n_age * n_time );
+				size_t i         = (index - offset) % n_time;
+				size_t k         = (index - offset) / n_time;
+				size_t age_id    = s_info_vec[smooth_id].age_id(i);
+				size_t time_id   = s_info_vec[smooth_id].time_id(k);
+				name            += to_string( age_table[age_id] );
+				name            += to_string( time_table[time_id] );
+				name            +=")/";
+				//
+				size_t node_id;
+				if( j == n_child_ )
+					node_id = parent_node_id;
+				else
+					node_id = child_object.child_id2node_id(j);
+				name += node_table[node_id].node_name;
+				//
+				return name;
+			}
+			base += n_var;
+		}
+	}
+	name = "";
+	return name;
+}
 
 } // END DISMOD_AT_NAMESPACE
