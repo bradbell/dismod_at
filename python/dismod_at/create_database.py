@@ -47,9 +47,7 @@
 #
 # $head Purpose$$
 # This routine makes it easy to create a $code dismod_at$$ database
-# with all of its $cref input$$ and $cref output$$ tables.
-# In addition, it sets all of the values in the input tables,
-# but the output tables are left empty.
+# with all of its $cref input$$ tables.
 # This is only meant for small example and testing cases and is not efficient.
 #
 # $head Primary Key$$
@@ -548,10 +546,13 @@ def create_database(
 	tbl_name = 'data'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
-	# create variable table
-	col_name = [ 'fit_id',  'sample',  'offset',  'value' ]
-	col_type = [ 'integer', 'integer', 'integer', 'real'  ]
-	row_list = []
-	tbl_name = 'variable'
+	# for some unknown reason, this empty table is requried (bug)
+	col_name = [ ]
+	col_type = [ ]
+	row_list = [ ]
+	tbl_name = 'not_used'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# -----------------------------------------------------------------------
+	# close the connection
+	connection.close()
 	return

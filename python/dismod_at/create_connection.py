@@ -36,6 +36,10 @@
 # $href%https://docs.python.org/2/library/sqlite3.html#connection-objects
 #	%connection object
 # %$$
+# You must close this connection when you are done with it by executing
+# $codei%
+#	%connection%.close()
+# %$$
 #
 # $end
 # ---------------------------------------------------------------------------

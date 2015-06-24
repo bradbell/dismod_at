@@ -20,7 +20,8 @@ $$
 $section Open An Sqlite3 Database Connection$$
 
 $head Syntax$$
-$icode%db% = open_connection(%file_name%, %new_file%)%$$
+$icode%db% = open_connection(%file_name%, %new_file%)
+%$$
 
 $head file_name$$
 This argument has prototype
@@ -44,6 +45,12 @@ $codei%
 	sqlite3* %db%
 %$$
 and is the database connection.
+
+$head close$$
+When you are done with $icode db$$, you must call
+$codei%
+	close_connection(%db%)
+%$$
 
 $end
 -----------------------------------------------------------------------------
@@ -73,6 +80,16 @@ sqlite3* open_connection(const std::string& file_name, bool new_file)
 		exit(1);
 	}
 	return db;
+}
+
+void close_connection(sqlite3* db)
+{
+	int rc = sqlite3_close(db);
+	if( rc )
+	{	std::cerr << "Can't close database" << std::endl;
+		exit(1);
+	}
+
 }
 
 } // END_DISMOD_AT_NAMESPACE
