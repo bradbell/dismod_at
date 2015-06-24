@@ -18,7 +18,6 @@ namespace dismod_at {
 		const std::string& file_name,
 		bool               new_file
 	);
-	extern void close_connection(sqlite3* db);
 }
 
 # endif

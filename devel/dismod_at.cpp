@@ -254,6 +254,6 @@ int main(int n_arg, const char** argv)
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
 	// ---------------------------------------------------------------------
-	dismod_at::close_connection(db);
+	sqlite3_close(db);
 	return 0;
 }
