@@ -8,25 +8,25 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin fit_result_table$$
+$begin variable_table$$
 $spell
 $$
 
 $section The Fit Result Table$$
-The $code fit_result$$ table is created during a
+The $code variable$$ table is created during a
 $cref fit_command$$ and records its results.
 It has the following columns:
 
-$head fit_result_id$$
+$head variable_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$head fit_result_value$$
+$head variable_value$$
 This column has type $code real$$ and is
 the maximum likelihood estimate for the
-$cref model_variable$$ corresponding to index $icode fit_result_id$$.
+$cref model_variable$$ corresponding to index $icode variable_id$$.
 
-$head fit_result_name$$
+$head variable_name$$
 This column has type $code text$$ and is
 a human readable description of the corresponding variable.
 

@@ -33,8 +33,8 @@ $subhead fit_arg_table$$
 A new $cref fit_arg_table$$ table is created with the arguments to
 this fit command; i.e., $icode file_name$$, ... , $icode max_num_iter$$.
 
-$subhead fit_result_table$$
-A new $cref fit_result_table$$ is created with the results of this
+$subhead variable_table$$
+A new $cref variable_table$$ is created with the results of this
 fit command.
 
 $head parent_node_id$$
@@ -234,20 +234,20 @@ int main(int n_arg, const char** argv)
 		row_val_vec[2] = argv[2 + id];
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
-	// ----------------- fit_result_table ----------------------------------
-	sql_cmd = "drop table if exists fit_result";
+	// ----------------- variable_table ----------------------------------
+	sql_cmd = "drop table if exists variable";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table fit_result("
-		" fit_result_id integer primary key,"
-		" fit_result_value real,"
-		" fit_result_name  text"
+	sql_cmd = "create table variable("
+		" variable_id integer primary key,"
+		" variable_value real,"
+		" variable_name  text"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	table_name = "fit_result";
+	table_name = "variable";
 	//
-	col_name_vec[0]   = "fit_result_id";
-	col_name_vec[1]   = "fit_result_value";
-	col_name_vec[2]   = "fit_result_name";
+	col_name_vec[0]   = "variable_id";
+	col_name_vec[1]   = "variable_value";
+	col_name_vec[2]   = "variable_name";
 	//
 	for(size_t index = 0; index < solution.size(); index++)
 	{	row_val_vec[0] = dismod_at::to_string( index );

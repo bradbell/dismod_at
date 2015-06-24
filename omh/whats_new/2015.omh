@@ -30,9 +30,8 @@ $lend
 $head 06-23$$
 The $cref fit_command$$ was changed so that there can only be
 on set of results in the data base.
-This also replaced the $code fit_table$$ with the
-$cref fit_arg_table$$ and the $code variable_table$$ with the
-$cref fit_result_table$$.
+This changed the contents of the
+$cref fit_arg_table$$ and the $cref variable_table$$.
 
 
 $head 06-22$$

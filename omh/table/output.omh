@@ -15,7 +15,7 @@ $$
 $section Data Base Output Tables$$
 
 $childtable%omh/table/fit_arg_table.omh
-	%omh/table/fit_result_table.omh
+	%omh/table/variable_table.omh
 %$$
 
 $end

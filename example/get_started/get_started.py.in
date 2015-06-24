@@ -240,7 +240,7 @@ smooth_dict     = dismod_at.get_table_dict(connection, 'smooth')
 mulcov_dict     = dismod_at.get_table_dict(connection, 'mulcov')
 rate_dict       = dismod_at.get_table_dict(connection, 'rate')
 fit_arg_dict    = dismod_at.get_table_dict(connection, 'fit_arg')
-fit_result_dict = dismod_at.get_table_dict(connection, 'fit_result')
+variable_dict = dismod_at.get_table_dict(connection, 'variable')
 # -----------------------------------------------------------------------
 # check fit_arg table
 for row in fit_arg_dict :
@@ -261,19 +261,19 @@ pack_object = dismod_at.pack_info(
 	rate_dict
 )
 # -----------------------------------------------------------------------
-# check fit_result table
+# check variable table
 #
 n_child   = pack_object.n_child()
 check_tol = 1e-3
 n_rate    = n_integrand
 n_data    = n_integrand
 #
-assert len(fit_result_dict) == pack_object.size()
+assert len(variable_dict) == pack_object.size()
 #
 # get variable values
-fit_result_value = []
-for row in fit_result_dict :
-	fit_result_value.append( row['fit_result_value'] )
+variable_value = []
+for row in variable_dict :
+	variable_value.append( row['variable_value'] )
 #
 for rate_id in range( n_rate ) :
 	integrand_id = rate_id
@@ -285,9 +285,9 @@ for rate_id in range( n_rate ) :
 		n_var  = info['n_var']
 		for i in range(n_var) :
 			if child_id == n_child :
-				err = fit_result_value[offset + i] / meas_value - 1.0
+				err = variable_value[offset + i] / meas_value - 1.0
 			else :
-				err = fit_result_value[offset + i] / meas_value
+				err = variable_value[offset + i] / meas_value
 			assert abs(err) <= check_tol
 # -----------------------------------------------------------------------
 print('get_started: OK')
