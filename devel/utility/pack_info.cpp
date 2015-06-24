@@ -795,24 +795,25 @@ pack_info::variable_name(
 	// mulstd case
 	size_t n_mulstd = 3 * n_smooth_;
 	if( index < base + n_mulstd )
-	{	name = "mulstd/";
+	{	name = "mulstd(";
 		//
 		size_t smooth_id = index / 3;
 		name += smooth_table[smooth_id].smooth_name;
 		//
 		switch( index % 3 )
 		{	case 0:
-			name += "/value";
+			name += ",value";
 			break;
 
 			case 1:
-			name += "/dage";
+			name += ",dage";
 			break;
 
 			case 2:
-			name += "/dtime";
+			name += ",dtime";
 			break;
 		}
+		name += ")";
 		return name;
 	}
 	base += n_mulstd;
@@ -825,25 +826,26 @@ pack_info::variable_name(
 			{	name  = rate_id2name[rate_id];
 				//
 				name += "(";
-				size_t smooth_id = rate_info_[rate_id][j].smooth_id;
-				size_t offset    = rate_info_[rate_id][j].offset;
-				size_t n_age     = s_info_vec[smooth_id].age_size();
-				size_t n_time    = s_info_vec[smooth_id].time_size();
-				assert( n_var == n_age * n_time );
-				size_t i         = (index - offset) % n_time;
-				size_t k         = (index - offset) / n_time;
-				size_t age_id    = s_info_vec[smooth_id].age_id(i);
-				size_t time_id   = s_info_vec[smooth_id].time_id(k);
-				name            += to_string( age_table[age_id] );
-				name            += to_string( time_table[time_id] );
-				name            +=")/";
-				//
 				size_t node_id;
 				if( j == n_child_ )
 					node_id = parent_node_id;
 				else
 					node_id = child_object.child_id2node_id(j);
 				name += node_table[node_id].node_name;
+				name += ",";
+				size_t smooth_id = rate_info_[rate_id][j].smooth_id;
+				size_t offset    = rate_info_[rate_id][j].offset;
+				size_t n_age     = s_info_vec[smooth_id].age_size();
+				size_t n_time    = s_info_vec[smooth_id].time_size();
+				assert( n_var == n_age * n_time );
+				size_t i         = (index - offset) % n_age;
+				size_t k         = (index - offset) / n_age;
+				size_t age_id    = s_info_vec[smooth_id].age_id(i);
+				size_t time_id   = s_info_vec[smooth_id].time_id(k);
+				name            += to_string( age_table[age_id] );
+				name            += ",";
+				name            += to_string( time_table[time_id] );
+				name            +=")";
 				//
 				return name;
 			}

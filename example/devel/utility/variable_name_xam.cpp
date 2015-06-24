@@ -60,14 +60,14 @@ bool variable_name_xam(void)
 	// sql commands
 	const char* sql_cmd[] = {
 	"create table age(age_id integer primary key, age real)",
-	"insert into age values(0,   0.0)",
-	"insert into age values(1,  50.0)",
-	"insert into age values(2, 100.0)",
+	"insert into age values(0,   0)",
+	"insert into age values(1,  50)",
+	"insert into age values(2, 100)",
 	//
 	"create table time(time_id integer primary key, time real)",
-	"insert into time values(0, 1900.0)",
-	"insert into time values(1, 2000.0)",
-	"insert into time values(2, 2100.0)",
+	"insert into time values(0, 1900)",
+	"insert into time values(1, 2000)",
+	"insert into time values(2, 2010)",
 	//
 	"create table rate("
 		" rate_id           integer primary key,"
@@ -164,10 +164,71 @@ bool variable_name_xam(void)
 	);
 	// ------------------------------------------------------------------
 	// check mulstd
+	string name;
 	size_t smooth_id = 0;
 	size_t offset    = pack_object.mulstd_offset(smooth_id);
-	string name      = VARIABLE_NAME(offset + 0);
-	ok              &= name == "mulstd/bilinear/value";
+	name   = VARIABLE_NAME(offset + 0);
+	ok    &= name == "mulstd(bilinear,value)";
+	name   = VARIABLE_NAME(offset + 1);
+	ok    &= name == "mulstd(bilinear,dage)";
+	name   = VARIABLE_NAME(offset + 2);
+	ok    &= name == "mulstd(bilinear,dtime)";
+	smooth_id = 1;
+	offset = pack_object.mulstd_offset(smooth_id);
+	name   = VARIABLE_NAME(offset + 0);
+	ok    &= name == "mulstd(constant,value)";
+	name   = VARIABLE_NAME(offset + 1);
+	ok    &= name == "mulstd(constant,dage)";
+	name   = VARIABLE_NAME(offset + 2);
+	ok    &= name == "mulstd(constant,dtime)";
+	//
+	// check pini
+	size_t n_var;
+	dismod_at::pack_info::subvec_info info;
+	for(size_t child_id = 0; child_id <= n_child; child_id++)
+	{	info    = pack_object.rate_info(dismod_at::pini_enum, child_id);
+		n_var  = info.n_var;
+		offset = info.offset;
+		ok    &= n_var == 1;
+		name   = VARIABLE_NAME(offset);
+		switch( child_id )
+		{	case 0:
+			ok &= name == "pini(north_america,50,2000)"; // first child
+			break;
+			case 1:
+			ok &= name == "pini(south_america,50,2000)"; // second child
+			break;
+			case 2:
+			ok &= name == "pini(world,50,2000)";         // parent
+			break;
+		}
+	}
+	//
+	// check omega
+	for(size_t child_id = 0; child_id <= n_child; child_id++)
+	{	info    = pack_object.rate_info(dismod_at::omega_enum, child_id);
+		n_var  = info.n_var;
+		offset = info.offset;
+		name   = VARIABLE_NAME(offset);
+		switch( child_id )
+		{	case 0:
+			ok &= n_var == 1;
+			ok &= name == "omega(north_america,50,2000)"; // first child
+			break;
+			case 1:
+			ok &= n_var == 1;
+			ok &= name == "omega(south_america,50,2000)"; // second child
+			break;
+			case 2:
+			ok &= n_var == 4;
+			ok &= name == "omega(world,0,1900)";        // parent
+			break;
+		}
+	}
+
+
+
+
 
 	return ok;
 }

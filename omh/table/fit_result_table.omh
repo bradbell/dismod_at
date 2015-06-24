@@ -26,6 +26,10 @@ This column has type $code real$$ and is
 the maximum likelihood estimate for the
 $cref model_variable$$ corresponding to index $icode fit_result_id$$.
 
+$head fit_result_name$$
+This column has type $code text$$ and is
+a human readable description of the corresponding variable.
+
 $head Example$$
 See the $cref get_started.py$$ example and test.
 

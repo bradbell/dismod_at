@@ -67,6 +67,7 @@ popd
 #
 # compile
 echo_eval g++ \
+	-std=c++11 \
 	-g \
 	-O0 \
 	-I ../../include \

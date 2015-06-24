@@ -238,19 +238,30 @@ int main(int n_arg, const char** argv)
 	sql_cmd = "drop table if exists fit_result";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	sql_cmd = "create table fit_result("
-		"fit_result_id integer primary key, fit_result_value real"
+		" fit_result_id integer primary key,"
+		" fit_result_value real,"
+		" fit_result_name  text"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	table_name = "fit_result";
 	//
-	col_name_vec.resize(2);
 	col_name_vec[0]   = "fit_result_id";
 	col_name_vec[1]   = "fit_result_value";
+	col_name_vec[2]   = "fit_result_name";
 	//
-	row_val_vec.resize(2);
-	for(size_t id = 0; id < solution.size(); id++)
-	{	row_val_vec[0] = dismod_at::to_string( id );
-		row_val_vec[1] = dismod_at::to_string( solution[id] );
+	for(size_t index = 0; index < solution.size(); index++)
+	{	row_val_vec[0] = dismod_at::to_string( index );
+		row_val_vec[1] = dismod_at::to_string( solution[index] );
+		row_val_vec[2] = pack_object.variable_name(
+			index,
+			parent_node_id,
+			db_input.age_table,
+			db_input.time_table,
+			db_input.node_table,
+			db_input.smooth_table,
+			s_info_vec,
+			child_object
+		);
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
 	// ---------------------------------------------------------------------
