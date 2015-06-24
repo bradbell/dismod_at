@@ -325,5 +325,6 @@ def create_database() :
 	check_list = [ [ 'rate_mean', 4, -1, 0, 0 ] ]
 	assert row_list == check_list
 	# -----------------------------------------------------------------------
+	connection.close()
 	print('create_database: OK')
 # END PYTHON

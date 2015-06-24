@@ -116,5 +116,6 @@ def smooth_grid_table() :
 		count += 1
 	assert count == len(row_list)
 	#
+	connection.close()
 	print('smooth_grid_table: OK')
 # END PYTHON

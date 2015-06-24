@@ -10,17 +10,22 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2015$$
 $spell
+	sqlite
 	Dismod_at
 $$
 
 $section Change and Additions to Dismod_at During 2015$$
 
 $head 06-24$$
+$list number$$
 There was a bug in the $cref create_database$$ routine,
 to be specific, it was not calling $code commit$$ and $code close$$
 at the end; see
 $href%https://docs.python.org/2/library/sqlite3.html%python sqlite%$$.
-
+$lnext
+Also close the connection at the end of each of the python sqlite examples;
+e.g., at the end of $cref age_table.py$$.
+$lend
 
 $head 06-23$$
 The $cref fit_command$$ was changed so that there can only be

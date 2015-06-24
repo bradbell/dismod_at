@@ -53,5 +53,6 @@ def covariate_table() :
 	row_list = dismod_at.get_row_list(connection, tbl_name, check_name)
 	assert row_list == check_list
 	# ------------------------------------------------------------------------
+	connection.close()
 	print('covariate_table: OK')
 # END PYTHON

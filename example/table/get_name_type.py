@@ -47,5 +47,6 @@ def get_name_type() :
 	assert col_name == check_name
 	assert col_type == check_type
 	#
+	connection.close()
 	print('get_name_type: OK')
 # END PYTHON

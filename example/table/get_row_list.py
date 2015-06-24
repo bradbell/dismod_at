@@ -55,5 +55,6 @@ def get_row_list() :
 	assert row_list[1][0] == 2000.0
 	assert row_list[1][1] == 'income'
 	#
+	connection.close()
 	print('get_row_list: OK')
 # END PYTHON

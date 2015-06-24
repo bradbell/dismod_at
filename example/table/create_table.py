@@ -61,5 +61,6 @@ def create_table() :
 	assert row_list[1][1] == cent_sign
 	assert row_list[2][1] == pound_sign
 	#
+	connection.close()
 	print('create_table: OK')
 # END PYTHON

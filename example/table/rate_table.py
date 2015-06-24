@@ -52,5 +52,6 @@ def rate_table() :
 	row_list = dismod_at.get_row_list(connection, tbl_name, check_name)
 	assert row_list == check_list
 	# ------------------------------------------------------------------------
+	connection.close()
 	print('rate_table: OK')
 # END PYTHON

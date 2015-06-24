@@ -47,5 +47,6 @@ def get_table_dict() :
 		assert table_dict[i]['covariate_name'] == row_list[i][0]
 		assert table_dict[i]['reference']      == row_list[i][1]
 	#
+	connection.close()
 	print('get_table_dict: OK')
 # END PYTHON
