@@ -12,9 +12,10 @@ $begin variable_table$$
 $spell
 $$
 
-$section The Fit Result Table$$
-The $code variable$$ table is created during a
-$cref fit_command$$ and records its results.
+$section The Variable Table$$
+The $code variable$$ table contains the
+maximum likelihood estimate corresponding to the most recent
+$cref fit_command$$.
 It has the following columns:
 
 $head variable_id$$

@@ -34,8 +34,15 @@ A new $cref fit_arg_table$$ table is created with the arguments to
 this fit command; i.e., $icode file_name$$, ... , $icode max_num_iter$$.
 
 $subhead variable_table$$
-A new $cref variable_table$$ is created with the results of this
-fit command.
+A new $cref variable_table$$ is created with the maximum likelihood
+estimate corresponding to this fit command.
+To be specific, the
+$cref/fixed effects/model_variable/Fixed Effects, theta/$$
+maximize the Laplace approximation
+$cref/L(theta)/approx_mixed_theory/Objective/L(theta)/$$ and the
+$cref/random effects/model_variable/Random Effects, u/$$
+maximize the joint likelihood; see
+$cref/u^(theta)/approx_mixed_theory/Objective/u^(theta)/$$.
 
 $head parent_node_id$$
 This is a non-negative integer (greater than or equal zero)
