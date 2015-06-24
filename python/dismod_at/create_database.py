@@ -546,13 +546,7 @@ def create_database(
 	tbl_name = 'data'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
-	# for some unknown reason, this empty table is requried (bug)
-	col_name = [ ]
-	col_type = [ ]
-	row_list = [ ]
-	tbl_name = 'not_used'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# -----------------------------------------------------------------------
 	# close the connection
+	connection.commit()
 	connection.close()
 	return
