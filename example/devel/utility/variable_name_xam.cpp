@@ -140,6 +140,7 @@ bool variable_name_xam(void)
 		" smooth_id      integer)",
 	"insert into mulcov values(0,  'meas_mean',  -1,  0, 0, 0)",
 	"insert into mulcov values(1,  'meas_std',   -1,  1, 0, 1)",
+	"insert into mulcov values(2,  'rate_mean',   1, -1, 0, 0)",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -250,7 +251,7 @@ bool variable_name_xam(void)
 		}
 	}
 	//
-	// mean_meas_mulcov
+	// meas_mean_mulcov
 	size_t integrand_id = 0;
 	size_t n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id);
 	assert( n_cov == 1 );
@@ -267,7 +268,7 @@ bool variable_name_xam(void)
 	name   = VARIABLE_NAME(offset + 3);
 	ok    &= name == "mean_mulcov(sex;prevalence;100;2010)";
 	//
-	// mean_meas_std
+	// meas_std_mulcov
 	integrand_id = 1;
 	n_cov        = pack_object.meas_std_mulcov_n_cov(integrand_id);
 	assert( n_cov == 1 );
@@ -277,6 +278,23 @@ bool variable_name_xam(void)
 	ok    &= n_var == 1;
 	name   = VARIABLE_NAME(offset + 0);
 	ok    &= name == "std_mulcov(sex;incidence;50;2000)";
+	//
+	// rate_mean_mulcov
+	size_t rate_id = 1;
+	n_cov = pack_object.rate_mean_mulcov_n_cov(rate_id);
+	assert( n_cov == 1 );
+	info   = pack_object.rate_mean_mulcov_info(rate_id, 0);
+	n_var  = info.n_var;
+	offset = info.offset;
+	ok    &= n_var == 4;
+	name   = VARIABLE_NAME(offset + 0);
+	ok    &= name == "mean_mulcov(sex;iota;0;1990)";
+	name   = VARIABLE_NAME(offset + 1);
+	ok    &= name == "mean_mulcov(sex;iota;100;1990)";
+	name   = VARIABLE_NAME(offset + 2);
+	ok    &= name == "mean_mulcov(sex;iota;0;2010)";
+	name   = VARIABLE_NAME(offset + 3);
+	ok    &= name == "mean_mulcov(sex;iota;100;2010)";
 
 	return ok;
 }

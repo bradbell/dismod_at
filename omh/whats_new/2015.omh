@@ -20,7 +20,9 @@ $section Change and Additions to Dismod_at During 2015$$
 
 $head 06-25$$
 Change $cref/variable_name/variable_table/variable_name/$$
-for the $cref/meas_mulcov/pack_info_meas_mulcov/$$ variables
+for the
+$cref/meas_mulcov/pack_info_meas_mulcov/$$ and
+$cref/rate_mulcov/pack_info_rate_mulcov/$$ variables
 from empty string to a descriptive name.
 
 $head 06-24$$

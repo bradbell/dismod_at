@@ -946,6 +946,45 @@ pack_info::variable_name(
 			}
 		}
 	}
+	//
+	// rate covariate cases
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	{	size_t count = 0;
+		for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
+		{	bool match;
+			match  = mulcov_table[mulcov_id].mulcov_type  == rate_mean_enum;
+			match &= mulcov_table[mulcov_id].rate_id == int(rate_id);
+			if( match )
+			{	subvec_info info;
+				info = rate_mean_mulcov_info_[rate_id][count++];
+				size_t n_var  = info.n_var;
+				if( index < base + n_var )
+				{	name = "mean_mulcov(";
+					size_t covariate_id = info.covariate_id;
+					size_t smooth_id    = info.smooth_id;
+					size_t offset       = info.offset;
+					size_t n_age        = s_info_vec[smooth_id].age_size();
+					size_t n_time       = s_info_vec[smooth_id].time_size();
+					assert( n_var == n_age * n_time );
+					size_t i            = (index - offset) % n_age;
+					size_t k            = (index - offset) / n_age;
+					name += covariate_table[covariate_id].covariate_name;
+					name += ";";
+					name += rate_id2name[rate_id];
+					name += ";";
+					size_t age_id    = s_info_vec[smooth_id].age_id(i);
+					size_t time_id   = s_info_vec[smooth_id].time_id(k);
+					name            += to_string( age_table[age_id] );
+					name            += ";";
+					name            += to_string( time_table[time_id] );
+					name            +=")";
+					//
+					return name;
+				}
+				base += n_var;
+			}
+		}
+	}
 	name = "";
 	return name;
 }
