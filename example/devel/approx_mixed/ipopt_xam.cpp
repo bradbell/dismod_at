@@ -19,6 +19,7 @@ $section Ipopt Example: Declare Non-linear Program Problem Class$$
 
 $nospell
 $codep */
+# include <cmath>
 # include <coin/IpIpoptApplication.hpp>
 # include <coin/IpTNLP.hpp>
 # include <cassert>

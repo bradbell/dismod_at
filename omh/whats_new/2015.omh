@@ -30,6 +30,17 @@ $lnext
 The C++11 $code nullptr$$ feature was not being suppressed
 when using a compiler that does not support this feature.
 This has been fixed.
+$lnext
+There were some non-standard references,
+in $cref open_connection$$,
+$cref ipopt_xam$$, and
+$cref get_column_max_xam.cpp$$,
+that gave compiler errors on some systems.
+This has been fixed.
+$lnext
+The particular settings for installing on the IHME cluster
+have been included as comments under the install dismod_at
+$cref/Setup/install_unix/dismod_at/Setup/$$ heading.
 $lend
 
 $head 06-24$$

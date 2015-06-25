@@ -21,9 +21,13 @@ dismod_at_prefix="$HOME/prefix/dismod_at"
 eigen_prefix="$HOME/prefix/dismod_at"
 ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
-# prefixes where suitesparse was installed (use NOTFOUND if not installed)
+# prefix where suitesparse was installed (use NOTFOUND if not installed)
 suitesparse_prefix="$HOME/prefix/suitesparse"
+# ----------------------------------------------------------------------------
+# Setting for IHME cluster
 # suitesparse_prefix="NOTFOUND"
+# python_three_command='/usr/local/anaconda3-current/bin/python'
+# extra_cxx_flags='-Wall'
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 if [ ! -e build ]

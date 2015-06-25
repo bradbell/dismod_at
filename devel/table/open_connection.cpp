@@ -55,6 +55,7 @@ $codei%
 $end
 -----------------------------------------------------------------------------
 */
+# include <cstdlib>
 # include <iostream>
 # include <fstream>
 # include <dismod_at/open_connection.hpp>
@@ -65,7 +66,7 @@ sqlite3* open_connection(const std::string& file_name, bool new_file)
 {
 	if( new_file )
 	{	// delete old version of database
-		std::ifstream ifile(file_name);
+		std::ifstream ifile( file_name.c_str() );
 		if( ifile )
 		{	ifile.close();
 			std::remove( file_name.c_str() );
@@ -77,7 +78,7 @@ sqlite3* open_connection(const std::string& file_name, bool new_file)
 	if( rc )
 	{	std::cerr << "Can't create database: " << file_name << std::endl;
 		sqlite3_close(db);
-		exit(1);
+		std::exit(1);
 	}
 	return db;
 }

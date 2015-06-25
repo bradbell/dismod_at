@@ -23,6 +23,7 @@ $$
 $end
 */
 // BEGIN C++
+# include <cstdlib>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/get_column_max.hpp>
