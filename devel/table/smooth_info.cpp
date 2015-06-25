@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -85,7 +85,7 @@ this object has prototype
 $codei%
 	const smooth_info %s_info%
 %$$
-The mean of the corresponding constructor arguments are specified below:
+The meaning of the corresponding constructor arguments are specified below:
 
 $subhead smooth_id$$
 This argument has prototype
@@ -135,7 +135,7 @@ $codei%
 %$$
 It specifies the time grid indices; i.e.
 $codei%
-	%s_info%.time_id(%i%) = %time_id%[%i%]
+	%s_info%.time_id(%j%) = %time_id%[%j%]
 %$$
 
 $subhead type_prior_id$$
@@ -148,7 +148,7 @@ const CppAD::vector<size_t>& %value_prior_id%, %dage_prior_id%, %dtime_prior_id%
 They specify the prior grid indices; i.e.
 $codei%
 	%s_info%.value_prior_id(%i%, %j%) = %value_prior_id%[%i%*%n_time% + %j%]
-	%s_info%.dage_prior_id(%i%, %j%)  = %dage_prior_id%[%i%*%n_time% + %j%]
+	%s_info%.dage_prior_id(%i%, %j%)  =  %dage_prior_id%[%i%*%n_time% + %j%]
 	%s_info%.dtime_prior_id(%i%, %j%) = %dtime_prior_id%[%i%*%n_time% + %j%]
 %$$
 where $icode%n_time% = %time_id%.size()%$$.
@@ -401,8 +401,8 @@ smooth_info::smooth_info(
 	// determine the age_id_ and time_id_ vectors for this smooth_id
 	assert( age_id_.size() == 0 );
 	assert( time_id_.size() == 0 );
-	size_t n_smooth = smooth_grid_table.size();
-	for(i = 0; i < n_smooth; i++)
+	size_t n_smooth_grid = smooth_grid_table.size();
+	for(i = 0; i < n_smooth_grid; i++)
 	{	if( smooth_grid_table[i].smooth_id == int( smooth_id ) )
 		{	id  = smooth_grid_table[i].age_id;
 			unique_insert_sort( age_id_,  id );
@@ -423,7 +423,7 @@ smooth_info::smooth_info(
 	dtime_prior_id_.resize(n_age  * n_time );
 	for(i = 0; i < n_age * n_time; i++)
 		count[i] = 0;
-	for( i = 0; i < n_smooth; i++)
+	for( i = 0; i < n_smooth_grid; i++)
 	{	if( smooth_grid_table[i].smooth_id == int( smooth_id ) )
 		{	id           = smooth_grid_table[i].age_id;
 			size_t j_age = n_age;
