@@ -129,6 +129,7 @@ bool variable_name_xam(void)
 		" integrand_name text,"
 		" eta            real)",
 	"insert into integrand values(0, 'prevalence', 1e-6)",
+	"insert into integrand values(1, 'incidence',  1e-6)",
 	//
 	"create table mulcov("
 		" mulcov_id      integer primary key,"
@@ -138,6 +139,7 @@ bool variable_name_xam(void)
 		" covariate_id   integer,"
 		" smooth_id      integer)",
 	"insert into mulcov values(0,  'meas_mean',  -1,  0, 0, 0)",
+	"insert into mulcov values(1,  'meas_std',   -1,  1, 0, 1)",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -179,7 +181,7 @@ bool variable_name_xam(void)
 	size_t n_child        = 2;
 	dismod_at::child_info child_object(parent_node_id, node_table, data_table);
 	// pack_object
-	size_t n_integrand = 1;
+	size_t n_integrand = integrand_table.size();
 	dismod_at::pack_info pack_object(
 		n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
@@ -264,6 +266,17 @@ bool variable_name_xam(void)
 	ok    &= name == "mean_mulcov(sex;prevalence;0;2010)";
 	name   = VARIABLE_NAME(offset + 3);
 	ok    &= name == "mean_mulcov(sex;prevalence;100;2010)";
+	//
+	// mean_meas_std
+	integrand_id = 1;
+	n_cov        = pack_object.meas_std_mulcov_n_cov(integrand_id);
+	assert( n_cov == 1 );
+	info   = pack_object.meas_std_mulcov_info(integrand_id, 0);
+	n_var  = info.n_var;
+	offset = info.offset;
+	ok    &= n_var == 1;
+	name   = VARIABLE_NAME(offset + 0);
+	ok    &= name == "std_mulcov(sex;incidence;50;2000)";
 
 	return ok;
 }

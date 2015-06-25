@@ -914,7 +914,7 @@ pack_info::variable_name(
 					name = "mean_mulcov(";
 				}
 				else
-				{	info = meas_mean_mulcov_info_[integrand_id][std_count++];
+				{	info = meas_std_mulcov_info_[integrand_id][std_count++];
 					name = "std_mulcov(";
 				}
 				size_t n_var  = info.n_var;
