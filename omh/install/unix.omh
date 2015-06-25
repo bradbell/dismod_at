@@ -131,11 +131,15 @@ It is possible that, when running the $code bin/run_cmake.sh$$ command,
 you will get the message $code package 'ipopt' not found$$.
 In this case, you need to execute the following command
 $codei%
-	PKG_CONFIG_PATH="@PKG_CONFIG_PATH:%ipopt_prefix%/%lib%/pkgconfig"
+	export PKG_CONFIG_PATH="@PKG_CONFIG_PATH:%ipopt_prefix%/%lib%/pkgconfig"
 %$$
 where $icode ipopt_prefix$$ is the prefix for the Ipopt install and
 $icode lib$$ is $code lib$$ or $code lib64$$ depending on which directory
 exists.
+In the default case this would be
+$codei%
+export PKG_CONFIG_PATH="@PKG_CONFIG_PATH:@HOME/prefix/dismod_at/lib64/pkgconfig"
+%$$
 
 $subhead Build$$
 The following commands will build the dismod_at executable:
@@ -155,6 +159,21 @@ The following command will install the dismod_at:
 $codep
 	make install
 $$
+
+$subhead Path Setting$$
+After the install you will be able to execute the command
+$codei%
+	dismod_at
+%$$
+If you get the error $code dismod_at: command not found$$,
+can add the binary install directory to you path
+$codei%
+	PATH="@PATH:%dismod_at_prefix%/bin"
+%$$
+In the default case this would be
+$codei%
+	PATH="@PATH:@HOME/prefix/dismod_at/bin"
+%$$
 
 
 $children%example/get_started/get_started.py.in
