@@ -263,9 +263,12 @@ int main(int n_arg, const char** argv)
 			index,
 			parent_node_id,
 			db_input.age_table,
-			db_input.time_table,
+			db_input.covariate_table,
+			db_input.integrand_table,
+			db_input.mulcov_table,
 			db_input.node_table,
 			db_input.smooth_table,
+			db_input.time_table,
 			s_info_vec,
 			child_object
 		);

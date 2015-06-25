@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -34,6 +34,7 @@ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
 $head integrand_name$$
+This column has type $code text$$.
 The following table lists the possible values for $icode integrand_name$$.
 Each name can only appear once in this table.
 Only the $cref/integrand_id/data_table/integrand_id/$$ that appear

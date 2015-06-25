@@ -677,6 +677,8 @@ $spell
 	struct
 	CppAD
 	std
+	covariate
+	mulcov
 $$
 
 $section Human Readable Name for a Model Variable$$
@@ -686,9 +688,12 @@ $icode%name% = %pack_object%.variable_name(
 	%index%,
 	%parent_node_id%,
 	%age_table%,
-	%time_table%
+	%covariate_table%,
+	%integrand_table%,
+	%mulcov_table%,
 	%node_table%
 	%smooth_table%,
+	%time_table%
 	%s_info_vec%,
 	%child_object%
 )%$$
@@ -716,12 +721,29 @@ $codei%
 %$$
 and is the $cref/age_table/get_age_table/age_table/$$.
 
-$head time_table$$
+$head covariate_table$$
 This argument has prototype
 $codei%
-	const CppAD::vector<double>&  %time_table%
+	const CppAD::vector<covariate_struct>& %covariate_table%
 %$$
-and is the $cref/time_table/get_time_table/time_table/$$.
+and is the
+$cref/covariate_table/get_covariate_table/covariate_table/$$.
+
+$head integrand_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<integrand_struct>& %integrand_table%
+%$$
+and is the
+$cref/integrand_table/get_integrand_table/integrand_table/$$.
+
+$head mulcov_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<mulcov_struct>& %mulcov_table%
+%$$
+and is the
+$cref/mulcov_table/get_mulcov_table/mulcov_table/$$.
 
 $head node_table$$
 This argument has prototype
@@ -737,7 +759,13 @@ $codei%
 %$$
 and is the
 $cref/smooth_table/get_smooth_table/smooth_table/$$.
-Only the $cref/smooth_name/smooth_table/smooth_name/$$ field is used.
+
+$head time_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>&  %time_table%
+%$$
+and is the $cref/time_table/get_time_table/time_table/$$.
 
 $head s_info_vec$$
 This argument has prototype
@@ -776,43 +804,58 @@ $end
 */
 std::string
 pack_info::variable_name(
-	size_t                              index          ,
-	size_t                              parent_node_id ,
-	const CppAD::vector<double>&        age_table      ,
-	const CppAD::vector<double>&        time_table     ,
-	const CppAD::vector<node_struct>    node_table     ,
-	const CppAD::vector<smooth_struct>& smooth_table   ,
-	const CppAD::vector<smooth_info>&   s_info_vec     ,
-	const child_info&                   child_object   ) const
+	size_t                                 index           ,
+	size_t                                 parent_node_id  ,
+	const CppAD::vector<double>&           age_table       ,
+	const CppAD::vector<covariate_struct>& covariate_table ,
+	const CppAD::vector<integrand_struct>& integrand_table ,
+	const CppAD::vector<mulcov_struct>&    mulcov_table    ,
+	const CppAD::vector<node_struct>&      node_table      ,
+	const CppAD::vector<smooth_struct>&    smooth_table    ,
+	const CppAD::vector<double>&           time_table      ,
+	const CppAD::vector<smooth_info>&      s_info_vec      ,
+	const child_info&                      child_object    ) const
 {	using std::string;
 	std::string name;
+	// see get_rate_table.cpp where this table also appears
 	const char* rate_id2name[] = {
 		"pini", "iota", "rho", "chi", "omega"
 	};
-
+	// see get_integrand_table.cpp were this table also appears
+	const char* integrand_enum2name[] = {
+		"incidence",
+		"remission",
+		"mtexcess",
+		"mtother",
+		"mtwith",
+		"prevalence",
+		"mtspecific",
+		"mtall",
+		"mtstandard",
+		"relrisk"
+	};
+	//
 	size_t base = 0;
 	//
 	// mulstd case
 	size_t n_mulstd = 3 * n_smooth_;
 	if( index < base + n_mulstd )
-	{	name = "mulstd(";
-		//
-		size_t smooth_id = index / 3;
-		name += smooth_table[smooth_id].smooth_name;
+	{	size_t smooth_id = index / 3;
 		//
 		switch( index % 3 )
 		{	case 0:
-			name += ",value";
+			name += "value_mulstd(";
 			break;
 
 			case 1:
-			name += ",dage";
+			name += "dage_mulstd(";
 			break;
 
 			case 2:
-			name += ",dtime";
+			name += "dtime_mulstd(";
 			break;
 		}
+		name += smooth_table[smooth_id].smooth_name;
 		name += ")";
 		return name;
 	}
@@ -832,7 +875,7 @@ pack_info::variable_name(
 				else
 					node_id = child_object.child_id2node_id(j);
 				name += node_table[node_id].node_name;
-				name += ",";
+				name += ";";
 				size_t smooth_id = rate_info_[rate_id][j].smooth_id;
 				size_t offset    = rate_info_[rate_id][j].offset;
 				size_t n_age     = s_info_vec[smooth_id].age_size();
@@ -843,13 +886,64 @@ pack_info::variable_name(
 				size_t age_id    = s_info_vec[smooth_id].age_id(i);
 				size_t time_id   = s_info_vec[smooth_id].time_id(k);
 				name            += to_string( age_table[age_id] );
-				name            += ",";
+				name            += ";";
 				name            += to_string( time_table[time_id] );
 				name            +=")";
 				//
 				return name;
 			}
 			base += n_var;
+		}
+	}
+	//
+	// measurement covariate cases
+	size_t n_mulcov    = mulcov_table.size();
+	size_t n_integrand = integrand_table.size();
+	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
+	{	size_t mean_count = 0;
+		size_t std_count  = 0;
+		for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
+		{	bool match;
+			match  = mulcov_table[mulcov_id].mulcov_type  == meas_mean_enum;
+			match |= mulcov_table[mulcov_id].mulcov_type  == meas_std_enum;
+			match &= mulcov_table[mulcov_id].integrand_id == int(integrand_id);
+			if( match )
+			{	subvec_info info;
+				if( mulcov_table[mulcov_id].mulcov_type == meas_mean_enum )
+				{	info = meas_mean_mulcov_info_[integrand_id][mean_count++];
+					name = "mean_mulcov(";
+				}
+				else
+				{	info = meas_mean_mulcov_info_[integrand_id][std_count++];
+					name = "std_mulcov(";
+				}
+				size_t n_var  = info.n_var;
+				if( index < base + n_var )
+				{	size_t covariate_id = info.covariate_id;
+					size_t smooth_id    = info.smooth_id;
+					size_t offset       = info.offset;
+					size_t n_age        = s_info_vec[smooth_id].age_size();
+					size_t n_time       = s_info_vec[smooth_id].time_size();
+					assert( n_var == n_age * n_time );
+					size_t i            = (index - offset) % n_age;
+					size_t k            = (index - offset) / n_age;
+					name += covariate_table[covariate_id].covariate_name;
+					name += ";";
+					name += integrand_enum2name[
+						integrand_table[integrand_id].integrand
+					];
+					name += ";";
+					size_t age_id    = s_info_vec[smooth_id].age_id(i);
+					size_t time_id   = s_info_vec[smooth_id].time_id(k);
+					name            += to_string( age_table[age_id] );
+					name            += ";";
+					name            += to_string( time_table[time_id] );
+					name            +=")";
+					//
+					return name;
+				}
+				base += n_var;
+			}
 		}
 	}
 	name = "";

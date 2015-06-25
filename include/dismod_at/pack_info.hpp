@@ -19,6 +19,8 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_rate_table.hpp"
 # include "smooth_info.hpp"
 # include "child_info.hpp"
+# include "get_integrand_table.hpp"
+# include "get_covariate_table.hpp"
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -100,14 +102,17 @@ public:
 
 	// varialbe_name
 	std::string variable_name(
-		size_t                              index          ,
-		size_t                              parent_node_id ,
-		const CppAD::vector<double>&        age_table      ,
-		const CppAD::vector<double>&        time_table     ,
-		const CppAD::vector<node_struct>    node_table     ,
-		const CppAD::vector<smooth_struct>& smooth_table   ,
-		const CppAD::vector<smooth_info>&   s_info_vec     ,
-		const child_info&                   child_object
+		size_t                                 index           ,
+		size_t                                 parent_node_id  ,
+		const CppAD::vector<double>&           age_table       ,
+		const CppAD::vector<covariate_struct>& covariate_table ,
+		const CppAD::vector<integrand_struct>& integrand_table ,
+		const CppAD::vector<mulcov_struct>&    mulcov_table    ,
+		const CppAD::vector<node_struct>&      node_table      ,
+		const CppAD::vector<smooth_struct>&    smooth_table    ,
+		const CppAD::vector<double>&           time_table      ,
+		const CppAD::vector<smooth_info>&      s_info_vec      ,
+		const child_info&                      child_object
 	) const;
 };
 

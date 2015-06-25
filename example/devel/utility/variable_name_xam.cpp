@@ -42,9 +42,12 @@ $end
 		index, \
 		parent_node_id, \
 		age_table, \
-		time_table, \
+		covariate_table, \
+		integrand_table, \
+		mulcov_table, \
 		node_table, \
 		smooth_table, \
+		time_table, \
 		s_info_vec, \
 		child_object )
 
@@ -65,7 +68,7 @@ bool variable_name_xam(void)
 	"insert into age values(2, 100)",
 	//
 	"create table time(time_id integer primary key, time real)",
-	"insert into time values(0, 1900)",
+	"insert into time values(0, 1990)",
 	"insert into time values(1, 2000)",
 	"insert into time values(2, 2010)",
 	//
@@ -114,6 +117,19 @@ bool variable_name_xam(void)
 	"insert into smooth_grid values(3,  0,  2,  2,  1, -1, -1)",
 	"insert into smooth_grid values(4,  1,  1,  1,  1, -1, -1)",
 	//
+	"create table covariate("
+		" covariate_id   integer primary key,"
+		" covariate_name text,"
+		" reference      real,"
+		" max_difference real)",
+	"insert into covariate values(0, 'sex', '0.0', '0.6')",
+	//
+	"create table integrand("
+		" integrand_id   integer primary key,"
+		" integrand_name text,"
+		" eta            real)",
+	"insert into integrand values(0, 'prevalence', 1e-6)",
+	//
 	"create table mulcov("
 		" mulcov_id      integer primary key,"
 		" mulcov_type    text,"
@@ -121,7 +137,7 @@ bool variable_name_xam(void)
 		" integrand_id   integer,"
 		" covariate_id   integer,"
 		" smooth_id      integer)",
-	"insert into mulcov values(0,  'rate_mean',  0,  -1, 0,  0)",
+	"insert into mulcov values(0,  'meas_mean',  -1,  0, 0, 0)",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -142,6 +158,12 @@ bool variable_name_xam(void)
 	// smooth_grid table
 	vector<dismod_at::smooth_grid_struct>
 		smooth_grid_table = dismod_at::get_smooth_grid(db);
+	// covariate_table
+	vector<dismod_at::covariate_struct>
+		covariate_table = dismod_at::get_covariate_table(db);
+	// integrand table
+	vector<dismod_at::integrand_struct>
+		integrand_table = dismod_at::get_integrand_table(db);
 	// mulcov table
 	vector<dismod_at::mulcov_struct>
 		mulcov_table = dismod_at::get_mulcov_table(db);
@@ -168,19 +190,19 @@ bool variable_name_xam(void)
 	size_t smooth_id = 0;
 	size_t offset    = pack_object.mulstd_offset(smooth_id);
 	name   = VARIABLE_NAME(offset + 0);
-	ok    &= name == "mulstd(bilinear,value)";
+	ok    &= name == "value_mulstd(bilinear)";
 	name   = VARIABLE_NAME(offset + 1);
-	ok    &= name == "mulstd(bilinear,dage)";
+	ok    &= name == "dage_mulstd(bilinear)";
 	name   = VARIABLE_NAME(offset + 2);
-	ok    &= name == "mulstd(bilinear,dtime)";
+	ok    &= name == "dtime_mulstd(bilinear)";
 	smooth_id = 1;
 	offset = pack_object.mulstd_offset(smooth_id);
 	name   = VARIABLE_NAME(offset + 0);
-	ok    &= name == "mulstd(constant,value)";
+	ok    &= name == "value_mulstd(constant)";
 	name   = VARIABLE_NAME(offset + 1);
-	ok    &= name == "mulstd(constant,dage)";
+	ok    &= name == "dage_mulstd(constant)";
 	name   = VARIABLE_NAME(offset + 2);
-	ok    &= name == "mulstd(constant,dtime)";
+	ok    &= name == "dtime_mulstd(constant)";
 	//
 	// check pini
 	size_t n_var;
@@ -193,13 +215,13 @@ bool variable_name_xam(void)
 		name   = VARIABLE_NAME(offset);
 		switch( child_id )
 		{	case 0:
-			ok &= name == "pini(north_america,50,2000)"; // first child
+			ok &= name == "pini(north_america;50;2000)"; // first child
 			break;
 			case 1:
-			ok &= name == "pini(south_america,50,2000)"; // second child
+			ok &= name == "pini(south_america;50;2000)"; // second child
 			break;
 			case 2:
-			ok &= name == "pini(world,50,2000)";         // parent
+			ok &= name == "pini(world;50;2000)";         // parent
 			break;
 		}
 	}
@@ -213,22 +235,35 @@ bool variable_name_xam(void)
 		switch( child_id )
 		{	case 0:
 			ok &= n_var == 1;
-			ok &= name == "omega(north_america,50,2000)"; // first child
+			ok &= name == "omega(north_america;50;2000)"; // first child
 			break;
 			case 1:
 			ok &= n_var == 1;
-			ok &= name == "omega(south_america,50,2000)"; // second child
+			ok &= name == "omega(south_america;50;2000)"; // second child
 			break;
 			case 2:
 			ok &= n_var == 4;
-			ok &= name == "omega(world,0,1900)";        // parent
+			ok &= name == "omega(world;0;1990)";        // parent (1 of 4)
 			break;
 		}
 	}
-
-
-
-
+	//
+	// mean_meas_mulcov
+	size_t integrand_id = 0;
+	size_t n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id);
+	assert( n_cov == 1 );
+	info   = pack_object.meas_mean_mulcov_info(integrand_id, 0);
+	n_var  = info.n_var;
+	offset = info.offset;
+	ok    &= n_var == 4;
+	name   = VARIABLE_NAME(offset + 0);
+	ok    &= name == "mean_mulcov(sex;prevalence;0;1990)";
+	name   = VARIABLE_NAME(offset + 1);
+	ok    &= name == "mean_mulcov(sex;prevalence;100;1990)";
+	name   = VARIABLE_NAME(offset + 2);
+	ok    &= name == "mean_mulcov(sex;prevalence;0;2010)";
+	name   = VARIABLE_NAME(offset + 3);
+	ok    &= name == "mean_mulcov(sex;prevalence;100;2010)";
 
 	return ok;
 }
