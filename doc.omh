@@ -32,13 +32,10 @@ $spell
 	dtime
 	dismod
 $$
-$section Disease Rates as Functions of Age and Time: dismod_at-20150622$$
+$section Disease Rates as Functions of Age and Time: dismod_at-20150625$$
 
 $head Wish List$$
 $list number$$
-Implement the $cref/max_difference/covariate_table/max_difference/$$
-limits on which data that is included.
-$lnext
 Construct an algorithmic differentiable way to handle cases where product of
 remission and incidence are zero.
 $lnext
@@ -51,9 +48,6 @@ $lnext
 Include lower and upper limit for the smoothing difference priors
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
-$lnext
-If the prefix for suitesparse is not specified, do not compile or run
-	example/devel/approx_mixed/cholmod_xam.cpp
 $lend
 
 $childtable%omh/install/unix.omh
