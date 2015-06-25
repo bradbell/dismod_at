@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -100,22 +100,23 @@ $end
 # include <iostream>
 # include <cassert>
 # include <dismod_at/get_table_column.hpp>
+# include <dismod_at/configure.hpp>
 
 namespace {
 	typedef int (*callback_type)(void*, int, char**, char**);
 
 	char*  convert(const std::string& not_used, char* v)
 	{	// no text values should be null
-		assert( v != nullptr );
+		assert( v != DISMOD_AT_NULLPTR );
 		return v;
 	}
 	int    convert(const int& not_used, char* v)
 	{	// no integer values should be null
-		assert( v != nullptr );
+		assert( v != DISMOD_AT_NULLPTR );
 		return std::atoi(v);
 	}
 	double convert(const double& not_used, char* v)
-	{	if( v == nullptr )
+	{	if( v == DISMOD_AT_NULLPTR )
 			return std::atof("nan");
 		return std::atof(v);
 	}
@@ -124,7 +125,7 @@ namespace {
 	int callback(void *result, int argc, char **argv, char **azColName)
 	{	typedef CppAD::vector<Element> vector;
 		assert( argc == 1 );
-		assert( result != nullptr );
+		assert( result != DISMOD_AT_NULLPTR );
 		vector* vector_result = static_cast<vector*>(result);
 		vector_result->push_back( convert(Element(), argv[0] ) );
   		return 0;
@@ -150,12 +151,12 @@ namespace {
 		cmd            += table_name;
 
 		// execute sql command
-		char* zErrMsg     = nullptr;
+		char* zErrMsg     = DISMOD_AT_NULLPTR;
 		callback_type fun = callback<Element>;
 		void* result      = static_cast<void*>(&vector_result);
 		int rc = sqlite3_exec(db, cmd.c_str(), fun, result, &zErrMsg);
 		if( rc )
-		{	assert(zErrMsg != nullptr );
+		{	assert(zErrMsg != DISMOD_AT_NULLPTR );
 			cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
 			sqlite3_free(zErrMsg);
 			sqlite3_close(db);

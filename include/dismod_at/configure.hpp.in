@@ -13,5 +13,10 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # define DISMOD_AT_VERSION         "@dismod_at_version@"
 # define DISMOD_AT_HAS_SUITESPARSE @dismod_at_has_suitesparse@
+# if @dismod_at_has_nullptr@
+# define DISMOD_AT_NULLPTR  nullptr
+# else
+# define DISMOD_AT_NULLPTR  0
+# endif
 
 # endif

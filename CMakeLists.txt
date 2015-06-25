@@ -8,12 +8,11 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-
+INCLUDE(CheckCXXSourceRuns)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
 SET(dismod_at_version "20150625" )
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
-
 # ----------------------------------------------------------------------------
 # get_prefix(package)
 #
@@ -71,6 +70,24 @@ MESSAGE(STATUS "extra_cxx_flags = ${extra_cxx_flags}")
 # (note CppAD must be installed with ipopt_prefix specified)
 FIND_PACKAGE(PkgConfig)
 pkg_check_modules(ipopt REQUIRED ipopt)
+# ----------------------------------------------------------------------------
+# dismod_at_has_nullptr
+#
+SET(source "
+int main(void)
+{	char *c = nullptr;
+	return 0;
+}"
+)
+IF( extra_cxx_flags )
+	SET(CMAKE_REQUIRED_FLAGS "${extra_cxx_flags}")
+ENDIF( extra_cxx_flags )
+CHECK_CXX_SOURCE_RUNS("${source}" dismod_at_has_nullptr_flag)
+IF( dismod_at_has_nullptr_flag )
+	SET(dismod_at_has_nullptr 1)
+ELSE( dismod_at_has_nullptr_flag )
+	SET(dismod_at_has_nullptr 0)
+ENDIF( dismod_at_has_nullptr_flag )
 # ----------------------------------------------------------------------------
 CONFIGURE_FILE(
 	${CMAKE_CURRENT_SOURCE_DIR}/include/dismod_at/configure.hpp.in

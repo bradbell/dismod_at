@@ -146,6 +146,7 @@ $end
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/table_error_exit.hpp>
 # include <dismod_at/to_string.hpp>
+# include <dismod_at/configure.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -205,7 +206,7 @@ n_child_        ( n_child )
 					mulcov_table[mulcov_id].covariate_id
 				);
 				string mulcov_type;
-				CppAD::vector<subvec_info>* info_vec = nullptr;
+				CppAD::vector<subvec_info>* info_vec = DISMOD_AT_NULLPTR;
 				if( mulcov_table[mulcov_id].mulcov_type == meas_mean_enum )
 				{	info_vec    = &( meas_mean_mulcov_info_[integrand_id]) ;
 					mulcov_type = "'meas_mean'";
