@@ -113,6 +113,11 @@ $verbatim%bin/install_cppad.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
 $$
 
 $head dismod_at$$
+The steps above should only need to be executed once, not for
+each new version of $code dismod_at$$
+(unless the $cref whats_new_2015$$ release notes say otherwise).
+The steps below will need to be executed each time you install
+a new version of $code dismod_at$$:
 
 $subhead Setup$$
 The following is a list of the cmake settings in $code bin/run_cmake.sh$$.
