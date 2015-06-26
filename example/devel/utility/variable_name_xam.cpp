@@ -173,8 +173,14 @@ bool variable_name_xam(void)
 	//
 	// s_info_vec
 	vector<dismod_at::smooth_info> s_info_vec(2);
-	s_info_vec[0] = dismod_at::smooth_info(0, smooth_table, smooth_grid_table);
-	s_info_vec[1] = dismod_at::smooth_info(1, smooth_table, smooth_grid_table);
+	size_t smooth_id = 0;
+	s_info_vec[smooth_id] = dismod_at::smooth_info(
+		age_table, time_table, smooth_id, smooth_table, smooth_grid_table
+	);
+	smooth_id = 1;
+	s_info_vec[smooth_id] = dismod_at::smooth_info(
+		age_table, time_table, smooth_id, smooth_table, smooth_grid_table
+	);
 	// empty data table
 	vector<dismod_at::data_struct> data_table(0);
 	// child_object
@@ -190,7 +196,7 @@ bool variable_name_xam(void)
 	// ------------------------------------------------------------------
 	// check mulstd
 	string name;
-	size_t smooth_id = 0;
+	smooth_id = 0;
 	size_t offset    = pack_object.mulstd_offset(smooth_id);
 	name   = VARIABLE_NAME(offset + 0);
 	ok    &= name == "value_mulstd(bilinear)";

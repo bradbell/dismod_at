@@ -103,7 +103,8 @@ bool like_one_xam(void)
 		vector<size_t> value_prior_id(n_si),
 			dage_prior_id(n_si), dtime_prior_id(n_si);
 		dismod_at::smooth_info s_info(
-			age_id_tmp, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
+			age_table, time_table, age_id_tmp, time_id,
+			value_prior_id, dage_prior_id, dtime_prior_id,
 			mulstd_value, mulstd_dage, mulstd_dtime
 		);
 		s_info_vec[smooth_id] = s_info;

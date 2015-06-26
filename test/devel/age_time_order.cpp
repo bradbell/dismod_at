@@ -9,29 +9,15 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin smooth_info_xam.cpp$$
-$spell
-	xam
-$$
-
-$section C++ smooth_info: Example and Test$$
-$index example, C++ smooth_info$$
-$index smooth_info, C++ example$$
-
-$code
-$verbatim%example/devel/table/smooth_info_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
-
-$end
+Check smooth_info in case where age and time grids are not in order.
 */
-// BEGIN C++
 # include <dismod_at/smooth_info.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/get_age_table.hpp>
 # include <dismod_at/get_time_table.hpp>
 
-bool smooth_info_xam(void)
+bool age_time_order(void)
 {
 	bool   ok = true;
 	using  std::string;
@@ -46,13 +32,13 @@ bool smooth_info_xam(void)
 	"create table age(age_id integer primary key, age real)",
 	"insert into age values(0,  00.0)",
 	"insert into age values(1,  25.0)",
-	"insert into age values(2,  50.0)",
-	"insert into age values(3,  75.0)",
-	"insert into age values(4, 100.0)",
+	"insert into age values(2, 100.0)",
+	"insert into age values(3,  50.0)",
+	"insert into age values(4,  75.0)",
 	//
 	"create table time(time_id integer primary key, time real)",
-	"insert into time values(0,  1990.0)",
-	"insert into time values(1,  2010.0)",
+	"insert into time values(0,  2010.0)",
+	"insert into time values(1,  1990.0)",
 	//
 	"create table smooth("
 		" smooth_id      integer primary key,"
@@ -72,12 +58,12 @@ bool smooth_info_xam(void)
 		" value_prior_id integer,"
 		" dage_prior_id  integer,"
 		" dtime_prior_id integer)",
-	"insert into smooth_grid values(0,  0,  0,  1,  1,  2, -1)",
-	"insert into smooth_grid values(1,  0,  2,  1,  2,  3, -1)",
-	"insert into smooth_grid values(2,  0,  4,  1,  3, -1, -1)",
-	"insert into smooth_grid values(3,  0,  0,  0,  5,  6,  7)",
-	"insert into smooth_grid values(4,  0,  2,  0,  7,  8,  9)",
-	"insert into smooth_grid values(5,  0,  4,  0,  1, -1,  3)",
+	"insert into smooth_grid values(0,  0,  0,  0,  1,  2, -1)",
+	"insert into smooth_grid values(2,  0,  2,  0,  3, -1, -1)",
+	"insert into smooth_grid values(1,  0,  3,  0,  2,  3, -1)",
+	"insert into smooth_grid values(3,  0,  0,  1,  5,  6,  7)",
+	"insert into smooth_grid values(5,  0,  2,  1,  1, -1,  3)",
+	"insert into smooth_grid values(4,  0,  3,  1,  7,  8,  9)",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -106,12 +92,12 @@ bool smooth_info_xam(void)
 	ok  &= s_info.age_size()  == 3;
 	ok  &= s_info.time_size() == 2;
 	//
-	ok  &= s_info.age_id(0)   == 0;
-	ok  &= s_info.age_id(1)   == 2;
-	ok  &= s_info.age_id(2)   == 4;
+	ok  &= age_table[ s_info.age_id(0) ]   == 0.0;
+	ok  &= age_table[ s_info.age_id(1) ]   == 50.0;
+	ok  &= age_table[ s_info.age_id(2) ]   == 100.0;
 	//
-	ok  &= s_info.time_id(0)  == 0;
-	ok  &= s_info.time_id(1)  == 1;
+	ok  &= time_table[ s_info.time_id(0)]  == 1990.0;
+	ok  &= time_table[ s_info.time_id(1)]  == 2010.0;
 	//
 	ok  &= s_info.value_prior_id(0, 1) ==  1;
 	ok  &= s_info.value_prior_id(1, 1) ==  2;
@@ -142,4 +128,3 @@ bool smooth_info_xam(void)
 	sqlite3_close(db);
 	return ok;
 }
-// END C++

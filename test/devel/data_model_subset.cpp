@@ -9,23 +9,8 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin avg_no_ode_xam.cpp$$
-$spell
-	interp
-	xam
-$$
-
-$section C++ avg_no_ode: Example and Test$$
-$index example, C++ avg_no_ode$$
-$index avg_no_ode, C++ example$$
-
-$code
-$verbatim%example/devel/model/avg_no_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
-
-$end
+Test computing data model values on a subset of data table.
 */
-// BEGIN C++
 # include <limits>
 # include <dismod_at/data_model.hpp>
 
@@ -117,7 +102,8 @@ bool data_model_subset(void)
 		vector<size_t> value_prior_id(n_si),
 			dage_prior_id(n_si), dtime_prior_id(n_si);
 		dismod_at::smooth_info s_info(
-			age_id_tmp, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
+			age_table, time_table, age_id_tmp, time_id,
+			value_prior_id, dage_prior_id, dtime_prior_id,
 			mulstd_value, mulstd_dage, mulstd_dtime
 		);
 		s_info_vec[smooth_id] = s_info;
@@ -261,4 +247,3 @@ bool data_model_subset(void)
 
 	return ok;
 }
-// END C++

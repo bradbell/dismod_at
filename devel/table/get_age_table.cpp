@@ -47,13 +47,6 @@ $codei%
 is the age for the corresponding
 $cref/age/age_table/age/$$.
 
-$head Assumptions$$
-For $icode%age_id% = 1 , %...%, %age_table%.size()-2%$$,
-the following assumption is checked:
-$codei%
-	%age_table%[%age_id%] < %age_table%[%age_id%+1]
-%$$
-
 $children%example/devel/table/get_age_table_xam.cpp
 %$$
 $head Example$$
@@ -83,13 +76,6 @@ CppAD::vector<double> get_age_table(sqlite3* db)
 	CppAD::vector<double>  age;
 	get_table_column(db, table_name, column_name, age);
 	assert( age.size() == n_age );
-
-	for(size_t age_id = 1; age_id < n_age; age_id++) if(
-		age[age_id-1] >= age[age_id]
-	)
-	{	string message = "age is not monotone increasing";
-		table_error_exit("age", age_id, message);
-	}
 
 	return age;
 }

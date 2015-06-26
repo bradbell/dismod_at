@@ -30,7 +30,8 @@ $codei%smooth_info %s_default%()
 $codei%smooth_info %s_info%(%smooth_id%, %smooth_table%, %smooth_grid_table% )
 %$$
 $codei%smooth_info %s_test%(
-	%age_id%, %time_id%, %value_prior_id%, %dage_prior_id%, %dtime_prior_id%,
+	%age_table%, %time_table%, %age_id%, %time_id%,
+	%value_prior_id%, %dage_prior_id%, %dtime_prior_id%,
 	%mulstd_value%, %mulstd_dage%, %mulstd_dtime%
 )
 %$$
@@ -87,6 +88,20 @@ $codei%
 %$$
 The meaning of the corresponding constructor arguments are specified below:
 
+$subhead age_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %age_table%
+%$$
+and is the $cref/age_table/get_age_table/$$.
+
+$subhead time_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %time_table%
+%$$
+and is the $cref/time_table/get_time_table/$$.
+
 $subhead smooth_id$$
 This argument has prototype
 $codei%
@@ -117,6 +132,20 @@ they do not modify $icode s_info$$.
 $head s_test$$
 This constructor is used for testing purposes only.
 The meaning of its arguments are specified below:
+
+$subhead age_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %age_table%
+%$$
+and is the $cref/age_table/get_age_table/$$.
+
+$subhead time_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %time_table%
+%$$
+and is the $cref/time_table/get_time_table/$$.
 
 $subhead age_id$$
 This argument has prototype
@@ -269,19 +298,27 @@ $end
 # include <dismod_at/smooth_info.hpp>
 
 namespace {
+	struct key_id {
+		double key;
+		size_t id;
+	};
 	void unique_insert_sort(
-		CppAD::vector<size_t>& vec     ,
-		size_t                 element )
+		CppAD::vector<key_id>&  vec     ,
+		key_id&                 element )
 	{	size_t n = vec.size();
 		size_t i = 0;
-		while( i < n && vec[i] < element )
+		while( i < n && vec[i].key < element.key )
+		{	assert( vec[i].id != element.id );
 			i++;
+		}
 		if( i == n )
 		{	vec.push_back(element);
 			return;
 		}
-		if( vec[i] == element )
+		if( vec[i].key == element.key )
+		{	assert( vec[i].id == element.id );
 			return;
+		}
 		vec.push_back( vec[n-1] );
 		size_t j = n - 1;
 		while( j > i )
@@ -355,6 +392,8 @@ mulstd_dtime_(0)
 
 // Testing Constructor
 smooth_info::smooth_info(
+	const CppAD::vector<double>& age_table      ,
+	const CppAD::vector<double>& time_table     ,
 	const CppAD::vector<size_t>& age_id         ,
 	const CppAD::vector<size_t>& time_id        ,
 	const CppAD::vector<size_t>& value_prior_id ,
@@ -373,14 +412,16 @@ smooth_info::smooth_info(
 	mulstd_dtime_    = mulstd_dtime;
 # ifndef NDEBUG
 	for(size_t i = 1; i < age_id.size(); i++)
-		assert( age_id[i-1] < age_id[i] );
+		assert( age_table[age_id[i-1]] < age_table[age_id[i]] );
 	for(size_t j = 1; j < time_id.size(); j++)
-		assert( time_id[j-1] < time_id[j] );
+		assert( time_table[time_id[j-1]] < time_table[time_id[j]] );
 # endif
 }
 
 // Normal Constructor
 smooth_info::smooth_info(
+	const CppAD::vector<double>&             age_table         ,
+	const CppAD::vector<double>&             time_table        ,
 	size_t                                   smooth_id         ,
 	const CppAD::vector<smooth_struct>&      smooth_table      ,
 	const CppAD::vector<smooth_grid_struct>& smooth_grid_table )
@@ -401,19 +442,47 @@ smooth_info::smooth_info(
 	// determine the age_id_ and time_id_ vectors for this smooth_id
 	assert( age_id_.size() == 0 );
 	assert( time_id_.size() == 0 );
+	CppAD::vector<key_id> age_vec, time_vec;
 	size_t n_smooth_grid = smooth_grid_table.size();
 	for(i = 0; i < n_smooth_grid; i++)
 	{	if( smooth_grid_table[i].smooth_id == int( smooth_id ) )
-		{	id  = smooth_grid_table[i].age_id;
-			unique_insert_sort( age_id_,  id );
-			id  = smooth_grid_table[i].time_id;
-			unique_insert_sort( time_id_, id );
+		{	key_id element;
+			//
+			element.id   = smooth_grid_table[i].age_id;
+			element.key  = age_table[element.id];
+			unique_insert_sort( age_vec,  element );
+			//
+			element.id   = smooth_grid_table[i].time_id;
+			element.key  = time_table[element.id];
+			unique_insert_sort( time_vec,  element );
 		}
 	}
-
 	// number of age and time points for this smoothing
-	size_t n_age  = age_id_.size();
-	size_t n_time = time_id_.size();
+	size_t n_age  = age_vec.size();
+	if( n_age != size_t( smooth_table[smooth_id].n_age ) )
+	{	cerr << "In smooth_table with smooth_id = " << smooth_id
+		<< ", n_age = " << smooth_table[smooth_id].n_age << endl;
+		cerr << "In smooth_grid_table with smooth_id = " << smooth_id
+		<< ", n_age = " << n_age << endl;
+		std::exit(1);
+	}
+	size_t n_time  = time_vec.size();
+	if( n_time != size_t( smooth_table[smooth_id].n_time ) )
+	{	cerr << "In smooth_table with smooth_id = " << smooth_id
+		<< ", n_time = " << smooth_table[smooth_id].n_time << endl;
+		cerr << "In smooth_grid_table with smooth_id = " << smooth_id
+		<< ", n_time = " << n_time << endl;
+		std::exit(1);
+	}
+
+	// age ids in order of increasing age for this smoothing
+	age_id_.resize(n_age);
+	for(i = 0; i < n_age; i++)
+		age_id_[i] = age_vec[i].id;
+	// time ids in order of increasing age for this smoothing
+	time_id_.resize(n_time);
+	for(j = 0; j < n_time; j++)
+		time_id_[j] = time_vec[j].id;
 
 	// set smoothing priors and count number of times each
 	// age, time pair appears for this smooth_id

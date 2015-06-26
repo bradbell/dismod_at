@@ -130,8 +130,9 @@ bool pack_prior_xam(void)
 	// s_info
 	size_t smooth_id_3_by_2 = 0;
 	s_info_vec[0] = dismod_at::smooth_info(
-			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
-			mulstd_value, mulstd_dage, mulstd_dtime
+		age_table, time_table, age_id, time_id,
+		value_prior_id, dage_prior_id, dtime_prior_id,
+		mulstd_value, mulstd_dage, mulstd_dtime
 	);
 	// ------------------ second smoothing -----------------------------------
 	// age_id
@@ -163,8 +164,9 @@ bool pack_prior_xam(void)
 	// s_info
 	size_t smooth_id_1_by_2 = 1;
 	s_info_vec[1] = dismod_at::smooth_info(
-			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
-			mulstd_value, mulstd_dage, mulstd_dtime
+		age_table, time_table, age_id, time_id,
+		value_prior_id, dage_prior_id, dtime_prior_id,
+		mulstd_value, mulstd_dage, mulstd_dtime
 	);
 	// ----------------------- pack_object --------------------------------
 	// smooth_table

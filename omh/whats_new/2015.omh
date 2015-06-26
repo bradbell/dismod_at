@@ -19,6 +19,11 @@ $$
 
 $section Change and Additions to Dismod_at During 2015$$
 
+$head 06-26$$
+Remove the requirement that the
+$cref/age/age_table/age/$$ and $cref/time/time_table/time/$$
+values must be in increasing order in the corresponding tables.
+
 $head 06-25$$
 $list number$$
 Change $cref/variable_name/variable_table/variable_name/$$

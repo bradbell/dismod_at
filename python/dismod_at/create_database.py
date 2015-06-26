@@ -63,11 +63,11 @@
 # If this file already exists, it is deleted and a database is created.
 #
 # $head age_list$$
-# is a $code list$$ of $code float$$ in increasing order that
+# is a $code list$$ of $code float$$ that
 # specify the age grid values.
 #
 # $head time_list$$
-# is a $code list$$ of $code float$$ in increasing order that
+# is a $code list$$ of $code float$$ that
 # specify the time grid values.
 #
 # $head integrand_list$$

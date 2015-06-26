@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -22,8 +22,8 @@ Its initial value is zero, and it increments by one for each row.
 
 $head time$$
 This column has type $code real$$ and is a set of time values.
-The values in the time column are strictly increasing; i.e.,
-the value in each row is greater than the value in the previous row.
+The values in the time column must be unique; i.e.,
+none of the values may be repeated.
 
 $children%example/table/time_table.py
 %$$

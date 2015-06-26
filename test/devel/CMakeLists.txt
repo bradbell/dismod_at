@@ -15,6 +15,7 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 
 # Program cpp, not installed, and depends on following source files
 ADD_EXECUTABLE(test_devel EXCLUDE_FROM_ALL
+	age_time_order.cpp
 	data_model_subset.cpp
 	meas_mulcov.cpp
 	rate_mulcov.cpp

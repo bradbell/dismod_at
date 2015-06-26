@@ -137,8 +137,9 @@ bool fit_model_xam(void)
 	}
 	size_t smooth_id_gaussian_zero = 0;
 	s_info_vec[smooth_id_gaussian_zero] = dismod_at::smooth_info(
-			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
-			mulstd_value, mulstd_dage, mulstd_dtime
+		age_table, time_table, age_id, time_id,
+		value_prior_id, dage_prior_id, dtime_prior_id,
+		mulstd_value, mulstd_dage, mulstd_dtime
 	);
 	//
 	// smooth_id_positive
@@ -148,8 +149,9 @@ bool fit_model_xam(void)
 	}
 	size_t smooth_id_positive = 1;
 	s_info_vec[smooth_id_positive] = dismod_at::smooth_info(
-			age_id, time_id, value_prior_id, dage_prior_id, dtime_prior_id,
-			mulstd_value, mulstd_dage, mulstd_dtime
+		age_table, time_table, age_id, time_id,
+		value_prior_id, dage_prior_id, dtime_prior_id,
+		mulstd_value, mulstd_dage, mulstd_dtime
 	);
 	// --------------------------------------------------------------------
 	// smooth_table

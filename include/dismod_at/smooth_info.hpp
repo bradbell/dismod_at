@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -42,12 +42,16 @@ public:
 	smooth_info(void);
 	// normal constructor
 	smooth_info(
+		const CppAD::vector<double>&             age_table         ,
+		const CppAD::vector<double>&             time_table        ,
 		size_t                                   smooth_id         ,
 		const CppAD::vector<smooth_struct>&      smooth_table      ,
 		const CppAD::vector<smooth_grid_struct>& smooth_grid_table
 	);
 	// testing constructor
 	smooth_info(
+		const CppAD::vector<double>&  age_table      ,
+		const CppAD::vector<double>&  time_table     ,
 		const CppAD::vector<size_t>&  age_id         ,
 		const CppAD::vector<size_t>&  time_id        ,
 		const CppAD::vector<size_t>&  value_prior_id ,

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -63,6 +63,8 @@ bool smooth2ode_xam(void)
 
 	// testing constructor
 	dismod_at::smooth_info s_info(
+		age_table,
+		time_table,
 		age_id,
 		time_id,
 		value_prior_id,
