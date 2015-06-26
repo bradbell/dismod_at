@@ -42,6 +42,7 @@ $code chi$$        $pre   $$ $cnext model excess mortality        $rnext
 $code omega$$      $pre   $$ $cnext model other cause mortality
 $tend
 In addition, these values must appear in the order above.
+(Note that this column is unique; i.e., each name only appears once.)
 
 $subhead pini$$
 The initial prevalence is the prevalence at the initial age; i.e.,

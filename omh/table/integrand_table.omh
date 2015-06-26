@@ -36,7 +36,7 @@ Its initial value is zero, and it increments by one for each row.
 $head integrand_name$$
 This column has type $code text$$.
 The following table lists the possible values for $icode integrand_name$$.
-Each name can only appear once in this table.
+This column is unique; i.e., each name can only appear once in this table.
 Only the $cref/integrand_id/data_table/integrand_id/$$ that appear
 in the data table need appear in the integrand table.
 $table

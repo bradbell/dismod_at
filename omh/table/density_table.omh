@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Density Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -37,6 +37,7 @@ $code log_gaussian$$   $pre   $$ $cnext Log-Gaussian density   $rnext
 $code log_laplace$$    $pre   $$ $cnext Log-Laplace density
 $tend
 In addition, these values must appear in the order above.
+(Note that this column is unique; i.e., each name only appears once.)
 
 
 $children%example/table/density_table.py
