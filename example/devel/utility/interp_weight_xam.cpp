@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -57,7 +57,9 @@ bool interp_weight_xam(void)
 	{	for(j = 0; j < n_time; j++)
 			weight[i * n_time + j] = i * j + 1;
 	}
-	dismod_at::weight_info w_info(age_id, time_id, weight);
+	dismod_at::weight_info w_info(
+		age_table, time_table, age_id, time_id, weight
+	);
 
 	// case where interpolating in both directions
 	double age     = 10.0 * 2.5;

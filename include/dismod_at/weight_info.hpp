@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -12,6 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_WEIGHT_INFO_HPP
 
 # include <cppad/cppad.hpp>
+# include "get_weight_table.hpp"
 # include "get_weight_grid.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -31,13 +32,18 @@ public:
 	weight_info(void);
 	// testing constructor
 	weight_info(
-		const CppAD::vector<size_t>& age_id    ,
-		const CppAD::vector<size_t>& time_id   ,
+		const CppAD::vector<double>& age_table    ,
+		const CppAD::vector<double>& time_table   ,
+		const CppAD::vector<size_t>& age_id       ,
+		const CppAD::vector<size_t>& time_id      ,
 		const CppAD::vector<double>& weight
 	);
 	// normal  constructor
 	weight_info(
-		size_t                                   weight_id         ,
+		const CppAD::vector<double>&             age_table    ,
+		const CppAD::vector<double>&             time_table   ,
+		size_t                                   weight_id    ,
+		const CppAD::vector<weight_struct>&      weight_table ,
 		const CppAD::vector<weight_grid_struct>& weight_grid_table
 	);
 	//

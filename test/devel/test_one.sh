@@ -32,6 +32,7 @@ fi
 # fun_name
 fun_name=`grep '^bool *[a-zA-Z0-9_]* *( *void *)' $file | \
 	sed -e 's|^bool *\([a-zA-Z0-9_]*\) *( *void *) *|\1|'`
+echo "fun_name=$fun_name"
 #
 # junk.cpp
 if ! grep '\/\/ summary report' test_devel.cpp > /dev/null
@@ -67,6 +68,8 @@ popd
 echo_eval g++ \
 	-g \
 	-O0 \
+	-std=c++11 \
+	-Wall \
 	-I ../../include \
 	-I $HOME/prefix/dismod_at/include \
 	junk.cpp \

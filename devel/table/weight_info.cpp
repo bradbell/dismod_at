@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -53,6 +53,20 @@ $codei%
 %$$
 The mean of the corresponding constructor arguments are specified below:
 
+$subhead age_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %age_table%
+%$$
+and is the $cref/age_table/get_age_table/$$.
+
+$subhead time_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %time_table%
+%$$
+and is the $cref/time_table/get_time_table/$$.
+
 $subhead weight_id$$
 This argument has prototype
 $codei%
@@ -60,6 +74,13 @@ $codei%
 %$$
 and is the $cref/weight_id/weight_grid_table/weight_id/$$ for the
 weighting that $icode w_info$$ corresponds to.
+
+$subhead weight_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %weight_table%
+%$$
+and is the $cref/weight_table/get_weight_table/$$.
 
 $subhead weight_grid_table$$
 This argument has prototype
@@ -76,6 +97,20 @@ they do not modify $icode w_info$$.
 $head w_test$$
 This constructor is used for testing purposes only.
 The meaning of its arguments are specified below:
+
+$subhead age_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %age_table%
+%$$
+and is the $cref/age_table/get_age_table/$$.
+
+$subhead time_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %time_table%
+%$$
+and is the $cref/time_table/get_time_table/$$.
 
 $subhead age_id$$
 This argument has prototype
@@ -183,23 +218,33 @@ $end
 # include <dismod_at/weight_info.hpp>
 
 namespace {
+	struct key_id {
+		double key;
+		size_t id;
+	};
 	void unique_insert_sort(
-		CppAD::vector<size_t>& vec     ,
-		size_t                 element )
+		CppAD::vector<key_id>&  vec     ,
+		key_id&                 element )
 	{	size_t n = vec.size();
 		size_t i = 0;
-		while( i < n && vec[i] < element )
+		while( i < n && vec[i].key < element.key )
+		{	assert( vec[i].id != element.id );
 			i++;
+		}
 		if( i == n )
 		{	vec.push_back(element);
 			return;
 		}
-		if( vec[i] == element )
+		if( vec[i].key == element.key )
+		{	assert( vec[i].id == element.id );
 			return;
+		}
 		vec.push_back( vec[n-1] );
 		size_t j = n - 1;
 		while( j > i )
-			vec[j] = vec[j-1];
+		{	vec[j] = vec[j-1];
+			j--;
+		}
 		vec[i] = element;
 	}
 }
@@ -240,16 +285,27 @@ weight_(0)
 
 // Testing Constructor
 weight_info::weight_info(
-	const CppAD::vector<size_t>& age_id    ,
-	const CppAD::vector<size_t>& time_id   ,
-	const CppAD::vector<double>& weight    )
+	const CppAD::vector<double>& age_table  ,
+	const CppAD::vector<double>& time_table ,
+	const CppAD::vector<size_t>& age_id     ,
+	const CppAD::vector<size_t>& time_id    ,
+	const CppAD::vector<double>& weight     )
 {	age_id_  = age_id;
 	time_id_ = time_id;
 	weight_  = weight;
+# ifndef NDEBUG
+	for(size_t i = 1; i < age_id.size(); i++)
+		assert( age_table[age_id[i-1]] < age_table[age_id[i]] );
+	for(size_t j = 1; j < time_id.size(); j++)
+		assert( time_table[time_id[j-1]] < time_table[time_id[j]] );
+# endif
 }
 // Normal Constructor
 weight_info::weight_info(
+	const CppAD::vector<double>&             age_table         ,
+	const CppAD::vector<double>&             time_table        ,
 	size_t                                   weight_id         ,
+	const CppAD::vector<weight_struct>&      weight_table      ,
 	const CppAD::vector<weight_grid_struct>& weight_grid_table )
 {	size_t i, j, id;
 
@@ -261,18 +317,47 @@ weight_info::weight_info(
 	assert( age_id_.size() == 0 );
 	assert( time_id_.size() == 0 );
 	size_t n_weight = weight_grid_table.size();
+	CppAD::vector<key_id> age_vec, time_vec;
 	for( i = 0; i < n_weight; i++)
 	{	if( weight_grid_table[i].weight_id == int(weight_id) )
-		{	id  = weight_grid_table[i].age_id;
-			unique_insert_sort( age_id_,  id );
-			id  = weight_grid_table[i].time_id;
-			unique_insert_sort( time_id_, id );
+		{	key_id element;
+			//
+			element.id  = weight_grid_table[i].age_id;
+			element.key = age_table[element.id];
+			unique_insert_sort( age_vec,  element);
+			//
+			element.id  = weight_grid_table[i].time_id;
+			element.key = time_table[element.id];
+			unique_insert_sort( time_vec, element );
 		}
 	}
 
 	// number of age and time points for this weighting
-	size_t n_age  = age_id_.size();
-	size_t n_time = time_id_.size();
+	size_t n_age  = age_vec.size();
+	if( n_age != size_t( weight_table[weight_id].n_age ) )
+	{	cerr << "In weight_table with weight_id = " << weight_id
+		<< ": n_age = " << weight_table[weight_id].n_age << endl;
+		cerr << "In weight_grid_table with weight_id = " << weight_id
+		<< ": n_age = " << n_age << endl;
+		std::exit(1);
+	}
+	size_t n_time = time_vec.size();
+	if( n_time != size_t( weight_table[weight_id].n_time ) )
+	{	cerr << "In weight_table with weight_id = " << weight_id
+		<< ": n_time = " << weight_table[weight_id].n_time << endl;
+		cerr << "In weight_grid_table with weight_id = " << weight_id
+		<< ": n_time = " << n_time << endl;
+		std::exit(1);
+	}
+
+	// age ids in order of increasing age for this weighting
+	age_id_.resize(n_age);
+	for(i = 0; i < n_age; i++)
+		age_id_[i] = age_vec[i].id;
+	// time ids in order of increasing time for this weighting
+	time_id_.resize(n_time);
+	for(j = 0; j < n_time; j++)
+		time_id_[j] = time_vec[j].id;
 
 	// set weight_ and count number of times each
 	// age, time pair appears for this weight_id

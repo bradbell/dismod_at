@@ -9,15 +9,21 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-Check smooth_info in case where age and time grids are not in order.
+Check cases where age and time grids are not in order.
 */
 # include <dismod_at/smooth_info.hpp>
+# include <dismod_at/weight_info.hpp>
+# include <dismod_at/get_weight_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/get_age_table.hpp>
 # include <dismod_at/get_time_table.hpp>
 
-bool age_time_order(void)
+namespace { // BEGIN EMPTY_NAMESPACE
+
+// put bool on its own line so that test_one.sh works correctly
+bool
+test_smooth_info(void)
 {
 	bool   ok = true;
 	using  std::string;
@@ -126,5 +132,105 @@ bool age_time_order(void)
  	//
 	// close database and return
 	sqlite3_close(db);
+	return ok;
+}
+// put bool on its own line so that test_one.sh works correctly
+bool
+test_weight_info(void)
+{
+	bool   ok = true;
+	using  std::string;
+	using  CppAD::vector;
+
+	string   file_name = "example.db";
+	bool     new_file  = true;
+	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
+
+	// sql commands
+	const char* sql_cmd[] = {
+	"create table age(age_id integer primary key, age real)",
+	"insert into age values(0,  00.0)",
+	"insert into age values(1,  25.0)",
+	"insert into age values(2, 100.0)",
+	"insert into age values(3,  50.0)",
+	"insert into age values(4,  75.0)",
+	//
+	"create table time(time_id integer primary key, time real)",
+	"insert into time values(0,  2010.0)",
+	"insert into time values(1,  1990.0)",
+	//
+	"create table weight("
+		" weight_id      integer primary key,"
+		" weight_name    text,   "
+		" n_age          integer,"
+		" n_time         integer)",
+	"insert into weight values(0, 'bilinear', 3, 2)",
+	//
+	"create table weight_grid("
+		" weight_grid_id integer primary key,"
+		" weight_id      integer,"
+		" age_id         integer,"
+		" time_id        integer,"
+		" weight         real)",
+	"insert into weight_grid values(0,  0,  0,  0, 1.0)", // (0,   2010)
+	"insert into weight_grid values(2,  0,  2,  0, 2.0)", // (100, 2010)
+	"insert into weight_grid values(1,  0,  3,  0, 3.0)", // (50,  2010)
+	"insert into weight_grid values(3,  0,  0,  1, 4.0)", // (0,   1990)
+	"insert into weight_grid values(5,  0,  2,  1, 5.0)", // (100, 1990)
+	"insert into weight_grid values(4,  0,  3,  1, 6.0)", // (50,  1990)
+	};
+	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
+	for(size_t i = 0; i < n_command; i++)
+		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
+
+	// get age table
+	vector<double> age_table = dismod_at::get_age_table(db);
+
+	// get time table
+	vector<double> time_table = dismod_at::get_time_table(db);
+
+	// get the weight table
+	vector<dismod_at::weight_struct>
+		weight_table = dismod_at::get_weight_table(db);
+
+	// get the weight_grid table
+	vector<dismod_at::weight_grid_struct>
+		weight_grid_table = dismod_at::get_weight_grid(db);
+
+	// extract the weighting information
+	size_t weight_id = 0;
+	dismod_at::weight_info  w_info(
+		age_table, time_table, weight_id, weight_table, weight_grid_table
+	);
+
+	ok  &= w_info.age_size()  == 3;
+	ok  &= w_info.time_size() == 2;
+	//
+	ok  &= age_table[ w_info.age_id(0) ]   == 0.0;
+	ok  &= age_table[ w_info.age_id(1) ]   == 50.0;
+	ok  &= age_table[ w_info.age_id(2) ]   == 100.0;
+	//
+	ok  &= time_table[ w_info.time_id(0)]  == 1990.0;
+	ok  &= time_table[ w_info.time_id(1)]  == 2010.0;
+	//
+	ok  &= w_info.weight(0, 0) == 4.0;
+	ok  &= w_info.weight(1, 0) == 6.0;
+	ok  &= w_info.weight(2, 0) == 5.0;
+	//
+	ok  &= w_info.weight(0, 1) == 1.0;
+	ok  &= w_info.weight(1, 1) == 3.0;
+	ok  &= w_info.weight(2, 1) == 2.0;
+	//
+	// close database and return
+	sqlite3_close(db);
+	return ok;
+}
+
+} // END EMPTY_NAMESPACE
+
+bool age_time_order(void)
+{	bool ok = true;
+	ok &= test_smooth_info();
+	ok &= test_weight_info();
 	return ok;
 }

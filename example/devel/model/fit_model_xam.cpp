@@ -216,7 +216,9 @@ bool fit_model_xam(void)
 	time_id.resize(1);
 	age_id[0] = 0;
 	time_id[0] = 0;
-	dismod_at::weight_info w_info(age_id, time_id, weight);
+	dismod_at::weight_info w_info(
+		age_table, time_table, age_id, time_id, weight
+	);
 	vector<dismod_at::weight_info> w_info_vec(1);
 	w_info_vec[0] = w_info;
 	//

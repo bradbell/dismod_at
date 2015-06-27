@@ -162,7 +162,11 @@ int main(int n_arg, const char** argv)
 	vector<dismod_at::weight_info> w_info_vec(n_weight);
 	for(size_t weight_id = 0; weight_id < n_weight; weight_id++)
 	{	w_info_vec[weight_id] = dismod_at::weight_info(
-			weight_id, db_input.weight_grid_table
+			db_input.age_table,
+			db_input.time_table,
+			weight_id,
+			db_input.weight_table,
+			db_input.weight_grid_table
 		);
 	}
 	// s_info_vec

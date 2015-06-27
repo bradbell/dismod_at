@@ -26,6 +26,10 @@ $cref/age/age_table/age/$$ and $cref/time/time_table/time/$$
 values must be in increasing order in the corresponding tables.
 $lnext
 The $cref/install/install_unix/$$ instructions have been improved.
+$lnext
+There was a bug in the $cref weight_info$$ constructor
+when the ages or times were not increasing.
+This was fixed and a second version for this date was created.
 $lend
 
 $head 06-25$$

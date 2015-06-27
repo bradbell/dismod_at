@@ -27,7 +27,9 @@ $head Syntax$$
 $subhead Constructors$$
 $codei%smooth_info %s_default%()
 %$$
-$codei%smooth_info %s_info%(%smooth_id%, %smooth_table%, %smooth_grid_table% )
+$codei%smooth_info %s_info%(
+	%age_table%, %time_table%, %smooth_id%, %smooth_table%, %smooth_grid_table%
+)
 %$$
 $codei%smooth_info %s_test%(
 	%age_table%, %time_table%, %age_id%, %time_id%,
@@ -322,7 +324,9 @@ namespace {
 		vec.push_back( vec[n-1] );
 		size_t j = n - 1;
 		while( j > i )
-			vec[j] = vec[j-1];
+		{	vec[j] = vec[j-1];
+			j--;
+		}
 		vec[i] = element;
 	}
 }
@@ -461,17 +465,17 @@ smooth_info::smooth_info(
 	size_t n_age  = age_vec.size();
 	if( n_age != size_t( smooth_table[smooth_id].n_age ) )
 	{	cerr << "In smooth_table with smooth_id = " << smooth_id
-		<< ", n_age = " << smooth_table[smooth_id].n_age << endl;
+		<< ": n_age = " << smooth_table[smooth_id].n_age << endl;
 		cerr << "In smooth_grid_table with smooth_id = " << smooth_id
-		<< ", n_age = " << n_age << endl;
+		<< ": n_age = " << n_age << endl;
 		std::exit(1);
 	}
 	size_t n_time  = time_vec.size();
 	if( n_time != size_t( smooth_table[smooth_id].n_time ) )
 	{	cerr << "In smooth_table with smooth_id = " << smooth_id
-		<< ", n_time = " << smooth_table[smooth_id].n_time << endl;
+		<< ": n_time = " << smooth_table[smooth_id].n_time << endl;
 		cerr << "In smooth_grid_table with smooth_id = " << smooth_id
-		<< ", n_time = " << n_time << endl;
+		<< ": n_time = " << n_time << endl;
 		std::exit(1);
 	}
 
@@ -479,7 +483,7 @@ smooth_info::smooth_info(
 	age_id_.resize(n_age);
 	for(i = 0; i < n_age; i++)
 		age_id_[i] = age_vec[i].id;
-	// time ids in order of increasing age for this smoothing
+	// time ids in order of increasing time for this smoothing
 	time_id_.resize(n_time);
 	for(j = 0; j < n_time; j++)
 		time_id_[j] = time_vec[j].id;

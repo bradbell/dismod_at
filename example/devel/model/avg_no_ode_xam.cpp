@@ -95,7 +95,9 @@ bool avg_no_ode_xam(void)
 	vector<double> weight(n_si);
 	for(k = 0; k < n_si; k++)
 		weight[k] = 0.5;
-	dismod_at::weight_info w_info(age_id, time_id, weight);
+	dismod_at::weight_info w_info(
+		age_table, time_table, age_id, time_id, weight
+	);
 	vector<dismod_at::weight_info> w_info_vec(1);
 	w_info_vec[0] = w_info;
 	//
