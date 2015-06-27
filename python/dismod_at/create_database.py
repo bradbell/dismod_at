@@ -169,12 +169,16 @@
 # name    $cnext str         $cnext name of $th i$$ smoothing  $rnext
 # age_id  $cnext list of int $cnext indices for age values     $rnext
 # time_id $cnext list of int $cnext indices for time values    $rnext
-# mulstd_value   $cnext str   $cnext
-#	name for $cref/mulstd_value/smooth_table/mulstd_value/$$ smoothing $rnext
-# mulstd_dage   $cnext str   $cnext
-#	name for $cref/mulstd_dage/smooth_table/mulstd_dage/$$ smoothing $rnext
-# mulstd_dtime   $cnext str   $cnext
-#	name for $cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ smoothing $rnext
+# mulstd_value_prior_name   $cnext str   $cnext
+#	name for $cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$ smoothing $rnext
+# mulstd_dage_prior_name   $cnext str   $cnext
+#	name corresponding to
+#	$cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$
+#	for this smoothing $rnext
+# mulstd_dtime_prior_name   $cnext str   $cnext
+#	name corresponding to
+#	$cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$
+#	for this smoothing $rnext
 # fun     $cnext function    $cnext $icode%(%v%,%da%,%dt%)%=%fun%(%a%, %t%)%$$
 # $tend
 # The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
@@ -381,21 +385,41 @@ def create_database(
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create smooth table
-	col_name = [ 'smooth_name', 'n_age',   'n_time', 'mulstd_value',
-		'mulstd_dage', 'mulstd_dtime'    ]
-	col_type = [ 'text',        'integer', 'integer', 'integer',
-  		'integer',       'integer'           ]
+	col_name = [
+		'smooth_name',
+		'n_age',
+		'n_time',
+		'mulstd_value_prior_id',
+		'mulstd_dage_prior_id',
+		'mulstd_dtime_prior_id'
+	]
+	col_type = [
+		'text',
+		'integer',
+		'integer',
+		'integer',
+		'integer',
+		'integer'
+	]
 	row_list = [ ]
 	for i in range( len(smooth_list) ) :
 		smooth        = smooth_list[i]
 		name          = smooth['name']
 		n_age         = len( smooth['age_id'] )
 		n_time        = len( smooth['time_id'] )
-		mulstd_value   = global_prior_name2id[ smooth['mulstd_value'] ]
-		mulstd_dage    = global_prior_name2id[ smooth['mulstd_dage']  ]
-		mulstd_dtime   = global_prior_name2id[ smooth['mulstd_dtime'] ]
+		mulstd_value_prior_id = \
+			global_prior_name2id[ smooth['mulstd_value_prior_name'] ]
+		mulstd_dage_prior_id  = \
+			global_prior_name2id[ smooth['mulstd_dage_prior_name']  ]
+		mulstd_dtime_prior_id = \
+			global_prior_name2id[ smooth['mulstd_dtime_prior_name'] ]
 		row_list.append( [
-		name, n_age, n_time, mulstd_value, mulstd_dage, mulstd_dtime
+			name,
+			n_age,
+			n_time,
+			mulstd_value_prior_id,
+			mulstd_dage_prior_id,
+			mulstd_dtime_prior_id
 		] )
 	tbl_name = 'smooth'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

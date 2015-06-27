@@ -58,7 +58,7 @@ the rate, age and time specified by $latex j$$.
 
 $head lambda_j$$
 We use $latex \lambda_j$$
-for the $cref/mulstd_value/smooth_table/mulstd_value/$$
+for the $cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$
 multiplier for the
 $cref/child_smooth_id/rate_table/child_smooth_id/$$
 corresponding to the rate specified by $latex j$$.

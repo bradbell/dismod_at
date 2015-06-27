@@ -159,9 +159,9 @@ bool fit_model_xam(void)
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
 	{	smooth_table[smooth_id].n_age  = s_info_vec[smooth_id].age_size();
 		smooth_table[smooth_id].n_time = s_info_vec[smooth_id].time_size();
-		smooth_table[smooth_id].mulstd_value = mulstd_value;
-		smooth_table[smooth_id].mulstd_dage  = mulstd_dage;
-		smooth_table[smooth_id].mulstd_dtime = mulstd_dtime;
+		smooth_table[smooth_id].mulstd_value_prior_id = mulstd_value;
+		smooth_table[smooth_id].mulstd_dage_prior_id  = mulstd_dage;
+		smooth_table[smooth_id].mulstd_dtime_prior_id = mulstd_dtime;
 	}
 	//
 	// mulcov_table

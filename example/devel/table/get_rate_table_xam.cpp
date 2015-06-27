@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -44,8 +44,8 @@ bool get_rate_table_xam(void)
 		"create table rate("
 			"rate_id          integer primary key,"
 			"rate_name        text,"
-			"parent_smooth_id int,"
-			"child_smooth_id  int)",
+			"parent_smooth_id integer,"
+			"child_smooth_id  integer)",
 		"insert into rate values(0, 'pini',  0, 1)",
 		"insert into rate values(1, 'iota',  0, 1)",
 		"insert into rate values(2, 'rho',   0, 1)",

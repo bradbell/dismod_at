@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -20,9 +20,9 @@ namespace dismod_at {
 		std::string smooth_name;
 		int         n_age;
 		int         n_time;
-		int         mulstd_value;
-		int         mulstd_dage;
-		int         mulstd_dtime;
+		int         mulstd_value_prior_id;
+		int         mulstd_dage_prior_id;
+		int         mulstd_dtime_prior_id;
 	};
 	extern CppAD::vector<smooth_struct> get_smooth_table(sqlite3*  db);
 }

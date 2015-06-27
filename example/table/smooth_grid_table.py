@@ -33,12 +33,12 @@ def smooth_grid_table() :
 	# create smooth table
 	ptype    = 'integer primary key'
 	col_name2type = collections.OrderedDict( [
-		('smooth_name',    'text'    ),
-		('n_age',          'integer' ),
-		('n_time',         'integer' ),
-		('mulstd_value',   'integer' ),
-		('mulstd_dage',    'integer' ),
-		('mulstd_dtime',   'integer' )
+		('smooth_name',             'text'    ),
+		('n_age',                   'integer' ),
+		('n_time',                  'integer' ),
+		('mulstd_value_prior_id',   'integer' ),
+		('mulstd_dage_prior_id',    'integer' ),
+		('mulstd_dtime_prior_id',   'integer' )
 	] )
 	col_name = list(col_name2type.keys())
 	col_type = list(col_name2type.values())

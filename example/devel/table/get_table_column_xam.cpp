@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -40,9 +40,9 @@ bool get_table_column_xam(void)
 
 	// create three columns one with each type of data
 	void (*exec_sql)(sqlite3*, const string&) = dismod_at::exec_sql_cmd;
-	exec_sql(db, "create table mytable(one text,   two int, three real)");
-	exec_sql(db, "insert into  mytable values('hello',    1,       2.0)");
-	exec_sql(db, "insert into  mytable values('goodbye',  3,       4.0)");
+	exec_sql(db, "create table mytable(one text, two integer, three real)");
+	exec_sql(db, "insert into  mytable values('hello',     1,        2.0)");
+	exec_sql(db, "insert into  mytable values('goodbye',   3,        4.0)");
 	string table_name   = "mytable";
 	string column_name;
 	string column_type;

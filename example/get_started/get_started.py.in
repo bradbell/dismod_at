@@ -146,21 +146,21 @@ middle_age_id  = 1
 last_time_id   = 2
 smooth_list = [
 	{   # smooth_mean_zero
-		'name':          'smooth_mean_zero',
-		'age_id':        [ middle_age_id ],
-		'time_id':       [ 0, last_time_id ],
-		'mulstd_value':  'prior_one',
-		'mulstd_dage':   'prior_one',
-		'mulstd_dtime':  'prior_one',
-		'fun':           gaussian_zero_fun
+		'name':                     'smooth_mean_zero',
+		'age_id':                   [ middle_age_id ],
+		'time_id':                  [ 0, last_time_id ],
+		'mulstd_value_prior_name':  'prior_one',
+		'mulstd_dage_prior_name':   'prior_one',
+		'mulstd_dtime_prior_name':  'prior_one',
+		'fun':                      gaussian_zero_fun
 	},{ # smooth_uniform_positive
-		'name':          'smooth_uniform_positive',
-		'age_id':        [ middle_age_id ],
-		'time_id':       [ 0, last_time_id ],
-		'mulstd_value':  'prior_one',
-		'mulstd_dage':   'prior_one',
-		'mulstd_dtime':  'prior_one',
-		'fun':           uniform_positive_fun
+		'name':                     'smooth_uniform_positive',
+		'age_id':                   [ middle_age_id ],
+		'time_id':                  [ 0, last_time_id ],
+		'mulstd_value_prior_name':  'prior_one',
+		'mulstd_dage_prior_name':   'prior_one',
+		'mulstd_dtime_prior_name':  'prior_one',
+		'fun':                       uniform_positive_fun
 	}
 ]
 # --------------------------------------------------------------------------

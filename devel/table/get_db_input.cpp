@@ -141,9 +141,9 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(weight_grid, weight_id, weight, 0);
 
 	// smooth table
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_value, prior, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dage,  prior, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dtime, prior, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_value_prior_id, prior, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dage_prior_id,  prior, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dtime_prior_id, prior, 0);
 
 	// smooth_grid table
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, smooth_id, smooth, 0);

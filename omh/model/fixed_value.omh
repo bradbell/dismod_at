@@ -36,7 +36,7 @@ $cref/smoothing standard deviation multiplier
 /$$
 then $latex \lambda_j = 1$$.
 Otherwise $latex \lambda_j$$
-is the $cref/mulstd_value/smooth_table/mulstd_value/$$
+is the $cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$
 multiplier for the
 $cref/parent_smooth_id/rate_table/parent_smooth_id/$$
 corresponding to $latex \theta_j$$.

@@ -284,9 +284,9 @@ $codei%
 	size_t %m_value%, %m_dage%, %m_dtime%
 %$$
 and are the
-$cref/mulstd_value/smooth_table/mulstd_value/$$,
-$cref/mulstd_dage/smooth_table/mulstd_dage/$$, and
-$cref/mulstd_dtime/smooth_table/mulstd_dtime/$$
+$cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$,
+$cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$, and
+$cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$
 for this smoothing.
 
 $children%example/devel/table/smooth_info_xam.cpp
@@ -439,9 +439,9 @@ smooth_info::smooth_info(
 	assert( -1 == int( size_t(-1) ) );
 
 	// only use of smooth_table is to determine multiplier priors
-	mulstd_value_   = smooth_table[smooth_id].mulstd_value;
-	mulstd_dage_    = smooth_table[smooth_id].mulstd_dage;
-	mulstd_dtime_   = smooth_table[smooth_id].mulstd_dtime;
+	mulstd_value_   = smooth_table[smooth_id].mulstd_value_prior_id;
+	mulstd_dage_    = smooth_table[smooth_id].mulstd_dage_prior_id;
+	mulstd_dtime_   = smooth_table[smooth_id].mulstd_dtime_prior_id;
 
 	// determine the age_id_ and time_id_ vectors for this smooth_id
 	assert( age_id_.size() == 0 );

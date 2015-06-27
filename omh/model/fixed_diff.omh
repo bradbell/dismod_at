@@ -39,8 +39,8 @@ We use
 $latex \lambda_k^a$$
 ( $latex \lambda_k^t$$ )
 to denote the
-$cref/mulstd_dage/smooth_table/mulstd_dage/$$
-( $cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ )
+$cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$
+( $cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$ )
 for $icode smooth_id$$ corresponding to $latex k$$.
 
 $head Age, a_i,k$$

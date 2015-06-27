@@ -15,9 +15,22 @@ $spell
 	mulcov
 	mulstd
 	nullptr
+	dage
+	dtime
 $$
 
 $section Change and Additions to Dismod_at During 2015$$
+
+$head 06-27$$
+All of the $cref/prior_id/prior_table/prior_id/$$ columns in
+the $cref smooth_table$$ have been changed to end in $code _prior_id$$.
+To be explicit, the following column names have been changed:
+$table
+Old name                $cnext New name                      $rnext
+$code mulcov_value$$    $cnext $code mulcov_value_prior_id$$ $rnext
+$code mulcov_dage$$     $cnext $code mulcov_dage_prior_id$$  $rnext
+$code mulcov_dtime$$    $cnext $code mulcov_dtime_prior_id$$
+$tend
 
 $head 06-26$$
 $list number$$

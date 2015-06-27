@@ -131,9 +131,9 @@ For each $latex i = $$ $cref/smooth_id/smooth_table/smooth_id/$$,
 there are three smoothing standard deviation multiplier variables:
 $latex \lambda_i^v$$, $latex \lambda_i^a$$ and $latex \lambda_i^t$$.
 The corresponding priors as specified by
-$cref/mulstd_value/smooth_table/mulstd_value/$$,
-$cref/mulstd_dage/smooth_table/mulstd_dage/$$, and
-$cref/mulstd_dtime/smooth_table/mulstd_dtime/$$.
+$cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$,
+$cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$, and
+$cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$.
 
 $subhead Parent Rates$$
 For each rate

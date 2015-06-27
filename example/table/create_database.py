@@ -126,16 +126,16 @@ def create_database() :
 		{	'name':'uniform_01_constant',
 			'age_id':[0],
 			'time_id':[0],
-			'mulstd_value':'one',
-			'mulstd_dage':'one',
-			'mulstd_dtime':'one',
+			'mulstd_value_prior_name':'one',
+			'mulstd_dage_prior_name':'one',
+			'mulstd_dtime_prior_name':'one',
 			'fun':smooth_uniform_01_fun
 		},{	'name':'gaussian_01_constant',
 			'age_id':[0],
 			'time_id':[0],
-			'mulstd_value':'one',
-			'mulstd_dage':'one',
-			'mulstd_dtime':'one',
+			'mulstd_value_prior_name':'one',
+			'mulstd_dage_prior_name':'one',
+			'mulstd_dtime_prior_name':'one',
 			'fun':smooth_gaussian_01_fun
 		}
 	]
@@ -279,9 +279,9 @@ def create_database() :
 		'smooth_name',
 		'n_age',
 		'n_time',
-		'mulstd_value',
-		'mulstd_dage',
-		'mulstd_dtime'
+		'mulstd_value_prior_id',
+		'mulstd_dage_prior_id',
+		'mulstd_dtime_prior_id'
 	]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
 	check_list = [

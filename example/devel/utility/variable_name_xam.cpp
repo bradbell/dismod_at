@@ -97,9 +97,9 @@ bool variable_name_xam(void)
 		" smooth_name    text,   "
 		" n_age          integer,"
 		" n_time         integer,"
-		" mulstd_value   integer,"
-		" mulstd_dage    integer,"
-		" mulstd_dtime   integer)",
+		" mulstd_value_prior_id   integer,"
+		" mulstd_dage_prior_id    integer,"
+		" mulstd_dtime_prior_id   integer)",
 	"insert into smooth values(0, 'bilinear', 2, 2, 1, 1, 1)",
 	"insert into smooth values(1, 'constant', 1, 1, 1, 1, 1)",
 	//

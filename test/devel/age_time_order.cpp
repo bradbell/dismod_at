@@ -51,9 +51,9 @@ test_smooth_info(void)
 		" smooth_name    text,   "
 		" n_age          integer,"
 		" n_time         integer,"
-		" mulstd_value   integer,"
-		" mulstd_dage    integer,"
-		" mulstd_dtime   integer)",
+		" mulstd_value_prior_id   integer,"
+		" mulstd_dage_prior_id    integer,"
+		" mulstd_dtime_prior_id   integer)",
 	"insert into smooth values(0, 'bilinear', 3, 2, 1, 1, 1)",
 	//
 	"create table smooth_grid("

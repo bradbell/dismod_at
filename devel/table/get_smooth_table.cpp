@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -65,14 +65,17 @@ $rnext
 $code int$$ $cnext $code n_time$$ $cnext
 	The $cref/n_time/smooth_table/n_time/$$ for this smoothing.
 $rnext
-$code int$$ $cnext $code mulstd_value$$ $cnext
-	The $cref/mulstd_value/smooth_table/mulstd_value/$$ for this smoothing.
+$code int$$ $cnext $code mulstd_value_prior_id$$ $cnext
+	The $cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$
+	for this smoothing.
 $rnext
-$code int$$ $cnext $code mulstd_dage$$ $cnext
-	The $cref/mulstd_dage/smooth_table/mulstd_dage/$$ for this smoothing.
+$code int$$ $cnext $code mulstd_dage_prior_id$$ $cnext
+	The $cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$
+	for this smoothing.
 $rnext
-$code int$$ $cnext $code mulstd_dtime$$ $cnext
-	The $cref/mulstd_dtime/smooth_table/mulstd_dtime/$$ for this smoothing.
+$code int$$ $cnext $code mulstd_dtime_prior_id$$ $cnext
+	The $cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$
+	for this smoothing.
 $tend
 $comment%example/devel/table/get_smooth_grid_xam.cpp in included by smooth_grid.omh
 %$$
@@ -112,29 +115,29 @@ CppAD::vector<smooth_struct> get_smooth_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, n_time);
 	assert( n_time.size() == n_smooth );
 
-	column_name        =  "mulstd_value";
-	CppAD::vector<int>     mulstd_value;
-	get_table_column(db, table_name, column_name, mulstd_value);
-	assert( mulstd_value.size() == n_smooth );
+	column_name        =  "mulstd_value_prior_id";
+	CppAD::vector<int>     mulstd_value_prior_id;
+	get_table_column(db, table_name, column_name, mulstd_value_prior_id);
+	assert( mulstd_value_prior_id.size() == n_smooth );
 
-	column_name        =  "mulstd_dage";
-	CppAD::vector<int>     mulstd_dage;
-	get_table_column(db, table_name, column_name, mulstd_dage);
-	assert( mulstd_dage.size() == n_smooth );
+	column_name        =  "mulstd_dage_prior_id";
+	CppAD::vector<int>     mulstd_dage_prior_id;
+	get_table_column(db, table_name, column_name, mulstd_dage_prior_id);
+	assert( mulstd_dage_prior_id.size() == n_smooth );
 
-	column_name        =  "mulstd_dtime";
-	CppAD::vector<int>     mulstd_dtime;
-	get_table_column(db, table_name, column_name, mulstd_dtime);
-	assert( mulstd_dtime.size() == n_smooth );
+	column_name        =  "mulstd_dtime_prior_id";
+	CppAD::vector<int>     mulstd_dtime_prior_id;
+	get_table_column(db, table_name, column_name, mulstd_dtime_prior_id);
+	assert( mulstd_dtime_prior_id.size() == n_smooth );
 
 	CppAD::vector<smooth_struct> smooth_table(n_smooth);
 	for(size_t i = 0; i < n_smooth; i++)
-	{	smooth_table[i].smooth_name   = smooth_name[i];
-		smooth_table[i].n_age         = n_age[i];
-		smooth_table[i].n_time        = n_time[i];
-		smooth_table[i].mulstd_value   = mulstd_value[i];
-		smooth_table[i].mulstd_dage    = mulstd_dage[i];
-		smooth_table[i].mulstd_dtime   = mulstd_dtime[i];
+	{	smooth_table[i].smooth_name             = smooth_name[i];
+		smooth_table[i].n_age                   = n_age[i];
+		smooth_table[i].n_time                  = n_time[i];
+		smooth_table[i].mulstd_value_prior_id   = mulstd_value_prior_id[i];
+		smooth_table[i].mulstd_dage_prior_id    = mulstd_dage_prior_id[i];
+		smooth_table[i].mulstd_dtime_prior_id   = mulstd_dtime_prior_id[i];
 	}
 	return smooth_table;
 }
