@@ -8,31 +8,31 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin fit_arg_table$$
+$begin simulate_table$$
 $spell
 	Arg
 	num_iter
 $$
 
-$section The Fit Arg Table$$
-The $code fit_arg$$ table is created during a
-$cref fit_command$$ and records its arguments.
+$section The Simulate Table$$
+The $code simulate$$ table is created during a
+$cref simulate_command$$ and records its arguments.
 It has the following columns:
 
-$head fit_arg_id$$
+$head simulate_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$head fit_arg_name$$
+$head simulate_name$$
 This column has type $code text$$ and is
-the name for the corresponding argument to the fit command;
+the name for the corresponding argument to the simulate command;
 i.e.,
-$cref/file_name/fit_command/file_name/$$, ...
-$cref/rate_info/fit_command/rate_info/$$.
+$cref/file_name/simulate_command/file_name/$$, ...
+$cref/rate_info/simulate_command/rate_info/$$.
 
-$head fit_arg_value$$
+$head simulate_value$$
 This column has type $code text$$ and is
-the value for the corresponding argument to the fit command.
+the value for the corresponding argument to the simulate command.
 
 $head Example$$
 See the $cref get_started.py$$ example and test.

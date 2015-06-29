@@ -1,4 +1,4 @@
-$Id$
+$Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
           Copyright (C) 2014-15 University of Washington
@@ -8,15 +8,14 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin output$$
+$begin command$$
 $spell
+	dismod
 $$
 
-$section Data Base Output Tables$$
+$section The dismod_at Commands$$
 
-$childtable%omh/table/fit_arg_table.omh
-	%omh/table/variable_table.omh
-	%omh/table/simulate_table.omh
-%$$
+$childtable%devel/dismod_at.cpp%$$
+
 
 $end
