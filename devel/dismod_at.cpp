@@ -8,6 +8,20 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
+
+# include <string>
+# include <iostream>
+# include <cppad/vector.hpp>
+# include <dismod_at/configure.hpp>
+# include <dismod_at/open_connection.hpp>
+# include <dismod_at/get_db_input.hpp>
+# include <dismod_at/fit_model.hpp>
+# include <dismod_at/child_info.hpp>
+# include <dismod_at/put_table_row.hpp>
+# include <dismod_at/to_string.hpp>
+# include <dismod_at/get_column_max.hpp>
+# include <dismod_at/exec_sql_cmd.hpp>
+
 /*
 $begin fit_command$$
 $spell
@@ -119,18 +133,97 @@ both $icode iota$$ and $icode rho$$ have lower and upper limit zero.
 
 $end
 */
-# include <string>
-# include <iostream>
-# include <cppad/vector.hpp>
-# include <dismod_at/configure.hpp>
-# include <dismod_at/open_connection.hpp>
-# include <dismod_at/get_db_input.hpp>
-# include <dismod_at/fit_model.hpp>
-# include <dismod_at/child_info.hpp>
-# include <dismod_at/put_table_row.hpp>
-# include <dismod_at/to_string.hpp>
-# include <dismod_at/get_column_max.hpp>
-# include <dismod_at/exec_sql_cmd.hpp>
+namespace { // BEGIN_EMPTY_NAMESPACE
+
+void fit_command(
+	sqlite3*                                     db               ,
+	const dismod_at::pack_info&                  pack_object      ,
+	const dismod_at::db_input_struct&            db_input         ,
+	const CppAD::vector<dismod_at::smooth_info>& s_info_vec       ,
+	const dismod_at::data_model&                 data_object      ,
+	const dismod_at::prior_model&                prior_object     ,
+	const std::string&                           tolerance_arg    ,
+	const std::string&                           max_num_iter_arg ,
+	const size_t&                                n_fit_arg        ,
+	const char*                                  fit_arg_name[]   ,
+	const char**                                 argv             ,
+	const size_t&                                parent_node_id   ,
+	const dismod_at::child_info&                 child_object
+)
+{	using CppAD::vector;
+	using std::string;
+
+	// ------------------ run fit_model ------------------------------------
+	dismod_at::fit_model fit_object(
+		pack_object          ,
+		db_input.prior_table ,
+		s_info_vec           ,
+		data_object          ,
+		prior_object
+	);
+	fit_object.run_fit(tolerance_arg, max_num_iter_arg);
+	vector<double> solution = fit_object.get_solution();
+	// ----------------- fit_arg_table ----------------------------------
+	const char* sql_cmd;
+	CppAD::vector<string> col_name_vec, row_val_vec;
+	string table_name;
+	//
+	sql_cmd = "drop table if exists fit_arg";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	sql_cmd = "create table fit_arg("
+		"fit_arg_id integer primary key, fit_arg_name text, fit_arg_value text"
+	")";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	table_name = "fit_arg";
+	//
+	col_name_vec.resize(3);
+	col_name_vec[0]   = "fit_arg_id";
+	col_name_vec[1]   = "fit_arg_name";
+	col_name_vec[2]   = "fit_arg_value";
+	//
+	row_val_vec.resize(3);
+	for(size_t id = 0; id < n_fit_arg; id++)
+	{	row_val_vec[0] = dismod_at::to_string(id);
+		row_val_vec[1] = fit_arg_name[id];
+		row_val_vec[2] = argv[2 + id];
+		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+	}
+	// ----------------- variable_table ----------------------------------
+	sql_cmd = "drop table if exists variable";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	sql_cmd = "create table variable("
+		" variable_id integer primary key,"
+		" variable_value real,"
+		" variable_name  text"
+	")";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	table_name = "variable";
+	//
+	col_name_vec[0]   = "variable_id";
+	col_name_vec[1]   = "variable_value";
+	col_name_vec[2]   = "variable_name";
+	//
+	for(size_t index = 0; index < solution.size(); index++)
+	{	row_val_vec[0] = dismod_at::to_string( index );
+		row_val_vec[1] = dismod_at::to_string( solution[index] );
+		row_val_vec[2] = pack_object.variable_name(
+			index,
+			parent_node_id,
+			db_input.age_table,
+			db_input.covariate_table,
+			db_input.integrand_table,
+			db_input.mulcov_table,
+			db_input.node_table,
+			db_input.smooth_table,
+			db_input.time_table,
+			s_info_vec,
+			child_object
+		);
+		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+	}
+	return;
+}
+} // END_EMPTY_NAMESPACE
 
 int main(int n_arg, const char** argv)
 {	// ---------------- using statements ----------------------------------
@@ -269,74 +362,22 @@ int main(int n_arg, const char** argv)
 		child_object
 	);
 	data_object.set_eigen_ode2_case_number(rate_info_arg);
-	// ------------------ run fit_model ------------------------------------
-	dismod_at::fit_model fit_object(
-		pack_object          ,
-		db_input.prior_table ,
-		s_info_vec           ,
-		data_object          ,
-		prior_object
+	//
+	fit_command(
+		db               ,
+		pack_object      ,
+		db_input         ,
+		s_info_vec       ,
+		data_object      ,
+		prior_object     ,
+		tolerance_arg    ,
+		max_num_iter_arg ,
+		n_fit_arg        ,
+		fit_arg_name     ,
+		argv             ,
+		parent_node_id   ,
+		child_object
 	);
-	fit_object.run_fit(tolerance_arg, max_num_iter_arg);
-	vector<double> solution = fit_object.get_solution();
-	// ----------------- fit_arg_table ----------------------------------
-	const char* sql_cmd;
-	CppAD::vector<string> col_name_vec, row_val_vec;
-	string table_name;
-	//
-	sql_cmd = "drop table if exists fit_arg";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table fit_arg("
-		"fit_arg_id integer primary key, fit_arg_name text, fit_arg_value text"
-	")";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	table_name = "fit_arg";
-	//
-	col_name_vec.resize(3);
-	col_name_vec[0]   = "fit_arg_id";
-	col_name_vec[1]   = "fit_arg_name";
-	col_name_vec[2]   = "fit_arg_value";
-	//
-	row_val_vec.resize(3);
-	for(size_t id = 0; id < n_fit_arg; id++)
-	{	row_val_vec[0] = dismod_at::to_string(id);
-		row_val_vec[1] = fit_arg_name[id];
-		row_val_vec[2] = argv[2 + id];
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
-	}
-	// ----------------- variable_table ----------------------------------
-	sql_cmd = "drop table if exists variable";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table variable("
-		" variable_id integer primary key,"
-		" variable_value real,"
-		" variable_name  text"
-	")";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	table_name = "variable";
-	//
-	col_name_vec[0]   = "variable_id";
-	col_name_vec[1]   = "variable_value";
-	col_name_vec[2]   = "variable_name";
-	//
-	for(size_t index = 0; index < solution.size(); index++)
-	{	row_val_vec[0] = dismod_at::to_string( index );
-		row_val_vec[1] = dismod_at::to_string( solution[index] );
-		row_val_vec[2] = pack_object.variable_name(
-			index,
-			parent_node_id,
-			db_input.age_table,
-			db_input.covariate_table,
-			db_input.integrand_table,
-			db_input.mulcov_table,
-			db_input.node_table,
-			db_input.smooth_table,
-			db_input.time_table,
-			s_info_vec,
-			child_object
-		);
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
-	}
 	// ---------------------------------------------------------------------
 	sqlite3_close(db);
 	return 0;
