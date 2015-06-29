@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -46,7 +46,7 @@ bool get_integrand_table_xam(void)
 		"insert into integrand values(0, 'mtall',      1e-7)",
 		"insert into integrand values(1, 'prevalence', 1e-6)",
 		"insert into integrand values(2, 'remission',  1e-5)",
-		"insert into integrand values(3, 'incidence',  1e-4)",
+		"insert into integrand values(3, 'Sincidence', 1e-4)",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -61,7 +61,7 @@ bool get_integrand_table_xam(void)
 	ok  &= integrand_table[0].integrand == dismod_at::mtall_enum;
 	ok  &= integrand_table[1].integrand == dismod_at::prevalence_enum;
 	ok  &= integrand_table[2].integrand == dismod_at::remission_enum;
-	ok  &= integrand_table[3].integrand == dismod_at::incidence_enum;
+	ok  &= integrand_table[3].integrand == dismod_at::Sincidence_enum;
 	//
 	ok  &= integrand_table[0].eta == 1e-7;
 	ok  &= integrand_table[1].eta == 1e-6;

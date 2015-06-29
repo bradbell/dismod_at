@@ -10,6 +10,8 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin avg_integrand$$
 $spell
+	Sincidence
+	Tincidence
 	wbar
 	mulcov
 	ik
@@ -164,7 +166,7 @@ see $cref/pini/rate_table/rate_name/pini/$$.
 
 $subhead iota_i(a,t)$$
 We use $codei%iota_i(%a%, %t%)%$$ and $latex \iota_i (a,t)$$
-to denote the adjusted incidence as a function of age and time; i.e.
+to denote the adjusted susceptible incidence as a function of age and time; i.e.
 $latex r_{i,1} ( a, t )$$
 
 $subhead rho_i(a,t)$$
@@ -229,7 +231,7 @@ Depending on the value of
 see $cref/integrand_id/data_table/integrand_id/$$ for data index $latex i$$,
 the function $latex I_i (a, t)$$ is defined by
 
-$subhead incidence$$
+$subhead Sincidence$$
 $latex I_i (a, t) = \iota (a,t)$$
 
 $subhead remission$$
@@ -246,6 +248,9 @@ $latex I_i (a, t) = \omega (a,t) + \chi (a,t)$$
 
 $subhead prevalence$$
 $latex I_i (a, t) = p(a,t) $$
+
+$subhead Tincidence$$
+$latex I_i (a, t) = iota(a, t) [ 1 - p(a,t) ]$$
 
 $subhead mtspecific$$
 $latex I_i (a, t) = \chi (a,t) p(a, t)$$

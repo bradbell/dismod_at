@@ -129,7 +129,7 @@ bool variable_name_xam(void)
 		" integrand_name text,"
 		" eta            real)",
 	"insert into integrand values(0, 'prevalence', 1e-6)",
-	"insert into integrand values(1, 'incidence',  1e-6)",
+	"insert into integrand values(1, 'Sincidence', 1e-6)",
 	//
 	"create table mulcov("
 		" mulcov_id      integer primary key,"
@@ -283,7 +283,7 @@ bool variable_name_xam(void)
 	offset = info.offset;
 	ok    &= n_var == 1;
 	name   = VARIABLE_NAME(offset + 0);
-	ok    &= name == "std_mulcov(sex;incidence;50;2000)";
+	ok    &= name == "std_mulcov(sex;Sincidence;50;2000)";
 	//
 	// rate_mean_mulcov
 	size_t rate_id = 1;

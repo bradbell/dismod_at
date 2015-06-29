@@ -10,6 +10,8 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2015$$
 $spell
+	Sincidence
+	Tincidence
 	sqlite
 	Dismod_at
 	mulcov
@@ -37,6 +39,12 @@ $lnext
 Create links from the index (and search) to the $cref/rates/rate_table/$$.
 In addition, make the definition of the rates more precise; e.g.,
 see $cref/iota/rate_table/rate_name/iota/$$.
+$lnext
+The $cref/integrand_name/integrand_table/integrand_name/$$
+$code incidence$$ has been changes to $code Sincidence$$ to
+emphasize that it is relative to the susceptible population.
+In addition the new integrand $code Tincidence$$ has been
+added (which is relative to the total population).
 $lend
 
 $head 06-27$$

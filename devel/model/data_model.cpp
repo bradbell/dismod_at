@@ -522,6 +522,7 @@ void data_model::set_eigen_ode2_case_number(const std::string& rate_info_arg)
 $begin data_model_avg_no_ode$$
 
 $spell
+	Sincidence
 	subvectors
 	enum
 	integrands
@@ -577,7 +578,7 @@ $cref devel_pack_info_rate$$ and $cref devel_pack_info_rate_mulcov$$ subvectors 
 $icode pack_vec$$ are used:
 $table
 Integrand               $cnext Rates               $rnext
-$code incidence_enum$$  $cnext $code iota_enum$$   $rnext
+$code Sincidence_enum$$ $cnext $code iota_enum$$   $rnext
 $code remission_enum$$  $cnext $code rho_enum$$    $rnext
 $code mtexcess_enum$$   $cnext $code chi_enum$$    $rnext
 $code mtother_enum$$    $cnext $code omega_enum$$  $rnext
@@ -640,7 +641,7 @@ Float data_model::avg_no_ode(
 	rate_id[1] = number_rate_enum;
 	switch(integrand)
 	{
-		case incidence_enum:
+		case Sincidence_enum:
 		rate_id[0] = size_t (iota_enum);
 		break;
 
@@ -732,7 +733,7 @@ Float data_model::avg_no_ode(
 	CppAD::vector<Float> var_ode(n_ode);
 	switch(integrand)
 	{
-		case incidence_enum:
+		case Sincidence_enum:
 		var_ode = rate_ode[0];
 		break;
 
@@ -774,6 +775,7 @@ Float data_model::avg_no_ode(
 $begin data_model_avg_yes_ode$$
 
 $spell
+	Tincidence
 	mtspecific
 	mtall
 	mtstandard
@@ -815,6 +817,7 @@ The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
 $cref/sample_id/data_subset/data_sample/sample_id/$$
 must be one of the following:
 $code prevalence_enum$$,
+$code Tincidence_enum$$,
 $code mtspecific_enum$$,
 $code mtall_enum$$,
 $code mtstandard_enum$$.
@@ -856,7 +859,7 @@ Float data_model::avg_yes_ode(
 # ifndef NDEBUG
 	switch( data_info_[sample_id].integrand )
 	{
-		case incidence_enum:
+		case Sincidence_enum:
 		case remission_enum:
 		case mtexcess_enum:
 		case mtother_enum:
@@ -1040,6 +1043,10 @@ Float data_model::avg_yes_ode(
 					integrand_sub[ij] = P;
 					break;
 
+					case Tincidence_enum:
+					integrand_sub[ij] = iota[k] * (1.0 - P);
+					break;
+
 					case mtspecific_enum:
 					integrand_sub[ij] = chi[k] * P;
 					break;
@@ -1073,6 +1080,8 @@ Float data_model::avg_yes_ode(
 $begin data_model_like_one$$
 
 $spell
+	Sincidence
+	Tincidence
 	struct
 	logden
 	fabs
@@ -1156,10 +1165,10 @@ $table
 routine                   $cnext integrand for this $icode sample_id$$
 $rnext
 $cref data_model_avg_no_ode$$ $cnext
-	incidence, remission, mtexcess, mtother, mtwith, relrisk
+	Sincidence, remission, mtexcess, mtother, mtwith, relrisk
 $rnext
 $cref data_model_avg_yes_ode$$ $cnext
-	prevalence, mtspecific, mtall, mtstandard
+	Tincidence, prevalence, mtspecific, mtall, mtstandard
 
 $tend
 
@@ -1347,7 +1356,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 		Float avg;
 		integrand_enum integrand  = data_info_[sample_id].integrand;
 		switch( integrand )
-		{	case incidence_enum:
+		{	case Sincidence_enum:
 			case remission_enum:
 			case mtexcess_enum:
 			case mtother_enum:
@@ -1357,6 +1366,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 			break;
 
 			case prevalence_enum:
+			case Tincidence_enum:
 			case mtspecific_enum:
 			case mtall_enum:
 			case mtstandard_enum:

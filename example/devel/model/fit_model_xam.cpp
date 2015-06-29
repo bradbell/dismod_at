@@ -229,7 +229,7 @@ bool fit_model_xam(void)
 	vector<double> x(0); // empty set of covariates
 	dismod_at::integrand_enum integrand_vec[] = {
 		dismod_at::prevalence_enum , // rate_id = 0
-		dismod_at::incidence_enum  , // rate_id = 1
+		dismod_at::Sincidence_enum , // rate_id = 1
 		dismod_at::remission_enum  , // rate_id = 2
 		dismod_at::mtexcess_enum   , // rate_id = 3
 		dismod_at::mtother_enum      // rate_id = 4

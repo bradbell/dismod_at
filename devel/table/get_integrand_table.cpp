@@ -11,6 +11,8 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin get_integrand_table$$
 $spell
+	Sincidence
+	Tincidence
 	struct
 	sqlite
 	enum
@@ -70,7 +72,8 @@ $head integrand_enum$$
 This is an enum type with the following values:
 $table
 $icode integrand_enum$$ $pre  $$ $cnext $icode integrand_name$$ $rnext
-$code incidence_enum$$  $pre  $$ $cnext $code incidence$$     $rnext
+$code Sincidence_enum$$ $pre  $$ $cnext $code Sincidence$$      $rnext
+$code Tincidence_enum$$ $pre  $$ $cnext $code Tincidence$$      $rnext
 $code remission_enum$$  $pre  $$ $cnext $code remission$$     $rnext
 $code mtexcess_enum$$   $pre  $$ $cnext $code mtexcess$$      $rnext
 $code mtother_enum$$    $pre  $$ $cnext $code mtother$$       $rnext
@@ -109,7 +112,8 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // rate names in same order as enum type in get_integrand_table.hpp
 const char* integrand_enum2name[] = {
-	"incidence",
+	"Sincidence",
+	"Tincidence",
 	"remission",
 	"mtexcess",
 	"mtother",

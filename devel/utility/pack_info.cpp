@@ -824,7 +824,8 @@ pack_info::variable_name(
 	};
 	// see get_integrand_table.cpp were this table also appears
 	const char* integrand_enum2name[] = {
-		"incidence",
+		"Sincidence",
+		"Tincidence",
 		"remission",
 		"mtexcess",
 		"mtother",

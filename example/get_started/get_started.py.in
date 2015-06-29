@@ -50,7 +50,7 @@ time_list   = [ 1995.0, 2005.0, 2015.0 ]
 # integrand table
 integrand_list = [
 	{ 'name':'prevalence',  'eta':1e-6 },
-	{ 'name':'incidence',   'eta':1e-6 },
+	{ 'name':'Sincidence',  'eta':1e-6 },
 	{ 'name':'remission',   'eta':1e-6 },
 	{ 'name':'mtexcess',    'eta':1e-6 },
 	{ 'name':'mtother',     'eta':1e-6 }
