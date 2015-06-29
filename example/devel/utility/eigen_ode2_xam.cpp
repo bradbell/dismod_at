@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -15,8 +15,6 @@ $spell
 $$
 
 $section Example and Test of Eigenvector Method of Solving ODE$$
-$index test, eigen_ode2$$
-$index example, eigen_ode2$$
 
 $code
 $verbatim%example/devel/utility/eigen_ode2_xam.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -49,15 +47,14 @@ namespace {
 bool eigen_ode2_xam(void)
 {	bool ok = true;
 	typedef CppAD::vector<Float> vector;
-	//
-	// solve ODE using eigen_ode2
-	Float tf = 0.25;
+	Float tf = 0.1;
 	vector b(4), yi(2), yf(2);
+	size_t case_number;
+	// -------------------------------------------------------------------
 	b[0] = -3.0;  b[1] = 0.0;
 	b[2] = 0.0;   b[3] = -4.0;
 	yi[0] = 1.0;
 	yi[1] = 2.0;
-	dismod_at::eigen_ode2(tf, b, yi, yf);
 	//
 	// solve ODE using Runge45
 	Fun F;
@@ -67,30 +64,66 @@ bool eigen_ode2_xam(void)
 	vector xi = yi;
 	vector xf = CppAD::Runge45(F, M, ti, tf, yi);
 	//
-	// splitting case:
-	// b[0] = -3.0 , b[1] =  0.0
-	// b[2] =  0.0 , b[3] = -4.0
+	case_number = 1;
+	yf  = dismod_at::eigen_ode2(case_number, b, yi, tf);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
-	//
-	// switch during splitting case:
+	// -------------------------------------------------------------------
 	b[0] = -3.0 , b[1] =  1.0;
 	b[2] =  0.0 , b[3] = -4.0;
 	F.set(b);
-	dismod_at::eigen_ode2(tf, b, yi, yf);
 	xf = CppAD::Runge45(F, M, ti, tf, yi);
+	//
+	case_number = 2;
+	yf  = dismod_at::eigen_ode2(case_number, b, yi, tf);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
+	// -------------------------------------------------------------------
+	b[0] = -3.0 , b[1] =  1.0;
+	b[2] =  0.0 , b[3] = -3.0;
+	F.set(b);
+	xf = CppAD::Runge45(F, M, ti, tf, yi);
 	//
-	// eigen vector case
-	b[0] = -3.0 , b[1] =  0.5;
+	case_number = 3;
+	yf   = dismod_at::eigen_ode2(case_number, b, yi, tf);
+	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
+	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
+	// -------------------------------------------------------------------
+	b[0] = -3.0 , b[1] =  1.0;
+	b[2] =  0.0 , b[3] = -4.0;
+	F.set(b);
+	xf = CppAD::Runge45(F, M, ti, tf, yi);
+	//
+	case_number = 4;
+	yf   = dismod_at::eigen_ode2(case_number, b, yi, tf);
+	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
+	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
+	// -------------------------------------------------------------------
+	b[0] = -3.0 , b[1] =  0.0;
+	b[2] =  1.0 , b[3] = -3.0;
+	F.set(b);
+	xf = CppAD::Runge45(F, M, ti, tf, yi);
+	//
+	case_number = 5;
+	yf   = dismod_at::eigen_ode2(case_number, b, yi, tf);
+	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
+	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
+	// -------------------------------------------------------------------
+	b[0] = -3.0 , b[1] =  0.0;
 	b[2] =  1.0 , b[3] = -4.0;
 	F.set(b);
-	dismod_at::eigen_ode2(tf, b, yi, yf);
 	xf = CppAD::Runge45(F, M, ti, tf, yi);
+	//
+	case_number = 6;
+	yf   = dismod_at::eigen_ode2(case_number, b, yi, tf);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
 	//
+	case_number = 7;
+	yf   = dismod_at::eigen_ode2(case_number, b, yi, tf);
+	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
+	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
+	// -------------------------------------------------------------------
 	return ok;
 }
 // END C++

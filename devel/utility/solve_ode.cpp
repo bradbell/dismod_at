@@ -186,7 +186,9 @@ void solve_ode(
 		for(size_t j = 0; j < 4; j++)
 			b_avg[j] = (b_previous[j] + b_next[j]) / 2.0;
 		//
-		eigen_ode2(step_size, b_avg, yi, yf);
+		// |b[2]| > |b[1]| and b[0] != b[3]
+		size_t case_number = 7;
+		yf = eigen_ode2(case_number, b_avg, yi, step_size);
 		//
 		S_out[k+1]  = yf[0];
 		C_out[k+1]  = yf[1];

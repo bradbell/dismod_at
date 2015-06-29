@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -15,11 +15,11 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	template <class Float>
-	extern void eigen_ode2(
-		const Float&                 tf  ,
-		const CppAD::vector<Float>&  a   ,
-		const CppAD::vector<Float>&  yi  ,
-		      CppAD::vector<Float>&  yf
+	extern CppAD::vector<Float> eigen_ode2(
+		size_t                       case_number ,
+		const CppAD::vector<Float>&  b           ,
+		const CppAD::vector<Float>&  yi          ,
+		const Float&                 tf
 	);
 }
 # endif
