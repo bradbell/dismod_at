@@ -207,6 +207,9 @@ pack_object_   (pack_object)
 	assert( n_age_ode  > 1 );
 	assert( n_time_ode > 1 );
 	//
+	// set default value for eigen_ode2_case_number_
+	eigen_ode2_case_number_ = 7;
+	//
 	// set n_child_
 	n_child_ = child_object.child_size();
 	assert( n_child_ == pack_object.child_size() );
@@ -468,6 +471,52 @@ pack_object_   (pack_object)
 			data_info_[sample_id].c_ode[k] = c_sum[k] / sum;
 	}
 }
+/*
+$begin set_eigne_ode2_case_number$$
+$spell
+	Dismod
+	eigen
+	arg
+	const
+$$
+
+$section Sets the Method Used to Solve the Dismod_at ODE$$
+
+$head Syntax$$
+$codei%data_object%.set_eigen_ode2_case_number(%rate_info_arg%)%$$
+
+$head data_object$$
+This object has prototype
+$codei%
+	const data_model %data_object%
+%$$
+see $cref/data_object constructor/data_model_ctor/data_object/$$.
+
+$head rate_info_arg$$
+Is the fit command $cref/rate_info/fit_command/rate_info/$$ argument.
+$end
+*/
+void data_model::set_eigen_ode2_case_number(const std::string& rate_info_arg)
+{
+	if( rate_info_arg == "chi_positive" )
+	{	eigen_ode2_case_number_ = 7;
+		return;
+	}
+	if( rate_info_arg == "iota_and_chi_zero" )
+	{	eigen_ode2_case_number_ = 5;
+		return;
+	}
+	if( rate_info_arg == "rho_and_chi_zero" )
+	{	eigen_ode2_case_number_ = 3;
+		return;
+	}
+	if( rate_info_arg == "iota_and_rho_zero" )
+	{	eigen_ode2_case_number_ = 1;
+		return;
+	}
+	assert(false);
+}
+
 /*
 -----------------------------------------------------------------------------
 $begin data_model_avg_no_ode$$
@@ -974,6 +1023,7 @@ Float data_model::avg_yes_ode(
 		Float  step_size = Float(ode_step_size_);
 		//
 		solve_ode(
+			eigen_ode2_case_number_ ,
 			i_max, j_max, step_size, pini, iota, rho, chi, omega, S_out, C_out
 		);
 		//

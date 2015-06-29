@@ -45,7 +45,7 @@ In addition, these values must appear in the order above.
 (Note that this column is unique; i.e., each name only appears once.)
 
 $subhead pini$$
-The initial prevalence is the prevalence at the initial age; i.e.,
+The initial prevalence $icode pini$$ is the prevalence at the initial age; i.e.,
 the value $cref/age/age_table/age/$$ corresponding to
 $icode%age_id% == 0%$$.
 If $icode rate_name$$ is $code pini$$, the
@@ -53,6 +53,26 @@ $icode parent_smooth_id$$ and $icode child_smooth_id$$ smoothings must have
 $cref/n_age/smooth_table/n_age/$$ equal to one.
 This is because prevalence at the initial age
 is only a function of time, and does not depend on age.
+
+$subhead iota$$
+The incidence rate $icode iota$$ is the rate at which people who
+are in the susceptible state $icode S$$
+transfer to the with condition state $icode C$$.
+
+$subhead rho$$
+The remission rate $icode rho$$ is the rate at which people who
+are in the with condition state $icode C$$
+transfer to the susceptible state $icode S$$.
+
+$subhead chi$$
+The excess mortality rate $icode chi$$ is the rate at which people who
+are in the with condition state $icode C$$ die from the condition.
+
+$subhead omega$$
+The other mortality rate $icode omega$$ is the rate at which people who
+are in either state, $icode S$$ or $icode C$$,
+die from causes other than the condition.
+
 
 $head parent_smooth_id$$
 This column has type $code integer$$ and its value is a

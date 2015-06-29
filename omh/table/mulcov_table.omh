@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -33,13 +33,16 @@ Its initial value is zero, and it increments by one for each row.
 
 $head mulcov_type$$
 This column has type $code text$$.
-The possible values are
-$table
-$icode mulcov_type$$ $cnext Description $rnext
-$code rate_mean$$  $cnext covariate effects a model rate $rnext
-$code meas_mean$$  $cnext covariate effects a measurement mean $rnext
-$code meas_std$$   $cnext covariate effects a measurement standard deviation
-$tend
+The possible values are:
+
+$subhead rate_mean$$
+This covariate adjusts a model rate.
+
+$subhead meas_mean$$
+This covariate adjusts the mean value for measurement.
+
+$subhead meas_std$$
+This covariate adjusts the standard deviation for a measurement.
 
 $head rate_id$$
 If $icode mulcov_type$$ is $code rate_mean$$,

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -84,7 +84,9 @@ bool solve_ode_xam(void)
 		chi[k]   = 0.08 * ri * ri;
 		omega[k] = 0.07 * ri * ri;
 	}
+	size_t eigen_ode2_case_number = 7;
 	dismod_at::solve_ode(
+		eigen_ode2_case_number,
 		i_max, j_max, step_size, pini, iota, rho, chi, omega, S_out, C_out
 	);
 	Fun F;

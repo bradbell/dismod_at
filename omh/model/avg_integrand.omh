@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -26,12 +26,29 @@ $spell
 	mtother
 	mtwith
 	susceptible
+	covariates
+	dismod
 $$
 
-$section The Average Integrand$$
-$index avg_integrand$$
-$index model, avg_integrand$$
-$index data, avg_integrand$$
+$section Model for the Average Integrand$$
+
+$head Ordinary Differential Equation$$
+In the case where the $cref/rates/rate_table/$$ do not depend on time,
+the dismod_ode ordinary differential equation is
+$latex \[
+\begin{array}{rcl}
+	S'(a) & = & - [ \iota(a) + \omega (a) ] S(a) + \rho(a) C(a)
+	\\
+	C'(a) & = & + \iota(a) S(a) - [ \rho(a) + \chi(a) + \omega (a) ] C(a)
+\end{array}
+\] $$
+with the initial condition $latex C(0) = p_0$$ and $latex S(0) = 1 - p_0$$.
+This equation is made more complicated by the fact that the
+rates vary with time as well as with each data point.
+The reason for the variation between data points due both to the
+$cref/random effects/model_variable/Random Effects, u/$$ as well as the
+$cref/rate_mean/mulcov_table/mulcov_type/rate_mean/$$ covariates.
+
 
 $head Data Table Notation$$
 

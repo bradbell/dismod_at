@@ -33,13 +33,6 @@ $section Disease Rates as Functions of Age and Time: dismod_at-20150627$$
 
 $head Wish List$$
 $list number$$
-Construct an algorithmic differentiable way to handle cases where product of
-remission and incidence are zero.
-The best way to do this is to improve CppAD, which will have to wait till
-September.
-In the meantime, if necessary, we could implement a special case
-when remission was know to be zero.
-$lnext
 Add computation of a weighted residuals table to the $cref fit_command$$.
 $lnext
 If the $cref variable_table$$ exists when the $cref fit_command$$ is executed,

@@ -48,6 +48,10 @@ private:
 	size_t                       n_child_;
 	CppAD::vector<smooth2ode*>   si2ode_vec_;
 	CppAD::vector<data_ode_info> data_info_;
+
+	// set to a default value by consturctor
+	// modified by set_eigen_ode2_case_number
+	size_t                       eigen_ode2_case_number_;
 public:
 	data_model(
 		size_t                                   parent_node_id  ,
@@ -66,6 +70,9 @@ public:
 	);
 	// destructor must delete the smooth2ode objects pointed to by si2ode_vec_
 	~data_model(void);
+	//
+	void set_eigen_ode2_case_number(const std::string& rate_info_arg);
+	//
 	// compute average for integrands that do not require S or C
 	template <class Float>
 	Float avg_no_ode(

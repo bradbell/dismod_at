@@ -16,13 +16,17 @@ $spell
 	Dismod
 	Ipopt
 	num_iter
+	mtspecific
+	mtall
+	mtstandard
 $$
 
 $section The Fit Command$$
 
 $head Syntax$$
 $codei%dismod_at fit %file_name% %parent_node_id% \
-	%n_age_ode% %n_time_ode% %ode_step_size% %tolerance% %max_num_iter%$$
+	%n_age_ode% %n_time_ode% %ode_step_size% %tolerance% %max_num_iter%$$ \
+	[ rho_zero ] [chi_zero]
 
 $head file_name$$
 Is an
@@ -74,6 +78,45 @@ and specifies the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
 maximum number of iterations $code max_iter$$.
 
+$head rate_info$$
+This argument only matters when one of the following
+$cref/integrand names/integrand_table/integrand_name/$$ is used:
+$code prevalence$$,
+$code mtspecific$$,
+$code mtall$$,
+$code mtstandard$$.
+In this case it is necessary to solve the dismod_ode
+$cref/
+ordinary differential equation /avg_integrand/Ordinary Differential Equation
+/$$
+The possible values for this argument are listed below:
+
+$subhead chi_positive$$
+If $icode%rate_info% = "chi_positive"%$$,
+the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
+$icode chi$$ always has a lower limit greater than zero.
+
+$subhead iota_and_chi_zero$$
+If $icode%rate_info% = "iota_and_chi_zero"%$$,
+the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for both
+$icode iota$$ and $icode chi$$ have lower and upper limit zero.
+In this case
+the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
+$icode rho$$ must always has a lower limit greater than zero.
+
+$subhead rho_and_chi_zero$$
+If $icode%rate_info% = "rho_and_chi_zero"%$$,
+the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for both
+$icode rho$$ and $icode chi$$ have lower and upper limit zero.
+In this case
+the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
+$icode iota$$ must always has a lower limit greater than zero.
+
+$subhead iota_and_rho_zero$$
+If $icode%rate_info% = "iota_and_rho_zero"%$$,
+the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
+both $icode iota$$ and $icode rho$$ have lower and upper limit zero.
+
 $end
 */
 # include <string>
@@ -104,7 +147,8 @@ int main(int n_arg, const char** argv)
 		"n_time_ode",
 		"ode_step_size",
 		"tolerance",
-		"max_num_iter"
+		"max_num_iter",
+		"rate_info"
 	};
 	size_t n_fit_arg = sizeof(fit_arg_name) / sizeof(fit_arg_name[0]);
 	//
@@ -118,13 +162,13 @@ int main(int n_arg, const char** argv)
 	}
 	if( size_t(n_arg) != n_fit_arg + 2 )
 	{	cerr << usage << endl;
-		exit(1);
+		std::exit(1);
 	}
 	size_t i_arg = 0;
 	const string command_arg       = argv[++i_arg];
 	if( command_arg != "fit" )
 	{	cerr << usage << endl;
-		exit(1);
+		std::exit(1);
 	}
 	const string file_name_arg      = argv[++i_arg];
 	const string parent_node_id_arg = argv[++i_arg];
@@ -133,7 +177,19 @@ int main(int n_arg, const char** argv)
 	const string ode_step_size_arg  = argv[++i_arg];
 	const string tolerance_arg      = argv[++i_arg];
 	const string max_num_iter_arg   = argv[++i_arg];
-	// --------------- get the input tables -----------------------------
+	const string rate_info_arg      = argv[++i_arg];
+	// ------------- check rate_info_arg ------------------------------------
+	bool ok = rate_info_arg == "chi_positive";
+	ok     |= rate_info_arg == "iota_and_chi_zero";
+	ok     |= rate_info_arg == "rho_and_chi_zero";
+	ok     |= rate_info_arg == "iota_and_rho_zero";
+	if( ! ok )
+	{	cerr << usage << endl
+		<< "rate_info = " << rate_info_arg
+		<< " is not a valid choice" << endl;
+		std::exit(1);
+	}
+	// --------------- get the input tables ---------------------------------
 	bool new_file = false;
 	sqlite3* db   = dismod_at::open_connection(file_name_arg, new_file);
 	dismod_at::db_input_struct db_input;
@@ -212,6 +268,7 @@ int main(int n_arg, const char** argv)
 		pack_object              ,
 		child_object
 	);
+	data_object.set_eigen_ode2_case_number(rate_info_arg);
 	// ------------------ run fit_model ------------------------------------
 	dismod_at::fit_model fit_object(
 		pack_object          ,

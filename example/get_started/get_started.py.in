@@ -214,7 +214,8 @@ fit_list= {
 	'n_time_ode':       '2',
 	'ode_step_size':    '20.0',
 	'tolerance':        '1e-8',
-	'max_num_iter':     '100'
+	'max_num_iter':     '100',
+	'rate_info':        'chi_positive'
 }
 cmd       = [
 	program                     ,
@@ -225,7 +226,8 @@ cmd       = [
 	fit_list['n_time_ode']      ,
 	fit_list['ode_step_size']   ,
 	fit_list['tolerance']       ,
-	fit_list['max_num_iter']
+	fit_list['max_num_iter']    ,
+	fit_list['rate_info']
 ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
