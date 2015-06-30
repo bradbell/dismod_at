@@ -41,12 +41,12 @@ bool get_integrand_table_xam(void)
 
 	// sql commands
 	const char* sql_cmd[] = {
-		"create table integrand"
-		"(integrand_id integer primary key, integrand_name text, eta real)",
-		"insert into integrand values(0, 'mtall',      1e-7)",
-		"insert into integrand values(1, 'prevalence', 1e-6)",
-		"insert into integrand values(2, 'remission',  1e-5)",
-		"insert into integrand values(3, 'Sincidence', 1e-4)",
+	"create table integrand"
+	"(integrand_id integer primary key, integrand_name text unique, eta real)",
+	"insert into integrand values(0, 'mtall',      1e-7)",
+	"insert into integrand values(1, 'prevalence', 1e-6)",
+	"insert into integrand values(2, 'remission',  1e-5)",
+	"insert into integrand values(3, 'Sincidence', 1e-4)",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)

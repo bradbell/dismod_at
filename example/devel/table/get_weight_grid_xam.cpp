@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -44,7 +44,7 @@ bool get_weight_grid_xam(void)
 	const char* sql_cmd[] = {
 	"create table weight("
 		"weight_id   integer primary key,"
-		"weight_name text,"
+		"weight_name text unique,"
 		"n_age       int,"
 		"n_time      int)",
 	"insert into weight values(0, 'constant',  1,  1)",
@@ -109,7 +109,7 @@ bool get_weight_grid_xam(void)
 	ok  &= weight_grid_table[4].age_id    == 2;
 	ok  &= weight_grid_table[4].time_id   == 2;
 	ok  &= weight_grid_table[4].weight    == 1.5;
- 	//
+	//
 	// close database and return
 	sqlite3_close(db);
 	return ok;

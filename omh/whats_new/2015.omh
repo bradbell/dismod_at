@@ -25,9 +25,13 @@ $section Change and Additions to Dismod_at During 2015$$
 
 $head 06-30$$
 $list number$$
-The python $code create_database$$ routine now adds
-the unique constraint to all the
-$cref/name columns/create_database/Name Column/$$ in the database.
+The python routine $code create_table$$ now adds the
+$cref/unique/create_table/col_name/unique/$$ constraint to
+$cref/name columns/input/Name Column/$$.
+This in turn is used by, and does the same for, $code create_database$$.
+In addition, the C++ examples for $cref/tables/devel_table/$$
+were changed to include is constraint; e.g.,
+$cref get_integrand_table_xam.cpp$$.
 $lnext
 There was a bug in reading the data tables whereby the following error
 would be incorrectly generated:

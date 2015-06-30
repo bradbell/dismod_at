@@ -44,7 +44,7 @@ bool get_smooth_grid_xam(void)
 	const char* sql_cmd[] = {
 	"create table smooth("
 		"smooth_id                integer primary key,"
-		"smooth_name              text,"
+		"smooth_name              text unique,"
 		"n_age                    integer,"
 		"n_time                   integer,"
 		"mulstd_value_prior_id    integer,"

@@ -33,6 +33,8 @@
 # where the elements are the column names in the table that is created.
 # The column name for the primary key, $icode%tbl_name%_id%$$ must
 # not be included in the list.
+#
+# $subhead unique$$
 # If the column name $icode%tbl_name%_name%$$ is in the list,
 # the corresponding column will have the $code unique$$ constraint.
 #

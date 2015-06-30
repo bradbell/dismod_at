@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Density Estimation as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -43,7 +43,7 @@ bool get_density_table_xam(void)
 	// sql commands
 	const char* sql_cmd[] = {
 		"create table density"
-		"(density_id integer primary key, density_name text)",
+		"(density_id integer primary key, density_name text unique)",
 		"insert into density values(0, 'uniform')"     ,
 		"insert into density values(1, 'gaussian')"    ,
 		"insert into density values(2, 'laplace')"     ,

@@ -56,7 +56,7 @@ bool smooth_info_xam(void)
 	//
 	"create table smooth("
 		" smooth_id               integer primary key,"
-		" smooth_name             text,   "
+		" smooth_name             text unique,   "
 		" n_age                   integer,"
 		" n_time                  integer,"
 		" mulstd_value_prior_id   integer,"
@@ -137,7 +137,7 @@ bool smooth_info_xam(void)
 	ok  &= s_info.mulstd_value()      == 1;
 	ok  &= s_info.mulstd_dage()       == 1;
 	ok  &= s_info.mulstd_dtime()      == 1;
- 	//
+	//
 	// close database and return
 	sqlite3_close(db);
 	return ok;

@@ -43,7 +43,7 @@ bool get_rate_table_xam(void)
 	const char* sql_cmd[] = {
 		"create table rate("
 			"rate_id          integer primary key,"
-			"rate_name        text,"
+			"rate_name        text unique,"
 			"parent_smooth_id integer,"
 			"child_smooth_id  integer)",
 		"insert into rate values(0, 'pini',  0, 1)",

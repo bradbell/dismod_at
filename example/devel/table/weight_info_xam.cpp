@@ -61,7 +61,7 @@ bool weight_info_xam(void)
 	//
 	"create table weight("
 		" weight_id      integer primary key,"
-		" weight_name    text,"
+		" weight_name    text unique,"
 		" n_age          integer,"
 		" n_time         integer)",
 	"insert into weight values(0, 'my weight', 3, 2)",
@@ -120,7 +120,7 @@ bool weight_info_xam(void)
 	ok  &= w_info.weight(0,1)  == 1.50;
 	ok  &= w_info.weight(1,1)  == 1.25;
 	ok  &= w_info.weight(2,1)  == 1.00;
- 	//
+	//
 	// close database and return
 	sqlite3_close(db);
 	return ok;

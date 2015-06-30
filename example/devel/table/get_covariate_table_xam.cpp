@@ -42,7 +42,7 @@ bool get_covariate_table_xam(void)
 	const char* sql_cmd[] = {
 	"create table covariate("
 		" covariate_id   integer primary key,"
-		" covariate_name text,"
+		" covariate_name text unique,"
 		" reference      real,"
 		" max_difference real)",
 	"insert into covariate values(0, 'sex',     0.0,     0.6 )",
@@ -61,7 +61,7 @@ bool get_covariate_table_xam(void)
 	ok  &= covariate_table[0].covariate_name  == "sex";
 	ok  &= covariate_table[0].reference       == 0.0;
 	ok  &= covariate_table[0].max_difference  == 0.6;
- 	//
+	//
 	ok  &= covariate_table[1].covariate_name  == "income";
 	ok  &= covariate_table[1].reference       == 2000.0;
 	ok  &= covariate_table[1].max_difference  == std::atof("+inf");

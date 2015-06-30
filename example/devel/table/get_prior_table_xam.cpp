@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -44,7 +44,7 @@ bool get_prior_table_xam(void)
 	const char* sql_cmd[] = {
 		"create table prior("
 			" prior_id      integer primary key,"
-			" prior_name    text,"
+			" prior_name    text unique,"
 			" density_id   integer,"
 			" lower        real,"
 			" upper        real,"
@@ -76,7 +76,7 @@ bool get_prior_table_xam(void)
 	ok  &= prior_table[1].mean       == 0.1;
 	ok  &= prior_table[1].std        == 1e-4;
 	ok  &= prior_table[1].eta        == 1e-5;
- 	//
+	//
 	// close database and return
 	sqlite3_close(db);
 	return ok;
