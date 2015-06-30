@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin variable_table$$
 $spell
+	dismod
 $$
 
 $section The Variable Table$$
@@ -28,8 +29,12 @@ the maximum likelihood estimate for the
 $cref model_variable$$ corresponding to index $icode variable_id$$.
 
 $head variable_name$$
-This column has type $code text$$ and is
-a human readable description of the corresponding variable.
+This column has type $code text$$ and has a different value for every row;
+The names are intended to be easier for a human to remember than the ids.
+While the names are unique, the method by which the names are constructed
+is as of yet not part of the dismod_at API and may change.
+The $cref pack_info$$ routine can be used to determine which
+$cref model_variable$$ corresponds to a particular $icode variable_id$$.
 
 $head Example$$
 See the $cref get_started.py$$ example and test.

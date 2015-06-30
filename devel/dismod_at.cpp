@@ -130,7 +130,9 @@ void fit_command(
 	sql_cmd = "drop table if exists fit_arg";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	sql_cmd = "create table fit_arg("
-		"fit_arg_id integer primary key, fit_arg_name text, fit_arg_value text"
+		" fit_arg_id integer primary key,"
+		" fit_arg_name text unique,"
+		" fit_arg_value text"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	table_name = "fit_arg";
@@ -153,7 +155,7 @@ void fit_command(
 	sql_cmd = "create table variable("
 		" variable_id integer primary key,"
 		" variable_value real,"
-		" variable_name  text"
+		" variable_name  text unique"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	table_name = "variable";
