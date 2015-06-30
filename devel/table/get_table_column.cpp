@@ -62,6 +62,8 @@ depending on the type of the column in the database.
 $head result$$
 The input size of this vector must be zero.
 Upon return it contains the values in the specified column.
+The results are ordered using the $cref/primary key/input/Primary Key/$$
+for this table.
 
 $subhead text$$
 If the column has type $code text$$, this argument has
@@ -128,8 +130,8 @@ namespace {
 		assert( result != DISMOD_AT_NULLPTR );
 		vector* vector_result = static_cast<vector*>(result);
 		vector_result->push_back( convert(Element(), argv[0] ) );
-  		return 0;
-  	}
+		return 0;
+	}
 	template int callback<std::string>(void*, int, char**, char**);
 
 	template <class Element>
@@ -144,11 +146,16 @@ namespace {
 		// check that initial vector is empty
 		assert( vector_result.size() == 0 );
 
+		// name of the primary key for this table
+		std::string primary_key = table_name + "_id";
+
 		// sql command: select column_name from table_name
 		std::string cmd = "select ";
 		cmd            += column_name;
 		cmd            += " from ";
 		cmd            += table_name;
+		cmd            += " order by ";
+		cmd            += primary_key;
 
 		// execute sql command
 		char* zErrMsg     = DISMOD_AT_NULLPTR;

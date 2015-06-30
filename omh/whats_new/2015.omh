@@ -25,6 +25,15 @@ $section Change and Additions to Dismod_at During 2015$$
 
 $head 06-30$$
 $list number$$
+There was a bug in reading the data tables whereby the following error
+would be incorrectly generated:
+$codei%
+	%table_name%_id must start at zero and increment by one.
+	Detected in %table_name% table at %table_name%_id = %index%.
+%$$
+where $icode table_name$$ is any table name.
+This has been fixed.
+$lnext
 Added the $cref simulate_command$$ (not yet working).
 $lnext
 The values $icode n_age_ode$$ and $icode n_time_ode$$

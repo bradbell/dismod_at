@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -42,7 +42,7 @@ bool get_node_table_xam(void)
 	// sql commands
 	const char* sql_cmd[] = {
 		"create table node"
-		"(node_id integer primary key, node_name text, parent int)",
+		"(node_id integer primary key, node_name text unique, parent int)",
 		"insert into node values(0, 'world',          -1)",
 		"insert into node values(1, 'north_america',  0)",
 		"insert into node values(2, 'united_states',  1)",
@@ -66,7 +66,7 @@ bool get_node_table_xam(void)
 	ok  &= node_table[1].parent == 0;
 	ok  &= node_table[2].parent == 1;
 	ok  &= node_table[3].parent == 1;
- 	//
+	//
 	// close database and return
 	sqlite3_close(db);
 	return ok;
