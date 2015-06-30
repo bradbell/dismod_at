@@ -25,6 +25,45 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/to_string.hpp>
 
+namespace { // BEGIN_EMPTY_NAMESPACE
+
+// --------------------------------------------------------------------------
+// create command argument table
+void command_arg_table
+(	sqlite3*            db         ,
+	const std::string&  table_name ,
+	const size_t&       n_arg      ,
+	const char*         arg_name[] ,
+	const char**        argv
+)
+{
+	using std::string;
+	using CppAD::vector;
+	vector<string> col_name_vec(2), row_val_vec(2);
+	string cmd;
+	//
+	cmd  = "drop table if exists ";
+	cmd += table_name;
+	dismod_at::exec_sql_cmd(db, cmd);
+	//
+	cmd  = "create table ";
+	cmd += table_name;
+	cmd += "(";
+	cmd += table_name + "_id integer primary key, ";
+	cmd += table_name + "_name text unique, ";
+	cmd += table_name + "_value text)";
+	dismod_at::exec_sql_cmd(db, cmd);
+	//
+	col_name_vec[0]   = table_name + "_name";
+	col_name_vec[1]   = table_name + "_value";
+	//
+	for(size_t id = 0; id < n_arg; id++)
+	{	row_val_vec[0] = arg_name[id];
+		row_val_vec[1] = argv[2 + id];
+		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+	}
+	return;
+}
 /*
 $begin fit_command$$
 $spell
@@ -93,7 +132,6 @@ See the $cref get_started.py$$ example and test.
 
 $end
 */
-namespace { // BEGIN_EMPTY_NAMESPACE
 
 // ----------------------------------------------------------------------------
 void fit_command(
@@ -105,9 +143,6 @@ void fit_command(
 	const dismod_at::prior_model&                prior_object     ,
 	const std::string&                           tolerance_arg    ,
 	const std::string&                           max_num_iter_arg ,
-	const size_t&                                n_fit_arg        ,
-	const char*                                  fit_arg_name[]   ,
-	const char**                                 argv             ,
 	const size_t&                                parent_node_id   ,
 	const dismod_at::child_info&                 child_object
 )
@@ -125,44 +160,16 @@ void fit_command(
 	);
 	fit_object.run_fit(tolerance_arg, max_num_iter_arg);
 	vector<double> solution = fit_object.get_solution();
-	// ----------------- fit_arg_table ----------------------------------
-	const char* sql_cmd;
-	CppAD::vector<string> col_name_vec, row_val_vec;
-	string table_name;
-	//
-	sql_cmd = "drop table if exists fit_arg";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table fit_arg("
-		" fit_arg_id integer primary key,"
-		" fit_arg_name text unique,"
-		" fit_arg_value text"
-	")";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	table_name = "fit_arg";
-	//
-	col_name_vec.resize(3);
-	col_name_vec[0]   = "fit_arg_id";
-	col_name_vec[1]   = "fit_arg_name";
-	col_name_vec[2]   = "fit_arg_value";
-	//
-	row_val_vec.resize(3);
-	for(size_t id = 0; id < n_fit_arg; id++)
-	{	row_val_vec[0] = to_string(id);
-		row_val_vec[1] = fit_arg_name[id];
-		row_val_vec[2] = argv[2 + id];
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
-	}
 	// ----------------- variable_table ----------------------------------
-	sql_cmd = "drop table if exists variable";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table variable("
+	string sql_cmd = "create table variable("
 		" variable_id integer primary key,"
 		" variable_value real,"
 		" variable_name  text unique"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	table_name = "variable";
+	string table_name = "variable";
 	//
+	CppAD::vector<string> col_name_vec(3), row_val_vec(3);
 	col_name_vec[0]   = "variable_id";
 	col_name_vec[1]   = "variable_value";
 	col_name_vec[2]   = "variable_name";
@@ -260,12 +267,9 @@ $head Example$$
 $end
 */
 void simulate_command
-(	sqlite3*                                            db                   ,
-	const CppAD::vector<dismod_at::data_subset_struct>& data_sample          ,
-	const dismod_at::data_model&                        data_object          ,
-	const size_t&                                       n_simulate_arg       ,
-	const char*                                         simulate_arg_name[]  ,
-	const char**                                        argv
+(	sqlite3*                                            db          ,
+	const CppAD::vector<dismod_at::data_subset_struct>& data_sample ,
+	const dismod_at::data_model&                        data_object
 )
 {	using std::cerr;
 	using std::endl;
@@ -278,46 +282,18 @@ void simulate_command
 	string table_name = "variable";
 	string column_name = "value";
 	dismod_at::get_table_column(db, table_name, column_name, pack_vec);
-	// ----------------- simulate_arg_table ----------------------------------
-	const char* sql_cmd;
-	vector<string> col_name_vec, row_val_vec;
-	//
-	table_name = "simulate_arg";
-	//
-	sql_cmd = "drop table if exists simulate_arg";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table simulate_arg("
-		" simulate_arg_id integer primary key,"
-		" simulate_arg_name text unique,"
-		" simulate_arg_value text"
-	")";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	//
-	col_name_vec.resize(3);
-	col_name_vec[0]   = "simulate_arg_id";
-	col_name_vec[1]   = "simulate_arg_name";
-	col_name_vec[2]   = "simulate_arg_value";
-	//
-	row_val_vec.resize(3);
-	for(size_t id = 0; id < n_simulate_arg; id++)
-	{	row_val_vec[0] = to_string(id);
-		row_val_vec[1] = simulate_arg_name[id];
-		row_val_vec[2] = argv[2 + id];
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
-	}
 	// ----------------- simulate_table ----------------------------------
 	table_name = "simulate";
 	//
-	sql_cmd = "drop table if exists simulate";
+	string sql_cmd = "drop table if exists simulate";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	sql_cmd = "create table simulate("
 		" simulate_id integer primary key, meas_value real"
 	");";
-	col_name_vec.resize(2);
+	vector<string> col_name_vec(2), row_val_vec(2);
 	col_name_vec[0]   = "data_id";
 	col_name_vec[1]   = "meas_value";
 	//
-	row_val_vec.resize(2);
 	size_t n_sample = data_sample.size();
 	for(size_t sample_id = 0; sample_id < n_sample; sample_id++)
 	{	dismod_at::integrand_enum integrand =
@@ -554,29 +530,45 @@ int main(int n_arg, const char** argv)
 	);
 	data_object.set_eigen_ode2_case_number(rate_info_arg);
 	//
-	if( command_arg == "fit" ) fit_command(
-		db               ,
-		pack_object      ,
-		db_input         ,
-		s_info_vec       ,
-		data_object      ,
-		prior_object     ,
-		tolerance_arg    ,
-		max_num_iter_arg ,
-		n_fit_arg        ,
-		fit_arg_name     ,
-		argv             ,
-		parent_node_id   ,
-		child_object
-	);
-	if( command_arg == "simulate" ) simulate_command(
-		db                ,
-		data_sample       ,
-		data_object       ,
-		n_simulate_arg    ,
-		simulate_arg_name ,
-		argv
-	);
+	if( command_arg == "fit" )
+	{	fit_command(
+			db               ,
+			pack_object      ,
+			db_input         ,
+			s_info_vec       ,
+			data_object      ,
+			prior_object     ,
+			tolerance_arg    ,
+			max_num_iter_arg ,
+			parent_node_id   ,
+			child_object
+		);
+		string table_name = "fit_arg";
+		command_arg_table(
+			db           ,
+			table_name   ,
+			n_fit_arg    ,
+			fit_arg_name ,
+			argv
+		);
+	}
+	else if( command_arg == "simulate" )
+	{	simulate_command(
+			db                ,
+			data_sample       ,
+			data_object
+		);
+		string table_name = "simulate_arg";
+		command_arg_table(
+			db                ,
+			table_name        ,
+			n_simulate_arg    ,
+			simulate_arg_name ,
+			argv
+		);
+	}
+	else
+		assert(false);
 	// ---------------------------------------------------------------------
 	sqlite3_close(db);
 	return 0;
