@@ -35,6 +35,6 @@ This column has type $code text$$ and is
 the value for the corresponding argument to the simulate command.
 
 $head Example$$
-See the $cref get_started.py$$ example and test.
+2DO: add an example and test for the simulate command.
 
 $end

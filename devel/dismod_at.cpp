@@ -90,6 +90,9 @@ maximum number of iterations $code max_iter$$.
 
 $include devel/rate_info.omh$$
 
+$head Example$$
+See the $cref get_started.py$$ example and test.
+
 $end
 */
 namespace { // BEGIN_EMPTY_NAMESPACE
@@ -207,21 +210,25 @@ $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $subhead variable_table$$
-The data base must contains a $cref variable_table$$ that specifies the
+The data base must contain a $cref variable_table$$ that specifies the
 value of the model variables that is used to simulate the data.
 The $cref/variable_name/variable_table/variable_name/$$ column
 is not used.
+It may have been created by a previous $cref fit_command$$.
 
 $subhead simulate_table$$
 A new $cref simulate_table$$ table is created with the arguments to
 this simulate command;
 i.e., $icode file_name$$, ... , $icode rate_info$$.
 
-$subhead data_table$$
-The measurement values for which
+$subhead meas_value_table$$
+A new $cref meas_value_table$$ is created.
+It contains simulated values for data table
+$cref/meas_value/data_table/meas_value/$$ entires.
+Only those entires in the data table for which
 $cref/node_id/data_table/node_id/$$ is $icode parent_node_id$$,
-or that is a descendent of $icode parent_node_id$$ are replaced by
-simulated values.
+or that is a descendent of $icode parent_node_id$$,
+are simulated.
 
 $head parent_node_id$$
 This is a non-negative integer (greater than or equal zero)
@@ -244,6 +251,9 @@ that specifies numerical ode step size.
 The step size is the same in age and time because it is along cohort lines.
 
 $include devel/rate_info.omh$$
+
+$head Example$$
+2DO: add an example and test for the simulate command.
 
 $end
 */
