@@ -25,6 +25,10 @@ $section Change and Additions to Dismod_at During 2015$$
 
 $head 06-30$$
 $list number$$
+The python $code create_database$$ routine now adds
+the unique constraint to all the
+$cref/name columns/create_database/Name Column/$$ in the database.
+$lnext
 There was a bug in reading the data tables whereby the following error
 would be incorrectly generated:
 $codei%

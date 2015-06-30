@@ -18,15 +18,23 @@ $$
 $section Data Base Input Tables$$
 
 $head Comment Columns$$
-Any input table may have any number of columns with names that begin
+Any input table (in this database)
+may have any number of columns with names that begin
 with the two characters $code c_$$.
 These are comment columns and are ignored by $code dismod_at$$.
 
 $head Primary Key$$
-Any table has a name $icode tbl_name$$ and a column with type
-$code integer primary key$$ and name $icode%tbl_name%_id%$$.
-The values in this column start at zero and increment by one
-for each row in the table.
+If $icode table_name$$ is a table (in this database),
+it has a column $icode%table_name%_id%$$ that is the primary key for the table.
+The values in this column are $code integer$$,
+start at zero and increment by one for each row in the table.
+
+$head Name Column$$
+Suppose that $icode table_name$$ is a table (in this database),
+and the column $icode%table_name%_name%$$ exists.
+In this case, the values in this column are $code text$$ must be unique;
+i.e., the names can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
 
 $childtable%
 	omh/table/age_table.omh

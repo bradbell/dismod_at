@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
 # $begin create_database$$ $newlinech #$$
@@ -56,6 +56,12 @@
 # For example, $icode%age_list%[%i%]%$$ corresponds to the $th i$$ row
 # of the $code age$$ table which has
 # $cref/primary key/input/Primary Key/$$ value $icode%age_id% = %i%$$.
+#
+# $head Name Column$$
+# The $cref/name columns/input/Name Column/$$ are created with th unique
+# constraint; i.e., it will be an error to have the same value appear
+# twice in a column $icode%table_name%_name%$$ in the table
+# $icode table_name$$.
 #
 # $head file_name$$
 # is as $code str$$ containing the name of the file where the data base
@@ -487,14 +493,14 @@ def create_database(
 		'rate_id',
 		'integrand_id',
 		'covariate_id',
-  		'smooth_id'
+		'smooth_id'
 	]
 	col_type = [
 		'text',    # mulcov_type
 		'integer', # rate_id
 		'integer', # integrand_id
 		'integer', # covariate_id
-  		'integer'  # smooth_id'
+		'integer'  # smooth_id'
 	]
 	row_list = []
 	for i in range( len(mulcov_list) ) :

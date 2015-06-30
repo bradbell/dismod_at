@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # $begin create_table$$ $newlinech #$$
@@ -33,6 +33,8 @@
 # where the elements are the column names in the table that is created.
 # The column name for the primary key, $icode%tbl_name%_id%$$ must
 # not be included in the list.
+# If the column name $icode%tbl_name%_name%$$ is in the list,
+# the corresponding column will have the $code unique$$ constraint.
 #
 # $head col_type$$
 # is a $code list$$ of $code str$$ where the elements are the column types
@@ -77,12 +79,17 @@
 def create_table(connection, tbl_name, col_name, col_type, row_list) :
 	import dismod_at
 	import copy
+	primary_key = tbl_name + '_id'
+	name_column = tbl_name + '_name'
 	#
 	cmd       = 'create table ' + tbl_name + '('
 	n_col     = len( col_name )
 	cmd      += '\n\t' + tbl_name + '_id integer primary key'
 	for j in range(n_col) :
+		assert col_name != primary_key
 		cmd   += ',\n\t' + col_name[j] + ' ' + col_type[j]
+		if col_name[j] == name_column :
+			cmd += ' unique'
 	cmd += '\n\t);'
 	#
 	cursor  = connection.cursor()
