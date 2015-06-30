@@ -9,6 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 
+# include <cassert>
 # include <string>
 # include <iostream>
 # include <cppad/vector.hpp>
@@ -35,7 +36,7 @@ $$
 $section The Fit Command$$
 
 $head Syntax$$
-$codei%dismod_at fit %file_name% %parent_node_id% %n_age_ode% %n_time_ode% \
+$codei%dismod_at fit %file_name% %parent_node_id% \
 	%ode_step_size% %tolerance% %max_num_iter% %rate_info%$$
 
 $head file_name$$
@@ -62,20 +63,15 @@ $head parent_node_id$$
 This is a non-negative integer (greater than or equal zero)
 that specifies the parent $cref/node_id/node_table/node_id/$$.
 
-$head n_age_ode$$
-This is a positive integer (greater than zero)
-specifying the number of points in the
-$cref/ode age grid/glossary/Ode Grid/Age, a_i/$$.
-
-$head n_time_ode$$
-This is a positive integer
-specifying the number of points in the
-$cref/ode time grid/glossary/Ode Grid/Time, t_j/$$.
-
 $head ode_step_size$$
-This is a positive floating point number
+This is a positive floating point number (greater than zero)
 that specifies numerical ode step size.
 The step size is the same in age and time because it is along cohort lines.
+The smaller $icode ode_step_size$$, the more accurate the solution of the
+$cref/
+ordinary differential equation /avg_integrand/Ordinary Differential Equation
+/$$
+and the more time required to compute this solution.
 
 $head tolerance$$
 This is a positive floating point number
@@ -202,7 +198,7 @@ This command is under construction and does not yet work.
 
 $head Syntax$$
 $codei%dismod_at simulate %file_name% %parent_node_id% \
-	%n_age_ode% %n_time_ode% %ode_step_size% %rate_info%$$
+	%ode_step_size% %rate_info%$$
 
 $head file_name$$
 Is an
@@ -235,20 +231,15 @@ This is a non-negative integer (greater than or equal zero)
 that specifies the parent $cref/node_id/node_table/node_id/$$
 for this simulation (see data_table heading above).
 
-$head n_age_ode$$
-This is a positive integer (greater than zero)
-specifying the number of points in the
-$cref/ode age grid/glossary/Ode Grid/Age, a_i/$$.
-
-$head n_time_ode$$
-This is a positive integer
-specifying the number of points in the
-$cref/ode time grid/glossary/Ode Grid/Time, t_j/$$.
-
 $head ode_step_size$$
-This is a positive floating point number
+This is a positive floating point number (greater than zero)
 that specifies numerical ode step size.
 The step size is the same in age and time because it is along cohort lines.
+The smaller $icode ode_step_size$$, the more accurate the solution of the
+$cref/
+ordinary differential equation /avg_integrand/Ordinary Differential Equation
+/$$
+and the more time required to compute this solution.
 
 $include devel/rate_info.omh$$
 
@@ -277,8 +268,6 @@ int main(int n_arg, const char** argv)
 	const char* fit_arg_name[] = {
 		"file_name",
 		"parent_node_id",
-		"n_age_ode",
-		"n_time_ode",
 		"ode_step_size",
 		"tolerance",
 		"max_num_iter",
@@ -290,8 +279,6 @@ int main(int n_arg, const char** argv)
 	const char* simulate_arg_name[] = {
 		"file_name",
 		"parent_node_id",
-		"n_age_ode",
-		"n_time_ode",
 		"ode_step_size",
 		"rate_info"
 	};
@@ -339,8 +326,6 @@ int main(int n_arg, const char** argv)
 	}
 	const string file_name_arg      = argv[++i_arg];
 	const string parent_node_id_arg = argv[++i_arg];
-	const string n_age_ode_arg      = argv[++i_arg];
-	const string n_time_ode_arg     = argv[++i_arg];
 	const string ode_step_size_arg  = argv[++i_arg];
 	string tolerance_arg, max_num_iter_arg;
 	if( command_arg == "fit" )
@@ -368,10 +353,32 @@ int main(int n_arg, const char** argv)
 	dismod_at::db_input_struct db_input;
 	get_db_input(db, db_input);
 	// ---------------------------------------------------------------------
-	size_t parent_node_id = std::atoi( parent_node_id_arg.c_str() );
-	size_t n_age_ode      = std::atoi( n_age_ode_arg.c_str() );
-	size_t n_time_ode     = std::atoi( n_time_ode_arg.c_str() );
+	// ode_step_size
 	double ode_step_size  = std::atof( ode_step_size_arg.c_str() );
+	if( ode_step_size <= 0.0 )
+	{	if( command_arg == "fit" )
+			cerr << fit_usage << endl;
+		else
+			cerr << simulate_usage << endl;
+		cerr << "ode_step_size = " << ode_step_size_arg
+		<< " is less than or equal zero " << endl;
+		std::exit(1);
+	}
+	// ---------------------------------------------------------------------
+	// n_age_ode
+	double age_min    = db_input.age_table[0];
+	double age_max    = db_input.age_table[ db_input.age_table.size() - 1 ];
+	size_t n_age_ode  = size_t( (age_max - age_min) / ode_step_size + 1.0 );
+	assert( age_max  <= age_min  + n_age_ode * ode_step_size );
+	// ---------------------------------------------------------------------
+	// n_time_ode
+	double time_min   = db_input.time_table[0];
+	double time_max   = db_input.time_table[ db_input.time_table.size() - 1 ];
+	size_t n_time_ode = size_t( (time_max - time_min) / ode_step_size + 1.0 );
+	assert( time_max <= time_min  + n_time_ode * ode_step_size );
+	// ---------------------------------------------------------------------
+	// child_object and some more size_t values
+	size_t parent_node_id = std::atoi( parent_node_id_arg.c_str() );
 	dismod_at::child_info child_object(
 		parent_node_id ,
 		db_input.node_table ,
@@ -381,6 +388,7 @@ int main(int n_arg, const char** argv)
 	size_t n_integrand = db_input.integrand_table.size();
 	size_t n_weight    = db_input.weight_table.size();
 	size_t n_smooth    = db_input.smooth_table.size();
+	// ---------------------------------------------------------------------
 	// data_sample
 	vector<dismod_at::data_subset_struct> data_sample = data_subset(
 		db_input.data_table,

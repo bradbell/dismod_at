@@ -24,6 +24,16 @@ $head age$$
 This column has type $code real$$ and is a set of age values.
 The values in the age column must be unique; i.e.,
 none of the values may repeated.
+$pre
+
+$$
+Note that the maximum minus the minimum age divided by
+the ode integration step size
+$cref/ode_step_size/fit_command/ode_step_size/$$ will determine
+the number of age points used to integrate the
+$cref/
+ordinary differential equation /avg_integrand/Ordinary Differential Equation
+/$$.
 
 $children%example/table/age_table.py
 %$$

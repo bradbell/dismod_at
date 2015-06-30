@@ -210,8 +210,6 @@ command        = 'fit'
 fit_list= {
 	'file_name':        file_name,
 	'parent_node_id':   '0',
-	'n_age_ode':        '6',
-	'n_time_ode':       '2',
 	'ode_step_size':    '20.0',
 	'tolerance':        '1e-8',
 	'max_num_iter':     '100',
@@ -222,8 +220,6 @@ cmd       = [
 	command                     ,
 	fit_list['file_name']       ,
 	fit_list['parent_node_id']  ,
-	fit_list['n_age_ode']       ,
-	fit_list['n_time_ode']      ,
 	fit_list['ode_step_size']   ,
 	fit_list['tolerance']       ,
 	fit_list['max_num_iter']    ,
