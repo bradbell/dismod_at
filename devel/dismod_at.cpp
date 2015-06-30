@@ -22,6 +22,8 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/to_string.hpp>
 # include <dismod_at/get_column_max.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
+# include <dismod_at/get_table_column.hpp>
+# include <dismod_at/to_string.hpp>
 
 /*
 $begin fit_command$$
@@ -111,6 +113,7 @@ void fit_command(
 )
 {	using CppAD::vector;
 	using std::string;
+	using dismod_at::to_string;
 
 	// ------------------ run fit_model ------------------------------------
 	dismod_at::fit_model fit_object(
@@ -144,7 +147,7 @@ void fit_command(
 	//
 	row_val_vec.resize(3);
 	for(size_t id = 0; id < n_fit_arg; id++)
-	{	row_val_vec[0] = dismod_at::to_string(id);
+	{	row_val_vec[0] = to_string(id);
 		row_val_vec[1] = fit_arg_name[id];
 		row_val_vec[2] = argv[2 + id];
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
@@ -165,8 +168,8 @@ void fit_command(
 	col_name_vec[2]   = "variable_name";
 	//
 	for(size_t index = 0; index < solution.size(); index++)
-	{	row_val_vec[0] = dismod_at::to_string( index );
-		row_val_vec[1] = dismod_at::to_string( solution[index] );
+	{	row_val_vec[0] = to_string( index );
+		row_val_vec[1] = to_string( solution[index] );
 		row_val_vec[2] = pack_object.variable_name(
 			index,
 			parent_node_id,
@@ -193,6 +196,7 @@ $spell
 	dismod
 	arg
 	std
+	covariates
 $$
 
 $head Under Construction$$
@@ -214,19 +218,24 @@ The $cref/variable_name/variable_table/variable_name/$$ column
 is not used.
 It may have been created by a previous $cref fit_command$$.
 
-$subhead simulate_table$$
-A new $cref simulate_table$$ table is created with the arguments to
+$subhead simulate_arg_table$$
+A new $cref simulate_arg_table$$ table is created with the arguments to
 this simulate command;
 i.e., $icode file_name$$, ... , $icode rate_info$$.
 
-$subhead meas_value_table$$
-A new $cref meas_value_table$$ is created.
+$subhead simulate_table$$
+A new $cref simulate_table$$ is created.
 It contains simulated values for data table
 $cref/meas_value/data_table/meas_value/$$ entires.
-Only those entires in the data table for which
-$cref/node_id/data_table/node_id/$$ is $icode parent_node_id$$,
-or that is a descendent of $icode parent_node_id$$,
-are simulated.
+Only those entires in the data table for the following conditions
+hold are included:
+$list number$$
+The $cref/node_id/data_table/node_id/$$ for the data is $icode parent_node_id$$,
+or that is a descendent of $icode parent_node_id$$.
+$lnext
+All of the covariates satisfy the
+$cref/max_difference/covariate_table/max_difference/$$ criteria.
+$lend
 
 $head parent_node_id$$
 This is a non-negative integer (greater than or equal zero)
@@ -250,11 +259,103 @@ $head Example$$
 
 $end
 */
-void simulate_command(void)
+void simulate_command
+(	sqlite3*                                            db                   ,
+	const CppAD::vector<dismod_at::data_subset_struct>& data_sample          ,
+	const dismod_at::data_model&                        data_object          ,
+	const size_t&                                       n_simulate_arg       ,
+	const char*                                         simulate_arg_name[]  ,
+	const char**                                        argv
+)
 {	using std::cerr;
 	using std::endl;
+	using std::string;
+	using CppAD::vector;
+	using dismod_at::to_string;
+	// -----------------------------------------------------------------------
+	// pack_vec
+	vector<double> pack_vec;
+	string table_name = "variable";
+	string column_name = "value";
+	dismod_at::get_table_column(db, table_name, column_name, pack_vec);
+	// ----------------- simulate_arg_table ----------------------------------
+	const char* sql_cmd;
+	vector<string> col_name_vec, row_val_vec;
+	//
+	table_name = "simulate_arg";
+	//
+	sql_cmd = "drop table if exists simulate_arg";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	sql_cmd = "create table simulate_arg("
+		" simulate_arg_id integer primary key,"
+		" simulate_arg_name text unique,"
+		" simulate_arg_value text"
+	")";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	col_name_vec.resize(3);
+	col_name_vec[0]   = "simulate_arg_id";
+	col_name_vec[1]   = "simulate_arg_name";
+	col_name_vec[2]   = "simulate_arg_value";
+	//
+	row_val_vec.resize(3);
+	for(size_t id = 0; id < n_simulate_arg; id++)
+	{	row_val_vec[0] = to_string(id);
+		row_val_vec[1] = simulate_arg_name[id];
+		row_val_vec[2] = argv[2 + id];
+		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+	}
+	// ----------------- simulate_table ----------------------------------
+	table_name = "simulate";
+	//
+	sql_cmd = "drop table if exists simulate";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	sql_cmd = "create table simulate("
+		" simulate_id integer primary key, meas_value real"
+	");";
+	col_name_vec.resize(2);
+	col_name_vec[0]   = "data_id";
+	col_name_vec[1]   = "meas_value";
+	//
+	row_val_vec.resize(2);
+	size_t n_sample = data_sample.size();
+	for(size_t sample_id = 0; sample_id < n_sample; sample_id++)
+	{	dismod_at::integrand_enum integrand =
+			dismod_at::integrand_enum( data_sample[sample_id].integrand_id );
+		double avg;
+		switch( integrand )
+		{	case dismod_at::Sincidence_enum:
+			case dismod_at::remission_enum:
+			case dismod_at::mtexcess_enum:
+			case dismod_at::mtother_enum:
+			case dismod_at::mtwith_enum:
+			case dismod_at::relrisk_enum:
+			avg = data_object.avg_no_ode(sample_id, pack_vec);
+			break;
 
-	cerr << "dismod_at simulate command not yet implemented" << endl;
+			case dismod_at::prevalence_enum:
+			case dismod_at::Tincidence_enum:
+			case dismod_at::mtspecific_enum:
+			case dismod_at::mtall_enum:
+			case dismod_at::mtstandard_enum:
+			avg = data_object.avg_yes_ode(sample_id, pack_vec);
+			break;
+
+			default:
+			assert(false);
+		}
+		row_val_vec[0] = to_string( data_sample[sample_id].data_id );
+		row_val_vec[1] = to_string(avg);
+# ifdef NDEBUG
+		dismod_at::put_table_row(table_name, col_name_vec, row_val_vec);
+# else
+		size_t simulate_id = dismod_at::put_table_row(
+			db, table_name, col_name_vec, row_val_vec
+		);
+		assert( simulate_id == sample_id );
+# endif
+	}
+
 	return;
 }
 } // END_EMPTY_NAMESPACE
@@ -468,7 +569,14 @@ int main(int n_arg, const char** argv)
 		parent_node_id   ,
 		child_object
 	);
-	if( command_arg == "simulate" ) simulate_command();
+	if( command_arg == "simulate" ) simulate_command(
+		db                ,
+		data_sample       ,
+		data_object       ,
+		n_simulate_arg    ,
+		simulate_arg_name ,
+		argv
+	);
 	// ---------------------------------------------------------------------
 	sqlite3_close(db);
 	return 0;

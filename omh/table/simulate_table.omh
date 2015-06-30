@@ -10,31 +10,28 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin simulate_table$$
 $spell
-	Arg
-	num_iter
 $$
 
-$section The Simulate Table$$
+$section The Simulation Output Table$$
 The $code simulate$$ table is created during a
-$cref simulate_command$$ and records its arguments.
-It has the following columns:
+$cref simulate_command$$.
 
 $head simulate_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$head simulate_name$$
-This column has type $code text$$ and is
-the name for the corresponding argument to the simulate command;
-i.e.,
-$cref/file_name/simulate_command/file_name/$$, ...
-$cref/rate_info/simulate_command/rate_info/$$.
+$head data_id$$
+This column has type $code integer$$ and has a different value for every row.
+It specifies the row in the $cref/data_id/data_table/data_id/$$ that
+this simulated measurement value corresponds to.
 
-$head simulate_value$$
-This column has type $code text$$ and is
-the value for the corresponding argument to the simulate command.
+$head meas_value$$
+The column has type $code real$$ and is
+the simulate measurement value that for the specified row of the data table;
+i.e., it can act as a replacement for the value
+$cref/meas_value/data_table/meas_value/$$ in the data table.
 
 $head Example$$
-2DO: add an example and test for the simulate command.
+2DO: add an example for the $cref simulate_command$$.
 
 $end

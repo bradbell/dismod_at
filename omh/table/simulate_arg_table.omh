@@ -1,0 +1,40 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin simulate_arg_table$$
+$spell
+	Arg
+	num_iter
+$$
+
+$section The Simulate Table$$
+The $code simulate_arg$$ table is created during a
+$cref simulate_command$$ and records its arguments.
+It has the following columns:
+
+$head simulate_arg_id$$
+This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+$head simulate_arg_name$$
+This column has type $code text$$ and is
+the name for the corresponding argument to the simulate command;
+i.e.,
+$cref/file_name/simulate_command/file_name/$$, ...
+$cref/rate_info/simulate_command/rate_info/$$.
+
+$head simulate_arg_value$$
+This column has type $code text$$ and is
+the value for the corresponding argument to the simulate command.
+
+$head Example$$
+2DO: add an example and test for the simulate command.
+
+$end

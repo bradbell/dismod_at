@@ -561,14 +561,6 @@ $codei%
 and is the $cref/sample_id/data_subset/data_sample/sample_id/$$
 we are computing the average integrand for.
 
-$head pack_vec$$
-This argument has prototype
-$codei%
-	const CppAD::vector<%Float%>& %pack_vec%
-%$$
-and is all the $cref/model variables/model_variable/$$ in the order
-specified by $cref devel_pack_info$$.
-
 $subhead Integrand and Rates$$
 The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
 $cref/sample_id/data_subset/data_sample/sample_id/$$
@@ -585,6 +577,14 @@ $code mtother_enum$$    $cnext $code omega_enum$$  $rnext
 $code mtwith_enum$$     $cnext $code chi_enum$$, $code omega_enum$$ $rnext
 $code relrisk_enum$$    $cnext $code chi_enum$$, $code omega_enum$$
 $tend
+
+$head pack_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %pack_vec%
+%$$
+and is all the $cref/model variables/model_variable/$$ in the order
+specified by $cref devel_pack_info$$.
 
 $head avg$$
 The return value has prototype
