@@ -110,3 +110,4 @@ TARGET_LINK_LIBRARIES(example_devel
 	sqlite3
 )
 ADD_CUSTOM_TARGET(check_example_devel example_devel DEPENDS example_devel )
+ADD_DEPENDENCIES(check_example_devel devel_lib)

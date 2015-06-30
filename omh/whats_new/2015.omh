@@ -23,6 +23,13 @@ $$
 
 $section Change and Additions to Dismod_at During 2015$$
 
+$head 06-30$$
+It is no longer necessary to run a separate
+$code make$$ command to build the dismod_at executable and library
+when $cref/installing/install_unix/dismod_at/Install/$$ dismod_at.
+In addition, running the $cref/tests/install_unix/dismod_at/Test/$$
+is now optional.
+
 $head 06-29$$
 $list number$$
 Add the $cref/rate_info/fit_command/rate_info/$$ argument

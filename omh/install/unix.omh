@@ -146,22 +146,22 @@ $codei%
 export PKG_CONFIG_PATH="@PKG_CONFIG_PATH:@HOME/prefix/dismod_at/lib64/pkgconfig"
 %$$
 
-$subhead Build$$
-The following commands will build the dismod_at executable:
+$subhead Test$$
+The following command is optional and will,
+build the dismod_at library and executable if necessary,
+build the examples and tests,
+and run the examples and tests:
 $codep
 	cd build
-	make
-$$
-
-$subhead Test$$
-The following command will run the examples and tests:
-$codep
 	make check
 $$
 
 $subhead Install$$
-The following command will install the dismod_at:
+The following command will,
+build the dismod_at library and executable if necessary,
+and install dismod_at:
 $codep
+	cd build
 	make install
 $$
 

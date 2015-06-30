@@ -21,3 +21,4 @@ ADD_CUSTOM_TARGET(
 	check_get_started
 	${python_three_command} get_started.py
 )
+ADD_DEPENDENCIES(check_get_started dismod_at)
