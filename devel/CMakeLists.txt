@@ -82,5 +82,11 @@ LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 ADD_EXECUTABLE( dismod_at dismod_at.cpp )
 SET_TARGET_PROPERTIES( dismod_at PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}" )
 ADD_DEPENDENCIES(dismod_at devel_lib)
-TARGET_LINK_LIBRARIES( dismod_at devel_lib ${ipopt_LIBRARIES} sqlite3 )
+TARGET_LINK_LIBRARIES(dismod_at
+	devel_lib
+	${ipopt_LIBRARIES}
+	sqlite3
+	gsl
+	gslcblas
+)
 INSTALL( TARGETS dismod_at DESTINATION ${dismod_at_prefix}/bin )

@@ -24,6 +24,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/to_string.hpp>
+# include <dismod_at/manage_gsl_rng.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 
@@ -276,7 +277,7 @@ void simulate_command
 	const CppAD::vector<dismod_at::integrand_struct>&   integrand_table ,
 	const CppAD::vector<dismod_at::data_subset_struct>& data_sample     ,
 	const dismod_at::data_model&                        data_object     ,
-	const std::string&                                  random_seed_arg
+	const size_t&                                       actual_seed
 )
 {	using std::cerr;
 	using std::endl;
@@ -463,6 +464,10 @@ int main(int n_arg, const char** argv)
 		std::exit(1);
 	}
 	// ---------------------------------------------------------------------
+	// initialize random number generator
+	size_t random_seed = std::atoi( random_seed_arg.c_str() );
+	size_t actual_seed = dismod_at::new_gsl_rng(random_seed);
+	// ---------------------------------------------------------------------
 	// n_age_ode
 	double age_min    = db_input.age_table[0];
 	double age_max    = db_input.age_table[ db_input.age_table.size() - 1 ];
@@ -577,7 +582,7 @@ int main(int n_arg, const char** argv)
 			db_input.integrand_table ,
 			data_sample              ,
 			data_object              ,
-			random_seed_arg
+			actual_seed
 		);
 		string table_name = "simulate_arg";
 		command_arg_table(
@@ -587,6 +592,13 @@ int main(int n_arg, const char** argv)
 			simulate_arg_name ,
 			argv
 		);
+		// add actual_seed to simulate_arg table
+		vector<string> col_name_vec(2), row_val_vec(2);
+		col_name_vec[0]   = table_name + "_name";
+		col_name_vec[1]   = table_name + "_value";
+		row_val_vec[0]    = "actual_seed";
+		row_val_vec[1]    = dismod_at::to_string(actual_seed);
+		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
 	else
 		assert(false);
