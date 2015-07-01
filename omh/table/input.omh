@@ -36,6 +36,20 @@ In this case, the values in this column are $code text$$ must be unique;
 i.e., the names can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
 
+$head Foreign Key$$
+The column $icode%table_name%_id%$$ is the primary key for table
+$icode table_name$$.
+If this key is used in another table, the name of the corresponding column
+will be $icode%table_name%_id%$$
+or it will end with $codei%_%table_name%_id%$$.
+
+$subhead parent$$
+Note that the column $cref/parent/node_table/parent/$$ is a primary
+key value for the $cref/node table/node_table/$$; i.e, $code node_id$$.
+This is not an exception because the $code parent$$ column is itself
+in the $code node$$ table.
+
+
 $childtable%
 	omh/table/age_table.omh
 	%omh/table/covariate_table.omh

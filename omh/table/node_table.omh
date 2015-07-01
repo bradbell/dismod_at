@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -32,6 +32,9 @@ $head parent$$
 This column has type $code integer$$ and is the $icode node_id$$
 of the parent for this node.
 If this node has no parents, $icode parent$$ is $code -1$$.
+Note that this is a value for the primary key in this table, but
+the name of this column does not follow the
+$cref/foreign key/input/Foreign Key/parent/$$ convention.
 
 $subhead Child Group$$
 The child group for node $icode p$$ is the sent of $icode node_id$$ values
