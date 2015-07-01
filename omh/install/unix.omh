@@ -23,6 +23,9 @@ $spell
 	eigen
 	tarball
 	xzf
+	gsl
+	sqlite
+	devel
 $$
 
 $section Installing dismod_at in Unix$$
@@ -59,9 +62,17 @@ $subhead python3$$
 The $href%http://www.python.org/%python3%$$,
 programming language.
 
-$subhead SQLite$$
+$subhead sqlite$$
 The $href%href%http://sqlite.org/%sqlite3%$$ version
 of SQLite.
+Note that the development headers are required; e.g.,
+on Fedora or Red-Hat one needs to install $code sqlite-devel$$.
+
+$subhead gsl$$
+$href%http://gnuwin32.sourceforge.net/packages/gsl.htm%gsl%$$,
+the gnu scientific library.
+Note that the development headers are required; e.g.,
+on Fedora or Red-Hat one needs to install $code gsl-devel$$.
 
 $head Special Requirements$$
 The following programs are required by dismod_at

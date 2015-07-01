@@ -8,8 +8,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_PRIOR_DENSITY_HPP
-# define DISMOD_AT_PRIOR_DENSITY_HPP
+# ifndef DISMOD_AT_PRIOR_MODEL_HPP
+# define DISMOD_AT_PRIOR_MODEL_HPP
 
 # include <cppad/vector.hpp>
 # include "pack_info.hpp"

@@ -8,8 +8,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef IPOPT_FIXED_NLP_HPP
-# define IPOPT_FIXED_NLP_HPP
+# ifndef DISMOD_AT_IPOPT_FIXED_HPP
+# define DISMOD_AT_IPOPT_FIXED_HPP
 
 /*
 $begin ipopt_fixed$$

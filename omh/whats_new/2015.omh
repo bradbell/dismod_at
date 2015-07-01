@@ -19,9 +19,17 @@ $spell
 	nullptr
 	dage
 	dtime
+	gsl
 $$
 
-$section Change and Additions to Dismod_at During 2015$$
+$section Changes and Additions to Dismod_at During 2015$$
+
+$head 07-01$$
+Simulating random numbers
+(for the $cref simulate_command$$ which is not yet working)
+has added the gnu scientific library
+$cref/gsl/install_unix/System Requirements/gsl/$$
+the system requirements.
 
 $head 06-30$$
 $list number$$

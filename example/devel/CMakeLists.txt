@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # Build C++ Examples / Tests
@@ -66,6 +66,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/integrate_1d_xam.cpp
 	utility/integrate_2d_xam.cpp
 	utility/interp_weight_xam.cpp
+	utility/manage_gsl_rng_xam.cpp
 	utility/pack_info_xam.cpp
 	utility/pack_prior_xam.cpp
 	utility/random_effect_xam.cpp
@@ -108,6 +109,8 @@ TARGET_LINK_LIBRARIES(example_devel
 	${ipopt_LIBRARIES}
 	${suitesparse_LIBRARIES}
 	sqlite3
+	gsl
+	gslcblas
 )
 ADD_CUSTOM_TARGET(check_example_devel example_devel DEPENDS example_devel )
 ADD_DEPENDENCIES(check_example_devel devel_lib)

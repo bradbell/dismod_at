@@ -8,8 +8,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_FIT_FIXED_HPP
-# define DISMOD_AT_FIT_FIXED_HPP
+# ifndef DISMOD_AT_FIT_MODEL_HPP
+# define DISMOD_AT_FIT_MODEL_HPP
 
 # include <dismod_at/a5_double.hpp>
 # include <dismod_at/approx_mixed.hpp>

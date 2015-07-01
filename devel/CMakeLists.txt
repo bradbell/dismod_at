@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 SET(CMAKE_BUILD_TYPE DEBUG)
@@ -40,6 +40,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	utility/integrate_1d.cpp
 	utility/integrate_2d.cpp
 	utility/interp_weight.cpp
+	utility/manage_gsl_rng.cpp
 	utility/random_effect.cpp
 	utility/residual_density.cpp
 	utility/smooth2ode.cpp
