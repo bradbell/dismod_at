@@ -29,6 +29,11 @@ the name for the corresponding argument to the simulate command;
 i.e.,
 $cref/file_name/simulate_command/file_name/$$, ...
 $cref/rate_info/simulate_command/rate_info/$$.
+In addition a row with $icode simulate_arg_name$$ equal to
+$code actual_seed$$ is included.
+This contains the actual random number generated seed and is
+different from $cref/random_seed/simulate_command/random_seed/$$
+when $icode random_seed$$ is zero.
 
 $head simulate_arg_value$$
 This column has type $code text$$ and is

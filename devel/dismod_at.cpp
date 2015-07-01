@@ -211,7 +211,7 @@ This command is under construction and does not yet work.
 
 $head Syntax$$
 $codei%dismod_at simulate %file_name% %parent_node_id% \
-	%ode_step_size% %rate_info%$$
+	%ode_step_size% %rate_info% %random_seed%$$
 
 $head file_name$$
 Is an
@@ -232,10 +232,10 @@ i.e., $icode file_name$$, ... , $icode rate_info$$.
 
 $subhead simulate_table$$
 A new $cref simulate_table$$ is created.
-It contains simulated values for data table
-$cref/meas_value/data_table/meas_value/$$ entires.
+It contains simulated values that can be used in place of the data table
+$cref/meas_value/data_table/meas_value/$$ column.
 Only those entires in the data table for the following conditions
-hold are included:
+hold are simulated:
 $list number$$
 The $cref/node_id/data_table/node_id/$$ for the data is $icode parent_node_id$$,
 or that is a descendent of $icode parent_node_id$$.
@@ -259,6 +259,11 @@ ordinary differential equation /avg_integrand/Ordinary Differential Equation
 /$$
 and the more time required to compute this solution.
 
+$head random_seed$$
+This is a non-negative integer used to seed the random number
+generator (used to generate simulated measurement noise).
+If this value is zero, the clock is used to seed the random number generator.
+
 $include devel/rate_info.omh$$
 
 $head Example$$
@@ -267,9 +272,11 @@ $head Example$$
 $end
 */
 void simulate_command
-(	sqlite3*                                            db          ,
-	const CppAD::vector<dismod_at::data_subset_struct>& data_sample ,
-	const dismod_at::data_model&                        data_object
+(	sqlite3*                                            db              ,
+	const CppAD::vector<dismod_at::integrand_struct>&   integrand_table ,
+	const CppAD::vector<dismod_at::data_subset_struct>& data_sample     ,
+	const dismod_at::data_model&                        data_object     ,
+	const std::string&                                  random_seed_arg
 )
 {	using std::cerr;
 	using std::endl;
@@ -296,8 +303,9 @@ void simulate_command
 	//
 	size_t n_sample = data_sample.size();
 	for(size_t sample_id = 0; sample_id < n_sample; sample_id++)
-	{	dismod_at::integrand_enum integrand =
-			dismod_at::integrand_enum( data_sample[sample_id].integrand_id );
+	{	size_t integrand_id =  data_sample[sample_id].integrand_id;
+		dismod_at::integrand_enum integrand =
+			integrand_table[integrand_id].integrand;
 		double avg;
 		switch( integrand )
 		{	case dismod_at::Sincidence_enum:
@@ -320,6 +328,13 @@ void simulate_command
 			default:
 			assert(false);
 		}
+# if 0
+		// need to simulate random noise with proper density
+		dismod_at::density_enum density = dismod_at::density_enum(
+			data_sample[sample_id].density_id
+		);
+		double meas_std = data_sample[sample_id].meas_std;
+# endif
 		row_val_vec[0] = to_string( data_sample[sample_id].data_id );
 		row_val_vec[1] = to_string(avg);
 # ifdef NDEBUG
@@ -359,6 +374,7 @@ int main(int n_arg, const char** argv)
 		"file_name",
 		"parent_node_id",
 		"ode_step_size",
+		"random_seed",
 		"rate_info"
 	};
 	size_t n_simulate_arg =
@@ -406,10 +422,13 @@ int main(int n_arg, const char** argv)
 	const string file_name_arg      = argv[++i_arg];
 	const string parent_node_id_arg = argv[++i_arg];
 	const string ode_step_size_arg  = argv[++i_arg];
-	string tolerance_arg, max_num_iter_arg;
+	string tolerance_arg, max_num_iter_arg, random_seed_arg;
 	if( command_arg == "fit" )
 	{	tolerance_arg    = argv[++i_arg];
 		max_num_iter_arg = argv[++i_arg];
+	}
+	if( command_arg == "simulate" )
+	{	random_seed_arg  = argv[++i_arg];
 	}
 	const string rate_info_arg      = argv[++i_arg];
 	// ------------- check rate_info_arg ------------------------------------
@@ -554,9 +573,11 @@ int main(int n_arg, const char** argv)
 	}
 	else if( command_arg == "simulate" )
 	{	simulate_command(
-			db                ,
-			data_sample       ,
-			data_object
+			db                       ,
+			db_input.integrand_table ,
+			data_sample              ,
+			data_object              ,
+			random_seed_arg
 		);
 		string table_name = "simulate_arg";
 		command_arg_table(

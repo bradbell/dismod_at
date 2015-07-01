@@ -34,7 +34,7 @@ the integrand for this measurement.
 
 $head density_id$$
 This column has type $code integer$$ and is the
-$cref/density_id/prior_table/density_id/$$ that identifies
+$cref/density_id/density_table/density_id/$$ that identifies
 the density function for this measurement.
 
 $head node_id$$
