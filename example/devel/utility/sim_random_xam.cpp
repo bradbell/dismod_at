@@ -42,7 +42,7 @@ bool sim_random_xam(void)
 	// -------------------------------------------------------------------
 	// check Gausian
 	dismod_at::density_enum density = dismod_at::gaussian_enum;
-	double delta   = 1.0;
+	double delta   = 0.5;
 	double mu      = 0.0;
 	size_t count   = 0;
 	double sum_z   = 0.0;
@@ -69,7 +69,7 @@ bool sim_random_xam(void)
 	// -------------------------------------------------------------------
 	// check Laplace
 	density = dismod_at::laplace_enum;
-	delta   = 1.0;
+	delta   = 0.5;
 	mu      = 0.0;
 	count   = 0;
 	sum_z   = 0.0;
