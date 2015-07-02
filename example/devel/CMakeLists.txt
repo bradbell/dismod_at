@@ -71,6 +71,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/pack_prior_xam.cpp
 	utility/random_effect_xam.cpp
 	utility/residual_density_xam.cpp
+	utility/sim_random_xam.cpp
 	utility/smooth2ode_xam.cpp
 	utility/solve_ode_xam.cpp
 	utility/to_string_xam.cpp

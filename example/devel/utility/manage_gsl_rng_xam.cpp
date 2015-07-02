@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin manage_gsl_rng.cpp$$
+$begin manage_gsl_rng_xam.cpp$$
 $spell
 	gsl
 	rng
@@ -18,7 +18,7 @@ $$
 $section Manage GSL Random Number Generator: Example and Test$$
 
 $code
-$verbatim%example/devel/utility/manage_gsl_rng.cpp%
+$verbatim%example/devel/utility/manage_gsl_rng_xam.cpp%
 	0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -27,7 +27,6 @@ $end
 // BEGIN C++
 # include <cppad/vector.hpp>
 # include <gsl/gsl_randist.h>
-# include <cmath>
 # include <dismod_at/manage_gsl_rng.hpp>
 
 bool manage_gsl_rng_xam(void)

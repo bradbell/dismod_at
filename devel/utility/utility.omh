@@ -26,6 +26,7 @@ $childtable%include/dismod_at/a5_double.hpp
 	%devel/utility/pack_info.omh
 	%devel/utility/pack_prior.cpp
 	%devel/utility/residual_density.cpp
+	%devel/utility/random_number.omh
 	%devel/utility/random_effect.cpp
 	%devel/utility/smooth2ode.cpp
 	%devel/utility/solve_ode.cpp

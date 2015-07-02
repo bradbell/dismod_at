@@ -43,6 +43,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	utility/manage_gsl_rng.cpp
 	utility/random_effect.cpp
 	utility/residual_density.cpp
+	utility/sim_random.cpp
 	utility/smooth2ode.cpp
 	utility/solve_ode.cpp
 	utility/pack_info.cpp

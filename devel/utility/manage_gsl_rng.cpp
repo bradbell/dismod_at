@@ -64,7 +64,7 @@ Otherwise it returns the null pointer.
 $subhead rng$$
 The return value $icode rng$$ has prototype
 $codei%
-	gsl_rng* rng
+	gsl_rng* %rng%
 %$$
 
 $head free_gsl_rng$$
@@ -76,10 +76,10 @@ $codei%
 
 
 $children%
-	example/devel/utility/manage_gsl_rng.cpp
+	example/devel/utility/manage_gsl_rng_xam.cpp
 %$$
 $head Example$$
-The file $cref manage_gsl_rng.cpp$$ contains an example and test of
+The file $cref manage_gsl_rng_xam.cpp$$ contains an example and test of
 $code manage_gsl_rng$$.  It returns $code true$$, if the test passes,
 and $code false$$ otherwise.
 

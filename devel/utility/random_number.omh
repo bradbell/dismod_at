@@ -12,6 +12,8 @@ $begin random_number$$
 
 $section Pseudo Random Number Generation$$
 
-$childtable%manage_gsl_rng.cpp%$$
+$childtable%devel/utility/manage_gsl_rng.cpp
+	%devel/utility/sim_random.cpp
+%$$
 
 $end
