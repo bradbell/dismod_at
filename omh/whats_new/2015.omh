@@ -20,9 +20,14 @@ $spell
 	dage
 	dtime
 	gsl
+	covariate
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 07-03$$
+Change the $code mean_mean$$ covariate multiplier type to
+$cref/meas_value/mulcov_table/mulcov_type/meas_value/$$.
 
 $head 07-01$$
 $list number$$

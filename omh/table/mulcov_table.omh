@@ -39,10 +39,12 @@ $subhead rate_mean$$
 This covariate adjusts a model rate.
 
 $subhead meas_value$$
-This covariate adjusts the mean value for measurement.
+This covariate adjusts the
+$cref/measurement value/data_table/meas_value/$$.
 
 $subhead meas_std$$
-This covariate adjusts the standard deviation for a measurement.
+This covariate adjusts the
+$cref/measurement standard deviation/data_table/meas_std/$$.
 
 $head rate_id$$
 If $icode mulcov_type$$ is $code rate_mean$$,
