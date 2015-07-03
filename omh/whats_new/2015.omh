@@ -21,13 +21,26 @@ $spell
 	dtime
 	gsl
 	covariate
+	std
+	cov
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-03$$
+$list number$$
 Change the $code mean_mean$$ covariate multiplier type to
 $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$.
+$lnext
+For $icode cov_type$$ equal $code rate_mean$$, $code meas_value$$,
+and $code meas_std$$, change
+$codei%
+	%cov_type%_mulcov_n_cov -> mulcov_%cov_type%_n_cov
+	%cov_type%_mulcov_info -> mulcov_%cov_type%_info
+%$$
+see $cref pack_info_meas_mulcov$$ and $cref pack_info_rate_mulcov$$.
+$lend
+
 
 $head 07-01$$
 $list number$$
