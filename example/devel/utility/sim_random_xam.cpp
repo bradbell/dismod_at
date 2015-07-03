@@ -38,7 +38,7 @@ bool sim_random_xam(void)
 	// initialize random number generator using the clock
 	dismod_at::new_gsl_rng(0);
 	//
-	size_t sample_size = 1000;
+	size_t sample_size = 4000;
 	// -------------------------------------------------------------------
 	// check Gausian
 	dismod_at::density_enum density = dismod_at::gaussian_enum;
@@ -122,7 +122,35 @@ bool sim_random_xam(void)
 	// https://en.wikipedia.org/wiki/Standard_normal_table
 	check = 0.5 - 0.19146;
 	ok   &= std::fabs( samp_prob / check - 1.0 ) < 1e-1;
+	// -------------------------------------------------------------------
+	// check Log-Laplace
+	density = dismod_at::log_laplace_enum;
+	delta   = 1e-1;
+	mu      = 1e-1;
+	eta     = 1e-2;
+	count   = 0;
+	sum_w   = 0.0;
+	sum_wsq = 0.0;
+	sigma   = log(mu + eta + delta) - log(mu + eta);
+	for(size_t i = 0; i < sample_size; i++)
+	{	double z     = dismod_at::sim_random(density, mu, delta, eta);
+		double w     = ( log(z + eta) - log(mu + eta) ) / sigma;
+		if( 0.5 <= w )
+			count ++;
+		sum_w   += w;
+		sum_wsq += w * w;
+	}
+	samp_mean = sum_w / double(sample_size);
+	samp_var  = sum_wsq / double(sample_size);
+	samp_prob = double(count) / double(sample_size);
 	//
+	check = 0.0;
+	ok   &= std::fabs(samp_mean) < 2.0 / std::sqrt( double(sample_size) );
+	ok   &= std::fabs(samp_var - 1.0) < 1e-1;
+	// integral from 0.5 to infinity of p(z) dz
+	check = exp( - std::sqrt(2.0) * 0.5 ) / 2.0;
+	ok   &= std::fabs( samp_prob / check - 1.0 ) < 1e-1;
+	// ---------------------------------------------------------------------
 	// free random number generator
 	dismod_at::free_gsl_rng();
 	//
