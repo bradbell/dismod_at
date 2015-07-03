@@ -188,7 +188,7 @@
 #
 # $end
 # ----------------------------------------------------------------------------
-# $begin pack_info_meas_mulcov$$ $newlinech #$$
+# $begin pack_info_mulcov_meas$$ $newlinech #$$
 # $spell
 #	std
 #	cov
@@ -269,7 +269,7 @@
 #
 # $end
 # ----------------------------------------------------------------------------
-# $begin pack_info_rate_mulcov$$ $newlinech #$$
+# $begin pack_info_mulcov_rate$$ $newlinech #$$
 # $spell
 #	std
 #	cov

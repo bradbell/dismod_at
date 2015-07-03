@@ -566,7 +566,7 @@ The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
 $cref/sample_id/data_subset/data_sample/sample_id/$$
 must be one of those listed in the table below.
 In addition, depending on the integrand, only the corresponding
-$cref devel_pack_info_rate$$ and $cref devel_pack_info_rate_mulcov$$ subvectors of
+$cref devel_pack_info_rate$$ and $cref devel_pack_info_mulcov_rate$$ subvectors of
 $icode pack_vec$$ are used:
 $table
 Integrand               $cnext Rates               $rnext
@@ -831,7 +831,7 @@ and is all the $cref/model variables/model_variable/$$ in the order
 specified by $cref devel_pack_info$$.
 Only the following subvectors of $icode pack_vec$$ are used:
 $cref devel_pack_info_rate$$,
-$cref devel_pack_info_rate_mulcov$$.
+$cref devel_pack_info_mulcov_rate$$.
 
 $head avg$$
 The return value has prototype
@@ -1148,7 +1148,7 @@ $codei%
 and is all the $cref/model variables/model_variable/$$ in the order
 specified by $cref devel_pack_info$$; i.e.,
 $latex (u , \theta)$$.
-Only the $cref devel_pack_info_meas_mulcov$$ subvectors of $icode pack_vec$$ are used
+Only the $cref devel_pack_info_mulcov_meas$$ subvectors of $icode pack_vec$$ are used
 by $code like_one$$ (note that other components of $latex (u, \theta )$$
 are used to compute $icode avg$$ documented below).
 

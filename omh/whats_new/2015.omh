@@ -38,7 +38,7 @@ $codei%
 	%cov_type%_mulcov_n_cov -> mulcov_%cov_type%_n_cov
 	%cov_type%_mulcov_info -> mulcov_%cov_type%_info
 %$$
-see $cref pack_info_meas_mulcov$$ and $cref pack_info_rate_mulcov$$.
+see $cref pack_info_mulcov_meas$$ and $cref pack_info_mulcov_rate$$.
 $lend
 
 
@@ -142,8 +142,8 @@ $head 06-25$$
 $list number$$
 Change $cref/variable_name/variable_table/variable_name/$$
 for the
-$cref/meas_mulcov/pack_info_meas_mulcov/$$ and
-$cref/rate_mulcov/pack_info_rate_mulcov/$$ variables
+$cref/meas_mulcov/pack_info_mulcov_meas/$$ and
+$cref/rate_mulcov/pack_info_mulcov_rate/$$ variables
 from empty string to a descriptive name.
 $lnext
 The C++11 $code nullptr$$ feature was not being suppressed

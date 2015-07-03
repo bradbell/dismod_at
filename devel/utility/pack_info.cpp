@@ -444,7 +444,7 @@ pack_info::subvec_info pack_info::rate_info(size_t rate_id, size_t j) const
 
 /*
 ------------------------------------------------------------------------------
-$begin devel_pack_info_meas_mulcov$$
+$begin devel_pack_info_mulcov_meas$$
 $spell
 	Devel
 	std
@@ -572,7 +572,7 @@ pack_info::mulcov_meas_std_info(size_t integrand_id, size_t j) const
 
 /*
 ------------------------------------------------------------------------------
-$begin devel_pack_info_rate_mulcov$$
+$begin devel_pack_info_mulcov_rate$$
 $spell
 	Devel
 	std
