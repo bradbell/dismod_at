@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
 # $begin mulcov_table.py$$ $newlinech #$$
@@ -40,7 +40,7 @@ def mulcov_table() :
 		('rate_id',      'integer' ),
 		('integrand_id', 'integer' ),
 		('covariate_id', 'integer' ),
-  		('smooth_id',    'integer' )
+		('smooth_id',    'integer' )
 	] )
 	col_name = list(col_name2type.keys())
 	col_type = list(col_name2type.values())

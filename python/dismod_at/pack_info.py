@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # $begin pack_info_ctor$$ $newlinech #$$
@@ -190,12 +190,12 @@
 # ----------------------------------------------------------------------------
 # $begin pack_info_meas_mulcov$$ $newlinech #$$
 # $spell
-# 	std
-# 	cov
-# 	var
-# 	mulcov
-# 	dismod
-# 	covariate
+#	std
+#	cov
+#	var
+#	mulcov
+#	dismod
+#	covariate
 # $$
 #
 # $section Pack Variables: Measurement Covariate Multipliers$$
@@ -271,12 +271,12 @@
 # ----------------------------------------------------------------------------
 # $begin pack_info_rate_mulcov$$ $newlinech #$$
 # $spell
-# 	std
-# 	cov
-# 	var
-# 	mulcov
-# 	dismod
-# 	covariate
+#	std
+#	cov
+#	var
+#	mulcov
+#	dismod
+#	covariate
 # $$
 #
 # $section Pack Variables: Rate Covariate Multipliers$$
