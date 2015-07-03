@@ -252,7 +252,7 @@ bool rate_mulcov(void)
 	}
 	size_t omega_id = dismod_at::omega_enum;
 	dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
-	info = pack_object.rate_mean_mulcov_info(omega_id, 0);
+	info = pack_object.mulcov_rate_mean_info(omega_id, 0);
 	for(i = 0; i < s_info.age_size(); i++)
 	{	double age = age_table[ s_info.age_id(i) ];
 		for(j = 0; j < s_info.time_size(); j++)

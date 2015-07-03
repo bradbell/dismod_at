@@ -123,11 +123,11 @@ bool pack_info_xam(void)
 			}
 		}
 	}
-	// set meas_value_mulcov
+	// set mulcov_meas_value
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.meas_value_mulcov_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.meas_value_mulcov_info(integrand_id, j);
+		{	info   = pack_object.mulcov_meas_value_info(integrand_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -136,11 +136,11 @@ bool pack_info_xam(void)
 			}
 		}
 	}
-	// set meas_std_mulcov
+	// set mulcov_meas_std
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.meas_std_mulcov_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.mulcov_meas_std_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.meas_std_mulcov_info(integrand_id, j);
+		{	info   = pack_object.mulcov_meas_std_info(integrand_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -149,11 +149,11 @@ bool pack_info_xam(void)
 			}
 		}
 	}
-	// set rate_mean_mulcov
+	// set mulcov_rate_mean
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	size_t n_cov = pack_object.rate_mean_mulcov_n_cov(rate_id);
+	{	size_t n_cov = pack_object.mulcov_rate_mean_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.rate_mean_mulcov_info(rate_id, j);
+		{	info   = pack_object.mulcov_rate_mean_info(rate_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -181,15 +181,15 @@ bool pack_info_xam(void)
 				ok &= pack_vec[info.offset + k] == rate_id + 3 + j + k;
 		}
 	}
-	// check meas_value_mulcov
+	// check mulcov_meas_value
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.meas_value_mulcov_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
 		size_t check = 0;
 		if( integrand_id < 2 )
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.meas_value_mulcov_info(integrand_id, j);
+		{	info   = pack_object.mulcov_meas_value_info(integrand_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -200,15 +200,15 @@ bool pack_info_xam(void)
 			ok &= n_var == n_age * n_time;
 		}
 	}
-	// check meas_std_mulcov
+	// check mulcov_meas_std
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.meas_std_mulcov_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.mulcov_meas_std_n_cov(integrand_id);
 		size_t check = 0;
 		if( integrand_id == 2 )
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.meas_std_mulcov_info(integrand_id, j);
+		{	info   = pack_object.mulcov_meas_std_info(integrand_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -219,15 +219,15 @@ bool pack_info_xam(void)
 			ok &= n_var == n_age * n_time;
 		}
 	}
-	// check rate_mean_mulcov
+	// check mulcov_rate_mean
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	size_t n_cov = pack_object.rate_mean_mulcov_n_cov(rate_id);
+	{	size_t n_cov = pack_object.mulcov_rate_mean_n_cov(rate_id);
 		size_t check = 0;
 		if( rate_id == 3 )
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.rate_mean_mulcov_info(rate_id, j);
+		{	info   = pack_object.mulcov_rate_mean_info(rate_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -242,13 +242,13 @@ bool pack_info_xam(void)
 	// check copy constructor
 	dismod_at::pack_info pack_copy(pack_object);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	size_t n_cov = pack_copy.rate_mean_mulcov_n_cov(rate_id);
+	{	size_t n_cov = pack_copy.mulcov_rate_mean_n_cov(rate_id);
 		size_t check = 0;
 		if( rate_id == 3 )
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_copy.rate_mean_mulcov_info(rate_id, j);
+		{	info   = pack_copy.mulcov_rate_mean_info(rate_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)

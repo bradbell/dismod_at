@@ -710,9 +710,9 @@ Float data_model::avg_no_ode(
 				effect_ode[k] += var_ode[k];
 		}
 		// include effect of rate covariates
-		size_t n_cov = pack_object_.rate_mean_mulcov_n_cov(rate_id[ell]);
+		size_t n_cov = pack_object_.mulcov_rate_mean_n_cov(rate_id[ell]);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object_.rate_mean_mulcov_info(rate_id[ell], j);
+		{	info       = pack_object_.mulcov_rate_mean_info(rate_id[ell], j);
 			n_var      = info.n_var;
 			smooth_id  = info.smooth_id;
 			double x_j = x[ info.covariate_id ];
@@ -972,9 +972,9 @@ Float data_model::avg_yes_ode(
 		}
 		//
 		// include effect of rate covariates
-		size_t n_cov = pack_object_.rate_mean_mulcov_n_cov(rate_id);
+		size_t n_cov = pack_object_.mulcov_rate_mean_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object_.rate_mean_mulcov_info(rate_id, j);
+		{	info       = pack_object_.mulcov_rate_mean_info(rate_id, j);
 			n_var      = info.n_var;
 			smooth_id  = info.smooth_id;
 			double x_j = x[ info.covariate_id ];
@@ -1226,11 +1226,11 @@ residual_struct<Float> data_model::like_one(
 	CppAD::vector<Float> meas_cov_ode(n_ode);
 	for(k = 0; k < n_ode; k++)
 		meas_cov_ode[k] = 0.0;
-	size_t n_cov = pack_object_.meas_value_mulcov_n_cov(integrand_id);
+	size_t n_cov = pack_object_.mulcov_meas_value_n_cov(integrand_id);
 	//
 	pack_info::subvec_info  info;
 	for(size_t j = 0; j < n_cov; j++)
-	{	info              = pack_object_.meas_value_mulcov_info(integrand_id, j);
+	{	info              = pack_object_.mulcov_meas_value_info(integrand_id, j);
 		size_t n_var      = info.n_var;
 		size_t smooth_id  = info.smooth_id;
 		double x_j = x[ info.covariate_id ];
@@ -1253,9 +1253,9 @@ residual_struct<Float> data_model::like_one(
 	// measurement std covaraites effect on the ode subgrid
 	for(k = 0; k < n_ode; k++)
 		meas_cov_ode[k] = 0.0;
-	n_cov = pack_object_.meas_std_mulcov_n_cov(integrand_id);
+	n_cov = pack_object_.mulcov_meas_std_n_cov(integrand_id);
 	for(size_t j = 0; j < n_cov; j++)
-	{	info              = pack_object_.meas_std_mulcov_info(integrand_id, j);
+	{	info              = pack_object_.mulcov_meas_std_info(integrand_id, j);
 		size_t n_var      = info.n_var;
 		size_t smooth_id  = info.smooth_id;
 		double x_j = x[ info.covariate_id ];

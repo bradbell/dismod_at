@@ -269,9 +269,9 @@ bool meas_mulcov(void)
 	dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 	for(k = 0; k < 2; k++)
 	{	if( k == 0 )
-			info = pack_object.meas_value_mulcov_info(mtother_id, 0);
+			info = pack_object.mulcov_meas_value_info(mtother_id, 0);
 		else
-			info = pack_object.meas_std_mulcov_info(mtother_id, 0);
+			info = pack_object.mulcov_meas_std_info(mtother_id, 0);
 		for(i = 0; i < s_info.age_size(); i++)
 		{	double age = age_table[ s_info.age_id(i) ];
 			for(j = 0; j < s_info.time_size(); j++)

@@ -232,9 +232,9 @@ bool prior_random_xam(void)
 		}
 	}
 	//
-	// meas_value_mulcov: none
-	// meas_std_mulcov: none
-	// rate_mean_mulcov: none
+	// mulcov_meas_value: none
+	// mulcov_meas_std: none
+	// mulcov_rate_mean: none
 	dismod_at::prior_model prior_object(
 		pack_object, age_table, time_table, prior_table, s_info_vec
 	);

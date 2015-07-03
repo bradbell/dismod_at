@@ -302,9 +302,9 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 
 	// rate covariate multipliers
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_cov = pack_object_.rate_mean_mulcov_n_cov( rate_id );
+	{	size_t n_cov = pack_object_.mulcov_rate_mean_n_cov( rate_id );
 		for(size_t cov = 0; cov < n_cov; cov++)
-		{	info = pack_object_.rate_mean_mulcov_info(rate_id, cov);
+		{	info = pack_object_.mulcov_rate_mean_info(rate_id, cov);
 			size_t smooth_id          = info.smooth_id;
 			size_t offset             = info.offset;
 			const smooth_info& s_info = s_info_vec_[smooth_id];
@@ -321,9 +321,9 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 	// measurement covariate multipliers
 	size_t n_integrand = pack_object_.integrand_size();
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object_.meas_value_mulcov_n_cov( integrand_id );
+	{	size_t n_cov = pack_object_.mulcov_meas_value_n_cov( integrand_id );
 		for(size_t cov = 0; cov < n_cov; cov++)
-		{	info = pack_object_.meas_value_mulcov_info(integrand_id, cov);
+		{	info = pack_object_.mulcov_meas_value_info(integrand_id, cov);
 			size_t smooth_id          = info.smooth_id;
 			size_t offset             = info.offset;
 			const smooth_info& s_info = s_info_vec_[smooth_id];
@@ -335,9 +335,9 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 				s_info
 			);
 		}
-		n_cov = pack_object_.meas_std_mulcov_n_cov( integrand_id );
+		n_cov = pack_object_.mulcov_meas_std_n_cov( integrand_id );
 		for(size_t cov = 0; cov < n_cov; cov++)
-		{	info = pack_object_.meas_std_mulcov_info(integrand_id, cov);
+		{	info = pack_object_.mulcov_meas_std_info(integrand_id, cov);
 			size_t smooth_id          = info.smooth_id;
 			size_t offset             = info.offset;
 			const smooth_info& s_info = s_info_vec_[smooth_id];

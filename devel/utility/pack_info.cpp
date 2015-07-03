@@ -191,9 +191,9 @@ n_child_        ( n_child )
 		}
 	}
 
-	// meas_value_mulcov_info_ and meas_std_mulcov_info_
-	meas_value_mulcov_info_.resize( n_integrand );
-	meas_std_mulcov_info_.resize( n_integrand );
+	// mulcov_meas_value_info_ and mulcov_meas_std_info_
+	mulcov_meas_value_info_.resize( n_integrand );
+	mulcov_meas_std_info_.resize( n_integrand );
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	size_t mulcov_id;
 		for(mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
@@ -208,11 +208,11 @@ n_child_        ( n_child )
 				string mulcov_type;
 				CppAD::vector<subvec_info>* info_vec = DISMOD_AT_NULLPTR;
 				if( mulcov_table[mulcov_id].mulcov_type == meas_value_enum )
-				{	info_vec    = &( meas_value_mulcov_info_[integrand_id]) ;
+				{	info_vec    = &( mulcov_meas_value_info_[integrand_id]) ;
 					mulcov_type = "'meas_value'";
 				}
 				if( mulcov_table[mulcov_id].mulcov_type == meas_std_enum )
-				{	info_vec    = &( meas_std_mulcov_info_[integrand_id]) ;
+				{	info_vec    = &( mulcov_meas_std_info_[integrand_id]) ;
 					mulcov_type = "'meas_std'";
 				}
 				for(size_t j = 0; j < info_vec->size(); j++)
@@ -240,8 +240,8 @@ n_child_        ( n_child )
 		}
 	}
 
-	// rate_mean_mulcov_info_
-	rate_mean_mulcov_info_.resize( number_rate_enum );
+	// mulcov_rate_mean_info_
+	mulcov_rate_mean_info_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	size_t mulcov_id;
 		for(mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
@@ -253,7 +253,7 @@ n_child_        ( n_child )
 					mulcov_table[mulcov_id].covariate_id
 				);
 				CppAD::vector<subvec_info>& info_vec =
-					rate_mean_mulcov_info_[rate_id];
+					mulcov_rate_mean_info_[rate_id];
 				for(size_t j = 0; j < info_vec.size(); j++)
 				{	if( info_vec[j].covariate_id == covariate_id )
 					{	string msg = "covariate_id appears twice with "
@@ -460,25 +460,25 @@ $$
 $section Devel Pack Variables: Measurement Covariate Multipliers$$
 
 $head Syntax$$
-$icode%n_cov% = %pack_object%.meas_value_mulcov_n_cov(%integrand_id%)
+$icode%n_cov% = %pack_object%.mulcov_meas_value_n_cov(%integrand_id%)
 %$$
-$icode%n_cov% = %pack_object%.meas_std_mulcov_n_cov(%integrand_id%)
+$icode%n_cov% = %pack_object%.mulcov_meas_std_n_cov(%integrand_id%)
 %$$
-$icode%info% = %pack_object%.meas_value_mulcov_info(%integrand_id%, %j%)
+$icode%info% = %pack_object%.mulcov_meas_value_info(%integrand_id%, %j%)
 %$$
-$icode%info% = %pack_object%.meas_std_mulcov_info(%integrand_id%, %j%)
+$icode%info% = %pack_object%.mulcov_meas_std_info(%integrand_id%, %j%)
 %$$
 
 $head meas_value$$
 The functions
-$code meas_value_mulcov_n_cov$$ and
-$code meas_value_mulcov_info$$
+$code mulcov_meas_value_n_cov$$ and
+$code mulcov_meas_value_info$$
 return information about the measurement mean covariate multipliers.
 
 $head meas_std$$
 The functions
-$code meas_std_mulcov_n_cov$$ and
-$code meas_std_mulcov_info$$
+$code mulcov_meas_std_n_cov$$ and
+$code mulcov_meas_std_info$$
 return information about the measurement standard deviation
 covariate multipliers.
 
@@ -549,25 +549,25 @@ See $cref/pack_info Example/devel_pack_info/Example/$$.
 $end
 */
 size_t
-pack_info::meas_value_mulcov_n_cov(size_t integrand_id) const
+pack_info::mulcov_meas_value_n_cov(size_t integrand_id) const
 {	assert( integrand_id < n_integrand_ );
-	return meas_value_mulcov_info_[integrand_id].size();
+	return mulcov_meas_value_info_[integrand_id].size();
 }
 size_t
-pack_info::meas_std_mulcov_n_cov(size_t integrand_id) const
+pack_info::mulcov_meas_std_n_cov(size_t integrand_id) const
 {	assert( integrand_id < n_integrand_ );
-	return meas_std_mulcov_info_[integrand_id].size();
+	return mulcov_meas_std_info_[integrand_id].size();
 }
 //
 pack_info::subvec_info
-pack_info::meas_value_mulcov_info(size_t integrand_id, size_t j) const
+pack_info::mulcov_meas_value_info(size_t integrand_id, size_t j) const
 {	assert( integrand_id < n_integrand_ );
-	return meas_value_mulcov_info_[integrand_id][j];
+	return mulcov_meas_value_info_[integrand_id][j];
 }
 pack_info::subvec_info
-pack_info::meas_std_mulcov_info(size_t integrand_id, size_t j) const
+pack_info::mulcov_meas_std_info(size_t integrand_id, size_t j) const
 {	assert( integrand_id < n_integrand_ );
-	return meas_std_mulcov_info_[integrand_id][j];
+	return mulcov_meas_std_info_[integrand_id][j];
 }
 
 /*
@@ -588,9 +588,9 @@ $$
 $section Devel Pack Variables: Rate Covariate Multipliers$$
 
 $head Syntax$$
-$icode%n_cov% = %pack_object%.rate_mean_mulcov_n_cov(%rate_id%)
+$icode%n_cov% = %pack_object%.mulcov_rate_mean_n_cov(%rate_id%)
 %$$
-$icode%info% = %pack_object%.rate_mean_mulcov_info(%rate_id%, %j%)
+$icode%info% = %pack_object%.mulcov_rate_mean_info(%rate_id%, %j%)
 %$$
 
 $head subvec_info$$
@@ -660,15 +660,15 @@ See $cref/pack_info Example/devel_pack_info/Example/$$.
 $end
 */
 size_t
-pack_info::rate_mean_mulcov_n_cov(size_t rate_id) const
+pack_info::mulcov_rate_mean_n_cov(size_t rate_id) const
 {	assert( rate_id < number_rate_enum );
-	return rate_mean_mulcov_info_[rate_id].size();
+	return mulcov_rate_mean_info_[rate_id].size();
 }
 //
 pack_info::subvec_info
-pack_info::rate_mean_mulcov_info(size_t rate_id, size_t j) const
+pack_info::mulcov_rate_mean_info(size_t rate_id, size_t j) const
 {	assert( rate_id < number_rate_enum );
-	return rate_mean_mulcov_info_[rate_id][j];
+	return mulcov_rate_mean_info_[rate_id][j];
 }
 /*
 $begin devel_pack_info_variable_name$$
@@ -912,11 +912,11 @@ pack_info::variable_name(
 			if( match )
 			{	subvec_info info;
 				if( mulcov_table[mulcov_id].mulcov_type == meas_value_enum )
-				{	info = meas_value_mulcov_info_[integrand_id][mean_count++];
+				{	info = mulcov_meas_value_info_[integrand_id][mean_count++];
 					name = "mean_mulcov(";
 				}
 				else
-				{	info = meas_std_mulcov_info_[integrand_id][std_count++];
+				{	info = mulcov_meas_std_info_[integrand_id][std_count++];
 					name = "std_mulcov(";
 				}
 				size_t n_var  = info.n_var;
@@ -958,7 +958,7 @@ pack_info::variable_name(
 			match &= mulcov_table[mulcov_id].rate_id == int(rate_id);
 			if( match )
 			{	subvec_info info;
-				info = rate_mean_mulcov_info_[rate_id][count++];
+				info = mulcov_rate_mean_info_[rate_id][count++];
 				size_t n_var  = info.n_var;
 				if( index < base + n_var )
 				{	name = "mean_mulcov(";

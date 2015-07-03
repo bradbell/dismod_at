@@ -257,11 +257,11 @@ bool variable_name_xam(void)
 		}
 	}
 	//
-	// meas_value_mulcov
+	// mulcov_meas_value
 	size_t integrand_id = 0;
-	size_t n_cov = pack_object.meas_value_mulcov_n_cov(integrand_id);
+	size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
 	assert( n_cov == 1 );
-	info   = pack_object.meas_value_mulcov_info(integrand_id, 0);
+	info   = pack_object.mulcov_meas_value_info(integrand_id, 0);
 	n_var  = info.n_var;
 	offset = info.offset;
 	ok    &= n_var == 4;
@@ -274,22 +274,22 @@ bool variable_name_xam(void)
 	name   = VARIABLE_NAME(offset + 3);
 	ok    &= name == "mean_mulcov(sex;prevalence;100;2010)";
 	//
-	// meas_std_mulcov
+	// mulcov_meas_std
 	integrand_id = 1;
-	n_cov        = pack_object.meas_std_mulcov_n_cov(integrand_id);
+	n_cov        = pack_object.mulcov_meas_std_n_cov(integrand_id);
 	assert( n_cov == 1 );
-	info   = pack_object.meas_std_mulcov_info(integrand_id, 0);
+	info   = pack_object.mulcov_meas_std_info(integrand_id, 0);
 	n_var  = info.n_var;
 	offset = info.offset;
 	ok    &= n_var == 1;
 	name   = VARIABLE_NAME(offset + 0);
 	ok    &= name == "std_mulcov(sex;Sincidence;50;2000)";
 	//
-	// rate_mean_mulcov
+	// mulcov_rate_mean
 	size_t rate_id = 1;
-	n_cov = pack_object.rate_mean_mulcov_n_cov(rate_id);
+	n_cov = pack_object.mulcov_rate_mean_n_cov(rate_id);
 	assert( n_cov == 1 );
-	info   = pack_object.rate_mean_mulcov_info(rate_id, 0);
+	info   = pack_object.mulcov_rate_mean_info(rate_id, 0);
 	n_var  = info.n_var;
 	offset = info.offset;
 	ok    &= n_var == 4;
