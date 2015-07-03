@@ -1226,11 +1226,11 @@ residual_struct<Float> data_model::like_one(
 	CppAD::vector<Float> meas_cov_ode(n_ode);
 	for(k = 0; k < n_ode; k++)
 		meas_cov_ode[k] = 0.0;
-	size_t n_cov = pack_object_.meas_mean_mulcov_n_cov(integrand_id);
+	size_t n_cov = pack_object_.meas_value_mulcov_n_cov(integrand_id);
 	//
 	pack_info::subvec_info  info;
 	for(size_t j = 0; j < n_cov; j++)
-	{	info              = pack_object_.meas_mean_mulcov_info(integrand_id, j);
+	{	info              = pack_object_.meas_value_mulcov_info(integrand_id, j);
 		size_t n_var      = info.n_var;
 		size_t smooth_id  = info.smooth_id;
 		double x_j = x[ info.covariate_id ];

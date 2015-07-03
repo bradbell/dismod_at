@@ -200,7 +200,7 @@ bool meas_mulcov(void)
 	// mul_cov
 	size_t omega_rate_id = dismod_at::omega_enum;
 	vector<dismod_at::mulcov_struct> mulcov_table(2);
-	mulcov_table[0].mulcov_type = dismod_at::meas_mean_enum;
+	mulcov_table[0].mulcov_type = dismod_at::meas_value_enum;
 	mulcov_table[1].mulcov_type = dismod_at::meas_std_enum;
 	for(size_t mulcov_id = 0; mulcov_id < 2; mulcov_id++)
 	{	mulcov_table[mulcov_id].rate_id        = -1;
@@ -269,7 +269,7 @@ bool meas_mulcov(void)
 	dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 	for(k = 0; k < 2; k++)
 	{	if( k == 0 )
-			info = pack_object.meas_mean_mulcov_info(mtother_id, 0);
+			info = pack_object.meas_value_mulcov_info(mtother_id, 0);
 		else
 			info = pack_object.meas_std_mulcov_info(mtother_id, 0);
 		for(i = 0; i < s_info.age_size(); i++)

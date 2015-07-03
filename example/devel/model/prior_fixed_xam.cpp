@@ -235,7 +235,7 @@ bool prior_fixed_xam(void)
 		}
 	}
 	//
-	// meas_mean_mulcov: none
+	// meas_value_mulcov: none
 	// meas_std_mulcov: none
 	// rate_mean_mulcov: none
 	dismod_at::prior_model prior_object(

@@ -191,14 +191,14 @@ n_child_        ( n_child )
 		}
 	}
 
-	// meas_mean_mulcov_info_ and meas_std_mulcov_info_
-	meas_mean_mulcov_info_.resize( n_integrand );
+	// meas_value_mulcov_info_ and meas_std_mulcov_info_
+	meas_value_mulcov_info_.resize( n_integrand );
 	meas_std_mulcov_info_.resize( n_integrand );
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	size_t mulcov_id;
 		for(mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
 		{	bool match;
-			match  = mulcov_table[mulcov_id].mulcov_type  == meas_mean_enum;
+			match  = mulcov_table[mulcov_id].mulcov_type  == meas_value_enum;
 			match |= mulcov_table[mulcov_id].mulcov_type  == meas_std_enum;
 			match &= mulcov_table[mulcov_id].integrand_id == int(integrand_id);
 			if( match )
@@ -207,9 +207,9 @@ n_child_        ( n_child )
 				);
 				string mulcov_type;
 				CppAD::vector<subvec_info>* info_vec = DISMOD_AT_NULLPTR;
-				if( mulcov_table[mulcov_id].mulcov_type == meas_mean_enum )
-				{	info_vec    = &( meas_mean_mulcov_info_[integrand_id]) ;
-					mulcov_type = "'meas_mean'";
+				if( mulcov_table[mulcov_id].mulcov_type == meas_value_enum )
+				{	info_vec    = &( meas_value_mulcov_info_[integrand_id]) ;
+					mulcov_type = "'meas_value'";
 				}
 				if( mulcov_table[mulcov_id].mulcov_type == meas_std_enum )
 				{	info_vec    = &( meas_std_mulcov_info_[integrand_id]) ;
@@ -460,19 +460,19 @@ $$
 $section Devel Pack Variables: Measurement Covariate Multipliers$$
 
 $head Syntax$$
-$icode%n_cov% = %pack_object%.meas_mean_mulcov_n_cov(%integrand_id%)
+$icode%n_cov% = %pack_object%.meas_value_mulcov_n_cov(%integrand_id%)
 %$$
 $icode%n_cov% = %pack_object%.meas_std_mulcov_n_cov(%integrand_id%)
 %$$
-$icode%info% = %pack_object%.meas_mean_mulcov_info(%integrand_id%, %j%)
+$icode%info% = %pack_object%.meas_value_mulcov_info(%integrand_id%, %j%)
 %$$
 $icode%info% = %pack_object%.meas_std_mulcov_info(%integrand_id%, %j%)
 %$$
 
-$head meas_mean$$
+$head meas_value$$
 The functions
-$code meas_mean_mulcov_n_cov$$ and
-$code meas_mean_mulcov_info$$
+$code meas_value_mulcov_n_cov$$ and
+$code meas_value_mulcov_info$$
 return information about the measurement mean covariate multipliers.
 
 $head meas_std$$
@@ -549,9 +549,9 @@ See $cref/pack_info Example/devel_pack_info/Example/$$.
 $end
 */
 size_t
-pack_info::meas_mean_mulcov_n_cov(size_t integrand_id) const
+pack_info::meas_value_mulcov_n_cov(size_t integrand_id) const
 {	assert( integrand_id < n_integrand_ );
-	return meas_mean_mulcov_info_[integrand_id].size();
+	return meas_value_mulcov_info_[integrand_id].size();
 }
 size_t
 pack_info::meas_std_mulcov_n_cov(size_t integrand_id) const
@@ -560,9 +560,9 @@ pack_info::meas_std_mulcov_n_cov(size_t integrand_id) const
 }
 //
 pack_info::subvec_info
-pack_info::meas_mean_mulcov_info(size_t integrand_id, size_t j) const
+pack_info::meas_value_mulcov_info(size_t integrand_id, size_t j) const
 {	assert( integrand_id < n_integrand_ );
-	return meas_mean_mulcov_info_[integrand_id][j];
+	return meas_value_mulcov_info_[integrand_id][j];
 }
 pack_info::subvec_info
 pack_info::meas_std_mulcov_info(size_t integrand_id, size_t j) const
@@ -906,13 +906,13 @@ pack_info::variable_name(
 		size_t std_count  = 0;
 		for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
 		{	bool match;
-			match  = mulcov_table[mulcov_id].mulcov_type  == meas_mean_enum;
+			match  = mulcov_table[mulcov_id].mulcov_type  == meas_value_enum;
 			match |= mulcov_table[mulcov_id].mulcov_type  == meas_std_enum;
 			match &= mulcov_table[mulcov_id].integrand_id == int(integrand_id);
 			if( match )
 			{	subvec_info info;
-				if( mulcov_table[mulcov_id].mulcov_type == meas_mean_enum )
-				{	info = meas_mean_mulcov_info_[integrand_id][mean_count++];
+				if( mulcov_table[mulcov_id].mulcov_type == meas_value_enum )
+				{	info = meas_value_mulcov_info_[integrand_id][mean_count++];
 					name = "mean_mulcov(";
 				}
 				else

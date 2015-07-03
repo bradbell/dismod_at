@@ -66,7 +66,7 @@ $tend
 $subhead mulcov_type_enum$$
 The $code mulcov_type_enum$$ possible values are
 $code rate_mean_enum$$,
-$code meas_mean_enum$$, and
+$code meas_value_enum$$, and
 $code meas_std_enum$$.
 These correspond to the values in the
 $cref/mulcov_type/mulcov_table/mulcov_type/$$ column of the
@@ -144,13 +144,13 @@ CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
 		//
 		if( mulcov_type[i] == "rate_mean" )
 			mulcov_table[i].mulcov_type = rate_mean_enum;
-		else if( mulcov_type[i] == "meas_mean" )
-			mulcov_table[i].mulcov_type = meas_mean_enum;
+		else if( mulcov_type[i] == "meas_value" )
+			mulcov_table[i].mulcov_type = meas_value_enum;
 		else if( mulcov_type[i] == "meas_std" )
 			mulcov_table[i].mulcov_type = meas_std_enum;
 		else
 		{	string message = "mulcov_type is not one of the following\n"
-			"'rate_mean', 'meas_mean', 'meas_std'.";
+			"'rate_mean', 'meas_value', 'meas_std'.";
 			table_name = "mulcov";
 			table_error_exit(table_name, i, message);
 		}

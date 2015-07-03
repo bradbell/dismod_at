@@ -80,7 +80,7 @@ $subhead J_i$$
 There is a set of rows in the mulcov table such that
 $cref/integrand_id/mulcov_table/integrand_id/$$ is equal to $latex I_i$$.
 and
-$cref/mulcov_type/mulcov_table/mulcov_type/$$ is equal to $code meas_mean$$.
+$cref/mulcov_type/mulcov_table/mulcov_type/$$ is equal to $code meas_value$$.
 We use $latex J_i$$ to denote the corresponding set of
 $cref/covariate_id/mulcov_table/covariate_id/$$ values for
 which this is the case.

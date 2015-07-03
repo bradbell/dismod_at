@@ -201,19 +201,19 @@
 # $section Pack Variables: Measurement Covariate Multipliers$$
 #
 # $head Syntax$$
-# $icode%n_cov% = %pack_object%.meas_mean_mulcov_n_cov(%integrand_id%)
+# $icode%n_cov% = %pack_object%.meas_value_mulcov_n_cov(%integrand_id%)
 # %$$
 # $icode%n_cov% = %pack_object%.meas_std_mulcov_n_cov(%integrand_id%)
 # %$$
-# $icode%info% = %pack_object%.meas_mean_mulcov_info(%integrand_id%, %j%)
+# $icode%info% = %pack_object%.meas_value_mulcov_info(%integrand_id%, %j%)
 # %$$
 # $icode%info% = %pack_object%.meas_std_mulcov_info(%integrand_id%, %j%)
 # %$$
 #
-# $head meas_mean$$
+# $head meas_value$$
 # The functions
-# $code meas_mean_mulcov_n_cov$$ and
-# $code meas_mean_mulcov_info$$
+# $code meas_value_mulcov_n_cov$$ and
+# $code meas_value_mulcov_info$$
 # return information about the measurement mean covariate multipliers.
 #
 # $head meas_std$$
@@ -393,14 +393,14 @@ class pack_info :
 				# check assumption about pini smoothing
 				assert rate_id != 0 or n_age == 1
 
-		# meas_mean_mulcov_info_ and meas_std_mulcov_info_
-		self.meas_mean_mulcov_info_ = list()
+		# meas_value_mulcov_info_ and meas_std_mulcov_info_
+		self.meas_value_mulcov_info_ = list()
 		self.meas_std_mulcov_info_  = list()
 		for integrand_id in range(n_integrand) :
-			self.meas_mean_mulcov_info_.append( list() )
+			self.meas_value_mulcov_info_.append( list() )
 			self.meas_std_mulcov_info_.append( list() )
 			for mulcov_id in range( len(mulcov_dict) ) :
-				match  = mulcov_dict[mulcov_id]['mulcov_type'] == 'meas_mean'
+				match  = mulcov_dict[mulcov_id]['mulcov_type'] == 'meas_value'
 				match |= mulcov_dict[mulcov_id]['mulcov_type'] == 'meas_std'
 				tmp_id = int( mulcov_dict[mulcov_id]['integrand_id'] )
 				match &= tmp_id == integrand_id
@@ -416,8 +416,8 @@ class pack_info :
 						'n_var'        : n_age * n_time,
 						'offset'       : offset
 					}
-					if mulcov_type == 'meas_mean' :
-						info_list = self.meas_mean_mulcov_info_[integrand_id]
+					if mulcov_type == 'meas_value' :
+						info_list = self.meas_value_mulcov_info_[integrand_id]
 					elif mulcov_type == 'meas_std' :
 						info_list = self.meas_std_mulcov_info_[integrand_id]
 					for j in range( len(info_list) ) :
@@ -473,10 +473,10 @@ class pack_info :
 	def rate_info(self, rate_id, child_id) :
 		return self.rate_info_[rate_id][child_id]
 	# ------------------------------------------------------------------------
-	def meas_mean_mulcov_n_cov(self, integrand_id) :
-		return len(self.meas_mean_mulcov_info_[integrand_id])
-	def meas_mean_mulcov_info(self, integrand_id, j) :
-		return self.meas_mean_mulcov_info_[integrand_id][j]
+	def meas_value_mulcov_n_cov(self, integrand_id) :
+		return len(self.meas_value_mulcov_info_[integrand_id])
+	def meas_value_mulcov_info(self, integrand_id, j) :
+		return self.meas_value_mulcov_info_[integrand_id][j]
 	# ------------------------------------------------------------------------
 	def meas_std_mulcov_n_cov(self, integrand_id) :
 		return len(self.meas_std_mulcov_info_[integrand_id])

@@ -215,7 +215,7 @@
 # $table
 # Key       $cnext Value Type  $pre  $$ $cnext Description       $rnext
 # covariate $cnext str         $cnext is the covariate column    $rnext
-# type      $cnext str  $cnext rate_mean, meas_mean, or meas_std $rnext
+# type      $cnext str  $cnext rate_mean, meas_value, or meas_std $rnext
 # effected  $cnext str         $cnext integrand or rate effected $rnext
 # smooth    $cnext str         $cnext smoothing name
 # $tend

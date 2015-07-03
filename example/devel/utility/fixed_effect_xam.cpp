@@ -64,8 +64,8 @@ bool fixed_effect_xam(void)
 	size_t n_mulcov = 3;
 	vector<dismod_at::mulcov_struct> mulcov_table(n_mulcov);
 	//
-	// meas_mean_mulcov
-	mulcov_table[0].mulcov_type  = dismod_at::meas_mean_enum;
+	// meas_value_mulcov
+	mulcov_table[0].mulcov_type  = dismod_at::meas_value_enum;
 	mulcov_table[0].rate_id      = -1;
 	mulcov_table[0].integrand_id = 0;
 	mulcov_table[0].covariate_id = 0;

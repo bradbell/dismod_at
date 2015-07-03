@@ -321,9 +321,9 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 	// measurement covariate multipliers
 	size_t n_integrand = pack_object_.integrand_size();
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object_.meas_mean_mulcov_n_cov( integrand_id );
+	{	size_t n_cov = pack_object_.meas_value_mulcov_n_cov( integrand_id );
 		for(size_t cov = 0; cov < n_cov; cov++)
-		{	info = pack_object_.meas_mean_mulcov_info(integrand_id, cov);
+		{	info = pack_object_.meas_value_mulcov_info(integrand_id, cov);
 			size_t smooth_id          = info.smooth_id;
 			size_t offset             = info.offset;
 			const smooth_info& s_info = s_info_vec_[smooth_id];

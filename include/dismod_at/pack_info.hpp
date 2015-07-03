@@ -50,8 +50,8 @@ private:
 	// rate variable information
 	CppAD::vector< CppAD::vector<subvec_info> > rate_info_;
 
-	// meas_mean_mulcov infromation
-	CppAD::vector< CppAD::vector<subvec_info> > meas_mean_mulcov_info_;
+	// meas_value_mulcov infromation
+	CppAD::vector< CppAD::vector<subvec_info> > meas_value_mulcov_info_;
 
 	// meas_std_mulcov infromation
 	CppAD::vector< CppAD::vector<subvec_info> > meas_std_mulcov_info_;
@@ -88,9 +88,9 @@ public:
 	// rate
 	subvec_info rate_info(size_t rate_id, size_t j) const;
 
-	// meas_mean_mulcov_
-	size_t      meas_mean_mulcov_n_cov(size_t integrand_id) const;
-	subvec_info meas_mean_mulcov_info(size_t integrand_id, size_t j) const;
+	// meas_value_mulcov_
+	size_t      meas_value_mulcov_n_cov(size_t integrand_id) const;
+	subvec_info meas_value_mulcov_info(size_t integrand_id, size_t j) const;
 
 	// meas_std_mulcov_
 	size_t      meas_std_mulcov_n_cov(size_t integrand_id) const;

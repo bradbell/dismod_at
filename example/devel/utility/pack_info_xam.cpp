@@ -49,12 +49,12 @@ bool pack_info_xam(void)
 	//
 	size_t n_mulcov = 4;
 	vector<dismod_at::mulcov_struct> mulcov_table(n_mulcov);
-	mulcov_table[0].mulcov_type  = dismod_at::meas_mean_enum;
+	mulcov_table[0].mulcov_type  = dismod_at::meas_value_enum;
 	mulcov_table[0].rate_id      = -1;
 	mulcov_table[0].integrand_id = 0;
 	mulcov_table[0].covariate_id = 0;
 	mulcov_table[0].smooth_id    = 0;
-	mulcov_table[1].mulcov_type  = dismod_at::meas_mean_enum;
+	mulcov_table[1].mulcov_type  = dismod_at::meas_value_enum;
 	mulcov_table[1].rate_id      = -1;
 	mulcov_table[1].integrand_id = 1;
 	mulcov_table[1].covariate_id = 1;
@@ -123,11 +123,11 @@ bool pack_info_xam(void)
 			}
 		}
 	}
-	// set meas_mean_mulcov
+	// set meas_value_mulcov
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.meas_value_mulcov_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.meas_mean_mulcov_info(integrand_id, j);
+		{	info   = pack_object.meas_value_mulcov_info(integrand_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -181,15 +181,15 @@ bool pack_info_xam(void)
 				ok &= pack_vec[info.offset + k] == rate_id + 3 + j + k;
 		}
 	}
-	// check meas_mean_mulcov
+	// check meas_value_mulcov
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.meas_value_mulcov_n_cov(integrand_id);
 		size_t check = 0;
 		if( integrand_id < 2 )
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.meas_mean_mulcov_info(integrand_id, j);
+		{	info   = pack_object.meas_value_mulcov_info(integrand_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)

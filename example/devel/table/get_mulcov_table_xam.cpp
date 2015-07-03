@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -50,7 +50,7 @@ bool get_mulcov_table_xam(void)
 			" integrand_id       integer,"
 			" covariate_id       integer,"
 			" smooth_id          integer)",
-		"insert into mulcov values(0, 'meas_mean', -1,  2, 1, 2)",
+		"insert into mulcov values(0, 'meas_value', -1,  2, 1, 2)",
 		"insert into mulcov values(1, 'rate_mean',  1, -1, 2, 2)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
@@ -62,7 +62,7 @@ bool get_mulcov_table_xam(void)
 		mulcov_table = dismod_at::get_mulcov_table(db);
 	ok  &= mulcov_table.size() == 2;
 	//
-	ok  &= mulcov_table[0].mulcov_type  == dismod_at::meas_mean_enum;
+	ok  &= mulcov_table[0].mulcov_type  == dismod_at::meas_value_enum;
 	ok  &= mulcov_table[1].mulcov_type  == dismod_at::rate_mean_enum;
 	//
 	ok  &= mulcov_table[0].rate_id == -1;

@@ -36,13 +36,13 @@ def pack_info() :
 		{ 'n_age':3, 'n_time':3 }
 	]
 	mulcov_dict = [ {
-			'mulcov_type':'meas_mean',
+			'mulcov_type':'meas_value',
 			'rate_id':     -1,
 			'integrand_id': 0,
 			'covariate_id': 0,
 			'smooth_id':    0
 		},{
-			'mulcov_type':'meas_mean',
+			'mulcov_type':'meas_value',
 			'rate_id':     -1,
 			'integrand_id': 1,
 			'covariate_id': 1,
@@ -101,11 +101,11 @@ def pack_info() :
 				pack_list[info['offset'] + k] = value
 				count += 1
 	#
-	# set meas_mean_mulcov
+	# set meas_value_mulcov
 	for integrand_id in range(n_integrand) :
-		n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id)
+		n_cov = pack_object.meas_value_mulcov_n_cov(integrand_id)
 		for j in range(n_cov) :
-			info = pack_object.meas_mean_mulcov_info(integrand_id, j)
+			info = pack_object.meas_value_mulcov_info(integrand_id, j)
 			for k in range( info['n_var'] ) :
 				pack_list[info['offset'] + k] = float(integrand_id + 4 + j + k)
 				count += 1
@@ -148,11 +148,11 @@ def pack_info() :
 				value = float(rate_id + 3 + child_id + k)
 				assert pack_list[offset + k] == value
 	#
-	# check meas_mean_mulcov
+	# check meas_value_mulcov
 	for integrand_id in range(n_integrand) :
-		n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id)
+		n_cov = pack_object.meas_value_mulcov_n_cov(integrand_id)
 		for j in range(n_cov) :
-			info   = pack_object.meas_mean_mulcov_info(integrand_id, j)
+			info   = pack_object.meas_value_mulcov_info(integrand_id, j)
 			offset = info['offset']
 			for k in range( info['n_var'] ) :
 				assert pack_list[offset + k] == float(integrand_id + 4 + j + k)

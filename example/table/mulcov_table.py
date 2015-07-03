@@ -45,7 +45,7 @@ def mulcov_table() :
 	col_name = list(col_name2type.keys())
 	col_type = list(col_name2type.values())
 	row_list = [ [
-		'meas_mean', # muitiplier_type
+		'meas_value', # muitiplier_type
 		-1,          # rate_id (-1 becasue this is an measurement covariate)
 		2,           # integrand_id
 		1,           # covariate_id

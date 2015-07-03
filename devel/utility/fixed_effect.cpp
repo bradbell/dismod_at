@@ -157,9 +157,9 @@ void get_fixed_effect(
 
 	// measurement mean and standard deviation covariates
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.meas_value_mulcov_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object.meas_mean_mulcov_info(integrand_id, j);
+		{	info       = pack_object.meas_value_mulcov_info(integrand_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				fixed_vec[fixed_index++] = pack_vec[pack_index++];
@@ -221,9 +221,9 @@ void put_fixed_effect(
 
 	// measurement mean and standard deviation covariates
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.meas_value_mulcov_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object.meas_mean_mulcov_info(integrand_id, j);
+		{	info       = pack_object.meas_value_mulcov_info(integrand_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				pack_vec[pack_index++] = fixed_vec[fixed_index++];

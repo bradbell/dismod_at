@@ -131,9 +131,9 @@ CppAD::vector<size_t> pack_value_prior(
 	// get prioirs for measurement covariates
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	// measurement mean covariates for this integrand
-		size_t n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id);
+		size_t n_cov = pack_object.meas_value_mulcov_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.meas_mean_mulcov_info(integrand_id, j);
+		{	info   = pack_object.meas_value_mulcov_info(integrand_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
 			set_value_prior(ret_val, offset, s_info_vec[smooth_id]);

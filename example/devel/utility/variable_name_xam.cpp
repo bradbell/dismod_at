@@ -138,7 +138,7 @@ bool variable_name_xam(void)
 		" integrand_id   integer,"
 		" covariate_id   integer,"
 		" smooth_id      integer)",
-	"insert into mulcov values(0,  'meas_mean',  -1,  0, 0, 0)",
+	"insert into mulcov values(0,  'meas_value',  -1,  0, 0, 0)",
 	"insert into mulcov values(1,  'meas_std',   -1,  1, 0, 1)",
 	"insert into mulcov values(2,  'rate_mean',   1, -1, 0, 0)",
 	};
@@ -257,11 +257,11 @@ bool variable_name_xam(void)
 		}
 	}
 	//
-	// meas_mean_mulcov
+	// meas_value_mulcov
 	size_t integrand_id = 0;
-	size_t n_cov = pack_object.meas_mean_mulcov_n_cov(integrand_id);
+	size_t n_cov = pack_object.meas_value_mulcov_n_cov(integrand_id);
 	assert( n_cov == 1 );
-	info   = pack_object.meas_mean_mulcov_info(integrand_id, 0);
+	info   = pack_object.meas_value_mulcov_info(integrand_id, 0);
 	n_var  = info.n_var;
 	offset = info.offset;
 	ok    &= n_var == 4;
