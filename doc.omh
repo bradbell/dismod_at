@@ -37,6 +37,10 @@ Add computation of a weighted residuals table to the $cref fit_command$$.
 $lnext
 Add a foreign key constraint for all the
 $cref/foreign keys/input/Foreign Key/$$.
+Add a $code not null$$ constraint for all
+$cref/primary keys/input/Primary Key/$$ and all columns
+of type $code text$$'; see
+$cref/text column not null/input/Text Column Not Null/$$.
 $lnext
 If the $cref variable_table$$ exists when the $cref fit_command$$ is executed,
 use those values as a starting point for the optimization.

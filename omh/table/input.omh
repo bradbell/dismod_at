@@ -49,6 +49,10 @@ key value for the $cref/node table/node_table/$$; i.e, $code node_id$$.
 This is not an exception because the $code parent$$ column is itself
 in the $code node$$ table.
 
+$head Text Column Not Null$$
+The empty string, and not the $code null$$ value, is used when a
+$code text$$ column does not have a value in a particular row.
+
 
 $childtable%
 	omh/table/age_table.omh
