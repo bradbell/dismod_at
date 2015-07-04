@@ -11,6 +11,12 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin variable_table$$
 $spell
 	dismod
+	mulstd
+	dage
+	dtime
+	mulcov
+	covariate
+	std
 $$
 
 $section The Variable Table$$
@@ -28,13 +34,123 @@ This column has type $code real$$ and is
 the maximum likelihood estimate for the
 $cref model_variable$$ corresponding to index $icode variable_id$$.
 
-$head variable_name$$
-This column has type $code text$$ and has a different value for every row;
-The names are intended to be easier for a human to remember than the ids.
-While the names are unique, the method by which the names are constructed
-is as of yet not part of the dismod_at API and may change.
-The $cref pack_info$$ routine can be used to determine which
-$cref model_variable$$ corresponds to a particular $icode variable_id$$.
+$head variable_type$$
+The column has type $code text$$ and has one of the following possible values:
+
+$subhead mulstd_value$$
+This variable is that multiplies the standard deviation in the
+$cref/mulstd_value_prior/smooth_table/mulstd_value_prior_id/$$
+for the corresponding $icode smooth_id$$; see
+$cref/smoothing standard deviation multiplier
+	/model_variable
+	/Fixed Effects, theta
+	/Smoothing Standard Deviation Multipliers, lambda
+/$$.
+
+$subhead mulstd_dage$$
+This variable is that multiplies the standard deviation in the
+$cref/mulstd_dage_prior/smooth_table/mulstd_dage_prior_id/$$
+for the corresponding $icode smooth_id$$; see
+$cref/smoothing standard deviation multiplier
+	/model_variable
+	/Fixed Effects, theta
+	/Smoothing Standard Deviation Multipliers, lambda
+/$$.
+
+$subhead mulstd_dtime$$
+This variable is that multiplies the standard deviation in the
+$cref/mulstd_dtime_prior/smooth_table/mulstd_dtime_prior_id/$$
+for the corresponding $icode smooth_id$$; see
+$cref/smoothing standard deviation multiplier
+	/model_variable
+	/Fixed Effects, theta
+	/Smoothing Standard Deviation Multipliers, lambda
+/$$.
+
+$subhead rate$$
+This variable is rate for the corresponding
+$icode age_id$$ $icode time_id$$,
+$icode node_id$$, and $icode rate_id$$,
+If the $icode node_id$$ is the
+$cref/parent_node_id/fit_command/parent_node_id/$$, it is a
+$cref/fixed effect/model_variable/Fixed Effects, theta/Parent Rates/$$.
+Otherwise, it is a
+$cref/random effect/model_variable/Random Effects, u/Child Rates/$$.
+
+$subhead mulcov_rate_mean$$
+This variable is a
+$cref/covariate multiplier
+	/model_variable
+	/Fixed Effects, theta
+	/Covariate Multipliers
+/$$
+that affects the rate for the corresponding
+$icode age_id$$, $icode time_id$$,
+$icode rate_id$$, and $icode covariate_id$$.
+
+$subhead mulcov_meas_value$$
+This variable is a
+$cref/covariate multiplier
+	/model_variable
+	/Fixed Effects, theta
+	/Covariate Multipliers
+/$$
+that affects the measurement value for the corresponding
+$icode age_id$$, $icode time_id$$,
+$icode integrand_id$$, and $icode covariate_id$$.
+
+$subhead mulcov_meas_std$$
+This variable is a
+$cref/covariate multiplier
+	/model_variable
+	/Fixed Effects, theta
+	/Covariate Multipliers
+/$$
+that affects the measurement value
+$icode age_id$$, $icode time_id$$,
+$icode integrand_id$$, and $icode covariate_id$$.
+
+$head smooth_id$$
+If $icode%variable_type% == mulstd%$$,
+this is the $cref/smooth_id/smooth_table/smooth_id/$$ for the
+smoothing that this variable multiplies.
+Otherwise, this column is $code null$$.
+
+$head age_id$$
+If $icode%variable_type% != mulstd%$$,
+this is the $cref/age_id/age_table/age_id/$$ that identifies
+the age for the corresponding variable.
+
+$head time_id$$
+If $icode%variable_type% != mulstd%$$,
+this is the $cref/time_id/time_table/time_id/$$ that identifies
+the time for the corresponding variable.
+
+$head node_id$$
+If $icode%variable_type% == rate%$$,
+this is the $cref/node_id/node_table/node_id/$$ that the rate is for.
+Otherwise, this column is $code null$$.
+
+$head rate_id$$
+If $icode%variable_type% == rate%$$ or
+$icode%variable_type% == mulcov_rate_mean%$$,
+this is the $cref/rate_id/rate_table/rate_id/$$ for the specific rate.
+Otherwise, this column is $code null$$.
+
+$head integrand_id$$
+If $icode%variable_type% == mulcov_meas_value%$$ or
+$icode%variable_type% == mulcov_meas_std%$$,
+this is the $cref/integrand_id/integrand_table/integrand_id/$$
+that this variable applies to.
+Otherwise, this column is $code null$$.
+
+$head covariate_id$$
+If $icode%variable_type% == mulcov_rate_mean%$$,
+$icode%variable_type% == mulcov_meas_value%$$, or
+$icode%variable_type% == mulcov_meas_std%$$,
+this is the $cref/covariate_id/covariate_table/covariate_id/$$
+that this variable applies to.
+Otherwise, this column is $code null$$.
 
 $head Example$$
 See the $cref get_started.py$$ example and test.

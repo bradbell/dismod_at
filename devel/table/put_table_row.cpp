@@ -24,6 +24,9 @@ $head Syntax$$
 $icode%table_name_id% = put_table_row(
 	%db%, %table_name%, %col_name_vec%, %row_val_vec%
 )%$$
+$codei%put_table_row(
+	%db%, %table_name%, %col_name_vec%, %row_val_vec%. %primary_key%
+)%$$
 
 $head db$$
 This argument has prototype
@@ -64,17 +67,27 @@ The special value $code null$$ can be used for $code integer$$ and
 $code real$$ columns. If it is used for a $code text$$ column,
 it will be interpreted as the text $code 'null'$$ and not a missing value.
 
-$head Primary Key$$
+$head primary_key$$
 The primary key for this table name must have column name
 $icode%table_name%_id%$$.
-This key starts with zero, and increment by one between rows.
+This argument has prototype
+$codei%
+	const size_t& %primary_key%
+%$$.
+If this argument is present, this value is used for the primary key.
+Otherwise, if the table is empty,
+the value zero is used for the primary key.
+Otherwise, the value is for the primary key is one greater than
+the current maximum value for the primary key column
+$icode%table_name%_id%$$.
 
 $head table_name_id$$
-The return value has prototype
+If the return value is present, it has prototype
 $codei%
 	size_t %table_name_id%
 %$$
-It is the value of the primary key $icode%table_name%_id%$$ for this row.
+It is the value of the primary key for this row;
+i.e, the value in the $icode%table_name%_id%$$ column for this row.
 
 $children%example/devel/table/put_table_row_xam.cpp
 %$$
@@ -89,19 +102,20 @@ $end
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/get_table_column.hpp>
+# include <dismod_at/get_column_max.hpp>
 # include <dismod_at/to_string.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-size_t put_table_row(
+void put_table_row(
 	sqlite3*                          db           ,
 	const std::string&                table_name   ,
 	const CppAD::vector<std::string>& col_name_vec ,
-	const CppAD::vector<std::string>& row_val_vec  )
+	const CppAD::vector<std::string>& row_val_vec  ,
+	const size_t&                     primary_key  )
 {
 	size_t n_col = col_name_vec.size();
-	size_t n_row = check_table_id(db, table_name);
-	std::string table_name_id = to_string(n_row);
+	std::string table_name_id = to_string(primary_key);
 	//
 	std::string name_list  = "(";
 	std::string value_list = "(";
@@ -139,7 +153,25 @@ size_t put_table_row(
 	//
 	exec_sql_cmd(db, cmd);
 	//
-	return n_row;
+	return;
+}
+size_t put_table_row(
+	sqlite3*                          db           ,
+	const std::string&                table_name   ,
+	const CppAD::vector<std::string>& col_name_vec ,
+	const CppAD::vector<std::string>& row_val_vec  )
+{	using std::string;
+
+	string select_cmd       = "select * from " + table_name;
+	std::string column_name = table_name + "_id";
+	std::string max_str     = get_column_max(db, select_cmd, column_name);
+	//
+	size_t primary_key      = 0;
+	if( max_str != "" )
+		primary_key = std::atoi( max_str.c_str() ) + 1;;
+	//
+	put_table_row(db, table_name, col_name_vec, row_val_vec, primary_key);
+	return primary_key;
 }
 
 } // END_DISMOD_AT_NAMESPACE

@@ -37,9 +37,7 @@ Add computation of a weighted residuals table to the $cref fit_command$$.
 $lnext
 If the $cref variable_table$$ exists when the $cref fit_command$$ is executed,
 use those values as a starting point for the optimization.
-Note that the values of the $cref/variable_name/variable_table/variable_name/$$
-should not matter (need not be filled in).
-Also note that the initial
+Note that the initial
 $cref variable_table$$ will be overwritten by the fit.
 $lnext
 Add a $code dismod_at sample$$ command that,

@@ -29,6 +29,10 @@ $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-03$$
 $list number$$
+Remove the $code variable_name$$ from the $cref variable_table$$,
+add extra columns to specify the exact variable using
+$cref/foreign keys/input/Foreign Key/$$.
+$lnext
 Change the $code mean_mean$$ covariate multiplier type to
 $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$.
 $lnext
@@ -140,7 +144,7 @@ $lend
 
 $head 06-25$$
 $list number$$
-Change $cref/variable_name/variable_table/variable_name/$$
+Change $code variable_name$$
 for the
 $cref/meas_mulcov/pack_info_mulcov_meas/$$ and
 $cref/rate_mulcov/pack_info_mulcov_rate/$$ variables
@@ -172,7 +176,7 @@ $lnext
 Also close the connection at the end of each of the python sqlite examples;
 e.g., at the end of $cref age_table.py$$.
 $lnext
-Change $cref/variable_name/variable_table/variable_name/$$
+Change $code variable_name$$
 for the $cref/mulstd/pack_info_mulstd/$$ variables
 for the $cref/rate/pack_info_rate/$$ variables
 from empty string to a descriptive name.

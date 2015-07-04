@@ -25,6 +25,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/to_string.hpp>
 # include <dismod_at/manage_gsl_rng.hpp>
+# include <dismod_at/pack_info.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 
@@ -162,36 +163,173 @@ void fit_command(
 	fit_object.run_fit(tolerance_arg, max_num_iter_arg);
 	vector<double> solution = fit_object.get_solution();
 	// ----------------- variable_table ----------------------------------
-	string sql_cmd = "create table variable("
-		" variable_id integer primary key,"
+	string sql_cmd = "drop table if exists variable";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	sql_cmd = "create table variable("
+		" variable_id    integer primary key,"
 		" variable_value real,"
-		" variable_name  text unique"
+		" variable_type  text,"
+		" smooth_id      integer,"
+		" age_id         integer,"
+		" time_id        integer,"
+		" node_id        integer,"
+		" rate_id        integer,"
+		" integrand_id   integer,"
+		" covariate_id   integer"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	string table_name = "variable";
 	//
-	CppAD::vector<string> col_name_vec(3), row_val_vec(3);
-	col_name_vec[0]   = "variable_id";
-	col_name_vec[1]   = "variable_value";
-	col_name_vec[2]   = "variable_name";
+	CppAD::vector<string> col_name_vec(9), row_val_vec(9);
+	col_name_vec[0]   = "variable_value";
+	col_name_vec[1]   = "variable_type";
+	col_name_vec[2]   = "smooth_id";
+	col_name_vec[3]   = "age_id";
+	col_name_vec[4]   = "time_id";
+	col_name_vec[5]   = "node_id";
+	col_name_vec[6]   = "rate_id";
+	col_name_vec[7]   = "integrand_id";
+	col_name_vec[8]   = "covariate_id";
 	//
-	for(size_t index = 0; index < solution.size(); index++)
-	{	row_val_vec[0] = to_string( index );
-		row_val_vec[1] = to_string( solution[index] );
-		row_val_vec[2] = pack_object.variable_name(
-			index,
-			parent_node_id,
-			db_input.age_table,
-			db_input.covariate_table,
-			db_input.integrand_table,
-			db_input.mulcov_table,
-			db_input.node_table,
-			db_input.smooth_table,
-			db_input.time_table,
-			s_info_vec,
-			child_object
-		);
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+	// mulstd variables
+	size_t n_smooth = db_input.smooth_table.size();
+	size_t offset, variable_id;
+	for(size_t i = 3; i < row_val_vec.size(); i++)
+		row_val_vec[i] = "null"; // these columns are null for mulstd variables
+	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
+	{	offset      = pack_object.mulstd_offset(smooth_id);
+		for(size_t i = 0; i < 3; i++)
+		{	variable_id              = offset + i;
+			// variable_type
+			if( i == 0 )
+				row_val_vec[1] = "mulstd_value";
+			else if( i == 1 )
+				row_val_vec[1] = "mulstd_dage";
+			else
+				row_val_vec[1] = "mulstd_dtime";
+			//
+			// variable_value
+			row_val_vec[0] = to_string( solution[variable_id] );
+			// smooth_id
+			row_val_vec[2] = to_string( smooth_id );
+			//
+			dismod_at::put_table_row(
+				db,
+				table_name,
+				col_name_vec,
+				row_val_vec,
+				variable_id
+			);
+		}
+	}
+	//
+	// rate variables
+	size_t n_rate  = db_input.rate_table.size();
+	size_t n_child = child_object.child_size();
+	size_t smooth_id, n_var, n_age, n_time, node_id;
+	dismod_at::pack_info::subvec_info info;
+	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
+		{	info      = pack_object.rate_info(rate_id, child_id);
+			offset    = info.offset;
+			smooth_id = info.smooth_id;
+			n_var     = info.n_var;
+			n_age     = s_info_vec[smooth_id].age_size();
+			n_time    = s_info_vec[smooth_id].time_size();
+			if( child_id == n_child )
+				node_id = parent_node_id;
+			else
+				node_id = child_object.child_id2node_id(child_id);
+			assert( n_var == n_age * n_time );
+			for(size_t index = 0; index < n_var; index++)
+			{	size_t age_id   = index % n_age;
+				size_t time_id  = index / n_age;
+				variable_id     = offset + index;
+				//
+				// variable_value
+				row_val_vec[0]  = to_string( solution[variable_id] );
+				row_val_vec[1]  = "rate";     // variable_type
+				row_val_vec[2]  = "null";     // smooth_id
+				row_val_vec[3]  = to_string( age_id );
+				row_val_vec[4]  = to_string( time_id );
+				row_val_vec[5]  = to_string( node_id );
+				row_val_vec[6]  = to_string( rate_id );
+				row_val_vec[7]  = "null";     // integrand_id
+				row_val_vec[8]  = "null";     // covariate_id
+				dismod_at::put_table_row(
+					db,
+					table_name,
+					col_name_vec,
+					row_val_vec,
+					variable_id
+				);
+			}
+		}
+	}
+	//
+	// covariate multiplers
+	const CppAD::vector<dismod_at::mulcov_struct>&
+		mulcov_table( db_input.mulcov_table );
+	size_t n_mulcov        = mulcov_table.size();
+	size_t count_rate_mean  = 0;
+	size_t count_meas_value = 0;
+	size_t count_meas_std   = 0;
+	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
+	{	dismod_at::mulcov_type_enum mulcov_type;
+		mulcov_type     = mulcov_table[mulcov_id].mulcov_type;
+		size_t rate_id  = mulcov_table[mulcov_id].rate_id;
+		size_t integrand_id = mulcov_table[mulcov_id].integrand_id;
+		size_t covariate_id = mulcov_table[mulcov_id].covariate_id;
+		size_t smooth_id    = mulcov_table[mulcov_id].smooth_id;
+		//
+		if( mulcov_type == dismod_at::rate_mean_enum ) info =
+		pack_object.mulcov_rate_mean_info(rate_id, count_rate_mean++);
+		//
+		else if( mulcov_type == dismod_at::meas_value_enum ) info =
+		pack_object.mulcov_meas_value_info(integrand_id, count_meas_value++);
+		//
+		else if( mulcov_type == dismod_at::meas_std_enum ) info =
+		pack_object.mulcov_meas_std_info(integrand_id, count_meas_std++);
+		//
+		else assert(false);
+		//
+		offset    = info.offset;
+		assert( smooth_id == info.smooth_id);
+		n_var     = info.n_var;
+		n_age     = s_info_vec[smooth_id].age_size();
+		n_time    = s_info_vec[smooth_id].time_size();
+		assert( n_var == n_age * n_time );
+		for(size_t index = 0; index < n_var; index++)
+		{	size_t age_id   = index % n_age;
+			size_t time_id  = index / n_age;
+			variable_id     = offset + index;
+			//
+		// variable_type
+			if( mulcov_type == dismod_at::rate_mean_enum )
+				row_val_vec[1]  = "mulcov_rate_mean";
+			else if( mulcov_type == dismod_at::meas_value_enum )
+				row_val_vec[1]  = "mulcov_meas_value";
+			else if( mulcov_type == dismod_at::meas_std_enum )
+				row_val_vec[1]  = "mulcov_meas_std";
+			else assert(false);
+			//
+			// variable_value
+			row_val_vec[0]  = to_string( solution[variable_id] );
+			row_val_vec[2]  = "null";     // smooth_id
+			row_val_vec[3]  = to_string( age_id );
+			row_val_vec[4]  = to_string( time_id );
+			row_val_vec[5]  = "null";     // node_id
+			row_val_vec[6]  = "null";     // rate_id
+			row_val_vec[7]  = to_string( integrand_id );
+			row_val_vec[8]  = to_string( covariate_id );
+			dismod_at::put_table_row(
+				db,
+				table_name,
+				col_name_vec,
+				row_val_vec,
+				variable_id
+			);
+		}
 	}
 	return;
 }
@@ -222,8 +360,6 @@ $code dismod_at$$ $cref input$$ tables which are not modified.
 $subhead variable_table$$
 The data base must contain a $cref variable_table$$ that specifies the
 value of the model variables that is used to simulate the data.
-The $cref/variable_name/variable_table/variable_name/$$ column
-is not used.
 It may have been created by a previous $cref fit_command$$.
 
 $subhead simulate_arg_table$$
