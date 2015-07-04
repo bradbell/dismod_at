@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # $begin get_started.py$$ $newlinech #$$
@@ -230,63 +230,58 @@ flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at fit command failed')
 # -----------------------------------------------------------------------
-# read tables
+# connect to database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
-node_dict       = dismod_at.get_table_dict(connection, 'node')
-smooth_dict     = dismod_at.get_table_dict(connection, 'smooth')
-mulcov_dict     = dismod_at.get_table_dict(connection, 'mulcov')
-rate_dict       = dismod_at.get_table_dict(connection, 'rate')
-fit_arg_dict    = dismod_at.get_table_dict(connection, 'fit_arg')
-variable_dict = dismod_at.get_table_dict(connection, 'variable')
 # -----------------------------------------------------------------------
 # check fit_arg table
+fit_arg_dict  = dismod_at.get_table_dict(connection, 'fit_arg')
 for row in fit_arg_dict :
 	fit_arg_name  = row['fit_arg_name']
 	fit_arg_value = row['fit_arg_value']
 	assert fit_list[fit_arg_name] == fit_arg_value
 # -----------------------------------------------------------------------
-# create pack_object
-n_integrand    = len( integrand_list )
-parent_node_id = int( fit_list['parent_node_id'] )
-#
-pack_object = dismod_at.pack_info(
-	n_integrand,
-	parent_node_id,
-	node_dict,
-	smooth_dict,
-	mulcov_dict,
-	rate_dict
-)
-# -----------------------------------------------------------------------
 # check variable table
+variable_dict  = dismod_at.get_table_dict(connection, 'variable')
 #
-n_child   = pack_object.n_child()
-check_tol = 1e-3
-n_rate    = n_integrand
-n_data    = n_integrand
+# mulstd variables
+for smooth_id in range( len(smooth_list) ) :
+	for variable_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
+		count = 0
+		for row in variable_dict :
+			match = row['variable_type'] == variable_type
+			match = match and row['smooth_id'] == smooth_id
+			if match :
+				count += 1
+				assert row['variable_value'] == 1.0
+		assert count == 1
 #
-assert len(variable_dict) == pack_object.size()
-#
-# get variable values
-variable_value = []
-for row in variable_dict :
-	variable_value.append( row['variable_value'] )
-#
-for rate_id in range( n_rate ) :
-	integrand_id = rate_id
-	data_id      = rate_id
-	meas_value   = data_list[ integrand_id ]['meas_value']
-	for child_id in range(n_child + 1) :
-		info   = pack_object.rate_info(rate_id, child_id)
-		offset = info['offset']
-		n_var  = info['n_var']
-		for i in range(n_var) :
-			if child_id == n_child :
-				err = variable_value[offset + i] / meas_value - 1.0
-			else :
-				err = variable_value[offset + i] / meas_value
-			assert abs(err) <= check_tol
+# rate variables
+parent_node_id = 0
+child_node_id  = 1
+check_tol      = 1e-3
+n_rate         = 5;
+for rate_id in range(n_rate) :
+	integrand_id   = rate_id
+	data_id        = rate_id
+	meas_value     = data_list[ integrand_id ]['meas_value']
+	for node_id in [ parent_node_id, child_node_id ] :
+		count = 0
+		for row in variable_dict :
+			match = row['variable_type'] == 'rate'
+			match = match and row['rate_id'] == rate_id
+			match = match and row['node_id'] == node_id
+			if match :
+				count += 1
+				if node_id == 0 :
+					# parent node
+					err = row['variable_value'] / meas_value - 1.0
+				else :
+					# child node
+					err = row['variable_value'] / meas_value
+				assert abs(err) <= check_tol
+		# number of point in smoothing for all rates
+		assert count == 2
 # -----------------------------------------------------------------------
 print('get_started: OK')
 # END PYTHON

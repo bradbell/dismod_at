@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # $begin get_row_list$$ $newlinech #$$
@@ -71,10 +71,12 @@
 def get_row_list(connection, tbl_name, col_name) :
 	import collections
 	#
-	cursor    = connection.cursor()
-	n_col     = len(col_name)
-	columns   = ','.join(col_name)
-	cmd       = 'SELECT ' + columns + ' FROM ' + tbl_name
+	cursor      = connection.cursor()
+	n_col       = len(col_name)
+	columns     = ','.join(col_name)
+	primary_key = tbl_name + '_id'
+	cmd         = 'SELECT ' + columns + ' FROM ' + tbl_name
+	cmd        += ' ORDER BY ' + primary_key
 	row_list  = list()
 	for row in cursor.execute(cmd) :
 		row_tmp = list()
