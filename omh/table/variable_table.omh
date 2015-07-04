@@ -69,8 +69,8 @@ $cref/smoothing standard deviation multiplier
 
 $subhead rate$$
 This variable is rate for the corresponding
-$icode age_id$$ $icode time_id$$,
-$icode node_id$$, and $icode rate_id$$,
+$icode age_id$$, $icode time_id$$,
+$icode node_id$$, and $icode rate_id$$.
 If the $icode node_id$$ is the
 $cref/parent_node_id/fit_command/parent_node_id/$$, it is a
 $cref/fixed effect/model_variable/Fixed Effects, theta/Parent Rates/$$.
@@ -111,43 +111,46 @@ $icode age_id$$, $icode time_id$$,
 $icode integrand_id$$, and $icode covariate_id$$.
 
 $head smooth_id$$
-If $icode%variable_type% == mulstd%$$,
+If $icode variable_type$$ is $code rate$$,
+$code mulstd_value$$, $code mulstd_dage$$ or $code mulstd_dtime$$,
 this is the $cref/smooth_id/smooth_table/smooth_id/$$ for the
 smoothing that this variable multiplies.
 Otherwise, this column is $code null$$.
 
 $head age_id$$
-If $icode%variable_type% != mulstd%$$,
+If $icode variable_type$$ is $code rate$$,
+$code mulcov_rate_mean$$, $code mulcov_meas_value$$ or $code mulcov_meas_std$$,
 this is the $cref/age_id/age_table/age_id/$$ that identifies
 the age for the corresponding variable.
+Otherwise, this column is $code null$$.
 
 $head time_id$$
-If $icode%variable_type% != mulstd%$$,
+If $icode variable_type$$ is $code rate$$,
+$code mulcov_rate_mean$$, $code mulcov_meas_value$$ or $code mulcov_meas_std$$,
 this is the $cref/time_id/time_table/time_id/$$ that identifies
 the time for the corresponding variable.
+Otherwise, this column is $code null$$.
 
 $head node_id$$
-If $icode%variable_type% == rate%$$,
+If $icode variable_type$$ is $code rate$$,
 this is the $cref/node_id/node_table/node_id/$$ that the rate is for.
 Otherwise, this column is $code null$$.
 
 $head rate_id$$
-If $icode%variable_type% == rate%$$ or
-$icode%variable_type% == mulcov_rate_mean%$$,
+If $icode variable_type$$ is $code rate$$ or $code mulcov_rate_mean$$,
 this is the $cref/rate_id/rate_table/rate_id/$$ for the specific rate.
 Otherwise, this column is $code null$$.
 
 $head integrand_id$$
-If $icode%variable_type% == mulcov_meas_value%$$ or
-$icode%variable_type% == mulcov_meas_std%$$,
+If $icode variable_type$$ is
+$code mulcov_meas_value$$ or $code mulcov_meas_std$$,
 this is the $cref/integrand_id/integrand_table/integrand_id/$$
 that this variable applies to.
 Otherwise, this column is $code null$$.
 
 $head covariate_id$$
-If $icode%variable_type% == mulcov_rate_mean%$$,
-$icode%variable_type% == mulcov_meas_value%$$, or
-$icode%variable_type% == mulcov_meas_std%$$,
+If $icode variable_type$$ is
+$code mulcov_rate_mean$$, $code mulcov_meas_value$$ or $code mulcov_meas_std$$,
 this is the $cref/covariate_id/covariate_table/covariate_id/$$
 that this variable applies to.
 Otherwise, this column is $code null$$.
