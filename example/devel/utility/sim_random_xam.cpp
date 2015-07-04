@@ -38,7 +38,7 @@ bool sim_random_xam(void)
 	// initialize random number generator using the clock
 	dismod_at::new_gsl_rng(0);
 	//
-	size_t sample_size = 4000;
+	size_t sample_size = 8000;
 	// -------------------------------------------------------------------
 	// check Gausian
 	dismod_at::density_enum density = dismod_at::gaussian_enum;
