@@ -20,10 +20,8 @@ $spell
 $$
 
 $section The Variable Table$$
-The $code variable$$ table contains the
-maximum likelihood estimate corresponding to the most recent
-$cref fit_command$$.
-It has the following columns:
+The $code variable$$ table contains a value for each of the
+$cref/model variables/model_variable/$$.
 
 $head variable_id$$
 This column has type $code integer$$ and is the primary key for this table.

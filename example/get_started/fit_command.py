@@ -226,7 +226,7 @@ dismod_at.create_database(
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
 command        = 'fit'
-fit_list= {
+arg_list= {
 	'file_name':        file_name,
 	'parent_node_id':   '0',
 	'ode_step_size':    '20.0',
@@ -237,12 +237,12 @@ fit_list= {
 cmd       = [
 	program                     ,
 	command                     ,
-	fit_list['file_name']       ,
-	fit_list['parent_node_id']  ,
-	fit_list['ode_step_size']   ,
-	fit_list['tolerance']       ,
-	fit_list['max_num_iter']    ,
-	fit_list['rate_info']
+	arg_list['file_name']       ,
+	arg_list['parent_node_id']  ,
+	arg_list['ode_step_size']   ,
+	arg_list['tolerance']       ,
+	arg_list['max_num_iter']    ,
+	arg_list['rate_info']
 ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
@@ -258,7 +258,7 @@ fit_arg_dict  = dismod_at.get_table_dict(connection, 'fit_arg')
 for row in fit_arg_dict :
 	fit_arg_name  = row['fit_arg_name']
 	fit_arg_value = row['fit_arg_value']
-	assert fit_list[fit_arg_name] == fit_arg_value
+	assert arg_list[fit_arg_name] == fit_arg_value
 # -----------------------------------------------------------------------
 # check variable table
 variable_dict  = dismod_at.get_table_dict(connection, 'variable')
