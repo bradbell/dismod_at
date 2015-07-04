@@ -143,7 +143,7 @@ This argument has prototype
 $codei%
 	const pack_info& %pack_object%
 %$$
-and is the $cref devel_pack_info$$ information corresponding to
+and is the $cref pack_info$$ information corresponding to
 the $cref/model_variables/model_variable/$$.
 
 $head child_object$$
@@ -566,7 +566,7 @@ The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
 $cref/sample_id/data_subset/data_sample/sample_id/$$
 must be one of those listed in the table below.
 In addition, depending on the integrand, only the corresponding
-$cref devel_pack_info_rate$$ and $cref devel_pack_info_mulcov_rate$$ subvectors of
+$cref pack_info_rate$$ and $cref pack_info_mulcov_rate$$ subvectors of
 $icode pack_vec$$ are used:
 $table
 Integrand               $cnext Rates               $rnext
@@ -584,7 +584,7 @@ $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
 and is all the $cref/model variables/model_variable/$$ in the order
-specified by $cref devel_pack_info$$.
+specified by $cref pack_info$$.
 
 $head avg$$
 The return value has prototype
@@ -828,10 +828,10 @@ $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
 and is all the $cref/model variables/model_variable/$$ in the order
-specified by $cref devel_pack_info$$.
+specified by $cref pack_info$$.
 Only the following subvectors of $icode pack_vec$$ are used:
-$cref devel_pack_info_rate$$,
-$cref devel_pack_info_mulcov_rate$$.
+$cref pack_info_rate$$,
+$cref pack_info_mulcov_rate$$.
 
 $head avg$$
 The return value has prototype
@@ -1146,9 +1146,9 @@ $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
 and is all the $cref/model variables/model_variable/$$ in the order
-specified by $cref devel_pack_info$$; i.e.,
+specified by $cref pack_info$$; i.e.,
 $latex (u , \theta)$$.
-Only the $cref devel_pack_info_mulcov_meas$$ subvectors of $icode pack_vec$$ are used
+Only the $cref pack_info_mulcov_meas$$ subvectors of $icode pack_vec$$ are used
 by $code like_one$$ (note that other components of $latex (u, \theta )$$
 are used to compute $icode avg$$ documented below).
 
@@ -1326,7 +1326,7 @@ $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
 and is all the $cref/model variables/model_variable/$$ in the order
-specified by $cref devel_pack_info$$; i.e.,
+specified by $cref pack_info$$; i.e.,
 $latex (u , \theta)$$.
 
 $head residual_vec$$

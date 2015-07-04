@@ -10,7 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 
 /*
-$begin devel_pack_info_ctor$$
+$begin pack_info_ctor$$
 $spell
 	Devel
 	mulcov
@@ -46,7 +46,7 @@ $codei%
 %$$
 and is the number of integrands; i.e., the size of
 $cref/integrand_table/get_integrand_table/integrand_table/$$.
-If $cref/mulcov_table/devel_pack_info_ctor/mulcov_table/$$ has size zero,
+If $cref/mulcov_table/pack_info_ctor/mulcov_table/$$ has size zero,
 then $icode n_integrand$$ can be zero (a case used for testing purposes).
 
 $head n_child$$
@@ -137,7 +137,7 @@ is the index in the packed vector of the corresponding age-time point.
 
 
 $head Example$$
-See $cref/pack_info Example/devel_pack_info/Example/$$.
+See $cref/pack_info Example/pack_info/Example/$$.
 
 $end
 */
@@ -302,7 +302,7 @@ size_t pack_info::smooth_size(void) const
 
 /*
 ------------------------------------------------------------------------------
-$begin devel_pack_info_mulstd$$
+$begin pack_info_mulstd$$
 $spell
 	Devel
 	var
@@ -345,7 +345,7 @@ value, dage, and dtime standard deviation multipliers
 (and should always be used in that order).
 
 $head Example$$
-See $cref/pack_info Example/devel_pack_info/Example/$$.
+See $cref/pack_info Example/pack_info/Example/$$.
 
 $end
 
@@ -356,7 +356,7 @@ size_t pack_info::mulstd_offset(size_t smooth_id) const
 }
 /*
 ------------------------------------------------------------------------------
-$begin devel_pack_info_rate$$
+$begin pack_info_rate$$
 $spell
 	Devel
 	std
@@ -433,7 +433,7 @@ this is the rate vector for the
 $cref/parent_node/fit_command/parent_node_id/$$.
 
 $head Example$$
-See $cref/pack_info Example/devel_pack_info/Example/$$.
+See $cref/pack_info Example/pack_info/Example/$$.
 
 $end
 */
@@ -444,7 +444,7 @@ pack_info::subvec_info pack_info::rate_info(size_t rate_id, size_t j) const
 
 /*
 ------------------------------------------------------------------------------
-$begin devel_pack_info_mulcov_meas$$
+$begin pack_info_mulcov_meas$$
 $spell
 	Devel
 	std
@@ -544,7 +544,7 @@ is the offset in the packed variable vector where the
 $icode n_var$$ variables begin (for this covariate multiplier).
 
 $head Example$$
-See $cref/pack_info Example/devel_pack_info/Example/$$.
+See $cref/pack_info Example/pack_info/Example/$$.
 
 $end
 */
@@ -572,7 +572,7 @@ pack_info::mulcov_meas_std_info(size_t integrand_id, size_t j) const
 
 /*
 ------------------------------------------------------------------------------
-$begin devel_pack_info_mulcov_rate$$
+$begin pack_info_mulcov_rate$$
 $spell
 	Devel
 	std
@@ -655,7 +655,7 @@ is the offset in the packed variable vector where the
 $icode n_var$$ variables begin (for this covariate multiplier).
 
 $head Example$$
-See $cref/pack_info Example/devel_pack_info/Example/$$.
+See $cref/pack_info Example/pack_info/Example/$$.
 
 $end
 */
@@ -671,7 +671,7 @@ pack_info::mulcov_rate_mean_info(size_t rate_id, size_t j) const
 	return mulcov_rate_mean_info_[rate_id][j];
 }
 /*
-$begin devel_pack_info_variable_name$$
+$begin pack_info_variable_name$$
 $spell
 	vec
 	const
