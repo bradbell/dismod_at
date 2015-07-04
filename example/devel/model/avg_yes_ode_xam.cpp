@@ -188,7 +188,7 @@ bool avg_yes_ode_xam(void)
 		data_table
 	);
 	// data_subset
-	vector<dismod_at::data_subset_struct> data_sample = data_subset(
+	vector<dismod_at::data_subset_struct> subset_object = data_subset(
 		data_table,
 		covariate_table,
 		child_object
@@ -204,7 +204,7 @@ bool avg_yes_ode_xam(void)
 		time_table,
 		integrand_table,
 		node_table,
-		data_sample,
+		subset_object,
 		w_info_vec,
 		s_info_vec,
 		pack_object,
@@ -238,7 +238,7 @@ bool avg_yes_ode_xam(void)
 	int_b^c P(a) / (c - b) = [ a  + exp( -beta a ) / beta ]_b^c / (c - b)
 	*/
 	using CppAD::exp;
-	ok            &= data_table.size() == data_sample.size();
+	ok            &= data_table.size() == subset_object.size();
 	data_id = 0;
 	Float avg      = data_object.avg_yes_ode(data_id, pack_vec);
 	double b       = data_table[data_id].age_lower;

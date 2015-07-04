@@ -105,13 +105,13 @@ $codei%
 and is the $cref/node_table/get_node_table/node_table/$$.
 Only the $code parent$$ field of this table is used.
 
-$head data_sample$$
+$head subset_object$$
 This argument has prototype
 $codei%
-	const CppAD::vector<data_subset_struct>&  %data_sample%
+	const CppAD::vector<data_subset_struct>&  %subset_object%
 %$$
 and is the sub-sampled version of the data table; see
-$cref/data_sample/data_subset/data_sample/$$.
+$cref/subset_object/data_subset/subset_object/$$.
 
 $head w_info_vec$$
 This argument has prototype
@@ -188,7 +188,7 @@ data_model::data_model(
 	const CppAD::vector<double>&             time_table      ,
 	const CppAD::vector<integrand_struct>&   integrand_table ,
 	const CppAD::vector<node_struct>&        node_table      ,
-	const CppAD::vector<data_subset_struct>& data_sample     ,
+	const CppAD::vector<data_subset_struct>& subset_object   ,
 	const CppAD::vector<weight_info>&        w_info_vec      ,
 	const CppAD::vector<smooth_info>&        s_info_vec      ,
 	const pack_info&                         pack_object     ,
@@ -197,7 +197,7 @@ data_model::data_model(
 n_age_ode_     (n_age_ode)        ,
 n_time_ode_    (n_time_ode)       ,
 ode_step_size_ (ode_step_size)    ,
-data_sample_   (data_sample)      ,
+subset_object_   (subset_object)      ,
 pack_object_   (pack_object)
 {	using std::string;
 	size_t i, j, k;
@@ -224,8 +224,8 @@ pack_object_   (pack_object)
 		);
 	}
 	//
-	// data_ode_info_ has same size as data_sample
-	size_t n_sample = data_sample.size();
+	// data_ode_info_ has same size as subset_object
+	size_t n_sample = subset_object.size();
 	data_info_.resize( n_sample );
 	//
 	// limits of the ode grid
@@ -237,17 +237,17 @@ pack_object_   (pack_object)
 	assert( age_max  <= age_min  + n_age_ode * ode_step_size );
 	assert( time_max <= time_min + n_time_ode * ode_step_size );
 	//
-	for(size_t sample_id = 0; sample_id < n_sample; sample_id++)
+	for(size_t subset_id = 0; subset_id < n_sample; subset_id++)
 	{	// information for this data point
-		size_t data_id = data_sample[sample_id].data_id;
+		size_t data_id = subset_object[subset_id].data_id;
 
 		// age limits
-		double age_lower  = data_sample[sample_id].age_lower;
+		double age_lower  = subset_object[subset_id].age_lower;
 		if( age_lower < age_min )
 		{	string msg = "age_lower is less than minimum age in age table";
 			table_error_exit("data", data_id, msg);
 		}
-		double age_upper  = data_sample[sample_id].age_upper;
+		double age_upper  = subset_object[subset_id].age_upper;
 		if( age_upper < age_lower )
 		{	string msg = "age_upper is less than age_lower";
 			table_error_exit("data", data_id, msg);
@@ -258,12 +258,12 @@ pack_object_   (pack_object)
 		}
 
 		// time limits
-		double time_lower  = data_sample[sample_id].time_lower;
+		double time_lower  = subset_object[subset_id].time_lower;
 		if( time_lower < time_min )
 		{	string msg = "time_lower is less than minimum time in time table";
 			table_error_exit("data", data_id, msg);
 		}
-		double time_upper  = data_sample[sample_id].time_upper;
+		double time_upper  = subset_object[subset_id].time_upper;
 		if( time_upper < time_lower )
 		{	string msg = "time_upper is less than time_lower";
 			table_error_exit("data", data_id, msg);
@@ -304,7 +304,7 @@ pack_object_   (pack_object)
 			c_sum[k] = 0.0;
 
 		// weighting for this data point
-		size_t weight_id = data_sample[sample_id].weight_id;
+		size_t weight_id = subset_object[subset_id].weight_id;
 		const weight_info& w_info( w_info_vec[weight_id] );
 
 		// indices used to interpolate weighting
@@ -445,7 +445,7 @@ pack_object_   (pack_object)
 		assert( sum > 0.0 );
 
 		// integrand and eta
-		size_t  integrand_id     = data_sample[sample_id].integrand_id;
+		size_t  integrand_id     = subset_object[subset_id].integrand_id;
 		integrand_enum integrand = integrand_table[integrand_id].integrand;
 		double eta               = integrand_table[integrand_id].eta;
 
@@ -453,22 +453,22 @@ pack_object_   (pack_object)
 		size_t  child            = child_object.data_id2child(data_id);
 
 		// density for this data point
-		size_t density_id    = data_sample[sample_id].density_id;
+		size_t density_id    = subset_object[subset_id].density_id;
 		density_enum density = density_enum(density_id);
 
 		// set the information for this data point
-		data_info_[sample_id].integrand = integrand;
-		data_info_[sample_id].density   = density;
-		data_info_[sample_id].child     = child;
-		data_info_[sample_id].i_min     = i_min;
-		data_info_[sample_id].j_min     = j_min;
-		data_info_[sample_id].n_age     = n_age;
-		data_info_[sample_id].n_time    = n_time;
-		data_info_[sample_id].eta       = eta;
+		data_info_[subset_id].integrand = integrand;
+		data_info_[subset_id].density   = density;
+		data_info_[subset_id].child     = child;
+		data_info_[subset_id].i_min     = i_min;
+		data_info_[subset_id].j_min     = j_min;
+		data_info_[subset_id].n_age     = n_age;
+		data_info_[subset_id].n_time    = n_time;
+		data_info_[subset_id].eta       = eta;
 		//
-		data_info_[sample_id].c_ode.resize(n_age * n_time);
+		data_info_[subset_id].c_ode.resize(n_age * n_time);
 		for(k = 0; k < n_age * n_time; k++)
-			data_info_[sample_id].c_ode[k] = c_sum[k] / sum;
+			data_info_[subset_id].c_ode[k] = c_sum[k] / sum;
 	}
 }
 /*
@@ -539,7 +539,7 @@ $$
 $section One Average Integrand That Doesn't Require the ODE$$
 
 $head Syntax$$
-$icode%avg% = %data_object%.avg_no_ode(%sample_id%, %pack_vec%)%$$
+$icode%avg% = %data_object%.avg_no_ode(%subset_id%, %pack_vec%)%$$
 
 $head data_object$$
 This object has prototype
@@ -553,17 +553,17 @@ $head Float$$
 The type $icode Float$$ must be one of the following:
 $code double$$, $code AD<double>$$, or $cref a5_double$$.
 
-$head sample_id$$
+$head subset_id$$
 This argument has prototype
 $codei%
-	size_t %sample_id%
+	size_t %subset_id%
 %$$
-and is the $cref/sample_id/data_subset/data_sample/sample_id/$$
+and is the $cref/subset_id/data_subset/subset_object/subset_id/$$
 we are computing the average integrand for.
 
 $subhead Integrand and Rates$$
 The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
-$cref/sample_id/data_subset/data_sample/sample_id/$$
+$cref/subset_id/data_subset/subset_object/subset_id/$$
 must be one of those listed in the table below.
 In addition, depending on the integrand, only the corresponding
 $cref pack_info_rate$$ and $cref pack_info_mulcov_rate$$ subvectors of
@@ -605,22 +605,22 @@ $end
 */
 template <class Float>
 Float data_model::avg_no_ode(
-	size_t                        sample_id ,
+	size_t                        subset_id ,
 	const CppAD::vector<Float>&   pack_vec  ) const
 {	size_t i, j, k, ell;
 	assert( pack_object_.size() == pack_vec.size() );
 
 	// data table infomation for this data point
-	const CppAD::vector<double>& x = data_sample_[ sample_id ].x;
+	const CppAD::vector<double>& x = subset_object_[ subset_id ].x;
 
 	// data_info information for this data point
-	integrand_enum integrand           = data_info_[sample_id].integrand;
-	size_t i_min                       = data_info_[sample_id].i_min;
-	size_t j_min                       = data_info_[sample_id].j_min;
-	size_t n_age                       = data_info_[sample_id].n_age;
-	size_t n_time                      = data_info_[sample_id].n_time;
-	size_t child                       = data_info_[sample_id].child;
-	const CppAD::vector<double>& c_ode = data_info_[sample_id].c_ode;
+	integrand_enum integrand           = data_info_[subset_id].integrand;
+	size_t i_min                       = data_info_[subset_id].i_min;
+	size_t j_min                       = data_info_[subset_id].j_min;
+	size_t n_age                       = data_info_[subset_id].n_age;
+	size_t n_time                      = data_info_[subset_id].n_time;
+	size_t child                       = data_info_[subset_id].child;
+	const CppAD::vector<double>& c_ode = data_info_[subset_id].c_ode;
 
 	// check that this data's node is a descendent of the parent node
 	assert( child <= n_child_ );
@@ -790,7 +790,7 @@ $$
 $section One Average Integrand That Requires the ODE$$
 
 $head Syntax$$
-$icode%avg% = %data_object%.avg_yes_ode(%sample_id%, %pack_vec%)%$$
+$icode%avg% = %data_object%.avg_yes_ode(%subset_id%, %pack_vec%)%$$
 
 
 $head data_object$$
@@ -804,17 +804,17 @@ $head Float$$
 The type $icode Float$$ must be one of the following:
 $code double$$, $code AD<double>$$, or $cref a5_double$$.
 
-$head sample_id$$
+$head subset_id$$
 This argument has prototype
 $codei%
-	size_t %sample_id%
+	size_t %subset_id%
 %$$
-and is the $cref/sample_id/data_subset/data_sample/sample_id/$$
+and is the $cref/subset_id/data_subset/subset_object/subset_id/$$
 we are computing the average integrand for.
 
 $subhead Integrand$$
 The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
-$cref/sample_id/data_subset/data_sample/sample_id/$$
+$cref/subset_id/data_subset/subset_object/subset_id/$$
 must be one of the following:
 $code prevalence_enum$$,
 $code Tincidence_enum$$,
@@ -853,11 +853,11 @@ $end
 
 template <class Float>
 Float data_model::avg_yes_ode(
-	size_t                        sample_id ,
+	size_t                        subset_id ,
 	const CppAD::vector<Float>&   pack_vec  ) const
 {
 # ifndef NDEBUG
-	switch( data_info_[sample_id].integrand )
+	switch( data_info_[subset_id].integrand )
 	{
 		case Sincidence_enum:
 		case remission_enum:
@@ -876,16 +876,16 @@ Float data_model::avg_yes_ode(
 	assert( pack_object_.size() == pack_vec.size() );
 
 	// data table information for this data pont
-	const CppAD::vector<double>& x     = data_sample_[sample_id].x;
+	const CppAD::vector<double>& x     = subset_object_[subset_id].x;
 
 	// data_info infomation for this data point
-	integrand_enum integrand           = data_info_[sample_id].integrand;
-	size_t i_min                       = data_info_[sample_id].i_min;
-	size_t j_min                       = data_info_[sample_id].j_min;
-	size_t n_age_sub                   = data_info_[sample_id].n_age;
-	size_t n_time_sub                  = data_info_[sample_id].n_time;
-	size_t child                       = data_info_[sample_id].child;
-	const CppAD::vector<double>& c_ode = data_info_[sample_id].c_ode;
+	integrand_enum integrand           = data_info_[subset_id].integrand;
+	size_t i_min                       = data_info_[subset_id].i_min;
+	size_t j_min                       = data_info_[subset_id].j_min;
+	size_t n_age_sub                   = data_info_[subset_id].n_age;
+	size_t n_time_sub                  = data_info_[subset_id].n_time;
+	size_t child                       = data_info_[subset_id].child;
+	const CppAD::vector<double>& c_ode = data_info_[subset_id].c_ode;
 
 	// check that this data's node is a descendent of the parent node
 	assert( child <= n_child_ );
@@ -1106,12 +1106,12 @@ $$
 $section One Weighted Residual and Log-Likelihood for any Integrands$$
 
 $head Syntax$$
-$icode%residual% = %data_object%.like_one(%sample_id%, %pack_vec%, %avg%)%$$
+$icode%residual% = %data_object%.like_one(%subset_id%, %pack_vec%, %avg%)%$$
 
 $head Log-likelihood$$
 We use $cref/y_i/data_like/Data Table Notation/y_i/$$ to denote the
 $cref/meas_value/data_table/meas_value/$$ corresponding
-to this $cref/sample_id/data_subset/data_sample/sample_id/$$.
+to this $cref/subset_id/data_subset/subset_object/subset_id/$$.
 The log-likelihood computed by $code like_one$$ is the mapping
 $latex \[
 	\ell (u, \theta) = C + \log [ \B{p} ( y_i | u , \theta ) ]
@@ -1132,12 +1132,12 @@ $head Float$$
 The type $icode Float$$ must be one of the following:
 $code double$$, $code AD<double>$$, or $cref a5_double$$.
 
-$head sample_id$$
+$head subset_id$$
 This argument has prototype
 $codei%
-	size_t %sample_id%
+	size_t %subset_id%
 %$$
-and is the $cref/sample_id/data_subset/data_sample/sample_id/$$
+and is the $cref/subset_id/data_subset/subset_object/subset_id/$$
 we are computing the weighted residual and log-likelihood for.
 
 $head pack_vec$$
@@ -1162,7 +1162,7 @@ $cref/average integrand/avg_integrand/Average Integrand, A_i/$$,
 $latex A_i ( u , \theta )$$, for the specified data point.
 This can be calculated using:
 $table
-routine                   $cnext integrand for this $icode sample_id$$
+routine                   $cnext integrand for this $icode subset_id$$
 $rnext
 $cref data_model_avg_no_ode$$ $cnext
 	Sincidence, remission, mtexcess, mtother, mtwith, relrisk
@@ -1190,27 +1190,27 @@ $end
 */
 template <class Float>
 residual_struct<Float> data_model::like_one(
-	size_t                        sample_id ,
+	size_t                        subset_id ,
 	const CppAD::vector<Float>&   pack_vec  ,
 	const Float&                  avg       ) const
 {	size_t i, j, k;
 	assert( pack_object_.size() == pack_vec.size() );
 
 	// data table infomation for this data point
-	const CppAD::vector<double>& x = data_sample_[sample_id].x;
-	double sigma                   = data_sample_[sample_id].meas_std;
-	size_t integrand_id            = data_sample_[sample_id].integrand_id;
-	double meas_value              = data_sample_[sample_id].meas_value;
+	const CppAD::vector<double>& x = subset_object_[subset_id].x;
+	double sigma                   = subset_object_[subset_id].meas_std;
+	size_t integrand_id            = subset_object_[subset_id].integrand_id;
+	double meas_value              = subset_object_[subset_id].meas_value;
 	assert( sigma > 0.0 );
 
 	// data_info information for this data point
-	density_enum   density             = data_info_[sample_id].density;
-	double eta                         = data_info_[sample_id].eta;
-	size_t i_min                       = data_info_[sample_id].i_min;
-	size_t j_min                       = data_info_[sample_id].j_min;
-	size_t n_age                       = data_info_[sample_id].n_age;
-	size_t n_time                      = data_info_[sample_id].n_time;
-	const CppAD::vector<double>& c_ode = data_info_[sample_id].c_ode;
+	density_enum   density             = data_info_[subset_id].density;
+	double eta                         = data_info_[subset_id].eta;
+	size_t i_min                       = data_info_[subset_id].i_min;
+	size_t j_min                       = data_info_[subset_id].j_min;
+	size_t n_age                       = data_info_[subset_id].n_age;
+	size_t n_time                      = data_info_[subset_id].n_time;
+	const CppAD::vector<double>& c_ode = data_info_[subset_id].c_ode;
 
 	// ode subgrid that we covariates at
 	size_t n_ode = n_age * n_time;
@@ -1305,7 +1305,7 @@ see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $subhead i$$
 We use $icode i$$ to denote the
-$cref/sample_id/data_subset/data_sample/sample_id/$$
+$cref/subset_id/data_subset/subset_object/subset_id/$$
 for a row in the data table.
 
 $subhead y_i$$
@@ -1335,7 +1335,7 @@ $codei%
 	CppAD::vector< residual_struct<%Float%> > %residual_vec%
 %$$
 The size of $icode residual$$ is equal the number of samples
-$cref/n_sample/data_subset/data_sample/n_sample/$$.
+$cref/n_sample/data_subset/subset_object/n_sample/$$.
 The order of the residuals is unspecified (at this time).
 The log of the density
 $latex \B{p}( y | u , \theta )$$,
@@ -1351,10 +1351,10 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 {	CppAD::vector< residual_struct<Float> > residual_vec;
 
 	// loop over the subsampled data
-	for(size_t sample_id = 0; sample_id < data_sample_.size(); sample_id++)
+	for(size_t subset_id = 0; subset_id < subset_object_.size(); subset_id++)
 	{	// compute avgerage of integrand for this data
 		Float avg;
-		integrand_enum integrand  = data_info_[sample_id].integrand;
+		integrand_enum integrand  = data_info_[subset_id].integrand;
 		switch( integrand )
 		{	case Sincidence_enum:
 			case remission_enum:
@@ -1362,7 +1362,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 			case mtother_enum:
 			case mtwith_enum:
 			case relrisk_enum:
-			avg = avg_no_ode(sample_id, pack_vec);
+			avg = avg_no_ode(subset_id, pack_vec);
 			break;
 
 			case prevalence_enum:
@@ -1370,14 +1370,14 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 			case mtspecific_enum:
 			case mtall_enum:
 			case mtstandard_enum:
-			avg = avg_yes_ode(sample_id, pack_vec);
+			avg = avg_yes_ode(subset_id, pack_vec);
 			break;
 
 			default:
 			assert(false);
 		}
 		// compute its residual and log likelihood
-		residual_struct<Float> residual = like_one(sample_id, pack_vec, avg);
+		residual_struct<Float> residual = like_one(subset_id, pack_vec, avg);
 		residual_vec.push_back( residual );
 	}
 	return residual_vec;
@@ -1386,16 +1386,16 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \
 	template Float data_model::avg_no_ode(                  \
-		size_t                        sample_id,            \
+		size_t                        subset_id,            \
 		const CppAD::vector<Float>&   pack_vec              \
 	) const;                                                \
 	template Float data_model::avg_yes_ode(                 \
-		size_t                        sample_id,            \
+		size_t                        subset_id,            \
 		const CppAD::vector<Float>&   pack_vec              \
 	) const;                                                \
 	template residual_struct<Float>                         \
 	data_model::like_one(                                   \
-		size_t                        sample_id,            \
+		size_t                        subset_id,            \
 		const CppAD::vector<Float>&   pack_vec ,            \
 		const Float&                  avg                   \
 	) const;                                                \

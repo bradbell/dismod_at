@@ -411,7 +411,7 @@ $end
 void simulate_command
 (	sqlite3*                                            db              ,
 	const CppAD::vector<dismod_at::integrand_struct>&   integrand_table ,
-	const CppAD::vector<dismod_at::data_subset_struct>& data_sample     ,
+	const CppAD::vector<dismod_at::data_subset_struct>& subset_object   ,
 	const dismod_at::data_model&                        data_object     ,
 	const size_t&                                       actual_seed
 )
@@ -438,9 +438,9 @@ void simulate_command
 	col_name_vec[0]   = "data_id";
 	col_name_vec[1]   = "meas_value";
 	//
-	size_t n_sample = data_sample.size();
-	for(size_t sample_id = 0; sample_id < n_sample; sample_id++)
-	{	size_t integrand_id =  data_sample[sample_id].integrand_id;
+	size_t n_sample = subset_object.size();
+	for(size_t subset_id = 0; subset_id < n_sample; subset_id++)
+	{	size_t integrand_id =  subset_object[subset_id].integrand_id;
 		dismod_at::integrand_enum integrand =
 			integrand_table[integrand_id].integrand;
 		double avg;
@@ -451,7 +451,7 @@ void simulate_command
 			case dismod_at::mtother_enum:
 			case dismod_at::mtwith_enum:
 			case dismod_at::relrisk_enum:
-			avg = data_object.avg_no_ode(sample_id, pack_vec);
+			avg = data_object.avg_no_ode(subset_id, pack_vec);
 			break;
 
 			case dismod_at::prevalence_enum:
@@ -459,7 +459,7 @@ void simulate_command
 			case dismod_at::mtspecific_enum:
 			case dismod_at::mtall_enum:
 			case dismod_at::mtstandard_enum:
-			avg = data_object.avg_yes_ode(sample_id, pack_vec);
+			avg = data_object.avg_yes_ode(subset_id, pack_vec);
 			break;
 
 			default:
@@ -468,11 +468,11 @@ void simulate_command
 # if 0
 		// need to simulate random noise with proper density
 		dismod_at::density_enum density = dismod_at::density_enum(
-			data_sample[sample_id].density_id
+			subset_object[subset_id].density_id
 		);
-		double meas_std = data_sample[sample_id].meas_std;
+		double meas_std = subset_object[subset_id].meas_std;
 # endif
-		row_val_vec[0] = to_string( data_sample[sample_id].data_id );
+		row_val_vec[0] = to_string( subset_object[subset_id].data_id );
 		row_val_vec[1] = to_string(avg);
 # ifdef NDEBUG
 		dismod_at::put_table_row(table_name, col_name_vec, row_val_vec);
@@ -480,7 +480,7 @@ void simulate_command
 		size_t simulate_id = dismod_at::put_table_row(
 			db, table_name, col_name_vec, row_val_vec
 		);
-		assert( simulate_id == sample_id );
+		assert( simulate_id == subset_id );
 # endif
 	}
 
@@ -628,8 +628,8 @@ int main(int n_arg, const char** argv)
 	size_t n_weight    = db_input.weight_table.size();
 	size_t n_smooth    = db_input.smooth_table.size();
 	// ---------------------------------------------------------------------
-	// data_sample
-	vector<dismod_at::data_subset_struct> data_sample = data_subset(
+	// subset_object
+	vector<dismod_at::data_subset_struct> subset_object = data_subset(
 		db_input.data_table,
 		db_input.covariate_table,
 		child_object
@@ -682,7 +682,7 @@ int main(int n_arg, const char** argv)
 		db_input.time_table      ,
 		db_input.integrand_table ,
 		db_input.node_table      ,
-		data_sample              ,
+		subset_object            ,
 		w_info_vec               ,
 		s_info_vec               ,
 		pack_object              ,
@@ -716,7 +716,7 @@ int main(int n_arg, const char** argv)
 	{	simulate_command(
 			db                       ,
 			db_input.integrand_table ,
-			data_sample              ,
+			subset_object            ,
 			data_object              ,
 			actual_seed
 		);
