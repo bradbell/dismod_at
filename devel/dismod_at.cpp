@@ -130,8 +130,10 @@ maximum number of iterations $code max_iter$$.
 
 $include devel/rate_info.omh$$
 
+$children%example/get_started/fit_command.py%$$
 $head Example$$
-See the $cref get_started.py$$ example and test.
+The file $cref fit_command.py$$ contains an example and test
+of using this command.
 
 $end
 */

@@ -35,6 +35,6 @@ This column has type $code text$$ and is
 the value for the corresponding argument to the fit command.
 
 $head Example$$
-See the $cref get_started.py$$ example and test.
+See the $cref fit_command.py$$ example and test.
 
 $end

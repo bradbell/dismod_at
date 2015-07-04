@@ -192,12 +192,10 @@ $codei%
 %$$
 
 
-$children%example/get_started/get_started.py.in
-%$$
+$children%example/get_started/get_started.omh%$$
 $head Example$$
-The file $cref get_started.py$$ contains an example and test
-of $code dismod_at$$. This is run as part of the $code make check$$
+The section $cref get_started$$ contains a list of examples and tests
+of $code dismod_at$$. These tests are run as part of the $code make check$$
 command above.
-
 
 $end

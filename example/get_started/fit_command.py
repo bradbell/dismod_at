@@ -8,26 +8,45 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin get_started.py$$ $newlinech #$$
+# $begin fit_command.py$$ $newlinech #$$
 # $spell
 #	dismod
 # $$
 #
-# $section Getting Started Using dismod_at$$
+# $section dismod_at fit: Example and Test$$
 #
 # $code
 # $verbatim%
-#	example/get_started/get_started.py.in
+#	example/get_started/fit_command.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys
-sys.path.append('@CMAKE_SOURCE_DIR@/python')
-import dismod_at
+import os
 import copy
 import subprocess
+import distutils.dir_util
+# ---------------------------------------------------------------------------
+# check execution is from distribution directory
+example = 'example/get_started/fit_command.py'
+print(sys.argv)
+if sys.argv[0] != example  or len(sys.argv) != 1 :
+	usage  = 'python3 ' + example + '\n'
+	usage += 'where python3 is the python 3 program on your system\n'
+	usage += 'and working directory is the dismod_at distribution directory\n'
+	sys.exit(usage)
+#
+# add python subdirectoy to python path
+sys.path.append( os.getcwd() + '/python' )
+#
+# import dismod_at routine
+import dismod_at
+#
+# change into the build/example/get_started directory
+distutils.dir_util.mkpath('build/exmaple/get_started')
+os.chdir('build/exmaple/get_started')
 # ---------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
@@ -205,7 +224,7 @@ dismod_at.create_database(
 	mulcov_list
 )
 # -----------------------------------------------------------------------
-program        = '@CMAKE_BINARY_DIR@/devel/dismod_at'
+program        = '../../devel/dismod_at'
 command        = 'fit'
 fit_list= {
 	'file_name':        file_name,
@@ -283,5 +302,5 @@ for rate_id in range(n_rate) :
 		# number of point in smoothing for all rates
 		assert count == 2
 # -----------------------------------------------------------------------
-print('get_started: OK')
+print('fit_command: OK')
 # END PYTHON

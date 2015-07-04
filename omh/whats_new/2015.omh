@@ -23,6 +23,7 @@ $spell
 	covariate
 	std
 	cov
+	py
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
@@ -32,8 +33,11 @@ $list number$$
 Remove the python $code pack_info$$ class
 (no longer necessary now that $cref variable_table$$ has more information).
 $lnext
-Modify the $cref get_started.py$$ example so that it demonstrates
-how to use the new $cref variable_table$$ information.
+Move the $code get_started.py$$ example to $cref fit_command.py$$.
+$lnext
+Modify the $cref fit_command.py$$ example so that it demonstrates
+how to use the new $cref variable_table$$ information
+and so that it can be run as is (without configuration).
 $lend
 
 $head 07-03$$

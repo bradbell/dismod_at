@@ -156,6 +156,6 @@ that this variable applies to.
 Otherwise, this column is $code null$$.
 
 $head Example$$
-See the $cref get_started.py$$ example and test.
+See the $cref fit_command.py$$ example and test.
 
 $end
