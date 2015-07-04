@@ -26,6 +26,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/to_string.hpp>
 # include <dismod_at/manage_gsl_rng.hpp>
 # include <dismod_at/pack_info.hpp>
+# include <dismod_at/sim_random.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 
@@ -465,15 +466,17 @@ void simulate_command
 			default:
 			assert(false);
 		}
-# if 0
 		// need to simulate random noise with proper density
 		dismod_at::density_enum density = dismod_at::density_enum(
 			subset_object[subset_id].density_id
 		);
-		double meas_std = subset_object[subset_id].meas_std;
-# endif
+		double meas_std     = subset_object[subset_id].meas_std;
+		double eta          = integrand_table[integrand_id].eta;
+		double meas_value   = dismod_at::sim_random(
+			density, avg, meas_std, eta
+		);
 		row_val_vec[0] = to_string( subset_object[subset_id].data_id );
-		row_val_vec[1] = to_string(avg);
+		row_val_vec[1] = to_string(meas_value);
 # ifdef NDEBUG
 		dismod_at::put_table_row(table_name, col_name_vec, row_val_vec);
 # else
