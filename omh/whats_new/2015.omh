@@ -42,7 +42,10 @@ $codei%
 	%cov_type%_mulcov_n_cov -> mulcov_%cov_type%_n_cov
 	%cov_type%_mulcov_info -> mulcov_%cov_type%_info
 %$$
-see $cref pack_info_mulcov_meas$$ and $cref pack_info_mulcov_rate$$.
+see
+$cref/mulcov_rate_mean/variable_table/variable_type/mulcov_rate_mean/$$,
+$cref/mulcov_meas_value/variable_table/variable_type/mulcov_meas_value/$$ and
+$cref/mulcov_meas_std/variable_table/variable_type/mulcov_meas_std/$$.
 $lend
 
 
@@ -145,10 +148,9 @@ $lend
 $head 06-25$$
 $list number$$
 Change $code variable_name$$
-for the
-$cref/meas_mulcov/pack_info_mulcov_meas/$$ and
-$cref/rate_mulcov/pack_info_mulcov_rate/$$ variables
+for measurement covariate and rate covariate multipliers
 from empty string to a descriptive name.
+(This column of the variable table was later removed.)
 $lnext
 The C++11 $code nullptr$$ feature was not being suppressed
 when using a compiler that does not support this feature.
@@ -177,9 +179,9 @@ Also close the connection at the end of each of the python sqlite examples;
 e.g., at the end of $cref age_table.py$$.
 $lnext
 Change $code variable_name$$
-for the $cref/mulstd/pack_info_mulstd/$$ variables
-for the $cref/rate/pack_info_rate/$$ variables
+for the smoothing standard deviation multipliers
 from empty string to a descriptive name.
+(This column of the variable table was later removed.)
 $lend
 
 $head 06-23$$

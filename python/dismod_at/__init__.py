@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
 # $begin python$$ $newlinech #$$
@@ -19,7 +19,6 @@
 #	%python/dismod_at/get_table_dict.py
 #	%python/dismod_at/unicode_tuple.py
 #	%python/dismod_at/create_database.py
-#	%python/dismod_at/pack_info.omh
 # %$$
 #
 # $end
@@ -31,4 +30,3 @@ from .get_row_list      import get_row_list
 from .get_table_dict    import get_table_dict
 from .unicode_tuple     import unicode_tuple
 from .create_database   import create_database
-from .pack_info         import pack_info
