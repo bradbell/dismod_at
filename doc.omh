@@ -35,6 +35,9 @@ $head Wish List$$
 $list number$$
 Add computation of a weighted residuals table to the $cref fit_command$$.
 $lnext
+Add a foreign key constraint for all the
+$cref/foreign keys/input/Foreign Key/$$.
+$lnext
 If the $cref variable_table$$ exists when the $cref fit_command$$ is executed,
 use those values as a starting point for the optimization.
 Note that the initial
