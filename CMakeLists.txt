@@ -5,13 +5,13 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 INCLUDE(CheckCXXSourceRuns)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
-SET(dismod_at_version "20150630" )
+SET(dismod_at_version "20150704" )
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 # ----------------------------------------------------------------------------
 # get_prefix(package)

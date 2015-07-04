@@ -27,11 +27,17 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
-$head 07-03$$
+$head 07-04$$
 $list number$$
 Remove the python $code pack_info$$ class
 (no longer necessary now that $cref variable_table$$ has more information).
 $lnext
+Modify the $cref get_started.py$$ example so that it demonstrates
+how to use the new $cref variable_table$$ information.
+$lend
+
+$head 07-03$$
+$list number$$
 Remove the $code variable_name$$ from the $cref variable_table$$,
 add extra columns to specify the exact variable using
 $cref/foreign keys/input/Foreign Key/$$.
