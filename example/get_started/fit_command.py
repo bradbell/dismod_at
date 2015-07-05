@@ -50,15 +50,6 @@ import get_started_db
 distutils.dir_util.mkpath('build/exmaple/get_started')
 os.chdir('build/exmaple/get_started')
 # ---------------------------------------------------------------------------
-def constant_weight_fun(a, t) :
-	return 1.0
-def gaussian_zero_fun(a, t) :
-	# note that the a, t values are not used
-	return ('prior_mean_zero', 'prior_mean_zero', 'prior_mean_zero')
-def uniform_positive_fun(a, t) :
-	# note that the a, t values are not used
-	return ('prior_uniform_positive', 'prior_mean_zero', 'prior_mean_zero')
-# ------------------------------------------------------------------------
 # create input tables
 file_name              = 'example.db'
 (n_smooth, rate_true)  = get_started_db.get_started_db(file_name)
