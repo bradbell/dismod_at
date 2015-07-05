@@ -20,17 +20,13 @@ $spell
 $$
 
 $section The Variable Table$$
-The $code variable$$ table contains a value for each of the
-$cref/model variables/model_variable/$$.
+The $code variable$$ table maps the $icode variable_id$$
+to information that specifies exactly which
+$cref model_variable$$ it corresponds to.
 
 $head variable_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
-
-$head variable_value$$
-This column has type $code real$$ and is
-the maximum likelihood estimate for the
-$cref model_variable$$ corresponding to index $icode variable_id$$.
 
 $head variable_type$$
 The column has type $code text$$ and has one of the following possible values:
@@ -154,6 +150,6 @@ that this variable applies to.
 Otherwise, this column is $code null$$.
 
 $head Example$$
-See the $cref fit_command.py$$ example and test.
+See the $cref variable_command.py$$ example and test.
 
 $end

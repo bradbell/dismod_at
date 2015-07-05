@@ -19,6 +19,7 @@ $children%example/get_started/get_started_db.py
 %$$
 $table
 $rref get_started_db.py$$
+$rref variable_command$$
 $rref fit_command$$
 $tend
 

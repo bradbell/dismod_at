@@ -11,8 +11,18 @@
 # Build get_started Examples / Tests
 
 ADD_CUSTOM_TARGET(
-	check_get_started
+	check_variable_command
+	${python_three_command} example/get_started/variable_command.py
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+	DEPENDS dismod_at
+)
+ADD_CUSTOM_TARGET(
+	check_fit_command
 	${python_three_command} example/get_started/fit_command.py
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+	DEPENDS dismod_at
 )
-ADD_DEPENDENCIES(check_get_started dismod_at)
+ADD_CUSTOM_TARGET(
+	check_get_started
+	DEPENDS check_variable_command check_fit_command
+)

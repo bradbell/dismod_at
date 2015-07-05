@@ -31,7 +31,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 /*
-$begin fit_command$$
+$begin variable_command$$
 $spell
 	tol
 	arg
@@ -40,10 +40,10 @@ $spell
 	num_iter
 $$
 
-$section The Fit Command$$
+$section The Variable Command$$
 
 $head Syntax$$
-$codei%dismod_at fit %file_name%$$
+$codei%dismod_at variable %file_name%$$
 
 $head file_name$$
 Is an
@@ -51,34 +51,27 @@ $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $subhead variable_table$$
-A new $cref variable_table$$ is created with the maximum likelihood
-estimate corresponding to this fit command.
-To be specific, the
-$cref/fixed effects/model_variable/Fixed Effects, theta/$$
-maximize the Laplace approximation
-$cref/L(theta)/approx_mixed_theory/Objective/L(theta)/$$ and the
-$cref/random effects/model_variable/Random Effects, u/$$
-maximize the joint likelihood; see
-$cref/u^(theta)/approx_mixed_theory/Objective/u^(theta)/$$.
+A new variable table is created with the information
+that maps a $cref/variable_id/variable_table/variable_id/$$
+to its meaning in terms of the
+$cref/model variables/model_variable/$$.
+You can use this information to interpret a $cref fit_table$$
+created by the $cref fit_command$$,
+or to build a fit table for use as input to the $cref simulate_command$$.
 
-$children%example/get_started/fit_command.py%$$
+$children%example/get_started/variable_command.py%$$
 $head Example$$
-The file $cref fit_command.py$$ contains an example and test
+The file $cref variable_command.py$$ contains an example and test
 of using this command.
 
 $end
 */
 
 // ----------------------------------------------------------------------------
-void fit_command(
+void variable_command(
 	sqlite3*                                     db               ,
 	const dismod_at::pack_info&                  pack_object      ,
 	const dismod_at::db_input_struct&            db_input         ,
-	const CppAD::vector<dismod_at::smooth_info>& s_info_vec       ,
-	const dismod_at::data_model&                 data_object      ,
-	const dismod_at::prior_model&                prior_object     ,
-	const std::string&                           tolerance_arg    ,
-	const std::string&                           max_num_iter_arg ,
 	const size_t&                                parent_node_id   ,
 	const dismod_at::child_info&                 child_object
 )
@@ -86,22 +79,10 @@ void fit_command(
 	using std::string;
 	using dismod_at::to_string;
 
-	// ------------------ run fit_model ------------------------------------
-	dismod_at::fit_model fit_object(
-		pack_object          ,
-		db_input.prior_table ,
-		s_info_vec           ,
-		data_object          ,
-		prior_object
-	);
-	fit_object.run_fit(tolerance_arg, max_num_iter_arg);
-	vector<double> solution = fit_object.get_solution();
-	// ----------------- variable_table ----------------------------------
 	string sql_cmd = "drop table if exists variable";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	sql_cmd = "create table variable("
 		" variable_id    integer primary key,"
-		" variable_value real,"
 		" variable_type  text,"
 		" smooth_id      integer,"
 		" age_id         integer,"
@@ -114,21 +95,20 @@ void fit_command(
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	string table_name = "variable";
 	//
-	CppAD::vector<string> col_name_vec(9), row_val_vec(9);
-	col_name_vec[0]   = "variable_value";
-	col_name_vec[1]   = "variable_type";
-	col_name_vec[2]   = "smooth_id";
-	col_name_vec[3]   = "age_id";
-	col_name_vec[4]   = "time_id";
-	col_name_vec[5]   = "node_id";
-	col_name_vec[6]   = "rate_id";
-	col_name_vec[7]   = "integrand_id";
-	col_name_vec[8]   = "covariate_id";
+	CppAD::vector<string> col_name_vec(8), row_val_vec(8);
+	col_name_vec[0]   = "variable_type";
+	col_name_vec[1]   = "smooth_id";
+	col_name_vec[2]   = "age_id";
+	col_name_vec[3]   = "time_id";
+	col_name_vec[4]   = "node_id";
+	col_name_vec[5]   = "rate_id";
+	col_name_vec[6]   = "integrand_id";
+	col_name_vec[7]   = "covariate_id";
 	//
 	// mulstd variables
 	size_t n_smooth = db_input.smooth_table.size();
 	size_t offset, variable_id;
-	for(size_t i = 3; i < row_val_vec.size(); i++)
+	for(size_t i = 2; i < row_val_vec.size(); i++)
 		row_val_vec[i] = "null"; // these columns are null for mulstd variables
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	offset      = pack_object.mulstd_offset(smooth_id);
@@ -136,16 +116,14 @@ void fit_command(
 		{	variable_id              = offset + i;
 			// variable_type
 			if( i == 0 )
-				row_val_vec[1] = "mulstd_value";
+				row_val_vec[0] = "mulstd_value";
 			else if( i == 1 )
-				row_val_vec[1] = "mulstd_dage";
+				row_val_vec[0] = "mulstd_dage";
 			else
-				row_val_vec[1] = "mulstd_dtime";
+				row_val_vec[0] = "mulstd_dtime";
 			//
-			// variable_value
-			row_val_vec[0] = to_string( solution[variable_id] );
 			// smooth_id
-			row_val_vec[2] = to_string( smooth_id );
+			row_val_vec[1] = to_string( smooth_id );
 			//
 			dismod_at::put_table_row(
 				db,
@@ -168,8 +146,8 @@ void fit_command(
 			offset    = info.offset;
 			smooth_id = info.smooth_id;
 			n_var     = info.n_var;
-			n_age     = s_info_vec[smooth_id].age_size();
-			n_time    = s_info_vec[smooth_id].time_size();
+			n_age     = db_input.smooth_table[smooth_id].n_age;
+			n_time    = db_input.smooth_table[smooth_id].n_time;
 			if( child_id == n_child )
 				node_id = parent_node_id;
 			else
@@ -181,15 +159,14 @@ void fit_command(
 				variable_id     = offset + index;
 				//
 				// variable_value
-				row_val_vec[0]  = to_string( solution[variable_id] );
-				row_val_vec[1]  = "rate";     // variable_type
-				row_val_vec[2]  = "null";     // smooth_id
-				row_val_vec[3]  = to_string( age_id );
-				row_val_vec[4]  = to_string( time_id );
-				row_val_vec[5]  = to_string( node_id );
-				row_val_vec[6]  = to_string( rate_id );
-				row_val_vec[7]  = "null";     // integrand_id
-				row_val_vec[8]  = "null";     // covariate_id
+				row_val_vec[0]  = "rate";     // variable_type
+				row_val_vec[1]  = "null";     // smooth_id
+				row_val_vec[2]  = to_string( age_id );
+				row_val_vec[3]  = to_string( time_id );
+				row_val_vec[4]  = to_string( node_id );
+				row_val_vec[5]  = to_string( rate_id );
+				row_val_vec[6]  = "null";     // integrand_id
+				row_val_vec[7]  = "null";     // covariate_id
 				dismod_at::put_table_row(
 					db,
 					table_name,
@@ -230,8 +207,8 @@ void fit_command(
 		offset    = info.offset;
 		assert( smooth_id == info.smooth_id);
 		n_var     = info.n_var;
-		n_age     = s_info_vec[smooth_id].age_size();
-		n_time    = s_info_vec[smooth_id].time_size();
+		n_age     = db_input.smooth_table[smooth_id].n_age;
+		n_time    = db_input.smooth_table[smooth_id].n_time;
 		assert( n_var == n_age * n_time );
 		for(size_t index = 0; index < n_var; index++)
 		{	size_t age_id   = index % n_age;
@@ -240,22 +217,20 @@ void fit_command(
 			//
 		// variable_type
 			if( mulcov_type == dismod_at::rate_mean_enum )
-				row_val_vec[1]  = "mulcov_rate_mean";
+				row_val_vec[0]  = "mulcov_rate_mean";
 			else if( mulcov_type == dismod_at::meas_value_enum )
-				row_val_vec[1]  = "mulcov_meas_value";
+				row_val_vec[0]  = "mulcov_meas_value";
 			else if( mulcov_type == dismod_at::meas_std_enum )
-				row_val_vec[1]  = "mulcov_meas_std";
+				row_val_vec[0]  = "mulcov_meas_std";
 			else assert(false);
 			//
-			// variable_value
-			row_val_vec[0]  = to_string( solution[variable_id] );
-			row_val_vec[2]  = "null";     // smooth_id
-			row_val_vec[3]  = to_string( age_id );
-			row_val_vec[4]  = to_string( time_id );
-			row_val_vec[5]  = "null";     // node_id
-			row_val_vec[6]  = "null";     // rate_id
-			row_val_vec[7]  = to_string( integrand_id );
-			row_val_vec[8]  = to_string( covariate_id );
+			row_val_vec[1]  = "null";     // smooth_id
+			row_val_vec[2]  = to_string( age_id );
+			row_val_vec[3]  = to_string( time_id );
+			row_val_vec[4]  = "null";     // node_id
+			row_val_vec[5]  = "null";     // rate_id
+			row_val_vec[6]  = to_string( integrand_id );
+			row_val_vec[7]  = to_string( covariate_id );
 			dismod_at::put_table_row(
 				db,
 				table_name,
@@ -264,6 +239,91 @@ void fit_command(
 				variable_id
 			);
 		}
+	}
+	return;
+}
+
+/*
+$begin fit_command$$
+$spell
+	tol
+	arg
+	Dismod
+	Ipopt
+	num_iter
+$$
+
+$section The Fit Command$$
+
+$head Syntax$$
+$codei%dismod_at fit %file_name%$$
+
+$head file_name$$
+Is an
+$href%http://www.sqlite.org/sqlite/%$$ data base containing the
+$code dismod_at$$ $cref input$$ tables which are not modified.
+
+$subhead variable_table$$
+The $cref variable_table$$, created by the previous $cref variable_command$$
+is an additional input table for this command.
+
+$subhead fit_table$$
+The $cref fit_table$$ is created by this command and contains the
+results of the fit in its $cref/fit_value/fit_table/fit_value/$$ column.
+
+$children%example/get_started/fit_command.py%$$
+$head Example$$
+The file $cref fit_command.py$$ contains an example and test
+of using this command.
+
+$end
+*/
+
+// ----------------------------------------------------------------------------
+void fit_command(
+	sqlite3*                                     db               ,
+	const dismod_at::pack_info&                  pack_object      ,
+	const dismod_at::db_input_struct&            db_input         ,
+	const CppAD::vector<dismod_at::smooth_info>& s_info_vec       ,
+	const dismod_at::data_model&                 data_object      ,
+	const dismod_at::prior_model&                prior_object     ,
+	const std::string&                           tolerance_arg    ,
+	const std::string&                           max_num_iter_arg
+)
+{	using CppAD::vector;
+	using std::string;
+	using dismod_at::to_string;
+
+	// ------------------ run fit_model ------------------------------------
+	dismod_at::fit_model fit_object(
+		pack_object          ,
+		db_input.prior_table ,
+		s_info_vec           ,
+		data_object          ,
+		prior_object
+	);
+	fit_object.run_fit(tolerance_arg, max_num_iter_arg);
+	vector<double> solution = fit_object.get_solution();
+	// -------------------- fit table --------------------------------------
+	string sql_cmd = "drop table if exists fit";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	sql_cmd = "create table fit("
+		" fit_id       integer primary key,"
+		" variable_id  integer,"
+		" fit_value    real"
+	")";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	string table_name = "fit";
+	//
+	CppAD::vector<string> col_name_vec(2), row_val_vec(2);
+	col_name_vec[0]   = "variable_id";
+	col_name_vec[1]   = "fit_value";
+	for(size_t fit_id = 0; fit_id < solution.size(); fit_id++)
+	{	size_t variable_id = fit_id;
+		double fit_value   = solution[variable_id];
+		row_val_vec[0] = to_string( variable_id );
+		row_val_vec[1] = to_string( fit_value );
+		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
 	return;
 }
@@ -534,11 +594,20 @@ int main(int n_arg, const char** argv)
 	);
 	string rate_info = argument_map["rate_info"];
 	data_object.set_eigen_ode2_case_number(rate_info);
-	//
-	string tolerance    = argument_map["tolerance"];
-	string max_num_iter = argument_map["max_num_iter"];
-	if( command_arg == "fit" )
-	{	fit_command(
+	// ---------------------------------------------------------------------
+	if( command_arg == "variable" )
+	{	variable_command(
+			db,
+			pack_object,
+			db_input,
+			parent_node_id,
+			child_object
+		);
+	}
+	else if( command_arg == "fit" )
+	{	string tolerance    = argument_map["tolerance"];
+		string max_num_iter = argument_map["max_num_iter"];
+		fit_command(
 			db               ,
 			pack_object      ,
 			db_input         ,
@@ -546,9 +615,7 @@ int main(int n_arg, const char** argv)
 			data_object      ,
 			prior_object     ,
 			tolerance        ,
-			max_num_iter     ,
-			parent_node_id   ,
-			child_object
+			max_num_iter
 		);
 	}
 	else if( command_arg == "simulate" )

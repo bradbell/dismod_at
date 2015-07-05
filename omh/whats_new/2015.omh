@@ -38,6 +38,9 @@ During $cref install_unix$$,
 there was a problem running $code make check$$ without first running
 $code make$$.
 This has been fixed.
+$lnext
+Use a $cref variable_command$$ to create the $cref variable_table$$
+and put the $cref fit_command$$ results in a separate $cref fit_table$$.
 $lend
 
 $head 07-04$$

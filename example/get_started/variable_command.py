@@ -8,16 +8,16 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin fit_command.py$$ $newlinech #$$
+# $begin variable_command.py$$ $newlinech #$$
 # $spell
 #	dismod
 # $$
 #
-# $section dismod_at fit: Example and Test$$
+# $section dismod_at variable: Example and Test$$
 #
 # $code
 # $verbatim%
-#	example/get_started/fit_command.py
+#	example/get_started/variable_command.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -30,7 +30,7 @@ import subprocess
 import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
-example = 'example/get_started/fit_command.py'
+example = 'example/get_started/variable_command.py'
 if sys.argv[0] != example  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + example + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -54,65 +54,46 @@ file_name              = 'example.db'
 (n_smooth, rate_true)  = get_started_db.get_started_db(file_name)
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
-for command in [ 'variable', 'fit' ] :
-	cmd  = [ program, command, file_name ]
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+command        = 'variable'
+cmd  = [ program, command, file_name ]
+print( ' '.join(cmd) )
+flag = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at variable command failed')
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
-# get variable and fit tables
+# check variable table
 variable_dict  = dismod_at.get_table_dict(connection, 'variable')
-fit_dict       = dismod_at.get_table_dict(connection, 'fit')
-for fit_id in range( len(fit_dict) ) :
-	assert fit_dict[fit_id]['variable_id'] == fit_id
 #
 # mulstd variables
 for smooth_id in range( n_smooth ) :
 	for variable_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
 		count = 0
-		for variable_id in range( len(variable_dict) ) :
-			row   = variable_dict[variable_id]
+		for row in variable_dict :
 			match = row['variable_type'] == variable_type
 			match = match and row['smooth_id'] == smooth_id
 			if match :
 				count += 1
-				fit_id         = variable_id
-				variable_value = fit_dict[fit_id]['fit_value']
-				assert variable_value == 1.0
 		assert count == 1
 #
 # rate variables
 parent_node_id = 0
 child_node_id  = 1
-check_tol      = 1e-3
 n_rate         = 5;
 for rate_id in range(n_rate) :
 	for node_id in [ parent_node_id, child_node_id ] :
 		count = 0
-		for variable_id in range( len(variable_dict) ) :
-			row   = variable_dict[variable_id]
+		for row in variable_dict :
 			match = row['variable_type'] == 'rate'
 			match = match and row['rate_id'] == rate_id
 			match = match and row['node_id'] == node_id
 			if match :
 				count += 1
-				check          = rate_true[rate_id]
-				fit_id         = variable_id
-				variable_value = fit_dict[fit_id]['fit_value']
-				if node_id == 0 :
-					# parent node
-					err = variable_value / check - 1.0
-				else :
-					# child node
-					err = variable_value / check
-				assert abs(err) <= check_tol
 		# number of point in smoothing for all rates
 		assert count == 2
 # -----------------------------------------------------------------------
-print('fit_command: OK')
+print('variable_command: OK')
 # END PYTHON
