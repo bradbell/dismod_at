@@ -31,7 +31,6 @@ import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
 example = 'example/get_started/fit_command.py'
-print(sys.argv)
 if sys.argv[0] != example  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + example + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -47,8 +46,8 @@ sys.path.append( os.getcwd() + '/example/get_started' )
 import get_started_db
 #
 # change into the build/example/get_started directory
-distutils.dir_util.mkpath('build/exmaple/get_started')
-os.chdir('build/exmaple/get_started')
+distutils.dir_util.mkpath('build/example/get_started')
+os.chdir('build/example/get_started')
 # ---------------------------------------------------------------------------
 # create input tables
 file_name              = 'example.db'
@@ -56,24 +55,7 @@ file_name              = 'example.db'
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
 command        = 'fit'
-arg_list= {
-	'file_name':        file_name,
-	'parent_node_id':   '0',
-	'ode_step_size':    '20.0',
-	'tolerance':        '1e-8',
-	'max_num_iter':     '100',
-	'rate_info':        'chi_positive'
-}
-cmd       = [
-	program                     ,
-	command                     ,
-	arg_list['file_name']       ,
-	arg_list['parent_node_id']  ,
-	arg_list['ode_step_size']   ,
-	arg_list['tolerance']       ,
-	arg_list['max_num_iter']    ,
-	arg_list['rate_info']
-]
+cmd  = [ program, command, file_name ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
@@ -82,13 +64,6 @@ if flag != 0 :
 # connect to database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
-# -----------------------------------------------------------------------
-# check fit_arg table
-fit_arg_dict  = dismod_at.get_table_dict(connection, 'fit_arg')
-for row in fit_arg_dict :
-	fit_arg_name  = row['fit_arg_name']
-	fit_arg_value = row['fit_arg_value']
-	assert arg_list[fit_arg_name] == fit_arg_value
 # -----------------------------------------------------------------------
 # check variable table
 variable_dict  = dismod_at.get_table_dict(connection, 'variable')

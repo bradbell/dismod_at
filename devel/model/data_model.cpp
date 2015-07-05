@@ -49,7 +49,7 @@ $codei%
 	size_t %parent_node_id%
 %$$
 and is the
-$cref/parent_node_id/fit_command/parent_node_id/$$.
+$cref/parent_node_id/argument_table/parent_node_id/$$.
 in the fit command.
 
 $head n_age_ode$$
@@ -73,7 +73,7 @@ This argument has prototype
 $codei%
 	double %ode_step_size%
 %$$
-and is the value of $cref/ode_step_size/fit_command/ode_step_size/$$
+and is the value of $cref/ode_step_size/argument_table/ode_step_size/$$
 in the fit command.
 
 $head age_table$$
@@ -483,7 +483,7 @@ $$
 $section Sets the Method Used to Solve the Dismod_at ODE$$
 
 $head Syntax$$
-$codei%data_object%.set_eigen_ode2_case_number(%rate_info_arg%)%$$
+$codei%data_object%.set_eigen_ode2_case_number(%rate_info%)%$$
 
 $head data_object$$
 This object has prototype
@@ -492,25 +492,26 @@ $codei%
 %$$
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
-$head rate_info_arg$$
-Is the fit command $cref/rate_info/fit_command/rate_info/$$ argument.
+$head rate_info$$
+Is the $cref/argument_value/argument_table/argument_value/$$
+corresponding to $icode%argument_name% = rate_info%$$ in the argument table.
 $end
 */
-void data_model::set_eigen_ode2_case_number(const std::string& rate_info_arg)
+void data_model::set_eigen_ode2_case_number(const std::string& rate_info)
 {
-	if( rate_info_arg == "chi_positive" )
+	if( rate_info == "chi_positive" )
 	{	eigen_ode2_case_number_ = 7;
 		return;
 	}
-	if( rate_info_arg == "iota_and_chi_zero" )
+	if( rate_info == "iota_and_chi_zero" )
 	{	eigen_ode2_case_number_ = 5;
 		return;
 	}
-	if( rate_info_arg == "rho_and_chi_zero" )
+	if( rate_info == "rho_and_chi_zero" )
 	{	eigen_ode2_case_number_ = 3;
 		return;
 	}
-	if( rate_info_arg == "iota_and_rho_zero" )
+	if( rate_info == "iota_and_rho_zero" )
 	{	eigen_ode2_case_number_ = 1;
 		return;
 	}

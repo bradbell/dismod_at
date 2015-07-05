@@ -102,6 +102,8 @@ ADD_SUBDIRECTORY(test/devel)
 ADD_SUBDIRECTORY(example/get_started)
 # ----------------------------------------------------------------------------
 ADD_CUSTOM_TARGET(check DEPENDS
+	dismod_at
+	devel_lib
 	check_example_table
 	check_example_devel
 	check_test_devel

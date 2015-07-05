@@ -9,6 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 
+# include <map>
 # include <cassert>
 # include <string>
 # include <iostream>
@@ -29,44 +30,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/sim_random.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
-
-// --------------------------------------------------------------------------
-// create command argument table
-void command_arg_table
-(	sqlite3*            db         ,
-	const std::string&  table_name ,
-	const size_t&       n_arg      ,
-	const char*         arg_name[] ,
-	const char**        argv
-)
-{
-	using std::string;
-	using CppAD::vector;
-	vector<string> col_name_vec(2), row_val_vec(2);
-	string cmd;
-	//
-	cmd  = "drop table if exists ";
-	cmd += table_name;
-	dismod_at::exec_sql_cmd(db, cmd);
-	//
-	cmd  = "create table ";
-	cmd += table_name;
-	cmd += "(";
-	cmd += table_name + "_id integer primary key, ";
-	cmd += table_name + "_name text unique, ";
-	cmd += table_name + "_value text)";
-	dismod_at::exec_sql_cmd(db, cmd);
-	//
-	col_name_vec[0]   = table_name + "_name";
-	col_name_vec[1]   = table_name + "_value";
-	//
-	for(size_t id = 0; id < n_arg; id++)
-	{	row_val_vec[0] = arg_name[id];
-		row_val_vec[1] = argv[2 + id];
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
-	}
-	return;
-}
 /*
 $begin fit_command$$
 $spell
@@ -80,17 +43,12 @@ $$
 $section The Fit Command$$
 
 $head Syntax$$
-$codei%dismod_at fit %file_name% %parent_node_id% \
-	%ode_step_size% %tolerance% %max_num_iter% %rate_info%$$
+$codei%dismod_at fit %file_name%$$
 
 $head file_name$$
 Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
-
-$subhead fit_arg_table$$
-A new $cref fit_arg_table$$ table is created with the arguments to
-this fit command; i.e., $icode file_name$$, ... , $icode rate_info$$.
 
 $subhead variable_table$$
 A new $cref variable_table$$ is created with the maximum likelihood
@@ -102,33 +60,6 @@ $cref/L(theta)/approx_mixed_theory/Objective/L(theta)/$$ and the
 $cref/random effects/model_variable/Random Effects, u/$$
 maximize the joint likelihood; see
 $cref/u^(theta)/approx_mixed_theory/Objective/u^(theta)/$$.
-
-$head parent_node_id$$
-This is a non-negative integer (greater than or equal zero)
-that specifies the parent $cref/node_id/node_table/node_id/$$.
-
-$head ode_step_size$$
-This is a positive floating point number (greater than zero)
-that specifies numerical ode step size.
-The step size is the same in age and time because it is along cohort lines.
-The smaller $icode ode_step_size$$, the more accurate the solution of the
-$cref/
-ordinary differential equation /avg_integrand/Ordinary Differential Equation
-/$$
-and the more time required to compute this solution.
-
-$head tolerance$$
-This is a positive floating point number
-and specifies the $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
-desired relative convergence tolerance $code tol$$.
-
-$head max_num_iter$$
-This is a positive integer
-and specifies the
-$href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
-maximum number of iterations $code max_iter$$.
-
-$include devel/rate_info.omh$$
 
 $children%example/get_started/fit_command.py%$$
 $head Example$$
@@ -352,8 +283,7 @@ $head Under Construction$$
 This command is under construction and does not yet work.
 
 $head Syntax$$
-$codei%dismod_at simulate %file_name% %parent_node_id% \
-	%ode_step_size% %rate_info% %random_seed%$$
+$codei%dismod_at simulate %file_name%$$
 
 $head file_name$$
 Is an
@@ -364,11 +294,6 @@ $subhead variable_table$$
 The data base must contain a $cref variable_table$$ that specifies the
 value of the model variables that is used to simulate the data.
 It may have been created by a previous $cref fit_command$$.
-
-$subhead simulate_arg_table$$
-A new $cref simulate_arg_table$$ table is created with the arguments to
-this simulate command;
-i.e., $icode file_name$$, ... , $icode rate_info$$.
 
 $subhead simulate_table$$
 A new $cref simulate_table$$ is created.
@@ -383,28 +308,6 @@ $lnext
 All of the covariates satisfy the
 $cref/max_difference/covariate_table/max_difference/$$ criteria.
 $lend
-
-$head parent_node_id$$
-This is a non-negative integer (greater than or equal zero)
-that specifies the parent $cref/node_id/node_table/node_id/$$
-for this simulation (see data_table heading above).
-
-$head ode_step_size$$
-This is a positive floating point number (greater than zero)
-that specifies numerical ode step size.
-The step size is the same in age and time because it is along cohort lines.
-The smaller $icode ode_step_size$$, the more accurate the solution of the
-$cref/
-ordinary differential equation /avg_integrand/Ordinary Differential Equation
-/$$
-and the more time required to compute this solution.
-
-$head random_seed$$
-This is a non-negative integer used to seed the random number
-generator (used to generate simulated measurement noise).
-If this value is zero, the clock is used to seed the random number generator.
-
-$include devel/rate_info.omh$$
 
 $head Example$$
 2DO: add an example and test for the simulate command.
@@ -499,92 +402,24 @@ int main(int n_arg, const char** argv)
 	using std::endl;
 	using CppAD::vector;
 	using std::string;
-	// -----------------------------------------------------------------------
-	// fit command line argument names
-	const char* fit_arg_name[] = {
-		"file_name",
-		"parent_node_id",
-		"ode_step_size",
-		"tolerance",
-		"max_num_iter",
-		"rate_info"
-	};
-	size_t n_fit_arg = sizeof(fit_arg_name) / sizeof(fit_arg_name[0]);
-	// -----------------------------------------------------------------------
-	// simulate command line argument names
-	const char* simulate_arg_name[] = {
-		"file_name",
-		"parent_node_id",
-		"ode_step_size",
-		"random_seed",
-		"rate_info"
-	};
-	size_t n_simulate_arg =
-		sizeof(simulate_arg_name) / sizeof(simulate_arg_name[0]);
-	//
 	// ---------------- command line arguments ---------------------------
 	string program = "dismod_at-";
 	program       += DISMOD_AT_VERSION;
-	string fit_usage   = "dismod_at fit";
-	for(size_t i = 0; i < n_fit_arg; i++)
-	{	fit_usage += " ";
-		fit_usage += fit_arg_name[i];
-	}
-	string simulate_usage   = "dismod_at simulate";
-	for(size_t i = 0; i < n_simulate_arg; i++)
-	{	simulate_usage += " ";
-		simulate_usage += simulate_arg_name[i];
-	}
-	if( n_arg < 2 )
+	if( n_arg != 3 )
 	{	cerr << program << endl;
-		cerr << fit_usage << endl;
-		cerr << simulate_usage << endl;
+		cerr << "usage: dismod_at command file_name" << endl;
 		std::exit(1);
 	}
 	size_t i_arg = 0;
-	const string command_arg  = argv[++i_arg];
-	if( command_arg == "fit" )
-	{	if( size_t(n_arg) != n_fit_arg + 2 )
-		{	cerr << fit_usage << endl;
-			std::exit(1);
-		}
-	}
-	else if( command_arg == "simulate" )
-	{	if( size_t(n_arg) != n_simulate_arg + 2 )
-		{	cerr << simulate_usage << endl;
-			std::exit(1);
-		}
-	}
-	else
-	{	cerr << program << endl;
-		cerr << fit_usage << endl;
-		cerr << simulate_usage << endl;
-		std::exit(1);
-	}
-	const string file_name_arg      = argv[++i_arg];
-	const string parent_node_id_arg = argv[++i_arg];
-	const string ode_step_size_arg  = argv[++i_arg];
-	string tolerance_arg, max_num_iter_arg, random_seed_arg;
-	if( command_arg == "fit" )
-	{	tolerance_arg    = argv[++i_arg];
-		max_num_iter_arg = argv[++i_arg];
-	}
-	if( command_arg == "simulate" )
-	{	random_seed_arg  = argv[++i_arg];
-	}
-	const string rate_info_arg      = argv[++i_arg];
-	// ------------- check rate_info_arg ------------------------------------
-	bool ok = rate_info_arg == "chi_positive";
-	ok     |= rate_info_arg == "iota_and_chi_zero";
-	ok     |= rate_info_arg == "rho_and_chi_zero";
-	ok     |= rate_info_arg == "iota_and_rho_zero";
+	const string command_arg    = argv[++i_arg];
+	const string file_name_arg  = argv[++i_arg];
+	bool ok = false;
+	ok     |= command_arg == "variable";
+	ok     |= command_arg == "fit";
+	ok     |= command_arg == "simulate";
 	if( ! ok )
-	{	if( command_arg == "fit" )
-			cerr << fit_usage << endl;
-		else
-			cerr << simulate_usage << endl;
-		cerr << "rate_info = " << rate_info_arg
-		<< " is not a valid choice" << endl;
+	{	cerr << "dismod_at: command is not one of the following:" << endl
+		<< "\tvariable, fit, simulate" << endl;
 		std::exit(1);
 	}
 	// --------------- get the input tables ---------------------------------
@@ -592,21 +427,23 @@ int main(int n_arg, const char** argv)
 	sqlite3* db   = dismod_at::open_connection(file_name_arg, new_file);
 	dismod_at::db_input_struct db_input;
 	get_db_input(db, db_input);
-	// ---------------------------------------------------------------------
-	// ode_step_size
-	double ode_step_size  = std::atof( ode_step_size_arg.c_str() );
-	if( ode_step_size <= 0.0 )
-	{	if( command_arg == "fit" )
-			cerr << fit_usage << endl;
-		else
-			cerr << simulate_usage << endl;
-		cerr << "ode_step_size = " << ode_step_size_arg
-		<< " is less than or equal zero " << endl;
-		std::exit(1);
+	// ----------------------------------------------------------------------
+	// argument_map
+	std::map<string, string> argument_map;
+	size_t n_argument = db_input.argument_table.size();
+	for(size_t id = 0; id < n_argument; id++)
+	{	string name  = db_input.argument_table[id].argument_name;
+		string value = db_input.argument_table[id].argument_value;
+		argument_map[name] = value;
 	}
 	// ---------------------------------------------------------------------
+	// ode_step_size
+	double ode_step_size  = std::atof( argument_map["ode_step_size"].c_str() );
+	assert( ode_step_size > 0.0 );
+	// ---------------------------------------------------------------------
 	// initialize random number generator
-	size_t random_seed = std::atoi( random_seed_arg.c_str() );
+	// 2DO: need to put actual seed in some output table or std::cout
+	size_t random_seed = std::atoi( argument_map["random_seed"].c_str() );
 	size_t actual_seed = dismod_at::new_gsl_rng(random_seed);
 	// ---------------------------------------------------------------------
 	// n_age_ode
@@ -622,7 +459,9 @@ int main(int n_arg, const char** argv)
 	assert( time_max <= time_min  + n_time_ode * ode_step_size );
 	// ---------------------------------------------------------------------
 	// child_object and some more size_t values
-	size_t parent_node_id = std::atoi( parent_node_id_arg.c_str() );
+	size_t parent_node_id = std::atoi(
+		argument_map["parent_node_id"].c_str()
+	);
 	dismod_at::child_info child_object(
 		parent_node_id ,
 		db_input.node_table ,
@@ -693,8 +532,11 @@ int main(int n_arg, const char** argv)
 		pack_object              ,
 		child_object
 	);
-	data_object.set_eigen_ode2_case_number(rate_info_arg);
+	string rate_info = argument_map["rate_info"];
+	data_object.set_eigen_ode2_case_number(rate_info);
 	//
+	string tolerance    = argument_map["tolerance"];
+	string max_num_iter = argument_map["max_num_iter"];
 	if( command_arg == "fit" )
 	{	fit_command(
 			db               ,
@@ -703,18 +545,10 @@ int main(int n_arg, const char** argv)
 			s_info_vec       ,
 			data_object      ,
 			prior_object     ,
-			tolerance_arg    ,
-			max_num_iter_arg ,
+			tolerance        ,
+			max_num_iter     ,
 			parent_node_id   ,
 			child_object
-		);
-		string table_name = "fit_arg";
-		command_arg_table(
-			db           ,
-			table_name   ,
-			n_fit_arg    ,
-			fit_arg_name ,
-			argv
 		);
 	}
 	else if( command_arg == "simulate" )
@@ -725,21 +559,6 @@ int main(int n_arg, const char** argv)
 			data_object              ,
 			actual_seed
 		);
-		string table_name = "simulate_arg";
-		command_arg_table(
-			db                ,
-			table_name        ,
-			n_simulate_arg    ,
-			simulate_arg_name ,
-			argv
-		);
-		// add actual_seed to simulate_arg table
-		vector<string> col_name_vec(2), row_val_vec(2);
-		col_name_vec[0]   = table_name + "_name";
-		col_name_vec[1]   = table_name + "_value";
-		row_val_vec[0]    = "actual_seed";
-		row_val_vec[1]    = dismod_at::to_string(actual_seed);
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
 	else
 		assert(false);

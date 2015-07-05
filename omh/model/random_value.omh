@@ -22,7 +22,7 @@ $head c$$
 We use $latex C$$ to denote the size of the
 $cref/child group/node_table/parent/Child Group/$$
 corresponding to the
-$cref/parent/fit_command/parent_node_id/$$.
+$cref/parent_node_id/argument_table/parent_node_id/$$.
 For $latex c = 0 , \ldots , C-1$$, we use
 $latex c$$ to denote the corresponding child.
 

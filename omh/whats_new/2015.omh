@@ -24,9 +24,21 @@ $spell
 	std
 	cov
 	py
+	arg
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 07-05$$
+$list number$$
+Put the $cref command$$ arguments in $cref argument_table$$
+instead of on the command line (except for the file name of the database).
+$lnext
+During $cref install_unix$$,
+there was a problem running $code make check$$ without first running
+$code make$$.
+This has been fixed.
+$lend
 
 $head 07-04$$
 $list number$$
@@ -108,7 +120,7 @@ $lend
 
 $head 06-29$$
 $list number$$
-Add the $cref/rate_info/fit_command/rate_info/$$ argument
+Add the $cref/rate_info/argument_table/rate_info/$$ argument
 to the fit command.
 This enables taking advantage of cases where $icode rho$$
 or $icode iota$$ are zero (to speed integration).
@@ -201,7 +213,7 @@ $head 06-23$$
 The $cref fit_command$$ was changed so that there can only be
 on set of results in the data base.
 This changed the contents of the
-$cref fit_arg_table$$ and the $cref variable_table$$.
+$code fit_arg_table$$ and the $cref variable_table$$.
 
 
 $head 06-22$$

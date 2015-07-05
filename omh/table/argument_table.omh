@@ -1,0 +1,131 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin argument_table$$
+$spell
+	dismod
+	integrands
+	Sincidence
+	mtexcess
+	mtwith
+	relrisk
+	tol
+	num_iter
+$$
+
+$section The Command Argument Table$$
+Each $code dismod_at$$ $cref command$$ has a required set of
+$icode argument_name$$, $icode argument_value$$ pairs
+that must be present in the argument table.
+
+$head argument_id$$
+This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+$head argument_name$$
+This column has type $code text$$ and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The following argument names, and only the following, must appear:
+
+$head argument_value$$
+This column has type $code text$$ and is
+the value for the corresponding command argument.
+
+$head parent_node_id$$
+If $icode%argument_name% = parent_node%$$,
+the corresponding $icode argument_value$$
+is a non-negative integer (greater than or equal zero)
+that specifies the parent $cref/node_id/node_table/node_id/$$.
+
+$head ode_step_size$$
+If $icode%argument_name% = ode_step_size%$$,
+the corresponding $icode argument_value$$
+is a positive floating point number (greater than zero)
+that specifies numerical ode step size.
+The step size is the same in age and time because it is along cohort lines.
+The smaller $icode ode_step_size$$, the more accurate the solution of the
+$cref/
+ordinary differential equation /avg_integrand/Ordinary Differential Equation
+/$$
+and the more time required to compute this solution.
+The $icode ode_step_size$$ value does not matter for the following integrands:
+$code Sincidence$$,
+$code remission$$,
+$code mtexcess$$,
+$code mtwith$$,
+$code relrisk$$.
+
+$head tolerance$$
+If $icode%argument_name% = tolerance%$$,
+the corresponding $icode argument_value$$
+is a positive floating point number
+that specifies the $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
+desired relative convergence tolerance $code tol$$.
+
+$head max_num_iter$$
+If $icode%argument_name% = max_num_iter%$$,
+the corresponding $icode argument_value$$
+is a positive integer that specifies the
+$href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
+maximum number of iterations $code max_iter$$.
+
+$head random_seed$$
+This is a non-negative integer used to seed the random number
+generator (used to generate simulated measurement noise).
+If this value is zero, the clock is used to seed the random number generator.
+
+$head rate_info$$
+If $icode%argument_name% = rate_info%$$,
+the corresponding argument value must be one of the following:
+$code chi_positive$$, $code iota_and_chi_zero$$, $code rho_and_chi_zero$$.
+The $icode rate_info$$ value does not matter for the following integrands:
+$code Sincidence$$,
+$code remission$$,
+$code mtexcess$$,
+$code mtwith$$,
+$code relrisk$$.
+
+$subhead chi_positive$$
+If $icode%argument_name% = rate_info%$$ and
+$icode%argument_value% = chi_positive%$$,
+the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
+$icode chi$$ always has a lower limit greater than zero.
+
+$subhead iota_and_chi_zero$$
+If $icode%argument_name% = rate_info%$$ and
+$icode%argument_value% = iota_and_chi_zero%$$,
+the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for both
+$icode iota$$ and $icode chi$$ have lower and upper limit zero.
+In this case
+the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
+$icode rho$$ must always has a lower limit greater than zero.
+
+$subhead rho_and_chi_zero$$
+If $icode%argument_name% = rate_info%$$ and
+$icode%argument_value% = rho_and_chi_zero%$$,
+the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for both
+$icode rho$$ and $icode chi$$ have lower and upper limit zero.
+In this case
+the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
+$icode iota$$ must always has a lower limit greater than zero.
+
+$subhead iota_and_rho_zero$$
+If $icode%argument_name% = rate_info%$$ and
+$icode%argument_value% = iota_and_rho_zero%$$,
+the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
+both $icode iota$$ and $icode rho$$ have lower and upper limit zero.
+
+$children%example/table/argument_table.py
+%$$
+$head Example$$
+The files $cref argument_table.py$$
+contains an example $code argument$$ table.
+
+$end

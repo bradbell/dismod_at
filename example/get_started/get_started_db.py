@@ -195,6 +195,16 @@ def get_started_db (file_name) :
 			'child_smooth':  'smooth_mean_zero'
 		}
 	]
+	# ------------------------------------------------------------------------
+	# argument_list
+	argument_list = [
+		{ 'name':'parent_node_id','value':'0'            },
+		{ 'name':'ode_step_size', 'value':'10.0'         },
+		{ 'name':'tolerance',     'value':'1e-8'         },
+		{ 'name':'max_num_iter',  'value':'100'          },
+		{ 'name':'random_seed',   'value':'0'            },
+		{ 'name':'rate_info',     'value':'chi_positive' }
+	]
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
@@ -209,7 +219,8 @@ def get_started_db (file_name) :
 		prior_list,
 		smooth_list,
 		rate_list,
-		mulcov_list
+		mulcov_list,
+		argument_list
 	)
 	# -----------------------------------------------------------------------
 	n_smooth  = len( smooth_list )

@@ -77,6 +77,7 @@ extern bool variable_name_xam(void);
 extern bool check_pini_n_age_xam(void);
 extern bool data_subset_xam(void);
 extern bool get_age_table_xam(void);
+extern bool get_argument_table_xam(void);
 extern bool get_column_max_xam(void);
 extern bool get_covariate_table_xam(void);
 extern bool get_data_table_xam(void);
@@ -176,6 +177,7 @@ int main(void)
 	RUN(check_pini_n_age_xam);
 	RUN(data_subset_xam);
 	RUN(get_age_table_xam);
+	RUN(get_argument_table_xam);
 	RUN(get_column_max_xam);
 	RUN(get_covariate_table_xam);
 	RUN(get_data_table_xam);

@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # $begin create_database.py$$ $newlinech #$$
@@ -173,6 +173,16 @@ def create_database() :
 			'smooth':'uniform_01_constant'
 		}
 	]
+	#
+	# argument_list
+	argument_list = [
+		{ 'name':'parent_node_id','value':'0'            },
+		{ 'name':'ode_step_size', 'value':'10.0'         },
+		{ 'name':'tolerance',     'value':'1e-8'         },
+		{ 'name':'max_num_iter',  'value':'100'          },
+		{ 'name':'random_seed',   'value':'0'            },
+		{ 'name':'rate_info',     'value':'chi_positive' }
+	]
 	dismod_at.create_database(
 		file_name,
 		age_list,
@@ -185,7 +195,8 @@ def create_database() :
 		prior_list,
 		smooth_list,
 		rate_list,
-		mulcov_list
+		mulcov_list,
+		argument_list
 	)
 	# -----------------------------------------------------------------------
 	# Check database
@@ -323,6 +334,20 @@ def create_database() :
 	]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
 	check_list = [ [ 'rate_mean', 4, -1, 0, 0 ] ]
+	assert row_list == check_list
+	#
+	# argument_table
+	tbl_name = 'argument'
+	col_name = [ 'argument_name', 'argument_value' ]
+	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
+	check_list = [
+		[ 'parent_node_id', '0'   ],
+		[ 'ode_step_size',  '10.0'],
+		[ 'tolerance',      '1e-8'],
+		[ 'max_num_iter',   '100' ],
+		[ 'random_seed',    '0'   ],
+		[ 'rate_info',      'chi_positive']
+	]
 	assert row_list == check_list
 	# -----------------------------------------------------------------------
 	connection.close()

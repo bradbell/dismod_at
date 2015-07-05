@@ -42,7 +42,8 @@
 #	%prior_list%,
 #	%smooth_list%,
 #	%rate_list%,
-#	%mulcov_list%
+#	%mulcov_list%,
+#	%argument_list%
 # )%$$
 #
 # $head Purpose$$
@@ -220,6 +221,14 @@
 # smooth    $cnext str         $cnext smoothing name
 # $tend
 #
+# $head argument_list$$
+# This is a list of $code dict$$
+# that define the rows of the $cref argument_table$$.
+# The dictionary $icode%argument_list%[%i%]%$$ has the following keys:
+# $code name$$, $code value$$.
+# See $cref argument_table$$ for the corresponding set of names
+# and meaning of corresponding values.
+#
 # $end
 def create_database(
 	file_name,
@@ -233,7 +242,8 @@ def create_database(
 	prior_list,
 	smooth_list,
 	rate_list,
-	mulcov_list
+	mulcov_list,
+	argument_list
 ) :
 	import dismod_at
 	# -----------------------------------------------------------------------
@@ -241,7 +251,14 @@ def create_database(
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
 	# -----------------------------------------------------------------------
-	# Input Tables
+	# create argument table
+	col_name = [ 'argument_name', 'argument_value' ]
+	col_type = [ 'text unique', 'text' ]
+	row_list = []
+	for row in argument_list :
+		row_list.append( [ row['name'], row['value'] ] )
+	tbl_name = 'argument'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# create age table
 	col_name = [ 'age' ]

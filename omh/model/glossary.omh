@@ -95,13 +95,11 @@ v( \alpha , \theta )  = v_{i,j}
 
 $lend
 
-
-
 $head Ode Grid$$
 $index ode, grid$$
 $index grid, ode$$
 We use the notation $latex \Delta s$$ for the
-$cref/ode_step_size/fit_command/ode_step_size/$$.
+$cref/ode_step_size/argument_table/ode_step_size/$$.
 We use $latex a_\R{min}$$ and $latex a_\R{max}$$ to denote
 the minimum and maximum
 $cref/age/age_table/age/$$ values in the age table.
