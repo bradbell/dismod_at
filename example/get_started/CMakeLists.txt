@@ -10,18 +10,18 @@
 # ---------------------------------------------------------------------------
 # Build get_started Examples / Tests
 
-FOREACH(cmd variable fit truth simulate)
+FOREACH(cmd var fit truth simulate)
 	ADD_CUSTOM_TARGET(
 		check_${cmd}_command
 		${python_three_command} example/get_started/${cmd}_command.py
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		DEPENDS dismod_at
 	)
-ENDFOREACH(cmd variable fit truth simulate)
+ENDFOREACH(cmd var fit truth simulate)
 ADD_CUSTOM_TARGET(
 	check_get_started
 	DEPENDS
-	check_variable_command
+	check_var_command
 	check_fit_command
 	check_truth_command
 	check_simulate_command

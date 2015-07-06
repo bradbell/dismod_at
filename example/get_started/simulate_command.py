@@ -53,33 +53,33 @@ os.chdir('build/example/get_started')
 file_name              = 'example.db'
 (n_smooth, rate_true)  = get_started_db.get_started_db(file_name)
 # -----------------------------------------------------------------------
-# create the variable table
+# create the var table
 program        = '../../devel/dismod_at'
-command        = 'variable'
+command        = 'var'
 cmd  = [ program, command, file_name ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
-	sys.exit('The dismod_at variable command failed')
+	sys.exit('The dismod_at var command failed')
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get the variable information
-variable_dict  = dismod_at.get_table_dict(connection, 'variable')
+var_dict  = dismod_at.get_table_dict(connection, 'var')
 # -----------------------------------------------------------------------
 # create a truth table with variables values to use during simulation
 tbl_name = 'truth'
 col_name = [ 'truth_value' ]
 col_type = [ 'real'        ]
 row_list = list()
-for variable_id in range( len(variable_dict) ) :
-	variable_row  = variable_dict[variable_id]
-	variable_type = variable_row['variable_type']
-	if variable_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
+for var_id in range( len(var_dict) ) :
+	variable_row  = var_dict[var_id]
+	var_type = variable_row['var_type']
+	if var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
 		truth_value = 1.0
-	elif variable_type == 'rate' :
+	elif var_type == 'rate' :
 		rate_id   = variable_row['rate_id']
 		truth_value = 5e-3 * (rate_id + 1)
 	else :

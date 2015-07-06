@@ -8,16 +8,16 @@
 # 	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin variable_table.py$$ $newlinech #$$
+# $begin var_table.py$$ $newlinech #$$
 #
-# $section variable_table: Example and Test$$
+# $section var_table: Example and Test$$
 #
 # $code
-# $verbatim%example/table/variable_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/var_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
-def variable_table() :
+def var_table() :
 	import dismod_at
 	#
 	file_name      = 'example.db'
@@ -40,8 +40,8 @@ def variable_table() :
 					offset,
 					value
 				] )
-	# create the variable table
-	tbl_name = 'variable'
+	# create the var table
+	tbl_name = 'var'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# include primary key in test
@@ -54,5 +54,5 @@ def variable_table() :
 	assert row_list == check_list
 	# ------------------------------------------------------------------------
 	connection.close()
-	print('variable_table: OK')
+	print('var_table: OK')
 # END PYTHON

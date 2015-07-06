@@ -54,7 +54,7 @@ file_name              = 'example.db'
 (n_smooth, rate_true)  = get_started_db.get_started_db(file_name)
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
-for command in [ 'variable', 'fit' ] :
+for command in [ 'var', 'fit' ] :
 	cmd  = [ program, command, file_name ]
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
@@ -66,20 +66,20 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get variable and fit tables
-variable_dict  = dismod_at.get_table_dict(connection, 'variable')
+var_dict  = dismod_at.get_table_dict(connection, 'var')
 fit_dict       = dismod_at.get_table_dict(connection, 'fit')
 #
 # mulstd variables
 for smooth_id in range( n_smooth ) :
-	for variable_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
+	for var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
 		count = 0
-		for variable_id in range( len(variable_dict) ) :
-			row   = variable_dict[variable_id]
-			match = row['variable_type'] == variable_type
+		for var_id in range( len(var_dict) ) :
+			row   = var_dict[var_id]
+			match = row['var_type'] == var_type
 			match = match and row['smooth_id'] == smooth_id
 			if match :
 				count += 1
-				fit_id         = variable_id
+				fit_id         = var_id
 				variable_value = fit_dict[fit_id]['fit_value']
 				assert variable_value == 1.0
 		assert count == 1
@@ -92,15 +92,15 @@ n_rate         = 5;
 for rate_id in range(n_rate) :
 	for node_id in [ parent_node_id, child_node_id ] :
 		count = 0
-		for variable_id in range( len(variable_dict) ) :
-			row   = variable_dict[variable_id]
-			match = row['variable_type'] == 'rate'
+		for var_id in range( len(var_dict) ) :
+			row   = var_dict[var_id]
+			match = row['var_type'] == 'rate'
 			match = match and row['rate_id'] == rate_id
 			match = match and row['node_id'] == node_id
 			if match :
 				count += 1
 				check          = rate_true[rate_id]
-				fit_id         = variable_id
+				fit_id         = var_id
 				variable_value = fit_dict[fit_id]['fit_value']
 				if node_id == 0 :
 					# parent node

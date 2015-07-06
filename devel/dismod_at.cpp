@@ -31,40 +31,41 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 /*
-$begin variable_command$$
+$begin var_command$$
 $spell
+	var
 	dismod
 $$
 
 $section The Variable Command$$
 
 $head Syntax$$
-$codei%dismod_at variable %file_name%$$
+$codei%dismod_at var %file_name%$$
 
 $head file_name$$
 Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
-$subhead variable_table$$
-A new variable table is created with the information
-that maps a $cref/variable_id/variable_table/variable_id/$$
+$subhead var_table$$
+A new var table is created with the information
+that maps a $cref/var_id/var_table/var_id/$$
 to its meaning in terms of the
 $cref/model variables/model_variable/$$.
 You can use this information to interpret a $cref fit_table$$
 created by the $cref fit_command$$,
 or to build a fit table for use as input to the $cref simulate_command$$.
 
-$children%example/get_started/variable_command.py%$$
+$children%example/get_started/var_command.py%$$
 $head Example$$
-The file $cref variable_command.py$$ contains an example and test
+The file $cref var_command.py$$ contains an example and test
 of using this command.
 
 $end
 */
 
 // ----------------------------------------------------------------------------
-void variable_command(
+void var_command(
 	sqlite3*                                     db               ,
 	const dismod_at::pack_info&                  pack_object      ,
 	const dismod_at::db_input_struct&            db_input         ,
@@ -75,11 +76,11 @@ void variable_command(
 	using std::string;
 	using dismod_at::to_string;
 
-	string sql_cmd = "drop table if exists variable";
+	string sql_cmd = "drop table if exists var";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table variable("
-		" variable_id    integer primary key,"
-		" variable_type  text,"
+	sql_cmd = "create table var("
+		" var_id         integer primary key,"
+		" var_type       text,"
 		" smooth_id      integer,"
 		" age_id         integer,"
 		" time_id        integer,"
@@ -89,10 +90,10 @@ void variable_command(
 		" covariate_id   integer"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	string table_name = "variable";
+	string table_name = "var";
 	//
 	CppAD::vector<string> col_name_vec(8), row_val_vec(8);
-	col_name_vec[0]   = "variable_type";
+	col_name_vec[0]   = "var_type";
 	col_name_vec[1]   = "smooth_id";
 	col_name_vec[2]   = "age_id";
 	col_name_vec[3]   = "time_id";
@@ -103,14 +104,14 @@ void variable_command(
 	//
 	// mulstd variables
 	size_t n_smooth = db_input.smooth_table.size();
-	size_t offset, variable_id;
+	size_t offset, var_id;
 	for(size_t i = 2; i < row_val_vec.size(); i++)
 		row_val_vec[i] = "null"; // these columns are null for mulstd variables
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	offset      = pack_object.mulstd_offset(smooth_id);
 		for(size_t i = 0; i < 3; i++)
-		{	variable_id              = offset + i;
-			// variable_type
+		{	var_id                   = offset + i;
+			// var_type
 			if( i == 0 )
 				row_val_vec[0] = "mulstd_value";
 			else if( i == 1 )
@@ -126,7 +127,7 @@ void variable_command(
 				table_name,
 				col_name_vec,
 				row_val_vec,
-				variable_id
+				var_id
 			);
 		}
 	}
@@ -152,10 +153,10 @@ void variable_command(
 			for(size_t index = 0; index < n_var; index++)
 			{	size_t age_id   = index % n_age;
 				size_t time_id  = index / n_age;
-				variable_id     = offset + index;
+				var_id          = offset + index;
 				//
 				// variable_value
-				row_val_vec[0]  = "rate";     // variable_type
+				row_val_vec[0]  = "rate";     // var_type
 				row_val_vec[1]  = "null";     // smooth_id
 				row_val_vec[2]  = to_string( age_id );
 				row_val_vec[3]  = to_string( time_id );
@@ -168,7 +169,7 @@ void variable_command(
 					table_name,
 					col_name_vec,
 					row_val_vec,
-					variable_id
+					var_id
 				);
 			}
 		}
@@ -209,9 +210,9 @@ void variable_command(
 		for(size_t index = 0; index < n_var; index++)
 		{	size_t age_id   = index % n_age;
 			size_t time_id  = index / n_age;
-			variable_id     = offset + index;
+			var_id          = offset + index;
 			//
-		// variable_type
+		// var_type
 			if( mulcov_type == dismod_at::rate_mean_enum )
 				row_val_vec[0]  = "mulcov_rate_mean";
 			else if( mulcov_type == dismod_at::meas_value_enum )
@@ -232,7 +233,7 @@ void variable_command(
 				table_name,
 				col_name_vec,
 				row_val_vec,
-				variable_id
+				var_id
 			);
 		}
 	}
@@ -242,6 +243,7 @@ void variable_command(
 /*
 $begin fit_command$$
 $spell
+	var
 	tol
 	arg
 	Dismod
@@ -320,13 +322,14 @@ void fit_command(
 /*
 $begin truth_command$$
 $spell
+	var
 	dismod
 $$
 
 $section The Truth Command$$
 
 $head Syntax$$
-$codei%dismod_at variable %file_name%$$
+$codei%dismod_at var %file_name%$$
 
 $head file_name$$
 Is an
@@ -341,7 +344,7 @@ $subhead truth_table$$
 A new $cref truth_table$$ is created with the information in the fit table;
 to be specific,
 $codei%
-	%truth_id% = %fit_id% = %variable_id%
+	%truth_id% = %fit_id% = %var_id%
 	%truth_value% = %fit_value%
 %$$
 
@@ -389,6 +392,7 @@ $begin simulate_command$$
 
 $section The Simulate Command$$
 $spell
+	var
 	dismod
 	arg
 	std
@@ -410,7 +414,7 @@ It specifies the true values for the
 $cref/model_variables/model_variable/$$ used during the simulation.
 This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
-$cref variable_table$$ (created by the $cref variable_command$$).
+$cref var_table$$ (created by the $cref var_command$$).
 
 $subhead sim_meas_table$$
 A new $cref sim_meas_table$$ is created.
@@ -538,13 +542,13 @@ int main(int n_arg, const char** argv)
 	const string command_arg    = argv[++i_arg];
 	const string file_name_arg  = argv[++i_arg];
 	bool ok = false;
-	ok     |= command_arg == "variable";
+	ok     |= command_arg == "var";
 	ok     |= command_arg == "fit";
 	ok     |= command_arg == "truth";
 	ok     |= command_arg == "simulate";
 	if( ! ok )
 	{	cerr << "dismod_at: command is not one of the following:" << endl
-		<< "\tvariable, fit, truth, simulate" << endl;
+		<< "\tvar, fit, truth, simulate" << endl;
 		std::exit(1);
 	}
 	// --------------- get the input tables ---------------------------------
@@ -660,8 +664,8 @@ int main(int n_arg, const char** argv)
 	string rate_info = argument_map["rate_info"];
 	data_object.set_eigen_ode2_case_number(rate_info);
 	// ---------------------------------------------------------------------
-	if( command_arg == "variable" )
-	{	variable_command(
+	if( command_arg == "var" )
+	{	var_command(
 			db,
 			pack_object,
 			db_input,

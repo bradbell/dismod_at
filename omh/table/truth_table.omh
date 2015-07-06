@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin truth_table$$
 $spell
+	var
 $$
 
 $section The Truth Table$$
@@ -18,17 +19,17 @@ A new $code truth$$ table is created,
 as a copy of the $cref fit_table$$,
 by the $cref truth_command$$.
 It may also be created directly by the user
-(with the aid of the $cref variable_table$$).
+(with the aid of the $cref var_table$$).
 
 $head truth_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$subhead variable_id$$
+$subhead var_id$$
 The $icode truth_id$$ column is also a foreign key for the
-$cref variable_table$$; i.e.,
+$cref var_table$$; i.e.,
 $codei%
-	%variable_id% = %truth_id%
+	%var_id% = %truth_id%
 %$$
 In addition, the size of both tables is the same.
 

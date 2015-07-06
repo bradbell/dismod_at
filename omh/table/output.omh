@@ -14,7 +14,7 @@ $$
 
 $section Data Base Output Tables$$
 
-$childtable%omh/table/variable_table.omh
+$childtable%omh/table/var_table.omh
 	%omh/table/fit_table.omh
 	%omh/table/truth_table.omh
 	%omh/table/sim_meas_table.omh

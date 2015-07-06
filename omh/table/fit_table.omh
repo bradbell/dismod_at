@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin fit_table$$
 $spell
+	var
 $$
 
 $section The Fit Table$$
@@ -21,11 +22,11 @@ $head fit_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$subhead variable_id$$
+$subhead var_id$$
 The $icode fit_id$$ column is also a foreign key for the
-$cref variable_table$$; i.e.,
+$cref var_table$$; i.e.,
 $codei%
-	%variable_id% = %fit_id%
+	%var_id% = %fit_id%
 %$$
 In addition, the size of both tables is the same.
 

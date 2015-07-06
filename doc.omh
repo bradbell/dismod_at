@@ -42,14 +42,14 @@ $cref/primary keys/input/Primary Key/$$ and all columns
 of type $code text$$'; see
 $cref/text column not null/input/Text Column Not Null/$$.
 $lnext
-If the $cref variable_table$$ exists when the $cref fit_command$$ is executed,
+If the $cref var_table$$ exists when the $cref fit_command$$ is executed,
 use those values as a starting point for the optimization.
 Note that the initial
-$cref variable_table$$ will be overwritten by the fit.
+$cref var_table$$ will be overwritten by the fit.
 $lnext
 Add a $code dismod_at sample$$ command that,
 given the estimated  $cref/variable/model_variable/$$ values
-in the $cref variable_table$$,
+in the $cref var_table$$,
 samples from the from the posterior distribution corresponding
 to any of the $cref/average integrands/avg_integrand/$$.
 $lnext
