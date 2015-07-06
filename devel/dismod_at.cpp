@@ -33,11 +33,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 /*
 $begin variable_command$$
 $spell
-	tol
-	arg
-	Dismod
-	Ipopt
-	num_iter
+	dismod
 $$
 
 $section The Variable Command$$
@@ -322,6 +318,73 @@ void fit_command(
 }
 // ----------------------------------------------------------------------------
 /*
+$begin truth_command$$
+$spell
+	dismod
+$$
+
+$section The Variable Command$$
+
+$head Syntax$$
+$codei%dismod_at variable %file_name%$$
+
+$head file_name$$
+Is an
+$href%http://www.sqlite.org/sqlite/%$$ data base containing the
+$code dismod_at$$ $cref input$$ tables which are not modified.
+
+$subhead fit_table$$
+In addition to the standard $cref input$$ tables,
+there must be a $cref fit_table$$.
+
+$subhead truth_table$$
+A new truth table is created with the information in the fit table;
+to be specific,
+$codei%
+	%truth_id% = %fit_id% = %variable_id%
+	%truth_value% = %fit_value%
+%$$
+
+$children%example/get_started/truth_command.py%$$
+$head Example$$
+The file $cref truth_command.py$$ contains an example and test
+of using this command.
+
+$end
+*/
+
+// ----------------------------------------------------------------------------
+void truth_command(sqlite3* db)
+{	using CppAD::vector;
+	using std::string;
+	//
+	// get fit table information
+	CppAD::vector<double> fit_value;
+	string table_name  = "fit";
+	string column_name = "fit_value";
+	dismod_at::get_table_column(db, table_name, column_name, fit_value);
+	//
+	// create fit table
+	string sql_cmd = "drop table if exists truth";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	sql_cmd = "create table truth("
+		" truth_id       integer primary key,"
+		" truth_value    real"
+	")";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	table_name = "truth";
+	CppAD::vector<string> col_name_vec(1), row_val_vec(1);
+	col_name_vec[0]   = "truth_value";
+	for(size_t fit_id = 0; fit_id < fit_value.size(); fit_id++)
+	{	string truth_value = dismod_at::to_string( fit_value[fit_id] );
+		row_val_vec[0]     = truth_value;
+		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+	}
+	return;
+}
+// ----------------------------------------------------------------------------
+/*
 $begin simulate_command$$
 
 $section The Simulate Command$$
@@ -340,11 +403,11 @@ Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
-$subhead fit_table$$
-The $cref fit_table$$ is an addition input table for this command.
+$subhead truth_table$$
+The $cref truth_table$$ is an addition input table for this command.
 It specifies the true values for the
 $cref/model_variables/model_variable/$$ used during the simulation.
-This table can be create by a previous $cref fit_command$$,
+This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
 $cref variable_table$$ (created by the $cref variable_command$$).
 
@@ -382,10 +445,10 @@ void simulate_command
 	using CppAD::vector;
 	using dismod_at::to_string;
 	// -----------------------------------------------------------------------
-	// read fit table into pack_vec
+	// read truth table into pack_vec
 	vector<double> pack_vec;
-	string table_name = "fit";
-	string column_name = "fit_value";
+	string table_name = "truth";
+	string column_name = "truth_value";
 	dismod_at::get_table_column(db, table_name, column_name, pack_vec);
 	// ----------------- simulate_table ----------------------------------
 	table_name = "simulate";
@@ -476,10 +539,11 @@ int main(int n_arg, const char** argv)
 	bool ok = false;
 	ok     |= command_arg == "variable";
 	ok     |= command_arg == "fit";
+	ok     |= command_arg == "truth";
 	ok     |= command_arg == "simulate";
 	if( ! ok )
 	{	cerr << "dismod_at: command is not one of the following:" << endl
-		<< "\tvariable, fit, simulate" << endl;
+		<< "\tvariable, fit, truth, simulate" << endl;
 		std::exit(1);
 	}
 	// --------------- get the input tables ---------------------------------
@@ -617,6 +681,9 @@ int main(int n_arg, const char** argv)
 			tolerance        ,
 			max_num_iter
 		);
+	}
+	else if( command_arg == "truth" )
+	{	truth_command(db);
 	}
 	else if( command_arg == "simulate" )
 	{	simulate_command(

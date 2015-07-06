@@ -8,39 +8,36 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin fit_table$$
+$begin truth_table$$
 $spell
 $$
 
-$section The Fit Table$$
-The fit table contains one value for each $cref model_variable$$.
-A new $code fit$$ table is created during a
-$cref fit_command$$.
+$section The Truth Table$$
+The truth table contains one value for each $cref model_variable$$.
+A new $code truth$$ table is created,
+as a copy of the $cref fit_table$$,
+by the $cref truth_command$$.
+It may also be created directly by the user
+(with the aid of the $cref variable_table$$).
 
-$head fit_id$$
+$head truth_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
 $subhead variable_id$$
-The $icode fit_id$$ column is also a foreign key for the
+The $icode truth_id$$ column is also a foreign key for the
 $cref variable_table$$; i.e.,
 $codei%
-	%variable_id% = %fit_id%
+	%variable_id% = %truth_id%
 %$$
 In addition, the size of both tables is the same.
 
-$head fit_value$$
+$head truth_value$$
 The column has type $code real$$ and is
-the maximum likelihood estimate for this $icode fit_id$$.
-To be specific, the
-$cref/fixed effects/model_variable/Fixed Effects, theta/$$
-maximize the Laplace approximation
-$cref/L(theta)/approx_mixed_theory/Objective/L(theta)/$$ and the
-$cref/random effects/model_variable/Random Effects, u/$$
-maximize the joint likelihood; see
-$cref/u^(theta)/approx_mixed_theory/Objective/u^(theta)/$$.
+the value of the corresponding $cref model_variable$$
+used during the $cref simulate_command$$.
 
 $head Example$$
-See the $cref fit_command.py$$ example and test.
+See the $cref truth_command.py$$ example and test.
 
 $end
