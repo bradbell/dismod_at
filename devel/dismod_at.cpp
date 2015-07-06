@@ -54,7 +54,8 @@ to its meaning in terms of the
 $cref/model variables/model_variable/$$.
 You can use this information to interpret a $cref fit_var_table$$
 created by the $cref fit_command$$,
-or to build a fit_var table for use as input to the $cref sim_command$$.
+or to create a $cref truth_var_table$$
+for use as input to the $cref sim_command$$.
 
 $children%example/get_started/var_command.py%$$
 $head Example$$

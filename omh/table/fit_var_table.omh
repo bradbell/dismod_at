@@ -14,9 +14,11 @@ $spell
 $$
 
 $section The Fit Variable Table$$
-The fit_var table contains one value for each $cref model_variable$$.
-A new $code fit$$ table is created during a
-$cref fit_command$$.
+The fit_var table contains the maximum likelihood estimate
+for the $cref/model variables/model_variable/$$ corresponding to
+the data table $cref/meas_value/data_table/meas_value/$$.
+A new $code fit$$ table is created each time the
+$cref fit_command$$ is executed.
 
 $head fit_var_id$$
 This column has type $code integer$$ and is the primary key for this table.
@@ -29,8 +31,7 @@ $codei%
 In addition, the size of both tables is the same.
 
 $head fit_var_value$$
-The column has type $code real$$ and is
-the maximum likelihood estimate for this $icode fit_var_id$$.
+The column has type $code real$$ and contains the model variable values.
 To be specific, the
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$
 maximize the Laplace approximation
