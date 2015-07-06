@@ -97,11 +97,11 @@ flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at simulate command failed')
 # -----------------------------------------------------------------------
-# check the simulate table
+# check the sim_meas table
 data_dict      = dismod_at.get_table_dict(connection, 'data')
-simulate_dict  = dismod_at.get_table_dict(connection, 'simulate')
-for simulate_id in range( len(simulate_dict) ) :
-	row = simulate_dict[simulate_id];
+sim_meas_dict  = dismod_at.get_table_dict(connection, 'sim_meas')
+for sim_meas_id in range( len(sim_meas_dict) ) :
+	row = sim_meas_dict[sim_meas_id];
 	data_id    = row['data_id']
 	meas_value = row['meas_value']
 	meas_std   = data_dict[data_id]['meas_std']

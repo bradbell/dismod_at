@@ -392,6 +392,7 @@ $spell
 	dismod
 	arg
 	std
+	sim
 	covariates
 $$
 
@@ -411,10 +412,10 @@ This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
 $cref variable_table$$ (created by the $cref variable_command$$).
 
-$subhead simulate_table$$
-A new $cref simulate_table$$ is created.
-It contains simulated values that can be used in place of the data table
-$cref/meas_value/data_table/meas_value/$$ column.
+$subhead sim_meas_table$$
+A new $cref sim_meas_table$$ is created.
+It contains simulated measurement values that can be used in place of
+the data table $cref/meas_value/data_table/meas_value/$$ column.
 Only those entires in the data table for the following conditions
 hold are simulated:
 $list number$$
@@ -450,14 +451,14 @@ void simulate_command
 	string table_name = "truth";
 	string column_name = "truth_value";
 	dismod_at::get_table_column(db, table_name, column_name, pack_vec);
-	// ----------------- simulate_table ----------------------------------
-	table_name = "simulate";
+	// ----------------- sim_meas_table ----------------------------------
+	table_name = "sim_meas";
 	//
-	string sql_cmd = "drop table if exists simulate";
+	string sql_cmd = "drop table if exists sim_meas";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	sql_cmd = "create table simulate("
-		" simulate_id integer primary key,"
+	sql_cmd = "create table sim_meas("
+		" sim_meas_id integer primary key,"
 		" data_id     integer,"
 		" meas_value  real"
 	");";
@@ -508,10 +509,10 @@ void simulate_command
 # ifdef NDEBUG
 		dismod_at::put_table_row(table_name, col_name_vec, row_val_vec);
 # else
-		size_t simulate_id = dismod_at::put_table_row(
+		size_t sim_meas_id = dismod_at::put_table_row(
 			db, table_name, col_name_vec, row_val_vec
 		);
-		assert( simulate_id == subset_id );
+		assert( sim_meas_id == subset_id );
 # endif
 	}
 
