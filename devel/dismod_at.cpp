@@ -323,7 +323,7 @@ $spell
 	dismod
 $$
 
-$section The Variable Command$$
+$section The Truth Command$$
 
 $head Syntax$$
 $codei%dismod_at variable %file_name%$$
@@ -338,7 +338,7 @@ In addition to the standard $cref input$$ tables,
 there must be a $cref fit_table$$.
 
 $subhead truth_table$$
-A new truth table is created with the information in the fit table;
+A new $cref truth_table$$ is created with the information in the fit table;
 to be specific,
 $codei%
 	%truth_id% = %fit_id% = %variable_id%

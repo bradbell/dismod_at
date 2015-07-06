@@ -71,8 +71,8 @@ variable_dict  = dismod_at.get_table_dict(connection, 'variable')
 # -----------------------------------------------------------------------
 # create a truth table with variables values to use during simulation
 tbl_name = 'truth'
-col_name = [ 'variable_id', 'truth_value' ]
-col_type = [ 'integer',     'real'      ]
+col_name = [ 'truth_value' ]
+col_type = [ 'real'        ]
 row_list = list()
 for variable_id in range( len(variable_dict) ) :
 	variable_row  = variable_dict[variable_id]
@@ -84,7 +84,7 @@ for variable_id in range( len(variable_dict) ) :
 		truth_value = 5e-3 * (rate_id + 1)
 	else :
 		assert False
-	truth_row = [ variable_id, truth_value ]
+	truth_row = [ truth_value ]
 	row_list.append( truth_row )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 # -----------------------------------------------------------------------
@@ -109,6 +109,6 @@ for sim_meas_id in range( len(sim_meas_dict) ) :
 	truth_value  = 5e-3 * (rate_id + 1)
 	assert meas_value != data_dict[data_id]['meas_value']
 	assert meas_value != truth_value
-	assert abs( meas_value - truth_value ) < 2.0 * meas_std
+	assert abs( meas_value - truth_value ) < 3.0 * meas_std
 print('simulate_command: OK')
 # END PYTHON
