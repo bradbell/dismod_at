@@ -264,8 +264,9 @@ $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $subhead fit_table$$
-The $cref fit_table$$ is created by this command and contains the
-results of the fit in its $cref/fit_value/fit_table/fit_value/$$ column.
+A new $cref fit_table$$ is created each time this command is run.
+It contains the results of the fit in its
+$cref/fit_value/fit_table/fit_value/$$ column.
 
 $children%example/get_started/fit_command.py%$$
 $head Example$$
@@ -305,20 +306,16 @@ void fit_command(
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	sql_cmd = "create table fit("
 		" fit_id       integer primary key,"
-		" variable_id  integer,"
 		" fit_value    real"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	string table_name = "fit";
 	//
-	CppAD::vector<string> col_name_vec(2), row_val_vec(2);
-	col_name_vec[0]   = "variable_id";
-	col_name_vec[1]   = "fit_value";
+	CppAD::vector<string> col_name_vec(1), row_val_vec(1);
+	col_name_vec[0]   = "fit_value";
 	for(size_t fit_id = 0; fit_id < solution.size(); fit_id++)
-	{	size_t variable_id = fit_id;
-		double fit_value   = solution[variable_id];
-		row_val_vec[0] = to_string( variable_id );
-		row_val_vec[1] = to_string( fit_value );
+	{	double fit_value   = solution[fit_id];
+		row_val_vec[0] = to_string( fit_value );
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
 	return;

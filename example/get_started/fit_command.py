@@ -68,8 +68,6 @@ connection      = dismod_at.create_connection(file_name, new)
 # get variable and fit tables
 variable_dict  = dismod_at.get_table_dict(connection, 'variable')
 fit_dict       = dismod_at.get_table_dict(connection, 'fit')
-for fit_id in range( len(fit_dict) ) :
-	assert fit_dict[fit_id]['variable_id'] == fit_id
 #
 # mulstd variables
 for smooth_id in range( n_smooth ) :

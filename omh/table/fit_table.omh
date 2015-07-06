@@ -12,22 +12,25 @@ $begin fit_table$$
 $spell
 $$
 
-$section The Fit Output Table$$
-The $code fit$$ table is created during a
+$section The Fit Table$$
+The fit table contains one value for each $cref model_variable$$.
+A new $code fit$$ table is created during a
 $cref fit_command$$.
 
 $head fit_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$head variable_id$$
-This column has type $code integer$$ and has a different value for every row.
-It specifies the row in the $cref/variable table/variable_table/variable_id/$$
-that this $icode fit_value$$ corresponds to.
+$subhead variable_id$$
+The $icode fit_id$$ column is also a foreign key for the
+$cref variable_table$$; i.e.,
+$codei%
+	%variable_id% = %fit_id%
+%$$
 
 $head fit_value$$
 The column has type $code real$$ and is
-the maximum likelihood estimate for this $icode variable_id$$.
+the maximum likelihood estimate for this $icode fit_id$$.
 To be specific, the
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$
 maximize the Laplace approximation
