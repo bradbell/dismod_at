@@ -340,12 +340,12 @@ $subhead fit_var_table$$
 In addition to the standard $cref input$$ tables,
 there must be a $cref fit_var_table$$.
 
-$subhead truth_table$$
-A new $cref truth_table$$ is created with the information in the fit_var table;
+$subhead truth_var_table$$
+A new $cref truth_var_table$$ is created with the information in the fit_var table;
 to be specific,
 $codei%
-	%truth_id% = %fit_var_id% = %var_id%
-	%truth_value% = %fit_var_value%
+	%truth_var_id% = %fit_var_id% = %var_id%
+	%truth_var_value% = %fit_var_value%
 %$$
 
 $children%example/get_started/truth_command.py%$$
@@ -370,18 +370,18 @@ void truth_command(sqlite3* db)
 	// create fit_var table
 	string sql_cmd = "drop table if exists truth";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table truth("
-		" truth_id       integer primary key,"
-		" truth_value    real"
+	sql_cmd = "create table truth_var("
+		" truth_var_id   integer primary key,"
+		" truth_var_value    real"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	table_name = "truth";
+	table_name = "truth_var";
 	CppAD::vector<string> col_name_vec(1), row_val_vec(1);
-	col_name_vec[0]   = "truth_value";
+	col_name_vec[0]   = "truth_var_value";
 	for(size_t fit_var_id = 0; fit_var_id < fit_var_value.size(); fit_var_id++)
-	{	string truth_value = dismod_at::to_string( fit_var_value[fit_var_id] );
-		row_val_vec[0]     = truth_value;
+	{	string truth_var_value = dismod_at::to_string( fit_var_value[fit_var_id] );
+		row_val_vec[0]     = truth_var_value;
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
 	return;
@@ -408,8 +408,8 @@ Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
-$subhead truth_table$$
-The $cref truth_table$$ is an addition input table for this command.
+$subhead truth_var_table$$
+The $cref truth_var_table$$ is an addition input table for this command.
 It specifies the true values for the
 $cref/model_variables/model_variable/$$ used during the simulation.
 This table can be create by the $cref truth_command$$,
@@ -450,10 +450,10 @@ void simulate_command
 	using CppAD::vector;
 	using dismod_at::to_string;
 	// -----------------------------------------------------------------------
-	// read truth table into pack_vec
+	// read truth_var table into pack_vec
 	vector<double> pack_vec;
-	string table_name = "truth";
-	string column_name = "truth_value";
+	string table_name = "truth_var";
+	string column_name = "truth_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, pack_vec);
 	// ----------------- sim_meas_table ----------------------------------
 	table_name = "sim_meas";

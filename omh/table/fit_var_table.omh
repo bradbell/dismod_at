@@ -21,8 +21,6 @@ $cref fit_command$$.
 $head fit_var_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
-
-$subhead var_id$$
 The $icode fit_var_id$$ column is also a foreign key for the
 $cref var_table$$; i.e.,
 $codei%

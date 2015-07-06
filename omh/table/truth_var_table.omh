@@ -8,32 +8,30 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin truth_table$$
+$begin truth_var_table$$
 $spell
 	var
 $$
 
-$section The Truth Table$$
-The truth table contains one value for each $cref model_variable$$.
+$section The Truth Variable Table$$
+The truth_var table contains one value for each $cref model_variable$$.
 A new $code truth$$ table is created,
 as a copy of the $cref fit_var_table$$,
 by the $cref truth_command$$.
 It may also be created directly by the user
 (with the aid of the $cref var_table$$).
 
-$head truth_id$$
+$head truth_var_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
-
-$subhead var_id$$
-The $icode truth_id$$ column is also a foreign key for the
+The $icode truth_var_id$$ column is also a foreign key for the
 $cref var_table$$; i.e.,
 $codei%
-	%var_id% = %truth_id%
+	%var_id% = %truth_var_id%
 %$$
 In addition, the size of both tables is the same.
 
-$head truth_value$$
+$head truth_var_value$$
 The column has type $code real$$ and is
 the value of the corresponding $cref model_variable$$
 used during the $cref simulate_command$$.

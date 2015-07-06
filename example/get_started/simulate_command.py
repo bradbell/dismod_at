@@ -69,22 +69,22 @@ connection      = dismod_at.create_connection(file_name, new)
 # get the variable information
 var_dict  = dismod_at.get_table_dict(connection, 'var')
 # -----------------------------------------------------------------------
-# create a truth table with variables values to use during simulation
-tbl_name = 'truth'
-col_name = [ 'truth_value' ]
+# create a truth_var table with variables values to use during simulation
+tbl_name = 'truth_var'
+col_name = [ 'truth_var_value' ]
 col_type = [ 'real'        ]
 row_list = list()
 for var_id in range( len(var_dict) ) :
 	variable_row  = var_dict[var_id]
 	var_type = variable_row['var_type']
 	if var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
-		truth_value = 1.0
+		truth_var_value = 1.0
 	elif var_type == 'rate' :
 		rate_id   = variable_row['rate_id']
-		truth_value = 5e-3 * (rate_id + 1)
+		truth_var_value = 5e-3 * (rate_id + 1)
 	else :
 		assert False
-	truth_row = [ truth_value ]
+	truth_row = [ truth_var_value ]
 	row_list.append( truth_row )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 # -----------------------------------------------------------------------
@@ -106,9 +106,9 @@ for sim_meas_id in range( len(sim_meas_dict) ) :
 	meas_value = row['meas_value']
 	meas_std   = data_dict[data_id]['meas_std']
 	rate_id      = data_id # for this example database
-	truth_value  = 5e-3 * (rate_id + 1)
+	truth_var_value  = 5e-3 * (rate_id + 1)
 	assert meas_value != data_dict[data_id]['meas_value']
-	assert meas_value != truth_value
-	assert abs( meas_value - truth_value ) < 3.0 * meas_std
+	assert meas_value != truth_var_value
+	assert abs( meas_value - truth_var_value ) < 3.0 * meas_std
 print('simulate_command: OK')
 # END PYTHON
