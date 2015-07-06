@@ -66,15 +66,15 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get fit and truth tables
-fit_dict    = dismod_at.get_table_dict(connection, 'fit')
+fit_var_dict= dismod_at.get_table_dict(connection, 'fit_var')
 truth_dict  = dismod_at.get_table_dict(connection, 'truth')
 # -----------------------------------------------------------------------
 # check result
-assert len(fit_dict) == len(truth_dict)
-for fit_id in range( len(fit_dict) ) :
-	fit_value   = fit_dict[fit_id]['fit_value']
-	truth_value = truth_dict[fit_id]['truth_value']
-	assert fit_value == truth_value
+assert len(fit_var_dict) == len(truth_dict)
+for fit_var_id in range( len(fit_var_dict) ) :
+	fit_var_value   = fit_var_dict[fit_var_id]['fit_var_value']
+	truth_value = truth_dict[fit_var_id]['truth_value']
+	assert fit_var_value == truth_value
 # -----------------------------------------------------------------------
 print('truth_command: OK')
 # END PYTHON

@@ -8,31 +8,31 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin fit_table$$
+$begin fit_var_table$$
 $spell
 	var
 $$
 
-$section The Fit Table$$
-The fit table contains one value for each $cref model_variable$$.
+$section The Fit Variable Table$$
+The fit_var table contains one value for each $cref model_variable$$.
 A new $code fit$$ table is created during a
 $cref fit_command$$.
 
-$head fit_id$$
+$head fit_var_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
 $subhead var_id$$
-The $icode fit_id$$ column is also a foreign key for the
+The $icode fit_var_id$$ column is also a foreign key for the
 $cref var_table$$; i.e.,
 $codei%
-	%var_id% = %fit_id%
+	%var_id% = %fit_var_id%
 %$$
 In addition, the size of both tables is the same.
 
-$head fit_value$$
+$head fit_var_value$$
 The column has type $code real$$ and is
-the maximum likelihood estimate for this $icode fit_id$$.
+the maximum likelihood estimate for this $icode fit_var_id$$.
 To be specific, the
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$
 maximize the Laplace approximation

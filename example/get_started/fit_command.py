@@ -65,9 +65,9 @@ for command in [ 'var', 'fit' ] :
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
-# get variable and fit tables
-var_dict  = dismod_at.get_table_dict(connection, 'var')
-fit_dict       = dismod_at.get_table_dict(connection, 'fit')
+# get variable and fit_var tables
+var_dict       = dismod_at.get_table_dict(connection, 'var')
+fit_var_dict   = dismod_at.get_table_dict(connection, 'fit_var')
 #
 # mulstd variables
 for smooth_id in range( n_smooth ) :
@@ -79,8 +79,8 @@ for smooth_id in range( n_smooth ) :
 			match = match and row['smooth_id'] == smooth_id
 			if match :
 				count += 1
-				fit_id         = var_id
-				variable_value = fit_dict[fit_id]['fit_value']
+				fit_var_id     = var_id
+				variable_value = fit_var_dict[fit_var_id]['fit_var_value']
 				assert variable_value == 1.0
 		assert count == 1
 #
@@ -100,8 +100,8 @@ for rate_id in range(n_rate) :
 			if match :
 				count += 1
 				check          = rate_true[rate_id]
-				fit_id         = var_id
-				variable_value = fit_dict[fit_id]['fit_value']
+				fit_var_id     = var_id
+				variable_value = fit_var_dict[fit_var_id]['fit_var_value']
 				if node_id == 0 :
 					# parent node
 					err = variable_value / check - 1.0

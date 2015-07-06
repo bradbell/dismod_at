@@ -16,7 +16,7 @@ $$
 $section The Truth Table$$
 The truth table contains one value for each $cref model_variable$$.
 A new $code truth$$ table is created,
-as a copy of the $cref fit_table$$,
+as a copy of the $cref fit_var_table$$,
 by the $cref truth_command$$.
 It may also be created directly by the user
 (with the aid of the $cref var_table$$).

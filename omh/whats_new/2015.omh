@@ -44,7 +44,7 @@ $code make$$.
 This has been fixed.
 $lnext
 Use a $cref var_command$$ to create the $cref var_table$$
-and put the $cref fit_command$$ results in a separate $cref fit_table$$.
+and put the $cref fit_command$$ results in a separate $cref fit_var_table$$.
 $lend
 
 $head 07-04$$

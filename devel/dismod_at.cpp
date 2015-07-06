@@ -52,9 +52,9 @@ A new var table is created with the information
 that maps a $cref/var_id/var_table/var_id/$$
 to its meaning in terms of the
 $cref/model variables/model_variable/$$.
-You can use this information to interpret a $cref fit_table$$
+You can use this information to interpret a $cref fit_var_table$$
 created by the $cref fit_command$$,
-or to build a fit table for use as input to the $cref simulate_command$$.
+or to build a fit_var table for use as input to the $cref simulate_command$$.
 
 $children%example/get_started/var_command.py%$$
 $head Example$$
@@ -261,10 +261,10 @@ Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
-$subhead fit_table$$
-A new $cref fit_table$$ is created each time this command is run.
+$subhead fit_var_table$$
+A new $cref fit_var_table$$ is created each time this command is run.
 It contains the results of the fit in its
-$cref/fit_value/fit_table/fit_value/$$ column.
+$cref/fit_var_value/fit_var_table/fit_var_value/$$ column.
 
 $children%example/get_started/fit_command.py%$$
 $head Example$$
@@ -299,21 +299,21 @@ void fit_command(
 	);
 	fit_object.run_fit(tolerance_arg, max_num_iter_arg);
 	vector<double> solution = fit_object.get_solution();
-	// -------------------- fit table --------------------------------------
+	// -------------------- fit_var table --------------------------------------
 	string sql_cmd = "drop table if exists fit";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table fit("
-		" fit_id       integer primary key,"
-		" fit_value    real"
+	sql_cmd = "create table fit_var("
+		" fit_var_id   integer primary key,"
+		" fit_var_value    real"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	string table_name = "fit";
+	string table_name = "fit_var";
 	//
 	CppAD::vector<string> col_name_vec(1), row_val_vec(1);
-	col_name_vec[0]   = "fit_value";
-	for(size_t fit_id = 0; fit_id < solution.size(); fit_id++)
-	{	double fit_value   = solution[fit_id];
-		row_val_vec[0] = to_string( fit_value );
+	col_name_vec[0]   = "fit_var_value";
+	for(size_t fit_var_id = 0; fit_var_id < solution.size(); fit_var_id++)
+	{	double fit_var_value   = solution[fit_var_id];
+		row_val_vec[0] = to_string( fit_var_value );
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
 	return;
@@ -336,16 +336,16 @@ Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
-$subhead fit_table$$
+$subhead fit_var_table$$
 In addition to the standard $cref input$$ tables,
-there must be a $cref fit_table$$.
+there must be a $cref fit_var_table$$.
 
 $subhead truth_table$$
-A new $cref truth_table$$ is created with the information in the fit table;
+A new $cref truth_table$$ is created with the information in the fit_var table;
 to be specific,
 $codei%
-	%truth_id% = %fit_id% = %var_id%
-	%truth_value% = %fit_value%
+	%truth_id% = %fit_var_id% = %var_id%
+	%truth_value% = %fit_var_value%
 %$$
 
 $children%example/get_started/truth_command.py%$$
@@ -361,13 +361,13 @@ void truth_command(sqlite3* db)
 {	using CppAD::vector;
 	using std::string;
 	//
-	// get fit table information
-	CppAD::vector<double> fit_value;
-	string table_name  = "fit";
-	string column_name = "fit_value";
-	dismod_at::get_table_column(db, table_name, column_name, fit_value);
+	// get fit_var table information
+	CppAD::vector<double> fit_var_value;
+	string table_name  = "fit_var";
+	string column_name = "fit_var_value";
+	dismod_at::get_table_column(db, table_name, column_name, fit_var_value);
 	//
-	// create fit table
+	// create fit_var table
 	string sql_cmd = "drop table if exists truth";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	sql_cmd = "create table truth("
@@ -379,8 +379,8 @@ void truth_command(sqlite3* db)
 	table_name = "truth";
 	CppAD::vector<string> col_name_vec(1), row_val_vec(1);
 	col_name_vec[0]   = "truth_value";
-	for(size_t fit_id = 0; fit_id < fit_value.size(); fit_id++)
-	{	string truth_value = dismod_at::to_string( fit_value[fit_id] );
+	for(size_t fit_var_id = 0; fit_var_id < fit_var_value.size(); fit_var_id++)
+	{	string truth_value = dismod_at::to_string( fit_var_value[fit_var_id] );
 		row_val_vec[0]     = truth_value;
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
