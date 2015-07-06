@@ -70,6 +70,13 @@
 # Its values start with zero (for the first row) and
 # increment by one for each row.
 #
+# $head Side Effects$$
+# This routine does a
+# $codei%
+#	%connection%.commit()
+# %$$
+# to make sure the table exists before returning.
+#
 # $children%example/table/create_table.py
 # %$$
 # $head Example$$
@@ -104,3 +111,4 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
 		value_tuple = dismod_at.unicode_tuple(row_cpy, quote_text)
 		cmd = 'insert into ' + tbl_name + ' values ' + value_tuple
 		cursor.execute(cmd)
+	connection.commit()

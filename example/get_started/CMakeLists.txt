@@ -23,6 +23,12 @@ ADD_CUSTOM_TARGET(
 	DEPENDS dismod_at
 )
 ADD_CUSTOM_TARGET(
+	check_simulate_command
+	${python_three_command} example/get_started/simulate_command.py
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+	DEPENDS dismod_at
+)
+ADD_CUSTOM_TARGET(
 	check_get_started
-	DEPENDS check_variable_command check_fit_command
+	DEPENDS check_variable_command check_fit_command check_simulate_command
 )

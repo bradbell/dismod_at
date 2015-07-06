@@ -31,6 +31,9 @@ $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-05$$
 $list number$$
+First version of the $cref simulate_command$$ that passes
+its example / test.
+$lnext
 Put the $cref command$$ arguments in $cref argument_table$$
 instead of on the command line (except for the file name of the database).
 $lnext

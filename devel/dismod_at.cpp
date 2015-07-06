@@ -263,10 +263,6 @@ Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
-$subhead variable_table$$
-The $cref variable_table$$, created by the previous $cref variable_command$$
-is an additional input table for this command.
-
 $subhead fit_table$$
 The $cref fit_table$$ is created by this command and contains the
 results of the fit in its $cref/fit_value/fit_table/fit_value/$$ column.
@@ -339,9 +335,6 @@ $spell
 	covariates
 $$
 
-$head Under Construction$$
-This command is under construction and does not yet work.
-
 $head Syntax$$
 $codei%dismod_at simulate %file_name%$$
 
@@ -350,10 +343,13 @@ Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
-$subhead variable_table$$
-The data base must contain a $cref variable_table$$ that specifies the
-value of the model variables that is used to simulate the data.
-It may have been created by a previous $cref fit_command$$.
+$subhead fit_table$$
+The $cref fit_table$$ is an addition input table for this command.
+It specifies the true values for the
+$cref/model_variables/model_variable/$$ used during the simulation.
+This table can be create by a previous $cref fit_command$$,
+or the user can create it directly with the aid of the
+$cref variable_table$$ (created by the $cref variable_command$$).
 
 $subhead simulate_table$$
 A new $cref simulate_table$$ is created.
@@ -369,8 +365,10 @@ All of the covariates satisfy the
 $cref/max_difference/covariate_table/max_difference/$$ criteria.
 $lend
 
+$children%example/get_started/simulate_command.py%$$
 $head Example$$
-2DO: add an example and test for the simulate command.
+The file $cref simulate_command.py$$ contains an example and test
+of using this command.
 
 $end
 */
@@ -387,19 +385,24 @@ void simulate_command
 	using CppAD::vector;
 	using dismod_at::to_string;
 	// -----------------------------------------------------------------------
-	// pack_vec
+	// read fit table into pack_vec
 	vector<double> pack_vec;
-	string table_name = "variable";
-	string column_name = "value";
+	string table_name = "fit";
+	string column_name = "fit_value";
 	dismod_at::get_table_column(db, table_name, column_name, pack_vec);
 	// ----------------- simulate_table ----------------------------------
 	table_name = "simulate";
 	//
 	string sql_cmd = "drop table if exists simulate";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
 	sql_cmd = "create table simulate("
-		" simulate_id integer primary key, meas_value real"
+		" simulate_id integer primary key,"
+		" data_id     integer,"
+		" meas_value  real"
 	");";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
 	vector<string> col_name_vec(2), row_val_vec(2);
 	col_name_vec[0]   = "data_id";
 	col_name_vec[1]   = "meas_value";

@@ -53,12 +53,6 @@ in the $cref variable_table$$,
 samples from the from the posterior distribution corresponding
 to any of the $cref/average integrands/avg_integrand/$$.
 $lnext
-Add a $code dismod_at simulate$$ command that,
-given true $cref/variable/model_variable/$$ values
-in the $cref variable_table$$,
-samples from the from the distribution corresponding
-to the data table $cref/meas_value/data_table/meas_value/$$.
-$lnext
 Include lower and upper limit for the smoothing difference priors
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.

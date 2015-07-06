@@ -226,6 +226,7 @@ def get_started_db (file_name) :
 	n_smooth  = len( smooth_list )
 	rate_true = []
 	for rate_id in range( len( data_list ) ) :
+		# for this particular example
 		data_id    = rate_id
 		meas_value = data_list[data_id]['meas_value']
 		rate_true.append(meas_value)
