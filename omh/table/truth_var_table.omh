@@ -34,7 +34,7 @@ In addition, the size of both tables is the same.
 $head truth_var_value$$
 The column has type $code real$$ and is
 the value of the corresponding $cref model_variable$$
-used during the $cref simulate_command$$.
+used during the $cref sim_command$$.
 
 $head Example$$
 See the $cref truth_command.py$$ example and test.

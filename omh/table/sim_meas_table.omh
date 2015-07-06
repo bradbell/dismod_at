@@ -15,9 +15,9 @@ $$
 
 $section The Simulated Measurement Table$$
 The $code sim_meas$$ table is created during a
-$cref simulate_command$$.
+$cref sim_command$$.
 
-$head simulate_id$$
+$head sim_meas_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
@@ -26,13 +26,13 @@ This column has type $code integer$$ and has a different value for every row.
 It specifies the row in the $cref/data_id/data_table/data_id/$$ that
 this simulated measurement value corresponds to.
 
-$head meas_value$$
+$head sim_meas_value$$
 The column has type $code real$$ and is
-the simulate measurement value that for the specified row of the data table;
+the simulated measurement value that for the specified row of the data table;
 i.e., it can act as a replacement for the value
 $cref/meas_value/data_table/meas_value/$$ in the data table.
 
 $head Example$$
-See the $cref simulate_command.py$$ example and test.
+See the $cref sim_command.py$$ example and test.
 
 $end

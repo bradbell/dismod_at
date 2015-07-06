@@ -54,7 +54,7 @@ to its meaning in terms of the
 $cref/model variables/model_variable/$$.
 You can use this information to interpret a $cref fit_var_table$$
 created by the $cref fit_command$$,
-or to build a fit_var table for use as input to the $cref simulate_command$$.
+or to build a fit_var table for use as input to the $cref sim_command$$.
 
 $children%example/get_started/var_command.py%$$
 $head Example$$
@@ -388,7 +388,7 @@ void truth_command(sqlite3* db)
 }
 // ----------------------------------------------------------------------------
 /*
-$begin simulate_command$$
+$begin sim_command$$
 
 $section The Simulate Command$$
 $spell
@@ -401,7 +401,7 @@ $spell
 $$
 
 $head Syntax$$
-$codei%dismod_at simulate %file_name%$$
+$codei%dismod_at sim %file_name%$$
 
 $head file_name$$
 Is an
@@ -430,14 +430,14 @@ All of the covariates satisfy the
 $cref/max_difference/covariate_table/max_difference/$$ criteria.
 $lend
 
-$children%example/get_started/simulate_command.py%$$
+$children%example/get_started/sim_command.py%$$
 $head Example$$
-The file $cref simulate_command.py$$ contains an example and test
+The file $cref sim_command.py$$ contains an example and test
 of using this command.
 
 $end
 */
-void simulate_command
+void sim_command
 (	sqlite3*                                            db              ,
 	const CppAD::vector<dismod_at::integrand_struct>&   integrand_table ,
 	const CppAD::vector<dismod_at::data_subset_struct>& subset_object   ,
@@ -545,10 +545,10 @@ int main(int n_arg, const char** argv)
 	ok     |= command_arg == "var";
 	ok     |= command_arg == "fit";
 	ok     |= command_arg == "truth";
-	ok     |= command_arg == "simulate";
+	ok     |= command_arg == "sim";
 	if( ! ok )
 	{	cerr << "dismod_at: command is not one of the following:" << endl
-		<< "\tvar, fit, truth, simulate" << endl;
+		<< "\tvar, fit, truth, sim" << endl;
 		std::exit(1);
 	}
 	// --------------- get the input tables ---------------------------------
@@ -690,8 +690,8 @@ int main(int n_arg, const char** argv)
 	else if( command_arg == "truth" )
 	{	truth_command(db);
 	}
-	else if( command_arg == "simulate" )
-	{	simulate_command(
+	else if( command_arg == "sim" )
+	{	sim_command(
 			db                       ,
 			db_input.integrand_table ,
 			subset_object            ,
