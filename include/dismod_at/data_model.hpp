@@ -21,6 +21,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "smooth2ode.hpp"
 # include "pack_info.hpp"
 # include "residual_density.hpp"
+# include "get_simulate_table.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -41,7 +42,6 @@ private:
 	const size_t                              n_age_ode_;
 	const size_t                              n_time_ode_;
 	const double                              ode_step_size_;
-	const CppAD::vector<data_subset_struct>&  subset_object_;
 	const pack_info                           pack_object_;
 
 	// set by constructor and not changed
@@ -52,6 +52,10 @@ private:
 	// set to a default value by consturctor
 	// modified by set_eigen_ode2_case_number
 	size_t                       eigen_ode2_case_number_;
+
+	// set by consructor as reference to object in call
+	// subset_object_[subset_id].meas_value is modified by change_meas_value.
+	CppAD::vector<data_subset_struct>         subset_object_;
 public:
 	data_model(
 		size_t                                   parent_node_id  ,
@@ -72,6 +76,11 @@ public:
 	~data_model(void);
 	//
 	void set_eigen_ode2_case_number(const std::string& rate_info_arg);
+	//
+	void change_meas_value(
+		const size_t&                         sample_index,
+		const CppAD::vector<simulate_struct>& sample_table
+	);
 	//
 	// compute average for integrands that do not require S or C
 	template <class Float>

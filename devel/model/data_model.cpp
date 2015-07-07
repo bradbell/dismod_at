@@ -197,8 +197,8 @@ data_model::data_model(
 n_age_ode_     (n_age_ode)        ,
 n_time_ode_    (n_time_ode)       ,
 ode_step_size_ (ode_step_size)    ,
-subset_object_ (subset_object)    ,
-pack_object_   (pack_object)
+pack_object_   (pack_object)      ,
+subset_object_ (subset_object)
 {	using std::string;
 	size_t i, j, k;
 	//
@@ -488,7 +488,7 @@ $codei%data_object%.set_eigen_ode2_case_number(%rate_info%)%$$
 $head data_object$$
 This object has prototype
 $codei%
-	const data_model %data_object%
+	data_model %data_object%
 %$$
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
@@ -517,6 +517,74 @@ void data_model::set_eigen_ode2_case_number(const std::string& rate_info)
 	}
 	assert(false);
 }
+/*
+$begin change_meas_value$$
+$spell
+	const
+	CppAD
+	struct
+$$
+
+$section Change the Measurement Values to A Particular Simulation$$
+
+$head Syntax$$
+$codei%data_object%.change_meas_value(%sample_index%, %simulate_table)%$$
+
+$head data_object$$
+This object has prototype
+$codei%
+	data_model %data_object%
+%$$
+see $cref/data_object constructor/data_model_ctor/data_object/$$.
+
+$head sample_index$$
+This argument has prototype
+$codei%
+	const size_t& %sample_index%
+%$$
+It specifies the $cref/sample_index/simulate_table/sample_index/$$
+corresponding to new measurement values.
+
+$head simulate_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<simulate_struct>& %simulate_table%
+%$$
+and is the result of $cref get_simulate_table$$.
+The $cref/meas_value/simulate_table/meas_value/$$ column in this table,
+is used to replace the measurement values stored in $icode data_object$$.
+
+
+$end
+*/
+void data_model::change_meas_value(
+		const size_t&                         sample_index   ,
+		const CppAD::vector<simulate_struct>& simulate_table )
+{	size_t n_subset = subset_object_.size();
+	//
+	// simulate_id where this sample_index starts
+	size_t offset = n_subset * sample_index;
+	if( offset + n_subset > simulate_table.size() )
+	{	std::cerr << "Attempt to use a sample_index not in simulate table"
+		<< std::endl;
+		std::exit(1);
+	}
+	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+	{	size_t simulate_id  = offset + subset_id;
+		int    sample     = simulate_table[simulate_id].sample_index;
+		int    data_id    = simulate_table[simulate_id].data_id;
+		double meas_value = simulate_table[simulate_id].meas_value;
+		bool   ok         = size_t(sample) == sample_index;
+		ok               &= data_id == subset_object_[subset_id].data_id;
+		if( ! ok )
+		{	std::cerr << "simulate table is corrupted" << std::endl;
+			std::exit(1);
+		}
+		subset_object_[subset_id].meas_value = meas_value;
+	}
+	return;
+}
+
 
 /*
 -----------------------------------------------------------------------------
@@ -1335,8 +1403,8 @@ The return value has prototype
 $codei%
 	CppAD::vector< residual_struct<%Float%> > %residual_vec%
 %$$
-The size of $icode residual$$ is equal the number of samples
-$cref/n_sample/data_subset/subset_object/n_sample/$$.
+The size of $icode residual$$ is equal the number of subset data values
+$cref/n_subset/data_subset/subset_object/n_subset/$$.
 The order of the residuals is unspecified (at this time).
 The log of the density
 $latex \B{p}( y | u , \theta )$$,

@@ -74,12 +74,12 @@ the conditions above.
 The structure has all the fields that are present in
 $cref/data_struct/get_data_table/data_struct/$$.
 
-$subhead n_sample$$
-We use the notation $icode%n_sample% = %subset_object%.size()%$$.
+$subhead n_subset$$
+We use the notation $icode%n_subset% = %subset_object%.size()%$$.
 
 $subhead subset_id$$
 We use the notation $icode subset_id$$ for an index between
-zero and $icode%n_sample%-1%$$,
+zero and $icode%n_subset%-1%$$,
 
 $subhead data_id$$
 There an extra field in $code data_struct$$ that has
@@ -91,7 +91,7 @@ $codei%
 	%subset_object%[%subset_id%].data_id
 %$$
 increases with $icode subset_id$$;
-i.e., for each $icode subset_id$$ less than $icode%n_sample%-2%$$,
+i.e., for each $icode subset_id$$ less than $icode%n_subset%-2%$$,
 $codei%
 	%subset_object%[%subset_id%].data_id < %subset_object%[%subset_id%+1].data_id
 %$$
