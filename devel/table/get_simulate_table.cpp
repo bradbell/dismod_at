@@ -47,8 +47,8 @@ $head simulate_struct$$
 This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
-$code int$$ $cnext $code sample_index$$ $cnext
-	The $cref/sample_index/simulate_table/sample_index/$$
+$code int$$ $cnext $code sample_id$$ $cnext
+	The $cref/sample_id/simulate_table/sample_id/$$
 	for this simulated measurement.
 $rnext
 $code int$$ $cnext $code n_time$$ $cnext
@@ -82,10 +82,10 @@ CppAD::vector<simulate_struct> get_simulate_table(sqlite3* db)
 	string table_name  = "simulate";
 	size_t n_simulate = check_table_id(db, table_name);
 
-	std::string column_name =  "sample_index";
-	CppAD::vector<int>          sample_index;
-	get_table_column(db, table_name, column_name, sample_index);
-	assert( sample_index.size() == n_simulate );
+	std::string column_name =  "sample_id";
+	CppAD::vector<int>          sample_id;
+	get_table_column(db, table_name, column_name, sample_id);
+	assert( sample_id.size() == n_simulate );
 
 	column_name             =  "data_id";
 	CppAD::vector<int>          data_id;
@@ -99,7 +99,7 @@ CppAD::vector<simulate_struct> get_simulate_table(sqlite3* db)
 
 	CppAD::vector<simulate_struct> simulate_table(n_simulate);
 	for(size_t i = 0; i < n_simulate; i++)
-	{	simulate_table[i].sample_index  = sample_index[i];
+	{	simulate_table[i].sample_id     = sample_id[i];
 		simulate_table[i].data_id       = data_id[i];
 		simulate_table[i].meas_value    = meas_value[i];
 	}

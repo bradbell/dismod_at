@@ -458,19 +458,19 @@ void simulate_command
 	//
 	sql_cmd = "create table simulate("
 		" simulate_id   integer primary key,"
-		" sample_index  integer,"
+		" sample_id     integer,"
 		" data_id       integer,"
 		" meas_value    real"
 	");";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	vector<string> col_name_vec(3), row_val_vec(3);
-	col_name_vec[0]   = "sample_index";
+	col_name_vec[0]   = "sample_id";
 	col_name_vec[1]   = "data_id";
 	col_name_vec[2]   = "meas_value";
 	//
 	size_t n_subset = subset_object.size();
-	for(size_t sample_index = 0; sample_index < number_sample; sample_index++)
+	for(size_t sample_id = 0; sample_id < number_sample; sample_id++)
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	size_t integrand_id =  subset_object[subset_id].integrand_id;
 		dismod_at::integrand_enum integrand =
@@ -506,7 +506,7 @@ void simulate_command
 		double meas_value   = dismod_at::sim_random(
 			density, avg, meas_std, eta
 		);
-		row_val_vec[0] = to_string( sample_index );
+		row_val_vec[0] = to_string( sample_id );
 		row_val_vec[1] = to_string( subset_object[subset_id].data_id );
 		row_val_vec[2] = to_string(meas_value);
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);

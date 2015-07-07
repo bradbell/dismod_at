@@ -17,7 +17,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	struct simulate_struct {
-		int         sample_index;
+		int         sample_id;
 		int         data_id;
 		double      meas_value;
 	};
