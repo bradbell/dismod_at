@@ -55,7 +55,7 @@ $cref/model variables/model_variable/$$.
 You can use this information to interpret a $cref fit_var_table$$
 created by the $cref fit_command$$,
 or to create a $cref truth_var_table$$
-for use as input to the $cref sim_command$$.
+for use as input to the $cref simulate_command$$.
 
 $children%example/get_started/var_command.py%$$
 $head Example$$
@@ -389,7 +389,7 @@ void truth_command(sqlite3* db)
 }
 // ----------------------------------------------------------------------------
 /*
-$begin sim_command$$
+$begin simulate_command$$
 
 $section The Simulate Command$$
 $spell
@@ -397,12 +397,11 @@ $spell
 	dismod
 	arg
 	std
-	sim
 	covariates
 $$
 
 $head Syntax$$
-$codei%dismod_at sim %file_name%$$
+$codei%dismod_at simulate %file_name%$$
 
 $head file_name$$
 Is an
@@ -417,8 +416,8 @@ This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref var_command$$).
 
-$subhead sim_meas_table$$
-A new $cref sim_meas_table$$ is created.
+$subhead simulate_table$$
+A new $cref simulate_table$$ is created.
 It contains simulated measurement values that can be used in place of
 the data table $cref/meas_value/data_table/meas_value/$$ column.
 Only those entires in the data table for the following conditions
@@ -431,14 +430,14 @@ All of the covariates satisfy the
 $cref/max_difference/covariate_table/max_difference/$$ criteria.
 $lend
 
-$children%example/get_started/sim_command.py%$$
+$children%example/get_started/simulate_command.py%$$
 $head Example$$
-The file $cref sim_command.py$$ contains an example and test
+The file $cref simulate_command.py$$ contains an example and test
 of using this command.
 
 $end
 */
-void sim_command
+void simulate_command
 (	sqlite3*                                            db              ,
 	const CppAD::vector<dismod_at::integrand_struct>&   integrand_table ,
 	const CppAD::vector<dismod_at::data_subset_struct>& subset_object   ,
@@ -456,14 +455,14 @@ void sim_command
 	string table_name = "truth_var";
 	string column_name = "truth_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, pack_vec);
-	// ----------------- sim_meas_table ----------------------------------
-	table_name = "sim_meas";
+	// ----------------- simulate_table ----------------------------------
+	table_name = "simulate";
 	//
-	string sql_cmd = "drop table if exists sim_meas";
+	string sql_cmd = "drop table if exists simulate";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	sql_cmd = "create table sim_meas("
-		" sim_meas_id integer primary key,"
+	sql_cmd = "create table simulate("
+		" simulate_id integer primary key,"
 		" data_id     integer,"
 		" meas_value  real"
 	");";
@@ -514,10 +513,10 @@ void sim_command
 # ifdef NDEBUG
 		dismod_at::put_table_row(table_name, col_name_vec, row_val_vec);
 # else
-		size_t sim_meas_id = dismod_at::put_table_row(
+		size_t simulate_id = dismod_at::put_table_row(
 			db, table_name, col_name_vec, row_val_vec
 		);
-		assert( sim_meas_id == subset_id );
+		assert( simulate_id == subset_id );
 # endif
 	}
 
@@ -546,10 +545,10 @@ int main(int n_arg, const char** argv)
 	ok     |= command_arg == "var";
 	ok     |= command_arg == "fit";
 	ok     |= command_arg == "truth";
-	ok     |= command_arg == "sim";
+	ok     |= command_arg == "simulate";
 	if( ! ok )
 	{	cerr << "dismod_at: command is not one of the following:" << endl
-		<< "\tvar, fit, truth, sim" << endl;
+		<< "\tvar, fit, truth, simulate" << endl;
 		std::exit(1);
 	}
 	// --------------- get the input tables ---------------------------------
@@ -691,8 +690,8 @@ int main(int n_arg, const char** argv)
 	else if( command_arg == "truth" )
 	{	truth_command(db);
 	}
-	else if( command_arg == "sim" )
-	{	sim_command(
+	else if( command_arg == "simulate" )
+	{	simulate_command(
 			db                       ,
 			db_input.integrand_table ,
 			subset_object            ,

@@ -32,7 +32,7 @@ $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-05$$
 $list number$$
-First version of the $cref sim_command$$ that passes
+First version of the $cref simulate_command$$ that passes
 its example / test.
 $lnext
 Put the $cref command$$ arguments in $cref argument_table$$
@@ -84,7 +84,7 @@ $lend
 $head 07-01$$
 $list number$$
 Simulating random numbers
-(for the $cref sim_command$$ which is not yet working)
+(for the $cref simulate_command$$ which is not yet working)
 has added the gnu scientific library
 $cref/gsl/install_unix/System Requirements/gsl/$$
 the system requirements.
@@ -112,7 +112,7 @@ $codei%
 where $icode table_name$$ is any table name.
 This has been fixed.
 $lnext
-Added the $cref sim_command$$ (not yet working).
+Added the $cref simulate_command$$ (not yet working).
 $lnext
 The values $icode n_age_ode$$ and $icode n_time_ode$$
 are now computed automatically

@@ -8,17 +8,16 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin sim_command.py$$ $newlinech #$$
+# $begin simulate_command.py$$ $newlinech #$$
 # $spell
-#	sim
 #	dismod
 # $$
 #
-# $section dismod_at sim: Example and Test$$
+# $section dismod_at simulate: Example and Test$$
 #
 # $code
 # $verbatim%
-#	example/get_started/sim_command.py
+#	example/get_started/simulate_command.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -31,7 +30,7 @@ import subprocess
 import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
-example = 'example/get_started/sim_command.py'
+example = 'example/get_started/simulate_command.py'
 if sys.argv[0] != example  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + example + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -89,20 +88,20 @@ for var_id in range( len(var_dict) ) :
 	row_list.append( truth_row )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 # -----------------------------------------------------------------------
-# sim command
+# simulate command
 program        = '../../devel/dismod_at'
-command        = 'sim'
+command        = 'simulate'
 cmd  = [ program, command, file_name ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
-	sys.exit('The dismod_at sim command failed')
+	sys.exit('The dismod_at simulate command failed')
 # -----------------------------------------------------------------------
-# check the sim_meas table
+# check the simulate table
 data_dict      = dismod_at.get_table_dict(connection, 'data')
-sim_meas_dict  = dismod_at.get_table_dict(connection, 'sim_meas')
-for sim_meas_id in range( len(sim_meas_dict) ) :
-	row = sim_meas_dict[sim_meas_id];
+simulate_dict  = dismod_at.get_table_dict(connection, 'simulate')
+for simulate_id in range( len(simulate_dict) ) :
+	row = simulate_dict[simulate_id];
 	data_id    = row['data_id']
 	meas_value = row['meas_value']
 	meas_std   = data_dict[data_id]['meas_std']
@@ -111,5 +110,5 @@ for sim_meas_id in range( len(sim_meas_dict) ) :
 	assert meas_value != data_dict[data_id]['meas_value']
 	assert meas_value != truth_var_value
 	assert abs( meas_value - truth_var_value ) < 3.0 * meas_std
-print('sim_command: OK')
+print('simulate_command: OK')
 # END PYTHON

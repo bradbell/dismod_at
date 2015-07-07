@@ -8,16 +8,15 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin sim_meas_table$$
+$begin simulate_table$$
 $spell
-	sim
 $$
 
 $section The Simulated Measurement Table$$
-The $code sim_meas$$ table is created during a
-$cref sim_command$$.
+The $code simulate$$ table is created during a
+$cref simulate_command$$.
 
-$head sim_meas_id$$
+$head simulate_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
@@ -26,13 +25,13 @@ This column has type $code integer$$ and has a different value for every row.
 It specifies the row in the $cref/data_id/data_table/data_id/$$ that
 this simulated measurement value corresponds to.
 
-$head sim_meas_value$$
+$head meas_value$$
 The column has type $code real$$ and is
 the simulated measurement value that for the specified row of the data table;
 i.e., it can act as a replacement for the value
 $cref/meas_value/data_table/meas_value/$$ in the data table.
 
 $head Example$$
-See the $cref sim_command.py$$ example and test.
+See the $cref simulate_command.py$$ example and test.
 
 $end
