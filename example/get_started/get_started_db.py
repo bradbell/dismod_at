@@ -203,6 +203,7 @@ def get_started_db (file_name) :
 		{ 'name':'tolerance',     'value':'1e-8'         },
 		{ 'name':'max_num_iter',  'value':'100'          },
 		{ 'name':'random_seed',   'value':'0'            },
+		{ 'name':'number_sample', 'value':'1'            },
 		{ 'name':'rate_info',     'value':'chi_positive' }
 	]
 	# --------------------------------------------------------------------------

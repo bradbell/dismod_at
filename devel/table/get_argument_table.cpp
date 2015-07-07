@@ -80,10 +80,11 @@ CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
 {	using std::string;
 	//
 	const char* name_list[] = {
-		"parent_node_id",
-		"ode_step_size",
-		"tolerance",
 		"max_num_iter",
+		"number_sample",
+		"ode_step_size",
+		"parent_node_id",
+		"tolerance",
 		"random_seed",
 		"rate_info"
 	};
@@ -150,6 +151,15 @@ CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
 			{	std::cerr
 				<< "argument table: argument_id = " << match << std::endl
 				<< "argument_value is < 0 for random_seed" << std::endl;
+				std::exit(1);
+			}
+		}
+		if( name_vec[i] == "number_sample" )
+		{	bool ok = std::atoi( argument_value[match].c_str() ) >= 1;
+			if( ! ok )
+			{	std::cerr
+				<< "argument table: argument_id = " << match << std::endl
+				<< "argument_value is < 1 for number_sample" << std::endl;
 				std::exit(1);
 			}
 		}

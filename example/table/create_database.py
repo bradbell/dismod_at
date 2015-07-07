@@ -181,6 +181,7 @@ def create_database() :
 		{ 'name':'tolerance',     'value':'1e-8'         },
 		{ 'name':'max_num_iter',  'value':'100'          },
 		{ 'name':'random_seed',   'value':'0'            },
+		{ 'name':'number_sample', 'value':'1'            },
 		{ 'name':'rate_info',     'value':'chi_positive' }
 	]
 	dismod_at.create_database(
@@ -346,6 +347,7 @@ def create_database() :
 		[ 'tolerance',      '1e-8'],
 		[ 'max_num_iter',   '100' ],
 		[ 'random_seed',    '0'   ],
+		[ 'number_sample',  '1'   ],
 		[ 'rate_info',      'chi_positive']
 	]
 	assert row_list == check_list

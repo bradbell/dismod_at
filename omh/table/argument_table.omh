@@ -76,6 +76,13 @@ is a positive integer that specifies the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
 maximum number of iterations $code max_iter$$.
 
+$head number_sample$$
+If $icode%argument_name% = number_sample%$$,
+the corresponding $icode argument_value$$
+is a positive integer specifying the
+number of independent samples of the
+$cref/data subset/simulate_table/data_id/Data Subset/$$.
+
 $head random_seed$$
 This is a non-negative integer used to seed the random number
 generator (used to generate simulated measurement noise).

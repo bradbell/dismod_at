@@ -47,7 +47,7 @@ Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
-$subhead var_table$$
+$head var_table$$
 A new var table is created with the information
 that maps a $cref/var_id/var_table/var_id/$$
 to its meaning in terms of the
@@ -262,7 +262,7 @@ Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
-$subhead fit_var_table$$
+$head fit_var_table$$
 A new $cref fit_var_table$$ is created each time this command is run.
 It contains the results of the fit in its
 $cref/fit_var_value/fit_var_table/fit_var_value/$$ column.
@@ -337,11 +337,11 @@ Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
-$subhead fit_var_table$$
+$head fit_var_table$$
 In addition to the standard $cref input$$ tables,
 there must be a $cref fit_var_table$$.
 
-$subhead truth_var_table$$
+$head truth_var_table$$
 A new $cref truth_var_table$$ is created with the information in the fit_var table;
 to be specific,
 $codei%
@@ -408,7 +408,7 @@ Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
-$subhead truth_var_table$$
+$head truth_var_table$$
 The $cref truth_var_table$$ is an addition input table for this command.
 It specifies the true values for the
 $cref/model_variables/model_variable/$$ used during the simulation.
@@ -416,19 +416,13 @@ This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref var_command$$).
 
-$subhead simulate_table$$
+$head simulate_table$$
 A new $cref simulate_table$$ is created.
 It contains simulated measurement values that can be used in place of
 the data table $cref/meas_value/data_table/meas_value/$$ column.
-Only those entires in the data table for the following conditions
-hold are simulated:
-$list number$$
-The $cref/node_id/data_table/node_id/$$ for the data is $icode parent_node_id$$,
-or that is a descendent of $icode parent_node_id$$.
-$lnext
-All of the covariates satisfy the
-$cref/max_difference/covariate_table/max_difference/$$ criteria.
-$lend
+Only those entires in the data table that satisfy the
+$cref/data subset/simulate_table/data_id/Data Subset/$$ conditions
+are included.
 
 $children%example/get_started/simulate_command.py%$$
 $head Example$$
@@ -442,7 +436,8 @@ void simulate_command
 	const CppAD::vector<dismod_at::integrand_struct>&   integrand_table ,
 	const CppAD::vector<dismod_at::data_subset_struct>& subset_object   ,
 	const dismod_at::data_model&                        data_object     ,
-	const size_t&                                       actual_seed
+	const size_t&                                       actual_seed     ,
+	const size_t&                                       number_sample
 )
 {	using std::cerr;
 	using std::endl;
@@ -462,18 +457,21 @@ void simulate_command
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	sql_cmd = "create table simulate("
-		" simulate_id integer primary key,"
-		" data_id     integer,"
-		" meas_value  real"
+		" simulate_id   integer primary key,"
+		" sample_index  integer,"
+		" data_id       integer,"
+		" meas_value    real"
 	");";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	vector<string> col_name_vec(2), row_val_vec(2);
-	col_name_vec[0]   = "data_id";
-	col_name_vec[1]   = "meas_value";
+	vector<string> col_name_vec(3), row_val_vec(3);
+	col_name_vec[0]   = "sample_index";
+	col_name_vec[1]   = "data_id";
+	col_name_vec[2]   = "meas_value";
 	//
-	size_t n_sample = subset_object.size();
-	for(size_t subset_id = 0; subset_id < n_sample; subset_id++)
+	size_t n_subset = subset_object.size();
+	for(size_t sample_index = 0; sample_index < number_sample; sample_index++)
+	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	size_t integrand_id =  subset_object[subset_id].integrand_id;
 		dismod_at::integrand_enum integrand =
 			integrand_table[integrand_id].integrand;
@@ -508,16 +506,10 @@ void simulate_command
 		double meas_value   = dismod_at::sim_random(
 			density, avg, meas_std, eta
 		);
-		row_val_vec[0] = to_string( subset_object[subset_id].data_id );
-		row_val_vec[1] = to_string(meas_value);
-# ifdef NDEBUG
-		dismod_at::put_table_row(table_name, col_name_vec, row_val_vec);
-# else
-		size_t simulate_id = dismod_at::put_table_row(
-			db, table_name, col_name_vec, row_val_vec
-		);
-		assert( simulate_id == subset_id );
-# endif
+		row_val_vec[0] = to_string( sample_index );
+		row_val_vec[1] = to_string( subset_object[subset_id].data_id );
+		row_val_vec[2] = to_string(meas_value);
+		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
 
 	return;
@@ -691,12 +683,16 @@ int main(int n_arg, const char** argv)
 	{	truth_command(db);
 	}
 	else if( command_arg == "simulate" )
-	{	simulate_command(
+	{	size_t number_sample = std::atoi(
+			argument_map["number_sample"].c_str()
+		);
+		simulate_command(
 			db                       ,
 			db_input.integrand_table ,
 			subset_object            ,
 			data_object              ,
-			actual_seed
+			actual_seed              ,
+			number_sample
 		);
 	}
 	else
