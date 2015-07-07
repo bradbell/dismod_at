@@ -197,7 +197,7 @@ data_model::data_model(
 n_age_ode_     (n_age_ode)        ,
 n_time_ode_    (n_time_ode)       ,
 ode_step_size_ (ode_step_size)    ,
-subset_object_   (subset_object)      ,
+subset_object_ (subset_object)    ,
 pack_object_   (pack_object)
 {	using std::string;
 	size_t i, j, k;
