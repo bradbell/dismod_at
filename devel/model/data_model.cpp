@@ -528,7 +528,7 @@ $$
 $section Change the Measurement Values to A Particular Simulation$$
 
 $head Syntax$$
-$codei%data_object%.change_meas_value(%sample_id%, %simulate_table)%$$
+$codei%data_object%.change_meas_value(%sample_index%, %simulate_table)%$$
 
 $head data_object$$
 This object has prototype
@@ -537,12 +537,12 @@ $codei%
 %$$
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
-$head sample_id$$
+$head sample_index$$
 This argument has prototype
 $codei%
-	const size_t& %sample_id%
+	const size_t& %sample_index%
 %$$
-It specifies the $cref/sample_id/simulate_table/sample_id/$$
+It specifies the $cref/sample_index/simulate_table/sample_index/$$
 corresponding to new measurement values.
 
 $head simulate_table$$
@@ -558,23 +558,23 @@ is used to replace the measurement values stored in $icode data_object$$.
 $end
 */
 void data_model::change_meas_value(
-		const size_t&                         sample_id      ,
+		const size_t&                         sample_index   ,
 		const CppAD::vector<simulate_struct>& simulate_table )
 {	size_t n_subset = subset_object_.size();
 	//
-	// simulate_id where this sample_id starts
-	size_t offset = n_subset * sample_id;
+	// simulate_id where this sample_index starts
+	size_t offset = n_subset * sample_index;
 	if( offset + n_subset > simulate_table.size() )
-	{	std::cerr << "Attempt to use a sample_id not in simulate table"
+	{	std::cerr << "Attempt to use a sample_index not in simulate table"
 		<< std::endl;
 		std::exit(1);
 	}
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	size_t simulate_id  = offset + subset_id;
-		int    sample     = simulate_table[simulate_id].sample_id;
+		int    sample     = simulate_table[simulate_id].sample_index;
 		int    data_id    = simulate_table[simulate_id].data_id;
 		double meas_value = simulate_table[simulate_id].meas_value;
-		bool   ok         = size_t(sample) == sample_id;
+		bool   ok         = size_t(sample) == sample_index;
 		ok               &= data_id == subset_object_[subset_id].data_id;
 		if( ! ok )
 		{	std::cerr << "simulate table is corrupted" << std::endl;

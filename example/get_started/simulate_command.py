@@ -102,13 +102,13 @@ data_dict      = dismod_at.get_table_dict(connection, 'data')
 simulate_dict  = dismod_at.get_table_dict(connection, 'simulate')
 for simulate_id in range( len(simulate_dict) ) :
 	row = simulate_dict[simulate_id];
-	sample_id = row['sample_id']
+	sample_index = row['sample_index']
 	data_id      = row['data_id']
 	meas_value   = row['meas_value']
 	meas_std     = data_dict[data_id]['meas_std']
 	rate_id      = data_id # for this example database
 	truth_var_value  = 5e-3 * (rate_id + 1)
-	assert sample_id    == 0
+	assert sample_index == 0
 	assert meas_value != data_dict[data_id]['meas_value']
 	assert meas_value != truth_var_value
 	assert abs( meas_value - truth_var_value ) < 3.0 * meas_std

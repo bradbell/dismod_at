@@ -78,7 +78,7 @@ public:
 	void set_eigen_ode2_case_number(const std::string& rate_info_arg);
 	//
 	void change_meas_value(
-		const size_t&                         sample_id,
+		const size_t&                         sample_index,
 		const CppAD::vector<simulate_struct>& sample_table
 	);
 	//
