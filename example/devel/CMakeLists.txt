@@ -90,6 +90,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	table/get_mulcov_table_xam.cpp
 	table/get_node_table_xam.cpp
 	table/get_rate_table_xam.cpp
+	table/get_simulate_table_xam.cpp
 	table/get_smooth_grid_xam.cpp
 	table/get_table_column_xam.cpp
 	table/get_time_table_xam.cpp

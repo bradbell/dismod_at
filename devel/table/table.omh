@@ -32,6 +32,7 @@ $childtable%
 	%devel/table/get_node_table.cpp
 	%devel/table/get_prior_table.cpp
 	%devel/table/get_rate_table.cpp
+	%devel/table/get_simulate_table.cpp
 	%devel/table/get_smooth_grid.cpp
 	%devel/table/get_smooth_table.cpp
 	%devel/table/get_table_column.cpp
