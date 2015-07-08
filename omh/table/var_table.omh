@@ -151,6 +151,6 @@ that this variable applies to.
 Otherwise, this column is $code null$$.
 
 $head Example$$
-See the $cref var_command.py$$ example and test.
+See the $cref init_command.py$$ example and test.
 
 $end

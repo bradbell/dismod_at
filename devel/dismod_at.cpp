@@ -33,8 +33,9 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace { // BEGIN_EMPTY_NAMESPACE
 /*
 -----------------------------------------------------------------------------
-$begin var_command$$
+$begin init_command$$
 $spell
+	init
 	var
 	dismod
 $$
@@ -42,7 +43,11 @@ $$
 $section The Variable Command$$
 
 $head Syntax$$
-$codei%dismod_at var %file_name%$$
+$codei%dismod_at init %file_name%$$
+
+$head Purpose$$
+This command should be executed whenever any of the
+$cref input$$ tables change.
 
 $head file_name$$
 Is an
@@ -59,16 +64,28 @@ created by the $cref fit_command$$,
 or to create a $cref truth_var_table$$
 for use as input to the $cref simulate_command$$.
 
-$children%example/get_started/var_command.py%$$
+$head Deleted Tables$$
+If any of the following tables exist, they are deleted:
+$list number$$
+$cref/fit_var_table/fit_command/fit_var_table/$$
+$lnext
+$cref/truth_var_table/truth_command/truth_var_table/$$
+$lnext
+$cref/simulate_table/simulate_command/simulate_table/$$
+$lnext
+$cref/sample_table/sample_command/sample_table/$$
+$lend
+
+$children%example/get_started/init_command.py%$$
 $head Example$$
-The file $cref var_command.py$$ contains an example and test
+The file $cref init_command.py$$ contains an example and test
 of using this command.
 
 $end
 */
 
 // ----------------------------------------------------------------------------
-void var_command(
+void init_command(
 	sqlite3*                                     db               ,
 	const dismod_at::pack_info&                  pack_object      ,
 	const dismod_at::db_input_struct&            db_input         ,
@@ -79,8 +96,20 @@ void var_command(
 	using std::string;
 	using dismod_at::to_string;
 
-	string sql_cmd = "drop table if exists var";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
+	// -----------------------------------------------------------------------
+	const char* drop_list[] = {
+		"var", "fit_var", "truth_var", "simulate", "sample"
+	};
+	size_t n_drop = sizeof( drop_list ) / sizeof( drop_list[0] );
+	string sql_cmd;
+	for(size_t i = 0; i < n_drop; i++)
+	{	sql_cmd = "drop table if exists ";
+		sql_cmd += drop_list[i];
+		dismod_at::exec_sql_cmd(db, sql_cmd);
+	}
+	// -----------------------------------------------------------------------
+	// create var_table
+	// -----------------------------------------------------------------------
 	sql_cmd = "create table var("
 		" var_id         integer primary key,"
 		" var_type       text,"
@@ -415,7 +444,7 @@ It specifies the true values for the
 $cref/model_variables/model_variable/$$ used during the simulation.
 This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
-$cref var_table$$ (created by the $cref var_command$$).
+$cref var_table$$ (created by the $cref init_command$$).
 
 $head simulate_table$$
 A new $cref simulate_table$$ is created.
@@ -637,14 +666,14 @@ int main(int n_arg, const char** argv)
 	const string command_arg    = argv[++i_arg];
 	const string file_name_arg  = argv[++i_arg];
 	bool ok = false;
-	ok     |= command_arg == "var";
+	ok     |= command_arg == "init";
 	ok     |= command_arg == "fit";
 	ok     |= command_arg == "truth";
 	ok     |= command_arg == "simulate";
 	ok     |= command_arg == "sample";
 	if( ! ok )
 	{	cerr << "dismod_at: command is not one of the following:" << endl
-		<< "\tvar, fit, truth, simulate, sample" << endl;
+		<< "\tinit, fit, truth, simulate, sample" << endl;
 		std::exit(1);
 	}
 	// --------------- get the input tables ---------------------------------
@@ -760,8 +789,8 @@ int main(int n_arg, const char** argv)
 	string rate_info = argument_map["rate_info"];
 	data_object.set_eigen_ode2_case_number(rate_info);
 	// ---------------------------------------------------------------------
-	if( command_arg == "var" )
-	{	var_command(
+	if( command_arg == "init" )
+	{	init_command(
 			db,
 			pack_object,
 			db_input,

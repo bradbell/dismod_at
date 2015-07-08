@@ -8,17 +8,17 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin var_command.py$$ $newlinech #$$
+# $begin init_command.py$$ $newlinech #$$
 # $spell
-#	var
+#	init
 #	dismod
 # $$
 #
-# $section dismod_at var: Example and Test$$
+# $section dismod_at init: Example and Test$$
 #
 # $code
 # $verbatim%
-#	example/get_started/var_command.py
+#	example/get_started/init_command.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -31,7 +31,7 @@ import subprocess
 import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
-example = 'example/get_started/var_command.py'
+example = 'example/get_started/init_command.py'
 if sys.argv[0] != example  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + example + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -55,12 +55,12 @@ file_name              = 'example.db'
 (n_smooth, rate_true)  = get_started_db.get_started_db(file_name)
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
-command        = 'var'
+command        = 'init'
 cmd  = [ program, command, file_name ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
-	sys.exit('The dismod_at var command failed')
+	sys.exit('The dismod_at init command failed')
 # -----------------------------------------------------------------------
 # connect to database
 new             = False

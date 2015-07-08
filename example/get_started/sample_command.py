@@ -55,7 +55,7 @@ file_name              = 'example.db'
 # -----------------------------------------------------------------------
 # create the var table
 program        = '../../devel/dismod_at'
-command        = 'var'
+command        = 'init'
 cmd  = [ program, command, file_name ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
@@ -114,7 +114,7 @@ sample_dict    = dismod_at.get_table_dict(connection, 'sample')
 # rate variables
 parent_node_id = 0
 child_node_id  = 1
-check_tol      = 1e-3
+check_tol      = 1e-2
 n_rate         = 5;
 for rate_id in range(n_rate) :
 	for node_id in [ parent_node_id, child_node_id ] :
