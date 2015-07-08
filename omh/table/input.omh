@@ -57,6 +57,7 @@ $code text$$ column does not have a value in a particular row.
 $childtable%
 	omh/table/age_table.omh
 	%omh/table/argument_table.omh
+	%omh/table/avg_case_table.omh
 	%omh/table/covariate_table.omh
 	%omh/table/data_table.omh
 	%omh/table/density_table.omh

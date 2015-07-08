@@ -1,0 +1,93 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin avg_case_table$$
+$spell
+	covariate
+	covariates
+	std
+	dismod
+$$
+
+$section The Average Integrand Case Table$$
+Give a value for the $cref/model variables/model_variable/$$,
+this table contains the other information necessary to compute the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
+
+$head avg_case_id$$
+This column has type $code integer$$ and is the primary key for the
+$code avg_case$$ table.
+Its initial value is zero, and it increments by one for each row.
+
+$head integrand_id$$
+This column has type $code integer$$ and is the
+$cref/integrand_id/integrand_table/integrand_id/$$ that identifies
+the integrand for this case.
+
+$head node_id$$
+This column has type $code integer$$ and is the
+$cref/node_id/node_table/node_id/$$ that identifies
+the node for this case.
+
+$subhead Subset Condition$$
+This node must satisfy the $cref data_subset$$ condition; i.e.,
+it must be the $cref/parent_node/argument_table/parent_node_id/$$,
+or a descendant of the parent node.
+
+$head weight_id$$
+This column has type $code integer$$ and is the
+$cref/weight_id/weight_grid_table/weight_id/$$ that identifies
+the weighting used for this case.
+
+$head age_lower$$
+This column has type $code real$$ and is the lower age limit
+for this case.
+It must be greater than or equal the minimum $cref age_table$$ value.
+
+$head age_upper$$
+This column has type $code real$$ and is the upper age limit
+for this case.
+It must be greater than or equal the corresponding $icode age_lower$$
+and less than or equal the maximum $cref age_table$$ value.
+
+$head time_lower$$
+This column has type $code real$$ and is the lower time limit
+for this case.
+It must be greater than or equal the minimum $cref time_table$$ value.
+
+$head time_upper$$
+This column has type $code real$$ and is the upper time limit
+for this case.
+It must be greater than or equal the corresponding $icode time_lower$$
+and less than or equal the maximum $cref time_table$$ value.
+
+$head Covariates$$
+The covariate columns have type $code real$$ and column names
+that begin with the two characters $code x_$$.
+For each valid $cref/covariate_id/covariate_table/covariate_id/$$,
+column $codei%x_%covariate_id%$$ contains
+the value, for this measurement, of the covariate specified by
+$icode covariate_id$$.
+The covariate value $code null$$ is interpreted as the
+$cref/reference/covariate_table/reference/$$ value for
+the corresponding covariate.
+
+$subhead Subset Condition$$
+All of the covariate values must satisfy the
+$cref/max_difference/covariate_table/max_difference/$$ criteria.
+
+$children%example/table/avg_case_table.py
+%$$
+$head Example$$
+The files $cref avg_case_table.py$$ and
+$cref get_avg_case_table_xam.cpp$$
+create example $code avg_case$$ tables.
+
+$end

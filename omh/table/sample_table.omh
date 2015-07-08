@@ -13,10 +13,11 @@ $spell
 	var
 $$
 
-$section The Sample Table$$
-The table contains the optimal estimate of the model variables
+$section The Variable Sample Table$$
+This table contains the optimal estimate of the
+$cref/model variables/model_variable/$$
 for each valid $cref/sample_index/simulate_table/sample_index/$$
-in the sample table.
+in the simulate table.
 A new $code sample$$ table is created each time the
 $cref sample_command$$ is executed.
 

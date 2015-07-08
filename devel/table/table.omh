@@ -22,6 +22,7 @@ $childtable%
 	%devel/table/data_subset.cpp
 	%devel/table/exec_sql_cmd.cpp
 	%devel/table/get_age_table.cpp
+	%devel/table/get_avg_case_table.cpp
 	%devel/table/get_column_max.cpp
 	%devel/table/get_covariate_table.cpp
 	%devel/table/get_data_table.cpp

@@ -15,10 +15,6 @@
 #
 # $section covariate_table: Example and Test$$
 #
-# $index covariate, table example$$
-# $index example, covariate table$$
-# $index table, covariate example$$
-#
 # $code
 # $verbatim%example/table/covariate_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
