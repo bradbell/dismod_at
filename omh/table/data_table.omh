@@ -10,8 +10,6 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin data_table$$
 $spell
-	gridname
-	cov
 	covariate
 	covariates
 	std
@@ -19,7 +17,7 @@ $spell
 $$
 
 $section The Data Table$$
-Each row of the data file corresponds to one measurement;
+Each row of the data table corresponds to one measurement;
 see $cref/meas_value/data_table/meas_value/$$ below.
 
 $head data_id$$
@@ -35,7 +33,7 @@ the integrand for this measurement.
 $head density_id$$
 This column has type $code integer$$ and is the
 $cref/density_id/density_table/density_id/$$ that identifies
-the density function for this measurement.
+the density function for the measurement nose.
 
 $head node_id$$
 This column has type $code integer$$ and is the
