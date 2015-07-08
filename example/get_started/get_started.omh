@@ -19,10 +19,10 @@ $children%example/get_started/get_started_db.py
 %$$
 $table
 $rref get_started_db.py$$
-$rref var_command$$
-$rref fit_command$$
-$rref simulate_command$$
-$rref sample_command$$
+$rref var_command.py$$
+$rref fit_command.py$$
+$rref simulate_command.py$$
+$rref sample_command.py$$
 $tend
 
 $end

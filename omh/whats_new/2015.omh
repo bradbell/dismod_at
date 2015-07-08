@@ -31,7 +31,7 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-07$$
-First version of $cref sample_command that passes its example / test.
+First version of $cref sample_command$$ that passes its example / test.
 
 $head 07-05$$
 $list number$$
