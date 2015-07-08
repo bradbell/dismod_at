@@ -40,10 +40,10 @@ bool get_simulate_table_xam(void)
 	// sql commands
 	const char* sql_cmd[] = {
 	"create table simulate("
-		" simulate_id   integer primary key,"
-		" sample_index  integer,"
-		" data_id       integer,"
-		" meas_value    real"
+		" simulate_id    integer primary key,"
+		" sample_index   integer,"
+		" data_subset_id integer,"
+		" meas_value     real"
 	")",
 	"insert into simulate values(0, 0, 0, 0e-3)",
 	"insert into simulate values(1, 0, 1, 1e-3)",
@@ -69,12 +69,12 @@ bool get_simulate_table_xam(void)
 	ok  &= simulate_table[4].sample_index == 1;
 	ok  &= simulate_table[5].sample_index == 1;
 	//
-	ok  &= simulate_table[0].data_id      == 0;
-	ok  &= simulate_table[1].data_id      == 1;
-	ok  &= simulate_table[2].data_id      == 2;
-	ok  &= simulate_table[3].data_id      == 0;
-	ok  &= simulate_table[4].data_id      == 1;
-	ok  &= simulate_table[5].data_id      == 2;
+	ok  &= simulate_table[0].data_subset_id == 0;
+	ok  &= simulate_table[1].data_subset_id == 1;
+	ok  &= simulate_table[2].data_subset_id == 2;
+	ok  &= simulate_table[3].data_subset_id == 0;
+	ok  &= simulate_table[4].data_subset_id == 1;
+	ok  &= simulate_table[5].data_subset_id == 2;
 	//
 	ok  &= simulate_table[0].meas_value   == 0e-3;
 	ok  &= simulate_table[1].meas_value   == 1e-3;

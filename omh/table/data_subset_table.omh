@@ -32,7 +32,7 @@ $head data_subset_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$subhead data_id$$
+$head data_id$$
 This column has type $code integer$$ and is a
 $cref/data_id/data_table/data_id/$$ in the data table.
 These values are unique and monotone increasing with $icode subset_id$$.

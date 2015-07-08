@@ -570,12 +570,12 @@ void data_model::change_meas_value(
 		std::exit(1);
 	}
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	size_t simulate_id  = offset + subset_id;
-		int    sample     = simulate_table[simulate_id].sample_index;
-		int    data_id    = simulate_table[simulate_id].data_id;
+	{	size_t simulate_id    = offset + subset_id;
+		int    sample         = simulate_table[simulate_id].sample_index;
+		int    data_subset_id = simulate_table[simulate_id].data_subset_id;
 		double meas_value = simulate_table[simulate_id].meas_value;
-		bool   ok         = size_t(sample) == sample_index;
-		ok               &= data_id == subset_object_[subset_id].data_id;
+		bool   ok  = size_t(sample) == sample_index;
+		ok        &= size_t( data_subset_id ) == subset_id;
 		if( ! ok )
 		{	std::cerr << "simulate table is corrupted" << std::endl;
 			std::exit(1);

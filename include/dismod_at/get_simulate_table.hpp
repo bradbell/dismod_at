@@ -18,7 +18,7 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 	struct simulate_struct {
 		int         sample_index;
-		int         data_id;
+		int         data_subset_id;
 		double      meas_value;
 	};
 	extern CppAD::vector<simulate_struct> get_simulate_table(sqlite3*  db);

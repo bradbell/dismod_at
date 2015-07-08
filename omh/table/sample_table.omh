@@ -25,18 +25,22 @@ This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
 $head sample_index$$
-This column has type $code integer$$ and specifies the sample
-$cref/data subset/simulate_table/data_id/Data Subset/$$ in the
-sample table.
+This column has type $code integer$$ and specifies the
+$cref/sample_index/simulate_table/sample_index/$$
+in the simulated data table that $icode sample_value$$ corresponds to.
 
 $head var_id$$
 This column has type $code integer$$ and specifies the
 $cref model_variable$$ that $icode sample_value$$ corresponds to;
 see $cref/var_id/var_table/var_id/$$.
+If $icode n_var$$ is the number of rows in the variable table,
+$codei%
+	%sample_id% = %sample_index% * %n_var% + %var_id%
+%$$
 
 $head sample_value$$
 This column type $code real$$ and is the optimal variable value
-for this $icode var_id$$, $icode sample_index$$.
+for this $icode var_id$$ and $icode sample_index$$.
 
 $head Example$$
 The $cref sample_command.py$$ is an example that creates this table.

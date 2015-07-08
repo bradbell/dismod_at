@@ -98,12 +98,14 @@ if flag != 0 :
 	sys.exit('The dismod_at simulate command failed')
 # -----------------------------------------------------------------------
 # check the simulate table
-data_dict      = dismod_at.get_table_dict(connection, 'data')
-simulate_dict  = dismod_at.get_table_dict(connection, 'simulate')
+data_dict        = dismod_at.get_table_dict(connection, 'data')
+data_subset_dict = dismod_at.get_table_dict(connection, 'data_subset')
+simulate_dict    = dismod_at.get_table_dict(connection, 'simulate')
 for simulate_id in range( len(simulate_dict) ) :
 	row = simulate_dict[simulate_id];
-	sample_index = row['sample_index']
-	data_id      = row['data_id']
+	sample_index    = row['sample_index']
+	data_subset_id  = row['data_subset_id']
+	data_id         = data_subset_dict[data_subset_id]['data_id']
 	meas_value   = row['meas_value']
 	meas_std     = data_dict[data_id]['meas_std']
 	rate_id      = data_id # for this example database

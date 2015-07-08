@@ -81,7 +81,7 @@ If $icode%argument_name% = number_sample%$$,
 the corresponding $icode argument_value$$
 is a positive integer specifying the
 number of independent samples of the
-$cref/data subset/simulate_table/data_id/Data Subset/$$.
+$cref/data subset/data_subset_table/$$.
 
 $head random_seed$$
 This is a non-negative integer used to seed the random number

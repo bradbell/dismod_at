@@ -35,21 +35,15 @@ and then increments by one between samples (of the data subset).
 The final (maximum) value for $icode sample_index$$ is
 $cref/number_sample/argument_table/number_sample/$$ minus one.
 
-$head data_id$$
-This column has type $code integer$$ and has a different value for every row.
-It specifies the row in the $cref/data_id/data_table/data_id/$$ that
-this simulated measurement value corresponds to.
-
-$subhead Data Subset$$
-The following subset of the data is included:
-$list number$$
-Only $icode data_id$$ corresponding to nodes that are descendants of the
-$cref/parent_node/argument_table/parent_node_id/$$ are included.
-$lnext
-Only $icode data_id$$ for which the covariates satisfy the
-$cref/max_difference/covariate_table/max_difference/$$ criteria
-are included.
-$lend
+$head data_subset_id$$
+This column has type $code integer$$ and is the primary key
+for the $cref data_subset_table$$.
+This identifies which $cref/data_id/data_subset_table/data_id/$$
+each row of the simulate table corresponds to
+If $icode n_subset$$ is the number of rows in the data_subset table,
+$codei%
+	%simulate_id% = %sample_index% * %n_subset% + %data_subset_id%
+%$$
 
 
 $head meas_value$$

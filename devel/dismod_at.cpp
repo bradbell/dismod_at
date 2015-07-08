@@ -469,9 +469,8 @@ $head simulate_table$$
 A new $cref simulate_table$$ is created.
 It contains simulated measurement values that can be used in place of
 the data table $cref/meas_value/data_table/meas_value/$$ column.
-Only those entires in the data table that satisfy the
-$cref/data subset/simulate_table/data_id/Data Subset/$$ conditions
-are included.
+Only the $cref/data_id/data_subset_table/data_id/$$ that are in the
+data_subset table are included.
 
 $children%example/get_started/simulate_command.py%$$
 $head Example$$
@@ -506,16 +505,16 @@ void simulate_command
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	sql_cmd = "create table simulate("
-		" simulate_id   integer primary key,"
-		" sample_index  integer,"
-		" data_id       integer,"
-		" meas_value    real"
+		" simulate_id     integer primary key,"
+		" sample_index    integer,"
+		" data_subset_id  integer,"
+		" meas_value      real"
 	");";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	vector<string> col_name_vec(3), row_val_vec(3);
 	col_name_vec[0]   = "sample_index";
-	col_name_vec[1]   = "data_id";
+	col_name_vec[1]   = "data_subset_id";
 	col_name_vec[2]   = "meas_value";
 	//
 	size_t n_subset = subset_object.size();
@@ -556,7 +555,7 @@ void simulate_command
 			density, avg, meas_std, eta
 		);
 		row_val_vec[0] = to_string( sample_index );
-		row_val_vec[1] = to_string( subset_object[subset_id].data_id );
+		row_val_vec[1] = to_string( subset_id );
 		row_val_vec[2] = to_string(meas_value);
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}

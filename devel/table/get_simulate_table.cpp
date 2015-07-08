@@ -52,7 +52,7 @@ $code int$$ $cnext $code sample_index$$ $cnext
 	for this simulated measurement.
 $rnext
 $code int$$ $cnext $code n_time$$ $cnext
-	The $cref/data_id/data_table/data_id/$$
+	The $cref/data_subset_id/data_subset_table/data_subset_id/$$
 	for this simulated measurement.
 $rnext
 $code double$$ $cnext $code meas_value$$ $cnext
@@ -87,10 +87,10 @@ CppAD::vector<simulate_struct> get_simulate_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, sample_index);
 	assert( sample_index.size() == n_simulate );
 
-	column_name             =  "data_id";
-	CppAD::vector<int>          data_id;
-	get_table_column(db, table_name, column_name, data_id);
-	assert( data_id.size() == n_simulate );
+	column_name             =  "data_subset_id";
+	CppAD::vector<int>          data_subset_id;
+	get_table_column(db, table_name, column_name, data_subset_id);
+	assert( data_subset_id.size() == n_simulate );
 
 	column_name             =  "meas_value";
 	CppAD::vector<double>       meas_value;
@@ -99,8 +99,8 @@ CppAD::vector<simulate_struct> get_simulate_table(sqlite3* db)
 
 	CppAD::vector<simulate_struct> simulate_table(n_simulate);
 	for(size_t i = 0; i < n_simulate; i++)
-	{	simulate_table[i].sample_index  = sample_index[i];
-		simulate_table[i].data_id       = data_id[i];
+	{	simulate_table[i].sample_index   = sample_index[i];
+		simulate_table[i].data_subset_id = data_subset_id[i];
 		simulate_table[i].meas_value    = meas_value[i];
 	}
 	return simulate_table;
