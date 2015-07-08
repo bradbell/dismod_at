@@ -207,6 +207,28 @@ def get_started_db (file_name) :
 		{ 'name':'rate_info',     'value':'chi_positive' }
 	]
 	# --------------------------------------------------------------------------
+	# avg_case table: same order as list of integrands
+	avg_case_list = list()
+	# values that are the same for all data rows
+	row = {
+		'node':        'world',
+		'weight':      'constant',
+		'time_lower':   2000.0,
+		'time_upper':   2000.0,
+		'age_lower':    0.0
+	}
+	# values that change between rows: (one data point for each integrand)
+	for data_id in range( len(integrand_list) ) :
+		integrand         = integrand_list[data_id]['name']
+		row['integrand']  = integrand
+		if integrand == 'prevalence' :
+			# prevalence is measured at age zero
+			row['age_upper'] = 0.0
+		else :
+			# other integrands are averaged from age zero to one hundred
+			row['age_upper'] = 100.0
+		avg_case_list.append( copy.copy(row) )
+	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
@@ -221,7 +243,8 @@ def get_started_db (file_name) :
 		smooth_list,
 		rate_list,
 		mulcov_list,
-		argument_list
+		argument_list,
+		avg_case_list
 	)
 	# -----------------------------------------------------------------------
 	n_smooth  = len( smooth_list )

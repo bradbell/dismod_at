@@ -43,7 +43,8 @@
 #	%smooth_list%,
 #	%rate_list%,
 #	%mulcov_list%,
-#	%argument_list%
+#	%argument_list%,
+#	%avg_case_list%
 # )%$$
 #
 # $head Purpose$$
@@ -229,6 +230,14 @@
 # See $cref argument_table$$ for the corresponding set of names
 # and meaning of corresponding values.
 #
+# $head avg_case_list$$
+# This is a list of $code dict$$
+# that define the rows of the $cref avg_case_table$$.
+# The dictionary $icode%avg_case_list%[%i%]%$$ has the same description as
+# $cref/data_list[i]/create_database/data_list/$$ except that the
+# following keys (and corresponding values) are not present:
+# $code density$$, $code meas_value$$, $code meas_std$$.
+#
 # $end
 def create_database(
 	file_name,
@@ -243,7 +252,8 @@ def create_database(
 	smooth_list,
 	rate_list,
 	mulcov_list,
-	argument_list
+	argument_list,
+	avg_case_list
 ) :
 	import dismod_at
 	# -----------------------------------------------------------------------
@@ -591,6 +601,51 @@ def create_database(
 			row.append( data[ covariate_list[j]['name'] ] )
 		row_list.append(row)
 	tbl_name = 'data'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------
+	# create avg_case table
+	col_name = [
+		'integrand_id',
+		'node_id',
+		'weight_id',
+		'age_lower',
+		'age_upper',
+		'time_lower',
+		'time_upper'
+	]
+	for j in range( len(covariate_list) ) :
+		col_name.append( 'x_%s' % j )
+	col_type = [
+		'integer',              # integrand_id
+		'integer',              # node_id
+		'integer',              # weight_id
+		'real',                 # age_lower
+		'real',                 # age_upper
+		'real',                 # time_lower
+		'real'                  # time_upper
+	]
+	for j in range( len(covariate_list) )  :
+		col_type.append( 'real' )
+	row_list = [ ]
+	for i in range( len(avg_case_list) ) :
+		avg_case = avg_case_list[i]
+		avg_case_id      = i
+		integrand_id = global_integrand_name2id[ avg_case['integrand'] ]
+		node_id      = global_node_name2id[ avg_case['node'] ]
+		weight_id    = global_weight_name2id[ avg_case['weight'] ]
+		row = [
+			integrand_id,
+			node_id,
+			weight_id,
+			avg_case['age_lower'],
+			avg_case['age_upper'],
+			avg_case['time_lower'],
+			avg_case['time_upper']
+		]
+		for j in range( len(covariate_list) ) :
+			row.append( avg_case[ covariate_list[j]['name'] ] )
+		row_list.append(row)
+	tbl_name = 'avg_case'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# close the connection

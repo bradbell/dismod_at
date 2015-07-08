@@ -184,6 +184,24 @@ def create_database() :
 		{ 'name':'number_sample', 'value':'1'            },
 		{ 'name':'rate_info',     'value':'chi_positive' }
 	]
+	# avg_case_list
+	avg_case_list = []
+	row = {
+		'integrand':'mtother',
+		'weight':'constant',
+		'age_lower':0.0,
+		'age_upper':100.0,
+		'time_lower':1990.0,
+		'time_upper':2010.0,
+		'sex':0.5
+	}
+	row['node']       = 'north_america'
+	avg_case_list.append( copy.copy(row) )
+	row['node']       = 'united_states'
+	avg_case_list.append( copy.copy(row) )
+	row['node']       = 'canada'
+	row['meas_value'] = 0.5e-5
+	avg_case_list.append( copy.copy(row) )
 	dismod_at.create_database(
 		file_name,
 		age_list,
@@ -197,7 +215,8 @@ def create_database() :
 		smooth_list,
 		rate_list,
 		mulcov_list,
-		argument_list
+		argument_list,
+		avg_case_list
 	)
 	# -----------------------------------------------------------------------
 	# Check database
@@ -349,6 +368,17 @@ def create_database() :
 		[ 'random_seed',    '0'   ],
 		[ 'number_sample',  '1'   ],
 		[ 'rate_info',      'chi_positive']
+	]
+	assert row_list == check_list
+	#
+	# avg_case_table
+	tbl_name   = 'avg_case'
+	col_name   = [ 'integrand_id', 'node_id', 'age_lower', 'age_upper'  ]
+	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
+	check_list = [
+		[ 0, 1, 0.0, 100.0 ],
+		[ 0, 2, 0.0, 100.0  ],
+		[ 0, 3, 0.0, 100.0 ]
 	]
 	assert row_list == check_list
 	# -----------------------------------------------------------------------
