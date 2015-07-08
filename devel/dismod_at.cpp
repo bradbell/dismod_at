@@ -28,9 +28,11 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/manage_gsl_rng.hpp>
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/sim_random.hpp>
+# include <dismod_at/get_simulate_table.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 /*
+-----------------------------------------------------------------------------
 $begin var_command$$
 $spell
 	var
@@ -242,14 +244,13 @@ void var_command(
 }
 
 /*
+-----------------------------------------------------------------------------
 $begin fit_command$$
 $spell
 	var
-	tol
 	arg
-	Dismod
-	Ipopt
 	num_iter
+	dismod
 $$
 
 $section The Fit Command$$
@@ -319,8 +320,8 @@ void fit_command(
 	}
 	return;
 }
-// ----------------------------------------------------------------------------
 /*
+-----------------------------------------------------------------------------
 $begin truth_command$$
 $spell
 	var
@@ -387,8 +388,8 @@ void truth_command(sqlite3* db)
 	}
 	return;
 }
-// ----------------------------------------------------------------------------
 /*
+-----------------------------------------------------------------------------
 $begin simulate_command$$
 
 $section The Simulate Command$$
@@ -514,6 +515,108 @@ void simulate_command
 
 	return;
 }
+/*
+-------------------------------------------------------------------------------
+$begin sample_command$$
+$spell
+	dismod
+	var
+	arg
+$$
+
+$section The Sample Command$$
+
+$head Syntax$$
+$codei%dismod_at sample %file_name%$$
+
+$head file_name$$
+Is an
+$href%http://www.sqlite.org/sqlite/%$$ data base containing the
+$code dismod_at$$ $cref input$$ tables which are not modified.
+
+$head simulate_table$$
+This command has the extra input $cref  simulate_table$$
+which was created by a previous $cref simulate_command$$.
+
+$head sample_table$$
+A new $cref sample_table$$ is created each time this command is run.
+It contains the optimal $cref model_variable$$ values
+for each simulated $cref/sample_index/simulate_table/sample_index/$$.
+
+$children%example/get_started/sample_command.py%$$
+$head Example$$
+The file $cref sample_command.py$$ contains an example and test
+of using this command.
+
+$end
+*/
+
+// ----------------------------------------------------------------------------
+void sample_command(
+	sqlite3*                                             db               ,
+	dismod_at::data_model&                               data_object      ,
+	const CppAD::vector<dismod_at::data_subset_struct>&  subset_object    ,
+	const dismod_at::pack_info&                          pack_object      ,
+	const dismod_at::db_input_struct&                    db_input         ,
+	const CppAD::vector<dismod_at::simulate_struct>&     simulate_table   ,
+	const CppAD::vector<dismod_at::smooth_info>&         s_info_vec       ,
+	const dismod_at::prior_model&                        prior_object     ,
+	const std::string&                                   tolerance_arg    ,
+	const std::string&                                   max_num_iter_arg
+)
+{	using CppAD::vector;
+	using std::string;
+	using dismod_at::to_string;
+
+	// create a new sample table
+	string sql_cmd = "drop table if exists sample";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	sql_cmd = "create table sample("
+		" sample_id        integer primary key,"
+		" sample_index     integer,"
+		" var_id           integer,"
+		" sample_value     real"
+	")";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	string table_name = "sample";
+	CppAD::vector<string> col_name_vec(3), row_val_vec(3);
+	col_name_vec[0]   = "sample_index";
+	col_name_vec[1]   = "var_id";
+	col_name_vec[2]   = "sample_value";
+
+	// n_subset, n_sample
+	size_t n_var    = pack_object.size();
+	size_t n_subset = subset_object.size();
+	size_t n_sample = simulate_table.size() / n_subset;
+	assert( simulate_table.size() == n_sample * n_subset );
+	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
+	{	// set the measurement values for this simulation subset
+		data_object.change_meas_value(sample_index, simulate_table);
+
+		// fit_model
+		dismod_at::fit_model fit_object(
+			pack_object          ,
+			db_input.prior_table ,
+			s_info_vec           ,
+			data_object          ,
+			prior_object
+		);
+		fit_object.run_fit(tolerance_arg, max_num_iter_arg);
+		vector<double> solution = fit_object.get_solution();
+		assert( solution.size() == n_var );
+		//
+		// write out solution for this sample_index
+		row_val_vec[0] = to_string( sample_index );
+		for(size_t var_id = 0; var_id < n_var; var_id++)
+		{	row_val_vec[1] = to_string( var_id );
+			row_val_vec[2] = to_string( solution[var_id] );
+			dismod_at::put_table_row(
+				db, table_name, col_name_vec, row_val_vec
+			);
+		}
+	}
+	return;
+}
 } // END_EMPTY_NAMESPACE
 
 int main(int n_arg, const char** argv)
@@ -538,9 +641,10 @@ int main(int n_arg, const char** argv)
 	ok     |= command_arg == "fit";
 	ok     |= command_arg == "truth";
 	ok     |= command_arg == "simulate";
+	ok     |= command_arg == "sample";
 	if( ! ok )
 	{	cerr << "dismod_at: command is not one of the following:" << endl
-		<< "\tvar, fit, truth, simulate" << endl;
+		<< "\tvar, fit, truth, simulate, sample" << endl;
 		std::exit(1);
 	}
 	// --------------- get the input tables ---------------------------------
@@ -693,6 +797,24 @@ int main(int n_arg, const char** argv)
 			data_object              ,
 			actual_seed              ,
 			number_sample
+		);
+	}
+	else if( command_arg == "sample" )
+	{	CppAD::vector<dismod_at::simulate_struct> simulate_table =
+			dismod_at::get_simulate_table(db);
+		string tolerance    = argument_map["tolerance"];
+		string max_num_iter = argument_map["max_num_iter"];
+		sample_command(
+			db               ,
+			data_object      ,
+			subset_object    ,
+			pack_object      ,
+			db_input         ,
+			simulate_table   ,
+			s_info_vec       ,
+			prior_object     ,
+			tolerance        ,
+			max_num_iter
 		);
 	}
 	else

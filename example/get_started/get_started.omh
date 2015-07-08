@@ -21,6 +21,8 @@ $table
 $rref get_started_db.py$$
 $rref var_command$$
 $rref fit_command$$
+$rref simulate_command$$
+$rref sample_command$$
 $tend
 
 $end

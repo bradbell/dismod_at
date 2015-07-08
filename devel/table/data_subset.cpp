@@ -67,7 +67,7 @@ $codei%
 $head subset_object$$
 The return value has prototype
 $codei%
-	data_subset_struct %subset_object%
+	CppAD::vector<data_subset_struct> %subset_object%
 %$$
 Its size is the number of rows in $icode data_table$$ that satisfy
 the conditions above.

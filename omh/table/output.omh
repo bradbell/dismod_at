@@ -18,6 +18,7 @@ $childtable%omh/table/var_table.omh
 	%omh/table/fit_var_table.omh
 	%omh/table/truth_var_table.omh
 	%omh/table/simulate_table.omh
+	%omh/table/sample_table.omh
 %$$
 
 $end

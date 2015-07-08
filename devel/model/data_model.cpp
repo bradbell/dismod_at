@@ -483,7 +483,7 @@ $$
 $section Sets the Method Used to Solve the Dismod_at ODE$$
 
 $head Syntax$$
-$codei%data_object%.set_eigen_ode2_case_number(%rate_info%)%$$
+$icode%data_object%.set_eigen_ode2_case_number(%rate_info%)%$$
 
 $head data_object$$
 This object has prototype
@@ -528,7 +528,7 @@ $$
 $section Change the Measurement Values to A Particular Simulation$$
 
 $head Syntax$$
-$codei%data_object%.change_meas_value(%sample_index%, %simulate_table)%$$
+$icode%data_object%.change_meas_value(%sample_index%, %simulate_table)%$$
 
 $head data_object$$
 This object has prototype
