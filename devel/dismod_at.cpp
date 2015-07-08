@@ -55,14 +55,14 @@ $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $head var_table$$
-A new var table is created with the information
+A new $cref var_table$$ is created with the information
 that maps a $cref/var_id/var_table/var_id/$$
 to its meaning in terms of the
 $cref/model variables/model_variable/$$.
-You can use this information to interpret a $cref fit_var_table$$
-created by the $cref fit_command$$,
-or to create a $cref truth_var_table$$
-for use as input to the $cref simulate_command$$.
+
+$head data_subset_table$$
+A new $cref data_subset_table$$ is created.
+This makes explicit exactly which rows of the data table are used.
 
 $head Deleted Tables$$
 If any of the following tables exist, they are deleted:
@@ -86,11 +86,12 @@ $end
 
 // ----------------------------------------------------------------------------
 void init_command(
-	sqlite3*                                     db               ,
-	const dismod_at::pack_info&                  pack_object      ,
-	const dismod_at::db_input_struct&            db_input         ,
-	const size_t&                                parent_node_id   ,
-	const dismod_at::child_info&                 child_object
+	sqlite3*                                            db               ,
+	const CppAD::vector<dismod_at::data_subset_struct>& subset_object    ,
+	const dismod_at::pack_info&                         pack_object      ,
+	const dismod_at::db_input_struct&                   db_input         ,
+	const size_t&                                       parent_node_id   ,
+	const dismod_at::child_info&                        child_object
 )
 {	using CppAD::vector;
 	using std::string;
@@ -98,7 +99,7 @@ void init_command(
 
 	// -----------------------------------------------------------------------
 	const char* drop_list[] = {
-		"var", "fit_var", "truth_var", "simulate", "sample"
+		"subset", "var", "fit_var", "truth_var", "simulate", "sample"
 	};
 	size_t n_drop = sizeof( drop_list ) / sizeof( drop_list[0] );
 	string sql_cmd;
@@ -108,7 +109,24 @@ void init_command(
 		dismod_at::exec_sql_cmd(db, sql_cmd);
 	}
 	// -----------------------------------------------------------------------
+	// create data_subset_table
+	sql_cmd = "create table data_subset("
+		" data_subset_id  integer primary key,"
+		" data_id         integer"
+	")";
+	// -----------------------------------------------------------------------
 	// create var_table
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	string table_name = "data_subset";
+	size_t n_subset = subset_object.size();
+	CppAD::vector<string> col_name_vec(1), row_val_vec(1);
+	col_name_vec[0] = "data_id";
+	for(size_t data_subset_id = 0; data_subset_id < n_subset; data_subset_id++)
+	{	int data_id    = subset_object[data_subset_id].data_id;
+		row_val_vec[0] = dismod_at::to_string( data_id );
+		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+	}
 	// -----------------------------------------------------------------------
 	sql_cmd = "create table var("
 		" var_id         integer primary key,"
@@ -122,9 +140,10 @@ void init_command(
 		" covariate_id   integer"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	string table_name = "var";
+	table_name = "var";
 	//
-	CppAD::vector<string> col_name_vec(8), row_val_vec(8);
+	col_name_vec.resize(8);
+	row_val_vec.resize(8);
 	col_name_vec[0]   = "var_type";
 	col_name_vec[1]   = "smooth_id";
 	col_name_vec[2]   = "age_id";
@@ -792,6 +811,7 @@ int main(int n_arg, const char** argv)
 	if( command_arg == "init" )
 	{	init_command(
 			db,
+			subset_object,
 			pack_object,
 			db_input,
 			parent_node_id,

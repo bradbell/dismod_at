@@ -31,9 +31,13 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-08$$
+$list number$$
 Change the $code var_command$$ to $cref init_command$$
 and use this command to initialize output tables whenever
 the $cref input$$ tables change.
+$lnext
+Add the $cref data_subset_table$$.
+$lend
 
 $head 07-07$$
 First version of $cref sample_command$$ that passes its example / test.

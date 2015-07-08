@@ -66,6 +66,13 @@ if flag != 0 :
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
+# check data_subset table
+data_subset_dict = dismod_at.get_table_dict(connection, 'data_subset');
+n_subset         = len( data_subset_dict )
+for data_subset_id in range( n_subset ) :
+	# all the data is included for this example
+	assert data_subset_id == data_subset_dict[data_subset_id]['data_id']
+# -----------------------------------------------------------------------
 # check var table
 var_dict  = dismod_at.get_table_dict(connection, 'var')
 #

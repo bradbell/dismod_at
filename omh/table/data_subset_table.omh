@@ -1,0 +1,44 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin data_subset_table$$
+$spell
+	covariates
+$$
+
+$section The Data Subset Table$$
+The $code data_subset$$ table identifies which rows of the
+$cref data_table$$ are used.
+This subset is defined as the set rows
+(or the set of $cref/data_id/data_table/data_id/$$)
+such that the following conditions hold:
+$list number$$
+The $cref/node/data_table/node_id/$$ is a descendant of the
+$cref/parent_node/argument_table/parent_node_id/$$.
+$lnext
+All of the data
+$cref/covariates/data_table/Covariates/$$ satisfy the
+$cref/max_difference/covariate_table/max_difference/$$ criteria.
+$lend
+
+$head data_subset_id$$
+This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+$subhead data_id$$
+This column has type $code integer$$ and is a
+$cref/data_id/data_table/data_id/$$ in the data table.
+These values are unique and monotone increasing with $icode subset_id$$.
+
+
+$head Example$$
+See $cref init_command.py$$ example and test.
+
+$end

@@ -24,6 +24,10 @@ $section The Variable Table$$
 The $code variable$$ table maps the $icode var_id$$
 to information that specifies exactly which
 $cref model_variable$$ it corresponds to.
+You can use this information to interpret a $cref fit_var_table$$
+created by the $cref fit_command$$,
+or to create a $cref truth_var_table$$
+for use as input to the $cref simulate_command$$.
 
 $head var_id$$
 This column has type $code integer$$ and is the primary key for this table.
