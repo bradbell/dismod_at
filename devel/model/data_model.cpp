@@ -32,6 +32,7 @@ $codei%data_model %data_object%(
 	%time_table%,
 	%integrand_table%,
 	%node_table%,
+	%subset_object%,
 	%w_info_vec%,
 	%s_info_vec%,
 	%pack_object%
