@@ -165,9 +165,6 @@ bool data_model_subset(void)
 		data_table[data_id].x            = x;
 	}
 	//
-	// empty avg_case table
-	vector<dismod_at::avg_case_struct> avg_case_table;
-	//
 	// smooth_table
 	size_t n_child        = 2;
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
@@ -197,8 +194,7 @@ bool data_model_subset(void)
 	dismod_at::child_info child_object(
 		parent_node_id ,
 		node_table     ,
-		data_table     ,
-		avg_case_table
+		data_table
 	);
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(

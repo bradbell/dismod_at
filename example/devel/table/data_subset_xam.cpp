@@ -85,13 +85,10 @@ bool data_subset_xam(void)
 	data_table[2].x[0] = 0.0;  // within sex bounds
 	data_table[3].x[0] = 0.5;  // out of sex bounds
 	//
-	// empty avg_case table
-	vector<dismod_at::avg_case_struct> avg_case_table;
-
 	// child_object
 	size_t parent_node_id = 1; // north_america
 	dismod_at::child_info child_object(
-		parent_node_id, node_table, data_table, avg_case_table
+		parent_node_id, node_table, data_table
 	);
 
 	// data_subset_obj

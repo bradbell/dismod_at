@@ -153,7 +153,7 @@ CppAD::vector<data_subset_struct> data_subset(
 	one_sample.x.resize(n_covariate);
 	//
 	for(size_t data_id = 0; data_id < n_data; data_id++)
-	{	size_t child = child_object.data_id2child(data_id);
+	{	size_t child = child_object.other_id2child(data_id);
 		// check if this data is for parent or one of its descendents
 		bool ok = child <= n_child;
 		if( ok )

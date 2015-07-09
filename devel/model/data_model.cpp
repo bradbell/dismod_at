@@ -467,7 +467,7 @@ data_subset_obj_ (data_subset_obj)
 		double eta               = integrand_table[integrand_id].eta;
 
 		// child of parent node that this data is associated with
-		size_t  child            = child_object.data_id2child(data_id);
+		size_t  child            = child_object.other_id2child(data_id);
 
 		// density for this data point
 		size_t density_id    = data_subset_obj[subset_id].density_id;

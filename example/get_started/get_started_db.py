@@ -200,7 +200,7 @@ def get_started_db (file_name) :
 	argument_list = [
 		{ 'name':'parent_node_id','value':'0'            },
 		{ 'name':'ode_step_size', 'value':'10.0'         },
-		{ 'name':'tolerance',     'value':'1e-8'         },
+		{ 'name':'tolerance',     'value':'1e-10'        },
 		{ 'name':'max_num_iter',  'value':'100'          },
 		{ 'name':'random_seed',   'value':'0'            },
 		{ 'name':'number_sample', 'value':'1'            },

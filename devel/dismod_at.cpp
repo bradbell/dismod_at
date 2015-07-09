@@ -752,8 +752,7 @@ int main(int n_arg, const char** argv)
 	dismod_at::child_info child_object(
 		parent_node_id          ,
 		db_input.node_table     ,
-		db_input.data_table     ,
-		db_input.avg_case_table
+		db_input.data_table
 	);
 	size_t n_child     = child_object.child_size();
 	size_t n_integrand = db_input.integrand_table.size();

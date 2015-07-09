@@ -155,7 +155,7 @@ CppAD::vector<avg_case_subset_struct> avg_case_subset(
 	one_sample.x.resize(n_covariate);
 	//
 	for(size_t avg_case_id = 0; avg_case_id < n_avg_case; avg_case_id++)
-	{	size_t child = child_object.avg_case_id2child(avg_case_id);
+	{	size_t child = child_object.other_id2child(avg_case_id);
 		// check if this avg_case is for parent or one of its descendents
 		bool ok = child <= n_child;
 		if( ok )
