@@ -115,6 +115,21 @@ $codei%
 and is the sub-sampled version of the data table; see
 $cref/data_subset_obj/data_subset/data_subset_obj/$$.
 
+$subhead avg_case_subset$$
+In the special case where the functions
+$cref/data_object.like_one/data_model_like_one/$$ and
+$cref/data_object.like_one/data_model_like_all/$$ are not used
+the fields
+$codei%
+	%data_subset_obj%.density
+	%data_subset_obj%.meas_value
+	%data_subset_obj%.meas_std
+%$$
+are not used and do not matter.
+This is the case when one is only computing model predictions for a
+$cref avg_case_subset$$ object.
+
+
 $head w_info_vec$$
 This argument has prototype
 $codei%
