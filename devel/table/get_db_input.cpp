@@ -127,8 +127,9 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.mulcov_table      = get_mulcov_table(db);
 	db_input.argument_table    = get_argument_table(db);
 	//
-	size_t n_covariate   = db_input.covariate_table.size();
-	db_input.data_table  = get_data_table(db, n_covariate);
+	size_t n_covariate      = db_input.covariate_table.size();
+	db_input.data_table     = get_data_table(db, n_covariate);
+	db_input.avg_case_table = get_avg_case_table(db, n_covariate);
 	//
 	// -----------------------------------------------------------------------
 	// check primary keys
@@ -164,6 +165,11 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(data, density_id,   density,   0);
 	DISMOD_AT_CHECK_PRIMARY_ID(data, node_id,      node,      0);
 	DISMOD_AT_CHECK_PRIMARY_ID(data, weight_id,    weight,    0);
+
+	// avg_case table
+	DISMOD_AT_CHECK_PRIMARY_ID(avg_case, integrand_id, integrand, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(avg_case, node_id,      node,      0);
+	DISMOD_AT_CHECK_PRIMARY_ID(avg_case, weight_id,    weight,    0);
 
 	// rate table
 	DISMOD_AT_CHECK_PRIMARY_ID(rate, parent_smooth_id, smooth, 0);

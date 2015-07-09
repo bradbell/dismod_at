@@ -176,6 +176,10 @@ bool avg_yes_ode_xam(void)
 		rate_table[rate_id].parent_smooth_id = smooth_id;
 		rate_table[rate_id].child_smooth_id = smooth_id;
 	}
+	//
+	// empty avg_case table
+	vector<dismod_at::avg_case_struct> avg_case_table;
+	//
 	// pack_object
 	dismod_at::pack_info pack_object(
 		n_integrand, n_child,
@@ -184,8 +188,9 @@ bool avg_yes_ode_xam(void)
 	// child_info
 	dismod_at::child_info child_object(
 		parent_node_id ,
-		node_table ,
-		data_table
+		node_table     ,
+		data_table     ,
+		avg_case_table
 	);
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(

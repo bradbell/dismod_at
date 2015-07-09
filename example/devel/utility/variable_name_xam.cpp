@@ -181,12 +181,15 @@ bool variable_name_xam(void)
 	s_info_vec[smooth_id] = dismod_at::smooth_info(
 		age_table, time_table, smooth_id, smooth_table, smooth_grid_table
 	);
-	// empty data table
-	vector<dismod_at::data_struct> data_table(0);
+	// empty data and avg_case table
+	vector<dismod_at::data_struct>     data_table;
+	vector<dismod_at::avg_case_struct> avg_case_table;
 	// child_object
 	size_t parent_node_id = 0;
 	size_t n_child        = 2;
-	dismod_at::child_info child_object(parent_node_id, node_table, data_table);
+	dismod_at::child_info child_object(
+		parent_node_id, node_table, data_table, avg_case_table
+	);
 	// pack_object
 	size_t n_integrand = integrand_table.size();
 	dismod_at::pack_info pack_object(

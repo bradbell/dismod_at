@@ -259,6 +259,9 @@ bool fit_model_xam(void)
 		data_table[data_id].x            = x;
 	}
 	//
+	// empty avg_case table
+	vector<dismod_at::avg_case_struct> avg_case_table;
+	//
 	// prior_object
 	dismod_at::prior_model prior_object(
 		pack_object, age_table, time_table, prior_table, s_info_vec
@@ -266,8 +269,9 @@ bool fit_model_xam(void)
 	// child_info
 	dismod_at::child_info child_object(
 		parent_node_id ,
-		node_table ,
-		data_table
+		node_table     ,
+		data_table     ,
+		avg_case_table
 	);
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(

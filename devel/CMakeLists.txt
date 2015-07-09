@@ -53,6 +53,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	table/check_pini_n_age.cpp
 	table/check_table_id.cpp
 	table/data_subset.cpp
+	table/avg_case_subset.cpp
 	table/exec_sql_cmd.cpp
 	table/get_age_table.cpp
 	table/get_avg_case_table.cpp

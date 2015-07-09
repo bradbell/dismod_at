@@ -20,13 +20,17 @@ $$
 $section Child Indices and Data Indices$$
 
 $head Syntax$$
-$codei%child_info %child_object%(%parent_node_id%, %node_table%, %data_table%)
+$codei%child_info %child_object%(
+	%parent_node_id%, %node_table%, %data_table%, %avg_case_table%
+)
 %$$
 $icode%n_child%  = %child_object%.child_size()
 %$$
 $icode%node_id%  = %child_object%.child_id2node_id(%child_id%)
 %$$
 $icode%child%    = %child_object%.data_id2child(%data_id%)
+%$$
+$icode%child%    = %child_object%.avg_case_id2child(%data_id%)
 %$$
 
 $head child_object$$
@@ -60,7 +64,15 @@ $codei%
 	const CppAD::vector<data_struct>& %data_table%
 %$$
 and is the $cref/data_table/get_data_table/data_table/$$.
-Only the following fields of this table are used: $code node_id$$.
+Only the $code node_id$$ field of this table is used.
+
+$subhead avg_case_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<data_struct>& %avg_case_table%
+%$$
+and is the $cref/avg_case_table/get_avg_case_table/avg_case_table/$$.
+Only the $code node_id$$ field of this table is used.
 
 $head child_size$$
 
@@ -132,6 +144,11 @@ If $icode%child% == %n_child%+1%$$,
 the $cref/node_id/data_table/node_id/$$ for this $icode data_id$$ is
 not a descendent of the parent node.
 
+$head avg_case_id2child$$
+This similar to $code data_id2child$$ excep that
+$cref/data_id/data_table/data_id/$$ is replaced by
+$cref/avg_case_id/avg_case_table/avg_case_id/$$.
+
 $end
 */
 # include <dismod_at/child_info.hpp>
@@ -139,9 +156,10 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 child_info::child_info(
-	size_t                            parent_node_id ,
-	const CppAD::vector<node_struct>& node_table     ,
-	const CppAD::vector<data_struct>& data_table     )
+	size_t                            parent_node_id         ,
+	const CppAD::vector<node_struct>& node_table             ,
+	const CppAD::vector<data_struct>& data_table             ,
+	const CppAD::vector<avg_case_struct>& avg_case_table     )
 {	assert( parent_node_id != size_t(-1) );
 
 	// child_id2node_id
@@ -176,6 +194,30 @@ child_info::child_info(
 		data_id2child_[data_id] = child;
 	}
 
+	// avg_case_id2child_id
+	size_t n_avg_case = avg_case_table.size();
+	avg_case_id2child_.resize(n_avg_case);
+	for(size_t avg_case_id = 0; avg_case_id < n_avg_case; avg_case_id++)
+	{	size_t node_id = size_t( avg_case_table[avg_case_id].node_id );
+		bool   found   = parent_node_id == node_id;
+		size_t child   = child_id2node_id_.size();
+		bool   more    = ! found;
+		while(more)
+		{	for(size_t i = 0; i < child_id2node_id_.size(); i++)
+			{	if( child_id2node_id_[i] == node_id )
+				{	child = i;
+					found = true;
+				}
+			}
+			more = (! found) && (node_id != size_t(-1));
+			if(more)
+				node_id = size_t( node_table[node_id].parent );
+		}
+		if( ! found )
+			child = child_id2node_id_.size() + 1;
+		avg_case_id2child_[avg_case_id] = child;
+	}
+
 }
 
 size_t child_info::child_size(void) const
@@ -186,6 +228,9 @@ size_t child_info::child_id2node_id(size_t child_id) const
 
 size_t child_info::data_id2child(size_t data_id) const
 {	return data_id2child_[data_id]; }
+
+size_t child_info::avg_case_id2child(size_t avg_case_id) const
+{	return avg_case_id2child_[avg_case_id]; }
 
 
 } // END DISMOD_AT_NAMESPACE
