@@ -18,12 +18,13 @@ $spell
 	const
 	CppAD
 	struct
+	obj
 $$
 
 $section Create a Subsampled Version of Data Table$$
 
 $head Syntax$$
-$icode%subset_object% = data_subset(
+$icode%data_subset_obj% = data_subset(
 	%data_table%, %covariate_table%, %child_object%
 )%$$
 
@@ -64,10 +65,10 @@ $codei%
 	const child_info& %child_object%
 %$$
 
-$head subset_object$$
+$head data_subset_obj$$
 The return value has prototype
 $codei%
-	CppAD::vector<data_subset_struct> %subset_object%
+	CppAD::vector<data_subset_struct> %data_subset_obj%
 %$$
 Its size is the number of rows in $icode data_table$$ that satisfy
 the conditions above.
@@ -75,7 +76,7 @@ The structure has all the fields that are present in
 $cref/data_struct/get_data_table/data_struct/$$.
 
 $subhead n_subset$$
-We use the notation $icode%n_subset% = %subset_object%.size()%$$.
+We use the notation $icode%n_subset% = %data_subset_obj%.size()%$$.
 
 $subhead subset_id$$
 We use the notation $icode subset_id$$ for an index between
@@ -88,23 +89,23 @@ The values in this field are equal to the
 $icode data_id$$ for the corresponding row of $cref data_table$$.
 The value of
 $codei%
-	%subset_object%[%subset_id%].data_id
+	%data_subset_obj%[%subset_id%].data_id
 %$$
 increases with $icode subset_id$$;
 i.e., for each $icode subset_id$$ less than $icode%n_subset%-2%$$,
 $codei%
-	%subset_object%[%subset_id%].data_id < %subset_object%[%subset_id%+1].data_id
+	%data_subset_obj%[%subset_id%].data_id < %data_subset_obj%[%subset_id%+1].data_id
 %$$
 
 $subhead x$$
 For each $icode subset_id$$ we use
 $codei%
-	row(%subset_id%) = %data_table%[ %subset_object%[%subset_id%].data_id ]
+	row(%subset_id%) = %data_table%[ %data_subset_obj%[%subset_id%].data_id ]
 %$$
 to denote the corresponding row of $icode data_table$$.
 For each $cref/covariate_id/covariate_table/covariate_id/$$,
 $codei%
-	%subset_object%[%subset_id%].x[%covariate_id%] =
+	%data_subset_obj%[%subset_id%].x[%covariate_id%] =
 		row(%subset_id%).x[%covariate_id%] - reference(%covariate_id%)
 %$$
 where $codei%reference(%covariate_id%)%$$ is the
@@ -115,11 +116,11 @@ $cref/max_difference/covariate_table/max_difference/$$
 value is $code null$$ in the covariate table,
 or the covariate value is $code null$$ in the data table,
 $codei%
-	%subset_object%[%subset_id%].x[%covariate_id%] = 0
+	%data_subset_obj%[%subset_id%].x[%covariate_id%] = 0
 %$$
 Also note that
 $codei%
-	| %subset_object%[%subset_id%].x[%covariate_id%] | <=
+	| %data_subset_obj%[%subset_id%].x[%covariate_id%] | <=
 		max_difference(%covariate_id%)
 %$$
 where $codei%max_difference(%covariate_id%)%$$ is the
@@ -137,9 +138,9 @@ CppAD::vector<data_subset_struct> data_subset(
 	const CppAD::vector<data_struct>&      data_table      ,
 	const CppAD::vector<covariate_struct>& covariate_table ,
 	const child_info&                      child_object    )
-{	CppAD::vector<data_subset_struct> subset_object;
+{	CppAD::vector<data_subset_struct> data_subset_obj;
 	if( data_table.size() == 0 )
-		return subset_object;
+		return data_subset_obj;
 	//
 	size_t n_child     = child_object.child_size();
 	size_t n_data      = data_table.size();
@@ -176,9 +177,9 @@ CppAD::vector<data_subset_struct> data_subset(
 			one_sample.time_lower   = data_table[data_id].time_lower;
 			one_sample.time_upper   = data_table[data_id].time_upper;
 			//
-			subset_object.push_back(one_sample);
+			data_subset_obj.push_back(one_sample);
 		}
 	}
-	return subset_object;
+	return data_subset_obj;
 }
 } // END DISMOD_AT_NAMESPACE

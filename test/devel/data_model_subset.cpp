@@ -197,7 +197,7 @@ bool data_model_subset(void)
 		data_table
 	);
 	// data_subset
-	vector<dismod_at::data_subset_struct> subset_object = data_subset(
+	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 		data_table,
 		covariate_table,
 		child_object
@@ -212,7 +212,7 @@ bool data_model_subset(void)
 		time_table,
 		integrand_table,
 		node_table,
-		subset_object,
+		data_subset_obj,
 		w_info_vec,
 		s_info_vec,
 		pack_object,
@@ -238,11 +238,11 @@ bool data_model_subset(void)
 		}
 	}
 	// check results
-	size_t n_sample = subset_object.size();
+	size_t n_sample = data_subset_obj.size();
 	ok &= n_sample == 3;
 	for(size_t subset_id = 0; subset_id < n_sample; subset_id++)
 	{	Float avg      = data_object.avg_no_ode(subset_id, pack_vec);
-		size_t data_id = subset_object[subset_id].data_id;
+		size_t data_id = data_subset_obj[subset_id].data_id;
 		double check   = check_avg(data_table[data_id]) / (age_max*time_max);
 		ok            &= fabs( 1.0 - avg / check ) <= eps;
 	}

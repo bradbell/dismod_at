@@ -193,7 +193,7 @@ bool like_all_xam(void)
 		data_table
 	);
 	// data_subset
-	vector<dismod_at::data_subset_struct> subset_object = data_subset(
+	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 		data_table,
 		covariate_table,
 		child_object
@@ -209,7 +209,7 @@ bool like_all_xam(void)
 		time_table,
 		integrand_table,
 		node_table,
-		subset_object,
+		data_subset_obj,
 		w_info_vec,
 		s_info_vec,
 		pack_object,
@@ -232,7 +232,7 @@ bool like_all_xam(void)
 		}
 	}
 	// check results
-	ok &= data_table.size() == subset_object.size();
+	ok &= data_table.size() == data_subset_obj.size();
 	CppAD::vector< dismod_at::residual_struct<Float> >
 		residual_vec = data_object.like_all(pack_vec);
 	for(size_t data_id = 0; data_id < data_table.size(); data_id++)

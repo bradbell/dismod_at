@@ -238,7 +238,7 @@ bool avg_no_ode_xam(void)
 		data_table
 	);
 	// data_subset
-	vector<dismod_at::data_subset_struct> subset_object = data_subset(
+	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 		data_table,
 		covariate_table,
 		child_object
@@ -253,7 +253,7 @@ bool avg_no_ode_xam(void)
 		time_table,
 		integrand_table,
 		node_table,
-		subset_object,
+		data_subset_obj,
 		w_info_vec,
 		s_info_vec,
 		pack_object,
@@ -279,7 +279,7 @@ bool avg_no_ode_xam(void)
 		}
 	}
 	// check results
-	ok &= data_table.size() == subset_object.size();
+	ok &= data_table.size() == data_subset_obj.size();
 	for(data_id = 0; data_id < data_table.size(); data_id++)
 	{	Float avg     = data_object.avg_no_ode(data_id, pack_vec);
 		double check  = check_avg(data_table[data_id]) / (age_max*time_max);

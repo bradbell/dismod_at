@@ -54,8 +54,8 @@ private:
 	size_t                       eigen_ode2_case_number_;
 
 	// set by consructor as reference to object in call
-	// subset_object_[subset_id].meas_value is modified by change_meas_value.
-	CppAD::vector<data_subset_struct>         subset_object_;
+	// data_subset_obj_[subset_id].meas_value is modified by change_meas_value.
+	CppAD::vector<data_subset_struct>         data_subset_obj_;
 public:
 	data_model(
 		size_t                                   parent_node_id  ,
@@ -66,7 +66,7 @@ public:
 		const CppAD::vector<double>&             time_table      ,
 		const CppAD::vector<integrand_struct>&   integrand_table ,
 		const CppAD::vector<node_struct>&        node_table      ,
-		const CppAD::vector<data_subset_struct>& subset_object   ,
+		const CppAD::vector<data_subset_struct>& data_subset_obj ,
 		const CppAD::vector<weight_info>&        w_info_vec      ,
 		const CppAD::vector<smooth_info>&        s_info_vec      ,
 		const pack_info&                         pack_object     ,

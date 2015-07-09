@@ -87,7 +87,7 @@ $end
 // ----------------------------------------------------------------------------
 void init_command(
 	sqlite3*                                            db               ,
-	const CppAD::vector<dismod_at::data_subset_struct>& subset_object    ,
+	const CppAD::vector<dismod_at::data_subset_struct>& data_subset_obj  ,
 	const dismod_at::pack_info&                         pack_object      ,
 	const dismod_at::db_input_struct&                   db_input         ,
 	const size_t&                                       parent_node_id   ,
@@ -119,11 +119,11 @@ void init_command(
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	string table_name = "data_subset";
-	size_t n_subset = subset_object.size();
+	size_t n_subset = data_subset_obj.size();
 	CppAD::vector<string> col_name_vec(1), row_val_vec(1);
 	col_name_vec[0] = "data_id";
 	for(size_t data_subset_id = 0; data_subset_id < n_subset; data_subset_id++)
-	{	int data_id    = subset_object[data_subset_id].data_id;
+	{	int data_id    = data_subset_obj[data_subset_id].data_id;
 		row_val_vec[0] = dismod_at::to_string( data_id );
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
@@ -482,7 +482,7 @@ $end
 void simulate_command
 (	sqlite3*                                            db              ,
 	const CppAD::vector<dismod_at::integrand_struct>&   integrand_table ,
-	const CppAD::vector<dismod_at::data_subset_struct>& subset_object   ,
+	const CppAD::vector<dismod_at::data_subset_struct>& data_subset_obj ,
 	const dismod_at::data_model&                        data_object     ,
 	const size_t&                                       actual_seed     ,
 	const size_t&                                       number_sample
@@ -517,10 +517,10 @@ void simulate_command
 	col_name_vec[1]   = "data_subset_id";
 	col_name_vec[2]   = "meas_value";
 	//
-	size_t n_subset = subset_object.size();
+	size_t n_subset = data_subset_obj.size();
 	for(size_t sample_index = 0; sample_index < number_sample; sample_index++)
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	size_t integrand_id =  subset_object[subset_id].integrand_id;
+	{	size_t integrand_id =  data_subset_obj[subset_id].integrand_id;
 		dismod_at::integrand_enum integrand =
 			integrand_table[integrand_id].integrand;
 		double avg;
@@ -547,9 +547,9 @@ void simulate_command
 		}
 		// need to simulate random noise with proper density
 		dismod_at::density_enum density = dismod_at::density_enum(
-			subset_object[subset_id].density_id
+			data_subset_obj[subset_id].density_id
 		);
-		double meas_std     = subset_object[subset_id].meas_std;
+		double meas_std     = data_subset_obj[subset_id].meas_std;
 		double eta          = integrand_table[integrand_id].eta;
 		double meas_value   = dismod_at::sim_random(
 			density, avg, meas_std, eta
@@ -602,7 +602,7 @@ $end
 void sample_command(
 	sqlite3*                                             db               ,
 	dismod_at::data_model&                               data_object      ,
-	const CppAD::vector<dismod_at::data_subset_struct>&  subset_object    ,
+	const CppAD::vector<dismod_at::data_subset_struct>&  data_subset_obj  ,
 	const dismod_at::pack_info&                          pack_object      ,
 	const dismod_at::db_input_struct&                    db_input         ,
 	const CppAD::vector<dismod_at::simulate_struct>&     simulate_table   ,
@@ -633,7 +633,7 @@ void sample_command(
 
 	// n_subset, n_sample
 	size_t n_var    = pack_object.size();
-	size_t n_subset = subset_object.size();
+	size_t n_subset = data_subset_obj.size();
 	size_t n_sample = simulate_table.size() / n_subset;
 	assert( simulate_table.size() == n_sample * n_subset );
 	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
@@ -744,8 +744,8 @@ int main(int n_arg, const char** argv)
 	size_t n_weight    = db_input.weight_table.size();
 	size_t n_smooth    = db_input.smooth_table.size();
 	// ---------------------------------------------------------------------
-	// subset_object
-	vector<dismod_at::data_subset_struct> subset_object = data_subset(
+	// data_subset_obj
+	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 		db_input.data_table,
 		db_input.covariate_table,
 		child_object
@@ -798,7 +798,7 @@ int main(int n_arg, const char** argv)
 		db_input.time_table      ,
 		db_input.integrand_table ,
 		db_input.node_table      ,
-		subset_object            ,
+		data_subset_obj          ,
 		w_info_vec               ,
 		s_info_vec               ,
 		pack_object              ,
@@ -810,7 +810,7 @@ int main(int n_arg, const char** argv)
 	if( command_arg == "init" )
 	{	init_command(
 			db,
-			subset_object,
+			data_subset_obj,
 			pack_object,
 			db_input,
 			parent_node_id,
@@ -841,7 +841,7 @@ int main(int n_arg, const char** argv)
 		simulate_command(
 			db                       ,
 			db_input.integrand_table ,
-			subset_object            ,
+			data_subset_obj          ,
 			data_object              ,
 			actual_seed              ,
 			number_sample
@@ -855,7 +855,7 @@ int main(int n_arg, const char** argv)
 		sample_command(
 			db               ,
 			data_object      ,
-			subset_object    ,
+			data_subset_obj  ,
 			pack_object      ,
 			db_input         ,
 			simulate_table   ,

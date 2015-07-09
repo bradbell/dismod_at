@@ -89,23 +89,23 @@ bool data_subset_xam(void)
 	size_t parent_node_id = 1; // north_america
 	dismod_at::child_info child_object(parent_node_id, node_table, data_table);
 
-	// subset_object
-	vector<dismod_at::data_subset_struct> subset_object =
+	// data_subset_obj
+	vector<dismod_at::data_subset_struct> data_subset_obj =
 		data_subset(data_table, covariate_table, child_object);
 
 	// data_id = 0 is for world and hence not included
-	ok &= subset_object[0].data_id == 1;
+	ok &= data_subset_obj[0].data_id == 1;
 	// data_id = 1 covariate values minus corresponding reference value
-	ok &= subset_object[0].x[0]    == 0.0;
-	ok &= subset_object[0].x[1]    == 100.;
-	ok &= subset_object[0].node_id == 1;
+	ok &= data_subset_obj[0].x[0]    == 0.0;
+	ok &= data_subset_obj[0].x[1]    == 100.;
+	ok &= data_subset_obj[0].node_id == 1;
 	// data_id = 2 covariate values minus corresponding reference value
-	ok &= subset_object[1].data_id == 2;
-	ok &= subset_object[1].x[0]    == 0.5;
-	ok &= subset_object[1].x[1]    == 200.;
-	ok &= subset_object[1].node_id == 2;
+	ok &= data_subset_obj[1].data_id == 2;
+	ok &= data_subset_obj[1].x[0]    == 0.5;
+	ok &= data_subset_obj[1].x[1]    == 200.;
+	ok &= data_subset_obj[1].node_id == 2;
 	// data_id = 3 is has a sex covariate that is out of bounds
-	ok &= subset_object.size() == 2;
+	ok &= data_subset_obj.size() == 2;
 
 	return ok;
 }
