@@ -69,9 +69,16 @@ connection      = dismod_at.create_connection(file_name, new)
 # check data_subset table
 data_subset_dict = dismod_at.get_table_dict(connection, 'data_subset');
 n_subset         = len( data_subset_dict )
-for data_subset_id in range( n_subset ) :
+for subset_id in range( n_subset ) :
 	# all the data is included for this example
-	assert data_subset_id == data_subset_dict[data_subset_id]['data_id']
+	assert subset_id == data_subset_dict[subset_id]['data_id']
+# -----------------------------------------------------------------------
+# check avg_case_subset table
+avg_case_subset_dict = dismod_at.get_table_dict(connection, 'avg_case_subset');
+n_subset         = len( avg_case_subset_dict )
+for subset_id in range( n_subset ) :
+	# all the avg_case is included for this example
+	assert subset_id == avg_case_subset_dict[subset_id]['avg_case_id']
 # -----------------------------------------------------------------------
 # check var table
 var_dict  = dismod_at.get_table_dict(connection, 'var')

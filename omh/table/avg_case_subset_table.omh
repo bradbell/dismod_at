@@ -8,35 +8,35 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin data_subset_table$$
+$begin avg_case_subset_table$$
 $spell
 	covariates
 $$
 
 $section The Data Subset Table$$
-The $code data_subset$$ table identifies which rows of the
-$cref data_table$$ are used.
+The $code avg_case_subset$$ table identifies which rows of the
+$cref avg_case_table$$ are used.
 This subset is defined as the set rows
-(or the set of $cref/data_id/data_table/data_id/$$)
+(or the set of $cref/avg_case_id/avg_case_table/avg_case_id/$$)
 such that the following conditions hold:
 $list number$$
-The $cref/node/data_table/node_id/$$ is a descendant of the
+The $cref/node/avg_case_table/node_id/$$ is a descendant of the
 $cref/parent_node/argument_table/parent_node_id/$$.
 $lnext
 All of the
-$cref/covariates/data_table/Covariates/$$ satisfy the
+$cref/covariates/avg_case_table/Covariates/$$ satisfy the
 $cref/max_difference/covariate_table/max_difference/$$ criteria.
 $lend
 
-$head data_subset_id$$
+$head avg_case_subset_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$head data_id$$
+$head avg_case_id$$
 This column has type $code integer$$ and is a
-$cref/data_id/data_table/data_id/$$ in the data table.
+$cref/avg_case_id/avg_case_table/avg_case_id/$$ in the avg_case table.
 These values are unique and monotone increasing with
-$icode data_subset_id$$.
+$icode avg_case_subset_id$$.
 
 
 $head Example$$

@@ -145,7 +145,7 @@ the $cref/node_id/data_table/node_id/$$ for this $icode data_id$$ is
 not a descendent of the parent node.
 
 $head avg_case_id2child$$
-This similar to $code data_id2child$$ excep that
+This similar to $code data_id2child$$ except that
 $cref/data_id/data_table/data_id/$$ is replaced by
 $cref/avg_case_id/avg_case_table/avg_case_id/$$.
 

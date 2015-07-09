@@ -218,8 +218,8 @@ def get_started_db (file_name) :
 		'age_lower':    0.0
 	}
 	# values that change between rows: (one data point for each integrand)
-	for data_id in range( len(integrand_list) ) :
-		integrand         = integrand_list[data_id]['name']
+	for avg_case_id in range( len(integrand_list) ) :
+		integrand         = integrand_list[avg_case_id]['name']
 		row['integrand']  = integrand
 		if integrand == 'prevalence' :
 			# prevalence is measured at age zero

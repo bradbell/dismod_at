@@ -29,6 +29,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/sim_random.hpp>
 # include <dismod_at/get_simulate_table.hpp>
+# include <dismod_at/avg_case_subset.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 /*
@@ -64,6 +65,10 @@ $head data_subset_table$$
 A new $cref data_subset_table$$ is created.
 This makes explicit exactly which rows of the data table are used.
 
+$head avg_case_subset_table$$
+A new $cref avg_case_subset_table$$ is created.
+This makes explicit exactly which rows of the avg_case table are used.
+
 $head Deleted Tables$$
 If any of the following tables exist, they are deleted:
 $list number$$
@@ -86,12 +91,13 @@ $end
 
 // ----------------------------------------------------------------------------
 void init_command(
-	sqlite3*                                            db               ,
-	const CppAD::vector<dismod_at::data_subset_struct>& data_subset_obj  ,
-	const dismod_at::pack_info&                         pack_object      ,
-	const dismod_at::db_input_struct&                   db_input         ,
-	const size_t&                                       parent_node_id   ,
-	const dismod_at::child_info&                        child_object
+sqlite3*                                                db                  ,
+const CppAD::vector<dismod_at::data_subset_struct>&     data_subset_obj     ,
+const CppAD::vector<dismod_at::avg_case_subset_struct>& avg_case_subset_obj ,
+const dismod_at::pack_info&                             pack_object         ,
+const dismod_at::db_input_struct&                       db_input            ,
+const size_t&                                           parent_node_id      ,
+const dismod_at::child_info&                            child_object
 )
 {	using CppAD::vector;
 	using std::string;
@@ -114,17 +120,31 @@ void init_command(
 		" data_subset_id  integer primary key,"
 		" data_id         integer"
 	")";
-	// -----------------------------------------------------------------------
-	// create var_table
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	string table_name = "data_subset";
-	size_t n_subset = data_subset_obj.size();
+	size_t n_subset   = data_subset_obj.size();
 	CppAD::vector<string> col_name_vec(1), row_val_vec(1);
 	col_name_vec[0] = "data_id";
-	for(size_t data_subset_id = 0; data_subset_id < n_subset; data_subset_id++)
-	{	int data_id    = data_subset_obj[data_subset_id].data_id;
+	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+	{	int data_id    = data_subset_obj[subset_id].data_id;
 		row_val_vec[0] = dismod_at::to_string( data_id );
+		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+	}
+	// -----------------------------------------------------------------------
+	// create avg_case_subset_table
+	sql_cmd = "create table avg_case_subset("
+		" avg_case_subset_id  integer primary key,"
+		" avg_case_id         integer"
+	")";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	table_name = "avg_case_subset";
+	n_subset   = avg_case_subset_obj.size();
+	col_name_vec[0] = "avg_case_id";
+	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+	{	int avg_case_id    = avg_case_subset_obj[subset_id].avg_case_id;
+		row_val_vec[0] = dismod_at::to_string( avg_case_id );
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
 	// -----------------------------------------------------------------------
@@ -751,6 +771,14 @@ int main(int n_arg, const char** argv)
 		db_input.covariate_table,
 		child_object
 	);
+	// ---------------------------------------------------------------------
+	// avg_case_subset_obj
+	vector<dismod_at::avg_case_subset_struct> avg_case_subset_obj =
+		avg_case_subset(
+			db_input.avg_case_table,
+			db_input.covariate_table,
+			child_object
+	);
 	// w_info_vec
 	vector<dismod_at::weight_info> w_info_vec(n_weight);
 	for(size_t weight_id = 0; weight_id < n_weight; weight_id++)
@@ -812,6 +840,7 @@ int main(int n_arg, const char** argv)
 	{	init_command(
 			db,
 			data_subset_obj,
+			avg_case_subset_obj,
 			pack_object,
 			db_input,
 			parent_node_id,

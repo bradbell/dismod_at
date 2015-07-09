@@ -15,6 +15,7 @@ $$
 $section Data Base Output Tables$$
 
 $childtable%omh/table/data_subset_table.omh
+	%omh/table/avg_case_subset_table.omh
 	%omh/table/var_table.omh
 	%omh/table/fit_var_table.omh
 	%omh/table/truth_var_table.omh

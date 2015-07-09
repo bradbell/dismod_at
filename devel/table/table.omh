@@ -16,7 +16,8 @@ $$
 $section Dismod_at Developer Table Documentation$$
 
 $childtable%
-	devel/table/check_child_prior.cpp
+	devel/table/avg_case_subset.cpp
+	%devel/table/check_child_prior.cpp
 	%devel/table/check_pini_n_age.cpp
 	%devel/table/check_table_id.cpp
 	%devel/table/data_subset.cpp
