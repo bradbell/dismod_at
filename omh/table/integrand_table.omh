@@ -23,8 +23,6 @@ $spell
 	mtstandard
 	relrisk
 $$
-$index integrand, table$$
-$index table, integrand$$
 
 $section The Integrand Table$$
 The $code integrand$$ table is used to identify data integrands.

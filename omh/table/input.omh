@@ -15,7 +15,7 @@ $spell
 	dismod
 $$
 
-$section Data Base Input Tables$$
+$section Tables That Are Only Used as Inputs$$
 
 $head Comment Columns$$
 Any input table (in this database)

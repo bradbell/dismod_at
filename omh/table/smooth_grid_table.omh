@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -17,11 +17,8 @@ $spell
 	dtime
 	smoothings
 $$
-$index smooth, prior table$$
-$index table, smooth prior$$
-$index prior, smooth table$$
 
-$section The Smoothing Grid Table$$
+$section The Smooth Grid Table$$
 This table specifies smoothings for functions of age and time.
 It has the following columns:
 

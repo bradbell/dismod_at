@@ -13,7 +13,7 @@ $spell
 	covariates
 $$
 
-$section The Data Subset Table$$
+$section The data_subset Table: Which Data Table Rows are Used$$
 The $code data_subset$$ table identifies which rows of the
 $cref data_table$$ are used.
 This subset is defined as the set rows

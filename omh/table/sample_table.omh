@@ -13,7 +13,7 @@ $spell
 	var
 $$
 
-$section The Variable Sample Table$$
+$section The Sample Table: Samples Varaibles$$
 This table contains the optimal estimate of the
 $cref/model variables/model_variable/$$
 for each valid $cref/sample_index/simulate_table/sample_index/$$

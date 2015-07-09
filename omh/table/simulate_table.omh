@@ -15,7 +15,7 @@ $spell
 	covariates
 $$
 
-$section The Simulated Measurement Table$$
+$section The Simulated Table: Samples Simulated Measurements$$
 The $code simulate$$ table is created during a
 $cref simulate_command$$.
 

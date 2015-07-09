@@ -13,7 +13,7 @@ $spell
 	var
 $$
 
-$section The Truth Variable Table$$
+$section The truth_var Table: True Values Used During Simulations$$
 The truth_var table contains one value for each $cref model_variable$$.
 A new $code truth$$ table is created,
 as a copy of the $cref fit_var_table$$,

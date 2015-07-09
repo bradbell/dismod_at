@@ -20,7 +20,7 @@ $spell
 	num_iter
 $$
 
-$section The Command Argument Table$$
+$section The Argument Table: Command Arguments$$
 Each $code dismod_at$$ $cref command$$ has a required set of
 $icode argument_name$$, $icode argument_value$$ pairs
 that must be present in the argument table.

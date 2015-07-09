@@ -17,11 +17,8 @@ $spell
 	dtime
 	covariate
 $$
-$index mulcov, table$$
-$index table, mulcov$$
-$index covariate, multiplier$$
 
-$section The Covariate Multiplier Table$$
+$section The mulcov Table: Covariate Multipliers$$
 This table specifies the covariate multipliers and their priors.
 If this table is empty, there are no covariate multipliers in the model.
 This table has the following columns

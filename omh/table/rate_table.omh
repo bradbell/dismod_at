@@ -17,8 +17,6 @@ $spell
 	smoothings
 	covariate
 $$
-$index rate, table$$
-$index table, rate$$
 
 $section The Rate Table$$
 The $code rate$$ table is used to set the smoothing for each of the rates.

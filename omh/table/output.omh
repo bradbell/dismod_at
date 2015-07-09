@@ -12,7 +12,7 @@ $begin output$$
 $spell
 $$
 
-$section Data Base Output Tables$$
+$section Tables That Are Created By Dismod_at$$
 
 $childtable%omh/table/data_subset_table.omh
 	%omh/table/avg_case_subset_table.omh

@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -13,9 +13,6 @@ $spell
 	agetime
 	grid
 $$
-$index weight, grid table$$
-$index table, grid weight$$
-$index grid, weight table$$
 
 $section The Weight Grid Table$$
 This table specifies the age-time weighting functions on a grid.
