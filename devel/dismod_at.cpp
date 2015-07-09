@@ -745,16 +745,21 @@ int main(int n_arg, const char** argv)
 	size_t n_time_ode = size_t( (time_max - time_min) / ode_step_size + 1.0 );
 	assert( time_max <= time_min  + n_time_ode * ode_step_size );
 	// ---------------------------------------------------------------------
-	// child_object and some more size_t values
+	// child_data, child_avg_case, and some more size_t values
 	size_t parent_node_id = std::atoi(
 		argument_map["parent_node_id"].c_str()
 	);
-	dismod_at::child_info child_object(
+	dismod_at::child_info child_data(
 		parent_node_id          ,
 		db_input.node_table     ,
 		db_input.data_table
 	);
-	size_t n_child     = child_object.child_size();
+	dismod_at::child_info child_avg_case(
+		parent_node_id          ,
+		db_input.node_table     ,
+		db_input.avg_case_table
+	);
+	size_t n_child     = child_data.child_size();
 	size_t n_integrand = db_input.integrand_table.size();
 	size_t n_weight    = db_input.weight_table.size();
 	size_t n_smooth    = db_input.smooth_table.size();
@@ -763,7 +768,7 @@ int main(int n_arg, const char** argv)
 	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 		db_input.data_table,
 		db_input.covariate_table,
-		child_object
+		child_data
 	);
 	// ---------------------------------------------------------------------
 	// avg_case_subset_obj
@@ -771,7 +776,7 @@ int main(int n_arg, const char** argv)
 		avg_case_subset(
 			db_input.avg_case_table,
 			db_input.covariate_table,
-			child_object
+			child_avg_case
 	);
 	// w_info_vec
 	vector<dismod_at::weight_info> w_info_vec(n_weight);
@@ -825,7 +830,7 @@ int main(int n_arg, const char** argv)
 		w_info_vec               ,
 		s_info_vec               ,
 		pack_object              ,
-		child_object
+		child_data
 	);
 	string rate_info = argument_map["rate_info"];
 	data_object.set_eigen_ode2_case_number(rate_info);
@@ -838,7 +843,7 @@ int main(int n_arg, const char** argv)
 			pack_object,
 			db_input,
 			parent_node_id,
-			child_object
+			child_data     // could also use child_avg_case
 		);
 	}
 	else if( command_arg == "fit" )
