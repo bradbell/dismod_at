@@ -36,11 +36,6 @@ This column has type $code integer$$ and is the
 $cref/node_id/node_table/node_id/$$ that identifies
 the node for this case.
 
-$subhead Subset Condition$$
-This node must satisfy the $cref data_subset$$ condition; i.e.,
-it must be the $cref/parent_node/argument_table/parent_node_id/$$,
-or a descendant of the parent node.
-
 $head weight_id$$
 This column has type $code integer$$ and is the
 $cref/weight_id/weight_grid_table/weight_id/$$ that identifies
@@ -78,10 +73,6 @@ $icode covariate_id$$.
 The covariate value $code null$$ is interpreted as the
 $cref/reference/covariate_table/reference/$$ value for
 the corresponding covariate.
-
-$subhead Subset Condition$$
-All of the covariate values must satisfy the
-$cref/max_difference/covariate_table/max_difference/$$ criteria.
 
 $children%example/table/avg_case_table.py
 %$$

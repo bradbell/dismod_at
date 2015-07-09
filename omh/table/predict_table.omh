@@ -1,0 +1,54 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin predict_table$$
+$spell
+	var
+	py
+$$
+
+$section The Predict Table: Average Integrand Predictions$$
+This table contains model predictions for the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
+2DO: A new $code predict$$ table is created each time the
+$code predict_command$$ is executed.
+
+$head predict_id$$
+This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+$head sample_index$$
+This column has type $code integer$$ and specifies the
+$cref/sample_index/sample_table/sample_index/$$
+in the sample data table that $icode avg_integrand$$ corresponds to.
+
+$head avg_case_subset_id$$
+This column has type $code integer$$ and specifies the
+$cref/avg_case_subset_id/avg_case_subset_table/avg_case_subset_id/$$ that
+$icode avg_integrand$$ corresponds to.
+If $icode n_subset$$ is the number of rows in the avg_case_subset table,
+$codei%
+	%predict_id% = %sample_index% * %n_subset% + %avg_case_subset_id%
+%$$
+See the corresponding
+$cref/avg_case_id/avg_case_subset_table/avg_case_id/$$ and the
+$cref avg_case_table$$.
+
+$head avg_integrand$$
+This column type $code real$$ and is the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
+corresponding to the model variables with
+$icode sample_index$$ in $cref sample_table$$
+and the average integrand case specified by $icode avg_case_subset_id$$.
+
+$head Example$$
+2DO: The $code predict_command.py$$ is an example that creates this table.
+
+$end

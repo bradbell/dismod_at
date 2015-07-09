@@ -22,6 +22,7 @@ $childtable%omh/table/data_subset_table.omh
 	%omh/table/truth_var_table.omh
 	%omh/table/simulate_table.omh
 	%omh/table/sample_table.omh
+	%omh/table/predict_table.omh
 %$$
 
 $end
