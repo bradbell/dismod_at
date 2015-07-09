@@ -32,6 +32,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/avg_case_subset.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
+	using CppAD::vector;
 /*
 -----------------------------------------------------------------------------
 $begin init_command$$
@@ -91,16 +92,15 @@ $end
 
 // ----------------------------------------------------------------------------
 void init_command(
-sqlite3*                                                db                  ,
-const CppAD::vector<dismod_at::data_subset_struct>&     data_subset_obj     ,
-const CppAD::vector<dismod_at::avg_case_subset_struct>& avg_case_subset_obj ,
-const dismod_at::pack_info&                             pack_object         ,
-const dismod_at::db_input_struct&                       db_input            ,
-const size_t&                                           parent_node_id      ,
-const dismod_at::child_info&                            child_object
+	sqlite3*                                         db                  ,
+	const vector<dismod_at::data_subset_struct>&     data_subset_obj     ,
+	const vector<dismod_at::avg_case_subset_struct>& avg_case_subset_obj ,
+	const dismod_at::pack_info&                      pack_object         ,
+	const dismod_at::db_input_struct&                db_input            ,
+	const size_t&                                    parent_node_id      ,
+	const dismod_at::child_info&                     child_object
 )
-{	using CppAD::vector;
-	using std::string;
+{	using std::string;
 	using dismod_at::to_string;
 
 	// -----------------------------------------------------------------------
@@ -124,7 +124,7 @@ const dismod_at::child_info&                            child_object
 	//
 	string table_name = "data_subset";
 	size_t n_subset   = data_subset_obj.size();
-	CppAD::vector<string> col_name_vec(1), row_val_vec(1);
+	vector<string> col_name_vec(1), row_val_vec(1);
 	col_name_vec[0] = "data_id";
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	int data_id    = data_subset_obj[subset_id].data_id;
@@ -247,7 +247,7 @@ const dismod_at::child_info&                            child_object
 	}
 	//
 	// covariate multiplers
-	const CppAD::vector<dismod_at::mulcov_struct>&
+	const vector<dismod_at::mulcov_struct>&
 		mulcov_table( db_input.mulcov_table );
 	size_t n_mulcov        = mulcov_table.size();
 	size_t count_rate_mean  = 0;
@@ -349,14 +349,13 @@ void fit_command(
 	sqlite3*                                     db               ,
 	const dismod_at::pack_info&                  pack_object      ,
 	const dismod_at::db_input_struct&            db_input         ,
-	const CppAD::vector<dismod_at::smooth_info>& s_info_vec       ,
+	const vector<dismod_at::smooth_info>&        s_info_vec       ,
 	const dismod_at::data_model&                 data_object      ,
 	const dismod_at::prior_model&                prior_object     ,
 	const std::string&                           tolerance_arg    ,
 	const std::string&                           max_num_iter_arg
 )
-{	using CppAD::vector;
-	using std::string;
+{	using std::string;
 	using dismod_at::to_string;
 
 	// ------------------ run fit_model ------------------------------------
@@ -379,7 +378,7 @@ void fit_command(
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	string table_name = "fit_var";
 	//
-	CppAD::vector<string> col_name_vec(1), row_val_vec(1);
+	vector<string> col_name_vec(1), row_val_vec(1);
 	col_name_vec[0]   = "fit_var_value";
 	for(size_t fit_var_id = 0; fit_var_id < solution.size(); fit_var_id++)
 	{	double fit_var_value   = solution[fit_var_id];
@@ -428,11 +427,10 @@ $end
 
 // ----------------------------------------------------------------------------
 void truth_command(sqlite3* db)
-{	using CppAD::vector;
-	using std::string;
+{	using std::string;
 	//
 	// get fit_var table information
-	CppAD::vector<double> fit_var_value;
+	vector<double> fit_var_value;
 	string table_name  = "fit_var";
 	string column_name = "fit_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, fit_var_value);
@@ -447,7 +445,7 @@ void truth_command(sqlite3* db)
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	table_name = "truth_var";
-	CppAD::vector<string> col_name_vec(1), row_val_vec(1);
+	vector<string> col_name_vec(1), row_val_vec(1);
 	col_name_vec[0]   = "truth_var_value";
 	for(size_t fit_var_id = 0; fit_var_id < fit_var_value.size(); fit_var_id++)
 	{	string truth_var_value = dismod_at::to_string( fit_var_value[fit_var_id] );
@@ -501,8 +499,8 @@ $end
 */
 void simulate_command
 (	sqlite3*                                            db              ,
-	const CppAD::vector<dismod_at::integrand_struct>&   integrand_table ,
-	const CppAD::vector<dismod_at::data_subset_struct>& data_subset_obj ,
+	const vector<dismod_at::integrand_struct>&          integrand_table ,
+	const vector<dismod_at::data_subset_struct>&        data_subset_obj ,
 	const dismod_at::data_model&                        data_object     ,
 	const size_t&                                       actual_seed     ,
 	const size_t&                                       number_sample
@@ -510,7 +508,6 @@ void simulate_command
 {	using std::cerr;
 	using std::endl;
 	using std::string;
-	using CppAD::vector;
 	using dismod_at::to_string;
 	// -----------------------------------------------------------------------
 	// read truth_var table into pack_vec
@@ -625,13 +622,13 @@ void sample_command(
 	dismod_at::data_model&                               data_object      ,
 	const dismod_at::pack_info&                          pack_object      ,
 	const dismod_at::db_input_struct&                    db_input         ,
-	const CppAD::vector<dismod_at::simulate_struct>&     simulate_table   ,
-	const CppAD::vector<dismod_at::smooth_info>&         s_info_vec       ,
+	const vector<dismod_at::simulate_struct>&            simulate_table   ,
+	const vector<dismod_at::smooth_info>&                s_info_vec       ,
 	const dismod_at::prior_model&                        prior_object     ,
 	const std::string&                                   tolerance_arg    ,
 	const std::string&                                   max_num_iter_arg
 )
-{	using CppAD::vector;
+{
 	using std::string;
 	using dismod_at::to_string;
 
@@ -646,7 +643,7 @@ void sample_command(
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	string table_name = "sample";
-	CppAD::vector<string> col_name_vec(3), row_val_vec(3);
+	vector<string> col_name_vec(3), row_val_vec(3);
 	col_name_vec[0]   = "sample_index";
 	col_name_vec[1]   = "var_id";
 	col_name_vec[2]   = "var_value";
@@ -689,7 +686,6 @@ int main(int n_arg, const char** argv)
 {	// ---------------- using statements ----------------------------------
 	using std::cerr;
 	using std::endl;
-	using CppAD::vector;
 	using std::string;
 	// ---------------- command line arguments ---------------------------
 	string program = "dismod_at-";
@@ -877,7 +873,7 @@ int main(int n_arg, const char** argv)
 		);
 	}
 	else if( command_arg == "sample" )
-	{	CppAD::vector<dismod_at::simulate_struct> simulate_table =
+	{	vector<dismod_at::simulate_struct> simulate_table =
 			dismod_at::get_simulate_table(db);
 		string tolerance     = argument_map["tolerance"];
 		string max_num_iter  = argument_map["max_num_iter"];
