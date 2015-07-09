@@ -51,7 +51,7 @@ $code int$$ $cnext $code sample_index$$ $cnext
 	The $cref/sample_index/simulate_table/sample_index/$$
 	for this simulated measurement.
 $rnext
-$code int$$ $cnext $code n_time$$ $cnext
+$code int$$ $cnext $code data_subset_id$$ $cnext
 	The $cref/data_subset_id/data_subset_table/data_subset_id/$$
 	for this simulated measurement.
 $rnext
