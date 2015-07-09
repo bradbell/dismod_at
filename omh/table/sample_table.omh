@@ -13,7 +13,7 @@ $spell
 	var
 $$
 
-$section The Sample Table: Samples Varaibles$$
+$section The Sample Table: Samples of Variable Values$$
 This table contains the optimal estimate of the
 $cref/model variables/model_variable/$$
 for each valid $cref/sample_index/simulate_table/sample_index/$$
@@ -28,18 +28,18 @@ Its initial value is zero, and it increments by one for each row.
 $head sample_index$$
 This column has type $code integer$$ and specifies the
 $cref/sample_index/simulate_table/sample_index/$$
-in the simulated data table that $icode sample_value$$ corresponds to.
+in the simulated data table that $icode var_value$$ corresponds to.
 
 $head var_id$$
 This column has type $code integer$$ and specifies the
-$cref model_variable$$ that $icode sample_value$$ corresponds to;
+$cref model_variable$$ that $icode var_value$$ corresponds to;
 see $cref/var_id/var_table/var_id/$$.
 If $icode n_var$$ is the number of rows in the variable table,
 $codei%
 	%sample_id% = %sample_index% * %n_var% + %var_id%
 %$$
 
-$head sample_value$$
+$head var_value$$
 This column type $code real$$ and is the optimal variable value
 for this $icode var_id$$ and $icode sample_index$$.
 

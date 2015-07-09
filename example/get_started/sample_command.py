@@ -128,7 +128,7 @@ for rate_id in range(n_rate) :
 				count += 1
 				sample_id      = rate_id
 				check          = simulate_dict[sample_id]['meas_value']
-				variable_value = sample_dict[var_id]['sample_value']
+				variable_value = sample_dict[var_id]['var_value']
 				if node_id == 0 :
 					# parent node
 					err = variable_value / check - 1.0

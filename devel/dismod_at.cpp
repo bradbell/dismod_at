@@ -642,14 +642,14 @@ void sample_command(
 		" sample_id        integer primary key,"
 		" sample_index     integer,"
 		" var_id           integer,"
-		" sample_value     real"
+		" var_value        real"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	string table_name = "sample";
 	CppAD::vector<string> col_name_vec(3), row_val_vec(3);
 	col_name_vec[0]   = "sample_index";
 	col_name_vec[1]   = "var_id";
-	col_name_vec[2]   = "sample_value";
+	col_name_vec[2]   = "var_value";
 
 	// n_subset, n_sample
 	size_t n_var    = pack_object.size();

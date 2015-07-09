@@ -30,6 +30,18 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-09$$
+$list number$$
+The $code sample$$ table column $code sample_value$$
+was changed to $cref/var_value/sample_table/var_value/$$.
+$lnext
+The $cref avg_case_table$$ was added to the set of
+$cref input$$ tables.
+$lnext
+The $cref avg_case_subset_table$$ was added as an output
+of the $cref init_command$$.
+$lend
+
 $head 07-08$$
 $list number$$
 Change the $code var_command$$ to $cref init_command$$
