@@ -621,8 +621,8 @@ $end
 // ----------------------------------------------------------------------------
 void sample_command(
 	sqlite3*                                             db               ,
+	size_t                                               n_data_subset    ,
 	dismod_at::data_model&                               data_object      ,
-	const CppAD::vector<dismod_at::data_subset_struct>&  data_subset_obj  ,
 	const dismod_at::pack_info&                          pack_object      ,
 	const dismod_at::db_input_struct&                    db_input         ,
 	const CppAD::vector<dismod_at::simulate_struct>&     simulate_table   ,
@@ -651,11 +651,10 @@ void sample_command(
 	col_name_vec[1]   = "var_id";
 	col_name_vec[2]   = "var_value";
 
-	// n_subset, n_sample
+	// n_var, n_sample
 	size_t n_var    = pack_object.size();
-	size_t n_subset = data_subset_obj.size();
-	size_t n_sample = simulate_table.size() / n_subset;
-	assert( simulate_table.size() == n_sample * n_subset );
+	size_t n_sample = simulate_table.size() / n_data_subset;
+	assert( simulate_table.size() == n_sample * n_data_subset );
 	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
 	{	// set the measurement values for this simulation subset
 		data_object.change_meas_value(sample_index, simulate_table);
@@ -880,12 +879,13 @@ int main(int n_arg, const char** argv)
 	else if( command_arg == "sample" )
 	{	CppAD::vector<dismod_at::simulate_struct> simulate_table =
 			dismod_at::get_simulate_table(db);
-		string tolerance    = argument_map["tolerance"];
-		string max_num_iter = argument_map["max_num_iter"];
+		string tolerance     = argument_map["tolerance"];
+		string max_num_iter  = argument_map["max_num_iter"];
+		size_t n_data_subset = data_subset_obj.size();
 		sample_command(
 			db               ,
+			n_data_subset    ,
 			data_object      ,
-			data_subset_obj  ,
 			pack_object      ,
 			db_input         ,
 			simulate_table   ,
