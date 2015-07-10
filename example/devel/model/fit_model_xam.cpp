@@ -295,6 +295,18 @@ bool fit_model_xam(void)
 		pack_object,
 		child_object
 	);
+	// replace_like
+	size_t n_subset = data_subset_obj.size();
+	vector<size_t> density_id(n_subset);
+	vector<double> meas_value(n_subset);
+	vector<double> meas_std(n_subset);
+	// values that do not change with sample_index
+	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+	{	density_id[subset_id] = data_subset_obj[subset_id].density_id;
+		meas_value[subset_id] = data_subset_obj[subset_id].meas_value;
+		meas_std[subset_id]   = data_subset_obj[subset_id].meas_std;
+	}
+	data_object.replace_like(density_id, meas_value, meas_std);
 	// ----------------------- run the fit -------------------------------
 	dismod_at::fit_model fit_object(
 		pack_object,

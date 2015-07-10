@@ -347,16 +347,30 @@ $end
 // ----------------------------------------------------------------------------
 void fit_command(
 	sqlite3*                                     db               ,
+	dismod_at::data_model&                       data_object      ,
+	const vector<dismod_at::data_subset_struct>& data_subset_obj  ,
 	const dismod_at::pack_info&                  pack_object      ,
 	const dismod_at::db_input_struct&            db_input         ,
 	const vector<dismod_at::smooth_info>&        s_info_vec       ,
-	const dismod_at::data_model&                 data_object      ,
 	const dismod_at::prior_model&                prior_object     ,
 	const std::string&                           tolerance_arg    ,
 	const std::string&                           max_num_iter_arg
 )
 {	using std::string;
 	using dismod_at::to_string;
+
+	// used be replace_like
+	size_t n_subset = data_subset_obj.size();
+	vector<size_t> density_id(n_subset);
+	vector<double> meas_value(n_subset);
+	vector<double> meas_std(n_subset);
+	// values that do not change with sample_index
+	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+	{	density_id[subset_id] = data_subset_obj[subset_id].density_id;
+		meas_value[subset_id] = data_subset_obj[subset_id].meas_value;
+		meas_std[subset_id]   = data_subset_obj[subset_id].meas_std;
+	}
+	data_object.replace_like(density_id, meas_value, meas_std);
 
 	// ------------------ run fit_model ------------------------------------
 	dismod_at::fit_model fit_object(
@@ -877,10 +891,11 @@ int main(int n_arg, const char** argv)
 		string max_num_iter = argument_map["max_num_iter"];
 		fit_command(
 			db               ,
+			data_object      ,
+			data_subset_obj  ,
 			pack_object      ,
 			db_input         ,
 			s_info_vec       ,
-			data_object      ,
 			prior_object     ,
 			tolerance        ,
 			max_num_iter

@@ -215,10 +215,24 @@ data_model::data_model(
 n_age_ode_     (n_age_ode)        ,
 n_time_ode_    (n_time_ode)       ,
 ode_step_size_ (ode_step_size)    ,
-pack_object_   (pack_object)      ,
-data_subset_obj_ (data_subset_obj)
+pack_object_   (pack_object)
 {	using std::string;
 	size_t i, j, k;
+	//
+	// only set the fileds that are common to data_subset and avg_case_subset
+	size_t n_subset = data_subset_obj.size();
+	data_subset_obj_.resize(n_subset);
+	for(size_t i = 0; i < n_subset; i++)
+	{	data_subset_obj_[i].original_id  = data_subset_obj[i].original_id;
+		data_subset_obj_[i].integrand_id = data_subset_obj[i].integrand_id;
+		data_subset_obj_[i].node_id      = data_subset_obj[i].node_id;
+		data_subset_obj_[i].weight_id    = data_subset_obj[i].weight_id;
+		data_subset_obj_[i].age_lower    = data_subset_obj[i].age_lower;
+		data_subset_obj_[i].age_upper    = data_subset_obj[i].age_upper;
+		data_subset_obj_[i].time_lower   = data_subset_obj[i].time_lower;
+		data_subset_obj_[i].time_upper   = data_subset_obj[i].time_upper;
+		data_subset_obj_[i].x            = data_subset_obj[i].x;
+	}
 	//
 	double eps = std::numeric_limits<double>::epsilon() * 100.0;
 	//
@@ -227,6 +241,9 @@ data_subset_obj_ (data_subset_obj)
 	//
 	// set default value for eigen_ode2_case_number_
 	eigen_ode2_case_number_ = 7;
+	//
+	// initialize
+	replace_like_called_ = false;
 	//
 	// set n_child_
 	n_child_ = child_object.child_size();
@@ -517,7 +534,7 @@ void data_model::set_eigen_ode2_case_number(const std::string& rate_info)
 	assert(false);
 }
 /*
-$begin change_meas_value$$
+$begin data_model_replace_like$$
 $spell
 	const
 	CppAD
@@ -526,7 +543,7 @@ $spell
 	obj
 $$
 
-$section Change the Measurement Values to A Particular Simulation$$
+$section Replace Density, Measurement Value, and Standard Deviation$$
 
 $head Syntax$$
 $icode%data_object%.replace_like(
@@ -609,6 +626,7 @@ void data_model::replace_like(
 		data_subset_obj_[subset_id].meas_value = meas_value[subset_id];
 		data_subset_obj_[subset_id].meas_std   = meas_std[subset_id];
 	}
+	replace_like_called_ = true;
 	return;
 }
 
@@ -1204,6 +1222,10 @@ $section One Weighted Residual and Log-Likelihood for any Integrands$$
 $head Syntax$$
 $icode%residual% = %data_object%.like_one(%subset_id%, %pack_vec%, %avg%)%$$
 
+$head Requirement$$
+One must call $cref/replace_like/data_model_replace_like/$$
+before calling this function.
+
 $head Log-likelihood$$
 We use $cref/y_i/data_like/Data Table Notation/y_i/$$ to denote the
 $cref/meas_value/data_table/meas_value/$$ corresponding
@@ -1291,6 +1313,7 @@ residual_struct<Float> data_model::like_one(
 	const Float&                  avg       ) const
 {	size_t i, j, k;
 	assert( pack_object_.size() == pack_vec.size() );
+	assert( replace_like_called_ );
 
 	// data table infomation for this data point
 	const CppAD::vector<double>& x = data_subset_obj_[subset_id].x;
@@ -1390,6 +1413,10 @@ $section All the Weighted Residuals and Log-Likelihoods$$
 $head Syntax$$
 $icode%residual_vec% = %data_object%.like_all(%pack_vec%)%$$
 
+$head Requirement$$
+One must call $cref/replace_like/data_model_replace_like/$$
+before calling this function.
+
 $head Data Table Notation$$
 
 $head data_object$$
@@ -1444,7 +1471,8 @@ template <class Float>
 CppAD::vector< residual_struct<Float> > data_model::like_all(
 	const CppAD::vector<Float>& pack_vec
 ) const
-{	CppAD::vector< residual_struct<Float> > residual_vec;
+{	assert( replace_like_called_ );
+	CppAD::vector< residual_struct<Float> > residual_vec;
 
 	// loop over the subsampled data
 	for(size_t subset_id = 0; subset_id < data_subset_obj_.size(); subset_id++)

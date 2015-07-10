@@ -53,7 +53,11 @@ private:
 	// modified by set_eigen_ode2_case_number
 	size_t                       eigen_ode2_case_number_;
 
-	// set by consructor, following fields modied by replace_like
+	// Has replace_like been called.
+	// Set false by constructor and true by replace_like.
+	bool                         replace_like_called_;
+
+	// set by consructor, except that following fields set by replace_like
 	// data_subset_obj_[subset_id].density_id
 	// data_subset_obj_[subset_id].meas_value
 	// data_subset_obj_[subset_id].meas_std
