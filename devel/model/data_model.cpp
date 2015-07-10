@@ -108,27 +108,13 @@ $codei%
 and is the $cref/node_table/get_node_table/node_table/$$.
 Only the $code parent$$ field of this table is used.
 
-$head data_subset_obj$$
+$head subset_object$$
 This argument has prototype
 $codei%
-	const CppAD::vector<data_subset_struct>&  %data_subset_obj%
+	const CppAD::vector<data_subset_struct>&  %subset_object%
 %$$
 and is the sub-sampled version of the data table; see
 $cref/data_subset_obj/data_subset/data_subset_obj/$$.
-
-$subhead avg_case_subset$$
-In the special case where the functions
-$cref/data_object.like_one/data_model_like_one/$$ and
-$cref/data_object.like_one/data_model_like_all/$$ are not used
-the fields
-$codei%
-	%data_subset_obj%.density
-	%data_subset_obj%.meas_value
-	%data_subset_obj%.meas_std
-%$$
-are not used and do not matter.
-This is the case when one is only computing model predictions for a
-$cref avg_case_subset$$ object.
 
 
 $head w_info_vec$$
@@ -206,7 +192,7 @@ data_model::data_model(
 	const CppAD::vector<double>&             time_table      ,
 	const CppAD::vector<integrand_struct>&   integrand_table ,
 	const CppAD::vector<node_struct>&        node_table      ,
-	const CppAD::vector<data_subset_struct>& data_subset_obj ,
+	const CppAD::vector<data_subset_struct>& subset_object   ,
 	const CppAD::vector<weight_info>&        w_info_vec      ,
 	const CppAD::vector<smooth_info>&        s_info_vec      ,
 	const pack_info&                         pack_object     ,
@@ -220,18 +206,18 @@ pack_object_   (pack_object)
 	size_t i, j, k;
 	//
 	// only set the fileds that are common to data_subset and avg_case_subset
-	size_t n_subset = data_subset_obj.size();
+	size_t n_subset = subset_object.size();
 	data_subset_obj_.resize(n_subset);
 	for(size_t i = 0; i < n_subset; i++)
-	{	data_subset_obj_[i].original_id  = data_subset_obj[i].original_id;
-		data_subset_obj_[i].integrand_id = data_subset_obj[i].integrand_id;
-		data_subset_obj_[i].node_id      = data_subset_obj[i].node_id;
-		data_subset_obj_[i].weight_id    = data_subset_obj[i].weight_id;
-		data_subset_obj_[i].age_lower    = data_subset_obj[i].age_lower;
-		data_subset_obj_[i].age_upper    = data_subset_obj[i].age_upper;
-		data_subset_obj_[i].time_lower   = data_subset_obj[i].time_lower;
-		data_subset_obj_[i].time_upper   = data_subset_obj[i].time_upper;
-		data_subset_obj_[i].x            = data_subset_obj[i].x;
+	{	data_subset_obj_[i].original_id  = subset_object[i].original_id;
+		data_subset_obj_[i].integrand_id = subset_object[i].integrand_id;
+		data_subset_obj_[i].node_id      = subset_object[i].node_id;
+		data_subset_obj_[i].weight_id    = subset_object[i].weight_id;
+		data_subset_obj_[i].age_lower    = subset_object[i].age_lower;
+		data_subset_obj_[i].age_upper    = subset_object[i].age_upper;
+		data_subset_obj_[i].time_lower   = subset_object[i].time_lower;
+		data_subset_obj_[i].time_upper   = subset_object[i].time_upper;
+		data_subset_obj_[i].x            = subset_object[i].x;
 	}
 	//
 	double eps = std::numeric_limits<double>::epsilon() * 100.0;
@@ -260,8 +246,7 @@ pack_object_   (pack_object)
 	}
 	//
 	// data_ode_info_ has same size as data_subset_obj
-	size_t n_sample = data_subset_obj.size();
-	data_info_.resize( n_sample );
+	data_info_.resize( n_subset );
 	//
 	// limits of the ode grid
 	double age_min    = age_table[0];
@@ -272,20 +257,20 @@ pack_object_   (pack_object)
 	assert( age_max  <= age_min  + n_age_ode * ode_step_size );
 	assert( time_max <= time_min + n_time_ode * ode_step_size );
 	//
-	for(size_t subset_id = 0; subset_id < n_sample; subset_id++)
+	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	// information for this data point
-		size_t original_id = data_subset_obj[subset_id].original_id;
+		size_t original_id = subset_object[subset_id].original_id;
 
 		// age limits
-		double age_lower  = data_subset_obj[subset_id].age_lower;
-		double age_upper  = data_subset_obj[subset_id].age_upper;
+		double age_lower  = subset_object[subset_id].age_lower;
+		double age_upper  = subset_object[subset_id].age_upper;
 		assert( age_min <= age_lower );
 		assert( age_upper <= age_max );
 		assert( age_lower <= age_upper);
 
 		// time limits
-		double time_lower = data_subset_obj[subset_id].time_lower;
-		double time_upper = data_subset_obj[subset_id].time_upper;
+		double time_lower = subset_object[subset_id].time_lower;
+		double time_upper = subset_object[subset_id].time_upper;
 		assert( time_min <= time_lower );
 		assert( time_upper <= time_max );
 		assert( time_lower <= time_upper);
@@ -320,7 +305,7 @@ pack_object_   (pack_object)
 			c_sum[k] = 0.0;
 
 		// weighting for this data point
-		size_t weight_id = data_subset_obj[subset_id].weight_id;
+		size_t weight_id = subset_object[subset_id].weight_id;
 		const weight_info& w_info( w_info_vec[weight_id] );
 
 		// indices used to interpolate weighting
@@ -461,7 +446,7 @@ pack_object_   (pack_object)
 		assert( sum > 0.0 );
 
 		// integrand and eta
-		size_t  integrand_id     = data_subset_obj[subset_id].integrand_id;
+		size_t  integrand_id     = subset_object[subset_id].integrand_id;
 		integrand_enum integrand = integrand_table[integrand_id].integrand;
 		double eta               = integrand_table[integrand_id].eta;
 
@@ -469,7 +454,7 @@ pack_object_   (pack_object)
 		size_t  child            = child_object.table_id2child(original_id);
 
 		// density for this data point
-		size_t density_id    = data_subset_obj[subset_id].density_id;
+		size_t density_id    = subset_object[subset_id].density_id;
 		density_enum density = density_enum(density_id);
 
 		// set the information for this data point
