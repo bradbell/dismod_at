@@ -30,6 +30,10 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-10$$
+First verison of $cref predict_comamnd$$ that passes its
+example / test $cref predict_command.py$$.
+
 $head 07-09$$
 $list number$$
 The $code sample$$ table column $code sample_value$$

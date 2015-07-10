@@ -117,11 +117,13 @@ for rate_id in range(n_rate) :
 		match = match and row['rate_id'] == rate_id
 		match = match and row['node_id'] == parent_node_id
 		if match :
-			var_valiue     = sample_dict[var_id]['var_value']
+			count         += 1
+			var_value      = sample_dict[var_id]['var_value']
 			avg_integrand  = predict_dict[integrand_id]['avg_integrand']
 			err            = avg_integrand / var_value - 1.0
 			assert abs(err) <= check_tol
-		assert count == 1
+	# two time points, one age point, for each rate
+	assert count == 2
 
 print('predict_command: OK')
 # END PYTHON

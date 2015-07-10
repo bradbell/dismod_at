@@ -797,7 +797,7 @@ void predict_command(
 	vector<string> col_name_vec(3), row_val_vec(3);
 	col_name_vec[0]   = "sample_index";
 	col_name_vec[1]   = "avg_case_subset_id";
-	col_name_vec[2]   = "avg_integtrand";
+	col_name_vec[2]   = "avg_integrand";
 
 	// n_sample
 	size_t n_sample  = sample_table.size() / n_var;
@@ -821,14 +821,13 @@ void predict_command(
 			{	std::cerr << "sample table is corrupted" << std::endl;
 				std::exit(1);
 			}
-			pack_vec[var_id] = sample_table[sample_id++].var_id;
+			pack_vec[var_id] = sample_table[sample_id++].var_value;
 		}
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	int integrand_id = avg_case_subset_obj[subset_id].integrand_id;
 			double avg = 0.0;
 			dismod_at::integrand_enum integrand =
 				db_input.integrand_table[integrand_id].integrand;
-			std::cout << "integrand = " << integrand << std::endl;
 			switch( integrand )
 			{
 				case dismod_at::Sincidence_enum:
@@ -851,6 +850,7 @@ void predict_command(
 				default:
 				assert(false);
 			}
+			row_val_vec[0] = to_string( sample_index );
 			row_val_vec[1] = to_string( subset_id );
 			row_val_vec[2] = to_string( avg );
 			dismod_at::put_table_row(
