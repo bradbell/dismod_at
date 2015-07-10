@@ -66,11 +66,11 @@ bool child_info_xam(void)
 	ok &= child_object.child_id2node_id(0) == 1; // first  child node_id = 1
 	ok &= child_object.child_id2node_id(1) == 2; // second child node_id = 2
 
-	// check other_id2child_id
-	ok &= child_object.other_id2child(0) == 1;      // first  data child_id = 1
-	ok &= child_object.other_id2child(1) == 1;      // second data child_id = 1
-	ok &= child_object.other_id2child(2) == 0;      // third  data child_id = 0
-	ok &= child_object.other_id2child(3) == n_child;// fourth in parent set
+	// check table_id2child_id
+	ok &= child_object.table_id2child(0) == 1;      // first  data child_id = 1
+	ok &= child_object.table_id2child(1) == 1;      // second data child_id = 1
+	ok &= child_object.table_id2child(2) == 0;      // third  data child_id = 0
+	ok &= child_object.table_id2child(3) == n_child;// fourth in parent set
 
 	return ok;
 }

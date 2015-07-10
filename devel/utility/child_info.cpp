@@ -20,15 +20,13 @@ $$
 $section Child Indices and Tables Indices$$
 
 $head Syntax$$
-$codei%child_info %child_object%(
-	%parent_node_id%, %node_table%, %other_table%
-)
+$codei%child_info %child_object%(%parent_node_id%, %node_table%, %table%)
 %$$
 $icode%n_child%  = %child_object%.child_size()
 %$$
 $icode%node_id%  = %child_object%.child_id2node_id(%child_id%)
 %$$
-$icode%child%    = %child_object%.other_id2child(%other_id%)%$$
+$icode%child%    = %child_object%.table_id2child(%table_id%)%$$
 
 $head child_object$$
 Except for it's constructor, this object has prototype
@@ -55,13 +53,12 @@ $codei%
 and is the $cref/node_table/get_node_table/node_table/$$.
 Only the following fields of this table are used: $code parent$$.
 
-$subhead other_table$$
+$subhead table$$
 This argument has one of the following prototypes
 $codei%
-	const CppAD::vector<%data_struct%>&     %other_table%
-	const CppAD::vector<%avg_case_struct%>& %other_table%
+	const CppAD::vector<%data_struct%>&     %table%
+	const CppAD::vector<%avg_case_struct%>& %table%
 %$$
-Let $icode n_other$$ be the number of rows in $icode other_table$$.
 
 
 $head child_size$$
@@ -96,15 +93,15 @@ $codei%
 and is the $cref/node_id/node_table/node_id/$$ for the
 corresponding $icode child_id$$.
 
-$head other_id2child$$
+$head table_id2child$$
 
-$subhead other_id$$
+$subhead table_id$$
 This argument has prototype
 $codei%
-	size_t %other_id%
+	size_t %table_id%
 %$$
-and is the primary key in the $icode other_table$$, i.e.,
-the index into the vector $icode other_table$$.
+and is the primary key in the $icode table$$, i.e.,
+the index into the vector $icode table$$.
 
 $subhead child$$
 This return value has prototype
@@ -113,7 +110,7 @@ $codei%
 %$$
 If $icode%child% < %n_child%$$,
 $codei%
-	%other_table%[%other_id%].node_id
+	%table%[%table_id%].node_id
 %$$
 is a descendent of
 $codei%
@@ -125,7 +122,7 @@ $pre
 $$
 If $icode%child% == %n_child%$$,
 $codei%
-	%other_table%[%other_id%].node_id
+	%table%[%table_id%].node_id
 %$$
 is the parent node.
 $pre
@@ -133,7 +130,7 @@ $pre
 $$
 If $icode%child% == %n_child%+1%$$,
 $codei%
-	%other_table%[%other_id%].node_id
+	%table%[%table_id%].node_id
 %$$
 is not the parent node and not a descendent of the parent node.
 
@@ -149,7 +146,7 @@ template<class Row>
 child_info::child_info(
 	size_t                            parent_node_id         ,
 	const CppAD::vector<node_struct>& node_table             ,
-	const CppAD::vector<Row>&         other_table            )
+	const CppAD::vector<Row>&         table                  )
 {	assert( parent_node_id != size_t(-1) );
 
 	// child_id2node_id
@@ -160,11 +157,11 @@ child_info::child_info(
 			child_id2node_id_.push_back(node_id);
 	}
 
-	// other_id2child_id
-	size_t n_other = other_table.size();
-	other_id2child_.resize(n_other);
-	for(size_t other_id = 0; other_id < n_other; other_id++)
-	{	size_t node_id = size_t( other_table[other_id].node_id );
+	// table_id2child_id
+	size_t n_table = table.size();
+	table_id2child_.resize(n_table);
+	for(size_t table_id = 0; table_id < n_table; table_id++)
+	{	size_t node_id = size_t( table[table_id].node_id );
 		bool   found   = parent_node_id == node_id;
 		size_t child   = child_id2node_id_.size();
 		bool   more    = ! found;
@@ -181,7 +178,7 @@ child_info::child_info(
 		}
 		if( ! found )
 			child = child_id2node_id_.size() + 1;
-		other_id2child_[other_id] = child;
+		table_id2child_[table_id] = child;
 	}
 }
 
@@ -191,20 +188,20 @@ size_t child_info::child_size(void) const
 size_t child_info::child_id2node_id(size_t child_id) const
 {	return child_id2node_id_[child_id]; }
 
-size_t child_info::other_id2child(size_t other_id) const
-{	return other_id2child_[other_id]; }
+size_t child_info::table_id2child(size_t table_id) const
+{	return table_id2child_[table_id]; }
 
 
 // instantiate child_info constructor for two possible cases
 template child_info::child_info<data_struct>(
 	size_t                            parent_node_id         ,
 	const CppAD::vector<node_struct>& node_table             ,
-	const CppAD::vector<data_struct>& other_table
+	const CppAD::vector<data_struct>& table
 );
 template child_info::child_info<avg_case_struct>(
 	size_t                                parent_node_id             ,
 	const CppAD::vector<node_struct>&     node_table             ,
-	const CppAD::vector<avg_case_struct>& other_table
+	const CppAD::vector<avg_case_struct>& table
 );
 
 } // END DISMOD_AT_NAMESPACE

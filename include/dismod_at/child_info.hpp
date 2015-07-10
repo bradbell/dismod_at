@@ -19,17 +19,17 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 class child_info {
 private:
 	CppAD::vector<size_t> child_id2node_id_;
-	CppAD::vector<size_t> other_id2child_;
+	CppAD::vector<size_t> table_id2child_;
 public:
 	template <class Row>
 	child_info(
 		size_t                                parent_node_id ,
 		const CppAD::vector<node_struct>&     node_table     ,
-		const CppAD::vector<Row>&             other_table
+		const CppAD::vector<Row>&             table
 	);
 	size_t child_size(void) const;
 	size_t child_id2node_id(size_t child_id) const;
-	size_t other_id2child(size_t other_id) const;
+	size_t table_id2child(size_t table_id) const;
 };
 
 } // END DISMOD_AT_NAMESPACE
