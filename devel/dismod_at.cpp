@@ -143,7 +143,7 @@ void init_command(
 	n_subset   = avg_case_subset_obj.size();
 	col_name_vec[0] = "avg_case_id";
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	int avg_case_id    = avg_case_subset_obj[subset_id].avg_case_id;
+	{	int avg_case_id    = avg_case_subset_obj[subset_id].original_id;
 		row_val_vec[0] = dismod_at::to_string( avg_case_id );
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}

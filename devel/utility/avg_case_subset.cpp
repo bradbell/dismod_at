@@ -85,27 +85,27 @@ $subhead subset_id$$
 We use the notation $icode subset_id$$ for an index between
 zero and $icode%n_subset%-1%$$,
 
-$subhead avg_case_id$$
+$subhead original_id$$
 There an extra field in $code avg_case_struct$$ that has
-name $code avg_case_id$$, type $code int$$.
+name $code original_id$$, type $code int$$.
 The values in this field are equal to the
 $icode avg_case_id$$ for the corresponding row of $cref avg_case_table$$.
 The value of
 $codei%
-	%avg_case_subset_obj%[%subset_id%].avg_case_id
+	%avg_case_subset_obj%[%subset_id%].original_id
 %$$
 increases with $icode subset_id$$;
 i.e., for each $icode subset_id$$ less than $icode%n_subset%-2%$$,
 $codei%
-	%avg_case_subset_obj%[%subset_id%].avg_case_id <
-		%avg_case_subset_obj%[%subset_id%+1].avg_case_id
+	%avg_case_subset_obj%[%subset_id%].original_id <
+		%avg_case_subset_obj%[%subset_id%+1].original_id
 %$$
 
 $subhead x$$
 For each $icode subset_id$$ we use
 $codei%
 	row(%subset_id%) =
-		%avg_case_table%[ %avg_case_subset_obj%[%subset_id%].avg_case_id ]
+		%avg_case_table%[ %avg_case_subset_obj%[%subset_id%].original_id ]
 %$$
 to denote the corresponding row of $icode avg_case_table$$.
 For each $cref/covariate_id/covariate_table/covariate_id/$$,
@@ -170,7 +170,7 @@ CppAD::vector<avg_case_subset_struct> avg_case_subset(
 			}
 		}
 		if( ok )
-		{	one_sample.avg_case_id  = avg_case_id;
+		{	one_sample.original_id  = avg_case_id;
 			one_sample.integrand_id = avg_case_table[avg_case_id].integrand_id;
 			one_sample.node_id      = avg_case_table[avg_case_id].node_id;
 			one_sample.weight_id    = avg_case_table[avg_case_id].weight_id;

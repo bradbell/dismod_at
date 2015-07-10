@@ -94,13 +94,13 @@ bool avg_case_subset_xam(void)
 		avg_case_subset(avg_case_table, covariate_table, child_object);
 
 	// avg_case_id = 0 is for world and hence not included
-	ok &= avg_case_subset_obj[0].avg_case_id == 1;
+	ok &= avg_case_subset_obj[0].original_id == 1;
 	// avg_case_id = 1 covariate values minus corresponding reference value
 	ok &= avg_case_subset_obj[0].x[0]    == 0.0;
 	ok &= avg_case_subset_obj[0].x[1]    == 100.;
 	ok &= avg_case_subset_obj[0].node_id == 1;
 	// avg_case_id = 2 covariate values minus corresponding reference value
-	ok &= avg_case_subset_obj[1].avg_case_id == 2;
+	ok &= avg_case_subset_obj[1].original_id == 2;
 	ok &= avg_case_subset_obj[1].x[0]    == 0.5;
 	ok &= avg_case_subset_obj[1].x[1]    == 200.;
 	ok &= avg_case_subset_obj[1].node_id == 2;

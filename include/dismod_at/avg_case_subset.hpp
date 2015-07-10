@@ -19,7 +19,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	struct avg_case_subset_struct {
-		int         avg_case_id;
+		int         original_id;
 		int         integrand_id;
 		int         node_id;
 		int         weight_id;
