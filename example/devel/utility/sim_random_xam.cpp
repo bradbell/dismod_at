@@ -149,6 +149,7 @@ bool sim_random_xam(void)
 	ok   &= std::fabs(samp_var - 1.0) < 1e-1;
 	// integral from 0.5 to infinity of p(z) dz
 	check = exp( - std::sqrt(2.0) * 0.5 ) / 2.0;
+	// std::cout << samp_prob / check << std::endl;
 	ok   &= std::fabs( samp_prob / check - 1.0 ) < 1e-1;
 	// ---------------------------------------------------------------------
 	// free random number generator

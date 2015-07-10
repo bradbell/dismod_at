@@ -63,6 +63,7 @@ private:
 	// data_subset_obj_[subset_id].meas_std
 	CppAD::vector<data_subset_struct>         data_subset_obj_;
 public:
+	template <class SubsetStruct>
 	data_model(
 		size_t                                   parent_node_id  ,
 		size_t                                   n_age_ode       ,
@@ -72,7 +73,7 @@ public:
 		const CppAD::vector<double>&             time_table      ,
 		const CppAD::vector<integrand_struct>&   integrand_table ,
 		const CppAD::vector<node_struct>&        node_table      ,
-		const CppAD::vector<data_subset_struct>& data_subset_obj ,
+		const CppAD::vector<SubsetStruct>&       subset_object   ,
 		const CppAD::vector<weight_info>&        w_info_vec      ,
 		const CppAD::vector<smooth_info>&        s_info_vec      ,
 		const pack_info&                         pack_object     ,

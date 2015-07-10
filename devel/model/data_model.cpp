@@ -171,6 +171,7 @@ $end
 # include <dismod_at/solve_ode.hpp>
 # include <dismod_at/residual_density.hpp>
 # include <dismod_at/a5_double.hpp>
+# include <dismod_at/avg_case_subset.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -183,6 +184,7 @@ data_model::~data_model(void)
 }
 
 // consctructor
+template <class SubsetStruct>
 data_model::data_model(
 	size_t                                   parent_node_id  ,
 	size_t                                   n_age_ode       ,
@@ -192,7 +194,7 @@ data_model::data_model(
 	const CppAD::vector<double>&             time_table      ,
 	const CppAD::vector<integrand_struct>&   integrand_table ,
 	const CppAD::vector<node_struct>&        node_table      ,
-	const CppAD::vector<data_subset_struct>& subset_object   ,
+	const CppAD::vector<SubsetStruct>&       subset_object   ,
 	const CppAD::vector<weight_info>&        w_info_vec      ,
 	const CppAD::vector<smooth_info>&        s_info_vec      ,
 	const pack_info&                         pack_object     ,
@@ -453,13 +455,8 @@ pack_object_   (pack_object)
 		// child of parent node that this data is associated with
 		size_t  child            = child_object.table_id2child(original_id);
 
-		// density for this data point
-		size_t density_id    = subset_object[subset_id].density_id;
-		density_enum density = density_enum(density_id);
-
 		// set the information for this data point
 		data_info_[subset_id].integrand = integrand;
-		data_info_[subset_id].density   = density;
 		data_info_[subset_id].child     = child;
 		data_info_[subset_id].i_min     = i_min;
 		data_info_[subset_id].j_min     = j_min;
@@ -548,18 +545,21 @@ $codei%
 %$$
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
+$head subset_object$$
+We use $icode subset_object$$
+for the $cref/subset_object/data_model_ctor/$$ in the $icode data_object$$
+constructor.
+
 $head n_subset$$
 We use the notation
 $codei%
-	%n_subset% = %data_subset_obj%.size()
+	%n_subset% = %subset_object%.size()
 %$$
-where $cref/data_subset_obj/data_model_ctor/data_subset_obj/$$ is the
-corresponding object in the $icode data_object$$ constructor.
 
 $head subset_id$$
 This an index between zero and $icode%n_subset% - 1%$$.
 It is used to refer to the corresponding element of
-$icode data_subset_obj$$.
+$icode subset_object$$.
 
 $head density_id$$
 This argument has prototype
@@ -570,7 +570,7 @@ and has size $icode n_subset$$.
 For each $icode subset_id$$,
 $icode%density%[%subset_id%]%$$ is used
 as a replacement for $cref/density_id/data_table/density_id/$$ at row
-$icode%data_subset_obj[%subset_id%]%.table_id%$$ of the data table.
+$icode%subset_object[%subset_id%]%.table_id%$$ of the data table.
 
 $head meas_value$$
 This argument has prototype
@@ -581,7 +581,7 @@ and has size $icode n_subset$$.
 For each $icode subset_id$$,
 $icode%meas_value%[%subset_id%]%$$ is used
 as a replacement for $cref/meas_value/data_table/meas_value/$$ at row
-$icode%data_subset_obj[%subset_id%]%.table_id%$$ of the data table.
+$icode%subset_object[%subset_id%]%.table_id%$$ of the data table.
 
 $head meas_std$$
 This argument has prototype
@@ -592,7 +592,7 @@ and has size $icode n_subset$$.
 For each $icode subset_id$$,
 $icode%meas_std%[%subset_id%]%$$ is used
 as a replacement for $cref/meas_std/data_table/meas_std/$$ at row
-$icode%data_subset_obj[%subset_id%]%.table_id%$$ of the data table.
+$icode%subset_object[%subset_id%]%.table_id%$$ of the data table.
 
 
 $end
@@ -610,6 +610,8 @@ void data_model::replace_like(
 	{	data_subset_obj_[subset_id].density_id = density_id[subset_id];
 		data_subset_obj_[subset_id].meas_value = meas_value[subset_id];
 		data_subset_obj_[subset_id].meas_std   = meas_std[subset_id];
+		//
+		data_info_[subset_id].density = density_enum(density_id[subset_id]);
 	}
 	replace_like_called_ = true;
 	return;
@@ -1492,6 +1494,25 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 	return residual_vec;
 }
 
+// ------------------------------------------------------------------------
+# define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)   \
+template data_model::data_model(                                \
+	size_t                                   parent_node_id  ,  \
+	size_t                                   n_age_ode       ,  \
+	size_t                                   n_time_ode      ,  \
+	double                                   ode_step_size   ,  \
+	const CppAD::vector<double>&             age_table       ,  \
+	const CppAD::vector<double>&             time_table      ,  \
+	const CppAD::vector<integrand_struct>&   integrand_table ,  \
+	const CppAD::vector<node_struct>&        node_table      ,  \
+	const CppAD::vector<SubsetStruct>&       subset_object   ,  \
+	const CppAD::vector<weight_info>&        w_info_vec      ,  \
+	const CppAD::vector<smooth_info>&        s_info_vec      ,  \
+	const pack_info&                         pack_object     ,  \
+	const child_info&                        child_object       \
+);
+DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(data_subset_struct)
+DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avg_case_subset_struct)
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \
 	template Float data_model::avg_no_ode(                  \
