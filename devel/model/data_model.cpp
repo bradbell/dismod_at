@@ -36,7 +36,8 @@ $codei%data_model %data_object%(
 	%data_subset_obj%,
 	%w_info_vec%,
 	%s_info_vec%,
-	%pack_object%
+	%pack_object%,
+	%child_object%
 )%$$
 
 $head data_object$$
