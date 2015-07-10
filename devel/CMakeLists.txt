@@ -33,8 +33,10 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	model/fit_model.cpp
 	model/prior_model.cpp
 
+	utility/avg_case_subset.cpp
 	utility/bilinear_interp.cpp
 	utility/child_info.cpp
+	utility/data_subset.cpp
 	utility/eigen_ode2.cpp
 	utility/fixed_effect.cpp
 	utility/integrate_1d.cpp
@@ -52,8 +54,6 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	table/check_child_prior.cpp
 	table/check_pini_n_age.cpp
 	table/check_table_id.cpp
-	table/data_subset.cpp
-	table/avg_case_subset.cpp
 	table/exec_sql_cmd.cpp
 	table/get_age_table.cpp
 	table/get_avg_case_table.cpp

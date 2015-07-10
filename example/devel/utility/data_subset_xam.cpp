@@ -9,16 +9,17 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_data_table_xam.cpp$$
+$begin data_subset_xam.cpp$$
 $spell
 	data
 	xam
 $$
 
-$section C++ get_data_table: Example and Test$$
+$section C++ data_subset: Example and Test$$
 
 $code
-$verbatim%example/devel/table/get_data_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/devel/table/data_subset_xam.cpp%
+	0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

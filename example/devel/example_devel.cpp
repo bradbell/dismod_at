@@ -55,8 +55,10 @@ extern bool prior_fixed_xam(void);
 extern bool prior_random_xam(void);
 
 // utility subdirectory
+extern bool avg_case_subset_xam(void);
 extern bool bilinear_interp_xam(void);
 extern bool child_info_xam(void);
+extern bool data_subset_xam(void);
 extern bool eigen_ode2_xam(void);
 extern bool fixed_effect_xam(void);
 extern bool integrate_1d_xam(void);
@@ -75,7 +77,6 @@ extern bool variable_name_xam(void);
 
 // table subdirectory
 extern bool check_pini_n_age_xam(void);
-extern bool data_subset_xam(void);
 extern bool get_age_table_xam(void);
 extern bool get_avg_case_table_xam(void);
 extern bool get_argument_table_xam(void);
@@ -158,8 +159,10 @@ int main(void)
 	RUN(prior_random_xam);
 
 	// utility subdirectory
+	RUN(avg_case_subset_xam);
 	RUN(bilinear_interp_xam);
 	RUN(child_info_xam);
+	RUN(data_subset_xam);
 	RUN(eigen_ode2_xam);
 	RUN(fixed_effect_xam);
 	RUN(integrate_1d_xam);
@@ -178,7 +181,6 @@ int main(void)
 
 	// table subdirectory
 	RUN(check_pini_n_age_xam);
-	RUN(data_subset_xam);
 	RUN(get_age_table_xam);
 	RUN(get_avg_case_table_xam);
 	RUN(get_argument_table_xam);

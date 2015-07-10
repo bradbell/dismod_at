@@ -59,8 +59,10 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	model/prior_fixed_xam.cpp
 	model/prior_random_xam.cpp
 
+	utility/avg_case_subset_xam.cpp
 	utility/bilinear_interp_xam.cpp
 	utility/child_info_xam.cpp
+	utility/data_subset_xam.cpp
 	utility/eigen_ode2_xam.cpp
 	utility/fixed_effect_xam.cpp
 	utility/integrate_1d_xam.cpp
@@ -78,7 +80,6 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/variable_name_xam.cpp
 
 	table/check_pini_n_age_xam.cpp
-	table/data_subset_xam.cpp
 	table/get_age_table_xam.cpp
 	table/get_avg_case_table_xam.cpp
 	table/get_argument_table_xam.cpp

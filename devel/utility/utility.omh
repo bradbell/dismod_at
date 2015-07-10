@@ -16,8 +16,10 @@ $$
 $section Dismod_at Developer Utility Documentation$$
 
 $childtable%include/dismod_at/a5_double.hpp
+	%devel/utility/avg_case_subset.cpp
 	%devel/utility/bilinear_interp.cpp
 	%devel/utility/child_info.cpp
+	%devel/utility/data_subset.cpp
 	%devel/utility/eigen_ode2.cpp
 	%devel/utility/fixed_effect.cpp
 	%devel/utility/integrate_1d.cpp
