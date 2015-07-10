@@ -128,8 +128,18 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.argument_table    = get_argument_table(db);
 	//
 	size_t n_covariate      = db_input.covariate_table.size();
-	db_input.data_table     = get_data_table(db, n_covariate);
-	db_input.avg_case_table = get_avg_case_table(db, n_covariate);
+	size_t n_age            = db_input.age_table.size();
+	double age_min          = db_input.age_table[0];
+	double age_max          = db_input.age_table[n_age - 1];
+	size_t n_time           = db_input.time_table.size();
+	double time_min         = db_input.time_table[0];
+	double time_max         = db_input.time_table[n_time - 1];
+	db_input.data_table     = get_data_table(
+		db, n_covariate, age_min, age_max, time_min, time_max
+	);
+	db_input.avg_case_table = get_avg_case_table(
+		db, n_covariate, age_min, age_max, time_min, time_max
+	);
 	//
 	// -----------------------------------------------------------------------
 	// check primary keys

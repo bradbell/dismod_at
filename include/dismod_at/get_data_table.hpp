@@ -30,7 +30,12 @@ namespace dismod_at {
 		CppAD::vector<double> x;
 	};
 	extern CppAD::vector<data_struct> get_data_table(
-		sqlite3* db, size_t n_covariate
+		sqlite3* db        ,
+		size_t n_covariate ,
+		double age_min     ,
+		double age_max     ,
+		double time_min    ,
+		double time_max
 	);
 }
 

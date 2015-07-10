@@ -24,7 +24,9 @@ $$
 $section C++: Get the Data Table Information$$
 
 $head Syntax$$
-$icode%data_table% = get_data_table(%db%, %n_covariate%)%$$
+$icode%data_table% = get_data_table(
+	%db%, %n_covariate%, %age_min%, %age_max%, %time_min%, %time_max%
+)%$$
 
 $head Purpose$$
 To read the $cref data_table$$ and return it as a C++ data structure.
@@ -39,9 +41,55 @@ and is an open connection to the database.
 $head n_covariate$$
 This argument has prototype
 $codei%
-	size_t n_covariate
+	size_t %n_covariate%
 %$$
 and is the size of the $cref/covariate_table/get_covariate_table/$$.
+
+$head age_min$$
+This argument has prototype
+$codei%
+	double %age_min%
+%$$
+and is the minimum value in the $cref age_table$$.
+If an $cref/age_lower/data_table/age_lower/$$ value is less than
+$icode age_min$$, an error is reported.
+
+$head age_max$$
+This argument has prototype
+$codei%
+	double %age_max%
+%$$
+and is the maximum value in the $cref age_table$$.
+If an $cref/age_upper/data_table/age_upper/$$ value is greater than
+$icode age_max$$, an error is reported.
+The condition
+$icode%
+	%age_lower% <= %age_upper%
+%$$
+is also checked.
+
+$head time_min$$
+This argument has prototype
+$codei%
+	double %time_min%
+%$$
+and is the minimum value in the $cref time_table$$.
+If an $cref/time_lower/data_table/time_lower/$$ value is less than
+$icode time_min$$, an error is reported.
+
+$head time_max$$
+This argument has prototype
+$codei%
+	double %time_max%
+%$$
+and is the maximum value in the $cref time_table$$.
+If an $cref/time_upper/data_table/time_upper/$$ value is greater than
+$icode time_max$$, an error is reported.
+The condition
+$icode%
+	%time_lower% <= %time_upper%
+%$$
+is also checked.
 
 $head data_table$$
 The return value $icode data_table$$ has prototype
@@ -114,10 +162,17 @@ $end
 # include <dismod_at/get_data_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
+# include <dismod_at/table_error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<data_struct> get_data_table(sqlite3* db, size_t n_covariate)
+CppAD::vector<data_struct> get_data_table(
+	sqlite3* db        ,
+	size_t n_covariate ,
+	double age_min     ,
+	double age_max     ,
+	double time_min    ,
+	double time_max    )
 {	using std::string;
 	// TODO: This could be more efficient if we only allcated one temporary
 	// column at a time (to use with get_table column
@@ -202,6 +257,41 @@ CppAD::vector<data_struct> get_data_table(sqlite3* db, size_t n_covariate)
 		get_table_column(db, table_name, column_name, x_j);
 		for(size_t i = 0; i < n_data; i++)
 			data_table[i].x[j] = x_j[i];
+	}
+
+	// check for erorr conditions
+	string msg;
+	for(size_t data_id = 0; data_id < n_data; data_id++)
+	{	// -------------------------------------------------------------
+		double age_lower  = data_table[data_id].age_lower;
+		double age_upper  = data_table[data_id].age_upper;
+		if( age_lower < age_min )
+		{	msg = "age_lower is less than minimum age in age table";
+			table_error_exit("data", data_id, msg);
+		}
+		if( age_max < age_upper )
+		{	msg = "age_upper is greater than maximum age in age table";
+			table_error_exit("data", data_id, msg);
+		}
+		if( age_upper < age_lower )
+		{	msg = "age_lower is greater than age_upper";
+			table_error_exit("data", data_id, msg);
+		}
+		// ------------------------------------------------------------
+		double time_lower = data_table[data_id].time_lower;
+		double time_upper = data_table[data_id].time_upper;
+		if( time_lower < time_min )
+		{	msg = "time_lower is less than minimum time in time table";
+			table_error_exit("data", data_id, msg);
+		}
+		if( time_max < time_upper )
+		{	msg = "time_upper is greater than maximum time in time table";
+			table_error_exit("data", data_id, msg);
+		}
+		if( time_upper < time_lower )
+		{	msg = "time_lower is greater than time_upper";
+			table_error_exit("data", data_id, msg);
+		}
 	}
 	return data_table;
 }

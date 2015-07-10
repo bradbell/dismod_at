@@ -77,8 +77,13 @@ bool get_data_table_xam(void)
 
 	// get the data table
 	size_t n_covariate = 2;
-	vector<dismod_at::data_struct>
-		data_table = dismod_at::get_data_table(db, n_covariate);
+	double age_min     = 0.0;
+	double age_max     = 100.0;
+	double time_min    = 1900.;
+	double time_max    = 2015.;
+	vector<dismod_at::data_struct> data_table = dismod_at::get_data_table(
+		db, n_covariate, age_min, age_max, time_min, time_max
+	);
 	ok  &= data_table.size() == 1;
 	//
 	ok  &= data_table[0].integrand_id      == 1;

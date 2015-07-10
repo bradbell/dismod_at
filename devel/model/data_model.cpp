@@ -260,36 +260,17 @@ data_subset_obj_ (data_subset_obj)
 
 		// age limits
 		double age_lower  = data_subset_obj[subset_id].age_lower;
-		if( age_lower < age_min )
-		{	string msg = "age_lower is less than minimum age in age table";
-			table_error_exit("data", data_id, msg);
-		}
 		double age_upper  = data_subset_obj[subset_id].age_upper;
-		if( age_upper < age_lower )
-		{	string msg = "age_upper is less than age_lower";
-			table_error_exit("data", data_id, msg);
-		}
-		if( age_max < age_upper )
-		{	string msg = "age_upper is greater than maximum age in age table";
-			table_error_exit("data", data_id, msg);
-		}
+		assert( age_min <= age_lower );
+		assert( age_upper <= age_max );
+		assert( age_lower <= age_upper);
 
 		// time limits
-		double time_lower  = data_subset_obj[subset_id].time_lower;
-		if( time_lower < time_min )
-		{	string msg = "time_lower is less than minimum time in time table";
-			table_error_exit("data", data_id, msg);
-		}
-		double time_upper  = data_subset_obj[subset_id].time_upper;
-		if( time_upper < time_lower )
-		{	string msg = "time_upper is less than time_lower";
-			table_error_exit("data", data_id, msg);
-		}
-		if( time_max < time_upper )
-		{	string msg =
-				"time_upper is greater than maximum time in time table";
-			table_error_exit("data", data_id, msg);
-		}
+		double time_lower = data_subset_obj[subset_id].time_lower;
+		double time_upper = data_subset_obj[subset_id].time_upper;
+		assert( time_min <= time_lower );
+		assert( time_upper <= time_max );
+		assert( time_lower <= time_upper);
 
 		// determine minimum ode grid age index
 		size_t i_min = 0;
