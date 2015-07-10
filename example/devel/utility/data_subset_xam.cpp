@@ -97,13 +97,13 @@ bool data_subset_xam(void)
 		data_subset(data_table, covariate_table, child_object);
 
 	// data_id = 0 is for world and hence not included
-	ok &= data_subset_obj[0].data_id == 1;
+	ok &= data_subset_obj[0].original_id == 1;
 	// data_id = 1 covariate values minus corresponding reference value
 	ok &= data_subset_obj[0].x[0]    == 0.0;
 	ok &= data_subset_obj[0].x[1]    == 100.;
 	ok &= data_subset_obj[0].node_id == 1;
 	// data_id = 2 covariate values minus corresponding reference value
-	ok &= data_subset_obj[1].data_id == 2;
+	ok &= data_subset_obj[1].original_id == 2;
 	ok &= data_subset_obj[1].x[0]    == 0.5;
 	ok &= data_subset_obj[1].x[1]    == 200.;
 	ok &= data_subset_obj[1].node_id == 2;

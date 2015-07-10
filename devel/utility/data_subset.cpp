@@ -85,25 +85,26 @@ $subhead subset_id$$
 We use the notation $icode subset_id$$ for an index between
 zero and $icode%n_subset%-1%$$,
 
-$subhead data_id$$
+$subhead original_id$$
 There an extra field in $code data_struct$$ that has
-name $code data_id$$, type $code int$$.
+name $code original_id$$, type $code int$$.
 The values in this field are equal to the
-$icode data_id$$ for the corresponding row of $cref data_table$$.
+$icode original_id$$ for the corresponding row of $cref data_table$$.
 The value of
 $codei%
-	%data_subset_obj%[%subset_id%].data_id
+	%data_subset_obj%[%subset_id%].original_id
 %$$
 increases with $icode subset_id$$;
 i.e., for each $icode subset_id$$ less than $icode%n_subset%-2%$$,
 $codei%
-	%data_subset_obj%[%subset_id%].data_id < %data_subset_obj%[%subset_id%+1].data_id
+	%data_subset_obj%[%subset_id%].original_id <
+		%data_subset_obj%[%subset_id%+1].original_id
 %$$
 
 $subhead x$$
 For each $icode subset_id$$ we use
 $codei%
-	row(%subset_id%) = %data_table%[ %data_subset_obj%[%subset_id%].data_id ]
+row(%subset_id%) = %data_table%[ %data_subset_obj%[%subset_id%].original_id ]
 %$$
 to denote the corresponding row of $icode data_table$$.
 For each $cref/covariate_id/covariate_table/covariate_id/$$,
@@ -168,7 +169,7 @@ CppAD::vector<data_subset_struct> data_subset(
 			}
 		}
 		if( ok )
-		{	one_sample.data_id      = data_id;
+		{	one_sample.original_id  = data_id;
 			one_sample.integrand_id = data_table[data_id].integrand_id;
 			one_sample.density_id   = data_table[data_id].density_id;
 			one_sample.node_id      = data_table[data_id].node_id;

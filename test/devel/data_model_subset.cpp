@@ -242,7 +242,7 @@ bool data_model_subset(void)
 	ok &= n_sample == 3;
 	for(size_t subset_id = 0; subset_id < n_sample; subset_id++)
 	{	Float avg      = data_object.avg_no_ode(subset_id, pack_vec);
-		size_t data_id = data_subset_obj[subset_id].data_id;
+		size_t data_id = data_subset_obj[subset_id].original_id;
 		double check   = check_avg(data_table[data_id]) / (age_max*time_max);
 		ok            &= fabs( 1.0 - avg / check ) <= eps;
 	}

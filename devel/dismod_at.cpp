@@ -127,7 +127,7 @@ void init_command(
 	vector<string> col_name_vec(1), row_val_vec(1);
 	col_name_vec[0] = "data_id";
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	int data_id    = data_subset_obj[subset_id].data_id;
+	{	int data_id    = data_subset_obj[subset_id].original_id;
 		row_val_vec[0] = dismod_at::to_string( data_id );
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}

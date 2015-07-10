@@ -256,7 +256,7 @@ data_subset_obj_ (data_subset_obj)
 	//
 	for(size_t subset_id = 0; subset_id < n_sample; subset_id++)
 	{	// information for this data point
-		size_t data_id = data_subset_obj[subset_id].data_id;
+		size_t original_id = data_subset_obj[subset_id].original_id;
 
 		// age limits
 		double age_lower  = data_subset_obj[subset_id].age_lower;
@@ -448,7 +448,7 @@ data_subset_obj_ (data_subset_obj)
 		double eta               = integrand_table[integrand_id].eta;
 
 		// child of parent node that this data is associated with
-		size_t  child            = child_object.table_id2child(data_id);
+		size_t  child            = child_object.table_id2child(original_id);
 
 		// density for this data point
 		size_t density_id    = data_subset_obj[subset_id].density_id;
