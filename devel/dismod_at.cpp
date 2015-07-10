@@ -14,22 +14,23 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <string>
 # include <iostream>
 # include <cppad/vector.hpp>
-# include <dismod_at/configure.hpp>
-# include <dismod_at/open_connection.hpp>
-# include <dismod_at/get_db_input.hpp>
-# include <dismod_at/fit_model.hpp>
-# include <dismod_at/child_info.hpp>
-# include <dismod_at/put_table_row.hpp>
-# include <dismod_at/to_string.hpp>
-# include <dismod_at/get_column_max.hpp>
-# include <dismod_at/exec_sql_cmd.hpp>
-# include <dismod_at/get_table_column.hpp>
-# include <dismod_at/to_string.hpp>
-# include <dismod_at/manage_gsl_rng.hpp>
-# include <dismod_at/pack_info.hpp>
-# include <dismod_at/sim_random.hpp>
-# include <dismod_at/get_simulate_table.hpp>
 # include <dismod_at/avg_case_subset.hpp>
+# include <dismod_at/child_info.hpp>
+# include <dismod_at/configure.hpp>
+# include <dismod_at/exec_sql_cmd.hpp>
+# include <dismod_at/fit_model.hpp>
+# include <dismod_at/get_column_max.hpp>
+# include <dismod_at/get_db_input.hpp>
+# include <dismod_at/get_integrand_table.hpp>
+# include <dismod_at/get_sample_table.hpp>
+# include <dismod_at/get_simulate_table.hpp>
+# include <dismod_at/get_table_column.hpp>
+# include <dismod_at/manage_gsl_rng.hpp>
+# include <dismod_at/open_connection.hpp>
+# include <dismod_at/pack_info.hpp>
+# include <dismod_at/put_table_row.hpp>
+# include <dismod_at/sim_random.hpp>
+# include <dismod_at/to_string.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 	using CppAD::vector;
@@ -80,6 +81,8 @@ $lnext
 $cref/simulate_table/simulate_command/simulate_table/$$
 $lnext
 $cref/sample_table/sample_command/sample_table/$$
+$lnext
+$cref/predict_table/predict_command/predict_table/$$
 $lend
 
 $children%example/get_started/init_command.py%$$
@@ -105,7 +108,7 @@ void init_command(
 
 	// -----------------------------------------------------------------------
 	const char* drop_list[] = {
-		"subset", "var", "fit_var", "truth_var", "simulate", "sample"
+	"subset", "var", "fit_var", "truth_var", "simulate", "sample", "predict"
 	};
 	size_t n_drop = sizeof( drop_list ) / sizeof( drop_list[0] );
 	string sql_cmd;
@@ -636,7 +639,6 @@ void sample_command(
 	dismod_at::data_model&                               data_object      ,
 	const dismod_at::pack_info&                          pack_object      ,
 	const dismod_at::db_input_struct&                    db_input         ,
-	const vector<dismod_at::simulate_struct>&            simulate_table   ,
 	const vector<dismod_at::smooth_info>&                s_info_vec       ,
 	const dismod_at::prior_model&                        prior_object     ,
 	const std::string&                                   tolerance_arg    ,
@@ -645,6 +647,10 @@ void sample_command(
 {
 	using std::string;
 	using dismod_at::to_string;
+
+	// get simulation data
+	vector<dismod_at::simulate_struct> simulate_table =
+			dismod_at::get_simulate_table(db);
 
 	// create a new sample table
 	string sql_cmd = "drop table if exists sample";
@@ -720,6 +726,141 @@ void sample_command(
 	}
 	return;
 }
+/*
+-------------------------------------------------------------------------------
+$begin predict_command$$
+$spell
+	dismod
+	var
+	arg
+$$
+
+$section The Predict Command$$
+
+$head Syntax$$
+$codei%dismod_at predict %file_name%$$
+
+$head file_name$$
+Is an
+$href%http://www.sqlite.org/sqlite/%$$ data base containing the
+$code dismod_at$$ $cref input$$ tables which are not modified.
+
+$head sample_table$$
+This command has the extra input $cref sample_table$$
+which was created by a previous $cref sample_command$$.
+
+$head predict_table$$
+A new $cref predict_table$$ is created each time this command is run.
+It contains the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
+values for each
+$cref/sample_index/sample_table/sample_index/$$ in the sample table
+and each
+$cref/avg_case_subset_id/avg_case_subset_table/avg_case_subset_id/$$
+in the avg_case_subset table.
+
+$children%example/get_started/predict_command.py%$$
+$head Example$$
+The file $cref predict_command.py$$ contains an example and test
+of using this command.
+
+$end
+*/
+
+// ----------------------------------------------------------------------------
+void predict_command(
+	sqlite3*                                          db                  ,
+	const dismod_at::db_input_struct&                 db_input            ,
+	size_t                                            n_var               ,
+	dismod_at::data_model&                            avg_case_object     ,
+	const vector<dismod_at::avg_case_subset_struct>&  avg_case_subset_obj
+)
+{
+	using std::string;
+	using dismod_at::to_string;
+
+	// sample table
+	vector<dismod_at::sample_struct> sample_table =
+		dismod_at::get_sample_table(db);
+
+	// create a new sample table
+	string sql_cmd = "drop table if exists predict";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	sql_cmd = "create table predict("
+		" predict_id          integer primary key,"
+		" sample_index       integer,"
+		" avg_case_subset_id integer,"
+		" avg_integrand      real"
+	")";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	string table_name = "predict";
+	vector<string> col_name_vec(3), row_val_vec(3);
+	col_name_vec[0]   = "sample_index";
+	col_name_vec[1]   = "avg_case_subset_id";
+	col_name_vec[2]   = "avg_integtrand";
+
+	// n_sample
+	size_t n_sample  = sample_table.size() / n_var;
+	assert( sample_table.size() == n_sample * n_var );
+	//
+	// n_subset
+	size_t n_subset  = avg_case_subset_obj.size();
+	//
+	// pack_vec
+	CppAD::vector<double> pack_vec(n_var);
+	//
+	size_t sample_id = 0;
+	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
+	{	// copy the variable values for this sample index into pack_vec
+		for(size_t var_id = 0; var_id < n_var; var_id++)
+		{	size_t sample_check =
+				size_t( sample_table[sample_id].sample_index);
+			size_t var_check =
+				size_t( sample_table[sample_id].var_id);
+			if( sample_check != sample_index || var_check != var_id )
+			{	std::cerr << "sample table is corrupted" << std::endl;
+				std::exit(1);
+			}
+			pack_vec[var_id] = sample_table[sample_id++].var_id;
+		}
+		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+		{	int integrand_id = avg_case_subset_obj[subset_id].integrand_id;
+			double avg = 0.0;
+			dismod_at::integrand_enum integrand =
+				db_input.integrand_table[integrand_id].integrand;
+			std::cout << "integrand = " << integrand << std::endl;
+			switch( integrand )
+			{
+				case dismod_at::Sincidence_enum:
+				case dismod_at::remission_enum:
+				case dismod_at::mtexcess_enum:
+				case dismod_at::mtother_enum:
+				case dismod_at::mtwith_enum:
+				case dismod_at::relrisk_enum:
+				avg = avg_case_object.avg_no_ode(subset_id, pack_vec);
+				break;
+				//
+				case dismod_at::prevalence_enum:
+				case dismod_at::Tincidence_enum:
+				case dismod_at::mtspecific_enum:
+				case dismod_at::mtall_enum:
+				case dismod_at::mtstandard_enum:
+				avg = avg_case_object.avg_yes_ode(subset_id, pack_vec);
+				break;
+				//
+				default:
+				assert(false);
+			}
+			row_val_vec[1] = to_string( subset_id );
+			row_val_vec[2] = to_string( avg );
+			dismod_at::put_table_row(
+				db, table_name, col_name_vec, row_val_vec
+			);
+		}
+	}
+	return;
+}
+// ---------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 
 int main(int n_arg, const char** argv)
@@ -744,9 +885,10 @@ int main(int n_arg, const char** argv)
 	ok     |= command_arg == "truth";
 	ok     |= command_arg == "simulate";
 	ok     |= command_arg == "sample";
+	ok     |= command_arg == "predict";
 	if( ! ok )
 	{	cerr << "dismod_at: command is not one of the following:" << endl
-		<< "\tinit, fit, truth, simulate, sample" << endl;
+		<< "\tinit, fit, truth, simulate, sample, predict" << endl;
 		std::exit(1);
 	}
 	// --------------- get the input tables ---------------------------------
@@ -874,6 +1016,27 @@ int main(int n_arg, const char** argv)
 	);
 	string rate_info = argument_map["rate_info"];
 	data_object.set_eigen_ode2_case_number(rate_info);
+	//
+	// avg_case_object
+	dismod_at::data_model avg_case_object(
+		parent_node_id           ,
+		n_age_ode                ,
+		n_time_ode               ,
+		ode_step_size            ,
+		db_input.age_table       ,
+		db_input.time_table      ,
+		db_input.integrand_table ,
+		db_input.node_table      ,
+		avg_case_subset_obj          ,
+		w_info_vec               ,
+		s_info_vec               ,
+		pack_object              ,
+		child_avg_case
+	);
+	avg_case_object.set_eigen_ode2_case_number(rate_info);
+	// -----------------------------------------------------------------------
+	string tolerance     = argument_map["tolerance"];
+	string max_num_iter  = argument_map["max_num_iter"];
 	// ---------------------------------------------------------------------
 	if( command_arg == "init" )
 	{	init_command(
@@ -887,9 +1050,7 @@ int main(int n_arg, const char** argv)
 		);
 	}
 	else if( command_arg == "fit" )
-	{	string tolerance    = argument_map["tolerance"];
-		string max_num_iter = argument_map["max_num_iter"];
-		fit_command(
+	{	fit_command(
 			db               ,
 			data_object      ,
 			data_subset_obj  ,
@@ -918,21 +1079,27 @@ int main(int n_arg, const char** argv)
 		);
 	}
 	else if( command_arg == "sample" )
-	{	vector<dismod_at::simulate_struct> simulate_table =
-			dismod_at::get_simulate_table(db);
-		string tolerance     = argument_map["tolerance"];
-		string max_num_iter  = argument_map["max_num_iter"];
+	{
 		sample_command(
 			db               ,
 			data_subset_obj  ,
 			data_object      ,
 			pack_object      ,
 			db_input         ,
-			simulate_table   ,
 			s_info_vec       ,
 			prior_object     ,
 			tolerance        ,
 			max_num_iter
+		);
+	}
+	else if( command_arg == "predict" )
+	{	size_t n_var = pack_object.size();
+		predict_command(
+			db                   ,
+			db_input             ,
+			n_var                ,
+			avg_case_object      ,
+			avg_case_subset_obj
 		);
 	}
 	else
