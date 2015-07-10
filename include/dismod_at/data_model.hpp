@@ -53,8 +53,10 @@ private:
 	// modified by set_eigen_ode2_case_number
 	size_t                       eigen_ode2_case_number_;
 
-	// set by consructor as reference to object in call
-	// data_subset_obj_[subset_id].meas_value is modified by change_meas_value.
+	// set by consructor, following fields modied by replace_like
+	// data_subset_obj_[subset_id].density_id
+	// data_subset_obj_[subset_id].meas_value
+	// data_subset_obj_[subset_id].meas_std
 	CppAD::vector<data_subset_struct>         data_subset_obj_;
 public:
 	data_model(
@@ -77,9 +79,10 @@ public:
 	//
 	void set_eigen_ode2_case_number(const std::string& rate_info_arg);
 	//
-	void change_meas_value(
-		const size_t&                         sample_index,
-		const CppAD::vector<simulate_struct>& sample_table
+	void replace_like(
+		const CppAD::vector<size_t>&          density_id     ,
+		const CppAD::vector<double>&          meas_value     ,
+		const CppAD::vector<double>&          meas_std
 	);
 	//
 	// compute average for integrands that do not require S or C

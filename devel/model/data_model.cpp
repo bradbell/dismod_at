@@ -522,12 +522,22 @@ $spell
 	const
 	CppAD
 	struct
+	std
+	obj
 $$
 
 $section Change the Measurement Values to A Particular Simulation$$
 
 $head Syntax$$
-$icode%data_object%.change_meas_value(%sample_index%, %simulate_table)%$$
+$icode%data_object%.replace_like(
+	%density_id%, %meas_value%, %meas_std%
+)%$$
+
+$head Purpose$$
+This routine sets the value necessary to calculate the functions
+$cref/data_object.like_one/data_model_like_one/$$ and
+$cref/data_object.like_all/data_model_like_all/$$.
+
 
 $head data_object$$
 This object has prototype
@@ -536,50 +546,68 @@ $codei%
 %$$
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
-$head sample_index$$
-This argument has prototype
+$head n_subset$$
+We use the notation
 $codei%
-	const size_t& %sample_index%
+	%n_subset% = %data_subset_obj%.size()
 %$$
-It specifies the $cref/sample_index/simulate_table/sample_index/$$
-corresponding to new measurement values.
+where $cref/data_subset_obj/data_model_ctor/data_subset_obj/$$ is the
+corresponding object in the $icode data_object$$ constructor.
 
-$head simulate_table$$
+$head subset_id$$
+This an index between zero and $icode%n_subset% - 1%$$.
+It is used to refer to the corresponding element of
+$icode data_subset_obj$$.
+
+$head density_id$$
 This argument has prototype
 $codei%
-	const CppAD::vector<simulate_struct>& %simulate_table%
+	const CppAD::vector<size_t>& %density_id%
 %$$
-and is the result of $cref get_simulate_table$$.
-The $cref/meas_value/simulate_table/meas_value/$$ column in this table,
-is used to replace the measurement values stored in $icode data_object$$.
+and has size $icode n_subset$$.
+For each $icode subset_id$$,
+$icode%density%[%subset_id%]%$$ is used
+as a replacement for $cref/density_id/data_table/density_id/$$ at row
+$icode%data_subset_obj[%subset_id%]%.table_id%$$ of the data table.
+
+$head meas_value$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %meas_value%
+%$$
+and has size $icode n_subset$$.
+For each $icode subset_id$$,
+$icode%meas_value%[%subset_id%]%$$ is used
+as a replacement for $cref/meas_value/data_table/meas_value/$$ at row
+$icode%data_subset_obj[%subset_id%]%.table_id%$$ of the data table.
+
+$head meas_std$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %meas_std%
+%$$
+and has size $icode n_subset$$.
+For each $icode subset_id$$,
+$icode%meas_std%[%subset_id%]%$$ is used
+as a replacement for $cref/meas_std/data_table/meas_std/$$ at row
+$icode%data_subset_obj[%subset_id%]%.table_id%$$ of the data table.
 
 
 $end
 */
-void data_model::change_meas_value(
-		const size_t&                         sample_index   ,
-		const CppAD::vector<simulate_struct>& simulate_table )
+void data_model::replace_like(
+		const CppAD::vector<size_t>&          density_id     ,
+		const CppAD::vector<double>&          meas_value     ,
+		const CppAD::vector<double>&          meas_std       )
 {	size_t n_subset = data_subset_obj_.size();
+	assert( density_id.size() == n_subset );
+	assert( meas_value.size() == n_subset );
+	assert( meas_std.size()   == n_subset );
 	//
-	// simulate_id where this sample_index starts
-	size_t offset = n_subset * sample_index;
-	if( offset + n_subset > simulate_table.size() )
-	{	std::cerr << "Attempt to use a sample_index not in simulate table"
-		<< std::endl;
-		std::exit(1);
-	}
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	size_t simulate_id    = offset + subset_id;
-		int    sample         = simulate_table[simulate_id].sample_index;
-		int    data_subset_id = simulate_table[simulate_id].data_subset_id;
-		double meas_value = simulate_table[simulate_id].meas_value;
-		bool   ok  = size_t(sample) == sample_index;
-		ok        &= size_t( data_subset_id ) == subset_id;
-		if( ! ok )
-		{	std::cerr << "simulate table is corrupted" << std::endl;
-			std::exit(1);
-		}
-		data_subset_obj_[subset_id].meas_value = meas_value;
+	{	data_subset_obj_[subset_id].density_id = density_id[subset_id];
+		data_subset_obj_[subset_id].meas_value = meas_value[subset_id];
+		data_subset_obj_[subset_id].meas_std   = meas_std[subset_id];
 	}
 	return;
 }

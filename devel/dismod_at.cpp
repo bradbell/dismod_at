@@ -618,7 +618,7 @@ $end
 // ----------------------------------------------------------------------------
 void sample_command(
 	sqlite3*                                             db               ,
-	size_t                                               n_data_subset    ,
+	const vector<dismod_at::data_subset_struct>&         data_subset_obj  ,
 	dismod_at::data_model&                               data_object      ,
 	const dismod_at::pack_info&                          pack_object      ,
 	const dismod_at::db_input_struct&                    db_input         ,
@@ -648,13 +648,39 @@ void sample_command(
 	col_name_vec[1]   = "var_id";
 	col_name_vec[2]   = "var_value";
 
+	// n_subset
+	size_t n_subset = data_subset_obj.size();
+
+	// used be replace_like
+	vector<size_t> density_id(n_subset);
+	vector<double> meas_value(n_subset);
+	vector<double> meas_std(n_subset);
+	// values that do not change with sample_index
+	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+	{	density_id[subset_id] = data_subset_obj[subset_id].density_id;
+		meas_std[subset_id]   = data_subset_obj[subset_id].meas_std;
+	}
+
 	// n_var, n_sample
 	size_t n_var    = pack_object.size();
-	size_t n_sample = simulate_table.size() / n_data_subset;
-	assert( simulate_table.size() == n_sample * n_data_subset );
+	size_t n_sample = simulate_table.size() / n_subset;
+	assert( simulate_table.size() == n_sample * n_subset );
 	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
 	{	// set the measurement values for this simulation subset
-		data_object.change_meas_value(sample_index, simulate_table);
+		size_t offset = n_subset * sample_index;
+		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+		{	size_t simulate_id = offset + subset_id;
+			size_t sample_check =
+				size_t(simulate_table[simulate_id].sample_index);
+			size_t subset_check =
+				size_t(simulate_table[simulate_id].data_subset_id);
+			if( sample_check != sample_index || subset_check != subset_id )
+			{	std::cerr << "simulate table is corrupted" << std::endl;
+				std::exit(1);
+			}
+			meas_value[subset_id] = simulate_table[simulate_id].meas_value;
+		}
+		data_object.replace_like(density_id, meas_value, meas_std);
 
 		// fit_model
 		dismod_at::fit_model fit_object(
@@ -881,10 +907,9 @@ int main(int n_arg, const char** argv)
 			dismod_at::get_simulate_table(db);
 		string tolerance     = argument_map["tolerance"];
 		string max_num_iter  = argument_map["max_num_iter"];
-		size_t n_data_subset = data_subset_obj.size();
 		sample_command(
 			db               ,
-			n_data_subset    ,
+			data_subset_obj  ,
 			data_object      ,
 			pack_object      ,
 			db_input         ,
