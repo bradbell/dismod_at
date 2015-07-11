@@ -415,7 +415,7 @@ $$
 $section The Truth Command$$
 
 $head Syntax$$
-$codei%dismod_at var %file_name%$$
+$codei%dismod_at truth %file_name%$$
 
 $head file_name$$
 Is an

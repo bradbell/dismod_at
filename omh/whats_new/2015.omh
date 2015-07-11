@@ -31,8 +31,12 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-10$$
-First verison of $cref predict_comamnd$$ that passes its
+$list number$$
+First version of $cref predict_command$$ that passes its
 example / test $cref predict_command.py$$.
+$lnext
+List addition input and output tables in $cref output$$ section.
+$lend
 
 $head 07-09$$
 $list number$$

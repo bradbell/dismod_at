@@ -11,11 +11,16 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin output$$
 $spell
 	Dismod
+	init
 $$
 
 $section Tables That Are Created By Dismod_at$$
+Each of the tables in this section is created by a dismod_at $cref command$$.
+There is one possible exception,
+the $cref truth_var_table$$ may be directly by the user
+(instead of by using the $cref truth_command$$).
 
-$childtable%omh/table/data_subset_table.omh
+$children%omh/table/data_subset_table.omh
 	%omh/table/avg_case_subset_table.omh
 	%omh/table/var_table.omh
 	%omh/table/fit_var_table.omh
@@ -24,5 +29,37 @@ $childtable%omh/table/data_subset_table.omh
 	%omh/table/sample_table.omh
 	%omh/table/predict_table.omh
 %$$
+
+$table
+	Command $pre  $$ $cnext
+	Outputs $cnext
+	Addition Inputs
+$rnext
+	$cref/init/init_command/$$ $cnext
+	$cref var_table$$
+$rnext $cnext
+	$cref data_subset_table$$
+$rnext $cnext
+	$cref avg_case_subset_table$$  $pre  $$
+$rnext
+	$cref/fit/fit_command/$$ $cnext
+	$cref fit_var_table$$    $cnext
+$rnext
+	$cref/truth/truth_command/$$ $cnext
+	$cref truth_var_table$$      $cnext
+	$cref fit_var_table$$
+$rnext
+	$cref/simulate/simulate_command/$$ $cnext
+	$cref simulate_table$$             $cnext
+	$cref truth_var_table$$
+$rnext
+	$cref/sample/sample_command/$$ $cnext
+	$cref sample_table$$           $cnext
+	$cref simulate_table$$
+$rnext
+	$cref/predict/predict_command/$$ $cnext
+	$cref predict_table$$            $cnext
+	$cref sample_table$$
+$tend
 
 $end
