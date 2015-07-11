@@ -39,23 +39,20 @@ Add a foreign key constraint for all the
 $cref/foreign keys/input/Foreign Key/$$.
 Add a $code not null$$ constraint for all
 $cref/primary keys/input/Primary Key/$$ and all columns
-of type $code text$$'; see
-$cref/text column not null/input/Text Column Not Null/$$.
+of type $code text$$; see
+$cref/text not null/input/Text Not Null/$$.
 $lnext
 If the $cref fit_var_table$$ exists when the $cref fit_command$$ is executed,
 use those values as a starting point for the optimization.
 Note that the initial
 $cref fit_var_table$$ will be overwritten by the fit.
 $lnext
-Add a $code dismod_at posterior$$ command that,
-given the $cref/variable/model_variable/$$ values posterior samples
-$cref sample_table$$,
-samples from the from the posterior distribution corresponding
-to any of the $cref/average integrands/avg_integrand/$$.
-$lnext
 Include lower and upper limit for the smoothing difference priors
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
+$lnext
+Add a log table that records commands and corresponding error messages
+or OK at end of command.
 $lend
 
 $childtable%omh/install/unix.omh

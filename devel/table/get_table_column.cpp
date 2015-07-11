@@ -20,9 +20,6 @@ $spell
 $$
 
 $section C++: Get The Type and Values in a Table Column$$
-$index get, table column$$
-$index column, get table$$
-$index table, get column$$
 
 $head Syntax$$
 $icode%column_type% = get_table_column_type(%db%, %table_name%, %column_name%)
@@ -71,7 +68,8 @@ prototype
 $codei%
 	CppAD::vector<std::string>& %result%
 %$$
-It is an error for any for any of the text values to be $code null$$.
+It is an error for any of the text values
+in the database to be $code null$$.
 
 $subhead integer$$
 If the column has type $code integer$$, this argument has
@@ -79,7 +77,13 @@ prototype
 $codei%
 	CppAD::vector<int>& %result%
 %$$
-It is an error for any for any of the integer values to be $code null$$.
+If an integer value is $code null$$,
+it is returned as the $code int$$ value
+$codei%
+	std::limits<int>::min()
+%$$
+It is an error for any of the integer values in the database to
+have this value.
 
 $subhead real$$
 If the column has type $code real$$, this argument has
@@ -87,8 +91,9 @@ prototype
 $codei%
 	CppAD::vector<double>& %result%
 %$$
-It a real value is $code null$$, it is returned as the $code double$$
+If a real value is $code null$$, it is returned as the $code double$$
 value $code nan$$.
+Note that it is not possible for a database value to be $code nan$$.
 
 $children%example/devel/table/get_table_column_xam.cpp
 %$$
@@ -99,27 +104,51 @@ this function.
 $end
 ------------------------------------------------------------------------------
 */
+# include <limits>
+# include <string>
 # include <iostream>
 # include <cassert>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/configure.hpp>
+# include <dismod_at/table_error_exit.hpp>
 
 namespace {
+	using std::string;
+
+	// Type specified by sqlite3_exec
 	typedef int (*callback_type)(void*, int, char**, char**);
 
-	char*  convert(const std::string& not_used, char* v)
-	{	// no text values should be null
-		assert( v != DISMOD_AT_NULLPTR );
+	// Name of table column that we are currently working with
+	// set by get_column, used by convert
+	string table_name_;
+	string column_name_;
+
+	char*  convert(const std::string& not_used, char* v, size_t row_id)
+	{	if( v == DISMOD_AT_NULLPTR )
+		{	string msg = "The null value appears in the text column ";
+			msg += column_name_;
+			dismod_at::table_error_exit(table_name_, row_id, msg);
+		}
 		return v;
 	}
-	int    convert(const int& not_used, char* v)
-	{	// no integer values should be null
-		assert( v != DISMOD_AT_NULLPTR );
-		return std::atoi(v);
+	int    convert(const int& not_used, char* v, size_t row_id)
+	{	if(	v == DISMOD_AT_NULLPTR )
+			return std::numeric_limits<int>::min();
+		//
+		int value = std::atoi(v);
+		//
+		// no integer values should be the minimum integer
+		if( value == std::numeric_limits<int>::min() )
+		{	string msg = "The minimum integer appears in the int column ";
+			msg += column_name_;
+			dismod_at::table_error_exit(table_name_, row_id, msg);
+		}
+		//
+		return value;
 	}
-	double convert(const double& not_used, char* v)
+	double convert(const double& not_used, char* v, size_t row_id)
 	{	if( v == DISMOD_AT_NULLPTR )
-			return std::atof("nan");
+			return std::numeric_limits<double>::quiet_NaN();
 		return std::atof(v);
 	}
 
@@ -129,7 +158,8 @@ namespace {
 		assert( argc == 1 );
 		assert( result != DISMOD_AT_NULLPTR );
 		vector* vector_result = static_cast<vector*>(result);
-		vector_result->push_back( convert(Element(), argv[0] ) );
+		size_t row_id = vector_result->size();
+		vector_result->push_back( convert(Element(), argv[0], row_id ) );
 		return 0;
 	}
 	template int callback<std::string>(void*, int, char**, char**);
@@ -184,6 +214,10 @@ std::string get_table_column_type(
 	using std::cerr;
 	using std::endl;
 
+	// set globals used by error messages
+	table_name_ = table_name;
+	column_name_ = column_name;
+
 	const char *zDataType;
 	const char *zCollSeq;
 	int NotNull;
@@ -221,6 +255,11 @@ void get_table_column(
 	const std::string&          column_name         ,
 	CppAD::vector<std::string>& text_result         )
 {
+
+	// set globals used by error messages
+	table_name_ = table_name;
+	column_name_ = column_name;
+
 	// check that initial vector is empty
 	assert( text_result.size() == 0 );
 
@@ -245,6 +284,11 @@ void get_table_column(
 	const std::string&          column_name        ,
 	CppAD::vector<int>&         int_result         )
 {
+
+	// set globals used by error messages
+	table_name_ = table_name;
+	column_name_ = column_name;
+
 	// check that initial vector is empty
 	assert( int_result.size() == 0 );
 
@@ -269,6 +313,10 @@ void get_table_column(
 	const std::string&          column_name        ,
 	CppAD::vector<double>&      double_result      )
 {
+	// set globals used by error messages
+	table_name_ = table_name;
+	column_name_ = column_name;
+
 	// check that initial vector is empty
 	assert( double_result.size() == 0 );
 

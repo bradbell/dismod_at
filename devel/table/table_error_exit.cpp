@@ -44,6 +44,14 @@ $codei%
 It is the row identifier value $icode%table_name%_id%$$;
 i.e., it starts at zero and increments by one between rows.
 
+$head message$$
+This argument has prototype
+$codei%
+	const std::string& %message%
+%$$
+and is a description of the error
+(not including the table name and row identifier).
+
 $end
 ------------------------------------------------------------------------------
 */

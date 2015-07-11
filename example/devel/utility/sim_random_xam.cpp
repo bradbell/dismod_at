@@ -35,10 +35,10 @@ bool sim_random_xam(void)
 {	bool ok = true;
 	//
 	//
-	// initialize random number generator using the clock
-	dismod_at::new_gsl_rng(0);
+	// Initialize random number generator using the clock
+	size_t random_seed = dismod_at::new_gsl_rng(0);
 	//
-	size_t sample_size = 1500;
+	size_t sample_size = 3000;
 	// -------------------------------------------------------------------
 	// check Gausian
 	dismod_at::density_enum density = dismod_at::gaussian_enum;
@@ -151,6 +151,9 @@ bool sim_random_xam(void)
 	check = exp( - std::sqrt(2.0) * 0.5 ) / 2.0;
 	// std::cout << samp_prob / check << std::endl;
 	ok   &= std::fabs( samp_prob / check - 1.0 ) < 1e-1;
+	// ---------------------------------------------------------------------
+	if( ! ok )
+		std::cout << "random_seed = " << random_seed << std::endl;
 	// ---------------------------------------------------------------------
 	// free random number generator
 	dismod_at::free_gsl_rng();

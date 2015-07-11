@@ -85,6 +85,11 @@ It simulates a sample from the specified distribution that is independent
 for the any previous return values.
 The routine $cref manage_gsl_rng$$ sets up and controls the underlying
 simulated random number generator.
+
+$children%example/devel/utility/sim_random_xam.cpp
+%$$
+$head Example$$
+The file $cref sim_random_xam.cpp$$ is an example and test of this simulation.
 ------------------------------------------------------------------------------
 $end
 */

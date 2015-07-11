@@ -26,9 +26,25 @@ $spell
 	cov
 	py
 	arg
+	sim
+	xam
+	cpp
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 07-11$$
+$list number$$
+Add an error message when a text value is $code null$$; see
+$cref/text not null/input/Text Not Null/$$.
+Allow for $code null$$ integer values; see
+$cref/integer can be null/input/Integer Can Be Null/$$.
+$lnext
+The example $cref sim_random_xam.cpp$$ was missing from documentation.
+Increase $icode sample_size$$ in $code sim_random_xam.cpp$$
+(to reduce change of random failure).
+In addition, print random seed when test does fail.
+$lend
 
 $head 07-10$$
 $list number$$
