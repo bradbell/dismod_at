@@ -111,6 +111,7 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/configure.hpp>
 # include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace {
 	using std::string;
@@ -133,12 +134,12 @@ namespace {
 	}
 	int    convert(const int& not_used, char* v, size_t row_id)
 	{	if(	v == DISMOD_AT_NULL_PTR )
-			return std::numeric_limits<int>::min();
+			return DISMOD_AT_NULL_INT;
 		//
 		int value = std::atoi(v);
 		//
 		// no integer values should be the minimum integer
-		if( value == std::numeric_limits<int>::min() )
+		if( value == DISMOD_AT_NULL_INT )
 		{	string msg = "The minimum integer appears in the int column ";
 			msg += column_name_;
 			dismod_at::table_error_exit(table_name_, row_id, msg);

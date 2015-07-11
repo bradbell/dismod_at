@@ -77,6 +77,7 @@ $end
 # include <dismod_at/get_time_table.hpp>
 # include <dismod_at/check_pini_n_age.hpp>
 # include <dismod_at/check_child_prior.hpp>
+# include <dismod_at/null_int.hpp>
 
 
 # define DISMOD_AT_CHECK_PRIMARY_ID(in_table, in_name, primary_table, lower)\
@@ -84,7 +85,7 @@ for(size_t i = 0; i < db_input.in_table ## _table.size(); i++) \
 {	int id_value = db_input.in_table ## _table[i].in_name; \
 	int upper = int( db_input.primary_table ## _table.size() ) - 1; \
 	bool ok   = lower <= id_value && id_value <= upper; \
-	ok       |= id_value == std::numeric_limits<int>::min(); \
+	ok       |= id_value == DISMOD_AT_NULL_INT; \
 	if( ! ok ) \
 	{	std::cerr << #in_name << "=" << id_value << " does not appear as " \
 		<< #primary_table "_id in " << #primary_table " table" << std::endl \
