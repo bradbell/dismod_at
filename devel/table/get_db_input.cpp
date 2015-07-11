@@ -148,7 +148,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	// check primary keys
 	//
 	// node table
-	DISMOD_AT_CHECK_PRIMARY_ID(node, parent, node, -1);
+	DISMOD_AT_CHECK_PRIMARY_ID(node, parent, node, 0);
 
 	// prior table
 	DISMOD_AT_CHECK_PRIMARY_ID(prior, density_id, density, 0);

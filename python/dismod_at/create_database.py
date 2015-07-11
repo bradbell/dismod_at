@@ -349,7 +349,7 @@ def create_database(
 		name   = node['name']
 		parent = node['parent']
 		if parent == '' :
-			parent = -1
+			parent = None
 		else :
 			parent = global_node_name2id[parent]
 		row_list.append( [ name, parent ] )

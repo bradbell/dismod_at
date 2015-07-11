@@ -273,7 +273,7 @@ def create_database() :
 	col_name   = [ 'node_name', 'parent' ]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
 	check_list = [
-		['world',        -1],
+		['world',        None],
 		['north_america', 0],
 		['united_states', 1],
 		['canada',        1]
