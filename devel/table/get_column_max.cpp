@@ -82,14 +82,14 @@ namespace {
 	{	count_callback++;
 		assert(count_callback == 1);
 		assert( argc == 1 );
-		assert( result != DISMOD_AT_NULLPTR );
+		assert( result != DISMOD_AT_NULL_PTR );
 		std::string* str_ptr = static_cast<std::string*>(result);
-		if( argv[0] == DISMOD_AT_NULLPTR )
+		if( argv[0] == DISMOD_AT_NULL_PTR )
 			*str_ptr = "";
 		else
 			*str_ptr = argv[0];
-  		return 0;
-  	}
+		return 0;
+	}
 }
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -109,11 +109,11 @@ std::string get_column_max(
 
 	// execute sql command
 	count_callback = 0;
-	char* zErrMsg  = DISMOD_AT_NULLPTR;
+	char* zErrMsg  = DISMOD_AT_NULL_PTR;
 	std::string max_str;
 	int rc = sqlite3_exec(db, cmd.c_str(), callback, &max_str, &zErrMsg);
 	if( rc )
-	{	assert(zErrMsg != DISMOD_AT_NULLPTR );
+	{	assert(zErrMsg != DISMOD_AT_NULL_PTR );
 		cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
 		sqlite3_free(zErrMsg);
 		sqlite3_close(db);

@@ -124,7 +124,7 @@ namespace {
 	string column_name_;
 
 	char*  convert(const std::string& not_used, char* v, size_t row_id)
-	{	if( v == DISMOD_AT_NULLPTR )
+	{	if( v == DISMOD_AT_NULL_PTR )
 		{	string msg = "The null value appears in the text column ";
 			msg += column_name_;
 			dismod_at::table_error_exit(table_name_, row_id, msg);
@@ -132,7 +132,7 @@ namespace {
 		return v;
 	}
 	int    convert(const int& not_used, char* v, size_t row_id)
-	{	if(	v == DISMOD_AT_NULLPTR )
+	{	if(	v == DISMOD_AT_NULL_PTR )
 			return std::numeric_limits<int>::min();
 		//
 		int value = std::atoi(v);
@@ -147,7 +147,7 @@ namespace {
 		return value;
 	}
 	double convert(const double& not_used, char* v, size_t row_id)
-	{	if( v == DISMOD_AT_NULLPTR )
+	{	if( v == DISMOD_AT_NULL_PTR )
 			return std::numeric_limits<double>::quiet_NaN();
 		return std::atof(v);
 	}
@@ -156,7 +156,7 @@ namespace {
 	int callback(void *result, int argc, char **argv, char **azColName)
 	{	typedef CppAD::vector<Element> vector;
 		assert( argc == 1 );
-		assert( result != DISMOD_AT_NULLPTR );
+		assert( result != DISMOD_AT_NULL_PTR );
 		vector* vector_result = static_cast<vector*>(result);
 		size_t row_id = vector_result->size();
 		vector_result->push_back( convert(Element(), argv[0], row_id ) );
@@ -188,12 +188,12 @@ namespace {
 		cmd            += primary_key;
 
 		// execute sql command
-		char* zErrMsg     = DISMOD_AT_NULLPTR;
+		char* zErrMsg     = DISMOD_AT_NULL_PTR;
 		callback_type fun = callback<Element>;
 		void* result      = static_cast<void*>(&vector_result);
 		int rc = sqlite3_exec(db, cmd.c_str(), fun, result, &zErrMsg);
 		if( rc )
-		{	assert(zErrMsg != DISMOD_AT_NULLPTR );
+		{	assert(zErrMsg != DISMOD_AT_NULL_PTR );
 			cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
 			sqlite3_free(zErrMsg);
 			sqlite3_close(db);

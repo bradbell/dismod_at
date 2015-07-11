@@ -206,7 +206,7 @@ n_child_        ( n_child )
 					mulcov_table[mulcov_id].covariate_id
 				);
 				string mulcov_type;
-				CppAD::vector<subvec_info>* info_vec = DISMOD_AT_NULLPTR;
+				CppAD::vector<subvec_info>* info_vec = DISMOD_AT_NULL_PTR;
 				if( mulcov_table[mulcov_id].mulcov_type == meas_value_enum )
 				{	info_vec    = &( mulcov_meas_value_info_[integrand_id]) ;
 					mulcov_type = "'meas_value'";

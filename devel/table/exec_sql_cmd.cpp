@@ -64,9 +64,9 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 void exec_sql_cmd(sqlite3* db, const std::string& sql_cmd)
 {	using std::cerr;
 	using std::endl;
-	char* zErrMsg                              = DISMOD_AT_NULLPTR;
-	int (*callback)(void*, int, char**,char**) = DISMOD_AT_NULLPTR;
-	void* callback_arg                         = DISMOD_AT_NULLPTR;
+	char* zErrMsg                              = DISMOD_AT_NULL_PTR;
+	int (*callback)(void*, int, char**,char**) = DISMOD_AT_NULL_PTR;
+	void* callback_arg                         = DISMOD_AT_NULL_PTR;
 	int rc = sqlite3_exec(
 		db,
 		sql_cmd.c_str(),
@@ -75,7 +75,7 @@ void exec_sql_cmd(sqlite3* db, const std::string& sql_cmd)
 		&zErrMsg
 	);
 	if( rc )
-	{	assert(zErrMsg != DISMOD_AT_NULLPTR );
+	{	assert(zErrMsg != DISMOD_AT_NULL_PTR );
 		cerr << "SQL command: " << sql_cmd << endl;
 		cerr << "SQL error:   " << sqlite3_errmsg(db) << endl;
 		sqlite3_free(zErrMsg);
