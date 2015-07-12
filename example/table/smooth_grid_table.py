@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
 # $begin smooth_grid_table.py$$ $newlinech #$$
@@ -74,15 +74,15 @@ def smooth_grid_table() :
 		3           # dtime_prior_id
 	]
 	age_time_list = list()
-	for age_id in [0, 1, 2] :             # n_age is 3
+	for age_id in [0, 1, 2] :            # n_age is 3
 		for time_id in [0, 1] :          # n_time is 2
 			default[1] = age_id
 			default[2] = time_id
 			row        = copy.copy(default)
 			if age_id == 2 :
-				row[4] = -1 # dage_prior
+				row[4] = None # dage_prior_id null for this case
 			if time_id == 1 :
-				row[5] = -1 # dtime_prior
+				row[5] = None # dtime_prior_id null for this case
 			row_list.append( row )
 			age_time_list.append( (age_id, time_id) )
 	#
@@ -106,11 +106,11 @@ def smooth_grid_table() :
 		assert row[3] == age_time_list[count][1]
 		assert row[4] == 1
 		if row[2] == 2 :
-			assert row[5] == -1
+			assert row[5] == None
 		else :
 			assert row[5] == 2
 		if row[3] == 1 :
-			assert row[6] == -1
+			assert row[6] == None
 		else :
 			assert row[6] == 3
 		count += 1

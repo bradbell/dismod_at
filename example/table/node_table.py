@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
 # $begin node_table.py$$ $newlinech #$$
@@ -33,7 +33,7 @@ def node_table() :
 	col_name = [ 'node_name',     'parent'    ]
 	col_type = [ 'text',          'integer'   ]
 	row_list = [
-		[ 'world',         -1          ],
+		[ 'world',         None        ],
 		[ 'north_america', 0           ],
 		[ 'united_states', 1           ],
 		[ 'canada',        1           ]

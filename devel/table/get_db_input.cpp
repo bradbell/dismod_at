@@ -32,7 +32,7 @@ $subhead Primary Key$$
 Check that all occurrences of $icode%table_name%_id%$$ are with in
 the limit for the corresponding table.
 Note that this only checks limits, and not positional dependent limits.
-For example, $code -1$$ might appear anywhere in
+For example, $code null$$ might appear anywhere in
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$.
 
 $subhead Initial Prevalence Grid$$
@@ -168,8 +168,8 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dtime_prior_id, prior, 0);
 
 	// mulcov table
-	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, rate_id, rate, -1);
-	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, integrand_id, integrand, -1);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, rate_id, rate, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, integrand_id, integrand, 0);
 	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, covariate_id, covariate, 0);
 	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, smooth_id, smooth, 0);
 

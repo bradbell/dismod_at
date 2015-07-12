@@ -49,6 +49,10 @@ Use $code null$$ instead of $code -1$$ in the following cases:
 There is no $cref/parent/node_table/parent/$$ node,
 there is no $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$,
 there is no $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
+$lnext
+Add the constraint that a $cref/foreign key/input/Foreign Key/$$
+must appear in the corresponding primary key column,
+or it must be $code null$$.
 $lend
 
 $head 07-10$$

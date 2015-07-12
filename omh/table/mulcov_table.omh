@@ -49,7 +49,7 @@ $icode rate_id$$ is the
 $cref/rate_id/rate_table/rate_id/$$ that determines
 the rate that this covariate and multiplier effects.
 If $icode mulcov_type$$ is $code meas_value$$ or $code meas_std$$,
-this column should be $code -1$$.
+this column must be $code null$$.
 
 $head integrand_id$$
 If $icode mulcov_type$$ is $code meas_value$$ or $code meas_std$$,
@@ -57,7 +57,7 @@ $icode integrand_id$$ is the
 $cref/integrand_id/integrand_table/integrand_id/$$ that determines
 which measurement integrand this multiplier effects.
 If $icode mulcov_type$$ is $code rate_mean$$,
-this column should be $code -1$$.
+this column should be $code null$$.
 
 $head covariate_id$$
 This column has type $code integer$$ and is a

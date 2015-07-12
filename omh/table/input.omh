@@ -37,17 +37,22 @@ i.e., the names can act as substitutes for the primary key.
 The names are intended to be easier for a human to remember than the ids.
 
 $head Foreign Key$$
-The column $icode%table_name%_id%$$ is the primary key for table
-$icode table_name$$.
-If this key is used in another table, the name of the corresponding column
-will be $icode%table_name%_id%$$
-or it will end with $codei%_%table_name%_id%$$.
+If $icode this$$ is the name of a table its primary key is
+the column $icode%this%_id%$$.
+If this primary key is used in another table it is
+called a foreign key (in the other table).
+The name of the column in the other table will be $icode%this%_id%$$
+or it will end with $codei%_%this%_id%$$.
+A value in the foreign key column must also appear in the
+corresponding primary key column, or it must be $code null$$.
 
 $subhead parent$$
 Note that the column $cref/parent/node_table/parent/$$ is a primary
 key value for the $cref/node table/node_table/$$; i.e, $code node_id$$.
+Note that this column is not named $icode node_id$$ nor does it end
+in $codei%_%node_id%$$.
 This is not an exception because the $code parent$$ column is itself
-in the $code node$$ table.
+in the $code node$$ table and hence this is not a foreign key.
 
 $head Text Not Null$$
 The empty string, and not the $code null$$ value, is used when a

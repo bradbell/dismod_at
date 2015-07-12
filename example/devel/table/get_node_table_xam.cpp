@@ -28,6 +28,7 @@ $end
 # include <dismod_at/get_node_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 bool get_node_table_xam(void)
 {
@@ -43,7 +44,7 @@ bool get_node_table_xam(void)
 	const char* sql_cmd[] = {
 		"create table node"
 		"(node_id integer primary key, node_name text unique, parent int)",
-		"insert into node values(0, 'world',          -1)",
+		"insert into node values(0, 'world',          null)",
 		"insert into node values(1, 'north_america',  0)",
 		"insert into node values(2, 'united_states',  1)",
 		"insert into node values(3, 'canada',         1)"
@@ -62,7 +63,7 @@ bool get_node_table_xam(void)
 	ok  &= node_table[2].node_name == "united_states";
 	ok  &= node_table[3].node_name == "canada";
 	//
-	ok  &= node_table[0].parent == -1;
+	ok  &= node_table[0].parent == DISMOD_AT_NULL_INT;
 	ok  &= node_table[1].parent == 0;
 	ok  &= node_table[2].parent == 1;
 	ok  &= node_table[3].parent == 1;

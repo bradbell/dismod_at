@@ -29,6 +29,7 @@ $end
 # include <dismod_at/get_mulcov_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 bool get_mulcov_table_xam(void)
 {
@@ -50,8 +51,8 @@ bool get_mulcov_table_xam(void)
 			" integrand_id       integer,"
 			" covariate_id       integer,"
 			" smooth_id          integer)",
-		"insert into mulcov values(0, 'meas_value', -1,  2, 1, 2)",
-		"insert into mulcov values(1, 'rate_mean',  1, -1, 2, 2)"
+		"insert into mulcov values(0, 'meas_value', null,  2,   1, 2)",
+		"insert into mulcov values(1, 'rate_mean',     1, null, 2, 2)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -65,11 +66,11 @@ bool get_mulcov_table_xam(void)
 	ok  &= mulcov_table[0].mulcov_type  == dismod_at::meas_value_enum;
 	ok  &= mulcov_table[1].mulcov_type  == dismod_at::rate_mean_enum;
 	//
-	ok  &= mulcov_table[0].rate_id == -1;
+	ok  &= mulcov_table[0].rate_id == DISMOD_AT_NULL_INT;
 	ok  &= mulcov_table[1].rate_id == 1;
 	//
 	ok  &= mulcov_table[0].integrand_id == 2;
-	ok  &= mulcov_table[1].integrand_id == -1;
+	ok  &= mulcov_table[1].integrand_id == DISMOD_AT_NULL_INT;
 	//
 	ok  &= mulcov_table[0].covariate_id == 1;
 	ok  &= mulcov_table[1].covariate_id == 2;
