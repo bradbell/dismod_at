@@ -164,8 +164,8 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	// smooth_grid table
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, smooth_id, smooth, 0);
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, value_prior_id, prior, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dage_prior_id, prior, -1);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dtime_prior_id, prior, -1);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dage_prior_id, prior, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dtime_prior_id, prior, 0);
 
 	// mulcov table
 	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, rate_id, rate, -1);

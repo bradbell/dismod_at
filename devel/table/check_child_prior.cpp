@@ -32,7 +32,7 @@ $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
 for the last age point, and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
 for the last time point,
-are $code -1$$ and there is no prior to check for these cases.
+are $code null$$ and there is no prior to check for these cases.
 
 $list number$$
 The $cref/density_id/prior_table/density_id/$$ must correspond
@@ -87,6 +87,7 @@ $end
 # include <dismod_at/check_child_prior.hpp>
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -112,7 +113,8 @@ void check_child_prior(
 			prior_id[2] = smooth_grid[grid_id].dtime_prior_id;
 			name[2]     = "child dtime prior";
 			// skip dage and dtime priors for last age and last time
-			for(size_t i = 0; i < 3; i++) if( prior_id[i] != -1 )
+			for(size_t i = 0; i < 3; i++)
+			if( prior_id[i] != DISMOD_AT_NULL_INT )
 			{	int    density_id = prior_table[prior_id[i]].density_id;
 				double mean       = prior_table[prior_id[i]].mean;
 				double std        = prior_table[prior_id[i]].std;

@@ -53,7 +53,7 @@ $cref/prior_id/prior_table/prior_id/$$ for
 function's forward difference quotients w.r.t age,
 for this smoothing, at this age, and time.
 The prior at the maximum age, for each time, is not used and
-the corresponding $icode dage_prior_id$$ must be $code -1$$.
+the corresponding $icode dage_prior_id$$ must be $code null$$.
 
 $head dtime_prior_id$$
 This column has type $code integer$$ and its value is the
@@ -61,7 +61,7 @@ $cref/prior_id/prior_table/prior_id/$$ for
 function's forward difference quotients w.r.t time,
 for this smoothing, at this age, and time.
 The prior at the maximum time, for each age, is not used and
-the corresponding $icode dtime_prior_id$$ must be $code -1$$.
+the corresponding $icode dtime_prior_id$$ must be $code null$$.
 
 $head Rectangular Grid$$
 For each fixed value of $icode smooth_id$$

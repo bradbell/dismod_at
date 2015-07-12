@@ -30,6 +30,7 @@ $end
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/get_age_table.hpp>
 # include <dismod_at/get_time_table.hpp>
+# include <dismod_at/null_int.hpp>
 
 bool smooth_info_xam(void)
 {
@@ -72,12 +73,12 @@ bool smooth_info_xam(void)
 		" value_prior_id integer,"
 		" dage_prior_id  integer,"
 		" dtime_prior_id integer)",
-	"insert into smooth_grid values(0,  0,  0,  1,  1,  2, -1)",
-	"insert into smooth_grid values(1,  0,  2,  1,  2,  3, -1)",
-	"insert into smooth_grid values(2,  0,  4,  1,  3, -1, -1)",
-	"insert into smooth_grid values(3,  0,  0,  0,  5,  6,  7)",
-	"insert into smooth_grid values(4,  0,  2,  0,  7,  8,  9)",
-	"insert into smooth_grid values(5,  0,  4,  0,  1, -1,  3)",
+	"insert into smooth_grid values(0,  0,  0,  1,  1,    2, null)",
+	"insert into smooth_grid values(1,  0,  2,  1,  2,    3, null)",
+	"insert into smooth_grid values(2,  0,  4,  1,  3, null, null)",
+	"insert into smooth_grid values(3,  0,  0,  0,  5,    6,    7)",
+	"insert into smooth_grid values(4,  0,  2,  0,  7,    8,    9)",
+	"insert into smooth_grid values(5,  0,  4,  0,  1, null,    3)",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -102,6 +103,8 @@ bool smooth_info_xam(void)
 	dismod_at::smooth_info  s_info(
 		age_table, time_table, smooth_id, smooth_table, smooth_grid_table
 	);
+	//
+	size_t null_size_t = size_t ( DISMOD_AT_NULL_INT );
 
 	ok  &= s_info.age_size()  == 3;
 	ok  &= s_info.time_size() == 2;
@@ -122,14 +125,14 @@ bool smooth_info_xam(void)
 	//
 	ok  &= s_info.dage_prior_id(0, 1)  ==  2;
 	ok  &= s_info.dage_prior_id(1, 1)  ==  3;
-	ok  &= s_info.dage_prior_id(2, 1)  == size_t(-1);
+	ok  &= s_info.dage_prior_id(2, 1)  == null_size_t;
 	ok  &= s_info.dage_prior_id(0, 0)  ==  6;
 	ok  &= s_info.dage_prior_id(1, 0)  ==  8;
-	ok  &= s_info.dage_prior_id(2, 0)  == size_t(-1);
+	ok  &= s_info.dage_prior_id(2, 0)  == null_size_t;
 	//
-	ok  &= s_info.dtime_prior_id(0, 1) == size_t(-1);
-	ok  &= s_info.dtime_prior_id(1, 1) == size_t(-1);
-	ok  &= s_info.dtime_prior_id(2, 1) == size_t(-1);
+	ok  &= s_info.dtime_prior_id(0, 1) == null_size_t;
+	ok  &= s_info.dtime_prior_id(1, 1) == null_size_t;
+	ok  &= s_info.dtime_prior_id(2, 1) == null_size_t;
 	ok  &= s_info.dtime_prior_id(0, 0) ==  7;
 	ok  &= s_info.dtime_prior_id(1, 0) ==  9;
 	ok  &= s_info.dtime_prior_id(2, 0) ==  3;

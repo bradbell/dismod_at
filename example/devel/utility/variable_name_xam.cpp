@@ -111,11 +111,11 @@ bool variable_name_xam(void)
 		" value_prior_id integer,"
 		" dage_prior_id  integer,"
 		" dtime_prior_id integer)",
-	"insert into smooth_grid values(0,  0,  0,  0,  1,  1,  1)",
-	"insert into smooth_grid values(1,  0,  2,  0,  1, -1,  1)",
-	"insert into smooth_grid values(2,  0,  0,  2,  1,  1, -1)",
-	"insert into smooth_grid values(3,  0,  2,  2,  1, -1, -1)",
-	"insert into smooth_grid values(4,  1,  1,  1,  1, -1, -1)",
+	"insert into smooth_grid values(0,  0,  0,  0,  1,    1,  1)",
+	"insert into smooth_grid values(1,  0,  2,  0,  1, null,  1)",
+	"insert into smooth_grid values(2,  0,  0,  2,  1,    1, null)",
+	"insert into smooth_grid values(3,  0,  2,  2,  1, null, null)",
+	"insert into smooth_grid values(4,  1,  1,  1,  1, null, null)",
 	//
 	"create table covariate("
 		" covariate_id   integer primary key,"

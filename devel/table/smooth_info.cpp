@@ -298,6 +298,7 @@ this function.
 $end
 */
 # include <dismod_at/smooth_info.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace {
 	struct key_id {
@@ -518,34 +519,35 @@ smooth_info::smooth_info(
 			dage_prior_id_[index]  = smooth_grid_table[i].dage_prior_id;
 			dtime_prior_id_[index] = smooth_grid_table[i].dtime_prior_id;
 			//
-			if( j_age == n_age -1 && dage_prior_id_[index] != size_t(-1) )
+			size_t null_size_t = size_t( DISMOD_AT_NULL_INT );
+			if( j_age == n_age -1 && dage_prior_id_[index] != null_size_t )
 			{	cerr << "smooth_grid table with smooth_grid_id = " << i
 				<< endl << "age_id = " << age_id_[j_age]
 				<< " is maximum age for smooth_id = " << smooth_id
 				<< endl << " but dage_prior_id = " << dage_prior_id_[index]
-				<< " is not -1" << endl;
+				<< " is not null" << endl;
 				exit(1);
 			}
-			if( j_age != n_age -1 && dage_prior_id_[index] == size_t(-1) )
+			if( j_age != n_age -1 && dage_prior_id_[index] == null_size_t )
 			{	cerr << "smooth_grid table with smooth_grid_id = " << i
 				<< endl << "age_id = " << age_id_[j_age]
 				<< " is not maximum age for smooth_id = " << smooth_id
-				<< endl << " but dage_prior_id = -1 " << endl;
+				<< endl << " but dage_prior_id is null" << endl;
 				exit(1);
 			}
-			if( j_time == n_time -1 && dtime_prior_id_[index] != size_t(-1) )
+			if( j_time == n_time -1 && dtime_prior_id_[index] != null_size_t )
 			{	cerr << "smooth_grid table with smooth_grid_id = " << i
 				<< endl << "time_id = " << time_id_[j_time]
 				<< " is maximum time for smooth_id = " << smooth_id
 				<< endl << " but dtime_prior_id = " << dtime_prior_id_[index]
-				<< " is not -1" << endl;
+				<< " is not null" << endl;
 				exit(1);
 			}
-			if( j_time != n_time -1 && dtime_prior_id_[index] == size_t(-1) )
+			if( j_time != n_time -1 && dtime_prior_id_[index] == null_size_t )
 			{	cerr << "smooth_grid table with smooth_grid_id = " << i
 				<< endl << "time_id = " << time_id_[j_time]
 				<< " is not maximum time for smooth_id = " << smooth_id
-				<< endl << " but dtime_prior_id = -1 " << endl;
+				<< endl << " but dtime_prior_id is null " << endl;
 				exit(1);
 			}
 		}

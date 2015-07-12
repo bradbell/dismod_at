@@ -491,9 +491,9 @@ def create_database(
 				da        = global_prior_name2id[da]
 				dt        = global_prior_name2id[dt]
 				if j == age_id[-1] :
-					da = -1
+					da = None
 				if k == time_id[-1] :
-					dt = -1
+					dt = None
 				row_list.append( [ i, j, k, v, da, dt] )
 	tbl_name = 'smooth_grid'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

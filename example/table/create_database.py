@@ -329,8 +329,8 @@ def create_database() :
 	]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
 	check_list = [
-		[ 0, 0, 0, 2, -1, -1 ],
-		[ 1, 0, 0, 3, -1, -1 ]
+		[ 0, 0, 0, 2, None, None ] ,
+		[ 1, 0, 0, 3, None, None ]
 	]
 	assert row_list == check_list
 	#
