@@ -31,6 +31,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/put_table_row.hpp>
 # include <dismod_at/sim_random.hpp>
 # include <dismod_at/to_string.hpp>
+# include <dismod_at/log_message.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 	using CppAD::vector;
@@ -886,14 +887,20 @@ int main(int n_arg, const char** argv)
 	ok     |= command_arg == "simulate";
 	ok     |= command_arg == "sample";
 	ok     |= command_arg == "predict";
+	string message;
 	if( ! ok )
-	{	cerr << "dismod_at: command is not one of the following:" << endl
-		<< "\tinit, fit, truth, simulate, sample, predict" << endl;
+	{	message =  "dismod_at: command not one the following:\n";
+		message += "\tinit, fit, truth, simulate, sample, predict";
+		cerr << message << endl;
 		std::exit(1);
 	}
-	// --------------- get the input tables ---------------------------------
+	// --------------- open connection to datbase ---------------------------
 	bool new_file = false;
 	sqlite3* db   = dismod_at::open_connection(file_name_arg, new_file);
+	// --------------- log start of this command -----------------------------
+	message = command_arg + " " + file_name_arg;
+	dismod_at::log_message(db, "command", message);
+	// --------------- get the input tables ---------------------------------
 	dismod_at::db_input_struct db_input;
 	get_db_input(db, db_input);
 	// ----------------------------------------------------------------------
@@ -1105,6 +1112,8 @@ int main(int n_arg, const char** argv)
 	else
 		assert(false);
 	// ---------------------------------------------------------------------
+	message = "OK";
+	dismod_at::log_message(db, "command", message);
 	sqlite3_close(db);
 	return 0;
 }

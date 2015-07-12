@@ -76,6 +76,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	table/get_time_table.cpp
 	table/get_weight_grid.cpp
 	table/get_weight_table.cpp
+	table/log_message.cpp
 	table/open_connection.cpp
 	table/put_table_row.cpp
 	table/smooth_info.cpp

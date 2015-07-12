@@ -1,0 +1,59 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin log_table$$
+$spell
+$$
+
+$section The Log Table$$
+Note that time below is for the GMT Time Zone.
+
+$head log_id$$
+This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+$head message_type$$
+This column has type $code text$$ and is one of the following values:
+$code command$$, $code error$$.
+
+$head year$$
+This column has type $code int$$ and is
+the year when the message was posted; e.g., $code 2015$$.
+
+$head month$$
+This column has type $code int$$ and is
+the month when the message was posted.
+It is between $code 1$$ and $code 12$$.
+
+$head day$$
+This column has type $code int$$ and is
+the day of the month when the message was posted.
+It is between $code 1$$ and $code 31$$.
+
+$head hour$$
+This column has type $code int$$ and is
+the hour of the day when the message was posted.
+It is between $code 0$$ and $code 23$$.
+
+$head minute$$
+This column has type $code int$$ and is
+the minute of the hour when the message was posted.
+It is between $code 0$$ and $code 59$$.
+
+$head second$$
+This column has type $code int$$ and is
+the minute of the hour when the message was posted.
+It is between $code 0$$ and $code 61$$.
+(values above 59 are for leap seconds).
+
+$head message$$
+This column has type $code test$$ and is the message.
+
+$end
