@@ -72,7 +72,7 @@ $codep */
 		const CppAD::vector<a5_double>& random_vec
 	) = 0;
 /* $$
-see $cref/joint_density/approx_mixed_joint_density/$$.
+See $cref/joint_density/approx_mixed_joint_density/$$.
 
 $subhead prior_density$$
 $codep */
@@ -80,7 +80,14 @@ $codep */
 		const CppAD::vector<a1_double>& fixed_vec
 	) = 0 ;
 /* $$
-see $cref/prior_density/approx_mixed_prior_density/$$.
+See $cref/prior_density/approx_mixed_prior_density/$$.
+
+$subhead fatal_error$$
+$codep */
+	virtual void fatal_error(const std::string& error_message) = 0;
+/* $$
+This routine displays error message and then exits the program
+(hence it does not return).
 
 $head constructor$$
 Construct an $code approx_mixed$$ derived class object; see

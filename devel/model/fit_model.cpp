@@ -353,5 +353,10 @@ fit_model::a1d_vector fit_model::prior_density(
 	//
 	return prior_den_tmp_;
 }
-
+// ---------------------------------------------------------------------------
+// fatal_error
+void fit_model::fatal_error(const std::string& error_message)
+{	std::cerr << error_message << std::endl;
+	std::exit(1);
+}
 } // DISMOD_AT_END_NAMESPACE

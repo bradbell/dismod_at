@@ -110,6 +110,11 @@ namespace {
 		virtual vector<a1_double> prior_density(
 			const vector<a1_double>& fixed_vec  )
 		{	return implement_prior_density(fixed_vec); }
+		//
+		virtual void fatal_error(const std::string& error_message)
+		{	std::cerr << error_message << std::endl;
+			std::exit(1);
+		}
 	};
 }
 

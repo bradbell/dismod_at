@@ -81,6 +81,8 @@ namespace {
 			return vec;
 		}
 	public:
+		// -------------------------------------------------------------------
+		// User defined virtual functions
 		virtual vector<a5_double> joint_density(
 			const vector<a5_double>& fixed_vec  ,
 			const vector<a5_double>& random_vec )
@@ -93,6 +95,11 @@ namespace {
 			vec[0] = 0.0;
 			return vec;
 		}
+		virtual void fatal_error(const std::string& error_message)
+		{	std::cerr << error_message << std::endl;
+			std::exit(1);
+		}
+		// ------------------------------------------------------------------
 	};
 }
 
