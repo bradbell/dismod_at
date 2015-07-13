@@ -171,9 +171,7 @@ namespace {
 		const std::string&          table_name            ,
 		const std::string&          column_name           ,
 		CppAD::vector<Element>&     vector_result         )
-	{	using std::cerr;
-		using std::endl;
-
+	{
 		// check that initial vector is empty
 		assert( vector_result.size() == 0 );
 
@@ -213,8 +211,6 @@ std::string get_table_column_type(
 	const std::string& table_name  ,
 	const std::string& column_name )
 {	// check the type for this column
-	using std::cerr;
-	using std::endl;
 
 	// set globals used by error messages
 	db_         = db;
@@ -237,10 +233,10 @@ std::string get_table_column_type(
 		&PrimaryKey,
 		&Autoinc
 	);
-	if( rc ){
-		cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
-		sqlite3_close(db);
-		exit(1);
+	if( rc )
+	{	std::string message = "SQL error: ";
+		message += sqlite3_errmsg(db);
+		error_exit(db, message);
 	}
 	std::string rvalue(zDataType);
 
@@ -257,7 +253,8 @@ void get_table_column(
 	const std::string&          table_name          ,
 	const std::string&          column_name         ,
 	CppAD::vector<std::string>& text_result         )
-{
+{	// for error message
+	size_t null_id = size_t( DISMOD_AT_NULL_INT );
 
 	// set globals used by error messages
 	table_name_ = table_name;
@@ -269,10 +266,9 @@ void get_table_column(
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
 	if( col_type != "text" )
-	{	std::cerr << "get_table_column: for table = " << table_name
-		<< ", column = " << column_name << std::endl
-		<< "expect type to be text, not " << col_type << std::endl;
-		exit(1);
+	{	std::string message = "get_table_column for column = " + column_name;
+		message += ". Expected type to be text not " + col_type;
+		error_exit(db, message, table_name, null_id);
 	}
 
 	// Use template function for rest
@@ -286,7 +282,8 @@ void get_table_column(
 	const std::string&          table_name         ,
 	const std::string&          column_name        ,
 	CppAD::vector<int>&         int_result         )
-{
+{	// for error message
+	size_t null_id = size_t( DISMOD_AT_NULL_INT );
 
 	// set globals used by error messages
 	table_name_ = table_name;
@@ -298,10 +295,9 @@ void get_table_column(
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
 	if( col_type != "integer" )
-	{	std::cerr << "get_table_column: for table = " << table_name
-		<< ", column = " << column_name << std::endl
-		<< "expect type to be integer, not " << col_type << std::endl;
-		exit(1);
+	{	std::string message = "get_table_column for column = " + column_name;
+		message += ". Expected type to be integer not " + col_type;
+		error_exit(db, message, table_name, null_id);
 	}
 
 	// Use template function for rest
@@ -315,7 +311,9 @@ void get_table_column(
 	const std::string&          table_name         ,
 	const std::string&          column_name        ,
 	CppAD::vector<double>&      double_result      )
-{
+{	// for error message
+	size_t null_id = size_t( DISMOD_AT_NULL_INT );
+
 	// set globals used by error messages
 	table_name_ = table_name;
 	column_name_ = column_name;
@@ -326,10 +324,9 @@ void get_table_column(
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
 	if( col_type != "real" )
-	{	std::cerr << "get_table_column: for table = " << table_name
-		<< ", column = " << column_name << std::endl
-		<< "expect type to be real, not " << col_type << std::endl;
-		exit(1);
+	{	std::string message = "get_table_column for column = " + column_name;
+		message += ". Expected type to be real not " + col_type;
+		error_exit(db, message, table_name, null_id);
 	}
 
 	// Use template function for rest
