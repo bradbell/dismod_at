@@ -29,6 +29,11 @@ $codei%
 	sqlite3* %db%
 %$$
 and is the database connection where the log entry is written.
+This connection is closed using
+$codei%
+	sqlite3_close(%db%)
+%$$
+before the program exits.
 
 $head message$$
 This argument has prototype
@@ -103,6 +108,7 @@ void error_exit(
 			cerr << " in row with " << table_name << "_id = " << row_id;
 		cerr << endl;
 	}
+	sqlite3_close(db);
 	std::exit(1);
 }
 void error_exit(

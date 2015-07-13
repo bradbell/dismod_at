@@ -58,12 +58,12 @@ $end
 
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/configure.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void exec_sql_cmd(sqlite3* db, const std::string& sql_cmd)
-{	using std::cerr;
-	using std::endl;
+{
 	char* zErrMsg                              = DISMOD_AT_NULL_PTR;
 	int (*callback)(void*, int, char**,char**) = DISMOD_AT_NULL_PTR;
 	void* callback_arg                         = DISMOD_AT_NULL_PTR;
@@ -76,10 +76,11 @@ void exec_sql_cmd(sqlite3* db, const std::string& sql_cmd)
 	);
 	if( rc )
 	{	assert(zErrMsg != DISMOD_AT_NULL_PTR );
-		cerr << "SQL command: " << sql_cmd << endl;
-		cerr << "SQL error:   " << sqlite3_errmsg(db) << endl;
+		std::string message = "SQL error: ";
+		message += sqlite3_errmsg(db);
+		message += ". SQL command: " + sql_cmd;
 		sqlite3_free(zErrMsg);
-		sqlite3_close(db);
+		error_exit(db, message);
 		exit(1);
 	}
 }

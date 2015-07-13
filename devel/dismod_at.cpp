@@ -32,6 +32,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/sim_random.hpp>
 # include <dismod_at/to_string.hpp>
 # include <dismod_at/log_message.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 	using CppAD::vector;
@@ -523,8 +524,7 @@ void simulate_command
 	const size_t&                                       actual_seed     ,
 	const size_t&                                       number_sample
 )
-{	using std::cerr;
-	using std::endl;
+{
 	using std::string;
 	using dismod_at::to_string;
 	// -----------------------------------------------------------------------
@@ -696,8 +696,9 @@ void sample_command(
 			size_t subset_check =
 				size_t(simulate_table[simulate_id].data_subset_id);
 			if( sample_check != sample_index || subset_check != subset_id )
-			{	std::cerr << "simulate table is corrupted" << std::endl;
-				std::exit(1);
+			{	string msg = "database modified, restart with init command";
+				table_name = "simulate";
+				dismod_at::error_exit(db, msg, table_name, simulate_id);
 			}
 			meas_value[subset_id] = simulate_table[simulate_id].meas_value;
 		}
@@ -819,8 +820,9 @@ void predict_command(
 			size_t var_check =
 				size_t( sample_table[sample_id].var_id);
 			if( sample_check != sample_index || var_check != var_id )
-			{	std::cerr << "sample table is corrupted" << std::endl;
-				std::exit(1);
+			{	string msg = "database modified, restart with init command";
+				table_name = "sample";
+				dismod_at::error_exit(db, msg, table_name, sample_id);
 			}
 			pack_vec[var_id] = sample_table[sample_id++].var_value;
 		}
