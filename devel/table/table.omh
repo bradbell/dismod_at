@@ -43,7 +43,6 @@ $childtable%devel/table/check_child_prior.cpp
 	%devel/table/put_table_row.cpp
 	%devel/table/open_connection.cpp
 	%devel/table/smooth_info.cpp
-	%devel/table/table_error_exit.cpp
 	%devel/table/weight_info.cpp
 %$$
 

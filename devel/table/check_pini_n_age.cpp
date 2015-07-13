@@ -15,6 +15,7 @@ $spell
 	CppAD
 	struct
 	pini
+	sqlite
 $$
 
 $section Check Initial Prevalence Grid Has One Age$$

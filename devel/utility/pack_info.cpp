@@ -20,6 +20,7 @@ $spell
 	var
 	const
 	integrands
+	sqlite
 $$
 
 $section Devel Variable Packing Information: Constructor$$
