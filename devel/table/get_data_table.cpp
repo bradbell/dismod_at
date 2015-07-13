@@ -162,7 +162,7 @@ $end
 # include <dismod_at/get_data_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
-# include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -267,30 +267,30 @@ CppAD::vector<data_struct> get_data_table(
 		double age_upper  = data_table[data_id].age_upper;
 		if( age_lower < age_min )
 		{	msg = "age_lower is less than minimum age in age table";
-			table_error_exit("data", data_id, msg);
+			error_exit(db, msg, table_name, data_id);
 		}
 		if( age_max < age_upper )
 		{	msg = "age_upper is greater than maximum age in age table";
-			table_error_exit("data", data_id, msg);
+			error_exit(db, msg, table_name, data_id);
 		}
 		if( age_upper < age_lower )
 		{	msg = "age_lower is greater than age_upper";
-			table_error_exit("data", data_id, msg);
+			error_exit(db, msg, table_name, data_id);
 		}
 		// ------------------------------------------------------------
 		double time_lower = data_table[data_id].time_lower;
 		double time_upper = data_table[data_id].time_upper;
 		if( time_lower < time_min )
 		{	msg = "time_lower is less than minimum time in time table";
-			table_error_exit("data", data_id, msg);
+			error_exit(db, msg, table_name, data_id);
 		}
 		if( time_max < time_upper )
 		{	msg = "time_upper is greater than maximum time in time table";
-			table_error_exit("data", data_id, msg);
+			error_exit(db, msg, table_name, data_id);
 		}
 		if( time_upper < time_lower )
 		{	msg = "time_lower is greater than time_upper";
-			table_error_exit("data", data_id, msg);
+			error_exit(db, msg, table_name, data_id);
 		}
 	}
 	return data_table;
