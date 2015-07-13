@@ -106,7 +106,7 @@ $end
 # include <dismod_at/get_integrand_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
-# include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -150,7 +150,7 @@ CppAD::vector<integrand_struct> get_integrand_table(sqlite3* db)
 		if( integrand == number_integrand_enum )
 		{	string msg = integrand_name[integrand_id];
 			msg       += " is not a valid choice for integrand_name.";
-			table_error_exit("integrand", integrand_id, msg);
+			error_exit(db, msg, table_name, integrand_id);
 		}
 		integrand_table[integrand_id].integrand = integrand;
 		integrand_table[integrand_id].eta       = eta[integrand_id];

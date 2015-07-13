@@ -99,7 +99,7 @@ $end
 # include <dismod_at/get_mulcov_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
-# include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -152,7 +152,7 @@ CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
 		{	string message = "mulcov_type is not one of the following\n"
 			"'rate_mean', 'meas_value', 'meas_std'.";
 			table_name = "mulcov";
-			table_error_exit(table_name, i, message);
+			error_exit(db, message, table_name, i);
 		}
 	}
 	return mulcov_table;

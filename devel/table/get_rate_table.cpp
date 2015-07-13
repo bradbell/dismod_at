@@ -91,7 +91,7 @@ $end
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
-# include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -144,7 +144,7 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 		{	string message = "expected rate_name to be ";
 			message += rate_enum2name[rate_id];
 			message += " but found " + rate_name[rate_id];
-			table_error_exit("rate", rate_id, message);
+			error_exit(db, message, table_name, rate_id);
 		}
 		rate_table[rate_id].rate             = rate_enum(rate_id);
 		rate_table[rate_id].parent_smooth_id = parent_smooth_id[rate_id];

@@ -110,7 +110,7 @@ $end
 # include <cassert>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/configure.hpp>
-# include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/error_exit.hpp>
 # include <dismod_at/null_int.hpp>
 
 namespace {
@@ -119,16 +119,16 @@ namespace {
 	// Type specified by sqlite3_exec
 	typedef int (*callback_type)(void*, int, char**, char**);
 
-	// Name of table column that we are currently working with
 	// set by get_column, used by convert
-	string table_name_;
-	string column_name_;
+	sqlite3* db_;
+	string   table_name_;
+	string   column_name_;
 
 	char*  convert(const std::string& not_used, char* v, size_t row_id)
 	{	if( v == DISMOD_AT_NULL_PTR )
 		{	string msg = "The null value appears in the text column ";
 			msg += column_name_;
-			dismod_at::table_error_exit(table_name_, row_id, msg);
+			dismod_at::error_exit(db_, msg, table_name_, row_id);
 		}
 		return v;
 	}
@@ -142,7 +142,7 @@ namespace {
 		if( value == DISMOD_AT_NULL_INT )
 		{	string msg = "The minimum integer appears in the int column ";
 			msg += column_name_;
-			dismod_at::table_error_exit(table_name_, row_id, msg);
+			dismod_at::error_exit(db_, msg, table_name_, row_id);
 		}
 		//
 		return value;
@@ -216,6 +216,7 @@ std::string get_table_column_type(
 	using std::endl;
 
 	// set globals used by error messages
+	db_         = db;
 	table_name_ = table_name;
 	column_name_ = column_name;
 
