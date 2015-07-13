@@ -195,10 +195,11 @@ namespace {
 		int rc = sqlite3_exec(db, cmd.c_str(), fun, result, &zErrMsg);
 		if( rc )
 		{	assert(zErrMsg != DISMOD_AT_NULL_PTR );
-			cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+			std::string message = "SQL error: ";
+			message += sqlite3_errmsg(db);
+			message += ". SQL command: " + cmd;
 			sqlite3_free(zErrMsg);
-			sqlite3_close(db);
-			exit(1);
+			dismod_at::error_exit(db, message);
 		}
 		return;
 	}
