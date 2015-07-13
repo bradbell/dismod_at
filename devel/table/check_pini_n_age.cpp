@@ -20,7 +20,14 @@ $$
 $section Check Initial Prevalence Grid Has One Age$$
 
 $head syntax$$
-$codei%check_pini_n_age(%rate_table%, %smooth_table%)%$$
+$codei%check_pini_n_age(%db%, %rate_table%, %smooth_table%)%$$
+
+$head db$$
+This argument has prototype
+$codei%
+	sqlite3* %db%
+%$$
+and is the database connection for $cref/logging/log_message/$$ errors.
 
 $head rate_table$$
 This argument has prototype

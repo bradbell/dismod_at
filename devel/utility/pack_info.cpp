@@ -26,7 +26,7 @@ $section Devel Variable Packing Information: Constructor$$
 
 $head Syntax$$
 $codei%pack_info %pack_object%(
-	%n_integrand%,  %n_child%,
+	%db%, %n_integrand%,  %n_child%,
 	%smooth_table%, %mulcov_table%, %rate_table%
 )
 %$$
@@ -38,6 +38,13 @@ $icode%integrand_size%  = %pack_object%.integrand_size()
 %$$
 $icode%child_size%      = %pack_object%.child_size()
 %$$
+
+$head db$$
+This argument has prototype
+$codei%
+	sqlite3* %db%
+%$$
+and is the database connection for $cref/logging/log_message/$$ errors.
 
 $head n_integrand$$
 This argument has prototype
@@ -144,13 +151,14 @@ $end
 
 # include <cppad/cppad.hpp>
 # include <dismod_at/pack_info.hpp>
-# include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/error_exit.hpp>
 # include <dismod_at/to_string.hpp>
 # include <dismod_at/configure.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 pack_info::pack_info(
+	sqlite3*                             db             ,
 	size_t                               n_integrand    ,
 	size_t                               n_child        ,
 	const CppAD::vector<smooth_struct>&  smooth_table   ,
@@ -221,7 +229,7 @@ n_child_        ( n_child )
 							"mulcov_type equal to";
 						msg += mulcov_type;
 						string table_name = "mulcov";
-						table_error_exit(table_name, mulcov_id, msg);
+						error_exit(db, msg, table_name, mulcov_id);
 					}
 				}
 				size_t smooth_id = mulcov_table[mulcov_id].smooth_id;
@@ -259,7 +267,7 @@ n_child_        ( n_child )
 					{	string msg = "covariate_id appears twice with "
 							"mulcov_type equal to 'rate_mean'";
 						string table_name = "mulcov";
-						table_error_exit(table_name, mulcov_id, msg);
+						error_exit(db, msg, table_name, mulcov_id);
 					}
 				}
 				size_t smooth_id = mulcov_table[mulcov_id].smooth_id;

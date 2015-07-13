@@ -27,6 +27,7 @@ $end
 */
 // BEGIN C++
 # include <dismod_at/data_model.hpp>
+# include <dismod_at/open_connection.hpp>
 
 bool avg_yes_ode_xam(void)
 {	bool   ok = true;
@@ -178,8 +179,11 @@ bool avg_yes_ode_xam(void)
 	}
 	//
 	// pack_object
+	bool new_file = true;
+	std::string file_name = "example.db";
+	sqlite3* db = dismod_at::open_connection(file_name, new_file);
 	dismod_at::pack_info pack_object(
-		n_integrand, n_child,
+		db, n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
 	// child_info

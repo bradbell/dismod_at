@@ -29,6 +29,7 @@ $end
 # include <dismod_at/pack_prior.hpp>
 # include <dismod_at/get_prior_table.hpp>
 # include <dismod_at/get_density_table.hpp>
+# include <dismod_at/open_connection.hpp>
 
 # define DISMOD_AT_PRIOR_DENSITY_XAM_TRACE 0
 
@@ -195,8 +196,11 @@ bool pack_prior_xam(void)
 	// pack_object
 	size_t n_integrand = 0;
 	size_t n_child     = 1;
+	bool new_file = true;
+	std::string file_name = "example.db";
+	sqlite3* db = dismod_at::open_connection(file_name, new_file);
 	dismod_at::pack_info pack_object(
-		n_integrand, n_child,
+		db, n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
 	// ----------------------- value_prior -------------------------------

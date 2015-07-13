@@ -28,6 +28,7 @@ $end
 // BEGIN C++
 # include <limits>
 # include <dismod_at/data_model.hpp>
+# include <dismod_at/open_connection.hpp>
 
 namespace {
 	double check_avg(const dismod_at::data_struct& data_row)
@@ -226,8 +227,11 @@ bool avg_no_ode_xam(void)
 	}
 	//
 	// pack_object
+	bool new_file = true;
+	std::string file_name = "example.db";
+	sqlite3* db = dismod_at::open_connection(file_name, new_file);
 	dismod_at::pack_info pack_object(
-		n_integrand, n_child,
+		db, n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
 	//

@@ -27,6 +27,7 @@ $end
 # include <cppad/cppad.hpp>
 # include <dismod_at/fixed_effect.hpp>
 # include <dismod_at/get_rate_table.hpp>
+# include <dismod_at/open_connection.hpp>
 
 bool fixed_effect_xam(void)
 {	bool ok = true;
@@ -89,8 +90,11 @@ bool fixed_effect_xam(void)
 	n_fixed_effect += smooth_table[1].n_age * smooth_table[1].n_time;
 	//
 	// construct pack_object, pack_vec, and subvec_info
+	bool new_file = true;
+	std::string file_name = "example.db";
+	sqlite3* db = dismod_at::open_connection(file_name, new_file);
 	dismod_at::pack_info pack_object(
-		n_integrand, n_child,
+		db, n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
 	//

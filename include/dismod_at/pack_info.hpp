@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # ifndef DISMOD_AT_PACK_INFO_HPP
 # define DISMOD_AT_PACK_INFO_HPP
 
+# include <sqlite3.h>
 # include <cppad/vector.hpp>
 # include "get_node_table.hpp"
 # include "get_data_table.hpp"
@@ -63,6 +64,7 @@ private:
 	size_t size_;
 public:
 	pack_info(
+		sqlite3*                            db             ,
 		size_t                              n_integrand    ,
 		size_t                              n_child        ,
 		const CppAD::vector<smooth_struct>& smooth_table   ,
