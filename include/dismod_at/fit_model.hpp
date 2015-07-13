@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # ifndef DISMOD_AT_FIT_MODEL_HPP
 # define DISMOD_AT_FIT_MODEL_HPP
 
+# include <sqlite3.h>
 # include <dismod_at/a5_double.hpp>
 # include <dismod_at/approx_mixed.hpp>
 # include <dismod_at/pack_info.hpp>
@@ -32,6 +33,7 @@ namespace dismod_at {
 	// =======================================================================
 	private:
 		// const member variables
+		sqlite3*                           db_;
 		const size_t                       n_fixed_;
 		const size_t                       n_random_;
 		const pack_info&                   pack_object_;
@@ -73,6 +75,7 @@ namespace dismod_at {
 	public:
 		// constructor
 		fit_model(
+			sqlite3*                           db           ,
 			const pack_info&                   pack_object  ,
 			const CppAD::vector<prior_struct>& prior_table  ,
 			const CppAD::vector<smooth_info>&  s_info_vec   ,

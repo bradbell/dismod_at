@@ -313,6 +313,7 @@ bool fit_model_xam(void)
 	data_object.replace_like(density_id, meas_value, meas_std);
 	// ----------------------- run the fit -------------------------------
 	dismod_at::fit_model fit_object(
+		db,
 		pack_object,
 		prior_table,
 		s_info_vec,

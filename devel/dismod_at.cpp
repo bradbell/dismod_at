@@ -379,6 +379,7 @@ void fit_command(
 
 	// ------------------ run fit_model ------------------------------------
 	dismod_at::fit_model fit_object(
+		db                   ,
 		pack_object          ,
 		db_input.prior_table ,
 		s_info_vec           ,
@@ -706,6 +707,7 @@ void sample_command(
 
 		// fit_model
 		dismod_at::fit_model fit_object(
+			db                   ,
 			pack_object          ,
 			db_input.prior_table ,
 			s_info_vec           ,

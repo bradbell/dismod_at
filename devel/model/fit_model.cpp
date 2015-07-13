@@ -11,9 +11,11 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/a5_double.hpp>
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/pack_prior.hpp>
+# include <dismod_at/error_exit.hpp>
 /*
 $begin fit_model$$
 $spell
+	sqlite
 	str
 	num_iter
 	std
@@ -29,7 +31,7 @@ $section Fit the Fixed and Random Effects to the Model and Data$$
 
 $head Syntax$$
 $codei%fit_model %fit_object%(
-	%pack_object%, %prior_table%, %s_info_vec%, %data_object%, %prior_object%
+%db%, %pack_object%, %prior_table%, %s_info_vec%, %data_object%, %prior_object%
 )
 %$$
 $codei%fit_object.run_fit(%tolerance_str%, %max_num_iter_str%)
@@ -42,6 +44,13 @@ This object has prototype
 $codei%
 	fit_model %fit_object%
 %$$
+
+$head db$$
+This argument has prototype
+$codei%
+	sqlite3* %db%
+%$$
+and is the database connection for $cref/logging/log_message/$$ errors.
 
 $head pack_object$$
 This argument has prototype
@@ -125,6 +134,7 @@ namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 // ===========================================================================
 // constructor
 fit_model::fit_model(
+	sqlite3*                           db           ,
 	const pack_info&                   pack_object  ,
 	const CppAD::vector<prior_struct>& prior_table  ,
 	const CppAD::vector<smooth_info>&  s_info_vec   ,
@@ -135,6 +145,7 @@ approx_mixed(
 	size_fixed_effect(pack_object) , // n_fixed
 	size_random_effect(pack_object)  // n_random
 ) ,
+db_            (db)                                 ,
 n_fixed_       ( size_fixed_effect(pack_object)  )  ,
 n_random_      ( size_random_effect(pack_object) )  ,
 pack_object_   ( pack_object )                      ,
@@ -356,7 +367,6 @@ fit_model::a1d_vector fit_model::prior_density(
 // ---------------------------------------------------------------------------
 // fatal_error
 void fit_model::fatal_error(const std::string& error_message)
-{	std::cerr << error_message << std::endl;
-	std::exit(1);
+{	error_exit(db_, error_message);
 }
 } // DISMOD_AT_END_NAMESPACE
