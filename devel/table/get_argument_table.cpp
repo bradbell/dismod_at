@@ -73,11 +73,18 @@ $end
 # include <dismod_at/get_argument_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
+# include <dismod_at/error_exit.hpp>
+# include <dismod_at/null_int.hpp>
+# include <dismod_at/to_string.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
 {	using std::string;
+	//
+	// for error messaging
+	string msg;
+	size_t row_id  = size_t(DISMOD_AT_NULL_INT);
 	//
 	const char* name_list[] = {
 		"max_num_iter",
@@ -96,10 +103,8 @@ CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
 	string table_name  = "argument";
 	size_t n_argument      = check_table_id(db, table_name);
 	if( n_name != n_argument )
-	{	using std::cerr;
-		cerr << "argument table does not have ";
-		cerr << size_t( n_name ) << "rows." << std::endl;
-		std::exit(1);
+	{	msg = "argument table does not have " + to_string(n_name) + " rows.";
+		error_exit(db, msg, table_name, row_id);
 	}
 	//
 	string column_name = "argument_name";
@@ -119,9 +124,10 @@ CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
 			if( name_vec[i] == argument_name[argument_id] )
 				match = argument_id;
 		if( match == n_argument )
-		{	std::cerr << "argument table does not have a row with "
-			<< "argument name = " << name_vec[i] << std::endl;
-			std::exit(1);
+		{	msg  = "table does not have a row with ";
+			msg +=  "argument_name = ";
+			msg +=  name_vec[i];
+			error_exit(db, msg, table_name, row_id);
 		}
 		if( name_vec[i] == "rate_info" )
 		{	bool ok = false;
@@ -130,37 +136,29 @@ CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
 			ok     |= argument_value[match] == "rho_and_chi_zero";
 			ok     |= argument_value[match] == "iota_and_rho_zero";
 			if( ! ok )
-			{	std::cerr
-				<< "argument table: argument_id = " << match << std::endl
-				<< "argument_value not valid for rate_info" << std::endl;
-				std::exit(1);
+			{	msg = "argument_value not valid for rate_info";
+				error_exit(db, msg, table_name, match);
 			}
 		}
 		if( name_vec[i] == "ode_step_size" )
 		{	bool ok = std::atof( argument_value[match].c_str() ) > 0.0;
 			if( ! ok )
-			{	std::cerr
-				<< "argument table: argument_id = " << match << std::endl
-				<< "argument_value is <= 0.0 for ode_step_size" << std::endl;
-				std::exit(1);
+			{	msg = "argument_value is <= 0.0 for ode_step_size";
+				error_exit(db, msg, table_name, match);
 			}
 		}
 		if( name_vec[i] == "random_seed" )
 		{	bool ok = std::atoi( argument_value[match].c_str() ) >= 0;
 			if( ! ok )
-			{	std::cerr
-				<< "argument table: argument_id = " << match << std::endl
-				<< "argument_value is < 0 for random_seed" << std::endl;
-				std::exit(1);
+			{	msg = "argument_value is < 0 for random_seed";
+				error_exit(db, msg, table_name, match);
 			}
 		}
 		if( name_vec[i] == "number_sample" )
 		{	bool ok = std::atoi( argument_value[match].c_str() ) >= 1;
 			if( ! ok )
-			{	std::cerr
-				<< "argument table: argument_id = " << match << std::endl
-				<< "argument_value is < 1 for number_sample" << std::endl;
-				std::exit(1);
+			{	msg = "argument_value is < 1 for number_sample";
+				error_exit(db, msg, table_name, match);
 			}
 		}
 	}
