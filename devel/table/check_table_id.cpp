@@ -61,7 +61,7 @@ $end
 # include <iostream>
 
 # include <cppad/cppad.hpp>
-# include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/error_exit.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 
@@ -77,7 +77,7 @@ namespace dismod_at {
 		{	if( table_id[i] != int(i) )
 			{	string msg = table_name + "_id must start at zero";
 				msg       += " and increment by one.";
-				table_error_exit(table_name, i, msg);
+				error_exit(db, msg, table_name, i);
 			}
 		}
 		return n_row;
