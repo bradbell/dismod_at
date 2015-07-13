@@ -19,7 +19,9 @@ Each of the tables in this section is created by a dismod_at $cref command$$.
 There is one possible exception,
 the $cref truth_var_table$$ may be directly by the user
 (instead of by using the $cref truth_command$$).
-Also note that the $cref log_table$$ is cumulative; i.e.,
+Also note that a row is written in the $cref log_table$$ at the beginning
+and end of every command.
+In addition, the log table is cumulative; i.e.,
 it is never erased and restarted.
 
 $children%omh/table/log_table.omh
