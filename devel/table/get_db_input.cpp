@@ -78,6 +78,8 @@ $end
 # include <dismod_at/check_pini_n_age.hpp>
 # include <dismod_at/check_child_prior.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/to_string.hpp>
+# include <dismod_at/error_exit.hpp>
 
 
 # define DISMOD_AT_CHECK_PRIMARY_ID(in_table, in_name, primary_table)\
@@ -87,11 +89,11 @@ for(size_t row_id = 0; row_id < db_input.in_table ## _table.size(); row_id++) \
 	bool ok   = 0 <= id_value && id_value <= upper; \
 	ok       |= id_value == DISMOD_AT_NULL_INT; \
 	if( ! ok ) \
-	{	std::cerr << #in_name << "=" << id_value << " does not appear as " \
-		<< #primary_table "_id in " << #primary_table " table" << std::endl \
-		<< "Detected in " << #in_table << " table at " #in_table "_id =" \
-		<< row_id << std::endl; \
-		exit(1); \
+	{	table_name = #in_table; \
+		message    = #in_name " = "; \
+		message   += to_string( id_value ) + " does not appear as "; \
+		message   += #primary_table "_id in " #primary_table " table"; \
+		error_exit(db, message, table_name, row_id); \
 	} \
 }
 
@@ -146,6 +148,8 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	//
 	// -----------------------------------------------------------------------
 	// check primary keys
+	// -----------------------------------------------------------------------
+	std::string message, table_name;
 	//
 	// node table
 	DISMOD_AT_CHECK_PRIMARY_ID(node, parent, node);
