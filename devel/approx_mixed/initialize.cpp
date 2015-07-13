@@ -94,8 +94,7 @@ void approx_mixed::initialize(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {	if( grad_ran_.size_var() != 0 )
-	{	std::cerr << "approx_mixed::initialize was called twice" << std::endl;
-		exit(1);
+	{	fatal_error("approx_mixed::initialize was called twice");
 	}
 	//
 	// joint_density_

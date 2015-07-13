@@ -119,9 +119,9 @@ void approx_mixed::prior_hes(
 {
 	// make sure initialize has been called
 	if( prior_density_.size_var() == 0 )
-	{	std::cerr << "approx_mixed::initialize was not called before"
-		<< " approx_mixed::prior_hes" << std::endl;
-		exit(1);
+	{	std::string error_message =
+		"approx_mixed::initialize was not called before prior_hes";
+		fatal_error(error_message);
 	}
 
 	assert( row_out.size() == col_out.size() );

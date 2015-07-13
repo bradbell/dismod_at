@@ -94,9 +94,9 @@ double approx_mixed::laplace_eval(
 {
 	// make sure initialize has been called
 	if( grad_ran_.size_var() == 0 )
-	{	std::cerr << "approx_mixed::initialize was not called before"
-		<< " approx_mixed::laplace_eval" << std::endl;
-		exit(1);
+	{	std::string error_message =
+		"approx_mixed::initialize was not called before laplace_evel";
+		fatal_error(error_message);
 	}
 	assert( laplace_0_.Domain() == 2 * n_fixed_ + n_random_ );
 	assert( laplace_0_.Range() == 1 );

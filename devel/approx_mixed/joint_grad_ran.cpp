@@ -82,9 +82,9 @@ CppAD::vector<approx_mixed::a3_double> approx_mixed::joint_grad_ran(
 {
 	// make sure initialize has been called
 	if( grad_ran_.size_var() == 0 )
-	{	std::cerr << "approx_mixed::initialize was not called before"
-		<< " approx_mixed::joint_grad_ran" << std::endl;
-		exit(1);
+	{	std::string error_message =
+		"approx_mixed::initialize was not called before joint_grad_ran";
+		fatal_error(error_message);
 	}
 
 	// number of fixed and random effects

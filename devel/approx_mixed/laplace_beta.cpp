@@ -91,9 +91,9 @@ approx_mixed::d_vector approx_mixed::laplace_beta(
 {
 	// make sure initialize has been called
 	if( grad_ran_.size_var() == 0 )
-	{	std::cerr << "approx_mixed::initialize was not called before"
-		<< " approx_mixed::laplace_beta" << std::endl;
-		exit(1);
+	{	std::string error_message =
+		"approx_mixed::initialize was not called before laplace_beta";
+		fatal_error(error_message);
 	}
 
 	assert( laplace_1_.Domain() == 2 * n_fixed_ + n_random_ );

@@ -120,9 +120,9 @@ void approx_mixed::joint_hes_ran(
 {
 	// make sure initialize has been called
 	if( hes_ran_.size_var() == 0 )
-	{	std::cerr << "approx_mixed::initialize was not called before"
-		<< " approx_mixed::joint_hes_ran" << std::endl;
-		exit(1);
+	{	std::string error_message =
+		"approx_mixed::initialize was not called before joint_hes_ran";
+		fatal_error(error_message);
 	}
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );

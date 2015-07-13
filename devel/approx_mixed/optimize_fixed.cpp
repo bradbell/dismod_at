@@ -177,9 +177,9 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	using Ipopt::SmartPtr;
 	// make sure initialize has been called
 	if( grad_ran_.size_var() == 0 )
-	{	std::cerr << "approx_mixed::initialize was not called before"
-		<< " approx_mixed::optimize_fixed" << std::endl;
-		exit(1);
+	{	std::string error_message =
+		"approx_mixed::initialize was not called before optimize_fixed";
+		fatal_error(error_message);
 	}
 
 # ifndef NDEBUG
@@ -261,21 +261,18 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	status = app->Initialize();
 	ok    &= status == Ipopt::Solve_Succeeded;
 	if( ! ok )
-	{	std::cerr << "optimize_fixed: initalization failed" << std::endl;
-		exit(1);
+	{	fatal_error("optimize_fixed: initalization failed");
 	}
 
 	// solve the problem
 	status = app->OptimizeTNLP(fixed_nlp);
 	ok    &= status == Ipopt::Solve_Succeeded;
 	if( ! ok )
-	{	std::cerr << "optimize_fixed: ipopt failed to converge" << std::endl;
-		exit(1);
+	{	fatal_error("optimize_fixed: ipopt failed to converge");
 	}
 	ok    &= fixed_nlp->finalize_solution_ok_;
 	if( ! ok )
-	{	std::cerr << "optimize_fixed: solution check failed" << std::endl;
-		exit(1);
+	{	fatal_error("optimize_fixed: solution check failed");
 	}
 	//
 	return fixed_nlp->fixed_opt();
