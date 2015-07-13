@@ -81,7 +81,6 @@ void exec_sql_cmd(sqlite3* db, const std::string& sql_cmd)
 		message += ". SQL command: " + sql_cmd;
 		sqlite3_free(zErrMsg);
 		error_exit(db, message);
-		exit(1);
 	}
 }
 

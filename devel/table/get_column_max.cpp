@@ -75,6 +75,7 @@ $end
 # include <cassert>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/configure.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace {
 	size_t count_callback;
@@ -97,9 +98,7 @@ std::string get_column_max(
 	sqlite3*                    db                    ,
 	const std::string&          select_cmd            ,
 	const std::string&          column_name           )
-{	using std::cerr;
-	using std::endl;
-
+{
 	// sql command: select max(column_name) from ( select_cmd ) sub
 	std::string cmd = "select max(";
 	cmd            += column_name;
@@ -114,10 +113,11 @@ std::string get_column_max(
 	int rc = sqlite3_exec(db, cmd.c_str(), callback, &max_str, &zErrMsg);
 	if( rc )
 	{	assert(zErrMsg != DISMOD_AT_NULL_PTR );
-		cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+		std::string message = "SQL error: ";
+		message += sqlite3_errmsg(db);
+		message += ". SQL command: " + cmd;
 		sqlite3_free(zErrMsg);
-		sqlite3_close(db);
-		exit(1);
+		error_exit(db, message);
 	}
 	assert( count_callback == 1 );
 	return max_str;
