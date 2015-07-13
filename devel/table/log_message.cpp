@@ -14,15 +14,14 @@ $spell
 	sqlite
 	const
 	std
-	bool
 $$
 
 $section Put a Message in the Log Table$$
 
 $head Syntax$$
 $codei%log_message(%db%, %message_type%, %message%)
-$codei%log_message(%db%, %message_type%, %table_name%, %row_id%, %message%)
 %$$
+$codei%log_message(%db%, %message_type%, %message%, %table_name%, %row_id%)%$$
 
 $head db$$
 This argument has prototype
@@ -37,7 +36,7 @@ $codei%
 	const std::string& %message_type%
 %$$
 and must be one of the following:
-$code comamnd$$, $code error$$.
+$code command$$, $code error$$.
 This value gets written in the
 $cref/message_type/log_table/message_type/$$ column of the log table.
 
@@ -68,6 +67,8 @@ $cref/row_id/log_table/row_id/$$ column of the log table.
 Note that the value $code size_t(DISMOD_AT_NULL_INT)$$
 gets converted to a $code null$$.
 If $icode row_id$$ is not present, $code null$$ is used.
+If $icode row_id$$ is present and not $code size_t(DISMOD_AT_NULL_INT)$$,
+$icode table_name$$ must not be empty.
 
 $head Example$$
 Check the $code log$$ table in the database after any

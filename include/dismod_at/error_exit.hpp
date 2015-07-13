@@ -8,21 +8,21 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_CHECK_CHILD_PRIOR_HPP
-# define DISMOD_AT_CHECK_CHILD_PRIOR_HPP
+# ifndef DISMOD_AT_ERROR_EXIT_HPP
+# define DISMOD_AT_ERROR_EXIT_HPP
 
-# include <string>
 # include <sqlite3.h>
-# include "get_rate_table.hpp"
-# include "get_smooth_grid.hpp"
-# include "get_prior_table.hpp"
-
+# include <string>
 namespace dismod_at {
-	void check_child_prior(
-		sqlite3*                                 db          ,
-		const CppAD::vector<rate_struct>&        rate_table  ,
-		const CppAD::vector<smooth_grid_struct>& smooth_grid ,
-		const CppAD::vector<prior_struct>&       prior_table
+	extern void error_exit(
+		sqlite3*           db           ,
+		const std::string& message
+	);
+	extern void error_exit(
+		sqlite3*           db           ,
+		const std::string& message      ,
+		const std::string& table_name   ,
+		const size_t&      row_id
 	);
 }
 

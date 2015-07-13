@@ -21,6 +21,7 @@ $childtable%include/dismod_at/a5_double.hpp
 	%devel/utility/child_info.cpp
 	%devel/utility/data_subset.cpp
 	%devel/utility/eigen_ode2.cpp
+	%devel/utility/error_exit.cpp
 	%devel/utility/fixed_effect.cpp
 	%devel/utility/integrate_1d.cpp
 	%devel/utility/integrate_2d.cpp

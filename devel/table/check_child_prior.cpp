@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin check_child_prior$$
 $spell
+	sqlite
 	std
 	dage
 	dtime
@@ -22,7 +23,7 @@ $$
 $section Check Priors in Child Smoothing$$
 
 $head syntax$$
-$codei%check_child_prior(%rate_table%, %smooth_grid%, %prior_table%)%$$
+$codei%check_child_prior(%db%, %rate_table%, %smooth_grid%, %prior_table%)%$$
 
 $head Purpose$$
 Checks the
@@ -46,6 +47,13 @@ The $cref/lower/prior_table/lower/$$ limit must be minus infinity.
 $lnext
 The $cref/upper/prior_table/upper/$$ limit must be plus infinity.
 $lend
+
+$head db$$
+This argument has prototype
+$codei%
+	sqlite3* %db%
+%$$
+and is the database connection for $cref/logging/log_message/$$ errors.
 
 $head rate_table$$
 This argument has prototype
@@ -86,18 +94,22 @@ $end
 */
 # include <dismod_at/check_child_prior.hpp>
 # include <dismod_at/get_density_table.hpp>
-# include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/error_exit.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/to_string.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void check_child_prior(
+	sqlite3*                                 db            ,
 	const CppAD::vector<rate_struct>&        rate_table    ,
 	const CppAD::vector<smooth_grid_struct>& smooth_grid   ,
 	const CppAD::vector<prior_struct>&       prior_table   )
 {	assert( rate_table.size()   == number_rate_enum );
-	std::stringstream msg;
 	using std::endl;
+	using std::string;
+	using dismod_at::to_string;
+	string msg;
 	//
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{
@@ -105,13 +117,14 @@ void check_child_prior(
 		for(size_t grid_id = 0; grid_id < smooth_grid.size(); grid_id++)
 		if( smooth_grid[grid_id].smooth_id == child_smooth_id )
 		{	CppAD::vector<int> prior_id(3);
-			CppAD::vector<std::string> name(3);
+			CppAD::vector<string> name(3);
 			prior_id[0] = smooth_grid[grid_id].value_prior_id;
 			name[0]     = "child value prior";
 			prior_id[1] = smooth_grid[grid_id].dage_prior_id;
 			name[1]     = "child dage prior";
 			prior_id[2] = smooth_grid[grid_id].dtime_prior_id;
 			name[2]     = "child dtime prior";
+			msg         = "";
 			// skip dage and dtime priors for last age and last time
 			for(size_t i = 0; i < 3; i++)
 			if( prior_id[i] != DISMOD_AT_NULL_INT )
@@ -120,34 +133,38 @@ void check_child_prior(
 				double std        = prior_table[prior_id[i]].std;
 				double lower      = prior_table[prior_id[i]].lower;
 				double upper      = prior_table[prior_id[i]].upper ;
-				bool   ok         = true;
 				if( density_id != int( gaussian_enum ) )
-				{	msg << name[i] << " density not gaussian" << endl;
-					ok = false;
+				{	msg += "density not gaussian";
 				}
 				if( mean != 0.0 )
-				{	msg << name[i] << " mean not zero" << endl;
-					ok = false;
+				{	if( msg != "" )
+						msg += ", ";
+					msg += "mean not zero";
 				}
 				if( std <= 0.0 )
-				{	msg << name[i] << " std not greater than zero" << endl;
-					ok = false;
+				{	if(msg != "" )
+						msg += ", ";
+					msg += "std not greater than zero";
 				}
 				double inf = std::numeric_limits<double>::infinity();
 				if( lower != -inf )
-				{	msg << name[i] << " lower not minus infinity" << endl;
-					ok = false;
+				{	if(msg != "" )
+						msg += ", ";
+					msg += "lower not minus infinity";
 				}
-				if( upper != inf )
-				{	msg << name[i] << " upper not plus infinity" << endl;
-					ok = false;
+				if( upper != +inf )
+				{	if(msg != "" )
+						msg += ", ";
+					msg += "upper not plus infinity";
 				}
-				if( ! ok )
-				{	msg << "child_smooth_id= " << child_smooth_id << endl;
-					msg << "smooth_grid_id = " << grid_id         << endl;
-					msg << "prior_id       = " << prior_id[i]     << endl;
-					std::string table_name  = "rate";
-					table_error_exit( table_name, rate_id, msg.str() );
+				if( msg != "" )
+				{	msg = name[i]
+					+ ": child_smooth_id = " + to_string(child_smooth_id)
+					+ ", smooth_grid_id = " + to_string(grid_id)
+					+ ", prior_id = " + to_string( prior_id[i] )
+					+ ": " + msg;
+					string table_name  = "rate";
+					error_exit(db, msg,  table_name, rate_id);
 				}
 			}
 		}
