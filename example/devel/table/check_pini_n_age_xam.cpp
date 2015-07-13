@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -15,8 +15,6 @@ $spell
 $$
 
 $section C++ check_pini_n_age: Example and Test$$
-$index example, C++ check_pini_n_age$$
-$index check_pini_n_age, C++ example$$
 
 $code
 $verbatim%example/devel/table/check_pini_n_age_xam.cpp
@@ -26,9 +24,15 @@ $$
 $end
 */
 # include <dismod_at/check_pini_n_age.hpp>
+# include <dismod_at/open_connection.hpp>
 
 bool check_pini_n_age_xam(void)
 {	bool ok = true;
+	//
+	// database
+	bool new_file = true;
+	std::string file_name = "example.db";
+	sqlite3* db           = dismod_at::open_connection(file_name, new_file);
 	//
 	// rate_table
 	size_t n_rate = size_t(dismod_at::number_rate_enum);
@@ -52,7 +56,7 @@ bool check_pini_n_age_xam(void)
 	smooth_table[2].n_age = 2;
 	smooth_table[3].n_age = 2;
 	//
-	dismod_at::check_pini_n_age(rate_table, smooth_table);
+	dismod_at::check_pini_n_age(db, rate_table, smooth_table);
 	//
 	return ok;
 }

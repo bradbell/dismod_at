@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -46,15 +46,17 @@ $end
 */
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/get_smooth_table.hpp>
-# include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void check_pini_n_age(
+	sqlite3*                            db            ,
 	const CppAD::vector<rate_struct>&   rate_table    ,
 	const CppAD::vector<smooth_struct>& smooth_table  )
 {	assert( rate_table.size()   == number_rate_enum );
 	std::string message;
+	std::string table_name = "rate";
 	//
 	size_t rate_id = size_t( pini_enum );
 	size_t parent_smooth_id = rate_table[rate_id].parent_smooth_id;
@@ -66,13 +68,13 @@ void check_pini_n_age(
 	if( n_age_parent != 1 )
 	{	message = "parent_smooth_id, for pini, corresponds to a smoothing"
 			" with n_age not equal to one";
-		table_error_exit("rate", rate_id, message);
+		error_exit(db, message, table_name, rate_id);
 	}
 	//
 	if( n_age_child != 1 )
 	{	message = "child_smooth_id, for pini, corresponds to a smoothing"
 			" with n_age not equal to one";
-		table_error_exit("rate", rate_id, message);
+		error_exit(db, message, table_name, rate_id);
 	}
 }
 

@@ -191,6 +191,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	// -----------------------------------------------------------------------
 	// other checks
 	check_pini_n_age(
+		db                        ,
 		db_input.rate_table       ,
 		db_input.smooth_table
 	);
