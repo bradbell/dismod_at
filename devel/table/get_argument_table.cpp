@@ -84,7 +84,7 @@ CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
 	//
 	// for error messaging
 	string msg;
-	size_t row_id  = size_t(DISMOD_AT_NULL_INT);
+	size_t null_id  = size_t(DISMOD_AT_NULL_INT);
 	//
 	const char* name_list[] = {
 		"max_num_iter",
@@ -104,7 +104,7 @@ CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
 	size_t n_argument      = check_table_id(db, table_name);
 	if( n_name != n_argument )
 	{	msg = "argument table does not have " + to_string(n_name) + " rows.";
-		error_exit(db, msg, table_name, row_id);
+		error_exit(db, msg, table_name, null_id);
 	}
 	//
 	string column_name = "argument_name";
@@ -127,7 +127,7 @@ CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
 		{	msg  = "table does not have a row with ";
 			msg +=  "argument_name = ";
 			msg +=  name_vec[i];
-			error_exit(db, msg, table_name, row_id);
+			error_exit(db, msg, table_name, null_id);
 		}
 		if( name_vec[i] == "rate_info" )
 		{	bool ok = false;

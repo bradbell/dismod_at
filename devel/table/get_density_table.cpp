@@ -73,13 +73,19 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/to_string.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 
 CppAD::vector<density_enum> get_density_table(sqlite3* db)
 {	using std::string;
-
+	//
+	// for error messaging
+	string message;
+	size_t null_id  = size_t(DISMOD_AT_NULL_INT);
+	//
 	// density names in same order as enum type in get_density_table.hpp
 	// and in th documentationf for density_table.omh
 	const char* density_enum2name[] = {
@@ -99,10 +105,9 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 	size_t n_density   = check_table_id(db, table_name);
 
 	if( n_density != size_t( number_density_enum ) )
-	{	using std::cerr;
-		cerr << "density table does not have ";
-		cerr << size_t( number_density_enum) << "rows." << std::endl;
-		exit(1);
+	{	message  = "density table does not have ";
+		message += to_string( size_t( number_density_enum) ) + "rows.";
+		error_exit(db, message, table_name, null_id);
 	}
 
 	string column_name =  "density_name";
@@ -113,7 +118,7 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 	CppAD::vector<density_enum> density_table(number_density_enum);
 	for(size_t density_id = 0; density_id < number_density_enum; density_id++)
 	{	if( density_name[density_id] != density_enum2name[density_id] )
-		{	string message = "expected density_name to be ";
+		{	message = "expected density_name to be ";
 			message += density_enum2name[density_id];
 			message += " but found " + density_name[density_id];
 			error_exit(db, message, table_name, density_id);
