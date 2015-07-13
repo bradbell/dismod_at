@@ -165,7 +165,6 @@ $end
 # include <dismod_at/integrate_1d.hpp>
 # include <dismod_at/integrate_2d.hpp>
 # include <dismod_at/interp_weight.hpp>
-# include <dismod_at/table_error_exit.hpp>
 # include <dismod_at/child_info.hpp>
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/solve_ode.hpp>

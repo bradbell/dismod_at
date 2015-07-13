@@ -21,6 +21,7 @@ $section Put a Message in the Log Table$$
 
 $head Syntax$$
 $codei%log_message(%db%, %message_type%, %message%)
+$codei%log_message(%db%, %message_type%, %table_name%, %row_id%, %message%)
 %$$
 
 $head db$$
@@ -48,6 +49,26 @@ $codei%
 This value gets written in the
 $cref/message/log_table/message/$$ column of the log table.
 
+$head table_name$$
+This argument has prototype
+$codei%
+	const std::string& %table_name%
+%$$
+This value gets written in the
+$cref/table_name/log_table/table_name/$$ column of the log table.
+If $icode table_name$$ it is not present, the empty string is used.
+
+$head row_id$$
+This argument has prototype
+$codei%
+	const size_t& %row_id%
+%$$
+This value gets written in the
+$cref/row_id/log_table/row_id/$$ column of the log table.
+Note that the value $code size_t(DISMOD_AT_NULL_INT)$$
+gets converted to a $code null$$.
+If $icode row_id$$ is not present, $code null$$ is used.
+
 $head Example$$
 Check the $code log$$ table in the database after any
 $cref command$$.
@@ -61,14 +82,20 @@ $end
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/get_column_max.hpp>
 # include <dismod_at/to_string.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void log_message(
 	sqlite3*           db           ,
 	const std::string& message_type ,
-	const std::string& message      )
+	const std::string& message      ,
+	const std::string& table_name   ,
+	const size_t&      row_id       )
 {	using std::string;
+
+	// check assumption one table_name and row_id columns of log
+	assert( table_name != "" || row_id == size_t( DISMOD_AT_NULL_INT ) );
 
 	// check message type
 	assert( message_type == "command" || message_type == "error" );
@@ -76,6 +103,8 @@ void log_message(
 	string sql_cmd = "create table if not exists log("
 		" log_id              integer primary key,"
 		" message_type        text,"
+		" table_name          text,"
+		" row_id              integer,"
 		" year                integer,"
 		" month               integer,"
 		" day                 integer,"
@@ -105,7 +134,14 @@ void log_message(
 	sql_cmd += to_string( log_id );
 	sql_cmd += " , '";
 	sql_cmd += message_type;
+	sql_cmd += "' , '";
+	sql_cmd += table_name;
 	sql_cmd += "' , ";
+	if( row_id == size_t( DISMOD_AT_NULL_INT ) )
+		sql_cmd += "null";
+	else
+		sql_cmd += to_string( row_id );
+	sql_cmd += " , ";
 	sql_cmd += to_string( tm_ptr->tm_year + 1900 );
 	sql_cmd += " , ";
 	sql_cmd += to_string( tm_ptr->tm_mon + 1 );
@@ -122,6 +158,15 @@ void log_message(
 	sql_cmd += "' );";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 
+	return;
+}
+void log_message(
+	sqlite3*           db           ,
+	const std::string& message_type ,
+	const std::string& message      )
+{	std::string table_name = "";
+	size_t      row_id     = size_t( DISMOD_AT_NULL_INT );
+	log_message(db, message_type, message, table_name, row_id);
 	return;
 }
 

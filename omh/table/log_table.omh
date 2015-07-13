@@ -23,6 +23,17 @@ $head message_type$$
 This column has type $code text$$ and is one of the following values:
 $code command$$, $code error$$.
 
+$head table_name$$
+This column has type $code text$$.
+If it is non-empty, $icode message$$ must be $code error$$
+and it is the $cref input$$ table in which the error occurred.
+
+$head row_id$$
+This column has type $code int$$.
+If it is not $code null$$, $icode table_name$$ is not
+empty and $icode row_id$$ is the primary key value in
+the specified table where the error occurred.
+
 $head year$$
 This column has type $code int$$ and is
 the year when the message was posted; e.g., $code 2015$$.
