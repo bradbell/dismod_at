@@ -72,7 +72,7 @@ $end
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
-# include <dismod_at/table_error_exit.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -116,7 +116,7 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 		{	string message = "expected density_name to be ";
 			message += density_enum2name[density_id];
 			message += " but found " + density_name[density_id];
-			table_error_exit("density", density_id, message);
+			error_exit(db, message, table_name, density_id);
 		}
 			density_table[density_id] = density_enum(density_id);
 	}
