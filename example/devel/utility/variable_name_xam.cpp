@@ -175,11 +175,11 @@ bool variable_name_xam(void)
 	vector<dismod_at::smooth_info> s_info_vec(2);
 	size_t smooth_id = 0;
 	s_info_vec[smooth_id] = dismod_at::smooth_info(
-		age_table, time_table, smooth_id, smooth_table, smooth_grid_table
+		db, age_table, time_table, smooth_id, smooth_table, smooth_grid_table
 	);
 	smooth_id = 1;
 	s_info_vec[smooth_id] = dismod_at::smooth_info(
-		age_table, time_table, smooth_id, smooth_table, smooth_grid_table
+		db, age_table, time_table, smooth_id, smooth_table, smooth_grid_table
 	);
 	// empty data table
 	vector<dismod_at::data_struct>     data_table;

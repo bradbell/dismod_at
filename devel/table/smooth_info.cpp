@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin smooth_info$$
 $spell
+	sqlite
 	mulstd
 	s_info
 	dage
@@ -89,6 +90,13 @@ $codei%
 	const smooth_info %s_info%
 %$$
 The meaning of the corresponding constructor arguments are specified below:
+
+$subhead db$$
+This argument has prototype
+$codei%
+	sqlite3* %db%
+%$$
+and is the database connection for $cref/logging/log_message/$$ errors.
 
 $subhead age_table$$
 This argument has prototype
@@ -299,6 +307,8 @@ $end
 */
 # include <dismod_at/smooth_info.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/error_exit.hpp>
+# include <dismod_at/to_string.hpp>
 
 namespace {
 	struct key_id {
@@ -425,16 +435,19 @@ smooth_info::smooth_info(
 
 // Normal Constructor
 smooth_info::smooth_info(
+	sqlite3*                                 db                ,
 	const CppAD::vector<double>&             age_table         ,
 	const CppAD::vector<double>&             time_table        ,
 	size_t                                   smooth_id         ,
 	const CppAD::vector<smooth_struct>&      smooth_table      ,
 	const CppAD::vector<smooth_grid_struct>& smooth_grid_table )
 {	size_t i, j, id;
-
-	using std::cerr;
-	using std::endl;
 	using std::string;
+	//
+	// for erorr messaging
+	string msg, table_name;
+	size_t row_id;
+	size_t null_size_t = size_t( DISMOD_AT_NULL_INT );
 
 	// check that -1 is not a valid positive int
 	assert( -1 == int( size_t(-1) ) );
@@ -465,19 +478,21 @@ smooth_info::smooth_info(
 	// number of age and time points for this smoothing
 	size_t n_age  = age_vec.size();
 	if( n_age != size_t( smooth_table[smooth_id].n_age ) )
-	{	cerr << "In smooth_table with smooth_id = " << smooth_id
-		<< ": n_age = " << smooth_table[smooth_id].n_age << endl;
-		cerr << "In smooth_grid_table with smooth_id = " << smooth_id
-		<< ": n_age = " << n_age << endl;
-		std::exit(1);
+	{	table_name = "smooth";
+		msg  = "In smooth_grid table with smooth_id = " + to_string(smooth_id);
+		msg += ", n_age = " + to_string(n_age) + ".";
+		msg +=  "In smooth table n_age = ";
+		msg += to_string( smooth_table[smooth_id].n_age );
+		error_exit(db, msg, table_name, smooth_id);
 	}
-	size_t n_time  = time_vec.size();
+	size_t n_time = time_vec.size();
 	if( n_time != size_t( smooth_table[smooth_id].n_time ) )
-	{	cerr << "In smooth_table with smooth_id = " << smooth_id
-		<< ": n_time = " << smooth_table[smooth_id].n_time << endl;
-		cerr << "In smooth_grid_table with smooth_id = " << smooth_id
-		<< ": n_time = " << n_time << endl;
-		std::exit(1);
+	{	table_name = "smooth";
+		msg  = "In smooth_grid table with smooth_id = " + to_string(smooth_id);
+		msg += ", n_time = " + to_string(n_time) + ".";
+		msg +=  "In smooth table n_time = ";
+		msg += to_string( smooth_table[smooth_id].n_time );
+		error_exit(db, msg, table_name, smooth_id);
 	}
 
 	// age ids in order of increasing age for this smoothing
@@ -519,36 +534,42 @@ smooth_info::smooth_info(
 			dage_prior_id_[index]  = smooth_grid_table[i].dage_prior_id;
 			dtime_prior_id_[index] = smooth_grid_table[i].dtime_prior_id;
 			//
-			size_t null_size_t = size_t( DISMOD_AT_NULL_INT );
+			// check dage_prior_id
 			if( j_age == n_age -1 && dage_prior_id_[index] != null_size_t )
-			{	cerr << "smooth_grid table with smooth_grid_id = " << i
-				<< endl << "age_id = " << age_id_[j_age]
-				<< " is maximum age for smooth_id = " << smooth_id
-				<< endl << " but dage_prior_id = " << dage_prior_id_[index]
-				<< " is not null" << endl;
-				exit(1);
+			{	table_name = "smooth_grid";
+				row_id     = i;
+				msg  = "age_id = " + to_string( age_id_[j_age] );
+				msg += " is the maximum age for smooth_id = ";
+				msg += to_string(smooth_id) + " but dage_prior_id = ";
+				msg += to_string( dage_prior_id_[index] ) + " is not null";
+				error_exit(db, msg, table_name, row_id);
 			}
 			if( j_age != n_age -1 && dage_prior_id_[index] == null_size_t )
-			{	cerr << "smooth_grid table with smooth_grid_id = " << i
-				<< endl << "age_id = " << age_id_[j_age]
-				<< " is not maximum age for smooth_id = " << smooth_id
-				<< endl << " but dage_prior_id is null" << endl;
-				exit(1);
+			{	table_name = "smooth_grid";
+				row_id     = i;
+				msg  = "age_id = " + to_string( age_id_[j_age] );
+				msg += " is not the maximum age for smooth_id = ";
+				msg += to_string(smooth_id) + " but dage_prior_id is null ";
+				error_exit(db, msg, table_name, row_id);
 			}
+			//
+			// check dtime_prior_id
 			if( j_time == n_time -1 && dtime_prior_id_[index] != null_size_t )
-			{	cerr << "smooth_grid table with smooth_grid_id = " << i
-				<< endl << "time_id = " << time_id_[j_time]
-				<< " is maximum time for smooth_id = " << smooth_id
-				<< endl << " but dtime_prior_id = " << dtime_prior_id_[index]
-				<< " is not null" << endl;
-				exit(1);
+			{	table_name = "smooth_grid";
+				row_id     = i;
+				msg  = "time_id = " + to_string( time_id_[j_time] );
+				msg += " is the maximum time for smooth_id = ";
+				msg += to_string(smooth_id) + " but dtime_prior_id = ";
+				msg += to_string( dtime_prior_id_[index] ) + " is not null";
+				error_exit(db, msg, table_name, row_id);
 			}
 			if( j_time != n_time -1 && dtime_prior_id_[index] == null_size_t )
-			{	cerr << "smooth_grid table with smooth_grid_id = " << i
-				<< endl << "time_id = " << time_id_[j_time]
-				<< " is not maximum time for smooth_id = " << smooth_id
-				<< endl << " but dtime_prior_id is null " << endl;
-				exit(1);
+			{	table_name = "smooth_grid";
+				row_id     = i;
+				msg  = "time_id = " + to_string( time_id_[j_time] );
+				msg += " is not the maximum time for smooth_id = ";
+				msg += to_string(smooth_id) + " but dtime_prior_id is null ";
+				error_exit(db, msg, table_name, row_id);
 			}
 		}
 	}
@@ -558,11 +579,14 @@ smooth_info::smooth_info(
 	{	if( count[i] != 1 )
 		{	size_t j_time = i % n_time;
 			size_t j_age  = (i - j_time) / n_time;
-			cerr << "smooth_grid table with smooth_id = " << smooth_id
-			<< endl << "age_id = " << age_id_[j_age]
-			<< ", time_id = " << time_id_[j_time] << " appears "
-			<< count[i] << " times (not 1 time)." << endl;
-			exit(1);
+			table_name = "smooth_grid";
+			row_id     = null_size_t;
+			msg  = "smooth_id = " + to_string( smooth_id );
+			msg += ", age_id = " + to_string( age_id_[j_age] );
+			msg += ", time_id = " + to_string( time_id_[j_time] );
+			msg += ": appears " + to_string(count[i]) + " times";
+			msg += " (should be one time). ";
+			error_exit(db, msg, table_name, row_id);
 		}
 	}
 

@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # ifndef DISMOD_AT_SMOOTH_INFO_HPP
 # define DISMOD_AT_SMOOTH_INFO_HPP
 
+# include <sqlite3.h>
 # include <cppad/cppad.hpp>
 # include "get_smooth_table.hpp"
 # include "get_smooth_grid.hpp"
@@ -42,6 +43,7 @@ public:
 	smooth_info(void);
 	// normal constructor
 	smooth_info(
+		sqlite3*                                 db                ,
 		const CppAD::vector<double>&             age_table         ,
 		const CppAD::vector<double>&             time_table        ,
 		size_t                                   smooth_id         ,
