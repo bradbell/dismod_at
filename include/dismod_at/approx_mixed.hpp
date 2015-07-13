@@ -61,6 +61,27 @@ $codep */
 	typedef CppAD::vector<a4_double>   a4d_vector;
 	typedef CppAD::vector<a5_double>   a5d_vector;
 /* $$
+$head User Defined$$
+The following are $code approx_mixed$$ pure virtual functions and hence must
+be defined by the user's derived class:
+
+$subhead joint_density$$
+$codep */
+	virtual CppAD::vector<a5_double> joint_density(
+		const CppAD::vector<a5_double>& fixed_vec  ,
+		const CppAD::vector<a5_double>& random_vec
+	) = 0;
+/* $$
+see $cref/joint_density/approx_mixed_joint_density/$$.
+
+$subhead prior_density$$
+$codep */
+	virtual CppAD::vector<a1_double> prior_density(
+		const CppAD::vector<a1_double>& fixed_vec
+	) = 0 ;
+/* $$
+see $cref/prior_density/approx_mixed_prior_density/$$.
+
 $head constructor$$
 Construct an $code approx_mixed$$ derived class object; see
 $cref/derived_ctor/approx_mixed_derived_ctor/$$.
@@ -76,23 +97,6 @@ Directly after construction, use this function to initialize
 the derived class object; see $cref/initialize/approx_mixed_initialize/$$.
 $codep */
 	void initialize(const d_vector& fixed_vec, const d_vector& random_vec);
-/* $$
-$head joint_density$$
-This is a pure virtual function so it must be defined by derived class;
-see $cref/joint_density/approx_mixed_joint_density/$$.
-$codep */
-	virtual CppAD::vector<a5_double> joint_density(
-		const CppAD::vector<a5_double>& fixed_vec  ,
-		const CppAD::vector<a5_double>& random_vec
-	) = 0;
-/* $$
-$head prior_density$$
-These are pure virtual functions so they must be defined by derived class;
-see $cref/prior_density/approx_mixed_prior_density/$$.
-$codep */
-	virtual CppAD::vector<a1_double> prior_density(
-		const CppAD::vector<a1_double>& fixed_vec
-	) = 0 ;
 /* $$
 $head optimize_random$$
 Given the fixed effects, optimize with respect to the random effects;
