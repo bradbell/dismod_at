@@ -80,17 +80,17 @@ $end
 # include <dismod_at/null_int.hpp>
 
 
-# define DISMOD_AT_CHECK_PRIMARY_ID(in_table, in_name, primary_table, lower)\
-for(size_t i = 0; i < db_input.in_table ## _table.size(); i++) \
-{	int id_value = db_input.in_table ## _table[i].in_name; \
+# define DISMOD_AT_CHECK_PRIMARY_ID(in_table, in_name, primary_table)\
+for(size_t row_id = 0; row_id < db_input.in_table ## _table.size(); row_id++) \
+{	int id_value = db_input.in_table ## _table[row_id].in_name; \
 	int upper = int( db_input.primary_table ## _table.size() ) - 1; \
-	bool ok   = lower <= id_value && id_value <= upper; \
+	bool ok   = 0 <= id_value && id_value <= upper; \
 	ok       |= id_value == DISMOD_AT_NULL_INT; \
 	if( ! ok ) \
 	{	std::cerr << #in_name << "=" << id_value << " does not appear as " \
 		<< #primary_table "_id in " << #primary_table " table" << std::endl \
 		<< "Detected in " << #in_table << " table at " #in_table "_id =" \
-		<< i << std::endl; \
+		<< row_id << std::endl; \
 		exit(1); \
 	} \
 }
@@ -148,45 +148,45 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	// check primary keys
 	//
 	// node table
-	DISMOD_AT_CHECK_PRIMARY_ID(node, parent, node, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(node, parent, node);
 
 	// prior table
-	DISMOD_AT_CHECK_PRIMARY_ID(prior, density_id, density, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(prior, density_id, density);
 
 	// weight_grid table
-	DISMOD_AT_CHECK_PRIMARY_ID(weight_grid, weight_id, weight, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(weight_grid, weight_id, weight);
 
 	// smooth table
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_value_prior_id, prior, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dage_prior_id,  prior, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dtime_prior_id, prior, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_value_prior_id, prior);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dage_prior_id,  prior);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_dtime_prior_id, prior);
 
 	// smooth_grid table
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, smooth_id, smooth, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, value_prior_id, prior, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dage_prior_id, prior, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dtime_prior_id, prior, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, smooth_id,      smooth);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, value_prior_id, prior);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dage_prior_id,  prior);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dtime_prior_id, prior);
 
 	// mulcov table
-	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, rate_id, rate, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, integrand_id, integrand, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, covariate_id, covariate, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, smooth_id, smooth, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, rate_id,      rate);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, integrand_id, integrand);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, covariate_id, covariate);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, smooth_id,    smooth);
 
 	// data table
-	DISMOD_AT_CHECK_PRIMARY_ID(data, integrand_id, integrand, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(data, density_id,   density,   0);
-	DISMOD_AT_CHECK_PRIMARY_ID(data, node_id,      node,      0);
-	DISMOD_AT_CHECK_PRIMARY_ID(data, weight_id,    weight,    0);
+	DISMOD_AT_CHECK_PRIMARY_ID(data, integrand_id, integrand);
+	DISMOD_AT_CHECK_PRIMARY_ID(data, density_id,   density);
+	DISMOD_AT_CHECK_PRIMARY_ID(data, node_id,      node);
+	DISMOD_AT_CHECK_PRIMARY_ID(data, weight_id,    weight);
 
 	// avg_case table
-	DISMOD_AT_CHECK_PRIMARY_ID(avg_case, integrand_id, integrand, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(avg_case, node_id,      node,      0);
-	DISMOD_AT_CHECK_PRIMARY_ID(avg_case, weight_id,    weight,    0);
+	DISMOD_AT_CHECK_PRIMARY_ID(avg_case, integrand_id, integrand);
+	DISMOD_AT_CHECK_PRIMARY_ID(avg_case, node_id,      node);
+	DISMOD_AT_CHECK_PRIMARY_ID(avg_case, weight_id,    weight);
 
 	// rate table
-	DISMOD_AT_CHECK_PRIMARY_ID(rate, parent_smooth_id, smooth, 0);
-	DISMOD_AT_CHECK_PRIMARY_ID(rate, parent_smooth_id, smooth, 0);
+	DISMOD_AT_CHECK_PRIMARY_ID(rate, parent_smooth_id, smooth);
+	DISMOD_AT_CHECK_PRIMARY_ID(rate, parent_smooth_id, smooth);
 
 	// -----------------------------------------------------------------------
 	// other checks
