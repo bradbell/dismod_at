@@ -92,12 +92,18 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/to_string.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 {	using std::string;
-
+	//
+	// for error messaging
+	string message;
+	size_t null_id  = size_t(DISMOD_AT_NULL_INT);
+	//
 	// rate names in same order as enum type in get_rate_table.hpp
 	// and in the documentation for rate_table.omh
 	const char* rate_enum2name[] = {
@@ -117,10 +123,9 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 	string table_name   = "rate";
 	size_t n_rate       = check_table_id(db, table_name);
 	if( n_rate != size_t( number_rate_enum ) )
-	{	using std::cerr;
-		cerr << "rate table does not have ";
-		cerr << size_t( number_rate_enum) << "rows." << std::endl;
-		exit(1);
+	{	message  = "rate table does not have ";
+		message += to_string( size_t( number_rate_enum) )  + "rows.";
+		error_exit(db, message, table_name, null_id);
 	}
 
 	string column_name  = "rate_name";
@@ -141,7 +146,7 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 	CppAD::vector<rate_struct> rate_table(number_rate_enum);
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	if( rate_name[rate_id] != rate_enum2name[rate_id] )
-		{	string message = "expected rate_name to be ";
+		{	message  = "expected rate_name to be ";
 			message += rate_enum2name[rate_id];
 			message += " but found " + rate_name[rate_id];
 			error_exit(db, message, table_name, rate_id);
