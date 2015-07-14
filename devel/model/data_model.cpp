@@ -524,17 +524,23 @@ $spell
 	obj
 $$
 
-$section Replace Density, Measurement Value, and Standard Deviation$$
+$section Set Value Necessary for Likelihood (not for Average Integrand)$$
 
 $head Syntax$$
-$icode%data_object%.replace_like(
-	%density_id%, %meas_value%, %meas_std%
-)%$$
+$icode%data_object%.replace_like(%data_subset_obj%)%$$
 
 $head Purpose$$
-This routine sets the value necessary to calculate the functions
+The values
+$cref/density_id/data_table/density_id/$$,
+$cref/hold_out/data_table/hold_out/$$,
+$cref/meas_value/data_table/meas_value/$$,
+$cref/meas_std/data_table/meas_std/$$ are not necessary to calculate
+$cref/data_object.avg_no_ode/data_model_avg_no_ode/$$ and
+$cref/data_object.avg_yes_ode/data_model_avg_yes_ode/$$.
+However, the are necessary to use the functions
 $cref/data_object.like_one/data_model_like_one/$$ and
 $cref/data_object.like_all/data_model_like_all/$$.
+
 
 
 $head data_object$$
@@ -560,57 +566,38 @@ This an index between zero and $icode%n_subset% - 1%$$.
 It is used to refer to the corresponding element of
 $icode subset_object$$.
 
-$head density_id$$
+$head data_subset_obj$$
 This argument has prototype
 $codei%
-	const CppAD::vector<size_t>& %density_id%
+	const CppAD::vector<data_subset_struct>& %data_subset_obj%
 %$$
 and has size $icode n_subset$$.
 For each $icode subset_id$$,
-$icode%density%[%subset_id%]%$$ is used
-as a replacement for $cref/density_id/data_table/density_id/$$ at row
-$icode%subset_object[%subset_id%]%.table_id%$$ of the data table.
-
-$head meas_value$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>& %meas_value%
-%$$
-and has size $icode n_subset$$.
-For each $icode subset_id$$,
-$icode%meas_value%[%subset_id%]%$$ is used
-as a replacement for $cref/meas_value/data_table/meas_value/$$ at row
-$icode%subset_object[%subset_id%]%.table_id%$$ of the data table.
-
-$head meas_std$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>& %meas_std%
-%$$
-and has size $icode n_subset$$.
-For each $icode subset_id$$,
-$icode%meas_std%[%subset_id%]%$$ is used
-as a replacement for $cref/meas_std/data_table/meas_std/$$ at row
-$icode%subset_object[%subset_id%]%.table_id%$$ of the data table.
-
+and for $icode%field% = density_id%,% hold_out%,% meas_value%,% meas_std%$$,
+$icode%data_subset_obj%[%subset_id%].%field%$$,
+is used as a replacement for
+$icode%subset_object[%subset_id%]%.%field%$$.
 
 $end
 */
 void data_model::replace_like(
-		const CppAD::vector<size_t>&          density_id     ,
-		const CppAD::vector<double>&          meas_value     ,
-		const CppAD::vector<double>&          meas_std       )
+		const CppAD::vector<data_subset_struct>&  data_subset_obj )
 {	size_t n_subset = data_subset_obj_.size();
-	assert( density_id.size() == n_subset );
-	assert( meas_value.size() == n_subset );
-	assert( meas_std.size()   == n_subset );
+	assert( data_subset_obj.size() == n_subset );
 	//
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	data_subset_obj_[subset_id].density_id = density_id[subset_id];
-		data_subset_obj_[subset_id].meas_value = meas_value[subset_id];
-		data_subset_obj_[subset_id].meas_std   = meas_std[subset_id];
+	{	data_subset_obj_[subset_id].density_id =
+			data_subset_obj[subset_id].density_id;
+		data_subset_obj_[subset_id].hold_out =
+			data_subset_obj[subset_id].hold_out;
+		data_subset_obj_[subset_id].meas_value =
+			data_subset_obj[subset_id].meas_value;
+		data_subset_obj_[subset_id].meas_std =
+			data_subset_obj[subset_id].meas_std;
 		//
-		data_info_[subset_id].density = density_enum(density_id[subset_id]);
+		data_info_[subset_id].density = density_enum(
+			data_subset_obj[subset_id].density_id
+		);
 	}
 	replace_like_called_ = true;
 	return;

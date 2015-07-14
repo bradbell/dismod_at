@@ -59,6 +59,7 @@ private:
 
 	// set by consructor, except that following fields set by replace_like
 	// data_subset_obj_[subset_id].density_id
+	// data_subset_obj_[subset_id].hold_out
 	// data_subset_obj_[subset_id].meas_value
 	// data_subset_obj_[subset_id].meas_std
 	CppAD::vector<data_subset_struct>         data_subset_obj_;
@@ -85,9 +86,7 @@ public:
 	void set_eigen_ode2_case_number(const std::string& rate_info_arg);
 	//
 	void replace_like(
-		const CppAD::vector<size_t>&          density_id     ,
-		const CppAD::vector<double>&          meas_value     ,
-		const CppAD::vector<double>&          meas_std
+		const CppAD::vector<data_subset_struct>& data_subset_obj
 	);
 	//
 	// compute average for integrands that do not require S or C

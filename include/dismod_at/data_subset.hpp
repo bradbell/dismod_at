@@ -23,6 +23,7 @@ namespace dismod_at {
 		int         density_id;
 		int         node_id;
 		int         weight_id;
+		int         hold_out;
 		double      meas_value;
 		double      meas_std;
 		double      age_lower;
