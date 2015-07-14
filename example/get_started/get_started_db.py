@@ -55,7 +55,7 @@ def get_started_db (file_name) :
 	time_list   = [ 1995.0, 2005.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_list = [
+	integrand_dict = [
 		{ 'name':'prevalence',  'eta':1e-6 },
 		{ 'name':'Sincidence',  'eta':1e-6 },
 		{ 'name':'remission',   'eta':1e-6 },
@@ -65,7 +65,7 @@ def get_started_db (file_name) :
 	#
 	# node table: world -> north_america
 	#             north_america -> (united_states, canada)
-	node_list = [
+	node_dict = [
 		{ 'name':'world',         'parent':'' },
 		{ 'name':'north_america', 'parent':'world' },
 		{ 'name':'united_states', 'parent':'north_america' },
@@ -74,18 +74,18 @@ def get_started_db (file_name) :
 	#
 	# weight table: The constant function 1.0 (one age and one time point)
 	fun = constant_weight_fun
-	weight_list = [
+	weight_dict = [
 		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
 	]
 	#
 	# covariate table: no covriates
-	covariate_list = list()
+	covariate_dict = list()
 	#
 	# mulcov table
-	mulcov_list = list()
+	mulcov_dict = list()
 	# --------------------------------------------------------------------------
 	# data table: same order as list of integrands
-	data_list = list()
+	data_dict = list()
 	# values that are the same for all data rows
 	row = {
 		'node':        'world',
@@ -97,11 +97,11 @@ def get_started_db (file_name) :
 		'age_lower':    0.0
 	}
 	# values that change between rows: (one data point for each integrand)
-	for integrand_id in range( len(integrand_list) ) :
+	for integrand_id in range( len(integrand_dict) ) :
 		rate_id           = integrand_id
 		meas_value        = 1e-2 * (rate_id + 1)
 		meas_std          = 0.2 * meas_value
-		integrand         = integrand_list[integrand_id]['name']
+		integrand         = integrand_dict[integrand_id]['name']
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
 		row['integrand']  = integrand
@@ -112,18 +112,18 @@ def get_started_db (file_name) :
 			# other integrands are averaged from age zero to one hundred
 			row['age_upper'] = 100.0
 		# data_id = rate_id = integand_id
-		data_list.append( copy.copy(row) )
+		data_dict.append( copy.copy(row) )
 	#
 	# add one outlyer at end of data table with hold_out true
 	row['hold_out']   = True # if outlyer were false, fit would fail
-	row['integrand']  = data_list[0]['integrand']
-	row['meas_std']   = data_list[0]['meas_std']
-	row['age_upper']  = data_list[0]['age_upper']
-	row['meas_value'] = 10. * data_list[0]['meas_value']
-	data_list.append( copy.copy(row) )
+	row['integrand']  = data_dict[0]['integrand']
+	row['meas_std']   = data_dict[0]['meas_std']
+	row['age_upper']  = data_dict[0]['age_upper']
+	row['meas_value'] = 10. * data_dict[0]['meas_value']
+	data_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
-	prior_list = [
+	prior_dict = [
 		{   # prior_zero
 			'name':     'prior_zero',
 			'density':  'uniform',
@@ -162,7 +162,7 @@ def get_started_db (file_name) :
 	# smooth table
 	middle_age_id  = 1
 	last_time_id   = 2
-	smooth_list = [
+	smooth_dict = [
 		{   # smooth_mean_zero
 			'name':                     'smooth_mean_zero',
 			'age_id':                   [ middle_age_id ],
@@ -183,7 +183,7 @@ def get_started_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# rate table
-	rate_list = [
+	rate_dict = [
 		{
 			'name':          'pini',
 			'parent_smooth': 'smooth_uniform_positive',
@@ -207,8 +207,8 @@ def get_started_db (file_name) :
 		}
 	]
 	# ------------------------------------------------------------------------
-	# argument_list
-	argument_list = [
+	# argument_dict
+	argument_dict = [
 		{ 'name':'parent_node_id','value':'0'            },
 		{ 'name':'ode_step_size', 'value':'10.0'         },
 		{ 'name':'tolerance',     'value':'1e-10'        },
@@ -219,7 +219,7 @@ def get_started_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# avg_case table: same order as list of integrands
-	avg_case_list = list()
+	avg_case_dict = list()
 	# values that are the same for all data rows
 	row = {
 		'node':        'world',
@@ -229,8 +229,8 @@ def get_started_db (file_name) :
 		'age_lower':    0.0
 	}
 	# values that change between rows: (one data point for each integrand)
-	for avg_case_id in range( len(integrand_list) ) :
-		integrand         = integrand_list[avg_case_id]['name']
+	for avg_case_id in range( len(integrand_dict) ) :
+		integrand         = integrand_dict[avg_case_id]['name']
 		row['integrand']  = integrand
 		if integrand == 'prevalence' :
 			# prevalence is measured at age zero
@@ -238,32 +238,32 @@ def get_started_db (file_name) :
 		else :
 			# other integrands are averaged from age zero to one hundred
 			row['age_upper'] = 100.0
-		avg_case_list.append( copy.copy(row) )
+		avg_case_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
 		age_list,
 		time_list,
-		integrand_list,
-		node_list,
-		weight_list,
-		covariate_list,
-		data_list,
-		prior_list,
-		smooth_list,
-		rate_list,
-		mulcov_list,
-		argument_list,
-		avg_case_list
+		integrand_dict,
+		node_dict,
+		weight_dict,
+		covariate_dict,
+		data_dict,
+		prior_dict,
+		smooth_dict,
+		rate_dict,
+		mulcov_dict,
+		argument_dict,
+		avg_case_dict
 	)
 	# -----------------------------------------------------------------------
-	n_smooth  = len( smooth_list )
+	n_smooth  = len( smooth_dict )
 	rate_true = []
-	for rate_id in range( len( data_list ) ) :
+	for rate_id in range( len( data_dict ) ) :
 		# for this particular example
 		data_id    = rate_id
-		meas_value = data_list[data_id]['meas_value']
+		meas_value = data_dict[data_id]['meas_value']
 		rate_true.append(meas_value)
 	#
 	return (n_smooth, rate_true)

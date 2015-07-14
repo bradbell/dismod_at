@@ -36,30 +36,30 @@ def create_database() :
 	import dismod_at
 	import copy
 	#
-	# file_name, age_list, time_list, integrand_list
+	# file_name, age_list, time_list, integrand_dict
 	file_name      = 'example.db'
 	age_list       = [ 50.0 ]
 	time_list      = [ 2000.0 ]
-	integrand_list = [ { 'name':'mtother',    'eta':1e-6 } ]
+	integrand_dict = [ { 'name':'mtother',    'eta':1e-6 } ]
 	#
-	# node_list
-	node_list = [
+	# node_dict
+	node_dict = [
 		{ 'name':'world',         'parent':'' },
 		{ 'name':'north_america', 'parent':'world' },
 		{ 'name':'united_states', 'parent':'north_america' },
 		{ 'name':'canada',        'parent':'north_america' }
 	]
-	# weight_list
+	# weight_dict
 	fun = constant_weight_fun
-	weight_list = [
+	weight_dict = [
 		{ 'name':'constant',  'age_id':[0], 'time_id':[0], 'fun':fun }
 	]
-	# covariate_list
-	covariate_list = [
+	# covariate_dict
+	covariate_dict = [
 		{ 'name':'sex', 'reference':0.0, 'max_difference':0.6 }
 	]
-	# data_list
-	data_list = []
+	# data_dict
+	data_dict = []
 	row = {
 		'integrand':'mtother',
 		'density':'log_gaussian',
@@ -74,16 +74,16 @@ def create_database() :
 	}
 	row['node']       = 'north_america'
 	row['meas_value'] = 1.0e-5
-	data_list.append( copy.copy(row) )
+	data_dict.append( copy.copy(row) )
 	row['node']       = 'united_states'
 	row['meas_value'] = 1.5e-5
-	data_list.append( copy.copy(row) )
+	data_dict.append( copy.copy(row) )
 	row['node']       = 'canada'
 	row['meas_value'] = 0.5e-5
-	data_list.append( copy.copy(row) )
+	data_dict.append( copy.copy(row) )
 	#
-	# prior_list
-	prior_list = [
+	# prior_dict
+	prior_dict = [
 		{	'name':'zero',
 			'density':'uniform',
 			'lower':0.0,
@@ -123,7 +123,7 @@ def create_database() :
 	]
 	#
 	# smooth list
-	smooth_list = [
+	smooth_dict = [
 		{	'name':'uniform_01_constant',
 			'age_id':[0],
 			'time_id':[0],
@@ -141,8 +141,8 @@ def create_database() :
 		}
 	]
 	#
-	# rate_list
-	rate_list = [
+	# rate_dict
+	rate_dict = [
 		{
 			'name':'pini',
 			'parent_smooth':'uniform_01_constant',
@@ -166,8 +166,8 @@ def create_database() :
 		}
 	]
 	#
-	# mulcov_list
-	mulcov_list = [
+	# mulcov_dict
+	mulcov_dict = [
 		{	'covariate':'sex',
 			'type':'rate_mean',
 			'effected':'omega',
@@ -175,8 +175,8 @@ def create_database() :
 		}
 	]
 	#
-	# argument_list
-	argument_list = [
+	# argument_dict
+	argument_dict = [
 		{ 'name':'parent_node_id','value':'0'            },
 		{ 'name':'ode_step_size', 'value':'10.0'         },
 		{ 'name':'tolerance',     'value':'1e-8'         },
@@ -185,8 +185,8 @@ def create_database() :
 		{ 'name':'number_sample', 'value':'1'            },
 		{ 'name':'rate_info',     'value':'chi_positive' }
 	]
-	# avg_case_list
-	avg_case_list = []
+	# avg_case_dict
+	avg_case_dict = []
 	row = {
 		'integrand':'mtother',
 		'weight':'constant',
@@ -197,27 +197,27 @@ def create_database() :
 		'sex':0.5
 	}
 	row['node']       = 'north_america'
-	avg_case_list.append( copy.copy(row) )
+	avg_case_dict.append( copy.copy(row) )
 	row['node']       = 'united_states'
-	avg_case_list.append( copy.copy(row) )
+	avg_case_dict.append( copy.copy(row) )
 	row['node']       = 'canada'
 	row['meas_value'] = 0.5e-5
-	avg_case_list.append( copy.copy(row) )
+	avg_case_dict.append( copy.copy(row) )
 	dismod_at.create_database(
 		file_name,
 		age_list,
 		time_list,
-		integrand_list,
-		node_list,
-		weight_list,
-		covariate_list,
-		data_list,
-		prior_list,
-		smooth_list,
-		rate_list,
-		mulcov_list,
-		argument_list,
-		avg_case_list
+		integrand_dict,
+		node_dict,
+		weight_dict,
+		covariate_dict,
+		data_dict,
+		prior_dict,
+		smooth_dict,
+		rate_dict,
+		mulcov_dict,
+		argument_dict,
+		avg_case_dict
 	)
 	# -----------------------------------------------------------------------
 	# Check database
