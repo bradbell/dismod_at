@@ -41,6 +41,11 @@ $lnext
 Once there is a database
 $cref/connection/open_connection/$$,
 use $cref log_table$$ to record all error messages before exiting.
+$lnext
+The pure virtual function
+$cref/fatal_error/approx_mixed_public/User Defined/fatal_error/$$
+was added to the $code approx_mixed$$ derived class.
+This enabled $code dismod_at$$ to log the $code approx_mixed$$ error messages.
 $lend
 
 $head 07-11$$
