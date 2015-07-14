@@ -91,6 +91,7 @@ def get_started_db (file_name) :
 		'node':        'world',
 		'density':     'gaussian',
 		'weight':      'constant',
+		'hold_out':     False,
 		'time_lower':   2000.0,
 		'time_upper':   2000.0,
 		'age_lower':    0.0

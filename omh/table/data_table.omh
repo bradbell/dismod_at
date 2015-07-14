@@ -45,6 +45,10 @@ This column has type $code integer$$ and is the
 $cref/weight_id/weight_grid_table/weight_id/$$ that identifies
 the weighting used for this measurement.
 
+$head hold_out$$
+This column has type $code integer$$ and has value zero or one.
+Only the rows where hold_out is zero are used during a $cref fit_command$$.
+
 $head meas_value$$
 This column has type $code real$$ and is the measured value
 for each row of the $code data$$ table;

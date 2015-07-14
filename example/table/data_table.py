@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
 # $begin data_table.py$$ $newlinech #$$
@@ -32,6 +32,7 @@ def data_table() :
 		('density_id',   'integer'),
 		('node_id',      'integer'),
 		('weight_id',    'integer'),
+		('hold_out',     'integer'),
 		('meas_value',   'real'   ),
 		('meas_std',     'real'   ),
 		('age_lower',    'real'   ),
@@ -51,6 +52,7 @@ def data_table() :
 		0,                      # density_id
 		3,                      # node_id
 		4,                      # weight_id
+		0,                      # hold_out
 		1e-4,                   # meas_value
 		1e-5,                   # meas_std
 		10.0,                   # age_lower

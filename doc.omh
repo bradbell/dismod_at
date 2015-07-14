@@ -33,7 +33,12 @@ $section Disease Rates as Functions of Age and Time: dismod_at-20150711$$
 
 $head Wish List$$
 $list number$$
-Add computation of a weighted residuals table to the $cref fit_command$$.
+$lnext
+Implement $cref/hold_out/data_table/hold_out/$$ when estimating variables
+during $cref fit_command$$.
+$lnext
+Compute weighted residuals for all data (including hold outs)
+during $cref fit_command$$.
 $lnext
 If the $cref fit_var_table$$ exists when the $cref fit_command$$ is executed,
 use those values as a starting point for the optimization.

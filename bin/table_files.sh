@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 if [ "$0" != 'bin/table_files.sh' ]
@@ -48,6 +48,6 @@ devel/table/get_${name}_table.cpp$wlt             read $name table in C++
 python/dismod_at/create_database.py$wgt           create all tables
 example/table/${name}_table.py$wlt                $name table example
 example/table/create_database.py$wgt              create_database.py example
-example/get_started/get_started.py.in$wgt         calls create_database
+example/get_started/get_started_db.py$wgt         calls create_database
 example/devel/table/get_${name}_table_xam.cpp$wlt C++ example for $name table
 EOF

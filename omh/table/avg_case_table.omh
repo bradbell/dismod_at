@@ -17,7 +17,7 @@ $spell
 $$
 
 $section The avg_case Table: Defines Average Integrand Cases$$
-Give a value for the $cref/model variables/model_variable/$$,
+Given a value for the $cref/model variables/model_variable/$$,
 this table contains the other information necessary to compute the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
 

@@ -137,6 +137,7 @@
 # density      $cnext str         $cnext density                     $rnext
 # node         $cnext str         $cnext node in graph               $rnext
 # weight       $cnext str         $cnext weighting function          $rnext
+# hold_out     $cnext bool        $cnext hold out flag               $rnext
 # meas_value   $cnext float       $cnext measured value              $rnext
 # meas_std     $cnext float       $cnext standard deviation          $rnext
 # age_lower    $cnext float       $cnext lower age limit             $rnext
@@ -554,6 +555,7 @@ def create_database(
 		'density_id',
 		'node_id',
 		'weight_id',
+		'hold_out',
 		'meas_value',
 		'meas_std',
 		'age_lower',
@@ -568,6 +570,7 @@ def create_database(
 		'integer',              # density_id
 		'integer',              # node_id
 		'integer',              # weight_id
+		'integer',              # hold_out
 		'real',                 # meas_value
 		'real',                 # meas_std
 		'real',                 # age_lower
@@ -585,11 +588,13 @@ def create_database(
 		density_id   = global_density_name2id[ data['density'] ]
 		node_id      = global_node_name2id[ data['node'] ]
 		weight_id    = global_weight_name2id[ data['weight'] ]
+		hold_out     = int( data['hold_out'] )
 		row = [
 			integrand_id,
 			density_id,
 			node_id,
 			weight_id,
+			hold_out,
 			data['meas_value'],
 			data['meas_std'],
 			data['age_lower'],

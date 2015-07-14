@@ -128,6 +128,9 @@ $rnext
 $code int$$ $cnext $code weight_id$$ $cnext
 	The $cref/weight_id/data_table/weight_id/$$ for this measurement
 $rnext
+$code int$$ $cnext $code hold_out$$ $cnext
+	The $cref/hold_out/data_table/hold_out/$$ for this measurement
+$rnext
 $code double$$ $cnext $code meas_value$$ $cnext
 	The $cref/meas_value/data_table/meas_value/$$ for this measurement
 $rnext
@@ -190,6 +193,11 @@ CppAD::vector<data_struct> get_data_table(
 	get_table_column(db, table_name, column_name, density_id);
 	assert( n_data == density_id.size() );
 
+	column_name        = "hold_out";
+	CppAD::vector<int>    hold_out;
+	get_table_column(db, table_name, column_name, hold_out);
+	assert( n_data == hold_out.size() );
+
 	column_name        = "node_id";
 	CppAD::vector<int>    node_id;
 	get_table_column(db, table_name, column_name, node_id);
@@ -237,6 +245,7 @@ CppAD::vector<data_struct> get_data_table(
 		data_table[i].density_id    = density_id[i];
 		data_table[i].node_id       = node_id[i];
 		data_table[i].weight_id     = weight_id[i];
+		data_table[i].hold_out      = hold_out[i];
 		data_table[i].meas_value    = meas_value[i];
 		data_table[i].meas_std      = meas_std[i];
 		data_table[i].age_lower     = age_lower[i];
@@ -262,7 +271,12 @@ CppAD::vector<data_struct> get_data_table(
 	// check for erorr conditions
 	string msg;
 	for(size_t data_id = 0; data_id < n_data; data_id++)
-	{	// -------------------------------------------------------------
+	{	int hold_out = data_table[data_id].hold_out;
+		if( hold_out != 0 && hold_out != 1 )
+		{	msg = "hold_out is not equal to zero or one";
+			error_exit(db, msg, table_name, data_id);
+		}
+		// -------------------------------------------------------------
 		double age_lower  = data_table[data_id].age_lower;
 		double age_upper  = data_table[data_id].age_upper;
 		if( age_lower < age_min )

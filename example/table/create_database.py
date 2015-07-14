@@ -64,6 +64,7 @@ def create_database() :
 		'integrand':'mtother',
 		'density':'log_gaussian',
 		'weight':'constant',
+		'hold_out':False,
 		'meas_std':1e-5,
 		'age_lower':0.0,
 		'age_upper':100.0,
