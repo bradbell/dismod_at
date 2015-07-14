@@ -97,10 +97,11 @@ def get_started_db (file_name) :
 		'age_lower':    0.0
 	}
 	# values that change between rows: (one data point for each integrand)
-	for data_id in range( len(integrand_list) ) :
-		meas_value        = 1e-2 * (data_id + 1)
+	for integrand_id in range( len(integrand_list) ) :
+		rate_id           = integrand_id
+		meas_value        = 1e-2 * (rate_id + 1)
 		meas_std          = 0.2 * meas_value
-		integrand         = integrand_list[data_id]['name']
+		integrand         = integrand_list[integrand_id]['name']
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
 		row['integrand']  = integrand
@@ -110,7 +111,16 @@ def get_started_db (file_name) :
 		else :
 			# other integrands are averaged from age zero to one hundred
 			row['age_upper'] = 100.0
+		# data_id = rate_id = integand_id
 		data_list.append( copy.copy(row) )
+	#
+	# add one outlyer at end of data table with hold_out true
+	row['hold_out']   = True # if outlyer were false, fit would fail
+	row['integrand']  = data_list[0]['integrand']
+	row['meas_std']   = data_list[0]['meas_std']
+	row['age_upper']  = data_list[0]['age_upper']
+	row['meas_value'] = 10. * data_list[0]['meas_value']
+	data_list.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
 	prior_list = [

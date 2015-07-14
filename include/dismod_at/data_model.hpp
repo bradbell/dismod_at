@@ -111,6 +111,7 @@ public:
 	// compute weighted residual and log-likelihood for all data points
 	template <class Float>
 	CppAD::vector< residual_struct<Float> > like_all(
+		bool                          hold_out ,
 		const  CppAD::vector<Float>&  pack_vec
 	) const;
 };

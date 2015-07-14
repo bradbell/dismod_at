@@ -33,6 +33,10 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-14$$
+Add $cref/hold_out/data_table/hold_out/$$ to the data table
+and exclude the flagged data during the $cref fit_command$$.
+
 $head 07-13$$
 $list number$$
 Record the start of and end of each $cref command$$ in the

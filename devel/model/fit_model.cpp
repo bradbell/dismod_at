@@ -257,7 +257,8 @@ fit_model::a5d_vector fit_model::joint_density(
 	put_random_effect(pack_object_, a5_pack_vec_tmp_, random_vec);
 	//
 	// evaluate the data and prior residuals
-	data_like_tmp_  = data_object_.like_all(a5_pack_vec_tmp_);
+	bool hold_out = true;
+	data_like_tmp_  = data_object_.like_all(hold_out, a5_pack_vec_tmp_);
 	prior_ran_tmp_  = prior_object_.random(a5_pack_vec_tmp_);
 	//
 	// number of data and prior residuals

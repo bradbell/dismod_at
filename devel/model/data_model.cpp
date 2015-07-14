@@ -33,7 +33,7 @@ $codei%data_model %data_object%(
 	%time_table%,
 	%integrand_table%,
 	%node_table%,
-	%data_subset_obj%,
+	%subset_object%,
 	%w_info_vec%,
 	%s_info_vec%,
 	%pack_object%,
@@ -1374,6 +1374,7 @@ residual_struct<Float> data_model::like_one(
 -------------------------------------------------------------------------------
 $begin data_model_like_all$$
 $spell
+	bool
 	enum
 	vec
 	CppAD
@@ -1384,13 +1385,11 @@ $$
 $section All the Weighted Residuals and Log-Likelihoods$$
 
 $head Syntax$$
-$icode%residual_vec% = %data_object%.like_all(%pack_vec%)%$$
+$icode%residual_vec% = %data_object%.like_all(%hold_out%, %pack_vec%)%$$
 
 $head Requirement$$
 One must call $cref/replace_like/data_model_replace_like/$$
 before calling this function.
-
-$head Data Table Notation$$
 
 $head data_object$$
 This object has prototype
@@ -1399,22 +1398,17 @@ $codei%
 %$$
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
-$subhead i$$
-We use $icode i$$ to denote the
-$cref/subset_id/data_subset/data_subset_obj/subset_id/$$
-for a row in the data table.
-
-$subhead y_i$$
-We use $icode y_i$$ to denote the corresponding
-$cref/meas_value/data_table/meas_value/$$.
-
-$subhead n_i$$
-We use $icode n_i$$ to denote the corresponding
-$cref/node_id/data_table/node_id/$$.
-
 $head Float$$
 The type $icode Float$$ must be one of the following:
 $code double$$, $code AD<double>$$, or $cref a5_double$$.
+
+$head hold_out$$
+This argument has prototype
+$codei%
+	bool %hold_out%
+%$$
+If it is true, the flagged data will be held out,
+otherwise it will not.
 
 $head pack_vec$$
 This argument has prototype
@@ -1430,11 +1424,27 @@ The return value has prototype
 $codei%
 	CppAD::vector< residual_struct<%Float%> > %residual_vec%
 %$$
-The size of $icode residual$$ is equal the number of subset data values
+
+$subhead Include Hold Outs$$
+If $icode hold_out$$ is false,
+the size of $icode residual$$ is equal the number of subset data values
 $cref/n_subset/data_subset/data_subset_obj/n_subset/$$.
-The order of the residuals is unspecified (at this time).
+The order of the residuals is the same as in
+$cref/subset_object/data_model_ctor/subset_object/$$ in the
+$icode data_object$$ constructor.
+
+$subhead No Hold Outs$$
+If $icode hold_out$$ is true,
+the size of $icode residual$$ is equal the number of subset data values
+$cref/n_subset/data_subset/data_subset_obj/n_subset/$$,
+minus the number for which
+$cref/hold_out/data_table/hold_out/$$ is one.
+The order of the residuals is not specified in this case.
+
+$head Log Density$$
 The log of the density
 $latex \B{p}( y | u , \theta )$$,
+for the data that is included,
 is the sum of the log of the densities corresponding to all the
 $cref/residuals/residual_density/$$ in $icode residual_vec$$.
 
@@ -1442,13 +1452,14 @@ $end
 */
 template <class Float>
 CppAD::vector< residual_struct<Float> > data_model::like_all(
-	const CppAD::vector<Float>& pack_vec
-) const
+	bool                        hold_out ,
+	const CppAD::vector<Float>& pack_vec ) const
 {	assert( replace_like_called_ );
 	CppAD::vector< residual_struct<Float> > residual_vec;
 
 	// loop over the subsampled data
 	for(size_t subset_id = 0; subset_id < data_subset_obj_.size(); subset_id++)
+	if( hold_out == false || data_subset_obj_[subset_id].hold_out == 0 )
 	{	// compute avgerage of integrand for this data
 		Float avg;
 		integrand_enum integrand  = data_info_[subset_id].integrand;
@@ -1517,6 +1528,7 @@ DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avg_case_subset_struct)
 	) const;                                                \
 	template CppAD::vector< residual_struct<Float> >        \
 	data_model::like_all(                                   \
+		bool                          hold_out ,            \
 		const CppAD::vector<Float>&   pack_vec              \
 	) const;                                                \
 

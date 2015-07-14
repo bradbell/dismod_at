@@ -106,9 +106,12 @@ for simulate_id in range( len(simulate_dict) ) :
 	sample_index    = row['sample_index']
 	data_subset_id  = row['data_subset_id']
 	data_id         = data_subset_dict[data_subset_id]['data_id']
-	meas_value   = row['meas_value']
-	meas_std     = data_dict[data_id]['meas_std']
-	rate_id      = data_id # for this example database
+	meas_value      = row['meas_value']
+	meas_std        = data_dict[data_id]['meas_std']
+	if data_id == len(data_dict) - 1 :
+		rate_id = 0       # in original data set this is outlyer at then
+	else :
+		rate_id = data_id # for this example case
 	truth_var_value  = 5e-3 * (rate_id + 1)
 	assert sample_index == 0
 	assert meas_value != data_dict[data_id]['meas_value']

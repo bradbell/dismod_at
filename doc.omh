@@ -33,10 +33,6 @@ $section Disease Rates as Functions of Age and Time: dismod_at-20150711$$
 
 $head Wish List$$
 $list number$$
-$lnext
-Implement $cref/hold_out/data_table/hold_out/$$ when estimating variables
-during $cref fit_command$$.
-$lnext
 Compute weighted residuals for all data (including hold outs)
 during $cref fit_command$$.
 $lnext
