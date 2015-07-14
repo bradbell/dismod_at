@@ -84,6 +84,7 @@ $end
 # include <dismod_at/get_column_max.hpp>
 # include <dismod_at/to_string.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/configure.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -106,12 +107,7 @@ void log_message(
 		" message_type        text,"
 		" table_name          text,"
 		" row_id              integer,"
-		" year                integer,"
-		" month               integer,"
-		" day                 integer,"
-		" hour                integer,"
-		" minute              integer,"
-		" second              integer,"
+		" unix_time           integer,"
 		" message             text"
 		");";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
@@ -125,10 +121,7 @@ void log_message(
 		log_id = std::atoi( max_str.c_str() ) + 1;
 
 	// get time
-	time_t rawtime;
-	struct std::tm* tm_ptr;
-	std::time( &rawtime );
-	tm_ptr = std::gmtime( &rawtime );
+	time_t unix_time = std::time( DISMOD_AT_NULL_PTR );
 
 	// add this message to the log file
 	sql_cmd  = "insert into log values ( ";
@@ -143,17 +136,7 @@ void log_message(
 	else
 		sql_cmd += to_string( row_id );
 	sql_cmd += " , ";
-	sql_cmd += to_string( tm_ptr->tm_year + 1900 );
-	sql_cmd += " , ";
-	sql_cmd += to_string( tm_ptr->tm_mon + 1 );
-	sql_cmd += " , ";
-	sql_cmd += to_string( tm_ptr->tm_mday );
-	sql_cmd += " , ";
-	sql_cmd += to_string( tm_ptr->tm_hour );
-	sql_cmd += " , ";
-	sql_cmd += to_string( tm_ptr->tm_min );
-	sql_cmd += " , ";
-	sql_cmd += to_string( tm_ptr->tm_sec );
+	sql_cmd += to_string( unix_time );
 	sql_cmd += " , '";
 	sql_cmd += message;
 	sql_cmd += "' );";
