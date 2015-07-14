@@ -17,7 +17,7 @@ $section The fit_var Table: Fit Results for Variables$$
 The fit_var table contains the maximum likelihood estimate
 for the $cref/model variables/model_variable/$$ corresponding to
 the data table $cref/meas_value/data_table/meas_value/$$.
-A new $code fit$$ table is created each time the
+A new $code fit_var$$ table is created each time the
 $cref fit_command$$ is executed.
 
 $head fit_var_id$$
@@ -26,7 +26,7 @@ Its initial value is zero, and it increments by one for each row.
 The $icode fit_var_id$$ column is also a foreign key for the
 $cref var_table$$; i.e.,
 $codei%
-	%var_id% = %fit_var_id%
+	%fit_var_id% = %var_id%
 %$$
 In addition, the size of both tables is the same.
 

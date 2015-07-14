@@ -1,0 +1,53 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin fit_residual_table$$
+$spell
+	var
+$$
+
+$section The fit_residual Table: Compare Model and Data For a Fit$$.
+The fit_residual table compares the model and data
+for the $cref/model variables/model_variable/$$
+corresponding to a $cref fit_command$$.
+A new $code fit_residual$$ table is created each time the
+$cref fit_command$$ is executed.
+
+$head fit_residual_id$$
+This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+$head data_subset_id$$
+The $icode data_subset_id$$ has type $code integer$$
+and is the $cref/data_subset_id/data_subset_table/data_subset_id/$$
+for this row. This information is redundant because
+$codei%
+	%data_subset_id% = %fit_residual_id%
+%$$
+The extra column is included to abide by the conventions for naming
+$cref/primary/input/Primary Key/$$ and
+$cref/foreign keys/input/Foreign Key/$$.
+
+$head avg_integrand$$
+The column has type $code real$$ and contains the
+$cref avg_integrand$$ that correspond to the
+$cref/model variables/model_variable/$$ obtained by the fit; see
+$cref/fit_var_value/fit_var_table/fit_var_value/$$.
+
+$head weighted_residual$$
+The column has type $code real$$ and contains the
+$cref/weighted_residuals/wres_density/$$ that correspond to the
+$cref/model variables/model_variable/$$ obtained by the fit; see
+$cref/fit_var_value/fit_var_table/fit_var_value/$$.
+
+$head Example$$
+See the $cref fit_command.py$$ example and test.
+
+$end

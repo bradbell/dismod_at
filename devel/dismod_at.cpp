@@ -78,6 +78,8 @@ If any of the following tables exist, they are deleted:
 $list number$$
 $cref/fit_var_table/fit_command/fit_var_table/$$
 $lnext
+$cref/fit_residual_table/fit_command/fit_residual_table/$$
+$lnext
 $cref/truth_var_table/truth_command/truth_var_table/$$
 $lnext
 $cref/simulate_table/simulate_command/simulate_table/$$
@@ -110,7 +112,15 @@ void init_command(
 
 	// -----------------------------------------------------------------------
 	const char* drop_list[] = {
-	"subset", "var", "fit_var", "truth_var", "simulate", "sample", "predict"
+		"var",
+		"avg_data_subset",
+		"data_subset",
+		"fit_var",
+		"fit_residual",
+		"truth_var",
+		"simulate",
+		"sample",
+		"predict"
 	};
 	size_t n_drop = sizeof( drop_list ) / sizeof( drop_list[0] );
 	string sql_cmd;
@@ -341,6 +351,10 @@ A new $cref fit_var_table$$ is created each time this command is run.
 It contains the results of the fit in its
 $cref/fit_var_value/fit_var_table/fit_var_value/$$ column.
 
+$head fit_residual_table$$
+A new $cref fit_residual_table$$ is created each time this command is run.
+It is a comparison of the model and data corresponding to the fit results.
+
 $children%example/get_started/fit_command.py%$$
 $head Example$$
 The file $cref fit_command.py$$ contains an example and test
@@ -376,7 +390,7 @@ void fit_command(
 	fit_object.run_fit(tolerance_arg, max_num_iter_arg);
 	vector<double> solution = fit_object.get_solution();
 	// -------------------- fit_var table --------------------------------------
-	string sql_cmd = "drop table if exists fit";
+	string sql_cmd = "drop table if exists fit_var";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	sql_cmd = "create table fit_var("
 		" fit_var_id   integer primary key,"
@@ -390,6 +404,61 @@ void fit_command(
 	for(size_t fit_var_id = 0; fit_var_id < solution.size(); fit_var_id++)
 	{	double fit_var_value   = solution[fit_var_id];
 		row_val_vec[0] = to_string( fit_var_value );
+		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+	}
+	// ------------------ fit_residual table --------------------------------
+	sql_cmd = "drop table if exists fit_residual";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	sql_cmd = "create table    fit_residual("
+		" fit_residual_id      integer primary key,"
+		" data_subset_id       integer,"
+		" avg_integrand        real,"
+		" weighted_residual    real"
+	")";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	table_name = "fit_residual";
+	col_name_vec.resize(3);
+	row_val_vec.resize(3);
+	col_name_vec[0] = "data_subset_id";
+	col_name_vec[1] = "avg_integrand";
+	col_name_vec[2] = "weighted_residual";
+	//
+	size_t n_subset = data_subset_obj.size();
+	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+	{	// compute average integrand for this data item
+		double avg;
+		size_t integrand_id = data_subset_obj[subset_id].integrand_id;
+		dismod_at::integrand_enum integrand =
+			db_input.integrand_table[integrand_id].integrand;
+		switch( integrand )
+		{	case dismod_at::Sincidence_enum:
+			case dismod_at::remission_enum:
+			case dismod_at::mtexcess_enum:
+			case dismod_at::mtother_enum:
+			case dismod_at::mtwith_enum:
+			case dismod_at::relrisk_enum:
+			avg = data_object.avg_no_ode(subset_id, solution);
+			break;
+
+			case dismod_at::prevalence_enum:
+			case dismod_at::Tincidence_enum:
+			case dismod_at::mtspecific_enum:
+			case dismod_at::mtall_enum:
+			case dismod_at::mtstandard_enum:
+			avg = data_object.avg_yes_ode(subset_id, solution);
+			break;
+
+			default:
+			assert(false);
+		}
+		// compute its residual and log likelihood
+		dismod_at::residual_struct<double> residual =
+			data_object.like_one(subset_id, solution, avg);
+		//
+		row_val_vec[0] = to_string( subset_id );
+		row_val_vec[1] = to_string( avg );
+		row_val_vec[2] = to_string( residual.wres );
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
 	return;

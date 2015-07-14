@@ -89,6 +89,7 @@ parent_node_id = 0
 child_node_id  = 1
 check_tol      = 1e-3
 n_rate         = 5;
+rate_value     = list()
 for rate_id in range(n_rate) :
 	for node_id in [ parent_node_id, child_node_id ] :
 		count = 0
@@ -101,16 +102,43 @@ for rate_id in range(n_rate) :
 				count += 1
 				check          = rate_true[rate_id]
 				fit_var_id     = var_id
-				variable_value = fit_var_dict[fit_var_id]['fit_var_value']
-				if node_id == 0 :
-					# parent node
-					err = variable_value / check - 1.0
+				fit_var_value  = fit_var_dict[fit_var_id]['fit_var_value']
+				if node_id == parent_node_id :
+					err = fit_var_value / check - 1.0
+					if count == 1 :
+						rate_value.append( fit_var_value )
 				else :
 					# child node
-					err = variable_value / check
+					err = fit_var_value / check
 				assert abs(err) <= check_tol
 		# number of point in smoothing for all rates
 		assert count == 2
+assert len(rate_value) == n_rate
+# -----------------------------------------------------------------------
+# get fit_residual table
+fit_residual_dict = dismod_at.get_table_dict(connection, 'fit_residual')
+data_dict         = dismod_at.get_table_dict(connection, 'data')
+density_dict      = dismod_at.get_table_dict(connection, 'density')
+#
+# all data included in subset
+assert len(fit_residual_dict) == n_rate + 1;
+#
+# first n_rate date entries
+check_tol = 1e-8
+for data_id in range(n_rate) :
+	rate_id       = data_id
+	avg_integrand = fit_residual_dict[data_id]['avg_integrand']
+	err           = avg_integrand / rate_value[rate_id] - 1.0;
+	#
+	weighted_residual = fit_residual_dict[data_id]['avg_integrand']
+	meas_value        = data_dict[data_id]['meas_value']
+	meas_std          = data_dict[data_id]['meas_std']
+	density_id        = data_dict[data_id]['density_id']
+	assert density_dict[density_id]['density_name'] == 'gaussian'
+	check             = (meas_value - avg_integrand) / meas_std;
+	err               = weighted_residual / rate_value[rate_id] - 1.0;
+
+#
 # -----------------------------------------------------------------------
 print('fit_command: OK')
 # END PYTHON

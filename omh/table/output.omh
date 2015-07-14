@@ -12,6 +12,7 @@ $begin output$$
 $spell
 	Dismod
 	init
+	var
 $$
 
 $section Tables That Are Created By Dismod_at$$
@@ -29,6 +30,7 @@ $children%omh/table/log_table.omh
 	%omh/table/avg_case_subset_table.omh
 	%omh/table/var_table.omh
 	%omh/table/fit_var_table.omh
+	%omh/table/fit_residual_table.omh
 	%omh/table/truth_var_table.omh
 	%omh/table/simulate_table.omh
 	%omh/table/sample_table.omh
@@ -37,34 +39,35 @@ $children%omh/table/log_table.omh
 
 $table
 	Command $pre  $$ $cnext
-	Outputs $cnext
-	Addition Inputs
+	Output Tables $cnext
+	Addition Input Tables
 $rnext
 	$cref/init/init_command/$$ $cnext
-	$cref var_table$$
+	$cref/var/var_table/$$
 $rnext $cnext
-	$cref data_subset_table$$
+	$cref/data_subset/data_subset_table/$$
 $rnext $cnext
-	$cref avg_case_subset_table$$  $pre  $$
+	$cref/avg_case_subset/avg_case_subset_table/$$  $pre  $$
 $rnext
 	$cref/fit/fit_command/$$ $cnext
-	$cref fit_var_table$$    $cnext
+	$cref/fit_var/fit_var_table/$$, $cref/fit_residual/fit_residual_table/$$
+	$cnext
 $rnext
 	$cref/truth/truth_command/$$ $cnext
-	$cref truth_var_table$$      $cnext
-	$cref fit_var_table$$
+	$cref/truth_var/truth_var_table/$$      $cnext
+	$cref/fit_var/fit_var_table/$$
 $rnext
 	$cref/simulate/simulate_command/$$ $cnext
-	$cref simulate_table$$             $cnext
-	$cref truth_var_table$$
+	$cref/simulate/simulate_table/$$             $cnext
+	$cref/truth_var/truth_var_table/$$
 $rnext
 	$cref/sample/sample_command/$$ $cnext
-	$cref sample_table$$           $cnext
-	$cref simulate_table$$
+	$cref/sample/sample_table/$$           $cnext
+	$cref/simulate/simulate_table/$$
 $rnext
 	$cref/predict/predict_command/$$ $cnext
-	$cref predict_table$$            $cnext
-	$cref sample_table$$
+	$cref/predict/predict_table/$$            $cnext
+	$cref/sample/sample_table/$$
 $tend
 
 $end
