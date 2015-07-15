@@ -42,6 +42,11 @@ $lnext
 When writing to standard error,
 add $code Error:$$ ($code Warning:$$)
 to beginning of error messages (warning messages).
+$lnext
+The $cref init_command$$ no longer deletes the current
+fit, fit_residual, truth_var, simulate, sample and predict tables.
+These table get overwritten when the corresponding command is executed;
+see $cref output$$.
 $lend
 
 $head 07-14$$

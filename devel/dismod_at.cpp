@@ -74,22 +74,6 @@ $head avg_case_subset_table$$
 A new $cref avg_case_subset_table$$ is created.
 This makes explicit exactly which rows of the avg_case table are used.
 
-$head Deleted Tables$$
-If any of the following tables exist, they are deleted:
-$list number$$
-$cref/fit_var_table/fit_command/fit_var_table/$$
-$lnext
-$cref/fit_residual_table/fit_command/fit_residual_table/$$
-$lnext
-$cref/truth_var_table/truth_command/truth_var_table/$$
-$lnext
-$cref/simulate_table/simulate_command/simulate_table/$$
-$lnext
-$cref/sample_table/sample_command/sample_table/$$
-$lnext
-$cref/predict_table/predict_command/predict_table/$$
-$lend
-
 $children%example/get_started/init_command.py%$$
 $head Example$$
 The file $cref init_command.py$$ contains an example and test
@@ -115,13 +99,7 @@ void init_command(
 	const char* drop_list[] = {
 		"var",
 		"avg_data_subset",
-		"data_subset",
-		"fit_var",
-		"fit_residual",
-		"truth_var",
-		"simulate",
-		"sample",
-		"predict"
+		"data_subset"
 	};
 	size_t n_drop = sizeof( drop_list ) / sizeof( drop_list[0] );
 	string sql_cmd;
