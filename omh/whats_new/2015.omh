@@ -33,6 +33,17 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-15$$
+$list number$$
+Change $cref create_database$$ arguments to end in $icode _dict$$ when
+they are a list of dictionaries, so similar to
+$cref/table_dict/get_table_dict/table_dict/$$.
+$lnext
+When writing to standard error,
+add $code Error:$$ ($code Warning:$$)
+to beginning of error messages (warning messages).
+$lend
+
 $head 07-14$$
 $list number$$
 Add $cref/hold_out/data_table/hold_out/$$ to the data table

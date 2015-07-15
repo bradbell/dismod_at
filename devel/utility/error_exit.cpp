@@ -101,7 +101,7 @@ void error_exit(
 	log_message(db, message_type, message, table_name, row_id);
 
 	// write to standard error
-	cerr << message << endl;
+	cerr << "Error: " << message << endl;
 	if( table_name != "" )
 	{	cerr << "Detected in table " << table_name;
 		if( row_id != size_t(DISMOD_AT_NULL_INT) )

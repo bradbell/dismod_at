@@ -373,6 +373,7 @@ void fit_model::fatal_error(const std::string& error_message)
 }
 // warning
 void fit_model::warning(const std::string& warning_message)
-{	log_message(db_, "warning", warning_message);
+{	std::cerr << "Warning: " << warning_message << std::endl;
+	log_message(db_, "warning", warning_message);
 }
 } // DISMOD_AT_END_NAMESPACE
