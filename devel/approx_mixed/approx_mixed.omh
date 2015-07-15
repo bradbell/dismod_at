@@ -16,18 +16,9 @@ $$
 
 $section approx_mixed: Laplace Approximation For Mixed Effects Models$$
 
-$head Negative Log-Density Vector$$
-If $icode vec$$ is a density vector corresponding to $latex \B{p}(x)$$,
-the corresponding negative log-density is given by
-$pre
-	$$
-$latex - \log [ \B{p} (x) ] = $$
-$icode%vec%[0] + CppAD::abs(%vec%[1]) + %...% CppAD::abs(%vec%[%s%-1])
-%$$
-where $icode%s% = %vec%.size()%$$.
-
 $head Fixed Effects, theta$$
-For each $code approx_mixed$$ object, there is a vector of fixed effects.
+For each $code approx_mixed$$ object,
+there is a vector of fixed effects $latex theta$$.
 The number of the fixed effects, and their order in constant
 (for each $code approx_mixed$$ object).
 We sometimes use $latex \theta$$ to denote the vector of fixed effects.
@@ -37,6 +28,40 @@ For each $code approx_mixed$$ object, there is a vector of random effects.
 The number of the random effects, and their order is constant
 (for each $code approx_mixed$$ object).
 We sometimes use $latex u$$ to denote the vector of random effects.
+
+$head Problem$$
+We are given the problem of
+estimating the fixed effects by maximizing the likelihood with
+respect to $latex \theta$$; i.e.,
+$latex \[
+\B{p}( y | \theta ) =
+	\B{p} ( \theta ) \int_{-\infty}^{+\infty}
+		\B{p} ( y |  \theta, u ) \B{p} ( u | \theta ) \; \B{d} u
+\] $$
+We approximate this solution by replacing the integral above with its
+Laplace approximation (see $cref approx_mixed_theory$$) and
+optimizing the approximate objective.
+Let $latex \hat{\theta}$$ be to optimal solution for the approximate
+problem.
+We then estimate the random effects by maximizing the likelihood,
+at the fixed effects estimate, with respect to the random effects
+$latex u$$; i.e.,
+$latex \[
+\B{p} ( y, u | \hat{\theta} )
+=
+\B{p}( y | u, \hat{\theta} )  \B{p} ( u | \hat{\theta} )
+\] $$
+
+
+$head Negative Log-Density Vector$$
+If $icode vec$$ is a density vector corresponding to $latex \B{p}(x)$$,
+the corresponding negative log-density is given by
+$pre
+	$$
+$latex - \log [ \B{p} (x) ] = $$
+$icode%vec%[0] + CppAD::abs(%vec%[1]) + %...% CppAD::abs(%vec%[%s%-1])
+%$$
+where $icode%s% = %vec%.size()%$$.
 
 $childtable%
 	devel/approx_mixed/theory.omh%
