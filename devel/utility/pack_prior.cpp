@@ -10,7 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 
 /*
-$begin pack_prior$$
+$begin pack_value_prior$$
 $spell
 	vec
 	const
@@ -20,7 +20,7 @@ $$
 $section Prior Ids In Same Order As Packed Variables$$
 
 $head Syntax$$
-$icode%value_prior% = pack_value_prior(%pack_object%, %s_info_vec%)%$$
+$icode%value_prior_id% = pack_value_prior(%pack_object%, %s_info_vec%)%$$
 
 $head pack_object$$
 This argument has prototype
@@ -41,12 +41,12 @@ $codei%
 %$$
 is the corresponding $cref smooth_info$$ information.
 
-$head value_prior$$
+$head value_prior_id$$
 The return value has prototype
 $codei%
-	CppAD::vector<size_t> %value_prior%
+	CppAD::vector<size_t> %value_prior_id%
 %$$
-The element $icode%value_prior%[%i%]%$$ is the
+The element $icode%value_prior_id%[%i%]%$$ is the
 $cref/prior_id/prior_table/prior_id/$$ corresponding to the
 $th i$$ model variable in the order determined by $icode pack_object$$.
 

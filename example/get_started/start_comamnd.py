@@ -8,16 +8,17 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin truth_command.py$$ $newlinech #$$
+# $begin init_command.py$$ $newlinech #$$
 # $spell
+#	init
 #	dismod
 # $$
 #
-# $section dismod_at truth: Example and Test$$
+# $section dismod_at init: Example and Test$$
 #
 # $code
 # $verbatim%
-#	example/get_started/truth_command.py
+#	example/get_started/init_command.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -30,7 +31,7 @@ import subprocess
 import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
-example = 'example/get_started/truth_command.py'
+example = 'example/get_started/init_command.py'
 if sys.argv[0] != example  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + example + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -54,27 +55,60 @@ file_name              = 'example.db'
 (n_smooth, rate_true)  = get_started_db.get_started_db(file_name)
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
-for command in [ 'init', 'start', 'fit', 'truth'  ] :
-	cmd  = [ program, command, file_name ]
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+command        = 'init'
+cmd  = [ program, command, file_name ]
+print( ' '.join(cmd) )
+flag = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at init command failed')
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
-# get fit and truth_var tables
-fit_var_dict= dismod_at.get_table_dict(connection, 'fit_var')
-truth_var_dict  = dismod_at.get_table_dict(connection, 'truth_var')
+# check data_subset table
+data_subset_dict = dismod_at.get_table_dict(connection, 'data_subset');
+n_subset         = len( data_subset_dict )
+for subset_id in range( n_subset ) :
+	# all the data is included for this example
+	assert subset_id == data_subset_dict[subset_id]['data_id']
 # -----------------------------------------------------------------------
-# check result
-assert len(fit_var_dict) == len(truth_var_dict)
-for fit_var_id in range( len(fit_var_dict) ) :
-	fit_var_value   = fit_var_dict[fit_var_id]['fit_var_value']
-	truth_var_value = truth_var_dict[fit_var_id]['truth_var_value']
-	assert fit_var_value == truth_var_value
+# check avg_case_subset table
+avg_case_subset_dict = dismod_at.get_table_dict(connection, 'avg_case_subset');
+n_subset         = len( avg_case_subset_dict )
+for subset_id in range( n_subset ) :
+	# all the avg_case is included for this example
+	assert subset_id == avg_case_subset_dict[subset_id]['avg_case_id']
 # -----------------------------------------------------------------------
-print('truth_command: OK')
+# check var table
+var_dict  = dismod_at.get_table_dict(connection, 'var')
+#
+# mulstd variables
+for smooth_id in range( n_smooth ) :
+	for var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
+		count = 0
+		for row in var_dict :
+			match = row['var_type'] == var_type
+			match = match and row['smooth_id'] == smooth_id
+			if match :
+				count += 1
+		assert count == 1
+#
+# rate variables
+parent_node_id = 0
+child_node_id  = 1
+n_rate         = 5;
+for rate_id in range(n_rate) :
+	for node_id in [ parent_node_id, child_node_id ] :
+		count = 0
+		for row in var_dict :
+			match = row['var_type'] == 'rate'
+			match = match and row['rate_id'] == rate_id
+			match = match and row['node_id'] == node_id
+			if match :
+				count += 1
+		# number of point in smoothing for all rates
+		assert count == 2
+# -----------------------------------------------------------------------
+print('var_command: OK')
 # END PYTHON

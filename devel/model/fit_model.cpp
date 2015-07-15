@@ -26,13 +26,20 @@ $spell
 	const
 	CppAD
 	struct
+	var
 $$
 
 $section Fit the Fixed and Random Effects to the Model and Data$$
 
 $head Syntax$$
 $codei%fit_model %fit_object%(
-%db%, %pack_object%, %prior_table%, %s_info_vec%, %data_object%, %prior_object%
+	%db%,
+	%pack_object%,
+	%start_var%,
+	%prior_table%,
+	%s_info_vec%,
+	%data_object%,
+	%prior_object%
 )
 %$$
 $codei%fit_object.run_fit(%tolerance_str%, %max_num_iter_str%)
@@ -51,7 +58,8 @@ This argument has prototype
 $codei%
 	sqlite3* %db%
 %$$
-and is the database connection for $cref/logging/log_message/$$ errors.
+and is the database connection for
+$cref/logging/log_message/$$ errors and warnings.
 
 $head pack_object$$
 This argument has prototype
@@ -60,6 +68,14 @@ $codei%
 %$$
 and is the $cref pack_info$$ information corresponding to the
 $cref/model_variables/model_variable/$$.
+
+$head start_var$$
+This vector has prototype
+$codei%
+	const CppAD::vector<double>& %start_var%
+%$$
+and is the starting $cref/model variables/model_variable/$$ in the order
+specified by $cref pack_info$$.
 
 $head prior_table$$
 This argument has prototype
@@ -137,6 +153,7 @@ namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 fit_model::fit_model(
 	sqlite3*                           db           ,
 	const pack_info&                   pack_object  ,
+	const CppAD::vector<double>&       start_var    ,
 	const CppAD::vector<prior_struct>& prior_table  ,
 	const CppAD::vector<smooth_info>&  s_info_vec   ,
 	const data_model&                  data_object  ,
@@ -163,17 +180,12 @@ prior_object_  ( prior_object )
 	// ---------------------------------------------------------------------
 	// initialize the aprox_mixed object
 	//
-	CppAD::vector<double> pack_vec( n_var );
 	// fixed_vec
 	CppAD::vector<double> fixed_vec(n_fixed_);
-	for(size_t i = 0; i < n_var; i++)
-		pack_vec[i] = prior_table_[ value_prior_[i] ].mean;
-	get_fixed_effect(pack_object_, pack_vec, fixed_vec);
+	get_fixed_effect(pack_object_, start_var, fixed_vec);
 	// random_vec
 	CppAD::vector<double> random_vec(n_random_);
-	for(size_t i = 0; i < n_var; i++)
-		pack_vec[i] = prior_table_[ value_prior_[i] ].mean;
-	get_random_effect(pack_object_, pack_vec, random_vec);
+	get_random_effect(pack_object_, start_var, random_vec);
 	//
 	initialize(fixed_vec, random_vec);
 }

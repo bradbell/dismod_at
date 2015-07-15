@@ -10,7 +10,7 @@
 # ---------------------------------------------------------------------------
 # Build get_started Examples / Tests
 
-FOREACH(cmd init fit truth simulate sample predict)
+FOREACH(cmd init start fit truth simulate sample predict)
 	ADD_CUSTOM_TARGET(
 		check_${cmd}_command
 		${python_three_command} example/get_started/${cmd}_command.py
@@ -22,6 +22,7 @@ ADD_CUSTOM_TARGET(
 	check_get_started
 	DEPENDS
 	check_init_command
+	check_start_command
 	check_fit_command
 	check_truth_command
 	check_simulate_command

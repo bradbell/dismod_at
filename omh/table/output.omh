@@ -29,6 +29,7 @@ $children%omh/table/log_table.omh
 	%omh/table/data_subset_table.omh
 	%omh/table/avg_case_subset_table.omh
 	%omh/table/var_table.omh
+	%omh/table/start_var_table.omh
 	%omh/table/fit_var_table.omh
 	%omh/table/fit_residual_table.omh
 	%omh/table/truth_var_table.omh
@@ -49,9 +50,13 @@ $rnext $cnext
 $rnext $cnext
 	$cref/avg_case_subset/avg_case_subset_table/$$  $pre  $$
 $rnext
+	$cref/start/start_command/$$ $cnext
+	$cref/start_var/start_var_table/$$      $cnext
+$rnext
 	$cref/fit/fit_command/$$ $cnext
 	$cref/fit_var/fit_var_table/$$, $cref/fit_residual/fit_residual_table/$$
-	$cnext
+	$pre  $$ $cnext
+	$cref/start_var/start_var_table/$$
 $rnext
 	$cref/truth/truth_command/$$ $cnext
 	$cref/truth_var/truth_var_table/$$      $cnext

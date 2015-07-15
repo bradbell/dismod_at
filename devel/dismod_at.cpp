@@ -33,6 +33,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/to_string.hpp>
 # include <dismod_at/log_message.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/pack_prior.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 	using CppAD::vector;
@@ -143,7 +144,7 @@ void init_command(
 	col_name_vec[0] = "data_id";
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	int data_id    = data_subset_obj[subset_id].original_id;
-		row_val_vec[0] = dismod_at::to_string( data_id );
+		row_val_vec[0] = to_string( data_id );
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
 	// -----------------------------------------------------------------------
@@ -159,7 +160,7 @@ void init_command(
 	col_name_vec[0] = "avg_case_id";
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	int avg_case_id    = avg_case_subset_obj[subset_id].original_id;
-		row_val_vec[0] = dismod_at::to_string( avg_case_id );
+		row_val_vec[0] = to_string( avg_case_id );
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
 	// -----------------------------------------------------------------------
@@ -325,6 +326,71 @@ void init_command(
 	}
 	return;
 }
+/*
+-----------------------------------------------------------------------------
+$begin start_command$$
+$spell
+	var
+	dismod
+$$
+
+$section The Start Command$$
+
+$head Syntax$$
+$codei%dismod_at start %file_name%$$
+
+$head file_name$$
+Is an
+$href%http://www.sqlite.org/sqlite/%$$ data base containing the
+$code dismod_at$$ $cref input$$ tables which are not modified.
+
+$head start_var_table$$
+The start table is required for the $cref fit_command$$.
+This command creates a $cref start_var_table$$ using the means
+for the prior for each $cref model_variable$$.
+
+$children%example/get_started/start_command.py%$$
+$head Example$$
+The file $cref start_command.py$$ contains an example and test
+of using this command.
+
+$end
+*/
+
+// ----------------------------------------------------------------------------
+void start_command(
+	sqlite3*          db        ,
+	const vector<dismod_at::prior_struct>& prior_table ,
+	const dismod_at::pack_info&            pack_object ,
+	const vector<dismod_at::smooth_info>&  s_info_vec  )
+{	using std::string;
+	using dismod_at::to_string;
+	//
+	// Value prior_id in pack_info order
+	vector<size_t> value_prior_id = pack_value_prior(pack_object, s_info_vec);
+	//
+	// number of variables
+	size_t n_var = pack_object.size();
+	//
+	// create start_var table
+	string sql_cmd = "drop table if exists start_var";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	sql_cmd = "create table start_var("
+		" start_var_id       integer primary key,"
+		" start_var_value    real"
+	")";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	string table_name = "start_var";
+	vector<string> col_name_vec(1), row_val_vec(1);
+	col_name_vec[0]   = "start_var_value";
+	for(size_t var_id = 0; var_id < n_var; var_id++)
+	{	double start_var_value    = prior_table[ value_prior_id[var_id] ].mean;
+		row_val_vec[0]     = to_string(start_var_value);
+		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+	}
+	return;
+}
 
 /*
 -----------------------------------------------------------------------------
@@ -377,11 +443,17 @@ void fit_command(
 )
 {	using std::string;
 	using dismod_at::to_string;
-
+	// -----------------------------------------------------------------------
+	// read start_var table into start_var
+	vector<double> start_var;
+	string table_name = "start_var";
+	string column_name = "start_var_value";
+	dismod_at::get_table_column(db, table_name, column_name, start_var);
 	// ------------------ run fit_model ------------------------------------
 	dismod_at::fit_model fit_object(
 		db                   ,
 		pack_object          ,
+		start_var            ,
 		db_input.prior_table ,
 		s_info_vec           ,
 		data_object          ,
@@ -397,8 +469,8 @@ void fit_command(
 		" fit_var_value    real"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	string table_name = "fit_var";
 	//
+	table_name = "fit_var";
 	vector<string> col_name_vec(1), row_val_vec(1);
 	col_name_vec[0]   = "fit_var_value";
 	for(size_t fit_var_id = 0; fit_var_id < solution.size(); fit_var_id++)
@@ -486,7 +558,8 @@ In addition to the standard $cref input$$ tables,
 there must be a $cref fit_var_table$$.
 
 $head truth_var_table$$
-A new $cref truth_var_table$$ is created with the information in the fit_var table;
+A new $cref truth_var_table$$ is created with the information
+in the fit_var table;
 to be specific,
 $codei%
 	%truth_var_id% = %fit_var_id% = %var_id%
@@ -504,6 +577,7 @@ $end
 // ----------------------------------------------------------------------------
 void truth_command(sqlite3* db)
 {	using std::string;
+	using dismod_at::to_string;
 	//
 	// get fit_var table information
 	vector<double> fit_var_value;
@@ -511,8 +585,8 @@ void truth_command(sqlite3* db)
 	string column_name = "fit_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, fit_var_value);
 	//
-	// create fit_var table
-	string sql_cmd = "drop table if exists truth";
+	// create truth_var table
+	string sql_cmd = "drop table if exists truth_var";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	sql_cmd = "create table truth_var("
 		" truth_var_id   integer primary key,"
@@ -524,7 +598,7 @@ void truth_command(sqlite3* db)
 	vector<string> col_name_vec(1), row_val_vec(1);
 	col_name_vec[0]   = "truth_var_value";
 	for(size_t fit_var_id = 0; fit_var_id < fit_var_value.size(); fit_var_id++)
-	{	string truth_var_value = dismod_at::to_string( fit_var_value[fit_var_id] );
+	{	string truth_var_value = to_string( fit_var_value[fit_var_id] );
 		row_val_vec[0]     = truth_var_value;
 		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
 	}
@@ -573,8 +647,8 @@ of using this command.
 
 $end
 */
-void simulate_command
-(	sqlite3*                                            db              ,
+void simulate_command(
+	sqlite3*                                            db              ,
 	const vector<dismod_at::integrand_struct>&          integrand_table ,
 	const vector<dismod_at::data_subset_struct>&        data_subset_obj ,
 	const dismod_at::data_model&                        data_object     ,
@@ -585,11 +659,11 @@ void simulate_command
 	using std::string;
 	using dismod_at::to_string;
 	// -----------------------------------------------------------------------
-	// read truth_var table into pack_vec
-	vector<double> pack_vec;
+	// read truth_var table into truth_var
+	vector<double> truth_var;
 	string table_name = "truth_var";
 	string column_name = "truth_var_value";
-	dismod_at::get_table_column(db, table_name, column_name, pack_vec);
+	dismod_at::get_table_column(db, table_name, column_name, truth_var);
 	// ----------------- simulate_table ----------------------------------
 	table_name = "simulate";
 	//
@@ -623,7 +697,7 @@ void simulate_command
 			case dismod_at::mtother_enum:
 			case dismod_at::mtwith_enum:
 			case dismod_at::relrisk_enum:
-			avg = data_object.avg_no_ode(subset_id, pack_vec);
+			avg = data_object.avg_no_ode(subset_id, truth_var);
 			break;
 
 			case dismod_at::prevalence_enum:
@@ -631,7 +705,7 @@ void simulate_command
 			case dismod_at::mtspecific_enum:
 			case dismod_at::mtall_enum:
 			case dismod_at::mtstandard_enum:
-			avg = data_object.avg_yes_ode(subset_id, pack_vec);
+			avg = data_object.avg_yes_ode(subset_id, truth_var);
 			break;
 
 			default:
@@ -705,11 +779,17 @@ void sample_command(
 {
 	using std::string;
 	using dismod_at::to_string;
-
+	// -----------------------------------------------------------------------
+	// read truth_var table into truth_var
+	vector<double> truth_var;
+	string table_name = "truth_var";
+	string column_name = "truth_var_value";
+	dismod_at::get_table_column(db, table_name, column_name, truth_var);
+	// -----------------------------------------------------------------------
 	// get simulation data
 	vector<dismod_at::simulate_struct> simulate_table =
 			dismod_at::get_simulate_table(db);
-
+	// -----------------------------------------------------------------------
 	// create a new sample table
 	string sql_cmd = "drop table if exists sample";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
@@ -720,11 +800,12 @@ void sample_command(
 		" var_value        real"
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	string table_name = "sample";
+	table_name = "sample";
 	vector<string> col_name_vec(3), row_val_vec(3);
 	col_name_vec[0]   = "sample_index";
 	col_name_vec[1]   = "var_id";
 	col_name_vec[2]   = "var_value";
+	// -----------------------------------------------------------------------
 
 	// n_subset
 	size_t n_subset = data_subset_obj.size();
@@ -756,6 +837,7 @@ void sample_command(
 		dismod_at::fit_model fit_object(
 			db                   ,
 			pack_object          ,
+			truth_var            ,
 			db_input.prior_table ,
 			s_info_vec           ,
 			data_object          ,
@@ -933,6 +1015,7 @@ int main(int n_arg, const char** argv)
 	const string file_name_arg  = argv[++i_arg];
 	bool ok = false;
 	ok     |= command_arg == "init";
+	ok     |= command_arg == "start";
 	ok     |= command_arg == "fit";
 	ok     |= command_arg == "truth";
 	ok     |= command_arg == "simulate";
@@ -941,7 +1024,7 @@ int main(int n_arg, const char** argv)
 	string message;
 	if( ! ok )
 	{	message =  "dismod_at: command not one the following:\n";
-		message += "\tinit, fit, truth, simulate, sample, predict";
+		message += "\tinit, start, fit, truth, simulate, sample, predict";
 		cerr << message << endl;
 		std::exit(1);
 	}
@@ -1108,6 +1191,14 @@ int main(int n_arg, const char** argv)
 			db_input,
 			parent_node_id,
 			child_data     // could also use child_avg_case
+		);
+	}
+	else if( command_arg == "start" )
+	{	start_command(
+			db                   ,
+			db_input.prior_table ,
+			pack_object          ,
+			s_info_vec
 		);
 	}
 	else if( command_arg == "fit" )

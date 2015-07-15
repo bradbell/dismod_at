@@ -1,0 +1,48 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin start_var_table$$
+$spell
+	var
+$$
+
+$section The start_var Table: Starting Values Used During a Fit$$
+The start_var table contains one value for each $cref model_variable$$.
+A new $code start_var$$ table is created,
+using the mean of the prior for the model variables,
+by the $cref start_command$$.
+It may also be created directly by the user
+(with the aid of the $cref var_table$$).
+A normal use case in this regard is to continue a fit by making
+the $code start_var$$ table a copy of the $cref fit_var_table$$
+from a previous fit.
+Another use case is to check for local minima
+by starting at different locations.
+
+$head start_var_id$$
+This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+The $icode start_var_id$$ column is also a foreign key for the
+$cref var_table$$; i.e.,
+$codei%
+	%var_id% = %start_var_id%
+%$$
+In addition, the size of both tables is the same.
+
+$head start_var_value$$
+The column has type $code real$$ and is
+the value of the corresponding $cref model_variable$$
+where the optimization procedure is started during the
+$cref fit_command$$.
+
+$head Example$$
+See the $cref init_command.py$$ example and test.
+
+$end

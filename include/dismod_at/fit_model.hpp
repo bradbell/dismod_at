@@ -79,6 +79,7 @@ namespace dismod_at {
 		fit_model(
 			sqlite3*                           db           ,
 			const pack_info&                   pack_object  ,
+			const CppAD::vector<double>&       start_var    ,
 			const CppAD::vector<prior_struct>& prior_table  ,
 			const CppAD::vector<smooth_info>&  s_info_vec   ,
 			const data_model&                  data_object  ,

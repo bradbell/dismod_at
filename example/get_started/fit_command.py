@@ -54,7 +54,7 @@ file_name              = 'example.db'
 (n_smooth, rate_true)  = get_started_db.get_started_db(file_name)
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
-for command in [ 'init', 'fit' ] :
+for command in [ 'init', 'start', 'fit' ] :
 	cmd  = [ program, command, file_name ]
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )

@@ -30,6 +30,7 @@ $end
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/pack_prior.hpp>
 
 bool fit_model_xam(void)
 {	bool   ok = true;
@@ -54,9 +55,6 @@ bool fit_model_xam(void)
 	// ----------------------- prior table ---------------------------------
 	size_t n_prior_table = 4;
 	vector<dismod_at::prior_struct> prior_table(n_prior_table);
-	//
-	// 2DO: in case where density is uniform, should be able to leave
-	// standard deviation undefined.
 	//
 	// prior_id_zero (identically zero prior)
 	prior_table[0].prior_name = "zero";
@@ -300,10 +298,21 @@ bool fit_model_xam(void)
 		child_object
 	);
 	data_object.replace_like(data_subset_obj);
+	//
+	// start_var
+	vector<size_t> pack_prior_id =
+		dismod_at::pack_value_prior(pack_object, s_info_vec
+	);
+	vector<double> start_var( pack_object.size() );
+	for(size_t var_id = 0; var_id < start_var.size(); var_id++)
+	{	size_t prior_id = pack_prior_id[var_id];
+		start_var[var_id] = prior_table[prior_id].mean;
+	}
 	// ----------------------- run the fit -------------------------------
 	dismod_at::fit_model fit_object(
 		db,
 		pack_object,
+		start_var,
 		prior_table,
 		s_info_vec,
 		data_object,
