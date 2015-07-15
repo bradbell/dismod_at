@@ -69,8 +69,10 @@ namespace dismod_at {
 		virtual a1d_vector prior_density(
 			const a1d_vector& fixed_vec
 		);
-		// display error message and terminate
+		// display error message and terminate program
 		virtual void fatal_error(const std::string& error_message);
+		// display warning message and continue
+		virtual void warning(const std::string& warning_message);
 	// =======================================================================
 	public:
 		// constructor

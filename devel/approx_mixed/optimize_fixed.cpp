@@ -266,13 +266,11 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 
 	// solve the problem
 	status = app->OptimizeTNLP(fixed_nlp);
-	ok    &= status == Ipopt::Solve_Succeeded;
-	if( ! ok )
-	{	fatal_error("optimize_fixed: ipopt failed to converge");
+	if( status != Ipopt::Solve_Succeeded )
+	{	warning("optimize_fixed: ipopt failed to converge");
 	}
-	ok    &= fixed_nlp->finalize_solution_ok_;
-	if( ! ok )
-	{	fatal_error("optimize_fixed: solution check failed");
+	else if( fixed_nlp->finalize_solution_ok_ )
+	{	warning("optimize_fixed: solution check failed");
 	}
 	//
 	return fixed_nlp->fixed_opt();

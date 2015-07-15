@@ -89,6 +89,12 @@ $codep */
 This routine displays error message and then exits the program
 (hence it does not return).
 
+$subhead warning$$
+$codep */
+	virtual void warning(const std::string& warning_message) = 0;
+/* $$
+This routine displays a warning message and then returns.
+
 $head constructor$$
 Construct an $code approx_mixed$$ derived class object; see
 $cref/derived_ctor/approx_mixed_derived_ctor/$$.

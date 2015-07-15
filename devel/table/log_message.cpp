@@ -100,7 +100,11 @@ void log_message(
 	assert( table_name != "" || row_id == size_t( DISMOD_AT_NULL_INT ) );
 
 	// check message type
-	assert( message_type == "command" || message_type == "error" );
+	assert(
+		message_type == "command" ||
+		message_type == "error"   ||
+		message_type == "warning"
+	);
 
 	string sql_cmd = "create table if not exists log("
 		" log_id              integer primary key,"

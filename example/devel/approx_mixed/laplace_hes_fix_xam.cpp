@@ -110,6 +110,10 @@ namespace {
 		{	std::cerr << error_message << std::endl;
 			std::exit(1);
 		}
+		//
+		virtual void warning(const std::string& error_message)
+		{	std::cerr << error_message << std::endl;
+		}
 	};
 }
 

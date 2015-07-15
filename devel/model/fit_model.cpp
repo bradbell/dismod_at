@@ -12,6 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/pack_prior.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/log_message.hpp>
 /*
 $begin fit_model$$
 $spell
@@ -369,5 +370,9 @@ fit_model::a1d_vector fit_model::prior_density(
 // fatal_error
 void fit_model::fatal_error(const std::string& error_message)
 {	error_exit(db_, error_message);
+}
+// warning
+void fit_model::warning(const std::string& warning_message)
+{	log_message(db_, "warning", warning_message);
 }
 } // DISMOD_AT_END_NAMESPACE
