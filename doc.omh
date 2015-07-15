@@ -33,11 +33,6 @@ $section Disease Rates as Functions of Age and Time: dismod_at-20150714$$
 
 $head Wish List$$
 $list number$$
-If the $cref fit_var_table$$ exists when the $cref fit_command$$ is executed,
-use those values as a starting point for the optimization.
-Note that the initial
-$cref fit_var_table$$ will be overwritten by the fit.
-$lnext
 Include lower and upper limit for the smoothing difference priors
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
