@@ -179,6 +179,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/record_laplace.cpp
 	%devel/approx_mixed/record_hes_fix.cpp
 	%devel/approx_mixed/record_prior.cpp
+	%devel/approx_mixed/record_constraint.cpp
 	%devel/approx_mixed/joint_grad_ran.cpp
 	%devel/approx_mixed/joint_hes_ran.cpp
 	%devel/approx_mixed/laplace_eval.cpp
@@ -263,6 +264,19 @@ $codep */
 	CppAD::vector<size_t>   prior_hes_col_; // prior hessian column indices
 	CppAD::sparse_hessian_work prior_hes_work_;
 /* $$
+$head constraint_$$
+Recording of the $cref/constraint/approx_mixed_constraint/$$ function.
+$codep */
+	// computes constraint function
+	CppAD::ADFun<double>        constraint_;
+	//
+	CppAD::vector<size_t>       constraint_jac_row_; // jacobian row indices
+	CppAD::vector<size_t>       constraint_jac_col_; // jacobian column indices
+	CppAD::sparse_jacobian_work constraint_jac_work_;
+	CppAD::vector<size_t>       constraint_hes_row_; // hessian row indices
+	CppAD::vector<size_t>       constraint_hes_col_; // hessian column indices
+	CppAD::sparse_hessian_work constraint_hes_work_;
+/* $$
 
 $head pack$$
 See $cref approx_mixed_pack$$.
@@ -343,6 +357,11 @@ $head record_prior$$
 See $cref approx_mixed_record_prior$$.
 $codep */
 	void record_prior(const d_vector& fixed_vec);
+/* $$
+$head record_constraint$$
+See $cref approx_mixed_record_constraint$$.
+$codep */
+	void record_constraint(const d_vector& fixed_vec);
 /* $$
 $head joint_grad_ran$$
 See $cref approx_mixed_joint_grad_ran$$
