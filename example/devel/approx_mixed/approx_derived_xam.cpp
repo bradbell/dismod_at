@@ -101,13 +101,13 @@ namespace {
 			const vector<a5_double>& random_vec )
 		{	return implement_joint_like(fixed_vec, random_vec); }
 		//
-		virtual vector<double> prior_like(
-			const vector<double>& fixed_vec  )
-		{	return implement_prior_like(fixed_vec); }
-		//
 		virtual vector<a1_double> prior_like(
 			const vector<a1_double>& fixed_vec  )
 		{	return implement_prior_like(fixed_vec); }
+		//
+		virtual vector<a1_double> constraint(
+			const vector<a1_double>& fixed_vec  )
+		{	return vector<a1_double>(0); } // empty vector
 		//
 		virtual void fatal_error(const std::string& error_message)
 		{	std::cerr << "Error: " << error_message << std::endl;

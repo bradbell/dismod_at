@@ -82,6 +82,14 @@ $codep */
 /* $$
 See $cref/prior_like/approx_mixed_prior_like/$$.
 
+$subhead constraint$$
+$codep */
+	virtual CppAD::vector<a1_double> constraint(
+		const CppAD::vector<a1_double>& fixed_vec
+	) = 0 ;
+/* $$
+See $cref/constraint/approx_mixed_constraint/$$.
+
 $subhead fatal_error$$
 $codep */
 	virtual void fatal_error(const std::string& error_message) = 0;
@@ -137,6 +145,7 @@ $childtable%
 	devel/approx_mixed/initialize.cpp%
 	devel/approx_mixed/joint_like.omh%
 	devel/approx_mixed/prior_like.omh%
+	devel/approx_mixed/constraint.omh%
 	devel/approx_mixed/optimize_random.cpp%
 	devel/approx_mixed/optimize_fixed.cpp
 %$$

@@ -378,6 +378,13 @@ fit_model::a1d_vector fit_model::prior_like(
 	//
 	return prior_den_tmp_;
 }
+// --------------------------------------------------------------------------
+// constraint
+// 2DO: upper and lower limits on dage and dtime as constraints.
+fit_model::a1d_vector fit_model::constraint(
+	const a1d_vector& fixed_vec   )
+{	return a1d_vector(0); // empty vector
+}
 // ---------------------------------------------------------------------------
 // fatal_error
 void fit_model::fatal_error(const std::string& error_message)

@@ -69,6 +69,10 @@ namespace dismod_at {
 		virtual a1d_vector prior_like(
 			const a1d_vector& fixed_vec
 		);
+		// pass constraint functions to base class
+		virtual a1d_vector constraint(
+			const a1d_vector& fixed_vec
+		);
 		// display error message and terminate program
 		virtual void fatal_error(const std::string& error_message);
 		// display warning message and continue

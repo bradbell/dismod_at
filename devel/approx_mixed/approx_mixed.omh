@@ -38,11 +38,15 @@ $latex \[
 	\B{p} ( \theta ) \int_{-\infty}^{+\infty}
 		\B{p} ( y |  \theta, u ) \B{p} ( u | \theta ) \; \B{d} u
 \] $$
+
+$subhead Fixed Effects Estimation$$
 We approximate this solution by replacing the integral above with its
 Laplace approximation (see $cref approx_mixed_theory$$) and
 optimizing the approximate objective.
 Let $latex \hat{\theta}$$ be to optimal solution for the approximate
 problem.
+
+$subhead Random Effects Estimation$$
 We then estimate the random effects by maximizing the likelihood,
 at the fixed effects estimate, with respect to the random effects
 $latex u$$; i.e.,
@@ -52,6 +56,17 @@ $latex \[
 \B{p}( y | u, \hat{\theta} )  \B{p} ( u | \hat{\theta} )
 \] $$
 
+$subhead Constraints$$
+The random effects vector $latex u$$ does have any constraints
+(so that the Laplace approximation makes sense).
+The fixed effects have constraints of the form
+$latex \[
+	c_L \leq c(\theta) \leq c_U
+\] $$
+Where $latex c( \theta ) $$ is a smooth function of the fixed effects,
+and $latex c_L$$, $latex c_U$$ are vectors in the range of $latex c(x)$$.
+In the case where there are no constraints on the fixed effects,
+the range space is the empty vector.
 
 $head Negative Log-Density Vector$$
 If $icode vec$$ is a density vector corresponding to $latex \B{p}(x)$$,

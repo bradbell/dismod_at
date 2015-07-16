@@ -55,6 +55,11 @@ It is the value of the
 $cref/constraint function/approx_mixed/Problem/Constraints/$$
 $latex c( \theta )$$.
 
+$head Under Construction$$
+This feature is not yet fully implemented.
+For the time being, there should be no constraints and the
+vector $icode c$$ should be empty; i.e., have size zero.
+
 $head Example$$
 This file $cref approx_derived_xam.cpp$$ contains an example
 of defining this virtual function.
