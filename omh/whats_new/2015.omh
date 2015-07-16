@@ -33,6 +33,13 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-16$$
+In the $cref approx_mixed$$ sub-package,
+changed $code joint_density$$ to
+$cref/joint_like/approx_mixed_public/User Defined/joint_like/$$
+and changed $code prior_density$$ to
+$cref/prior_like/approx_mixed_public/User Defined/prior_like/$$.
+
 $head 07-15$$
 $list number$$
 Change $cref create_database$$ arguments to end in $icode _dict$$ when
