@@ -96,7 +96,7 @@ void approx_mixed::prior_jac(
 	d_vector&              val_out     )
 {
 	// make sure initilialize has been called
-	if( prior_density_.size_var() == 0 )
+	if( prior_like_.size_var() == 0 )
 	{	std::string error_message =
 		"approx_mixed::initialize was not called before prior_jac";
 		fatal_error(error_message);
@@ -123,7 +123,7 @@ void approx_mixed::prior_jac(
 	assert( row_out.size() != 0 );
 
 	CppAD::vector< std::set<size_t> > not_used;
-	prior_density_.SparseJacobianForward(
+	prior_like_.SparseJacobianForward(
 		fixed_vec       ,
 		not_used        ,
 		row_out         ,

@@ -108,7 +108,7 @@ This object has prototype
 $codei%
 	const prior_model %prior_object%
 %$$
-It contains the model for the prior density; see $cref prior_model$$.
+It contains the model for the prior negative log-likelihood; see $cref prior_model$$.
 
 $head run_fit$$
 Run the optimization process to determine the optimal fixed and random effects.
@@ -322,8 +322,8 @@ fit_model::a5d_vector fit_model::joint_like(
 	return joint_den_tmp_;
 }
 // ---------------------------------------------------------------------------
-// prior_density
-fit_model::a1d_vector fit_model::prior_density(
+// prior_like
+fit_model::a1d_vector fit_model::prior_like(
 	const a1d_vector& fixed_vec   )
 {	// check if this temporay needs to be sized
 	if( random_vec_tmp_.size() == 0 )

@@ -78,9 +78,9 @@ namespace {
 			}
 			return vec;
 		}
-		// implementation of prior_density
+		// implementation of prior_like
 		template <class Float>
-		vector<Float> implement_prior_density(
+		vector<Float> implement_prior_like(
 			const vector<Float>& fixed_vec  )
 		{	vector<Float> vec(1);
 
@@ -106,9 +106,9 @@ namespace {
 			const vector<a5_double>& random_vec )
 		{	return implement_joint_like(fixed_vec, random_vec); }
 		//
-		virtual vector<a1_double> prior_density(
+		virtual vector<a1_double> prior_like(
 			const vector<a1_double>& fixed_vec  )
-		{	return implement_prior_density(fixed_vec); }
+		{	return implement_prior_like(fixed_vec); }
 		//
 		virtual void fatal_error(const std::string& error_message)
 		{	std::cerr << "Error: " << error_message << std::endl;

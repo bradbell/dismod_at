@@ -245,7 +245,7 @@ bool prior_fixed_xam(void)
 	dismod_at::prior_model prior_object(
 		pack_object, age_table, time_table, prior_table, s_info_vec
 	);
-	// -------------- compute prior density --------------------------------
+	// -------------- compute prior negative log-likelihood --------------------------------
 	CppAD::vector< dismod_at::residual_struct<double> > residual_vec;
 	residual_vec = prior_object.fixed(pack_vec);
 	double logden    = 0.0;

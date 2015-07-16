@@ -71,9 +71,9 @@ namespace {
 			}
 			return vec;
 		}
-		// implementation of prior_density
+		// implementation of prior_like
 		template <class Float>
-		vector<Float> implement_prior_density(
+		vector<Float> implement_prior_like(
 			const vector<Float>& theta  )
 		{	vector<Float> vec(1);
 
@@ -101,13 +101,13 @@ namespace {
 			const vector<a5_double>& random_vec )
 		{	return implement_joint_like(fixed_vec, random_vec); }
 		//
-		virtual vector<double> prior_density(
+		virtual vector<double> prior_like(
 			const vector<double>& fixed_vec  )
-		{	return implement_prior_density(fixed_vec); }
+		{	return implement_prior_like(fixed_vec); }
 		//
-		virtual vector<a1_double> prior_density(
+		virtual vector<a1_double> prior_like(
 			const vector<a1_double>& fixed_vec  )
-		{	return implement_prior_density(fixed_vec); }
+		{	return implement_prior_like(fixed_vec); }
 		//
 		virtual void fatal_error(const std::string& error_message)
 		{	std::cerr << "Error: " << error_message << std::endl;
@@ -167,11 +167,11 @@ bool approx_derived_xam(void)
 	}
 	ok &= abs( a5_vec[0] / a5_double(sum) - a5_double(1.0) ) < eps;
 
-	// Evaluate the prior density
+	// Evaluate the prior negative log-likelihood
 	vector<a1_double> a1_vec(1 + n_fixed);
-	a1_vec = approx_object.prior_density(a1_fixed);
+	a1_vec = approx_object.prior_like(a1_fixed);
 
-	// check the prior density
+	// check the prior negative log-likelihood
 	sum = 0.0;
 	for(size_t j = 0; j < n_fixed; j++)
 	{	double sigma  = fixed_vec[j];

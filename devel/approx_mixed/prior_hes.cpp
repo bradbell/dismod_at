@@ -49,9 +49,9 @@ $codei%
 It specifies the value of the weights for the
 components of the
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
-corresponding to the $cref/prior_density/approx_mixed_prior_density/$$.
+corresponding to the $cref/prior_like/approx_mixed_prior_like/$$.
 It has the same size as the corresponding return value
-$cref/vec/approx_mixed_prior_density/vec/$$.
+$cref/vec/approx_mixed_prior_like/vec/$$.
 
 $head Hessian$$
 We use $latex w$$ to denote the vector corresponding to $icode weight$$
@@ -118,7 +118,7 @@ void approx_mixed::prior_hes(
 	d_vector&              val_out     )
 {
 	// make sure initialize has been called
-	if( prior_density_.size_var() == 0 )
+	if( prior_like_.size_var() == 0 )
 	{	std::string error_message =
 		"approx_mixed::initialize was not called before prior_hes";
 		fatal_error(error_message);
@@ -143,7 +143,7 @@ void approx_mixed::prior_hes(
 # endif
 
 	CppAD::vector< std::set<size_t> > not_used;
-	prior_density_.SparseHessian(
+	prior_like_.SparseHessian(
 		fixed_vec       ,
 		weight          ,
 		not_used        ,

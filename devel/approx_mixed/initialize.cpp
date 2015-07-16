@@ -82,7 +82,7 @@ The member variable
 $cref/hes_fix_/approx_mixed_private/hes_fix_/$$.
 $lnext
 The member variable
-$cref/prior_density_/approx_mixed_private/prior_density_/$$.
+$cref/prior_like_/approx_mixed_private/prior_like_/$$.
 $lend
 
 $end
@@ -136,10 +136,10 @@ void approx_mixed::initialize(
 	record_hes_fix(fixed_vec, random_vec);
 	assert( hes_fix_.size_var() > 0 );
 	//
-	// prior_density_
-	assert( prior_density_.size_var() == 0 );
+	// prior_like_
+	assert( prior_like_.size_var() == 0 );
 	record_prior(fixed_vec);
-	assert( prior_density_.size_var() > 0 );
+	assert( prior_like_.size_var() > 0 );
 }
 
 } // END_DISMOD_AT_NAMESPACE

@@ -20,7 +20,7 @@ $spell
 	Jacobian
 $$
 
-$section approx_mixed: Record Prior Density For Fixed Effects$$
+$section approx_mixed: Record Prior Negative Log-Likelihood For Fixed Effects$$
 
 $head Syntax$$
 $codei%record_joint(%fixed_vec%)%$$
@@ -39,18 +39,18 @@ It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
 vector $latex \theta$$ at which the recording is made.
 
-$head prior_density_$$
+$head prior_like_$$
 The input value of the member variable
 $codei%
-	CppAD::ADFun<double> prior_density_
+	CppAD::ADFun<double> prior_like_
 %$$
 does not matter.
 Upon return it contains the corresponding recording for the
-$cref/prior_density/approx_mixed_prior_density/$$.
+$cref/prior_like/approx_mixed_prior_like/$$.
 Note that the function result is the
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to the function
-$cref/g(theta)/approx_mixed_theory/Prior Density, g(theta)/$$.
+$cref/g(theta)/approx_mixed_theory/Prior Negative Log-Likelihood, g(theta)/$$.
 
 $head prior_jac_row_, prior_jac_col_$$
 The input value of the member variables
@@ -60,7 +60,7 @@ $codei%
 do not matter.
 Upon return they contain the row indices and column indices
 that correspond to non-zero elements in the Jacobian corresponding to
-$code prior_density_$$.
+$code prior_like_$$.
 
 $head prior_jac_work_$$
 The input value of the member variables
@@ -70,7 +70,7 @@ $codei%
 does not matter.
 Upon return it contains the work information for reuse by calls of the form
 $codei%
-	prior_density_.SparseJacobianForward(
+	prior_like_.SparseJacobianForward(
 		%x%, %not_used%, prior_jac_row_, prior_jac_col_, %jac%, prior_jac_work_
 	)
 %$$
@@ -83,7 +83,7 @@ void approx_mixed::record_prior(const d_vector& fixed_vec  )
 {	assert( fixed_vec.size() == n_fixed_ );
 
 	// ------------------------------------------------------------------------
-	// prior_density_
+	// prior_like_
 	// ------------------------------------------------------------------------
 	// convert to an a1d_vector
 	a1d_vector a1_theta(n_fixed_);
@@ -93,14 +93,14 @@ void approx_mixed::record_prior(const d_vector& fixed_vec  )
 	// start recording a1_double operations
 	Independent(a1_theta);
 
-	// compute prior_density
-	a1d_vector a1_vec = prior_density(a1_theta);
+	// compute prior_like
+	a1d_vector a1_vec = prior_like(a1_theta);
 
 	// save the recording
-	prior_density_.Dependent(a1_theta, a1_vec);
+	prior_like_.Dependent(a1_theta, a1_vec);
 
 	// optimize the recording
-	prior_density_.optimize();
+	prior_like_.optimize();
 
 	// ------------------------------------------------------------------------
 	// prior_jac_row_, prior_jac_col_, prior_jac_work_
@@ -110,13 +110,13 @@ void approx_mixed::record_prior(const d_vector& fixed_vec  )
 	sparsity_pattern r(n_fixed_);
 	for(size_t j = 0; j < n_fixed_; j++)
 		r[j].insert(j);
-	sparsity_pattern pattern = prior_density_.ForSparseJac(n_fixed_, r);
+	sparsity_pattern pattern = prior_like_.ForSparseJac(n_fixed_, r);
 
 	// convert sparsity to row and column index form
 	prior_jac_row_.clear();
 	prior_jac_col_.clear();
 	std::set<size_t>::iterator itr;
-	for(size_t i = 0; i < prior_density_.Range(); i++)
+	for(size_t i = 0; i < prior_like_.Range(); i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	size_t j = *itr;
 			prior_jac_row_.push_back(i);
@@ -126,7 +126,7 @@ void approx_mixed::record_prior(const d_vector& fixed_vec  )
 
 	// compute the work vector for reuse during Jacobian sparsity calculations
 	d_vector jac( prior_jac_row_.size() );
-	prior_density_.SparseJacobianForward(
+	prior_like_.SparseJacobianForward(
 		fixed_vec       ,
 		pattern         ,
 		prior_jac_row_  ,
@@ -141,10 +141,10 @@ void approx_mixed::record_prior(const d_vector& fixed_vec  )
 	//
 	// sparsity pattern for the Hessian
 	sparsity_pattern s(1);
-	for(size_t i = 0; i < prior_density_.Range(); i++ )
+	for(size_t i = 0; i < prior_like_.Range(); i++ )
 		s[0].insert(i);
 	pattern.clear();
-	pattern = prior_density_.RevSparseHes(n_fixed_, s);
+	pattern = prior_like_.RevSparseHes(n_fixed_, s);
 
 	// determine row and column indices in lower triangle of Hessian
 	prior_hes_row_.clear();
@@ -162,8 +162,8 @@ void approx_mixed::record_prior(const d_vector& fixed_vec  )
 	size_t K = prior_hes_row_.size();
 
 	// compute the work vector for reuse during Hessian sparsity calculations
-	d_vector weight( prior_density_.Range() ), hes(K);
-	prior_density_.SparseHessian(
+	d_vector weight( prior_like_.Range() ), hes(K);
+	prior_like_.SparseHessian(
 		fixed_vec       ,
 		weight          ,
 		pattern         ,

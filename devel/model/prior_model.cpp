@@ -21,7 +21,7 @@ $spell
 	var
 $$
 
-$section Construct Prior Density Object$$
+$section Construct Prior Negative Log-Likelihood Object$$
 
 $head Syntax$$
 $codei%prior_model %prior_object%(
@@ -186,7 +186,7 @@ $spell
 	const
 $$
 
-$section Evaluate Prior Density for the Fixed Effects$$
+$section Evaluate Prior Negative Log-Likelihood for the Fixed Effects$$
 
 $head Syntax$$
 $icode%residual_vec% = %prior_object%.fixed(%pack_vec%)%$$
@@ -220,7 +220,7 @@ because there are priors on smoothing differences as well as values.
 The order of the residuals is unspecified (at this time).
 
 $head p(theta)$$
-The log of the prior density for the
+The log of the prior negative log-likelihood for the
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$,
 $latex \log \; \B{p}( \theta )$$,
 is the sum of all the log densities corresponding to the
@@ -239,7 +239,7 @@ template <class Float>
 CppAD::vector< residual_struct<Float> > prior_model::fixed(
 	const CppAD::vector<Float>&            pack_vec        ) const
 {
-	// initialize the log of the prior density as zero
+	// initialize the log of the prior negative log-likelihood as zero
 	CppAD::vector< residual_struct<Float> > residual_vec;
 	assert( residual_vec.size() == 0 );
 
@@ -261,7 +261,7 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 		size_t prior_id           = s_info_vec_[smooth_id].mulstd_value();
 		const prior_struct* prior = &prior_table_[prior_id];
 
-		// add prior density for this multipliers value
+		// add prior negative log-likelihood for this multipliers value
 		residual            = log_prior(*prior, mulstd);
 		residual_vec.push_back(residual);
 
@@ -362,7 +362,7 @@ $spell
 	const
 $$
 
-$section Evaluate Prior Density for the Random Effects$$
+$section Evaluate Prior Negative Log-Likelihood for the Random Effects$$
 
 $head Syntax$$
 $icode%residual_vec% = %prior_object%.random(%pack_vec%)%$$
@@ -396,7 +396,7 @@ because there are priors on smoothing differences as well as values.
 The order of the residuals is unspecified (at this time).
 
 $head p(u|theta)$$
-The log of the prior density for the
+The log of the prior negative log-likelihood for the
 and $cref/random effects/model_variable/Random Effects, u/$$
 given the fixed effects,
 $latex \log \; \B{p}( u | \theta )$$,
@@ -416,7 +416,7 @@ template <class Float>
 CppAD::vector< residual_struct<Float> > prior_model::random(
 	const CppAD::vector<Float>&            pack_vec        ) const
 {
-	// initialize the log of the prior density as zero
+	// initialize the log of the prior negative log-likelihood as zero
 	CppAD::vector< residual_struct<Float> > residual_vec;
 	assert( residual_vec.size() == 0 );
 

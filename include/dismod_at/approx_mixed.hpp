@@ -74,13 +74,13 @@ $codep */
 /* $$
 See $cref/joint_like/approx_mixed_joint_like/$$.
 
-$subhead prior_density$$
+$subhead prior_like$$
 $codep */
-	virtual CppAD::vector<a1_double> prior_density(
+	virtual CppAD::vector<a1_double> prior_like(
 		const CppAD::vector<a1_double>& fixed_vec
 	) = 0 ;
 /* $$
-See $cref/prior_density/approx_mixed_prior_density/$$.
+See $cref/prior_like/approx_mixed_prior_like/$$.
 
 $subhead fatal_error$$
 $codep */
@@ -136,7 +136,7 @@ $childtable%
 	devel/approx_mixed/derived_ctor.omh%
 	devel/approx_mixed/initialize.cpp%
 	devel/approx_mixed/joint_like.omh%
-	devel/approx_mixed/prior_density.omh%
+	devel/approx_mixed/prior_like.omh%
 	devel/approx_mixed/optimize_random.cpp%
 	devel/approx_mixed/optimize_fixed.cpp
 %$$
@@ -239,14 +239,14 @@ $codep */
 	CppAD::vector<size_t>   hes_fix_row_; // corresponding row indices
 	CppAD::vector<size_t>   hes_fix_col_; // corresponding column indices
 /* $$
-$head prior_density_$$
-Recording of the $cref/prior_density/approx_mixed_prior_density/$$ function
+$head prior_like_$$
+Recording of the $cref/prior_like/approx_mixed_prior_like/$$ function
 which evaluates a
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to
-$cref/g(theta)/approx_mixed_theory/Prior Density, g(theta)/$$.
+$cref/g(theta)/approx_mixed_theory/Prior Negative Log-Likelihood, g(theta)/$$.
 $codep */
-	CppAD::ADFun<double>    prior_density_; // computes prior density
+	CppAD::ADFun<double>    prior_like_; // computes prior negative log-likelihood
 	CppAD::vector<size_t>   prior_jac_row_; // prior jacobian row indices
 	CppAD::vector<size_t>   prior_jac_col_; // prior jacobian column indices
 	CppAD::sparse_jacobian_work prior_jac_work_;

@@ -54,7 +54,7 @@ namespace dismod_at {
 		CppAD::vector< residual_struct<a5_double> > prior_ran_tmp_;
 		a5d_vector                                  joint_den_tmp_;
 		//
-		// temporaries in prior_density
+		// temporaries in prior_like
 		a1d_vector                                  random_vec_tmp_;
 		a1d_vector                                  a1_pack_vec_tmp_;
 		CppAD::vector< residual_struct<a1_double> > prior_fix_tmp_;
@@ -65,8 +65,8 @@ namespace dismod_at {
 			const a5d_vector& fixed_vec   ,
 			const a5d_vector& random_vec
 		);
-		// pass prior density to base class
-		virtual a1d_vector prior_density(
+		// pass prior negative log-likelihood to base class
+		virtual a1d_vector prior_like(
 			const a1d_vector& fixed_vec
 		);
 		// display error message and terminate program

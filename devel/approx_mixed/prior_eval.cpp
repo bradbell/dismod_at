@@ -46,7 +46,7 @@ $codei%
 and is a
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to the prior for the fixed effects
-$cref/g(theta)/approx_mixed_theory/Prior Density, g(theta)/$$.
+$cref/g(theta)/approx_mixed_theory/Prior Negative Log-Likelihood, g(theta)/$$.
 To be specific;
 $pre
 	$$
@@ -69,14 +69,14 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 CppAD::vector<double> approx_mixed::prior_eval(const d_vector& fixed_vec)
-{	assert( prior_density_.Domain() == n_fixed_ );
+{	assert( prior_like_.Domain() == n_fixed_ );
 	// make sure initialize has been called
 	if( grad_ran_.size_var() == 0 )
 	{	std::string error_message =
 		"approx_mixed::initialize was not called before prior_eval";
 		fatal_error(error_message);
 	}
-	return prior_density_.Forward(0, fixed_vec);
+	return prior_like_.Forward(0, fixed_vec);
 }
 
 

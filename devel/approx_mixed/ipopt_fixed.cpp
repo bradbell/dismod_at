@@ -206,10 +206,10 @@ and should not be modified.
 
 $subhead prior_n_abs_$$
 number of absolute value terms in the
-$cref/prior_density/approx_mixed_prior_density/$$.
+$cref/prior_like/approx_mixed_prior_like/$$.
 
 $head prior_nnz_jac_$$
-number of non-zeros in the Jacobian of the prior density.
+number of non-zeros in the Jacobian of the prior negative log-likelihood.
 
 $head lag_hes_row_$$
 The row indices for the sparse representation of the Hessian
@@ -252,7 +252,7 @@ approx_object_ ( approx_object    )
 	// -----------------------------------------------------------------------
 	// set prior_n_abs_
 	// -----------------------------------------------------------------------
-	// prior density at the initial fixed effects vector
+	// prior negative log-likelihood at the initial fixed effects vector
 	d_vector prior_vec = approx_object_.prior_eval(fixed_in);
 	assert( prior_vec.size() > 0 );
 	prior_n_abs_ = prior_vec.size() - 1;
@@ -282,7 +282,7 @@ approx_object_ ( approx_object    )
 		fixed_in, random_in,
 		laplace_hes_row_, laplace_hes_col_, laplace_hes_val_
 	);
-	// row and column indices for contribution form prior density
+	// row and column indices for contribution form prior negative log-likelihood
 	d_vector weight( 1 + prior_n_abs_ );
 	for(size_t i = 0; i < weight.size(); i++)
 		weight[i] = 1.0;
@@ -538,7 +538,7 @@ bool ipopt_fixed::get_starting_point(
 	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
 	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
 
-	// prior density at the initial fixed effects vector
+	// prior negative log-likelihood at the initial fixed effects vector
 	prior_vec_tmp_ = approx_object_.prior_eval(fixed_in_);
 	assert( prior_vec_tmp_.size() == 1 + prior_n_abs_ );
 
@@ -1218,7 +1218,7 @@ void ipopt_fixed::finalize_solution(
 		ok &= 0.0 <= z_U[j];
 	}
 
-	// prior density at the final fixed effects vector
+	// prior negative log-likelihood at the final fixed effects vector
 	prior_vec_tmp_ = approx_object_.prior_eval(fixed_in_);
 	assert( prior_vec_tmp_.size() == 1 + prior_n_abs_ );
 

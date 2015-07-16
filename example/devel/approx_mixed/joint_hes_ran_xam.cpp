@@ -94,7 +94,7 @@ namespace {
 			const vector<a5_double>& random_vec )
 		{	return implement_joint_like(fixed_vec, random_vec); }
 		//
-		virtual vector<a1_double> prior_density(
+		virtual vector<a1_double> prior_like(
 			const vector<a1_double>& fixed_vec  )
 		{	a1d_vector vec(1);
 			vec[0] = 0.0;
