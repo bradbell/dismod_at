@@ -47,9 +47,9 @@ namespace {
 			y_(y)
 		{ }
 	private:
-		// implementation of joint_density
+		// implementation of joint_like
 		template <class Float>
-		vector<Float> implement_joint_density(
+		vector<Float> implement_joint_like(
 			const vector<Float>& theta  ,
 			const vector<Float>& u      )
 		{	vector<Float> vec(1);
@@ -83,10 +83,10 @@ namespace {
 	public:
 		// -------------------------------------------------------------------
 		// User defined virtual functions
-		virtual vector<a5_double> joint_density(
+		virtual vector<a5_double> joint_like(
 			const vector<a5_double>& fixed_vec  ,
 			const vector<a5_double>& random_vec )
-		{	return implement_joint_density(fixed_vec, random_vec); }
+		{	return implement_joint_like(fixed_vec, random_vec); }
 		//
 		// improper constant prior
 		virtual vector<a1_double> prior_density(

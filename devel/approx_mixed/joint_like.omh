@@ -9,17 +9,17 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 /*
-$begin approx_mixed_joint_density$$
+$begin approx_mixed_joint_like$$
 $spell
 	vec
 	CppAD
 	const
 $$
 
-$section Joint Density for the Data and Random Effects$$
+$section Joint Negative Log-Likelihood for the Data and Random Effects$$
 
 $head Syntax$$
-$icode%vec% = %approx_object%.joint_density(%fixed_vec%, %random_vec%)%$$
+$icode%vec% = %approx_object%.joint_like(%fixed_vec%, %random_vec%)%$$
 
 $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
@@ -34,7 +34,7 @@ $head Virtual Function$$
 The following virtual functions and must be implemented
 in the derived class:
 $codei%
-	virtual CppAD::vector<a5_double> joint_density(
+	virtual CppAD::vector<a5_double> joint_like(
 		const CppAD::vector<a5_double>& %fixed_vec%  ,
 		const CppAD::vector<a5_double>& %random_vec%
 	)
@@ -66,8 +66,8 @@ $cref/negative log-density vector
 	/approx_mixed
 	/Negative Log-Density Vector
 /$$
-corresponding to the joint density
-$cref/f(theta, u)/approx_mixed_theory/Joint Density, f(theta, u)/$$; i.e.,
+corresponding to the joint negative log-likelihood
+$cref/f(theta, u)/approx_mixed_theory/Joint Negative Log-Likelihood, f(theta, u)/$$; i.e.,
 $latex \[
 	f( \theta , u) = - \log [ \B{p}( y | \theta, u) \B{p} ( u | \theta ) ]
 \] $$

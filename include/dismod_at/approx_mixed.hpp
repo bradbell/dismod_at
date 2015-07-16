@@ -65,14 +65,14 @@ $head User Defined$$
 The following are $code approx_mixed$$ pure virtual functions and hence must
 be defined by the user's derived class:
 
-$subhead joint_density$$
+$subhead joint_like$$
 $codep */
-	virtual CppAD::vector<a5_double> joint_density(
+	virtual CppAD::vector<a5_double> joint_like(
 		const CppAD::vector<a5_double>& fixed_vec  ,
 		const CppAD::vector<a5_double>& random_vec
 	) = 0;
 /* $$
-See $cref/joint_density/approx_mixed_joint_density/$$.
+See $cref/joint_like/approx_mixed_joint_like/$$.
 
 $subhead prior_density$$
 $codep */
@@ -135,7 +135,7 @@ $codep */
 $childtable%
 	devel/approx_mixed/derived_ctor.omh%
 	devel/approx_mixed/initialize.cpp%
-	devel/approx_mixed/joint_density.omh%
+	devel/approx_mixed/joint_like.omh%
 	devel/approx_mixed/prior_density.omh%
 	devel/approx_mixed/optimize_random.cpp%
 	devel/approx_mixed/optimize_fixed.cpp
@@ -190,19 +190,19 @@ The number of random effects is given by
 $codep */
 	const size_t n_random_;
 /* $$
-$head joint_density_$$
-Recording of the $cref/joint_density/approx_mixed_joint_density/$$ function
+$head joint_like_$$
+Recording of the $cref/joint_like/approx_mixed_joint_like/$$ function
 which evaluates a
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to
-$cref/f(theta, u)/approx_mixed_theory/Joint Density, f(theta, u)/$$
+$cref/f(theta, u)/approx_mixed_theory/Joint Negative Log-Likelihood, f(theta, u)/$$
 for different levels of AD:
 $codep */
-	CppAD::ADFun<double>      a0_joint_density_;
-	CppAD::ADFun<a1_double>   a1_joint_density_;
-	CppAD::ADFun<a2_double>   a2_joint_density_;
-	CppAD::ADFun<a3_double>   a3_joint_density_;
-	CppAD::ADFun<a4_double>   a4_joint_density_;
+	CppAD::ADFun<double>      a0_joint_like_;
+	CppAD::ADFun<a1_double>   a1_joint_like_;
+	CppAD::ADFun<a2_double>   a2_joint_like_;
+	CppAD::ADFun<a3_double>   a3_joint_like_;
+	CppAD::ADFun<a4_double>   a4_joint_like_;
 /* $$
 $head grad_ran_$$
 The gradient of the joint likelihood w.r.t. the random effects

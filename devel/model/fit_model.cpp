@@ -257,8 +257,8 @@ CppAD::vector<double> fit_model::get_solution(void)
 // ===========================================================================
 // private functions
 // ===========================================================================
-// joint_density
-fit_model::a5d_vector fit_model::joint_density(
+// joint_like
+fit_model::a5d_vector fit_model::joint_like(
 	const a5d_vector& fixed_vec   ,
 	const a5d_vector& random_vec  )
 {	// check if temporay needs to be sized

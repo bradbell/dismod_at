@@ -18,7 +18,7 @@ $spell
 	Cpp
 $$
 
-$section approx_mixed: Record Joint Density For Different Levels of AD$$
+$section approx_mixed: Record Joint Negative Log-Likelihood For Different Levels of AD$$
 
 $head Syntax$$
 $codei%record_joint(%fixed_vec%, %random_vec%)%$$
@@ -46,18 +46,18 @@ It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
-$head joint_density_$$
+$head joint_like_$$
 For $icode%k% = 0, 1, 2, 3, 4%$$ the input value of the member variable
 $codei%
-	CppAD::ADFun<a%k%_double> a%k%_joint_density_
+	CppAD::ADFun<a%k%_double> a%k%_joint_like_
 %$$
 does not matter.
 Upon return it contains the corresponding recording for the
-$cref/joint_density/approx_mixed_joint_density/$$.
+$cref/joint_like/approx_mixed_joint_like/$$.
 Note that the function result is the
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to the function
-$cref/f(theta , u )/approx_mixed_theory/Joint Density, f(theta, u)/$$.
+$cref/f(theta , u )/approx_mixed_theory/Joint Negative Log-Likelihood, f(theta, u)/$$.
 
 $end
 */
@@ -81,7 +81,7 @@ namespace {
 		// independent variables for this recording
 		Independent(ad_arg);
 
-		// compute joint_density using AD<Float> operations
+		// compute joint_like using AD<Float> operations
 		vector< AD<Float> >  ad_vec = ad_float_record.Forward(0, ad_arg);
 
 		// save the recording
@@ -99,7 +99,7 @@ void approx_mixed::record_joint(
 	const d_vector& random_vec )
 {
 	// ------------------------------------------------------------------
-	// record a3_joint_density_
+	// record a3_joint_like_
 	// ------------------------------------------------------------------
 	// combine into one vector
 	a5d_vector a5_both( n_fixed_ + n_random_ );
@@ -112,32 +112,32 @@ void approx_mixed::record_joint(
 	a5d_vector a5_theta(n_fixed_), a5_u(n_random_);
 	unpack(a5_theta, a5_u, a5_both);
 
-	// compute joint_density using a5_double operations
-	a5d_vector a5_vec = joint_density(a5_theta, a5_u);
+	// compute joint_like using a5_double operations
+	a5d_vector a5_vec = joint_like(a5_theta, a5_u);
 
 	// save the recording
-	a4_joint_density_.Dependent(a5_both, a5_vec);
+	a4_joint_like_.Dependent(a5_both, a5_vec);
 
 	// optimize the recording
-	a4_joint_density_.optimize();
+	a4_joint_like_.optimize();
 	// ------------------------------------------------------------------
 	//
 	// both
 	d_vector both(n_fixed_ + n_random_);
 	pack(fixed_vec, random_vec, both);
 	//
-	// record a3_joint_density_
-	record_next_joint(both, a4_joint_density_, a3_joint_density_);
+	// record a3_joint_like_
+	record_next_joint(both, a4_joint_like_, a3_joint_like_);
 	//
-	// record a2_joint_density_
-	record_next_joint(both, a3_joint_density_, a2_joint_density_);
+	// record a2_joint_like_
+	record_next_joint(both, a3_joint_like_, a2_joint_like_);
 	//
-	// record a1_joint_density_
-	record_next_joint(both, a2_joint_density_, a1_joint_density_);
+	// record a1_joint_like_
+	record_next_joint(both, a2_joint_like_, a1_joint_like_);
 	//
-	// record a0_joint_density_
+	// record a0_joint_like_
 	a1d_vector a1_both( n_fixed_ + n_random_ );
-	record_next_joint(both, a1_joint_density_, a0_joint_density_);
+	record_next_joint(both, a1_joint_like_, a0_joint_like_);
 }
 
 

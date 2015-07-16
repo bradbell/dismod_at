@@ -26,7 +26,7 @@ $icode%approx_object%.optimize_random(%fixed_vec%, %random_in%)%$$
 
 $head Purpose$$
 This routine maximizes the
-$cref/joint density/approx_mixed_joint_density/$$ corresponding to the
+$cref/joint negative log-likelihood/approx_mixed_joint_like/$$ corresponding to the
 object $icode approx_object$$.
 
 $head approx_object$$
@@ -63,7 +63,7 @@ vector $latex u$$.
 
 $head Laplace Likelihood$$
 This optimization properly handles the case where
-the joint density contains Laplace likelihood terms.
+the joint negative log-likelihood contains Laplace likelihood terms.
 
 $children%
 	example/devel/approx_mixed/optimize_random_xam.cpp
@@ -121,7 +121,7 @@ public:
 		approx_object_.pack(fixed_vec_, random_vec, both_vec);
 
 		// compute log-density vector
-		ADvector vec = approx_object_.a1_joint_density_.Forward(0, both_vec);
+		ADvector vec = approx_object_.a1_joint_like_.Forward(0, both_vec);
 
 		// initialize smooth part of negative log-likelihood
 		size_t k = 0;
@@ -159,7 +159,7 @@ CppAD::vector<double> approx_mixed::optimize_random(
 	// determine initial density vector
 	d_vector both_vec(n_fixed_ + n_random_);
 	pack(fixed_vec, random_in, both_vec);
-	d_vector vec = a0_joint_density_.Forward(0, both_vec);
+	d_vector vec = a0_joint_like_.Forward(0, both_vec);
 
 	// number of absolute value terms in objective
 	size_t n_abs = vec.size() - 1;

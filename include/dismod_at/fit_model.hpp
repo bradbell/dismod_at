@@ -48,7 +48,7 @@ namespace dismod_at {
 		// solution found by run_fit and in pack_info form
 		CppAD::vector<double>              solution_;
 		//
-		// temporaries in joint_density
+		// temporaries in joint_like
 		a5d_vector                                  a5_pack_vec_tmp_;
 		CppAD::vector< residual_struct<a5_double> > data_like_tmp_;
 		CppAD::vector< residual_struct<a5_double> > prior_ran_tmp_;
@@ -60,8 +60,8 @@ namespace dismod_at {
 		CppAD::vector< residual_struct<a1_double> > prior_fix_tmp_;
 		a1d_vector                                  prior_den_tmp_;
 		// ---------------------------------------------------------------
-		// pass joint density to base class
-		virtual a5d_vector joint_density(
+		// pass joint negative log-likelihood to base class
+		virtual a5d_vector joint_like(
 			const a5d_vector& fixed_vec   ,
 			const a5d_vector& random_vec
 		);

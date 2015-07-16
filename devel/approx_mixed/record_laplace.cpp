@@ -181,7 +181,7 @@ void approx_mixed::record_laplace(
 	// f[beta, W(beta, theta, u)]
 	a3d_vector both(n_fixed_ + n_random_);
 	pack(beta, W, both);
-	a3d_vector vec = a3_joint_density_.Forward(0, both);
+	a3d_vector vec = a3_joint_like_.Forward(0, both);
 	a3_double sum = vec[0];
 	size_t n_abs = vec.size() - 1;
 	for(size_t i = 0; i < n_abs; i++)

@@ -142,7 +142,7 @@ for $icode%j% = 0 , %...%, %n_fixed_%-1%$$.
 $head Laplace Approximation$$
 The $cref/theory/approx_mixed_theory/$$ for the
 Laplace approximation optimization only includes the case where
-the $cref/joint density/approx_mixed_joint_density/$$ is smooth.
+the $cref/joint negative log-likelihood/approx_mixed_joint_like/$$ is smooth.
 
 $children%example/devel/approx_mixed/optimize_fixed_xam.cpp
 	%include/dismod_at/ipopt_fixed.hpp
@@ -208,7 +208,7 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	while( options[begin_1] == ' ')
 		begin_1++;
 	while( begin_1 < options.size() )
-	{ 	// split this line into tokens
+	{	// split this line into tokens
 		end_1   = options.find_first_of(" \n", begin_1);
 		begin_2 = end_1;
 		while( options[begin_2] == ' ')

@@ -18,7 +18,7 @@ $spell
 	Cpp
 $$
 
-$section approx_mixed: Record Gradient of Joint Density w.r.t Random Effects$$
+$section approx_mixed: Record Gradient of Joint Negative Log-Likelihood w.r.t Random Effects$$
 
 $head Syntax$$
 $codei%record_grad_ran(%fixed_vec%, %random_vec%)%$$
@@ -80,7 +80,7 @@ void approx_mixed::record_grad_ran(
 	CppAD::Independent(a5_u);
 	//
 	a5d_vector a5_both(n_fixed_ + n_random_);
-	a5d_vector a5_vec = joint_density(a5_theta, a5_u);
+	a5d_vector a5_vec = joint_like(a5_theta, a5_u);
 	a5d_vector a5_sum(1);
 	a5_sum[0]    = a5_vec[0];
 	size_t n_abs = a5_vec.size() - 1;

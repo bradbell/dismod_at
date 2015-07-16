@@ -18,14 +18,14 @@ $spell
 	xam
 $$
 
-$section Gradient of Joint Density With Respect to Random Effects$$
+$section Gradient of Joint Negative Log-Likelihood With Respect to Random Effects$$
 
 $head Syntax$$
 $icode%grad% = %approx_object%.joint_grad_ran( %fixed_vec%, %random_vec%)%$$
 
 $head Purpose$$
-This routine computes the gradient of the negative log of the joint density
-$cref/f(theta, u)/approx_mixed_theory/Joint Density, f(theta, u)/$$
+This routine computes the gradient of the negative log of the joint negative log-likelihood
+$cref/f(theta, u)/approx_mixed_theory/Joint Negative Log-Likelihood, f(theta, u)/$$
 with respect to the random effects vector $latex u$$; i.e.
 $latex \[
 	f_u^{(1)} ( \theta, u )

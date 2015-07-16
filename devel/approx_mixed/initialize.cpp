@@ -28,7 +28,7 @@ $icode%approx_object%.initialize(%fixed_vec%, %random_vec%)%$$
 $head Purpose$$
 Some of the $code approx_mixed$$ initialization requires calling the
 derived class version of the
-$cref/joint_density/approx_mixed_joint_density/$$ function.
+$cref/joint_like/approx_mixed_joint_like/$$ function.
 Hence this initialization cannot be done until
 after the $cref/derived constructor/approx_mixed_derived_ctor/$$ completes.
 
@@ -65,8 +65,8 @@ the corresponding $code size_var()$$ is zero.
 They will contain the corresponding recordings when $code initialize$$ returns:
 $list number$$
 For $icode%k% = 0%, ... ,% 4%$$,
-the member variable $codei%a%k%_joint_density_%$$ is the corresponding
-$cref/joint_density_/approx_mixed_private/joint_density_/$$.
+the member variable $codei%a%k%_joint_like_%$$ is the corresponding
+$cref/joint_like_/approx_mixed_private/joint_like_/$$.
 $lnext
 The member variable
 $cref/grad_ran_/approx_mixed_private/grad_ran_/$$.
@@ -97,14 +97,14 @@ void approx_mixed::initialize(
 	{	fatal_error("approx_mixed::initialize was called twice");
 	}
 	//
-	// joint_density_
-	assert( a2_joint_density_.size_var() == 0 );
-	assert( a1_joint_density_.size_var() == 0 );
-	assert( a0_joint_density_.size_var() == 0 );
+	// joint_like_
+	assert( a2_joint_like_.size_var() == 0 );
+	assert( a1_joint_like_.size_var() == 0 );
+	assert( a0_joint_like_.size_var() == 0 );
 	record_joint(fixed_vec, random_vec);
-	assert( a2_joint_density_.size_var() > 0 );
-	assert( a1_joint_density_.size_var() > 0 );
-	assert( a0_joint_density_.size_var() > 0 );
+	assert( a2_joint_like_.size_var() > 0 );
+	assert( a1_joint_like_.size_var() > 0 );
+	assert( a0_joint_like_.size_var() > 0 );
 	//
 	// grad_ran_
 	assert( grad_ran_.size_var() == 0 );
