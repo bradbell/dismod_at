@@ -109,8 +109,9 @@ $cref/derived_ctor/approx_mixed_derived_ctor/$$.
 $codep */
 	approx_mixed(size_t n_fixed, size_t n_random)
 	:
-	n_fixed_(n_fixed)   ,
-	n_random_(n_random)
+	n_fixed_(n_fixed)               ,
+	n_random_(n_random)             ,
+	constraint_initialized_(false)
 	{ }
 /* $$
 $head initialize$$
@@ -268,6 +269,7 @@ $head constraint_$$
 Recording of the $cref/constraint/approx_mixed_constraint/$$ function.
 $codep */
 	// computes constraint function
+	bool                        constraint_initialized_;
 	CppAD::ADFun<double>        constraint_;
 	//
 	CppAD::vector<size_t>       constraint_jac_row_; // jacobian row indices
@@ -275,7 +277,7 @@ $codep */
 	CppAD::sparse_jacobian_work constraint_jac_work_;
 	CppAD::vector<size_t>       constraint_hes_row_; // hessian row indices
 	CppAD::vector<size_t>       constraint_hes_col_; // hessian column indices
-	CppAD::sparse_hessian_work constraint_hes_work_;
+	CppAD::sparse_hessian_work  constraint_hes_work_;
 /* $$
 
 $head pack$$

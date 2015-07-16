@@ -83,6 +83,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void approx_mixed::record_constraint(const d_vector& fixed_vec  )
 {	assert( fixed_vec.size() == n_fixed_ );
+	assert( ! constraint_initialized_ );
+	constraint_initialized_ = true;
 
 	// ------------------------------------------------------------------------
 	// constraint_
@@ -97,6 +99,13 @@ void approx_mixed::record_constraint(const d_vector& fixed_vec  )
 
 	// compute constraint
 	a1d_vector a1_vec = constraint(a1_theta);
+
+	// check for empty recording case
+	if( a1_vec.size() == 0 )
+	{	// abort recording AD<double>
+		CppAD::AD<double>::abort_recording();
+		return;
+	}
 
 	// save the recording
 	constraint_.Dependent(a1_theta, a1_vec);

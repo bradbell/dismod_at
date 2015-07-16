@@ -140,6 +140,10 @@ void approx_mixed::initialize(
 	assert( prior_like_.size_var() == 0 );
 	record_prior(fixed_vec);
 	assert( prior_like_.size_var() > 0 );
+	//
+	// constraint_
+	// (record_constraint makes sure initialization does not happend twice)
+	record_constraint(fixed_vec);
 }
 
 } // END_DISMOD_AT_NAMESPACE
