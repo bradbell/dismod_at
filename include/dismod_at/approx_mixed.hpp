@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/cppad.hpp>
 
 //
+extern bool constraint_eval_xam(void);
 extern bool joint_grad_ran_xam(void);
 extern bool joint_hes_ran_xam(void);
 extern bool laplace_eval_xam(void);
@@ -174,6 +175,7 @@ $section approx_mixed Private Declarations$$
 
 $childtable%include/dismod_at/approx_pack.hpp
 	%include/dismod_at/approx_unpack.hpp
+	%devel/approx_mixed/constraint_eval.cpp
 	%devel/approx_mixed/record_joint.cpp
 	%devel/approx_mixed/record_grad_ran.cpp
 	%devel/approx_mixed/record_hes_ran.cpp
@@ -423,6 +425,15 @@ $codep */
 	);
 	friend bool ::laplace_hes_fix_xam(void);
 /* $$
+-------------------------------------------------------------------------------
+$head constraint_eval$$
+See $cref approx_mixed_constraint_eval$$
+$codep */
+	// constraint_eval
+	d_vector constraint_eval(const d_vector& fixed_vec);
+	friend bool ::constraint_eval_xam(void);
+/* $$
+-------------------------------------------------------------------------------
 $head prior_eval$$
 See $cref approx_mixed_prior_eval$$
 $codep */

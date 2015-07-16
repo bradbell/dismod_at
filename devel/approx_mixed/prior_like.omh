@@ -60,7 +60,7 @@ corresponding to the prior negative log-likelihood
 $cref/g(theta)/approx_mixed_theory/Prior Negative Log-Likelihood, g(theta)/$$.
 
 $head Example$$
-This file $cref approx_derived_xam.cpp$$ contains an example
+The file $cref approx_derived_xam.cpp$$ contains an example
 of defining this virtual function.
 
 $end
