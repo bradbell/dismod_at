@@ -18,10 +18,13 @@ namespace {
 		const CppAD::vector<size_t>& col_one      ,
 		const CppAD::vector<size_t>& row_two      , // second sparsity pattern
 		const CppAD::vector<size_t>& col_two      ,
+		const CppAD::vector<size_t>& row_three    , // third sparsity pattern
+		const CppAD::vector<size_t>& col_three    ,
 		CppAD::vector<size_t>&       row_out      , // merged sparsity pattern
 		CppAD::vector<size_t>&       col_out      ,
 		CppAD::vector<size_t>&       one_2_out    , // maps first into merged
-		CppAD::vector<size_t>&       two_2_out    ) // maps second into merged
+		CppAD::vector<size_t>&       two_2_out    , // maps second into merged
+		CppAD::vector<size_t>&       three_2_out  ) // maps third into merged
 	{	assert( row_out.size() == 0 );
 		assert( col_out.size() == 0 );
 		//
@@ -31,9 +34,12 @@ namespace {
 		assert( row_two.size() == col_two.size() );
 		assert( row_two.size() == two_2_out.size() );
 		//
+		assert( row_three.size() == col_three.size() );
+		assert( row_three.size() == three_2_out.size() );
 		//
-		size_t n_one = row_one.size();
-		size_t n_two = row_two.size();
+		size_t n_one   = row_one.size();
+		size_t n_two   = row_two.size();
+		size_t n_three = row_three.size();
 		//
 		// compute maximum column index
 		size_t max_col = 0;
@@ -41,68 +47,83 @@ namespace {
 			max_col = std::max( col_one[k], max_col );
 		for(size_t k = 0; k < n_two; k++)
 			max_col = std::max( col_two[k], max_col );
+		for(size_t k = 0; k < n_three; k++)
+			max_col = std::max( col_three[k], max_col );
 		//
-		// keys for sorting
-		CppAD::vector<size_t> key_one(n_one), key_two(n_two);
+		// keys for sorting and maximum key value
+		CppAD::vector<size_t>
+			key_one(n_one), key_two(n_two), key_three(n_three);
+		size_t key_max = 0;
 		for(size_t k = 0; k < n_one; k++)
-			key_one[k] = row_one[k] * max_col + col_one[k];
+		{	key_one[k] = row_one[k] * max_col + col_one[k];
+			key_max    = std::max(key_max, key_one[k]);
+		}
 		for(size_t k = 0; k < n_two; k++)
-			key_two[k] = row_two[k] * max_col + col_two[k];
+		{	key_two[k] = row_two[k] * max_col + col_two[k];
+			key_max    = std::max(key_max, key_two[k]);
+		}
+		for(size_t k = 0; k < n_three; k++)
+		{	key_three[k] = row_three[k] * max_col + col_three[k];
+			key_max      = std::max(key_max, key_three[k]);
+		}
 		//
-		// sort both
-		CppAD::vector<size_t> ind_one(n_one), ind_two(n_two);
-		CppAD::index_sort(key_one, ind_one);
-		CppAD::index_sort(key_two, ind_two);
+		// sort all three
+		CppAD::vector<size_t> ind_one(n_one), ind_two(n_two), ind_three;
+		CppAD::index_sort(key_one,   ind_one);
+		CppAD::index_sort(key_two,   ind_two);
+		CppAD::index_sort(key_three, ind_three);
 		//
 		// now merge into row_out and col_out
-		size_t k_one = 0, k_two = 0;
-		while( k_one < n_one && k_two < n_two )
-		{	if( key_one[k_one] == key_two[k_two] )
-			{	assert( row_one[k_one] == row_two[k_two] );
-				assert( col_one[k_one] == col_two[k_two] );
-				//
-				one_2_out[k_one] = row_out.size();
-				two_2_out[k_two] = row_out.size();
-				//
+		size_t k_one = 0, k_two = 0, k_three = 0;
+		while( k_one < n_one || k_two < n_two || k_three < n_three )
+		{	size_t key_next = key_max + 1;
+			size_t n_out    = row_out.size();
+			if( k_one < n_one )
+				key_next = std::min(key_next, key_one[k_one]);
+			if( k_two < n_two )
+				key_next = std::min(key_next, key_two[k_two]);
+			if( k_three < n_three )
+				key_next = std::min(key_next, key_three[k_three]);
+			assert( key_next <= key_max );
+			//
+			size_t found = false;
+			if( k_one < n_one && key_one[k_one] == key_next )
+			{	found = true;
 				row_out.push_back( row_one[k_one] );
 				col_out.push_back( col_one[k_one] );
 				//
-				k_one++;
-				k_two++;
-			}
-			else if( key_one[k_one] < key_two[k_two] )
-			{	one_2_out[k_one] = row_out.size();
-				//
-				row_out.push_back( row_one[k_one] );
-				col_out.push_back( col_one[k_one] );
-				//
+				one_2_out[k_one] = n_out;
 				k_one++;
 			}
-			else
-			{	assert( key_two[k_two] < key_one[k_one] );
-				two_2_out[k_two] = row_out.size();
-				//
-				row_out.push_back( row_two[k_two] );
-				col_out.push_back( col_two[k_two] );
-				//
+			if( k_two < n_two && key_two[k_two] == key_next )
+			{	if( found )
+				{	assert( row_two[k_two] == row_out[n_out] );
+					assert( col_two[k_two] == col_out[n_out] );
+					two_2_out[k_two] =n_out;
+				}
+				else
+				{	found = true;
+					row_out.push_back( row_two[k_two] );
+					col_out.push_back( col_two[k_two] );
+					two_2_out[k_two] = n_out;
+				}
 				k_two++;
 			}
-		}
-		while( k_one < n_one )
-		{	one_2_out[k_one] = row_out.size();
-			//
-			row_out.push_back( row_one[k_one] );
-			col_out.push_back( col_one[k_one] );
-			//
-			k_one++;
-		}
-		while( k_two < n_two )
-		{	two_2_out[k_two] = row_out.size();
-			//
-			row_out.push_back( row_two[k_two] );
-			col_out.push_back( col_two[k_two] );
-			//
-			k_two++;
+			if( k_three < n_three && key_three[k_three] == key_next )
+			{	if( found )
+				{	assert( row_three[k_three] == row_out[n_out] );
+					assert( col_three[k_three] == col_out[n_out] );
+					three_2_out[k_three] = n_out;
+				}
+				else
+				{	found = true;
+					row_out.push_back( row_three[k_three] );
+					col_out.push_back( col_three[k_three] );
+					three_2_out[k_three] = n_out;
+				}
+				k_three++;
+			}
+			assert(found);
 		}
 		return;
 	}
@@ -250,17 +271,24 @@ approx_object_ ( approx_object    )
 				std::max(nlp_upper_bound_inf_, 1.1 * fixed_upper[j] );
 	}
 	// -----------------------------------------------------------------------
-	// set prior_n_abs_
+	// set prior_n_abs_, n_constraint_
 	// -----------------------------------------------------------------------
 	// prior negative log-likelihood at the initial fixed effects vector
 	d_vector prior_vec = approx_object_.prior_eval(fixed_in);
 	assert( prior_vec.size() > 0 );
 	prior_n_abs_ = prior_vec.size() - 1;
+	//
+	d_vector c_vec = approx_object_.constraint_eval(fixed_in);
+	n_constraint_  = c_vec.size();
 	// -----------------------------------------------------------------------
 	// set prior_jac_row_, prior_jac_col_, prior_jac_val_
+	// constraint_jac_row_, constraint_jac_col_, constraint_jac_val_
 	// -----------------------------------------------------------------------
 	approx_object.prior_jac(
 		fixed_in, prior_jac_row_, prior_jac_col_, prior_jac_val_
+	);
+	approx_object.constraint_jac(
+		fixed_in, constraint_jac_row_, constraint_jac_col_, constraint_jac_val_
 	);
 	// -----------------------------------------------------------------------
 	// set nnz_jac_g_
@@ -274,6 +302,8 @@ approx_object_ ( approx_object    )
 	}
 	// derivative w.r.t auxillary variables
 	nnz_jac_g_ += 2 * prior_n_abs_;
+	// derivative of the constraints
+	nnz_jac_g_ += constraint_jac_row_.size();
 	// -----------------------------------------------------------------------
 	// set lag_hes_row_, lag_hes_col_, laplace_2_lag_, prior_2_lag_
 	// -----------------------------------------------------------------------
@@ -282,32 +312,51 @@ approx_object_ ( approx_object    )
 		fixed_in, random_in,
 		laplace_hes_row_, laplace_hes_col_, laplace_hes_val_
 	);
-	// row and column indices for contribution form prior negative log-likelihood
+	// row and column indices for contribution from prior
 	d_vector weight( 1 + prior_n_abs_ );
 	for(size_t i = 0; i < weight.size(); i++)
 		weight[i] = 1.0;
 	approx_object.prior_hes(
 		fixed_in, weight, prior_hes_row_, prior_hes_col_, prior_hes_val_
 	);
+	// row and column indices for contribution from constraint
+	weight.resize( n_constraint_ );
+	for(size_t i = 0; i < weight.size(); i++)
+		weight[i] = 1.0;
+	approx_object.constraint_hes(
+		fixed_in,
+		weight,
+		constraint_hes_row_,
+		constraint_hes_col_,
+		constraint_hes_val_
+	);
 	//
 	// merge to form sparsity for Lagrangian
 	laplace_2_lag_.resize( laplace_hes_row_.size() );
 	prior_2_lag_.resize( prior_hes_row_.size() );
+	constraint_2_lag_.resize( constraint_hes_row_.size() );
 	merge_sparse(
 		laplace_hes_row_      ,
 		laplace_hes_col_      ,
 		prior_hes_row_        ,
 		prior_hes_col_        ,
+		constraint_hes_row_   ,
+		constraint_hes_col_   ,
 		lag_hes_row_          ,
 		lag_hes_col_          ,
 		laplace_2_lag_        ,
-		prior_2_lag_
+		prior_2_lag_          ,
+		constraint_2_lag_
 	);
 # ifndef NDEBUG
 	for(size_t k = 0; k < laplace_hes_row_.size(); k++)
 		assert( laplace_2_lag_[k] < lag_hes_row_.size() );
+	//
 	for(size_t k = 0; k < prior_hes_row_.size(); k++)
 		assert( prior_2_lag_[k] < lag_hes_row_.size() );
+	//
+	for(size_t k = 0; k < constraint_hes_row_.size(); k++)
+		assert( constraint_2_lag_[k] < lag_hes_row_.size() );
 # endif
 	// -----------------------------------------------------------------------
 	// set nnz_h_lag_
