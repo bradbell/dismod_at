@@ -119,9 +119,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		d_vector        w_constraint_tmp_;// size n_constraint
 		// ---------------------------------------------------------------
 		// set by eval_f only (constructor does not modify)
-		double   objective_opt_; // so var optimal objective value
-		d_vector fixed_opt_;     // so far optimal fixed effects
-		d_vector random_opt_;    // random effects corresponding to fixed_opt_
+		d_vector fixed_opt_; // empty until finalize_solution called
+		d_vector random_h_;  // random effect at previous eval_h
 		// ---------------------------------------------------------------
 		// set by constructor
 		// ---------------------------------------------------------------

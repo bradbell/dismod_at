@@ -130,14 +130,6 @@ namespace {
 	}
 
 	// --------------------------------------------------------------------
-	bool check_near_equal(double x, double y, double tol)
-	{	bool flag = true;
-		if( x >= 0.0 )
-			flag &= (1.0 - tol) * x <= y && y <= (1.0 + tol) * x;
-		else
-			flag &= (1.0 + tol) * x <= y && y <= (1.0 - tol) * x;
-		return flag;
-	}
 	bool check_in_limits(double lower, double x, double upper, double tol)
 	{	bool flag = true;
 		if( upper >= 0.0 )
@@ -682,22 +674,15 @@ bool ipopt_fixed::eval_f(
 	const Number*   x         ,  // in
 	bool            new_x     ,  // in
 	Number&         obj_value )  // out
-{	double tol = 1e-8;
-
+{
 	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
 	//
-	// check if we are initializing optimal value so far
-	if( fixed_opt_.size() == 0 )
-	{	objective_opt_ = std::numeric_limits<double>::infinity();
-		fixed_opt_.resize(n_fixed_);
-		random_opt_.resize(n_random_);
-
-		// using random_in_ for initial random effects
-		random_tmp_ = random_in_;
+	// initialize random effects
+	if( random_h_.size() == 0 )
+	{	random_tmp_ = random_in_;
 	}
 	else
-	{	// using so far optimal random effects
-		random_tmp_ = random_opt_;
+	{	random_tmp_ = random_h_;
 	}
 	//
 	// value of fixed effects corresponding to this x
@@ -729,17 +714,6 @@ bool ipopt_fixed::eval_f(
 	for(size_t j = 0; j < prior_n_abs_; j++)
 		obj_tmp += CppAD::abs( prior_vec_tmp_[1+j] );
 	//
-	// check if so far optimal
-	bool feasible = true;
-	for(size_t j = 0; j < n_fixed_; j++)
-	{	feasible &= fixed_tmp_[j] <= (1.0 + tol) * fixed_upper_[j];
-		feasible &= fixed_lower_[j] <= (1.0 + tol) * fixed_tmp_[j];
-	}
-	if( feasible && obj_tmp < objective_opt_ )
-	{	objective_opt_ = obj_tmp;
-		fixed_opt_     = fixed_tmp_;
-		random_opt_    = random_cur_;
-	}
 	return true;
 }
 /*
@@ -794,10 +768,14 @@ bool ipopt_fixed::eval_grad_f(
 	//
 	// compute the optimal random effects corresponding to fixed effects
 	if( new_x )
-	{	if( fixed_opt_.size() == 0 )
-			random_tmp_ = random_in_;
+	{	// initialize random effects
+		if( random_h_.size() == 0 )
+		{	random_tmp_ = random_in_;
+		}
 		else
-			random_tmp_ = random_opt_;
+		{	random_tmp_ = random_h_;
+		}
+		// random_cur_
 		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
 	}
 	//
@@ -1158,11 +1136,12 @@ bool ipopt_fixed::eval_h(
 	//
 	// compute the optimal random effects corresponding to fixed effects
 	if( new_x )
-	{	if( fixed_opt_.size() == 0 )
+	{	if( random_h_.size() == 0 )
 			random_tmp_ = random_in_;
 		else
-			random_tmp_ = random_opt_;
+			random_tmp_ = random_h_;
 		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
+		random_h_   = random_cur_;
 	}
 	//
 	// initialize return value
@@ -1330,34 +1309,46 @@ void ipopt_fixed::finalize_solution(
 	//
 	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
 	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ + n_constraint_ );
-
+	assert( fixed_opt_.size() == 0 );
+	//
 	// default tolerance
+	// 2DO: use tolerance specified by option
 	double tol = 1e-08;
-
-	// check that x is feasible and same as fixed_opt_
+	//
+	// check that x is within its limits
+	fixed_opt_.resize(n_fixed_);
 	for(size_t j = 0; j < n_fixed_; j++)
-	{	fixed_tmp_[j] = double( x[j] );
-		check_near_equal(fixed_tmp_[j],  fixed_opt_[j], tol);
-		check_in_limits(fixed_lower_[j], fixed_tmp_[j], fixed_upper_[j], tol);
+	{	fixed_opt_[j] = x[j];
+		ok &= check_in_limits(fixed_lower_[j], x[j], fixed_upper_[j], tol);
 	}
-
+	//
 	// check that the bound multipliers are feasible
 	for(size_t j = 0; j < n_fixed_ + prior_n_abs_; j++)
 	{	ok &= 0.0 <= z_L[j];
 		ok &= 0.0 <= z_U[j];
 	}
-
+	//
 	// prior negative log-likelihood at the final fixed effects vector
-	prior_vec_tmp_ = approx_object_.prior_eval(fixed_in_);
+	prior_vec_tmp_ = approx_object_.prior_eval(fixed_opt_);
 	assert( prior_vec_tmp_.size() == 1 + prior_n_abs_ );
 
-	// check that the constraint on g(x) are satisfied
+	// check constraints corresponding to l1 terms
 	for(size_t j = 0; j < 2 * prior_n_abs_; j++)
 	{	double check = (1.0 + tol) * double( x[n_fixed_ + j] );
 		ok &= check - prior_vec_tmp_[j] >= 0.0;
 		ok &= check + prior_vec_tmp_[j] >= 0.0;
 	}
+	//
+	// explicit constraints at the final fixed effects vector
+	c_vec_tmp_ = approx_object_.constraint_eval(fixed_opt_);
+	assert( c_vec_tmp_.size() == n_constraint_ );
 
+	// check explicit constraints
+	for(size_t j = 0; j < n_constraint_; j++)
+	{	ok &= check_in_limits(
+			constraint_lower_[j], c_vec_tmp_[j], constraint_upper_[j], tol
+		);
+	}
 	// Evaluate gradient of f w.r.t x
 	CppAD::vector<Number> grad_f(n);
 	bool new_x = true;
