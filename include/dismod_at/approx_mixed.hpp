@@ -14,6 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 //
 extern bool constraint_eval_xam(void);
+extern bool constraint_jac_xam(void);
 extern bool joint_grad_ran_xam(void);
 extern bool joint_hes_ran_xam(void);
 extern bool laplace_eval_xam(void);
@@ -176,6 +177,7 @@ $section approx_mixed Private Declarations$$
 $childtable%include/dismod_at/approx_pack.hpp
 	%include/dismod_at/approx_unpack.hpp
 	%devel/approx_mixed/constraint_eval.cpp
+	%devel/approx_mixed/constraint_jac.cpp
 	%devel/approx_mixed/record_joint.cpp
 	%devel/approx_mixed/record_grad_ran.cpp
 	%devel/approx_mixed/record_hes_ran.cpp
@@ -281,7 +283,7 @@ $codep */
 	CppAD::vector<size_t>       constraint_hes_col_; // hessian column indices
 	CppAD::sparse_hessian_work  constraint_hes_work_;
 /* $$
-
+------------------------------------------------------------------------------
 $head pack$$
 See $cref approx_mixed_pack$$.
 $codep */
@@ -316,6 +318,7 @@ $codep */
 		const CppAD::vector<Float_pack>&   three_vec
 	) const;
 /* $$
+------------------------------------------------------------------------------
 $head record_joint$$
 See $cref approx_mixed_record_joint$$.
 $codep */
@@ -367,6 +370,7 @@ See $cref approx_mixed_record_constraint$$.
 $codep */
 	void record_constraint(const d_vector& fixed_vec);
 /* $$
+------------------------------------------------------------------------------
 $head joint_grad_ran$$
 See $cref approx_mixed_joint_grad_ran$$
 $codep */
@@ -390,6 +394,7 @@ $codep */
 	);
 	friend bool ::joint_hes_ran_xam(void);
 /* $$
+------------------------------------------------------------------------------
 $head laplace_eval$$
 See $cref approx_mixed_laplace_eval$$
 $codep */
@@ -433,6 +438,19 @@ $codep */
 	d_vector constraint_eval(const d_vector& fixed_vec);
 	friend bool ::constraint_eval_xam(void);
 /* $$
+$end
+$head constraint_jac$$
+See $cref approx_mixed_constraint_jac$$
+$codep */
+	// constraint_jac
+	void constraint_jac(
+		const d_vector&        fixed_vec   ,
+		CppAD::vector<size_t>& row_out     ,
+		CppAD::vector<size_t>& col_out     ,
+		d_vector&              val_out
+	);
+	friend bool ::constraint_jac_xam(void);
+/* $$
 -------------------------------------------------------------------------------
 $head prior_eval$$
 See $cref approx_mixed_prior_eval$$
@@ -442,7 +460,6 @@ $codep */
 	friend bool ::prior_eval_xam(void);
 /* $$
 $end
--------------------------------------------------------------------------------
 $head prior_jac$$
 See $cref approx_mixed_prior_jac$$
 $codep */
@@ -456,7 +473,6 @@ $codep */
 	friend bool ::prior_jac_xam(void);
 /* $$
 $end
--------------------------------------------------------------------------------
 $head prior_hes$$
 See $cref approx_mixed_prior_hes$$
 $codep */

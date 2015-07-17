@@ -269,7 +269,7 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	if( status != Ipopt::Solve_Succeeded )
 	{	warning("optimize_fixed: ipopt failed to converge");
 	}
-	else if( fixed_nlp->finalize_solution_ok_ )
+	else if( ! fixed_nlp->finalize_solution_ok_ )
 	{	warning("optimize_fixed: solution check failed");
 	}
 	//

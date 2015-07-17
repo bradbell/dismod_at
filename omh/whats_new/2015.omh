@@ -33,6 +33,11 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-17$$
+The $code solution check failed$$ warning was printing
+when the check actually passed (since 07-15).
+This has been fixed.
+
 $head 07-16$$
 In the $cref approx_mixed$$ sub-package,
 changed $code joint_density$$ to
