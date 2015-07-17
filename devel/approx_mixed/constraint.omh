@@ -57,13 +57,8 @@ $latex c( \theta )$$.
 In the case where there are no constraints,
 $icode%c_vec%.size() == 0%$$.
 
-$head Under Construction$$
-This feature is not yet fully implemented.
-For the time being, there should be no constraints and the
-vector $icode c_vec$$ should be empty; i.e., have size zero.
-
 $head Example$$
-The file $cref constraint_eval_xam.cpp$$ contains an example
-of defining this virtual function.
+The file $cref approx_constraint_xam.cpp$$ contains an example
+using constraints.
 
 $end

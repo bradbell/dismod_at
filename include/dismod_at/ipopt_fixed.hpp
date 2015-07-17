@@ -65,6 +65,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		const size_t n_fixed_;            // number of fixed effects
 		const size_t n_random_;           // number of random effects
 		const size_t n_constraint_;       // number of constraints
+		const double ipopt_tolerance_;    // ipopt relative tolerance
 		//
 		const d_vector& fixed_lower_;     // fixed effects lower limits
 		const d_vector& fixed_upper_;     // fixed effects upper limit
@@ -143,6 +144,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		//
 		// default constructor
 		ipopt_fixed(
+			const double&   ipopt_tolerance   ,
 			const d_vector& fixed_lower       ,
 			const d_vector& fixed_upper       ,
 			const d_vector& constraint_lower  ,

@@ -35,6 +35,10 @@ $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-17$$
 $list number$$
+First version of the $code approx_mixed$$ sub-package that works with
+$cref/constraints/approx_mixed/Problem/Constraints/$$; e.g., see
+$cref approx_constraint_xam.cpp$$.
+$lnext
 The $code solution check failed$$ warning was printing
 when the check actually passed (since 07-15).
 This has been fixed.

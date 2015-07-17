@@ -159,12 +159,14 @@ $spell
 	nnz_jac
 	Jacobian
 	std
+	tol
 $$
 
 $section Ipopt Example: Constructor and Destructor$$
 
 $head Syntax$$
 $codei%ipopt_fixed %ipopt_object%(
+	%ipopt_tolerance%,
 	%fixed_lower%,
 	%fixed_upper%,
 	%constraint_lower%,
@@ -177,6 +179,7 @@ $codei%ipopt_fixed %ipopt_object%(
 $head Prototype$$
 The arguments has prototype
 $codei%
+	const double&                %ipopt_tolerance%
 	const CppAD::vector<double>& %fixed_lower%
 	const CppAD::vector<double>& %fixed_in%
 	const CppAD::vector<double>& %fixed_upper%
@@ -188,6 +191,14 @@ $head References$$
 The values of the arguments are stored by reference and hence
 the arguments must not be deleted while $icode ipopt_object$$
 is still being used.
+
+$head ipopt_tolerance$$
+Is the relative convergence criteria used by Ipopt.
+This only informs ipopt_fixed,
+the IpoptApplication must be informed separately using
+$codei%
+	%app%->Options()->SetNumericValue("tol", %ipopt_tolerance%)
+%$$
 
 $head fixed_lower$$
 specifies the lower limits for the
@@ -260,6 +271,7 @@ of the Lagrangian (for any Lagrange multiplier values).
 $end
 */
 ipopt_fixed::ipopt_fixed(
+	const double&       ipopt_tolerance    ,
 	const d_vector&     fixed_lower        ,
 	const d_vector&     fixed_upper        ,
 	const d_vector&     constraint_lower   ,
@@ -270,6 +282,7 @@ ipopt_fixed::ipopt_fixed(
 n_fixed_           ( fixed_in.size()  )        ,
 n_random_          ( random_in.size() )        ,
 n_constraint_      ( constraint_lower.size() ) ,
+ipopt_tolerance_   ( ipopt_tolerance  )        ,
 fixed_lower_       ( fixed_lower      )        ,
 fixed_upper_       ( fixed_upper      )        ,
 constraint_lower_  ( constraint_lower      )   ,
@@ -1311,9 +1324,9 @@ void ipopt_fixed::finalize_solution(
 	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ + n_constraint_ );
 	assert( fixed_opt_.size() == 0 );
 	//
-	// default tolerance
-	// 2DO: use tolerance specified by option
-	double tol = 1e-08;
+	//
+	// relaxed verison of tolerance
+	double tol = 3.0 * ipopt_tolerance_;
 	//
 	// check that x is within its limits
 	fixed_opt_.resize(n_fixed_);
@@ -1372,15 +1385,12 @@ void ipopt_fixed::finalize_solution(
 	{	Number sum = grad_f[j];
 		for(size_t k = 0; k < nnz_jac_g_; k++)
 		{	if( jCol[k] == Index(j) )
-			{	Number factor = Number( 1.0 );
-				Index  i      = iRow[k];
-				if( i > 0 )
-					factor = lambda[i-1];
-				sum += factor * values[k];
+			{	Index  i = iRow[k];
+				sum   += lambda[i] * values[k];
 			}
 		}
 		sum += z_U[j] - z_L[j];
-		ok &= CppAD::abs( double(sum) ) <= 10. * tol;
+		ok &= CppAD::abs( double(sum) ) <= tol;
 	}
 
 	// set member variable finalize_solution_ok_
