@@ -223,8 +223,6 @@ bool approx_constraint_xam(void)
 	{	double err	= data[i] - fixed_out[i] + lambda * fixed_out[i];
 		ok         &= CppAD::abs(err) < tol;
 	}
-	if( ! ok )
-		std::cout << "approx_contraint_xam.cpp not yet passing test";
-	return true;
+	return ok;
 }
 // END C++

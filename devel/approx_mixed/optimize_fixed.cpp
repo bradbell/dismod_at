@@ -208,17 +208,6 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	// create a reference to this object
 	approx_mixed& approx_object(*this);
 
-	// Create an instance of the problem
-	SmartPtr<ipopt_fixed> fixed_nlp = new ipopt_fixed(
-		fixed_lower,
-		fixed_upper,
-		constraint_lower,
-		constraint_upper,
-		fixed_in,
-		random_in,
-		approx_object
-	);
-
 	// Create an instance of an IpoptApplication
 	SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
 
@@ -269,6 +258,17 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 			begin_1++;
 	}
 
+	// object that is used to evalutate objective and constraints
+	SmartPtr<ipopt_fixed> fixed_nlp = new ipopt_fixed(
+		fixed_lower,
+		fixed_upper,
+		constraint_lower,
+		constraint_upper,
+		fixed_in,
+		random_in,
+		approx_object
+	);
+
 	// Set values used for minus and plus infinity
 	app->Options()->SetNumericValue(
 		"nlp_lower_bound_inf", fixed_nlp->nlp_lower_bound_inf()
@@ -289,10 +289,11 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	if( status != Ipopt::Solve_Succeeded )
 	{	warning("optimize_fixed: ipopt failed to converge");
 	}
-	else if( ! fixed_nlp->finalize_solution_ok_ )
+	if( ! fixed_nlp->finalize_solution_ok_ )
 	{	warning("optimize_fixed: solution check failed");
 	}
 	//
+	// must call finalize_solution before getting fixed_opt
 	return fixed_nlp->fixed_opt();
 }
 
