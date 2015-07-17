@@ -93,7 +93,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 void approx_mixed::initialize(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	if( grad_ran_.size_var() != 0 )
+{	if( constraint_initialized_ )
 	{	fatal_error("approx_mixed::initialize was called twice");
 	}
 	//

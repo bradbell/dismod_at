@@ -90,7 +90,7 @@ approx_mixed::d_vector approx_mixed::laplace_beta(
 	const d_vector& u     )
 {
 	// make sure initialize has been called
-	if( grad_ran_.size_var() == 0 )
+	if( laplace_1_.size_var() == 0 )
 	{	std::string error_message =
 		"approx_mixed::initialize was not called before laplace_beta";
 		fatal_error(error_message);

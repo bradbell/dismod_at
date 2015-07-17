@@ -93,7 +93,7 @@ double approx_mixed::laplace_eval(
 	const d_vector& u     )
 {
 	// make sure initialize has been called
-	if( grad_ran_.size_var() == 0 )
+	if( laplace_0_.size_var() == 0 )
 	{	std::string error_message =
 		"approx_mixed::initialize was not called before laplace_evel";
 		fatal_error(error_message);
