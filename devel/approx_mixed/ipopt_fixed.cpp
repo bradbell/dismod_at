@@ -68,7 +68,8 @@ namespace {
 		}
 		//
 		// sort all three
-		CppAD::vector<size_t> ind_one(n_one), ind_two(n_two), ind_three;
+		CppAD::vector<size_t>
+			ind_one(n_one), ind_two(n_two), ind_three(n_three);
 		CppAD::index_sort(key_one,   ind_one);
 		CppAD::index_sort(key_two,   ind_two);
 		CppAD::index_sort(key_three, ind_three);
@@ -625,7 +626,7 @@ bool ipopt_fixed::get_starting_point(
 	assert( init_z == false );
 	assert( init_lambda == false );
 	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
-	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
+	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ + n_constraint_ );
 
 	// prior negative log-likelihood at the initial fixed effects vector
 	prior_vec_tmp_ = approx_object_.prior_eval(fixed_in_);
@@ -874,7 +875,7 @@ bool ipopt_fixed::eval_g(
 	Number*         g        )  // out
 {
 	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
-	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
+	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ + n_constraint_ );
 	//
 	// fixed effects
 	for(size_t j = 0; j < n_fixed_; j++)
@@ -977,7 +978,7 @@ bool ipopt_fixed::eval_jac_g(
 	Number*         values   )  // out
 {
 	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
-	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
+	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ + n_constraint_ );
 	assert( size_t(nele_jac) == nnz_jac_g_ );
 	//
 	if( values == NULL )
@@ -1141,7 +1142,7 @@ bool ipopt_fixed::eval_h(
 	Number*       values         )  // out
 {
 	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
-	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
+	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ + n_constraint_ );
 	assert( size_t(nele_hess) == nnz_h_lag_ );
 	if( values == NULL )
 	{	for(size_t k = 0; k < nnz_h_lag_; k++)
@@ -1328,7 +1329,7 @@ void ipopt_fixed::finalize_solution(
 {	bool ok = true;
 	//
 	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
-	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
+	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ + n_constraint_ );
 
 	// default tolerance
 	double tol = 1e-08;

@@ -37,6 +37,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 
 	${suitesparse_EXAMPLES}
 
+	approx_mixed/approx_constraint_xam.cpp
 	approx_mixed/approx_derived_xam.cpp
 	approx_mixed/constraint_eval_xam.cpp
 	approx_mixed/constraint_jac_xam.cpp

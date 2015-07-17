@@ -29,6 +29,7 @@ $end
 # include <dismod_at/configure.hpp>
 
 // approx_mixed subdirectory
+extern bool approx_constraint_xam(void);
 extern bool approx_derived_xam(void);
 extern bool constraint_eval_xam(void);
 extern bool constraint_jac_xam(void);
@@ -138,6 +139,7 @@ int main(void)
 	RUN(cholmod_xam);
 # endif
 	// approx_mixed subdirectory
+	RUN(approx_constraint_xam);
 	RUN(approx_derived_xam);
 	RUN(constraint_eval_xam);
 	RUN(constraint_jac_xam);
