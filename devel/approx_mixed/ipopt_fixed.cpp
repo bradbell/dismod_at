@@ -396,13 +396,15 @@ approx_object_     ( approx_object    )
 	nnz_h_lag_ = lag_hes_row_.size();
 	assert( nnz_h_lag_ == lag_hes_col_.size() );
 	// -----------------------------------------------------------------------
-	// set size of fixed_tmp_, random_tmp_, prior_vec_tmp_, H_beta_tmp_
+	// set size of temporary vectors
 	// -----------------------------------------------------------------------
 	fixed_tmp_.resize( n_fixed_ );
 	random_tmp_.resize( n_random_ );
 	prior_vec_tmp_.resize( prior_n_abs_ + 1 );
+	c_vec_tmp_.resize( n_constraint_ );
 	H_beta_tmp_.resize( n_fixed_ );
-	weight_tmp_.resize( prior_n_abs_ + 1 );
+	w_prior_tmp_.resize( prior_n_abs_ + 1 );
+	w_constraint_tmp_.resize( n_constraint_ );
 	// -----------------------------------------------------------------------
 }
 ipopt_fixed::~ipopt_fixed(void)
@@ -1175,15 +1177,32 @@ bool ipopt_fixed::eval_h(
 		values[ laplace_2_lag_[k] ] +=
 			obj_factor * Number( laplace_hes_val_[k] );
 	//
-	// Hessian of Langrange multiplied weighted prior w.r.t. fixed effects
-	weight_tmp_[0] = obj_factor;
+	// Hessian of Lagrangian of weighted prior w.r.t. fixed effects
+	w_prior_tmp_[0] = obj_factor;
 	for(size_t j = 0; j < prior_n_abs_; j++)
-		weight_tmp_[1 + j] = lambda[2 * j + 1] - lambda[2 * j];
+		w_prior_tmp_[1 + j] = lambda[2 * j + 1] - lambda[2 * j];
 	approx_object_.prior_hes(
-		fixed_tmp_, weight_tmp_, prior_hes_row_, prior_hes_col_, prior_hes_val_
+		fixed_tmp_,
+		w_prior_tmp_,
+		prior_hes_row_,
+		prior_hes_col_,
+		prior_hes_val_
 	);
 	for(size_t k = 0; k < prior_hes_row_.size(); k++)
 		values[ prior_2_lag_[k] ] += Number( prior_hes_val_[k] );
+	//
+	// Hessian of Lagrangian of weighted explicit constraints
+	for(size_t j = 0; j < n_constraint_; j++)
+		w_constraint_tmp_[j] = lambda[2 * prior_n_abs_ + j];
+	approx_object_.constraint_hes(
+		fixed_tmp_,
+		w_constraint_tmp_,
+		constraint_hes_row_,
+		constraint_hes_col_,
+		constraint_hes_val_
+	);
+	for(size_t k = 0; k < constraint_hes_row_.size(); k++)
+		values[ constraint_2_lag_[k] ] += Number( constraint_hes_val_[k] );
 	//
 	return true;
 }

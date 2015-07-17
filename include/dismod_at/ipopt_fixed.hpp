@@ -115,7 +115,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		d_vector        prior_vec_tmp_;  // size prior_n_abs_ + 1
 		d_vector        c_vec_tmp_;      // size n_constraint_
 		d_vector        H_beta_tmp_;     // size n_fixed_
-		d_vector        weight_tmp_;     // size 2 * prior_n_abs
+		d_vector        w_prior_tmp_;     // size 2 * prior_n_abs
+		d_vector        w_constraint_tmp_;// size n_constraint
 		// ---------------------------------------------------------------
 		// set by eval_f only (constructor does not modify)
 		double   objective_opt_; // so var optimal objective value
