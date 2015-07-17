@@ -630,7 +630,6 @@ void simulate_command(
 	const vector<dismod_at::integrand_struct>&          integrand_table ,
 	const vector<dismod_at::data_subset_struct>&        data_subset_obj ,
 	const dismod_at::data_model&                        data_object     ,
-	const size_t&                                       actual_seed     ,
 	const size_t&                                       number_sample
 )
 {
@@ -1033,6 +1032,10 @@ int main(int n_arg, const char** argv)
 	// 2DO: need to put actual seed in some output table or std::cout
 	size_t random_seed = std::atoi( argument_map["random_seed"].c_str() );
 	size_t actual_seed = dismod_at::new_gsl_rng(random_seed);
+	if( random_seed == 0 )
+	{	message =  "actual_seed = " + dismod_at::to_string(actual_seed);
+		dismod_at::log_message(db, "value", message);
+	}
 	// ---------------------------------------------------------------------
 	// n_age_ode
 	double age_min    = db_input.age_table[0];
@@ -1204,7 +1207,6 @@ int main(int n_arg, const char** argv)
 			db_input.integrand_table ,
 			data_subset_obj          ,
 			data_object              ,
-			actual_seed              ,
 			number_sample
 		);
 	}

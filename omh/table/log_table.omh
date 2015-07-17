@@ -43,6 +43,21 @@ This is a warning.
 The message was added to the log file and then program execution
 continued as if nothing was wrong.
 
+$subhead value$$
+This message type is used to report about the run.
+In this case $icode message$$ has the form
+$icode%
+	%variable% = %value%
+%$$
+The possible cases for $icode variable$$ are listed below:
+
+$subhead actual_seed$$
+If $icode variable$$ is $code actual_seed$$,
+$cref/random_seed/argument_table/random_seed/$$ was zero
+and $icode value$$ is the actual random seed that was used.
+You can change $icode random_seed$$ to be this value
+in order to reproduce results.
+
 $head table_name$$
 This column has type $code text$$.
 If it is non-empty, $icode message$$ must be $code error$$

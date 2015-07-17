@@ -103,7 +103,8 @@ void log_message(
 	assert(
 		message_type == "command" ||
 		message_type == "error"   ||
-		message_type == "warning"
+		message_type == "warning" ||
+		message_type == "value"
 	);
 
 	string sql_cmd = "create table if not exists log("

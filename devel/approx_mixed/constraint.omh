@@ -54,6 +54,8 @@ $codei%
 It is the value of the
 $cref/constraint function/approx_mixed/Problem/Constraints/$$
 $latex c( \theta )$$.
+In the case where there are no constraints,
+$icode%c_vec%.size() == 0%$$.
 
 $head Under Construction$$
 This feature is not yet fully implemented.
