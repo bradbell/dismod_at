@@ -101,6 +101,14 @@ void approx_mixed::constraint_jac(
 		"approx_mixed::initialize was not called before constraint_jac";
 		fatal_error(error_message);
 	}
+	if( constraint_.size_var() == 0 )
+	{	assert( row_out.size() == 0 );
+		assert( col_out.size() == 0 );
+		assert( constraint_jac_row_.size() == 0 );
+		assert( constraint_jac_col_.size() == 0 );
+		val_out.resize(0);
+		return;
+	}
 
 	assert( row_out.size() == col_out.size() );
 	assert( row_out.size() == val_out.size() );

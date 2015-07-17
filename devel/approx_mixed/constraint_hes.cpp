@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/approx_mixed.hpp>
 
 /*
-$begin approx_mixed_prior_hes$$
+$begin approx_mixed_constraint_hes$$
 $spell
 	eval
 	vec
@@ -23,7 +23,7 @@ $$
 $section approx_mixed: Hessian of Prior for Fixed Effects$$
 
 $head Syntax$$
-$icode%approx_object%.prior_hes(
+$icode%approx_object%.constraint_hes(
 	%fixed_vec%, %weight%, %row_out%, %col_out%, %val_out%
 )%$$
 
@@ -47,19 +47,17 @@ $codei%
 	const CppAD::vector<double>& %weight%
 %$$
 It specifies the value of the weights for the
-components of the
-$cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
-corresponding to the $cref/prior_like/approx_mixed_prior_like/$$.
+components of the $cref/constraint/approx_mixed_constraint/$$.
 It has the same size as the corresponding return value
-$cref/vec/approx_mixed_prior_like/vec/$$.
+$cref/c_vec/approx_mixed_constraint/c_vec/$$.
 
 $head Hessian$$
 We use $latex w$$ to denote the vector corresponding to $icode weight$$
-and $latex v( \theta )$$ to denote the function corresponding th
-the negative log-density vector.
+and $latex c( \theta )$$ to denote the function corresponding th
+the constraints
 The Hessian is for the function
 $latex \[
-	\sum_{i} w_i v_i ( \theta )
+	\sum_{i} w_i c_i ( \theta )
 \] $$.
 
 
@@ -70,7 +68,7 @@ $codei%
 %$$
 If the input size of this array is non-zero,
 the entire vector must be the same
-as for a previous call to $code prior_hes$$.
+as for a previous call to $code constraint_hes$$.
 If it's input size is zero,
 upon return it contains the row indices for the Hessian elements
 that are possibly non-zero.
@@ -82,7 +80,7 @@ $codei%
 %$$
 If the input size of this array is non-zero,
 the entire vector must be the same as for
-a previous call to $code prior_hes$$.
+a previous call to $code constraint_hes$$.
 If it's input size is zero,
 upon return it contains the column indices for the Hessian elements
 that are possibly non-zero (and will have the same size as $icode row_out$$).
@@ -93,15 +91,15 @@ $codei%
 	CppAD::vector<double>& %val_out%
 %$$
 If the input size of this array is non-zero, it must have the same size
-as for a previous call to $code prior_hes$$.
+as for a previous call to $code constraint_hes$$.
 Upon return, it contains the value of the Hessian elements
 that are possibly non-zero (and will have the same size as $icode row_out$$).
 
 $children%
-	example/devel/approx_mixed/prior_hes_xam.cpp
+	example/devel/approx_mixed/constraint_hes_xam.cpp
 %$$
 $head Example$$
-The file $cref prior_hes_xam.cpp$$ contains an example
+The file $cref constraint_hes_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 
@@ -110,7 +108,7 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void approx_mixed::prior_hes(
+void approx_mixed::constraint_hes(
 	const d_vector&        fixed_vec   ,
 	const d_vector&        weight      ,
 	CppAD::vector<size_t>& row_out     ,
@@ -118,39 +116,47 @@ void approx_mixed::prior_hes(
 	d_vector&              val_out     )
 {
 	// make sure initialize has been called
-	if( prior_like_.size_var() == 0 )
+	if( ! constraint_initialized_ )
 	{	std::string error_message =
-		"approx_mixed::initialize was not called before prior_hes";
+		"approx_mixed::initialize was not called before constraint_hes";
 		fatal_error(error_message);
+	}
+	if( constraint_.size_var() == 0 )
+	{	assert( row_out.size() == 0 );
+		assert( col_out.size() == 0 );
+		assert( constraint_hes_row_.size() == 0 );
+		assert( constraint_hes_col_.size() == 0 );
+		val_out.resize(0);
+		return;
 	}
 
 	assert( row_out.size() == col_out.size() );
 	assert( row_out.size() == val_out.size() );
 	if( row_out.size() == 0 )
-	{	row_out = prior_hes_row_;
-		col_out = prior_hes_col_;
+	{	row_out = constraint_hes_row_;
+		col_out = constraint_hes_col_;
 		val_out.resize( row_out.size() );
 	}
 # ifndef NDEBUG
 	else
-	{	size_t n_nonzero = prior_hes_row_.size();
+	{	size_t n_nonzero = constraint_hes_row_.size();
 		assert( row_out.size() == n_nonzero );
 		for(size_t k = 0; k < n_nonzero; k++)
-		{	assert( row_out[k] == prior_hes_row_[k] );
-			assert( col_out[k] == prior_hes_col_[k] );
+		{	assert( row_out[k] == constraint_hes_row_[k] );
+			assert( col_out[k] == constraint_hes_col_[k] );
 		}
 	}
 # endif
 
 	CppAD::vector< std::set<size_t> > not_used;
-	prior_like_.SparseHessian(
+	constraint_.SparseHessian(
 		fixed_vec       ,
 		weight          ,
 		not_used        ,
 		row_out         ,
 		col_out         ,
 		val_out         ,
-		prior_hes_work_
+		constraint_hes_work_
 	);
 
 	return;

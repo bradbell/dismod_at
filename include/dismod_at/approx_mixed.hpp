@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 //
 extern bool constraint_eval_xam(void);
 extern bool constraint_jac_xam(void);
+extern bool constraint_hes_xam(void);
 extern bool joint_grad_ran_xam(void);
 extern bool joint_hes_ran_xam(void);
 extern bool laplace_eval_xam(void);
@@ -178,6 +179,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%include/dismod_at/approx_unpack.hpp
 	%devel/approx_mixed/constraint_eval.cpp
 	%devel/approx_mixed/constraint_jac.cpp
+	%devel/approx_mixed/constraint_hes.cpp
 	%devel/approx_mixed/record_joint.cpp
 	%devel/approx_mixed/record_grad_ran.cpp
 	%devel/approx_mixed/record_hes_ran.cpp
@@ -450,6 +452,20 @@ $codep */
 		d_vector&              val_out
 	);
 	friend bool ::constraint_jac_xam(void);
+/* $$
+$end
+$head constraint_hes$$
+See $cref approx_mixed_constraint_hes$$
+$codep */
+	// constraint_hes
+	void constraint_hes(
+		const d_vector&        fixed_vec   ,
+		const d_vector&        weight      ,
+		CppAD::vector<size_t>& row_out     ,
+		CppAD::vector<size_t>& col_out     ,
+		d_vector&              val_out
+	);
+	friend bool ::constraint_hes_xam(void);
 /* $$
 -------------------------------------------------------------------------------
 $head prior_eval$$
