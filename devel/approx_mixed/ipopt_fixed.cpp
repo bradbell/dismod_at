@@ -172,7 +172,13 @@ $section Ipopt Example: Constructor and Destructor$$
 
 $head Syntax$$
 $codei%ipopt_fixed %ipopt_object%(
-	%fixed_lower%, %fixed_in%, %fixed_upper%, %random_in%, %approx_object%
+	%fixed_lower%,
+	%fixed_upper%,
+	%constraint_lower%,
+	%constraint_upper%,
+	%fixed_in%,
+	%random_in%,
+	%approx_object%
 )%$$
 
 $head Prototype$$
@@ -197,14 +203,7 @@ Note that
 $code%
 	- std::numeric_limits<double>::infinity()
 %$$
-is used for minus infinity; i.e., no lower bound.
-
-$head fixed_in$$
-specifies the initial value (during optimization) for the fixed effects.
-It must hold for each $icode j$$ that
-$codei%
-	%fixed_lower%[%j%] <= %fixed_in%[%j%] <= %fixed_upper%[%j%]
-%$$
+is used for minus infinity; i.e., no lower limit.
 
 $head fixed_upper$$
 specifies the upper limits for the fixed effects.
@@ -212,7 +211,31 @@ Note that
 $code%
 	std::numeric_limits<double>::infinity()
 %$$
-is used for plus infinity; i.e., no upper bound.
+is used for plus infinity; i.e., no upper limit.
+
+$head constraint_lower$$
+specifies the lower limits for the
+$cref/constraints/approx_mixed_constraint/$$.
+Note that
+$code%
+	- std::numeric_limits<double>::infinity()
+%$$
+is used for minus infinity; i.e., no lower limit.
+
+$head constraint_upper$$
+specifies the upper limits for the constraints.
+Note that
+$code%
+	std::numeric_limits<double>::infinity()
+%$$
+is used for plus infinity; i.e., no upper limit.
+
+$head fixed_in$$
+specifies the initial value (during optimization) for the fixed effects.
+It must hold for each $icode j$$ that
+$codei%
+	%fixed_lower%[%j%] <= %fixed_in%[%j%] <= %fixed_upper%[%j%]
+%$$
 
 $head random_in$$
 specifies the initial value (for initial optimization) of the random effects.
@@ -244,18 +267,23 @@ of the Lagrangian (for any Lagrange multiplier values).
 $end
 */
 ipopt_fixed::ipopt_fixed(
-	const d_vector&     fixed_lower   ,
-	const d_vector&     fixed_in      ,
-	const d_vector&     fixed_upper   ,
-	const d_vector&     random_in     ,
-	approx_mixed&       approx_object ) :
-n_fixed_       ( fixed_in.size()  )   ,
-n_random_      ( random_in.size() )   ,
-fixed_lower_   ( fixed_lower      )   ,
-fixed_in_      ( fixed_in         )   ,
-fixed_upper_   ( fixed_upper      )   ,
-random_in_     ( random_in        )   ,
-approx_object_ ( approx_object    )
+	const d_vector&     fixed_lower        ,
+	const d_vector&     fixed_upper        ,
+	const d_vector&     constraint_lower   ,
+	const d_vector&     constraint_upper   ,
+	const d_vector&     fixed_in           ,
+	const d_vector&     random_in          ,
+	approx_mixed&       approx_object      ) :
+n_fixed_           ( fixed_in.size()  )        ,
+n_random_          ( random_in.size() )        ,
+n_constraint_      ( constraint_lower.size() ) ,
+fixed_lower_       ( fixed_lower      )        ,
+fixed_upper_       ( fixed_upper      )        ,
+constraint_lower_  ( constraint_lower      )   ,
+constraint_upper_  ( constraint_upper      )   ,
+fixed_in_          ( fixed_in         )        ,
+random_in_         ( random_in        )        ,
+approx_object_     ( approx_object    )
 {
 	// -----------------------------------------------------------------------
 	// set nlp_lower_bound_inf_, nlp_upper_bound_inf_
@@ -270,16 +298,20 @@ approx_object_ ( approx_object    )
 		if( fixed_upper[j] != inf ) nlp_upper_bound_inf_ =
 				std::max(nlp_upper_bound_inf_, 1.1 * fixed_upper[j] );
 	}
+	for(size_t j = 0; j < n_constraint_; j++)
+	{	if( constraint_lower[j] != - inf ) nlp_lower_bound_inf_ =
+				std::min(nlp_lower_bound_inf_, 1.1 * constraint_lower[j] );
+		//
+		if( constraint_upper[j] != inf ) nlp_upper_bound_inf_ =
+				std::max(nlp_upper_bound_inf_, 1.1 * constraint_upper[j] );
+	}
 	// -----------------------------------------------------------------------
-	// set prior_n_abs_, n_constraint_
+	// set prior_n_abs_
 	// -----------------------------------------------------------------------
 	// prior negative log-likelihood at the initial fixed effects vector
 	d_vector prior_vec = approx_object_.prior_eval(fixed_in);
 	assert( prior_vec.size() > 0 );
 	prior_n_abs_ = prior_vec.size() - 1;
-	//
-	d_vector c_vec = approx_object_.constraint_eval(fixed_in);
-	n_constraint_  = c_vec.size();
 	// -----------------------------------------------------------------------
 	// set prior_jac_row_, prior_jac_col_, prior_jac_val_
 	// constraint_jac_row_, constraint_jac_col_, constraint_jac_val_

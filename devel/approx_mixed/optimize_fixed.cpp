@@ -24,7 +24,11 @@ $section Optimize Fixed Effects$$
 $head Syntax$$
 $icode%fixed_out% =%$$
 $icode%approx_object%.optimize_fixed(
-	%options%, %fixed_lower%, %fixed_in%, %fixed_upper%, %random_in%
+	%options%,
+	%fixed_lower%,
+	%fixed_upper%,
+	%fixed_in%,
+	%random_in%
 )%$$
 
 $head Purpose$$
@@ -76,19 +80,40 @@ $codei%
 Here $icode name$$ is any valid Ipopt numeric option
 and $icode value$$ is its setting.
 
+
 $head fixed_lower$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>& %fixed_lower%
-%$$
-It specifies the lower bound for the
-$cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
-vector $latex \theta$$.
+specifies the lower limits for the
+$cref/fixed_effects/model_variable/Fixed Effects, theta/$$.
 Note that
 $code%
 	- std::numeric_limits<double>::infinity()
 %$$
-is used for minus infinity; i.e., no lower bound.
+is used for minus infinity; i.e., no lower limit.
+
+$head fixed_upper$$
+specifies the upper limits for the fixed effects.
+Note that
+$code%
+	std::numeric_limits<double>::infinity()
+%$$
+is used for plus infinity; i.e., no upper limit.
+
+$head constraint_lower$$
+specifies the lower limits for the
+$cref/constraints/approx_mixed_constraint/$$.
+Note that
+$code%
+	- std::numeric_limits<double>::infinity()
+%$$
+is used for minus infinity; i.e., no lower limit.
+
+$head constraint_upper$$
+specifies the upper limits for the constraints.
+Note that
+$code%
+	std::numeric_limits<double>::infinity()
+%$$
+is used for plus infinity; i.e., no upper limit.
 
 $head fixed_in$$
 This argument has prototype
@@ -102,20 +127,6 @@ It must hold for each $icode j$$ that
 $codei%
 	%fixed_lower%[%j%] <= %fixed_in%[%j%] <= %fixed_upper%[%j%]
 %$$
-
-$head fixed_upper$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>& %fixed_upper%
-%$$
-It specifies the upper bound for the
-$cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
-vector $latex \theta$$.
-Note that
-$code%
-	std::numeric_limits<double>::infinity()
-%$$
-is used for plus infinity; i.e., no upper bound.
 
 $head random_in$$
 This argument has prototype
@@ -168,10 +179,12 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 CppAD::vector<double> approx_mixed::optimize_fixed(
-	const std::string& options     ,
-	const d_vector&    fixed_lower ,
-	const d_vector&    fixed_in    ,
-	const d_vector&    fixed_upper ,
+	const std::string& options           ,
+	const d_vector&    fixed_lower       ,
+	const d_vector&    fixed_upper       ,
+	const d_vector&    constraint_lower  ,
+	const d_vector&    constraint_upper  ,
+	const d_vector&    fixed_in          ,
 	const d_vector&    random_in   )
 {	bool ok = true;
 	using Ipopt::SmartPtr;
@@ -196,7 +209,13 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 
 	// Create an instance of the problem
 	SmartPtr<ipopt_fixed> fixed_nlp = new ipopt_fixed(
-		fixed_lower, fixed_in, fixed_upper, random_in, approx_object
+		fixed_lower,
+		fixed_upper,
+		constraint_lower,
+		constraint_upper,
+		fixed_in,
+		random_in,
+		approx_object
 	);
 
 	// Create an instance of an IpoptApplication

@@ -64,10 +64,13 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		// member variables set during constructor
 		const size_t n_fixed_;            // number of fixed effects
 		const size_t n_random_;           // number of random effects
+		const size_t n_constraint_;       // number of constraints
 		//
 		const d_vector& fixed_lower_;     // fixed effects lower limits
-		const d_vector& fixed_in_;        // fixed effects initial value
 		const d_vector& fixed_upper_;     // fixed effects upper limit
+		const d_vector& constraint_lower_;// constraint lower limits
+		const d_vector& constraint_upper_;// constraint upper limit
+		const d_vector& fixed_in_;        // fixed effects initial value
 		const d_vector& random_in_;       // random effects initial value
 		//
 		approx_mixed&   approx_object_;   // approx_mixed for this problem
@@ -77,7 +80,6 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		double nlp_upper_bound_inf_; // Ipopt's code for + infinity
 		//
 		size_t prior_n_abs_; // number of absolute values in prior
-		size_t n_constraint_;// number of constraint components
 		size_t nnz_jac_g_;   // number non-zeros in Jacobian of constraints
 		size_t nnz_h_lag_;   // number non-zeros in Hessian of Lagragian
 		//
@@ -140,10 +142,12 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		//
 		// default constructor
 		ipopt_fixed(
-			const d_vector& fixed_lower   ,
-			const d_vector& fixed_in      ,
-			const d_vector& fixed_upper   ,
-			const d_vector& random_in     ,
+			const d_vector& fixed_lower       ,
+			const d_vector& fixed_upper       ,
+			const d_vector& constraint_lower  ,
+			const d_vector& constraint_upper  ,
+			const d_vector& fixed_in          ,
+			const d_vector& random_in         ,
 			approx_mixed&   approx_object
 		);
 		//

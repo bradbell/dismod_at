@@ -169,6 +169,9 @@ bool optimize_fixed_xam(void)
 	fixed_lower[0] = - inf; fixed_in[0] = 2.0; fixed_upper[0] = inf;
 	fixed_lower[1] = .01;   fixed_in[1] = 0.5; fixed_upper[1] = inf;
 	//
+	// explicit constriants (in addition to l1 terms)
+	vector<double> constraint_lower(0), constraint_upper(0);
+	//
 	vector<double> data(n_data), random_in(n_random);
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]       = double(i + 1);
@@ -188,7 +191,13 @@ bool optimize_fixed_xam(void)
 		"Numeric tol                       1e-8\n"
 	;
 	vector<double> fixed_out = approx_object.optimize_fixed(
-		options, fixed_lower, fixed_in, fixed_upper, random_in
+		options,
+		fixed_lower,
+		fixed_upper,
+		constraint_lower,
+		constraint_upper,
+		fixed_in,
+		random_in
 	);
 
 	// results of optimization
@@ -208,7 +217,8 @@ bool optimize_fixed_xam(void)
 	F_1       += double(n_data) * theta_1 / den;
 	F_1       -= sumsq * theta_1  / (den * den);
 
-	// Note that no constraints are active, so the partials should be zero.
+	// Note that no constraints are active, (not even the l1 terms)
+	// so the partials should be zero.
 	ok &= CppAD::abs( F_0 ) <= tol;
 	ok &= CppAD::abs( F_1 ) <= tol;
 

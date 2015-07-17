@@ -116,6 +116,6 @@ for simulate_id in range( len(simulate_dict) ) :
 	assert sample_index == 0
 	assert meas_value != data_dict[data_id]['meas_value']
 	assert meas_value != truth_var_value
-	assert abs( meas_value - truth_var_value ) < 3.0 * meas_std
+	assert abs( meas_value - truth_var_value ) < 4.0 * meas_std
 print('simulate_command: OK')
 # END PYTHON

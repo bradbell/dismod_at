@@ -205,17 +205,21 @@ void fit_model::run_fit(
 		pack_vec[i] = prior_table_[ value_prior_[i] ].lower;
 	get_fixed_effect(pack_object_, pack_vec, fixed_lower);
 
-	// fixed_in
-	CppAD::vector<double> fixed_in(n_fixed_);
-	for(size_t i = 0; i < n_var; i++)
-		pack_vec[i] = prior_table_[ value_prior_[i] ].mean;
-	get_fixed_effect(pack_object_, pack_vec, fixed_in);
-
 	// fixed_upper
 	CppAD::vector<double> fixed_upper(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
 		pack_vec[i] = prior_table_[ value_prior_[i] ].upper;
 	get_fixed_effect(pack_object_, pack_vec, fixed_upper);
+
+	// 2DO: implement the constraints corresponding to dage and dtime priors
+	CppAD::vector<double> constraint_lower(0);
+	CppAD::vector<double> constraint_upper(0);
+
+	// fixed_in
+	CppAD::vector<double> fixed_in(n_fixed_);
+	for(size_t i = 0; i < n_var; i++)
+		pack_vec[i] = prior_table_[ value_prior_[i] ].mean;
+	get_fixed_effect(pack_object_, pack_vec, fixed_in);
 
 	// random_in
 	CppAD::vector<double> random_in(n_random_);
@@ -237,7 +241,13 @@ void fit_model::run_fit(
 	//
 	// optimal fixed effects
 	CppAD::vector<double> optimal_fixed = optimize_fixed(
-		options, fixed_lower, fixed_in, fixed_upper, random_in
+		options,
+		fixed_lower,
+		fixed_upper,
+		constraint_lower,
+		constraint_upper,
+		fixed_in,
+		random_in
 	);
 	//
 	// optimal random effects
@@ -380,7 +390,7 @@ fit_model::a1d_vector fit_model::prior_like(
 }
 // --------------------------------------------------------------------------
 // constraint
-// 2DO: upper and lower limits on dage and dtime as constraints.
+// 2DO: implement the constraints corresponding to dage and dtime priors
 fit_model::a1d_vector fit_model::constraint(
 	const a1d_vector& fixed_vec   )
 {	return a1d_vector(0); // empty vector

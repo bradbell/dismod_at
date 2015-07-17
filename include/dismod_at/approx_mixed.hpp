@@ -137,10 +137,12 @@ Optimize the total objective with respect to the fixed effects;
 see  $cref/optimize_fixed/approx_mixed_optimize_fixed/$$.
 $codep */
 	d_vector optimize_fixed(
-		const std::string& options     ,
-		const d_vector&    fixed_lower ,
-		const d_vector&    fixed_in    ,
-		const d_vector&    fixed_upper ,
+		const std::string& options          ,
+		const d_vector&    fixed_lower      ,
+		const d_vector&    fixed_upper      ,
+		const d_vector&    constraint_lower ,
+		const d_vector&    constraint_upper ,
+		const d_vector&    fixed_in         ,
 		const d_vector&    random_in
 	);
 /* $$
