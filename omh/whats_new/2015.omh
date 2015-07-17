@@ -34,9 +34,14 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-17$$
+$list number$$
 The $code solution check failed$$ warning was printing
 when the check actually passed (since 07-15).
 This has been fixed.
+$lnext
+Add the $cref/value/log_table/message_type/value/$$
+message type to the log table.
+$lend
 
 $head 07-16$$
 In the $cref approx_mixed$$ sub-package,

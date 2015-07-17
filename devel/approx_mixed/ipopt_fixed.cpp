@@ -459,7 +459,7 @@ bool ipopt_fixed::get_nlp_info(
 	IndexStyleEnum& index_style  )  // out
 {
 	n           = n_fixed_;
-	m           = 2 * prior_n_abs_;
+	m           = 2 * prior_n_abs_ + n_constraint_;
 	nnz_jac_g   = nnz_jac_g_;
 	nnz_h_lag   = nnz_h_lag_;
 	index_style = C_STYLE;
@@ -514,7 +514,7 @@ bool ipopt_fixed::get_bounds_info(
 		Number*     g_u      )   // out
 {
 	assert( n > 0 && size_t(n) == n_fixed_ + prior_n_abs_ );
-	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ );
+	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ + n_constraint_ );
 
 	for(size_t j = 0; j < n_fixed_; j++)
 	{	// map infinity to crazy value required by ipopt
@@ -538,6 +538,12 @@ bool ipopt_fixed::get_bounds_info(
 	for(size_t j = 0; j < 2 * prior_n_abs_; j++)
 	{	g_l[j] = 0.0;
 		g_u[j] = nlp_upper_bound_inf_;
+	}
+	//
+	// explicit constraints
+	for(size_t j = 0; j < n_constraint_; j++)
+	{	g_l[2 * prior_n_abs_ + j] = constraint_lower_[j];
+		g_u[2 * prior_n_abs_ + j] = constraint_upper_[j];
 	}
 	//
 	return true;
@@ -609,7 +615,7 @@ bool ipopt_fixed::get_starting_point(
 	bool            init_z       ,  // in
 	Number*         z_L          ,  // out
 	Number*         z_U          ,  // out
-	Index           m            ,  // out
+	Index           m            ,  // in
 	bool            init_lambda  ,  // in
 	Number*         lambda       )  // out
 {
@@ -876,13 +882,19 @@ bool ipopt_fixed::eval_g(
 	// (2DO: cache prior_vec_tmp_ for eval_f with same x)
 	prior_vec_tmp_ = approx_object_.prior_eval(fixed_tmp_);
 	//
-	// convert absolute value terms to constraint
+	// convert absolute value terms to constraints
 	for(size_t j = 0; j < prior_n_abs_; j++)
 	{	// x[n_fixed_ + j] >= prior_vec_tmp_[1 + j];
 		g[2 * j] = Number(x[n_fixed_ + j] - prior_vec_tmp_[1 + j]); // >= 0
 		// x[n_fixed_ + j] >= - prior_vec_tmp_[1 + j]
 		g[2*j+1] = Number(x[n_fixed_ + j] + prior_vec_tmp_[1 + j]); // >= 0
 	}
+	//
+	// include explicit constraints
+	c_vec_tmp_ = approx_object_.constraint_eval(fixed_tmp_);
+	assert( c_vec_tmp_.size() == n_constraint_ );
+	for(size_t j = 0; j < n_constraint_; j++)
+		g[2 * prior_n_abs_ + j] = c_vec_tmp_[j];
 	//
 	return true;
 }
@@ -967,7 +979,7 @@ bool ipopt_fixed::eval_jac_g(
 	assert( size_t(nele_jac) == nnz_jac_g_ );
 	//
 	if( values == NULL )
-	{	// just return row and column indices
+	{	// just return row and column indices for l1 constraints
 		size_t ell = 0;
 		for(size_t k = 0; k < prior_jac_row_.size(); k++)
 		{	if( prior_jac_row_[k] != 0 )
@@ -976,12 +988,19 @@ bool ipopt_fixed::eval_jac_g(
 				ell += 2;
 			}
 		}
+		// auxillary variables for l1 constraints
 		for(size_t j = 0; j < prior_n_abs_; j++)
 		{	iRow[ell] = Index( 2 * j );
 			jCol[ell] = Index( n_fixed_ + j);
 			ell++;
 			iRow[ell] = Index( 2 * j + 1);
 			jCol[ell] = Index(n_fixed_ + j);
+			ell++;
+		}
+		// explicit constaints
+		for(size_t k = 0; k < constraint_jac_row_.size(); k++)
+		{	iRow[ell] = Index( constraint_jac_row_[k] );
+			jCol[ell] = Index( constraint_jac_col_[k] );
 			ell++;
 		}
 		return true;
@@ -1010,6 +1029,15 @@ bool ipopt_fixed::eval_jac_g(
 		}
 	}
 	//
+	// Jacobian of explicit constraints
+	approx_object_.constraint_jac(
+		fixed_tmp_,
+		constraint_jac_row_,
+		constraint_jac_col_,
+		constraint_jac_val_
+	);
+	for(size_t k = 0; k < constraint_jac_row_.size(); k++)
+		values[ell++] = Number( constraint_jac_val_[k] );
 	return true;
 }
 /*

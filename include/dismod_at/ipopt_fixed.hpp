@@ -113,6 +113,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		d_vector        fixed_tmp_;      // size n_fixed_
 		d_vector        random_tmp_;     // size n_random_
 		d_vector        prior_vec_tmp_;  // size prior_n_abs_ + 1
+		d_vector        c_vec_tmp_;      // size n_constraint_
 		d_vector        H_beta_tmp_;     // size n_fixed_
 		d_vector        weight_tmp_;     // size 2 * prior_n_abs
 		// ---------------------------------------------------------------

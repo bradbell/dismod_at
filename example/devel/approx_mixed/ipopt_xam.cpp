@@ -326,7 +326,7 @@ bool ipopt_xam_nlp::get_starting_point(
 	bool            init_z       ,  // in
 	Number*         z_L          ,  // out
 	Number*         z_U          ,  // out
-	Index           m            ,  // out
+	Index           m            ,  // in
 	bool            init_lambda  ,  // in
 	Number*         lambda       )  // out
 {
