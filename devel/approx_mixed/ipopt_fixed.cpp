@@ -244,10 +244,10 @@ approx_object_ ( approx_object    )
 	double inf           = std::numeric_limits<double>::infinity();
 	for(size_t j = 0; j < n_fixed_; j++)
 	{	if( fixed_lower[j] != - inf ) nlp_lower_bound_inf_ =
-				std::min(nlp_lower_bound_inf_, fixed_lower[j] );
+				std::min(nlp_lower_bound_inf_, 1.1 * fixed_lower[j] );
 		//
 		if( fixed_upper[j] != inf ) nlp_upper_bound_inf_ =
-				std::max(nlp_upper_bound_inf_, fixed_upper[j] );
+				std::max(nlp_upper_bound_inf_, 1.1 * fixed_upper[j] );
 	}
 	// -----------------------------------------------------------------------
 	// set prior_n_abs_
