@@ -74,7 +74,8 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/interp_weight_xam.cpp
 	utility/manage_gsl_rng_xam.cpp
 	utility/pack_info_xam.cpp
-	utility/pack_prior_xam.cpp
+	utility/pack_diff_prior_xam.cpp
+	utility/pack_value_prior_xam.cpp
 	utility/random_effect_xam.cpp
 	utility/residual_density_xam.cpp
 	utility/sim_random_xam.cpp

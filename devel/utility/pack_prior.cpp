@@ -8,8 +8,66 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
+# include <dismod_at/pack_prior.hpp>
+# include <dismod_at/null_int.hpp>
 
+namespace {
+	// ----------------------------------------------------------------------
+	void set_value_prior(
+		CppAD::vector<size_t>&            ret_val   ,
+		size_t                            offset    ,
+		const dismod_at::smooth_info&     s_info  )
+	{
+		size_t n_age     = s_info.age_size();
+		size_t n_time    = s_info.time_size();
+		for(size_t i = 0; i < n_age; i++)
+		{	for(size_t j = 0; j < n_time; j++)
+			{	size_t index   = offset + i * n_time + j;
+				ret_val[index] = s_info.value_prior_id(i, j);
+			}
+		}
+	}
+	// ----------------------------------------------------------------------
+	using dismod_at::diff_prior_struct;
+	void set_diff_prior(
+		CppAD::vector<diff_prior_struct>&  ret_val ,
+		size_t                             offset  ,
+		const dismod_at::smooth_info&      s_info  )
+	{	diff_prior_struct one_prior;
+		size_t n_age     = s_info.age_size();
+		size_t n_time    = s_info.time_size();
+		//
+		// dage_prior_id
+		if( n_age > 1 )
+		{	for(size_t i = 0; i < n_age-1; i++)
+			{	for(size_t j = 0; j < n_time; j++)
+				{	one_prior.minus_var_id = offset + i * n_time + j;
+					one_prior.plus_var_id  = offset + (i+1) * n_time + j;
+					one_prior.prior_id     = s_info.dage_prior_id(i, j);
+					assert( one_prior.prior_id != size_t(DISMOD_AT_NULL_INT) );
+					ret_val.push_back(one_prior);
+				}
+			}
+		}
+		//
+		// dtime_prior_id
+		if( n_time > 1 )
+		{	for(size_t i = 0; i < n_age; i++)
+			{	for(size_t j = 0; j < n_time-1; j++)
+				{	one_prior.minus_var_id = offset + i * n_time + j;
+					one_prior.plus_var_id  = offset + i * n_time + j+1;
+					one_prior.prior_id     = s_info.dtime_prior_id(i, j);
+					assert( one_prior.prior_id != size_t(DISMOD_AT_NULL_INT) );
+					ret_val.push_back(one_prior);
+				}
+			}
+		}
+	}
+}
+
+namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
+------------------------------------------------------------------------------
 $begin pack_value_prior$$
 $spell
 	vec
@@ -51,36 +109,14 @@ $cref/prior_id/prior_table/prior_id/$$ corresponding to the
 $th i$$ model variable in the order determined by $icode pack_object$$.
 
 $children%
-	example/devel/utility/pack_prior_xam.cpp
+	example/devel/utility/pack_value_prior_xam.cpp
 %$$
 $head Example$$
-The file $cref pack_prior_xam.cpp$$
+The file $cref pack_value_prior_xam.cpp$$
 contains an example and test that uses this routine.
 
 $end
 */
-# include <dismod_at/pack_prior.hpp>
-
-namespace {
-
-	void set_value_prior(
-		CppAD::vector<size_t>&            ret_val   ,
-		size_t                            offset    ,
-		const dismod_at::smooth_info&     s_info  )
-	{
-		size_t n_age     = s_info.age_size();
-		size_t n_time    = s_info.time_size();
-		for(size_t i = 0; i < n_age; i++)
-		{	for(size_t j = 0; j < n_time; j++)
-			{	size_t index   = offset + i * n_time + j;
-				ret_val[index] = s_info.value_prior_id(i, j);
-			}
-		}
-	}
-
-}
-
-namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 CppAD::vector<size_t> pack_value_prior(
 	const pack_info&                     pack_object  ,
@@ -148,6 +184,133 @@ CppAD::vector<size_t> pack_value_prior(
 		}
 	}
 
+	// done
+	return ret_val;
+}
+/*
+------------------------------------------------------------------------------
+$begin pack_diff_prior$$
+$spell
+	diff
+	vec
+	const
+	CppAD
+	struct
+	dage
+	dtime
+	var
+$$
+
+$section Difference Priors For Packed Variables$$
+
+$head Syntax$$
+$icode%diff_prior% = pack_diff_prior(%pack_object%, %s_info_vec%)%$$
+
+$head pack_object$$
+This argument has prototype
+$codei%
+	const pack_info& %pack_object%
+%$$
+and is the $cref pack_info$$ information corresponding to
+the $cref/model_variables/model_variable/$$.
+
+$head s_info_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<smooth_info>& %s_info_vec%
+%$$
+For each $cref/smooth_id/smooth_table/smooth_id/$$,
+$codei%
+	%s_info_vec%[ %smooth_id% ]
+%$$
+is the corresponding $cref smooth_info$$ information.
+
+$head diff_prior$$
+The return value has prototype
+$codei%
+	CppAD::vector<diff_prior_struct> %diff_prior%
+%$$
+It contains one $code diff_prior_sruct$$
+for each pair of packed variable indices that have a
+$cref/dage/smooth_grid_table/dage_prior_id/$$ or
+$cref/dtime/smooth_grid_table/dtime_prior_id/$$ prior.
+Let $icode%n_diff_prior% = %diff_prior%.size()%$$.
+For $icode%k% = 0 , %...%, %n_diff_prior%-1%$$:
+$table
+$icode%diff_prior%[%k%].plus_var_id%$$ $cnext
+	packed variable index of positive term
+$rnext
+$icode%diff_prior%[%k%].minus_var_id%$$ $cnext
+	packed variable index of negative term
+$rnext
+$icode%diff_prior%[%k%].prior_id%$$ $cnext
+	primary key in prior table for this difference
+$tend
+
+$children%
+	example/devel/utility/pack_diff_prior_xam.cpp
+%$$
+$head Example$$
+The file $cref pack_diff_prior_xam.cpp$$
+contains an example and test that uses this routine.
+$end
+*/
+
+
+CppAD::vector<diff_prior_struct> pack_diff_prior(
+	const pack_info&                     pack_object  ,
+	const CppAD::vector<smooth_info>&    s_info_vec   )
+{	pack_info::subvec_info info;
+
+	// initilaize return value as empty vector
+	CppAD::vector<diff_prior_struct> ret_val;
+
+	// some parameters
+	size_t n_child     = pack_object.child_size();
+	size_t n_integrand = pack_object.integrand_size();
+
+	// no difference priors for smoothing multipliers
+
+	// get priors for rates
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	{	for(size_t j = 0; j <= n_child; j++)
+		{	info             = pack_object.rate_info(rate_id, j);
+			size_t offset    = info.offset;
+			size_t smooth_id = info.smooth_id;
+			set_diff_prior(ret_val, offset, s_info_vec[smooth_id]);
+		}
+	}
+
+	// get priors for rate mean covariates
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	{	size_t n_cov = pack_object.mulcov_rate_mean_n_cov(rate_id);
+		for(size_t j = 0; j < n_cov; j++)
+		{	info   = pack_object.mulcov_rate_mean_info(rate_id, j);
+			size_t offset    = info.offset;
+			size_t smooth_id = info.smooth_id;
+			set_diff_prior(ret_val, offset, s_info_vec[smooth_id]);
+		}
+	}
+
+	// get prioirs for measurement covariates
+	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
+	{	// measurement mean covariates for this integrand
+		size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
+		for(size_t j = 0; j < n_cov; j++)
+		{	info   = pack_object.mulcov_meas_value_info(integrand_id, j);
+			size_t offset    = info.offset;
+			size_t smooth_id = info.smooth_id;
+			set_diff_prior(ret_val, offset, s_info_vec[smooth_id]);
+		}
+		// measurement std covariates for this integrand
+		n_cov = pack_object.mulcov_meas_std_n_cov(integrand_id);
+		for(size_t j = 0; j < n_cov; j++)
+		{	info   = pack_object.mulcov_meas_std_info(integrand_id, j);
+			size_t offset    = info.offset;
+			size_t smooth_id = info.smooth_id;
+			set_diff_prior(ret_val, offset, s_info_vec[smooth_id]);
+		}
+	}
 	// done
 	return ret_val;
 }

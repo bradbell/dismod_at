@@ -9,16 +9,16 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin pack_prior_xam.cpp$$
+$begin pack_diff_prior_xam.cpp$$
 $spell
-	interp
 	xam
+	diff
 $$
 
-$section C++ pack_prior: Example and Test$$
+$section C++ pack_diff_prior: Example and Test$$
 
 $code
-$verbatim%example/devel/utility/pack_prior_xam.cpp%0
+$verbatim%example/devel/utility/pack_diff_prior_xam.cpp%0
 	%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -33,7 +33,7 @@ $end
 
 # define DISMOD_AT_PRIOR_DENSITY_XAM_TRACE 0
 
-bool pack_prior_xam(void)
+bool pack_diff_prior_xam(void)
 {	bool   ok = true;
 	size_t i, j;
 	using CppAD::vector;
@@ -97,7 +97,7 @@ bool pack_prior_xam(void)
 	vector<size_t> value_prior_id, dage_prior_id, dtime_prior_id;
 	size_t mulstd_value, mulstd_dage, mulstd_dtime;
 	size_t n_age, n_time, n_grid;
-
+	//
 	vector<dismod_at::smooth_info> s_info_vec(2);
 	// ------------------ first smoothing ------------------------------------
 	// age_id
@@ -203,18 +203,12 @@ bool pack_prior_xam(void)
 		db, n_integrand, n_child,
 		smooth_table, mulcov_table, rate_table
 	);
-	// ----------------------- value_prior -------------------------------
-	vector<size_t> value_prior = dismod_at::pack_value_prior(
-		pack_object, s_info_vec
-	);
-	dismod_at::pack_info::subvec_info info;
+	// ----------------------- diff_prior -------------------------------
+	vector<dismod_at::diff_prior_struct> diff_prior =
+		dismod_at::pack_diff_prior(pack_object, s_info_vec);
+	size_t n_diff_prior = diff_prior.size();
 	//
-	// check mulstd
-	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
-	{	size_t offset  = pack_object.mulstd_offset(smooth_id);
-		for(i = 0; i < 3; i++)
-			ok &= value_prior[offset + i] == i;
-	}
+	dismod_at::pack_info::subvec_info info;
 	//
 	// check rates
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
@@ -223,10 +217,44 @@ bool pack_prior_xam(void)
 			dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 			n_age  = s_info.age_size();
 			n_time = s_info.time_size();
-			for(i = 0; i < n_age; i++)
-			{	for(j = 0; j < n_time; j++)
-				{	size_t index   = info.offset + i * n_time + j;
-					ok &= s_info.value_prior_id(i, j) == value_prior[index];
+			if( n_age > 1 )
+			{	for(i = 0; i < n_age-1; i++)
+				{	for(j = 0; j < n_time; j++)
+					{	size_t minus_var_id = info.offset + i * n_time + j;
+						size_t plus_var_id  = info.offset + (i+1) * n_time + j;
+						size_t prior_id     = s_info.dage_prior_id(i, j);
+						size_t count = 0;
+						for(size_t k = 0; k < n_diff_prior; k++)
+						{	bool match = true;
+							match &= diff_prior[k].minus_var_id==minus_var_id;
+							match &= diff_prior[k].plus_var_id == plus_var_id;
+							if( match )
+							{	ok &= diff_prior[k].prior_id == prior_id;
+								count++;
+							}
+						}
+						ok &= count == 1;
+					}
+				}
+			}
+			if( n_time > 1 )
+			{	for(i = 0; i < n_age; i++)
+				{	for(j = 0; j < n_time-1; j++)
+					{	size_t minus_var_id = info.offset + i * n_time + j;
+						size_t plus_var_id  = info.offset + i * n_time + j + 1;
+						size_t prior_id     = s_info.dtime_prior_id(i, j);
+						size_t count = 0;
+						for(size_t k = 0; k < n_diff_prior; k++)
+						{	bool match = true;
+							match &= diff_prior[k].minus_var_id==minus_var_id;
+							match &= diff_prior[k].plus_var_id == plus_var_id;
+							if( match )
+							{	ok &= diff_prior[k].prior_id == prior_id;
+								count++;
+							}
+						}
+						ok &= count == 1;
+					}
 				}
 			}
 		}
