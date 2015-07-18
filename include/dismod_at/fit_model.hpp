@@ -50,8 +50,12 @@ namespace dismod_at {
 		//
 		// Prior for variable differences. Only difference for which
 		// the upper limit is less than + infinity or the lower limit
-		// is greate than minus infinity are included.
+		// is greater than minus infinity are included. Note that all the
+		// corresponding variables should be fixed effects.
 		CppAD::vector<diff_prior_struct>  diff_prior_;
+		// Converts a packed variable id to index in fixed vector.
+		// Uses the invalid value n_fixed_ if not a fixed variable.
+		CppAD::vector<size_t>             var_id2fixed_;
 		// -------------------------------------------------------------------
 		// solution found by run_fit and in pack_info form
 		CppAD::vector<double>              solution_;

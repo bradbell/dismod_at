@@ -121,8 +121,9 @@ void approx_mixed::constraint_hes(
 		"approx_mixed::initialize was not called before constraint_hes";
 		fatal_error(error_message);
 	}
-	if( constraint_.size_var() == 0 )
-	{	assert( row_out.size() == 0 );
+	if( constraint_hes_row_.size() == 0 )
+	{	// Sparse Hessian has no rows
+		assert( row_out.size() == 0 );
 		assert( col_out.size() == 0 );
 		assert( constraint_hes_row_.size() == 0 );
 		assert( constraint_hes_col_.size() == 0 );
@@ -147,6 +148,7 @@ void approx_mixed::constraint_hes(
 		}
 	}
 # endif
+	assert( row_out.size() != 0 );
 
 	CppAD::vector< std::set<size_t> > not_used;
 	constraint_.SparseHessian(

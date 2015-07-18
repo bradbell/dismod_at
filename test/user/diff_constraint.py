@@ -33,17 +33,36 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ---------------------------------------------------------------------------
-# note that the a, t values are not used for this example
+import sys
+import os
+import distutils.dir_util
+import subprocess
+test_program = 'test/user/diff_constraint.py'
+if sys.argv[0] != test_program  or len(sys.argv) != 1 :
+	usage  = 'python3 ' + test_program + '\n'
+	usage += 'where python3 is the python 3 program on your system\n'
+	usage += 'and working directory is the dismod_at distribution directory\n'
+	sys.exit(usage)
+#
+# import dismod_at
+sys.path.append( os.getcwd() + '/python' )
+import dismod_at
+#
+# change into the build/test/user directory
+distutils.dir_util.mkpath('build/test/user')
+os.chdir('build/test/user')
+# ------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
+# note that the a, t values are not used for this case
 def gaussian_zero_fun(a, t) :
-	return ('prior_mean_zero', 'prior_mean_zero', 'prior_mean_zero')
+	return 3 * ['prior_mean_zero']
 def uniform_positive_fun(a, t) :
-	return ('prior_uniform_positive', 'prior_mean_zero', 'prior_mean_zero')
+	return 3 * ['prior_uniform_positive']
+def zero_fun(a, t) :
+	return 3 * ['prior_zero']
 # ------------------------------------------------------------------------
-def get_started_db (file_name) :
-	import sys
-	import os
+def example_db (file_name) :
 	import copy
 	import dismod_at
 	# ----------------------------------------------------------------------
@@ -91,35 +110,22 @@ def get_started_db (file_name) :
 		'density':     'gaussian',
 		'weight':      'constant',
 		'hold_out':     False,
-		'time_lower':   2000.0,
-		'time_upper':   2000.0,
-		'age_lower':    0.0
+		'time_lower':   1995.0,
+		'time_upper':   1995.0,
+		'age_lower':    0.0,
+		'age_upper':    0.0
 	}
 	# values that change between rows: (one data point for each integrand)
 	for integrand_id in range( len(integrand_dict) ) :
 		rate_id           = integrand_id
-		meas_value        = 1e-2 * (rate_id + 1)
+		meas_value        = 0.2
 		meas_std          = 0.2 * meas_value
 		integrand         = integrand_dict[integrand_id]['name']
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
 		row['integrand']  = integrand
-		if integrand == 'prevalence' :
-			# prevalence is measured at age zero
-			row['age_upper'] = 0.0
-		else :
-			# other integrands are averaged from age zero to one hundred
-			row['age_upper'] = 100.0
 		# data_id = rate_id = integand_id
 		data_dict.append( copy.copy(row) )
-	#
-	# add one outlyer at end of data table with hold_out true
-	row['hold_out']   = True # if outlyer were false, fit would fail
-	row['integrand']  = data_dict[0]['integrand']
-	row['meas_std']   = data_dict[0]['meas_std']
-	row['age_upper']  = data_dict[0]['age_upper']
-	row['meas_value'] = 10. * data_dict[0]['meas_value']
-	data_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
 	prior_dict = [
@@ -142,9 +148,9 @@ def get_started_db (file_name) :
 		},{ # prior_uniform_positive
 			'name':     'prior_uniform_positive',
 			'density':  'uniform',
-			'lower':    1e-4,
+			'lower':    0.01,
 			'upper':    None,
-			'mean':     1e-1,
+			'mean':     0.1,
 			'std':      None,
 			'eta':      None
 		},{ # prior_mean_zero
@@ -153,18 +159,20 @@ def get_started_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      1e-2,
+			'std':      0.01,
 			'eta':      None
 		}
 	]
 	# --------------------------------------------------------------------------
 	# smooth table
 	middle_age_id  = 1
+	middle_time_id = 1
+	last_age_id    = 2
 	last_time_id   = 2
 	smooth_dict = [
 		{   # smooth_mean_zero
 			'name':                     'smooth_mean_zero',
-			'age_id':                   [ middle_age_id ],
+			'age_id':                   [ 0, last_age_id ],
 			'time_id':                  [ 0, last_time_id ],
 			'mulstd_value_prior_name':  'prior_one',
 			'mulstd_dage_prior_name':   'prior_one',
@@ -172,12 +180,20 @@ def get_started_db (file_name) :
 			'fun':                      gaussian_zero_fun
 		},{ # smooth_uniform_positive
 			'name':                     'smooth_uniform_positive',
-			'age_id':                   [ middle_age_id ],
+			'age_id':                   [ 0, last_age_id ],
 			'time_id':                  [ 0, last_time_id ],
 			'mulstd_value_prior_name':  'prior_one',
 			'mulstd_dage_prior_name':   'prior_one',
 			'mulstd_dtime_prior_name':  'prior_one',
 			'fun':                       uniform_positive_fun
+		},{ # smooth_pini
+			'name':                     'smooth_pini',
+			'age_id':                   [ middle_age_id ],
+			'time_id':                  [ middle_time_id ],
+			'mulstd_value_prior_name':  'prior_one',
+			'mulstd_dage_prior_name':   'prior_one',
+			'mulstd_dtime_prior_name':  'prior_one',
+			'fun':                       gaussian_zero_fun
 		}
 	]
 	# --------------------------------------------------------------------------
@@ -185,8 +201,8 @@ def get_started_db (file_name) :
 	rate_dict = [
 		{
 			'name':          'pini',
-			'parent_smooth': 'smooth_uniform_positive',
-			'child_smooth':  'smooth_mean_zero'
+			'parent_smooth': 'smooth_pini',
+			'child_smooth':  'smooth_pini'
 		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_uniform_positive',
@@ -217,27 +233,8 @@ def get_started_db (file_name) :
 		{ 'name':'rate_info',     'value':'chi_positive' }
 	]
 	# --------------------------------------------------------------------------
-	# avg_case table: same order as list of integrands
+	# avg_case table: empty
 	avg_case_dict = list()
-	# values that are the same for all data rows
-	row = {
-		'node':        'world',
-		'weight':      'constant',
-		'time_lower':   2000.0,
-		'time_upper':   2000.0,
-		'age_lower':    0.0
-	}
-	# values that change between rows: (one data point for each integrand)
-	for avg_case_id in range( len(integrand_dict) ) :
-		integrand         = integrand_dict[avg_case_id]['name']
-		row['integrand']  = integrand
-		if integrand == 'prevalence' :
-			# prevalence is measured at age zero
-			row['age_upper'] = 0.0
-		else :
-			# other integrands are averaged from age zero to one hundred
-			row['age_upper'] = 100.0
-		avg_case_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
@@ -265,5 +262,19 @@ def get_started_db (file_name) :
 		meas_value = data_dict[data_id]['meas_value']
 		rate_true.append(meas_value)
 	#
-	return (n_smooth, rate_true)
-# END PYTHON
+	return
+# ===========================================================================
+file_name      = 'example.db'
+example_db(file_name)
+program        = '../../devel/dismod_at'
+for command in [ 'init', 'start', 'fit' ] :
+	cmd  = [ program, command, file_name ]
+	print( ' '.join(cmd) )
+	flag = subprocess.call( cmd )
+	if flag != 0 :
+		sys.exit('The dismod_at ' + command + ' command failed')
+# -----------------------------------------------------------------------
+# connect to database
+new             = False
+connection      = dismod_at.create_connection(file_name, new)
+

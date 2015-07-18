@@ -17,6 +17,10 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 	extern size_t size_fixed_effect(const pack_info& pack_object);
 	//
+	extern CppAD::vector<size_t> fixed2var_id(
+		const pack_info&             pack_object
+	);
+	//
 	template <class Float>
 	extern void get_fixed_effect(
 		const pack_info&             pack_object  ,

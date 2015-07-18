@@ -230,7 +230,7 @@ The return value has prototype
 $codei%
 	CppAD::vector<diff_prior_struct> %diff_prior%
 %$$
-It contains one $code diff_prior_sruct$$
+It contains one $code diff_prior_struct$$
 for each pair of packed variable indices that have a
 $cref/dage/smooth_grid_table/dage_prior_id/$$ or
 $cref/dtime/smooth_grid_table/dtime_prior_id/$$ prior.
@@ -311,6 +311,13 @@ CppAD::vector<diff_prior_struct> pack_diff_prior(
 			set_diff_prior(ret_val, offset, s_info_vec[smooth_id]);
 		}
 	}
+# ifndef NDEBUG
+	size_t n_var = pack_object.size();
+	for(size_t k = 0; k < ret_val.size(); k++)
+	{	assert( ret_val[k].plus_var_id < n_var );
+		assert( ret_val[k].minus_var_id < n_var );
+	}
+# endif
 	// done
 	return ret_val;
 }

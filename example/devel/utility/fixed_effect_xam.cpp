@@ -101,6 +101,9 @@ bool fixed_effect_xam(void)
 	// check size_fixed_effect
 	ok &= n_fixed_effect == dismod_at::size_fixed_effect(pack_object);
 
+	// pack_index
+	CppAD::vector<size_t> pack_index = dismod_at::fixed2var_id(pack_object);
+
 	// pack_vec
 	CppAD::vector<double> pack_vec( pack_object.size() );
 
@@ -111,6 +114,10 @@ bool fixed_effect_xam(void)
 	for(size_t i = 0; i < n_fixed_effect; i++)
 		fixed_vec[i] = double(i + 1);
 	dismod_at::put_fixed_effect(pack_object, pack_vec, fixed_vec);
+
+	// check pack_index values
+	for(size_t i = 0; i < n_fixed_effect; i++)
+		ok &= pack_vec[ pack_index[i] ] == double(i+1);
 
 	// clear fixed_vec
 	for(size_t i = 0; i < n_fixed_effect; i++)

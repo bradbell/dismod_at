@@ -101,8 +101,9 @@ void approx_mixed::constraint_jac(
 		"approx_mixed::initialize was not called before constraint_jac";
 		fatal_error(error_message);
 	}
-	if( constraint_.size_var() == 0 )
-	{	assert( row_out.size() == 0 );
+	if( constraint_jac_row_.size() == 0 )
+	{	// sparse Jacobian has no rows
+		assert( row_out.size() == 0 );
 		assert( col_out.size() == 0 );
 		assert( constraint_jac_row_.size() == 0 );
 		assert( constraint_jac_col_.size() == 0 );
@@ -127,7 +128,6 @@ void approx_mixed::constraint_jac(
 		}
 	}
 # endif
-	// just checking to see if example/devel/model/fit_model_xam is this case
 	assert( row_out.size() != 0 );
 
 	CppAD::vector< std::set<size_t> > not_used;

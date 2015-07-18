@@ -23,6 +23,8 @@ $section Setting and Getting the Fixed Effect Vector$$
 $head Syntax$$
 $icode%size_fixed% = size_fixed_effect(%pack_object%)
 %$$
+$icode%pack_index% = fixed2var_id(%pack_object%)
+%$$
 $codei%put_fixed_effect(%pack_object%, %pack_vec%, %fixed_vec%)
 %$$
 $codei%get_fixed_effect(%pack_object%, %pack_vec%, %fixed_vec%)
@@ -54,6 +56,17 @@ $codei%
 %$$
 It is the number of
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$ in the model.
+
+$head pack_index$$
+This return value has prototype
+$codei%
+	CppAD::vector<size_t> %pack_index%
+%$$
+It size is equal to $icode size_fixed$$; i.e., the number of
+$cref/fixed effects/model_variable/Fixed Effects, theta/$$ in the model.
+For each fixed effect index $icode j$$,
+the value $icode%pack_index%[%j%]%$$ is the corresponding
+index in a packed vector (with both fixed and random effects).
 
 $head put_fixed_effect$$
 This functions copies information from $icode pack_vec$$
@@ -122,6 +135,68 @@ size_t size_fixed_effect(const pack_info&  pack_object)
 {	assert( pack_object.size() > size_random_effect(pack_object) );
 	return pack_object.size() - size_random_effect(pack_object);
 }
+// ---------------------------------------------------------------------------
+CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
+{
+	//
+	size_t n_integrand = pack_object.integrand_size();
+	size_t n_child     = pack_object.child_size();
+	size_t n_smooth    = pack_object.smooth_size();
+
+	pack_info::subvec_info info;
+	size_t pack_index;
+	size_t fixed_index = 0;
+	size_t n_fixed     = size_fixed_effect(pack_object);
+	CppAD::vector<size_t> ret_val(n_fixed);
+
+	// mulstd
+	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
+	{	pack_index = pack_object.mulstd_offset(smooth_id);
+		for(size_t k = 0; k < 3; k++)
+			ret_val[fixed_index++] = pack_index++;
+	}
+
+	// parent rates
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	{	info       = pack_object.rate_info(rate_id, n_child);
+		pack_index = info.offset;
+		for(size_t k = 0; k < info.n_var; k++)
+			ret_val[fixed_index++] = pack_index++;
+	}
+
+	// measurement mean and standard deviation covariates
+	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
+	{	size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
+		for(size_t j = 0; j < n_cov; j++)
+		{	info       = pack_object.mulcov_meas_value_info(integrand_id, j);
+			pack_index = info.offset;
+			for(size_t k = 0; k < info.n_var; k++)
+				ret_val[fixed_index++] = pack_index++;
+		}
+		n_cov = pack_object.mulcov_meas_std_n_cov(integrand_id);
+		for(size_t j = 0; j < n_cov; j++)
+		{	info       = pack_object.mulcov_meas_std_info(integrand_id, j);
+			pack_index = info.offset;
+			for(size_t k = 0; k < info.n_var; k++)
+				ret_val[fixed_index++] = pack_index++;
+		}
+	}
+
+	// rate mean covariates
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	{	size_t n_cov = pack_object.mulcov_rate_mean_n_cov(rate_id);
+		for(size_t j = 0; j < n_cov; j++)
+		{	info       = pack_object.mulcov_rate_mean_info(rate_id, j);
+			pack_index = info.offset;
+			for(size_t k = 0; k < info.n_var; k++)
+				ret_val[fixed_index++] = pack_index++;
+		}
+	}
+	assert( fixed_index == n_fixed );
+	//
+	return ret_val;
+}
+// ---------------------------------------------------------------------------
 
 template <class Float>
 void get_fixed_effect(
@@ -187,6 +262,7 @@ void get_fixed_effect(
 
 	return;
 }
+// ---------------------------------------------------------------------------
 
 template <class Float>
 void put_fixed_effect(
@@ -251,6 +327,7 @@ void put_fixed_effect(
 
 	return;
 }
+// ---------------------------------------------------------------------------
 
 # define DISMOD_AT_INSTANTIATE_FIXED_EFFECT(Float)        \
 	template void get_fixed_effect(                       \

@@ -171,10 +171,10 @@ s_info_vec_    ( s_info_vec  )                      ,
 data_object_   ( data_object )                      ,
 prior_object_  ( prior_object )
 {
-# ifndef NDEBUG
+	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
-# endif
+	//
 	// value_prior_
 	value_prior_ = pack_value_prior(pack_object, s_info_vec);
 	assert( value_prior_.size() == n_var );
@@ -191,6 +191,14 @@ prior_object_  ( prior_object )
 		if( - inf < lower || upper < + inf )
 			diff_prior_.push_back( diff_prior_tmp[k] );
 	}
+	//
+	// var_id2fixed_
+	var_id2fixed_.resize(n_var);
+	for(size_t k = 0; k < n_var; k++)
+		var_id2fixed_[k] = n_fixed_;
+	CppAD::vector<size_t> pack_index = fixed2var_id(pack_object);
+	for(size_t j = 0; j < n_fixed_; j++)
+		var_id2fixed_[ pack_index[j] ] = j;
 	// ---------------------------------------------------------------------
 	// initialize the aprox_mixed object
 	//
@@ -228,7 +236,11 @@ void fit_model::run_fit(
 	// constraint_lower, constraint_upper
 	CppAD::vector<double> constraint_lower, constraint_upper;
 	for(size_t k = 0; k < diff_prior_.size(); k++)
-	{	size_t prior_id = diff_prior_[k].prior_id;
+	{	// make sure these variable ids correspond to fixed effects
+		assert( var_id2fixed_[ diff_prior_[k].plus_var_id ] < n_fixed_ );
+		assert( var_id2fixed_[ diff_prior_[k].minus_var_id ] < n_fixed_ );
+		//
+		size_t prior_id = diff_prior_[k].prior_id;
 		double lower    = prior_table_[prior_id].lower;
 		double upper    = prior_table_[prior_id].upper;
 		constraint_lower.push_back(lower);
@@ -413,9 +425,11 @@ fit_model::a1d_vector fit_model::prior_like(
 fit_model::a1d_vector fit_model::constraint(const a1d_vector& fixed_vec)
 {	a1d_vector ret_val( diff_prior_.size() );
 	for(size_t k = 0; k < diff_prior_.size(); k++)
-	{	size_t plus_var_id  = diff_prior_[k].plus_var_id;
-		size_t minus_var_id = diff_prior_[k].plus_var_id;
-		ret_val[k] = fixed_vec[plus_var_id] - fixed_vec[minus_var_id];
+	{	size_t plus_var_id    = diff_prior_[k].plus_var_id;
+		size_t minus_var_id   = diff_prior_[k].minus_var_id;
+		size_t plus_fixed_id  = var_id2fixed_[ plus_var_id ];
+		size_t minus_fixed_id = var_id2fixed_[ minus_var_id ];
+		ret_val[k] = fixed_vec[plus_fixed_id] - fixed_vec[minus_fixed_id];
 	}
 	return ret_val;
 }
