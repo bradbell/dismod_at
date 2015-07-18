@@ -10,7 +10,6 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/a5_double.hpp>
 # include <dismod_at/fit_model.hpp>
-# include <dismod_at/pack_prior.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/log_message.hpp>
 /*
@@ -172,11 +171,26 @@ s_info_vec_    ( s_info_vec  )                      ,
 data_object_   ( data_object )                      ,
 prior_object_  ( prior_object )
 {
-	// value_prior_
-	value_prior_ = pack_value_prior(pack_object, s_info_vec);
+# ifndef NDEBUG
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
+# endif
+	// value_prior_
+	value_prior_ = pack_value_prior(pack_object, s_info_vec);
 	assert( value_prior_.size() == n_var );
+	//
+	// diff_prior_
+	CppAD::vector<diff_prior_struct> diff_prior_tmp =
+			pack_diff_prior(pack_object, s_info_vec);
+	assert( diff_prior_.size() == 0 );
+	double inf = std::numeric_limits<double>::infinity();
+	for(size_t k = 0; k < diff_prior_tmp.size(); k++)
+	{	size_t prior_id = diff_prior_tmp[k].prior_id;
+		double lower    = prior_table[prior_id].lower;
+		double upper    = prior_table[prior_id].upper;
+		if( - inf < lower || upper < + inf )
+			diff_prior_.push_back( diff_prior_tmp[k] );
+	}
 	// ---------------------------------------------------------------------
 	// initialize the aprox_mixed object
 	//
@@ -211,9 +225,15 @@ void fit_model::run_fit(
 		pack_vec[i] = prior_table_[ value_prior_[i] ].upper;
 	get_fixed_effect(pack_object_, pack_vec, fixed_upper);
 
-	// 2DO: implement the constraints corresponding to dage and dtime priors
-	CppAD::vector<double> constraint_lower(0);
-	CppAD::vector<double> constraint_upper(0);
+	// constraint_lower, constraint_upper
+	CppAD::vector<double> constraint_lower, constraint_upper;
+	for(size_t k = 0; k < diff_prior_.size(); k++)
+	{	size_t prior_id = diff_prior_[k].prior_id;
+		double lower    = prior_table_[prior_id].lower;
+		double upper    = prior_table_[prior_id].upper;
+		constraint_lower.push_back(lower);
+		constraint_upper.push_back(upper);
+	}
 
 	// fixed_in
 	CppAD::vector<double> fixed_in(n_fixed_);
@@ -390,10 +410,14 @@ fit_model::a1d_vector fit_model::prior_like(
 }
 // --------------------------------------------------------------------------
 // constraint
-// 2DO: implement the constraints corresponding to dage and dtime priors
-fit_model::a1d_vector fit_model::constraint(
-	const a1d_vector& fixed_vec   )
-{	return a1d_vector(0); // empty vector
+fit_model::a1d_vector fit_model::constraint(const a1d_vector& fixed_vec)
+{	a1d_vector ret_val( diff_prior_.size() );
+	for(size_t k = 0; k < diff_prior_.size(); k++)
+	{	size_t plus_var_id  = diff_prior_[k].plus_var_id;
+		size_t minus_var_id = diff_prior_[k].plus_var_id;
+		ret_val[k] = fixed_vec[plus_var_id] - fixed_vec[minus_var_id];
+	}
+	return ret_val;
 }
 // ---------------------------------------------------------------------------
 // fatal_error

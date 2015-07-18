@@ -19,6 +19,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/prior_model.hpp>
 # include <dismod_at/fixed_effect.hpp>
 # include <dismod_at/random_effect.hpp>
+# include <dismod_at/pack_prior.hpp>
 
 namespace dismod_at {
 
@@ -41,10 +42,17 @@ namespace dismod_at {
 		const CppAD::vector<smooth_info>&  s_info_vec_;
 		const data_model&                  data_object_;
 		const prior_model&                 prior_object_;
-		//
+		// -------------------------------------------------------------------
 		// set during constructor and otherwise const
-		CppAD::vector<size_t>              value_prior_;
 		//
+		// prior for each variable
+		CppAD::vector<size_t>             value_prior_;
+		//
+		// Prior for variable differences. Only difference for which
+		// the upper limit is less than + infinity or the lower limit
+		// is greate than minus infinity are included.
+		CppAD::vector<diff_prior_struct>  diff_prior_;
+		// -------------------------------------------------------------------
 		// solution found by run_fit and in pack_info form
 		CppAD::vector<double>              solution_;
 		//
