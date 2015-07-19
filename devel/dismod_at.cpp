@@ -416,8 +416,9 @@ void fit_command(
 	const dismod_at::db_input_struct&            db_input         ,
 	const vector<dismod_at::smooth_info>&        s_info_vec       ,
 	const dismod_at::prior_model&                prior_object     ,
-	const std::string&                           tolerance_arg    ,
-	const std::string&                           max_num_iter_arg
+	const std::string&                           tolerance_str    ,
+	const std::string&                           max_num_iter_str ,
+	const std::string&                           print_level_str
 )
 {	using std::string;
 	using dismod_at::to_string;
@@ -437,7 +438,7 @@ void fit_command(
 		data_object          ,
 		prior_object
 	);
-	fit_object.run_fit(tolerance_arg, max_num_iter_arg);
+	fit_object.run_fit(tolerance_str, max_num_iter_str, print_level_str);
 	vector<double> solution = fit_object.get_solution();
 	// -------------------- fit_var table --------------------------------------
 	string sql_cmd = "drop table if exists fit_var";
@@ -743,15 +744,16 @@ $end
 
 // ----------------------------------------------------------------------------
 void sample_command(
-	sqlite3*                                             db               ,
-	vector<dismod_at::data_subset_struct>&               data_subset_obj  ,
-	dismod_at::data_model&                               data_object      ,
-	const dismod_at::pack_info&                          pack_object      ,
-	const dismod_at::db_input_struct&                    db_input         ,
-	const vector<dismod_at::smooth_info>&                s_info_vec       ,
-	const dismod_at::prior_model&                        prior_object     ,
-	const std::string&                                   tolerance_arg    ,
-	const std::string&                                   max_num_iter_arg
+	sqlite3*                                    db               ,
+	vector<dismod_at::data_subset_struct>&      data_subset_obj  ,
+	dismod_at::data_model&                      data_object      ,
+	const dismod_at::pack_info&                 pack_object      ,
+	const dismod_at::db_input_struct&           db_input         ,
+	const vector<dismod_at::smooth_info>&       s_info_vec       ,
+	const dismod_at::prior_model&               prior_object     ,
+	const std::string&                          tolerance_str    ,
+	const std::string&                          max_num_iter_str ,
+	const std::string&                          print_level_str
 )
 {
 	using std::string;
@@ -820,7 +822,7 @@ void sample_command(
 			data_object          ,
 			prior_object
 		);
-		fit_object.run_fit(tolerance_arg, max_num_iter_arg);
+		fit_object.run_fit(tolerance_str, max_num_iter_str, print_level_str);
 		vector<double> solution = fit_object.get_solution();
 		assert( solution.size() == n_var );
 		//
@@ -1160,8 +1162,9 @@ int main(int n_arg, const char** argv)
 	);
 	avg_case_object.set_eigen_ode2_case_number(rate_info);
 	// -----------------------------------------------------------------------
-	string tolerance     = argument_map["tolerance"];
-	string max_num_iter  = argument_map["max_num_iter"];
+	string tolerance_str     = argument_map["tolerance"];
+	string max_num_iter_str  = argument_map["max_num_iter"];
+	string print_level_str   = argument_map["print_level"];
 	// ---------------------------------------------------------------------
 	if( command_arg == "init" )
 	{	init_command(
@@ -1191,8 +1194,9 @@ int main(int n_arg, const char** argv)
 			db_input         ,
 			s_info_vec       ,
 			prior_object     ,
-			tolerance        ,
-			max_num_iter
+			tolerance_str    ,
+			max_num_iter_str ,
+			print_level_str
 		);
 	}
 	else if( command_arg == "truth" )
@@ -1220,8 +1224,9 @@ int main(int n_arg, const char** argv)
 			db_input         ,
 			s_info_vec       ,
 			prior_object     ,
-			tolerance        ,
-			max_num_iter
+			tolerance_str    ,
+			max_num_iter_str ,
+			print_level_str
 		);
 	}
 	else if( command_arg == "predict" )

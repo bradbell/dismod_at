@@ -26,6 +26,7 @@ $spell
 	CppAD
 	struct
 	var
+	dismod
 $$
 
 $section Fit the Fixed and Random Effects to the Model and Data$$
@@ -41,8 +42,9 @@ $codei%fit_model %fit_object%(
 	%prior_object%
 )
 %$$
-$codei%fit_object.run_fit(%tolerance_str%, %max_num_iter_str%)
-%$$
+$codei%fit_object.run_fit(
+	%tolerance_str%, %max_num_iter_str%, %print_level_str%
+)%$$
 $icode%solution% = %fit_object%.get_solution()
 %$$
 
@@ -125,6 +127,15 @@ $code
 	const std::string& %max_num_iter_str%
 %$$
 and is the Ipopt maximum number of iterations $code max_iter$$ for the fit.
+
+$subhead print_level_str$$
+This argument has prototype
+$code
+	const std::string& %print_level_str%
+%$$
+and is the Ipopt print level (between zero and 12 inclusive).
+Zero is the normal value for $code dismod_at$$ and corresponds to no printing
+(five is the default Ipopt value).
 
 $head solution$$
 This return value has prototype
@@ -215,7 +226,8 @@ prior_object_  ( prior_object )
 // run_fit
 void fit_model::run_fit(
 	const std::string& tolerance_str    ,
-	const std::string& max_num_iter_str )
+	const std::string& max_num_iter_str ,
+	const std::string& print_level_str  )
 {	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
 	assert( value_prior_.size() == n_var );
@@ -261,7 +273,6 @@ void fit_model::run_fit(
 
 	// Ipopt options (2DO: also set options for random effects optimzation)
 	std::string options =
-		"Integer print_level               0\n"
 		"String  sb                        yes\n"
 		"String  derivative_test           second-order\n"
 		"String  derivative_test_print_all yes\n"
@@ -270,6 +281,8 @@ void fit_model::run_fit(
 	options += tolerance_str + "\n";
 	options += "Integer max_iter ";
 	options += max_num_iter_str + "\n";
+	options += "Integer print_level ";
+	options += print_level_str + "\n";
 	//
 	// optimal fixed effects
 	CppAD::vector<double> optimal_fixed = optimize_fixed(

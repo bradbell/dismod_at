@@ -90,6 +90,7 @@ CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
 		"max_num_iter",
 		"number_sample",
 		"ode_step_size",
+		"print_level",
 		"parent_node_id",
 		"tolerance",
 		"random_seed",
@@ -161,6 +162,15 @@ CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
 				error_exit(db, msg, table_name, match);
 			}
 		}
+		if( name_vec[i] == "print_level" )
+		{	int print_level = std::atoi( argument_value[match].c_str() );
+			bool ok = 0 <= print_level && print_level <= 12;
+			if( ! ok )
+			{	msg = "argument_value is not between 0 and 12 inclusinve";
+				error_exit(db, msg, table_name, match);
+			}
+		}
+
 	}
 	//
 	// return table

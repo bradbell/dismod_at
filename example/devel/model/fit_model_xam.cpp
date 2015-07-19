@@ -320,7 +320,10 @@ bool fit_model_xam(void)
 	);
 	std::string fit_tolerance_str    = "1e-8";
 	std::string fit_max_num_iter_str = "100";
-	fit_object.run_fit(fit_tolerance_str, fit_max_num_iter_str);
+	std::string print_level_str      = "0";
+	fit_object.run_fit(
+		fit_tolerance_str, fit_max_num_iter_str, print_level_str
+	);
 	CppAD::vector<double> solution = fit_object.get_solution();
 
 	// check against known solution

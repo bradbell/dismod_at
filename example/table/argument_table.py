@@ -34,6 +34,7 @@ def argument_table() :
 		['ode_step_size',  '20.0'        ] ,
 		['tolerance',      '1e-8'        ] ,
 		['max_num_iter',   '100'         ] ,
+		['print_level',    '0'           ] ,
 		['rate_info',      'chi_positive']
 	]
 	tbl_name = 'argument'

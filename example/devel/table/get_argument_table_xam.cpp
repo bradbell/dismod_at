@@ -49,9 +49,10 @@ bool get_argument_table_xam(void)
 		"insert into argument values(1, 'ode_step_size',   '20.0')",
 		"insert into argument values(2, 'tolerance',       '1e-8')",
 		"insert into argument values(3, 'max_num_iter',    '100' )",
-		"insert into argument values(4, 'random_seed',     '0'   )",
-		"insert into argument values(5, 'number_sample',   '1'   )",
-		"insert into argument values(6, 'rate_info',       'chi_positive' )"
+		"insert into argument values(4, 'print_level',     '0'    )",
+		"insert into argument values(5, 'random_seed',     '0'   )",
+		"insert into argument values(6, 'number_sample',   '1'   )",
+		"insert into argument values(7, 'rate_info',       'chi_positive' )"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -61,7 +62,7 @@ bool get_argument_table_xam(void)
 	// get the argument table
 	vector<dismod_at::argument_struct> argument_table =
 		dismod_at::get_argument_table(db);
-	ok  &= argument_table.size() == 7;
+	ok  &= argument_table.size() == 8;
 	//
 	ok  &= argument_table[0].argument_name  == "parent_node_id";
 	ok  &= argument_table[0].argument_value == "0";
@@ -75,14 +76,17 @@ bool get_argument_table_xam(void)
 	ok  &= argument_table[3].argument_name  == "max_num_iter";
 	ok  &= argument_table[3].argument_value == "100";
 	//
-	ok  &= argument_table[4].argument_name  == "random_seed";
+	ok  &= argument_table[4].argument_name  == "print_level";
 	ok  &= argument_table[4].argument_value == "0";
 	//
-	ok  &= argument_table[5].argument_name  == "number_sample";
-	ok  &= argument_table[5].argument_value == "1";
+	ok  &= argument_table[5].argument_name  == "random_seed";
+	ok  &= argument_table[5].argument_value == "0";
 	//
-	ok  &= argument_table[6].argument_name  == "rate_info";
-	ok  &= argument_table[6].argument_value == "chi_positive";
+	ok  &= argument_table[6].argument_name  == "number_sample";
+	ok  &= argument_table[6].argument_value == "1";
+	//
+	ok  &= argument_table[7].argument_name  == "rate_info";
+	ok  &= argument_table[7].argument_value == "chi_positive";
 	//
 	// close database and return
 	sqlite3_close(db);

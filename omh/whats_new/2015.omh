@@ -33,6 +33,16 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-19$$
+$list number$$
+Some bugs were fixed in the
+$cref/constraint/approx_mixed/Problem/Constraints/$$ option.
+$lnext
+The $cref/print_level/argument_table/print_level/$$ option
+was added to control tracing during optimization,
+use no tracing (zero) as default.
+$lend
+
 $head 07-17$$
 $list number$$
 First version of the $code approx_mixed$$ sub-package that works with

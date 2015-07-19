@@ -212,6 +212,7 @@ def get_started_db (file_name) :
 		{ 'name':'ode_step_size', 'value':'10.0'         },
 		{ 'name':'tolerance',     'value':'1e-10'        },
 		{ 'name':'max_num_iter',  'value':'100'          },
+		{ 'name':'print_level',   'value':'0'            },
 		{ 'name':'random_seed',   'value':'0'            },
 		{ 'name':'number_sample', 'value':'1'            },
 		{ 'name':'rate_info',     'value':'chi_positive' }

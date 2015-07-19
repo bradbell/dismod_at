@@ -104,7 +104,8 @@ namespace dismod_at {
 		// run fit
 		void run_fit(
 			const std::string& tolerance_str    ,
-			const std::string& max_num_iter_str
+			const std::string& max_num_iter_str ,
+			const std::string& print_level
 		);
 		// get_solution
 		CppAD::vector<double> get_solution(void);

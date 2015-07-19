@@ -18,6 +18,7 @@ $spell
 	relrisk
 	tol
 	num_iter
+	Ipopt
 $$
 
 $section The Argument Table: Command Arguments$$
@@ -75,6 +76,16 @@ the corresponding $icode argument_value$$
 is a positive integer that specifies the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
 maximum number of iterations $code max_iter$$.
+
+$head print_level$$
+If $icode%argument_name% = print_level%$$,
+the corresponding $icode argument_value$$
+is a positive integer between 0 and 12 inclusive
+that specifies the
+$href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
+print level for optimizing the fixed effects.
+Zero, corresponds to no printing and should be the default for use
+with $code dismod_at$$ (the value 5 is the normal default for Ipopt).
 
 $head number_sample$$
 If $icode%argument_name% = number_sample%$$,
