@@ -33,7 +33,7 @@ for this simulated measurement value. This index starts at zero,
 repeats as the same for the entire subset of $icode data_id$$ values,
 and then increments by one between samples (of the data subset).
 The final (maximum) value for $icode sample_index$$ is
-$cref/number_sample/argument_table/number_sample/$$ minus one.
+$cref/number_sample/option_table/number_sample/$$ minus one.
 
 $head data_subset_id$$
 This column has type $code integer$$ and is the primary key

@@ -42,7 +42,7 @@ $codei%
 	size_t %parent_node_id%
 %$$
 and is the
-$cref/parent_node_id/argument_table/parent_node_id/$$.
+$cref/parent_node_id/option_table/parent_node_id/$$.
 for the fit command.
 
 $subhead node_table$$

@@ -8,7 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin argument_table$$
+$begin option_table$$
 $spell
 	dismod
 	integrands
@@ -23,31 +23,31 @@ $$
 
 $section The Argument Table: Command Arguments$$
 Each $code dismod_at$$ $cref command$$ has a required set of
-$icode argument_name$$, $icode argument_value$$ pairs
-that must be present in the argument table.
+$icode option_name$$, $icode option_value$$ pairs
+that must be present in the option table.
 
-$head argument_id$$
+$head option_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$head argument_name$$
+$head option_name$$
 This column has type $code text$$ and has a different value for every row;
 i.e., the names are unique and can act as substitutes for the primary key.
-The following argument names, and only the following, must appear:
+The following option names, and only the following, must appear:
 
-$head argument_value$$
+$head option_value$$
 This column has type $code text$$ and is
 the value for the corresponding command argument.
 
 $head parent_node_id$$
-If $icode%argument_name% = parent_node%$$,
-the corresponding $icode argument_value$$
+If $icode%option_name% = parent_node%$$,
+the corresponding $icode option_value$$
 is a non-negative integer (greater than or equal zero)
 that specifies the parent $cref/node_id/node_table/node_id/$$.
 
 $head ode_step_size$$
-If $icode%argument_name% = ode_step_size%$$,
-the corresponding $icode argument_value$$
+If $icode%option_name% = ode_step_size%$$,
+the corresponding $icode option_value$$
 is a positive floating point number (greater than zero)
 that specifies numerical ode step size.
 The step size is the same in age and time because it is along cohort lines.
@@ -64,22 +64,22 @@ $code mtwith$$,
 $code relrisk$$.
 
 $head tolerance$$
-If $icode%argument_name% = tolerance%$$,
-the corresponding $icode argument_value$$
+If $icode%option_name% = tolerance%$$,
+the corresponding $icode option_value$$
 is a positive floating point number
 that specifies the $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
 desired relative convergence tolerance $code tol$$.
 
 $head max_num_iter$$
-If $icode%argument_name% = max_num_iter%$$,
-the corresponding $icode argument_value$$
+If $icode%option_name% = max_num_iter%$$,
+the corresponding $icode option_value$$
 is a positive integer that specifies the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
 maximum number of iterations $code max_iter$$.
 
 $head print_level$$
-If $icode%argument_name% = print_level%$$,
-the corresponding $icode argument_value$$
+If $icode%option_name% = print_level%$$,
+the corresponding $icode option_value$$
 is a positive integer between 0 and 12 inclusive
 that specifies the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$
@@ -88,8 +88,8 @@ Zero, corresponds to no printing and should be the default for use
 with $code dismod_at$$ (the value 5 is the normal default for Ipopt).
 
 $head number_sample$$
-If $icode%argument_name% = number_sample%$$,
-the corresponding $icode argument_value$$
+If $icode%option_name% = number_sample%$$,
+the corresponding $icode option_value$$
 is a positive integer specifying the
 number of independent samples of the
 $cref/data subset/data_subset_table/$$.
@@ -100,8 +100,8 @@ generator (used to generate simulated measurement noise).
 If this value is zero, the clock is used to seed the random number generator.
 
 $head rate_info$$
-If $icode%argument_name% = rate_info%$$,
-the corresponding argument value must be one of the following:
+If $icode%option_name% = rate_info%$$,
+the corresponding option value must be one of the following:
 $code chi_positive$$, $code iota_and_chi_zero$$, $code rho_and_chi_zero$$.
 The $icode rate_info$$ value does not matter for the following integrands:
 $code Sincidence$$,
@@ -111,14 +111,14 @@ $code mtwith$$,
 $code relrisk$$.
 
 $subhead chi_positive$$
-If $icode%argument_name% = rate_info%$$ and
-$icode%argument_value% = chi_positive%$$,
+If $icode%option_name% = rate_info%$$ and
+$icode%option_value% = chi_positive%$$,
 the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
 $icode chi$$ always has a lower limit greater than zero.
 
 $subhead iota_and_chi_zero$$
-If $icode%argument_name% = rate_info%$$ and
-$icode%argument_value% = iota_and_chi_zero%$$,
+If $icode%option_name% = rate_info%$$ and
+$icode%option_value% = iota_and_chi_zero%$$,
 the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for both
 $icode iota$$ and $icode chi$$ have lower and upper limit zero.
 In this case
@@ -126,8 +126,8 @@ the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
 $icode rho$$ must always has a lower limit greater than zero.
 
 $subhead rho_and_chi_zero$$
-If $icode%argument_name% = rate_info%$$ and
-$icode%argument_value% = rho_and_chi_zero%$$,
+If $icode%option_name% = rate_info%$$ and
+$icode%option_value% = rho_and_chi_zero%$$,
 the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for both
 $icode rho$$ and $icode chi$$ have lower and upper limit zero.
 In this case
@@ -135,15 +135,15 @@ the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
 $icode iota$$ must always has a lower limit greater than zero.
 
 $subhead iota_and_rho_zero$$
-If $icode%argument_name% = rate_info%$$ and
-$icode%argument_value% = iota_and_rho_zero%$$,
+If $icode%option_name% = rate_info%$$ and
+$icode%option_value% = iota_and_rho_zero%$$,
 the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
 both $icode iota$$ and $icode rho$$ have lower and upper limit zero.
 
-$children%example/table/argument_table.py
+$children%example/table/option_table.py
 %$$
 $head Example$$
-The files $cref argument_table.py$$
-contains an example $code argument$$ table.
+The files $cref option_table.py$$
+contains an example $code option$$ table.
 
 $end

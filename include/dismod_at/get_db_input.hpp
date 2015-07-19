@@ -15,7 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <sqlite3.h>
 # include <cppad/vector.hpp>
 
-# include "get_argument_table.hpp"
+# include "get_option_table.hpp"
 # include "get_covariate_table.hpp"
 # include "get_data_table.hpp"
 # include "get_avg_case_table.hpp"
@@ -36,7 +36,7 @@ namespace dismod_at {
 		CppAD::vector<double>             age_table;
 		CppAD::vector<double>             time_table;
 		//
-		CppAD::vector<argument_struct>    argument_table;
+		CppAD::vector<option_struct>    option_table;
 		CppAD::vector<avg_case_struct>    avg_case_table;
 		CppAD::vector<covariate_struct>   covariate_table;
 		CppAD::vector<data_struct>        data_table;

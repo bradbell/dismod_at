@@ -175,8 +175,8 @@ def create_database() :
 		}
 	]
 	#
-	# argument_dict
-	argument_dict = [
+	# option_dict
+	option_dict = [
 		{ 'name':'parent_node_id','value':'0'            },
 		{ 'name':'ode_step_size', 'value':'10.0'         },
 		{ 'name':'tolerance',     'value':'1e-8'         },
@@ -217,7 +217,7 @@ def create_database() :
 		smooth_dict,
 		rate_dict,
 		mulcov_dict,
-		argument_dict,
+		option_dict,
 		avg_case_dict
 	)
 	# -----------------------------------------------------------------------
@@ -358,9 +358,9 @@ def create_database() :
 	check_list = [ [ 'rate_mean', 4, -1, 0, 0 ] ]
 	assert row_list == check_list
 	#
-	# argument_table
-	tbl_name = 'argument'
-	col_name = [ 'argument_name', 'argument_value' ]
+	# option_table
+	tbl_name = 'option'
+	col_name = [ 'option_name', 'option_value' ]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
 	check_list = [
 		[ 'parent_node_id', '0'   ],

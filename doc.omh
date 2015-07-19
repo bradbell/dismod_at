@@ -39,7 +39,7 @@ $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
 $lnext
 Add the case where there are no random effects to $cref approx_mixed$$.
 (This is necessary for dismod_at when the
-$cref/parent_node/argument_table/parent_node_id/$$ has no children.)
+$cref/parent_node/option_table/parent_node_id/$$ has no children.)
 $lend
 
 $childtable%omh/install/unix.omh

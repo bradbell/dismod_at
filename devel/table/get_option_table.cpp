@@ -47,21 +47,21 @@ $code std::string$$ $cnext $code agument_value$$  $cnext
 $rnext
 $tend
 
-$head argument_table$$
-The return value $icode argument_table$$ has prototype
+$head option_table$$
+The return value $icode option_table$$ has prototype
 $codei%
-	CppAD::vector<argument_struct>  %argument_table%
+	CppAD::vector<option_struct>  %option_table%
 %$$
-For each $cref/argument_id/argument_table/argument_id/$$,
+For each $cref/option_id/option_table/option_id/$$,
 $codei%
-	%argument_table%[%argument_id%]
+	%option_table%[%option_id%]
 %$$
 is the information for the corresponding comamnd argument.
 
-$children%example/devel/table/get_argument_table_xam.cpp
+$children%example/devel/table/get_option_table_xam.cpp
 %$$
 $head Example$$
-The file $cref get_argument_table_xam.cpp$$ contains an example that uses
+The file $cref get_option_table_xam.cpp$$ contains an example that uses
 this function.
 
 $end
@@ -70,7 +70,7 @@ $end
 
 
 
-# include <dismod_at/get_argument_table.hpp>
+# include <dismod_at/get_option_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
@@ -79,7 +79,7 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
+CppAD::vector<option_struct> get_option_table(sqlite3* db)
 {	using std::string;
 	//
 	// for error messaging
@@ -101,72 +101,72 @@ CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
 	for(size_t i = 0; i < n_name; i++)
 		name_vec[i] = name_list[i];
 	//
-	string table_name  = "argument";
-	size_t n_argument      = check_table_id(db, table_name);
-	if( n_name != n_argument )
-	{	msg = "argument table does not have " + to_string(n_name) + " rows.";
+	string table_name  = "option";
+	size_t n_option      = check_table_id(db, table_name);
+	if( n_name != n_option )
+	{	msg = "option table does not have " + to_string(n_name) + " rows.";
 		error_exit(db, msg, table_name, null_id);
 	}
 	//
-	string column_name = "argument_name";
-	CppAD::vector<string>  argument_name;
-	get_table_column(db, table_name, column_name, argument_name);
-	assert( n_argument == argument_name.size() );
+	string column_name = "option_name";
+	CppAD::vector<string>  option_name;
+	get_table_column(db, table_name, column_name, option_name);
+	assert( n_option == option_name.size() );
 	//
-	column_name = "argument_value";
-	CppAD::vector<string>  argument_value;
-	get_table_column(db, table_name, column_name, argument_value);
-	assert( n_argument == argument_value.size() );
+	column_name = "option_value";
+	CppAD::vector<string>  option_value;
+	get_table_column(db, table_name, column_name, option_value);
+	assert( n_option == option_value.size() );
 	//
 	// check table
 	for(size_t i = 0; i < n_name; i++)
-	{	size_t match = n_argument;
-		for(size_t argument_id = 0; argument_id < n_argument; argument_id++)
-			if( name_vec[i] == argument_name[argument_id] )
-				match = argument_id;
-		if( match == n_argument )
+	{	size_t match = n_option;
+		for(size_t option_id = 0; option_id < n_option; option_id++)
+			if( name_vec[i] == option_name[option_id] )
+				match = option_id;
+		if( match == n_option )
 		{	msg  = "table does not have a row with ";
-			msg +=  "argument_name = ";
+			msg +=  "option_name = ";
 			msg +=  name_vec[i];
 			error_exit(db, msg, table_name, null_id);
 		}
 		if( name_vec[i] == "rate_info" )
 		{	bool ok = false;
-			ok     |= argument_value[match] == "chi_positive";
-			ok     |= argument_value[match] == "iota_and_chi_zero";
-			ok     |= argument_value[match] == "rho_and_chi_zero";
-			ok     |= argument_value[match] == "iota_and_rho_zero";
+			ok     |= option_value[match] == "chi_positive";
+			ok     |= option_value[match] == "iota_and_chi_zero";
+			ok     |= option_value[match] == "rho_and_chi_zero";
+			ok     |= option_value[match] == "iota_and_rho_zero";
 			if( ! ok )
-			{	msg = "argument_value not valid for rate_info";
+			{	msg = "option_value not valid for rate_info";
 				error_exit(db, msg, table_name, match);
 			}
 		}
 		if( name_vec[i] == "ode_step_size" )
-		{	bool ok = std::atof( argument_value[match].c_str() ) > 0.0;
+		{	bool ok = std::atof( option_value[match].c_str() ) > 0.0;
 			if( ! ok )
-			{	msg = "argument_value is <= 0.0 for ode_step_size";
+			{	msg = "option_value is <= 0.0 for ode_step_size";
 				error_exit(db, msg, table_name, match);
 			}
 		}
 		if( name_vec[i] == "random_seed" )
-		{	bool ok = std::atoi( argument_value[match].c_str() ) >= 0;
+		{	bool ok = std::atoi( option_value[match].c_str() ) >= 0;
 			if( ! ok )
-			{	msg = "argument_value is < 0 for random_seed";
+			{	msg = "option_value is < 0 for random_seed";
 				error_exit(db, msg, table_name, match);
 			}
 		}
 		if( name_vec[i] == "number_sample" )
-		{	bool ok = std::atoi( argument_value[match].c_str() ) >= 1;
+		{	bool ok = std::atoi( option_value[match].c_str() ) >= 1;
 			if( ! ok )
-			{	msg = "argument_value is < 1 for number_sample";
+			{	msg = "option_value is < 1 for number_sample";
 				error_exit(db, msg, table_name, match);
 			}
 		}
 		if( name_vec[i] == "print_level" )
-		{	int print_level = std::atoi( argument_value[match].c_str() );
+		{	int print_level = std::atoi( option_value[match].c_str() );
 			bool ok = 0 <= print_level && print_level <= 12;
 			if( ! ok )
-			{	msg = "argument_value is not between 0 and 12 inclusinve";
+			{	msg = "option_value is not between 0 and 12 inclusinve";
 				error_exit(db, msg, table_name, match);
 			}
 		}
@@ -174,12 +174,12 @@ CppAD::vector<argument_struct> get_argument_table(sqlite3* db)
 	}
 	//
 	// return table
-	CppAD::vector<argument_struct> argument_table(n_argument);
-	for(size_t i = 0; i < n_argument; i++)
-	{	argument_table[i].argument_name  = argument_name[i];
-		argument_table[i].argument_value = argument_value[i];
+	CppAD::vector<option_struct> option_table(n_option);
+	for(size_t i = 0; i < n_option; i++)
+	{	option_table[i].option_name    = option_name[i];
+		option_table[i].option_value = option_value[i];
 	}
-	return argument_table;
+	return option_table;
 }
 
 } // END DISMOD_AT_NAMESPACE

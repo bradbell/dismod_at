@@ -35,7 +35,7 @@ $head Limit$$
 This routine subsamples the $icode data_table$$, in the following way:
 $list number$$
 Only rows corresponding to nodes that are descendants of the
-$cref/parent_node/argument_table/parent_node_id/$$ are included.
+$cref/parent_node/option_table/parent_node_id/$$ are included.
 $lnext
 Only rows for which the covariates satisfy the
 $cref/max_difference/covariate_table/max_difference/$$ criteria

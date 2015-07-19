@@ -16,11 +16,11 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 
 namespace dismod_at {
-	struct argument_struct {
-		std::string argument_name;
-		std::string argument_value;
+	struct option_struct {
+		std::string option_name;
+		std::string option_value;
 	};
-	extern CppAD::vector<argument_struct> get_argument_table(sqlite3*  db);
+	extern CppAD::vector<option_struct> get_option_table(sqlite3*  db);
 }
 
 # endif

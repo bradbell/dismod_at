@@ -62,7 +62,7 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	table/exec_sql_cmd.cpp
 	table/get_age_table.cpp
 	table/get_avg_case_table.cpp
-	table/get_argument_table.cpp
+	table/get_option_table.cpp
 	table/get_column_max.cpp
 	table/get_covariate_table.cpp
 	table/get_data_table.cpp

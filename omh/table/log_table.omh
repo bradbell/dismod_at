@@ -53,7 +53,7 @@ The possible cases for $icode variable$$ are listed below:
 
 $subhead actual_seed$$
 If $icode variable$$ is $code actual_seed$$,
-$cref/random_seed/argument_table/random_seed/$$ was zero
+$cref/random_seed/option_table/random_seed/$$ was zero
 and $icode value$$ is the actual random seed that was used.
 You can change $icode random_seed$$ to be this value
 in order to reproduce results.

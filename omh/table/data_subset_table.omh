@@ -21,7 +21,7 @@ This subset is defined as the set rows
 such that the following conditions hold:
 $list number$$
 The $cref/node/data_table/node_id/$$ is a descendant of the
-$cref/parent_node/argument_table/parent_node_id/$$.
+$cref/parent_node/option_table/parent_node_id/$$.
 $lnext
 All of the
 $cref/covariates/data_table/Covariates/$$ satisfy the

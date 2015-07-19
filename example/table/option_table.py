@@ -8,16 +8,16 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin argument_table.py$$ $newlinech #$$
+# $begin option_table.py$$ $newlinech #$$
 #
-# $section argument_table: Example and Test$$
+# $section option_table: Example and Test$$
 #
 # $code
-# $verbatim%example/table/argument_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/option_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
-def argument_table() :
+def option_table() :
 	import dismod_at
 	import copy
 	#
@@ -26,8 +26,8 @@ def argument_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	# create the argument table
-	col_name = [ 'argument_name', 'argument_value'  ]
+	# create the option table
+	col_name = [ 'option_name', 'option_value'  ]
 	col_type = [ 'text unique'  , 'text' ]
 	row_list = [
 		['parent_node_id', '0'           ] ,
@@ -37,7 +37,7 @@ def argument_table() :
 		['print_level',    '0'           ] ,
 		['rate_info',      'chi_positive']
 	]
-	tbl_name = 'argument'
+	tbl_name = 'option'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# include primary key in test
@@ -50,5 +50,5 @@ def argument_table() :
 	assert row_list == check_list
 	# ------------------------------------------------------------------------
 	connection.close()
-	print('argument_table: OK')
+	print('option_table: OK')
 # END PYTHON

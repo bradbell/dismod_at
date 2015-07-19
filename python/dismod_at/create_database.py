@@ -43,7 +43,7 @@
 #	%smooth_dict%,
 #	%rate_dict%,
 #	%mulcov_dict%,
-#	%argument_dict%,
+#	%option_dict%,
 #	%avg_case_dict%
 # )%$$
 #
@@ -223,12 +223,12 @@
 # smooth    $cnext str         $cnext smoothing name
 # $tend
 #
-# $head argument_dict$$
+# $head option_dict$$
 # This is a list of $code dict$$
-# that define the rows of the $cref argument_table$$.
-# The dictionary $icode%argument_dict%[%i%]%$$ has the following keys:
+# that define the rows of the $cref option_table$$.
+# The dictionary $icode%option_dict%[%i%]%$$ has the following keys:
 # $code name$$, $code value$$.
-# See $cref argument_table$$ for the corresponding set of names
+# See $cref option_table$$ for the corresponding set of names
 # and meaning of corresponding values.
 #
 # $head avg_case_dict$$
@@ -253,7 +253,7 @@ def create_database(
 	smooth_dict,
 	rate_dict,
 	mulcov_dict,
-	argument_dict,
+	option_dict,
 	avg_case_dict
 ) :
 	import dismod_at
@@ -262,13 +262,13 @@ def create_database(
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
 	# -----------------------------------------------------------------------
-	# create argument table
-	col_name = [ 'argument_name', 'argument_value' ]
+	# create option table
+	col_name = [ 'option_name', 'option_value' ]
 	col_type = [ 'text unique', 'text' ]
 	row_list = []
-	for row in argument_dict :
+	for row in option_dict :
 		row_list.append( [ row['name'], row['value'] ] )
-	tbl_name = 'argument'
+	tbl_name = 'option'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# create age table

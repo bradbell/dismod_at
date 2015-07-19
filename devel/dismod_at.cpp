@@ -1017,22 +1017,22 @@ int main(int n_arg, const char** argv)
 	dismod_at::db_input_struct db_input;
 	get_db_input(db, db_input);
 	// ----------------------------------------------------------------------
-	// argument_map
-	std::map<string, string> argument_map;
-	size_t n_argument = db_input.argument_table.size();
-	for(size_t id = 0; id < n_argument; id++)
-	{	string name  = db_input.argument_table[id].argument_name;
-		string value = db_input.argument_table[id].argument_value;
-		argument_map[name] = value;
+	// option_map
+	std::map<string, string> option_map;
+	size_t n_option = db_input.option_table.size();
+	for(size_t id = 0; id < n_option; id++)
+	{	string name  = db_input.option_table[id].option_name;
+		string value = db_input.option_table[id].option_value;
+		option_map[name] = value;
 	}
 	// ---------------------------------------------------------------------
 	// ode_step_size
-	double ode_step_size  = std::atof( argument_map["ode_step_size"].c_str() );
+	double ode_step_size  = std::atof( option_map["ode_step_size"].c_str() );
 	assert( ode_step_size > 0.0 );
 	// ---------------------------------------------------------------------
 	// initialize random number generator
 	// 2DO: need to put actual seed in some output table or std::cout
-	size_t random_seed = std::atoi( argument_map["random_seed"].c_str() );
+	size_t random_seed = std::atoi( option_map["random_seed"].c_str() );
 	size_t actual_seed = dismod_at::new_gsl_rng(random_seed);
 	if( random_seed == 0 )
 	{	message =  "actual_seed = " + dismod_at::to_string(actual_seed);
@@ -1053,7 +1053,7 @@ int main(int n_arg, const char** argv)
 	// ---------------------------------------------------------------------
 	// child_data, child_avg_case, and some more size_t values
 	size_t parent_node_id = std::atoi(
-		argument_map["parent_node_id"].c_str()
+		option_map["parent_node_id"].c_str()
 	);
 	dismod_at::child_info child_data(
 		parent_node_id          ,
@@ -1140,7 +1140,7 @@ int main(int n_arg, const char** argv)
 		pack_object              ,
 		child_data
 	);
-	string rate_info = argument_map["rate_info"];
+	string rate_info = option_map["rate_info"];
 	data_object.set_eigen_ode2_case_number(rate_info);
 	data_object.replace_like( data_subset_obj );
 	//
@@ -1162,9 +1162,9 @@ int main(int n_arg, const char** argv)
 	);
 	avg_case_object.set_eigen_ode2_case_number(rate_info);
 	// -----------------------------------------------------------------------
-	string tolerance_str     = argument_map["tolerance"];
-	string max_num_iter_str  = argument_map["max_num_iter"];
-	string print_level_str   = argument_map["print_level"];
+	string tolerance_str     = option_map["tolerance"];
+	string max_num_iter_str  = option_map["max_num_iter"];
+	string print_level_str   = option_map["print_level"];
 	// ---------------------------------------------------------------------
 	if( command_arg == "init" )
 	{	init_command(
@@ -1204,7 +1204,7 @@ int main(int n_arg, const char** argv)
 	}
 	else if( command_arg == "simulate" )
 	{	size_t number_sample = std::atoi(
-			argument_map["number_sample"].c_str()
+			option_map["number_sample"].c_str()
 		);
 		simulate_command(
 			db                       ,

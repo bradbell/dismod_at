@@ -35,10 +35,11 @@ $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-19$$
 $list number$$
+The name of the $code argument_table$$ was change to the $cref option_table$$.
 Some bugs were fixed in the
 $cref/constraint/approx_mixed/Problem/Constraints/$$ option.
 $lnext
-The $cref/print_level/argument_table/print_level/$$ option
+The $cref/print_level/option_table/print_level/$$ option
 was added to control tracing during optimization,
 use no tracing (zero) as default.
 $lend
@@ -163,7 +164,7 @@ $list number$$
 First version of the $cref simulate_command$$ that passes
 its example / test.
 $lnext
-Put the $cref command$$ arguments in $cref argument_table$$
+Put the $cref command$$ arguments in the $code argument_table$$
 instead of on the command line (except for the file name of the database).
 $lnext
 During $cref install_unix$$,
@@ -255,7 +256,7 @@ $lend
 
 $head 06-29$$
 $list number$$
-Add the $cref/rate_info/argument_table/rate_info/$$ argument
+Add the $cref/rate_info/option_table/rate_info/$$ argument
 to the fit command.
 This enables taking advantage of cases where $icode rho$$
 or $icode iota$$ are zero (to speed integration).

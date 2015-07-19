@@ -29,7 +29,7 @@ $pre
 $$
 Note that the maximum minus the minimum age divided by
 the ode integration step size
-$cref/ode_step_size/argument_table/ode_step_size/$$ will determine
+$cref/ode_step_size/option_table/ode_step_size/$$ will determine
 the number of age points used to integrate the
 $cref/
 ordinary differential equation /avg_integrand/Ordinary Differential Equation

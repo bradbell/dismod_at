@@ -52,7 +52,7 @@ $codei%
 	size_t %parent_node_id%
 %$$
 and is the
-$cref/parent_node_id/argument_table/parent_node_id/$$.
+$cref/parent_node_id/option_table/parent_node_id/$$.
 in the fit command.
 
 $head n_age_ode$$
@@ -76,7 +76,7 @@ This argument has prototype
 $codei%
 	double %ode_step_size%
 %$$
-and is the value of $cref/ode_step_size/argument_table/ode_step_size/$$
+and is the value of $cref/ode_step_size/option_table/ode_step_size/$$
 in the fit command.
 
 $head age_table$$
@@ -490,8 +490,8 @@ $codei%
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head rate_info$$
-Is the $cref/argument_value/argument_table/argument_value/$$
-corresponding to $icode%argument_name% = rate_info%$$ in the argument table.
+Is the $cref/option_value/option_table/option_value/$$
+corresponding to $icode%option_name% = rate_info%$$ in the option table.
 $end
 */
 void data_model::set_eigen_ode2_case_number(const std::string& rate_info)

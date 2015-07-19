@@ -65,7 +65,7 @@ $codei%
 and is the number of children; i.e., the size of
 $cref/child group/node_table/parent/Child Group/$$
 corresponding to the
-$cref/parent_node/argument_table/parent_node_id/$$.
+$cref/parent_node/option_table/parent_node_id/$$.
 
 $head smooth_table$$
 This argument has prototype
@@ -439,7 +439,7 @@ If $icode%j% < %n_child%$$,
 it is the rate vector for the $th j$$ child node.
 If $icode%j% == %n_child%$$,
 this is the rate vector for the
-$cref/parent_node/argument_table/parent_node_id/$$.
+$cref/parent_node/option_table/parent_node_id/$$.
 
 $head Example$$
 See $cref/pack_info Example/pack_info/Example/$$.
@@ -721,7 +721,7 @@ $codei%
 	size_t %parent_node_id%
 %$$
 and is the
-$cref/parent_node_id/argument_table/parent_node_id/$$.
+$cref/parent_node_id/option_table/parent_node_id/$$.
 for the fit command.
 
 $head age_table$$

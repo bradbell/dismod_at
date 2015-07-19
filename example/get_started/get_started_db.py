@@ -206,8 +206,8 @@ def get_started_db (file_name) :
 		}
 	]
 	# ------------------------------------------------------------------------
-	# argument_dict
-	argument_dict = [
+	# option_dict
+	option_dict = [
 		{ 'name':'parent_node_id','value':'0'            },
 		{ 'name':'ode_step_size', 'value':'10.0'         },
 		{ 'name':'tolerance',     'value':'1e-10'        },
@@ -254,7 +254,7 @@ def get_started_db (file_name) :
 		smooth_dict,
 		rate_dict,
 		mulcov_dict,
-		argument_dict,
+		option_dict,
 		avg_case_dict
 	)
 	# -----------------------------------------------------------------------
