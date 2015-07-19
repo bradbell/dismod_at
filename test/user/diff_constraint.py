@@ -8,30 +8,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin get_started_db.py$$ $newlinech #$$
-# $spell
-#	dismod
-# $$
-#
-# $section Create get_started Input Tables: Example and Test$$
-#
-# $head Syntax$$
-# $codei%(%n_smooth%, %rate_true%) = get_started_db.get_started_db()%$$
-#
-# $head Purpose$$
-# Creates the database $code get_started.db$$ in the current working directory.
-# This is a very simple case that is defined by the source code below
-# and the specifications for $cref create_database$$.
-#
-# $head Source Code$$
-# $code
-# $verbatim%
-#	example/get_started/get_started_db.py
-#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
-# $end
-# ---------------------------------------------------------------------------
-# BEGIN PYTHON
+# Test limits on age and time differences
 # ---------------------------------------------------------------------------
 import sys
 import os
@@ -55,12 +32,12 @@ os.chdir('build/test/user')
 def constant_weight_fun(a, t) :
 	return 1.0
 # note that the a, t values are not used for this case
-def gaussian_zero_fun(a, t) :
-	return 3 * ['prior_mean_zero']
-def uniform_positive_fun(a, t) :
-	return 3 * ['prior_uniform_positive']
-def zero_fun(a, t) :
-	return 3 * ['prior_zero']
+def fun_pini_parent(a, t) :
+	return ('prior_zero', 'prior_gauss_zero', 'prior_gauss_zero')
+def fun_rate_child(a, t) :
+	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
+def fun_rate_parent(a, t) :
+	return ('prior_uniform_pos', 'prior_gauss_pos', 'prior_gauss_pos')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import copy
@@ -118,7 +95,7 @@ def example_db (file_name) :
 	# values that change between rows: (one data point for each integrand)
 	for integrand_id in range( len(integrand_dict) ) :
 		rate_id           = integrand_id
-		meas_value        = 0.2
+		meas_value        = 0.05
 		meas_std          = 0.2 * meas_value
 		integrand         = integrand_dict[integrand_id]['name']
 		row['meas_value'] = meas_value
@@ -145,21 +122,29 @@ def example_db (file_name) :
 			'mean':     1.0,
 			'std':      None,
 			'eta':      None
-		},{ # prior_uniform_positive
-			'name':     'prior_uniform_positive',
+		},{ # prior_gauss_zero
+			'name':     'prior_gauss_zero',
+			'density':  'gaussian',
+			'lower':    None,
+			'upper':    None,
+			'mean':     0.0,
+			'std':      0.01,
+			'eta':      None
+		},{ # prior_uniform_pos
+			'name':     'prior_uniform_pos',
 			'density':  'uniform',
 			'lower':    0.01,
 			'upper':    None,
 			'mean':     0.1,
 			'std':      None,
 			'eta':      None
-		},{ # prior_mean_zero
-			'name':     'prior_mean_zero',
-			'density':  'gaussian',
-			'lower':    None,
-			'upper':    None,
-			'mean':     0.0,
-			'std':      0.01,
+		},{ # prior_gauss_pos
+			'name':     'prior_gauss_pos',
+			'density':  'uniform',
+			'lower':    0.01,
+			'upper':    1.00,
+			'mean':     0.01,
+			'std':      0.10,
 			'eta':      None
 		}
 	]
@@ -170,30 +155,38 @@ def example_db (file_name) :
 	last_age_id    = 2
 	last_time_id   = 2
 	smooth_dict = [
-		{   # smooth_mean_zero
-			'name':                     'smooth_mean_zero',
+		{   # smooth_rate_child
+			'name':                     'smooth_rate_child',
 			'age_id':                   [ 0, last_age_id ],
 			'time_id':                  [ 0, last_time_id ],
 			'mulstd_value_prior_name':  'prior_one',
 			'mulstd_dage_prior_name':   'prior_one',
 			'mulstd_dtime_prior_name':  'prior_one',
-			'fun':                      gaussian_zero_fun
-		},{ # smooth_uniform_positive
-			'name':                     'smooth_uniform_positive',
+			'fun':                      fun_rate_child
+		},{ # smooth_rate_parent
+			'name':                     'smooth_rate_parent',
 			'age_id':                   [ 0, last_age_id ],
 			'time_id':                  [ 0, last_time_id ],
 			'mulstd_value_prior_name':  'prior_one',
 			'mulstd_dage_prior_name':   'prior_one',
 			'mulstd_dtime_prior_name':  'prior_one',
-			'fun':                       uniform_positive_fun
-		},{ # smooth_pini
-			'name':                     'smooth_pini',
+			'fun':                       fun_rate_parent
+		},{ # smooth_pini_parent
+			'name':                     'smooth_pini_parent',
 			'age_id':                   [ middle_age_id ],
 			'time_id':                  [ middle_time_id ],
 			'mulstd_value_prior_name':  'prior_one',
 			'mulstd_dage_prior_name':   'prior_one',
 			'mulstd_dtime_prior_name':  'prior_one',
-			'fun':                       gaussian_zero_fun
+			'fun':                       fun_pini_parent
+		},{ # smooth_pini_child
+			'name':                     'smooth_pini_child',
+			'age_id':                   [ middle_age_id ],
+			'time_id':                  [ middle_time_id ],
+			'mulstd_value_prior_name':  'prior_one',
+			'mulstd_dage_prior_name':   'prior_one',
+			'mulstd_dtime_prior_name':  'prior_one',
+			'fun':                       fun_rate_child
 		}
 	]
 	# --------------------------------------------------------------------------
@@ -201,24 +194,24 @@ def example_db (file_name) :
 	rate_dict = [
 		{
 			'name':          'pini',
-			'parent_smooth': 'smooth_pini',
-			'child_smooth':  'smooth_pini'
+			'parent_smooth': 'smooth_pini_parent',
+			'child_smooth':  'smooth_pini_child'
 		},{
 			'name':          'iota',
-			'parent_smooth': 'smooth_uniform_positive',
-			'child_smooth':  'smooth_mean_zero'
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'rho',
-			'parent_smooth': 'smooth_uniform_positive',
-			'child_smooth':  'smooth_mean_zero'
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'chi',
-			'parent_smooth': 'smooth_uniform_positive',
-			'child_smooth':  'smooth_mean_zero'
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'omega',
-			'parent_smooth': 'smooth_uniform_positive',
-			'child_smooth':  'smooth_mean_zero'
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_rate_child'
 		}
 	]
 	# ------------------------------------------------------------------------
