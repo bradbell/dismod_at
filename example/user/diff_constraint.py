@@ -8,13 +8,27 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# Test limits on age and time differences
+# $begin user_diff_constraint.py$$ $newlinech #$$
+# $spell
+#	dage
+#	dtime
+# $$
+#
+# $section Constraints on Differences in Age and Time$$
+#
+# $code
+# $verbatim%
+#	example/user/diff_constraint.py
+#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $$
+# $end
 # ---------------------------------------------------------------------------
+# BEGIN PYTHON
 import sys
 import os
 import distutils.dir_util
 import subprocess
-test_program = 'test/user/diff_constraint.py'
+test_program = 'example/user/diff_constraint.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -221,7 +235,7 @@ def example_db (file_name) :
 		{ 'name':'ode_step_size', 'value':'10.0'         },
 		{ 'name':'tolerance',     'value':'1e-10'        },
 		{ 'name':'max_num_iter',  'value':'100'          },
-		{ 'name':'print_level',   'value':'5'            },
+		{ 'name':'print_level',   'value':'0'            },
 		{ 'name':'random_seed',   'value':'0'            },
 		{ 'name':'number_sample', 'value':'1'            },
 		{ 'name':'rate_info',     'value':'chi_positive' }
@@ -271,4 +285,5 @@ for command in [ 'init', 'start', 'fit' ] :
 # connect to database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
-
+# -----------------------------------------------------------------------
+# END PYTHON

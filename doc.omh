@@ -28,21 +28,27 @@ $spell
 	dtime
 	dismod
 	integrands
+	covariate
 $$
 $section Disease Rates as Functions of Age and Time: dismod_at-20150717$$
 
 $head Wish List$$
 $list number$$
-Include lower and upper limit for the smoothing difference priors
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
-$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
+Fix bug in lower and upper limit for the smoothing difference priors,
+$cref user_diff_constraint.py$$ is generating the following warning:
+$codep
+	Warning: optimize_fixed: solution check failed
+$$
 $lnext
 Add the case where there are no random effects to $cref approx_mixed$$.
 (This is necessary for dismod_at when the
 $cref/parent_node/option_table/parent_node_id/$$ has no children.)
+$lnext
+Test Lasso on covariate parameters.
 $lend
 
 $childtable%omh/install/unix.omh
+	%example/user/user.omh
 	%omh/table/input.omh
 	%omh/model/model.omh
 	%devel/command.omh

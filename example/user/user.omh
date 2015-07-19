@@ -1,0 +1,23 @@
+$Id:$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin user$$
+$spell
+	dage
+	dtime
+$$
+
+$section User Examples and Tests$$
+
+$childtable%example/get_started/get_started.omh
+	%example/user/diff_constraint.py
+%$$
+
+$end

@@ -192,7 +192,6 @@ $codei%
 %$$
 
 
-$children%example/get_started/get_started.omh%$$
 $head Example$$
 The section $cref get_started$$ contains a list of examples and tests
 of $code dismod_at$$. These tests are run as part of the $code make check$$
