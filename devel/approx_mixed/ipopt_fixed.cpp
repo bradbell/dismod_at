@@ -1346,10 +1346,10 @@ void ipopt_fixed::finalize_solution(
 	assert( prior_vec_tmp_.size() == 1 + prior_n_abs_ );
 
 	// check constraints corresponding to l1 terms
-	for(size_t j = 0; j < 2 * prior_n_abs_; j++)
+	for(size_t j = 0; j < prior_n_abs_; j++)
 	{	double check = (1.0 + tol) * double( x[n_fixed_ + j] );
-		ok &= check - prior_vec_tmp_[j] >= 0.0;
-		ok &= check + prior_vec_tmp_[j] >= 0.0;
+		ok &= check - prior_vec_tmp_[j + 1] >= 0.0;
+		ok &= check + prior_vec_tmp_[j + 1] >= 0.0;
 	}
 	//
 	// explicit constraints at the final fixed effects vector
