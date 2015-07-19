@@ -879,7 +879,7 @@ and false otherwise.
 
 $head Source$$
 $codep */
-bool ipopt_xam_run()
+bool ipopt_xam_run(void)
 {	bool ok = true;
 	using Ipopt::SmartPtr;
 

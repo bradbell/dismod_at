@@ -134,7 +134,7 @@ def example_db (file_name) :
 			'name':     'prior_uniform_pos',
 			'density':  'uniform',
 			'lower':    0.01,
-			'upper':    None,
+			'upper':    1.00,
 			'mean':     0.1,
 			'std':      None,
 			'eta':      None
@@ -142,9 +142,9 @@ def example_db (file_name) :
 			'name':     'prior_gauss_pos',
 			'density':  'uniform',
 			'lower':    0.01,
-			'upper':    1.00,
+			'upper':    None,
 			'mean':     0.01,
-			'std':      0.10,
+			'std':      0.01,
 			'eta':      None
 		}
 	]
