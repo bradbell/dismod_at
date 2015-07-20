@@ -116,7 +116,7 @@ void approx_mixed::constraint_hes(
 	d_vector&              val_out     )
 {
 	// make sure initialize has been called
-	if( ! constraint_initialized_ )
+	if( ! initialize_done_ )
 	{	std::string error_message =
 		"approx_mixed::initialize was not called before constraint_hes";
 		fatal_error(error_message);

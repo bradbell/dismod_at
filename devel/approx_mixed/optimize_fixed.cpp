@@ -190,7 +190,7 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 {	bool ok = true;
 	using Ipopt::SmartPtr;
 	// make sure initialize has been called
-	if( ! constraint_initialized_ )
+	if( ! initialize_done_ )
 	{	std::string error_message =
 		"approx_mixed::initialize was not called before optimize_fixed";
 		fatal_error(error_message);

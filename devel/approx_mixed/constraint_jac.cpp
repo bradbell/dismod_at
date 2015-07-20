@@ -96,7 +96,7 @@ void approx_mixed::constraint_jac(
 	d_vector&              val_out     )
 {
 	// make sure initilialize has been called
-	if( ! constraint_initialized_  )
+	if( ! initialize_done_  )
 	{	std::string error_message =
 		"approx_mixed::initialize was not called before constraint_jac";
 		fatal_error(error_message);

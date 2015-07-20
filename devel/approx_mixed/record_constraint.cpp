@@ -83,8 +83,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void approx_mixed::record_constraint(const d_vector& fixed_vec  )
 {	assert( fixed_vec.size() == n_fixed_ );
-	assert( ! constraint_initialized_ );
-	constraint_initialized_ = true;
+	assert( ! initialize_done_ );
 
 	// ------------------------------------------------------------------------
 	// constraint_

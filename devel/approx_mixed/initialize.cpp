@@ -83,6 +83,10 @@ $cref/hes_fix_/approx_mixed_private/hes_fix_/$$.
 $lnext
 The member variable
 $cref/prior_like_/approx_mixed_private/prior_like_/$$.
+$lnext
+The member variable
+$cref/initialize_done_/approx_mixed_private/initialize_done_/$$
+must be false when this routine is called and will be true when it returns.
 $lend
 
 $end
@@ -93,7 +97,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 void approx_mixed::initialize(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	if( constraint_initialized_ )
+{	if( initialize_done_ )
 	{	fatal_error("approx_mixed::initialize was called twice");
 	}
 	//
@@ -144,6 +148,9 @@ void approx_mixed::initialize(
 	// constraint_
 	// (record_constraint makes sure initialization does not happend twice)
 	record_constraint(fixed_vec);
+	//
+	// initialize_done_
+	initialize_done_ = true;
 }
 
 } // END_DISMOD_AT_NAMESPACE

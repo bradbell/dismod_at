@@ -114,7 +114,7 @@ $codep */
 	:
 	n_fixed_(n_fixed)               ,
 	n_random_(n_random)             ,
-	constraint_initialized_(false)
+	initialize_done_(false)
 	{ }
 /* $$
 $head initialize$$
@@ -209,6 +209,12 @@ The number of random effects is given by
 $codep */
 	const size_t n_random_;
 /* $$
+$head initialize_done_$$
+The following flag is false after construction and true after
+$cref/initialize/approx_mixed_public/initialize/$$ is called.
+$codep */
+	bool initialize_done_;
+/* $$
 $head joint_like_$$
 Recording of the $cref/joint_like/approx_mixed_joint_like/$$ function
 which evaluates a
@@ -277,7 +283,6 @@ $head constraint_$$
 Recording of the $cref/constraint/approx_mixed_constraint/$$ function.
 $codep */
 	// computes constraint function
-	bool                        constraint_initialized_;
 	CppAD::ADFun<double>        constraint_;
 	//
 	CppAD::vector<size_t>       constraint_jac_row_; // jacobian row indices

@@ -63,7 +63,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 CppAD::vector<double> approx_mixed::constraint_eval(const d_vector& fixed_vec)
 {
 	// make sure initialize has been called
-	if( ! constraint_initialized_ )
+	if( ! initialize_done_ )
 	{	std::string error_message =
 		"approx_mixed::initialize was not called before constraint_eval";
 		fatal_error(error_message);
