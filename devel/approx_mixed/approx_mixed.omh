@@ -19,7 +19,7 @@ $section approx_mixed: Laplace Approximation For Mixed Effects Models$$
 $head Fixed Effects, theta$$
 For each $code approx_mixed$$ object,
 there is a vector of fixed effects $latex theta$$.
-The number of the fixed effects, and their order in constant
+The number of the fixed effects, and their order is constant
 (for each $code approx_mixed$$ object).
 We sometimes use $latex \theta$$ to denote the vector of fixed effects.
 
