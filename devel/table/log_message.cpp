@@ -19,9 +19,11 @@ $$
 $section Put a Message in the Log Table$$
 
 $head Syntax$$
-$codei%log_message(%db%, %message_type%, %message%)
+$icode%unix_time% = log_message(%db%, %message_type%, %message%)
 %$$
-$codei%log_message(%db%, %message_type%, %message%, %table_name%, %row_id%)%$$
+$icode%unix_time% = %log_message(
+	%db%, %message_type%, %message%, %table_name%, %row_id%
+)%$$
 
 $head db$$
 This argument has prototype
@@ -70,6 +72,14 @@ If $icode row_id$$ is not present, $code null$$ is used.
 If $icode row_id$$ is present and not $code size_t(DISMOD_AT_NULL_INT)$$,
 $icode table_name$$ must not be empty.
 
+$head unix_time$$
+The return value has prototype
+$codei%
+	std::time_t %unix_time%
+%$$
+It is the value written in the log table for
+$cref/unix_time/log_table/unix_time/$$.
+
 $head Example$$
 Check the $code log$$ table in the database after any
 $cref command$$.
@@ -88,7 +98,7 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void log_message(
+std::time_t log_message(
 	sqlite3*           db           ,
 	const std::string& message_type ,
 	const std::string& message      ,
@@ -126,7 +136,7 @@ void log_message(
 		log_id = std::atoi( max_str.c_str() ) + 1;
 
 	// get time
-	time_t unix_time = std::time( DISMOD_AT_NULL_PTR );
+	std::time_t unix_time = std::time( DISMOD_AT_NULL_PTR );
 
 	// add this message to the log file
 	sql_cmd  = "insert into log values ( ";
@@ -147,16 +157,15 @@ void log_message(
 	sql_cmd += "' );";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 
-	return;
+	return unix_time;
 }
-void log_message(
+std::time_t log_message(
 	sqlite3*           db           ,
 	const std::string& message_type ,
 	const std::string& message      )
 {	std::string table_name = "";
 	size_t      row_id     = size_t( DISMOD_AT_NULL_INT );
-	log_message(db, message_type, message, table_name, row_id);
-	return;
+	return log_message(db, message_type, message, table_name, row_id);
 }
 
 } // END_DISMOD_AT_NAMESPACE

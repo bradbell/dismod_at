@@ -14,9 +14,11 @@ $spell
 $$
 
 $section The dismod_at Commands$$
-Each of these commands creates one or more output tables.
-Some of these tables are used as additional inputs; i.e.,
-addition to the standard $cref/input tables/input/$$.
+Each of these commands creates one or more output tables
+and $cref/command/log_table/message_type/command/$$ messages in the log table.
+Some of the output tables are used as additional inputs to other commands;
+see $cref output$$.
+
 
 $childtable%devel/dismod_at.cpp%$$
 

@@ -27,11 +27,19 @@ This column has type $code text$$ and is one of the following values:
 $code command$$, $code error$$.
 
 $subhead command$$
+$list number$$
 The start of every command is logged with the name of the command
-and the data base.
-The end of every command is logged with the name of the command and
-$code OK$$. It this does not appear after the command starts,
+followed by $code start$$.
+$lnext
+The end of every command is logged with the name of the command followed by
+$code done$$.
+If $code done$$ does not appear after the command starts,
 the command failed to finish.
+$lnext
+If $cref/random_seed/option_table/random_seed/$$ is zero,
+the value of $icode unix_time$$ in the start row for the command
+is used as the random seed for the command.
+$lend
 
 $subhead error$$
 This is a fatal error.
@@ -42,14 +50,6 @@ $subhead warning$$
 This is a warning.
 The message was added to the log file and then program execution
 continued as if nothing was wrong.
-
-$subhead value$$
-This message type is used to report about the run.
-In this case $icode message$$ has the form
-$icode%
-	%variable% = %value%
-%$$
-The possible cases for $icode variable$$ are listed below:
 
 $subhead actual_seed$$
 If $icode variable$$ is $code actual_seed$$,

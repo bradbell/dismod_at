@@ -13,13 +13,15 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <sqlite3.h>
 # include <string>
+# include <ctime>
+
 namespace dismod_at {
-	extern void log_message(
+	extern std::time_t log_message(
 		sqlite3*           db           ,
 		const std::string& message_type ,
 		const std::string& message
 	);
-	extern void log_message(
+	extern std::time_t log_message(
 		sqlite3*           db           ,
 		const std::string& message_type ,
 		const std::string& message      ,

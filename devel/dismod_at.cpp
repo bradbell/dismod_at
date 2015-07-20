@@ -1013,8 +1013,8 @@ int main(int n_arg, const char** argv)
 	bool new_file = false;
 	sqlite3* db   = dismod_at::open_connection(file_name_arg, new_file);
 	// --------------- log start of this command -----------------------------
-	message = command_arg + " " + file_name_arg;
-	dismod_at::log_message(db, "command", message);
+	message = command_arg + " start";
+	std::time_t unix_time = dismod_at::log_message(db, "command", message);
 	// --------------- get the input tables ---------------------------------
 	dismod_at::db_input_struct db_input;
 	get_db_input(db, db_input);
@@ -1033,12 +1033,14 @@ int main(int n_arg, const char** argv)
 	assert( ode_step_size > 0.0 );
 	// ---------------------------------------------------------------------
 	// initialize random number generator
-	// 2DO: need to put actual seed in some output table or std::cout
 	size_t random_seed = std::atoi( option_map["random_seed"].c_str() );
-	size_t actual_seed = dismod_at::new_gsl_rng(random_seed);
 	if( random_seed == 0 )
-	{	message =  "actual_seed = " + dismod_at::to_string(actual_seed);
-		dismod_at::log_message(db, "value", message);
+	{	size_t actual_seed = dismod_at::new_gsl_rng( size_t(unix_time) );
+		assert( std::time_t( actual_seed ) == unix_time );
+	}
+	else
+	{	size_t actual_seed = dismod_at::new_gsl_rng(random_seed);
+		assert( actual_seed == random_seed );
 	}
 	// ---------------------------------------------------------------------
 	// n_age_ode
@@ -1245,7 +1247,7 @@ int main(int n_arg, const char** argv)
 	else
 		assert(false);
 	// ---------------------------------------------------------------------
-	message = "OK";
+	message = command_arg + " done";
 	dismod_at::log_message(db, "command", message);
 	sqlite3_close(db);
 	return 0;

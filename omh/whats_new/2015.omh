@@ -33,6 +33,20 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-20$$
+$list number$$
+If $cref/random_seed/option_table/random_seed/$$ is zero,
+use the $cref/unix_time/log_table/unix_time/$$ in the log table
+for the random seed.
+$lnext
+Remove the $code value$$
+$cref/message_type/log_table/message_type/$$ from the $code log$$ table
+(not yet necessary due to change above).
+$lnext
+Simplify the $cref/command/log_table/message_type/command/$$ start
+and done messages.
+$lend
+
 $head 07-19$$
 $list number$$
 The name of the $code argument_table$$ was change to the $cref option_table$$.
@@ -71,8 +85,9 @@ The $code solution check failed$$ warning was printing
 when the check actually passed (since 07-15).
 This has been fixed.
 $lnext
-Add the $cref/value/log_table/message_type/value/$$
-message type to the log table.
+Add the $code value$$
+message type to the log table
+(it has since been removed).
 $lend
 
 $head 07-16$$
