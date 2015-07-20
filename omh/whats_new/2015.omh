@@ -45,6 +45,13 @@ $cref/message_type/log_table/message_type/$$ from the $code log$$ table
 $lnext
 Simplify the $cref/command/log_table/message_type/command/$$ start
 and done messages.
+$lnext
+Include data that is independent of the random effects
+$cref/z/approx_mixed/Data, y, z/$$
+in the discussion of the $code approx_mixed$$
+$cref/problem/approx_mixed/Problem/$$.
+Also fix a $latex \B{p} ( y , \theta )$$ that was written as
+$latex \B{p} ( y | \theta )$$ in the problem discussion.
 $lend
 
 $head 07-19$$

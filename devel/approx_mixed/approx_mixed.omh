@@ -29,15 +29,28 @@ The number of the random effects, and their order is constant
 (for each $code approx_mixed$$ object).
 We sometimes use $latex u$$ to denote the vector of random effects.
 
+$head Data, y, z$$
+We use $latex y$$, ($latex z$$) to denote the set of data points that are
+dependent on (independent of) the random effects.
+
 $head Problem$$
 We are given the problem of
 estimating the fixed effects by maximizing the likelihood with
 respect to $latex \theta$$; i.e.,
 $latex \[
-\B{p}( y | \theta ) =
-	\B{p} ( \theta ) \int_{-\infty}^{+\infty}
+\B{p}( y , z , \theta )
+=
+\B{p} ( \theta ) \B{p} ( y, z | \theta )
+=
+\B{p} ( \theta ) \B{p} ( z | \theta ) \int_{-\infty}^{+\infty}
 		\B{p} ( y |  \theta, u ) \B{p} ( u | \theta ) \; \B{d} u
 \] $$
+where the density functions
+$latex \B{p} ( \theta )$$,
+$latex \B{p} ( z | \theta )$$,
+$latex \B{p} ( y | \theta , u )$$, and
+$latex \B{p} ( u | \theta )$$
+are known functions of $latex y$$, $latex z$$, $latex \theta$$, and $latex u$$.
 
 $subhead Fixed Effects Estimation$$
 We approximate this solution by replacing the integral above with its
@@ -51,9 +64,9 @@ We then estimate the random effects by maximizing the likelihood,
 at the fixed effects estimate, with respect to the random effects
 $latex u$$; i.e.,
 $latex \[
-\B{p} ( y, u | \hat{\theta} )
+\B{p} ( y , u | \hat{\theta} )
 =
-\B{p}( y | u, \hat{\theta} )  \B{p} ( u | \hat{\theta} )
+\B{p}( y | \hat{\theta} , u )  \B{p} ( u | \hat{\theta} )
 \] $$
 
 $subhead Constraints$$

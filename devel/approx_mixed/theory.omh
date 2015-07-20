@@ -46,8 +46,10 @@ non-smooth terms in the form of Laplace densities.
 $head Prior Negative Log-Likelihood, g(theta)$$
 We use the notation
 $latex \[
-	g( \theta ) = - \log [ \B{p} ( \theta ) ]
+	g( \theta ) = - \log [ \B{p} ( z | \theta ) \B{p} ( \theta ) ]
 \]$$
+In an abuse of notation, we call this the prior even though it includes
+the data $latex z$$ that does not depend on the random effects $latex u$$.
 The function $latex g(x)$$ may be non-smooth because it
 can have absolute values in it (corresponding to the Laplace likelihoods).
 
