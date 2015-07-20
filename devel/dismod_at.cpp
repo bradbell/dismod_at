@@ -90,8 +90,8 @@ void init_command(
 	const dismod_at::pack_info&                      pack_object         ,
 	const dismod_at::db_input_struct&                db_input            ,
 	const size_t&                                    parent_node_id      ,
-	const dismod_at::child_info&                     child_object
-)
+	const dismod_at::child_info&                     child_object        ,
+	const vector<dismod_at::smooth_info>&            s_info_vec          )
 {	using std::string;
 	using dismod_at::to_string;
 
@@ -216,9 +216,11 @@ void init_command(
 				node_id = child_object.child_id2node_id(child_id);
 			assert( n_var == n_age * n_time );
 			for(size_t index = 0; index < n_var; index++)
-			{	size_t age_id   = index % n_age;
-				size_t time_id  = index / n_age;
-				var_id          = offset + index;
+			{	size_t i       = index % n_age;
+				size_t j       = index / n_age;
+				var_id         = offset + index;
+				size_t age_id  = s_info_vec[smooth_id].age_id(i);
+				size_t time_id = s_info_vec[smooth_id].time_id(j);
 				//
 				// variable_value
 				row_val_vec[0]  = "rate";     // var_type
@@ -1174,7 +1176,8 @@ int main(int n_arg, const char** argv)
 			pack_object,
 			db_input,
 			parent_node_id,
-			child_data     // could also use child_avg_case
+			child_data,     // could also use child_avg_case
+			s_info_vec
 		);
 	}
 	else if( command_arg == "start" )

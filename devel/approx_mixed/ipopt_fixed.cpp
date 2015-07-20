@@ -1382,6 +1382,7 @@ void ipopt_fixed::finalize_solution(
 
 	// Check the partial of the Lagrangian w.r.t x
 	for(size_t j = 0; j < n_fixed_ + prior_n_abs_; j++)
+	if( fixed_lower_[j] != fixed_upper_[j] )
 	{	Number sum = grad_f[j];
 		for(size_t k = 0; k < nnz_jac_g_; k++)
 		{	if( jCol[k] == Index(j) )

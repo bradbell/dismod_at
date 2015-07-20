@@ -42,6 +42,10 @@ $lnext
 The $cref/print_level/option_table/print_level/$$ option
 was added to control tracing during optimization,
 use no tracing (zero) as default.
+$lnext
+There was a bug in the values of $cref/age_id/var_table/age_id/$$
+and $cref/time_id/var_table/time_id/$$ in the $code var$$ table.
+This has been fixed.
 $lend
 
 $head 07-17$$

@@ -39,9 +39,9 @@ if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 sys.path.append( os.getcwd() + '/python' )
 import dismod_at
 #
-# change into the build/test/user directory
-distutils.dir_util.mkpath('build/test/user')
-os.chdir('build/test/user')
+# change into the build/example/user directory
+distutils.dir_util.mkpath('build/example/user')
+os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
@@ -286,4 +286,55 @@ for command in [ 'init', 'start', 'fit' ] :
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
+# get parent rate variable values
+var_dict     = dismod_at.get_table_dict(connection, 'var')
+fit_var_dict = dismod_at.get_table_dict(connection, 'fit_var')
+#
+middle_age_id  = 1
+middle_time_id = 1
+last_age_id    = 2
+last_time_id   = 2
+parent_node_id = 0
+n_rate         = 5
+tol            = 1e-8
+for rate_id in range(n_rate) :
+	rate_value = dict()
+	count      = 0
+	for var_id in range( len(var_dict) ) :
+		row   = var_dict[var_id]
+		match = row['var_type'] == 'rate'
+		match = match and row['rate_id'] == rate_id
+		match = match and row['node_id'] == parent_node_id
+		if match :
+			age_id  = row['age_id']
+			time_id = row['time_id']
+			if age_id not in rate_value :
+				rate_value[age_id] = dict()
+			count += 1
+	print(rate_value)
+	if rate_id == 0 :
+		# pini case
+		assert count == 1
+		assert abs( rate_value[middle_age_id][middle_time_id] ) < tol
+	else :
+		# other rates
+		assert count == 4
+		assert ( rate_value[0][0] / 0.05 - 1.0 ) < tol
+		#
+		diff  = rate_value[last_age_id][0] - rate_value[0][0]
+		assert diff - 0.01 > - tol  # contraint
+		assert diff - 0.01 < 1e-3   # smoohting objective
+		#
+		diff  = rate_value[0][last_time] - rate_value[0][0]
+		assert diff - 0.01 > - tol  # contraint
+		assert diff - 0.01 < 1e-3   # smoohting objective
+		#
+		diff  = rate_value[last_age_id][0] - rate_value[0][0]
+		assert diff - 0.01 > - tol  # contraint
+		assert diff - 0.01 < 1e-3   # smoohting objective
+		#
+		diff  = rate_value[last_age_id][last_time] - rate_value[last_age][0]
+		assert diff - 0.01 > - tol  # contraint
+		assert diff - 0.01 < 1e-3   # smoohting objective
+#
 # END PYTHON
