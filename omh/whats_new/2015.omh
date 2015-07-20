@@ -55,6 +55,10 @@ because differences are simpler.
 $lnext
 The $cref user_diff_constraint.py$$ example was added to documentation
 and test suite.
+$lnext
+The $code solution check failed$$ warning would sometimes print
+incorrectly when a fixed effect was at its lower or upper bound.
+This has been fixed.
 $lend
 
 $head 07-17$$

@@ -1380,9 +1380,8 @@ void ipopt_fixed::finalize_solution(
 		iRow.data(), jCol.data(), values.data()
 	);
 
-	// Check the partial of the Lagrangian w.r.t x
-	for(size_t j = 0; j < n_fixed_ + prior_n_abs_; j++)
-	if( fixed_lower_[j] != fixed_upper_[j] )
+	// Check the partial of the Lagrangian w.r.t fixed effects
+	for(size_t j = 0; j < n_fixed_; j++)
 	{	Number sum = grad_f[j];
 		for(size_t k = 0; k < nnz_jac_g_; k++)
 		{	if( jCol[k] == Index(j) )
@@ -1390,7 +1389,27 @@ void ipopt_fixed::finalize_solution(
 				sum   += lambda[i] * values[k];
 			}
 		}
-		sum += z_U[j] - z_L[j];
+		// sum += z_U[j] - z_L[j]; does not work because
+		// Ipopt does not seem to set z_U[j] and z_L[j] accuractely
+		double scale = CppAD::abs( (1.0 + tol) * x[j] );
+		bool at_lower = x[j] - fixed_lower_[j] <= scale;
+		if( at_lower )
+			sum = std::min(sum, 0.0);
+		bool at_upper = fixed_upper_[j] - x[j] <= scale;
+		if( at_upper )
+			sum = std::max(sum, 0.0);
+		ok &= CppAD::abs( double(sum) ) <= tol;
+	}
+
+	// Check the partial of the Lagrangian w.r.t auxillary variables
+	for(size_t j = n_fixed_; j < n_fixed_ + prior_n_abs_; j++)
+	{	Number sum = grad_f[j];
+		for(size_t k = 0; k < nnz_jac_g_; k++)
+		{	if( jCol[k] == Index(j) )
+			{	Index  i = iRow[k];
+				sum   += lambda[i] * values[k];
+			}
+		}
 		ok &= CppAD::abs( double(sum) ) <= tol;
 	}
 

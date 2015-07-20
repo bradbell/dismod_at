@@ -112,10 +112,11 @@ simulate_dict  = dismod_at.get_table_dict(connection, 'simulate')
 sample_dict    = dismod_at.get_table_dict(connection, 'sample')
 #
 # rate variables
-parent_node_id = 0
-child_node_id  = 1
-check_tol      = 1e-2
-n_rate         = 5;
+parent_node_id    = 0
+child_node_id     = 1
+check_tol         = 1e-5
+n_rate            = 5;
+parent_rate_lower = 1e-4;
 for rate_id in range(n_rate) :
 	for node_id in [ parent_node_id, child_node_id ] :
 		count = 0
@@ -128,6 +129,7 @@ for rate_id in range(n_rate) :
 				count += 1
 				sample_id      = rate_id
 				check          = simulate_dict[sample_id]['meas_value']
+				check          = max(check, parent_rate_lower)
 				variable_value = sample_dict[var_id]['var_value']
 				if node_id == 0 :
 					# parent node
