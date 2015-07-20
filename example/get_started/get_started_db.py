@@ -36,10 +36,10 @@
 # note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
-def gaussian_zero_fun(a, t) :
-	return ('prior_mean_zero', 'prior_mean_zero', 'prior_mean_zero')
-def uniform_positive_fun(a, t) :
-	return ('prior_uniform_positive', 'prior_mean_zero', 'prior_mean_zero')
+def fun_rate_child(a, t) :
+	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
+def fun_rate_parent(a, t) :
+	return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
 # ------------------------------------------------------------------------
 def get_started_db (file_name) :
 	import sys
@@ -139,16 +139,16 @@ def get_started_db (file_name) :
 			'mean':     1.0,
 			'std':      None,
 			'eta':      None
-		},{ # prior_uniform_positive
-			'name':     'prior_uniform_positive',
+		},{ # prior_rate_parent
+			'name':     'prior_rate_parent',
 			'density':  'uniform',
 			'lower':    1e-4,
 			'upper':    None,
 			'mean':     1e-1,
 			'std':      None,
 			'eta':      None
-		},{ # prior_mean_zero
-			'name':     'prior_mean_zero',
+		},{ # prior_gauss_zero
+			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
 			'lower':    None,
 			'upper':    None,
@@ -162,22 +162,22 @@ def get_started_db (file_name) :
 	middle_age_id  = 1
 	last_time_id   = 2
 	smooth_dict = [
-		{   # smooth_mean_zero
-			'name':                     'smooth_mean_zero',
+		{   # smooth_rate_child
+			'name':                     'smooth_rate_child',
 			'age_id':                   [ middle_age_id ],
 			'time_id':                  [ 0, last_time_id ],
 			'mulstd_value_prior_name':  'prior_one',
 			'mulstd_dage_prior_name':   'prior_one',
 			'mulstd_dtime_prior_name':  'prior_one',
-			'fun':                      gaussian_zero_fun
-		},{ # smooth_uniform_positive
-			'name':                     'smooth_uniform_positive',
+			'fun':                      fun_rate_child
+		},{ # smooth_rate_parent
+			'name':                     'smooth_rate_parent',
 			'age_id':                   [ middle_age_id ],
 			'time_id':                  [ 0, last_time_id ],
 			'mulstd_value_prior_name':  'prior_one',
 			'mulstd_dage_prior_name':   'prior_one',
 			'mulstd_dtime_prior_name':  'prior_one',
-			'fun':                       uniform_positive_fun
+			'fun':                       fun_rate_parent
 		}
 	]
 	# --------------------------------------------------------------------------
@@ -185,24 +185,24 @@ def get_started_db (file_name) :
 	rate_dict = [
 		{
 			'name':          'pini',
-			'parent_smooth': 'smooth_uniform_positive',
-			'child_smooth':  'smooth_mean_zero'
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'iota',
-			'parent_smooth': 'smooth_uniform_positive',
-			'child_smooth':  'smooth_mean_zero'
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'rho',
-			'parent_smooth': 'smooth_uniform_positive',
-			'child_smooth':  'smooth_mean_zero'
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'chi',
-			'parent_smooth': 'smooth_uniform_positive',
-			'child_smooth':  'smooth_mean_zero'
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'omega',
-			'parent_smooth': 'smooth_uniform_positive',
-			'child_smooth':  'smooth_mean_zero'
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_rate_child'
 		}
 	]
 	# ------------------------------------------------------------------------
