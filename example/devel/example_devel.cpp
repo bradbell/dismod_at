@@ -48,6 +48,7 @@ extern bool optimize_random_xam(void);
 extern bool prior_eval_xam(void);
 extern bool prior_jac_xam(void);
 extern bool prior_hes_xam(void);
+extern bool no_random_xam(void);
 
 // model subdirectory
 extern bool avg_no_ode_xam(void);
