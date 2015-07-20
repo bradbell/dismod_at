@@ -41,20 +41,6 @@ $cref/child_smooth_id/rate_table/child_smooth_id/$$
 corresponding to
 $icode%rate_id% = %k%$$
 
-$head Age, a_i,k$$
-Given $latex k$$, there is a corresponding number of age points
-$cref/n_age/smooth_table/n_age/$$ $latex I(k)$$ for the corresponding
-$cref/child_smooth_id/rate_table/child_smooth_id/$$.
-For $latex i = 0 , \ldots , I(k)-1$$,
-we use $latex a_{i,k}$$ to denote the corresponding age value.
-
-$head Time, t_j,k$$
-Given $latex k$$, there is a corresponding number of time points
-$cref/n_time/smooth_table/n_time/$$ $latex J(k)$$ for the corresponding
-$cref/child_smooth_id/rate_table/child_smooth_id/$$.
-For $latex j = 0 , \ldots , J(k)-1$$,
-we use $latex t_{j,k}$$ to denote the corresponding time value.
-
 $head u_i,j,k,c$$
 Let $latex u_{i,j,k,c}$$ denote the random effect corresponding to
 child index $latex c$$,
@@ -65,17 +51,13 @@ time index $latex j$$.
 $head Delta^a$$
 For $latex i = 0 , \ldots , I(k)-2$$ we define
 $latex \[
-\Delta_{i,j,k,c}^a u
-=
-\frac{ u_{i+1,j,k,c} - u_{i,j,k,c} }{ a_{i+1,k} - a_{i,k} }
+\Delta_{i,j,k,c}^a u = u_{i+1,j,k,c} - u_{i,j,k,c}
 \] $$
 
 $head Delta^t$$
 For $latex j = 0 , \ldots , J(k)-2$$ we define
 $latex \[
-\Delta_{i,j,k,c}^t u
-=
-\frac{ u_{i,j+1,k,c} - u_{i,j,k,c} }{ t_{j+1,k} - t_{j,k} }
+\Delta_{i,j,k,c}^t u = u_{i,j+1,k,c} - u_{i,j,k,c}
 \] $$
 
 $head delta_i,j,k$$

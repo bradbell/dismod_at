@@ -100,6 +100,7 @@ ADD_SUBDIRECTORY(example/table)
 ADD_SUBDIRECTORY(example/devel)
 ADD_SUBDIRECTORY(test/devel)
 ADD_SUBDIRECTORY(example/get_started)
+ADD_SUBDIRECTORY(example/user)
 # ----------------------------------------------------------------------------
 ADD_CUSTOM_TARGET(check DEPENDS
 	dismod_at
@@ -108,4 +109,5 @@ ADD_CUSTOM_TARGET(check DEPENDS
 	check_example_devel
 	check_test_devel
 	check_get_started
+	check_user
 )

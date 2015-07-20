@@ -93,7 +93,7 @@ $latex \theta$$ corresponding to the next larger age.
 $subhead Delta^a$$
 If $latex a_{i(k)}$$ is not the maximum age, we use the notation
 $latex \[
-\Delta^a_k \theta = \frac{\theta_{\ell(k)} - \theta_k}{ a_{i(k)+1} - a_{i(k)} }
+\Delta^a_k \theta = \theta_{\ell(k)} - \theta_k
 \] $$
 
 $subhead L_k^a$$

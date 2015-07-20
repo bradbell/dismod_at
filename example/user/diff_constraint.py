@@ -51,7 +51,7 @@ def fun_pini_parent(a, t) :
 def fun_rate_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_rate_parent(a, t) :
-	return ('prior_uniform_pos', 'prior_gauss_pos', 'prior_gauss_pos')
+	return ('prior_value_parent', 'prior_diff_parent', 'prior_diff_parent')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import copy
@@ -144,17 +144,17 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      0.01,
 			'eta':      None
-		},{ # prior_uniform_pos
-			'name':     'prior_uniform_pos',
+		},{ # prior_value_parent
+			'name':     'prior_value_parent',
 			'density':  'uniform',
 			'lower':    0.01,
 			'upper':    1.00,
 			'mean':     0.1,
 			'std':      None,
 			'eta':      None
-		},{ # prior_gauss_pos
-			'name':     'prior_gauss_pos',
-			'density':  'uniform',
+		},{ # prior_diff_parent
+			'name':     'prior_diff_parent',
+			'density':  'gaussian',
 			'lower':    0.01,
 			'upper':    None,
 			'mean':     0.01,
@@ -310,8 +310,9 @@ for rate_id in range(n_rate) :
 			time_id = row['time_id']
 			if age_id not in rate_value :
 				rate_value[age_id] = dict()
+			value = fit_var_dict[var_id]['fit_var_value']
+			rate_value[age_id][time_id] = value
 			count += 1
-	print(rate_value)
 	if rate_id == 0 :
 		# pini case
 		assert count == 1
@@ -322,19 +323,20 @@ for rate_id in range(n_rate) :
 		assert ( rate_value[0][0] / 0.05 - 1.0 ) < tol
 		#
 		diff  = rate_value[last_age_id][0] - rate_value[0][0]
-		assert diff - 0.01 > - tol  # contraint
-		assert diff - 0.01 < 1e-3   # smoohting objective
+		assert diff - 0.01 > - tol             # due to contraint
+		assert abs(diff / 0.01 - 1.0) < 1e-3   # due to smoohting objective
 		#
-		diff  = rate_value[0][last_time] - rate_value[0][0]
-		assert diff - 0.01 > - tol  # contraint
-		assert diff - 0.01 < 1e-3   # smoohting objective
+		diff  = rate_value[0][last_time_id] - rate_value[0][0]
+		assert diff - 0.01 > - tol
+		assert abs(diff / 0.01 - 1.0) < 1e-3
 		#
 		diff  = rate_value[last_age_id][0] - rate_value[0][0]
-		assert diff - 0.01 > - tol  # contraint
-		assert diff - 0.01 < 1e-3   # smoohting objective
+		assert diff - 0.01 > - tol
+		assert abs(diff / 0.01 - 1.0) < 1e-3
 		#
-		diff  = rate_value[last_age_id][last_time] - rate_value[last_age][0]
-		assert diff - 0.01 > - tol  # contraint
-		assert diff - 0.01 < 1e-3   # smoohting objective
+		diff  = rate_value[last_age_id][last_time_id] \
+			- rate_value[last_age_id][0]
+		assert diff - 0.01 > - tol
+		assert abs(diff / 0.01 - 1.0) < 1e-3
 #
 # END PYTHON

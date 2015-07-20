@@ -287,26 +287,22 @@ bool prior_fixed_xam(void)
 				check         -= log(std_v * sqrt_2pi);
 				check         -= wres * wres / 2.0;
 				if( i + 1 < n_age )
-				{	double a0    = age_table[ s_info.age_id(i) ];
-					double a1    = age_table[ s_info.age_id(i+1) ];
-					double v0    = var;
+				{	double v0    = var;
 					index        = info.offset + (i+1) * n_time + j;
 					double v1    = pack_vec[index];
-					double dv_da = (v1 - v0) / (a1 - a0);
-					wres         = (dv_da - mean_a) / std_a;
+					double dv    = v1 - v0;
+					wres         = (dv - mean_a) / std_a;
 					check       -= log( std_a * sqrt_2 );
 					check       -= sqrt_2 * fabs(wres);
 					++count_laplace;
 				}
 				if( j + 1 < n_time )
-				{	double t0    = time_table[ s_info.time_id(j) ];
-					double t1    = time_table[ s_info.time_id(j+1) ];
-					double v0    = var;
+				{	double v0    = var;
 					double sigma = log(1.0 + std_t / (mean_t + eta_t));
 					index        = info.offset + i * n_time + j + 1;
 					double v1    = pack_vec[index];
-					double dv_dt = (v1 - v0) / (t1 - t0);
-					wres         = log(dv_dt+eta_t) - log(mean_t+ eta_t);
+					double dv    = v1 - v0;
+					wres         = log(dv + eta_t) - log(mean_t+ eta_t);
 					wres        /= sigma;
 					check       -= log(sigma * sqrt_2pi);
 					check       -= wres * wres / 2.0;

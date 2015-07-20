@@ -145,32 +145,36 @@ void prior_model::log_prior_on_grid(
 	}
 	// age difference smoothing
 	for(size_t i = 0; i < (n_age-1); i++)
-	{	double a0 = age_table_[ s_info.age_id(i) ];
+	{
+# ifndef NDEBUG
+		double a0 = age_table_[ s_info.age_id(i) ];
 		double a1 = age_table_[ s_info.age_id(i+1) ];
 		assert( a1 > a0 );
+# endif
 		for(size_t j = 0; j < n_time; j++)
 		{	Float  v0       = pack_vec[offset + i * n_time + j];
 			Float  v1       = pack_vec[offset + (i+1) * n_time + j];
-			Float  dv_da    = Float((v1 - v0) / (a1 - a0));
 			size_t prior_id = s_info.dage_prior_id(i, j);
 			const prior_struct& prior = prior_table_[prior_id];
-			residual                  = log_prior(prior, dv_da);
+			residual                  = log_prior(prior, v1-v0);
 			residual_vec.push_back(residual);
 		}
 	}
 	// time difference smoothing
 	for(size_t j = 0; j < (n_time-1); j++)
-	{	double t0 = time_table_[ s_info.time_id(j) ];
+	{
+# ifndef NDEBUG
+		double t0 = time_table_[ s_info.time_id(j) ];
 		double t1 = time_table_[ s_info.time_id(j+1) ];
 		assert( t1 > t0 );
+# endif
 		for(size_t i = 0; i < n_age; i++)
 		{
 			Float  v0       = pack_vec[offset + i * n_time + j];
 			Float  v1       = pack_vec[offset + i * n_time + j + 1];
-			Float  dv_dt    = Float((v1 - v0) / (t1 - t0));
 			size_t prior_id = s_info.dtime_prior_id(i, j);
 			const prior_struct& prior = prior_table_[prior_id];
-			residual                  = log_prior(prior, dv_dt);
+			residual                  = log_prior(prior, v1-v0);
 			residual_vec.push_back(residual);
 		}
 	}

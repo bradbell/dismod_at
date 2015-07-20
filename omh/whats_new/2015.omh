@@ -46,6 +46,15 @@ $lnext
 There was a bug in the values of $cref/age_id/var_table/age_id/$$
 and $cref/time_id/var_table/time_id/$$ in the $code var$$ table.
 This has been fixed.
+$lnext
+Change the definition of
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ so that
+they refer to differences and not difference quotients
+because differences are simpler.
+$lnext
+The $cref user_diff_constraint.py$$ example was added to documentation
+and test suite.
 $lend
 
 $head 07-17$$

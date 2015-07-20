@@ -43,20 +43,6 @@ $cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$
 ( $cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$ )
 for $icode smooth_id$$ corresponding to $latex k$$.
 
-$head Age, a_i,k$$
-Given $latex k$$, there is a corresponding number of age points
-$cref/n_age/smooth_table/n_age/$$ $latex I(k)$$ for the corresponding
-$icode smooth_id$$.
-For $latex i = 0 , \ldots , I(k)-1$$,
-we use $latex a_{i,k}$$ to denote the corresponding age value.
-
-$head Time, t_j,k$$
-Given $latex k$$, there is a corresponding number of time points
-$cref/n_time/smooth_table/n_time/$$ $latex J(k)$$ for the corresponding
-$icode smooth_id$$.
-For $latex j = 0 , \ldots , J(k)-1$$,
-we use $latex t_{j,k}$$ to denote the corresponding time value.
-
 $head theta_i,j,k$$
 Let $latex \theta_{i,j,k}$$ denote the fixed effect corresponding to
 rate or covariate index $latex k$$,
@@ -66,17 +52,13 @@ time index $latex j$$.
 $head Delta^a$$
 For $latex i = 0 , \ldots , I(k)-2$$ we define
 $latex \[
-\Delta_{i,j,k}^a \theta
-=
-\frac{ \theta_{i+1,j,k} - \theta_{i,j,k} }{ a_{i+1,k} - a_{i,k} }
+\Delta_{i,j,k}^a \theta = \theta_{i+1,j,k} - \theta_{i,j,k}
 \] $$
 
 $head Delta^t$$
 For $latex i = 0 , \ldots , J(k)-2$$ we define
 $latex \[
-\Delta_{i,j,k}^t \theta
-=
-\frac{ \theta_{i,j+1,k} - \theta_{i,j,k} }{ t_{j+1,k} - t_{j,k} }
+\Delta_{i,j,k}^t \theta = \theta_{i,j+1,k} - \theta_{i,j,k}
 \] $$
 
 $head mu_i,j,k$$
