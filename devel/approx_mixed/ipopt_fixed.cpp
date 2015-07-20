@@ -692,24 +692,27 @@ bool ipopt_fixed::eval_f(
 	//
 	// initialize random effects
 	if( random_h_.size() == 0 )
-	{	random_tmp_ = random_in_;
-	}
+		random_tmp_ = random_in_;
 	else
-	{	random_tmp_ = random_h_;
-	}
+		random_tmp_ = random_h_;
 	//
 	// value of fixed effects corresponding to this x
 	for(size_t j = 0; j < n_fixed_; j++)
 		fixed_tmp_[j] = double( x[j] );
 	//
-	// compute the optimal random effects corresponding to fixed effects
-	if( new_x )
+	// joint part of objective
+	double H = Number( 0.0 );
+	if( n_random_ > 0 )
+	{	//
+		// compute the optimal random effects corresponding to fixed effects
+		if( new_x )
 		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
-	//
-	// compute joint part of the Laplace objective
-	double H = approx_object_.laplace_eval(
-		fixed_tmp_, fixed_tmp_, random_cur_
-	);
+		//
+		// compute joint part of the Laplace objective
+		H = approx_object_.laplace_eval(
+			fixed_tmp_, fixed_tmp_, random_cur_
+		);
+	}
 	//
 	// prior part of objective
 	// (2DO: cache prior_vec_tmp_ for eval_g with same x)
@@ -779,23 +782,27 @@ bool ipopt_fixed::eval_grad_f(
 	for(size_t j = 0; j < n_fixed_; j++)
 		fixed_tmp_[j] = double( x[j] );
 	//
-	// compute the optimal random effects corresponding to fixed effects
-	if( new_x )
-	{	// initialize random effects
-		if( random_h_.size() == 0 )
-		{	random_tmp_ = random_in_;
-		}
-		else
-		{	random_tmp_ = random_h_;
-		}
-		// random_cur_
-		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
-	}
+	// initialize random effects
+	if( random_h_.size() == 0 )
+		random_tmp_ = random_in_;
+	else
+		random_tmp_ = random_h_;
 	//
-	// Jacobian for joint part of the Lalpace objective
-	H_beta_tmp_ = approx_object_.laplace_beta(
-		fixed_tmp_, fixed_tmp_, random_cur_
-	);
+	// joint part of objective
+	assert( H_beta_tmp_.size() == n_fixed_ );
+	for(size_t j = 0; j < n_fixed_; j++)
+		H_beta_tmp_[j] = Number(0.0);
+	if( n_random_ > 0 )
+	{
+		// compute the optimal random effects corresponding to fixed effects
+		if( new_x )
+		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
+		//
+		// Jacobian for joint part of the Lalpace objective
+		H_beta_tmp_ = approx_object_.laplace_beta(
+			fixed_tmp_, fixed_tmp_, random_cur_
+		);
+	}
 	//
 	// Jacobian of prior part of objective
 	// (2DO: do not revaluate when eval_jac_g has same x)
@@ -1147,28 +1154,34 @@ bool ipopt_fixed::eval_h(
 	for(size_t j = 0; j < n_fixed_; j++)
 		fixed_tmp_[j] = double( x[j] );
 	//
-	// compute the optimal random effects corresponding to fixed effects
-	if( new_x )
-	{	if( random_h_.size() == 0 )
-			random_tmp_ = random_in_;
-		else
-			random_tmp_ = random_h_;
-		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
-		random_h_   = random_cur_;
-	}
+	// initialize random effects
+	if( random_h_.size() == 0 )
+		random_tmp_ = random_in_;
+	else
+		random_tmp_ = random_h_;
 	//
 	// initialize return value
 	for(size_t k = 0; k < nnz_h_lag_; k++)
 		values[k] = Number( 0.0 );
 	//
-	// compute Hessian of Laplace approximation w.r.t. fixed effects
-	approx_object_.laplace_hes_fix(
-		fixed_tmp_, random_cur_,
-		laplace_hes_row_, laplace_hes_col_, laplace_hes_val_
-	);
-	for(size_t k = 0; k < laplace_hes_row_.size(); k++)
-		values[ laplace_2_lag_[k] ] +=
-			obj_factor * Number( laplace_hes_val_[k] );
+	// joint part of objective
+	if( n_random_ > 0 )
+	{
+		// compute the optimal random effects corresponding to fixed effects
+		if( new_x )
+		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
+		//
+		random_h_   = random_cur_;
+		//
+		// compute Hessian of Laplace approximation w.r.t. fixed effects
+		approx_object_.laplace_hes_fix(
+			fixed_tmp_, random_cur_,
+			laplace_hes_row_, laplace_hes_col_, laplace_hes_val_
+		);
+		for(size_t k = 0; k < laplace_hes_row_.size(); k++)
+			values[ laplace_2_lag_[k] ] +=
+				obj_factor * Number( laplace_hes_val_[k] );
+	}
 	//
 	// Hessian of Lagrangian of weighted prior w.r.t. fixed effects
 	w_prior_tmp_[0] = obj_factor;

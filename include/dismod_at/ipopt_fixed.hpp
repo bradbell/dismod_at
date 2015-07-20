@@ -110,7 +110,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		s_vector prior_2_lag_;      // maps prior_hes_row_ to lag_hes_row_
 		s_vector constraint_2_lag_; // maps constraint_hes_row to lag_hes_row
 		// ---------------------------------------------------------------
-		// temporaries
+		// temporaries (size set by constructor only)
 		d_vector        fixed_tmp_;      // size n_fixed_
 		d_vector        random_tmp_;     // size n_random_
 		d_vector        prior_vec_tmp_;  // size prior_n_abs_ + 1
