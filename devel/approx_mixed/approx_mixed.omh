@@ -52,6 +52,14 @@ $latex \B{p} ( y | \theta , u )$$, and
 $latex \B{p} ( u | \theta )$$
 are known functions of $latex y$$, $latex z$$, $latex \theta$$, and $latex u$$.
 
+$subhead No Random Effects$$
+In the case where there are not random effects, the vector $latex u$$
+is empty and the optimal fixed effects maximize
+$latex \[
+\B{p} ( \theta ) \B{p} ( z | \theta )
+\] $$
+
+
 $subhead Fixed Effects Estimation$$
 We approximate this solution by replacing the integral above with its
 Laplace approximation (see $cref approx_mixed_theory$$) and

@@ -33,6 +33,11 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-21$$
+The $code approx_mixed$$ sub-package was extended to work in the case
+were there are
+$cref/no random effects/approx_mixed/Problem/No Random Effects/$$.
+
 $head 07-20$$
 $list number$$
 If $cref/random_seed/option_table/random_seed/$$ is zero,
