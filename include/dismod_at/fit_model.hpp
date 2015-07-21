@@ -60,12 +60,6 @@ namespace dismod_at {
 		// solution found by run_fit and in pack_info form
 		CppAD::vector<double>              solution_;
 		//
-		// temporaries in joint_like
-		a5d_vector                                  a5_pack_vec_tmp_;
-		CppAD::vector< residual_struct<a5_double> > data_like_tmp_;
-		CppAD::vector< residual_struct<a5_double> > prior_ran_tmp_;
-		a5d_vector                                  joint_den_tmp_;
-		//
 		// temporaries in prior_like
 		a1d_vector                                  random_vec_tmp_;
 		a1d_vector                                  a1_pack_vec_tmp_;

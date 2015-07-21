@@ -316,65 +316,63 @@ CppAD::vector<double> fit_model::get_solution(void)
 fit_model::a5d_vector fit_model::joint_like(
 	const a5d_vector& fixed_vec   ,
 	const a5d_vector& random_vec  )
-{	// check if temporay needs to be sized
-	if( a5_pack_vec_tmp_.size() == 0 )
-		a5_pack_vec_tmp_.resize( pack_object_.size() );
+{	// packed vector
+	a5d_vector a5_pack_vec( pack_object_.size() );
 	//
 	// put the fixed and random effects into pack_vec
-	put_fixed_effect(pack_object_, a5_pack_vec_tmp_, fixed_vec);
-	put_random_effect(pack_object_, a5_pack_vec_tmp_, random_vec);
+	put_fixed_effect(pack_object_, a5_pack_vec, fixed_vec);
+	put_random_effect(pack_object_, a5_pack_vec, random_vec);
 	//
 	// evaluate the data and prior residuals
+	CppAD::vector< residual_struct<a5_double> > data_like, prior_ran;
 	bool hold_out = true;
-	data_like_tmp_  = data_object_.like_all(hold_out, a5_pack_vec_tmp_);
-	prior_ran_tmp_  = prior_object_.random(a5_pack_vec_tmp_);
+	data_like  = data_object_.like_all(hold_out, a5_pack_vec);
+	prior_ran  = prior_object_.random(a5_pack_vec);
 	//
 	// number of data and prior residuals
-	size_t n_data_like  = data_like_tmp_.size();
-	size_t n_prior_ran   = prior_ran_tmp_.size();
+	size_t n_data_like  = data_like.size();
+	size_t n_prior_ran   = prior_ran.size();
 	//
-	// check if this temporary needs to be sized
-	if( joint_den_tmp_.size() == 0 )
-	{	// count the number of absolute value terms
-		size_t n_abs = 0;
-		for(size_t i = 0; i < n_data_like; i++)
-		{	density_enum density = data_like_tmp_[i].density;
-			if( density == laplace_enum || density == log_laplace_enum )
-				n_abs++;
-		}
-		for(size_t i = 0; i < n_prior_ran; i++)
-		{	density_enum density = prior_ran_tmp_[i].density;
-			if( density == laplace_enum || density == log_laplace_enum )
-				n_abs++;
-		}
-		// size joint_den_tmp_
-		joint_den_tmp_.resize(1 + n_abs);
+	// count the number of absolute value terms
+	size_t n_abs = 0;
+	for(size_t i = 0; i < n_data_like; i++)
+	{	density_enum density = data_like[i].density;
+		if( density == laplace_enum || density == log_laplace_enum )
+			n_abs++;
 	}
+	for(size_t i = 0; i < n_prior_ran; i++)
+	{	density_enum density = prior_ran[i].density;
+		if( density == laplace_enum || density == log_laplace_enum )
+			n_abs++;
+	}
+	// size joint_den
+	a5d_vector joint_den(1 + n_abs);
+	//
 	// initialize summation of smooth part
-	joint_den_tmp_[0] = a5_double(0.0);
+	joint_den[0] = a5_double(0.0);
 	//
 	// initialize index for non-smooth part
 	size_t i_abs = 0;
 	//
 	// data_like terms
 	for(size_t i = 0; i < n_data_like; i++)
-	{	joint_den_tmp_[0] += data_like_tmp_[i].logden_smooth;
-		density_enum density = data_like_tmp_[i].density;
+	{	joint_den[0] += data_like[i].logden_smooth;
+		density_enum density = data_like[i].density;
 		if( density == laplace_enum || density == log_laplace_enum )
-			joint_den_tmp_[1 + i_abs++] = data_like_tmp_[i].logden_sub_abs;
+			joint_den[1 + i_abs++] = data_like[i].logden_sub_abs;
 	}
 	//
 	// random effects prior
 	for(size_t i = 0; i < n_prior_ran; i++)
-	{	joint_den_tmp_[0] += prior_ran_tmp_[i].logden_smooth;
-		density_enum density = prior_ran_tmp_[i].density;
+	{	joint_den[0] += prior_ran[i].logden_smooth;
+		density_enum density = prior_ran[i].density;
 		if( density == laplace_enum || density == log_laplace_enum )
-			joint_den_tmp_[1 + i_abs++] = prior_ran_tmp_[i].logden_sub_abs;
+			joint_den[1 + i_abs++] = prior_ran[i].logden_sub_abs;
 	}
 	// convert from log-density to negative log density
-	joint_den_tmp_[0] = - joint_den_tmp_[0];
+	joint_den[0] = - joint_den[0];
 	//
-	return joint_den_tmp_;
+	return joint_den;
 }
 // ---------------------------------------------------------------------------
 // prior_like
