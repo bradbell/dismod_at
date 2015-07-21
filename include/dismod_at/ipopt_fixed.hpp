@@ -100,6 +100,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		s_vector constraint_hes_col_; // column for Hessian of constraint
 		d_vector constraint_hes_val_; // values for Hessian of constraint
 		//
+		// only defined when n_random_ > 0
 		s_vector laplace_hes_row_; // row indices for Hessian of Laplace
 		s_vector laplace_hes_col_; // column indices for Hessian of Laplace
 		d_vector laplace_hes_val_; // values of Hessian of Laplace approx

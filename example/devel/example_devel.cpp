@@ -158,6 +158,7 @@ int main(void)
 	RUN(prior_eval_xam);
 	RUN(prior_jac_xam);
 	RUN(prior_hes_xam);
+	RUN(no_random_xam);
 
 	// model subdirectory
 	RUN(avg_no_ode_xam);

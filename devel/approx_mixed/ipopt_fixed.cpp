@@ -346,7 +346,7 @@ approx_object_     ( approx_object    )
 	// set lag_hes_row_, lag_hes_col_, laplace_2_lag_, prior_2_lag_
 	// -----------------------------------------------------------------------
 	// row and column indices for contribution from Laplace approximation
-	approx_object.laplace_hes_fix(
+	if( n_random_ > 0 ) approx_object.laplace_hes_fix(
 		fixed_in, random_in,
 		laplace_hes_row_, laplace_hes_col_, laplace_hes_val_
 	);

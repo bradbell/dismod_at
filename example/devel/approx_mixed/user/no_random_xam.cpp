@@ -76,11 +76,7 @@ namespace {
 		vector<Float> implement_joint_like(
 			const vector<Float>& theta  ,
 			const vector<Float>& u      )
-		{	vector<Float> vec(1);
-
-			// initialize part of log-density that is always smooth
-			vec[0] = Float(0.0);
-
+		{	vector<Float> vec(0);
 			return vec;
 		}
 		// implementation of prior_like as p(z|theta) * p(theta)
@@ -125,11 +121,12 @@ namespace {
 		//
 		virtual void fatal_error(const std::string& error_message)
 		{	std::cerr << "Error: " << error_message << std::endl;
-			std::exit(1);
+			assert(false);
 		}
 		//
 		virtual void warning(const std::string& warning_message)
 		{	std::cerr << "Warning: " << warning_message << std::endl;
+			assert(false);
 		}
 		// ------------------------------------------------------------------
 	};
