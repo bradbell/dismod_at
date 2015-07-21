@@ -37,24 +37,24 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 
 	${suitesparse_EXAMPLES}
 
-	approx_mixed/approx_constraint_xam.cpp
-	approx_mixed/approx_derived_xam.cpp
-	approx_mixed/constraint_eval_xam.cpp
-	approx_mixed/constraint_jac_xam.cpp
-	approx_mixed/constraint_hes_xam.cpp
-	approx_mixed/eigen_xam.cpp
-	approx_mixed/joint_grad_ran_xam.cpp
-	approx_mixed/laplace_hes_fix_xam.cpp
-	approx_mixed/joint_hes_ran_xam.cpp
+	approx_mixed/public/approx_constraint_xam.cpp
+	approx_mixed/public/approx_derived_xam.cpp
+	approx_mixed/private/constraint_eval_xam.cpp
+	approx_mixed/private/constraint_jac_xam.cpp
+	approx_mixed/private/constraint_hes_xam.cpp
+	approx_mixed/private/eigen_xam.cpp
+	approx_mixed/private/joint_grad_ran_xam.cpp
+	approx_mixed/private/laplace_hes_fix_xam.cpp
+	approx_mixed/private/joint_hes_ran_xam.cpp
 	approx_mixed/ipopt_xam_run.cpp
-	approx_mixed/laplace_eval_xam.cpp
-	approx_mixed/laplace_beta_xam.cpp
-	approx_mixed/optimize_fixed_xam.cpp
-	approx_mixed/optimize_random_xam.cpp
-	approx_mixed/prior_eval_xam.cpp
-	approx_mixed/prior_jac_xam.cpp
-	approx_mixed/prior_hes_xam.cpp
-	approx_mixed/user/no_random_xam.cpp
+	approx_mixed/private/laplace_eval_xam.cpp
+	approx_mixed/private/laplace_beta_xam.cpp
+	approx_mixed/public/optimize_fixed_xam.cpp
+	approx_mixed/public/optimize_random_xam.cpp
+	approx_mixed/private/prior_eval_xam.cpp
+	approx_mixed/private/prior_jac_xam.cpp
+	approx_mixed/private/prior_hes_xam.cpp
+	approx_mixed/public/no_random_xam.cpp
 
 	model/avg_no_ode_xam.cpp
 	model/avg_yes_ode_xam.cpp

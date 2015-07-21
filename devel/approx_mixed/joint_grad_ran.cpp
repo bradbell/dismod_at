@@ -62,7 +62,7 @@ $codei%
 It contains the gradient $latex f_u^{(1)} ( \theta , u )$$.
 
 $children%
-	example/devel/approx_mixed/joint_grad_ran_xam.cpp
+	example/devel/approx_mixed/private/joint_grad_ran_xam.cpp
 %$$
 $head Example$$
 The file $cref joint_grad_ran_xam.cpp$$ contains an example

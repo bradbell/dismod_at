@@ -9,16 +9,21 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin approx_derived_xam.cpp$$
+$begin prior_eval_xam.cpp$$
 $spell
+	eval
 	interp
 	xam
 $$
 
-$section C++ approx_derived: Example and Test$$
+$section C++ prior_eval: Example and Test$$
+
+$head Private$$
+This example is not part of the
+$cref/approx_mixed public API/approx_mixed_public/$$.
 
 $code
-$verbatim%example/devel/approx_mixed/approx_derived_xam.cpp
+$verbatim%example/devel/approx_mixed/private/prior_eval_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -28,7 +33,6 @@ $end
 # include <cppad/cppad.hpp>
 # include <dismod_at/approx_mixed.hpp>
 
-
 namespace {
 	using CppAD::vector;
 	using CppAD::log;
@@ -36,17 +40,20 @@ namespace {
 
 	class approx_derived : public dismod_at::approx_mixed {
 	private:
+		size_t                n_fixed_;
 		const vector<double>& y_;
 	public:
 		// constructor
 		approx_derived(
 			size_t n_fixed                    ,
 			size_t n_random                   ,
-			const vector<double>& y           )
-			:
+			const vector<double>& y           ) :
 			dismod_at::approx_mixed(n_fixed, n_random) ,
+			n_fixed_(n_fixed) ,
 			y_(y)
-		{ }
+		{	assert( n_fixed == 2);
+		}
+	private:
 		// implementation of joint_like
 		template <class Float>
 		vector<Float> implement_joint_like(
@@ -62,8 +69,8 @@ namespace {
 
 			// for each data and random effect
 			for(size_t i = 0; i < y_.size(); i++)
-			{	Float mu     = u[i];
-				Float sigma  = theta[i];
+			{	Float mu     = theta[0] + u[i];
+				Float sigma  = theta[1];
 				Float res    = (y_[i] - mu) / sigma;
 
 				// This is a Gaussian term, so entire density is smooth
@@ -74,28 +81,27 @@ namespace {
 		// implementation of prior_like
 		template <class Float>
 		vector<Float> implement_prior_like(
-			const vector<Float>& theta  )
+			const vector<Float>& fixed_vec  )
 		{	vector<Float> vec(1);
 
 			// initialize part of log-density that is smooth
 			vec[0] = Float(0.0);
 
 			// compute these factors once
-			Float one    = Float(1.0);
+			Float mu     = Float(1.0);
 			Float sqrt_2 = CppAD::sqrt( Float(2.0) );
 
-			for(size_t i = 0; i < y_.size(); i++)
-			{	Float sigma  = theta[i];
-
-				// This is a Laplace term, so using Laso for this variable
-				vec[0] += CppAD::log( sqrt_2 * sigma);
+			for(size_t j = 0; j < n_fixed_; j++)
+			{
+				// This is a Laplace term
+				vec[0] += CppAD::log( sqrt_2 );
 
 				// part of the density that needs absolute value
-				vec.push_back(sqrt_2 * (sigma - one) );
+				vec.push_back(sqrt_2 * (fixed_vec[j] - mu) );
 			}
 			return vec;
 		}
-		// ------------------------------------------------------------------
+	public:
 		virtual vector<a5_double> joint_like(
 			const vector<a5_double>& fixed_vec  ,
 			const vector<a5_double>& random_vec )
@@ -120,67 +126,44 @@ namespace {
 	};
 }
 
-bool approx_derived_xam(void)
+bool prior_eval_xam(void)
 {
-	bool   ok  = true;
-	double pi  = 4.0 * std::atan(1.0);
+	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
-
-	typedef dismod_at::approx_mixed::a1_double a1_double;
-	typedef dismod_at::approx_mixed::a5_double a5_double;
+	double sqrt_2 = CppAD::sqrt(2.0);
 
 	size_t n_data   = 10;
-	size_t n_fixed  = n_data;
+	size_t n_fixed  = 2;
 	size_t n_random = n_data;
-	vector<double>    data(n_data);
-	vector<double>    fixed_vec(n_fixed), random_vec(n_random);
-	vector<a1_double> a1_fixed(n_fixed), a1_random(n_random);
-	vector<a5_double> a5_fixed(n_fixed), a5_random(n_random);
+	vector<double> data(n_data), fixed_vec(n_fixed), random_vec(n_random);
 
+	fixed_vec[0] = 2.0;
+	fixed_vec[1] = 0.5;
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]       = double(i + 1);
-		//
-		fixed_vec[i]  = 1.5;
-		a1_fixed[i]   = a1_double( fixed_vec[i] );
-		a5_fixed[i]   = a5_double( fixed_vec[i] );
-		//
-		random_vec[i] = 0.0;
-		a1_random[i]  = a1_double( random_vec[i] );
-		a5_random[i]  = a5_double( random_vec[i] );
+		random_vec[i] = i / double(n_data);
 	}
 
 	// object that is derived from approx_mixed
 	approx_derived approx_object(n_fixed, n_random, data);
 	approx_object.initialize(fixed_vec, random_vec);
 
-	// Evaluate the joint negative log-likelihood
-	vector<a5_double> a5_vec(1);
-	a5_vec = approx_object.implement_joint_like(a5_fixed, a5_random);
+	// compute prior negative log-density vector
+	CppAD::vector<double> vec = approx_object.prior_eval(fixed_vec);
 
-	// check the joint negative log-likelihood
-	double sum = 0.0;
-	for(size_t i = 0; i < n_data; i++)
-	{	double mu     = random_vec[i];
-		double sigma  = fixed_vec[i];
-		double res    = (data[i] - mu) / sigma;
-		sum          += (std::log(2 * pi * sigma * sigma) + res * res) / 2.0;
-	}
-	ok &= abs( a5_vec[0] / a5_double(sum) - a5_double(1.0) ) < eps;
+	// check smooth part
+	double check = CppAD::log(2.0);
+	ok &= CppAD::abs( vec[0] / check - 1.0 ) <= eps;
 
-	// Evaluate the prior negative log-likelihood
-	vector<a1_double> a1_vec(1 + n_fixed);
-	a1_vec = approx_object.prior_like(a1_fixed);
+	// check number of absolute values
+	ok &= vec.size() == n_fixed + 1;
 
-	// check the prior negative log-likelihood
-	sum = 0.0;
+	// check argument to absolute value
 	for(size_t j = 0; j < n_fixed; j++)
-	{	double sigma  = fixed_vec[j];
-		sum          += std::log( std::sqrt(2.0) * sigma );
-		//
-		double check  = std::sqrt(2.0) * (sigma - 1.0);
-		ok  &= abs( a1_vec[1+j] / check - 1.0 ) < eps;
+	{	// note that the true value is not equal to 1.0 so can deivide by check
+		check = sqrt_2 * ( fixed_vec[j] - 1.0 );
+		ok &= CppAD::abs( vec[1 + j] / check - 1.0 ) <= eps;
 	}
-	ok &= abs( a1_vec[0] / sum - 1.0 ) < eps;
 
 	return ok;
 }

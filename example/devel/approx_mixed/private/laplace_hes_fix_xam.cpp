@@ -36,7 +36,7 @@ $latex \[
 \] $$
 
 $code
-$verbatim%example/devel/approx_mixed/laplace_hes_fix_xam.cpp
+$verbatim%example/devel/approx_mixed/private/laplace_hes_fix_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 

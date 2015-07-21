@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin optimize_fixed_xam.cpp$$
+$begin approx_mixed_user_no_random_xam.cpp$$
 $spell
 	hes
 	eval
@@ -17,39 +17,31 @@ $spell
 	xam
 $$
 
-$section C++ optimize_fixed_xam: Example and Test$$
+$section C++ approx_mixed: User Example and Test with no Random Effects$$.
 
 $head Model$$
 $latex \[
-	\B{p}( y_i | \theta , u ) \sim \B{N} ( u_i + \theta_0 , \theta_1^2 )
+	\B{p}( z_i | \theta ) \sim \B{N} ( \theta_i , 1 )
 \] $$
 $latex \[
-	\B{p}( u_i | \theta ) \sim \B{N} ( 0 , 1 )
-\] $$
+	\B{p}( \theta_i ) \sim \B{N} ( 0 , 1 )
+The corresponding prior negative log-likelihood
+$cref/g(theta)/approx_mixed_theory/Prior Negative Log-Likelihood, g(theta)/$$
+is
 $latex \[
-	\B{p}( \theta ) \sim \B{N} ( 4 , 1 )
-\] $$
-It follows that the Laplace approximation is exact and
-$latex \[
-	\B{p}( y_i | \theta ) \sim \B{N} \left( \theta_0 , 1 + \theta_1^2 \right)
-\] $$
-The corresponding objective for the fixed effects is equivalent to:
-$latex \[
-F( \theta ) = \frac{1}{2} \left[
-	( \theta_0 - 4 )^2 + ( \theta_1 - 4 )^2 +
-		N \log \left( 1 + \theta_1^2 \right) +
-		( 1 + \theta_1^2)^{-1} \sum_{i=0}^{N-1} ( y_i - \theta_0 )^2
+g( \theta ) = \frac{1}{2} \sim_{i} \left[
+	\log \left( 2 \pi ) + \theta_i^2
+	+
+	\log \left( 2 \pi ) + ( z_i - \theta_i )^2
 \right]
 \] $$
-The constraints on the fixed effect are
+The optimal solution (with no constraints) is
 $latex \[
-	- \infty \leq \theta_0 \leq + \infty
-	\R{\; and \;}
-	0.1 \leq \theta_1 \leq 100
+	\hat{\theta}_i = z_i / 2
 \] $$
 
 $code
-$verbatim%example/devel/approx_mixed/optimize_fixed_xam.cpp
+$verbatim%example/devel/approx_mixed/public/optimize_fixed_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -67,63 +59,47 @@ namespace {
 	class approx_derived : public dismod_at::approx_mixed {
 	private:
 		size_t                n_fixed_;
-		const vector<double>& y_;
+		const vector<double>& z_;
 	public:
 		// constructor
 		approx_derived(
 			size_t n_fixed                    ,
 			size_t n_random                   ,
-			const vector<double>& y           ) :
+			const vector<double>& z           ) :
 			dismod_at::approx_mixed(n_fixed, n_random) ,
 			n_fixed_(n_fixed)                          ,
-			y_(y)
-		{	assert( n_fixed == 2); }
+			z_(z)
+		{	assert(z.size() == n_fixed); }
 	private:
-		// implementation of joint_like
+		// implemtation joint likelihood for empty random effect vector
 		template <class Float>
 		vector<Float> implement_joint_like(
 			const vector<Float>& theta  ,
 			const vector<Float>& u      )
-		{	vector<Float> vec(1);
-
-			// initialize part of log-density that is always smooth
-			vec[0] = Float(0.0);
-
-			// pi
-			Float sqrt_2pi = Float( CppAD::sqrt(8.0 * CppAD::atan(1.0) ) );
-
-			for(size_t i = 0; i < y_.size(); i++)
-			{	Float mu     = u[i] + theta[0];
-				Float sigma  = theta[1];
-				Float res    = (y_[i] - mu) / sigma;
-
-				// p(y_i | u, theta)
-				vec[0] += log(sqrt_2pi * sigma) + res*res / Float(2.0);
-
-				// p(u_i | theta)
-				vec[0] += log(sqrt_2pi) + u[i] * u[i] / Float(2.0);
-			}
+		{	vector<Float> vec(0);
 			return vec;
 		}
-		// implementation of prior_like
+		// implementation of prior_like as p(z|theta) * p(theta)
 		template <class Float>
 		vector<Float> implement_prior_like(
 			const vector<Float>& fixed_vec  )
-		{	vector<Float> vec(1);
-
-			// initialize part of log-density that is smooth
+		{
+			// initialize log-density
+			vector<Float> vec(1);
 			vec[0] = Float(0.0);
 
-			// compute these factors once
+			// compute this factors once
 			Float sqrt_2pi = Float( CppAD::sqrt( 8.0 * CppAD::atan(1.0) ) );
 
 			for(size_t j = 0; j < n_fixed_; j++)
-			{	Float mu     = Float(4.0);
-				Float sigma  = Float(1.0);
-				Float res    = (fixed_vec[j] - mu);
+			{
+				// Data term
+				Float res  = (z_[j] - fixed_vec[j]);
+				vec[0]    += log(sqrt_2pi ) + res * res / Float(2.0);
 
-				// This is a Gaussian term, so entire density is smooth
-				vec[0]  += log(sqrt_2pi * sigma) + res * res / Float(2.0);
+				// True prior term
+				res     = fixed_vec[j];
+				vec[0] += log(sqrt_2pi) + res * res / Float(2.0);
 			}
 			return vec;
 		}
@@ -145,41 +121,46 @@ namespace {
 		//
 		virtual void fatal_error(const std::string& error_message)
 		{	std::cerr << "Error: " << error_message << std::endl;
-			std::exit(1);
+			assert(false);
 		}
 		//
 		virtual void warning(const std::string& warning_message)
 		{	std::cerr << "Warning: " << warning_message << std::endl;
+			assert(false);
 		}
 		// ------------------------------------------------------------------
 	};
 }
 
-bool optimize_fixed_xam(void)
+bool no_random_xam(void)
 {
 	bool   ok = true;
 	double inf = std::numeric_limits<double>::infinity();
 	double tol = 1e-8;
 
-	size_t n_data   = 10;
-	size_t n_fixed  = 2;
-	size_t n_random = n_data;
+	// fixed effects
+	size_t n_fixed  = 3;
 	vector<double>
 		fixed_lower(n_fixed), fixed_in(n_fixed), fixed_upper(n_fixed);
-	fixed_lower[0] = - inf; fixed_in[0] = 2.0; fixed_upper[0] = inf;
-	fixed_lower[1] = .01;   fixed_in[1] = 0.5; fixed_upper[1] = inf;
+	for(size_t j = 0; j < n_fixed; j++)
+	{	fixed_lower[j] = - inf;
+		fixed_in[j]    = 0.0;
+		fixed_upper[j] = inf;
+	}
 	//
-	// explicit constriants (in addition to l1 terms)
+	// no random effects
+	size_t n_random = 0;
+	vector<double> random_in(0);
+	//
+	// no constriants
 	vector<double> constraint_lower(0), constraint_upper(0);
 	//
-	vector<double> data(n_data), random_in(n_random);
-	for(size_t i = 0; i < n_data; i++)
-	{	data[i]       = double(i + 1);
-		random_in[i] = i / double(n_data);
-	}
+	vector<double> z(n_fixed);
+	for(size_t i = 0; i < n_fixed; i++)
+		z[i] = double(i+1);
 
 	// object that is derived from approx_mixed
-	approx_derived approx_object(n_fixed, n_random, data);
+	approx_derived approx_object(n_fixed, n_random, z);
 	approx_object.initialize(fixed_in, random_in);
 
 	// optimize the fixed effects
@@ -200,27 +181,8 @@ bool optimize_fixed_xam(void)
 		random_in
 	);
 
-	// results of optimization
-	double theta_0 = fixed_out[0];
-	double theta_1 = fixed_out[1];
-
-	// compute partials of F
-	double sum   = 0.0;
-	double sumsq = 0.0;
-	for(size_t i = 0; i < n_data; i++)
-	{	sum   += theta_0 - data[i];
-		sumsq += (theta_0 - data[i]) * (theta_0 - data[i]);
-	}
-	double den = 1.0 + theta_1 * theta_1;
-	double F_0 = theta_0 - 4.0 + sum / den;
-	double F_1 = theta_1 - 4.0;
-	F_1       += double(n_data) * theta_1 / den;
-	F_1       -= sumsq * theta_1  / (den * den);
-
-	// Note that no constraints are active, (not even the l1 terms)
-	// so the partials should be zero.
-	ok &= CppAD::abs( F_0 ) <= tol;
-	ok &= CppAD::abs( F_1 ) <= tol;
+	for(size_t j = 0; j < n_fixed; j++)
+		ok &= CppAD::abs( fixed_out[j] - z[j] / 2.0 ) <= tol;
 
 	return ok;
 }

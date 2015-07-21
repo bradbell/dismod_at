@@ -51,7 +51,7 @@ L( \theta , \lambda ) =
 \] $$
 
 $code
-$verbatim%example/devel/approx_mixed/approx_constraint_xam.cpp
+$verbatim%example/devel/approx_mixed/public/approx_constraint_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 

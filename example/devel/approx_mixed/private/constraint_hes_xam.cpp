@@ -9,21 +9,21 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin prior_jac_xam.cpp$$
+$begin constraint_hes_xam.cpp$$
 $spell
-	jac
+	hes
 	interp
 	xam
 $$
 
-$section C++ prior_jac: Example and Test$$
+$section C++ constraint_hes: Example and Test$$
 
 $head Private$$
 This example is not part of the
 $cref/approx_mixed public API/approx_mixed_public/$$.
 
 $code
-$verbatim%example/devel/approx_mixed/prior_jac_xam.cpp
+$verbatim%example/devel/approx_mixed/private/constraint_hes_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -111,9 +111,17 @@ namespace {
 			const vector<a1_double>& fixed_vec  )
 		{	return implement_prior_like(fixed_vec); }
 		//
+		// constraint is 1/2 norm squared of the fixed effects
 		virtual vector<a1_double> constraint(
 			const vector<a1_double>& fixed_vec  )
-		{	return vector<a1_double>(0); } // empty vector
+		{	assert( fixed_vec.size() == n_fixed_ );
+			vector<a1_double> c_vec(1);
+			c_vec[0] = 0.0;
+			for(size_t j = 0; j < n_fixed_; j++)
+				c_vec[0] += fixed_vec[j] * fixed_vec[j];
+			c_vec[0] /= 2.0;
+			return c_vec;
+		}
 		//
 		virtual void fatal_error(const std::string& error_message)
 		{	std::cerr << "Error: " << error_message << std::endl;
@@ -126,11 +134,10 @@ namespace {
 	};
 }
 
-bool prior_jac_xam(void)
+bool constraint_hes_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
-	double sqrt_2 = CppAD::sqrt(2.0);
 
 	size_t n_data   = 10;
 	size_t n_fixed  = 2;
@@ -148,29 +155,27 @@ bool prior_jac_xam(void)
 	approx_derived approx_object(n_fixed, n_random, data);
 	approx_object.initialize(fixed_vec, random_vec);
 
-	// compute prior jacobian
+	// compute the constraint function and check result
 	CppAD::vector<size_t> row, col;
-	CppAD::vector<double> val;
-	approx_object.prior_jac(fixed_vec, row, col, val);
+	CppAD::vector<double> weight(1), val;
+	weight[0] = 1.0;
+	approx_object.constraint_hes(fixed_vec, weight, row, col, val);
 
-	// initialize which rows have been found so far
-	CppAD::vector<bool> found(3);
-	for(size_t i = 0; i < 3; i++)
-		found[i] = false;
 
 	// check derivatives
+	CppAD::vector<bool> found(n_fixed);
+	for(size_t j = 0; j < n_fixed; j++)
+		found[j] = false;
+	ok &= row.size() == n_fixed;
 	for(size_t k = 0; k < row.size(); k++)
 	{	size_t i = row[k];
 		size_t j = col[k];
-		double check = sqrt_2;
-		ok      &= i == j+1;
-		ok      &= ! found[i];
+		double check = 1.0;
+		ok      &= i == j;
 		ok      &= ( val[k] / check - 1.0) <= eps;
+		ok      &= ! found[i];
 		found[i] = true;
 	}
-	ok &= found[0] == false;
-	ok &= found[1];
-	ok &= found[2];
 
 	return ok;
 }

@@ -24,7 +24,7 @@ This example is not part of the
 $cref/approx_mixed public API/approx_mixed_public/$$.
 
 $code
-$verbatim%example/devel/approx_mixed/joint_hes_ran_xam.cpp
+$verbatim%example/devel/approx_mixed/private/joint_hes_ran_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 

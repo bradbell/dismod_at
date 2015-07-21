@@ -96,7 +96,7 @@ Upon return, it contains the value of the Hessian elements
 that are possibly non-zero (and will have the same size as $icode row_out$$).
 
 $children%
-	example/devel/approx_mixed/constraint_hes_xam.cpp
+	example/devel/approx_mixed/private/constraint_hes_xam.cpp
 %$$
 $head Example$$
 The file $cref constraint_hes_xam.cpp$$ contains an example

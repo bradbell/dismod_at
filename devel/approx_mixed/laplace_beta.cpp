@@ -73,7 +73,7 @@ $codei%
 and is the value of the partial derivative.
 
 $children%
-	example/devel/approx_mixed/laplace_beta_xam.cpp
+	example/devel/approx_mixed/private/laplace_beta_xam.cpp
 %$$
 $head Example$$
 The file $cref laplace_beta_xam.cpp$$ contains an example

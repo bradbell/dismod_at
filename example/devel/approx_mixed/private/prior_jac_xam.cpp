@@ -9,21 +9,21 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin constraint_eval_xam.cpp$$
+$begin prior_jac_xam.cpp$$
 $spell
-	eval
+	jac
 	interp
 	xam
 $$
 
-$section C++ constraint_eval: Example and Test$$
+$section C++ prior_jac: Example and Test$$
 
 $head Private$$
 This example is not part of the
 $cref/approx_mixed public API/approx_mixed_public/$$.
 
 $code
-$verbatim%example/devel/approx_mixed/constraint_eval_xam.cpp
+$verbatim%example/devel/approx_mixed/private/prior_jac_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -111,17 +111,9 @@ namespace {
 			const vector<a1_double>& fixed_vec  )
 		{	return implement_prior_like(fixed_vec); }
 		//
-		// constraint is 1/2 norm squared of the fixed effects
 		virtual vector<a1_double> constraint(
 			const vector<a1_double>& fixed_vec  )
-		{	assert( fixed_vec.size() == n_fixed_ );
-			vector<a1_double> c_vec(1);
-			c_vec[0] = 0.0;
-			for(size_t j = 0; j < n_fixed_; j++)
-				c_vec[0] += fixed_vec[j] * fixed_vec[j];
-			c_vec[0] /= 2.0;
-			return c_vec;
-		}
+		{	return vector<a1_double>(0); } // empty vector
 		//
 		virtual void fatal_error(const std::string& error_message)
 		{	std::cerr << "Error: " << error_message << std::endl;
@@ -134,10 +126,11 @@ namespace {
 	};
 }
 
-bool constraint_eval_xam(void)
+bool prior_jac_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
+	double sqrt_2 = CppAD::sqrt(2.0);
 
 	size_t n_data   = 10;
 	size_t n_fixed  = 2;
@@ -155,14 +148,29 @@ bool constraint_eval_xam(void)
 	approx_derived approx_object(n_fixed, n_random, data);
 	approx_object.initialize(fixed_vec, random_vec);
 
-	// compute the constraint function and check result
-	CppAD::vector<double> c = approx_object.constraint_eval(fixed_vec);
-	ok &= c.size() == 1;
-	double check = 0.0;
-	for(size_t j = 0; j < n_fixed; j++)
-		check += fixed_vec[j] * fixed_vec[j];
-	check /= 2.0;
-	ok &= CppAD::abs( c[0] / check - 1.0 ) <= eps;
+	// compute prior jacobian
+	CppAD::vector<size_t> row, col;
+	CppAD::vector<double> val;
+	approx_object.prior_jac(fixed_vec, row, col, val);
+
+	// initialize which rows have been found so far
+	CppAD::vector<bool> found(3);
+	for(size_t i = 0; i < 3; i++)
+		found[i] = false;
+
+	// check derivatives
+	for(size_t k = 0; k < row.size(); k++)
+	{	size_t i = row[k];
+		size_t j = col[k];
+		double check = sqrt_2;
+		ok      &= i == j+1;
+		ok      &= ! found[i];
+		ok      &= ( val[k] / check - 1.0) <= eps;
+		found[i] = true;
+	}
+	ok &= found[0] == false;
+	ok &= found[1];
+	ok &= found[2];
 
 	return ok;
 }

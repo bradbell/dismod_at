@@ -48,7 +48,7 @@ corresponding to the fixed effects; see
 $cref/c_vec/approx_mixed_constraint/c_vec/$$.
 
 $children%
-	example/devel/approx_mixed/constraint_eval_xam.cpp
+	example/devel/approx_mixed/private/constraint_eval_xam.cpp
 %$$
 $head Example$$
 The file $cref constraint_eval_xam.cpp$$ contains an example

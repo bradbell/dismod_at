@@ -66,7 +66,7 @@ This optimization properly handles the case where
 the joint negative log-likelihood contains Laplace likelihood terms.
 
 $children%
-	example/devel/approx_mixed/optimize_random_xam.cpp
+	example/devel/approx_mixed/public/optimize_random_xam.cpp
 %$$
 $head Example$$
 The file $cref optimize_random_xam.cpp$$ contains an example

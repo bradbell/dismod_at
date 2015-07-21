@@ -99,7 +99,7 @@ Upon return, it contains the value of the Hessian elements
 that are possibly non-zero (and will have the same size as $icode row_out$$).
 
 $children%
-	example/devel/approx_mixed/laplace_hes_fix_xam.cpp
+	example/devel/approx_mixed/private/laplace_hes_fix_xam.cpp
 %$$
 $head Example$$
 The file $cref laplace_hes_fix_xam.cpp$$ contains an example

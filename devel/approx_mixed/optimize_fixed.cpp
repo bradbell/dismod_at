@@ -155,8 +155,8 @@ The $cref/theory/approx_mixed_theory/$$ for the
 Laplace approximation optimization only includes the case where
 the $cref/joint negative log-likelihood/approx_mixed_joint_like/$$ is smooth.
 
-$children%example/devel/approx_mixed/optimize_fixed_xam.cpp
-	%example/devel/approx_mixed/approx_constraint_xam.cpp
+$children%example/devel/approx_mixed/public/optimize_fixed_xam.cpp
+	%example/devel/approx_mixed/public/approx_constraint_xam.cpp
 	%include/dismod_at/ipopt_fixed.hpp
 %$$
 

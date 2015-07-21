@@ -75,7 +75,7 @@ $cref/H(beta, theta, u)/approx_mixed_theory
 /$$.
 
 $children%
-	example/devel/approx_mixed/laplace_eval_xam.cpp
+	example/devel/approx_mixed/private/laplace_eval_xam.cpp
 %$$
 $head Example$$
 The file $cref laplace_eval_xam.cpp$$ contains an example

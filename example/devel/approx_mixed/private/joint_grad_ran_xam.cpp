@@ -9,16 +9,20 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin optimize_random_xam.cpp$$
+$begin joint_grad_ran_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ optimize_random: Example and Test$$
+$section C++ joint_grad_ran: Example and Test$$
+
+$head Private$$
+This example is not part of the
+$cref/approx_mixed public API/approx_mixed_public/$$.
 
 $code
-$verbatim%example/devel/approx_mixed/optimize_random_xam.cpp
+$verbatim%example/devel/approx_mixed/private/joint_grad_ran_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -57,22 +61,23 @@ namespace {
 			// initialize part of log-density that is always smooth
 			vec[0] = Float(0.0);
 
-			// compute these factors once
-			Float sqrt_2   = CppAD::sqrt( Float(2.0) );
-			Float sqrt_2pi = Float( CppAD::sqrt( 8.0 * CppAD::atan(1.0) ) );
+			// compute this factor once
+			Float sqrt_2 = CppAD::sqrt( Float(2.0) );
 
 			for(size_t i = 0; i < y_.size(); i++)
 			{	Float mu     = u[i];
 				Float sigma  = theta[i];
 				Float res    = (y_[i] - mu) / sigma;
 
-				if( i % 2 )
+				if( i % 2 == 0 )
 				{	// This is a Gaussian term, so entire density is smooth
-					vec[0]  += (sqrt_2pi * log(sigma) + res*res) / Float(2.0);
+					// (do not need 2*pi inside of log)
+					vec[0]  += (log(sigma) + res*res) / Float(2.0);
 				}
 				else
 				{	// This term is Laplace distributed
-					vec[0] += log(sqrt_2 * sigma);
+					// (do not need sqrt(2) inside of log)
+					vec[0] += log(sigma);
 
 					// part of the density that need absolute value
 					vec.push_back(sqrt_2 * res);
@@ -81,14 +86,12 @@ namespace {
 			return vec;
 		}
 	public:
-		// -------------------------------------------------------------------
-		// User defined virtual functions
+		//
 		virtual vector<a5_double> joint_like(
 			const vector<a5_double>& fixed_vec  ,
 			const vector<a5_double>& random_vec )
 		{	return implement_joint_like(fixed_vec, random_vec); }
 		//
-		// improper constant prior
 		virtual vector<a1_double> prior_like(
 			const vector<a1_double>& fixed_vec  )
 		{	a1d_vector vec(1);
@@ -108,37 +111,49 @@ namespace {
 		virtual void warning(const std::string& warning_message)
 		{	std::cerr << "Warning: " << warning_message << std::endl;
 		}
-		// ------------------------------------------------------------------
 	};
 }
 
-bool optimize_random_xam(void)
+bool joint_grad_ran_xam(void)
 {
 	bool   ok = true;
+	double eps = 100. * std::numeric_limits<double>::epsilon();
+	double sqrt_2 = std::sqrt( 2.0 );
+	typedef AD< AD< AD<double> > > a3_double;
 
-	size_t n_data = 10;
-	vector<double> data(n_data), fixed_vec(n_data), random_in(n_data);
+	size_t n_data   = 10;
+	size_t n_fixed  = n_data;
+	size_t n_random = n_data;
+	vector<double> data(n_data);
+	vector<double> theta(n_fixed), u(n_random);
+	vector<a3_double> fixed_vec(n_fixed), random_vec(n_random);
 
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]      = double(i + 1);
-		fixed_vec[i] = 1.0;
-		random_in[i] = 0.0;
+		fixed_vec[i] = theta[i] =std::sqrt( double(i + 1) );
+		random_vec[i] = u[i] = 0.0;
 	}
 
 	// object that is derived from approx_mixed
-	approx_derived approx_object(n_data, n_data, data);
-	approx_object.initialize(fixed_vec, random_in);
+	approx_derived approx_object(n_fixed, n_random, data);
+	approx_object.initialize(theta, u);
 
-	// determine the optimal random effects
-	vector<double> random_out = approx_object.optimize_random(
-		fixed_vec, random_in
-	);
+	// compute gradient with respect to random effects
+	vector<a3_double> grad =
+		approx_object.joint_grad_ran(fixed_vec, random_vec);
 
-	// check the result
-	for(size_t i = 0; i < n_data; i++)
-	{	// debugging print out
-		// std::cout << random_out[i] / data[i] - 1.0 << std::endl;
-		ok &= CppAD::abs(random_out[i] / data[i] - 1.0) < 1e-10;
+	// The Laplace terms are known to have zero Hessian w.r.t random effects
+	for(size_t i = 0; i < n_random; i++)
+	{	a3_double sigma  = fixed_vec[i];
+		a3_double mu     = random_vec[i];
+		a3_double res    = (a3_double(data[i]) - mu) / sigma;
+		a3_double check;
+		if( i % 2 == 0 )
+			check  = - res / sigma;
+		else
+			check  = - sqrt_2 * CppAD::sign(res) / sigma;
+		//
+		ok           &= abs( grad[i] / check - 1.0) <= eps;
 	}
 
 	return ok;

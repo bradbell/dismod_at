@@ -56,7 +56,7 @@ $icode%vec%[0] + CppAD::abs(%vec%[1]) + %...% CppAD::abs(%vec%[%s%-1])
 where $icode%s% = %vec%.size()%$$.
 
 $children%
-	example/devel/approx_mixed/prior_eval_xam.cpp
+	example/devel/approx_mixed/private/prior_eval_xam.cpp
 %$$
 $head Example$$
 The file $cref prior_eval_xam.cpp$$ contains an example

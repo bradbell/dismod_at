@@ -9,20 +9,21 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin joint_grad_ran_xam.cpp$$
+$begin constraint_jac_xam.cpp$$
 $spell
+	jac
 	interp
 	xam
 $$
 
-$section C++ joint_grad_ran: Example and Test$$
+$section C++ constraint_jac: Example and Test$$
 
 $head Private$$
 This example is not part of the
 $cref/approx_mixed public API/approx_mixed_public/$$.
 
 $code
-$verbatim%example/devel/approx_mixed/joint_grad_ran_xam.cpp
+$verbatim%example/devel/approx_mixed/private/constraint_jac_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -39,17 +40,19 @@ namespace {
 
 	class approx_derived : public dismod_at::approx_mixed {
 	private:
+		size_t                n_fixed_;
 		const vector<double>& y_;
 	public:
 		// constructor
 		approx_derived(
 			size_t n_fixed                    ,
 			size_t n_random                   ,
-			const vector<double>& y           )
-			:
+			const vector<double>& y           ) :
 			dismod_at::approx_mixed(n_fixed, n_random) ,
+			n_fixed_(n_fixed) ,
 			y_(y)
-		{ }
+		{	assert( n_fixed == 2);
+		}
 	private:
 		// implementation of joint_like
 		template <class Float>
@@ -58,35 +61,47 @@ namespace {
 			const vector<Float>& u      )
 		{	vector<Float> vec(1);
 
-			// initialize part of log-density that is always smooth
+			// compute this factor once
+			Float sqrt_2pi = Float( CppAD::sqrt( 8.0 * CppAD::atan(1.0) ) );
+
+			// initialize summation
 			vec[0] = Float(0.0);
 
-			// compute this factor once
-			Float sqrt_2 = CppAD::sqrt( Float(2.0) );
-
+			// for each data and random effect
 			for(size_t i = 0; i < y_.size(); i++)
-			{	Float mu     = u[i];
-				Float sigma  = theta[i];
+			{	Float mu     = theta[0] + u[i];
+				Float sigma  = theta[1];
 				Float res    = (y_[i] - mu) / sigma;
 
-				if( i % 2 == 0 )
-				{	// This is a Gaussian term, so entire density is smooth
-					// (do not need 2*pi inside of log)
-					vec[0]  += (log(sigma) + res*res) / Float(2.0);
-				}
-				else
-				{	// This term is Laplace distributed
-					// (do not need sqrt(2) inside of log)
-					vec[0] += log(sigma);
+				// This is a Gaussian term, so entire density is smooth
+				vec[0]  += log(sqrt_2pi * sigma) + res * res / Float(2.0);
+			}
+			return vec;
+		}
+		// implementation of prior_like
+		template <class Float>
+		vector<Float> implement_prior_like(
+			const vector<Float>& fixed_vec  )
+		{	vector<Float> vec(1);
 
-					// part of the density that need absolute value
-					vec.push_back(sqrt_2 * res);
-				}
+			// initialize part of log-density that is smooth
+			vec[0] = Float(0.0);
+
+			// compute these factors once
+			Float mu     = Float(1.0);
+			Float sqrt_2 = CppAD::sqrt( Float(2.0) );
+
+			for(size_t j = 0; j < n_fixed_; j++)
+			{
+				// This is a Laplace term
+				vec[0] += CppAD::log( sqrt_2 );
+
+				// part of the density that needs absolute value
+				vec.push_back(sqrt_2 * (fixed_vec[j] - mu) );
 			}
 			return vec;
 		}
 	public:
-		//
 		virtual vector<a5_double> joint_like(
 			const vector<a5_double>& fixed_vec  ,
 			const vector<a5_double>& random_vec )
@@ -94,14 +109,19 @@ namespace {
 		//
 		virtual vector<a1_double> prior_like(
 			const vector<a1_double>& fixed_vec  )
-		{	a1d_vector vec(1);
-			vec[0] = 0.0;
-			return vec;
-		}
+		{	return implement_prior_like(fixed_vec); }
 		//
+		// constraint is 1/2 norm squared of the fixed effects
 		virtual vector<a1_double> constraint(
 			const vector<a1_double>& fixed_vec  )
-		{	return vector<a1_double>(0); } // empty vector
+		{	assert( fixed_vec.size() == n_fixed_ );
+			vector<a1_double> c_vec(1);
+			c_vec[0] = 0.0;
+			for(size_t j = 0; j < n_fixed_; j++)
+				c_vec[0] += fixed_vec[j] * fixed_vec[j];
+			c_vec[0] /= 2.0;
+			return c_vec;
+		}
 		//
 		virtual void fatal_error(const std::string& error_message)
 		{	std::cerr << "Error: " << error_message << std::endl;
@@ -114,46 +134,40 @@ namespace {
 	};
 }
 
-bool joint_grad_ran_xam(void)
+bool constraint_jac_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
-	double sqrt_2 = std::sqrt( 2.0 );
-	typedef AD< AD< AD<double> > > a3_double;
 
 	size_t n_data   = 10;
-	size_t n_fixed  = n_data;
+	size_t n_fixed  = 2;
 	size_t n_random = n_data;
-	vector<double> data(n_data);
-	vector<double> theta(n_fixed), u(n_random);
-	vector<a3_double> fixed_vec(n_fixed), random_vec(n_random);
+	vector<double> data(n_data), fixed_vec(n_fixed), random_vec(n_random);
 
+	fixed_vec[0] = 2.0;
+	fixed_vec[1] = 0.5;
 	for(size_t i = 0; i < n_data; i++)
-	{	data[i]      = double(i + 1);
-		fixed_vec[i] = theta[i] =std::sqrt( double(i + 1) );
-		random_vec[i] = u[i] = 0.0;
+	{	data[i]       = double(i + 1);
+		random_vec[i] = i / double(n_data);
 	}
 
 	// object that is derived from approx_mixed
 	approx_derived approx_object(n_fixed, n_random, data);
-	approx_object.initialize(theta, u);
+	approx_object.initialize(fixed_vec, random_vec);
 
-	// compute gradient with respect to random effects
-	vector<a3_double> grad =
-		approx_object.joint_grad_ran(fixed_vec, random_vec);
+	// compute the constraint function and check result
+	CppAD::vector<size_t> row, col;
+	CppAD::vector<double> val;
+	approx_object.constraint_jac(fixed_vec, row, col, val);
 
-	// The Laplace terms are known to have zero Hessian w.r.t random effects
-	for(size_t i = 0; i < n_random; i++)
-	{	a3_double sigma  = fixed_vec[i];
-		a3_double mu     = random_vec[i];
-		a3_double res    = (a3_double(data[i]) - mu) / sigma;
-		a3_double check;
-		if( i % 2 == 0 )
-			check  = - res / sigma;
-		else
-			check  = - sqrt_2 * CppAD::sign(res) / sigma;
-		//
-		ok           &= abs( grad[i] / check - 1.0) <= eps;
+	// check derivatives
+	ok &= row.size() == n_fixed;
+	for(size_t k = 0; k < row.size(); k++)
+	{	size_t i = row[k];
+		size_t j = col[k];
+		double check = fixed_vec[j];
+		ok      &= i == 0;
+		ok      &= ( val[k] / check - 1.0) <= eps;
 	}
 
 	return ok;
