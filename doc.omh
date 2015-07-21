@@ -37,6 +37,9 @@ $list number$$
 Add the case where there are no random effects to $cref approx_mixed$$.
 (This is necessary for dismod_at when the
 $cref/parent_node/option_table/parent_node_id/$$ has no children.)
+This includes using
+$cref/prior_like/approx_mixed_prior_like/$$ for measurements
+corresponding to the parent area.
 $lnext
 Test Lasso on covariate parameters.
 $lend

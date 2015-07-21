@@ -215,7 +215,15 @@ $cref/initialize/approx_mixed_public/initialize/$$ is called.
 $codep */
 	bool initialize_done_;
 /* $$
-$head joint_like_$$
+$head n_random_ > 0$$
+The following values are only defined when $icode%n_random_% > 0%$$:
+$cref/joint_like_/approx_mixed_private/n_random_ > 0/joint_like_/$$,
+$cref/grad_ran_/approx_mixed_private/n_random_ > 0/grad_ran_/$$,
+$cref/hes_ran_/approx_mixed_private/n_random_ > 0/hes_ran_/$$,
+$cref/laplace_k_/approx_mixed_private/n_random_ > 0/laplace_k_/$$,
+$cref/hes_fix_/approx_mixed_private/n_random_ > 0/hes_fix_/$$,
+
+$subhead joint_like_$$
 Recording of the $cref/joint_like/approx_mixed_joint_like/$$ function
 which evaluates a
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
@@ -229,7 +237,7 @@ $codep */
 	CppAD::ADFun<a3_double>   a3_joint_like_;
 	CppAD::ADFun<a4_double>   a4_joint_like_;
 /* $$
-$head grad_ran_$$
+$subhead grad_ran_$$
 The gradient of the joint likelihood w.r.t. the random effects
 $latex f_u^{(1)} ( \theta , u )^T$$. Because this is a simple vector
 there is no difference between the gradient and the derivative; i.e.,
@@ -237,7 +245,7 @@ the transpose does not matter.
 $codep */
 	CppAD::ADFun<a3_double> grad_ran_;   // computes the gradient values
 /* $$
-$head hes_ran_$$
+$subhead hes_ran_$$
 The Hessian of the joint likelihood w.r.t. the random effects
 $latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix
 represented by the following variables:
@@ -246,7 +254,7 @@ $codep */
 	CppAD::vector<size_t>   hes_ran_row_; // corresponding row indices
 	CppAD::vector<size_t>   hes_ran_col_; // corresponding column indices
 /* $$
-$head laplace_k_$$
+$subhead laplace_k_$$
 For $icode%k% = 0 , 1, 2%$$, $codei%laplace_%k%_%$$ is $th k$$ order accurate
 in $latex \beta$$ recording of the Joint part of the Laplace approximation;
 i.e., $latex H( \beta , \theta , u)$$.
@@ -255,7 +263,7 @@ $codep */
 	CppAD::ADFun<double>    laplace_1_;     // for computing H_beta
 	CppAD::ADFun<a2_double> laplace_2_;     // for computing H_beta_beta
 /* $$
-$head hes_fix_$$
+$subhead hes_fix_$$
 The Hessian of the joint likelihood w.r.t. the fixed effects
 $latex H_{\beta \beta}^{(2)} ( \beta, \theta , u )$$ is as a sparse matrix
 represented by the following variables:

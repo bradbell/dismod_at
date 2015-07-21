@@ -64,22 +64,27 @@ $code initialize$$ is called; i.e.,
 the corresponding $code size_var()$$ is zero.
 They will contain the corresponding recordings when $code initialize$$ returns:
 $list number$$
-For $icode%k% = 0%, ... ,% 4%$$,
+If $icode%n_random_ > 0%$$,
+for $icode%k% = 0%, ... ,% 4%$$,
 the member variable $codei%a%k%_joint_like_%$$ is the corresponding
-$cref/joint_like_/approx_mixed_private/joint_like_/$$.
+$cref/joint_like_/approx_mixed_private/n_random_ > 0/joint_like_/$$.
 $lnext
-The member variable
-$cref/grad_ran_/approx_mixed_private/grad_ran_/$$.
+If $icode%n_random_ > 0%$$,
+the member variable
+$cref/grad_ran_/approx_mixed_private/n_random_ > 0/grad_ran_/$$.
 $lnext
-The member variable
-$cref/hes_ran_/approx_mixed_private/hes_ran_/$$.
+If $icode%n_random_ > 0%$$,
+the member variable
+$cref/hes_ran_/approx_mixed_private/n_random_ > 0/hes_ran_/$$.
 $lnext
-For $icode%k% = 0%, ... ,% 2%$$,
+If $icode%n_random_ > 0%$$,
+for $icode%k% = 0%, ... ,% 2%$$,
 the member variable $codei%laplace_%k%_%$$ is the $th k$$ order
-$cref/Laplace approximation/approx_mixed_private/laplace_k_/$$.
+$cref/Laplace approximation/approx_mixed_private/n_random_ > 0/laplace_k_/$$.
 $lnext
-The member variable
-$cref/hes_fix_/approx_mixed_private/hes_fix_/$$.
+If $icode%n_random_ > 0%$$,
+the member variable
+$cref/hes_fix_/approx_mixed_private/n_random_ > 0/hes_fix_/$$.
 $lnext
 The member variable
 $cref/prior_like_/approx_mixed_private/prior_like_/$$.
@@ -100,45 +105,47 @@ void approx_mixed::initialize(
 {	if( initialize_done_ )
 	{	fatal_error("approx_mixed::initialize was called twice");
 	}
-	//
-	// joint_like_
-	assert( a2_joint_like_.size_var() == 0 );
-	assert( a1_joint_like_.size_var() == 0 );
-	assert( a0_joint_like_.size_var() == 0 );
-	record_joint(fixed_vec, random_vec);
-	assert( a2_joint_like_.size_var() > 0 );
-	assert( a1_joint_like_.size_var() > 0 );
-	assert( a0_joint_like_.size_var() > 0 );
-	//
-	// grad_ran_
-	assert( grad_ran_.size_var() == 0 );
-	record_grad_ran(fixed_vec, random_vec);
-	assert( grad_ran_.size_var() > 0 );
-	//
-	// hes_ran_
-	assert( hes_ran_.size_var() == 0 );
-	record_hes_ran(fixed_vec, random_vec);
-	assert( hes_ran_.size_var() > 0 );
-	//
-	// laplace_0_
-	assert( laplace_0_.size_var() == 0 );
-	record_laplace(0, fixed_vec, random_vec);
-	assert( laplace_0_.size_var() > 0 );
-	//
-	// laplace_1_
-	assert( laplace_1_.size_var() == 0 );
-	record_laplace(1, fixed_vec, random_vec);
-	assert( laplace_1_.size_var() > 0 );
-	//
-	// laplace_0_
-	assert( laplace_2_.size_var() == 0 );
-	record_laplace(2, fixed_vec, random_vec);
-	assert( laplace_2_.size_var() > 0 );
-	//
-	// hes_fix_
-	assert( hes_fix_.size_var() == 0 );
-	record_hes_fix(fixed_vec, random_vec);
-	assert( hes_fix_.size_var() > 0 );
+	if( n_random_ > 0 )
+	{
+		// joint_like_
+		assert( a2_joint_like_.size_var() == 0 );
+		assert( a1_joint_like_.size_var() == 0 );
+		assert( a0_joint_like_.size_var() == 0 );
+		record_joint(fixed_vec, random_vec);
+		assert( a2_joint_like_.size_var() > 0 );
+		assert( a1_joint_like_.size_var() > 0 );
+		assert( a0_joint_like_.size_var() > 0 );
+		//
+		// grad_ran_
+		assert( grad_ran_.size_var() == 0 );
+		record_grad_ran(fixed_vec, random_vec);
+		assert( grad_ran_.size_var() > 0 );
+		//
+		// hes_ran_
+		assert( hes_ran_.size_var() == 0 );
+		record_hes_ran(fixed_vec, random_vec);
+		assert( hes_ran_.size_var() > 0 );
+		//
+		// laplace_0_
+		assert( laplace_0_.size_var() == 0 );
+		record_laplace(0, fixed_vec, random_vec);
+		assert( laplace_0_.size_var() > 0 );
+		//
+		// laplace_1_
+		assert( laplace_1_.size_var() == 0 );
+		record_laplace(1, fixed_vec, random_vec);
+		assert( laplace_1_.size_var() > 0 );
+		//
+		// laplace_0_
+		assert( laplace_2_.size_var() == 0 );
+		record_laplace(2, fixed_vec, random_vec);
+		assert( laplace_2_.size_var() > 0 );
+		//
+		// hes_fix_
+		assert( hes_fix_.size_var() == 0 );
+		record_hes_fix(fixed_vec, random_vec);
+		assert( hes_fix_.size_var() > 0 );
+	}
 	//
 	// prior_like_
 	assert( prior_like_.size_var() == 0 );
