@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin approx_mixed_user_no_random_xam.cpp$$
+$begin no_random_xam.cpp$$
 $spell
 	hes
 	eval
@@ -25,14 +25,15 @@ $latex \[
 \] $$
 $latex \[
 	\B{p}( \theta_i ) \sim \B{N} ( 0 , 1 )
+\] $$
 The corresponding prior negative log-likelihood
 $cref/g(theta)/approx_mixed_theory/Prior Negative Log-Likelihood, g(theta)/$$
 is
 $latex \[
-g( \theta ) = \frac{1}{2} \sim_{i} \left[
-	\log \left( 2 \pi ) + \theta_i^2
+g( \theta ) = \frac{1}{2} \sum_{i} \left[
+	\log ( 2 \pi ) + \theta_i^2
 	+
-	\log \left( 2 \pi ) + ( z_i - \theta_i )^2
+	\log ( 2 \pi ) + ( z_i - \theta_i )^2
 \right]
 \] $$
 The optimal solution (with no constraints) is

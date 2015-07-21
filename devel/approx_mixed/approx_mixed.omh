@@ -92,6 +92,7 @@ $icode%vec%[0] + CppAD::abs(%vec%[1]) + %...% CppAD::abs(%vec%[%s%-1])
 where $icode%s% = %vec%.size()%$$.
 
 $childtable%
+	example/devel/approx_mixed/user/user.omh%
 	devel/approx_mixed/theory.omh%
 	include/dismod_at/approx_mixed.hpp
 %$$

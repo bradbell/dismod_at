@@ -57,8 +57,12 @@ $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$ at which certain $code CppAD::ADFun$$
 objects are recorded.
 
-$head Member Variables$$
-The following $code approx_mixed$$ member variables are
+$head Example$$
+The file $cref approx_derived_xam.cpp$$ contains an example
+of using $code initialize$$.
+
+$head Private Member Variables$$
+The following $code approx_mixed$$ private member variables are
 $code CppAD::ADFun$$ functions that are assumed to be empty when
 $code initialize$$ is called; i.e.,
 the corresponding $code size_var()$$ is zero.
