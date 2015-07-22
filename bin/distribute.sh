@@ -16,7 +16,7 @@ then
 	exit 1
 fi
 remote_machine='moby'
-remote_directory='/var/www/moby.ihme.washington.edu/bradbell'
+remote_directory='/www/moby.ihme.washington.edu/htdocs/bradbell'
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
