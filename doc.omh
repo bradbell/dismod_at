@@ -34,9 +34,6 @@ $section Disease Rates as Functions of Age and Time: dismod_at-20150722$$
 
 $head Wish List$$
 $list number$$
-Test case where
-$cref/parent_node/option_table/parent_node_id/$$ has no children.
-$lnext
 Test Lasso on covariate parameters.
 $lend
 
