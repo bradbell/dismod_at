@@ -1385,7 +1385,9 @@ $$
 $section All the Weighted Residuals and Log-Likelihoods$$
 
 $head Syntax$$
-$icode%residual_vec% = %data_object%.like_all(%hold_out%, %pack_vec%)%$$
+$icode%residual_vec% = %data_object%.like_all(
+	%hold_out%, %parent%, %pack_vec%
+)%$$
 
 $head Requirement$$
 One must call $cref/replace_like/data_model_replace_like/$$
@@ -1409,6 +1411,17 @@ $codei%
 %$$
 If it is true, the flagged data will be held out,
 otherwise it will not.
+
+$head parent$$
+This argument has prototype
+$codei%
+	bool %parent%
+%$$
+If it is true, all the
+$cref/parent/option_table/parent_node_id/$$ data is returned.
+If it is false, all the
+$cref/child/node_table/parent/Child Group/$$ data is returned
+(including any level of descendant).
 
 $head pack_vec$$
 This argument has prototype
@@ -1453,40 +1466,50 @@ $end
 template <class Float>
 CppAD::vector< residual_struct<Float> > data_model::like_all(
 	bool                        hold_out ,
+	bool                        parent   ,
 	const CppAD::vector<Float>& pack_vec ) const
 {	assert( replace_like_called_ );
 	CppAD::vector< residual_struct<Float> > residual_vec;
 
 	// loop over the subsampled data
 	for(size_t subset_id = 0; subset_id < data_subset_obj_.size(); subset_id++)
-	if( hold_out == false || data_subset_obj_[subset_id].hold_out == 0 )
-	{	// compute avgerage of integrand for this data
-		Float avg;
-		integrand_enum integrand  = data_info_[subset_id].integrand;
-		switch( integrand )
-		{	case Sincidence_enum:
-			case remission_enum:
-			case mtexcess_enum:
-			case mtother_enum:
-			case mtwith_enum:
-			case relrisk_enum:
-			avg = avg_no_ode(subset_id, pack_vec);
-			break;
+	{	bool keep = hold_out == false;
+		keep     |= data_subset_obj_[subset_id].hold_out == 0;
+		if( parent )
+			keep &= data_info_[subset_id].child == n_child_;
+		else
+			keep &= data_info_[subset_id].child != n_child_;
+		assert( data_info_[subset_id].child <= n_child_ );
+		if( keep )
+		{	// compute avgerage of integrand for this data
+			Float avg;
+			integrand_enum integrand  = data_info_[subset_id].integrand;
+			switch( integrand )
+			{	case Sincidence_enum:
+				case remission_enum:
+				case mtexcess_enum:
+				case mtother_enum:
+				case mtwith_enum:
+				case relrisk_enum:
+				avg = avg_no_ode(subset_id, pack_vec);
+				break;
 
-			case prevalence_enum:
-			case Tincidence_enum:
-			case mtspecific_enum:
-			case mtall_enum:
-			case mtstandard_enum:
-			avg = avg_yes_ode(subset_id, pack_vec);
-			break;
+				case prevalence_enum:
+				case Tincidence_enum:
+				case mtspecific_enum:
+				case mtall_enum:
+				case mtstandard_enum:
+				avg = avg_yes_ode(subset_id, pack_vec);
+				break;
 
-			default:
-			assert(false);
+				default:
+				assert(false);
+			}
+			// compute its residual and log likelihood
+			residual_struct<Float> residual =
+				like_one(subset_id, pack_vec, avg);
+			residual_vec.push_back( residual );
 		}
-		// compute its residual and log likelihood
-		residual_struct<Float> residual = like_one(subset_id, pack_vec, avg);
-		residual_vec.push_back( residual );
 	}
 	return residual_vec;
 }
@@ -1529,6 +1552,7 @@ DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avg_case_subset_struct)
 	template CppAD::vector< residual_struct<Float> >        \
 	data_model::like_all(                                   \
 		bool                          hold_out ,            \
+		bool                          parent   ,            \
 		const CppAD::vector<Float>&   pack_vec              \
 	) const;                                                \
 

@@ -112,6 +112,7 @@ public:
 	template <class Float>
 	CppAD::vector< residual_struct<Float> > like_all(
 		bool                          hold_out ,
+		bool                          parent   ,
 		const  CppAD::vector<Float>&  pack_vec
 	) const;
 };

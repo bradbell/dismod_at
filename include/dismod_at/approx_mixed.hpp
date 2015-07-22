@@ -290,6 +290,10 @@ $codep */
 	CppAD::vector<size_t>   hes_fix_row_; // corresponding row indices
 	CppAD::vector<size_t>   hes_fix_col_; // corresponding column indices
 /* $$
+Note that if $code record_hes_fix_done_$$ is true and
+$code hes_fix_row_.size() == 0$$, then this Hessian is zero; i.e.,
+the second derivative of the Laplace approximation is zero.
+
 $head prior_like_$$
 Recording of the $cref/prior_like/approx_mixed_prior_like/$$ function
 which evaluates a

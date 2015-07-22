@@ -33,6 +33,27 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-22$$
+$list number$$
+There was a bug in the case where the second derivative
+of the Laplace approximation
+$cref/H(beta, theta, u)
+	/approx_mixed_theory
+	/Joint Part of Objective
+	/H(beta, theta, u)
+/$$
+with respect to $latex \beta$$ was zero.
+This has been fixed.
+$lnext
+The data corresponding to the
+$cref/parent node/option_table/parent_node_id/$$ is now in represented using
+$cref/p(z | theta)/approx_mixed/Density Functions/p(z | theta)/$$ instead of
+$cref/p(y | theta, u)/approx_mixed/Density Functions/p(y | theta, u)/$$.
+This speeds up the computation and enables one to use
+Laplace and Log-Laplace likelihoods for this data
+(with out affecting the Laplace approximation for the integral).
+$lend
+
 $head 07-21$$
 The $code approx_mixed$$ sub-package was extended to work in the case
 were there are

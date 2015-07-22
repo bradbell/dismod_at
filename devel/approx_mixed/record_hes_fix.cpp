@@ -136,24 +136,30 @@ void approx_mixed::record_hes_fix(
 			}
 		}
 	}
-	size_t K = hes_fix_row_.size();
+	if( hes_fix_row_.size() == 0 )
+	{	// hes_fit_ not recorded in this case
+		CppAD::AD<double>::abort_recording();
+	}
+	else
+	{	size_t K = hes_fix_row_.size();
 
-	// compute lower triangle of sparse Hessian H_{beta beta}^{(2)} (beta)
-	a1d_vector a1_beta(n_fixed_), a1_theta(n_fixed_), a1_u(n_random_);
-	a1d_vector a1_w(1), a1_hes(K);
-	unpack(a1_beta, a1_theta, a1_u, a1_beta_theta_u);
-	//
-	a1_w[0] = 1.0;
-	CppAD::sparse_hessian_work work;
-	a1_f.SparseHessian(
-		a1_beta, a1_w, pattern, hes_fix_row_, hes_fix_col_, a1_hes, work
-	);
+		// compute lower triangle of sparse Hessian H_{beta beta}^{(2)} (beta)
+		a1d_vector a1_beta(n_fixed_), a1_theta(n_fixed_), a1_u(n_random_);
+		a1d_vector a1_w(1), a1_hes(K);
+		unpack(a1_beta, a1_theta, a1_u, a1_beta_theta_u);
+		//
+		a1_w[0] = 1.0;
+		CppAD::sparse_hessian_work work;
+		a1_f.SparseHessian(
+			a1_beta, a1_w, pattern, hes_fix_row_, hes_fix_col_, a1_hes, work
+		);
 
-	// complete recording of H_{beta beta}^{(2)} (beta, theta, u)
-	hes_fix_.Dependent(a1_beta_theta_u, a1_hes);
+		// complete recording of H_{beta beta}^{(2)} (beta, theta, u)
+		hes_fix_.Dependent(a1_beta_theta_u, a1_hes);
 
-	// optimize the recording
-	hes_fix_.optimize();
+		// optimize the recording
+		hes_fix_.optimize();
+	}
 	//
 	record_hes_fix_done_ = true;
 }

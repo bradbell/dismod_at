@@ -121,12 +121,19 @@ void approx_mixed::laplace_hes_fix(
 	d_vector&                val_out     )
 {	assert( record_hes_fix_done_ );
 
+	// size of outputs
+	size_t n_nonzero = hes_fix_row_.size();
+	if( n_nonzero == 0 )
+	{	// special case where Hessian of Laplace approximation is zero.
+		assert( row_out.size() == 0 );
+		assert( col_out.size() == 0 );
+		assert( val_out.size() == 0 );
+		return;
+	}
+
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );
 	assert( n_random_ == random_vec.size() );
-
-	// size of outputs
-	size_t n_nonzero = hes_fix_row_.size();
 	assert( hes_fix_col_.size() == n_nonzero );
 	assert( hes_fix_.Range()    == n_nonzero );
 

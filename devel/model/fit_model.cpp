@@ -326,7 +326,8 @@ fit_model::a5d_vector fit_model::joint_like(
 	// evaluate the data and prior residuals
 	CppAD::vector< residual_struct<a5_double> > data_like, prior_ran;
 	bool hold_out = true;
-	data_like  = data_object_.like_all(hold_out, a5_pack_vec);
+	bool parent   = false;
+	data_like  = data_object_.like_all(hold_out, parent, a5_pack_vec);
 	prior_ran  = prior_object_.random(a5_pack_vec);
 	//
 	// number of data and prior residuals
@@ -392,9 +393,9 @@ fit_model::a1d_vector fit_model::prior_like(
 	//
 	// evaluate prior residuals (data residuals empty for now)
 	CppAD::vector< residual_struct<a1_double> > data_like, prior_fix;
-	// not yet using data_like in this routine
-	// bool hold_out = true;
-	// data_like     = data_object_.like_all(hold_out, a1_pack_vec);
+	bool hold_out = true;
+	bool parent   = true;
+	data_like     = data_object_.like_all(hold_out, parent, a1_pack_vec);
 	prior_fix     = prior_object_.fixed(a1_pack_vec);
 	//
 	// number of data and prior residuals
