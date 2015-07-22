@@ -35,6 +35,12 @@ $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-22$$
 $list number$$
+Add the $cref user_no_children.py$$ example.
+$lnext
+Exit with an error if
+$cref/optimize_random/approx_mixed_optimize_random/$$ is called
+in a case where there are no random effects.
+$lnext
 There was a bug in the case where the second derivative
 of the Laplace approximation
 $cref/H(beta, theta, u)

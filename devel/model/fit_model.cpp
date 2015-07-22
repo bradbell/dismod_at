@@ -294,16 +294,17 @@ void fit_model::run_fit(
 		fixed_in,
 		random_in
 	);
-	//
-	// optimal random effects
-	CppAD::vector<double> optimal_random = optimize_random(
-		optimal_fixed, random_in
-	);
-
-	// solution_
+	// store solution_
 	solution_.resize( pack_object_.size() );
 	put_fixed_effect(pack_object_, solution_, optimal_fixed);
-	put_random_effect(pack_object_, solution_, optimal_random);
+	if( n_random_ > 0 )
+	{
+		// corresponding optimal random effects
+		CppAD::vector<double> optimal_random = optimize_random(
+			optimal_fixed, random_in
+		);
+		put_random_effect(pack_object_, solution_, optimal_random);
+	}
 }
 // ---------------------------------------------------------------------------
 // get_solution

@@ -28,6 +28,7 @@ $end
 // BEGIN C++
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 bool avg_yes_ode_xam(void)
 {	bool   ok = true;
@@ -133,7 +134,7 @@ bool avg_yes_ode_xam(void)
 	//
 	// node_table:
 	CppAD::vector<dismod_at::node_struct> node_table(3);
-	node_table[0].parent = -1; // node zero has two children
+	node_table[0].parent = DISMOD_AT_NULL_INT; // node zero has two children
 	node_table[1].parent = 0;
 	node_table[2].parent = 0;
 	//

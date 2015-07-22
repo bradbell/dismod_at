@@ -8,17 +8,17 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_diff_constraint.py$$ $newlinech #$$
+# $begin user_no_children.py$$ $newlinech #$$
 # $spell
 #	dage
 #	dtime
 # $$
 #
-# $section Constraints on Differences in Age and Time$$
+# $section Case with no Children; i.e., no Random Effects$$
 #
 # $code
 # $verbatim%
-#	example/user/diff_constraint.py
+#	example/user/no_children.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -28,7 +28,7 @@ import sys
 import os
 import distutils.dir_util
 import subprocess
-test_program = 'example/user/diff_constraint.py'
+test_program = 'example/user/no_children.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -42,18 +42,18 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
-# ------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
-# note that the a, t values are not used for this case
-def fun_pini_parent(a, t) :
-	return ('prior_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_rate_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_rate_parent(a, t) :
-	return ('prior_value_parent', 'prior_diff_parent', 'prior_diff_parent')
+	return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
+	import sys
+	import os
 	import copy
 	import dismod_at
 	# ----------------------------------------------------------------------
@@ -101,22 +101,35 @@ def example_db (file_name) :
 		'density':     'gaussian',
 		'weight':      'constant',
 		'hold_out':     False,
-		'time_lower':   1995.0,
-		'time_upper':   1995.0,
-		'age_lower':    0.0,
-		'age_upper':    0.0
+		'time_lower':   2000.0,
+		'time_upper':   2000.0,
+		'age_lower':    0.0
 	}
 	# values that change between rows: (one data point for each integrand)
 	for integrand_id in range( len(integrand_dict) ) :
 		rate_id           = integrand_id
-		meas_value        = 0.05
+		meas_value        = 1e-2 * (rate_id + 1)
 		meas_std          = 0.2 * meas_value
 		integrand         = integrand_dict[integrand_id]['name']
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
 		row['integrand']  = integrand
+		if integrand == 'prevalence' :
+			# prevalence is measured at age zero
+			row['age_upper'] = 0.0
+		else :
+			# other integrands are averaged from age zero to one hundred
+			row['age_upper'] = 100.0
 		# data_id = rate_id = integand_id
 		data_dict.append( copy.copy(row) )
+	#
+	# add one outlyer at end of data table with hold_out true
+	row['hold_out']   = True # if outlyer were false, fit would fail
+	row['integrand']  = data_dict[0]['integrand']
+	row['meas_std']   = data_dict[0]['meas_std']
+	row['age_upper']  = data_dict[0]['age_upper']
+	row['meas_value'] = 10. * data_dict[0]['meas_value']
+	data_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
 	prior_dict = [
@@ -136,42 +149,32 @@ def example_db (file_name) :
 			'mean':     1.0,
 			'std':      None,
 			'eta':      None
+		},{ # prior_rate_parent
+			'name':     'prior_rate_parent',
+			'density':  'uniform',
+			'lower':    1e-4,
+			'upper':    None,
+			'mean':     1e-1,
+			'std':      None,
+			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      0.01,
-			'eta':      None
-		},{ # prior_value_parent
-			'name':     'prior_value_parent',
-			'density':  'uniform',
-			'lower':    0.01,
-			'upper':    1.00,
-			'mean':     0.1,
-			'std':      None,
-			'eta':      None
-		},{ # prior_diff_parent
-			'name':     'prior_diff_parent',
-			'density':  'gaussian',
-			'lower':    0.01,
-			'upper':    None,
-			'mean':     0.01,
-			'std':      0.01,
+			'std':      1e-2,
 			'eta':      None
 		}
 	]
 	# --------------------------------------------------------------------------
 	# smooth table
 	middle_age_id  = 1
-	middle_time_id = 1
-	last_age_id    = 2
 	last_time_id   = 2
 	smooth_dict = [
 		{   # smooth_rate_child
 			'name':                     'smooth_rate_child',
-			'age_id':                   [ 0, last_age_id ],
+			'age_id':                   [ middle_age_id ],
 			'time_id':                  [ 0, last_time_id ],
 			'mulstd_value_prior_name':  'prior_one',
 			'mulstd_dage_prior_name':   'prior_one',
@@ -179,28 +182,12 @@ def example_db (file_name) :
 			'fun':                      fun_rate_child
 		},{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
-			'age_id':                   [ 0, last_age_id ],
+			'age_id':                   [ middle_age_id ],
 			'time_id':                  [ 0, last_time_id ],
 			'mulstd_value_prior_name':  'prior_one',
 			'mulstd_dage_prior_name':   'prior_one',
 			'mulstd_dtime_prior_name':  'prior_one',
 			'fun':                       fun_rate_parent
-		},{ # smooth_pini_parent
-			'name':                     'smooth_pini_parent',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ middle_time_id ],
-			'mulstd_value_prior_name':  'prior_one',
-			'mulstd_dage_prior_name':   'prior_one',
-			'mulstd_dtime_prior_name':  'prior_one',
-			'fun':                       fun_pini_parent
-		},{ # smooth_pini_child
-			'name':                     'smooth_pini_child',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ middle_time_id ],
-			'mulstd_value_prior_name':  'prior_one',
-			'mulstd_dage_prior_name':   'prior_one',
-			'mulstd_dtime_prior_name':  'prior_one',
-			'fun':                       fun_rate_child
 		}
 	]
 	# --------------------------------------------------------------------------
@@ -208,8 +195,8 @@ def example_db (file_name) :
 	rate_dict = [
 		{
 			'name':          'pini',
-			'parent_smooth': 'smooth_pini_parent',
-			'child_smooth':  'smooth_pini_child'
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_rate_parent',
@@ -230,8 +217,9 @@ def example_db (file_name) :
 	]
 	# ------------------------------------------------------------------------
 	# option_dict
+	assert node_dict[3]['name'] == 'canada'
 	option_dict = [
-		{ 'name':'parent_node_id','value':'0'            },
+		{ 'name':'parent_node_id','value':'3'            },
 		{ 'name':'ode_step_size', 'value':'10.0'         },
 		{ 'name':'tolerance',     'value':'1e-10'        },
 		{ 'name':'max_num_iter',  'value':'100'          },
@@ -241,8 +229,27 @@ def example_db (file_name) :
 		{ 'name':'rate_info',     'value':'chi_positive' }
 	]
 	# --------------------------------------------------------------------------
-	# avg_case table: empty
+	# avg_case table: same order as list of integrands
 	avg_case_dict = list()
+	# values that are the same for all data rows
+	row = {
+		'node':        'canada',
+		'weight':      'constant',
+		'time_lower':   2000.0,
+		'time_upper':   2000.0,
+		'age_lower':    0.0
+	}
+	# values that change between rows: (one data point for each integrand)
+	for avg_case_id in range( len(integrand_dict) ) :
+		integrand         = integrand_dict[avg_case_id]['name']
+		row['integrand']  = integrand
+		if integrand == 'prevalence' :
+			# prevalence is measured at age zero
+			row['age_upper'] = 0.0
+		else :
+			# other integrands are averaged from age zero to one hundred
+			row['age_upper'] = 100.0
+		avg_case_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
@@ -270,7 +277,7 @@ def example_db (file_name) :
 		meas_value = data_dict[data_id]['meas_value']
 		rate_true.append(meas_value)
 	#
-	return
+	return (n_smooth, rate_true)
 # ===========================================================================
 file_name      = 'example.db'
 example_db(file_name)
@@ -281,64 +288,6 @@ for command in [ 'init', 'start', 'fit' ] :
 	flag = subprocess.call( cmd )
 	if flag != 0 :
 		sys.exit('The dismod_at ' + command + ' command failed')
-# -----------------------------------------------------------------------
-# connect to database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
-# -----------------------------------------------------------------------
-# get parent rate variable values
-var_dict     = dismod_at.get_table_dict(connection, 'var')
-fit_var_dict = dismod_at.get_table_dict(connection, 'fit_var')
-#
-middle_age_id  = 1
-middle_time_id = 1
-last_age_id    = 2
-last_time_id   = 2
-parent_node_id = 0
-n_rate         = 5
-tol            = 1e-8
-for rate_id in range(n_rate) :
-	rate_value = dict()
-	count      = 0
-	for var_id in range( len(var_dict) ) :
-		row   = var_dict[var_id]
-		match = row['var_type'] == 'rate'
-		match = match and row['rate_id'] == rate_id
-		match = match and row['node_id'] == parent_node_id
-		if match :
-			age_id  = row['age_id']
-			time_id = row['time_id']
-			if age_id not in rate_value :
-				rate_value[age_id] = dict()
-			value = fit_var_dict[var_id]['fit_var_value']
-			rate_value[age_id][time_id] = value
-			count += 1
-	if rate_id == 0 :
-		# pini case
-		assert count == 1
-		assert abs( rate_value[middle_age_id][middle_time_id] ) < tol
-	else :
-		# other rates
-		assert count == 4
-		assert ( rate_value[0][0] / 0.05 - 1.0 ) < tol
-		#
-		diff  = rate_value[last_age_id][0] - rate_value[0][0]
-		assert diff - 0.01 > - tol             # due to contraint
-		assert abs(diff / 0.01 - 1.0) < 1e-3   # due to smoohting objective
-		#
-		diff  = rate_value[0][last_time_id] - rate_value[0][0]
-		assert diff - 0.01 > - tol
-		assert abs(diff / 0.01 - 1.0) < 1e-3
-		#
-		diff  = rate_value[last_age_id][0] - rate_value[0][0]
-		assert diff - 0.01 > - tol
-		assert abs(diff / 0.01 - 1.0) < 1e-3
-		#
-		diff  = rate_value[last_age_id][last_time_id] \
-			- rate_value[last_age_id][0]
-		assert diff - 0.01 > - tol
-		assert abs(diff / 0.01 - 1.0) < 1e-3
 # -----------------------------------------------------------------------------
-print('diff_constraint.py: OK')
-# -----------------------------------------------------------------------------
+print('no_children.py: OK')
 # END PYTHON

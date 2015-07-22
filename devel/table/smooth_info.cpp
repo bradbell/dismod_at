@@ -449,9 +449,6 @@ smooth_info::smooth_info(
 	size_t row_id;
 	size_t null_size_t = size_t( DISMOD_AT_NULL_INT );
 
-	// check that -1 is not a valid positive int
-	assert( -1 == int( size_t(-1) ) );
-
 	// only use of smooth_table is to determine multiplier priors
 	mulstd_value_   = smooth_table[smooth_id].mulstd_value_prior_id;
 	mulstd_dage_    = smooth_table[smooth_id].mulstd_dage_prior_id;

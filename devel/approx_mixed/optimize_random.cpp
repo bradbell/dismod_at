@@ -152,6 +152,12 @@ CppAD::vector<double> approx_mixed::optimize_random(
 		"approx_mixed::initialize was not called before optimize_random";
 		fatal_error(error_message);
 	}
+	if( ! record_joint_done_ )
+	{	std::string error_message =
+		"approx_mixed::optimize_random there are no random effects";
+		fatal_error(error_message);
+	}
+
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );
 	assert( n_random_ == random_in.size() );

@@ -27,6 +27,7 @@ $end
 # include <limits>
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 bool like_all_xam(void)
 {	bool   ok = true;
@@ -133,7 +134,7 @@ bool like_all_xam(void)
 	//
 	// node_table:
 	CppAD::vector<dismod_at::node_struct> node_table(1);
-	node_table[0].parent = -1;
+	node_table[0].parent = DISMOD_AT_NULL_INT;
 	//
 	// parent_node_id
 	size_t parent_node_id = 0;

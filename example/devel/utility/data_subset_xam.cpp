@@ -31,6 +31,7 @@ $end
 # include <dismod_at/get_node_table.hpp>
 # include <dismod_at/child_info.hpp>
 # include <dismod_at/data_subset.hpp>
+# include <dismod_at/null_int.hpp>
 
 bool data_subset_xam(void)
 {
@@ -55,7 +56,7 @@ bool data_subset_xam(void)
 	node_table[2].node_name = "united_states";
 	node_table[3].node_name = "canada";
 	//
-	node_table[0].parent = -1;
+	node_table[0].parent = DISMOD_AT_NULL_INT;
 	node_table[1].parent = 0;
 	node_table[2].parent = 1;
 	node_table[3].parent = 1;

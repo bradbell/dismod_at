@@ -29,6 +29,7 @@ $end
 # include <limits>
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace {
 	double check_avg(const dismod_at::data_struct& data_row)
@@ -149,7 +150,7 @@ bool avg_no_ode_xam(void)
 	//              1    2
 	//                  3  4
 	CppAD::vector<dismod_at::node_struct> node_table(5);
-	node_table[0].parent = -1;
+	node_table[0].parent = DISMOD_AT_NULL_INT;
 	node_table[1].parent =  0;
 	node_table[2].parent =  0;
 	node_table[3].parent =  2;

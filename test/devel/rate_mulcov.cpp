@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <limits>
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 // Testing rate covaraite multipliers
 
@@ -142,7 +143,7 @@ bool rate_mulcov(void)
 	//              1    2
 	//                  3  4
 	CppAD::vector<dismod_at::node_struct> node_table(5);
-	node_table[0].parent = -1;
+	node_table[0].parent = DISMOD_AT_NULL_INT;
 	node_table[1].parent =  0;
 	node_table[2].parent =  0;
 	node_table[3].parent =  2;

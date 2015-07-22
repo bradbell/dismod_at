@@ -139,6 +139,7 @@ $end
 # include <dismod_at/child_info.hpp>
 # include <dismod_at/get_data_table.hpp>
 # include <dismod_at/get_avg_case_table.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -172,7 +173,7 @@ child_info::child_info(
 					found = true;
 				}
 			}
-			more = (! found) && (node_id != size_t(-1));
+			more = (! found) && (node_id != size_t(DISMOD_AT_NULL_INT));
 			if(more)
 				node_id = size_t( node_table[node_id].parent );
 		}

@@ -29,6 +29,7 @@ $end
 # include <cppad/cppad.hpp>
 # include <dismod_at/child_info.hpp>
 # include <dismod_at/get_data_table.hpp>
+# include <dismod_at/null_int.hpp>
 
 bool child_info_xam(void)
 {	bool ok = true;
@@ -40,7 +41,7 @@ bool child_info_xam(void)
 	// node_table
 	size_t n_node = 4;
 	CppAD::vector<dismod_at::node_struct> node_table(n_node);
-	node_table[0].parent = -1; // parent node
+	node_table[0].parent = DISMOD_AT_NULL_INT; // parent node
 	node_table[1].parent =  0; // child_id = 0
 	node_table[2].parent =  0; // child_id = 1
 	node_table[3].parent =  2; // grand child node below child_id = 2

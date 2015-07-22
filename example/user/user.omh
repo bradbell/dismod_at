@@ -18,6 +18,7 @@ $section User Examples and Tests$$
 
 $childtable%example/get_started/get_started.omh
 	%example/user/diff_constraint.py
+	%example/user/no_children.py
 %$$
 
 $end
