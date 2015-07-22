@@ -88,14 +88,7 @@ approx_mixed::d_vector approx_mixed::laplace_beta(
 	const d_vector& beta  ,
 	const d_vector& theta ,
 	const d_vector& u     )
-{
-	// make sure initialize has been called
-	if( laplace_1_.size_var() == 0 )
-	{	std::string error_message =
-		"approx_mixed::initialize was not called before laplace_beta";
-		fatal_error(error_message);
-	}
-
+{	assert( record_laplace_done_[1] );
 	assert( laplace_1_.Domain() == 2 * n_fixed_ + n_random_ );
 	assert( laplace_1_.Range() == 1 );
 

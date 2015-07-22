@@ -86,6 +86,7 @@ void approx_mixed::record_laplace(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {	assert( order <= 2 );
+	assert( ! record_laplace_done_[order] );
 
 	// declare eigen matrix types
 	using Eigen::Dynamic;
@@ -223,6 +224,7 @@ void approx_mixed::record_laplace(
 		laplace_2_.Dependent(beta_theta_u, H);
 		laplace_2_.optimize();
 	}
+	record_laplace_done_[order] = true;
 }
 
 } // END_DISMOD_AT_NAMESPACE

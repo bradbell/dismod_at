@@ -117,13 +117,8 @@ void approx_mixed::joint_hes_ran(
 	CppAD::vector<size_t>&   row_out     ,
 	CppAD::vector<size_t>&   col_out     ,
 	a3d_vector&              val_out     )
-{
-	// make sure initialize has been called
-	if( hes_ran_.size_var() == 0 )
-	{	std::string error_message =
-		"approx_mixed::initialize was not called before joint_hes_ran";
-		fatal_error(error_message);
-	}
+{	assert( record_hes_ran_done_ );
+
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );
 	assert( n_random_ == random_vec.size() );

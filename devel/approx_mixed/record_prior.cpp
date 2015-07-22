@@ -81,6 +81,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void approx_mixed::record_prior(const d_vector& fixed_vec  )
 {	assert( fixed_vec.size() == n_fixed_ );
+	assert( ! record_prior_done_ );
 
 	// ------------------------------------------------------------------------
 	// prior_like_
@@ -173,6 +174,7 @@ void approx_mixed::record_prior(const d_vector& fixed_vec  )
 		prior_hes_work_
 	);
 
+	record_prior_done_ = true;
 	return;
 }
 

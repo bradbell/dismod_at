@@ -97,7 +97,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 void approx_mixed::record_joint(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{
+{	assert( ! record_joint_done_ );
 	// ------------------------------------------------------------------
 	// record a3_joint_like_
 	// ------------------------------------------------------------------
@@ -138,6 +138,8 @@ void approx_mixed::record_joint(
 	// record a0_joint_like_
 	a1d_vector a1_both( n_fixed_ + n_random_ );
 	record_next_joint(both, a1_joint_like_, a0_joint_like_);
+	//
+	record_joint_done_ = true;
 }
 
 

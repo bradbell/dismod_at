@@ -79,13 +79,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 CppAD::vector<approx_mixed::a3_double> approx_mixed::joint_grad_ran(
 	const a3d_vector&        fixed_vec   ,
 	const a3d_vector&        random_vec  )
-{
-	// make sure initialize has been called
-	if( grad_ran_.size_var() == 0 )
-	{	std::string error_message =
-		"approx_mixed::initialize was not called before joint_grad_ran";
-		fatal_error(error_message);
-	}
+{	assert( record_grad_ran_done_ );
 
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );

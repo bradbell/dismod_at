@@ -94,15 +94,10 @@ void approx_mixed::prior_jac(
 	CppAD::vector<size_t>& row_out     ,
 	CppAD::vector<size_t>& col_out     ,
 	d_vector&              val_out     )
-{
-	// make sure initilialize has been called
-	if( prior_like_.size_var() == 0 )
-	{	std::string error_message =
-		"approx_mixed::initialize was not called before prior_jac";
-		fatal_error(error_message);
-	}
+{	assert( record_prior_done_ );
 	assert( row_out.size() == col_out.size() );
 	assert( row_out.size() == val_out.size() );
+	//
 	if( prior_jac_row_.size() == 0 )
 	{	assert( prior_jac_col_.size() == 0 );
 		assert( row_out.size() == 0 );

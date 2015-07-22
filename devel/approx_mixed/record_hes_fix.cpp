@@ -83,12 +83,9 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 void approx_mixed::record_hes_fix(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	size_t i, j;
-	if( laplace_2_.size_var() == 0 )
-	{	std::string error_message =
-		"approx_mixed::laplace_2_ was not initialized before hes_fix_";
-		fatal_error(error_message);
-	}
+{	assert( ! record_hes_fix_done_ );
+	assert( record_laplace_done_[2] );
+	size_t i, j;
 
 	//	create an a1d_vector containing (theta, u)
 	a1d_vector a1_beta_theta_u( 2 * n_fixed_ + n_random_ );
@@ -157,6 +154,8 @@ void approx_mixed::record_hes_fix(
 
 	// optimize the recording
 	hes_fix_.optimize();
+	//
+	record_hes_fix_done_ = true;
 }
 
 } // END_DISMOD_AT_NAMESPACE

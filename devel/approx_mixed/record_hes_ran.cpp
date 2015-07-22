@@ -83,7 +83,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 void approx_mixed::record_hes_ran(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	size_t i, j;
+{	assert( ! record_hes_ran_done_ );
+	size_t i, j;
 
 	//	create an a4d_vector containing (theta, u)
 	a4d_vector a4_both( n_fixed_ + n_random_ );
@@ -155,6 +156,8 @@ void approx_mixed::record_hes_ran(
 
 	// optimize the recording
 	hes_ran_.optimize();
+	//
+	record_hes_ran_done_ = true;
 }
 
 

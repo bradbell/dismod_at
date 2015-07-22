@@ -114,8 +114,17 @@ $codep */
 	:
 	n_fixed_(n_fixed)               ,
 	n_random_(n_random)             ,
-	initialize_done_(false)
-	{ }
+	initialize_done_(false)         ,
+	record_prior_done_(false)       ,
+	record_joint_done_(false)       ,
+	record_hes_ran_done_(false)     ,
+	record_hes_fix_done_(false)     ,
+	record_grad_ran_done_(false)    ,
+	record_constraint_done_(false)  ,
+	record_laplace_done_(3)
+	{	for(size_t order = 0; order < 3; order++)
+			record_laplace_done_[order] = false;
+	}
 /* $$
 $head initialize$$
 Directly after construction, use this function to initialize
@@ -211,9 +220,16 @@ $codep */
 /* $$
 $head initialize_done_$$
 The following flag is false after construction and true after
-$cref/initialize/approx_mixed_public/initialize/$$ is called.
+the correspondong member function is called:
 $codep */
-	bool initialize_done_;
+	bool                initialize_done_;
+	bool                record_prior_done_;
+	bool                record_joint_done_;
+	bool                record_hes_ran_done_;
+	bool                record_hes_fix_done_;
+	bool                record_grad_ran_done_;
+	bool                record_constraint_done_;
+	CppAD::vector<bool> record_laplace_done_; // index is order in call
 /* $$
 $head n_random_ > 0$$
 The following values are only defined when $icode%n_random_% > 0%$$:

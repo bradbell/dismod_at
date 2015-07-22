@@ -64,7 +64,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 void approx_mixed::record_grad_ran(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{
+{	assert( ! record_grad_ran_done_ );
+
 	//	create an a4d_vector containing (theta, u)
 	a4d_vector a4_both( n_fixed_ + n_random_ );
 	pack(fixed_vec, random_vec, a4_both);
@@ -104,6 +105,8 @@ void approx_mixed::record_grad_ran(
 
 	// optimize the recording
 	grad_ran_.optimize();
+	//
+	record_grad_ran_done_ = true;
 }
 
 

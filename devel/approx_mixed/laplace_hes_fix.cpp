@@ -119,13 +119,8 @@ void approx_mixed::laplace_hes_fix(
 	CppAD::vector<size_t>&   row_out     ,
 	CppAD::vector<size_t>&   col_out     ,
 	d_vector&                val_out     )
-{
-	// make initilaize has been called
-	if( hes_fix_.size_var() == 0 )
-	{	std::string error_message =
-		"approx_mixed::initialize was not called before laplace_hes_fix";
-		fatal_error(error_message);
-	}
+{	assert( record_hes_fix_done_ );
+
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );
 	assert( n_random_ == random_vec.size() );

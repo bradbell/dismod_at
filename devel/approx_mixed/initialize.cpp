@@ -111,55 +111,46 @@ void approx_mixed::initialize(
 	}
 	if( n_random_ > 0 )
 	{
+		assert( ! record_joint_done_ );
+		assert( ! record_grad_ran_done_ );
+		assert( ! record_hes_ran_done_ );
+		assert( ! record_laplace_done_[0] );
+		assert( ! record_laplace_done_[1] );
+		assert( ! record_laplace_done_[2] );
+
 		// joint_like_
-		assert( a2_joint_like_.size_var() == 0 );
-		assert( a1_joint_like_.size_var() == 0 );
-		assert( a0_joint_like_.size_var() == 0 );
 		record_joint(fixed_vec, random_vec);
-		assert( a2_joint_like_.size_var() > 0 );
-		assert( a1_joint_like_.size_var() > 0 );
-		assert( a0_joint_like_.size_var() > 0 );
-		//
 		// grad_ran_
-		assert( grad_ran_.size_var() == 0 );
 		record_grad_ran(fixed_vec, random_vec);
-		assert( grad_ran_.size_var() > 0 );
-		//
 		// hes_ran_
-		assert( hes_ran_.size_var() == 0 );
 		record_hes_ran(fixed_vec, random_vec);
-		assert( hes_ran_.size_var() > 0 );
-		//
 		// laplace_0_
-		assert( laplace_0_.size_var() == 0 );
 		record_laplace(0, fixed_vec, random_vec);
-		assert( laplace_0_.size_var() > 0 );
-		//
 		// laplace_1_
-		assert( laplace_1_.size_var() == 0 );
 		record_laplace(1, fixed_vec, random_vec);
-		assert( laplace_1_.size_var() > 0 );
-		//
 		// laplace_0_
-		assert( laplace_2_.size_var() == 0 );
 		record_laplace(2, fixed_vec, random_vec);
-		assert( laplace_2_.size_var() > 0 );
-		//
 		// hes_fix_
-		assert( hes_fix_.size_var() == 0 );
 		record_hes_fix(fixed_vec, random_vec);
-		assert( hes_fix_.size_var() > 0 );
+
+		assert( record_joint_done_ );
+		assert( record_grad_ran_done_ );
+		assert( record_hes_ran_done_ );
+		assert( record_laplace_done_[0] );
+		assert( record_laplace_done_[1] );
+		assert( record_laplace_done_[2] );
 	}
-	//
+	assert( ! record_prior_done_ );
+	assert( ! record_constraint_done_ );
+
 	// prior_like_
-	assert( prior_like_.size_var() == 0 );
 	record_prior(fixed_vec);
-	assert( prior_like_.size_var() > 0 );
-	//
 	// constraint_
-	// (record_constraint makes sure initialization does not happend twice)
 	record_constraint(fixed_vec);
-	//
+
+	assert( record_prior_done_ );
+	assert( record_constraint_done_ );
+
 	// initialize_done_
 	initialize_done_ = true;
 }
