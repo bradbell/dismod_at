@@ -29,7 +29,7 @@ $codei%
 The derived class constructor must call its base class constructor as follows:
 $codei%
 	approx_mixed(%n_fixed%, %n_random%)
-%$$.
+%$$
 
 $head approx_object$$
 This is the derived class object that is constructed by the syntax above.

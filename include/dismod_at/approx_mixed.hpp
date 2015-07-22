@@ -111,11 +111,13 @@ Construct an $code approx_mixed$$ derived class object; see
 $cref/derived_ctor/approx_mixed_derived_ctor/$$.
 $codep */
 	approx_mixed(size_t n_fixed, size_t n_random)
+/* $$
+$comment */
 	:
 	n_fixed_(n_fixed)               ,
 	n_random_(n_random)             ,
 	initialize_done_(false)         ,
-	record_prior_done_(false)       ,
+	record_prior_like_done_(false)  ,
 	record_joint_done_(false)       ,
 	record_hes_ran_done_(false)     ,
 	record_hes_fix_done_(false)     ,
@@ -196,7 +198,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/record_hes_ran.cpp
 	%devel/approx_mixed/record_laplace.cpp
 	%devel/approx_mixed/record_hes_fix.cpp
-	%devel/approx_mixed/record_prior.cpp
+	%devel/approx_mixed/record_prior_like.cpp
 	%devel/approx_mixed/record_constraint.cpp
 	%devel/approx_mixed/joint_grad_ran.cpp
 	%devel/approx_mixed/joint_hes_ran.cpp
@@ -220,10 +222,10 @@ $codep */
 /* $$
 $head initialize_done_$$
 The following flag is false after construction and true after
-the correspondong member function is called:
+the corresponding member function is called:
 $codep */
 	bool                initialize_done_;
-	bool                record_prior_done_;
+	bool                record_prior_like_done_;
 	bool                record_joint_done_;
 	bool                record_hes_ran_done_;
 	bool                record_hes_fix_done_;
@@ -393,10 +395,10 @@ $codep */
 		const d_vector& random_vec
 	);
 /* $$
-$head record_prior$$
-See $cref approx_mixed_record_prior$$.
+$head record_prior_like$$
+See $cref approx_mixed_record_prior_like$$.
 $codep */
-	void record_prior(const d_vector& fixed_vec);
+	void record_prior_like(const d_vector& fixed_vec);
 /* $$
 $head record_constraint$$
 See $cref approx_mixed_record_constraint$$.

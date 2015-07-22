@@ -116,7 +116,7 @@ void approx_mixed::prior_hes(
 	CppAD::vector<size_t>& row_out     ,
 	CppAD::vector<size_t>& col_out     ,
 	d_vector&              val_out     )
-{	assert( record_prior_done_ );
+{	assert( record_prior_like_done_ );
 	assert( row_out.size() == col_out.size() );
 	assert( row_out.size() == val_out.size() );
 	//

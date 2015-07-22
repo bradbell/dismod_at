@@ -140,15 +140,15 @@ void approx_mixed::initialize(
 		assert( record_laplace_done_[1] );
 		assert( record_laplace_done_[2] );
 	}
-	assert( ! record_prior_done_ );
+	assert( ! record_prior_like_done_ );
 	assert( ! record_constraint_done_ );
 
 	// prior_like_
-	record_prior(fixed_vec);
+	record_prior_like(fixed_vec);
 	// constraint_
 	record_constraint(fixed_vec);
 
-	assert( record_prior_done_ );
+	assert( record_prior_like_done_ );
 	assert( record_constraint_done_ );
 
 	// initialize_done_

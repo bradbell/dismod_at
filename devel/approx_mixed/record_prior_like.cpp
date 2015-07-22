@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/approx_mixed.hpp>
 
 /*
-$begin approx_mixed_record_prior$$
+$begin approx_mixed_record_prior_like$$
 $spell
 	jac
 	vec
@@ -23,7 +23,7 @@ $$
 $section approx_mixed: Record Prior Negative Log-Likelihood For Fixed Effects$$
 
 $head Syntax$$
-$codei%record_prior(%fixed_vec%)%$$
+$codei%record_prior_like(%fixed_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code approx_mixed$$ class
@@ -79,9 +79,9 @@ $end
 */
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void approx_mixed::record_prior(const d_vector& fixed_vec  )
+void approx_mixed::record_prior_like(const d_vector& fixed_vec  )
 {	assert( fixed_vec.size() == n_fixed_ );
-	assert( ! record_prior_done_ );
+	assert( ! record_prior_like_done_ );
 
 	// ------------------------------------------------------------------------
 	// prior_like_
@@ -174,7 +174,7 @@ void approx_mixed::record_prior(const d_vector& fixed_vec  )
 		prior_hes_work_
 	);
 
-	record_prior_done_ = true;
+	record_prior_like_done_ = true;
 	return;
 }
 
