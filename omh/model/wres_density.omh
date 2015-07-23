@@ -12,6 +12,23 @@ $begin wres_density$$
 
 $section Weighted Residual and Density Functions$$
 
+$head Uniform$$
+A random variable $latex z$$ has a Uniform distribution
+if its probability density function is constant; i.e.,
+$latex \[
+\B{p} ( z ) = \alpha
+\] $$
+where $latex \alpha$$ is chosen so that the total integral of the density
+is one.
+Note that as the range of $latex z$$ values goes to infinity,
+$latex \alpha \rightarrow 0$$.
+
+$subhead Weighted Residual, R$$
+The corresponding weight residual function is
+$latex \[
+R ( z, \mu , \delta ) = 0.0
+\] $$
+
 $head Gaussian$$
 A random variable $latex z$$ has a Gaussian distribution with
 mean $latex \mu$$ and standard deviation $latex \delta$$ if

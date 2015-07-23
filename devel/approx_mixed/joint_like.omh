@@ -71,6 +71,12 @@ $cref/f(theta, u)/approx_mixed_theory/Joint Negative Log-Likelihood, f(theta, u)
 $latex \[
 	f( \theta , u) = - \log [ \B{p}( y | \theta, u) \B{p} ( u | \theta ) ]
 \] $$
+The Laplace approximation only makes sense if this function is smooth; i.e,
+if the are no absolute value terms in the likelihood; i.e.
+$codei%
+	%vec%.size() == 1
+%$$
+The ability to do otherwise is for research purposes only.
 
 $head Example$$
 The file $cref approx_derived_xam.cpp$$ contains an example

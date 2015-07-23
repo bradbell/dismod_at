@@ -21,7 +21,7 @@ $spell
 	Ipopt
 $$
 
-$section The Argument Table: Command Arguments$$
+$section The Option Table$$
 Each $code dismod_at$$ $cref command$$ has a required set of
 $icode option_name$$, $icode option_value$$ pairs
 that must be present in the option table.
