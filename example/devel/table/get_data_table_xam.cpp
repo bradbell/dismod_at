@@ -59,7 +59,7 @@ bool get_data_table_xam(void)
 	"insert into data values("
 		"0,"                       // data_id
 		"1,"                       // integrand_id
-		"0,"                       // density_id
+		"1,"                       // density_id (not uniform)
 		"3,"                       // node_id
 		"4,"                       // weight_id
 		"1,"                       // hold_out
@@ -89,7 +89,7 @@ bool get_data_table_xam(void)
 	ok  &= data_table.size() == 1;
 	//
 	ok  &= data_table[0].integrand_id      == 1;
-	ok  &= data_table[0].density_id        == 0;
+	ok  &= data_table[0].density_id        == 1;
 	ok  &= data_table[0].node_id           == 3;
 	ok  &= data_table[0].weight_id         == 4;
 	ok  &= data_table[0].hold_out          == 1;

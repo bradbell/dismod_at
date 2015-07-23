@@ -166,6 +166,7 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/get_density_table.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -304,6 +305,16 @@ CppAD::vector<data_struct> get_data_table(
 		}
 		if( time_upper < time_lower )
 		{	msg = "time_lower is greater than time_upper";
+			error_exit(db, msg, table_name, data_id);
+		}
+		int density_id = data_table[data_id].density_id;
+		if( density_enum( density_id ) == uniform_enum )
+		{	msg = "density_id corresponds to the uniform distribution";
+			error_exit(db, msg, table_name, data_id);
+		}
+		double meas_std = data_table[data_id].meas_std;
+		if( meas_std <= 0.0 )
+		{	msg = "meas_std is less than or equal zero";
 			error_exit(db, msg, table_name, data_id);
 		}
 	}

@@ -34,8 +34,16 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-23$$
+$list number$$
 Fix bug when using $code laplace$$ and $code log_laplace$$
 $cref/densities/density_table/$$.
+$lnext
+Detect and report an error in the data table when
+$cref/meas_std/data_table/meas_std/$$ is less than or equal zero
+and when
+$cref/density_id/data_table/density_id/$$ corresponds to a
+uniform distribution.
+$lend
 
 $head 07-22$$
 $list number$$
