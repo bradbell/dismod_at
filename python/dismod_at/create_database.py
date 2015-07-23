@@ -537,10 +537,10 @@ def create_database(
 		effected        = mulcov['effected']
 		if mulcov_type == 'rate_mean' :
 			rate_id      = global_rate_name2id[ effected ]
-			integrand_id = -1
+			integrand_id = None
 		else :
 			integrand_id = global_integrand_name2id[ effected ]
-			rate_id      = -1
+			rate_id      = None
 		covariate_id  = global_covariate_name2id[ mulcov['covariate'] ]
 		smooth_id     = global_smooth_name2id[ mulcov['smooth'] ]
 		row_list.append(

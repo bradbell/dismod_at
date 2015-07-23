@@ -355,7 +355,7 @@ def create_database() :
 		'mulcov_type', 'rate_id', 'integrand_id', 'covariate_id', 'smooth_id'
 	]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
-	check_list = [ [ 'rate_mean', 4, -1, 0, 0 ] ]
+	check_list = [ [ 'rate_mean', 4, None, 0, 0 ] ]
 	assert row_list == check_list
 	#
 	# option_table
