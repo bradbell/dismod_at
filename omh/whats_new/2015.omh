@@ -33,6 +33,10 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-23$$
+Fix bug when using $code laplace$$ and $code log_laplace$$
+$cref/densities/density_table/$$.
+
 $head 07-22$$
 $list number$$
 Add the $cref user_no_children.py$$ example.

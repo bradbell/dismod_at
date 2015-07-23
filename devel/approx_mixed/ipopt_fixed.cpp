@@ -466,7 +466,7 @@ bool ipopt_fixed::get_nlp_info(
 	Index&          nnz_h_lag    ,  // out
 	IndexStyleEnum& index_style  )  // out
 {
-	n           = n_fixed_;
+	n           = n_fixed_ + prior_n_abs_;
 	m           = 2 * prior_n_abs_ + n_constraint_;
 	nnz_jac_g   = nnz_jac_g_;
 	nnz_h_lag   = nnz_h_lag_;
