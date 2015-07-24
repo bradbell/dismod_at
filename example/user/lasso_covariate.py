@@ -16,8 +16,8 @@
 #
 # $section Using Lasso with Covariates (Under Construction)$$
 #
-# The example currently generates a convergence warning and only estimates
-# one covariate multiplier (eventually will estimate two).
+# $head Future Work$$
+# Should add random noise to the data and increase number of data points.
 #
 # $code
 # $verbatim%
@@ -98,7 +98,7 @@ def example_db (file_name) :
 	income_reference = 100.00
 	covariate_dict = [
 		{'name':'income', 'reference':income_reference, 'max_difference':None},
-		{'name':'elevation', 'reference':100.0,  'max_difference':None}
+		{'name':'elevation', 'reference':1.0,  'max_difference':None}
 	]
 	#
 	# mulcov table
@@ -108,11 +108,11 @@ def example_db (file_name) :
 			'type':     'rate_mean',
 			'effected': 'iota',
 			'smooth':   'smooth_mulcov'
-		#},{
-		#	'covariate':'elevation',
-		#	'type':     'rate_mean',
-		#	'effected': 'iota',
-		#	'smooth':   'smooth_mulcov'
+		},{
+			'covariate':'elevation',
+			'type':     'rate_mean',
+			'effected': 'iota',
+			'smooth':   'smooth_mulcov'
 		}
 	]
 	# --------------------------------------------------------------------------
@@ -132,7 +132,7 @@ def example_db (file_name) :
 	# values that change between rows:
 	for data_id in range( 10 ) :
 		income      = (data_id - n_data / 2) + income_reference
-		elevation   = 100.0 * ( data_id % 3 )
+		elevation   = ( data_id % 3 )
 		meas_value  = iota_true
 		meas_value *= math.exp( (income - income_reference) * mulcov_income )
 		meas_std    = 0.2 * meas_value
@@ -192,7 +192,7 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      5.0,
+			'std':      1.0,
 			'eta':      None
 		}
 	]
@@ -356,7 +356,6 @@ for var_id in range( len(var_dict) ) :
 		assert abs( value ) < tol
 #
 # check covariate multiplier values
-tol  = 1e-5
 count = 0
 for var_id in range( len(var_dict) ) :
 	row   = var_dict[var_id]
@@ -366,10 +365,10 @@ for var_id in range( len(var_dict) ) :
 		value        = fit_var_dict[var_id]['fit_var_value']
 		covariate_id = row['covariate_id']
 		if covariate_id == 0 :
-			assert abs( value / mulcov_income - 1.0 ) < tol
+			assert abs( value / mulcov_income - 1.0 ) < 1e3 * tol
 		else :
-			assert abs( value - 1.0 ) < tol
-assert count == 1
+			assert abs( value ) < tol
+assert count == 2
 # -----------------------------------------------------------------------------
 print('lasso_covariate.py: OK')
 # -----------------------------------------------------------------------------
