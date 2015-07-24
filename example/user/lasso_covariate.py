@@ -16,9 +16,6 @@
 #
 # $section Using Lasso with Covariates (Under Construction)$$
 #
-# $head Future Work$$
-# Should add random noise to the data and increase number of data points.
-#
 # $code
 # $verbatim%
 #	example/user/lasso_covariate.py
@@ -27,6 +24,10 @@
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
+# true values used to simulate data
+iota_true        = 0.05
+n_data           = 51
+# ------------------------------------------------------------------------
 import sys
 import os
 import distutils.dir_util
@@ -58,11 +59,6 @@ def fun_iota_parent(a, t) :
 def fun_mulcov(a, t) :
 	return ('prior_mulcov', 'prior_gauss_zero', 'prior_gauss_zero')
 # ------------------------------------------------------------------------
-# true values used to simulate data
-iota_true     = 0.05
-n_data        = 11
-mulcov_income = iota_true / n_data
-#
 def example_db (file_name) :
 	import copy
 	import dismod_at
@@ -95,24 +91,24 @@ def example_db (file_name) :
 	]
 	#
 	# covariate table: no covriates
-	income_reference = 100.00
 	covariate_dict = [
-		{'name':'income', 'reference':income_reference, 'max_difference':None},
-		{'name':'elevation', 'reference':1.0,  'max_difference':None}
+		{'name':'income', 'reference':0.5, 'max_difference':None},
+		{'name':'sex',    'reference':0.0, 'max_difference':0.6}
 	]
 	#
 	# mulcov table
+	# income has been scaled the same as sex so man use same smoothing
 	mulcov_dict = [
 		{
-			'covariate':'income',
-			'type':     'rate_mean',
-			'effected': 'iota',
-			'smooth':   'smooth_mulcov'
+			'covariate': 'income',
+			'type':      'rate_mean',
+			'effected':  'iota',
+			'smooth':    'smooth_mulcov'
 		},{
-			'covariate':'elevation',
-			'type':     'rate_mean',
-			'effected': 'iota',
-			'smooth':   'smooth_mulcov'
+			'covariate': 'sex',
+			'type':      'rate_mean',
+			'effected':  'iota',
+			'smooth':    'smooth_mulcov'
 		}
 	]
 	# --------------------------------------------------------------------------
@@ -130,18 +126,20 @@ def example_db (file_name) :
 		'age_upper':    0.0
 	}
 	# values that change between rows:
-	for data_id in range( 10 ) :
-		income      = (data_id - n_data / 2) + income_reference
-		elevation   = ( data_id % 3 )
+	mulcov_income    = 1.0
+	income_reference = 0.5
+	for data_id in range( n_data ) :
+		income      = data_id / float(n_data-1)
+		sex         = ( data_id % 3 - 1.0 ) / 2.0
 		meas_value  = iota_true
 		meas_value *= math.exp( (income - income_reference) * mulcov_income )
-		meas_std    = 0.2 * meas_value
+		meas_std    = 0.1 * meas_value
 		integrand   = integrand_dict[0]['name']
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
 		row['integrand']  = integrand
 		row['income']     = income
-		row['elevation']  = elevation
+		row['sex']        = sex
 		data_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
@@ -306,10 +304,13 @@ def example_db (file_name) :
 	#
 	return
 # ===========================================================================
+# Note that this process uses the fit resutls as the truth for simulated data
+# The fit_var table corresponds to fitting with no noise.
+# The sample table corresponds to fitting with noise.
 file_name      = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
-for command in [ 'init', 'start', 'fit' ] :
+for command in [ 'init', 'start', 'fit', 'truth', 'simulate', 'sample' ] :
 	cmd  = [ program, command, file_name ]
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
@@ -320,7 +321,7 @@ for command in [ 'init', 'start', 'fit' ] :
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
-# get parent rate variable values
+# Results for fitting with no noise
 var_dict     = dismod_at.get_table_dict(connection, 'var')
 fit_var_dict = dismod_at.get_table_dict(connection, 'fit_var')
 #
@@ -357,6 +358,7 @@ for var_id in range( len(var_dict) ) :
 #
 # check covariate multiplier values
 count = 0
+mulcov_income  = 1.0
 for var_id in range( len(var_dict) ) :
 	row   = var_dict[var_id]
 	match = row['var_type'] == 'mulcov_rate_mean'
@@ -368,6 +370,27 @@ for var_id in range( len(var_dict) ) :
 			assert abs( value / mulcov_income - 1.0 ) < 1e3 * tol
 		else :
 			assert abs( value ) < tol
+assert count == 2
+# -----------------------------------------------------------------------
+# Results for fitting with noise
+sample_dict = dismod_at.get_table_dict(connection, 'sample')
+#
+# check covariate multiplier values
+count = 0
+for var_id in range( len(var_dict) ) :
+	# We can use var_id as sample_id because number_sample = 1
+	assert sample_dict[var_id]['var_id'] == var_id
+	#
+	row   = var_dict[var_id]
+	match = row['var_type'] == 'mulcov_rate_mean'
+	if match :
+		count       += 1
+		value        = sample_dict[var_id]['var_value']
+		covariate_id = row['covariate_id']
+		if covariate_id == 0 :
+			assert abs( value / mulcov_income - 1.0 ) < 1e-1
+		else :
+			assert abs( value ) < 1e-1
 assert count == 2
 # -----------------------------------------------------------------------------
 print('lasso_covariate.py: OK')
