@@ -1044,14 +1044,14 @@ int main(int n_arg, const char** argv)
 	// n_age_ode
 	double age_min    = db_input.age_table[0];
 	double age_max    = db_input.age_table[ db_input.age_table.size() - 1 ];
-	size_t n_age_ode  = size_t( (age_max - age_min) / ode_step_size + 1.0 );
-	assert( age_max  <= age_min  + n_age_ode * ode_step_size );
+	size_t n_age_ode  = size_t( (age_max - age_min) / ode_step_size + 2.0 );
+	assert( age_max  <= age_min  + (n_age_ode - 1) * ode_step_size );
 	// ---------------------------------------------------------------------
 	// n_time_ode
 	double time_min   = db_input.time_table[0];
 	double time_max   = db_input.time_table[ db_input.time_table.size() - 1 ];
-	size_t n_time_ode = size_t( (time_max - time_min) / ode_step_size + 1.0 );
-	assert( time_max <= time_min  + n_time_ode * ode_step_size );
+	size_t n_time_ode = size_t( (time_max - time_min) / ode_step_size + 2.0 );
+	assert( time_max <= time_min  + (n_time_ode - 1) * ode_step_size );
 	// ---------------------------------------------------------------------
 	// child_data, child_avg_case, and some more size_t values
 	size_t parent_node_id = std::atoi(

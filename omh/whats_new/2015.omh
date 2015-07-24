@@ -34,8 +34,13 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-24$$
+$list number$$
 Add the $cref/derivative_test/option_table/Optimizer/derivative_test/$$
 option (because it is to slow to do all the time).
+$lnext
+Fix the automatic setting of the number of age and time points in the
+$cref/ode grid/glossary/Ode Grid/$$.
+$lend
 
 $head 07-23$$
 $list number$$
