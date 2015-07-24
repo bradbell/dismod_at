@@ -14,7 +14,7 @@
 #	covariate
 # $$
 #
-# $section Using Lasso with Covariates (Under Construction)$$
+# $section Using Lasso with Covariates$$
 #
 # $code
 # $verbatim%

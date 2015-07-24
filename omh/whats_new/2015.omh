@@ -106,7 +106,7 @@ The name of the $code argument_table$$ was change to the $cref option_table$$.
 Some bugs were fixed in the
 $cref/constraint/approx_mixed/Problem/Constraints/$$ option.
 $lnext
-The $cref/print_level/option_table/print_level/$$ option
+The $cref/print_level/option_table/Optimizer/print_level/$$ option
 was added to control tracing during optimization,
 use no tracing (zero) as default.
 $lnext
