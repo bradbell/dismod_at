@@ -1360,7 +1360,7 @@ void ipopt_fixed::finalize_solution(
 	//
 	//
 	// relaxed verison of tolerance
-	double tol = 3.0 * ipopt_tolerance_;
+	double tol = ipopt_tolerance_;
 	//
 	// check that x is within its limits
 	fixed_opt_.resize(n_fixed_);
@@ -1381,9 +1381,9 @@ void ipopt_fixed::finalize_solution(
 
 	// check constraints corresponding to l1 terms
 	for(size_t j = 0; j < prior_n_abs_; j++)
-	{	double check = (1.0 + tol) * double( x[n_fixed_ + j] );
-		ok &= check - prior_vec_tmp_[j + 1] >= 0.0;
-		ok &= check + prior_vec_tmp_[j + 1] >= 0.0;
+	{	double check = double( x[n_fixed_ + j] );
+		ok &= check - prior_vec_tmp_[j + 1] + 1e2 * tol >= 0;
+		ok &= check + prior_vec_tmp_[j + 1] + 1e2 * tol >= 0;
 	}
 	//
 	// explicit constraints at the final fixed effects vector
