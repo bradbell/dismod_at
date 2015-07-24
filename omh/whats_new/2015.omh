@@ -33,6 +33,10 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-24$$
+Add the $cref/derivative_test/option_table/Optimizer/derivative_test/$$
+option (because it is to slow to do all the time).
+
 $head 07-23$$
 $list number$$
 Add the $cref user_lasso_covariate.py$$ example / test.

@@ -30,12 +30,13 @@ def option_table() :
 	col_name = [ 'option_name', 'option_value'  ]
 	col_type = [ 'text unique'  , 'text' ]
 	row_list = [
-		['parent_node_id', '0'           ] ,
-		['ode_step_size',  '20.0'        ] ,
-		['tolerance',      '1e-8'        ] ,
-		['max_num_iter',   '100'         ] ,
-		['print_level',    '0'           ] ,
-		['rate_info',      'chi_positive']
+		['parent_node_id',  '0'            ] ,
+		['ode_step_size',   '20.0'         ] ,
+		['tolerance',       '1e-8'         ] ,
+		['max_num_iter',    '100'          ] ,
+		['print_level',     '0'            ] ,
+		['derivative_test', 'second-order' ] ,
+		['rate_info',       'chi_positive' ]
 	]
 	tbl_name = 'option'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

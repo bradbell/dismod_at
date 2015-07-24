@@ -87,14 +87,15 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	size_t null_id  = size_t(DISMOD_AT_NULL_INT);
 	//
 	const char* name_list[] = {
+		"derivative_test",
 		"max_num_iter",
 		"number_sample",
 		"ode_step_size",
-		"print_level",
 		"parent_node_id",
-		"tolerance",
+		"print_level",
 		"random_seed",
-		"rate_info"
+		"rate_info",
+		"tolerance"
 	};
 	size_t n_name = sizeof( name_list ) / sizeof( name_list[0] );
 	CppAD::vector<string> name_vec(n_name);
@@ -167,6 +168,18 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			bool ok = 0 <= print_level && print_level <= 12;
 			if( ! ok )
 			{	msg = "option_value is not between 0 and 12 inclusinve";
+				error_exit(db, msg, table_name, match);
+			}
+		}
+		if( name_vec[i] == "derivative_test" )
+		{	bool ok = false;
+			ok     |= option_value[match] == "none";
+			ok     |= option_value[match] == "first-order";
+			ok     |= option_value[match] == "second-order";
+			ok     |= option_value[match] == "only-second-order";
+			if( ! ok )
+			{	msg  = "option_value not one of the following: ";
+				msg += "none, first-order, second-order, only-second-order";
 				error_exit(db, msg, table_name, match);
 			}
 		}

@@ -42,11 +42,9 @@ $codei%fit_model %fit_object%(
 	%prior_object%
 )
 %$$
-$codei%fit_object.run_fit(
-	%tolerance_str%, %max_num_iter_str%, %print_level_str%
-)%$$
-$icode%solution% = %fit_object%.get_solution()
+$codei%fit_object.run_fit(%option_map%)
 %$$
+$icode%solution% = %fit_object%.get_solution()%$$
 
 $head fit_object$$
 This object has prototype
@@ -114,26 +112,25 @@ It contains the model for the prior negative log-likelihood; see $cref prior_mod
 $head run_fit$$
 Run the optimization process to determine the optimal fixed and random effects.
 
-$subhead tolerance_str$$
+$head option_map$$
 This argument has prototype
 $code
-	const std::string& %tolerance_str%
+	std::map<std::string, std::string>& %option_map%
 %$$
-and is the Ipopt relative tolerance $code tol$$ for the fit.
+It is effectively $code const$$ and
+must have the following values:
 
-$subhead max_num_iter_str$$
-This argument has prototype
-$code
-	const std::string& %max_num_iter_str%
-%$$
+$subhead tolerance$$
+$icode%option_map%["tolerance"]%$$
+is the Ipopt relative tolerance $code tol$$ for the fit.
+
+$subhead max_num_iter$$
+$icode%option_map%["max_num_iter"]%$$
 and is the Ipopt maximum number of iterations $code max_iter$$ for the fit.
 
-$subhead print_level_str$$
-This argument has prototype
-$code
-	const std::string& %print_level_str%
-%$$
-and is the Ipopt print level (between zero and 12 inclusive).
+$subhead print_level$$
+$icode%option_map%["print_level"]%$$
+is the Ipopt print level (between zero and 12 inclusive).
 Zero is the normal value for $code dismod_at$$ and corresponds to no printing
 (five is the default Ipopt value).
 
@@ -224,10 +221,7 @@ prior_object_  ( prior_object )
 }
 // ---------------------------------------------------------------------------
 // run_fit
-void fit_model::run_fit(
-	const std::string& tolerance_str    ,
-	const std::string& max_num_iter_str ,
-	const std::string& print_level_str  )
+void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 {	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
 	assert( value_prior_.size() == n_var );
@@ -272,17 +266,13 @@ void fit_model::run_fit(
 	get_random_effect(pack_object_, pack_vec, random_in);
 
 	// Ipopt options (2DO: also set options for random effects optimzation)
-	std::string options =
-		"String  sb                        yes\n"
-		"String  derivative_test           second-order\n"
-		"String  derivative_test_print_all yes\n"
-	;
-	options += "Numeric tol ";
-	options += tolerance_str + "\n";
-	options += "Integer max_iter ";
-	options += max_num_iter_str + "\n";
-	options += "Integer print_level ";
-	options += print_level_str + "\n";
+	std::string options;
+	options += "String  sb  yes";
+	options += "\nNumeric tol " + option_map["tolerance"];
+	options += "\nInteger max_iter " + option_map["max_num_iter"];
+	options += "\nInteger print_level " + option_map["print_level"];
+	options += "\nString derivative_test " + option_map["derivative_test"];
+	options += "\n";
 	//
 	// optimal fixed effects
 	CppAD::vector<double> optimal_fixed = optimize_fixed(

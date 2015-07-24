@@ -45,14 +45,15 @@ bool get_option_table_xam(void)
 			" option_name     text unique,"
 			" option_value    text"
 		")",
-		"insert into option values(0, 'parent_node_id',  '0'   )",
-		"insert into option values(1, 'ode_step_size',   '20.0')",
-		"insert into option values(2, 'tolerance',       '1e-8')",
-		"insert into option values(3, 'max_num_iter',    '100' )",
-		"insert into option values(4, 'print_level',     '0'    )",
-		"insert into option values(5, 'random_seed',     '0'   )",
-		"insert into option values(6, 'number_sample',   '1'   )",
-		"insert into option values(7, 'rate_info',       'chi_positive' )"
+		"insert into option values(0, 'parent_node_id',  '0'            )",
+		"insert into option values(1, 'ode_step_size',   '20.0'         )",
+		"insert into option values(2, 'tolerance',       '1e-8'         )",
+		"insert into option values(3, 'max_num_iter',    '100'          )",
+		"insert into option values(4, 'print_level',     '0'            )",
+		"insert into option values(5, 'random_seed',     '0'            )",
+		"insert into option values(6, 'number_sample',   '1'            )",
+		"insert into option values(7, 'rate_info',       'chi_positive' )",
+		"insert into option values(8, 'derivative_test', 'second-order' )"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -62,7 +63,7 @@ bool get_option_table_xam(void)
 	// get the option table
 	vector<dismod_at::option_struct> option_table =
 		dismod_at::get_option_table(db);
-	ok  &= option_table.size() == 8;
+	ok  &= option_table.size() == 9;
 	//
 	ok  &= option_table[0].option_name    == "parent_node_id";
 	ok  &= option_table[0].option_value == "0";
@@ -87,6 +88,9 @@ bool get_option_table_xam(void)
 	//
 	ok  &= option_table[7].option_name    == "rate_info";
 	ok  &= option_table[7].option_value == "chi_positive";
+	//
+	ok  &= option_table[8].option_name    == "derivative_test";
+	ok  &= option_table[8].option_value == "second-order";
 	//
 	// close database and return
 	sqlite3_close(db);

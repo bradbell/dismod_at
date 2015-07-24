@@ -319,12 +319,12 @@ bool fit_model_xam(void)
 		data_object,
 		prior_object
 	);
-	std::string fit_tolerance_str    = "1e-8";
-	std::string fit_max_num_iter_str = "100";
-	std::string print_level_str      = "0";
-	fit_object.run_fit(
-		fit_tolerance_str, fit_max_num_iter_str, print_level_str
-	);
+	std::map<std::string, std::string> option_map;
+	option_map["tolerance"]          = "1e-8";
+	option_map["max_num_iter"]       = "100";
+	option_map["print_level"]        = "0";
+	option_map["derivative_test"]    = "second-order";
+	fit_object.run_fit( option_map );
 	CppAD::vector<double> solution = fit_object.get_solution();
 
 	// check against known solution

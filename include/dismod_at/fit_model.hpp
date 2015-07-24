@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # ifndef DISMOD_AT_FIT_MODEL_HPP
 # define DISMOD_AT_FIT_MODEL_HPP
 
+# include <map>
 # include <sqlite3.h>
 # include <dismod_at/a5_double.hpp>
 # include <dismod_at/approx_mixed.hpp>
@@ -91,9 +92,8 @@ namespace dismod_at {
 		);
 		// run fit
 		void run_fit(
-			const std::string& tolerance_str    ,
-			const std::string& max_num_iter_str ,
-			const std::string& print_level
+			// effectively const
+			std::map<std::string, std::string>& option_map
 		);
 		// get_solution
 		CppAD::vector<double> get_solution(void);

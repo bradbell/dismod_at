@@ -145,6 +145,25 @@ print level for optimizing the fixed effects.
 Zero, corresponds to no printing and should be the default for use
 with $code dismod_at$$ (the value 5 is the normal default for Ipopt).
 
+$subhead derivative_test$$
+If $icode%option_name% = derivative_test%$$,
+the corresponding $icode option_value$$
+is one of the following:
+$table
+$icode option_value$$ $cnext Description $rnext
+$code none$$          $cnext
+	do not perform derivative test
+$rnext
+$code first-order$$   $cnext
+	test first derivatives at starting point
+$rnext
+$code second-order$$  $cnext
+	test first and second derivatives at starting point
+$rnext
+$code only-second-order $$ $cnext
+	test second derivatives at starting point
+$tend
+
 
 $children%example/table/option_table.py
 %$$

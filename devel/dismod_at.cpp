@@ -418,9 +418,8 @@ void fit_command(
 	const dismod_at::db_input_struct&            db_input         ,
 	const vector<dismod_at::smooth_info>&        s_info_vec       ,
 	const dismod_at::prior_model&                prior_object     ,
-	const std::string&                           tolerance_str    ,
-	const std::string&                           max_num_iter_str ,
-	const std::string&                           print_level_str
+	// effectively const
+	std::map<std::string, std::string>&          option_map
 )
 {	using std::string;
 	using dismod_at::to_string;
@@ -440,7 +439,7 @@ void fit_command(
 		data_object          ,
 		prior_object
 	);
-	fit_object.run_fit(tolerance_str, max_num_iter_str, print_level_str);
+	fit_object.run_fit(option_map);
 	vector<double> solution = fit_object.get_solution();
 	// -------------------- fit_var table --------------------------------------
 	string sql_cmd = "drop table if exists fit_var";
@@ -753,9 +752,8 @@ void sample_command(
 	const dismod_at::db_input_struct&           db_input         ,
 	const vector<dismod_at::smooth_info>&       s_info_vec       ,
 	const dismod_at::prior_model&               prior_object     ,
-	const std::string&                          tolerance_str    ,
-	const std::string&                          max_num_iter_str ,
-	const std::string&                          print_level_str
+	// effectively const
+	std::map<std::string, std::string>&         option_map
 )
 {
 	using std::string;
@@ -824,7 +822,7 @@ void sample_command(
 			data_object          ,
 			prior_object
 		);
-		fit_object.run_fit(tolerance_str, max_num_iter_str, print_level_str);
+		fit_object.run_fit(option_map);
 		vector<double> solution = fit_object.get_solution();
 		assert( solution.size() == n_var );
 		//
@@ -1165,10 +1163,6 @@ int main(int n_arg, const char** argv)
 		child_avg_case
 	);
 	avg_case_object.set_eigen_ode2_case_number(rate_info);
-	// -----------------------------------------------------------------------
-	string tolerance_str     = option_map["tolerance"];
-	string max_num_iter_str  = option_map["max_num_iter"];
-	string print_level_str   = option_map["print_level"];
 	// ---------------------------------------------------------------------
 	if( command_arg == "init" )
 	{	init_command(
@@ -1199,9 +1193,7 @@ int main(int n_arg, const char** argv)
 			db_input         ,
 			s_info_vec       ,
 			prior_object     ,
-			tolerance_str    ,
-			max_num_iter_str ,
-			print_level_str
+			option_map
 		);
 	}
 	else if( command_arg == "truth" )
@@ -1229,9 +1221,7 @@ int main(int n_arg, const char** argv)
 			db_input         ,
 			s_info_vec       ,
 			prior_object     ,
-			tolerance_str    ,
-			max_num_iter_str ,
-			print_level_str
+			option_map
 		);
 	}
 	else if( command_arg == "predict" )
