@@ -813,12 +813,17 @@ bool ipopt_fixed::eval_grad_f(
 	//
 	// set grad_f
 	for(size_t j = 0; j < n_fixed_; j++)
+	{	assert( j < size_t(n) );
 		grad_f[j] = Number( H_beta_tmp_[j] );
+	}
 	for(size_t j = 0; j < prior_n_abs_; j++)
+	{	assert( n_fixed_ + j < size_t(n) );
 		grad_f[n_fixed_ + j] = Number( 1.0 );
+	}
 	for(size_t k = 0; k < prior_jac_row_.size(); k++)
 	{	if( prior_jac_row_[k] == 0 )
 		{	size_t j = prior_jac_col_[k];
+			assert( j < size_t(n) );
 			grad_f[j] += Number( prior_jac_val_[k] );
 		}
 	}
@@ -886,6 +891,7 @@ bool ipopt_fixed::eval_g(
 	// convert absolute value terms to constraints
 	for(size_t j = 0; j < prior_n_abs_; j++)
 	{	// x[n_fixed_ + j] >= prior_vec_tmp_[1 + j];
+		assert( 2 * j + 1 < size_t(m) );
 		g[2 * j] = Number(x[n_fixed_ + j] - prior_vec_tmp_[1 + j]); // >= 0
 		// x[n_fixed_ + j] >= - prior_vec_tmp_[1 + j]
 		g[2*j+1] = Number(x[n_fixed_ + j] + prior_vec_tmp_[1 + j]); // >= 0
@@ -895,7 +901,9 @@ bool ipopt_fixed::eval_g(
 	c_vec_tmp_ = approx_object_.constraint_eval(fixed_tmp_);
 	assert( c_vec_tmp_.size() == n_constraint_ );
 	for(size_t j = 0; j < n_constraint_; j++)
+	{	assert( 2 * prior_n_abs_ + j < size_t(m) );
 		g[2 * prior_n_abs_ + j] = c_vec_tmp_[j];
+	}
 	//
 	return true;
 }
@@ -984,14 +992,16 @@ bool ipopt_fixed::eval_jac_g(
 		size_t ell = 0;
 		for(size_t k = 0; k < prior_jac_row_.size(); k++)
 		{	if( prior_jac_row_[k] != 0 )
-			{	iRow[ell+1] = iRow[ell] = Index( prior_jac_row_[k] );
+			{	assert( ell + 1 < nnz_jac_g_ );
+				iRow[ell+1] = iRow[ell] = Index( prior_jac_row_[k] );
 				jCol[ell+1] = jCol[ell] = Index( prior_jac_col_[k] );
 				ell += 2;
 			}
 		}
 		// auxillary variables for l1 constraints
 		for(size_t j = 0; j < prior_n_abs_; j++)
-		{	iRow[ell] = Index( 2 * j );
+		{	assert( ell + 1 < nnz_jac_g_ );
+			iRow[ell] = Index( 2 * j );
 			jCol[ell] = Index( n_fixed_ + j);
 			ell++;
 			iRow[ell] = Index( 2 * j + 1);
@@ -1000,10 +1010,12 @@ bool ipopt_fixed::eval_jac_g(
 		}
 		// explicit constaints
 		for(size_t k = 0; k < constraint_jac_row_.size(); k++)
-		{	iRow[ell] = Index( constraint_jac_row_[k] );
+		{	assert( ell < nnz_jac_g_ );
+			iRow[ell] = Index( constraint_jac_row_[k] );
 			jCol[ell] = Index( constraint_jac_col_[k] );
 			ell++;
 		}
+		assert( ell == nnz_jac_g_ );
 		return true;
 	}
 	//
@@ -1019,15 +1031,17 @@ bool ipopt_fixed::eval_jac_g(
 	size_t ell = 0;
 	for(size_t k = 0; k < prior_jac_row_.size(); k++)
 	{	if( prior_jac_row_[k] != 0 )
-		{	values[ell] = Number( prior_jac_val_[k] );
+		{	assert( ell + 1 < nnz_jac_g_ );
+			values[ell] = Number( prior_jac_val_[k] );
 			ell++;
 			values[ell] = Number( - prior_jac_val_[k] );
 			ell++;
 		}
-		for(size_t j = 0; j < prior_n_abs_; j++)
-		{	values[ell+1] = values[ell] = Number(1.0);
-			ell += 2;
-		}
+	}
+	for(size_t j = 0; j < prior_n_abs_; j++)
+	{	assert( ell + 1 < nnz_jac_g_ );
+		values[ell+1] = values[ell] = Number(1.0);
+		ell += 2;
 	}
 	//
 	// Jacobian of explicit constraints
@@ -1038,7 +1052,10 @@ bool ipopt_fixed::eval_jac_g(
 		constraint_jac_val_
 	);
 	for(size_t k = 0; k < constraint_jac_row_.size(); k++)
+	{	assert( ell < nnz_jac_g_ );
 		values[ell++] = Number( constraint_jac_val_[k] );
+	}
+	assert( ell == nnz_jac_g_ );
 	return true;
 }
 /*
@@ -1195,7 +1212,9 @@ bool ipopt_fixed::eval_h(
 		prior_hes_val_
 	);
 	for(size_t k = 0; k < prior_hes_row_.size(); k++)
+	{	assert( prior_2_lag_[k] < nnz_h_lag_ );
 		values[ prior_2_lag_[k] ] += Number( prior_hes_val_[k] );
+	}
 	//
 	// Hessian of Lagrangian of weighted explicit constraints
 	for(size_t j = 0; j < n_constraint_; j++)
@@ -1208,7 +1227,9 @@ bool ipopt_fixed::eval_h(
 		constraint_hes_val_
 	);
 	for(size_t k = 0; k < constraint_hes_row_.size(); k++)
+	{	assert( constraint_2_lag_[k] < nnz_h_lag_ );
 		values[ constraint_2_lag_[k] ] += Number( constraint_hes_val_[k] );
+	}
 	//
 	return true;
 }

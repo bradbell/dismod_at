@@ -10,7 +10,11 @@
 # ---------------------------------------------------------------------------
 # Build get_started Examples / Tests
 
-FOREACH(user_case diff_constraint no_children )
+FOREACH(user_case
+	diff_constraint
+	no_children
+	lasso_covariate
+)
 	ADD_CUSTOM_TARGET(
 		check_${user_case}
 		${python_three_command} example/user/${user_case}.py
@@ -23,4 +27,5 @@ ADD_CUSTOM_TARGET(
 	DEPENDS
 	check_diff_constraint
 	check_no_children
+	check_lasso_covariate
 )

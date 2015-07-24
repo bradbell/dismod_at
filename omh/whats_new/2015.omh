@@ -35,7 +35,9 @@ $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-23$$
 $list number$$
-Fix bug when using $code laplace$$ and $code log_laplace$$
+Add the $cref user_lasso_covariate.py$$ example / test.
+$lnext
+Fix some bugs related to using $code laplace$$ and $code log_laplace$$
 $cref/densities/density_table/$$.
 $lnext
 Detect and report an error in the data table when
