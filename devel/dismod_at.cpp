@@ -349,29 +349,27 @@ void start_command(
 {	using std::string;
 	using dismod_at::to_string;
 	//
+	string sql_cmd = "drop table if exists start_var";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
 	// Value prior_id in pack_info order
 	vector<size_t> value_prior_id = pack_value_prior(pack_object, s_info_vec);
 	//
-	// number of variables
-	size_t n_var = pack_object.size();
-	//
 	// create start_var table
-	string sql_cmd = "drop table if exists start_var";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table start_var("
-		" start_var_id       integer primary key,"
-		" start_var_value    real"
-	")";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	//
 	string table_name = "start_var";
-	vector<string> col_name_vec(1), row_val_vec(1);
-	col_name_vec[0]   = "start_var_value";
+	size_t n_var      = pack_object.size();
+	vector<string> col_name(1), col_type(1), row_value(n_var);
+	vector<bool>   col_unique(1);
+	col_name[0]       = "start_var_value";
+	col_type[0]       = "real";
+	col_unique[0]     = false;
 	for(size_t var_id = 0; var_id < n_var; var_id++)
-	{	double start_var_value    = prior_table[ value_prior_id[var_id] ].mean;
-		row_val_vec[0]     = to_string(start_var_value);
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+	{	double start_var_value = prior_table[ value_prior_id[var_id] ].mean;
+		row_value[var_id]      = to_string(start_var_value);
 	}
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
 	return;
 }
 
