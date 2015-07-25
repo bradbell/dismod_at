@@ -785,31 +785,33 @@ void sample_command(
 	// get simulation data
 	vector<dismod_at::simulate_struct> simulate_table =
 			dismod_at::get_simulate_table(db);
+	//
+	size_t n_subset = data_subset_obj.size();
+	size_t n_sample = simulate_table.size() / n_subset;
 	// -----------------------------------------------------------------------
 	// create a new sample table
 	string sql_cmd = "drop table if exists sample";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table sample("
-		" sample_id        integer primary key,"
-		" sample_index     integer,"
-		" var_id           integer,"
-		" var_value        real"
-	")";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
 	table_name = "sample";
-	vector<string> col_name_vec(3), row_val_vec(3);
-	col_name_vec[0]   = "sample_index";
-	col_name_vec[1]   = "var_id";
-	col_name_vec[2]   = "var_value";
-	// -----------------------------------------------------------------------
-
-	// n_subset
-	size_t n_subset = data_subset_obj.size();
-
-	// n_var, n_sample
+	size_t n_col    = 3;
 	size_t n_var    = pack_object.size();
-	size_t n_sample = simulate_table.size() / n_subset;
-	assert( simulate_table.size() == n_sample * n_subset );
+	size_t n_row    = n_sample * n_var;
+	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_row);
+	vector<bool>   col_unique(n_col);
+	//
+	col_name[0]   = "sample_index";
+	col_type[0]   = "integer";
+	col_unique[0] = false;
+	//
+	col_name[1]   = "var_id";
+	col_type[1]   = "integer";
+	col_unique[1] = false;
+	//
+	col_name[2]   = "var_value";
+	col_type[2]   = "real";
+	col_unique[2] = false;
+	//
 	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
 	{	// set the measurement values for this simulation subset
 		size_t offset = n_subset * sample_index;
@@ -843,16 +845,19 @@ void sample_command(
 		vector<double> solution = fit_object.get_solution();
 		assert( solution.size() == n_var );
 		//
-		// write out solution for this sample_index
-		row_val_vec[0] = to_string( sample_index );
+		// put solution for this sample_index in row_value
+		string sample_index_str = to_string( sample_index );
 		for(size_t var_id = 0; var_id < n_var; var_id++)
-		{	row_val_vec[1] = to_string( var_id );
-			row_val_vec[2] = to_string( solution[var_id] );
-			dismod_at::put_table_row(
-				db, table_name, col_name_vec, row_val_vec
-			);
+		{	size_t sample_id = sample_index * n_var + var_id;
+			row_value[n_col * sample_id + 0] = sample_index_str;
+			row_value[n_col * sample_id + 1] = to_string( var_id );
+			row_value[n_col * sample_id + 2] = to_string( solution[var_id] );
 		}
 	}
+	assert( n_sample * n_subset == simulate_table.size() );
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
 	return;
 }
 /*
