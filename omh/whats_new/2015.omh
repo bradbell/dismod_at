@@ -34,11 +34,9 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-25$$
-$list number$$
 Add the $cref cpp_create_table$$ routine,
-this is much faster than creating it one row at a time using
-$cref put_table_row$$.
-Speed up dismod_at by switching, where possible, to this new routine.
+and replace all uses of $cref put_table_row$$ by $code create_table$$
+(much faster).
 
 
 $head 07-24$$

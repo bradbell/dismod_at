@@ -127,6 +127,7 @@ void init_command(
 	// -----------------------------------------------------------------------
 	// create data_subset_table
 	n_subset   = avg_case_subset_obj.size();
+	row_value.clear();
 	row_value.resize(n_subset);
 	table_name     = "avg_case_subset";
 	n_subset       = avg_case_subset_obj.size();
@@ -148,6 +149,7 @@ void init_command(
 	col_name.resize(n_col);
 	col_type.resize(n_col);
 	col_unique.resize(n_col);
+	row_value.clear();
 	row_value.resize(n_col * n_row);
 	//
 	col_name[0]   = "var_type";
@@ -470,6 +472,7 @@ void fit_command(
 	col_name.resize(n_col);
 	col_type.resize(n_col);
 	col_unique.resize(n_col);
+	row_value.clear();
 	row_value.resize(n_col * n_subset);
 	//
 	col_name[0]   = "data_subset_id";
