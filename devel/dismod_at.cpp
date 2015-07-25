@@ -236,7 +236,7 @@ void init_command(
 				//
 				// variable_value
 # ifndef NDEBUG
-			for(size_t j = 2; j < n_col; j++)
+			for(size_t j = 0; j < n_col; j++)
 				assert( row_value[ n_col * var_id + j ] == "" );
 # endif
 				row_value[n_col * var_id + 0] = "rate"; // var_type
@@ -285,22 +285,25 @@ void init_command(
 			size_t time_id  = index / n_age;
 			var_id          = offset + index;
 # ifndef NDEBUG
-			for(size_t j = 2; j < n_col; j++)
+			for(size_t j = 0; j < n_col; j++)
 				assert( row_value[ n_col * var_id + j ] == "" );
 # endif
-			string var_type;
 			if( mulcov_type == dismod_at::rate_mean_enum )
-				var_type  = "mulcov_rate_mean";
+			{	row_value[n_col * var_id + 0]  = "mulcov_rate_mean";
+				row_value[n_col * var_id + 5] = to_string( rate_id );
+			}
 			else if( mulcov_type == dismod_at::meas_value_enum )
-				var_type  = "mulcov_meas_value";
+			{	row_value[n_col * var_id + 0]  = "mulcov_meas_value";
+				row_value[n_col * var_id + 6] = to_string( integrand_id );
+			}
 			else if( mulcov_type == dismod_at::meas_std_enum )
-				var_type  = "mulcov_meas_std";
+			{	row_value[n_col * var_id + 0]  = "mulcov_meas_std";
+				row_value[n_col * var_id + 6] = to_string( integrand_id );
+			}
 			else assert(false);
 			//
-			row_value[n_col * var_id + 0] = var_type;
 			row_value[n_col * var_id + 2] = to_string( age_id );
 			row_value[n_col * var_id + 3] = to_string( time_id );
-			row_value[n_col * var_id + 6] = to_string( integrand_id );
 			row_value[n_col * var_id + 7] = to_string( covariate_id );
 		}
 	}
