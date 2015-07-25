@@ -142,56 +142,69 @@ void init_command(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
 	// -----------------------------------------------------------------------
-	vector<string> col_name_vec(8), row_val_vec(8);
-	sql_cmd = "create table var("
-		" var_id         integer primary key,"
-		" var_type       text,"
-		" smooth_id      integer,"
-		" age_id         integer,"
-		" time_id        integer,"
-		" node_id        integer,"
-		" rate_id        integer,"
-		" integrand_id   integer,"
-		" covariate_id   integer"
-	")";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	table_name = "var";
-	col_name_vec[0]   = "var_type";
-	col_name_vec[1]   = "smooth_id";
-	col_name_vec[2]   = "age_id";
-	col_name_vec[3]   = "time_id";
-	col_name_vec[4]   = "node_id";
-	col_name_vec[5]   = "rate_id";
-	col_name_vec[6]   = "integrand_id";
-	col_name_vec[7]   = "covariate_id";
+	// create var table
+	size_t n_row = pack_object.size();
+	size_t n_col = 8;
+	table_name   = "var";
+	col_name.resize(n_col);
+	col_type.resize(n_col);
+	col_unique.resize(n_col);
+	row_value.resize(n_col * n_row);
+	//
+	col_name[0]   = "var_type";
+	col_type[0]   = "text";
+	col_unique[0] = false;
+	//
+	col_name[1]   = "smooth_id";
+	col_type[1]   = "integer";
+	col_unique[1] = false;
+	//
+	col_name[2]   = "age_id";
+	col_type[2]   = "integer";
+	col_unique[2] = false;
+	//
+	col_name[3]   = "time_id";
+	col_type[3]   = "integer";
+	col_unique[3] = false;
+	//
+	col_name[4]   = "node_id";
+	col_type[4]   = "integer";
+	col_unique[4] = false;
+	//
+	col_name[5]   = "rate_id";
+	col_type[5]   = "integer";
+	col_unique[5] = false;
+	//
+	col_name[6]   = "integrand_id";
+	col_type[6]   = "integer";
+	col_unique[6] = false;
+	//
+	col_name[7]   = "covariate_id";
+	col_type[7]   = "integer";
+	col_unique[7] = false;
 	//
 	// mulstd variables
 	size_t n_smooth = db_input.smooth_table.size();
 	size_t offset, var_id;
-	for(size_t i = 2; i < row_val_vec.size(); i++)
-		row_val_vec[i] = "null"; // these columns are null for mulstd variables
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	offset      = pack_object.mulstd_offset(smooth_id);
 		for(size_t i = 0; i < 3; i++)
 		{	var_id                   = offset + i;
-			// var_type
+# ifndef NDEBUG
+			for(size_t j = 0; j < n_col; j++)
+				assert( row_value[ n_col * var_id + j ] == "" );
+# endif
+			string var_type;
 			if( i == 0 )
-				row_val_vec[0] = "mulstd_value";
+				var_type = "mulstd_value";
 			else if( i == 1 )
-				row_val_vec[0] = "mulstd_dage";
+				var_type = "mulstd_dage";
 			else
-				row_val_vec[0] = "mulstd_dtime";
+				var_type = "mulstd_dtime";
 			//
 			// smooth_id
-			row_val_vec[1] = to_string( smooth_id );
-			//
-			dismod_at::put_table_row(
-				db,
-				table_name,
-				col_name_vec,
-				row_val_vec,
-				var_id
-			);
+			row_value[ n_col * var_id + 0] = var_type;
+			row_value[ n_col * var_id + 1] = to_string( smooth_id );
 		}
 	}
 	//
@@ -221,21 +234,15 @@ void init_command(
 				size_t time_id = s_info_vec[smooth_id].time_id(j);
 				//
 				// variable_value
-				row_val_vec[0]  = "rate";     // var_type
-				row_val_vec[1]  = "null";     // smooth_id
-				row_val_vec[2]  = to_string( age_id );
-				row_val_vec[3]  = to_string( time_id );
-				row_val_vec[4]  = to_string( node_id );
-				row_val_vec[5]  = to_string( rate_id );
-				row_val_vec[6]  = "null";     // integrand_id
-				row_val_vec[7]  = "null";     // covariate_id
-				dismod_at::put_table_row(
-					db,
-					table_name,
-					col_name_vec,
-					row_val_vec,
-					var_id
-				);
+# ifndef NDEBUG
+			for(size_t j = 2; j < n_col; j++)
+				assert( row_value[ n_col * var_id + j ] == "" );
+# endif
+				row_value[n_col * var_id + 0] = "rate"; // var_type
+				row_value[n_col * var_id + 2] = to_string( age_id );
+				row_value[n_col * var_id + 3] = to_string( time_id );
+				row_value[n_col * var_id + 4] = to_string( node_id );
+				row_value[n_col * var_id + 5] = to_string( rate_id );
 			}
 		}
 	}
@@ -276,32 +283,30 @@ void init_command(
 		{	size_t age_id   = index % n_age;
 			size_t time_id  = index / n_age;
 			var_id          = offset + index;
-			//
-		// var_type
+# ifndef NDEBUG
+			for(size_t j = 2; j < n_col; j++)
+				assert( row_value[ n_col * var_id + j ] == "" );
+# endif
+			string var_type;
 			if( mulcov_type == dismod_at::rate_mean_enum )
-				row_val_vec[0]  = "mulcov_rate_mean";
+				var_type  = "mulcov_rate_mean";
 			else if( mulcov_type == dismod_at::meas_value_enum )
-				row_val_vec[0]  = "mulcov_meas_value";
+				var_type  = "mulcov_meas_value";
 			else if( mulcov_type == dismod_at::meas_std_enum )
-				row_val_vec[0]  = "mulcov_meas_std";
+				var_type  = "mulcov_meas_std";
 			else assert(false);
 			//
-			row_val_vec[1]  = "null";     // smooth_id
-			row_val_vec[2]  = to_string( age_id );
-			row_val_vec[3]  = to_string( time_id );
-			row_val_vec[4]  = "null";     // node_id
-			row_val_vec[5]  = "null";     // rate_id
-			row_val_vec[6]  = to_string( integrand_id );
-			row_val_vec[7]  = to_string( covariate_id );
-			dismod_at::put_table_row(
-				db,
-				table_name,
-				col_name_vec,
-				row_val_vec,
-				var_id
-			);
+			row_value[n_col * var_id + 0] = var_type;
+			row_value[n_col * var_id + 2] = to_string( age_id );
+			row_value[n_col * var_id + 3] = to_string( time_id );
+			row_value[n_col * var_id + 6] = to_string( integrand_id );
+			row_value[n_col * var_id + 7] = to_string( covariate_id );
 		}
 	}
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
+	// ----------------------------------------------------------------------
 	return;
 }
 /*
