@@ -28,7 +28,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/manage_gsl_rng.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/pack_info.hpp>
-# include <dismod_at/put_table_row.hpp>
 # include <dismod_at/sim_random.hpp>
 # include <dismod_at/to_string.hpp>
 # include <dismod_at/log_message.hpp>
@@ -917,28 +916,30 @@ void predict_command(
 	vector<dismod_at::sample_struct> sample_table =
 		dismod_at::get_sample_table(db);
 
-	// create a new sample table
+	// -----------------------------------------------------------------------
+	// create a new predict table
 	string sql_cmd = "drop table if exists predict";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table predict("
-		" predict_id          integer primary key,"
-		" sample_index       integer,"
-		" avg_case_subset_id integer,"
-		" avg_integrand      real"
-	")";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	string table_name = "predict";
-	vector<string> col_name_vec(3), row_val_vec(3);
-	col_name_vec[0]   = "sample_index";
-	col_name_vec[1]   = "avg_case_subset_id";
-	col_name_vec[2]   = "avg_integrand";
-
-	// n_sample
-	size_t n_sample  = sample_table.size() / n_var;
-	assert( sample_table.size() == n_sample * n_var );
 	//
-	// n_subset
-	size_t n_subset  = avg_case_subset_obj.size();
+	string table_name = "predict";
+	size_t n_col      = 3;
+	size_t n_sample   = sample_table.size() / n_var;
+	size_t n_subset   = avg_case_subset_obj.size();
+	size_t n_row      = n_sample * n_subset;
+	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_row);
+	vector<bool>   col_unique(n_col);
+	//
+	col_name[0]   = "sample_index";
+	col_type[0]   = "integer";
+	col_unique[0] = false;
+	//
+	col_name[1]   = "avg_case_subset_id";
+	col_type[1]   = "integer";
+	col_unique[1] = false;
+	//
+	col_name[2]   = "avg_integrand";
+	col_type[2]   = "real";
+	col_unique[2] = false;
 	//
 	// pack_vec
 	CppAD::vector<double> pack_vec(n_var);
@@ -985,14 +986,16 @@ void predict_command(
 				default:
 				assert(false);
 			}
-			row_val_vec[0] = to_string( sample_index );
-			row_val_vec[1] = to_string( subset_id );
-			row_val_vec[2] = to_string( avg );
-			dismod_at::put_table_row(
-				db, table_name, col_name_vec, row_val_vec
-			);
+			size_t predict_id = sample_index * n_subset + subset_id;
+			row_value[n_col * predict_id + 0] = to_string( sample_index );
+			row_value[n_col * predict_id + 1] = to_string( subset_id );
+			row_value[n_col * predict_id + 2] = to_string( avg );
 		}
 	}
+	assert( n_sample * n_var == sample_table.size() );
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
 	return;
 }
 // ---------------------------------------------------------------------------
