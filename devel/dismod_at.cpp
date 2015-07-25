@@ -578,20 +578,21 @@ void truth_command(sqlite3* db)
 	// create truth_var table
 	string sql_cmd = "drop table if exists truth_var";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table truth_var("
-		" truth_var_id   integer primary key,"
-		" truth_var_value    real"
-	")";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	table_name = "truth_var";
-	vector<string> col_name_vec(1), row_val_vec(1);
-	col_name_vec[0]   = "truth_var_value";
-	for(size_t fit_var_id = 0; fit_var_id < fit_var_value.size(); fit_var_id++)
-	{	string truth_var_value = to_string( fit_var_value[fit_var_id] );
-		row_val_vec[0]     = truth_var_value;
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+	table_name   = "truth_var";
+	size_t n_var = fit_var_value.size();
+	vector<string> col_name(1), col_type(1), row_value(n_var);
+	vector<bool>   col_unique(1);
+	col_name[0]       = "truth_var_value";
+	col_type[0]       = "real";
+	col_unique[0]     = false;
+	for(size_t fit_var_id = 0; fit_var_id < n_var; fit_var_id++)
+	{	double truth_var_value  = fit_var_value[fit_var_id];
+		row_value[fit_var_id]   = to_string( truth_var_value );
 	}
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
 	return;
 }
 /*
