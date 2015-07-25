@@ -463,21 +463,28 @@ void fit_command(
 	// ------------------ fit_residual table --------------------------------
 	sql_cmd = "drop table if exists fit_residual";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table    fit_residual("
-		" fit_residual_id      integer primary key,"
-		" data_subset_id       integer,"
-		" avg_integrand        real,"
-		" weighted_residual    real"
-	")";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	table_name = "fit_residual";
-	vector<string> col_name_vec(3), row_val_vec(3);
-	col_name_vec[0] = "data_subset_id";
-	col_name_vec[1] = "avg_integrand";
-	col_name_vec[2] = "weighted_residual";
-	//
+	size_t n_col    = 3;
 	size_t n_subset = data_subset_obj.size();
+	table_name      = "fit_residual";
+	//
+	col_name.resize(n_col);
+	col_type.resize(n_col);
+	col_unique.resize(n_col);
+	row_value.resize(n_col * n_subset);
+	//
+	col_name[0]   = "data_subset_id";
+	col_type[0]   = "integer";
+	col_unique[0] = true;
+	//
+	col_name[1]   = "avg_integrand";
+	col_type[1]   = "real";
+	col_unique[1] = false;
+	//
+	col_name[2]   = "weighted_residual";
+	col_type[2]   = "real";
+	col_unique[2] = false;
+	//
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	// compute average integrand for this data item
 		double avg;
@@ -509,11 +516,13 @@ void fit_command(
 		dismod_at::residual_struct<double> residual =
 			data_object.like_one(subset_id, solution, avg);
 		//
-		row_val_vec[0] = to_string( subset_id );
-		row_val_vec[1] = to_string( avg );
-		row_val_vec[2] = to_string( residual.wres );
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+		row_value[ subset_id * n_col + 0] = to_string( subset_id );
+		row_value[ subset_id * n_col + 1] = to_string( avg );
+		row_value[ subset_id * n_col + 2] = to_string( residual.wres );
 	}
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
 	return;
 }
 /*
