@@ -34,6 +34,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/log_message.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/pack_prior.hpp>
+# include <dismod_at/create_table.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 	using CppAD::vector;
@@ -110,23 +111,23 @@ void init_command(
 	}
 	// -----------------------------------------------------------------------
 	// create data_subset_table
-	sql_cmd = "create table data_subset("
-		" data_subset_id  integer primary key,"
-		" data_id         integer"
-	")";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	//
 	string table_name = "data_subset";
 	size_t n_subset   = data_subset_obj.size();
-	vector<string> col_name_vec(1), row_val_vec(1);
-	col_name_vec[0] = "data_id";
+	vector<string> col_name(1), col_type(1), row_value(n_subset);
+	vector<bool>   col_unique(1);
+	col_name[0]       = "data_id";
+	col_type[0]       = "integer";
+	col_unique[0]     = true;
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	int data_id    = data_subset_obj[subset_id].original_id;
-		row_val_vec[0] = to_string( data_id );
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+		row_value[subset_id] = to_string( data_id );
 	}
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
 	// -----------------------------------------------------------------------
 	// create avg_case_subset_table
+	vector<string> col_name_vec(1), row_val_vec(1);
 	sql_cmd = "create table avg_case_subset("
 		" avg_case_subset_id  integer primary key,"
 		" avg_case_id         integer"

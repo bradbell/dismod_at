@@ -86,6 +86,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/variable_name_xam.cpp
 
 	table/check_pini_n_age_xam.cpp
+	table/create_table_xam.cpp
 	table/get_age_table_xam.cpp
 	table/get_avg_case_table_xam.cpp
 	table/get_option_table_xam.cpp

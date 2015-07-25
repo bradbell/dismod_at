@@ -83,6 +83,7 @@ extern bool variable_name_xam(void);
 
 // table subdirectory
 extern bool check_pini_n_age_xam(void);
+extern bool create_table_xam(void);
 extern bool get_age_table_xam(void);
 extern bool get_avg_case_table_xam(void);
 extern bool get_option_table_xam(void);
@@ -193,6 +194,7 @@ int main(void)
 
 	// table subdirectory
 	RUN(check_pini_n_age_xam);
+	RUN(create_table_xam);
 	RUN(get_age_table_xam);
 	RUN(get_avg_case_table_xam);
 	RUN(get_option_table_xam);
