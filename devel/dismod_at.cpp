@@ -655,25 +655,29 @@ void simulate_command(
 	string column_name = "truth_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, truth_var);
 	// ----------------- simulate_table ----------------------------------
-	table_name = "simulate";
 	//
 	string sql_cmd = "drop table if exists simulate";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	sql_cmd = "create table simulate("
-		" simulate_id     integer primary key,"
-		" sample_index    integer,"
-		" data_subset_id  integer,"
-		" meas_value      real"
-	");";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	//
-	vector<string> col_name_vec(3), row_val_vec(3);
-	col_name_vec[0]   = "sample_index";
-	col_name_vec[1]   = "data_subset_id";
-	col_name_vec[2]   = "meas_value";
-	//
+	table_name      = "simulate";
+	size_t n_col    = 3;
 	size_t n_subset = data_subset_obj.size();
+	size_t n_row    = number_sample * n_subset;
+	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_row);
+	vector<bool>   col_unique(n_col);
+	//
+	col_name[0]   = "sample_index";
+	col_type[0]   = "integer";
+	col_unique[0] = false;
+	//
+	col_name[1]   = "data_subset_id";
+	col_type[1]   = "integer";
+	col_unique[1] = false;
+	//
+	col_name[2]   = "meas_value";
+	col_type[2]   = "real";
+	col_unique[2] = false;
+	//
 	for(size_t sample_index = 0; sample_index < number_sample; sample_index++)
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	size_t integrand_id =  data_subset_obj[subset_id].integrand_id;
@@ -710,12 +714,14 @@ void simulate_command(
 		double meas_value   = dismod_at::sim_random(
 			density, avg, meas_std, eta
 		);
-		row_val_vec[0] = to_string( sample_index );
-		row_val_vec[1] = to_string( subset_id );
-		row_val_vec[2] = to_string(meas_value);
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+		size_t simulate_id = sample_index * n_subset + subset_id;
+		row_value[simulate_id * n_col + 0] = to_string( sample_index );
+		row_value[simulate_id * n_col + 1] = to_string( subset_id );
+		row_value[simulate_id * n_col + 2] = to_string(meas_value);
 	}
-
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
 	return;
 }
 /*
