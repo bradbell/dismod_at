@@ -126,23 +126,23 @@ void init_command(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
 	// -----------------------------------------------------------------------
-	// create avg_case_subset_table
-	vector<string> col_name_vec(1), row_val_vec(1);
-	sql_cmd = "create table avg_case_subset("
-		" avg_case_subset_id  integer primary key,"
-		" avg_case_id         integer"
-	")";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	//
-	table_name = "avg_case_subset";
+	// create data_subset_table
 	n_subset   = avg_case_subset_obj.size();
-	col_name_vec[0] = "avg_case_id";
+	row_value.resize(n_subset);
+	table_name     = "avg_case_subset";
+	n_subset       = avg_case_subset_obj.size();
+	col_name[0]    = "avg_case_id";
+	col_type[0]    = "integer";
+	col_unique[0]  = true;
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	int avg_case_id    = avg_case_subset_obj[subset_id].original_id;
-		row_val_vec[0] = to_string( avg_case_id );
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+		row_value[subset_id] = to_string( avg_case_id );
 	}
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
 	// -----------------------------------------------------------------------
+	vector<string> col_name_vec(8), row_val_vec(8);
 	sql_cmd = "create table var("
 		" var_id         integer primary key,"
 		" var_type       text,"
@@ -156,9 +156,6 @@ void init_command(
 	")";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	table_name = "var";
-	//
-	col_name_vec.resize(8);
-	row_val_vec.resize(8);
 	col_name_vec[0]   = "var_type";
 	col_name_vec[1]   = "smooth_id";
 	col_name_vec[2]   = "age_id";
