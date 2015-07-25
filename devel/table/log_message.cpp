@@ -104,7 +104,8 @@ std::time_t log_message(
 	const std::string& message      ,
 	const std::string& table_name   ,
 	const size_t&      row_id       )
-{	using std::string;
+{	static bool recursive = false;
+	using std::string;
 
 	// check assumption one table_name and row_id columns of log
 	assert( table_name != "" || row_id == size_t( DISMOD_AT_NULL_INT ) );
@@ -116,47 +117,51 @@ std::time_t log_message(
 		message_type == "warning" ||
 		message_type == "value"
 	);
-
-	string sql_cmd = "create table if not exists log("
-		" log_id              integer primary key,"
-		" message_type        text,"
-		" table_name          text,"
-		" row_id              integer,"
-		" unix_time           integer,"
-		" message             text"
-		");";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-
-	// determine next primary key value
-	string select_cmd  = "select * from log";
-	string column_name = "log_id";
-	string max_str     = get_column_max(db, select_cmd, column_name);
-	size_t log_id      = 0;
-	if( max_str != "" )
-		log_id = std::atoi( max_str.c_str() ) + 1;
-
 	// get time
 	std::time_t unix_time = std::time( DISMOD_AT_NULL_PTR );
+	//
+	if( ! recursive )
+	{	recursive = true;
+		//
+		string sql_cmd = "create table if not exists log("
+			" log_id              integer primary key,"
+			" message_type        text,"
+			" table_name          text,"
+			" row_id              integer,"
+			" unix_time           integer,"
+			" message             text"
+			");";
+		dismod_at::exec_sql_cmd(db, sql_cmd);
 
-	// add this message to the log file
-	sql_cmd  = "insert into log values ( ";
-	sql_cmd += to_string( log_id );
-	sql_cmd += " , '";
-	sql_cmd += message_type;
-	sql_cmd += "' , '";
-	sql_cmd += table_name;
-	sql_cmd += "' , ";
-	if( row_id == size_t( DISMOD_AT_NULL_INT ) )
-		sql_cmd += "null";
-	else
-		sql_cmd += to_string( row_id );
-	sql_cmd += " , ";
-	sql_cmd += to_string( unix_time );
-	sql_cmd += " , '";
-	sql_cmd += message;
-	sql_cmd += "' );";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
+		// determine next primary key value
+		string select_cmd  = "select * from log";
+		string column_name = "log_id";
+		string max_str     = get_column_max(db, select_cmd, column_name);
+		size_t log_id      = 0;
+		if( max_str != "" )
+			log_id = std::atoi( max_str.c_str() ) + 1;
 
+		// add this message to the log file
+		sql_cmd  = "insert into log values ( ";
+		sql_cmd += to_string( log_id );
+		sql_cmd += " , '";
+		sql_cmd += message_type;
+		sql_cmd += "' , '";
+		sql_cmd += table_name;
+		sql_cmd += "' , ";
+		if( row_id == size_t( DISMOD_AT_NULL_INT ) )
+			sql_cmd += "null";
+		else
+			sql_cmd += to_string( row_id );
+		sql_cmd += " , ";
+		sql_cmd += to_string( unix_time );
+		sql_cmd += " , '";
+		sql_cmd += message;
+		sql_cmd += "' );";
+		dismod_at::exec_sql_cmd(db, sql_cmd);
+	}
+	recursive = false;
+	//
 	return unix_time;
 }
 std::time_t log_message(
