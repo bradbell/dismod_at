@@ -445,20 +445,21 @@ void fit_command(
 	// -------------------- fit_var table --------------------------------------
 	string sql_cmd = "drop table if exists fit_var";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	sql_cmd = "create table fit_var("
-		" fit_var_id   integer primary key,"
-		" fit_var_value    real"
-	")";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	table_name = "fit_var";
-	vector<string> col_name_vec(1), row_val_vec(1);
-	col_name_vec[0]   = "fit_var_value";
-	for(size_t fit_var_id = 0; fit_var_id < solution.size(); fit_var_id++)
+	table_name   = "fit_var";
+	size_t n_var = solution.size();
+	vector<string> col_name(1), col_type(1), row_value(n_var);
+	vector<bool>   col_unique(1);
+	col_name[0]       = "fit_var_value";
+	col_type[0]       = "real";
+	col_unique[0]     = false;
+	for(size_t fit_var_id = 0; fit_var_id < n_var; fit_var_id++)
 	{	double fit_var_value   = solution[fit_var_id];
-		row_val_vec[0] = to_string( fit_var_value );
-		dismod_at::put_table_row(db, table_name, col_name_vec, row_val_vec);
+		row_value[fit_var_id] = to_string( fit_var_value );
 	}
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
 	// ------------------ fit_residual table --------------------------------
 	sql_cmd = "drop table if exists fit_residual";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
@@ -471,8 +472,7 @@ void fit_command(
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	table_name = "fit_residual";
-	col_name_vec.resize(3);
-	row_val_vec.resize(3);
+	vector<string> col_name_vec(3), row_val_vec(3);
 	col_name_vec[0] = "data_subset_id";
 	col_name_vec[1] = "avg_integrand";
 	col_name_vec[2] = "weighted_residual";
