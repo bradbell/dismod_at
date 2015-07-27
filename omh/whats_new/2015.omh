@@ -33,6 +33,10 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-27$$
+Grouped all the user level $cref approx_mixed$$ examples in the
+section $cref approx_mixed_user$$.
+
 $head 07-25$$
 Add the $cref cpp_create_table$$ routine,
 and replace all uses of $cref put_table_row$$ by $code create_table$$
