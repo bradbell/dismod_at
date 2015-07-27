@@ -13,7 +13,8 @@ $begin approx_mixed_user$$
 $section Approx_mixed User Examples$$
 
 $children%
-	example/devel/approx_mixed/user/no_random_xam.cpp
+	example/devel/approx_mixed/user/no_random_xam.cpp%
+	example/devel/approx_mixed/user/capture.cpp
 %$$
 
 $table
