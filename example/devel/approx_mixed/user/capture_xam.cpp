@@ -29,10 +29,15 @@ $latex T$$     $cnext number of sampling times
 $rnext
 $latex I$$     $cnext number of sampling locations
 $rnext
-$latex N_i$$   $cnext size of the population at the $th i$$ location
+$latex K$$     $cnext practical bound on population size (used to truncate sum)
+$rnext
+$latex N_i$$   $cnext size of the population at $th i$$ location
 $rnext
 $latex y_{i,t}$$ $cnext
-	number of individuals captured at location $latex i$$ and time $latex t$$
+	measured of number of captures at location $latex i$$ and time $latex t$$
+$rnext
+$latex M_i$$   $cnext
+	maximum of the measured number of captures at $th i$$ location
 $rnext
 $latex p_{i,t}$$ $cnext
 	probability of capture at location $latex i$$ and time $latex t$$
@@ -52,7 +57,7 @@ $latex \theta_3$$ $cnext
 	log of the variance of the random effects $latex u_t$$
 $tend
 
-$head Data Probability$$
+$head Count Data$$
 We use a binomial distribution to model the
 probability of $latex y_{i,t}$$ given $latex N_i$$ and $latex p_{i,t}$$; i.e,
 $latex \[
@@ -85,8 +90,14 @@ $latex \[
 =
 \exp( \theta_2 )^{N(i)} \frac{ \exp[ - \exp( \theta_2 ) ] }{ N_i ! }
 \] $$
-Furthermore, we assume that this probability
+We assume that this probability
 is independent for each $latex i$$.
+Furthermore, we assume that for $latex \lambda = \exp( \theta_2 ) $$,
+$latex \[
+	\exp( \lambda )
+	\approx
+	\sum_{k = 0}^{K-1} \frac{ \lambda^k }{ k ! }
+\] $$
 
 $head p(u | theta)$$
 We use a normal distribution, with mean zero and variance
@@ -116,7 +127,7 @@ function for each location and time by
 $latex \[
 S_{i,t} ( y, \theta , u )
 =
-\sum_{k=M(i)}^{+\infty}
+\sum_{k=M(i)}^{K-1}
 \exp( \theta_2 )^k \frac{ \exp[ - \exp( \theta_2 ) ] }{ k ! }
 \left( \begin{array}{c} k \\ y_{i,t} \end{array} \right)
 	p_{i,t} ( \theta , u)^{y(i,t)}
@@ -148,13 +159,15 @@ $end
 */
 namespace {
 	using CppAD::vector;
+	using std::exp;
 
+	// simulate covariates, x, and data, y
 	void simulate_xy(
 		size_t                 I     ,
 		size_t                 T     ,
 		const vector<double>&  theta ,
 		vector<double>&        x     ,
-		vector<double>&        y     )
+		vector<size_t>&        y     )
 	{	assert( theta.size() == 4 );
 		assert( x.size() == I );
 		assert( y.size() == I * T );
@@ -163,13 +176,13 @@ namespace {
 		//
 		// simulate population sizes
 		vector<double> N(I);
-		double mu =  std::exp( theta[2] );
+		double mu =  exp( theta[2] );
 		for(size_t i = 0; i < I; i++)
 			N[i] = gsl_ran_poisson(gsl_rng, mu );
 		//
 		// simulate random effects
 		vector<double> u(T);
-		double sigma = std::sqrt( std::exp( theta[3] ) );
+		double sigma = std::sqrt( exp( theta[3] ) );
 		for(size_t t = 0; t < T; t++)
 			u[t] = gsl_ran_gaussian(gsl_rng, sigma);
 		//
@@ -181,7 +194,7 @@ namespace {
 		for(size_t i = 0; i < I; i++)
 		{	for(size_t t = 0; t < T; t++)
 			{	// probability of capture
-				double ex = std::exp( - u[t] - theta[0] - theta[1] * x[i] );
+				double ex = exp( - u[t] - theta[0] - theta[1] * x[i] );
 				double p = 1.0 /( 1.0  + ex );
 				y[ i * T + t ] = gsl_ran_binomial(gsl_rng, p, N[i]);
 			}
@@ -189,6 +202,55 @@ namespace {
 		//
 		return;
 	}
+
+	// approx_mixed derived class
+	class approx_derived : public dismod_at::approx_mixed {
+	private:
+		const size_t          K_; // practical bound on population size
+		const size_t          I_; // number of locations
+		const size_t          T_; // number of times
+		const vector<double>& x_; // referece to covariate values
+		const vector<size_t>& y_; // reference to data values
+		// -----------------------------------------------------------------
+		// set by constructor and then effectively const
+		vector<size_t>        M_; // max number of captures at each location
+		// ------------------------------------------------------------------
+		template <class Float>
+		double p(const vector<Float>& theta, double ut, double xi )
+		{	return 1.0 / ( 1.0 + exp( - ut - theta[0] - theta[1] * xi ) );
+		}
+	public:
+		// constructor
+		approx_derived(
+			size_t                 K     ,
+			size_t                 I     ,
+			size_t                 T     ,
+			vector<double>&        x     ,
+			vector<size_t>&        y     )
+			:
+			dismod_at::approx_mixed(4, T) , // n_fixed = 4, n_random = T
+			K_(K)            ,
+			I_(I)            ,
+			T_(T)            ,
+			x_(x)            ,
+			y_(y)
+		{	// set M_
+			M_.resize(I);
+			for(size_t i = 0; i < I; i++)
+			{	M_[i] = 0;
+				for(size_t t = 0; t < T; t++)
+					M_[i] = std::max( M_[i], y[ i * T + t] );
+			}
+		}
+		// implementaion of joint_like
+		template <class Float>
+		vector<Float> implement_joint_like(
+			const vector<Float>&  theta  ,
+			const vector<Float>&  u      )
+		{	vector<Float> vec(1);
+
+
+
 
 }
 bool capture_xam(void)
@@ -204,7 +266,8 @@ bool capture_xam(void)
 	theta[3] = - 1.00; // log of variance of random effects
 
 	// set x, y
-	vector<double> x(I), y(I * T);
+	vector<double> x(I);
+	vector<size_t> y(I * T);
 	simulate_xy(I, T, theta, x, y);
 
 	return ok;
