@@ -27,7 +27,7 @@ $head Notation$$
 $table
 $latex T$$     $cnext number of sampling times
 $rnext
-$latex R$$     $cnext number of sampling locations
+$latex I$$     $cnext number of sampling locations
 $rnext
 $latex N_i$$   $cnext size of the population at the $th i$$ location
 $rnext
@@ -37,8 +37,7 @@ $rnext
 $latex p_{i,t}$$ $cnext
 	probability of capture at location $latex i$$ and time $latex t$$
 $rnext
-$latex \theta_2$$ $cnext
-	mean for $latex N_i$$ given $latex \theta$$
+$latex u_t$$   $cnext random effect for each sampling time
 $rnext
 $latex x_i$$   $cnext covariate value for each location
 $rnext
@@ -46,7 +45,11 @@ $latex \theta_0$$ $cnext constant multiplier in covariate relation
 $rnext
 $latex \theta_1$$ $cnext linear multiplier in covariate relation
 $rnext
-$latex u_t$$     $cnext extra random effect for each sampling time
+$latex \theta_2$$ $cnext
+	log of mean for $latex N_i$$ given $latex \theta$$
+$rnext
+$latex \theta_3$$ $cnext
+	log of the variance of the random effects $latex u_t$$
 $tend
 
 $head Data Probability$$
@@ -78,9 +81,9 @@ $head Population Probability$$
 We use a Poisson distribution to model the
 probability of $latex N_i$$ given $latex \theta_2$$; i.e.,
 $latex \[
-\B{P} ( N_i | \theta_2 )
+\B{P} [ N_i | \exp( \theta_2 ) ]
 =
-\theta_2^{N(i)} \frac{ \exp( - \theta_2 ) }{ N_i ! }
+\exp( \theta_2 )^{N(i)} \frac{ \exp[ - \exp( \theta_2 ) ] }{ N_i ! }
 \] $$
 Furthermore, we assume that this probability
 is independent for each $latex i$$.
@@ -114,7 +117,7 @@ $latex \[
 S_{i,t} ( y, \theta , u )
 =
 \sum_{k=M(i)}^{+\infty}
-\theta_2^k \frac{ \exp( - \theta_2 ) }{ k ! }
+\exp( \theta_2 )^k \frac{ \exp[ - \exp( \theta_2 ) ] }{ k ! }
 \left( \begin{array}{c} k \\ y_{i,t} \end{array} \right)
 	p_{i,t} ( \theta , u)^{y(i,t)}
 	\left( 1 - p_{i,t}( \theta , u)^{y(i,t)} \right)
@@ -124,7 +127,7 @@ that depends on the fixed and random effects, is
 $latex \[
 \B{p}( y | \theta , u )
 =
-\sum_{i=0}^{R-1} \sum_{t=0}^{T-1} S_{i,t} ( y, \theta , u )
+\sum_{i=0}^{I-1} \sum_{t=0}^{T-1} S_{i,t} ( y, \theta , u )
 \] $$
 
 $head p(theta)$$
@@ -141,4 +144,68 @@ from Spatially Replicated Counts.
 $$
 
 $end
-po
+-----------------------------------------------------------------------------
+*/
+namespace {
+	using CppAD::vector;
+
+	void simulate_xy(
+		size_t                 I     ,
+		size_t                 T     ,
+		const vector<double>&  theta ,
+		vector<double>&        x     ,
+		vector<double>&        y     )
+	{	assert( theta.size() == 4 );
+		assert( x.size() == I );
+		assert( y.size() == I * T );
+		// random number generator
+		gsl_rng* rng = get_gsl_rng();
+		//
+		// simulate population sizes
+		vector<double> N(I);
+		double mu =  std::exp( theta[2] );
+		for(size_t i = 0; i < I; i++)
+			N[i] = gsl_ran_poisson(gsl_rng, mu );
+		//
+		// simulate random effects
+		vector<double> u(T);
+		double sigma = std::sqrt( std::exp( theta[3] ) );
+		for(size_t t = 0; t < T; t++)
+			u[t] = gsl_ran_gaussian(gsl_rng, sigma);
+		//
+		// simulate covariate values
+		for(size_t i = 0; i < I; i++)
+			x[i] = gsl_ran_gaussian(gsl_rng, sigma);
+		//
+		// simulate data
+		for(size_t i = 0; i < I; i++)
+		{	for(size_t t = 0; t < T; t++)
+			{	// probability of capture
+				double ex = std::exp( - u[t] - theta[0] - theta[1] * x[i] );
+				double p = 1.0 /( 1.0  + ex );
+				y[ i * T + t ] = gsl_ran_binomial(gsl_rng, p, N[i]);
+			}
+		}
+		//
+		return;
+	}
+
+}
+bool capture(void)
+{	bool ok = true;
+
+	// simulation parameters
+	size_t I = 10;
+	size_t T = 10;
+	const vector<double> theta(4);
+	theta[0] =   0.75; // constant term in covariate model
+	theta[1] =   1.00; // linear term in covariate model
+	theta[2] =   2.50; // log of mean population size
+	theta[3] = - 1.00; // log of variance of random effects
+
+	// set x, y
+	vector<double> x(I), y(I * T);
+	simulate_xy(I, T, theta, x, y);
+
+	return ok;
+}
