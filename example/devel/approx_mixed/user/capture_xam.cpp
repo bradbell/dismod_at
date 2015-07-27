@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin capture.cpp$$
+$begin capture_xam.cpp$$
 $spell
 	Biometrics
 	Royle
@@ -191,7 +191,7 @@ namespace {
 	}
 
 }
-bool capture(void)
+bool capture_xam(void)
 {	bool ok = true;
 
 	// simulation parameters
