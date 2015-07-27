@@ -14,13 +14,10 @@ $section Approx_mixed User Examples$$
 
 $childtable%
 	example/devel/approx_mixed/user/optimize_random_xam.cpp%
+	example/devel/approx_mixed/user/optimize_fixed_xam.cpp%
 	example/devel/approx_mixed/user/no_random_xam.cpp%
 	example/devel/approx_mixed/user/approx_constraint_xam.cpp%
 	example/devel/approx_mixed/user/capture.cpp
 %$$
-
-$table
-$cref optimize_fixed_xam.cpp$$ $cnext $title optimize_fixed_xam.cpp$$
-$tend
 
 $end

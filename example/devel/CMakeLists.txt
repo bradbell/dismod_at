@@ -48,12 +48,12 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	approx_mixed/ipopt_xam_run.cpp
 	approx_mixed/private/laplace_eval_xam.cpp
 	approx_mixed/private/laplace_beta_xam.cpp
-	approx_mixed/public/optimize_fixed_xam.cpp
 	approx_mixed/private/prior_eval_xam.cpp
 	approx_mixed/private/prior_jac_xam.cpp
 	approx_mixed/private/prior_hes_xam.cpp
 	approx_mixed/user/approx_constraint_xam.cpp
 	approx_mixed/user/no_random_xam.cpp
+	approx_mixed/user/optimize_fixed_xam.cpp
 	approx_mixed/user/optimize_random_xam.cpp
 
 	model/avg_no_ode_xam.cpp

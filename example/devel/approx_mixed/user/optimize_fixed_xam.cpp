@@ -49,7 +49,7 @@ $latex \[
 \] $$
 
 $code
-$verbatim%example/devel/approx_mixed/public/optimize_fixed_xam.cpp
+$verbatim%example/devel/approx_mixed/user/optimize_fixed_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
