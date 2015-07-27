@@ -72,14 +72,6 @@ namespace {
 			z_(z)
 		{	assert(z.size() == n_fixed); }
 	private:
-		// implemtation joint likelihood for empty random effect vector
-		template <class Float>
-		vector<Float> implement_joint_like(
-			const vector<Float>& theta  ,
-			const vector<Float>& u      )
-		{	vector<Float> vec(0);
-			return vec;
-		}
 		// implementation of prior_like as p(z|theta) * p(theta)
 		template <class Float>
 		vector<Float> implement_prior_like(
@@ -110,7 +102,7 @@ namespace {
 		virtual vector<a5_double> joint_like(
 			const vector<a5_double>& fixed_vec  ,
 			const vector<a5_double>& random_vec )
-		{	return implement_joint_like(fixed_vec, random_vec); }
+		{	return vector<a5_double>(0); } // empty vector
 		//
 		virtual vector<a1_double> prior_like(
 			const vector<a1_double>& fixed_vec  )

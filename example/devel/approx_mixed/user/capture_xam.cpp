@@ -34,7 +34,8 @@ $rnext
 $latex N_i$$   $cnext size of the population at $th i$$ location
 $rnext
 $latex y_{i,t}$$ $cnext
-	measured of number of captures at location $latex i$$ and time $latex t$$
+	number of captures at location $latex i$$ and time $latex t$$
+	($latex y_{i,t} < K$$)
 $rnext
 $latex M_i$$   $cnext
 	maximum of the measured number of captures at $th i$$ location
@@ -121,24 +122,30 @@ We define a probability of capture function for each location and time by
 $latex \[
 p_{i,t} ( \theta , u ) =  [ 1 + \exp( - u_t - \theta_0 - \theta_1 x_i ) ]^{-1}
 \] $$
-We do not know the population at each location,
-so we define the population summed probability
-function for each location and time by
+The joint probability of $latex N_i$$, and $latex y_{i, t}$$ given
+$latex \theta$$, and $latex u$$ is
 $latex \[
-S_{i,t} ( y, \theta , u )
+J_{i,t} ( N_i, y_{i,t} , \theta , u )
 =
-\sum_{k=M(i)}^{K-1}
-\exp( \theta_2 )^k \frac{ \exp[ - \exp( \theta_2 ) ] }{ k ! }
-\left( \begin{array}{c} k \\ y_{i,t} \end{array} \right)
+\exp( \theta_2 )^{N(i)} \frac{ \exp[ - \exp( \theta_2 ) ] }{ {N(i)} ! }
+\left( \begin{array}{c} {N(i)} \\ y_{i,t} \end{array} \right)
 	p_{i,t} ( \theta , u)^{y(i,t)}
 	\left( 1 - p_{i,t}( \theta , u)^{y(i,t)} \right)
+\] $$
+We do not know the population at each location $latex N_i$$
+so we define the population summed probability
+function for each location by
+$latex \[
+S_i ( y, \theta , u )
+=
+\sum_{k=M(i)}^{K-1} \prod_{t=0}^{T-1} J_{i,t} ( k , y_{i,t}, \theta , u )
 \] $$
 Our model for the density of the data,
 that depends on the fixed and random effects, is
 $latex \[
 \B{p}( y | \theta , u )
 =
-\sum_{i=0}^{I-1} \sum_{t=0}^{T-1} S_{i,t} ( y, \theta , u )
+\prod_{i=0}^{I-1} S_i ( y, \theta , u )
 \] $$
 
 $head p(theta)$$
@@ -160,6 +167,7 @@ $end
 namespace {
 	using CppAD::vector;
 	using std::exp;
+	using std::log;
 
 	// simulate covariates, x, and data, y
 	void simulate_xy(
@@ -240,6 +248,7 @@ namespace {
 			{	M_[i] = 0;
 				for(size_t t = 0; t < T; t++)
 					M_[i] = std::max( M_[i], y[ i * T + t] );
+				assert( M_[i] < K );
 			}
 		}
 		// implementaion of joint_like
@@ -248,8 +257,58 @@ namespace {
 			const vector<Float>&  theta  ,
 			const vector<Float>&  u      )
 		{	vector<Float> vec(1);
-
-
+			//
+			double lambda  = exp( theta[2] );
+			//
+			// log of k !
+			assert( K >= 2 );
+			vector<double> logfac(K);
+			logfac[0]  = 0.0;
+			logfac[1]  = 0.0;
+			for(size_t k = 2; k < K; k++)
+				logfac[k] = log( double(k) ) + logfac(k-1);
+			//
+			// p_{i,t}
+			vector<Float> p(I_ * T_);
+			for(size_t i = 0; i < I; i++)
+			{	for(size_t t = 0; t < T; t++)
+				{	Float ex     = exp( - u[t] - theta[0] - theta[1] * xi );
+					p[i * T + t] = Float(1.0) / (Float(1.0) + ex );
+				}
+			}
+			//
+			// loop over locations
+			Float ret_val = 0.0;
+			for(size_t i = 0; i < I; i++)
+			{	Float xi = float( x[i] );
+				//
+				// initialize sum that defines S_i
+				Float Si = Float(0.0);
+				for(size_t k = M_[i]; k < K_; k++)
+				{	// initialize summation of log( J_{it} )
+					Float sumlog = Float(T) * theta[2] * Float(k);
+					sumlog      -= Float(T) * exp( theta[2] );
+					//
+					// now compute terms that depend on t
+					for(size_t t = 0; t < T; t++)
+					{	size_t yit = y[ i * T + t ];
+						Float  pit = p[ i * T + t ];
+						//
+						// log [ (k choose yit) / k ! ]
+						double term_1 = - logfac[yit] - logfac[k - yit];
+						// log [ pit^yit ]
+						double term_2 = yit * log(pit) +
+						// log [ 1 - pit^yit ]
+						double term_3 = log(1.0 - exp( term_1 ) );
+						//
+						sumlog       += term_1 + term_2 + term_3
+					}
+					Si += exp( sumlog );
+				}
+				vec[0] += log( Si );
+			}
+			return vec;
+		}
 
 
 }
