@@ -49,9 +49,6 @@ $head ...$$
 Other arguments to the derived class constructor
 (that are not used by the base class constructor).
 
-$children%
-	example/devel/approx_mixed/public/approx_derived_xam.cpp
-%$$
 $head Example$$
 The file $cref approx_derived_xam.cpp$$ contains an example
 that uses this derived class.

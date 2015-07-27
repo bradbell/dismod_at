@@ -18,7 +18,7 @@ $$
 $section C++ approx_derived: Example and Test$$
 
 $code
-$verbatim%example/devel/approx_mixed/public/approx_derived_xam.cpp
+$verbatim%example/devel/approx_mixed/user/approx_derived_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
