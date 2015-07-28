@@ -315,11 +315,13 @@ public:
 					//
 					sumlog       += term_1 + term_2 + term_3;
 				}
+				assert( CppAD::abs( sumlog ) <= Float(100.0) );
 				Si += exp( sumlog );
 			}
 			vec[0] += log( Si );
 		}
 		vec[0] = - vec[0];
+		std::cout << "vec = " << vec << std::endl;
 		return vec;
 	}
 // ------------------------------------------------------------------------
@@ -350,7 +352,6 @@ public:
 
 bool capture_xam(void)
 {	bool ok = true;
-	double inf = std::numeric_limits<double>::infinity();
 	size_t n_fixed = 4;
 	size_t random_seed = dismod_at::new_gsl_rng(0);
 	std::cout << "random_seed = " << random_seed << std::endl;
@@ -372,7 +373,7 @@ bool capture_xam(void)
 	// practical bound for population size is 5 times mean
 	double lambda = exp( theta[2] );
 	double sigma  = std::sqrt( lambda );
-	size_t K      = size_t ( lambda + 3.0 * sigma );
+	size_t K      = size_t ( lambda + 2.0 * sigma );
 	assert( K >= 2 );
 
 	// create derived object
@@ -381,7 +382,7 @@ bool capture_xam(void)
 	// initialize point to start optimization at
 	vector<double> theta_in( n_fixed ), u_in(T);
 	for(size_t j = 0; j < n_fixed; j++)
-		theta_in[j] = 0.0;
+		theta_in[j] = theta[j] / 2.0;
 	for(size_t t = 0; t < T; t++)
 		u_in[t] = 0.0;
 	approx_object.initialize(theta_in, u_in);
@@ -390,8 +391,8 @@ bool capture_xam(void)
 	vector<double> constraint_lower, constraint_upper;
 	vector<double> theta_lower(n_fixed), theta_upper(n_fixed);
 	for(size_t j = 0; j < n_fixed; j++)
-	{	theta_lower[j] = -inf;
-		theta_upper[j] = +inf;
+	{	theta_lower[j] = -5.0;
+		theta_upper[j] = +5.0;
 	}
 
 

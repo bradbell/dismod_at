@@ -719,23 +719,22 @@ bool ipopt_fixed::eval_f(
 			fixed_tmp_, fixed_tmp_, random_cur_
 		);
 	}
-	//
-	// prior part of objective
-	// (2DO: cache prior_vec_tmp_ for eval_g with same x)
-	prior_vec_tmp_ = approx_object_.prior_eval(fixed_tmp_);
-	//
-	// only include smooth part of prior in objective
-	obj_value = Number( H + prior_vec_tmp_[0] );
-	//
-	// use contraints to represent absolute value part
-	for(size_t j = 0; j < prior_n_abs_; j++)
-		obj_value += x[n_fixed_ + j];
-	//
-	// compute the true objective (without constraints)
-	double obj_tmp = H + prior_vec_tmp_[0];
-	for(size_t j = 0; j < prior_n_abs_; j++)
-		obj_tmp += CppAD::abs( prior_vec_tmp_[1+j] );
-	//
+	obj_value = Number(H);
+	if( prior_vec_tmp_.size() == 0 )
+		assert( approx_object_.prior_eval(fixed_tmp_).size() == 0 );
+	else
+	{
+		// prior part of objective
+		// (2DO: cache prior_vec_tmp_ for eval_g with same x)
+		prior_vec_tmp_ = approx_object_.prior_eval(fixed_tmp_);
+		//
+		// only include smooth part of prior in objective
+		obj_value += Number( prior_vec_tmp_[0] );
+		//
+		// use contraints to represent absolute value part
+		for(size_t j = 0; j < prior_n_abs_; j++)
+			obj_value += x[n_fixed_ + j];
+	}
 	return true;
 }
 /*
