@@ -68,6 +68,7 @@ namespace {
 	private:
 		size_t                n_fixed_;
 		const vector<double>& y_;
+	// ----------------------------------------------------------------------
 	public:
 		// constructor
 		approx_derived(
@@ -78,6 +79,7 @@ namespace {
 			n_fixed_(n_fixed)                          ,
 			y_(y)
 		{	assert( n_fixed == 2); }
+	// ----------------------------------------------------------------------
 	private:
 		// implementation of joint_like
 		template <class Float>
@@ -127,8 +129,8 @@ namespace {
 			}
 			return vec;
 		}
+	// ----------------------------------------------------------------------
 	public:
-		// ------------------------------------------------------------------
 		// User defined virtual functions
 		virtual vector<a5_double> joint_like(
 			const vector<a5_double>& fixed_vec  ,

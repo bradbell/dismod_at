@@ -52,6 +52,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	approx_mixed/private/prior_hes_xam.cpp
 	approx_mixed/user/approx_constraint_xam.cpp
 	approx_mixed/user/approx_derived_xam.cpp
+	approx_mixed/user/capture_xam.cpp
 	approx_mixed/user/no_random_xam.cpp
 	approx_mixed/user/optimize_fixed_xam.cpp
 	approx_mixed/user/optimize_random_xam.cpp

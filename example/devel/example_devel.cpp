@@ -31,6 +31,7 @@ $end
 // approx_mixed subdirectory
 extern bool approx_constraint_xam(void);
 extern bool approx_derived_xam(void);
+extern bool capture_xam(void);
 extern bool constraint_eval_xam(void);
 extern bool constraint_jac_xam(void);
 extern bool constraint_hes_xam(void);
@@ -144,6 +145,7 @@ int main(void)
 	// approx_mixed subdirectory
 	RUN(approx_constraint_xam);
 	RUN(approx_derived_xam);
+	// RUN(capture_xam);
 	RUN(constraint_eval_xam);
 	RUN(constraint_jac_xam);
 	RUN(constraint_hes_xam);
