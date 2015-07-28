@@ -638,7 +638,9 @@ bool ipopt_fixed::get_starting_point(
 	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ + n_constraint_ );
 
 	// prior negative log-likelihood at the initial fixed effects vector
-	if( prior_vec_tmp_.size() > 0 )
+	if( prior_vec_tmp_.size() == 0 )
+		assert( approx_object_.prior_eval(fixed_in_).size() == 0 );
+	else
 	{	prior_vec_tmp_ = approx_object_.prior_eval(fixed_in_);
 		assert( prior_vec_tmp_.size() == 1 + prior_n_abs_ );
 	}
@@ -1381,14 +1383,18 @@ void ipopt_fixed::finalize_solution(
 	}
 	//
 	// prior negative log-likelihood at the final fixed effects vector
-	prior_vec_tmp_ = approx_object_.prior_eval(fixed_opt_);
-	assert( prior_vec_tmp_.size() == 1 + prior_n_abs_ );
+	if( prior_vec_tmp_.size() == 0 )
+		assert( approx_object_.prior_eval(fixed_opt_).size() == 0 );
+	else
+	{	prior_vec_tmp_ = approx_object_.prior_eval(fixed_opt_);
+		assert( prior_vec_tmp_.size() == 1 + prior_n_abs_ );
 
-	// check constraints corresponding to l1 terms
-	for(size_t j = 0; j < prior_n_abs_; j++)
-	{	double check = double( x[n_fixed_ + j] );
-		ok &= check - prior_vec_tmp_[j + 1] + 1e2 * tol >= 0;
-		ok &= check + prior_vec_tmp_[j + 1] + 1e2 * tol >= 0;
+		// check constraints corresponding to l1 terms
+		for(size_t j = 0; j < prior_n_abs_; j++)
+		{	double check = double( x[n_fixed_ + j] );
+			ok &= check - prior_vec_tmp_[j + 1] + 1e2 * tol >= 0;
+			ok &= check + prior_vec_tmp_[j + 1] + 1e2 * tol >= 0;
+		}
 	}
 	//
 	// explicit constraints at the final fixed effects vector
