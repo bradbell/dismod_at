@@ -315,13 +315,11 @@ public:
 					//
 					sumlog       += term_1 + term_2 + term_3;
 				}
-				assert( CppAD::abs( sumlog ) <= Float(100.0) );
 				Si += exp( sumlog );
 			}
 			vec[0] += log( Si );
 		}
 		vec[0] = - vec[0];
-		std::cout << "vec = " << vec << std::endl;
 		return vec;
 	}
 // ------------------------------------------------------------------------
@@ -354,26 +352,25 @@ bool capture_xam(void)
 {	bool ok = true;
 	size_t n_fixed = 4;
 	size_t random_seed = dismod_at::new_gsl_rng(0);
-	std::cout << "random_seed = " << random_seed << std::endl;
 
 	// simulation parameters
-	size_t I = 1;
+	size_t I = 50;
 	size_t T = 1;
-	vector<double> theta(n_fixed);
-	theta[0] =   0.75; // constant term in covariate model
-	theta[1] =   1.00; // linear term in covariate model
-	theta[2] =   2.50; // log of mean population size
-	theta[3] = - 1.00; // log of variance of random effects
+	vector<double> theta_sim(n_fixed);
+	theta_sim[0] =   0.75; // constant term in covariate model
+	theta_sim[1] =   1.00; // linear term in covariate model
+	theta_sim[2] =   2.50; // log of mean population size
+	theta_sim[3] = - 1.00; // log of variance of random effects
 
 	// set x, y
 	vector<double> x(I);
 	vector<size_t> y(I * T);
-	simulate_xy(I, T, theta, x, y);
+	simulate_xy(I, T, theta_sim, x, y);
 
 	// practical bound for population size is 5 times mean
-	double lambda = exp( theta[2] );
+	double lambda = exp( theta_sim[2] );
 	double sigma  = std::sqrt( lambda );
-	size_t K      = size_t ( lambda + 2.0 * sigma );
+	size_t K      = size_t ( lambda + 4.0 * sigma );
 	assert( K >= 2 );
 
 	// create derived object
@@ -382,7 +379,7 @@ bool capture_xam(void)
 	// initialize point to start optimization at
 	vector<double> theta_in( n_fixed ), u_in(T);
 	for(size_t j = 0; j < n_fixed; j++)
-		theta_in[j] = theta[j] / 2.0;
+		theta_in[j] = theta_sim[j];
 	for(size_t t = 0; t < T; t++)
 		u_in[t] = 0.0;
 	approx_object.initialize(theta_in, u_in);
@@ -391,14 +388,16 @@ bool capture_xam(void)
 	vector<double> constraint_lower, constraint_upper;
 	vector<double> theta_lower(n_fixed), theta_upper(n_fixed);
 	for(size_t j = 0; j < n_fixed; j++)
-	{	theta_lower[j] = -5.0;
-		theta_upper[j] = +5.0;
+	{	theta_lower[j] = theta_sim[j];
+		theta_upper[j] = theta_sim[j];
 	}
+	theta_lower[2] = -5.0;
+	theta_upper[2] = 5.0;
 
 
 	// optimize the fixed effects
 	std::string options =
-		"Integer print_level               5\n"
+		"Integer print_level               0\n"
 		"String  sb                        yes\n"
 		"String  derivative_test           second-order\n"
 		"String  derivative_test_print_all yes\n"
@@ -413,6 +412,8 @@ bool capture_xam(void)
 		theta_in,
 		u_in
 	);
+	for(size_t j = 0; j < n_fixed; j++)
+		std::cout << j << ", " << theta_sim[j] << " , " << theta_out[j] << std::endl;
 	//
 	if( ! ok )
 		std::cout << "capture_xam:: random_seed = " << random_seed << std::endl;
