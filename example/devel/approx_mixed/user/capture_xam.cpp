@@ -75,11 +75,11 @@ Section 2.4 of the reference below suggest a covariate
 model for the probability of capture.
 We add random effects to this model as follows:
 $latex \[
-	\R{logit} ( p_{i,t} ) = u_t + \theta_0 + \theta_1 x_i
+	\R{logit} ( p_{i,t} ) = - u_t - \theta_0 - \theta_1 x_i
 \] $$
 It follows that
 $latex \[
-	p_{i,t} = [ 1 + \exp( - u_t - \theta_0 - \theta_1 x_i ) ]^{-1}
+	p_{i,t} = [ 1 + \exp(  u_t + \theta_0 + \theta_1 x_i ) ]^{-1}
 \] $$
 Note that the covariate vector $latex x$$ is assumed to be known.
 
@@ -120,7 +120,7 @@ $latex \[
 \] $$
 We define a probability of capture function for each location and time by
 $latex \[
-p_{i,t} ( \theta , u ) =  [ 1 + \exp( - u_t - \theta_0 - \theta_1 x_i ) ]^{-1}
+p_{i,t} ( \theta , u ) =  [ 1 + \exp( u_t + \theta_0 + \theta_1 x_i ) ]^{-1}
 \] $$
 The joint probability of $latex N_i$$, and $latex y_{i, t}$$ given
 $latex \theta$$, and $latex u$$ is
@@ -209,7 +209,7 @@ void simulate_xy(
 	for(size_t i = 0; i < I; i++)
 	{	for(size_t t = 0; t < T; t++)
 		{	// probability of capture
-			double ex = exp( - u[t] - theta[0] - theta[1] * x[i] );
+			double ex = exp( u[t] + theta[0] + theta[1] * x[i] );
 			double p = 1.0 /( 1.0  + ex );
 			y[ i * T + t ] = gsl_ran_binomial(rng, p, N[i]);
 		}
@@ -228,7 +228,7 @@ private:
 	const vector<size_t>& y_; // reference to data values
 	// -----------------------------------------------------------------
 	// set by constructor and then effectively const
-	vector<size_t>        M_; // max number of captures at each location
+	vector<size_t>        M_;      // max number of captures at each location
 	vector<double>        logfac_; // logfac_[k] = log( k! )
 // ------------------------------------------------------------------------
 public:
@@ -269,6 +269,7 @@ public:
 	{	vector<Float> vec(1);
 		Float pi2( 8.0 * std::atan(1.0) );
 		Float two( 2.0 );
+		Float eps( 1e3 * std::numeric_limits<double>::epsilon() );
 		//  ------------------------------------------------------------
 		// log [ p(u | theta) ]
 		//  ------------------------------------------------------------
@@ -287,8 +288,8 @@ public:
 		vector<Float> p(I_ * T_);
 		for(size_t i = 0; i < I_; i++)
 		{	for(size_t t = 0; t < T_; t++)
-			{	Float ex     = exp( - u[t] - theta[0] - theta[1] * x_[i] );
-				p[i * T_ + t] = Float(1.0) / (Float(1.0) + ex );
+			{	Float ex     = exp( u[t] + theta[0] + theta[1] * x_[i] );
+				p[i * T_ + t] = Float(1.0) / (Float(1.0) + ex + eps );
 			}
 		}
 		//
@@ -311,7 +312,7 @@ public:
 					// log [ pit^yit ]
 					Float term_2 = Float( yit ) * log(pit);
 					// log [ 1 - pit^yit ]
-					Float term_3 = log(Float(1.0) - exp( term_1 ) );
+					Float term_3 = log(Float(1.0) - exp( term_2 ) + eps );
 					//
 					sumlog       += term_1 + term_2 + term_3;
 				}
@@ -354,13 +355,13 @@ bool capture_xam(void)
 	size_t random_seed = dismod_at::new_gsl_rng(0);
 
 	// simulation parameters
-	size_t I = 50;
-	size_t T = 1;
+	size_t I = 5;
+	size_t T = 5;
 	vector<double> theta_sim(n_fixed);
-	theta_sim[0] =   0.75; // constant term in covariate model
-	theta_sim[1] =   1.00; // linear term in covariate model
-	theta_sim[2] =   2.50; // log of mean population size
-	theta_sim[3] = - 1.00; // log of variance of random effects
+	theta_sim[0] =   1.00;      // constant term in covariate model
+	theta_sim[1] =   0.00;      // linear term in covariate model
+	theta_sim[2] =   log(5.0);  // log of mean population size
+	theta_sim[3] =   log(0.25); // log of variance of random effects
 
 	// set x, y
 	vector<double> x(I);
@@ -370,7 +371,7 @@ bool capture_xam(void)
 	// practical bound for population size is 5 times mean
 	double lambda = exp( theta_sim[2] );
 	double sigma  = std::sqrt( lambda );
-	size_t K      = size_t ( lambda + 4.0 * sigma );
+	size_t K      = size_t ( lambda + 3.0 * sigma );
 	assert( K >= 2 );
 
 	// create derived object
@@ -391,8 +392,8 @@ bool capture_xam(void)
 	{	theta_lower[j] = theta_sim[j];
 		theta_upper[j] = theta_sim[j];
 	}
-	theta_lower[2] = -5.0;
-	theta_upper[2] = 5.0;
+	theta_lower[0] = 0.0;
+	theta_upper[0] = 2.0;
 
 
 	// optimize the fixed effects
