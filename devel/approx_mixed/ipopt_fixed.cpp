@@ -316,8 +316,10 @@ approx_object_     ( approx_object    )
 	// -----------------------------------------------------------------------
 	// prior negative log-likelihood at the initial fixed effects vector
 	d_vector prior_vec = approx_object_.prior_eval(fixed_in);
-	assert( prior_vec.size() > 0 );
-	prior_n_abs_ = prior_vec.size() - 1;
+	if( prior_vec.size() == 0 )
+		prior_n_abs_ = 0;
+	else
+		prior_n_abs_ = prior_vec.size() - 1;
 	// -----------------------------------------------------------------------
 	// set prior_jac_row_, prior_jac_col_, prior_jac_val_
 	// constraint_jac_row_, constraint_jac_col_, constraint_jac_val_
@@ -406,11 +408,13 @@ approx_object_     ( approx_object    )
 	// -----------------------------------------------------------------------
 	fixed_tmp_.resize( n_fixed_ );
 	random_tmp_.resize( n_random_ );
-	prior_vec_tmp_.resize( prior_n_abs_ + 1 );
 	c_vec_tmp_.resize( n_constraint_ );
 	H_beta_tmp_.resize( n_fixed_ );
 	w_prior_tmp_.resize( prior_n_abs_ + 1 );
 	w_constraint_tmp_.resize( n_constraint_ );
+	assert( prior_vec_tmp_.size() == 0 );
+	if( prior_vec.size() > 0 )
+		prior_vec_tmp_.resize( prior_n_abs_ + 1 );
 	// -----------------------------------------------------------------------
 }
 ipopt_fixed::~ipopt_fixed(void)
@@ -634,8 +638,10 @@ bool ipopt_fixed::get_starting_point(
 	assert( m >= 0 && size_t(m) == 2 * prior_n_abs_ + n_constraint_ );
 
 	// prior negative log-likelihood at the initial fixed effects vector
-	prior_vec_tmp_ = approx_object_.prior_eval(fixed_in_);
-	assert( prior_vec_tmp_.size() == 1 + prior_n_abs_ );
+	if( prior_vec_tmp_.size() > 0 )
+	{	prior_vec_tmp_ = approx_object_.prior_eval(fixed_in_);
+		assert( prior_vec_tmp_.size() == 1 + prior_n_abs_ );
+	}
 
 	for(size_t j = 0; j < n_fixed_; j++)
 		x[j] = fixed_in_[j];

@@ -350,6 +350,7 @@ public:
 
 bool capture_xam(void)
 {	bool ok = true;
+	double inf = std::numeric_limits<double>::infinity();
 	size_t n_fixed = 4;
 	size_t random_seed = dismod_at::new_gsl_rng(0);
 	std::cout << "random_seed = " << random_seed << std::endl;
@@ -386,8 +387,12 @@ bool capture_xam(void)
 	approx_object.initialize(theta_in, u_in);
 
 	// lower and upper limits
-	vector<double> theta_lower, theta_upper;
 	vector<double> constraint_lower, constraint_upper;
+	vector<double> theta_lower(n_fixed), theta_upper(n_fixed);
+	for(size_t j = 0; j < n_fixed; j++)
+	{	theta_lower[j] = -inf;
+		theta_upper[j] = +inf;
+	}
 
 
 	// optimize the fixed effects

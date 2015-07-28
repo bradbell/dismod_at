@@ -99,7 +99,8 @@ void approx_mixed::prior_jac(
 	assert( row_out.size() == val_out.size() );
 	//
 	if( prior_jac_row_.size() == 0 )
-	{	assert( prior_jac_col_.size() == 0 );
+	{	// sparse Jacobian has no rows
+		assert( prior_jac_col_.size() == 0 );
 		assert( row_out.size() == 0 );
 		val_out.resize(0);
 		return;
