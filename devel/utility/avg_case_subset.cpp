@@ -131,6 +131,13 @@ $codei%
 where $codei%max_difference(%covariate_id%)%$$ is the
 maximum difference for the corresponding $icode covariate_id$$.
 
+$childtable%example/devel/utility/avg_case_subset_xam.cpp
+%$$
+$head Example$$
+The file $cref avg_case_subset_xam.cpp$$ contains
+and example and test of $code avg_case_subset$$.
+It returns true for success and false for failure.
+
 $end
 */
 

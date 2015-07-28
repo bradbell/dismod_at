@@ -42,7 +42,7 @@ $latex \[
 \] $$
 
 $code
-$verbatim%example/devel/approx_mixed/user/optimize_fixed_xam.cpp
+$verbatim%example/devel/approx_mixed/user/no_random_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 

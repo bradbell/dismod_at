@@ -239,6 +239,13 @@
 # following keys (and corresponding values) are not present:
 # $code density$$, $code meas_value$$, $code meas_std$$.
 #
+#
+# $childtable%example/table/create_database.py
+# %$$
+# $head Example$$
+# The file $cref create_database.py$$ contains
+# and example and test of $code create_database$$.
+#
 # $end
 def create_database(
 	file_name,

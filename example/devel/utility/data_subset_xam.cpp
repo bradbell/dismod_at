@@ -18,7 +18,7 @@ $$
 $section C++ data_subset: Example and Test$$
 
 $code
-$verbatim%example/devel/table/data_subset_xam.cpp%
+$verbatim%example/devel/utility/data_subset_xam.cpp%
 	0%// BEGIN C++%// END C++%1%$$
 $$
 
