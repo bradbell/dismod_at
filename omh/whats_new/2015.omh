@@ -34,6 +34,7 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 07-28$$
+$list number$$
 Some example were missing, or were including the wrong source code.
 This has been fixed in the following user examples:
 $cref no_random_xam.cpp$$,
@@ -41,6 +42,10 @@ $cref create_database.py$$.
 It was also fixed for the following developer examples:
 $cref avg_case_subset_xam.cpp$$,
 $cref data_subset_xam.cpp$$.
+$lnext
+Handle the case where the
+$cref/prior_like/approx_mixed_prior_like/$$ is empty.
+$lend
 
 $head 07-27$$
 Grouped all the user level $cref approx_mixed$$ examples in the
