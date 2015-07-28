@@ -58,6 +58,8 @@ $cref/negative log-density vector
 /$$
 corresponding to the prior negative log-likelihood
 $cref/g(theta)/approx_mixed_theory/Prior Negative Log-Likelihood, g(theta)/$$.
+In the case where there is no prior, the vector $icode vec$$
+should be empty; i.e., $icode%vec%.size() == 0%$$.
 
 $head Example$$
 The file $cref approx_derived_xam.cpp$$ contains an example

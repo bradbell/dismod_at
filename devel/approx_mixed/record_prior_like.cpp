@@ -18,6 +18,7 @@ $spell
 	const
 	Cpp
 	Jacobian
+	var
 $$
 
 $section approx_mixed: Record Prior Negative Log-Likelihood For Fixed Effects$$
@@ -39,13 +40,21 @@ It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
 vector $latex \theta$$ at which the recording is made.
 
+$head record_prior_like_done_$$
+When this function is called, this member variable must be false.
+Upon return it is true.
+
 $head prior_like_$$
-The input value of the member variable
+On input, the member variable
 $codei%
 	CppAD::ADFun<double> prior_like_
 %$$
-does not matter.
-Upon return it contains the corresponding recording for the
+must be empty; i.e., $code prior_like_.size_var() == 0$$.
+If the return value for
+$cref/prior_like/approx_mixed_prior_like/$$ is empty,
+$code prior_like_$$ is not modified.
+Otherwise,
+upon return it contains the corresponding recording for the
 $cref/prior_like/approx_mixed_prior_like/$$.
 Note that the function result is the
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
@@ -96,6 +105,12 @@ void approx_mixed::record_prior_like(const d_vector& fixed_vec  )
 
 	// compute prior_like
 	a1d_vector a1_vec = prior_like(a1_theta);
+	if( a1_vec.size() == 0 )
+	{	CppAD::AD<double>::abort_recording();
+		record_prior_like_done_ = true;
+		assert( prior_like_.size_var() == 0 );
+		return;
+	}
 
 	// save the recording
 	prior_like_.Dependent(a1_theta, a1_vec);

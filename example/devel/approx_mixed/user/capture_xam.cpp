@@ -307,7 +307,7 @@ public:
 					Float  pit = p[ i * T_ + t ];
 					//
 					// log [ (k choose yit) / k ! ]
-					Float term_1 = - Float( logfac_[yit] - logfac_[k - yit] );
+					Float term_1 = - Float( logfac_[yit] + logfac_[k - yit] );
 					// log [ pit^yit ]
 					Float term_2 = Float( yit ) * log(pit);
 					// log [ 1 - pit^yit ]
@@ -351,10 +351,12 @@ public:
 bool capture_xam(void)
 {	bool ok = true;
 	size_t n_fixed = 4;
+	size_t random_seed = dismod_at::new_gsl_rng(0);
+	std::cout << "random_seed = " << random_seed << std::endl;
 
 	// simulation parameters
-	size_t I = 10;
-	size_t T = 10;
+	size_t I = 1;
+	size_t T = 1;
 	vector<double> theta(n_fixed);
 	theta[0] =   0.75; // constant term in covariate model
 	theta[1] =   1.00; // linear term in covariate model
@@ -367,7 +369,10 @@ bool capture_xam(void)
 	simulate_xy(I, T, theta, x, y);
 
 	// practical bound for population size is 5 times mean
-	size_t K = size_t ( exp( theta[2] ) * 5 );
+	double lambda = exp( theta[2] );
+	double sigma  = std::sqrt( lambda );
+	size_t K      = size_t ( lambda + 3.0 * sigma );
+	assert( K >= 2 );
 
 	// create derived object
 	approx_derived approx_object(K, I, T, x, y);
@@ -402,7 +407,9 @@ bool capture_xam(void)
 		theta_in,
 		u_in
 	);
-
-
+	//
+	if( ! ok )
+		std::cout << "capture_xam:: random_seed = " << random_seed << std::endl;
+	dismod_at::free_gsl_rng();
 	return ok;
 }
