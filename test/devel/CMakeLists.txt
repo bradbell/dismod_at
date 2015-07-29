@@ -21,6 +21,7 @@ LINK_DIRECTORIES(
 ADD_EXECUTABLE(test_devel EXCLUDE_FROM_ALL
 	age_time_order.cpp
 	binomial_test.cpp
+	capture_xam.cpp
 	data_model_subset.cpp
 	meas_mulcov.cpp
 	n_mixture.cpp

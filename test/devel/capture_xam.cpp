@@ -359,11 +359,11 @@ bool capture_xam(void)
 
 	// simulation parameters
 	size_t I = 50;
-	size_t T = 5;
+	size_t T = 1;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   1.00;      // constant term in covariate model
 	theta_sim[1] =   0.00;      // linear term in covariate model
-	theta_sim[2] =   log(10.0); // log of mean population size
+	theta_sim[2] =   log(5.0);  // log of mean population size
 	theta_sim[3] =   log(0.10); // log of variance of random effects
 
 	// set x, y

@@ -153,7 +153,7 @@ public:
 bool n_mixture(void)
 {	bool ok = true;
 	size_t n_fixed = 2;
-	size_t random_seed = dismod_at::new_gsl_rng(0);
+	// size_t random_seed = dismod_at::new_gsl_rng(0);
 
 	// simulation parameters
 	size_t I = 50;

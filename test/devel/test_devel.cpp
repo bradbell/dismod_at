@@ -19,6 +19,7 @@ extern bool meas_mulcov(void);
 extern bool rate_mulcov(void);
 
 // this test only run wth ./test_one.sh
+extern bool capture_xam(void);
 extern bool n_mixture(void);
 
 // anonymous namespace
