@@ -18,7 +18,7 @@ $spell
 	Cpp
 $$
 
-$section approx_mixed: Record Joint Negative Log-Likelihood For Different Levels of AD$$
+$section approx_mixed: Record Random Negative Log-Likelihood For Different Levels of AD$$
 
 $head Syntax$$
 $codei%record_joint(%fixed_vec%, %random_vec%)%$$
@@ -57,7 +57,7 @@ $cref/ran_like/approx_mixed_ran_like/$$.
 Note that the function result is the
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to the function
-$cref/f(theta , u )/approx_mixed_theory/Joint Negative Log-Likelihood, f(theta, u)/$$.
+$cref/f(theta , u )/approx_mixed_theory/Random Negative Log-Likelihood, f(theta, u)/$$.
 
 $end
 */

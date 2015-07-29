@@ -57,7 +57,7 @@ $latex \[
 	H_{\beta \beta}^{(2)} ( \beta, \theta , u )
 \] $$
 see $cref/H(beta, theta, u)
-	/approx_mixed_theory/Joint Part of Objective/ H(beta, theta, u)/$$
+	/approx_mixed_theory/Random Part of Objective/ H(beta, theta, u)/$$
 Note that the matrix is symmetric and hence can be recovered from
 its lower triangle.
 

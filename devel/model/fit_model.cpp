@@ -107,7 +107,7 @@ This object has prototype
 $codei%
 	const prior_model %prior_object%
 %$$
-It contains the model for the prior negative log-likelihood; see $cref prior_model$$.
+It contains the model for the fixed negative log-likelihood; see $cref prior_model$$.
 
 $head run_fit$$
 Run the optimization process to determine the optimal fixed and random effects.

@@ -46,7 +46,7 @@ $codei%
 and is a
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to the prior for the fixed effects
-$cref/g(theta)/approx_mixed_theory/Prior Negative Log-Likelihood, g(theta)/$$.
+$cref/g(theta)/approx_mixed_theory/Fixed Negative Log-Likelihood, g(theta)/$$.
 To be specific;
 $pre
 	$$

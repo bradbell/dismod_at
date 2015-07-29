@@ -28,9 +28,9 @@ $icode%approx_object%.laplace_hes_fix(
 
 $head Purpose$$
 This routine computes the Hessian of the negative log of the
-joint part of the objective
+random part of the objective
 $cref/H(beta, theta, u)/
-	approx_mixed_theory/Joint Part of Objective/H(beta, theta, u)/$$
+	approx_mixed_theory/Random Part of Objective/H(beta, theta, u)/$$
 with respect to the random effects vector $latex \beta$$; i.e.
 $latex \[
 	H_{\beta \beta}^{(2)} ( \theta, \theta, \hat{u} )

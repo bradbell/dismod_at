@@ -21,7 +21,7 @@ $spell
 	var
 $$
 
-$section approx_mixed: Record Prior Negative Log-Likelihood For Fixed Effects$$
+$section approx_mixed: Record Fixed Negative Log-Likelihood For Fixed Effects$$
 
 $head Syntax$$
 $codei%record_fix_like(%fixed_vec%)%$$
@@ -59,7 +59,7 @@ $cref/fix_like/approx_mixed_fix_like/$$.
 Note that the function result is the
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to the function
-$cref/g(theta)/approx_mixed_theory/Prior Negative Log-Likelihood, g(theta)/$$.
+$cref/g(theta)/approx_mixed_theory/Fixed Negative Log-Likelihood, g(theta)/$$.
 
 $head fix_like_jac_row_, fix_like_jac_col_$$
 The input value of the member variables

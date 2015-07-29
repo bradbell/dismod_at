@@ -16,7 +16,7 @@ $spell
 	const
 $$
 
-$section Prior Negative Log-Likelihood for the Fixed Effects$$
+$section Fixed Negative Log-Likelihood for the Fixed Effects$$
 
 $head Syntax$$
 $icode%vec% = %approx_object%.fix_like(%fixed_vec%)%$$
@@ -56,8 +56,8 @@ $cref/negative log-density vector
 	/approx_mixed
 	/Negative Log-Density Vector
 /$$
-corresponding to the prior negative log-likelihood
-$cref/g(theta)/approx_mixed_theory/Prior Negative Log-Likelihood, g(theta)/$$.
+corresponding to the fixed negative log-likelihood
+$cref/g(theta)/approx_mixed_theory/Fixed Negative Log-Likelihood, g(theta)/$$.
 In the case where there is no prior, the vector $icode vec$$
 should be empty; i.e., $icode%vec%.size() == 0%$$.
 

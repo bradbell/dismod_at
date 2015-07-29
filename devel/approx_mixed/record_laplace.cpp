@@ -18,7 +18,7 @@ $spell
 	Cpp
 $$
 
-$section approx_mixed: Record Joint Part of Laplace Approximation$$
+$section approx_mixed: Record Random Part of Laplace Approximation$$
 
 $head Syntax$$
 $codei%record_laplace(%order%, %fixed_vec%, %random_vec%)%$$
@@ -68,9 +68,9 @@ $codei%
 %$$
 does not matter.
 Upon return it contains a an recording for the
-joint part of the Laplace approximation objective; see
+random part of the Laplace approximation objective; see
 $cref/derivatives of G/approx_mixed_theory
-	/Joint Part of Objective
+	/Random Part of Objective
 	/Derivatives of G
 /$$.
 

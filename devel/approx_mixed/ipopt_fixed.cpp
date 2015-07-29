@@ -257,7 +257,7 @@ number of absolute value terms in the
 $cref/fix_like/approx_mixed_fix_like/$$.
 
 $head prior_nnz_jac_$$
-number of non-zeros in the Jacobian of the prior negative log-likelihood.
+number of non-zeros in the Jacobian of the fixed negative log-likelihood.
 
 $head lag_hes_row_$$
 The row indices for the sparse representation of the Hessian
@@ -314,7 +314,7 @@ approx_object_     ( approx_object    )
 	// -----------------------------------------------------------------------
 	// set fix_like_n_abs_
 	// -----------------------------------------------------------------------
-	// prior negative log-likelihood at the initial fixed effects vector
+	// fixed negative log-likelihood at the initial fixed effects vector
 	d_vector fix_like_vec = approx_object_.prior_eval(fixed_in);
 	if( fix_like_vec.size() == 0 )
 		fix_like_n_abs_ = 0;
@@ -637,7 +637,7 @@ bool ipopt_fixed::get_starting_point(
 	assert( n > 0 && size_t(n) == n_fixed_ + fix_like_n_abs_ );
 	assert( m >= 0 && size_t(m) == 2 * fix_like_n_abs_ + n_constraint_ );
 
-	// prior negative log-likelihood at the initial fixed effects vector
+	// fixed negative log-likelihood at the initial fixed effects vector
 	if( fix_like_vec_tmp_.size() == 0 )
 		assert( approx_object_.prior_eval(fixed_in_).size() == 0 );
 	else
@@ -708,7 +708,7 @@ bool ipopt_fixed::eval_f(
 	for(size_t j = 0; j < n_fixed_; j++)
 		fixed_tmp_[j] = double( x[j] );
 	//
-	// joint part of objective
+	// random part of objective
 	double H = Number( 0.0 );
 	if( n_random_ > 0 )
 	{	//
@@ -716,7 +716,7 @@ bool ipopt_fixed::eval_f(
 		if( new_x )
 		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
 		//
-		// compute joint part of the Laplace objective
+		// compute random part of the Laplace objective
 		H = approx_object_.laplace_eval(
 			fixed_tmp_, fixed_tmp_, random_cur_
 		);
@@ -726,7 +726,7 @@ bool ipopt_fixed::eval_f(
 		assert( approx_object_.prior_eval(fixed_tmp_).size() == 0 );
 	else
 	{
-		// prior part of objective
+		// fixed part of objective
 		// (2DO: cache fix_like_vec_tmp_ for eval_g with same x)
 		fix_like_vec_tmp_ = approx_object_.prior_eval(fixed_tmp_);
 		//
@@ -795,7 +795,7 @@ bool ipopt_fixed::eval_grad_f(
 	else
 		random_tmp_ = random_h_;
 	//
-	// joint part of objective
+	// random part of objective
 	assert( H_beta_tmp_.size() == n_fixed_ );
 	for(size_t j = 0; j < n_fixed_; j++)
 		H_beta_tmp_[j] = Number(0.0);
@@ -805,13 +805,13 @@ bool ipopt_fixed::eval_grad_f(
 		if( new_x )
 		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
 		//
-		// Jacobian for joint part of the Lalpace objective
+		// Jacobian for random part of the Lalpace objective
 		H_beta_tmp_ = approx_object_.laplace_beta(
 			fixed_tmp_, fixed_tmp_, random_cur_
 		);
 	}
 	//
-	// Jacobian of prior part of objective
+	// Jacobian of fixed part of objective
 	// (2DO: do not revaluate when eval_jac_g has same x)
 	approx_object_.fix_like_jac(
 		fixed_tmp_, fix_like_jac_row_, fix_like_jac_col_, fix_like_jac_val_
@@ -891,7 +891,7 @@ bool ipopt_fixed::eval_g(
 	for(size_t j = 0; j < n_fixed_; j++)
 		fixed_tmp_[j] = double( x[j] );
 	//
-	// prior part of objective
+	// fixed part of objective
 	// (2DO: cache fix_like_vec_tmp_ for eval_f with same x)
 	fix_like_vec_tmp_ = approx_object_.prior_eval(fixed_tmp_);
 	//
@@ -1030,7 +1030,7 @@ bool ipopt_fixed::eval_jac_g(
 	for(size_t j = 0; j < n_fixed_; j++)
 		fixed_tmp_[j] = double( x[j] );
 	//
-	// Jacobian of prior part of objective
+	// Jacobian of fixed part of objective
 	// (2DO: do not revaluate when eval_grad_f had same x)
 	approx_object_.fix_like_jac(
 		fixed_tmp_, fix_like_jac_row_, fix_like_jac_col_, fix_like_jac_val_
@@ -1188,7 +1188,7 @@ bool ipopt_fixed::eval_h(
 	for(size_t k = 0; k < nnz_h_lag_; k++)
 		values[k] = Number( 0.0 );
 	//
-	// joint part of objective
+	// random part of objective
 	if( n_random_ > 0 )
 	{
 		// compute the optimal random effects corresponding to fixed effects
@@ -1382,7 +1382,7 @@ void ipopt_fixed::finalize_solution(
 		ok &= 0.0 <= z_U[j];
 	}
 	//
-	// prior negative log-likelihood at the final fixed effects vector
+	// fixed negative log-likelihood at the final fixed effects vector
 	if( fix_like_vec_tmp_.size() == 0 )
 		assert( approx_object_.prior_eval(fixed_opt_).size() == 0 );
 	else

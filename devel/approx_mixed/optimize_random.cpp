@@ -26,7 +26,7 @@ $icode%approx_object%.optimize_random(%fixed_vec%, %random_in%)%$$
 
 $head Purpose$$
 This routine maximizes the
-$cref/joint negative log-likelihood/approx_mixed_ran_like/$$ corresponding to the
+$cref/random negative log-likelihood/approx_mixed_ran_like/$$ corresponding to the
 object $icode approx_object$$.
 
 $head approx_object$$
@@ -63,7 +63,7 @@ vector $latex u$$.
 
 $head Laplace Likelihood$$
 This optimization properly handles the case where
-the joint negative log-likelihood contains Laplace likelihood terms.
+the random negative log-likelihood contains Laplace likelihood terms.
 
 $head Example$$
 The file $cref optimize_random_xam.cpp$$ contains an example

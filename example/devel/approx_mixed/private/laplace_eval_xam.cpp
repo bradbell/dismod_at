@@ -148,7 +148,7 @@ bool laplace_eval_xam(void)
 	// optimize the random effects
 	uhat = approx_object.optimize_random(fixed_vec, random_vec);
 
-	// compute joint part of Laplace approximation
+	// compute random part of Laplace approximation
 	double H = approx_object.laplace_eval(beta, theta, uhat);
 
 	// For this case the Laplace approximation is exactly equal the integral

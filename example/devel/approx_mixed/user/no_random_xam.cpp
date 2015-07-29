@@ -26,8 +26,8 @@ $latex \[
 $latex \[
 	\B{p}( \theta_i ) \sim \B{N} ( 0 , 1 )
 \] $$
-The corresponding prior negative log-likelihood
-$cref/g(theta)/approx_mixed_theory/Prior Negative Log-Likelihood, g(theta)/$$
+The corresponding fixed negative log-likelihood
+$cref/g(theta)/approx_mixed_theory/Fixed Negative Log-Likelihood, g(theta)/$$
 is
 $latex \[
 g( \theta ) = \frac{1}{2} \sum_{i} \left[

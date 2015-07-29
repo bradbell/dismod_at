@@ -147,7 +147,7 @@ bool laplace_hes_fix_xam(void)
 	// optimize the random effects
 	uhat = approx_object.optimize_random(fixed_vec, random_vec);
 
-	// compute Hessian of joint part of Laplace approximation
+	// compute Hessian of random part of Laplace approximation
 	vector<size_t> row, col;
 	vector<double> val;
 	approx_object.laplace_hes_fix(fixed_vec, random_vec, row, col, val);

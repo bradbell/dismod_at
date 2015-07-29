@@ -148,7 +148,7 @@ bool prior_eval_xam(void)
 	approx_derived approx_object(n_fixed, n_random, data);
 	approx_object.initialize(fixed_vec, random_vec);
 
-	// compute prior negative log-density vector
+	// compute fixed negative log-density vector
 	CppAD::vector<double> vec = approx_object.prior_eval(fixed_vec);
 
 	// check smooth part

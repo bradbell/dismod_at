@@ -24,12 +24,12 @@ $icode%H_beta% = %approx_object%.laplace_beta(%beta%, %theta%, %u%)%$$
 
 $head Purpose$$
 This routine evaluates the partial w.r.t. $latex \beta$$ of the
-joint part of the Laplace Approximation; i.e.,
+random part of the Laplace Approximation; i.e.,
 $latex \[
 	H_\beta^{(1)} ( \beta , \theta , u )
 \]$$
 See $cref/H(beta, theta, u)/approx_mixed_theory
-	/Joint Part of Objective
+	/Random Part of Objective
 	/H(beta, theta, u)
 /$$.
 

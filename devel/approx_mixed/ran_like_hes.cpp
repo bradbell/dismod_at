@@ -27,8 +27,8 @@ $icode%approx_object%.ran_like_hes(
 )%$$
 
 $head Purpose$$
-This routine computes the Hessian of the negative log of the joint negative log-likelihood
-$cref/f(theta, u)/approx_mixed_theory/Joint Negative Log-Likelihood, f(theta, u)/$$
+This routine computes the Hessian of the negative log of the random negative log-likelihood
+$cref/f(theta, u)/approx_mixed_theory/Random Negative Log-Likelihood, f(theta, u)/$$
 with respect to the random effects vector $latex u$$; i.e.
 $latex \[
 	f_{uu}^{(2)} ( \theta, u )

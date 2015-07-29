@@ -18,7 +18,7 @@ $spell
 	Cpp
 $$
 
-$section approx_mixed: Record Gradient of Joint Negative Log-Likelihood w.r.t Random Effects$$
+$section approx_mixed: Record Gradient of Random Negative Log-Likelihood w.r.t Random Effects$$
 
 $head Syntax$$
 $codei%record_grad_ran(%fixed_vec%, %random_vec%)%$$

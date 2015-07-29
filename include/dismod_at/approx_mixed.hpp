@@ -246,7 +246,7 @@ Recording of the $cref/ran_like/approx_mixed_ran_like/$$ function
 which evaluates a
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to
-$cref/f(theta, u)/approx_mixed_theory/Joint Negative Log-Likelihood, f(theta, u)/$$
+$cref/f(theta, u)/approx_mixed_theory/Random Negative Log-Likelihood, f(theta, u)/$$
 for different levels of AD:
 $codep */
 	CppAD::ADFun<double>      a0_ran_like_;
@@ -256,7 +256,7 @@ $codep */
 	CppAD::ADFun<a4_double>   a4_ran_like_;
 /* $$
 $subhead grad_ran_$$
-The gradient of the joint likelihood w.r.t. the random effects
+The gradient of the random likelihood w.r.t. the random effects
 $latex f_u^{(1)} ( \theta , u )^T$$. Because this is a simple vector
 there is no difference between the gradient and the derivative; i.e.,
 the transpose does not matter.
@@ -264,7 +264,7 @@ $codep */
 	CppAD::ADFun<a3_double> grad_ran_;   // computes the gradient values
 /* $$
 $subhead hes_ran_$$
-The Hessian of the joint likelihood w.r.t. the random effects
+The Hessian of the random likelihood w.r.t. the random effects
 $latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix
 represented by the following variables:
 $codep */
@@ -282,7 +282,7 @@ $codep */
 	CppAD::ADFun<a2_double> laplace_2_;     // for computing H_beta_beta
 /* $$
 $subhead hes_fix_$$
-The Hessian of the joint likelihood w.r.t. the fixed effects
+The Hessian of the random likelihood w.r.t. the fixed effects
 $latex H_{\beta \beta}^{(2)} ( \beta, \theta , u )$$ is as a sparse matrix
 represented by the following variables:
 $codep */
@@ -299,9 +299,9 @@ Recording of the $cref/fix_like/approx_mixed_fix_like/$$ function
 which evaluates a
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to
-$cref/g(theta)/approx_mixed_theory/Prior Negative Log-Likelihood, g(theta)/$$.
+$cref/g(theta)/approx_mixed_theory/Fixed Negative Log-Likelihood, g(theta)/$$.
 $codep */
-	CppAD::ADFun<double>    fix_like_; // computes prior negative log-likelihood
+	CppAD::ADFun<double>    fix_like_; // computes fixed negative log-likelihood
 	CppAD::vector<size_t>   fix_like_jac_row_; // prior jacobian row indices
 	CppAD::vector<size_t>   fix_like_jac_col_; // prior jacobian column indices
 	CppAD::sparse_jacobian_work fix_like_jac_work_;

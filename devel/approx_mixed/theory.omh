@@ -26,7 +26,7 @@ TMB: Automatic Differentiation and Laplace Approximation,
 Kasper Kristensen, Anders Nielsen, Casper W. Berg, Hans Skaug, Bradley M. Bell,
 Journal of Statistical Software, Accepted 2015-02.
 
-$head Joint Negative Log-Likelihood, f(theta, u)$$
+$head Random Negative Log-Likelihood, f(theta, u)$$
 The reference above defines $latex f( \theta, u)$$
 to be the negative log-likelihood of
 $latex y$$, $latex u$$ and $latex \theta$$; i.e.,
@@ -43,7 +43,7 @@ The function $latex f(\theta, u)$$ is assumed to be smooth.
 Note that $cref/ran_like/approx_mixed_ran_like/$$ allows for
 non-smooth terms in the form of Laplace densities.
 
-$head Prior Negative Log-Likelihood, g(theta)$$
+$head Fixed Negative Log-Likelihood, g(theta)$$
 We use the notation
 $latex \[
 	g( \theta ) = - \log [ \B{p} ( z | \theta ) \B{p} ( \theta ) ]
@@ -68,7 +68,7 @@ h( \theta, u )
 
 $subhead u^(theta)$$
 Given the fixed effects,
-the corresponding random effects that maximize the joint likelihood
+the corresponding random effects that maximize the random likelihood
 are denoted by
 $latex \[
 	\hat{u} ( \theta ) = \R{argmin} \; f( \theta, u ) \; \R{w.r.t.} \; u
@@ -79,7 +79,7 @@ We refer to
 $latex \[
 	G( \theta ) = h[ \theta , \hat{u} ( \theta ) ]
 \] $$
-as the prior part of the objective.
+as the fixed part of the objective.
 
 $subhead L(theta)$$
 The Laplace approximation objective, as a function of the fixed effects, is
@@ -89,7 +89,7 @@ L ( \theta )
 G( \theta ) + g( \theta )
 \] $$
 
-$head Joint Part of Objective$$
+$head Random Part of Objective$$
 
 $subhead Implicit Differentiation$$
 Because $latex f(\theta, u)$$ is smooth, we obtain

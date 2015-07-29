@@ -153,11 +153,11 @@ bool approx_derived_xam(void)
 	approx_derived approx_object(n_fixed, n_random, data);
 	approx_object.initialize(fixed_vec, random_vec);
 
-	// Evaluate the joint negative log-likelihood
+	// Evaluate the random negative log-likelihood
 	vector<a5_double> a5_vec(1);
 	a5_vec = approx_object.implement_ran_like(a5_fixed, a5_random);
 
-	// check the joint negative log-likelihood
+	// check the random negative log-likelihood
 	double sum = 0.0;
 	for(size_t i = 0; i < n_data; i++)
 	{	double mu     = random_vec[i];
@@ -167,11 +167,11 @@ bool approx_derived_xam(void)
 	}
 	ok &= abs( a5_vec[0] / a5_double(sum) - a5_double(1.0) ) < eps;
 
-	// Evaluate the prior negative log-likelihood
+	// Evaluate the fixed negative log-likelihood
 	vector<a1_double> a1_vec(1 + n_fixed);
 	a1_vec = approx_object.fix_like(a1_fixed);
 
-	// check the prior negative log-likelihood
+	// check the fixed negative log-likelihood
 	sum = 0.0;
 	for(size_t j = 0; j < n_fixed; j++)
 	{	double sigma  = fixed_vec[j];

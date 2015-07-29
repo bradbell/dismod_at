@@ -19,7 +19,7 @@ $spell
 	Cpp
 $$
 
-$section approx_mixed: Record Hessian of Joint Negative Log-Likelihood w.r.t Random Effects$$
+$section approx_mixed: Record Hessian of Random Negative Log-Likelihood w.r.t Random Effects$$
 
 $head Syntax$$
 $codei%record_hes_ran(%fixed_vec%, %random_vec%)%$$
@@ -57,7 +57,7 @@ Upon return it contains the corresponding recording for the lower triangle of
 $latex \[
 	f_{uu}^{(2)} ( \theta , u )
 \]$$
-see $cref/f(theta, u)/approx_mixed_theory/Joint Negative Log-Likelihood, f(theta, u)/$$.
+see $cref/f(theta, u)/approx_mixed_theory/Random Negative Log-Likelihood, f(theta, u)/$$.
 Note that the matrix is symmetric and hence can be recovered from
 its lower triangle.
 

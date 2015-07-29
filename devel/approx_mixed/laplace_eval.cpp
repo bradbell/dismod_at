@@ -19,15 +19,15 @@ $spell
 	Cpp
 $$
 
-$section approx_mixed: Evaluate Joint Part of the Laplace Approximation$$
+$section approx_mixed: Evaluate Random Part of the Laplace Approximation$$
 
 $head Syntax$$
 $icode%H% = %approx_object%.laplace_eval(%beta%, %theta%, %u%)%$$
 
 $head Purpose$$
-This routine evaluates the joint part of the Laplace approximation objective
+This routine evaluates the random part of the Laplace approximation objective
 $cref/H(beta, theta, u)/approx_mixed_theory
-	/Joint Part of Objective
+	/Random Part of Objective
 	/H(beta, theta, u)
 /$$.
 
@@ -68,9 +68,9 @@ The return value has prototype
 $codei%
 	double %H%
 %$$
-and is the value of the joint part of the Laplace approximation
+and is the value of the random part of the Laplace approximation
 $cref/H(beta, theta, u)/approx_mixed_theory
-	/Joint Part of Objective
+	/Random Part of Objective
 	/H(beta, theta, u)
 /$$.
 
