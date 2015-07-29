@@ -72,9 +72,9 @@ namespace {
 			z_(z)
 		{	assert(z.size() == n_fixed); }
 	private:
-		// implementation of prior_like as p(z|theta) * p(theta)
+		// implementation of fix_like as p(z|theta) * p(theta)
 		template <class Float>
-		vector<Float> implement_prior_like(
+		vector<Float> implement_fix_like(
 			const vector<Float>& fixed_vec  )
 		{
 			// initialize log-density
@@ -104,9 +104,9 @@ namespace {
 			const vector<a5_double>& random_vec )
 		{	return vector<a5_double>(0); } // empty vector
 		//
-		virtual vector<a1_double> prior_like(
+		virtual vector<a1_double> fix_like(
 			const vector<a1_double>& fixed_vec  )
-		{	return implement_prior_like(fixed_vec); }
+		{	return implement_fix_like(fixed_vec); }
 		//
 		virtual vector<a1_double> constraint(
 			const vector<a1_double>& fixed_vec  )

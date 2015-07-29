@@ -44,7 +44,7 @@ $cref avg_case_subset_xam.cpp$$,
 $cref data_subset_xam.cpp$$.
 $lnext
 Handle the case where the
-$cref/prior_like/approx_mixed_prior_like/$$ is empty.
+$cref/fix_like/approx_mixed_fix_like/$$ is empty.
 $lend
 
 $head 07-27$$
@@ -181,7 +181,7 @@ In the $cref approx_mixed$$ sub-package,
 changed $code joint_density$$ to
 $cref/joint_like/approx_mixed_public/User Defined/joint_like/$$
 and changed $code prior_density$$ to
-$cref/prior_like/approx_mixed_public/User Defined/prior_like/$$.
+$cref/fix_like/approx_mixed_public/User Defined/fix_like/$$.
 
 $head 07-15$$
 $list number$$

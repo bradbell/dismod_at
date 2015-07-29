@@ -61,7 +61,7 @@ public:
 	}
 	// implementaion of joint_like
 	template <class Float>
-	vector<Float> implement_prior_like(const vector<Float>&  theta)
+	vector<Float> implement_fix_like(const vector<Float>&  theta)
 	{	vector<Float> vec(1);
 		Float eps( 10.0 * std::numeric_limits<double>::epsilon() );
 		//  ------------------------------------------------------------
@@ -90,9 +90,9 @@ public:
 		const vector<a5_double>& random_vec )
 	{	return vector<a5_double>(0); } // empty vector
 	//
-	virtual vector<a1_double> prior_like(
+	virtual vector<a1_double> fix_like(
 		const vector<a1_double>& fixed_vec  )
-	{	return implement_prior_like<a1_double>(fixed_vec); }
+	{	return implement_fix_like<a1_double>(fixed_vec); }
 	//
 	virtual vector<a1_double> constraint(
 		const vector<a1_double>& fixed_vec  )

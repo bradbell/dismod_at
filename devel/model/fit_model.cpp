@@ -367,8 +367,8 @@ fit_model::a5d_vector fit_model::joint_like(
 	return joint_den;
 }
 // ---------------------------------------------------------------------------
-// prior_like
-fit_model::a1d_vector fit_model::prior_like(
+// fix_like
+fit_model::a1d_vector fit_model::fix_like(
 	const a1d_vector& fixed_vec   )
 {	// local vectors
 	a1d_vector random_vec( size_random_effect(pack_object_) );

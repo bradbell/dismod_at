@@ -80,17 +80,17 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		double nlp_lower_bound_inf_; // Ipopt's code for - infinity
 		double nlp_upper_bound_inf_; // Ipopt's code for + infinity
 		//
-		size_t prior_n_abs_; // number of absolute values in prior
+		size_t fix_like_n_abs_; // number of absolute values in prior
 		size_t nnz_jac_g_;   // number non-zeros in Jacobian of constraints
 		size_t nnz_h_lag_;   // number non-zeros in Hessian of Lagragian
 		//
-		s_vector prior_jac_row_; // row indices for Jacobian of prior
-		s_vector prior_jac_col_; // column indices for Jacobian of prior
-		d_vector prior_jac_val_; // values for Jacobian of prior
+		s_vector fix_like_jac_row_; // row indices for Jacobian of prior
+		s_vector fix_like_jac_col_; // column indices for Jacobian of prior
+		d_vector fix_like_jac_val_; // values for Jacobian of prior
 		//
-		s_vector prior_hes_row_; // row indices for Hessian of prior
-		s_vector prior_hes_col_; // column indices for Hessian of prior
-		d_vector prior_hes_val_; // values for Hessian of prior
+		s_vector fix_like_hes_row_; // row indices for Hessian of prior
+		s_vector fix_like_hes_col_; // column indices for Hessian of prior
+		d_vector fix_like_hes_val_; // values for Hessian of prior
 		//
 		s_vector constraint_jac_row_; // row for Jacobian of constraint
 		s_vector constraint_jac_col_; // column for Jacobian of constraint
@@ -108,16 +108,16 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		s_vector lag_hes_row_;   // row indices for Hessian of Lagrangian
 		s_vector lag_hes_col_;   // column indices for Hessian of Lagrangian
 		s_vector laplace_2_lag_;    // maps laplace_hes_row_ to lag_hes_row_
-		s_vector prior_2_lag_;      // maps prior_hes_row_ to lag_hes_row_
+		s_vector fix_like2lag_;      // maps fix_like_hes_row_ to lag_hes_row_
 		s_vector constraint_2_lag_; // maps constraint_hes_row to lag_hes_row
 		// ---------------------------------------------------------------
 		// temporaries (size set by constructor only)
 		d_vector        fixed_tmp_;      // size n_fixed_
 		d_vector        random_tmp_;     // size n_random_
-		d_vector        prior_vec_tmp_;  // size prior_n_abs_ + 1
+		d_vector        fix_like_vec_tmp_;  // size fix_like_n_abs_ + 1
 		d_vector        c_vec_tmp_;      // size n_constraint_
 		d_vector        H_beta_tmp_;     // size n_fixed_
-		d_vector        w_prior_tmp_;     // size 2 * prior_n_abs
+		d_vector        w_fix_like_tmp_;     // size 2 * prior_n_abs
 		d_vector        w_constraint_tmp_;// size n_constraint
 		// ---------------------------------------------------------------
 		// set by eval_f only (constructor does not modify)

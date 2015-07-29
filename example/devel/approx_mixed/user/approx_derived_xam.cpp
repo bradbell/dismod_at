@@ -71,9 +71,9 @@ namespace {
 			}
 			return vec;
 		}
-		// implementation of prior_like
+		// implementation of fix_like
 		template <class Float>
-		vector<Float> implement_prior_like(
+		vector<Float> implement_fix_like(
 			const vector<Float>& theta  )
 		{	vector<Float> vec(1);
 
@@ -101,9 +101,9 @@ namespace {
 			const vector<a5_double>& random_vec )
 		{	return implement_joint_like(fixed_vec, random_vec); }
 		//
-		virtual vector<a1_double> prior_like(
+		virtual vector<a1_double> fix_like(
 			const vector<a1_double>& fixed_vec  )
-		{	return implement_prior_like(fixed_vec); }
+		{	return implement_fix_like(fixed_vec); }
 		//
 		virtual vector<a1_double> constraint(
 			const vector<a1_double>& fixed_vec  )
@@ -169,7 +169,7 @@ bool approx_derived_xam(void)
 
 	// Evaluate the prior negative log-likelihood
 	vector<a1_double> a1_vec(1 + n_fixed);
-	a1_vec = approx_object.prior_like(a1_fixed);
+	a1_vec = approx_object.fix_like(a1_fixed);
 
 	// check the prior negative log-likelihood
 	sum = 0.0;

@@ -23,9 +23,9 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	approx_mixed/optimize_fixed.cpp
 	approx_mixed/optimize_random.cpp
 	approx_mixed/prior_eval.cpp
-	approx_mixed/prior_jac.cpp
-	approx_mixed/prior_hes.cpp
-	approx_mixed/record_prior_like.cpp
+	approx_mixed/fix_like_jac.cpp
+	approx_mixed/fix_like_hes.cpp
+	approx_mixed/record_fix_like.cpp
 	approx_mixed/record_constraint.cpp
 	approx_mixed/record_grad_ran.cpp
 	approx_mixed/record_hes_fix.cpp

@@ -150,7 +150,7 @@ $latex \[
 
 $head p(theta)$$
 $index no prior$$
-$index prior_like, none$$
+$index fix_like, none$$
 For this example there is no prior $latex \B{p}(\theta)$$.
 
 $head Reference$$
@@ -333,7 +333,7 @@ public:
 		const vector<a5_double>& random_vec )
 	{	return implement_joint_like(fixed_vec, random_vec); }
 	//
-	virtual vector<a1_double> prior_like(
+	virtual vector<a1_double> fix_like(
 		const vector<a1_double>& fixed_vec  )
 	{	return vector<a1_double>(0); } // empty vector
 	//

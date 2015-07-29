@@ -9,21 +9,21 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin prior_hes_xam.cpp$$
+$begin fix_like_jac_xam.cpp$$
 $spell
-	hes
+	jac
 	interp
 	xam
 $$
 
-$section C++ prior_hes: Example and Test$$
+$section C++ fix_like_jac: Example and Test$$
 
 $head Private$$
 This example is not part of the
 $cref/approx_mixed public API/approx_mixed_public/$$.
 
 $code
-$verbatim%example/devel/approx_mixed/private/prior_hes_xam.cpp
+$verbatim%example/devel/approx_mixed/private/fix_like_jac_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -78,9 +78,9 @@ namespace {
 			}
 			return vec;
 		}
-		// implementation of prior_like
+		// implementation of fix_like
 		template <class Float>
-		vector<Float> implement_prior_like(
+		vector<Float> implement_fix_like(
 			const vector<Float>& fixed_vec  )
 		{	vector<Float> vec(1);
 
@@ -88,15 +88,16 @@ namespace {
 			vec[0] = Float(0.0);
 
 			// compute these factors once
-			Float sqrt_2pi = Float( CppAD::sqrt( 8.0 * CppAD::atan(1.0) ) );
+			Float mu     = Float(1.0);
+			Float sqrt_2 = CppAD::sqrt( Float(2.0) );
 
 			for(size_t j = 0; j < n_fixed_; j++)
-			{	Float mu     = Float(1.0);
-				Float sigma  = Float(1.0);
-				Float res    = (fixed_vec[j] - mu);
+			{
+				// This is a Laplace term
+				vec[0] += CppAD::log( sqrt_2 );
 
-				// This is a Gaussian term, so entire density is smooth
-				vec[0]  += log(sqrt_2pi * sigma) + res * res / Float(2.0);
+				// part of the density that needs absolute value
+				vec.push_back(sqrt_2 * (fixed_vec[j] - mu) );
 			}
 			return vec;
 		}
@@ -106,9 +107,9 @@ namespace {
 			const vector<a5_double>& random_vec )
 		{	return implement_joint_like(fixed_vec, random_vec); }
 		//
-		virtual vector<a1_double> prior_like(
+		virtual vector<a1_double> fix_like(
 			const vector<a1_double>& fixed_vec  )
-		{	return implement_prior_like(fixed_vec); }
+		{	return implement_fix_like(fixed_vec); }
 		//
 		virtual vector<a1_double> constraint(
 			const vector<a1_double>& fixed_vec  )
@@ -125,10 +126,11 @@ namespace {
 	};
 }
 
-bool prior_hes_xam(void)
+bool fix_like_jac_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
+	double sqrt_2 = CppAD::sqrt(2.0);
 
 	size_t n_data   = 10;
 	size_t n_fixed  = 2;
@@ -146,30 +148,29 @@ bool prior_hes_xam(void)
 	approx_derived approx_object(n_fixed, n_random, data);
 	approx_object.initialize(fixed_vec, random_vec);
 
-	// compute prior hessian
+	// compute prior jacobian
 	CppAD::vector<size_t> row, col;
-	CppAD::vector<double> val, weight(n_fixed);
-	for(size_t j = 0; j < n_fixed; j++)
-		weight[j] = 1.0;
-	approx_object.prior_hes(fixed_vec, weight, row, col, val);
+	CppAD::vector<double> val;
+	approx_object.fix_like_jac(fixed_vec, row, col, val);
 
-	// initialize which variables have been found so far
+	// initialize which rows have been found so far
 	CppAD::vector<bool> found(3);
-	for(size_t j = 0; j < n_fixed; j++)
-		found[j] = false;
+	for(size_t i = 0; i < 3; i++)
+		found[i] = false;
 
 	// check derivatives
 	for(size_t k = 0; k < row.size(); k++)
 	{	size_t i = row[k];
 		size_t j = col[k];
-		double check = 1.0;
-		ok      &= i == j;
+		double check = sqrt_2;
+		ok      &= i == j+1;
 		ok      &= ! found[i];
 		ok      &= ( val[k] / check - 1.0) <= eps;
 		found[i] = true;
 	}
-	for(size_t j = 0; j < n_fixed; j++)
-		ok &= found[j];
+	ok &= found[0] == false;
+	ok &= found[1];
+	ok &= found[2];
 
 	return ok;
 }

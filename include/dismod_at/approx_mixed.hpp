@@ -22,8 +22,8 @@ extern bool laplace_eval_xam(void);
 extern bool laplace_beta_xam(void);
 extern bool laplace_hes_fix_xam(void);
 extern bool prior_eval_xam(void);
-extern bool prior_jac_xam(void);
-extern bool prior_hes_xam(void);
+extern bool fix_like_jac_xam(void);
+extern bool fix_like_hes_xam(void);
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -77,13 +77,13 @@ $codep */
 /* $$
 See $cref/joint_like/approx_mixed_joint_like/$$.
 
-$subhead prior_like$$
+$subhead fix_like$$
 $codep */
-	virtual CppAD::vector<a1_double> prior_like(
+	virtual CppAD::vector<a1_double> fix_like(
 		const CppAD::vector<a1_double>& fixed_vec
 	) = 0 ;
 /* $$
-See $cref/prior_like/approx_mixed_prior_like/$$.
+See $cref/fix_like/approx_mixed_fix_like/$$.
 
 $subhead constraint$$
 $codep */
@@ -117,7 +117,7 @@ $comment */
 	n_fixed_(n_fixed)               ,
 	n_random_(n_random)             ,
 	initialize_done_(false)         ,
-	record_prior_like_done_(false)  ,
+	record_fix_like_done_(false)  ,
 	record_joint_done_(false)       ,
 	record_hes_ran_done_(false)     ,
 	record_hes_fix_done_(false)     ,
@@ -161,7 +161,7 @@ $childtable%
 	devel/approx_mixed/derived_ctor.omh%
 	devel/approx_mixed/initialize.cpp%
 	devel/approx_mixed/joint_like.omh%
-	devel/approx_mixed/prior_like.omh%
+	devel/approx_mixed/fix_like.omh%
 	devel/approx_mixed/constraint.omh%
 	devel/approx_mixed/optimize_random.cpp%
 	devel/approx_mixed/optimize_fixed.cpp
@@ -198,7 +198,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/record_hes_ran.cpp
 	%devel/approx_mixed/record_laplace.cpp
 	%devel/approx_mixed/record_hes_fix.cpp
-	%devel/approx_mixed/record_prior_like.cpp
+	%devel/approx_mixed/record_fix_like.cpp
 	%devel/approx_mixed/record_constraint.cpp
 	%devel/approx_mixed/joint_grad_ran.cpp
 	%devel/approx_mixed/joint_hes_ran.cpp
@@ -206,8 +206,8 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/laplace_beta.cpp
 	%devel/approx_mixed/laplace_hes_fix.cpp
 	%devel/approx_mixed/prior_eval.cpp
-	%devel/approx_mixed/prior_jac.cpp
-	%devel/approx_mixed/prior_hes.cpp
+	%devel/approx_mixed/fix_like_jac.cpp
+	%devel/approx_mixed/fix_like_hes.cpp
 %$$
 
 $head n_fixed_$$
@@ -225,7 +225,7 @@ The following flag is false after construction and true after
 the corresponding member function is called:
 $codep */
 	bool                initialize_done_;
-	bool                record_prior_like_done_;
+	bool                record_fix_like_done_;
 	bool                record_joint_done_;
 	bool                record_hes_ran_done_;
 	bool                record_hes_fix_done_;
@@ -294,20 +294,20 @@ Note that if $code record_hes_fix_done_$$ is true and
 $code hes_fix_row_.size() == 0$$, then this Hessian is zero; i.e.,
 the second derivative of the Laplace approximation is zero.
 
-$head prior_like_$$
-Recording of the $cref/prior_like/approx_mixed_prior_like/$$ function
+$head fix_like_$$
+Recording of the $cref/fix_like/approx_mixed_fix_like/$$ function
 which evaluates a
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to
 $cref/g(theta)/approx_mixed_theory/Prior Negative Log-Likelihood, g(theta)/$$.
 $codep */
-	CppAD::ADFun<double>    prior_like_; // computes prior negative log-likelihood
-	CppAD::vector<size_t>   prior_jac_row_; // prior jacobian row indices
-	CppAD::vector<size_t>   prior_jac_col_; // prior jacobian column indices
-	CppAD::sparse_jacobian_work prior_jac_work_;
-	CppAD::vector<size_t>   prior_hes_row_; // prior hessian row indices
-	CppAD::vector<size_t>   prior_hes_col_; // prior hessian column indices
-	CppAD::sparse_hessian_work prior_hes_work_;
+	CppAD::ADFun<double>    fix_like_; // computes prior negative log-likelihood
+	CppAD::vector<size_t>   fix_like_jac_row_; // prior jacobian row indices
+	CppAD::vector<size_t>   fix_like_jac_col_; // prior jacobian column indices
+	CppAD::sparse_jacobian_work fix_like_jac_work_;
+	CppAD::vector<size_t>   fix_like_hes_row_; // prior hessian row indices
+	CppAD::vector<size_t>   fix_like_hes_col_; // prior hessian column indices
+	CppAD::sparse_hessian_work fix_like_hes_work_;
 /* $$
 $head constraint_$$
 Recording of the $cref/constraint/approx_mixed_constraint/$$ function.
@@ -399,10 +399,10 @@ $codep */
 		const d_vector& random_vec
 	);
 /* $$
-$head record_prior_like$$
-See $cref approx_mixed_record_prior_like$$.
+$head record_fix_like$$
+See $cref approx_mixed_record_fix_like$$.
 $codep */
-	void record_prior_like(const d_vector& fixed_vec);
+	void record_fix_like(const d_vector& fixed_vec);
 /* $$
 $head record_constraint$$
 See $cref approx_mixed_record_constraint$$.
@@ -513,31 +513,31 @@ $codep */
 	friend bool ::prior_eval_xam(void);
 /* $$
 $end
-$head prior_jac$$
-See $cref approx_mixed_prior_jac$$
+$head fix_like_jac$$
+See $cref approx_mixed_fix_like_jac$$
 $codep */
-	// prior_jac
-	void prior_jac(
+	// fix_like_jac
+	void fix_like_jac(
 		const d_vector&        fixed_vec   ,
 		CppAD::vector<size_t>& row_out     ,
 		CppAD::vector<size_t>& col_out     ,
 		d_vector&              val_out
 	);
-	friend bool ::prior_jac_xam(void);
+	friend bool ::fix_like_jac_xam(void);
 /* $$
 $end
-$head prior_hes$$
-See $cref approx_mixed_prior_hes$$
+$head fix_like_hes$$
+See $cref approx_mixed_fix_like_hes$$
 $codep */
-	// prior_hes
-	void prior_hes(
+	// fix_like_hes
+	void fix_like_hes(
 		const d_vector&        fixed_vec   ,
 		const d_vector&        weight      ,
 		CppAD::vector<size_t>& row_out     ,
 		CppAD::vector<size_t>& col_out     ,
 		d_vector&              val_out
 	);
-	friend bool ::prior_hes_xam(void);
+	friend bool ::fix_like_hes_xam(void);
 /* $$
 $end
 -------------------------------------------------------------------------------

@@ -69,13 +69,13 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 CppAD::vector<double> approx_mixed::prior_eval(const d_vector& fixed_vec)
-{	assert( record_prior_like_done_ );
-	if( prior_like_.size_var() == 0 )
+{	assert( record_fix_like_done_ );
+	if( fix_like_.size_var() == 0 )
 	{	// empty vector case
 		return CppAD::vector<double>(0);
 	}
-	assert( prior_like_.Domain() == n_fixed_ );
-	return prior_like_.Forward(0, fixed_vec);
+	assert( fix_like_.Domain() == n_fixed_ );
+	return fix_like_.Forward(0, fixed_vec);
 }
 
 

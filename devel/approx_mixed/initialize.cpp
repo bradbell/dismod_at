@@ -91,7 +91,7 @@ the member variable
 $cref/hes_fix_/approx_mixed_private/n_random_ > 0/hes_fix_/$$.
 $lnext
 The member variable
-$cref/prior_like_/approx_mixed_private/prior_like_/$$.
+$cref/fix_like_/approx_mixed_private/fix_like_/$$.
 $lnext
 The member variable
 $cref/initialize_done_/approx_mixed_private/initialize_done_/$$
@@ -140,15 +140,15 @@ void approx_mixed::initialize(
 		assert( record_laplace_done_[1] );
 		assert( record_laplace_done_[2] );
 	}
-	assert( ! record_prior_like_done_ );
+	assert( ! record_fix_like_done_ );
 	assert( ! record_constraint_done_ );
 
-	// prior_like_
-	record_prior_like(fixed_vec);
+	// fix_like_
+	record_fix_like(fixed_vec);
 	// constraint_
 	record_constraint(fixed_vec);
 
-	assert( record_prior_like_done_ );
+	assert( record_fix_like_done_ );
 	assert( record_constraint_done_ );
 
 	// initialize_done_

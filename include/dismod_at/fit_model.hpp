@@ -67,7 +67,7 @@ namespace dismod_at {
 			const a5d_vector& random_vec
 		);
 		// pass prior negative log-likelihood to base class
-		virtual a1d_vector prior_like(
+		virtual a1d_vector fix_like(
 			const a1d_vector& fixed_vec
 		);
 		// pass constraint functions to base class

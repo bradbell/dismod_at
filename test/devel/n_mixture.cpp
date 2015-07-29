@@ -85,9 +85,9 @@ public:
 		for(size_t k = 2; k <= K; k++)
 			logfac_[k] = log( double(k) ) + logfac_[k-1];
 	}
-	// implementaion of prior_like
+	// implementaion of fix_like
 	template <class Float>
-	vector<Float> implement_prior_like(const vector<Float>&  theta)
+	vector<Float> implement_fix_like(const vector<Float>&  theta)
 	{	vector<Float> vec(1);
 		Float eps( 10.0 * std::numeric_limits<double>::epsilon() );
 		//  ------------------------------------------------------------
@@ -131,9 +131,9 @@ public:
 		const vector<a5_double>& random_vec )
 	{	return vector<a5_double>(0); } // empty vector
 	//
-	virtual vector<a1_double> prior_like(
+	virtual vector<a1_double> fix_like(
 		const vector<a1_double>& fixed_vec  )
-	{	return implement_prior_like<a1_double>(fixed_vec); }
+	{	return implement_fix_like<a1_double>(fixed_vec); }
 	//
 	virtual vector<a1_double> constraint(
 		const vector<a1_double>& fixed_vec  )
@@ -218,8 +218,8 @@ bool n_mixture(void)
 	for(size_t j = 0; j < n_fixed; j++)
 		ad_theta[j] = theta_sim[j];
 	CppAD::Independent(ad_theta);
-	vector< AD<double> > ad_prior_like = approx_object.prior_like(ad_theta);
-	CppAD::ADFun<double> f(ad_theta, ad_prior_like);
+	vector< AD<double> > ad_fix_like = approx_object.fix_like(ad_theta);
+	CppAD::ADFun<double> f(ad_theta, ad_fix_like);
 	vector<double> h = f.Hessian(theta_sim, 0);
 	std::cout << "h = " << h << std::endl;
 

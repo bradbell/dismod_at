@@ -78,9 +78,9 @@ namespace {
 			}
 			return vec;
 		}
-		// implementation of prior_like
+		// implementation of fix_like
 		template <class Float>
-		vector<Float> implement_prior_like(
+		vector<Float> implement_fix_like(
 			const vector<Float>& fixed_vec  )
 		{	vector<Float> vec(1);
 
@@ -107,9 +107,9 @@ namespace {
 			const vector<a5_double>& random_vec )
 		{	return implement_joint_like(fixed_vec, random_vec); }
 		//
-		virtual vector<a1_double> prior_like(
+		virtual vector<a1_double> fix_like(
 			const vector<a1_double>& fixed_vec  )
-		{	return implement_prior_like(fixed_vec); }
+		{	return implement_fix_like(fixed_vec); }
 		//
 		// constraint is 1/2 norm squared of the fixed effects
 		virtual vector<a1_double> constraint(
