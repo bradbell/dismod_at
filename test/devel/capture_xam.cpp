@@ -261,9 +261,9 @@ public:
 		for(size_t k = 2; k < K; k++)
 			logfac_[k] = log( double(k) ) + logfac_[k-1];
 	}
-	// implementaion of joint_like
+	// implementaion of ran_like
 	template <class Float>
-	vector<Float> implement_joint_like(
+	vector<Float> implement_ran_like(
 		const vector<Float>&  theta  ,
 		const vector<Float>&  u      )
 	{	vector<Float> vec(1);
@@ -328,10 +328,10 @@ public:
 	}
 // ------------------------------------------------------------------------
 public:
-	virtual vector<a5_double> joint_like(
+	virtual vector<a5_double> ran_like(
 		const vector<a5_double>& fixed_vec  ,
 		const vector<a5_double>& random_vec )
-	{	return implement_joint_like(fixed_vec, random_vec); }
+	{	return implement_ran_like(fixed_vec, random_vec); }
 	//
 	virtual vector<a1_double> fix_like(
 		const vector<a1_double>& fixed_vec  )

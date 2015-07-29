@@ -179,7 +179,7 @@ $lend
 $head 07-16$$
 In the $cref approx_mixed$$ sub-package,
 changed $code joint_density$$ to
-$cref/joint_like/approx_mixed_public/User Defined/joint_like/$$
+$cref/ran_like/approx_mixed_public/User Defined/ran_like/$$
 and changed $code prior_density$$ to
 $cref/fix_like/approx_mixed_public/User Defined/fix_like/$$.
 

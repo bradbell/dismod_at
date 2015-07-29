@@ -47,9 +47,9 @@ namespace {
 			dismod_at::approx_mixed(n_fixed, n_random) ,
 			y_(y)
 		{ }
-		// implementation of joint_like
+		// implementation of ran_like
 		template <class Float>
-		vector<Float> implement_joint_like(
+		vector<Float> implement_ran_like(
 			const vector<Float>& theta  ,
 			const vector<Float>& u      )
 		{	vector<Float> vec(1);
@@ -96,10 +96,10 @@ namespace {
 			return vec;
 		}
 		// ------------------------------------------------------------------
-		virtual vector<a5_double> joint_like(
+		virtual vector<a5_double> ran_like(
 			const vector<a5_double>& fixed_vec  ,
 			const vector<a5_double>& random_vec )
-		{	return implement_joint_like(fixed_vec, random_vec); }
+		{	return implement_ran_like(fixed_vec, random_vec); }
 		//
 		virtual vector<a1_double> fix_like(
 			const vector<a1_double>& fixed_vec  )
@@ -155,7 +155,7 @@ bool approx_derived_xam(void)
 
 	// Evaluate the joint negative log-likelihood
 	vector<a5_double> a5_vec(1);
-	a5_vec = approx_object.implement_joint_like(a5_fixed, a5_random);
+	a5_vec = approx_object.implement_ran_like(a5_fixed, a5_random);
 
 	// check the joint negative log-likelihood
 	double sum = 0.0;

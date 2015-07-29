@@ -16,8 +16,8 @@ see http://www.gnu.org/licenses/agpl.txt
 extern bool constraint_eval_xam(void);
 extern bool constraint_jac_xam(void);
 extern bool constraint_hes_xam(void);
-extern bool joint_grad_ran_xam(void);
-extern bool joint_hes_ran_xam(void);
+extern bool ran_like_grad_xam(void);
+extern bool ran_like_hes_xam(void);
 extern bool laplace_eval_xam(void);
 extern bool laplace_beta_xam(void);
 extern bool laplace_hes_fix_xam(void);
@@ -68,14 +68,14 @@ $head User Defined$$
 The following are $code approx_mixed$$ pure virtual functions and hence must
 be defined by the user's derived class:
 
-$subhead joint_like$$
+$subhead ran_like$$
 $codep */
-	virtual CppAD::vector<a5_double> joint_like(
+	virtual CppAD::vector<a5_double> ran_like(
 		const CppAD::vector<a5_double>& fixed_vec  ,
 		const CppAD::vector<a5_double>& random_vec
 	) = 0;
 /* $$
-See $cref/joint_like/approx_mixed_joint_like/$$.
+See $cref/ran_like/approx_mixed_ran_like/$$.
 
 $subhead fix_like$$
 $codep */
@@ -118,7 +118,7 @@ $comment */
 	n_random_(n_random)             ,
 	initialize_done_(false)         ,
 	record_fix_like_done_(false)  ,
-	record_joint_done_(false)       ,
+	record_ran_like_done_(false)       ,
 	record_hes_ran_done_(false)     ,
 	record_hes_fix_done_(false)     ,
 	record_grad_ran_done_(false)    ,
@@ -160,7 +160,7 @@ $codep */
 $childtable%
 	devel/approx_mixed/derived_ctor.omh%
 	devel/approx_mixed/initialize.cpp%
-	devel/approx_mixed/joint_like.omh%
+	devel/approx_mixed/ran_like.omh%
 	devel/approx_mixed/fix_like.omh%
 	devel/approx_mixed/constraint.omh%
 	devel/approx_mixed/optimize_random.cpp%
@@ -200,8 +200,8 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/record_hes_fix.cpp
 	%devel/approx_mixed/record_fix_like.cpp
 	%devel/approx_mixed/record_constraint.cpp
-	%devel/approx_mixed/joint_grad_ran.cpp
-	%devel/approx_mixed/joint_hes_ran.cpp
+	%devel/approx_mixed/ran_like_grad.cpp
+	%devel/approx_mixed/ran_like_hes.cpp
 	%devel/approx_mixed/laplace_eval.cpp
 	%devel/approx_mixed/laplace_beta.cpp
 	%devel/approx_mixed/laplace_hes_fix.cpp
@@ -226,7 +226,7 @@ the corresponding member function is called:
 $codep */
 	bool                initialize_done_;
 	bool                record_fix_like_done_;
-	bool                record_joint_done_;
+	bool                record_ran_like_done_;
 	bool                record_hes_ran_done_;
 	bool                record_hes_fix_done_;
 	bool                record_grad_ran_done_;
@@ -235,25 +235,25 @@ $codep */
 /* $$
 $head n_random_ > 0$$
 The following values are only defined when $icode%n_random_% > 0%$$:
-$cref/joint_like_/approx_mixed_private/n_random_ > 0/joint_like_/$$,
+$cref/ran_like_/approx_mixed_private/n_random_ > 0/ran_like_/$$,
 $cref/grad_ran_/approx_mixed_private/n_random_ > 0/grad_ran_/$$,
 $cref/hes_ran_/approx_mixed_private/n_random_ > 0/hes_ran_/$$,
 $cref/laplace_k_/approx_mixed_private/n_random_ > 0/laplace_k_/$$,
 $cref/hes_fix_/approx_mixed_private/n_random_ > 0/hes_fix_/$$,
 
-$subhead joint_like_$$
-Recording of the $cref/joint_like/approx_mixed_joint_like/$$ function
+$subhead ran_like_$$
+Recording of the $cref/ran_like/approx_mixed_ran_like/$$ function
 which evaluates a
 $cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
 corresponding to
 $cref/f(theta, u)/approx_mixed_theory/Joint Negative Log-Likelihood, f(theta, u)/$$
 for different levels of AD:
 $codep */
-	CppAD::ADFun<double>      a0_joint_like_;
-	CppAD::ADFun<a1_double>   a1_joint_like_;
-	CppAD::ADFun<a2_double>   a2_joint_like_;
-	CppAD::ADFun<a3_double>   a3_joint_like_;
-	CppAD::ADFun<a4_double>   a4_joint_like_;
+	CppAD::ADFun<double>      a0_ran_like_;
+	CppAD::ADFun<a1_double>   a1_ran_like_;
+	CppAD::ADFun<a2_double>   a2_ran_like_;
+	CppAD::ADFun<a3_double>   a3_ran_like_;
+	CppAD::ADFun<a4_double>   a4_ran_like_;
 /* $$
 $subhead grad_ran_$$
 The gradient of the joint likelihood w.r.t. the random effects
@@ -410,28 +410,28 @@ $codep */
 	void record_constraint(const d_vector& fixed_vec);
 /* $$
 ------------------------------------------------------------------------------
-$head joint_grad_ran$$
-See $cref approx_mixed_joint_grad_ran$$
+$head ran_like_grad$$
+See $cref approx_mixed_ran_like_grad$$
 $codep */
-	// joint_grad_ran
-	a3d_vector joint_grad_ran(
+	// ran_like_grad
+	a3d_vector ran_like_grad(
 		const a3d_vector&       fixed_vec   ,
 		const a3d_vector&       random_vec
 	);
-	friend bool ::joint_grad_ran_xam(void);
+	friend bool ::ran_like_grad_xam(void);
 /* $$
-$head joint_hes_ran$$
-See $cref approx_mixed_joint_hes_ran$$
+$head ran_like_hes$$
+See $cref approx_mixed_ran_like_hes$$
 $codep */
-	// joint_hes_ran
-	void joint_hes_ran(
+	// ran_like_hes
+	void ran_like_hes(
 		const a3d_vector&       fixed_vec   ,
 		const a3d_vector&       random_vec  ,
 		CppAD::vector<size_t>&  row_out     ,
 		CppAD::vector<size_t>&  col_out     ,
 		a3d_vector&             val_out
 	);
-	friend bool ::joint_hes_ran_xam(void);
+	friend bool ::ran_like_hes_xam(void);
 /* $$
 ------------------------------------------------------------------------------
 $head laplace_eval$$

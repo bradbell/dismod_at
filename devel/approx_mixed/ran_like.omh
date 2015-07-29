@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 /*
-$begin approx_mixed_joint_like$$
+$begin approx_mixed_ran_like$$
 $spell
 	vec
 	CppAD
@@ -19,7 +19,7 @@ $$
 $section Joint Negative Log-Likelihood for the Data and Random Effects$$
 
 $head Syntax$$
-$icode%vec% = %approx_object%.joint_like(%fixed_vec%, %random_vec%)%$$
+$icode%vec% = %approx_object%.ran_like(%fixed_vec%, %random_vec%)%$$
 
 $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
@@ -34,7 +34,7 @@ $head Virtual Function$$
 The following virtual functions and must be implemented
 in the derived class:
 $codei%
-	virtual CppAD::vector<a5_double> joint_like(
+	virtual CppAD::vector<a5_double> ran_like(
 		const CppAD::vector<a5_double>& %fixed_vec%  ,
 		const CppAD::vector<a5_double>& %random_vec%
 	)

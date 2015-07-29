@@ -303,8 +303,8 @@ CppAD::vector<double> fit_model::get_solution(void)
 // ===========================================================================
 // private functions
 // ===========================================================================
-// joint_like
-fit_model::a5d_vector fit_model::joint_like(
+// ran_like
+fit_model::a5d_vector fit_model::ran_like(
 	const a5d_vector& fixed_vec   ,
 	const a5d_vector& random_vec  )
 {	// packed vector

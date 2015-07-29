@@ -28,7 +28,7 @@ $icode%approx_object%.initialize(%fixed_vec%, %random_vec%)%$$
 $head Purpose$$
 Some of the $code approx_mixed$$ initialization requires calling the
 derived class version of the
-$cref/joint_like/approx_mixed_joint_like/$$ function.
+$cref/ran_like/approx_mixed_ran_like/$$ function.
 Hence this initialization cannot be done until
 after the $cref/derived constructor/approx_mixed_derived_ctor/$$ completes.
 
@@ -70,8 +70,8 @@ They will contain the corresponding recordings when $code initialize$$ returns:
 $list number$$
 If $icode%n_random_ > 0%$$,
 for $icode%k% = 0%, ... ,% 4%$$,
-the member variable $codei%a%k%_joint_like_%$$ is the corresponding
-$cref/joint_like_/approx_mixed_private/n_random_ > 0/joint_like_/$$.
+the member variable $codei%a%k%_ran_like_%$$ is the corresponding
+$cref/ran_like_/approx_mixed_private/n_random_ > 0/ran_like_/$$.
 $lnext
 If $icode%n_random_ > 0%$$,
 the member variable
@@ -111,14 +111,14 @@ void approx_mixed::initialize(
 	}
 	if( n_random_ > 0 )
 	{
-		assert( ! record_joint_done_ );
+		assert( ! record_ran_like_done_ );
 		assert( ! record_grad_ran_done_ );
 		assert( ! record_hes_ran_done_ );
 		assert( ! record_laplace_done_[0] );
 		assert( ! record_laplace_done_[1] );
 		assert( ! record_laplace_done_[2] );
 
-		// joint_like_
+		// ran_like_
 		record_joint(fixed_vec, random_vec);
 		// grad_ran_
 		record_grad_ran(fixed_vec, random_vec);
@@ -133,7 +133,7 @@ void approx_mixed::initialize(
 		// hes_fix_
 		record_hes_fix(fixed_vec, random_vec);
 
-		assert( record_joint_done_ );
+		assert( record_ran_like_done_ );
 		assert( record_grad_ran_done_ );
 		assert( record_hes_ran_done_ );
 		assert( record_laplace_done_[0] );

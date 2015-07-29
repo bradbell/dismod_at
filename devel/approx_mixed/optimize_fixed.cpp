@@ -153,7 +153,7 @@ for $icode%j% = 0 , %...%, %n_fixed_%-1%$$.
 $head Laplace Approximation$$
 The $cref/theory/approx_mixed_theory/$$ for the
 Laplace approximation optimization only includes the case where
-the $cref/joint negative log-likelihood/approx_mixed_joint_like/$$ is smooth.
+the $cref/joint negative log-likelihood/approx_mixed_ran_like/$$ is smooth.
 
 $children%include/dismod_at/ipopt_fixed.hpp
 %$$

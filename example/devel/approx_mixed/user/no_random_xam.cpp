@@ -99,7 +99,7 @@ namespace {
 	public:
 		// ------------------------------------------------------------------
 		// User defined virtual functions
-		virtual vector<a5_double> joint_like(
+		virtual vector<a5_double> ran_like(
 			const vector<a5_double>& fixed_vec  ,
 			const vector<a5_double>& random_vec )
 		{	return vector<a5_double>(0); } // empty vector

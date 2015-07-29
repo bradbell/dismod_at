@@ -9,14 +9,14 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin joint_hes_ran_xam.cpp$$
+$begin ran_like_hes_xam.cpp$$
 $spell
 	hes
 	interp
 	xam
 $$
 
-$section C++ joint_hes_ran: Example and Test$$
+$section C++ ran_like_hes: Example and Test$$
 
 
 $head Private$$
@@ -24,7 +24,7 @@ This example is not part of the
 $cref/approx_mixed public API/approx_mixed_public/$$.
 
 $code
-$verbatim%example/devel/approx_mixed/private/joint_hes_ran_xam.cpp
+$verbatim%example/devel/approx_mixed/private/ran_like_hes_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -53,9 +53,9 @@ namespace {
 			y_(y)
 		{ }
 	private:
-		// implementation of joint_like
+		// implementation of ran_like
 		template <class Float>
-		vector<Float> implement_joint_like(
+		vector<Float> implement_ran_like(
 			const vector<Float>& theta  ,
 			const vector<Float>& u      )
 		{	vector<Float> vec(1);
@@ -89,10 +89,10 @@ namespace {
 		}
 	public:
 		//
-		virtual vector<a5_double> joint_like(
+		virtual vector<a5_double> ran_like(
 			const vector<a5_double>& fixed_vec  ,
 			const vector<a5_double>& random_vec )
-		{	return implement_joint_like(fixed_vec, random_vec); }
+		{	return implement_ran_like(fixed_vec, random_vec); }
 		//
 		virtual vector<a1_double> fix_like(
 			const vector<a1_double>& fixed_vec  )
@@ -116,7 +116,7 @@ namespace {
 	};
 }
 
-bool joint_hes_ran_xam(void)
+bool ran_like_hes_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -142,7 +142,7 @@ bool joint_hes_ran_xam(void)
 	// compute Hessian with respect to random effects
 	vector<size_t> row, col;
 	vector<a3_double> val;
-	approx_object.joint_hes_ran(fixed_vec, random_vec, row, col, val);
+	approx_object.ran_like_hes(fixed_vec, random_vec, row, col, val);
 
 	// check size of result vectors
 	size_t K = row.size();

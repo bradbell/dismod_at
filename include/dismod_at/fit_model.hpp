@@ -62,7 +62,7 @@ namespace dismod_at {
 		CppAD::vector<double>              solution_;
 		// ---------------------------------------------------------------
 		// pass joint negative log-likelihood to base class
-		virtual a5d_vector joint_like(
+		virtual a5d_vector ran_like(
 			const a5d_vector& fixed_vec   ,
 			const a5d_vector& random_vec
 		);

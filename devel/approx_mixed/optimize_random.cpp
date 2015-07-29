@@ -26,7 +26,7 @@ $icode%approx_object%.optimize_random(%fixed_vec%, %random_in%)%$$
 
 $head Purpose$$
 This routine maximizes the
-$cref/joint negative log-likelihood/approx_mixed_joint_like/$$ corresponding to the
+$cref/joint negative log-likelihood/approx_mixed_ran_like/$$ corresponding to the
 object $icode approx_object$$.
 
 $head approx_object$$
@@ -118,7 +118,7 @@ public:
 		approx_object_.pack(fixed_vec_, random_vec, both_vec);
 
 		// compute log-density vector
-		ADvector vec = approx_object_.a1_joint_like_.Forward(0, both_vec);
+		ADvector vec = approx_object_.a1_ran_like_.Forward(0, both_vec);
 
 		// initialize smooth part of negative log-likelihood
 		size_t k = 0;
@@ -149,7 +149,7 @@ CppAD::vector<double> approx_mixed::optimize_random(
 		"approx_mixed::initialize was not called before optimize_random";
 		fatal_error(error_message);
 	}
-	if( ! record_joint_done_ )
+	if( ! record_ran_like_done_ )
 	{	std::string error_message =
 		"approx_mixed::optimize_random there are no random effects";
 		fatal_error(error_message);
@@ -162,7 +162,7 @@ CppAD::vector<double> approx_mixed::optimize_random(
 	// determine initial density vector
 	d_vector both_vec(n_fixed_ + n_random_);
 	pack(fixed_vec, random_in, both_vec);
-	d_vector vec = a0_joint_like_.Forward(0, both_vec);
+	d_vector vec = a0_ran_like_.Forward(0, both_vec);
 
 	// number of absolute value terms in objective
 	size_t n_abs = vec.size() - 1;

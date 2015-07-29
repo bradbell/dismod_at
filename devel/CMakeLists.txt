@@ -13,9 +13,9 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	approx_mixed/constraint_eval.cpp
 	approx_mixed/constraint_jac.cpp
 	approx_mixed/constraint_hes.cpp
-	approx_mixed/joint_grad_ran.cpp
+	approx_mixed/ran_like_grad.cpp
 	approx_mixed/laplace_hes_fix.cpp
-	approx_mixed/joint_hes_ran.cpp
+	approx_mixed/ran_like_hes.cpp
 	approx_mixed/initialize.cpp
 	approx_mixed/ipopt_fixed.cpp
 	approx_mixed/laplace_eval.cpp

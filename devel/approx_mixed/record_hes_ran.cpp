@@ -101,7 +101,7 @@ void approx_mixed::record_hes_ran(
 	CppAD::Independent(a5_u);
 	//
 	a5d_vector a5_both(n_fixed_ + n_random_);
-	a5d_vector a5_vec = joint_like(a5_theta, a5_u);
+	a5d_vector a5_vec = ran_like(a5_theta, a5_u);
 	a5d_vector a5_sum(1);
 	a5_sum[0]    = a5_vec[0];
 	size_t n_abs = a5_vec.size() - 1;

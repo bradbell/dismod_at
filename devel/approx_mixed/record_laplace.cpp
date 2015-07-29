@@ -107,7 +107,7 @@ void approx_mixed::record_laplace(
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	CppAD::vector<size_t> row, col;
 	a3d_vector val;
-	joint_hes_ran(theta, u, row, col, val);
+	ran_like_hes(theta, u, row, col, val);
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
 	sparse_matrix hessian(n_random_, n_random_);
@@ -129,7 +129,7 @@ void approx_mixed::record_laplace(
 	}
 	else
 	{	// evaluate gradient f_u^{(1)} (beta , u )
-		grad = joint_grad_ran(beta, u);
+		grad = ran_like_grad(beta, u);
 
 		// newton_step = f_{uu}^{(2)} (theta , u)^{-1} f_u^{(1)} (beta, u)
 		for(size_t j = 0; j < n_random_; j++)
@@ -141,7 +141,7 @@ void approx_mixed::record_laplace(
 			U[j] = u[j] - newton_step(j);
 
 		// evaluate hessian f_{uu}^{(2)}(beta, U) and compute its factorization
-		joint_hes_ran(beta, U, row, col, val);
+		ran_like_hes(beta, U, row, col, val);
 		for(size_t k = 0; k < K; k++)
 			hessian.coeffRef(row[k], col[k]) = val[k];
 		chol.factorize(hessian);
@@ -154,7 +154,7 @@ void approx_mixed::record_laplace(
 	}
 	else
 	{	// evaluate gradient f_u^{(1)} (beta , U )
-		grad = joint_grad_ran(beta, U);
+		grad = ran_like_grad(beta, U);
 
 		// newton_step = f_{uu}^{(2)} (beta , U)^{-1} f_u^{(1)} (beta, U)
 		for(size_t j = 0; j < n_random_; j++)
@@ -166,7 +166,7 @@ void approx_mixed::record_laplace(
 			W[j] = U[j] - newton_step(j);
 
 		// evaluate hessian f_{uu}^{(2)}(beta, W) and compute its factorization
-		joint_hes_ran(beta, W, row, col, val);
+		ran_like_hes(beta, W, row, col, val);
 		for(size_t k = 0; k < K; k++)
 			hessian.coeffRef(row[k], col[k]) = val[k];
 		chol.factorize(hessian);
@@ -182,7 +182,7 @@ void approx_mixed::record_laplace(
 	// f[beta, W(beta, theta, u)]
 	a3d_vector both(n_fixed_ + n_random_);
 	pack(beta, W, both);
-	a3d_vector vec = a3_joint_like_.Forward(0, both);
+	a3d_vector vec = a3_ran_like_.Forward(0, both);
 	a3_double sum = vec[0];
 	size_t n_abs = vec.size() - 1;
 	for(size_t i = 0; i < n_abs; i++)

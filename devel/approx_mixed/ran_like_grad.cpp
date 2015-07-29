@@ -10,7 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/approx_mixed.hpp>
 /*
-$begin approx_mixed_joint_grad_ran$$
+$begin approx_mixed_ran_like_grad$$
 $spell
 	vec
 	const
@@ -21,7 +21,7 @@ $$
 $section Gradient of Joint Negative Log-Likelihood With Respect to Random Effects$$
 
 $head Syntax$$
-$icode%grad% = %approx_object%.joint_grad_ran( %fixed_vec%, %random_vec%)%$$
+$icode%grad% = %approx_object%.ran_like_grad( %fixed_vec%, %random_vec%)%$$
 
 $head Purpose$$
 This routine computes the gradient of the negative log of the joint negative log-likelihood
@@ -62,10 +62,10 @@ $codei%
 It contains the gradient $latex f_u^{(1)} ( \theta , u )$$.
 
 $children%
-	example/devel/approx_mixed/private/joint_grad_ran_xam.cpp
+	example/devel/approx_mixed/private/ran_like_grad_xam.cpp
 %$$
 $head Example$$
-The file $cref joint_grad_ran_xam.cpp$$ contains an example
+The file $cref ran_like_grad_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 
@@ -75,8 +75,8 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // ----------------------------------------------------------------------------
-// joint_grad_ran
-CppAD::vector<approx_mixed::a3_double> approx_mixed::joint_grad_ran(
+// ran_like_grad
+CppAD::vector<approx_mixed::a3_double> approx_mixed::ran_like_grad(
 	const a3d_vector&        fixed_vec   ,
 	const a3d_vector&        random_vec  )
 {	assert( record_grad_ran_done_ );
