@@ -19,6 +19,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 using CppAD::vector;
 using std::exp;
 using std::log;
+using std::endl;
 
 // simulate covariates, x, and data, y
 void simulate(
@@ -98,12 +99,12 @@ public:
 	{	return vector<a1_double>(0); } // empty vector
 	//
 	virtual void fatal_error(const std::string& error_message)
-	{	std::cerr << "Error: " << error_message << std::endl;
+	{	std::cerr << "Error: " << error_message << endl;
 		std::exit(1);
 	}
 	//
 	virtual void warning(const std::string& warning_message)
-	{	std::cerr << "Warning: " << warning_message << std::endl;
+	{	std::cerr << "Warning: " << warning_message << endl;
 	}
 };
 } // END_EMPTY_NAMESPACE
@@ -114,8 +115,8 @@ bool binomial_test(void)
 	size_t random_seed = dismod_at::new_gsl_rng(0);
 
 	// simulation parameters
-	size_t N = 20;
-	size_t I = 2000;
+	size_t N = 25;
+	size_t I = 5000;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   0.25;      // constant term in covariate model
 
@@ -157,10 +158,12 @@ bool binomial_test(void)
 		u_in
 	);
 	for(size_t j = 0; j < n_fixed; j++)
-		ok &= std::fabs( theta_out[j] / theta_sim[j] - 1.0) < 1e-2;
+	{	ok &= std::fabs( theta_out[j] / theta_sim[j] - 1.0) < 1e-2;
+		std::cout << endl << theta_out[j] / theta_sim[j] - 1.0 << endl;
+	}
 	//
 	if( ! ok )
-		std::cout << "capture_xam:: random_seed = " << random_seed << std::endl;
+		std::cout << endl << "random_seed = " << random_seed << endl;
 	dismod_at::free_gsl_rng();
 	return ok;
 }
