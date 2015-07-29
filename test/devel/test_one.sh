@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # bash function that echos and executes a command
@@ -77,6 +77,8 @@ echo_eval g++ \
 	$dismod_at_lib \
 	$ipopt_libs \
 	-lsqlite3 \
+	-lgsl \
+	-lgslcblas \
 	-o junk
 #
 # run

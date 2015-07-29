@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cstring>
 
 extern bool age_time_order(void);
+extern bool binomial_test(void);
 extern bool data_model_subset(void);
 extern bool meas_mulcov(void);
 extern bool rate_mulcov(void);
@@ -51,6 +52,7 @@ namespace {
 int main(void)
 {
 	RUN(age_time_order);
+	RUN(binomial_test);
 	RUN(data_model_subset);
 	RUN(meas_mulcov);
 	RUN(rate_mulcov);

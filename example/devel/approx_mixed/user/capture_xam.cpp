@@ -268,8 +268,9 @@ public:
 		const vector<Float>&  u      )
 	{	vector<Float> vec(1);
 		Float pi2( 8.0 * std::atan(1.0) );
+		Float one( 1.0 );
 		Float two( 2.0 );
-		Float eps( 1e3 * std::numeric_limits<double>::epsilon() );
+		Float eps = Float( 10.0 * std::numeric_limits<double>::epsilon() );
 		//  ------------------------------------------------------------
 		// log [ p(u | theta) ]
 		//  ------------------------------------------------------------
@@ -289,7 +290,7 @@ public:
 		for(size_t i = 0; i < I_; i++)
 		{	for(size_t t = 0; t < T_; t++)
 			{	Float ex     = exp( u[t] + theta[0] + theta[1] * x_[i] );
-				p[i * T_ + t] = Float(1.0) / (Float(1.0) + ex + eps );
+				p[i * T_ + t] = Float(1.0) / (Float(1.0) + ex );
 			}
 		}
 		//
@@ -298,7 +299,9 @@ public:
 		{	// initialize sum that defines S_i
 			Float Si = Float(0.0);
 			for(size_t k = M_[i]; k < K_; k++)
-			{	// initialize summation of log( J_{it} )
+			{	// compute log( J_{it} )
+				//
+				// terms that do not depend on i, t
 				Float sumlog = Float(T_) * theta[2] * Float(k);
 				sumlog      -= Float(T_) * exp( theta[2] );
 				//
@@ -310,9 +313,9 @@ public:
 					// log [ (k choose yit) / k ! ]
 					Float term_1 = - Float( logfac_[yit] + logfac_[k - yit] );
 					// log [ pit^yit ]
-					Float term_2 = Float( yit ) * log(pit);
+					Float term_2 = Float( yit ) * log(pit + eps);
 					// log [ 1 - pit^yit ]
-					Float term_3 = log(Float(1.0) - exp( term_2 ) + eps );
+					Float term_3 = Float(k - yit) * log(one + eps - pit);
 					//
 					sumlog       += term_1 + term_2 + term_3;
 				}
@@ -355,13 +358,13 @@ bool capture_xam(void)
 	size_t random_seed = dismod_at::new_gsl_rng(0);
 
 	// simulation parameters
-	size_t I = 5;
+	size_t I = 50;
 	size_t T = 5;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   1.00;      // constant term in covariate model
 	theta_sim[1] =   0.00;      // linear term in covariate model
-	theta_sim[2] =   log(5.0);  // log of mean population size
-	theta_sim[3] =   log(0.25); // log of variance of random effects
+	theta_sim[2] =   log(10.0); // log of mean population size
+	theta_sim[3] =   log(0.10); // log of variance of random effects
 
 	// set x, y
 	vector<double> x(I);
@@ -371,7 +374,7 @@ bool capture_xam(void)
 	// practical bound for population size is 5 times mean
 	double lambda = exp( theta_sim[2] );
 	double sigma  = std::sqrt( lambda );
-	size_t K      = size_t ( lambda + 3.0 * sigma );
+	size_t K      = size_t ( lambda + 2.0 * sigma );
 	assert( K >= 2 );
 
 	// create derived object
@@ -392,9 +395,9 @@ bool capture_xam(void)
 	{	theta_lower[j] = theta_sim[j];
 		theta_upper[j] = theta_sim[j];
 	}
-	theta_lower[0] = 0.0;
-	theta_upper[0] = 2.0;
-
+	// limit on constant term
+	theta_lower[0] = -2.0;
+	theta_upper[0] =  2.0;
 
 	// optimize the fixed effects
 	std::string options =

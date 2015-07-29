@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # Build C++ Examples / Tests
@@ -13,18 +13,27 @@
 # Release or deug build
 SET(CMAKE_BUILD_TYPE DEBUG)
 
+LINK_DIRECTORIES(
+	${dismod_at_BINARY_DIR}/cpp
+	${ipopt_LIBRARY_DIRS}
+)
 # Program cpp, not installed, and depends on following source files
 ADD_EXECUTABLE(test_devel EXCLUDE_FROM_ALL
 	age_time_order.cpp
+	binomial_test.cpp
 	data_model_subset.cpp
 	meas_mulcov.cpp
 	rate_mulcov.cpp
 	test_devel.cpp
 )
-
-LINK_DIRECTORIES( ${dismod_at_BINARY_DIR}/cpp )
 SET_TARGET_PROPERTIES(
 	test_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
-TARGET_LINK_LIBRARIES(test_devel devel_lib sqlite3)
+TARGET_LINK_LIBRARIES(test_devel
+	devel_lib
+	${ipopt_LIBRARIES}
+	sqlite3
+	gsl
+	gslcblas
+)
 ADD_CUSTOM_TARGET(check_test_devel test_devel DEPENDS test_devel )
