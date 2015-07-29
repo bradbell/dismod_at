@@ -18,6 +18,9 @@ extern bool data_model_subset(void);
 extern bool meas_mulcov(void);
 extern bool rate_mulcov(void);
 
+// this test only run wth ./test_one.sh
+extern bool n_mixture(void);
+
 // anonymous namespace
 namespace {
 	using std::cout;
