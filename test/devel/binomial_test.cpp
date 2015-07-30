@@ -158,8 +158,8 @@ bool binomial_test(void)
 		u_in
 	);
 	for(size_t j = 0; j < n_fixed; j++)
-	{	ok &= std::fabs( theta_out[j] / theta_sim[j] - 1.0) < 1e-2;
-		std::cout << endl << theta_out[j] / theta_sim[j] - 1.0 << endl;
+	{	// std::cout << endl << theta_out[j] / theta_sim[j] - 1.0 << endl;
+		ok &= std::fabs( theta_out[j] / theta_sim[j] - 1.0) < 1e-2;
 	}
 	//
 	if( ! ok )

@@ -17,6 +17,10 @@ $spell
 	Poisson
 	covariate
 $$
+$latex
+\newcommand{\B}[1]{{\bf #1}}
+\newcommand{\R}[1]{{\rm #1}}
+$$
 
 $section A Capture Re-capture Model$$
 
@@ -51,11 +55,9 @@ $latex \theta_0$$ $cnext constant multiplier in covariate relation
 $rnext
 $latex \theta_1$$ $cnext linear multiplier in covariate relation
 $rnext
-$latex \theta_2$$ $cnext
-	log of mean for $latex N_i$$ given $latex \theta$$
+$latex \theta_2$$ $cnext mean for $latex N_i$$ given $latex \theta$$
 $rnext
-$latex \theta_3$$ $cnext
-	log of the variance of the random effects $latex u_t$$
+$latex \theta_3$$ $cnext variance of the random effects $latex u_t$$
 $tend
 
 $head Count Data$$
@@ -87,30 +89,30 @@ $head Population Probability$$
 We use a Poisson distribution to model the
 probability of $latex N_i$$ given $latex \theta_2$$; i.e.,
 $latex \[
-\B{P} [ N_i | \exp( \theta_2 ) ]
+\B{P} [ N_i | \theta_2  ]
 =
-\exp( \theta_2 )^{N(i)} \frac{ \exp[ - \exp( \theta_2 ) ] }{ N_i ! }
+\theta_2^{N(i)} \frac{ \exp[ - \theta_2 ] }{ N_i ! }
 \] $$
 We assume that this probability
 is independent for each $latex i$$.
-Furthermore, we assume that for $latex \lambda = \exp( \theta_2 ) $$,
+Furthermore, we assume that
 $latex \[
-	\exp( \lambda )
+	\exp( \theta_2 )
 	\approx
-	\sum_{k = 0}^{K-1} \frac{ \lambda^k }{ k ! }
+	\sum_{k = 0}^{K-1} \frac{ \theta_2^k }{ k ! }
 \] $$
 
 $head p(u | theta)$$
 We use a normal distribution, with mean zero and variance
-$latex \exp( \theta_3 )$$,
+$latex \theta_3$$,
 for the distribution of the random effects $latex u$$
 given the fixed effects $latex \theta$$; i.e.,
 $latex \[
 \B{p} ( u | \theta )
 =
 \prod_{t=0}^{T-1}
-	\frac{1}{ \sqrt{ \exp( \theta_3 ) 2 \pi } }
-		\exp \left[ - \frac{1}{2} \frac{ u_t^2 }{ \exp( \theta_3 ) } \right]
+	\frac{1}{ \sqrt{ \theta_3 2 \pi } }
+		\exp \left[ - \frac{1}{2} \frac{ u_t^2 }{ \theta_3 } \right]
 \] $$
 
 $head p(y | theta , u)$$
@@ -122,30 +124,31 @@ We define a probability of capture function for each location and time by
 $latex \[
 p_{i,t} ( \theta , u ) =  [ 1 + \exp( u_t + \theta_0 + \theta_1 x_i ) ]^{-1}
 \] $$
-The joint probability of $latex N_i$$, and $latex y_{i, t}$$ given
-$latex \theta$$, and $latex u$$ is
+The binomial likelihood for $latex y_{i, t}$$ given
+$latex N_i$$, $latex \theta$$, and $latex u$$ is
 $latex \[
-J_{i,t} ( N_i, y_{i,t} , \theta , u )
+B_{i,t} ( N_i, \theta , u )
 =
-\exp( \theta_2 )^{N(i)} \frac{ \exp[ - \exp( \theta_2 ) ] }{ {N(i)} ! }
 \left( \begin{array}{c} {N(i)} \\ y_{i,t} \end{array} \right)
 	p_{i,t} ( \theta , u)^{y(i,t)}
 	\left( 1 - p_{i,t}( \theta , u)^{y(i,t)} \right)
 \] $$
-We do not know the population at each location $latex N_i$$
-so we define the population summed probability
-function for each location by
+We do not know the population at each location $latex N_i$$,
+but instead have a Poisson prior for $latex N_i$$.
+The likelihood for the data at the $th i$$ location is
 $latex \[
-S_i ( y, \theta , u )
+L_i ( \theta , u )
 =
-\sum_{k=M(i)}^{K-1} \prod_{t=0}^{T-1} J_{i,t} ( k , y_{i,t}, \theta , u )
+\sum_{k=M(i)}^{K-1}
+	\theta_2^k \frac{ \exp( - \theta_2 ) }{ k ! }
+		\prod_{t=0}^{T-1} B_{i,t} ( k , \theta , u )
 \] $$
-Our model for the density of the data,
-that depends on the fixed and random effects, is
+Our model for the likelihood of the data at all the locations,
+fiven the fixed and random effects, is
 $latex \[
 \B{p}( y | \theta , u )
 =
-\prod_{i=0}^{I-1} S_i ( y, \theta , u )
+\prod_{i=0}^{I-1} L_i ( \theta , u )
 \] $$
 
 $head p(theta)$$
@@ -191,13 +194,13 @@ void simulate_xy(
 	//
 	// simulate population sizes
 	vector<double> N(I);
-	double mu =  exp( theta[2] );
+	double mu =  theta[2];
 	for(size_t i = 0; i < I; i++)
 		N[i] = gsl_ran_poisson(rng, mu );
 	//
 	// simulate random effects
 	vector<double> u(T);
-	double sigma = std::sqrt( exp( theta[3] ) );
+	double sigma = std::sqrt( theta[3] );
 	for(size_t t = 0; t < T; t++)
 		u[t] = gsl_ran_gaussian(rng, sigma);
 	//
@@ -267,61 +270,71 @@ public:
 		const vector<Float>&  theta  ,
 		const vector<Float>&  u      )
 	{	vector<Float> vec(1);
-		Float pi2( 8.0 * std::atan(1.0) );
 		Float one( 1.0 );
 		Float two( 2.0 );
+		Float pi2( 8.0 * std::atan(1.0) );
 		Float eps = Float( 10.0 * std::numeric_limits<double>::epsilon() );
 		//  ------------------------------------------------------------
 		// log [ p(u | theta) ]
 		//  ------------------------------------------------------------
 		vec[0] = Float(0.0);
-		Float sigsq = exp( theta[3] );
+		Float sigsq = theta[3];
 		for(size_t t = 0; t < T_; t++)
-		{	vec[0] -= log( pi2 * sigsq ) / two;
-			vec[0] -= u[t] * u[t] / (two * sigsq);
+		{	vec[0] -= log( pi2 * sigsq + eps) / two;
+			vec[0] -= u[t] * u[t] / (two * sigsq + eps);
 		}
 		//  ------------------------------------------------------------
 		// log [ p(y | theta, u) ]
 		//  ------------------------------------------------------------
-		// log of k !
 		//
-		// p_{i,t}
-		vector<Float> p(I_ * T_);
+		// log( p_{i,t} ) and log( 1.0 - p_{i,t} )
+		vector<Float> log_p(I_ * T_), log_1p(I_ * T_);
 		for(size_t i = 0; i < I_; i++)
 		{	for(size_t t = 0; t < T_; t++)
-			{	Float ex     = exp( u[t] + theta[0] + theta[1] * x_[i] );
-				p[i * T_ + t] = Float(1.0) / (Float(1.0) + ex );
+			{	Float ex   = exp( u[t] + theta[0] + theta[1] * x_[i] );
+				Float    p = one / (one + ex );
+				log_p[ i * T_ + t ]  = log(p + eps);
+				log_1p[i * T_ + t ]  = log(one - p + eps);
 			}
 		}
 		//
 		// loop over locations
 		for(size_t i = 0; i < I_; i++)
-		{	// initialize sum that defines S_i
-			Float Si = Float(0.0);
+		{	// initialize sum that defines L_i
+			Float Li = Float(0.0);
 			for(size_t k = M_[i]; k < K_; k++)
-			{	// compute log( J_{it} )
+			{	// initialize log of term for this k
 				//
-				// terms that do not depend on i, t
-				Float sumlog = Float(T_) * theta[2] * Float(k);
-				sumlog      -= Float(T_) * exp( theta[2] );
+				// terms that need to be calculated with Float
+				Float float_sum = Float(0.0);
+				//
+				// terms that dno not need to use Float
+				double double_sum = 0.0;
+				//
+				// log [ likelihood for k given theta[2] ]
+				float_sum  += log( theta[2] + eps ) * Float(k);
+				float_sum  -= theta[2];
+				double_sum -= logfac_[k];
+				//
+				// terms in likelihood for data given k that do not
+				// depend on value of t
+				double_sum     += T_ * logfac_[k];
 				//
 				// now compute terms that depend on t
 				for(size_t t = 0; t < T_; t++)
 				{	size_t yit = y_[ i * T_ + t ];
-					Float  pit = p[ i * T_ + t ];
 					//
-					// log [ (k choose yit) / k ! ]
-					Float term_1 = - Float( logfac_[yit] + logfac_[k - yit] );
+					// log [ (k choose yit) / k! ]
+					// where the k! term is added outside the loop
+					double_sum += logfac_[yit] - logfac_[k - yit];
 					// log [ pit^yit ]
-					Float term_2 = Float( yit ) * log(pit + eps);
+					float_sum += Float( yit ) * log_p[i * T_ + t];
 					// log [ 1 - pit^yit ]
-					Float term_3 = Float(k - yit) * log(one + eps - pit);
-					//
-					sumlog       += term_1 + term_2 + term_3;
+					float_sum += Float(k - yit) * log_1p[i * T_ + t];
 				}
-				Si += exp( sumlog );
+				Li += exp( float_sum + double_sum );
 			}
-			vec[0] += log( Si );
+			vec[0] += log( Li );
 		}
 		vec[0] = - vec[0];
 		return vec;
@@ -358,13 +371,13 @@ bool capture_xam(void)
 	size_t random_seed = dismod_at::new_gsl_rng(0);
 
 	// simulation parameters
-	size_t I = 50;
-	size_t T = 1;
+	size_t I = 100;
+	size_t T = 7;
 	vector<double> theta_sim(n_fixed);
-	theta_sim[0] =   1.00;      // constant term in covariate model
-	theta_sim[1] =   0.00;      // linear term in covariate model
-	theta_sim[2] =   log(5.0);  // log of mean population size
-	theta_sim[3] =   log(0.10); // log of variance of random effects
+	theta_sim[0] =   0.50;  // constant term in covariate model
+	theta_sim[1] =   0.00;  // linear term in covariate model
+	theta_sim[2] =   5.0;   // mean population size
+	theta_sim[3] =   0.25;  // variance of random effects
 
 	// set x, y
 	vector<double> x(I);
@@ -372,9 +385,8 @@ bool capture_xam(void)
 	simulate_xy(I, T, theta_sim, x, y);
 
 	// practical bound for population size is 5 times mean
-	double lambda = exp( theta_sim[2] );
-	double sigma  = std::sqrt( lambda );
-	size_t K      = size_t ( lambda + 2.0 * sigma );
+	double sigma  = std::sqrt( theta_sim[2] );
+	size_t K      = size_t ( theta_sim[2] + 3.0 * sigma );
 	assert( K >= 2 );
 
 	// create derived object
@@ -391,17 +403,22 @@ bool capture_xam(void)
 	// lower and upper limits
 	vector<double> constraint_lower, constraint_upper;
 	vector<double> theta_lower(n_fixed), theta_upper(n_fixed);
-	for(size_t j = 0; j < n_fixed; j++)
-	{	theta_lower[j] = theta_sim[j];
-		theta_upper[j] = theta_sim[j];
-	}
-	// limit on constant term
+	// constant term
 	theta_lower[0] = -2.0;
-	theta_upper[0] =  2.0;
+	theta_upper[0] = +2.0;
+	// linear term
+	theta_lower[1] = theta_sim[1];
+	theta_upper[1] = theta_sim[1];
+	// mean population
+	theta_lower[2] = 1.0;
+	theta_upper[2] = 20.0;
+	// variance of random effects
+	theta_lower[3] = 0.0;
+	theta_upper[3] = 4.0;
 
 	// optimize the fixed effects
 	std::string options =
-		"Integer print_level               0\n"
+		"Integer print_level               5\n"
 		"String  sb                        yes\n"
 		"String  derivative_test           second-order\n"
 		"String  derivative_test_print_all yes\n"
@@ -417,10 +434,13 @@ bool capture_xam(void)
 		u_in
 	);
 	for(size_t j = 0; j < n_fixed; j++)
-		std::cout << j << ", " << theta_sim[j] << " , " << theta_out[j] << std::endl;
+	{	std::cout << theta_out[j] / theta_sim[j] - 1.0 << std::endl;
+		ok &= std::fabs( theta_out[j] / theta_sim[j] - 1.0 ) < 1e-1;
+	}
 	//
 	if( ! ok )
-		std::cout << "capture_xam:: random_seed = " << random_seed << std::endl;
+		std::cout << "random_seed = " << random_seed << std::endl;
+	//
 	dismod_at::free_gsl_rng();
 	return ok;
 }

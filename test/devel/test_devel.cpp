@@ -16,11 +16,11 @@ extern bool age_time_order(void);
 extern bool binomial_test(void);
 extern bool data_model_subset(void);
 extern bool meas_mulcov(void);
+extern bool n_mixture(void);
 extern bool rate_mulcov(void);
 
-// this test only run wth ./test_one.sh
+// not yet passing automated test
 extern bool capture_xam(void);
-extern bool n_mixture(void);
 
 // anonymous namespace
 namespace {
@@ -59,6 +59,7 @@ int main(void)
 	RUN(binomial_test);
 	RUN(data_model_subset);
 	RUN(meas_mulcov);
+	RUN(n_mixture);
 	RUN(rate_mulcov);
 
 	// summary report

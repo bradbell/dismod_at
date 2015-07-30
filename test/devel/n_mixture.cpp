@@ -15,7 +15,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/approx_mixed.hpp>
 # include <dismod_at/manage_gsl_rng.hpp>
 
-// Problem with the model in the reference
 // J. Andrew Royle, Biometrics 60, 108-115 March 2004,
 // N-Mixture Models for Estimating Population Size
 // from Spatially Replicated Counts.
@@ -99,17 +98,18 @@ public:
 		for(size_t i = 0; i < I_; i++)
 		{	Float sum_prob = Float(0.0);
 			for(size_t k = M_[i]; k < K_; k++)
-			{	Float sum_log = Float(0.0);
+			{	// log probability for k given lambda
+				Float sum_log = log( lambda + eps ) * Float(k) - lambda;
+				sum_log      -= logfac_[k];
+				//
 				for(size_t t = 0; t < T_; t++)
-				{	//
-					// data at loation i and time t
+				{	// data at loation i and time t
 					size_t yit = y_[ i * T_ + t];
 					//
-					// log of a Poisson with mean lambda and value k + log(k!)
-					sum_log += log( lambda + eps ) * Float(k) - lambda;
-					//
 					// log (k choose yit) - log(k!)
-					sum_log += Float(logfac_[yit] - logfac_[k - yit] );
+					sum_log += Float(
+						logfac_[k] - logfac_[yit] - logfac_[k - yit]
+					);
 					//
 					// log ( p^yit )
 					sum_log += Float( yit ) * log(p + eps);
@@ -153,10 +153,10 @@ public:
 bool n_mixture(void)
 {	bool ok = true;
 	size_t n_fixed = 2;
-	// size_t random_seed = dismod_at::new_gsl_rng(0);
+	size_t random_seed = dismod_at::new_gsl_rng(0);
 
 	// simulation parameters
-	size_t I = 50;
+	size_t I = 400; // use 400 (50 in paper) to increase accuracy for test
 	size_t T = 10;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   0.25;      // probability of capture
@@ -208,30 +208,14 @@ bool n_mixture(void)
 		u_in
 	);
 	// simulated and fit values are very different
-	std::cout << std::endl << "theta = (p , lambda)" << std::endl;
-	std::cout << "theta_sim = " << theta_sim << std::endl;
-	std::cout << "theta_out = " << theta_out << std::endl;
-	//
-	// now compute the condition number of the Hessian
-	using CppAD::AD;
-	vector< AD<double> > ad_theta(n_fixed);
 	for(size_t j = 0; j < n_fixed; j++)
-		ad_theta[j] = theta_sim[j];
-	CppAD::Independent(ad_theta);
-	vector< AD<double> > ad_fix_like = approx_object.fix_like(ad_theta);
-	CppAD::ADFun<double> f(ad_theta, ad_fix_like);
-	vector<double> h = f.Hessian(theta_sim, 0);
-	std::cout << "h = " << h << std::endl;
-
-	vector<double> v(4), s(2), w(2);
-	gsl_matrix_view H = gsl_matrix_view_array(h.data(), 2, 2);
-	gsl_matrix_view V = gsl_matrix_view_array(v.data(), 2, 2);
-	gsl_vector_view S = gsl_vector_view_array(s.data(), 2);
-	gsl_vector_view W = gsl_vector_view_array(w.data(), 2);
-	gsl_linalg_SV_decomp(&H.matrix, &V.matrix, &S.vector, &W.vector);
-	std::cout << "singular values = " << s << std::endl;
-
-
+	{	// std::cout << theta_out[j] / theta_sim[j] - 1.0 << std::endl;
+		ok &= std::fabs( theta_out[j] / theta_sim[j] - 1.0 ) < 1e-1;
+	}
+	//
+	if( ! ok )
+		std::cout << "random_seed = " << random_seed << std::endl;
+	//
 	dismod_at::free_gsl_rng();
 	return ok;
 }
