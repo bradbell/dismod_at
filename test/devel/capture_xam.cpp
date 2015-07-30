@@ -33,13 +33,10 @@ $latex T$$     $cnext number of sampling times
 $rnext
 $latex I$$     $cnext number of sampling locations
 $rnext
-$latex K$$     $cnext practical bound on population size (used to truncate sum)
-$rnext
 $latex N_i$$   $cnext size of the population at $th i$$ location
 $rnext
 $latex y_{i,t}$$ $cnext
 	number of captures at location $latex i$$ and time $latex t$$
-	($latex y_{i,t} < K$$)
 $rnext
 $latex M_i$$   $cnext
 	maximum of the measured number of captures at $th i$$ location
@@ -91,12 +88,6 @@ $latex \[
 \] $$
 We assume that this probability
 is independent for each $latex i$$.
-Furthermore, we assume that
-$latex \[
-	\exp( \theta_1 )
-	\approx
-	\sum_{k = 0}^{K-1} \frac{ \theta_1^k }{ k ! }
-\] $$
 
 $head p(u | theta)$$
 We use a normal distribution, with mean zero and standard deviation
@@ -135,7 +126,15 @@ The likelihood for the data at the $th i$$ location is
 $latex \[
 L_i ( \theta , u )
 =
-\sum_{k=M(i)}^{K-1}
+\sum_{k=M(i)}^{2 M(i) + 1}
+	\theta_1^k \frac{ \exp( - \theta_1 ) }{ k ! }
+		\prod_{t=0}^{T-1} B_{i,t} ( k , \theta , u )
+\] $$
+We assume that this is a good approximation; i.e.,
+$latex \[
+L_i ( \theta , u )
+\approx
+\sum_{k=M(i)}^{+\infty}
 	\theta_1^k \frac{ \exp( - \theta_1 ) }{ k ! }
 		\prod_{t=0}^{T-1} B_{i,t} ( k , \theta , u )
 \] $$
@@ -164,10 +163,12 @@ $end
 -----------------------------------------------------------------------------
 */
 
+# include <ctime>
 # include <gsl/gsl_randist.h>
 # include <cppad/vector.hpp>
 # include <dismod_at/approx_mixed.hpp>
 # include <dismod_at/manage_gsl_rng.hpp>
+# include <dismod_at/configure.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 
@@ -220,41 +221,40 @@ void simulate(
 // approx_mixed derived class
 class approx_derived : public dismod_at::approx_mixed {
 private:
-	const size_t          K_; // practical bound on population size
 	const size_t          I_; // number of locations
 	const size_t          T_; // number of times
 	const vector<size_t>& y_; // reference to data values
 	// -----------------------------------------------------------------
 	// set by constructor and then effectively const
 	vector<size_t>        M_;      // max number of captures at each location
+	size_t                K_;      // practical bound on population size
 	vector<double>        logfac_; // logfac_[k] = log( k! )
 // ------------------------------------------------------------------------
 public:
 	// constructor
 	approx_derived(
-		size_t                 K     ,
 		size_t                 I     ,
 		size_t                 T     ,
 		vector<size_t>&        y     )
 		:
 		dismod_at::approx_mixed(3, T) , // n_fixed = 3, n_random = T
-		K_(K)            ,
 		I_(I)            ,
 		T_(T)            ,
 		y_(y)
-	{	// set M_
+	{	// set M_ and K_
 		M_.resize(I);
+		K_ = 0;
 		for(size_t i = 0; i < I; i++)
 		{	M_[i] = 0;
 			for(size_t t = 0; t < T; t++)
 				M_[i] = std::max( M_[i], y[ i * T + t] );
-			assert( M_[i] < K );
+			K_ = std::max( M_[i] , K_ );
 		}
-		assert( K >= 2 );
-		logfac_.resize(K);
+		K_ = 2 + 2 * K_ ;
+		logfac_.resize(K_);
 		logfac_[0]  = 0.0;
 		logfac_[1]  = 0.0;
-		for(size_t k = 2; k < K; k++)
+		for(size_t k = 2; k < K_; k++)
 			logfac_[k] = log( double(k) ) + logfac_[k-1];
 	}
 	// implementaion of ran_like
@@ -304,7 +304,7 @@ public:
 		for(size_t i = 0; i < I_; i++)
 		{	// initialize sum that defines L_i
 			Float Li = Float(0.0);
-			for(size_t k = M_[i]; k < K_; k++)
+			for(size_t k = M_[i]; k < 2 * M_[i] + 2; k++)
 			{	// initialize log of term for this k
 				//
 				// terms that need to be calculated with Float
@@ -326,7 +326,7 @@ public:
 					double_sum += logfac_[yit] - logfac_[k - yit];
 					// log [ pit^yit ]
 					float_sum += yit_log_p[i * T_ + t];
-					// log [ 1 - pit^yit ]
+					// log [ (1 - pit)^(k - yit) ]
 					float_sum += Float(k - yit) * log_1p[i * T_ + t];
 				}
 				Li += exp( float_sum + double_sum );
@@ -366,9 +366,10 @@ bool capture_xam(void)
 {	bool ok = true;
 	size_t n_fixed = 3;
 	size_t random_seed = dismod_at::new_gsl_rng(0);
+	std::time_t start_time = std::time( DISMOD_AT_NULL_PTR );
 
 	// simulation parameters
-	size_t I = 100;
+	size_t I = 50;
 	size_t T = 10;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   0.50;  // constant term in covariate model
@@ -379,40 +380,37 @@ bool capture_xam(void)
 	vector<size_t> y(I * T);
 	simulate(I, T, theta_sim, y);
 
-	// practical bound for population size is 5 times mean
-	double sigma  = std::sqrt( theta_sim[1] );
-	size_t K      = size_t ( theta_sim[1] + 3.0 * sigma );
-	assert( K >= 2 );
+	// lower and upper limits
+	vector<double> constraint_lower, constraint_upper;
+	vector<double>
+		theta_lower(n_fixed), theta_in(n_fixed), theta_upper(n_fixed);
+	// constant term
+	theta_lower[0] = -2.0;
+	theta_in[0]    =  theta_sim[0] / 2.0;
+	theta_upper[0] = +2.0;
+	// mean population
+	theta_lower[1] = 1.0;
+	theta_in[1]    = theta_sim[1] / 2.0;
+	theta_upper[1] = 20.0;
+	// standard deviation of random effects
+	theta_lower[2] = 0.0;
+	theta_in[2]    = theta_sim[2] / 2.0;
+	theta_upper[2] = 4.0;
 
 	// create derived object
-	approx_derived approx_object(K, I, T, y);
+	approx_derived approx_object(I, T, y);
 
 	// initialize point to start optimization at
-	vector<double> theta_in( n_fixed ), u_in(T);
-	for(size_t j = 0; j < n_fixed; j++)
-		theta_in[j] = theta_sim[j];
+	vector<double>  u_in(T);
 	for(size_t t = 0; t < T; t++)
 		u_in[t] = 0.0;
 	approx_object.initialize(theta_in, u_in);
 
-	// lower and upper limits
-	vector<double> constraint_lower, constraint_upper;
-	vector<double> theta_lower(n_fixed), theta_upper(n_fixed);
-	// constant term
-	theta_lower[0] = -2.0;
-	theta_upper[0] = +2.0;
-	// mean population
-	theta_lower[1] = 1.0;
-	theta_upper[1] = 20.0;
-	// standard deviation of random effects
-	theta_lower[2] = 0.0;
-	theta_upper[2] = 4.0;
-
 	// optimize the fixed effects
 	std::string options =
-		"Integer print_level               5\n"
+		"Integer print_level               0\n"
 		"String  sb                        yes\n"
-		"String  derivative_test           second-order\n"
+		"String  derivative_test           none\n"
 		"String  derivative_test_print_all yes\n"
 		"Numeric tol                       1e-8\n"
 	;
@@ -425,13 +423,16 @@ bool capture_xam(void)
 		theta_in,
 		u_in
 	);
+	std::cout << std::endl;
 	for(size_t j = 0; j < n_fixed; j++)
 	{	std::cout << theta_out[j] / theta_sim[j] - 1.0 << std::endl;
-		ok &= std::fabs( theta_out[j] / theta_sim[j] - 1.0 ) < 1e-1;
+		ok &= std::fabs( theta_out[j] / theta_sim[j] - 1.0 ) < 3e-1;
 	}
 	//
 	if( ! ok )
 		std::cout << "random_seed = " << random_seed << std::endl;
+	std::time_t end_time = std::time( DISMOD_AT_NULL_PTR );
+	std::cout << "elapsed seconds = " << end_time - start_time << std::endl;
 	//
 	dismod_at::free_gsl_rng();
 	return ok;

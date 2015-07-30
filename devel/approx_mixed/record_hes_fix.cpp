@@ -19,7 +19,7 @@ $spell
 	Cpp
 $$
 
-$section approx_mixed: Record Hessian of Joint Density w.r.t Fixed Effects$$
+$section approx_mixed: Record Hessian of Random Likelihood w.r.t Fixed Effects$$
 
 $head Syntax$$
 $codei%record_hes_fix(%fixed_vec%, %random_vec%)%$$
