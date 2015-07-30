@@ -53,7 +53,7 @@ $latex \theta_0$$ $cnext constant multiplier in covariate relation
 $rnext
 $latex \theta_1$$ $cnext mean for $latex N_i$$ given $latex \theta$$
 $rnext
-$latex \theta_2$$ $cnext variance of the random effects $latex u_t$$
+$latex \theta_2$$ $cnext standard deviation of random effects $latex u_t$$
 $tend
 
 $head Count Data$$
@@ -85,7 +85,7 @@ $head Population Probability$$
 We use a Poisson distribution to model the
 probability of $latex N_i$$ given $latex \theta_1$$; i.e.,
 $latex \[
-\B{P} [ N_i | \theta_1  ]
+\B{P} ( N_i | \theta  )
 =
 \theta_1^{N(i)} \frac{ \exp[ - \theta_1 ] }{ N_i ! }
 \] $$
@@ -99,7 +99,7 @@ $latex \[
 \] $$
 
 $head p(u | theta)$$
-We use a normal distribution, with mean zero and variance
+We use a normal distribution, with mean zero and standard deviation
 $latex \theta_2$$,
 for the distribution of the random effects $latex u$$
 given the fixed effects $latex \theta$$; i.e.,
@@ -107,8 +107,8 @@ $latex \[
 \B{p} ( u | \theta )
 =
 \prod_{t=0}^{T-1}
-	\frac{1}{ \sqrt{ \theta_2 2 \pi } }
-		\exp \left[ - \frac{1}{2} \frac{ u_t^2 }{ \theta_2 } \right]
+	\frac{1}{ \theta_2 \sqrt{ 2 \pi } }
+		\exp \left[ - \frac{1}{2} \frac{ u_t^2 }{ \theta_2^2 } \right]
 \] $$
 
 $head p(y | theta , u)$$
@@ -194,9 +194,15 @@ void simulate(
 	//
 	// simulate random effects
 	vector<double> u(T);
-	double sigma = std::sqrt( theta[2] );
+	double sigma = theta[2] * sqrt( double(T) / (double(T) - 1.0) );
+	double sum   = 0.0;
 	for(size_t t = 0; t < T; t++)
-		u[t] = gsl_ran_gaussian(rng, sigma);
+	{	u[t] = gsl_ran_gaussian(rng, sigma);
+		sum += u[t];
+	}
+	// offset random effects to be mean zero (removes one degree of freedom)
+	for(size_t t = 0; t < T; t++)
+		u[t] = u[t] - sum / double(T);
 	//
 	// simulate data
 	for(size_t i = 0; i < I; i++)
@@ -264,12 +270,13 @@ public:
 		//  ------------------------------------------------------------
 		// log [ p(u | theta) ]
 		//  ------------------------------------------------------------
-		vec[0] = Float(0.0);
-		Float sigsq = theta[2];
+		Float sig = theta[2];
+		vec[0] -= Float(T_) * ( two * log(sig) + log( pi2 ) );
 		for(size_t t = 0; t < T_; t++)
-		{	vec[0] -= log( pi2 * sigsq + eps) / two;
-			vec[0] -= u[t] * u[t] / (two * sigsq + eps);
+		{	Float w = u[t] / ( sig + eps );
+			vec[0] -= w * w;
 		}
+		vec[0] /= two;
 		//  ------------------------------------------------------------
 		// log [ p(y | theta, u) ]
 		//  ------------------------------------------------------------
@@ -366,7 +373,7 @@ bool capture_xam(void)
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   0.50;  // constant term in covariate model
 	theta_sim[1] =   5.0;   // mean population size
-	theta_sim[2] =   0.50;  // variance of random effects
+	theta_sim[2] =   1.00;  // standard deviation of random effects
 
 	// simulate y
 	vector<size_t> y(I * T);
@@ -397,7 +404,7 @@ bool capture_xam(void)
 	// mean population
 	theta_lower[1] = 1.0;
 	theta_upper[1] = 20.0;
-	// variance of random effects
+	// standard deviation of random effects
 	theta_lower[2] = 0.0;
 	theta_upper[2] = 4.0;
 
