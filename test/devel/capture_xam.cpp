@@ -49,15 +49,11 @@ $latex p_{i,t}$$ $cnext
 $rnext
 $latex u_t$$   $cnext random effect for each sampling time
 $rnext
-$latex x_i$$   $cnext covariate value for each location
-$rnext
 $latex \theta_0$$ $cnext constant multiplier in covariate relation
 $rnext
-$latex \theta_1$$ $cnext linear multiplier in covariate relation
+$latex \theta_1$$ $cnext mean for $latex N_i$$ given $latex \theta$$
 $rnext
-$latex \theta_2$$ $cnext mean for $latex N_i$$ given $latex \theta$$
-$rnext
-$latex \theta_3$$ $cnext variance of the random effects $latex u_t$$
+$latex \theta_2$$ $cnext variance of the random effects $latex u_t$$
 $tend
 
 $head Count Data$$
@@ -77,42 +73,42 @@ Section 2.4 of the reference below suggest a covariate
 model for the probability of capture.
 We add random effects to this model as follows:
 $latex \[
-	\R{logit} ( p_{i,t} ) = - u_t - \theta_0 - \theta_1 x_i
+	\R{logit} ( p_{i,t} ) = - u_t - \theta_0
 \] $$
 It follows that
 $latex \[
-	p_{i,t} = [ 1 + \exp(  u_t + \theta_0 + \theta_1 x_i ) ]^{-1}
+	p_{i,t} = [ 1 + \exp(  u_t + \theta_0 ) ]^{-1}
 \] $$
 Note that the covariate vector $latex x$$ is assumed to be known.
 
 $head Population Probability$$
 We use a Poisson distribution to model the
-probability of $latex N_i$$ given $latex \theta_2$$; i.e.,
+probability of $latex N_i$$ given $latex \theta_1$$; i.e.,
 $latex \[
-\B{P} [ N_i | \theta_2  ]
+\B{P} [ N_i | \theta_1  ]
 =
-\theta_2^{N(i)} \frac{ \exp[ - \theta_2 ] }{ N_i ! }
+\theta_1^{N(i)} \frac{ \exp[ - \theta_1 ] }{ N_i ! }
 \] $$
 We assume that this probability
 is independent for each $latex i$$.
 Furthermore, we assume that
 $latex \[
-	\exp( \theta_2 )
+	\exp( \theta_1 )
 	\approx
-	\sum_{k = 0}^{K-1} \frac{ \theta_2^k }{ k ! }
+	\sum_{k = 0}^{K-1} \frac{ \theta_1^k }{ k ! }
 \] $$
 
 $head p(u | theta)$$
 We use a normal distribution, with mean zero and variance
-$latex \theta_3$$,
+$latex \theta_2$$,
 for the distribution of the random effects $latex u$$
 given the fixed effects $latex \theta$$; i.e.,
 $latex \[
 \B{p} ( u | \theta )
 =
 \prod_{t=0}^{T-1}
-	\frac{1}{ \sqrt{ \theta_3 2 \pi } }
-		\exp \left[ - \frac{1}{2} \frac{ u_t^2 }{ \theta_3 } \right]
+	\frac{1}{ \sqrt{ \theta_2 2 \pi } }
+		\exp \left[ - \frac{1}{2} \frac{ u_t^2 }{ \theta_2 } \right]
 \] $$
 
 $head p(y | theta , u)$$
@@ -122,7 +118,7 @@ $latex \[
 \] $$
 We define a probability of capture function for each location and time by
 $latex \[
-p_{i,t} ( \theta , u ) =  [ 1 + \exp( u_t + \theta_0 + \theta_1 x_i ) ]^{-1}
+p_{i,t} ( \theta , u ) =  [ 1 + \exp( u_t + \theta_0 ) ]^{-1}
 \] $$
 The binomial likelihood for $latex y_{i, t}$$ given
 $latex N_i$$, $latex \theta$$, and $latex u$$ is
@@ -140,11 +136,11 @@ $latex \[
 L_i ( \theta , u )
 =
 \sum_{k=M(i)}^{K-1}
-	\theta_2^k \frac{ \exp( - \theta_2 ) }{ k ! }
+	\theta_1^k \frac{ \exp( - \theta_1 ) }{ k ! }
 		\prod_{t=0}^{T-1} B_{i,t} ( k , \theta , u )
 \] $$
 Our model for the likelihood of the data at all the locations,
-fiven the fixed and random effects, is
+given the fixed and random effects, is
 $latex \[
 \B{p}( y | \theta , u )
 =
@@ -180,39 +176,33 @@ using std::exp;
 using std::log;
 
 // simulate covariates, x, and data, y
-void simulate_xy(
+void simulate(
 	size_t                 I     ,
 	size_t                 T     ,
 	const vector<double>&  theta ,
-	vector<double>&        x     ,
 	vector<size_t>&        y     )
-{	assert( theta.size() == 4 );
-	assert( x.size() == I );
+{	assert( theta.size() == 3 );
 	assert( y.size() == I * T );
 	// random number generator
 	gsl_rng* rng = dismod_at::get_gsl_rng();
 	//
 	// simulate population sizes
 	vector<double> N(I);
-	double mu =  theta[2];
+	double mu =  theta[1];
 	for(size_t i = 0; i < I; i++)
 		N[i] = gsl_ran_poisson(rng, mu );
 	//
 	// simulate random effects
 	vector<double> u(T);
-	double sigma = std::sqrt( theta[3] );
+	double sigma = std::sqrt( theta[2] );
 	for(size_t t = 0; t < T; t++)
 		u[t] = gsl_ran_gaussian(rng, sigma);
-	//
-	// simulate covariate values
-	for(size_t i = 0; i < I; i++)
-		x[i] = gsl_ran_gaussian(rng, sigma);
 	//
 	// simulate data
 	for(size_t i = 0; i < I; i++)
 	{	for(size_t t = 0; t < T; t++)
 		{	// probability of capture
-			double ex = exp( u[t] + theta[0] + theta[1] * x[i] );
+			double ex = exp( u[t] + theta[0] );
 			double p = 1.0 /( 1.0  + ex );
 			y[ i * T + t ] = gsl_ran_binomial(rng, p, N[i]);
 		}
@@ -227,7 +217,6 @@ private:
 	const size_t          K_; // practical bound on population size
 	const size_t          I_; // number of locations
 	const size_t          T_; // number of times
-	const vector<double>& x_; // referece to covariate values
 	const vector<size_t>& y_; // reference to data values
 	// -----------------------------------------------------------------
 	// set by constructor and then effectively const
@@ -240,14 +229,12 @@ public:
 		size_t                 K     ,
 		size_t                 I     ,
 		size_t                 T     ,
-		vector<double>&        x     ,
 		vector<size_t>&        y     )
 		:
-		dismod_at::approx_mixed(4, T) , // n_fixed = 4, n_random = T
+		dismod_at::approx_mixed(3, T) , // n_fixed = 3, n_random = T
 		K_(K)            ,
 		I_(I)            ,
 		T_(T)            ,
-		x_(x)            ,
 		y_(y)
 	{	// set M_
 		M_.resize(I);
@@ -278,7 +265,7 @@ public:
 		// log [ p(u | theta) ]
 		//  ------------------------------------------------------------
 		vec[0] = Float(0.0);
-		Float sigsq = theta[3];
+		Float sigsq = theta[2];
 		for(size_t t = 0; t < T_; t++)
 		{	vec[0] -= log( pi2 * sigsq + eps) / two;
 			vec[0] -= u[t] * u[t] / (two * sigsq + eps);
@@ -291,11 +278,19 @@ public:
 		vector<Float> log_p(I_ * T_), log_1p(I_ * T_);
 		for(size_t i = 0; i < I_; i++)
 		{	for(size_t t = 0; t < T_; t++)
-			{	Float ex   = exp( u[t] + theta[0] + theta[1] * x_[i] );
+			{	Float ex   = exp( u[t] + theta[0] );
 				Float    p = one / (one + ex );
 				log_p[ i * T_ + t ]  = log(p + eps);
 				log_1p[i * T_ + t ]  = log(one - p + eps);
 			}
+		}
+		//
+		// log( theta[1]^k * exp( - theta[1] ) / k! )
+		vector<Float> log_poisson(K_);
+		for(size_t k = 0; k < K_; k++)
+		{	log_poisson[k] = log( theta[1] + eps ) * Float(k);
+			log_poisson[k] -= theta[1];
+			log_poisson[k] -= logfac_[k];
 		}
 		//
 		// loop over locations
@@ -306,15 +301,10 @@ public:
 			{	// initialize log of term for this k
 				//
 				// terms that need to be calculated with Float
-				Float float_sum = Float(0.0);
+				Float float_sum = log_poisson[k];
 				//
 				// terms that dno not need to use Float
 				double double_sum = 0.0;
-				//
-				// log [ likelihood for k given theta[2] ]
-				float_sum  += log( theta[2] + eps ) * Float(k);
-				float_sum  -= theta[2];
-				double_sum -= logfac_[k];
 				//
 				// terms in likelihood for data given k that do not
 				// depend on value of t
@@ -367,30 +357,28 @@ public:
 
 bool capture_xam(void)
 {	bool ok = true;
-	size_t n_fixed = 4;
+	size_t n_fixed = 3;
 	size_t random_seed = dismod_at::new_gsl_rng(0);
 
 	// simulation parameters
 	size_t I = 100;
-	size_t T = 7;
+	size_t T = 10;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   0.50;  // constant term in covariate model
-	theta_sim[1] =   0.00;  // linear term in covariate model
-	theta_sim[2] =   5.0;   // mean population size
-	theta_sim[3] =   0.25;  // variance of random effects
+	theta_sim[1] =   5.0;   // mean population size
+	theta_sim[2] =   0.50;  // variance of random effects
 
-	// set x, y
-	vector<double> x(I);
+	// simulate y
 	vector<size_t> y(I * T);
-	simulate_xy(I, T, theta_sim, x, y);
+	simulate(I, T, theta_sim, y);
 
 	// practical bound for population size is 5 times mean
-	double sigma  = std::sqrt( theta_sim[2] );
-	size_t K      = size_t ( theta_sim[2] + 3.0 * sigma );
+	double sigma  = std::sqrt( theta_sim[1] );
+	size_t K      = size_t ( theta_sim[1] + 3.0 * sigma );
 	assert( K >= 2 );
 
 	// create derived object
-	approx_derived approx_object(K, I, T, x, y);
+	approx_derived approx_object(K, I, T, y);
 
 	// initialize point to start optimization at
 	vector<double> theta_in( n_fixed ), u_in(T);
@@ -406,15 +394,12 @@ bool capture_xam(void)
 	// constant term
 	theta_lower[0] = -2.0;
 	theta_upper[0] = +2.0;
-	// linear term
-	theta_lower[1] = theta_sim[1];
-	theta_upper[1] = theta_sim[1];
 	// mean population
-	theta_lower[2] = 1.0;
-	theta_upper[2] = 20.0;
+	theta_lower[1] = 1.0;
+	theta_upper[1] = 20.0;
 	// variance of random effects
-	theta_lower[3] = 0.0;
-	theta_upper[3] = 4.0;
+	theta_lower[2] = 0.0;
+	theta_upper[2] = 4.0;
 
 	// optimize the fixed effects
 	std::string options =
