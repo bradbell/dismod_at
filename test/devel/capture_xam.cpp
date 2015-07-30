@@ -274,14 +274,14 @@ public:
 		// log [ p(y | theta, u) ]
 		//  ------------------------------------------------------------
 		//
-		// log( p_{i,t} ) and log( 1.0 - p_{i,t} )
-		vector<Float> log_p(I_ * T_), log_1p(I_ * T_);
+		// y_{i,t} * log( p_{i,t} ) and log( 1.0 - p_{i,t} )
+		vector<Float> yit_log_p(I_ * T_), log_1p(I_ * T_);
 		for(size_t i = 0; i < I_; i++)
 		{	for(size_t t = 0; t < T_; t++)
 			{	Float ex   = exp( u[t] + theta[0] );
 				Float    p = one / (one + ex );
-				log_p[ i * T_ + t ]  = log(p + eps);
-				log_1p[i * T_ + t ]  = log(one - p + eps);
+				yit_log_p[ i * T_ + t ]  = Float(y_[i*T_+t]) * log(p + eps);
+				log_1p[i * T_ + t ]      = log(one - p + eps);
 			}
 		}
 		//
@@ -318,7 +318,7 @@ public:
 					// where the k! term is added outside the loop
 					double_sum += logfac_[yit] - logfac_[k - yit];
 					// log [ pit^yit ]
-					float_sum += Float( yit ) * log_p[i * T_ + t];
+					float_sum += yit_log_p[i * T_ + t];
 					// log [ 1 - pit^yit ]
 					float_sum += Float(k - yit) * log_1p[i * T_ + t];
 				}
