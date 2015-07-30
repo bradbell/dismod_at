@@ -29,11 +29,15 @@ Journal of Statistical Software, Accepted 2015-02.
 $head Random Negative Log-Likelihood, f(theta, u)$$
 The reference above defines $latex f( \theta, u)$$
 to be the negative log-likelihood of
-$latex y$$, $latex u$$ and $latex \theta$$; i.e.,
+$latex z$$, $latex y$$, $latex u$$ and $latex \theta$$; i.e.,
 $latex \[
-	- \log [ \B{p} ( y |  \theta, u ) \B{p} ( u | \theta ) \B{p} ( \theta ) ]
+- \log [  \;
+	\B{p} ( y |  \theta, u ) \B{p} ( u | \theta )  \;
+	\B{p} ( z | \theta )\B{p} ( \theta ) \;
+]
 \] $$
-We use a different notation and define
+We use $latex f( \theta , u )$$ for the part of the likelihood
+that depends on the random effects $latex u$$;
 $latex \[
 	f( \theta, u ) = - \log [ \B{p} ( y |  \theta, u ) \B{p} ( u | \theta ) ]
 \] $$
@@ -41,17 +45,17 @@ $latex \[
 $subhead Smoothness Assumption$$
 The function $latex f(\theta, u)$$ is assumed to be smooth.
 Note that $cref/ran_like/approx_mixed_ran_like/$$ allows for
-non-smooth terms in the form of Laplace densities.
+non-smooth terms in the form of Laplace densities, the this is for
+research purposes only.
 
 $head Fixed Negative Log-Likelihood, g(theta)$$
-We use the notation
+We use $latex g( \theta )$$ for the part of the likelihood
+that only depends on the fixed effects $latex \theta$$;
 $latex \[
 	g( \theta ) = - \log [ \B{p} ( z | \theta ) \B{p} ( \theta ) ]
 \]$$
-In an abuse of notation, we call this the prior even though it includes
-the data $latex z$$ that does not depend on the random effects $latex u$$.
-The function $latex g(x)$$ may be non-smooth because it
-can have absolute values in it (corresponding to the Laplace likelihoods).
+The function $latex g(x)$$ may be non-smooth, to be specific, it
+can have absolute values in it (corresponding to the Laplace densities).
 
 $head Objective$$
 

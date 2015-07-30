@@ -33,6 +33,22 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 07-29$$
+$list number$$
+The term
+'prior negative log-likelihood' was change to
+$cref/fixed negative log-likelihood/approx_mixed_theory/
+	Fixed Negative Log-Likelihood, g(theta)
+/$$.
+$lnext
+The term
+'joint negative log-likelihood' was change to
+$cref/random negative log-likelihood/approx_mixed_theory/
+	Random Negative Log-Likelihood, f(theta, u)
+/$$.
+$lend
+
+
 $head 07-28$$
 $list number$$
 Some example were missing, or were including the wrong source code.
