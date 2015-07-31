@@ -120,7 +120,7 @@ void approx_mixed::record_laplace(
 	chol.analyzePattern(hessian);
 	chol.factorize(hessian);
 
-	// First order section -------------------------------------------------
+	// First order section: Compute U -----------------------------------------
 	a3d_vector U(n_random_), grad(n_random_);
 	dense_matrix rhs(n_random_, 1), newton_step(n_random_, 1);
 	if( order < 1 )
@@ -146,9 +146,9 @@ void approx_mixed::record_laplace(
 			hessian.coeffRef(row[k], col[k]) = val[k];
 		chol.factorize(hessian);
 	}
-	// Second order section --------------------------------------------------
+	// Second order section: Compute W ----------------------------------------
 	a3d_vector W(n_random_);
-	if( order < 1 )
+	if( order < 2 )
 	{	for(size_t j = 0; j < n_random_; j++)
 			W[j] = U[j];
 	}
