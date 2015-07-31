@@ -337,34 +337,34 @@ fit_model::a5d_vector fit_model::ran_like(
 		if( density == laplace_enum || density == log_laplace_enum )
 			n_abs++;
 	}
-	// size joint_den
-	a5d_vector joint_den(1 + n_abs);
+	// size ran_den
+	a5d_vector ran_den(1 + n_abs);
 	//
 	// initialize summation of smooth part
-	joint_den[0] = a5_double(0.0);
+	ran_den[0] = a5_double(0.0);
 	//
 	// initialize index for non-smooth part
 	size_t i_abs = 0;
 	//
 	// data_like terms
 	for(size_t i = 0; i < n_data_like; i++)
-	{	joint_den[0] += data_like[i].logden_smooth;
+	{	ran_den[0] += data_like[i].logden_smooth;
 		density_enum density = data_like[i].density;
 		if( density == laplace_enum || density == log_laplace_enum )
-			joint_den[1 + i_abs++] = data_like[i].logden_sub_abs;
+			ran_den[1 + i_abs++] = data_like[i].logden_sub_abs;
 	}
 	//
 	// random effects prior
 	for(size_t i = 0; i < n_prior_ran; i++)
-	{	joint_den[0] += prior_ran[i].logden_smooth;
+	{	ran_den[0] += prior_ran[i].logden_smooth;
 		density_enum density = prior_ran[i].density;
 		if( density == laplace_enum || density == log_laplace_enum )
-			joint_den[1 + i_abs++] = prior_ran[i].logden_sub_abs;
+			ran_den[1 + i_abs++] = prior_ran[i].logden_sub_abs;
 	}
 	// convert from log-density to negative log density
-	joint_den[0] = - joint_den[0];
+	ran_den[0] = - ran_den[0];
 	//
-	return joint_den;
+	return ran_den;
 }
 // ---------------------------------------------------------------------------
 // fix_like

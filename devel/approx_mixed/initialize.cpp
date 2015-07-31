@@ -119,7 +119,7 @@ void approx_mixed::initialize(
 		assert( ! record_laplace_done_[2] );
 
 		// ran_like_
-		record_joint(fixed_vec, random_vec);
+		record_ran_like(fixed_vec, random_vec);
 		// grad_ran_
 		record_grad_ran(fixed_vec, random_vec);
 		// hes_ran_

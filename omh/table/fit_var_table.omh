@@ -37,7 +37,7 @@ $cref/fixed effects/model_variable/Fixed Effects, theta/$$
 maximize the Laplace approximation
 $cref/L(theta)/approx_mixed_theory/Objective/L(theta)/$$ and the
 $cref/random effects/model_variable/Random Effects, u/$$
-maximize the joint likelihood; see
+maximize the random likelihood; see
 $cref/u^(theta)/approx_mixed_theory/Objective/u^(theta)/$$.
 
 $head Example$$

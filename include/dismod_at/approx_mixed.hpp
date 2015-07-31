@@ -193,7 +193,7 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/constraint_eval.cpp
 	%devel/approx_mixed/constraint_jac.cpp
 	%devel/approx_mixed/constraint_hes.cpp
-	%devel/approx_mixed/record_joint.cpp
+	%devel/approx_mixed/record_ran_like.cpp
 	%devel/approx_mixed/record_grad_ran.cpp
 	%devel/approx_mixed/record_hes_ran.cpp
 	%devel/approx_mixed/record_laplace.cpp
@@ -358,10 +358,10 @@ $codep */
 	) const;
 /* $$
 ------------------------------------------------------------------------------
-$head record_joint$$
-See $cref approx_mixed_record_joint$$.
+$head record_ran_like$$
+See $cref approx_mixed_record_ran_like$$.
 $codep */
-	void record_joint(
+	void record_ran_like(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);

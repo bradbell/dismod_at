@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/approx_mixed.hpp>
 
 /*
-$begin approx_mixed_record_joint$$
+$begin approx_mixed_record_ran_like$$
 $spell
 	vec
 	const
@@ -21,7 +21,7 @@ $$
 $section approx_mixed: Record Random Negative Log-Likelihood For Different Levels of AD$$
 
 $head Syntax$$
-$codei%record_joint(%fixed_vec%, %random_vec%)%$$
+$codei%record_ran_like(%fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code approx_mixed$$ class
@@ -68,7 +68,7 @@ namespace {
 	using CppAD::Independent;
 
 	template <class Float>
-	void record_next_joint(
+	void record_next_ran_like(
 		const vector<double>&      arg                   ,
 		ADFun< AD<Float> >&        ad_float_record       ,
 		ADFun<Float>&              float_record          )
@@ -94,7 +94,7 @@ namespace {
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void approx_mixed::record_joint(
+void approx_mixed::record_ran_like(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {	assert( ! record_ran_like_done_ );
@@ -127,17 +127,17 @@ void approx_mixed::record_joint(
 	pack(fixed_vec, random_vec, both);
 	//
 	// record a3_ran_like_
-	record_next_joint(both, a4_ran_like_, a3_ran_like_);
+	record_next_ran_like(both, a4_ran_like_, a3_ran_like_);
 	//
 	// record a2_ran_like_
-	record_next_joint(both, a3_ran_like_, a2_ran_like_);
+	record_next_ran_like(both, a3_ran_like_, a2_ran_like_);
 	//
 	// record a1_ran_like_
-	record_next_joint(both, a2_ran_like_, a1_ran_like_);
+	record_next_ran_like(both, a2_ran_like_, a1_ran_like_);
 	//
 	// record a0_ran_like_
 	a1d_vector a1_both( n_fixed_ + n_random_ );
-	record_next_joint(both, a1_ran_like_, a0_ran_like_);
+	record_next_ran_like(both, a1_ran_like_, a0_ran_like_);
 	//
 	record_ran_like_done_ = true;
 }
