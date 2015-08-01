@@ -279,7 +279,7 @@ i.e., $latex H( \beta , \theta , u)$$.
 $codep */
 	CppAD::ADFun<double>    laplace_0_;     // for computing H
 	CppAD::ADFun<double>    laplace_1_;     // for computing H_beta
-	CppAD::ADFun<a2_double> laplace_2_;     // for computing H_beta_beta
+	CppAD::ADFun<double>    laplace_2_;     // for computing H_beta_beta
 /* $$
 $subhead hes_fix_$$
 Information used to calculate the sparse Hessian of the random likelihood

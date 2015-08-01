@@ -196,32 +196,30 @@ void approx_mixed::record_laplace(
 	a3d_vector H(1);
 	H[0] = logdet / 2.0 + sum - constant_term;
 
+	// push recording down from a3 to a1 level
+	// (2DO: change ran_like_ to use a1 instead of a3 values)
+	CppAD::ADFun<a2_double> a2f(beta_theta_u, H);
+	a1d_vector a1_beta_theta_u( 2 * n_fixed_ + n_random_), a1_H(1);
+	a2d_vector a2_beta_theta_u( 2 * n_fixed_ + n_random_), a2_H(1);
+	pack(fixed_vec, fixed_vec, random_vec, a1_beta_theta_u);
+	CppAD::Independent(a1_beta_theta_u);
+	for(size_t j = 0; j < 2 * n_fixed_ + n_random_; j++)
+		a2_beta_theta_u[j] = a1_beta_theta_u[j];
+	a2_H     = a2f.Forward(0, a2_beta_theta_u);
+	a1_H[0]  = Value( a2_H[0] );
+
 	// complete recording of H(beta, theta, u)
-	if( order <= 1 )
-	{	CppAD::ADFun<a2_double> a2f(beta_theta_u, H);
-		//
-		a1d_vector a1_beta_theta_u( 2 * n_fixed_ + n_random_), a1_H(1);
-		a2d_vector a2_beta_theta_u( 2 * n_fixed_ + n_random_), a2_H(1);
-		//
-		pack(fixed_vec, fixed_vec, random_vec, a1_beta_theta_u);
-		CppAD::Independent(a1_beta_theta_u);
-		for(size_t j = 0; j < 2 * n_fixed_ + n_random_; j++)
-			a2_beta_theta_u[j] = a1_beta_theta_u[j];
-		a2_H     = a2f.Forward(0, a2_beta_theta_u);
-		a1_H[0]  = Value( a2_H[0] );
-		if( order == 0 )
-		{	laplace_0_.Dependent(a1_beta_theta_u, a1_H);
-			laplace_0_.optimize();
-		}
-		else
-		{	assert( order == 1 );
-			laplace_1_.Dependent(a1_beta_theta_u, a1_H);
-			laplace_1_.optimize();
-		}
+	if( order == 0 )
+	{	laplace_0_.Dependent(a1_beta_theta_u, a1_H);
+		laplace_0_.optimize();
+	}
+	else if( order == 1 )
+	{	laplace_1_.Dependent(a1_beta_theta_u, a1_H);
+		laplace_1_.optimize();
 	}
 	else
 	{	assert(order == 2 );
-		laplace_2_.Dependent(beta_theta_u, H);
+		laplace_2_.Dependent(a1_beta_theta_u, a1_H);
 		laplace_2_.optimize();
 	}
 	record_laplace_done_[order] = true;

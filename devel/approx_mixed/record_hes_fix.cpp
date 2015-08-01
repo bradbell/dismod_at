@@ -91,13 +91,9 @@ void approx_mixed::record_hes_fix(
 	size_t n_total = 2 * n_fixed_ + n_random_;
 
 	//	create an a1d_vector containing (theta, theta , u)
-	a1d_vector a1_beta_theta_u(n_total);
-	pack(fixed_vec, fixed_vec, random_vec, a1_beta_theta_u);
+	d_vector beta_theta_u(n_total);
+	pack(fixed_vec, fixed_vec, random_vec, beta_theta_u);
 
-	// create an a2d_vector containing (theta, theta, u)
-	a2d_vector a2_beta_theta_u(n_total);
-	for(size_t j = 0; j < n_total; j++)
-		a2_beta_theta_u[j] = a1_beta_theta_u[j];
 
 	// compute Jacobian sparsity corresponding to partial w.r.t beta
 	// of H(beta, beta, u)
@@ -136,20 +132,20 @@ void approx_mixed::record_hes_fix(
 	}
 
 	// create an a2d weighting vector
-	a2d_vector a2_w(1);
-	a2_w[0] = 1.0;
+	d_vector w(1);
+	w[0] = 1.0;
 
 	// palce where results go
-	a2d_vector a2_val_out( hes_fix_row_.size() );
+	d_vector val_out( hes_fix_row_.size() );
 
 	// compute the work vector
 	laplace_2_.SparseHessian(
-		a2_beta_theta_u,
-		a2_w,
+		beta_theta_u,
+		w,
 		pattern,
 		hes_fix_row_,
 		hes_fix_col_,
-		a2_val_out,
+		val_out,
 		hes_fix_work_
 	);
 

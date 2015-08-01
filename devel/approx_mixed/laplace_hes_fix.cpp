@@ -145,34 +145,7 @@ void approx_mixed::laplace_hes_fix(
 	assert( row_out.size() == col_out.size() );
 	assert( row_out.size() == val_out.size() );
 
-	// create an a2d_vector containing (beta, theta, u)
-	a1d_vector a1_beta_theta_u( 2 * n_fixed_ + n_random_ );
-	pack(fixed_vec, fixed_vec, random_vec, a1_beta_theta_u);
-	a2d_vector a2_beta_theta_u( 2 * n_fixed_ + n_random_ );
-	for(size_t j = 0; j < 2 * n_fixed_ + n_random_; j++)
-		a2_beta_theta_u[j] = a1_beta_theta_u[j];
-
-	// create an a2d weighting vector
-	a2d_vector a2_w(1);
-	a2_w[0] = 1.0;
-
-	// create an a2d vector for the results
-	a2d_vector a2_val_out( hes_fix_row_.size() );
-
-	// First call to SparseHessian is during record_hes_fix
-	CppAD::vector< std::set<size_t> > not_used(0);
-
-	// compute the sparse Hessian
-	laplace_2_.SparseHessian(
-		a2_beta_theta_u,
-		a2_w,
-		not_used,
-		hes_fix_row_,
-		hes_fix_col_,
-		a2_val_out,
-		hes_fix_work_
-	);
-
+	// check if this is first call
 	if( row_out.size() == 0 )
 	{	row_out.resize(n_nonzero);
 		col_out.resize(n_nonzero);
@@ -182,10 +155,30 @@ void approx_mixed::laplace_hes_fix(
 			col_out[k] = hes_fix_col_[k];
 		}
 	}
-	for(size_t k = 0; k < n_nonzero; k++)
-		val_out[k] = Value( Value( a2_val_out[k] ) );
 
-# ifndef NDEUBG
+	// create an d_vector containing (beta, theta, u)
+	d_vector beta_theta_u( 2 * n_fixed_ + n_random_ );
+	pack(fixed_vec, fixed_vec, random_vec, beta_theta_u);
+
+	// create an a2d weighting vector
+	d_vector w(1);
+	w[0] = 1.0;
+
+	// First call to SparseHessian is during record_hes_fix
+	CppAD::vector< std::set<size_t> > not_used(0);
+
+	// compute the sparse Hessian
+	laplace_2_.SparseHessian(
+		beta_theta_u,
+		w,
+		not_used,
+		hes_fix_row_,
+		hes_fix_col_,
+		val_out,
+		hes_fix_work_
+	);
+
+# ifndef NDEBUG
 	for(size_t k = 0; k < n_nonzero; k++)
 	{	assert( row_out[k] == hes_fix_row_[k] );
 		assert( col_out[k] == hes_fix_col_[k] );
@@ -195,4 +188,3 @@ void approx_mixed::laplace_hes_fix(
 
 
 } // END_DISMOD_AT_NAMESPACE
-
