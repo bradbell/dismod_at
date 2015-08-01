@@ -87,47 +87,44 @@ void approx_mixed::record_hes_fix(
 	assert( record_laplace_done_[2] );
 	size_t i, j;
 
-	//	create an a1d_vector containing (theta, u)
-	a1d_vector a1_beta_theta_u( 2 * n_fixed_ + n_random_ );
+	// total number of variables in H
+	size_t n_total = 2 * n_fixed_ + n_random_;
+
+	//	create an a1d_vector containing (theta, theta , u)
+	a1d_vector a1_beta_theta_u(n_total);
 	pack(fixed_vec, fixed_vec, random_vec, a1_beta_theta_u);
 
-	// start recording using a1_double operations
-	CppAD::Independent( a1_beta_theta_u );
+	// create an a2d_vector containing (theta, theta, u)
+	a2d_vector a2_beta_theta_u(n_total);
+	for(size_t j = 0; j < n_total; j++)
+		a2_beta_theta_u[j] = a1_beta_theta_u[j];
 
-	// create an a2d_vector containing beta, theta and u
-	a2d_vector a2_beta(n_fixed_), a2_theta(n_fixed_), a2_u(n_random_);
-	unpack(a2_beta, a2_theta, a2_u, a1_beta_theta_u);
-
-	// compute H(beta) using a2_double operations
-	CppAD::Independent(a2_beta);
-	a2d_vector a2_H(1);
-	a2d_vector a2_beta_theta_u( 2 * n_fixed_ + n_random_ );
-	pack(a2_beta, a2_theta, a2_u, a2_beta_theta_u);
-	a2_H = laplace_2_.Forward(0, a2_beta_theta_u);
-
-	// create an ADFun object corresponding to H(beta)
-	CppAD::ADFun<a1_double> a1_f;
-	a1_f.Dependent(a2_beta, a2_H);
-
-	// compute sparsity pattern corresponding to H_beta^{(1)} (beta)
+	// compute Jacobian sparsity corresponding to partial w.r.t beta
+	// of H(beta, beta, u)
 	typedef CppAD::vector< std::set<size_t> > sparsity_pattern;
-	sparsity_pattern r(n_fixed_);
+	sparsity_pattern r(n_total);
 	for(i = 0; i < n_fixed_; i++)
 		r[i].insert(i);
-	a1_f.ForSparseJac(n_fixed_, r);
+	laplace_2_.ForSparseJac(n_fixed_, r);
 
-	// compute sparsity pattern corresponding to H_{beta beta}^{(2)} (beta)
+	// compute sparsity pattern corresponding to partial w.r.t (beta, theta, u)
+	// of parital w.r.t beta of H(beta, theta, u)
 	sparsity_pattern s(1);
 	assert( s[0].empty() );
 	s[0].insert(0);
-	sparsity_pattern pattern = a1_f.RevSparseHes(n_fixed_, s);
+	bool transpose = true;
+	hes_fix_sparsity_ = laplace_2_.RevSparseHes(n_fixed_, s, transpose);
 
 	// determine row and column indices in lower triangle of Hessian
 	hes_fix_row_.clear();
 	hes_fix_col_.clear();
 	std::set<size_t>::iterator itr;
 	for(i = 0; i < n_fixed_; i++)
-	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
+	{	for(
+			itr  = hes_fix_sparsity_[i].begin();
+			itr != hes_fix_sparsity_[i].end();
+			itr++
+		)
 		{	j = *itr;
 			// only compute lower triangular part
 			if( i >= j )
@@ -136,31 +133,6 @@ void approx_mixed::record_hes_fix(
 			}
 		}
 	}
-	if( hes_fix_row_.size() == 0 )
-	{	// hes_fit_ not recorded in this case
-		CppAD::AD<double>::abort_recording();
-	}
-	else
-	{	size_t K = hes_fix_row_.size();
-
-		// compute lower triangle of sparse Hessian H_{beta beta}^{(2)} (beta)
-		a1d_vector a1_beta(n_fixed_), a1_theta(n_fixed_), a1_u(n_random_);
-		a1d_vector a1_w(1), a1_hes(K);
-		unpack(a1_beta, a1_theta, a1_u, a1_beta_theta_u);
-		//
-		a1_w[0] = 1.0;
-		CppAD::sparse_hessian_work work;
-		a1_f.SparseHessian(
-			a1_beta, a1_w, pattern, hes_fix_row_, hes_fix_col_, a1_hes, work
-		);
-
-		// complete recording of H_{beta beta}^{(2)} (beta, theta, u)
-		hes_fix_.Dependent(a1_beta_theta_u, a1_hes);
-
-		// optimize the recording
-		hes_fix_.optimize();
-	}
-	//
 	record_hes_fix_done_ = true;
 }
 

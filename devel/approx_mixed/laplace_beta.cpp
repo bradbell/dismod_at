@@ -17,14 +17,14 @@ $spell
 	Cpp
 $$
 
-$section approx_mixed: Partial of Laplace Approximation w.r.t beta$$
+$section approx_mixed: Partial of Laplace Approximation w.r.t Fixed Effects$$
 
 $head Syntax$$
 $icode%H_beta% = %approx_object%.laplace_beta(%beta%, %theta%, %u%)%$$
 
 $head Purpose$$
-This routine evaluates the partial w.r.t. $latex \beta$$ of the
-random part of the Laplace Approximation; i.e.,
+This routine evaluates the partial w.r.t the fixed effects of the
+random part of the objective; i.e.,
 $latex \[
 	H_\beta^{(1)} ( \beta , \theta , u )
 \]$$

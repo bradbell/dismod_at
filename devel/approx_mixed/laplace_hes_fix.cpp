@@ -19,7 +19,7 @@ $spell
 	xam
 $$
 
-$section Hessian With Respect to Fixed Effects$$
+$section Hessian of Laplace Approximation w.r.t Fixed Effects$$
 
 $head Syntax$$
 $icode%approx_object%.laplace_hes_fix(
@@ -27,14 +27,15 @@ $icode%approx_object%.laplace_hes_fix(
 )%$$
 
 $head Purpose$$
-This routine computes the Hessian of the negative log of the
-random part of the objective
-$cref/H(beta, theta, u)/
-	approx_mixed_theory/Random Part of Objective/H(beta, theta, u)/$$
-with respect to the random effects vector $latex \beta$$; i.e.
+This routine computes the Hessian w.r.t the fixed effects of
+random part of the of the objective; i.e.,
 $latex \[
-	H_{\beta \beta}^{(2)} ( \theta, \theta, \hat{u} )
+	H_\beta^{(2)} ( \beta , \theta , u )
 \] $$
+See $cref/H(beta, theta, u)/
+	approx_mixed_theory/Random Part of Objective
+	/H(beta, theta, u)
+/$$.
 
 $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
@@ -69,7 +70,11 @@ the entire vector must be the same
 as for a previous call to $code laplace_hes_fix$$.
 If it's input size is zero,
 upon return it contains the row indices for the Hessian elements
-that are possibly non-zero.
+that are possibly non-zero;
+$codei%
+	%row_out%[%k%] < %n_fixed%
+%$$
+for all $icode%k% = 0 , %...%, %row_out%.size()-1%$$
 
 $head col_out$$
 This argument has prototype
@@ -135,35 +140,52 @@ void approx_mixed::laplace_hes_fix(
 	assert( n_fixed_  == fixed_vec.size() );
 	assert( n_random_ == random_vec.size() );
 	assert( hes_fix_col_.size() == n_nonzero );
-	assert( hes_fix_.Range()    == n_nonzero );
 
 	// make sure outputs have proper dimension
 	assert( row_out.size() == col_out.size() );
 	assert( row_out.size() == val_out.size() );
 
-	// create an d_vector containing (beta, theta, u)
-	d_vector beta_theta_u( 2 * n_fixed_ + n_random_ );
-	pack(fixed_vec, fixed_vec, random_vec, beta_theta_u);
+	// create an a2d_vector containing (beta, theta, u)
+	a1d_vector a1_beta_theta_u( 2 * n_fixed_ + n_random_ );
+	pack(fixed_vec, fixed_vec, random_vec, a1_beta_theta_u);
+	a2d_vector a2_beta_theta_u( 2 * n_fixed_ + n_random_ );
+	for(size_t j = 0; j < 2 * n_fixed_ + n_random_; j++)
+		a2_beta_theta_u[j] = a1_beta_theta_u[j];
+
+	// create an a2d weighting vector
+	a2d_vector a2_w(1);
+	a2_w[0] = 1.0;
+
+	// create an a2d vector for the results
+	a2d_vector a2_val_out( hes_fix_row_.size() );
 
 	// compute the sparse Hessian
-	size_t order = 0;
-	val_out = hes_fix_.Forward(order, beta_theta_u);
-	assert( val_out.size() == n_nonzero );
+	laplace_2_.SparseHessian(
+		a2_beta_theta_u,
+		a2_w,
+		hes_fix_sparsity_,
+		hes_fix_row_,
+		hes_fix_col_,
+		a2_val_out,
+		hes_fix_work_
+	);
 
 	if( row_out.size() == 0 )
 	{	row_out.resize(n_nonzero);
 		col_out.resize(n_nonzero);
+		val_out.resize(n_nonzero);
 		for(size_t k = 0; k < n_nonzero; k++)
 		{	row_out[k] = hes_fix_row_[k];
 			col_out[k] = hes_fix_col_[k];
 		}
 	}
+	for(size_t k = 0; k < n_nonzero; k++)
+		val_out[k] = Value( Value( a2_val_out[k] ) );
+
 # ifndef NDEUBG
-	else
-	{	for(size_t k = 0; k < n_nonzero; k++)
-		{	assert( row_out[k] == hes_fix_row_[k] );
-			assert( col_out[k] == hes_fix_col_[k] );
-		}
+	for(size_t k = 0; k < n_nonzero; k++)
+	{	assert( row_out[k] == hes_fix_row_[k] );
+		assert( col_out[k] == hes_fix_col_[k] );
 	}
 # endif
 }

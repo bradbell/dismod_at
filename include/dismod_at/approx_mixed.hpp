@@ -286,9 +286,10 @@ The Hessian of the random likelihood w.r.t. the fixed effects
 $latex H_{\beta \beta}^{(2)} ( \beta, \theta , u )$$ is as a sparse matrix
 represented by the following variables:
 $codep */
-	CppAD::ADFun<double>    hes_fix_;     // computes the hessian values
 	CppAD::vector<size_t>   hes_fix_row_; // corresponding row indices
 	CppAD::vector<size_t>   hes_fix_col_; // corresponding column indices
+	CppAD::vector< std::set<size_t> > hes_fix_sparsity_;
+	CppAD::sparse_hessian_work        hes_fix_work_;
 /* $$
 Note that if $code record_hes_fix_done_$$ is true and
 $code hes_fix_row_.size() == 0$$, then this Hessian is zero; i.e.,

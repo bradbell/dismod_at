@@ -370,7 +370,7 @@ bool capture_xam(void)
 
 	// simulation parameters
 	size_t I = 50;
-	size_t T = 10;
+	size_t T = 20;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   0.50;  // constant term in covariate model
 	theta_sim[1] =   5.0;   // mean population size
