@@ -70,25 +70,25 @@ be defined by the user's derived class:
 
 $subhead ran_like$$
 $codep */
-	virtual CppAD::vector<a5_double> ran_like(
-		const CppAD::vector<a5_double>& fixed_vec  ,
-		const CppAD::vector<a5_double>& random_vec
+	virtual a5d_vector ran_like(
+		const a5d_vector& fixed_vec  ,
+		const a5d_vector& random_vec
 	) = 0;
 /* $$
 See $cref/ran_like/approx_mixed_ran_like/$$.
 
 $subhead fix_like$$
 $codep */
-	virtual CppAD::vector<a1_double> fix_like(
-		const CppAD::vector<a1_double>& fixed_vec
+	virtual a1d_vector fix_like(
+		const a1d_vector& fixed_vec
 	) = 0 ;
 /* $$
 See $cref/fix_like/approx_mixed_fix_like/$$.
 
 $subhead constraint$$
 $codep */
-	virtual CppAD::vector<a1_double> constraint(
-		const CppAD::vector<a1_double>& fixed_vec
+	virtual a1d_vector constraint(
+		const a1d_vector& fixed_vec
 	) = 0 ;
 /* $$
 See $cref/constraint/approx_mixed_constraint/$$.
