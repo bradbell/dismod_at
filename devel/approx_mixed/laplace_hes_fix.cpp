@@ -159,11 +159,14 @@ void approx_mixed::laplace_hes_fix(
 	// create an a2d vector for the results
 	a2d_vector a2_val_out( hes_fix_row_.size() );
 
+	// First call to SparseHessian is during record_hes_fix
+	CppAD::vector< std::set<size_t> > not_used(0);
+
 	// compute the sparse Hessian
 	laplace_2_.SparseHessian(
 		a2_beta_theta_u,
 		a2_w,
-		hes_fix_sparsity_,
+		not_used,
 		hes_fix_row_,
 		hes_fix_col_,
 		a2_val_out,

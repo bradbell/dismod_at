@@ -113,7 +113,8 @@ void approx_mixed::record_hes_fix(
 	assert( s[0].empty() );
 	s[0].insert(0);
 	bool transpose = true;
-	hes_fix_sparsity_ = laplace_2_.RevSparseHes(n_fixed_, s, transpose);
+	CppAD::vector< std::set<size_t> > pattern =
+		laplace_2_.RevSparseHes(n_fixed_, s, transpose);
 
 	// determine row and column indices in lower triangle of Hessian
 	hes_fix_row_.clear();
@@ -121,8 +122,8 @@ void approx_mixed::record_hes_fix(
 	std::set<size_t>::iterator itr;
 	for(i = 0; i < n_fixed_; i++)
 	{	for(
-			itr  = hes_fix_sparsity_[i].begin();
-			itr != hes_fix_sparsity_[i].end();
+			itr  = pattern[i].begin();
+			itr != pattern[i].end();
 			itr++
 		)
 		{	j = *itr;
@@ -133,6 +134,25 @@ void approx_mixed::record_hes_fix(
 			}
 		}
 	}
+
+	// create an a2d weighting vector
+	a2d_vector a2_w(1);
+	a2_w[0] = 1.0;
+
+	// palce where results go
+	a2d_vector a2_val_out( hes_fix_row_.size() );
+
+	// compute the work vector
+	laplace_2_.SparseHessian(
+		a2_beta_theta_u,
+		a2_w,
+		pattern,
+		hes_fix_row_,
+		hes_fix_col_,
+		a2_val_out,
+		hes_fix_work_
+	);
+
 	record_hes_fix_done_ = true;
 }
 
