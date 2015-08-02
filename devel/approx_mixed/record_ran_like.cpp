@@ -121,6 +121,16 @@ void approx_mixed::record_ran_like(
 
 	// compute ran_like using a2_double operations
 	a2d_vector a2_vec = ran_like(a2_theta, a2_u);
+	if( a2_vec.size() == 0 )
+	{	std::string error_message =
+		"approx_mixed: number of random effects > 0 and ran_like has size 0";
+		fatal_error(error_message);
+	}
+	if( a2_vec.size() != 1 )
+	{	std::string error_message =
+		"approx_mixed: ran_like does not have size zero or one.";
+		fatal_error(error_message);
+	}
 
 	// save the recording
 	a1_ran_like_.Dependent(a2_both, a2_vec);
