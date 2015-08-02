@@ -57,8 +57,7 @@ namespace {
 			// initialize part of log-density that is always smooth
 			vec[0] = Float(0.0);
 
-			// compute these factors once
-			Float sqrt_2   = CppAD::sqrt( Float(2.0) );
+			// compute factor once
 			Float sqrt_2pi = Float( CppAD::sqrt( 8.0 * CppAD::atan(1.0) ) );
 
 			for(size_t i = 0; i < y_.size(); i++)
@@ -66,17 +65,8 @@ namespace {
 				Float sigma  = theta[i];
 				Float res    = (y_[i] - mu) / sigma;
 
-				if( i % 2 )
-				{	// This is a Gaussian term, so entire density is smooth
-					vec[0]  += (sqrt_2pi * log(sigma) + res*res) / Float(2.0);
-				}
-				else
-				{	// This term is Laplace distributed
-					vec[0] += log(sqrt_2 * sigma);
-
-					// part of the density that need absolute value
-					vec.push_back(sqrt_2 * res);
-				}
+				// Gaussian likelihood
+				vec[0]  += (sqrt_2pi * log(sigma) + res*res) / Float(2.0);
 			}
 			return vec;
 		}

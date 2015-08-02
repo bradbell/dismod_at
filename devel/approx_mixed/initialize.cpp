@@ -75,10 +75,6 @@ $cref/ran_like_/approx_mixed_private/n_random_ > 0/ran_like_/$$.
 $lnext
 If $icode%n_random_ > 0%$$,
 the member variable
-$cref/grad_ran_/approx_mixed_private/n_random_ > 0/grad_ran_/$$.
-$lnext
-If $icode%n_random_ > 0%$$,
-the member variable
 $cref/hes_ran_/approx_mixed_private/n_random_ > 0/hes_ran_/$$.
 $lnext
 If $icode%n_random_ > 0%$$,
@@ -112,7 +108,6 @@ void approx_mixed::initialize(
 	if( n_random_ > 0 )
 	{
 		assert( ! record_ran_like_done_ );
-		assert( ! record_grad_ran_done_ );
 		assert( ! record_hes_ran_done_ );
 		assert( ! record_laplace_done_[0] );
 		assert( ! record_laplace_done_[1] );
@@ -120,8 +115,6 @@ void approx_mixed::initialize(
 
 		// ran_like_
 		record_ran_like(fixed_vec, random_vec);
-		// grad_ran_
-		record_grad_ran(fixed_vec, random_vec);
 		// hes_ran_
 		record_hes_ran(fixed_vec, random_vec);
 		// laplace_0_
@@ -134,7 +127,6 @@ void approx_mixed::initialize(
 		record_hes_fix(fixed_vec, random_vec);
 
 		assert( record_ran_like_done_ );
-		assert( record_grad_ran_done_ );
 		assert( record_hes_ran_done_ );
 		assert( record_laplace_done_[0] );
 		assert( record_laplace_done_[1] );

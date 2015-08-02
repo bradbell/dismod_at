@@ -33,6 +33,11 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 08-02$$
+Remove the option to include Laplace likelihoods (absolute value terms)
+in the $cref/random negative log likelihood/approx_mixed_ran_like/$$.
+(This reduces the number of necessary recordings and corresponding memory).
+
 $head 08-01$$
 $list number$$
 The Hessian w.r.t. $latex \beta$$,

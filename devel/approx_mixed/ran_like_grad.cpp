@@ -79,7 +79,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 CppAD::vector<approx_mixed::a1_double> approx_mixed::ran_like_grad(
 	const a1d_vector&        fixed_vec   ,
 	const a1d_vector&        random_vec  )
-{	assert( record_grad_ran_done_ );
+{	assert( record_ran_like_done_ );
 
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );
@@ -89,9 +89,21 @@ CppAD::vector<approx_mixed::a1_double> approx_mixed::ran_like_grad(
 	a1d_vector both_vec( n_fixed_ + n_random_ );
 	pack(fixed_vec, random_vec, both_vec);
 
-	// compute the gradient
-	size_t order = 0;
-	return grad_ran_.Forward(order, both_vec);
+	// zero order forward mode
+	a1_ran_like_.Forward(0, both_vec);
+
+	// first order reverse f_{theta,u}^{(1) ( theta , u )
+	assert( a1_ran_like_.Range() == 1);
+	a1d_vector a1_w(1), grad_both(n_fixed_ + n_random_);
+	a1_w[0] = 1.0;
+	grad_both = a1_ran_like_.Reverse(1, a1_w);
+
+	// extract u part of the gradient
+	a1d_vector grad_ran(n_random_);
+	for(size_t j = 0; j < n_random_; j++)
+		grad_ran[j] = grad_both[n_fixed_ + j];
+	//
+	return grad_ran;
 }
 
 

@@ -44,9 +44,6 @@ $latex \[
 
 $subhead Smoothness Assumption$$
 The function $latex f(\theta, u)$$ is assumed to be smooth.
-Note that $cref/ran_like/approx_mixed_ran_like/$$ allows for
-non-smooth terms in the form of Laplace densities, the this is for
-research purposes only.
 
 $head Fixed Negative Log-Likelihood, g(theta)$$
 We use $latex g( \theta )$$ for the part of the likelihood

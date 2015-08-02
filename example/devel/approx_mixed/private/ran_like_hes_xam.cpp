@@ -63,27 +63,13 @@ namespace {
 			// initialize part of log-density that is always smooth
 			vec[0] = Float(0.0);
 
-			// compute this factor once
-			Float sqrt_2 = CppAD::sqrt( Float(2.0) );
-
 			for(size_t i = 0; i < y_.size(); i++)
 			{	Float mu     = u[i];
 				Float sigma  = theta[i];
 				Float res    = (y_[i] - mu) / sigma;
 
-				if( i % 2 == 0 )
-				{	// This is a Gaussian term, so entire density is smooth
-					// (do not need 2*pi inside of log)
-					vec[0]  += (log(sigma) + res*res) / Float(2.0);
-				}
-				else
-				{	// This term is Laplace distributed
-					// (do not need sqrt(2) inside of log)
-					vec[0] += log(sigma);
-
-					// part of the density that need absolute value
-					vec.push_back(sqrt_2 * res);
-				}
+				// (do not need 2*pi inside of log)
+				vec[0]  += (log(sigma) + res*res) / Float(2.0);
 			}
 			return vec;
 		}
@@ -130,7 +116,7 @@ bool ran_like_hes_xam(void)
 	vector<a1_double> fixed_vec(n_fixed), random_vec(n_random);
 
 	for(size_t i = 0; i < n_data; i++)
-	{	data[i]      = double(i + 1);
+	{	data[i]      = double( (i + 1) * (i + 1) );
 		fixed_vec[i] = theta[i] = std::sqrt( double(i + 1) );
 		random_vec[i] = u[i] = 0.0;
 	}
@@ -145,13 +131,12 @@ bool ran_like_hes_xam(void)
 	approx_object.ran_like_hes(fixed_vec, random_vec, row, col, val);
 
 	// check size of result vectors
-	size_t K = row.size();
-	ok &= col.size() == K;
-	ok &= val.size() == K;
+	ok &= row.size() == n_random;
+	ok &= col.size() == n_random;
+	ok &= val.size() == n_random;
 
-	// The Laplace terms are known to have zero Hessian w.r.t random effects
-	ok &= K == (n_random + 1) / 2;
-	for(size_t k = 0; k < K; k++)
+	// check Hessian
+	for(size_t k = 0; k < n_random; k++)
 	{	size_t i = row[k];
 		size_t j = col[k];
 		ok      &= (i == j);

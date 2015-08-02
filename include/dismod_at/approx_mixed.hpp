@@ -117,7 +117,6 @@ $comment */
 	record_ran_like_done_(false)       ,
 	record_hes_ran_done_(false)     ,
 	record_hes_fix_done_(false)     ,
-	record_grad_ran_done_(false)    ,
 	record_constraint_done_(false)  ,
 	record_laplace_done_(3)
 	{	for(size_t order = 0; order < 3; order++)
@@ -190,7 +189,6 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/constraint_jac.cpp
 	%devel/approx_mixed/constraint_hes.cpp
 	%devel/approx_mixed/record_ran_like.cpp
-	%devel/approx_mixed/record_grad_ran.cpp
 	%devel/approx_mixed/record_hes_ran.cpp
 	%devel/approx_mixed/record_laplace.cpp
 	%devel/approx_mixed/record_hes_fix.cpp
@@ -225,14 +223,12 @@ $codep */
 	bool                record_ran_like_done_;
 	bool                record_hes_ran_done_;
 	bool                record_hes_fix_done_;
-	bool                record_grad_ran_done_;
 	bool                record_constraint_done_;
 	CppAD::vector<bool> record_laplace_done_; // index is order in call
 /* $$
 $head n_random_ > 0$$
 The following values are only defined when $icode%n_random_% > 0%$$:
 $cref/ran_like_/approx_mixed_private/n_random_ > 0/ran_like_/$$,
-$cref/grad_ran_/approx_mixed_private/n_random_ > 0/grad_ran_/$$,
 $cref/hes_ran_/approx_mixed_private/n_random_ > 0/hes_ran_/$$,
 $cref/laplace_k_/approx_mixed_private/n_random_ > 0/laplace_k_/$$,
 $cref/hes_fix_/approx_mixed_private/n_random_ > 0/hes_fix_/$$,
@@ -248,14 +244,6 @@ $codep */
 	CppAD::ADFun<double>      a0_ran_like_;
 	CppAD::ADFun<a1_double>   a1_ran_like_;
 	CppAD::ADFun<a2_double>   a2_ran_like_;
-/* $$
-$subhead grad_ran_$$
-The gradient of the random likelihood w.r.t. the random effects
-$latex f_u^{(1)} ( \theta , u )^T$$. Because this is a simple vector
-there is no difference between the gradient and the derivative; i.e.,
-the transpose does not matter.
-$codep */
-	CppAD::ADFun<a1_double> grad_ran_;   // computes the gradient values
 /* $$
 $subhead hes_ran_$$
 The Hessian of the random likelihood w.r.t. the random effects
@@ -356,14 +344,6 @@ $head record_ran_like$$
 See $cref approx_mixed_record_ran_like$$.
 $codep */
 	void record_ran_like(
-		const d_vector& fixed_vec ,
-		const d_vector& random_vec
-	);
-/* $$
-$head record_grad_ran$$
-See $cref approx_mixed_record_grad_ran$$.
-$codep */
-	void record_grad_ran(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);

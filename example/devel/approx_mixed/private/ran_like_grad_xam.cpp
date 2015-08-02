@@ -61,27 +61,13 @@ namespace {
 			// initialize part of log-density that is always smooth
 			vec[0] = Float(0.0);
 
-			// compute this factor once
-			Float sqrt_2 = CppAD::sqrt( Float(2.0) );
-
 			for(size_t i = 0; i < y_.size(); i++)
 			{	Float mu     = u[i];
 				Float sigma  = theta[i];
 				Float res    = (y_[i] - mu) / sigma;
 
-				if( i % 2 == 0 )
-				{	// This is a Gaussian term, so entire density is smooth
-					// (do not need 2*pi inside of log)
-					vec[0]  += (log(sigma) + res*res) / Float(2.0);
-				}
-				else
-				{	// This term is Laplace distributed
-					// (do not need sqrt(2) inside of log)
-					vec[0] += log(sigma);
-
-					// part of the density that need absolute value
-					vec.push_back(sqrt_2 * res);
-				}
+				// (do not need 2*pi inside of log)
+				vec[0]  += (log(sigma) + res*res) / Float(2.0);
 			}
 			return vec;
 		}
@@ -118,7 +104,6 @@ bool ran_like_grad_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
-	double sqrt_2 = std::sqrt( 2.0 );
 	typedef AD<double> a1_double;
 
 	size_t n_data   = 10;
@@ -129,8 +114,8 @@ bool ran_like_grad_xam(void)
 	vector<a1_double> fixed_vec(n_fixed), random_vec(n_random);
 
 	for(size_t i = 0; i < n_data; i++)
-	{	data[i]      = double(i + 1);
-		fixed_vec[i] = theta[i] =std::sqrt( double(i + 1) );
+	{	data[i]      = double((i + 1) * (i + 1) );
+		fixed_vec[i] = theta[i] = std::sqrt( double(i + 1) );
 		random_vec[i] = u[i] = 0.0;
 	}
 
@@ -142,18 +127,16 @@ bool ran_like_grad_xam(void)
 	vector<a1_double> grad =
 		approx_object.ran_like_grad(fixed_vec, random_vec);
 
-	// The Laplace terms are known to have zero Hessian w.r.t random effects
+	// check the gradient
 	for(size_t i = 0; i < n_random; i++)
 	{	a1_double sigma  = fixed_vec[i];
 		a1_double mu     = random_vec[i];
 		a1_double res    = (a1_double(data[i]) - mu) / sigma;
-		a1_double check;
-		if( i % 2 == 0 )
-			check  = - res / sigma;
-		else
-			check  = - sqrt_2 * CppAD::sign(res) / sigma;
+		a1_double check  = - res / sigma;
 		//
-		ok           &= abs( grad[i] / check - 1.0) <= eps;
+		// std::cout << "grad[i] = " << grad[i];
+		// std::cout << ", check = " << check << std::endl;
+		ok              &= abs( grad[i] / check - 1.0) <= eps;
 	}
 
 	return ok;
