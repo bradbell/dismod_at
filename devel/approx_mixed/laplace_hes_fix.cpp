@@ -125,20 +125,19 @@ void approx_mixed::laplace_hes_fix(
 	CppAD::vector<size_t>&   col_out     ,
 	d_vector&                val_out     )
 {	assert( record_hes_fix_done_ );
+	assert( n_fixed_  == fixed_vec.size() );
+	assert( n_random_ == random_vec.size() );
 
 	// size of outputs
 	size_t n_nonzero = hes_fix_row_.size();
 	if( n_nonzero == 0 )
-	{	// special case where Hessian of Laplace approximation is zero.
+	{	// special case where Hessian is zero.
 		assert( row_out.size() == 0 );
 		assert( col_out.size() == 0 );
 		assert( val_out.size() == 0 );
 		return;
 	}
-
-	// number of fixed and random effects
-	assert( n_fixed_  == fixed_vec.size() );
-	assert( n_random_ == random_vec.size() );
+	// check recording
 	assert( hes_fix_col_.size() == n_nonzero );
 
 	// make sure outputs have proper dimension
@@ -156,7 +155,7 @@ void approx_mixed::laplace_hes_fix(
 		}
 	}
 
-	// create an d_vector containing (beta, theta, u)
+	// create a d_vector containing (beta, theta, u)
 	d_vector beta_theta_u( 2 * n_fixed_ + n_random_ );
 	pack(fixed_vec, fixed_vec, random_vec, beta_theta_u);
 

@@ -250,9 +250,9 @@ The Hessian of the random likelihood w.r.t. the random effects
 $latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix
 represented by the following variables:
 $codep */
-	CppAD::ADFun<a1_double> hes_ran_;     // computes the hessian values
-	CppAD::vector<size_t>   hes_ran_row_; // corresponding row indices
-	CppAD::vector<size_t>   hes_ran_col_; // corresponding column indices
+	CppAD::vector<size_t>      hes_ran_row_; // corresponding row indices
+	CppAD::vector<size_t>      hes_ran_col_; // corresponding column indices
+	CppAD::sparse_hessian_work hes_ran_work_;
 /* $$
 $subhead laplace_k_$$
 For $icode%k% = 0 , 1, 2%$$, $codei%laplace_%k%_%$$ is $th k$$ order accurate

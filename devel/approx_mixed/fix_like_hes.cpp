@@ -20,7 +20,7 @@ $spell
 	hes
 $$
 
-$section approx_mixed: Hessian of Prior for Fixed Effects$$
+$section Hessian of Fixed Negative Log-Likelihood$$
 
 $head Syntax$$
 $icode%approx_object%.fix_like_hes(

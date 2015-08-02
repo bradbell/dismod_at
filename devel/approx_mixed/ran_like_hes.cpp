@@ -19,7 +19,7 @@ $spell
 	xam
 $$
 
-$section Hessian With Respect to Random Effects$$
+$section Hessian of Random Negative Log-Likelihood Random Effects$$
 
 $head Syntax$$
 $icode%approx_object%.ran_like_hes(
@@ -27,8 +27,12 @@ $icode%approx_object%.ran_like_hes(
 )%$$
 
 $head Purpose$$
-This routine computes the Hessian of the negative log of the random negative log-likelihood
-$cref/f(theta, u)/approx_mixed_theory/Random Negative Log-Likelihood, f(theta, u)/$$
+This routine computes the Hessian of the
+negative log of the random negative log-likelihood
+$cref/f(theta, u)
+	/approx_mixed_theory/
+	Random Negative Log-Likelihood, f(theta, u)
+/$$
 with respect to the random effects vector $latex u$$; i.e.
 $latex \[
 	f_{uu}^{(2)} ( \theta, u )
@@ -118,43 +122,63 @@ void approx_mixed::ran_like_hes(
 	CppAD::vector<size_t>&   col_out     ,
 	a1d_vector&              val_out     )
 {	assert( record_hes_ran_done_ );
-
-	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );
 	assert( n_random_ == random_vec.size() );
 
 	// size of outputs
 	size_t n_nonzero = hes_ran_row_.size();
+	if( n_nonzero == 0 )
+	{	// special case where Hessian is zero.
+		assert( row_out.size() == 0 );
+		assert( col_out.size() == 0 );
+		assert( val_out.size() == 0 );
+		return;
+	}
+	// check recording
 	assert( hes_ran_col_.size() == n_nonzero );
-	assert( hes_ran_.Range()    == n_nonzero );
 
 	// make sure outputs have proper dimension
 	assert( row_out.size() == col_out.size() );
 	assert( row_out.size() == val_out.size() );
 
-	// create an a1d_vector containing (theta, u)
-	a1d_vector both_vec( n_fixed_ + n_random_ );
-	pack(fixed_vec, random_vec, both_vec);
-
-	// compute the sparse Hessian
-	size_t order = 0;
-	val_out = hes_ran_.Forward(order, both_vec);
-	assert( val_out.size() == n_nonzero );
-
+	// check if this is first call
 	if( row_out.size() == 0 )
 	{	row_out.resize(n_nonzero);
 		col_out.resize(n_nonzero);
+		val_out.resize(n_nonzero);
 		for(size_t k = 0; k < n_nonzero; k++)
-		{	row_out[k] = hes_ran_row_[k];
-			col_out[k] = hes_ran_col_[k];
+		{	assert( hes_ran_row_[k] >= n_fixed_ );
+			assert( hes_ran_col_[k] >= n_fixed_ );
+			row_out[k] = hes_ran_row_[k] - n_fixed_;
+			col_out[k] = hes_ran_col_[k] - n_fixed_;
 		}
 	}
+
+	// create an a1d_vector containing (theta, u)
+	a1d_vector a1_both_vec( n_fixed_ + n_random_ );
+	pack(fixed_vec, random_vec, a1_both_vec);
+
+	// create an a1d weight vector
+	a1d_vector a1_w(1);
+	a1_w[0] = 1.0;
+
+	// First call to SparseHessian si suring record_hes_ran
+	CppAD::vector< std::set<size_t> > not_used(0);
+
+	// compute the sparse Hessian
+	a1_ran_like_.SparseHessian(
+		a1_both_vec,
+		a1_w,
+		not_used,
+		hes_ran_row_,
+		hes_ran_col_,
+		val_out,
+		hes_ran_work_
+	);
 # ifndef NDEUBG
-	else
-	{	for(size_t k = 0; k < n_nonzero; k++)
-		{	assert( row_out[k] == hes_ran_row_[k] );
-			assert( col_out[k] == hes_ran_col_[k] );
-		}
+	for(size_t k = 0; k < n_nonzero; k++)
+	{	assert( row_out[k] + n_fixed_ == hes_ran_row_[k] );
+		assert( col_out[k] + n_fixed_ == hes_ran_col_[k] );
 	}
 # endif
 }

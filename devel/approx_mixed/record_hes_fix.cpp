@@ -19,7 +19,7 @@ $spell
 	Cpp
 $$
 
-$section approx_mixed: Record Hessian of Random Likelihood w.r.t Fixed Effects$$
+$section Record Hessian of Random Likelihood w.r.t Fixed Effects$$
 
 $head Syntax$$
 $codei%record_hes_fix(%fixed_vec%, %random_vec%)%$$
@@ -46,20 +46,6 @@ $codei%
 It specifies the initial value for the
 $cref/random effects/approx_mixed/Random Effects, u/$$ optimization.
 
-$head hes_fix_$$
-The input value of the member variable
-$codei%
-	CppAD::ADFun<double> hes_fix_
-%$$
-does not matter.
-Upon return it contains the corresponding recording for the lower triangle of
-$latex \[
-	H_{\beta \beta}^{(2)} ( \beta, \theta , u )
-\] $$
-see $cref/H(beta, theta, u)
-	/approx_mixed_theory/Random Part of Objective/ H(beta, theta, u)/$$
-Note that the matrix is symmetric and hence can be recovered from
-its lower triangle.
 
 $head hes_fix_row_, hes_fix_col_$$
 The input value of the member variables
@@ -74,6 +60,32 @@ are the row and column indices for the Hessian element
 that corresponds to the $th i$$ component of the function
 corresponding to $code hes_fix_$$.
 
+$head hes_fix_work_$$
+The input value of the member variable
+$codei%
+	CppAD::sparse_hessian_work hes_fix_work_
+%$$
+does not matter.
+Upon return it contains the necessary information so that
+$codei%
+	laplace_2_.SparseHessian(
+		%beta_theta_u%,
+		%w%,
+		%not_used%,
+		hes_fix_row_,
+		hes_fix_col_,
+		%val_out%,
+		hes_fix_work_
+	);
+%$$
+can be used to calculate the lower triangle of the sparse Hessian
+$latex \[
+	H_{\beta \beta}^{(2)} ( \beta, \theta , u )
+\] $$
+see $cref/H(beta, theta, u)
+	/approx_mixed_theory/Random Part of Objective/ H(beta, theta, u)/$$
+Note that the matrix is symmetric and hence can be recovered from
+its lower triangle.
 
 $end
 */
@@ -109,7 +121,7 @@ void approx_mixed::record_hes_fix(
 	assert( s[0].empty() );
 	s[0].insert(0);
 	bool transpose = true;
-	CppAD::vector< std::set<size_t> > pattern =
+	sparsity_pattern pattern =
 		laplace_2_.RevSparseHes(n_fixed_, s, transpose);
 
 	// determine row and column indices in lower triangle of Hessian
@@ -131,11 +143,11 @@ void approx_mixed::record_hes_fix(
 		}
 	}
 
-	// create an a2d weighting vector
+	// create a weighting vector
 	d_vector w(1);
 	w[0] = 1.0;
 
-	// palce where results go
+	// place where results go (not used here)
 	d_vector val_out( hes_fix_row_.size() );
 
 	// compute the work vector
@@ -148,7 +160,7 @@ void approx_mixed::record_hes_fix(
 		val_out,
 		hes_fix_work_
 	);
-
+	//
 	record_hes_fix_done_ = true;
 }
 
