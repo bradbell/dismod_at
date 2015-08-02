@@ -32,7 +32,7 @@ $codei%
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, or $cref a5_double$$.
+$code double$$, $code AD<double>$$, or $cref a3_double$$.
 
 $head smooth2ode$$
 This constructs an object that interpolates from
@@ -153,7 +153,7 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <dismod_at/smooth2ode.hpp>
-# include <dismod_at/a5_double.hpp>
+# include <dismod_at/a3_double.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -320,7 +320,7 @@ template CppAD::vector<Float> smooth2ode::interpolate<Float>( \
 
 DISMOD_AT_INSTANTIATE_SMOOTH2ODE( double )
 DISMOD_AT_INSTANTIATE_SMOOTH2ODE( CppAD::AD<double> )
-DISMOD_AT_INSTANTIATE_SMOOTH2ODE( a5_double )
+DISMOD_AT_INSTANTIATE_SMOOTH2ODE( a3_double )
 
 } // END DISMOD_AT_NAMESPACE
 

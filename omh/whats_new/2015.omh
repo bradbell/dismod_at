@@ -34,6 +34,7 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 08-01$$
+$list number$$
 The Hessian w.r.t. $latex \beta$$,
 $latex \[
 	H^{(2)}_\beta H( \beta, \theta, u)
@@ -42,6 +43,10 @@ is no longer recorded as a separate AD function, but is rather
 evaluated using the recording for $latex H( \beta , \theta , u)$$
 (instead of its own separate recording.
 The greatly reduced the program memory requirements.
+$lnext
+The $cref/ran_like/approx_mixed_ran_like/$$ function was changed from
+use $code a5_double$$ objects to $code a3_double$$ objects.
+$lend
 
 $head 07-29$$
 $list number$$

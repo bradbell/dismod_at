@@ -96,9 +96,9 @@ namespace {
 			return vec;
 		}
 		// ------------------------------------------------------------------
-		virtual vector<a5_double> ran_like(
-			const vector<a5_double>& fixed_vec  ,
-			const vector<a5_double>& random_vec )
+		virtual vector<a3_double> ran_like(
+			const vector<a3_double>& fixed_vec  ,
+			const vector<a3_double>& random_vec )
 		{	return implement_ran_like(fixed_vec, random_vec); }
 		//
 		virtual vector<a1_double> fix_like(
@@ -127,7 +127,7 @@ bool approx_derived_xam(void)
 	double eps = 100. * std::numeric_limits<double>::epsilon();
 
 	typedef dismod_at::approx_mixed::a1_double a1_double;
-	typedef dismod_at::approx_mixed::a5_double a5_double;
+	typedef dismod_at::approx_mixed::a3_double a3_double;
 
 	size_t n_data   = 10;
 	size_t n_fixed  = n_data;
@@ -135,18 +135,18 @@ bool approx_derived_xam(void)
 	vector<double>    data(n_data);
 	vector<double>    fixed_vec(n_fixed), random_vec(n_random);
 	vector<a1_double> a1_fixed(n_fixed), a1_random(n_random);
-	vector<a5_double> a5_fixed(n_fixed), a5_random(n_random);
+	vector<a3_double> a3_fixed(n_fixed), a3_random(n_random);
 
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]       = double(i + 1);
 		//
 		fixed_vec[i]  = 1.5;
 		a1_fixed[i]   = a1_double( fixed_vec[i] );
-		a5_fixed[i]   = a5_double( fixed_vec[i] );
+		a3_fixed[i]   = a3_double( fixed_vec[i] );
 		//
 		random_vec[i] = 0.0;
 		a1_random[i]  = a1_double( random_vec[i] );
-		a5_random[i]  = a5_double( random_vec[i] );
+		a3_random[i]  = a3_double( random_vec[i] );
 	}
 
 	// object that is derived from approx_mixed
@@ -154,8 +154,8 @@ bool approx_derived_xam(void)
 	approx_object.initialize(fixed_vec, random_vec);
 
 	// Evaluate the random negative log-likelihood
-	vector<a5_double> a5_vec(1);
-	a5_vec = approx_object.implement_ran_like(a5_fixed, a5_random);
+	vector<a3_double> a3_vec(1);
+	a3_vec = approx_object.implement_ran_like(a3_fixed, a3_random);
 
 	// check the random negative log-likelihood
 	double sum = 0.0;
@@ -165,7 +165,7 @@ bool approx_derived_xam(void)
 		double res    = (data[i] - mu) / sigma;
 		sum          += (std::log(2 * pi * sigma * sigma) + res * res) / 2.0;
 	}
-	ok &= abs( a5_vec[0] / a5_double(sum) - a5_double(1.0) ) < eps;
+	ok &= abs( a3_vec[0] / a3_double(sum) - a3_double(1.0) ) < eps;
 
 	// Evaluate the fixed negative log-likelihood
 	vector<a1_double> a1_vec(1 + n_fixed);

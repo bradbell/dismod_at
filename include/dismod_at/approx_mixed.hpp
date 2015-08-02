@@ -50,8 +50,6 @@ $codep */
 	typedef CppAD::AD<double>          a1_double;
 	typedef CppAD::AD<a1_double>       a2_double;
 	typedef CppAD::AD<a2_double>       a3_double;
-	typedef CppAD::AD<a3_double>       a4_double;
-	typedef CppAD::AD<a4_double>       a5_double;
 /* $$
 
 $head Vector Types$$
@@ -61,8 +59,6 @@ $codep */
 	typedef CppAD::vector<a1_double>   a1d_vector;
 	typedef CppAD::vector<a2_double>   a2d_vector;
 	typedef CppAD::vector<a3_double>   a3d_vector;
-	typedef CppAD::vector<a4_double>   a4d_vector;
-	typedef CppAD::vector<a5_double>   a5d_vector;
 /* $$
 $head User Defined$$
 The following are $code approx_mixed$$ pure virtual functions and hence must
@@ -70,9 +66,9 @@ be defined by the user's derived class:
 
 $subhead ran_like$$
 $codep */
-	virtual a5d_vector ran_like(
-		const a5d_vector& fixed_vec  ,
-		const a5d_vector& random_vec
+	virtual a3d_vector ran_like(
+		const a3d_vector& fixed_vec  ,
+		const a3d_vector& random_vec
 	) = 0;
 /* $$
 See $cref/ran_like/approx_mixed_ran_like/$$.
@@ -319,27 +315,6 @@ $codep */
 	CppAD::vector<size_t>       constraint_hes_row_; // hessian row indices
 	CppAD::vector<size_t>       constraint_hes_col_; // hessian column indices
 	CppAD::sparse_hessian_work  constraint_hes_work_;
-/* $$
-------------------------------------------------------------------------------
-$subhead ran_like$$
-2DO: Change public interface to use a3 instead of a5 version of this
-function.
-$codep */
-	a3d_vector ran_like(
-		const a3d_vector& fixed_vec  ,
-		const a3d_vector& random_vec
-	)
-	{	a5d_vector a5_fixed(n_fixed_), a5_random(n_random_);
-		for(size_t j = 0; j < n_fixed_; j++)
-			a5_fixed[j] = a5_double( a4_double( fixed_vec[j] ) );
-		for(size_t j = 0; j < n_random_; j++)
-			a5_random[j] = a5_double( a4_double( random_vec[j] ) );
-		a5d_vector a5_vec = ran_like(a5_fixed, a5_random);
-		a3d_vector a3_vec( a5_vec.size() );
-		for(size_t i = 0; i < a5_vec.size(); i++)
-			a3_vec[i] = Value( Value( a5_vec[i] ) );
-		return a3_vec;
-	}
 /* $$
 ------------------------------------------------------------------------------
 $head pack$$

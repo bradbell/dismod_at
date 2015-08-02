@@ -40,7 +40,7 @@ for which this function is recorded.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, or $cref a5_double$$.
+$code double$$, $code AD<double>$$, or $cref a3_double$$.
 
 
 $head b$$
@@ -315,7 +315,7 @@ $end
 */
 # include <cppad/cppad.hpp>
 # include <dismod_at/eigen_ode2.hpp>
-# include <dismod_at/a5_double.hpp>
+# include <dismod_at/a3_double.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -413,7 +413,7 @@ CppAD::vector<Float> eigen_ode2(
 	Float zf_m      = zi_m * exp( lambda_m * tf );
 	//
 	yf[1]           = (zf_p - zf_m) * b[2] / root_disc;
- 	yf[0]           = zf_p - u_p * yf[1];
+	yf[0]           = zf_p - u_p * yf[1];
 	//
 	return yf;
 }
@@ -430,6 +430,6 @@ CppAD::vector<Float> eigen_ode2(
 // instantiations
 DISMOD_AT_INSTANTIATE_EIGEN_ODE2(double)
 DISMOD_AT_INSTANTIATE_EIGEN_ODE2( CppAD::AD<double> )
-DISMOD_AT_INSTANTIATE_EIGEN_ODE2( a5_double )
+DISMOD_AT_INSTANTIATE_EIGEN_ODE2( a3_double )
 
 } // END DISMOD_AT_NAMESPACE

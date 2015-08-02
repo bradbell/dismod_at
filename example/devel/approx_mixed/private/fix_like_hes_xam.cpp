@@ -101,9 +101,9 @@ namespace {
 			return vec;
 		}
 	public:
-		virtual vector<a5_double> ran_like(
-			const vector<a5_double>& fixed_vec  ,
-			const vector<a5_double>& random_vec )
+		virtual vector<a3_double> ran_like(
+			const vector<a3_double>& fixed_vec  ,
+			const vector<a3_double>& random_vec )
 		{	return implement_ran_like(fixed_vec, random_vec); }
 		//
 		virtual vector<a1_double> fix_like(

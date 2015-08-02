@@ -30,7 +30,7 @@ $codei%get_random_effect(%pack_object%, %pack_vec%, %random_vec%)
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, or $cref a5_double$$.
+$code double$$, $code AD<double>$$, or $cref a3_double$$.
 
 $head Order of Random Effects$$
 The order of the random effects is unspecified, except for the
@@ -113,7 +113,7 @@ $end
 */
 
 # include <dismod_at/pack_info.hpp>
-# include <dismod_at/a5_double.hpp>
+# include <dismod_at/a3_double.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -205,7 +205,7 @@ void put_random_effect(
 // instantiations
 DISMOD_AT_INSTANTIATE_RANDOM_EFFECT(double)
 DISMOD_AT_INSTANTIATE_RANDOM_EFFECT( CppAD::AD<double> )
-DISMOD_AT_INSTANTIATE_RANDOM_EFFECT( a5_double )
+DISMOD_AT_INSTANTIATE_RANDOM_EFFECT( a3_double )
 
 
 } // END DISMOD_AT_NAMESPACE

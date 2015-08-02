@@ -13,7 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <map>
 # include <sqlite3.h>
-# include <dismod_at/a5_double.hpp>
+# include <dismod_at/a3_double.hpp>
 # include <dismod_at/approx_mixed.hpp>
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/data_model.hpp>
@@ -30,7 +30,7 @@ namespace dismod_at {
 		// type declarations
 		typedef CppAD::AD<double>          a1_double;
 		typedef CppAD::vector<a1_double>   a1d_vector;
-		typedef CppAD::vector<a5_double>   a5d_vector;
+		typedef CppAD::vector<a3_double>   a3d_vector;
 		//
 	// =======================================================================
 	private:
@@ -62,9 +62,9 @@ namespace dismod_at {
 		CppAD::vector<double>              solution_;
 		// ---------------------------------------------------------------
 		// pass random negative log-likelihood to base class
-		virtual a5d_vector ran_like(
-			const a5d_vector& fixed_vec   ,
-			const a5d_vector& random_vec
+		virtual a3d_vector ran_like(
+			const a3d_vector& fixed_vec   ,
+			const a3d_vector& random_vec
 		);
 		// pass fixed negative log-likelihood to base class
 		virtual a1d_vector fix_like(
