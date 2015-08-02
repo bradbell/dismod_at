@@ -8,12 +8,12 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_A3_DOUBLE_HPP
-# define DISMOD_AT_A3_DOUBLE_HPP
+# ifndef DISMOD_AT_A2_DOUBLE_HPP
+# define DISMOD_AT_A2_DOUBLE_HPP
 # include<cppad/cppad.hpp>
 
 /*
-$begin a3_double$$
+$begin a2_double$$
 $spell
 	CppAD
 	namespace
@@ -22,19 +22,19 @@ $spell
 	hpp
 $$
 
-$section a3_double$$
+$section a2_double$$
 
 $head Syntax$$
-$codei%# include <dismod_at/a3_double.hpp>%$$
+$codei%# include <dismod_at/a2_double.hpp>%$$
 
 $head Purpose$$
-Defines the type $code a3_double$$ as five levels of $code AD$$ in
+Defines the type $code a2_double$$ as two levels of $code AD$$ in
 the CppAD package.
 
 $head Source Code$$
 $codep */
 namespace dismod_at {
-	typedef CppAD::AD< CppAD::AD< CppAD::AD<double> > > a3_double;
+	typedef CppAD::AD< CppAD::AD<double> > a2_double;
 }
 /* $$
 $end

@@ -47,17 +47,24 @@ $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
 $head ran_like_$$
-For $icode%k% = 0, 1, 2%$$ the input value of the member variable
+The input value of the member variables
 $codei%
-	CppAD::ADFun<a%k%_double> a%k%_ran_like_
+	CppAD::ADFun<a%k%_double> a0_ran_like_
+	CppAD::ADFun<a%k%_double> a1_ran_like_
 %$$
-does not matter.
-Upon return it contains the corresponding recording for the
+do not matter.
+Upon return they contain the corresponding recording for the
 $cref/ran_like/approx_mixed_ran_like/$$.
 Note that the function result is the
-$cref/negative log-density vector/approx_mixed/Negative Log-Density Vector/$$
+$cref/negative log-density vector
+	/approx_mixed
+	/Negative Log-Density Vector
+/$$
 corresponding to the function
-$cref/f(theta , u )/approx_mixed_theory/Random Negative Log-Likelihood, f(theta, u)/$$.
+$cref/f(theta , u )
+	/approx_mixed_theory/
+	Random Negative Log-Likelihood, f(theta, u)
+/$$.
 
 $end
 */
@@ -99,35 +106,32 @@ void approx_mixed::record_ran_like(
 	const d_vector& random_vec )
 {	assert( ! record_ran_like_done_ );
 	// ------------------------------------------------------------------
-	// record a2_ran_like_
+	// record a1_ran_like_
 	// ------------------------------------------------------------------
 	// combine into one vector
-	a3d_vector a3_both( n_fixed_ + n_random_ );
-	pack(fixed_vec, random_vec, a3_both);
+	a2d_vector a2_both( n_fixed_ + n_random_ );
+	pack(fixed_vec, random_vec, a2_both);
 
-	// start recording a3_double operations
-	Independent(a3_both);
+	// start recording a2_double operations
+	Independent(a2_both);
 
 	// extract the fixed and random effects
-	a3d_vector a3_theta(n_fixed_), a3_u(n_random_);
-	unpack(a3_theta, a3_u, a3_both);
+	a2d_vector a2_theta(n_fixed_), a2_u(n_random_);
+	unpack(a2_theta, a2_u, a2_both);
 
-	// compute ran_like using a3_double operations
-	a3d_vector a3_vec = ran_like(a3_theta, a3_u);
+	// compute ran_like using a2_double operations
+	a2d_vector a2_vec = ran_like(a2_theta, a2_u);
 
 	// save the recording
-	a2_ran_like_.Dependent(a3_both, a3_vec);
+	a1_ran_like_.Dependent(a2_both, a2_vec);
 
 	// optimize the recording
-	a2_ran_like_.optimize();
+	a1_ran_like_.optimize();
 	// ------------------------------------------------------------------
 	//
 	// both
 	d_vector both(n_fixed_ + n_random_);
 	pack(fixed_vec, random_vec, both);
-	//
-	// record a1_ran_like_
-	record_next_ran_like(both, a2_ran_like_, a1_ran_like_);
 	//
 	// record a0_ran_like_
 	record_next_ran_like(both, a1_ran_like_, a0_ran_like_);

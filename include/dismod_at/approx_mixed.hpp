@@ -49,16 +49,14 @@ $index a_double$$
 $codep */
 	typedef CppAD::AD<double>          a1_double;
 	typedef CppAD::AD<a1_double>       a2_double;
-	typedef CppAD::AD<a2_double>       a3_double;
 /* $$
 
 $head Vector Types$$
-$mindex d_vector a1d_vector a2d_vector a3d_vector a4d_vector$$
+$mindex d_vector a1d_vector a2d_vector$$
 $codep */
 	typedef CppAD::vector<double>      d_vector;
 	typedef CppAD::vector<a1_double>   a1d_vector;
 	typedef CppAD::vector<a2_double>   a2d_vector;
-	typedef CppAD::vector<a3_double>   a3d_vector;
 /* $$
 $head User Defined$$
 The following are $code approx_mixed$$ pure virtual functions and hence must
@@ -66,9 +64,9 @@ be defined by the user's derived class:
 
 $subhead ran_like$$
 $codep */
-	virtual a3d_vector ran_like(
-		const a3d_vector& fixed_vec  ,
-		const a3d_vector& random_vec
+	virtual a2d_vector ran_like(
+		const a2d_vector& fixed_vec  ,
+		const a2d_vector& random_vec
 	) = 0;
 /* $$
 See $cref/ran_like/approx_mixed_ran_like/$$.

@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # ifndef DISMOD_AT_APPROX_UNPACK_HPP
 # define DISMOD_AT_APPROX_UNPACK_HPP
 # include <dismod_at/approx_mixed.hpp>
-# include <dismod_at/a3_double.hpp>
+# include <dismod_at/a2_double.hpp>
 
 /*
 $begin approx_mixed_unpack$$

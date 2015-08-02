@@ -169,7 +169,7 @@ $end
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/solve_ode.hpp>
 # include <dismod_at/residual_density.hpp>
-# include <dismod_at/a3_double.hpp>
+# include <dismod_at/a2_double.hpp>
 # include <dismod_at/avg_case_subset.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
@@ -638,7 +638,7 @@ see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, or $cref a3_double$$.
+$code double$$, $code AD<double>$$, or $cref a2_double$$.
 
 $head subset_id$$
 This argument has prototype
@@ -889,7 +889,7 @@ see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, or $cref a3_double$$.
+$code double$$, $code AD<double>$$, or $cref a2_double$$.
 
 $head subset_id$$
 This argument has prototype
@@ -1221,7 +1221,7 @@ see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, or $cref a3_double$$.
+$code double$$, $code AD<double>$$, or $cref a2_double$$.
 
 $head subset_id$$
 This argument has prototype
@@ -1402,7 +1402,7 @@ see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, or $cref a3_double$$.
+$code double$$, $code AD<double>$$, or $cref a2_double$$.
 
 $head hold_out$$
 This argument has prototype
@@ -1559,7 +1559,7 @@ DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avg_case_subset_struct)
 // instantiations
 DISMOD_AT_INSTANTIATE_DATA_MODEL(double)
 DISMOD_AT_INSTANTIATE_DATA_MODEL( CppAD::AD<double> )
-DISMOD_AT_INSTANTIATE_DATA_MODEL( a3_double )
+DISMOD_AT_INSTANTIATE_DATA_MODEL( a2_double )
 
 
 } // END DISMOD_AT_NAMESPACE

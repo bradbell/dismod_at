@@ -8,7 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# include <dismod_at/a3_double.hpp>
+# include <dismod_at/a2_double.hpp>
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/log_message.hpp>
@@ -304,22 +304,22 @@ CppAD::vector<double> fit_model::get_solution(void)
 // private functions
 // ===========================================================================
 // ran_like
-fit_model::a3d_vector fit_model::ran_like(
-	const a3d_vector& fixed_vec   ,
-	const a3d_vector& random_vec  )
+fit_model::a2d_vector fit_model::ran_like(
+	const a2d_vector& fixed_vec   ,
+	const a2d_vector& random_vec  )
 {	// packed vector
-	a3d_vector a3_pack_vec( pack_object_.size() );
+	a2d_vector a2_pack_vec( pack_object_.size() );
 	//
 	// put the fixed and random effects into pack_vec
-	put_fixed_effect(pack_object_, a3_pack_vec, fixed_vec);
-	put_random_effect(pack_object_, a3_pack_vec, random_vec);
+	put_fixed_effect(pack_object_, a2_pack_vec, fixed_vec);
+	put_random_effect(pack_object_, a2_pack_vec, random_vec);
 	//
 	// evaluate the data and prior residuals
-	CppAD::vector< residual_struct<a3_double> > data_like, prior_ran;
+	CppAD::vector< residual_struct<a2_double> > data_like, prior_ran;
 	bool hold_out = true;
 	bool parent   = false;
-	data_like  = data_object_.like_all(hold_out, parent, a3_pack_vec);
-	prior_ran  = prior_object_.random(a3_pack_vec);
+	data_like  = data_object_.like_all(hold_out, parent, a2_pack_vec);
+	prior_ran  = prior_object_.random(a2_pack_vec);
 	//
 	// number of data and prior residuals
 	size_t n_data_like  = data_like.size();
@@ -338,10 +338,10 @@ fit_model::a3d_vector fit_model::ran_like(
 			n_abs++;
 	}
 	// size ran_den
-	a3d_vector ran_den(1 + n_abs);
+	a2d_vector ran_den(1 + n_abs);
 	//
 	// initialize summation of smooth part
-	ran_den[0] = a3_double(0.0);
+	ran_den[0] = a2_double(0.0);
 	//
 	// initialize index for non-smooth part
 	size_t i_abs = 0;

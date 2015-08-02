@@ -15,7 +15,7 @@ $$
 
 $section Dismod_at Developer Utility Documentation$$
 
-$childtable%include/dismod_at/a3_double.hpp
+$childtable%include/dismod_at/a2_double.hpp
 	%devel/utility/avg_case_subset.cpp
 	%devel/utility/bilinear_interp.cpp
 	%devel/utility/child_info.cpp

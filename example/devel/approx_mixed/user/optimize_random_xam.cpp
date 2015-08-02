@@ -73,9 +73,9 @@ namespace {
 	public:
 		// -------------------------------------------------------------------
 		// User defined virtual functions
-		virtual vector<a3_double> ran_like(
-			const vector<a3_double>& fixed_vec  ,
-			const vector<a3_double>& random_vec )
+		virtual vector<a2_double> ran_like(
+			const vector<a2_double>& fixed_vec  ,
+			const vector<a2_double>& random_vec )
 		{	return implement_ran_like(fixed_vec, random_vec); }
 		//
 		// improper constant prior
