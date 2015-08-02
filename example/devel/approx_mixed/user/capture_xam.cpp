@@ -17,15 +17,8 @@ $spell
 	Poisson
 	covariate
 $$
-$latex
-\newcommand{\B}[1]{{\bf #1}}
-\newcommand{\R}[1]{{\rm #1}}
-$$
 
 $section A Capture Re-capture Model$$
-
-$head Under Construction$$
-This example is under construction and has not yet been fully implemented.
 
 $head Notation$$
 $table
@@ -159,10 +152,15 @@ N-Mixture Models for Estimating Population Size
 from Spatially Replicated Counts.
 $$
 
+$code
+$verbatim%example/devel/approx_mixed/user/capture_xam.cpp
+	%0%// BEGIN C++%// END C++%1%$$
+$$
+
 $end
 -----------------------------------------------------------------------------
 */
-
+// BEGIN C++
 # include <ctime>
 # include <gsl/gsl_randist.h>
 # include <cppad/vector.hpp>
@@ -365,11 +363,11 @@ public:
 bool capture_xam(void)
 {	bool ok = true;
 	size_t n_fixed = 3;
-	size_t random_seed = dismod_at::new_gsl_rng(0);
+	size_t random_seed = dismod_at::new_gsl_rng(1438537596);
 	std::time_t start_time = std::time( DISMOD_AT_NULL_PTR );
 
 	// simulation parameters
-	size_t I = 50;
+	size_t I = 20;
 	size_t T = 20;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   0.50;  // constant term in covariate model
@@ -408,10 +406,10 @@ bool capture_xam(void)
 
 	// optimize the fixed effects
 	std::string options =
-		"Integer print_level               0\n"
+		"Integer print_level               5\n"
 		"String  sb                        yes\n"
 		"String  derivative_test           none\n"
-		"String  derivative_test_print_all yes\n"
+		"String  derivative_test_print_all no\n"
 		"Numeric tol                       1e-8\n"
 	;
 	vector<double> theta_out = approx_object.optimize_fixed(
@@ -423,17 +421,24 @@ bool capture_xam(void)
 		theta_in,
 		u_in
 	);
-	std::cout << std::endl;
-	for(size_t j = 0; j < n_fixed; j++)
-	{	std::cout << theta_out[j] / theta_sim[j] - 1.0 << std::endl;
-		ok &= std::fabs( theta_out[j] / theta_sim[j] - 1.0 ) < 3e-1;
-	}
-	//
-	if( ! ok )
-		std::cout << "random_seed = " << random_seed << std::endl;
 	std::time_t end_time = std::time( DISMOD_AT_NULL_PTR );
-	std::cout << "elapsed seconds = " << end_time - start_time << std::endl;
+	// check reults
+	for(size_t j = 0; j < n_fixed; j++)
+		ok &= std::fabs( theta_out[j] / theta_sim[j] - 1.0 ) < 3e-1;
+	//
+	using std::cout;
+	using std::endl;
+	cout << "capture_xam: elapsed seconds = " << end_time - start_time << endl;
+	if( ok )
+		std::cout << "captrue_xam: OK" << endl;
+	else
+	{	cout << "captrue_xam: Error" << endl;
+		for(size_t j = 0; j < n_fixed; j++)
+			cout << theta_out[j] / theta_sim[j] - 1.0 << endl;
+		cout << "random_seed = " << random_seed << endl;
+	}
 	//
 	dismod_at::free_gsl_rng();
 	return ok;
 }
+// END C++

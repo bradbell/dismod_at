@@ -34,6 +34,7 @@ extern bool approx_derived_xam(void);
 extern bool constraint_eval_xam(void);
 extern bool constraint_jac_xam(void);
 extern bool constraint_hes_xam(void);
+extern bool capture_xam(void);
 extern bool cholmod_xam(void);
 extern bool eigen_xam(void);
 extern bool ran_like_grad_xam(void);
@@ -229,5 +230,11 @@ int main(void)
 	{	cout << Run_error_count << " tests failed." << endl;
 		return_flag = 1;
 	}
+
+	// BEGIN capture_xam
+	if( ! capture_xam() )
+		return_flag = 1;
+	// END capture_xam
+
 	return return_flag;
 }

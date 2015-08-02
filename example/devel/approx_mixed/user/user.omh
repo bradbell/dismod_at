@@ -17,7 +17,8 @@ $childtable%
 	example/devel/approx_mixed/user/optimize_random_xam.cpp%
 	example/devel/approx_mixed/user/optimize_fixed_xam.cpp%
 	example/devel/approx_mixed/user/no_random_xam.cpp%
-	example/devel/approx_mixed/user/approx_constraint_xam.cpp
+	example/devel/approx_mixed/user/approx_constraint_xam.cpp%
+	example/devel/approx_mixed/user/capture_xam.cpp
 %$$
 
 $end

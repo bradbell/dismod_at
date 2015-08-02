@@ -37,10 +37,13 @@ $head 08-02$$
 $list number$$
 Remove the option to include Laplace likelihoods (absolute value terms)
 in the $cref/random negative log likelihood/approx_mixed_ran_like/$$.
-(This reduces the number of necessary recordings and corresponding memory).
+This reduces the number of necessary recordings and corresponding memory.
 $lnext
 The $cref/ran_like/approx_mixed_ran_like/$$ function was changed from
 use $code a3_double$$ objects to $code a2_double$$ objects.
+$lnext
+Add the $cref capture_xam.cpp$$ example and test.
+This is both a correctness and speed test.
 $lend
 
 $head 08-01$$

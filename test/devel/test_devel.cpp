@@ -19,9 +19,6 @@ extern bool meas_mulcov(void);
 extern bool n_mixture(void);
 extern bool rate_mulcov(void);
 
-// not yet passing automated test
-extern bool capture_xam(void);
-
 // anonymous namespace
 namespace {
 	using std::cout;
