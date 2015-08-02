@@ -252,8 +252,6 @@ $codep */
 	CppAD::ADFun<double>      a0_ran_like_;
 	CppAD::ADFun<a1_double>   a1_ran_like_;
 	CppAD::ADFun<a2_double>   a2_ran_like_;
-	CppAD::ADFun<a3_double>   a3_ran_like_;
-	CppAD::ADFun<a4_double>   a4_ran_like_;
 /* $$
 $subhead grad_ran_$$
 The gradient of the random likelihood w.r.t. the random effects

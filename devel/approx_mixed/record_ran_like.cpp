@@ -47,7 +47,7 @@ $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
 $head ran_like_$$
-For $icode%k% = 0, 1, 2, 3, 4%$$ the input value of the member variable
+For $icode%k% = 0, 1, 2%$$ the input value of the member variable
 $codei%
 	CppAD::ADFun<a%k%_double> a%k%_ran_like_
 %$$
@@ -99,44 +99,37 @@ void approx_mixed::record_ran_like(
 	const d_vector& random_vec )
 {	assert( ! record_ran_like_done_ );
 	// ------------------------------------------------------------------
-	// record a3_ran_like_
+	// record a2_ran_like_
 	// ------------------------------------------------------------------
 	// combine into one vector
-	a5d_vector a5_both( n_fixed_ + n_random_ );
-	pack(fixed_vec, random_vec, a5_both);
+	a3d_vector a3_both( n_fixed_ + n_random_ );
+	pack(fixed_vec, random_vec, a3_both);
 
-	// start recording a5_double operations
-	Independent(a5_both);
+	// start recording a3_double operations
+	Independent(a3_both);
 
 	// extract the fixed and random effects
-	a5d_vector a5_theta(n_fixed_), a5_u(n_random_);
-	unpack(a5_theta, a5_u, a5_both);
+	a3d_vector a3_theta(n_fixed_), a3_u(n_random_);
+	unpack(a3_theta, a3_u, a3_both);
 
-	// compute ran_like using a5_double operations
-	a5d_vector a5_vec = ran_like(a5_theta, a5_u);
+	// compute ran_like using a3_double operations
+	a3d_vector a3_vec = ran_like(a3_theta, a3_u);
 
 	// save the recording
-	a4_ran_like_.Dependent(a5_both, a5_vec);
+	a2_ran_like_.Dependent(a3_both, a3_vec);
 
 	// optimize the recording
-	a4_ran_like_.optimize();
+	a2_ran_like_.optimize();
 	// ------------------------------------------------------------------
 	//
 	// both
 	d_vector both(n_fixed_ + n_random_);
 	pack(fixed_vec, random_vec, both);
 	//
-	// record a3_ran_like_
-	record_next_ran_like(both, a4_ran_like_, a3_ran_like_);
-	//
-	// record a2_ran_like_
-	record_next_ran_like(both, a3_ran_like_, a2_ran_like_);
-	//
 	// record a1_ran_like_
 	record_next_ran_like(both, a2_ran_like_, a1_ran_like_);
 	//
 	// record a0_ran_like_
-	a1d_vector a1_both( n_fixed_ + n_random_ );
 	record_next_ran_like(both, a1_ran_like_, a0_ran_like_);
 	//
 	record_ran_like_done_ = true;
