@@ -50,7 +50,7 @@ vector $latex u$$ at which the recording is made.
 $head hes_ran_$$
 The input value of the member variable
 $codei%
-	CppAD::ADFun<a3_double> hes_ran_
+	CppAD::ADFun<a1_double> hes_ran_
 %$$
 does not matter.
 Upon return it contains the corresponding recording for the lower triangle of
@@ -86,44 +86,44 @@ void approx_mixed::record_hes_ran(
 {	assert( ! record_hes_ran_done_ );
 	size_t i, j;
 
-	//	create an a4d_vector containing (theta, u)
-	a4d_vector a4_both( n_fixed_ + n_random_ );
-	pack(fixed_vec, random_vec, a4_both);
+	//	create an a2d_vector containing (theta, u)
+	a2d_vector a2_both( n_fixed_ + n_random_ );
+	pack(fixed_vec, random_vec, a2_both);
 
-	// start recording using a4_double operations
-	CppAD::Independent( a4_both );
+	// start recording using a2_double operations
+	CppAD::Independent( a2_both );
 
-	// create an a5d_vector containing theta and u
-	a5d_vector a5_theta(n_fixed_), a5_u(n_random_);
-	unpack(a5_theta, a5_u, a4_both);
+	// create an a3d_vector containing theta and u
+	a3d_vector a3_theta(n_fixed_), a3_u(n_random_);
+	unpack(a3_theta, a3_u, a2_both);
 
-	// compute f(u) using a5_double operations
-	CppAD::Independent(a5_u);
+	// compute f(u) using a3_double operations
+	CppAD::Independent(a3_u);
 	//
-	a5d_vector a5_both(n_fixed_ + n_random_);
-	a5d_vector a5_vec = ran_like(a5_theta, a5_u);
-	a5d_vector a5_sum(1);
-	a5_sum[0]    = a5_vec[0];
-	size_t n_abs = a5_vec.size() - 1;
+	a3d_vector a3_both(n_fixed_ + n_random_);
+	a3d_vector a3_vec = ran_like(a3_theta, a3_u);
+	a3d_vector a3_sum(1);
+	a3_sum[0]    = a3_vec[0];
+	size_t n_abs = a3_vec.size() - 1;
 	for(i = 0; i < n_abs; i++)
-		a5_sum[0] += abs( a5_vec[1 + i] );
+		a3_sum[0] += abs( a3_vec[1 + i] );
 
 	// create an ADFun object corresponding to f(u)
-	CppAD::ADFun<a4_double> a4_f;
-	a4_f.Dependent(a5_u, a5_sum);
+	CppAD::ADFun<a2_double> a2_f;
+	a2_f.Dependent(a3_u, a3_sum);
 
 	// compute sparsity pattern corresponding to f_u^{(1)} (u)
 	typedef CppAD::vector< std::set<size_t> > sparsity_pattern;
 	sparsity_pattern r(n_random_);
 	for(i = 0; i < n_random_; i++)
 		r[i].insert(i);
-	a4_f.ForSparseJac(n_random_, r);
+	a2_f.ForSparseJac(n_random_, r);
 
 	// compute sparsity pattern corresponding to f_uu^{(2)} (u)
 	sparsity_pattern s(1);
 	assert( s[0].empty() );
 	s[0].insert(0);
-	sparsity_pattern pattern = a4_f.RevSparseHes(n_random_, s);
+	sparsity_pattern pattern = a2_f.RevSparseHes(n_random_, s);
 
 	// determine row and column indices in lower triangle of Hessian
 	hes_ran_row_.clear();
@@ -142,17 +142,17 @@ void approx_mixed::record_hes_ran(
 	size_t K = hes_ran_row_.size();
 
 	// compute lower triangle of sparse Hessian f_uu^2 (u)
-	a4d_vector a4_theta(n_fixed_), a4_u(n_random_), a4_w(1), a4_hes(K);
-	unpack(a4_theta, a4_u, a4_both);
+	a2d_vector a2_theta(n_fixed_), a2_u(n_random_), a2_w(1), a2_hes(K);
+	unpack(a2_theta, a2_u, a2_both);
 	//
-	a4_w[0] = 1.0;
+	a2_w[0] = 1.0;
 	CppAD::sparse_hessian_work work;
-	a4_f.SparseHessian(
-		a4_u, a4_w, pattern, hes_ran_row_, hes_ran_col_, a4_hes, work
+	a2_f.SparseHessian(
+		a2_u, a2_w, pattern, hes_ran_row_, hes_ran_col_, a2_hes, work
 	);
 
 	// complete recording of f_uu^2 (u, theta)
-	hes_ran_.Dependent(a4_both, a4_hes);
+	hes_ran_.Dependent(a2_both, a2_hes);
 
 	// optimize the recording
 	hes_ran_.optimize();

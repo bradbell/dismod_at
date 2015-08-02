@@ -64,7 +64,7 @@ vector $latex u$$ at which the recording is made.
 $head laplace_order_$$
 The input value of the member variable
 $codei%
-	CppAD::ADFun<a2_double> laplace_%order%_
+	CppAD::ADFun<double> laplace_%order%_
 %$$
 does not matter.
 Upon return it contains a an recording for the
@@ -90,23 +90,23 @@ void approx_mixed::record_laplace(
 
 	// declare eigen matrix types
 	using Eigen::Dynamic;
-	typedef Eigen::Matrix<a3_double, Dynamic, Dynamic> dense_matrix;
-	typedef Eigen::SparseMatrix<a3_double>             sparse_matrix;
+	typedef Eigen::Matrix<a1_double, Dynamic, Dynamic> dense_matrix;
+	typedef Eigen::SparseMatrix<a1_double>             sparse_matrix;
 
-	//	create an a3d_vector containing (beta, theta, u)
-	a3d_vector beta_theta_u( 2 * n_fixed_ + n_random_ );
-	pack(fixed_vec, fixed_vec, random_vec, beta_theta_u);
+	//	create an a1d_vector containing (beta, theta, u)
+	a1d_vector a1_beta_theta_u( 2 * n_fixed_ + n_random_ );
+	pack(fixed_vec, fixed_vec, random_vec, a1_beta_theta_u);
 
-	// start recording a3_double operations
-	CppAD::Independent( beta_theta_u );
+	// start recording a1_double operations
+	CppAD::Independent( a1_beta_theta_u );
 
 	// split back out to beta, theta, u
-	a3d_vector beta(n_fixed_), theta(n_fixed_), u(n_random_);
-	unpack(beta, theta, u, beta_theta_u);
+	a1d_vector beta(n_fixed_), theta(n_fixed_), u(n_random_);
+	unpack(beta, theta, u, a1_beta_theta_u);
 
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	CppAD::vector<size_t> row, col;
-	a3d_vector val;
+	a1d_vector val;
 	ran_like_hes(theta, u, row, col, val);
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
@@ -121,7 +121,7 @@ void approx_mixed::record_laplace(
 	chol.factorize(hessian);
 
 	// First order section: Compute U -----------------------------------------
-	a3d_vector U(n_random_), grad(n_random_);
+	a1d_vector U(n_random_), grad(n_random_);
 	dense_matrix rhs(n_random_, 1), newton_step(n_random_, 1);
 	if( order < 1 )
 	{	for(size_t j = 0; j < n_random_; j++)
@@ -147,7 +147,7 @@ void approx_mixed::record_laplace(
 		chol.factorize(hessian);
 	}
 	// Second order section: Compute W ----------------------------------------
-	a3d_vector W(n_random_);
+	a1d_vector W(n_random_);
 	if( order < 2 )
 	{	for(size_t j = 0; j < n_random_; j++)
 			W[j] = U[j];
@@ -175,15 +175,15 @@ void approx_mixed::record_laplace(
 	//
 	// logdet f_{uu}^{(2)} (beta, W)]
 	dense_matrix diag = chol.vectorD();
-	a3_double logdet = a3_double(0.0);
+	a1_double logdet = a1_double(0.0);
 	for(size_t j = 0; j < n_random_; j++)
 		logdet += log( diag(j) );
 
 	// f[beta, W(beta, theta, u)]
-	a3d_vector both(n_fixed_ + n_random_);
+	a1d_vector both(n_fixed_ + n_random_);
 	pack(beta, W, both);
-	a3d_vector vec = a3_ran_like_.Forward(0, both);
-	a3_double sum = vec[0];
+	a1d_vector vec = a1_ran_like_.Forward(0, both);
+	a1_double sum = vec[0];
 	size_t n_abs = vec.size() - 1;
 	for(size_t i = 0; i < n_abs; i++)
 		sum += abs( vec[1 + i] );
@@ -193,20 +193,8 @@ void approx_mixed::record_laplace(
 	double constant_term = CppAD::log(2.0 * pi) * double(n_random_) / 2.0;
 
 	// H(beta, theta, u)
-	a3d_vector H(1);
-	H[0] = logdet / 2.0 + sum - constant_term;
-
-	// push recording down from a3 to a1 level
-	// (2DO: change ran_like_ to use a1 instead of a3 values)
-	CppAD::ADFun<a2_double> a2f(beta_theta_u, H);
-	a1d_vector a1_beta_theta_u( 2 * n_fixed_ + n_random_), a1_H(1);
-	a2d_vector a2_beta_theta_u( 2 * n_fixed_ + n_random_), a2_H(1);
-	pack(fixed_vec, fixed_vec, random_vec, a1_beta_theta_u);
-	CppAD::Independent(a1_beta_theta_u);
-	for(size_t j = 0; j < 2 * n_fixed_ + n_random_; j++)
-		a2_beta_theta_u[j] = a1_beta_theta_u[j];
-	a2_H     = a2f.Forward(0, a2_beta_theta_u);
-	a1_H[0]  = Value( a2_H[0] );
+	a1d_vector a1_H(1);
+	a1_H[0] = logdet / 2.0 + sum - constant_term;
 
 	// complete recording of H(beta, theta, u)
 	if( order == 0 )

@@ -39,7 +39,7 @@ derived from the $code approx_mixed$$ base class.
 $head fixed_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a3_double>& %fixed_vec%
+	const CppAD::vector<a1_double>& %fixed_vec%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
@@ -48,7 +48,7 @@ vector $latex \theta$$.
 $head random_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a3_double>& %random_vec%
+	const CppAD::vector<a1_double>& %random_vec%
 %$$
 It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
@@ -57,7 +57,7 @@ vector $latex u$$.
 $head grad$$
 The return value has prototype
 $codei%
-	CppAD::vector<a3_double>& %grad%
+	CppAD::vector<a1_double>& %grad%
 %$$
 It contains the gradient $latex f_u^{(1)} ( \theta , u )$$.
 
@@ -76,17 +76,17 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // ----------------------------------------------------------------------------
 // ran_like_grad
-CppAD::vector<approx_mixed::a3_double> approx_mixed::ran_like_grad(
-	const a3d_vector&        fixed_vec   ,
-	const a3d_vector&        random_vec  )
+CppAD::vector<approx_mixed::a1_double> approx_mixed::ran_like_grad(
+	const a1d_vector&        fixed_vec   ,
+	const a1d_vector&        random_vec  )
 {	assert( record_grad_ran_done_ );
 
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );
 	assert( n_random_ == random_vec.size() );
 
-	// create an a3d_vector containing (theta, u)
-	a3d_vector both_vec( n_fixed_ + n_random_ );
+	// create an a1d_vector containing (theta, u)
+	a1d_vector both_vec( n_fixed_ + n_random_ );
 	pack(fixed_vec, random_vec, both_vec);
 
 	// compute the gradient

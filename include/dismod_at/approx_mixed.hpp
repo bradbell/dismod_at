@@ -261,14 +261,14 @@ $latex f_u^{(1)} ( \theta , u )^T$$. Because this is a simple vector
 there is no difference between the gradient and the derivative; i.e.,
 the transpose does not matter.
 $codep */
-	CppAD::ADFun<a3_double> grad_ran_;   // computes the gradient values
+	CppAD::ADFun<a1_double> grad_ran_;   // computes the gradient values
 /* $$
 $subhead hes_ran_$$
 The Hessian of the random likelihood w.r.t. the random effects
 $latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix
 represented by the following variables:
 $codep */
-	CppAD::ADFun<a3_double> hes_ran_;     // computes the hessian values
+	CppAD::ADFun<a1_double> hes_ran_;     // computes the hessian values
 	CppAD::vector<size_t>   hes_ran_row_; // corresponding row indices
 	CppAD::vector<size_t>   hes_ran_col_; // corresponding column indices
 /* $$
@@ -321,6 +321,27 @@ $codep */
 	CppAD::vector<size_t>       constraint_hes_row_; // hessian row indices
 	CppAD::vector<size_t>       constraint_hes_col_; // hessian column indices
 	CppAD::sparse_hessian_work  constraint_hes_work_;
+/* $$
+------------------------------------------------------------------------------
+$subhead ran_like$$
+2DO: Change public interface to use a3 instead of a5 version of this
+function.
+$codep */
+	a3d_vector ran_like(
+		const a3d_vector& fixed_vec  ,
+		const a3d_vector& random_vec
+	)
+	{	a5d_vector a5_fixed(n_fixed_), a5_random(n_random_);
+		for(size_t j = 0; j < n_fixed_; j++)
+			a5_fixed[j] = a5_double( a4_double( fixed_vec[j] ) );
+		for(size_t j = 0; j < n_random_; j++)
+			a5_random[j] = a5_double( a4_double( random_vec[j] ) );
+		a5d_vector a5_vec = ran_like(a5_fixed, a5_random);
+		a3d_vector a3_vec( a5_vec.size() );
+		for(size_t i = 0; i < a5_vec.size(); i++)
+			a3_vec[i] = Value( Value( a5_vec[i] ) );
+		return a3_vec;
+	}
 /* $$
 ------------------------------------------------------------------------------
 $head pack$$
@@ -414,9 +435,9 @@ $head ran_like_grad$$
 See $cref approx_mixed_ran_like_grad$$
 $codep */
 	// ran_like_grad
-	a3d_vector ran_like_grad(
-		const a3d_vector&       fixed_vec   ,
-		const a3d_vector&       random_vec
+	a1d_vector ran_like_grad(
+		const a1d_vector&       fixed_vec   ,
+		const a1d_vector&       random_vec
 	);
 	friend bool ::ran_like_grad_xam(void);
 /* $$
@@ -425,11 +446,11 @@ See $cref approx_mixed_ran_like_hes$$
 $codep */
 	// ran_like_hes
 	void ran_like_hes(
-		const a3d_vector&       fixed_vec   ,
-		const a3d_vector&       random_vec  ,
+		const a1d_vector&       fixed_vec   ,
+		const a1d_vector&       random_vec  ,
 		CppAD::vector<size_t>&  row_out     ,
 		CppAD::vector<size_t>&  col_out     ,
-		a3d_vector&             val_out
+		a1d_vector&             val_out
 	);
 	friend bool ::ran_like_hes_xam(void);
 /* $$
