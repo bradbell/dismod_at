@@ -156,8 +156,8 @@ bool n_mixture(void)
 	size_t random_seed = dismod_at::new_gsl_rng(0);
 
 	// simulation parameters
-	size_t I = 400; // use 400 (50 in paper) to increase accuracy for test
-	size_t T = 10;
+	size_t I = 300; // I = 50, T =  10 in paper
+	size_t T = 30;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   0.25;      // probability of capture
 	theta_sim[1] =   5.;        // mean population size

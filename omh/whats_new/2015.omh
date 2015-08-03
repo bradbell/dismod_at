@@ -31,6 +31,7 @@ $spell
 	cpp
 	libdir
 	cmake
+	devel
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
@@ -43,6 +44,9 @@ $cref/cmake command/install_unix/dismod_at/Cmake Command/$$.
 $lnext
 The $code cmake command$$ script was not using $code bash$$ as its shell
 for all systems. This has been fixed.
+$lnext
+Reduce the chance of random failure in $code test/devel/n_mixture.cpp$$
+(using more simulated data).
 $lend
 
 $head 08-02$$
