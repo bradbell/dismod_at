@@ -8,11 +8,61 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
+#
+# cmake \
+#    -Wno-dev \
+#    -D CMAKE_VERBOSE_MAKEFILE=$verbose_makefile \
+#    -D python_three_command=$python_three_command \
+#    -D extra_cxx_flags="$extra_cxx_flags" \
+#    -D approx_mixed_libdir="$approx_mixed_libdir" \
+#    -D dismod_at_prefix="$dismod_at_prefix" \
+#    -D cppad_prefix="$cppad_prefix" \
+#    -D ipopt_prefix="$cppad_prefix" \
+#    -D eigen_prefix="$eigen_prefix" \
+#    -D suitesparse_prefix="$suitesparse_prefix"
+# ----------------------------------------------------------------------------
 INCLUDE(CheckCXXSourceRuns)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
 SET(dismod_at_version "20150802" )
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
+# ----------------------------------------------------------------------------
+# python_three_command
+IF( python_three_command )
+	MESSAGE(STATUS "python_three_command = ${python_three_command}")
+ELSE( python_three_command )
+	MESSAGE(FATAL_ERROR "python_three_command not set by cmake command")
+ENDIF( python_three_command )
+# ----------------------------------------------------------------------------
+# extra_cxx_flags
+SET(extra_cxx_flags NOTFOUND CACHE STRING
+	"extra compiler flags (besides debug and release"
+)
+IF( NOT extra_cxx_flags )
+	MESSAGE(FATAL_ERROR "extra_cxx_flags not set by cmake command")
+ENDIF( NOT extra_cxx_flags )
+MESSAGE(STATUS "extra_cxx_flags = ${extra_cxx_flags}")
+# ----------------------------------------------------------------------------
+# dismod_at_prefix
+IF( dismod_at_prefix )
+	MESSAGE(STATUS "dismod_at_prefix = ${dismod_at_prefix}")
+ELSE( dismod_at_prefix )
+	MESSAGE(FATAL_ERROR "dismod_at_prefix not set by cmake command")
+ENDIF( dismod_at_prefix )
+# ----------------------------------------------------------------------------
+# approx_mixed_libdir
+SET(approx_mixed_libdir NOTFOUND CACHE STRING
+	"directory below dismod_at_prefix where approx_mixed library is installed"
+)
+IF( approx_mixed_libdir )
+	MESSAGE(STATUS "approx_mixed library installed in "
+		"${dismod_at_prefix}/${approx_mixed_libdir}"
+	)
+ELSE( approx_mixed_libdir )
+	MESSAGE(STATUS "approx_mixed_libdir not specified "
+		"so its library is not installed"
+	)
+ENDIF( NOT approx_mixed_libdir )
 # ----------------------------------------------------------------------------
 # get_prefix(package)
 #
@@ -34,18 +84,6 @@ MACRO(get_prefix package)
 	INCLUDE_DIRECTORIES( ${${package}_prefix}/include )
 ENDMACRO(get_prefix)
 # ----------------------------------------------------------------------------
-IF( python_three_command )
-	MESSAGE(STATUS "python_three_command = ${python_three_command}")
-ELSE( python_three_command )
-	MESSAGE(FATAL_ERROR "python_three_command not set by cmake command")
-ENDIF( python_three_command )
-# ----------------------------------------------------------------------------
-IF( dismod_at_prefix )
-	MESSAGE(STATUS "dismod_at_prefix = ${dismod_at_prefix}")
-ELSE( dismod_at_prefix )
-	MESSAGE(FATAL_ERROR "dismod_at_prefix not set by cmake command")
-ENDIF( dismod_at_prefix )
-# ----------------------------------------------------------------------------
 # get other package prefixes
 get_prefix(cppad)
 get_prefix(eigen)
@@ -55,16 +93,10 @@ IF( suitesparse_prefix )
 	get_prefix(suitesparse)
 ELSE( suitesparse_prefix )
 	SET(dismod_at_has_suitesparse 0)
+	MESSAGE(STATUS "suitesparse_prefix not specified "
+		"so corresponding example not included."
+	)
 ENDIF( suitesparse_prefix )
-# ----------------------------------------------------------------------------
-# extra_cxx_flags
-SET(extra_cxx_flags NOTFOUND CACHE STRING
-	"extra compiler flags (besides debug and release"
-)
-IF( NOT extra_cxx_flags )
-	MESSAGE(FATAL_ERROR "extra_cxx_flags not set by cmake command")
-ENDIF( NOT extra_cxx_flags )
-MESSAGE(STATUS "extra_cxx_flags = ${extra_cxx_flags}")
 # ----------------------------------------------------------------------------
 # set ipopt_LIBRARY_DIRS, ipopt_LIBRARIES
 # (note CppAD must be installed with ipopt_prefix specified)
@@ -104,7 +136,8 @@ ADD_SUBDIRECTORY(example/user)
 # ----------------------------------------------------------------------------
 ADD_CUSTOM_TARGET(check DEPENDS
 	dismod_at
-	devel_lib
+	devel
+	approx_mixed
 	check_example_table
 	check_example_devel
 	check_test_devel

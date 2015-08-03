@@ -31,7 +31,8 @@ SET_TARGET_PROPERTIES(
 	test_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
 TARGET_LINK_LIBRARIES(test_devel
-	devel_lib
+	devel
+	approx_mixed
 	${ipopt_LIBRARIES}
 	sqlite3
 	gsl

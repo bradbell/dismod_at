@@ -9,7 +9,9 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 SET(CMAKE_BUILD_TYPE DEBUG)
-ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
+#
+# libapprox_mixed
+ADD_LIBRARY(approx_mixed
 	approx_mixed/constraint_eval.cpp
 	approx_mixed/constraint_jac.cpp
 	approx_mixed/constraint_hes.cpp
@@ -31,7 +33,12 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	approx_mixed/record_hes_ran.cpp
 	approx_mixed/record_ran_like.cpp
 	approx_mixed/record_laplace.cpp
-
+)
+SET_TARGET_PROPERTIES(approx_mixed
+	PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
+)
+#
+ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	model/data_model.cpp
 	model/fit_model.cpp
 	model/prior_model.cpp
@@ -87,17 +94,34 @@ ADD_LIBRARY(devel_lib EXCLUDE_FROM_ALL
 	table/smooth_info.cpp
 	table/weight_info.cpp
 )
-SET_TARGET_PROPERTIES(devel_lib PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
+SET_TARGET_PROPERTIES(devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
 #
 LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
-ADD_EXECUTABLE( dismod_at dismod_at.cpp )
-SET_TARGET_PROPERTIES( dismod_at PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}" )
-ADD_DEPENDENCIES(dismod_at devel_lib)
+ADD_EXECUTABLE(dismod_at dismod_at.cpp )
+SET_TARGET_PROPERTIES(dismod_at PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}" )
+ADD_DEPENDENCIES(dismod_at devel approx_mixed)
 TARGET_LINK_LIBRARIES(dismod_at
-	devel_lib
+	devel
+	approx_mixed
 	${ipopt_LIBRARIES}
 	sqlite3
 	gsl
 	gslcblas
 )
-INSTALL( TARGETS dismod_at DESTINATION ${dismod_at_prefix}/bin )
+#
+# install commands
+INSTALL(
+	TARGETS dismod_at
+	DESTINATION ${dismod_at_prefix}/bin
+)
+IF( approx_mixed_libdir )
+	INSTALL(
+		TARGETS approx_mixed
+		DESTINATION ${dismod_at_prefix}/${approx_mixed_libdir}
+	)
+	INSTALL(
+		FILES ${dismod_at_SOURCE_DIR}/include/dismod_at/approx_mixed.hpp
+		DESTINATION ${dismod_at_prefix}/include/dismod_at
+	)
+ENDIF( approx_mixed_libdir )
+

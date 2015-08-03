@@ -17,20 +17,20 @@ echo_eval() {
 # usage
 if [ "$1" == '' ]
 then
-	echo 'usage: ./test_one.sh file'
+	echo 'usage: ./test_one.sh test_file'
 	exit 1
 fi
 #
-# file
-file="$1"
-if [ ! -e "$file" ]
+# test_file
+test_file="$1"
+if [ ! -e "$test_file" ]
 then
-	echo "Cannot find $file"
+	echo "Cannot find $test_file"
 	exit 1
 fi
 #
 # fun_name
-fun_name=`grep '^bool *[a-zA-Z0-9_]* *( *void *)' $file | \
+fun_name=`grep '^bool *[a-zA-Z0-9_]* *( *void *)' $test_file | \
 	sed -e 's|^bool *\([a-zA-Z0-9_]*\) *( *void *) *|\1|'`
 echo "fun_name=$fun_name"
 #
@@ -45,8 +45,8 @@ sed \
 	-e "s|// summary report|RUN($fun_name);\n\t&|" \
 	< test_devel.cpp > junk.cpp
 #
-# dismod_at library flags
-lib_file='../../build/devel/libdevel_lib.a'
+# devel library flags
+lib_file='../../build/devel/libdevel.a'
 if [ ! -e "$lib_file" ]
 then
 	echo "./test_one.sh: Cannot find $lib_file."
@@ -55,6 +55,16 @@ fi
 lib_dir=`echo $lib_file | sed -e 's|/[^/]*$||'`
 lib_name=`echo $lib_file | sed -e 's|.*/lib||' -e 's|[.][^.]*$||'`
 dismod_at_lib="-L $lib_dir -l$lib_name"
+#
+# approx_mixed library flags (assume same lib_dir)
+file='../../build/devel/libapprox_mixed.a'
+if [ ! -e "$file" ]
+then
+	echo "./test_one.sh: Cannot find $file."
+	exit 1
+fi
+lib_name=`echo $file | sed -e 's|.*/lib||' -e 's|[.][^.]*$||'`
+dismod_at_lib="$dismod_at_lib -l$lib_name"
 #
 # libarary flags necessary to use ipopt
 ipopt_libs=`pkg-config --libs ipopt`
@@ -73,7 +83,7 @@ echo_eval g++ \
 	-I ../../include \
 	-I $HOME/prefix/dismod_at/include \
 	junk.cpp \
-	$file \
+	$test_file \
 	$dismod_at_lib \
 	$ipopt_libs \
 	-lsqlite3 \

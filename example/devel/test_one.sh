@@ -47,8 +47,8 @@ sed \
 	-e "s|// summary report|RUN($fun_name);\n\t&|" \
 	< example_devel.cpp > junk.cpp
 #
-# dismod_at library flags
-file='../../build/devel/libdevel_lib.a'
+# devel library flags
+file='../../build/devel/libdevel.a'
 if [ ! -e "$file" ]
 then
 	echo "./test_one.sh: Cannot find $file."
@@ -57,6 +57,16 @@ fi
 lib_dir=`echo $file | sed -e 's|/[^/]*$||'`
 lib_name=`echo $file | sed -e 's|.*/lib||' -e 's|[.][^.]*$||'`
 dismod_at_lib="-L $lib_dir -l$lib_name"
+#
+# approx_mixed library flags (assume same lib_dir)
+file='../../build/devel/libapprox_mixed.a'
+if [ ! -e "$file" ]
+then
+	echo "./test_one.sh: Cannot find $file."
+	exit 1
+fi
+lib_name=`echo $file | sed -e 's|.*/lib||' -e 's|[.][^.]*$||'`
+dismod_at_lib="$dismod_at_lib -l$lib_name"
 #
 # libarary flags necessary to use ipopt
 ipopt_libs=`pkg-config --libs ipopt`

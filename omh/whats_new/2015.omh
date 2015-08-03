@@ -29,9 +29,16 @@ $spell
 	sim
 	xam
 	cpp
+	libdir
+	cmake
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 08-03$$
+First version that actually installs the $cref approx_mixed$$ sub-package
+using the $code approx_mixed_libdir$$ option to the
+$cref/cmake command/install_unix/dismod_at/Run Cmake/$$.
 
 $head 08-02$$
 $list number$$

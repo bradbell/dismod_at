@@ -5,7 +5,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
@@ -23,6 +23,9 @@ ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
 # prefix where suitesparse was installed (use NOTFOUND if not installed)
 suitesparse_prefix="$HOME/prefix/suitesparse"
+# sub-directory of dismod_at_prefix where libapprox_mixed will be installed
+# (use NOTFOUND if you do not need to install it)
+approx_mixed_libdir='lib64'
 # ----------------------------------------------------------------------------
 # Setting for IHME cluster
 # suitesparse_prefix="NOTFOUND"
@@ -41,6 +44,8 @@ cmake \
 	-D python_three_command=$python_three_command \
 	-D extra_cxx_flags="$extra_cxx_flags" \
 	-D dismod_at_prefix="$dismod_at_prefix" \
+	-D approx_mixed_libdir="$approx_mixed_libdir" \
+	\
 	-D cppad_prefix="$cppad_prefix" \
 	-D ipopt_prefix="$cppad_prefix" \
 	-D eigen_prefix="$eigen_prefix" \
