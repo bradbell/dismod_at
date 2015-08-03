@@ -36,9 +36,14 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 08-03$$
+$list number$$
 First version that actually installs the $cref approx_mixed$$ sub-package
 using the $code approx_mixed_libdir$$ option to the
-$cref/cmake command/install_unix/dismod_at/Run Cmake/$$.
+$cref/cmake command/install_unix/dismod_at/Cmake Command/$$.
+$lnext
+The $code cmake command$$ script was not using $code bash$$ as its shell
+for all systems. This has been fixed.
+$lend
 
 $head 08-02$$
 $list number$$

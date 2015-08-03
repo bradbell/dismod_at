@@ -1,3 +1,4 @@
+#! /bin/bash -e
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
@@ -8,6 +9,12 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
+# bash function that echos and executes a command
+echo_eval() {
+	echo $*
+	eval $*
+}
+# -----------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
 # use '1' for verbose make output
 verbose_makefile='0'
@@ -35,9 +42,9 @@ approx_mixed_libdir='lib64'
 # ---------------------------------------------------------------------------
 if [ ! -e build ]
 then
-	mkdir build
+	echo_eval mkdir build
 fi
-cd build
+echo_eval cd build
 cmake \
 	-Wno-dev \
 	-D CMAKE_VERBOSE_MAKEFILE=$verbose_makefile \
