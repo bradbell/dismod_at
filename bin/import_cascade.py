@@ -21,6 +21,8 @@
 import sys
 import os
 import csv
+import collections
+#
 sys.path.append( os.path.join( os.getcwd(), 'python' ) )
 import dismod_at
 # ---------------------------------------------------------------------------
@@ -55,7 +57,7 @@ for name in cascade_name_list :
 		sys.exit(msg)
 	cascade_path_dict[name] = path
 # ---------------------------------------------------------------------------
-# Create database_connection (database that is output by this program)
+# db_connection: database that is output by this program
 if not os.path.isdir('build') :
 	print('mkdir build')
 	os.mkdir('build')
@@ -63,8 +65,7 @@ new = True
 file_name        = os.path.join('build', cascade_dir + '.db')
 db_connection    = dismod_at.create_connection(file_name, new)
 # ---------------------------------------------------------------------------
-# Create cascade_data_dict (data for each cascade input file)
-#
+# cascade_data_dict: data for each cascade input file
 cascade_data_dict = dict()
 for name in cascade_path_dict :
 	path      = cascade_path_dict[name]
@@ -74,5 +75,68 @@ for name in cascade_path_dict :
 	cascade_data_dict[name] = list()
 	for row in reader :
 		cascade_data_dict[name].append(row)
+# ---------------------------------------------------------------------------
+# covariate_name2id: mapping from covariate names to covariate_id value
+data_table_in = cascade_data_dict['data']
+header        = data_table_in[0].keys()
+covariate_name_list = list()
+for name in header :
+	if name.startswith('r_') or name.startswith('a_') :
+		covariate_name_list.append(name)
+covariate_name2id = dict()
+for covariate_id in range( len(covariate_name_list) ) :
+	name                    = covariate_name_list[covariate_id]
+	covariate_name2id[name] = covariate_id
+# ---------------------------------------------------------------------------
+# integrand_name2id: mapping from integrand name to integrand_id value
+data_table_in       = cascade_data_dict['data']
+integrand_name_set = set()
+for row in data_table_in :
+	integrand_name_set.add( row['integrand'] )
+integrand_name_list = list( integrand_name_set )
+integrand_name2id   = dict()
+for integrand_id in range( len(integrand_name_list) ) :
+	name                    = integrand_name_list[integrand_id]
+	integrand_name2id[name] = integrand_id
+# ---------------------------------------------------------------------------
+# Output density table
+# density_name2id: mapping from density name to density_id value
+col_name = [  'density_name'   ]
+col_type = [  'text'        ]
+row_list = [
+	['uniform'],
+	['gaussian'],
+	['laplace'],
+	['log_gaussian'],
+	['log_laplace']
+]
+tbl_name = 'density'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+#
+density_name2id = dict()
+for density_id in range( len(row_list) ) :
+	name                  = row_list[density_id][0]
+	density_name2id[name] = density_id
+# ---------------------------------------------------------------------------
+# output data table:
+col_name2type = collections.OrderedDict([
+	# required columns
+	('integrand_id', 'integer'),
+	('density_id',   'integer'),
+	('node_id',      'integer'),
+	('weight_id',    'integer'),
+	('hold_out',     'integer'),
+	('meas_value',   'real'   ),
+	('meas_std',     'real'   ),
+	('age_lower',    'real'   ),
+	('age_upper',    'real'   ),
+	('time_lower',   'real'   ),
+	('time_upper',   'real'   )
+] )
+col_name = list( col_name2type.keys() )
+col_type = list( col_name2type.values() )
+for name in covariate_name2id :
+	col_name.append( 'x_%s' % covariate_name2id[name] )
+	col_type.append( 'real' )
 # ---------------------------------------------------------------------------
 print('import_cascade.py: OK')
