@@ -6,12 +6,12 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 if [ "$0" != 'bin/distribute.sh' ] || [ "$USER" != "bradbell" ]
 then
-	echo 'this program must be run from its parent directory and'
+	echo 'This program must be run from its parent directory and'
 	echo 'only Brad Bell can run it.'
 	exit 1
 fi
