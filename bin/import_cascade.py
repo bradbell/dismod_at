@@ -84,7 +84,7 @@ covariate_name_list = list()
 for name in header :
 	if name.startswith('r_') or name.startswith('a_') :
 		covariate_name_list.append(name)
-covariate_name2id = dict()
+covariate_name2id = collections.OrderedDict()
 for covariate_id in range( len(covariate_name_list) ) :
 	name                    = covariate_name_list[covariate_id]
 	covariate_name2id[name] = covariate_id
@@ -178,12 +178,42 @@ for name in covariate_name2id :
 	col_type.append( 'real' )
 #
 row_list      = list()
-for row in data_table_in :
-	integrand_id = integrand_name2id[ row['integrand'] ]
-	density_id   = density_name2id[ row['data_like'] ]
+for row_in in data_table_in :
+	integrand_id = integrand_name2id[ row_in['integrand'] ]
+	density_id   = density_name2id[ row_in['data_like'] ]
+	weight_id    = 0
+	hold_out     = int( row_in['hold_out'] )
+	meas_value   = float( row_in['meas_value'] )
+	meas_std     = float( row_in['meas_stdev'] )
+	age_lower    = float( row_in['age_lower'] )
+	age_upper    = float( row_in['age_upper'] )
+	time_lower   = float( row_in['time_lower'] )
+	time_upper   = float( row_in['time_upper'] )
+	#
 	node_id      = node_name2id['world']
 	for level in [ 'super', 'region', 'subreg', 'atom' ] :
-		if row[level] != 'none' :
-			node_id = node_name2id[ row[level] ]
+		if row_in[level] != 'none' :
+			node_id = node_name2id[ row_in[level] ]
+	#
+	row_out = [
+		integrand_id,
+		density_id,
+		node_id,
+		weight_id,
+		hold_out,
+		meas_value,
+		meas_std,
+		age_lower,
+		age_upper,
+		time_lower,
+		time_upper
+	]
+	for name in covariate_name2id :
+		covaraite_id = covariate_name2id[name]
+		value        = row_in[name]
+		row_out.append(value)
+	row_list.append( row_out )
+tbl_name = 'data'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
 print('import_cascade.py: OK')
