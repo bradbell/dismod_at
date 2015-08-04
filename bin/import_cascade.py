@@ -21,6 +21,7 @@
 import sys
 import os
 import csv
+import math
 import collections
 #
 sys.path.append( os.path.join( os.getcwd(), 'python' ) )
@@ -112,7 +113,7 @@ row_list = [
 ]
 tbl_name = 'density'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
-#
+
 density_name2id = dict()
 for density_id in range( len(row_list) ) :
 	name                  = row_list[density_id][0]
@@ -209,11 +210,39 @@ for row_in in data_table_in :
 		time_upper
 	]
 	for name in covariate_name2id :
-		covaraite_id = covariate_name2id[name]
 		value        = row_in[name]
 		row_out.append(value)
 	row_list.append( row_out )
 tbl_name = 'data'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+# ---------------------------------------------------------------------------
+# Output covariate table
+col_name   = [ 'covariate_name',  'reference', 'max_difference' ]
+col_type   = [ 'text',             'real',     'real'           ]
+row_list   = list()
+for name in covariate_name2id :
+	if name.startswith('r_') :
+		cov_sum   = 0.0
+		cov_count = 0
+		for row in data_table_in :
+			cov_value = float( row[name] )
+			if not math.isnan(cov_value) :
+				cov_sum   += cov_value
+				cov_count += 1
+		if cov_count == 0 :
+			reference = 0.0
+		else :
+			reference = cov_sum / cov_count
+		max_difference = None
+	else :
+		assert name.startswith('a_')
+		reference = 0.0
+		if name == 'a_sex' :
+			max_difference = 0.6
+		else :
+			max_difference = None
+	row_list.append( [name , reference, max_difference] )
+tbl_name = 'covariate'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
 print('import_cascade.py: OK')
