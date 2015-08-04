@@ -66,6 +66,7 @@ file_name        = os.path.join('build', cascade_dir + '.db')
 db_connection    = dismod_at.create_connection(file_name, new)
 # ---------------------------------------------------------------------------
 # cascade_data_dict: data for each cascade input file
+# data_table_in:     cascade_data_dict['data'
 cascade_data_dict = dict()
 for name in cascade_path_dict :
 	path      = cascade_path_dict[name]
@@ -75,9 +76,9 @@ for name in cascade_path_dict :
 	cascade_data_dict[name] = list()
 	for row in reader :
 		cascade_data_dict[name].append(row)
+data_table_in = cascade_data_dict['data']
 # ---------------------------------------------------------------------------
 # covariate_name2id: mapping from covariate names to covariate_id value
-data_table_in = cascade_data_dict['data']
 header        = data_table_in[0].keys()
 covariate_name_list = list()
 for name in header :
@@ -89,7 +90,6 @@ for covariate_id in range( len(covariate_name_list) ) :
 	covariate_name2id[name] = covariate_id
 # ---------------------------------------------------------------------------
 # integrand_name2id: mapping from integrand name to integrand_id value
-data_table_in       = cascade_data_dict['data']
 integrand_name_set = set()
 for row in data_table_in :
 	integrand_name_set.add( row['integrand'] )
@@ -118,6 +118,44 @@ for density_id in range( len(row_list) ) :
 	name                  = row_list[density_id][0]
 	density_name2id[name] = density_id
 # ---------------------------------------------------------------------------
+# Output node table
+# node_name2id: mapping from area name to node_id value
+col_name      = [ 'node_name', 'parent'  ]
+col_type      = [ 'text',      'integer' ]
+row_list      = list()
+node_name2id  = dict()
+#
+# world
+row_list.append( [ 'world', None ] )
+node_name2id['world'] = 0
+#
+for row in data_table_in :
+	parent = node_name2id['world']
+	for level in [ 'super', 'region', 'subreg', 'atom' ] :
+		name = row[level]
+		if name != 'none' :
+			if not name in node_name2id :
+				node_id = len(row_list)
+				row_list.append( [ name , parent ] )
+				node_name2id[name] = node_id
+			parent = node_name2id[name]
+tbl_name = 'node'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+# ---------------------------------------------------------------------------
+# output weight and weight_grid table:
+#
+col_name =   [ 'weight_name', 'n_age',   'n_time'   ]
+col_type =   [ 'text',        'integer', 'integer'  ]
+row_list = [ [ 'weight_one',  1,          1         ] ]
+tbl_name = 'weight'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+#
+col_name =   [  'weight_id', 'age_id',   'time_id',  'weight' ]
+col_type =   [  'integer',   'integer',  'integer',  'real'   ]
+row_list = [ [  0,           0,          0,           1.0     ] ]
+tbl_name = 'weight_grid'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+# ---------------------------------------------------------------------------
 # output data table:
 col_name2type = collections.OrderedDict([
 	# required columns
@@ -138,5 +176,14 @@ col_type = list( col_name2type.values() )
 for name in covariate_name2id :
 	col_name.append( 'x_%s' % covariate_name2id[name] )
 	col_type.append( 'real' )
+#
+row_list      = list()
+for row in data_table_in :
+	integrand_id = integrand_name2id[ row['integrand'] ]
+	density_id   = density_name2id[ row['data_like'] ]
+	node_id      = node_name2id['world']
+	for level in [ 'super', 'region', 'subreg', 'atom' ] :
+		if row[level] != 'none' :
+			node_id = node_name2id[ row[level] ]
 # ---------------------------------------------------------------------------
 print('import_cascade.py: OK')
