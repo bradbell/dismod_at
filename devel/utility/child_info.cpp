@@ -194,12 +194,12 @@ size_t child_info::table_id2child(size_t table_id) const
 
 
 // instantiate child_info constructor for two possible cases
-template child_info::child_info<data_struct>(
+template child_info::child_info(
 	size_t                            parent_node_id         ,
 	const CppAD::vector<node_struct>& node_table             ,
 	const CppAD::vector<data_struct>& table
 );
-template child_info::child_info<avg_case_struct>(
+template child_info::child_info(
 	size_t                                parent_node_id             ,
 	const CppAD::vector<node_struct>&     node_table             ,
 	const CppAD::vector<avg_case_struct>& table

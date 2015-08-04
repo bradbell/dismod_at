@@ -72,6 +72,7 @@ In this case, $icode row_id$$ is also written (with a label) to standard error.
 $end
 -----------------------------------------------------------------------------
 */
+# include <cstdlib>
 # include <ctime>
 # include <cassert>
 # include <iostream>

@@ -87,6 +87,7 @@ $cref command$$.
 $end
 -----------------------------------------------------------------------------
 */
+# include <cstdlib>
 # include <ctime>
 # include <cassert>
 # include <dismod_at/log_message.hpp>

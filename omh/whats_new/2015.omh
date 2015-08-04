@@ -36,6 +36,11 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 08-04$$
+Some compiler errors (on older compilers) were added.
+In addition, the minimal version of
+$cref/sqlite3/install_unix/System Requirements/sqlite3/$$ was specified.
+
 $head 08-03$$
 $list number$$
 First version that actually installs the $cref approx_mixed$$ sub-package
