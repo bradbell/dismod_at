@@ -20,7 +20,10 @@
 # ---------------------------------------------------------------------------
 import sys
 import os
+import csv
 # ---------------------------------------------------------------------------
+# Create cascade_path_dict (path to cascade input files)
+#
 if sys.argv[0] != 'bin/import_cascade.py' :
 	msg  = 'bin/import_cascasde.py: must be executed from its parent directory'
 	sys.exit(msg)
@@ -36,20 +39,27 @@ if not os.path.isdir( cascade_dir ) :
 	msg += 'import_cascade: ' + cascade_dir + ' is not a directory'
 	sys.exit(msg)
 #
-cascade_file_list = [
-	'data.csv',
-	'rate_prior.csv',
-	'simple_prior.csv',
-	'effect_prior.csv',
-	'integrand.csv',
-	'value.csv'
+cascade_name_list = [
+	'data', 'rate_prior', 'simple_prior', 'effect_prior', 'integrand', 'value'
 ]
-cascade_path_list = list()
-for name in cascade_file_list :
-	path = os.path.join(cascade_dir, name)
+cascade_path_dict = dict()
+for name in cascade_name_list :
+	path = os.path.join(cascade_dir, name + '.csv')
 	if not os.path.isfile(path) :
 		msg = 'import_cascade: ' + path + ' is not a file'
 		sys.exit(msg)
-	cascade_path_list.append(path)
+	cascade_path_dict[name] = path
+# ---------------------------------------------------------------------------
+# Create cascade_data_dict (data for each cascade input file)
+#
+cascade_data_dict = dict()
+for name in cascade_path_dict :
+	path      = cascade_path_dict[name]
+	file_ptr  = open(path)
+	reader    = csv.DictReader(file_ptr)
+	#
+	cascade_data_dict[name] = list()
+	for row in reader :
+		cascade_data_dict[name].append(row)
 # ---------------------------------------------------------------------------
 print('import_cascade.py: OK')
