@@ -66,8 +66,9 @@ new = True
 file_name        = os.path.join('build', cascade_dir + '.db')
 db_connection    = dismod_at.create_connection(file_name, new)
 # ---------------------------------------------------------------------------
-# cascade_data_dict: data for each cascade input file
-# data_table_in:     cascade_data_dict['data'
+# data_table_in:   cascade data file as a list of dictionaries
+# simple_prior_in: simple prior file as a dictionary or dictionaries
+# integrand_
 cascade_data_dict = dict()
 for name in cascade_path_dict :
 	path      = cascade_path_dict[name]
@@ -77,7 +78,13 @@ for name in cascade_path_dict :
 	cascade_data_dict[name] = list()
 	for row in reader :
 		cascade_data_dict[name].append(row)
-data_table_in = cascade_data_dict['data']
+data_table_in     = cascade_data_dict['data']
+simple_prior_in = dict()
+for row in cascade_data_dict['simple_prior'] :
+	name                    = row['name']
+	simple_prior_in[name] =  dict()
+	for column in [ 'lower', 'upper', 'mean', 'std'  ] :
+		simple_prior_in[name][column] = row[column]
 # ---------------------------------------------------------------------------
 # covariate_name2id: mapping from covariate names to covariate_id value
 header        = data_table_in[0].keys()
@@ -245,4 +252,87 @@ for name in covariate_name2id :
 tbl_name = 'covariate'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
+# Start information for prior, smooth, and smooth_grid tables
+# ---------------------------------------------------------------------------
+# prior_col_name2type:
+# smooth_col_name2type:
+# smooth_grid_col_name2type:
+prior_col_name2type = collections.OrderedDict([
+	('prior_name',     'text'   ),
+	('lower',          'real'   ),
+	('upper',          'real'   ),
+	('mean',           'real'   ),
+	('std',            'real'   ),
+	('density_id',     'integer'),
+	('eta',            'real'   ),
+])
+smooth_col_name2type = collections.OrderedDict([
+	('smooth_name',            'text'   ),
+	('n_age',                  'integer'),
+	('n_time',                 'integer'),
+	('mulstd_value_prior_id',  'integer'),
+	('mulstd_dage_prior_id',   'integer'),
+	('mulstd_dtime_prior_id',  'integer')
+])
+#
+smooth_grid_col_name2type = collections.OrderedDict([
+	('smooth_id',       'integer'),
+	('age_id',          'integer'),
+	('time_id',         'integer'),
+	('value_prior_id',  'integer'),
+	('dage_prior_id',   'integer'),
+	('dtime_prior_id',  'integer')
+])
+# --------------------------------------------------------------------------
+# zero_prior_id, one_prior_id zero_smooth_id, one_smooth_id, and corresponding
+# values in prior_row_list, smooth_row_list, smooth_grid_row_list
+prior_row_list       = list()
+smooth_row_list      = list()
+smooth_grid_row_list = list()
+#
+zero_prior_id    = len( prior_row_list )
+prior_row_list.append(
+	[ 'zero_prior', 0.0, 0.0, 0.0, None, 'uniform', None ]
+)
+one_prior_id    = len( prior_row_list )
+prior_row_list.append(
+	[ 'one_prior', 1.0, 1.0, 0.0, None, 'uniform', None ]
+)
+#
+zero_smooth_id   = len( smooth_row_list )
+smooth_row_list.append(
+	[ 'zero_smooth',  1,   1,   one_prior_id, None, None ]
+)
+smooth_grid_row_list.append(
+	[ zero_smooth_id, 0,   0,   zero_prior_id, None, None ]
+)
+#
+one_smooth_id   = len( smooth_row_list )
+smooth_row_list.append(
+	[ 'one_smooth',  1,   1,   one_prior_id, None, None ]
+)
+smooth_grid_row_list.append(
+	[ one_smooth_id, 0,   0,   one_prior_id, None, None ]
+)
+# --------------------------------------------------------------------------
+# write out prior, smooth, and smooth_grid tables
+# --------------------------------------------------------------------------
+col_name = list( prior_col_name2type.keys() )
+col_type = list( prior_col_name2type.values() )
+row_list = prior_row_list
+tbl_name = 'prior'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+#
+col_name = list( smooth_col_name2type.keys() )
+col_type = list( smooth_col_name2type.values() )
+row_list = smooth_row_list
+tbl_name = 'smooth'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+#
+col_name = list( smooth_grid_col_name2type.keys() )
+col_type = list( smooth_grid_col_name2type.values() )
+row_list = smooth_grid_row_list
+tbl_name = 'smooth_grid'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+# --------------------------------------------------------------------------
 print('import_cascade.py: OK')
