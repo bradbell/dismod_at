@@ -29,7 +29,7 @@ import dismod_at
 # ---------------------------------------------------------------------------
 # cascade_dir:       directory name (not path) where cascade input files are
 # cascade_path_dict: path to cascade input files
-# option_dict:       a dictionary containing values in option file
+# option_table_in:   a dictionary containing values in option file
 #
 if sys.argv[0] != 'bin/import_cascade.py' :
 	msg  = 'bin/import_cascasde.py: must be executed from its parent directory'
@@ -71,11 +71,15 @@ for name in cascade_name_list :
 		sys.exit(msg)
 	cascade_path_dict[name] = path
 #
-option_dict = dict()
+option_table_in = dict()
 file_ptr    = open(option_csv)
 reader      = csv.DictReader(file_ptr)
 for row in reader :
-	option_dict[ row['name'] ] = row['value']
+	option_table_in[ row['name'] ] = row['value']
+if int( option_table_in['number_time'] ) < 2 :
+	msg  = usage + '\n'
+	msg += 'import_cascade: number_time in ' + option-csv + ' < 2'
+	sys.exit(msg)
 # ---------------------------------------------------------------------------
 # db_connection: database that is output by this program
 if not os.path.isdir('build') :
@@ -106,18 +110,19 @@ for row in cascade_data_dict['simple_prior'] :
 		simple_prior_in[name][column] = row[column]
 # ---------------------------------------------------------------------------
 # Output time table
-# time_table_out:
+# time_list:
 col_name = [ 'time' ]
 col_type = [ 'real' ]
-time_lower     = float( option_dict['time_lower'] )
-time_upper     = float( option_dict['time_upper'] )
-number_time    = int( option_dict['number_time'] )
-time_table_out = list()
+time_lower     = float( option_table_in['time_lower'] )
+time_upper     = float( option_table_in['time_upper'] )
+number_time    = int( option_table_in['number_time'] )
+time_list      = list()
+row_list       = list()
 for i in range( number_time ) :
 	t = ( time_lower * (number_time-i-1) + time_upper * i )/(number_time-1)
-	time_table_out.append([t])
+	time_list.append(t)
+	row_list.append([t])
 tbl_name = 'time'
-row_list = time_table_out
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
 # covariate_name2id: mapping from covariate names to covariate_id value
@@ -326,21 +331,22 @@ smooth_row_list      = list()
 smooth_grid_row_list = list()
 #
 zero_prior_id    = len( prior_row_list )
+density_id       = density_name2id['uniform']
 prior_row_list.append(
-	[ 'zero_prior', 0.0, 0.0, 0.0, None, 'uniform', None ]
+	[ 'zero_prior', 0.0, 0.0, 0.0, None, density_id, None ]
 )
 one_prior_id    = len( prior_row_list )
 prior_row_list.append(
-	[ 'one_prior', 1.0, 1.0, 0.0, None, 'uniform', None ]
+	[ 'one_prior', 1.0, 1.0, 0.0, None, density_id, None ]
 )
 no_prior_id    = len( prior_row_list )
 prior_row_list.append(
-	[ 'no_prior', None, None, 0.0, None, 'uniform', None ]
+	[ 'no_prior', None, None, 0.0, None, density_id, None ]
 )
 #
 zero_smooth_id   = len( smooth_row_list )
 smooth_row_list.append(
-	[ 'zero_smooth',  1,   1,   one_prior_id, no_prior_id, no_prior_id ]
+	[ 'zero_smooth',  1,   1,   one_prior_id, one_prior_id, one_prior_id ]
 )
 smooth_grid_row_list.append(
 	[ zero_smooth_id, 0,   0,   zero_prior_id, None, None ]
@@ -348,13 +354,32 @@ smooth_grid_row_list.append(
 #
 one_smooth_id   = len( smooth_row_list )
 smooth_row_list.append(
-	[ 'one_smooth',  1,   1,   one_prior_id, no_prior_id, no_prior_id ]
+	[ 'one_smooth',  1,   1,   one_prior_id, one_prior_id, one_prior_id ]
 )
 smooth_grid_row_list.append(
 	[ one_smooth_id, 0,   0,   one_prior_id, None, None ]
 )
 # --------------------------------------------------------------------------
-# pini_prior_id and correspoding value in prior_row_list
+# dtime_prior_id and corresponding value in prior_row_list
+delta_time      = time_list[1] - time_list[0]
+dtime_prior_id  = len( prior_row_list )
+lower           = None
+upper           = None
+mean            = 0.0
+std             = delta_time / 10.
+eta             = 1e-7
+prior_row_list.append([
+	'dtime_prior',
+	lower,
+	upper,
+	mean,
+	std,
+	density_name2id['log_gaussian'],
+	eta
+])
+# --------------------------------------------------------------------------
+# pini_prior_id, pini_smooth_id, and correspoding values in
+# prior_row_list, smooth_row_list, smooth_grid_row_list
 prior_in         = simple_prior_in['p_zero']
 pini_prior_id    = len( prior_row_list )
 prior_row_list.append([
@@ -366,6 +391,23 @@ prior_row_list.append([
 	density_name2id['gaussian'],
 	None
 ])
+pini_smooth_id = len( smooth_row_list )
+n_age          = 1
+n_time         = len( time_list )
+smooth_row_list.append(
+	[ 'pini_smooth', n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
+)
+age_id        = 0
+dage_prior_id = None
+for time_id in range( n_time ) :
+	smooth_grid_row_list.append([
+		pini_smooth_id,
+		age_id,
+		time_id,
+		pini_prior_id,
+		dage_prior_id,
+		dtime_prior_id
+	])
 # --------------------------------------------------------------------------
 # write out prior, smooth, and smooth_grid tables
 # --------------------------------------------------------------------------
