@@ -81,6 +81,11 @@ if int( option_table_in['number_time'] ) < 2 :
 	msg += 'import_cascade: number_time in ' + option-csv + ' < 2'
 	sys.exit(msg)
 # ---------------------------------------------------------------------------
+def float_or_none(string) :
+	if string in [ 'nan', '_inf', '-inf', 'inf', '+inf' ] :
+		return None
+	return float(string)
+# ---------------------------------------------------------------------------
 # db_connection: database that is output by this program
 if not os.path.isdir('build') :
 	print('mkdir build')
@@ -404,14 +409,19 @@ prior_row_list.append([
 # prior_row_list, smooth_row_list, smooth_grid_row_list
 prior_in         = simple_prior_in['p_zero']
 pini_prior_id    = len( prior_row_list )
+eta              = None
+if float(prior_in['std']) == float('inf') :
+	density_id = density_name2id['uniform']
+else :
+	density_id = density_name2id['gaussian']
 prior_row_list.append([
 	'pini_prior',
-	float( prior_in['lower'] ),
-	float( prior_in['upper'] ),
+	float_or_none( prior_in['lower'] ),
+	float_or_none( prior_in['upper'] ),
 	float( prior_in['mean']  ),
-	float( prior_in['std']   ),
-	density_name2id['gaussian'],
-	None
+	float_or_none( prior_in['std']   ),
+	density_id,
+	eta
 ])
 pini_smooth_id = len( smooth_row_list )
 n_age          = 1
@@ -422,54 +432,24 @@ smooth_row_list.append(
 age_id        = 0
 dage_prior_id = None
 for time_id in range( n_time ) :
+	if time_id < n_time - 1 :
+		dt_prior_id = dtime_prior_id
+	else :
+		dt_prior_id = None
 	smooth_grid_row_list.append([
 		pini_smooth_id,
 		age_id,
 		time_id,
 		pini_prior_id,
 		dage_prior_id,
-		dtime_prior_id
+		dt_prior_id
 	])
 # --------------------------------------------------------------------------
 # prior and smoothing for the following rates: iota, rho, and chi
 # 2DO: this is not yet working, see value_prior_id
 sqrt_dage = math.sqrt( (age_list[-1] - age_list[0]) / (len(age_list) - 1) )
 for rate in [ 'iota', 'rho', 'chi' ] :
-	prior_in  = simple_prior_in['xi_' + rate]
-	lower     = None
-	upper     = None
-	mean      = 0.0
-	std       = sqrt_dage * float( prior_in['mean'] )
-	eta       = value_table_in['kappa_' + rate]
-	dage_prior_id    = len( prior_row_list )
-	prior_row_list.append([
-		rate + '_dage_prior',
-		lower,
-		upper,
-		mean,
-		std,
-		density_name2id['uniform'],
-		eta
-	])
-	n_age     = len(age_list)
-	n_time    = len(time_list)
-	name      = rate + '_smooth'
-	smooth_id = len(smooth_row_list)
-	smooth_row_list.append(
-		[ name, n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
-	)
-	# note taking into account all information in rate_in.csv
-	value_prior_id = 0
-	for age_id in range( len(age_list) ) :
-		for time_id in range( n_time) :
-			smooth_grid_row_list.append([
-				smooth_id,
-				age_id,
-				time_id,
-				value_prior_id,
-				dage_prior_id,
-				dtime_prior_id
-			])
+	pass
 # --------------------------------------------------------------------------
 # write out prior, smooth, and smooth_grid tables
 # --------------------------------------------------------------------------
