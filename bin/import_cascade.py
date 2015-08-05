@@ -445,12 +445,9 @@ for time_id in range( n_time ) :
 		dt_prior_id
 	])
 # --------------------------------------------------------------------------
-# Add priros for all the rates:
-# prior_in_list:
+# Add priros for all the rate values:
+# value_prior_list:
 #
-sqrt_dage = math.sqrt( (age_list[-1] - age_list[0]) / (len(age_list) - 1) )
-#
-# determine the value priors
 prior_in_set = set()
 for row in rate_prior_in :
 	if row['type'] in [ 'iota', 'rho', 'chi', 'omega' ] :
@@ -460,25 +457,53 @@ for row in rate_prior_in :
 		std   = float_or_none( row['std'] )
 		prior_in_set.add( (lower, upper, mean, std) )
 #
-prior_list = list()
+value_prior_list = list()
 for element in prior_in_set :
-	print(element)
 	if std == None :
 		density_id = density_name2id['uniform']
 	else :
 		density_id = density_name2id['gaussian']
+	(lower, upper, mean, std) = element
 	eta      = None
-	lower    = element[0]
-	upper    = element[1]
-	mean     = element[2]
-	std      = element[3]
 	prior_id = len( prior_row_list )
 	name     = 'rate_' + str(prior_id) + '_prior'
 	prior_row_list.append(
 		[ name , lower, upper, mean, std, density_id, eta ]
 	)
-	prior_list.append( [ prior_id, element ] )
+	value_prior_list.append( [ prior_id, element ] )
+# --------------------------------------------------------------------------
+# Add priros for all the rate dage:
+# dage_prior_list:
 #
+sqrt_dage = math.sqrt( (age_list[-1] - age_list[0]) / (len(age_list) - 1) )
+dage_prior_list = list()
+for drate in [ 'diota', 'drho', 'dchi', 'domega' ] :
+	prior_in_set = set()
+	for row in rate_prior_in :
+		if row['type'] == drate :
+			lower = float_or_none( row['lower'] )
+			upper = float_or_none( row['upper'] )
+			mean  = float( row['mean'] )
+			std   = float_or_none( row['std'] )
+			assert lower in [ None, 0.0 ]
+			assert upper in [ 0.0, None ]
+			assert mean == 0.0
+			assert std  == None
+			prior_in_set.add( (lower, upper, mean, std) )
+	name  = 'xi_' + drate[1:]
+	xi    = float( simple_prior_in[name]['mean'] )
+	name  = 'kappa_' + drate[1:]
+	eta   = value_table_in[name]
+	for element in prior_in_set :
+		prior_id   = len( prior_row_list )
+		(lower, upper, mean, std) = element
+		name       = drate + '_' + str(prior_id) + '_prior'
+		std        = xi * sqrt_dage
+		density_id = density_name2id['log_gaussian']
+		prior_row_list.append(
+			[ name , lower, upper, mean, std, density_id, eta ]
+		)
+		dage_prior_list.append( [ prior_id, element ] )
 # --------------------------------------------------------------------------
 # write out prior, smooth, and smooth_grid tables
 # --------------------------------------------------------------------------
