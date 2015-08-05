@@ -92,7 +92,7 @@ db_connection    = dismod_at.create_connection(file_name, new)
 # data_table_in:    data file as a list of dictionaries
 # rate_prior_in:    rate prior file as a list of dictionaries
 # simple_prior_in:  simple prior file as a dictionary or dictionaries
-# integrand_
+# value_table_in:   value file as a dictionary
 cascade_data_dict = dict()
 for name in cascade_path_dict :
 	path      = cascade_path_dict[name]
@@ -110,6 +110,9 @@ for row in cascade_data_dict['simple_prior'] :
 	simple_prior_in[name] =  dict()
 	for column in [ 'lower', 'upper', 'mean', 'std'  ] :
 		simple_prior_in[name][column] = row[column]
+value_table_in = dict()
+for row in cascade_data_dict['value'] :
+	value_table_in[ row['name'] ] = row['value']
 # ---------------------------------------------------------------------------
 # Output time table
 # time_list:
@@ -427,6 +430,46 @@ for time_id in range( n_time ) :
 		dage_prior_id,
 		dtime_prior_id
 	])
+# --------------------------------------------------------------------------
+# prior and smoothing for the following rates: iota, rho, and chi
+# 2DO: this is not yet working, see value_prior_id
+sqrt_dage = math.sqrt( (age_list[-1] - age_list[0]) / (len(age_list) - 1) )
+for rate in [ 'iota', 'rho', 'chi' ] :
+	prior_in  = simple_prior_in['xi_' + rate]
+	lower     = None
+	upper     = None
+	mean      = 0.0
+	std       = sqrt_dage * float( prior_in['mean'] )
+	eta       = value_table_in['kappa_' + rate]
+	dage_prior_id    = len( prior_row_list )
+	prior_row_list.append([
+		rate + '_dage_prior',
+		lower,
+		upper,
+		mean,
+		std,
+		density_name2id['uniform'],
+		eta
+	])
+	n_age     = len(age_list)
+	n_time    = len(time_list)
+	name      = rate + '_smooth'
+	smooth_id = len(smooth_row_list)
+	smooth_row_list.append(
+		[ name, n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
+	)
+	# note taking into account all information in rate_in.csv
+	value_prior_id = 0
+	for age_id in range( len(age_list) ) :
+		for time_id in range( n_time) :
+			smooth_grid_row_list.append([
+				smooth_id,
+				age_id,
+				time_id,
+				value_prior_id,
+				dage_prior_id,
+				dtime_prior_id
+			])
 # --------------------------------------------------------------------------
 # write out prior, smooth, and smooth_grid tables
 # --------------------------------------------------------------------------
