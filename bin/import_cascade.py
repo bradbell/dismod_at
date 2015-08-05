@@ -14,7 +14,7 @@
 # $section Import an IHME Cascade Study$$
 #
 # $head Syntax$$
-# $codei%import_cascade.py %dir%$$
+# $codei%import_cascade.py %cascade_path% %option_file%$$
 #
 # $end
 # ---------------------------------------------------------------------------
@@ -29,20 +29,33 @@ import dismod_at
 # ---------------------------------------------------------------------------
 # cascade_dir:       directory name (not path) where cascade input files are
 # cascade_path_dict: path to cascade input files
+# option_dict:       a dictionary containing values in option file
 #
 if sys.argv[0] != 'bin/import_cascade.py' :
 	msg  = 'bin/import_cascasde.py: must be executed from its parent directory'
 	sys.exit(msg)
 #
-usage = 'bin/import_cascade.py cascade_path'
+usage = '''bin/import_cascade.py cascade_path option_csv
+
+cascade_path: path where the directory where cascade input files are located
+option_csv:   a csv file that contains the following (name, value) pairs
+	time_lower:   the minimum value in the time grid
+	time_upper:   the maximum value in the time grid
+	number_time:  the number of values in the time grid
+'''
 n_arg = len(sys.argv)
-if n_arg != 2 :
+if n_arg != 3 :
 	sys.exit(usage)
 #
 cascade_path = sys.argv[1]
+option_csv   = sys.argv[2]
 if not os.path.isdir( cascade_path ) :
 	msg  = usage + '\n'
 	msg += 'import_cascade: ' + cascade_path + ' is not a directory'
+	sys.exit(msg)
+if not os.path.isfile( option_csv ) :
+	msg  = usage + '\n'
+	msg += 'import_cascade: ' + option_csv + ' is not a file'
 	sys.exit(msg)
 #
 cascade_dir       = os.path.basename(cascade_path)
@@ -57,6 +70,12 @@ for name in cascade_name_list :
 		msg = 'import_cascade: ' + path + ' is not a file'
 		sys.exit(msg)
 	cascade_path_dict[name] = path
+#
+option_dict = dict()
+file_ptr    = open(option_csv)
+reader      = csv.DictReader(file_ptr)
+for row in reader :
+	option_dict[ row['name'] ] = row['value']
 # ---------------------------------------------------------------------------
 # db_connection: database that is output by this program
 if not os.path.isdir('build') :
@@ -85,6 +104,21 @@ for row in cascade_data_dict['simple_prior'] :
 	simple_prior_in[name] =  dict()
 	for column in [ 'lower', 'upper', 'mean', 'std'  ] :
 		simple_prior_in[name][column] = row[column]
+# ---------------------------------------------------------------------------
+# Output time table
+# time_table_out:
+col_name = [ 'time' ]
+col_type = [ 'real' ]
+time_lower     = float( option_dict['time_lower'] )
+time_upper     = float( option_dict['time_upper'] )
+number_time    = int( option_dict['number_time'] )
+time_table_out = list()
+for i in range( number_time ) :
+	t = ( time_lower * (number_time-i-1) + time_upper * i )/(number_time-1)
+	time_table_out.append([t])
+tbl_name = 'time'
+row_list = time_table_out
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
 # covariate_name2id: mapping from covariate names to covariate_id value
 header        = data_table_in[0].keys()
@@ -120,7 +154,7 @@ row_list = [
 ]
 tbl_name = 'density'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
-
+#
 density_name2id = dict()
 for density_id in range( len(row_list) ) :
 	name                  = row_list[density_id][0]
@@ -284,7 +318,8 @@ smooth_grid_col_name2type = collections.OrderedDict([
 	('dtime_prior_id',  'integer')
 ])
 # --------------------------------------------------------------------------
-# zero_prior_id, one_prior_id zero_smooth_id, one_smooth_id, and corresponding
+# zero_prior_id, one_prior_id, no_prior_id,
+# zero_smooth_id, one_smooth_id, and corresponding
 # values in prior_row_list, smooth_row_list, smooth_grid_row_list
 prior_row_list       = list()
 smooth_row_list      = list()
@@ -298,10 +333,14 @@ one_prior_id    = len( prior_row_list )
 prior_row_list.append(
 	[ 'one_prior', 1.0, 1.0, 0.0, None, 'uniform', None ]
 )
+no_prior_id    = len( prior_row_list )
+prior_row_list.append(
+	[ 'no_prior', None, None, 0.0, None, 'uniform', None ]
+)
 #
 zero_smooth_id   = len( smooth_row_list )
 smooth_row_list.append(
-	[ 'zero_smooth',  1,   1,   one_prior_id, None, None ]
+	[ 'zero_smooth',  1,   1,   one_prior_id, no_prior_id, no_prior_id ]
 )
 smooth_grid_row_list.append(
 	[ zero_smooth_id, 0,   0,   zero_prior_id, None, None ]
@@ -309,11 +348,24 @@ smooth_grid_row_list.append(
 #
 one_smooth_id   = len( smooth_row_list )
 smooth_row_list.append(
-	[ 'one_smooth',  1,   1,   one_prior_id, None, None ]
+	[ 'one_smooth',  1,   1,   one_prior_id, no_prior_id, no_prior_id ]
 )
 smooth_grid_row_list.append(
 	[ one_smooth_id, 0,   0,   one_prior_id, None, None ]
 )
+# --------------------------------------------------------------------------
+# pini_prior_id and correspoding value in prior_row_list
+prior_in         = simple_prior_in['p_zero']
+pini_prior_id    = len( prior_row_list )
+prior_row_list.append([
+	'pini_prior',
+	float( prior_in['lower'] ),
+	float( prior_in['upper'] ),
+	float( prior_in['mean']  ),
+	float( prior_in['std']   ),
+	density_name2id['gaussian'],
+	None
+])
 # --------------------------------------------------------------------------
 # write out prior, smooth, and smooth_grid tables
 # --------------------------------------------------------------------------
