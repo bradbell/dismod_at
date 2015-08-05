@@ -389,12 +389,12 @@ smooth_grid_row_list.append(
 # --------------------------------------------------------------------------
 # dtime_prior_id and corresponding value in prior_row_list
 delta_time      = time_list[1] - time_list[0]
-dtime_prior_id  = len( prior_row_list )
 lower           = None
 upper           = None
 mean            = 0.0
 std             = delta_time / 10.
 eta             = 1e-7
+dtime_prior_id  = len( prior_row_list )
 prior_row_list.append([
 	'dtime_prior',
 	lower,
@@ -445,11 +445,40 @@ for time_id in range( n_time ) :
 		dt_prior_id
 	])
 # --------------------------------------------------------------------------
-# prior and smoothing for the following rates: iota, rho, and chi
-# 2DO: this is not yet working, see value_prior_id
+# Add priros for all the rates:
+# prior_in_list:
+#
 sqrt_dage = math.sqrt( (age_list[-1] - age_list[0]) / (len(age_list) - 1) )
-for rate in [ 'iota', 'rho', 'chi' ] :
-	pass
+#
+# determine the value priors
+prior_in_set = set()
+for row in rate_prior_in :
+	if row['type'] in [ 'iota', 'rho', 'chi', 'omega' ] :
+		lower = float_or_none( row['lower'] )
+		upper = float_or_none( row['upper'] )
+		mean  = float( row['mean'] )
+		std   = float_or_none( row['std'] )
+		prior_in_set.add( (lower, upper, mean, std) )
+#
+prior_list = list()
+for element in prior_in_set :
+	print(element)
+	if std == None :
+		density_id = density_name2id['uniform']
+	else :
+		density_id = density_name2id['gaussian']
+	eta      = None
+	lower    = element[0]
+	upper    = element[1]
+	mean     = element[2]
+	std      = element[3]
+	prior_id = len( prior_row_list )
+	name     = 'rate_' + str(prior_id) + '_prior'
+	prior_row_list.append(
+		[ name , lower, upper, mean, std, density_id, eta ]
+	)
+	prior_list.append( [ prior_id, element ] )
+#
 # --------------------------------------------------------------------------
 # write out prior, smooth, and smooth_grid tables
 # --------------------------------------------------------------------------
