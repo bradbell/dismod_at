@@ -89,8 +89,9 @@ new = True
 file_name        = os.path.join('build', cascade_dir + '.db')
 db_connection    = dismod_at.create_connection(file_name, new)
 # ---------------------------------------------------------------------------
-# data_table_in:   cascade data file as a list of dictionaries
-# simple_prior_in: simple prior file as a dictionary or dictionaries
+# data_table_in:    data file as a list of dictionaries
+# rate_prior_in:    rate prior file as a list of dictionaries
+# simple_prior_in:  simple prior file as a dictionary or dictionaries
 # integrand_
 cascade_data_dict = dict()
 for name in cascade_path_dict :
@@ -101,7 +102,8 @@ for name in cascade_path_dict :
 	cascade_data_dict[name] = list()
 	for row in reader :
 		cascade_data_dict[name].append(row)
-data_table_in     = cascade_data_dict['data']
+data_table_in  = cascade_data_dict['data']
+rate_prior_in  = cascade_data_dict['rate_prior']
 simple_prior_in = dict()
 for row in cascade_data_dict['simple_prior'] :
 	name                    = row['name']
@@ -111,18 +113,35 @@ for row in cascade_data_dict['simple_prior'] :
 # ---------------------------------------------------------------------------
 # Output time table
 # time_list:
+time_lower = float( option_table_in['time_lower'] )
+time_upper = float( option_table_in['time_upper'] )
+n_time     = int( option_table_in['number_time'] )
+time_list      = list()
+for i in range( n_time ) :
+	time = ( time_lower * (n_time-i-1) + time_upper * i )/(n_time-1)
+	time_list.append(time)
+#
 col_name = [ 'time' ]
 col_type = [ 'real' ]
-time_lower     = float( option_table_in['time_lower'] )
-time_upper     = float( option_table_in['time_upper'] )
-number_time    = int( option_table_in['number_time'] )
-time_list      = list()
 row_list       = list()
-for i in range( number_time ) :
-	t = ( time_lower * (number_time-i-1) + time_upper * i )/(number_time-1)
-	time_list.append(t)
-	row_list.append([t])
+for time in time_list :
+	row_list.append([time])
 tbl_name = 'time'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+# ---------------------------------------------------------------------------
+# Output age table
+# age_list:
+age_set = set()
+for row in rate_prior_in :
+	age_set.add( float(row['age']) )
+age_list = sorted( age_set)
+#
+col_name = [ 'age' ]
+col_type = [ 'real' ]
+row_list  = list()
+for age in age_list :
+	row_list.append([age])
+tbl_name = 'age'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
 # covariate_name2id: mapping from covariate names to covariate_id value
