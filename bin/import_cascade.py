@@ -518,7 +518,7 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	upper  = None
 	mean   = 0.0
 	xi     = float( simple_prior_in['xi_' + rate]['mean'] )
-	std    = xi * delta_age / 3.0 # just a rough approximation
+	std    = xi * delta_age / 3.0    # just a rough approximation
 	default_rate_dage_prior_id[rate]  = len( prior_row_list )
 	prior_row_list.append([
 		rate + '_dage_prior',
@@ -569,6 +569,21 @@ for time_id in range( n_time ) :
 		dage_prior_id,
 		dtime_prior_id
 	])
+# --------------------------------------------------------------------------
+# rate_smooth_id
+#
+rate_smooth_id = dict()
+rate_smooth_id['pini'] = pini_smooth_id
+for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
+	# smooth_row_list
+	n_age  = len(age_list)
+	n_time = len(time_list)
+	name   = rate + '_smooth'
+	rate_smooth_id[rate] = len(smooth_row_list)
+	smooth_row_list.append(
+			[ name, n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
+	)
+	# need to fill in smooth_grid entries for this smoothing
 # --------------------------------------------------------------------------
 # Output rate table and add parent smoothing for the rates
 # 2DO: other rates besides pini
