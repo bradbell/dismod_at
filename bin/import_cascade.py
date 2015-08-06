@@ -35,17 +35,27 @@ if sys.argv[0] != 'bin/import_cascade.py' :
 	msg  = 'bin/import_cascasde.py: must be executed from its parent directory'
 	sys.exit(msg)
 #
+option_dict = collections.OrderedDict([
+	('time_lower',     'minimum value in the time grid'),
+	('time_upper',     'maximum value in the time grid'),
+	('number_time',    'number of values in the time grid'),
+	('child_value_std','value standard deviation for random effects'),
+	('child_dage_std', 'dage standard deviation for random effects'),
+	('child_dtime_std','dtime standard deviation for random effects'),
+	('iota_dage_std',  'std for parent iota delta in offset log space'),
+	('rho_dage_std',   'std for parent rho delta in offset log space'),
+	('chi_dage_std',   'std for parent chi delta in offset log space'),
+	('omega_dage_std', 'std for parent omega delta in offset log space')
+])
 usage = '''bin/import_cascade.py cascade_path option_csv
 
 cascade_path: path where the directory where cascade input files are located
 option_csv:   a csv file that contains the following (name, value) pairs
-	time_lower:      the minimum value in the time grid
-	time_upper:      the maximum value in the time grid
-	number_time:     the number of values in the time grid
-	child_value_std: value standard deviation for random effects
-	child_dage_std:  dage standard deviation for random effects
-	child_dtime_std: dtime standard deviation for random effects
 '''
+usage += 30 * '-' + ' options ' + 40 * '-' + '\n'
+for key in option_dict :
+	usage += key + ': ' + option_dict[key] + '\n'
+usage += 79 * '-' + '\n'
 n_arg = len(sys.argv)
 if n_arg != 3 :
 	sys.exit(usage)
@@ -74,16 +84,12 @@ for name in cascade_name_list :
 		sys.exit(msg)
 	cascade_path_dict[name] = path
 #
-option_list = [
-	'time_lower', 'time_upper', 'number_time',
-	'child_value_std', 'child_dage_std', 'child_dtime_std'
-]
 option_table_in = dict()
 file_ptr    = open(option_csv)
 reader      = csv.DictReader(file_ptr)
 for row in reader :
 	option_table_in[ row['name'] ] = row['value']
-for option in option_list :
+for option in option_dict :
 	if option not in option_table_in :
 		msg  = usage + '\n'
 		msg += option + ' not in ' + option_csv
