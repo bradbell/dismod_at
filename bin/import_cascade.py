@@ -99,12 +99,15 @@ if int( option_table_in['number_time'] ) < 2 :
 	msg += 'import_cascade: number_time in ' + option-csv + ' < 2'
 	sys.exit(msg)
 # ---------------------------------------------------------------------------
+# float_or_none
+#
 def float_or_none(string) :
 	if string in [ 'nan', '_inf', '-inf', 'inf', '+inf' ] :
 		return None
 	return float(string)
 # ---------------------------------------------------------------------------
-# db_connection: database that is output by this program
+# db_connection
+#
 if not os.path.isdir('build') :
 	print('mkdir build')
 	os.mkdir('build')
@@ -116,6 +119,7 @@ db_connection    = dismod_at.create_connection(file_name, new)
 # rate_prior_in:    rate prior file as a list of dictionaries
 # simple_prior_in:  simple prior file as a dictionary or dictionaries
 # value_table_in:   value file as a dictionary
+#
 cascade_data_dict = dict()
 for name in cascade_path_dict :
 	path      = cascade_path_dict[name]
@@ -137,8 +141,9 @@ value_table_in = dict()
 for row in cascade_data_dict['value'] :
 	value_table_in[ row['name'] ] = row['value']
 # ---------------------------------------------------------------------------
-# Output time table
+# Output time table.
 # time_list:
+#
 time_lower = float( option_table_in['time_lower'] )
 time_upper = float( option_table_in['time_upper'] )
 n_time     = int( option_table_in['number_time'] )
@@ -155,8 +160,9 @@ for time in time_list :
 tbl_name = 'time'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
-# Output age table
+# Output age table.
 # age_list:
+#
 age_dict = dict()
 for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	drate           = 'd' + rate
@@ -183,7 +189,8 @@ for age in age_list :
 tbl_name = 'age'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
-# covariate_name2id: mapping from covariate names to covariate_id value
+# covariate_name2id
+#
 header        = data_table_in[0].keys()
 covariate_name_list = list()
 for name in header :
@@ -194,7 +201,8 @@ for covariate_id in range( len(covariate_name_list) ) :
 	name                    = covariate_name_list[covariate_id]
 	covariate_name2id[name] = covariate_id
 # ---------------------------------------------------------------------------
-# integrand_name2id: mapping from integrand name to integrand_id value
+# integrand_name2id
+#
 integrand_name_set = set()
 for row in data_table_in :
 	integrand_name_set.add( row['integrand'] )
@@ -205,7 +213,8 @@ for integrand_id in range( len(integrand_name_list) ) :
 	integrand_name2id[name] = integrand_id
 # ---------------------------------------------------------------------------
 # Output density table
-# density_name2id: mapping from density name to density_id value
+# density_name2id
+#
 col_name = [  'density_name'   ]
 col_type = [  'text'        ]
 row_list = [
@@ -224,7 +233,8 @@ for density_id in range( len(row_list) ) :
 	density_name2id[name] = density_id
 # ---------------------------------------------------------------------------
 # Output node table
-# node_name2id: mapping from area name to node_id value
+# node_name2id
+#
 col_name      = [ 'node_name', 'parent'  ]
 col_type      = [ 'text',      'integer' ]
 row_list      = list()
@@ -247,7 +257,8 @@ for row in data_table_in :
 tbl_name = 'node'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
-# output weight and weight_grid table:
+# Output weight table
+# Output weight_grid table
 #
 col_name =   [ 'weight_name', 'n_age',   'n_time'   ]
 col_type =   [ 'text',        'integer', 'integer'  ]
@@ -261,7 +272,8 @@ row_list = [ [  0,           0,          0,           1.0     ] ]
 tbl_name = 'weight_grid'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
-# output data table:
+# Output data table
+#
 col_name2type = collections.OrderedDict([
 	# required columns
 	('integrand_id', 'integer'),
@@ -321,6 +333,7 @@ tbl_name = 'data'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
 # Output covariate table
+#
 col_name   = [ 'covariate_name',  'reference', 'max_difference' ]
 col_type   = [ 'text',             'real',     'real'           ]
 row_list   = list()
@@ -349,7 +362,7 @@ for name in covariate_name2id :
 tbl_name = 'covariate'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
-# Start information for prior, smooth, and smooth_grid tables
+# Start recording information for prior smooth and smooth_grid tables
 # ---------------------------------------------------------------------------
 # prior_col_name2type:
 # smooth_col_name2type:
@@ -381,9 +394,10 @@ smooth_grid_col_name2type = collections.OrderedDict([
 	('dtime_prior_id',  'integer')
 ])
 # --------------------------------------------------------------------------
-# zero_prior_id, one_prior_id, no_prior_id,
-# zero_smooth_id, one_smooth_id, and corresponding
-# values in prior_row_list, smooth_row_list, smooth_grid_row_list
+# zero_prior_id, zero_smooth_id
+# one_prior_id,  one_smooth_id
+# no_prior_id
+#
 prior_row_list       = list()
 smooth_row_list      = list()
 smooth_grid_row_list = list()
@@ -418,7 +432,8 @@ smooth_grid_row_list.append(
 	[ one_smooth_id, 0,   0,   one_prior_id, None, None ]
 )
 # --------------------------------------------------------------------------
-# dtime_prior_id and corresponding value in prior_row_list
+# dtime_prior_id
+#
 delta_time      = time_list[1] - time_list[0]
 lower           = None
 upper           = None
@@ -436,10 +451,9 @@ prior_row_list.append([
 	eta
 ])
 # --------------------------------------------------------------------------
-# pini_smooth_id and corresponding values in
-# prior_row_list, smooth_row_list, smooth_grid_row_list
-pini_prior_id    = len( prior_row_list )
+# pini_smooth_id
 #
+pini_prior_id    = len( prior_row_list )
 prior_in         = simple_prior_in['p_zero']
 eta              = None
 if float(prior_in['std']) == float('inf') :
@@ -477,8 +491,8 @@ for time_id in range( n_time ) :
 		dt_prior_id
 	])
 # --------------------------------------------------------------------------
-# Add priors and smoothing for the children
 # child_smooth_id
+#
 lower      = None
 upper      = None
 mean       = 0.0
