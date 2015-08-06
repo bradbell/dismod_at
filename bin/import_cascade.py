@@ -484,24 +484,29 @@ for i in range( n_age ) :
 			[ smooth_id, i, j, value_prior_id, dage_prior_id, dtime_prior_id ]
 	)
 # --------------------------------------------------------------------------
-# dtime_prior_id
+# rate_dtime_prior_id
 #
-delta_time      = time_list[1] - time_list[0]
-lower           = None
-upper           = None
-mean            = 0.0
-std             = delta_time / 10.
-eta             = 1e-7
-dtime_prior_id  = len( prior_row_list )
-prior_row_list.append([
-	'dtime_prior',
-	lower,
-	upper,
-	mean,
-	std,
-	density_name2id['log_gaussian'],
-	eta
-])
+rate_dtime_prior_id = dict()
+delta_time          = time_list[1] - time_list[0]
+lower               = None
+upper               = None
+mean                = 0.0
+std                 = delta_time / 10.
+for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
+	if rate == 'pini' :
+		eta = 1e-7
+	else :
+		eta = value_table_in[ 'kappa_' + rate ]
+	rate_dtime_prior_id[rate]  = len( prior_row_list )
+	prior_row_list.append([
+		rate + '_dtime_prior',
+		lower,
+		upper,
+		mean,
+		std,
+		density_name2id['log_gaussian'],
+		eta
+	])
 # --------------------------------------------------------------------------
 # pini_smooth_id
 #
@@ -531,16 +536,16 @@ age_id        = 0
 dage_prior_id = None
 for time_id in range( n_time ) :
 	if time_id < n_time - 1 :
-		dt_prior_id = dtime_prior_id
+		dtime_prior_id = rate_dtime_prior_id['pini']
 	else :
-		dt_prior_id = None
+		dtime_prior_id = None
 	smooth_grid_row_list.append([
 		pini_smooth_id,
 		age_id,
 		time_id,
 		pini_prior_id,
 		dage_prior_id,
-		dt_prior_id
+		dtime_prior_id
 	])
 # --------------------------------------------------------------------------
 # Output rate table and add parent smoothing for the rates
