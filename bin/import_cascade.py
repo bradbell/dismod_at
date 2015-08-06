@@ -39,9 +39,12 @@ usage = '''bin/import_cascade.py cascade_path option_csv
 
 cascade_path: path where the directory where cascade input files are located
 option_csv:   a csv file that contains the following (name, value) pairs
-	time_lower:   the minimum value in the time grid
-	time_upper:   the maximum value in the time grid
-	number_time:  the number of values in the time grid
+	time_lower:      the minimum value in the time grid
+	time_upper:      the maximum value in the time grid
+	number_time:     the number of values in the time grid
+	child_value_std: value standard deviation for random effects
+	child_dage_std:  dage standard deviation for random effects
+	child_dtime_std: dtime standard deviation for random effects
 '''
 n_arg = len(sys.argv)
 if n_arg != 3 :
@@ -71,11 +74,20 @@ for name in cascade_name_list :
 		sys.exit(msg)
 	cascade_path_dict[name] = path
 #
+option_list = [
+	'time_lower', 'time_upper', 'number_time',
+	'child_value_std', 'child_dage_std', 'child_dtime_std'
+]
 option_table_in = dict()
 file_ptr    = open(option_csv)
 reader      = csv.DictReader(file_ptr)
 for row in reader :
 	option_table_in[ row['name'] ] = row['value']
+for option in option_list :
+	if option not in option_table_in :
+		msg  = usage + '\n'
+		msg += option + ' not in ' + option_csv
+		sys.exit(msg)
 if int( option_table_in['number_time'] ) < 2 :
 	msg  = usage + '\n'
 	msg += 'import_cascade: number_time in ' + option-csv + ' < 2'
@@ -405,10 +417,11 @@ prior_row_list.append([
 	eta
 ])
 # --------------------------------------------------------------------------
-# pini_prior_id, pini_smooth_id, and correspoding values in
+# pini_prior_id, pini_smooth_id, and corresponding values in
 # prior_row_list, smooth_row_list, smooth_grid_row_list
-prior_in         = simple_prior_in['p_zero']
 pini_prior_id    = len( prior_row_list )
+#
+prior_in         = simple_prior_in['p_zero']
 eta              = None
 if float(prior_in['std']) == float('inf') :
 	density_id = density_name2id['uniform']
@@ -445,8 +458,9 @@ for time_id in range( n_time ) :
 		dt_prior_id
 	])
 # --------------------------------------------------------------------------
-# Add priros for all the rate values:
+# Add pirors for all the rate values:
 # value_prior_list:
+value_prior_list = list()
 #
 prior_in_set = set()
 for row in rate_prior_in :
@@ -457,7 +471,6 @@ for row in rate_prior_in :
 		std   = float_or_none( row['std'] )
 		prior_in_set.add( (lower, upper, mean, std) )
 #
-value_prior_list = list()
 for element in prior_in_set :
 	if std == None :
 		density_id = density_name2id['uniform']
@@ -472,11 +485,11 @@ for element in prior_in_set :
 	)
 	value_prior_list.append( [ prior_id, element ] )
 # --------------------------------------------------------------------------
-# Add priros for all the rate dage:
+# Add pirors for all the rate dage:
 # dage_prior_list:
+dage_prior_list = list()
 #
 sqrt_dage = math.sqrt( (age_list[-1] - age_list[0]) / (len(age_list) - 1) )
-dage_prior_list = list()
 for drate in [ 'diota', 'drho', 'dchi', 'domega' ] :
 	prior_in_set = set()
 	for row in rate_prior_in :
@@ -505,7 +518,35 @@ for drate in [ 'diota', 'drho', 'dchi', 'domega' ] :
 		)
 		dage_prior_list.append( [ prior_id, element ] )
 # --------------------------------------------------------------------------
-# write out prior, smooth, and smooth_grid tables
+# Add priors for the children
+# child_value_prior_id, child_dage_prior_id, child_time_prior_id
+lower      = None
+upper      = None
+mean       = 0.0
+density_id = density_name2id['gaussian']
+eta        = None
+#
+std    = float( option_table_in['child_value_std'] )
+name   = 'child_value_piror'
+child_value_prior_id = len( prior_row_list )
+prior_row_list.append(
+		[ name , lower, upper, mean, std, density_id, eta ]
+)
+#
+std    = float( option_table_in['child_dage_std'] )
+name   = 'child_dage_piror'
+child_dage_prior_id = len( prior_row_list )
+prior_row_list.append(
+		[ name , lower, upper, mean, std, density_id, eta ]
+)
+std    = float( option_table_in['child_dtime_std'] )
+name   = 'child_dtime_piror'
+child_dtime_prior_id = len( prior_row_list )
+prior_row_list.append(
+		[ name , lower, upper, mean, std, density_id, eta ]
+)
+# --------------------------------------------------------------------------
+# Output, smooth, and smooth_grid tables
 # --------------------------------------------------------------------------
 col_name = list( prior_col_name2type.keys() )
 col_type = list( prior_col_name2type.values() )
