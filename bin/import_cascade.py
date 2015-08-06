@@ -112,7 +112,7 @@ if not os.path.isdir('build') :
 	print('mkdir build')
 	os.mkdir('build')
 new = True
-file_name        = os.path.join('build', cascade_dir + '.db')
+file_name        = os.path.join('build', cascade_dir + '.sqlite')
 db_connection    = dismod_at.create_connection(file_name, new)
 # ---------------------------------------------------------------------------
 # data_table_in:    data file as a list of dictionaries
@@ -432,6 +432,58 @@ smooth_grid_row_list.append(
 	[ one_smooth_id, 0,   0,   one_prior_id, None, None ]
 )
 # --------------------------------------------------------------------------
+# child_smooth_id
+#
+lower      = None
+upper      = None
+mean       = 0.0
+density_id = density_name2id['gaussian']
+eta        = None
+#
+std    = float( option_table_in['child_value_std'] )
+name   = 'child_value_piror'
+child_value_prior_id = len( prior_row_list )
+prior_row_list.append(
+		[ name , lower, upper, mean, std, density_id, eta ]
+)
+#
+std    = float( option_table_in['child_dage_std'] )
+name   = 'child_dage_piror'
+child_dage_prior_id = len( prior_row_list )
+prior_row_list.append(
+		[ name , lower, upper, mean, std, density_id, eta ]
+)
+#
+std    = float( option_table_in['child_dtime_std'] )
+name   = 'child_dtime_piror'
+child_dtime_prior_id = len( prior_row_list )
+prior_row_list.append(
+		[ name , lower, upper, mean, std, density_id, eta ]
+)
+#
+name            = 'child_smooth'
+n_age           = len(age_list)
+n_time          = len(time_list)
+child_smooth_id = len(smooth_row_list)
+smooth_row_list.append(
+		[ name , n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
+)
+smooth_id      = child_smooth_id
+value_prior_id = child_value_prior_id
+for i in range( n_age ) :
+	if i + 1 < n_age :
+		dage_prior_id = child_dage_prior_id
+	else :
+		dage_prior_id = None
+	for j in range( n_time ) :
+		if j + 1 < n_time :
+			dtime_prior_id = child_dtime_prior_id
+		else :
+			dtime_prior_id = None
+		smooth_grid_row_list.append(
+			[ smooth_id, i, j, value_prior_id, dage_prior_id, dtime_prior_id ]
+	)
+# --------------------------------------------------------------------------
 # dtime_prior_id
 #
 delta_time      = time_list[1] - time_list[0]
@@ -490,58 +542,6 @@ for time_id in range( n_time ) :
 		dage_prior_id,
 		dt_prior_id
 	])
-# --------------------------------------------------------------------------
-# child_smooth_id
-#
-lower      = None
-upper      = None
-mean       = 0.0
-density_id = density_name2id['gaussian']
-eta        = None
-#
-std    = float( option_table_in['child_value_std'] )
-name   = 'child_value_piror'
-child_value_prior_id = len( prior_row_list )
-prior_row_list.append(
-		[ name , lower, upper, mean, std, density_id, eta ]
-)
-#
-std    = float( option_table_in['child_dage_std'] )
-name   = 'child_dage_piror'
-child_dage_prior_id = len( prior_row_list )
-prior_row_list.append(
-		[ name , lower, upper, mean, std, density_id, eta ]
-)
-#
-std    = float( option_table_in['child_dtime_std'] )
-name   = 'child_dtime_piror'
-child_dtime_prior_id = len( prior_row_list )
-prior_row_list.append(
-		[ name , lower, upper, mean, std, density_id, eta ]
-)
-#
-name            = 'child_smooth'
-n_age           = len(age_list)
-n_time          = len(time_list)
-child_smooth_id = len(smooth_row_list)
-smooth_row_list.append(
-		[ name , n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
-)
-smooth_id      = child_smooth_id
-value_prior_id = child_value_prior_id
-for i in range( n_age ) :
-	if i + 1 < n_age :
-		dage_prior_id = child_dage_prior_id
-	else :
-		dage_prior_id = None
-	for j in range( n_time ) :
-		if j + 1 < n_time :
-			dtime_prior_id = child_dtime_prior_id
-		else :
-			dtime_prior_id = None
-		smooth_grid_row_list.append(
-			[ smooth_id, i, j, value_prior_id, dage_prior_id, dtime_prior_id ]
-	)
 # --------------------------------------------------------------------------
 # Output rate table and add parent smoothing for the rates
 # 2DO: other rates besides pini
