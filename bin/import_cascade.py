@@ -508,6 +508,28 @@ for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
 		eta
 	])
 # --------------------------------------------------------------------------
+# default_rate_dage_prior_id
+#
+delta_age          = (age_list[-1] - age_list[0]) / (len(age_list) - 1)
+default_rate_dage_prior_id = dict()
+for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
+	eta = value_table_in[ 'kappa_' + rate ]
+	lower  = None
+	upper  = None
+	mean   = 0.0
+	xi     = float( simple_prior_in['xi_' + rate]['mean'] )
+	std    = xi * delta_age / 3.0 # just a rough approximation
+	default_rate_dage_prior_id[rate]  = len( prior_row_list )
+	prior_row_list.append([
+		rate + '_dage_prior',
+		lower,
+		upper,
+		mean,
+		std,
+		density_name2id['log_gaussian'],
+		eta
+	])
+# --------------------------------------------------------------------------
 # pini_smooth_id
 #
 pini_prior_id    = len( prior_row_list )
