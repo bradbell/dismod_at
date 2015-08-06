@@ -151,10 +151,23 @@ dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
 # Output age table
 # age_list:
-age_set = set()
-for row in rate_prior_in :
-	age_set.add( float(row['age']) )
-age_list = sorted( age_set)
+age_dict = dict()
+for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
+	drate           = 'd' + rate
+	age_dict[rate]  = list()
+	age_dict[drate] = list()
+	for row in rate_prior_in :
+		if row['type'] == rate :
+			age_dict[rate].append( float( row['age'] ) )
+		if row['type'] == drate :
+			age_dict[drate].append( float( row['age'] ) )
+#
+# This program assumes only one age grid in rate_prior_in
+age_list = sorted( age_dict['iota'] )
+for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
+	drate = 'd' + rate
+	assert age_dict[rate] == age_list
+	assert age_dict[drate] == age_list[0:-1]
 #
 col_name = [ 'age' ]
 col_type = [ 'real' ]
