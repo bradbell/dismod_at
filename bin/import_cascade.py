@@ -417,7 +417,7 @@ prior_row_list.append([
 	eta
 ])
 # --------------------------------------------------------------------------
-# pini_prior_id, pini_smooth_id, and corresponding values in
+# pini_smooth_id and corresponding values in
 # prior_row_list, smooth_row_list, smooth_grid_row_list
 pini_prior_id    = len( prior_row_list )
 #
@@ -570,13 +570,17 @@ for i in range( n_age ) :
 			[ smooth_id, i, j, value_prior_id, dage_prior_id, dtime_prior_id ]
 	)
 # --------------------------------------------------------------------------
-# Output rate table and add smoothing for the rates
+# Output rate table and add parent smoothing for the rates
+# 2DO: other rates besides pini
 col_name = [  'rate_name', 'parent_smooth_id', 'child_smooth_id'  ]
 col_type = [  'text',      'integer',         'integer'          ]
 row_list = list()
 #
-
-
+row_list.append(
+	[ 'pini_smooth', pini_smooth_id, child_smooth_id ]
+)
+tbl_name = 'rate'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # --------------------------------------------------------------------------
 # Output, prior, smooth, and smooth_grid tables
 # --------------------------------------------------------------------------
