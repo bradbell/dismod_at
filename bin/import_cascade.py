@@ -518,8 +518,8 @@ for drate in [ 'diota', 'drho', 'dchi', 'domega' ] :
 		)
 		dage_prior_list.append( [ prior_id, element ] )
 # --------------------------------------------------------------------------
-# Add priors for the children
-# child_value_prior_id, child_dage_prior_id, child_time_prior_id
+# Add priors and smoothing for the children
+# child_smooth_id
 lower      = None
 upper      = None
 mean       = 0.0
@@ -539,14 +539,46 @@ child_dage_prior_id = len( prior_row_list )
 prior_row_list.append(
 		[ name , lower, upper, mean, std, density_id, eta ]
 )
+#
 std    = float( option_table_in['child_dtime_std'] )
 name   = 'child_dtime_piror'
 child_dtime_prior_id = len( prior_row_list )
 prior_row_list.append(
 		[ name , lower, upper, mean, std, density_id, eta ]
 )
+#
+name            = 'child_smooth'
+n_age           = len(age_list)
+n_time          = len(time_list)
+child_smooth_id = len(smooth_row_list)
+smooth_row_list.append(
+		[ name , n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
+)
+smooth_id      = child_smooth_id
+value_prior_id = child_value_prior_id
+for i in range( n_age ) :
+	if i + 1 < n_age :
+		dage_prior_id = child_dage_prior_id
+	else :
+		dage_prior_id = None
+	for j in range( n_time ) :
+		if j + 1 < n_time :
+			dtime_prior_id = child_dtime_prior_id
+		else :
+			dtime_prior_id = None
+		smooth_grid_row_list.append(
+			[ smooth_id, i, j, value_prior_id, dage_prior_id, dtime_prior_id ]
+	)
 # --------------------------------------------------------------------------
-# Output, smooth, and smooth_grid tables
+# Output rate table and add smoothing for the rates
+col_name = [  'rate_name', 'parent_smooth_id', 'child_smooth_id'  ]
+col_type = [  'text',      'integer',         'integer'          ]
+row_list = list()
+#
+
+
+# --------------------------------------------------------------------------
+# Output, prior, smooth, and smooth_grid tables
 # --------------------------------------------------------------------------
 col_name = list( prior_col_name2type.keys() )
 col_type = list( prior_col_name2type.values() )
