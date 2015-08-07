@@ -665,13 +665,13 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 print( len(smooth_grid_row_list) )
 # --------------------------------------------------------------------------
 # Output rate table and add parent smoothing for the rates
-# 2DO: other rates besides pini
 col_name = [  'rate_name', 'parent_smooth_id', 'child_smooth_id'  ]
 col_type = [  'text',      'integer',         'integer'          ]
 row_list = list()
 #
-row_list.append(
-	[ 'pini_smooth', pini_smooth_id, child_smooth_id ]
+for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
+	row_list.append(
+		[ rate, rate_smooth_id[rate], child_smooth_id ]
 )
 tbl_name = 'rate'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
