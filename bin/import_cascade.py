@@ -106,6 +106,24 @@ def float_or_none(string) :
 		return None
 	return float(string)
 # ---------------------------------------------------------------------------
+# prior_cascade2at
+#
+density_name2id = None
+def prior_cascade2at(name, cascade_prior_row) :
+	assert density_name2id != None
+	lower = float_or_none( cascade_prior_row['lower'] )
+	upper = float_or_none( cascade_prior_row['upper'] )
+	mean  = float( cascade_prior_row['mean'] )
+	#
+	if cascade_prior_row['std'] == 'inf' :
+		density_id = density_name2id['uniform']
+	else :
+		density_id = density_name2id['gaussian']
+	#
+	#
+	eta   = None
+	return [ name , lower, upper, mean, std, density_id, eta ]
+# ---------------------------------------------------------------------------
 # db_connection
 #
 if not os.path.isdir('build') :
@@ -532,25 +550,15 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 # --------------------------------------------------------------------------
 # pini_smooth_id
 #
-pini_prior_id    = len( prior_row_list )
 prior_in         = simple_prior_in['p_zero']
-eta              = None
-if float(prior_in['std']) == float('inf') :
-	density_id = density_name2id['uniform']
-else :
-	density_id = density_name2id['gaussian']
-prior_row_list.append([
-	'pini_prior',
-	float_or_none( prior_in['lower'] ),
-	float_or_none( prior_in['upper'] ),
-	float( prior_in['mean']  ),
-	float_or_none( prior_in['std']   ),
-	density_id,
-	eta
-])
-pini_smooth_id = len( smooth_row_list )
+name             = 'pini_prior'
+prior_out        = prior_cascade2at(name, prior_in)
+pini_prior_id    = len( prior_row_list )
+prior_row_list.append(prior_out)
+#
 n_age          = 1
 n_time         = len( time_list )
+pini_smooth_id = len( smooth_row_list )
 smooth_row_list.append(
 	[ 'pini_smooth', n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
 )
