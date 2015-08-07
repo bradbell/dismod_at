@@ -106,10 +106,10 @@ def float_or_none(string) :
 		return None
 	return float(string)
 # ---------------------------------------------------------------------------
-# prior_cascade2at
+# gaussian_cascade2at
 #
 density_name2id = None
-def prior_cascade2at(name, cascade_prior_row) :
+def gaussian_cascade2at(prior_name, cascade_prior_row) :
 	assert density_name2id != None
 	lower = float_or_none( cascade_prior_row['lower'] )
 	upper = float_or_none( cascade_prior_row['upper'] )
@@ -122,7 +122,23 @@ def prior_cascade2at(name, cascade_prior_row) :
 	#
 	#
 	eta   = None
-	return [ name , lower, upper, mean, std, density_id, eta ]
+	return [ prior_name , lower, upper, mean, std, density_id, eta ]
+# ---------------------------------------------------------------------------
+# log_gaussian_cascade2at
+#
+density_name2id = None
+def log_gaussian_cascade2at(prior_name, cascade_prior_row, eta) :
+	assert density_name2id != None
+	lower = float_or_none( cascade_prior_row['lower'] )
+	upper = float_or_none( cascade_prior_row['upper'] )
+	mean  = float( cascade_prior_row['mean'] )
+	if cascade_prior_row['std'] == 'inf' :
+		density_id = density_name2id['uniform']
+	else :
+		density_id = density_name2id['log_gaussian']
+	#
+	#
+	return [ prior_name , lower, upper, mean, std, density_id, eta ]
 # ---------------------------------------------------------------------------
 # db_connection
 #
@@ -206,6 +222,19 @@ for age in age_list :
 	row_list.append([age])
 tbl_name = 'age'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+# ---------------------------------------------------------------------------
+# rate_prior_in_dict:
+#
+rate_prior_in_dict = dict()
+for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
+	drate           = 'd' + rate
+	rate_prior_in_dict[rate]  = list()
+	rate_prior_in_dict[drate] = list()
+	for row in rate_prior_in :
+		if row['type'] == rate :
+			rate_prior_in_dict[rate].append( row )
+		if row['type'] == drate :
+			rate_prior_in_dict[drate].append( row )
 # ---------------------------------------------------------------------------
 # covariate_name2id
 #
@@ -526,33 +555,11 @@ for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
 		eta
 	])
 # --------------------------------------------------------------------------
-# default_rate_dage_prior_id
-#
-delta_age          = (age_list[-1] - age_list[0]) / (len(age_list) - 1)
-default_rate_dage_prior_id = dict()
-for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
-	eta = value_table_in[ 'kappa_' + rate ]
-	lower  = None
-	upper  = None
-	mean   = 0.0
-	xi     = float( simple_prior_in['xi_' + rate]['mean'] )
-	std    = xi * delta_age / 3.0    # just a rough approximation
-	default_rate_dage_prior_id[rate]  = len( prior_row_list )
-	prior_row_list.append([
-		rate + '_dage_prior',
-		lower,
-		upper,
-		mean,
-		std,
-		density_name2id['log_gaussian'],
-		eta
-	])
-# --------------------------------------------------------------------------
 # pini_smooth_id
 #
 prior_in         = simple_prior_in['p_zero']
 name             = 'pini_prior'
-prior_out        = prior_cascade2at(name, prior_in)
+prior_out        = gaussian_cascade2at(name, prior_in)
 pini_prior_id    = len( prior_row_list )
 prior_row_list.append(prior_out)
 #
@@ -580,9 +587,21 @@ for time_id in range( n_time ) :
 # --------------------------------------------------------------------------
 # rate_smooth_id
 #
-rate_smooth_id = dict()
+rate_smooth_id         = dict()
 rate_smooth_id['pini'] = pini_smooth_id
+#
+delta_age          = (age_list[-1] - age_list[0]) / (len(age_list) - 1)
 for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
+	drate = 'd' + rate
+	xi     = float( simple_prior_in['xi_' + rate]['mean'] )
+	#
+	# initialize some lists for this rate
+	local_list     = list()
+	local_list_id  = list()
+	#
+	dlocal_list    = list()
+	dlocal_list_id = list()
+	#
 	# smooth_row_list
 	n_age  = len(age_list)
 	n_time = len(time_list)
@@ -592,6 +611,58 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 			[ name, n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
 	)
 	# need to fill in smooth_grid entries for this smoothing
+	for age_id in range( n_age ) :
+		# --------------------------------------------------------------------
+		# determine value_prior_id
+		name  = rate + '_' + str( len(local_list) ) + '_prior'
+		prior_in = rate_prior_in_dict[rate][age_id]
+		prior_at = gaussian_cascade2at(name, prior_in)
+		(name, lower, upper, mean, std, density_id, eta) = prior_at
+		#
+		# check if this prior already specified
+		element = (lower, upper, mean, std)
+		if element not in local_list :
+			local_list_id.append( len(prior_row_list) )
+			local_list.append( element )
+			prior_row_list.append( prior_at )
+		value_prior_id = local_list_id [ local_list.index(element) ]
+		if age_id + 1 < n_age :
+			# ----------------------------------------------------------------
+			# determine dage_prior_id
+			name  = 'd' + rate + '_' + str( len(dlocal_list) ) + '_prior'
+			prior_in = rate_prior_in_dict[drate][age_id]
+			eta      = value_table_in[ 'kappa_' + rate ]
+			prior_at = log_gaussian_cascade2at(name, prior_in, eta)
+			(name, lower, upper, mean, std, density_id, eta) = prior_at
+			#
+			# ignoring cascade values for mean and std in this case
+			mean = 0.0
+			std  = xi * delta_age / 3.0 # using xi from cascade in this way
+			#
+			# check if this prior already specified
+			element = (lower, upper, mean, std)
+			if element not in dlocal_list :
+				dlocal_list_id.append( len(prior_row_list) )
+				dlocal_list.append( element )
+				prior_row_list.append( prior_at )
+			dage_prior_id = dlocal_list_id [ dlocal_list.index(element) ]
+		else :
+			dage_prior_id  = None
+		# --------------------------------------------------------------------
+		for time_id in range( n_time ) :
+			if time_id + 1 < n_time :
+				dtime_prior_id = rate_dtime_prior_id[rate]
+			else :
+				dtime_prior_id = None
+			smooth_grid_row_list.append([
+				rate_smooth_id[rate],
+				age_id,
+				time_id,
+				value_prior_id,
+				dage_prior_id,
+				dtime_prior_id
+			])
+print( len(smooth_grid_row_list) )
 # --------------------------------------------------------------------------
 # Output rate table and add parent smoothing for the rates
 # 2DO: other rates besides pini
