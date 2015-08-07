@@ -441,28 +441,31 @@ smooth_grid_col_name2type = collections.OrderedDict([
 	('dtime_prior_id',  'integer')
 ])
 # --------------------------------------------------------------------------
-# zero_prior_id, zero_smooth_id
-# one_prior_id,  one_smooth_id
-# no_prior_id
+# zero_prior_id,   zero_smooth_id
+# one_prior_id,    one_smooth_id
+# nolim_prior_id   nolim_const_smooth_id
 #
 prior_row_list       = list()
 smooth_row_list      = list()
 smooth_grid_row_list = list()
 #
+# zero_prior_id
 zero_prior_id    = len( prior_row_list )
 density_id       = density_name2id['uniform']
 prior_row_list.append(
 	[ 'zero_prior', 0.0, 0.0, 0.0, None, density_id, None ]
 )
+# one_prior_id
 one_prior_id    = len( prior_row_list )
 prior_row_list.append(
 	[ 'one_prior', 1.0, 1.0, 0.0, None, density_id, None ]
 )
-no_prior_id    = len( prior_row_list )
+# nolim_prior_id
+nolim_prior_id    = len( prior_row_list )
 prior_row_list.append(
-	[ 'no_prior', None, None, 0.0, None, density_id, None ]
+	[ 'nolim_prior', None, None, 0.0, None, density_id, None ]
 )
-#
+# zero_smooth_id
 zero_smooth_id   = len( smooth_row_list )
 smooth_row_list.append(
 	[ 'zero_smooth',  1,   1,   one_prior_id, one_prior_id, one_prior_id ]
@@ -470,13 +473,21 @@ smooth_row_list.append(
 smooth_grid_row_list.append(
 	[ zero_smooth_id, 0,   0,   zero_prior_id, None, None ]
 )
-#
+# one_smooth_id
 one_smooth_id   = len( smooth_row_list )
 smooth_row_list.append(
 	[ 'one_smooth',  1,   1,   one_prior_id, one_prior_id, one_prior_id ]
 )
 smooth_grid_row_list.append(
 	[ one_smooth_id, 0,   0,   one_prior_id, None, None ]
+)
+# nolim_const_smooth_id
+nolim_const_smooth_id   = len( smooth_row_list )
+smooth_row_list.append(
+	[ 'nolim_const_smooth',  1, 1, one_prior_id, one_prior_id, one_prior_id ]
+)
+smooth_grid_row_list.append(
+	[ nolim_const_smooth_id, 0, 0, one_prior_id, None, None ]
 )
 # --------------------------------------------------------------------------
 # child_smooth_id
