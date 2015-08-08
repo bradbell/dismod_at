@@ -149,11 +149,12 @@ new = True
 file_name        = os.path.join('build', cascade_dir + '.sqlite')
 db_connection    = dismod_at.create_connection(file_name, new)
 # ---------------------------------------------------------------------------
-# data_table_in:    data file as a list of dictionaries
-# rate_prior_in:    rate prior file as a list of dictionaries
-# effect_prior_in:  effect file as a list of dictionaries
-# simple_prior_in:  simple prior file as a dictionary or dictionaries
-# value_table_in:   value file as a single dictionary
+# integrand_table_in: integrand file as a list of dictionaries
+# data_table_in:      data file as a list of dictionaries
+# rate_prior_in:      rate prior file as a list of dictionaries
+# effect_prior_in:    effect file as a list of dictionaries
+# simple_prior_in:    simple prior file as a dictionary or dictionaries
+# value_table_in:     value file as a single dictionary
 #
 cascade_data_dict = dict()
 for name in cascade_path_dict :
@@ -164,10 +165,11 @@ for name in cascade_path_dict :
 	cascade_data_dict[name] = list()
 	for row in reader :
 		cascade_data_dict[name].append(row)
-data_table_in    = cascade_data_dict['data']
-rate_prior_in    = cascade_data_dict['rate_prior']
-effect_prior_in  = cascade_data_dict['effect_prior']
-simple_prior_in = dict()
+integrand_table_in = cascade_data_dict['integrand']
+data_table_in      = cascade_data_dict['data']
+rate_prior_in      = cascade_data_dict['rate_prior']
+effect_prior_in    = cascade_data_dict['effect_prior']
+simple_prior_in    = dict()
 for row in cascade_data_dict['simple_prior'] :
 	name                    = row['name']
 	simple_prior_in[name] =  dict()
@@ -250,16 +252,24 @@ for covariate_id in range( len(covariate_name_list) ) :
 	name                    = covariate_name_list[covariate_id]
 	covariate_name2id[name] = covariate_id
 # ---------------------------------------------------------------------------
+# Output integrand table.
 # integrand_name2id
 #
-integrand_name_set = set()
-for row in data_table_in :
-	integrand_name_set.add( row['integrand'] )
-integrand_name_list = list( integrand_name_set )
 integrand_name2id   = dict()
-for integrand_id in range( len(integrand_name_list) ) :
-	name                    = integrand_name_list[integrand_id]
+for integrand_id in range( len(integrand_table_in) ) :
+	name                    = integrand_table_in[integrand_id]['integrand']
 	integrand_name2id[name] = integrand_id
+#
+col_name = [ 'integrand_name', 'eta' ]
+col_type = [ 'text',           'real']
+row_list = list()
+for row in integrand_table_in :
+	integrand_name = row['integrand']
+	if integrand_name == 'incidence' :
+		integrand_name = 'Tincidence'
+	row_list.append( [ integrand_name , float( row['eta'] ) ] )
+tbl_name = 'integrand'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
 # Output density table
 # density_name2id
