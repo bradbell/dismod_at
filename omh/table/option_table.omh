@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin option_table$$
 $spell
+	pos
 	optimizer
 	dismod
 	integrands
@@ -77,45 +78,41 @@ generator (used to generate simulated measurement noise).
 If this value is zero, the clock is used to seed the random number generator.
 
 $head rate_info$$
-If $icode%option_name% = rate_info%$$,
-the corresponding option value must be one of the following:
-$code chi_positive$$, $code iota_and_chi_zero$$, $code rho_and_chi_zero$$.
 The $icode rate_info$$ value does not matter for the following integrands:
 $code Sincidence$$,
 $code remission$$,
 $code mtexcess$$,
 $code mtwith$$,
 $code relrisk$$.
+If $icode%option_name% = rate_info%$$,
+the corresponding option value must be one of the following:
 
-$subhead chi_positive$$
+$subhead iota_zero_rho_zero$$
 If $icode%option_name% = rate_info%$$ and
-$icode%option_value% = chi_positive%$$,
+$icode%option_value% = iota_zero_rho_zero%$$,
 the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
-$icode chi$$ always has a lower limit greater than zero.
+$icode iota$$ and $icode rho$$ must always have lower and upper limit zero.
 
-$subhead iota_and_chi_zero$$
+$subhead iota_pos_rho_zero$$
 If $icode%option_name% = rate_info%$$ and
-$icode%option_value% = iota_and_chi_zero%$$,
-the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for both
-$icode iota$$ and $icode chi$$ have lower and upper limit zero.
-In this case
+$icode%option_value% = iota_pos_rho_zero%$$,
 the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
-$icode rho$$ must always has a lower limit greater than zero.
+$icode iota$$ must always have lower limit greater than zero and for
+$icode rho$$ lower and upper limit zero.
 
-$subhead rho_and_chi_zero$$
+$subhead iota_zero_rho_pos$$
 If $icode%option_name% = rate_info%$$ and
-$icode%option_value% = rho_and_chi_zero%$$,
-the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for both
-$icode rho$$ and $icode chi$$ have lower and upper limit zero.
-In this case
+$icode%option_value% = iota_zero_rho_pos%$$,
 the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
-$icode iota$$ must always has a lower limit greater than zero.
+$icode rho$$ must always have lower limit greater than zero and for
+$icode iota$$ lower and upper limit zero.
 
-$subhead iota_and_rho_zero$$
+$subhead iota_pos_rho_pos$$
 If $icode%option_name% = rate_info%$$ and
-$icode%option_value% = iota_and_rho_zero%$$,
+$icode%option_value% = iota_zero_rho_pos%$$,
 the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
-both $icode iota$$ and $icode rho$$ have lower and upper limit zero.
+$icode iota$$ and $icode rho$$
+must always have lower limit greater than zero.
 
 $head Optimizer$$
 The following options control the

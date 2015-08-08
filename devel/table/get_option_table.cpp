@@ -133,12 +133,13 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		}
 		if( name_vec[i] == "rate_info" )
 		{	bool ok = false;
-			ok     |= option_value[match] == "chi_positive";
-			ok     |= option_value[match] == "iota_and_chi_zero";
-			ok     |= option_value[match] == "rho_and_chi_zero";
-			ok     |= option_value[match] == "iota_and_rho_zero";
+			ok     |= option_value[match] == "iota_pos_rho_zero";
+			ok     |= option_value[match] == "iota_zero_rho_pos";
+			ok     |= option_value[match] == "iota_zero_rho_zero";
+			ok     |= option_value[match] == "iota_pos_rho_pos";
 			if( ! ok )
-			{	msg = "option_value not valid for rate_info";
+			{	msg = "option table: rate_info = '";
+				msg += option_value[match] + "'";
 				error_exit(db, msg, table_name, match);
 			}
 		}

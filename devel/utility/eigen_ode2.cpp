@@ -123,73 +123,40 @@ $latex \[
 \]$$
 
 $subhead Two$$
-The case where $latex | b_1 | > | b_2 |$$ and either
-$latex b_0 \neq b_3$$ or $latex b_2 \neq 0$$
-we denote by
+The case where $latex b_1 \neq 0$$ and $latex b_2 = 0$$.
+We denote by
 $codei%
 	%case_number% == 2
 %$$
 In this case, we switch the order of the rows and columns in
 $latex B$$ and $icode yi$$,
-compute the solution using case number seven,
+compute the solution using
+$cref/case three/eigen_ode2/Method/Case Three/$$
 and then switch the order of the result.
 
 $subhead Three$$
-The case where $latex b_1 \neq 0$$, $latex b_2 = 0$$ and $latex b_0 = b_3$$.
+The case where $latex b_1 = 0$$, $latex b_2 \neq 0$$.
 We denote this case by
 $codei%
 	%case_number% == 3
 %$$
-In this case, we switch the order of the rows and columns in
-$latex B$$ and $icode yi$$,
-compute the solution using case number five,
-and then switch the order of the result $icode yf$$.
+In this case, we compute the solution use the method for
+$cref/case three/eigen_ode2/Method/Case Three/$$ below.
 
 $subhead Four$$
-The case where $latex b_1 \neq 0$$, $latex b_2 = 0$$ and $latex b_0 \neq b_3$$.
-We denote this case by
+The case where $latex b_1 \neq 0 $$ and $latex b_2 \neq 0$$.
 $codei%
 	%case_number% == 4
 %$$
-In this case, we switch the order of the rows and columns in
-$latex B$$ and $icode yi$$,
-compute the solution using case number six,
-and then switch the order of the result $icode yf$$.
-
-$subhead Five$$
-The case where
-$latex b_1 = 0$$,
-$latex b_2 \neq 0$$,
-and $latex b_0 = b_3$$ we denote by
-$codei%
-	%case_number% == 5
-%$$
-This is a special case of number seven below,
-but it has a simpler solution that is used in this case.
-
-$subhead Six$$
-The case where
-$latex b_1 = 0$$,
-$latex b_2 \neq 0$$,
-and $latex b_0 \neq b_3$$ we denote by
-$codei%
-	%case_number% == 6
-%$$
-
-$subhead Seven$$
-The case where $latex | b_2 | \geq | b_1 |$$ and either
-$latex b_0 \neq b_3$$ or $latex b_1 \neq 0$$
-or both we denote by
-$codei%
-	%case_number% == 7
-%$$
+In this case, we compute the solution use the method for
+$cref/case four/eigen_ode2/Method/Case Four/$$ below.
 
 $head Method$$
-For the rest of the presentation, we assume that this is either
-case five, six or seven.
+The solution for case one is presented above.
+The solution for case two is to convert it to case three.
 
-$subhead Case Five and Six$$
-For these cases $latex b_1 = 0$$ and $latex b_2 \neq 0$$.
+$subhead Case Three$$
+For this case $latex b_1 = 0$$ and $latex b_2 \neq 0$$.
 It follows that
 $latex \[
 \begin{array}{rcl}
@@ -208,21 +175,7 @@ y_1 (t)     & = & y_1 ( 0 ) \exp ( b_3 t ) +
 \end{array}
 \] $$
 
-$subhead Case Five$$
-In this case $latex b_0 = b_3$$ and we have
-$latex \[
-y_1 (t) = \exp ( b_3 t ) [ y_1 ( 0 ) + b_2 y_0 ( 0 ) t ]
-\] $$
-
-$subhead Case Six$$
-In this case $latex b_0 \neq b_3$$ and we have
-$latex \[
-y_1 (t) = \exp ( b_3 t ) \left \{ y_1 ( 0 ) +
-b_2 y_0 ( 0 ) \frac{ \exp [ ( b_0 - b_3 ) t ] - 1}{ b_0 - b_3 }
-\right\}
-\] $$
-
-$subhead Case Seven$$
+$subhead Case Four$$
 In this case
 $latex \[
 	(b_0 - b_3)^2 + b_1 b_2 > 0
@@ -319,6 +272,14 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
+namespace {
+	// ignore the double argument case
+	void PrintFor(
+			double pos, const char* before, double var, const char* after
+	)
+	{	return; }
+}
+
 template <class Float>
 CppAD::vector<Float> eigen_ode2(
 	size_t                       case_number ,
@@ -331,18 +292,18 @@ CppAD::vector<Float> eigen_ode2(
 	//
 	assert( b.size() == 4 );
 	assert( yi.size() == 2 );
-	assert( 1 <= case_number && case_number <= 7 );
+	assert( 1 <= case_number && case_number <= 4 );
 	CppAD::vector<Float> yf(2);
 
-	// solution corresponding to B = 0
+	// solution corresponding to b_1 = b_2 = 0
 	if( case_number == 1 )
 	{	yf[0] = yi[0] * exp( b[0] * tf );
 		yf[1] = yi[1] * exp( b[3] * tf );
 		return yf;
 	}
 
-	// cases for which we switch the order of the rows and columns
-	if( case_number == 2 || case_number == 3 || case_number == 4 )
+	// case for which we switch the order of the rows and columns
+	if( case_number == 2 )
 	{	CppAD::vector<Float> b_sw(4), yi_sw(2), yf_sw(2);
 		b_sw[0]  = b[3];
 		b_sw[1]  = b[2];
@@ -350,50 +311,30 @@ CppAD::vector<Float> eigen_ode2(
 		b_sw[3]  = b[0];
 		yi_sw[0] = yi[1];
 		yi_sw[1] = yi[0];
-		size_t case_number_sw;
-		switch( case_number )
-		{	case 2:
-			case_number_sw = 7;
-			break;
-
-			case 3:
-			case_number_sw = 5;
-			break;
-
-			case 4:
-			case_number_sw = 6;
-			break;
-
-			default:
-			assert(false);
-		}
+		size_t case_number_sw = 3;
 		yf_sw = eigen_ode2(case_number_sw, b_sw, yi_sw, tf);
 		yf[0] = yf_sw[1];
 		yf[1] = yf_sw[0];
 		//
 		return yf;
 	}
-	assert( case_number >= 5);
 	//
-	if( case_number == 5 )
-	{	// y_0 ( tf )
-		yf[0] = yi[0] * exp( b[0] * tf );
-		// y_1 ( tf )
-		yf[1] = exp( b[3] * tf ) * ( yi[1] + b[2] * yi[0] * tf );
-		//
-		return yf;
-	}
-	//
-	if( case_number == 6 )
+	if( case_number == 3 )
 	{	// y_0 ( tf )
 		yf[0] = yi[0] * exp( b[0] * tf );
 		// y_1 ( tf )
 		Float term = (exp( (b[0] - b[3]) * tf ) - 1.0 ) / (b[0] - b[3] );
+		//
+		Float eps = CppAD::numeric_limits<Float>::epsilon();
+		Float pos = abs(b[0] - b[3]) - 10. * eps * (abs(b[0]) + abs(b[1]));
+		PrintFor(pos, "\neigen: b[0] - b[3] = ", b[0] - b[3], "\n");
+		//
 		yf[1] = exp( b[3] * tf ) * ( yi[1] + b[2] * yi[0] * term );
 		//
 		return yf;
 	}
-	assert( case_number == 7 );
+	//
+	assert( case_number == 4 );
 
 	// discriminant in the quadratic equation for eigen-values
 	Float disc = (b[0] - b[3])*(b[0] - b[3]) + 4.0*b[1]*b[2];

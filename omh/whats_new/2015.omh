@@ -45,6 +45,9 @@ $lnext
 Change the measurement covariate multiple type $code rate_mean$$ to
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$.
 $lnext
+Simplify the $cref/rate_info/option_table/rate_info/$$ choice in the
+option table.
+$lnext
 Fix $cref/logging/log_table/$$ an error message that has the
 single quote character $code '$$ in it.
 $lnext

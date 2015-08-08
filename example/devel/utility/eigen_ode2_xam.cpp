@@ -79,8 +79,8 @@ bool eigen_ode2_xam(void)
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
 	// -------------------------------------------------------------------
-	b[0] = -3.0 , b[1] =  1.0;
-	b[2] =  0.0 , b[3] = -3.0;
+	b[0] = -3.0 , b[1] =  0.0;
+	b[2] =  1.0 , b[3] = -4.0;
 	F.set(b);
 	xf = CppAD::Runge45(F, M, ti, tf, yi);
 	//
@@ -90,36 +90,11 @@ bool eigen_ode2_xam(void)
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
 	// -------------------------------------------------------------------
 	b[0] = -3.0 , b[1] =  1.0;
-	b[2] =  0.0 , b[3] = -4.0;
-	F.set(b);
-	xf = CppAD::Runge45(F, M, ti, tf, yi);
-	//
-	case_number = 4;
-	yf   = dismod_at::eigen_ode2(case_number, b, yi, tf);
-	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
-	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
-	// -------------------------------------------------------------------
-	b[0] = -3.0 , b[1] =  0.0;
 	b[2] =  1.0 , b[3] = -3.0;
 	F.set(b);
 	xf = CppAD::Runge45(F, M, ti, tf, yi);
 	//
-	case_number = 5;
-	yf   = dismod_at::eigen_ode2(case_number, b, yi, tf);
-	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
-	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
-	// -------------------------------------------------------------------
-	b[0] = -3.0 , b[1] =  0.0;
-	b[2] =  1.0 , b[3] = -4.0;
-	F.set(b);
-	xf = CppAD::Runge45(F, M, ti, tf, yi);
-	//
-	case_number = 6;
-	yf   = dismod_at::eigen_ode2(case_number, b, yi, tf);
-	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
-	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
-	//
-	case_number = 7;
+	case_number = 4;
 	yf   = dismod_at::eigen_ode2(case_number, b, yi, tf);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;

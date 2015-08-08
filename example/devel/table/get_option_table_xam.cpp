@@ -52,7 +52,7 @@ bool get_option_table_xam(void)
 		"insert into option values(4, 'print_level',     '0'            )",
 		"insert into option values(5, 'random_seed',     '0'            )",
 		"insert into option values(6, 'number_sample',   '1'            )",
-		"insert into option values(7, 'rate_info',       'chi_positive' )",
+		"insert into option values(7, 'rate_info',       'iota_pos_rho_pos' )",
 		"insert into option values(8, 'derivative_test', 'second-order' )"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
@@ -87,7 +87,7 @@ bool get_option_table_xam(void)
 	ok  &= option_table[6].option_value == "1";
 	//
 	ok  &= option_table[7].option_name    == "rate_info";
-	ok  &= option_table[7].option_value == "chi_positive";
+	ok  &= option_table[7].option_value == "iota_pos_rho_pos";
 	//
 	ok  &= option_table[8].option_name    == "derivative_test";
 	ok  &= option_table[8].option_value == "second-order";

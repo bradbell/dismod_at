@@ -227,7 +227,7 @@ pack_object_   (pack_object)
 	assert( n_time_ode > 1 );
 	//
 	// set default value for eigen_ode2_case_number_
-	eigen_ode2_case_number_ = 7;
+	eigen_ode2_case_number_ = 4;
 	//
 	// initialize
 	replace_like_called_ = false;
@@ -496,20 +496,20 @@ $end
 */
 void data_model::set_eigen_ode2_case_number(const std::string& rate_info)
 {
-	if( rate_info == "chi_positive" )
-	{	eigen_ode2_case_number_ = 7;
+	if( rate_info == "iota_zero_rho_zero" )
+	{	eigen_ode2_case_number_ = 1;
 		return;
 	}
-	if( rate_info == "iota_and_chi_zero" )
-	{	eigen_ode2_case_number_ = 5;
+	if( rate_info == "iota_pos_rho_zero" )
+	{	eigen_ode2_case_number_ = 2;
 		return;
 	}
-	if( rate_info == "rho_and_chi_zero" )
+	if( rate_info == "iota_zero_rho_pos" )
 	{	eigen_ode2_case_number_ = 3;
 		return;
 	}
-	if( rate_info == "iota_and_rho_zero" )
-	{	eigen_ode2_case_number_ = 1;
+	if( rate_info == "iota_pos_rho_pos" )
+	{	eigen_ode2_case_number_ = 4;
 		return;
 	}
 	assert(false);
