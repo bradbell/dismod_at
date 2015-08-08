@@ -22,6 +22,7 @@ import sys
 import os
 import csv
 import math
+import time as timer
 import collections
 #
 sys.path.append( os.path.join( os.getcwd(), 'python' ) )
@@ -36,16 +37,12 @@ if sys.argv[0] != 'bin/import_cascade.py' :
 	sys.exit(msg)
 #
 option_dict = collections.OrderedDict([
-	('time_lower',     'minimum value in the time grid'),
-	('time_upper',     'maximum value in the time grid'),
-	('number_time',    'number of values in the time grid'),
-	('child_value_std','value standard deviation for random effects'),
-	('child_dage_std', 'dage standard deviation for random effects'),
-	('child_dtime_std','dtime standard deviation for random effects'),
-	('iota_dage_std',  'std for parent iota delta in offset log space'),
-	('rho_dage_std',   'std for parent rho delta in offset log space'),
-	('chi_dage_std',   'std for parent chi delta in offset log space'),
-	('omega_dage_std', 'std for parent omega delta in offset log space')
+	('time_lower','      minimum value in the time grid'),
+	('time_upper','      maximum value in the time grid'),
+	('number_time','     number of values in the time grid'),
+	('child_value_std',' value standard deviation for random effects'),
+	('child_dage_std','  dage standard deviation for random effects'),
+	('child_dtime_std',' dtime standard deviation for random effects')
 ])
 usage = '''bin/import_cascade.py cascade_path option_csv
 
@@ -54,7 +51,7 @@ option_csv:   a csv file that contains the following (name, value) pairs
 '''
 usage += 30 * '-' + ' options ' + 40 * '-' + '\n'
 for key in option_dict :
-	usage += key + ': ' + option_dict[key] + '\n'
+	usage += key + ':' + option_dict[key] + '\n'
 usage += 79 * '-' + '\n'
 n_arg = len(sys.argv)
 if n_arg != 3 :
@@ -93,6 +90,11 @@ for option in option_dict :
 	if option not in option_table_in :
 		msg  = usage + '\n'
 		msg += option + ' not in ' + option_csv
+		sys.exit(msg)
+for option in option_table_in :
+	if option not in option_dict :
+		msg  = usage + '\n'
+		msg += option + ' in ' + option_csv + ' is not a valid option'
 		sys.exit(msg)
 if int( option_table_in['number_time'] ) < 2 :
 	msg  = usage + '\n'
@@ -146,7 +148,7 @@ if not os.path.isdir('build') :
 	print('mkdir build')
 	os.mkdir('build')
 new = True
-file_name        = os.path.join('build', cascade_dir + '.sqlite')
+file_name        = os.path.join('build', cascade_dir + '.db')
 db_connection    = dismod_at.create_connection(file_name, new)
 # ---------------------------------------------------------------------------
 # integrand_table_in: integrand file as a list of dictionaries
@@ -772,6 +774,18 @@ col_name = list( smooth_grid_col_name2type.keys() )
 col_type = list( smooth_grid_col_name2type.values() )
 row_list = smooth_grid_row_list
 tbl_name = 'smooth_grid'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+# ---------------------------------------------------------------------------
+# Output option table.
+col_name = [ 'option_name', 'option_value' ]
+col_type = [ 'text unique', 'text' ]
+row_list = [
+	[ 'parent_node_id', node_name2id['world']            ] ,
+	[ 'ode_step_size',  value_table_in['integrate_step'] ] ,
+	[ 'number_sample',  10                               ] ,
+	[ 'random_seed',    int( timer.time() )              ]
+]
+tbl_name = 'option'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # --------------------------------------------------------------------------
 print('import_cascade.py: OK')
