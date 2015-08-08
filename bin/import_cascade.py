@@ -151,8 +151,9 @@ db_connection    = dismod_at.create_connection(file_name, new)
 # ---------------------------------------------------------------------------
 # data_table_in:    data file as a list of dictionaries
 # rate_prior_in:    rate prior file as a list of dictionaries
+# effect_prior_in:  effect file as a list of dictionaries
 # simple_prior_in:  simple prior file as a dictionary or dictionaries
-# value_table_in:   value file as a dictionary
+# value_table_in:   value file as a single dictionary
 #
 cascade_data_dict = dict()
 for name in cascade_path_dict :
@@ -163,8 +164,9 @@ for name in cascade_path_dict :
 	cascade_data_dict[name] = list()
 	for row in reader :
 		cascade_data_dict[name].append(row)
-data_table_in  = cascade_data_dict['data']
-rate_prior_in  = cascade_data_dict['rate_prior']
+data_table_in    = cascade_data_dict['data']
+rate_prior_in    = cascade_data_dict['rate_prior']
+effect_prior_in  = cascade_data_dict['effect_prior']
 simple_prior_in = dict()
 for row in cascade_data_dict['simple_prior'] :
 	name                    = row['name']
@@ -238,7 +240,7 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 # ---------------------------------------------------------------------------
 # covariate_name2id
 #
-header        = data_table_in[0].keys()
+header        = list( data_table_in[0].keys() )
 covariate_name_list = list()
 for name in header :
 	if name.startswith('r_') or name.startswith('a_') :
@@ -443,7 +445,7 @@ smooth_grid_col_name2type = collections.OrderedDict([
 # --------------------------------------------------------------------------
 # zero_prior_id,   zero_smooth_id
 # one_prior_id,    one_smooth_id
-# nolim_prior_id   nolim_const_smooth_id
+# nolim_prior_id
 #
 prior_row_list       = list()
 smooth_row_list      = list()
@@ -480,14 +482,6 @@ smooth_row_list.append(
 )
 smooth_grid_row_list.append(
 	[ one_smooth_id, 0,   0,   one_prior_id, None, None ]
-)
-# nolim_const_smooth_id
-nolim_const_smooth_id   = len( smooth_row_list )
-smooth_row_list.append(
-	[ 'nolim_const_smooth',  1, 1, one_prior_id, one_prior_id, one_prior_id ]
-)
-smooth_grid_row_list.append(
-	[ nolim_const_smooth_id, 0, 0, one_prior_id, None, None ]
 )
 # --------------------------------------------------------------------------
 # child_smooth_id
@@ -673,9 +667,8 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 				dage_prior_id,
 				dtime_prior_id
 			])
-print( len(smooth_grid_row_list) )
 # --------------------------------------------------------------------------
-# Output rate table and add parent smoothing for the rates
+# Output rate table
 col_name = [  'rate_name', 'parent_smooth_id', 'child_smooth_id'  ]
 col_type = [  'text',      'integer',         'integer'          ]
 row_list = list()
@@ -686,6 +679,70 @@ for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
 )
 tbl_name = 'rate'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+# --------------------------------------------------------------------------
+# Output mulcov table
+col_name2type = collections.OrderedDict([
+	('mulcov_type',     'text'    ),
+	('rate_id',         'integer' ),
+	('integrand_id',    'integer' ),
+	('covariate_id',    'integer' ),
+	('smooth_id',       'integer' )
+])
+col_name = list( col_name2type.keys() )
+col_type = list( col_name2type.values() )
+row_list = list()
+#
+for row in effect_prior_in :
+	effect = row['effect']
+	if effect in [ 'zeta', 'beta' ] :
+		integrand    = row['integrand']
+		covariate    = row['name']
+		covariate_id = covariate_name2id[covariate]
+		#
+		if row['effect'] == 'zeta' :
+			mulcov_type  = 'meas_std'
+			integrand_id = integrand_name2id[integrand]
+			rate_id      = None
+			name         = integrand
+		elif integrand in [ 'incidence', 'remission', 'mtexcess' ] :
+			mulcov_type       = 'rate_mean'
+			integrand_id      = None
+			# rate table order is pini, iota, rho, chi, omega
+			if integrand == 'incidence' :
+				rate_id = 1
+				name    = 'iota'
+			if integrand == 'remission' :
+				rate_id = 2
+				name    = 'rho'
+			if integrand == 'mtexcess' :
+				rate_id = 3
+				name    = 'chi'
+		else :
+			mulcov_type  = 'meas_mean'
+			integrand_id = integrand_name2id[integrand]
+			rate_id      = None
+		#
+		prior_name   = name + '_' + covariate + '_prior'
+		prior_at     = gaussian_cascade2at(prior_name, row)
+		prior_id     = len( prior_row_list )
+		prior_row_list.append( prior_at )
+		#
+		smooth_name  = name + '_' + covariate + '_smooth'
+		smooth_id    = len( smooth_row_list )
+		smooth_row_list.append(
+			[ smooth_name,  1, 1, one_prior_id, one_prior_id, one_prior_id ]
+		)
+		smooth_grid_row_list.append(
+			[ smooth_id, 0, 0, one_prior_id, None, None ]
+		)
+		#
+		row_list.append(
+			[ mulcov_type, rate_id, integrand_id, covariate_id, smooth_id ]
+		)
+#
+tbl_name = 'mulcov'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+#
 # --------------------------------------------------------------------------
 # Output, prior, smooth, and smooth_grid tables
 # --------------------------------------------------------------------------
