@@ -1016,8 +1016,10 @@ int main(int n_arg, const char** argv)
 	string program = "dismod_at-";
 	program       += DISMOD_AT_VERSION;
 	if( n_arg != 3 )
-	{	cerr << program << endl;
-		cerr << "usage: dismod_at command file_name" << endl;
+	{	cerr << program << endl
+		<< "usage:     dismod_at command file_name\n"
+		<< "command:   init, start, fit, truth, simulate, sample, or predict\n"
+		<< "file_name: sqlite database\n";
 		std::exit(1);
 	}
 	size_t i_arg = 0;

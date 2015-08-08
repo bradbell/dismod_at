@@ -149,8 +149,9 @@ CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
 		else if( mulcov_type[i] == "meas_std" )
 			mulcov_table[i].mulcov_type = meas_std_enum;
 		else
-		{	string message = "mulcov_type is not one of the following\n"
-			"'rate_mean', 'meas_value', 'meas_std'.";
+		{	string message = "mulcov_type = '" + mulcov_type[i] + "'";
+			message += " is not one of the following:\n"
+				"'rate_mean', 'meas_value', 'meas_std'.";
 			table_name = "mulcov";
 			error_exit(db, message, table_name, i);
 		}

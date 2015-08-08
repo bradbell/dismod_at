@@ -728,7 +728,7 @@ for row in effect_prior_in :
 				rate_id = 3
 				name    = 'chi'
 		else :
-			mulcov_type  = 'meas_mean'
+			mulcov_type  = 'meas_value'
 			integrand_id = integrand_name2id[integrand]
 			rate_id      = None
 		#

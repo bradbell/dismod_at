@@ -36,6 +36,21 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 08-08$$
+$list number$$
+Fix $cref/logging/log_table/$$ an error message that has the
+single quote character $code '$$ in it.
+$lnext
+Improve the $code usage$$ message that is printed when $code dismod_at$$
+is executed with no command arguments.
+$lnext
+Improve the error message when the $cref mulcov_table$$ has an invalid
+value in the $code mulcov_type$$ column.
+$lnext
+Reduce the chance of a false failure from
+$code test/binomial_test.cpp$$.
+$lend
+
 $head 08-04$$
 Some compiler errors (on older compilers) were added.
 In addition, the minimal version of

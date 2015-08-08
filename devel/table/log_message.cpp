@@ -134,6 +134,15 @@ std::time_t log_message(
 			");";
 		dismod_at::exec_sql_cmd(db, sql_cmd);
 
+		// message with single quotes escaped
+		string escaped_message = "";
+		for(size_t i = 0; i < message.size(); i++)
+		{	if( message[i] == '\'' )
+				escaped_message += "''";
+			else
+				escaped_message += message[i];
+		}
+
 		// determine next primary key value
 		string select_cmd  = "select * from log";
 		string column_name = "log_id";
@@ -157,7 +166,7 @@ std::time_t log_message(
 		sql_cmd += " , ";
 		sql_cmd += to_string( unix_time );
 		sql_cmd += " , '";
-		sql_cmd += message;
+		sql_cmd += escaped_message;
 		sql_cmd += "' );";
 		dismod_at::exec_sql_cmd(db, sql_cmd);
 	}

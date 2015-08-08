@@ -116,7 +116,7 @@ bool binomial_test(void)
 
 	// simulation parameters
 	size_t N = 25;
-	size_t I = 5000;
+	size_t I = 10 * 1000;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   0.25;      // constant term in covariate model
 
