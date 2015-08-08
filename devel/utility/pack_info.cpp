@@ -249,24 +249,24 @@ n_child_        ( n_child )
 		}
 	}
 
-	// mulcov_rate_mean_info_
-	mulcov_rate_mean_info_.resize( number_rate_enum );
+	// mulcov_rate_value_info_
+	mulcov_rate_value_info_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	size_t mulcov_id;
 		for(mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
 		{	bool match;
-			match  = mulcov_table[mulcov_id].mulcov_type  == rate_mean_enum;
+			match  = mulcov_table[mulcov_id].mulcov_type  == rate_value_enum;
 			match &= mulcov_table[mulcov_id].rate_id == int(rate_id);
 			if( match )
 			{	size_t covariate_id = size_t(
 					mulcov_table[mulcov_id].covariate_id
 				);
 				CppAD::vector<subvec_info>& info_vec =
-					mulcov_rate_mean_info_[rate_id];
+					mulcov_rate_value_info_[rate_id];
 				for(size_t j = 0; j < info_vec.size(); j++)
 				{	if( info_vec[j].covariate_id == covariate_id )
 					{	string msg = "covariate_id appears twice with "
-							"mulcov_type equal to 'rate_mean'";
+							"mulcov_type equal to 'rate_value'";
 						string table_name = "mulcov";
 						error_exit(db, msg, table_name, mulcov_id);
 					}
@@ -597,9 +597,9 @@ $$
 $section Devel Pack Variables: Rate Covariate Multipliers$$
 
 $head Syntax$$
-$icode%n_cov% = %pack_object%.mulcov_rate_mean_n_cov(%rate_id%)
+$icode%n_cov% = %pack_object%.mulcov_rate_value_n_cov(%rate_id%)
 %$$
-$icode%info% = %pack_object%.mulcov_rate_mean_info(%rate_id%, %j%)
+$icode%info% = %pack_object%.mulcov_rate_value_info(%rate_id%, %j%)
 %$$
 
 $head subvec_info$$
@@ -669,15 +669,15 @@ See $cref/pack_info Example/pack_info/Example/$$.
 $end
 */
 size_t
-pack_info::mulcov_rate_mean_n_cov(size_t rate_id) const
+pack_info::mulcov_rate_value_n_cov(size_t rate_id) const
 {	assert( rate_id < number_rate_enum );
-	return mulcov_rate_mean_info_[rate_id].size();
+	return mulcov_rate_value_info_[rate_id].size();
 }
 //
 pack_info::subvec_info
-pack_info::mulcov_rate_mean_info(size_t rate_id, size_t j) const
+pack_info::mulcov_rate_value_info(size_t rate_id, size_t j) const
 {	assert( rate_id < number_rate_enum );
-	return mulcov_rate_mean_info_[rate_id][j];
+	return mulcov_rate_value_info_[rate_id][j];
 }
 /*
 $begin pack_info_variable_name$$
@@ -963,11 +963,11 @@ pack_info::variable_name(
 	{	size_t count = 0;
 		for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
 		{	bool match;
-			match  = mulcov_table[mulcov_id].mulcov_type  == rate_mean_enum;
+			match  = mulcov_table[mulcov_id].mulcov_type  == rate_value_enum;
 			match &= mulcov_table[mulcov_id].rate_id == int(rate_id);
 			if( match )
 			{	subvec_info info;
-				info = mulcov_rate_mean_info_[rate_id][count++];
+				info = mulcov_rate_value_info_[rate_id][count++];
 				size_t n_var  = info.n_var;
 				if( index < base + n_var )
 				{	name = "mean_mulcov(";

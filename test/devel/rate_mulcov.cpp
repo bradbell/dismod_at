@@ -190,7 +190,7 @@ bool rate_mulcov(void)
 	// mul_cov
 	size_t omega_rate_id = dismod_at::omega_enum;
 	vector<dismod_at::mulcov_struct> mulcov_table(1);
-	mulcov_table[0].mulcov_type    = dismod_at::rate_mean_enum;
+	mulcov_table[0].mulcov_type    = dismod_at::rate_value_enum;
 	mulcov_table[0].rate_id        = dismod_at::omega_enum;
 	mulcov_table[0].integrand_id   = -1;
 	mulcov_table[0].covariate_id   = 0;
@@ -257,7 +257,7 @@ bool rate_mulcov(void)
 	}
 	size_t omega_id = dismod_at::omega_enum;
 	dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
-	info = pack_object.mulcov_rate_mean_info(omega_id, 0);
+	info = pack_object.mulcov_rate_value_info(omega_id, 0);
 	for(i = 0; i < s_info.age_size(); i++)
 	{	double age = age_table[ s_info.age_id(i) ];
 		for(j = 0; j < s_info.time_size(); j++)

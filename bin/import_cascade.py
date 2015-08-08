@@ -715,7 +715,7 @@ for row in effect_prior_in :
 			rate_id      = None
 			name         = integrand
 		elif integrand in [ 'incidence', 'remission', 'mtexcess' ] :
-			mulcov_type       = 'rate_mean'
+			mulcov_type       = 'rate_value'
 			integrand_id      = None
 			# rate table order is pini, iota, rho, chi, omega
 			if integrand == 'incidence' :

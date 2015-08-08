@@ -49,7 +49,7 @@ This equation is made more complicated by the fact that the
 rates vary with time as well as with each data point.
 The reason for the variation between data points due both to the
 $cref/random effects/model_variable/Random Effects, u/$$ as well as the
-$cref/rate_mean/mulcov_table/mulcov_type/rate_mean/$$ covariates.
+$cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ covariates.
 
 
 $head Data Table Notation$$
@@ -128,7 +128,7 @@ For each rate index $latex k$$,
 there is a set of rows in the mulcov table such that
 $cref/rate_id/mulcov_table/rate_id/$$ is equal to $latex k$$
 and
-$cref/mulcov_type/mulcov_table/mulcov_type/$$ is $code rate_mean$$.
+$cref/mulcov_type/mulcov_table/mulcov_type/$$ is $code rate_value$$.
 We use $latex J_k$$ to denote the set of
 $cref/covariate_id/mulcov_table/covariate_id/$$ values for
 which this is the case.

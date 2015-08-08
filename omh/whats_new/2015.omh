@@ -41,6 +41,9 @@ $list number$$
 Fix $cref/logging/log_table/$$ an error message that has the
 single quote character $code '$$ in it.
 $lnext
+Change the measurement covariate multiple type $code rate_mean$$ to
+$cref/rate_value/mulcov_table/mulcov_type/rate_value/$$.
+$lnext
 Improve the $code usage$$ message that is printed when $code dismod_at$$
 is executed with no command arguments.
 $lnext
@@ -395,14 +398,14 @@ $lnext
 Change the $code mean_mean$$ covariate multiplier type to
 $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$.
 $lnext
-For $icode cov_type$$ equal $code rate_mean$$, $code meas_value$$,
+For $icode cov_type$$ equal $code rate_value$$, $code meas_value$$,
 and $code meas_std$$, change
 $codei%
 	%cov_type%_mulcov_n_cov -> mulcov_%cov_type%_n_cov
 	%cov_type%_mulcov_info -> mulcov_%cov_type%_info
 %$$
 see
-$cref/mulcov_rate_mean/var_table/var_type/mulcov_rate_mean/$$,
+$cref/mulcov_rate_value/var_table/var_type/mulcov_rate_value/$$,
 $cref/mulcov_meas_value/var_table/var_type/mulcov_meas_value/$$ and
 $cref/mulcov_meas_std/var_table/var_type/mulcov_meas_std/$$.
 $lend

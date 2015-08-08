@@ -76,7 +76,7 @@ $cref/fixed effect/model_variable/Fixed Effects, theta/Parent Rates/$$.
 Otherwise, it is a
 $cref/random effect/model_variable/Random Effects, u/Child Rates/$$.
 
-$subhead mulcov_rate_mean$$
+$subhead mulcov_rate_value$$
 This variable is a
 $cref/covariate multiplier
 	/model_variable
@@ -118,14 +118,14 @@ Otherwise, this column is $code null$$.
 
 $head age_id$$
 If $icode var_type$$ is $code rate$$,
-$code mulcov_rate_mean$$, $code mulcov_meas_value$$ or $code mulcov_meas_std$$,
+$code mulcov_rate_value$$, $code mulcov_meas_value$$ or $code mulcov_meas_std$$,
 this is the $cref/age_id/age_table/age_id/$$ that identifies
 the age for the corresponding variable.
 Otherwise, this column is $code null$$.
 
 $head time_id$$
 If $icode var_type$$ is $code rate$$,
-$code mulcov_rate_mean$$, $code mulcov_meas_value$$ or $code mulcov_meas_std$$,
+$code mulcov_rate_value$$, $code mulcov_meas_value$$ or $code mulcov_meas_std$$,
 this is the $cref/time_id/time_table/time_id/$$ that identifies
 the time for the corresponding variable.
 Otherwise, this column is $code null$$.
@@ -136,7 +136,7 @@ this is the $cref/node_id/node_table/node_id/$$ that the rate is for.
 Otherwise, this column is $code null$$.
 
 $head rate_id$$
-If $icode var_type$$ is $code rate$$ or $code mulcov_rate_mean$$,
+If $icode var_type$$ is $code rate$$ or $code mulcov_rate_value$$,
 this is the $cref/rate_id/rate_table/rate_id/$$ for the specific rate.
 Otherwise, this column is $code null$$.
 
@@ -149,7 +149,7 @@ Otherwise, this column is $code null$$.
 
 $head covariate_id$$
 If $icode var_type$$ is
-$code mulcov_rate_mean$$, $code mulcov_meas_value$$ or $code mulcov_meas_std$$,
+$code mulcov_rate_value$$, $code mulcov_meas_value$$ or $code mulcov_meas_std$$,
 this is the $cref/covariate_id/covariate_table/covariate_id/$$
 that this variable applies to.
 Otherwise, this column is $code null$$.

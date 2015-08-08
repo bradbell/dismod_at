@@ -65,7 +65,7 @@ bool pack_info_xam(void)
 	mulcov_table[2].integrand_id = 2;
 	mulcov_table[2].covariate_id = 2;
 	mulcov_table[2].smooth_id    = 2;
-	mulcov_table[3].mulcov_type  = dismod_at::rate_mean_enum;
+	mulcov_table[3].mulcov_type  = dismod_at::rate_value_enum;
 	mulcov_table[3].rate_id      = 3;
 	mulcov_table[3].integrand_id = -1;
 	mulcov_table[3].covariate_id = 3;
@@ -153,11 +153,11 @@ bool pack_info_xam(void)
 			}
 		}
 	}
-	// set mulcov_rate_mean
+	// set mulcov_rate_value
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	size_t n_cov = pack_object.mulcov_rate_mean_n_cov(rate_id);
+	{	size_t n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_rate_mean_info(rate_id, j);
+		{	info   = pack_object.mulcov_rate_value_info(rate_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -223,15 +223,15 @@ bool pack_info_xam(void)
 			ok &= n_var == n_age * n_time;
 		}
 	}
-	// check mulcov_rate_mean
+	// check mulcov_rate_value
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	size_t n_cov = pack_object.mulcov_rate_mean_n_cov(rate_id);
+	{	size_t n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
 		size_t check = 0;
 		if( rate_id == 3 )
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_rate_mean_info(rate_id, j);
+		{	info   = pack_object.mulcov_rate_value_info(rate_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -246,13 +246,13 @@ bool pack_info_xam(void)
 	// check copy constructor
 	dismod_at::pack_info pack_copy(pack_object);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	size_t n_cov = pack_copy.mulcov_rate_mean_n_cov(rate_id);
+	{	size_t n_cov = pack_copy.mulcov_rate_value_n_cov(rate_id);
 		size_t check = 0;
 		if( rate_id == 3 )
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_copy.mulcov_rate_mean_info(rate_id, j);
+		{	info   = pack_copy.mulcov_rate_value_info(rate_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)

@@ -140,7 +140,7 @@ bool variable_name_xam(void)
 		" smooth_id      integer)",
 	"insert into mulcov values(0,  'meas_value',  -1,  0, 0, 0)",
 	"insert into mulcov values(1,  'meas_std',   -1,  1, 0, 1)",
-	"insert into mulcov values(2,  'rate_mean',   1, -1, 0, 0)",
+	"insert into mulcov values(2,  'rate_value',   1, -1, 0, 0)",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -287,11 +287,11 @@ bool variable_name_xam(void)
 	name   = VARIABLE_NAME(offset + 0);
 	ok    &= name == "std_mulcov(sex;Sincidence;50;2000)";
 	//
-	// mulcov_rate_mean
+	// mulcov_rate_value
 	size_t rate_id = 1;
-	n_cov = pack_object.mulcov_rate_mean_n_cov(rate_id);
+	n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
 	assert( n_cov == 1 );
-	info   = pack_object.mulcov_rate_mean_info(rate_id, 0);
+	info   = pack_object.mulcov_rate_value_info(rate_id, 0);
 	n_var  = info.n_var;
 	offset = info.offset;
 	ok    &= n_var == 4;

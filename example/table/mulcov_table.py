@@ -51,7 +51,7 @@ def mulcov_table() :
 		1,           # covariate_id
 		2            # smooth_id
 	],[
-		'rate_mean',  # muitiplier_type
+		'rate_value',  # muitiplier_type
 		1,            # rate_id
 		None,         # integrand_id is null because a rate covariate
 		2,            # covariate_id

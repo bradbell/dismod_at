@@ -184,9 +184,9 @@ CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
 
 	// rate mean covariates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_cov = pack_object.mulcov_rate_mean_n_cov(rate_id);
+	{	size_t n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object.mulcov_rate_mean_info(rate_id, j);
+		{	info       = pack_object.mulcov_rate_value_info(rate_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				ret_val[fixed_index++] = pack_index++;
@@ -250,9 +250,9 @@ void get_fixed_effect(
 
 	// rate mean covariates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_cov = pack_object.mulcov_rate_mean_n_cov(rate_id);
+	{	size_t n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object.mulcov_rate_mean_info(rate_id, j);
+		{	info       = pack_object.mulcov_rate_value_info(rate_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				fixed_vec[fixed_index++] = pack_vec[pack_index++];
@@ -315,9 +315,9 @@ void put_fixed_effect(
 
 	// rate mean covariates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_cov = pack_object.mulcov_rate_mean_n_cov(rate_id);
+	{	size_t n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object.mulcov_rate_mean_info(rate_id, j);
+		{	info       = pack_object.mulcov_rate_value_info(rate_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				pack_vec[pack_index++] = fixed_vec[fixed_index++];

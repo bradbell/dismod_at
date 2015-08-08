@@ -797,9 +797,9 @@ Float data_model::avg_no_ode(
 				effect_ode[k] += var_ode[k];
 		}
 		// include effect of rate covariates
-		size_t n_cov = pack_object_.mulcov_rate_mean_n_cov(rate_id[ell]);
+		size_t n_cov = pack_object_.mulcov_rate_value_n_cov(rate_id[ell]);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object_.mulcov_rate_mean_info(rate_id[ell], j);
+		{	info       = pack_object_.mulcov_rate_value_info(rate_id[ell], j);
 			n_var      = info.n_var;
 			smooth_id  = info.smooth_id;
 			double x_j = x[ info.covariate_id ];
@@ -1059,9 +1059,9 @@ Float data_model::avg_yes_ode(
 		}
 		//
 		// include effect of rate covariates
-		size_t n_cov = pack_object_.mulcov_rate_mean_n_cov(rate_id);
+		size_t n_cov = pack_object_.mulcov_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object_.mulcov_rate_mean_info(rate_id, j);
+		{	info       = pack_object_.mulcov_rate_value_info(rate_id, j);
 			n_var      = info.n_var;
 			smooth_id  = info.smooth_id;
 			double x_j = x[ info.covariate_id ];

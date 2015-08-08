@@ -57,8 +57,8 @@ private:
 	// mulcov_meas_std infromation
 	CppAD::vector< CppAD::vector<subvec_info> > mulcov_meas_std_info_;
 
-	// mulcov_rate_mean infromation
-	CppAD::vector< CppAD::vector<subvec_info> > mulcov_rate_mean_info_;
+	// mulcov_rate_value infromation
+	CppAD::vector< CppAD::vector<subvec_info> > mulcov_rate_value_info_;
 
 	// total number of elements in the packed vector
 	size_t size_;
@@ -98,9 +98,9 @@ public:
 	size_t      mulcov_meas_std_n_cov(size_t integrand_id) const;
 	subvec_info mulcov_meas_std_info(size_t integrand_id, size_t j) const;
 
-	// mulcov_rate_mean_
-	size_t      mulcov_rate_mean_n_cov(size_t integrand_id) const;
-	subvec_info mulcov_rate_mean_info(size_t integrand_id, size_t j) const;
+	// mulcov_rate_value_
+	size_t      mulcov_rate_value_n_cov(size_t integrand_id) const;
+	subvec_info mulcov_rate_value_info(size_t integrand_id, size_t j) const;
 
 	// varialbe_name
 	std::string variable_name(

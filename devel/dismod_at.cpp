@@ -252,7 +252,7 @@ void init_command(
 	const vector<dismod_at::mulcov_struct>&
 		mulcov_table( db_input.mulcov_table );
 	size_t n_mulcov        = mulcov_table.size();
-	size_t count_rate_mean  = 0;
+	size_t count_rate_value = 0;
 	size_t count_meas_value = 0;
 	size_t count_meas_std   = 0;
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
@@ -263,8 +263,8 @@ void init_command(
 		size_t covariate_id = mulcov_table[mulcov_id].covariate_id;
 		size_t smooth_id    = mulcov_table[mulcov_id].smooth_id;
 		//
-		if( mulcov_type == dismod_at::rate_mean_enum ) info =
-		pack_object.mulcov_rate_mean_info(rate_id, count_rate_mean++);
+		if( mulcov_type == dismod_at::rate_value_enum ) info =
+		pack_object.mulcov_rate_value_info(rate_id, count_rate_value++);
 		//
 		else if( mulcov_type == dismod_at::meas_value_enum ) info =
 		pack_object.mulcov_meas_value_info(integrand_id, count_meas_value++);
@@ -288,8 +288,8 @@ void init_command(
 			for(size_t j = 0; j < n_col; j++)
 				assert( row_value[ n_col * var_id + j ] == "" );
 # endif
-			if( mulcov_type == dismod_at::rate_mean_enum )
-			{	row_value[n_col * var_id + 0]  = "mulcov_rate_mean";
+			if( mulcov_type == dismod_at::rate_value_enum )
+			{	row_value[n_col * var_id + 0]  = "mulcov_rate_value";
 				row_value[n_col * var_id + 5] = to_string( rate_id );
 			}
 			else if( mulcov_type == dismod_at::meas_value_enum )

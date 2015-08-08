@@ -218,7 +218,7 @@
 # $table
 # Key       $cnext Value Type  $pre  $$ $cnext Description       $rnext
 # covariate $cnext str         $cnext is the covariate column    $rnext
-# type      $cnext str  $cnext rate_mean, meas_value, or meas_std $rnext
+# type      $cnext str  $cnext rate_value, meas_value, or meas_std $rnext
 # effected  $cnext str         $cnext integrand or rate effected $rnext
 # smooth    $cnext str         $cnext smoothing name
 # $tend
@@ -542,7 +542,7 @@ def create_database(
 		mulcov          = mulcov_dict[i]
 		mulcov_type     = mulcov['type']
 		effected        = mulcov['effected']
-		if mulcov_type == 'rate_mean' :
+		if mulcov_type == 'rate_value' :
 			rate_id      = global_rate_name2id[ effected ]
 			integrand_id = None
 		else :

@@ -32,7 +32,7 @@ $head mulcov_type$$
 This column has type $code text$$.
 The possible values are:
 
-$subhead rate_mean$$
+$subhead rate_value$$
 This covariate adjusts a model rate.
 
 $subhead meas_value$$
@@ -44,7 +44,7 @@ This covariate adjusts the
 $cref/measurement standard deviation/data_table/meas_std/$$.
 
 $head rate_id$$
-If $icode mulcov_type$$ is $code rate_mean$$,
+If $icode mulcov_type$$ is $code rate_value$$,
 $icode rate_id$$ is the
 $cref/rate_id/rate_table/rate_id/$$ that determines
 the rate that this covariate and multiplier effects.
@@ -56,7 +56,7 @@ If $icode mulcov_type$$ is $code meas_value$$ or $code meas_std$$,
 $icode integrand_id$$ is the
 $cref/integrand_id/integrand_table/integrand_id/$$ that determines
 which measurement integrand this multiplier effects.
-If $icode mulcov_type$$ is $code rate_mean$$,
+If $icode mulcov_type$$ is $code rate_value$$,
 this column should be $code null$$.
 
 $head covariate_id$$
@@ -74,7 +74,7 @@ It specifies the smoothing uses as a prior for this covariate multiplier.
 (Note that all covariate multipliers are fixed effects.)
 
 $subhead pini$$
-Consider the case where $icode mulcov_type$$ is $code rate_mean$$
+Consider the case where $icode mulcov_type$$ is $code rate_value$$
 and $icode rate_id$$ corresponds to
 $cref/rate_name/rate_table/rate_name/$$ $code pini$$.
 In this case, $icode smooth_id$$ should correspond to

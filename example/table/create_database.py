@@ -169,7 +169,7 @@ def create_database() :
 	# mulcov_dict
 	mulcov_dict = [
 		{	'covariate':'sex',
-			'type':'rate_mean',
+			'type':'rate_value',
 			'effected':'omega',
 			'smooth':'uniform_01_constant'
 		}
@@ -356,7 +356,7 @@ def create_database() :
 		'mulcov_type', 'rate_id', 'integrand_id', 'covariate_id', 'smooth_id'
 	]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
-	check_list = [ [ 'rate_mean', 4, None, 0, 0 ] ]
+	check_list = [ [ 'rate_value', 4, None, 0, 0 ] ]
 	assert row_list == check_list
 	#
 	# option_table

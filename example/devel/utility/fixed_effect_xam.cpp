@@ -81,8 +81,8 @@ bool fixed_effect_xam(void)
 	mulcov_table[1].smooth_id    = 0;
 	n_fixed_effect += smooth_table[0].n_age * smooth_table[0].n_time;
 	//
-	// mulcov_rate_mean
-	mulcov_table[2].mulcov_type  = dismod_at::rate_mean_enum;
+	// mulcov_rate_value
+	mulcov_table[2].mulcov_type  = dismod_at::rate_value_enum;
 	mulcov_table[2].rate_id      = 3;
 	mulcov_table[2].integrand_id = 0;
 	mulcov_table[2].covariate_id = 2;

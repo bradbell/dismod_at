@@ -155,9 +155,9 @@ CppAD::vector<size_t> pack_value_prior(
 
 	// get priors for rate mean covariates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_cov = pack_object.mulcov_rate_mean_n_cov(rate_id);
+	{	size_t n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_rate_mean_info(rate_id, j);
+		{	info   = pack_object.mulcov_rate_value_info(rate_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
 			set_value_prior(ret_val, offset, s_info_vec[smooth_id]);
@@ -283,9 +283,9 @@ CppAD::vector<diff_prior_struct> pack_diff_prior(
 
 	// get priors for rate mean covariates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_cov = pack_object.mulcov_rate_mean_n_cov(rate_id);
+	{	size_t n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_rate_mean_info(rate_id, j);
+		{	info   = pack_object.mulcov_rate_value_info(rate_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
 			set_diff_prior(ret_val, offset, s_info_vec[smooth_id]);

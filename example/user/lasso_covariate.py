@@ -101,12 +101,12 @@ def example_db (file_name) :
 	mulcov_dict = [
 		{
 			'covariate': 'income',
-			'type':      'rate_mean',
+			'type':      'rate_value',
 			'effected':  'iota',
 			'smooth':    'smooth_mulcov'
 		},{
 			'covariate': 'sex',
-			'type':      'rate_mean',
+			'type':      'rate_value',
 			'effected':  'iota',
 			'smooth':    'smooth_mulcov'
 		}
@@ -362,7 +362,7 @@ count = 0
 mulcov_income  = 1.0
 for var_id in range( len(var_dict) ) :
 	row   = var_dict[var_id]
-	match = row['var_type'] == 'mulcov_rate_mean'
+	match = row['var_type'] == 'mulcov_rate_value'
 	if match :
 		count       += 1
 		value        = fit_var_dict[var_id]['fit_var_value']
@@ -383,7 +383,7 @@ for var_id in range( len(var_dict) ) :
 	assert sample_dict[var_id]['var_id'] == var_id
 	#
 	row   = var_dict[var_id]
-	match = row['var_type'] == 'mulcov_rate_mean'
+	match = row['var_type'] == 'mulcov_rate_value'
 	if match :
 		count       += 1
 		value        = sample_dict[var_id]['var_value']

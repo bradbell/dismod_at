@@ -241,7 +241,7 @@ bool prior_fixed_xam(void)
 	//
 	// mulcov_meas_value: none
 	// mulcov_meas_std: none
-	// mulcov_rate_mean: none
+	// mulcov_rate_value: none
 	dismod_at::prior_model prior_object(
 		pack_object, age_table, time_table, prior_table, s_info_vec
 	);

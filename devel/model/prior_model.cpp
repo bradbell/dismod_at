@@ -306,9 +306,9 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 
 	// rate covariate multipliers
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_cov = pack_object_.mulcov_rate_mean_n_cov( rate_id );
+	{	size_t n_cov = pack_object_.mulcov_rate_value_n_cov( rate_id );
 		for(size_t cov = 0; cov < n_cov; cov++)
-		{	info = pack_object_.mulcov_rate_mean_info(rate_id, cov);
+		{	info = pack_object_.mulcov_rate_value_info(rate_id, cov);
 			size_t smooth_id          = info.smooth_id;
 			size_t offset             = info.offset;
 			const smooth_info& s_info = s_info_vec_[smooth_id];

@@ -13,7 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	enum mulcov_type_enum {
-		rate_mean_enum,
+		rate_value_enum,
 		meas_value_enum,
 		meas_std_enum,
 		number_mulcov_type_enum
