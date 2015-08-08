@@ -55,7 +55,7 @@ file_name              = 'example.db'
 # -----------------------------------------------------------------------
 # create the var table
 program        = '../../devel/dismod_at'
-command        = 'init'
+command        = 'var'
 cmd  = [ program, command, file_name ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )

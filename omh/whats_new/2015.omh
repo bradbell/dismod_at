@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2015$$
 $spell
+	init
 	var
 	Sincidence
 	Tincidence
@@ -38,11 +39,14 @@ $section Changes and Additions to Dismod_at During 2015$$
 
 $head 08-08$$
 $list number$$
-Fix $cref/logging/log_table/$$ an error message that has the
-single quote character $code '$$ in it.
+Change the $code init_command$$ to the $cref var_command$$
+(because it creates the $cref var_table$$).
 $lnext
 Change the measurement covariate multiple type $code rate_mean$$ to
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$.
+$lnext
+Fix $cref/logging/log_table/$$ an error message that has the
+single quote character $code '$$ in it.
 $lnext
 Improve the $code usage$$ message that is printed when $code dismod_at$$
 is executed with no command arguments.
@@ -276,7 +280,7 @@ When writing to standard error,
 add $code Error:$$ ($code Warning:$$)
 to beginning of error messages (warning messages).
 $lnext
-The $cref init_command$$ no longer deletes the current
+The $cref var_command$$ no longer deletes the current
 fit, fit_residual, truth_var, simulate, sample and predict tables.
 These table get overwritten when the corresponding command is executed;
 see $cref output$$.
@@ -345,12 +349,12 @@ The $cref avg_case_table$$ was added to the set of
 $cref input$$ tables.
 $lnext
 The $cref avg_case_subset_table$$ was added as an output
-of the $cref init_command$$.
+of the $cref var_command$$.
 $lend
 
 $head 07-08$$
 $list number$$
-Change the $code var_command$$ to $cref init_command$$
+Change the $code var_command$$ to $cref var_command$$
 and use this command to initialize output tables whenever
 the $cref input$$ tables change.
 $lnext
@@ -373,7 +377,7 @@ there was a problem running $code make check$$ without first running
 $code make$$.
 This has been fixed.
 $lnext
-Use a $cref init_command$$ to create the $cref var_table$$
+Use a $cref var_command$$ to create the $cref var_table$$
 and put the $cref fit_command$$ results in a separate $cref fit_var_table$$.
 $lend
 
