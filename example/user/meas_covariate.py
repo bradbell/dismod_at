@@ -8,17 +8,18 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_lasso_covariate.py$$ $newlinech #$$
+# $begin user_meas_covariate.py$$ $newlinech #$$
 # $spell
 #	Covariates
 #	covariate
+#	Integrands
 # $$
 #
-# $section Using Lasso with Covariates$$
+# $section Using Measurement Covariates on Multiple Integrands$$
 #
 # $code
 # $verbatim%
-#	example/user/lasso_covariate.py
+#	example/user/meas_covariate.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -346,21 +347,21 @@ remission_rate_id = 2
 for var_id in range( len(var_dict) ) :
 	row   = var_dict[var_id]
 	match = row['var_type'] == 'rate'
-	match = match and row['rate_id'] == iota_rate_id
 	match = match and row['node_id'] == parent_node_id
-	if match and rate['rate_id'] == iota_rate_id :
+	if match and row['rate_id'] == iota_rate_id :
 		count += 1
 		value = fit_var_dict[var_id]['fit_var_value']
 		assert abs( value / iota_true - 1.0 ) < tol
-	if match and rate['rate_id'] == remission_rate_id :
+	if match and row['rate_id'] == remission_rate_id :
 		count += 1
 		value = fit_var_dict[var_id]['fit_var_value']
 		assert abs( value / remission_true - 1.0 ) < tol
 assert count == 8
 #
 # check covariate multiplier values
-count           = 0
-mulcov_income  = 1.0
+count                   = 0
+mulcov_income           = 1.0
+remission_integrand_id  = 1
 for var_id in range( len(var_dict) ) :
 	row   = var_dict[var_id]
 	match = row['var_type'] == 'mulcov_meas_value'
@@ -368,7 +369,7 @@ for var_id in range( len(var_dict) ) :
 		integrand_id = row['integrand_id']
 		count       += 1
 		value        = fit_var_dict[var_id]['fit_var_value']
-		if integrand_dict[integrand_id]['name'] == 'remission' :
+		if integrand_id == remission_integrand_id :
 			assert abs( value / mulcov_income - 1.0 ) < 1e3 * tol
 		else :
 			assert abs( value ) < tol

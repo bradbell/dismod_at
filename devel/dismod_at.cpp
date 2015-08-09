@@ -98,8 +98,8 @@ void var_command(
 	// -----------------------------------------------------------------------
 	const char* drop_list[] = {
 		"var",
-		"avg_data_subset",
-		"data_subset"
+		"data_subset",
+		"avg_case_subset",
 	};
 	size_t n_drop = sizeof( drop_list ) / sizeof( drop_list[0] );
 	string sql_cmd;
@@ -252,25 +252,37 @@ void var_command(
 	const vector<dismod_at::mulcov_struct>&
 		mulcov_table( db_input.mulcov_table );
 	size_t n_mulcov        = mulcov_table.size();
-	size_t count_rate_value = 0;
-	size_t count_meas_value = 0;
-	size_t count_meas_std   = 0;
+	size_t n_integrand     = db_input.integrand_table.size();
+	vector<size_t> count_meas_value(n_integrand), count_meas_std(n_integrand);
+	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
+	{	count_meas_value[integrand_id] = 0;
+		count_meas_std[integrand_id]   = 0;
+	}
+	vector<size_t> count_rate_value(n_rate);
+	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+		count_rate_value[rate_id] = 0;
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
 	{	dismod_at::mulcov_type_enum mulcov_type;
-		mulcov_type     = mulcov_table[mulcov_id].mulcov_type;
-		size_t rate_id  = mulcov_table[mulcov_id].rate_id;
+		mulcov_type         = mulcov_table[mulcov_id].mulcov_type;
+		size_t rate_id      = mulcov_table[mulcov_id].rate_id;
 		size_t integrand_id = mulcov_table[mulcov_id].integrand_id;
 		size_t covariate_id = mulcov_table[mulcov_id].covariate_id;
 		size_t smooth_id    = mulcov_table[mulcov_id].smooth_id;
 		//
 		if( mulcov_type == dismod_at::rate_value_enum ) info =
-		pack_object.mulcov_rate_value_info(rate_id, count_rate_value++);
+			pack_object.mulcov_rate_value_info(
+				rate_id, count_rate_value[rate_id]++
+		);
 		//
 		else if( mulcov_type == dismod_at::meas_value_enum ) info =
-		pack_object.mulcov_meas_value_info(integrand_id, count_meas_value++);
+			pack_object.mulcov_meas_value_info(
+				integrand_id, count_meas_value[integrand_id]++
+		);
 		//
 		else if( mulcov_type == dismod_at::meas_std_enum ) info =
-		pack_object.mulcov_meas_std_info(integrand_id, count_meas_std++);
+			pack_object.mulcov_meas_std_info(
+				integrand_id, count_meas_std[integrand_id]++
+		);
 		//
 		else assert(false);
 		//

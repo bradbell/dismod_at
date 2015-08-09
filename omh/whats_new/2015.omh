@@ -33,9 +33,17 @@ $spell
 	libdir
 	cmake
 	devel
+	integrands
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 08-09$$
+There was a bug in the $cref var_command$$ when there were
+$cref/covariate multipliers/mulcov_table/$$ for multiple integrands
+or multiple rates.
+This has been fixed and is tested by the user example
+$cref user_meas_covariate.py$$.
 
 $head 08-08$$
 $list number$$

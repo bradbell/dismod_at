@@ -20,6 +20,7 @@ $childtable%example/get_started/get_started.omh
 	%example/user/diff_constraint.py
 	%example/user/no_children.py
 	%example/user/lasso_covariate.py
+	%example/user/meas_covariate.py
 %$$
 
 $end

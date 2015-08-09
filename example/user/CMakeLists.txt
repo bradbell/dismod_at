@@ -14,6 +14,7 @@ FOREACH(user_case
 	diff_constraint
 	no_children
 	lasso_covariate
+	meas_covariate
 )
 	ADD_CUSTOM_TARGET(
 		check_${user_case}
@@ -28,4 +29,5 @@ ADD_CUSTOM_TARGET(
 	check_diff_constraint
 	check_no_children
 	check_lasso_covariate
+	check_meas_covariate
 )
