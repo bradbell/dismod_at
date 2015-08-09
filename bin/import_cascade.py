@@ -22,6 +22,7 @@ import sys
 import os
 import csv
 import math
+import copy
 import time as timer
 import collections
 #
@@ -808,6 +809,39 @@ row_list = [
 	[ 'derivative_test', 'none'                          ]
 ]
 tbl_name = 'option'
+dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+# --------------------------------------------------------------------------
+# avg_case table
+col_name2type = collections.OrderedDict([
+	('integrand_id',   'integer'     ),
+	('node_id',        'integer'     ),
+	('weight_id',      'integer'     ),
+	('age_lower',      'real'        ),
+	('age_upper',      'real'        ),
+	('time_lower',     'real'        ),
+	('time_upper',     'real'        )
+])
+col_name = list( col_name2type.keys() )
+col_type = list( col_name2type.values() )
+for j in range( len(covariate_name2id) ) :
+	col_name.append( 'x_%s' % j )
+	col_type.append( 'real' )
+eight_id = 0
+node_id   = node_name2id['world']
+row_list = list()
+row      = (7 + len(covariate_name2id) ) * [0]
+row[1]  = node_id
+row[2]  = weight_id
+for time_id in range( len(time_list) ) :
+	row[5]  = time_list[time_id]
+	row[6]  = time_list[time_id]
+	for age_id in range(len(time_list) ) :
+		row[3]  = age_list[age_id]
+		row[4]  = age_list[age_id]
+		for integrand in integrand_name2id :
+			row[0]  = integrand_name2id[integrand]
+			row_list.append( copy.copy(row) )
+tbl_name = 'avg_case'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # --------------------------------------------------------------------------
 print('import_cascade.py: OK')
