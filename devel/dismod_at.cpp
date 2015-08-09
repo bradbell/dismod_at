@@ -1117,20 +1117,6 @@ int main(int n_arg, const char** argv)
 	size_t n_weight    = db_input.weight_table.size();
 	size_t n_smooth    = db_input.smooth_table.size();
 	// ---------------------------------------------------------------------
-	// data_subset_obj
-	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
-		db_input.data_table,
-		db_input.covariate_table,
-		child_data
-	);
-	// ---------------------------------------------------------------------
-	// avg_case_subset_obj
-	vector<dismod_at::avg_case_subset_struct> avg_case_subset_obj =
-		avg_case_subset(
-			db_input.avg_case_table,
-			db_input.covariate_table,
-			child_avg_case
-	);
 	// w_info_vec
 	vector<dismod_at::weight_info> w_info_vec(n_weight);
 	for(size_t weight_id = 0; weight_id < n_weight; weight_id++)
@@ -1163,20 +1149,7 @@ int main(int n_arg, const char** argv)
 		db_input.mulcov_table ,
 		db_input.rate_table
 	);
-	// ---------------------------------------------------------------------
-	if( command_arg == "var" )
-	{	var_command(
-			db,
-			data_subset_obj,
-			avg_case_subset_obj,
-			pack_object,
-			db_input,
-			parent_node_id,
-			child_data,     // could also use child_avg_case
-			s_info_vec
-		);
-	}
-	else if( command_arg == "start" )
+	if( command_arg == "start" )
 	{	start_command(
 			db                   ,
 			db_input.prior_table ,
@@ -1188,102 +1161,130 @@ int main(int n_arg, const char** argv)
 	{	truth_command(db);
 	}
 	else
-	{	// ------------------------------------------------------------------
-		// prior_object
-		dismod_at::prior_model prior_object(
-			pack_object           ,
-			db_input.age_table    ,
-			db_input.time_table   ,
-			db_input.prior_table  ,
-			s_info_vec
-		);
-		// data_object
-		dismod_at::data_model data_object(
-			parent_node_id           ,
-			n_age_ode                ,
-			n_time_ode               ,
-			ode_step_size            ,
-			db_input.age_table       ,
-			db_input.time_table      ,
-			db_input.integrand_table ,
-			db_input.node_table      ,
-			data_subset_obj          ,
-			w_info_vec               ,
-			s_info_vec               ,
-			pack_object              ,
+	{	// data_subset_obj
+		vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
+			db_input.data_table,
+			db_input.covariate_table,
 			child_data
 		);
-		string rate_info = option_map["rate_info"];
-		data_object.set_eigen_ode2_case_number(rate_info);
-		data_object.replace_like( data_subset_obj );
-		//
-		// avg_case_object
-		dismod_at::data_model avg_case_object(
-			parent_node_id           ,
-			n_age_ode                ,
-			n_time_ode               ,
-			ode_step_size            ,
-			db_input.age_table       ,
-			db_input.time_table      ,
-			db_input.integrand_table ,
-			db_input.node_table      ,
-			avg_case_subset_obj          ,
-			w_info_vec               ,
-			s_info_vec               ,
-			pack_object              ,
-			child_avg_case
+		// avg_case_subset_obj
+		vector<dismod_at::avg_case_subset_struct> avg_case_subset_obj =
+			avg_case_subset(
+				db_input.avg_case_table,
+				db_input.covariate_table,
+				child_avg_case
 		);
-		avg_case_object.set_eigen_ode2_case_number(rate_info);
-		// ------------------------------------------------------------------
-		if( command_arg == "fit" )
-		{	fit_command(
-				db               ,
-				data_object      ,
-				data_subset_obj  ,
-				pack_object      ,
-				db_input         ,
-				s_info_vec       ,
-				prior_object     ,
-				option_map
-			);
-		}
-		else if( command_arg == "simulate" )
-		{	size_t number_sample = std::atoi(
-				option_map["number_sample"].c_str()
-			);
-			simulate_command(
-				db                       ,
-				db_input.integrand_table ,
-				data_subset_obj          ,
-				data_object              ,
-				number_sample
-			);
-		}
-		else if( command_arg == "sample" )
-		{
-			sample_command(
-				db               ,
-				data_subset_obj  ,
-				data_object      ,
-				pack_object      ,
-				db_input         ,
-				s_info_vec       ,
-				prior_object     ,
-				option_map
-			);
-		}
-		else if( command_arg == "predict" )
-		{	size_t n_var = pack_object.size();
-			predict_command(
-				db                   ,
-				db_input             ,
-				n_var                ,
-				avg_case_object      ,
-				avg_case_subset_obj
+		// -------------------------------------------------------------------
+		if( command_arg == "var" )
+		{	var_command(
+				db,
+				data_subset_obj,
+				avg_case_subset_obj,
+				pack_object,
+				db_input,
+				parent_node_id,
+				child_data,     // could also use child_avg_case
+				s_info_vec
 			);
 		}
 		else
-			assert(false);
+		{	// ---------------------------------------------------------------
+			// prior_object
+			dismod_at::prior_model prior_object(
+				pack_object           ,
+				db_input.age_table    ,
+				db_input.time_table   ,
+				db_input.prior_table  ,
+				s_info_vec
+			);
+			// data_object
+			dismod_at::data_model data_object(
+				parent_node_id           ,
+				n_age_ode                ,
+				n_time_ode               ,
+				ode_step_size            ,
+				db_input.age_table       ,
+				db_input.time_table      ,
+				db_input.integrand_table ,
+				db_input.node_table      ,
+				data_subset_obj          ,
+				w_info_vec               ,
+				s_info_vec               ,
+				pack_object              ,
+				child_data
+			);
+			string rate_info = option_map["rate_info"];
+			data_object.set_eigen_ode2_case_number(rate_info);
+			data_object.replace_like( data_subset_obj );
+			//
+			// avg_case_object
+			dismod_at::data_model avg_case_object(
+				parent_node_id           ,
+				n_age_ode                ,
+				n_time_ode               ,
+				ode_step_size            ,
+				db_input.age_table       ,
+				db_input.time_table      ,
+				db_input.integrand_table ,
+				db_input.node_table      ,
+				avg_case_subset_obj          ,
+				w_info_vec               ,
+				s_info_vec               ,
+				pack_object              ,
+				child_avg_case
+			);
+			avg_case_object.set_eigen_ode2_case_number(rate_info);
+			// ------------------------------------------------------------------
+			if( command_arg == "fit" )
+			{	fit_command(
+					db               ,
+					data_object      ,
+					data_subset_obj  ,
+					pack_object      ,
+					db_input         ,
+					s_info_vec       ,
+					prior_object     ,
+					option_map
+				);
+			}
+			else if( command_arg == "simulate" )
+			{	size_t number_sample = std::atoi(
+					option_map["number_sample"].c_str()
+				);
+				simulate_command(
+					db                       ,
+					db_input.integrand_table ,
+					data_subset_obj          ,
+					data_object              ,
+					number_sample
+				);
+			}
+			else if( command_arg == "sample" )
+			{
+				sample_command(
+					db               ,
+					data_subset_obj  ,
+					data_object      ,
+					pack_object      ,
+					db_input         ,
+					s_info_vec       ,
+					prior_object     ,
+					option_map
+				);
+			}
+			else if( command_arg == "predict" )
+			{	size_t n_var = pack_object.size();
+				predict_command(
+					db                   ,
+					db_input             ,
+					n_var                ,
+					avg_case_object      ,
+					avg_case_subset_obj
+				);
+			}
+			else
+				assert(false);
+		}
 	}
 	// ---------------------------------------------------------------------
 	message = command_arg + " done";
