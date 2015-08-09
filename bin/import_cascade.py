@@ -543,14 +543,33 @@ prior_row_list.append(
 		[ name , lower, upper, mean, std, density_id, eta ]
 )
 #
-name            = 'child_smooth'
-n_age           = len(age_list)
+name            = 'pini_child_smooth'
+n_age           = 1
 n_time          = len(time_list)
-child_smooth_id = len(smooth_row_list)
+child_smooth_id = dict()
+child_smooth_id['pini'] = len(smooth_row_list)
 smooth_row_list.append(
 		[ name , n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
 )
-smooth_id      = child_smooth_id
+n_age           = len(age_list)
+name            = 'child_smooth'
+for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
+	child_smooth_id[rate] = len(smooth_row_list)
+smooth_row_list.append(
+		[ name , n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
+)
+smooth_id      = child_smooth_id['pini']
+value_prior_id = child_value_prior_id
+dage_prior_id = None
+for j in range( n_time ) :
+	if j + 1 < n_time :
+		dtime_prior_id = child_dtime_prior_id
+	else :
+		dtime_prior_id = None
+	smooth_grid_row_list.append(
+		[ smooth_id, i, j, value_prior_id, dage_prior_id, dtime_prior_id ]
+)
+smooth_id      = child_smooth_id['iota']
 value_prior_id = child_value_prior_id
 for i in range( n_age ) :
 	if i + 1 < n_age :
@@ -705,7 +724,7 @@ row_list = list()
 #
 for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
 	row_list.append(
-		[ rate, rate_smooth_id[rate], child_smooth_id ]
+		[ rate, rate_smooth_id[rate], child_smooth_id[rate] ]
 )
 tbl_name = 'rate'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
@@ -826,7 +845,7 @@ col_type = list( col_name2type.values() )
 for j in range( len(covariate_name2id) ) :
 	col_name.append( 'x_%s' % j )
 	col_type.append( 'real' )
-eight_id = 0
+weight_id = 0
 node_id   = node_name2id['world']
 row_list = list()
 row      = (7 + len(covariate_name2id) ) * [0]
