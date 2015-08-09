@@ -157,26 +157,43 @@ CppAD::vector<data_subset_struct> data_subset(
 	size_t n_data      = data_table.size();
 	size_t n_covariate = data_table[0].x.size();
 	//
-	data_subset_struct    one_sample;
-	one_sample.x.resize(n_covariate);
-	//
+	size_t n_subset = 0;
+	CppAD::vector<bool> ok(n_data);
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	size_t child = child_object.table_id2child(data_id);
 		// check if this data is for parent or one of its descendents
-		bool ok = child <= n_child;
-		if( ok )
+		ok[data_id] = child <= n_child;
+		if( ok[data_id] )
 		{	for(size_t j = 0; j < n_covariate; j++)
 			{	double x_j            = data_table[data_id].x[j];
 				double reference      = covariate_table[j].reference;
 				double max_difference = covariate_table[j].max_difference;
-				if( std::isnan(x_j) )
-					x_j = reference;
-				one_sample.x[j]       = x_j - reference;
-				ok  &= std::fabs( one_sample.x[j] ) <= max_difference;
+				double difference     = 0.0;
+				if( ! std::isnan(x_j) )
+					difference = x_j - reference;
+				ok[data_id]  &= std::fabs( difference ) <= max_difference;
 			}
 		}
-		if( ok )
-		{	one_sample.original_id  = data_id;
+		if( ok[data_id] )
+			n_subset++;
+	}
+	//
+	data_subset_obj.resize(n_subset);
+	size_t subset_id = 0;
+	for(size_t data_id = 0; data_id < n_data; data_id++)
+	{	if( ok[data_id] )
+		{	data_subset_struct& one_sample( data_subset_obj[subset_id] );
+			one_sample.x.resize(n_covariate);
+			//
+			for(size_t j = 0; j < n_covariate; j++)
+			{	double x_j            = data_table[data_id].x[j];
+				double reference      = covariate_table[j].reference;
+				double difference     = 0.0;
+				if( ! std::isnan(x_j) )
+					difference = x_j - reference;
+				one_sample.x[j] = difference;
+			}
+			one_sample.original_id  = data_id;
 			one_sample.integrand_id = data_table[data_id].integrand_id;
 			one_sample.density_id   = data_table[data_id].density_id;
 			one_sample.node_id      = data_table[data_id].node_id;
@@ -189,7 +206,8 @@ CppAD::vector<data_subset_struct> data_subset(
 			one_sample.time_lower   = data_table[data_id].time_lower;
 			one_sample.time_upper   = data_table[data_id].time_upper;
 			//
-			data_subset_obj.push_back(one_sample);
+			// advance to next sample
+			subset_id++;
 		}
 	}
 	return data_subset_obj;
