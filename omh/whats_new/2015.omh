@@ -50,6 +50,9 @@ The routine $cref data_subset$$ was changes to pre-allocate its
 result instead of growing the vector as needed.
 This resulted in a huge savings (in one test case a 24 minute
 run time was reduced to 3.5 minutes).
+$lnext
+The $cref get_db_input$$ routine now checks the lower and upper limits
+implied by the choice of $cref/rate_info/option_table/rate_info/$$.
 $lend
 
 $head 08-08$$

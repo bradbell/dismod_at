@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_agument_table$$
+$begin get_option_table$$
 $spell
 	sqlite
 	struct
@@ -20,10 +20,10 @@ $$
 $section C++: Get the Node Table Information$$
 
 $head Syntax$$
-$icode%agument_table% = get_agument_table(%db%)%$$
+$icode%option_table% = get_option_table(%db%)%$$
 
 $head Purpose$$
-To read the $cref agument_table$$ and return it as a C++ data structure.
+To read the $cref option_table$$ and return it as a C++ data structure.
 
 $head db$$
 The argument $icode db$$ has prototype
@@ -32,18 +32,18 @@ $codei%
 %$$
 and is an open connection to the database.
 
-$head agument_struct$$
+$head option_struct$$
 This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
 $rnext
-$code std::string$$ $cnext $code agument_name$$  $cnext
-	The $cref/agument_name/agument_table/agument_name/$$u
-	for this command argument
+$code std::string$$ $cnext $code option_name$$  $cnext
+	The $cref/name/option_table/option_name/$$
+	for this option
 $rnext
-$code std::string$$ $cnext $code agument_value$$  $cnext
-	The $cref/agument_value/agument_table/agument_value/$$
-	for this command argument
+$code std::string$$ $cnext $code option_value$$  $cnext
+	The $cref/value/option_table/option_value/$$
+	for this option
 $rnext
 $tend
 
@@ -56,7 +56,7 @@ For each $cref/option_id/option_table/option_id/$$,
 $codei%
 	%option_table%[%option_id%]
 %$$
-is the information for the corresponding comamnd argument.
+is the information for the corresponding command option.
 
 $children%example/devel/table/get_option_table_xam.cpp
 %$$

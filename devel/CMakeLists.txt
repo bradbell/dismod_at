@@ -64,6 +64,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 
 	table/check_child_prior.cpp
 	table/check_pini_n_age.cpp
+	table/check_rate_limit.cpp
 	table/check_table_id.cpp
 	table/create_table.cpp
 	table/exec_sql_cmd.cpp
