@@ -26,13 +26,14 @@
 # BEGIN PYTHON
 # true values used to simulate data
 iota_true        = 0.05
+remission_true   = 0.10
 n_data           = 51
 # ------------------------------------------------------------------------
 import sys
 import os
 import distutils.dir_util
 import subprocess
-test_program = 'example/user/lasso_covariate.py'
+test_program = 'example/user/meas_covariate.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -72,7 +73,8 @@ def example_db (file_name) :
 	#
 	# integrand table
 	integrand_dict = [
-		{ 'name':'Sincidence',  'eta':1e-6 }
+		{ 'name':'Sincidence',  'eta':1e-6 },
+		{ 'name':'remission',   'eta':1e-6 }
 	]
 	#
 	# node table: world -> north_america
@@ -101,13 +103,13 @@ def example_db (file_name) :
 	mulcov_dict = [
 		{
 			'covariate': 'income',
-			'type':      'rate_value',
-			'effected':  'iota',
+			'type':      'meas_value',
+			'effected':  'Sincidence',
 			'smooth':    'smooth_mulcov'
 		},{
-			'covariate': 'sex',
-			'type':      'rate_value',
-			'effected':  'iota',
+			'covariate': 'income',
+			'type':      'meas_value',
+			'effected':  'remission',
 			'smooth':    'smooth_mulcov'
 		}
 	]
@@ -128,13 +130,17 @@ def example_db (file_name) :
 	# values that change between rows:
 	mulcov_income    = 1.0
 	income_reference = 0.5
+	n_integrand      = len( integrand_dict )
 	for data_id in range( n_data ) :
+		integrand   = integrand_dict[ data_id % n_integrand ]['name']
 		income      = data_id / float(n_data-1)
 		sex         = ( data_id % 3 - 1.0 ) / 2.0
 		meas_value  = iota_true
-		meas_value *= math.exp( (income - income_reference) * mulcov_income )
+		if integrand == 'remission' :
+			meas_value  = remission_true
+			effect      = (income - income_reference) * mulcov_income
+			meas_value *= math.exp(effect)
 		meas_std    = 0.1 * meas_value
-		integrand   = integrand_dict[0]['name']
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
 		row['integrand']  = integrand
@@ -209,8 +215,8 @@ def example_db (file_name) :
 			'mulstd_dage_prior_name':   'prior_one',
 			'mulstd_dtime_prior_name':  'prior_one',
 			'fun':                      fun_rate_child
-		},{ # smooth_iota_parent
-			'name':                     'smooth_iota_parent',
+		},{ # smooth_rate_parent
+			'name':                     'smooth_rate_parent',
 			'age_id':                   [ 0, last_age_id ],
 			'time_id':                  [ 0, last_time_id ],
 			'mulstd_value_prior_name':  'prior_one',
@@ -244,11 +250,11 @@ def example_db (file_name) :
 			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'iota',
-			'parent_smooth': 'smooth_iota_parent',
+			'parent_smooth': 'smooth_rate_parent',
 			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'rho',
-			'parent_smooth': 'smooth_zero',
+			'parent_smooth': 'smooth_rate_parent',
 			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'chi',
@@ -311,7 +317,7 @@ def example_db (file_name) :
 file_name      = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
-for command in [ 'var', 'start', 'fit', 'truth', 'simulate', 'sample' ] :
+for command in [ 'var', 'start', 'fit' ] :
 	cmd  = [ program, command, file_name ]
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
@@ -333,67 +339,41 @@ last_time_id   = 2
 parent_node_id = 0
 tol            = 1e-8
 #
-# check parent iota values
-count          = 0
-iota_rate_id   = 1
+# check parent iota and remission values
+count             = 0
+iota_rate_id      = 1
+remission_rate_id = 2
 for var_id in range( len(var_dict) ) :
 	row   = var_dict[var_id]
 	match = row['var_type'] == 'rate'
 	match = match and row['rate_id'] == iota_rate_id
 	match = match and row['node_id'] == parent_node_id
-	if match :
+	if match and rate['rate_id'] == iota_rate_id :
 		count += 1
 		value = fit_var_dict[var_id]['fit_var_value']
 		assert abs( value / iota_true - 1.0 ) < tol
-assert count == 4
-#
-# check other iota values
-for var_id in range( len(var_dict) ) :
-	row   = var_dict[var_id]
-	match = row['var_type'] == 'rate'
-	if row['rate_id'] == iota_rate_id :
-		match = match and row['node_id'] != parent_node_id
-	if match :
+	if match and rate['rate_id'] == remission_rate_id :
+		count += 1
 		value = fit_var_dict[var_id]['fit_var_value']
-		assert abs( value ) < tol
+		assert abs( value / remission_true - 1.0 ) < tol
+assert count == 8
 #
 # check covariate multiplier values
-count          = 0
+count           = 0
 mulcov_income  = 1.0
 for var_id in range( len(var_dict) ) :
 	row   = var_dict[var_id]
-	match = row['var_type'] == 'mulcov_rate_value'
+	match = row['var_type'] == 'mulcov_meas_value'
 	if match :
+		integrand_id = row['integrand_id']
 		count       += 1
 		value        = fit_var_dict[var_id]['fit_var_value']
-		covariate_id = row['covariate_id']
-		if covariate_id == 0 :
+		if integrand_dict[integrand_id]['name'] == 'remission' :
 			assert abs( value / mulcov_income - 1.0 ) < 1e3 * tol
 		else :
 			assert abs( value ) < tol
 assert count == 2
-# -----------------------------------------------------------------------
-# Results for fitting with noise
-sample_dict = dismod_at.get_table_dict(connection, 'sample')
-#
-# check covariate multiplier values
-count = 0
-for var_id in range( len(var_dict) ) :
-	# We can use var_id as sample_id because number_sample = 1
-	assert sample_dict[var_id]['var_id'] == var_id
-	#
-	row   = var_dict[var_id]
-	match = row['var_type'] == 'mulcov_rate_value'
-	if match :
-		count       += 1
-		value        = sample_dict[var_id]['var_value']
-		covariate_id = row['covariate_id']
-		if covariate_id == 0 :
-			assert abs( value / mulcov_income - 1.0 ) < 1e-1
-		else :
-			assert abs( value ) < 1e-1
-assert count == 2
 # -----------------------------------------------------------------------------
-print('lasso_covariate.py: OK')
+print('meas_covariate.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON
