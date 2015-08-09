@@ -37,6 +37,7 @@ if sys.argv[0] != 'bin/import_cascade.py' :
 	sys.exit(msg)
 #
 option_dict = collections.OrderedDict([
+	('rate_info','       are iota and rho zero or non-zero'),
 	('time_lower','      minimum value in the time grid'),
 	('time_upper','      maximum value in the time grid'),
 	('number_time','     number of values in the time grid'),
@@ -80,7 +81,7 @@ for name in cascade_name_list :
 		msg = 'import_cascade: ' + path + ' is not a file'
 		sys.exit(msg)
 	cascade_path_dict[name] = path
-#
+# ----------------------------------------------------------------------------
 option_table_in = dict()
 file_ptr    = open(option_csv)
 reader      = csv.DictReader(file_ptr)
@@ -96,9 +97,25 @@ for option in option_table_in :
 		msg  = usage + '\n'
 		msg += option + ' in ' + option_csv + ' is not a valid option'
 		sys.exit(msg)
+#
 if int( option_table_in['number_time'] ) < 2 :
 	msg  = usage + '\n'
 	msg += 'import_cascade: number_time in ' + option-csv + ' < 2'
+	sys.exit(msg)
+#
+rate_info = option_table_in['rate_info']
+info_list = [
+	'iota_pos_rho_zero', 'iota_zero_rho_pos',
+	'iota_zero_rho_pos', 'iota_pos_rho_pos'
+]
+if rate_info not in info_list :
+	msg  = usage + '\n'
+	msg += 'in ' + option_csv + ' rate_info = ' + rate_info + '\n'
+	msg += 'is not one of the following:\n'
+	for i in range( len( info_list ) ) :
+		msg += info_list[i]
+		if i + 1 < len( info_list ) :
+			msg += ', '
 	sys.exit(msg)
 # ---------------------------------------------------------------------------
 # float_or_none
@@ -780,10 +797,15 @@ dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 col_name = [ 'option_name', 'option_value' ]
 col_type = [ 'text unique', 'text' ]
 row_list = [
-	[ 'parent_node_id', node_name2id['world']            ] ,
-	[ 'ode_step_size',  value_table_in['integrate_step'] ] ,
-	[ 'number_sample',  10                               ] ,
-	[ 'random_seed',    int( timer.time() )              ]
+	[ 'parent_node_id', str(node_name2id['world'])       ],
+	[ 'ode_step_size',  value_table_in['integrate_step'] ],
+	[ 'number_sample',  '10'                             ],
+	[ 'random_seed',    str(int( timer.time() ))         ],
+	[ 'rate_info',      option_table_in['rate_info']     ],
+	[ 'tolerance',      '1e-8'                           ],
+	[ 'max_num_iter',   '50'                             ],
+	[ 'print_level',     '5'                             ],
+	[ 'derivative_test', 'none'                          ]
 ]
 tbl_name = 'option'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
