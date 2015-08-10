@@ -158,7 +158,7 @@ def log_gaussian_cascade2at(prior_name, cascade_prior_row, eta) :
 		density_id = density_name2id['log_gaussian']
 	#
 	#
-	return [ prior_name , lower, upper, mean, std, density_id, eta ]
+	return [ prior_name , lower, upper, mean, std, density_id, float(eta) ]
 # ---------------------------------------------------------------------------
 # db_connection
 #
@@ -641,6 +641,7 @@ for time_id in range( n_time ) :
 # --------------------------------------------------------------------------
 # rate_smooth_id
 #
+rate_info              = option_table_in['rate_info']
 rate_smooth_id         = dict()
 rate_smooth_id['pini'] = pini_smooth_id
 #
@@ -648,6 +649,9 @@ delta_age          = (age_list[-1] - age_list[0]) / (len(age_list) - 1)
 for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	drate = 'd' + rate
 	xi     = float( simple_prior_in['xi_' + rate]['mean'] )
+	#
+	rate_is_zero = rate_info.find( rate + '_zero') != -1
+	rate_is_pos  = rate_info.find( rate + '_pos') != -1
 	#
 	# initialize some lists for this rate
 	local_list     = list()
@@ -670,6 +674,17 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 		# determine value_prior_id
 		name  = rate + '_' + str( len(local_list) ) + '_prior'
 		prior_in = rate_prior_in_dict[rate][age_id]
+		#
+		if rate_is_zero :
+			prior_in['lower'] = '0'
+			prior_in['upper'] = '0'
+			prior_in['mean']  = '0'
+			piror_in['std']   = 'inf'
+		if rate_is_pos :
+			eta   = float( value_table_in['kappa_' + rate] )
+			lower = eta / 100.
+			prior_in['lower'] = str( lower )
+		#
 		prior_at = gaussian_cascade2at(name, prior_in)
 		(name, lower, upper, mean, std, density_id, eta) = prior_at
 		#
