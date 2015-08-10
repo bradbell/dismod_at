@@ -29,6 +29,7 @@ import collections
 sys.path.append( os.path.join( os.getcwd(), 'python' ) )
 import dismod_at
 # ---------------------------------------------------------------------------
+# optiono_csv:       file that contains options to import_cascade
 # cascade_dir:       directory name (not path) where cascade input files are
 # cascade_path_dict: path to cascade input files
 # option_table_in:   a dictionary containing values in option file
@@ -43,7 +44,6 @@ option_dict = collections.OrderedDict([
 	('time_upper','      maximum value in the time grid'),
 	('number_time','     number of values in the time grid'),
 	('child_value_std',' value standard deviation for random effects'),
-	('child_dage_std','  dage standard deviation for random effects'),
 	('child_dtime_std',' dtime standard deviation for random effects')
 ])
 usage = '''bin/import_cascade.py cascade_path option_csv
@@ -205,10 +205,16 @@ for row in cascade_data_dict['value'] :
 time_lower = float( option_table_in['time_lower'] )
 time_upper = float( option_table_in['time_upper'] )
 n_time     = int( option_table_in['number_time'] )
-time_list      = list()
-for i in range( n_time ) :
-	time = ( time_lower * (n_time-i-1) + time_upper * i )/(n_time-1)
-	time_list.append(time)
+time_list  = list()
+if n_time <= 0 :
+	msg = 'n_time = ' + str(n_time) + ' is <= 0 in ' + option_csv
+	sys.exit(msg)
+elif n_time == 1 :
+	time_list.append( (time_lower + time_upper) / 2.0 )
+else :
+	for i in range( n_time ) :
+		time = ( time_lower * (n_time-i-1) + time_upper * i )/(n_time-1)
+		time_list.append(time)
 #
 col_name = [ 'time' ]
 col_type = [ 'real' ]
@@ -529,13 +535,6 @@ prior_row_list.append(
 		[ name , lower, upper, mean, std, density_id, eta ]
 )
 #
-std    = float( option_table_in['child_dage_std'] )
-name   = 'child_dage_piror'
-child_dage_prior_id = len( prior_row_list )
-prior_row_list.append(
-		[ name , lower, upper, mean, std, density_id, eta ]
-)
-#
 std    = float( option_table_in['child_dtime_std'] )
 name   = 'child_dtime_piror'
 child_dtime_prior_id = len( prior_row_list )
@@ -543,47 +542,29 @@ prior_row_list.append(
 		[ name , lower, upper, mean, std, density_id, eta ]
 )
 #
-name            = 'pini_child_smooth'
+name            = 'child_smooth'
 n_age           = 1
 n_time          = len(time_list)
-child_smooth_id = dict()
-child_smooth_id['pini'] = len(smooth_row_list)
+child_smooth_id = len(smooth_row_list)
 smooth_row_list.append(
 		[ name , n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
 )
-n_age           = len(age_list)
-name            = 'child_smooth'
-for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
-	child_smooth_id[rate] = len(smooth_row_list)
-smooth_row_list.append(
-		[ name , n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
-)
-smooth_id      = child_smooth_id['pini']
 value_prior_id = child_value_prior_id
-dage_prior_id = None
-for j in range( n_time ) :
-	if j + 1 < n_time :
+dage_prior_id  = None
+age_id         = 0
+for time_id in range( n_time ) :
+	if time_id + 1 < n_time :
 		dtime_prior_id = child_dtime_prior_id
 	else :
 		dtime_prior_id = None
-	smooth_grid_row_list.append(
-		[ smooth_id, i, j, value_prior_id, dage_prior_id, dtime_prior_id ]
-)
-smooth_id      = child_smooth_id['iota']
-value_prior_id = child_value_prior_id
-for i in range( n_age ) :
-	if i + 1 < n_age :
-		dage_prior_id = child_dage_prior_id
-	else :
-		dage_prior_id = None
-	for j in range( n_time ) :
-		if j + 1 < n_time :
-			dtime_prior_id = child_dtime_prior_id
-		else :
-			dtime_prior_id = None
-		smooth_grid_row_list.append(
-			[ smooth_id, i, j, value_prior_id, dage_prior_id, dtime_prior_id ]
-	)
+	smooth_grid_row_list.append( [
+		child_smooth_id,
+		age_id,
+		time_id,
+		value_prior_id,
+		dage_prior_id,
+		dtime_prior_id
+	] )
 # --------------------------------------------------------------------------
 # rate_dtime_prior_id
 #
@@ -626,7 +607,7 @@ smooth_row_list.append(
 age_id        = 0
 dage_prior_id = None
 for time_id in range( n_time ) :
-	if time_id < n_time - 1 :
+	if time_id + 1 < n_time :
 		dtime_prior_id = rate_dtime_prior_id['pini']
 	else :
 		dtime_prior_id = None
@@ -739,7 +720,7 @@ row_list = list()
 #
 for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
 	row_list.append(
-		[ rate, rate_smooth_id[rate], child_smooth_id[rate] ]
+		[ rate, rate_smooth_id[rate], child_smooth_id ]
 )
 tbl_name = 'rate'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
