@@ -382,11 +382,6 @@ See $cref/pack_info Example/pack_info/Example/$$.
 $end
 
 */
-// 2DO replace all uses of this version of mulstd_offset and then remove it
-size_t pack_info::mulstd_offset(size_t smooth_id) const
-{	assert( smooth_id < n_smooth_ );
-	return mulstd_offset_[ 3 * smooth_id ];
-}
 size_t pack_info::mulstd_offset(size_t smooth_id, size_t k) const
 {	assert( smooth_id < n_smooth_ );
 	assert( k < 3 );

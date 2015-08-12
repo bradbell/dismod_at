@@ -30,6 +30,7 @@ $end
 # include <dismod_at/get_prior_table.hpp>
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 # define DISMOD_AT_PRIOR_DENSITY_XAM_TRACE 0
 
@@ -211,9 +212,11 @@ bool pack_value_prior_xam(void)
 	//
 	// check mulstd
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
-	{	size_t offset  = pack_object.mulstd_offset(smooth_id);
-		for(i = 0; i < 3; i++)
-			ok &= value_prior[offset + i] == i;
+	{	for(size_t k = 0; k < 3; k++)
+		{	size_t offset  = pack_object.mulstd_offset(smooth_id, k);
+			assert( offset != size_t(DISMOD_AT_NULL_INT) );
+			ok &= value_prior[offset] == k;
+		}
 	}
 	//
 	// check rates

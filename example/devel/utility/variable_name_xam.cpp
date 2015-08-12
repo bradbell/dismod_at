@@ -199,20 +199,24 @@ bool variable_name_xam(void)
 	// check mulstd
 	string name;
 	smooth_id = 0;
-	size_t offset    = pack_object.mulstd_offset(smooth_id);
-	name   = VARIABLE_NAME(offset + 0);
+	size_t offset    = pack_object.mulstd_offset(smooth_id, 0);
+	name   = VARIABLE_NAME(offset);
 	ok    &= name == "value_mulstd(bilinear)";
-	name   = VARIABLE_NAME(offset + 1);
+	offset = pack_object.mulstd_offset(smooth_id, 1);
+	name   = VARIABLE_NAME(offset);
 	ok    &= name == "dage_mulstd(bilinear)";
-	name   = VARIABLE_NAME(offset + 2);
+	offset = pack_object.mulstd_offset(smooth_id, 2);
+	name   = VARIABLE_NAME(offset);
 	ok    &= name == "dtime_mulstd(bilinear)";
 	smooth_id = 1;
-	offset = pack_object.mulstd_offset(smooth_id);
-	name   = VARIABLE_NAME(offset + 0);
+	offset = pack_object.mulstd_offset(smooth_id, 0);
+	name   = VARIABLE_NAME(offset);
+	offset = pack_object.mulstd_offset(smooth_id, 1);
 	ok    &= name == "value_mulstd(constant)";
-	name   = VARIABLE_NAME(offset + 1);
+	name   = VARIABLE_NAME(offset);
+	offset = pack_object.mulstd_offset(smooth_id, 2);
 	ok    &= name == "dage_mulstd(constant)";
-	name   = VARIABLE_NAME(offset + 2);
+	name   = VARIABLE_NAME(offset);
 	ok    &= name == "dtime_mulstd(constant)";
 	//
 	// check pini

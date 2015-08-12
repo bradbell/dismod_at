@@ -29,6 +29,7 @@ $end
 # include <dismod_at/prior_model.hpp>
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 # define DISMOD_AT_PRIOR_DENSITY_XAM_TRACE 0
 
@@ -177,6 +178,12 @@ bool prior_random_xam(void)
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
 	{	smooth_table[smooth_id].n_age  = s_info_vec[smooth_id].age_size();
 		smooth_table[smooth_id].n_time = s_info_vec[smooth_id].time_size();
+		smooth_table[smooth_id].mulstd_value_prior_id =
+				s_info_vec[smooth_id].mulstd_value();
+		smooth_table[smooth_id].mulstd_dage_prior_id =
+				s_info_vec[smooth_id].mulstd_dage();
+		smooth_table[smooth_id].mulstd_dtime_prior_id =
+				s_info_vec[smooth_id].mulstd_dtime();
 	}
 	//
 	// mulcov_table
@@ -211,9 +218,11 @@ bool prior_random_xam(void)
 	//
 	// mulstd
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
-	{	size_t offset  = pack_object.mulstd_offset(smooth_id);
-		for(i = 0; i < 3; i++)
-			pack_vec[offset + i] = 1.0;
+	{	for(size_t k = 0; k < 3; k++)
+		{	size_t offset  = pack_object.mulstd_offset(smooth_id, k);
+			assert( offset != size_t(DISMOD_AT_NULL_INT) );
+			pack_vec[offset] = 1.0;
+		}
 	}
 	//
 	// rates
