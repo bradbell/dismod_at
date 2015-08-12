@@ -85,7 +85,8 @@ public:
 	size_t smooth_size(void) const;
 
 	// mulstd
-	size_t mulstd_offset(size_t smooth_id) const;
+	size_t mulstd_offset(size_t smooth_id) const; // 2DO: remove this version
+	size_t mulstd_offset(size_t smooth_id, size_t k) const;
 
 	// rate
 	subvec_info rate_info(size_t rate_id, size_t j) const;

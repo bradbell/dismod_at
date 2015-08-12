@@ -325,7 +325,9 @@ $$
 $section Devel Pack Variables: Standard Deviations Multipliers$$
 
 $head Syntax$$
-$icode%offset% = %pack_object%.mulstd_offset(%smooth_id%)%$$
+$icode%offset% = %pack_object%.mulstd_offset(%smooth_id%, %k%)
+%$$
+$index mulstd_offset$$
 
 $head pack_object$$
 This object has prototype
@@ -342,16 +344,32 @@ and is the
 $cref/smooth_id/smooth_table/smooth_id/$$
 for this multiplier.
 
+$head k$$
+This argument has prototype
+$codei%
+	size_t %k%
+%$$
+It specifies which type of priors standard deviations that get multiplied
+by this variable as follows:
+$table
+$icode k$$ $pre  $$ $cnext Type of prior $rnext
+$code 0$$  $pre  $$ $cnext value priors for this smoothing $rnext
+$code 1$$  $pre  $$ $cnext age difference priors for this smoothing $rnext
+$code 2$$  $pre  $$ $cnext time difference priors for this smoothing
+$tend
+
 $subhead offset$$
 The return value has prototype
 $codei%
 	size_t offset
 %$$
 and is the offset (index) in the packed variable vector
-where the three variables for this smoothing begin.
-The three variables for each smoothing are the
-value, dage, and dtime standard deviation multipliers
-(and should always be used in that order).
+where this multiplier is located.
+If it has value
+$codei%
+	size_t(DISMOD_AT_NULL_INT)
+%$$
+This multiplier has value one and is not a variable.
 
 $head Example$$
 See $cref/pack_info Example/pack_info/Example/$$.
@@ -359,9 +377,15 @@ See $cref/pack_info Example/pack_info/Example/$$.
 $end
 
 */
+// 2DO replace all uses of this version of mulstd_offset and then remove it
 size_t pack_info::mulstd_offset(size_t smooth_id) const
 {	assert( smooth_id < n_smooth_ );
 	return mulstd_offset_ + 3 * smooth_id;
+}
+size_t pack_info::mulstd_offset(size_t smooth_id, size_t k) const
+{	assert( smooth_id < n_smooth_ );
+	assert( k < 3 );
+	return mulstd_offset_ + 3 * smooth_id + k;
 }
 /*
 ------------------------------------------------------------------------------

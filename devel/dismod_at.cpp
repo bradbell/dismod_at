@@ -34,6 +34,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/pack_prior.hpp>
 # include <dismod_at/create_table.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 	using CppAD::vector;
@@ -188,27 +189,39 @@ void init_command(
 	size_t n_smooth = db_input.smooth_table.size();
 	size_t offset, var_id;
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	offset      = pack_object.mulstd_offset(smooth_id);
-		for(size_t i = 0; i < 3; i++)
-		{	var_id                   = offset + i;
+	{	for(size_t k = 0; k < 3; k++)
+		{	offset  = pack_object.mulstd_offset(smooth_id, k);
+			if( offset != size_t(DISMOD_AT_NULL_INT) )
+			{	var_id  = offset;
 # ifndef NDEBUG
-			for(size_t j = 0; j < n_col; j++)
-				assert( row_value[ n_col * var_id + j ] == "" );
+				for(size_t j = 0; j < n_col; j++)
+					assert( row_value[ n_col * var_id + j ] == "" );
 # endif
-			string var_type;
-			if( i == 0 )
-				var_type = "mulstd_value";
-			else if( i == 1 )
-				var_type = "mulstd_dage";
-			else
-				var_type = "mulstd_dtime";
-			//
-			// smooth_id
-			row_value[ n_col * var_id + 0] = var_type;
-			row_value[ n_col * var_id + 1] = to_string( smooth_id );
+				// var_type
+				string var_type;
+				switch(k)
+				{	case 0:
+					var_type = "mulstd_value";
+					break;
+
+					case 1:
+					var_type = "mulstd_dage";
+					break;
+
+					case 2:
+					var_type = "mulstd_dtime";
+					break;
+
+					default:
+					assert(false);
+				}
+				row_value[ n_col * var_id + 0] = var_type;
+
+				// smooth_id
+				row_value[ n_col * var_id + 1] = to_string( smooth_id );
+			}
 		}
 	}
-	//
 	// rate variables
 	size_t n_rate  = db_input.rate_table.size();
 	size_t n_child = child_object.child_size();
