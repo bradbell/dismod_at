@@ -29,6 +29,7 @@ $end
 # include <cppad/cppad.hpp>
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 bool pack_info_xam(void)
 {	bool ok = true;
@@ -47,6 +48,11 @@ bool pack_info_xam(void)
 	smooth_table[2].n_time = 1;
 	smooth_table[3].n_age  = 3;
 	smooth_table[3].n_time = 3;
+	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
+	{	smooth_table[smooth_id].mulstd_value_prior_id = 1;
+		smooth_table[smooth_id].mulstd_dage_prior_id = 1;
+		smooth_table[smooth_id].mulstd_dtime_prior_id = 1;
+	}
 	//
 	size_t n_mulcov = 4;
 	vector<dismod_at::mulcov_struct> mulcov_table(n_mulcov);
@@ -110,11 +116,13 @@ bool pack_info_xam(void)
 
 	// set mulstd
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	size_t offset    =	pack_object.mulstd_offset(smooth_id);
-		pack_vec[offset + 0 ] = smooth_id + 0; // value multiplier
-		pack_vec[offset + 1 ] = smooth_id + 1; // dage  multiplier
-		pack_vec[offset + 2 ] = smooth_id + 2; // dtime multiplier
-		count += 3;
+	{	for(size_t k = 0; k < 3; k++)
+		{	size_t offset    =	pack_object.mulstd_offset(smooth_id, k);
+			if( offset != size_t(DISMOD_AT_NULL_INT) )
+			{	pack_vec[offset] = smooth_id + k;
+				count++;
+			}
+		}
 	}
 	// set rates
 	size_t n_rate = dismod_at::number_rate_enum;
@@ -172,10 +180,11 @@ bool pack_info_xam(void)
 	//
 	// check mulstd
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	offset =	pack_object.mulstd_offset(smooth_id);
-		ok &= pack_vec[ offset + 0 ] == smooth_id + 0;
-		ok &= pack_vec[ offset + 1 ] == smooth_id + 1;
-		ok &= pack_vec[ offset + 2 ] == smooth_id + 2;
+	{	for(size_t k = 0; k < 3; k++)
+		{	offset =	pack_object.mulstd_offset(smooth_id, k);
+			if( offset != size_t(DISMOD_AT_NULL_INT) )
+				ok &= pack_vec[offset] == smooth_id + k;
+		}
 	}
 	// check rates
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
