@@ -155,6 +155,7 @@ $end
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/to_string.hpp>
 # include <dismod_at/configure.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -175,7 +176,11 @@ n_child_        ( n_child )
 	size_t offset = 0;
 
 	// mulstd_offset_
-	mulstd_offset_  = offset; offset += 3 * n_smooth_;
+	mulstd_offset_.resize(3 * n_smooth_);
+	for(size_t smooth_id = 0; smooth_id < n_smooth_; smooth_id++)
+	{	for(size_t k = 0; k < 3; k++)
+			mulstd_offset_[smooth_id * 3 + k] = offset++;
+	}
 
 	// rate_info_
 	rate_info_.resize( number_rate_enum );
@@ -380,12 +385,12 @@ $end
 // 2DO replace all uses of this version of mulstd_offset and then remove it
 size_t pack_info::mulstd_offset(size_t smooth_id) const
 {	assert( smooth_id < n_smooth_ );
-	return mulstd_offset_ + 3 * smooth_id;
+	return mulstd_offset_[ 3 * smooth_id ];
 }
 size_t pack_info::mulstd_offset(size_t smooth_id, size_t k) const
 {	assert( smooth_id < n_smooth_ );
 	assert( k < 3 );
-	return mulstd_offset_ + 3 * smooth_id + k;
+	return mulstd_offset_[3 * smooth_id + k];
 }
 /*
 ------------------------------------------------------------------------------
@@ -873,28 +878,37 @@ pack_info::variable_name(
 	size_t base = 0;
 	//
 	// mulstd case
-	size_t n_mulstd = 3 * n_smooth_;
-	if( index < base + n_mulstd )
-	{	size_t smooth_id = index / 3;
-		//
-		switch( index % 3 )
-		{	case 0:
-			name += "value_mulstd(";
-			break;
+	for(size_t smooth_id = 0; smooth_id < n_smooth_; smooth_id++)
+	{	for(size_t k = 0; k < 3; k++)
+		{	size_t offset = mulstd_offset(smooth_id, k);
+			if( offset != size_t(DISMOD_AT_NULL_INT) )
+			{	assert( base == offset );
+				if( base == index )
+				{
+					switch( k )
+					{	case 0:
+						name = "value_mulstd(";
+						break;
 
-			case 1:
-			name += "dage_mulstd(";
-			break;
+						case 1:
+						name = "dage_mulstd(";
+						break;
 
-			case 2:
-			name += "dtime_mulstd(";
-			break;
+						case 2:
+						name = "dtime_mulstd(";
+						break;
+
+						default:
+						assert(false);
+					}
+					name += smooth_table[smooth_id].smooth_name;
+					name += ")";
+					return name;
+				}
+				base++;
+			}
 		}
-		name += smooth_table[smooth_id].smooth_name;
-		name += ")";
-		return name;
 	}
-	base += n_mulstd;
 	//
 	// rate case
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)

@@ -46,7 +46,7 @@ private:
 	const size_t n_child_;
 
 	// mulstd variable offsets
-	size_t mulstd_offset_;
+	CppAD::vector<size_t>  mulstd_offset_;
 
 	// rate variable information
 	CppAD::vector< CppAD::vector<subvec_info> > rate_info_;
