@@ -479,46 +479,11 @@ smooth_grid_col_name2type = collections.OrderedDict([
 	('dtime_prior_id',  'integer')
 ])
 # --------------------------------------------------------------------------
-# zero_prior_id,   zero_smooth_id
-# one_prior_id,    one_smooth_id
-# nolim_prior_id
+# Initialize the row list for the prior, smooth, and smooth_grid tables
 #
 prior_row_list       = list()
 smooth_row_list      = list()
 smooth_grid_row_list = list()
-#
-# zero_prior_id
-zero_prior_id    = len( prior_row_list )
-density_id       = density_name2id['uniform']
-prior_row_list.append(
-	[ 'zero_prior', 0.0, 0.0, 0.0, None, density_id, None ]
-)
-# one_prior_id
-one_prior_id    = len( prior_row_list )
-prior_row_list.append(
-	[ 'one_prior', 1.0, 1.0, 0.0, None, density_id, None ]
-)
-# nolim_prior_id
-nolim_prior_id    = len( prior_row_list )
-prior_row_list.append(
-	[ 'nolim_prior', None, None, 0.0, None, density_id, None ]
-)
-# zero_smooth_id
-zero_smooth_id   = len( smooth_row_list )
-smooth_row_list.append(
-	[ 'zero_smooth',  1,   1,   one_prior_id, one_prior_id, one_prior_id ]
-)
-smooth_grid_row_list.append(
-	[ zero_smooth_id, 0,   0,   zero_prior_id, None, None ]
-)
-# one_smooth_id
-one_smooth_id   = len( smooth_row_list )
-smooth_row_list.append(
-	[ 'one_smooth',  1,   1,   one_prior_id, one_prior_id, one_prior_id ]
-)
-smooth_grid_row_list.append(
-	[ one_smooth_id, 0,   0,   one_prior_id, None, None ]
-)
 # --------------------------------------------------------------------------
 # child_smooth_id
 #
@@ -547,7 +512,7 @@ n_age           = 1
 n_time          = len(time_list)
 child_smooth_id = len(smooth_row_list)
 smooth_row_list.append(
-		[ name , n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
+		[ name , n_age, n_time, None, None, None ]
 )
 value_prior_id = child_value_prior_id
 dage_prior_id  = None
@@ -602,7 +567,7 @@ n_age          = 1
 n_time         = len( time_list )
 pini_smooth_id = len( smooth_row_list )
 smooth_row_list.append(
-	[ 'pini_smooth', n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
+	[ 'pini_smooth', n_age, n_time, None, None, None ]
 )
 age_id        = 0
 dage_prior_id = None
@@ -647,7 +612,7 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	name   = rate + '_smooth'
 	rate_smooth_id[rate] = len(smooth_row_list)
 	smooth_row_list.append(
-			[ name, n_age, n_time, one_prior_id, one_prior_id, one_prior_id ]
+			[ name, n_age, n_time, None, None, None ]
 	)
 	# need to fill in smooth_grid entries for this smoothing
 	for age_id in range( n_age ) :
@@ -775,10 +740,10 @@ for row in effect_prior_in :
 		smooth_name  = name + '_' + covariate + '_smooth'
 		smooth_id    = len( smooth_row_list )
 		smooth_row_list.append(
-			[ smooth_name,  1, 1, one_prior_id, one_prior_id, one_prior_id ]
+			[ smooth_name,  1, 1, None, None, None ]
 		)
 		smooth_grid_row_list.append(
-			[ smooth_id, 0, 0, one_prior_id, None, None ]
+			[ smooth_id, 0, 0, prior_id, None, None ]
 		)
 		#
 		row_list.append(
