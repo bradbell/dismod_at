@@ -88,6 +88,7 @@ $end
 # include <dismod_at/prior_model.hpp>
 # include <dismod_at/smooth_info.hpp>
 # include <dismod_at/a2_double.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -255,33 +256,40 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 
 	// smoothing multipliers
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	// offset for this smoothing
-		size_t offset = pack_object_.mulstd_offset(smooth_id);
+	{	for(size_t k = 0; k < 3; k++)
+		{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
+			if( offset != size_t(DISMOD_AT_NULL_INT) )
+			{
+				// value of the multiplier
+				Float mulstd = Float(pack_vec[offset]);
 
-		// multiplier for value smoothing
-		Float mulstd = Float(pack_vec[offset + 0]);
+				// prior_id for this multiplier
+				size_t prior_id;
+				switch(k)
+				{	case 0:
+					prior_id = s_info_vec_[smooth_id].mulstd_value();
+					break;
 
-		// prior index for this multilier
-		size_t prior_id           = s_info_vec_[smooth_id].mulstd_value();
-		const prior_struct* prior = &prior_table_[prior_id];
+					case 1:
+					prior_id = s_info_vec_[smooth_id].mulstd_dage();
+					break;
 
-		// add fixed negative log-likelihood for this multipliers value
-		residual            = log_prior(*prior, mulstd);
-		residual_vec.push_back(residual);
+					case 2:
+					prior_id = s_info_vec_[smooth_id].mulstd_dtime();
+					break;
 
-		// add multiplier for age difference smoothing
-		mulstd              = pack_vec[offset + 1];
-		prior_id            = s_info_vec_[smooth_id].mulstd_dage();
-		prior               = &prior_table_[prior_id];
-		residual            = log_prior(*prior, mulstd);
-		residual_vec.push_back(residual);
+					default:
+					assert(false);
+				}
 
-		// multiplier for time difference smoothing
-		mulstd              = pack_vec[offset + 2];
-		prior_id            = s_info_vec_[smooth_id].mulstd_dtime();
-		prior               = &prior_table_[prior_id];
-		residual            = log_prior(*prior, mulstd);
-		residual_vec.push_back(residual);
+				// prior for this multilier
+				const prior_struct* prior = &prior_table_[prior_id];
+
+				// add fixed negative log-likelihood for this multiplier
+				residual  = log_prior(*prior, mulstd);
+				residual_vec.push_back(residual);
+			}
+		}
 	}
 
 	// rates
