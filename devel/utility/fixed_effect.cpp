@@ -128,6 +128,7 @@ $end
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/random_effect.hpp>
 # include <dismod_at/a2_double.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -151,9 +152,11 @@ CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
 
 	// mulstd
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	pack_index = pack_object.mulstd_offset(smooth_id);
-		for(size_t k = 0; k < 3; k++)
-			ret_val[fixed_index++] = pack_index++;
+	{	for(size_t k = 0; k < 3; k++)
+		{	pack_index = pack_object.mulstd_offset(smooth_id, k);
+			if( pack_index != size_t(DISMOD_AT_NULL_INT) )
+				ret_val[fixed_index++] = pack_index;
+		}
 	}
 
 	// parent rates
@@ -217,9 +220,11 @@ void get_fixed_effect(
 
 	// mulstd
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	pack_index = pack_object.mulstd_offset(smooth_id);
-		for(size_t k = 0; k < 3; k++)
-			fixed_vec[fixed_index++] = pack_vec[pack_index++];
+	{	for(size_t k = 0; k < 3; k++)
+		{	pack_index = pack_object.mulstd_offset(smooth_id, k);
+			if( pack_index != size_t(DISMOD_AT_NULL_INT) )
+				fixed_vec[fixed_index++] = pack_vec[pack_index];
+		}
 	}
 
 	// parent rates
@@ -282,9 +287,11 @@ void put_fixed_effect(
 
 	// mulstd
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	pack_index = pack_object.mulstd_offset(smooth_id);
-		for(size_t k = 0; k < 3; k++)
-			pack_vec[pack_index++] = fixed_vec[fixed_index++];
+	{	for(size_t k = 0; k < 3; k++)
+		{	pack_index = pack_object.mulstd_offset(smooth_id, k);
+			if( pack_index != size_t(DISMOD_AT_NULL_INT) )
+				pack_vec[pack_index] = fixed_vec[fixed_index++];
+		}
 	}
 
 	// parent rates
