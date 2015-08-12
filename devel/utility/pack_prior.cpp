@@ -133,14 +133,30 @@ CppAD::vector<size_t> pack_value_prior(
 
 	// get priors for smoothing multipliers
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	// mulstd
-		size_t offset     = pack_object.mulstd_offset(smooth_id);
-		size_t prior_id   = s_info_vec[smooth_id].mulstd_value();
-		ret_val[offset+0] = prior_id;
-		prior_id          = s_info_vec[smooth_id].mulstd_dage();
-		ret_val[offset+1] = prior_id;
-		prior_id          = s_info_vec[smooth_id].mulstd_dtime();
-		ret_val[offset+2] = prior_id;
+	{	for(size_t k = 0; k < 3; k++)
+		{	// mulstd
+			size_t offset     = pack_object.mulstd_offset(smooth_id, k);
+			if( offset != size_t(DISMOD_AT_NULL_INT) )
+			{	size_t prior_id;
+				switch(k)
+				{	case 0:
+					prior_id = s_info_vec[smooth_id].mulstd_value();
+					break;
+
+					case 1:
+					prior_id = s_info_vec[smooth_id].mulstd_dage();
+					break;
+
+					case 2:
+					prior_id = s_info_vec[smooth_id].mulstd_dtime();
+					break;
+
+					default:
+					assert(false);
+				}
+				ret_val[offset] = prior_id;
+			}
+		}
 	}
 
 	// get priors for rates
