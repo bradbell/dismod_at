@@ -43,7 +43,7 @@ $table
 	Output Tables $cnext
 	Addition Input Tables
 $rnext
-	$cref/init/var_command/$$ $cnext
+	$cref/init/init_command/$$ $cnext
 	$cref/var/var_table/$$
 $rnext $cnext
 	$cref/data_subset/data_subset_table/$$

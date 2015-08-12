@@ -40,6 +40,6 @@ $icode data_subset_id$$.
 
 
 $head Example$$
-See $cref var_command.py$$ example and test.
+See $cref init_command.py$$ example and test.
 
 $end

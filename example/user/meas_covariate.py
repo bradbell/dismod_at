@@ -318,7 +318,7 @@ def example_db (file_name) :
 file_name      = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
-for command in [ 'var', 'start', 'fit' ] :
+for command in [ 'init', 'start', 'fit' ] :
 	cmd  = [ program, command, file_name ]
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )

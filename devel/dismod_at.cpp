@@ -39,7 +39,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 	using CppAD::vector;
 /*
 -----------------------------------------------------------------------------
-$begin var_command$$
+$begin init_command$$
 $spell
 	init
 	var
@@ -49,7 +49,7 @@ $$
 $section The Variable Command$$
 
 $head Syntax$$
-$codei%dismod_at var %file_name%$$
+$codei%dismod_at init %file_name%$$
 
 $head Purpose$$
 This command should be executed whenever any of the
@@ -74,16 +74,16 @@ $head avg_case_subset_table$$
 A new $cref avg_case_subset_table$$ is created.
 This makes explicit exactly which rows of the avg_case table are used.
 
-$children%example/get_started/var_command.py%$$
+$children%example/get_started/init_command.py%$$
 $head Example$$
-The file $cref var_command.py$$ contains an example and test
+The file $cref init_command.py$$ contains an example and test
 of using this command.
 
 $end
 */
 
 // ----------------------------------------------------------------------------
-void var_command(
+void init_command(
 	sqlite3*                                         db                  ,
 	const vector<dismod_at::data_subset_struct>&     data_subset_obj     ,
 	const vector<dismod_at::avg_case_subset_struct>& avg_case_subset_obj ,
@@ -639,7 +639,7 @@ It specifies the true values for the
 $cref/model_variables/model_variable/$$ used during the simulation.
 This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
-$cref var_table$$ (created by the $cref var_command$$).
+$cref var_table$$ (created by the $cref init_command$$).
 
 $head simulate_table$$
 A new $cref simulate_table$$ is created.
@@ -839,7 +839,7 @@ void sample_command(
 			size_t subset_check =
 				size_t(simulate_table[simulate_id].data_subset_id);
 			if( sample_check != sample_index || subset_check != subset_id )
-			{	string msg = "database modified, restart with var command";
+			{	string msg = "database modified, restart with init command";
 				table_name = "simulate";
 				dismod_at::error_exit(db, msg, table_name, simulate_id);
 			}
@@ -971,7 +971,7 @@ void predict_command(
 			size_t var_check =
 				size_t( sample_table[sample_id].var_id);
 			if( sample_check != sample_index || var_check != var_id )
-			{	string msg = "database modified, restart with var command";
+			{	string msg = "database modified, restart with init command";
 				table_name = "sample";
 				dismod_at::error_exit(db, msg, table_name, sample_id);
 			}
@@ -1030,7 +1030,7 @@ int main(int n_arg, const char** argv)
 	if( n_arg != 3 )
 	{	cerr << program << endl
 		<< "usage:     dismod_at command file_name\n"
-		<< "command:   var, start, fit, truth, simulate, sample, or predict\n"
+		<< "command:   init, start, fit, truth, simulate, sample, or predict\n"
 		<< "file_name: sqlite database\n";
 		std::exit(1);
 	}
@@ -1038,7 +1038,7 @@ int main(int n_arg, const char** argv)
 	const string command_arg    = argv[++i_arg];
 	const string file_name_arg  = argv[++i_arg];
 	bool ok = false;
-	ok     |= command_arg == "var";
+	ok     |= command_arg == "init";
 	ok     |= command_arg == "start";
 	ok     |= command_arg == "truth";
 	ok     |= command_arg == "fit";
@@ -1175,8 +1175,8 @@ int main(int n_arg, const char** argv)
 				child_avg_case
 		);
 		// -------------------------------------------------------------------
-		if( command_arg == "var" )
-		{	var_command(
+		if( command_arg == "init" )
+		{	init_command(
 				db,
 				data_subset_obj,
 				avg_case_subset_obj,

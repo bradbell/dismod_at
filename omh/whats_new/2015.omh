@@ -38,9 +38,13 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 08-12$$
+The $code var_command$$ was changed back to the $cref init_command$$
+(because it creates more than just the $cref var_table$$).
+
 $head 08-09$$
 $list number$$
-There was a bug in the $cref var_command$$ when there were
+There was a bug in the $code var_command$$ when there were
 $cref/covariate multipliers/mulcov_table/$$ for multiple integrands
 or multiple rates.
 This has been fixed and is tested by the user example
@@ -57,7 +61,7 @@ $lend
 
 $head 08-08$$
 $list number$$
-Change the $code init_command$$ to the $cref var_command$$
+Change the $cref init_command$$ to the $code var_command$$
 (because it creates the $cref var_table$$).
 $lnext
 Change the measurement covariate multiple type $code rate_mean$$ to
@@ -301,7 +305,7 @@ When writing to standard error,
 add $code Error:$$ ($code Warning:$$)
 to beginning of error messages (warning messages).
 $lnext
-The $cref var_command$$ no longer deletes the current
+The $cref init_command$$ no longer deletes the current
 fit, fit_residual, truth_var, simulate, sample and predict tables.
 These table get overwritten when the corresponding command is executed;
 see $cref output$$.
@@ -370,12 +374,12 @@ The $cref avg_case_table$$ was added to the set of
 $cref input$$ tables.
 $lnext
 The $cref avg_case_subset_table$$ was added as an output
-of the $cref var_command$$.
+of the $cref init_command$$.
 $lend
 
 $head 07-08$$
 $list number$$
-Change the $code var_command$$ to $cref var_command$$
+Change the $code var_command$$ to $cref init_command$$
 and use this command to initialize output tables whenever
 the $cref input$$ tables change.
 $lnext
@@ -398,7 +402,7 @@ there was a problem running $code make check$$ without first running
 $code make$$.
 This has been fixed.
 $lnext
-Use a $cref var_command$$ to create the $cref var_table$$
+Use a $code var_command$$ to create the $cref var_table$$
 and put the $cref fit_command$$ results in a separate $cref fit_var_table$$.
 $lend
 

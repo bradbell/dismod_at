@@ -55,12 +55,12 @@ file_name              = 'example.db'
 # -----------------------------------------------------------------------
 # create the var table
 program        = '../../devel/dismod_at'
-command        = 'var'
+command        = 'init'
 cmd  = [ program, command, file_name ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
-	sys.exit('The dismod_at var command failed')
+	sys.exit('The dismod_at init command failed')
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
