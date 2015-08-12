@@ -78,7 +78,7 @@ for var_id in range( len(var_dict) ) :
 	variable_row  = var_dict[var_id]
 	var_type = variable_row['var_type']
 	if var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
-		truth_var_value = 1.0
+		assert False
 	elif var_type == 'rate' :
 		rate_id   = variable_row['rate_id']
 		truth_var_value = 5e-3 * (rate_id + 1)

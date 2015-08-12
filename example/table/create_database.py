@@ -127,16 +127,16 @@ def create_database() :
 		{	'name':'uniform_01_constant',
 			'age_id':[0],
 			'time_id':[0],
-			'mulstd_value_prior_name':'one',
-			'mulstd_dage_prior_name':'one',
-			'mulstd_dtime_prior_name':'one',
+			'mulstd_value_prior_name':'',
+			'mulstd_dage_prior_name':'',
+			'mulstd_dtime_prior_name':'',
 			'fun':smooth_uniform_01_fun
 		},{	'name':'gaussian_01_constant',
 			'age_id':[0],
 			'time_id':[0],
-			'mulstd_value_prior_name':'one',
-			'mulstd_dage_prior_name':'one',
-			'mulstd_dtime_prior_name':'one',
+			'mulstd_value_prior_name':'',
+			'mulstd_dage_prior_name':'',
+			'mulstd_dtime_prior_name':'',
 			'fun':smooth_gaussian_01_fun
 		}
 	]
@@ -319,8 +319,8 @@ def create_database() :
 	]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
 	check_list = [
-		[ 'uniform_01_constant',  1, 1, 1, 1, 1 ],
-		[ 'gaussian_01_constant', 1, 1, 1, 1, 1 ]
+		[ 'uniform_01_constant',  1, 1, None, None, None],
+		[ 'gaussian_01_constant', 1, 1, None, None, None]
 	]
 	assert row_list == check_list
 	#

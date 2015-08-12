@@ -131,14 +131,6 @@ def get_started_db (file_name) :
 			'mean':     0.0,
 			'std':      None,
 			'eta':      None
-		},{ # prior_one
-			'name':     'prior_one',
-			'density':  'uniform',
-			'lower':    1.0,
-			'upper':    1.0,
-			'mean':     1.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
@@ -166,17 +158,17 @@ def get_started_db (file_name) :
 			'name':                     'smooth_rate_child',
 			'age_id':                   [ middle_age_id ],
 			'time_id':                  [ 0, last_time_id ],
-			'mulstd_value_prior_name':  'prior_one',
-			'mulstd_dage_prior_name':   'prior_one',
-			'mulstd_dtime_prior_name':  'prior_one',
+			'mulstd_value_prior_name':  '',
+			'mulstd_dage_prior_name':   '',
+			'mulstd_dtime_prior_name':  '',
 			'fun':                      fun_rate_child
 		},{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
 			'age_id':                   [ middle_age_id ],
 			'time_id':                  [ 0, last_time_id ],
-			'mulstd_value_prior_name':  'prior_one',
-			'mulstd_dage_prior_name':   'prior_one',
-			'mulstd_dtime_prior_name':  'prior_one',
+			'mulstd_value_prior_name':  '',
+			'mulstd_dage_prior_name':   '',
+			'mulstd_dtime_prior_name':  '',
 			'fun':                       fun_rate_parent
 		}
 	]

@@ -51,6 +51,9 @@ $cref/standard deviation multipliers
 /$$
 were not being used.
 This has been fixed.
+$lnext
+Use $code null$$ for a standard deviation multiplier now
+eliminates it from the list of variables; see $cref smooth_table$$.
 $lend
 
 $head 08-09$$

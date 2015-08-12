@@ -82,7 +82,7 @@ for smooth_id in range( n_smooth ) :
 				fit_var_id     = var_id
 				variable_value = fit_var_dict[fit_var_id]['fit_var_value']
 				assert variable_value == 1.0
-		assert count == 1
+		assert count == 0
 #
 # rate variables
 parent_node_id = 0

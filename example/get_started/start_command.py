@@ -81,7 +81,7 @@ for smooth_id in range( n_smooth ) :
 				count += 1
 				variable_value = start_var_dict[var_id]['start_var_value']
 				assert variable_value == 1.0
-		assert count == 1
+		assert count == 0
 #
 # rate variables are equal to their prior means
 parent_node_id = 0

@@ -92,7 +92,7 @@ for smooth_id in range( n_smooth ) :
 			match = match and row['smooth_id'] == smooth_id
 			if match :
 				count += 1
-		assert count == 1
+		assert count == 0
 #
 # rate variables
 parent_node_id = 0

@@ -58,7 +58,7 @@ $cref/value_prior_id/smooth_grid_table/value_prior_id/$$ standard deviations
 for this
 $cref/smooth_id/smooth_grid_table/smooth_id/$$.
 If this variable is not needed,
-use the $cref/one/prior_table/prior_id/one/$$ prior.
+use the value $code null$$ (which corresponds to a multiplier of one).
 
 $head mulstd_dage_prior_id$$
 This column has type $code integer$$ and its value is the
@@ -67,7 +67,7 @@ $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ standard deviations
 for this
 $cref/smooth_id/smooth_grid_table/smooth_id/$$.
 If this variable is not needed,
-use the $cref/one/prior_table/prior_id/one/$$ prior.
+use the value $code null$$ (which corresponds to a multiplier of one).
 
 $head mulstd_dtime_prior_id$$
 This column has type $code integer$$ and its value is the
@@ -76,7 +76,7 @@ $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ standard deviations
 for this
 $cref/smooth_id/smooth_grid_table/smooth_id/$$.
 If this variable is not needed,
-use the $cref/one/prior_table/prior_id/one/$$ prior.
+use the value $code null$$ (which corresponds to a multiplier of one).
 
 $comment%example/table/smooth_grid_table.py is included by smooth_grid_table.omh
 %$$

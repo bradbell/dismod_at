@@ -179,15 +179,17 @@
 # age_id  $cnext list of int $cnext indices for age values     $rnext
 # time_id $cnext list of int $cnext indices for time values    $rnext
 # mulstd_value_prior_name   $cnext str   $cnext
-#	name for $cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$ smoothing $rnext
+#	name of prior for $cref/
+#		mulstd_value_prior_name/smooth_table/mulstd_value_prior_id/$$
+#	(empty string for $code null$$) $rnext
 # mulstd_dage_prior_name   $cnext str   $cnext
-#	name corresponding to
-#	$cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$
-#	for this smoothing $rnext
+#	name of prior for $cref/
+#		mulstd_dage_prior_name/smooth_table/mulstd_dage_prior_id/$$
+#	(empty string for $code null$$) $rnext
 # mulstd_dtime_prior_name   $cnext str   $cnext
-#	name corresponding to
-#	$cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$
-#	for this smoothing $rnext
+#	name of prior for $cref/
+#		mulstd_dtime_prior_name/smooth_table/mulstd_dtime_prior_id/$$
+#	(empty string for $code null$$) $rnext
 # fun     $cnext function    $cnext $icode%(%v%,%da%,%dt%)%=%fun%(%a%, %t%)%$$
 # $tend
 # The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
@@ -448,12 +450,25 @@ def create_database(
 		name          = smooth['name']
 		n_age         = len( smooth['age_id'] )
 		n_time        = len( smooth['time_id'] )
-		mulstd_value_prior_id = \
-			global_prior_name2id[ smooth['mulstd_value_prior_name'] ]
-		mulstd_dage_prior_id  = \
-			global_prior_name2id[ smooth['mulstd_dage_prior_name']  ]
-		mulstd_dtime_prior_id = \
-			global_prior_name2id[ smooth['mulstd_dtime_prior_name'] ]
+		#
+		prior_name    = smooth['mulstd_value_prior_name']
+		if prior_name == '' :
+			mulstd_value_prior_id = None
+		else :
+			mulstd_value_prior_id = global_prior_name2id[prior_name]
+		#
+		prior_name    = smooth['mulstd_dage_prior_name']
+		if prior_name == '' :
+			mulstd_dage_prior_id = None
+		else :
+			mulstd_dage_prior_id = global_prior_name2id[prior_name]
+		#
+		prior_name    = smooth['mulstd_dtime_prior_name']
+		if prior_name == '' :
+			mulstd_dtime_prior_id = None
+		else :
+			mulstd_dtime_prior_id = global_prior_name2id[prior_name]
+		#
 		row_list.append( [
 			name,
 			n_age,
