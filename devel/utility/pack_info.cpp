@@ -178,8 +178,23 @@ n_child_        ( n_child )
 	// mulstd_offset_
 	mulstd_offset_.resize(3 * n_smooth_);
 	for(size_t smooth_id = 0; smooth_id < n_smooth_; smooth_id++)
-	{	for(size_t k = 0; k < 3; k++)
-			mulstd_offset_[smooth_id * 3 + k] = offset++;
+	{	int prior_id = smooth_table[smooth_id].mulstd_value_prior_id;
+		if( prior_id == DISMOD_AT_NULL_INT )
+			mulstd_offset_[smooth_id * 3 + 0] = size_t(DISMOD_AT_NULL_INT);
+		else
+			mulstd_offset_[smooth_id * 3 + 0] = offset++;
+		//
+		prior_id = smooth_table[smooth_id].mulstd_dage_prior_id;
+		if( prior_id == DISMOD_AT_NULL_INT )
+			mulstd_offset_[smooth_id * 3 + 1] = size_t(DISMOD_AT_NULL_INT);
+		else
+			mulstd_offset_[smooth_id * 3 + 1] = offset++;
+		//
+		prior_id = smooth_table[smooth_id].mulstd_dtime_prior_id;
+		if( prior_id == DISMOD_AT_NULL_INT )
+			mulstd_offset_[smooth_id * 3 + 2] = size_t(DISMOD_AT_NULL_INT);
+		else
+			mulstd_offset_[smooth_id * 3 + 2] = offset++;
 	}
 
 	// rate_info_
