@@ -39,8 +39,19 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 08-12$$
+$list number$$
 The $code var_command$$ was changed back to the $cref init_command$$
 (because it creates more than just the $cref var_table$$).
+$lnext
+There was a bug whereby the
+$cref/standard deviation multipliers
+	/model_variable
+	/Fixed Effects, theta
+	/Smoothing Standard Deviation Multipliers, lambda
+/$$
+were not being used.
+This has been fixed.
+$lend
 
 $head 08-09$$
 $list number$$

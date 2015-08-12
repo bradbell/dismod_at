@@ -32,6 +32,7 @@ namespace dismod_at {
 		template <class Float>
 		residual_struct<Float> log_prior(
 			const prior_struct& prior   ,
+			const Float&        mulstd  ,
 			const Float&        variable
 		) const;
 		template <class Float>
@@ -39,6 +40,7 @@ namespace dismod_at {
 			CppAD::vector< residual_struct<Float> >& residual_vec ,
 			size_t                                   offset       ,
 			const CppAD::vector<Float>&              pack_vec     ,
+			const CppAD::vector<Float>&              mulstd       ,
 			const smooth_info&                       s_info
 		) const;
 	public:

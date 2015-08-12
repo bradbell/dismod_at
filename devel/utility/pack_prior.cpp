@@ -131,7 +131,7 @@ CppAD::vector<size_t> pack_value_prior(
 	size_t n_child     = pack_object.child_size();
 	size_t n_integrand = pack_object.integrand_size();
 
-	// get priors for smoothing multipliers
+	// get priors for standard devaition multipliers
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
 		{	// mulstd
@@ -285,7 +285,7 @@ CppAD::vector<diff_prior_struct> pack_diff_prior(
 	size_t n_child     = pack_object.child_size();
 	size_t n_integrand = pack_object.integrand_size();
 
-	// no difference priors for smoothing multipliers
+	// no difference priors for standard devaition multipliers
 
 	// get priors for rates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)

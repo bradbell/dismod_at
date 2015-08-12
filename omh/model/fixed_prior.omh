@@ -23,7 +23,7 @@ $head theta$$
 $subhead lambda$$
 We use $latex \lambda$$ to denote
 the sub-vector of the fixed effects that are
-$cref/smoothing multipliers
+$cref/standard deviation multipliers
 	/model_variable
 	/Fixed Effects, theta
 	/Smoothing Standard Deviation Multipliers, lambda

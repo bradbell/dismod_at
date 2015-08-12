@@ -31,7 +31,8 @@ $end
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/null_int.hpp>
 
-# define DISMOD_AT_PRIOR_DENSITY_XAM_TRACE 0
+# define DISMOD_AT_PRIOR_FIXED_XAM_TRACE 0
+# define DISMOD_AT_PRIOR_FIXED_XAM_MULSTD 2.0
 
 bool prior_fixed_xam(void)
 {	bool   ok = true;
@@ -60,18 +61,16 @@ bool prior_fixed_xam(void)
 	// ----------------------- prior table ---------------------------------
 	size_t n_prior_table = 6;
 	vector<dismod_at::prior_struct> prior_table(n_prior_table);
-	// prior_id = 0
+	// prior_id = 0 (is the constant zero)
 	prior_table[0].density_id = int( dismod_at::uniform_enum );
 	prior_table[0].lower      = 0.0;
 	prior_table[0].mean       = 0.0;
 	prior_table[0].upper      = 0.0;
-	prior_table[0].std        = 1.0;
 	// prior_id = 1
 	prior_table[1].density_id = int( dismod_at::uniform_enum );
-	prior_table[1].lower      = 1.0;
-	prior_table[1].mean       = 1.0;
-	prior_table[1].upper      = 1.0;
-	prior_table[1].std        = 1.0;
+	prior_table[1].lower      = DISMOD_AT_PRIOR_FIXED_XAM_MULSTD;
+	prior_table[1].mean       = DISMOD_AT_PRIOR_FIXED_XAM_MULSTD;
+	prior_table[1].upper      = DISMOD_AT_PRIOR_FIXED_XAM_MULSTD;
 	// size_t prior_id_none = 2;
 	prior_table[2].density_id = int( dismod_at::uniform_enum );
 	prior_table[2].lower      = -inf;
@@ -118,7 +117,7 @@ bool prior_fixed_xam(void)
 	time_id[0] = 0;
 	time_id[1] = n_time_table - 1;
 	// scalar prior_id
-	mulstd_value = 1;
+	mulstd_value = 1; // corresponds to multiply by DISMOD_AT_FIXED_XAM_MULSTD
 	mulstd_dage  = 1;
 	mulstd_dtime = 1;
 	// grid prior ids
@@ -152,7 +151,7 @@ bool prior_fixed_xam(void)
 	time_id[0] = 0;
 	time_id[1] = n_time_table - 1;
 	// scalar prior_id
-	mulstd_value = 1;
+	mulstd_value = 1; // corresponds to multiply by DISMOD_AT_FIXED_XAM_MULSTD
 	mulstd_dage  = 1;
 	mulstd_dtime = 1;
 	// grid prior ids
@@ -224,7 +223,7 @@ bool prior_fixed_xam(void)
 	{	for(size_t k = 0; k < 3; k++)
 		{	size_t offset  = pack_object.mulstd_offset(smooth_id, k);
 			assert( offset != size_t(DISMOD_AT_NULL_INT) );
-			pack_vec[offset] = 1.0;
+			pack_vec[offset] = DISMOD_AT_PRIOR_FIXED_XAM_MULSTD;
 		}
 	}
 	//
@@ -254,7 +253,7 @@ bool prior_fixed_xam(void)
 	dismod_at::prior_model prior_object(
 		pack_object, age_table, time_table, prior_table, s_info_vec
 	);
-	// -------------- compute fixed negative log-likelihood --------------------------------
+	// -------------- compute fixed negative log-likelihood -------------------
 	CppAD::vector< dismod_at::residual_struct<double> > residual_vec;
 	residual_vec = prior_object.fixed(pack_vec);
 	double logden    = 0.0;
@@ -276,10 +275,13 @@ bool prior_fixed_xam(void)
 	double check  = 0.0;
 	double mean_v = prior_table[prior_id_gaussian].mean;
 	double std_v  = prior_table[prior_id_gaussian].std ;
+	std_v        *= DISMOD_AT_PRIOR_FIXED_XAM_MULSTD;
 	double mean_a = prior_table[prior_id_laplace].mean;
 	double std_a  = prior_table[prior_id_laplace].std ;
+	std_a        *= DISMOD_AT_PRIOR_FIXED_XAM_MULSTD;
 	double mean_t = prior_table[prior_id_log_gaussian].mean;
 	double std_t  = prior_table[prior_id_log_gaussian].std ;
+	std_t        *= DISMOD_AT_PRIOR_FIXED_XAM_MULSTD;
 	double eta_t  = prior_table[prior_id_log_gaussian].eta ;
 	size_t count_laplace = 0;
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
