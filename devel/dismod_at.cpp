@@ -36,8 +36,25 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/create_table.hpp>
 # include <dismod_at/null_int.hpp>
 
+# define DISMOD_AT_TRACE 0
+
 namespace { // BEGIN_EMPTY_NAMESPACE
 	using CppAD::vector;
+# if DISMOD_AT_TRACE
+	std::time_t trace(const char* message, std::time_t previous_time = 0)
+	{	std::time_t current_time = std::time( DISMOD_AT_NULL_PTR );
+		if( previous_time == 0 )
+			std::cout << message << std::endl;
+		else
+			std::cout << current_time - previous_time << " sec" << std::endl;
+		return current_time;
+	}
+# else
+	std::time_t trace(const char* message, std::time_t previous_time = 0)
+	{	std::time_t current_time = std::time( DISMOD_AT_NULL_PTR );
+		return current_time;
+	}
+# endif
 /*
 -----------------------------------------------------------------------------
 $begin init_command$$
@@ -1072,8 +1089,10 @@ int main(int n_arg, const char** argv)
 	message = command_arg + " start";
 	std::time_t unix_time = dismod_at::log_message(db, "command", message);
 	// --------------- get the input tables ---------------------------------
+	std::time_t current_time = trace("Reading data base");
 	dismod_at::db_input_struct db_input;
 	get_db_input(db, db_input);
+	trace("elapsed time = ", current_time);
 	// ----------------------------------------------------------------------
 	// option_map
 	std::map<string, string> option_map;

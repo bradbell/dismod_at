@@ -40,11 +40,9 @@ if sys.argv[0] != 'bin/import_cascade.py' :
 #
 option_dict = collections.OrderedDict([
 	('rate_info','       are iota and rho zero or non-zero'),
-	('time_lower','      minimum value in the time grid'),
-	('time_upper','      maximum value in the time grid'),
-	('number_time','     number of values in the time grid'),
 	('child_value_std',' value standard deviation for random effects'),
-	('child_dtime_std',' dtime standard deviation for random effects')
+	('child_dtime_std',' dtime standard deviation for random effects'),
+	('time_grid','       the time grid as space seperated values')
 ])
 usage = '''bin/import_cascade.py cascade_path option_csv
 
@@ -83,6 +81,8 @@ for name in cascade_name_list :
 		sys.exit(msg)
 	cascade_path_dict[name] = path
 # ----------------------------------------------------------------------------
+# option_table_in
+#
 option_table_in = dict()
 file_ptr    = open(option_csv)
 reader      = csv.DictReader(file_ptr)
@@ -99,9 +99,8 @@ for option in option_table_in :
 		msg += option + ' in ' + option_csv + ' is not a valid option'
 		sys.exit(msg)
 #
-if int( option_table_in['number_time'] ) < 2 :
-	msg  = usage + '\n'
-	msg += 'import_cascade: number_time in ' + option-csv + ' < 2'
+if len( option_table_in['time_grid'].split() ) < 2 :
+	msg = 'in ' + option_csv + ' time_grid does not have two or more elements'
 	sys.exit(msg)
 #
 rate_info = option_table_in['rate_info']
@@ -202,19 +201,11 @@ for row in cascade_data_dict['value'] :
 # Output time table.
 # time_list:
 #
-time_lower = float( option_table_in['time_lower'] )
-time_upper = float( option_table_in['time_upper'] )
-n_time     = int( option_table_in['number_time'] )
-time_list  = list()
-if n_time <= 0 :
-	msg = 'n_time = ' + str(n_time) + ' is <= 0 in ' + option_csv
-	sys.exit(msg)
-elif n_time == 1 :
-	time_list.append( (time_lower + time_upper) / 2.0 )
-else :
-	for i in range( n_time ) :
-		time = ( time_lower * (n_time-i-1) + time_upper * i )/(n_time-1)
-		time_list.append(time)
+time_grid  = option_table_in['time_grid']
+time_list  = time_grid.split()
+for i in range( len(time_list) ) :
+	time_list[i] = float( time_list[i] )
+assert len(time_list) >= 2
 #
 col_name = [ 'time' ]
 col_type = [ 'real' ]
@@ -534,11 +525,11 @@ for time_id in range( n_time ) :
 # rate_dtime_prior_id
 #
 rate_dtime_prior_id = dict()
-delta_time          = time_list[1] - time_list[0]
+avg_delta_time      = (time_list[-1] - time_list[0]) / (len(time_list) - 1)
 lower               = None
 upper               = None
 mean                = 0.0
-std                 = delta_time / 10.
+std                 = avg_delta_time / 10.
 for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
 	if rate == 'pini' :
 		eta = 1e-7
