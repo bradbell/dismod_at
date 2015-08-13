@@ -19,13 +19,14 @@ $spell
 	CppAD
 	struct
 	obj
+	cov
 $$
 
 $section Create a Subsampled Version of Data Table$$
 
 $head Syntax$$
 $icode%data_subset_obj% = data_subset(
-	%data_table%, %covariate_value%, %covariate_table%, %child_object%
+	%data_table%, %data_cov_value%, %covariate_table%, %child_object%
 )%$$
 
 $head See Also$$
@@ -152,7 +153,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<data_subset_struct> data_subset(
 	const CppAD::vector<data_struct>&      data_table      ,
-	const CppAD::vector<double>&           covariate_value ,
+	const CppAD::vector<double>&           data_cov_value  ,
 	const CppAD::vector<covariate_struct>& covariate_table ,
 	const child_info&                      child_object    )
 {	CppAD::vector<data_subset_struct> data_subset_obj;
@@ -172,7 +173,7 @@ CppAD::vector<data_subset_struct> data_subset(
 		if( ok[data_id] )
 		{	for(size_t j = 0; j < n_covariate; j++)
 			{	size_t index          = data_id * n_covariate + j;
-				double x_j            = covariate_value[index];
+				double x_j            = data_cov_value[index];
 				double reference      = covariate_table[j].reference;
 				double max_difference = covariate_table[j].max_difference;
 				double difference     = 0.0;
@@ -194,7 +195,7 @@ CppAD::vector<data_subset_struct> data_subset(
 			//
 			for(size_t j = 0; j < n_covariate; j++)
 			{	size_t index          = data_id * n_covariate + j;
-				double x_j            = covariate_value[index];
+				double x_j            = data_cov_value[index];
 				double reference      = covariate_table[j].reference;
 				double difference     = 0.0;
 				if( ! std::isnan(x_j) )

@@ -147,10 +147,10 @@ bool data_model_subset(void)
 	//
 	// covariate table
 	vector<dismod_at::covariate_struct> covariate_table(0);
+	vector<double> data_cov_value(0);
 	//
 	// data_table
 	size_t n_data = n_node;
-	vector<double> x(0);
 	vector<dismod_at::data_struct> data_table(n_data);
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	// just evaluating integrand at a point
@@ -164,7 +164,6 @@ bool data_model_subset(void)
 		data_table[data_id].meas_value   = 0.0;
 		data_table[data_id].meas_std     = 1e-3;
 		data_table[data_id].density_id   = dismod_at::uniform_enum;
-		data_table[data_id].x            = x;
 	}
 	//
 	// smooth_table
@@ -204,6 +203,7 @@ bool data_model_subset(void)
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 		data_table,
+		data_cov_value,
 		covariate_table,
 		child_object
 	);

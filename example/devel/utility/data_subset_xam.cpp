@@ -76,16 +76,16 @@ bool data_subset_xam(void)
 	// data table
 	size_t n_data = n_node;
 	vector<dismod_at::data_struct> data_table(n_data);
-	vector<double> covariate_value( n_data * n_covariate );
+	vector<double> data_cov_value( n_data * n_covariate );
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	data_table[data_id]         = record;
 		data_table[data_id].node_id = data_id;
-		covariate_value[ data_id * n_covariate + 1 ] = 100. * data_id;
+		data_cov_value[ data_id * n_covariate + 1 ] = 100. * data_id;
 	}
-	covariate_value[ 0 * n_covariate + 0] = -0.5; // sex reference
-	covariate_value[ 1 * n_covariate + 0] = -0.5; // sex reference
-	covariate_value[ 2 * n_covariate + 0] =  0.0; // within sex bounds
-	covariate_value[ 3 * n_covariate + 0] =  0.5; // out of sex bounds
+	data_cov_value[ 0 * n_covariate + 0] = -0.5; // sex reference
+	data_cov_value[ 1 * n_covariate + 0] = -0.5; // sex reference
+	data_cov_value[ 2 * n_covariate + 0] =  0.0; // within sex bounds
+	data_cov_value[ 3 * n_covariate + 0] =  0.5; // out of sex bounds
 	//
 	// child_object
 	size_t parent_node_id = 1; // north_america
@@ -96,7 +96,7 @@ bool data_subset_xam(void)
 	// data_subset_obj
 	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 		data_table,
-		covariate_value,
+		data_cov_value,
 		covariate_table,
 		child_object
 	);

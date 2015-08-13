@@ -19,6 +19,7 @@ $spell
 	cpp
 	std
 	data
+	cov
 $$
 
 $section C++: Get the Data Table Information$$
@@ -26,7 +27,7 @@ $section C++: Get the Data Table Information$$
 $head Syntax$$
 $codei%get_data_table(
 	%db%, %n_covariate%, %age_min%, %age_max%, %time_min%, %time_max%,
-	%data_table%, %covariate_value%
+	%data_table%, %data_cov_value%
 )%$$
 
 $head Purpose$$
@@ -144,10 +145,10 @@ $code double$$ $cnext $code time_upper$$ $cnext
 	The $cref/time_upper/data_table/time_upper/$$ for this measurement
 $tend
 
-$head covariate_value$$
+$head data_cov_value$$
 This argument has prototype
 $codei%
-	CppAD::vector<double>&  %covariate_value%
+	CppAD::vector<double>&  %data_cov_value%
 %$$
 On input its size is zero.
 Upon return, its size is the number of data points times
@@ -155,7 +156,7 @@ the number of covariates.
 For each
 $cref/covariate_id/covariate_table/covariate_id/$$ and $icode data_id$$ pair
 $codei%
-	covariate_value[%data_id% * %n_covariate% + %covariate_id%]
+	data_cov_value[%data_id% * %n_covariate% + %covariate_id%]
 %$$
 is the corresponding covariate value.
 
@@ -184,7 +185,7 @@ void get_data_table(
 	double                      time_min          ,
 	double                      time_max          ,
 	CppAD::vector<data_struct>& data_table        ,
-	CppAD::vector<double>&      covariate_value   )
+	CppAD::vector<double>&      data_cov_value    )
 {	using std::string;
 	// TODO: This could be more efficient if we only allcated one temporary
 	// column at a time (to use with get_table column
@@ -265,8 +266,8 @@ void get_data_table(
 	}
 
 	// now get the covariates
-	assert( covariate_value.size() == 0 );
-	covariate_value.resize(n_data * n_covariate );
+	assert( data_cov_value.size() == 0 );
+	data_cov_value.resize(n_data * n_covariate );
 	for(size_t j = 0; j < n_covariate; j++)
 	{	std::stringstream ss;
 		ss << "x_" << j;
@@ -274,7 +275,7 @@ void get_data_table(
 		CppAD::vector<double> x_j;
 		get_table_column(db, table_name, column_name, x_j);
 		for(size_t i = 0; i < n_data; i++)
-			covariate_value[ i * n_covariate + j ] = x_j[i];
+			data_cov_value[ i * n_covariate + j ] = x_j[i];
 	}
 
 	// check for erorr conditions

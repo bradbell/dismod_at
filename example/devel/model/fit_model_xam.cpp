@@ -227,7 +227,7 @@ bool fit_model_xam(void)
 	//
 	// covariate table
 	vector<dismod_at::covariate_struct> covariate_table(0);
-	vector<double> covariate_value(0);
+	vector<double> data_cov_value(0);
 	//
 	// data_table
 	dismod_at::integrand_enum integrand_vec[] = {
@@ -274,7 +274,7 @@ bool fit_model_xam(void)
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 		data_table,
-		covariate_value,
+		data_cov_value,
 		covariate_table,
 		child_object
 	);

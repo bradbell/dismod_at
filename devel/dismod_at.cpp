@@ -1197,7 +1197,7 @@ int main(int n_arg, const char** argv)
 	{	// data_subset_obj
 		vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 			db_input.data_table,
-			db_input.covariate_value,
+			db_input.data_cov_value,
 			db_input.covariate_table,
 			child_data
 		);

@@ -178,8 +178,6 @@ bool meas_mulcov(void)
 	double time_lower = time_min;
 	double time_upper = time_lower + ode_step_size;
 	size_t data_id = 0;
-	vector<double> x(1);
-	x[0] = x_j;
 	data_table[data_id].integrand_id = dismod_at::mtother_enum;
 	data_table[data_id].node_id      = 0;
 	data_table[data_id].weight_id    = 0;
@@ -190,7 +188,9 @@ bool meas_mulcov(void)
 	data_table[data_id].meas_value   = 0.0;
 	data_table[data_id].meas_std     = 1e-3;
 	data_table[data_id].density_id   = dismod_at::gaussian_enum;
-	data_table[data_id].x            = x;
+	//
+	vector<double> data_cov_value(1); // n_covariate * n_data = 1
+	data_cov_value[0] = x_j;
 	//
 	// smooth_table
 	size_t n_child        = 2;
@@ -236,6 +236,7 @@ bool meas_mulcov(void)
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 		data_table,
+		data_cov_value,
 		covariate_table,
 		child_object
 	);

@@ -37,7 +37,7 @@ namespace dismod_at {
 		double                      time_min        ,
 		double                      time_max        ,
 		CppAD::vector<data_struct>& data_table      ,
-		CppAD::vector<double>&      covariate_value
+		CppAD::vector<double>&      data_cov_value
 	);
 }
 
