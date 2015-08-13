@@ -28,15 +28,16 @@ namespace dismod_at {
 		double      age_upper;
 		double      time_lower;
 		double      time_upper;
-		CppAD::vector<double> x;
 	};
-	extern CppAD::vector<data_struct> get_data_table(
-		sqlite3* db        ,
-		size_t n_covariate ,
-		double age_min     ,
-		double age_max     ,
-		double time_min    ,
-		double time_max
+	extern void get_data_table(
+		sqlite3* db                                 ,
+		size_t                      n_covariate     ,
+		double                      age_min         ,
+		double                      age_max         ,
+		double                      time_min        ,
+		double                      time_max        ,
+		CppAD::vector<data_struct>& data_table      ,
+		CppAD::vector<double>&      covariate_value
 	);
 }
 

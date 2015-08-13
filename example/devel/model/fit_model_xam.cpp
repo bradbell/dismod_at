@@ -227,9 +227,9 @@ bool fit_model_xam(void)
 	//
 	// covariate table
 	vector<dismod_at::covariate_struct> covariate_table(0);
+	vector<double> covariate_value(0);
 	//
 	// data_table
-	vector<double> x(0); // empty set of covariates
 	dismod_at::integrand_enum integrand_vec[] = {
 		dismod_at::prevalence_enum , // rate_id = 0
 		dismod_at::Sincidence_enum , // rate_id = 1
@@ -259,7 +259,6 @@ bool fit_model_xam(void)
 		data_table[data_id].meas_value   = meas_value;
 		data_table[data_id].meas_std     = meas_std;
 		data_table[data_id].density_id   = dismod_at::gaussian_enum;
-		data_table[data_id].x            = x;
 	}
 	//
 	// prior_object
@@ -275,6 +274,7 @@ bool fit_model_xam(void)
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 		data_table,
+		covariate_value,
 		covariate_table,
 		child_object
 	);

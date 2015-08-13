@@ -38,6 +38,12 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 08-13$$
+The covariate values storage was changed from a vector for each data row
+to one vector for all the data rows.
+For an example with 77,288 rows of data this changed to time to read
+the entire database from 334 seconds to one second.
+
 $head 08-12$$
 $list number$$
 The $code var_command$$ was changed back to the $cref init_command$$

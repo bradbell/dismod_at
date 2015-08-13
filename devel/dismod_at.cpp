@@ -46,7 +46,8 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 		if( previous_time == 0 )
 			std::cout << message << std::endl;
 		else
-			std::cout << current_time - previous_time << " sec" << std::endl;
+			std::cout << message << current_time - previous_time << " sec"
+			<< std::endl;
 		return current_time;
 	}
 # else
@@ -1196,6 +1197,7 @@ int main(int n_arg, const char** argv)
 	{	// data_subset_obj
 		vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 			db_input.data_table,
+			db_input.covariate_value,
 			db_input.covariate_table,
 			child_data
 		);

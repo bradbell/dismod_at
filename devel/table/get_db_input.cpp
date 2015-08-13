@@ -143,8 +143,9 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	size_t n_time           = db_input.time_table.size();
 	double time_min         = db_input.time_table[0];
 	double time_max         = db_input.time_table[n_time - 1];
-	db_input.data_table     = get_data_table(
-		db, n_covariate, age_min, age_max, time_min, time_max
+	get_data_table(
+		db, n_covariate, age_min, age_max, time_min, time_max,
+		db_input.data_table, db_input.covariate_value
 	);
 	db_input.avg_case_table = get_avg_case_table(
 		db, n_covariate, age_min, age_max, time_min, time_max

@@ -34,6 +34,7 @@ namespace dismod_at {
 	};
 	extern CppAD::vector<data_subset_struct> data_subset(
 		const CppAD::vector<data_struct>&      data_table      ,
+		const CppAD::vector<double>&           covariate_value ,
 		const CppAD::vector<covariate_struct>& covariate_table ,
 		const child_info&                      child_object
 	);

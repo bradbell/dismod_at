@@ -76,7 +76,7 @@ $codei%
 Its size is the number of rows in $icode data_table$$ that satisfy
 the conditions above.
 The structure has all the fields that are present in
-$cref/data_struct/get_data_table/data_struct/$$.
+$cref/data_struct/get_data_table/data_table/data_struct/$$.
 
 $subhead n_subset$$
 We use the notation $icode%n_subset% = %data_subset_obj%.size()%$$.
@@ -147,6 +147,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<data_subset_struct> data_subset(
 	const CppAD::vector<data_struct>&      data_table      ,
+	const CppAD::vector<double>&           covariate_value ,
 	const CppAD::vector<covariate_struct>& covariate_table ,
 	const child_info&                      child_object    )
 {	CppAD::vector<data_subset_struct> data_subset_obj;
@@ -155,7 +156,7 @@ CppAD::vector<data_subset_struct> data_subset(
 	//
 	size_t n_child     = child_object.child_size();
 	size_t n_data      = data_table.size();
-	size_t n_covariate = data_table[0].x.size();
+	size_t n_covariate = covariate_table.size();
 	//
 	size_t n_subset = 0;
 	CppAD::vector<bool> ok(n_data);
@@ -165,7 +166,8 @@ CppAD::vector<data_subset_struct> data_subset(
 		ok[data_id] = child <= n_child;
 		if( ok[data_id] )
 		{	for(size_t j = 0; j < n_covariate; j++)
-			{	double x_j            = data_table[data_id].x[j];
+			{	size_t index          = data_id * n_covariate + j;
+				double x_j            = covariate_value[index];
 				double reference      = covariate_table[j].reference;
 				double max_difference = covariate_table[j].max_difference;
 				double difference     = 0.0;
@@ -186,7 +188,8 @@ CppAD::vector<data_subset_struct> data_subset(
 			one_sample.x.resize(n_covariate);
 			//
 			for(size_t j = 0; j < n_covariate; j++)
-			{	double x_j            = data_table[data_id].x[j];
+			{	size_t index          = data_id * n_covariate + j;
+				double x_j            = covariate_value[index];
 				double reference      = covariate_table[j].reference;
 				double difference     = 0.0;
 				if( ! std::isnan(x_j) )

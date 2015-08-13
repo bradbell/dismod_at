@@ -36,10 +36,11 @@ namespace dismod_at {
 		CppAD::vector<double>             age_table;
 		CppAD::vector<double>             time_table;
 		//
-		CppAD::vector<option_struct>    option_table;
+		CppAD::vector<option_struct>      option_table;
 		CppAD::vector<avg_case_struct>    avg_case_table;
 		CppAD::vector<covariate_struct>   covariate_table;
 		CppAD::vector<data_struct>        data_table;
+		CppAD::vector<double>             covariate_value;
 		CppAD::vector<density_enum>       density_table;
 		CppAD::vector<integrand_struct>   integrand_table;
 		CppAD::vector<mulcov_struct>      mulcov_table;

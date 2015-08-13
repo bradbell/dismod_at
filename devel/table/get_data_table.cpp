@@ -24,8 +24,9 @@ $$
 $section C++: Get the Data Table Information$$
 
 $head Syntax$$
-$icode%data_table% = get_data_table(
-	%db%, %n_covariate%, %age_min%, %age_max%, %time_min%, %time_max%
+$icode%get_data_table(
+	%db%, %n_covariate%, %age_min%, %age_max%, %time_min%, %time_max%,
+	%data_table%, %covariate_value%
 )%$$
 
 $head Purpose$$
@@ -92,26 +93,19 @@ $icode%
 is also checked.
 
 $head data_table$$
-The return value $icode data_table$$ has prototype
+This argument has prototype
 $codei%
-	CppAD::vector<data_struct>  %data_table%
+	CppAD::vector<data_struct>&  %data_table%
 %$$
+On input its size is zero and upon return it has one element for
+each row in the data table.
 For each $cref/data_id/data_table/data_id/$$,
 $codei%
 	%data_table%[%data_id%]
 %$$
-is the information for the corresponding data.
+is the $code data_struct$$ information for the corresponding data.
 
-$subhead x$$
-The value
-$codei%
-	%data_table%[%data_id%].x[%covariate_id%]
-%$$
-is the value of the covariate corresponding to the
-$cref/covariate_id/covariate_table/covariate_id/$$
-and the $icode data_id$$.
-
-$head data_struct$$
+$subhead data_struct$$
 This is a structure with the following fields
 $table
 Type  $cnext Field $cnext Description
@@ -148,10 +142,22 @@ $code double$$ $cnext $code time_lower$$ $cnext
 $rnext
 $code double$$ $cnext $code time_upper$$ $cnext
 	The $cref/time_upper/data_table/time_upper/$$ for this measurement
-$rnext
-$code CppAD::vector<double>$$ $pre  $$ $cnext $code x$$ $cnext
-	The $cref/covariate/data_table/Covariates/$$ values for this measurement
 $tend
+
+$head covariate_value$$
+This argument has prototype
+$codei%
+	CppAD::vector<double>&  %covariate_value%
+%$$
+On input its size is zero.
+Upon return, its size is the number of data points times
+the number of covariates.
+For each
+$cref/covariate_id/covariate_table/covariate_id/$$ and $icode data_id$$ pair
+$codei%
+	covariate_value[%data_id% * %n_covariate% + %covariate_id%]
+%$$
+is the corresponding covariate value.
 
 $children%example/devel/table/get_data_table_xam.cpp
 %$$
@@ -170,13 +176,15 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<data_struct> get_data_table(
-	sqlite3* db        ,
-	size_t n_covariate ,
-	double age_min     ,
-	double age_max     ,
-	double time_min    ,
-	double time_max    )
+void get_data_table(
+	sqlite3* db                                   ,
+	size_t                      n_covariate       ,
+	double                      age_min           ,
+	double                      age_max           ,
+	double                      time_min          ,
+	double                      time_max          ,
+	CppAD::vector<data_struct>& data_table        ,
+	CppAD::vector<double>&      covariate_value   )
 {	using std::string;
 	// TODO: This could be more efficient if we only allcated one temporary
 	// column at a time (to use with get_table column
@@ -239,8 +247,9 @@ CppAD::vector<data_struct> get_data_table(
 	get_table_column(db, table_name, column_name, time_upper);
 	assert( n_data == time_upper.size() );
 
-	// fill in all but the covariate values
-	CppAD::vector<data_struct> data_table(n_data);
+	// fill in the data table
+	assert( data_table.size() == 0 );
+	data_table.resize(n_data);
 	for(size_t i = 0; i < n_data; i++)
 	{	data_table[i].integrand_id  = integrand_id[i];
 		data_table[i].density_id    = density_id[i];
@@ -253,12 +262,11 @@ CppAD::vector<data_struct> get_data_table(
 		data_table[i].age_upper     = age_upper[i];
 		data_table[i].time_lower    = time_lower[i];
 		data_table[i].time_upper    = time_upper[i];
-
-		// alocate memory for covariates
-		data_table[i].x.resize(n_covariate);
 	}
 
-	// now get the covariate values
+	// now get the covariates
+	assert( covariate_value.size() == 0 );
+	covariate_value.resize(n_data * n_covariate );
 	for(size_t j = 0; j < n_covariate; j++)
 	{	std::stringstream ss;
 		ss << "x_" << j;
@@ -266,7 +274,7 @@ CppAD::vector<data_struct> get_data_table(
 		CppAD::vector<double> x_j;
 		get_table_column(db, table_name, column_name, x_j);
 		for(size_t i = 0; i < n_data; i++)
-			data_table[i].x[j] = x_j[i];
+			covariate_value[ i * n_covariate + j ] = x_j[i];
 	}
 
 	// check for erorr conditions
@@ -318,7 +326,7 @@ CppAD::vector<data_struct> get_data_table(
 			error_exit(db, msg, table_name, data_id);
 		}
 	}
-	return data_table;
+	return;
 }
 
 } // END DISMOD_AT_NAMESPACE

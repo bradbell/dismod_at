@@ -143,11 +143,11 @@ bool avg_yes_ode_xam(void)
 	//
 	// covariate table
 	vector<dismod_at::covariate_struct> covariate_table(0);
+	vector<double> covariate_value(0);
 	//
 	// data_table
 	vector<dismod_at::data_struct> data_table(1);
 	size_t data_id = 0;
-	vector<double> x(0);
 	data_table[data_id].integrand_id = dismod_at::prevalence_enum;
 	data_table[data_id].node_id      = 1; // child node
 	data_table[data_id].weight_id    = 0;
@@ -158,7 +158,6 @@ bool avg_yes_ode_xam(void)
 	data_table[data_id].meas_value   = 0.0;
 	data_table[data_id].meas_std     = 1e-3;
 	data_table[data_id].density_id   = dismod_at::uniform_enum;
-	data_table[data_id].x            = x;
 	//
 	// smooth_table
 	size_t n_child        = 2;
@@ -196,6 +195,7 @@ bool avg_yes_ode_xam(void)
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 		data_table,
+		covariate_value,
 		covariate_table,
 		child_object
 	);

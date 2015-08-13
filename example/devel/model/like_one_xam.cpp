@@ -141,12 +141,12 @@ bool like_one_xam(void)
 	//
 	// covariate table
 	vector<dismod_at::covariate_struct> covariate_table(0);
+	vector<double> covariate_value(0);
 	//
 	// data_table
 	vector<dismod_at::data_struct> data_table(2);
 	//
 	// parent node, time and age integrantion.
-	vector<double> x(0);
 	for(size_t data_id = 0; data_id < 2; data_id++)
 	{
 		data_table[data_id].integrand_id = dismod_at::mtother_enum;
@@ -162,7 +162,6 @@ bool like_one_xam(void)
 			data_table[data_id].density_id = dismod_at::gaussian_enum;
 		else
 			data_table[data_id].density_id = dismod_at::log_gaussian_enum;
-		data_table[data_id].x          = x;
 	}
 	//
 	// smooth_table
@@ -200,6 +199,7 @@ bool like_one_xam(void)
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
 		data_table,
+		covariate_value,
 		covariate_table,
 		child_object
 	);
