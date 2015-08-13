@@ -24,7 +24,7 @@ $$
 $section C++: Get the Data Table Information$$
 
 $head Syntax$$
-$icode%get_data_table(
+$codei%get_data_table(
 	%db%, %n_covariate%, %age_min%, %age_max%, %time_min%, %time_max%,
 	%data_table%, %covariate_value%
 )%$$

@@ -25,11 +25,16 @@ $section Create a Subsampled Version of Data Table$$
 
 $head Syntax$$
 $icode%data_subset_obj% = data_subset(
-	%data_table%, %covariate_table%, %child_object%
+	%data_table%, %covariate_value%, %covariate_table%, %child_object%
 )%$$
 
 $head See Also$$
 $cref avg_case_subset$$.
+
+$head 2DO$$
+This documentation is out of date since the data table covariate values
+were moved to a separate table.
+This will be fixed once data subset covariate values are also moved.
 
 $head Limit$$
 This routine subsamples the $icode data_table$$, in the following way:
