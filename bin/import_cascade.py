@@ -30,8 +30,6 @@ sys.path.append( os.path.join( os.getcwd(), 'python' ) )
 import dismod_at
 # ---------------------------------------------------------------------------
 # optiono_csv:       file that contains options to import_cascade
-# cascade_dir:       directory name (not path) where cascade input files are
-# cascade_path_dict: path to cascade input files
 # option_table_in:   a dictionary containing values in option file
 #
 if sys.argv[0] != 'bin/import_cascade.py' :
@@ -39,14 +37,14 @@ if sys.argv[0] != 'bin/import_cascade.py' :
 	sys.exit(msg)
 #
 option_dict = collections.OrderedDict([
+	('cascade_path','    directory (not path) where cascade input files are'),
 	('rate_info','       are iota and rho zero or non-zero'),
 	('child_value_std',' value standard deviation for random effects'),
 	('child_dtime_std',' dtime standard deviation for random effects'),
 	('time_grid','       the time grid as space seperated values')
 ])
-usage = '''bin/import_cascade.py cascade_path option_csv
+usage = '''bin/import_cascade.py option_csv
 
-cascade_path: path where the directory where cascade input files are located
 option_csv:   a csv file that contains the following (name, value) pairs
 '''
 usage += 30 * '-' + ' options ' + 40 * '-' + '\n'
@@ -54,32 +52,14 @@ for key in option_dict :
 	usage += key + ':' + option_dict[key] + '\n'
 usage += 79 * '-' + '\n'
 n_arg = len(sys.argv)
-if n_arg != 3 :
+if n_arg != 2 :
 	sys.exit(usage)
 #
-cascade_path = sys.argv[1]
-option_csv   = sys.argv[2]
-if not os.path.isdir( cascade_path ) :
-	msg  = usage + '\n'
-	msg += 'import_cascade: ' + cascade_path + ' is not a directory'
-	sys.exit(msg)
+option_csv   = sys.argv[1]
 if not os.path.isfile( option_csv ) :
 	msg  = usage + '\n'
 	msg += 'import_cascade: ' + option_csv + ' is not a file'
 	sys.exit(msg)
-#
-cascade_dir       = os.path.basename(cascade_path)
-#
-cascade_name_list = [
-	'data', 'rate_prior', 'simple_prior', 'effect_prior', 'integrand', 'value'
-]
-cascade_path_dict = dict()
-for name in cascade_name_list :
-	path = os.path.join(cascade_path, name + '.csv')
-	if not os.path.isfile(path) :
-		msg = 'import_cascade: ' + path + ' is not a file'
-		sys.exit(msg)
-	cascade_path_dict[name] = path
 # ----------------------------------------------------------------------------
 # option_table_in
 #
@@ -99,6 +79,13 @@ for option in option_table_in :
 		msg += option + ' in ' + option_csv + ' is not a valid option'
 		sys.exit(msg)
 #
+cascade_path = option_table_in['cascade_path']
+if not os.path.isdir( cascade_path ) :
+	msg  = usage + '\n'
+	msg += 'in ' + option_csv + ' cascade_path = ' + cascade_path
+	msg += ' is not a directory'
+	sys.exit(msg)
+#
 if len( option_table_in['time_grid'].split() ) < 2 :
 	msg = 'in ' + option_csv + ' time_grid does not have two or more elements'
 	sys.exit(msg)
@@ -117,6 +104,22 @@ if rate_info not in info_list :
 		if i + 1 < len( info_list ) :
 			msg += ', '
 	sys.exit(msg)
+# ----------------------------------------------------------------------------
+# cascade_path_dict
+#
+cascade_path  = option_table_in['cascade_path']
+cascade_dir   = os.path.basename(cascade_path)
+#
+cascade_name_list = [
+	'data', 'rate_prior', 'simple_prior', 'effect_prior', 'integrand', 'value'
+]
+cascade_path_dict = dict()
+for name in cascade_name_list :
+	path = os.path.join(cascade_path, name + '.csv')
+	if not os.path.isfile(path) :
+		msg = 'import_cascade: ' + path + ' is not a file'
+		sys.exit(msg)
+	cascade_path_dict[name] = path
 # ---------------------------------------------------------------------------
 # float_or_none
 #
