@@ -38,6 +38,8 @@ if sys.argv[0] != 'bin/import_cascade.py' :
 #
 option_dict = collections.OrderedDict([
 	('cascade_path','    directory (not path) where cascade input files are'),
+	('ode_step_size','   step size of ODE solution in age and time'),
+	('mtall2mtother','   treat mtall data as if it were mtother [yes/no]'),
 	('rate_info','       are iota and rho zero or non-zero'),
 	('child_value_std',' value standard deviation for random effects'),
 	('child_dtime_std',' dtime standard deviation for random effects'),
@@ -78,6 +80,20 @@ for option in option_table_in :
 		msg  = usage + '\n'
 		msg += option + ' in ' + option_csv + ' is not a valid option'
 		sys.exit(msg)
+#
+ode_step_size = option_table_in['ode_step_size']
+if not float(ode_step_size) > 0.0 :
+	msg  = usage + '\n'
+	msg += 'in ' + option_csv + ' ode_step_size = ' + ode_step_size
+	msg += ' is not greater than zero'
+	sys.exit(msg)
+#
+mtall2mtother = option_table_in['mtall2mtother']
+if not mtall2mtother in [ 'yes', 'no' ] :
+	msg  = usage + '\n'
+	msg += 'in ' + option_csv + ' mtall2mtother = "' + mtall2mtother
+	msg += '" is not "yes" or "no"'
+	sys.exit(msg)
 #
 cascade_path = option_table_in['cascade_path']
 if not os.path.isdir( cascade_path ) :
@@ -287,6 +303,8 @@ for row in integrand_table_in :
 	integrand_name = row['integrand']
 	if integrand_name == 'incidence' :
 		integrand_name = 'Tincidence'
+	if integrand_name == 'mtall' and option_table_in['mtall2mtother']=='yes' :
+		integrand_name = 'mtother'
 	row_list.append( [ integrand_name , float( row['eta'] ) ] )
 tbl_name = 'integrand'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
@@ -829,7 +847,7 @@ col_name = [ 'option_name', 'option_value' ]
 col_type = [ 'text unique', 'text' ]
 row_list = [
 	[ 'parent_node_id', str(node_name2id['world'])       ],
-	[ 'ode_step_size',  value_table_in['integrate_step'] ],
+	[ 'ode_step_size',  option_table_in['ode_step_size'] ],
 	[ 'number_sample',  '10'                             ],
 	[ 'random_seed',    str(int( timer.time() ))         ],
 	[ 'rate_info',      option_table_in['rate_info']     ],
