@@ -241,11 +241,15 @@ bool avg_no_ode_xam(void)
 		data_table
 	);
 	// data_subset
-	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
+	vector<dismod_at::data_subset_struct> data_subset_obj;
+	vector<double> data_subset_cov_value;
+	data_subset(
 		data_table,
 		data_cov_value,
 		covariate_table,
-		child_object
+		child_object,
+		data_subset_obj,
+		data_subset_cov_value
 	);
 	// data_model
 	dismod_at::data_model data_object(
@@ -259,6 +263,7 @@ bool avg_no_ode_xam(void)
 		integrand_table,
 		node_table,
 		data_subset_obj,
+		data_subset_cov_value,
 		w_info_vec,
 		s_info_vec,
 		pack_object,

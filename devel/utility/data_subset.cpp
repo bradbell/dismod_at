@@ -26,19 +26,15 @@ $$
 $section Create a Subsampled Version of Data Table$$
 
 $head Syntax$$
-$icode%data_subset_obj% = data_subset(
-	%data_table%, %data_cov_value%, %covariate_table%, %child_object%
+$codei%data_subset(
+	%data_table%, %data_cov_value%, %covariate_table%, %child_object%,
+	%data_subset_obj%, %data_subset_cov_value%
 )%$$
 
 $head See Also$$
 $cref avgint_subset$$.
 
-$head 2DO$$
-This documentation is out of date since the data table covariate values
-were moved to a separate table.
-This will be fixed once data subset covariate values are also moved.
-
-$head Limit$$
+$head Purpose$$
 This routine subsamples the $icode data_table$$, in the following way:
 $list number$$
 Only rows corresponding to nodes that are descendants of the
@@ -47,13 +43,12 @@ $lnext
 Only rows for which the covariates satisfy the
 $cref/max_difference/covariate_table/max_difference/$$ criteria
 are included.
-$lend
-
-$head Covariate Reference$$
+$lnext
 The subsampled rows are the same as the corresponding original row
 except that for each covariate, its
 $cref/reference/covariate_table/reference/$$ value is subtracted
 from the value of the covariate in $icode data_table$$.
+$lend
 
 $head data_table$$
 This argument has prototype
@@ -61,6 +56,14 @@ $codei%
 	const CppAD::vector<data_struct>& %data_table%
 %$$
 and is the $cref/data_table/get_data_table/data_table/$$.
+
+$head data_cov_value$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %data_cov_value%
+%$$
+and is the $cref/data_table/get_data_table/data_cov_value/$$
+covariate values.
 
 $head covariate_table$$
 This argument has prototype
@@ -76,12 +79,13 @@ $codei%
 %$$
 
 $head data_subset_obj$$
-The return value has prototype
+This argument has prototype
 $codei%
-	CppAD::vector<data_subset_struct> %data_subset_obj%
+	CppAD::vector<data_subset_struct>& %data_subset_obj%
 %$$
-Its size is the number of rows in $icode data_table$$ that satisfy
-the conditions above.
+Its input size is zero and upon return
+its size is the number of rows in $icode data_table$$ that satisfy
+the purpose above.
 The structure has all the fields that are present in
 $cref/data_struct/get_data_table/data_table/data_struct/$$.
 
@@ -108,34 +112,42 @@ $codei%
 		%data_subset_obj%[%subset_id%+1].original_id
 %$$
 
-$subhead x$$
-For each $icode subset_id$$ we use
+$head data_subset_cov_value$$
+This argument has prototype
 $codei%
-row(%subset_id%) = %data_table%[ %data_subset_obj%[%subset_id%].original_id ]
+	CppAD::vector<double>& %data_subset_cov_value%
 %$$
-to denote the corresponding row of $icode data_table$$.
-For each $cref/covariate_id/covariate_table/covariate_id/$$,
+Its input size is zero and upon return
+its size is $icode%n_subset% * %n_covariate%$$.
+For each $icode subset_id$$ and
+$cref/covariate_id/covariate_table/covariate_id/$$,
 $codei%
-	%data_subset_obj%[%subset_id%].x[%covariate_id%] =
-		row(%subset_id%).x[%covariate_id%] - reference(%covariate_id%)
+%data_subset_cov_value%[%subset_id% * %n_covariate% + %covariate_id%]
+= %data_cov_value%[%original_id% * %n_covariate% + %covariate_id%]
+  - reference(%covariate_id%)
 %$$
-where $codei%reference(%covariate_id%)%$$ is the
+where
+$codei%
+	%original_id% = %data_subset_obj%[%subset_id%].original_id
+%$$
+and $codei%reference(%covariate_id%)%$$ is the
 $cref/reference/covariate_table/reference/$$ value for the
 corresponding $icode covariate_id$$.
 Note that if the
 $cref/max_difference/covariate_table/max_difference/$$
 value is $code null$$ in the covariate table,
-or the covariate value is $code null$$ in $icode data_table$$,
+or the covariate value is $code null$$ in $cref data_table$$,
 $codei%
-	%data_subset_obj%[%subset_id%].x[%covariate_id%] = 0
+%data_subset_cov_value%[%subset_id% * %n_covariate% + %covariate_id%] = 0
 %$$
 Also note that
 $codei%
-	| %data_subset_obj%[%subset_id%].x[%covariate_id%] | <=
-		max_difference(%covariate_id%)
+| %data_subset_cov_value%[%subset_id% * %n_covariate% + %covariate_id%] |
+<= max_difference(%covariate_id%)
 %$$
 where $codei%max_difference(%covariate_id%)%$$ is the
 maximum difference for the corresponding $icode covariate_id$$.
+
 
 $childtable%example/devel/utility/data_subset_xam.cpp
 %$$
@@ -152,17 +164,20 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<data_subset_struct> data_subset(
-	const CppAD::vector<data_struct>&      data_table      ,
-	const CppAD::vector<double>&           data_cov_value  ,
-	const CppAD::vector<covariate_struct>& covariate_table ,
-	const child_info&                      child_object    )
-{	CppAD::vector<data_subset_struct> data_subset_obj;
+void data_subset(
+	const CppAD::vector<data_struct>&      data_table            ,
+	const CppAD::vector<double>&           data_cov_value        ,
+	const CppAD::vector<covariate_struct>& covariate_table       ,
+	const child_info&                      child_object          ,
+	CppAD::vector<data_subset_struct>&     data_subset_obj       ,
+	CppAD::vector<double>&                 data_subset_cov_value )
+{	assert( data_subset_obj.size() == 0 );
+	assert( data_subset_cov_value.size() == 0 );
 	if( data_table.size() == 0 )
-		return data_subset_obj;
+		return;
 	//
 	size_t n_child     = child_object.child_size();
-	size_t n_data      = data_table.size();
+	size_t n_data    = data_table.size();
 	size_t n_covariate = covariate_table.size();
 	//
 	size_t n_subset = 0;
@@ -188,11 +203,11 @@ CppAD::vector<data_subset_struct> data_subset(
 	}
 	//
 	data_subset_obj.resize(n_subset);
+	data_subset_cov_value.resize(n_subset * n_covariate);
 	size_t subset_id = 0;
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	if( ok[data_id] )
 		{	data_subset_struct& one_sample( data_subset_obj[subset_id] );
-			one_sample.x.resize(n_covariate);
 			//
 			for(size_t j = 0; j < n_covariate; j++)
 			{	size_t index          = data_id * n_covariate + j;
@@ -201,8 +216,10 @@ CppAD::vector<data_subset_struct> data_subset(
 				double difference     = 0.0;
 				if( ! std::isnan(x_j) )
 					difference = x_j - reference;
-				one_sample.x[j] = difference;
+				index = subset_id * n_covariate + j;
+				data_subset_cov_value[index] = difference;
 			}
+			//
 			one_sample.original_id  = data_id;
 			one_sample.integrand_id = data_table[data_id].integrand_id;
 			one_sample.density_id   = data_table[data_id].density_id;
@@ -220,6 +237,7 @@ CppAD::vector<data_subset_struct> data_subset(
 			subset_id++;
 		}
 	}
-	return data_subset_obj;
+	return;
 }
+
 } // END DISMOD_AT_NAMESPACE

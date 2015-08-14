@@ -22,6 +22,7 @@ $spell
 	obj
 	covariate
 	covariates
+	cov
 $$
 
 $section Data Model: Constructor$$
@@ -38,6 +39,7 @@ $codei%data_model %data_object%(
 	%integrand_table%,
 	%node_table%,
 	%subset_object%,
+	%subset_cov_value%,
 	%w_info_vec%,
 	%s_info_vec%,
 	%pack_object%,
@@ -125,8 +127,18 @@ This argument has prototype
 $codei%
 	const CppAD::vector<data_subset_struct>&  %subset_object%
 %$$
-and is the sub-sampled version of the data table; see
-$cref/data_subset_obj/data_subset/data_subset_obj/$$.
+and is the sub-sampled version of the data or avgint table; see
+$cref/data_subset_obj/data_subset/data_subset_obj/$$,
+$cref/avgint_subset_obj/avgint_subset/avgint_subset_obj/$$.
+
+$head subset_cov_value$$
+This argument has prototype
+$codei%
+	const CppAD::vector<data_subset_struct>&  %subset_cov_value%
+%$$
+and is the sub-sampled version of the covariates; see
+$cref/data_subset_cov_value/data_subset/data_subset_cov_value/$$,
+$cref/avgint_subset_cov_value/avgint_subset/avgint_subset_cov_value/$$.
 
 
 $head w_info_vec$$
@@ -207,6 +219,7 @@ data_model::data_model(
 	const CppAD::vector<integrand_struct>&   integrand_table ,
 	const CppAD::vector<node_struct>&        node_table      ,
 	const CppAD::vector<SubsetStruct>&       subset_object   ,
+	const CppAD::vector<double>&             subset_cov_value,
 	const CppAD::vector<weight_info>&        w_info_vec      ,
 	const CppAD::vector<smooth_info>&        s_info_vec      ,
 	const pack_info&                         pack_object     ,
@@ -223,6 +236,8 @@ pack_object_   (pack_object)
 	// only set the fileds that are common to data_subset and avgint_subset
 	size_t n_subset = subset_object.size();
 	data_subset_obj_.resize(n_subset);
+	//
+	assert( subset_cov_value.size() == n_covariate * n_subset );
 	data_cov_value_.resize(n_subset * n_covariate);
 	for(i = 0; i < n_subset; i++)
 	{	data_subset_obj_[i].original_id  = subset_object[i].original_id;
@@ -234,7 +249,8 @@ pack_object_   (pack_object)
 		data_subset_obj_[i].time_lower   = subset_object[i].time_lower;
 		data_subset_obj_[i].time_upper   = subset_object[i].time_upper;
 		for(j = 0; j < n_covariate_; j++)
-			data_cov_value_[i * n_covariate_ + j] = subset_object[i].x[j];
+			data_cov_value_[i * n_covariate_ + j] =
+				subset_cov_value[i * n_covariate + j];
 	}
 	//
 	double eps = std::numeric_limits<double>::epsilon() * 100.0;
@@ -1555,6 +1571,7 @@ template data_model::data_model(                                \
 	const CppAD::vector<integrand_struct>&   integrand_table ,  \
 	const CppAD::vector<node_struct>&        node_table      ,  \
 	const CppAD::vector<SubsetStruct>&       subset_object   ,  \
+	const CppAD::vector<double>&             subset_cov_value,  \
 	const CppAD::vector<weight_info>&        w_info_vec      ,  \
 	const CppAD::vector<smooth_info>&        s_info_vec      ,  \
 	const pack_info&                         pack_object     ,  \

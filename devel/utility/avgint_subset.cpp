@@ -26,19 +26,15 @@ $$
 $section Create a Subsampled Version of Average Integrand Case Table$$
 
 $head Syntax$$
-$icode%avgint_subset_obj% = avgint_subset(
-	%avgint_table%, %avgint_cov_value%, %covariate_table%, %child_object%
+$codei%avgint_subset(
+	%avgint_table%, %avgint_cov_value%, %covariate_table%, %child_object%,
+	%avgint_subset_obj, %avgint_subset_cov_value%
 )%$$
 
 $head See Also$$
 $cref data_subset$$
 
-$head 2DO$$
-This documentation is out of date since the avgint table covariate values
-were moved to a separate table.
-This will be fixed once avgint subset covariate values are also moved.
-
-$head Limit$$
+$head Purpose$$
 This routine subsamples the $icode avgint_table$$, in the following way:
 $list number$$
 Only rows corresponding to nodes that are descendants of the
@@ -47,13 +43,12 @@ $lnext
 Only rows for which the covariates satisfy the
 $cref/max_difference/covariate_table/max_difference/$$ criteria
 are included.
-$lend
-
-$head Covariate Reference$$
+$lnext
 The subsampled rows are the same as the corresponding original row
 except that for each covariate, its
 $cref/reference/covariate_table/reference/$$ value is subtracted
 from the value of the covariate in $icode avgint_table$$.
+$lend
 
 $head avgint_table$$
 This argument has prototype
@@ -61,6 +56,14 @@ $codei%
 	const CppAD::vector<avgint_struct>& %avgint_table%
 %$$
 and is the $cref/avgint_table/get_avgint_table/avgint_table/$$.
+
+$head avgint_cov_value$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %avgint_cov_value%
+%$$
+and is the $cref/avgint_table/get_avgint_table/avgint_cov_value/$$
+covariate values.
 
 $head covariate_table$$
 This argument has prototype
@@ -76,12 +79,13 @@ $codei%
 %$$
 
 $head avgint_subset_obj$$
-The return value has prototype
+This argument has prototype
 $codei%
-	CppAD::vector<avgint_subset_struct> %avgint_subset_obj%
+	CppAD::vector<avgint_subset_struct>& %avgint_subset_obj%
 %$$
-Its size is the number of rows in $icode avgint_table$$ that satisfy
-the conditions above.
+Its input size is zero and upon return
+its size is the number of rows in $icode avgint_table$$ that satisfy
+the purpose above.
 The structure has all the fields that are present in
 $cref/avgint_struct/get_avgint_table/avgint_struct/$$.
 
@@ -108,32 +112,38 @@ $codei%
 		%avgint_subset_obj%[%subset_id%+1].original_id
 %$$
 
-$subhead x$$
-For each $icode subset_id$$ we use
+$head avgint_subset_cov_value$$
+This argument has prototype
 $codei%
-	row(%subset_id%) =
-		%avgint_table%[ %avgint_subset_obj%[%subset_id%].original_id ]
+	CppAD::vector<double>& %avgint_subset_cov_value%
 %$$
-to denote the corresponding row of $icode avgint_table$$.
-For each $cref/covariate_id/covariate_table/covariate_id/$$,
+Its input size is zero and upon return
+its size is $icode%n_subset% * %n_covariate%$$.
+For each $icode subset_id$$ and
+$cref/covariate_id/covariate_table/covariate_id/$$,
 $codei%
-	%avgint_subset_obj%[%subset_id%].x[%covariate_id%] =
-		row(%subset_id%).x[%covariate_id%] - reference(%covariate_id%)
+%avgint_subset_cov_value%[%subset_id% * %n_covariate% + %covariate_id%]
+= %avgint_cov_value%[%original_id% * %n_covariate% + %covariate_id%]
+  - reference(%covariate_id%)
 %$$
-where $codei%reference(%covariate_id%)%$$ is the
+where
+$codei%
+	%original_id% = %avgint_subset_obj%[%subset_id%].original_id
+%$$
+and $codei%reference(%covariate_id%)%$$ is the
 $cref/reference/covariate_table/reference/$$ value for the
 corresponding $icode covariate_id$$.
 Note that if the
 $cref/max_difference/covariate_table/max_difference/$$
 value is $code null$$ in the covariate table,
-or the covariate value is $code null$$ in $icode avgint_table$$,
+or the covariate value is $code null$$ in $cref avgint_table$$,
 $codei%
-	%avgint_subset_obj%[%subset_id%].x[%covariate_id%] = 0
+%avgint_subset_cov_value%[%subset_id% * %n_covariate% + %covariate_id%] = 0
 %$$
 Also note that
 $codei%
-	| %avgint_subset_obj%[%subset_id%].x[%covariate_id%] | <=
-		max_difference(%covariate_id%)
+| %avgint_subset_cov_value%[%subset_id% * %n_covariate% + %covariate_id%] |
+<= max_difference(%covariate_id%)
 %$$
 where $codei%max_difference(%covariate_id%)%$$ is the
 maximum difference for the corresponding $icode covariate_id$$.
@@ -153,17 +163,20 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<avgint_subset_struct> avgint_subset(
-	const CppAD::vector<avgint_struct>&  avgint_table  ,
-	const CppAD::vector<double>&           avgint_cov_value   ,
-	const CppAD::vector<covariate_struct>& covariate_table ,
-	const child_info&                      child_object    )
-{	CppAD::vector<avgint_subset_struct> avgint_subset_obj;
+void avgint_subset(
+	const CppAD::vector<avgint_struct>&    avgint_table            ,
+	const CppAD::vector<double>&           avgint_cov_value        ,
+	const CppAD::vector<covariate_struct>& covariate_table         ,
+	const child_info&                      child_object            ,
+	CppAD::vector<avgint_subset_struct>&   avgint_subset_obj       ,
+	CppAD::vector<double>&                 avgint_subset_cov_value )
+{	assert( avgint_subset_obj.size() == 0 );
+	assert( avgint_subset_cov_value.size() == 0 );
 	if( avgint_table.size() == 0 )
-		return avgint_subset_obj;
+		return;
 	//
 	size_t n_child     = child_object.child_size();
-	size_t n_avgint  = avgint_table.size();
+	size_t n_avgint    = avgint_table.size();
 	size_t n_covariate = covariate_table.size();
 	//
 	size_t n_subset = 0;
@@ -189,12 +202,11 @@ CppAD::vector<avgint_subset_struct> avgint_subset(
 	}
 	//
 	avgint_subset_obj.resize(n_subset);
+	avgint_subset_cov_value.resize(n_subset * n_covariate);
 	size_t subset_id = 0;
 	for(size_t avgint_id = 0; avgint_id < n_avgint; avgint_id++)
 	{	if( ok[avgint_id] )
-		{	avgint_subset_struct& one_sample =
-				avgint_subset_obj[subset_id];
-			one_sample.x.resize(n_covariate);
+		{	avgint_subset_struct& one_sample( avgint_subset_obj[subset_id] );
 			//
 			for(size_t j = 0; j < n_covariate; j++)
 			{	size_t index          = avgint_id * n_covariate + j;
@@ -203,7 +215,8 @@ CppAD::vector<avgint_subset_struct> avgint_subset(
 				double difference     = 0.0;
 				if( ! std::isnan(x_j) )
 					difference = x_j - reference;
-				one_sample.x[j] = difference;
+				index = subset_id * n_covariate + j;
+				avgint_subset_cov_value[index] = difference;
 			}
 			//
 			one_sample.original_id  = avgint_id;
@@ -219,6 +232,6 @@ CppAD::vector<avgint_subset_struct> avgint_subset(
 			subset_id++;
 		}
 	}
-	return avgint_subset_obj;
+	return;
 }
 } // END DISMOD_AT_NAMESPACE

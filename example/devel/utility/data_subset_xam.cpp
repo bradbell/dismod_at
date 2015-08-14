@@ -94,23 +94,27 @@ bool data_subset_xam(void)
 	);
 
 	// data_subset_obj
-	vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
+	vector<dismod_at::data_subset_struct> data_subset_obj;
+	vector<double> data_subset_cov_value;
+	data_subset(
 		data_table,
 		data_cov_value,
 		covariate_table,
-		child_object
+		child_object,
+		data_subset_obj,
+		data_subset_cov_value
 	);
 
 	// data_id = 0 is for world and hence not included
 	ok &= data_subset_obj[0].original_id == 1;
 	// data_id = 1 covariate values minus corresponding reference value
-	ok &= data_subset_obj[0].x[0]    == 0.0;
-	ok &= data_subset_obj[0].x[1]    == 100.;
+	ok &= data_subset_cov_value[0 * n_covariate + 0]    == 0.0;
+	ok &= data_subset_cov_value[0 * n_covariate + 1]    == 100.;
 	ok &= data_subset_obj[0].node_id == 1;
 	// data_id = 2 covariate values minus corresponding reference value
 	ok &= data_subset_obj[1].original_id == 2;
-	ok &= data_subset_obj[1].x[0]    == 0.5;
-	ok &= data_subset_obj[1].x[1]    == 200.;
+	ok &= data_subset_cov_value[1 * n_covariate + 0]    == 0.5;
+	ok &= data_subset_cov_value[1 * n_covariate + 1]    == 200.;
 	ok &= data_subset_obj[1].node_id == 2;
 	// data_id = 3 is has a sex covariate that is out of bounds
 	ok &= data_subset_obj.size() == 2;

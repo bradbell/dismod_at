@@ -1205,19 +1205,26 @@ int main(int n_arg, const char** argv)
 	}
 	else
 	{	// data_subset_obj
-		vector<dismod_at::data_subset_struct> data_subset_obj = data_subset(
+		vector<dismod_at::data_subset_struct> data_subset_obj;
+		vector<double> data_subset_cov_value;
+		data_subset(
 			db_input.data_table,
 			db_input.data_cov_value,
 			db_input.covariate_table,
-			child_data
+			child_data,
+			data_subset_obj,
+			data_subset_cov_value
 		);
 		// avgint_subset_obj
-		vector<dismod_at::avgint_subset_struct> avgint_subset_obj =
-			avgint_subset(
+		vector<dismod_at::avgint_subset_struct> avgint_subset_obj;
+		vector<double> avgint_subset_cov_value;
+		avgint_subset(
 				db_input.avgint_table,
 				db_input.avgint_cov_value,
 				db_input.covariate_table,
-				child_avgint
+				child_avgint,
+				avgint_subset_obj,
+				avgint_subset_cov_value
 		);
 		// -------------------------------------------------------------------
 		if( command_arg == "init" )
@@ -1254,6 +1261,7 @@ int main(int n_arg, const char** argv)
 				db_input.integrand_table ,
 				db_input.node_table      ,
 				data_subset_obj          ,
+				data_subset_cov_value    ,
 				w_info_vec               ,
 				s_info_vec               ,
 				pack_object              ,
@@ -1274,7 +1282,8 @@ int main(int n_arg, const char** argv)
 				db_input.time_table      ,
 				db_input.integrand_table ,
 				db_input.node_table      ,
-				avgint_subset_obj          ,
+				avgint_subset_obj        ,
+				avgint_subset_cov_value  ,
 				w_info_vec               ,
 				s_info_vec               ,
 				pack_object              ,

@@ -40,7 +40,13 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 08-14$$
+$list number$$
 Change the name of the $code avg_case_table$$ to $cref avgint_table$$.
+$lnext
+Change all covariate value storage to be a vector separate from the
+corresponding $cref data_table$$ or $cref avgint_table$$ value storage.
+(see speed comment for $code 08-13$$ below).
+$lend
 
 $head 08-13$$
 The covariate values storage was changed from a vector for each data row

@@ -30,13 +30,14 @@ namespace dismod_at {
 		double      age_upper;
 		double      time_lower;
 		double      time_upper;
-		CppAD::vector<double> x;
 	};
-	extern CppAD::vector<data_subset_struct> data_subset(
-		const CppAD::vector<data_struct>&      data_table      ,
-		const CppAD::vector<double>&           data_cov_value  ,
-		const CppAD::vector<covariate_struct>& covariate_table ,
-		const child_info&                      child_object
+	extern void data_subset(
+		const CppAD::vector<data_struct>&      data_table            ,
+		const CppAD::vector<double>&           data_cov_value        ,
+		const CppAD::vector<covariate_struct>& covariate_table         ,
+		const child_info&                      child_object            ,
+		CppAD::vector<data_subset_struct>&     data_subset_obj       ,
+		CppAD::vector<double>&                 data_subset_cov_value
 	);
 }
 

@@ -92,24 +92,27 @@ bool avgint_subset_xam(void)
 	);
 
 	// avgint_subset_obj
-	vector<dismod_at::avgint_subset_struct> avgint_subset_obj =
-		avgint_subset(
-			avgint_table,
-			avgint_cov_value,
-			covariate_table,
-			child_object
+	vector<dismod_at::avgint_subset_struct> avgint_subset_obj;
+	vector<double> avgint_subset_cov_value;
+	avgint_subset(
+		avgint_table,
+		avgint_cov_value,
+		covariate_table,
+		child_object,
+		avgint_subset_obj,
+		avgint_subset_cov_value
 	);
 
 	// avgint_id = 0 is for world and hence not included
 	ok &= avgint_subset_obj[0].original_id == 1;
 	// avgint_id = 1 covariate values minus corresponding reference value
-	ok &= avgint_subset_obj[0].x[0]    == 0.0;
-	ok &= avgint_subset_obj[0].x[1]    == 100.;
+	ok &= avgint_subset_cov_value[0 * n_covariate + 0]    == 0.0;
+	ok &= avgint_subset_cov_value[0 * n_covariate + 1]    == 100.;
 	ok &= avgint_subset_obj[0].node_id == 1;
 	// avgint_id = 2 covariate values minus corresponding reference value
 	ok &= avgint_subset_obj[1].original_id == 2;
-	ok &= avgint_subset_obj[1].x[0]    == 0.5;
-	ok &= avgint_subset_obj[1].x[1]    == 200.;
+	ok &= avgint_subset_cov_value[1 * n_covariate + 0]    == 0.5;
+	ok &= avgint_subset_cov_value[1 * n_covariate + 1]    == 200.;
 	ok &= avgint_subset_obj[1].node_id == 2;
 	// avgint_id = 3 is has a sex covariate that is out of bounds
 	ok &= avgint_subset_obj.size() == 2;
