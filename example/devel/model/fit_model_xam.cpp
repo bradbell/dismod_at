@@ -226,8 +226,8 @@ bool fit_model_xam(void)
 	w_info_vec[0] = w_info;
 	//
 	// covariate table
-	vector<dismod_at::covariate_struct> covariate_table(0);
-	vector<double> data_cov_value(0);
+	size_t n_covariate = 0;
+	vector<dismod_at::covariate_struct> covariate_table(n_covariate);
 	//
 	// data_table
 	dismod_at::integrand_enum integrand_vec[] = {
@@ -239,6 +239,7 @@ bool fit_model_xam(void)
 	};
 	size_t n_data = sizeof(integrand_vec) / sizeof(integrand_vec[0]);
 	vector<dismod_at::data_struct> data_table(n_data);
+	vector<double> data_cov_value(n_data * n_covariate);
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	double meas_value = 1e-2 * double( data_id + 1);
 		double meas_std   = 0.2  * meas_value;
@@ -285,6 +286,7 @@ bool fit_model_xam(void)
 	double ode_step_size = 20.;
 	dismod_at::data_model data_object(
 		parent_node_id,
+		n_covariate,
 		n_age_ode,
 		n_time_ode,
 		ode_step_size,

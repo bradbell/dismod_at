@@ -153,13 +153,15 @@ bool rate_mulcov(void)
 	size_t parent_node_id = 0;
 	//
 	// covariate table
-	vector<dismod_at::covariate_struct> covariate_table(1);
+	size_t n_covariate = 1;
+	vector<dismod_at::covariate_struct> covariate_table(n_covariate);
 	covariate_table[0].covariate_name  = "sex";
 	covariate_table[0].reference       = 0.0;
 	covariate_table[0].max_difference  = 0.6;
 	//
 	// data_table
 	vector<dismod_at::data_struct> data_table(1);
+	vector<double> data_cov_value(data_table.size() * n_covariate);
 	//
 	double age_lower  = age_min + ode_step_size;
 	double age_upper  = age_lower + 2.0 * ode_step_size;
@@ -177,7 +179,6 @@ bool rate_mulcov(void)
 	data_table[data_id].meas_std     = 1e-3;
 	data_table[data_id].density_id   = dismod_at::uniform_enum;
 	//
-	vector<double> data_cov_value(1); // n_covariate * n_data = 1
 	data_cov_value[0] = x_j;
 	//
 	// smooth_table
@@ -229,6 +230,7 @@ bool rate_mulcov(void)
 	// data_model
 	dismod_at::data_model data_object(
 		parent_node_id,
+		n_covariate,
 		n_age_ode,
 		n_time_ode,
 		ode_step_size,

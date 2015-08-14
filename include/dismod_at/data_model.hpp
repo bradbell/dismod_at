@@ -38,7 +38,23 @@ class data_model {
 		double                eta;
 		CppAD::vector<double> c_ode;
 	} data_ode_info;
+	// 2DO: remove when same as data_subset_struct
+	struct subset_data_struct {
+		int         original_id;
+		int         integrand_id;
+		int         density_id;
+		int         node_id;
+		int         weight_id;
+		int         hold_out;
+		double      meas_value;
+		double      meas_std;
+		double      age_lower;
+		double      age_upper;
+		double      time_lower;
+		double      time_upper;
+	};
 private:
+	const size_t                              n_covariate_;
 	const size_t                              n_age_ode_;
 	const size_t                              n_time_ode_;
 	const double                              ode_step_size_;
@@ -62,11 +78,15 @@ private:
 	// data_subset_obj_[subset_id].hold_out
 	// data_subset_obj_[subset_id].meas_value
 	// data_subset_obj_[subset_id].meas_std
-	CppAD::vector<data_subset_struct>         data_subset_obj_;
+	CppAD::vector<subset_data_struct>         data_subset_obj_;
+
+	// set by constructor and not changes
+	CppAD::vector<double>                     data_cov_value_;
 public:
 	template <class SubsetStruct>
 	data_model(
 		size_t                                   parent_node_id  ,
+		size_t                                   n_covariate     ,
 		size_t                                   n_age_ode       ,
 		size_t                                   n_time_ode      ,
 		double                                   ode_step_size   ,

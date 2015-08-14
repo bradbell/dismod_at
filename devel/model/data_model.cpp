@@ -19,6 +19,8 @@ $spell
 	struct
 	Cpp
 	obj
+	covariate
+	covariates
 $$
 
 $section Data Model: Constructor$$
@@ -26,6 +28,7 @@ $section Data Model: Constructor$$
 $head Syntax$$
 $codei%data_model %data_object%(
 	%parent_node_id%,
+	%n_covariate%,
 	%n_age_ode%,
 	%n_time_ode%,
 	%ode_step_size%,
@@ -54,6 +57,14 @@ $codei%
 and is the
 $cref/parent_node_id/option_table/parent_node_id/$$.
 in the fit command.
+
+$head n_covariate$$
+This argument has prototype
+$codei%
+	size_t %n_covariate%
+%$$
+It is the number of covariates; i.e., number or rows in
+$cref covariate_table$$.
 
 $head n_age_ode$$
 This argument has prototype
@@ -186,6 +197,7 @@ data_model::~data_model(void)
 template <class SubsetStruct>
 data_model::data_model(
 	size_t                                   parent_node_id  ,
+	size_t                                   n_covariate     ,
 	size_t                                   n_age_ode       ,
 	size_t                                   n_time_ode      ,
 	double                                   ode_step_size   ,
@@ -199,6 +211,7 @@ data_model::data_model(
 	const pack_info&                         pack_object     ,
 	const child_info&                        child_object    )
 :
+n_covariate_   (n_covariate)      ,
 n_age_ode_     (n_age_ode)        ,
 n_time_ode_    (n_time_ode)       ,
 ode_step_size_ (ode_step_size)    ,
@@ -209,7 +222,8 @@ pack_object_   (pack_object)
 	// only set the fileds that are common to data_subset and avg_case_subset
 	size_t n_subset = subset_object.size();
 	data_subset_obj_.resize(n_subset);
-	for(size_t i = 0; i < n_subset; i++)
+	data_cov_value_.resize(n_subset * n_covariate);
+	for(i = 0; i < n_subset; i++)
 	{	data_subset_obj_[i].original_id  = subset_object[i].original_id;
 		data_subset_obj_[i].integrand_id = subset_object[i].integrand_id;
 		data_subset_obj_[i].node_id      = subset_object[i].node_id;
@@ -218,7 +232,8 @@ pack_object_   (pack_object)
 		data_subset_obj_[i].age_upper    = subset_object[i].age_upper;
 		data_subset_obj_[i].time_lower   = subset_object[i].time_lower;
 		data_subset_obj_[i].time_upper   = subset_object[i].time_upper;
-		data_subset_obj_[i].x            = subset_object[i].x;
+		for(j = 0; j < n_covariate_; j++)
+			data_cov_value_[i * n_covariate_ + j] = subset_object[i].x[j];
 	}
 	//
 	double eps = std::numeric_limits<double>::epsilon() * 100.0;
@@ -697,8 +712,10 @@ Float data_model::avg_no_ode(
 {	size_t i, j, k, ell;
 	assert( pack_object_.size() == pack_vec.size() );
 
-	// data table infomation for this data point
-	const CppAD::vector<double>& x = data_subset_obj_[ subset_id ].x;
+	// covariate infomation for this data point
+	CppAD::vector<double> x(n_covariate_);
+	for(j = 0; j < n_covariate_; j++)
+			x[j] = data_cov_value_[subset_id * n_covariate_ + j];
 
 	// data_info information for this data point
 	integrand_enum integrand           = data_info_[subset_id].integrand;
@@ -962,8 +979,10 @@ Float data_model::avg_yes_ode(
 	size_t i, j, k, ell;
 	assert( pack_object_.size() == pack_vec.size() );
 
-	// data table information for this data pont
-	const CppAD::vector<double>& x     = data_subset_obj_[subset_id].x;
+	// covariate information for this data pont
+	CppAD::vector<double> x(n_covariate_);
+	for(j = 0; j < n_covariate_; j++)
+		x[j] = data_cov_value_[subset_id * n_covariate_ + j];
 
 	// data_info infomation for this data point
 	integrand_enum integrand           = data_info_[subset_id].integrand;
@@ -1288,8 +1307,10 @@ residual_struct<Float> data_model::like_one(
 	assert( pack_object_.size() == pack_vec.size() );
 	assert( replace_like_called_ );
 
-	// data table infomation for this data point
-	const CppAD::vector<double>& x = data_subset_obj_[subset_id].x;
+	// covariate infomation for this data point
+	CppAD::vector<double> x(n_covariate_);
+	for(j = 0; j < n_covariate_; j++)
+		x[j] = data_cov_value_[subset_id * n_covariate_ + j];
 	double sigma                   = data_subset_obj_[subset_id].meas_std;
 	size_t integrand_id            = data_subset_obj_[subset_id].integrand_id;
 	double meas_value              = data_subset_obj_[subset_id].meas_value;
@@ -1314,7 +1335,7 @@ residual_struct<Float> data_model::like_one(
 		}
 	}
 
-	// measurement mean covaraites effect on the ode subgrid
+	// measurement mean covariates effect on the ode subgrid
 	CppAD::vector<Float> meas_cov_ode(n_ode);
 	for(k = 0; k < n_ode; k++)
 		meas_cov_ode[k] = 0.0;
@@ -1342,7 +1363,7 @@ residual_struct<Float> data_model::like_one(
 		mean_effect += c_ode[k] * exp( - meas_cov_ode[k] );
 	Float adjust  = Float(mean_effect * meas_value);
 
-	// measurement std covaraites effect on the ode subgrid
+	// measurement std covariates effect on the ode subgrid
 	for(k = 0; k < n_ode; k++)
 		meas_cov_ode[k] = 0.0;
 	n_cov = pack_object_.mulcov_meas_std_n_cov(integrand_id);
@@ -1518,6 +1539,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)   \
 template data_model::data_model(                                \
 	size_t                                   parent_node_id  ,  \
+	size_t                                   n_covariate     ,  \
 	size_t                                   n_age_ode       ,  \
 	size_t                                   n_time_ode      ,  \
 	double                                   ode_step_size   ,  \

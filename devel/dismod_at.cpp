@@ -1119,6 +1119,9 @@ int main(int n_arg, const char** argv)
 		assert( actual_seed == random_seed );
 	}
 	// ---------------------------------------------------------------------
+	// n_covariate
+	size_t n_covariate = db_input.covariate_table.size();
+	// ---------------------------------------------------------------------
 	// n_age_ode
 	double age_min    = db_input.age_table[0];
 	double age_max    = db_input.age_table[ db_input.age_table.size() - 1 ];
@@ -1235,6 +1238,7 @@ int main(int n_arg, const char** argv)
 			// data_object
 			dismod_at::data_model data_object(
 				parent_node_id           ,
+				n_covariate              ,
 				n_age_ode                ,
 				n_time_ode               ,
 				ode_step_size            ,
@@ -1255,6 +1259,7 @@ int main(int n_arg, const char** argv)
 			// avg_case_object
 			dismod_at::data_model avg_case_object(
 				parent_node_id           ,
+				n_covariate              ,
 				n_age_ode                ,
 				n_time_ode               ,
 				ode_step_size            ,

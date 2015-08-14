@@ -146,12 +146,13 @@ bool data_model_subset(void)
 	size_t parent_node_id = 2;
 	//
 	// covariate table
-	vector<dismod_at::covariate_struct> covariate_table(0);
-	vector<double> data_cov_value(0);
+	size_t n_covariate = 0;
+	vector<dismod_at::covariate_struct> covariate_table(n_covariate);
 	//
 	// data_table
 	size_t n_data = n_node;
 	vector<dismod_at::data_struct> data_table(n_data);
+	vector<double> data_cov_value(n_data * n_covariate);
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	// just evaluating integrand at a point
 		data_table[data_id].integrand_id = dismod_at::mtother_enum;
@@ -210,6 +211,7 @@ bool data_model_subset(void)
 	// data_model
 	dismod_at::data_model data_object(
 		parent_node_id,
+		n_covariate,
 		n_age_ode,
 		n_time_ode,
 		ode_step_size,

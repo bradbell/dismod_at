@@ -142,11 +142,12 @@ bool avg_yes_ode_xam(void)
 	size_t parent_node_id = 0;
 	//
 	// covariate table
-	vector<dismod_at::covariate_struct> covariate_table(0);
-	vector<double> data_cov_value(0);
+	size_t n_covariate = 0;
+	vector<dismod_at::covariate_struct> covariate_table(n_covariate);
 	//
 	// data_table
 	vector<dismod_at::data_struct> data_table(1);
+	vector<double> data_cov_value(data_table.size() * n_covariate);
 	size_t data_id = 0;
 	data_table[data_id].integrand_id = dismod_at::prevalence_enum;
 	data_table[data_id].node_id      = 1; // child node
@@ -203,6 +204,7 @@ bool avg_yes_ode_xam(void)
 	// data_model
 	dismod_at::data_model data_object(
 		parent_node_id,
+		n_covariate,
 		n_age_ode,
 		n_time_ode,
 		ode_step_size,
