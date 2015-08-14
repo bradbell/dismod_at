@@ -149,7 +149,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	);
 	get_avg_case_table(
 		db, n_covariate, age_min, age_max, time_min, time_max,
-		db_input.avg_case_table, db_input.avg_cov_value
+		db_input.avg_case_table, db_input.avg_case_cov_value
 	);
 	//
 	// -----------------------------------------------------------------------

@@ -73,16 +73,16 @@ bool avg_case_subset_xam(void)
 	// avg_case table
 	size_t n_avg_case = n_node;
 	vector<dismod_at::avg_case_struct> avg_case_table(n_avg_case);
-	vector<double> avg_cov_value( n_avg_case * n_covariate );
+	vector<double> avg_case_cov_value( n_avg_case * n_covariate );
 	for(size_t avg_case_id = 0; avg_case_id < n_avg_case; avg_case_id++)
 	{	avg_case_table[avg_case_id]         = record;
 		avg_case_table[avg_case_id].node_id = avg_case_id;
-		avg_cov_value[ avg_case_id * n_covariate + 1 ] = 100. * avg_case_id;
+		avg_case_cov_value[ avg_case_id * n_covariate + 1 ] = 100. * avg_case_id;
 	}
-	avg_cov_value[0 * n_covariate + 0] = -0.5; // sex reference
-	avg_cov_value[1 * n_covariate + 0] = -0.5; // sex reference
-	avg_cov_value[2 * n_covariate + 0] = 0.0;  // within sex bounds
-	avg_cov_value[3 * n_covariate + 0] = 0.5;  // out of sex bounds
+	avg_case_cov_value[0 * n_covariate + 0] = -0.5; // sex reference
+	avg_case_cov_value[1 * n_covariate + 0] = -0.5; // sex reference
+	avg_case_cov_value[2 * n_covariate + 0] = 0.0;  // within sex bounds
+	avg_case_cov_value[3 * n_covariate + 0] = 0.5;  // out of sex bounds
 	//
 	// child_object
 	size_t parent_node_id = 1; // north_america
@@ -94,7 +94,7 @@ bool avg_case_subset_xam(void)
 	vector<dismod_at::avg_case_subset_struct> avg_case_subset_obj =
 		avg_case_subset(
 			avg_case_table,
-			avg_cov_value,
+			avg_case_cov_value,
 			covariate_table,
 			child_object
 	);

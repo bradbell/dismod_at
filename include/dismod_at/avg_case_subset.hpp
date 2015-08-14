@@ -31,7 +31,7 @@ namespace dismod_at {
 	};
 	extern CppAD::vector<avg_case_subset_struct> avg_case_subset(
 		const CppAD::vector<avg_case_struct>&      avg_case_table   ,
-		const CppAD::vector<double>&               avg_cov_value    ,
+		const CppAD::vector<double>&               avg_case_cov_value    ,
 		const CppAD::vector<covariate_struct>&     covariate_table  ,
 		const child_info&                          child_object
 	);

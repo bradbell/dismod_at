@@ -33,7 +33,7 @@ namespace dismod_at {
 		double                           time_min       ,
 		double                           time_max       ,
 		CppAD::vector<avg_case_struct>&  avg_case_table ,
-		CppAD::vector<double>&           avg_cov_value
+		CppAD::vector<double>&           avg_case_cov_value
 	);
 }
 

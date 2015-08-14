@@ -38,7 +38,7 @@ namespace dismod_at {
 		//
 		CppAD::vector<option_struct>      option_table;
 		CppAD::vector<avg_case_struct>    avg_case_table;
-		CppAD::vector<double>             avg_cov_value;
+		CppAD::vector<double>             avg_case_cov_value;
 		CppAD::vector<covariate_struct>   covariate_table;
 		CppAD::vector<data_struct>        data_table;
 		CppAD::vector<double>             data_cov_value;

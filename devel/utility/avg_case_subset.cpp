@@ -26,7 +26,7 @@ $section Create a Subsampled Version of Average Integrand Case Table$$
 
 $head Syntax$$
 $icode%avg_case_subset_obj% = avg_case_subset(
-	%avg_case_table%, %avg_cov_value%, %covariate_table%, %child_object%
+	%avg_case_table%, %avg_case_cov_value%, %covariate_table%, %child_object%
 )%$$
 
 $head See Also$$
@@ -154,7 +154,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<avg_case_subset_struct> avg_case_subset(
 	const CppAD::vector<avg_case_struct>&  avg_case_table  ,
-	const CppAD::vector<double>&           avg_cov_value   ,
+	const CppAD::vector<double>&           avg_case_cov_value   ,
 	const CppAD::vector<covariate_struct>& covariate_table ,
 	const child_info&                      child_object    )
 {	CppAD::vector<avg_case_subset_struct> avg_case_subset_obj;
@@ -174,7 +174,7 @@ CppAD::vector<avg_case_subset_struct> avg_case_subset(
 		if( ok[avg_case_id] )
 		{	for(size_t j = 0; j < n_covariate; j++)
 			{	size_t index          = avg_case_id * n_covariate + j;
-				double x_j            = avg_cov_value[index];
+				double x_j            = avg_case_cov_value[index];
 				double reference      = covariate_table[j].reference;
 				double max_difference = covariate_table[j].max_difference;
 				double difference     = 0.0;
@@ -197,7 +197,7 @@ CppAD::vector<avg_case_subset_struct> avg_case_subset(
 			//
 			for(size_t j = 0; j < n_covariate; j++)
 			{	size_t index          = avg_case_id * n_covariate + j;
-				double x_j            = avg_cov_value[index];
+				double x_j            = avg_case_cov_value[index];
 				double reference      = covariate_table[j].reference;
 				double difference     = 0.0;
 				if( ! std::isnan(x_j) )

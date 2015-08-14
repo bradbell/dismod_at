@@ -1208,7 +1208,7 @@ int main(int n_arg, const char** argv)
 		vector<dismod_at::avg_case_subset_struct> avg_case_subset_obj =
 			avg_case_subset(
 				db_input.avg_case_table,
-				db_input.avg_cov_value,
+				db_input.avg_case_cov_value,
 				db_input.covariate_table,
 				child_avg_case
 		);

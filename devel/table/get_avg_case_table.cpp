@@ -26,7 +26,7 @@ $section C++: Get the Average Integrand Case Table$$
 $head Syntax$$
 $codei%get_avg_case_table(
 	%db%, %n_covariate%, %age_min%, %age_max%, %time_min%, %time_max%,
-	%avg_case_table%, %avg_cov_value%
+	%avg_case_table%, %avg_case_cov_value%
 %)%$$
 
 $head Purpose$$
@@ -132,10 +132,10 @@ $code double$$ $cnext $code time_upper$$ $cnext
 	The $cref/time_upper/avg_case_table/time_upper/$$ for this measurement
 $tend
 
-$head avg_cov_value$$
+$head avg_case_cov_value$$
 This argument has prototype
 $codei%
-	CppAD::vector<double>&  %avg_cov_value%
+	CppAD::vector<double>&  %avg_case_cov_value%
 %$$
 On input its size is zero.
 Upon return, its size is the number of rows in the avg_case table times
@@ -144,7 +144,7 @@ For each
 $cref/covariate_id/covariate_table/covariate_id/$$ and
 $icode avg_case_id$$ pair
 $codei%
-	avg_cov_value[%avg_case_id% * %n_covariate% + %covariate_id%]
+	avg_case_cov_value[%avg_case_id% * %n_covariate% + %covariate_id%]
 %$$
 is the corresponding covariate value.
 
@@ -172,7 +172,7 @@ void get_avg_case_table(
 	double                          time_min            ,
 	double                          time_max            ,
 	CppAD::vector<avg_case_struct>& avg_case_table      ,
-	CppAD::vector<double>&          avg_cov_value       )
+	CppAD::vector<double>&          avg_case_cov_value       )
 {	using std::string;
 	// TODO: This could be more efficient if we only allcated one temporary
 	// column at a time (to use with get_table column)
@@ -229,8 +229,8 @@ void get_avg_case_table(
 	}
 
 	// now get the covariate values
-	assert( avg_cov_value.size() == 0 );
-	avg_cov_value.resize(n_avg_case * n_covariate);
+	assert( avg_case_cov_value.size() == 0 );
+	avg_case_cov_value.resize(n_avg_case * n_covariate);
 	for(size_t j = 0; j < n_covariate; j++)
 	{	std::stringstream ss;
 		ss << "x_" << j;
@@ -238,7 +238,7 @@ void get_avg_case_table(
 		CppAD::vector<double> x_j;
 		get_table_column(db, table_name, column_name, x_j);
 		for(size_t i = 0; i < n_avg_case; i++)
-			avg_cov_value[ i * n_covariate + j ] = x_j[i];
+			avg_case_cov_value[ i * n_covariate + j ] = x_j[i];
 	}
 
 	// check for erorr conditions
