@@ -373,41 +373,97 @@ for name in covariate_name2id :
 	col_name.append( 'x_%s' % covariate_name2id[name] )
 	col_type.append( 'real' )
 #
+mtall_list    = list()
 row_list      = list()
 for row_in in data_table_in :
+	mtall        = row_in['integrand'] == 'mtall'
 	integrand_id = integrand_name2id[ row_in['integrand'] ]
 	density_id   = density_name2id[ row_in['data_like'] ]
 	weight_id    = 0
-	hold_out     = int( row_in['hold_out'] )
-	meas_value   = float( row_in['meas_value'] )
-	meas_std     = float( row_in['meas_stdev'] )
-	age_lower    = float( row_in['age_lower'] )
-	age_upper    = float( row_in['age_upper'] )
-	time_lower   = float( row_in['time_lower'] )
-	time_upper   = float( row_in['time_upper'] )
+	hold_out     = row_in['hold_out']
+	meas_value   = row_in['meas_value']
+	meas_std     = row_in['meas_stdev']
+	age_lower    = row_in['age_lower']
+	age_upper    = row_in['age_upper']
+	time_lower   = row_in['time_lower']
+	time_upper   = row_in['time_upper']
 	#
+	# node_is
 	node_id      = node_name2id['world']
-	for level in [ 'super', 'region', 'subreg', 'atom' ] :
-		if row_in[level] != 'none' :
-			node_id = node_name2id[ row_in[level] ]
+	if mtall :
+		if row_in['super'] != 'none' :
+			node_id = node_name2id[ row_in['super'] ]
+	else :
+		for level in [ 'super', 'region', 'subreg', 'atom' ] :
+			if row_in[level] != 'none' :
+				node_id = node_name2id[ row_in[level] ]
 	#
 	row_out = [
-		integrand_id,
-		density_id,
-		node_id,
-		weight_id,
-		hold_out,
-		meas_value,
-		meas_std,
-		age_lower,
-		age_upper,
-		time_lower,
-		time_upper
+		integrand_id, # 0
+		density_id,   # 1
+		node_id,      # 2
+		weight_id,    # 3
+		hold_out,     # 4
+		meas_value,   # 5
+		meas_std,     # 6
+		age_lower,    # 7
+		age_upper,    # 8
+		time_lower,   # 9
+		time_upper    # 10
 	]
-	for name in covariate_name2id :
-		value        = row_in[name]
-		row_out.append(value)
-	row_list.append( row_out )
+	if mtall :
+			mtall_list.append(row_out)
+	else :
+		for name in covariate_name2id :
+			value        = row_in[name]
+			row_out.append(value)
+		row_list.append( row_out )
+#
+# sort the mtall data by age_lower, time_lower, node_id
+mtall_list = sorted(mtall_list, key=lambda row: row[2]) # by node_id
+mtall_list = sorted(mtall_list, key=lambda row: row[9]) # by time_lower
+mtall_list = sorted(mtall_list, key=lambda row: row[7]) # by age_lower
+#
+# combine the mtall data that has the same node_id, time_lower, age_lower
+previous_row  = [None]
+for row  in mtall_list :
+	if previous_row[0] == None :
+		match = False
+	else :
+		match = True
+		for i in [ 7, 9, 2 ] :
+			match = match and previous_row[i] == row[i]
+	#
+	if match :
+		n_sum      += 1
+		meas_value += float( previous_row[5] )
+		meas_std   += float( previous_row[6] )**2
+	else :
+		if previous_row[0] != None :
+			meas_value   = meas_value / n_sum
+			meas_std     = math.sqrt( meas_std / n_sum**2  )
+			previous_row[5] = meas_value
+			previous_row[6] = meas_std
+			for name in covariate_name2id :
+				previous_row.append('0')  # drop the covariates in mtall data
+			row_list.append(previous_row)
+		n_sum        = 0
+		meas_value   = 0.0
+		meas_std     = 0.0
+	previous_row = row
+#
+n_sum       += 1
+meas_value  += float( previous_row[5] )
+meas_std    += float( previous_row[6] )**2
+meas_value   = meas_value / n_sum
+meas_std     = math.sqrt( meas_std / n_sum**2  )
+previous_row[5] = meas_value
+previous_row[6] = meas_std
+for name in covariate_name2id :
+	previous_row.append('0')  # drop the covariates in mtall data
+row_list.append(previous_row)
+#
+#
 tbl_name = 'data'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
