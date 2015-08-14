@@ -24,15 +24,16 @@ namespace dismod_at {
 		double      age_upper;
 		double      time_lower;
 		double      time_upper;
-		CppAD::vector<double> x;
 	};
-	extern CppAD::vector<avg_case_struct> get_avg_case_table(
-		sqlite3* db        ,
-		size_t n_covariate ,
-		double age_min     ,
-		double age_max     ,
-		double time_min    ,
-		double time_max
+	extern void get_avg_case_table(
+		sqlite3* db                                     ,
+		size_t                           n_covariate    ,
+		double                           age_min        ,
+		double                           age_max        ,
+		double                           time_min       ,
+		double                           time_max       ,
+		CppAD::vector<avg_case_struct>&  avg_case_table ,
+		CppAD::vector<double>&           avg_cov_value
 	);
 }
 

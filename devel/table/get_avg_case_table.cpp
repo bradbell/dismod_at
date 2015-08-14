@@ -18,13 +18,15 @@ $spell
 	struct
 	cpp
 	std
+	cov
 $$
 
 $section C++: Get the Average Integrand Case Table$$
 
 $head Syntax$$
-$icode%avg_case_table% = get_avg_case_table(
-	%db%, %n_covariate%, %age_min%, %age_max%, %time_min%, %time_max%
+$codei%get_avg_case_table(
+	%db%, %n_covariate%, %age_min%, %age_max%, %time_min%, %time_max%,
+	%avg_case_table%, %avg_cov_value%
 %)%$$
 
 $head Purpose$$
@@ -91,24 +93,17 @@ $icode%
 is also checked.
 
 $head avg_case_table$$
-The return value $icode avg_case_table$$ has prototype
+This argument has prototype
 $codei%
-	CppAD::vector<avg_case_struct>  %avg_case_table%
+	CppAD::vector<avg_case_struct>&  %avg_case_table%
 %$$
+On input its size is zero and upon return it has one element for
+each row in the avg_case table.
 For each $cref/avg_case_id/avg_case_table/avg_case_id/$$,
 $codei%
 	%avg_case_table%[%avg_case_id%]
 %$$
-is the information for the corresponding data.
-
-$subhead x$$
-The value
-$codei%
-	%avg_case_table%[%avg_case_id%].x[%covariate_id%]
-%$$
-is the value of the covariate corresponding to the
-$cref/covariate_id/covariate_table/covariate_id/$$
-and the $icode avg_case_id$$.
+is the information for the corresponding row.
 
 $head avg_case_struct$$
 This is a structure with the following fields
@@ -135,10 +130,23 @@ $code double$$ $cnext $code time_lower$$ $cnext
 $rnext
 $code double$$ $cnext $code time_upper$$ $cnext
 	The $cref/time_upper/avg_case_table/time_upper/$$ for this measurement
-$rnext
-$code CppAD::vector<double>$$ $pre  $$ $cnext $code x$$ $cnext
-	The $cref/covariate/avg_case_table/Covariates/$$ values for this measurement
 $tend
+
+$head avg_cov_value$$
+This argument has prototype
+$codei%
+	CppAD::vector<double>&  %avg_cov_value%
+%$$
+On input its size is zero.
+Upon return, its size is the number of rows in the avg_case table times
+the number of covariates.
+For each
+$cref/covariate_id/covariate_table/covariate_id/$$ and
+$icode avg_case_id$$ pair
+$codei%
+	avg_cov_value[%avg_case_id% * %n_covariate% + %covariate_id%]
+%$$
+is the corresponding covariate value.
 
 $children%example/devel/table/get_avg_case_table_xam.cpp
 %$$
@@ -156,13 +164,15 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<avg_case_struct> get_avg_case_table(
+void get_avg_case_table(
 	sqlite3* db        ,
-	size_t n_covariate ,
-	double age_min     ,
-	double age_max     ,
-	double time_min    ,
-	double time_max    )
+	size_t                          n_covariate         ,
+	double                          age_min             ,
+	double                          age_max             ,
+	double                          time_min            ,
+	double                          time_max            ,
+	CppAD::vector<avg_case_struct>& avg_case_table      ,
+	CppAD::vector<double>&          avg_cov_value       )
 {	using std::string;
 	// TODO: This could be more efficient if we only allcated one temporary
 	// column at a time (to use with get_table column)
@@ -206,7 +216,8 @@ CppAD::vector<avg_case_struct> get_avg_case_table(
 	assert( n_avg_case == time_upper.size() );
 
 	// fill in all but the covariate values
-	CppAD::vector<avg_case_struct> avg_case_table(n_avg_case);
+	assert( avg_case_table.size() == 0 );
+	avg_case_table.resize(n_avg_case);
 	for(size_t i = 0; i < n_avg_case; i++)
 	{	avg_case_table[i].integrand_id  = integrand_id[i];
 		avg_case_table[i].node_id       = node_id[i];
@@ -215,12 +226,11 @@ CppAD::vector<avg_case_struct> get_avg_case_table(
 		avg_case_table[i].age_upper     = age_upper[i];
 		avg_case_table[i].time_lower    = time_lower[i];
 		avg_case_table[i].time_upper    = time_upper[i];
-
-		// alocate memory for covariates
-		avg_case_table[i].x.resize(n_covariate);
 	}
 
 	// now get the covariate values
+	assert( avg_cov_value.size() == 0 );
+	avg_cov_value.resize(n_avg_case * n_covariate);
 	for(size_t j = 0; j < n_covariate; j++)
 	{	std::stringstream ss;
 		ss << "x_" << j;
@@ -228,7 +238,7 @@ CppAD::vector<avg_case_struct> get_avg_case_table(
 		CppAD::vector<double> x_j;
 		get_table_column(db, table_name, column_name, x_j);
 		for(size_t i = 0; i < n_avg_case; i++)
-			avg_case_table[i].x[j] = x_j[i];
+			avg_cov_value[ i * n_covariate + j ] = x_j[i];
 	}
 
 	// check for erorr conditions
@@ -265,7 +275,7 @@ CppAD::vector<avg_case_struct> get_avg_case_table(
 			error_exit(db, msg, table_name, avg_case_id);
 		}
 	}
-	return avg_case_table;
+	return;
 }
 
 } // END DISMOD_AT_NAMESPACE

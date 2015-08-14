@@ -69,20 +69,20 @@ bool avg_case_subset_xam(void)
 	record.age_upper      = 90.0;
 	record.time_lower     = 2000.0;
 	record.time_upper     = 2010.0;
-	record.x.resize(n_covariate);
 
 	// avg_case table
 	size_t n_avg_case = n_node;
 	vector<dismod_at::avg_case_struct> avg_case_table(n_avg_case);
+	vector<double> avg_cov_value( n_avg_case * n_covariate );
 	for(size_t avg_case_id = 0; avg_case_id < n_avg_case; avg_case_id++)
 	{	avg_case_table[avg_case_id]         = record;
 		avg_case_table[avg_case_id].node_id = avg_case_id;
-		avg_case_table[avg_case_id].x[1]    = 100. * avg_case_id;
+		avg_cov_value[ avg_case_id * n_covariate + 1 ] = 100. * avg_case_id;
 	}
-	avg_case_table[0].x[0] = -0.5; // sex reference
-	avg_case_table[1].x[0] = -0.5; // sex reference
-	avg_case_table[2].x[0] = 0.0;  // within sex bounds
-	avg_case_table[3].x[0] = 0.5;  // out of sex bounds
+	avg_cov_value[0 * n_covariate + 0] = -0.5; // sex reference
+	avg_cov_value[1 * n_covariate + 0] = -0.5; // sex reference
+	avg_cov_value[2 * n_covariate + 0] = 0.0;  // within sex bounds
+	avg_cov_value[3 * n_covariate + 0] = 0.5;  // out of sex bounds
 	//
 	// child_object
 	size_t parent_node_id = 1; // north_america
@@ -92,7 +92,12 @@ bool avg_case_subset_xam(void)
 
 	// avg_case_subset_obj
 	vector<dismod_at::avg_case_subset_struct> avg_case_subset_obj =
-		avg_case_subset(avg_case_table, covariate_table, child_object);
+		avg_case_subset(
+			avg_case_table,
+			avg_cov_value,
+			covariate_table,
+			child_object
+	);
 
 	// avg_case_id = 0 is for world and hence not included
 	ok &= avg_case_subset_obj[0].original_id == 1;

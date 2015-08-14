@@ -19,17 +19,23 @@ $spell
 	CppAD
 	struct
 	obj
+	cov
 $$
 
 $section Create a Subsampled Version of Average Integrand Case Table$$
 
 $head Syntax$$
 $icode%avg_case_subset_obj% = avg_case_subset(
-	%avg_case_table%, %covariate_table%, %child_object%
+	%avg_case_table%, %avg_cov_value%, %covariate_table%, %child_object%
 )%$$
 
 $head See Also$$
 $cref data_subset$$
+
+$head 2DO$$
+This documentation is out of date since the avg_case table covariate values
+were moved to a separate table.
+This will be fixed once avg_case subset covariate values are also moved.
 
 $head Limit$$
 This routine subsamples the $icode avg_case_table$$, in the following way:
@@ -148,6 +154,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<avg_case_subset_struct> avg_case_subset(
 	const CppAD::vector<avg_case_struct>&  avg_case_table  ,
+	const CppAD::vector<double>&           avg_cov_value   ,
 	const CppAD::vector<covariate_struct>& covariate_table ,
 	const child_info&                      child_object    )
 {	CppAD::vector<avg_case_subset_struct> avg_case_subset_obj;
@@ -156,28 +163,49 @@ CppAD::vector<avg_case_subset_struct> avg_case_subset(
 	//
 	size_t n_child     = child_object.child_size();
 	size_t n_avg_case  = avg_case_table.size();
-	size_t n_covariate = avg_case_table[0].x.size();
+	size_t n_covariate = covariate_table.size();
 	//
-	avg_case_subset_struct one_sample;
-	one_sample.x.resize(n_covariate);
-	//
+	size_t n_subset = 0;
+	CppAD::vector<bool> ok(n_avg_case);
 	for(size_t avg_case_id = 0; avg_case_id < n_avg_case; avg_case_id++)
 	{	size_t child = child_object.table_id2child(avg_case_id);
 		// check if this avg_case is for parent or one of its descendents
-		bool ok = child <= n_child;
-		if( ok )
+		ok[avg_case_id] = child <= n_child;
+		if( ok[avg_case_id] )
 		{	for(size_t j = 0; j < n_covariate; j++)
-			{	double x_j            = avg_case_table[avg_case_id].x[j];
+			{	size_t index          = avg_case_id * n_covariate + j;
+				double x_j            = avg_cov_value[index];
 				double reference      = covariate_table[j].reference;
 				double max_difference = covariate_table[j].max_difference;
-				if( std::isnan(x_j) )
-					x_j = reference;
-				one_sample.x[j]       = x_j - reference;
-				ok  &= std::fabs( one_sample.x[j] ) <= max_difference;
+				double difference     = 0.0;
+				if( ! std::isnan(x_j) )
+					difference = x_j - reference;
+				ok[avg_case_id]  &= std::fabs( difference ) <= max_difference;
 			}
 		}
-		if( ok )
-		{	one_sample.original_id  = avg_case_id;
+		if( ok[avg_case_id] )
+			n_subset++;
+	}
+	//
+	avg_case_subset_obj.resize(n_subset);
+	size_t subset_id = 0;
+	for(size_t avg_case_id = 0; avg_case_id < n_avg_case; avg_case_id++)
+	{	if( ok[avg_case_id] )
+		{	avg_case_subset_struct& one_sample =
+				avg_case_subset_obj[subset_id];
+			one_sample.x.resize(n_covariate);
+			//
+			for(size_t j = 0; j < n_covariate; j++)
+			{	size_t index          = avg_case_id * n_covariate + j;
+				double x_j            = avg_cov_value[index];
+				double reference      = covariate_table[j].reference;
+				double difference     = 0.0;
+				if( ! std::isnan(x_j) )
+					difference = x_j - reference;
+				one_sample.x[j] = difference;
+			}
+			//
+			one_sample.original_id  = avg_case_id;
 			one_sample.integrand_id = avg_case_table[avg_case_id].integrand_id;
 			one_sample.node_id      = avg_case_table[avg_case_id].node_id;
 			one_sample.weight_id    = avg_case_table[avg_case_id].weight_id;
@@ -186,7 +214,8 @@ CppAD::vector<avg_case_subset_struct> avg_case_subset(
 			one_sample.time_lower   = avg_case_table[avg_case_id].time_lower;
 			one_sample.time_upper   = avg_case_table[avg_case_id].time_upper;
 			//
-			avg_case_subset_obj.push_back(one_sample);
+			// advance to next sample
+			subset_id++;
 		}
 	}
 	return avg_case_subset_obj;

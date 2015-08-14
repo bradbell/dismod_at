@@ -75,9 +75,11 @@ bool get_avg_case_table_xam(void)
 	double age_max     = 100.0;
 	double time_min    = 1900.;
 	double time_max    = 2015.;
-	vector<dismod_at::avg_case_struct> avg_case_table =
-		dismod_at::get_avg_case_table(
-			db, n_covariate, age_min, age_max, time_min, time_max
+	vector<dismod_at::avg_case_struct> avg_case_table(0);
+	vector<double> avg_cov_value(0);
+	dismod_at::get_avg_case_table(
+			db, n_covariate, age_min, age_max, time_min, time_max,
+			avg_case_table, avg_cov_value
 	);
 	ok  &= avg_case_table.size() == 1;
 	//
@@ -88,8 +90,8 @@ bool get_avg_case_table_xam(void)
 	ok  &= avg_case_table[0].age_upper         == 90.0;
 	ok  &= avg_case_table[0].time_lower        == 2000.0;
 	ok  &= avg_case_table[0].time_upper        == 2010.0;
-	ok  &= avg_case_table[0].x[0]              == 0.5;
-	ok  &= avg_case_table[0].x[1]              == 1000.0;
+	ok  &= avg_cov_value[ 0 * n_covariate + 0] == 0.5;
+	ok  &= avg_cov_value[ 0 * n_covariate + 1] == 1000.0;
 	//
 	// close database and return
 	sqlite3_close(db);
