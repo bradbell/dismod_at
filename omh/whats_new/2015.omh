@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2015$$
 $spell
+	avgint
 	init
 	var
 	Sincidence
@@ -37,6 +38,9 @@ $spell
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 08-14$$
+Change the name of the $code avg_case_table$$ to $cref avgint_table$$.
 
 $head 08-13$$
 The covariate values storage was changed from a vector for each data row
@@ -172,7 +176,7 @@ This has been fixed in the following user examples:
 $cref no_random_xam.cpp$$,
 $cref create_database.py$$.
 It was also fixed for the following developer examples:
-$cref avg_case_subset_xam.cpp$$,
+$cref avgint_subset_xam.cpp$$,
 $cref data_subset_xam.cpp$$.
 $lnext
 Handle the case where the
@@ -390,10 +394,10 @@ $list number$$
 The $code sample$$ table column $code sample_value$$
 was changed to $cref/var_value/sample_table/var_value/$$.
 $lnext
-The $cref avg_case_table$$ was added to the set of
+The $cref avgint_table$$ was added to the set of
 $cref input$$ tables.
 $lnext
-The $cref avg_case_subset_table$$ was added as an output
+The $cref avgint_subset_table$$ was added as an output
 of the $cref init_command$$.
 $lend
 

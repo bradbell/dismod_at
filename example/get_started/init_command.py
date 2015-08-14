@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 # $begin init_command.py$$ $newlinech #$$
 # $spell
+#	avgint
 #	init
 #	dismod
 # $$
@@ -73,12 +74,12 @@ for subset_id in range( n_subset ) :
 	# all the data is included for this example
 	assert subset_id == data_subset_dict[subset_id]['data_id']
 # -----------------------------------------------------------------------
-# check avg_case_subset table
-avg_case_subset_dict = dismod_at.get_table_dict(connection, 'avg_case_subset');
-n_subset         = len( avg_case_subset_dict )
+# check avgint_subset table
+avgint_subset_dict = dismod_at.get_table_dict(connection, 'avgint_subset');
+n_subset         = len( avgint_subset_dict )
 for subset_id in range( n_subset ) :
-	# all the avg_case is included for this example
-	assert subset_id == avg_case_subset_dict[subset_id]['avg_case_id']
+	# all the avgint is included for this example
+	assert subset_id == avgint_subset_dict[subset_id]['avgint_id']
 # -----------------------------------------------------------------------
 # check var table
 var_dict  = dismod_at.get_table_dict(connection, 'var')

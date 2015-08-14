@@ -782,7 +782,7 @@ row_list = [
 tbl_name = 'option'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # --------------------------------------------------------------------------
-# avg_case table
+# avgint table
 col_name2type = collections.OrderedDict([
 	('integrand_id',   'integer'     ),
 	('node_id',        'integer'     ),
@@ -812,7 +812,7 @@ for time_id in range( len(time_list) ) :
 		for integrand in integrand_name2id :
 			row[0]  = integrand_name2id[integrand]
 			row_list.append( copy.copy(row) )
-tbl_name = 'avg_case'
+tbl_name = 'avgint'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # --------------------------------------------------------------------------
 print('import_cascade.py: OK')

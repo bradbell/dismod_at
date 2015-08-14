@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin devel_table$$
 $spell
+	avgint
 	dismod
 $$
 
@@ -22,7 +23,7 @@ $childtable%devel/table/check_child_prior.cpp
 	%devel/table/create_table.cpp
 	%devel/table/exec_sql_cmd.cpp
 	%devel/table/get_age_table.cpp
-	%devel/table/get_avg_case_table.cpp
+	%devel/table/get_avgint_table.cpp
 	%devel/table/get_column_max.cpp
 	%devel/table/get_covariate_table.cpp
 	%devel/table/get_data_table.cpp

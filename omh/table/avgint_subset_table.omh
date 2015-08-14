@@ -8,35 +8,36 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin avg_case_subset_table$$
+$begin avgint_subset_table$$
 $spell
+	avgint
 	covariates
 $$
 
-$section The avg_case_subset Table: Which avg_case Table Rows are Used$$.
-The $code avg_case_subset$$ table identifies which rows of the
-$cref avg_case_table$$ are used.
+$section The avgint_subset Table: Which avgint Table Rows are Used$$.
+The $code avgint_subset$$ table identifies which rows of the
+$cref avgint_table$$ are used.
 This subset is defined as the set rows
-(or the set of $cref/avg_case_id/avg_case_table/avg_case_id/$$)
+(or the set of $cref/avgint_id/avgint_table/avgint_id/$$)
 such that the following conditions hold:
 $list number$$
-The $cref/node/avg_case_table/node_id/$$ is a descendant of the
+The $cref/node/avgint_table/node_id/$$ is a descendant of the
 $cref/parent_node/option_table/parent_node_id/$$.
 $lnext
 All of the
-$cref/covariates/avg_case_table/Covariates/$$ satisfy the
+$cref/covariates/avgint_table/Covariates/$$ satisfy the
 $cref/max_difference/covariate_table/max_difference/$$ criteria.
 $lend
 
-$head avg_case_subset_id$$
+$head avgint_subset_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$head avg_case_id$$
+$head avgint_id$$
 This column has type $code integer$$ and is a
-$cref/avg_case_id/avg_case_table/avg_case_id/$$ in the avg_case table.
+$cref/avgint_id/avgint_table/avgint_id/$$ in the avgint table.
 These values are unique and monotone increasing with
-$icode avg_case_subset_id$$.
+$icode avgint_subset_id$$.
 
 
 $head Example$$

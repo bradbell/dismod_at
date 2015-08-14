@@ -16,7 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_covariate_table.hpp"
 
 namespace dismod_at {
-	struct avg_case_struct {
+	struct avgint_struct {
 		int         integrand_id;
 		int         node_id;
 		int         weight_id;
@@ -25,15 +25,15 @@ namespace dismod_at {
 		double      time_lower;
 		double      time_upper;
 	};
-	extern void get_avg_case_table(
+	extern void get_avgint_table(
 		sqlite3* db                                     ,
 		size_t                           n_covariate    ,
 		double                           age_min        ,
 		double                           age_max        ,
 		double                           time_min       ,
 		double                           time_max       ,
-		CppAD::vector<avg_case_struct>&  avg_case_table ,
-		CppAD::vector<double>&           avg_case_cov_value
+		CppAD::vector<avgint_struct>&  avgint_table ,
+		CppAD::vector<double>&           avgint_cov_value
 	);
 }
 

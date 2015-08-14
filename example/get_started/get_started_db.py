@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 # $begin get_started_db.py$$ $newlinech #$$
 # $spell
+#	avgint
 #	dismod
 # $$
 #
@@ -211,8 +212,8 @@ def get_started_db (file_name) :
 		{ 'name':'derivative_test',  'value':'second-order' }
 	]
 	# --------------------------------------------------------------------------
-	# avg_case table: same order as list of integrands
-	avg_case_dict = list()
+	# avgint table: same order as list of integrands
+	avgint_dict = list()
 	# values that are the same for all data rows
 	row = {
 		'node':        'world',
@@ -222,8 +223,8 @@ def get_started_db (file_name) :
 		'age_lower':    0.0
 	}
 	# values that change between rows: (one data point for each integrand)
-	for avg_case_id in range( len(integrand_dict) ) :
-		integrand         = integrand_dict[avg_case_id]['name']
+	for avgint_id in range( len(integrand_dict) ) :
+		integrand         = integrand_dict[avgint_id]['name']
 		row['integrand']  = integrand
 		if integrand == 'prevalence' :
 			# prevalence is measured at age zero
@@ -231,7 +232,7 @@ def get_started_db (file_name) :
 		else :
 			# other integrands are averaged from age zero to one hundred
 			row['age_upper'] = 100.0
-		avg_case_dict.append( copy.copy(row) )
+		avgint_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
@@ -248,7 +249,7 @@ def get_started_db (file_name) :
 		rate_dict,
 		mulcov_dict,
 		option_dict,
-		avg_case_dict
+		avgint_dict
 	)
 	# -----------------------------------------------------------------------
 	n_smooth  = len( smooth_dict )

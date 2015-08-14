@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin child_info$$
 $spell
+	avgint
 	dismod
 	const
 	CppAD
@@ -57,7 +58,7 @@ $subhead table$$
 This argument has one of the following prototypes
 $codei%
 	const CppAD::vector<%data_struct%>&     %table%
-	const CppAD::vector<%avg_case_struct%>& %table%
+	const CppAD::vector<%avgint_struct%>& %table%
 %$$
 
 
@@ -138,7 +139,7 @@ $end
 */
 # include <dismod_at/child_info.hpp>
 # include <dismod_at/get_data_table.hpp>
-# include <dismod_at/get_avg_case_table.hpp>
+# include <dismod_at/get_avgint_table.hpp>
 # include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
@@ -202,7 +203,7 @@ template child_info::child_info(
 template child_info::child_info(
 	size_t                                parent_node_id             ,
 	const CppAD::vector<node_struct>&     node_table             ,
-	const CppAD::vector<avg_case_struct>& table
+	const CppAD::vector<avgint_struct>& table
 );
 
 } // END DISMOD_AT_NAMESPACE

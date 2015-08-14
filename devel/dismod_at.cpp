@@ -14,7 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <string>
 # include <iostream>
 # include <cppad/vector.hpp>
-# include <dismod_at/avg_case_subset.hpp>
+# include <dismod_at/avgint_subset.hpp>
 # include <dismod_at/child_info.hpp>
 # include <dismod_at/configure.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
@@ -60,6 +60,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 -----------------------------------------------------------------------------
 $begin init_command$$
 $spell
+	avgint
 	init
 	var
 	dismod
@@ -89,9 +90,9 @@ $head data_subset_table$$
 A new $cref data_subset_table$$ is created.
 This makes explicit exactly which rows of the data table are used.
 
-$head avg_case_subset_table$$
-A new $cref avg_case_subset_table$$ is created.
-This makes explicit exactly which rows of the avg_case table are used.
+$head avgint_subset_table$$
+A new $cref avgint_subset_table$$ is created.
+This makes explicit exactly which rows of the avgint table are used.
 
 $children%example/get_started/init_command.py%$$
 $head Example$$
@@ -105,7 +106,7 @@ $end
 void init_command(
 	sqlite3*                                         db                  ,
 	const vector<dismod_at::data_subset_struct>&     data_subset_obj     ,
-	const vector<dismod_at::avg_case_subset_struct>& avg_case_subset_obj ,
+	const vector<dismod_at::avgint_subset_struct>& avgint_subset_obj ,
 	const dismod_at::pack_info&                      pack_object         ,
 	const dismod_at::db_input_struct&                db_input            ,
 	const size_t&                                    parent_node_id      ,
@@ -118,7 +119,7 @@ void init_command(
 	const char* drop_list[] = {
 		"var",
 		"data_subset",
-		"avg_case_subset",
+		"avgint_subset",
 	};
 	size_t n_drop = sizeof( drop_list ) / sizeof( drop_list[0] );
 	string sql_cmd;
@@ -145,17 +146,17 @@ void init_command(
 	);
 	// -----------------------------------------------------------------------
 	// create data_subset_table
-	n_subset   = avg_case_subset_obj.size();
+	n_subset   = avgint_subset_obj.size();
 	row_value.clear();
 	row_value.resize(n_subset);
-	table_name     = "avg_case_subset";
-	n_subset       = avg_case_subset_obj.size();
-	col_name[0]    = "avg_case_id";
+	table_name     = "avgint_subset";
+	n_subset       = avgint_subset_obj.size();
+	col_name[0]    = "avgint_id";
 	col_type[0]    = "integer";
 	col_unique[0]  = true;
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	int avg_case_id    = avg_case_subset_obj[subset_id].original_id;
-		row_value[subset_id] = to_string( avg_case_id );
+	{	int avgint_id    = avgint_subset_obj[subset_id].original_id;
+		row_value[subset_id] = to_string( avgint_id );
 	}
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
@@ -360,6 +361,7 @@ void init_command(
 -----------------------------------------------------------------------------
 $begin start_command$$
 $spell
+	avgint
 	var
 	dismod
 $$
@@ -424,6 +426,7 @@ void start_command(
 -----------------------------------------------------------------------------
 $begin fit_command$$
 $spell
+	avgint
 	var
 	arg
 	num_iter
@@ -577,6 +580,7 @@ void fit_command(
 -----------------------------------------------------------------------------
 $begin truth_command$$
 $spell
+	avgint
 	var
 	dismod
 $$
@@ -649,6 +653,7 @@ $begin simulate_command$$
 
 $section The Simulate Command$$
 $spell
+	avgint
 	var
 	dismod
 	arg
@@ -776,6 +781,7 @@ void simulate_command(
 -------------------------------------------------------------------------------
 $begin sample_command$$
 $spell
+	avgint
 	dismod
 	var
 	arg
@@ -912,6 +918,7 @@ void sample_command(
 -------------------------------------------------------------------------------
 $begin predict_command$$
 $spell
+	avgint
 	dismod
 	var
 	arg
@@ -938,8 +945,8 @@ $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 values for each
 $cref/sample_index/sample_table/sample_index/$$ in the sample table
 and each
-$cref/avg_case_subset_id/avg_case_subset_table/avg_case_subset_id/$$
-in the avg_case_subset table.
+$cref/avgint_subset_id/avgint_subset_table/avgint_subset_id/$$
+in the avgint_subset table.
 
 $children%example/get_started/predict_command.py%$$
 $head Example$$
@@ -954,8 +961,8 @@ void predict_command(
 	sqlite3*                                          db                  ,
 	const dismod_at::db_input_struct&                 db_input            ,
 	size_t                                            n_var               ,
-	dismod_at::data_model&                            avg_case_object     ,
-	const vector<dismod_at::avg_case_subset_struct>&  avg_case_subset_obj
+	dismod_at::data_model&                            avgint_object     ,
+	const vector<dismod_at::avgint_subset_struct>&  avgint_subset_obj
 )
 {
 	using std::string;
@@ -973,7 +980,7 @@ void predict_command(
 	string table_name = "predict";
 	size_t n_col      = 3;
 	size_t n_sample   = sample_table.size() / n_var;
-	size_t n_subset   = avg_case_subset_obj.size();
+	size_t n_subset   = avgint_subset_obj.size();
 	size_t n_row      = n_sample * n_subset;
 	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_row);
 	vector<bool>   col_unique(n_col);
@@ -982,7 +989,7 @@ void predict_command(
 	col_type[0]   = "integer";
 	col_unique[0] = false;
 	//
-	col_name[1]   = "avg_case_subset_id";
+	col_name[1]   = "avgint_subset_id";
 	col_type[1]   = "integer";
 	col_unique[1] = false;
 	//
@@ -1009,7 +1016,7 @@ void predict_command(
 			pack_vec[var_id] = sample_table[sample_id++].var_value;
 		}
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-		{	int integrand_id = avg_case_subset_obj[subset_id].integrand_id;
+		{	int integrand_id = avgint_subset_obj[subset_id].integrand_id;
 			double avg = 0.0;
 			dismod_at::integrand_enum integrand =
 				db_input.integrand_table[integrand_id].integrand;
@@ -1021,7 +1028,7 @@ void predict_command(
 				case dismod_at::mtother_enum:
 				case dismod_at::mtwith_enum:
 				case dismod_at::relrisk_enum:
-				avg = avg_case_object.avg_no_ode(subset_id, pack_vec);
+				avg = avgint_object.avg_no_ode(subset_id, pack_vec);
 				break;
 				//
 				case dismod_at::prevalence_enum:
@@ -1029,7 +1036,7 @@ void predict_command(
 				case dismod_at::mtspecific_enum:
 				case dismod_at::mtall_enum:
 				case dismod_at::mtstandard_enum:
-				avg = avg_case_object.avg_yes_ode(subset_id, pack_vec);
+				avg = avgint_object.avg_yes_ode(subset_id, pack_vec);
 				break;
 				//
 				default:
@@ -1134,7 +1141,7 @@ int main(int n_arg, const char** argv)
 	size_t n_time_ode = size_t( (time_max - time_min) / ode_step_size + 2.0 );
 	assert( time_max <= time_min  + (n_time_ode - 1) * ode_step_size );
 	// ---------------------------------------------------------------------
-	// child_data, child_avg_case, and some more size_t values
+	// child_data, child_avgint, and some more size_t values
 	size_t parent_node_id = std::atoi(
 		option_map["parent_node_id"].c_str()
 	);
@@ -1143,10 +1150,10 @@ int main(int n_arg, const char** argv)
 		db_input.node_table     ,
 		db_input.data_table
 	);
-	dismod_at::child_info child_avg_case(
+	dismod_at::child_info child_avgint(
 		parent_node_id          ,
 		db_input.node_table     ,
-		db_input.avg_case_table
+		db_input.avgint_table
 	);
 	size_t n_child     = child_data.child_size();
 	size_t n_integrand = db_input.integrand_table.size();
@@ -1204,24 +1211,24 @@ int main(int n_arg, const char** argv)
 			db_input.covariate_table,
 			child_data
 		);
-		// avg_case_subset_obj
-		vector<dismod_at::avg_case_subset_struct> avg_case_subset_obj =
-			avg_case_subset(
-				db_input.avg_case_table,
-				db_input.avg_case_cov_value,
+		// avgint_subset_obj
+		vector<dismod_at::avgint_subset_struct> avgint_subset_obj =
+			avgint_subset(
+				db_input.avgint_table,
+				db_input.avgint_cov_value,
 				db_input.covariate_table,
-				child_avg_case
+				child_avgint
 		);
 		// -------------------------------------------------------------------
 		if( command_arg == "init" )
 		{	init_command(
 				db,
 				data_subset_obj,
-				avg_case_subset_obj,
+				avgint_subset_obj,
 				pack_object,
 				db_input,
 				parent_node_id,
-				child_data,     // could also use child_avg_case
+				child_data,     // could also use child_avgint
 				s_info_vec
 			);
 		}
@@ -1256,8 +1263,8 @@ int main(int n_arg, const char** argv)
 			data_object.set_eigen_ode2_case_number(rate_info);
 			data_object.replace_like( data_subset_obj );
 			//
-			// avg_case_object
-			dismod_at::data_model avg_case_object(
+			// avgint_object
+			dismod_at::data_model avgint_object(
 				parent_node_id           ,
 				n_covariate              ,
 				n_age_ode                ,
@@ -1267,13 +1274,13 @@ int main(int n_arg, const char** argv)
 				db_input.time_table      ,
 				db_input.integrand_table ,
 				db_input.node_table      ,
-				avg_case_subset_obj          ,
+				avgint_subset_obj          ,
 				w_info_vec               ,
 				s_info_vec               ,
 				pack_object              ,
-				child_avg_case
+				child_avgint
 			);
-			avg_case_object.set_eigen_ode2_case_number(rate_info);
+			avgint_object.set_eigen_ode2_case_number(rate_info);
 			// ------------------------------------------------------------------
 			if( command_arg == "fit" )
 			{	fit_command(
@@ -1318,8 +1325,8 @@ int main(int n_arg, const char** argv)
 					db                   ,
 					db_input             ,
 					n_var                ,
-					avg_case_object      ,
-					avg_case_subset_obj
+					avgint_object      ,
+					avgint_subset_obj
 				);
 			}
 			else

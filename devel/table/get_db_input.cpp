@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin get_db_input$$
 $spell
+	avgint
 	dage
 	struct
 	sqlite
@@ -147,9 +148,9 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 		db, n_covariate, age_min, age_max, time_min, time_max,
 		db_input.data_table, db_input.data_cov_value
 	);
-	get_avg_case_table(
+	get_avgint_table(
 		db, n_covariate, age_min, age_max, time_min, time_max,
-		db_input.avg_case_table, db_input.avg_case_cov_value
+		db_input.avgint_table, db_input.avgint_cov_value
 	);
 	//
 	// -----------------------------------------------------------------------
@@ -189,10 +190,10 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(data, node_id,      node);
 	DISMOD_AT_CHECK_PRIMARY_ID(data, weight_id,    weight);
 
-	// avg_case table
-	DISMOD_AT_CHECK_PRIMARY_ID(avg_case, integrand_id, integrand);
-	DISMOD_AT_CHECK_PRIMARY_ID(avg_case, node_id,      node);
-	DISMOD_AT_CHECK_PRIMARY_ID(avg_case, weight_id,    weight);
+	// avgint table
+	DISMOD_AT_CHECK_PRIMARY_ID(avgint, integrand_id, integrand);
+	DISMOD_AT_CHECK_PRIMARY_ID(avgint, node_id,      node);
+	DISMOD_AT_CHECK_PRIMARY_ID(avgint, weight_id,    weight);
 
 	// rate table
 	DISMOD_AT_CHECK_PRIMARY_ID(rate, parent_smooth_id, smooth);

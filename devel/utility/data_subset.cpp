@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin data_subset$$
 $spell
+	avgint
 	covariate
 	subsamples
 	Subsampled
@@ -30,7 +31,7 @@ $icode%data_subset_obj% = data_subset(
 )%$$
 
 $head See Also$$
-$cref avg_case_subset$$.
+$cref avgint_subset$$.
 
 $head 2DO$$
 This documentation is out of date since the data table covariate values

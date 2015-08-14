@@ -61,7 +61,7 @@ extern bool prior_fixed_xam(void);
 extern bool prior_random_xam(void);
 
 // utility subdirectory
-extern bool avg_case_subset_xam(void);
+extern bool avgint_subset_xam(void);
 extern bool bilinear_interp_xam(void);
 extern bool child_info_xam(void);
 extern bool data_subset_xam(void);
@@ -86,7 +86,7 @@ extern bool variable_name_xam(void);
 extern bool check_pini_n_age_xam(void);
 extern bool create_table_xam(void);
 extern bool get_age_table_xam(void);
-extern bool get_avg_case_table_xam(void);
+extern bool get_avgint_table_xam(void);
 extern bool get_option_table_xam(void);
 extern bool get_column_max_xam(void);
 extern bool get_covariate_table_xam(void);
@@ -172,7 +172,7 @@ int main(void)
 	RUN(prior_random_xam);
 
 	// utility subdirectory
-	RUN(avg_case_subset_xam);
+	RUN(avgint_subset_xam);
 	RUN(bilinear_interp_xam);
 	RUN(child_info_xam);
 	RUN(data_subset_xam);
@@ -197,7 +197,7 @@ int main(void)
 	RUN(check_pini_n_age_xam);
 	RUN(create_table_xam);
 	RUN(get_age_table_xam);
-	RUN(get_avg_case_table_xam);
+	RUN(get_avgint_table_xam);
 	RUN(get_option_table_xam);
 	RUN(get_column_max_xam);
 	RUN(get_covariate_table_xam);

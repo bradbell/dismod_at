@@ -10,13 +10,14 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin devel_utility$$
 $spell
+	avgint
 	dismod
 $$
 
 $section Dismod_at Developer Utility Documentation$$
 
 $childtable%include/dismod_at/a2_double.hpp
-	%devel/utility/avg_case_subset.cpp
+	%devel/utility/avgint_subset.cpp
 	%devel/utility/bilinear_interp.cpp
 	%devel/utility/child_info.cpp
 	%devel/utility/data_subset.cpp

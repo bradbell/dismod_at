@@ -9,8 +9,9 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_avg_case_table$$
+$begin get_avgint_table$$
 $spell
+	avgint
 	const
 	covariate
 	covariates
@@ -24,13 +25,13 @@ $$
 $section C++: Get the Average Integrand Case Table$$
 
 $head Syntax$$
-$codei%get_avg_case_table(
+$codei%get_avgint_table(
 	%db%, %n_covariate%, %age_min%, %age_max%, %time_min%, %time_max%,
-	%avg_case_table%, %avg_case_cov_value%
+	%avgint_table%, %avgint_cov_value%
 %)%$$
 
 $head Purpose$$
-To read the $cref avg_case_table$$ and return it as a C++ data structure.
+To read the $cref avgint_table$$ and return it as a C++ data structure.
 
 $head db$$
 The argument $icode db$$ has prototype
@@ -92,187 +93,187 @@ $icode%
 %$$
 is also checked.
 
-$head avg_case_table$$
+$head avgint_table$$
 This argument has prototype
 $codei%
-	CppAD::vector<avg_case_struct>&  %avg_case_table%
+	CppAD::vector<avgint_struct>&  %avgint_table%
 %$$
 On input its size is zero and upon return it has one element for
-each row in the avg_case table.
-For each $cref/avg_case_id/avg_case_table/avg_case_id/$$,
+each row in the avgint table.
+For each $cref/avgint_id/avgint_table/avgint_id/$$,
 $codei%
-	%avg_case_table%[%avg_case_id%]
+	%avgint_table%[%avgint_id%]
 %$$
 is the information for the corresponding row.
 
-$head avg_case_struct$$
+$head avgint_struct$$
 This is a structure with the following fields
 $table
 Type  $cnext Field $cnext Description
 $rnext
 $code int$$ $cnext $code integrand_id$$ $cnext
-	The $cref/integrand_id/avg_case_table/integrand_id/$$ for this measurement
+	The $cref/integrand_id/avgint_table/integrand_id/$$ for this measurement
 $rnext
 $code int$$ $cnext $code node_id$$ $cnext
-	The $cref/node_id/avg_case_table/node_id/$$ for this measurement
+	The $cref/node_id/avgint_table/node_id/$$ for this measurement
 $rnext
 $code int$$ $cnext $code weight_id$$ $cnext
-	The $cref/weight_id/avg_case_table/weight_id/$$ for this measurement
+	The $cref/weight_id/avgint_table/weight_id/$$ for this measurement
 $rnext
 $code double$$ $cnext $code age_lower$$ $cnext
-	The $cref/age_lower/avg_case_table/age_lower/$$ for this measurement
+	The $cref/age_lower/avgint_table/age_lower/$$ for this measurement
 $rnext
 $code double$$ $cnext $code age_upper$$ $cnext
-	The $cref/age_upper/avg_case_table/age_upper/$$ for this measurement
+	The $cref/age_upper/avgint_table/age_upper/$$ for this measurement
 $rnext
 $code double$$ $cnext $code time_lower$$ $cnext
-	The $cref/time_lower/avg_case_table/time_lower/$$ for this measurement
+	The $cref/time_lower/avgint_table/time_lower/$$ for this measurement
 $rnext
 $code double$$ $cnext $code time_upper$$ $cnext
-	The $cref/time_upper/avg_case_table/time_upper/$$ for this measurement
+	The $cref/time_upper/avgint_table/time_upper/$$ for this measurement
 $tend
 
-$head avg_case_cov_value$$
+$head avgint_cov_value$$
 This argument has prototype
 $codei%
-	CppAD::vector<double>&  %avg_case_cov_value%
+	CppAD::vector<double>&  %avgint_cov_value%
 %$$
 On input its size is zero.
-Upon return, its size is the number of rows in the avg_case table times
+Upon return, its size is the number of rows in the avgint table times
 the number of covariates.
 For each
 $cref/covariate_id/covariate_table/covariate_id/$$ and
-$icode avg_case_id$$ pair
+$icode avgint_id$$ pair
 $codei%
-	avg_case_cov_value[%avg_case_id% * %n_covariate% + %covariate_id%]
+	avgint_cov_value[%avgint_id% * %n_covariate% + %covariate_id%]
 %$$
 is the corresponding covariate value.
 
-$children%example/devel/table/get_avg_case_table_xam.cpp
+$children%example/devel/table/get_avgint_table_xam.cpp
 %$$
 $head Example$$
-The file $cref get_avg_case_table_xam.cpp$$ contains an example that uses
+The file $cref get_avgint_table_xam.cpp$$ contains an example that uses
 this function.
 
 $end
 -----------------------------------------------------------------------------
 */
-# include <dismod_at/get_avg_case_table.hpp>
+# include <dismod_at/get_avgint_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-void get_avg_case_table(
+void get_avgint_table(
 	sqlite3* db        ,
 	size_t                          n_covariate         ,
 	double                          age_min             ,
 	double                          age_max             ,
 	double                          time_min            ,
 	double                          time_max            ,
-	CppAD::vector<avg_case_struct>& avg_case_table      ,
-	CppAD::vector<double>&          avg_case_cov_value       )
+	CppAD::vector<avgint_struct>& avgint_table      ,
+	CppAD::vector<double>&          avgint_cov_value       )
 {	using std::string;
 	// TODO: This could be more efficient if we only allcated one temporary
 	// column at a time (to use with get_table column)
 
-	string table_name  = "avg_case";
-	size_t n_avg_case      = check_table_id(db, table_name);
+	string table_name  = "avgint";
+	size_t n_avgint      = check_table_id(db, table_name);
 
 	string column_name = "integrand_id";
 	CppAD::vector<int>    integrand_id;
 	get_table_column(db, table_name, column_name, integrand_id);
-	assert( n_avg_case == integrand_id.size() );
+	assert( n_avgint == integrand_id.size() );
 
 	column_name        = "node_id";
 	CppAD::vector<int>    node_id;
 	get_table_column(db, table_name, column_name, node_id);
-	assert( n_avg_case == node_id.size() );
+	assert( n_avgint == node_id.size() );
 
 	column_name        = "weight_id";
 	CppAD::vector<int>    weight_id;
 	get_table_column(db, table_name, column_name, weight_id);
-	assert( n_avg_case == weight_id.size() );
+	assert( n_avgint == weight_id.size() );
 
 	column_name           =  "age_lower";
 	CppAD::vector<double>     age_lower;
 	get_table_column(db, table_name, column_name, age_lower);
-	assert( n_avg_case == age_lower.size() );
+	assert( n_avgint == age_lower.size() );
 
 	column_name           =  "age_upper";
 	CppAD::vector<double>     age_upper;
 	get_table_column(db, table_name, column_name, age_upper);
-	assert( n_avg_case == age_upper.size() );
+	assert( n_avgint == age_upper.size() );
 
 	column_name           =  "time_lower";
 	CppAD::vector<double>     time_lower;
 	get_table_column(db, table_name, column_name, time_lower);
-	assert( n_avg_case == time_lower.size() );
+	assert( n_avgint == time_lower.size() );
 
 	column_name           =  "time_upper";
 	CppAD::vector<double>     time_upper;
 	get_table_column(db, table_name, column_name, time_upper);
-	assert( n_avg_case == time_upper.size() );
+	assert( n_avgint == time_upper.size() );
 
 	// fill in all but the covariate values
-	assert( avg_case_table.size() == 0 );
-	avg_case_table.resize(n_avg_case);
-	for(size_t i = 0; i < n_avg_case; i++)
-	{	avg_case_table[i].integrand_id  = integrand_id[i];
-		avg_case_table[i].node_id       = node_id[i];
-		avg_case_table[i].weight_id     = weight_id[i];
-		avg_case_table[i].age_lower     = age_lower[i];
-		avg_case_table[i].age_upper     = age_upper[i];
-		avg_case_table[i].time_lower    = time_lower[i];
-		avg_case_table[i].time_upper    = time_upper[i];
+	assert( avgint_table.size() == 0 );
+	avgint_table.resize(n_avgint);
+	for(size_t i = 0; i < n_avgint; i++)
+	{	avgint_table[i].integrand_id  = integrand_id[i];
+		avgint_table[i].node_id       = node_id[i];
+		avgint_table[i].weight_id     = weight_id[i];
+		avgint_table[i].age_lower     = age_lower[i];
+		avgint_table[i].age_upper     = age_upper[i];
+		avgint_table[i].time_lower    = time_lower[i];
+		avgint_table[i].time_upper    = time_upper[i];
 	}
 
 	// now get the covariate values
-	assert( avg_case_cov_value.size() == 0 );
-	avg_case_cov_value.resize(n_avg_case * n_covariate);
+	assert( avgint_cov_value.size() == 0 );
+	avgint_cov_value.resize(n_avgint * n_covariate);
 	for(size_t j = 0; j < n_covariate; j++)
 	{	std::stringstream ss;
 		ss << "x_" << j;
 		column_name = ss.str();
 		CppAD::vector<double> x_j;
 		get_table_column(db, table_name, column_name, x_j);
-		for(size_t i = 0; i < n_avg_case; i++)
-			avg_case_cov_value[ i * n_covariate + j ] = x_j[i];
+		for(size_t i = 0; i < n_avgint; i++)
+			avgint_cov_value[ i * n_covariate + j ] = x_j[i];
 	}
 
 	// check for erorr conditions
 	string msg;
-	for(size_t avg_case_id = 0; avg_case_id < n_avg_case; avg_case_id++)
+	for(size_t avgint_id = 0; avgint_id < n_avgint; avgint_id++)
 	{	// -------------------------------------------------------------
-		double age_lower  = avg_case_table[avg_case_id].age_lower;
-		double age_upper  = avg_case_table[avg_case_id].age_upper;
+		double age_lower  = avgint_table[avgint_id].age_lower;
+		double age_upper  = avgint_table[avgint_id].age_upper;
 		if( age_lower < age_min )
 		{	msg = "age_lower is less than minimum age in age table";
-			error_exit(db, msg, table_name, avg_case_id);
+			error_exit(db, msg, table_name, avgint_id);
 		}
 		if( age_max < age_upper )
 		{	msg = "age_upper is greater than maximum age in age table";
-			error_exit(db, msg, table_name, avg_case_id);
+			error_exit(db, msg, table_name, avgint_id);
 		}
 		if( age_upper < age_lower )
 		{	msg = "age_lower is greater than age_upper";
-			error_exit(db, msg, table_name, avg_case_id);
+			error_exit(db, msg, table_name, avgint_id);
 		}
 		// ------------------------------------------------------------
-		double time_lower = avg_case_table[avg_case_id].time_lower;
-		double time_upper = avg_case_table[avg_case_id].time_upper;
+		double time_lower = avgint_table[avgint_id].time_lower;
+		double time_upper = avgint_table[avgint_id].time_upper;
 		if( time_lower < time_min )
 		{	msg = "time_lower is less than minimum time in time table";
-			error_exit(db, msg, table_name, avg_case_id);
+			error_exit(db, msg, table_name, avgint_id);
 		}
 		if( time_max < time_upper )
 		{	msg = "time_upper is greater than maximum time in time table";
-			error_exit(db, msg, table_name, avg_case_id);
+			error_exit(db, msg, table_name, avgint_id);
 		}
 		if( time_upper < time_lower )
 		{	msg = "time_lower is greater than time_upper";
-			error_exit(db, msg, table_name, avg_case_id);
+			error_exit(db, msg, table_name, avgint_id);
 		}
 	}
 	return;

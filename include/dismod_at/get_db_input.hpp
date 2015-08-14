@@ -18,7 +18,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_option_table.hpp"
 # include "get_covariate_table.hpp"
 # include "get_data_table.hpp"
-# include "get_avg_case_table.hpp"
+# include "get_avgint_table.hpp"
 # include "get_density_table.hpp"
 # include "get_integrand_table.hpp"
 # include "get_mulcov_table.hpp"
@@ -37,8 +37,8 @@ namespace dismod_at {
 		CppAD::vector<double>             time_table;
 		//
 		CppAD::vector<option_struct>      option_table;
-		CppAD::vector<avg_case_struct>    avg_case_table;
-		CppAD::vector<double>             avg_case_cov_value;
+		CppAD::vector<avgint_struct>    avgint_table;
+		CppAD::vector<double>             avgint_cov_value;
 		CppAD::vector<covariate_struct>   covariate_table;
 		CppAD::vector<data_struct>        data_table;
 		CppAD::vector<double>             data_cov_value;

@@ -10,6 +10,7 @@
 # -------------------------------------------------------------------------- */
 # $begin create_database$$ $newlinech #$$
 # $spell
+#	avgint
 #	num_iter
 #	Ipopt
 #	pini
@@ -44,7 +45,7 @@
 #	%rate_dict%,
 #	%mulcov_dict%,
 #	%option_dict%,
-#	%avg_case_dict%
+#	%avgint_dict%
 # )%$$
 #
 # $head Purpose$$
@@ -233,10 +234,10 @@
 # See $cref option_table$$ for the corresponding set of names
 # and meaning of corresponding values.
 #
-# $head avg_case_dict$$
+# $head avgint_dict$$
 # This is a list of $code dict$$
-# that define the rows of the $cref avg_case_table$$.
-# The dictionary $icode%avg_case_dict%[%i%]%$$ has the same description as
+# that define the rows of the $cref avgint_table$$.
+# The dictionary $icode%avgint_dict%[%i%]%$$ has the same description as
 # $cref/data_dict[i]/create_database/data_dict/$$ except that the
 # following keys (and corresponding values) are not present:
 # $code density$$, $code meas_value$$, $code meas_std$$.
@@ -263,7 +264,7 @@ def create_database(
 	rate_dict,
 	mulcov_dict,
 	option_dict,
-	avg_case_dict
+	avgint_dict
 ) :
 	import dismod_at
 	# -----------------------------------------------------------------------
@@ -630,7 +631,7 @@ def create_database(
 	tbl_name = 'data'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
-	# create avg_case table
+	# create avgint table
 	col_name = [
 		'integrand_id',
 		'node_id',
@@ -654,25 +655,25 @@ def create_database(
 	for j in range( len(covariate_dict) )  :
 		col_type.append( 'real' )
 	row_list = [ ]
-	for i in range( len(avg_case_dict) ) :
-		avg_case = avg_case_dict[i]
-		avg_case_id      = i
-		integrand_id = global_integrand_name2id[ avg_case['integrand'] ]
-		node_id      = global_node_name2id[ avg_case['node'] ]
-		weight_id    = global_weight_name2id[ avg_case['weight'] ]
+	for i in range( len(avgint_dict) ) :
+		avgint = avgint_dict[i]
+		avgint_id      = i
+		integrand_id = global_integrand_name2id[ avgint['integrand'] ]
+		node_id      = global_node_name2id[ avgint['node'] ]
+		weight_id    = global_weight_name2id[ avgint['weight'] ]
 		row = [
 			integrand_id,
 			node_id,
 			weight_id,
-			avg_case['age_lower'],
-			avg_case['age_upper'],
-			avg_case['time_lower'],
-			avg_case['time_upper']
+			avgint['age_lower'],
+			avgint['age_upper'],
+			avgint['time_lower'],
+			avgint['time_upper']
 		]
 		for j in range( len(covariate_dict) ) :
-			row.append( avg_case[ covariate_dict[j]['name'] ] )
+			row.append( avgint[ covariate_dict[j]['name'] ] )
 		row_list.append(row)
-	tbl_name = 'avg_case'
+	tbl_name = 'avgint'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# close the connection

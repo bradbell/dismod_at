@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin data_model_ctor$$
 $spell
+	avgint
 	logden
 	std
 	vec
@@ -181,7 +182,7 @@ $end
 # include <dismod_at/solve_ode.hpp>
 # include <dismod_at/residual_density.hpp>
 # include <dismod_at/a2_double.hpp>
-# include <dismod_at/avg_case_subset.hpp>
+# include <dismod_at/avgint_subset.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -219,7 +220,7 @@ pack_object_   (pack_object)
 {	using std::string;
 	size_t i, j, k;
 	//
-	// only set the fileds that are common to data_subset and avg_case_subset
+	// only set the fileds that are common to data_subset and avgint_subset
 	size_t n_subset = subset_object.size();
 	data_subset_obj_.resize(n_subset);
 	data_cov_value_.resize(n_subset * n_covariate);
@@ -486,6 +487,7 @@ pack_object_   (pack_object)
 /*
 $begin set_eigne_ode2_case_number$$
 $spell
+	avgint
 	Dismod
 	eigen
 	arg
@@ -532,6 +534,7 @@ void data_model::set_eigen_ode2_case_number(const std::string& rate_info)
 /*
 $begin data_model_replace_like$$
 $spell
+	avgint
 	const
 	CppAD
 	struct
@@ -624,6 +627,7 @@ void data_model::replace_like(
 $begin data_model_avg_no_ode$$
 
 $spell
+	avgint
 	Sincidence
 	subvectors
 	enum
@@ -879,6 +883,7 @@ Float data_model::avg_no_ode(
 $begin data_model_avg_yes_ode$$
 
 $spell
+	avgint
 	Tincidence
 	mtspecific
 	mtall
@@ -1186,6 +1191,7 @@ Float data_model::avg_yes_ode(
 $begin data_model_like_one$$
 
 $spell
+	avgint
 	Sincidence
 	Tincidence
 	struct
@@ -1395,6 +1401,7 @@ residual_struct<Float> data_model::like_one(
 -------------------------------------------------------------------------------
 $begin data_model_like_all$$
 $spell
+	avgint
 	bool
 	enum
 	vec
@@ -1554,7 +1561,7 @@ template data_model::data_model(                                \
 	const child_info&                        child_object       \
 );
 DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(data_subset_struct)
-DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avg_case_subset_struct)
+DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \
 	template Float data_model::avg_no_ode(                  \

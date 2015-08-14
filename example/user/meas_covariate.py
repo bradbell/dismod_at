@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 # $begin user_meas_covariate.py$$ $newlinech #$$
 # $spell
+#	avgint
 #	Covariates
 #	covariate
 #	Integrands
@@ -281,8 +282,8 @@ def example_db (file_name) :
 		{ 'name':'derivative_test',  'value':'second-order' }
 	]
 	# --------------------------------------------------------------------------
-	# avg_case table: empty
-	avg_case_dict = list()
+	# avgint table: empty
+	avgint_dict = list()
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
@@ -299,7 +300,7 @@ def example_db (file_name) :
 		rate_dict,
 		mulcov_dict,
 		option_dict,
-		avg_case_dict
+		avgint_dict
 	)
 	# -----------------------------------------------------------------------
 	n_smooth  = len( smooth_dict )

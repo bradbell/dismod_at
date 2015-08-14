@@ -5,19 +5,22 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin avg_case_table.py$$ $newlinech #$$
+# $begin avgint_table.py$$ $newlinech #$$
+# $spell
+#	avgint
+# $$
 #
-# $section avg_case_table: Example and Test$$
+# $section avgint_table: Example and Test$$
 #
 # $code
-# $verbatim%example/table/avg_case_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $verbatim%example/table/avgint_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
-def avg_case_table() :
+def avgint_table() :
 	import dismod_at
 	import copy
 	import collections
@@ -55,8 +58,8 @@ def avg_case_table() :
 		1000.                  # x_income
 	] ]
 
-	# create the avg_case table
-	tbl_name = 'avg_case'
+	# create the avgint table
+	tbl_name = 'avgint'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# include primary key in test
@@ -69,5 +72,5 @@ def avg_case_table() :
 	assert row_list == check_list
 	# ------------------------------------------------------------------------
 	connection.close()
-	print('avg_case_table: OK')
+	print('avgint_table: OK')
 # END PYTHON

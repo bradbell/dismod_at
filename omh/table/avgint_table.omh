@@ -8,22 +8,23 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin avg_case_table$$
+$begin avgint_table$$
 $spell
+	avgint
 	covariate
 	covariates
 	std
 	dismod
 $$
 
-$section The avg_case Table: Defines Average Integrand Cases$$
+$section The avgint Table: Defines Average Integrand Cases$$
 Given a value for the $cref/model variables/model_variable/$$,
 this table contains the other information necessary to compute the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
 
-$head avg_case_id$$
+$head avgint_id$$
 This column has type $code integer$$ and is the primary key for the
-$code avg_case$$ table.
+$code avgint$$ table.
 Its initial value is zero, and it increments by one for each row.
 
 $head integrand_id$$
@@ -74,11 +75,11 @@ The covariate value $code null$$ is interpreted as the
 $cref/reference/covariate_table/reference/$$ value for
 the corresponding covariate.
 
-$children%example/table/avg_case_table.py
+$children%example/table/avgint_table.py
 %$$
 $head Example$$
-The files $cref avg_case_table.py$$ and
-$cref get_avg_case_table_xam.cpp$$
-create example $code avg_case$$ tables.
+The files $cref avgint_table.py$$ and
+$cref get_avgint_table_xam.cpp$$
+create example $code avgint$$ tables.
 
 $end

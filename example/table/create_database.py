@@ -187,8 +187,8 @@ def create_database() :
 		{ 'name':'print_level',     'value':'0'            },
 		{ 'name':'derivative_test', 'value':'second-order' }
 	]
-	# avg_case_dict
-	avg_case_dict = []
+	# avgint_dict
+	avgint_dict = []
 	row = {
 		'integrand':'mtother',
 		'weight':'constant',
@@ -199,12 +199,12 @@ def create_database() :
 		'sex':0.5
 	}
 	row['node']       = 'north_america'
-	avg_case_dict.append( copy.copy(row) )
+	avgint_dict.append( copy.copy(row) )
 	row['node']       = 'united_states'
-	avg_case_dict.append( copy.copy(row) )
+	avgint_dict.append( copy.copy(row) )
 	row['node']       = 'canada'
 	row['meas_value'] = 0.5e-5
-	avg_case_dict.append( copy.copy(row) )
+	avgint_dict.append( copy.copy(row) )
 	dismod_at.create_database(
 		file_name,
 		age_list,
@@ -219,7 +219,7 @@ def create_database() :
 		rate_dict,
 		mulcov_dict,
 		option_dict,
-		avg_case_dict
+		avgint_dict
 	)
 	# -----------------------------------------------------------------------
 	# Check database
@@ -376,8 +376,8 @@ def create_database() :
 	]
 	assert row_list == check_list
 	#
-	# avg_case_table
-	tbl_name   = 'avg_case'
+	# avgint_table
+	tbl_name   = 'avgint'
 	col_name   = [ 'integrand_id', 'node_id', 'age_lower', 'age_upper'  ]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
 	check_list = [

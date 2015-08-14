@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin predict_table$$
 $spell
+	avgint
 	var
 	py
 $$
@@ -29,24 +30,24 @@ This column has type $code integer$$ and specifies the
 $cref/sample_index/sample_table/sample_index/$$
 in the sample data table that $icode avg_integrand$$ corresponds to.
 
-$head avg_case_subset_id$$
+$head avgint_subset_id$$
 This column has type $code integer$$ and specifies the
-$cref/avg_case_subset_id/avg_case_subset_table/avg_case_subset_id/$$ that
+$cref/avgint_subset_id/avgint_subset_table/avgint_subset_id/$$ that
 $icode avg_integrand$$ corresponds to.
-If $icode n_subset$$ is the number of rows in the avg_case_subset table,
+If $icode n_subset$$ is the number of rows in the avgint_subset table,
 $codei%
-	%predict_id% = %sample_index% * %n_subset% + %avg_case_subset_id%
+	%predict_id% = %sample_index% * %n_subset% + %avgint_subset_id%
 %$$
 See the corresponding
-$cref/avg_case_id/avg_case_subset_table/avg_case_id/$$ and the
-$cref avg_case_table$$.
+$cref/avgint_id/avgint_subset_table/avgint_id/$$ and the
+$cref avgint_table$$.
 
 $head avg_integrand$$
 This column type $code real$$ and is the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 corresponding to the model variables with
 $icode sample_index$$ in $cref sample_table$$
-and the average integrand case specified by $icode avg_case_subset_id$$.
+and the average integrand case specified by $icode avgint_subset_id$$.
 
 $head Example$$
 2DO: The $code predict_command.py$$ is an example that creates this table.

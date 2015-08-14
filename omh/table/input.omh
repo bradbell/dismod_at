@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin input$$
 $spell
+	avgint
 	tbl
 	std
 	dismod
@@ -69,7 +70,7 @@ the minimum integer appears in a table that is read by dismod_at.
 $childtable%
 	omh/table/age_table.omh
 	%omh/table/option_table.omh
-	%omh/table/avg_case_table.omh
+	%omh/table/avgint_table.omh
 	%omh/table/covariate_table.omh
 	%omh/table/data_table.omh
 	%omh/table/density_table.omh

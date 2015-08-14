@@ -43,7 +43,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	model/fit_model.cpp
 	model/prior_model.cpp
 
-	utility/avg_case_subset.cpp
+	utility/avgint_subset.cpp
 	utility/bilinear_interp.cpp
 	utility/child_info.cpp
 	utility/data_subset.cpp
@@ -69,7 +69,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	table/create_table.cpp
 	table/exec_sql_cmd.cpp
 	table/get_age_table.cpp
-	table/get_avg_case_table.cpp
+	table/get_avgint_table.cpp
 	table/get_option_table.cpp
 	table/get_column_max.cpp
 	table/get_covariate_table.cpp
