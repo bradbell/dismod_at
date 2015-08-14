@@ -8,8 +8,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_GET_AVG_CASE_TABLE_HPP
-# define DISMOD_AT_GET_AVG_CASE_TABLE_HPP
+# ifndef DISMOD_AT_GET_AVGINT_TABLE_HPP
+# define DISMOD_AT_GET_AVGINT_TABLE_HPP
 
 # include <sqlite3.h>
 # include <cppad/vector.hpp>
