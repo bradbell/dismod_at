@@ -40,7 +40,12 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 08-15$$
+$list number$$
 Improve the $cref approx_mixed_theory$$ section.
+$lnext
+Add diagnostics as to the size of the $cref approx_mixed$$ problem
+representation; see $cref/size_map/approx_mixed_initialize/size_map/$$.
+$lend
 
 $head 08-14$$
 $list number$$

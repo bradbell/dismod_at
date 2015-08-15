@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # ifndef DISMOD_AT_APPROX_MIXED_HPP
 # define DISMOD_AT_APPROX_MIXED_HPP
 # include <cppad/cppad.hpp>
+# include <map>
 
 //
 extern bool constraint_eval_xam(void);
@@ -126,7 +127,9 @@ $head initialize$$
 Directly after construction, use this function to initialize
 the derived class object; see $cref/initialize/approx_mixed_initialize/$$.
 $codep */
-	void initialize(const d_vector& fixed_vec, const d_vector& random_vec);
+	std::map<std::string, size_t> initialize(
+		const d_vector& fixed_vec, const d_vector& random_vec
+	);
 /* $$
 $head optimize_random$$
 Given the fixed effects, optimize with respect to the random effects;

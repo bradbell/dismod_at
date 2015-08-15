@@ -362,13 +362,14 @@ public:
 
 bool capture_xam(void)
 {	bool ok = true;
-	size_t n_fixed = 3;
+	size_t n_fixed  = 3;
+	size_t n_random = 20;
 	size_t random_seed = dismod_at::new_gsl_rng(1438537596);
 	std::time_t start_time = std::time( DISMOD_AT_NULL_PTR );
 
 	// simulation parameters
 	size_t I = 20;
-	size_t T = 20;
+	size_t T = n_random;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   0.50;  // constant term in covariate model
 	theta_sim[1] =   5.0;   // mean population size
@@ -402,7 +403,21 @@ bool capture_xam(void)
 	vector<double>  u_in(T);
 	for(size_t t = 0; t < T; t++)
 		u_in[t] = 0.0;
-	approx_object.initialize(theta_in, u_in);
+	std::map<std::string, size_t> size_map =
+		approx_object.initialize(theta_in, u_in);
+
+	// print sizes
+	std::cout << std::endl
+	<< "n_fixed = "  << n_fixed << std::endl
+	<< "n_random = " << n_random << std::endl;
+	const char* slist[] = {
+		"fix_like", "a0_ran_like", "a1_ran_like",
+		"ran_obj_0", "ran_obj_1", "ran_obj_2", "hes_ran", "hes_fix"
+	};
+	size_t n_size = sizeof(slist) / sizeof( slist[0] );
+	for(size_t i = 0; i < n_size; i++)
+		std::cout << slist[i] << " = " << size_map[slist[i]] << std::endl;
+
 
 	// optimize the fixed effects
 	std::string options =

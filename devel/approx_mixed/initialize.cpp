@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin approx_mixed_initialize$$
 $spell
+	std
 	obj
 	vec
 	const
@@ -24,7 +25,7 @@ $$
 $section approx_mixed: Initialization After Constructor$$
 
 $head Syntax$$
-$icode%approx_object%.initialize(%fixed_vec%, %random_vec%)%$$
+$icode%size_map% = approx_object%.initialize(%fixed_vec%, %random_vec%)%$$
 
 $head Purpose$$
 Some of the $code approx_mixed$$ initialization requires calling the
@@ -57,6 +58,69 @@ It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$ at which certain $code CppAD::ADFun$$
 objects are recorded.
+
+$head size_map$$
+The return value has prototype
+$codei%
+	std::map<std::string, size_t> %size_map%
+%$$
+It represent the size of certain aspects of the problem as follows:
+$table
+$icode%size_map%["fix_like"]%$$ $cnext
+	number of variables in the $code ADFun<double>$$ version of
+	$cref/fix_like/approx_mixed_fix_like/$$.
+$rnext
+$icode%size_map%["a1_ran_like"]%$$ $cnext
+	number of variables in the $code ADFun<a1_double>$$ version of
+	$cref/ran_like/approx_mixed_ran_like/$$.
+$rnext
+$icode%size_map%["a0_ran_like"]%$$ $cnext
+	number of variables in the $code ADFun<double>$$ version of
+	$cref/ran_like/approx_mixed_ran_like/$$.
+$rnext
+$icode%size_map%["ran_obj_0"]%$$ $cnext
+	number of variables in the $code ADFun<double>$$
+	object used to evaluate the
+	$cref/random part of objective
+		/approx_mixed_theory
+		/Objective
+		/Random Part of Objective, r(theta)
+	/$$.
+$icode%size_map%["ran_obj_1"]%$$ $cnext
+	number of variables in the $code ADFun<double>$$
+	object used to evaluate the derivative, w.r.t fixed effects, of the
+	$cref/random part of objective
+		/approx_mixed_theory
+		/Objective
+		/Random Part of Objective, r(theta)
+	/$$.
+$icode%size_map%["ran_obj_2"]%$$ $cnext
+	number of variables in the $code ADFun<double>$$
+	object used to evaluate Hessian, w.r.t. fixed effects, of the
+	$cref/random part of objective
+		/approx_mixed_theory
+		/Objective
+		/Random Part of Objective, r(theta)
+	/$$.
+$rnext
+$icode%size_map%["hes_ran"]%$$ $cnext
+	number of non-zero entries in hessian of
+	random negative log-likelihood
+	$cref/f(theta, u)
+		/approx_mixed_theory
+		/Objective
+		/Random Part of Objective, r(theta)
+	/$$
+	with respect to fixed effects $latex \theta$$.
+$rnext
+$icode%size_map%["hes_fix"]%$$ $cnext
+	number of non-zero entries in hessian of random part of objective
+	$cref/r(theta)
+		/approx_mixed_theory
+		/Random Negative Log-Likelihood, f(theta, u)
+	/$$
+	with respect to the random effects $latex u$$.
+$tend
 
 $head Example$$
 The file $cref approx_derived_xam.cpp$$ contains an example
@@ -100,7 +164,7 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void approx_mixed::initialize(
+std::map<std::string, size_t> approx_mixed::initialize(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {	if( initialize_done_ )
@@ -146,6 +210,18 @@ void approx_mixed::initialize(
 
 	// initialize_done_
 	initialize_done_ = true;
+
+	// return value
+	std::map<std::string, size_t> size_map;
+	size_map["fix_like"]    = fix_like_.size_var();
+	size_map["a0_ran_like"] = a0_ran_like_.size_var();
+	size_map["a1_ran_like"] = a1_ran_like_.size_var();
+	size_map["ran_obj_0"]   = ran_obj_0_.size_var();
+	size_map["ran_obj_1"]   = ran_obj_1_.size_var();
+	size_map["ran_obj_2"]   = ran_obj_2_.size_var();
+	size_map["hes_ran"]     = hes_ran_row_.size();
+	size_map["hes_fix"]     = hes_fix_row_.size();
+	return size_map;
 }
 
 } // END_DISMOD_AT_NAMESPACE
