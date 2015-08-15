@@ -24,7 +24,7 @@
 INCLUDE(CheckCXXSourceRuns)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
-SET(dismod_at_version "20150803" )
+SET(dismod_at_version "20150815" )
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 # ----------------------------------------------------------------------------
 # python_three_command
