@@ -100,15 +100,15 @@ void approx_mixed::record_ran_obj(
 	typedef Eigen::SparseMatrix<a1_double>             sparse_matrix;
 
 	//	create an a1d_vector containing (beta, theta, u)
-	a1d_vector a1_beta_theta_u( 2 * n_fixed_ + n_random_ );
-	pack(fixed_vec, fixed_vec, random_vec, a1_beta_theta_u);
+	a1d_vector beta_theta_u( 2 * n_fixed_ + n_random_ );
+	pack(fixed_vec, fixed_vec, random_vec, beta_theta_u);
 
 	// start recording a1_double operations
-	CppAD::Independent( a1_beta_theta_u );
+	CppAD::Independent( beta_theta_u );
 
 	// split back out to beta, theta, u
 	a1d_vector beta(n_fixed_), theta(n_fixed_), u(n_random_);
-	unpack(beta, theta, u, a1_beta_theta_u);
+	unpack(beta, theta, u, beta_theta_u);
 
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	CppAD::vector<size_t> row, col;
@@ -199,21 +199,21 @@ void approx_mixed::record_ran_obj(
 	double constant_term = CppAD::log(2.0 * pi) * double(n_random_) / 2.0;
 
 	// H(beta, theta, u)
-	a1d_vector a1_H(1);
-	a1_H[0] = logdet / 2.0 + sum - constant_term;
+	a1d_vector H(1);
+	H[0] = logdet / 2.0 + sum - constant_term;
 
 	// complete recording of H(beta, theta, u)
 	if( order == 0 )
-	{	ran_obj_0_.Dependent(a1_beta_theta_u, a1_H);
+	{	ran_obj_0_.Dependent(beta_theta_u, H);
 		ran_obj_0_.optimize();
 	}
 	else if( order == 1 )
-	{	ran_obj_1_.Dependent(a1_beta_theta_u, a1_H);
+	{	ran_obj_1_.Dependent(beta_theta_u, H);
 		ran_obj_1_.optimize();
 	}
 	else
 	{	assert(order == 2 );
-		ran_obj_2_.Dependent(a1_beta_theta_u, a1_H);
+		ran_obj_2_.Dependent(beta_theta_u, H);
 		ran_obj_2_.optimize();
 	}
 	record_ran_obj_done_[order] = true;
