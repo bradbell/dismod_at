@@ -241,7 +241,6 @@ for different levels of AD:
 $codep */
 	CppAD::ADFun<double>      a0_ran_like_;
 	CppAD::ADFun<a1_double>   a1_ran_like_;
-	CppAD::ADFun<a2_double>   a2_ran_like_;
 /* $$
 $subhead hes_ran_$$
 The Hessian of the random likelihood w.r.t. the random effects

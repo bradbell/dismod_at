@@ -27,7 +27,7 @@
 # BEGIN PYTHON
 # true values used to simulate data
 iota_true        = 0.05
-n_data           = 51
+n_data           = 101
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -390,6 +390,7 @@ for var_id in range( len(var_dict) ) :
 		value        = sample_dict[var_id]['var_value']
 		covariate_id = row['covariate_id']
 		if covariate_id == 0 :
+			# print( value / mulcov_income - 1.0 )
 			assert abs( value / mulcov_income - 1.0 ) < 1e-1
 		else :
 			assert abs( value ) < 1e-1

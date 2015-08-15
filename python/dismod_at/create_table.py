@@ -50,14 +50,8 @@
 # Each row is itself a list containing the data for one row of the
 # table in the same order as $icode col_name$$.
 # Note that the primary key column is not included in $icode row_list$$.
-# The python type corresponding to the values in $icode row_list$$ are
-# as follows:
-# $table
-# $icode col_type$$ $pre  $$ $cnext  Python           $rnext
-# $code integer$$            $cnext  $code int$$      $rnext
-# $code real$$               $cnext  $code float$$    $rnext
-# $code text$$               $cnext  $code str$$
-# $tend
+# Also note that the value in each column gets converted to unicode value
+# before being written to the database.
 # Note that the special value
 # $codei%
 #	%row_list%[%i%][%j%] ==  None
