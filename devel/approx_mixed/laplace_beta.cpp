@@ -28,9 +28,11 @@ random part of the objective; i.e.,
 $latex \[
 	H_\beta^{(1)} ( \beta , \theta , u )
 \]$$
-See $cref/H(beta, theta, u)/approx_mixed_theory
-	/Random Part of Objective
-	/H(beta, theta, u)
+see
+$cref/H(beta, theta, u)
+	/approx_mixed_theory
+	/Differentiating Random Part of Objective
+	/Approximate Random Objective, H(beta, theta, u)
 /$$.
 
 $head approx_object$$

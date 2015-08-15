@@ -39,6 +39,9 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 08-15$$
+Improve the $cref approx_mixed_theory$$ section.
+
 $head 08-14$$
 $list number$$
 Change the name of the $code avg_case_table$$ to $cref avgint_table$$.
@@ -231,11 +234,11 @@ $cref/optimize_random/approx_mixed_optimize_random/$$ is called
 in a case where there are no random effects.
 $lnext
 There was a bug in the case where the second derivative
-of the Laplace approximation
+of the random part of the objective
 $cref/H(beta, theta, u)
 	/approx_mixed_theory
-	/Random Part of Objective
-	/H(beta, theta, u)
+	/Differentiating Random Part of Objective
+	/Approximate Random Objective, H(beta, theta, u)
 /$$
 with respect to $latex \beta$$ was zero.
 This has been fixed.

@@ -25,10 +25,11 @@ $head Syntax$$
 $icode%H% = %approx_object%.laplace_eval(%beta%, %theta%, %u%)%$$
 
 $head Purpose$$
-This routine evaluates the random part of the Laplace approximation objective
-$cref/H(beta, theta, u)/approx_mixed_theory
-	/Random Part of Objective
-	/H(beta, theta, u)
+This routine evaluates the random part of the objective
+$cref/H(beta, theta, u)
+	/approx_mixed_theory
+	/Differentiating Random Part of Objective
+	/Approximate Random Objective, H(beta, theta, u)
 /$$.
 
 $head approx_object$$
@@ -68,10 +69,11 @@ The return value has prototype
 $codei%
 	double %H%
 %$$
-and is the value of the random part of the Laplace approximation
-$cref/H(beta, theta, u)/approx_mixed_theory
-	/Random Part of Objective
-	/H(beta, theta, u)
+and is the value of the random part of the objective
+$cref/H(beta, theta, u)
+	/approx_mixed_theory
+	/Differentiating Random Part of Objective
+	/Approximate Random Objective, H(beta, theta, u)
 /$$.
 
 $children%

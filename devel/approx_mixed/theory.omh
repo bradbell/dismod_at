@@ -26,9 +26,9 @@ TMB: Automatic Differentiation and Laplace Approximation,
 Kasper Kristensen, Anders Nielsen, Casper W. Berg, Hans Skaug, Bradley M. Bell,
 Journal of Statistical Software, Accepted 2015-02.
 
-$head Random Negative Log-Likelihood, f(theta, u)$$
+$head Total Log-Likelihood$$
 The reference above defines $latex f( \theta, u)$$
-to be the negative log-likelihood of
+to be the negative log-likelihood of the
 $latex z$$, $latex y$$, $latex u$$ and $latex \theta$$; i.e.,
 $latex \[
 - \log [  \;
@@ -36,14 +36,18 @@ $latex \[
 	\B{p} ( z | \theta )\B{p} ( \theta ) \;
 ]
 \] $$
+
+
+$head Random Negative Log-Likelihood, f(theta, u)$$
 We use $latex f( \theta , u )$$ for the part of the likelihood
 that depends on the random effects $latex u$$;
 $latex \[
 	f( \theta, u ) = - \log [ \B{p} ( y |  \theta, u ) \B{p} ( u | \theta ) ]
 \] $$
 
-$subhead Smoothness Assumption$$
+$subhead Assumption$$
 The function $latex f(\theta, u)$$ is assumed to be smooth.
+Furthermore, there are no constraints on the value of $latex u$$.
 
 $head Fixed Negative Log-Likelihood, g(theta)$$
 We use $latex g( \theta )$$ for the part of the likelihood
@@ -51,13 +55,14 @@ that only depends on the fixed effects $latex \theta$$;
 $latex \[
 	g( \theta ) = - \log [ \B{p} ( z | \theta ) \B{p} ( \theta ) ]
 \]$$
-The function $latex g(x)$$ may be non-smooth, to be specific, it
+The function $latex g( \theta )$$ may not be smooth, to be specific, it
 can have absolute values in it (corresponding to the Laplace densities).
+Furthermore, there may be  constraints on the value of $latex \theta$$.
 
 $head Objective$$
 
 $subhead h(theta, u)$$
-Using this notation, the part of the Laplace approximation that
+Using the notation above, the part of the Laplace approximation that
 depends on both the fixed and random effects $latex u$$ is
 $latex \[
 h( \theta, u )
@@ -75,22 +80,28 @@ $latex \[
 	\hat{u} ( \theta ) = \R{argmin} \; f( \theta, u ) \; \R{w.r.t.} \; u
 \] $$
 
-$subhead G(theta)$$
+$subhead Random Part of Objective, r(theta)$$
 We refer to
 $latex \[
-	G( \theta ) = h[ \theta , \hat{u} ( \theta ) ]
+	r( \theta )
+	=
+	h[ \theta , \hat{u} ( \theta ) ]
+	\approx
+	- \log \left[ \int_{-\infty}^{+\infty}
+		\B{p} ( y |  \theta, u ) \B{p} ( u | \theta ) \; \B{d} u
+	\right]
 \] $$
-as the fixed part of the objective.
+as the random part of the objective.
 
-$subhead L(theta)$$
-The Laplace approximation objective, as a function of the fixed effects, is
+$subhead Total Objective, L(theta)$$
+The total objective, as a function of the fixed effects, is
 $latex \[
 L ( \theta )
 =
-G( \theta ) + g( \theta )
+r( \theta ) + g( \theta )
 \] $$
 
-$head Random Part of Objective$$
+$head Differentiating Random Part of Objective$$
 
 $subhead Implicit Differentiation$$
 Because $latex f(\theta, u)$$ is smooth, we obtain
@@ -104,12 +115,6 @@ $latex \[
 - f_{uu}^{(2)} \left[ \theta , \hat{u} ( \theta ) \right]^{-1}
 	f_{u \theta}^{(2)} \left[ \theta , \hat{u} ( \theta )  \right]
 \]$$
-We define the function
-$latex \[
-F( \theta , u )
-=
-- f_{uu}^{(2)} ( \theta , u)^{-1} f_{u \theta}^{(2)} ( \theta , u )
-\] $$
 
 $subhead U(beta, theta, u)$$
 We define  the function
@@ -160,7 +165,7 @@ I think that the second partials of $latex W^i$$ w.r.t
 $latex \beta$$ are equal to $latex u_i^{(2)} ( \theta )$$,
 but I have not yet proven so.
 
-$subhead H(beta, theta, u)$$
+$subhead Approximate Random Objective, H(beta, theta, u)$$
 Given these facts we define
 $latex \[
 H( \beta , \theta , u)
@@ -169,24 +174,33 @@ H( \beta , \theta , u)
 + f[ \beta, W( \beta , \theta , u) ]
 - \frac{n}{2} \log ( 2 \pi )
 \] $$
-It follows that
+It follow that
 $latex \[
-\frac{d}{d \theta } \left( h [ \theta , \hat{u} ( \theta ) ]  \right)
+r( \theta ) = H( \theta , \theta , \hat{u} ( \theta ) )
+\] $$
+$latex \[
+r^{(1)} ( \theta )
 =
 H_{\beta}^{(1)} \left[ \theta , \theta , \hat{u} ( \theta ) \right]
 \] $$
-Note that, for first partials to agree, $latex W$$ could be replaced
-by $latex U$$ and
-$latex f[ \beta , U( \beta , \theta , u) ]$$.
-Also note that for function values; neither $latex U$$ or $latex W$$
-need to be computed.
-
-$subhead Derivatives of G$$
-This formula enables us to use AD to compute the derivatives of
-$latex G( \theta ) = h[ \theta , \hat{u} ( \theta ) ]$$
+$latex \[
+r^{(2)} ( \theta )
+=
+H_{\beta \beta}^{(1)} \left[ \theta , \theta , \hat{u} ( \theta ) \right]
+\] $$
+(The last equation has yet to be proved.)
+This enables us to use AD to compute the derivatives of
+$latex r( \theta ) = h[ \theta , \hat{u} ( \theta ) ]$$
 without having to differentiate the iterative process that computes
 $latex \hat{u} ( \theta )$$.
 Also note that the iterative process may not have a fixed operation sequence
 and might need to be re-taped for each value of $latex \theta$$.
+$pre
+
+$$
+Note that, for first derivatives to agree, $latex W$$ could be replaced
+by $latex U$$ in the definition of $latex H$$ (less computation).
+Furthermore, for function values to agree $latex W$$ could be
+replaced by $latex \hat{u} ( \theta )$$ (even less computation).
 
 $end

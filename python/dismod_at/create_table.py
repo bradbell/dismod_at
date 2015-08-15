@@ -13,6 +13,7 @@
 #	dismod
 #	str
 #	tbl
+#	unicode
 # $$
 #
 # $section Create a Database Table$$
@@ -50,7 +51,7 @@
 # Each row is itself a list containing the data for one row of the
 # table in the same order as $icode col_name$$.
 # Note that the primary key column is not included in $icode row_list$$.
-# Also note that the value in each column gets converted to unicode value
+# Also note that the value in each column gets converted to unicode
 # before being written to the database.
 # Note that the special value
 # $codei%

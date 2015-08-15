@@ -37,11 +37,15 @@ It specifies the order of accuracy when approximating
 $cref/u^(theta)/approx_mixed_theory/Objective/u^(theta)/$$
 and must be zero, one, or two.
 The zero order recording is shortest, but can only compute
-$cref/G(theta)/approx_mixed_theory/Objective/G(theta)/$$.
+$cref/r(theta)
+	/approx_mixed_theory
+	/Objective
+	/Random Part of Objective, r(theta)
+/$$.
 The first order recording is longer, and can compute
-both $latex G( \theta )$$ and its derivative.
+both $latex r( \theta )$$ and its derivative.
 The second order recording is longest, and can compute
-both $latex G( \theta )$$ and its derivative and its Hessian.
+$latex r( \theta )$$, and its derivative, and its Hessian.
 
 $head fixed_vec$$
 This argument has prototype
@@ -68,10 +72,11 @@ $codei%
 %$$
 does not matter.
 Upon return it contains a an recording for the
-random part of the Laplace approximation objective; see
-$cref/derivatives of G/approx_mixed_theory
-	/Random Part of Objective
-	/Derivatives of G
+approximate random part of the objective; see
+$cref/H(beta, theta, u)
+	/approx_mixed_theory
+	/Differentiating Random Part of Objective
+	/Approximate Random Objective, H(beta, theta, u)
 /$$.
 
 $end

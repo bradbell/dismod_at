@@ -32,14 +32,8 @@ $icode%approx_object%.optimize_fixed(
 )%$$
 
 $head Purpose$$
-This routine maximizes the Laplace approximation for the
-negative log-likelihood
-$cref/L(theta)/approx_mixed_theory/Objective/L(theta)/$$
-$latex \[
-L( \theta ) \approx - \log \left[
-	\int \B{p} ( y | \theta , u) \B{p} ( u | \theta ) \B{p} ( \theta ) \R{d} u
-\right]
-\] $$
+This routine maximizes the total objective
+$cref/L(theta)/approx_mixed_theory/Objective/Total Objective, L(theta)/$$.
 
 $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
