@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin approx_mixed_initialize$$
 $spell
+	obj
 	vec
 	const
 	Cpp
@@ -79,8 +80,8 @@ $cref/hes_ran_/approx_mixed_private/n_random_ > 0/hes_ran_/$$.
 $lnext
 If $icode%n_random_ > 0%$$,
 for $icode%k% = 0%, ... ,% 2%$$,
-the member variable $codei%laplace_%k%_%$$ is the $th k$$ order
-$cref/Laplace approximation/approx_mixed_private/n_random_ > 0/laplace_k_/$$.
+the member variable $codei%ran_obj_%k%_%$$ is the $th k$$ order
+$cref/random objective/approx_mixed_private/n_random_ > 0/ran_obj_k_/$$.
 $lnext
 If $icode%n_random_ > 0%$$,
 the member variable
@@ -109,28 +110,28 @@ void approx_mixed::initialize(
 	{
 		assert( ! record_ran_like_done_ );
 		assert( ! record_hes_ran_done_ );
-		assert( ! record_laplace_done_[0] );
-		assert( ! record_laplace_done_[1] );
-		assert( ! record_laplace_done_[2] );
+		assert( ! record_ran_obj_done_[0] );
+		assert( ! record_ran_obj_done_[1] );
+		assert( ! record_ran_obj_done_[2] );
 
 		// ran_like_
 		record_ran_like(fixed_vec, random_vec);
 		// hes_ran_
 		record_hes_ran(fixed_vec, random_vec);
-		// laplace_0_
-		record_laplace(0, fixed_vec, random_vec);
-		// laplace_1_
-		record_laplace(1, fixed_vec, random_vec);
-		// laplace_0_
-		record_laplace(2, fixed_vec, random_vec);
+		// ran_obj_0_
+		record_ran_obj(0, fixed_vec, random_vec);
+		// ran_obj_1_
+		record_ran_obj(1, fixed_vec, random_vec);
+		// ran_obj_0_
+		record_ran_obj(2, fixed_vec, random_vec);
 		// hes_fix_
 		record_hes_fix(fixed_vec, random_vec);
 
 		assert( record_ran_like_done_ );
 		assert( record_hes_ran_done_ );
-		assert( record_laplace_done_[0] );
-		assert( record_laplace_done_[1] );
-		assert( record_laplace_done_[2] );
+		assert( record_ran_obj_done_[0] );
+		assert( record_ran_obj_done_[1] );
+		assert( record_ran_obj_done_[2] );
 	}
 	assert( ! record_fix_like_done_ );
 	assert( ! record_constraint_done_ );

@@ -18,9 +18,9 @@ extern bool constraint_jac_xam(void);
 extern bool constraint_hes_xam(void);
 extern bool ran_like_grad_xam(void);
 extern bool ran_like_hes_xam(void);
-extern bool laplace_eval_xam(void);
-extern bool laplace_beta_xam(void);
-extern bool laplace_hes_fix_xam(void);
+extern bool ran_obj_eval_xam(void);
+extern bool ran_obj_beta_xam(void);
+extern bool ran_obj_hes_fix_xam(void);
 extern bool prior_eval_xam(void);
 extern bool fix_like_jac_xam(void);
 extern bool fix_like_hes_xam(void);
@@ -34,6 +34,7 @@ public:
 /*
 $begin approx_mixed_public$$
 $spell
+	obj
 	const
 	vec
 	typedef
@@ -116,9 +117,9 @@ $comment */
 	record_hes_ran_done_(false)     ,
 	record_hes_fix_done_(false)     ,
 	record_constraint_done_(false)  ,
-	record_laplace_done_(3)
+	record_ran_obj_done_(3)
 	{	for(size_t order = 0; order < 3; order++)
-			record_laplace_done_[order] = false;
+			record_ran_obj_done_[order] = false;
 	}
 /* $$
 $head initialize$$
@@ -166,6 +167,7 @@ private:
 ------------------------------------------------------------------------------
 $begin approx_mixed_private$$
 $spell
+	obj
 	jac
 	Jacobians
 	jacobian
@@ -188,15 +190,15 @@ $childtable%include/dismod_at/approx_pack.hpp
 	%devel/approx_mixed/constraint_hes.cpp
 	%devel/approx_mixed/record_ran_like.cpp
 	%devel/approx_mixed/record_hes_ran.cpp
-	%devel/approx_mixed/record_laplace.cpp
+	%devel/approx_mixed/record_ran_obj.cpp
 	%devel/approx_mixed/record_hes_fix.cpp
 	%devel/approx_mixed/record_fix_like.cpp
 	%devel/approx_mixed/record_constraint.cpp
 	%devel/approx_mixed/ran_like_grad.cpp
 	%devel/approx_mixed/ran_like_hes.cpp
-	%devel/approx_mixed/laplace_eval.cpp
-	%devel/approx_mixed/laplace_beta.cpp
-	%devel/approx_mixed/laplace_hes_fix.cpp
+	%devel/approx_mixed/ran_obj_eval.cpp
+	%devel/approx_mixed/ran_obj_beta.cpp
+	%devel/approx_mixed/ran_obj_hes_fix.cpp
 	%devel/approx_mixed/prior_eval.cpp
 	%devel/approx_mixed/fix_like_jac.cpp
 	%devel/approx_mixed/fix_like_hes.cpp
@@ -222,13 +224,13 @@ $codep */
 	bool                record_hes_ran_done_;
 	bool                record_hes_fix_done_;
 	bool                record_constraint_done_;
-	CppAD::vector<bool> record_laplace_done_; // index is order in call
+	CppAD::vector<bool> record_ran_obj_done_; // index is order in call
 /* $$
 $head n_random_ > 0$$
 The following values are only defined when $icode%n_random_% > 0%$$:
 $cref/ran_like_/approx_mixed_private/n_random_ > 0/ran_like_/$$,
 $cref/hes_ran_/approx_mixed_private/n_random_ > 0/hes_ran_/$$,
-$cref/laplace_k_/approx_mixed_private/n_random_ > 0/laplace_k_/$$,
+$cref/ran_obj_k_/approx_mixed_private/n_random_ > 0/ran_obj_k_/$$,
 $cref/hes_fix_/approx_mixed_private/n_random_ > 0/hes_fix_/$$,
 
 $subhead ran_like_$$
@@ -251,14 +253,14 @@ $codep */
 	CppAD::vector<size_t>      hes_ran_col_; // corresponding column indices
 	CppAD::sparse_hessian_work hes_ran_work_;
 /* $$
-$subhead laplace_k_$$
-For $icode%k% = 0 , 1, 2%$$, $codei%laplace_%k%_%$$ is $th k$$ order accurate
+$subhead ran_obj_k_$$
+For $icode%k% = 0 , 1, 2%$$, $codei%ran_obj_%k%_%$$ is $th k$$ order accurate
 in $latex \beta$$ recording of the Joint part of the Laplace approximation;
 i.e., $latex H( \beta , \theta , u)$$.
 $codep */
-	CppAD::ADFun<double>    laplace_0_;     // for computing H
-	CppAD::ADFun<double>    laplace_1_;     // for computing H_beta
-	CppAD::ADFun<double>    laplace_2_;     // for computing H_beta_beta
+	CppAD::ADFun<double>    ran_obj_0_;     // for computing H
+	CppAD::ADFun<double>    ran_obj_1_;     // for computing H_beta
+	CppAD::ADFun<double>    ran_obj_2_;     // for computing H_beta_beta
 /* $$
 $subhead hes_fix_$$
 Information used to calculate the sparse Hessian of the random likelihood
@@ -353,10 +355,10 @@ $codep */
 		const d_vector& random_vec
 	);
 /* $$
-$head record_laplace$$
-See $cref approx_mixed_record_laplace$$.
+$head record_ran_obj$$
+See $cref approx_mixed_record_ran_obj$$.
 $codep */
-	void record_laplace(
+	void record_ran_obj(
 		size_t          order     ,
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
@@ -405,40 +407,40 @@ $codep */
 	friend bool ::ran_like_hes_xam(void);
 /* $$
 ------------------------------------------------------------------------------
-$head laplace_eval$$
-See $cref approx_mixed_laplace_eval$$
+$head ran_obj_eval$$
+See $cref approx_mixed_ran_obj_eval$$
 $codep */
-	// laplace_eval
-	double laplace_eval(
+	// ran_obj_eval
+	double ran_obj_eval(
 		const d_vector& beta   ,
 		const d_vector& theta  ,
 		const d_vector& u
 	);
-	friend bool ::laplace_eval_xam(void);
+	friend bool ::ran_obj_eval_xam(void);
 /* $$
-$head laplace_beta$$
-See $cref approx_mixed_laplace_beta$$
+$head ran_obj_beta$$
+See $cref approx_mixed_ran_obj_beta$$
 $codep */
-	// laplace_beta
-	d_vector laplace_beta(
+	// ran_obj_beta
+	d_vector ran_obj_beta(
 		const d_vector& beta   ,
 		const d_vector& theta  ,
 		const d_vector& u
 	);
-	friend bool ::laplace_beta_xam(void);
+	friend bool ::ran_obj_beta_xam(void);
 /* $$
-$head laplace_hes_fix$$
-See $cref approx_mixed_laplace_hes_fix$$
+$head ran_obj_hes_fix$$
+See $cref approx_mixed_ran_obj_hes_fix$$
 $codep */
-	// laplace_hes_fix
-	void laplace_hes_fix(
+	// ran_obj_hes_fix
+	void ran_obj_hes_fix(
 		const d_vector&         fixed_vec   ,
 		const d_vector&         random_vec  ,
 		CppAD::vector<size_t>&  row_out     ,
 		CppAD::vector<size_t>&  col_out     ,
 		d_vector&               val_out
 	);
-	friend bool ::laplace_hes_fix_xam(void);
+	friend bool ::ran_obj_hes_fix_xam(void);
 /* $$
 -------------------------------------------------------------------------------
 $head constraint_eval$$

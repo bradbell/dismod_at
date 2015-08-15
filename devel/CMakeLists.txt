@@ -16,12 +16,12 @@ ADD_LIBRARY(approx_mixed
 	approx_mixed/constraint_jac.cpp
 	approx_mixed/constraint_hes.cpp
 	approx_mixed/ran_like_grad.cpp
-	approx_mixed/laplace_hes_fix.cpp
+	approx_mixed/ran_obj_hes_fix.cpp
 	approx_mixed/ran_like_hes.cpp
 	approx_mixed/initialize.cpp
 	approx_mixed/ipopt_fixed.cpp
-	approx_mixed/laplace_eval.cpp
-	approx_mixed/laplace_beta.cpp
+	approx_mixed/ran_obj_eval.cpp
+	approx_mixed/ran_obj_beta.cpp
 	approx_mixed/optimize_fixed.cpp
 	approx_mixed/optimize_random.cpp
 	approx_mixed/prior_eval.cpp
@@ -32,7 +32,7 @@ ADD_LIBRARY(approx_mixed
 	approx_mixed/record_hes_fix.cpp
 	approx_mixed/record_hes_ran.cpp
 	approx_mixed/record_ran_like.cpp
-	approx_mixed/record_laplace.cpp
+	approx_mixed/record_ran_obj.cpp
 )
 SET_TARGET_PROPERTIES(approx_mixed
 	PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"

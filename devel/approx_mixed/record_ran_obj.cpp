@@ -11,17 +11,18 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/approx_mixed.hpp>
 
 /*
-$begin approx_mixed_record_laplace$$
+$begin approx_mixed_record_ran_obj$$
 $spell
+	obj
 	vec
 	const
 	Cpp
 $$
 
-$section approx_mixed: Record Random Part of Laplace Approximation$$
+$section Record Approximation for Random Part of Objective$$
 
 $head Syntax$$
-$codei%record_laplace(%order%, %fixed_vec%, %random_vec%)%$$
+$codei%record_ran_obj(%order%, %fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code approx_mixed$$ class
@@ -65,10 +66,10 @@ It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
-$head laplace_order_$$
+$head ran_obj_order_$$
 The input value of the member variable
 $codei%
-	CppAD::ADFun<double> laplace_%order%_
+	CppAD::ADFun<double> ran_obj_%order%_
 %$$
 does not matter.
 Upon return it contains a an recording for the
@@ -86,12 +87,12 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void approx_mixed::record_laplace(
+void approx_mixed::record_ran_obj(
 	size_t          order      ,
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {	assert( order <= 2 );
-	assert( ! record_laplace_done_[order] );
+	assert( ! record_ran_obj_done_[order] );
 
 	// declare eigen matrix types
 	using Eigen::Dynamic;
@@ -203,19 +204,19 @@ void approx_mixed::record_laplace(
 
 	// complete recording of H(beta, theta, u)
 	if( order == 0 )
-	{	laplace_0_.Dependent(a1_beta_theta_u, a1_H);
-		laplace_0_.optimize();
+	{	ran_obj_0_.Dependent(a1_beta_theta_u, a1_H);
+		ran_obj_0_.optimize();
 	}
 	else if( order == 1 )
-	{	laplace_1_.Dependent(a1_beta_theta_u, a1_H);
-		laplace_1_.optimize();
+	{	ran_obj_1_.Dependent(a1_beta_theta_u, a1_H);
+		ran_obj_1_.optimize();
 	}
 	else
 	{	assert(order == 2 );
-		laplace_2_.Dependent(a1_beta_theta_u, a1_H);
-		laplace_2_.optimize();
+		ran_obj_2_.Dependent(a1_beta_theta_u, a1_H);
+		ran_obj_2_.optimize();
 	}
-	record_laplace_done_[order] = true;
+	record_ran_obj_done_[order] = true;
 }
 
 } // END_DISMOD_AT_NAMESPACE

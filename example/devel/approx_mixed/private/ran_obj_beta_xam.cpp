@@ -9,15 +9,14 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin laplace_hes_fix_xam.cpp$$
+$begin ran_obj_beta_xam.cpp$$
 $spell
-	hes
-	eval
+	obj
 	interp
 	xam
 $$
 
-$section C++ laplace_hes_fix: Example and Test$$
+$section C++ ran_obj_beta: Example and Test$$
 
 $head Private$$
 This example is not part of the
@@ -36,7 +35,7 @@ $latex \[
 \] $$
 
 $code
-$verbatim%example/devel/approx_mixed/private/laplace_hes_fix_xam.cpp
+$verbatim%example/devel/approx_mixed/private/ran_obj_beta_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -121,11 +120,10 @@ namespace {
 	};
 }
 
-bool laplace_hes_fix_xam(void)
+bool ran_obj_beta_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
-	double sqrt_2pi = CppAD::sqrt(8.0 * CppAD::atan(1.0) );
 
 	size_t n_data   = 10;
 	size_t n_fixed  = 2;
@@ -134,11 +132,13 @@ bool laplace_hes_fix_xam(void)
 	vector<double> beta(n_fixed), theta(n_fixed), uhat(n_random);
 
 	fixed_vec[0] = 2.0;
-	fixed_vec[1] = 0.5;
+	fixed_vec[1] = 1.0;
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]       = double(i + 1);
 		random_vec[i] = i / double(n_data);
 	}
+	for(size_t j = 0; j < n_fixed; j++)
+		beta[j] = theta[j] = fixed_vec[j];
 
 	// object that is derived from approx_mixed
 	approx_derived approx_object(n_fixed, n_random, data);
@@ -147,58 +147,39 @@ bool laplace_hes_fix_xam(void)
 	// optimize the random effects
 	uhat = approx_object.optimize_random(fixed_vec, random_vec);
 
-	// compute Hessian of random part of Laplace approximation
-	vector<size_t> row, col;
-	vector<double> val;
-	approx_object.laplace_hes_fix(fixed_vec, random_vec, row, col, val);
-
-	// check size of result vectors
-	size_t K = row.size();
-	ok &= col.size() == K;
-	ok &= val.size() == K;
+	// compute partial of random part of Laplace approximation w.r.t beta
+	vector<double> H_beta = approx_object.ran_obj_beta(beta, theta, uhat);
 
 	// For this case the Laplace approximation is exactly equal the integral
 	// p(y | theta ) = integral of p(y | theta , u) p(u | theta) du
-	// record the function L(theta) = p(y | theta)
-	typedef AD<double> a1_double;
-	vector<a1_double> a1_fixed_vec(n_fixed), a1_L(1);
-	a1_fixed_vec[0]  = fixed_vec[0];
-	a1_fixed_vec[1]  = fixed_vec[1];
-	CppAD::Independent(a1_fixed_vec);
-	a1_double mu     = a1_fixed_vec[0];
-	a1_double sigma  = a1_fixed_vec[1];
-	a1_double delta  = CppAD::sqrt( sigma * sigma + 1.0 );
-	a1_L[0] = 0.0;
+	// Furthermore p(y | theta ) is simple to calculate directly
+	double mu         = fixed_vec[0];
+	double sigma      = fixed_vec[1];
+	//
+	double d_mu_0     = 1.0;
+	double d_sigma_1  = 1.0;
+	//
+	double delta      = CppAD::sqrt( sigma * sigma + 1.0 );
+	double d_delta_1  = d_sigma_1 * sigma / delta;
+	//
+	double d_sum_0    = 0.0;
+	double d_sum_1    = 0.0;
 	for(size_t i = 0; i < n_data; i++)
-	{	a1_double res  = (data[i] - mu) / delta;
-		a1_L[0]       += log(sqrt_2pi * delta) + res*res / 2.0;
+	{	double res    = (data[i] - mu) / delta;
+		// - log p( y_i | theta ) = log(sqrt_2pi * delta) + res*res / 2.0;
+		// so compute partials w.r.t. sigma = theta_i
+		double d_res_0    = - d_mu_0 / delta;
+		double d_res_1    = - d_delta_1 * (data[i] - mu) / ( delta * delta) ;
+		//
+		double d_log_1    = d_delta_1 / delta;
+		double d_square_0 = d_res_0 * res;
+		double d_square_1 = d_res_1 * res;
+		//
+		d_sum_0          += d_square_0;
+		d_sum_1          += d_log_1 + d_square_1;
 	}
-	CppAD::ADFun<double> f(a1_fixed_vec, a1_L);
-
-	// compute Hessian of L
-	vector<double> hes = f.Hessian(fixed_vec, 0);
-
-	// check results
-	ok &= hes.size() == 4;
-	size_t check_count = 0;
-	size_t non_zero    = 0;
-	for(size_t i = 0; i < 2; i++)
-	{	for(size_t j = 0; j <= i; j++)
-		{	// only check lower triangle non-zero values
-			if( hes[ i * 2 + j ] != 0.0 )
-			{	non_zero++;
-				for(size_t k = 0; k < K; k++)
-				{	if( row[k] == i && col[k] == j )
-					{	ok &= abs( val[k] / hes[i*n_fixed+j] - 1.0 ) <= eps;
-						check_count++;
-					}
-				}
-			}
-		}
-	}
-	// should be only two non
-	ok &= check_count == non_zero;
-	ok &= K == non_zero;
+	ok &= abs( H_beta[0] / d_sum_0 - 1.0 )  < eps;
+	ok &= abs( H_beta[1] / d_sum_1 - 1.0 )  < eps;
 
 	return ok;
 }

@@ -9,14 +9,15 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin laplace_eval_xam.cpp$$
+$begin ran_obj_eval_xam.cpp$$
 $spell
+	obj
 	eval
 	interp
 	xam
 $$
 
-$section C++ laplace_eval: Example and Test$$
+$section C++ ran_obj_eval: Example and Test$$
 
 $head Private$$
 This example is not part of the
@@ -35,7 +36,7 @@ $latex \[
 \] $$
 
 $code
-$verbatim%example/devel/approx_mixed/private/laplace_eval_xam.cpp
+$verbatim%example/devel/approx_mixed/private/ran_obj_eval_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -120,7 +121,7 @@ namespace {
 	};
 }
 
-bool laplace_eval_xam(void)
+bool ran_obj_eval_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -149,7 +150,7 @@ bool laplace_eval_xam(void)
 	uhat = approx_object.optimize_random(fixed_vec, random_vec);
 
 	// compute random part of Laplace approximation
-	double H = approx_object.laplace_eval(beta, theta, uhat);
+	double H = approx_object.ran_obj_eval(beta, theta, uhat);
 
 	// For this case the Laplace approximation is exactly equal the integral
 	// p(y | theta ) = integral of p(y | theta , u) p(u | theta) du

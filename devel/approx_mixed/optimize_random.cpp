@@ -61,10 +61,6 @@ It is the final value (obtained by optimization) of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$.
 
-$head Laplace Likelihood$$
-This optimization properly handles the case where
-the random negative log-likelihood contains Laplace likelihood terms.
-
 $head Example$$
 The file $cref optimize_random_xam.cpp$$ contains an example
 and test of this procedure.

@@ -10,17 +10,18 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/approx_mixed.hpp>
 /*
-$begin approx_mixed_laplace_beta$$
+$begin approx_mixed_ran_obj_beta$$
 $spell
+	obj
 	vec
 	const
 	Cpp
 $$
 
-$section approx_mixed: Partial of Laplace Approximation w.r.t Fixed Effects$$
+$section Partial of Random Part of Objective w.r.t Fixed Effects$$
 
 $head Syntax$$
-$icode%H_beta% = %approx_object%.laplace_beta(%beta%, %theta%, %u%)%$$
+$icode%H_beta% = %approx_object%.ran_obj_beta(%beta%, %theta%, %u%)%$$
 
 $head Purpose$$
 This routine evaluates the partial w.r.t the fixed effects of the
@@ -75,10 +76,10 @@ $codei%
 and is the value of the partial derivative.
 
 $children%
-	example/devel/approx_mixed/private/laplace_beta_xam.cpp
+	example/devel/approx_mixed/private/ran_obj_beta_xam.cpp
 %$$
 $head Example$$
-The file $cref laplace_beta_xam.cpp$$ contains an example
+The file $cref ran_obj_beta_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 
@@ -86,25 +87,25 @@ $end
 */
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-approx_mixed::d_vector approx_mixed::laplace_beta(
+approx_mixed::d_vector approx_mixed::ran_obj_beta(
 	const d_vector& beta  ,
 	const d_vector& theta ,
 	const d_vector& u     )
-{	assert( record_laplace_done_[1] );
-	assert( laplace_1_.Domain() == 2 * n_fixed_ + n_random_ );
-	assert( laplace_1_.Range() == 1 );
+{	assert( record_ran_obj_done_[1] );
+	assert( ran_obj_1_.Domain() == 2 * n_fixed_ + n_random_ );
+	assert( ran_obj_1_.Range() == 1 );
 
 	// pack all the arguments into one vector.
 	d_vector beta_theta_u(2 * n_fixed_ + n_random_);
 	pack(beta, theta, u, beta_theta_u);
 
 	// execute a zero order forward sweep
-	laplace_1_.Forward(0, beta_theta_u);
+	ran_obj_1_.Forward(0, beta_theta_u);
 
 	// compute the gradient H w.r.t (beta, theta, u)
 	d_vector w(1);
 	w[0] = 1.0;
-	d_vector H_beta_theta_u = laplace_1_.Reverse(1, w);
+	d_vector H_beta_theta_u = ran_obj_1_.Reverse(1, w);
 
 	// extract H_beta
 	d_vector H_beta(n_fixed_), H_theta(n_fixed_), H_u(n_random_);

@@ -42,11 +42,11 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	approx_mixed/private/constraint_hes_xam.cpp
 	approx_mixed/private/eigen_xam.cpp
 	approx_mixed/private/ran_like_grad_xam.cpp
-	approx_mixed/private/laplace_hes_fix_xam.cpp
+	approx_mixed/private/ran_obj_hes_fix_xam.cpp
 	approx_mixed/private/ran_like_hes_xam.cpp
 	approx_mixed/ipopt_xam_run.cpp
-	approx_mixed/private/laplace_eval_xam.cpp
-	approx_mixed/private/laplace_beta_xam.cpp
+	approx_mixed/private/ran_obj_eval_xam.cpp
+	approx_mixed/private/ran_obj_beta_xam.cpp
 	approx_mixed/private/prior_eval_xam.cpp
 	approx_mixed/private/fix_like_jac_xam.cpp
 	approx_mixed/private/fix_like_hes_xam.cpp

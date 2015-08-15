@@ -150,6 +150,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /* $$
 $begin ipopt_fixed_ctor$$
 $spell
+	obj
 	hes
 	vec
 	eval
@@ -345,12 +346,12 @@ approx_object_     ( approx_object    )
 	// derivative of the constraints
 	nnz_jac_g_ += constraint_jac_row_.size();
 	// -----------------------------------------------------------------------
-	// set lag_hes_row_, lag_hes_col_, laplace_2_lag_, fix_like2lag_
+	// set lag_hes_row_, lag_hes_col_, ran_obj_2_lag_, fix_like2lag_
 	// -----------------------------------------------------------------------
-	// row and column indices for contribution from Laplace approximation
-	if( n_random_ > 0 ) approx_object.laplace_hes_fix(
+	// row and column indices for contribution from random part of objective
+	if( n_random_ > 0 ) approx_object.ran_obj_hes_fix(
 		fixed_in, random_in,
-		laplace_hes_row_, laplace_hes_col_, laplace_hes_val_
+		ran_obj_hes_row_, ran_obj_hes_col_, ran_obj_hes_val_
 	);
 	// row and column indices for contribution from prior
 	d_vector weight( 1 + fix_like_n_abs_ );
@@ -372,25 +373,25 @@ approx_object_     ( approx_object    )
 	);
 	//
 	// merge to form sparsity for Lagrangian
-	laplace_2_lag_.resize( laplace_hes_row_.size() );
+	ran_obj_2_lag_.resize( ran_obj_hes_row_.size() );
 	fix_like2lag_.resize( fix_like_hes_row_.size() );
 	constraint_2_lag_.resize( constraint_hes_row_.size() );
 	merge_sparse(
-		laplace_hes_row_      ,
-		laplace_hes_col_      ,
+		ran_obj_hes_row_      ,
+		ran_obj_hes_col_      ,
 		fix_like_hes_row_        ,
 		fix_like_hes_col_        ,
 		constraint_hes_row_   ,
 		constraint_hes_col_   ,
 		lag_hes_row_          ,
 		lag_hes_col_          ,
-		laplace_2_lag_        ,
+		ran_obj_2_lag_        ,
 		fix_like2lag_          ,
 		constraint_2_lag_
 	);
 # ifndef NDEBUG
-	for(size_t k = 0; k < laplace_hes_row_.size(); k++)
-		assert( laplace_2_lag_[k] < lag_hes_row_.size() );
+	for(size_t k = 0; k < ran_obj_hes_row_.size(); k++)
+		assert( ran_obj_2_lag_[k] < lag_hes_row_.size() );
 	//
 	for(size_t k = 0; k < fix_like_hes_row_.size(); k++)
 		assert( fix_like2lag_[k] < lag_hes_row_.size() );
@@ -424,6 +425,7 @@ $end
 ------------------------------------------------------------------------------
 $begin ipopt_fixed_get_nlp_info$$
 $spell
+	obj
 	ipopt_fixed_get_nlp_info
 	nnz_jac
 	Jacobian
@@ -482,6 +484,7 @@ bool ipopt_fixed::get_nlp_info(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_get_bounds_info$$
 $spell
+	obj
 	ipopt
 	bool
 $$
@@ -564,6 +567,7 @@ bool ipopt_fixed::get_bounds_info(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_get_starting_point$$
 $spell
+	obj
 	init
 	ipopt
 	bool
@@ -656,6 +660,7 @@ bool ipopt_fixed::get_starting_point(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_f$$
 $spell
+	obj
 	ipopt
 	bool
 	eval
@@ -716,8 +721,8 @@ bool ipopt_fixed::eval_f(
 		if( new_x )
 		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
 		//
-		// compute random part of the Laplace objective
-		H = approx_object_.laplace_eval(
+		// compute random part of the objective
+		H = approx_object_.ran_obj_eval(
 			fixed_tmp_, fixed_tmp_, random_cur_
 		);
 	}
@@ -743,6 +748,7 @@ bool ipopt_fixed::eval_f(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_grad_f$$
 $spell
+	obj
 	ipopt
 	bool
 	eval
@@ -806,7 +812,7 @@ bool ipopt_fixed::eval_grad_f(
 		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
 		//
 		// Jacobian for random part of the Lalpace objective
-		H_beta_tmp_ = approx_object_.laplace_beta(
+		H_beta_tmp_ = approx_object_.ran_obj_beta(
 			fixed_tmp_, fixed_tmp_, random_cur_
 		);
 	}
@@ -841,6 +847,7 @@ bool ipopt_fixed::eval_grad_f(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_g$$
 $spell
+	obj
 	ipopt
 	bool
 	const
@@ -918,6 +925,7 @@ bool ipopt_fixed::eval_g(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_jac_g$$
 $spell
+	obj
 	ipopt
 	bool
 	eval
@@ -1069,6 +1077,7 @@ bool ipopt_fixed::eval_jac_g(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_h$$
 $spell
+	obj
 	ipopt
 	bool
 	eval
@@ -1197,14 +1206,14 @@ bool ipopt_fixed::eval_h(
 		//
 		random_h_   = random_cur_;
 		//
-		// compute Hessian of Laplace approximation w.r.t. fixed effects
-		approx_object_.laplace_hes_fix(
+		// compute Hessian of random part w.r.t. fixed effects
+		approx_object_.ran_obj_hes_fix(
 			fixed_tmp_, random_cur_,
-			laplace_hes_row_, laplace_hes_col_, laplace_hes_val_
+			ran_obj_hes_row_, ran_obj_hes_col_, ran_obj_hes_val_
 		);
-		for(size_t k = 0; k < laplace_hes_row_.size(); k++)
-			values[ laplace_2_lag_[k] ] +=
-				obj_factor * Number( laplace_hes_val_[k] );
+		for(size_t k = 0; k < ran_obj_hes_row_.size(); k++)
+			values[ ran_obj_2_lag_[k] ] +=
+				obj_factor * Number( ran_obj_hes_val_[k] );
 	}
 	//
 	// Hessian of Lagrangian of weighted prior w.r.t. fixed effects
@@ -1244,6 +1253,7 @@ bool ipopt_fixed::eval_h(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_finalize_solution$$
 $spell
+	obj
 	ipopt
 	bool
 	eval

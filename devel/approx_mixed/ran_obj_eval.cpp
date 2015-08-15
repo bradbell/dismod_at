@@ -11,18 +11,19 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/approx_mixed.hpp>
 
 /*
-$begin approx_mixed_laplace_eval$$
+$begin approx_mixed_ran_obj_eval$$
 $spell
+	obj
 	eval
 	vec
 	const
 	Cpp
 $$
 
-$section approx_mixed: Evaluate Random Part of the Laplace Approximation$$
+$section Evaluate Random Part of the Objective$$
 
 $head Syntax$$
-$icode%H% = %approx_object%.laplace_eval(%beta%, %theta%, %u%)%$$
+$icode%H% = %approx_object%.ran_obj_eval(%beta%, %theta%, %u%)%$$
 
 $head Purpose$$
 This routine evaluates the random part of the objective
@@ -77,10 +78,10 @@ $cref/H(beta, theta, u)
 /$$.
 
 $children%
-	example/devel/approx_mixed/private/laplace_eval_xam.cpp
+	example/devel/approx_mixed/private/ran_obj_eval_xam.cpp
 %$$
 $head Example$$
-The file $cref laplace_eval_xam.cpp$$ contains an example
+The file $cref ran_obj_eval_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 
@@ -89,18 +90,18 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-double approx_mixed::laplace_eval(
+double approx_mixed::ran_obj_eval(
 	const d_vector& beta  ,
 	const d_vector& theta ,
 	const d_vector& u     )
-{	assert( record_laplace_done_[0] );
-	assert( laplace_0_.Domain() == 2 * n_fixed_ + n_random_ );
-	assert( laplace_0_.Range() == 1 );
+{	assert( record_ran_obj_done_[0] );
+	assert( ran_obj_0_.Domain() == 2 * n_fixed_ + n_random_ );
+	assert( ran_obj_0_.Range() == 1 );
 
 	// evaluate H(beta, theta, u)
 	d_vector beta_theta_u(2 * n_fixed_ + n_random_);
 	pack(beta, theta, u, beta_theta_u);
-	d_vector H = laplace_0_.Forward(0, beta_theta_u);
+	d_vector H = ran_obj_0_.Forward(0, beta_theta_u);
 
 	return H[0];
 }
