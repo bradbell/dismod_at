@@ -65,62 +65,79 @@ $codei%
 	std::map<std::string, size_t> %size_map%
 %$$
 It represent the size of certain aspects of the problem as follows:
-$table
-$icode%size_map%["fix_like"]%$$ $cnext
+$codei%
+
+%size_map%["fix_like"]
+%$$
 	number of variables in the $code ADFun<double>$$ version of
 	$cref/fix_like/approx_mixed_fix_like/$$.
-$rnext
-$icode%size_map%["a1_ran_like"]%$$ $cnext
-	number of variables in the $code ADFun<a1_double>$$ version of
-	$cref/ran_like/approx_mixed_ran_like/$$.
-$rnext
-$icode%size_map%["a0_ran_like"]%$$ $cnext
-	number of variables in the $code ADFun<double>$$ version of
-	$cref/ran_like/approx_mixed_ran_like/$$.
-$rnext
-$icode%size_map%["ran_obj_0"]%$$ $cnext
-	number of variables in the $code ADFun<double>$$
-	object used to evaluate the
-	$cref/random part of objective
-		/approx_mixed_theory
-		/Objective
-		/Random Part of Objective, r(theta)
-	/$$.
-$icode%size_map%["ran_obj_1"]%$$ $cnext
-	number of variables in the $code ADFun<double>$$
-	object used to evaluate the derivative, w.r.t fixed effects, of the
-	$cref/random part of objective
-		/approx_mixed_theory
-		/Objective
-		/Random Part of Objective, r(theta)
-	/$$.
-$icode%size_map%["ran_obj_2"]%$$ $cnext
-	number of variables in the $code ADFun<double>$$
-	object used to evaluate Hessian, w.r.t. fixed effects, of the
-	$cref/random part of objective
-		/approx_mixed_theory
-		/Objective
-		/Random Part of Objective, r(theta)
-	/$$.
-$rnext
-$icode%size_map%["hes_ran"]%$$ $cnext
-	number of non-zero entries in hessian of
-	random negative log-likelihood
-	$cref/f(theta, u)
-		/approx_mixed_theory
-		/Objective
-		/Random Part of Objective, r(theta)
-	/$$
-	with respect to fixed effects $latex \theta$$.
-$rnext
-$icode%size_map%["hes_fix"]%$$ $cnext
-	number of non-zero entries in hessian of random part of objective
-	$cref/r(theta)
-		/approx_mixed_theory
-		/Random Negative Log-Likelihood, f(theta, u)
-	/$$
-	with respect to the random effects $latex u$$.
-$tend
+$codei%
+
+%size_map%["a1_ran_like"]
+%$$
+number of variables in the $code ADFun<a1_double>$$ version of
+$cref/ran_like/approx_mixed_ran_like/$$.
+$codei%
+
+%size_map%["a0_ran_like"]
+%$$
+number of variables in the $code ADFun<double>$$ version of
+$cref/ran_like/approx_mixed_ran_like/$$.
+$codei%
+
+%size_map%["ran_obj_0"]
+%$$
+number of variables in the $code ADFun<double>$$
+object used to evaluate the
+$cref/random part of objective
+	/approx_mixed_theory
+	/Objective
+	/Random Part of Objective, r(theta)
+/$$.
+$codei%
+
+%size_map%["ran_obj_1"]
+%$$
+number of variables in the $code ADFun<double>$$
+object used to evaluate the derivative, w.r.t fixed effects, of the
+$cref/random part of objective
+	/approx_mixed_theory
+	/Objective
+	/Random Part of Objective, r(theta)
+/$$.
+$codei%
+
+%size_map%["ran_obj_2"]
+%$$
+number of variables in the $code ADFun<double>$$
+object used to evaluate Hessian, w.r.t. fixed effects, of the
+$cref/random part of objective
+	/approx_mixed_theory
+	/Objective
+	/Random Part of Objective, r(theta)
+/$$.
+$codei%
+
+%size_map%["hes_ran"]
+%$$
+number of non-zero entries in hessian of
+random negative log-likelihood
+$cref/f(theta, u)
+	/approx_mixed_theory
+	/Objective
+	/Random Part of Objective, r(theta)
+/$$
+with respect to fixed effects $latex \theta$$.
+$codei%
+
+%size_map%["hes_fix"]
+%$$
+number of non-zero entries in hessian of random part of objective
+$cref/r(theta)
+	/approx_mixed_theory
+	/Random Negative Log-Likelihood, f(theta, u)
+/$$
+with respect to the random effects $latex u$$.
 
 $head Example$$
 The file $cref approx_derived_xam.cpp$$ contains an example
