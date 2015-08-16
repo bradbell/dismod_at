@@ -13,7 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin approx_mixed_record_hes_ran$$
 $spell
-	hes
+	hes hes
 	vec
 	const
 	Cpp
@@ -71,12 +71,12 @@ does not matter.
 Upon return it contains the necessary information so that
 $codei%
 	a1_ran_like_.SparseHessian(
-		%beta_theta_u%,
-		%w%,
+		%a1_both_vec%,
+		%a1_w%,
 		%not_used%,
 		hes_ran_row_,
 		hes_ran_col_,
-		%val_out%,
+		%a1_val_out%,
 		hes_ran_work_
 	);
 %$$
@@ -90,6 +90,23 @@ see $cref/f(theta, u)/
 /$$.
 Note that the matrix is symmetric and hence can be recovered from
 its lower triangle.
+
+$head hes_ran_atom_$$
+The input value of the member variable
+$codei%
+	checkpoint_hes hes_ran_atom_
+%$$
+must be the same as after its constructor; i.e.,
+no member functions had been called.
+Upon return, $code hes_ran_atom_$$ can be used to compute the
+sparse hessian with the syntax
+$codei%
+	hes_ran_atom_(%both_vec%, %a1_val_out%)
+%$$
+can be used to calculate the lower triangle of the sparse Hessian
+$latex \[
+	f_{uu}^{(2)} ( \theta , u )
+\] $$
 
 $end
 */
@@ -127,6 +144,7 @@ void approx_mixed::record_hes_ran(
 	sparsity_pattern pattern =
 		a1_ran_like_.RevSparseHes(n_total, s, transpose);
 
+	// compute hes_ran_row_ and hes_ran_col_
 	// determine row and column indices in lower triangle of Hessian
 	hes_ran_row_.clear();
 	hes_ran_col_.clear();
@@ -157,6 +175,17 @@ void approx_mixed::record_hes_ran(
 		hes_ran_row_,
 		hes_ran_col_,
 		a1_val_out,
+		hes_ran_work_
+	);
+	//
+	const char* name = "approx_mixed::hes_ran_atom_";
+	hes_ran_atom_.initialize(
+		name,
+		a1_ran_like_,
+		a1_both,
+		a1_w,
+		hes_ran_row_,
+		hes_ran_col_,
 		hes_ran_work_
 	);
 	//

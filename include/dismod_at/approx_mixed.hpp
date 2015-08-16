@@ -10,8 +10,10 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # ifndef DISMOD_AT_APPROX_MIXED_HPP
 # define DISMOD_AT_APPROX_MIXED_HPP
-# include <cppad/cppad.hpp>
+
 # include <map>
+# include <cppad/cppad.hpp>
+# include <dismod_at/checkpoint_hes.hpp>
 
 //
 extern bool constraint_eval_xam(void);
@@ -170,6 +172,7 @@ private:
 ------------------------------------------------------------------------------
 $begin approx_mixed_private$$
 $spell
+	hes hes
 	obj
 	jac
 	Jacobians
@@ -255,6 +258,8 @@ $codep */
 	CppAD::vector<size_t>      hes_ran_row_; // corresponding row indices
 	CppAD::vector<size_t>      hes_ran_col_; // corresponding column indices
 	CppAD::sparse_hessian_work hes_ran_work_;
+	// computation of the Hessian as an atomic operation
+	checkpoint_hes             hes_ran_atom_;
 /* $$
 $subhead ran_obj_k_$$
 For $icode%k% = 0 , 1, 2%$$, $codei%ran_obj_%k%_%$$ is $th k$$ order accurate

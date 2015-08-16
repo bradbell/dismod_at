@@ -12,6 +12,7 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 #
 # libapprox_mixed
 ADD_LIBRARY(approx_mixed
+	approx_mixed/checkpoint_hes.cpp
 	approx_mixed/constraint_eval.cpp
 	approx_mixed/constraint_jac.cpp
 	approx_mixed/constraint_hes.cpp

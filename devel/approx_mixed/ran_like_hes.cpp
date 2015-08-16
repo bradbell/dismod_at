@@ -110,7 +110,7 @@ This argument has prototype
 $codei%
 	CppAD::vector<a1_double>& %a1_val_out%
 %$$
-If the input size must be eqaul to $code hes_ran_row_.size()$$.
+If the input size must be equal to $code hes_ran_row_.size()$$.
 Upon return, it contains the value of the Hessian elements
 that are possibly non-zero where
 $icode%val_out%[%k%]%$$ corresponds to row
