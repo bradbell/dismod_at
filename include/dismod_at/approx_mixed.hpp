@@ -401,11 +401,8 @@ See $cref approx_mixed_ran_like_hes$$
 $codep */
 	// ran_like_hes
 	void ran_like_hes(
-		const a1d_vector&       fixed_vec   ,
-		const a1d_vector&       random_vec  ,
-		CppAD::vector<size_t>&  row_out     ,
-		CppAD::vector<size_t>&  col_out     ,
-		a1d_vector&             val_out
+		const a1d_vector&       a1_both_vec ,
+		a1d_vector&             a1_val_out
 	);
 	friend bool ::ran_like_hes_xam(void);
 /* $$

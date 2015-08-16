@@ -19,12 +19,10 @@ $spell
 	xam
 $$
 
-$section Hessian of Random Negative Log-Likelihood Random Effects$$
+$section Hessian of Negative Log-Likelihood w.r.t. Random Effects$$
 
 $head Syntax$$
-$icode%approx_object%.ran_like_hes(
-	%fixed_vec%, %random_vec%, %row_out%, %col_out%, %val_out%
-)%$$
+$icode%approx_object%.ran_like_hes(%a1_both_vec%, %a1_val_out%)%$$
 
 $head Purpose$$
 This routine computes the Hessian of the
@@ -43,62 +41,81 @@ We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
 to denote an object of a class that is
 derived from the $code approx_mixed$$ base class.
 
-$head fixed_vec$$
+$head a1_both_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a1_double>& %fixed_vec%
+	const CppAD::vector<a1_double>& %a1_both_vec%
+%$$
+The following call will unpack the fixed and random effects from
+$icode a1_both_vec$$:
+$codei%
+	unpack(%a1_fixed_vec%, %a1_random_vec%, %a1_both_vec%)
+%$$
+
+$subhead a1_fixed_vec$$
+This argument has prototype
+$codei%
+	CppAD::vector<a1_double>& %a1_fixed_vec%
 %$$
 It specifies the value of the
 $cref/fixed effects/approx_mixed/Fixed Effects, theta/$$
 vector $latex \theta$$.
 
-$head random_vec$$
+$subhead a1_random_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<a1_double>& %random_vec%
+	CppAD::vector<a1_double>& %a1_random_vec%
 %$$
 It specifies the value of the
 $cref/random effects/approx_mixed/Random Effects, u/$$
 vector $latex u$$.
 
-$head row_out$$
-This argument has prototype
+$head hes_ran_row_$$
+This $code approx_mixed$$ member variable has prototype
 $codei%
-	CppAD::vector<size_t>& %row_out%
+	const CppAD::vector<size_t> hes_ran_row_
 %$$
-If the input size of this array is non-zero,
-the entire vector must be the same
-as for a previous call to $code ran_like_hes$$.
-If it's input size is zero,
-upon return it contains the row indices for the Hessian elements
+It contains the row indices for the Hessian elements
 that are possibly non-zero.
-
-$head col_out$$
-This argument has prototype
+This is set by $code record_hes_ran$$ and hence
+$code record_hes_ran_done_$$ must be true.
+These indices are with respect to both
+the fixed and random effect with
 $codei%
-	CppAD::vector<size_t>& %col_out%
+	hes_ran_row_[%k%] - n_fixed_
 %$$
-If the input size of this array is non-zero,
-the entire vector must be the same as for
-a previous call to $code ran_like_hes$$.
-If it's input size is zero,
-upon return it contains the column indices for the Hessian elements
-that are possibly non-zero (and will have the same size as $icode row_out$$).
+the index with respect to the random effects only.
+
+$head hes_ran_col_$$
+This $code approx_mixed$$ member variable has prototype
+$codei%
+	const CppAD::vector<size_t> hes_ran_col_
+%$$
+It contains the column indices for the Hessian elements
+that are possibly non-zero.
 Note that only the lower triangle of the Hessian is computed and hence
 $codei%
-	%col_out%[%k%] <= %row_out%[%k%]
+	hes_ran_col_[%k%] <= hes_ran_row_[%k%]
 %$$
-for all $icode%k% = 0 , %...%, %row_out%.size()-1%$$
+for all $icode%k% = 0 , %...%, hes_ran_row_.size()-1%$$
+These indices are with respect to both
+the fixed and random effect with
+$codei%
+	hes_ran_col_[%k%] - n_fixed_
+%$$
+the index with respect to the random effects only.
 
-$head val_out$$
+$head a1_val_out$$
 This argument has prototype
 $codei%
-	CppAD::vector<a1_double>& %val_out%
+	CppAD::vector<a1_double>& %a1_val_out%
 %$$
-If the input size of this array is non-zero, it must have the same size
-as for a previous call to $code ran_like_hes$$.
+If the input size must be eqaul to $code hes_ran_row_.size()$$.
 Upon return, it contains the value of the Hessian elements
-that are possibly non-zero (and will have the same size as $icode row_out$$).
+that are possibly non-zero where
+$icode%val_out%[%k%]%$$ corresponds to row
+$codei%hes_ran_row_[%k%] - n_fixed_%$$ and column
+$codei%hes_ran_col_[%k%] - n_fixed_%$$ of the Hessian.
 
 $children%
 	example/devel/approx_mixed/private/ran_like_hes_xam.cpp
@@ -116,53 +133,24 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // ----------------------------------------------------------------------------
 // ran_like_hes
 void approx_mixed::ran_like_hes(
-	const a1d_vector&        fixed_vec   ,
-	const a1d_vector&        random_vec  ,
-	CppAD::vector<size_t>&   row_out     ,
-	CppAD::vector<size_t>&   col_out     ,
-	a1d_vector&              val_out     )
+	const a1d_vector&        a1_both_vec   ,
+	a1d_vector&              a1_val_out    )
 {	assert( record_hes_ran_done_ );
-	assert( n_fixed_  == fixed_vec.size() );
-	assert( n_random_ == random_vec.size() );
 
 	// size of outputs
 	size_t n_nonzero = hes_ran_row_.size();
+	assert( hes_ran_col_.size() == n_nonzero );
+	assert( a1_val_out.size() == n_nonzero );
 	if( n_nonzero == 0 )
 	{	// special case where Hessian is zero.
-		assert( row_out.size() == 0 );
-		assert( col_out.size() == 0 );
-		assert( val_out.size() == 0 );
 		return;
 	}
-	// check recording
-	assert( hes_ran_col_.size() == n_nonzero );
-
-	// make sure outputs have proper dimension
-	assert( row_out.size() == col_out.size() );
-	assert( row_out.size() == val_out.size() );
-
-	// check if this is first call
-	if( row_out.size() == 0 )
-	{	row_out.resize(n_nonzero);
-		col_out.resize(n_nonzero);
-		val_out.resize(n_nonzero);
-		for(size_t k = 0; k < n_nonzero; k++)
-		{	assert( hes_ran_row_[k] >= n_fixed_ );
-			assert( hes_ran_col_[k] >= n_fixed_ );
-			row_out[k] = hes_ran_row_[k] - n_fixed_;
-			col_out[k] = hes_ran_col_[k] - n_fixed_;
-		}
-	}
-
-	// create an a1d_vector containing (theta, u)
-	a1d_vector a1_both_vec( n_fixed_ + n_random_ );
-	pack(fixed_vec, random_vec, a1_both_vec);
 
 	// create an a1d weight vector
 	a1d_vector a1_w(1);
 	a1_w[0] = 1.0;
 
-	// First call to SparseHessian si suring record_hes_ran
+	// First call to SparseHessian is in record_hes_ran
 	CppAD::vector< std::set<size_t> > not_used(0);
 
 	// compute the sparse Hessian
@@ -172,15 +160,9 @@ void approx_mixed::ran_like_hes(
 		not_used,
 		hes_ran_row_,
 		hes_ran_col_,
-		val_out,
+		a1_val_out,
 		hes_ran_work_
 	);
-# ifndef NDEUBG
-	for(size_t k = 0; k < n_nonzero; k++)
-	{	assert( row_out[k] + n_fixed_ == hes_ran_row_[k] );
-		assert( col_out[k] + n_fixed_ == hes_ran_col_[k] );
-	}
-# endif
 }
 
 

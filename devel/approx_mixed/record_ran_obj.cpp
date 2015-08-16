@@ -111,15 +111,20 @@ void approx_mixed::record_ran_obj(
 	unpack(beta, theta, u, beta_theta_u);
 
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
-	CppAD::vector<size_t> row, col;
-	a1d_vector val;
-	ran_like_hes(theta, u, row, col, val);
+	a1d_vector both(n_fixed_ + n_random_), val_out( hes_ran_row_.size() );
+	pack(theta, u, both);
+	ran_like_hes(both, val_out);
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
 	sparse_matrix hessian(n_random_, n_random_);
-	size_t K = row.size();
+	size_t K = hes_ran_row_.size();
 	for(size_t k = 0; k < K; k++)
-		hessian.insert(row[k], col[k]) = val[k];
+	{	assert( n_fixed_        <= hes_ran_col_[k]  );
+		assert( hes_ran_col_[k] <= hes_ran_row_[k] );
+		size_t row = hes_ran_row_[k] - n_fixed_;
+		size_t col = hes_ran_col_[k] - n_fixed_;
+		hessian.insert(row, col) = val_out[k];
+	}
 
 	// compute an LDL^T Cholesky factorization of f_{uu}^{(2)}(theta, u)
 	Eigen::SimplicialLDLT<sparse_matrix, Eigen::Lower> chol;
@@ -147,9 +152,13 @@ void approx_mixed::record_ran_obj(
 			U[j] = u[j] - newton_step(j);
 
 		// evaluate hessian f_{uu}^{(2)}(beta, U) and compute its factorization
-		ran_like_hes(beta, U, row, col, val);
+		pack(beta, U, both);
+		ran_like_hes(both, val_out);
 		for(size_t k = 0; k < K; k++)
-			hessian.coeffRef(row[k], col[k]) = val[k];
+		{	size_t row = hes_ran_row_[k] - n_fixed_;
+			size_t col = hes_ran_col_[k] - n_fixed_;
+			hessian.coeffRef(row, col) = val_out[k];
+		}
 		chol.factorize(hessian);
 	}
 	// Second order section: Compute W ----------------------------------------
@@ -172,9 +181,13 @@ void approx_mixed::record_ran_obj(
 			W[j] = U[j] - newton_step(j);
 
 		// evaluate hessian f_{uu}^{(2)}(beta, W) and compute its factorization
-		ran_like_hes(beta, W, row, col, val);
+		pack(beta, W, both);
+		ran_like_hes(both, val_out);
 		for(size_t k = 0; k < K; k++)
-			hessian.coeffRef(row[k], col[k]) = val[k];
+		{	size_t row = hes_ran_row_[k] - n_fixed_;
+			size_t col = hes_ran_col_[k] - n_fixed_;
+			hessian.coeffRef(row, col) = val_out[k];
+		}
 		chol.factorize(hessian);
 	}
 	// Back to all orders ----------------------------------------------------
@@ -186,7 +199,6 @@ void approx_mixed::record_ran_obj(
 		logdet += log( diag(j) );
 
 	// f[beta, W(beta, theta, u)]
-	a1d_vector both(n_fixed_ + n_random_);
 	pack(beta, W, both);
 	a1d_vector vec = a1_ran_like_.Forward(0, both);
 	a1_double sum = vec[0];

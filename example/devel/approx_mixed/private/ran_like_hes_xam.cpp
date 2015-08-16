@@ -33,6 +33,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include <dismod_at/approx_mixed.hpp>
+# include <dismod_at/approx_pack.hpp>
 
 namespace {
 	using CppAD::vector;
@@ -125,25 +126,26 @@ bool ran_like_hes_xam(void)
 	approx_derived approx_object(n_fixed, n_random, data);
 	approx_object.initialize(theta, u);
 
-	// compute Hessian with respect to random effects
-	vector<size_t> row, col;
-	vector<a1_double> val;
-	approx_object.ran_like_hes(fixed_vec, random_vec, row, col, val);
+	// number of non-zeros in Hessian w.r.t random effects
+	ok &= approx_object.hes_ran_row_.size() == n_random;
+	ok &= approx_object.hes_ran_col_.size() == n_random;
 
-	// check size of result vectors
-	ok &= row.size() == n_random;
-	ok &= col.size() == n_random;
-	ok &= val.size() == n_random;
+	// compute Hessian with respect to random effects
+	vector<a1_double> both_vec(n_fixed + n_random), val_out(n_random);
+	approx_object.pack(fixed_vec, random_vec, both_vec);
+	approx_object.ran_like_hes(both_vec, val_out);
 
 	// check Hessian
 	for(size_t k = 0; k < n_random; k++)
-	{	size_t i = row[k];
-		size_t j = col[k];
+	{	ok     &= approx_object.hes_ran_row_[k] >= n_fixed;
+		ok     &= approx_object.hes_ran_col_[k] >= n_fixed;
+		size_t i = approx_object.hes_ran_row_[k] - n_fixed;
+		size_t j = approx_object.hes_ran_col_[k] - n_fixed;
 		ok      &= (i == j);
 		//
 		a1_double sigma  = fixed_vec[i];
 		a1_double check  = a1_double(1.0) / (sigma * sigma);
-		ok           &= abs( val[k] / check - 1.0) <= eps;
+		ok              &= abs( val_out[k] / check - 1.0) <= eps;
 	}
 
 	return ok;
