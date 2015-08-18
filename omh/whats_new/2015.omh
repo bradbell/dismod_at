@@ -35,9 +35,23 @@ $spell
 	cmake
 	devel
 	integrands
+	eigen
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 08-18$$
+$list number$$
+There was a problem with the
+$cref|bin/install_eigen.sh|install_unix|Special Requirements|eigen|$$
+install script and its use of the $code -i$$ flag on Mac systems.
+This has been fixed.
+$lnext
+Suppress certain warnings that occur when compiling with eigen package
+(need to be fixed by that package).
+This now requires linking both the $code approx_mixed$$ and
+$code approx_mixed_eigen$$ libraries.
+$lend
 
 $head 08-15$$
 $list number$$

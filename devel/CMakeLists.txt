@@ -10,7 +10,7 @@
 # ---------------------------------------------------------------------------
 SET(CMAKE_BUILD_TYPE DEBUG)
 #
-# libapprox_mixed
+# approx_mixed
 ADD_LIBRARY(approx_mixed
 	approx_mixed/checkpoint_hes.cpp
 	approx_mixed/constraint_eval.cpp
@@ -33,12 +33,24 @@ ADD_LIBRARY(approx_mixed
 	approx_mixed/record_hes_fix.cpp
 	approx_mixed/record_hes_ran.cpp
 	approx_mixed/record_ran_like.cpp
-	approx_mixed/record_ran_obj.cpp
 )
 SET_TARGET_PROPERTIES(approx_mixed
 	PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
-#
+# ---------------------------------------------------------------------------
+# approx_mixed_eigen
+ADD_LIBRARY(approx_mixed_eigen
+	approx_mixed/record_ran_obj.cpp
+)
+SET(eigen_cxx_flags
+	"${extra_cxx_flags} -Wno-shadow -Wno-deprecated-declarations"
+)
+MESSAGE(STATUS "eigen_cxx_flags = ${eigen_cxx_flags}")
+SET_TARGET_PROPERTIES(approx_mixed_eigen
+	PROPERTIES COMPILE_FLAGS "${eigen_cxx_flags}"
+)
+# ---------------------------------------------------------------------------
+# devel
 ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	model/data_model.cpp
 	model/fit_model.cpp
@@ -96,22 +108,26 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	table/smooth_info.cpp
 	table/weight_info.cpp
 )
+# ---------------------------------------------------------------------------
+# devel
 SET_TARGET_PROPERTIES(devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
 #
 LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 ADD_EXECUTABLE(dismod_at dismod_at.cpp )
 SET_TARGET_PROPERTIES(dismod_at PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}" )
-ADD_DEPENDENCIES(dismod_at devel approx_mixed)
+ADD_DEPENDENCIES(dismod_at devel approx_mixed approx_mixed_eigen)
 TARGET_LINK_LIBRARIES(dismod_at
 	devel
+	approx_mixed
+	approx_mixed_eigen
 	approx_mixed
 	${ipopt_LIBRARIES}
 	sqlite3
 	gsl
 	gslcblas
 )
-#
-# install commands
+# ---------------------------------------------------------------------------
+# install
 INSTALL(
 	TARGETS dismod_at
 	DESTINATION ${dismod_at_prefix}/bin
@@ -120,6 +136,10 @@ IF( approx_mixed_libdir )
 	INSTALL(
 		TARGETS approx_mixed
 		DESTINATION ${dismod_at_prefix}/${approx_mixed_libdir}
+	)
+	INSTALL(
+		TARGETS approx_mixed_eigen
+		DESTINATION ${dismod_at_prefix}/${approx_mixed_eigen_libdir}
 	)
 	INSTALL(
 		FILES ${dismod_at_SOURCE_DIR}/include/dismod_at/approx_mixed.hpp

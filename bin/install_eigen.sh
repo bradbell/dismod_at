@@ -6,7 +6,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
@@ -53,7 +53,7 @@ echo_eval cd eigen-$version
 #
 echo 'patch eigen source code'
 sed -e 's|Scalar l_ii = 0|Scalar l_ii = Scalar(0)|' \
-	-i Eigen/src/SparseCore/TriangularSolver.h
+	-i.old Eigen/src/SparseCore/TriangularSolver.h
 #
 echo_eval mkdir build
 echo_eval cd build

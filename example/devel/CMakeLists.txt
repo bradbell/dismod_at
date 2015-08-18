@@ -121,6 +121,8 @@ SET_TARGET_PROPERTIES(
 TARGET_LINK_LIBRARIES(example_devel
 	devel
 	approx_mixed
+	approx_mixed_eigen
+	approx_mixed
 	${ipopt_LIBRARIES}
 	${suitesparse_LIBRARIES}
 	sqlite3
@@ -128,4 +130,4 @@ TARGET_LINK_LIBRARIES(example_devel
 	gslcblas
 )
 ADD_CUSTOM_TARGET(check_example_devel example_devel DEPENDS example_devel )
-ADD_DEPENDENCIES(check_example_devel devel approx_mixed)
+ADD_DEPENDENCIES(check_example_devel devel approx_mixed approx_mixed_eigen)
