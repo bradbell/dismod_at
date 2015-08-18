@@ -24,7 +24,7 @@
 INCLUDE(CheckCXXSourceRuns)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
-SET(dismod_at_version "20150815" )
+SET(dismod_at_version "20150818" )
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 # ----------------------------------------------------------------------------
 # python_three_command
@@ -97,6 +97,12 @@ ELSE( suitesparse_prefix )
 		"so corresponding example not included."
 	)
 ENDIF( suitesparse_prefix )
+# ----------------------------------------------------------------------------
+# set eigen_cxx_flags
+SET(eigen_cxx_flags
+	"${extra_cxx_flags} -Wno-shadow -Wno-deprecated-declarations"
+)
+MESSAGE(STATUS "eigen_cxx_flags = ${eigen_cxx_flags}")
 # ----------------------------------------------------------------------------
 # set ipopt_LIBRARY_DIRS, ipopt_LIBRARIES
 # (note CppAD must be installed with ipopt_prefix specified)

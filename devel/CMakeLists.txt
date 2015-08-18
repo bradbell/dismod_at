@@ -42,10 +42,6 @@ SET_TARGET_PROPERTIES(approx_mixed
 ADD_LIBRARY(approx_mixed_eigen
 	approx_mixed/record_ran_obj.cpp
 )
-SET(eigen_cxx_flags
-	"${extra_cxx_flags} -Wno-shadow -Wno-deprecated-declarations"
-)
-MESSAGE(STATUS "eigen_cxx_flags = ${eigen_cxx_flags}")
 SET_TARGET_PROPERTIES(approx_mixed_eigen
 	PROPERTIES COMPILE_FLAGS "${eigen_cxx_flags}"
 )

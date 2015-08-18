@@ -31,7 +31,15 @@ LINK_DIRECTORIES(
 	${suitesparse_LIBRARY_DIRS}
 	${dismod_at_BINARY_DIR}/cpp
 )
-
+# -----------------------------------------------------------------------------
+# example_devel_eigen
+ADD_LIBRARY(example_devel_eigen
+	approx_mixed/private/eigen_xam.cpp
+)
+SET_TARGET_PROPERTIES(example_devel_eigen
+	PROPERTIES COMPILE_FLAGS "${eigen_cxx_flags}"
+)
+# -----------------------------------------------------------------------------
 ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	example_devel.cpp
 
@@ -40,7 +48,6 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	approx_mixed/private/constraint_eval_xam.cpp
 	approx_mixed/private/constraint_jac_xam.cpp
 	approx_mixed/private/constraint_hes_xam.cpp
-	approx_mixed/private/eigen_xam.cpp
 	approx_mixed/private/ran_like_grad_xam.cpp
 	approx_mixed/private/ran_obj_hes_fix_xam.cpp
 	approx_mixed/private/ran_like_hes_xam.cpp
@@ -119,6 +126,7 @@ SET_TARGET_PROPERTIES(
 	example_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
 TARGET_LINK_LIBRARIES(example_devel
+	example_devel_eigen
 	devel
 	approx_mixed
 	approx_mixed_eigen

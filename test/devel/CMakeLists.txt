@@ -33,6 +33,8 @@ SET_TARGET_PROPERTIES(
 TARGET_LINK_LIBRARIES(test_devel
 	devel
 	approx_mixed
+	approx_mixed_eigen
+	approx_mixed
 	${ipopt_LIBRARIES}
 	sqlite3
 	gsl
