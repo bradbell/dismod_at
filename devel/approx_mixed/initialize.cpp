@@ -85,6 +85,39 @@ number of variables in the $code ADFun<double>$$ version of
 $cref/ran_like/approx_mixed_ran_like/$$.
 $codei%
 
+%size_map%["hes_ran"]
+%$$
+number of non-zero entries in hessian of
+random negative log-likelihood
+$cref/f(theta, u)
+	/approx_mixed_theory
+	/Random Negative Log-Likelihood, f(theta, u)
+/$$
+with respect to fixed effects $latex \theta$$.
+$codei%
+
+%size_map%["hes_ran_atom"]
+%$$
+number of variables in the $code ADFun<double>$$
+object used to evaluate Hessian of the
+random negative log-likelihood
+$cref/f(theta, u)
+	/approx_mixed_theory
+	/Random Negative Log-Likelihood, f(theta, u)
+/$$
+with respect to random effects $latex u$$.
+$codei%
+
+%size_map%["hes_fix"]
+%$$
+number of non-zero entries in hessian of fixed part of objective
+$cref/g(theta)
+	/approx_mixed_theory
+	/Fixed Negative Log-Likelihood, g(theta)
+/$$
+with respect to the random effects $latex \theta$$.
+$codei%
+
 %size_map%["ran_obj_0"]
 %$$
 number of variables in the $code ADFun<double>$$
@@ -116,28 +149,6 @@ $cref/random part of objective
 	/Objective
 	/Random Part of Objective, r(theta)
 /$$.
-$codei%
-
-%size_map%["hes_ran"]
-%$$
-number of non-zero entries in hessian of
-random negative log-likelihood
-$cref/f(theta, u)
-	/approx_mixed_theory
-	/Objective
-	/Random Part of Objective, r(theta)
-/$$
-with respect to fixed effects $latex \theta$$.
-$codei%
-
-%size_map%["hes_fix"]
-%$$
-number of non-zero entries in hessian of random part of objective
-$cref/r(theta)
-	/approx_mixed_theory
-	/Random Negative Log-Likelihood, f(theta, u)
-/$$
-with respect to the random effects $latex u$$.
 
 $head Example$$
 The file $cref approx_derived_xam.cpp$$ contains an example
@@ -230,14 +241,15 @@ std::map<std::string, size_t> approx_mixed::initialize(
 
 	// return value
 	std::map<std::string, size_t> size_map;
-	size_map["fix_like"]    = fix_like_.size_var();
-	size_map["a0_ran_like"] = a0_ran_like_.size_var();
-	size_map["a1_ran_like"] = a1_ran_like_.size_var();
-	size_map["ran_obj_0"]   = ran_obj_0_.size_var();
-	size_map["ran_obj_1"]   = ran_obj_1_.size_var();
-	size_map["ran_obj_2"]   = ran_obj_2_.size_var();
-	size_map["hes_ran"]     = hes_ran_row_.size();
-	size_map["hes_fix"]     = hes_fix_row_.size();
+	size_map["fix_like"]     = fix_like_.size_var();
+	size_map["a0_ran_like"]  = a0_ran_like_.size_var();
+	size_map["a1_ran_like"]  = a1_ran_like_.size_var();
+	size_map["ran_obj_0"]    = ran_obj_0_.size_var();
+	size_map["ran_obj_1"]    = ran_obj_1_.size_var();
+	size_map["ran_obj_2"]    = ran_obj_2_.size_var();
+	size_map["hes_ran"]      = hes_ran_row_.size();
+	size_map["hes_ran_atom"] = hes_ran_atom_.size_var();
+	size_map["hes_fix"]      = hes_fix_row_.size();
 	return size_map;
 }
 

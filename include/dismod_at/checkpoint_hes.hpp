@@ -54,6 +54,7 @@ public:
 		CppAD::sparse_hessian_work&       work
 	);
 	void eval(const a1d_vector& a1_x, a1d_vector& a1_val);
+	size_t size_var(void);
 };
 
 

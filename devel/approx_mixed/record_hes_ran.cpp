@@ -108,6 +108,9 @@ $latex \[
 	f_{uu}^{(2)} ( \theta , u )
 \] $$
 
+$contents%devel/approx_mixed/checkpoint_hes.cpp
+%$$
+
 $end
 */
 

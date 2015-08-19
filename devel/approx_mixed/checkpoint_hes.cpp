@@ -10,12 +10,24 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
 $begin checkpoint_hes$$
+$spell
+	std
+	cpp
+	hes
+	obj
+	adfun
+	eval
+	const
+	sv
+	var
+$$
 
 $section Checkpoint a Sparse Hessian Calculation$$
 
 $head 2DO$$
 It is intended that this will be used to
-replace the $cref ran_like_hes$$ function in $code record_ran_obj.cpp$$.
+replace the $cref/ran_like_hes/approx_mixed_ran_like_hes/$$
+function in $code record_ran_obj.cpp$$.
 Currently this leads to slow down durn the calculation of sparsity patterns
 with respect to the fixed effects Hessian.
 
@@ -23,13 +35,15 @@ $head Syntax$$
 $icode%checkpoint_hes %atom_hes%()
 %$$
 $icode%atom_hes%.initialize(%
-	%name%, %a1_adfun%, %a1_w%, %row%, %col%, %work%
+	%name%, %a1_adfun%, %a1_x%, %a1_w%, %row%, %col%, %work%
 )%$$
+$icode%sv% = atom_hes%.size_var()
+%$$
 $code%atom_hes%.eval%(%a1_x%, %a1_val%)
 %$$
 
 $head Purpose$$
-This stores the operation sequence correpsonding to a sparse
+This stores the operation sequence corresponding to a sparse
 Hessian calculation so that it can be used as an atomic operation
 (instead of being re-taped multiple times).
 
@@ -47,7 +61,7 @@ The object $icode atom_hes$$ must still exist (not be destructed)
 for as long as any $code CppAD::ADFun$$ objects use its atomic operation.
 
 $head initialize$$
-The $icode atom_hes$ object must be initialized,
+The $icode atom_hes$$ object must be initialized,
 before any calls to its $code eval$$ function, using the syntax
 $icode%atom_hes%.initialize(%
 	%a1_adfun%, %a1_w%, %row%, %col%, %work%,
@@ -62,14 +76,14 @@ $codei%
 %$$
 It is the name used for error reporting.
 The suggested value for $icode name$$ is $icode atom_hes$$; i.e.,
-the same as used for the the object being initialized.
+the same as used for the object being initialized.
 
 $subhead a1_adfun$$
 This $code initialize$$ argument has prototype
 $codei%
 	CppAD::ADFun< CppAD::AD<double> > %a1_adfun%
 %$$
-This is a recording of the fuction,
+This is a recording of the function,
 $latex f : \B{R}^n \rightarrow \B{R}^m$$,
 that we are computing sparse Hessians for.
 
@@ -78,7 +92,7 @@ This $code initialize$$ argument has prototype
 $codei%
 	const CppAD::vector< CppAD::AD<double> >& %a1_x%
 %$$
-It is a point at which we could evalute the sparse Hessian.
+It is a point at which we could evaluate the sparse Hessian.
 
 $subhead a1_w$$
 This $code initialize$$ argument has prototype
@@ -129,9 +143,17 @@ $codei%
 	const CppAD::vector< CppAD::AD<double> >& %a1_val%
 %$$
 
+$head size_var$$
+The return value for this member function has prototype
+$codei%
+	size_t %sv%
+%$$
+It is the number of variables in the tape used to represent the Hessian.
+If the  $code initialize$$ member function has not been called,
+the return value is $icode%sv% = 0%$$.
 
 $head eval$$
-The $code initialze$$ member function must be called before
+The $code initialize$$ member function must be called before
 the $code eval$$ member function is used.
 
 $subhead a1_x$$
@@ -229,7 +251,16 @@ void checkpoint_hes::initialize(
 	atom_fun_ = new CppAD::checkpoint<double>(name, *algo, a1_x, a1_val);
 	assert( atom_fun_ != DISMOD_AT_NULL_PTR );
 	//
+	// user boolean sparsity patterns
+	atom_fun_->option(CppAD::atomic_base<double>::bool_sparsity_enum);
+	//
 	delete algo;
+}
+// size_var
+size_t checkpoint_hes::size_var(void)
+{	if( atom_fun_ ==  DISMOD_AT_NULL_PTR )
+		return 0;
+	return atom_fun_->size_var();
 }
 // eval
 void checkpoint_hes::eval(const a1d_vector& a1_x, a1d_vector& a1_val)
