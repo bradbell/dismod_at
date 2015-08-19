@@ -283,9 +283,11 @@ pack_object_   (pack_object)
 	//
 	// limits of the ode grid
 	double age_min    = age_table[0];
-	double age_max    = age_table[ age_table.size() - 1 ];
 	double time_min   = time_table[0];
+# ifndef NDEBUG
+	double age_max    = age_table[ age_table.size() - 1 ];
 	double time_max   = time_table[ time_table.size() - 1 ];
+# endif
 	//
 	assert( age_max  <= age_min  + n_age_ode * ode_step_size );
 	assert( time_max <= time_min + n_time_ode * ode_step_size );

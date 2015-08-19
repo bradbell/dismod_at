@@ -9,10 +9,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # Build C++ Examples / Tests
-
-# Release or deug build
-SET(CMAKE_BUILD_TYPE DEBUG)
-
+#
 IF( suitesparse_prefix )
 	# no pkg-config for SuiteSparse so explicitly set corresponding values
 	SET(suitesparse_LIBRARY_DIRS ${suitesparse_prefix}/lib )

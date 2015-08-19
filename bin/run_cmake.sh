@@ -16,20 +16,30 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-# use '1' for verbose make output
-verbose_makefile='0'
+# use '0' for normal and '1' for verbose make output
+cmake_verbose_makefile='0'
+#
+# use either 'DEBUG' or 'RELEASE' for the type of this build
+cmake_build_type='RELEASE'
+#
 # commannd used to execute python3 on this machine
 python_three_command='python3'
+#
 # extra c++ flags used during compliation
 extra_cxx_flags='-std=c++11 -Wall'
+#
 # prefix where dismod_at will be installed
 dismod_at_prefix="$HOME/prefix/dismod_at"
+#
 # prefixes where the required packages were installed
 eigen_prefix="$HOME/prefix/dismod_at"
 ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
-# prefix where suitesparse was installed (use NOTFOUND if not installed)
+#
+# Prefix where optional package was installed (use NOTFOUND if not installed).
+# This is only required by example/devel/approx_mixed/cholmod_xam.cpp.
 suitesparse_prefix="$HOME/prefix/suitesparse"
+#
 # sub-directory of dismod_at_prefix where libapprox_mixed will be installed
 # (use NOTFOUND if you do not need to install it)
 approx_mixed_libdir='lib64'
@@ -47,7 +57,8 @@ fi
 echo_eval cd build
 cmake \
 	-Wno-dev \
-	-D CMAKE_VERBOSE_MAKEFILE=$verbose_makefile \
+	-D CMAKE_VERBOSE_MAKEFILE=$cmake_verbose_makefile \
+	-D CMAKE_BUILD_TYPE=$cmake_build_type \
 	-D python_three_command=$python_three_command \
 	-D extra_cxx_flags="$extra_cxx_flags" \
 	-D dismod_at_prefix="$dismod_at_prefix" \

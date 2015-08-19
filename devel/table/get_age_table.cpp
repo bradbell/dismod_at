@@ -69,7 +69,11 @@ CppAD::vector<double> get_age_table(sqlite3* db)
 {	using std::string;
 
 	string table_name  = "age";
+# ifndef NDEBUG
 	size_t n_age       = check_table_id(db, table_name);
+# else
+	check_table_id(db, table_name);
+# endif
 
 	string column_name =  "age";
 	CppAD::vector<double>  age;

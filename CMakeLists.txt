@@ -11,21 +11,25 @@
 #
 # cmake \
 #    -Wno-dev \
-#    -D CMAKE_VERBOSE_MAKEFILE=$verbose_makefile \
-#    -D python_three_command=$python_three_command \
-#    -D extra_cxx_flags="$extra_cxx_flags" \
-#    -D approx_mixed_libdir="$approx_mixed_libdir" \
-#    -D dismod_at_prefix="$dismod_at_prefix" \
-#    -D cppad_prefix="$cppad_prefix" \
-#    -D ipopt_prefix="$cppad_prefix" \
-#    -D eigen_prefix="$eigen_prefix" \
-#    -D suitesparse_prefix="$suitesparse_prefix"
+#    -D CMAKE_VERBOSE_MAKEFILE=value_1 \
+#    -D CMAKE_BUILD_TYPE=value_2 \
+#    -D python_three_command=value_3 \
+#    -D extra_cxx_flags=value_4 \
+#    -D approx_mixed_libdir=value_5 \
+#    -D dismod_at_prefix=value_6 \
+#    -D cppad_prefix=value_7 \
+#    -D ipopt_prefix=value_8 \
+#    -D eigen_prefix=value_9 \
+#    -D suitesparse_prefix=value_10
 # ----------------------------------------------------------------------------
 INCLUDE(CheckCXXSourceRuns)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
 SET(dismod_at_version "20150818" )
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
+# ----------------------------------------------------------------------------
+MESSAGE(STATUS "cmake_verbose_makefile = ${CMAKE_VERBOSE_MAKEFILE}")
+MESSAGE(STATUS "cmake_buld_type = ${CMAKE_BUILD_TYPE}")
 # ----------------------------------------------------------------------------
 # python_three_command
 IF( python_three_command )

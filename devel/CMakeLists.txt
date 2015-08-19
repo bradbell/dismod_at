@@ -8,8 +8,6 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-SET(CMAKE_BUILD_TYPE DEBUG)
-#
 # approx_mixed
 ADD_LIBRARY(approx_mixed
 	approx_mixed/checkpoint_hes.cpp

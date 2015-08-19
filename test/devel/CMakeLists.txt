@@ -9,10 +9,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # Build C++ Examples / Tests
-
-# Release or deug build
-SET(CMAKE_BUILD_TYPE DEBUG)
-
+#
 LINK_DIRECTORIES(
 	${dismod_at_BINARY_DIR}/cpp
 	${ipopt_LIBRARY_DIRS}

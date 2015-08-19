@@ -938,8 +938,10 @@ pack_info::variable_name(
 				size_t smooth_id = rate_info_[rate_id][j].smooth_id;
 				size_t offset    = rate_info_[rate_id][j].offset;
 				size_t n_age     = s_info_vec[smooth_id].age_size();
+# ifndef NDEBUG
 				size_t n_time    = s_info_vec[smooth_id].time_size();
 				assert( n_var == n_age * n_time );
+# endif
 				size_t i         = (index - offset) % n_age;
 				size_t k         = (index - offset) / n_age;
 				size_t age_id    = s_info_vec[smooth_id].age_id(i);
@@ -982,8 +984,10 @@ pack_info::variable_name(
 					size_t smooth_id    = info.smooth_id;
 					size_t offset       = info.offset;
 					size_t n_age        = s_info_vec[smooth_id].age_size();
+# ifndef NDEBUG
 					size_t n_time       = s_info_vec[smooth_id].time_size();
 					assert( n_var == n_age * n_time );
+# endif
 					size_t i            = (index - offset) % n_age;
 					size_t k            = (index - offset) / n_age;
 					name += covariate_table[covariate_id].covariate_name;
@@ -1023,8 +1027,10 @@ pack_info::variable_name(
 					size_t smooth_id    = info.smooth_id;
 					size_t offset       = info.offset;
 					size_t n_age        = s_info_vec[smooth_id].age_size();
+# ifndef NDEBUG
 					size_t n_time       = s_info_vec[smooth_id].time_size();
 					assert( n_var == n_age * n_time );
+# endif
 					size_t i            = (index - offset) % n_age;
 					size_t k            = (index - offset) / n_age;
 					name += covariate_table[covariate_id].covariate_name;

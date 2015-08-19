@@ -143,9 +143,10 @@ residual_struct<Float> residual_density(
 	const Float&       mu      ,
 	const Float&       delta   ,
 	const Float&       eta     )
-{
+{	Float nan(std::numeric_limits<double>::quiet_NaN());
 
-	Float wres, sigma;
+	Float wres = nan;
+	Float sigma = nan;
 	switch( density )
 	{
 		case uniform_enum:
@@ -169,7 +170,8 @@ residual_struct<Float> residual_density(
 		default:
 		assert(false);
 	}
-	Float logden_smooth, logden_sub_abs;
+	Float logden_smooth = nan;
+	Float logden_sub_abs = nan;
 	switch( density )
 	{
 		case uniform_enum:

@@ -244,21 +244,23 @@ void init_command(
 	// rate variables
 	size_t n_rate  = db_input.rate_table.size();
 	size_t n_child = child_object.child_size();
-	size_t smooth_id, n_var, n_age, n_time, node_id;
-	dismod_at::pack_info::subvec_info info;
+	size_t smooth_id, n_var, n_age, node_id;
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
-		{	info      = pack_object.rate_info(rate_id, child_id);
+		{	dismod_at::pack_info::subvec_info info;
+			info      = pack_object.rate_info(rate_id, child_id);
 			offset    = info.offset;
 			smooth_id = info.smooth_id;
 			n_var     = info.n_var;
 			n_age     = db_input.smooth_table[smooth_id].n_age;
-			n_time    = db_input.smooth_table[smooth_id].n_time;
 			if( child_id == n_child )
 				node_id = parent_node_id;
 			else
 				node_id = child_object.child_id2node_id(child_id);
+# ifndef NDEBUG
+			size_t n_time    = db_input.smooth_table[smooth_id].n_time;
 			assert( n_var == n_age * n_time );
+# endif
 			for(size_t index = 0; index < n_var; index++)
 			{	size_t i       = index % n_age;
 				size_t j       = index / n_age;
@@ -301,6 +303,7 @@ void init_command(
 		size_t covariate_id = mulcov_table[mulcov_id].covariate_id;
 		size_t smooth_id    = mulcov_table[mulcov_id].smooth_id;
 		//
+		dismod_at::pack_info::subvec_info info;
 		if( mulcov_type == dismod_at::rate_value_enum ) info =
 			pack_object.mulcov_rate_value_info(
 				rate_id, count_rate_value[rate_id]++
@@ -322,8 +325,10 @@ void init_command(
 		assert( smooth_id == info.smooth_id);
 		n_var     = info.n_var;
 		n_age     = db_input.smooth_table[smooth_id].n_age;
-		n_time    = db_input.smooth_table[smooth_id].n_time;
+# ifndef NDEBUG
+		size_t n_time = db_input.smooth_table[smooth_id].n_time;
 		assert( n_var == n_age * n_time );
+# endif
 		for(size_t index = 0; index < n_var; index++)
 		{	size_t age_id   = index % n_age;
 			size_t time_id  = index / n_age;
@@ -756,6 +761,7 @@ void simulate_command(
 			break;
 
 			default:
+			avg = std::numeric_limits<double>::quiet_NaN();
 			assert(false);
 		}
 		// need to simulate random noise with proper density
@@ -1118,11 +1124,21 @@ int main(int n_arg, const char** argv)
 	// initialize random number generator
 	size_t random_seed = std::atoi( option_map["random_seed"].c_str() );
 	if( random_seed == 0 )
-	{	size_t actual_seed = dismod_at::new_gsl_rng( size_t(unix_time) );
+	{
+# ifndef NDEBUG
+		size_t actual_seed = dismod_at::new_gsl_rng( size_t(unix_time) );
+# else
+		dismod_at::new_gsl_rng( size_t(unix_time) );
+# endif
 		assert( std::time_t( actual_seed ) == unix_time );
 	}
 	else
-	{	size_t actual_seed = dismod_at::new_gsl_rng(random_seed);
+	{
+# ifndef NDEBUG
+		size_t actual_seed = dismod_at::new_gsl_rng(random_seed);
+# else
+		dismod_at::new_gsl_rng(random_seed);
+# endif
 		assert( actual_seed == random_seed );
 	}
 	// ---------------------------------------------------------------------

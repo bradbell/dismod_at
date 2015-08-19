@@ -22,6 +22,14 @@ then
 	echo 'file: is a *.cpp file containing a test/example'
 	exit 1
 fi
+# -----------------------------------------------------------------------------
+# determine if debug or release
+if grep "cmake_build_type='RELEASE'" ../../bin/run_cmake.sh > /dev/null
+then
+	build_type='-O3 -DNDEBUG'
+else
+	build_type='-g -O0'
+fi
 #
 # dir/file
 dir_file="$1"
@@ -89,8 +97,7 @@ popd
 # compile
 echo_eval g++ \
 	-std=c++11 \
-	-g \
-	-O0 \
+	$build_type \
 	-I ../../include \
 	-I $HOME/prefix/dismod_at/include \
 	junk.cpp \

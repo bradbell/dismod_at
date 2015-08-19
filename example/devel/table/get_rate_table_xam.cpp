@@ -67,7 +67,7 @@ bool get_rate_table_xam(void)
 
 		// check that one can use rate_enum values in place of rate_id
 		dismod_at::rate_enum rate = rate_table[rate_id].rate;
-		assert( rate == dismod_at::rate_enum( rate_id ) );
+		ok &= rate == dismod_at::rate_enum( rate_id );
 	}
 
 	// close database and return
