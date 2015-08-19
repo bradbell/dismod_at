@@ -3,6 +3,9 @@ git_commit.sh
 # temporary file for all purposes
 junk
 junk.*
+# gnu profiling files
+example/devel/gmon.out
+example/devel/gprof.out
 # cmake confiuration files
 include/dismod_at/configure.hpp
 # web version of documentation directory

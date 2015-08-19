@@ -20,7 +20,7 @@ echo_eval() {
 cmake_verbose_makefile='0'
 #
 # use either 'DEBUG' or 'RELEASE' for the type of this build
-cmake_build_type='RELEASE'
+cmake_build_type='DEBUG'
 #
 # commannd used to execute python3 on this machine
 python_three_command='python3'

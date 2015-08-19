@@ -28,7 +28,7 @@ if grep "cmake_build_type='RELEASE'" ../../bin/run_cmake.sh > /dev/null
 then
 	build_type='-O3 -DNDEBUG'
 else
-	build_type='-g -O0'
+	build_type='-g -O0 -pg'
 fi
 #
 # dir/file
@@ -112,6 +112,12 @@ echo_eval g++ \
 # run
 echo "./junk"
 ./junk
+#
+if ( echo "$build_type" | grep '\-pg' > /dev/null )
+then
+	echo "gprof junk | sed -f gprof.sed > gprof.out"
+	gprof junk | sed -f gprof.sed > gprof.out
+fi
 #
 if [ -e 'example.db' ]
 then

@@ -84,7 +84,7 @@ see http://www.gnu.org/licenses/agpl.txt
 EOF
 	;;
 
-	cmake | txt | sh | py | R )
+	cmake | py | R |  sed | sh | txt )
 	cat << EOF  >> bin/add_copyright.$$
 # \$Id:\$
 #  --------------------------------------------------------------------------
@@ -101,7 +101,7 @@ EOF
 
 	*)
 	echo "bin/add_copyright.sh: $file_name extension is one of"
-	echo 'cpp, hpp, omh, cmake, txt, sh, py, R'
+	echo 'cpp, hpp, omh, cmake, py, R, sed, sh, txt'
 	exit 1
 esac
 # -----------------------------------------------------------------------------
