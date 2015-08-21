@@ -137,6 +137,13 @@ $latex \[
 	s = f_{uu} ( \theta , u )^{-1} v
 \] $$
 
+$children%example/devel/approx_mixed/private/newton_step_xam.cpp
+%$$
+$head Example$$
+The file $cref newton_step_xam.cpp$$ is an example
+and test of $code newton_step$$.
+
+
 $end
 ----------------------------------------------------------------------------
 */

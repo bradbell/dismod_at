@@ -31,25 +31,26 @@ $end
 // approx_mixed subdirectory
 extern bool approx_constraint_xam(void);
 extern bool approx_derived_xam(void);
-extern bool constraint_eval_xam(void);
-extern bool constraint_jac_xam(void);
-extern bool constraint_hes_xam(void);
 extern bool capture_xam(void);
 extern bool cholmod_xam(void);
+extern bool constraint_eval_xam(void);
+extern bool constraint_hes_xam(void);
+extern bool constraint_jac_xam(void);
 extern bool eigen_xam(void);
-extern bool ran_like_grad_xam(void);
-extern bool ran_obj_hes_fix_xam(void);
-extern bool ran_like_hes_xam(void);
-extern bool ipopt_xam(void);
+extern bool fix_like_hes_xam(void);
+extern bool fix_like_jac_xam(void);
 extern bool ipopt_xam_run(void);
-extern bool ran_obj_beta_xam(void);
-extern bool ran_obj_eval_xam(void);
+extern bool ipopt_xam(void);
+extern bool newton_step_xam(void);
+extern bool no_random_xam(void);
 extern bool optimize_fixed_xam(void);
 extern bool optimize_random_xam(void);
 extern bool prior_eval_xam(void);
-extern bool fix_like_jac_xam(void);
-extern bool fix_like_hes_xam(void);
-extern bool no_random_xam(void);
+extern bool ran_like_grad_xam(void);
+extern bool ran_like_hes_xam(void);
+extern bool ran_obj_beta_xam(void);
+extern bool ran_obj_eval_xam(void);
+extern bool ran_obj_hes_fix_xam(void);
 
 // model subdirectory
 extern bool avg_no_ode_xam(void);
@@ -153,6 +154,7 @@ int main(void)
 	RUN(ran_obj_hes_fix_xam);
 	RUN(ran_like_hes_xam);
 	RUN(ipopt_xam_run);
+	RUN(newton_step_xam);
 	RUN(ran_obj_beta_xam);
 	RUN(ran_obj_eval_xam);
 	RUN(optimize_fixed_xam);
