@@ -114,6 +114,8 @@ $contents%devel/approx_mixed/checkpoint_hes.cpp
 $end
 */
 
+# define DISMOD_AT_SET_SPARSITY 0
+
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void approx_mixed::record_hes_ran(
@@ -132,36 +134,63 @@ void approx_mixed::record_hes_ran(
 	pack(fixed_vec, random_vec, a1_both);
 
 	// compute Jacobian sparsity corresponding to parital w.r.t. random effects
+# if DISMOD_AT_SET_SPARSITY
 	typedef CppAD::vector< std::set<size_t> > sparsity_pattern;
 	sparsity_pattern r(n_total);
 	for(i = n_fixed_; i < n_total; i++)
 		r[i].insert(i);
+# else
+	typedef CppAD::vectorBool sparsity_pattern;
+	sparsity_pattern r(n_total * n_total);
+	for(i = 0; i < n_total; i++)
+	{	for(j = 0; j < n_total; j++)
+			r[i * n_total + j] = (i >= n_fixed_) && (i == j);
+	}
+# endif
 	a1_ran_like_.ForSparseJac(n_total, r);
 
 	// compute sparsity pattern corresponding to paritls w.r.t. (theta, u)
 	// of partial w.r.t. u of f(theta, u)
-	sparsity_pattern s(1);
+	bool transpose = true;
+	sparsity_pattern s(1), pattern;
+# if DISMOD_AT_SET_SPARSITY
 	assert( s[0].empty() );
 	s[0].insert(0);
-	bool transpose = true;
-	sparsity_pattern pattern =
-		a1_ran_like_.RevSparseHes(n_total, s, transpose);
+# else
+	s[0] = true;
+# endif
+	pattern = a1_ran_like_.RevSparseHes(n_total, s, transpose);
 
 	// compute hes_ran_row_ and hes_ran_col_
 	// determine row and column indices in lower triangle of Hessian
 	hes_ran_row_.clear();
 	hes_ran_col_.clear();
+# if DISMOD_AT_SET_SPARSITY
 	std::set<size_t>::iterator itr;
 	for(i = n_fixed_; i < n_total; i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	j = *itr;
+			assert( j >= n_fixed_ );
 			// only compute lower triangular part of Hessian w.r.t u only
-			if( i >= j && j >= n_fixed_ )
+			if( i >= j )
 			{	hes_ran_row_.push_back(i);
 				hes_ran_col_.push_back(j);
 			}
 		}
 	}
+# else
+	for(i = n_fixed_; i < n_total; i++)
+	{	for(j = n_fixed_; j < n_total; j++)
+		{	if( pattern[i * n_total + j] && i >= j )
+			{	// only compute lower triangular of Hessian w.r.t u only
+				if( i >= j )
+				{	hes_ran_row_.push_back(i);
+					hes_ran_col_.push_back(j);
+				}
+			}
+		}
+	}
+# endif
 
 	// create a weighting vector
 	a1d_vector a1_w(1);
