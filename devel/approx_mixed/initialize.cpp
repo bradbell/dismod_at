@@ -96,16 +96,14 @@ $cref/f(theta, u)
 with respect to fixed effects $latex \theta$$.
 $codei%
 
-%size_map%["hes_ran_atom"]
+%size_map%["newton_atom"]
 %$$
 number of variables in the $code ADFun<double>$$
-object used to evaluate Hessian of the
-random negative log-likelihood
-$cref/f(theta, u)
-	/approx_mixed_theory
-	/Random Negative Log-Likelihood, f(theta, u)
-/$$
-with respect to random effects $latex u$$.
+object used to evaluate the newton step
+$latex \[
+	s = f_{uu}^{(2)} ( \theta , u )^{-1} v
+\] $$
+and the log of the determinant of the matrix being inverted.
 $codei%
 
 %size_map%["hes_fix"]
@@ -248,7 +246,7 @@ std::map<std::string, size_t> approx_mixed::initialize(
 	size_map["ran_obj_1"]    = ran_obj_1_.size_var();
 	size_map["ran_obj_2"]    = ran_obj_2_.size_var();
 	size_map["hes_ran"]      = hes_ran_row_.size();
-	size_map["hes_ran_atom"] = hes_ran_atom_.size_var();
+	size_map["newton_atom"]  = newton_atom_.size_var();
 	size_map["hes_fix"]      = hes_fix_row_.size();
 	return size_map;
 }

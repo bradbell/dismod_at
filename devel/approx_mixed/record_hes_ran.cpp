@@ -17,6 +17,7 @@ $spell
 	vec
 	const
 	Cpp
+	logdet
 $$
 
 $section Record Hessian of Random Negative Log-Likelihood w.r.t Random Effects$$
@@ -91,30 +92,33 @@ see $cref/f(theta, u)/
 Note that the matrix is symmetric and hence can be recovered from
 its lower triangle.
 
-$head hes_ran_atom_$$
+$head newton_atom_$$
 The input value of the member variable
 $codei%
-	checkpoint_hes hes_ran_atom_
+	newton_step newton_atom_
 %$$
 must be the same as after its constructor; i.e.,
 no member functions had been called.
-Upon return, $code hes_ran_atom_$$ can be used to compute the
-sparse hessian with the syntax
+Upon return, $code newton_atom_$$ can be used to compute
+the log of the determinant and the Newton step using
 $codei%
-	hes_ran_atom_(%both_vec%, %a1_val_out%)
+	newton_atom_(%a1_theta_u_v%, %a1_logdet_step%)
 %$$
-can be used to calculate the lower triangle of the sparse Hessian
+be more specific, $icode%a1_logdet_step%[0]%$$ is the log of the determinant of
+$latex f_{uu}^{(2)} ( \theta , u ) $$ and the rest of the vector is the
+Newton step
 $latex \[
-	f_{uu}^{(2)} ( \theta , u )
+	s = f_{uu}^{(2)} ( \theta , u )^{-1} v
 \] $$
 
-$contents%devel/approx_mixed/checkpoint_hes.cpp
+
+$contents%devel/approx_mixed/newton_step.cpp
 %$$
 
 $end
 */
 
-# define DISMOD_AT_SET_SPARSITY 0
+# define DISMOD_AT_SET_SPARSITY 1
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -210,16 +214,7 @@ void approx_mixed::record_hes_ran(
 		hes_ran_work_
 	);
 	//
-	const char* name = "approx_mixed::hes_ran_atom_";
-	hes_ran_atom_.initialize(
-		name,
-		a1_ran_like_,
-		a1_both,
-		a1_w,
-		hes_ran_row_,
-		hes_ran_col_,
-		hes_ran_work_
-	);
+	newton_atom_.initialize(a1_ran_like_, fixed_vec, random_vec);
 	//
 	record_hes_ran_done_ = true;
 }

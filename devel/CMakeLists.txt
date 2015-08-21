@@ -10,7 +10,7 @@
 # ---------------------------------------------------------------------------
 # approx_mixed
 ADD_LIBRARY(approx_mixed
-	approx_mixed/checkpoint_hes.cpp
+	approx_mixed/constraint_eval.cpp
 	approx_mixed/constraint_eval.cpp
 	approx_mixed/constraint_jac.cpp
 	approx_mixed/constraint_hes.cpp
@@ -39,6 +39,7 @@ SET_TARGET_PROPERTIES(approx_mixed
 # approx_mixed_eigen
 ADD_LIBRARY(approx_mixed_eigen
 	approx_mixed/record_ran_obj.cpp
+	approx_mixed/newton_step.cpp
 )
 SET_TARGET_PROPERTIES(approx_mixed_eigen
 	PROPERTIES COMPILE_FLAGS "${eigen_cxx_flags}"

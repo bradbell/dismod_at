@@ -83,7 +83,8 @@ If present, the size of this vector must be equal to
 $icode%n_fixed_% + %n_random_%$$.
 The input value of its elements does not matter.
 Upon return, it contains the values in
-$icode fixed_one$$ and $icode random_vec$$  as one vector.
+$icode fixed_one$$ and $icode random_vec$$ as one vector in that order;
+i.e., $icode fixed_one$$ comes first and then $icode random_vec$$.
 
 $head three_vec$$
 This argument has prototype
@@ -95,6 +96,7 @@ $codei%2*%n_fixed_% + %n_random_%$$.
 The input value of its elements does not matter.
 Upon return, it contains the values in
 $icode fixed_one$$, $icode fixed_two$$, and $icode random_vec$$ as one vector.
+The order of the result is unspecified.
 
 $end
 */

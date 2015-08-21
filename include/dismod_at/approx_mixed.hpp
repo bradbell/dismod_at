@@ -13,7 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <map>
 # include <cppad/cppad.hpp>
-# include <dismod_at/checkpoint_hes.hpp>
+# include <dismod_at/newton_step.hpp>
 
 //
 extern bool constraint_eval_xam(void);
@@ -259,7 +259,7 @@ $codep */
 	CppAD::vector<size_t>      hes_ran_col_; // corresponding column indices
 	CppAD::sparse_hessian_work hes_ran_work_;
 	// computation of the Hessian as an atomic operation
-	checkpoint_hes             hes_ran_atom_;
+	newton_step                newton_atom_;
 /* $$
 $subhead ran_obj_k_$$
 For $icode%k% = 0 , 1, 2%$$, $codei%ran_obj_%k%_%$$ is $th k$$ order accurate

@@ -410,14 +410,9 @@ bool capture_xam(void)
 	std::cout << std::endl
 	<< "n_fixed = "  << n_fixed << std::endl
 	<< "n_random = " << n_random << std::endl;
-	const char* slist[] = {
-		"fix_like", "a0_ran_like", "a1_ran_like",
-		"ran_obj_0", "ran_obj_1", "ran_obj_2", "hes_ran", "hes_fix"
-	};
-	size_t n_size = sizeof(slist) / sizeof( slist[0] );
-	for(size_t i = 0; i < n_size; i++)
-		std::cout << slist[i] << " = " << size_map[slist[i]] << std::endl;
-
+	std::map<std::string, size_t>::const_iterator itr;
+	for(itr = size_map.begin(); itr != size_map.end(); ++itr)
+		std::cout << itr->first << " = " << itr->second << std::endl;
 
 	// optimize the fixed effects
 	std::string options =
