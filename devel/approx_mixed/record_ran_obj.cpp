@@ -8,8 +8,6 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# include <dismod_at/approx_mixed.hpp>
-
 /*
 $begin approx_mixed_record_ran_obj$$
 $spell
@@ -85,8 +83,120 @@ $end
 # include <Eigen/Sparse>
 # include <dismod_at/approx_mixed.hpp>
 
-namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
+# define USE_ATOMIC_NEWTON_STEP 0
+
+namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
+// ----------------------------------------------------------------------------
+# if USE_ATOMIC_NEWTON_STEP
+// ----------------------------------------------------------------------------
+void approx_mixed::record_ran_obj(
+	size_t          order      ,
+	const d_vector& fixed_vec  ,
+	const d_vector& random_vec )
+{	assert( order <= 2 );
+	assert( ! record_ran_obj_done_[order] );
+
+	//	create an a1d_vector containing (beta, theta, u)
+	a1d_vector beta_theta_u( 2 * n_fixed_ + n_random_ );
+	pack(fixed_vec, fixed_vec, random_vec, beta_theta_u);
+
+	// start recording a1_double operations
+	CppAD::Independent( beta_theta_u );
+
+	// split back out to beta, theta, u
+	a1d_vector beta(n_fixed_), theta(n_fixed_), u(n_random_);
+	unpack(beta, theta, u, beta_theta_u);
+
+	// evaluate gradient f_u^{(1)} (beta , u )
+	a1d_vector grad(n_random_);
+	grad = ran_like_grad(beta, u);
+
+	// Evaluate the log determinant of f_{uu}^{(2)} ( theta , u)
+	// and Newton step s = f_{uu}^{(2)} ( theta , u) f_u^{(1)} (beta, u)
+	a1d_vector theta_u_v(n_fixed_ + 2 * n_random_ );
+	for(size_t j = 0; j < n_fixed_; j++)
+		theta_u_v[j] = theta[j];
+	for(size_t j = 0; j < n_random_; j++)
+	{	theta_u_v[n_fixed_ + j]             = u[j];
+		theta_u_v[n_fixed_ + n_random_ + j] = grad[j];
+	}
+	a1d_vector logdet_step(1 + n_random_);
+	newton_atom_.eval(theta_u_v, logdet_step);
+	//
+	// constant term
+	double pi   = CppAD::atan(1.0) * 4.0;
+	double constant_term = CppAD::log(2.0 * pi) * double(n_random_) / 2.0;
+	//
+	a1d_vector both(n_fixed_ + n_random_), f(1), H(1);
+	if( order == 0 )
+	{	pack(theta, u, both);
+		f    = a1_ran_like_.Forward(0, both);
+		H[0] = logdet_step[0] / 2.0 + f[0] - constant_term;
+		//
+		ran_obj_0_.Dependent(beta_theta_u, H);
+		ran_obj_0_.optimize();
+		//
+		record_ran_obj_done_[order] = true;
+		return;
+	}
+	// -----------------------------------------------------------------------
+	// U(beta, theta, u)
+	a1d_vector U(n_random_);
+	for(size_t j = 0; j < n_random_; j++)
+		U[j] = u[j] - logdet_step[1 + j];
+
+	// evaluate gradient f_u^{(1)} (beta , U )
+	grad = ran_like_grad(beta, U);
+
+	// Evaluate the log determinant and newton step
+	a1d_vector beta_U_v(n_fixed_ + 2 * n_random_ );
+	for(size_t j = 0; j < n_fixed_; j++)
+		beta_U_v[j] = beta[j];
+	for(size_t j = 0; j < n_random_; j++)
+	{	beta_U_v[n_fixed_ + j]             = U[j];
+		beta_U_v[n_fixed_ + n_random_ + j] = grad[j];
+	}
+	newton_atom_.eval(beta_U_v, logdet_step);
+	if( order == 1 )
+	{	pack(beta, U, both);
+		f    = a1_ran_like_.Forward(0, both);
+		H[0] = logdet_step[0] / 2.0 + f[0] - constant_term;
+		//
+		ran_obj_1_.Dependent(beta_theta_u, H);
+		ran_obj_1_.optimize();
+		//
+		record_ran_obj_done_[order] = true;
+		return;
+	}
+	// -----------------------------------------------------------------------
+	// W(beta, theta, u)
+	a1d_vector W(n_random_);
+	for(size_t j = 0; j < n_random_; j++)
+		W[j] = U[j] - logdet_step[1 + j];
+
+	// Evaluate the log determinant
+	a1d_vector beta_W_v(n_fixed_ + 2 * n_random_ );
+	for(size_t j = 0; j < n_fixed_; j++)
+		beta_W_v[j] = beta[j];
+	for(size_t j = 0; j < n_random_; j++)
+	{	beta_W_v[n_fixed_ + j]             = W[j];
+		beta_W_v[n_fixed_ + n_random_ + j] = 0.0;
+	}
+	newton_atom_.eval(beta_W_v, logdet_step);
+	pack(beta, W, both);
+	f    = a1_ran_like_.Forward(0, both);
+	H[0] = logdet_step[0] / 2.0 + f[0] - constant_term;
+	//
+	ran_obj_2_.Dependent(beta_theta_u, H);
+	ran_obj_2_.optimize();
+	//
+	record_ran_obj_done_[order] = true;
+	return;
+}
+// ----------------------------------------------------------------------------
+# else // USE_ATOMIC_NEWTON_STEP
+// ----------------------------------------------------------------------------
 void approx_mixed::record_ran_obj(
 	size_t          order      ,
 	const d_vector& fixed_vec  ,
@@ -230,5 +340,8 @@ void approx_mixed::record_ran_obj(
 	}
 	record_ran_obj_done_[order] = true;
 }
+// ----------------------------------------------------------------------------
+# endif // USE_ATOMIC_NEWTON_STEP
+// ----------------------------------------------------------------------------
 
 } // END_DISMOD_AT_NAMESPACE
