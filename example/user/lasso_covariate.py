@@ -153,15 +153,7 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      None,
 			'eta':      None
-		},{ # prior_one
-			'name':     'prior_one',
-			'density':  'uniform',
-			'lower':    1.0,
-			'upper':    1.0,
-			'mean':     1.0,
-			'std':      None,
-			'eta':      None
-		},{ # prior_none
+		}, { # prior_none
 			'name':     'prior_none',
 			'density':  'uniform',
 			'lower':    None,
@@ -206,33 +198,33 @@ def example_db (file_name) :
 			'name':                     'smooth_rate_child',
 			'age_id':                   [ last_age_id ],
 			'time_id':                  [ last_time_id ],
-			'mulstd_value_prior_name':  'prior_one',
-			'mulstd_dage_prior_name':   'prior_one',
-			'mulstd_dtime_prior_name':  'prior_one',
+			'mulstd_value_prior_name':  '',
+			'mulstd_dage_prior_name':   '',
+			'mulstd_dtime_prior_name':  '',
 			'fun':                      fun_rate_child
 		},{ # smooth_iota_parent
 			'name':                     'smooth_iota_parent',
 			'age_id':                   [ 0, last_age_id ],
 			'time_id':                  [ 0, last_time_id ],
-			'mulstd_value_prior_name':  'prior_one',
-			'mulstd_dage_prior_name':   'prior_one',
-			'mulstd_dtime_prior_name':  'prior_one',
+			'mulstd_value_prior_name':  '',
+			'mulstd_dage_prior_name':   '',
+			'mulstd_dtime_prior_name':  '',
 			'fun':                       fun_iota_parent
 		},{ # smooth_zero
 			'name':                     'smooth_zero',
 			'age_id':                   [ middle_age_id ],
 			'time_id':                  [ middle_time_id ],
-			'mulstd_value_prior_name':  'prior_one',
-			'mulstd_dage_prior_name':   'prior_one',
-			'mulstd_dtime_prior_name':  'prior_one',
+			'mulstd_value_prior_name':  '',
+			'mulstd_dage_prior_name':   '',
+			'mulstd_dtime_prior_name':  '',
 			'fun':                       fun_zero
 		},{ # smooth_mulcov
 			'name':                     'smooth_mulcov',
 			'age_id':                   [ middle_age_id ],
 			'time_id':                  [ middle_time_id ],
-			'mulstd_value_prior_name':  'prior_one',
-			'mulstd_dage_prior_name':   'prior_one',
-			'mulstd_dtime_prior_name':  'prior_one',
+			'mulstd_value_prior_name':  '',
+			'mulstd_dage_prior_name':   '',
+			'mulstd_dtime_prior_name':  '',
 			'fun':                       fun_mulcov
 		}
 	]

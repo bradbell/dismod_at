@@ -18,7 +18,6 @@ $spell
 	sqlite
 	Dismod_at
 	mulcov
-	mulstd
 	nullptr
 	dage
 	dtime
@@ -39,6 +38,21 @@ $spell
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 08-21$$
+$list number$$
+Fix discussion of
+$cref/text can be null, not empty/input/Text Can be Null, not Empty/$$.
+$lnext
+Remove the special prior that is a constant one from the
+$cref user$$ examples (since 08-12 $code null$$ can be used to
+the same effect for
+$cref/standard deviation multipliers
+	/model_variable
+	/Fixed Effects, theta
+	/Smoothing Standard Deviation Multipliers, lambda
+/$$).
+$lend
 
 $head 08-18$$
 $list number$$
@@ -389,8 +403,8 @@ $lend
 
 $head 07-11$$
 $list number$$
-Add an error message when a text value is $code null$$; see
-$cref/text not null/input/Text Not Null/$$.
+Add an error message when the text value in a table is empty; see
+$cref/text can be null, not empty/input/Text Can be Null, not Empty/$$.
 Allow for $code null$$ integer values; see
 $cref/integer can be null/input/Integer Can Be Null/$$.
 $lnext

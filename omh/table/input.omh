@@ -55,15 +55,14 @@ in $codei%_%node_id%$$.
 This is not an exception because the $code parent$$ column is itself
 in the $code node$$ table and hence this is not a foreign key.
 
-$head Text Not Null$$
-The empty string, and not the $code null$$ value, is used when a
-$code text$$ column does not have a value in a particular row.
-An error message will be generated if the text value is $code null$$
+$head Text Can be Null, not Empty$$
+The empty string is used to represent a $code null$$ text value in a table.
+An error message will be generated if the empty string
 appears in a table that is read by dismod_at.
 
 $head Integer Can Be Null$$
 The minimum integer (negative integer with the largest absolute value)
-is used to represent a $code null$$ integer value.
+is used to represent a $code null$$ integer value in a table.
 An error message will be generated if
 the minimum integer appears in a table that is read by dismod_at.
 
