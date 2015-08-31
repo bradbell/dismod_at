@@ -32,8 +32,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/coin-or/CppAD.git'
-hash_key='85ef072f288db37cb6516d5688c8d11f8ec6774c'
-version='20150818'
+hash_key='48d2f6a2d4b58dc317f3f05d20b5225ce2b832b9'
+version='20150831'
 # --------------------------------------------------------------------------
 if [ ! -e build/external ]
 then

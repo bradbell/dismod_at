@@ -20,6 +20,8 @@ $spell
 	Cpp
 	var
 	hes
+	num
+	alloc
 $$
 
 $section approx_mixed: Initialization After Constructor$$
@@ -147,6 +149,12 @@ $cref/random part of objective
 	/Objective
 	/Random Part of Objective, r(theta)
 /$$.
+$codei%
+
+%size_map%["num_bytes"]
+%$$
+number of bytes currently allocated by $code CppAD::thread_alloc$$
+for the current thread.
 
 $head Example$$
 The file $cref approx_derived_xam.cpp$$ contains an example
@@ -248,6 +256,8 @@ std::map<std::string, size_t> approx_mixed::initialize(
 	size_map["hes_ran"]      = hes_ran_row_.size();
 	size_map["newton_atom"]  = newton_atom_.size_var();
 	size_map["hes_fix"]      = hes_fix_row_.size();
+	size_t thread            = CppAD::thread_alloc::thread_num();
+	size_map["num_bytes"]    = CppAD::thread_alloc::inuse(thread);
 	return size_map;
 }
 

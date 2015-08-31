@@ -328,8 +328,10 @@ void newton_step::initialize(
 	}
 	const char* name = "approx_mixed newton_step";
 	a1d_vector a1_logdet_step(1 + n_random);
+	CppAD::atomic_base<double>::option_enum sparsity =
+		CppAD::atomic_base<double>::pack_sparsity_enum;
 	atom_fun_ = new CppAD::checkpoint<double>(
-		name, algo, a1_theta_u_v, a1_logdet_step
+		name, algo, a1_theta_u_v, a1_logdet_step, sparsity
 	);
 	assert( atom_fun_ != DISMOD_AT_NULL_PTR );
 	//

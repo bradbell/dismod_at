@@ -35,9 +35,15 @@ $spell
 	devel
 	integrands
 	eigen
+	cppad
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 08-31$$
+Reduce memory required by $cref approx_mixed$$ sub-package.
+This required some recent improvements to CppAD and hence requires
+$code bin/install_cppad.sh$$ to be re-run.
 
 $head 08-27$$
 Reduce the chance of a false failure from
