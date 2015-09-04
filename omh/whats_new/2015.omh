@@ -36,9 +36,34 @@ $spell
 	integrands
 	eigen
 	cppad
+	bool
+	enum
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 09-03$$
+$list number$$
+Advance to a newer version of CppAD
+(to avoid a bug when used with c++98 compilers)
+and hence requires $code bin/install_cppad.sh$$ to be re-run.
+$lnext
+The $cref newton_step$$ function was not taking advantage
+of the recent memory saving changes to CppAD
+(using $code bool_sparsity_enum$$ instead of $code pack_sparsity_enum$$).
+This has been fixed.
+$lnext
+The $cref newton_step$$ was being recorded, but not used,
+and hence more memory was used, instead of memory being saved.
+This has been fixed.
+$lnext
+Reduce the chance of a false failure from
+$code example/devel/approx_mixed/user/capture_xam.cpp$$
+(takes longer to run).
+$lnext
+Print result of test for C++ $code nullptr$$ during
+$cref/cmake command/install_unix/dismod_at/Cmake Command/$$
+$lend
 
 $head 08-31$$
 Reduce memory required by $cref approx_mixed$$ sub-package.
@@ -47,7 +72,8 @@ $code bin/install_cppad.sh$$ to be re-run.
 
 $head 08-27$$
 Reduce the chance of a false failure from
-$code example/devel/approx_mixed/user/capture_xam.cpp$$.
+$code example/devel/approx_mixed/user/capture_xam.cpp$$
+(takes longer to run).
 
 $head 08-21$$
 $list number$$

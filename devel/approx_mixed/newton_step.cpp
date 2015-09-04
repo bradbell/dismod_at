@@ -334,9 +334,6 @@ void newton_step::initialize(
 		name, algo, a1_theta_u_v, a1_logdet_step, sparsity
 	);
 	assert( atom_fun_ != DISMOD_AT_NULL_PTR );
-	//
-	// user boolean sparsity patterns
-	atom_fun_->option(CppAD::atomic_base<double>::bool_sparsity_enum);
 }
 // size_var
 size_t newton_step::size_var(void)

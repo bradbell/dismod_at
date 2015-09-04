@@ -32,8 +32,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/coin-or/CppAD.git'
-hash_key='48d2f6a2d4b58dc317f3f05d20b5225ce2b832b9'
-version='20150831'
+hash_key='5967e213f6fd2be5adf4adef224b3c86f6532496'
+version='20150904'
 # --------------------------------------------------------------------------
 if [ ! -e build/external ]
 then
@@ -45,8 +45,12 @@ if [ ! -e cppad-$version ]
 then
 	echo_eval git clone $web_page cppad-$version
 fi
+#
 echo_eval cd cppad-$version
 echo_eval git checkout --quiet $hash_key
+bin/version.sh set $version
+bin/version.sh copy
+#
 if [ ! -e build ]
 then
 	mkdir build

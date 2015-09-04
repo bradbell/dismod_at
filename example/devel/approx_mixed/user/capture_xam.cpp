@@ -363,7 +363,7 @@ public:
 bool capture_xam(void)
 {	bool ok = true;
 	size_t n_fixed  = 3;
-	size_t n_random = 15; // 40 works with ulimit -Sv 1000000
+	size_t n_random = 20; // 40 works with ulimit -Sv 1000000
 	size_t random_seed = dismod_at::new_gsl_rng(0);
 	std::time_t start_time = std::time( DISMOD_AT_NULL_PTR );
 

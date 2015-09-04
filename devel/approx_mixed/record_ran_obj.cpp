@@ -84,7 +84,7 @@ $end
 # include <dismod_at/approx_mixed.hpp>
 
 
-# define USE_ATOMIC_NEWTON_STEP 0
+# define USE_ATOMIC_NEWTON_STEP 1
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // ----------------------------------------------------------------------------
