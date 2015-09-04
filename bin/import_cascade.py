@@ -37,10 +37,10 @@ if sys.argv[0] != 'bin/import_cascade.py' :
 	sys.exit(msg)
 #
 option_dict = collections.OrderedDict([
-	('cascade_path','    directory (not path) where cascade input files are'),
+	('cascade_path','    path to directory where cascade input files are'),
 	('ode_step_size','   step size of ODE solution in age and time'),
 	('mtall2mtother','   treat mtall data as if it were mtother [yes/no]'),
-	('rate_info','       are iota and rho zero or non-zero'),
+	('rate_info','       are iota and rho zero or non-zero; see option_table'),
 	('child_value_std',' value standard deviation for random effects'),
 	('child_dtime_std',' dtime standard deviation for random effects'),
 	('time_grid','       the time grid as space seperated values')
