@@ -19,9 +19,11 @@ $cref data_table$$ are used.
 This subset is defined as the set rows
 (or the set of $cref/data_id/data_table/data_id/$$)
 such that the following conditions hold:
+
 $list number$$
-The $cref/node/data_table/node_id/$$ is a descendant of the
-$cref/parent_node/option_table/parent_node_id/$$.
+The $cref/node_id/data_table/node_id/$$ is the
+$cref/parent_node_id/option_table/parent_node_id/$$ or corresponds to a
+descendant of the parent node.
 $lnext
 All of the
 $cref/covariates/data_table/Covariates/$$ satisfy the

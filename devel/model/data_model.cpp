@@ -748,7 +748,7 @@ Float data_model::avg_no_ode(
 	size_t child                       = data_info_[subset_id].child;
 	const CppAD::vector<double>& c_ode = data_info_[subset_id].c_ode;
 
-	// check that this data's node is a descendent of the parent node
+	// check that this data's node is for parent or one of its descendents
 	assert( child <= n_child_ );
 
 	// ode subgrid that we need integrand at
