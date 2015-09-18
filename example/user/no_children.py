@@ -98,7 +98,7 @@ def example_db (file_name) :
 	data_dict = list()
 	# values that are the same for all data rows
 	row = {
-		'node':        'world',
+		'node':        'canada',
 		'density':     'gaussian',
 		'weight':      'constant',
 		'hold_out':     False,
@@ -273,15 +273,59 @@ def example_db (file_name) :
 	#
 	return (n_smooth, rate_true)
 # ===========================================================================
-file_name      = 'example.db'
-example_db(file_name)
-program        = '../../devel/dismod_at'
+file_name             = 'example.db'
+(n_smooth, rate_true) = example_db(file_name)
+program               = '../../devel/dismod_at'
 for command in [ 'init', 'start', 'fit' ] :
 	cmd  = [ program, command, file_name ]
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :
 		sys.exit('The dismod_at ' + command + ' command failed')
+# -----------------------------------------------------------------------
+# connect to database
+new             = False
+connection      = dismod_at.create_connection(file_name, new)
+# -----------------------------------------------------------------------
+# get variable and fit_var tables
+var_dict       = dismod_at.get_table_dict(connection, 'var')
+fit_var_dict   = dismod_at.get_table_dict(connection, 'fit_var')
+#
+# mulstd variables
+for smooth_id in range( n_smooth ) :
+	for var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
+		count = 0
+		for var_id in range( len(var_dict) ) :
+			row   = var_dict[var_id]
+			match = row['var_type'] == var_type
+			match = match and row['smooth_id'] == smooth_id
+			if match :
+				count += 1
+				fit_var_id     = var_id
+				variable_value = fit_var_dict[fit_var_id]['fit_var_value']
+				assert variable_value == 1.0
+		assert count == 0
+#
+# rate variables
+parent_node_id = 3
+check_tol      = 1e-3
+n_rate         = 5;
+for rate_id in range(n_rate) :
+	count = 0
+	for var_id in range( len(var_dict) ) :
+		row   = var_dict[var_id]
+		match = row['var_type'] == 'rate'
+		match = match and row['rate_id'] == rate_id
+		if match :
+			assert row['node_id'] == parent_node_id
+			count         += 1
+			check          = rate_true[rate_id]
+			fit_var_id     = var_id
+			fit_var_value  = fit_var_dict[fit_var_id]['fit_var_value']
+			err            = fit_var_value / check - 1.0
+			assert abs(err) <= check_tol
+	# There is one age point and two time points for each rate
+	assert count == 2
 # -----------------------------------------------------------------------------
 print('no_children.py: OK')
 # END PYTHON

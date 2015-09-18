@@ -42,6 +42,13 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 09-18$$
+There was an error in the $cref user_no_children.py$$ example
+(the parent node was $code world$$ and should have been $code canada$$).
+This has been fixed.
+In addition, the fitted values are now checked at the end of the example
+(so that in the future, this type of mistake will be automatically detected).
+
 $head 09-03$$
 $list number$$
 Advance to a newer version of CppAD
