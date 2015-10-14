@@ -23,13 +23,18 @@ $$
 $end
 */
 // BEGIN C++
+# include <string>
+# include <cmath>
+# include <limits>
 # include <dismod_at/to_string.hpp>
 
 bool to_string_xam(void)
 {	bool ok = true;
-	//
-	std::string s = dismod_at::to_string(101);
-	ok &= s == "101";
+	double eps    = 10. * std::numeric_limits<double>::epsilon();
+	double value  = 1.234567890;
+	std::string s = dismod_at::to_string(value);
+	double check  = std::atof( s.c_str() );
+	ok &= std::fabs(check - value) <= eps;
 
 	return ok;
 }

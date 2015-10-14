@@ -42,6 +42,11 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 10-14$$
+Use full numerical precision when converting double precision values to strings
+for writing to $cref output$$ tables (it used to be that only about six
+digits of precision were preserved).
+
 $head 09-18$$
 There was an error in the $cref user_no_children.py$$ example
 (the parent node was $code world$$ and should have been $code canada$$).

@@ -74,7 +74,10 @@ assert len(fit_var_dict) == len(truth_var_dict)
 for fit_var_id in range( len(fit_var_dict) ) :
 	fit_var_value   = fit_var_dict[fit_var_id]['fit_var_value']
 	truth_var_value = truth_var_dict[fit_var_id]['truth_var_value']
-	assert fit_var_value == truth_var_value
+	if truth_var_value == 0.0 :
+		assert fit_var_value == truth_var_value
+	else :
+		assert abs( fit_var_value / truth_var_value - 1.0 ) <= 1e-10
 # -----------------------------------------------------------------------
 print('truth_command: OK')
 # END PYTHON

@@ -49,12 +49,21 @@ $end
 
 # include <string>
 # include <sstream>
+# include <cmath>
+# include <iomanip>
+# include <limits>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 	template <class Value>
 	std::string to_string(const Value& v)
 	{	std::ostringstream os;
 		os << v;
+		return os.str();
+	}
+	inline std::string to_string(const double& v)
+	{	std::ostringstream os;
+		int digits = 1 - std::log10( std::numeric_limits<double>::epsilon() );
+		os << std::setprecision(digits) << v;
 		return os.str();
 	}
 } // END_DISMOD_AT_NAMESPACE

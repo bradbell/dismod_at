@@ -17,6 +17,16 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head external$$
+Change the $codei%bin/install_%package%.sh%$$ files to install in
+$code external$$ instead of $code build/external$$.
+That way a user could blow away the $code build$$ directory
+without having to redo the externals.
+
+$head Constrain Rate$$
+If a rate is constrained to have upper and lower limits equal at the parent
+level, remove it from the random effect in the inner problem.
+
 $head Numerical Integration$$
 Recently, CppAD was modified so that conditional expressions
 can be used with multiple levels of AD and reverse mode; see.
