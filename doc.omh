@@ -46,6 +46,7 @@ $childtable%omh/install/unix.omh
 	%python/dismod_at/__init__.py
 	%devel/devel.omh
 	%omh/whats_new/2015.omh
+	%omh/wish_list.omh
 %$$
 
 $end
