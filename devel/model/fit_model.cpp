@@ -265,18 +265,25 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		pack_vec[i] = prior_table_[ value_prior_[i] ].mean;
 	get_random_effect(pack_object_, pack_vec, random_in);
 
-	// Ipopt options (2DO: also set options for random effects optimzation)
-	std::string options;
-	options += "String  sb  yes";
-	options += "\nNumeric tol " + option_map["tolerance"];
-	options += "\nInteger max_iter " + option_map["max_num_iter"];
-	options += "\nInteger print_level " + option_map["print_level"];
-	options += "\nString derivative_test " + option_map["derivative_test"];
-	options += "\n";
+	// Ipopt fixed effects optimization options
+	std::string fixed_options;
+	fixed_options += "String  sb  yes";
+	fixed_options += "\nNumeric tol " + option_map["tolerance"];
+	fixed_options += "\nInteger max_iter " + option_map["max_num_iter"];
+	fixed_options += "\nInteger print_level " + option_map["print_level"];
+	fixed_options += "\nString derivative_test "
+		+ option_map["derivative_test"] + "\n";
+	// Ipopt random effects optimization options
+	std::string random_options =
+		"Integer print_level 0\n"
+		"String  sb          yes\n"
+		"String  derivative_test second-order\n"
+	;
 	//
 	// optimal fixed effects
 	CppAD::vector<double> optimal_fixed = optimize_fixed(
-		options,
+		fixed_options,
+		random_options,
 		fixed_lower,
 		fixed_upper,
 		constraint_lower,
@@ -288,12 +295,7 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 	solution_.resize( pack_object_.size() );
 	put_fixed_effect(pack_object_, solution_, optimal_fixed);
 	if( n_random_ > 0 )
-	{	std::string random_options;
-		random_options += "Integer print_level 0\n";
-		random_options += "String  sb          yes\n";
-		random_options += "String  derivative_test second-order\n";
-
-		// corresponding optimal random effects
+	{	// corresponding optimal random effects
 		CppAD::vector<double> optimal_random = optimize_random(
 			random_options, optimal_fixed, random_in
 		);

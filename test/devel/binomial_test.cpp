@@ -141,15 +141,21 @@ bool binomial_test(void)
 	theta_upper[0] = 1.0;
 
 	// optimize the fixed effects
-	std::string options =
+	std::string fixed_options =
 		"Integer print_level               0\n"
 		"String  sb                        yes\n"
 		"String  derivative_test           second-order\n"
 		"String  derivative_test_print_all yes\n"
 		"Numeric tol                       1e-8\n"
 	;
+	std::string random_options =
+		"Integer print_level 0\n"
+		"String  sb          yes\n"
+		"String  derivative_test second-order\n"
+	;
 	vector<double> theta_out = approx_object.optimize_fixed(
-		options,
+		fixed_options,
+		random_options,
 		theta_lower,
 		theta_upper,
 		constraint_lower,

@@ -374,7 +374,7 @@ bool capture_xam(void)
 	size_t T = n_random;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   0.50;  // constant term in covariate model
-	theta_sim[1] =   5.0;   // mean population size
+	theta_sim[1] =   6.0;   // mean population size
 	theta_sim[2] =   1.00;  // standard deviation of random effects
 
 	// simulate y
@@ -417,15 +417,21 @@ bool capture_xam(void)
 		std::cout << itr->first << " = " << itr->second << std::endl;
 
 	// optimize the fixed effects
-	std::string options =
+	std::string fixed_options =
 		"Integer print_level               5\n"
 		"String  sb                        yes\n"
 		"String  derivative_test           none\n"
 		"String  derivative_test_print_all no\n"
 		"Numeric tol                       1e-8\n"
 	;
+	std::string random_options =
+		"Integer print_level 0\n"
+		"String  sb          yes\n"
+		"String  derivative_test second-order\n"
+	;
 	vector<double> theta_out = approx_object.optimize_fixed(
-		options,
+		fixed_options,
+		random_options,
 		theta_lower,
 		theta_upper,
 		constraint_lower,

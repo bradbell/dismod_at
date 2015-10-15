@@ -24,7 +24,8 @@ $section Optimize Fixed Effects$$
 $head Syntax$$
 $icode%fixed_out% =%$$
 $icode%approx_object%.optimize_fixed(
-	%options%,
+	%fixed_options%,
+	%random_options%,
 	%fixed_lower%,
 	%fixed_upper%,
 	%fixed_in%,
@@ -40,12 +41,19 @@ We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
 to denote an object of a class that is
 derived from the $code approx_mixed$$ base class.
 
-$head options$$
-The argument $icode options$$ has prototype
+$head fixed_options$$
+This argument has prototype
 $codei%
-	const std::string& %options%
+	const std::string& %fixed_options%
 %$$
 and is the $cref ipopt_options$$ for optimizing the fixed effects.
+
+$head random_options$$
+This argument has prototype
+$codei%
+	const std::string& %random_options%
+%$$
+and is the $cref ipopt_options$$ for optimizing the random effects.
 
 
 $head fixed_lower$$
@@ -147,7 +155,8 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 CppAD::vector<double> approx_mixed::optimize_fixed(
-	const std::string& options           ,
+	const std::string& fixed_options     ,
+	const std::string& random_options    ,
 	const d_vector&    fixed_lower       ,
 	const d_vector&    fixed_upper       ,
 	const d_vector&    constraint_lower  ,
@@ -178,8 +187,8 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	// Create an instance of an IpoptApplication
 	SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
 
-	// Set options
-	double fixed_tolerance = 1e-8; // default
+	// Set options for optimization of the fixed effects
+	const std::string& options = fixed_options;
 	size_t begin_1, end_1, begin_2, end_2, begin_3, end_3;
 	begin_1     = 0;
 	while( options[begin_1] == ' ')
@@ -213,8 +222,6 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 		else if ( tok_1 == "Numeric" )
 		{	Ipopt::Number value = std::atof( tok_3.c_str() );
 			app->Options()->SetNumericValue(tok_2.c_str(), value);
-			if( tok_2 == "tol" )
-				fixed_tolerance = value;
 		}
 		else if ( tok_1 == "Integer" )
 		{	Ipopt::Index value = std::atoi( tok_3.c_str() );
@@ -227,9 +234,15 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 		while( options[begin_1] == ' ' || options[begin_1] == '\n' )
 			begin_1++;
 	}
+	// get the tolerance settting for the fixed effects optimization
+	const std::string tag    = "tol";
+	const std::string prefix = "";
+	double fixed_tolerance;
+	app->Options()->GetNumericValue(tag, fixed_tolerance, prefix);
 
 	// object that is used to evalutate objective and constraints
 	SmartPtr<ipopt_fixed> fixed_nlp = new ipopt_fixed(
+		random_options,
 		fixed_tolerance,
 		fixed_lower,
 		fixed_upper,

@@ -167,6 +167,7 @@ $section Ipopt Example: Constructor and Destructor$$
 
 $head Syntax$$
 $codei%ipopt_fixed %ipopt_object%(
+	%random_options%,
 	%fixed_tolerance%,
 	%fixed_lower%,
 	%fixed_upper%,
@@ -178,8 +179,9 @@ $codei%ipopt_fixed %ipopt_object%(
 )%$$
 
 $head Prototype$$
-The arguments has prototype
+The arguments has prototypes
 $codei%
+	const std::string&           %random_options%
 	const double&                %fixed_tolerance%
 	const CppAD::vector<double>& %fixed_lower%
 	const CppAD::vector<double>& %fixed_in%
@@ -192,6 +194,13 @@ $head References$$
 The values of the arguments are stored by reference and hence
 the arguments must not be deleted while $icode ipopt_object$$
 is still being used.
+
+$head random_options$$
+This argument has prototype
+$codei%
+	const std::string& %random_options%
+%$$
+and is the $cref ipopt_options$$ for optimizing the random effects.
 
 $head fixed_tolerance$$
 Is the relative convergence criteria used by Ipopt for optimize fixed effects.
@@ -272,6 +281,7 @@ of the Lagrangian (for any Lagrange multiplier values).
 $end
 */
 ipopt_fixed::ipopt_fixed(
+	const std::string&  random_options     ,
 	const double&       fixed_tolerance    ,
 	const d_vector&     fixed_lower        ,
 	const d_vector&     fixed_upper        ,
@@ -280,11 +290,11 @@ ipopt_fixed::ipopt_fixed(
 	const d_vector&     fixed_in           ,
 	const d_vector&     random_in          ,
 	approx_mixed&       approx_object      ) :
-random_options_    ()                          ,
+random_options_    ( random_options )          ,
+fixed_tolerance_   ( fixed_tolerance  )        ,
 n_fixed_           ( fixed_in.size()  )        ,
 n_random_          ( random_in.size() )        ,
 n_constraint_      ( constraint_lower.size() ) ,
-fixed_tolerance_   ( fixed_tolerance  )        ,
 fixed_lower_       ( fixed_lower      )        ,
 fixed_upper_       ( fixed_upper      )        ,
 constraint_lower_  ( constraint_lower      )   ,
@@ -293,11 +303,6 @@ fixed_in_          ( fixed_in         )        ,
 random_in_         ( random_in        )        ,
 approx_object_     ( approx_object    )
 {
-	// 2DO: make this an argument to constructor and const in class
-	// In addition, distinguish between tolerance for random and fixed effects.
-	random_options_ += "Integer print_level 0\n";
-	random_options_ += "String  sb          yes\n";
-	random_options_ += "String  derivative_test second-order\n";
 	//
 	// -----------------------------------------------------------------------
 	// set nlp_lower_bound_inf_, nlp_upper_bound_inf_

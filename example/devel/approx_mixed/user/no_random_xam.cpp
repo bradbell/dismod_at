@@ -157,15 +157,21 @@ bool no_random_xam(void)
 	approx_object.initialize(fixed_in, random_in);
 
 	// optimize the fixed effects
-	std::string options =
+	std::string fixed_options =
 		"Integer print_level               0\n"
 		"String  sb                        yes\n"
 		"String  derivative_test           second-order\n"
 		"String  derivative_test_print_all yes\n"
 		"Numeric tol                       1e-8\n"
 	;
+	std::string random_options =
+		"Integer print_level 0\n"
+		"String  sb          yes\n"
+		"String  derivative_test second-order\n"
+	;
 	vector<double> fixed_out = approx_object.optimize_fixed(
-		options,
+		fixed_options,
+		random_options,
 		fixed_lower,
 		fixed_upper,
 		constraint_lower,

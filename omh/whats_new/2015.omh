@@ -49,8 +49,9 @@ The instructions in $cref install_unix$$ were modified to make it clear
 that the external package installers only need to be run once; see
 $cref/special requirements/install_unix/Special Requirements/$$.
 $lnext
-The $cref/options/approx_mixed_optimize_random/options/$$
-argument was added to the $code optimize_random$$ function.
+A separate $cref ipopt_options$$ was added for the random effect in
+$cref/optimize_random/approx_mixed_optimize_random/options/$$ and
+$cref/optimize_fixed/approx_mixed_optimize_fixed/random_options/$$.
 $lend
 
 $head 10-14$$
