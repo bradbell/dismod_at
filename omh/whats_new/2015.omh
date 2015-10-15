@@ -52,6 +52,9 @@ $lnext
 A separate $cref ipopt_options$$ was added for the random effect in
 $cref/optimize_random/approx_mixed_optimize_random/options/$$ and
 $cref/optimize_fixed/approx_mixed_optimize_fixed/random_options/$$.
+$lnext
+Advance to a newer version of CppAD (to avoid another bug)
+and hence requires $code bin/install_cppad.sh$$ to be re-run.
 $lend
 
 $head 10-14$$
