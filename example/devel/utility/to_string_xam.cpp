@@ -25,6 +25,7 @@ $end
 // BEGIN C++
 # include <string>
 # include <cmath>
+# include <cstdlib>
 # include <limits>
 # include <dismod_at/to_string.hpp>
 

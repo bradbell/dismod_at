@@ -64,7 +64,8 @@ programming language.
 
 $subhead sqlite3$$
 The $href%href%http://sqlite.org/%sqlite3%$$ library,
-version 3.7.11 or higher.
+version 3.7.11 (released on 2012-03-20) or higher; see
+$href%http://www.sqlite.org/changes.html%sqlite releases%$$.
 Note that the development headers are required; e.g.,
 on Fedora or Red-Hat one needs to install $code sqlite-devel$$.
 
