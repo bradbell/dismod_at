@@ -146,7 +146,11 @@ bool ran_obj_hes_fix_xam(void)
 	approx_object.initialize(fixed_vec, random_vec);
 
 	// optimize the random effects
-	uhat = approx_object.optimize_random(fixed_vec, random_vec);
+	std::string options;
+	options += "Integer print_level 0\n";
+	options += "String  sb          yes\n";
+	options += "String  derivative_test second-order\n";
+	uhat = approx_object.optimize_random(options, fixed_vec, random_vec);
 
 	// compute Hessian of random part of Laplace approximation
 	vector<size_t> row, col;

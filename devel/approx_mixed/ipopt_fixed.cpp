@@ -280,6 +280,7 @@ ipopt_fixed::ipopt_fixed(
 	const d_vector&     fixed_in           ,
 	const d_vector&     random_in          ,
 	approx_mixed&       approx_object      ) :
+random_options_    ()                          ,
 n_fixed_           ( fixed_in.size()  )        ,
 n_random_          ( random_in.size() )        ,
 n_constraint_      ( constraint_lower.size() ) ,
@@ -292,6 +293,12 @@ fixed_in_          ( fixed_in         )        ,
 random_in_         ( random_in        )        ,
 approx_object_     ( approx_object    )
 {
+	// 2DO: make this an argument to constructor and const in class
+	// In addition, distinguish between tolerance for random and fixed effects.
+	random_options_ += "Integer print_level 0\n";
+	random_options_ += "String  sb          yes\n";
+	random_options_ += "String  derivative_test second-order\n";
+	//
 	// -----------------------------------------------------------------------
 	// set nlp_lower_bound_inf_, nlp_upper_bound_inf_
 	// -----------------------------------------------------------------------
@@ -719,7 +726,9 @@ bool ipopt_fixed::eval_f(
 	{	//
 		// compute the optimal random effects corresponding to fixed effects
 		if( new_x )
-		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
+		random_cur_ = approx_object_.optimize_random(
+			random_options_, fixed_tmp_, random_tmp_
+		);
 		//
 		// compute random part of the objective
 		H = approx_object_.ran_obj_eval(
@@ -809,7 +818,9 @@ bool ipopt_fixed::eval_grad_f(
 	{
 		// compute the optimal random effects corresponding to fixed effects
 		if( new_x )
-		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
+		random_cur_ = approx_object_.optimize_random(
+			random_options_, fixed_tmp_, random_tmp_
+		);
 		//
 		// Jacobian for random part of the Lalpace objective
 		H_beta_tmp_ = approx_object_.ran_obj_beta(
@@ -1202,7 +1213,9 @@ bool ipopt_fixed::eval_h(
 	{
 		// compute the optimal random effects corresponding to fixed effects
 		if( new_x )
-		random_cur_ = approx_object_.optimize_random(fixed_tmp_, random_tmp_);
+		random_cur_ = approx_object_.optimize_random(
+			random_options_, fixed_tmp_, random_tmp_
+		);
 		//
 		random_h_   = random_cur_;
 		//

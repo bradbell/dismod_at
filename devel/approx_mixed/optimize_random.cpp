@@ -16,23 +16,59 @@ $spell
 	vec
 	const
 	CppAD
+	std
+	Ipopt
 $$
 
 $section Optimize Random Effects$$
 
 $head Syntax$$
 $icode%random_out% =%$$
-$icode%approx_object%.optimize_random(%fixed_vec%, %random_in%)%$$
+$icode%approx_object%.optimize_random(%options%, %fixed_vec%, %random_in%)%$$
 
 $head Purpose$$
 This routine maximizes the
-$cref/random negative log-likelihood/approx_mixed_ran_like/$$ corresponding to the
-object $icode approx_object$$.
+$cref/random negative log-likelihood/approx_mixed_ran_like/$$
+corresponding to the object $icode approx_object$$.
 
 $head approx_object$$
 We use $cref/approx_object/approx_mixed_derived_ctor/approx_object/$$
 to denote an object of a class that is
 derived from the $code approx_mixed$$ base class.
+
+$head options$$
+The argument $icode options$$ has prototype
+$codei%
+	const std::string %options%
+%$$
+It contains a list of options.
+Each option, including the last option,
+is terminated by the $code '\n'$$ character.
+Each line consists of three non-empty tokens separated by one or more spaces.
+
+$subhead String$$
+You can set any Ipopt string option using a line with the following syntax:
+$codei%
+	String %name% %value%
+%$$
+Here $icode name$$ is any valid Ipopt string option
+and $icode value$$ is its setting.
+
+$subhead Integer$$
+You can set any Ipopt integer option using a line with the following syntax:
+$codei%
+	Integer %name% %value%
+%$$
+Here $icode name$$ is any valid Ipopt integer option
+and $icode value$$ is its setting.
+
+$subhead Numeric$$
+You can set any Ipopt numeric option using a line with the following syntax:
+$codei%
+	Numeric %name% %value%
+%$$
+Here $icode name$$ is any valid Ipopt numeric option
+and $icode value$$ is its setting.
 
 $head fixed_vec$$
 This argument has prototype
@@ -136,8 +172,9 @@ public:
 // ----------------------------------------------------------------------------
 // optimize_random
 CppAD::vector<double> approx_mixed::optimize_random(
-	const d_vector& fixed_vec       ,
-	const d_vector& random_in       )
+	const std::string& options         ,
+	const d_vector&    fixed_vec       ,
+	const d_vector&    random_in       )
 {
 	// make sure initialize has been called
 	if( ! initialize_done_ )
@@ -195,18 +232,15 @@ CppAD::vector<double> approx_mixed::optimize_random(
 	optimize_random_eval fg_eval(n_abs, n_random_, fixed_vec, *this);
 
 	// optimizer options
-	std::string options;
-	options += "Integer print_level 0\n";
-	options += "String  sb          yes\n";
-	options += "Sparse  true        reverse\n";
-	options += "String  derivative_test second-order\n";
+	assert( options[ options.size() - 1] == '\n' );
+	std::string solve_options = options + "Sparse  true  reverse\n";
 
 	// return solution
 	CppAD::ipopt::solve_result<d_vector> solution;
 
 	// solve the optimization problem
 	CppAD::ipopt::solve(
-		options, xi, xl, xu, gl, gu, fg_eval, solution
+		solve_options, xi, xl, xu, gl, gu, fg_eval, solution
 	);
 
 	return solution.x;

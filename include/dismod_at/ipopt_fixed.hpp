@@ -63,6 +63,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		typedef Ipopt::TNLP::IndexStyleEnum IndexStyleEnum;
 		// ---------------------------------------------------------------
 		// member variables set during constructor
+		std::string random_options_;      // options for opt random effects
+		//
 		const size_t n_fixed_;            // number of fixed effects
 		const size_t n_random_;           // number of random effects
 		const size_t n_constraint_;       // number of constraints

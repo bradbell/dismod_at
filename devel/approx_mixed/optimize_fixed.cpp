@@ -48,7 +48,7 @@ $codei%
 It contains a list of options.
 Each option, including the last option,
 is terminated by the $code '\n'$$ character.
-Each line consists of three tokens separated by one or more spaces.
+Each line consists of three non-empty tokens separated by one or more spaces.
 
 $subhead String$$
 You can set any Ipopt string option using a line with the following syntax:
@@ -221,7 +221,7 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 			begin_3++;
 		end_3   = options.find_first_of(" \n", begin_3);
 
-		// check for errors
+		// check for three non-empty tokens
 		assert( end_3 != std::string::npos );
 		assert( begin_1 < end_1 && end_1 <= begin_2 );
 		assert( begin_2 < end_2 && end_2 <= begin_3 );

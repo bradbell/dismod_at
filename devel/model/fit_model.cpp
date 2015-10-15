@@ -288,10 +288,14 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 	solution_.resize( pack_object_.size() );
 	put_fixed_effect(pack_object_, solution_, optimal_fixed);
 	if( n_random_ > 0 )
-	{
+	{	std::string random_options;
+		random_options += "Integer print_level 0\n";
+		random_options += "String  sb          yes\n";
+		random_options += "String  derivative_test second-order\n";
+
 		// corresponding optimal random effects
 		CppAD::vector<double> optimal_random = optimize_random(
-			optimal_fixed, random_in
+			random_options, optimal_fixed, random_in
 		);
 		put_random_effect(pack_object_, solution_, optimal_random);
 	}

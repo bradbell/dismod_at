@@ -138,8 +138,9 @@ Given the fixed effects, optimize with respect to the random effects;
 see  $cref/optimize_random/approx_mixed_optimize_random/$$.
 $codep */
 	d_vector optimize_random(
-		const d_vector& fixed_vec ,
-		const d_vector& random_in
+		const std::string& options   ,
+		const d_vector&    fixed_vec ,
+		const d_vector&    random_in
 	);
 /* $$
 $head optimize_fixed$$

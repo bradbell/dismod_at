@@ -120,8 +120,12 @@ bool optimize_random_xam(void)
 	approx_object.initialize(fixed_vec, random_in);
 
 	// determine the optimal random effects
+	std::string options;
+	options += "Integer print_level 0\n";
+	options += "String  sb          yes\n";
+	options += "String  derivative_test second-order\n";
 	vector<double> random_out = approx_object.optimize_random(
-		fixed_vec, random_in
+		options, fixed_vec, random_in
 	);
 
 	// check the result

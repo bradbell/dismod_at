@@ -44,9 +44,14 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 10-15$$
+$list number$$
 The instructions in $cref install_unix$$ were modified to make it clear
 that the external package installers only need to be run once; see
 $cref/special requirements/install_unix/Special Requirements/$$.
+$lnext
+The $cref/options/approx_mixed_optimize_random/options/$$
+argument was added to the $code optimize_random$$ function.
+$lend
 
 $head 10-14$$
 Use full numerical precision when converting double precision values to strings
