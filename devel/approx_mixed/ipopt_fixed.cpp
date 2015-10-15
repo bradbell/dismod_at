@@ -167,7 +167,7 @@ $section Ipopt Example: Constructor and Destructor$$
 
 $head Syntax$$
 $codei%ipopt_fixed %ipopt_object%(
-	%ipopt_tolerance%,
+	%fixed_tolerance%,
 	%fixed_lower%,
 	%fixed_upper%,
 	%constraint_lower%,
@@ -180,7 +180,7 @@ $codei%ipopt_fixed %ipopt_object%(
 $head Prototype$$
 The arguments has prototype
 $codei%
-	const double&                %ipopt_tolerance%
+	const double&                %fixed_tolerance%
 	const CppAD::vector<double>& %fixed_lower%
 	const CppAD::vector<double>& %fixed_in%
 	const CppAD::vector<double>& %fixed_upper%
@@ -193,12 +193,12 @@ The values of the arguments are stored by reference and hence
 the arguments must not be deleted while $icode ipopt_object$$
 is still being used.
 
-$head ipopt_tolerance$$
-Is the relative convergence criteria used by Ipopt.
+$head fixed_tolerance$$
+Is the relative convergence criteria used by Ipopt for optimize fixed effects.
 This only informs ipopt_fixed,
 the IpoptApplication must be informed separately using
 $codei%
-	%app%->Options()->SetNumericValue("tol", %ipopt_tolerance%)
+	%app%->Options()->SetNumericValue("tol", %fixed_tolerance%)
 %$$
 
 $head fixed_lower$$
@@ -272,7 +272,7 @@ of the Lagrangian (for any Lagrange multiplier values).
 $end
 */
 ipopt_fixed::ipopt_fixed(
-	const double&       ipopt_tolerance    ,
+	const double&       fixed_tolerance    ,
 	const d_vector&     fixed_lower        ,
 	const d_vector&     fixed_upper        ,
 	const d_vector&     constraint_lower   ,
@@ -284,7 +284,7 @@ random_options_    ()                          ,
 n_fixed_           ( fixed_in.size()  )        ,
 n_random_          ( random_in.size() )        ,
 n_constraint_      ( constraint_lower.size() ) ,
-ipopt_tolerance_   ( ipopt_tolerance  )        ,
+fixed_tolerance_   ( fixed_tolerance  )        ,
 fixed_lower_       ( fixed_lower      )        ,
 fixed_upper_       ( fixed_upper      )        ,
 constraint_lower_  ( constraint_lower      )   ,
@@ -1390,7 +1390,7 @@ void ipopt_fixed::finalize_solution(
 	//
 	//
 	// relaxed verison of tolerance
-	double tol = ipopt_tolerance_;
+	double tol = fixed_tolerance_;
 	//
 	// check that x is within its limits
 	fixed_opt_.resize(n_fixed_);

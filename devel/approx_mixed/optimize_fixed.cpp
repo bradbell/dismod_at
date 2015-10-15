@@ -179,7 +179,7 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 	SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
 
 	// Set options
-	double ipopt_tolerance = 1e-8; // default
+	double fixed_tolerance = 1e-8; // default
 	size_t begin_1, end_1, begin_2, end_2, begin_3, end_3;
 	begin_1     = 0;
 	while( options[begin_1] == ' ')
@@ -214,7 +214,7 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 		{	Ipopt::Number value = std::atof( tok_3.c_str() );
 			app->Options()->SetNumericValue(tok_2.c_str(), value);
 			if( tok_2 == "tol" )
-				ipopt_tolerance = value;
+				fixed_tolerance = value;
 		}
 		else if ( tok_1 == "Integer" )
 		{	Ipopt::Index value = std::atoi( tok_3.c_str() );
@@ -230,7 +230,7 @@ CppAD::vector<double> approx_mixed::optimize_fixed(
 
 	// object that is used to evalutate objective and constraints
 	SmartPtr<ipopt_fixed> fixed_nlp = new ipopt_fixed(
-		ipopt_tolerance,
+		fixed_tolerance,
 		fixed_lower,
 		fixed_upper,
 		constraint_lower,
