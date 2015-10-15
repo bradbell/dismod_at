@@ -25,12 +25,6 @@ at both the fixed and random effects levels.
 $head Windows Install$$
 Make and test a set of Windows install instructions for $code dismod_at$$.
 
-$head external$$
-Change the $codei%bin/install_%package%.sh%$$ files to install in
-$code external$$ instead of $code build/external$$.
-That way a user could blow away the $code build$$ directory
-without having to redo the externals.
-
 $head Constrain Rate$$
 If a rate is constrained to have upper and lower limits equal at the parent
 level, remove it from the random effect in the inner problem.
