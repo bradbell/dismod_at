@@ -13,9 +13,17 @@ $spell
 	Dismod
 	CppAD
 	eigen
+	optimizer
 $$
 
 $section Dismod_at Wish List$$
+
+$head Tracing Optimization$$
+Add options to specify the file name for the optimizer trace
+at both the fixed and random effects levels.
+
+$head Windows Install$$
+Make and test a set of Windows install instructions for $code dismod_at$$.
 
 $head external$$
 Change the $codei%bin/install_%package%.sh%$$ files to install in
