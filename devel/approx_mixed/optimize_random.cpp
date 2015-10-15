@@ -39,36 +39,9 @@ derived from the $code approx_mixed$$ base class.
 $head options$$
 The argument $icode options$$ has prototype
 $codei%
-	const std::string %options%
+	const std::string& %options%
 %$$
-It contains a list of options.
-Each option, including the last option,
-is terminated by the $code '\n'$$ character.
-Each line consists of three non-empty tokens separated by one or more spaces.
-
-$subhead String$$
-You can set any Ipopt string option using a line with the following syntax:
-$codei%
-	String %name% %value%
-%$$
-Here $icode name$$ is any valid Ipopt string option
-and $icode value$$ is its setting.
-
-$subhead Integer$$
-You can set any Ipopt integer option using a line with the following syntax:
-$codei%
-	Integer %name% %value%
-%$$
-Here $icode name$$ is any valid Ipopt integer option
-and $icode value$$ is its setting.
-
-$subhead Numeric$$
-You can set any Ipopt numeric option using a line with the following syntax:
-$codei%
-	Numeric %name% %value%
-%$$
-Here $icode name$$ is any valid Ipopt numeric option
-and $icode value$$ is its setting.
+and is the $cref ipopt_options$$ for optimizing the random effects.
 
 $head fixed_vec$$
 This argument has prototype
