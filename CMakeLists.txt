@@ -159,6 +159,6 @@ ADD_CUSTOM_TARGET(check DEPENDS
 	check_example_devel
 	check_test_devel
 	check_test_user
-	check_get_started
-	check_user
+	check_example_get_started
+	check_example_user
 )

@@ -17,17 +17,17 @@ FOREACH(user_case
 	meas_covariate
 )
 	ADD_CUSTOM_TARGET(
-		check_${user_case}
+		check_example_user_${user_case}
 		${python_three_command} example/user/${user_case}.py
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		DEPENDS dismod_at
 	)
 ENDFOREACH(user_case diff_constraint)
 ADD_CUSTOM_TARGET(
-	check_user
+	check_example_user
 	DEPENDS
-	check_diff_constraint
-	check_no_children
-	check_lasso_covariate
-	check_meas_covariate
+	check_example_user_diff_constraint
+	check_example_user_no_children
+	check_example_user_lasso_covariate
+	check_example_user_meas_covariate
 )

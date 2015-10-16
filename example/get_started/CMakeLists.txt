@@ -12,20 +12,20 @@
 
 FOREACH(cmd init start fit truth simulate sample predict)
 	ADD_CUSTOM_TARGET(
-		check_${cmd}_command
+		check_example_get_started_${cmd}
 		${python_three_command} example/get_started/${cmd}_command.py
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		DEPENDS dismod_at
 	)
 ENDFOREACH(cmd init start fit truth simulate sample predict)
 ADD_CUSTOM_TARGET(
-	check_get_started
+	check_example_get_started
 	DEPENDS
-	check_init_command
-	check_start_command
-	check_fit_command
-	check_truth_command
-	check_simulate_command
-	check_sample_command
-	check_predict_command
+	check_example_get_started_init
+	check_example_get_started_start
+	check_example_get_started_fit
+	check_example_get_started_truth
+	check_example_get_started_simulate
+	check_example_get_started_sample
+	check_example_get_started_predict
 )
