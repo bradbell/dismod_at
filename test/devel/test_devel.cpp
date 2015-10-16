@@ -12,12 +12,16 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cassert>
 # include <cstring>
 
+// this directory
 extern bool age_time_order(void);
 extern bool binomial_test(void);
 extern bool data_model_subset(void);
 extern bool meas_mulcov(void);
 extern bool n_mixture(void);
 extern bool rate_mulcov(void);
+
+// approx_mixed subdirectory
+extern bool zero_random(void);
 
 // anonymous namespace
 namespace {
@@ -52,12 +56,16 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
+	// this directory
 	RUN(age_time_order);
 	RUN(binomial_test);
 	RUN(data_model_subset);
 	RUN(meas_mulcov);
 	RUN(n_mixture);
 	RUN(rate_mulcov);
+
+	// approx_mixed subdirectory
+	RUN(zero_random);
 
 	// summary report
 	int return_flag;

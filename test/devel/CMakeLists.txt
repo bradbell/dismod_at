@@ -16,6 +16,7 @@ LINK_DIRECTORIES(
 )
 # Program cpp, not installed, and depends on following source files
 ADD_EXECUTABLE(test_devel EXCLUDE_FROM_ALL
+	approx_mixed/zero_random.cpp
 	age_time_order.cpp
 	binomial_test.cpp
 	data_model_subset.cpp
