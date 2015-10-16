@@ -126,7 +126,7 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      0.01,
+			'std':      1.0, # 2DO: 1.0 and 0.01 work but 0.1 fails
 			'eta':      None
 		},{ # prior_iota_parent
 			'name':     'prior_iota_parent',

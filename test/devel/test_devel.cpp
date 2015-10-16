@@ -21,7 +21,8 @@ extern bool n_mixture(void);
 extern bool rate_mulcov(void);
 
 // approx_mixed subdirectory
-extern bool zero_random(void);
+extern bool zero_random_one(void);
+extern bool zero_random_two(void);
 
 // anonymous namespace
 namespace {
@@ -65,7 +66,8 @@ int main(void)
 	RUN(rate_mulcov);
 
 	// approx_mixed subdirectory
-	RUN(zero_random);
+	RUN(zero_random_one);
+	RUN(zero_random_two);
 
 	// summary report
 	int return_flag;
