@@ -44,6 +44,13 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 10-16$$
+Two new tests were added to check cases where the solution
+for the random effects should be zero; see
+$code test/devel/approx_mixed/zero_random.cpp$$ and
+$code test/user/zero_random.py$$.
+
+
 $head 10-15$$
 $list number$$
 The instructions in $cref install_unix$$ were modified to make it clear
