@@ -144,11 +144,12 @@ CONFIGURE_FILE(
 # ----------------------------------------------------------------------------
 # subdirectories
 ADD_SUBDIRECTORY(devel)
-ADD_SUBDIRECTORY(example/table)
 ADD_SUBDIRECTORY(example/devel)
-ADD_SUBDIRECTORY(test/devel)
 ADD_SUBDIRECTORY(example/get_started)
+ADD_SUBDIRECTORY(example/table)
 ADD_SUBDIRECTORY(example/user)
+ADD_SUBDIRECTORY(test/devel)
+ADD_SUBDIRECTORY(test/user)
 # ----------------------------------------------------------------------------
 ADD_CUSTOM_TARGET(check DEPENDS
 	dismod_at
@@ -157,6 +158,7 @@ ADD_CUSTOM_TARGET(check DEPENDS
 	check_example_table
 	check_example_devel
 	check_test_devel
+	check_test_user
 	check_get_started
 	check_user
 )
