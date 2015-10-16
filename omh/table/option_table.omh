@@ -11,7 +11,6 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin option_table$$
 $spell
 	pos
-	optimizer
 	dismod
 	integrands
 	Sincidence
@@ -21,6 +20,7 @@ $spell
 	tol
 	num_iter
 	Ipopt
+	Optimizer
 $$
 
 $section The Option Table$$
@@ -116,34 +116,12 @@ must always have lower limit greater than zero.
 
 $head Optimizer$$
 The following options control the
-$href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$ optimizer:
-
-$subhead tolerance$$
-If $icode%option_name% = tolerance%$$,
-the corresponding $icode option_value$$
-is a positive floating point number
-that specifies the
-desired relative convergence tolerance
-($code tol$$ in Ipopt documentation).
-
-$subhead max_num_iter$$
-If $icode%option_name% = max_num_iter%$$,
-the corresponding $icode option_value$$
-is a positive integer that specifies the
-maximum number of iterations
-($code max_iter$$ in Ipopt documentation).
-
-$subhead print_level$$
-If $icode%option_name% = print_level%$$,
-the corresponding $icode option_value$$
-is a positive integer between 0 and 12 inclusive
-that specifies the
-print level for optimizing the fixed effects.
-Zero, corresponds to no printing and should be the default for use
-with $code dismod_at$$ (the value 5 is the normal default for Ipopt).
+$href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$ optimization
+for both the fixed and random effects:
 
 $subhead derivative_test$$
-If $icode%option_name% = derivative_test%$$,
+If $icode option_name$$ is
+$code derivative_test_fixed$$ ($code derivative_test_random$$),
 the corresponding $icode option_value$$
 is one of the following:
 $table
@@ -160,6 +138,35 @@ $rnext
 $code only-second-order $$ $cnext
 	test second derivatives at starting point
 $tend
+
+$subhead max_num_iter$$
+If $icode option_name$$ is
+$code max_num_iter_fixed$$ ($code max_num_iter_random$$),
+the corresponding $icode option_value$$
+is a positive integer that specifies the
+maximum number of iterations
+($code max_iter$$ in Ipopt documentation).
+
+$subhead print_level$$
+If $icode option_name$$ is
+$code print_level_fixed$$ ($code print_level_random$$),
+the corresponding $icode option_value$$
+is a positive integer between 0 and 12 inclusive
+that specifies the print level
+for optimizing the fixed effects (random effects).
+Zero, corresponds to no printing and should be the default for use
+with $code dismod_at$$ (the value 5 is the normal default for Ipopt).
+At least one these two print values
+(for the fixed and random effects) should be zero.
+
+$subhead tolerance$$
+If $icode option_name$$ is
+$code tolerance_fixed$$ ($code tolerance_random$$),
+the corresponding $icode option_value$$
+is a positive floating point number
+that specifies the desired relative convergence tolerance
+for optimizing the fixed effects (random effects).
+(This is called $code tol$$ in Ipopt documentation.)
 
 
 $children%example/table/option_table.py

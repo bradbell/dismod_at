@@ -39,6 +39,7 @@ $spell
 	bool
 	enum
 	ipopt
+	optimizer
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
@@ -52,6 +53,10 @@ $lnext
 A separate $cref ipopt_options$$ was added for the random effect in
 $cref/optimize_random/approx_mixed_optimize_random/options/$$ and
 $cref/optimize_fixed/approx_mixed_optimize_fixed/random_options/$$.
+$lnext
+The splitting of the optimization options between fixed and random
+effects was extend to the dismod_at API;
+see $cref/optimizer options/option_table/Optimizer/$$.
 $lnext
 Advance to a newer version of CppAD (to avoid another bug)
 and hence requires $code bin/install_cppad.sh$$ to be re-run.

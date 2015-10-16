@@ -119,20 +119,16 @@ $code
 %$$
 It is effectively $code const$$ and
 must have the following values:
-
-$subhead tolerance$$
-$icode%option_map%["tolerance"]%$$
-is the Ipopt relative tolerance $code tol$$ for the fit.
-
-$subhead max_num_iter$$
-$icode%option_map%["max_num_iter"]%$$
-and is the Ipopt maximum number of iterations $code max_iter$$ for the fit.
-
-$subhead print_level$$
-$icode%option_map%["print_level"]%$$
-is the Ipopt print level (between zero and 12 inclusive).
-Zero is the normal value for $code dismod_at$$ and corresponds to no printing
-(five is the default Ipopt value).
+For $icode name$$ equal to
+$cref/derivative_test/option_table/Optimizer/derivative_test/$$,
+$cref/tolerance/option_table/Optimizer/tolerance/$$,
+$cref/max_num_iter/option_table/Optimizer/max_num_iter/$$,
+$cref/print_level/option_table/Optimizer/print_level/$$,
+and for $icode fit$$ equal to $code fixed$$ and $code random$$
+$codei%
+	%option_map%["%name%_%fit%"]
+%$$
+is the value in the $cref option_table$$ for the corresponding option.
 
 $head solution$$
 This return value has prototype
@@ -266,19 +262,23 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 	get_random_effect(pack_object_, pack_vec, random_in);
 
 	// Ipopt fixed effects optimization options
-	std::string fixed_options;
-	fixed_options += "String  sb  yes";
-	fixed_options += "\nNumeric tol " + option_map["tolerance"];
-	fixed_options += "\nInteger max_iter " + option_map["max_num_iter"];
-	fixed_options += "\nInteger print_level " + option_map["print_level"];
-	fixed_options += "\nString derivative_test "
-		+ option_map["derivative_test"] + "\n";
+	std::string options = "";
+	options += "String  sb  yes";
+	options += "\nNumeric tol " + option_map["tolerance_fixed"];
+	options += "\nInteger max_iter " + option_map["max_num_iter_fixed"];
+	options += "\nInteger print_level " + option_map["print_level_fixed"];
+	options += "\nString derivative_test "
+		+ option_map["derivative_test_fixed"] + "\n";
+	std::string fixed_options = options;
 	// Ipopt random effects optimization options
-	std::string random_options =
-		"Integer print_level 0\n"
-		"String  sb          yes\n"
-		"String  derivative_test second-order\n"
-	;
+	options = "";
+	options += "String  sb  yes";
+	options += "\nNumeric tol " + option_map["tolerance_random"];
+	options += "\nInteger max_iter " + option_map["max_num_iter_random"];
+	options += "\nInteger print_level " + option_map["print_level_random"];
+	options += "\nString derivative_test "
+		+ option_map["derivative_test_random"] + "\n";
+	std::string random_options = options;
 	//
 	// optimal fixed effects
 	CppAD::vector<double> optimal_fixed = optimize_fixed(

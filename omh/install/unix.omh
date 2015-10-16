@@ -17,8 +17,8 @@ $spell
 	make make
 	dismod
 	cmake
-	cppad
-	ipopt
+	CppAD
+	Ipopt
 	config
 	eigen
 	tarball
@@ -38,7 +38,7 @@ $codei%
 %$$
 
 $head System Requirements$$
-The following programs and libraries are required by dismod_at
+The following programs are required by dismod_at
 and should have standard system installs:
 
 $subhead C++ Compiler$$
@@ -76,16 +76,8 @@ Note that the development headers are required; e.g.,
 on Fedora or Red-Hat one needs to install $code gsl-devel$$.
 
 $head Special Requirements$$
-The following libraries are required by dismod_at
+The following programs are required by dismod_at
 and may not have standard system installs:
-It is only necessary to run each these installs once,
-except for the following cases:
-$list number$$
-Some of all of the files in the corresponding install prefix get removed.
-$lnext
-The $cref whats_new_2015$$ instructions say it is necessary to re-run
-a particular package install
-$lend
 
 $subhead eigen$$
 The $href%http://eigen.tuxfamily.org%eigen%$$
@@ -102,8 +94,8 @@ $code
 $verbatim%bin/install_eigen.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
 $$
 
-$subhead ipopt$$
-The $href%https://projects.coin-or.org/Ipopt%ipopt%$$
+$subhead Ipopt$$
+The $href%https://projects.coin-or.org/Ipopt%Ipopt%$$
 optimization package.
 The commands
 $codei%
@@ -117,7 +109,7 @@ $code
 $verbatim%bin/install_ipopt.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
 $$
 
-$subhead cppad$$
+$subhead CppAD$$
 The $href%http://www.coin-or.org/CppAD/%cppad%$$
 C++ algorithmic differentiation package.
 The commands
@@ -158,7 +150,7 @@ In this case, you need to execute the following command
 $codei%
 	export PKG_CONFIG_PATH="@PKG_CONFIG_PATH:%ipopt_prefix%/%lib%/pkgconfig"
 %$$
-where $icode ipopt_prefix$$ is the prefix for the ipopt install and
+where $icode ipopt_prefix$$ is the prefix for the Ipopt install and
 $icode lib$$ is $code lib$$ or $code lib64$$ depending on which directory
 exists.
 In the default case this would be

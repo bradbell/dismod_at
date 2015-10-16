@@ -224,15 +224,21 @@ def example_db (file_name) :
 	# ------------------------------------------------------------------------
 	# option_dict
 	option_dict = [
-		{ 'name':'parent_node_id',   'value':'0'            },
-		{ 'name':'ode_step_size',    'value':'10.0'         },
-		{ 'name':'random_seed',      'value':'0'            },
-		{ 'name':'number_sample',    'value':'1'            },
-		{ 'name':'rate_info',        'value':'iota_pos_rho_pos' },
-		{ 'name':'tolerance',        'value':'1e-10'        },
-		{ 'name':'max_num_iter',     'value':'100'          },
-		{ 'name':'print_level',      'value':'0'            },
-		{ 'name':'derivative_test',  'value':'second-order' }
+		{ 'name':'parent_node_id',         'value':'0'            },
+		{ 'name':'number_sample',          'value':'1'            },
+		{ 'name':'ode_step_size',          'value':'10.0'         },
+		{ 'name':'random_seed',            'value':'0'            },
+		{ 'name':'rate_info',              'value':'iota_pos_rho_pos' },
+
+		{ 'name':'derivative_test_fixed',  'value':'second-order' },
+		{ 'name':'max_num_iter_fixed',     'value':'100'          },
+		{ 'name':'print_level_fixed',      'value':'0'            },
+		{ 'name':'tolerance_fixed',        'value':'1e-10'        },
+
+		{ 'name':'derivative_test_random', 'value':'second-order' },
+		{ 'name':'max_num_iter_random',    'value':'100'          },
+		{ 'name':'print_level_random',     'value':'0'            },
+		{ 'name':'tolerance_random',       'value':'1e-10'        }
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: empty

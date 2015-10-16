@@ -87,15 +87,19 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	size_t null_id  = size_t(DISMOD_AT_NULL_INT);
 	//
 	const char* name_list[] = {
-		"derivative_test",
-		"max_num_iter",
 		"number_sample",
 		"ode_step_size",
 		"parent_node_id",
-		"print_level",
 		"random_seed",
 		"rate_info",
-		"tolerance"
+		"derivative_test_fixed",
+		"print_level_fixed",
+		"max_num_iter_fixed",
+		"tolerance_fixed",
+		"derivative_test_random",
+		"print_level_random",
+		"max_num_iter_random",
+		"tolerance_random"
 	};
 	size_t n_name = sizeof( name_list ) / sizeof( name_list[0] );
 	CppAD::vector<string> name_vec(n_name);
@@ -164,7 +168,10 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(db, msg, table_name, match);
 			}
 		}
-		if( name_vec[i] == "print_level" )
+		if(
+			name_vec[i] == "fixed_print_level" ||
+			name_vec[i] == "random_print_level"
+		)
 		{	int print_level = std::atoi( option_value[match].c_str() );
 			bool ok = 0 <= print_level && print_level <= 12;
 			if( ! ok )

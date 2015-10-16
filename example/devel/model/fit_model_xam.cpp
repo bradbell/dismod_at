@@ -327,10 +327,15 @@ bool fit_model_xam(void)
 		prior_object
 	);
 	std::map<std::string, std::string> option_map;
-	option_map["tolerance"]          = "1e-8";
-	option_map["max_num_iter"]       = "100";
-	option_map["print_level"]        = "0";
-	option_map["derivative_test"]    = "second-order";
+	option_map["derivative_test_fixed"]    = "second-order";
+	option_map["max_num_iter_fixed"]       = "100";
+	option_map["print_level_fixed"]        = "0";
+	option_map["tolerance_fixed"]          = "1e-8";
+	//
+	option_map["derivative_test_random"]   = "second-order";
+	option_map["max_num_iter_random"]      = "100";
+	option_map["print_level_random"]       = "0";
+	option_map["tolerance_random"]         = "1e-8";
 	fit_object.run_fit( option_map );
 	CppAD::vector<double> solution = fit_object.get_solution();
 

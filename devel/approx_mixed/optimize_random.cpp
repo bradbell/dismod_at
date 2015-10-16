@@ -206,7 +206,7 @@ CppAD::vector<double> approx_mixed::optimize_random(
 
 	// optimizer options
 	assert( options[ options.size() - 1] == '\n' );
-	std::string solve_options = options + "Sparse  true  reverse\n";
+	std::string solve_options = options + "Sparse  true  reverse \n";
 
 	// return solution
 	CppAD::ipopt::solve_result<d_vector> solution;
