@@ -322,7 +322,7 @@ bool data_mismatch_xam(void)
 	size_t n_fixed  = 1;
 	size_t n_random = 1;
 	double z        = 0.05;
-	double y        = 0.05;
+	double y        = z;
 	double sigma_u  = 0.1;
 	double sigma_y  = 0.1 * y;
 	double sigma_z  = 0.1 * z;
@@ -382,6 +382,10 @@ bool data_mismatch_xam(void)
 	double u_out       = random_out[0];
 	double L_theta_out = approx_object.L_theta(theta_out, u_out);
 	ok &= abs( L_theta_out ) <= 2e-8;
+	//
+	// Now demonstrate that the solution is still close to the expected values
+	ok &= abs( theta_out / z - 1.0 ) <= 1e-2;
+	ok &= abs( u_out ) <= 1e-2;
 	//
 	return ok;
 }
