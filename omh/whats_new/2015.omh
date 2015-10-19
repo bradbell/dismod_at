@@ -44,6 +44,11 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 10-19$$
+Added an example that demonstrates that the random effects variance
+term may cause the solution to move from an exact match with the
+data values; see $cref data_mismatch_xam.cpp$$.
+
 $head 10-16$$
 Two new tests were added to check cases where the solution
 for the random effects should be zero; see

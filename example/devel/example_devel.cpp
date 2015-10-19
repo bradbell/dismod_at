@@ -28,19 +28,20 @@ $end
 # include <cstring>
 # include <dismod_at/configure.hpp>
 
+// optional
+extern bool cholmod_xam(void);
+
 // approx_mixed subdirectory
 extern bool approx_constraint_xam(void);
 extern bool approx_derived_xam(void);
-extern bool capture_xam(void);
-extern bool cholmod_xam(void);
 extern bool constraint_eval_xam(void);
 extern bool constraint_hes_xam(void);
 extern bool constraint_jac_xam(void);
+extern bool data_mismatch_xam(void);
 extern bool eigen_xam(void);
 extern bool fix_like_hes_xam(void);
 extern bool fix_like_jac_xam(void);
 extern bool ipopt_xam_run(void);
-extern bool ipopt_xam(void);
 extern bool newton_step_xam(void);
 extern bool no_random_xam(void);
 extern bool optimize_fixed_xam(void);
@@ -108,6 +109,9 @@ extern bool put_table_row_xam(void);
 extern bool smooth_info_xam(void);
 extern bool weight_info_xam(void);
 
+// run last
+extern bool capture_xam(void);
+
 // anonymous namespace
 namespace {
 	// function that runs one test
@@ -147,22 +151,23 @@ int main(void)
 	RUN(approx_constraint_xam);
 	RUN(approx_derived_xam);
 	RUN(constraint_eval_xam);
-	RUN(constraint_jac_xam);
 	RUN(constraint_hes_xam);
+	RUN(constraint_jac_xam);
+	RUN(data_mismatch_xam);
 	RUN(eigen_xam);
-	RUN(ran_like_grad_xam);
-	RUN(ran_obj_hes_fix_xam);
-	RUN(ran_like_hes_xam);
+	RUN(fix_like_hes_xam);
+	RUN(fix_like_jac_xam);
 	RUN(ipopt_xam_run);
 	RUN(newton_step_xam);
+	RUN(ran_like_grad_xam);
+	RUN(ran_like_hes_xam);
 	RUN(ran_obj_beta_xam);
 	RUN(ran_obj_eval_xam);
+	RUN(ran_obj_hes_fix_xam);
+	RUN(no_random_xam);
 	RUN(optimize_fixed_xam);
 	RUN(optimize_random_xam);
 	RUN(prior_eval_xam);
-	RUN(fix_like_jac_xam);
-	RUN(fix_like_hes_xam);
-	RUN(no_random_xam);
 
 	// model subdirectory
 	RUN(avg_no_ode_xam);
