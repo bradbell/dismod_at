@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/cppad.hpp>
 # include <gsl/gsl_randist.h>
 # include <gsl/gsl_linalg.h>
-# include <dismod_at/approx_mixed.hpp>
+# include <dismod_at/cppad_mixed.hpp>
 # include <dismod_at/manage_gsl_rng.hpp>
 
 // J. Andrew Royle, Biometrics 60, 108-115 March 2004,
@@ -48,8 +48,8 @@ void simulate(
 	return;
 }
 
-// approx_mixed derived class
-class approx_derived : public dismod_at::approx_mixed {
+// cppad_mixed derived class
+class mixed_derived : public dismod_at::cppad_mixed {
 private:
 	const size_t          K_;      // maximum size of population
 	const size_t          I_;      // number of locations
@@ -62,9 +62,9 @@ private:
 // ------------------------------------------------------------------------
 public:
 	// constructor
-	approx_derived(size_t K, size_t I, size_t T, vector<size_t>&  y)
+	mixed_derived(size_t K, size_t I, size_t T, vector<size_t>&  y)
 		:
-		dismod_at::approx_mixed(2, 0) , // n_fixed = 2, n_random = 0
+		dismod_at::cppad_mixed(2, 0) , // n_fixed = 2, n_random = 0
 		K_(K)   ,
 		I_(I)   ,
 		T_(T)   ,
@@ -172,13 +172,13 @@ bool n_mixture(void)
 	size_t K      = size_t( lambda + 5.0 * sigma) + 1;
 
 	// create derived object
-	approx_derived approx_object(K, I, T, y);
+	mixed_derived mixed_object(K, I, T, y);
 
 	// initialize point to start optimization at
 	vector<double> theta_in( n_fixed ), u_in(0);
 	for(size_t j = 0; j < n_fixed; j++)
 		theta_in[j] = theta_sim[j];
-	approx_object.initialize(theta_in, u_in);
+	mixed_object.initialize(theta_in, u_in);
 
 	// lower and upper limits
 	vector<double> constraint_lower, constraint_upper;
@@ -203,7 +203,7 @@ bool n_mixture(void)
 		"String  sb          yes\n"
 		"String  derivative_test second-order\n"
 	;
-	vector<double> theta_out = approx_object.optimize_fixed(
+	vector<double> theta_out = mixed_object.optimize_fixed(
 		fixed_options,
 		random_options,
 		theta_lower,

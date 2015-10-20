@@ -31,9 +31,9 @@ $end
 // optional
 extern bool cholmod_xam(void);
 
-// approx_mixed subdirectory
-extern bool approx_constraint_xam(void);
-extern bool approx_derived_xam(void);
+// cppad_mixed subdirectory
+extern bool mixed_constraint_xam(void);
+extern bool mixed_derived_xam(void);
 extern bool constraint_eval_xam(void);
 extern bool constraint_hes_xam(void);
 extern bool constraint_jac_xam(void);
@@ -147,9 +147,9 @@ int main(void)
 # if DISMOD_AT_HAS_SUITESPARSE
 	RUN(cholmod_xam);
 # endif
-	// approx_mixed subdirectory
-	RUN(approx_constraint_xam);
-	RUN(approx_derived_xam);
+	// cppad_mixed subdirectory
+	RUN(mixed_constraint_xam);
+	RUN(mixed_derived_xam);
 	RUN(constraint_eval_xam);
 	RUN(constraint_hes_xam);
 	RUN(constraint_jac_xam);

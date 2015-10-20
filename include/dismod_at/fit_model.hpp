@@ -14,7 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <map>
 # include <sqlite3.h>
 # include <dismod_at/a2_double.hpp>
-# include <dismod_at/approx_mixed.hpp>
+# include <dismod_at/cppad_mixed.hpp>
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/prior_model.hpp>
@@ -25,7 +25,7 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 
 	// declare fit_model class
-	class fit_model : public approx_mixed {
+	class fit_model : public cppad_mixed {
 	public:
 		// type declarations
 		typedef CppAD::AD<double>          a1_double;

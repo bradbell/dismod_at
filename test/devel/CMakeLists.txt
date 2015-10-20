@@ -16,8 +16,8 @@ LINK_DIRECTORIES(
 )
 # Program cpp, not installed, and depends on following source files
 ADD_EXECUTABLE(test_devel EXCLUDE_FROM_ALL
-	approx_mixed/zero_random_one.cpp
-	approx_mixed/zero_random_two.cpp
+	cppad_mixed/zero_random_one.cpp
+	cppad_mixed/zero_random_two.cpp
 	age_time_order.cpp
 	binomial_test.cpp
 	data_model_subset.cpp
@@ -31,9 +31,9 @@ SET_TARGET_PROPERTIES(
 )
 TARGET_LINK_LIBRARIES(test_devel
 	devel
-	approx_mixed
-	approx_mixed_eigen
-	approx_mixed
+	cppad_mixed
+	cppad_mixed_eigen
+	cppad_mixed
 	${ipopt_LIBRARIES}
 	sqlite3
 	gsl

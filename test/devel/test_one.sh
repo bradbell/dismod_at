@@ -56,8 +56,8 @@ lib_dir=`echo $lib_file | sed -e 's|/[^/]*$||'`
 lib_name=`echo $lib_file | sed -e 's|.*/lib||' -e 's|[.][^.]*$||'`
 dismod_at_lib="-L $lib_dir -l$lib_name"
 #
-# approx_mixed library flags (assume same lib_dir)
-file='../../build/devel/libapprox_mixed.a'
+# cppad_mixed library flags (assume same lib_dir)
+file='../../build/devel/libcppad_mixed.a'
 if [ ! -e "$file" ]
 then
 	echo "./test_one.sh: Cannot find $file."

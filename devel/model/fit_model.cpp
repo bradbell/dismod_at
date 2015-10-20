@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin fit_model$$
 $spell
+	cppad
 	sqlite
 	str
 	num_iter
@@ -162,7 +163,7 @@ fit_model::fit_model(
 	const data_model&                  data_object  ,
 	const prior_model&                 prior_object ) :
 // base class constructor
-approx_mixed(
+cppad_mixed(
 	size_fixed_effect(pack_object) , // n_fixed
 	size_random_effect(pack_object)  // n_random
 ) ,

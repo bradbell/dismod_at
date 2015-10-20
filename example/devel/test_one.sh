@@ -66,8 +66,8 @@ lib_dir=`echo $file | sed -e 's|/[^/]*$||'`
 lib_name=`echo $file | sed -e 's|.*/lib||' -e 's|[.][^.]*$||'`
 dismod_at_lib="-L $lib_dir -l$lib_name"
 #
-# approx_mixed library flags (assume same lib_dir)
-file='../../build/devel/libapprox_mixed.a'
+# cppad_mixed library flags (assume same lib_dir)
+file='../../build/devel/libcppad_mixed.a'
 if [ ! -e "$file" ]
 then
 	echo "./test_one.sh: Cannot find $file."
@@ -76,15 +76,15 @@ fi
 lib_name=`echo $file | sed -e 's|.*/lib||' -e 's|[.][^.]*$||'`
 dismod_at_lib="$dismod_at_lib -l$lib_name"
 #
-# approx_mixed_eigen library flags (assume same lib_dir)
-file='../../build/devel/libapprox_mixed_eigen.a'
+# cppad_mixed_eigen library flags (assume same lib_dir)
+file='../../build/devel/libcppad_mixed_eigen.a'
 if [ ! -e "$file" ]
 then
 	echo "./test_one.sh: Cannot find $file."
 	exit 1
 fi
 lib_name=`echo $file | sed -e 's|.*/lib||' -e 's|[.][^.]*$||'`
-dismod_at_lib="$dismod_at_lib -l$lib_name -lapprox_mixed"
+dismod_at_lib="$dismod_at_lib -l$lib_name -lcppad_mixed"
 #
 # libarary flags necessary to use ipopt
 ipopt_libs=`pkg-config --libs ipopt`

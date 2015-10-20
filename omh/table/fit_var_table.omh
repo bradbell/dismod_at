@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin fit_var_table$$
 $spell
+	cppad
 	var
 $$
 
@@ -35,11 +36,11 @@ The column has type $code real$$ and contains the model variable values.
 To be specific, the
 $cref/fixed effects/model_variable/Fixed Effects, theta/$$ $latex ( \theta )$$,
 maximize the total objective
-$cref/L(theta)/approx_mixed_theory/Objective/Total Objective, L(theta)/$$
+$cref/L(theta)/cppad_mixed_theory/Objective/Total Objective, L(theta)/$$
 and the
 $cref/random effects/model_variable/Random Effects, u/$$ $latex ( u )$$
 maximize the random part of the objective (given the fixed effect); see
-$cref/u^(theta)/approx_mixed_theory/Objective/u^(theta)/$$.
+$cref/u^(theta)/cppad_mixed_theory/Objective/u^(theta)/$$.
 
 $head Example$$
 See the $cref fit_command.py$$ example and test.

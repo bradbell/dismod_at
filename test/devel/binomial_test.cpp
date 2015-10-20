@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <gsl/gsl_randist.h>
 # include <cppad/vector.hpp>
-# include <dismod_at/approx_mixed.hpp>
+# include <dismod_at/cppad_mixed.hpp>
 # include <dismod_at/manage_gsl_rng.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
@@ -39,8 +39,8 @@ void simulate(
 	return;
 }
 
-// approx_mixed derived class
-class approx_derived : public dismod_at::approx_mixed {
+// cppad_mixed derived class
+class mixed_derived : public dismod_at::cppad_mixed {
 private:
 	const size_t          N_;      // size of population
 	const vector<size_t>& y_;      // reference to data values
@@ -48,9 +48,9 @@ private:
 // ------------------------------------------------------------------------
 public:
 	// constructor
-	approx_derived(size_t N, vector<size_t>&  y)
+	mixed_derived(size_t N, vector<size_t>&  y)
 		:
-		dismod_at::approx_mixed(1, 0) , // n_fixed = 1, n_random = 0
+		dismod_at::cppad_mixed(1, 0) , // n_fixed = 1, n_random = 0
 		N_(N)                         ,
 		y_(y)
 	{	logfac_.resize(N+1);
@@ -125,13 +125,13 @@ bool binomial_test(void)
 	simulate(N, I, theta_sim, y);
 
 	// create derived object
-	approx_derived approx_object(N, y);
+	mixed_derived mixed_object(N, y);
 
 	// initialize point to start optimization at
 	vector<double> theta_in( n_fixed ), u_in(0);
 	for(size_t j = 0; j < n_fixed; j++)
 		theta_in[j] = theta_sim[j];
-	approx_object.initialize(theta_in, u_in);
+	mixed_object.initialize(theta_in, u_in);
 
 	// lower and upper limits
 	vector<double> constraint_lower, constraint_upper;
@@ -153,7 +153,7 @@ bool binomial_test(void)
 		"String  sb          yes\n"
 		"String  derivative_test second-order\n"
 	;
-	vector<double> theta_out = approx_object.optimize_fixed(
+	vector<double> theta_out = mixed_object.optimize_fixed(
 		fixed_options,
 		random_options,
 		theta_lower,

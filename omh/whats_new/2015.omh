@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2015$$
 $spell
+	cppad
 	avgint
 	init
 	var
@@ -45,10 +46,18 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+
 $head 10-20$$
-The $code approx_mixed_eigen$$ library was not being installed
-and the $code bin/check_approx_mixed.sh$$ test failed.
+$list number$$
+The $code approx_mixed$$ sub-package name was changed to
+$cref cppad_mixed$$. In addition example names of the form
+$codei%approx_%name%$$ where changed to $codei%mixed_%name%$$; e.g.,
+$cref/mixed_derived/cppad_mixed_derived_ctor/mixed_derived/$$.
+$lnext
+The $code cppad_mixed_eigen$$ library was not being installed
+and the $code bin/check_cppad_mixed.sh$$ test failed.
 This has been fixed.
+$lend
 
 $head 10-19$$
 Added an example that demonstrates that the random effects variance
@@ -58,7 +67,7 @@ data values; see $cref data_mismatch_xam.cpp$$.
 $head 10-16$$
 Two new tests were added to check cases where the solution
 for the random effects should be zero; see
-$code test/devel/approx_mixed/zero_random.cpp$$ and
+$code test/devel/cppad_mixed/zero_random.cpp$$ and
 $code test/user/zero_random.py$$.
 
 
@@ -69,8 +78,8 @@ that the external package installers only need to be run once; see
 $cref/special requirements/install_unix/Special Requirements/$$.
 $lnext
 A separate $cref ipopt_options$$ was added for the random effect in
-$cref/optimize_random/approx_mixed_optimize_random/options/$$ and
-$cref/optimize_fixed/approx_mixed_optimize_fixed/random_options/$$.
+$cref/optimize_random/cppad_mixed_optimize_random/options/$$ and
+$cref/optimize_fixed/cppad_mixed_optimize_fixed/random_options/$$.
 $lnext
 The splitting of the optimization options between fixed and random
 effects was extend to the dismod_at API;
@@ -108,7 +117,7 @@ and hence more memory was used, instead of memory being saved.
 This has been fixed.
 $lnext
 Reduce the chance of a false failure from
-$code example/devel/approx_mixed/user/capture_xam.cpp$$
+$code example/devel/cppad_mixed/user/capture_xam.cpp$$
 (takes longer to run).
 $lnext
 Print result of test for C++ $code nullptr$$ during
@@ -116,13 +125,13 @@ $cref/cmake command/install_unix/dismod_at/Cmake Command/$$
 $lend
 
 $head 08-31$$
-Reduce memory required by $cref approx_mixed$$ sub-package.
+Reduce memory required by $cref cppad_mixed$$ sub-package.
 This required some recent improvements to CppAD and hence requires
 $code bin/install_cppad.sh$$ to be re-run.
 
 $head 08-27$$
 Reduce the chance of a false failure from
-$code example/devel/approx_mixed/user/capture_xam.cpp$$
+$code example/devel/cppad_mixed/user/capture_xam.cpp$$
 (takes longer to run).
 
 $head 08-21$$
@@ -149,16 +158,16 @@ This has been fixed.
 $lnext
 Suppress certain warnings that occur when compiling with eigen package
 (need to be fixed by that package).
-This now requires linking both the $code approx_mixed$$ and
-$code approx_mixed_eigen$$ libraries.
+This now requires linking both the $code cppad_mixed$$ and
+$code cppad_mixed_eigen$$ libraries.
 $lend
 
 $head 08-15$$
 $list number$$
-Improve the $cref approx_mixed_theory$$ section.
+Improve the $cref cppad_mixed_theory$$ section.
 $lnext
-Add diagnostics as to the size of the $cref approx_mixed$$ problem
-representation; see $cref/size_map/approx_mixed_initialize/size_map/$$.
+Add diagnostics as to the size of the $cref cppad_mixed$$ problem
+representation; see $cref/size_map/cppad_mixed_initialize/size_map/$$.
 $lend
 
 $head 08-14$$
@@ -242,8 +251,8 @@ $cref/sqlite3/install_unix/System Requirements/sqlite3/$$ was specified.
 
 $head 08-03$$
 $list number$$
-First version that actually installs the $cref approx_mixed$$ sub-package
-using the $code approx_mixed_libdir$$ option to the
+First version that actually installs the $cref cppad_mixed$$ sub-package
+using the $code cppad_mixed_libdir$$ option to the
 $cref/cmake command/install_unix/dismod_at/Cmake Command/$$.
 $lnext
 The $code cmake command$$ script was not using $code bash$$ as its shell
@@ -256,10 +265,10 @@ $lend
 $head 08-02$$
 $list number$$
 Remove the option to include Laplace likelihoods (absolute value terms)
-in the $cref/random negative log likelihood/approx_mixed_ran_like/$$.
+in the $cref/random negative log likelihood/cppad_mixed_ran_like/$$.
 This reduces the number of necessary recordings and corresponding memory.
 $lnext
-The $cref/ran_like/approx_mixed_ran_like/$$ function was changed from
+The $cref/ran_like/cppad_mixed_ran_like/$$ function was changed from
 use $code a3_double$$ objects to $code a2_double$$ objects.
 $lnext
 Add the $cref capture_xam.cpp$$ example and test.
@@ -277,7 +286,7 @@ evaluated using the recording for $latex H( \beta , \theta , u)$$
 (instead of its own separate recording.
 The greatly reduced the program memory requirements.
 $lnext
-The $cref/ran_like/approx_mixed_ran_like/$$ function was changed from
+The $cref/ran_like/cppad_mixed_ran_like/$$ function was changed from
 use $code a5_double$$ objects to $code a3_double$$ objects.
 $lend
 
@@ -285,13 +294,13 @@ $head 07-29$$
 $list number$$
 The term
 'prior negative log-likelihood' was change to
-$cref/fixed negative log-likelihood/approx_mixed_theory/
+$cref/fixed negative log-likelihood/cppad_mixed_theory/
 	Fixed Negative Log-Likelihood, g(theta)
 /$$.
 $lnext
 The term
 'joint negative log-likelihood' was change to
-$cref/random negative log-likelihood/approx_mixed_theory/
+$cref/random negative log-likelihood/cppad_mixed_theory/
 	Random Negative Log-Likelihood, f(theta, u)
 /$$.
 $lend
@@ -308,12 +317,12 @@ $cref avgint_subset_xam.cpp$$,
 $cref data_subset_xam.cpp$$.
 $lnext
 Handle the case where the
-$cref/fix_like/approx_mixed_fix_like/$$ is empty.
+$cref/fix_like/cppad_mixed_fix_like/$$ is empty.
 $lend
 
 $head 07-27$$
-Grouped all the user level $cref approx_mixed$$ examples in the
-section $cref approx_mixed_user$$.
+Grouped all the user level $cref cppad_mixed$$ examples in the
+section $cref cppad_mixed_user$$.
 
 $head 07-25$$
 Add the $cref cpp_create_table$$ routine,
@@ -349,13 +358,13 @@ $list number$$
 Add the $cref user_no_children.py$$ example.
 $lnext
 Exit with an error if
-$cref/optimize_random/approx_mixed_optimize_random/$$ is called
+$cref/optimize_random/cppad_mixed_optimize_random/$$ is called
 in a case where there are no random effects.
 $lnext
 There was a bug in the case where the second derivative
 of the random part of the objective
 $cref/H(beta, theta, u)
-	/approx_mixed_theory
+	/cppad_mixed_theory
 	/Differentiating Random Part of Objective
 	/Approximate Random Objective, H(beta, theta, u)
 /$$
@@ -364,17 +373,17 @@ This has been fixed.
 $lnext
 The data corresponding to the
 $cref/parent node/option_table/parent_node_id/$$ is now in represented using
-$cref/p(z | theta)/approx_mixed/Density Functions/p(z | theta)/$$ instead of
-$cref/p(y | theta, u)/approx_mixed/Density Functions/p(y | theta, u)/$$.
+$cref/p(z | theta)/cppad_mixed/Density Functions/p(z | theta)/$$ instead of
+$cref/p(y | theta, u)/cppad_mixed/Density Functions/p(y | theta, u)/$$.
 This speeds up the computation and enables one to use
 Laplace and Log-Laplace likelihoods for this data
 (with out affecting the Laplace approximation for the integral).
 $lend
 
 $head 07-21$$
-The $code approx_mixed$$ sub-package was extended to work in the case
+The $code cppad_mixed$$ sub-package was extended to work in the case
 were there are
-$cref/no random effects/approx_mixed/Problem/No Random Effects/$$.
+$cref/no random effects/cppad_mixed/Problem/No Random Effects/$$.
 
 $head 07-20$$
 $list number$$
@@ -390,9 +399,9 @@ Simplify the $cref/command/log_table/message_type/command/$$ start
 and done messages.
 $lnext
 Include data that is independent of the random effects
-$cref/z/approx_mixed/Data, y, z/$$
-in the discussion of the $code approx_mixed$$
-$cref/problem/approx_mixed/Problem/$$.
+$cref/z/cppad_mixed/Data, y, z/$$
+in the discussion of the $code cppad_mixed$$
+$cref/problem/cppad_mixed/Problem/$$.
 Also fix a $latex \B{p} ( y , \theta )$$ that was written as
 $latex \B{p} ( y | \theta )$$ in the problem discussion.
 $lend
@@ -401,7 +410,7 @@ $head 07-19$$
 $list number$$
 The name of the $code argument_table$$ was change to the $cref option_table$$.
 Some bugs were fixed in the
-$cref/constraint/approx_mixed/Problem/Constraints/$$ option.
+$cref/constraint/cppad_mixed/Problem/Constraints/$$ option.
 $lnext
 The $cref/print_level/option_table/Optimizer/print_level/$$ option
 was added to control tracing during optimization,
@@ -427,9 +436,9 @@ $lend
 
 $head 07-17$$
 $list number$$
-First version of the $code approx_mixed$$ sub-package that works with
-$cref/constraints/approx_mixed/Problem/Constraints/$$; e.g., see
-$cref approx_constraint_xam.cpp$$.
+First version of the $code cppad_mixed$$ sub-package that works with
+$cref/constraints/cppad_mixed/Problem/Constraints/$$; e.g., see
+$cref mixed_constraint_xam.cpp$$.
 $lnext
 The $code solution check failed$$ warning was printing
 when the check actually passed (since 07-15).
@@ -441,11 +450,11 @@ message type to the log table
 $lend
 
 $head 07-16$$
-In the $cref approx_mixed$$ sub-package,
+In the $cref cppad_mixed$$ sub-package,
 changed $code joint_density$$ to
-$cref/ran_like/approx_mixed_public/User Defined/ran_like/$$
+$cref/ran_like/cppad_mixed_public/User Defined/ran_like/$$
 and changed $code prior_density$$ to
-$cref/fix_like/approx_mixed_public/User Defined/fix_like/$$.
+$cref/fix_like/cppad_mixed_public/User Defined/fix_like/$$.
 
 $head 07-15$$
 $list number$$
@@ -482,9 +491,9 @@ $cref/connection/open_connection/$$,
 use $cref log_table$$ to record all error messages before exiting.
 $lnext
 The pure virtual function
-$cref/fatal_error/approx_mixed_public/User Defined/fatal_error/$$
-was added to the $code approx_mixed$$ derived class.
-This enabled $code dismod_at$$ to log the $code approx_mixed$$ error messages.
+$cref/fatal_error/cppad_mixed_public/User Defined/fatal_error/$$
+was added to the $code cppad_mixed$$ derived class.
+This enabled $code dismod_at$$ to log the $code cppad_mixed$$ error messages.
 $lend
 
 $head 07-11$$

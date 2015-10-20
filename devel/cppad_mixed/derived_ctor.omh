@@ -1,0 +1,57 @@
+// $Id:$
+/* --------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-------------------------------------------------------------------------- */
+$begin cppad_mixed_derived_ctor$$
+$spell
+	cppad
+	dismod
+$$
+
+$section cppad_mixed Derived Class Constructor$$
+
+$head Syntax$$
+$icode%mixed_derived% %mixed_object%(%n_fixed%, %n_random%, %...%)%$$
+
+$head See Also$$
+$cref/initialize/cppad_mixed_initialize/$$
+
+$head mixed_derived$$
+This is the name of the class derived in the following fashion:
+$codei%
+	class %mixed_derived% : public dismod_at::cppad_mixed {
+%$$
+The derived class constructor must call its base class constructor as follows:
+$codei%
+	cppad_mixed(%n_fixed%, %n_random%)
+%$$
+
+$head mixed_object$$
+This is the derived class object that is constructed by the syntax above.
+
+$head n_fixed$$
+This is the number of
+$cref/fixed effects/cppad_mixed/Fixed Effects, theta/$$ in the model.
+
+$head n_random$$
+This is the number of
+$cref/random effects/cppad_mixed/Random Effects, u/$$ in the model.
+In the case where there are
+$cref/no random effects/cppad_mixed/Problem/No Random Effects/$$,
+$icode%n_random% = 0%$$.
+
+$head ...$$
+Other arguments to the derived class constructor
+(that are not used by the base class constructor).
+
+$head Example$$
+The file $cref mixed_derived_xam.cpp$$ contains an example
+that uses this derived class.
+
+$end

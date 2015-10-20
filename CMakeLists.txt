@@ -15,7 +15,7 @@
 #    -D CMAKE_BUILD_TYPE=value_2 \
 #    -D python_three_command=value_3 \
 #    -D extra_cxx_flags=value_4 \
-#    -D approx_mixed_libdir=value_5 \
+#    -D cppad_mixed_libdir=value_5 \
 #    -D dismod_at_prefix=value_6 \
 #    -D cppad_prefix=value_7 \
 #    -D ipopt_prefix=value_8 \
@@ -54,19 +54,19 @@ ELSE( dismod_at_prefix )
 	MESSAGE(FATAL_ERROR "dismod_at_prefix not set by cmake command")
 ENDIF( dismod_at_prefix )
 # ----------------------------------------------------------------------------
-# approx_mixed_libdir
-SET(approx_mixed_libdir NOTFOUND CACHE STRING
-	"directory below dismod_at_prefix where approx_mixed library is installed"
+# cppad_mixed_libdir
+SET(cppad_mixed_libdir NOTFOUND CACHE STRING
+	"directory below dismod_at_prefix where cppad_mixed library is installed"
 )
-IF( approx_mixed_libdir )
-	MESSAGE(STATUS "approx_mixed library installed in "
-		"${dismod_at_prefix}/${approx_mixed_libdir}"
+IF( cppad_mixed_libdir )
+	MESSAGE(STATUS "cppad_mixed library installed in "
+		"${dismod_at_prefix}/${cppad_mixed_libdir}"
 	)
-ELSE( approx_mixed_libdir )
-	MESSAGE(STATUS "approx_mixed_libdir not specified "
+ELSE( cppad_mixed_libdir )
+	MESSAGE(STATUS "cppad_mixed_libdir not specified "
 		"so its library is not installed"
 	)
-ENDIF( NOT approx_mixed_libdir )
+ENDIF( NOT cppad_mixed_libdir )
 # ----------------------------------------------------------------------------
 # get_prefix(package)
 #
@@ -154,7 +154,7 @@ ADD_SUBDIRECTORY(test/user)
 ADD_CUSTOM_TARGET(check DEPENDS
 	dismod_at
 	devel
-	approx_mixed
+	cppad_mixed
 	check_example_table
 	check_example_devel
 	check_test_devel
