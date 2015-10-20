@@ -18,7 +18,9 @@ inv(A) = [ 24, -18, -6; -18, 21, 3; -6, 3, 9] / det(A)
 # include <iostream>
 # include <cppad/cppad.hpp>
 
-bool eigen_xam(void)
+namespace { // BEGIN empty namespace
+
+bool test_one(void)
 {	bool ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
 
@@ -50,7 +52,7 @@ bool eigen_xam(void)
 	CppAD::Independent( A_vec );
 
 
-	// convert to an Eigen spares matrix
+	// convert to an Eigen sparse matrix
 	real_sparse_matrix A(n, n);
 
 	// create Matrix
@@ -91,5 +93,77 @@ bool eigen_xam(void)
 		for(size_t i = 0; i < n; i++)
 			ok &= CppAD::abs( x(i) / A_inv[i*n + j] - 1.0 ) <= eps;
 	}
+	return ok;
+}
+
+bool test_two(void)
+{	bool ok = true;
+	double eps = 100. * std::numeric_limits<double>::epsilon();
+
+	using Eigen::Dynamic;
+	typedef double                                   real;
+	typedef Eigen::SparseMatrix<real>                real_sparse_matrix;
+	typedef Eigen::SparseMatrix<real>::InnerIterator inner_itr;
+
+	// size of the matrix
+	size_t n = 3;
+
+	double A_inv[] = {
+		 24.0, -18.0, -6.0,
+		-18.0,  21.0,  3.0,
+		 -6.0,   3.0,  9.0
+	};
+	for(size_t i = 0; i < sizeof(A_inv)/sizeof(A_inv[0]); i++)
+		A_inv[i] /= 36.;
+
+	CppAD::vector<real> A_vec(n * (n + 1) / 2 );
+	A_vec[0] = 5.0; // A(0, 0)
+	A_vec[1] = 4.0; // A(1, 0)
+	A_vec[2] = 5.0; // A(1, 1)
+	A_vec[3] = 2.0; // A(2, 0)
+	A_vec[4] = 1.0; // A(2, 1)
+	A_vec[5] = 5.0; // A(2, 2)
+
+	// Lower triangle of positive definate A
+	real_sparse_matrix A(n, n);
+	A.insert(0, 0) = 5.0;
+	A.insert(1, 0) = 4.0;
+	A.insert(1, 1) = 5.0;
+	A.insert(2, 0) = 2.0;
+	A.insert(2, 1) = 1.0;
+	A.insert(2, 2) = 5.0;
+
+	// Compute the log of determinant using lower triangle of A
+	Eigen::SimplicialLDLT<real_sparse_matrix, Eigen::Lower> chol;
+	chol.analyzePattern(A);
+	chol.factorize(A);
+
+	// check computation of the inverse of A
+	size_t count = 0;
+	for(size_t j = 0; j < n; j++)
+	{	real_sparse_matrix b(n, 1);
+		b.insert(j, 0) = 1.0;
+		real_sparse_matrix x = chol.solve(b);
+		for(int k = 0; k < x.outerSize(); ++k)
+		{	ok &= k == 0;
+			for(inner_itr itr(x, k); itr; ++itr)
+			{	size_t i = itr.row();
+				real value = itr.value();
+				ok &= std::fabs( value - A_inv[ i * n + j] ) < 10. * eps;
+				count++;
+			}
+		}
+	}
+	ok &= count == 9;
+
+	return ok;
+}
+
+} // END namespace
+
+bool eigen_xam(void)
+{	bool ok  = true;
+	ok &= test_one();
+	ok &= test_two();
 	return ok;
 }
