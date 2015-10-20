@@ -62,7 +62,8 @@ Furthermore, there may be  constraints on the value of $latex \theta$$.
 $head Objective$$
 
 $subhead h(theta, u)$$
-Using the notation above, the part of the Laplace approximation that
+Using the notation above,
+negative log of the part of the Laplace approximation that
 depends on both the fixed and random effects $latex u$$ is
 $latex \[
 h( \theta, u )
@@ -71,6 +72,7 @@ h( \theta, u )
 + f( \theta, u )
 - \frac{n}{2} \log ( 2 \pi )
 \] $$
+where $latex n$$ is the number of random effects.
 
 $subhead u^(theta)$$
 Given the fixed effects,

@@ -846,15 +846,19 @@ dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 col_name = [ 'option_name', 'option_value' ]
 col_type = [ 'text unique', 'text' ]
 row_list = [
-	[ 'parent_node_id', str(node_name2id['world'])       ],
-	[ 'ode_step_size',  option_table_in['ode_step_size'] ],
-	[ 'number_sample',  '10'                             ],
-	[ 'random_seed',    str(int( timer.time() ))         ],
-	[ 'rate_info',      option_table_in['rate_info']     ],
-	[ 'tolerance',      '1e-8'                           ],
-	[ 'max_num_iter',   '50'                             ],
-	[ 'print_level',     '5'                             ],
-	[ 'derivative_test', 'none'                          ]
+	[ 'parent_node_id',        str(node_name2id['world'])       ],
+	[ 'ode_step_size',         option_table_in['ode_step_size'] ],
+	[ 'number_sample',         '10'                             ],
+	[ 'random_seed',           str(int( timer.time() ))         ],
+	[ 'rate_info',             option_table_in['rate_info']     ],
+	[ 'tolerance_fixed',       '1e-8'                           ],
+	[ 'max_num_iter_fixed',    '50'                             ],
+	[ 'print_level_fixed',      '5'                             ],
+	[ 'derivative_test_fixed',  'none'                          ],
+	[ 'tolerance_random',      '1e-8'                           ],
+	[ 'max_num_iter_random',   '50'                             ],
+	[ 'print_level_random',     '0'                             ],
+	[ 'derivative_test_random', 'none'                          ]
 ]
 tbl_name = 'option'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
