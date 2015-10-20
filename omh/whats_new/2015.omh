@@ -40,9 +40,15 @@ $spell
 	enum
 	ipopt
 	optimizer
+	lapprox
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 10-20$$
+The $code approx_mixed_eigen$$ library was not being installed
+and the $code bin/check_approx_mixed.sh$$ test failed.
+This has been fixed.
 
 $head 10-19$$
 Added an example that demonstrates that the random effects variance

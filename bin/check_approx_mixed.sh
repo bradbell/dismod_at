@@ -55,6 +55,8 @@ echo_eval g++ \
 	example.cpp \
 	-L $HOME/prefix/dismod_at/lib64 \
 	-lapprox_mixed \
+	-lapprox_mixed_eigen \
+	-lapprox_mixed \
 	$ipopt_libs \
 	-lsqlite3 \
 	-lgsl \

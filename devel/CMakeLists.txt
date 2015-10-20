@@ -129,12 +129,8 @@ INSTALL(
 )
 IF( approx_mixed_libdir )
 	INSTALL(
-		TARGETS approx_mixed
+		TARGETS approx_mixed approx_mixed_eigen
 		DESTINATION ${dismod_at_prefix}/${approx_mixed_libdir}
-	)
-	INSTALL(
-		TARGETS approx_mixed_eigen
-		DESTINATION ${dismod_at_prefix}/${approx_mixed_eigen_libdir}
 	)
 	INSTALL(
 		FILES ${dismod_at_SOURCE_DIR}/include/dismod_at/approx_mixed.hpp

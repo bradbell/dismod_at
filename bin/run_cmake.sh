@@ -40,8 +40,11 @@ cppad_prefix="$HOME/prefix/dismod_at"
 # This is only required by example/devel/approx_mixed/cholmod_xam.cpp.
 suitesparse_prefix="$HOME/prefix/suitesparse"
 #
-# sub-directory of dismod_at_prefix where libapprox_mixed will be installed
-# (use NOTFOUND if you do not need to install it)
+# sub-directory of dismod_at_prefix where approx_mixed libraries are installed
+#	-lapprox_mixed -lapprox_mixed_eigen -lapprox_mixed
+# The eigen part of the library is separate so different flags can be used
+# to compile the part of the code that uses eigen.
+# If you do not need to install approx_mixed, use NOTFOUND for this setting.
 approx_mixed_libdir='lib64'
 # ----------------------------------------------------------------------------
 # Setting for IHME cluster
