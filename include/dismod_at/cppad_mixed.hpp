@@ -15,7 +15,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/cppad.hpp>
 # include <dismod_at/newton_step.hpp>
 
-//
 extern bool constraint_eval_xam(void);
 extern bool constraint_jac_xam(void);
 extern bool constraint_hes_xam(void);
@@ -28,6 +27,7 @@ extern bool prior_eval_xam(void);
 extern bool fix_like_jac_xam(void);
 extern bool fix_like_hes_xam(void);
 extern bool hes_ran_0_xam(void);
+extern bool d_logdet_xam(void);
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -398,6 +398,18 @@ $head record_constraint$$
 See $cref cppad_mixed_record_constraint$$.
 $codep */
 	void record_constraint(const d_vector& fixed_vec);
+/* $$
+------------------------------------------------------------------------------
+$head d_logdet$$
+See $cref cppad_mixed_d_logdet$$
+$codep */
+	void d_logdet(
+		const d_vector& fixed_vec  ,
+		const d_vector& random_vec ,
+		d_vector&       logdet_fix ,
+		d_vector&       logdet_ran
+	);
+	friend bool ::d_logdet_xam(void);
 /* $$
 ------------------------------------------------------------------------------
 $head ran_like_grad$$

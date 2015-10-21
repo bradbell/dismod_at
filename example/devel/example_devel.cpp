@@ -38,6 +38,7 @@ extern bool constraint_eval_xam(void);
 extern bool constraint_hes_xam(void);
 extern bool constraint_jac_xam(void);
 extern bool data_mismatch_xam(void);
+extern bool d_logdet_xam(void);
 extern bool eigen_xam(void);
 extern bool fix_like_hes_xam(void);
 extern bool fix_like_jac_xam(void);
@@ -155,6 +156,7 @@ int main(void)
 	RUN(constraint_hes_xam);
 	RUN(constraint_jac_xam);
 	RUN(data_mismatch_xam);
+	RUN(d_logdet_xam);
 	RUN(eigen_xam);
 	RUN(fix_like_hes_xam);
 	RUN(fix_like_jac_xam);
