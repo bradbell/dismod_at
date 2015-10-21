@@ -157,9 +157,9 @@ void cppad_mixed::record_hes_ran(
 	// total number of variables
 	size_t n_total = n_fixed_ + n_random_;
 
-	//	create an a1d_vector containing (theta, u)
-	a1d_vector a1_both(n_total);
-	pack(fixed_vec, random_vec, a1_both);
+	// create a d_vector containing (theta, u)
+	d_vector both(n_total);
+	pack(fixed_vec, random_vec, both);
 
 	// compute Jacobian sparsity corresponding to parital w.r.t. random effects
 # if DISMOD_AT_SET_SPARSITY
@@ -175,7 +175,7 @@ void cppad_mixed::record_hes_ran(
 			r[i * n_total + j] = (i >= n_fixed_) && (i == j);
 	}
 # endif
-	a1_ran_like_.ForSparseJac(n_total, r);
+	a0_ran_like_.ForSparseJac(n_total, r);
 
 	// compute sparsity pattern corresponding to paritls w.r.t. (theta, u)
 	// of partial w.r.t. u of f(theta, u)
@@ -187,7 +187,7 @@ void cppad_mixed::record_hes_ran(
 # else
 	s[0] = true;
 # endif
-	pattern = a1_ran_like_.RevSparseHes(n_total, s, transpose);
+	pattern = a0_ran_like_.RevSparseHes(n_total, s, transpose);
 
 
 	// determine row and column indices in lower triangle of Hessian
@@ -233,20 +233,20 @@ void cppad_mixed::record_hes_ran(
 	}
 
 	// create a weighting vector
-	a1d_vector a1_w(1);
-	a1_w[0] = 1.0;
+	d_vector w(1);
+	w[0] = 1.0;
 
 	// place where results go (not usd here)
-	a1d_vector a1_val_out( hes_ran_row_.size() );
+	d_vector val_out(K);
 
 	// compute the work vector
-	a1_ran_like_.SparseHessian(
-		a1_both,
-		a1_w,
+	a0_ran_like_.SparseHessian(
+		both,
+		w,
 		pattern,
 		hes_ran_row_,
 		hes_ran_col_,
-		a1_val_out,
+		val_out,
 		hes_ran_work_
 	);
 	//
