@@ -217,6 +217,8 @@ std::map<std::string, size_t> cppad_mixed::initialize(
 		record_ran_like(fixed_vec, random_vec);
 		// hes_ran_
 		record_hes_ran(fixed_vec, random_vec);
+		// hes_cross_
+		record_hes_cross(fixed_vec, random_vec);
 		// ran_obj_0_
 		record_ran_obj(0, fixed_vec, random_vec);
 		// ran_obj_1_
@@ -228,6 +230,7 @@ std::map<std::string, size_t> cppad_mixed::initialize(
 
 		assert( record_ran_like_done_ );
 		assert( record_hes_ran_done_ );
+		assert( record_hes_cross_done_ );
 		assert( record_ran_obj_done_[0] );
 		assert( record_ran_obj_done_[1] );
 		assert( record_ran_obj_done_[2] );

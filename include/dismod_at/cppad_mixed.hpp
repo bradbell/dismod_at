@@ -28,6 +28,7 @@ extern bool fix_like_jac_xam(void);
 extern bool fix_like_hes_xam(void);
 extern bool hes_ran_0_xam(void);
 extern bool d_logdet_xam(void);
+extern bool hes_cross_xam(void);
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -117,9 +118,10 @@ $comment */
 	n_fixed_(n_fixed)               ,
 	n_random_(n_random)             ,
 	initialize_done_(false)         ,
-	record_fix_like_done_(false)  ,
-	record_ran_like_done_(false)       ,
+	record_fix_like_done_(false)    ,
+	record_ran_like_done_(false)    ,
 	record_hes_ran_done_(false)     ,
+	record_hes_cross_done_(false)   ,
 	record_hes_fix_done_(false)     ,
 	record_constraint_done_(false)  ,
 	record_ran_obj_done_(3)
@@ -203,6 +205,7 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/cppad_mixed/constraint_hes.cpp
 	%devel/cppad_mixed/record_ran_like.cpp
 	%devel/cppad_mixed/record_hes_ran.cpp
+	%devel/cppad_mixed/record_hes_cross.cpp
 	%devel/cppad_mixed/record_ran_obj.cpp
 	%devel/cppad_mixed/record_hes_fix.cpp
 	%devel/cppad_mixed/record_fix_like.cpp
@@ -236,6 +239,7 @@ $codep */
 	bool                record_fix_like_done_;
 	bool                record_ran_like_done_;
 	bool                record_hes_ran_done_;
+	bool                record_hes_cross_done_;
 	bool                record_hes_fix_done_;
 	bool                record_constraint_done_;
 	CppAD::vector<bool> record_ran_obj_done_; // index is order in call
@@ -266,12 +270,24 @@ $codep */
 	CppAD::vector<size_t>      hes_ran_row_; // corresponding row indices
 	CppAD::vector<size_t>      hes_ran_col_; // corresponding column indices
 	CppAD::ADFun<double>       hes_ran_0_;   // Compute f_{uu}^{(2)} (theta, u)
-	// used by calls that compute f_{uu}^{(2)} using a1_double type
+	// used by calls that compute f_{uu}^{(2)}
 	CppAD::sparse_hessian_work hes_ran_work_;
 	// computation of the Hessian as an atomic operation
 	newton_step                newton_atom_;
 	//
 	friend bool ::hes_ran_0_xam(void);
+/* $$
+$subhead hes_cross_$$
+The Hessian of the random likelihood w.r.t. the random effects
+$latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix
+represented by the following variables:
+$codep */
+	CppAD::vector<size_t>      hes_cross_row_; // corresponding row indices
+	CppAD::vector<size_t>      hes_cross_col_; // corresponding column indices
+	// used by calls that compute f_{u theta}^{(2)}
+	CppAD::sparse_hessian_work hes_cross_work_;
+	//
+	friend bool ::hes_cross_xam(void);
 /* $$
 $subhead ran_obj_k_$$
 For $icode%k% = 0 , 1, 2%$$, $codei%ran_obj_%k%_%$$ is $th k$$ order accurate
@@ -371,6 +387,14 @@ $head record_hes_ran$$
 See $cref cppad_mixed_record_hes_ran$$.
 $codep */
 	void record_hes_ran(
+		const d_vector& fixed_vec ,
+		const d_vector& random_vec
+	);
+/* $$
+$head record_hes_cross$$
+See $cref cppad_mixed_record_hes_cross$$.
+$codep */
+	void record_hes_cross(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);

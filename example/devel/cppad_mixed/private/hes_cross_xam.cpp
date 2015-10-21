@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin hes_ran_0_xam.cpp$$
+$begin hes_cross_xam.cpp$$
 $spell
 	cppad
 	hes
@@ -17,7 +17,7 @@ $spell
 	xam
 $$
 
-$section C++ hes_ran_0_: Example and Test$$
+$section C++ Hessian Cross Terms: Example and Test$$
 
 
 $head Private$$
@@ -25,7 +25,7 @@ This example is not part of the
 $cref/cppad_mixed public API/cppad_mixed_public/$$.
 
 $code
-$verbatim%example/devel/cppad_mixed/private/hes_ran_0_xam.cpp
+$verbatim%example/devel/cppad_mixed/private/hes_cross_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -104,7 +104,7 @@ namespace {
 	};
 }
 
-bool hes_ran_0_xam(void)
+bool hes_cross_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -126,25 +126,35 @@ bool hes_ran_0_xam(void)
 	mixed_derived mixed_object(n_fixed, n_random, data);
 	mixed_object.initialize(theta, u);
 
-	// number of non-zeros in Hessian w.r.t random effects
-	ok &= mixed_object.hes_ran_row_.size() == n_random;
-	ok &= mixed_object.hes_ran_col_.size() == n_random;
+	// number of non-zeros in Hessian cross terms
+	ok &= mixed_object.hes_cross_row_.size() == n_random;
+	ok &= mixed_object.hes_cross_col_.size() == n_random;
 
-	// compute Hessian with respect to random effects
-	vector<double> both_vec(n_fixed + n_random), val_out(n_random);
-	mixed_object.pack(fixed_vec, random_vec, both_vec);
-	val_out = mixed_object.hes_ran_0_.Forward(0, both_vec);
+	// compute Hessian cross terms
+	vector<double> w(1), val_out(n_random), both(n_fixed + n_random);
+	w[0] = 1.0;
+	CppAD::vector< std::set<size_t> > not_used;
+	mixed_object.pack(fixed_vec, random_vec, both);
+	mixed_object.a0_ran_like_.SparseHessian(
+		both,
+		w,
+		not_used,
+		mixed_object.hes_cross_row_,
+		mixed_object.hes_cross_col_,
+		val_out,
+		mixed_object.hes_cross_work_
+	);
 
 	// check Hessian
 	for(size_t k = 0; k < n_random; k++)
-	{	ok     &= mixed_object.hes_ran_row_[k] >= n_fixed;
-		ok     &= mixed_object.hes_ran_col_[k] >= n_fixed;
-		size_t i = mixed_object.hes_ran_row_[k] - n_fixed;
-		size_t j = mixed_object.hes_ran_col_[k] - n_fixed;
+	{	ok     &= mixed_object.hes_cross_row_[k] >= n_fixed;
+		ok     &= mixed_object.hes_cross_col_[k] < n_fixed;
+		size_t i = mixed_object.hes_cross_row_[k] - n_fixed;
+		size_t j = mixed_object.hes_cross_col_[k];
 		ok      &= (i == j);
 		//
-		double sigma  = fixed_vec[i];
-		double check  = 1.0 / (sigma * sigma);
+		double sigma3 = fixed_vec[i] * fixed_vec[i] * fixed_vec[i];
+		double check  = 2.0 * (data[i] - random_vec[i])  / sigma3;
 		ok              &= abs( val_out[k] / check - 1.0) <= eps;
 	}
 

@@ -100,11 +100,12 @@ void cppad_mixed::d_logdet(
 	d_vector&       logdet_fix ,
 	d_vector&       logdet_ran )
 {
+	assert( fixed_vec.size() == n_fixed_ );
+	assert( random_vec.size() == n_random_ );
 	assert( logdet_fix.size() == n_fixed_ );
 	assert( logdet_ran.size() == n_random_ );
 
 	// declare eigen matrix types
-	using Eigen::Dynamic;
 	typedef Eigen::SparseMatrix<double>                sparse_matrix;
 	typedef Eigen::SparseMatrix<double>::InnerIterator inner_itr;
 

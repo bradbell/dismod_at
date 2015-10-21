@@ -28,6 +28,7 @@ ADD_LIBRARY(cppad_mixed
 	cppad_mixed/fix_like_hes.cpp
 	cppad_mixed/record_fix_like.cpp
 	cppad_mixed/record_constraint.cpp
+	cppad_mixed/record_hes_cross.cpp
 	cppad_mixed/record_hes_fix.cpp
 	cppad_mixed/record_hes_ran.cpp
 	cppad_mixed/record_ran_like.cpp
