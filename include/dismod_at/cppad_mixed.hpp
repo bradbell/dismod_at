@@ -190,6 +190,8 @@ $spell
 	const
 	bool
 	xam
+	uu
+	logdet
 $$
 
 $section cppad_mixed Private Declarations$$
@@ -205,6 +207,7 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/cppad_mixed/record_hes_fix.cpp
 	%devel/cppad_mixed/record_fix_like.cpp
 	%devel/cppad_mixed/record_constraint.cpp
+	%devel/cppad_mixed/d_logdet.cpp
 	%devel/cppad_mixed/ran_like_grad.cpp
 	%devel/cppad_mixed/ran_like_hes.cpp
 	%devel/cppad_mixed/ran_obj_eval.cpp

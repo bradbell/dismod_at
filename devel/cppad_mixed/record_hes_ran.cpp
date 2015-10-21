@@ -88,7 +88,7 @@ $codei%
 %$$
 
 $head hes_ran_0_$$
-The inpute value of the member variables
+The input value of the member variables
 $codei%
 	CppAD::ADFun<double> hes_ran_0_
 %$$
@@ -149,6 +149,7 @@ $latex \[
 
 
 $contents%devel/cppad_mixed/newton_step.cpp
+	%example/devel/cppad_mixed/private/hes_ran_0_xam.cpp
 %$$
 
 $end

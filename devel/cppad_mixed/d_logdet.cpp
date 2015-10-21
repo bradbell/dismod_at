@@ -19,13 +19,14 @@ $spell
 	const
 	Cpp
 	xam
+	logdet
 $$
 
 $section Derivative of Log Determinant of Hessian w.r.t. Random Effects$$
 
 $head Syntax$$
 $icode%mixed_object%.d_logdet(
-	%fixed_vec%, %randoc_vec%, %logdet_fix%, %logdet_rand%)%$$
+	%fixed_vec%, %random_vec%, %logdet_fix%, %logdet_rand%)%$$
 
 $head Purpose$$
 This routine computes the total derivative of the log determinant
@@ -37,9 +38,9 @@ $cref/f(theta, u)
 with respect to the random effects vector $latex u$$; i.e.
 it computes both
 $latex \[
-	\parial_\theta f_{uu}^{(2)} ( \theta, u )
+	\partial_\theta f_{uu}^{(2)} ( \theta, u )
 	\; \R{and} \;
-	\parial_u f_{uu}^{(2)} ( \theta, u )
+	\partial_u f_{uu}^{(2)} ( \theta, u )
 \] $$
 
 $head mixed_object$$
