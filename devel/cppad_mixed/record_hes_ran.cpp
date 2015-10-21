@@ -56,13 +56,36 @@ $codei%
 %$$
 do not matter.
 Upon return they contain the row indices and column indices
-for the sparse Hessian represented by $code hes_ran_$$; i.e.
-$codei%hes_ran_row_[%i%] - n_fixed_%$$
-and
-$codei%hes_ran_col_[%i%] - n_fixed_%$$
+for the sparse Hessian;
+see call to $code SparseHessian$$ below.
+These indices are relative to both the fixed and random effects
+with the fixed effects coming first.
+
+$subhead Random Effects Index$$
+To get the indices relative to just the random effects, subtract
+$code n_fixed_$$; i.e.,
+$codei%
+	hes_ran_row_[%k%] - n_fixed_
+	hes_ran_col_[%k%] - n_fixed_
+%$$
+are between zero and the $code n_random_$$ and
 are the row and column indices for the Hessian element
-that corresponds to the $th i$$ component of the function
-corresponding to $code hes_ran_$$.
+that corresponds to the $th k$$ component of
+$icode a1_val_out$$ in the call to $code SparseHessian$$ below.
+
+$subhead Lower Triangle$$
+The result are only for the lower triangle of the Hessian; i.e.,
+$codei%
+	hes_ran_row_[%k%] >= hes_ran_col_[%k%]
+%$$
+
+$subhead Order$$
+The results are in column major order; i.e.,
+$codei%
+	hes_ran_col_[%k%] <= hes_ran_col_[%k+1%]
+	if( hes_ran_col_[%k%] == hes_ran_col_[%k+1%] )
+		hes_ran_row_[%k%] <= hes_ran_row_[%k+1%]
+%$$
 
 $head hes_ran_work_$$
 The input value of the member variable
@@ -166,10 +189,10 @@ void cppad_mixed::record_hes_ran(
 # endif
 	pattern = a1_ran_like_.RevSparseHes(n_total, s, transpose);
 
-	// compute hes_ran_row_ and hes_ran_col_
+
 	// determine row and column indices in lower triangle of Hessian
-	hes_ran_row_.clear();
-	hes_ran_col_.clear();
+	// and set key for column major sorting
+	CppAD::vector<size_t> row, col, key;
 # if DISMOD_AT_SET_SPARSITY
 	std::set<size_t>::iterator itr;
 	for(i = n_fixed_; i < n_total; i++)
@@ -178,8 +201,9 @@ void cppad_mixed::record_hes_ran(
 			assert( j >= n_fixed_ );
 			// only compute lower triangular part of Hessian w.r.t u only
 			if( i >= j )
-			{	hes_ran_row_.push_back(i);
-				hes_ran_col_.push_back(j);
+			{	row.push_back(i);
+				col.push_back(j);
+				key.push_back( i + j * n_total );
 			}
 		}
 	}
@@ -189,13 +213,24 @@ void cppad_mixed::record_hes_ran(
 		{	if( pattern[i * n_total + j] && i >= j )
 			{	// only compute lower triangular of Hessian w.r.t u only
 				if( i >= j )
-				{	hes_ran_row_.push_back(i);
-					hes_ran_col_.push_back(j);
+				{	row.push_back(i);
+					col.push_back(j);
+					key.push_back( i + j * n_total );
 				}
 			}
 		}
 	}
 # endif
+	// set hes_ran_row_ and hes_ran_col_ in colum major order
+	size_t K = row.size();
+	CppAD::vector<size_t> ind(K);
+	CppAD::index_sort(key, ind);
+	hes_ran_row_.resize(K);
+	hes_ran_col_.resize(K);
+	for(size_t k = 0; k < row.size(); k++)
+	{	hes_ran_row_[k] = row[ ind[k] ];
+		hes_ran_col_[k] = col[ ind[k] ];
+	}
 
 	// create a weighting vector
 	a1d_vector a1_w(1);
