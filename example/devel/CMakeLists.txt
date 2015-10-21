@@ -48,6 +48,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	cppad_mixed/private/constraint_jac_xam.cpp
 	cppad_mixed/private/fix_like_hes_xam.cpp
 	cppad_mixed/private/fix_like_jac_xam.cpp
+	cppad_mixed/private/hes_ran_0_xam.cpp
 	cppad_mixed/private/newton_step_xam.cpp
 	cppad_mixed/private/prior_eval_xam.cpp
 	cppad_mixed/private/ran_like_grad_xam.cpp

@@ -87,6 +87,18 @@ $codei%
 		hes_ran_row_[%k%] <= hes_ran_row_[%k+1%]
 %$$
 
+$head hes_ran_0_$$
+The inpute value of the member variables
+$codei%
+	CppAD::ADFun<double> hes_ran_0_
+%$$
+does not matter.
+Upon return its zero order forward mode computes
+the lower triangle of the sparse Hessian
+$latex \[
+	f_{uu}^{(2)} ( \theta , u )
+\]$$
+
 $head hes_ran_work_$$
 The input value of the member variable
 $codei%
@@ -249,6 +261,25 @@ void cppad_mixed::record_hes_ran(
 		val_out,
 		hes_ran_work_
 	);
+
+	// now tape the same computation and store in hes_ran_0_
+	CppAD::vector< std::set<size_t> > not_used(0);
+	a1d_vector a1_both(n_total), a1_w(1), a1_val_out(K);
+	for(size_t i = 0; i < n_total; i++)
+		a1_both[i] = both[i];
+	a1_w[0] = w[0];
+	CppAD::Independent(a1_both);
+	a1_ran_like_.SparseHessian(
+		a1_both,
+		a1_w,
+		not_used,
+		hes_ran_row_,
+		hes_ran_col_,
+		a1_val_out,
+		hes_ran_work_
+	);
+	hes_ran_0_.Dependent(a1_both, a1_val_out);
+	//
 	//
 	newton_atom_.initialize(a1_ran_like_, fixed_vec, random_vec);
 	//

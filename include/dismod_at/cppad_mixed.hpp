@@ -27,6 +27,7 @@ extern bool ran_obj_hes_fix_xam(void);
 extern bool prior_eval_xam(void);
 extern bool fix_like_jac_xam(void);
 extern bool fix_like_hes_xam(void);
+extern bool hes_ran_0_xam(void);
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -261,9 +262,13 @@ represented by the following variables:
 $codep */
 	CppAD::vector<size_t>      hes_ran_row_; // corresponding row indices
 	CppAD::vector<size_t>      hes_ran_col_; // corresponding column indices
+	CppAD::ADFun<double>       hes_ran_0_;   // Compute f_{uu}^{(2)} (theta, u)
+	// used by calls that compute f_{uu}^{(2)} using a1_double type
 	CppAD::sparse_hessian_work hes_ran_work_;
 	// computation of the Hessian as an atomic operation
 	newton_step                newton_atom_;
+	//
+	friend bool ::hes_ran_0_xam(void);
 /* $$
 $subhead ran_obj_k_$$
 For $icode%k% = 0 , 1, 2%$$, $codei%ran_obj_%k%_%$$ is $th k$$ order accurate
