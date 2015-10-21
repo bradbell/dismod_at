@@ -16,10 +16,13 @@ $spell
 $$
 
 $section The Predict Table: Average Integrand Predictions$$
+
+$head See Also$$
+$cref avgint_table$$
+
+$head Purpose$$
 This table contains model predictions for the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
-2DO: A new $code predict$$ table is created each time the
-$code predict_command$$ is executed.
 
 $head predict_id$$
 This column has type $code integer$$ and is the primary key for this table.
