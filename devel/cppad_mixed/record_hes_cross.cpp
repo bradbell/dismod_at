@@ -49,7 +49,7 @@ It specifies the value of the
 $cref/random effects/cppad_mixed/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
-$head hes_cross_row_
+$head hes_cross_row_$$
 The input value of this member variable does not matter.
 Upon return
 $codei%
@@ -58,7 +58,7 @@ $codei%
 is the random effects index for this cross partial in
 $latex f_{u \theta}^{(2)}$$.
 
-$head hes_cross_col_
+$head hes_cross_col_$$
 The input value of this member variable does not matter.
 Upon return
 $codei%
@@ -87,6 +87,14 @@ $codei%
 %$$
 can be used to calculate the non-zero cross terms in
 $latex f_{u \theta}^{(2)}$$.
+
+$children%
+	example/devel/cppad_mixed/private/hes_cross_xam.cpp
+%$$
+$head Example$$
+The file $cref hes_cross_xam.cpp$$ contains an example
+and test of this procedure.
+It returns true, if the test passes, and false otherwise.
 
 $end
 */

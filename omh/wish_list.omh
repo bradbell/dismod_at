@@ -18,6 +18,11 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Starting Point$$
+Have an option to start at a random point from the prior for the fixed effects
+(instead of the mean of the fixed effects).
+This would better detect local minima and represent solution uncertainty.
+
 $head Tracing Optimization$$
 Add options to specify the file name for the optimizer trace
 at both the fixed and random effects levels.
