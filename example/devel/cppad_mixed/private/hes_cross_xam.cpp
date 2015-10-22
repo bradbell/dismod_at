@@ -145,19 +145,26 @@ bool hes_cross_xam(void)
 		mixed_object.hes_cross_work_
 	);
 
+	CppAD::vector<size_t>& row(mixed_object.hes_cross_row_);
+	CppAD::vector<size_t>& col(mixed_object.hes_cross_col_);
+
 	// check Hessian
 	for(size_t k = 0; k < n_random; k++)
-	{	ok     &= mixed_object.hes_cross_row_[k] >= n_fixed;
-		ok     &= mixed_object.hes_cross_col_[k] < n_fixed;
-		size_t i = mixed_object.hes_cross_row_[k] - n_fixed;
-		size_t j = mixed_object.hes_cross_col_[k];
+	{	ok     &= row[k] >= n_fixed;
+		ok     &= col[k] < n_fixed;
+		size_t i = row[k] - n_fixed;
+		size_t j = col[k];
 		ok      &= (i == j);
 		//
 		double sigma3 = fixed_vec[i] * fixed_vec[i] * fixed_vec[i];
 		double check  = 2.0 * (data[i] - random_vec[i])  / sigma3;
 		ok              &= abs( val_out[k] / check - 1.0) <= eps;
 	}
-
+	for(size_t k = 1; k < n_random; k++)
+	{	ok &= col[k-1] <= col[k];
+		if( col[k-1] == col[k] )
+			ok &= row[k-1] < row[k];
+	}
 	return ok;
 }
 // END C++

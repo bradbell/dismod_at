@@ -84,7 +84,7 @@ The results are in column major order; i.e.,
 $codei%
 	hes_ran_col_[%k%] <= hes_ran_col_[%k+1%]
 	if( hes_ran_col_[%k%] == hes_ran_col_[%k+1%] )
-		hes_ran_row_[%k%] <= hes_ran_row_[%k+1%]
+		hes_ran_row_[%k%] < hes_ran_row_[%k+1%]
 %$$
 
 $head hes_ran_0_$$

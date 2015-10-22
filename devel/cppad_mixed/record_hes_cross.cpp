@@ -67,6 +67,14 @@ $codei%
 is the fixed effects index for this cross partial in
 $latex f_{u \theta}^{(2)}$$.
 
+$head Order$$
+The results are in column major order; i.e.,
+$codei%
+	hes_cross_col_[%k%] <= hes_cross_col_[%k+1%]
+	if( hes_cross_col_[%k%] == hes_cross_col_[%k+1%] )
+		hes_cross_row_[%k%] < hes_cross_row_[%k+1%]
+%$$
+
 $head hes_cross_work_$$
 The input value of the member variable
 $codei%
@@ -149,35 +157,45 @@ void cppad_mixed::record_hes_cross(
 
 
 	// User row index for random effect and column index for fixed effect
-	hes_cross_row_.clear();
-	hes_cross_col_.clear();
+	CppAD::vector<size_t> row, col, key;
 # if DISMOD_AT_SET_SPARSITY
 	std::set<size_t>::iterator itr;
 	for(i = n_fixed_; i < n_total; i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	j = *itr;
 			assert( j < n_fixed_ );
-			hes_cross_row_.push_back(i);
-			hes_cross_col_.push_back(j);
+			row.push_back(i);
+			col.push_back(j);
+			key.push_back( i + j * n_total );
 		}
 	}
 # else
 	for(i = n_fixed_; i < n_total; i++)
 	{	for(j = 0; j < n_fixed_; j++)
 		{	if( pattern[i * n_total + j] )
-			{	hes_cross_row_.push_back(i);
-				hes_cross_col_.push_back(j);
+			{	row.push_back(i);
+				col.push_back(j);
+				key.push_back( i + j * n_total );
 			}
 		}
 	}
 # endif
+	// set hes_cross_row_ and hes_cross_col_ in colum major order
+	size_t K = row.size();
+	CppAD::vector<size_t> ind(K);
+	CppAD::index_sort(key, ind);
+	hes_cross_row_.resize(K);
+	hes_cross_col_.resize(K);
+	for(size_t k = 0; k < row.size(); k++)
+	{	hes_cross_row_[k] = row[ ind[k] ];
+		hes_cross_col_[k] = col[ ind[k] ];
+	}
 
 	// create a weighting vector
 	d_vector w(1);
 	w[0] = 1.0;
 
 	// place where results go (not usd here)
-	size_t K = hes_cross_row_.size();
 	d_vector val_out(K);
 
 	// compute the work vector

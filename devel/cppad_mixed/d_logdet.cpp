@@ -26,7 +26,7 @@ $section Derivative of Log Determinant of Hessian w.r.t. Random Effects$$
 
 $head Syntax$$
 $icode%mixed_object%.d_logdet(
-	%fixed_vec%, %random_vec%, %logdet_fix%, %logdet_rand%)%$$
+	%fixed_vec%, %random_vec%, %logdet_fix%, %logdet_ran%)%$$
 
 $head Purpose$$
 This routine computes the total derivative of the log determinant
@@ -67,7 +67,7 @@ This argument has prototype
 $codei%
 	CppAD::vector<double>& %logdet_fix%
 %$$
-If the input size must be equal to $code n_fixed_$$.
+Its input size must be equal to $code n_fixed_$$.
 Upon return, it contains the value of the derivative w.r.t
 the fixed effects.
 $codei%hes_ran_col_[%k%] - n_fixed_%$$ of the Hessian.
@@ -77,7 +77,7 @@ This argument has prototype
 $codei%
 	CppAD::vector<double>& %logdet_ran%
 %$$
-If the input size must be equal to $code n_random_$$.
+Its input size must be equal to $code n_random_$$.
 Upon return, it contains the value of the derivative w.r.t
 the random effects.
 
@@ -119,7 +119,8 @@ void cppad_mixed::d_logdet(
 	val_out = hes_ran_0_.Forward(0, both);
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
-	// 2DO: only do this once and store chol
+	// 2DO: only do analyze pattern once and store in chol
+	// 2DO: same hessian point is factorized here as well as in d_ran_like.
 	sparse_matrix hessian(n_random_, n_random_);
 	for(size_t k = 0; k < K; k++)
 	{	assert( n_fixed_        <= hes_ran_col_[k]  );
@@ -135,9 +136,9 @@ void cppad_mixed::d_logdet(
 	chol.analyzePattern(hessian);
 	chol.factorize(hessian);
 
-	// Compute derivative of 0.5 * sum_k w_k hessian_k
-	// where w_k is the inverse of the Hessian at (row[k], col[k])
-	// (multiply by two for diagonal rows);
+	// Compute derivative of sum_k w_k hessian_k
+	// where w_k is the inverse of the Hessian at (row[k], col[k]).
+	// use order speicifcation for (hes_ran_row_, hes_ran_col_)
 	d_vector w(K);
 	for(size_t k = 0; k < K; k++)
 		w[k] = 0.0;

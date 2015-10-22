@@ -135,17 +135,25 @@ bool hes_ran_0_xam(void)
 	mixed_object.pack(fixed_vec, random_vec, both_vec);
 	val_out = mixed_object.hes_ran_0_.Forward(0, both_vec);
 
+	CppAD::vector<size_t>& row(mixed_object.hes_ran_row_);
+	CppAD::vector<size_t>& col(mixed_object.hes_ran_col_);
+
 	// check Hessian
 	for(size_t k = 0; k < n_random; k++)
-	{	ok     &= mixed_object.hes_ran_row_[k] >= n_fixed;
-		ok     &= mixed_object.hes_ran_col_[k] >= n_fixed;
-		size_t i = mixed_object.hes_ran_row_[k] - n_fixed;
-		size_t j = mixed_object.hes_ran_col_[k] - n_fixed;
+	{	ok     &= row[k] >= n_fixed;
+		ok     &= col[k] >= n_fixed;
+		size_t i = row[k] - n_fixed;
+		size_t j = col[k] - n_fixed;
 		ok      &= (i == j);
 		//
 		double sigma  = fixed_vec[i];
 		double check  = 1.0 / (sigma * sigma);
 		ok              &= abs( val_out[k] / check - 1.0) <= eps;
+	}
+	for(size_t k = 1; k < n_random; k++)
+	{	ok &= col[k-1] <= col[k];
+		if( col[k-1] == col[k] )
+			ok &= row[k-1] < row[k];
 	}
 
 	return ok;
