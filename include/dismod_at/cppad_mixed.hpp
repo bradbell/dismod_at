@@ -28,6 +28,7 @@ extern bool fix_like_jac_xam(void);
 extern bool fix_like_hes_xam(void);
 extern bool hes_ran_0_xam(void);
 extern bool d_logdet_xam(void);
+extern bool d_ran_like_xam(void);
 extern bool hes_cross_xam(void);
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -211,6 +212,7 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/cppad_mixed/record_fix_like.cpp
 	%devel/cppad_mixed/record_constraint.cpp
 	%devel/cppad_mixed/d_logdet.cpp
+	%devel/cppad_mixed/d_ran_like.cpp
 	%devel/cppad_mixed/ran_like_grad.cpp
 	%devel/cppad_mixed/ran_like_hes.cpp
 	%devel/cppad_mixed/ran_obj_eval.cpp
@@ -437,6 +439,17 @@ $codep */
 		d_vector&       logdet_ran
 	);
 	friend bool ::d_logdet_xam(void);
+/* $$
+------------------------------------------------------------------------------
+$head d_ran_like$$
+See $cref cppad_mixed_d_ran_like$$
+$codep */
+	void d_ran_like(
+		const d_vector& fixed_vec  ,
+		const d_vector& random_vec ,
+		d_vector&       r_fixed
+	);
+	friend bool ::d_ran_like_xam(void);
 /* $$
 ------------------------------------------------------------------------------
 $head ran_like_grad$$

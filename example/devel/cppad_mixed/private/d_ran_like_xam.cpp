@@ -9,23 +9,34 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin d_logdet_xam.cpp$$
+$begin d_ran_like_xam.cpp$$
 $spell
 	cppad
-	hes
+	obj
 	interp
 	xam
 $$
 
-$section C++ d_logdet: Example and Test$$
-
+$section C++ d_ran_like: Example and Test$$
 
 $head Private$$
 This example is not part of the
 $cref/cppad_mixed public API/cppad_mixed_public/$$.
 
+$head Model$$
+$latex \[
+	\B{p}( y_i | \theta , u ) \sim \B{N} ( u_i + \theta_0 , \theta_1^2 )
+\] $$
+$latex \[
+	\B{p}( u_i | \theta ) \sim \B{N} ( 0 , 1 )
+\] $$
+It follows that the Laplace approximation is exact and
+$latex \[
+	\B{p}( y_i | \theta ) \sim \B{N} \left( \theta_0 , 1 + \theta_1^2 \right)
+\] $$
+
 $code
-$verbatim%example/devel/cppad_mixed/private/d_logdet_xam.cpp
+$verbatim%example/devel/cppad_mixed/private/d_ran_like_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -34,7 +45,6 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include <dismod_at/cppad_mixed.hpp>
-# include <dismod_at/mixed_pack.hpp>
 
 namespace {
 	using CppAD::vector;
@@ -53,7 +63,8 @@ namespace {
 			:
 			dismod_at::cppad_mixed(n_fixed, n_random) ,
 			y_(y)
-		{ }
+		{	assert( n_fixed == 2);
+		}
 	private:
 		// implementation of ran_like
 		template <class Float>
@@ -65,13 +76,19 @@ namespace {
 			// initialize part of log-density that is always smooth
 			vec[0] = Float(0.0);
 
+			// pi
+			Float sqrt_2pi = Float( CppAD::sqrt(8.0 * CppAD::atan(1.0) ) );
+
 			for(size_t i = 0; i < y_.size(); i++)
-			{	Float mu     = u[i];
-				Float sigma  = theta[i];
+			{	Float mu     = u[i] + theta[0];
+				Float sigma  = theta[1];
 				Float res    = (y_[i] - mu) / sigma;
 
-				// (do not need 2*pi inside of log)
-				vec[0]  += (log(sigma) + res*res) / Float(2.0);
+				// p(y_i | u, theta)
+				vec[0] += log(sqrt_2pi * sigma) + res*res / Float(2.0);
+
+				// p(u_i | theta)
+				vec[0] += log(sqrt_2pi) + u[i] * u[i] / Float(2.0);
 			}
 			return vec;
 		}
@@ -104,41 +121,69 @@ namespace {
 	};
 }
 
-bool d_logdet_xam(void)
+bool d_ran_like_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
 
 	size_t n_data   = 10;
-	size_t n_fixed  = n_data;
+	size_t n_fixed  = 2;
 	size_t n_random = n_data;
-	vector<double> data(n_data);
-	vector<double> theta(n_fixed), u(n_random);
-	vector<double> fixed_vec(n_fixed), random_vec(n_random);
+	vector<double> data(n_data), fixed_vec(n_fixed), random_vec(n_random);
+	vector<double> uhat(n_random);
 
+	fixed_vec[0] = 2.0;
+	fixed_vec[1] = 1.0;
 	for(size_t i = 0; i < n_data; i++)
-	{	data[i]      = double( (i + 1) * (i + 1) );
-		fixed_vec[i] = theta[i] = std::sqrt( double(i + 1) );
-		random_vec[i] = u[i] = 0.0;
+	{	data[i]       = double(i + 1);
+		random_vec[i] = i / double(n_data);
 	}
 
 	// object that is derived from cppad_mixed
 	mixed_derived mixed_object(n_fixed, n_random, data);
-	mixed_object.initialize(theta, u);
+	mixed_object.initialize(fixed_vec, random_vec);
 
-	// compute derivative of logdet of Hessian
-	vector<double> logdet_fix(n_fixed), logdet_ran(n_random);
-	mixed_object.d_logdet(fixed_vec, random_vec, logdet_fix, logdet_ran);
+	// optimize the random effects
+	std::string options;
+	options += "Integer print_level 0\n";
+	options += "String  sb          yes\n";
+	options += "String  derivative_test second-order\n";
+	uhat = mixed_object.optimize_random(options, fixed_vec, random_vec);
 
-	// Hessian_{i,j} = 1.0 / (theta[i] * theta[i]) if i == j
-	//               = 0.0 otherwise
-	// log( det( Hessian ) ) = - 2.0 * sum_i log( theta[i] )
+	// compute the total derivaive of the random part of the objective
+	vector<double> r_fixed(n_fixed);
+	mixed_object.d_ran_like(fixed_vec, uhat, r_fixed);
+
+	// For this case the Laplace approximation is exactly equal the integral
+	// p(y | theta ) = integral of p(y | theta , u) p(u | theta) du
+	// Furthermore p(y | theta ) is simple to calculate directly
+	double mu         = fixed_vec[0];
+	double sigma      = fixed_vec[1];
+	//
+	double d_mu_0     = 1.0;
+	double d_sigma_1  = 1.0;
+	//
+	double delta      = CppAD::sqrt( sigma * sigma + 1.0 );
+	double d_delta_1  = d_sigma_1 * sigma / delta;
+	//
+	double d_sum_0    = 0.0;
+	double d_sum_1    = 0.0;
 	for(size_t i = 0; i < n_data; i++)
-		ok    &= logdet_ran[i] == 0.0;
-	for(size_t i = 0; i < n_data; i++)
-	{	double check   = - 2.0  / fixed_vec[i];
-		ok            &= abs( logdet_fix[i] / check - 1.0) <= eps;
+	{	double res    = (data[i] - mu) / delta;
+		// - log p( y_i | theta ) = log(sqrt_2pi * delta) + res*res / 2.0;
+		// so compute partials w.r.t. sigma = theta_i
+		double d_res_0    = - d_mu_0 / delta;
+		double d_res_1    = - d_delta_1 * (data[i] - mu) / ( delta * delta) ;
+		//
+		double d_log_1    = d_delta_1 / delta;
+		double d_square_0 = d_res_0 * res;
+		double d_square_1 = d_res_1 * res;
+		//
+		d_sum_0          += d_square_0;
+		d_sum_1          += d_log_1 + d_square_1;
 	}
+	ok &= abs( r_fixed[0] / d_sum_0 - 1.0 )  < eps;
+	ok &= abs( r_fixed[1] / d_sum_1 - 1.0 )  < eps;
 
 	return ok;
 }
