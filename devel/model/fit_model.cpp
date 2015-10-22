@@ -264,23 +264,22 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 
 	// Ipopt fixed effects optimization options
 	std::string options = "";
-	options += "String    sb                          yes";
-	options += "\nString  derivative_test             first-order";
-	options += "\nString  hessian_approximation       limited-memory";
-	options += "\nInteger limited_memory_max_history  30";
-	options += "\nNumeric tol "         + option_map["tolerance_fixed"];
-	options += "\nInteger max_iter "    + option_map["max_num_iter_fixed"];
+	options += "String  sb  yes";
+	options += "\nNumeric tol " + option_map["tolerance_fixed"];
+	options += "\nInteger max_iter " + option_map["max_num_iter_fixed"];
 	options += "\nInteger print_level " + option_map["print_level_fixed"];
-	std::string fixed_options = options + "\n";
+	options += "\nString derivative_test "
+		+ option_map["derivative_test_fixed"] + "\n";
+	std::string fixed_options = options;
 	// Ipopt random effects optimization options
 	options = "";
 	options += "String  sb  yes";
-	options += "\nNumeric tol "         + option_map["tolerance_random"];
-	options += "\nInteger max_iter "    + option_map["max_num_iter_random"];
+	options += "\nNumeric tol " + option_map["tolerance_random"];
+	options += "\nInteger max_iter " + option_map["max_num_iter_random"];
 	options += "\nInteger print_level " + option_map["print_level_random"];
 	options += "\nString derivative_test "
-		+ option_map["derivative_test_random"];
-	std::string random_options = options + "\n";
+		+ option_map["derivative_test_random"] + "\n";
+	std::string random_options = options;
 	//
 	// optimal fixed effects
 	CppAD::vector<double> optimal_fixed = optimize_fixed(

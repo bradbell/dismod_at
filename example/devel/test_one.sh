@@ -113,6 +113,16 @@ echo_eval g++ \
 echo "./junk"
 ./junk
 #
+read -p 'Run gprof [y/n] ?' response
+if [ "$response" != 'y' ]
+then
+	if [ -e 'example.db' ]
+	then
+		echo_eval rm example.db
+	fi
+	exit 0
+fi
+#
 if ( echo "$build_type" | grep '\-pg' > /dev/null )
 then
 	echo "gprof junk | sed -f gprof.sed > gprof.out"

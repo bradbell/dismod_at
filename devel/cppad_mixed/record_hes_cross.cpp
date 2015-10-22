@@ -8,6 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
+# include <dismod_at/configure.hpp>
 # include <dismod_at/cppad_mixed.hpp>
 
 /*
@@ -107,7 +108,6 @@ It returns true, if the test passes, and false otherwise.
 $end
 */
 
-# define DISMOD_AT_SET_SPARSITY 1
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 

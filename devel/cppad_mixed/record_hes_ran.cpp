@@ -9,6 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/cppad_mixed.hpp>
+# include <dismod_at/configure.hpp>
 
 /*
 $begin cppad_mixed_record_hes_ran$$
@@ -155,7 +156,6 @@ $contents%devel/cppad_mixed/newton_step.cpp
 $end
 */
 
-# define DISMOD_AT_SET_SPARSITY 1
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 

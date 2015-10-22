@@ -99,7 +99,9 @@ void cppad_mixed::d_logdet(
 	const d_vector& random_vec ,
 	d_vector&       logdet_fix ,
 	d_vector&       logdet_ran )
-{
+{	assert( record_ran_obj_done_[0] );
+	assert( record_hes_ran_done_ );
+
 	assert( fixed_vec.size() == n_fixed_ );
 	assert( random_vec.size() == n_random_ );
 	assert( logdet_fix.size() == n_fixed_ );

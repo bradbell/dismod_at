@@ -62,7 +62,7 @@ Furthermore, there may be  constraints on the value of $latex \theta$$.
 
 $head Objective$$
 
-$subhead h(theta, u)$$
+$subhead Negative Log Laplace Approximation, h(theta, u)$$
 Using the notation above,
 negative log of the part of the Laplace approximation that
 depends on both the fixed and random effects $latex u$$ is

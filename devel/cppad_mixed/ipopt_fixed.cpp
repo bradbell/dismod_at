@@ -8,7 +8,9 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
+# include <dismod_at/configure.hpp>
 # include <dismod_at/ipopt_fixed.hpp>
+
 
 namespace {
 
@@ -825,6 +827,8 @@ bool ipopt_fixed::eval_grad_f(
 	assert( H_beta_tmp_.size() == n_fixed_ );
 	for(size_t j = 0; j < n_fixed_; j++)
 		H_beta_tmp_[j] = Number(0.0);
+
+	d_vector r_fixed(n_fixed_);
 	if( n_random_ > 0 )
 	{
 		// compute the optimal random effects corresponding to fixed effects
@@ -832,11 +836,21 @@ bool ipopt_fixed::eval_grad_f(
 		random_cur_ = mixed_object_.optimize_random(
 			random_options_, fixed_tmp_, random_tmp_
 		);
-		//
 		// Jacobian for random part of the Lalpace objective
+# if DISMOD_AT_BFGS
+		/* 2DO: not yet working
+		mixed_object_.d_ran_like(
+			fixed_tmp_, random_cur_, r_fixed
+		);
+		*/
 		H_beta_tmp_ = mixed_object_.ran_obj_beta(
 			fixed_tmp_, fixed_tmp_, random_cur_
 		);
+# else
+		H_beta_tmp_ = mixed_object_.ran_obj_beta(
+			fixed_tmp_, fixed_tmp_, random_cur_
+		);
+# endif
 	}
 	//
 	// Jacobian of fixed part of objective

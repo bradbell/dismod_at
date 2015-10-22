@@ -150,6 +150,7 @@ $end
 ------------------------------------------------------------------------------
 */
 # include <coin/IpIpoptApplication.hpp>
+# include <dismod_at/configure.hpp>
 # include <dismod_at/cppad_mixed.hpp>
 # include <dismod_at/ipopt_fixed.hpp>
 
@@ -235,6 +236,12 @@ CppAD::vector<double> cppad_mixed::optimize_fixed(
 		while( options[begin_1] == ' ' || options[begin_1] == '\n' )
 			begin_1++;
 	}
+# if DISMOD_AT_BFGS
+	app->Options()->SetStringValue("hessian_approximation", "limited-memory");
+	app->Options()->SetStringValue("derivative_test", "first-order");
+	app->Options()->SetIntegerValue("limited_memory_max_history", 30);
+	app->Options()->SetNumericValue("point_perturbation_radius", 0.0);
+# endif
 	// get the tolerance settting for the fixed effects optimization
 	const std::string tag    = "tol";
 	const std::string prefix = "";
