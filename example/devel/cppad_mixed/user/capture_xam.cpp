@@ -368,7 +368,7 @@ bool capture_xam(void)
 	std::time_t start_time = std::time( DISMOD_AT_NULL_PTR );
 
 	// 45 (larger ?) works with ulimit -Sv 1000000 and -g compile
-	size_t n_random = 20;
+	size_t n_random = 25;
 	// 45 (larger ?) works with ulimit -Sv 1000000 and -g compile
 	size_t I = 25;
 	//
