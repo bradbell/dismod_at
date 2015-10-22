@@ -272,12 +272,12 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_fixed',  'value':'second-order' },
 		{ 'name':'max_num_iter_fixed',     'value':'100'          },
 		{ 'name':'print_level_fixed',      'value':'0'            },
-		{ 'name':'tolerance_fixed',        'value':'1e-10'        },
+		{ 'name':'tolerance_fixed',        'value':'1e-7'         },
 
 		{ 'name':'derivative_test_random', 'value':'second-order' },
 		{ 'name':'max_num_iter_random',    'value':'100'          },
 		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-10'        }
+		{ 'name':'tolerance_random',       'value':'1e-7'         }
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: empty
@@ -337,7 +337,7 @@ middle_time_id = 1
 last_age_id    = 2
 last_time_id   = 2
 parent_node_id = 0
-tol            = 1e-8
+tol            = 1e-7
 #
 # check parent iota and remission values
 count             = 0

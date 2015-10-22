@@ -1464,6 +1464,7 @@ void ipopt_fixed::finalize_solution(
 	);
 
 	// Check the partial of the Lagrangian w.r.t fixed effects
+	double average = 0.0;
 	for(size_t j = 0; j < n_fixed_; j++)
 	{	Number sum = grad_f[j];
 		for(size_t k = 0; k < nnz_jac_g_; k++)
@@ -1481,10 +1482,14 @@ void ipopt_fixed::finalize_solution(
 		bool at_upper = fixed_upper_[j] - x[j] <= scale;
 		if( at_upper )
 			sum = std::max(sum, 0.0);
-		ok &= CppAD::abs( double(sum) ) <= tol;
+		//
+		average += CppAD::abs(sum) / double(n_fixed_);
 	}
+	// needed to relax tolerance for bfgs method (Newton is more accurate)
+	ok &= average <= 30. * tol;
 
 	// Check the partial of the Lagrangian w.r.t auxillary variables
+	average = 0.0;
 	for(size_t j = n_fixed_; j < n_fixed_ + fix_like_n_abs_; j++)
 	{	Number sum = grad_f[j];
 		for(size_t k = 0; k < nnz_jac_g_; k++)
@@ -1493,8 +1498,9 @@ void ipopt_fixed::finalize_solution(
 				sum   += lambda[i] * values[k];
 			}
 		}
-		ok &= CppAD::abs( double(sum) ) <= tol;
+		average += CppAD::abs(sum) / double(n_fixed_);
 	}
+	ok &= average <= tol;
 
 	// set member variable finalize_solution_ok_
 	finalize_solution_ok_ = ok;
