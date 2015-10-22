@@ -28,14 +28,15 @@ $icode%mixed_object%.d_ran_like(%fixed_vec%, %random_vec%, %r_fixed%)%$$
 
 $head Purpose$$
 This routine computes the
-$cref/total derivatve
+$cref/total derivative
 	/cppad_mixed_new_theory/
 	Total Derivative of Random Part of Objective
 /$$,
 with respect to the fixed effects,
 of the
 $cref/random part of the objective
-	/cppad_mixed_new_theory/
+	/cppad_mixed_new_theory
+	/Objective
 	/Random Part of Objective, r(theta)
 /$$.
 
@@ -70,10 +71,10 @@ Upon return, it contains the value of the derivative w.r.t
 the fixed effects; i.e. $latex r^{(1)} ( \theta )$$.
 
 $children%
-	example/devel/cppad_mixed/private/d_ran_like.cpp
+	example/devel/cppad_mixed/private/d_ran_like_xam.cpp
 %$$
 $head Example$$
-The file $cref d_ran_like.cpp$$ contains an example
+The file $cref d_ran_like_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 

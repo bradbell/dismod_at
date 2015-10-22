@@ -15,6 +15,7 @@ $spell
 	hes
 	interp
 	xam
+	logdet
 $$
 
 $section C++ d_logdet: Example and Test$$
