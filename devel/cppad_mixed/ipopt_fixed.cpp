@@ -842,13 +842,8 @@ bool ipopt_fixed::eval_grad_f(
 		);
 		// Jacobian for random part of the Lalpace objective
 # if DISMOD_AT_BFGS
-		/* 2DO: not yet working
 		mixed_object_.d_ran_like(
 			fixed_tmp_, random_cur_, H_beta_tmp_
-		);
-		*/
-		H_beta_tmp_ = mixed_object_.ran_obj_beta(
-			fixed_tmp_, fixed_tmp_, random_cur_
 		);
 # else
 		H_beta_tmp_ = mixed_object_.ran_obj_beta(

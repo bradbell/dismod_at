@@ -128,10 +128,7 @@ bool delta_ran_like(void)
 	//
 	// compute the derivative of the random part of objective
 	vector<double> r_fixed(n_fixed);
-	r_fixed = mixed_object.ran_obj_beta(fixed_vec, fixed_vec, uhat);
-	//
-	// 2DO: this method not yet working
-	// mixed_object.d_ran_like(fixed_vec, uhat, r_fixed);
+	mixed_object.d_ran_like(fixed_vec, uhat, r_fixed);
 	//
 	// check using finite central differences
 	for(size_t j = 0; j < n_fixed; j++)

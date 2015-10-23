@@ -145,39 +145,45 @@ void cppad_mixed::d_logdet(
 	for(size_t k = 0; k < K; k++)
 		w[k] = 0.0;
 	size_t k  = 0;
-	size_t row = hes_ran_row_[k] - n_fixed_;
-	size_t col = hes_ran_col_[k] - n_fixed_;
+	size_t col = n_random_;
+	size_t row = n_random_;
+	if( k < K )
+	{	row = hes_ran_row_[k] - n_fixed_;
+		col = hes_ran_col_[k] - n_fixed_;
+	}
 	for(size_t j = 0; j < n_random_; j++)
-	{	sparse_matrix b(n_random_, 1);
+	{	while( col < j )
+		{	k++;
+			if( k < K )
+			{	row = hes_ran_row_[k] - n_fixed_;
+				col = hes_ran_col_[k] - n_fixed_;
+			}
+			else
+				row = col = n_random_;
+		}
+		sparse_matrix b(n_random_, 1);
 		b.insert(j, 0) = 1.0;
 		sparse_matrix x = chol.solve(b);
 		assert( x.outerSize() == 1 );
 		for(inner_itr itr(x, 0); itr; ++itr)
 		{	size_t i    = itr.row();
-			bool before = true;
-			while( before )
-			{	before = k < K;
-				if( before )
-				{	before = col <= j;
-					if( before )
-						before = row < i;
-					if( before )
-					{	k++;
-						if( k < K )
-						{	row = hes_ran_row_[k] - n_fixed_;
-							col = hes_ran_col_[k] - n_fixed_;
-						}
+			if( col == j )
+			{	while( row < i )
+				{	k++;
+					if( k < K )
+					{	row = hes_ran_row_[k] - n_fixed_;
+						col = hes_ran_col_[k] - n_fixed_;
 					}
+					else
+						row = col = n_random_;
 				}
 			}
-			if( k < K )
-			{	if( (row == i) && col == j)
-				{	// note off diagonal elements need to be counted twice
-					// becasue only computing for lower triangle
-					w[k] = itr.value();
-					if( hes_ran_row_[k] != hes_ran_col_[k] )
-						w[k] = 2.0 * w[k];
-				}
+			if( (row == i) && col == j)
+			{	// note off diagonal elements need to be counted twice
+				// becasue only computing for lower triangle
+				w[k] = itr.value();
+				if( hes_ran_row_[k] != hes_ran_col_[k] )
+					w[k] = 2.0 * w[k];
 			}
 		}
 	}
