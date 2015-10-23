@@ -159,7 +159,7 @@ void cppad_mixed::d_ran_like(
 	{	// parial w.r.t fixed effects contribution to total derivative
 		r_fixed[j] =  f_fixed[j] + 0.5 * logdet_fix[j];
 		//
-		// set b_i = f_{u theta}^{(2)} (theta , u) ]_{i,j}
+		// set b_i = - f_{u theta}^{(2)} (theta , u) ]_{i,j}
 		sparse_matrix b(n_random_, 1);
 		while( col < j )
 		{	k++;
@@ -174,7 +174,7 @@ void cppad_mixed::d_ran_like(
 		{	assert( hes_cross_row_[k] >= n_fixed_ );
 			size_t row = hes_cross_row_[k] - n_fixed_;
 			assert( row < n_random_ );
-			b.insert(row, 0) = val_out[k];
+			b.insert(row, 0) = - val_out[k];
 			k++;
 			if( k >= K )
 				col = n_fixed_;

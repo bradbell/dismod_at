@@ -16,6 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/configure.hpp>
 # include <dismod_at/newton_step.hpp>
 
+// private examples
 extern bool constraint_eval_xam(void);
 extern bool constraint_jac_xam(void);
 extern bool constraint_hes_xam(void);
@@ -32,6 +33,9 @@ extern bool h_ran_like_xam(void);
 extern bool d_logdet_xam(void);
 extern bool d_ran_like_xam(void);
 extern bool hes_cross_xam(void);
+
+//  tests
+extern bool der_var_hes(void);
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -463,6 +467,7 @@ $codep */
 		d_vector&       r_fixed
 	);
 	friend bool ::d_ran_like_xam(void);
+	friend bool ::der_var_hes(void);
 /* $$
 ------------------------------------------------------------------------------
 $head ran_like_grad$$
