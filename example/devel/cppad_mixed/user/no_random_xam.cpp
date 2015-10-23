@@ -103,7 +103,7 @@ namespace {
 		virtual vector<a2_double> ran_like(
 			const vector<a2_double>& fixed_vec  ,
 			const vector<a2_double>& random_vec )
-		{	return vector<a2_double>(0); } // empty vector
+		{	return a2d_vector(0); } // empty vector
 		//
 		virtual vector<a1_double> fix_like(
 			const vector<a1_double>& fixed_vec  )
@@ -111,7 +111,7 @@ namespace {
 		//
 		virtual vector<a1_double> constraint(
 			const vector<a1_double>& fixed_vec  )
-		{	return vector<a1_double>(0); } // empty vector
+		{	return a1d_vector(0); } // empty vector
 		//
 		virtual void fatal_error(const std::string& error_message)
 		{	std::cerr << "Error: " << error_message << std::endl;

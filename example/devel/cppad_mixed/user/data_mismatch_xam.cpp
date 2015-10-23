@@ -244,7 +244,7 @@ namespace {
 		//
 		virtual vector<a1_double> constraint(
 			const vector<a1_double>& fixed_vec  )
-		{	return vector<a1_double>(0); } // empty vector
+		{	return a1d_vector(0); } // empty vector
 		//
 		virtual void fatal_error(const std::string& error_message)
 		{	std::cerr << "Error: " << error_message << std::endl;
