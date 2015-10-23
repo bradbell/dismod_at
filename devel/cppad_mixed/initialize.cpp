@@ -62,6 +62,25 @@ $cref/random effects/cppad_mixed/Random Effects, u/$$
 vector $latex u$$ at which certain $code CppAD::ADFun$$
 objects are recorded.
 
+$head newton_atom_$$
+The input value of the member variable
+$codei%
+	newton_step newton_atom_
+%$$
+must be the same as after its constructor; i.e.,
+no member functions had been called.
+Upon return, $code newton_atom_$$ can be used to compute
+the log of the determinant and the Newton step using
+$codei%
+	newton_atom_(%a1_theta_u_v%, %a1_logdet_step%)
+%$$
+be more specific, $icode%a1_logdet_step%[0]%$$ is the log of the determinant of
+$latex f_{uu}^{(2)} ( \theta , u ) $$ and the rest of the vector is the
+Newton step
+$latex \[
+	s = f_{uu}^{(2)} ( \theta , u )^{-1} v
+\] $$
+
 $head size_map$$
 The return value has prototype
 $codei%
@@ -224,6 +243,11 @@ std::map<std::string, size_t> cppad_mixed::initialize(
 		assert( record_hes_cross_done_ );
 
 # if ! DISMOD_AT_BFGS
+		// newton_atom_
+		assert( ! record_newton_atom_done_ )
+		newton_atom_.initialize(a1_ran_like_, fixed_vec, random_vec);
+		record_newton_atom_done_ = true;
+
 		// ran_obj_0_
 		assert( ! record_ran_obj_done_[0] );
 		record_ran_obj(0, fixed_vec, random_vec);

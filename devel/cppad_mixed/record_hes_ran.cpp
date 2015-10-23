@@ -129,25 +129,6 @@ see $cref/f(theta, u)/
 Note that the matrix is symmetric and hence can be recovered from
 its lower triangle.
 
-$head newton_atom_$$
-The input value of the member variable
-$codei%
-	newton_step newton_atom_
-%$$
-must be the same as after its constructor; i.e.,
-no member functions had been called.
-Upon return, $code newton_atom_$$ can be used to compute
-the log of the determinant and the Newton step using
-$codei%
-	newton_atom_(%a1_theta_u_v%, %a1_logdet_step%)
-%$$
-be more specific, $icode%a1_logdet_step%[0]%$$ is the log of the determinant of
-$latex f_{uu}^{(2)} ( \theta , u ) $$ and the rest of the vector is the
-Newton step
-$latex \[
-	s = f_{uu}^{(2)} ( \theta , u )^{-1} v
-\] $$
-
 
 $contents%devel/cppad_mixed/newton_step.cpp
 	%example/devel/cppad_mixed/private/hes_ran_0_xam.cpp
@@ -280,9 +261,6 @@ void cppad_mixed::record_hes_ran(
 		hes_ran_work_
 	);
 	hes_ran_0_.Dependent(a1_both, a1_val_out);
-	//
-	//
-	newton_atom_.initialize(a1_ran_like_, fixed_vec, random_vec);
 	//
 	record_hes_ran_done_ = true;
 }

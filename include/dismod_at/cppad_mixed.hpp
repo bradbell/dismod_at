@@ -130,6 +130,7 @@ $comment */
 	record_ran_like_done_(false)    ,
 	record_hes_ran_done_(false)     ,
 	record_hes_cross_done_(false)   ,
+	record_newton_atom_done_(false) ,
 	record_hes_fix_done_(false)     ,
 	record_constraint_done_(false)  ,
 	record_ran_obj_done_(3)
@@ -251,6 +252,7 @@ $codep */
 	bool                record_ran_like_done_;
 	bool                record_hes_ran_done_;
 	bool                record_hes_cross_done_;
+	bool                record_newton_atom_done_;
 	bool                record_hes_fix_done_;
 	bool                record_constraint_done_;
 	CppAD::vector<bool> record_ran_obj_done_; // index is order in call

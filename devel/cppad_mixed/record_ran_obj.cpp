@@ -97,6 +97,7 @@ void cppad_mixed::record_ran_obj(
 	const d_vector& random_vec )
 {	assert( order <= 2 );
 	assert( ! record_ran_obj_done_[order] );
+	assert( record_newton_atom_done_ );
 
 	//	create an a1d_vector containing (beta, theta, u)
 	a1d_vector beta_theta_u( 2 * n_fixed_ + n_random_ );
