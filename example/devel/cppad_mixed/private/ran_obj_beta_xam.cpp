@@ -25,14 +25,16 @@ $cref/cppad_mixed public API/cppad_mixed_public/$$.
 
 $head Model$$
 $latex \[
-	\B{p}( y_i | \theta , u ) \sim \B{N} ( u_i + \theta_0 , \theta_1^2 )
+\B{p}( y_i | \theta , u ) \sim \B{N} ( \theta_0 + \theta_1 u_i, \theta_2^2 )
 \] $$
 $latex \[
 	\B{p}( u_i | \theta ) \sim \B{N} ( 0 , 1 )
 \] $$
 It follows that the Laplace approximation is exact and
 $latex \[
-	\B{p}( y_i | \theta ) \sim \B{N} \left( \theta_0 , 1 + \theta_1^2 \right)
+\B{p}( y_i | \theta )
+\sim
+\B{N} \left( \theta_0 , \theta_1^2 + \theta_2^2 \right)
 \] $$
 
 $code
@@ -63,7 +65,7 @@ namespace {
 			:
 			dismod_at::cppad_mixed(n_fixed, n_random) ,
 			y_(y)
-		{	assert( n_fixed == 2);
+		{	assert( n_fixed == 3);
 		}
 	private:
 		// implementation of ran_like
@@ -80,8 +82,8 @@ namespace {
 			Float sqrt_2pi = Float( CppAD::sqrt(8.0 * CppAD::atan(1.0) ) );
 
 			for(size_t i = 0; i < y_.size(); i++)
-			{	Float mu     = u[i] + theta[0];
-				Float sigma  = theta[1];
+			{	Float mu     = theta[0] + theta[1] * u[i];
+				Float sigma  = theta[2];
 				Float res    = (y_[i] - mu) / sigma;
 
 				// p(y_i | u, theta)
@@ -101,14 +103,11 @@ namespace {
 		//
 		virtual vector<a1_double> fix_like(
 			const vector<a1_double>& fixed_vec  )
-		{	a1d_vector vec(1);
-			vec[0] = 0.0;
-			return vec;
-		}
+		{	return a1d_vector(0); } // empty vector
 		//
 		virtual vector<a1_double> constraint(
 			const vector<a1_double>& fixed_vec  )
-		{	return vector<a1_double>(0); } // empty vector
+		{	return a1d_vector(0); } // empty vector
 		//
 		virtual void fatal_error(const std::string& error_message)
 		{	std::cerr << "Error: " << error_message << std::endl;
@@ -127,13 +126,14 @@ bool ran_obj_beta_xam(void)
 	double eps = 100. * std::numeric_limits<double>::epsilon();
 
 	size_t n_data   = 10;
-	size_t n_fixed  = 2;
+	size_t n_fixed  = 3;
 	size_t n_random = n_data;
 	vector<double> data(n_data), fixed_vec(n_fixed), random_vec(n_random);
 	vector<double> beta(n_fixed), theta(n_fixed), uhat(n_random);
 
 	fixed_vec[0] = 2.0;
-	fixed_vec[1] = 1.0;
+	fixed_vec[1] = 0.5;
+	fixed_vec[2] = 1.0;
 	for(size_t i = 0; i < n_data; i++)
 	{	data[i]       = double(i + 1);
 		random_vec[i] = i / double(n_data);
@@ -159,32 +159,44 @@ bool ran_obj_beta_xam(void)
 	// p(y | theta ) = integral of p(y | theta , u) p(u | theta) du
 	// Furthermore p(y | theta ) is simple to calculate directly
 	double mu         = fixed_vec[0];
-	double sigma      = fixed_vec[1];
+	double alpha      = fixed_vec[1];
+	double gamma      = fixed_vec[2];
 	//
 	double d_mu_0     = 1.0;
-	double d_sigma_1  = 1.0;
+	double d_alpha_1  = 1.0;
+	double d_gamma_2  = 1.0;
 	//
-	double delta      = CppAD::sqrt( sigma * sigma + 1.0 );
-	double d_delta_1  = d_sigma_1 * sigma / delta;
+	double delta      = CppAD::sqrt( alpha * alpha + gamma * gamma );
+	double d_delta_1  = alpha * d_alpha_1 / delta;
+	double d_delta_2  = gamma * d_gamma_2 / delta;
 	//
+	// double sum     = 0.0;
 	double d_sum_0    = 0.0;
 	double d_sum_1    = 0.0;
+	double d_sum_2    = 0.0;
 	for(size_t i = 0; i < n_data; i++)
-	{	double res    = (data[i] - mu) / delta;
-		// - log p( y_i | theta ) = log(sqrt_2pi * delta) + res*res / 2.0;
-		// so compute partials w.r.t. sigma = theta_i
+	{	double res        = (data[i] - mu) / delta;
 		double d_res_0    = - d_mu_0 / delta;
 		double d_res_1    = - d_delta_1 * (data[i] - mu) / ( delta * delta) ;
+		double d_res_2    = - d_delta_2 * (data[i] - mu) / ( delta * delta) ;
 		//
-		double d_log_1    = d_delta_1 / delta;
+		// double square  = res * res / 2.0;
 		double d_square_0 = d_res_0 * res;
 		double d_square_1 = d_res_1 * res;
+		double d_square_2 = d_res_2 * res;
 		//
+		// double logdelta = CppAD::log(delta);
+		double d_log_1     = d_delta_1 / delta;
+		double d_log_2     = d_delta_2 / delta;
+		//
+		// sum           += logdelta + square;
 		d_sum_0          += d_square_0;
 		d_sum_1          += d_log_1 + d_square_1;
+		d_sum_2          += d_log_2 + d_square_2;
 	}
 	ok &= abs( H_beta[0] / d_sum_0 - 1.0 )  < eps;
 	ok &= abs( H_beta[1] / d_sum_1 - 1.0 )  < eps;
+	ok &= abs( H_beta[1] / d_sum_2 - 1.0 )  < eps;
 
 	return ok;
 }
