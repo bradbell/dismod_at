@@ -183,8 +183,14 @@ def log_gaussian_cascade2at(prior_name, cascade_prior_row, eta) :
 if not os.path.isdir('build') :
 	print('mkdir build')
 	os.mkdir('build')
+#
+subdir=os.path.join('build', cascade_dir)
+if not os.path.isdir(subdir) :
+	print('mkdir ' + subdir)
+	os.mkdir(subdir)
+#
 new = True
-file_name        = os.path.join('build', cascade_dir + '.db')
+file_name        = os.path.join(subdir, cascade_dir + '.db')
 db_connection    = dismod_at.create_connection(file_name, new)
 # ---------------------------------------------------------------------------
 # integrand_table_in: integrand file as a list of dictionaries
@@ -857,7 +863,7 @@ row_list = [
 	[ 'derivative_test_fixed',  'none'                          ],
 	[ 'tolerance_random',      '1e-8'                           ],
 	[ 'max_num_iter_random',   '50'                             ],
-	[ 'print_level_random',     '0'                             ],
+	[ 'print_level_random',     '5'                             ],
 	[ 'derivative_test_random', 'none'                          ]
 ]
 tbl_name = 'option'
