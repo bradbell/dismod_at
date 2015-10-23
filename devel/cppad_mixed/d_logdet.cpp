@@ -38,9 +38,9 @@ $cref/f(theta, u)
 with respect to the random effects vector $latex u$$; i.e.
 it computes both
 $latex \[
-	\partial_\theta f_{uu}^{(2)} ( \theta, u )
+	\partial_\theta \log \det [ f_{uu}^{(2)} ( \theta, u ) ]
 	\; \R{and} \;
-	\partial_u f_{uu}^{(2)} ( \theta, u )
+	\partial_u \log \det [ f_{uu}^{(2)} ( \theta, u ) ]
 \] $$
 
 $head mixed_object$$

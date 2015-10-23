@@ -36,6 +36,7 @@ extern bool hes_cross_xam(void);
 
 //  tests
 extern bool der_var_hes(void);
+extern bool delta_ran_like(void);
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -185,6 +186,7 @@ private:
 ------------------------------------------------------------------------------
 $begin cppad_mixed_private$$
 $spell
+	var
 	cppad
 	hes hes
 	obj
@@ -468,6 +470,7 @@ $codep */
 	);
 	friend bool ::d_ran_like_xam(void);
 	friend bool ::der_var_hes(void);
+	friend bool ::delta_ran_like(void);
 /* $$
 ------------------------------------------------------------------------------
 $head ran_like_grad$$
