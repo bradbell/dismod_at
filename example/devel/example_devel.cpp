@@ -173,7 +173,6 @@ int main(void)
 	RUN(ran_like_hes_xam);
 	RUN(ran_obj_beta_xam);
 	RUN(ran_obj_eval_xam);
-	RUN(ran_obj_hes_fix_xam);
 	RUN(no_random_xam);
 	RUN(optimize_fixed_xam);
 	RUN(optimize_random_xam);
@@ -234,6 +233,10 @@ int main(void)
 	RUN(put_table_row_xam);
 	RUN(smooth_info_xam);
 	RUN(weight_info_xam);
+
+# if ! DISMOD_AT_BFGS
+	RUN(ran_obj_hes_fix_xam);
+# endif
 
 	// summary report
 	using std::cout;

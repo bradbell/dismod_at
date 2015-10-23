@@ -14,6 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace {
 
+# if ! DISMOD_AT_BFGS
 	// merge two (row, col) sparsity patterns into one
 	void merge_sparse(
 		const CppAD::vector<size_t>& row_one      , // first sparsity pattern
@@ -130,6 +131,7 @@ namespace {
 		}
 		return;
 	}
+# endif // DISMOD_AT_BFGS
 
 	// --------------------------------------------------------------------
 	bool check_in_limits(double lower, double x, double upper, double tol)
@@ -363,6 +365,9 @@ mixed_object_     ( mixed_object    )
 	// -----------------------------------------------------------------------
 	// set lag_hes_row_, lag_hes_col_, ran_obj_2_lag_, fix_like2lag_
 	// -----------------------------------------------------------------------
+# if DISMOD_AT_BFGS
+	nnz_h_lag_ = 0;
+# else
 	// row and column indices for contribution from random part of objective
 	if( n_random_ > 0 ) mixed_object.ran_obj_hes_fix(
 		fixed_in, random_in,
@@ -419,6 +424,7 @@ mixed_object_     ( mixed_object    )
 	// -----------------------------------------------------------------------
 	nnz_h_lag_ = lag_hes_row_.size();
 	assert( nnz_h_lag_ == lag_hes_col_.size() );
+# endif // DISMOD_AT_BFGS
 	// -----------------------------------------------------------------------
 	// set size of temporary vectors
 	// -----------------------------------------------------------------------
@@ -1139,6 +1145,9 @@ $latex \[
 	L(x) = \alpha f(x) + \sum_{i=0}^{m-1} \lambda_i g_i (x)
 \] $$
 
+$head DISMOD_AT_BFGS$$
+It is assumed that this preprocessor symbol is false (zero).
+
 $head n$$
 is the number of variables in the problem (dimension of x).
 
@@ -1210,6 +1219,7 @@ bool ipopt_fixed::eval_h(
 	Index*        jCol           ,  // out
 	Number*       values         )  // out
 {
+	assert( ! DISMOD_AT_BFGS );
 	assert( n > 0 && size_t(n) == n_fixed_ + fix_like_n_abs_ );
 	assert( m >= 0 && size_t(m) == 2 * fix_like_n_abs_ + n_constraint_ );
 	assert( size_t(nele_hess) == nnz_h_lag_ );

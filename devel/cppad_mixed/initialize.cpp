@@ -207,43 +207,53 @@ std::map<std::string, size_t> cppad_mixed::initialize(
 	}
 	if( n_random_ > 0 )
 	{
-		assert( ! record_ran_like_done_ );
-		assert( ! record_hes_ran_done_ );
-		assert( ! record_ran_obj_done_[0] );
-		assert( ! record_ran_obj_done_[1] );
-		assert( ! record_ran_obj_done_[2] );
 
 		// ran_like_
+		assert( ! record_ran_like_done_ );
 		record_ran_like(fixed_vec, random_vec);
-		// hes_ran_
-		record_hes_ran(fixed_vec, random_vec);
-		// hes_cross_
-		record_hes_cross(fixed_vec, random_vec);
-		// ran_obj_0_
-		record_ran_obj(0, fixed_vec, random_vec);
-		// ran_obj_1_
-		record_ran_obj(1, fixed_vec, random_vec);
-		// ran_obj_0_
-		record_ran_obj(2, fixed_vec, random_vec);
-		// hes_fix_
-		record_hes_fix(fixed_vec, random_vec);
-
 		assert( record_ran_like_done_ );
+
+		// hes_ran_
+		assert( ! record_hes_ran_done_ );
+		record_hes_ran(fixed_vec, random_vec);
 		assert( record_hes_ran_done_ );
+
+		// hes_cross_
+		assert( ! record_hes_cross_done_ );
+		record_hes_cross(fixed_vec, random_vec);
 		assert( record_hes_cross_done_ );
+
+		// ran_obj_0_
+		assert( ! record_ran_obj_done_[0] );
+		record_ran_obj(0, fixed_vec, random_vec);
 		assert( record_ran_obj_done_[0] );
+
+		// ran_obj_1_
+		assert( ! record_ran_obj_done_[1] );
+		record_ran_obj(1, fixed_vec, random_vec);
 		assert( record_ran_obj_done_[1] );
+
+		// ran_obj_2_
+		assert( ! record_ran_obj_done_[2] );
+		record_ran_obj(2, fixed_vec, random_vec);
 		assert( record_ran_obj_done_[2] );
+
+		// hes_fix_
+		assert( ! record_hes_fix_done_ );
+# if ! DISMOD_AT_BFGS
+		record_hes_fix(fixed_vec, random_vec);
+		assert( record_hes_fix_done_ );
+# endif
 	}
-	assert( ! record_fix_like_done_ );
-	assert( ! record_constraint_done_ );
 
 	// fix_like_
+	assert( ! record_fix_like_done_ );
 	record_fix_like(fixed_vec);
-	// constraint_
-	record_constraint(fixed_vec);
-
 	assert( record_fix_like_done_ );
+
+	// constraint_
+	assert( ! record_constraint_done_ );
+	record_constraint(fixed_vec);
 	assert( record_constraint_done_ );
 
 	// initialize_done_
