@@ -151,8 +151,10 @@ void cppad_mixed::d_ran_like(
 	);
 	// initialize index in hes_cross_row_, hes_cross_col_
 	size_t k = 0;
-	size_t col = hes_cross_col_[k];
-	assert( col < n_fixed_ );
+	size_t col = n_fixed_;
+	if( k < K )
+		col = hes_cross_col_[k];
+	assert( col <= n_fixed_ );
 	//
 	// Loop over fixed effects and compute r_fixed one component at a time
 	for(size_t j = 0; j < n_fixed_; j++)

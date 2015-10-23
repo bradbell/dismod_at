@@ -424,6 +424,7 @@ bool capture_xam(void)
 		"String  derivative_test           none\n"
 		"String  derivative_test_print_all no\n"
 		"Numeric tol                       1e-8\n"
+		"Integer max_iter                  20\n"
 	;
 	std::string random_options =
 		"Integer print_level 0\n"
