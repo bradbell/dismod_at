@@ -223,6 +223,7 @@ std::map<std::string, size_t> cppad_mixed::initialize(
 		record_hes_cross(fixed_vec, random_vec);
 		assert( record_hes_cross_done_ );
 
+# if ! DISMOD_AT_BFGS
 		// ran_obj_0_
 		assert( ! record_ran_obj_done_[0] );
 		record_ran_obj(0, fixed_vec, random_vec);
@@ -240,7 +241,6 @@ std::map<std::string, size_t> cppad_mixed::initialize(
 
 		// hes_fix_
 		assert( ! record_hes_fix_done_ );
-# if ! DISMOD_AT_BFGS
 		record_hes_fix(fixed_vec, random_vec);
 		assert( record_hes_fix_done_ );
 # endif
