@@ -741,11 +741,15 @@ bool ipopt_fixed::eval_f(
 		random_cur_ = mixed_object_.optimize_random(
 			random_options_, fixed_tmp_, random_tmp_
 		);
+# if DISMOD_AT_BFGS
+		H = mixed_object_.h_ran_like(fixed_tmp_, random_cur_);
+# else
 		//
 		// compute random part of the objective
 		H = mixed_object_.ran_obj_eval(
 			fixed_tmp_, fixed_tmp_, random_cur_
 		);
+# endif
 	}
 	obj_value = Number(H);
 	if( fix_like_vec_tmp_.size() == 0 )
