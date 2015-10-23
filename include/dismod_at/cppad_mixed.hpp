@@ -28,6 +28,7 @@ extern bool prior_eval_xam(void);
 extern bool fix_like_jac_xam(void);
 extern bool fix_like_hes_xam(void);
 extern bool hes_ran_0_xam(void);
+extern bool h_ran_like_xam(void);
 extern bool d_logdet_xam(void);
 extern bool d_ran_like_xam(void);
 extern bool hes_cross_xam(void);
@@ -212,6 +213,7 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/cppad_mixed/record_hes_fix.cpp
 	%devel/cppad_mixed/record_fix_like.cpp
 	%devel/cppad_mixed/record_constraint.cpp
+	%devel/cppad_mixed/h_ran_like.cpp
 	%devel/cppad_mixed/d_logdet.cpp
 	%devel/cppad_mixed/d_ran_like.cpp
 	%devel/cppad_mixed/ran_like_grad.cpp
@@ -428,6 +430,16 @@ $head record_constraint$$
 See $cref cppad_mixed_record_constraint$$.
 $codep */
 	void record_constraint(const d_vector& fixed_vec);
+/* $$
+------------------------------------------------------------------------------
+$head h_ran_like$$
+See $cref cppad_mixed_h_ran_like$$
+$codep */
+	double h_ran_like(
+		const d_vector& fixed_vec  ,
+		const d_vector& random_vec
+	);
+	friend bool ::h_ran_like_xam(void);
 /* $$
 ------------------------------------------------------------------------------
 $head d_logdet$$

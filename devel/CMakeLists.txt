@@ -41,6 +41,7 @@ SET_TARGET_PROPERTIES(cppad_mixed
 ADD_LIBRARY(cppad_mixed_eigen
 	cppad_mixed/record_ran_obj.cpp
 	cppad_mixed/newton_step.cpp
+	cppad_mixed/h_ran_like.cpp
 	cppad_mixed/d_logdet.cpp
 	cppad_mixed/d_ran_like.cpp
 )
