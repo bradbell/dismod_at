@@ -109,7 +109,7 @@ public:
 };
 } // END_EMPTY_NAMESPACE
 
-bool binomial_test(void)
+bool binomial(void)
 {	bool ok = true;
 	size_t n_fixed = 1;
 	size_t random_seed = dismod_at::new_gsl_rng(0);
