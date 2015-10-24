@@ -21,8 +21,6 @@ extern bool constraint_jac_xam(void);
 extern bool constraint_hes_xam(void);
 extern bool ran_like_grad_xam(void);
 extern bool ran_like_hes_xam(void);
-extern bool ran_obj_eval_xam(void);
-extern bool ran_obj_beta_xam(void);
 extern bool ran_obj_hes_fix_xam(void);
 extern bool prior_eval_xam(void);
 extern bool fix_like_jac_xam(void);
@@ -132,10 +130,8 @@ $comment */
 	record_newton_atom_done_(false) ,
 	record_hes_fix_done_(false)     ,
 	record_constraint_done_(false)  ,
-	record_ran_obj_done_(3)
-	{	for(size_t order = 0; order < 3; order++)
-			record_ran_obj_done_[order] = false;
-	}
+	record_ran_obj_done_(false)
+	{ }
 /* $$
 $head initialize$$
 Directly after construction, use this function to initialize
@@ -224,8 +220,6 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/mixed_cppad/d_ran_like.cpp
 	%devel/mixed_cppad/ran_like_grad.cpp
 	%devel/mixed_cppad/ran_like_hes.cpp
-	%devel/mixed_cppad/ran_obj_eval.cpp
-	%devel/mixed_cppad/ran_obj_beta.cpp
 	%devel/mixed_cppad/ran_obj_hes_fix.cpp
 	%devel/mixed_cppad/prior_eval.cpp
 	%devel/mixed_cppad/fix_like_jac.cpp
@@ -254,13 +248,13 @@ $codep */
 	bool                record_newton_atom_done_;
 	bool                record_hes_fix_done_;
 	bool                record_constraint_done_;
-	CppAD::vector<bool> record_ran_obj_done_; // index is order in call
+	bool                record_ran_obj_done_;
 /* $$
 $head n_random_ > 0$$
 The following values are only defined when $icode%n_random_% > 0%$$:
 $cref/ran_like_/mixed_cppad_private/n_random_ > 0/ran_like_/$$,
 $cref/hes_ran_/mixed_cppad_private/n_random_ > 0/hes_ran_/$$,
-$cref/ran_obj_k_/mixed_cppad_private/n_random_ > 0/ran_obj_k_/$$,
+$cref/ran_obj_2_/mixed_cppad_private/n_random_ > 0/ran_obj_2_/$$,
 $cref/hes_fix_/mixed_cppad_private/n_random_ > 0/hes_fix_/$$,
 
 $subhead ran_like_$$
@@ -301,13 +295,11 @@ $codep */
 	//
 	friend bool ::hes_cross_xam(void);
 /* $$
-$subhead ran_obj_k_$$
-For $icode%k% = 0 , 1, 2%$$, $codei%ran_obj_%k%_%$$ is $th k$$ order accurate
+$subhead ran_obj_2_$$
+second order accurate
 in $latex \beta$$ recording of the Joint part of the Laplace approximation;
 i.e., $latex H( \beta , \theta , u)$$.
 $codep */
-	CppAD::ADFun<double>    ran_obj_0_;     // for computing H
-	CppAD::ADFun<double>    ran_obj_1_;     // for computing H_beta
 	CppAD::ADFun<double>    ran_obj_2_;     // for computing H_beta_beta
 /* $$
 $subhead hes_fix_$$
@@ -495,28 +487,6 @@ $codep */
 	friend bool ::ran_like_hes_xam(void);
 /* $$
 ------------------------------------------------------------------------------
-$head ran_obj_eval$$
-See $cref mixed_cppad_ran_obj_eval$$
-$codep */
-	// ran_obj_eval
-	double ran_obj_eval(
-		const d_vector& beta   ,
-		const d_vector& theta  ,
-		const d_vector& u
-	);
-	friend bool ::ran_obj_eval_xam(void);
-/* $$
-$head ran_obj_beta$$
-See $cref mixed_cppad_ran_obj_beta$$
-$codep */
-	// ran_obj_beta
-	d_vector ran_obj_beta(
-		const d_vector& beta   ,
-		const d_vector& theta  ,
-		const d_vector& u
-	);
-	friend bool ::ran_obj_beta_xam(void);
-/* $$
 $head ran_obj_hes_fix$$
 See $cref mixed_cppad_ran_obj_hes_fix$$
 $codep */

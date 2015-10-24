@@ -102,7 +102,7 @@ void mixed_cppad::record_hes_fix(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {	assert( ! record_hes_fix_done_ );
-	assert( record_ran_obj_done_[2] );
+	assert( record_ran_obj_done_ );
 	size_t i, j;
 
 	// total number of variables in H

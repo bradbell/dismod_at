@@ -140,28 +140,6 @@ $cref/g(theta)
 with respect to the random effects $latex \theta$$.
 $codei%
 
-%size_map%["ran_obj_0"]
-%$$
-number of variables in the $code ADFun<double>$$
-object used to evaluate the
-$cref/random part of objective
-	/mixed_cppad_theory
-	/Objective
-	/Random Part of Objective, r(theta)
-/$$.
-$codei%
-
-%size_map%["ran_obj_1"]
-%$$
-number of variables in the $code ADFun<double>$$
-object used to evaluate the derivative, w.r.t fixed effects, of the
-$cref/random part of objective
-	/mixed_cppad_theory
-	/Objective
-	/Random Part of Objective, r(theta)
-/$$.
-$codei%
-
 %size_map%["ran_obj_2"]
 %$$
 number of variables in the $code ADFun<double>$$
@@ -199,9 +177,8 @@ the member variable
 $cref/hes_ran_/mixed_cppad_private/n_random_ > 0/hes_ran_/$$.
 $lnext
 If $icode%n_random_ > 0%$$,
-for $icode%k% = 0%, ... ,% 2%$$,
-the member variable $codei%ran_obj_%k%_%$$ is the $th k$$ order
-$cref/random objective/mixed_cppad_private/n_random_ > 0/ran_obj_k_/$$.
+the member variable $codei%ran_obj_2_%$$ is the second order
+$cref/random objective/mixed_cppad_private/n_random_ > 0/ran_obj_2_/$$.
 $lnext
 If $icode%n_random_ > 0%$$,
 the member variable
@@ -251,9 +228,9 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 		record_newton_atom_done_ = true;
 
 		// ran_obj_2_
-		assert( ! record_ran_obj_done_[2] );
+		assert( ! record_ran_obj_done_ );
 		record_ran_obj(2, fixed_vec, random_vec);
-		assert( record_ran_obj_done_[2] );
+		assert( record_ran_obj_done_ );
 
 		// hes_fix_
 		assert( ! record_hes_fix_done_ );
@@ -280,8 +257,6 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 	size_map["fix_like"]     = fix_like_.size_var();
 	size_map["a0_ran_like"]  = a0_ran_like_.size_var();
 	size_map["a1_ran_like"]  = a1_ran_like_.size_var();
-	size_map["ran_obj_0"]    = ran_obj_0_.size_var();
-	size_map["ran_obj_1"]    = ran_obj_1_.size_var();
 	size_map["ran_obj_2"]    = ran_obj_2_.size_var();
 	size_map["hes_ran"]      = hes_ran_row_.size();
 	size_map["newton_atom"]  = newton_atom_.size_var();
