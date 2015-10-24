@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin mixed_cppad_initialize$$
 $spell
+	logdet
 	cppad
 	std
 	obj
