@@ -163,7 +163,7 @@ fit_model::fit_model(
 	const data_model&                  data_object  ,
 	const prior_model&                 prior_object ) :
 // base class constructor
-cppad_mixed(
+mixed_cppad(
 	size_fixed_effect(pack_object) , // n_fixed
 	size_random_effect(pack_object)  // n_random
 ) ,

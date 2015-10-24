@@ -20,7 +20,7 @@
 #                        -D eigen_prefix=value \
 #                        -D ipopt_prefix=value \
 # optional variables:    -D suitesparse_prefix=value \
-#                        -D cppad_mixed_libdir=value
+#                        -D mixed_cppad_libdir=value
 # ============================================================================
 # Macro definitions
 # ============================================================================
@@ -90,19 +90,19 @@ ELSE( suitesparse_prefix )
 	)
 ENDIF( suitesparse_prefix )
 # ----------------------------------------------------------------------------
-# optional cppad_mixed_libdir
-SET( cppad_mixed_libdir NOTFOUND CACHE STRING
-	"directory below dismod_at_prefix where cppad_mixed library is installed"
+# optional mixed_cppad_libdir
+SET( mixed_cppad_libdir NOTFOUND CACHE STRING
+	"directory below dismod_at_prefix where mixed_cppad library is installed"
 )
-IF( cppad_mixed_libdir )
-	MESSAGE(STATUS "cppad_mixed library will be installed in\n"
-		"\t${dismod_at_prefix}/${cppad_mixed_libdir}"
+IF( mixed_cppad_libdir )
+	MESSAGE(STATUS "mixed_cppad library will be installed in\n"
+		"\t${dismod_at_prefix}/${mixed_cppad_libdir}"
 	)
-ELSE( cppad_mixed_libdir )
-	MESSAGE(STATUS "cppad_mixed_libdir not specified "
+ELSE( mixed_cppad_libdir )
+	MESSAGE(STATUS "mixed_cppad_libdir not specified "
 		"so its library will not be installed"
 	)
-ENDIF( NOT cppad_mixed_libdir )
+ENDIF( NOT mixed_cppad_libdir )
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
 # ----------------------------------------------------------------------------
@@ -158,7 +158,7 @@ ADD_SUBDIRECTORY(test/user)
 ADD_CUSTOM_TARGET(check DEPENDS
 	dismod_at
 	devel
-	cppad_mixed
+	mixed_cppad
 	check_example_table
 	check_example_devel
 	check_test_devel

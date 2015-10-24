@@ -31,7 +31,7 @@ $end
 // optional
 extern bool cholmod_xam(void);
 
-// cppad_mixed subdirectory
+// mixed_cppad subdirectory
 extern bool mixed_constraint_xam(void);
 extern bool mixed_derived_xam(void);
 extern bool constraint_eval_xam(void);
@@ -152,7 +152,7 @@ int main(void)
 # if DISMOD_AT_HAS_SUITESPARSE
 	RUN(cholmod_xam);
 # endif
-	// cppad_mixed subdirectory
+	// mixed_cppad subdirectory
 	RUN(mixed_constraint_xam);
 	RUN(mixed_derived_xam);
 	RUN(constraint_eval_xam);

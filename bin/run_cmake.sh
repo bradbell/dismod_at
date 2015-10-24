@@ -37,15 +37,15 @@ ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
 #
 # Prefix where optional package was installed (use NOTFOUND if not installed).
-# This is only required by example/devel/cppad_mixed/cholmod_xam.cpp.
+# This is only required by example/devel/mixed_cppad/cholmod_xam.cpp.
 suitesparse_prefix="$HOME/prefix/suitesparse"
 #
-# sub-directory of dismod_at_prefix where cppad_mixed libraries are installed
-#	-lcppad_mixed -lcppad_mixed_eigen -lcppad_mixed
+# sub-directory of dismod_at_prefix where mixed_cppad libraries are installed
+#	-lmixed_cppad -lmixed_cppad_eigen -lmixed_cppad
 # The eigen part of the library is separate so different flags can be used
 # to compile the part of the code that uses eigen.
-# If you do not need to install cppad_mixed, use NOTFOUND for this setting.
-cppad_mixed_libdir='lib64'
+# If you do not need to install mixed_cppad, use NOTFOUND for this setting.
+mixed_cppad_libdir='lib64'
 # ----------------------------------------------------------------------------
 # Setting for IHME cluster
 # suitesparse_prefix="NOTFOUND"
@@ -65,7 +65,7 @@ cmake \
 	-D python_three_command=$python_three_command \
 	-D extra_cxx_flags="$extra_cxx_flags" \
 	-D dismod_at_prefix="$dismod_at_prefix" \
-	-D cppad_mixed_libdir="$cppad_mixed_libdir" \
+	-D mixed_cppad_libdir="$mixed_cppad_libdir" \
 	\
 	-D cppad_prefix="$cppad_prefix" \
 	-D ipopt_prefix="$cppad_prefix" \

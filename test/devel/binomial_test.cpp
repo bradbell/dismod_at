@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <gsl/gsl_randist.h>
 # include <cppad/vector.hpp>
-# include <dismod_at/cppad_mixed.hpp>
+# include <dismod_at/mixed_cppad.hpp>
 # include <dismod_at/manage_gsl_rng.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
@@ -39,8 +39,8 @@ void simulate(
 	return;
 }
 
-// cppad_mixed derived class
-class mixed_derived : public dismod_at::cppad_mixed {
+// mixed_cppad derived class
+class mixed_derived : public dismod_at::mixed_cppad {
 private:
 	const size_t          N_;      // size of population
 	const vector<size_t>& y_;      // reference to data values
@@ -50,7 +50,7 @@ public:
 	// constructor
 	mixed_derived(size_t N, vector<size_t>&  y)
 		:
-		dismod_at::cppad_mixed(1, 0) , // n_fixed = 1, n_random = 0
+		dismod_at::mixed_cppad(1, 0) , // n_fixed = 1, n_random = 0
 		N_(N)                         ,
 		y_(y)
 	{	logfac_.resize(N+1);

@@ -20,7 +20,7 @@ extern bool meas_mulcov(void);
 extern bool n_mixture(void);
 extern bool rate_mulcov(void);
 
-// cppad_mixed subdirectory
+// mixed_cppad subdirectory
 extern bool delta_ran_like(void);
 extern bool der_var_hes(void);
 extern bool zero_random_one(void);
@@ -67,7 +67,7 @@ int main(void)
 	RUN(n_mixture);
 	RUN(rate_mulcov);
 
-	// cppad_mixed subdirectory
+	// mixed_cppad subdirectory
 	RUN(delta_ran_like);
 	RUN(der_var_hes);
 	RUN(zero_random_one);
