@@ -230,8 +230,6 @@ int main(void)
 	RUN(weight_info_xam);
 
 # if MIXED_CPPAD_NEWTON
-	RUN(ran_obj_eval_xam);
-	RUN(ran_obj_beta_xam);
 	RUN(ran_obj_hes_fix_xam);
 # endif
 # if DISMOD_AT_HAS_SUITESPARSE

@@ -250,16 +250,6 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 		newton_atom_.initialize(a1_ran_like_, fixed_vec, random_vec);
 		record_newton_atom_done_ = true;
 
-		// ran_obj_0_
-		assert( ! record_ran_obj_done_[0] );
-		record_ran_obj(0, fixed_vec, random_vec);
-		assert( record_ran_obj_done_[0] );
-
-		// ran_obj_1_
-		assert( ! record_ran_obj_done_[1] );
-		record_ran_obj(1, fixed_vec, random_vec);
-		assert( record_ran_obj_done_[1] );
-
 		// ran_obj_2_
 		assert( ! record_ran_obj_done_[2] );
 		record_ran_obj(2, fixed_vec, random_vec);

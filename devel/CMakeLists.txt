@@ -19,8 +19,6 @@ ADD_LIBRARY(mixed_cppad
 	mixed_cppad/ran_like_hes.cpp
 	mixed_cppad/initialize.cpp
 	mixed_cppad/ipopt_fixed.cpp
-	mixed_cppad/ran_obj_eval.cpp
-	mixed_cppad/ran_obj_beta.cpp
 	mixed_cppad/optimize_fixed.cpp
 	mixed_cppad/optimize_random.cpp
 	mixed_cppad/prior_eval.cpp
