@@ -6,7 +6,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 if [ "$0" != "bin/check_devel_xam.sh" ]
@@ -26,7 +26,8 @@ do
 done
 for dir in $dir_list
 do
-	list=`ls example/devel/$dir | sed -e '/^junk$/d' -e '/^new$/d'`
+	list=`ls example/devel/$dir/*.cpp | \
+		 sed -e "s|example/devel/$dir/||" -e '/^junk$/d' -e '/^new$/d'`
 	for file in $list
 	do
 		if ! grep "$dir/$file" example/devel/CMakeLists.txt > /dev/null

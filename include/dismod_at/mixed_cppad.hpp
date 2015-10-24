@@ -8,8 +8,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_APPROX_MIXED_HPP
-# define DISMOD_AT_APPROX_MIXED_HPP
+# ifndef DISMOD_AT_MIXED_CPPAD_HPP
+# define DISMOD_AT_MIXED_CPPAD_HPP
 
 # include <map>
 # include <cppad/cppad.hpp>
