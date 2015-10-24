@@ -34,8 +34,8 @@
 # is added to the set of include directories.
 #
 MACRO(get_prefix package)
-	SET(${package}_prefix NOTFOUND CACHE PATH
-		"prefix used during install of ${package}"
+	SET( ${package}_prefix NOTFOUND CACHE PATH
+		"prefix used during the installation of ${package}"
 	)
 	IF( NOT ${package}_prefix )
 		MESSAGE(FATAL_ERROR "${package}_prefix not set by cmake command")
@@ -44,12 +44,22 @@ MACRO(get_prefix package)
 	INCLUDE_DIRECTORIES( ${${package}_prefix}/include )
 ENDMACRO(get_prefix)
 # ----------------------------------------------------------------------------
-# required_definition( variable )
+# required_definition( variable type docstring )
 #
+# variable
 # If the specified varaible is defined, echo its definition in the output.
-# Otherwise output a fatal error message
+# Otherwise output a fatal error message.
 #
-MACRO( required_definition variable )
+# type
+# Is the type of the variable in the CMake Gui, must be one of the following:.
+# FILEPATH, PATH, STRING, BOOL.
+#
+# docstring
+# Is the description used for the variable in the CMake Gui.
+#
+#
+MACRO( required_definition variable type docstring )
+	SET( ${variable} NOTFOUND CACHE ${type} "${docstring}" )
 	IF( ${variable} )
 		MESSAGE( STATUS "${variable} = ${${variable}}" )
 	ELSE( ${variable} )
@@ -70,9 +80,15 @@ MESSAGE(STATUS "CMAKE_VERBOSE_MAKEFILE = ${CMAKE_VERBOSE_MAKEFILE}")
 MESSAGE(STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 # ----------------------------------------------------------------------------
 # required special cmake variables
-required_definition( python_three_command )
-required_definition( extra_cxx_flags )
-required_definition( dismod_at_prefix )
+required_definition(
+	python_three_command STRING "command for python3 on this system"
+)
+required_definition(
+	extra_cxx_flags STRING "extra flags used by C++ compiler"
+)
+required_definition(
+	dismod_at_prefix PATH "prefix where dismod_at will be installed"
+)
 # ----------------------------------------------------------------------------
 # get required package prefixes
 get_prefix(cppad)
