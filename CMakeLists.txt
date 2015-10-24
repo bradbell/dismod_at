@@ -8,66 +8,22 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-#
-# cmake \
-#    -Wno-dev \
-#    -D CMAKE_VERBOSE_MAKEFILE=value_1 \
-#    -D CMAKE_BUILD_TYPE=value_2 \
-#    -D python_three_command=value_3 \
-#    -D extra_cxx_flags=value_4 \
-#    -D cppad_mixed_libdir=value_5 \
-#    -D dismod_at_prefix=value_6 \
-#    -D cppad_prefix=value_7 \
-#    -D ipopt_prefix=value_8 \
-#    -D eigen_prefix=value_9 \
-#    -D suitesparse_prefix=value_10
-# ----------------------------------------------------------------------------
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
-PROJECT(dismod_at)
-SET(dismod_at_version "20151020" )
-INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
-INCLUDE(CheckCXXSourceRuns)
-# ----------------------------------------------------------------------------
-MESSAGE(STATUS "cmake_verbose_makefile = ${CMAKE_VERBOSE_MAKEFILE}")
-MESSAGE(STATUS "cmake_buld_type = ${CMAKE_BUILD_TYPE}")
-# ----------------------------------------------------------------------------
-# python_three_command
-IF( python_three_command )
-	MESSAGE(STATUS "python_three_command = ${python_three_command}")
-ELSE( python_three_command )
-	MESSAGE(FATAL_ERROR "python_three_command not set by cmake command")
-ENDIF( python_three_command )
-# ----------------------------------------------------------------------------
-# extra_cxx_flags
-SET(extra_cxx_flags NOTFOUND CACHE STRING
-	"extra compiler flags (besides debug and release"
-)
-IF( NOT extra_cxx_flags )
-	MESSAGE(FATAL_ERROR "extra_cxx_flags not set by cmake command")
-ENDIF( NOT extra_cxx_flags )
-MESSAGE(STATUS "extra_cxx_flags = ${extra_cxx_flags}")
-# ----------------------------------------------------------------------------
-# dismod_at_prefix
-IF( dismod_at_prefix )
-	MESSAGE(STATUS "dismod_at_prefix = ${dismod_at_prefix}")
-ELSE( dismod_at_prefix )
-	MESSAGE(FATAL_ERROR "dismod_at_prefix not set by cmake command")
-ENDIF( dismod_at_prefix )
-# ----------------------------------------------------------------------------
-# cppad_mixed_libdir
-SET(cppad_mixed_libdir NOTFOUND CACHE STRING
-	"directory below dismod_at_prefix where cppad_mixed library is installed"
-)
-IF( cppad_mixed_libdir )
-	MESSAGE(STATUS "cppad_mixed library installed in "
-		"${dismod_at_prefix}/${cppad_mixed_libdir}"
-	)
-ELSE( cppad_mixed_libdir )
-	MESSAGE(STATUS "cppad_mixed_libdir not specified "
-		"so its library is not installed"
-	)
-ENDIF( NOT cppad_mixed_libdir )
-# ----------------------------------------------------------------------------
+# Sample Command line
+#                     cmake \
+#                        -Wno-dev \
+# standard variables:    -D CMAKE_VERBOSE_MAKEFILE=value \
+#                        -D CMAKE_BUILD_TYPE=value \
+# required variables:    -D python_three_command=value \
+#                        -D extra_cxx_flags=value \
+#                        -D dismod_at_prefix=value \
+#                        -D cppad_prefix=value \
+#                        -D eigen_prefix=value \
+#                        -D ipopt_prefix=value \
+# optional variables:    -D suitesparse_prefix=value \
+#                        -D cppad_mixed_libdir=value
+# ============================================================================
+# Macro definitions
+# ============================================================================
 # get_prefix(package)
 #
 # ${package}_prefix: (out)
@@ -88,10 +44,42 @@ MACRO(get_prefix package)
 	INCLUDE_DIRECTORIES( ${${package}_prefix}/include )
 ENDMACRO(get_prefix)
 # ----------------------------------------------------------------------------
-# get other package prefixes
+# required_definition( variable )
+#
+# If the specified varaible is defined, echo its definition in the output.
+# Otherwise output a fatal error message
+#
+MACRO( required_definition variable )
+	IF( ${variable} )
+		MESSAGE( STATUS "${variable} = ${${variable}}" )
+	ELSE( ${variable} )
+		MESSAGE( FATAL_ERROR "${variable} is not set by cmake command" )
+	ENDIF( ${variable} )
+ENDMACRO( required_definition )
+# ----------------------------------------------------------------------------
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT(dismod_at)
+SET(dismod_at_version "20151020" )
+INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
+INCLUDE(CheckCXXSourceRuns)
+# ============================================================================
+MESSAGE(STATUS "BEGIN:")
+# ----------------------------------------------------------------------------
+# standard cmake variables
+MESSAGE(STATUS "CMAKE_VERBOSE_MAKEFILE = ${CMAKE_VERBOSE_MAKEFILE}")
+MESSAGE(STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
+# ----------------------------------------------------------------------------
+# required special cmake variables
+required_definition( python_three_command )
+required_definition( extra_cxx_flags )
+required_definition( dismod_at_prefix )
+# ----------------------------------------------------------------------------
+# get required package prefixes
 get_prefix(cppad)
 get_prefix(eigen)
 get_prefix(ipopt)
+# ----------------------------------------------------------------------------
+# optional package prefix
 IF( suitesparse_prefix )
 	SET(dismod_at_has_suitesparse 1)
 	get_prefix(suitesparse)
@@ -101,6 +89,22 @@ ELSE( suitesparse_prefix )
 		"so corresponding example not included."
 	)
 ENDIF( suitesparse_prefix )
+# ----------------------------------------------------------------------------
+# optional cppad_mixed_libdir
+SET( cppad_mixed_libdir NOTFOUND CACHE STRING
+	"directory below dismod_at_prefix where cppad_mixed library is installed"
+)
+IF( cppad_mixed_libdir )
+	MESSAGE(STATUS "cppad_mixed library will be installed in\n"
+		"\t${dismod_at_prefix}/${cppad_mixed_libdir}"
+	)
+ELSE( cppad_mixed_libdir )
+	MESSAGE(STATUS "cppad_mixed_libdir not specified "
+		"so its library will not be installed"
+	)
+ENDIF( NOT cppad_mixed_libdir )
+# ----------------------------------------------------------------------------
+MESSAGE(STATUS "END:")
 # ----------------------------------------------------------------------------
 # set eigen_cxx_flags
 SET(eigen_cxx_flags
