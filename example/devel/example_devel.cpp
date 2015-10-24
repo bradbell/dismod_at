@@ -149,9 +149,6 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
-# if DISMOD_AT_HAS_SUITESPARSE
-	RUN(cholmod_xam);
-# endif
 	// mixed_cppad subdirectory
 	RUN(mixed_constraint_xam);
 	RUN(mixed_derived_xam);
@@ -236,6 +233,9 @@ int main(void)
 	RUN(ran_obj_eval_xam);
 	RUN(ran_obj_beta_xam);
 	RUN(ran_obj_hes_fix_xam);
+# endif
+# if DISMOD_AT_HAS_SUITESPARSE
+	RUN(cholmod_xam);
 # endif
 
 	// summary report

@@ -16,7 +16,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 # include <dismod_at/avgint_subset.hpp>
 # include <dismod_at/child_info.hpp>
-# include <dismod_at/configure.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/get_column_max.hpp>
@@ -35,6 +34,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/pack_prior.hpp>
 # include <dismod_at/create_table.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/configure.hpp>
 
 # define DISMOD_AT_TRACE 0
 

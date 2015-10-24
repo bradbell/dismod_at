@@ -150,9 +150,9 @@ $end
 ------------------------------------------------------------------------------
 */
 # include <coin/IpIpoptApplication.hpp>
-# include <dismod_at/configure.hpp>
 # include <dismod_at/mixed_cppad.hpp>
 # include <dismod_at/ipopt_fixed.hpp>
+# include <dismod_at/configure.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 

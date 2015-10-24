@@ -14,6 +14,19 @@ echo_eval() {
 	echo $*
 	eval $*
 }
+if [ "$1" == '--help' ]
+then
+	cat << EOF
+usage: bin/run_cmake.sh \\
+	[--help] \\
+	[--verbose] \\
+	[--newton] \\
+	[--set_sparsity]
+EOF
+	exit 0
+else
+	user_option="$1"
+fi
 # -----------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
 # use '0' for normal and '1' for verbose make output
@@ -59,6 +72,22 @@ suitesparse_prefix="$HOME/prefix/suitesparse"
 # python_three_command='/usr/local/anaconda3-current/bin/python'
 # extra_cxx_flags='-Wall'
 # END USER_SETTINGS
+# ---------------------------------------------------------------------------
+if [ "$user_option" == '--verbose' ]
+then
+	cmake_verbose_makefile='1'
+elif [ "$user_option" == '--newton' ]
+then
+	mixed_cppad_newton="YES"
+elif [ "$user_option" == '--set_sparsity' ]
+then
+	mixed_cppad_set_sparsity="YES"
+elif [ "$user_option" != '' ]
+then
+	echo "'$1' is an invalid option"
+	bin/run_cmake.sh --help
+	exit 1
+fi
 # ---------------------------------------------------------------------------
 if [ ! -e build ]
 then

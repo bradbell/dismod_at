@@ -13,7 +13,6 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <map>
 # include <cppad/cppad.hpp>
-# include <dismod_at/configure.hpp>
 # include <dismod_at/newton_step.hpp>
 
 // private examples

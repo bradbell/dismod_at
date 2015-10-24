@@ -9,6 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/mixed_cppad.hpp>
+# include <dismod_at/configure.hpp>
 
 /*
 $begin mixed_cppad_initialize$$
@@ -245,7 +246,7 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 
 # if MIXED_CPPAD_NEWTON
 		// newton_atom_
-		assert( ! record_newton_atom_done_ )
+		assert( ! record_newton_atom_done_ );
 		newton_atom_.initialize(a1_ran_like_, fixed_vec, random_vec);
 		record_newton_atom_done_ = true;
 

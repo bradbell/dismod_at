@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/configure.hpp>
 # include <dismod_at/ipopt_fixed.hpp>
+# include <dismod_at/configure.hpp>
 
 
 namespace {
@@ -747,15 +748,7 @@ bool ipopt_fixed::eval_f(
 		random_cur_ = mixed_object_.optimize_random(
 			random_options_, fixed_tmp_, random_tmp_
 		);
-# if ! MIXED_CPPAD_NEWTON
 		H = mixed_object_.h_ran_like(fixed_tmp_, random_cur_);
-# else
-		//
-		// compute random part of the objective
-		H = mixed_object_.ran_obj_eval(
-			fixed_tmp_, fixed_tmp_, random_cur_
-		);
-# endif
 	}
 	obj_value = Number(H);
 	if( fix_like_vec_tmp_.size() == 0 )
@@ -847,15 +840,9 @@ bool ipopt_fixed::eval_grad_f(
 			random_options_, fixed_tmp_, random_tmp_
 		);
 		// Jacobian for random part of the Lalpace objective
-# if ! MIXED_CPPAD_NEWTON
 		mixed_object_.d_ran_like(
 			fixed_tmp_, random_cur_, H_beta_tmp_
 		);
-# else
-		H_beta_tmp_ = mixed_object_.ran_obj_beta(
-			fixed_tmp_, fixed_tmp_, random_cur_
-		);
-# endif
 	}
 	//
 	// Jacobian of fixed part of objective
