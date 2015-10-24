@@ -19,7 +19,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_NULL_PTR  0
 # endif
 
-# define DISMOD_AT_BFGS         1
-# define DISMOD_AT_SET_SPARSITY 1
+# define MIXED_CPPAD_NEWTON       0
+# define MIXED_CPPAD_SET_SPARSITY 1
 
 # endif

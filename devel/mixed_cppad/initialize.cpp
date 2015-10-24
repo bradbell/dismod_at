@@ -243,7 +243,7 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 		record_hes_cross(fixed_vec, random_vec);
 		assert( record_hes_cross_done_ );
 
-# if ! DISMOD_AT_BFGS
+# if MIXED_CPPAD_NEWTON
 		// newton_atom_
 		assert( ! record_newton_atom_done_ )
 		newton_atom_.initialize(a1_ran_like_, fixed_vec, random_vec);

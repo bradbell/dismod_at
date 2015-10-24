@@ -128,7 +128,7 @@ void mixed_cppad::record_hes_cross(
 	pack(fixed_vec, random_vec, both);
 
 	// compute Jacobian sparsity corresponding to parital w.r.t. fixed effects
-# if DISMOD_AT_SET_SPARSITY
+# if MIXED_CPPAD_SET_SPARSITY
 	typedef CppAD::vector< std::set<size_t> > sparsity_pattern;
 	sparsity_pattern r(n_total);
 	for(i = 0; i < n_fixed_; i++)
@@ -147,7 +147,7 @@ void mixed_cppad::record_hes_cross(
 	// of partial w.r.t. theta of f(theta, u)
 	bool transpose = true;
 	sparsity_pattern s(1), pattern;
-# if DISMOD_AT_SET_SPARSITY
+# if MIXED_CPPAD_SET_SPARSITY
 	assert( s[0].empty() );
 	s[0].insert(0);
 # else
@@ -158,7 +158,7 @@ void mixed_cppad::record_hes_cross(
 
 	// User row index for random effect and column index for fixed effect
 	CppAD::vector<size_t> row, col, key;
-# if DISMOD_AT_SET_SPARSITY
+# if MIXED_CPPAD_SET_SPARSITY
 	std::set<size_t>::iterator itr;
 	for(i = n_fixed_; i < n_total; i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
