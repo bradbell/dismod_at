@@ -46,6 +46,10 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 10-24$$
+Reduce the probability of the
+$code test/mixed_cppad/binomial.cpp$$ test failed by chance
+during $cref/testing/install_unix/dismod_at/Test/$$.
 
 $head 10-20$$
 $list number$$

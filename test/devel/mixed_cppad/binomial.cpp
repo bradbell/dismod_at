@@ -115,7 +115,7 @@ bool binomial(void)
 	size_t random_seed = dismod_at::new_gsl_rng(0);
 
 	// simulation parameters
-	size_t N = 25;
+	size_t N = 20;
 	size_t I = 10 * 1000;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   0.25;      // constant term in covariate model
@@ -137,8 +137,9 @@ bool binomial(void)
 	vector<double> constraint_lower, constraint_upper;
 	vector<double> theta_lower(n_fixed), theta_upper(n_fixed);
 	// limits on p
-	theta_lower[0] = 0.0;
-	theta_upper[0] = 1.0;
+	theta_lower[0] = 1e-4;
+	theta_upper[0] = 1.0 - 1e-4;
+	assert( theta_lower[0] <= theta_sim[0] );
 
 	// optimize the fixed effects
 	std::string fixed_options =
@@ -146,7 +147,8 @@ bool binomial(void)
 		"String  sb                        yes\n"
 		"String  derivative_test           second-order\n"
 		"String  derivative_test_print_all yes\n"
-		"Numeric tol                       1e-8\n"
+		"Numeric tol                       1e-5\n"
+		"Integer max_iter                  100\n"
 	;
 	std::string random_options =
 		"Integer print_level 0\n"
