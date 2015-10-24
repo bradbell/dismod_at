@@ -22,7 +22,8 @@
 # optional variables:    -D mixed_cppad_newton=value \
 #                        -D mixed_cppad_set_sparsity=value \
 #                        -D mixed_cppad_libdir=value \
-#                        -D suitesparse_prefix=value
+#                        -D suitesparse_prefix=value \
+#                         ..
 # ============================================================================
 # Macro definitions
 # ============================================================================

@@ -36,9 +36,12 @@ eigen_prefix="$HOME/prefix/dismod_at"
 ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
 #
-# Prefix where optional package was installed (use NOTFOUND if not installed).
-# This is only required by example/devel/mixed_cppad/cholmod_xam.cpp.
-suitesparse_prefix="$HOME/prefix/suitesparse"
+# Use a second order method when optimizing the fixed effects (YES/NO).
+# The default is NO because the Newton method requires a lot more memory.
+mixed_cppad_newton="NO"
+#
+# If YES, use sets of indices for sparsity pattersn. If NO use arrays of bools.
+mixed_cppad_set_sparsity="NO"
 #
 # sub-directory of dismod_at_prefix where mixed_cppad libraries are installed
 #	-lmixed_cppad -lmixed_cppad_eigen -lmixed_cppad
@@ -46,6 +49,10 @@ suitesparse_prefix="$HOME/prefix/suitesparse"
 # to compile the part of the code that uses eigen.
 # If you do not need to install mixed_cppad, use NOTFOUND for this setting.
 mixed_cppad_libdir='lib64'
+#
+# Prefix where optional package was installed (use NOTFOUND if not installed).
+# This is only required by example/devel/mixed_cppad/cholmod_xam.cpp.
+suitesparse_prefix="$HOME/prefix/suitesparse"
 # ----------------------------------------------------------------------------
 # Setting for IHME cluster
 # suitesparse_prefix="NOTFOUND"
@@ -62,13 +69,16 @@ cmake \
 	-Wno-dev \
 	-D CMAKE_VERBOSE_MAKEFILE=$cmake_verbose_makefile \
 	-D CMAKE_BUILD_TYPE=$cmake_build_type \
+	\
 	-D python_three_command=$python_three_command \
 	-D extra_cxx_flags="$extra_cxx_flags" \
 	-D dismod_at_prefix="$dismod_at_prefix" \
-	-D mixed_cppad_libdir="$mixed_cppad_libdir" \
-	\
 	-D cppad_prefix="$cppad_prefix" \
 	-D ipopt_prefix="$cppad_prefix" \
 	-D eigen_prefix="$eigen_prefix" \
+	\
+	-D mixed_cppad_newton="$mixed_cppad_newton" \
+	-D mixed_cppad_set_sparsity="$mixed_cppad_set_sparsity" \
+	-D mixed_cppad_libdir="$mixed_cppad_libdir" \
 	-D suitesparse_prefix="$suitesparse_prefix" \
 	..

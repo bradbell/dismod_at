@@ -47,9 +47,21 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 10-24$$
+$list number$$
 Reduce the probability of the
 $code test/mixed_cppad/binomial.cpp$$ test failed by chance
 during $cref/testing/install_unix/dismod_at/Test/$$.
+$lnext
+The $cref/optimize_fixed/mixed_cppad_optimize_fixed/$$ effects
+procedure can now uses a BFGS method (and requires much less memory).
+The $icode mixed_cppad_newton$$ option in the
+$cref/setup/install_unix/dismod_at/Setup/$$
+can be used to select the old Newton method.
+$lnext
+The
+$code mixed_cppad_set_sparsity$$ option was also added to the
+$cref/setup/install_unix/dismod_at/Setup/$$.
+$lend
 
 $head 10-20$$
 $list number$$
