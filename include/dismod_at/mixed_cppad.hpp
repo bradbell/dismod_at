@@ -20,7 +20,6 @@ extern bool constraint_eval_xam(void);
 extern bool constraint_jac_xam(void);
 extern bool constraint_hes_xam(void);
 extern bool ran_like_grad_xam(void);
-extern bool ran_like_hes_xam(void);
 extern bool ran_obj_hes_fix_xam(void);
 extern bool prior_eval_xam(void);
 extern bool fix_like_jac_xam(void);
@@ -219,7 +218,6 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/mixed_cppad/d_logdet.cpp
 	%devel/mixed_cppad/d_ran_like.cpp
 	%devel/mixed_cppad/ran_like_grad.cpp
-	%devel/mixed_cppad/ran_like_hes.cpp
 	%devel/mixed_cppad/ran_obj_hes_fix.cpp
 	%devel/mixed_cppad/prior_eval.cpp
 	%devel/mixed_cppad/fix_like_jac.cpp
@@ -475,16 +473,6 @@ $codep */
 		const a1d_vector&       random_vec
 	);
 	friend bool ::ran_like_grad_xam(void);
-/* $$
-$head ran_like_hes$$
-See $cref mixed_cppad_ran_like_hes$$
-$codep */
-	// ran_like_hes
-	void ran_like_hes(
-		const a1d_vector&       a1_both_vec ,
-		a1d_vector&             a1_val_out
-	);
-	friend bool ::ran_like_hes_xam(void);
 /* $$
 ------------------------------------------------------------------------------
 $head ran_obj_hes_fix$$

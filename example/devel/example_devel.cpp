@@ -53,9 +53,6 @@ extern bool optimize_fixed_xam(void);
 extern bool optimize_random_xam(void);
 extern bool prior_eval_xam(void);
 extern bool ran_like_grad_xam(void);
-extern bool ran_like_hes_xam(void);
-extern bool ran_obj_beta_xam(void);
-extern bool ran_obj_eval_xam(void);
 extern bool ran_obj_hes_fix_xam(void);
 
 // model subdirectory
@@ -167,7 +164,6 @@ int main(void)
 	RUN(ipopt_xam_run);
 	RUN(newton_step_xam);
 	RUN(ran_like_grad_xam);
-	RUN(ran_like_hes_xam);
 	RUN(no_random_xam);
 	RUN(optimize_fixed_xam);
 	RUN(optimize_random_xam);
