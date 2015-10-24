@@ -19,8 +19,10 @@
 #                        -D cppad_prefix=value \
 #                        -D eigen_prefix=value \
 #                        -D ipopt_prefix=value \
-# optional variables:    -D suitesparse_prefix=value \
-#                        -D mixed_cppad_libdir=value
+# optional variables:    -D mixed_cppad_newton=value \
+#                        -D mixed_cppad_set_sparsity=value \
+#                        -D mixed_cppad_libdir=value \
+#                        -D suitesparse_prefix=value
 # ============================================================================
 # Macro definitions
 # ============================================================================
@@ -47,12 +49,14 @@ ENDMACRO(get_prefix)
 # required_definition( variable type docstring )
 #
 # variable
-# If the specified varaible is defined, echo its definition in the output.
+# If this varaible is defined, echo its definition in the output.
 # Otherwise output a fatal error message.
 #
 # type
 # Is the type of the variable in the CMake Gui, must be one of the following:.
 # FILEPATH, PATH, STRING, BOOL.
+# If the variable type is BOOL, then ${variable}_01 is set to
+# 1 (for true) or 0 (for false).
 #
 # docstring
 # Is the description used for the variable in the CMake Gui.
@@ -67,6 +71,31 @@ MACRO( required_definition variable type docstring )
 	ENDIF( ${variable} )
 ENDMACRO( required_definition )
 # ----------------------------------------------------------------------------
+# optional_definition( variable type docstring )
+#
+# variable
+# echo this variables value in the output.
+#
+# type
+# Is the type of the variable in the CMake Gui, must be one of the following:.
+# FILEPATH, PATH, STRING, BOOL.
+#
+# docstring
+# Is the description used for the variable in the CMake Gui.
+#
+#
+MACRO( optional_definition variable type docstring )
+	SET( ${variable} NOTFOUND CACHE ${type} "${docstring}" )
+	MESSAGE( STATUS "${variable} = ${${variable}}" )
+	IF( ${type} STREQUAL "BOOL" )
+		IF( ${variable} )
+			SET( ${variable}_01 1 )
+		ELSE( ${variable} )
+			SET( ${variable}_01 0 )
+		ENDIF( ${variable} )
+	ENDIF( ${type} STREQUAL "BOOL" )
+ENDMACRO( optional_definition )
+# ----------------------------------------------------------------------------
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
 SET(dismod_at_version "20151020" )
@@ -80,14 +109,14 @@ MESSAGE(STATUS "CMAKE_VERBOSE_MAKEFILE = ${CMAKE_VERBOSE_MAKEFILE}")
 MESSAGE(STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 # ----------------------------------------------------------------------------
 # required special cmake variables
-required_definition(
-	python_three_command STRING "command for python3 on this system"
+required_definition( python_three_command STRING
+	"command for python3 on this system"
 )
-required_definition(
-	extra_cxx_flags STRING "extra flags used by C++ compiler"
+required_definition( extra_cxx_flags STRING
+	"extra flags used by C++ compiler (debug and release are automatic)"
 )
-required_definition(
-	dismod_at_prefix PATH "prefix where dismod_at will be installed"
+required_definition(dismod_at_prefix PATH
+	"prefix where dismod_at will be installed"
 )
 # ----------------------------------------------------------------------------
 # get required package prefixes
@@ -95,32 +124,29 @@ get_prefix(cppad)
 get_prefix(eigen)
 get_prefix(ipopt)
 # ----------------------------------------------------------------------------
-# optional package prefix
-IF( suitesparse_prefix )
-	SET(dismod_at_has_suitesparse 1)
-	get_prefix(suitesparse)
-ELSE( suitesparse_prefix )
-	SET(dismod_at_has_suitesparse 0)
-	MESSAGE(STATUS "suitesparse_prefix not specified "
-		"so corresponding example not included."
-	)
-ENDIF( suitesparse_prefix )
-# ----------------------------------------------------------------------------
-# optional mixed_cppad_libdir
-SET( mixed_cppad_libdir NOTFOUND CACHE STRING
+# optional special cmake variables
+optional_definition(mixed_cppad_newton BOOL
+	"use a second order optimization method (requires more memory)"
+)
+optional_definition(mixed_cppad_set_sparsity BOOL
+	"use sets (instead of bools) to represent sparsity patterns"
+)
+optional_definition( mixed_cppad_libdir STRING
 	"directory below dismod_at_prefix where mixed_cppad library is installed"
 )
-IF( mixed_cppad_libdir )
-	MESSAGE(STATUS "mixed_cppad library will be installed in\n"
-		"\t${dismod_at_prefix}/${mixed_cppad_libdir}"
-	)
-ELSE( mixed_cppad_libdir )
-	MESSAGE(STATUS "mixed_cppad_libdir not specified "
-		"so its library will not be installed"
-	)
-ENDIF( NOT mixed_cppad_libdir )
+IF( suitesparse_prefix )
+	SET( suitesparse_prefix_01 1 )
+	get_prefix(suitesparse)
+ELSE( suitesparse_prefix )
+	SET( suitesparse_prefix_01 0 )
+	MESSAGE(STATUS "examples that use suitesparse will not be tested")
+ENDIF( suitesparse_prefix )
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
+# ----------------------------------------------------------------------------
+IF( NOT mixed_cppad_libdir )
+	MESSAGE( STATUS "mixed_cppad library will not be installed")
+ENDIF( NOT mixed_cppad_libdir )
 # ----------------------------------------------------------------------------
 # set eigen_cxx_flags
 SET(eigen_cxx_flags
@@ -133,7 +159,7 @@ MESSAGE(STATUS "eigen_cxx_flags = ${eigen_cxx_flags}")
 FIND_PACKAGE(PkgConfig)
 pkg_check_modules(ipopt REQUIRED ipopt)
 # ----------------------------------------------------------------------------
-# dismod_at_has_nullptr
+# dismod_at_has_nullptr_01
 #
 SET(source "
 int main(void)
@@ -151,11 +177,11 @@ ElSE( extra_cxx_flags )
 ENDIF( extra_cxx_flags )
 CHECK_CXX_SOURCE_RUNS("${source}" dismod_at_has_nullptr_flag)
 IF( dismod_at_has_nullptr_flag )
-	SET(dismod_at_has_nullptr 1)
+	SET(dismod_at_has_nullptr_01 1)
 ELSE( dismod_at_has_nullptr_flag )
-	SET(dismod_at_has_nullptr 0)
+	SET(dismod_at_has_nullptr_01 0)
 ENDIF( dismod_at_has_nullptr_flag )
-MESSAGE(STATUS "dismod_at_has_nullptr = ${dismod_at_has_nullptr}")
+MESSAGE(STATUS "dismod_at_has_nullptr = ${dismod_at_has_nullptr_01}")
 # ----------------------------------------------------------------------------
 CONFIGURE_FILE(
 	${CMAKE_CURRENT_SOURCE_DIR}/include/dismod_at/configure.hpp.in
