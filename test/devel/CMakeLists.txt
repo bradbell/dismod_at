@@ -16,12 +16,12 @@ LINK_DIRECTORIES(
 )
 # Program cpp, not installed, and depends on following source files
 ADD_EXECUTABLE(test_devel EXCLUDE_FROM_ALL
+	mixed_cppad/binomial_test.cpp
 	mixed_cppad/delta_ran_like.cpp
 	mixed_cppad/der_var_hes.cpp
 	mixed_cppad/zero_random_one.cpp
 	mixed_cppad/zero_random_two.cpp
 	age_time_order.cpp
-	binomial_test.cpp
 	data_model_subset.cpp
 	meas_mulcov.cpp
 	n_mixture.cpp
