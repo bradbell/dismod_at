@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 
 /*
-$begin mixed_cppad_record_fix_like$$
+$begin record_fix_like$$
 $spell
 	cppad
 	jac
@@ -20,9 +20,10 @@ $spell
 	Cpp
 	Jacobian
 	var
+	hes
 $$
 
-$section mixed_cppad: Record Fixed Negative Log-Likelihood For Fixed Effects$$
+$section Record Negative Log-Likelihood For Fixed Effects$$
 
 $head Syntax$$
 $codei%record_fix_like(%fixed_vec%)%$$
@@ -57,18 +58,28 @@ $code fix_like_fun_$$ is not modified.
 Otherwise,
 upon return it contains the corresponding recording for the
 $cref/fix_like/mixed_cppad_fix_like/$$.
-Note that the function result is the
+The function result is the
 $cref/negative log-density vector/mixed_cppad/Negative Log-Density Vector/$$
 corresponding to the function
 $cref/g(theta)/mixed_cppad_theory/Fixed Negative Log-Likelihood, g(theta)/$$.
 
-$head fix_like_jac_row_, fix_like_jac_col_$$
-The input value of the member variables
+$head fix_like_jac_row_$$
+The input value of the member variable
 $codei%
-	CppAD::vector<size_t> fix_like_jac_row_, fix_like_jac_col_
+	CppAD::vector<size_t> fix_like_jac_row_
 %$$
-do not matter.
-Upon return they contain the row indices and column indices
+does not matter.
+Upon return it contains the row indices
+that correspond to non-zero elements in the Jacobian corresponding to
+$code fix_like_fun_$$.
+
+$head fix_like_jac_col_$$
+The input value of the member variable
+$codei%
+	CppAD::vector<size_t> fix_like_jac_col_
+%$$
+does not matter.
+Upon return it contains the column indices
 that correspond to non-zero elements in the Jacobian corresponding to
 $code fix_like_fun_$$.
 
@@ -78,12 +89,64 @@ $codei%
 	CppAD::sparse_jacobian_work fix_like_jac_work_
 %$$
 does not matter.
-Upon return it contains the work information for reuse by calls of the form
+Upon return it contains the CppAD work information so that
 $codei%
 	fix_like_fun_.SparseJacobianForward(
-		%x%, %not_used%, fix_like_jac_row_, fix_like_jac_col_, %jac%, fix_like_jac_work_
+		%theta%,
+		%not_used%,
+		fix_like_jac_row_,
+		fix_like_jac_col_,
+		%jac%,
+		fix_like_jac_work_
 	)
 %$$
+(where $icode x$$ and $icode jac$$ $code double$$ vectors)
+can be used to calculate the Jacobian of the fixed part of the likelihood.
+
+$head fix_like_hes_row_$$
+The input value of the member variable
+$codei%
+	CppAD::vector<size_t> fix_like_hes_row_
+%$$
+does not matter.
+Upon return it contains the row indices
+that correspond to non-zero elements in the
+lower triangle of a Hessian corresponding to
+$code fix_like_fun_$$.
+
+$head fix_like_hes_col_$$
+The input value of the member variable
+$codei%
+	CppAD::vector<size_t> fix_like_hes_col_
+%$$
+does not matter.
+Upon return it contains the column indices
+that correspond to non-zero elements in the
+lower triangle of a Hessian corresponding to
+$code fix_like_fun_$$.
+
+$head fix_like_hes_work_$$
+The input value of the member variables
+$codei%
+	CppAD::sparse_hessian_work fix_like_hes_work_
+%$$
+does not matter.
+Upon return it contains the CppAD work information so that
+$codei%
+	fix_like_fun_.SparseHessian(
+		%theta%,
+		%weight%
+		%not_used%,
+		fix_like_hes_row_,
+		fix_like_hes_col_,
+		%hes%,
+		fix_like_hes_work_
+	)
+%$$
+(where $icode theta$$, $icode weight$$, and $icode hes$$
+are $code double$$ vectors)
+can be used to calculate the
+lower triangle of a weighted Hessian for the fixed part of the likelihood.
 
 $end
 */

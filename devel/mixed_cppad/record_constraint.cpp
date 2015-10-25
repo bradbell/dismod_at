@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 
 /*
-$begin mixed_cppad_record_constraint$$
+$begin record_constraint$$
 $spell
 	cppad
 	jac
@@ -19,9 +19,11 @@ $spell
 	const
 	Cpp
 	Jacobian
+	var
+	hes
 $$
 
-$section mixed_cppad: Record Prior The Constraint Function$$
+$section Record Constraints as Function of Fixed Effects$$
 
 $head Syntax$$
 $codei%record_constraint(%fixed_vec%)%$$
@@ -40,23 +42,40 @@ It specifies the value of the
 $cref/fixed effects/mixed_cppad/Fixed Effects, theta/$$
 vector $latex \theta$$ at which the recording is made.
 
+$head record_constraint_done_$$
+When this function is called, this member variable must be false.
+Upon return it is true.
+
 $head constraint_fun_$$
-The input value of the member variable
+On input, the member variable
 $codei%
 	CppAD::ADFun<double> constraint_fun_
 %$$
-does not matter.
-Upon return it contains the corresponding recording for the
-$cref/constraint/mixed_cppad_constraint/$$ function $latex c( \theta )$$.
-Note that the function result is the
+must be empty; i.e., $code constraint_fun_.size_var() == 0$$.
+If the return value for
+$cref/constraint/mixed_cppad_constraint/$$ is empty,
+$code constraint_fun_$$ is not modified.
+Otherwise,
+upon return it contains the corresponding recording for the
+$cref/constraint/mixed_cppad_constraint/$$ $latex c( \theta )$$.
 
-$head constraint_jac_row_, constraint_jac_col_$$
-The input value of the member variables
+$head constraint_jac_row_$$
+The input value of the member variable
 $codei%
-	CppAD::vector<size_t> constraint_jac_row_, constraint_jac_col_
+	CppAD::vector<size_t> constraint_jac_row_
 %$$
-do not matter.
-Upon return they contain the row indices and column indices
+does not matter.
+Upon return it contains the row indices
+that correspond to non-zero elements in the Jacobian corresponding to
+$code constraint_fun_$$.
+
+$head constraint_jac_col_$$
+The input value of the member variable
+$codei%
+	CppAD::vector<size_t> constraint_jac_col_
+%$$
+does not matter.
+Upon return it contains the column indices
 that correspond to non-zero elements in the Jacobian corresponding to
 $code constraint_fun_$$.
 
@@ -66,10 +85,10 @@ $codei%
 	CppAD::sparse_jacobian_work constraint_jac_work_
 %$$
 does not matter.
-Upon return it contains the work information for reuse by calls of the form
+Upon return it contains the CppAD work information so that
 $codei%
 	constraint_fun_.SparseJacobianForward(
-		%x%,
+		%theta%,
 		%not_used%,
 		constraint_jac_row_,
 		constraint_jac_col_,
@@ -77,6 +96,53 @@ $codei%
 		constraint_jac_work_
 	)
 %$$
+(where $icode x$$ and $icode jac$$ $code double$$ vectors)
+can be used to calculate the Jacobian of the constraints.
+
+$head constraint_hes_row_$$
+The input value of the member variable
+$codei%
+	CppAD::vector<size_t> constraint_hes_row_
+%$$
+does not matter.
+Upon return it contains the row indices
+that correspond to non-zero elements in the
+lower triangle of a Hessian corresponding to
+$code constraint_fun_$$.
+
+$head constraint_hes_col_$$
+The input value of the member variable
+$codei%
+	CppAD::vector<size_t> constraint_hes_col_
+%$$
+does not matter.
+Upon return it contains the column indices
+that correspond to non-zero elements in the
+lower triangle of a Hessian corresponding to
+$code constraint_fun_$$.
+
+$head constraint_hes_work_$$
+The input value of the member variables
+$codei%
+	CppAD::sparse_hessian_work constraint_hes_work_
+%$$
+does not matter.
+Upon return it contains the CppAD work information so that
+$codei%
+	constraint_fun_.SparseHessian(
+		%theta%,
+		%weight%
+		%not_used%,
+		constraint_hes_row_,
+		constraint_hes_col_,
+		%hes%,
+		constraint_hes_work_
+	)
+%$$
+(where $icode theta$$, $icode weight$$, and $icode hes$$
+are $code double$$ vectors)
+can be used to calculate the
+lower triangle of a weighted Hessian for the constraints.
 
 $end
 */
@@ -99,12 +165,10 @@ void mixed_cppad::record_constraint(const d_vector& fixed_vec  )
 
 	// compute constraint
 	a1d_vector a1_vec = constraint(a1_theta);
-
-	// check for empty recording case
 	if( a1_vec.size() == 0 )
-	{	// abort recording AD<double>
-		CppAD::AD<double>::abort_recording();
+	{	CppAD::AD<double>::abort_recording();
 		record_constraint_done_ = true;
+		assert( constraint_fun_.size_var() == 0 );
 		return;
 	}
 
@@ -139,11 +203,11 @@ void mixed_cppad::record_constraint(const d_vector& fixed_vec  )
 	// compute the work vector for reuse during Jacobian sparsity calculations
 	d_vector jac( constraint_jac_row_.size() );
 	constraint_fun_.SparseJacobianForward(
-		fixed_vec            ,
-		pattern              ,
+		fixed_vec       ,
+		pattern         ,
 		constraint_jac_row_  ,
 		constraint_jac_col_  ,
-		jac                  ,
+		jac             ,
 		constraint_jac_work_
 	);
 	// ------------------------------------------------------------------------
@@ -176,15 +240,15 @@ void mixed_cppad::record_constraint(const d_vector& fixed_vec  )
 	// compute the work vector for reuse during Hessian sparsity calculations
 	d_vector weight( constraint_fun_.Range() ), hes(K);
 	constraint_fun_.SparseHessian(
-		fixed_vec            ,
-		weight               ,
-		pattern              ,
+		fixed_vec       ,
+		weight          ,
+		pattern         ,
 		constraint_hes_row_  ,
 		constraint_hes_col_  ,
-		hes                  ,
+		hes             ,
 		constraint_hes_work_
 	);
-	//
+
 	record_constraint_done_ = true;
 	return;
 }

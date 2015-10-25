@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 
 /*
-$begin mixed_cppad_record_hes_ranobj$$
+$begin record_hes_ranobj$$
 $spell
 	ranobj
 	cppad
@@ -22,7 +22,7 @@ $spell
 	Cpp
 $$
 
-$section Record Hessian of Random Likelihood w.r.t Fixed Effects$$
+$section Record Hessian of Random Part of Objective$$
 
 $head Syntax$$
 $codei%record_hes_ranobj(%fixed_vec%, %random_vec%)%$$
@@ -50,18 +50,25 @@ It specifies the initial value for the
 $cref/random effects/mixed_cppad/Random Effects, u/$$ optimization.
 
 
-$head hes_ranobj_row_, hes_ranobj_col_$$
-The input value of the member variables
+$head hes_ranobj_row_$$
+The input value of the member variable
 $codei%
-	CppAD::vector<size_t> hes_ranobj_row_, hes_ranobj_col_
+	CppAD::vector<size_t> hes_ranobj_row_
 %$$
-do not matter.
-Upon return the contain the row indices and column indices
-for the sparse Hessian represented by $code hes_ranobj_$$; i.e.
-$codei%hes_ranobj_row_[%i%]%$$ and $codei%hes_ranobj_col_[%i%]%$$
-are the row and column indices for the Hessian element
-that corresponds to the $th i$$ component of the function
-corresponding to $code hes_ranobj_$$.
+does not matter.
+Upon return it contains the row indices
+for the lower triangle of the sparse Hessian of the random
+part of the objective.
+
+$head hes_ranobj_col_$$
+The input value of the member variable
+$codei%
+	CppAD::vector<size_t> hes_ranobj_col_
+%$$
+does not matter.
+Upon return it contains the column indices
+for the lower triangle of the sparse Hessian of the random
+part of the objective.
 
 $head hes_ranobj_work_$$
 The input value of the member variable
@@ -69,7 +76,7 @@ $codei%
 	CppAD::sparse_hessian_work hes_ranobj_work_
 %$$
 does not matter.
-Upon return it contains the necessary information so that
+Upon return it contains the CppAD work information so that
 $codei%
 	ranobj_fun_.SparseHessian(
 		%beta_theta_u%,
@@ -81,9 +88,13 @@ $codei%
 		hes_ranobj_work_
 	);
 %$$
+(where $icode beta_theta_vec$$, $icode w$$, and $icode val_out$$
+are $code double$$ vectors)
 can be used to calculate the lower triangle of the sparse Hessian
 $latex \[
-	H_{\beta \beta}^{(2)} ( \beta, \theta , u )
+	r^{(2)} ( \theta )
+	=
+	H_{\beta \beta}^{(2)} [ \beta, \theta , \hat{u} ( \theta) ]
 \] $$
 see
 $cref/H(beta, theta, u)

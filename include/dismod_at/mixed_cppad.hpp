@@ -325,9 +325,13 @@ $codep */
 /* $$
 
 $subhead hes_ranobj_$$
-Information used to calculate the sparse Hessian of the random likelihood
-w.r.t. fixed effects $latex H_{\beta \beta}^{(2)} ( \beta, \theta , u )$$.
-matrix
+If $icode%n_random_% > 0%$$, MIXED_CPPAD_NEWTON is true, and
+$code record_hes_ranobj_done_$$,
+$cref/hes_ranobj_row_/record_hes_ranobj/hes_ranobj_row_/$$,
+$cref/hes_ranobj_col_/record_hes_ranobj/hes_ranobj_col_/$$, and
+$cref/hes_ranobj_work_/record_hes_ranobj/hes_ranobj_work_/$$,
+can be used to compute the lower triangle of the sparse Hessian
+$latex r^{(2)} ( \theta )$$.
 $codep */
 	CppAD::vector<size_t>      hes_ranobj_row_; // corresponding row indices
 	CppAD::vector<size_t>      hes_ranobj_col_; // corresponding column indices
@@ -337,33 +341,60 @@ Note that if $code record_hes_ranobj_done_$$ is true and
 $code hes_ranobj_row_.size() == 0$$, then this Hessian is zero; i.e.,
 the second derivative of the Laplace approximation is zero.
 
-$head fix_like_fun_$$
-Recording of the $cref/fix_like/mixed_cppad_fix_like/$$ function
-which evaluates a
-$cref/negative log-density vector/mixed_cppad/Negative Log-Density Vector/$$
-corresponding to
-$cref/g(theta)/mixed_cppad_theory/Fixed Negative Log-Likelihood, g(theta)/$$.
+$head fix_like_$$
+$cref/fix_like_fun_/record_fix_like/fix_like_fun_/$$
+is a recording of the fixed part of the likelihood function; see,
+$cref/fix_like/mixed_cppad_fix_like/$$.
+The vectors
+$cref/fix_like_jac_row_/record_fix_like/fix_like_jac_row_/$$,
+$cref/fix_like_jac_col_/record_fix_like/fix_like_jac_col_/$$, and
+$cref/fix_like_jac_work_/record_fix_like/fix_like_jac_work_/$$,
+can be used to compute the sparse Jacobian corresponding
+to $code fix_like_fun_$$.
+The vectors
+$cref/fix_like_hes_row_/record_fix_like/fix_like_hes_row_/$$,
+$cref/fix_like_hes_col_/record_fix_like/fix_like_hes_col_/$$, and
+$cref/fix_like_hes_work_/record_fix_like/fix_like_hes_work_/$$,
+can be used to compute the lower triangle of the
+sparse Hessian corresponding to $code fix_like_fun_$$.
 $codep */
-	CppAD::ADFun<double>    fix_like_fun_; // computes fixed negative log-likelihood
-	CppAD::vector<size_t>   fix_like_jac_row_; // prior jacobian row indices
-	CppAD::vector<size_t>   fix_like_jac_col_; // prior jacobian column indices
-	CppAD::sparse_jacobian_work fix_like_jac_work_;
-	CppAD::vector<size_t>   fix_like_hes_row_; // prior hessian row indices
-	CppAD::vector<size_t>   fix_like_hes_col_; // prior hessian column indices
-	CppAD::sparse_hessian_work fix_like_hes_work_;
+	CppAD::ADFun<double>        fix_like_fun_;     // g(theta)
+	//
+	CppAD::vector<size_t>       fix_like_jac_row_; // row indices for g^{(1)}
+	CppAD::vector<size_t>       fix_like_jac_col_; // column indices  g^{(1)}
+	CppAD::sparse_jacobian_work fix_like_jac_work_;// work info for   g^{(1)}
+	//
+	CppAD::vector<size_t>       fix_like_hes_row_; // row indices for g^{(2)}
+	CppAD::vector<size_t>       fix_like_hes_col_; // column indices  g^{(2)}
+	CppAD::sparse_hessian_work  fix_like_hes_work_;// work info for   g^{(2)}
 /* $$
 $head constraint_fun_$$
-Recording of the $cref/constraint/mixed_cppad_constraint/$$ function.
+$cref/constraint_fun_/record_constraint/constraint_fun_/$$
+is a recording of the fixed part of the likelihood function; see,
+$cref/constraint/mixed_cppad_constraint/$$.
+The vectors
+$cref/constraint_jac_row_/record_constraint/constraint_jac_row_/$$,
+$cref/constraint_jac_col_/record_constraint/constraint_jac_col_/$$, and
+$cref/constraint_jac_work_/record_constraint/constraint_jac_work_/$$,
+can be used to compute the sparse Jacobian corresponding
+to $code constraint_fun_$$.
+The vectors
+$cref/constraint_hes_row_/record_constraint/constraint_hes_row_/$$,
+$cref/constraint_hes_col_/record_constraint/constraint_hes_col_/$$, and
+$cref/constraint_hes_work_/record_constraint/constraint_hes_work_/$$,
+can be used to compute the lower triangle of the
+sparse Hessian corresponding to $code constraint_fun_$$.
 $codep */
 	// computes constraint function
-	CppAD::ADFun<double>        constraint_fun_;
+	CppAD::ADFun<double>        constraint_fun_;     // c(theta)
 	//
-	CppAD::vector<size_t>       constraint_jac_row_; // jacobian row indices
-	CppAD::vector<size_t>       constraint_jac_col_; // jacobian column indices
-	CppAD::sparse_jacobian_work constraint_jac_work_;
-	CppAD::vector<size_t>       constraint_hes_row_; // hessian row indices
-	CppAD::vector<size_t>       constraint_hes_col_; // hessian column indices
-	CppAD::sparse_hessian_work  constraint_hes_work_;
+	CppAD::vector<size_t>       constraint_jac_row_; // row indices for c^{(1)}
+	CppAD::vector<size_t>       constraint_jac_col_; // column indices  c^{(1)}
+	CppAD::sparse_jacobian_work constraint_jac_work_;// work info for   c^{(1)}
+	//
+	CppAD::vector<size_t>       constraint_hes_row_; // row indices for c^{(2)}
+	CppAD::vector<size_t>       constraint_hes_col_; // column indices  c^{(2)}
+	CppAD::sparse_hessian_work  constraint_hes_work_;// work info for   c^{(2)}
 /* $$
 ------------------------------------------------------------------------------
 $head pack$$
@@ -434,7 +465,7 @@ $codep */
 	);
 /* $$
 $head record_hes_ranobj$$
-See $cref mixed_cppad_record_hes_ranobj$$.
+See $cref record_hes_ranobj$$.
 $codep */
 	void record_hes_ranobj(
 		const d_vector& fixed_vec ,
@@ -442,12 +473,12 @@ $codep */
 	);
 /* $$
 $head record_fix_like$$
-See $cref mixed_cppad_record_fix_like$$.
+See $cref record_fix_like$$.
 $codep */
 	void record_fix_like(const d_vector& fixed_vec);
 /* $$
 $head record_constraint$$
-See $cref mixed_cppad_record_constraint$$.
+See $cref record_constraint$$.
 $codep */
 	void record_constraint(const d_vector& fixed_vec);
 /* $$
