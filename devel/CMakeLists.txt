@@ -26,7 +26,7 @@ ADD_LIBRARY(mixed_cppad
 	mixed_cppad/record_fix_like.cpp
 	mixed_cppad/record_constraint.cpp
 	mixed_cppad/record_hes_cross.cpp
-	mixed_cppad/record_hes_fix.cpp
+	mixed_cppad/record_hes_ranobj.cpp
 	mixed_cppad/record_hes_ran.cpp
 	mixed_cppad/record_ran_like.cpp
 )

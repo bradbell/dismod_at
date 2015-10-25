@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 
 /*
-$begin mixed_cppad_record_hes_fix$$
+$begin mixed_cppad_record_hes_ranobj$$
 $spell
 	ranobj
 	cppad
@@ -25,7 +25,7 @@ $$
 $section Record Hessian of Random Likelihood w.r.t Fixed Effects$$
 
 $head Syntax$$
-$codei%record_hes_fix(%fixed_vec%, %random_vec%)%$$
+$codei%record_hes_ranobj(%fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code mixed_cppad$$ class
@@ -57,11 +57,11 @@ $codei%
 %$$
 do not matter.
 Upon return the contain the row indices and column indices
-for the sparse Hessian represented by $code hes_fix_$$; i.e.
+for the sparse Hessian represented by $code hes_ranobj_$$; i.e.
 $codei%hes_ranobj_row_[%i%]%$$ and $codei%hes_ranobj_col_[%i%]%$$
 are the row and column indices for the Hessian element
 that corresponds to the $th i$$ component of the function
-corresponding to $code hes_fix_$$.
+corresponding to $code hes_ranobj_$$.
 
 $head hes_ranobj_work_$$
 The input value of the member variable
@@ -99,10 +99,10 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void mixed_cppad::record_hes_fix(
+void mixed_cppad::record_hes_ranobj(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	assert( ! record_hes_fix_done_ );
+{	assert( ! record_hes_ranobj_done_ );
 	assert( record_ranobj_done_ );
 	size_t i, j;
 
@@ -168,7 +168,7 @@ void mixed_cppad::record_hes_fix(
 		hes_ranobj_work_
 	);
 	//
-	record_hes_fix_done_ = true;
+	record_hes_ranobj_done_ = true;
 }
 
 } // END_DISMOD_AT_NAMESPACE

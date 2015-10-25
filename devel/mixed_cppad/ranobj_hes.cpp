@@ -129,7 +129,7 @@ void mixed_cppad::ranobj_hes(
 	CppAD::vector<size_t>&   row_out     ,
 	CppAD::vector<size_t>&   col_out     ,
 	d_vector&                val_out     )
-{	assert( record_hes_fix_done_ );
+{	assert( record_hes_ranobj_done_ );
 	assert( n_fixed_  == fixed_vec.size() );
 	assert( n_random_ == random_vec.size() );
 
@@ -168,7 +168,7 @@ void mixed_cppad::ranobj_hes(
 	d_vector w(1);
 	w[0] = 1.0;
 
-	// First call to SparseHessian is during record_hes_fix
+	// First call to SparseHessian is during record_hes_ranobj
 	CppAD::vector< std::set<size_t> > not_used(0);
 
 	// compute the sparse Hessian

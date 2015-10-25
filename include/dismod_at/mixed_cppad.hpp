@@ -130,7 +130,7 @@ $comment */
 	record_hes_cross_done_(false)   ,
 	record_newton_atom_done_(false) ,
 	record_ranobj_done_(false)     ,
-	record_hes_fix_done_(false)
+	record_hes_ranobj_done_(false)
 	{ }
 /* $$
 $head initialize$$
@@ -214,7 +214,7 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/mixed_cppad/record_hes_cross.cpp
 	%devel/mixed_cppad/newton_step.cpp
 	%devel/mixed_cppad/record_ranobj.cpp
-	%devel/mixed_cppad/record_hes_fix.cpp
+	%devel/mixed_cppad/record_hes_ranobj.cpp
 	%devel/mixed_cppad/record_fix_like.cpp
 	%devel/mixed_cppad/record_constraint.cpp
 	%devel/mixed_cppad/h_ran_like.cpp
@@ -251,7 +251,7 @@ $codep */
 	// only called when n_random_ > 0 and MIXED_CPPAD_NEWTON is true
 	bool                record_newton_atom_done_;
 	bool                record_ranobj_done_;
-	bool                record_hes_fix_done_;
+	bool                record_hes_ranobj_done_;
 /* $$
 
 $head n_random_ > 0$$
@@ -324,7 +324,7 @@ $codep */
 	CppAD::ADFun<double>    ranobj_fun_;     // for computing H_beta_beta
 /* $$
 
-$subhead hes_fix_$$
+$subhead hes_ranobj_$$
 Information used to calculate the sparse Hessian of the random likelihood
 w.r.t. fixed effects $latex H_{\beta \beta}^{(2)} ( \beta, \theta , u )$$.
 matrix
@@ -333,7 +333,7 @@ $codep */
 	CppAD::vector<size_t>      hes_ranobj_col_; // corresponding column indices
 	CppAD::sparse_hessian_work hes_ranobj_work_;
 /* $$
-Note that if $code record_hes_fix_done_$$ is true and
+Note that if $code record_hes_ranobj_done_$$ is true and
 $code hes_ranobj_row_.size() == 0$$, then this Hessian is zero; i.e.,
 the second derivative of the Laplace approximation is zero.
 
@@ -433,10 +433,10 @@ $codep */
 		const d_vector& random_vec
 	);
 /* $$
-$head record_hes_fix$$
-See $cref mixed_cppad_record_hes_fix$$.
+$head record_hes_ranobj$$
+See $cref mixed_cppad_record_hes_ranobj$$.
 $codep */
-	void record_hes_fix(
+	void record_hes_ranobj(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);

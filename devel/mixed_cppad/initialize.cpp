@@ -185,10 +185,10 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 		record_ranobj(fixed_vec, random_vec);
 		assert( record_ranobj_done_ );
 
-		// hes_fix_
-		assert( ! record_hes_fix_done_ );
-		record_hes_fix(fixed_vec, random_vec);
-		assert( record_hes_fix_done_ );
+		// hes_ranobj_
+		assert( ! record_hes_ranobj_done_ );
+		record_hes_ranobj(fixed_vec, random_vec);
+		assert( record_hes_ranobj_done_ );
 # endif
 	}
 
