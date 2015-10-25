@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 # include <Eigen/Sparse>
 /*
-$begin mixed_cppad_d_logdet$$
+$begin mixed_cppad_logdet_grad$$
 $spell
 	cppad
 	hes
@@ -25,7 +25,7 @@ $$
 $section Derivative of Log Determinant of Hessian w.r.t. Random Effects$$
 
 $head Syntax$$
-$icode%mixed_object%.d_logdet(
+$icode%mixed_object%.logdet_grad(
 	%fixed_vec%, %random_vec%, %logdet_fix%, %logdet_ran%)%$$
 
 $head Purpose$$
@@ -82,10 +82,10 @@ Upon return, it contains the value of the derivative w.r.t
 the random effects.
 
 $children%
-	example/devel/mixed_cppad/private/d_logdet_xam.cpp
+	example/devel/mixed_cppad/private/logdet_grad_xam.cpp
 %$$
 $head Example$$
-The file $cref d_logdet_xam.cpp$$ contains an example
+The file $cref logdet_grad_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 
@@ -94,7 +94,7 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // ----------------------------------------------------------------------------
-void mixed_cppad::d_logdet(
+void mixed_cppad::logdet_grad(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec ,
 	d_vector&       logdet_fix ,

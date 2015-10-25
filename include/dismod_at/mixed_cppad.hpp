@@ -26,7 +26,7 @@ extern bool fix_like_jac_xam(void);
 extern bool fix_like_hes_xam(void);
 extern bool hes_ran_fun_xam(void);
 extern bool ranobj_eval_xam(void);
-extern bool d_logdet_xam(void);
+extern bool logdet_grad_xam(void);
 extern bool ranobj_grad_xam(void);
 extern bool hes_cross_xam(void);
 
@@ -218,7 +218,7 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/mixed_cppad/record_fix_like.cpp
 	%devel/mixed_cppad/record_constraint.cpp
 	%devel/mixed_cppad/ranobj_eval.cpp
-	%devel/mixed_cppad/d_logdet.cpp
+	%devel/mixed_cppad/logdet_grad.cpp
 	%devel/mixed_cppad/ranobj_grad.cpp
 	%devel/mixed_cppad/ran_like_grad.cpp
 	%devel/mixed_cppad/ranobj_hes.cpp
@@ -493,16 +493,16 @@ $codep */
 	friend bool ::ranobj_eval_xam(void);
 /* $$
 ------------------------------------------------------------------------------
-$head d_logdet$$
-See $cref mixed_cppad_d_logdet$$
+$head logdet_grad$$
+See $cref mixed_cppad_logdet_grad$$
 $codep */
-	void d_logdet(
+	void logdet_grad(
 		const d_vector& fixed_vec  ,
 		const d_vector& random_vec ,
 		d_vector&       logdet_fix ,
 		d_vector&       logdet_ran
 	);
-	friend bool ::d_logdet_xam(void);
+	friend bool ::logdet_grad_xam(void);
 /* $$
 ------------------------------------------------------------------------------
 $head ranobj_grad$$

@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin d_logdet_xam.cpp$$
+$begin logdet_grad_xam.cpp$$
 $spell
 	cppad
 	hes
@@ -18,7 +18,7 @@ $spell
 	logdet
 $$
 
-$section C++ d_logdet: Example and Test$$
+$section C++ logdet_grad: Example and Test$$
 
 
 $head Private$$
@@ -26,7 +26,7 @@ This example is not part of the
 $cref/mixed_cppad public API/mixed_cppad_public/$$.
 
 $code
-$verbatim%example/devel/mixed_cppad/private/d_logdet_xam.cpp
+$verbatim%example/devel/mixed_cppad/private/logdet_grad_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -105,7 +105,7 @@ namespace {
 	};
 }
 
-bool d_logdet_xam(void)
+bool logdet_grad_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -129,7 +129,7 @@ bool d_logdet_xam(void)
 
 	// compute derivative of logdet of Hessian
 	vector<double> logdet_fix(n_fixed), logdet_ran(n_random);
-	mixed_object.d_logdet(fixed_vec, random_vec, logdet_fix, logdet_ran);
+	mixed_object.logdet_grad(fixed_vec, random_vec, logdet_fix, logdet_ran);
 
 	// Hessian_{i,j} = 1.0 / (theta[i] * theta[i]) if i == j
 	//               = 0.0 otherwise

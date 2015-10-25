@@ -108,7 +108,7 @@ void mixed_cppad::ranobj_grad(
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
 	// 2DO: only do analyze pattern once and store in chol
-	// 2DO: same hessian point is factorized here as well as in d_logdet.
+	// 2DO: same hessian point is factorized here as well as in logdet_grad.
 	sparse_matrix hessian(n_random_, n_random_);
 	for(size_t k = 0; k < K; k++)
 	{	assert( n_fixed_        <= hes_ran_col_[k]  );
@@ -126,7 +126,7 @@ void mixed_cppad::ranobj_grad(
 	//
 	// Compute derivative of logdet of f_{uu}^{(2)} ( theta , u )
 	d_vector logdet_fix(n_fixed_), logdet_ran(n_random_);
-	d_logdet(fixed_vec, random_vec, logdet_fix, logdet_ran);
+	logdet_grad(fixed_vec, random_vec, logdet_fix, logdet_ran);
 	//
 	// Compute derivative of f(theta , u ) w.r.t theta and u
 	d_vector w(1), f_both(n_fixed_ + n_random_);

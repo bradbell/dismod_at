@@ -46,7 +46,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	mixed_cppad/private/constraint_eval_xam.cpp
 	mixed_cppad/private/constraint_hes_xam.cpp
 	mixed_cppad/private/constraint_jac_xam.cpp
-	mixed_cppad/private/d_logdet_xam.cpp
+	mixed_cppad/private/logdet_grad_xam.cpp
 	mixed_cppad/private/ranobj_grad_xam.cpp
 	mixed_cppad/private/fix_like_hes_xam.cpp
 	mixed_cppad/private/fix_like_jac_xam.cpp
