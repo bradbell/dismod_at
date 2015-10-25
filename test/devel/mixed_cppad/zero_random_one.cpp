@@ -59,6 +59,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include <dismod_at/mixed_cppad.hpp>
+# include <dismod_at/configure.hpp>
 
 namespace {
 	using CppAD::vector;
@@ -199,10 +200,14 @@ bool zero_random_one(void)
 	std::string fixed_options =
 		"Integer print_level               0\n"
 		"String  sb                        yes\n"
-		"String  derivative_test           second-order\n"
 		"String  derivative_test_print_all yes\n"
 		"Numeric tol                       1e-8\n"
 	;
+# if MIXED_CPPAD_NEWTON
+	fixed_options += "String  derivative_test   second-order\n";
+# else
+	fixed_options += "String  derivative_test   first-order\n";
+# endif
 	std::string random_options =
 		"Integer print_level     0\n"
 		"String  sb              yes\n"

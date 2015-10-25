@@ -366,10 +366,8 @@ bool capture_xam(void)
 	size_t n_fixed  = 3;
 	size_t random_seed = dismod_at::new_gsl_rng(0);
 	std::time_t start_time = std::time( DISMOD_AT_NULL_PTR );
-
-	// 45 (larger ?) works with ulimit -Sv 1000000 and -g compile
+	// problem size
 	size_t n_random = 25;
-	// 45 (larger ?) works with ulimit -Sv 1000000 and -g compile
 	size_t I = 25;
 	//
 	size_t T = n_random;
@@ -387,7 +385,7 @@ bool capture_xam(void)
 	vector<double>
 		theta_lower(n_fixed), theta_in(n_fixed), theta_upper(n_fixed);
 	// constant term
-	theta_lower[0] = -2.0;
+	theta_lower[0] = 0.0;
 	theta_in[0]    =  theta_sim[0] / 2.0;
 	theta_upper[0] = +2.0;
 	// mean population
@@ -395,7 +393,7 @@ bool capture_xam(void)
 	theta_in[1]    = theta_sim[1] / 2.0;
 	theta_upper[1] = 20.0;
 	// standard deviation of random effects
-	theta_lower[2] = 0.0;
+	theta_lower[2] = 1e-2;
 	theta_in[2]    = theta_sim[2] / 2.0;
 	theta_upper[2] = 4.0;
 

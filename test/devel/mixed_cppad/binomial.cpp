@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 # include <dismod_at/mixed_cppad.hpp>
 # include <dismod_at/manage_gsl_rng.hpp>
+# include <dismod_at/configure.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 
@@ -145,11 +146,15 @@ bool binomial(void)
 	std::string fixed_options =
 		"Integer print_level               0\n"
 		"String  sb                        yes\n"
-		"String  derivative_test           second-order\n"
 		"String  derivative_test_print_all yes\n"
 		"Numeric tol                       1e-5\n"
 		"Integer max_iter                  100\n"
 	;
+# if MIXED_CPPAD_NEWTON
+	fixed_options += "String  derivative_test   second-order\n";
+# else
+	fixed_options += "String  derivative_test   first-order\n";
+# endif
 	std::string random_options =
 		"Integer print_level 0\n"
 		"String  sb          yes\n"

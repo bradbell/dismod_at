@@ -48,6 +48,19 @@ $codei%
 	const std::string& %fixed_options%
 %$$
 and is the $cref ipopt_options$$ for optimizing the fixed effects.
+If $cref/mixed_cppad_newton/run_cmake.sh/mixed_cppad_newton/$$
+is $code NO$$,
+the following changes are made to the standard Ipopt options specification:
+$list number$$
+If specified, the $icode derivative_test$$ must be $code none$$ or
+$code first-order$$.
+$lnext
+The value used for $icode hessian_approximation$$ is $code limit-memory$$
+and cannot be specified differently in $icode fixed_options$$.
+$lnext
+The default value used for $icode limited_memory_max_history$$ is 30.
+$lend
+
 
 $head random_options$$
 This argument has prototype
@@ -154,6 +167,7 @@ $end
 # include <dismod_at/ipopt_fixed.hpp>
 # include <dismod_at/configure.hpp>
 
+
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 CppAD::vector<double> mixed_cppad::optimize_fixed(
@@ -189,6 +203,11 @@ CppAD::vector<double> mixed_cppad::optimize_fixed(
 	// Create an instance of an IpoptApplication
 	SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
 
+# if ! MIXED_CPPAD_NEWTON
+	// special defaults settings
+	app->Options()->SetStringValue("hessian_approximation", "limited-memory");
+	app->Options()->SetIntegerValue("limited_memory_max_history", 30);
+# endif
 	// Set options for optimization of the fixed effects
 	const std::string& options = fixed_options;
 	size_t begin_1, end_1, begin_2, end_2, begin_3, end_3;
@@ -217,10 +236,22 @@ CppAD::vector<double> mixed_cppad::optimize_fixed(
 		std::string tok_1 = options.substr(begin_1, end_1 - begin_1);
 		std::string tok_2 = options.substr(begin_2, end_2 - begin_2);
 		std::string tok_3 = options.substr(begin_3, end_3 - begin_3);
-
 		// switch on option type
 		if ( tok_1 == "String" )
-			app->Options()->SetStringValue(tok_2.c_str(), tok_3.c_str());
+		{	app->Options()->SetStringValue(tok_2.c_str(), tok_3.c_str());
+# if ! MIXED_CPPAD_NEWTON
+			bool ok = true;
+			if( tok_2 == "hessian_approximation" )
+				ok &= tok_3 == "limited-memory";
+			if( tok_2 == "derivative_test" )
+				ok &= tok_3 == "none" ||tok_3 == "first-order";
+			if( ! ok )
+			{	std::string msg = "mixed_cppad: compiled without newton method";
+				msg += " so cannot have " + tok_2 + " equal to " + tok_3;
+				fatal_error(msg);
+			}
+# endif
+		}
 		else if ( tok_1 == "Numeric" )
 		{	Ipopt::Number value = std::atof( tok_3.c_str() );
 			app->Options()->SetNumericValue(tok_2.c_str(), value);
@@ -236,12 +267,6 @@ CppAD::vector<double> mixed_cppad::optimize_fixed(
 		while( options[begin_1] == ' ' || options[begin_1] == '\n' )
 			begin_1++;
 	}
-# if ! MIXED_CPPAD_NEWTON
-	app->Options()->SetStringValue("hessian_approximation", "limited-memory");
-	app->Options()->SetStringValue("derivative_test", "first-order");
-	app->Options()->SetIntegerValue("limited_memory_max_history", 30);
-	app->Options()->SetNumericValue("point_perturbation_radius", 0.0);
-# endif
 	// get the tolerance settting for the fixed effects optimization
 	const std::string tag    = "tol";
 	const std::string prefix = "";

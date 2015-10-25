@@ -1,4 +1,3 @@
-#! /bin/bash -e
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
@@ -9,29 +8,22 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-if [ "$0" != "bin/check_all.sh" ]
-then
-	echo "bin/check_all.sh: must be executed from its parent directory"
-	exit 1
-fi
-# ---------------------------------------------------------------------------
-bin/run_omhelp.sh xml
+# $begin mixed_cppad_newton$$ $newlinech #$$
+# $spell
+#	cppad
+#	dismod
+# $$
 #
-bin/run_cmake.sh --newton
-cd build
-make check
-cd ..
-bin/run_cmake.sh
-cd build
-make check
-make install
-cd ..
+# $section Was mixed_cppad Configured with Newtons Method for Fixed Effects$$
 #
-bin/check_devel_xam.sh
-bin/check_include.sh
-bin/check_verbatim.sh
-bin/check_configure.sh
+# $head Syntax$$
+# $icode%flag% = dismod_at.mixed_cppad_newton()%$$
 #
-bin/check_mixed_cppad.sh
+# $head flag$$
+# The return value $icode flag$$ is $code True$$ ($code False$$)
+# $cref/mixed_cppad_newton/run_cmake.sh/mixed_cppad_newton/$$
+# was $code YES$$ ($code NO$$).
 #
-echo 'check_all.sh: OK'
+# $end
+def mixed_cppad_newton() :
+	return @mixed_cppad_newton_01@ == 1

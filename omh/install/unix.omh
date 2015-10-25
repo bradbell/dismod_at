@@ -132,11 +132,9 @@ The steps below will need to be executed each time you install
 a new version of $code dismod_at$$:
 
 $subhead Setup$$
-The following is a list of the cmake settings in $code bin/run_cmake.sh$$.
-You should change these settings so they correspond to your machine:
-$code
-$verbatim%bin/run_cmake.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
-$$
+$children%bin/run_cmake.sh%$$
+The file $cref%bin/run_cmake.sh%run_cmake.sh%$$ has setting that
+you should change so they correspond to your machine.
 
 $subhead Cmake Command$$
 After changing $code bin/run_cmake.sh$$ to work for your system,

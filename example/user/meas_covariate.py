@@ -269,7 +269,6 @@ def example_db (file_name) :
 		{ 'name':'random_seed',            'value':'0'            },
 		{ 'name':'rate_info',              'value':'iota_pos_rho_pos' },
 
-		{ 'name':'derivative_test_fixed',  'value':'second-order' },
 		{ 'name':'max_num_iter_fixed',     'value':'100'          },
 		{ 'name':'print_level_fixed',      'value':'0'            },
 		{ 'name':'tolerance_fixed',        'value':'1e-7'         },
@@ -279,6 +278,14 @@ def example_db (file_name) :
 		{ 'name':'print_level_random',     'value':'0'            },
 		{ 'name':'tolerance_random',       'value':'1e-7'         }
 	]
+	if dismod_at.mixed_cppad_newton() :
+		option_dict.append(
+			{ 'name':'derivative_test_fixed',  'value':'second-order' },
+		)
+	else :
+		option_dict.append(
+			{ 'name':'derivative_test_fixed',  'value':'first-order' },
+		)
 	# --------------------------------------------------------------------------
 	# avgint table: empty
 	avgint_dict = list()

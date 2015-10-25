@@ -61,6 +61,9 @@ $lnext
 The
 $code mixed_cppad_set_sparsity$$ option was also added to the
 $cref/setup/install_unix/dismod_at/Setup/$$.
+$lnext
+Create a separate documentation section for editing of
+$cref run_cmake.sh$$ during the install procedure.
 $lend
 
 $head 10-20$$
