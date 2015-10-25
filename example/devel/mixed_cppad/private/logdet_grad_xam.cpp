@@ -52,7 +52,8 @@ namespace {
 			size_t n_random                   ,
 			const vector<double>& y           )
 			:
-			dismod_at::mixed_cppad(n_fixed, n_random) ,
+			// quasi_fixed = false
+			dismod_at::mixed_cppad(n_fixed, n_random, false) ,
 			y_(y)
 		{ }
 	private:

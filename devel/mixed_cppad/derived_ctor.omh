@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 $begin mixed_cppad_derived_ctor$$
 $spell
+	bool
 	cppad
 	dismod
 $$
@@ -17,7 +18,9 @@ $$
 $section mixed_cppad Derived Class Constructor$$
 
 $head Syntax$$
-$icode%mixed_derived% %mixed_object%(%n_fixed%, %n_random%, %...%)%$$
+$icode%mixed_derived% %mixed_object%(
+	%n_fixed%, %n_random%, %quasi_fixed%, %...%
+)%$$
 
 $head See Also$$
 $cref/initialize/mixed_cppad_initialize/$$
@@ -29,22 +32,41 @@ $codei%
 %$$
 The derived class constructor must call its base class constructor as follows:
 $codei%
-	mixed_cppad(%n_fixed%, %n_random%)
+	mixed_cppad(%n_fixed%, %n_random%, %quasi_fixed%)
 %$$
 
 $head mixed_object$$
 This is the derived class object that is constructed by the syntax above.
 
 $head n_fixed$$
-This is the number of
+This argument has prototype
+$codei%
+	size_t %n_fixed%
+%$$
+and is the number of
 $cref/fixed effects/mixed_cppad/Fixed Effects, theta/$$ in the model.
 
 $head n_random$$
-This is the number of
+This argument has prototype
+$codei%
+	size_t %n_random%
+%$$
+and is the number of
 $cref/random effects/mixed_cppad/Random Effects, u/$$ in the model.
 In the case where there are
 $cref/no random effects/mixed_cppad/Problem/No Random Effects/$$,
 $icode%n_random% = 0%$$.
+
+$head quasi_fixed$$
+This argument has prototype
+$codei%
+	bool %quasi_fixed%
+%$$
+If it is true, a quasi-Newton method is used to
+$cref/optimize the fixed effects/mixed_cppad_optimize_fixed/$$.
+Otherwise a full Newton method is used.
+The full Newton method requires much more memory for computation
+of second derivatives of the Laplace approximation.
 
 $head ...$$
 Other arguments to the derived class constructor

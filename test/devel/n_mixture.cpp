@@ -65,7 +65,8 @@ public:
 	// constructor
 	mixed_derived(size_t K, size_t I, size_t T, vector<size_t>&  y)
 		:
-		dismod_at::mixed_cppad(2, 0) , // n_fixed = 2, n_random = 0
+		// n_fixed = 2, n_random = 0, quasi_fixed = false
+		dismod_at::mixed_cppad(2, 0, false),
 		K_(K)   ,
 		I_(I)   ,
 		T_(T)   ,

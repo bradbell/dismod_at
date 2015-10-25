@@ -9,7 +9,6 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/mixed_cppad.hpp>
-# include <dismod_at/configure.hpp>
 
 /*
 $begin mixed_cppad_initialize$$
@@ -174,22 +173,23 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 		record_hes_cross(fixed_vec, random_vec);
 		assert( record_hes_cross_done_ );
 
-# if MIXED_CPPAD_NEWTON
-		// newton_atom_
-		assert( ! record_newton_atom_done_ );
-		newton_atom_.initialize(ran_like_a1fun_, fixed_vec, random_vec);
-		record_newton_atom_done_ = true;
+		if( ! quasi_fixed_ )
+		{
+			// newton_atom_
+			assert( ! record_newton_atom_done_ );
+			newton_atom_.initialize(ran_like_a1fun_, fixed_vec, random_vec);
+			record_newton_atom_done_ = true;
 
-		// ranobj_fun_
-		assert( ! record_ranobj_done_ );
-		record_ranobj(fixed_vec, random_vec);
-		assert( record_ranobj_done_ );
+			// ranobj_fun_
+			assert( ! record_ranobj_done_ );
+			record_ranobj(fixed_vec, random_vec);
+			assert( record_ranobj_done_ );
 
-		// hes_ranobj_
-		assert( ! record_hes_ranobj_done_ );
-		record_hes_ranobj(fixed_vec, random_vec);
-		assert( record_hes_ranobj_done_ );
-# endif
+			// hes_ranobj_
+			assert( ! record_hes_ranobj_done_ );
+			record_hes_ranobj(fixed_vec, random_vec);
+			assert( record_hes_ranobj_done_ );
+		}
 	}
 
 	// fix_like_fun_

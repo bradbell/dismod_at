@@ -165,7 +165,6 @@ $end
 # include <coin/IpIpoptApplication.hpp>
 # include <dismod_at/mixed_cppad.hpp>
 # include <dismod_at/ipopt_fixed.hpp>
-# include <dismod_at/configure.hpp>
 
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -203,11 +202,13 @@ CppAD::vector<double> mixed_cppad::optimize_fixed(
 	// Create an instance of an IpoptApplication
 	SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
 
-# if ! MIXED_CPPAD_NEWTON
-	// special defaults settings
-	app->Options()->SetStringValue("hessian_approximation", "limited-memory");
-	app->Options()->SetIntegerValue("limited_memory_max_history", 30);
-# endif
+	if( quasi_fixed_ )
+	{	// special defaults settings
+		app->Options()->SetStringValue(
+			"hessian_approximation", "limited-memory");
+		app->Options()->SetIntegerValue(
+			"limited_memory_max_history", 30);
+	}
 	// Set options for optimization of the fixed effects
 	const std::string& options = fixed_options;
 	size_t begin_1, end_1, begin_2, end_2, begin_3, end_3;
@@ -239,18 +240,19 @@ CppAD::vector<double> mixed_cppad::optimize_fixed(
 		// switch on option type
 		if ( tok_1 == "String" )
 		{	app->Options()->SetStringValue(tok_2.c_str(), tok_3.c_str());
-# if ! MIXED_CPPAD_NEWTON
-			bool ok = true;
-			if( tok_2 == "hessian_approximation" )
-				ok &= tok_3 == "limited-memory";
-			if( tok_2 == "derivative_test" )
-				ok &= tok_3 == "none" ||tok_3 == "first-order";
-			if( ! ok )
-			{	std::string msg = "mixed_cppad: compiled without newton method";
-				msg += " so cannot have " + tok_2 + " equal to " + tok_3;
-				fatal_error(msg);
+			if( quasi_fixed_ )
+			{	bool ok = true;
+				if( tok_2 == "hessian_approximation" )
+					ok &= tok_3 == "limited-memory";
+				if( tok_2 == "derivative_test" )
+					ok &= tok_3 == "none" ||tok_3 == "first-order";
+				if( ! ok )
+				{	std::string msg = "mixed_cppad: constructed with";
+					msg += " quasi_fixed true so cannot have ";
+					msg += tok_2 + " equal to " + tok_3;
+					fatal_error(msg);
+				}
 			}
-# endif
 		}
 		else if ( tok_1 == "Numeric" )
 		{	Ipopt::Number value = std::atof( tok_3.c_str() );

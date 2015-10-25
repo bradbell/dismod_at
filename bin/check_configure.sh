@@ -22,10 +22,10 @@ define_list='
 	MIXED_CPPAD_NEWTON
 	MIXED_CPPAD_SET_SPARSITY
 '
-required='no'
-present='no'
 for file in $file_list
 do
+	required='no'
+	present='no'
 	for name in $define_list
 	do
 		if grep $name $file > /dev/null

@@ -232,11 +232,13 @@ private:
 public:
 	// constructor
 	mixed_derived(
-		size_t                 I     ,
-		size_t                 T     ,
-		vector<size_t>&        y     )
+		size_t                 I           ,
+		size_t                 T           ,
+		bool                   quasi_fixed ,
+		vector<size_t>&        y           )
 		:
-		dismod_at::mixed_cppad(3, T) , // n_fixed = 3, n_random = T
+		// n_fixed = 3, n_random = T
+		dismod_at::mixed_cppad(3, T, quasi_fixed) ,
 		I_(I)            ,
 		T_(T)            ,
 		y_(y)
@@ -398,7 +400,8 @@ bool capture_xam(void)
 	theta_upper[2] = 4.0;
 
 	// create derived object
-	mixed_derived mixed_object(I, T, y);
+	bool quasi_fixed = (random_seed % 2) == 0;
+	mixed_derived mixed_object(I, T, quasi_fixed, y);
 
 	// initialize point to start optimization at
 	vector<double>  u_in(T);

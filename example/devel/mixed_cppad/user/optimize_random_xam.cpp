@@ -42,9 +42,10 @@ namespace {
 		mixed_derived(
 			size_t n_fixed                    ,
 			size_t n_random                   ,
+			bool   quasi_fixed                ,
 			const vector<double>& y           )
 			:
-			dismod_at::mixed_cppad(n_fixed, n_random) ,
+			dismod_at::mixed_cppad(n_fixed, n_random, quasi_fixed) ,
 			y_(y)
 		{ }
 	private:
@@ -117,7 +118,8 @@ bool optimize_random_xam(void)
 	}
 
 	// object that is derived from mixed_cppad
-	mixed_derived mixed_object(n_data, n_data, data);
+	bool quasi_fixed = true;
+	mixed_derived mixed_object(n_data, n_data, quasi_fixed, data);
 	mixed_object.initialize(fixed_vec, random_in);
 
 	// determine the optimal random effects

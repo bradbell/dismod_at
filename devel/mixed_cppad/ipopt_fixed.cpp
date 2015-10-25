@@ -8,14 +8,10 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# include <dismod_at/configure.hpp>
 # include <dismod_at/ipopt_fixed.hpp>
-# include <dismod_at/configure.hpp>
-
 
 namespace {
 
-# if MIXED_CPPAD_NEWTON
 	// merge two (row, col) sparsity patterns into one
 	void merge_sparse(
 		const CppAD::vector<size_t>& row_one      , // first sparsity pattern
@@ -132,7 +128,6 @@ namespace {
 		}
 		return;
 	}
-# endif // MIXED_CPPAD_NEWTON
 
 	// --------------------------------------------------------------------
 	bool check_in_limits(double lower, double x, double upper, double tol)
@@ -304,11 +299,11 @@ n_random_          ( random_in.size() )        ,
 n_constraint_      ( constraint_lower.size() ) ,
 fixed_lower_       ( fixed_lower      )        ,
 fixed_upper_       ( fixed_upper      )        ,
-constraint_lower_  ( constraint_lower      )   ,
-constraint_upper_  ( constraint_upper      )   ,
+constraint_lower_  ( constraint_lower )        ,
+constraint_upper_  ( constraint_upper )        ,
 fixed_in_          ( fixed_in         )        ,
 random_in_         ( random_in        )        ,
-mixed_object_     ( mixed_object    )
+mixed_object_      ( mixed_object    )
 {
 	//
 	// -----------------------------------------------------------------------
@@ -367,66 +362,74 @@ mixed_object_     ( mixed_object    )
 	// -----------------------------------------------------------------------
 	// set lag_hes_row_, lag_hes_col_, ranobj_2_lag_, fix_like2lag_
 	// -----------------------------------------------------------------------
-# if ! MIXED_CPPAD_NEWTON
-	nnz_h_lag_ = 0;
-# else
-	// row and column indices for contribution from random part of objective
-	if( n_random_ > 0 ) mixed_object.ranobj_hes(
-		fixed_in, random_in,
-		ranobj_hes_row_, ranobj_hes_col_, ranobj_hes_val_
-	);
-	// row and column indices for contribution from prior
-	d_vector weight( 1 + fix_like_n_abs_ );
-	for(size_t i = 0; i < weight.size(); i++)
-		weight[i] = 1.0;
-	mixed_object.fix_like_hes(
-		fixed_in, weight, fix_like_hes_row_, fix_like_hes_col_, fix_like_hes_val_
-	);
-	// row and column indices for contribution from constraint
-	weight.resize( n_constraint_ );
-	for(size_t i = 0; i < weight.size(); i++)
-		weight[i] = 1.0;
-	mixed_object.constraint_hes(
-		fixed_in,
-		weight,
-		constraint_hes_row_,
-		constraint_hes_col_,
-		constraint_hes_val_
-	);
-	//
-	// merge to form sparsity for Lagrangian
-	ranobj_2_lag_.resize( ranobj_hes_row_.size() );
-	fix_like2lag_.resize( fix_like_hes_row_.size() );
-	constraint_2_lag_.resize( constraint_hes_row_.size() );
-	merge_sparse(
-		ranobj_hes_row_      ,
-		ranobj_hes_col_      ,
-		fix_like_hes_row_        ,
-		fix_like_hes_col_        ,
-		constraint_hes_row_   ,
-		constraint_hes_col_   ,
-		lag_hes_row_          ,
-		lag_hes_col_          ,
-		ranobj_2_lag_        ,
-		fix_like2lag_          ,
-		constraint_2_lag_
-	);
+	if( mixed_object_.quasi_fixed_ )
+	{	// Using quasi-Newton method
+		nnz_h_lag_ = 0;
+	}
+	else
+	{	// Using full Newton method
+
+		// row and column indices for contribution from random part of objective
+		if( n_random_ > 0 ) mixed_object.ranobj_hes(
+			fixed_in, random_in,
+			ranobj_hes_row_, ranobj_hes_col_, ranobj_hes_val_
+		);
+		// row and column indices for contribution from prior
+		d_vector weight( 1 + fix_like_n_abs_ );
+		for(size_t i = 0; i < weight.size(); i++)
+			weight[i] = 1.0;
+		mixed_object.fix_like_hes(
+			fixed_in,
+			weight,
+			fix_like_hes_row_,
+			fix_like_hes_col_,
+			fix_like_hes_val_
+		);
+		// row and column indices for contribution from constraint
+		weight.resize( n_constraint_ );
+		for(size_t i = 0; i < weight.size(); i++)
+			weight[i] = 1.0;
+		mixed_object.constraint_hes(
+			fixed_in,
+			weight,
+			constraint_hes_row_,
+			constraint_hes_col_,
+			constraint_hes_val_
+		);
+		//
+		// merge to form sparsity for Lagrangian
+		ranobj_2_lag_.resize( ranobj_hes_row_.size() );
+		fix_like2lag_.resize( fix_like_hes_row_.size() );
+		constraint_2_lag_.resize( constraint_hes_row_.size() );
+		merge_sparse(
+			ranobj_hes_row_      ,
+			ranobj_hes_col_      ,
+			fix_like_hes_row_        ,
+			fix_like_hes_col_        ,
+			constraint_hes_row_   ,
+			constraint_hes_col_   ,
+			lag_hes_row_          ,
+			lag_hes_col_          ,
+			ranobj_2_lag_        ,
+			fix_like2lag_          ,
+			constraint_2_lag_
+		);
 # ifndef NDEBUG
-	for(size_t k = 0; k < ranobj_hes_row_.size(); k++)
-		assert( ranobj_2_lag_[k] < lag_hes_row_.size() );
-	//
-	for(size_t k = 0; k < fix_like_hes_row_.size(); k++)
-		assert( fix_like2lag_[k] < lag_hes_row_.size() );
-	//
-	for(size_t k = 0; k < constraint_hes_row_.size(); k++)
-		assert( constraint_2_lag_[k] < lag_hes_row_.size() );
+		for(size_t k = 0; k < ranobj_hes_row_.size(); k++)
+			assert( ranobj_2_lag_[k] < lag_hes_row_.size() );
+		//
+		for(size_t k = 0; k < fix_like_hes_row_.size(); k++)
+			assert( fix_like2lag_[k] < lag_hes_row_.size() );
+		//
+		for(size_t k = 0; k < constraint_hes_row_.size(); k++)
+			assert( constraint_2_lag_[k] < lag_hes_row_.size() );
 # endif
-	// -----------------------------------------------------------------------
-	// set nnz_h_lag_
-	// -----------------------------------------------------------------------
-	nnz_h_lag_ = lag_hes_row_.size();
-	assert( nnz_h_lag_ == lag_hes_col_.size() );
-# endif // MIXED_CPPAD_NEWTON
+		// -------------------------------------------------------------------
+		// set nnz_h_lag_
+		// -------------------------------------------------------------------
+		nnz_h_lag_ = lag_hes_row_.size();
+		assert( nnz_h_lag_ == lag_hes_col_.size() );
+	}
 	// -----------------------------------------------------------------------
 	// set size of temporary vectors
 	// -----------------------------------------------------------------------
@@ -1141,8 +1144,8 @@ $latex \[
 	L(x) = \alpha f(x) + \sum_{i=0}^{m-1} \lambda_i g_i (x)
 \] $$
 
-$head ! MIXED_CPPAD_NEWTON$$
-It is assumed that this preprocessor symbol is false (zero).
+$head mixed_object.quasi_fixed_$$
+It is assumed that this member variable is false.
 
 $head n$$
 is the number of variables in the problem (dimension of x).
@@ -1215,7 +1218,7 @@ bool ipopt_fixed::eval_h(
 	Index*        jCol           ,  // out
 	Number*       values         )  // out
 {
-	assert( MIXED_CPPAD_NEWTON );
+	assert( ! mixed_object_.quasi_fixed_ );
 	assert( n > 0 && size_t(n) == n_fixed_ + fix_like_n_abs_ );
 	assert( m >= 0 && size_t(m) == 2 * fix_like_n_abs_ + n_constraint_ );
 	assert( size_t(nele_hess) == nnz_h_lag_ );

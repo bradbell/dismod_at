@@ -13,7 +13,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/vector.hpp>
 # include <dismod_at/mixed_cppad.hpp>
 # include <dismod_at/manage_gsl_rng.hpp>
-# include <dismod_at/configure.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 
@@ -51,8 +50,9 @@ public:
 	// constructor
 	mixed_derived(size_t N, vector<size_t>&  y)
 		:
-		dismod_at::mixed_cppad(1, 0) , // n_fixed = 1, n_random = 0
-		N_(N)                         ,
+		// n_fixed = 1, n_random = 0, quasi_fixed = false
+		dismod_at::mixed_cppad(1, 0, false) ,
+		N_(N)                               ,
 		y_(y)
 	{	logfac_.resize(N+1);
 		logfac_[0]  = 0.0;
@@ -146,15 +146,11 @@ bool binomial(void)
 	std::string fixed_options =
 		"Integer print_level               0\n"
 		"String  sb                        yes\n"
+		"String  derivative_test           second-order\n"
 		"String  derivative_test_print_all yes\n"
 		"Numeric tol                       1e-5\n"
 		"Integer max_iter                  100\n"
 	;
-# if MIXED_CPPAD_NEWTON
-	fixed_options += "String  derivative_test   second-order\n";
-# else
-	fixed_options += "String  derivative_test   first-order\n";
-# endif
 	std::string random_options =
 		"Integer print_level 0\n"
 		"String  sb          yes\n"

@@ -12,6 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/log_message.hpp>
+# include <dismod_at/configure.hpp>
 /*
 $begin fit_model$$
 $spell
@@ -164,8 +165,13 @@ fit_model::fit_model(
 	const prior_model&                 prior_object ) :
 // base class constructor
 mixed_cppad(
-	size_fixed_effect(pack_object) , // n_fixed
-	size_random_effect(pack_object)  // n_random
+	size_fixed_effect(pack_object) ,  // n_fixed
+	size_random_effect(pack_object) , // n_random
+# if MIXED_CPPAD_NEWTON
+	false                             // quasi_fixed
+# else
+	true
+# endif
 ) ,
 db_            (db)                                 ,
 n_fixed_       ( size_fixed_effect(pack_object)  )  ,

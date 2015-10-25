@@ -43,9 +43,10 @@ namespace {
 		mixed_derived(
 			size_t n_fixed                    ,
 			size_t n_random                   ,
+			bool   quasi_fixed                ,
 			const vector<double>& y           )
 			:
-			dismod_at::mixed_cppad(n_fixed, n_random) ,
+			dismod_at::mixed_cppad(n_fixed, n_random, quasi_fixed) ,
 			y_(y)
 		{ }
 		// implementation of ran_like
@@ -151,7 +152,8 @@ bool mixed_derived_xam(void)
 	}
 
 	// object that is derived from mixed_cppad
-	mixed_derived mixed_object(n_fixed, n_random, data);
+	bool quasi_fixed = true;
+	mixed_derived mixed_object(n_fixed, n_random, quasi_fixed, data);
 	mixed_object.initialize(fixed_vec, random_vec);
 
 	// Evaluate the random negative log-likelihood

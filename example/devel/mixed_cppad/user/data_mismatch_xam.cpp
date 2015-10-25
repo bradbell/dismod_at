@@ -155,7 +155,6 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include <dismod_at/mixed_cppad.hpp>
-# include <dismod_at/configure.hpp>
 
 namespace {
 	using CppAD::vector;
@@ -173,12 +172,13 @@ namespace {
 		mixed_derived(
 			size_t n_fixed      ,
 			size_t n_random     ,
+			bool   quasi_fixed  ,
 			double y            ,
 			double z            ,
 			double sigma_u      ,
 			double sigma_y      ,
 			double sigma_z      ) :
-			dismod_at::mixed_cppad(n_fixed, n_random) ,
+			dismod_at::mixed_cppad(n_fixed, n_random, quasi_fixed) ,
 			y_(y), z_(z)                               ,
 			sigma_u_(sigma_u), sigma_y_(sigma_y), sigma_z_(sigma_z )
 		{	assert( n_fixed == 1 );
@@ -339,8 +339,9 @@ bool data_mismatch_xam(void)
 	vector<double> constraint_lower(0), constraint_upper(0);
 	//
 	// object that is derived from mixed_cppad
+	bool quasi_fixed = false;
 	mixed_derived mixed_object(
-		n_fixed, n_random, y, z, sigma_u, sigma_y, sigma_z
+		n_fixed, n_random, quasi_fixed, y, z, sigma_u, sigma_y, sigma_z
 
 	);
 	mixed_object.initialize(fixed_in, random_in);
@@ -351,18 +352,14 @@ bool data_mismatch_xam(void)
 	double L_theta_in = mixed_object.L_theta(theta_in, u_in);
 	ok &= abs( L_theta_in ) >= 1.0;
 	//
-	// optimize the fixed effects
+	// optimize the fixed effects using quasi-Newton method
 	std::string fixed_options =
 		"Integer print_level               0\n"
 		"String  sb                        yes\n"
+		"String  derivative_test           first-order\n"
 		"String  derivative_test_print_all yes\n"
 		"Numeric tol                       1e-8\n"
 	;
-# if MIXED_CPPAD_NEWTON
-	fixed_options += "String  derivative_test  second-order\n";
-# else
-	fixed_options += "String  derivative_test  first-order\n";
-# endif
 	std::string random_options =
 		"Integer print_level     0\n"
 		"String  sb              yes\n"

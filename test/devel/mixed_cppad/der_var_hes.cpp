@@ -147,7 +147,8 @@ namespace {
 			double y            ,
 			double sigma_u      ,
 			double sigma_y      ) :
-			dismod_at::mixed_cppad(n_fixed, n_random) ,
+			// quasi_fixed = false
+			dismod_at::mixed_cppad(n_fixed, n_random, false) ,
 			y_(y) , sigma_u_(sigma_u), sigma_y_(sigma_y)
 		{	assert( n_fixed == 1 );
 			assert( n_random == 1 );

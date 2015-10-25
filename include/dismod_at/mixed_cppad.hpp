@@ -52,6 +52,7 @@ $spell
 	CppAD
 	ctor
 	std
+	bool
 $$
 
 $section mixed_cppad Public Declarations$$
@@ -116,12 +117,13 @@ $head constructor$$
 Construct an $code mixed_cppad$$ derived class object; see
 $cref/derived_ctor/mixed_cppad_derived_ctor/$$.
 $codep */
-	mixed_cppad(size_t n_fixed, size_t n_random)
+	mixed_cppad(size_t n_fixed, size_t n_random, bool quasi_fixed)
 /* $$
 $comment */
 	:
 	n_fixed_(n_fixed)               ,
 	n_random_(n_random)             ,
+	quasi_fixed_(quasi_fixed)       ,
 	initialize_done_(false)         ,
 	record_fix_like_done_(false)    ,
 	record_constraint_done_(false)  ,
@@ -237,6 +239,12 @@ The number of random effects is given by
 $codep */
 	const size_t n_random_;
 /* $$
+$head quasi_fixed_$$
+Are we using a quasi-Newton method (or full Newton method)
+when $cref/optimizing fixed effects/mixed_cppad_optimize_fixed/$$.
+$codep */
+	const bool quasi_fixed_;
+/* $$
 $head initialize_done_$$
 The following flag is false after construction and true after
 the corresponding member function is called:
@@ -248,7 +256,7 @@ $codep */
 	bool                record_ran_like_done_;
 	bool                record_hes_ran_done_;
 	bool                record_hes_cross_done_;
-	// only called when n_random_ > 0 and MIXED_CPPAD_NEWTON is true
+	// only called when n_random_ > 0 and quasi_fixed_ is false
 	bool                record_newton_atom_done_;
 	bool                record_ranobj_done_;
 	bool                record_hes_ranobj_done_;
@@ -303,7 +311,7 @@ $codep */
 /* $$
 
 $head newton_atom_$$
-If $icode%n_random_% > 0%$$, MIXED_CPPAD_NEWTON is true, and
+If $icode%n_random_% > 0%$$, quasi_fixed_ is false, and
 $code record_newton_atom_done_$$,
 this is a CppAD atomic function that computes one Newton Step in the
 solution of the equation $latex f_u ( \theta, u) = 0$$ as well
@@ -315,7 +323,7 @@ $codep */
 /* $$
 
 $subhead ranobj_fun_$$
-If $icode%n_random_% > 0%$$, MIXED_CPPAD_NEWTON is true, and
+If $icode%n_random_% > 0%$$, quasi_fixed_ is false, and
 $code record_ranobj_done_$$,
 this is a recording of the second approximation for the
 random part of the Laplace approximation, $latex H( \beta , \theta , u)$$;
@@ -325,7 +333,7 @@ $codep */
 /* $$
 
 $subhead hes_ranobj_$$
-If $icode%n_random_% > 0%$$, MIXED_CPPAD_NEWTON is true, and
+If $icode%n_random_% > 0%$$, quasi_fixed_ is false, and
 $code record_hes_ranobj_done_$$,
 $cref/hes_ranobj_row_/record_hes_ranobj/hes_ranobj_row_/$$,
 $cref/hes_ranobj_col_/record_hes_ranobj/hes_ranobj_col_/$$, and

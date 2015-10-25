@@ -52,7 +52,6 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include <dismod_at/mixed_cppad.hpp>
-# include <dismod_at/configure.hpp>
 
 namespace {
 	using CppAD::vector;
@@ -68,9 +67,10 @@ namespace {
 		mixed_derived(
 			size_t n_fixed                    ,
 			size_t n_random                   ,
+			bool   quasi_fixed                ,
 			const vector<double>& z           ) :
-			dismod_at::mixed_cppad(n_fixed, n_random) ,
-			n_fixed_(n_fixed)                          ,
+			dismod_at::mixed_cppad(n_fixed, n_random, quasi_fixed) ,
+			n_fixed_(n_fixed)                                      ,
 			z_(z)
 		{	assert(z.size() == n_fixed); }
 	private:
@@ -155,21 +155,18 @@ bool no_random_xam(void)
 		z[i] = double(i+1);
 
 	// object that is derived from mixed_cppad
-	mixed_derived mixed_object(n_fixed, n_random, z);
+	bool quasi_fixed = true;
+	mixed_derived mixed_object(n_fixed, n_random, quasi_fixed, z);
 	mixed_object.initialize(fixed_in, random_in);
 
-	// optimize the fixed effects
+	// optimize the fixed effects using quasi-Newton method
 	std::string fixed_options =
 		"Integer print_level               0\n"
 		"String  sb                        yes\n"
+		"String  derivative_test           first-order\n"
 		"String  derivative_test_print_all yes\n"
 		"Numeric tol                       1e-8\n"
 	;
-# if MIXED_CPPAD_NEWTON
-	fixed_options += "String  derivative_test  second-order\n";
-# else
-	fixed_options += "String  derivative_test  first-order\n";
-# endif
 	std::string random_options =
 		"Integer print_level 0\n"
 		"String  sb          yes\n"
