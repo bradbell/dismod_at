@@ -40,7 +40,7 @@ ADD_LIBRARY(mixed_cppad_eigen
 	mixed_cppad/newton_step.cpp
 	mixed_cppad/ranobj_eval.cpp
 	mixed_cppad/d_logdet.cpp
-	mixed_cppad/d_ran_like.cpp
+	mixed_cppad/ranobj_grad.cpp
 )
 SET_TARGET_PROPERTIES(mixed_cppad_eigen
 	PROPERTIES COMPILE_FLAGS "${eigen_cxx_flags}"

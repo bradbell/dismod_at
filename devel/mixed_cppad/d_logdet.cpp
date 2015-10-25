@@ -121,7 +121,7 @@ void mixed_cppad::d_logdet(
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
 	// 2DO: only do analyze pattern once and store in chol
-	// 2DO: same hessian point is factorized here as well as in d_ran_like.
+	// 2DO: same hessian point is factorized here as well as in ranobj_grad.
 	sparse_matrix hessian(n_random_, n_random_);
 	for(size_t k = 0; k < K; k++)
 	{	assert( n_fixed_        <= hes_ran_col_[k]  );

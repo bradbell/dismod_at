@@ -294,7 +294,7 @@ bool der_var_hes(void)
 	//
 	// compute the derivative of the random part of objective
 	vector<double> r_fixed(n_fixed);
-	mixed_object.d_ran_like(fixed_vec, uhat, r_fixed);
+	mixed_object.ranobj_grad(fixed_vec, uhat, r_fixed);
 	//
 	// check the derivative of the random part of objective
 	uhat = mixed_object.optimize_random(options, fixed_vec, random_vec);

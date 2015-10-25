@@ -9,15 +9,16 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin d_ran_like_xam.cpp$$
+$begin ranobj_grad_xam.cpp$$
 $spell
+	ranobj
 	cppad
 	obj
 	interp
 	xam
 $$
 
-$section C++ d_ran_like: Example and Test$$
+$section C++ ranobj_grad: Example and Test$$
 
 $head Private$$
 This example is not part of the
@@ -38,7 +39,7 @@ $latex \[
 \] $$
 
 $code
-$verbatim%example/devel/mixed_cppad/private/d_ran_like_xam.cpp
+$verbatim%example/devel/mixed_cppad/private/ranobj_grad_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -120,7 +121,7 @@ namespace {
 	};
 }
 
-bool d_ran_like_xam(void)
+bool ranobj_grad_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -152,7 +153,7 @@ bool d_ran_like_xam(void)
 
 	// compute total derivative of random part of objective
 	vector<double> r_fixed(n_fixed);
-	mixed_object.d_ran_like(fixed_vec, uhat, r_fixed);
+	mixed_object.ranobj_grad(fixed_vec, uhat, r_fixed);
 
 	// For this case the Laplace approximation is exactly equal the integral
 	// p(y | theta ) = integral of p(y | theta , u) p(u | theta) du

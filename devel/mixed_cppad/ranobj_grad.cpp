@@ -11,8 +11,9 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 # include <Eigen/Sparse>
 /*
-$begin mixed_cppad_d_ran_like$$
+$begin mixed_cppad_ranobj_grad$$
 $spell
+	ranobj
 	cppad
 	hes
 	vec
@@ -24,7 +25,7 @@ $$
 $section Total Derivative of Random Part of Objective$$
 
 $head Syntax$$
-$icode%mixed_object%.d_ran_like(%fixed_vec%, %random_vec%, %r_fixed%)%$$
+$icode%mixed_object%.ranobj_grad(%fixed_vec%, %random_vec%, %r_fixed%)%$$
 
 $head Purpose$$
 This routine computes the
@@ -71,10 +72,10 @@ Upon return, it contains the value of the derivative w.r.t
 the fixed effects; i.e. $latex r^{(1)} ( \theta )$$.
 
 $children%
-	example/devel/mixed_cppad/private/d_ran_like_xam.cpp
+	example/devel/mixed_cppad/private/ranobj_grad_xam.cpp
 %$$
 $head Example$$
-The file $cref d_ran_like_xam.cpp$$ contains an example
+The file $cref ranobj_grad_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 
@@ -83,7 +84,7 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // ----------------------------------------------------------------------------
-void mixed_cppad::d_ran_like(
+void mixed_cppad::ranobj_grad(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec ,
 	d_vector&       r_fixed    )

@@ -27,7 +27,7 @@ extern bool fix_like_hes_xam(void);
 extern bool hes_ran_fun_xam(void);
 extern bool ranobj_eval_xam(void);
 extern bool d_logdet_xam(void);
-extern bool d_ran_like_xam(void);
+extern bool ranobj_grad_xam(void);
 extern bool hes_cross_xam(void);
 
 //  tests
@@ -219,7 +219,7 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/mixed_cppad/record_constraint.cpp
 	%devel/mixed_cppad/ranobj_eval.cpp
 	%devel/mixed_cppad/d_logdet.cpp
-	%devel/mixed_cppad/d_ran_like.cpp
+	%devel/mixed_cppad/ranobj_grad.cpp
 	%devel/mixed_cppad/ran_like_grad.cpp
 	%devel/mixed_cppad/ranobj_hes.cpp
 	%devel/mixed_cppad/prior_eval.cpp
@@ -505,15 +505,15 @@ $codep */
 	friend bool ::d_logdet_xam(void);
 /* $$
 ------------------------------------------------------------------------------
-$head d_ran_like$$
-See $cref mixed_cppad_d_ran_like$$
+$head ranobj_grad$$
+See $cref mixed_cppad_ranobj_grad$$
 $codep */
-	void d_ran_like(
+	void ranobj_grad(
 		const d_vector& fixed_vec  ,
 		const d_vector& random_vec ,
 		d_vector&       r_fixed
 	);
-	friend bool ::d_ran_like_xam(void);
+	friend bool ::ranobj_grad_xam(void);
 	friend bool ::der_var_hes(void);
 	friend bool ::delta_ranobj(void);
 /* $$

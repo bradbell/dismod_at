@@ -846,7 +846,7 @@ bool ipopt_fixed::eval_grad_f(
 			random_options_, fixed_tmp_, random_tmp_
 		);
 		// Jacobian for random part of the Lalpace objective
-		mixed_object_.d_ran_like(
+		mixed_object_.ranobj_grad(
 			fixed_tmp_, random_cur_, H_beta_tmp_
 		);
 	}
