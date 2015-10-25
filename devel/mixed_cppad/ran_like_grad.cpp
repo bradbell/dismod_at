@@ -10,7 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/mixed_cppad.hpp>
 /*
-$begin mixed_cppad_ran_like_grad$$
+$begin ran_like_grad$$
 $spell
 	cppad
 	vec

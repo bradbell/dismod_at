@@ -484,7 +484,7 @@ $codep */
 /* $$
 ------------------------------------------------------------------------------
 $head ranobj_eval$$
-See $cref mixed_cppad_ranobj_eval$$
+See $cref ranobj_eval$$
 $codep */
 	double ranobj_eval(
 		const d_vector& fixed_vec  ,
@@ -494,7 +494,7 @@ $codep */
 /* $$
 ------------------------------------------------------------------------------
 $head logdet_grad$$
-See $cref mixed_cppad_logdet_grad$$
+See $cref logdet_grad$$
 $codep */
 	void logdet_grad(
 		const d_vector& fixed_vec  ,
@@ -506,7 +506,7 @@ $codep */
 /* $$
 ------------------------------------------------------------------------------
 $head ranobj_grad$$
-See $cref mixed_cppad_ranobj_grad$$
+See $cref ranobj_grad$$
 $codep */
 	void ranobj_grad(
 		const d_vector& fixed_vec  ,
@@ -519,7 +519,7 @@ $codep */
 /* $$
 ------------------------------------------------------------------------------
 $head ran_like_grad$$
-See $cref mixed_cppad_ran_like_grad$$
+See $cref ran_like_grad$$
 $codep */
 	// ran_like_grad
 	a1d_vector ran_like_grad(
@@ -530,7 +530,7 @@ $codep */
 /* $$
 ------------------------------------------------------------------------------
 $head ranobj_hes$$
-See $cref mixed_cppad_ranobj_hes$$
+See $cref ranobj_hes$$
 $codep */
 	// ranobj_hes
 	void ranobj_hes(
@@ -544,7 +544,7 @@ $codep */
 /* $$
 -------------------------------------------------------------------------------
 $head constraint_eval$$
-See $cref mixed_cppad_constraint_eval$$
+See $cref constraint_eval$$
 $codep */
 	// constraint_eval
 	d_vector constraint_eval(const d_vector& fixed_vec);
@@ -552,7 +552,7 @@ $codep */
 /* $$
 $end
 $head constraint_jac$$
-See $cref mixed_cppad_constraint_jac$$
+See $cref constraint_jac$$
 $codep */
 	// constraint_jac
 	void constraint_jac(
@@ -565,7 +565,7 @@ $codep */
 /* $$
 $end
 $head constraint_hes$$
-See $cref mixed_cppad_constraint_hes$$
+See $cref constraint_hes$$
 $codep */
 	// constraint_hes
 	void constraint_hes(
@@ -587,7 +587,7 @@ $codep */
 /* $$
 $end
 $head fix_like_jac$$
-See $cref mixed_cppad_fix_like_jac$$
+See $cref fix_like_jac$$
 $codep */
 	// fix_like_jac
 	void fix_like_jac(
@@ -600,7 +600,7 @@ $codep */
 /* $$
 $end
 $head fix_like_hes$$
-See $cref mixed_cppad_fix_like_hes$$
+See $cref fix_like_hes$$
 $codep */
 	// fix_like_hes
 	void fix_like_hes(

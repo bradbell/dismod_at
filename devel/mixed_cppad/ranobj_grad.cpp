@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 # include <Eigen/Sparse>
 /*
-$begin mixed_cppad_ranobj_grad$$
+$begin ranobj_grad$$
 $spell
 	ranobj
 	cppad

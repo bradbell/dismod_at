@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 
 /*
-$begin mixed_cppad_constraint_hes$$
+$begin constraint_hes$$
 $spell
 	cppad
 	eval

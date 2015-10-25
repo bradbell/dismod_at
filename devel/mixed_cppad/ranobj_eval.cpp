@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 
 /*
-$begin mixed_cppad_ranobj_eval$$
+$begin ranobj_eval$$
 $spell
 	ranobj
 	cppad

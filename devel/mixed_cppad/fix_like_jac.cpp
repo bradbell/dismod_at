@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 
 /*
-$begin mixed_cppad_fix_like_jac$$
+$begin fix_like_jac$$
 $spell
 	cppad
 	eval
