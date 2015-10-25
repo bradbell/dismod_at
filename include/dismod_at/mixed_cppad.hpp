@@ -123,13 +123,13 @@ $comment */
 	n_random_(n_random)             ,
 	initialize_done_(false)         ,
 	record_fix_like_done_(false)    ,
+	record_constraint_done_(false)  ,
 	record_ran_like_done_(false)    ,
 	record_hes_ran_done_(false)     ,
 	record_hes_cross_done_(false)   ,
 	record_newton_atom_done_(false) ,
-	record_hes_fix_done_(false)     ,
-	record_constraint_done_(false)  ,
-	record_ran_obj_done_(false)
+	record_ran_obj_done_(false)     ,
+	record_hes_fix_done_(false)
 	{ }
 /* $$
 $head initialize$$
@@ -210,6 +210,7 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/mixed_cppad/record_ran_like.cpp
 	%devel/mixed_cppad/record_hes_ran.cpp
 	%devel/mixed_cppad/record_hes_cross.cpp
+	%devel/mixed_cppad/newton_step.cpp
 	%devel/mixed_cppad/record_ran_obj.cpp
 	%devel/mixed_cppad/record_hes_fix.cpp
 	%devel/mixed_cppad/record_fix_like.cpp
@@ -240,47 +241,60 @@ the corresponding member function is called:
 $codep */
 	bool                initialize_done_;
 	bool                record_fix_like_done_;
+	bool                record_constraint_done_;
+	// only called when n_random_ > 0
 	bool                record_ran_like_done_;
 	bool                record_hes_ran_done_;
 	bool                record_hes_cross_done_;
+	// only called when n_random_ > 0 and MIXED_CPPAD_NEWTON is true
 	bool                record_newton_atom_done_;
-	bool                record_hes_fix_done_;
-	bool                record_constraint_done_;
 	bool                record_ran_obj_done_;
+	bool                record_hes_fix_done_;
 /* $$
+
 $head n_random_ > 0$$
 The following values are only defined when $icode%n_random_% > 0%$$:
-$cref/ran_like_/mixed_cppad_private/n_random_ > 0/ran_like_/$$,
-$cref/hes_ran_/mixed_cppad_private/n_random_ > 0/hes_ran_/$$,
-$cref/ran_obj_fun_/mixed_cppad_private/n_random_ > 0/ran_obj_fun_/$$,
-$cref/hes_fix_/mixed_cppad_private/n_random_ > 0/hes_fix_/$$,
 
-$subhead ran_like_$$
-Recording of the $cref/ran_like/mixed_cppad_ran_like/$$ function
-which evaluates a
-$cref/negative log-density vector/mixed_cppad/Negative Log-Density Vector/$$
-corresponding to
-$cref/f(theta, u)/mixed_cppad_theory/Random Negative Log-Likelihood, f(theta, u)/$$
-for different levels of AD:
+$subhead ran_like$$
+If $icode%n_random_% > 0%$$ and $code record_ran_like_done_$$,
+$cref/ran_like_fun_/record_ran_like/ran_like_fun_/$$ and
+$cref/ran_like_a1fun_/record_ran_like/ran_like_a1fun_/$$ are
+recordings of the user's $cref/ran_like/mixed_cppad_ran_like/$$.
+function.
 $codep */
 	CppAD::ADFun<double>      ran_like_fun_;
 	CppAD::ADFun<a1_double>   ran_like_a1fun_;
 /* $$
+
 $subhead hes_ran_$$
-The Hessian of the random likelihood w.r.t. the random effects
-$latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix
-represented by the following variables:
+If $icode%n_random_% > 0%$$ and $code record_hes_ran_done_$$,
+$cref/hes_ran_row_/record_hes_ran/hes_ran_row_/$$,
+$cref/hes_ran_col_/record_hes_ran/hes_ran_col_/$$, and
+$cref/hes_ran_work_/record_hes_ran/hes_ran_work_/$$,
+can be used to compute the sparse Hessian
+$latex f_{uu}^{(2)} ( \theta , u )$$.
+This sparse Hessian computation is recorded in
+$cref/hes_ran_fun_/record_hes_ran/hes_ran_fun_/$$.
 $codep */
-	CppAD::vector<size_t>      hes_ran_row_; // corresponding row indices
-	CppAD::vector<size_t>      hes_ran_col_; // corresponding column indices
-	CppAD::ADFun<double>       hes_ran_fun_;   // Compute f_{uu}^{(2)} (theta, u)
-	// used by calls that compute f_{uu}^{(2)}
-	CppAD::sparse_hessian_work hes_ran_work_;
-	// computation of the Hessian as an atomic operation
-	newton_step                newton_atom_;
+	CppAD::vector<size_t>      hes_ran_row_;  // row indices
+	CppAD::vector<size_t>      hes_ran_col_;  // column indices
+	CppAD::sparse_hessian_work hes_ran_work_; // work structure
+	CppAD::ADFun<double>       hes_ran_fun_;  // recording of Hessian calc
 	//
 	friend bool ::hes_ran_fun_xam(void);
 /* $$
+
+$head newton_atom_$$
+If $icode%n_random_% > 0%$$, MIXED_CPPAD_NEWTON is true, and
+$code record_newton_atom_done_$$,
+this is a CppAD atomic function that computes one Newton Step in the
+solution of the equation $latex f_u ( \theta, u) = 0$$ as well
+as the log of the determinant of $latex f_{uu} ( \theta , u )$$.
+$codep */
+	// computation of the Hessian as an atomic operation
+	newton_step                newton_atom_;
+/* $$
+
 $subhead hes_cross_$$
 The Hessian of the random likelihood w.r.t. the random effects
 $latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix
@@ -378,7 +392,7 @@ $codep */
 /* $$
 ------------------------------------------------------------------------------
 $head record_ran_like$$
-See $cref mixed_cppad_record_ran_like$$.
+See $cref record_ran_like$$.
 $codep */
 	void record_ran_like(
 		const d_vector& fixed_vec ,
@@ -386,7 +400,7 @@ $codep */
 	);
 /* $$
 $head record_hes_ran$$
-See $cref mixed_cppad_record_hes_ran$$.
+See $cref record_hes_ran$$.
 $codep */
 	void record_hes_ran(
 		const d_vector& fixed_vec ,

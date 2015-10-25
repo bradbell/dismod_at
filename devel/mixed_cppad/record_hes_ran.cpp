@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/configure.hpp>
 
 /*
-$begin mixed_cppad_record_hes_ran$$
+$begin record_hes_ran$$
 $spell
 	cppad
 	hes hes
@@ -50,19 +50,65 @@ It specifies the value of the
 $cref/random effects/mixed_cppad/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
-$head hes_ran_row_, hes_ran_col_$$
-The input value of the member variables
+$head hes_ran_row_$$
+The input value of the member variable
 $codei%
-	CppAD::vector<size_t> hes_ran_row_, hes_ran_col_
+	CppAD::vector<size_t> hes_ran_row_
 %$$
-do not matter.
-Upon return they contain the row indices and column indices
-for the sparse Hessian;
-see call to $code SparseHessian$$ below.
+does not matter.
+Upon return it contains the row indices
+for the lower triangle of the sparse Hessian;
+
+$head hes_ran_col_$$
+The input value of the member variable
+$codei%
+	CppAD::vector<size_t> hes_ran_col_
+%$$
+does not matter.
+Upon return it contains the column indices
+
+$head hes_ran_work_$$
+The input value of the member variable
+$codei%
+	CppAD::sparse_hessian_work hes_ran_work_
+%$$
+does not matter.
+Upon return it contains the CppAD work information so that
+$codei%
+	ran_like_a1fun_.SparseHessian(
+		%a1_both_vec%,
+		%a1_w%,
+		%not_used%,
+		hes_ran_row_,
+		hes_ran_col_,
+		%a1_val_out%,
+		hes_ran_work_
+	);
+%$$
+(where $icode a1_both_vec$$, $icode a1_w$$, and
+$icode a1_value_out$$, are $code a1_double$$ vectors)
+can be used to calculate the lower triangle of the sparse Hessian
+$latex \[
+	f_{uu}^{(2)} ( \theta , u )
+\]$$
+see $cref/f(theta, u)/
+	mixed_cppad_theory/
+	Random Negative Log-Likelihood, f(theta, u)
+/$$.
+
+$list number$$
+The matrix is symmetric and hence can be recovered from
+its lower triangle.
+$lnext
 These indices are relative to both the fixed and random effects
 with the fixed effects coming first.
+$lnext
+You can replace the $code a1_double$$ vectors by $code double$$ vectors,
+and replace $code ran_like_a1fun_$$ by $code ran_like_fun_$$,
+and get the results in $code double$$ instead of $code a1_double$$.
+$lend
 
-$subhead Random Effects Index$$
+$head Random Effects Index$$
 To get the indices relative to just the random effects, subtract
 $code n_fixed_$$; i.e.,
 $codei%
@@ -72,15 +118,15 @@ $codei%
 are between zero and the $code n_random_$$ and
 are the row and column indices for the Hessian element
 that corresponds to the $th k$$ component of
-$icode a1_val_out$$ in the call to $code SparseHessian$$ below.
+$icode a1_val_out$$ in the call to $code SparseHessian$$.
 
-$subhead Lower Triangle$$
+$head Lower Triangle$$
 The result are only for the lower triangle of the Hessian; i.e.,
 $codei%
 	hes_ran_row_[%k%] >= hes_ran_col_[%k%]
 %$$
 
-$subhead Order$$
+$head Order$$
 The results are in column major order; i.e.,
 $codei%
 	hes_ran_col_[%k%] <= hes_ran_col_[%k+1%]
@@ -99,39 +145,9 @@ the lower triangle of the sparse Hessian
 $latex \[
 	f_{uu}^{(2)} ( \theta , u )
 \]$$
+in the same order as the $icode a1_val_out$$ above.
 
-$head hes_ran_work_$$
-The input value of the member variable
-$codei%
-	CppAD::sparse_hessian_work hes_ran_work_
-%$$
-does not matter.
-Upon return it contains the necessary information so that
-$codei%
-	ran_like_a1fun_.SparseHessian(
-		%a1_both_vec%,
-		%a1_w%,
-		%not_used%,
-		hes_ran_row_,
-		hes_ran_col_,
-		%a1_val_out%,
-		hes_ran_work_
-	);
-%$$
-can be used to calculate the lower triangle of the sparse Hessian
-$latex \[
-	f_{uu}^{(2)} ( \theta , u )
-\]$$
-see $cref/f(theta, u)/
-	mixed_cppad_theory/
-	Random Negative Log-Likelihood, f(theta, u)
-/$$.
-Note that the matrix is symmetric and hence can be recovered from
-its lower triangle.
-
-
-$contents%devel/mixed_cppad/newton_step.cpp
-	%example/devel/mixed_cppad/private/hes_ran_fun_xam.cpp
+$contents%example/devel/mixed_cppad/private/hes_ran_fun_xam.cpp
 %$$
 
 $end

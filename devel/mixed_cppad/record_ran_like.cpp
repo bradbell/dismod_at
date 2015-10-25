@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 
 /*
-$begin mixed_cppad_record_ran_like$$
+$begin record_ran_like$$
 $spell
 	cppad
 	vec
@@ -47,25 +47,23 @@ It specifies the value of the
 $cref/random effects/mixed_cppad/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
-$head ran_like_$$
-The input value of the member variables
+$head ran_like_fun_$$
+The input value of the member variable
 $codei%
-	CppAD::ADFun<a%k%_double> ran_like_fun_
-	CppAD::ADFun<a%k%_double> ran_like_a1fun_
+	CppAD::ADFun<double> ran_like_fun_
 %$$
-do not matter.
-Upon return they contain the corresponding recording for the
+does not matter.
+Upon return it contains a recording of the function
 $cref/ran_like/mixed_cppad_ran_like/$$.
-Note that the function result is the
-$cref/negative log-density vector
-	/mixed_cppad
-	/Negative Log-Density Vector
-/$$
-corresponding to the function
-$cref/f(theta , u )
-	/mixed_cppad_theory/
-	Random Negative Log-Likelihood, f(theta, u)
-/$$.
+
+$head ran_like_a1fun_$$
+The input value of the member variable
+$codei%
+	CppAD::ADFun<double> ran_like_a1fun_
+%$$
+does not matter.
+Upon return it contains a recording of the function
+$cref/ran_like/mixed_cppad_ran_like/$$.
 
 $end
 */
