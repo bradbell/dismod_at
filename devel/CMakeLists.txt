@@ -15,7 +15,7 @@ ADD_LIBRARY(mixed_cppad
 	mixed_cppad/constraint_jac.cpp
 	mixed_cppad/constraint_hes.cpp
 	mixed_cppad/ran_like_grad.cpp
-	mixed_cppad/ran_obj_hes_fix.cpp
+	mixed_cppad/ranobj_hes_fix.cpp
 	mixed_cppad/initialize.cpp
 	mixed_cppad/ipopt_fixed.cpp
 	mixed_cppad/optimize_fixed.cpp
@@ -36,7 +36,7 @@ SET_TARGET_PROPERTIES(mixed_cppad
 # ---------------------------------------------------------------------------
 # mixed_cppad_eigen
 ADD_LIBRARY(mixed_cppad_eigen
-	mixed_cppad/record_ran_obj.cpp
+	mixed_cppad/record_ranobj.cpp
 	mixed_cppad/newton_step.cpp
 	mixed_cppad/h_ran_like.cpp
 	mixed_cppad/d_logdet.cpp

@@ -20,7 +20,7 @@ extern bool constraint_eval_xam(void);
 extern bool constraint_jac_xam(void);
 extern bool constraint_hes_xam(void);
 extern bool ran_like_grad_xam(void);
-extern bool ran_obj_hes_fix_xam(void);
+extern bool ranobj_hes_fix_xam(void);
 extern bool prior_eval_xam(void);
 extern bool fix_like_jac_xam(void);
 extern bool fix_like_hes_xam(void);
@@ -43,6 +43,7 @@ public:
 /*
 $begin mixed_cppad_public$$
 $spell
+	ranobj
 	cppad
 	obj
 	const
@@ -128,7 +129,7 @@ $comment */
 	record_hes_ran_done_(false)     ,
 	record_hes_cross_done_(false)   ,
 	record_newton_atom_done_(false) ,
-	record_ran_obj_done_(false)     ,
+	record_ranobj_done_(false)     ,
 	record_hes_fix_done_(false)
 	{ }
 /* $$
@@ -181,6 +182,7 @@ private:
 ------------------------------------------------------------------------------
 $begin mixed_cppad_private$$
 $spell
+	ranobj
 	var
 	cppad
 	hes hes
@@ -211,7 +213,7 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/mixed_cppad/record_hes_ran.cpp
 	%devel/mixed_cppad/record_hes_cross.cpp
 	%devel/mixed_cppad/newton_step.cpp
-	%devel/mixed_cppad/record_ran_obj.cpp
+	%devel/mixed_cppad/record_ranobj.cpp
 	%devel/mixed_cppad/record_hes_fix.cpp
 	%devel/mixed_cppad/record_fix_like.cpp
 	%devel/mixed_cppad/record_constraint.cpp
@@ -219,7 +221,7 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/mixed_cppad/d_logdet.cpp
 	%devel/mixed_cppad/d_ran_like.cpp
 	%devel/mixed_cppad/ran_like_grad.cpp
-	%devel/mixed_cppad/ran_obj_hes_fix.cpp
+	%devel/mixed_cppad/ranobj_hes_fix.cpp
 	%devel/mixed_cppad/prior_eval.cpp
 	%devel/mixed_cppad/fix_like_jac.cpp
 	%devel/mixed_cppad/fix_like_hes.cpp
@@ -248,7 +250,7 @@ $codep */
 	bool                record_hes_cross_done_;
 	// only called when n_random_ > 0 and MIXED_CPPAD_NEWTON is true
 	bool                record_newton_atom_done_;
-	bool                record_ran_obj_done_;
+	bool                record_ranobj_done_;
 	bool                record_hes_fix_done_;
 /* $$
 
@@ -312,14 +314,14 @@ $codep */
 	newton_step                newton_atom_;
 /* $$
 
-$subhead ran_obj_fun_$$
+$subhead ranobj_fun_$$
 If $icode%n_random_% > 0%$$, MIXED_CPPAD_NEWTON is true, and
-$code record_ran_obj_done_$$,
+$code record_ranobj_done_$$,
 this is a recording of the second approximation for the
 random part of the Laplace approximation, $latex H( \beta , \theta , u)$$;
-see $cref/ran_obj_fun_/record_ran_obj/ran_obj_fun_/$$.
+see $cref/ranobj_fun_/record_ranobj/ranobj_fun_/$$.
 $codep */
-	CppAD::ADFun<double>    ran_obj_fun_;     // for computing H_beta_beta
+	CppAD::ADFun<double>    ranobj_fun_;     // for computing H_beta_beta
 /* $$
 
 $subhead hes_fix_$$
@@ -423,10 +425,10 @@ $codep */
 		const d_vector& random_vec
 	);
 /* $$
-$head record_ran_obj$$
-See $cref record_ran_obj$$.
+$head record_ranobj$$
+See $cref record_ranobj$$.
 $codep */
-	void record_ran_obj(
+	void record_ranobj(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);
@@ -496,18 +498,18 @@ $codep */
 	friend bool ::ran_like_grad_xam(void);
 /* $$
 ------------------------------------------------------------------------------
-$head ran_obj_hes_fix$$
-See $cref mixed_cppad_ran_obj_hes_fix$$
+$head ranobj_hes_fix$$
+See $cref mixed_cppad_ranobj_hes_fix$$
 $codep */
-	// ran_obj_hes_fix
-	void ran_obj_hes_fix(
+	// ranobj_hes_fix
+	void ranobj_hes_fix(
 		const d_vector&         fixed_vec   ,
 		const d_vector&         random_vec  ,
 		CppAD::vector<size_t>&  row_out     ,
 		CppAD::vector<size_t>&  col_out     ,
 		d_vector&               val_out
 	);
-	friend bool ::ran_obj_hes_fix_xam(void);
+	friend bool ::ranobj_hes_fix_xam(void);
 /* $$
 -------------------------------------------------------------------------------
 $head constraint_eval$$

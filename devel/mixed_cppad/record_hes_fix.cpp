@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin mixed_cppad_record_hes_fix$$
 $spell
+	ranobj
 	cppad
 	obj
 	hes
@@ -70,7 +71,7 @@ $codei%
 does not matter.
 Upon return it contains the necessary information so that
 $codei%
-	ran_obj_fun_.SparseHessian(
+	ranobj_fun_.SparseHessian(
 		%beta_theta_u%,
 		%w%,
 		%not_used%,
@@ -102,7 +103,7 @@ void mixed_cppad::record_hes_fix(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {	assert( ! record_hes_fix_done_ );
-	assert( record_ran_obj_done_ );
+	assert( record_ranobj_done_ );
 	size_t i, j;
 
 	// total number of variables in H
@@ -119,7 +120,7 @@ void mixed_cppad::record_hes_fix(
 	sparsity_pattern r(n_total);
 	for(i = 0; i < n_fixed_; i++)
 		r[i].insert(i);
-	ran_obj_fun_.ForSparseJac(n_fixed_, r);
+	ranobj_fun_.ForSparseJac(n_fixed_, r);
 
 	// compute sparsity pattern corresponding to partial w.r.t (beta, theta, u)
 	// of parital w.r.t beta of H(beta, theta, u)
@@ -128,7 +129,7 @@ void mixed_cppad::record_hes_fix(
 	s[0].insert(0);
 	bool transpose = true;
 	sparsity_pattern pattern =
-		ran_obj_fun_.RevSparseHes(n_fixed_, s, transpose);
+		ranobj_fun_.RevSparseHes(n_fixed_, s, transpose);
 
 	// determine row and column indices in lower triangle of Hessian
 	hes_fix_row_.clear();
@@ -157,7 +158,7 @@ void mixed_cppad::record_hes_fix(
 	d_vector val_out( hes_fix_row_.size() );
 
 	// compute the work vector
-	ran_obj_fun_.SparseHessian(
+	ranobj_fun_.SparseHessian(
 		beta_theta_u,
 		w,
 		pattern,

@@ -155,6 +155,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /* $$
 $begin ipopt_fixed_ctor$$
 $spell
+	ranobj
 	cppad
 	obj
 	hes
@@ -364,15 +365,15 @@ mixed_object_     ( mixed_object    )
 	// derivative of the constraints
 	nnz_jac_g_ += constraint_jac_row_.size();
 	// -----------------------------------------------------------------------
-	// set lag_hes_row_, lag_hes_col_, ran_obj_2_lag_, fix_like2lag_
+	// set lag_hes_row_, lag_hes_col_, ranobj_2_lag_, fix_like2lag_
 	// -----------------------------------------------------------------------
 # if ! MIXED_CPPAD_NEWTON
 	nnz_h_lag_ = 0;
 # else
 	// row and column indices for contribution from random part of objective
-	if( n_random_ > 0 ) mixed_object.ran_obj_hes_fix(
+	if( n_random_ > 0 ) mixed_object.ranobj_hes_fix(
 		fixed_in, random_in,
-		ran_obj_hes_row_, ran_obj_hes_col_, ran_obj_hes_val_
+		ranobj_hes_row_, ranobj_hes_col_, ranobj_hes_val_
 	);
 	// row and column indices for contribution from prior
 	d_vector weight( 1 + fix_like_n_abs_ );
@@ -394,25 +395,25 @@ mixed_object_     ( mixed_object    )
 	);
 	//
 	// merge to form sparsity for Lagrangian
-	ran_obj_2_lag_.resize( ran_obj_hes_row_.size() );
+	ranobj_2_lag_.resize( ranobj_hes_row_.size() );
 	fix_like2lag_.resize( fix_like_hes_row_.size() );
 	constraint_2_lag_.resize( constraint_hes_row_.size() );
 	merge_sparse(
-		ran_obj_hes_row_      ,
-		ran_obj_hes_col_      ,
+		ranobj_hes_row_      ,
+		ranobj_hes_col_      ,
 		fix_like_hes_row_        ,
 		fix_like_hes_col_        ,
 		constraint_hes_row_   ,
 		constraint_hes_col_   ,
 		lag_hes_row_          ,
 		lag_hes_col_          ,
-		ran_obj_2_lag_        ,
+		ranobj_2_lag_        ,
 		fix_like2lag_          ,
 		constraint_2_lag_
 	);
 # ifndef NDEBUG
-	for(size_t k = 0; k < ran_obj_hes_row_.size(); k++)
-		assert( ran_obj_2_lag_[k] < lag_hes_row_.size() );
+	for(size_t k = 0; k < ranobj_hes_row_.size(); k++)
+		assert( ranobj_2_lag_[k] < lag_hes_row_.size() );
 	//
 	for(size_t k = 0; k < fix_like_hes_row_.size(); k++)
 		assert( fix_like2lag_[k] < lag_hes_row_.size() );
@@ -447,6 +448,7 @@ $end
 ------------------------------------------------------------------------------
 $begin ipopt_fixed_get_nlp_info$$
 $spell
+	ranobj
 	cppad
 	obj
 	ipopt_fixed_get_nlp_info
@@ -507,6 +509,7 @@ bool ipopt_fixed::get_nlp_info(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_get_bounds_info$$
 $spell
+	ranobj
 	cppad
 	obj
 	ipopt
@@ -591,6 +594,7 @@ bool ipopt_fixed::get_bounds_info(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_get_starting_point$$
 $spell
+	ranobj
 	cppad
 	obj
 	init
@@ -685,6 +689,7 @@ bool ipopt_fixed::get_starting_point(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_f$$
 $spell
+	ranobj
 	cppad
 	obj
 	ipopt
@@ -772,6 +777,7 @@ bool ipopt_fixed::eval_f(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_grad_f$$
 $spell
+	ranobj
 	cppad
 	obj
 	ipopt
@@ -875,6 +881,7 @@ bool ipopt_fixed::eval_grad_f(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_g$$
 $spell
+	ranobj
 	cppad
 	obj
 	ipopt
@@ -954,6 +961,7 @@ bool ipopt_fixed::eval_g(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_jac_g$$
 $spell
+	ranobj
 	cppad
 	obj
 	ipopt
@@ -1107,6 +1115,7 @@ bool ipopt_fixed::eval_jac_g(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_eval_h$$
 $spell
+	ranobj
 	cppad
 	obj
 	ipopt
@@ -1244,13 +1253,13 @@ bool ipopt_fixed::eval_h(
 		random_h_   = random_cur_;
 		//
 		// compute Hessian of random part w.r.t. fixed effects
-		mixed_object_.ran_obj_hes_fix(
+		mixed_object_.ranobj_hes_fix(
 			fixed_tmp_, random_cur_,
-			ran_obj_hes_row_, ran_obj_hes_col_, ran_obj_hes_val_
+			ranobj_hes_row_, ranobj_hes_col_, ranobj_hes_val_
 		);
-		for(size_t k = 0; k < ran_obj_hes_row_.size(); k++)
-			values[ ran_obj_2_lag_[k] ] +=
-				obj_factor * Number( ran_obj_hes_val_[k] );
+		for(size_t k = 0; k < ranobj_hes_row_.size(); k++)
+			values[ ranobj_2_lag_[k] ] +=
+				obj_factor * Number( ranobj_hes_val_[k] );
 	}
 	//
 	// Hessian of Lagrangian of weighted prior w.r.t. fixed effects
@@ -1290,6 +1299,7 @@ bool ipopt_fixed::eval_h(
 -------------------------------------------------------------------------------
 $begin ipopt_fixed_finalize_solution$$
 $spell
+	ranobj
 	cppad
 	obj
 	ipopt

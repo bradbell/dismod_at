@@ -14,6 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin mixed_cppad_initialize$$
 $spell
+	ranobj
 	logdet
 	cppad
 	std
@@ -89,12 +90,12 @@ random negative log-likelihood w.r.t fixed and random effects
 $latex f_{u \theta}^{(2)} ( \theta , u )$$.
 
 $subhead ran_like_fun$$
-$icode%size_map%["a0_ran_like"]%$$ is the
+$icode%size_map%["ran_like_fun"]%$$ is the
 number of variables in the $code ADFun<double>$$ version of
 $cref/ran_like/mixed_cppad_ran_like/$$.
 
 $subhead ran_like_a1fun$$
-$icode%size_map%["a1_ran_like"]%$$ is the
+$icode%size_map%["ran_like_a1fun"]%$$ is the
 number of variables in the $code ADFun<a1_double>$$ version of
 $cref/ran_like/mixed_cppad_ran_like/$$.
 
@@ -112,8 +113,8 @@ $latex \[
 \] $$
 and the log of the determinant of the matrix being inverted.
 
-$subhead ran_obj_fun$$
-$icode%size_map%["ran_obj_2"]%$$ is the
+$subhead ranobj_fun$$
+$icode%size_map%["ranobj_2"]%$$ is the
 number of variables in the $code ADFun<double>$$
 object used to evaluate Hessian, w.r.t. fixed effects, of the objective
 $latex r^{(2)} ( \theta )$$.
@@ -179,10 +180,10 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 		newton_atom_.initialize(ran_like_a1fun_, fixed_vec, random_vec);
 		record_newton_atom_done_ = true;
 
-		// ran_obj_fun_
-		assert( ! record_ran_obj_done_ );
-		record_ran_obj(fixed_vec, random_vec);
-		assert( record_ran_obj_done_ );
+		// ranobj_fun_
+		assert( ! record_ranobj_done_ );
+		record_ranobj(fixed_vec, random_vec);
+		assert( record_ranobj_done_ );
 
 		// hes_fix_
 		assert( ! record_hes_fix_done_ );
@@ -212,7 +213,7 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 	size_map["ran_like_a1fun"] = ran_like_a1fun_.size_var();
 	size_map["hes_ran_fun"]    = hes_ran_fun_.size_var();
 	size_map["newton_atom"]    = newton_atom_.size_var();
-	size_map["ran_obj_fun"]    = ran_obj_fun_.size_var();
+	size_map["ranobj_fun"]    = ranobj_fun_.size_var();
 	size_map["fix_like_fun"]   = fix_like_fun_.size_var();
 	size_map["constraint"]     = constraint_fun_.size_var();
 	//

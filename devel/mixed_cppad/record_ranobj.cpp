@@ -9,8 +9,9 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin record_ran_obj$$
+$begin record_ranobj$$
 $spell
+	ranobj
 	cppad
 	obj
 	vec
@@ -21,7 +22,7 @@ $$
 $section Second Order Recording for Random Part of Objective$$
 
 $head Syntax$$
-$codei%record_ran_obj(%fixed_vec%, %random_vec%)%$$
+$codei%record_ranobj(%fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code mixed_cppad$$ class
@@ -46,10 +47,10 @@ It specifies the value of the
 $cref/random effects/mixed_cppad/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
-$head ran_obj_fun_$$
+$head ranobj_fun_$$
 The input value of the member variable
 $codei%
-	CppAD::ADFun<double> ran_obj_fun_
+	CppAD::ADFun<double> ranobj_fun_
 %$$
 does not matter.
 Upon return it contains a second order accurate recording for the
@@ -69,10 +70,10 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // ----------------------------------------------------------------------------
-void mixed_cppad::record_ran_obj(
+void mixed_cppad::record_ranobj(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	assert( ! record_ran_obj_done_ );
+{	assert( ! record_ranobj_done_ );
 	assert( record_newton_atom_done_ );
 
 	//	create an a1d_vector containing (beta, theta, u)
@@ -144,10 +145,10 @@ void mixed_cppad::record_ran_obj(
 	f    = ran_like_a1fun_.Forward(0, both);
 	H[0] = logdet_step[0] / 2.0 + f[0] - constant_term;
 	//
-	ran_obj_fun_.Dependent(beta_theta_u, H);
-	ran_obj_fun_.optimize();
+	ranobj_fun_.Dependent(beta_theta_u, H);
+	ranobj_fun_.optimize();
 	//
-	record_ran_obj_done_ = true;
+	record_ranobj_done_ = true;
 	return;
 }
 

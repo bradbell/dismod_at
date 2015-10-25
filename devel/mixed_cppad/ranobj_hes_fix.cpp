@@ -10,8 +10,9 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/mixed_cppad.hpp>
 /*
-$begin mixed_cppad_ran_obj_hes_fix$$
+$begin mixed_cppad_ranobj_hes_fix$$
 $spell
+	ranobj
 	cppad
 	obj
 	hes
@@ -24,7 +25,7 @@ $$
 $section Hessian of Random Part of Objective w.r.t Fixed Effects$$
 
 $head Syntax$$
-$icode%mixed_object%.ran_obj_hes_fix(
+$icode%mixed_object%.ranobj_hes_fix(
 	%fixed_vec%, %random_vec%, %row_out%, %col_out%, %val_out%
 )%$$
 
@@ -71,7 +72,7 @@ $codei%
 %$$
 If the input size of this array is non-zero,
 the entire vector must be the same
-as for a previous call to $code ran_obj_hes_fix$$.
+as for a previous call to $code ranobj_hes_fix$$.
 If it's input size is zero,
 upon return it contains the row indices for the Hessian elements
 that are possibly non-zero;
@@ -87,7 +88,7 @@ $codei%
 %$$
 If the input size of this array is non-zero,
 the entire vector must be the same as for
-a previous call to $code ran_obj_hes_fix$$.
+a previous call to $code ranobj_hes_fix$$.
 If it's input size is zero,
 upon return it contains the column indices for the Hessian elements
 that are possibly non-zero (and will have the same size as $icode row_out$$).
@@ -103,15 +104,15 @@ $codei%
 	CppAD::vector<double>& %val_out%
 %$$
 If the input size of this array is non-zero, it must have the same size
-as for a previous call to $code ran_obj_hes_fix$$.
+as for a previous call to $code ranobj_hes_fix$$.
 Upon return, it contains the value of the Hessian elements
 that are possibly non-zero (and will have the same size as $icode row_out$$).
 
 $children%
-	example/devel/mixed_cppad/private/ran_obj_hes_fix_xam.cpp
+	example/devel/mixed_cppad/private/ranobj_hes_fix_xam.cpp
 %$$
 $head Example$$
-The file $cref ran_obj_hes_fix_xam.cpp$$ contains an example
+The file $cref ranobj_hes_fix_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 
@@ -121,8 +122,8 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // ----------------------------------------------------------------------------
-// ran_obj_hes_fix
-void mixed_cppad::ran_obj_hes_fix(
+// ranobj_hes_fix
+void mixed_cppad::ranobj_hes_fix(
 	const d_vector&          fixed_vec   ,
 	const d_vector&          random_vec  ,
 	CppAD::vector<size_t>&   row_out     ,
@@ -171,7 +172,7 @@ void mixed_cppad::ran_obj_hes_fix(
 	CppAD::vector< std::set<size_t> > not_used(0);
 
 	// compute the sparse Hessian
-	ran_obj_fun_.SparseHessian(
+	ranobj_fun_.SparseHessian(
 		beta_theta_u,
 		w,
 		not_used,
