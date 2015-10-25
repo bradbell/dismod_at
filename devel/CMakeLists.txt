@@ -15,7 +15,7 @@ ADD_LIBRARY(mixed_cppad
 	mixed_cppad/constraint_jac.cpp
 	mixed_cppad/constraint_hes.cpp
 	mixed_cppad/ran_like_grad.cpp
-	mixed_cppad/ranobj_hes_fix.cpp
+	mixed_cppad/ranobj_hes.cpp
 	mixed_cppad/initialize.cpp
 	mixed_cppad/ipopt_fixed.cpp
 	mixed_cppad/optimize_fixed.cpp

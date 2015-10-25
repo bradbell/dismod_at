@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin ranobj_hes_fix_xam.cpp$$
+$begin ranobj_hes_xam.cpp$$
 $spell
 	ranobj
 	cppad
@@ -20,7 +20,7 @@ $spell
 	xam
 $$
 
-$section C++ ranobj_hes_fix: Example and Test$$
+$section C++ ranobj_hes: Example and Test$$
 
 $head Private$$
 This example is not part of the
@@ -39,7 +39,7 @@ $latex \[
 \] $$
 
 $code
-$verbatim%example/devel/mixed_cppad/private/ranobj_hes_fix_xam.cpp
+$verbatim%example/devel/mixed_cppad/private/ranobj_hes_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -124,7 +124,7 @@ namespace {
 	};
 }
 
-bool ranobj_hes_fix_xam(void)
+bool ranobj_hes_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -157,7 +157,7 @@ bool ranobj_hes_fix_xam(void)
 	// compute Hessian of random part of Laplace approximation
 	vector<size_t> row, col;
 	vector<double> val;
-	mixed_object.ranobj_hes_fix(fixed_vec, random_vec, row, col, val);
+	mixed_object.ranobj_hes(fixed_vec, random_vec, row, col, val);
 
 	// check size of result vectors
 	size_t K = row.size();

@@ -371,7 +371,7 @@ mixed_object_     ( mixed_object    )
 	nnz_h_lag_ = 0;
 # else
 	// row and column indices for contribution from random part of objective
-	if( n_random_ > 0 ) mixed_object.ranobj_hes_fix(
+	if( n_random_ > 0 ) mixed_object.ranobj_hes(
 		fixed_in, random_in,
 		ranobj_hes_row_, ranobj_hes_col_, ranobj_hes_val_
 	);
@@ -1253,7 +1253,7 @@ bool ipopt_fixed::eval_h(
 		random_h_   = random_cur_;
 		//
 		// compute Hessian of random part w.r.t. fixed effects
-		mixed_object_.ranobj_hes_fix(
+		mixed_object_.ranobj_hes(
 			fixed_tmp_, random_cur_,
 			ranobj_hes_row_, ranobj_hes_col_, ranobj_hes_val_
 		);

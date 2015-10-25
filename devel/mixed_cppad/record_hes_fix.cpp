@@ -50,23 +50,23 @@ It specifies the initial value for the
 $cref/random effects/mixed_cppad/Random Effects, u/$$ optimization.
 
 
-$head hes_fix_row_, hes_fix_col_$$
+$head hes_ranobj_row_, hes_ranobj_col_$$
 The input value of the member variables
 $codei%
-	CppAD::vector<size_t> hes_fix_row_, hes_fix_col_
+	CppAD::vector<size_t> hes_ranobj_row_, hes_ranobj_col_
 %$$
 do not matter.
 Upon return the contain the row indices and column indices
 for the sparse Hessian represented by $code hes_fix_$$; i.e.
-$codei%hes_fix_row_[%i%]%$$ and $codei%hes_fix_col_[%i%]%$$
+$codei%hes_ranobj_row_[%i%]%$$ and $codei%hes_ranobj_col_[%i%]%$$
 are the row and column indices for the Hessian element
 that corresponds to the $th i$$ component of the function
 corresponding to $code hes_fix_$$.
 
-$head hes_fix_work_$$
+$head hes_ranobj_work_$$
 The input value of the member variable
 $codei%
-	CppAD::sparse_hessian_work hes_fix_work_
+	CppAD::sparse_hessian_work hes_ranobj_work_
 %$$
 does not matter.
 Upon return it contains the necessary information so that
@@ -75,10 +75,10 @@ $codei%
 		%beta_theta_u%,
 		%w%,
 		%not_used%,
-		hes_fix_row_,
-		hes_fix_col_,
+		hes_ranobj_row_,
+		hes_ranobj_col_,
 		%val_out%,
-		hes_fix_work_
+		hes_ranobj_work_
 	);
 %$$
 can be used to calculate the lower triangle of the sparse Hessian
@@ -132,8 +132,8 @@ void mixed_cppad::record_hes_fix(
 		ranobj_fun_.RevSparseHes(n_fixed_, s, transpose);
 
 	// determine row and column indices in lower triangle of Hessian
-	hes_fix_row_.clear();
-	hes_fix_col_.clear();
+	hes_ranobj_row_.clear();
+	hes_ranobj_col_.clear();
 	std::set<size_t>::iterator itr;
 	for(i = 0; i < n_fixed_; i++)
 	{	for(
@@ -144,8 +144,8 @@ void mixed_cppad::record_hes_fix(
 		{	j = *itr;
 			// only compute lower triangular part
 			if( i >= j )
-			{	hes_fix_row_.push_back(i);
-				hes_fix_col_.push_back(j);
+			{	hes_ranobj_row_.push_back(i);
+				hes_ranobj_col_.push_back(j);
 			}
 		}
 	}
@@ -155,17 +155,17 @@ void mixed_cppad::record_hes_fix(
 	w[0] = 1.0;
 
 	// place where results go (not used here)
-	d_vector val_out( hes_fix_row_.size() );
+	d_vector val_out( hes_ranobj_row_.size() );
 
 	// compute the work vector
 	ranobj_fun_.SparseHessian(
 		beta_theta_u,
 		w,
 		pattern,
-		hes_fix_row_,
-		hes_fix_col_,
+		hes_ranobj_row_,
+		hes_ranobj_col_,
 		val_out,
-		hes_fix_work_
+		hes_ranobj_work_
 	);
 	//
 	record_hes_fix_done_ = true;

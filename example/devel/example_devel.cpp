@@ -53,7 +53,7 @@ extern bool optimize_fixed_xam(void);
 extern bool optimize_random_xam(void);
 extern bool prior_eval_xam(void);
 extern bool ran_like_grad_xam(void);
-extern bool ranobj_hes_fix_xam(void);
+extern bool ranobj_hes_xam(void);
 
 // model subdirectory
 extern bool avg_no_ode_xam(void);
@@ -226,7 +226,7 @@ int main(void)
 	RUN(weight_info_xam);
 
 # if MIXED_CPPAD_NEWTON
-	RUN(ranobj_hes_fix_xam);
+	RUN(ranobj_hes_xam);
 # endif
 # if DISMOD_AT_HAS_SUITESPARSE
 	RUN(cholmod_xam);
