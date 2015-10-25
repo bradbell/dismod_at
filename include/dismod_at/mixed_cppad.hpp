@@ -25,14 +25,14 @@ extern bool prior_eval_xam(void);
 extern bool fix_like_jac_xam(void);
 extern bool fix_like_hes_xam(void);
 extern bool hes_ran_fun_xam(void);
-extern bool h_ran_like_xam(void);
+extern bool ranobj_eval_xam(void);
 extern bool d_logdet_xam(void);
 extern bool d_ran_like_xam(void);
 extern bool hes_cross_xam(void);
 
 //  tests
 extern bool der_var_hes(void);
-extern bool delta_ran_like(void);
+extern bool delta_ranobj(void);
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -217,7 +217,7 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/mixed_cppad/record_hes_ranobj.cpp
 	%devel/mixed_cppad/record_fix_like.cpp
 	%devel/mixed_cppad/record_constraint.cpp
-	%devel/mixed_cppad/h_ran_like.cpp
+	%devel/mixed_cppad/ranobj_eval.cpp
 	%devel/mixed_cppad/d_logdet.cpp
 	%devel/mixed_cppad/d_ran_like.cpp
 	%devel/mixed_cppad/ran_like_grad.cpp
@@ -483,14 +483,14 @@ $codep */
 	void record_constraint(const d_vector& fixed_vec);
 /* $$
 ------------------------------------------------------------------------------
-$head h_ran_like$$
-See $cref mixed_cppad_h_ran_like$$
+$head ranobj_eval$$
+See $cref mixed_cppad_ranobj_eval$$
 $codep */
-	double h_ran_like(
+	double ranobj_eval(
 		const d_vector& fixed_vec  ,
 		const d_vector& random_vec
 	);
-	friend bool ::h_ran_like_xam(void);
+	friend bool ::ranobj_eval_xam(void);
 /* $$
 ------------------------------------------------------------------------------
 $head d_logdet$$
@@ -515,7 +515,7 @@ $codep */
 	);
 	friend bool ::d_ran_like_xam(void);
 	friend bool ::der_var_hes(void);
-	friend bool ::delta_ran_like(void);
+	friend bool ::delta_ranobj(void);
 /* $$
 ------------------------------------------------------------------------------
 $head ran_like_grad$$

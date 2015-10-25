@@ -12,8 +12,9 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 
 /*
-$begin mixed_cppad_h_ran_like$$
+$begin mixed_cppad_ranobj_eval$$
 $spell
+	ranobj
 	cppad
 	obj
 	eval
@@ -25,7 +26,7 @@ $$
 $section Evaluate Negative Log of  Laplace Approximation$$
 
 $head Syntax$$
-$icode%h% = %mixed_object%.h_ran_like(%fixed_vec%, %random_vec%)%$$
+$icode%h% = %mixed_object%.ranobj_eval(%fixed_vec%, %random_vec%)%$$
 
 $head Purpose$$
 This routine evaluates the random part of the objective
@@ -66,10 +67,10 @@ $codei%
 and is the value of the negative log of the Laplace approximation.
 
 $children%
-	example/devel/mixed_cppad/private/h_ran_like_xam.cpp
+	example/devel/mixed_cppad/private/ranobj_eval_xam.cpp
 %$$
 $head Example$$
-The file $cref h_ran_like_xam.cpp$$ contains an example
+The file $cref ranobj_eval_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 
@@ -78,7 +79,7 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-double mixed_cppad::h_ran_like(
+double mixed_cppad::ranobj_eval(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {	assert( record_ran_like_done_ );

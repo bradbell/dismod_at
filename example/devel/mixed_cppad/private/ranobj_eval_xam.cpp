@@ -9,8 +9,9 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin h_ran_like_xam.cpp$$
+$begin ranobj_eval_xam.cpp$$
 $spell
+	ranobj
 	cppad
 	obj
 	eval
@@ -18,7 +19,7 @@ $spell
 	xam
 $$
 
-$section C++ h_ran_like: Example and Test$$
+$section C++ ranobj_eval: Example and Test$$
 
 $head Private$$
 This example is not part of the
@@ -37,7 +38,7 @@ $latex \[
 \] $$
 
 $code
-$verbatim%example/devel/mixed_cppad/private/h_ran_like_xam.cpp
+$verbatim%example/devel/mixed_cppad/private/ranobj_eval_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -122,7 +123,7 @@ namespace {
 	};
 }
 
-bool h_ran_like_xam(void)
+bool ranobj_eval_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -153,7 +154,7 @@ bool h_ran_like_xam(void)
 	uhat = mixed_object.optimize_random(options, fixed_vec, random_vec);
 
 	// compute random part of Laplace approximation
-	double h = mixed_object.h_ran_like(fixed_vec, uhat);
+	double h = mixed_object.ranobj_eval(fixed_vec, uhat);
 
 	// For this case the Laplace approximation is exactly equal the integral
 	// p(y | theta ) = integral of p(y | theta , u) p(u | theta) du

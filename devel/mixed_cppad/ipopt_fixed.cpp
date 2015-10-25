@@ -753,7 +753,7 @@ bool ipopt_fixed::eval_f(
 		random_cur_ = mixed_object_.optimize_random(
 			random_options_, fixed_tmp_, random_tmp_
 		);
-		H = mixed_object_.h_ran_like(fixed_tmp_, random_cur_);
+		H = mixed_object_.ranobj_eval(fixed_tmp_, random_cur_);
 	}
 	obj_value = Number(H);
 	if( fix_like_vec_tmp_.size() == 0 )

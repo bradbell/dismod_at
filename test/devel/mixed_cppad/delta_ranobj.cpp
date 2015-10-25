@@ -92,7 +92,7 @@ namespace {
 
 }
 
-bool delta_ran_like(void)
+bool delta_ranobj(void)
 {
 	bool   ok = true;
 	double inf = std::numeric_limits<double>::infinity();
@@ -135,10 +135,10 @@ bool delta_ran_like(void)
 	{	double theta_j = fixed_vec[j];
 		fixed_vec[j]   = theta_j + 2.0 * eps;
 		uhat = mixed_object.optimize_random(options, fixed_vec, random_vec);
-		double r_plus  = mixed_object.h_ran_like(fixed_vec, uhat);
+		double r_plus  = mixed_object.ranobj_eval(fixed_vec, uhat);
 		fixed_vec[j]   = theta_j - 2.0 * eps;
 		uhat = mixed_object.optimize_random(options, fixed_vec, random_vec);
-		double r_minus = mixed_object.h_ran_like(fixed_vec, uhat);
+		double r_minus = mixed_object.ranobj_eval(fixed_vec, uhat);
 		fixed_vec[j]   = theta_j;
 		//
 		double check = (r_plus - r_minus) / (4.0 * eps);
