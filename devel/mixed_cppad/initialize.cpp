@@ -128,9 +128,15 @@ $icode%size_map%["constraint"]%$$ is the
 number of variables in the $code ADFun<double>$$ function
 that computes the general constraints for the fixed effects.
 
-$subhead num_bytes$$
-Is the number of bytes currently allocated by
-$code CppAD::thread_alloc$$ for the current thread.
+$subhead num_bytes_before$$
+$icode%size_map%["num_bytes_before"]%$$ is the
+number of bytes allocated by
+$code CppAD::thread_alloc$$ before the initialization is started.
+
+$subhead num_bytes_after$$
+$icode%size_map%["num_bytes_after"]%$$ is the
+number of bytes allocated by
+$code CppAD::thread_alloc$$ after the initialization is completed.
 
 $head Example$$
 The file $cref mixed_derived_xam.cpp$$ contains an example
@@ -147,9 +153,11 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 {	if( initialize_done_ )
 	{	fatal_error("mixed_cppad::initialize was called twice");
 	}
+	size_t thread           = CppAD::thread_alloc::thread_num();
+	size_t num_bytes_before = CppAD::thread_alloc::inuse(thread);
+	//
 	if( n_random_ > 0 )
 	{
-
 		// ran_like_
 		assert( ! record_ran_like_done_ );
 		record_ran_like(fixed_vec, random_vec);
@@ -208,8 +216,8 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 	size_map["fix_like"]      = fix_like_.size_var();
 	size_map["constraint"]    = constraint_.size_var();
 	//
-	size_t thread             = CppAD::thread_alloc::thread_num();
-	size_map["num_bytes"]     = CppAD::thread_alloc::inuse(thread);
+	size_map["num_bytes_before"] = num_bytes_before;
+	size_map["num_bytes_after"]  = CppAD::thread_alloc::inuse(thread);
 	return size_map;
 }
 
