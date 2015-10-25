@@ -21,7 +21,7 @@ extern bool constraint_jac_xam(void);
 extern bool constraint_hes_xam(void);
 extern bool ran_like_grad_xam(void);
 extern bool ranobj_hes_xam(void);
-extern bool prior_eval_xam(void);
+extern bool fix_like_eval_xam(void);
 extern bool fix_like_jac_xam(void);
 extern bool fix_like_hes_xam(void);
 extern bool hes_ran_fun_xam(void);
@@ -222,7 +222,7 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/mixed_cppad/ranobj_grad.cpp
 	%devel/mixed_cppad/ran_like_grad.cpp
 	%devel/mixed_cppad/ranobj_hes.cpp
-	%devel/mixed_cppad/prior_eval.cpp
+	%devel/mixed_cppad/fix_like_eval.cpp
 	%devel/mixed_cppad/fix_like_jac.cpp
 	%devel/mixed_cppad/fix_like_hes.cpp
 %$$
@@ -578,12 +578,12 @@ $codep */
 	friend bool ::constraint_hes_xam(void);
 /* $$
 -------------------------------------------------------------------------------
-$head prior_eval$$
-See $cref mixed_cppad_prior_eval$$
+$head fix_like_eval$$
+See $cref fix_like_eval$$
 $codep */
-	// prior_eval
-	d_vector prior_eval(const d_vector& fixed_vec);
-	friend bool ::prior_eval_xam(void);
+	// fix_like_eval
+	d_vector fix_like_eval(const d_vector& fixed_vec);
+	friend bool ::fix_like_eval_xam(void);
 /* $$
 $end
 $head fix_like_jac$$

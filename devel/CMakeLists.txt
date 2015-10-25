@@ -20,7 +20,7 @@ ADD_LIBRARY(mixed_cppad
 	mixed_cppad/ipopt_fixed.cpp
 	mixed_cppad/optimize_fixed.cpp
 	mixed_cppad/optimize_random.cpp
-	mixed_cppad/prior_eval.cpp
+	mixed_cppad/fix_like_eval.cpp
 	mixed_cppad/fix_like_jac.cpp
 	mixed_cppad/fix_like_hes.cpp
 	mixed_cppad/record_fix_like.cpp

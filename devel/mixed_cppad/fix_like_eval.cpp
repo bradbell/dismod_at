@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 
 /*
-$begin mixed_cppad_prior_eval$$
+$begin fix_like_eval$$
 $spell
 	cppad
 	eval
@@ -23,7 +23,7 @@ $$
 $section mixed_cppad: Evaluate Prior for Fixed Effects$$
 
 $head Syntax$$
-$icode%vec% = %mixed_object%.prior_eval(%fixed_vec%)%$$
+$icode%vec% = %mixed_object%.fix_like_eval(%fixed_vec%)%$$
 
 $head mixed_object$$
 We use $cref/mixed_object/mixed_cppad_derived_ctor/mixed_object/$$
@@ -57,10 +57,10 @@ $icode%vec%[0] + CppAD::abs(%vec%[1]) + %...% CppAD::abs(%vec%[%s%-1])
 where $icode%s% = %vec%.size()%$$.
 
 $children%
-	example/devel/mixed_cppad/private/prior_eval_xam.cpp
+	example/devel/mixed_cppad/private/fix_like_eval_xam.cpp
 %$$
 $head Example$$
-The file $cref prior_eval_xam.cpp$$ contains an example
+The file $cref fix_like_eval_xam.cpp$$ contains an example
 and test of this procedure.
 It returns true, if the test passes, and false otherwise.
 
@@ -69,7 +69,7 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-CppAD::vector<double> mixed_cppad::prior_eval(const d_vector& fixed_vec)
+CppAD::vector<double> mixed_cppad::fix_like_eval(const d_vector& fixed_vec)
 {	assert( record_fix_like_done_ );
 	if( fix_like_fun_.size_var() == 0 )
 	{	// empty vector case

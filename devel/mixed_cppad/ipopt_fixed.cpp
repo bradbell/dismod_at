@@ -335,7 +335,7 @@ mixed_object_     ( mixed_object    )
 	// set fix_like_n_abs_
 	// -----------------------------------------------------------------------
 	// fixed negative log-likelihood at the initial fixed effects vector
-	d_vector fix_like_vec = mixed_object_.prior_eval(fixed_in);
+	d_vector fix_like_vec = mixed_object_.fix_like_eval(fixed_in);
 	if( fix_like_vec.size() == 0 )
 		fix_like_n_abs_ = 0;
 	else
@@ -672,9 +672,9 @@ bool ipopt_fixed::get_starting_point(
 
 	// fixed negative log-likelihood at the initial fixed effects vector
 	if( fix_like_vec_tmp_.size() == 0 )
-		assert( mixed_object_.prior_eval(fixed_in_).size() == 0 );
+		assert( mixed_object_.fix_like_eval(fixed_in_).size() == 0 );
 	else
-	{	fix_like_vec_tmp_ = mixed_object_.prior_eval(fixed_in_);
+	{	fix_like_vec_tmp_ = mixed_object_.fix_like_eval(fixed_in_);
 		assert( fix_like_vec_tmp_.size() == 1 + fix_like_n_abs_ );
 	}
 
@@ -757,12 +757,12 @@ bool ipopt_fixed::eval_f(
 	}
 	obj_value = Number(H);
 	if( fix_like_vec_tmp_.size() == 0 )
-		assert( mixed_object_.prior_eval(fixed_tmp_).size() == 0 );
+		assert( mixed_object_.fix_like_eval(fixed_tmp_).size() == 0 );
 	else
 	{
 		// fixed part of objective
 		// (2DO: cache fix_like_vec_tmp_ for eval_g with same x)
-		fix_like_vec_tmp_ = mixed_object_.prior_eval(fixed_tmp_);
+		fix_like_vec_tmp_ = mixed_object_.fix_like_eval(fixed_tmp_);
 		//
 		// only include smooth part of prior in objective
 		obj_value += Number( fix_like_vec_tmp_[0] );
@@ -936,7 +936,7 @@ bool ipopt_fixed::eval_g(
 	//
 	// fixed part of objective
 	// (2DO: cache fix_like_vec_tmp_ for eval_f with same x)
-	fix_like_vec_tmp_ = mixed_object_.prior_eval(fixed_tmp_);
+	fix_like_vec_tmp_ = mixed_object_.fix_like_eval(fixed_tmp_);
 	//
 	// convert absolute value terms to constraints
 	for(size_t j = 0; j < fix_like_n_abs_; j++)
@@ -1442,9 +1442,9 @@ void ipopt_fixed::finalize_solution(
 	//
 	// fixed negative log-likelihood at the final fixed effects vector
 	if( fix_like_vec_tmp_.size() == 0 )
-		assert( mixed_object_.prior_eval(fixed_opt_).size() == 0 );
+		assert( mixed_object_.fix_like_eval(fixed_opt_).size() == 0 );
 	else
-	{	fix_like_vec_tmp_ = mixed_object_.prior_eval(fixed_opt_);
+	{	fix_like_vec_tmp_ = mixed_object_.fix_like_eval(fixed_opt_);
 		assert( fix_like_vec_tmp_.size() == 1 + fix_like_n_abs_ );
 
 		// check constraints corresponding to l1 terms

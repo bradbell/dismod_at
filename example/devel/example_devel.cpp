@@ -51,7 +51,7 @@ extern bool newton_step_xam(void);
 extern bool no_random_xam(void);
 extern bool optimize_fixed_xam(void);
 extern bool optimize_random_xam(void);
-extern bool prior_eval_xam(void);
+extern bool fix_like_eval_xam(void);
 extern bool ran_like_grad_xam(void);
 extern bool ranobj_hes_xam(void);
 
@@ -167,7 +167,7 @@ int main(void)
 	RUN(no_random_xam);
 	RUN(optimize_fixed_xam);
 	RUN(optimize_random_xam);
-	RUN(prior_eval_xam);
+	RUN(fix_like_eval_xam);
 
 	// model subdirectory
 	RUN(avg_no_ode_xam);

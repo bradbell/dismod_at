@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin prior_eval_xam.cpp$$
+$begin fix_like_eval_xam.cpp$$
 $spell
 	cppad
 	eval
@@ -17,14 +17,14 @@ $spell
 	xam
 $$
 
-$section C++ prior_eval: Example and Test$$
+$section C++ fix_like_eval: Example and Test$$
 
 $head Private$$
 This example is not part of the
 $cref/mixed_cppad public API/mixed_cppad_public/$$.
 
 $code
-$verbatim%example/devel/mixed_cppad/private/prior_eval_xam.cpp
+$verbatim%example/devel/mixed_cppad/private/fix_like_eval_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -127,7 +127,7 @@ namespace {
 	};
 }
 
-bool prior_eval_xam(void)
+bool fix_like_eval_xam(void)
 {
 	bool   ok = true;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -150,7 +150,7 @@ bool prior_eval_xam(void)
 	mixed_object.initialize(fixed_vec, random_vec);
 
 	// compute fixed negative log-density vector
-	CppAD::vector<double> vec = mixed_object.prior_eval(fixed_vec);
+	CppAD::vector<double> vec = mixed_object.fix_like_eval(fixed_vec);
 
 	// check smooth part
 	double check = CppAD::log(2.0);
