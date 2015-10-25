@@ -6,7 +6,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 if [ "$1" == '' ]
@@ -20,7 +20,7 @@ do
 	# make git has not staged a delete of this file
 	if [ -e "$file" ]
 	then
-		if grep "$1" $file > /dev/null
+		if grep --ignore-case "$1" $file > /dev/null
 		then
 			echo $file
 		fi
