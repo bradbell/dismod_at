@@ -22,7 +22,7 @@ $spell
 	logdet
 $$
 
-$section Record Hessian of Random Negative Log-Likelihood w.r.t Random Effects$$
+$section Record Hessian of Negative Log-Likelihood w.r.t Random Effects$$
 
 $head Syntax$$
 $codei%record_hes_ran(%fixed_vec%, %random_vec%)%$$

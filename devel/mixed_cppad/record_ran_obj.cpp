@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin mixed_cppad_record_ran_obj$$
+$begin record_ran_obj$$
 $spell
 	cppad
 	obj
@@ -18,34 +18,15 @@ $spell
 	Cpp
 $$
 
-$section Record Approximation for Random Part of Objective$$
+$section Second Order Recording for Random Part of Objective$$
 
 $head Syntax$$
-$codei%record_ran_obj(%order%, %fixed_vec%, %random_vec%)%$$
+$codei%record_ran_obj(%fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code mixed_cppad$$ class
 and cannot be used by a derived
 $cref/mixed_object/mixed_cppad_derived_ctor/mixed_object/$$.
-
-$head order$$
-This argument has prototype
-$icode%
-	size_t %order%
-%$$
-It specifies the order of accuracy when approximating
-$cref/u^(theta)/mixed_cppad_theory/Objective/u^(theta)/$$
-and must be zero, one, or two.
-The zero order recording is shortest, but can only compute
-$cref/r(theta)
-	/mixed_cppad_theory
-	/Objective
-	/Random Part of Objective, r(theta)
-/$$.
-The first order recording is longer, and can compute
-both $latex r( \theta )$$ and its derivative.
-The second order recording is longest, and can compute
-$latex r( \theta )$$, and its derivative, and its Hessian.
 
 $head fixed_vec$$
 This argument has prototype
@@ -65,13 +46,13 @@ It specifies the value of the
 $cref/random effects/mixed_cppad/Random Effects, u/$$
 vector $latex u$$ at which the recording is made.
 
-$head ran_obj_order_$$
+$head ran_obj_fun_$$
 The input value of the member variable
 $codei%
-	CppAD::ADFun<double> ran_obj_%order%_
+	CppAD::ADFun<double> ran_obj_fun_
 %$$
 does not matter.
-Upon return it contains a an recording for the
+Upon return it contains a second order accurate recording for the
 approximate random part of the objective; see
 $cref/H(beta, theta, u)
 	/mixed_cppad_theory
@@ -89,11 +70,9 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // ----------------------------------------------------------------------------
 void mixed_cppad::record_ran_obj(
-	size_t          order      ,
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	assert( order == 2 );
-	assert( ! record_ran_obj_done_ );
+{	assert( ! record_ran_obj_done_ );
 	assert( record_newton_atom_done_ );
 
 	//	create an a1d_vector containing (beta, theta, u)

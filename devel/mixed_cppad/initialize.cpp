@@ -181,7 +181,7 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 
 		// ran_obj_fun_
 		assert( ! record_ran_obj_done_ );
-		record_ran_obj(2, fixed_vec, random_vec);
+		record_ran_obj(fixed_vec, random_vec);
 		assert( record_ran_obj_done_ );
 
 		// hes_fix_

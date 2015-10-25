@@ -284,36 +284,44 @@ $codep */
 	friend bool ::hes_ran_fun_xam(void);
 /* $$
 
+$subhead hes_cross_$$
+If $icode%n_random_% > 0%$$ and $code record_hes_cross_done_$$,
+$cref/hes_cross_row_/record_hes_cross/hes_cross_row_/$$,
+$cref/hes_cross_col_/record_hes_cross/hes_cross_col_/$$, and
+$cref/hes_cross_work_/record_hes_cross/hes_cross_work_/$$,
+can be used to compute the cross terms in the sparse Hessian
+$latex f_{u \theta}^{(2)} ( \theta , u )$$.
+$codep */
+	CppAD::vector<size_t>      hes_cross_row_; // corresponding row indices
+	CppAD::vector<size_t>      hes_cross_col_; // corresponding column indices
+	CppAD::sparse_hessian_work hes_cross_work_;
+	//
+	friend bool ::hes_cross_xam(void);
+
+/* $$
+
 $head newton_atom_$$
 If $icode%n_random_% > 0%$$, MIXED_CPPAD_NEWTON is true, and
 $code record_newton_atom_done_$$,
 this is a CppAD atomic function that computes one Newton Step in the
 solution of the equation $latex f_u ( \theta, u) = 0$$ as well
-as the log of the determinant of $latex f_{uu} ( \theta , u )$$.
+as the log of the determinant of $latex f_{uu} ( \theta , u )$$;
+see $cref/initialize newton_step/newton_step/initialize/$$.
 $codep */
 	// computation of the Hessian as an atomic operation
 	newton_step                newton_atom_;
 /* $$
 
-$subhead hes_cross_$$
-The Hessian of the random likelihood w.r.t. the random effects
-$latex f_{uu}^{(2)} ( \theta , u )$$ is as a sparse matrix
-represented by the following variables:
-$codep */
-	CppAD::vector<size_t>      hes_cross_row_; // corresponding row indices
-	CppAD::vector<size_t>      hes_cross_col_; // corresponding column indices
-	// used by calls that compute f_{u theta}^{(2)}
-	CppAD::sparse_hessian_work hes_cross_work_;
-	//
-	friend bool ::hes_cross_xam(void);
-/* $$
 $subhead ran_obj_fun_$$
-second order accurate
-in $latex \beta$$ recording of the Joint part of the Laplace approximation;
-i.e., $latex H( \beta , \theta , u)$$.
+If $icode%n_random_% > 0%$$, MIXED_CPPAD_NEWTON is true, and
+$code record_ran_obj_done_$$,
+this is a recording of the second approximation for the
+random part of the Laplace approximation, $latex H( \beta , \theta , u)$$;
+see $cref/ran_obj_fun_/record_ran_obj/ran_obj_fun_/$$.
 $codep */
 	CppAD::ADFun<double>    ran_obj_fun_;     // for computing H_beta_beta
 /* $$
+
 $subhead hes_fix_$$
 Information used to calculate the sparse Hessian of the random likelihood
 w.r.t. fixed effects $latex H_{\beta \beta}^{(2)} ( \beta, \theta , u )$$.
@@ -408,7 +416,7 @@ $codep */
 	);
 /* $$
 $head record_hes_cross$$
-See $cref mixed_cppad_record_hes_cross$$.
+See $cref record_hes_cross$$.
 $codep */
 	void record_hes_cross(
 		const d_vector& fixed_vec ,
@@ -416,10 +424,9 @@ $codep */
 	);
 /* $$
 $head record_ran_obj$$
-See $cref mixed_cppad_record_ran_obj$$.
+See $cref record_ran_obj$$.
 $codep */
 	void record_ran_obj(
-		size_t          order     ,
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);

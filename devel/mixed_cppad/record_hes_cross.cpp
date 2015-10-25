@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/configure.hpp>
 
 /*
-$begin mixed_cppad_record_hes_cross$$
+$begin record_hes_cross$$
 $spell
 	cppad
 	hes hes
@@ -22,7 +22,7 @@ $spell
 	logdet
 $$
 
-$section Set Up Hessian of Cross Terms; i.e., w.r.t Fixed and Random Effects$$
+$section Cross Terms of Sparse Hessian w.r.t Fixed and Random Effects$$
 
 $head Syntax$$
 $codei%record_hes_cross(%fixed_vec%, %random_vec%)%$$
