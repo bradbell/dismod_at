@@ -21,7 +21,7 @@ $spell
 	hes
 $$
 
-$section Hessian of Fixed Negative Log-Likelihood$$
+$section Hessian of Fixed Part of Negative Log-Likelihood$$
 
 $head Syntax$$
 $icode%mixed_object%.fix_like_hes(
