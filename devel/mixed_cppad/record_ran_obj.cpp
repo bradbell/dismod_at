@@ -162,11 +162,11 @@ void mixed_cppad::record_ran_obj(
 	}
 	newton_atom_.eval(beta_W_v, logdet_step);
 	pack(beta, W, both);
-	f    = a1_ran_like_.Forward(0, both);
+	f    = ran_like_a1fun_.Forward(0, both);
 	H[0] = logdet_step[0] / 2.0 + f[0] - constant_term;
 	//
-	ran_obj_2_.Dependent(beta_theta_u, H);
-	ran_obj_2_.optimize();
+	ran_obj_fun_.Dependent(beta_theta_u, H);
+	ran_obj_fun_.optimize();
 	//
 	record_ran_obj_done_ = true;
 	return;

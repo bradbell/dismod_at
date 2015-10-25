@@ -91,13 +91,13 @@ CppAD::vector<mixed_cppad::a1_double> mixed_cppad::ran_like_grad(
 	pack(fixed_vec, random_vec, both_vec);
 
 	// zero order forward mode
-	a1_ran_like_.Forward(0, both_vec);
+	ran_like_a1fun_.Forward(0, both_vec);
 
 	// first order reverse f_{theta,u}^{(1) ( theta , u )
-	assert( a1_ran_like_.Range() == 1);
+	assert( ran_like_a1fun_.Range() == 1);
 	a1d_vector a1_w(1), grad_both(n_fixed_ + n_random_);
 	a1_w[0] = 1.0;
-	grad_both = a1_ran_like_.Reverse(1, a1_w);
+	grad_both = ran_like_a1fun_.Reverse(1, a1_w);
 
 	// extract u part of the gradient
 	a1d_vector grad_ran(n_random_);

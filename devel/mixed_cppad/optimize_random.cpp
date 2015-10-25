@@ -124,7 +124,7 @@ public:
 		mixed_object_.pack(fixed_vec_, random_vec, both_vec);
 
 		// compute log-density vector
-		ADvector vec = mixed_object_.a1_ran_like_.Forward(0, both_vec);
+		ADvector vec = mixed_object_.ran_like_a1fun_.Forward(0, both_vec);
 
 		// initialize smooth part of negative log-likelihood
 		size_t k = 0;
@@ -169,7 +169,7 @@ CppAD::vector<double> mixed_cppad::optimize_random(
 	// determine initial density vector
 	d_vector both_vec(n_fixed_ + n_random_);
 	pack(fixed_vec, random_in, both_vec);
-	d_vector vec = a0_ran_like_.Forward(0, both_vec);
+	d_vector vec = ran_like_fun_.Forward(0, both_vec);
 
 	// number of absolute value terms in objective
 	size_t n_abs = vec.size() - 1;

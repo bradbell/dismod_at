@@ -88,18 +88,18 @@ number of non-zero cross entries in hessian of
 random negative log-likelihood w.r.t fixed and random effects
 $latex f_{u \theta}^{(2)} ( \theta , u )$$.
 
-$subhead a0_ran_like$$
+$subhead ran_like_fun$$
 $icode%size_map%["a0_ran_like"]%$$ is the
 number of variables in the $code ADFun<double>$$ version of
 $cref/ran_like/mixed_cppad_ran_like/$$.
 
-$subhead a1_ran_like$$
+$subhead ran_like_a1fun$$
 $icode%size_map%["a1_ran_like"]%$$ is the
 number of variables in the $code ADFun<a1_double>$$ version of
 $cref/ran_like/mixed_cppad_ran_like/$$.
 
-$subhead hes_ran_0$$
-$icode%size_map%["hes_ran_0_"]%$$ is the
+$subhead hes_ran_fun$$
+$icode%size_map%["hes_ran_fun_"]%$$ is the
 number of variables in the $code ADFun<double>$$ object that
 computes the Hessian with respect to the random effects.
 
@@ -112,13 +112,13 @@ $latex \[
 \] $$
 and the log of the determinant of the matrix being inverted.
 
-$subhead ran_obj_2$$
+$subhead ran_obj_fun$$
 $icode%size_map%["ran_obj_2"]%$$ is the
 number of variables in the $code ADFun<double>$$
 object used to evaluate Hessian, w.r.t. fixed effects, of the objective
 $latex r^{(2)} ( \theta )$$.
 
-$subhead fix_like$$
+$subhead fix_like_fun$$
 $icode%size_map%["fix_like"]%$$ is the
 number of variables in the $code ADFun<double>$$ function
 that computes the fixed negative log likelihood $latex g( \theta )$$.
@@ -176,10 +176,10 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 # if MIXED_CPPAD_NEWTON
 		// newton_atom_
 		assert( ! record_newton_atom_done_ );
-		newton_atom_.initialize(a1_ran_like_, fixed_vec, random_vec);
+		newton_atom_.initialize(ran_like_a1fun_, fixed_vec, random_vec);
 		record_newton_atom_done_ = true;
 
-		// ran_obj_2_
+		// ran_obj_fun_
 		assert( ! record_ran_obj_done_ );
 		record_ran_obj(2, fixed_vec, random_vec);
 		assert( record_ran_obj_done_ );
@@ -191,12 +191,12 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 # endif
 	}
 
-	// fix_like_
+	// fix_like_fun_
 	assert( ! record_fix_like_done_ );
 	record_fix_like(fixed_vec);
 	assert( record_fix_like_done_ );
 
-	// constraint_
+	// constraint_fun_
 	assert( ! record_constraint_done_ );
 	record_constraint(fixed_vec);
 	assert( record_constraint_done_ );
@@ -206,18 +206,18 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 
 	// return value
 	std::map<std::string, size_t> size_map;
-	size_map["hes_ran_row"]   = hes_ran_row_.size();
-	size_map["hes_cross_row"] = hes_cross_row_.size();
-	size_map["a0_ran_like"]   = a0_ran_like_.size_var();
-	size_map["a1_ran_like"]   = a1_ran_like_.size_var();
-	size_map["hes_ran_0"]     = hes_ran_0_.size_var();
-	size_map["newton_atom"]   = newton_atom_.size_var();
-	size_map["ran_obj_2"]     = ran_obj_2_.size_var();
-	size_map["fix_like"]      = fix_like_.size_var();
-	size_map["constraint"]    = constraint_.size_var();
+	size_map["hes_ran_row"]    = hes_ran_row_.size();
+	size_map["hes_cross_row"]  = hes_cross_row_.size();
+	size_map["ran_like_fun"]   = ran_like_fun_.size_var();
+	size_map["ran_like_a1fun"] = ran_like_a1fun_.size_var();
+	size_map["hes_ran_fun"]    = hes_ran_fun_.size_var();
+	size_map["newton_atom"]    = newton_atom_.size_var();
+	size_map["ran_obj_fun"]    = ran_obj_fun_.size_var();
+	size_map["fix_like_fun"]   = fix_like_fun_.size_var();
+	size_map["constraint"]     = constraint_fun_.size_var();
 	//
-	size_map["num_bytes_before"] = num_bytes_before;
-	size_map["num_bytes_after"]  = CppAD::thread_alloc::inuse(thread);
+	size_map["num_bytes_before"]  = num_bytes_before;
+	size_map["num_bytes_after"]   = CppAD::thread_alloc::inuse(thread);
 	return size_map;
 }
 

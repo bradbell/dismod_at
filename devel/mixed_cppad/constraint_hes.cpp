@@ -152,7 +152,7 @@ void mixed_cppad::constraint_hes(
 	assert( row_out.size() != 0 );
 
 	CppAD::vector< std::set<size_t> > not_used;
-	constraint_.SparseHessian(
+	constraint_fun_.SparseHessian(
 		fixed_vec       ,
 		weight          ,
 		not_used        ,

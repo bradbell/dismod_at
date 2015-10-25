@@ -117,7 +117,7 @@ void mixed_cppad::d_logdet(
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	d_vector both(n_fixed_ + n_random_), val_out(K);
 	pack(fixed_vec, random_vec, both);
-	val_out = hes_ran_0_.Forward(0, both);
+	val_out = hes_ran_fun_.Forward(0, both);
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
 	// 2DO: only do analyze pattern once and store in chol
@@ -187,7 +187,7 @@ void mixed_cppad::d_logdet(
 		}
 	}
 	d_vector dw(n_fixed_ + n_random_);
-	dw = hes_ran_0_.Reverse(1, w);
+	dw = hes_ran_fun_.Reverse(1, w);
 	//
 	// split out fixed and random parts of the derivative
 	unpack(logdet_fix, logdet_ran, dw);

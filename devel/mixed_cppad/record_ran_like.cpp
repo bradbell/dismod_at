@@ -50,8 +50,8 @@ vector $latex u$$ at which the recording is made.
 $head ran_like_$$
 The input value of the member variables
 $codei%
-	CppAD::ADFun<a%k%_double> a0_ran_like_
-	CppAD::ADFun<a%k%_double> a1_ran_like_
+	CppAD::ADFun<a%k%_double> ran_like_fun_
+	CppAD::ADFun<a%k%_double> ran_like_a1fun_
 %$$
 do not matter.
 Upon return they contain the corresponding recording for the
@@ -107,7 +107,7 @@ void mixed_cppad::record_ran_like(
 	const d_vector& random_vec )
 {	assert( ! record_ran_like_done_ );
 	// ------------------------------------------------------------------
-	// record a1_ran_like_
+	// record ran_like_a1fun_
 	// ------------------------------------------------------------------
 	// combine into one vector
 	a2d_vector a2_both( n_fixed_ + n_random_ );
@@ -134,18 +134,18 @@ void mixed_cppad::record_ran_like(
 	}
 
 	// save the recording
-	a1_ran_like_.Dependent(a2_both, a2_vec);
+	ran_like_a1fun_.Dependent(a2_both, a2_vec);
 
 	// optimize the recording
-	a1_ran_like_.optimize();
+	ran_like_a1fun_.optimize();
 	// ------------------------------------------------------------------
 	//
 	// both
 	d_vector both(n_fixed_ + n_random_);
 	pack(fixed_vec, random_vec, both);
 	//
-	// record a0_ran_like_
-	record_next_ran_like(both, a1_ran_like_, a0_ran_like_);
+	// record ran_like_fun_
+	record_next_ran_like(both, ran_like_a1fun_, ran_like_fun_);
 	//
 	record_ran_like_done_ = true;
 }

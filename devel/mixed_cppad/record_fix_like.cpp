@@ -45,15 +45,15 @@ $head record_fix_like_done_$$
 When this function is called, this member variable must be false.
 Upon return it is true.
 
-$head fix_like_$$
+$head fix_like_fun_$$
 On input, the member variable
 $codei%
-	CppAD::ADFun<double> fix_like_
+	CppAD::ADFun<double> fix_like_fun_
 %$$
-must be empty; i.e., $code fix_like_.size_var() == 0$$.
+must be empty; i.e., $code fix_like_fun_.size_var() == 0$$.
 If the return value for
 $cref/fix_like/mixed_cppad_fix_like/$$ is empty,
-$code fix_like_$$ is not modified.
+$code fix_like_fun_$$ is not modified.
 Otherwise,
 upon return it contains the corresponding recording for the
 $cref/fix_like/mixed_cppad_fix_like/$$.
@@ -70,7 +70,7 @@ $codei%
 do not matter.
 Upon return they contain the row indices and column indices
 that correspond to non-zero elements in the Jacobian corresponding to
-$code fix_like_$$.
+$code fix_like_fun_$$.
 
 $head fix_like_jac_work_$$
 The input value of the member variables
@@ -80,7 +80,7 @@ $codei%
 does not matter.
 Upon return it contains the work information for reuse by calls of the form
 $codei%
-	fix_like_.SparseJacobianForward(
+	fix_like_fun_.SparseJacobianForward(
 		%x%, %not_used%, fix_like_jac_row_, fix_like_jac_col_, %jac%, fix_like_jac_work_
 	)
 %$$
@@ -94,7 +94,7 @@ void mixed_cppad::record_fix_like(const d_vector& fixed_vec  )
 	assert( ! record_fix_like_done_ );
 
 	// ------------------------------------------------------------------------
-	// fix_like_
+	// fix_like_fun_
 	// ------------------------------------------------------------------------
 	// convert to an a1d_vector
 	a1d_vector a1_theta(n_fixed_);
@@ -109,15 +109,15 @@ void mixed_cppad::record_fix_like(const d_vector& fixed_vec  )
 	if( a1_vec.size() == 0 )
 	{	CppAD::AD<double>::abort_recording();
 		record_fix_like_done_ = true;
-		assert( fix_like_.size_var() == 0 );
+		assert( fix_like_fun_.size_var() == 0 );
 		return;
 	}
 
 	// save the recording
-	fix_like_.Dependent(a1_theta, a1_vec);
+	fix_like_fun_.Dependent(a1_theta, a1_vec);
 
 	// optimize the recording
-	fix_like_.optimize();
+	fix_like_fun_.optimize();
 
 	// ------------------------------------------------------------------------
 	// fix_like_jac_row_, fix_like_jac_col_, fix_like_jac_work_
@@ -127,13 +127,13 @@ void mixed_cppad::record_fix_like(const d_vector& fixed_vec  )
 	sparsity_pattern r(n_fixed_);
 	for(size_t j = 0; j < n_fixed_; j++)
 		r[j].insert(j);
-	sparsity_pattern pattern = fix_like_.ForSparseJac(n_fixed_, r);
+	sparsity_pattern pattern = fix_like_fun_.ForSparseJac(n_fixed_, r);
 
 	// convert sparsity to row and column index form
 	fix_like_jac_row_.clear();
 	fix_like_jac_col_.clear();
 	std::set<size_t>::iterator itr;
-	for(size_t i = 0; i < fix_like_.Range(); i++)
+	for(size_t i = 0; i < fix_like_fun_.Range(); i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	size_t j = *itr;
 			fix_like_jac_row_.push_back(i);
@@ -143,7 +143,7 @@ void mixed_cppad::record_fix_like(const d_vector& fixed_vec  )
 
 	// compute the work vector for reuse during Jacobian sparsity calculations
 	d_vector jac( fix_like_jac_row_.size() );
-	fix_like_.SparseJacobianForward(
+	fix_like_fun_.SparseJacobianForward(
 		fixed_vec       ,
 		pattern         ,
 		fix_like_jac_row_  ,
@@ -158,10 +158,10 @@ void mixed_cppad::record_fix_like(const d_vector& fixed_vec  )
 	//
 	// sparsity pattern for the Hessian
 	sparsity_pattern s(1);
-	for(size_t i = 0; i < fix_like_.Range(); i++ )
+	for(size_t i = 0; i < fix_like_fun_.Range(); i++ )
 		s[0].insert(i);
 	pattern.clear();
-	pattern = fix_like_.RevSparseHes(n_fixed_, s);
+	pattern = fix_like_fun_.RevSparseHes(n_fixed_, s);
 
 	// determine row and column indices in lower triangle of Hessian
 	fix_like_hes_row_.clear();
@@ -179,8 +179,8 @@ void mixed_cppad::record_fix_like(const d_vector& fixed_vec  )
 	size_t K = fix_like_hes_row_.size();
 
 	// compute the work vector for reuse during Hessian sparsity calculations
-	d_vector weight( fix_like_.Range() ), hes(K);
-	fix_like_.SparseHessian(
+	d_vector weight( fix_like_fun_.Range() ), hes(K);
+	fix_like_fun_.SparseHessian(
 		fixed_vec       ,
 		weight          ,
 		pattern         ,

@@ -135,7 +135,7 @@ bool hes_cross_xam(void)
 	w[0] = 1.0;
 	CppAD::vector< std::set<size_t> > not_used;
 	mixed_object.pack(fixed_vec, random_vec, both);
-	mixed_object.a0_ran_like_.SparseHessian(
+	mixed_object.ran_like_fun_.SparseHessian(
 		both,
 		w,
 		not_used,

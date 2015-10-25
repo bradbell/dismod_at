@@ -125,7 +125,7 @@ void mixed_cppad::fix_like_jac(
 	assert( row_out.size() != 0 );
 
 	CppAD::vector< std::set<size_t> > not_used;
-	fix_like_.SparseJacobianForward(
+	fix_like_fun_.SparseJacobianForward(
 		fixed_vec       ,
 		not_used        ,
 		row_out         ,

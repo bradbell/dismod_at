@@ -88,10 +88,10 @@ $codei%
 		hes_ran_row_[%k%] < hes_ran_row_[%k+1%]
 %$$
 
-$head hes_ran_0_$$
+$head hes_ran_fun_$$
 The input value of the member variables
 $codei%
-	CppAD::ADFun<double> hes_ran_0_
+	CppAD::ADFun<double> hes_ran_fun_
 %$$
 does not matter.
 Upon return its zero order forward mode computes
@@ -108,7 +108,7 @@ $codei%
 does not matter.
 Upon return it contains the necessary information so that
 $codei%
-	a1_ran_like_.SparseHessian(
+	ran_like_a1fun_.SparseHessian(
 		%a1_both_vec%,
 		%a1_w%,
 		%not_used%,
@@ -131,7 +131,7 @@ its lower triangle.
 
 
 $contents%devel/mixed_cppad/newton_step.cpp
-	%example/devel/mixed_cppad/private/hes_ran_0_xam.cpp
+	%example/devel/mixed_cppad/private/hes_ran_fun_xam.cpp
 %$$
 
 $end
@@ -169,7 +169,7 @@ void mixed_cppad::record_hes_ran(
 			r[i * n_total + j] = (i >= n_fixed_) && (i == j);
 	}
 # endif
-	a0_ran_like_.ForSparseJac(n_total, r);
+	ran_like_fun_.ForSparseJac(n_total, r);
 
 	// compute sparsity pattern corresponding to paritls w.r.t. (theta, u)
 	// of partial w.r.t. u of f(theta, u)
@@ -181,7 +181,7 @@ void mixed_cppad::record_hes_ran(
 # else
 	s[0] = true;
 # endif
-	pattern = a0_ran_like_.RevSparseHes(n_total, s, transpose);
+	pattern = ran_like_fun_.RevSparseHes(n_total, s, transpose);
 
 
 	// determine row and column indices in lower triangle of Hessian
@@ -234,7 +234,7 @@ void mixed_cppad::record_hes_ran(
 	d_vector val_out(K);
 
 	// compute the work vector
-	a0_ran_like_.SparseHessian(
+	ran_like_fun_.SparseHessian(
 		both,
 		w,
 		pattern,
@@ -244,14 +244,14 @@ void mixed_cppad::record_hes_ran(
 		hes_ran_work_
 	);
 
-	// now tape the same computation and store in hes_ran_0_
+	// now tape the same computation and store in hes_ran_fun_
 	CppAD::vector< std::set<size_t> > not_used(0);
 	a1d_vector a1_both(n_total), a1_w(1), a1_val_out(K);
 	for(size_t i = 0; i < n_total; i++)
 		a1_both[i] = both[i];
 	a1_w[0] = w[0];
 	CppAD::Independent(a1_both);
-	a1_ran_like_.SparseHessian(
+	ran_like_a1fun_.SparseHessian(
 		a1_both,
 		a1_w,
 		not_used,
@@ -260,7 +260,7 @@ void mixed_cppad::record_hes_ran(
 		a1_val_out,
 		hes_ran_work_
 	);
-	hes_ran_0_.Dependent(a1_both, a1_val_out);
+	hes_ran_fun_.Dependent(a1_both, a1_val_out);
 	//
 	record_hes_ran_done_ = true;
 }

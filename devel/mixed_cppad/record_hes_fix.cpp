@@ -70,7 +70,7 @@ $codei%
 does not matter.
 Upon return it contains the necessary information so that
 $codei%
-	ran_obj_2_.SparseHessian(
+	ran_obj_fun_.SparseHessian(
 		%beta_theta_u%,
 		%w%,
 		%not_used%,
@@ -119,7 +119,7 @@ void mixed_cppad::record_hes_fix(
 	sparsity_pattern r(n_total);
 	for(i = 0; i < n_fixed_; i++)
 		r[i].insert(i);
-	ran_obj_2_.ForSparseJac(n_fixed_, r);
+	ran_obj_fun_.ForSparseJac(n_fixed_, r);
 
 	// compute sparsity pattern corresponding to partial w.r.t (beta, theta, u)
 	// of parital w.r.t beta of H(beta, theta, u)
@@ -128,7 +128,7 @@ void mixed_cppad::record_hes_fix(
 	s[0].insert(0);
 	bool transpose = true;
 	sparsity_pattern pattern =
-		ran_obj_2_.RevSparseHes(n_fixed_, s, transpose);
+		ran_obj_fun_.RevSparseHes(n_fixed_, s, transpose);
 
 	// determine row and column indices in lower triangle of Hessian
 	hes_fix_row_.clear();
@@ -157,7 +157,7 @@ void mixed_cppad::record_hes_fix(
 	d_vector val_out( hes_fix_row_.size() );
 
 	// compute the work vector
-	ran_obj_2_.SparseHessian(
+	ran_obj_fun_.SparseHessian(
 		beta_theta_u,
 		w,
 		pattern,

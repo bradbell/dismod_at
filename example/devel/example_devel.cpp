@@ -44,7 +44,7 @@ extern bool eigen_xam(void);
 extern bool fix_like_hes_xam(void);
 extern bool fix_like_jac_xam(void);
 extern bool hes_cross_xam(void);
-extern bool hes_ran_0_xam(void);
+extern bool hes_ran_fun_xam(void);
 extern bool h_ran_like_xam(void);
 extern bool ipopt_xam_run(void);
 extern bool newton_step_xam(void);
@@ -159,7 +159,7 @@ int main(void)
 	RUN(fix_like_hes_xam);
 	RUN(fix_like_jac_xam);
 	RUN(hes_cross_xam);
-	RUN(hes_ran_0_xam);
+	RUN(hes_ran_fun_xam);
 	RUN(h_ran_like_xam);
 	RUN(ipopt_xam_run);
 	RUN(newton_step_xam);

@@ -103,7 +103,7 @@ void mixed_cppad::d_ran_like(
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	d_vector both(n_fixed_ + n_random_), val_out(K);
 	pack(fixed_vec, random_vec, both);
-	val_out = hes_ran_0_.Forward(0, both);
+	val_out = hes_ran_fun_.Forward(0, both);
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
 	// 2DO: only do analyze pattern once and store in chol
@@ -130,17 +130,17 @@ void mixed_cppad::d_ran_like(
 	// Compute derivative of f(theta , u ) w.r.t theta and u
 	d_vector w(1), f_both(n_fixed_ + n_random_);
 	w[0] = 1.0;
-	a0_ran_like_.Forward(0, both);
-	f_both = a0_ran_like_.Reverse(1, w);
+	ran_like_fun_.Forward(0, both);
+	f_both = ran_like_fun_.Reverse(1, w);
 	d_vector f_fixed(n_fixed_), f_random(n_random_);
 	unpack(f_fixed, f_random, f_both);
 	//
 	// Compute the Hessian cross terms f_{u theta}^{(2)} ( theta , u )
-	// 2DO: another a0_ran_like_.Forward(0, both) is done by SparseHessian
+	// 2DO: another ran_like_fun_.Forward(0, both) is done by SparseHessian
 	CppAD::vector< std::set<size_t> > not_used;
 	K = hes_cross_row_.size();
 	val_out.resize(K);
-	a0_ran_like_.SparseHessian(
+	ran_like_fun_.SparseHessian(
 		both,
 		w,
 		not_used,

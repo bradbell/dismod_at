@@ -99,7 +99,7 @@ double mixed_cppad::h_ran_like(
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	d_vector both(n_fixed_ + n_random_), val_out(K);
 	pack(fixed_vec, random_vec, both);
-	val_out = hes_ran_0_.Forward(0, both);
+	val_out = hes_ran_fun_.Forward(0, both);
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
 	// 2DO: only do analyze pattern once and store in chol
@@ -130,7 +130,7 @@ double mixed_cppad::h_ran_like(
 	double constant_term = CppAD::log(2.0 * pi) * double(n_random_) / 2.0;
 
 	// f(theta , u)
-	d_vector vec = a0_ran_like_.Forward(0, both);
+	d_vector vec = ran_like_fun_.Forward(0, both);
 	assert( vec.size() == 1);
 
 	// h(theta, u)

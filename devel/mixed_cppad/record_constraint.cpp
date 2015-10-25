@@ -40,10 +40,10 @@ It specifies the value of the
 $cref/fixed effects/mixed_cppad/Fixed Effects, theta/$$
 vector $latex \theta$$ at which the recording is made.
 
-$head constraint_$$
+$head constraint_fun_$$
 The input value of the member variable
 $codei%
-	CppAD::ADFun<double> constraint_
+	CppAD::ADFun<double> constraint_fun_
 %$$
 does not matter.
 Upon return it contains the corresponding recording for the
@@ -58,7 +58,7 @@ $codei%
 do not matter.
 Upon return they contain the row indices and column indices
 that correspond to non-zero elements in the Jacobian corresponding to
-$code constraint_$$.
+$code constraint_fun_$$.
 
 $head constraint_jac_work_$$
 The input value of the member variables
@@ -68,7 +68,7 @@ $codei%
 does not matter.
 Upon return it contains the work information for reuse by calls of the form
 $codei%
-	constraint_.SparseJacobianForward(
+	constraint_fun_.SparseJacobianForward(
 		%x%,
 		%not_used%,
 		constraint_jac_row_,
@@ -87,7 +87,7 @@ void mixed_cppad::record_constraint(const d_vector& fixed_vec  )
 	assert( ! record_constraint_done_ );
 
 	// ------------------------------------------------------------------------
-	// constraint_
+	// constraint_fun_
 	// ------------------------------------------------------------------------
 	// convert to an a1d_vector
 	a1d_vector a1_theta(n_fixed_);
@@ -109,10 +109,10 @@ void mixed_cppad::record_constraint(const d_vector& fixed_vec  )
 	}
 
 	// save the recording
-	constraint_.Dependent(a1_theta, a1_vec);
+	constraint_fun_.Dependent(a1_theta, a1_vec);
 
 	// optimize the recording
-	constraint_.optimize();
+	constraint_fun_.optimize();
 
 	// ------------------------------------------------------------------------
 	// constraint_jac_row_, constraint_jac_col_, constraint_jac_work_
@@ -122,13 +122,13 @@ void mixed_cppad::record_constraint(const d_vector& fixed_vec  )
 	sparsity_pattern r(n_fixed_);
 	for(size_t j = 0; j < n_fixed_; j++)
 		r[j].insert(j);
-	sparsity_pattern pattern = constraint_.ForSparseJac(n_fixed_, r);
+	sparsity_pattern pattern = constraint_fun_.ForSparseJac(n_fixed_, r);
 
 	// convert sparsity to row and column index form
 	constraint_jac_row_.clear();
 	constraint_jac_col_.clear();
 	std::set<size_t>::iterator itr;
-	for(size_t i = 0; i < constraint_.Range(); i++)
+	for(size_t i = 0; i < constraint_fun_.Range(); i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	size_t j = *itr;
 			constraint_jac_row_.push_back(i);
@@ -138,7 +138,7 @@ void mixed_cppad::record_constraint(const d_vector& fixed_vec  )
 
 	// compute the work vector for reuse during Jacobian sparsity calculations
 	d_vector jac( constraint_jac_row_.size() );
-	constraint_.SparseJacobianForward(
+	constraint_fun_.SparseJacobianForward(
 		fixed_vec            ,
 		pattern              ,
 		constraint_jac_row_  ,
@@ -153,10 +153,10 @@ void mixed_cppad::record_constraint(const d_vector& fixed_vec  )
 	//
 	// sparsity pattern for the Hessian
 	sparsity_pattern s(1);
-	for(size_t i = 0; i < constraint_.Range(); i++ )
+	for(size_t i = 0; i < constraint_fun_.Range(); i++ )
 		s[0].insert(i);
 	pattern.clear();
-	pattern = constraint_.RevSparseHes(n_fixed_, s);
+	pattern = constraint_fun_.RevSparseHes(n_fixed_, s);
 
 	// determine row and column indices in lower triangle of Hessian
 	constraint_hes_row_.clear();
@@ -174,8 +174,8 @@ void mixed_cppad::record_constraint(const d_vector& fixed_vec  )
 	size_t K = constraint_hes_row_.size();
 
 	// compute the work vector for reuse during Hessian sparsity calculations
-	d_vector weight( constraint_.Range() ), hes(K);
-	constraint_.SparseHessian(
+	d_vector weight( constraint_fun_.Range() ), hes(K);
+	constraint_fun_.SparseHessian(
 		fixed_vec            ,
 		weight               ,
 		pattern              ,

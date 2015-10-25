@@ -51,7 +51,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	mixed_cppad/private/fix_like_hes_xam.cpp
 	mixed_cppad/private/fix_like_jac_xam.cpp
 	mixed_cppad/private/hes_cross_xam.cpp
-	mixed_cppad/private/hes_ran_0_xam.cpp
+	mixed_cppad/private/hes_ran_fun_xam.cpp
 	mixed_cppad/private/h_ran_like_xam.cpp
 	mixed_cppad/private/newton_step_xam.cpp
 	mixed_cppad/private/prior_eval_xam.cpp

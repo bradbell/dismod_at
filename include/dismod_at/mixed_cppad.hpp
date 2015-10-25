@@ -24,7 +24,7 @@ extern bool ran_obj_hes_fix_xam(void);
 extern bool prior_eval_xam(void);
 extern bool fix_like_jac_xam(void);
 extern bool fix_like_hes_xam(void);
-extern bool hes_ran_0_xam(void);
+extern bool hes_ran_fun_xam(void);
 extern bool h_ran_like_xam(void);
 extern bool d_logdet_xam(void);
 extern bool d_ran_like_xam(void);
@@ -252,7 +252,7 @@ $head n_random_ > 0$$
 The following values are only defined when $icode%n_random_% > 0%$$:
 $cref/ran_like_/mixed_cppad_private/n_random_ > 0/ran_like_/$$,
 $cref/hes_ran_/mixed_cppad_private/n_random_ > 0/hes_ran_/$$,
-$cref/ran_obj_2_/mixed_cppad_private/n_random_ > 0/ran_obj_2_/$$,
+$cref/ran_obj_fun_/mixed_cppad_private/n_random_ > 0/ran_obj_fun_/$$,
 $cref/hes_fix_/mixed_cppad_private/n_random_ > 0/hes_fix_/$$,
 
 $subhead ran_like_$$
@@ -263,8 +263,8 @@ corresponding to
 $cref/f(theta, u)/mixed_cppad_theory/Random Negative Log-Likelihood, f(theta, u)/$$
 for different levels of AD:
 $codep */
-	CppAD::ADFun<double>      a0_ran_like_;
-	CppAD::ADFun<a1_double>   a1_ran_like_;
+	CppAD::ADFun<double>      ran_like_fun_;
+	CppAD::ADFun<a1_double>   ran_like_a1fun_;
 /* $$
 $subhead hes_ran_$$
 The Hessian of the random likelihood w.r.t. the random effects
@@ -273,13 +273,13 @@ represented by the following variables:
 $codep */
 	CppAD::vector<size_t>      hes_ran_row_; // corresponding row indices
 	CppAD::vector<size_t>      hes_ran_col_; // corresponding column indices
-	CppAD::ADFun<double>       hes_ran_0_;   // Compute f_{uu}^{(2)} (theta, u)
+	CppAD::ADFun<double>       hes_ran_fun_;   // Compute f_{uu}^{(2)} (theta, u)
 	// used by calls that compute f_{uu}^{(2)}
 	CppAD::sparse_hessian_work hes_ran_work_;
 	// computation of the Hessian as an atomic operation
 	newton_step                newton_atom_;
 	//
-	friend bool ::hes_ran_0_xam(void);
+	friend bool ::hes_ran_fun_xam(void);
 /* $$
 $subhead hes_cross_$$
 The Hessian of the random likelihood w.r.t. the random effects
@@ -293,12 +293,12 @@ $codep */
 	//
 	friend bool ::hes_cross_xam(void);
 /* $$
-$subhead ran_obj_2_$$
+$subhead ran_obj_fun_$$
 second order accurate
 in $latex \beta$$ recording of the Joint part of the Laplace approximation;
 i.e., $latex H( \beta , \theta , u)$$.
 $codep */
-	CppAD::ADFun<double>    ran_obj_2_;     // for computing H_beta_beta
+	CppAD::ADFun<double>    ran_obj_fun_;     // for computing H_beta_beta
 /* $$
 $subhead hes_fix_$$
 Information used to calculate the sparse Hessian of the random likelihood
@@ -313,14 +313,14 @@ Note that if $code record_hes_fix_done_$$ is true and
 $code hes_fix_row_.size() == 0$$, then this Hessian is zero; i.e.,
 the second derivative of the Laplace approximation is zero.
 
-$head fix_like_$$
+$head fix_like_fun_$$
 Recording of the $cref/fix_like/mixed_cppad_fix_like/$$ function
 which evaluates a
 $cref/negative log-density vector/mixed_cppad/Negative Log-Density Vector/$$
 corresponding to
 $cref/g(theta)/mixed_cppad_theory/Fixed Negative Log-Likelihood, g(theta)/$$.
 $codep */
-	CppAD::ADFun<double>    fix_like_; // computes fixed negative log-likelihood
+	CppAD::ADFun<double>    fix_like_fun_; // computes fixed negative log-likelihood
 	CppAD::vector<size_t>   fix_like_jac_row_; // prior jacobian row indices
 	CppAD::vector<size_t>   fix_like_jac_col_; // prior jacobian column indices
 	CppAD::sparse_jacobian_work fix_like_jac_work_;
@@ -328,11 +328,11 @@ $codep */
 	CppAD::vector<size_t>   fix_like_hes_col_; // prior hessian column indices
 	CppAD::sparse_hessian_work fix_like_hes_work_;
 /* $$
-$head constraint_$$
+$head constraint_fun_$$
 Recording of the $cref/constraint/mixed_cppad_constraint/$$ function.
 $codep */
 	// computes constraint function
-	CppAD::ADFun<double>        constraint_;
+	CppAD::ADFun<double>        constraint_fun_;
 	//
 	CppAD::vector<size_t>       constraint_jac_row_; // jacobian row indices
 	CppAD::vector<size_t>       constraint_jac_col_; // jacobian column indices

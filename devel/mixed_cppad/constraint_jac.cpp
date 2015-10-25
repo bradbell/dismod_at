@@ -132,7 +132,7 @@ void mixed_cppad::constraint_jac(
 	assert( row_out.size() != 0 );
 
 	CppAD::vector< std::set<size_t> > not_used;
-	constraint_.SparseJacobianForward(
+	constraint_fun_.SparseJacobianForward(
 		fixed_vec       ,
 		not_used        ,
 		row_out         ,

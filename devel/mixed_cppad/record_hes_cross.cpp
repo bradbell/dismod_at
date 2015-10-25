@@ -84,7 +84,7 @@ $codei%
 does not matter.
 Upon return it contains the necessary information so that
 $codei%
-	a0_ran_like_.SparseHessian(
+	ran_like_fun_.SparseHessian(
 		%both_vec%,
 		%w%,
 		%not_used%,
@@ -141,7 +141,7 @@ void mixed_cppad::record_hes_cross(
 			r[i * n_total + j] = (i < n_fixed_) && (i == j);
 	}
 # endif
-	a0_ran_like_.ForSparseJac(n_total, r);
+	ran_like_fun_.ForSparseJac(n_total, r);
 
 	// compute sparsity pattern corresponding to paritls w.r.t. (theta, u)
 	// of partial w.r.t. theta of f(theta, u)
@@ -153,7 +153,7 @@ void mixed_cppad::record_hes_cross(
 # else
 	s[0] = true;
 # endif
-	pattern = a0_ran_like_.RevSparseHes(n_total, s, transpose);
+	pattern = ran_like_fun_.RevSparseHes(n_total, s, transpose);
 
 
 	// User row index for random effect and column index for fixed effect
@@ -199,7 +199,7 @@ void mixed_cppad::record_hes_cross(
 	d_vector val_out(K);
 
 	// compute the work vector
-	a0_ran_like_.SparseHessian(
+	ran_like_fun_.SparseHessian(
 		both,
 		w,
 		pattern,
