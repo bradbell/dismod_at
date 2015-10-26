@@ -50,7 +50,7 @@ $subhead Assumption$$
 The function $latex f(\theta, u)$$ is assumed to be smooth.
 Furthermore, there are no constraints on the value of $latex u$$.
 
-$head Fixed Negative Log-Likelihood, g(theta)$$
+$head Fixed Likelihood, g(theta)$$
 We use $latex g( \theta )$$ for the part of the likelihood
 that only depends on the fixed effects $latex \theta$$;
 $latex \[

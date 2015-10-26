@@ -22,7 +22,7 @@ $spell
 	jac
 $$
 
-$section Jacobian of Fixed part of Negative Log-likelihood$$
+$section Jacobian of Fixed Likelihood$$
 
 $head Syntax$$
 $icode%mixed_object%.fix_like_jac(

@@ -170,11 +170,11 @@ bool mixed_derived_xam(void)
 	}
 	ok &= abs( a2_vec[0] / a2_double(sum) - a2_double(1.0) ) < eps;
 
-	// Evaluate the fixed negative log-likelihood
+	// Evaluate the fixed likelihood
 	vector<a1_double> a1_vec(1 + n_fixed);
 	a1_vec = mixed_object.fix_like(a1_fixed);
 
-	// check the fixed negative log-likelihood
+	// check the fixed likelihood
 	sum = 0.0;
 	for(size_t j = 0; j < n_fixed; j++)
 	{	double sigma  = fixed_vec[j];

@@ -336,8 +336,8 @@ $head 07-29$$
 $list number$$
 The term
 'prior negative log-likelihood' was change to
-$cref/fixed negative log-likelihood/mixed_cppad_theory/
-	Fixed Negative Log-Likelihood, g(theta)
+$cref/fixed likelihood/mixed_cppad_theory/
+	Fixed Likelihood, g(theta)
 /$$.
 $lnext
 The term

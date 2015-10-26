@@ -27,7 +27,7 @@ TMB: Automatic Differentiation and Laplace Approximation,
 Kasper Kristensen, Anders Nielsen, Casper W. Berg, Hans Skaug, Bradley M. Bell,
 Journal of Statistical Software, Accepted 2015-02.
 
-$head Total Log-Likelihood$$
+$head Total Likelihood$$
 The reference above defines $latex f( \theta, u)$$
 to be the negative log-likelihood of the
 $latex z$$, $latex y$$, $latex u$$ and $latex \theta$$; i.e.,
@@ -50,7 +50,7 @@ $subhead Assumption$$
 The function $latex f(\theta, u)$$ is assumed to be smooth.
 Furthermore, there are no constraints on the value of $latex u$$.
 
-$head Fixed Negative Log-Likelihood, g(theta)$$
+$head Fixed Likelihood, g(theta)$$
 We use $latex g( \theta )$$ for the part of the likelihood
 that only depends on the fixed effects $latex \theta$$;
 $latex \[

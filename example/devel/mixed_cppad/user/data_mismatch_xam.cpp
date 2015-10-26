@@ -30,15 +30,15 @@ $latex \[
 $latex \[
 	\B{p}( u | \theta ) \sim \B{N} ( 0 , \sigma_u^2 )
 \] $$
-The negative log-likelihood for the fixed effects
-$cref/g(theta)/mixed_cppad_theory/Fixed Negative Log-Likelihood, g(theta)/$$
+The fixed likelihood
+$cref/g(theta)/mixed_cppad_theory/Fixed Likelihood, g(theta)/$$
 is
 $latex \[
 g( \theta ) = \frac{1}{2} \left[
 	\log ( 2 \pi \sigma_z^2 ) + ( z - \theta )^2
 \right]
 \] $$
-The negative log-likelihood for the random effects
+The random likelihood
 $cref/f(theta, u)
 	/mixed_cppad_theory/
 	Random Likelihood, f(theta, u)

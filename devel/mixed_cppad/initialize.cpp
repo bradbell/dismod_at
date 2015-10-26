@@ -121,7 +121,7 @@ $latex r^{(2)} ( \theta )$$.
 $subhead fix_like_fun$$
 $icode%size_map%["fix_like"]%$$ is the
 number of variables in the $code ADFun<double>$$ function
-that computes the fixed negative log likelihood $latex g( \theta )$$.
+that computes the fixed likelihood $latex g( \theta )$$.
 
 $subhead constraint$$
 $icode%size_map%["constraint"]%$$ is the

@@ -20,7 +20,7 @@ $spell
 	Cpp
 $$
 
-$section Evaluate Fixed Part of Negative Log-Likelihood$$
+$section Evaluate Fixed Likelihood$$
 
 $head Syntax$$
 $icode%vec% = %mixed_object%.fix_like_eval(%fixed_vec%)%$$
@@ -47,7 +47,7 @@ $codei%
 and is a
 $cref/negative log-density vector/mixed_cppad/Negative Log-Density Vector/$$
 corresponding to the fixed part of the negative log-likelihood
-$cref/g(theta)/mixed_cppad_theory/Fixed Negative Log-Likelihood, g(theta)/$$.
+$cref/g(theta)/mixed_cppad_theory/Fixed Likelihood, g(theta)/$$.
 To be specific;
 $pre
 	$$

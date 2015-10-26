@@ -23,7 +23,7 @@ $spell
 	hes
 $$
 
-$section Record Negative Log-Likelihood For Fixed Effects$$
+$section Record Fixed Likelihood$$
 
 $head Syntax$$
 $codei%record_fix_like(%fixed_vec%)%$$
@@ -61,7 +61,7 @@ $cref/fix_like/mixed_cppad_fix_like/$$.
 The function result is the
 $cref/negative log-density vector/mixed_cppad/Negative Log-Density Vector/$$
 corresponding to the function
-$cref/g(theta)/mixed_cppad_theory/Fixed Negative Log-Likelihood, g(theta)/$$.
+$cref/g(theta)/mixed_cppad_theory/Fixed Likelihood, g(theta)/$$.
 
 $head fix_like_jac_row_$$
 The input value of the member variable
@@ -101,7 +101,7 @@ $codei%
 	)
 %$$
 (where $icode x$$ and $icode jac$$ $code double$$ vectors)
-can be used to calculate the Jacobian of the fixed part of the likelihood.
+can be used to calculate the Jacobian of the fixed likelihood.
 
 $head fix_like_hes_row_$$
 The input value of the member variable
@@ -146,7 +146,7 @@ $codei%
 (where $icode theta$$, $icode weight$$, and $icode hes$$
 are $code double$$ vectors)
 can be used to calculate the
-lower triangle of a weighted Hessian for the fixed part of the likelihood.
+lower triangle of a weighted Hessian for the fixed likelihood.
 
 $end
 */

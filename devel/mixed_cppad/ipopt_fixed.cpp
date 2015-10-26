@@ -269,7 +269,7 @@ number of absolute value terms in the
 $cref/fix_like/mixed_cppad_fix_like/$$.
 
 $head prior_nnz_jac_$$
-number of non-zeros in the Jacobian of the fixed negative log-likelihood.
+number of non-zeros in the Jacobian of the fixed likelihood.
 
 $head lag_hes_row_$$
 The row indices for the sparse representation of the Hessian
@@ -329,7 +329,7 @@ mixed_object_      ( mixed_object    )
 	// -----------------------------------------------------------------------
 	// set fix_like_n_abs_
 	// -----------------------------------------------------------------------
-	// fixed negative log-likelihood at the initial fixed effects vector
+	// fixed likelihood at the initial fixed effects vector
 	d_vector fix_like_vec = mixed_object_.fix_like_eval(fixed_in);
 	if( fix_like_vec.size() == 0 )
 		fix_like_n_abs_ = 0;
@@ -673,7 +673,7 @@ bool ipopt_fixed::get_starting_point(
 	assert( n > 0 && size_t(n) == n_fixed_ + fix_like_n_abs_ );
 	assert( m >= 0 && size_t(m) == 2 * fix_like_n_abs_ + n_constraint_ );
 
-	// fixed negative log-likelihood at the initial fixed effects vector
+	// fixed likelihood at the initial fixed effects vector
 	if( fix_like_vec_tmp_.size() == 0 )
 		assert( mixed_object_.fix_like_eval(fixed_in_).size() == 0 );
 	else
@@ -1443,7 +1443,7 @@ void ipopt_fixed::finalize_solution(
 		ok &= 0.0 <= z_U[j];
 	}
 	//
-	// fixed negative log-likelihood at the final fixed effects vector
+	// fixed likelihood at the final fixed effects vector
 	if( fix_like_vec_tmp_.size() == 0 )
 		assert( mixed_object_.fix_like_eval(fixed_opt_).size() == 0 );
 	else

@@ -27,8 +27,8 @@ $latex \[
 $latex \[
 	\B{p}( \theta_i ) \sim \B{N} ( 0 , 1 )
 \] $$
-The corresponding fixed negative log-likelihood
-$cref/g(theta)/mixed_cppad_theory/Fixed Negative Log-Likelihood, g(theta)/$$
+The corresponding fixed likelihood
+$cref/g(theta)/mixed_cppad_theory/Fixed Likelihood, g(theta)/$$
 is
 $latex \[
 g( \theta ) = \frac{1}{2} \sum_{i} \left[
