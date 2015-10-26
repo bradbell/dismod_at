@@ -228,11 +228,25 @@
 #
 # $head option_dict$$
 # This is a list of $code dict$$
-# that define the rows of the $cref option_table$$.
-# The dictionary $icode%option_dict%[%i%]%$$ has the following keys:
-# $code name$$, $code value$$.
-# See $cref option_table$$ for the corresponding set of names
-# and meaning of corresponding values.
+# that define the values
+# $cref/option_name/option_table/option_name/$$,
+# $cref/option_value/option_table/option_value/$$ in the option table.
+# The $th i$$ row of the table will have
+# $codei%
+#	%option_name%  = %option_dict%[%i%]['name']
+#	%option_value% = %option_dict%[%i%]['value']
+# %$$
+# There is one exception to this rule.
+# The row of the table with $icode option_name$$ equal to
+# $cref/parent_node_id/option_table/parent_node_id/$$ is represented by
+# $codei%
+#	%option_dict%[%i%]['name']  = 'parent_node_name'
+#	%option_dict%[%i%]['value'] = %value%
+# %$$
+# where $icode value$$ is the value of
+# $cref/node_name/node_table/node_name/$$ in the node table that
+# corresponds to the $icode node_id$$ equal to
+# $icode parent_node_id$$ in the option table.
 #
 # $head avgint_dict$$
 # This is a list of $code dict$$
@@ -266,20 +280,12 @@ def create_database(
 	option_dict,
 	avgint_dict
 ) :
+	import sys
 	import dismod_at
 	# -----------------------------------------------------------------------
 	# create database
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
-	# -----------------------------------------------------------------------
-	# create option table
-	col_name = [ 'option_name', 'option_value' ]
-	col_type = [ 'text unique', 'text' ]
-	row_list = []
-	for row in option_dict :
-		row_list.append( [ row['name'], row['value'] ] )
-	tbl_name = 'option'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# create age table
 	col_name = [ 'age' ]
@@ -629,6 +635,28 @@ def create_database(
 			row.append( data[ covariate_dict[j]['name'] ] )
 		row_list.append(row)
 	tbl_name = 'data'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# -----------------------------------------------------------------------
+	# create option table
+	col_name = [ 'option_name', 'option_value' ]
+	col_type = [ 'text unique', 'text' ]
+	row_list = []
+	for row in option_dict :
+		name  = row['name']
+		value = row['value']
+		if name == 'parent_node_id' :
+			value = str(value)
+			msg   = 'create_database.py: option_dict has the following row:\n'
+			msg  += "\t{ 'name':'parent_node_id' , 'value':'" + value + "' }\n"
+			msg  += 'This is an error and should probably be replaced by\n'
+			value = node_dict[int(value)]['name']
+			msg  += "\t{ 'name':'parent_node_name' , 'value':'" + value + "' }"
+			sys.exit(msg)
+		if name == 'parent_node_name' :
+			name  = 'parent_node_id'
+			value = global_node_name2id[value]
+		row_list.append( [ name, value ] )
+	tbl_name = 'option'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create avgint table

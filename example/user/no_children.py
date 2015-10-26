@@ -210,9 +210,8 @@ def example_db (file_name) :
 	]
 	# ------------------------------------------------------------------------
 	# option_dict
-	assert node_dict[3]['name'] == 'canada'
 	option_dict = [
-		{ 'name':'parent_node_id',         'value':'3'            },
+		{ 'name':'parent_node_name',       'value':'canada'       },
 		{ 'name':'number_sample',          'value':'1'            },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },

@@ -46,6 +46,18 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 10-26$$
+Changed the specification for the $cref create_database$$ argument
+$cref/option_dict/create_database/option_dict/$$.
+To be specific, the row
+$codei%
+	{ 'name':'parent_node_id' , 'value':'%parent_node_id%' }
+%$$
+was replace by the row
+$codei%
+	{ 'name':'parent_node_name' , 'value':'%parent_node_name%' }
+%$$
+
 $head 10-25$$
 $list number$$
 Make the choice between quasi-Newton and full Newton

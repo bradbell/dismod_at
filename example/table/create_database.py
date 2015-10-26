@@ -177,7 +177,7 @@ def create_database() :
 	#
 	# option_dict
 	option_dict = [
-		{ 'name':'parent_node_id',  'value':'0'            },
+		{ 'name':'parent_node_name','value':'world'        },
 		{ 'name':'ode_step_size',   'value':'10.0'         },
 		{ 'name':'random_seed',     'value':'0'            },
 		{ 'name':'number_sample',   'value':'1'            },

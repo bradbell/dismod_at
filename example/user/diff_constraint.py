@@ -224,7 +224,7 @@ def example_db (file_name) :
 	# ------------------------------------------------------------------------
 	# option_dict
 	option_dict = [
-		{ 'name':'parent_node_id',         'value':'0'            },
+		{ 'name':'parent_node_name',       'value':'world'        },
 		{ 'name':'number_sample',          'value':'1'            },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },
