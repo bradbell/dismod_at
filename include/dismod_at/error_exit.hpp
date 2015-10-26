@@ -21,6 +21,11 @@ namespace dismod_at {
 	extern void error_exit(
 		sqlite3*           db           ,
 		const std::string& message      ,
+		const std::string& table_name
+	);
+	extern void error_exit(
+		sqlite3*           db           ,
+		const std::string& message      ,
 		const std::string& table_name   ,
 		const size_t&      row_id
 	);

@@ -32,7 +32,6 @@ $end
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/pack_prior.hpp>
 # include <dismod_at/null_int.hpp>
-# include <dismod_at/configure.hpp>
 
 bool fit_model_xam(void)
 {	bool   ok = true;
@@ -318,6 +317,7 @@ bool fit_model_xam(void)
 		start_var[var_id] = prior_table[prior_id].mean;
 	}
 	// ----------------------- run the fit -------------------------------
+	bool quasi_fixed = false;
 	dismod_at::fit_model fit_object(
 		db,
 		pack_object,
@@ -325,17 +325,14 @@ bool fit_model_xam(void)
 		prior_table,
 		s_info_vec,
 		data_object,
-		prior_object
+		prior_object,
+		quasi_fixed
 	);
 	std::map<std::string, std::string> option_map;
 	option_map["max_num_iter_fixed"]       = "100";
 	option_map["print_level_fixed"]        = "0";
 	option_map["tolerance_fixed"]          = "1e-8";
-# if MIXED_CPPAD_NEWTON
 	option_map["derivative_test_fixed"]    = "second-order";
-# else
-	option_map["derivative_test_fixed"]    = "first-order";
-# endif
 	//
 	option_map["derivative_test_random"]   = "second-order";
 	option_map["max_num_iter_random"]      = "100";

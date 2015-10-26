@@ -486,6 +486,8 @@ void fit_command(
 	string column_name = "start_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, start_var);
 	// ------------------ run fit_model ------------------------------------
+	bool quasi_fixed = option_map["quasi_fixed"] == "true";
+	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
 	dismod_at::fit_model fit_object(
 		db                   ,
 		pack_object          ,
@@ -493,7 +495,8 @@ void fit_command(
 		db_input.prior_table ,
 		s_info_vec           ,
 		data_object          ,
-		prior_object
+		prior_object         ,
+		quasi_fixed
 	);
 	fit_object.run_fit(option_map);
 	vector<double> solution = fit_object.get_solution();
@@ -872,6 +875,9 @@ void sample_command(
 	col_type[2]   = "real";
 	col_unique[2] = false;
 	//
+	bool quasi_fixed = option_map["quasi_fixed"] == "true";
+	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
+	//
 	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
 	{	// set the measurement values for this simulation subset
 		size_t offset = n_subset * sample_index;
@@ -899,7 +905,8 @@ void sample_command(
 			db_input.prior_table ,
 			s_info_vec           ,
 			data_object          ,
-			prior_object
+			prior_object         ,
+			quasi_fixed
 		);
 		fit_object.run_fit(option_map);
 		vector<double> solution = fit_object.get_solution();

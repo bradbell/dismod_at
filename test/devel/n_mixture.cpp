@@ -14,7 +14,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <gsl/gsl_linalg.h>
 # include <dismod_at/mixed_cppad.hpp>
 # include <dismod_at/manage_gsl_rng.hpp>
-# include <dismod_at/configure.hpp>
 
 // J. Andrew Royle, Biometrics 60, 108-115 March 2004,
 // N-Mixture Models for Estimating Population Size
@@ -196,14 +195,10 @@ bool n_mixture(void)
 	std::string fixed_options =
 		"Integer print_level               0\n"
 		"String  sb                        yes\n"
+		"String  derivative_test           second-order\n"
 		"String  derivative_test_print_all yes\n"
 		"Numeric tol                       1e-8\n"
 	;
-# if MIXED_CPPAD_NEWTON
-	fixed_options += "String  derivative_test   second-order\n";
-# else
-	fixed_options += "String  derivative_test   first-order\n";
-# endif
 	std::string random_options =
 		"Integer print_level 0\n"
 		"String  sb          yes\n"

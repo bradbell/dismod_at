@@ -155,6 +155,7 @@ int main(void)
 	RUN(data_mismatch_xam);
 	RUN(logdet_grad_xam);
 	RUN(ranobj_grad_xam);
+	RUN(ranobj_hes_xam);
 	RUN(eigen_xam);
 	RUN(fix_like_hes_xam);
 	RUN(fix_like_jac_xam);
@@ -225,9 +226,6 @@ int main(void)
 	RUN(smooth_info_xam);
 	RUN(weight_info_xam);
 
-# if MIXED_CPPAD_NEWTON
-	RUN(ranobj_hes_xam);
-# endif
 # if DISMOD_AT_HAS_SUITESPARSE
 	RUN(cholmod_xam);
 # endif

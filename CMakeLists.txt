@@ -19,8 +19,7 @@
 #                        -D cppad_prefix=value \
 #                        -D eigen_prefix=value \
 #                        -D ipopt_prefix=value \
-# optional variables:    -D mixed_cppad_newton=value \
-#                        -D mixed_cppad_set_sparsity=value \
+# optional variables:    -D mixed_cppad_set_sparsity=value \
 #                        -D mixed_cppad_libdir=value \
 #                        -D suitesparse_prefix=value \
 #                         ..
@@ -126,9 +125,6 @@ get_prefix(eigen)
 get_prefix(ipopt)
 # ----------------------------------------------------------------------------
 # optional special cmake variables
-optional_definition(mixed_cppad_newton BOOL
-	"include second order method for optimizing fixed effects (more memory)"
-)
 optional_definition(mixed_cppad_set_sparsity BOOL
 	"use sets (instead of bools) to represent sparsity patterns"
 )
@@ -187,10 +183,6 @@ MESSAGE(STATUS "dismod_at_has_nullptr = ${dismod_at_has_nullptr_01}")
 CONFIGURE_FILE(
 	${CMAKE_CURRENT_SOURCE_DIR}/include/dismod_at/configure.hpp.in
 	${CMAKE_CURRENT_SOURCE_DIR}/include/dismod_at/configure.hpp
-)
-CONFIGURE_FILE(
-	${CMAKE_CURRENT_SOURCE_DIR}/python/dismod_at/mixed_cppad_newton.py.in
-	${CMAKE_CURRENT_SOURCE_DIR}/python/dismod_at/mixed_cppad_newton.py
 )
 # ----------------------------------------------------------------------------
 # subdirectories

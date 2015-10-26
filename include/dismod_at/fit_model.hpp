@@ -88,7 +88,8 @@ namespace dismod_at {
 			const CppAD::vector<prior_struct>& prior_table  ,
 			const CppAD::vector<smooth_info>&  s_info_vec   ,
 			const data_model&                  data_object  ,
-			const prior_model&                 prior_object
+			const prior_model&                 prior_object ,
+			bool                               quasi_fixed
 		);
 		// run fit
 		void run_fit(

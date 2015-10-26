@@ -15,22 +15,19 @@ then
 	exit 1
 fi
 # ---------------------------------------------------------------------------
-bin/run_omhelp.sh xml
-#
-bin/run_cmake.sh --newton
-cd build
-make check
-cd ..
-bin/run_cmake.sh
-cd build
-make check
-make install
-cd ..
-#
 bin/check_devel_xam.sh
 bin/check_include.sh
 bin/check_verbatim.sh
 bin/check_configure.sh
+#
+bin/run_omhelp.sh xml
+#
+bin/run_cmake.sh
+#
+cd build
+make check
+make install
+cd ..
 #
 bin/check_mixed_cppad.sh
 #

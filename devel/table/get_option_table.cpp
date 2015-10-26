@@ -92,13 +92,14 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		"parent_node_id",
 		"random_seed",
 		"rate_info",
+		"quasi_fixed",
 		"derivative_test_fixed",
-		"print_level_fixed",
-		"max_num_iter_fixed",
-		"tolerance_fixed",
 		"derivative_test_random",
+		"print_level_fixed",
 		"print_level_random",
+		"max_num_iter_fixed",
 		"max_num_iter_random",
+		"tolerance_fixed",
 		"tolerance_random"
 	};
 	size_t n_name = sizeof( name_list ) / sizeof( name_list[0] );
@@ -124,6 +125,9 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	assert( n_option == option_value.size() );
 	//
 	// check table
+	int derivative_test_fixed_level = -1;
+	int quasi_fixed = -1;
+	//
 	for(size_t i = 0; i < n_name; i++)
 	{	size_t match = n_option;
 		for(size_t option_id = 0; option_id < n_option; option_id++)
@@ -168,18 +172,53 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(db, msg, table_name, match);
 			}
 		}
+		if( name_vec[i] == "quasi_fixed" )
+		{	if( option_value[match] == "true" )
+				quasi_fixed = 1;
+			else if( option_value[match] == "false" )
+				quasi_fixed = 0;
+			else
+			{	msg = "option_value is not true or false";
+				error_exit(db, msg, table_name, match);
+			}
+		}
 		if(
-			name_vec[i] == "fixed_print_level" ||
-			name_vec[i] == "random_print_level"
+			name_vec[i] == "tolerance_fixed" ||
+			name_vec[i] == "tolerance_random"
+		)
+		{	double tolerance = std::atof( option_value[match].c_str() );
+			bool ok = 0.0 < tolerance;
+			if( ! ok )
+			{	msg = "option_value is not greater than zero";
+				error_exit(db, msg, table_name, match);
+			}
+		}
+		if(
+			name_vec[i] == "max_num_iter_fixed" ||
+			name_vec[i] == "max_num_iter_random"
+		)
+		{	int max_num_iter = std::atoi( option_value[match].c_str() );
+			bool ok = 0 < max_num_iter;
+			if( ! ok )
+			{	msg = "option_value is not greater than zero";
+				error_exit(db, msg, table_name, match);
+			}
+		}
+		if(
+			name_vec[i] == "print_level_fixed" ||
+			name_vec[i] == "print_level_random"
 		)
 		{	int print_level = std::atoi( option_value[match].c_str() );
 			bool ok = 0 <= print_level && print_level <= 12;
 			if( ! ok )
-			{	msg = "option_value is not between 0 and 12 inclusinve";
+			{	msg = "option_value is not between 0 and 12 inclusive";
 				error_exit(db, msg, table_name, match);
 			}
 		}
-		if( name_vec[i] == "derivative_test" )
+		if(
+			name_vec[i] == "derivative_test_fixed" ||
+			name_vec[i] == "derivative_test_random"
+		)
 		{	bool ok = false;
 			ok     |= option_value[match] == "none";
 			ok     |= option_value[match] == "first-order";
@@ -190,14 +229,27 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				msg += "none, first-order, second-order, only-second-order";
 				error_exit(db, msg, table_name, match);
 			}
+			if( name_vec[i] == "derivative_test_fixed" )
+			{	if( option_value[match] == "none" )
+					derivative_test_fixed_level = 0;
+				else if( option_value[match] == "first-order" )
+					derivative_test_fixed_level = 1;
+				else
+					derivative_test_fixed_level = 2;
+			}
 		}
-
+	}
+	assert( quasi_fixed != -1 );
+	if( (quasi_fixed == 1) && (derivative_test_fixed_level > 1 ) )
+	{	msg  = "quasi_fixed option is true and derivative_test_fixed";
+		msg += " is second-order or only-second-order";
+		error_exit(db, msg, table_name);
 	}
 	//
 	// return table
 	CppAD::vector<option_struct> option_table(n_option);
 	for(size_t i = 0; i < n_option; i++)
-	{	option_table[i].option_name    = option_name[i];
+	{	option_table[i].option_name  = option_name[i];
 		option_table[i].option_value = option_value[i];
 	}
 	return option_table;

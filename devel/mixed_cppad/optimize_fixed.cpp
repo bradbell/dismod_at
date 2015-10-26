@@ -48,8 +48,8 @@ $codei%
 	const std::string& %fixed_options%
 %$$
 and is the $cref ipopt_options$$ for optimizing the fixed effects.
-If $cref/mixed_cppad_newton/run_cmake.sh/mixed_cppad_newton/$$
-is $code NO$$,
+If $cref/quasi_fixed/mixed_cppad_derived_ctor/quasi_fixed/$$
+is true,
 the following changes are made to the standard Ipopt options specification:
 $list number$$
 If specified, the $icode derivative_test$$ must be $code none$$ or

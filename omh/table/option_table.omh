@@ -119,6 +119,14 @@ The following options control the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$ optimization
 for both the fixed and random effects:
 
+$subhead quasi_fixed$$
+If $icode option_name$$ is
+$code quasi_fixed$$,
+the corresponding possible values are
+$code true$$ or $code false$$.
+If it is $code true$$, a quasi-Newton method is used to optimize
+the fixed effects. Otherwise a full Newton method is used.
+
 $subhead derivative_test$$
 If $icode option_name$$ is
 $code derivative_test_fixed$$ ($code derivative_test_random$$),
@@ -138,6 +146,9 @@ $rnext
 $code only-second-order $$ $cnext
 	test second derivatives at starting point
 $tend
+If $icode quasi_fixed$$ is $code true$$
+and $icode option_name$$ is $code derivative_text_fixed$$,
+the $icode option_value$$ cannot be $code second-order$$.
 
 $subhead max_num_iter$$
 If $icode option_name$$ is

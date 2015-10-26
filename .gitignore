@@ -7,7 +7,6 @@ junk.*
 example/devel/gmon.out
 example/devel/gprof.out
 # cmake confiuration files
-python/dismod_at/mixed_cppad_newton.py
 include/dismod_at/configure.hpp
 # web version of documentation directory
 doc.tgz

@@ -21,6 +21,8 @@ $section Log and Print an Error Message and then Exit$$
 $head Syntax$$
 $codei%error_exit(%db%, %message%)
 %$$
+$codei%error_exit(%db%, %message%, %table_name%)
+%$$
 $codei%error_exit(%db%, %message%, %table_name%, %row_id%)%$$
 
 $head db$$
@@ -114,10 +116,17 @@ void error_exit(
 }
 void error_exit(
 	sqlite3*           db           ,
+	const std::string& message      ,
+	const std::string& table_name   )
+{	size_t      row_id     = size_t( DISMOD_AT_NULL_INT );
+	error_exit(db, message, table_name, row_id);
+	return;
+}
+void error_exit(
+	sqlite3*           db           ,
 	const std::string& message      )
 {	std::string table_name = "";
-	size_t      row_id     = size_t( DISMOD_AT_NULL_INT );
-	error_exit(db, message, table_name, row_id);
+	error_exit(db, message, table_name);
 	return;
 }
 

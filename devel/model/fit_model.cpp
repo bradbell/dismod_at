@@ -12,10 +12,10 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/log_message.hpp>
-# include <dismod_at/configure.hpp>
 /*
 $begin fit_model$$
 $spell
+	bool
 	cppad
 	sqlite
 	str
@@ -41,7 +41,8 @@ $codei%fit_model %fit_object%(
 	%prior_table%,
 	%s_info_vec%,
 	%data_object%,
-	%prior_object%
+	%prior_object%,
+	%quasi_fixed%
 )
 %$$
 $codei%fit_object.run_fit(%option_map%)
@@ -111,6 +112,15 @@ $codei%
 %$$
 It contains the model for the fixed negative log-likelihood; see $cref prior_model$$.
 
+$head quasi_fixed$$
+This argument has prototype
+$codei%
+	bool quasi_fixed
+%$$
+If it is true, a quasi-Newton method is used when optimizing the fixed effects.
+Otherwise a full Newton method is used; see
+$cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$.
+
 $head run_fit$$
 Run the optimization process to determine the optimal fixed and random effects.
 
@@ -162,16 +172,13 @@ fit_model::fit_model(
 	const CppAD::vector<prior_struct>& prior_table  ,
 	const CppAD::vector<smooth_info>&  s_info_vec   ,
 	const data_model&                  data_object  ,
-	const prior_model&                 prior_object ) :
+	const prior_model&                 prior_object ,
+	bool                               quasi_fixed  ) :
 // base class constructor
 mixed_cppad(
 	size_fixed_effect(pack_object) ,  // n_fixed
 	size_random_effect(pack_object) , // n_random
-# if MIXED_CPPAD_NEWTON
-	false                             // quasi_fixed
-# else
-	true
-# endif
+	quasi_fixed
 ) ,
 db_            (db)                                 ,
 n_fixed_       ( size_fixed_effect(pack_object)  )  ,

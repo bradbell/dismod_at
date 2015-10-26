@@ -56,17 +56,6 @@ ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
 # &&
 #
-# &head mixed_cppad_newton&&
-# &index MIXED_CPPAD_NEWTON&&
-# Use a second order method when optimizing the fixed effects (YES/NO).
-# The default is NO because the Newton method requires a lot more memory:
-# &codep
-mixed_cppad_newton="NO"
-# &&
-# Note that the include file &code dismod_at/configure.hpp&& contains the
-# symbol &code MIXED_CPPAD_NEWTON&& which is zero or one depending on the
-# value of &icode mixed_cppad_newton&&.
-#
 # &head mixed_cppad_set_sparsity&&
 # If YES, use sets of indices for sparsity patterns.
 # If NO use arrays of bools:
@@ -114,7 +103,6 @@ then
 usage: bin/run_cmake.sh \\
 	[--help] \\
 	[--verbose] \\
-	[--newton] \\
 	[--set_sparsity]
 EOF
 	exit 0
@@ -124,9 +112,6 @@ fi
 if [ "$user_option" == '--verbose' ]
 then
 	cmake_verbose_makefile='1'
-elif [ "$user_option" == '--newton' ]
-then
-	mixed_cppad_newton="YES"
 elif [ "$user_option" == '--set_sparsity' ]
 then
 	mixed_cppad_set_sparsity="YES"
@@ -154,7 +139,6 @@ cmake \
 	-D ipopt_prefix="$cppad_prefix" \
 	-D eigen_prefix="$eigen_prefix" \
 	\
-	-D mixed_cppad_newton="$mixed_cppad_newton" \
 	-D mixed_cppad_set_sparsity="$mixed_cppad_set_sparsity" \
 	-D mixed_cppad_libdir="$mixed_cppad_libdir" \
 	-D suitesparse_prefix="$suitesparse_prefix" \
