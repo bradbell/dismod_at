@@ -375,7 +375,7 @@ bool capture_xam(void)
 	size_t T = n_random;
 	vector<double> theta_sim(n_fixed);
 	theta_sim[0] =   0.50;  // constant term in covariate model
-	theta_sim[1] =   6.0;   // mean population size
+	theta_sim[1] =   5.0;   // mean population size
 	theta_sim[2] =   1.00;  // standard deviation of random effects
 
 	// simulate y
@@ -400,7 +400,8 @@ bool capture_xam(void)
 	theta_upper[2] = 4.0;
 
 	// create derived object
-	bool quasi_fixed = (random_seed % 2) == 0;
+	// bool quasi_fixed = (random_seed % 2) == 0;
+	bool quasi_fixed = true;
 	mixed_derived mixed_object(I, T, quasi_fixed, y);
 
 	// initialize point to start optimization at
