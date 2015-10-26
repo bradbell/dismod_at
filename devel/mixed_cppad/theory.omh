@@ -62,10 +62,18 @@ Furthermore, there may be  constraints on the value of $latex \theta$$.
 
 $head Objective$$
 
-$subhead h(theta, u)$$
+$subhead u^(theta)$$
+Given the fixed effects $latex \theta$$,
+we use $latex \hat{u} ( \theta )$$ to denote
+the random effects that maximize the random likelihood; i.e.,
+$latex \[
+	\hat{u} ( \theta ) = \R{argmin} \; f( \theta, u ) \; \R{w.r.t.} \; u
+\] $$
+
+$subhead Laplace Approximation, h(theta, u)$$
 Using the notation above,
-negative log of the part of the Laplace approximation that
-depends on both the fixed and random effects $latex u$$ is
+the Laplace approximation as a function of both
+the fixed and random effects is
 $latex \[
 h( \theta, u )
 =
@@ -75,15 +83,7 @@ h( \theta, u )
 \] $$
 where $latex n$$ is the number of random effects.
 
-$subhead u^(theta)$$
-Given the fixed effects,
-the corresponding random effects that maximize the random likelihood
-are denoted by
-$latex \[
-	\hat{u} ( \theta ) = \R{argmin} \; f( \theta, u ) \; \R{w.r.t.} \; u
-\] $$
-
-$subhead Random Part of Objective, r(theta)$$
+$subhead Random Objective, r(theta)$$
 We refer to
 $latex \[
 	r( \theta )
@@ -94,7 +94,9 @@ $latex \[
 		\B{p} ( y |  \theta, u ) \B{p} ( u | \theta ) \; \B{d} u
 	\right]
 \] $$
-as the random part of the objective.
+as the random objective.
+This corresponds to equation (4) in the
+$cref/reference/mixed_cppad_theory/Reference/$$.
 
 $subhead Total Objective, L(theta)$$
 The total objective, as a function of the fixed effects, is
