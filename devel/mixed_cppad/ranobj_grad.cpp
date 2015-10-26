@@ -22,23 +22,16 @@ $spell
 	xam
 $$
 
-$section Total Derivative of Random Part of Objective$$
+$section Derivative of Random Objective$$
 
 $head Syntax$$
 $icode%mixed_object%.ranobj_grad(%fixed_vec%, %random_vec%, %r_fixed%)%$$
 
 $head Purpose$$
 This routine computes the
-$cref/total derivative
-	/mixed_cppad_new_theory/
-	Total Derivative of Random Part of Objective
-/$$,
-with respect to the fixed effects,
-of the
-$cref/random part of the objective
-	/mixed_cppad_new_theory
-	/Objective
-	/Random Part of Objective, r(theta)
+$cref/derivative of the random objective
+	/mixed_cppad_theory/
+	Derivative of Random Objective
 /$$.
 
 $head mixed_object$$

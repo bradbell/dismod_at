@@ -106,20 +106,59 @@ L ( \theta )
 r( \theta ) + g( \theta )
 \] $$
 
-$head Differentiating Random Part of Objective$$
+$head Derivative of Random Objective$$
+The derivative of the random part of the objective is given by
+$latex \[
+r^{(1)} ( \theta )
+=
+h_\theta^{(1)} [ \theta , \hat{u} ( \theta ) ]
++
+h_u^{(1)} [ \theta , \hat{u} ( \theta ) ] u^{(1)} ( \theta )
+\] $$
+Thus the derivative of $latex r ( \theta )$$ can be computed
+if we can compute the derivative of $latex \hat{u} ( \theta )$$
+and the partials of $latex h( \theta , u )$$.
 
-$subhead Implicit Differentiation$$
-Because $latex f(\theta, u)$$ is smooth, we obtain
+$subhead Derivative of u^(theta)$$
+Because $latex f(\theta, u)$$ is smooth,
+and $latex \hat{u} ( \theta )$$ is optimal w.r.t $latex u$$,
+we obtain
 $latex \[
 	f_u^{(1)} [ \theta , \hat{u} ( \theta ) ] = 0
 \] $$
-From this equation it follows that
+From this equation,
+and the implicit function theorem,
+it follows that
 $latex \[
 \hat{u}^{(1)} ( \theta )
 =
 - f_{uu}^{(2)} \left[ \theta , \hat{u} ( \theta ) \right]^{-1}
 	f_{u \theta}^{(2)} \left[ \theta , \hat{u} ( \theta )  \right]
 \]$$
+
+$subhead Partial Derivatives of h(theta, u)$$
+Let $latex \partial_k$$ denote the partial with respect to the $th k$$
+component of the combined vector $latex ( \theta , u )$$.
+$latex \[
+\partial_k [ h( \theta , u ) ]
+=
+\partial_k [ f( \theta , u ) ]
++
+\frac{1}{2} \sum_{i=0}^{n-1} \sum_{j=0}^{n-1}
+	f_{uu}^{(2)} ( \theta , u )_{i,j}^{-1}
+	\partial_k [ f_{uu}^{(2)} ( \theta , u)_{i,j} ]
+\] $$
+Note that $latex f_{uu}^{(2)} ( \theta , u )$$
+is often sparse and only non-zero
+components need be included in the summation.
+This is discussed in more detail near equation (8) in the
+$cref/reference/mixed_cppad_theory/Reference/$$.
+
+$head Hessian of Random Objective$$
+Note that the Hessian of the random objective
+$latex r^{(2)} ( \theta ) $$ is required when
+$cref/quasi_fixed/mixed_cppad_derived_ctor/quasi_fixed/$$ is false.
+In this case, the following representation is used:
 
 $subhead U(beta, theta, u)$$
 We define  the function
@@ -194,18 +233,5 @@ r^{(2)} ( \theta )
 H_{\beta \beta}^{(1)} \left[ \theta , \theta , \hat{u} ( \theta ) \right]
 \] $$
 (The last equation has yet to be proved.)
-This enables us to use AD to compute the derivatives of
-$latex r( \theta ) = h[ \theta , \hat{u} ( \theta ) ]$$
-without having to differentiate the iterative process that computes
-$latex \hat{u} ( \theta )$$.
-Also note that the iterative process may not have a fixed operation sequence
-and might need to be re-taped for each value of $latex \theta$$.
-$pre
-
-$$
-Note that, for first derivatives to agree, $latex W$$ could be replaced
-by $latex U$$ in the definition of $latex H$$ (less computation).
-Furthermore, for function values to agree $latex W$$ could be
-replaced by $latex \hat{u} ( \theta )$$ (even less computation).
 
 $end

@@ -23,18 +23,20 @@ $spell
 	Cpp
 $$
 
-$section Evaluate Negative Log of  Laplace Approximation$$
+$section Evaluate Laplace Approximation and Random Objective$$
 
 $head Syntax$$
 $icode%h% = %mixed_object%.ranobj_eval(%fixed_vec%, %random_vec%)%$$
 
 $head Purpose$$
-This routine evaluates the random part of the objective
+This routine evaluates the Laplace approximation
 $cref/h(theta, u)
-	/mixed_cppad_new_theory
+	/mixed_cppad_theory
 	/Objective
-	/Negative Log Laplace Approximation, h(theta, u)
+	/Laplace Approximation, h(theta, u)
 /$$.
+Note that if the random effects are optimal,
+then the Laplace approximation is equal to the random objective.
 
 $head mixed_object$$
 We use $cref/mixed_object/mixed_cppad_derived_ctor/mixed_object/$$
@@ -58,13 +60,16 @@ $codei%
 It specifies the value of the
 $cref/random effects/mixed_cppad/Random Effects, u/$$
 vector $latex u$$ at which $latex h( \theta , u)$$ is evaluated.
+Note that the Laplace approximation is equal to the random objective when
+$latex u$$ is optimal; i.e. equal to
+$cref/u^(theta)/mixed_cppad_theory/Objective/u^(theta)/$$,
 
 $head h$$
 The return value has prototype
 $codei%
 	double %h%
 %$$
-and is the value of the negative log of the Laplace approximation.
+and is the value of the Laplace approximation.
 
 $children%
 	example/devel/mixed_cppad/private/ranobj_eval_xam.cpp

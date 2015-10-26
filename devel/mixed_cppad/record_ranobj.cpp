@@ -19,7 +19,7 @@ $spell
 	Cpp
 $$
 
-$section Second Order Recording for Random Part of Objective$$
+$section Second Order Representation of Random Objective$$
 
 $head Syntax$$
 $codei%record_ranobj(%fixed_vec%, %random_vec%)%$$
@@ -53,11 +53,11 @@ $codei%
 	CppAD::ADFun<double> ranobj_fun_
 %$$
 does not matter.
-Upon return it contains a second order accurate recording for the
-approximate random part of the objective; see
+Upon return it contains a second order accurate recording of the
+approximate random objective; see
 $cref/H(beta, theta, u)
 	/mixed_cppad_theory
-	/Differentiating Random Part of Objective
+	/Hessian of Random Objective
 	/Approximate Random Objective, H(beta, theta, u)
 /$$.
 

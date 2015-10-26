@@ -115,7 +115,6 @@ where $icode%s% = %vec%.size()%$$.
 $childtable%
 	example/devel/mixed_cppad/user/user.omh%
 	devel/mixed_cppad/theory.omh%
-	devel/mixed_cppad/new_theory.omh%
 	include/dismod_at/mixed_cppad.hpp
 %$$
 

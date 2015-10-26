@@ -22,7 +22,7 @@ $spell
 	Cpp
 $$
 
-$section Record Hessian of Random Part of Objective$$
+$section Record Hessian of Approximate Random Objective$$
 
 $head Syntax$$
 $codei%record_hes_ranobj(%fixed_vec%, %random_vec%)%$$
@@ -99,7 +99,7 @@ $latex \[
 see
 $cref/H(beta, theta, u)
 	/mixed_cppad_theory
-	/Differentiating Random Part of Objective
+	/Hessian of Random Objective
 	/Approximate Random Objective, H(beta, theta, u)
 /$$.
 Note that the matrix is symmetric and hence can be recovered from

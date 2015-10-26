@@ -38,7 +38,7 @@ $latex \[
 see
 $cref/H(beta, theta, u)
 	/mixed_cppad_theory
-	/Differentiating Random Part of Objective
+	/Hessian of Random Objective
 	/Approximate Random Objective, H(beta, theta, u)
 /$$.
 
