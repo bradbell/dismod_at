@@ -142,7 +142,7 @@ for $icode%j% = 0 , %...%, %n_fixed_%-1%$$.
 $head Laplace Approximation$$
 The $cref/theory/mixed_cppad_theory/$$ for the
 Laplace approximation optimization only includes the case where
-the $cref/random negative log-likelihood/mixed_cppad_ran_like/$$ is smooth.
+the $cref/random likelihood/mixed_cppad_ran_like/$$ is smooth.
 
 $comment ipoot_options is also used by optimize_random$$
 $children%include/dismod_at/ipopt_fixed.hpp

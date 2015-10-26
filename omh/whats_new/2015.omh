@@ -342,8 +342,8 @@ $cref/fixed negative log-likelihood/mixed_cppad_theory/
 $lnext
 The term
 'joint negative log-likelihood' was change to
-$cref/random negative log-likelihood/mixed_cppad_theory/
-	Random Negative Log-Likelihood, f(theta, u)
+$cref/random likelihood/mixed_cppad_theory/
+	Random Likelihood, f(theta, u)
 /$$.
 $lend
 

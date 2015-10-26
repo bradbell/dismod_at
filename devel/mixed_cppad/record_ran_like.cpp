@@ -19,7 +19,7 @@ $spell
 	Cpp
 $$
 
-$section mixed_cppad: Record Random Negative Log-Likelihood For Different Levels of AD$$
+$section mixed_cppad: Record Random Likelihood$$
 
 $head Syntax$$
 $codei%record_ran_like(%fixed_vec%, %random_vec%)%$$

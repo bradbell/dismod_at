@@ -17,7 +17,7 @@ $spell
 	const
 $$
 
-$section Random Negative Log-Likelihood for the Data and Random Effects$$
+$section Random Likelihood$$
 
 $head Syntax$$
 $icode%vec% = %mixed_object%.ran_like(%fixed_vec%, %random_vec%)%$$
@@ -67,8 +67,8 @@ $cref/negative log-density vector
 	/mixed_cppad
 	/Negative Log-Density Vector
 /$$
-corresponding to the random negative log-likelihood
-$cref/f(theta, u)/mixed_cppad_theory/Random Negative Log-Likelihood, f(theta, u)/$$; i.e.,
+corresponding to the random likelihood
+$cref/f(theta, u)/mixed_cppad_theory/Random Likelihood, f(theta, u)/$$; i.e.,
 $latex \[
 	f( \theta , u) = - \log [ \B{p}( y | \theta, u) \B{p} ( u | \theta ) ]
 \] $$

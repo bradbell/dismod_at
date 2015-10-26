@@ -39,7 +39,7 @@ $latex \[
 \] $$
 
 
-$head Random Negative Log-Likelihood, f(theta, u)$$
+$head Random Likelihood, f(theta, u)$$
 We use $latex f( \theta , u )$$ for the part of the likelihood
 that depends on the random effects $latex u$$;
 $latex \[

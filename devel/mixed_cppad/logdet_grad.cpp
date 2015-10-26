@@ -30,10 +30,10 @@ $icode%mixed_object%.logdet_grad(
 
 $head Purpose$$
 This routine computes the total derivative of the log determinant
-of the Hessian of the negative log of the random negative log-likelihood
+of the Hessian of the random likelihood
 $cref/f(theta, u)
 	/mixed_cppad_theory/
-	Random Negative Log-Likelihood, f(theta, u)
+	Random Likelihood, f(theta, u)
 /$$
 with respect to the random effects vector $latex u$$; i.e.
 it computes both

@@ -79,13 +79,13 @@ is the corresponding size.
 $subhead hes_ran_row$$
 $icode%size_map%["hes_ran_row"]%$$ is the
 number of non-zero entries in hessian of
-random negative log-likelihood w.r.t random effects
+random likelihood w.r.t random effects
 $latex f_{uu}^{(2)} ( \theta , u )$$.
 
 $subhead hes_cross_row$$
 $icode%size_map%["hes_cross_row"]%$$ is the
 number of non-zero cross entries in hessian of
-random negative log-likelihood w.r.t fixed and random effects
+random likelihood w.r.t fixed and random effects
 $latex f_{u \theta}^{(2)} ( \theta , u )$$.
 
 $subhead ran_like_fun$$

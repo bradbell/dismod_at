@@ -22,7 +22,7 @@ $spell
 	logdet
 $$
 
-$section Record Hessian of Negative Log-Likelihood w.r.t Random Effects$$
+$section Record Hessian of Random Likelihood w.r.t Random Effects$$
 
 $head Syntax$$
 $codei%record_hes_ran(%fixed_vec%, %random_vec%)%$$
@@ -93,7 +93,7 @@ $latex \[
 \]$$
 see $cref/f(theta, u)/
 	mixed_cppad_theory/
-	Random Negative Log-Likelihood, f(theta, u)
+	Random Likelihood, f(theta, u)
 /$$.
 
 $list number$$

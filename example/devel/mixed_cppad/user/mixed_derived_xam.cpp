@@ -156,11 +156,11 @@ bool mixed_derived_xam(void)
 	mixed_derived mixed_object(n_fixed, n_random, quasi_fixed, data);
 	mixed_object.initialize(fixed_vec, random_vec);
 
-	// Evaluate the random negative log-likelihood
+	// Evaluate the random likelihood
 	vector<a2_double> a2_vec(1);
 	a2_vec = mixed_object.implement_ran_like(a2_fixed, a2_random);
 
-	// check the random negative log-likelihood
+	// check the random likelihood
 	double sum = 0.0;
 	for(size_t i = 0; i < n_data; i++)
 	{	double mu     = random_vec[i];

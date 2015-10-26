@@ -61,7 +61,7 @@ namespace dismod_at {
 		// solution found by run_fit and in pack_info form
 		CppAD::vector<double>              solution_;
 		// ---------------------------------------------------------------
-		// pass random negative log-likelihood to base class
+		// pass random likelihood to base class
 		virtual a2d_vector ran_like(
 			const a2d_vector& fixed_vec   ,
 			const a2d_vector& random_vec

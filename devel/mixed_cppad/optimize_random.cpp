@@ -29,7 +29,7 @@ $icode%mixed_object%.optimize_random(%options%, %fixed_vec%, %random_in%)%$$
 
 $head Purpose$$
 This routine maximizes the
-$cref/random negative log-likelihood/mixed_cppad_ran_like/$$
+$cref/random likelihood/mixed_cppad_ran_like/$$
 corresponding to the object $icode mixed_object$$.
 
 $head mixed_object$$
