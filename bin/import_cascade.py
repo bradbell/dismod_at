@@ -23,6 +23,7 @@ import os
 import csv
 import math
 import copy
+import pdb
 import time as timer
 import collections
 #
@@ -712,6 +713,14 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 			eta   = float( value_table_in['kappa_' + rate] )
 			lower = eta / 100.
 			prior_in['lower'] = str( lower )
+			if float( prior_in['mean'] ) < lower :
+				prior_in['mean'] = prior_in['lower']
+			if float( prior_in['upper'] ) < lower :
+				msg  = rate + ' is positive, but its upper limit = '
+				msg += prior_in['upper']
+				msg += '\nwhich is less than its eta / 100 = '
+				msg += prior_in['lower']
+				sys.exit(msg)
 		#
 		prior_at = gaussian_cascade2at(name, prior_in)
 		(name, lower, upper, mean, std, density_id, eta) = prior_at

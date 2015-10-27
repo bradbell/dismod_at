@@ -46,6 +46,13 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 10-27$$
+The values in the $cref prior_table$$ were checked to make sure that
+$icode%lower% <= %mean% <= %upper%$$,
+except for the uniform density case $icode%std% > 0%$$,
+and in the log density cases $icode eta$$ is not null.
+
+
 $head 10-26$$
 Changed the specification for the $cref create_database$$ argument
 $cref/option_dict/create_database/option_dict/$$.

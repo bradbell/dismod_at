@@ -65,7 +65,7 @@ and is the maximum value in the $cref age_table$$.
 If an $cref/age_upper/data_table/age_upper/$$ value is greater than
 $icode age_max$$, an error is reported.
 The condition
-$icode%
+$codei%
 	%age_lower% <= %age_upper%
 %$$
 is also checked.
@@ -88,7 +88,7 @@ and is the maximum value in the $cref time_table$$.
 If an $cref/time_upper/data_table/time_upper/$$ value is greater than
 $icode time_max$$, an error is reported.
 The condition
-$icode%
+$codei%
 	%time_lower% <= %time_upper%
 %$$
 is also checked.

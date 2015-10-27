@@ -70,6 +70,17 @@ $code double$$ $cnext $code eta$$           $cnext
 	The $cref/eta/prior_table/eta/$$ for this prior
 $tend
 
+$head Checks$$
+The values in the $cref prior_table$$ are checked to make sure that:
+$list number$$
+The limits and mean satisfy $icode%lower% <= %mean% <= %upper%$$.
+$lnext
+The standard deviation $icode%std% > 0%$$
+(except for the uniform density case).
+$lnext
+In the log density cases $icode eta$$ is not null.
+$lend
+
 $children%example/devel/table/get_prior_table_xam.cpp
 %$$
 $head Example$$
