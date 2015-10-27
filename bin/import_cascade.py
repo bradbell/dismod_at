@@ -137,6 +137,14 @@ for name in cascade_name_list :
 		sys.exit(msg)
 	cascade_path_dict[name] = path
 # ---------------------------------------------------------------------------
+# make column unique
+def make_column_unique(row_list, column) :
+	for i in range( len(row_list) ) :
+			row          = row_list[i]
+			col          = row[column]
+			col         += '_' + str(i)
+			row[column] = col
+# ---------------------------------------------------------------------------
 # float_or_none
 #
 def float_or_none(string) :
@@ -308,7 +316,7 @@ row_list = list()
 for row in integrand_table_in :
 	integrand_name = row['integrand']
 	if integrand_name == 'incidence' :
-		integrand_name = 'Tincidence'
+		integrand_name = 'Sincidence'
 	if integrand_name == 'mtall' and option_table_in['mtall2mtother']=='yes' :
 		integrand_name = 'mtother'
 	row_list.append( [ integrand_name , float( row['eta'] ) ] )
@@ -692,7 +700,7 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	for age_id in range( n_age ) :
 		# --------------------------------------------------------------------
 		# determine value_prior_id
-		name  = rate + '_' + str( len(local_list) ) + '_prior'
+		name  = rate + '_prior'
 		prior_in = rate_prior_in_dict[rate][age_id]
 		#
 		if rate_is_zero :
@@ -718,7 +726,7 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 		if age_id + 1 < n_age :
 			# ----------------------------------------------------------------
 			# determine dage_prior_id
-			name  = 'd' + rate + '_' + str( len(dlocal_list) ) + '_prior'
+			name  = 'd' + rate + '_prior'
 			prior_in = rate_prior_in_dict[drate][age_id]
 			eta      = value_table_in[ 'kappa_' + rate ]
 			prior_at = log_gaussian_cascade2at(name, prior_in, eta)
@@ -834,12 +842,14 @@ col_name = list( prior_col_name2type.keys() )
 col_type = list( prior_col_name2type.values() )
 row_list = prior_row_list
 tbl_name = 'prior'
+make_column_unique(row_list, 0)
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 #
 col_name = list( smooth_col_name2type.keys() )
 col_type = list( smooth_col_name2type.values() )
 row_list = smooth_row_list
 tbl_name = 'smooth'
+make_column_unique(row_list, 0)
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 #
 col_name = list( smooth_grid_col_name2type.keys() )
@@ -852,19 +862,20 @@ dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 col_name = [ 'option_name', 'option_value' ]
 col_type = [ 'text unique', 'text' ]
 row_list = [
-	[ 'parent_node_id',        str(node_name2id['world'])       ],
-	[ 'ode_step_size',         option_table_in['ode_step_size'] ],
-	[ 'number_sample',         '10'                             ],
-	[ 'random_seed',           str(int( timer.time() ))         ],
-	[ 'rate_info',             option_table_in['rate_info']     ],
-	[ 'tolerance_fixed',       '1e-8'                           ],
-	[ 'max_num_iter_fixed',    '50'                             ],
-	[ 'print_level_fixed',      '5'                             ],
-	[ 'derivative_test_fixed',  'none'                          ],
-	[ 'tolerance_random',      '1e-8'                           ],
-	[ 'max_num_iter_random',   '50'                             ],
-	[ 'print_level_random',     '5'                             ],
-	[ 'derivative_test_random', 'none'                          ]
+	[ 'parent_node_id',         str(node_name2id['world'])       ],
+	[ 'ode_step_size',          option_table_in['ode_step_size'] ],
+	[ 'number_sample',          '10'                             ],
+	[ 'random_seed',            str(int( timer.time() ))         ],
+	[ 'rate_info',              option_table_in['rate_info']     ],
+	[ 'quasi_fixed',            'true'                           ],
+	[ 'print_level_fixed',      '5'                              ],
+	[ 'print_level_random',     '5'                              ],
+	[ 'tolerance_fixed',        '1e-8'                           ],
+	[ 'tolerance_random',       '1e-8'                           ],
+	[ 'max_num_iter_fixed',     '50'                             ],
+	[ 'max_num_iter_random',    '50'                             ],
+	[ 'derivative_test_fixed',  'none'                           ],
+	[ 'derivative_test_random', 'none'                           ]
 ]
 tbl_name = 'option'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)

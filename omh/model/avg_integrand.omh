@@ -250,7 +250,7 @@ $subhead prevalence$$
 $latex I_i (a, t) = p(a,t) $$
 
 $subhead Tincidence$$
-$latex I_i (a, t) = iota(a, t) [ 1 - p(a,t) ]$$
+$latex I_i (a, t) = \iota(a, t) [ 1 - p(a,t) ]$$
 
 $subhead mtspecific$$
 $latex I_i (a, t) = \chi (a,t) p(a, t)$$
