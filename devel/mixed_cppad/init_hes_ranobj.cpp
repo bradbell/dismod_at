@@ -11,8 +11,9 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 
 /*
-$begin record_hes_ranobj$$
+$begin init_hes_ranobj$$
 $spell
+	init
 	ranobj
 	cppad
 	obj
@@ -22,10 +23,10 @@ $spell
 	Cpp
 $$
 
-$section Record Hessian of Approximate Random Objective$$
+$section Initialize Hessian of Approximate Random Objective$$
 
 $head Syntax$$
-$codei%record_hes_ranobj(%fixed_vec%, %random_vec%)%$$
+$codei%init_hes_ranobj(%fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code mixed_cppad$$ class
@@ -39,7 +40,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/fixed effects/mixed_cppad/Fixed Effects, theta/$$
-vector $latex \theta$$ at which the recording is made.
+vector $latex \theta$$ at which the initialization is done.
 
 $head random_vec$$
 This argument has prototype
@@ -110,11 +111,11 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void mixed_cppad::record_hes_ranobj(
+void mixed_cppad::init_hes_ranobj(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	assert( ! record_hes_ranobj_done_ );
-	assert( record_ranobj_done_ );
+{	assert( ! init_hes_ranobj_done_ );
+	assert( init_ranobj_done_ );
 	size_t i, j;
 
 	// total number of variables in H
@@ -179,7 +180,7 @@ void mixed_cppad::record_hes_ranobj(
 		hes_ranobj_work_
 	);
 	//
-	record_hes_ranobj_done_ = true;
+	init_hes_ranobj_done_ = true;
 }
 
 } // END_DISMOD_AT_NAMESPACE

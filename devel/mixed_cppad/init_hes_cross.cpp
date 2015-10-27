@@ -12,8 +12,9 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/configure.hpp>
 
 /*
-$begin record_hes_cross$$
+$begin init_hes_cross$$
 $spell
+	init
 	cppad
 	hes hes
 	vec
@@ -25,7 +26,7 @@ $$
 $section Cross Terms of Sparse Hessian w.r.t Fixed and Random Effects$$
 
 $head Syntax$$
-$codei%record_hes_cross(%fixed_vec%, %random_vec%)%$$
+$codei%init_hes_cross(%fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code mixed_cppad$$ class
@@ -39,7 +40,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/fixed effects/mixed_cppad/Fixed Effects, theta/$$
-vector $latex \theta$$ at which the recording is made.
+vector $latex \theta$$ at which the initialization is done.
 
 $head random_vec$$
 This argument has prototype
@@ -48,7 +49,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/random effects/mixed_cppad/Random Effects, u/$$
-vector $latex u$$ at which the recording is made.
+vector $latex u$$ at which the initialization is done.
 
 $head hes_cross_row_$$
 The input value of this member variable does not matter.
@@ -111,11 +112,11 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void mixed_cppad::record_hes_cross(
+void mixed_cppad::init_hes_cross(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {
-	assert( ! record_hes_cross_done_ );
+	assert( ! init_hes_cross_done_ );
 	assert( fixed_vec.size() == n_fixed_ );
 	assert( random_vec.size() == n_random_ );
 	size_t i, j;
@@ -209,7 +210,7 @@ void mixed_cppad::record_hes_cross(
 		hes_cross_work_
 	);
 	//
-	record_hes_cross_done_ = true;
+	init_hes_cross_done_ = true;
 }
 
 

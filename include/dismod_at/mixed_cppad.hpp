@@ -43,6 +43,7 @@ public:
 /*
 $begin mixed_cppad_public$$
 $spell
+	init
 	ranobj
 	cppad
 	obj
@@ -125,14 +126,14 @@ $comment */
 	n_random_(n_random)             ,
 	quasi_fixed_(quasi_fixed)       ,
 	initialize_done_(false)         ,
-	record_fix_like_done_(false)    ,
-	record_constraint_done_(false)  ,
-	record_ran_like_done_(false)    ,
-	record_hes_ran_done_(false)     ,
-	record_hes_cross_done_(false)   ,
+	init_fix_like_done_(false)    ,
+	init_constraint_done_(false)  ,
+	init_ran_like_done_(false)    ,
+	init_hes_ran_done_(false)     ,
+	init_hes_cross_done_(false)   ,
 	record_newton_atom_done_(false) ,
-	record_ranobj_done_(false)     ,
-	record_hes_ranobj_done_(false)
+	init_ranobj_done_(false)     ,
+	init_hes_ranobj_done_(false)
 	{ }
 /* $$
 $head initialize$$
@@ -184,6 +185,7 @@ private:
 ------------------------------------------------------------------------------
 $begin mixed_cppad_private$$
 $spell
+	init
 	ranobj
 	var
 	cppad
@@ -211,14 +213,14 @@ $childtable%include/dismod_at/mixed_pack.hpp
 	%devel/mixed_cppad/constraint_eval.cpp
 	%devel/mixed_cppad/constraint_jac.cpp
 	%devel/mixed_cppad/constraint_hes.cpp
-	%devel/mixed_cppad/record_ran_like.cpp
-	%devel/mixed_cppad/record_hes_ran.cpp
-	%devel/mixed_cppad/record_hes_cross.cpp
+	%devel/mixed_cppad/init_ran_like.cpp
+	%devel/mixed_cppad/init_hes_ran.cpp
+	%devel/mixed_cppad/init_hes_cross.cpp
 	%devel/mixed_cppad/newton_step.cpp
-	%devel/mixed_cppad/record_ranobj.cpp
-	%devel/mixed_cppad/record_hes_ranobj.cpp
-	%devel/mixed_cppad/record_fix_like.cpp
-	%devel/mixed_cppad/record_constraint.cpp
+	%devel/mixed_cppad/init_ranobj.cpp
+	%devel/mixed_cppad/init_hes_ranobj.cpp
+	%devel/mixed_cppad/init_fix_like.cpp
+	%devel/mixed_cppad/init_constraint.cpp
 	%devel/mixed_cppad/ranobj_eval.cpp
 	%devel/mixed_cppad/logdet_grad.cpp
 	%devel/mixed_cppad/ranobj_grad.cpp
@@ -250,25 +252,25 @@ The following flag is false after construction and true after
 the corresponding member function is called:
 $codep */
 	bool                initialize_done_;
-	bool                record_fix_like_done_;
-	bool                record_constraint_done_;
+	bool                init_fix_like_done_;
+	bool                init_constraint_done_;
 	// only called when n_random_ > 0
-	bool                record_ran_like_done_;
-	bool                record_hes_ran_done_;
-	bool                record_hes_cross_done_;
+	bool                init_ran_like_done_;
+	bool                init_hes_ran_done_;
+	bool                init_hes_cross_done_;
 	// only called when n_random_ > 0 and quasi_fixed_ is false
 	bool                record_newton_atom_done_;
-	bool                record_ranobj_done_;
-	bool                record_hes_ranobj_done_;
+	bool                init_ranobj_done_;
+	bool                init_hes_ranobj_done_;
 /* $$
 
 $head n_random_ > 0$$
 The following values are only defined when $icode%n_random_% > 0%$$:
 
 $subhead ran_like$$
-If $icode%n_random_% > 0%$$ and $code record_ran_like_done_$$,
-$cref/ran_like_fun_/record_ran_like/ran_like_fun_/$$ and
-$cref/ran_like_a1fun_/record_ran_like/ran_like_a1fun_/$$ are
+If $icode%n_random_% > 0%$$ and $code init_ran_like_done_$$,
+$cref/ran_like_fun_/init_ran_like/ran_like_fun_/$$ and
+$cref/ran_like_a1fun_/init_ran_like/ran_like_a1fun_/$$ are
 recordings of the user's $cref/ran_like/mixed_cppad_ran_like/$$.
 function.
 $codep */
@@ -277,14 +279,14 @@ $codep */
 /* $$
 
 $subhead hes_ran_$$
-If $icode%n_random_% > 0%$$ and $code record_hes_ran_done_$$,
-$cref/hes_ran_row_/record_hes_ran/hes_ran_row_/$$,
-$cref/hes_ran_col_/record_hes_ran/hes_ran_col_/$$, and
-$cref/hes_ran_work_/record_hes_ran/hes_ran_work_/$$,
+If $icode%n_random_% > 0%$$ and $code init_hes_ran_done_$$,
+$cref/hes_ran_row_/init_hes_ran/hes_ran_row_/$$,
+$cref/hes_ran_col_/init_hes_ran/hes_ran_col_/$$, and
+$cref/hes_ran_work_/init_hes_ran/hes_ran_work_/$$,
 can be used to compute the sparse Hessian
 $latex f_{uu}^{(2)} ( \theta , u )$$.
 This sparse Hessian computation is recorded in
-$cref/hes_ran_fun_/record_hes_ran/hes_ran_fun_/$$.
+$cref/hes_ran_fun_/init_hes_ran/hes_ran_fun_/$$.
 $codep */
 	CppAD::vector<size_t>      hes_ran_row_;  // row indices
 	CppAD::vector<size_t>      hes_ran_col_;  // column indices
@@ -295,10 +297,10 @@ $codep */
 /* $$
 
 $subhead hes_cross_$$
-If $icode%n_random_% > 0%$$ and $code record_hes_cross_done_$$,
-$cref/hes_cross_row_/record_hes_cross/hes_cross_row_/$$,
-$cref/hes_cross_col_/record_hes_cross/hes_cross_col_/$$, and
-$cref/hes_cross_work_/record_hes_cross/hes_cross_work_/$$,
+If $icode%n_random_% > 0%$$ and $code init_hes_cross_done_$$,
+$cref/hes_cross_row_/init_hes_cross/hes_cross_row_/$$,
+$cref/hes_cross_col_/init_hes_cross/hes_cross_col_/$$, and
+$cref/hes_cross_work_/init_hes_cross/hes_cross_work_/$$,
 can be used to compute the cross terms in the sparse Hessian
 $latex f_{u \theta}^{(2)} ( \theta , u )$$.
 $codep */
@@ -324,20 +326,20 @@ $codep */
 
 $subhead ranobj_fun_$$
 If $icode%n_random_% > 0%$$, quasi_fixed_ is false, and
-$code record_ranobj_done_$$,
+$code init_ranobj_done_$$,
 this is a recording of the second approximation for the
 random part of the Laplace approximation, $latex H( \beta , \theta , u)$$;
-see $cref/ranobj_fun_/record_ranobj/ranobj_fun_/$$.
+see $cref/ranobj_fun_/init_ranobj/ranobj_fun_/$$.
 $codep */
 	CppAD::ADFun<double>    ranobj_fun_;     // for computing H_beta_beta
 /* $$
 
 $subhead hes_ranobj_$$
 If $icode%n_random_% > 0%$$, quasi_fixed_ is false, and
-$code record_hes_ranobj_done_$$,
-$cref/hes_ranobj_row_/record_hes_ranobj/hes_ranobj_row_/$$,
-$cref/hes_ranobj_col_/record_hes_ranobj/hes_ranobj_col_/$$, and
-$cref/hes_ranobj_work_/record_hes_ranobj/hes_ranobj_work_/$$,
+$code init_hes_ranobj_done_$$,
+$cref/hes_ranobj_row_/init_hes_ranobj/hes_ranobj_row_/$$,
+$cref/hes_ranobj_col_/init_hes_ranobj/hes_ranobj_col_/$$, and
+$cref/hes_ranobj_work_/init_hes_ranobj/hes_ranobj_work_/$$,
 can be used to compute the lower triangle of the sparse Hessian
 $latex r^{(2)} ( \theta )$$.
 $codep */
@@ -345,24 +347,24 @@ $codep */
 	CppAD::vector<size_t>      hes_ranobj_col_; // corresponding column indices
 	CppAD::sparse_hessian_work hes_ranobj_work_;
 /* $$
-Note that if $code record_hes_ranobj_done_$$ is true and
+Note that if $code init_hes_ranobj_done_$$ is true and
 $code hes_ranobj_row_.size() == 0$$, then this Hessian is zero; i.e.,
 the second derivative of the Laplace approximation is zero.
 
 $head fix_like_$$
-$cref/fix_like_fun_/record_fix_like/fix_like_fun_/$$
+$cref/fix_like_fun_/init_fix_like/fix_like_fun_/$$
 is a recording of the fixed part of the likelihood function; see,
 $cref/fix_like/mixed_cppad_fix_like/$$.
 The vectors
-$cref/fix_like_jac_row_/record_fix_like/fix_like_jac_row_/$$,
-$cref/fix_like_jac_col_/record_fix_like/fix_like_jac_col_/$$, and
-$cref/fix_like_jac_work_/record_fix_like/fix_like_jac_work_/$$,
+$cref/fix_like_jac_row_/init_fix_like/fix_like_jac_row_/$$,
+$cref/fix_like_jac_col_/init_fix_like/fix_like_jac_col_/$$, and
+$cref/fix_like_jac_work_/init_fix_like/fix_like_jac_work_/$$,
 can be used to compute the sparse Jacobian corresponding
 to $code fix_like_fun_$$.
 The vectors
-$cref/fix_like_hes_row_/record_fix_like/fix_like_hes_row_/$$,
-$cref/fix_like_hes_col_/record_fix_like/fix_like_hes_col_/$$, and
-$cref/fix_like_hes_work_/record_fix_like/fix_like_hes_work_/$$,
+$cref/fix_like_hes_row_/init_fix_like/fix_like_hes_row_/$$,
+$cref/fix_like_hes_col_/init_fix_like/fix_like_hes_col_/$$, and
+$cref/fix_like_hes_work_/init_fix_like/fix_like_hes_work_/$$,
 can be used to compute the lower triangle of the
 sparse Hessian corresponding to $code fix_like_fun_$$.
 $codep */
@@ -377,19 +379,19 @@ $codep */
 	CppAD::sparse_hessian_work  fix_like_hes_work_;// work info for   g^{(2)}
 /* $$
 $head constraint_fun_$$
-$cref/constraint_fun_/record_constraint/constraint_fun_/$$
+$cref/constraint_fun_/init_constraint/constraint_fun_/$$
 is a recording of the fixed part of the likelihood function; see,
 $cref/constraint/mixed_cppad_constraint/$$.
 The vectors
-$cref/constraint_jac_row_/record_constraint/constraint_jac_row_/$$,
-$cref/constraint_jac_col_/record_constraint/constraint_jac_col_/$$, and
-$cref/constraint_jac_work_/record_constraint/constraint_jac_work_/$$,
+$cref/constraint_jac_row_/init_constraint/constraint_jac_row_/$$,
+$cref/constraint_jac_col_/init_constraint/constraint_jac_col_/$$, and
+$cref/constraint_jac_work_/init_constraint/constraint_jac_work_/$$,
 can be used to compute the sparse Jacobian corresponding
 to $code constraint_fun_$$.
 The vectors
-$cref/constraint_hes_row_/record_constraint/constraint_hes_row_/$$,
-$cref/constraint_hes_col_/record_constraint/constraint_hes_col_/$$, and
-$cref/constraint_hes_work_/record_constraint/constraint_hes_work_/$$,
+$cref/constraint_hes_row_/init_constraint/constraint_hes_row_/$$,
+$cref/constraint_hes_col_/init_constraint/constraint_hes_col_/$$, and
+$cref/constraint_hes_work_/init_constraint/constraint_hes_work_/$$,
 can be used to compute the lower triangle of the
 sparse Hessian corresponding to $code constraint_fun_$$.
 $codep */
@@ -440,55 +442,55 @@ $codep */
 	) const;
 /* $$
 ------------------------------------------------------------------------------
-$head record_ran_like$$
-See $cref record_ran_like$$.
+$head init_ran_like$$
+See $cref init_ran_like$$.
 $codep */
-	void record_ran_like(
+	void init_ran_like(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);
 /* $$
-$head record_hes_ran$$
-See $cref record_hes_ran$$.
+$head init_hes_ran$$
+See $cref init_hes_ran$$.
 $codep */
-	void record_hes_ran(
+	void init_hes_ran(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);
 /* $$
-$head record_hes_cross$$
-See $cref record_hes_cross$$.
+$head init_hes_cross$$
+See $cref init_hes_cross$$.
 $codep */
-	void record_hes_cross(
+	void init_hes_cross(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);
 /* $$
-$head record_ranobj$$
-See $cref record_ranobj$$.
+$head init_ranobj$$
+See $cref init_ranobj$$.
 $codep */
-	void record_ranobj(
+	void init_ranobj(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);
 /* $$
-$head record_hes_ranobj$$
-See $cref record_hes_ranobj$$.
+$head init_hes_ranobj$$
+See $cref init_hes_ranobj$$.
 $codep */
-	void record_hes_ranobj(
+	void init_hes_ranobj(
 		const d_vector& fixed_vec ,
 		const d_vector& random_vec
 	);
 /* $$
-$head record_fix_like$$
-See $cref record_fix_like$$.
+$head init_fix_like$$
+See $cref init_fix_like$$.
 $codep */
-	void record_fix_like(const d_vector& fixed_vec);
+	void init_fix_like(const d_vector& fixed_vec);
 /* $$
-$head record_constraint$$
-See $cref record_constraint$$.
+$head init_constraint$$
+See $cref init_constraint$$.
 $codep */
-	void record_constraint(const d_vector& fixed_vec);
+	void init_constraint(const d_vector& fixed_vec);
 /* $$
 ------------------------------------------------------------------------------
 $head ranobj_eval$$

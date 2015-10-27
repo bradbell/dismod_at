@@ -159,19 +159,19 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 	if( n_random_ > 0 )
 	{
 		// ran_like_
-		assert( ! record_ran_like_done_ );
-		record_ran_like(fixed_vec, random_vec);
-		assert( record_ran_like_done_ );
+		assert( ! init_ran_like_done_ );
+		init_ran_like(fixed_vec, random_vec);
+		assert( init_ran_like_done_ );
 
 		// hes_ran_
-		assert( ! record_hes_ran_done_ );
-		record_hes_ran(fixed_vec, random_vec);
-		assert( record_hes_ran_done_ );
+		assert( ! init_hes_ran_done_ );
+		init_hes_ran(fixed_vec, random_vec);
+		assert( init_hes_ran_done_ );
 
 		// hes_cross_
-		assert( ! record_hes_cross_done_ );
-		record_hes_cross(fixed_vec, random_vec);
-		assert( record_hes_cross_done_ );
+		assert( ! init_hes_cross_done_ );
+		init_hes_cross(fixed_vec, random_vec);
+		assert( init_hes_cross_done_ );
 
 		if( ! quasi_fixed_ )
 		{
@@ -181,26 +181,26 @@ std::map<std::string, size_t> mixed_cppad::initialize(
 			record_newton_atom_done_ = true;
 
 			// ranobj_fun_
-			assert( ! record_ranobj_done_ );
-			record_ranobj(fixed_vec, random_vec);
-			assert( record_ranobj_done_ );
+			assert( ! init_ranobj_done_ );
+			init_ranobj(fixed_vec, random_vec);
+			assert( init_ranobj_done_ );
 
 			// hes_ranobj_
-			assert( ! record_hes_ranobj_done_ );
-			record_hes_ranobj(fixed_vec, random_vec);
-			assert( record_hes_ranobj_done_ );
+			assert( ! init_hes_ranobj_done_ );
+			init_hes_ranobj(fixed_vec, random_vec);
+			assert( init_hes_ranobj_done_ );
 		}
 	}
 
 	// fix_like_fun_
-	assert( ! record_fix_like_done_ );
-	record_fix_like(fixed_vec);
-	assert( record_fix_like_done_ );
+	assert( ! init_fix_like_done_ );
+	init_fix_like(fixed_vec);
+	assert( init_fix_like_done_ );
 
 	// constraint_fun_
-	assert( ! record_constraint_done_ );
-	record_constraint(fixed_vec);
-	assert( record_constraint_done_ );
+	assert( ! init_constraint_done_ );
+	init_constraint(fixed_vec);
+	assert( init_constraint_done_ );
 
 	// initialize_done_
 	initialize_done_ = true;

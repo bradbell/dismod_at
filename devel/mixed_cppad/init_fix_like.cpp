@@ -11,8 +11,9 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 
 /*
-$begin record_constraint$$
+$begin init_fix_like$$
 $spell
+	init
 	cppad
 	jac
 	vec
@@ -23,10 +24,10 @@ $spell
 	hes
 $$
 
-$section Record Constraints as Function of Fixed Effects$$
+$section Initialize Fixed Likelihood$$
 
 $head Syntax$$
-$codei%record_constraint(%fixed_vec%)%$$
+$codei%init_fix_like(%fixed_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code mixed_cppad$$ class
@@ -40,120 +41,124 @@ $codei%
 %$$
 It specifies the value of the
 $cref/fixed effects/mixed_cppad/Fixed Effects, theta/$$
-vector $latex \theta$$ at which the recording is made.
+vector $latex \theta$$ at which the initialization is done.
 
-$head record_constraint_done_$$
+$head init_fix_like_done_$$
 When this function is called, this member variable must be false.
 Upon return it is true.
 
-$head constraint_fun_$$
+$head fix_like_fun_$$
 On input, the member variable
 $codei%
-	CppAD::ADFun<double> constraint_fun_
+	CppAD::ADFun<double> fix_like_fun_
 %$$
-must be empty; i.e., $code constraint_fun_.size_var() == 0$$.
+must be empty; i.e., $code fix_like_fun_.size_var() == 0$$.
 If the return value for
-$cref/constraint/mixed_cppad_constraint/$$ is empty,
-$code constraint_fun_$$ is not modified.
+$cref/fix_like/mixed_cppad_fix_like/$$ is empty,
+$code fix_like_fun_$$ is not modified.
 Otherwise,
 upon return it contains the corresponding recording for the
-$cref/constraint/mixed_cppad_constraint/$$ $latex c( \theta )$$.
+$cref/fix_like/mixed_cppad_fix_like/$$.
+The function result is the
+$cref/negative log-density vector/mixed_cppad/Negative Log-Density Vector/$$
+corresponding to the function
+$cref/g(theta)/mixed_cppad_theory/Fixed Likelihood, g(theta)/$$.
 
-$head constraint_jac_row_$$
+$head fix_like_jac_row_$$
 The input value of the member variable
 $codei%
-	CppAD::vector<size_t> constraint_jac_row_
+	CppAD::vector<size_t> fix_like_jac_row_
 %$$
 does not matter.
 Upon return it contains the row indices
 that correspond to non-zero elements in the Jacobian corresponding to
-$code constraint_fun_$$.
+$code fix_like_fun_$$.
 
-$head constraint_jac_col_$$
+$head fix_like_jac_col_$$
 The input value of the member variable
 $codei%
-	CppAD::vector<size_t> constraint_jac_col_
+	CppAD::vector<size_t> fix_like_jac_col_
 %$$
 does not matter.
 Upon return it contains the column indices
 that correspond to non-zero elements in the Jacobian corresponding to
-$code constraint_fun_$$.
+$code fix_like_fun_$$.
 
-$head constraint_jac_work_$$
+$head fix_like_jac_work_$$
 The input value of the member variables
 $codei%
-	CppAD::sparse_jacobian_work constraint_jac_work_
+	CppAD::sparse_jacobian_work fix_like_jac_work_
 %$$
 does not matter.
 Upon return it contains the CppAD work information so that
 $codei%
-	constraint_fun_.SparseJacobianForward(
+	fix_like_fun_.SparseJacobianForward(
 		%theta%,
 		%not_used%,
-		constraint_jac_row_,
-		constraint_jac_col_,
+		fix_like_jac_row_,
+		fix_like_jac_col_,
 		%jac%,
-		constraint_jac_work_
+		fix_like_jac_work_
 	)
 %$$
 (where $icode x$$ and $icode jac$$ $code double$$ vectors)
-can be used to calculate the Jacobian of the constraints.
+can be used to calculate the Jacobian of the fixed likelihood.
 
-$head constraint_hes_row_$$
+$head fix_like_hes_row_$$
 The input value of the member variable
 $codei%
-	CppAD::vector<size_t> constraint_hes_row_
+	CppAD::vector<size_t> fix_like_hes_row_
 %$$
 does not matter.
 Upon return it contains the row indices
 that correspond to non-zero elements in the
 lower triangle of a Hessian corresponding to
-$code constraint_fun_$$.
+$code fix_like_fun_$$.
 
-$head constraint_hes_col_$$
+$head fix_like_hes_col_$$
 The input value of the member variable
 $codei%
-	CppAD::vector<size_t> constraint_hes_col_
+	CppAD::vector<size_t> fix_like_hes_col_
 %$$
 does not matter.
 Upon return it contains the column indices
 that correspond to non-zero elements in the
 lower triangle of a Hessian corresponding to
-$code constraint_fun_$$.
+$code fix_like_fun_$$.
 
-$head constraint_hes_work_$$
+$head fix_like_hes_work_$$
 The input value of the member variables
 $codei%
-	CppAD::sparse_hessian_work constraint_hes_work_
+	CppAD::sparse_hessian_work fix_like_hes_work_
 %$$
 does not matter.
 Upon return it contains the CppAD work information so that
 $codei%
-	constraint_fun_.SparseHessian(
+	fix_like_fun_.SparseHessian(
 		%theta%,
 		%weight%
 		%not_used%,
-		constraint_hes_row_,
-		constraint_hes_col_,
+		fix_like_hes_row_,
+		fix_like_hes_col_,
 		%hes%,
-		constraint_hes_work_
+		fix_like_hes_work_
 	)
 %$$
 (where $icode theta$$, $icode weight$$, and $icode hes$$
 are $code double$$ vectors)
 can be used to calculate the
-lower triangle of a weighted Hessian for the constraints.
+lower triangle of a weighted Hessian for the fixed likelihood.
 
 $end
 */
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void mixed_cppad::record_constraint(const d_vector& fixed_vec  )
+void mixed_cppad::init_fix_like(const d_vector& fixed_vec  )
 {	assert( fixed_vec.size() == n_fixed_ );
-	assert( ! record_constraint_done_ );
+	assert( ! init_fix_like_done_ );
 
 	// ------------------------------------------------------------------------
-	// constraint_fun_
+	// fix_like_fun_
 	// ------------------------------------------------------------------------
 	// convert to an a1d_vector
 	a1d_vector a1_theta(n_fixed_);
@@ -163,93 +168,93 @@ void mixed_cppad::record_constraint(const d_vector& fixed_vec  )
 	// start recording a1_double operations
 	Independent(a1_theta);
 
-	// compute constraint
-	a1d_vector a1_vec = constraint(a1_theta);
+	// compute fix_like
+	a1d_vector a1_vec = fix_like(a1_theta);
 	if( a1_vec.size() == 0 )
 	{	CppAD::AD<double>::abort_recording();
-		record_constraint_done_ = true;
-		assert( constraint_fun_.size_var() == 0 );
+		init_fix_like_done_ = true;
+		assert( fix_like_fun_.size_var() == 0 );
 		return;
 	}
 
 	// save the recording
-	constraint_fun_.Dependent(a1_theta, a1_vec);
+	fix_like_fun_.Dependent(a1_theta, a1_vec);
 
 	// optimize the recording
-	constraint_fun_.optimize();
+	fix_like_fun_.optimize();
 
 	// ------------------------------------------------------------------------
-	// constraint_jac_row_, constraint_jac_col_, constraint_jac_work_
+	// fix_like_jac_row_, fix_like_jac_col_, fix_like_jac_work_
 	// ------------------------------------------------------------------------
 	// compute the sparsity pattern for the Jacobian
 	typedef CppAD::vector< std::set<size_t> > sparsity_pattern;
 	sparsity_pattern r(n_fixed_);
 	for(size_t j = 0; j < n_fixed_; j++)
 		r[j].insert(j);
-	sparsity_pattern pattern = constraint_fun_.ForSparseJac(n_fixed_, r);
+	sparsity_pattern pattern = fix_like_fun_.ForSparseJac(n_fixed_, r);
 
 	// convert sparsity to row and column index form
-	constraint_jac_row_.clear();
-	constraint_jac_col_.clear();
+	fix_like_jac_row_.clear();
+	fix_like_jac_col_.clear();
 	std::set<size_t>::iterator itr;
-	for(size_t i = 0; i < constraint_fun_.Range(); i++)
+	for(size_t i = 0; i < fix_like_fun_.Range(); i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	size_t j = *itr;
-			constraint_jac_row_.push_back(i);
-			constraint_jac_col_.push_back(j);
+			fix_like_jac_row_.push_back(i);
+			fix_like_jac_col_.push_back(j);
 		}
 	}
 
 	// compute the work vector for reuse during Jacobian sparsity calculations
-	d_vector jac( constraint_jac_row_.size() );
-	constraint_fun_.SparseJacobianForward(
+	d_vector jac( fix_like_jac_row_.size() );
+	fix_like_fun_.SparseJacobianForward(
 		fixed_vec       ,
 		pattern         ,
-		constraint_jac_row_  ,
-		constraint_jac_col_  ,
+		fix_like_jac_row_  ,
+		fix_like_jac_col_  ,
 		jac             ,
-		constraint_jac_work_
+		fix_like_jac_work_
 	);
 	// ------------------------------------------------------------------------
-	// constraint_hes_row_, constraint_hes_col_, constraint_hes_work_
+	// fix_like_hes_row_, fix_like_hes_col_, fix_like_hes_work_
 	// ------------------------------------------------------------------------
 	// no need to recalculate forward sparsity pattern.
 	//
 	// sparsity pattern for the Hessian
 	sparsity_pattern s(1);
-	for(size_t i = 0; i < constraint_fun_.Range(); i++ )
+	for(size_t i = 0; i < fix_like_fun_.Range(); i++ )
 		s[0].insert(i);
 	pattern.clear();
-	pattern = constraint_fun_.RevSparseHes(n_fixed_, s);
+	pattern = fix_like_fun_.RevSparseHes(n_fixed_, s);
 
 	// determine row and column indices in lower triangle of Hessian
-	constraint_hes_row_.clear();
-	constraint_hes_col_.clear();
+	fix_like_hes_row_.clear();
+	fix_like_hes_col_.clear();
 	for(size_t i = 0; i < n_fixed_; i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	size_t j = *itr;
 			// only compute lower triangular part
 			if( i >= j )
-			{	constraint_hes_row_.push_back(i);
-				constraint_hes_col_.push_back(j);
+			{	fix_like_hes_row_.push_back(i);
+				fix_like_hes_col_.push_back(j);
 			}
 		}
 	}
-	size_t K = constraint_hes_row_.size();
+	size_t K = fix_like_hes_row_.size();
 
 	// compute the work vector for reuse during Hessian sparsity calculations
-	d_vector weight( constraint_fun_.Range() ), hes(K);
-	constraint_fun_.SparseHessian(
+	d_vector weight( fix_like_fun_.Range() ), hes(K);
+	fix_like_fun_.SparseHessian(
 		fixed_vec       ,
 		weight          ,
 		pattern         ,
-		constraint_hes_row_  ,
-		constraint_hes_col_  ,
+		fix_like_hes_row_  ,
+		fix_like_hes_col_  ,
 		hes             ,
-		constraint_hes_work_
+		fix_like_hes_work_
 	);
 
-	record_constraint_done_ = true;
+	init_fix_like_done_ = true;
 	return;
 }
 

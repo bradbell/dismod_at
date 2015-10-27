@@ -87,8 +87,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 double mixed_cppad::ranobj_eval(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	assert( record_ran_like_done_ );
-	assert( record_hes_ran_done_ );
+{	assert( init_ran_like_done_ );
+	assert( init_hes_ran_done_ );
 
 	assert( fixed_vec.size() == n_fixed_ );
 	assert( random_vec.size() == n_random_ );

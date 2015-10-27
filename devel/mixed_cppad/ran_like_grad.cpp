@@ -80,7 +80,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 CppAD::vector<mixed_cppad::a1_double> mixed_cppad::ran_like_grad(
 	const a1d_vector&        fixed_vec   ,
 	const a1d_vector&        random_vec  )
-{	assert( record_ran_like_done_ );
+{	assert( init_ran_like_done_ );
 
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );

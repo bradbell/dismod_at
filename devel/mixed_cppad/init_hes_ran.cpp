@@ -12,8 +12,9 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/configure.hpp>
 
 /*
-$begin record_hes_ran$$
+$begin init_hes_ran$$
 $spell
+	init
 	cppad
 	hes hes
 	vec
@@ -22,10 +23,10 @@ $spell
 	logdet
 $$
 
-$section Record Hessian of Random Likelihood w.r.t Random Effects$$
+$section Initialize Hessian of Random Likelihood w.r.t Random Effects$$
 
 $head Syntax$$
-$codei%record_hes_ran(%fixed_vec%, %random_vec%)%$$
+$codei%init_hes_ran(%fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code mixed_cppad$$ class
@@ -39,7 +40,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/fixed effects/mixed_cppad/Fixed Effects, theta/$$
-vector $latex \theta$$ at which the recording is made.
+vector $latex \theta$$ at which the initialization is done.
 
 $head random_vec$$
 This argument has prototype
@@ -48,7 +49,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/random effects/mixed_cppad/Random Effects, u/$$
-vector $latex u$$ at which the recording is made.
+vector $latex u$$ at which the initialization is done.
 
 $head hes_ran_row_$$
 The input value of the member variable
@@ -156,10 +157,10 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void mixed_cppad::record_hes_ran(
+void mixed_cppad::init_hes_ran(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	assert( ! record_hes_ran_done_ );
+{	assert( ! init_hes_ran_done_ );
 	assert( fixed_vec.size() == n_fixed_ );
 	assert( random_vec.size() == n_random_ );
 	size_t i, j;
@@ -278,7 +279,7 @@ void mixed_cppad::record_hes_ran(
 	);
 	hes_ran_fun_.Dependent(a1_both, a1_val_out);
 	//
-	record_hes_ran_done_ = true;
+	init_hes_ran_done_ = true;
 }
 
 

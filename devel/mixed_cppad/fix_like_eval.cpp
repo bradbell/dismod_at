@@ -70,7 +70,7 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 CppAD::vector<double> mixed_cppad::fix_like_eval(const d_vector& fixed_vec)
-{	assert( record_fix_like_done_ );
+{	assert( init_fix_like_done_ );
 	if( fix_like_fun_.size_var() == 0 )
 	{	// empty vector case
 		return CppAD::vector<double>(0);

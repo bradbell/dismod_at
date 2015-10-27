@@ -23,12 +23,12 @@ ADD_LIBRARY(mixed_cppad
 	mixed_cppad/fix_like_eval.cpp
 	mixed_cppad/fix_like_jac.cpp
 	mixed_cppad/fix_like_hes.cpp
-	mixed_cppad/record_fix_like.cpp
-	mixed_cppad/record_constraint.cpp
-	mixed_cppad/record_hes_cross.cpp
-	mixed_cppad/record_hes_ranobj.cpp
-	mixed_cppad/record_hes_ran.cpp
-	mixed_cppad/record_ran_like.cpp
+	mixed_cppad/init_fix_like.cpp
+	mixed_cppad/init_constraint.cpp
+	mixed_cppad/init_hes_cross.cpp
+	mixed_cppad/init_hes_ranobj.cpp
+	mixed_cppad/init_hes_ran.cpp
+	mixed_cppad/init_ran_like.cpp
 )
 SET_TARGET_PROPERTIES(mixed_cppad
 	PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
@@ -36,7 +36,7 @@ SET_TARGET_PROPERTIES(mixed_cppad
 # ---------------------------------------------------------------------------
 # mixed_cppad_eigen
 ADD_LIBRARY(mixed_cppad_eigen
-	mixed_cppad/record_ranobj.cpp
+	mixed_cppad/init_ranobj.cpp
 	mixed_cppad/newton_step.cpp
 	mixed_cppad/ranobj_eval.cpp
 	mixed_cppad/logdet_grad.cpp

@@ -11,18 +11,19 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/mixed_cppad.hpp>
 
 /*
-$begin record_ran_like$$
+$begin init_ran_like$$
 $spell
+	init
 	cppad
 	vec
 	const
 	Cpp
 $$
 
-$section mixed_cppad: Record Random Likelihood$$
+$section mixed_cppad: Initialize Random Likelihood$$
 
 $head Syntax$$
-$codei%record_ran_like(%fixed_vec%, %random_vec%)%$$
+$codei%init_ran_like(%fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code mixed_cppad$$ class
@@ -36,7 +37,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/fixed effects/mixed_cppad/Fixed Effects, theta/$$
-vector $latex \theta$$ at which the recording is made.
+vector $latex \theta$$ at which the initialization is done.
 
 $head random_vec$$
 This argument has prototype
@@ -45,7 +46,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/random effects/mixed_cppad/Random Effects, u/$$
-vector $latex u$$ at which the recording is made.
+vector $latex u$$ at which the initialization is done.
 
 $head ran_like_fun_$$
 The input value of the member variable
@@ -100,10 +101,10 @@ namespace {
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void mixed_cppad::record_ran_like(
+void mixed_cppad::init_ran_like(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	assert( ! record_ran_like_done_ );
+{	assert( ! init_ran_like_done_ );
 	// ------------------------------------------------------------------
 	// record ran_like_a1fun_
 	// ------------------------------------------------------------------
@@ -145,7 +146,7 @@ void mixed_cppad::record_ran_like(
 	// record ran_like_fun_
 	record_next_ran_like(both, ran_like_a1fun_, ran_like_fun_);
 	//
-	record_ran_like_done_ = true;
+	init_ran_like_done_ = true;
 }
 
 

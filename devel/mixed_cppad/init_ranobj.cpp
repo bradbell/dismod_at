@@ -9,8 +9,9 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin record_ranobj$$
+$begin init_ranobj$$
 $spell
+	init
 	ranobj
 	cppad
 	obj
@@ -22,7 +23,7 @@ $$
 $section Second Order Representation of Random Objective$$
 
 $head Syntax$$
-$codei%record_ranobj(%fixed_vec%, %random_vec%)%$$
+$codei%init_ranobj(%fixed_vec%, %random_vec%)%$$
 
 $head Private$$
 This function is $code private$$ to the $code mixed_cppad$$ class
@@ -36,7 +37,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/fixed effects/mixed_cppad/Fixed Effects, theta/$$
-vector $latex \theta$$ at which the recording is made.
+vector $latex \theta$$ at which the initialization is done.
 
 $head random_vec$$
 This argument has prototype
@@ -45,7 +46,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/random effects/mixed_cppad/Random Effects, u/$$
-vector $latex u$$ at which the recording is made.
+vector $latex u$$ at which the initialization is done.
 
 $head ranobj_fun_$$
 The input value of the member variable
@@ -70,10 +71,10 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // ----------------------------------------------------------------------------
-void mixed_cppad::record_ranobj(
+void mixed_cppad::init_ranobj(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
-{	assert( ! record_ranobj_done_ );
+{	assert( ! init_ranobj_done_ );
 	assert( record_newton_atom_done_ );
 
 	//	create an a1d_vector containing (beta, theta, u)
@@ -148,7 +149,7 @@ void mixed_cppad::record_ranobj(
 	ranobj_fun_.Dependent(beta_theta_u, H);
 	ranobj_fun_.optimize();
 	//
-	record_ranobj_done_ = true;
+	init_ranobj_done_ = true;
 	return;
 }
 
