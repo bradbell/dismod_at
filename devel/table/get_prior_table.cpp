@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -83,11 +83,16 @@ $end
 # include <dismod_at/get_prior_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
+# include <dismod_at/error_exit.hpp>
+# include <dismod_at/get_density_table.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<prior_struct> get_prior_table(sqlite3* db)
 {	using std::string;
+
+	// user for error messaging
+	string msg;
 
 	string table_name  = "prior";
 	size_t n_prior      = check_table_id(db, table_name);
@@ -145,6 +150,26 @@ CppAD::vector<prior_struct> get_prior_table(sqlite3* db)
 		prior_table[i].mean       = mean[i];
 		prior_table[i].std        = std[i];
 		prior_table[i].eta        = eta[i];
+		//
+		// check values
+		if(	mean[i] > prior_table[i].upper )
+		{	msg = "mean greater than upper limit";
+			error_exit(db, msg, table_name, i);
+		}
+		if(	mean[i] < prior_table[i].lower )
+		{	msg = "mean less than upper limit";
+			error_exit(db, msg, table_name, i);
+		}
+		if( density_id[i] != uniform_enum && std[i] <= 0.0 )
+		{	msg = "std <= 0 and density is not uniform";
+			error_exit(db, msg, table_name, i);
+		}
+		bool nan_error = density_id[i] == log_gaussian_enum;
+		nan_error     |= density_id[i] == log_laplace_enum;
+		if( nan_error && std::isnan( eta[i] ) )
+		{	msg = "density is log gaussian or log laplace and eta is null";
+			error_exit(db, msg, table_name, i);
+		}
 	}
 	return prior_table;
 }
