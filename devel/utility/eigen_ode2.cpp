@@ -273,11 +273,80 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 namespace {
-	// ignore the double argument case
-	void PrintFor(
-			double pos, const char* before, double var, const char* after
-	)
-	{	return; }
+	// solution corresponding to b_1 = 0, b_2 = 0
+	template <class Float>
+	CppAD::vector<Float> both_zero(
+		const CppAD::vector<Float>&  b           ,
+		const CppAD::vector<Float>&  yi          ,
+		const Float&                 tf          )
+	{	CppAD::vector<Float> yf(2);
+
+		yf[0] = yi[0] * exp( b[0] * tf );
+		yf[1] = yi[1] * exp( b[3] * tf );
+
+		return yf;
+	}
+	// solution corresponding to b_1 = 0 , b_2 != 0
+	template <class Float>
+	CppAD::vector<Float> b1_zero(
+		const CppAD::vector<Float>&  b           ,
+		const CppAD::vector<Float>&  yi          ,
+		const Float&                 tf          )
+	{	CppAD::vector<Float> yf(2);
+		// y_0 ( tf )
+		yf[0] = yi[0] * exp( b[0] * tf );
+		// y_1 ( tf )
+		Float term = (exp( (b[0] - b[3]) * tf ) - 1.0 ) / (b[0] - b[3] );
+		//
+		yf[1] = exp( b[3] * tf ) * ( yi[1] + b[2] * yi[0] * term );
+		//
+		return yf;
+	}
+	// solution corresponding to b_1 != 0 , b_2 == 0
+	template <class Float>
+	CppAD::vector<Float> b2_zero(
+		const CppAD::vector<Float>&  b           ,
+		const CppAD::vector<Float>&  yi          ,
+		const Float&                 tf          )
+	{	CppAD::vector<Float> yf(2);
+		// y_1 ( tf )
+		yf[1] = yi[1] * exp( b[3] * tf );
+		// y_0 ( tf )
+		Float term = (exp( (b[3] - b[0]) * tf ) - 1.0 ) / (b[3] - b[0] );
+		//
+		yf[0] = exp( b[0] * tf ) * ( yi[0] + b[1] * yi[1] * term );
+		//
+		return yf;
+	}
+	// solution corresponding to b_1 != 0, b_2 != 0
+	template <class Float>
+	CppAD::vector<Float> both_nonzero(
+		const CppAD::vector<Float>&  b           ,
+		const CppAD::vector<Float>&  yi          ,
+		const Float&                 tf          )
+	{	CppAD::vector<Float> yf(2);
+		// discriminant in the quadratic equation for eigen-values
+		Float disc = (b[0] - b[3])*(b[0] - b[3]) + 4.0*b[1]*b[2];
+		Float root_disc = Float(sqrt( disc ));
+
+		// use eigen vectors
+		Float lambda_p  = (b[0] + b[3] + root_disc) / 2.0;
+		Float lambda_m  = (b[0] + b[3] - root_disc) / 2.0;
+		//
+		Float u_p       = (lambda_p - b[0]) / b[2];
+		Float u_m       = (lambda_m - b[0]) / b[2];
+		//
+		Float zi_p      = yi[0] + u_p * yi[1];
+		Float zi_m      = yi[0] + u_m * yi[1];
+		//
+		Float zf_p      = zi_p * exp( lambda_p * tf );
+		Float zf_m      = zi_m * exp( lambda_m * tf );
+		//
+		yf[1]           = (zf_p - zf_m) * b[2] / root_disc;
+		yf[0]           = zf_p - u_p * yf[1];
+		//
+		return yf;
+	}
 }
 
 template <class Float>
@@ -297,66 +366,18 @@ CppAD::vector<Float> eigen_ode2(
 
 	// solution corresponding to b_1 = b_2 = 0
 	if( case_number == 1 )
-	{	yf[0] = yi[0] * exp( b[0] * tf );
-		yf[1] = yi[1] * exp( b[3] * tf );
-		return yf;
+	{	return both_zero(b, yi, tf);
 	}
 
 	// case for which we switch the order of the rows and columns
 	if( case_number == 2 )
-	{	CppAD::vector<Float> b_sw(4), yi_sw(2), yf_sw(2);
-		b_sw[0]  = b[3];
-		b_sw[1]  = b[2];
-		b_sw[2]  = b[1];
-		b_sw[3]  = b[0];
-		yi_sw[0] = yi[1];
-		yi_sw[1] = yi[0];
-		size_t case_number_sw = 3;
-		yf_sw = eigen_ode2(case_number_sw, b_sw, yi_sw, tf);
-		yf[0] = yf_sw[1];
-		yf[1] = yf_sw[0];
-		//
-		return yf;
-	}
+		return b2_zero(b, yi, tf);
 	//
 	if( case_number == 3 )
-	{	// y_0 ( tf )
-		yf[0] = yi[0] * exp( b[0] * tf );
-		// y_1 ( tf )
-		Float term = (exp( (b[0] - b[3]) * tf ) - 1.0 ) / (b[0] - b[3] );
-		//
-		Float eps = CppAD::numeric_limits<Float>::epsilon();
-		Float pos = abs(b[0] - b[3]) - 10. * eps * (abs(b[0]) + abs(b[1]));
-		PrintFor(pos, "\neigen: b[0] - b[3] = ", b[0] - b[3], "\n");
-		//
-		yf[1] = exp( b[3] * tf ) * ( yi[1] + b[2] * yi[0] * term );
-		//
-		return yf;
-	}
+		return b1_zero(b, yi, tf);
 	//
 	assert( case_number == 4 );
-
-	// discriminant in the quadratic equation for eigen-values
-	Float disc = (b[0] - b[3])*(b[0] - b[3]) + 4.0*b[1]*b[2];
-	Float root_disc = Float(sqrt( disc ));
-
-	// use eigen vectors
-	Float lambda_p  = (b[0] + b[3] + root_disc) / 2.0;
-	Float lambda_m  = (b[0] + b[3] - root_disc) / 2.0;
-	//
-	Float u_p       = (lambda_p - b[0]) / b[2];
-	Float u_m       = (lambda_m - b[0]) / b[2];
-	//
-	Float zi_p      = yi[0] + u_p * yi[1];
-	Float zi_m      = yi[0] + u_m * yi[1];
-	//
-	Float zf_p      = zi_p * exp( lambda_p * tf );
-	Float zf_m      = zi_m * exp( lambda_m * tf );
-	//
-	yf[1]           = (zf_p - zf_m) * b[2] / root_disc;
-	yf[0]           = zf_p - u_p * yf[1];
-	//
-	return yf;
+	return both_nonzero(b, yi, tf);
 }
 
 // instantiation macro
