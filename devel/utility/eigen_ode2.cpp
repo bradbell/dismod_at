@@ -273,26 +273,28 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 namespace {
-	// solution corresponding to b_1 = 0, b_2 = 0
+	// solution corresponding to b1 = 0, b2 = 0
 	template <class Float>
 	CppAD::vector<Float> both_zero(
 		const CppAD::vector<Float>&  b           ,
 		const CppAD::vector<Float>&  yi          ,
 		const Float&                 tf          )
-	{	CppAD::vector<Float> yf(2);
+	{	using CppAD::exp;
+		CppAD::vector<Float> yf(2);
 
 		yf[0] = yi[0] * exp( b[0] * tf );
 		yf[1] = yi[1] * exp( b[3] * tf );
 
 		return yf;
 	}
-	// solution corresponding to b_1 = 0 , b_2 != 0
+	// solution corresponding to b1 = 0 , b2 != 0
 	template <class Float>
 	CppAD::vector<Float> b1_zero(
 		const CppAD::vector<Float>&  b           ,
 		const CppAD::vector<Float>&  yi          ,
 		const Float&                 tf          )
-	{	CppAD::vector<Float> yf(2);
+	{	using CppAD::exp;
+		CppAD::vector<Float> yf(2);
 		// y_0 ( tf )
 		yf[0] = yi[0] * exp( b[0] * tf );
 		// y_1 ( tf )
@@ -302,13 +304,14 @@ namespace {
 		//
 		return yf;
 	}
-	// solution corresponding to b_1 != 0 , b_2 == 0
+	// solution corresponding to b1 != 0 , b2 == 0
 	template <class Float>
 	CppAD::vector<Float> b2_zero(
 		const CppAD::vector<Float>&  b           ,
 		const CppAD::vector<Float>&  yi          ,
 		const Float&                 tf          )
-	{	CppAD::vector<Float> yf(2);
+	{	using CppAD::exp;
+		CppAD::vector<Float> yf(2);
 		// y_1 ( tf )
 		yf[1] = yi[1] * exp( b[3] * tf );
 		// y_0 ( tf )
@@ -318,16 +321,17 @@ namespace {
 		//
 		return yf;
 	}
-	// solution corresponding to b_1 != 0, b_2 != 0
+	// solution corresponding to b1 != 0, b2 != 0
 	template <class Float>
 	CppAD::vector<Float> both_nonzero(
 		const CppAD::vector<Float>&  b           ,
 		const CppAD::vector<Float>&  yi          ,
 		const Float&                 tf          )
-	{	CppAD::vector<Float> yf(2);
+	{	using CppAD::exp;
+		CppAD::vector<Float> yf(2);
 		// discriminant in the quadratic equation for eigen-values
 		Float disc = (b[0] - b[3])*(b[0] - b[3]) + 4.0*b[1]*b[2];
-		Float root_disc = Float(sqrt( disc ));
+		Float root_disc = Float( CppAD::sqrt( disc ));
 
 		// use eigen vectors
 		Float lambda_p  = (b[0] + b[3] + root_disc) / 2.0;
@@ -356,28 +360,51 @@ CppAD::vector<Float> eigen_ode2(
 	const CppAD::vector<Float>&  yi          ,
 	const Float&                 tf          )
 {	using CppAD::abs;
-	using CppAD::exp;
-	using CppAD::sqrt;
-	//
+	using CppAD::vector;
 	assert( b.size() == 4 );
 	assert( yi.size() == 2 );
+	vector<Float>abs_b(4),
+		both_zero_y(2), b2_zero_y(2), b1_zero_y(2), both_nonzero_y(2), yf(2);
+	//
+	// square root of machine epsilon
+	Float eps = Float( std::sqrt( std::numeric_limits<double>::epsilon() ) );
+	//
 	assert( 1 <= case_number && case_number <= 4 );
-	CppAD::vector<Float> yf(2);
-
-	// solution corresponding to b_1 = b_2 = 0
-	if( case_number == 1 )
-	{	return both_zero(b, yi, tf);
+	//
+	Float norm = Float(0.0);
+	for(size_t i = 0; i < b.size(); i++)
+	{	abs_b[i] = abs(b[i]);
+		norm    += abs_b[i];
 	}
-
-	// case for which we switch the order of the rows and columns
-	if( case_number == 2 )
-		return b2_zero(b, yi, tf);
 	//
-	if( case_number == 3 )
-		return b1_zero(b, yi, tf);
+	// solution corresponding to b1 = 0, b2 = 0
+	both_zero_y = both_zero(b, yi, tf);
+	// solution corresponding to b1 != 0, b2 = 0
+	b2_zero_y = b2_zero(b, yi, tf);
+	// solution corresponding to b1 = 0, b2 != 0
+	b1_zero_y = b1_zero(b, yi, tf);
+	// solution corresponding to b1 ! 0, b2 != 0
+	both_nonzero_y = both_nonzero(b, yi, tf);
 	//
-	assert( case_number == 4 );
-	return both_nonzero(b, yi, tf);
+	Float eps_norm    = eps * norm;
+	Float diff_abs_12 = abs(abs_b[1] - abs_b[2]);
+	Float min_abs_12 = (abs_b[1] + abs_b[2] - diff_abs_12) / 2.0;
+	Float max_abs_12 = (abs_b[1] + abs_b[2] + diff_abs_12) / 2.0;
+	for(size_t i = 0; i < yi.size(); i++)
+	{	// if |b1| < |b2|, b1_zero, else b2_zero
+		Float b1_or_b2_zero_yi = CppAD::CondExpLt(
+			abs_b[1], abs_b[2], b1_zero_y[i], b2_zero_y[i]
+		);
+		// if max(|b1|,|b2|) < eps_norm, both_zero, else b1_or_b2_zero
+		Float one_or_both_zero_yi = CppAD::CondExpLt(
+			max_abs_12, eps_norm, both_zero_y[i], b1_or_b2_zero_yi
+		);
+		// if min(|b1|,|b2|) > eps_norm, both_nonzero, else, one_or_both_zero
+		yf[i] = CppAD::CondExpGt(
+			min_abs_12, eps_norm, both_nonzero_y[i], one_or_both_zero_yi
+		);
+	}
+	return yf;
 }
 
 // instantiation macro
