@@ -258,9 +258,6 @@ pack_object_   (pack_object)
 	assert( n_age_ode  > 1 );
 	assert( n_time_ode > 1 );
 	//
-	// set default value for eigen_ode2_case_number_
-	eigen_ode2_case_number_ = 4;
-	//
 	// initialize
 	replace_like_called_ = false;
 	//
@@ -501,53 +498,6 @@ pack_object_   (pack_object)
 		for(k = 0; k < n_age * n_time; k++)
 			data_info_[subset_id].c_ode[k] = c_sum[k] / sum;
 	}
-}
-/*
-$begin set_eigne_ode2_case_number$$
-$spell
-	avgint
-	Dismod
-	eigen
-	arg
-	const
-$$
-
-$section Sets the Method Used to Solve the Dismod_at ODE$$
-
-$head Syntax$$
-$icode%data_object%.set_eigen_ode2_case_number(%rate_info%)%$$
-
-$head data_object$$
-This object has prototype
-$codei%
-	data_model %data_object%
-%$$
-see $cref/data_object constructor/data_model_ctor/data_object/$$.
-
-$head rate_info$$
-Is the $cref/option_value/option_table/option_value/$$
-corresponding to $icode%option_name% = rate_info%$$ in the option table.
-$end
-*/
-void data_model::set_eigen_ode2_case_number(const std::string& rate_info)
-{
-	if( rate_info == "iota_zero_rho_zero" )
-	{	eigen_ode2_case_number_ = 1;
-		return;
-	}
-	if( rate_info == "iota_pos_rho_zero" )
-	{	eigen_ode2_case_number_ = 2;
-		return;
-	}
-	if( rate_info == "iota_zero_rho_pos" )
-	{	eigen_ode2_case_number_ = 3;
-		return;
-	}
-	if( rate_info == "iota_pos_rho_pos" )
-	{	eigen_ode2_case_number_ = 4;
-		return;
-	}
-	assert(false);
 }
 /*
 $begin data_model_replace_like$$
@@ -1155,7 +1105,6 @@ Float data_model::avg_yes_ode(
 		Float  step_size = Float(ode_step_size_);
 		//
 		solve_ode(
-			eigen_ode2_case_number_ ,
 			i_max, j_max, step_size, pini, iota, rho, chi, omega, S_out, C_out
 		);
 		//

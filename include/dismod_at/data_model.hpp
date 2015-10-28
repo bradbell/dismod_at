@@ -50,10 +50,6 @@ private:
 	CppAD::vector<smooth2ode*>   si2ode_vec_;
 	CppAD::vector<data_ode_info> data_info_;
 
-	// set to a default value by consturctor
-	// modified by set_eigen_ode2_case_number
-	size_t                       eigen_ode2_case_number_;
-
 	// Has replace_like been called.
 	// Set false by constructor and true by replace_like.
 	bool                         replace_like_called_;
@@ -88,8 +84,6 @@ public:
 	);
 	// destructor must delete the smooth2ode objects pointed to by si2ode_vec_
 	~data_model(void);
-	//
-	void set_eigen_ode2_case_number(const std::string& rate_info_arg);
 	//
 	void replace_like(
 		const CppAD::vector<data_subset_struct>& data_subset_obj

@@ -22,7 +22,7 @@ $$
 $section Eigen Vector Solution of ODE with Two Components$$
 
 $head Syntax$$
-$icode%yf% = eigen_ode2(%case_number%, %b%, %yi%, %tf%)
+$icode%yf% = eigen_ode2(%b%, %yi%, %tf%)
 %$$
 
 $head Purpose$$
@@ -34,9 +34,8 @@ $latex y( t_f )$$ where
 $latex \[
 	y' (t) = B y(t)
 \]$$
-Furthermore, the operation sequence only depends on the value of
-$icode case_number$$ and not on the value of the particular $icode b$$
-for which this function is recorded.
+Furthermore, the CppAD floating point operation sequence
+does not depend on the input values.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -102,18 +101,11 @@ $codei%
 $codei%
 	%yf%[1]%$$ $latex = y_1 ( t_f )$$.
 
-$head case_number$$
-This argument has prototype
-$codei%
-	size_t %case_number%
-%$$
+$head Method$$
 
-$subhead One$$
-The case where $latex b_1 = 0$$ and $latex b_2 = 0$$ we denote by
-$codei%
-	%case_number% == 1
-%$$
-In this case we return the solution
+$subhead Case One$$
+The case where $latex b_1 = 0$$ and $latex b_2 = 0$$
+has the following solution
 $latex \[
 \begin{array}{rcl}
 	y_0 ( t_f ) & = & y_0 (0) \exp( b_0 t )
@@ -122,42 +114,9 @@ $latex \[
 \end{array}
 \]$$
 
-$subhead Two$$
-The case where $latex b_1 \neq 0$$ and $latex b_2 = 0$$.
-We denote by
-$codei%
-	%case_number% == 2
-%$$
-In this case, we switch the order of the rows and columns in
-$latex B$$ and $icode yi$$,
-compute the solution using
-$cref/case three/eigen_ode2/Method/Case Three/$$
-and then switch the order of the result.
-
-$subhead Three$$
-The case where $latex b_1 = 0$$, $latex b_2 \neq 0$$.
-We denote this case by
-$codei%
-	%case_number% == 3
-%$$
-In this case, we compute the solution use the method for
-$cref/case three/eigen_ode2/Method/Case Three/$$ below.
-
-$subhead Four$$
-The case where $latex b_1 \neq 0 $$ and $latex b_2 \neq 0$$.
-$codei%
-	%case_number% == 4
-%$$
-In this case, we compute the solution use the method for
-$cref/case four/eigen_ode2/Method/Case Four/$$ below.
-
-$head Method$$
-The solution for case one is presented above.
-The solution for case two is to convert it to case three.
-
-$subhead Case Three$$
-For this case $latex b_1 = 0$$ and $latex b_2 \neq 0$$.
-It follows that
+$subhead Case Two$$
+The case $latex b_1 = 0$$ and $latex b_2 \neq 0$$
+has the following solution
 $latex \[
 \begin{array}{rcl}
 y_0 ( t )   & = & y_0 ( 0 ) \exp ( b_0 t )
@@ -175,8 +134,14 @@ y_1 (t)     & = & y_1 ( 0 ) \exp ( b_3 t ) +
 \end{array}
 \] $$
 
+$subhead Case Three$$
+The case $latex b_1 \neq 0$$ and $latex b_2 = 0$$
+can be converted to case two by switching the rows and columns
+of the matrix and the elements of the vectors.
+
 $subhead Case Four$$
-In this case
+The case where $latex b_1 \neq 0$$ and $latex b_2 \neq 0$$
+has the following solution
 $latex \[
 	(b_0 - b_3)^2 + b_1 b_2 > 0
 \] $$
@@ -367,7 +332,6 @@ namespace {
 
 template <class Float>
 CppAD::vector<Float> eigen_ode2(
-	size_t                       not_used    ,
 	const CppAD::vector<Float>&  b           ,
 	const CppAD::vector<Float>&  yi          ,
 	const Float&                 tf          )
@@ -421,7 +385,6 @@ CppAD::vector<Float> eigen_ode2(
 // instantiation macro
 # define DISMOD_AT_INSTANTIATE_EIGEN_ODE2(Float)       \
 	template CppAD::vector<Float> eigen_ode2<Float>(   \
-		size_t                       not_used,         \
 		const CppAD::vector<Float>&  b           ,     \
 		const CppAD::vector<Float>&  yi          ,     \
 		const Float&                 tf                \

@@ -84,9 +84,7 @@ bool solve_ode_xam(void)
 		chi[k]   = 0.08 * ri * ri;
 		omega[k] = 0.07 * ri * ri;
 	}
-	size_t eigen_ode2_case_number = 4;
 	dismod_at::solve_ode(
-		eigen_ode2_case_number,
 		i_max, j_max, step_size, pini, iota, rho, chi, omega, S_out, C_out
 	);
 	Fun F;

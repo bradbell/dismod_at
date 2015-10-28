@@ -34,17 +34,5 @@ $head Constrain Rate$$
 If a rate is constrained to have upper and lower limits equal at the parent
 level, remove it from the random effect in the inner problem.
 
-$head Numerical Integration$$
-Recently, CppAD was modified so that conditional expressions
-can be used with multiple levels of AD and reverse mode; see.
-$href%http://www.coin-or.org/CppAD/Doc/whats_new_15.htm#09-27
-	%CppAD whats_new 2015-09-27
-%$$.
-It should now be possible to write an integrator
-that will solve the ODE for all rates values and does not need re-taping.
-Then we can remove $cref/case_number/eigen_ode2/case_number/$$
-from $code eigen_ode2$$ and $cref/rate_info/option_table/rate_info/$$
-form the option table..
-
 
 $end
