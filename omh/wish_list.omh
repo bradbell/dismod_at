@@ -18,6 +18,12 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Optimizing Random Effects$$
+It may save significant execution time and memory to write a special
+purpose optimizer for the random effects.
+We already have a recording for the Hessian w.r.t. the random effects,
+it is wasteful use an optimizer that does not take advantage of that Hessian.
+
 $head No Random Effects$$
 Add an option to fit the model without random effects. This would be useful
 for cases with lots of data. In this case, fitting with the random effect
