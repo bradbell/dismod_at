@@ -1290,7 +1290,6 @@ int main(int n_arg, const char** argv)
 				pack_object              ,
 				child_data
 			);
-			string rate_info = option_map["rate_info"];
 			data_object.replace_like( data_subset_obj );
 			//
 			// avgint_object

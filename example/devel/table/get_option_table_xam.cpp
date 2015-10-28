@@ -49,18 +49,17 @@ bool get_option_table_xam(void)
 	"insert into option values(1, 'number_sample',   '1'            )",
 	"insert into option values(2, 'ode_step_size',   '20.0'         )",
 	"insert into option values(3, 'random_seed',     '0'            )",
-	"insert into option values(4, 'rate_info',       'iota_pos_rho_pos' )",
 
-	"insert into option values(5, 'quasi_fixed',           'true'         )",
-	"insert into option values(6, 'derivative_test_fixed', 'first-order'  )",
-	"insert into option values(7, 'max_num_iter_fixed',    '100'          )",
-	"insert into option values(8, 'print_level_fixed',     '0'            )",
-	"insert into option values(9, 'tolerance_fixed',       '1e-8'         )",
+	"insert into option values(4, 'quasi_fixed',           'true'         )",
+	"insert into option values(5, 'derivative_test_fixed', 'first-order'  )",
+	"insert into option values(6, 'max_num_iter_fixed',    '100'          )",
+	"insert into option values(7, 'print_level_fixed',     '0'            )",
+	"insert into option values(8, 'tolerance_fixed',       '1e-8'         )",
 
-	"insert into option values(10, 'derivative_test_random', 'second-order' )",
-	"insert into option values(11,'max_num_iter_random',    '100'          )",
-	"insert into option values(12,'print_level_random',     '0'            )",
-	"insert into option values(13,'tolerance_random',       '1e-8'         )"
+	"insert into option values(9, 'derivative_test_random', 'second-order' )",
+	"insert into option values(10,'max_num_iter_random',    '100'          )",
+	"insert into option values(11,'print_level_random',     '0'            )",
+	"insert into option values(12,'tolerance_random',       '1e-8'         )"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -70,7 +69,7 @@ bool get_option_table_xam(void)
 	// get the option table
 	vector<dismod_at::option_struct> option_table =
 		dismod_at::get_option_table(db);
-	ok  &= option_table.size() == 14;
+	ok  &= option_table.size() == 13;
 	//
 	ok  &= option_table[0].option_name    == "parent_node_id";
 	ok  &= option_table[0].option_value   == "0";
@@ -84,35 +83,33 @@ bool get_option_table_xam(void)
 	ok  &= option_table[3].option_name    == "random_seed";
 	ok  &= option_table[3].option_value   == "0";
 	//
-	ok  &= option_table[4].option_name    == "rate_info";
-	ok  &= option_table[4].option_value   == "iota_pos_rho_pos";
 	//
-	ok  &= option_table[5].option_name    == "quasi_fixed";
-	ok  &= option_table[5].option_value   == "true";
+	ok  &= option_table[4].option_name    == "quasi_fixed";
+	ok  &= option_table[4].option_value   == "true";
 	//
-	ok  &= option_table[6].option_name    == "derivative_test_fixed";
-	ok  &= option_table[6].option_value   == "first-order";
+	ok  &= option_table[5].option_name    == "derivative_test_fixed";
+	ok  &= option_table[5].option_value   == "first-order";
 	//
-	ok  &= option_table[7].option_name    == "max_num_iter_fixed";
-	ok  &= option_table[7].option_value   == "100";
+	ok  &= option_table[6].option_name    == "max_num_iter_fixed";
+	ok  &= option_table[6].option_value   == "100";
 	//
-	ok  &= option_table[8].option_name    == "print_level_fixed";
-	ok  &= option_table[8].option_value   == "0";
+	ok  &= option_table[7].option_name    == "print_level_fixed";
+	ok  &= option_table[7].option_value   == "0";
 	//
-	ok  &= option_table[9].option_name    == "tolerance_fixed";
-	ok  &= option_table[9].option_value   == "1e-8";
+	ok  &= option_table[8].option_name    == "tolerance_fixed";
+	ok  &= option_table[8].option_value   == "1e-8";
 	//
-	ok  &= option_table[10].option_name   == "derivative_test_random";
-	ok  &= option_table[10].option_value  == "second-order";
+	ok  &= option_table[9].option_name   == "derivative_test_random";
+	ok  &= option_table[9].option_value  == "second-order";
 	//
-	ok  &= option_table[11].option_name    == "max_num_iter_random";
-	ok  &= option_table[11].option_value   == "100";
+	ok  &= option_table[10].option_name    == "max_num_iter_random";
+	ok  &= option_table[10].option_value   == "100";
 	//
-	ok  &= option_table[12].option_name    == "print_level_random";
-	ok  &= option_table[12].option_value   == "0";
+	ok  &= option_table[11].option_name    == "print_level_random";
+	ok  &= option_table[11].option_value   == "0";
 	//
-	ok  &= option_table[13].option_name    == "tolerance_random";
-	ok  &= option_table[13].option_value   == "1e-8";
+	ok  &= option_table[12].option_name    == "tolerance_random";
+	ok  &= option_table[12].option_value   == "1e-8";
 	//
 	// close database and return
 	sqlite3_close(db);

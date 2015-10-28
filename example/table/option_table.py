@@ -35,8 +35,7 @@ def option_table() :
 		['tolerance',       '1e-8'         ] ,
 		['max_num_iter',    '100'          ] ,
 		['print_level',     '0'            ] ,
-		['derivative_test', 'second-order' ] ,
-		['rate_info',       'chi_positive' ]
+		['derivative_test', 'second-order' ]
 	]
 	tbl_name = 'option'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

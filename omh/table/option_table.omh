@@ -77,43 +77,6 @@ This is a non-negative integer used to seed the random number
 generator (used to generate simulated measurement noise).
 If this value is zero, the clock is used to seed the random number generator.
 
-$head rate_info$$
-The $icode rate_info$$ value does not matter for the following integrands:
-$code Sincidence$$,
-$code remission$$,
-$code mtexcess$$,
-$code mtwith$$,
-$code relrisk$$.
-If $icode%option_name% = rate_info%$$,
-the corresponding option value must be one of the following:
-
-$subhead iota_zero_rho_zero$$
-If $icode%option_name% = rate_info%$$ and
-$icode%option_value% = iota_zero_rho_zero%$$,
-the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
-$icode iota$$ and $icode rho$$ must always have lower and upper limit zero.
-
-$subhead iota_pos_rho_zero$$
-If $icode%option_name% = rate_info%$$ and
-$icode%option_value% = iota_pos_rho_zero%$$,
-the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
-$icode iota$$ must always have lower limit greater than zero and for
-$icode rho$$ lower and upper limit zero.
-
-$subhead iota_zero_rho_pos$$
-If $icode%option_name% = rate_info%$$ and
-$icode%option_value% = iota_zero_rho_pos%$$,
-the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
-$icode rho$$ must always have lower limit greater than zero and for
-$icode iota$$ lower and upper limit zero.
-
-$subhead iota_pos_rho_pos$$
-If $icode%option_name% = rate_info%$$ and
-$icode%option_value% = iota_zero_rho_pos%$$,
-the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
-$icode iota$$ and $icode rho$$
-must always have lower limit greater than zero.
-
 $head Optimizer$$
 The following options control the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$ optimization

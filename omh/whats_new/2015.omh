@@ -56,6 +56,9 @@ $lnext
 There was a bug in the $cref eigen_ode2$$ routine whereby
 $code nan$$ could result even if the rates satisfied their prescribed
 conditions. This has been fixed.
+$lnext
+Modify $cref eigen_ode2$$ so that it works for all combinations of rates
+and remove $code rate_info$$ from the $cref option_table$$.
 $lend
 
 
@@ -272,7 +275,8 @@ This resulted in a huge savings (in one test case a 24 minute
 run time was reduced to 3.5 minutes).
 $lnext
 The $cref get_db_input$$ routine now checks the lower and upper limits
-implied by the choice of $cref/rate_info/option_table/rate_info/$$.
+implied by the choice of $code rate_info$$.
+This was removed on $cref/2015-10-27/whats_new_2015/10-27/$$.
 $lend
 
 $head 08-08$$
@@ -283,7 +287,7 @@ $lnext
 Change the measurement covariate multiple type $code rate_mean$$ to
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$.
 $lnext
-Simplify the $cref/rate_info/option_table/rate_info/$$ choice in the
+Simplify the $code rate_info$$ choice in the
 option table.
 $lnext
 Fix $cref/logging/log_table/$$ an error message that has the
@@ -702,8 +706,9 @@ $lend
 
 $head 06-29$$
 $list number$$
-Add the $cref/rate_info/option_table/rate_info/$$ argument
+Add the $code rate_info$$ argument
 to the fit command.
+(This was removed on $cref/2015-10-27/whats_new_2015/10-27/$$.)
 This enables taking advantage of cases where $icode rho$$
 or $icode iota$$ are zero (to speed integration).
 In addition, it allows for some cases where $icode chi$$ is zero.

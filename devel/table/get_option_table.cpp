@@ -91,7 +91,6 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		"ode_step_size",
 		"parent_node_id",
 		"random_seed",
-		"rate_info",
 		"quasi_fixed",
 		"derivative_test_fixed",
 		"derivative_test_random",
@@ -138,18 +137,6 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			msg +=  "option_name = ";
 			msg +=  name_vec[i];
 			error_exit(db, msg, table_name, null_id);
-		}
-		if( name_vec[i] == "rate_info" )
-		{	bool ok = false;
-			ok     |= option_value[match] == "iota_pos_rho_zero";
-			ok     |= option_value[match] == "iota_zero_rho_pos";
-			ok     |= option_value[match] == "iota_zero_rho_zero";
-			ok     |= option_value[match] == "iota_pos_rho_pos";
-			if( ! ok )
-			{	msg = "option table: rate_info = '";
-				msg += option_value[match] + "'";
-				error_exit(db, msg, table_name, match);
-			}
 		}
 		if( name_vec[i] == "ode_step_size" )
 		{	bool ok = std::atof( option_value[match].c_str() ) > 0.0;

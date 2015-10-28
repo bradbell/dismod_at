@@ -200,14 +200,6 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(rate, parent_smooth_id, smooth);
 
 	// -----------------------------------------------------------------------
-	// get rate_info
-	std::string rate_info;
-	size_t n_option = db_input.option_table.size();
-	for(size_t option_id = 0; option_id < n_option; option_id++)
-		if( db_input.option_table[option_id].option_name == "rate_info" )
-			rate_info = db_input.option_table[option_id].option_value;
-	assert( rate_info != "" );
-	// -----------------------------------------------------------------------
 	// other checks
 	check_pini_n_age(
 		db                        ,
@@ -216,7 +208,6 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	);
 	check_rate_limit(
 		db                        ,
-		rate_info                 ,
 		db_input.rate_table       ,
 		db_input.prior_table      ,
 		db_input.smooth_grid_table
