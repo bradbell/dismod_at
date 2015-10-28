@@ -137,9 +137,9 @@ def example_db (file_name) :
 		row['sex']       = ( data_id % 3 - 1.0 ) / 2.0
 		row['integrand'] = integrand_dict[ data_id % 2 ]['name']
 		if row['integrand'] == 'Sincidence' :
-			row['meas_std']  = 0.1 * iota_parent
+			row['meas_std']  = 0.05 * iota_parent
 		elif row['integrand'] == 'prevalence' :
-			row['meas_std']  = 0.1 * (iota_parent / rho_parent)
+			row['meas_std']  = 0.05 * (iota_parent / rho_parent)
 		else :
 			assert(False)
 		data_dict.append( copy.copy(row) )
@@ -304,42 +304,42 @@ flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at init command failed')
 # -----------------------------------------------------------------------
-# connect to database
+# read database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
-# -----------------------------------------------------------------------
-# read databas
 var_dict        = dismod_at.get_table_dict(connection, 'var')
 rate_dict       = dismod_at.get_table_dict(connection, 'rate')
 covariate_dict  = dismod_at.get_table_dict(connection, 'covariate')
-#
+# -----------------------------------------------------------------------
 # truth table:
-tbl_name     = 'truth'
+tbl_name     = 'truth_var'
 col_name     = [ 'truth_var_value' ]
 col_type     = [ 'real' ]
 row_list     = list()
-for variable in var_dict :
+var_id2true  = list()
+for var_id in range( len(var_dict) ) :
+	var_info        = var_dict[var_id]
 	truth_var_value = None
-	var_type = variable['var_type']
+	var_type = var_info['var_type']
 	if var_type == 'mulcov_rate_value' :
-		rate_id   = variable['rate_id']
+		rate_id   = var_info['rate_id']
 		rate_name = rate_dict[rate_id]['rate_name']
 		if rate_name == 'iota' :
-			covariate_id   = variable['covariate_id']
+			covariate_id   = var_info['covariate_id']
 			covariate_name = covariate_dict[covariate_id]['covariate_name' ]
 			assert( covariate_name == 'income' )
 			truth_var_value = mulcov_income_iota_true
 		else :
 			assert( rate_name == 'rho' )
-			covariate_id   = variable['covariate_id']
+			covariate_id   = var_info['covariate_id']
 			covariate_name = covariate_dict[covariate_id]['covariate_name' ]
 			assert( covariate_name == 'sex' )
 			truth_var_value = mulcov_sex_rho_true
 	else :
 		assert( var_type == 'rate' )
-		rate_id   = variable['rate_id']
+		rate_id   = var_info['rate_id']
 		rate_name = rate_dict[rate_id]['rate_name']
-		node_id   = variable['node_id']
+		node_id   = var_info['node_id']
 		# node zero is the world
 		if node_id == 0 and rate_name == 'iota' :
 			truth_var_value = iota_parent
@@ -347,5 +347,43 @@ for variable in var_dict :
 			truth_var_value = rho_parent
 		else :
 			truth_var_value = 0.0
+	var_id2true.append( truth_var_value )
 	row_list.append( [ truth_var_value ] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+connection.close()
+# -----------------------------------------------------------------------
+# Run the simulate and sample commands
+for command in [ 'simulate', 'sample' ] :
+	cmd            = [ program, command, file_name ]
+	print( ' '.join(cmd) )
+	flag = subprocess.call( cmd )
+	if flag != 0 :
+		sys.exit('The dismod_at ' + command + ' command failed')
+# -----------------------------------------------------------------------
+# check simulation results
+new          = False
+connection   = dismod_at.create_connection(file_name, new)
+sample_dict  = dismod_at.get_table_dict(connection, 'sample')
+connection.close()
+#
+number_variable = len(var_dict)
+assert( len(sample_dict) % number_variable == 0 )
+number_sample   = int( len(sample_dict) / number_variable )
+max_error       = 0.0
+for sample_index in range(number_sample) :
+	for var_id in range( len(var_dict) ) :
+		sample_id  = sample_index * number_variable + var_id
+		row        = sample_dict[sample_id]
+		fit_value  = row['var_value']
+		true_value = var_id2true[var_id]
+		if true_value == 0.0 :
+			max_error = max(abs(fit_value) , max_error)
+		else :
+			max_error = max( abs(fit_value / true_value - 1.0), max_error)
+if max_error > 5e-2 :
+	print('max_error = ', max_error)
+	assert(False)
+# -----------------------------------------------------------------------------
+print('simulated.py: OK')
+# -----------------------------------------------------------------------------
+
