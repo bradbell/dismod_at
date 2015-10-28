@@ -404,7 +404,7 @@ size_t pack_info::mulstd_offset(size_t smooth_id, size_t k) const
 }
 /*
 ------------------------------------------------------------------------------
-$begin pack_info_rate$$
+$begin pack_info_rate_info$$
 $spell
 	Devel
 	std

@@ -640,7 +640,7 @@ The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
 $cref/subset_id/data_subset/data_subset_obj/subset_id/$$
 must be one of those listed in the table below.
 In addition, depending on the integrand, only the corresponding
-$cref pack_info_rate$$ and $cref pack_info_mulcov_rate$$ subvectors of
+$cref pack_info_rate_info$$ and $cref pack_info_mulcov_rate$$ subvectors of
 $icode pack_vec$$ are used:
 $table
 Integrand               $cnext Rates               $rnext
@@ -907,7 +907,7 @@ $codei%
 and is all the $cref/model variables/model_variable/$$ in the order
 specified by $cref pack_info$$.
 Only the following subvectors of $icode pack_vec$$ are used:
-$cref pack_info_rate$$,
+$cref pack_info_rate_info$$,
 $cref pack_info_mulcov_rate$$.
 
 $head avg$$

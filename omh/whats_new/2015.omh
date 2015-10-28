@@ -66,6 +66,8 @@ conditions. This has been fixed.
 $lnext
 Modify $cref eigen_ode2$$ so that it works for all combinations of rates
 and remove $code rate_info$$ from the $cref option_table$$.
+Note that this is different from $cref pack_info_rate_info$$
+(which is only in the developer documentation).
 $lend
 
 
