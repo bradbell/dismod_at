@@ -32,11 +32,6 @@ $spell
 $$
 $section Disease Rates as Functions of Age and Time: dismod_at-20151028$$
 
-$head Wish List$$
-$list number$$
-Test Lasso on covariate parameters.
-$lend
-
 $childtable%omh/install/unix.omh
 	%example/user/user.omh
 	%omh/table/input.omh

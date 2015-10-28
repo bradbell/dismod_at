@@ -47,11 +47,18 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 10-28$$
+$list number$$
 Advance to a newer version of CppAD. The requires that you re-run
 $codep
 	bin/install_cppad.sh
 $$
-
+$lnext
+Remove some unused code in the dismod_at
+$cref user$$ examples (used for return value in
+$cref get_started_db.py$$).
+In addition, simply setting of the standard deviation multipliers
+to one (in the dismod_at $cref user$$ examples).
+$lend
 
 $head 10-27$$
 $list number$$
