@@ -295,11 +295,17 @@ namespace {
 		const Float&                 tf          )
 	{	using CppAD::exp;
 		CppAD::vector<Float> yf(2);
+		Float eps = Float(std::sqrt( std::numeric_limits<double>::epsilon()));
+		Float diff_03 = b[0] - b[3];
+		//
 		// y_0 ( tf )
 		yf[0] = yi[0] * exp( b[0] * tf );
-		// y_1 ( tf )
-		Float term = (exp( (b[0] - b[3]) * tf ) - 1.0 ) / (b[0] - b[3] );
 		//
+		// exp[ (b0 - b3) * tf ] / (b0 - b3);
+		Float term = expm1( diff_03 * tf ) / diff_03;
+		term = CppAD::CondExpLt(abs(diff_03), eps, tf, term);
+		//
+		// y_1 ( tf )
 		yf[1] = exp( b[3] * tf ) * ( yi[1] + b[2] * yi[0] * term );
 		//
 		return yf;
@@ -312,11 +318,17 @@ namespace {
 		const Float&                 tf          )
 	{	using CppAD::exp;
 		CppAD::vector<Float> yf(2);
+		Float eps = Float(std::sqrt( std::numeric_limits<double>::epsilon()));
+		Float diff_30 = b[3] - b[0];
+		//
 		// y_1 ( tf )
 		yf[1] = yi[1] * exp( b[3] * tf );
-		// y_0 ( tf )
-		Float term = (exp( (b[3] - b[0]) * tf ) - 1.0 ) / (b[3] - b[0] );
 		//
+		// exp[ (b3 - b0) * tf ] / (b3 - b0);
+		Float term = expm1( diff_30 * tf ) / diff_30;
+		term = CppAD::CondExpLt(abs(diff_30), eps, tf, term);
+		//
+		// y_0 ( tf )
 		yf[0] = exp( b[0] * tf ) * ( yi[0] + b[1] * yi[1] * term );
 		//
 		return yf;
@@ -355,7 +367,7 @@ namespace {
 
 template <class Float>
 CppAD::vector<Float> eigen_ode2(
-	size_t                       case_number ,
+	size_t                       not_used    ,
 	const CppAD::vector<Float>&  b           ,
 	const CppAD::vector<Float>&  yi          ,
 	const Float&                 tf          )
@@ -369,7 +381,6 @@ CppAD::vector<Float> eigen_ode2(
 	// square root of machine epsilon
 	Float eps = Float( std::sqrt( std::numeric_limits<double>::epsilon() ) );
 	//
-	assert( 1 <= case_number && case_number <= 4 );
 	//
 	Float norm = Float(0.0);
 	for(size_t i = 0; i < b.size(); i++)
@@ -410,7 +421,7 @@ CppAD::vector<Float> eigen_ode2(
 // instantiation macro
 # define DISMOD_AT_INSTANTIATE_EIGEN_ODE2(Float)       \
 	template CppAD::vector<Float> eigen_ode2<Float>(   \
-		size_t                       case_number ,     \
+		size_t                       not_used,         \
 		const CppAD::vector<Float>&  b           ,     \
 		const CppAD::vector<Float>&  yi          ,     \
 		const Float&                 tf                \

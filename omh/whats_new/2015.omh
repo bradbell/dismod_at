@@ -47,10 +47,16 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 10-27$$
+$list number$$
 The values in the $cref prior_table$$ were checked to make sure that
 $icode%lower% <= %mean% <= %upper%$$,
 except for the uniform density case $icode%std% > 0%$$,
 and in the log density cases $icode eta$$ is not null.
+$lnext
+There was a bug in the $cref eigen_ode2$$ routine whereby
+$code nan$$ could result even if the rates satisfied their prescribed
+conditions. This has been fixed.
+$lend
 
 
 $head 10-26$$
