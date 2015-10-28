@@ -41,7 +41,6 @@ option_dict = collections.OrderedDict([
 	('cascade_path','    path to directory where cascade input files are'),
 	('ode_step_size','   step size of ODE solution in age and time'),
 	('mtall2mtother','   treat mtall data as if it were mtother [yes/no]'),
-	('rate_info','       are iota and rho zero or non-zero; see option_table'),
 	('child_value_std',' value standard deviation for random effects'),
 	('child_dtime_std',' dtime standard deviation for random effects'),
 	('time_grid','       the time grid as space seperated values')
@@ -105,21 +104,6 @@ if not os.path.isdir( cascade_path ) :
 #
 if len( option_table_in['time_grid'].split() ) < 2 :
 	msg = 'in ' + option_csv + ' time_grid does not have two or more elements'
-	sys.exit(msg)
-#
-rate_info = option_table_in['rate_info']
-info_list = [
-	'iota_pos_rho_zero', 'iota_zero_rho_pos',
-	'iota_zero_rho_pos', 'iota_pos_rho_pos'
-]
-if rate_info not in info_list :
-	msg  = usage + '\n'
-	msg += 'in ' + option_csv + ' rate_info = ' + rate_info + '\n'
-	msg += 'is not one of the following:\n'
-	for i in range( len( info_list ) ) :
-		msg += info_list[i]
-		if i + 1 < len( info_list ) :
-			msg += ', '
 	sys.exit(msg)
 # ----------------------------------------------------------------------------
 # cascade_path_dict
@@ -670,7 +654,6 @@ for time_id in range( n_time ) :
 # --------------------------------------------------------------------------
 # rate_smooth_id
 #
-rate_info              = option_table_in['rate_info']
 rate_smooth_id         = dict()
 rate_smooth_id['pini'] = pini_smooth_id
 #
@@ -678,9 +661,6 @@ delta_age          = (age_list[-1] - age_list[0]) / (len(age_list) - 1)
 for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	drate = 'd' + rate
 	xi     = float( simple_prior_in['xi_' + rate]['mean'] )
-	#
-	rate_is_zero = rate_info.find( rate + '_zero') != -1
-	rate_is_pos  = rate_info.find( rate + '_pos') != -1
 	#
 	# initialize some lists for this rate
 	local_list     = list()
@@ -703,25 +683,6 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 		# determine value_prior_id
 		name  = rate + '_prior'
 		prior_in = rate_prior_in_dict[rate][age_id]
-		#
-		if rate_is_zero :
-			prior_in['lower'] = '0'
-			prior_in['upper'] = '0'
-			prior_in['mean']  = '0'
-			piror_in['std']   = 'inf'
-		if rate_is_pos :
-			eta   = float( value_table_in['kappa_' + rate] )
-			lower = eta / 100.
-			prior_in['lower'] = str( lower )
-			if float( prior_in['mean'] ) < lower :
-				prior_in['mean'] = prior_in['lower']
-			if float( prior_in['upper'] ) < lower :
-				msg  = rate + ' is positive, but its upper limit = '
-				msg += prior_in['upper']
-				msg += '\nwhich is less than its eta / 100 = '
-				msg += prior_in['lower']
-				sys.exit(msg)
-		#
 		prior_at = gaussian_cascade2at(name, prior_in)
 		(name, lower, upper, mean, std, density_id, eta) = prior_at
 		#
@@ -875,7 +836,6 @@ row_list = [
 	[ 'ode_step_size',          option_table_in['ode_step_size'] ],
 	[ 'number_sample',          '10'                             ],
 	[ 'random_seed',            str(int( timer.time() ))         ],
-	[ 'rate_info',              option_table_in['rate_info']     ],
 	[ 'quasi_fixed',            'true'                           ],
 	[ 'print_level_fixed',      '5'                              ],
 	[ 'print_level_random',     '5'                              ],

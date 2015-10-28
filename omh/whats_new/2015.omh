@@ -46,6 +46,13 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 10-28$$
+Advance to a newer version of CppAD. The requires that you re-run
+$codep
+	bin/install_cppad.sh
+$$
+
+
 $head 10-27$$
 $list number$$
 The values in the $cref prior_table$$ were checked to make sure that
