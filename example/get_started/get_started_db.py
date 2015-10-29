@@ -205,6 +205,7 @@ def get_started_db (file_name) :
 		{ 'name':'number_sample',          'value':'1'            },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },
+		{ 'name':'rate_info',              'value':'iota_pos_rho_pos' },
 
 		{ 'name':'quasi_fixed',            'value':'true'         },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'  },

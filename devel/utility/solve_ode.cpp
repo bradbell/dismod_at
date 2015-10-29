@@ -143,6 +143,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 template <class Float>
 void solve_ode(
+	size_t                       eigen_ode2_case_number ,
 	size_t                       i_max     ,
 	size_t                       j_max     ,
 	const Float&                 step_size ,
@@ -187,7 +188,7 @@ void solve_ode(
 			b_avg[j] = (b_previous[j] + b_next[j]) / 2.0;
 		//
 		// |b[2]| > |b[1]| and b[0] != b[3]
-		yf = eigen_ode2(b_avg, yi, step_size);
+		yf = eigen_ode2(eigen_ode2_case_number, b_avg, yi, step_size);
 		//
 		S_out[k+1]  = yf[0];
 		C_out[k+1]  = yf[1];
@@ -200,6 +201,7 @@ void solve_ode(
 // instantiation macro
 # define DISMOD_AT_INSTANTIATE_SOLVE_ODE(Float)     \
 	template void solve_ode<Float>(                \
+		size_t                       eigen_ode2_case_number , \
 		size_t                       i_max     ,  \
 		size_t                       j_max     ,  \
 		const Float&                 step_size ,  \

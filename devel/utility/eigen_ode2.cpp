@@ -22,7 +22,7 @@ $$
 $section Eigen Vector Solution of ODE with Two Components$$
 
 $head Syntax$$
-$icode%yf% = eigen_ode2(%b%, %yi%, %tf%)
+$icode%yf% = eigen_ode2(%case_number%, %b%, %yi%, %tf%)
 %$$
 
 $head Purpose$$
@@ -34,8 +34,9 @@ $latex y( t_f )$$ where
 $latex \[
 	y' (t) = B y(t)
 \]$$
-Furthermore, the CppAD floating point operation sequence
-does not depend on the input values.
+Furthermore, the operation sequence only depends on the value of
+$icode case_number$$ and not on the value of the particular $icode b$$
+for which this function is recorded.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -101,11 +102,18 @@ $codei%
 $codei%
 	%yf%[1]%$$ $latex = y_1 ( t_f )$$.
 
-$head Method$$
+$head case_number$$
+This argument has prototype
+$codei%
+	size_t %case_number%
+%$$
 
-$subhead Case One$$
-The case where $latex b_1 = 0$$ and $latex b_2 = 0$$
-has the following solution
+$subhead One$$
+The case where $latex b_1 = 0$$ and $latex b_2 = 0$$ we denote by
+$codei%
+	%case_number% == 1
+%$$
+In this case we return the solution
 $latex \[
 \begin{array}{rcl}
 	y_0 ( t_f ) & = & y_0 (0) \exp( b_0 t )
@@ -114,9 +122,42 @@ $latex \[
 \end{array}
 \]$$
 
-$subhead Case Two$$
-The case $latex b_1 = 0$$ and $latex b_2 \neq 0$$
-has the following solution
+$subhead Two$$
+The case where $latex b_1 \neq 0$$ and $latex b_2 = 0$$.
+We denote by
+$codei%
+	%case_number% == 2
+%$$
+In this case, we switch the order of the rows and columns in
+$latex B$$ and $icode yi$$,
+compute the solution using
+$cref/case three/eigen_ode2/Method/Case Three/$$
+and then switch the order of the result.
+
+$subhead Three$$
+The case where $latex b_1 = 0$$, $latex b_2 \neq 0$$.
+We denote this case by
+$codei%
+	%case_number% == 3
+%$$
+In this case, we compute the solution use the method for
+$cref/case three/eigen_ode2/Method/Case Three/$$ below.
+
+$subhead Four$$
+The case where $latex b_1 \neq 0 $$ and $latex b_2 \neq 0$$.
+$codei%
+	%case_number% == 4
+%$$
+In this case, we compute the solution use the method for
+$cref/case four/eigen_ode2/Method/Case Four/$$ below.
+
+$head Method$$
+The solution for case one is presented above.
+The solution for case two is to convert it to case three.
+
+$subhead Case Three$$
+For this case $latex b_1 = 0$$ and $latex b_2 \neq 0$$.
+It follows that
 $latex \[
 \begin{array}{rcl}
 y_0 ( t )   & = & y_0 ( 0 ) \exp ( b_0 t )
@@ -134,14 +175,8 @@ y_1 (t)     & = & y_1 ( 0 ) \exp ( b_3 t ) +
 \end{array}
 \] $$
 
-$subhead Case Three$$
-The case $latex b_1 \neq 0$$ and $latex b_2 = 0$$
-can be converted to case two by switching the rows and columns
-of the matrix and the elements of the vectors.
-
 $subhead Case Four$$
-The case where $latex b_1 \neq 0$$ and $latex b_2 \neq 0$$
-has the following solution
+In this case
 $latex \[
 	(b_0 - b_3)^2 + b_1 b_2 > 0
 \] $$
@@ -238,77 +273,61 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 namespace {
-	// solution corresponding to b1 = 0, b2 = 0
+	// solution corresponding to b_1 = 0, b_2 = 0
 	template <class Float>
 	CppAD::vector<Float> both_zero(
 		const CppAD::vector<Float>&  b           ,
 		const CppAD::vector<Float>&  yi          ,
 		const Float&                 tf          )
-	{	using CppAD::exp;
-		CppAD::vector<Float> yf(2);
+	{	CppAD::vector<Float> yf(2);
 
 		yf[0] = yi[0] * exp( b[0] * tf );
 		yf[1] = yi[1] * exp( b[3] * tf );
 
 		return yf;
 	}
-	// solution corresponding to b1 = 0 , b2 != 0
+	// solution corresponding to b_1 = 0 , b_2 != 0
 	template <class Float>
 	CppAD::vector<Float> b1_zero(
 		const CppAD::vector<Float>&  b           ,
 		const CppAD::vector<Float>&  yi          ,
 		const Float&                 tf          )
-	{	using CppAD::exp;
-		CppAD::vector<Float> yf(2);
-		Float eps = Float(std::sqrt( std::numeric_limits<double>::epsilon()));
-		Float diff_03 = b[0] - b[3];
-		//
+	{	CppAD::vector<Float> yf(2);
 		// y_0 ( tf )
 		yf[0] = yi[0] * exp( b[0] * tf );
-		//
-		// exp[ (b0 - b3) * tf ] / (b0 - b3);
-		Float term = expm1( diff_03 * tf ) / diff_03;
-		term = CppAD::CondExpLt(abs(diff_03), eps, tf, term);
-		//
 		// y_1 ( tf )
+		Float term = (exp( (b[0] - b[3]) * tf ) - 1.0 ) / (b[0] - b[3] );
+		//
 		yf[1] = exp( b[3] * tf ) * ( yi[1] + b[2] * yi[0] * term );
 		//
 		return yf;
 	}
-	// solution corresponding to b1 != 0 , b2 == 0
+	// solution corresponding to b_1 != 0 , b_2 == 0
 	template <class Float>
 	CppAD::vector<Float> b2_zero(
 		const CppAD::vector<Float>&  b           ,
 		const CppAD::vector<Float>&  yi          ,
 		const Float&                 tf          )
-	{	using CppAD::exp;
-		CppAD::vector<Float> yf(2);
-		Float eps = Float(std::sqrt( std::numeric_limits<double>::epsilon()));
-		Float diff_30 = b[3] - b[0];
-		//
+	{	CppAD::vector<Float> yf(2);
 		// y_1 ( tf )
 		yf[1] = yi[1] * exp( b[3] * tf );
-		//
-		// exp[ (b3 - b0) * tf ] / (b3 - b0);
-		Float term = expm1( diff_30 * tf ) / diff_30;
-		term = CppAD::CondExpLt(abs(diff_30), eps, tf, term);
-		//
 		// y_0 ( tf )
+		Float term = (exp( (b[3] - b[0]) * tf ) - 1.0 ) / (b[3] - b[0] );
+		//
 		yf[0] = exp( b[0] * tf ) * ( yi[0] + b[1] * yi[1] * term );
 		//
 		return yf;
 	}
-	// solution corresponding to b1 != 0, b2 != 0
+	// solution corresponding to b_1 != 0, b_2 != 0
 	template <class Float>
 	CppAD::vector<Float> both_nonzero(
 		const CppAD::vector<Float>&  b           ,
 		const CppAD::vector<Float>&  yi          ,
 		const Float&                 tf          )
-	{	using CppAD::exp;
-		CppAD::vector<Float> yf(2);
+	{	CppAD::vector<Float> yf(2);
 		// discriminant in the quadratic equation for eigen-values
 		Float disc = (b[0] - b[3])*(b[0] - b[3]) + 4.0*b[1]*b[2];
-		Float root_disc = Float( CppAD::sqrt( disc ));
+		Float root_disc = Float(sqrt( disc ));
 
 		// use eigen vectors
 		Float lambda_p  = (b[0] + b[3] + root_disc) / 2.0;
@@ -332,59 +351,39 @@ namespace {
 
 template <class Float>
 CppAD::vector<Float> eigen_ode2(
+	size_t                       case_number ,
 	const CppAD::vector<Float>&  b           ,
 	const CppAD::vector<Float>&  yi          ,
 	const Float&                 tf          )
 {	using CppAD::abs;
-	using CppAD::vector;
+	using CppAD::exp;
+	using CppAD::sqrt;
+	//
 	assert( b.size() == 4 );
 	assert( yi.size() == 2 );
-	vector<Float>abs_b(4),
-		both_zero_y(2), b2_zero_y(2), b1_zero_y(2), both_nonzero_y(2), yf(2);
-	//
-	// square root of machine epsilon
-	Float eps = Float( std::sqrt( std::numeric_limits<double>::epsilon() ) );
-	//
-	//
-	Float norm = Float(0.0);
-	for(size_t i = 0; i < b.size(); i++)
-	{	abs_b[i] = abs(b[i]);
-		norm    += abs_b[i];
+	assert( 1 <= case_number && case_number <= 4 );
+	CppAD::vector<Float> yf(2);
+
+	// solution corresponding to b_1 = b_2 = 0
+	if( case_number == 1 )
+	{	return both_zero(b, yi, tf);
 	}
+
+	// case for which we switch the order of the rows and columns
+	if( case_number == 2 )
+		return b2_zero(b, yi, tf);
 	//
-	// solution corresponding to b1 = 0, b2 = 0
-	both_zero_y = both_zero(b, yi, tf);
-	// solution corresponding to b1 != 0, b2 = 0
-	b2_zero_y = b2_zero(b, yi, tf);
-	// solution corresponding to b1 = 0, b2 != 0
-	b1_zero_y = b1_zero(b, yi, tf);
-	// solution corresponding to b1 ! 0, b2 != 0
-	both_nonzero_y = both_nonzero(b, yi, tf);
+	if( case_number == 3 )
+		return b1_zero(b, yi, tf);
 	//
-	Float eps_norm    = eps * norm;
-	Float diff_abs_12 = abs(abs_b[1] - abs_b[2]);
-	Float min_abs_12 = (abs_b[1] + abs_b[2] - diff_abs_12) / 2.0;
-	Float max_abs_12 = (abs_b[1] + abs_b[2] + diff_abs_12) / 2.0;
-	for(size_t i = 0; i < yi.size(); i++)
-	{	// if |b1| < |b2|, b1_zero, else b2_zero
-		Float b1_or_b2_zero_yi = CppAD::CondExpLt(
-			abs_b[1], abs_b[2], b1_zero_y[i], b2_zero_y[i]
-		);
-		// if max(|b1|,|b2|) < eps_norm, both_zero, else b1_or_b2_zero
-		Float one_or_both_zero_yi = CppAD::CondExpLt(
-			max_abs_12, eps_norm, both_zero_y[i], b1_or_b2_zero_yi
-		);
-		// if min(|b1|,|b2|) > eps_norm, both_nonzero, else, one_or_both_zero
-		yf[i] = CppAD::CondExpGt(
-			min_abs_12, eps_norm, both_nonzero_y[i], one_or_both_zero_yi
-		);
-	}
-	return yf;
+	assert( case_number == 4 );
+	return both_nonzero(b, yi, tf);
 }
 
 // instantiation macro
 # define DISMOD_AT_INSTANTIATE_EIGEN_ODE2(Float)       \
 	template CppAD::vector<Float> eigen_ode2<Float>(   \
+		size_t                       case_number ,     \
 		const CppAD::vector<Float>&  b           ,     \
 		const CppAD::vector<Float>&  yi          ,     \
 		const Float&                 tf                \

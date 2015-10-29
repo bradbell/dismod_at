@@ -173,7 +173,7 @@ def example_db (file_name) :
 		},{ # prior_iota_parent
 			'name':     'prior_iota_parent',
 			'density':  'uniform',
-			'lower':    0.0,
+			'lower':    0.001,
 			'upper':    1.0,
 			'mean':     0.1,
 			'std':      None,
@@ -181,7 +181,7 @@ def example_db (file_name) :
 		},{ # prior_iota_parent
 			'name':     'prior_rho_parent',
 			'density':  'uniform',
-			'lower':    0.0,
+			'lower':    0.001,
 			'upper':    1.0,
 			'mean':     0.1,
 			'std':      None,
@@ -254,6 +254,7 @@ def example_db (file_name) :
 	# ------------------------------------------------------------------------
 	# option_dict
 	option_dict = [
+		{ 'name':'rate_info',              'value':'iota_pos_rho_pos' },
 		{ 'name':'parent_node_name',       'value':'world'        },
 		{ 'name':'number_sample',          'value':'1'            },
 		{ 'name':'ode_step_size',          'value':'10.0'         },

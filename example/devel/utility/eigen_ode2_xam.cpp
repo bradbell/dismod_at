@@ -49,6 +49,7 @@ bool eigen_ode2_xam(void)
 	typedef CppAD::vector<Float> vector;
 	Float tf = 0.1;
 	vector b(4), yi(2), yf(2);
+	size_t case_number;
 	// -------------------------------------------------------------------
 	b[0] = -3.0;  b[1] = 0.0;
 	b[2] = 0.0;   b[3] = -4.0;
@@ -63,8 +64,8 @@ bool eigen_ode2_xam(void)
 	vector xi = yi;
 	vector xf = CppAD::Runge45(F, M, ti, tf, yi);
 	//
-	// case: b1 = 0, b2 = 0
-	yf  = dismod_at::eigen_ode2(b, yi, tf);
+	case_number = 1;
+	yf  = dismod_at::eigen_ode2(case_number, b, yi, tf);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
 	// -------------------------------------------------------------------
@@ -73,18 +74,8 @@ bool eigen_ode2_xam(void)
 	F.set(b);
 	xf = CppAD::Runge45(F, M, ti, tf, yi);
 	//
-	// case: b1 != 0, b2 = 0, b0 != b3
-	yf  = dismod_at::eigen_ode2(b, yi, tf);
-	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
-	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
-	// -------------------------------------------------------------------
-	b[0] = -3.0 , b[1] =  1.0;
-	b[2] =  0.0 , b[3] = -3.0;
-	F.set(b);
-	xf = CppAD::Runge45(F, M, ti, tf, yi);
-	//
-	// case: b1 != 0, b2 = 0, b0 == b3
-	yf  = dismod_at::eigen_ode2(b, yi, tf);
+	case_number = 2;
+	yf  = dismod_at::eigen_ode2(case_number, b, yi, tf);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
 	// -------------------------------------------------------------------
@@ -93,18 +84,8 @@ bool eigen_ode2_xam(void)
 	F.set(b);
 	xf = CppAD::Runge45(F, M, ti, tf, yi);
 	//
-	// case b1 = 0, b2 != 0, b0 != b3
-	yf   = dismod_at::eigen_ode2(b, yi, tf);
-	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
-	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
-	// -------------------------------------------------------------------
-	b[0] = -3.0 , b[1] =  0.0;
-	b[2] =  1.0 , b[3] = -3.0;
-	F.set(b);
-	xf = CppAD::Runge45(F, M, ti, tf, yi);
-	//
-	// case b1 = 0, b2 != 0, b0 == b3
-	yf   = dismod_at::eigen_ode2(b, yi, tf);
+	case_number = 3;
+	yf   = dismod_at::eigen_ode2(case_number, b, yi, tf);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
 	// -------------------------------------------------------------------
@@ -113,8 +94,8 @@ bool eigen_ode2_xam(void)
 	F.set(b);
 	xf = CppAD::Runge45(F, M, ti, tf, yi);
 	//
-	// case b1 != 0, b2 != 0
-	yf   = dismod_at::eigen_ode2(b, yi, tf);
+	case_number = 4;
+	yf   = dismod_at::eigen_ode2(case_number, b, yi, tf);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-6;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-6;
 	// -------------------------------------------------------------------

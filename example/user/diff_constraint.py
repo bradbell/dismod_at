@@ -166,30 +166,36 @@ def example_db (file_name) :
 			'name':                     'smooth_rate_child',
 			'age_id':                   [ 0, last_age_id ],
 			'time_id':                  [ 0, last_time_id ],
+			'mulstd_value_prior_name':  '',
+			'mulstd_dage_prior_name':   '',
+			'mulstd_dtime_prior_name':  '',
 			'fun':                      fun_rate_child
 		},{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
 			'age_id':                   [ 0, last_age_id ],
 			'time_id':                  [ 0, last_time_id ],
+			'mulstd_value_prior_name':  '',
+			'mulstd_dage_prior_name':   '',
+			'mulstd_dtime_prior_name':  '',
 			'fun':                       fun_rate_parent
 		},{ # smooth_pini_parent
 			'name':                     'smooth_pini_parent',
 			'age_id':                   [ middle_age_id ],
 			'time_id':                  [ middle_time_id ],
+			'mulstd_value_prior_name':  '',
+			'mulstd_dage_prior_name':   '',
+			'mulstd_dtime_prior_name':  '',
 			'fun':                       fun_pini_parent
 		},{ # smooth_pini_child
 			'name':                     'smooth_pini_child',
 			'age_id':                   [ middle_age_id ],
 			'time_id':                  [ middle_time_id ],
+			'mulstd_value_prior_name':  '',
+			'mulstd_dage_prior_name':   '',
+			'mulstd_dtime_prior_name':  '',
 			'fun':                       fun_rate_child
 		}
 	]
-	# no standard deviation multipliers
-	for dictionary in smooth_dict :
-		for name in [ 'value' , 'dage', 'dtime' ] :
-			key   = 'mulstd_' + name + '_prior_name'
-			value = ''
-			dictionary[key] = value
 	# --------------------------------------------------------------------------
 	# rate table
 	rate_dict = [
@@ -222,6 +228,7 @@ def example_db (file_name) :
 		{ 'name':'number_sample',          'value':'1'            },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },
+		{ 'name':'rate_info',              'value':'iota_pos_rho_pos' },
 
 		{ 'name':'quasi_fixed',            'value':'true'         },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
@@ -256,6 +263,14 @@ def example_db (file_name) :
 		avgint_dict
 	)
 	# -----------------------------------------------------------------------
+	n_smooth  = len( smooth_dict )
+	rate_true = []
+	for rate_id in range( len( data_dict ) ) :
+		# for this particular example
+		data_id    = rate_id
+		meas_value = data_dict[data_id]['meas_value']
+		rate_true.append(meas_value)
+	#
 	return
 # ===========================================================================
 file_name      = 'example.db'
