@@ -60,11 +60,16 @@ The empty string is used to represent a $code null$$ text value in a table.
 An error message will be generated if the empty string
 appears in a table that is read by dismod_at.
 
-$head Integer Can Be Null$$
+$head Integer Can be Null$$
 The minimum integer (negative integer with the largest absolute value)
 is used to represent a $code null$$ integer value in a table.
 An error message will be generated if
 the minimum integer appears in a table that is read by dismod_at.
+
+$head Real Can be Null, not Nan$$
+If a real value is $code null$$, it is represented as $code nan$$.
+An error message will be generated if
+the value $code nan$$ appears in a table that is read by dismod_at.
 
 $childtable%
 	omh/table/age_table.omh

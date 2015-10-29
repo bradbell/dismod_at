@@ -150,7 +150,13 @@ namespace {
 	double convert(const double& not_used, char* v, size_t row_id)
 	{	if( v == DISMOD_AT_NULL_PTR )
 			return std::numeric_limits<double>::quiet_NaN();
-		return std::atof(v);
+		double value = std::atof(v);
+		if( value != value )
+		{	string msg = "The value nan appears in the double column ";
+			msg += column_name_;
+			dismod_at::error_exit(db_, msg, table_name_, row_id);
+		}
+		return value;
 	}
 
 	template <class Element>

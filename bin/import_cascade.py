@@ -449,6 +449,8 @@ for row_in in data_table_in :
 	else :
 		for name in covariate_name2id :
 			value        = row_in[name]
+			if math.isnan( float(value) ) :
+				value = None
 			row_out.append(value)
 		row_list.append( row_out )
 #
