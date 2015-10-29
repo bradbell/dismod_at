@@ -111,9 +111,6 @@ extern bool put_table_row_xam(void);
 extern bool smooth_info_xam(void);
 extern bool weight_info_xam(void);
 
-// run last
-extern bool capture_xam(void);
-
 // anonymous namespace
 namespace {
 	// function that runs one test
@@ -242,11 +239,6 @@ int main(void)
 	{	cout << Run_error_count << " tests failed." << endl;
 		return_flag = 1;
 	}
-
-	// BEGIN capture_xam
-	if( ! capture_xam() )
-		return_flag = 1;
-	// END capture_xam
 
 	return return_flag;
 }

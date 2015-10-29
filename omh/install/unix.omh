@@ -157,13 +157,14 @@ export PKG_CONFIG_PATH="@PKG_CONFIG_PATH:@HOME/prefix/dismod_at/lib64/pkgconfig"
 %$$
 
 $subhead Test$$
-The following command is optional and will,
-build the dismod_at library and executable if necessary,
+The following commands are optional and will,
+build the dismod_at executable,
 build the examples and tests,
-and run the examples and tests:
+and run the examples, correctness tests, and speed tests:
 $codep
 	cd build
 	make check
+	make speed
 $$
 
 $subhead Install$$

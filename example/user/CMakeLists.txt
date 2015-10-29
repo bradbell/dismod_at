@@ -15,7 +15,6 @@ FOREACH(user_case
 	no_children
 	lasso_covariate
 	meas_covariate
-	simulated
 )
 	ADD_CUSTOM_TARGET(
 		check_example_user_${user_case}
@@ -31,5 +30,4 @@ ADD_CUSTOM_TARGET(
 	check_example_user_no_children
 	check_example_user_lasso_covariate
 	check_example_user_meas_covariate
-	check_example_user_simulated
 )

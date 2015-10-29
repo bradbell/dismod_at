@@ -51,7 +51,6 @@ then
 fi
 sed \
 	-e '/^\tRUN( *[a-zA-Z0-9_]* *)/d' \
-	-e '/BEGIN capture_xam/,/END capture_xam/d' \
 	-e "s|// summary report|RUN($fun_name);\n\t&|" \
 	< example_devel.cpp > junk.cpp
 #

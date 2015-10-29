@@ -15,7 +15,7 @@
 #
 # $code
 # $verbatim%
-#	example/user/simulated.py
+#	speed/simulated.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -33,7 +33,7 @@ import sys
 import os
 import distutils.dir_util
 import subprocess
-test_program = 'example/user/simulated.py'
+test_program = 'speed/simulated.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -386,4 +386,4 @@ if max_error > 5e-2 :
 # -----------------------------------------------------------------------------
 print('simulated.py: OK')
 # -----------------------------------------------------------------------------
-
+# END PYTHON

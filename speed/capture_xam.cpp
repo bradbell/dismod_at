@@ -154,7 +154,7 @@ from Spatially Replicated Counts.
 $$
 
 $code
-$verbatim%example/devel/mixed_cppad/user/capture_xam.cpp
+$verbatim%speed/capture_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -363,7 +363,7 @@ public:
 };
 } // END_EMPTY_NAMESPACE
 
-bool capture_xam(void)
+int main(void)
 {	bool ok = true;
 	size_t n_fixed  = 3;
 	size_t random_seed = dismod_at::new_gsl_rng(0);
@@ -452,15 +452,18 @@ bool capture_xam(void)
 	using std::endl;
 	cout << "capture_xam: elapsed seconds = " << end_time - start_time << endl;
 	if( ok )
-		std::cout << "captrue_xam: OK" << endl;
+		std::cout << "capture_xam: OK" << endl;
 	else
-	{	cout << "captrue_xam: Error" << endl;
+	{	cout << "capture_xam: Error" << endl;
 		for(size_t j = 0; j < n_fixed; j++)
 			cout << theta_out[j] / theta_sim[j] - 1.0 << endl;
 		cout << "random_seed = " << random_seed << endl;
 	}
 	//
 	dismod_at::free_gsl_rng();
-	return ok;
+	#
+	if( ok )
+		return 0;
+	return 1;
 }
 // END C++

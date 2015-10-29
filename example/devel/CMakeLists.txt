@@ -59,7 +59,6 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	mixed_cppad/private/ranobj_hes_xam.cpp
 	mixed_cppad/user/mixed_constraint_xam.cpp
 	mixed_cppad/user/mixed_derived_xam.cpp
-	mixed_cppad/user/capture_xam.cpp
 	mixed_cppad/user/data_mismatch_xam.cpp
 	mixed_cppad/user/no_random_xam.cpp
 	mixed_cppad/user/optimize_fixed_xam.cpp

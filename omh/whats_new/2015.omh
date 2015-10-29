@@ -58,6 +58,19 @@ $cref user$$ examples (used for return value in
 $cref get_started_db.py$$).
 In addition, simply setting of the standard deviation multipliers
 to one (in the dismod_at $cref user$$ examples).
+$lnext
+Add a $cref/simulated data/user_simulated.py/$$ example
+that also serves as a dismod_at speed test (the size of the problem
+can be easily scaled up).
+$lnext
+The dismod_at and mixed_cppad speed tests were placed in the
+$code speed$$ directory.
+They are now run separately from the correctness tests with the command
+$codep
+	make speed
+$$
+See instructions for running the
+$cref/tests/install_unix/dismod_at/Test/$$.
 $lend
 
 $head 10-27$$
@@ -757,7 +770,7 @@ $code mulcov_dage$$  $pre  $$ $cnext $code mulcov_dage_prior_id$$  $rnext
 $code mulcov_dtime$$ $pre  $$ $cnext $code mulcov_dtime_prior_id$$
 $tend
 $lnext
-Update the $cref/wish list/dismod_at/Wish List/$$.
+Update the $cref wish_list$$
 $lend
 
 $head 06-26$$

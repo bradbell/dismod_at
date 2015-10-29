@@ -193,6 +193,7 @@ ADD_SUBDIRECTORY(example/table)
 ADD_SUBDIRECTORY(example/user)
 ADD_SUBDIRECTORY(test/devel)
 ADD_SUBDIRECTORY(test/user)
+ADD_SUBDIRECTORY(speed)
 # ----------------------------------------------------------------------------
 ADD_CUSTOM_TARGET(check DEPENDS
 	dismod_at
@@ -205,3 +206,8 @@ ADD_CUSTOM_TARGET(check DEPENDS
 	check_example_get_started
 	check_example_user
 )
+ADD_CUSTOM_TARGET(speed DEPENDS
+	speed_capture_xam
+	speed_simulated
+)
+# ----------------------------------------------------------------------------

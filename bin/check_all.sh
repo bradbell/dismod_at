@@ -15,6 +15,11 @@ then
 	exit 1
 fi
 # ---------------------------------------------------------------------------
+speed_test=''
+while [ "$speed_test" != 'y' ] && [ "$speed_test" != 'n' ]
+do
+	read -p 'Include speed tests [y/n] ?' speed_test
+done
 bin/check_devel_xam.sh
 bin/check_include.sh
 bin/check_verbatim.sh
@@ -26,6 +31,10 @@ bin/run_cmake.sh
 #
 cd build
 make check
+if [ "$speed_test" == 'y' ]
+then
+	make speed
+fi
 make install
 cd ..
 #

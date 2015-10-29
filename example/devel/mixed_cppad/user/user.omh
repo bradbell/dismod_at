@@ -19,7 +19,7 @@ $childtable%
 	example/devel/mixed_cppad/user/no_random_xam.cpp%
 	example/devel/mixed_cppad/user/data_mismatch_xam.cpp%
 	example/devel/mixed_cppad/user/mixed_constraint_xam.cpp%
-	example/devel/mixed_cppad/user/capture_xam.cpp
+	speed/capture_xam.cpp
 %$$
 
 $end
