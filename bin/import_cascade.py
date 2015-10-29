@@ -41,7 +41,7 @@ option_dict = collections.OrderedDict([
 	('cascade_path','    path to directory where cascade input files are'),
 	('ode_step_size','   step size of ODE solution in age and time'),
 	('mtall2mtother','   treat mtall data as if it were mtother [yes/no]'),
-	('rate_info','       are iota and rho zero or non-zero; see option_table'),
+	('rate_case','       are iota and rho zero or non-zero; see option_table'),
 	('child_value_std',' value standard deviation for random effects'),
 	('child_dtime_std',' dtime standard deviation for random effects'),
 	('time_grid','       the time grid as space seperated values')
@@ -107,14 +107,14 @@ if len( option_table_in['time_grid'].split() ) < 2 :
 	msg = 'in ' + option_csv + ' time_grid does not have two or more elements'
 	sys.exit(msg)
 #
-rate_info = option_table_in['rate_info']
+rate_info = option_table_in['rate_case']
 info_list = [
 	'iota_pos_rho_zero', 'iota_zero_rho_pos',
 	'iota_zero_rho_pos', 'iota_pos_rho_pos'
 ]
-if rate_info not in info_list :
+if rate_case not in info_list :
 	msg  = usage + '\n'
-	msg += 'in ' + option_csv + ' rate_info = ' + rate_info + '\n'
+	msg += 'in ' + option_csv + ' rate_case = ' + rate_case + '\n'
 	msg += 'is not one of the following:\n'
 	for i in range( len( info_list ) ) :
 		msg += info_list[i]
@@ -670,7 +670,7 @@ for time_id in range( n_time ) :
 # --------------------------------------------------------------------------
 # rate_smooth_id
 #
-rate_info              = option_table_in['rate_info']
+rate_info              = option_table_in['rate_case']
 rate_smooth_id         = dict()
 rate_smooth_id['pini'] = pini_smooth_id
 #
@@ -679,8 +679,8 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	drate = 'd' + rate
 	xi     = float( simple_prior_in['xi_' + rate]['mean'] )
 	#
-	rate_is_zero = rate_info.find( rate + '_zero') != -1
-	rate_is_pos  = rate_info.find( rate + '_pos') != -1
+	rate_is_zero = rate_case.find( rate + '_zero') != -1
+	rate_is_pos  = rate_case.find( rate + '_pos') != -1
 	#
 	# initialize some lists for this rate
 	local_list     = list()
@@ -875,7 +875,7 @@ row_list = [
 	[ 'ode_step_size',          option_table_in['ode_step_size'] ],
 	[ 'number_sample',          '10'                             ],
 	[ 'random_seed',            str(int( timer.time() ))         ],
-	[ 'rate_info',              option_table_in['rate_info']     ],
+	[ 'rate_case',              option_table_in['rate_case']     ],
 	[ 'quasi_fixed',            'true'                           ],
 	[ 'print_level_fixed',      '5'                              ],
 	[ 'print_level_random',     '5'                              ],

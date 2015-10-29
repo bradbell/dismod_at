@@ -49,7 +49,7 @@ bool get_option_table_xam(void)
 	"insert into option values(1, 'number_sample',   '1'            )",
 	"insert into option values(2, 'ode_step_size',   '20.0'         )",
 	"insert into option values(3, 'random_seed',     '0'            )",
-	"insert into option values(4, 'rate_info',       'iota_pos_rho_pos' )",
+	"insert into option values(4, 'rate_case',       'iota_pos_rho_pos' )",
 
 	"insert into option values(5, 'quasi_fixed',           'true'         )",
 	"insert into option values(6, 'derivative_test_fixed', 'first-order'  )",
@@ -84,7 +84,7 @@ bool get_option_table_xam(void)
 	ok  &= option_table[3].option_name    == "random_seed";
 	ok  &= option_table[3].option_value   == "0";
 	//
-	ok  &= option_table[4].option_name    == "rate_info";
+	ok  &= option_table[4].option_name    == "rate_case";
 	ok  &= option_table[4].option_value   == "iota_pos_rho_pos";
 	//
 	ok  &= option_table[5].option_name    == "quasi_fixed";

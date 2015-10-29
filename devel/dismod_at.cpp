@@ -1290,8 +1290,8 @@ int main(int n_arg, const char** argv)
 				pack_object              ,
 				child_data
 			);
-			string rate_info = option_map["rate_info"];
-			data_object.set_eigen_ode2_case_number(rate_info);
+			string rate_case = option_map["rate_case"];
+			data_object.set_eigen_ode2_case_number(rate_case);
 			data_object.replace_like( data_subset_obj );
 			//
 			// avgint_object
@@ -1312,7 +1312,7 @@ int main(int n_arg, const char** argv)
 				pack_object              ,
 				child_avgint
 			);
-			avgint_object.set_eigen_ode2_case_number(rate_info);
+			avgint_object.set_eigen_ode2_case_number(rate_case);
 			// ------------------------------------------------------------------
 			if( command_arg == "fit" )
 			{	fit_command(

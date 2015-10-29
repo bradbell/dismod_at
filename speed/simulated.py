@@ -254,7 +254,7 @@ def example_db (file_name) :
 	# ------------------------------------------------------------------------
 	# option_dict
 	option_dict = [
-		{ 'name':'rate_info',              'value':'iota_pos_rho_pos' },
+		{ 'name':'rate_case',              'value':'iota_pos_rho_pos' },
 		{ 'name':'parent_node_name',       'value':'world'        },
 		{ 'name':'number_sample',          'value':'1'            },
 		{ 'name':'ode_step_size',          'value':'10.0'         },

@@ -22,7 +22,7 @@ $section Check Lower and Upper Iota and Rho Limits$$
 
 $head syntax$$
 $codei%check_rate_limit(
-	%db%, %rate_info%, %rate_table%, %prior_table%, %smooth_grid%
+	%db%, %rate_case%, %rate_table%, %prior_table%, %smooth_grid%
 )%$$
 
 $head db$$
@@ -32,10 +32,10 @@ $codei%
 %$$
 and is the database connection for $cref/logging/log_message/$$ errors.
 
-$head rate_info$$
+$head rate_case$$
 This is the option table information about the limits for
 $icode iota$$ and $icode rho$$; see
-$cref/rate_info/option_table/rate_info/$$.
+$cref/rate_case/option_table/rate_case/$$.
 
 $head rate_table$$
 This argument has prototype
@@ -75,26 +75,26 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void check_rate_limit(
 	sqlite3*                                  db            ,
-	const std::string&                        rate_info     ,
+	const std::string&                        rate_case     ,
 	const CppAD::vector<rate_struct>&         rate_table    ,
 	const CppAD::vector<prior_struct>&        prior_table   ,
 	const CppAD::vector<smooth_grid_struct>&  smooth_grid   )
 {	assert( rate_table.size()   == number_rate_enum );
 	//
 	CppAD::vector<bool> rate_zero(number_rate_enum);
-	if( rate_info == "iota_zero_rho_zero" )
+	if( rate_case == "iota_zero_rho_zero" )
 	{	rate_zero[iota_enum] = true;
 		rate_zero[rho_enum]  = true;
 	}
-	else if( rate_info == "iota_pos_rho_zero" )
+	else if( rate_case == "iota_pos_rho_zero" )
 	{	rate_zero[iota_enum] = false;
 		rate_zero[rho_enum]  = true;
 	}
-	else if( rate_info == "iota_zero_rho_pos" )
+	else if( rate_case == "iota_zero_rho_pos" )
 	{	rate_zero[iota_enum] = true;
 		rate_zero[rho_enum]  = false;
 	}
-	else if( rate_info == "iota_pos_rho_pos" )
+	else if( rate_case == "iota_pos_rho_pos" )
 	{	rate_zero[iota_enum] = false;
 		rate_zero[rho_enum]  = false;
 	}
@@ -138,7 +138,7 @@ void check_rate_limit(
 			message += " iota\n";
 		else
 			message += " rho\n";
-		message += "rate_info = " + rate_info;
+		message += "rate_case = " + rate_case;
 		message += ", parent_smooth_id = " + to_string(error_smooth_id);
 		message += "\nsmooth_grid_id = " + to_string(error_grid_id);
 		message += ", value_prior_id = " + to_string(error_prior_id);

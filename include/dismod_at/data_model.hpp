@@ -89,7 +89,7 @@ public:
 	// destructor must delete the smooth2ode objects pointed to by si2ode_vec_
 	~data_model(void);
 	//
-	void set_eigen_ode2_case_number(const std::string& rate_info_arg);
+	void set_eigen_ode2_case_number(const std::string& rate_case_arg);
 	//
 	void replace_like(
 		const CppAD::vector<data_subset_struct>& data_subset_obj

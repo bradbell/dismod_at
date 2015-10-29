@@ -515,7 +515,7 @@ $$
 $section Sets the Method Used to Solve the Dismod_at ODE$$
 
 $head Syntax$$
-$icode%data_object%.set_eigen_ode2_case_number(%rate_info%)%$$
+$icode%data_object%.set_eigen_ode2_case_number(%rate_case%)%$$
 
 $head data_object$$
 This object has prototype
@@ -524,26 +524,26 @@ $codei%
 %$$
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
-$head rate_info$$
+$head rate_case$$
 Is the $cref/option_value/option_table/option_value/$$
-corresponding to $icode%option_name% = rate_info%$$ in the option table.
+corresponding to $icode%option_name% = rate_case%$$ in the option table.
 $end
 */
-void data_model::set_eigen_ode2_case_number(const std::string& rate_info)
+void data_model::set_eigen_ode2_case_number(const std::string& rate_case)
 {
-	if( rate_info == "iota_zero_rho_zero" )
+	if( rate_case == "iota_zero_rho_zero" )
 	{	eigen_ode2_case_number_ = 1;
 		return;
 	}
-	if( rate_info == "iota_pos_rho_zero" )
+	if( rate_case == "iota_pos_rho_zero" )
 	{	eigen_ode2_case_number_ = 2;
 		return;
 	}
-	if( rate_info == "iota_zero_rho_pos" )
+	if( rate_case == "iota_zero_rho_pos" )
 	{	eigen_ode2_case_number_ = 3;
 		return;
 	}
-	if( rate_info == "iota_pos_rho_pos" )
+	if( rate_case == "iota_pos_rho_pos" )
 	{	eigen_ode2_case_number_ = 4;
 		return;
 	}

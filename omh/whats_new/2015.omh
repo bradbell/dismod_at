@@ -46,6 +46,15 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 10-29$$
+The change on $cref/10-27/whats_new_2015/10-27/$$ whereby
+$code rate_info$$ was reverted because it used three times
+as much memory and time.
+The name was however changed from $code rate_info$$ to
+$cref/rate_case/option_table/rate_case/$$ to avoid confusion with
+$cref pack_info_rate_info$$.
+
+
 $head 10-28$$
 $list number$$
 Advance to a newer version of CppAD. The requires that you re-run
