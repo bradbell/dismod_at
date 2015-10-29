@@ -279,7 +279,8 @@ namespace {
 		const CppAD::vector<Float>&  b           ,
 		const CppAD::vector<Float>&  yi          ,
 		const Float&                 tf          )
-	{	CppAD::vector<Float> yf(2);
+	{	using CppAD::exp;
+		CppAD::vector<Float> yf(2);
 
 		yf[0] = yi[0] * exp( b[0] * tf );
 		yf[1] = yi[1] * exp( b[3] * tf );
@@ -292,28 +293,46 @@ namespace {
 		const CppAD::vector<Float>&  b           ,
 		const CppAD::vector<Float>&  yi          ,
 		const Float&                 tf          )
-	{	CppAD::vector<Float> yf(2);
+	{	using CppAD::exp;
+		CppAD::vector<Float> yf(2);
+		double eps    = std::numeric_limits<double>::epsilon();
+		Float  small  = Float( std::sqrt(eps) );
+		Float diff_03 = b[0] - b[3];
+		//
 		// y_0 ( tf )
 		yf[0] = yi[0] * exp( b[0] * tf );
-		// y_1 ( tf )
-		Float term = (exp( (b[0] - b[3]) * tf ) - 1.0 ) / (b[0] - b[3] );
 		//
+		// exp[ (b0 - b3) * tf ] / (b0 - b3);
+		Float term   = expm1( diff_03 * tf ) / diff_03;
+		Float approx = tf  + diff_03 * tf * tf / Float(2.0);
+		term = CppAD::CondExpLt(abs(diff_03), small, approx, term);
+		//
+		// y_1 ( tf )
 		yf[1] = exp( b[3] * tf ) * ( yi[1] + b[2] * yi[0] * term );
 		//
 		return yf;
 	}
-	// solution corresponding to b_1 != 0 , b_2 == 0
+	// solution corresponding to b1 != 0 , b2 == 0
 	template <class Float>
 	CppAD::vector<Float> b2_zero(
 		const CppAD::vector<Float>&  b           ,
 		const CppAD::vector<Float>&  yi          ,
 		const Float&                 tf          )
-	{	CppAD::vector<Float> yf(2);
+	{	using CppAD::exp;
+		CppAD::vector<Float> yf(2);
+		double eps    = std::numeric_limits<double>::epsilon();
+		Float  small  = Float( std::sqrt(eps) );
+		Float diff_30 = b[3] - b[0];
+		//
 		// y_1 ( tf )
 		yf[1] = yi[1] * exp( b[3] * tf );
-		// y_0 ( tf )
-		Float term = (exp( (b[3] - b[0]) * tf ) - 1.0 ) / (b[3] - b[0] );
 		//
+		// exp[ (b3 - b0) * tf ] / (b3 - b0);
+		Float term   = expm1( diff_30 * tf ) / diff_30;
+		Float approx = tf  + diff_30 * tf * tf / Float(2.0);
+		term = CppAD::CondExpLt(abs(diff_30), small, approx, term);
+		//
+		// y_0 ( tf )
 		yf[0] = exp( b[0] * tf ) * ( yi[0] + b[1] * yi[1] * term );
 		//
 		return yf;
@@ -324,7 +343,8 @@ namespace {
 		const CppAD::vector<Float>&  b           ,
 		const CppAD::vector<Float>&  yi          ,
 		const Float&                 tf          )
-	{	CppAD::vector<Float> yf(2);
+	{	using CppAD::exp;
+		CppAD::vector<Float> yf(2);
 		// discriminant in the quadratic equation for eigen-values
 		Float disc = (b[0] - b[3])*(b[0] - b[3]) + 4.0*b[1]*b[2];
 		Float root_disc = Float(sqrt( disc ));

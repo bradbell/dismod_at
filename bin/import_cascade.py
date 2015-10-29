@@ -107,18 +107,18 @@ if len( option_table_in['time_grid'].split() ) < 2 :
 	msg = 'in ' + option_csv + ' time_grid does not have two or more elements'
 	sys.exit(msg)
 #
-rate_info = option_table_in['rate_case']
-info_list = [
+rate_case = option_table_in['rate_case']
+case_list = [
 	'iota_pos_rho_zero', 'iota_zero_rho_pos',
 	'iota_zero_rho_pos', 'iota_pos_rho_pos'
 ]
-if rate_case not in info_list :
+if rate_case not in case_list :
 	msg  = usage + '\n'
 	msg += 'in ' + option_csv + ' rate_case = ' + rate_case + '\n'
 	msg += 'is not one of the following:\n'
-	for i in range( len( info_list ) ) :
-		msg += info_list[i]
-		if i + 1 < len( info_list ) :
+	for i in range( len( case_list ) ) :
+		msg += case_list[i]
+		if i + 1 < len( case_list ) :
 			msg += ', '
 	sys.exit(msg)
 # ----------------------------------------------------------------------------
@@ -670,11 +670,12 @@ for time_id in range( n_time ) :
 # --------------------------------------------------------------------------
 # rate_smooth_id
 #
-rate_info              = option_table_in['rate_case']
+rate_case              = option_table_in['rate_case']
 rate_smooth_id         = dict()
 rate_smooth_id['pini'] = pini_smooth_id
 #
 delta_age          = (age_list[-1] - age_list[0]) / (len(age_list) - 1)
+warn_rate_bounds   = set()
 for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	drate = 'd' + rate
 	xi     = float( simple_prior_in['xi_' + rate]['mean'] )
@@ -708,19 +709,20 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 			prior_in['lower'] = '0'
 			prior_in['upper'] = '0'
 			prior_in['mean']  = '0'
-			piror_in['std']   = 'inf'
+			prior_in['std']   = 'inf'
 		if rate_is_pos :
 			eta   = float( value_table_in['kappa_' + rate] )
 			lower = eta / 100.
 			prior_in['lower'] = str( lower )
-			if float( prior_in['mean'] ) < lower :
-				prior_in['mean'] = prior_in['lower']
 			if float( prior_in['upper'] ) < lower :
-				msg  = rate + ' is positive, but its upper limit = '
-				msg += prior_in['upper']
-				msg += '\nwhich is less than its eta / 100 = '
-				msg += prior_in['lower']
-				sys.exit(msg)
+				prior_in['mean']  = prior_in['lower']
+				prior_in['upper'] = prior_in['lower']
+				if rate not in warn_rate_bounds :
+					msg = 'option.csv: rate_case = ' + rate_case + '\n'
+					msg += 'some bounds for ' + rate + ' were changed '
+					msg += 'so that it is positive.'
+					print(msg)
+					warn_rate_bounds.add(rate)
 		#
 		prior_at = gaussian_cascade2at(name, prior_in)
 		(name, lower, upper, mean, std, density_id, eta) = prior_at

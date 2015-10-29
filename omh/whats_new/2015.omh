@@ -53,6 +53,8 @@ as much memory and time.
 The name was however changed from $code rate_info$$ to
 $cref/rate_case/option_table/rate_case/$$ to avoid confusion with
 $cref pack_info_rate_info$$.
+In addition, the correction of the bug in $cref eigen_ode2$$
+was retained.
 
 
 $head 10-28$$
