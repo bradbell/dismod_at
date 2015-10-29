@@ -636,7 +636,7 @@ for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
 		upper,
 		mean,
 		std,
-		density_name2id['log_gaussian'],
+		density_name2id['gaussian'],
 		eta
 	])
 # --------------------------------------------------------------------------

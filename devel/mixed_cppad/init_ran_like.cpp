@@ -95,7 +95,9 @@ namespace {
 		float_record.Dependent(ad_arg, ad_vec);
 
 		// optimize the recording
+# ifdef NDEBUG
 		float_record.optimize();
+# endif
 	}
 }
 

@@ -177,7 +177,9 @@ void mixed_cppad::init_constraint(const d_vector& fixed_vec  )
 	constraint_fun_.Dependent(a1_theta, a1_vec);
 
 	// optimize the recording
+# ifdef NDEBUG
 	constraint_fun_.optimize();
+# endif
 
 	// ------------------------------------------------------------------------
 	// constraint_jac_row_, constraint_jac_col_, constraint_jac_work_

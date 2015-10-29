@@ -134,6 +134,23 @@ $end
 # include <dismod_at/residual_density.hpp>
 # include <dismod_at/a2_double.hpp>
 
+namespace {
+	template <class Float>
+	void print_forward_if_not_positive(
+		const char* name    ,
+		const Float& value  )
+	{	std::string lable = "residual_density: ";
+		lable += name;
+		lable += " = ";
+		CppAD::PrintFor(value, lable.c_str(), value, "\n");
+	}
+	void print_forward_if_not_positive(
+		const char* name    ,
+		const double& value )
+	{ }
+}
+
+
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 template <class Float>
@@ -144,6 +161,7 @@ residual_struct<Float> residual_density(
 	const Float&       delta   ,
 	const Float&       eta     )
 {	Float nan(std::numeric_limits<double>::quiet_NaN());
+	Float tiny( 10.0 / std::numeric_limits<double>::max() );
 
 	Float wres = nan;
 	Float sigma = nan;
@@ -155,6 +173,7 @@ residual_struct<Float> residual_density(
 
 		case gaussian_enum:
 		case laplace_enum:
+		print_forward_if_not_positive("delta", delta);
 		assert( delta > 0.0 );
 		sigma = delta;
 		wres  = ( z - mu) / sigma;
@@ -162,6 +181,9 @@ residual_struct<Float> residual_density(
 
 		case log_gaussian_enum:
 		case log_laplace_enum:
+		print_forward_if_not_positive("delta", delta);
+		print_forward_if_not_positive("z", z + tiny);
+		print_forward_if_not_positive("mu", mu + tiny);
 		assert( delta > 0.0 );
 		sigma = log( 1.0 + delta / (mu + eta) );
 		wres  = ( log( z + eta ) - log( mu + eta ) ) / sigma;

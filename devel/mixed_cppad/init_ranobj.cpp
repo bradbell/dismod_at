@@ -147,7 +147,9 @@ void mixed_cppad::init_ranobj(
 	H[0] = logdet_step[0] / 2.0 + f[0] - constant_term;
 	//
 	ranobj_fun_.Dependent(beta_theta_u, H);
+# ifdef NDEBUG
 	ranobj_fun_.optimize();
+# endif
 	//
 	init_ranobj_done_ = true;
 	return;

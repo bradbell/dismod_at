@@ -59,6 +59,13 @@ was retained.
 $lnext
 It is now an error if the value $code nan$$ appears in the database;
 see $cref/real cannot be nan/input/Real Can be Null, not Nan/$$.
+$lnext
+Add tracing, during CppAD's forward mode, of values in the
+$cref residual_density$$ function that should not be negative.
+This gives feedback as to the cause of CppAD's message that
+a forward mode result is $code nan$$.
+$lnext
+Add a $cref wish_list$$ item.
 $lend
 
 
