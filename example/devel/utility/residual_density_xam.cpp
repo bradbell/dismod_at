@@ -64,7 +64,7 @@ bool residual_density_xam(void)
 	density     = dismod_at::log_gaussian_enum;
 	eta         = 0.5;
 	residual    = residual_density(z, y, mu, delta, eta, density);
-	sigma       = log(y + eta + delta) - log(y + eta);
+	sigma       = log(z + eta + delta) - log(z + eta);
 	wres        = ( log(z + eta) - log(y + eta) - mu ) / sigma;
 	logden      = - log(sigma * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 	ok         &= fabs(1.0 - residual.wres / wres) <= eps;
@@ -76,7 +76,7 @@ bool residual_density_xam(void)
 	density     = dismod_at::log_laplace_enum;
 	eta         = 3.0;
 	residual    = residual_density(z, y, mu, delta, eta, density);
-	sigma       = log(y + eta + delta) - log(y + eta);
+	sigma       = log(z + eta + delta) - log(z + eta);
 	wres        = ( log(z + eta) - log(y + eta) - mu) / sigma;
 	logden      = - log(sigma * sqrt(2.0) ) - sqrt(2.0) * fabs( wres );
 	ok         &= fabs(1.0 - residual.wres / wres) <= eps;

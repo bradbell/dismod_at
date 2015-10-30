@@ -186,7 +186,7 @@ residual_struct<Float> residual_density(
 		print_forward_if_not_positive("z", z + tiny);
 		print_forward_if_not_positive("mu", mu + tiny);
 		assert( delta > 0.0 );
-		sigma = log( 1.0 + delta / (y + eta) );
+		sigma = log( 1.0 + delta / (z + eta) );
 		wres  = ( log( z + eta ) - log( y + eta ) - mu ) / sigma;
 		break;
 

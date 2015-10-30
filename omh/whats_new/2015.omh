@@ -42,9 +42,38 @@ $spell
 	ipopt
 	optimizer
 	lapprox
+	valgrind
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 10-30$$
+$list number$$
+The notation for the
+$cref/weighted residual/statistic/Weighted Residual Function, R/$$
+and
+$cref/log-density/statistic/Log-Density Function, D/$$
+was greatly simplified by adding the
+$cref/density/density_table/$$ as an argument.
+$lnext
+The $cref/simulated.py/user_simulated.py/$$
+speed test was changed to use the log-Gaussian instead
+of Gaussian density for the measured values.
+$lnext
+A large reduction in memory, and an increase in speed,
+was accomplished by making the
+$cref/log-standard deviation function
+	/statistic
+	/Log-Standard Deviation Function, sigma
+/$$
+depend the data and not on the $cref/model_variables/model_variable/$$.
+To be specific, $code valgrind --tool=massif$$ reported the following
+reduction for the maximum memory required by $code simulated.py$$:
+$icode%old% = 21.73 MB%$$, $icode%new% = 478.8 KB%$$.
+In addition, Ipopt reported the following
+total CPU secs in NLP function evaluations:
+$icode%old% = 12.98%$$, $icode%new% = 8.724%$$.
+$lend
 
 $head 10-29$$
 $list number$$

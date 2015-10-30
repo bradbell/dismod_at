@@ -263,7 +263,7 @@ bool like_one_xam(void)
 		// check wres
 		Float check;
 		if( log_density )
-			check = (log(y+eta) - log(avg+eta)) / log(1.0 + delta/(avg+eta));
+			check = (log(y+eta) - log(avg+eta)) / log(1.0 + delta/(y+eta));
 		else
 			check = (y - avg) / delta;
 		ok  &= fabs( 1.0 - wres / check ) <= eps;
@@ -290,12 +290,12 @@ bool like_one_xam(void)
 			break;
 
 			case dismod_at::log_gaussian_enum:
-			delta = log(1.0 + delta / (Value(avg) + eta) );
+			delta = log(1.0 + delta / (y + eta) );
 			check = - log( delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 			break;
 
 			case dismod_at::log_laplace_enum:
-			delta = log(1.0 + delta / (Value(avg) + eta) );
+			delta = log(1.0 + delta / (y + eta) );
 			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * fabs(wres);
 			break;
 
