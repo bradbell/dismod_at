@@ -25,14 +25,15 @@ bool residual_density_xam(void)
 	dismod_at::residual_struct<double> residual;
 	double wres, logden, sigma, tmp;
 
-	double z     = 1.5;
+	double z     = 3.0;
+	double y     = 2.5;
 	double mu    = 2.0;
-	double delta = 2.5;
+	double delta = 1.5;
 	double eta   = nan;
 
 	// uniform
 	density     = dismod_at::uniform_enum;
-	residual    = residual_density(z, mu, delta, eta, density);
+	residual    = residual_density(z, y, mu, delta, eta, density);
 	ok         &= residual.wres           == 0.0;
 	ok         &= residual.logden_smooth  == 0.0;
 	ok         &= residual.logden_sub_abs == 0.0;
@@ -40,8 +41,8 @@ bool residual_density_xam(void)
 
 	// gaussian
 	density     = dismod_at::gaussian_enum;
-	residual    = residual_density(z, mu, delta, eta, density);
-	wres        = (z - mu) / delta;
+	residual    = residual_density(z, y, mu, delta, eta, density);
+	wres        = (z - y - mu) / delta;
 	logden      = - log(delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 	ok         &= fabs(1.0 - residual.wres / wres) <= eps;
 	ok         &= fabs(1.0 - residual.logden_smooth / logden) <= eps;
@@ -50,8 +51,8 @@ bool residual_density_xam(void)
 
 	// laplace
 	density     = dismod_at::laplace_enum;
-	residual    = residual_density(z, mu, delta, eta, density);
-	wres        = (z - mu) / delta;
+	residual    = residual_density(z, y, mu, delta, eta, density);
+	wres        = (z - y - mu) / delta;
 	logden      = - log(delta * sqrt(2.0) ) - sqrt(2.0) * fabs( wres );
 	ok         &= fabs(1.0 - residual.wres / wres) <= eps;
 	tmp         = residual.logden_smooth;
@@ -61,10 +62,10 @@ bool residual_density_xam(void)
 
 	// log-gaussian
 	density     = dismod_at::log_gaussian_enum;
-	eta         = 3.0;
-	residual    = residual_density(z, mu, delta, eta, density);
-	sigma       = log(mu + eta + delta) - log(mu + eta);
-	wres        = ( log(z + eta) - log(mu + eta) ) / sigma;
+	eta         = 0.5;
+	residual    = residual_density(z, y, mu, delta, eta, density);
+	sigma       = log(y + eta + delta) - log(y + eta);
+	wres        = ( log(z + eta) - log(y + eta) - mu ) / sigma;
 	logden      = - log(sigma * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 	ok         &= fabs(1.0 - residual.wres / wres) <= eps;
 	ok         &= fabs(1.0 - residual.logden_smooth / logden) <= eps;
@@ -74,9 +75,9 @@ bool residual_density_xam(void)
 	// log-laplace
 	density     = dismod_at::log_laplace_enum;
 	eta         = 3.0;
-	residual    = residual_density(z, mu, delta, eta, density);
-	sigma       = log(mu + eta + delta) - log(mu + eta);
-	wres        = ( log(z + eta) - log(mu + eta) ) / sigma;
+	residual    = residual_density(z, y, mu, delta, eta, density);
+	sigma       = log(y + eta + delta) - log(y + eta);
+	wres        = ( log(z + eta) - log(y + eta) - mu) / sigma;
 	logden      = - log(sigma * sqrt(2.0) ) - sqrt(2.0) * fabs( wres );
 	ok         &= fabs(1.0 - residual.wres / wres) <= eps;
 	tmp         = residual.logden_smooth;

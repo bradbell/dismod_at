@@ -173,109 +173,35 @@ $icode data_id$$.
 
 
 $head Weighted Residual and Likelihood$$
-The weighted residual and likelihood,
-given the random effects $latex u$$ and the fixed effects $latex \theta$$,
-depend on the
-$cref/density_name/density_table/density_name/$$
-corresponding to $latex d_i$$.
-
-$subhead gaussian$$
-If $latex d_i$$ corresponds to $code gaussian$$,
+Given the random effects $latex u$$ and the fixed effects $latex \theta$$,
 the weighted residual is
 $latex \[
-R [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
-\] $$
-and the likelihood is
-$latex \[
-\B{p} ( y_i | u , \theta )
-=
-\exp \left(
-G [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
-\right)
-\] $$
-See the model density definitions of
-$cref/R/wres_density/Gaussian/Weighted Residual, R/$$
-and
-$cref/G/wres_density/Gaussian/Log-Density, G/$$.
-
-$subhead laplace$$
-If $latex d_i$$ corresponds to $code laplace$$,
-the weighted residual is
-$latex \[
-R [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
-\] $$
-and the likelihood is
-$latex \[
-\B{p} ( y_i | u , \theta )
-=
-\exp \left(
-L [ v_i ( \theta) \W{,} A_i ( u, \theta ) \W{,} \delta_i ( \theta ) ]
-\right)
-\] $$
-See the model density definitions of
-$cref/R/wres_density/Laplace/Weighted Residual, R/$$
-and
-$cref/L/wres_density/Laplace/Log-Density, L/$$.
-
-
-$subhead log_gaussian$$
-If $latex d_i$$ corresponds to $code log_gaussian$$,
-the weighted residual is
-$latex \[
-R_L [
+R [
 	v_i ( \theta)        \W{,}
 	A_i ( u, \theta )    \W{,}
+	0.0                  \W{,}
 	\delta_i ( \theta )  \W{,}
-	\eta_i
+	\eta_i               \W{,}
+	d_i
 ]
 \] $$
-and the likelihood is
+see the weight residual function
+$cref/R/statistic/Weighted Residual Function, R/$$.
+The likelihood is
 $latex \[
-\B{p} ( y_i | u , \theta )
+\B{p}( y_i | u , \theta )
 =
-\exp \left(
-G_L [
+\exp \left( D [
 	v_i ( \theta)        \W{,}
 	A_i ( u, \theta )    \W{,}
+	0.0                  \W{,}
 	\delta_i ( \theta )  \W{,}
-	\eta_i
-]
-\right)
+	\eta_i               \W{,}
+	d_i
+] \right)
 \] $$
-See the model density definitions of
-$cref/R_L/wres_density/Log-Gaussian/Weighted Residual, R_L/$$
-and
-$cref/G_L/wres_density/Log-Gaussian/Log-Density, G_L/$$.
-
-$subhead log_laplace$$
-If $latex d_i$$ corresponds to $code log_laplace$$,
-the weighted residual is
-$latex \[
-R_L [
-	v_i ( \theta)        \W{,}
-	A_i ( u, \theta )    \W{,}
-	\delta_i ( \theta )  \W{,}
-	\eta_i
-]
-\] $$
-and the likelihood is
-$latex \[
-\B{p} ( y_i | u , \theta )
-=
-\exp \left(
-L_L [
-	v_i ( \theta)        \W{,}
-	A_i ( u, \theta )    \W{,}
-	\delta_i ( \theta )  \W{,}
-	\eta_i
-]
-\right)
-\] $$
-See the model density definitions of
-$cref/R_L/wres_density/Log-Laplace/Weighted Residual, R_L/$$
-and
-$cref/L_L/wres_density/Log-Laplace/Log-Density, L_L/$$.
-
+see the log-density function
+$cref/D/statistic/Log-Density Function, D/$$.
 
 
 $end

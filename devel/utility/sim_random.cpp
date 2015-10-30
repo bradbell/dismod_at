@@ -34,13 +34,13 @@ $table
 $code uniform_enum$$ $pre $$ $cnext
 	not allowed $rnext
 $code gaussian_enum$$ $pre  $$ $cnext
-	$cref/Gaussian/wres_density/Gaussian/$$ $rnext
+	$cref/Gaussian/statistic/Log-Density Function, D/Gaussian/$$ $rnext
 $code laplace_enum$$ $pre  $$ $cnext
-	$cref/Laplace/wres_density/Laplace/$$ $rnext
+	$cref/Laplace/statistic/Log-Density Function, D/Laplace/$$ $rnext
 $code log_gaussian_enum$$ $pre  $$ $cnext
-	$cref/Log-Gaussian/wres_density/Log-Gaussian/$$ $rnext
+	$cref/Log-Gaussian/statistic/Log-Density Function, D/Log-Gaussian/$$ $rnext
 $code log_laplace_enum$$ $pre  $$ $cnext
-	$cref/Log-Laplace/wres_density/Log-Laplace/$$ $rnext
+	$cref/Log-Laplace/statistic/Log-Density Function, D/Log-Laplace/$$ $rnext
 $tend
 
 $head mu$$

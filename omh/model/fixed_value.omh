@@ -54,68 +54,26 @@ $head eta_j$$
 We use $latex \eta_j$$ to denote the log transformation offset
 $cref/eta/prior_table/eta/$$ corresponding to $icode prior_id$$.
 
-$head V_j^theta$$
-We use $icode density_id$$ to denote the
+$head d_j$$
+We use $latex d_j$$ to denote the
 $cref/density_id/prior_table/density_id/$$ corresponding to $icode prior_id$$.
-The definition of the value density function for $latex \theta_j$$
-is defined below under the corresponding
-$cref/density_name/density_table/density_name/$$.
 
-$subhead uniform$$
-If $icode density$$ is $code uniform$$,
-the value density function is
-$latex \[
-V_j^\theta ( \theta ) = 1
-\] $$
-
-$subhead gaussian$$
-If $icode density$$ is $code gaussian$$,
-see $cref/G/wres_density/Gaussian/Log-Density, G/$$,
-the value density function is
+$head V_j$$
+The value density for the $th j$$ component of $latex \theta$$ is
 $latex \[
 V_j^\theta ( \theta )
 =
-\exp \left[
-	 G \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \right)
-\right]
+\exp \left[ D \left(
+	\theta_j \W{,}
+	\mu_j \W{,}
+	0.0 \W{,}
+	\lambda_j \delta_j \W{,}
+	\eta_j \W{,}
+	d_j
+\right) \right]
 \] $$
-
-
-$subhead laplace$$
-If $icode density$$ is $code laplace$$,
-see $cref/L/wres_density/Laplace/Log-Density, L/$$,
-the value density function is
-$latex \[
-V_j^\theta ( \theta )
-=
-\exp \left[
-	 L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \right)
-\right]
-\] $$
-
-$subhead log_gaussian$$
-If $icode density$$ is $code log_gaussian$$,
-see $cref/G_L/wres_density/Log-Gaussian/Log-Density, G_L/$$,
-the value density function is
-$latex \[
-V_j^\theta ( \theta )
-=
-\exp \left[
- G_L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} \eta_j \right)
-\right]
-\] $$
-
-$subhead log_laplace$$
-If $icode density$$ is $code log_laplace$$,
-see $cref/L_L/wres_density/Log-Laplace/Log-Density, L_L/$$,
-the value density function is
-$latex \[
-V_j^\theta ( \theta )
-=
-\exp \left[
-L_L \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} \eta_j \right)
-\right]
-\] $$
+where $latex D$$ is the
+$cref/log-density function/statistic/Log-Density Function, D/$$.
 
 $head V^theta$$
 Let $latex n$$ be the number of fixed effects.

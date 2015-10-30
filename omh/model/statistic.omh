@@ -1,0 +1,141 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-15 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin statistic$$
+
+$section Some Statistical Function Definitions$$
+
+$head Log-Standard Deviation Function, sigma$$
+We define the log-standard deviation function by
+$latex \[
+\sigma( y, \delta , \eta )
+=
+\log ( y + \eta + \delta ) - \log ( y + \eta )
+\] $$
+
+$head Weighted Residual Function, R$$
+The weighted residual function
+$latex \[
+	R(z, y, \mu, \delta, \eta , d)
+\] $$
+is defined separately below for each possible value
+of the density $latex d$$:
+
+$subhead Uniform$$
+If the $cref/density/density_table/$$ $latex d$$ is $code uniform$$,
+the weighted residual function is
+$latex \[
+	R(z, y, \mu, \delta, \eta , d) = 0
+\] $$
+
+$subhead Gaussian$$
+If the $cref/density/density_table/$$ $latex d$$ is $code gaussian$$,
+the weighted residual function is
+$latex \[
+	R(z, y, \mu, \delta, \eta , d) = \frac{z - y - \mu}{\delta}
+\] $$
+
+$subhead Laplace$$
+If the $cref/density/density_table/$$ $latex d$$ is $code laplace$$,
+the weighted residual function is
+$latex \[
+	R(z, y, \mu, \delta, \eta , d) = \frac{z - y - \mu}{\delta}
+\] $$
+
+$subhead Log-Gaussian$$
+If the $cref/density/density_table/$$ $latex d$$ is $code log_gaussian$$,
+the weighted residual function is
+$latex \[
+R(z, y, \mu, \delta, \eta , d)
+=
+\frac{
+	\log( z + \eta ) - \log( y + \eta ) - \mu
+}{
+	\sigma( y , \delta , \eta )
+}
+\] $$
+
+$subhead Log-Laplace$$
+If the $cref/density/density_table/$$ $latex d$$ is $code log_laplace$$,
+the weighted residual function is
+$latex \[
+R(z, y, \mu, \delta, \eta , d)
+=
+\frac{
+	\log( z + \eta ) - \log( y + \eta ) - \mu
+}{
+	\sigma( y , \delta , \eta )
+}
+\] $$
+
+$head Log-Density Function, D$$
+The log-density function
+$latex \[
+	D(z, y, \mu, \delta, \eta , d)
+\] $$
+is defined separately below for each possible value
+of the density $latex d$$:
+
+$subhead Uniform$$
+If the $cref/density/density_table/$$ $latex d$$ is $code uniform$$,
+the log-density function is
+$latex \[
+	D(z, y, \mu, \delta, \eta , d) = 0
+\] $$
+
+$subhead Gaussian$$
+If the $cref/density/density_table/$$ $latex d$$ is $code gaussian$$,
+the log-density function is
+$latex \[
+D(z, y, \mu, \delta, \eta , d)
+=
+- \log \left( \delta \sqrt{2 \pi} \right)
+- \frac{1}{2} R(z, y, \mu, \delta , \eta, d )^2
+\] $$
+see $cref/Weighted Residual Function, R
+	/statistic
+	/Weighted Residual Function, R
+/$$.
+
+$subhead Laplace$$
+If the $cref/density/density_table/$$ $latex d$$ is $code laplace$$,
+the log-density function is
+$latex \[
+D(z, y, \mu, \delta, \eta , d)
+=
+- \log \left( \delta \sqrt{2} \right)
+- \sqrt{2} \left| R(z, y, \mu, \delta , \eta , d) \right|
+\] $$
+
+$subhead Log-Gaussian$$
+If the $cref/density/density_table/$$ $latex d$$ is $code log_gaussian$$,
+the log-density function is
+$latex \[
+D(z, y, \mu, \delta, \eta , d)
+=
+- \log \left[ \sigma( y , \delta , \eta ) \sqrt{2 \pi} \right]
+- \frac{1}{2} R(z, y, \mu, \delta, \eta, d)^2
+\] $$
+see $cref/log-standard deviation function
+	/statistic
+	/Log-Standard Deviation Function, sigma
+/$$.
+
+$subhead Log-Laplace$$
+If the $cref/density/density_table/$$ $latex d$$ is $code log_laplace$$,
+the log-density function is
+$latex \[
+D(z, y, \mu, \delta, \eta , d)
+=
+- \log \left[ \sigma( y , \delta , \eta ) \sqrt{2} \right]
+- \left| R(z, y, \mu, \delta, \eta, d) \right|
+\] $$
+
+$end

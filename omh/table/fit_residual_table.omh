@@ -43,7 +43,11 @@ $cref/fit_var_value/fit_var_table/fit_var_value/$$.
 
 $head weighted_residual$$
 The column has type $code real$$ and contains the
-$cref/weighted_residuals/wres_density/$$ that correspond to the
+$cref/weighted_residuals
+	/statistic
+	/Weighted Residual Function, R
+/$$
+that correspond to the
 $cref/model variables/model_variable/$$ obtained by the fit; see
 $cref/fit_var_value/fit_var_table/fit_var_value/$$.
 

@@ -11,22 +11,20 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin residual_density$$
 $spell
+	mu
+	enum
+	const
 	struct
-	fabs
 	wres
 	logden
-	enum
-	CppAD
-	std
-	mu
-	const
+	fabs
 $$
 
-$section Compute the Weighted Residual and Log-Density$$
+$section Compute Weighted Residual and Log-Density$$
 
 $head Syntax$$
-$icode%residual% = residual_density(
-	%z%, %mu%, %delta%, %eta%, %d%
+$icode%R% = residual_density(
+	%z%, %y%, %mu%, %delta%, %eta%, %d%
 )%$$
 
 $head d$$
@@ -34,12 +32,7 @@ This argument has prototype
 $codei%
 	density_enum %d%
 %$$
-It specifies one for the following density value
-$code uniform_enum$$,
-$cref/gaussian_enum/wres_density/Gaussian/$$,
-$cref/laplace_enum/wres_density/Laplace/$$,
-$cref/log_gaussian_enum/wres_density/Log-Gaussian/$$,
-$cref/log_laplace_enum/wres_density/Log-Laplace/$$.
+It specifies the $cref/density/get_density_table/density_enum/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -50,17 +43,23 @@ This argument has prototype
 $codei%
 	const %Float%& z
 %$$
-It specifies the random variable value.
+It specifies the first random variable value.
+
+$head y$$
+This argument has prototype
+$codei%
+	const %Float%& y
+%$$
+In the case of differences, it is the second random variable.
+In the case of values, it is the mean of the first random variable.
 
 $head mu$$
 This argument has prototype
 $codei%
 	const %Float%& mu
 %$$
-For the Gaussian, and Laplace cases,
-it specifies the mean of the distribution.
-For the Log-Gaussian and Log-Laplace cases,
-it specifies the transformed mean.
+In the case of differences, it is the central value for the difference.
+In the case of values, it is zero.
 
 $head delta$$
 This argument has prototype
@@ -68,9 +67,8 @@ $codei%
 	const %Float%& delta
 %$$
 For Gaussian, and Laplace cases,
-it specifies the standard deviation of the distribution.
-For the Log-Gaussian and Log-Laplace cases,
-it specifies the transformed standard deviation.
+it specifies the standard deviation for the value or difference
+in the same space as the value or difference.
 
 $head eta$$
 Is the offset in the Log-Gaussian and Log-Laplace $icode density$$ cases
@@ -81,6 +79,14 @@ The return value has prototype
 $codei%
 	residual_struct<%Float%> %residual%
 %$$
+This is the value of the weight residual function
+$latex \[
+	R(z, y, \mu, \delta, \eta, d)
+\]$$
+see $cref/weighted residual function
+	/statistic
+	/Weighted Residual Function, R
+/$$.
 
 $head residual_struct$$
 This structure has the following fields:
@@ -88,11 +94,12 @@ $table
 Type $cnext Field $cnext Description $rnext
 $icode Float$$ $cnext
 	$code wres$$ $cnext
-	$cref/weighted residual/wres_density/$$
+	$cref/weighted residual/statistic/Weighted Residual Function, R/$$
 $rnext
 $icode Float$$ $cnext
 	$code logden_smooth$$ $cnext
-	this smooth term is in $cref/log-density/wres_density/$$
+	this smooth term is in
+	$cref/log-density/statistic/Log-Density Function, D/$$
 $rnext
 $icode Float$$ $cnext
 	$code logden_sub_abs$$ $cnext
@@ -103,30 +110,23 @@ $icode density_enum$$ $cnext
 	type of density function; see
 	$cref/density_enum/get_density_table/density_enum/$$
 $tend
-
-$head Uniform$$
-In the case where the $icode density$$ is uniform,
-$icode wres$$,
-$icode logden_smooth$$,
-and $icode logden_sub_abs$$ are all set zero.
-
-$head Gaussian$$
-In the case where the $icode density$$ is
-$cref/Gaussian/wres_density/Gaussian/$$ or
-$cref/Log-Gaussian/wres_density/Log-Gaussian/$$,
-the log-density is equal to $icode logden_smooth$$ and
-$icode logden_sub_abs$$ is zero.
-
-$head Laplace$$
-In the case where the $icode density$$ is
-$cref/Laplace/wres_density/Laplace/$$ or
-$cref/Log-Laplace/wres_density/Log-Laplace/$$ likelihoods,
-the log-density is equal to
+The $cref/log-density function
+	/statistic
+	/Log-Density Function, D
+/$$
+$latex \[
+	D(z, y, \mu, \delta, \eta, d)
+\] $$
+is equal to
 $codei%
 	%logden_smooth% - fabs(%logden_sub_abs)%)
 %$$
-This enables one to express the log-density
+This express the log-density
 in terms of smooth functions (for optimization purposes).
+In the case of the uniform density,
+both $icode logden_smooth$$ and $icode logden_sub_abs$$ will be zero.
+In the case of the gaussian and log-gaussian densities,
+$icode logden_sub_abs$$ will be zero.
 
 $end
 */
@@ -156,6 +156,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 template <class Float>
 residual_struct<Float> residual_density(
 	const Float&       z       ,
+	const Float&       y       ,
 	const Float&       mu      ,
 	const Float&       delta   ,
 	const Float&       eta     ,
@@ -176,7 +177,7 @@ residual_struct<Float> residual_density(
 		print_forward_if_not_positive("delta", delta);
 		assert( delta > 0.0 );
 		sigma = delta;
-		wres  = ( z - mu) / sigma;
+		wres  = ( z - y - mu) / sigma;
 		break;
 
 		case log_gaussian_enum:
@@ -185,8 +186,8 @@ residual_struct<Float> residual_density(
 		print_forward_if_not_positive("z", z + tiny);
 		print_forward_if_not_positive("mu", mu + tiny);
 		assert( delta > 0.0 );
-		sigma = log( 1.0 + delta / (mu + eta) );
-		wres  = ( log( z + eta ) - log( mu + eta ) ) / sigma;
+		sigma = log( 1.0 + delta / (y + eta) );
+		wres  = ( log( z + eta ) - log( y + eta ) - mu ) / sigma;
 		break;
 
 		default:
@@ -233,6 +234,7 @@ residual_struct<Float> residual_density(
 # define DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY(Float)        \
 	template residual_struct<Float> residual_density(         \
 		const Float&       z       ,                          \
+		const Float&       y       ,                          \
 		const Float&       mu      ,                          \
 		const Float&       delta   ,                          \
 		const Float&       eta     ,                          \

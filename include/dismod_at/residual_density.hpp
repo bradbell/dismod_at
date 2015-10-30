@@ -28,6 +28,7 @@ namespace dismod_at {
 	template <class Float>
 	residual_struct<Float> residual_density(
 		const Float&       z       ,
+		const Float&       y       ,
 		const Float&       mu      ,
 		const Float&       delta   ,
 		const Float&       eta     ,
