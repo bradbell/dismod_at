@@ -26,13 +26,13 @@ $section Compute the Weighted Residual and Log-Density$$
 
 $head Syntax$$
 $icode%residual% = residual_density(
-	%density%, %z%, %mu%, %delta%, %eta%
+	%z%, %mu%, %delta%, %eta%, %d%
 )%$$
 
-$head density$$
+$head d$$
 This argument has prototype
 $codei%
-	density_enum %density%
+	density_enum %d%
 %$$
 It specifies one for the following density value
 $code uniform_enum$$,
@@ -155,17 +155,17 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 template <class Float>
 residual_struct<Float> residual_density(
-	density_enum       density ,
 	const Float&       z       ,
 	const Float&       mu      ,
 	const Float&       delta   ,
-	const Float&       eta     )
+	const Float&       eta     ,
+	density_enum       d       )
 {	Float nan(std::numeric_limits<double>::quiet_NaN());
 	Float tiny( 10.0 / std::numeric_limits<double>::max() );
 
 	Float wres = nan;
 	Float sigma = nan;
-	switch( density )
+	switch( d )
 	{
 		case uniform_enum:
 		wres = 0.0;
@@ -194,7 +194,7 @@ residual_struct<Float> residual_density(
 	}
 	Float logden_smooth = nan;
 	Float logden_sub_abs = nan;
-	switch( density )
+	switch( d )
 	{
 		case uniform_enum:
 		logden_smooth  = 0.0;
@@ -225,18 +225,18 @@ residual_struct<Float> residual_density(
 	residual.wres           = wres;
 	residual.logden_smooth  = logden_smooth;
 	residual.logden_sub_abs = logden_sub_abs;
-	residual.density        = density;
+	residual.density        = d;
 	return residual;
 }
 
 // instantiation macro
 # define DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY(Float)        \
 	template residual_struct<Float> residual_density(         \
-		density_enum       density ,                          \
 		const Float&       z       ,                          \
 		const Float&       mu      ,                          \
 		const Float&       delta   ,                          \
-		const Float&       eta                                \
+		const Float&       eta     ,                          \
+		density_enum       density                            \
 	);
 
 // instantiations

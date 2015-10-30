@@ -119,7 +119,7 @@ residual_struct<Float> prior_model::log_prior(
 	Float        mean    = Float(prior.mean);
 	Float        std     = mulstd * Float(prior.std);
 	Float        eta     = Float(prior.eta);
-	return residual_density(density, variable, mean, std, eta );
+	return residual_density(variable, mean, std, eta, density);
 }
 
 // private

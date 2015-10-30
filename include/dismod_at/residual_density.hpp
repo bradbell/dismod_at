@@ -27,11 +27,11 @@ namespace dismod_at {
 
 	template <class Float>
 	residual_struct<Float> residual_density(
-		density_enum       density ,
 		const Float&       z       ,
 		const Float&       mu      ,
 		const Float&       delta   ,
-		const Float&       eta
+		const Float&       eta     ,
+		density_enum       density
 	);
 }
 

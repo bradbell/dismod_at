@@ -1413,7 +1413,7 @@ residual_struct<Float> data_model::like_one(
 	Float delta  = Float(mean_effect * sigma);
 	delta       += std_effect * (adjust + eta);
 	//
-	return residual_density( density, adjust, avg, delta, Float(eta) );
+	return residual_density(adjust, avg, delta, Float(eta), density);
 }
 /*
 -------------------------------------------------------------------------------
