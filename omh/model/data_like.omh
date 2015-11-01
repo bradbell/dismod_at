@@ -30,8 +30,8 @@ $subhead y_i$$
 We use $latex y_i$$ to denote the corresponding
 $cref/meas_value/data_table/meas_value/$$ value.
 
-$subhead sigma_i$$
-We use $latex \sigma_i$$ to denote the corresponding
+$subhead Delta_i$$
+We use $latex \Delta_i$$ to denote the corresponding
 $cref/meas_std/data_table/meas_std/$$ value.
 
 $subhead a_i$$
@@ -143,7 +143,7 @@ The adjusted standard deviation is defined by
 $latex \[
 z_i ( \theta )
 =
-\frac{\sigma_i}{\bar{w}_i}
+\frac{\Delta_i}{\bar{w}_i}
 \int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
 \exp \left(
 	- \sum_{j \in J_i} x_{i,j} \beta_{i,j} (a, t )

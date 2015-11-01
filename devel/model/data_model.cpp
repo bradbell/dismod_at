@@ -1335,10 +1335,10 @@ residual_struct<Float> data_model::like_one(
 	CppAD::vector<double> x(n_covariate_);
 	for(j = 0; j < n_covariate_; j++)
 		x[j] = data_cov_value_[subset_id * n_covariate_ + j];
-	double sigma                   = data_subset_obj_[subset_id].meas_std;
+	double Delta                   = data_subset_obj_[subset_id].meas_std;
 	size_t integrand_id            = data_subset_obj_[subset_id].integrand_id;
 	double meas_value              = data_subset_obj_[subset_id].meas_value;
-	assert( sigma > 0.0 );
+	assert( Delta > 0.0 );
 
 	// data_info information for this data point
 	density_enum   density             = data_info_[subset_id].density;
@@ -1410,7 +1410,7 @@ residual_struct<Float> data_model::like_one(
 	Float std_effect = Float(0.0);
 	for(k = 0; k < n_ode; k++)
 		std_effect += c_ode[k] * meas_cov_ode[k];
-	Float delta  = Float(mean_effect * sigma);
+	Float delta  = Float(mean_effect * Delta);
 	delta       += std_effect * (adjust + eta);
 	//
 	Float not_used;
