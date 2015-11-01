@@ -620,10 +620,11 @@ for time_id in range( n_time ) :
 #
 rate_dtime_prior_id = dict()
 avg_delta_time      = (time_list[-1] - time_list[0]) / (len(time_list) - 1)
+density_id          = density_name2id['log_gaussian']
 lower               = None
 upper               = None
 mean                = 0.0
-std                 = avg_delta_time / 10.
+std                 = math.log( avg_delta_time / 10. )
 for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
 	if rate == 'pini' :
 		eta = 1e-7
@@ -636,7 +637,7 @@ for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
 		upper,
 		mean,
 		std,
-		density_name2id['gaussian'],
+		density_id,
 		eta
 	])
 # --------------------------------------------------------------------------
@@ -680,7 +681,7 @@ delta_age          = (age_list[-1] - age_list[0]) / (len(age_list) - 1)
 warn_rate_bounds   = set()
 for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	drate = 'd' + rate
-	xi     = float( simple_prior_in['xi_' + rate]['mean'] )
+	xi    = float( simple_prior_in['xi_' + rate]['mean'] )
 	#
 	rate_is_zero = rate_case.find( rate + '_zero') != -1
 	rate_is_pos  = rate_case.find( rate + '_pos') != -1
@@ -689,6 +690,7 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	local_list     = list()
 	local_list_id  = list()
 	#
+	# density same for this dlocal_list
 	dlocal_list    = list()
 	dlocal_list_id = list()
 	#
@@ -739,19 +741,23 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 		if age_id + 1 < n_age :
 			# ----------------------------------------------------------------
 			# determine dage_prior_id
-			name  = 'd' + rate + '_prior'
-			prior_in = rate_prior_in_dict[drate][age_id]
-			eta      = value_table_in[ 'kappa_' + rate ]
-			prior_at = log_gaussian_cascade2at(name, prior_in, eta)
-			(name, lower, upper, mean, std, density_id, eta) = prior_at
 			#
-			# ignoring cascade values for mean and std in this case
-			mean = 0.0
-			std  = xi * delta_age / 3.0 # using xi from cascade in this way
+			# ignoring this prior
+			# prior_in = rate_prior_in_dict[drate][age_id]
+			#
+			# using these values
+			density_id = density_name2id['log_gaussian']
+			name       = 'd' + rate + '_prior'
+			eta        = value_table_in[ 'kappa_' + rate ]
+			lower      = None
+			mean       = 0.0
+			upper      = None
+			std        = xi * math.sqrt( delta_age )
 			#
 			# check if this prior already specified
 			element = (lower, upper, mean, std)
 			if element not in dlocal_list :
+				prior_at = [name, lower, upper, mean, std, density_id, eta]
 				dlocal_list_id.append( len(prior_row_list) )
 				dlocal_list.append( element )
 				prior_row_list.append( prior_at )
@@ -882,7 +888,7 @@ row_list = [
 	[ 'rate_case',              option_table_in['rate_case']     ],
 	[ 'quasi_fixed',            'true'                           ],
 	[ 'print_level_fixed',      '5'                              ],
-	[ 'print_level_random',     '5'                              ],
+	[ 'print_level_random',     '0'                              ],
 	[ 'tolerance_fixed',        '1e-8'                           ],
 	[ 'tolerance_random',       '1e-8'                           ],
 	[ 'max_num_iter_fixed',     '50'                             ],
