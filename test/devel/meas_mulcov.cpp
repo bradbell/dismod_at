@@ -187,7 +187,7 @@ bool meas_mulcov(void)
 	data_table[data_id].age_upper    = age_upper;
 	data_table[data_id].time_lower   = time_lower;
 	data_table[data_id].time_upper   = time_upper;
-	data_table[data_id].meas_value   = 0.0;
+	data_table[data_id].meas_value   = 1e-2;
 	data_table[data_id].meas_std     = 1e-3;
 	data_table[data_id].density_id   = dismod_at::gaussian_enum;
 	//
@@ -206,7 +206,7 @@ bool meas_mulcov(void)
 	mulcov_table[0].mulcov_type = dismod_at::meas_value_enum;
 	mulcov_table[1].mulcov_type = dismod_at::meas_std_enum;
 	for(size_t mulcov_id = 0; mulcov_id < 2; mulcov_id++)
-	{	mulcov_table[mulcov_id].rate_id        = -1;
+	{	mulcov_table[mulcov_id].rate_id        = DISMOD_AT_NULL_INT;
 		mulcov_table[mulcov_id].integrand_id   = dismod_at::mtother_enum;
 		mulcov_table[mulcov_id].covariate_id   = 0;
 		mulcov_table[mulcov_id].smooth_id      = 0;
@@ -327,9 +327,9 @@ bool meas_mulcov(void)
 	//
 	// check residual
 	double v     = data_table[data_id].meas_value;
-	double sigma = data_table[data_id].meas_std;
+	double Delta = data_table[data_id].meas_std;
 	double y     = avg_mean_mulcov * v;
-	double delta = avg_mean_mulcov * sigma + avg_std_mulcov  * (y + eta);
+	double delta = avg_mean_mulcov * Delta + avg_std_mulcov  * (y + eta);
 	Float  check = (y - avg_integrand) / delta;
 	ok          &= fabs( 1.0 - wres / check ) <= eps;
 	/*

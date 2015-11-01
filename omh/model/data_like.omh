@@ -14,6 +14,7 @@ $spell
 	std
 	ij
 	covariate
+	covariates
 	mulcov
 $$
 
@@ -74,7 +75,7 @@ We use $latex w_i (a, t)$$ for the weighting as a function of age and time
 that corresponds to the
 $cref/weight_id/data_table/weight_id/$$ for this $icode data_id$$.
 
-$head Covariate$$
+$head Measurement Value Covariates$$
 
 $subhead J_i$$
 There is a set of rows in the mulcov table such that
@@ -96,6 +97,8 @@ $cref/covariate multiplier
 /$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
+
+$head Measurement Standard Deviation Covariates$$
 
 $subhead K_i$$
 There is a set of rows in the mulcov table such that
