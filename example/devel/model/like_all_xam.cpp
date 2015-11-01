@@ -279,7 +279,9 @@ bool like_all_xam(void)
 		// check loglike
 		double pi =  3.14159265358979323846264338327950288;
 		switch( density_id )
-		{	case dismod_at::uniform_enum:
+		{	double sigma;
+
+			case dismod_at::uniform_enum:
 			check = 0.0;
 			break;
 
@@ -292,13 +294,13 @@ bool like_all_xam(void)
 			break;
 
 			case dismod_at::log_gaussian_enum:
-			delta = log(1.0 + delta / (y + eta) );
-			check = - log( delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
+			sigma = log(1.0 + delta / (y + eta) );
+			check = - log( sigma * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 			break;
 
 			case dismod_at::log_laplace_enum:
-			delta = log(1.0 + delta / (y + eta) );
-			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * fabs(wres);
+			sigma = log(1.0 + delta / (y + eta) );
+			check = - log( sigma * sqrt(2.0) ) - sqrt(2.0) * fabs(wres);
 			break;
 
 			default:

@@ -66,7 +66,6 @@ V_j^\theta ( \theta )
 \exp \left[ D \left(
 	\theta_j \W{,}
 	\mu_j \W{,}
-	0.0 \W{,}
 	\lambda_j \delta_j \W{,}
 	\eta_j \W{,}
 	d_j

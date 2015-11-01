@@ -112,6 +112,7 @@ echo_eval g++ \
 echo "./junk"
 ./junk
 #
+exit 0
 read -p 'Run gprof [y/n] ?' response
 if [ "$response" != 'y' ]
 then

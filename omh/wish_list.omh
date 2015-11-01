@@ -20,12 +20,6 @@ $$
 
 $section Dismod_at Wish List$$
 
-$head dage and dtime Priors$$
-The use of log densities for these cases leads to taking the
-log of a negative number (hence $code nan$$).
-What is really wanted here is for the difference of the logs to be Gaussian
-or laplace; i.e., a different interpretation.
-
 $head Optimizing Random Effects$$
 It may save significant execution time and memory to write a special
 purpose optimizer for the random effects.

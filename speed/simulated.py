@@ -44,9 +44,9 @@ if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 sys.path.append( os.getcwd() + '/python' )
 import dismod_at
 #
-# change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/user')
-os.chdir('build/example/user')
+# change into the build/speed directory
+distutils.dir_util.mkpath('build/speed')
+os.chdir('build/speed')
 # ------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
@@ -170,6 +170,14 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      0.01,
 			'eta':      None
+		},{ # prior_loggauss_zero
+			'name':     'prior_loggauss_zero',
+			'density':  'log_gaussian',
+			'lower':    None,
+			'upper':    None,
+			'mean':     0.0,
+			'std':      0.1,
+			'eta':      1e-5
 		},{ # prior_iota_parent
 			'name':     'prior_iota_parent',
 			'density':  'uniform',
@@ -298,7 +306,7 @@ def example_db (file_name) :
 # Run the init command to create the var table
 file_name      = 'example.db'
 example_db(file_name)
-program        = '../../devel/dismod_at'
+program        = '../devel/dismod_at'
 cmd            = [ program, 'init', file_name ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )

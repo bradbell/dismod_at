@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -28,8 +28,8 @@ V^u ( u | \theta ) A^u ( u | \theta ) T^u ( u | \theta )
 \] $$
 See
 $cref/V^u/random_value/V^u/$$,
-$cref/A^u/random_diff/A^u/$$, and
-$cref/T^u/random_diff/T^u/$$  for the definitions of
+$cref/A^u/random_diff/Age Differences/A^u/$$, and
+$cref/T^u/random_diff/Time Differences/T^u/$$  for the definitions of
 $latex V^u$$, $latex A^u$$ and $latex T^u$$.
 
 $end

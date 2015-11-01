@@ -1311,7 +1311,7 @@ The return value has prototype
 $codei%
 	residual_struct<%Float%> %residual%
 %$$
-see $cref/residual_struct/residual_density/residual_struct/$$.
+see $cref/residual_struct/residual_density/residual/residual_struct/$$.
 It contains the weighted residual and the corresponding log-density.
 
 $children%example/devel/model/like_one_xam.cpp
@@ -1413,9 +1413,10 @@ residual_struct<Float> data_model::like_one(
 	Float delta  = Float(mean_effect * sigma);
 	delta       += std_effect * (adjust + eta);
 	//
-	Float zero(0.0);
+	Float not_used;
+	bool difference = false;
 	return residual_density(
-		adjust, avg, zero, delta, Float(eta), density
+		not_used, adjust, avg, delta, Float(eta), density, difference
 	);
 }
 /*

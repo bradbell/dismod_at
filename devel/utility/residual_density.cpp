@@ -18,13 +18,14 @@ $spell
 	wres
 	logden
 	fabs
+	bool
 $$
 
 $section Compute Weighted Residual and Log-Density$$
 
 $head Syntax$$
-$icode%R% = residual_density(
-	%z%, %y%, %mu%, %delta%, %eta%, %d%
+$icode%residual% = residual_density(
+	%z%, %y%, %mu%, %delta%, %eta%, %d%, %difference%
 )%$$
 
 $head d$$
@@ -43,52 +44,58 @@ This argument has prototype
 $codei%
 	const %Float%& z
 %$$
-It specifies the first random variable value.
+If $icode difference$$ is true,
+it specifies the first random variable in the difference.
+This argument is not used when $icode difference$$ is false.
 
 $head y$$
 This argument has prototype
 $codei%
 	const %Float%& y
 %$$
-In the case of differences, it is the second random variable.
-In the case of values, it is the mean of the first random variable.
+If $icode difference$$ is true,
+it specifies the second random variable in the difference.
+Otherwise it specifies the only random variable.
 
 $head mu$$
 This argument has prototype
 $codei%
 	const %Float%& mu
 %$$
-In the case of differences, it is the central value for the difference.
-In the case of values, it is zero.
+If $icode difference$$ is true, it is the central value for the difference.
+Otherwise, it is the central value for $icode y$$.
 
 $head delta$$
 This argument has prototype
 $codei%
 	const %Float%& delta
 %$$
-For Gaussian, and Laplace cases,
-it specifies the standard deviation for the value or difference
-in the same space as the value or difference.
+It is either the standard deviation or a parameter in the standard deviation;
+see below.
 
 $head eta$$
-Is the offset in the Log-Gaussian and Log-Laplace $icode density$$ cases
-(and is not used in the other cases).
+If the density $icode d$$ is
+$code log_gaussian_enum$$ or $code log_laplace_enum$$,
+it specifies the offset in the log transformation.
+Otherwise it is not used.
+
+$head difference$$
+This argument has prototype
+$codei%
+	bool %difference%
+%$$
+If $icode difference$$ is true,
+this calculation is for the difference of the
+random variables $latex z$$ and $latex y$$.
+Otherwise it is just for the random variable $latex y$$.
 
 $head residual$$
 The return value has prototype
 $codei%
 	residual_struct<%Float%> %residual%
 %$$
-This is the value of the weight residual function
-$latex \[
-	R(z, y, \mu, \delta, \eta, d)
-\]$$
-see $cref/weighted residual function
-	/statistic
-	/Weighted Residual Function, R
-/$$.
 
-$head residual_struct$$
+$subhead residual_struct$$
 This structure has the following fields:
 $table
 Type $cnext Field $cnext Description $rnext
@@ -97,31 +104,61 @@ $icode Float$$ $cnext
 	$cref/weighted residual/statistic/Weighted Residual Function, R/$$
 $rnext
 $icode Float$$ $cnext
-	$code logden_smooth$$ $cnext
+	$icode logden_smooth$$ $cnext
 	this smooth term is in
 	$cref/log-density/statistic/Log-Density Function, D/$$
 $rnext
 $icode Float$$ $cnext
-	$code logden_sub_abs$$ $cnext
+	$icode logden_sub_abs$$ $cnext
 	absolute value of this smooth term is in log-density
 $rnext
-$icode density_enum$$ $cnext
-	$code density$$ $cnext
+$code density_enum$$ $cnext
+	$icode density$$ $cnext
 	type of density function; see
 	$cref/density_enum/get_density_table/density_enum/$$
+$rnext
 $tend
 The $cref/log-density function
 	/statistic
 	/Log-Density Function, D
 /$$
+
+$subhead wres$$
+If $icode difference$$ is false, $icode wres$$ is the value of
 $latex \[
-	D(z, y, \mu, \delta, \eta, d)
-\] $$
+	R(y, \mu, \delta, \eta, d)
+\]$$
+see $cref/weighted residual function
+	/statistic
+	/Weighted Residual Function, R
+/$$.
+If $icode difference$$ is true, $icode wres$$ is the value of
+$latex \[
+	R(z, y, \mu, \delta, \eta, d)
+\]$$
+
+$subhead logden$$
+If $icode difference$$ is false, the log-density function
+$latex \[
+	D(y, \mu, \delta, \eta, d)
+\]$$
 is equal to
 $codei%
-	%logden_smooth% - fabs(%logden_sub_abs)%)
+    %logden_smooth% - fabs(%logden_sub_abs)%)
 %$$
-This express the log-density
+see $cref/log-density function
+	/statistic
+	/Log-Density Function, D
+/$$.
+If $icode difference$$ is true, the log-density function
+$latex \[
+	D(z, y, \mu, \delta, \eta, d)
+\]$$
+is equal to
+$codei%
+    %logden_smooth% - fabs(%logden_sub_abs)%)
+%$$
+This expresses the log-density
 in terms of smooth functions (for optimization purposes).
 In the case of the uniform density,
 both $icode logden_smooth$$ and $icode logden_sub_abs$$ will be zero.
@@ -155,12 +192,13 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 template <class Float>
 residual_struct<Float> residual_density(
-	const Float&       z       ,
-	const Float&       y       ,
-	const Float&       mu      ,
-	const Float&       delta   ,
-	const Float&       eta     ,
-	density_enum       d       )
+	const Float&       z          ,
+	const Float&       y          ,
+	const Float&       mu         ,
+	const Float&       delta      ,
+	const Float&       eta        ,
+	density_enum       d          ,
+	bool               difference )
 {	Float nan(std::numeric_limits<double>::quiet_NaN());
 	Float tiny( 10.0 / std::numeric_limits<double>::max() );
 
@@ -177,7 +215,10 @@ residual_struct<Float> residual_density(
 		print_forward_if_not_positive("delta", delta);
 		assert( delta > 0.0 );
 		sigma = delta;
-		wres  = ( z - y - mu) / sigma;
+		if( difference )
+			wres  = ( z - y - mu) / sigma;
+		else
+			wres = (y - mu) / sigma;
 		break;
 
 		case log_gaussian_enum:
@@ -186,8 +227,14 @@ residual_struct<Float> residual_density(
 		print_forward_if_not_positive("z", z + tiny);
 		print_forward_if_not_positive("mu", mu + tiny);
 		assert( delta > 0.0 );
-		sigma = log( 1.0 + delta / (z + eta) );
-		wres  = ( log( z + eta ) - log( y + eta ) - mu ) / sigma;
+		if( difference )
+		{	sigma = delta;
+			wres  = ( log( z + eta ) - log( y + eta ) - mu ) / sigma;
+		}
+		else
+		{	sigma = log( 1.0 + delta / (y + eta) );
+			wres  = ( log( y + eta ) - log( mu + eta ) ) / sigma;
+		}
 		break;
 
 		default:
@@ -233,12 +280,13 @@ residual_struct<Float> residual_density(
 // instantiation macro
 # define DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY(Float)        \
 	template residual_struct<Float> residual_density(         \
-		const Float&       z       ,                          \
-		const Float&       y       ,                          \
-		const Float&       mu      ,                          \
-		const Float&       delta   ,                          \
-		const Float&       eta     ,                          \
-		density_enum       density                            \
+		const Float&       z            ,                     \
+		const Float&       y            ,                     \
+		const Float&       mu           ,                     \
+		const Float&       delta        ,                     \
+		const Float&       eta          ,                     \
+		density_enum       density      ,                     \
+		bool               difference                         \
 	);
 
 // instantiations

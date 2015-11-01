@@ -155,7 +155,7 @@ $latex \[
 =
 z_i ( \theta )
 +
-\frac{ v_i ( \theta) + \eta_i }{\bar{w}_i}
+\frac{ v_i ( \theta ) + \eta_i }{\bar{w}_i}
 	\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
 	\left(
 		\sum_{j \in K_i} x_{i,j} \gamma_{i,j} (a, t)
@@ -177,9 +177,8 @@ Given the random effects $latex u$$ and the fixed effects $latex \theta$$,
 the weighted residual is
 $latex \[
 R [
-	v_i ( \theta)        \W{,}
+	v_i ( \theta )        \W{,}
 	A_i ( u, \theta )    \W{,}
-	0.0                  \W{,}
 	\delta_i ( \theta )  \W{,}
 	\eta_i               \W{,}
 	d_i
@@ -192,9 +191,8 @@ $latex \[
 \B{p}( y_i | u , \theta )
 =
 \exp \left( D [
-	v_i ( \theta)        \W{,}
+	v_i ( \theta )        \W{,}
 	A_i ( u, \theta )    \W{,}
-	0.0                  \W{,}
 	\delta_i ( \theta )  \W{,}
 	\eta_i               \W{,}
 	d_i

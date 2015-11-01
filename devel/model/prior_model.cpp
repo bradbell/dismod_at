@@ -109,19 +109,20 @@ s_info_vec_(s_info_vec)
 // private
 template <class Float>
 residual_struct<Float> prior_model::log_prior(
-	const prior_struct&   prior    ,
-	const Float&          mulstd   ,
-	const Float&          variable ) const
+	const prior_struct&   prior      ,  // prior for this residual
+	const Float&          mulstd     ,  // multiplies prior std
+	const Float&          z          ,  // first random variable
+	const Float&          y          ,  // second random variable
+	bool                  difference ) const // is this a difference residual
 {	assert ( 0 <= prior.density_id  );
 	assert ( prior.density_id < number_density_enum );
 
 	density_enum density = density_enum(prior.density_id);
-	Float        mean    = Float(prior.mean);
-	Float        std     = mulstd * Float(prior.std);
+	Float        mu      = Float(prior.mean);
+	Float        delta   = mulstd * Float(prior.std);
 	Float        eta     = Float(prior.eta);
-	Float zero(0.0);
 	return residual_density(
-		variable, mean, zero, std, eta, density
+		z, y, mu, delta, eta, density, difference
 	);
 }
 
@@ -140,16 +141,21 @@ void prior_model::log_prior_on_grid(
 	residual_struct<Float> residual;
 
 	// value smoothing
+	bool difference = false;
+	Float not_used;
 	for(size_t i = 0; i < n_age; i++)
 	{	for(size_t j = 0; j < n_time; j++)
 		{	Float  var      = Float(pack_vec[offset + i * n_time + j]);
 			size_t prior_id            = s_info.value_prior_id(i, j);
 			const prior_struct&  prior = prior_table_[prior_id];
-			residual  = log_prior(prior, mulstd_vec[0], var);
+			residual  = log_prior(
+				prior, mulstd_vec[0], not_used, var, difference
+			);
 			residual_vec.push_back(residual);
 		}
 	}
 	// age difference smoothing
+	difference = true;
 	for(size_t i = 0; i < (n_age-1); i++)
 	{
 # ifndef NDEBUG
@@ -162,11 +168,14 @@ void prior_model::log_prior_on_grid(
 			Float  v1       = pack_vec[offset + (i+1) * n_time + j];
 			size_t prior_id           = s_info.dage_prior_id(i, j);
 			const prior_struct& prior = prior_table_[prior_id];
-			residual  = log_prior(prior, mulstd_vec[1], v1 - v0);
+			residual  = log_prior(
+				prior, mulstd_vec[1], v1,  v0, difference
+			);
 			residual_vec.push_back(residual);
 		}
 	}
 	// time difference smoothing
+	difference = true;
 	for(size_t j = 0; j < (n_time-1); j++)
 	{
 # ifndef NDEBUG
@@ -180,7 +189,9 @@ void prior_model::log_prior_on_grid(
 			Float  v1       = pack_vec[offset + i * n_time + j + 1];
 			size_t prior_id           = s_info.dtime_prior_id(i, j);
 			const prior_struct& prior = prior_table_[prior_id];
-			residual  = log_prior(prior, mulstd_vec[2], v1 - v0);
+			residual  = log_prior(
+				prior, mulstd_vec[2], v1, v0, difference
+			);
 			residual_vec.push_back(residual);
 		}
 	}
@@ -260,6 +271,8 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 	size_t n_smooth = s_info_vec_.size();
 
 	// standard deviation multipliers
+	Float not_used;
+	bool difference = false;
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
 		{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
@@ -291,7 +304,9 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 				const prior_struct* prior = &prior_table_[prior_id];
 
 				// add fixed negative log-likelihood for this multiplier
-				residual  = log_prior(*prior, mulstd, Float(1.0));
+				residual  = log_prior(
+					*prior, Float(1.0), not_used, mulstd, difference
+				);
 				residual_vec.push_back(residual);
 			}
 		}

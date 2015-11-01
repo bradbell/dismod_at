@@ -31,9 +31,11 @@ namespace dismod_at {
 		// functions
 		template <class Float>
 		residual_struct<Float> log_prior(
-			const prior_struct& prior   ,
-			const Float&        mulstd  ,
-			const Float&        variable
+			const prior_struct& prior        ,
+			const Float&        mulstd       ,
+			const Float&        z            ,
+			const Float&        y            ,
+			bool                difference
 		) const;
 		template <class Float>
 		void log_prior_on_grid(

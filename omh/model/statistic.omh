@@ -12,8 +12,8 @@ $begin statistic$$
 
 $section Some Statistical Function Definitions$$
 
-$head Log-Standard Deviation Function, sigma$$
-We define the log-standard deviation function by
+$head Standard Deviation Log-Transform, sigma$$
+We define the standard deviation log-transform by
 $latex \[
 \sigma( y, \delta , \eta )
 =
@@ -23,76 +23,100 @@ $latex \[
 $head Weighted Residual Function, R$$
 The weighted residual function
 $latex \[
-	R(z, y, \mu, \delta, \eta , d)
+	R(y, \mu, \delta, \eta , d)
 \] $$
 is defined separately below for each possible value
-of the density $latex d$$:
+of the density $latex d$$.
+
+$subhead Difference$$
+The weighted residual function for differences
+$latex \[
+	R(z, y, \mu, \delta, \eta, d)
+\] $$
+has extra argument $latex z$$ and is also
+is defined separately below for each possible value
+of the density $latex d$$.
 
 $subhead Uniform$$
-If the $cref/density/density_table/$$ $latex d$$ is $code uniform$$,
-the weighted residual function is
+If the $cref/density/density_table/$$ $latex d$$ is uniform,
+the weighted residual functions are
+$latex \[
+	R(y, \mu, \delta, \eta , d) = 0
+\] $$
 $latex \[
 	R(z, y, \mu, \delta, \eta , d) = 0
 \] $$
 
-$subhead Gaussian$$
-If the $cref/density/density_table/$$ $latex d$$ is $code gaussian$$,
-the weighted residual function is
+$subhead Gaussian and Laplace$$
+If the $cref/density/density_table/$$ $latex d$$ is
+Gaussian or Laplace,
+the weighted residual functions are
+$latex \[
+	R(y, \mu, \delta, \eta , d) = \frac{y - \mu}{\delta}
+\] $$
 $latex \[
 	R(z, y, \mu, \delta, \eta , d) = \frac{z - y - \mu}{\delta}
 \] $$
 
-$subhead Laplace$$
-If the $cref/density/density_table/$$ $latex d$$ is $code laplace$$,
-the weighted residual function is
+$subhead Log-Gaussian and Log-Laplace$$
+If the $cref/density/density_table/$$ $latex d$$ is
+log-Gaussian or log-Laplace,
+the weighted residual functions are
 $latex \[
-	R(z, y, \mu, \delta, \eta , d) = \frac{z - y - \mu}{\delta}
-\] $$
-
-$subhead Log-Gaussian$$
-If the $cref/density/density_table/$$ $latex d$$ is $code log_gaussian$$,
-the weighted residual function is
-$latex \[
-R(z, y, \mu, \delta, \eta , d)
+R(y, \mu, \delta, \eta , d)
 =
 \frac{
-	\log( z + \eta ) - \log( y + \eta ) - \mu
+	\log( y + \eta ) - \log( \mu + \eta )
 }{
 	\sigma( y , \delta , \eta )
 }
 \] $$
-
-$subhead Log-Laplace$$
-If the $cref/density/density_table/$$ $latex d$$ is $code log_laplace$$,
-the weighted residual function is
 $latex \[
 R(z, y, \mu, \delta, \eta , d)
 =
 \frac{
-	\log( z + \eta ) - \log( y + \eta ) - \mu
+	\log(z + \eta ) - \log( y + \eta ) - \mu
 }{
-	\sigma( y , \delta , \eta )
+	\delta
 }
 \] $$
 
 $head Log-Density Function, D$$
 The log-density function
 $latex \[
-	D(z, y, \mu, \delta, \eta , d)
+	D(y, \mu, \delta, \eta , d)
 \] $$
 is defined separately below for each possible value
 of the density $latex d$$:
 
+$subhead Difference$$
+The log-density function for differences
+$latex \[
+	D(z, y, \mu, \delta, \eta, d)
+\] $$
+has extra argument $latex z$$ and is also
+is defined separately below for each possible value
+of the density $latex d$$.
+
 $subhead Uniform$$
-If the $cref/density/density_table/$$ $latex d$$ is $code uniform$$,
-the log-density function is
+If the $cref/density/density_table/$$ $latex d$$ is uniform,
+the log-density functions are
+$latex \[
+	D(y, \mu, \delta, \eta , d) = 0
+\] $$
 $latex \[
 	D(z, y, \mu, \delta, \eta , d) = 0
 \] $$
 
 $subhead Gaussian$$
-If the $cref/density/density_table/$$ $latex d$$ is $code gaussian$$,
-the log-density function is
+If the $cref/density/density_table/$$ $latex d$$ is Gaussian,
+the log-density functions are
+$latex \[
+D(y, \mu, \delta, \eta , d)
+=
+- \log \left( \delta \sqrt{2 \pi} \right)
+- \frac{1}{2} R(y, \mu, \delta , \eta, d )^2
+\] $$
 $latex \[
 D(z, y, \mu, \delta, \eta , d)
 =
@@ -105,8 +129,14 @@ see $cref/Weighted Residual Function, R
 /$$.
 
 $subhead Laplace$$
-If the $cref/density/density_table/$$ $latex d$$ is $code laplace$$,
-the log-density function is
+If the $cref/density/density_table/$$ $latex d$$ is Laplace,
+the log-density functions are
+$latex \[
+D(y, \mu, \delta, \eta , d)
+=
+- \log \left( \delta \sqrt{2} \right)
+- \sqrt{2} \left| R(y, \mu, \delta , \eta , d) \right|
+\] $$
 $latex \[
 D(z, y, \mu, \delta, \eta , d)
 =
@@ -115,26 +145,38 @@ D(z, y, \mu, \delta, \eta , d)
 \] $$
 
 $subhead Log-Gaussian$$
-If the $cref/density/density_table/$$ $latex d$$ is $code log_gaussian$$,
-the log-density function is
+If the $cref/density/density_table/$$ $latex d$$ is log-Gaussian,
+the log-density functions are
+$latex \[
+D(y, \mu, \delta, \eta , d)
+=
+- \log \left[ \sigma( y , \delta , \eta ) \sqrt{2 \pi} \right]
+- \frac{1}{2} R(y, \mu, \delta, \eta, d)^2
+\] $$
 $latex \[
 D(z, y, \mu, \delta, \eta , d)
 =
-- \log \left[ \sigma( y , \delta , \eta ) \sqrt{2 \pi} \right]
+- \log \left( \delta \sqrt{2 \pi} \right)
 - \frac{1}{2} R(z, y, \mu, \delta, \eta, d)^2
 \] $$
 see $cref/log-standard deviation function
 	/statistic
-	/Log-Standard Deviation Function, sigma
+	/Standard Deviation Log-Transform, sigma
 /$$.
 
 $subhead Log-Laplace$$
-If the $cref/density/density_table/$$ $latex d$$ is $code log_laplace$$,
-the log-density function is
+If the $cref/density/density_table/$$ $latex d$$ is log-Laplace
+the log-density functions are
+$latex \[
+D(y, \mu, \delta, \eta , d)
+=
+- \log \left[ \sigma( y , \delta , \eta ) \sqrt{2} \right]
+- \left| R(y, \mu, \delta, \eta, d) \right|
+\] $$
 $latex \[
 D(z, y, \mu, \delta, \eta , d)
 =
-- \log \left[ \sigma( y , \delta , \eta ) \sqrt{2} \right]
+- \log \left( \delta \sqrt{2} \right)
 - \left| R(z, y, \mu, \delta, \eta, d) \right|
 \] $$
 

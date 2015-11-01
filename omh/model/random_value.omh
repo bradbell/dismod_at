@@ -73,17 +73,23 @@ rate, age, and time specified by $icode j$$.
 $head d_j$$
 We use $latex d_j$$ for the
 density corresponding to the
-$icode value_prior_id$$ which must be $code gaussian$$.
+$icode value_prior_id$$ which must be Gaussian; see the
+$cref/child smoothing restrictions
+	/rate_table
+	/child_smooth_id
+	/Restrictions
+/$$.
 
 $head mu_j$$
 We use $latex \mu_j$$ for the
 mean corresponding to the
-$icode value_prior_id$$ which must be $code 0.0$$.
+$icode value_prior_id$$ which must be zero; see the
+child smoothing restrictions.
 
 $head eta_j$$
 We use $latex \eta_j$$ for the
 offset in the log transformation
-(which does not matter because $icode d_j$$ is $code gaussian$$).
+(which does not matter because $icode d_j$$ is Gaussian).
 
 $head V_c,j^u$$
 The definition of the value density function for $latex u_{c,j}$$ is
@@ -93,13 +99,17 @@ V_{c,j}^u ( u | \theta )
 \exp \left[ D (
 	u_{c,j} \W{,}
 	\mu_j \W{,}
-	0.0 \W{,}
 	\lambda_j \delta_j  \W{,}
+	\eta_j \W{,}
 	d_j
 ) \right]
 \] $$
 where $latex D$$ is the
 $cref/log-density function/statistic/Log-Density Function, D/$$.
+(As noted above,
+$latex \mu_j$$ must be zero,
+$latex d_j$$ must be Gaussian,
+and $latex \eta_j$$ does not matter.)
 
 $head V^u$$
 Let $latex m$$ be the number of random effects.

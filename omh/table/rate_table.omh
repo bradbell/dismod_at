@@ -85,6 +85,8 @@ $cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
 It specifies the smoothing used as a prior for this rate
 when fitting the children (random effects).
+
+$subhead Restrictions$$
 For each grid point there is a
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
@@ -94,7 +96,7 @@ $cref/prior_id/prior_table/prior_id/$$ values:
 
 $list number$$
 The $cref/density_id/prior_table/density_id/$$ must correspond
-to a $code gaussian$$ density.
+to a Gaussian.
 $lnext
 The $cref/mean/prior_table/mean/$$ must be zero.
 $lnext

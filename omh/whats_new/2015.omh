@@ -47,6 +47,32 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-01$$
+$list number$$
+The reduction in memory and increase in speed on 10-30
+did not make sense and does not seem to be reproducible
+(even using the source code check in that was intended to do so).
+$lnext
+One can now use log-Gaussian and log-Laplace for the
+prior on differences for fixed effects; see fixed effects
+$cref/age/fixed_diff/Age Differences/$$ and
+$cref/time/fixed_diff/Time Differences/$$ differences.
+This required a complete re-write (and simplification) of the
+documentation for the weighted residuals and log-densities.
+In addition, the actual definitions were changed for the differences; see
+$cref/weighted residuals
+	/statistic
+	/Weighted Residual Function, R
+	/Difference
+/$$ and
+$cref/log-densities
+	/statistic
+	/Log-Density Function, D
+	/Difference
+/$$ for differences.
+The corresponding wish list item has been removed.
+$lend
+
 $head 10-30$$
 $list number$$
 The notation for the
@@ -62,9 +88,9 @@ of Gaussian density for the measured values.
 $lnext
 A large reduction in memory, and an increase in speed,
 was accomplished by making the
-$cref/log-standard deviation function
+$cref/standard deviation log-transform
 	/statistic
-	/Log-Standard Deviation Function, sigma
+	/Standard Deviation Log-Transform, sigma
 /$$
 depend the data and not on the $cref/model_variables/model_variable/$$.
 To be specific, $code valgrind --tool=massif$$ reported the following

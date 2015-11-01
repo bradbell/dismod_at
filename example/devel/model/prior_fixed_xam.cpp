@@ -311,9 +311,8 @@ bool prior_fixed_xam(void)
 				{	double v0    = var;
 					index        = info.offset + i * n_time + j + 1;
 					double v1    = pack_vec[index];
-					double dv    = v1 - v0;
-					double sigma = log(1.0 + std_t / (dv + eta_t));
-					wres         = log(dv + eta_t) - log(mean_t+ eta_t);
+					double sigma = std_t;
+					wres         = log(v1 + eta_t) - log(v0 + eta_t) - mean_t;
 					wres        /= sigma;
 					check       -= log(sigma * sqrt_2pi);
 					check       -= wres * wres / 2.0;

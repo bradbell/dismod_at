@@ -37,7 +37,7 @@ are $code null$$ and there is no prior to check for these cases.
 
 $list number$$
 The $cref/density_id/prior_table/density_id/$$ must correspond
-to a $code gaussian$$ density.
+to a Gaussian density.
 $lnext
 The $cref/mean/prior_table/mean/$$ must be zero.
 $lnext

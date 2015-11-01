@@ -289,7 +289,7 @@ bool prior_random_xam(void)
 			{	for(j = 0; j < n_time; j++)
 				{	size_t index   = info.offset + i * n_time + j;
 					double var     = pack_vec[index];
-					double wres    = (var - mean_v) / std_v;
+					double wres    = (mean_v - var) / std_v;
 					check         -= log(std_v * sqrt_2pi);
 					check         -= wres * wres / 2.0;
 					if( i + 1 < n_age )
@@ -306,12 +306,11 @@ bool prior_random_xam(void)
 					{	double v0    = var;
 						index        = info.offset + i * n_time + j + 1;
 						double v1    = pack_vec[index];
-						double dv    = v1 - v0;
-						double sigma = log(1.0 + std_t / (dv + eta_t));
-						wres         = log(dv + eta_t) - log(mean_t+ eta_t);
-						wres        /= sigma;
-						check       -= log(sigma * sqrt_2pi);
-						check       -= wres * wres / 2.0;
+						double sigma = std_t;
+						wres    = log(v1 + eta_t) - log(v0 + eta_t) - mean_t;
+						wres   /= sigma;
+						check  -= log(sigma * sqrt_2pi);
+						check  -= wres * wres / 2.0;
 					}
 				}
 			}
