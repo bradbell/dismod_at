@@ -1,0 +1,100 @@
+#! /bin/python3
+# $Id:$
+#  --------------------------------------------------------------------------
+# dismod_at: Estimating Disease Rates as Functions of Age and Time
+#           Copyright (C) 2014-15 University of Washington
+#              (Bradley M. Bell bradbell@uw.edu)
+#
+# This program is distributed under the terms of the
+#	     GNU Affero General Public License version 3.0 or later
+# see http://www.gnu.org/licenses/agpl.txt
+# ---------------------------------------------------------------------------
+# $begin import_cascade$$ $newlinech #$$
+#
+# $section Import an IHME Cascade Study$$
+#
+# $head Syntax$$
+# $codei%import_cascade.py %cascade_path% %option_file%$$
+#
+# $end
+# ---------------------------------------------------------------------------
+import sys
+import os
+import csv
+#
+sys.path.append( os.path.join( os.getcwd(), 'python' ) )
+import dismod_at
+# ---------------------------------------------------------------------------
+if sys.argv[0] != 'bin/database2csv.py' :
+	msg  = 'bin/database2csv.py: must be executed from its parent directory'
+	sys.exit(msg)
+#
+usage = '''bin/database2csv.py directory database_file
+So far the only supported table is:
+	var
+'''
+if len(sys.argv) != 3 :
+	sys.exit(usage)
+#
+directory_arg     = sys.argv[1]
+database_file_arg = sys.argv[2]
+# ----------------------------------------------------------------------------
+file_name   = os.path.join(directory_arg, database_file_arg)
+new         = False
+connection  = dismod_at.create_connection(file_name, new)
+cmd     = "SELECT * FROM sqlite_master WHERE type='table' AND name='fit_var'"
+cursor  = connection.cursor()
+result  = cursor.execute(cmd).fetchall()
+have_fit_var = len(result) > 0
+#
+table_data  = dict()
+table_list  = ['age', 'covariate', 'integrand', 'node', 'rate', 'time', 'var']
+if have_fit_var :
+	table_list.append('fit_var')
+for table in table_list :
+	table_data[table] = dismod_at.get_table_dict(connection, table)
+# ----------------------------------------------------------------------------
+def table_lookup(table_name, row_id, column_name) :
+	if row_id == None :
+		return ''
+	value = table_data[table_name][row_id][column_name]
+	if type(value) is float :
+		value = '%13.5g' % value
+	else :
+		value = str(value)
+	assert( value != '' )
+	return value
+# ----------------------------------------------------------------------------
+file_name    = os.path.join(directory_arg, 'var.csv')
+csv_file_ptr = open(file_name, 'w')
+csv_writer   = csv.writer(csv_file_ptr)
+# ----------------------------------------------------------------------------
+header = [
+	'var_id','var_type','age','time','node','rate','integrand','covariate'
+]
+if have_fit_var :
+	header.append('fit_value')
+csv_writer.writerow(header)
+var_id = 0
+for row_in in table_data['var'] :
+	var_type   = row_in['var_type']
+	age        = table_lookup('age',  row_in['age_id'], 'age')
+	time       = table_lookup('time', row_in['time_id'], 'time')
+	node       = table_lookup('node', row_in['node_id'], 'node_name')
+	rate       = table_lookup('rate', row_in['rate_id'], 'rate_name')
+	integrand  = table_lookup(
+		'integrand', row_in['integrand_id'], 'integrand_name'
+	)
+	covariate  = table_lookup(
+		'covariate', row_in['covariate_id'], 'covariate_name'
+	)
+	row_out = [
+		var_id, var_type, age, time, node, rate, integrand, covariate
+	]
+	if have_fit_var :
+		fit_value = table_lookup('fit_var', var_id, 'fit_var_value')
+		row_out.append(fit_value)
+	csv_writer.writerow(row_out)
+	var_id += 1
+# ----------------------------------------------------------------------------
+csv_file_ptr.close()
