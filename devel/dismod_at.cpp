@@ -274,6 +274,7 @@ void init_command(
 				assert( row_value[ n_col * var_id + j ] == "" );
 # endif
 				row_value[n_col * var_id + 0] = "rate"; // var_type
+				row_value[n_col * var_id + 1] = to_string( smooth_id );
 				row_value[n_col * var_id + 2] = to_string( age_id );
 				row_value[n_col * var_id + 3] = to_string( time_id );
 				row_value[n_col * var_id + 4] = to_string( node_id );
@@ -351,6 +352,7 @@ void init_command(
 			}
 			else assert(false);
 			//
+			row_value[n_col * var_id + 1] = to_string( smooth_id );
 			row_value[n_col * var_id + 2] = to_string( age_id );
 			row_value[n_col * var_id + 3] = to_string( time_id );
 			row_value[n_col * var_id + 7] = to_string( covariate_id );

@@ -37,7 +37,7 @@ $head var_type$$
 The column has type $code text$$ and has one of the following possible values:
 
 $subhead mulstd_value$$
-This variable is that multiplies the standard deviation in the
+This variable multiplies the standard deviation in the
 $cref/mulstd_value_prior/smooth_table/mulstd_value_prior_id/$$
 for the corresponding $icode smooth_id$$; see
 $cref/smoothing standard deviation multiplier
@@ -47,7 +47,7 @@ $cref/smoothing standard deviation multiplier
 /$$.
 
 $subhead mulstd_dage$$
-This variable is that multiplies the standard deviation in the
+This variable multiplies the standard deviation in the
 $cref/mulstd_dage_prior/smooth_table/mulstd_dage_prior_id/$$
 for the corresponding $icode smooth_id$$; see
 $cref/smoothing standard deviation multiplier
@@ -57,7 +57,7 @@ $cref/smoothing standard deviation multiplier
 /$$.
 
 $subhead mulstd_dtime$$
-This variable is that multiplies the standard deviation in the
+This variable multiplies the standard deviation in the
 $cref/mulstd_dtime_prior/smooth_table/mulstd_dtime_prior_id/$$
 for the corresponding $icode smooth_id$$; see
 $cref/smoothing standard deviation multiplier
@@ -110,11 +110,16 @@ $icode age_id$$, $icode time_id$$,
 $icode integrand_id$$, and $icode covariate_id$$.
 
 $head smooth_id$$
-If $icode var_type$$ is $code rate$$,
+If $icode var_type$$ is
 $code mulstd_value$$, $code mulstd_dage$$ or $code mulstd_dtime$$,
 this is the $cref/smooth_id/smooth_table/smooth_id/$$ for the
 smoothing that this variable multiplies.
-Otherwise, this column is $code null$$.
+Otherwise, the specified smoothing is used for the priors
+for this variable.
+To be specific,
+the corresponding priors can be found by matching
+$icode smooth_id$$, $icode age_id$$, and $icode time_id$$ in the
+$cref smooth_grid_table$$.
 
 $head age_id$$
 If $icode var_type$$ is $code rate$$,
