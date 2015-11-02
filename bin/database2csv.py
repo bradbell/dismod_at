@@ -206,6 +206,7 @@ header = [
 	'density',
 	'meas_value',
 	'meas_std',
+	'eta',
 	'avgint',
 	'residual',
 	'node'
@@ -233,6 +234,9 @@ for subset_row in table_data['data_subset'] :
 	row_out['hold_out']    = row_in['hold_out']
 	row_out['meas_value']  = convert2output( row_in['meas_value'] )
 	row_out['meas_std']    = convert2output( row_in['meas_std'] )
+	row_out['eta']         = table_lookup(
+		'integrand', row_in['integrand_id'], 'eta'
+	)
 	row_out['integrand'] = table_lookup(
 		'integrand', row_in['integrand_id'], 'integrand_name'
 	)
