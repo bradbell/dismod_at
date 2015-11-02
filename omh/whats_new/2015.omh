@@ -43,9 +43,23 @@ $spell
 	optimizer
 	lapprox
 	valgrind
+	csv
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 11-02$$
+$list number$$
+Added the data base dump program
+$code bin/database2csv.py$$.
+This is just an example of how one might view the
+information in the database.
+It is not documented or tested and may change with time.
+$lnext
+Working on improving
+$code bin/import_cascade.py$$,
+another undocumented example that may change with time.
+$lend
 
 $head 11-01$$
 $list number$$

@@ -95,19 +95,28 @@ def table_lookup(table_name, row_id, column_name) :
 def get_prior_info(row_out, prior_id_dict) :
 	extension2name = {'_v':'value_', '_a':'dage_', '_t':'dtime_' }
 	for extension in extension2name :
-		name     = extension2name[extension]
-		key      = name + 'prior_id'
-		prior_id = prior_id_dict[key]
+		name      = extension2name[extension]
+		key       = name + 'prior_id'
+		prior_id  = prior_id_dict[key]
+		field_out = 'density' + extension
+		if prior_id == None :
+			row_out[field_out] = ''
+		else :
+			density_id   = table_data['prior'][prior_id]['density_id']
+			density_name = table_data['density'][density_id]['density_name']
+			row_out[field_out] = density_name
 		for field_in in [ 'lower', 'upper', 'mean', 'std', 'eta' ] :
 			field_out = field_in + extension
 			row_out[field_out] = ''
 			if prior_id != None :
 				value_in = table_data['prior'][prior_id][field_in]
+				if field_in == 'eta' :
+					if density_name in [ 'uniform', 'gaussian', 'laplace' ] :
+						value_in = None
+				if field_in == 'std' and density_name == 'uniform' :
+						value_in = None
 				row_out[field_out] = convert2output( value_in )
-				density_id = table_data['prior'][prior_id]['density_id']
-				value_in   = table_data['density'][density_id]['density_name']
-				field_out  = 'density' + extension
-				row_out[field_out] = convert2output( value_in )
+
 # ----------------------------------------------------------------------------
 def node_id2child_or_parent(node_id) :
 	if node_id == parent_node_id :
@@ -252,7 +261,12 @@ for subset_row in table_data['data_subset'] :
 	for row in table_data['covariate'] :
 		field_in  = 'x_' + str(covariate_id)
 		field_out = row['covariate_name']
-		row_out[field_out] = row_in[field_in]
+		reference = row['reference']
+		if row_in[field_in] == None :
+			row_out[field_out] = ''
+		else :
+			row_out[field_out] = convert2output(row_in[field_in] - reference)
+		covariate_id += 1
 	#
 	if have_fit :
 		row                 = table_data['fit_residual'][subset_id]

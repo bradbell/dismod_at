@@ -169,7 +169,7 @@ def gaussian_cascade2at(prior_name, cascade_prior_row) :
 	#
 	#
 	eta   = None
-	return [ prior_name , lower, upper, mean, std, density_id, eta ]
+	return [ prior_name , lower, upper, mean, std, eta, density_id ]
 # ---------------------------------------------------------------------------
 # log_gaussian_cascade2at
 #
@@ -185,7 +185,7 @@ def log_gaussian_cascade2at(prior_name, cascade_prior_row, eta) :
 		density_id = density_name2id['log_gaussian']
 	#
 	#
-	return [ prior_name , lower, upper, mean, std, density_id, float(eta) ]
+	return [ prior_name , lower, upper, mean, std, float(eta), density_id ]
 # ---------------------------------------------------------------------------
 # db_connection
 #
@@ -445,7 +445,7 @@ for row_in in data_table_in :
 		time_upper    # 10
 	]
 	if mtall :
-			mtall_list.append(row_out)
+		mtall_list.append(row_out)
 	else :
 		for name in covariate_name2id :
 			value        = row_in[name]
@@ -480,7 +480,7 @@ for row  in mtall_list :
 			previous_row[5] = meas_value
 			previous_row[6] = meas_std
 			for name in covariate_name2id :
-				previous_row.append('0')  # drop the covariates in mtall data
+				previous_row.append(None)
 			row_list.append(previous_row)
 		n_sum        = 0
 		meas_value   = 0.0
@@ -543,8 +543,8 @@ prior_col_name2type = collections.OrderedDict([
 	('upper',          'real'   ),
 	('mean',           'real'   ),
 	('std',            'real'   ),
-	('density_id',     'integer'),
 	('eta',            'real'   ),
+	('density_id',     'integer'),
 ])
 smooth_col_name2type = collections.OrderedDict([
 	('smooth_name',            'text'   ),
@@ -582,14 +582,14 @@ std    = float( option_table_in['child_value_std'] )
 name   = 'child_value_piror'
 child_value_prior_id = len( prior_row_list )
 prior_row_list.append(
-		[ name , lower, upper, mean, std, density_id, eta ]
+		[ name , lower, upper, mean, std, eta, density_id ]
 )
 #
 std    = float( option_table_in['child_dtime_std'] )
 name   = 'child_dtime_piror'
 child_dtime_prior_id = len( prior_row_list )
 prior_row_list.append(
-		[ name , lower, upper, mean, std, density_id, eta ]
+		[ name , lower, upper, mean, std, eta, density_id ]
 )
 #
 name            = 'child_smooth'
@@ -637,8 +637,8 @@ for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
 		upper,
 		mean,
 		std,
-		density_id,
-		eta
+		eta,
+		density_id
 	])
 # --------------------------------------------------------------------------
 # pini_smooth_id
@@ -729,7 +729,7 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 					warn_rate_bounds.add(rate)
 		#
 		prior_at = gaussian_cascade2at(name, prior_in)
-		(name, lower, upper, mean, std, density_id, eta) = prior_at
+		(name, lower, upper, mean, std, eta, density_id) = prior_at
 		#
 		# check if this prior already specified
 		element = (lower, upper, mean, std)
@@ -757,7 +757,7 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 			# check if this prior already specified
 			element = (lower, upper, mean, std)
 			if element not in dlocal_list :
-				prior_at = [name, lower, upper, mean, std, density_id, eta]
+				prior_at = [name, lower, upper, mean, std, eta, density_id]
 				dlocal_list_id.append( len(prior_row_list) )
 				dlocal_list.append( element )
 				prior_row_list.append( prior_at )
@@ -857,6 +857,16 @@ dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # --------------------------------------------------------------------------
 # Output, prior, smooth, and smooth_grid tables
 # --------------------------------------------------------------------------
+for row in prior_row_list :
+	# row = [ prior_name, lower, upper, mean, std, eta, density_id ]
+	density_id = row[6]
+	if density_id == density_name2id['uniform'] :
+		row[4] = None
+		row[5] = None
+	if density_id == density_name2id['gaussian'] :
+		row[5] = None
+	if density_id == density_name2id['laplace'] :
+		row[5] = None
 col_name = list( prior_col_name2type.keys() )
 col_type = list( prior_col_name2type.values() )
 row_list = prior_row_list
@@ -891,7 +901,7 @@ row_list = [
 	[ 'print_level_random',     '0'                              ],
 	[ 'tolerance_fixed',        '1e-8'                           ],
 	[ 'tolerance_random',       '1e-8'                           ],
-	[ 'max_num_iter_fixed',     '50'                             ],
+	[ 'max_num_iter_fixed',     '20'                             ],
 	[ 'max_num_iter_random',    '50'                             ],
 	[ 'derivative_test_fixed',  'none'                           ],
 	[ 'derivative_test_random', 'none'                           ]
