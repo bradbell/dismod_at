@@ -48,7 +48,15 @@ result  = cursor.execute(cmd).fetchall()
 have_fit_var = len(result) > 0
 #
 table_data  = dict()
-table_list  = ['age', 'covariate', 'integrand', 'node', 'rate', 'time', 'var']
+table_list  = [
+	'age',
+	'covariate',
+	'integrand',
+	'node',
+	'rate',
+	'time',
+	'var'
+]
 if have_fit_var :
 	table_list.append('fit_var')
 for table in table_list :
@@ -65,36 +73,42 @@ def table_lookup(table_name, row_id, column_name) :
 	assert( value != '' )
 	return value
 # ----------------------------------------------------------------------------
-file_name    = os.path.join(directory_arg, 'var.csv')
-csv_file_ptr = open(file_name, 'w')
-csv_writer   = csv.writer(csv_file_ptr)
+file_name = os.path.join(directory_arg, 'var.csv')
+csv_file  = open(file_name, 'w')
 # ----------------------------------------------------------------------------
 header = [
-	'var_id','var_type','age','time','node','rate','integrand','covariate'
+	'var_id',
+	'var_type',
+	'age',
+	'time',
+	'rate',
+	'integrand',
+	'fit_value',
+	'covariate',
+	'node',
 ]
-if have_fit_var :
-	header.append('fit_value')
-csv_writer.writerow(header)
-var_id = 0
+csv_writer = csv.DictWriter(csv_file, fieldnames=header)
+csv_writer.writeheader()
+var_id  = 0
+row_out = dict()
 for row_in in table_data['var'] :
-	var_type   = row_in['var_type']
-	age        = table_lookup('age',  row_in['age_id'], 'age')
-	time       = table_lookup('time', row_in['time_id'], 'time')
-	node       = table_lookup('node', row_in['node_id'], 'node_name')
-	rate       = table_lookup('rate', row_in['rate_id'], 'rate_name')
-	integrand  = table_lookup(
+	row_out['var_id']    = var_id
+	row_out['var_type']  = row_in['var_type']
+	row_out['age']       = table_lookup('age',  row_in['age_id'], 'age')
+	row_out['time']      = table_lookup('time', row_in['time_id'], 'time')
+	row_out['rate']      = table_lookup('rate', row_in['rate_id'], 'rate_name')
+	row_out['integrand'] = table_lookup(
 		'integrand', row_in['integrand_id'], 'integrand_name'
 	)
-	covariate  = table_lookup(
+	row_out['covariate'] = table_lookup(
 		'covariate', row_in['covariate_id'], 'covariate_name'
 	)
-	row_out = [
-		var_id, var_type, age, time, node, rate, integrand, covariate
-	]
+	row_out['node'] = table_lookup('node', row_in['node_id'], 'node_name')
 	if have_fit_var :
-		fit_value = table_lookup('fit_var', var_id, 'fit_var_value')
-		row_out.append(fit_value)
+		row_out['fit_value'] = table_lookup('fit_var', var_id, 'fit_var_value')
+	else :
+		row_out['fit_value'] = ''
 	csv_writer.writerow(row_out)
 	var_id += 1
 # ----------------------------------------------------------------------------
-csv_file_ptr.close()
+csv_file.close()
