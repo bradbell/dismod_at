@@ -29,10 +29,7 @@ if sys.argv[0] != 'bin/database2csv.py' :
 	msg  = 'bin/database2csv.py: must be executed from its parent directory'
 	sys.exit(msg)
 #
-usage = '''bin/database2csv.py directory database_file
-So far the only supported table is:
-	var
-'''
+usage = 'bin/database2csv.py directory database_file'
 if len(sys.argv) != 3 :
 	sys.exit(usage)
 #
@@ -51,10 +48,14 @@ table_data  = dict()
 table_list  = [
 	'age',
 	'covariate',
+	'density',
 	'integrand',
 	'option',
+	'mulcov',
 	'node',
+	'prior',
 	'rate',
+	'smooth_grid',
 	'time',
 	'var'
 ]
@@ -74,6 +75,16 @@ def table_lookup(table_name, row_id, column_name) :
 	assert( value != '' )
 	return value
 # ----------------------------------------------------------------------------
+def get_prior_info(row, prior_id) :
+	for field in [ 'lower', 'upper', 'mean', 'std', 'eta' ] :
+		row[field] = str( table_data['prior'][prior_id][field] )
+	density_id = table_data['prior'][prior_id]['density_id']
+	row['density'] = table_data['density'][density_id]['density_name']
+	if row['std'] == None :
+		row['std'] = ''
+	if row['eta'] == None :
+		row['eta'] = ''
+# ----------------------------------------------------------------------------
 file_name = os.path.join(directory_arg, 'var.csv')
 csv_file  = open(file_name, 'w')
 # ----------------------------------------------------------------------------
@@ -92,6 +103,12 @@ header = [
 	'rate',
 	'integrand',
 	'fit_value',
+	'lower',
+	'upper',
+	'mean',
+	'std',
+	'eta',
+	'density',
 	'covariate',
 	'node',
 ]
@@ -122,6 +139,33 @@ for row_in in table_data['var'] :
 	if row_in['var_type'] == 'rate' :
 		if row_in['node_id'] != parent_node_id :
 			row_out['fixed'] = 'false'
+	#
+	smooth_id = None
+	if row_in['var_type'] == 'rate' :
+		rate_info = table_data['rate'][ row_in['rate_id' ] ]
+		if row_in['node_id'] == parent_node_id :
+			smooth_id = rate_info['parent_smooth_id']
+		else :
+			smooth_id = rate_info['child_smooth_id']
+	if row_in['var_type'].startswith('mulcov_') :
+		mulcov_type = row_in['var_type'][7:]
+		for row in table_data['mulcov'] :
+			match = row['mulcov_type'] == mulcov_type
+			for field in ['rate_id', 'integrand_id', 'covariate_id'] :
+				if row[field] != None :
+					match = match and row[field] == row_in[field]
+			if match :
+				smooth_id = row['smooth_id']
+	if smooth_id != None :
+		age_id  = row_in['age_id']
+		time_id = row_in['time_id']
+		for row in table_data['smooth_grid'] :
+			match = row['smooth_id'] == smooth_id
+			match = match and row['age_id'] == age_id
+			match = match and row['time_id'] == time_id
+			if match :
+				prior_id   = row['value_prior_id']
+				get_prior_info(row_out, prior_id)
 	csv_writer.writerow(row_out)
 	var_id += 1
 # ----------------------------------------------------------------------------
