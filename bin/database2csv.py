@@ -64,26 +64,37 @@ if have_fit_var :
 for table in table_list :
 	table_data[table] = dismod_at.get_table_dict(connection, table)
 # ----------------------------------------------------------------------------
+def convert2output(value_in) :
+	if value_in == None :
+		value_out = ''
+	elif type(value_in) is float :
+		value_out = '%13.5g' % value_in
+	else :
+		value_out = str(value_in)
+	return value_out
+# ----------------------------------------------------------------------------
 def table_lookup(table_name, row_id, column_name) :
 	if row_id == None :
 		return ''
-	value = table_data[table_name][row_id][column_name]
-	if type(value) is float :
-		value = '%13.5g' % value
-	else :
-		value = str(value)
-	assert( value != '' )
-	return value
+	value_in = table_data[table_name][row_id][column_name]
+	return convert2output(value_in)
 # ----------------------------------------------------------------------------
-def get_prior_info(row, prior_id) :
-	for field in [ 'lower', 'upper', 'mean', 'std', 'eta' ] :
-		row[field] = str( table_data['prior'][prior_id][field] )
-	density_id = table_data['prior'][prior_id]['density_id']
-	row['density'] = table_data['density'][density_id]['density_name']
-	if row['std'] == None :
-		row['std'] = ''
-	if row['eta'] == None :
-		row['eta'] = ''
+def get_prior_info(row_out, prior_id_dict) :
+	extension2name = {'_v':'value_', '_a':'dage_', '_t':'dtime_' }
+	for extension in extension2name :
+		name     = extension2name[extension]
+		key      = name + 'prior_id'
+		prior_id = prior_id_dict[key]
+		for field_in in [ 'lower', 'upper', 'mean', 'std', 'eta' ] :
+			field_out = field_in + extension
+			row_out[field_out] = ''
+			if prior_id != None :
+				value_in = table_data['prior'][prior_id][field_in]
+				row_out[field_out] = convert2output( value_in )
+				density_id = table_data['prior'][prior_id]['density_id']
+				value_in   = table_data['density'][density_id]['density_name']
+				field_out  = 'density' + extension
+				row_out[field_out] = convert2output( value_in )
 # ----------------------------------------------------------------------------
 file_name = os.path.join(directory_arg, 'var.csv')
 csv_file  = open(file_name, 'w')
@@ -97,21 +108,18 @@ for row in table_data['option'] :
 header = [
 	'var_id',
 	'var_type',
-	'fixed',
 	'age',
 	'time',
 	'rate',
 	'integrand',
-	'fit_value',
-	'lower',
-	'upper',
-	'mean',
-	'std',
-	'eta',
-	'density',
 	'covariate',
 	'node',
+	'fixed',
+	'fit_value'
 ]
+for extension in ['_v', '_a', '_t' ] :
+	for root in ['lower', 'upper', 'mean', 'std', 'eta', 'density' ] :
+		header.append( root + extension )
 csv_writer = csv.DictWriter(csv_file, fieldnames=header)
 csv_writer.writeheader()
 var_id  = 0
@@ -142,9 +150,8 @@ for row_in in table_data['var'] :
 	#
 	smooth_id = row_in['smooth_id']
 	if row_in['var_type'].startswith('mulstd_') :
-		row       = table_data['smooth'][smooth_id]
-		prior_id  = row['mulstd_value_prior_id']
-		get_prior_info(row_out, prior_id)
+		prior_id_dict = table_data['smooth'][smooth_id]
+		get_prior_info(row_out, prior_id_dict)
 	else :
 		age_id    = row_in['age_id']
 		time_id   = row_in['time_id']
@@ -153,8 +160,8 @@ for row_in in table_data['var'] :
 			match = match and row['age_id'] == age_id
 			match = match and row['time_id'] == time_id
 			if match :
-				prior_id   = row['value_prior_id']
-				get_prior_info(row_out, prior_id)
+				prior_id_dict = row
+				get_prior_info(row_out, prior_id_dict)
 	csv_writer.writerow(row_out)
 	var_id += 1
 # ----------------------------------------------------------------------------
