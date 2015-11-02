@@ -273,3 +273,5 @@ for subset_row in table_data['data_subset'] :
 		row_out['avgint']   = convert2output( row['avg_integrand'] )
 		row_out['residual'] = convert2output( row['weighted_residual'] )
 	csv_writer.writerow(row_out)
+	subset_id += 1
+csv_file.close()
