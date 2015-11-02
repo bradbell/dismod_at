@@ -42,12 +42,19 @@ connection  = dismod_at.create_connection(file_name, new)
 cmd     = "SELECT * FROM sqlite_master WHERE type='table' AND name='fit_var'"
 cursor  = connection.cursor()
 result  = cursor.execute(cmd).fetchall()
-have_fit_var = len(result) > 0
+have_fit = len(result) > 0
+if have_fit :
+	assert len(result) == 1
+	cmd.replace('fit_var', 'fit_residual')
+	result  = cursor.execute(cmd).fetchall()
+	assert len(result) == 1
 #
 table_data  = dict()
 table_list  = [
 	'age',
 	'covariate',
+	'data',
+	'data_subset',
 	'density',
 	'integrand',
 	'option',
@@ -57,12 +64,18 @@ table_list  = [
 	'rate',
 	'smooth_grid',
 	'time',
-	'var'
+	'var',
+	'weight'
 ]
-if have_fit_var :
+if have_fit :
 	table_list.append('fit_var')
+	table_list.append('fit_residual')
 for table in table_list :
 	table_data[table] = dismod_at.get_table_dict(connection, table)
+#
+for row in table_data['option'] :
+	if row['option_name'] == 'parent_node_id' :
+		parent_node_id = int( row['option_value'] )
 # ----------------------------------------------------------------------------
 def convert2output(value_in) :
 	if value_in == None :
@@ -96,15 +109,24 @@ def get_prior_info(row_out, prior_id_dict) :
 				field_out  = 'density' + extension
 				row_out[field_out] = convert2output( value_in )
 # ----------------------------------------------------------------------------
-file_name = os.path.join(directory_arg, 'var.csv')
+def node_id2child_or_parent(node_id) :
+	if node_id == parent_node_id :
+		name = table_data['node'][node_id]['node_name']
+		return name
+	descendant_id = node_id
+	while descendant_id != None :
+		parent_id  = table_data['node'][descendant_id]['parent']
+		if parent_id == parent_node_id :
+			name = table_data['node'][descendant_id]['node_name']
+			return name
+		descendant_id = parent_id
+	return None
+# ============================================================================
+# variable.csv
+# ============================================================================
+file_name = os.path.join(directory_arg, 'variable.csv')
 csv_file  = open(file_name, 'w')
-# ----------------------------------------------------------------------------
-# parent_node_id
-for row in table_data['option'] :
-	if row['option_name'] == 'parent_node_id' :
-		parent_node_id = int( row['option_value'] )
-# ----------------------------------------------------------------------------
-
+#
 header = [
 	'var_id',
 	'var_type',
@@ -140,7 +162,7 @@ for row_in in table_data['var'] :
 	)
 	row_out['node'] = table_lookup('node', row_in['node_id'], 'node_name')
 	#
-	if have_fit_var :
+	if have_fit :
 		row_out['fit_value'] = table_lookup('fit_var', var_id, 'fit_var_value')
 	#
 	row_out['fixed'] = 'true'
@@ -166,3 +188,70 @@ for row_in in table_data['var'] :
 	var_id += 1
 # ----------------------------------------------------------------------------
 csv_file.close()
+# ============================================================================
+# data.csv
+# ============================================================================
+file_name = os.path.join(directory_arg, 'data.csv')
+csv_file  = open(file_name, 'w')
+#
+header = [
+	'data_id',
+	'age_lo',
+	'age_up',
+	'time_lo',
+	'time_up',
+	'integrand',
+	'weight',
+	'hold_out',
+	'density',
+	'meas_value',
+	'meas_std',
+	'avgint',
+	'residual',
+	'node'
+]
+for row in table_data['covariate'] :
+	header.append( row['covariate_name'] )
+csv_writer = csv.DictWriter(csv_file, fieldnames=header)
+csv_writer.writeheader()
+#
+row_out = dict()
+for field in header :
+	row_out[field] = ''
+subset_id = 0
+for subset_row in table_data['data_subset'] :
+	for field in header :
+		row_out[field] = ''
+	data_id = subset_row['data_id']
+	row_in  = table_data['data'][data_id]
+	#
+	row_out['data_id']     = data_id
+	row_out['age_lo']      = row_in['age_lower']
+	row_out['age_up']      = row_in['age_upper']
+	row_out['time_lo']     = row_in['time_lower']
+	row_out['time_up']     = row_in['time_upper']
+	row_out['hold_out']    = row_in['hold_out']
+	row_out['meas_value']  = convert2output( row_in['meas_value'] )
+	row_out['meas_std']    = convert2output( row_in['meas_std'] )
+	row_out['integrand'] = table_lookup(
+		'integrand', row_in['integrand_id'], 'integrand_name'
+	)
+	row_out['weight'] = table_lookup(
+		'weight', row_in['weight_id'], 'weight_name'
+	)
+	row_out['density'] = table_lookup(
+		'density', row_in['density_id'], 'density_name'
+	)
+	row_out['node'] = node_id2child_or_parent( row_in['node_id'] )
+	#
+	covariate_id = 0
+	for row in table_data['covariate'] :
+		field_in  = 'x_' + str(covariate_id)
+		field_out = row['covariate_name']
+		row_out[field_out] = row_in[field_in]
+	#
+	if have_fit :
+		row                 = table_data['fit_residual'][subset_id]
+		row_out['avgint']   = convert2output( row['avg_integrand'] )
+		row_out['residual'] = convert2output( row['weighted_residual'] )
+	csv_writer.writerow(row_out)
