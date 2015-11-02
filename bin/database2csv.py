@@ -52,6 +52,7 @@ table_list  = [
 	'age',
 	'covariate',
 	'integrand',
+	'option',
 	'node',
 	'rate',
 	'time',
@@ -76,9 +77,16 @@ def table_lookup(table_name, row_id, column_name) :
 file_name = os.path.join(directory_arg, 'var.csv')
 csv_file  = open(file_name, 'w')
 # ----------------------------------------------------------------------------
+# parent_node_id
+for row in table_data['option'] :
+	if row['option_name'] == 'parent_node_id' :
+		parent_node_id = int( row['option_value'] )
+# ----------------------------------------------------------------------------
+
 header = [
 	'var_id',
 	'var_type',
+	'fixed',
 	'age',
 	'time',
 	'rate',
@@ -91,6 +99,8 @@ csv_writer = csv.DictWriter(csv_file, fieldnames=header)
 csv_writer.writeheader()
 var_id  = 0
 row_out = dict()
+for field in header :
+	row_out[field] = ''
 for row_in in table_data['var'] :
 	row_out['var_id']    = var_id
 	row_out['var_type']  = row_in['var_type']
@@ -104,10 +114,14 @@ for row_in in table_data['var'] :
 		'covariate', row_in['covariate_id'], 'covariate_name'
 	)
 	row_out['node'] = table_lookup('node', row_in['node_id'], 'node_name')
+	#
 	if have_fit_var :
 		row_out['fit_value'] = table_lookup('fit_var', var_id, 'fit_var_value')
-	else :
-		row_out['fit_value'] = ''
+	#
+	row_out['fixed'] = 'true'
+	if row_in['var_type'] == 'rate' :
+		if row_in['node_id'] != parent_node_id :
+			row_out['fixed'] = 'false'
 	csv_writer.writerow(row_out)
 	var_id += 1
 # ----------------------------------------------------------------------------
