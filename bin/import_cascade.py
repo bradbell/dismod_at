@@ -752,6 +752,10 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 		# determine value_prior_id
 		name  = rate + '_prior'
 		prior_in = rate_prior_in_dict[rate][age_id]
+		if rate == 'omega' :
+			# The cascade converts all cause mortality to constraints on omega
+			# and does not really use its prior for omega, so overide its mean.
+			prior_in['mean'] = 0.01
 		#
 		if rate_is_zero :
 			prior_in['lower'] = '0'
