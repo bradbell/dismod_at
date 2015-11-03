@@ -29,14 +29,14 @@ if sys.argv[0] != 'bin/database2csv.py' :
 	msg  = 'bin/database2csv.py: must be executed from its parent directory'
 	sys.exit(msg)
 #
-usage = 'bin/database2csv.py directory database_file'
-if len(sys.argv) != 3 :
+usage = 'bin/database2csv.py database_file'
+if len(sys.argv) != 2 :
 	sys.exit(usage)
 #
-directory_arg     = sys.argv[1]
-database_file_arg = sys.argv[2]
+database_file_arg = sys.argv[1]
+database_dir      = os.path.split(database_file_arg)[0]
 # ----------------------------------------------------------------------------
-file_name   = os.path.join(directory_arg, database_file_arg)
+file_name   = database_file_arg
 new         = False
 connection  = dismod_at.create_connection(file_name, new)
 cmd     = "SELECT * FROM sqlite_master WHERE type='table' AND name='var'"
@@ -140,7 +140,7 @@ def node_id2child_or_parent(node_id) :
 # ============================================================================
 # variable.csv
 # ============================================================================
-file_name = os.path.join(directory_arg, 'variable.csv')
+file_name = os.path.join(database_dir, 'variable.csv')
 csv_file  = open(file_name, 'w')
 #
 header = [
@@ -207,7 +207,7 @@ csv_file.close()
 # ============================================================================
 # data.csv
 # ============================================================================
-file_name = os.path.join(directory_arg, 'data.csv')
+file_name = os.path.join(database_dir, 'data.csv')
 csv_file  = open(file_name, 'w')
 #
 header = [
