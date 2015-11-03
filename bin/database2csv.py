@@ -39,13 +39,20 @@ database_file_arg = sys.argv[2]
 file_name   = os.path.join(directory_arg, database_file_arg)
 new         = False
 connection  = dismod_at.create_connection(file_name, new)
-cmd     = "SELECT * FROM sqlite_master WHERE type='table' AND name='fit_var'"
+cmd     = "SELECT * FROM sqlite_master WHERE type='table' AND name='var'"
 cursor  = connection.cursor()
+result  = cursor.execute(cmd).fetchall()
+if len(result) == 0 :
+	msg  = 'bin/database2csv.py: must first run init command; i.e.\n'
+	msg += '\tdismod_at init ' + file_name
+	sys.exit(msg)
+#
+cmd = cmd.replace('var', 'fit_var')
 result  = cursor.execute(cmd).fetchall()
 have_fit = len(result) > 0
 if have_fit :
 	assert len(result) == 1
-	cmd.replace('fit_var', 'fit_residual')
+	cmd = cmd.replace('fit_var', 'fit_residual')
 	result  = cursor.execute(cmd).fetchall()
 	assert len(result) == 1
 #
