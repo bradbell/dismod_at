@@ -616,6 +616,50 @@ for time_id in range( n_time ) :
 		dtime_prior_id
 	] )
 # --------------------------------------------------------------------------
+# child_omega_smooth_id
+#
+n_age                 = len(age_list)
+n_time                = len(time_list)
+lower      = None
+upper      = None
+mean       = 0.0
+density_id = density_name2id['gaussian']
+eta        = None
+#
+std    = float( option_table_in['child_dtime_std'] )
+std    = std * math.sqrt( n_time / n_age )
+name   = 'child_omega_dage_piror'
+child_omega_dage_prior_id = len( prior_row_list )
+prior_row_list.append(
+		[ name , lower, upper, mean, std, eta, density_id ]
+)
+name                  = 'child_omega_smooth'
+child_omega_smooth_id = len(smooth_row_list)
+smooth_row_list.append(
+		[ name , n_age, n_time, None, None, None ]
+)
+value_prior_id = child_value_prior_id
+for age_id in range( n_age ):
+	if age_id + 1 < n_age :
+		dage_prior_id = child_omega_dage_prior_id
+	else :
+		dage_prior_id = None
+	#
+	for time_id in range( n_time ) :
+		if time_id + 1 < n_time :
+			dtime_prior_id = child_dtime_prior_id
+		else :
+			dtime_prior_id = None
+		#
+		smooth_grid_row_list.append( [
+			child_omega_smooth_id,
+			age_id,
+			time_id,
+			value_prior_id,
+			dage_prior_id,
+			dtime_prior_id
+		] )
+# --------------------------------------------------------------------------
 # rate_dtime_prior_id
 #
 rate_dtime_prior_id = dict()
@@ -784,10 +828,12 @@ col_name = [  'rate_name', 'parent_smooth_id', 'child_smooth_id'  ]
 col_type = [  'text',      'integer',         'integer'          ]
 row_list = list()
 #
-for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
+for rate in [ 'pini', 'iota', 'rho', 'chi' ] :
 	row_list.append(
 		[ rate, rate_smooth_id[rate], child_smooth_id ]
 )
+rate     = 'omega'
+row_list.append( [ rate, rate_smooth_id[rate], child_omega_smooth_id ] )
 tbl_name = 'rate'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # --------------------------------------------------------------------------

@@ -477,18 +477,18 @@ smooth_info::smooth_info(
 	if( n_age != size_t( smooth_table[smooth_id].n_age ) )
 	{	table_name = "smooth";
 		msg  = "In smooth_grid table with smooth_id = " + to_string(smooth_id);
-		msg += ", n_age = " + to_string(n_age) + ".";
+		msg += ", n_age = " + to_string(n_age) + ".\n";
 		msg +=  "In smooth table n_age = ";
-		msg += to_string( smooth_table[smooth_id].n_age );
+		msg += to_string( smooth_table[smooth_id].n_age ) + ".";
 		error_exit(db, msg, table_name, smooth_id);
 	}
 	size_t n_time = time_vec.size();
 	if( n_time != size_t( smooth_table[smooth_id].n_time ) )
 	{	table_name = "smooth";
 		msg  = "In smooth_grid table with smooth_id = " + to_string(smooth_id);
-		msg += ", n_time = " + to_string(n_time) + ".";
+		msg += ", n_time = " + to_string(n_time) + ".\n";
 		msg +=  "In smooth table n_time = ";
-		msg += to_string( smooth_table[smooth_id].n_time );
+		msg += to_string( smooth_table[smooth_id].n_time ) + ".";
 		error_exit(db, msg, table_name, smooth_id);
 	}
 
