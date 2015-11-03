@@ -445,7 +445,8 @@ for row_in in data_table_in :
 		time_upper    # 10
 	]
 	if mtall :
-		mtall_list.append(row_out)
+		if float(age_lower) >= 5.0 :
+			mtall_list.append(row_out)
 	else :
 		for name in covariate_name2id :
 			value        = row_in[name]
