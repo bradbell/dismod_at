@@ -48,6 +48,17 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-03$$
+$list number$$
+Change $code bin/database2csv.py$$ to only take one argument.
+$lnext
+Change all the $cref/commands/command/$$ to have syntax
+$codei%
+	dismod_at %file_name% %command%
+%$$
+i.e., switch the order of $icode file_name$$ and $icode command$$.
+$lend
+
 $head 11-02$$
 $list number$$
 Added the data base dump program

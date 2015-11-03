@@ -307,7 +307,7 @@ def example_db (file_name) :
 file_name      = 'example.db'
 example_db(file_name)
 program        = '../devel/dismod_at'
-cmd            = [ program, 'init', file_name ]
+cmd            = [ program, file_name, 'init' ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
@@ -363,7 +363,7 @@ connection.close()
 # -----------------------------------------------------------------------
 # Run the simulate and sample commands
 for command in [ 'simulate', 'sample' ] :
-	cmd            = [ program, command, file_name ]
+	cmd = [ program, file_name, command ]
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :

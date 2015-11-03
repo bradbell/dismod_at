@@ -56,7 +56,7 @@ file_name              = 'example.db'
 # create the var table
 program        = '../../devel/dismod_at'
 command        = 'init'
-cmd  = [ program, command, file_name ]
+cmd = [ program, file_name, command ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
@@ -91,7 +91,7 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 # simulate command
 program        = '../../devel/dismod_at'
 command        = 'simulate'
-cmd  = [ program, command, file_name ]
+cmd = [ program, file_name, command ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
@@ -100,7 +100,7 @@ if flag != 0 :
 # sample command
 program        = '../../devel/dismod_at'
 command        = 'sample'
-cmd  = [ program, command, file_name ]
+cmd = [ program, file_name, command ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :

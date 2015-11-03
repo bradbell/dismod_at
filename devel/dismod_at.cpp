@@ -69,7 +69,7 @@ $$
 $section The Variable Command$$
 
 $head Syntax$$
-$codei%dismod_at init %file_name%$$
+$codei%dismod_at %file_name% init%$$
 
 $head Purpose$$
 This command should be executed whenever any of the
@@ -376,7 +376,7 @@ $$
 $section The Start Command$$
 
 $head Syntax$$
-$codei%dismod_at start %file_name%$$
+$codei%dismod_at %file_name% start%$$
 
 $head file_name$$
 Is an
@@ -443,7 +443,7 @@ $$
 $section The Fit Command$$
 
 $head Syntax$$
-$codei%dismod_at fit %file_name%$$
+$codei%dismod_at %file_name% fit%$$
 
 $head file_name$$
 Is an
@@ -598,7 +598,7 @@ $$
 $section The Truth Command$$
 
 $head Syntax$$
-$codei%dismod_at truth %file_name%$$
+$codei%dismod_at %file_name% truth%$$
 
 $head file_name$$
 Is an
@@ -672,7 +672,7 @@ $spell
 $$
 
 $head Syntax$$
-$codei%dismod_at simulate %file_name%$$
+$codei%dismod_at %file_name% simulate%$$
 
 $head file_name$$
 Is an
@@ -801,7 +801,7 @@ $$
 $section The Sample Command$$
 
 $head Syntax$$
-$codei%dismod_at sample %file_name%$$
+$codei%dismod_at %file_name% sample%$$
 
 $head file_name$$
 Is an
@@ -942,7 +942,7 @@ $$
 $section The Predict Command$$
 
 $head Syntax$$
-$codei%dismod_at predict %file_name%$$
+$codei%dismod_at %file_name% predict%$$
 
 $head file_name$$
 Is an
@@ -1082,14 +1082,14 @@ int main(int n_arg, const char** argv)
 	program       += DISMOD_AT_VERSION;
 	if( n_arg != 3 )
 	{	cerr << program << endl
-		<< "usage:     dismod_at command file_name\n"
+		<< "usage:     dismod_at file_name command\n"
 		<< "command:   init, start, fit, truth, simulate, sample, or predict\n"
 		<< "file_name: sqlite database\n";
 		std::exit(1);
 	}
 	size_t i_arg = 0;
-	const string command_arg    = argv[++i_arg];
 	const string file_name_arg  = argv[++i_arg];
+	const string command_arg    = argv[++i_arg];
 	bool ok = false;
 	ok     |= command_arg == "init";
 	ok     |= command_arg == "start";
