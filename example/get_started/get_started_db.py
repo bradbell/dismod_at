@@ -203,6 +203,7 @@ def get_started_db (file_name) :
 	option_dict = [
 		{ 'name':'parent_node_name',       'value':'world'        },
 		{ 'name':'number_sample',          'value':'1'            },
+		{ 'name':'fit_sample_index',       'value':''                  },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_pos' },

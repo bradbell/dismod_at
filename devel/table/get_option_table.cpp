@@ -88,6 +88,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	//
 	const char* name_list[] = {
 		"number_sample",
+		"fit_sample_index",
 		"ode_step_size",
 		"parent_node_id",
 		"random_seed",
@@ -128,6 +129,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	int derivative_test_fixed_level = -1;
 	int quasi_fixed = -1;
 	//
+	int number_sample = -1;
+	string fit_sample_index;
 	for(size_t i = 0; i < n_name; i++)
 	{	size_t match = n_option;
 		for(size_t option_id = 0; option_id < n_option; option_id++)
@@ -166,10 +169,21 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			}
 		}
 		if( name_vec[i] == "number_sample" )
-		{	bool ok = std::atoi( option_value[match].c_str() ) >= 1;
+		{	number_sample = std::atoi( option_value[match].c_str() );
+			bool ok = number_sample >= 1;
 			if( ! ok )
 			{	msg = "option_value is < 1 for number_sample";
 				error_exit(db, msg, table_name, match);
+			}
+		}
+		if( name_vec[i] == "fit_sample_index" )
+		{	fit_sample_index = option_value[match].c_str();
+			if( fit_sample_index != "" )
+			{	bool ok = std::atoi( fit_sample_index.c_str() ) >= 0;
+				if( ! ok )
+				{	msg = "option_value is < 0 for fit_sample_index";
+					error_exit(db, msg, table_name, match);
+				}
 			}
 		}
 		if( name_vec[i] == "quasi_fixed" )
@@ -244,6 +258,12 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	{	msg  = "quasi_fixed option is true and derivative_test_fixed";
 		msg += " is second-order or only-second-order";
 		error_exit(db, msg, table_name);
+	}
+	if( fit_sample_index != "" )
+	{	if( std::atoi( fit_sample_index.c_str() ) >= number_sample )
+		{	msg  = "sample_index is greater than or equal number_sample";
+			error_exit(db, msg, table_name);
+		}
 	}
 	//
 	// return table

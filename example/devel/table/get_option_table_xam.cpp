@@ -60,7 +60,9 @@ bool get_option_table_xam(void)
 	"insert into option values(10, 'derivative_test_random', 'second-order' )",
 	"insert into option values(11,'max_num_iter_random',    '100'          )",
 	"insert into option values(12,'print_level_random',     '0'            )",
-	"insert into option values(13,'tolerance_random',       '1e-8'         )"
+	"insert into option values(13,'tolerance_random',       '1e-8'         )",
+
+	"insert into option values(14,'fit_sample_index',       ''             )"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -70,7 +72,7 @@ bool get_option_table_xam(void)
 	// get the option table
 	vector<dismod_at::option_struct> option_table =
 		dismod_at::get_option_table(db);
-	ok  &= option_table.size() == 14;
+	ok  &= option_table.size() == 15;
 	//
 	ok  &= option_table[0].option_name    == "parent_node_id";
 	ok  &= option_table[0].option_value   == "0";
@@ -113,6 +115,9 @@ bool get_option_table_xam(void)
 	//
 	ok  &= option_table[13].option_name    == "tolerance_random";
 	ok  &= option_table[13].option_value   == "1e-8";
+	//
+	ok  &= option_table[14].option_name    == "fit_sample_index";
+	ok  &= option_table[14].option_value   == "";
 	//
 	// close database and return
 	sqlite3_close(db);

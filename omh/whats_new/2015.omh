@@ -327,7 +327,7 @@ $code example/devel/mixed_cppad/user/capture_xam.cpp$$
 $head 08-21$$
 $list number$$
 Fix discussion of
-$cref/text can be null, not empty/input/Text Can be Null, not Empty/$$.
+$cref/text can be empty, not null/input/Text Can be Empty, not Null/$$.
 $lnext
 Remove the special prior that is a constant one from the
 $cref user$$ examples (since 08-12 $code null$$ can be used to
@@ -690,7 +690,7 @@ $lend
 $head 07-11$$
 $list number$$
 Add an error message when the text value in a table is empty; see
-$cref/text can be null, not empty/input/Text Can be Null, not Empty/$$.
+$cref/text can be empty, not null/input/Text Can be Empty, not Null/$$.
 Allow for $code null$$ integer values; see
 $cref/integer can be null/input/Integer Can be Null/$$.
 $lnext

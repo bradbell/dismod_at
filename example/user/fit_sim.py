@@ -7,15 +7,15 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_simulated.py$$ $newlinech #$$
+# $begin user_fit_sim.py$$ $newlinech #$$
 # $spell
 # $$
 #
-# $section A Simulate Data Example$$
+# $section Running Fit Command on Simulated Data Example$$
 #
 # $code
 # $verbatim%
-#	speed/simulated.py
+#	example/user/fit_sim.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -26,14 +26,14 @@ iota_parent               = 0.05
 rho_parent                = 0.2
 mulcov_income_iota_true   = 1.0
 mulcov_sex_rho_true       = -1.0
-n_children                = 5
+n_children                = 2
 n_data                    = 100
 # ------------------------------------------------------------------------
 import sys
 import os
 import distutils.dir_util
 import subprocess
-test_program = 'speed/simulated.py'
+test_program = 'example/user/fit_sim.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -44,9 +44,9 @@ if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 sys.path.append( os.getcwd() + '/python' )
 import dismod_at
 #
-# change into the build/speed directory
-distutils.dir_util.mkpath('build/speed')
-os.chdir('build/speed')
+# change into the build/example/user directory
+distutils.dir_util.mkpath('build/example/user')
+os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
@@ -136,10 +136,11 @@ def example_db (file_name) :
 		row['income']    = data_id / float(n_data-1)
 		row['sex']       = ( data_id % 3 - 1.0 ) / 2.0
 		row['integrand'] = integrand_dict[ data_id % 2 ]['name']
+		# use small error so can fit quickly for testing
 		if row['integrand'] == 'Sincidence' :
-			row['meas_std']  = 0.05 * iota_parent
+			row['meas_std']  = 0.01 * iota_parent
 		elif row['integrand'] == 'prevalence' :
-			row['meas_std']  = 0.05 * (iota_parent / rho_parent)
+			row['meas_std']  = 0.01 * (iota_parent / rho_parent)
 		else :
 			assert(False)
 		data_dict.append( copy.copy(row) )
@@ -272,7 +273,7 @@ def example_db (file_name) :
 		{ 'name':'quasi_fixed',            'value':'true'         },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
 		{ 'name':'max_num_iter_fixed',     'value':'100'          },
-		{ 'name':'print_level_fixed',      'value':'5'            },
+		{ 'name':'print_level_fixed',      'value':'0'            },
 		{ 'name':'tolerance_fixed',        'value':'1e-8'         },
 
 		{ 'name':'derivative_test_random', 'value':'second-order' },
@@ -307,7 +308,7 @@ def example_db (file_name) :
 # Run the init command to create the var table
 file_name      = 'example.db'
 example_db(file_name)
-program        = '../devel/dismod_at'
+program        = '../../devel/dismod_at'
 cmd            = [ program, file_name, 'init' ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
@@ -363,37 +364,32 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
 # Run the simulate and sample commands
-for command in [ 'simulate', 'sample' ] :
+for command in [ 'simulate', 'start', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :
 		sys.exit('The dismod_at ' + command + ' command failed')
 # -----------------------------------------------------------------------
-# check simulation results
+# check fit results
 new          = False
 connection   = dismod_at.create_connection(file_name, new)
-sample_dict  = dismod_at.get_table_dict(connection, 'sample')
+fit_var_dict = dismod_at.get_table_dict(connection, 'fit_var')
 connection.close()
 #
-number_variable = len(var_dict)
-assert( len(sample_dict) % number_variable == 0 )
-number_sample   = int( len(sample_dict) / number_variable )
-max_error       = 0.0
-for sample_index in range(number_sample) :
-	for var_id in range( len(var_dict) ) :
-		sample_id  = sample_index * number_variable + var_id
-		row        = sample_dict[sample_id]
-		fit_value  = row['var_value']
-		true_value = var_id2true[var_id]
-		if true_value == 0.0 :
-			max_error = max(abs(fit_value) , max_error)
-		else :
-			max_error = max( abs(fit_value / true_value - 1.0), max_error)
+max_error    = 0.0
+for var_id in range( len(var_dict) ) :
+	row      = fit_var_dict[var_id]
+	fit_value  = row['fit_var_value']
+	true_value = var_id2true[var_id]
+	if true_value == 0.0 :
+		max_error = max(abs(fit_value) , max_error)
+	else :
+		max_error = max( abs(fit_value / true_value - 1.0), max_error)
 if max_error > 5e-2 :
 	print('max_error = ', max_error)
 	assert(False)
 # -----------------------------------------------------------------------------
-print('simulated.py: OK')
+print('fit_sim.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

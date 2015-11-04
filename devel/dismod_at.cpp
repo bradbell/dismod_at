@@ -471,7 +471,7 @@ $end
 void fit_command(
 	sqlite3*                                     db               ,
 	dismod_at::data_model&                       data_object      ,
-	const vector<dismod_at::data_subset_struct>& data_subset_obj  ,
+	vector<dismod_at::data_subset_struct>&       data_subset_obj  ,
 	const dismod_at::pack_info&                  pack_object      ,
 	const dismod_at::db_input_struct&            db_input         ,
 	const vector<dismod_at::smooth_info>&        s_info_vec       ,
@@ -481,6 +481,32 @@ void fit_command(
 )
 {	using std::string;
 	using dismod_at::to_string;
+	// -----------------------------------------------------------------------
+	string fit_sample_index = option_map["fit_sample_index"];
+	if( fit_sample_index != "" )
+	{	size_t sample_index = std::atoi( fit_sample_index.c_str() );
+		//
+		// get simulation data
+		vector<dismod_at::simulate_struct> simulate_table =
+				dismod_at::get_simulate_table(db);
+		size_t n_subset = data_subset_obj.size();
+		size_t n_sample = simulate_table.size() / n_subset;
+		//
+		if( sample_index >= n_sample )
+		{	string msg = "dismod_at fit command fit_sample_index = ";
+			msg += fit_sample_index + "\nis greater than number of samples";
+			msg += " in the simulate table";
+			string table_name = "simulate";
+			dismod_at::error_exit(db, msg, table_name);
+		}
+		// replace the data with the simulated values
+		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+		{	size_t simulate_id = n_subset * sample_index + subset_id;
+			data_subset_obj[subset_id].meas_value =
+				simulate_table[simulate_id].meas_value;
+		}
+		data_object.replace_like(data_subset_obj);
+	}
 	// -----------------------------------------------------------------------
 	// read start_var table into start_var
 	vector<double> start_var;

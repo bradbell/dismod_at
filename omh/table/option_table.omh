@@ -27,6 +27,11 @@ $section The Option Table$$
 Each $code dismod_at$$ $cref command$$ has a required set of
 $icode option_name$$, $icode option_value$$ pairs
 that must be present in the option table.
+This table is special in that you can change almost all its values
+invalidating the $cref/output tables/output/$$.
+The one exception is that if you change the
+$cref/parent_node_id/option_table/parent_node_id/$$,
+all of the output tables become invalid.
 
 $head option_id$$
 This column has type $code integer$$ and is the primary key for this table.
@@ -71,6 +76,14 @@ the corresponding $icode option_value$$
 is a positive integer specifying the
 number of independent samples of the
 $cref/data subset/data_subset_table/$$.
+
+$head fit_sample_index$$
+If the value of $icode fit_sample_index$$ is $code null$$,
+the measurement values in the $cref/data_table/data_table/meas_value/$$
+are used during the $cref fit_command$$.
+Otherwise, $icode fit_sample_index$$ is the
+$icode sample_index$$ for the measurement values in the
+$cref/simulate_table/simulate_table/meas_value/$$.
 
 $head random_seed$$
 This is a non-negative integer used to seed the random number
