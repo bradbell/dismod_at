@@ -324,22 +324,23 @@ CppAD::vector<double> fit_model::get_solution(void)
 // private functions
 // ===========================================================================
 // ran_like
-fit_model::a2d_vector fit_model::ran_like(
-	const a2d_vector& fixed_vec   ,
-	const a2d_vector& random_vec  )
+template <class Float>
+CppAD::vector<Float> fit_model::implement_ran_like(
+	const CppAD::vector<Float>& fixed_vec   ,
+	const CppAD::vector<Float>& random_vec  )
 {	// packed vector
-	a2d_vector a2_pack_vec( pack_object_.size() );
+	CppAD::vector<Float> pack_vec( pack_object_.size() );
 	//
 	// put the fixed and random effects into pack_vec
-	put_fixed_effect(pack_object_, a2_pack_vec, fixed_vec);
-	put_random_effect(pack_object_, a2_pack_vec, random_vec);
+	put_fixed_effect(pack_object_, pack_vec, fixed_vec);
+	put_random_effect(pack_object_, pack_vec, random_vec);
 	//
 	// evaluate the data and prior residuals
-	CppAD::vector< residual_struct<a2_double> > data_like, prior_ran;
+	CppAD::vector< residual_struct<Float> > data_like, prior_ran;
 	bool hold_out = true;
 	bool parent   = false;
-	data_like  = data_object_.like_all(hold_out, parent, a2_pack_vec);
-	prior_ran  = prior_object_.random(a2_pack_vec);
+	data_like  = data_object_.like_all(hold_out, parent, pack_vec);
+	prior_ran  = prior_object_.random(pack_vec);
 	//
 	// number of data and prior residuals
 	size_t n_data_like  = data_like.size();
@@ -358,10 +359,10 @@ fit_model::a2d_vector fit_model::ran_like(
 			n_abs++;
 	}
 	// size ran_den
-	a2d_vector ran_den(1 + n_abs);
+	CppAD::vector<Float> ran_den(1 + n_abs);
 	//
 	// initialize summation of smooth part
-	ran_den[0] = a2_double(0.0);
+	ran_den[0] = Float(0.0);
 	//
 	// initialize index for non-smooth part
 	size_t i_abs = 0;
@@ -386,6 +387,16 @@ fit_model::a2d_vector fit_model::ran_like(
 	//
 	return ran_den;
 }
+//
+fit_model::a2d_vector fit_model::ran_like(
+	const a2d_vector& fixed_vec    ,
+	const a2d_vector& random_vec   )
+{	return implement_ran_like(fixed_vec, random_vec); }
+//
+fit_model::a1d_vector fit_model::ran_like(
+	const a1d_vector& fixed_vec    ,
+	const a1d_vector& random_vec   )
+{	return implement_ran_like(fixed_vec, random_vec); }
 // ---------------------------------------------------------------------------
 // fix_like
 fit_model::a1d_vector fit_model::fix_like(

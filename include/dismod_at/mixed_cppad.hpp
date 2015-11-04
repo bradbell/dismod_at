@@ -82,6 +82,10 @@ $codep */
 		const a2d_vector& fixed_vec  ,
 		const a2d_vector& random_vec
 	) = 0;
+	virtual a1d_vector ran_like(
+		const a1d_vector& fixed_vec  ,
+		const a1d_vector& random_vec
+	) = 0;
 /* $$
 See $cref/ran_like/mixed_cppad_ran_like/$$.
 

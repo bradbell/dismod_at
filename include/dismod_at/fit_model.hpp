@@ -62,9 +62,18 @@ namespace dismod_at {
 		CppAD::vector<double>              solution_;
 		// ---------------------------------------------------------------
 		// pass random likelihood to base class
+		template <class Float>
+		CppAD::vector<Float> implement_ran_like(
+			const CppAD::vector<Float>& fixed_vec   ,
+			const CppAD::vector<Float>& random_vec
+		);
 		virtual a2d_vector ran_like(
 			const a2d_vector& fixed_vec   ,
 			const a2d_vector& random_vec
+		);
+		virtual a1d_vector ran_like(
+			const a1d_vector& fixed_vec   ,
+			const a1d_vector& random_vec
 		);
 		// pass fixed negative log-likelihood to base class
 		virtual a1d_vector fix_like(

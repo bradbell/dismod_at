@@ -90,6 +90,10 @@ public:
 		const vector<a2_double>& fixed_vec  ,
 		const vector<a2_double>& random_vec )
 	{	return vector<a2_double>(0); } // empty vector
+	virtual vector<a1_double> ran_like(
+		const vector<a1_double>& fixed_vec  ,
+		const vector<a1_double>& random_vec )
+	{	return vector<a1_double>(0); } // empty vector
 	//
 	virtual vector<a1_double> fix_like(
 		const vector<a1_double>& fixed_vec  )
