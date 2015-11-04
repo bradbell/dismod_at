@@ -57,6 +57,13 @@ $icode fit_sample_index$$ is not empty.
 $lnext
 Add a user example that uses $icode fit_sample_index$$
 to fit simulated data; see $cref user_fit_sim.py$$.
+$lnext
+The $cref sample_table$$ may be created directly to control
+the input to the $cref predict_command$$.
+$lnext
+One may now make changes the
+$cref/option_table/option_table/Changing Values/$$,
+without invalidating all of the $cref output$$ tables.
 $lend
 
 $head 11-03$$

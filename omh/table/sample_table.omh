@@ -14,12 +14,15 @@ $spell
 $$
 
 $section The Sample Table: Samples of Variable Values$$
-This table contains the optimal estimate of the
-$cref/model variables/model_variable/$$
+The $cref sample_command$$ creates this table with
+one optimal estimate of the $cref/model variables/model_variable/$$
 for each valid $cref/sample_index/simulate_table/sample_index/$$
 in the simulate table.
-A new $code sample$$ table is created each time the
-$cref sample_command$$ is executed.
+This table may also be created directly by the user,
+with the aid of the $cref var_table$$.
+This is useful when one wants to use the
+$cref predict_command$$ with a specific set of variable values; e.g.,
+the values in the $cref fit_var_table$$.
 
 $head sample_id$$
 This column has type $code integer$$ and is the primary key for this table.
@@ -38,6 +41,8 @@ If $icode n_var$$ is the number of rows in the variable table,
 $codei%
 	%sample_id% = %sample_index% * %n_var% + %var_id%
 %$$
+for $icode sample_index$$ equal zero to the
+$cref/number_sample/option_table/number_sample/$$ minus one.
 
 $head var_value$$
 This column type $code real$$ and is the optimal variable value
