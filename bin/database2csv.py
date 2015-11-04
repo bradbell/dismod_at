@@ -47,6 +47,10 @@ if len(result) == 0 :
 	msg += '\tdismod_at init ' + file_name
 	sys.exit(msg)
 #
+cmd = cmd.replace('var', 'simulate')
+result  = cursor.execute(cmd).fetchall()
+have_simulate = len(result) > 0
+#
 cmd = cmd.replace('var', 'fit_var')
 result  = cursor.execute(cmd).fetchall()
 have_fit = len(result) > 0
@@ -77,12 +81,20 @@ table_list  = [
 if have_fit :
 	table_list.append('fit_var')
 	table_list.append('fit_residual')
+if have_simulate :
+	table_list.append('simulate')
 for table in table_list :
 	table_data[table] = dismod_at.get_table_dict(connection, table)
-#
+# ----------------------------------------------------------------------------
+# parent_node_id, fit_sample_index
 for row in table_data['option'] :
 	if row['option_name'] == 'parent_node_id' :
 		parent_node_id = int( row['option_value'] )
+	#
+	if row['option_name'] == 'fit_sample_index' :
+		fit_sample_index = row['option_value']
+		if fit_sample_index != "" :
+			sample_index = int(fit_sample_index)
 # ----------------------------------------------------------------------------
 def convert2output(value_in) :
 	if value_in == None :
@@ -229,13 +241,17 @@ header = [
 ]
 for row in table_data['covariate'] :
 	header.append( row['covariate_name'] )
+if fit_sample_index != "" :
+	index         = header.index('meas_value')
+	header[index] = 'sim_value'
 csv_writer = csv.DictWriter(csv_file, fieldnames=header)
 csv_writer.writeheader()
 #
 row_out = dict()
 for field in header :
 	row_out[field] = ''
-subset_id = 0
+subset_id  = 0
+n_subset   = len( table_data['data_subset'] )
 for subset_row in table_data['data_subset'] :
 	for field in header :
 		row_out[field] = ''
@@ -248,7 +264,6 @@ for subset_row in table_data['data_subset'] :
 	row_out['time_lo']     = row_in['time_lower']
 	row_out['time_up']     = row_in['time_upper']
 	row_out['hold_out']    = row_in['hold_out']
-	row_out['meas_value']  = convert2output( row_in['meas_value'] )
 	row_out['meas_std']    = convert2output( row_in['meas_std'] )
 	row_out['eta']         = table_lookup(
 		'integrand', row_in['integrand_id'], 'eta'
@@ -279,6 +294,13 @@ for subset_row in table_data['data_subset'] :
 		row                 = table_data['fit_residual'][subset_id]
 		row_out['avgint']   = convert2output( row['avg_integrand'] )
 		row_out['residual'] = convert2output( row['weighted_residual'] )
+	if fit_sample_index == "" :
+		row_out['meas_value']  = convert2output( row_in['meas_value'] )
+	else :
+		if have_simulate :
+			simulate_id =  n_subset * sample_index + subset_id
+			sim_value = table_data['simulate'][simulate_id]['meas_value']
+			row_out['sim_value'] = sim_value
 	csv_writer.writerow(row_out)
 	subset_id += 1
 csv_file.close()
