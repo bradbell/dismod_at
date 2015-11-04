@@ -34,7 +34,7 @@ echo_eval bin/run_omhelp.sh htm
 echo_eval tar -czf doc.tgz doc
 # --------------------------------------------------------------------------
 # copy to remote machine
-echo_eval ssh.sh $remote_machine -p doc.tgz
+echo_eval ssh.sh $remote_machine -p doc.tgz doc.tgz
 cat << EOF
 ------------------------------
 Enter the following commands:
