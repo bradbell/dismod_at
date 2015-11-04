@@ -11,7 +11,7 @@
 # $spell
 # $$
 #
-# $section Running Fit Command on Simulated Data Example$$
+# $section Fitting Simulated Data Example$$
 #
 # $code
 # $verbatim%
@@ -27,7 +27,7 @@ rho_parent                = 0.2
 mulcov_income_iota_true   = 1.0
 mulcov_sex_rho_true       = -1.0
 n_children                = 2
-n_data                    = 100
+n_data                    = 20
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -262,6 +262,7 @@ def example_db (file_name) :
 	]
 	# ------------------------------------------------------------------------
 	# option_dict
+	# Note that fit_sample_index is not empty (so will fit simulted data)
 	option_dict = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_pos' },
 		{ 'name':'parent_node_name',       'value':'world'        },

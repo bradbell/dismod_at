@@ -21,6 +21,7 @@ $childtable%example/get_started/get_started.omh
 	%example/user/no_children.py
 	%example/user/lasso_covariate.py
 	%example/user/meas_covariate.py
+	%example/user/fit_sim.py
 	%speed/simulated.py
 %$$
 

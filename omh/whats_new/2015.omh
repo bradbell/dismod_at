@@ -48,6 +48,17 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-04$$
+$list number$$
+Add $cref/fit_sample_index/option_table/fit_sample_index/$$
+to the option table and
+change $code bin/database2csv.py$$ to display simulated data
+$icode fit_sample_index$$ is not empty.
+$lnext
+Add a user example that uses $icode fit_sample_index$$
+to fit simulated data; see $cref user_fit_sim.py$$.
+$lend
+
 $head 11-03$$
 $list number$$
 Change $code bin/database2csv.py$$ to only take one argument.

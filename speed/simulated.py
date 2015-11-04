@@ -11,7 +11,7 @@
 # $spell
 # $$
 #
-# $section A Simulate Data Example$$
+# $section A Simulate Data Speed Test$$
 #
 # $code
 # $verbatim%
