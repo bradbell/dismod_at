@@ -22,10 +22,8 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # values used to simulate data
-iota_parent               = 0.05
-rho_parent                = 0.2
+iota_parent               = 0.01
 mulcov_income_iota_true   = 1.0
-mulcov_sex_rho_true       = -1.0
 n_children                = 2
 n_data                    = 20
 # ------------------------------------------------------------------------
@@ -57,8 +55,6 @@ def fun_rate_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_iota_parent(a, t) :
 	return ('prior_iota_parent', 'prior_gauss_zero', 'prior_gauss_zero')
-def fun_rho_parent(a, t) :
-	return ('prior_rho_parent', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_mulcov(a, t) :
 	return ('prior_mulcov', 'prior_gauss_zero', 'prior_gauss_zero')
 # ------------------------------------------------------------------------
@@ -74,10 +70,7 @@ def example_db (file_name) :
 	time_list   = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
 	#
 	# integrand table:
-	integrand_dict = [
-		{ 'name':'Sincidence',  'eta': 1e-2 * iota_parent  },
-		{ 'name':'prevalence',  'eta': 1e-3 * (iota_parent / rho_parent)  }
-	]
+	integrand_dict = [ { 'name':'prevalence',  'eta': 1e-5 } ]
 	#
 	# node table:
 	node_dict = [ { 'name':'world', 'parent':'' } ]
@@ -97,22 +90,15 @@ def example_db (file_name) :
 	#
 	# covariate table:
 	covariate_dict = [
-		{'name':'income', 'reference':0.5, 'max_difference':None},
-		{'name':'sex',    'reference':0.0, 'max_difference':0.6}
+		{'name':'income', 'reference':0.5, 'max_difference':None}
 	]
 	#
 	# mulcov table:
-	# income has been scaled the same as sex so man use same smoothing
 	mulcov_dict = [
 		{
 			'covariate': 'income',
 			'type':      'rate_value',
 			'effected':  'iota',
-			'smooth':    'smooth_mulcov'
-		},{
-			'covariate': 'sex',
-			'type':      'rate_value',
-			'effected':  'rho',
 			'smooth':    'smooth_mulcov'
 		}
 	]
@@ -125,24 +111,19 @@ def example_db (file_name) :
 		'density':     'gaussian',
 		'weight':      'constant',
 		'hold_out':     False,
-		'age_lower':    50.,
-		'age_upper':    50.,
 		'time_lower':   2000.,
 		'time_upper':   2000.
 	}
 	# values that change between rows:
 	for data_id in range( n_data ) :
+		fraction         = data_id / float(n_data-1)
+		age              = age_list[0] + (age_list[-1] - age_list[0])*fraction
+		row['age_lower'] = age
+		row['age_upper'] = age
 		row['node']      = 'child_' + str( (data_id % n_children) + 1 )
-		row['income']    = data_id / float(n_data-1)
-		row['sex']       = ( data_id % 3 - 1.0 ) / 2.0
-		row['integrand'] = integrand_dict[ data_id % 2 ]['name']
-		# use small error so can fit quickly for testing
-		if row['integrand'] == 'Sincidence' :
-			row['meas_std']  = 0.01 * iota_parent
-		elif row['integrand'] == 'prevalence' :
-			row['meas_std']  = 0.01 * (iota_parent / rho_parent)
-		else :
-			assert(False)
+		row['income']    = fraction
+		row['integrand'] = integrand_dict[0]['name']
+		row['meas_std']  = 1e-3
 		data_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
@@ -182,15 +163,7 @@ def example_db (file_name) :
 		},{ # prior_iota_parent
 			'name':     'prior_iota_parent',
 			'density':  'uniform',
-			'lower':    0.001,
-			'upper':    1.0,
-			'mean':     0.1,
-			'std':      None,
-			'eta':      None
-		},{ # prior_iota_parent
-			'name':     'prior_rho_parent',
-			'density':  'uniform',
-			'lower':    0.001,
+			'lower':    iota_parent / 100.,
 			'upper':    1.0,
 			'mean':     0.1,
 			'std':      None,
@@ -216,11 +189,6 @@ def example_db (file_name) :
 	]
 	name = 'smooth_iota_parent'
 	fun  = fun_iota_parent
-	smooth_dict.append(
-		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
-	)
-	name = 'smooth_rho_parent'
-	fun  = fun_rho_parent
 	smooth_dict.append(
 		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
 	)
@@ -250,7 +218,7 @@ def example_db (file_name) :
 			'parent_smooth': 'smooth_iota_parent',
 			'child_smooth':  'smooth_rate_child'
 		},{	'name':          'rho',
-			'parent_smooth': 'smooth_rho_parent',
+			'parent_smooth': 'smooth_zero',
 			'child_smooth':  'smooth_rate_child'
 		},{	'name':          'chi',
 			'parent_smooth': 'smooth_zero',
@@ -264,7 +232,7 @@ def example_db (file_name) :
 	# option_dict
 	# Note that fit_sample_index is not empty (so will fit simulted data)
 	option_dict = [
-		{ 'name':'rate_case',              'value':'iota_pos_rho_pos' },
+		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		{ 'name':'parent_node_name',       'value':'world'        },
 		{ 'name':'number_sample',          'value':'1'            },
 		{ 'name':'fit_sample_index',       'value':'0'            },
@@ -342,11 +310,7 @@ for var_id in range( len(var_dict) ) :
 			assert( covariate_name == 'income' )
 			truth_var_value = mulcov_income_iota_true
 		else :
-			assert( rate_name == 'rho' )
-			covariate_id   = var_info['covariate_id']
-			covariate_name = covariate_dict[covariate_id]['covariate_name' ]
-			assert( covariate_name == 'sex' )
-			truth_var_value = mulcov_sex_rho_true
+			assert( False )
 	else :
 		assert( var_type == 'rate' )
 		rate_id   = var_info['rate_id']
@@ -355,8 +319,6 @@ for var_id in range( len(var_dict) ) :
 		# node zero is the world
 		if node_id == 0 and rate_name == 'iota' :
 			truth_var_value = iota_parent
-		elif node_id == 0 and rate_name == 'rho' :
-			truth_var_value = rho_parent
 		else :
 			truth_var_value = 0.0
 	var_id2true.append( truth_var_value )

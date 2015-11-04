@@ -530,16 +530,21 @@ corresponding to $icode%option_name% = rate_case%$$ in the option table.
 $end
 */
 void data_model::set_eigen_ode2_case_number(const std::string& rate_case)
-{
+{	/*
+	b[0] = - ( iota + omega )
+	b[1] = + rho
+	b[2] = + iota
+	b[3] = - ( rho + chi + omega );
+	*/
 	if( rate_case == "iota_zero_rho_zero" )
 	{	eigen_ode2_case_number_ = 1;
 		return;
 	}
-	if( rate_case == "iota_pos_rho_zero" )
+	if( rate_case == "iota_zero_rho_pos" )
 	{	eigen_ode2_case_number_ = 2;
 		return;
 	}
-	if( rate_case == "iota_zero_rho_pos" )
+	if( rate_case == "iota_pos_rho_zero" )
 	{	eigen_ode2_case_number_ = 3;
 		return;
 	}

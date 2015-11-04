@@ -44,6 +44,7 @@ $spell
 	lapprox
 	valgrind
 	csv
+	pos
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
@@ -64,6 +65,12 @@ $lnext
 One may now make changes the
 $cref/option_table/option_table/Changing Values/$$,
 without invalidating all of the $cref output$$ tables.
+$lnext
+There was a bug in the solution of the differential equation.
+The $code iota_pos_rho_zero$$ and $code iota_zero_rho_pos$$
+$cref/rate_case/option_table/rate_case/$$ options were reversed.
+This bug was introduced on $cref/10-29/whats_new_2015/10-29/$$
+and has been fixed.
 $lend
 
 $head 11-03$$

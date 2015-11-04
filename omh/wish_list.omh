@@ -23,6 +23,8 @@ $section Dismod_at Wish List$$
 $head Continue Optimization$$
 Have a command that copies the final fit results to the starting
 point so that optimization can be continued.
+Currently one can do this directly by replacing the variable values in
+$cref start_var_table$$ using the variable values in $cref fit_var_table$$.
 
 $head Optimizing Random Effects$$
 It may save significant execution time and memory to write a special

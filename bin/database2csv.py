@@ -265,9 +265,6 @@ for subset_row in table_data['data_subset'] :
 	row_out['time_up']     = row_in['time_upper']
 	row_out['hold_out']    = row_in['hold_out']
 	row_out['meas_std']    = convert2output( row_in['meas_std'] )
-	row_out['eta']         = table_lookup(
-		'integrand', row_in['integrand_id'], 'eta'
-	)
 	row_out['integrand'] = table_lookup(
 		'integrand', row_in['integrand_id'], 'integrand_name'
 	)
@@ -278,6 +275,11 @@ for subset_row in table_data['data_subset'] :
 		'density', row_in['density_id'], 'density_name'
 	)
 	row_out['node'] = node_id2child_or_parent( row_in['node_id'] )
+	#
+	if row_out['density'] != 'gaussian' :
+		row_out['eta']         = table_lookup(
+			'integrand', row_in['integrand_id'], 'eta'
+		)
 	#
 	covariate_id = 0
 	for row in table_data['covariate'] :

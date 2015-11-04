@@ -945,6 +945,7 @@ row_list = [
 	[ 'parent_node_id',         str(node_name2id['world'])       ],
 	[ 'ode_step_size',          option_table_in['ode_step_size'] ],
 	[ 'number_sample',          '10'                             ],
+	[ 'fit_sample_index',       ''                               ],
 	[ 'random_seed',            str(int( timer.time() ))         ],
 	[ 'rate_case',              option_table_in['rate_case']     ],
 	[ 'quasi_fixed',            'true'                           ],
