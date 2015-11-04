@@ -68,45 +68,18 @@ $cref/ran_like/mixed_cppad_ran_like/$$.
 
 $end
 */
-namespace {
-	using CppAD::AD;
-	using CppAD::ADFun;
-	using CppAD::vector;
-	using CppAD::Independent;
-
-	template <class Float>
-	void record_next_ran_like(
-		const vector<double>&      arg                   ,
-		ADFun< AD<Float> >&        ad_float_record       ,
-		ADFun<Float>&              float_record          )
-	{
-		// copy of arg with type AD<Float>
-		vector< AD<Float> > ad_arg( arg.size() );
-		for(size_t j = 0; j < arg.size(); j++)
-			ad_arg[j] = AD<Float> ( arg[j] );
-
-		// independent variables for this recording
-		Independent(ad_arg);
-
-		// compute ran_like using AD<Float> operations
-		vector< AD<Float> >  ad_vec = ad_float_record.Forward(0, ad_arg);
-
-		// save the recording
-		float_record.Dependent(ad_arg, ad_vec);
-
-		// optimize the recording
-# ifdef NDEBUG
-		float_record.optimize();
-# endif
-	}
-}
-
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void mixed_cppad::init_ran_like(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )
 {	assert( ! init_ran_like_done_ );
+	//
+	using CppAD::AD;
+	using CppAD::ADFun;
+	using CppAD::vector;
+	using CppAD::Independent;
+	//
 	// ------------------------------------------------------------------
 	// record ran_like_a1fun_
 	// ------------------------------------------------------------------
@@ -138,17 +111,46 @@ void mixed_cppad::init_ran_like(
 	ran_like_a1fun_.Dependent(a2_both, a2_vec);
 
 	// optimize the recording
+# ifndef NDEBUG
 	ran_like_a1fun_.optimize();
+# endif
 	// ------------------------------------------------------------------
-	//
-	// both
-	d_vector both(n_fixed_ + n_random_);
-	pack(fixed_vec, random_vec, both);
-	//
 	// record ran_like_fun_
-	record_next_ran_like(both, ran_like_a1fun_, ran_like_fun_);
-	//
+	// ------------------------------------------------------------------
+	// combine into one vector
+	a1d_vector a1_both( n_fixed_ + n_random_ );
+	pack(fixed_vec, random_vec, a1_both);
+
+	// start recording a1_double operations
+	Independent(a1_both);
+
+	// extract the fixed and random effects
+	a1d_vector a1_theta(n_fixed_), a1_u(n_random_);
+	unpack(a1_theta, a1_u, a1_both);
+
+	// compute ran_like using a1_double operations
+	a1d_vector a1_vec = ran_like(a1_theta, a1_u);
+	if( a1_vec.size() == 0 )
+	{	std::string error_message =
+		"mixed_cppad: number of random effects > 0 and ran_like has size 0";
+		fatal_error(error_message);
+	}
+	if( a1_vec.size() != 1 )
+	{	std::string error_message =
+		"mixed_cppad: ran_like does not have size zero or one.";
+		fatal_error(error_message);
+	}
+
+	// save the recording
+	ran_like_fun_.Dependent(a1_both, a1_vec);
+
+	// optimize the recording
+# ifndef NDEBUG
+	ran_like_fun_.optimize();
+# endif
+	// ------------------------------------------------------------------
 	init_ran_like_done_ = true;
+	return;
 }
 
 

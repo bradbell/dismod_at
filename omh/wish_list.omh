@@ -20,6 +20,12 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Widowing Data and Analysis$$
+It would be nice to have an option to restrict the data
+and analysis to a rectangular subset.
+Currently one can do this by removing some of the input data
+and changing the $cref/age/age_table/$$ and $cref/time/time_table/$$.
+
 $head Continue Optimization$$
 Have a command that copies the final fit results to the starting
 point so that optimization can be continued.

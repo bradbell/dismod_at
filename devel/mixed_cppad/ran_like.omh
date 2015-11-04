@@ -30,10 +30,12 @@ derived from the $code mixed_cppad$$ base class.
 $head Float$$
 The type $icode Float$$ below can be either
 $code a1_double$$ or $code a2_double$$; see
-see $cref/AD Types/mixed_cppad_public/AD Types/$$.
+$cref/AD Types/mixed_cppad_public/AD Types/$$.
 
 $head Virtual Function$$
-The following virtual functions and must be implemented
+For $icode Float$$ equal to
+$code a1_double$$, $code a2_double$$,
+the following virtual function and must be implemented
 in the derived class:
 $codei%
 	virtual CppAD::vector<%Float%> ran_like(

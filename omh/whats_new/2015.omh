@@ -71,6 +71,10 @@ The $code iota_pos_rho_zero$$ and $code iota_zero_rho_pos$$
 $cref/rate_case/option_table/rate_case/$$ options were reversed.
 This bug was introduced on $cref/10-29/whats_new_2015/10-29/$$
 and has been fixed.
+$lnext
+The $cref/ran_like/mixed_cppad_ran_like/Virtual Function/$$ virtual
+function must be implemented for both $code a1_double$$ and $code a2_double$$
+(one used to only need to implement $code a2_double$$).
 $lend
 
 $head 11-03$$

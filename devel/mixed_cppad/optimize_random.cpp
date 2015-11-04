@@ -118,13 +118,12 @@ public:
 	{	assert( fg.size() == 1 + 2 * n_abs_ );
 
 		// extract the random effects from x
-		ADvector random_vec(n_random_), both_vec(n_fixed_ + n_random_);
+		ADvector random_vec(n_random_);
 		for(size_t j = 0; j < n_random_; j++)
 			random_vec[j] = x[j];
-		mixed_object_.pack(fixed_vec_, random_vec, both_vec);
 
 		// compute log-density vector
-		ADvector vec = mixed_object_.ran_like_a1fun_.Forward(0, both_vec);
+		ADvector vec = mixed_object_.ran_like(fixed_vec_, random_vec);
 
 		// initialize smooth part of negative log-likelihood
 		size_t k = 0;
