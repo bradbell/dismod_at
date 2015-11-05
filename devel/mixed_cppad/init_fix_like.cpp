@@ -151,6 +151,8 @@ lower triangle of a weighted Hessian for the fixed likelihood.
 
 $end
 */
+# define DEBUG_FIX_LIKE_FUN 0
+
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void mixed_cppad::init_fix_like(const d_vector& fixed_vec  )
@@ -166,6 +168,18 @@ void mixed_cppad::init_fix_like(const d_vector& fixed_vec  )
 		a1_theta[j] = fixed_vec[j];
 
 	// start recording a1_double operations
+# if DEBUG_FIX_LIKE_FUN
+	{	assert( n_fixed_ == 98 );
+		assert( n_fixed_ * sizeof(double) == 784 );
+		const char* file_name = "/tmp/fileJBRDSl";
+		std::ifstream infile(file_name, std::ifstream::binary);
+		CppAD::vector<double> double_buffer(n_fixed_);
+		char   *char_buffer   = reinterpret_cast<char *>(double_buffer.data());
+		infile.read(char_buffer, n_fixed_ * sizeof(double) );
+		for(size_t j = 0; j < n_fixed_; j++)
+			a1_theta[j] = double_buffer[j];
+	}
+# endif
 	Independent(a1_theta);
 
 	// compute fix_like
