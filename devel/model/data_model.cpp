@@ -881,15 +881,15 @@ Float data_model::avg_no_ode(
 		break;
 
 		case mtwith_enum:
+		// chi = rate_ode[0], omega = rate_ode[1]
 		for(k = 0; k < n_ode; k++)
-			var_ode[k] = rate_ode[0][k] + rate_ode[0][k];
+			var_ode[k] = rate_ode[0][k] + rate_ode[1][k];
 		break;
 
 		case relrisk_enum:
+		// chi = rate_ode[0], omega = rate_ode[1]
 		for(k = 0; k < n_ode; k++)
-		{	var_ode[k]  = 1.0;
-			var_ode[k] += rate_ode[0][k] / rate_ode[0][k];
-		}
+			var_ode[k]  = 1.0 + rate_ode[0][k] / rate_ode[1][k];
 		break;
 
 		default:

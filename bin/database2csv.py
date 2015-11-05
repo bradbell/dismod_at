@@ -21,6 +21,7 @@
 import sys
 import os
 import csv
+import pdb
 #
 sys.path.append( os.path.join( os.getcwd(), 'python' ) )
 import dismod_at
@@ -51,7 +52,7 @@ cmd = cmd.replace('var', 'simulate')
 result  = cursor.execute(cmd).fetchall()
 have_simulate = len(result) > 0
 #
-cmd = cmd.replace('var', 'fit_var')
+cmd = cmd.replace('simulate', 'fit_var')
 result  = cursor.execute(cmd).fetchall()
 have_fit = len(result) > 0
 if have_fit :
