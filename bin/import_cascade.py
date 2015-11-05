@@ -38,13 +38,14 @@ if sys.argv[0] != 'bin/import_cascade.py' :
 	sys.exit(msg)
 #
 option_dict = collections.OrderedDict([
-	('cascade_path','    path to directory where cascade input files are'),
-	('ode_step_size','   step size of ODE solution in age and time'),
-	('mtall2mtother','   treat mtall data as if it were mtother [yes/no]'),
-	('rate_case','       are iota and rho zero or non-zero; see option_table'),
-	('child_value_std',' value standard deviation for random effects'),
-	('child_dtime_std',' dtime standard deviation for random effects'),
-	('time_grid','       the time grid as space seperated values')
+('cascade_path','      path to directory where cascade input files are'),
+('ode_step_size','     step size of ODE solution in age and time'),
+('mtall2mtother','     treat mtall data as if it were mtother [yes/no]'),
+('rate_case','         are iota and rho zero or non-zero; see option_table'),
+('child_value_std','   value standard deviation for random effects'),
+('child_dtime_std','   dtime standard deviation for random effects'),
+('time_grid','         the time grid as space seperated values'),
+('parent_node_name','  name of the parent node')
 ])
 usage = '''bin/import_cascade.py option_csv
 
@@ -779,6 +780,8 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 		#
 		prior_at = gaussian_cascade2at(name, prior_in)
 		(name, lower, upper, mean, std, eta, density_id) = prior_at
+		if lower == upper :
+			density_id = density_name2id['uniform']
 		#
 		# check if this prior already specified
 		element = (lower, upper, mean, std)
@@ -939,10 +942,11 @@ tbl_name = 'smooth_grid'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
 # Output option table.
+parent_node_id = node_name2id[ option_table_in['parent_node_name'] ]
 col_name = [ 'option_name', 'option_value' ]
 col_type = [ 'text unique', 'text' ]
 row_list = [
-	[ 'parent_node_id',         str(node_name2id['world'])       ],
+	[ 'parent_node_id',         str(parent_node_id)              ],
 	[ 'ode_step_size',          option_table_in['ode_step_size'] ],
 	[ 'number_sample',          '10'                             ],
 	[ 'fit_sample_index',       ''                               ],

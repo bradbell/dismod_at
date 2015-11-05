@@ -44,7 +44,7 @@ cursor  = connection.cursor()
 result  = cursor.execute(cmd).fetchall()
 if len(result) == 0 :
 	msg  = 'bin/database2csv.py: must first run init command; i.e.\n'
-	msg += '\tdismod_at init ' + file_name
+	msg += '\tdismod_at ' + file_name + ' init'
 	sys.exit(msg)
 #
 cmd = cmd.replace('var', 'simulate')

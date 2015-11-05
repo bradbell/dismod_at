@@ -1127,7 +1127,7 @@ int main(int n_arg, const char** argv)
 	string message;
 	if( ! ok )
 	{	message =  "dismod_at: command not one the following:\n";
-		message += "\tvar, start, fit, truth, simulate, sample, predict";
+		message += "\tinit, start, fit, truth, simulate, sample, predict";
 		cerr << message << endl;
 		std::exit(1);
 	}
