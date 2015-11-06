@@ -20,6 +20,17 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Sum of Random Effects$$
+It would be nice to add a prior on the sum of the random effects at each
+age-time grid point.
+This feature is in $code dismod_at$$ and it made that program
+much more robust.
+Preliminary testing showed that doing this directly destroys the
+sparsity of the Hessian w.r.t. the random effects (and hence makes the
+problem consume much more memory and time).
+I think this can be done without changing
+the Hessian w.r.t. the random effects.
+
 $head Widowing Data and Analysis$$
 It would be nice to have an option to restrict the data
 and analysis to a rectangular subset.
