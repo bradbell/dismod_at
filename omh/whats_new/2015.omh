@@ -55,6 +55,8 @@ $head 11-06$$
 Add lower and upper limits to the random effects in
 $cref/optimize_random/mixed_cppad_optimize_random/random_lower/$$ and
 $cref/optimize_fixed/mixed_cppad_optimize_random/random_lower/$$.
+This is represented by
+$cref/random_bound/option_table/Optimizer/random_bound/$$ in the option table.
 
 $head 11-05$$
 $list number$$
