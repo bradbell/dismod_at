@@ -45,7 +45,8 @@ option_dict = collections.OrderedDict([
 ('child_value_std','   value standard deviation for random effects'),
 ('child_dtime_std','   dtime standard deviation for random effects'),
 ('time_grid','         the time grid as space seperated values'),
-('parent_node_name','  name of the parent node')
+('parent_node_name','  name of the parent node'),
+('random_bound','      bound for the random effects')
 ])
 usage = '''bin/import_cascade.py option_csv
 
@@ -956,6 +957,7 @@ row_list = [
 	[ 'print_level_fixed',      '5'                              ],
 	[ 'print_level_random',     '0'                              ],
 	[ 'tolerance_fixed',        '1e-8'                           ],
+	[ 'random_bound',           option_table_in['random_bound']  ],
 	[ 'tolerance_random',       '1e-8'                           ],
 	[ 'max_num_iter_fixed',     '20'                             ],
 	[ 'max_num_iter_random',    '50'                             ],
