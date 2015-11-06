@@ -14,7 +14,7 @@ $spell
 	var
 $$
 
-$section The fit_var Table: Fit Results for Variables$$
+$section The Optimization Results for Variables$$
 The fit_var table contains the maximum likelihood estimate
 for the $cref/model variables/model_variable/$$ corresponding to
 the data table $cref/meas_value/data_table/meas_value/$$.

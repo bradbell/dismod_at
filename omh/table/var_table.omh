@@ -20,7 +20,7 @@ $spell
 	std
 $$
 
-$section The Variable Table$$
+$section Mapping var_id To Variable Description$$
 The $code variable$$ table maps the $icode var_id$$
 to information that specifies exactly which
 $cref model_variable$$ it corresponds to.

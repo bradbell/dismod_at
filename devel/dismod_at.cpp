@@ -72,8 +72,12 @@ $head Syntax$$
 $codei%dismod_at %file_name% init%$$
 
 $head Purpose$$
-This command should be executed whenever any of the
-$cref input$$ tables change.
+This command creates the following tables
+$table
+$cref var_table$$           $cnext $title var_table$$ $rnext
+$cref data_subset_table$$   $cnext $title data_subset_table$$ $rnext
+$cref avgint_subset_table$$ $cnext $title avgint_subset_table$$ $rnext
+$tend
 
 $head file_name$$
 Is an
@@ -377,6 +381,12 @@ $section The Start Command$$
 
 $head Syntax$$
 $codei%dismod_at %file_name% start%$$
+
+$head Purpose$$
+This command uses the variable prior means to creates the following table:
+$table
+$cref start_var_table$$ $cnext $title start_var_table$$ $rnext
+$tend
 
 $head file_name$$
 Is an
