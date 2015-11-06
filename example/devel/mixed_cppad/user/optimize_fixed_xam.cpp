@@ -212,6 +212,11 @@ bool optimize_fixed_xam(void)
 		"String  derivative_test second-order\n"
 		"Numeric tol             1e-8\n"
 	;
+	vector<double> random_lower(n_random), random_upper(n_random);
+	for(size_t i = 0; i < n_random; i++)
+	{	random_lower[i] = -inf;
+		random_upper[i] = +inf;
+	}
 	vector<double> fixed_out = mixed_object.optimize_fixed(
 		fixed_options,
 		random_options,
@@ -220,6 +225,8 @@ bool optimize_fixed_xam(void)
 		constraint_lower,
 		constraint_upper,
 		fixed_in,
+		random_lower,
+		random_upper,
 		random_in
 	);
 

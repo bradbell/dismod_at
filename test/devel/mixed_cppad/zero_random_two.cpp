@@ -215,6 +215,11 @@ bool zero_random_two(void)
 		"String  derivative_test second-order\n"
 		"Numeric tol             1e-8\n"
 	;
+	vector<double> random_lower(n_random), random_upper(n_random);
+	for(size_t i = 0; i < n_random; i++)
+	{	random_lower[i] = -inf;
+		random_upper[i] = +inf;
+	}
 	vector<double> fixed_out = mixed_object.optimize_fixed(
 		fixed_options,
 		random_options,
@@ -223,6 +228,8 @@ bool zero_random_two(void)
 		constraint_lower,
 		constraint_upper,
 		fixed_in,
+		random_lower,
+		random_upper,
 		random_in
 	);
 
@@ -246,13 +253,6 @@ bool zero_random_two(void)
 	// so the partials should be zero.
 	ok &= CppAD::abs( F_0 ) <= 2.0 * tol;
 	ok &= CppAD::abs( F_1 ) <= 2.0 * tol;
-
-	// lower and upper limits for random effects
-	vector<double> random_lower(n_random), random_upper(n_random);
-	for(size_t i = 0; i < n_random; i++)
-	{	random_lower[i] = -inf;
-		random_upper[i] = +inf;
-	}
 
 	// Compute the optimal random effects
 	vector<double> random_out = mixed_object.optimize_random(

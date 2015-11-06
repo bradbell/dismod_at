@@ -176,6 +176,8 @@ $codei%ipopt_fixed %ipopt_object%(
 	%constraint_lower%,
 	%constraint_upper%,
 	%fixed_in%,
+	%random_lower%,
+	%random_upper%,
 	%random_in%,
 	%mixed_object%
 )%$$
@@ -253,6 +255,12 @@ $codei%
 	%fixed_lower%[%j%] <= %fixed_in%[%j%] <= %fixed_upper%[%j%]
 %$$
 
+$head random_lower$$
+specifies the lower limit for the random effects (during optimization).
+
+$head random_upper$$
+specifies the upper limit for the random effects (during optimization).
+
 $head random_in$$
 specifies the initial value (for initial optimization) of the random effects.
 
@@ -290,8 +298,10 @@ ipopt_fixed::ipopt_fixed(
 	const d_vector&     constraint_lower   ,
 	const d_vector&     constraint_upper   ,
 	const d_vector&     fixed_in           ,
+	const d_vector&     random_lower       ,
+	const d_vector&     random_upper       ,
 	const d_vector&     random_in          ,
-	mixed_cppad&       mixed_object      ) :
+	mixed_cppad&        mixed_object       ) :
 random_options_    ( random_options )          ,
 fixed_tolerance_   ( fixed_tolerance  )        ,
 n_fixed_           ( fixed_in.size()  )        ,
@@ -302,18 +312,12 @@ fixed_upper_       ( fixed_upper      )        ,
 constraint_lower_  ( constraint_lower )        ,
 constraint_upper_  ( constraint_upper )        ,
 fixed_in_          ( fixed_in         )        ,
-random_lower_      ( random_in.size() )        ,
-random_upper_      ( random_in.size() )        ,
+random_lower_      ( random_lower     )        ,
+random_upper_      ( random_upper     )        ,
 random_in_         ( random_in        )        ,
 mixed_object_      ( mixed_object    )
 {
 	double inf           = std::numeric_limits<double>::infinity();
-	// -----------------------------------------------------------------------
-	// set random_lower_ and random_upper_
-	for(size_t j = 0; j < n_random_; j++)
-	{	random_lower_[j] = -inf;
-		random_upper_[j] = +inf;
-	}
 	//
 	// -----------------------------------------------------------------------
 	// set nlp_lower_bound_inf_, nlp_upper_bound_inf_

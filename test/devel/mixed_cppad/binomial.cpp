@@ -160,6 +160,7 @@ bool binomial(void)
 		"String  sb          yes\n"
 		"String  derivative_test second-order\n"
 	;
+	vector<double> u_lower(0), u_upper(0);
 	vector<double> theta_out = mixed_object.optimize_fixed(
 		fixed_options,
 		random_options,
@@ -168,6 +169,8 @@ bool binomial(void)
 		constraint_lower,
 		constraint_upper,
 		theta_in,
+		u_lower,
+		u_upper,
 		u_in
 	);
 	for(size_t j = 0; j < n_fixed; j++)

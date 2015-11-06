@@ -51,6 +51,11 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-06$$
+Add lower and upper limits to the random effects in
+$cref/optimize_random/mixed_cppad_optimize_random/random_lower/$$ and
+$cref/optimize_fixed/mixed_cppad_optimize_random/random_lower/$$.
+
 $head 11-05$$
 $list number$$
 The $code relrisk$$ and $code mtwith$$ integrands were not being

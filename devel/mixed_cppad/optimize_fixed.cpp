@@ -31,6 +31,8 @@ $icode%mixed_object%.optimize_fixed(
 	%fixed_lower%,
 	%fixed_upper%,
 	%fixed_in%,
+	%random_lower%,
+	%random_upper%,
 	%random_in%
 )%$$
 
@@ -112,14 +114,53 @@ $codei%
 	%fixed_lower%[%j%] <= %fixed_in%[%j%] <= %fixed_upper%[%j%]
 %$$
 
+
+$head random_lower$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %random_lower%
+%$$
+It must have size equal to
+$cref/n_random/mixed_cppad_derived_ctor/n_random/$$ and
+specifies the lower limits for the optimization of the
+$cref/random effects/mixed_cppad/Random Effects, u/$$
+vector $latex u$$.
+This may be useful to keep the random effects
+out of regions of numerical instability.
+On the other hand, the calculation of the
+$cref/derivative of u^(theta)
+	/mixed_cppad_theory
+	/Derivative of Random Objective
+	/Derivative of u^(theta)
+/$$
+$latex \hat{u}^{(1)} ( \theta )$$ will not be correct when these constraints
+are active (and this could have adverse effects on the optimization).
+The value minus infinity can be used to specify no lower limit.
+
+$head random_upper$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %random_upper%
+%$$
+It must have size equal to
+$cref/n_random/mixed_cppad_derived_ctor/n_random/$$ and
+specifies the upper limits for the optimization of the random effect.
+The value plus infinity can be used to specify no lower limit.
+
 $head random_in$$
 This argument has prototype
 $codei%
 	const CppAD::vector<double>& %random_in%
 %$$
-It specifies the initial value used for the optimization of the
-$cref/random effects/mixed_cppad/Random Effects, u/$$
-vector $latex u$$.
+It must have size equal to
+$cref/n_random/mixed_cppad_derived_ctor/n_random/$$ and
+specifies the initial value used for the optimization of the
+$cref/random effects/mixed_cppad/Random Effects, u/$$ vector $latex u$$.
+It must hold that
+$codei%
+	%random_lower%[%i%] <= %random_in%[%i%] <= %random_upper%[%i%]
+%$$
+for each valid index $icode i$$.
 
 $head fixed_out$$
 The return value has prototype
@@ -172,7 +213,9 @@ CppAD::vector<double> mixed_cppad::optimize_fixed(
 	const d_vector&    constraint_lower  ,
 	const d_vector&    constraint_upper  ,
 	const d_vector&    fixed_in          ,
-	const d_vector&    random_in   )
+	const d_vector&    random_lower      ,
+	const d_vector&    random_upper      ,
+	const d_vector&    random_in         )
 {	bool ok = true;
 	using Ipopt::SmartPtr;
 	// make sure initialize has been called
@@ -279,6 +322,8 @@ CppAD::vector<double> mixed_cppad::optimize_fixed(
 		constraint_lower,
 		constraint_upper,
 		fixed_in,
+		random_lower,
+		random_upper,
 		random_in,
 		mixed_object
 	);

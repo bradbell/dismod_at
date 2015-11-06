@@ -172,6 +172,8 @@ $codep */
 		const d_vector&    constraint_lower ,
 		const d_vector&    constraint_upper ,
 		const d_vector&    fixed_in         ,
+		const d_vector&    random_lower     ,
+		const d_vector&    random_upper     ,
 		const d_vector&    random_in
 	);
 /* $$

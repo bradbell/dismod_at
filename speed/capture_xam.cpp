@@ -438,6 +438,12 @@ int main(void)
 		"String  sb          yes\n"
 		"String  derivative_test second-order\n"
 	;
+	double inf = std::numeric_limits<double>::infinity();
+	vector<double> u_lower(n_random), u_upper(n_random);
+	for(size_t i = 0; i < n_random; i++)
+	{	u_lower[i] = -inf;
+		u_upper[i] = +inf;
+	}
 	vector<double> theta_out = mixed_object.optimize_fixed(
 		fixed_options,
 		random_options,
@@ -446,6 +452,8 @@ int main(void)
 		constraint_lower,
 		constraint_upper,
 		theta_in,
+		u_lower,
+		u_upper,
 		u_in
 	);
 	std::time_t end_time = std::time( DISMOD_AT_NULL_PTR );

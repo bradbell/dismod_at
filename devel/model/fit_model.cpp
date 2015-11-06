@@ -294,6 +294,11 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		+ option_map["derivative_test_random"] + "\n";
 	std::string random_options = options;
 	//
+	CppAD::vector<double> random_lower(n_random_), random_upper(n_random_);
+	for(size_t j = 0; j < n_random_; j++)
+	{	random_upper[j] = std::numeric_limits<double>::infinity();
+		random_lower[j] = - random_upper[j];
+	}
 	// optimal fixed effects
 	CppAD::vector<double> optimal_fixed = optimize_fixed(
 		fixed_options,
@@ -303,18 +308,15 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		constraint_lower,
 		constraint_upper,
 		fixed_in,
+		random_lower,
+		random_upper,
 		random_in
 	);
 	// store solution_
 	solution_.resize( pack_object_.size() );
 	put_fixed_effect(pack_object_, solution_, optimal_fixed);
 	if( n_random_ > 0 )
-	{	CppAD::vector<double> random_lower(n_random_), random_upper(n_random_);
-		for(size_t j = 0; j < n_random_; j++)
-		{	random_upper[j] = std::numeric_limits<double>::infinity();
-			random_lower[j] = - random_upper[j];
-		}
-		// corresponding optimal random effects
+	{	// corresponding optimal random effects
 		CppAD::vector<double> optimal_random = optimize_random(
 		random_options, optimal_fixed, random_lower, random_upper, random_in
 		);

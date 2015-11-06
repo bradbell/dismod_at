@@ -77,11 +77,11 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		const d_vector& constraint_lower_;// constraint lower limits
 		const d_vector& constraint_upper_;// constraint upper limit
 		const d_vector& fixed_in_;        // fixed effects initial value
-		d_vector  random_lower_;          // lower limit for random effects
-		d_vector  random_upper_;          // upper limit for random effects
+		const d_vector& random_lower_;    // lower limit for random effects
+		const d_vector& random_upper_;    // upper limit for random effects
 		const d_vector& random_in_;       // random effects initial value
 		//
-		mixed_cppad&   mixed_object_;   // mixed_cppad for this problem
+		mixed_cppad&   mixed_object_;     // mixed_cppad for this problem
 		// ---------------------------------------------------------------
 		// set during constructor, otherwise const
 		double nlp_lower_bound_inf_; // Ipopt's code for - infinity
@@ -150,7 +150,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		// did finalize_solution agree that the solution had converged
 		bool finalize_solution_ok_;
 		//
-		// default constructor
+		// constructor
 		ipopt_fixed(
 			const std::string& random_options    ,
 			const double&      fixed_tolerance   ,
@@ -159,6 +159,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 			const d_vector& constraint_lower     ,
 			const d_vector& constraint_upper     ,
 			const d_vector& fixed_in             ,
+			const d_vector& random_lower         ,
+			const d_vector& random_upper         ,
 			const d_vector& random_in            ,
 			mixed_cppad&   mixed_object
 		);
