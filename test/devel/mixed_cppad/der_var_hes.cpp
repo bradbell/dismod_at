@@ -289,20 +289,31 @@ bool der_var_hes(void)
 	mixed_derived mixed_object( n_fixed, n_random, y, sigma_u, sigma_y );
 	mixed_object.initialize(fixed_vec, random_vec);
 	//
+	// lower and upper limits for random effects
+	vector<double> random_lower(n_random), random_upper(n_random);
+	for(size_t i = 0; i < n_random; i++)
+	{	random_lower[i] = -inf;
+		random_upper[i] = +inf;
+	}
+	//
 	// optimize the random effects
 	std::string options;
 	options += "Integer print_level 0\n";
 	options += "String  sb          yes\n";
 	options += "String  derivative_test second-order\n";
 	vector<double> uhat(n_random);
-	uhat = mixed_object.optimize_random(options, fixed_vec, random_vec);
+	uhat = mixed_object.optimize_random(
+			options, fixed_vec, random_lower, random_upper, random_vec
+	);
 	//
 	// compute the derivative of the random part of objective
 	vector<double> r_fixed(n_fixed);
 	mixed_object.ranobj_grad(fixed_vec, uhat, r_fixed);
 	//
 	// check the derivative of the random part of objective
-	uhat = mixed_object.optimize_random(options, fixed_vec, random_vec);
+	uhat = mixed_object.optimize_random(
+			options, fixed_vec, random_lower, random_upper, random_vec
+	);
 	double r_theta = mixed_object.r_theta(fixed_vec[0], uhat[0]);
 	//
 	ok &= CppAD::abs( r_fixed[0] / r_theta - 1.0 ) < eps;

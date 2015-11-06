@@ -302,16 +302,24 @@ fixed_upper_       ( fixed_upper      )        ,
 constraint_lower_  ( constraint_lower )        ,
 constraint_upper_  ( constraint_upper )        ,
 fixed_in_          ( fixed_in         )        ,
+random_lower_      ( random_in.size() )        ,
+random_upper_      ( random_in.size() )        ,
 random_in_         ( random_in        )        ,
 mixed_object_      ( mixed_object    )
 {
+	double inf           = std::numeric_limits<double>::infinity();
+	// -----------------------------------------------------------------------
+	// set random_lower_ and random_upper_
+	for(size_t j = 0; j < n_random_; j++)
+	{	random_lower_[j] = -inf;
+		random_upper_[j] = +inf;
+	}
 	//
 	// -----------------------------------------------------------------------
 	// set nlp_lower_bound_inf_, nlp_upper_bound_inf_
 	// -----------------------------------------------------------------------
 	nlp_lower_bound_inf_ = - 1e19;
 	nlp_upper_bound_inf_ = + 1e19;
-	double inf           = std::numeric_limits<double>::infinity();
 	for(size_t j = 0; j < n_fixed_; j++)
 	{	if( fixed_lower[j] != - inf ) nlp_lower_bound_inf_ =
 				std::min(nlp_lower_bound_inf_, 1.1 * fixed_lower[j] );
@@ -754,7 +762,7 @@ bool ipopt_fixed::eval_f(
 		// compute the optimal random effects corresponding to fixed effects
 		if( new_x )
 		random_cur_ = mixed_object_.optimize_random(
-			random_options_, fixed_tmp_, random_tmp_
+		random_options_, fixed_tmp_, random_lower_, random_upper_, random_tmp_
 		);
 		H = mixed_object_.ranobj_eval(fixed_tmp_, random_cur_);
 	}
@@ -846,7 +854,7 @@ bool ipopt_fixed::eval_grad_f(
 		// compute the optimal random effects corresponding to fixed effects
 		if( new_x )
 		random_cur_ = mixed_object_.optimize_random(
-			random_options_, fixed_tmp_, random_tmp_
+		random_options_, fixed_tmp_, random_lower_, random_upper_, random_tmp_
 		);
 		// Jacobian for random part of the Lalpace objective
 		mixed_object_.ranobj_grad(
@@ -1250,7 +1258,7 @@ bool ipopt_fixed::eval_h(
 		// compute the optimal random effects corresponding to fixed effects
 		if( new_x )
 		random_cur_ = mixed_object_.optimize_random(
-			random_options_, fixed_tmp_, random_tmp_
+		random_options_, fixed_tmp_, random_lower_, random_upper_, random_tmp_
 		);
 		//
 		random_h_   = random_cur_;

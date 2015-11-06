@@ -122,6 +122,13 @@ bool delta_ranobj(void)
 	// object that is derived from mixed_cppad
 	mixed_derived mixed_object( n_fixed, n_random, y, sigma_u, sigma_y );
 	mixed_object.initialize(fixed_vec, random_vec);
+
+	// lower and upper limits for random effects
+	vector<double> random_lower(n_random), random_upper(n_random);
+	for(size_t i = 0; i < n_random; i++)
+	{	random_lower[i] = -inf;
+		random_upper[i] = +inf;
+	}
 	//
 	// optimize the random effects
 	std::string options;
@@ -129,7 +136,9 @@ bool delta_ranobj(void)
 	options += "String  sb          yes\n";
 	options += "String  derivative_test second-order\n";
 	vector<double> uhat(n_random);
-	uhat = mixed_object.optimize_random(options, fixed_vec, random_vec);
+	uhat = mixed_object.optimize_random(
+		options, fixed_vec, random_lower, random_upper, random_vec
+	);
 	//
 	// compute the derivative of the random part of objective
 	vector<double> r_fixed(n_fixed);
@@ -139,10 +148,14 @@ bool delta_ranobj(void)
 	for(size_t j = 0; j < n_fixed; j++)
 	{	double theta_j = fixed_vec[j];
 		fixed_vec[j]   = theta_j + 2.0 * eps;
-		uhat = mixed_object.optimize_random(options, fixed_vec, random_vec);
+		uhat = mixed_object.optimize_random(
+			options, fixed_vec, random_lower, random_upper, random_vec
+		);
 		double r_plus  = mixed_object.ranobj_eval(fixed_vec, uhat);
 		fixed_vec[j]   = theta_j - 2.0 * eps;
-		uhat = mixed_object.optimize_random(options, fixed_vec, random_vec);
+		uhat = mixed_object.optimize_random(
+			options, fixed_vec, random_lower, random_upper, random_vec
+		);
 		double r_minus = mixed_object.ranobj_eval(fixed_vec, uhat);
 		fixed_vec[j]   = theta_j;
 		//

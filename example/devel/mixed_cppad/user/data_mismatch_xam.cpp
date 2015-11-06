@@ -380,8 +380,15 @@ bool data_mismatch_xam(void)
 		fixed_in,
 		random_in
 	);
+
+	// lower and upper limits for random effects
+	vector<double> random_lower(n_random), random_upper(n_random);
+	for(size_t i = 0; i < n_random; i++)
+	{	random_lower[i] = -inf;
+		random_upper[i] = +inf;
+	}
 	vector<double> random_out = mixed_object.optimize_random(
-		random_options, fixed_out, random_in
+		random_options, fixed_out, random_lower, random_upper, random_in
 	);
 	//
 	// compute the derivative of the objective at the final point

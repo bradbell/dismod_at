@@ -152,12 +152,22 @@ bool ranobj_hes_xam(void)
 	mixed_derived mixed_object(n_fixed, n_random, data);
 	mixed_object.initialize(fixed_vec, random_vec);
 
+	// lower and upper limits for random effects
+	double inf = std::numeric_limits<double>::infinity();
+	vector<double> random_lower(n_random), random_upper(n_random);
+	for(size_t i = 0; i < n_random; i++)
+	{	random_lower[i] = -inf;
+		random_upper[i] = +inf;
+	}
+
 	// optimize the random effects
 	std::string options;
 	options += "Integer print_level 0\n";
 	options += "String  sb          yes\n";
 	options += "String  derivative_test second-order\n";
-	uhat = mixed_object.optimize_random(options, fixed_vec, random_vec);
+	uhat = mixed_object.optimize_random(
+		options, fixed_vec, random_lower, random_upper, random_vec
+	);
 
 	// compute Hessian of random part of Laplace approximation
 	vector<size_t> row, col;

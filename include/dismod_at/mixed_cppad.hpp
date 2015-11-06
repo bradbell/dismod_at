@@ -153,8 +153,10 @@ Given the fixed effects, optimize with respect to the random effects;
 see  $cref/optimize_random/mixed_cppad_optimize_random/$$.
 $codep */
 	d_vector optimize_random(
-		const std::string& options   ,
-		const d_vector&    fixed_vec ,
+		const std::string& options      ,
+		const d_vector&    fixed_vec    ,
+		const d_vector&    random_lower ,
+		const d_vector&    random_upper ,
 		const d_vector&    random_in
 	);
 /* $$

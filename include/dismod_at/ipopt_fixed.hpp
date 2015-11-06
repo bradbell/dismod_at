@@ -77,6 +77,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		const d_vector& constraint_lower_;// constraint lower limits
 		const d_vector& constraint_upper_;// constraint upper limit
 		const d_vector& fixed_in_;        // fixed effects initial value
+		d_vector  random_lower_;          // lower limit for random effects
+		d_vector  random_upper_;          // upper limit for random effects
 		const d_vector& random_in_;       // random effects initial value
 		//
 		mixed_cppad&   mixed_object_;   // mixed_cppad for this problem

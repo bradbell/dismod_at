@@ -18,6 +18,7 @@ $spell
 	const
 	CppAD
 	std
+	inf
 $$
 
 $section Optimize Fixed Effects$$
@@ -36,6 +37,12 @@ $icode%mixed_object%.optimize_fixed(
 $head Purpose$$
 This routine maximizes the total objective
 $cref/L(theta)/mixed_cppad_theory/Objective/Total Objective, L(theta)/$$.
+
+$head inf$$
+The value $code inf$$ below refers to
+$codei%
+	std::numeric_limits<double>::infinity()
+%$$
 
 $head mixed_object$$
 We use $cref/mixed_object/mixed_cppad_derived_ctor/mixed_object/$$
@@ -73,35 +80,23 @@ and is the $cref ipopt_options$$ for optimizing the random effects.
 $head fixed_lower$$
 specifies the lower limits for the
 $cref/fixed_effects/model_variable/Fixed Effects, theta/$$.
-Note that
-$code%
-	- std::numeric_limits<double>::infinity()
-%$$
+Note that $code -inf$$
 is used for minus infinity; i.e., no lower limit.
 
 $head fixed_upper$$
 specifies the upper limits for the fixed effects.
-Note that
-$code%
-	std::numeric_limits<double>::infinity()
-%$$
+Note that $code inf$$
 is used for plus infinity; i.e., no upper limit.
 
 $head constraint_lower$$
 specifies the lower limits for the
 $cref/constraints/mixed_cppad_constraint/$$.
-Note that
-$code%
-	- std::numeric_limits<double>::infinity()
-%$$
+Note that $code -inf$$
 is used for minus infinity; i.e., no lower limit.
 
 $head constraint_upper$$
 specifies the upper limits for the constraints.
-Note that
-$code%
-	std::numeric_limits<double>::infinity()
-%$$
+Note that $code inf$$
 is used for plus infinity; i.e., no upper limit.
 
 $head fixed_in$$

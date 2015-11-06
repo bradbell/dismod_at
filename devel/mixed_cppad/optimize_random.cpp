@@ -25,7 +25,9 @@ $section Optimize Random Effects$$
 
 $head Syntax$$
 $icode%random_out% =%$$
-$icode%mixed_object%.optimize_random(%options%, %fixed_vec%, %random_in%)%$$
+$icode%mixed_object%.optimize_random(
+	%options%, %fixed_vec%, %random_lower%, %random_upper%, %random_in%
+)%$$
 
 $head Purpose$$
 This routine maximizes the
@@ -53,14 +55,42 @@ It specifies the value of the
 $cref/fixed effects/mixed_cppad/Fixed Effects, theta/$$
 vector $latex \theta$$.
 
+$head random_lower$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %random_lower%
+%$$
+It must have size equal to
+$cref/n_random/mixed_cppad_derived_ctor/n_random/$$ and
+specifies the lower limits for the optimization of the
+$cref/random effects/mixed_cppad/Random Effects, u/$$
+vector $latex u$$.
+The value minus infinity can be used to specify no lower limit.
+
+$head random_upper$$
+This argument has prototype
+$codei%
+	const CppAD::vector<double>& %random_upper%
+%$$
+It must have size equal to
+$cref/n_random/mixed_cppad_derived_ctor/n_random/$$ and
+specifies the upper limits for the optimization of the random effect.
+The value plus infinity can be used to specify no lower limit.
+
 $head random_in$$
 This argument has prototype
 $codei%
 	const CppAD::vector<double>& %random_in%
 %$$
-It specifies the initial value used for the optimization of the
-$cref/random effects/mixed_cppad/Random Effects, u/$$
-vector $latex u$$.
+It must have size equal to
+$cref/n_random/mixed_cppad_derived_ctor/n_random/$$ and
+specifies the initial value used for the optimization of the
+$cref/random effects/mixed_cppad/Random Effects, u/$$ vector $latex u$$.
+It must hold that
+$codei%
+	%random_lower%[%i%] <= %random_in%[%i%] <= %random_upper%[%i%]
+%$$
+for each valid index $icode i$$.
 
 $head random_out$$
 The return value  has prototype
@@ -147,6 +177,8 @@ public:
 CppAD::vector<double> mixed_cppad::optimize_random(
 	const std::string& options         ,
 	const d_vector&    fixed_vec       ,
+	const d_vector&    random_lower    ,
+	const d_vector&    random_upper    ,
 	const d_vector&    random_in       )
 {
 	// make sure initialize has been called
@@ -164,6 +196,11 @@ CppAD::vector<double> mixed_cppad::optimize_random(
 	// number of fixed and random effects
 	assert( n_fixed_  == fixed_vec.size() );
 	assert( n_random_ == random_in.size() );
+	assert( n_random_ == random_lower.size() );
+	assert( n_random_ == random_upper.size() );
+
+	// infinity
+	double inf = std::numeric_limits<double>::infinity();
 
 	// determine initial density vector
 	d_vector both_vec(n_fixed_ + n_random_);
@@ -190,8 +227,14 @@ CppAD::vector<double> mixed_cppad::optimize_random(
 	// set lower and upper limits for x
 	d_vector xl(nx), xu(nx);
 	for(size_t j = 0; j < nx; j++)
-	{	xl[j] = - ipopt_infinity;
-		xu[j] = + ipopt_infinity;
+	{	if( random_lower[j] == - inf )
+			xl[j] = - ipopt_infinity;
+		else
+			xl[j] = random_lower[j];
+		if( random_lower[j] == + inf )
+			xu[j] = + ipopt_infinity;
+		else
+			xu[j] = random_upper[j];
 	}
 
 	// set limits for abs contraint representation

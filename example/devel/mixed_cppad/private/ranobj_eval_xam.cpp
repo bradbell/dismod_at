@@ -147,16 +147,26 @@ bool ranobj_eval_xam(void)
 		random_vec[i] = i / double(n_data);
 	}
 
+	// lower and upper limits for random effects
+	double inf = std::numeric_limits<double>::infinity();
+	vector<double> random_lower(n_random), random_upper(n_random);
+	for(size_t i = 0; i < n_random; i++)
+	{	random_lower[i] = -inf;
+		random_upper[i] = +inf;
+	}
+
 	// object that is derived from mixed_cppad
 	mixed_derived mixed_object(n_fixed, n_random, data);
-	mixed_object.initialize(fixed_vec, random_vec);
+	mixed_object.initialize( fixed_vec, random_vec);
 
 	// optimize the random effects
 	std::string options;
 	options += "Integer print_level 0\n";
 	options += "String  sb          yes\n";
 	options += "String  derivative_test second-order\n";
-	uhat = mixed_object.optimize_random(options, fixed_vec, random_vec);
+	uhat = mixed_object.optimize_random(
+		options, fixed_vec, random_lower, random_upper, random_vec
+	);
 
 	// compute random part of Laplace approximation
 	double h = mixed_object.ranobj_eval(fixed_vec, uhat);

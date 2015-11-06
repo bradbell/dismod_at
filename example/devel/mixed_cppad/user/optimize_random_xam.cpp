@@ -126,13 +126,21 @@ bool optimize_random_xam(void)
 	mixed_derived mixed_object(n_data, n_data, quasi_fixed, data);
 	mixed_object.initialize(fixed_vec, random_in);
 
+	// lower and upper limits for random effects
+	double inf = std::numeric_limits<double>::infinity();
+	vector<double> random_lower(n_data), random_upper(n_data);
+	for(size_t i = 0; i < n_data; i++)
+	{	random_lower[i] = -inf;
+		random_upper[i] = +inf;
+	}
+
 	// determine the optimal random effects
 	std::string options;
 	options += "Integer print_level 0\n";
 	options += "String  sb          yes\n";
 	options += "String  derivative_test second-order\n";
 	vector<double> random_out = mixed_object.optimize_random(
-		options, fixed_vec, random_in
+		options, fixed_vec, random_lower, random_upper, random_in
 	);
 
 	// check the result
