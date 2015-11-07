@@ -13,7 +13,7 @@ $spell
 	var
 $$
 
-$section The start_var Table: Starting Values Used During a Fit$$
+$section Starting Values Used During a Fit$$
 The start_var table contains one value for each $cref model_variable$$.
 A new $code start_var$$ table is created,
 using the mean of the prior for the model variables,
