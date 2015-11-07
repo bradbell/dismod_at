@@ -50,8 +50,6 @@ os.chdir('build/example/user')
 def constant_weight_fun(a, t) :
 	return 1.0
 # note that the a, t values are not used for this case
-def fun_zero(a, t) :
-	return ('prior_zero', 'prior_none', 'prior_none')
 def fun_rate_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_iota_parent(a, t) :
@@ -209,14 +207,6 @@ def example_db (file_name) :
 			'mulstd_dage_prior_name':   '',
 			'mulstd_dtime_prior_name':  '',
 			'fun':                       fun_iota_parent
-		},{ # smooth_zero
-			'name':                     'smooth_zero',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ middle_time_id ],
-			'mulstd_value_prior_name':  '',
-			'mulstd_dage_prior_name':   '',
-			'mulstd_dtime_prior_name':  '',
-			'fun':                       fun_zero
 		},{ # smooth_mulcov
 			'name':                     'smooth_mulcov',
 			'age_id':                   [ middle_age_id ],
@@ -232,24 +222,24 @@ def example_db (file_name) :
 	rate_dict = [
 		{
 			'name':          'pini',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': '',
+			'child_smooth':  ''
 		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_iota_parent',
 			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'rho',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': '',
+			'child_smooth':  ''
 		},{
 			'name':          'chi',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': '',
+			'child_smooth':  ''
 		},{
 			'name':          'omega',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': '',
+			'child_smooth':  ''
 		}
 	]
 	# ------------------------------------------------------------------------
