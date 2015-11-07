@@ -49,11 +49,6 @@ purpose optimizer for the random effects.
 We already have a recording for the Hessian w.r.t. the random effects,
 it is wasteful use an optimizer that does not take advantage of that Hessian.
 
-$head No Random Effects$$
-Add an option to fit the model without random effects. This would be useful
-for cases with lots of data. In this case, fitting with the random effect
-consumes a huge amount of memory and takes a long time.
-
 $head Random Starting Point$$
 Have an option to start at a random point from the prior for the fixed effects
 (instead of the mean of the fixed effects).
