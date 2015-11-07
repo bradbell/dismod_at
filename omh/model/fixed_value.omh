@@ -21,7 +21,7 @@ $section The Fixed Effects Value Density Function$$
 $head theta_j$$
 We use $latex \theta_j$$ to denote
 one component of the
-$cref/fixed effects/model_variable/Fixed Effects, theta/$$ vector.
+$cref/fixed effects/model_variables/Fixed Effects, theta/$$ vector.
 
 $head prior_id$$
 We use $icode prior_id$$ for the prior that is attached to the
@@ -30,7 +30,7 @@ $th j$$ fixed effect.
 $head lambda_j$$
 If $latex \theta_j$$ is a
 $cref/smoothing standard deviation multiplier
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Smoothing Standard Deviation Multipliers, lambda
 /$$

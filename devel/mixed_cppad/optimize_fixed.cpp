@@ -81,7 +81,7 @@ and is the $cref ipopt_options$$ for optimizing the random effects.
 
 $head fixed_lower$$
 specifies the lower limits for the
-$cref/fixed_effects/model_variable/Fixed Effects, theta/$$.
+$cref/fixed_effects/model_variables/Fixed Effects, theta/$$.
 Note that $code -inf$$
 is used for minus infinity; i.e., no lower limit.
 

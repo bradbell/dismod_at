@@ -40,7 +40,7 @@ $codei%
 	const pack_info& %pack_object%
 %$$
 and is the $cref pack_info$$ information corresponding to the
-$cref/model_variables/model_variable/$$.
+$cref model_variables$$.
 
 $head age_table$$
 This argument has prototype
@@ -228,7 +228,7 @@ This vector has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and is all the $cref/model variables/model_variable/$$ in the order
+and is all the $cref model_variables$$ in the order
 specified by $cref pack_info$$.
 
 $head residual_vec$$
@@ -242,7 +242,7 @@ The order of the residuals is unspecified (at this time).
 
 $head p(theta)$$
 The log of the fixed negative log-likelihood for the
-$cref/fixed effects/model_variable/Fixed Effects, theta/$$,
+$cref/fixed effects/model_variables/Fixed Effects, theta/$$,
 $latex \log \; \B{p}( \theta )$$,
 is the sum of all the log densities corresponding to the
 $cref/residuals/residual_density/$$.
@@ -444,7 +444,7 @@ This vector has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and is all the $cref/model variables/model_variable/$$ in the order
+and is all the $cref model_variables$$ in the order
 specified by $cref pack_info$$.
 
 $head residual_vec$$
@@ -458,7 +458,7 @@ The order of the residuals is unspecified (at this time).
 
 $head p(u|theta)$$
 The log of the fixed negative log-likelihood for the
-and $cref/random effects/model_variable/Random Effects, u/$$
+and $cref/random effects/model_variables/Random Effects, u/$$
 given the fixed effects,
 $latex \log \; \B{p}( u | \theta )$$,
 is the sum of the all the log densities corresponding to the

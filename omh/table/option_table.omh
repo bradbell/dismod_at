@@ -215,7 +215,7 @@ If $icode option_name$$ is
 $code random_bound$$,
 plus and minus the corresponding $icode option_value$$
 are the bounds for each of the
-$cref/random effects/model_variable/Random Effects, u/$$.
+$cref/random effects/model_variables/Random Effects, u/$$.
 Note that if $latex u_j$$ is a random effects,
 $latex \exp( u_j )$$ multiplies the  corresponding rate in the
 $cref avg_integrand$$ model.

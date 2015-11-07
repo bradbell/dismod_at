@@ -14,7 +14,7 @@ $spell
 $$
 
 $section The truth_var Table: True Values Used During Simulations$$
-The truth_var table contains one value for each $cref model_variable$$.
+The truth_var table contains one value for each $cref/model_variables/model_variables/$$.
 A new $code truth_var$$ table is created,
 as a copy of the $cref fit_var_table$$,
 by the $cref truth_command$$.
@@ -33,7 +33,7 @@ In addition, the size of both tables is the same.
 
 $head truth_var_value$$
 The column has type $code real$$ and is
-the value of the corresponding $cref model_variable$$
+the value of the corresponding $cref/model_variables/model_variables/$$
 used during the $cref simulate_command$$.
 
 $head Example$$

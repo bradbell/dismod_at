@@ -47,7 +47,7 @@ $codei%
 	const pack_info& %pack_object%
 %$$
 It is the $cref pack_info$$ information corresponding
-to the $cref/model_variables/model_variable/$$.
+to the $cref model_variables$$.
 
 $head size_fixed$$
 This return value has prototype
@@ -55,7 +55,7 @@ $codei%
 	size_t %size_fixed%
 %$$
 It is the number of
-$cref/fixed effects/model_variable/Fixed Effects, theta/$$ in the model.
+$cref/fixed effects/model_variables/Fixed Effects, theta/$$ in the model.
 
 $head pack_index$$
 This return value has prototype
@@ -63,7 +63,7 @@ $codei%
 	CppAD::vector<size_t> %pack_index%
 %$$
 It size is equal to $icode size_fixed$$; i.e., the number of
-$cref/fixed effects/model_variable/Fixed Effects, theta/$$ in the model.
+$cref/fixed effects/model_variables/Fixed Effects, theta/$$ in the model.
 For each fixed effect index $icode j$$,
 the value $icode%pack_index%[%j%]%$$ is the corresponding
 index in a packed vector (with both fixed and random effects).
@@ -78,7 +78,7 @@ $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
 and its size is $icode%pack_object%.size()%$$.
-It specifies the value for all the $cref/model_variables/model_variable/$$
+It specifies the value for all the $cref model_variables$$
 in $cref pack_info$$ format.
 
 $subhead fixed_vec$$
@@ -101,7 +101,7 @@ $codei%
 	CppAD::vector<%Float%>& %pack_vec%
 %$$
 and its size is $icode%pack_object%.size()%$$.
-It specifies the value for all the $cref/model_variables/model_variable/$$
+It specifies the value for all the $cref model_variables$$
 in $cref pack_info$$ format.
 The input value of its fixed effects does not matter.  Upon return,
 the fixed effects correspond to the values in $icode fixed_vec$$.

@@ -48,7 +48,7 @@ with the initial condition $latex C(0) = p_0$$ and $latex S(0) = 1 - p_0$$.
 This equation is made more complicated by the fact that the
 rates vary with time as well as with each data point.
 The reason for the variation between data points due both to the
-$cref/random effects/model_variable/Random Effects, u/$$ as well as the
+$cref/random effects/model_variables/Random Effects, u/$$ as well as the
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ covariates.
 
 
@@ -102,7 +102,7 @@ $cref/rate_id/rate_table/rate_id/$$.
 The function $latex q_k (a, t)$$ is the piecewise linear rate function
 for the corresponding
 $cref/parent rate
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Parent Rates
 /$$
@@ -113,7 +113,7 @@ parent node,
 $latex u_{i,k} (a, t)$$ is the piecewise linear random effect
 for the corresponding
 $cref/child rate
-	/model_variable
+	/model_variables
 	/Random Effects, u
 	/Child Rates
 /$$
@@ -139,7 +139,7 @@ and each covariate index $latex j \in J_k$$,
 we use $latex \alpha_{j,k} (a, t)$$ to denote the
 piecewise linear function corresponding to the
 $cref/covariate multiplier
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Covariate Multipliers
 /$$
@@ -275,8 +275,8 @@ $latex \[
 
 $head Average Integrand, A_i$$
 We use $latex u$$ and $latex \theta$$ to denote the vector of
-$cref/random effects/model_variable/Random Effects, u/$$ and
-$cref/fixed effects/model_variable/Fixed Effects, theta/$$ respectively.
+$cref/random effects/model_variables/Random Effects, u/$$ and
+$cref/fixed effects/model_variables/Fixed Effects, theta/$$ respectively.
 The model for the $th i$$ measurement,
 not counting integrand effects or measurement noise, is
 $latex \[

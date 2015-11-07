@@ -91,7 +91,7 @@ For each covariate index $latex j \in J_i$$,
 we use $latex \beta_{i,j} (a, t) $$ to denote the
 piecewise linear function corresponding to the
 $cref/covariate multiplier
-	/model_variable/
+	/model_variables/
 	Fixed Effects, theta/
 	Covariate Multipliers
 /$$
@@ -114,7 +114,7 @@ For each covariate index $latex j \in K_i$$ ,
 we use $latex \gamma_{i,j} (a, t) $$ to denote the
 piecewise linear function corresponding to the
 $cref/covariate multiplier
-	/model_variable/
+	/model_variables/
 	Fixed Effects, theta/
 	Covariate Multipliers
 /$$
@@ -123,8 +123,8 @@ $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 
 $head Effects, u, theta$$
 We use $latex u$$ and $latex \theta$$ to denote the vector of
-$cref/random effects/model_variable/Random Effects, u/$$ and
-$cref/fixed effects/model_variable/Fixed Effects, theta/$$ respectively.
+$cref/random effects/model_variables/Random Effects, u/$$ and
+$cref/fixed effects/model_variables/Fixed Effects, theta/$$ respectively.
 
 $head Adjusted Measurement, v_i$$
 The adjusted data value is defined by

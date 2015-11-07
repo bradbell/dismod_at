@@ -45,7 +45,7 @@ $codei%
 	const pack_info& %pack_object%
 %$$
 It is the $cref pack_info$$ information corresponding
-to the $cref/model_variables/model_variable/$$.
+to the $cref model_variables$$.
 
 $head size_random$$
 This return value has prototype
@@ -53,7 +53,7 @@ $codei%
 	size_t %size_random%
 %$$
 It is the number of
-$cref/random effects/model_variable/Random Effects, u/$$ in the model.
+$cref/random effects/model_variables/Random Effects, u/$$ in the model.
 
 $head put_random_effect$$
 This functions copies information from $icode pack_vec$$
@@ -65,7 +65,7 @@ $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
 and its size is $icode%pack_object%.size()%$$.
-It specifies the value for all the $cref/model_variables/model_variable/$$
+It specifies the value for all the $cref model_variables$$
 in $cref pack_info$$ format.
 
 $subhead random_vec$$
@@ -88,7 +88,7 @@ $codei%
 	CppAD::vector<%Float%>& %pack_vec%
 %$$
 and its size is $icode%pack_object%.size()%$$.
-It specifies the value for all the $cref/model_variables/model_variable/$$
+It specifies the value for all the $cref model_variables$$
 in $cref pack_info$$ format.
 The input value of its random effects does not matter.  Upon return,
 the random effects correspond to the values in $icode random_vec$$.

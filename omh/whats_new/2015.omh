@@ -58,7 +58,7 @@ parent rate (child rate) is always zero by setting
 $cref/parent_smooth_id/rate_table/parent_smooth_id/null/$$
 ( $cref/child_smooth_id/rate_table/child_smooth_id/null/$$ )
 to $code null$$.
-This reduces the number of $cref/model_variables/model_variable/$$.
+This reduces the number of $cref model_variables$$.
 $lnext
 The $code speed/simulated.py$$ test was modified to take advantage
 of this feature.
@@ -190,7 +190,7 @@ $cref/standard deviation log-transform
 	/statistic
 	/Standard Deviation Log-Transform, sigma
 /$$
-depend the data and not on the $cref/model_variables/model_variable/$$.
+depend the data and not on the $cref model_variables$$.
 To be specific, $code valgrind --tool=massif$$ reported the following
 reduction for the maximum memory required by $code simulated.py$$:
 $icode%old% = 21.73 MB%$$, $icode%new% = 478.8 KB%$$.
@@ -406,7 +406,7 @@ Remove the special prior that is a constant one from the
 $cref user$$ examples (since 08-12 $code null$$ can be used to
 the same effect for
 $cref/standard deviation multipliers
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Smoothing Standard Deviation Multipliers, lambda
 /$$).
@@ -455,7 +455,7 @@ The $code var_command$$ was changed back to the $cref init_command$$
 $lnext
 There was a bug whereby the
 $cref/standard deviation multipliers
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Smoothing Standard Deviation Multipliers, lambda
 /$$

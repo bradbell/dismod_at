@@ -23,7 +23,7 @@ $$
 $section Mapping var_id To Variable Description$$
 The $code variable$$ table maps the $icode var_id$$
 to information that specifies exactly which
-$cref model_variable$$ it corresponds to.
+$cref/model_variables/model_variables/$$ it corresponds to.
 You can use this information to interpret a $cref fit_var_table$$
 created by the $cref fit_command$$,
 or to create a $cref truth_var_table$$
@@ -41,7 +41,7 @@ This variable multiplies the standard deviation in the
 $cref/mulstd_value_prior/smooth_table/mulstd_value_prior_id/$$
 for the corresponding $icode smooth_id$$; see
 $cref/smoothing standard deviation multiplier
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Smoothing Standard Deviation Multipliers, lambda
 /$$.
@@ -51,7 +51,7 @@ This variable multiplies the standard deviation in the
 $cref/mulstd_dage_prior/smooth_table/mulstd_dage_prior_id/$$
 for the corresponding $icode smooth_id$$; see
 $cref/smoothing standard deviation multiplier
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Smoothing Standard Deviation Multipliers, lambda
 /$$.
@@ -61,7 +61,7 @@ This variable multiplies the standard deviation in the
 $cref/mulstd_dtime_prior/smooth_table/mulstd_dtime_prior_id/$$
 for the corresponding $icode smooth_id$$; see
 $cref/smoothing standard deviation multiplier
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Smoothing Standard Deviation Multipliers, lambda
 /$$.
@@ -72,14 +72,14 @@ $icode age_id$$, $icode time_id$$,
 $icode node_id$$, and $icode rate_id$$.
 If the $icode node_id$$ is the
 $cref/parent_node_id/option_table/parent_node_id/$$, it is a
-$cref/fixed effect/model_variable/Fixed Effects, theta/Parent Rates/$$.
+$cref/fixed effect/model_variables/Fixed Effects, theta/Parent Rates/$$.
 Otherwise, it is a
-$cref/random effect/model_variable/Random Effects, u/Child Rates/$$.
+$cref/random effect/model_variables/Random Effects, u/Child Rates/$$.
 
 $subhead mulcov_rate_value$$
 This variable is a
 $cref/covariate multiplier
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Covariate Multipliers
 /$$
@@ -90,7 +90,7 @@ $icode rate_id$$, and $icode covariate_id$$.
 $subhead mulcov_meas_value$$
 This variable is a
 $cref/covariate multiplier
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Covariate Multipliers
 /$$
@@ -101,7 +101,7 @@ $icode integrand_id$$, and $icode covariate_id$$.
 $subhead mulcov_meas_std$$
 This variable is a
 $cref/covariate multiplier
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Covariate Multipliers
 /$$

@@ -172,7 +172,7 @@ $codei%
 	const pack_info& %pack_object%
 %$$
 and is the $cref pack_info$$ information corresponding to
-the $cref/model_variables/model_variable/$$.
+the $cref model_variables$$.
 
 $head child_object$$
 This argument has prototype
@@ -713,7 +713,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and is all the $cref/model variables/model_variable/$$ in the order
+and is all the $cref model_variables$$ in the order
 specified by $cref pack_info$$.
 
 $head avg$$
@@ -969,7 +969,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and is all the $cref/model variables/model_variable/$$ in the order
+and is all the $cref model_variables$$ in the order
 specified by $cref pack_info$$.
 Only the following subvectors of $icode pack_vec$$ are used:
 $cref pack_info_rate_info$$,
@@ -1303,7 +1303,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and is all the $cref/model variables/model_variable/$$ in the order
+and is all the $cref model_variables$$ in the order
 specified by $cref pack_info$$; i.e.,
 $latex (u , \theta)$$.
 Only the $cref pack_info_mulcov_meas$$ subvectors of $icode pack_vec$$ are used
@@ -1502,7 +1502,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
-and is all the $cref/model variables/model_variable/$$ in the order
+and is all the $cref model_variables$$ in the order
 specified by $cref pack_info$$; i.e.,
 $latex (u , \theta)$$.
 

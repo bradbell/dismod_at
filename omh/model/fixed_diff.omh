@@ -57,7 +57,7 @@ rate or covariate index $latex k$$,
 age index $latex i$$ and
 time index $latex j$$.
 Note that if $latex k$$ corresponds to a rate, it is the corresponding
-$cref/parent rates/model_variable/Fixed Effects, theta/Parent Rates/$$
+$cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
 that are fixed effects.
 
 $head mu_i,j,k$$

@@ -88,7 +88,7 @@ $head var_table$$
 A new $cref var_table$$ is created with the information
 that maps a $cref/var_id/var_table/var_id/$$
 to its meaning in terms of the
-$cref/model variables/model_variable/$$.
+$cref model_variables$$.
 
 $head data_subset_table$$
 A new $cref data_subset_table$$ is created.
@@ -401,7 +401,7 @@ $code dismod_at$$ $cref input$$ tables which are not modified.
 $head start_var_table$$
 The start table is required for the $cref fit_command$$.
 This command creates a $cref start_var_table$$ using the means
-for the prior for each $cref model_variable$$.
+for the prior for each $cref/model_variables/model_variables/$$.
 
 $children%example/get_started/start_command.py%$$
 $head Example$$
@@ -723,7 +723,7 @@ $code dismod_at$$ $cref input$$ tables which are not modified.
 $head truth_var_table$$
 The $cref truth_var_table$$ is an addition input table for this command.
 It specifies the true values for the
-$cref/model_variables/model_variable/$$ used during the simulation.
+$cref model_variables$$ used during the simulation.
 This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref init_command$$).
@@ -855,7 +855,7 @@ which was created by a previous $cref simulate_command$$.
 
 $head sample_table$$
 A new $cref sample_table$$ is created each time this command is run.
-It contains the optimal $cref model_variable$$ values
+It contains the optimal $cref/model_variables/model_variables/$$ values
 for each simulated $cref/sample_index/simulate_table/sample_index/$$.
 
 $children%example/get_started/sample_command.py%$$

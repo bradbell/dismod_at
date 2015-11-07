@@ -8,7 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin model_variable$$
+$begin model_variables$$
 $spell
 	std
 	subvectors
@@ -93,7 +93,7 @@ $latex \lambda_i^v$$,
 $latex \lambda_i^a$$, and
 $latex \lambda_i^t$$  respectively; see
 $cref/lambda
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Smoothing Standard Deviation Multipliers, lambda
 /$$

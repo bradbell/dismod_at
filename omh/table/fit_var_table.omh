@@ -16,7 +16,7 @@ $$
 
 $section The Optimization Results for Variables$$
 The fit_var table contains the maximum likelihood estimate
-for the $cref/model variables/model_variable/$$ corresponding to
+for the $cref model_variables$$ corresponding to
 the data table $cref/meas_value/data_table/meas_value/$$.
 A new $code fit_var$$ table is created each time the
 $cref fit_command$$ is executed.
@@ -34,11 +34,11 @@ In addition, the size of both tables is the same.
 $head fit_var_value$$
 The column has type $code real$$ and contains the model variable values.
 To be specific, the
-$cref/fixed effects/model_variable/Fixed Effects, theta/$$ $latex ( \theta )$$,
+$cref/fixed effects/model_variables/Fixed Effects, theta/$$ $latex ( \theta )$$,
 maximize the total objective
 $cref/L(theta)/mixed_cppad_theory/Objective/Total Objective, L(theta)/$$
 and the
-$cref/random effects/model_variable/Random Effects, u/$$ $latex ( u )$$
+$cref/random effects/model_variables/Random Effects, u/$$ $latex ( u )$$
 maximize the random part of the objective (given the fixed effect); see
 $cref/u^(theta)/mixed_cppad_theory/Objective/u^(theta)/$$.
 

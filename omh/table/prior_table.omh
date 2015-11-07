@@ -15,7 +15,7 @@ $$
 
 $section The Prior Table$$
 The $code prior$$ table is used to define the
-prior for a single $cref model_variable$$.
+prior for a single $cref/model_variables/model_variables/$$.
 It has the following columns:
 
 $head prior_id$$

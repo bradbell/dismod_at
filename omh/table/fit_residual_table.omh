@@ -15,7 +15,7 @@ $$
 
 $section The Model and Weighted Residuals Corresponding to a Fit$$.
 The fit_residual table compares the model and data
-for the $cref/model variables/model_variable/$$
+for the $cref model_variables$$
 corresponding to a $cref fit_command$$.
 A new $code fit_residual$$ table is created each time the
 $cref fit_command$$ is executed.
@@ -38,7 +38,7 @@ $cref/foreign keys/input/Foreign Key/$$.
 $head avg_integrand$$
 The column has type $code real$$ and contains the
 $cref avg_integrand$$ that correspond to the
-$cref/model variables/model_variable/$$ obtained by the fit; see
+$cref model_variables$$ obtained by the fit; see
 $cref/fit_var_value/fit_var_table/fit_var_value/$$.
 
 $head weighted_residual$$
@@ -48,7 +48,7 @@ $cref/weighted_residuals
 	/Weighted Residual Function, R
 /$$
 that correspond to the
-$cref/model variables/model_variable/$$ obtained by the fit; see
+$cref model_variables$$ obtained by the fit; see
 $cref/fit_var_value/fit_var_table/fit_var_value/$$.
 
 $head Example$$

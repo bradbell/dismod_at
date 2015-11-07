@@ -216,7 +216,7 @@ $codei%
 
 $head fixed_lower$$
 specifies the lower limits for the
-$cref/fixed_effects/model_variable/Fixed Effects, theta/$$.
+$cref/fixed_effects/model_variables/Fixed Effects, theta/$$.
 Note that
 $code%
 	- std::numeric_limits<double>::infinity()

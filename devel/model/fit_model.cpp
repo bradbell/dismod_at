@@ -69,14 +69,14 @@ $codei%
 	const pack_info& %pack_object%
 %$$
 and is the $cref pack_info$$ information corresponding to the
-$cref/model_variables/model_variable/$$.
+$cref model_variables$$.
 
 $head start_var$$
 This vector has prototype
 $codei%
 	const CppAD::vector<double>& %start_var%
 %$$
-and is the starting $cref/model variables/model_variable/$$ in the order
+and is the starting $cref model_variables$$ in the order
 specified by $cref pack_info$$.
 
 $head prior_table$$
@@ -147,7 +147,7 @@ This return value has prototype
 $codei%
 	CppAD::vector<double> %solution%
 %$$
-It is the optimal $cref/variable values/model_variable/$$ in
+It is the optimal $cref/variable values/model_variables/$$ in
 $cref pack_info$$ format.
 
 $children%example/devel/model/fit_model_xam.cpp

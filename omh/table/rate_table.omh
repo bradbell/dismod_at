@@ -81,7 +81,7 @@ when fitting the parent (fixed effects).
 
 $subhead null$$
 If the $icode parent_smooth_id$$ is $code null$$, the corresponding
-parent rate is always zero and no $cref/model_variables/model_variable/$$ are
+parent rate is always zero and no $cref model_variables$$ are
 allocated for it.
 
 $head child_smooth_id$$
@@ -117,7 +117,7 @@ $lend
 $subhead null$$
 If $icode child_smooth_id$$ is $code null$$, the corresponding child rate
 is always zero and no variables are allocated for the corresponding
-$cref/random effects/model_variable/Random Effects, u/$$.
+$cref/random effects/model_variables/Random Effects, u/$$.
 
 $children%example/table/rate_table.py
 %$$

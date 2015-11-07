@@ -14,7 +14,7 @@ $spell
 $$
 
 $section Starting Values Used During a Fit$$
-The start_var table contains one value for each $cref model_variable$$.
+The start_var table contains one value for each $cref/model_variables/model_variables/$$.
 A new $code start_var$$ table is created,
 using the mean of the prior for the model variables,
 by the $cref start_command$$.
@@ -38,7 +38,7 @@ In addition, the size of both tables is the same.
 
 $head start_var_value$$
 The column has type $code real$$ and is
-the value of the corresponding $cref model_variable$$
+the value of the corresponding $cref/model_variables/model_variables/$$
 where the optimization procedure is started during the
 $cref fit_command$$.
 

@@ -22,7 +22,7 @@ $cref simulate_command$$.
 $head simulate_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
-Given the $cref/model variables/model_variable/$$ as specified by
+Given the $cref model_variables$$ as specified by
 $cref truth_var_table$$,
 the measurement uncertainty is independent for each row
 and has standard deviation $cref/meas_std/data_table/meas_std/$$.

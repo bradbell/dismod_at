@@ -15,7 +15,7 @@ $$
 
 $section The Sample Table: Samples of Variable Values$$
 The $cref sample_command$$ creates this table with
-one optimal estimate of the $cref/model variables/model_variable/$$
+one optimal estimate of the $cref model_variables$$
 for each valid $cref/sample_index/simulate_table/sample_index/$$
 in the simulate table.
 This table may also be created directly by the user,
@@ -35,7 +35,7 @@ in the simulated data table that $icode var_value$$ corresponds to.
 
 $head var_id$$
 This column has type $code integer$$ and specifies the
-$cref model_variable$$ that $icode var_value$$ corresponds to;
+$cref/model_variables/model_variables/$$ that $icode var_value$$ corresponds to;
 see $cref/var_id/var_table/var_id/$$.
 If $icode n_var$$ is the number of rows in the variable table,
 $codei%

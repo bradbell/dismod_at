@@ -24,7 +24,7 @@ $subhead lambda$$
 We use $latex \lambda$$ to denote
 the sub-vector of the fixed effects that are
 $cref/standard deviation multipliers
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Smoothing Standard Deviation Multipliers, lambda
 /$$.
@@ -33,13 +33,13 @@ $subhead beta$$
 We use $latex \beta$$ to denote
 the sub-vector of the fixed effects that are
 $cref/parent rates
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Parent Rates
 /$$
 or
 $cref/covariate multipliers
-	/model_variable
+	/model_variables
 	/Fixed Effects, theta
 	/Covariate Multipliers
 /$$.
