@@ -51,8 +51,6 @@ os.chdir('build/speed')
 def constant_weight_fun(a, t) :
 	return 1.0
 # note that the a, t values are not used for this case
-def fun_zero(a, t) :
-	return ('prior_zero', 'prior_none', 'prior_none')
 def fun_rate_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_iota_parent(a, t) :
@@ -208,10 +206,10 @@ def example_db (file_name) :
 	# smooth table
 	name           = 'smooth_rate_child'
 	fun            = fun_rate_child
-	age_id         = int( len( age_list ) / 2 )
-	time_id        = int( len( time_list ) / 2 )
+	age_grid       = [ 0, len(age_list)-1 ]
+	time_grid      = [ 0, len(time_list)-1 ]
 	smooth_dict = [
-		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
+		{'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun }
 	]
 	name = 'smooth_iota_parent'
 	fun  = fun_iota_parent
@@ -220,11 +218,6 @@ def example_db (file_name) :
 	)
 	name = 'smooth_rho_parent'
 	fun  = fun_rho_parent
-	smooth_dict.append(
-		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
-	)
-	name = 'smooth_zero'
-	fun  = fun_zero
 	smooth_dict.append(
 		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
 	)
@@ -243,8 +236,8 @@ def example_db (file_name) :
 	# rate table:
 	rate_dict = [
 		{	'name':          'pini',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': '',
+			'child_smooth':  ''
 		},{	'name':          'iota',
 			'parent_smooth': 'smooth_iota_parent',
 			'child_smooth':  'smooth_rate_child'
@@ -252,11 +245,11 @@ def example_db (file_name) :
 			'parent_smooth': 'smooth_rho_parent',
 			'child_smooth':  'smooth_rate_child'
 		},{	'name':          'chi',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': '',
+			'child_smooth':  ''
 		},{	'name':          'omega',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': '',
+			'child_smooth':  ''
 		}
 	]
 	# ------------------------------------------------------------------------
