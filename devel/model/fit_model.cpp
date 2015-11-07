@@ -175,7 +175,7 @@ fit_model::fit_model(
 	const prior_model&                 prior_object ,
 	bool                               quasi_fixed  ) :
 // base class constructor
-mixed_cppad(
+cppad_mixed(
 	size_fixed_effect(pack_object) ,  // n_fixed
 	size_random_effect(pack_object) , // n_random
 	quasi_fixed

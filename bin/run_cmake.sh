@@ -12,7 +12,7 @@
 # $OMhelpKeyCharacter=&
 # &begin run_cmake.sh&& &newlinech #&&
 # &spell
-#	cmake makefile cxx std dismod libdir lmixed cholmod xam cpp
+#	cmake makefile cxx std dismod libdir lcppad cholmod xam cpp
 #	usr eigen ipopt cppad bools suitesparse devel hpp
 # &&
 #
@@ -56,29 +56,29 @@ ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
 # &&
 #
-# &head mixed_cppad_set_sparsity&&
+# &head cppad_mixed_set_sparsity&&
 # If YES, use sets of indices for sparsity patterns.
 # If NO use arrays of bools:
 # &codep
-mixed_cppad_set_sparsity="NO"
+cppad_mixed_set_sparsity="NO"
 # &&
 #
-# &head mixed_cppad_libdir&&
-# Sub-directory of dismod_at_prefix where mixed_cppad libraries are installed.
+# &head cppad_mixed_libdir&&
+# Sub-directory of dismod_at_prefix where cppad_mixed libraries are installed.
 # The eigen part of the library is separate so different flags can be used
 # to compile the part of the code that uses eigen.
-# The following will properly link the &code mixed_cppad&& library:
+# The following will properly link the &code cppad_mixed&& library:
 # &codep
-#	-lmixed_cppad -lmixed_cppad_eigen -lmixed_cppad
+#	-lcppad_mixed -lcppad_mixed_eigen -lcppad_mixed
 # &&
-# If you do not need to install mixed_cppad, use NOTFOUND for this setting:
+# If you do not need to install cppad_mixed, use NOTFOUND for this setting:
 # &codep
-mixed_cppad_libdir='lib64'
+cppad_mixed_libdir='lib64'
 # &&
 #
 # &head suitesparse_prefix&&
 # Prefix where optional package was installed (use NOTFOUND if not installed).
-# This is only required by example/devel/mixed_cppad/cholmod_xam.cpp.
+# This is only required by example/devel/cppad_mixed/cholmod_xam.cpp.
 # &codep
 suitesparse_prefix="$HOME/prefix/suitesparse"
 # &&
@@ -114,7 +114,7 @@ then
 	cmake_verbose_makefile='1'
 elif [ "$user_option" == '--set_sparsity' ]
 then
-	mixed_cppad_set_sparsity="YES"
+	cppad_mixed_set_sparsity="YES"
 elif [ "$user_option" != '' ]
 then
 	echo "'$1' is an invalid option"
@@ -139,7 +139,7 @@ cmake \
 	-D ipopt_prefix="$cppad_prefix" \
 	-D eigen_prefix="$eigen_prefix" \
 	\
-	-D mixed_cppad_set_sparsity="$mixed_cppad_set_sparsity" \
-	-D mixed_cppad_libdir="$mixed_cppad_libdir" \
+	-D cppad_mixed_set_sparsity="$cppad_mixed_set_sparsity" \
+	-D cppad_mixed_libdir="$cppad_mixed_libdir" \
 	-D suitesparse_prefix="$suitesparse_prefix" \
 	..

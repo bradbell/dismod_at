@@ -8,7 +8,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# mixed_cppad speed test
+# cppad_mixed speed test
 #
 LINK_DIRECTORIES(
 	${ipopt_LIBRARY_DIRS}
@@ -27,16 +27,16 @@ SET_TARGET_PROPERTIES(
 TARGET_LINK_LIBRARIES(capture_xam
 	example_devel_eigen
 	devel
-	mixed_cppad
-	mixed_cppad_eigen
-	mixed_cppad
+	cppad_mixed
+	cppad_mixed_eigen
+	cppad_mixed
 	${ipopt_LIBRARIES}
 	sqlite3
 	gsl
 	gslcblas
 )
 ADD_CUSTOM_TARGET(speed_capture_xam capture_xam DEPENDS capture_xam )
-ADD_DEPENDENCIES(speed_capture_xam devel mixed_cppad mixed_cppad_eigen)
+ADD_DEPENDENCIES(speed_capture_xam devel cppad_mixed cppad_mixed_eigen)
 # -----------------------------------------------------------------------------
 # dismod_at speed test
 #

@@ -31,7 +31,7 @@ $end
 // optional
 extern bool cholmod_xam(void);
 
-// mixed_cppad subdirectory
+// cppad_mixed subdirectory
 extern bool mixed_constraint_xam(void);
 extern bool mixed_derived_xam(void);
 extern bool constraint_eval_xam(void);
@@ -143,7 +143,7 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {
-	// mixed_cppad subdirectory
+	// cppad_mixed subdirectory
 	RUN(mixed_constraint_xam);
 	RUN(mixed_derived_xam);
 	RUN(constraint_eval_xam);

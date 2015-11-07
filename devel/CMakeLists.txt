@@ -8,41 +8,41 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# mixed_cppad
-ADD_LIBRARY(mixed_cppad
-	mixed_cppad/constraint_eval.cpp
-	mixed_cppad/constraint_eval.cpp
-	mixed_cppad/constraint_jac.cpp
-	mixed_cppad/constraint_hes.cpp
-	mixed_cppad/ran_like_grad.cpp
-	mixed_cppad/ranobj_hes.cpp
-	mixed_cppad/initialize.cpp
-	mixed_cppad/ipopt_fixed.cpp
-	mixed_cppad/optimize_fixed.cpp
-	mixed_cppad/optimize_random.cpp
-	mixed_cppad/fix_like_eval.cpp
-	mixed_cppad/fix_like_jac.cpp
-	mixed_cppad/fix_like_hes.cpp
-	mixed_cppad/init_fix_like.cpp
-	mixed_cppad/init_constraint.cpp
-	mixed_cppad/init_hes_cross.cpp
-	mixed_cppad/init_hes_ranobj.cpp
-	mixed_cppad/init_hes_ran.cpp
-	mixed_cppad/init_ran_like.cpp
+# cppad_mixed
+ADD_LIBRARY(cppad_mixed
+	cppad_mixed/constraint_eval.cpp
+	cppad_mixed/constraint_eval.cpp
+	cppad_mixed/constraint_jac.cpp
+	cppad_mixed/constraint_hes.cpp
+	cppad_mixed/ran_like_grad.cpp
+	cppad_mixed/ranobj_hes.cpp
+	cppad_mixed/initialize.cpp
+	cppad_mixed/ipopt_fixed.cpp
+	cppad_mixed/optimize_fixed.cpp
+	cppad_mixed/optimize_random.cpp
+	cppad_mixed/fix_like_eval.cpp
+	cppad_mixed/fix_like_jac.cpp
+	cppad_mixed/fix_like_hes.cpp
+	cppad_mixed/init_fix_like.cpp
+	cppad_mixed/init_constraint.cpp
+	cppad_mixed/init_hes_cross.cpp
+	cppad_mixed/init_hes_ranobj.cpp
+	cppad_mixed/init_hes_ran.cpp
+	cppad_mixed/init_ran_like.cpp
 )
-SET_TARGET_PROPERTIES(mixed_cppad
+SET_TARGET_PROPERTIES(cppad_mixed
 	PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
 # ---------------------------------------------------------------------------
-# mixed_cppad_eigen
-ADD_LIBRARY(mixed_cppad_eigen
-	mixed_cppad/init_ranobj.cpp
-	mixed_cppad/newton_step.cpp
-	mixed_cppad/ranobj_eval.cpp
-	mixed_cppad/logdet_grad.cpp
-	mixed_cppad/ranobj_grad.cpp
+# cppad_mixed_eigen
+ADD_LIBRARY(cppad_mixed_eigen
+	cppad_mixed/init_ranobj.cpp
+	cppad_mixed/newton_step.cpp
+	cppad_mixed/ranobj_eval.cpp
+	cppad_mixed/logdet_grad.cpp
+	cppad_mixed/ranobj_grad.cpp
 )
-SET_TARGET_PROPERTIES(mixed_cppad_eigen
+SET_TARGET_PROPERTIES(cppad_mixed_eigen
 	PROPERTIES COMPILE_FLAGS "${eigen_cxx_flags}"
 )
 # ---------------------------------------------------------------------------
@@ -111,12 +111,12 @@ SET_TARGET_PROPERTIES(devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
 LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 ADD_EXECUTABLE(dismod_at dismod_at.cpp )
 SET_TARGET_PROPERTIES(dismod_at PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}" )
-ADD_DEPENDENCIES(dismod_at devel mixed_cppad mixed_cppad_eigen)
+ADD_DEPENDENCIES(dismod_at devel cppad_mixed cppad_mixed_eigen)
 TARGET_LINK_LIBRARIES(dismod_at
 	devel
-	mixed_cppad
-	mixed_cppad_eigen
-	mixed_cppad
+	cppad_mixed
+	cppad_mixed_eigen
+	cppad_mixed
 	${ipopt_LIBRARIES}
 	sqlite3
 	gsl
@@ -128,14 +128,14 @@ INSTALL(
 	TARGETS dismod_at
 	DESTINATION ${dismod_at_prefix}/bin
 )
-IF( mixed_cppad_libdir )
+IF( cppad_mixed_libdir )
 	INSTALL(
-		TARGETS mixed_cppad mixed_cppad_eigen
-		DESTINATION ${dismod_at_prefix}/${mixed_cppad_libdir}
+		TARGETS cppad_mixed cppad_mixed_eigen
+		DESTINATION ${dismod_at_prefix}/${cppad_mixed_libdir}
 	)
 	INSTALL(
-		FILES ${dismod_at_SOURCE_DIR}/include/dismod_at/mixed_cppad.hpp
+		FILES ${dismod_at_SOURCE_DIR}/include/dismod_at/cppad_mixed.hpp
 		DESTINATION ${dismod_at_prefix}/include/dismod_at
 	)
-ENDIF( mixed_cppad_libdir )
+ENDIF( cppad_mixed_libdir )
 

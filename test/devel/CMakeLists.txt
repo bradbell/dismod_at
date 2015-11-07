@@ -16,11 +16,11 @@ LINK_DIRECTORIES(
 )
 # Program cpp, not installed, and depends on following source files
 ADD_EXECUTABLE(test_devel EXCLUDE_FROM_ALL
-	mixed_cppad/binomial.cpp
-	mixed_cppad/delta_ranobj.cpp
-	mixed_cppad/der_var_hes.cpp
-	mixed_cppad/zero_random_one.cpp
-	mixed_cppad/zero_random_two.cpp
+	cppad_mixed/binomial.cpp
+	cppad_mixed/delta_ranobj.cpp
+	cppad_mixed/der_var_hes.cpp
+	cppad_mixed/zero_random_one.cpp
+	cppad_mixed/zero_random_two.cpp
 	age_time_order.cpp
 	data_model_subset.cpp
 	meas_mulcov.cpp
@@ -33,9 +33,9 @@ SET_TARGET_PROPERTIES(
 )
 TARGET_LINK_LIBRARIES(test_devel
 	devel
-	mixed_cppad
-	mixed_cppad_eigen
-	mixed_cppad
+	cppad_mixed
+	cppad_mixed_eigen
+	cppad_mixed
 	${ipopt_LIBRARIES}
 	sqlite3
 	gsl

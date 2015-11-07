@@ -165,7 +165,7 @@ $end
 # include <ctime>
 # include <gsl/gsl_randist.h>
 # include <cppad/vector.hpp>
-# include <dismod_at/mixed_cppad.hpp>
+# include <dismod_at/cppad_mixed.hpp>
 # include <dismod_at/manage_gsl_rng.hpp>
 # include <dismod_at/configure.hpp>
 
@@ -217,8 +217,8 @@ void simulate(
 	return;
 }
 
-// mixed_cppad derived class
-class mixed_derived : public dismod_at::mixed_cppad {
+// cppad_mixed derived class
+class mixed_derived : public dismod_at::cppad_mixed {
 private:
 	const size_t          I_; // number of locations
 	const size_t          T_; // number of times
@@ -238,7 +238,7 @@ public:
 		vector<size_t>&        y           )
 		:
 		// n_fixed = 3, n_random = T
-		dismod_at::mixed_cppad(3, T, quasi_fixed) ,
+		dismod_at::cppad_mixed(3, T, quasi_fixed) ,
 		I_(I)            ,
 		T_(T)            ,
 		y_(y)

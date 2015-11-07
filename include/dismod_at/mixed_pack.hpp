@@ -10,11 +10,11 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # ifndef DISMOD_AT_MIXED_PACK_HPP
 # define DISMOD_AT_MIXED_PACK_HPP
-# include <dismod_at/mixed_cppad.hpp>
+# include <dismod_at/cppad_mixed.hpp>
 # include <dismod_at/a2_double.hpp>
 
 /*
-$begin mixed_cppad_pack$$
+$begin cppad_mixed_pack$$
 $spell
 	cppad
 	vec
@@ -24,7 +24,7 @@ $spell
 	hpp
 $$
 
-$section mixed_cppad: Pack Fixed Effect and Random Effects Into One Vector$$
+$section cppad_mixed: Pack Fixed Effect and Random Effects Into One Vector$$
 
 $head Syntax$$
 $codei%pack(%fixed_one%, %random_vec%, %both_vec%)
@@ -33,9 +33,9 @@ $codei%pack(%fixed_one%, %fixed_two%, %random_vec%, %three_vec%)
 %$$
 
 $head Private$$
-This function is $code private$$ to the $code mixed_cppad$$ class
+This function is $code private$$ to the $code cppad_mixed$$ class
 and cannot be used by a derived
-$cref/mixed_object/mixed_cppad_derived_ctor/mixed_object/$$.
+$cref/mixed_object/cppad_mixed_derived_ctor/mixed_object/$$.
 
 $head Float_unpack$$
 This can be any type.
@@ -51,9 +51,9 @@ $codei%
 	const CppAD::vector<%Float_unpack%>& %fixed_one%
 %$$
 It specifies the a value for the
-$cref/fixed effects/mixed_cppad/Fixed Effects, theta/$$.
+$cref/fixed effects/cppad_mixed/Fixed Effects, theta/$$.
 The size of this vector must be equal to
-$cref/n_fixed_/mixed_cppad_private/n_fixed_/$$.
+$cref/n_fixed_/cppad_mixed_private/n_fixed_/$$.
 
 $head fixed_two$$
 This argument has prototype
@@ -61,9 +61,9 @@ $codei%
 	const CppAD::vector<%Float_unpack%>& %fixed_two%
 %$$
 If present, it also specifies the a value for the
-$cref/fixed effects/mixed_cppad/Fixed Effects, theta/$$.
+$cref/fixed effects/cppad_mixed/Fixed Effects, theta/$$.
 The size of this vector must be equal to
-$cref/n_fixed_/mixed_cppad_private/n_fixed_/$$.
+$cref/n_fixed_/cppad_mixed_private/n_fixed_/$$.
 
 $head random_vec$$
 This argument has prototype
@@ -71,9 +71,9 @@ $codei%
 	const CppAD::vector<%Float_unpack%>& %random_vec%
 %$$
 It specifies a value for the
-$cref/random effects/mixed_cppad/Random Effects, u/$$.
+$cref/random effects/cppad_mixed/Random Effects, u/$$.
 The size of this vector must be equal to
-$cref/n_fixed_/mixed_cppad_private/n_random_/$$.
+$cref/n_fixed_/cppad_mixed_private/n_random_/$$.
 
 $head both_vec$$
 This argument has prototype
@@ -101,13 +101,13 @@ The order of the result is unspecified.
 
 $end
 */
-# include <dismod_at/mixed_cppad.hpp>
+# include <dismod_at/cppad_mixed.hpp>
 # include <dismod_at/a2_double.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 template <class Float_unpack, class Float_pack>
-void mixed_cppad::pack(
+void cppad_mixed::pack(
 	const CppAD::vector<Float_unpack>& fixed_one  ,
 	const CppAD::vector<Float_unpack>& random_vec ,
 	CppAD::vector<Float_pack>&         both_vec   ) const
@@ -121,7 +121,7 @@ void mixed_cppad::pack(
 		both_vec[n_fixed_ + j] = Float_pack( random_vec[j] );
 }
 template <class Float_unpack, class Float_pack>
-void mixed_cppad::pack(
+void cppad_mixed::pack(
 	const CppAD::vector<Float_unpack>& fixed_one  ,
 	const CppAD::vector<Float_unpack>& fixed_two  ,
 	const CppAD::vector<Float_unpack>& random_vec ,

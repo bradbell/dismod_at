@@ -19,8 +19,8 @@
 #                        -D cppad_prefix=value \
 #                        -D eigen_prefix=value \
 #                        -D ipopt_prefix=value \
-# optional variables:    -D mixed_cppad_set_sparsity=value \
-#                        -D mixed_cppad_libdir=value \
+# optional variables:    -D cppad_mixed_set_sparsity=value \
+#                        -D cppad_mixed_libdir=value \
 #                        -D suitesparse_prefix=value \
 #                         ..
 # ============================================================================
@@ -125,11 +125,11 @@ get_prefix(eigen)
 get_prefix(ipopt)
 # ----------------------------------------------------------------------------
 # optional special cmake variables
-optional_definition(mixed_cppad_set_sparsity BOOL
+optional_definition(cppad_mixed_set_sparsity BOOL
 	"use sets (instead of bools) to represent sparsity patterns"
 )
-optional_definition( mixed_cppad_libdir STRING
-	"directory below dismod_at_prefix where mixed_cppad library is installed"
+optional_definition( cppad_mixed_libdir STRING
+	"directory below dismod_at_prefix where cppad_mixed library is installed"
 )
 IF( suitesparse_prefix )
 	SET( suitesparse_prefix_01 1 )
@@ -141,9 +141,9 @@ ENDIF( suitesparse_prefix )
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
 # ----------------------------------------------------------------------------
-IF( NOT mixed_cppad_libdir )
-	MESSAGE( STATUS "mixed_cppad library will not be installed")
-ENDIF( NOT mixed_cppad_libdir )
+IF( NOT cppad_mixed_libdir )
+	MESSAGE( STATUS "cppad_mixed library will not be installed")
+ENDIF( NOT cppad_mixed_libdir )
 # ----------------------------------------------------------------------------
 # set eigen_cxx_flags
 SET(eigen_cxx_flags
@@ -198,7 +198,7 @@ ADD_SUBDIRECTORY(speed)
 ADD_CUSTOM_TARGET(check DEPENDS
 	dismod_at
 	devel
-	mixed_cppad
+	cppad_mixed
 	check_example_table
 	check_example_devel
 	check_test_devel

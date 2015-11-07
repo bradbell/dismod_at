@@ -25,7 +25,7 @@ $$
 $section Ipopt NLP Class Used to Optimize Fixed Effects$$
 
 $head Private$$
-This class is not part of the $cref mixed_cppad$$ API.
+This class is not part of the $cref cppad_mixed$$ API.
 
 $head nlp_lower_bound_inf()$$
 This member function returns the $code double$$ value used
@@ -39,15 +39,15 @@ $head fixed_opt()$$
 This member function returns the optimal solution (so far)
 for the fixed effects.
 
-$childtable%devel/mixed_cppad/ipopt_fixed.cpp
-	%example/devel/mixed_cppad/ipopt_xam.omh
+$childtable%devel/cppad_mixed/ipopt_fixed.cpp
+	%example/devel/cppad_mixed/ipopt_xam.omh
 %$$
 
 $end
 -----------------------------------------------------------------------------
 */
 # include <coin/IpTNLP.hpp>
-# include <dismod_at/mixed_cppad.hpp>
+# include <dismod_at/cppad_mixed.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 	//
@@ -55,8 +55,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 	class ipopt_fixed : public Ipopt::TNLP
 	{
 	private:
-		// mixed_cppad types used by this class
-		typedef mixed_cppad::d_vector     d_vector;
+		// cppad_mixed types used by this class
+		typedef cppad_mixed::d_vector     d_vector;
 		typedef CppAD::vector<size_t>      s_vector;
 		//
 		// Ipopt types used by this class
@@ -81,7 +81,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		const d_vector& random_upper_;    // upper limit for random effects
 		const d_vector& random_in_;       // random effects initial value
 		//
-		mixed_cppad&   mixed_object_;     // mixed_cppad for this problem
+		cppad_mixed&   mixed_object_;     // cppad_mixed for this problem
 		// ---------------------------------------------------------------
 		// set during constructor, otherwise const
 		double nlp_lower_bound_inf_; // Ipopt's code for - infinity
@@ -162,7 +162,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 			const d_vector& random_lower         ,
 			const d_vector& random_upper         ,
 			const d_vector& random_in            ,
-			mixed_cppad&   mixed_object
+			cppad_mixed&   mixed_object
 		);
 		//
 		// default destructor

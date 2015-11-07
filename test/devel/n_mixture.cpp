@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/cppad.hpp>
 # include <gsl/gsl_randist.h>
 # include <gsl/gsl_linalg.h>
-# include <dismod_at/mixed_cppad.hpp>
+# include <dismod_at/cppad_mixed.hpp>
 # include <dismod_at/manage_gsl_rng.hpp>
 
 // J. Andrew Royle, Biometrics 60, 108-115 March 2004,
@@ -48,8 +48,8 @@ void simulate(
 	return;
 }
 
-// mixed_cppad derived class
-class mixed_derived : public dismod_at::mixed_cppad {
+// cppad_mixed derived class
+class mixed_derived : public dismod_at::cppad_mixed {
 private:
 	const size_t          K_;      // maximum size of population
 	const size_t          I_;      // number of locations
@@ -65,7 +65,7 @@ public:
 	mixed_derived(size_t K, size_t I, size_t T, vector<size_t>&  y)
 		:
 		// n_fixed = 2, n_random = 0, quasi_fixed = false
-		dismod_at::mixed_cppad(2, 0, false),
+		dismod_at::cppad_mixed(2, 0, false),
 		K_(K)   ,
 		I_(I)   ,
 		T_(T)   ,

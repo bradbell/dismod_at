@@ -38,6 +38,6 @@ fi
 make install
 cd ..
 #
-bin/check_mixed_cppad.sh
+bin/check_cppad_mixed.sh
 #
 echo 'check_all.sh: OK'
