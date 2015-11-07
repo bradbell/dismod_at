@@ -183,6 +183,7 @@ def create_database() :
 		{ 'name':'number_sample',   'value':'1'            },
 		{ 'name':'rate_case',       'value':'chi_positive' },
 		{ 'name':'tolerance',       'value':'1e-8'         },
+		{ 'name':'random_bound',    'value':'5.0'          },
 		{ 'name':'max_num_iter',    'value':'100'          },
 		{ 'name':'print_level',     'value':'0'            },
 		{ 'name':'derivative_test', 'value':'second-order' }
@@ -370,6 +371,7 @@ def create_database() :
 		[ 'number_sample',    '1'            ],
 		[ 'rate_case',        'chi_positive' ],
 		[ 'tolerance',        '1e-8'         ],
+		[ 'random_bound',     '5.0'          ],
 		[ 'max_num_iter',     '100'          ],
 		[ 'print_level',      '0'            ],
 		[ 'derivative_test',  'second-order' ]

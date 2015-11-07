@@ -101,7 +101,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		"max_num_iter_fixed",
 		"max_num_iter_random",
 		"tolerance_fixed",
-		"tolerance_random"
+		"tolerance_random",
+		"random_bound"
 	};
 	size_t n_name = sizeof( name_list ) / sizeof( name_list[0] );
 	CppAD::vector<string> name_vec(n_name);
@@ -205,6 +206,17 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			if( ! ok )
 			{	msg = "option_value is not greater than zero";
 				error_exit(db, msg, table_name, match);
+			}
+		}
+		if( name_vec[i] == "random_bound" )
+		{	std::string random_bound_str = option_value[match];
+			if( random_bound_str != "" )
+			{	double random_bound = std::atof( random_bound_str.c_str() );
+				bool ok = 1.0 <= random_bound;
+				if( ! ok )
+				{	msg = "option_value is not greater than or equal one.";
+					error_exit(db, msg, table_name, match);
+				}
 			}
 		}
 		if(

@@ -294,10 +294,16 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		+ option_map["derivative_test_random"] + "\n";
 	std::string random_options = options;
 	//
+	std::string random_bound_string = option_map["random_bound"];
+	double random_bound = std::numeric_limits<double>::infinity();
+	if( random_bound_string  != "" )
+		random_bound = std::atof( random_bound_string.c_str() );
+
+	assert( random_bound >= 1.0 );
 	CppAD::vector<double> random_lower(n_random_), random_upper(n_random_);
 	for(size_t j = 0; j < n_random_; j++)
-	{	random_upper[j] = std::numeric_limits<double>::infinity();
-		random_lower[j] = - random_upper[j];
+	{	random_upper[j] = random_bound;
+		random_lower[j] = - random_bound;
 	}
 	// optimal fixed effects
 	CppAD::vector<double> optimal_fixed = optimize_fixed(
