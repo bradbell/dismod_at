@@ -207,16 +207,21 @@ n_child_        ( n_child )
 				smooth_id = rate_table[rate_id].child_smooth_id;
 			else
 				smooth_id = rate_table[rate_id].parent_smooth_id;
-			size_t n_age  = smooth_table[smooth_id].n_age;
-			size_t n_time = smooth_table[smooth_id].n_time;
-			size_t n_var  = n_age * n_time;
 			rate_info_[rate_id][j].smooth_id = smooth_id;
-			rate_info_[rate_id][j].n_var     = n_var;
-			rate_info_[rate_id][j].offset    = offset;
-			offset += n_var;
-			//
-			// check_rate_table should already have checked this assumption
-			assert( rate_id != pini_enum || n_age == 1 );
+			if( smooth_id == size_t(DISMOD_AT_NULL_INT) )
+			{	rate_info_[rate_id][j].n_var  = size_t(DISMOD_AT_NULL_INT);
+				rate_info_[rate_id][j].offset = size_t(DISMOD_AT_NULL_INT);
+			}
+			else
+			{	size_t n_age  = smooth_table[smooth_id].n_age;
+				size_t n_time = smooth_table[smooth_id].n_time;
+				size_t n_var  = n_age * n_time;
+				rate_info_[rate_id][j].n_var     = n_var;
+				rate_info_[rate_id][j].offset    = offset;
+				offset += n_var;
+				// check_rate_table should have checked this assumption
+				assert( rate_id != pini_enum || n_age == 1 );
+			}
 		}
 	}
 
@@ -466,10 +471,16 @@ If $icode%j% == %n_child%$$,
 this smoothing corresponds to the parent rates.
 Otherwise it corresponds to the child rates and is the same
 for all children.
+If
+$codei%
+	%smooth_id% == size_t(DISMOD_AT_NULL_INT)
+%$$
+then this rate is identically zero and there are no corresponding variables.
 
 $subhead n_var$$
 is the number of packed variables for this $icode rate_id$$
 and is the same for each $icode j$$.
+(Not specified when $icode smooth_id$$ corresponds to $code null$$).
 
 $subhead offset$$
 is the offset (index) in the packed variable vector for the
@@ -479,6 +490,7 @@ it is the rate vector for the $th j$$ child node.
 If $icode%j% == %n_child%$$,
 this is the rate vector for the
 $cref/parent_node/option_table/parent_node_id/$$.
+(Not specified when $icode smooth_id$$ corresponds to $code null$$).
 
 $head Example$$
 See $cref/pack_info Example/pack_info/Example/$$.

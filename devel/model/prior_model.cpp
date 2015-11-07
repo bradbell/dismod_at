@@ -323,21 +323,24 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 
 		info = pack_object_.rate_info(rate_id, child);
 		size_t smooth_id          = info.smooth_id;
-		const smooth_info& s_info = s_info_vec_[smooth_id];
-		for(size_t k = 0; k < 3; k++)
-		{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-			if( offset == size_t(DISMOD_AT_NULL_INT) )
-				mulstd_vec[k] = 1.0;
-			else
-				mulstd_vec[k] = pack_vec[offset];
+		if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		{
+			const smooth_info& s_info = s_info_vec_[smooth_id];
+			for(size_t k = 0; k < 3; k++)
+			{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
+				if( offset == size_t(DISMOD_AT_NULL_INT) )
+					mulstd_vec[k] = 1.0;
+				else
+					mulstd_vec[k] = pack_vec[offset];
+			}
+			log_prior_on_grid(
+				residual_vec,
+				info.offset ,
+				pack_vec    ,
+				mulstd_vec  ,
+				s_info
+			);
 		}
-		log_prior_on_grid(
-			residual_vec,
-			info.offset ,
-			pack_vec    ,
-			mulstd_vec  ,
-			s_info
-		);
 	}
 
 	// rate covariate multipliers
@@ -489,21 +492,24 @@ CppAD::vector< residual_struct<Float> > prior_model::random(
 		for(size_t child = 0; child < n_child; child++)
 		{	info = pack_object_.rate_info(rate_id, child);
 			size_t smooth_id          = info.smooth_id;
-			const smooth_info& s_info = s_info_vec_[smooth_id];
-			for(size_t k = 0; k < 3; k++)
-			{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-				if( offset == size_t(DISMOD_AT_NULL_INT) )
-					mulstd_vec[k] = 1.0;
-				else
-					mulstd_vec[k] = pack_vec[offset];
+			if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+			{
+				const smooth_info& s_info = s_info_vec_[smooth_id];
+				for(size_t k = 0; k < 3; k++)
+				{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
+					if( offset == size_t(DISMOD_AT_NULL_INT) )
+						mulstd_vec[k] = 1.0;
+					else
+						mulstd_vec[k] = pack_vec[offset];
+				}
+				log_prior_on_grid(
+					residual_vec,
+					info.offset ,
+					pack_vec    ,
+					mulstd_vec  ,
+					s_info
+				);
 			}
-			log_prior_on_grid(
-				residual_vec,
-				info.offset ,
-				pack_vec    ,
-				mulstd_vec  ,
-				s_info
-			);
 		}
 	}
 	return residual_vec;

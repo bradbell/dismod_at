@@ -47,8 +47,6 @@ os.chdir('build/example/user')
 def constant_weight_fun(a, t) :
 	return 1.0
 # note that the a, t values are not used for this case
-def fun_pini_parent(a, t) :
-	return ('prior_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_rate_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_rate_parent(a, t) :
@@ -178,22 +176,6 @@ def example_db (file_name) :
 			'mulstd_dage_prior_name':   '',
 			'mulstd_dtime_prior_name':  '',
 			'fun':                       fun_rate_parent
-		},{ # smooth_pini_parent
-			'name':                     'smooth_pini_parent',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ middle_time_id ],
-			'mulstd_value_prior_name':  '',
-			'mulstd_dage_prior_name':   '',
-			'mulstd_dtime_prior_name':  '',
-			'fun':                       fun_pini_parent
-		},{ # smooth_pini_child
-			'name':                     'smooth_pini_child',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ middle_time_id ],
-			'mulstd_value_prior_name':  '',
-			'mulstd_dage_prior_name':   '',
-			'mulstd_dtime_prior_name':  '',
-			'fun':                       fun_rate_child
 		}
 	]
 	# --------------------------------------------------------------------------
@@ -201,8 +183,8 @@ def example_db (file_name) :
 	rate_dict = [
 		{
 			'name':          'pini',
-			'parent_smooth': 'smooth_pini_parent',
-			'child_smooth':  'smooth_pini_child'
+			'parent_smooth': '',
+			'child_smooth':  ''
 		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_rate_parent',
@@ -316,9 +298,8 @@ for rate_id in range(n_rate) :
 			rate_value[age_id][time_id] = value
 			count += 1
 	if rate_id == 0 :
-		# pini case
-		assert count == 1
-		assert abs( rate_value[middle_age_id][middle_time_id] ) < tol
+		# no pini variables because its parent and child smoothings are null
+		assert count == 0
 	else :
 		# other rates
 		assert count == 4

@@ -195,6 +195,7 @@ $end
 # include <dismod_at/residual_density.hpp>
 # include <dismod_at/a2_double.hpp>
 # include <dismod_at/avgint_subset.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -808,16 +809,23 @@ Float data_model::avg_no_ode(
 		// extract subvector information for the parent rate
 		pack_info::subvec_info info;
 		info             = pack_object_.rate_info(rate_id[ell], n_child_);
-		size_t n_var     = info.n_var;
 		size_t smooth_id = info.smooth_id;
-		//
-		CppAD::vector<Float> rate_si(n_var);
-		for(k = 0; k < n_var; k++)
-			rate_si[k] = pack_vec[info.offset + k];
-		//
-		// interpolate onto the ode grid
-		rate_ode[ell] =
-			si2ode_vec_[smooth_id]->interpolate(rate_si, ode_index);
+		size_t n_var;
+		if( smooth_id == size_t(DISMOD_AT_NULL_INT) )
+		{	for(k = 0; k < n_ode; k++)
+				rate_ode[ell][k] = 0.0;
+		}
+		else
+		{	n_var     = info.n_var;
+			//
+			CppAD::vector<Float> rate_si(n_var);
+			for(k = 0; k < n_var; k++)
+				rate_si[k] = pack_vec[info.offset + k];
+			//
+			// interpolate onto the ode grid
+			rate_ode[ell] =
+				si2ode_vec_[smooth_id]->interpolate(rate_si, ode_index);
+		}
 		//
 		// initialize sum of effects to zero
 		CppAD::vector<Float> effect_ode(n_ode);
@@ -827,18 +835,20 @@ Float data_model::avg_no_ode(
 		// include child random effect
 		if( child < n_child_ )
 		{	info      = pack_object_.rate_info(rate_id[ell], child);
-			n_var     = info.n_var;
 			smooth_id = info.smooth_id;
-			//
-			CppAD::vector<Float> var_si(n_var);
-			for(k = 0; k < n_var; k++)
-				var_si[k] = pack_vec[info.offset + k];
-			//
-			CppAD::vector<Float> var_ode =
-				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
-			//
-			for(k = 0; k < n_ode; k++)
-				effect_ode[k] += var_ode[k];
+			if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+			{	n_var     = info.n_var;
+				//
+				CppAD::vector<Float> var_si(n_var);
+				for(k = 0; k < n_var; k++)
+					var_si[k] = pack_vec[info.offset + k];
+				//
+				CppAD::vector<Float> var_ode =
+					si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
+				//
+				for(k = 0; k < n_ode; k++)
+					effect_ode[k] += var_ode[k];
+			}
 		}
 		// include effect of rate covariates
 		size_t n_cov = pack_object_.mulcov_rate_value_n_cov(rate_id[ell]);
@@ -1072,16 +1082,23 @@ Float data_model::avg_yes_ode(
 		//
 		// extract subvector information for the parent rate
 		info             = pack_object_.rate_info(rate_id, n_child_);
-		size_t n_var     = info.n_var;
 		size_t smooth_id = info.smooth_id;
-		//
-		CppAD::vector<Float> rate_si(n_var);
-		for(k = 0; k < n_var; k++)
-			rate_si[k] = pack_vec[info.offset + k];
-		//
-		// interpolate onto the ode grid
-		rate_ode[rate_id] =
-			si2ode_vec_[smooth_id]->interpolate(rate_si, ode_index);
+		size_t n_var;
+		if( smooth_id == size_t(DISMOD_AT_NULL_INT) )
+		{	for(k = 0; k < n_index; k++)
+				rate_ode[rate_id][k] = 0.0;
+		}
+		else
+		{	n_var     = info.n_var;
+			//
+			CppAD::vector<Float> rate_si(n_var);
+			for(k = 0; k < n_var; k++)
+				rate_si[k] = pack_vec[info.offset + k];
+			//
+			// interpolate onto the ode grid
+			rate_ode[rate_id] =
+				si2ode_vec_[smooth_id]->interpolate(rate_si, ode_index);
+		}
 		//
 		// initialize sum of effects to zero
 		CppAD::vector<Float> effect_ode(n_index);
@@ -1091,18 +1108,20 @@ Float data_model::avg_yes_ode(
 		// include child random effect
 		if( child < n_child_ )
 		{	info      = pack_object_.rate_info(rate_id, child);
-			n_var     = info.n_var;
 			smooth_id = info.smooth_id;
-			//
-			CppAD::vector<Float> var_si(n_var);
-			for(k = 0; k < n_var; k++)
-				var_si[k] = pack_vec[info.offset + k];
-			//
-			CppAD::vector<Float> var_ode =
-				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
-			//
-			for(k = 0; k < n_index; k++)
-				effect_ode[k] += var_ode[k];
+			if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+			{	n_var     = info.n_var;
+				//
+				CppAD::vector<Float> var_si(n_var);
+				for(k = 0; k < n_var; k++)
+					var_si[k] = pack_vec[info.offset + k];
+				//
+				CppAD::vector<Float> var_ode =
+					si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
+				//
+				for(k = 0; k < n_index; k++)
+					effect_ode[k] += var_ode[k];
+			}
 		}
 		//
 		// include effect of rate covariates

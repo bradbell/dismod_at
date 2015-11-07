@@ -162,9 +162,11 @@ CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
 	// parent rates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	info       = pack_object.rate_info(rate_id, n_child);
-		pack_index = info.offset;
-		for(size_t k = 0; k < info.n_var; k++)
-			ret_val[fixed_index++] = pack_index++;
+		if( info.smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		{	pack_index = info.offset;
+			for(size_t k = 0; k < info.n_var; k++)
+				ret_val[fixed_index++] = pack_index++;
+		}
 	}
 
 	// measurement mean and standard deviation covariates
@@ -230,9 +232,11 @@ void get_fixed_effect(
 	// parent rates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	info       = pack_object.rate_info(rate_id, n_child);
-		pack_index = info.offset;
-		for(size_t k = 0; k < info.n_var; k++)
-			fixed_vec[fixed_index++] = pack_vec[pack_index++];
+		if( info.smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		{	pack_index = info.offset;
+			for(size_t k = 0; k < info.n_var; k++)
+				fixed_vec[fixed_index++] = pack_vec[pack_index++];
+		}
 	}
 
 	// measurement mean and standard deviation covariates
@@ -297,9 +301,11 @@ void put_fixed_effect(
 	// parent rates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	info       = pack_object.rate_info(rate_id, n_child);
-		pack_index = info.offset;
-		for(size_t k = 0; k < info.n_var; k++)
-			pack_vec[pack_index++] = fixed_vec[fixed_index++];
+		if( info.smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		{	pack_index = info.offset;
+			for(size_t k = 0; k < info.n_var; k++)
+				pack_vec[pack_index++] = fixed_vec[fixed_index++];
+		}
 	}
 
 	// measurement mean and standard deviation covariates

@@ -57,6 +57,8 @@ $cref/prior_id/prior_table/prior_id/$$ for the variable that multiplies the
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$ standard deviations
 for this
 $cref/smooth_id/smooth_grid_table/smooth_id/$$.
+
+$subhead null$$
 If this variable is not needed,
 use the value $code null$$ (which corresponds to a multiplier of one).
 
@@ -66,6 +68,8 @@ $cref/prior_id/prior_table/prior_id/$$ for the variable that multiplies the
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ standard deviations
 for this
 $cref/smooth_id/smooth_grid_table/smooth_id/$$.
+
+$subhead null$$
 If this variable is not needed,
 use the value $code null$$ (which corresponds to a multiplier of one).
 
@@ -75,6 +79,8 @@ $cref/prior_id/prior_table/prior_id/$$ for the variable that multiplies the
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ standard deviations
 for this
 $cref/smooth_id/smooth_grid_table/smooth_id/$$.
+
+$subhead null$$
 If this variable is not needed,
 use the value $code null$$ (which corresponds to a multiplier of one).
 

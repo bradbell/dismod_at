@@ -70,6 +70,7 @@ $end
 # include <dismod_at/check_rate_limit.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/to_string.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -107,23 +108,33 @@ void check_rate_limit(
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	if( rate_enum(rate_id) == iota_enum || rate_enum(rate_id) == rho_enum )
 	{	size_t smooth_id = rate_table[rate_id].parent_smooth_id;
-		for(size_t grid_id = 0; grid_id < n_grid; grid_id++)
-		if( size_t( smooth_grid[grid_id].smooth_id ) == smooth_id )
-		{	size_t prior_id = smooth_grid[grid_id].value_prior_id;
-			double lower    = prior_table[prior_id].lower;
-			double upper    = prior_table[prior_id].upper;
-			bool error;
-			if( rate_zero[rate_id] )
-				error = upper != 0.0;
-			else
-				error = lower <= 0.0;
-			if( error )
-			{
-				error_rate_id   = rate_id;
-				error_smooth_id = smooth_id;
-				error_grid_id   = grid_id;
-				error_prior_id  = prior_id;
-				error_zero     = rate_zero[rate_id];
+		if( smooth_id == size_t(DISMOD_AT_NULL_INT) )
+		{	if( ! rate_zero[rate_id] )
+			{	std::string msg = "parent_smooth_id for this rate is null";
+				msg += "\nbut this rate is expected to be positive.";
+				std::string table_name = "rate";
+				error_exit(db, msg, table_name, rate_id);
+			}
+		}
+		else
+		{	for(size_t grid_id = 0; grid_id < n_grid; grid_id++)
+			if( size_t( smooth_grid[grid_id].smooth_id ) == smooth_id )
+			{	size_t prior_id = smooth_grid[grid_id].value_prior_id;
+				double lower    = prior_table[prior_id].lower;
+				double upper    = prior_table[prior_id].upper;
+				bool error;
+				if( rate_zero[rate_id] )
+					error = upper != 0.0;
+				else
+					error = lower <= 0.0;
+				if( error )
+				{
+					error_rate_id   = rate_id;
+					error_smooth_id = smooth_id;
+					error_grid_id   = grid_id;
+					error_prior_id  = prior_id;
+					error_zero     = rate_zero[rate_id];
+				}
 			}
 		}
 	}

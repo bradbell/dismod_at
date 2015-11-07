@@ -10,6 +10,7 @@
 # -------------------------------------------------------------------------- */
 # $begin create_database$$ $newlinech #$$
 # $spell
+#	smoothings
 #	avgint
 #	num_iter
 #	Ipopt
@@ -213,6 +214,8 @@
 # Furthermore the order of the rate names must be
 # pini, iota, rho, chi, omega; i.e., the only order allowed for
 # the $cref rate_table$$.
+# The empty string is used to represent a $code null$$ value for
+# the parent and child smoothings.
 #
 # $head mulcov_dict$$
 # This is a list of $code dict$$
@@ -535,8 +538,14 @@ def create_database(
 	for i in range( len(rate_dict) ) :
 		rate             = rate_dict[i]
 		rate_name        = rate['name']
-		parent_smooth_id = global_smooth_name2id[ rate['parent_smooth'] ]
-		child_smooth_id  = global_smooth_name2id[ rate['child_smooth'] ]
+		if rate['parent_smooth'] == '' :
+			parent_smooth_id = None
+		else :
+			parent_smooth_id = global_smooth_name2id[ rate['parent_smooth'] ]
+		if rate['child_smooth'] == '' :
+			child_smooth_id = None
+		else :
+			child_smooth_id  = global_smooth_name2id[ rate['child_smooth'] ]
 		row_list.append( [ rate_name, parent_smooth_id, child_smooth_id ] )
 	tbl_name = 'rate'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

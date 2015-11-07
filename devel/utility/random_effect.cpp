@@ -114,6 +114,7 @@ $end
 
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/a2_double.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -124,12 +125,15 @@ size_t size_random_effect(const pack_info&  pack_object)
 	//
 	size_t sum = 0;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_var = pack_object.rate_info(rate_id, 0).n_var;
-		sum += n_var * n_child;
+	{	pack_info::subvec_info info = pack_object.rate_info(rate_id, 0);
+		if( info.smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		{	size_t n_var = pack_object.rate_info(rate_id, 0).n_var;
+			sum += n_var * n_child;
 # ifndef NDEBUG
-		for(size_t j = 0; j < n_child; j++)
-		{	pack_info::subvec_info info = pack_object.rate_info(rate_id, j);
-			assert( n_var == info.n_var );
+			for(size_t j = 0; j < n_child; j++)
+			{	info = pack_object.rate_info(rate_id, j);
+				assert( n_var == info.n_var );
+			}
 		}
 # endif
 	}
@@ -153,11 +157,14 @@ void get_random_effect(
 
 	size_t random_index = 0;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	for(size_t j = 0; j < n_child; j++)
-		{	pack_info::subvec_info info = pack_object.rate_info(rate_id, j);
-			size_t pack_index = info.offset;
-			for(size_t k = 0; k < info.n_var; k++)
-				random_vec[random_index++] = pack_vec[pack_index++];
+	{	pack_info::subvec_info info = pack_object.rate_info(rate_id, 0);
+		if( info.smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		{	for(size_t j = 0; j < n_child; j++)
+			{	info = pack_object.rate_info(rate_id, j);
+				size_t pack_index = info.offset;
+				for(size_t k = 0; k < info.n_var; k++)
+					random_vec[random_index++] = pack_vec[pack_index++];
+			}
 		}
 	}
 	return;
@@ -180,11 +187,14 @@ void put_random_effect(
 
 	size_t random_index = 0;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	for(size_t j = 0; j < n_child; j++)
-		{	pack_info::subvec_info info = pack_object.rate_info(rate_id, j);
-			size_t pack_index = info.offset;
-			for(size_t k = 0; k < info.n_var; k++)
-				pack_vec[pack_index++] = random_vec[random_index++];
+	{	pack_info::subvec_info info = pack_object.rate_info(rate_id, 0);
+		if( info.smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		{	for(size_t j = 0; j < n_child; j++)
+			{	info = pack_object.rate_info(rate_id, j);
+				size_t pack_index = info.offset;
+				for(size_t k = 0; k < info.n_var; k++)
+					pack_vec[pack_index++] = random_vec[random_index++];
+			}
 		}
 	}
 	return;

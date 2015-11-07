@@ -55,6 +55,7 @@ $end
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/get_smooth_table.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -68,22 +69,23 @@ void check_pini_n_age(
 	//
 	size_t rate_id = size_t( pini_enum );
 	size_t parent_smooth_id = rate_table[rate_id].parent_smooth_id;
+	if( parent_smooth_id != size_t(DISMOD_AT_NULL_INT) )
+	{	size_t n_age = smooth_table[parent_smooth_id].n_age;
+		if( n_age != 1 )
+		{	message = "parent_smooth_id, for pini, corresponds to a smoothing"
+				" with n_age not equal to one";
+		}
+	}
 	size_t child_smooth_id  = rate_table[rate_id].child_smooth_id;
-	//
-	size_t n_age_parent = smooth_table[parent_smooth_id].n_age;
-	size_t n_age_child  = smooth_table[child_smooth_id].n_age;
-	//
-	if( n_age_parent != 1 )
-	{	message = "parent_smooth_id, for pini, corresponds to a smoothing"
-			" with n_age not equal to one";
-		error_exit(db, message, table_name, rate_id);
+	if( child_smooth_id != size_t(DISMOD_AT_NULL_INT) )
+	{	size_t n_age = smooth_table[child_smooth_id].n_age;
+		if( n_age != 1 )
+		{	message = "child_smooth_id, for pini, corresponds to a smoothing"
+				" with n_age not equal to one";
+		}
 	}
-	//
-	if( n_age_child != 1 )
-	{	message = "child_smooth_id, for pini, corresponds to a smoothing"
-			" with n_age not equal to one";
+	if( message != "" )
 		error_exit(db, message, table_name, rate_id);
-	}
 }
 
 } // END DISMOD_AT_NAMESPACE

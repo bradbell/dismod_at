@@ -79,6 +79,11 @@ in the $code smooth_grid$$ table.
 It specifies the smoothing used as a prior for this rate
 when fitting the parent (fixed effects).
 
+$subhead null$$
+If the $icode parent_smooth_id$$ is $code null$$, the corresponding
+parent rate is always zero and no $cref/model_variables/model_variable/$$ are
+allocated for it.
+
 $head child_smooth_id$$
 This column has type $code integer$$ and its value is a
 $cref/smooth_id/smooth_grid_table/smooth_id/$$
@@ -108,6 +113,11 @@ $lnext
 The $cref/upper/prior_table/upper/$$ limit must be $code null$$
 (which gets interpreted as plus infinity).
 $lend
+
+$subhead null$$
+If $icode child_smooth_id$$ is $code null$$, the corresponding child rate
+is always zero and no variables are allocated for the corresponding
+$cref/random effects/model_variable/Random Effects, u/$$.
 
 $children%example/table/rate_table.py
 %$$

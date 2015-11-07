@@ -163,9 +163,11 @@ CppAD::vector<size_t> pack_value_prior(
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	for(size_t j = 0; j <= n_child; j++)
 		{	info             = pack_object.rate_info(rate_id, j);
-			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
-			set_value_prior(ret_val, offset, s_info_vec[smooth_id]);
+			if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+			{	size_t offset    = info.offset;
+				set_value_prior(ret_val, offset, s_info_vec[smooth_id]);
+			}
 		}
 	}
 
@@ -174,9 +176,11 @@ CppAD::vector<size_t> pack_value_prior(
 	{	size_t n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
 		{	info   = pack_object.mulcov_rate_value_info(rate_id, j);
-			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
-			set_value_prior(ret_val, offset, s_info_vec[smooth_id]);
+			if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+			{	size_t offset    = info.offset;
+				set_value_prior(ret_val, offset, s_info_vec[smooth_id]);
+			}
 		}
 	}
 
@@ -291,9 +295,11 @@ CppAD::vector<diff_prior_struct> pack_diff_prior(
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	for(size_t j = 0; j <= n_child; j++)
 		{	info             = pack_object.rate_info(rate_id, j);
-			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
-			set_diff_prior(ret_val, offset, s_info_vec[smooth_id]);
+			if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+			{	size_t offset    = info.offset;
+				set_diff_prior(ret_val, offset, s_info_vec[smooth_id]);
+			}
 		}
 	}
 

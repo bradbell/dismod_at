@@ -51,6 +51,15 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-07$$
+One can now inform $code dismod_at$$ that a specific
+parent rate (child rate) is always zero by setting
+$cref/parent_smooth_id/rate_table/parent_smooth_id/null/$$
+( $cref/child_smooth_id/rate_table/child_smooth_id/null/$$ )
+to $code null$$.
+This reduces the number of $cref/model_variables/model_variable/$$.
+
+
 $head 11-06$$
 Add lower and upper limits to the random effects in
 $cref/optimize_random/mixed_cppad_optimize_random/random_lower/$$ and
