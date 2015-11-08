@@ -182,7 +182,8 @@ void cppad_mixed::init_hes_ran(
 	ran_like_fun_.ForSparseJac(n_total, r);
 
 	// compute sparsity pattern corresponding to paritls w.r.t. (theta, u)
-	// of partial w.r.t. u of f(theta, u)
+	// of partial w.r.t. u of f(theta, u). Note this part if different
+	// form the vectorBool sparsity pattern.
 	bool transpose = true;
 	sparsity_pattern s(1), pattern;
 	assert( s[0].empty() );
@@ -213,12 +214,12 @@ void cppad_mixed::init_hes_ran(
 	sparsity_pattern r(n_total * n_total);
 	for(i = 0; i < n_total; i++)
 	{	for(j = 0; j < n_total; j++)
-			r[i * n_total + j] = (i >= n_fixed_) && (i == j);
+			r[i * n_total + j] = (i == j);
 	}
 	ran_like_fun_.ForSparseJac(n_total, r);
 
 	// compute sparsity pattern corresponding to paritls w.r.t. (theta, u)
-	// of partial w.r.t. u of f(theta, u)
+	// of partial w.r.t. (theta, u) of f(theta, u)
 	bool transpose = true;
 	sparsity_pattern s(1), pattern;
 	s[0] = true;
@@ -230,7 +231,7 @@ void cppad_mixed::init_hes_ran(
 	CppAD::vector<size_t> row, col, key;
 	for(i = n_fixed_; i < n_total; i++)
 	{	for(j = n_fixed_; j < n_total; j++)
-		{	if( pattern[i * n_total + j] && i >= j )
+		{	if( pattern[i * n_total + j] )
 			{	// only compute lower triangular of Hessian w.r.t u only
 				if( i >= j )
 				{	row.push_back(i);
