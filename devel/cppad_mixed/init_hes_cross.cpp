@@ -128,38 +128,26 @@ void cppad_mixed::init_hes_cross(
 	d_vector both(n_total);
 	pack(fixed_vec, random_vec, both);
 
-	// compute Jacobian sparsity corresponding to parital w.r.t. fixed effects
 # if CPPAD_MIXED_SET_SPARSITY
+	// ----------------------------------------------------------------------
+	// compute Jacobian sparsity corresponding to parital w.r.t. fixed effects
 	typedef CppAD::vector< std::set<size_t> > sparsity_pattern;
 	sparsity_pattern r(n_total);
 	for(i = 0; i < n_fixed_; i++)
 		r[i].insert(i);
-# else
-	typedef CppAD::vectorBool sparsity_pattern;
-	sparsity_pattern r(n_total * n_total);
-	for(i = 0; i < n_total; i++)
-	{	for(j = 0; j < n_total; j++)
-			r[i * n_total + j] = (i < n_fixed_) && (i == j);
-	}
-# endif
 	ran_like_fun_.ForSparseJac(n_total, r);
 
 	// compute sparsity pattern corresponding to paritls w.r.t. (theta, u)
 	// of partial w.r.t. theta of f(theta, u)
 	bool transpose = true;
 	sparsity_pattern s(1), pattern;
-# if CPPAD_MIXED_SET_SPARSITY
 	assert( s[0].empty() );
 	s[0].insert(0);
-# else
-	s[0] = true;
-# endif
 	pattern = ran_like_fun_.RevSparseHes(n_total, s, transpose);
 
 
 	// User row index for random effect and column index for fixed effect
 	CppAD::vector<size_t> row, col, key;
-# if CPPAD_MIXED_SET_SPARSITY
 	std::set<size_t>::iterator itr;
 	for(i = n_fixed_; i < n_total; i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
@@ -171,6 +159,53 @@ void cppad_mixed::init_hes_cross(
 		}
 	}
 # else
+	// -----------------------------------------------------------------------
+	// compute Jacobian sparsity corresponding to parital w.r.t. random effects
+	typedef CppAD::vectorBool sparsity_pattern;
+
+	// sparsity pattern for complete Hessian
+	sparsity_pattern pattern(n_total * n_total);
+
+	// number of bits that are packed into one unit in vectorBool
+	// (note yet part of CppAD API).
+	size_t n_column = std::numeric_limits<size_t>::digits;
+
+	// sparsity patterns for current columns
+	sparsity_pattern r(n_total * n_column), h(n_total * n_column);
+
+	// sparsity patter for range space of function
+	sparsity_pattern s(1);
+
+	// loop that computes the sparsity pattern n_column columns at a time
+	size_t n_loop = (n_total - 1) / n_column + 1;
+	for(size_t i_loop = 0; i_loop < n_loop; i_loop++)
+	{	// starting column index for this iteration
+		size_t i_column = i_loop * n_column;
+
+		// pattern that picks out the appropriate columns
+		for(i = 0; i < n_total; i++)
+		{	for(j = 0; j < n_column; j++)
+				r[i * n_column + j] = (i == i_column + j);
+		}
+		ran_like_fun_.ForSparseJac(n_column, r);
+
+		// compute sparsity pattern corresponding to paritls w.r.t. (theta, u)
+		// of partial w.r.t. the selected columns
+		bool transpose = true;
+		s[0] = true;
+		h = ran_like_fun_.RevSparseHes(n_column, s, transpose);
+
+		// fill in the corresponding columns of total_sparsity
+		for(i = 0; i < n_total; i++)
+		{	for(j = 0; j < n_column; j++)
+			{	if( i_column + j < n_total )
+					pattern[i * n_total + i_column + j] = h[i * n_column + j];
+			}
+		}
+	}
+
+	// User row index for random effect and column index for fixed effect
+	CppAD::vector<size_t> row, col, key;
 	for(i = n_fixed_; i < n_total; i++)
 	{	for(j = 0; j < n_fixed_; j++)
 		{	if( pattern[i * n_total + j] )
@@ -181,6 +216,7 @@ void cppad_mixed::init_hes_cross(
 		}
 	}
 # endif
+	// ----------------------------------------------------------------------
 	// set hes_cross_row_ and hes_cross_col_ in colum major order
 	size_t K = row.size();
 	CppAD::vector<size_t> ind(K);

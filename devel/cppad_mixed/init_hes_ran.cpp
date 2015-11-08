@@ -182,8 +182,7 @@ void cppad_mixed::init_hes_ran(
 	ran_like_fun_.ForSparseJac(n_total, r);
 
 	// compute sparsity pattern corresponding to paritls w.r.t. (theta, u)
-	// of partial w.r.t. u of f(theta, u). Note this part if different
-	// form the vectorBool sparsity pattern.
+	// of partial w.r.t. u of f(theta, u)
 	bool transpose = true;
 	sparsity_pattern s(1), pattern;
 	assert( s[0].empty() );
@@ -211,21 +210,47 @@ void cppad_mixed::init_hes_ran(
 	// -----------------------------------------------------------------------
 	// compute Jacobian sparsity corresponding to parital w.r.t. random effects
 	typedef CppAD::vectorBool sparsity_pattern;
-	sparsity_pattern r(n_total * n_total);
-	for(i = 0; i < n_total; i++)
-	{	for(j = 0; j < n_total; j++)
-			r[i * n_total + j] = (i == j);
+
+	// sparsity pattern for complete Hessian
+	sparsity_pattern pattern(n_total * n_total);
+
+	// number of bits that are packed into one unit in vectorBool
+	// (note yet part of CppAD API).
+	size_t n_column = std::numeric_limits<size_t>::digits;
+
+	// sparsity patterns for current columns
+	sparsity_pattern r(n_total * n_column), h(n_total * n_column);
+
+	// sparsity patter for range space of function
+	sparsity_pattern s(1);
+
+	// loop that computes the sparsity pattern n_column columns at a time
+	size_t n_loop = (n_total - 1) / n_column + 1;
+	for(size_t i_loop = 0; i_loop < n_loop; i_loop++)
+	{	// starting column index for this iteration
+		size_t i_column = i_loop * n_column;
+
+		// pattern that picks out the appropriate columns
+		for(i = 0; i < n_total; i++)
+		{	for(j = 0; j < n_column; j++)
+				r[i * n_column + j] = (i == i_column + j);
+		}
+		ran_like_fun_.ForSparseJac(n_column, r);
+
+		// compute sparsity pattern corresponding to paritls w.r.t. (theta, u)
+		// of partial w.r.t. the selected columns
+		bool transpose = true;
+		s[0] = true;
+		h = ran_like_fun_.RevSparseHes(n_column, s, transpose);
+
+		// fill in the corresponding columns of total_sparsity
+		for(i = 0; i < n_total; i++)
+		{	for(j = 0; j < n_column; j++)
+			{	if( i_column + j < n_total )
+					pattern[i * n_total + i_column + j] = h[i * n_column + j];
+			}
+		}
 	}
-	ran_like_fun_.ForSparseJac(n_total, r);
-
-	// compute sparsity pattern corresponding to paritls w.r.t. (theta, u)
-	// of partial w.r.t. (theta, u) of f(theta, u)
-	bool transpose = true;
-	sparsity_pattern s(1), pattern;
-	s[0] = true;
-	pattern = ran_like_fun_.RevSparseHes(n_total, s, transpose);
-
-
 	// determine row and column indices in lower triangle of Hessian
 	// and set key for column major sorting
 	CppAD::vector<size_t> row, col, key;
