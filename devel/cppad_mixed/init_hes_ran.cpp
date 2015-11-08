@@ -172,39 +172,27 @@ void cppad_mixed::init_hes_ran(
 	d_vector both(n_total);
 	pack(fixed_vec, random_vec, both);
 
-	// compute Jacobian sparsity corresponding to parital w.r.t. random effects
 # if CPPAD_MIXED_SET_SPARSITY
+	// ----------------------------------------------------------------------
+	// compute Jacobian sparsity corresponding to parital w.r.t. random effects
 	typedef CppAD::vector< std::set<size_t> > sparsity_pattern;
 	sparsity_pattern r(n_total);
 	for(i = n_fixed_; i < n_total; i++)
 		r[i].insert(i);
-# else
-	typedef CppAD::vectorBool sparsity_pattern;
-	sparsity_pattern r(n_total * n_total);
-	for(i = 0; i < n_total; i++)
-	{	for(j = 0; j < n_total; j++)
-			r[i * n_total + j] = (i >= n_fixed_) && (i == j);
-	}
-# endif
 	ran_like_fun_.ForSparseJac(n_total, r);
 
 	// compute sparsity pattern corresponding to paritls w.r.t. (theta, u)
 	// of partial w.r.t. u of f(theta, u)
 	bool transpose = true;
 	sparsity_pattern s(1), pattern;
-# if CPPAD_MIXED_SET_SPARSITY
 	assert( s[0].empty() );
 	s[0].insert(0);
-# else
-	s[0] = true;
-# endif
 	pattern = ran_like_fun_.RevSparseHes(n_total, s, transpose);
 
 
 	// determine row and column indices in lower triangle of Hessian
 	// and set key for column major sorting
 	CppAD::vector<size_t> row, col, key;
-# if CPPAD_MIXED_SET_SPARSITY
 	std::set<size_t>::iterator itr;
 	for(i = n_fixed_; i < n_total; i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
@@ -219,6 +207,27 @@ void cppad_mixed::init_hes_ran(
 		}
 	}
 # else
+	// -----------------------------------------------------------------------
+	// compute Jacobian sparsity corresponding to parital w.r.t. random effects
+	typedef CppAD::vectorBool sparsity_pattern;
+	sparsity_pattern r(n_total * n_total);
+	for(i = 0; i < n_total; i++)
+	{	for(j = 0; j < n_total; j++)
+			r[i * n_total + j] = (i >= n_fixed_) && (i == j);
+	}
+	ran_like_fun_.ForSparseJac(n_total, r);
+
+	// compute sparsity pattern corresponding to paritls w.r.t. (theta, u)
+	// of partial w.r.t. u of f(theta, u)
+	bool transpose = true;
+	sparsity_pattern s(1), pattern;
+	s[0] = true;
+	pattern = ran_like_fun_.RevSparseHes(n_total, s, transpose);
+
+
+	// determine row and column indices in lower triangle of Hessian
+	// and set key for column major sorting
+	CppAD::vector<size_t> row, col, key;
 	for(i = n_fixed_; i < n_total; i++)
 	{	for(j = n_fixed_; j < n_total; j++)
 		{	if( pattern[i * n_total + j] && i >= j )
@@ -232,6 +241,8 @@ void cppad_mixed::init_hes_ran(
 		}
 	}
 # endif
+	// -----------------------------------------------------------------------
+
 	// set hes_ran_row_ and hes_ran_col_ in colum major order
 	size_t K = row.size();
 	CppAD::vector<size_t> ind(K);
