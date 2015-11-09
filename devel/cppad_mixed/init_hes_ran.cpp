@@ -221,7 +221,7 @@ void cppad_mixed::init_hes_ran(
 	// sparsity patterns for current columns
 	sparsity_pattern r(n_total * n_column), h(n_total * n_column);
 
-	// sparsity patter for range space of function
+	// sparsity pattern for range space of function
 	sparsity_pattern s(1);
 
 	// loop that computes the sparsity pattern n_column columns at a time

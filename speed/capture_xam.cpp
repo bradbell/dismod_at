@@ -436,7 +436,7 @@ int main(void)
 	std::string random_options =
 		"Integer print_level 0\n"
 		"String  sb          yes\n"
-		"String  derivative_test second-order\n"
+		"String  derivative_test none\n"
 	;
 	double inf = std::numeric_limits<double>::infinity();
 	vector<double> u_lower(n_random), u_upper(n_random);

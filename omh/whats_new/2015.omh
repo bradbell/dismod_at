@@ -51,6 +51,14 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-09$$
+$list number$$
+Advance to a new version of CppAD; i.e., need to rerun
+$code bin/install_cppad.sh$$.
+$lnext
+Remove derivative testing from the tests in the $code speed$$ directory.
+$lend
+
 $head 11-07$$
 $list number$$
 One can now inform $code dismod_at$$ that a specific
