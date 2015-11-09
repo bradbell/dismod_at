@@ -244,13 +244,24 @@ std::string get_table_column_type(
 		message += sqlite3_errmsg(db);
 		error_exit(db, message);
 	}
-	std::string rvalue(zDataType);
-
+	std::string ctype(zDataType);
+	//
+	// sqlite seems to use upper case for its types
+	for(size_t i = 0; i < ctype.size(); i++)
+		ctype[i] = std::tolower( ctype[i] );
+	//
 	// sqlite seems to use int for its integer type
-	if( rvalue == "int" )
-		rvalue = "integer";
-	assert( rvalue == "integer" || rvalue == "text" || rvalue == "real" );
-	return rvalue;
+	if( ctype == "int" )
+		ctype = "integer";
+	//
+	bool ok = ctype == "integer" || ctype == "text" || ctype == "real";
+	if( ! ok )
+	{	string msg = "Column " + column_name + " has type " + ctype
+			+ "\nwhich is not one of the following: integer, real, or text";
+		dismod_at::error_exit(db_, msg, table_name_);
+	}
+
+	return ctype;
 }
 
 

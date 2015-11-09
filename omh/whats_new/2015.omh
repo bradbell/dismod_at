@@ -66,6 +66,10 @@ less memory.)
 $lnext
 The dismod_at $cref python$$ module is now part of the distribution; see
 $cref/install python/install_unix/dismod_at/Install Python/$$.
+$lnext
+Change the C++ $cref get_table_column$$ so it will handle upper case for
+column types. In addition, if a column has an invalid type, report the
+table and column and invalid type.
 $lend
 
 $head 11-07$$
