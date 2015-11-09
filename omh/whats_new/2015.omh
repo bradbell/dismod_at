@@ -57,6 +57,12 @@ Advance to a new version of CppAD; i.e., need to rerun
 $code bin/install_cppad.sh$$.
 $lnext
 Remove derivative testing from the tests in the $code speed$$ directory.
+Increase the number of random effects in $cref capture_xam.cpp$$ to
+reduce the change of false negative tests.
+Increase the number of data points in $cref user_simulated.py$$
+for the same reason.
+(This is reasonable because $cref cppad_mixed$$ is now faster and uses
+less memory.)
 $lnext
 The dismod_at $cref python$$ module is now part of the distribution; see
 $cref/install python/install_unix/dismod_at/Install Python/$$.

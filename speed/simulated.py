@@ -27,7 +27,7 @@ rho_parent                = 0.2
 mulcov_income_iota_true   = 1.0
 mulcov_sex_rho_true       = -1.0
 n_children                = 5
-n_data                    = 100
+n_data                    = 200
 # ------------------------------------------------------------------------
 import sys
 import os

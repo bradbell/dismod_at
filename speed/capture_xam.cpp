@@ -374,7 +374,7 @@ int main(void)
 	size_t random_seed = dismod_at::new_gsl_rng(0);
 	std::time_t start_time = std::time( DISMOD_AT_NULL_PTR );
 	// problem size
-	size_t n_random = 25;
+	size_t n_random = 30;
 	size_t I = 25;
 	//
 	size_t T = n_random;
