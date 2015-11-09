@@ -68,10 +68,12 @@ fi
 list='
 	doc.omh
 	omh/install/unix.omh
+	bin/setup.py
 '
 for name in $list
 do
 	sed -e "s|dismod_at-[0-9]\{8\}|dismod_at-$version|"  \
+		-e "s|version = '[0-9]\{8\}|version = '$version'|" \
 		-i.old $name
 	#
 	echo '-------------------------------------------------------------'
