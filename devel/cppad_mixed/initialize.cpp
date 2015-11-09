@@ -30,7 +30,7 @@ $$
 $section cppad_mixed: Initialization After Constructor$$
 
 $head Syntax$$
-$icode%size_map% = mixed_object%.initialize(%fixed_vec%, %random_vec%)%$$
+$icode%size_map% = %mixed_object%.initialize(%fixed_vec%, %random_vec%)%$$
 
 $head Purpose$$
 Some of the $code cppad_mixed$$ initialization requires calling the
