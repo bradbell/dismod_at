@@ -57,6 +57,9 @@ Advance to a new version of CppAD; i.e., need to rerun
 $code bin/install_cppad.sh$$.
 $lnext
 Remove derivative testing from the tests in the $code speed$$ directory.
+$lnext
+The dismod_at $cref python$$ module is now part of the distribution; see
+$cref/install python/install_unix/dismod_at/Install Python/$$.
 $lend
 
 $head 11-07$$

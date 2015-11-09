@@ -176,6 +176,17 @@ $codep
 	make install
 $$
 
+$subhead Install Python$$
+To install the dismod_at $cref python$$ model, execute the following command
+$codep
+	cd build
+	make install_python
+$$
+Note that the python module $code dismod_at$$ will bin installed in below the
+$cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$
+in the standard place for your
+$cref/python_three_command/run_cmake.sh/python_three_command/$$.
+
 $subhead Path Setting$$
 After the install you will be able to execute the command
 $codei%

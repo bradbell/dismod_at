@@ -210,4 +210,9 @@ ADD_CUSTOM_TARGET(speed DEPENDS
 	speed_capture_xam
 	speed_simulated
 )
+ADD_CUSTOM_TARGET(
+	install_python
+	${python_three_command} bin/setup.py install --prefix=${dismod_at_prefix}
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
 # ----------------------------------------------------------------------------
