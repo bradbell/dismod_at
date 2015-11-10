@@ -104,7 +104,11 @@ $codei%
 (where $icode x$$ and $icode jac$$ $code double$$ vectors)
 can be used to calculate the Jacobian of the fixed likelihood.
 
-$head fix_like_hes_row_$$
+$head quasi_fixed false$$
+If $icode quasi_fixed$$ is false,
+the following values are also initialized:
+
+$subhead fix_like_hes_row_$$
 The input value of the member variable
 $codei%
 	CppAD::vector<size_t> fix_like_hes_row_
@@ -115,7 +119,7 @@ that correspond to non-zero elements in the
 lower triangle of a Hessian corresponding to
 $code fix_like_fun_$$.
 
-$head fix_like_hes_col_$$
+$subhead fix_like_hes_col_$$
 The input value of the member variable
 $codei%
 	CppAD::vector<size_t> fix_like_hes_col_
@@ -126,7 +130,7 @@ that correspond to non-zero elements in the
 lower triangle of a Hessian corresponding to
 $code fix_like_fun_$$.
 
-$head fix_like_hes_work_$$
+$subhead fix_like_hes_work_$$
 The input value of the member variables
 $codei%
 	CppAD::sparse_hessian_work fix_like_hes_work_
@@ -231,6 +235,10 @@ void cppad_mixed::init_fix_like(const d_vector& fixed_vec  )
 		jac             ,
 		fix_like_jac_work_
 	);
+	if( quasi_fixed_ )
+	{	init_fix_like_done_ = true;
+		return;
+	}
 	// ------------------------------------------------------------------------
 	// fix_like_hes_row_, fix_like_hes_col_, fix_like_hes_work_
 	// ------------------------------------------------------------------------

@@ -369,19 +369,26 @@ $cref/fix_like_jac_col_/init_fix_like/fix_like_jac_col_/$$, and
 $cref/fix_like_jac_work_/init_fix_like/fix_like_jac_work_/$$,
 can be used to compute the sparse Jacobian corresponding
 to $code fix_like_fun_$$.
-The vectors
-$cref/fix_like_hes_row_/init_fix_like/fix_like_hes_row_/$$,
-$cref/fix_like_hes_col_/init_fix_like/fix_like_hes_col_/$$, and
-$cref/fix_like_hes_work_/init_fix_like/fix_like_hes_work_/$$,
-can be used to compute the lower triangle of the
-sparse Hessian corresponding to $code fix_like_fun_$$.
 $codep */
 	CppAD::ADFun<double>        fix_like_fun_;     // g(theta)
 	//
 	CppAD::vector<size_t>       fix_like_jac_row_; // row indices for g^{(1)}
 	CppAD::vector<size_t>       fix_like_jac_col_; // column indices  g^{(1)}
 	CppAD::sparse_jacobian_work fix_like_jac_work_;// work info for   g^{(1)}
-	//
+/* $$
+$subhead quasi_fixed false$$
+If $icode quasi_fixed$$ is false,
+the vectors
+$cref/fix_like_hes_row_
+	/init_fix_like
+	/quasi_fixed false
+	/fix_like_hes_row_
+/$$,
+$code fix_like_hes_col_$$ and
+$code fix_like_hes_work_$$
+can be used to compute the lower triangle of the
+sparse Hessian corresponding to $code fix_like_fun_$$.
+$codep */
 	CppAD::vector<size_t>       fix_like_hes_row_; // row indices for g^{(2)}
 	CppAD::vector<size_t>       fix_like_hes_col_; // column indices  g^{(2)}
 	CppAD::sparse_hessian_work  fix_like_hes_work_;// work info for   g^{(2)}
@@ -396,12 +403,6 @@ $cref/constraint_jac_col_/init_constraint/constraint_jac_col_/$$, and
 $cref/constraint_jac_work_/init_constraint/constraint_jac_work_/$$,
 can be used to compute the sparse Jacobian corresponding
 to $code constraint_fun_$$.
-The vectors
-$cref/constraint_hes_row_/init_constraint/constraint_hes_row_/$$,
-$cref/constraint_hes_col_/init_constraint/constraint_hes_col_/$$, and
-$cref/constraint_hes_work_/init_constraint/constraint_hes_work_/$$,
-can be used to compute the lower triangle of the
-sparse Hessian corresponding to $code constraint_fun_$$.
 $codep */
 	// computes constraint function
 	CppAD::ADFun<double>        constraint_fun_;     // c(theta)
@@ -409,7 +410,20 @@ $codep */
 	CppAD::vector<size_t>       constraint_jac_row_; // row indices for c^{(1)}
 	CppAD::vector<size_t>       constraint_jac_col_; // column indices  c^{(1)}
 	CppAD::sparse_jacobian_work constraint_jac_work_;// work info for   c^{(1)}
-	//
+/* $$
+$subhead quasi_fixed false$$
+If $icode quasi_fixed$$ is false,
+the vectors
+$cref/constraint_hes_row_
+	/init_constraint
+	/quasi_fixed false
+	/constraint_hes_row_
+/$$,
+$code constraint_hes_row_$$, and
+$code constraint_hes_work_$$,
+can be used to compute the lower triangle of the
+sparse Hessian corresponding to $code constraint_fun_$$.
+$codep */
 	CppAD::vector<size_t>       constraint_hes_row_; // row indices for c^{(2)}
 	CppAD::vector<size_t>       constraint_hes_col_; // column indices  c^{(2)}
 	CppAD::sparse_hessian_work  constraint_hes_work_;// work info for   c^{(2)}

@@ -47,6 +47,7 @@ $spell
 	valgrind
 	csv
 	pos
+	Jacobian
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
@@ -64,6 +65,16 @@ $lnext
 Change from text can be empty to text can be null
 (to make it more like other types); see
 $cref/text can be null, not empty/table/Text can be Null, not Empty/$$).
+$lnext
+Implement the space saving Jacobian and Hessian calculations for the
+$cref/fixed likelihood/cppad_mixed_theory/Fixed Likelihood, g(theta)/$$
+$latex g(\theta)$$.
+$lnext
+Only initialize the Hessian terms for
+fixed likelihood $latex g(\theta)$$
+and the $cref/constraint/cppad_mixed_constraint/$$ function
+$latex c(\theta)$$
+when $cref/quasi_fixed/cppad_mixed_derived_ctor/quasi_fixed/$$ is false.
 $lend
 
 $head 11-09$$

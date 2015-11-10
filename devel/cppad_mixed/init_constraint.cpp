@@ -100,7 +100,11 @@ $codei%
 (where $icode x$$ and $icode jac$$ $code double$$ vectors)
 can be used to calculate the Jacobian of the constraints.
 
-$head constraint_hes_row_$$
+$head quasi_fixed false$$
+If $icode quasi_fixed_$$ is false,
+the following values are also initialized:
+
+$subhead constraint_hes_row_$$
 The input value of the member variable
 $codei%
 	CppAD::vector<size_t> constraint_hes_row_
@@ -111,7 +115,7 @@ that correspond to non-zero elements in the
 lower triangle of a Hessian corresponding to
 $code constraint_fun_$$.
 
-$head constraint_hes_col_$$
+$subhead constraint_hes_col_$$
 The input value of the member variable
 $codei%
 	CppAD::vector<size_t> constraint_hes_col_
@@ -122,7 +126,7 @@ that correspond to non-zero elements in the
 lower triangle of a Hessian corresponding to
 $code constraint_fun_$$.
 
-$head constraint_hes_work_$$
+$subhead constraint_hes_work_$$
 The input value of the member variables
 $codei%
 	CppAD::sparse_hessian_work constraint_hes_work_
@@ -252,6 +256,10 @@ void cppad_mixed::init_constraint(const d_vector& fixed_vec  )
 		jac             ,
 		constraint_jac_work_
 	);
+	if( quasi_fixed_ )
+	{	init_constraint_done_ = true;
+		return;
+	}
 	// ------------------------------------------------------------------------
 	// constraint_hes_row_, constraint_hes_col_, constraint_hes_work_
 	// ------------------------------------------------------------------------
