@@ -20,6 +20,12 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Constrain Omega$$
+Right now we are fitting $latex \omega(a, t)$$ while $code dismod_ode$$
+constrains it to match the data.
+We could do the same, and in addition, have the random
+effect constraints match the data for each child.
+
 $head Sum of Random Effects$$
 It would be nice to add a prior on the sum of the random effects at each
 age-time grid point.
