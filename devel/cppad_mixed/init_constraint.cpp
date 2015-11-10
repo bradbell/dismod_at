@@ -185,17 +185,56 @@ void cppad_mixed::init_constraint(const d_vector& fixed_vec  )
 	// constraint_jac_row_, constraint_jac_col_, constraint_jac_work_
 	// ------------------------------------------------------------------------
 	// compute the sparsity pattern for the Jacobian
+	using CppAD::vectorBool;
 	typedef CppAD::vector< std::set<size_t> > sparsity_pattern;
-	sparsity_pattern r(n_fixed_);
-	for(size_t j = 0; j < n_fixed_; j++)
-		r[j].insert(j);
-	sparsity_pattern pattern = constraint_fun_.ForSparseJac(n_fixed_, r);
-
+	size_t m            = constraint_fun_.Range();
+	size_t n            = constraint_fun_.Domain();
+	sparsity_pattern pattern(m);
+	if( n < m )
+	{	size_t n_col = vectorBool::bit_per_unit();
+		vectorBool s(m * n_col), r(n * n_col);
+		size_t n_loop = (n - 1) / n_col + 1;
+		for(size_t i_loop = 0; i_loop < n_loop; i_loop++)
+		{	size_t j_col = i_loop * n_col;
+			for(size_t i = 0; i < n; i++)
+			{	for(size_t j = 0; j < n_col; j++)
+					r[i * n_col + j] = (i == j_col + j);
+			}
+			s = constraint_fun_.ForSparseJac(n_col, r);
+			for(size_t i = 0; i < m; i++)
+			{	for(size_t j = 0; j < n_col; j++)
+				{	if( j_col + j < n )
+						if( s[ i * n_col + j ] )
+							pattern[i].insert(j_col + j);
+				}
+			}
+		}
+	}
+	else
+	{	size_t n_row = vectorBool::bit_per_unit();
+		vectorBool s(n_row * n), r(n_row * m);
+		size_t n_loop = (n - 1) / n_row + 1;
+		for(size_t i_loop = 0; i_loop < n_loop; i_loop++)
+		{	size_t i_row = i_loop * n_row;
+			for(size_t i = 0; i < n_row; i++)
+			{	for(size_t j = 0; j < m; j++)
+					r[i * m + j] = (i_row + i == j);
+			}
+			s = constraint_fun_.RevSparseJac(n_row, r);
+			for(size_t i = 0; i < n_row; i++)
+			{	for(size_t j = 0; j < n; j++)
+				{	if( i_row + i < m )
+						if( s[ i * n + j ] )
+							pattern[i_row + i].insert(j);
+				}
+			}
+		}
+	}
 	// convert sparsity to row and column index form
 	constraint_jac_row_.clear();
 	constraint_jac_col_.clear();
 	std::set<size_t>::iterator itr;
-	for(size_t i = 0; i < constraint_fun_.Range(); i++)
+	for(size_t i = 0; i < m; i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	size_t j = *itr;
 			constraint_jac_row_.push_back(i);
@@ -216,15 +255,33 @@ void cppad_mixed::init_constraint(const d_vector& fixed_vec  )
 	// ------------------------------------------------------------------------
 	// constraint_hes_row_, constraint_hes_col_, constraint_hes_work_
 	// ------------------------------------------------------------------------
-	// no need to recalculate forward sparsity pattern.
-	//
 	// sparsity pattern for the Hessian
-	sparsity_pattern s(1);
-	for(size_t i = 0; i < constraint_fun_.Range(); i++ )
-		s[0].insert(i);
+	size_t n_col = vectorBool::bit_per_unit();
 	pattern.clear();
-	pattern = constraint_fun_.RevSparseHes(n_fixed_, s);
-
+	pattern.resize(n);
+	vectorBool r(n * n_col), h(n * n_col);
+	vectorBool s(m);
+	for(size_t i = 0; i < m; i++ )
+		s[i] = true;
+	size_t n_loop = (n - 1) / n_col + 1;
+	for(size_t i_loop = 0; i_loop < n_loop; i_loop++)
+	{	size_t j_col = i_loop * n_col;
+		for(size_t i = 0; i < n; i++)
+		{	for(size_t j = 0; j < n_col; j++)
+				r[i * n_col + j] = (i == j_col + j);
+		}
+		constraint_fun_.ForSparseJac(n_col, r);
+		bool transpose = true;
+		h = constraint_fun_.RevSparseHes(n_col, s, transpose);
+		//
+		for(size_t i = 0; i < n; i++)
+		{	for(size_t j = 0; j < n_col; j++)
+			{	if( j_col + j < n )
+					if( h[ i * n_col + j ] )
+						pattern[i].insert(j_col + j);
+			}
+		}
+	}
 	// determine row and column indices in lower triangle of Hessian
 	constraint_hes_row_.clear();
 	constraint_hes_col_.clear();
