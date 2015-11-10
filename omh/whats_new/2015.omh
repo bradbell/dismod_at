@@ -51,6 +51,21 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-10$$
+$list number$$
+Group all of the user database documentation under the section
+$cref table$$
+$lnext
+Modify $code bin/import_cascade.py$$ to take advantage of the
+$code null$$ option for the rate
+$cref/parent_smooth_id/rate_table/parent_smooth_id/$$ and
+$icode child_smooth_id$$.
+$lnext
+Change from text can be empty to text can be null
+(to make it more like other types); see
+$cref/text can be null, not empty/table/Text can be Null, not Empty/$$).
+$lend
+
 $head 11-09$$
 $list number$$
 Advance to a new version of CppAD; i.e., need to rerun
@@ -423,8 +438,9 @@ $code example/devel/cppad_mixed/user/capture_xam.cpp$$
 
 $head 08-21$$
 $list number$$
-Fix discussion of
-$cref/text can be empty, not null/table/Text Can be Empty, not Null/$$.
+Edit discussion of text can be empty
+(now it must be $code null$$ instead of empty) see
+$cref/text can be null, not empty/table/Text can be Null, not Empty/$$).
 $lnext
 Remove the special prior that is a constant one from the
 $cref user$$ examples (since 08-12 $code null$$ can be used to
@@ -787,7 +803,7 @@ $lend
 $head 07-11$$
 $list number$$
 Add an error message when the text value in a table is empty; see
-$cref/text can be empty, not null/table/Text Can be Empty, not Null/$$.
+$cref/text can be null, not empty/table/Text can be Null, not Empty/$$.
 Allow for $code null$$ integer values; see
 $cref/integer can be null/table/Integer Can be Null/$$.
 $lnext

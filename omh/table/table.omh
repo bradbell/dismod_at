@@ -55,9 +55,9 @@ in $codei%_%node_id%$$.
 This is not an exception because the $code parent$$ column is itself
 in the $code node$$ table and hence this is not a foreign key.
 
-$head Text Can be Empty, not Null$$
+$head Text can be Null, not Empty$$
 The empty string is used to represent a $code null$$ text value in a table.
-An error message will be generated if null
+An error message will be generated if the empty string
 appears in a text field that is read by dismod_at.
 
 $head Integer Can be Null$$

@@ -124,9 +124,11 @@ namespace {
 	string   table_name_;
 	string   column_name_;
 
-	char*  convert(const std::string& not_used, char* v, size_t row_id)
+	const char* convert(const std::string& not_used, char* v, size_t row_id)
 	{	if( v == DISMOD_AT_NULL_PTR )
-		{	string msg = "The null value appears in the text column ";
+			return "";
+		if( *v == '\0' )
+		{	string msg = "The empty string appears in the text column ";
 			msg += column_name_;
 			dismod_at::error_exit(db_, msg, table_name_, row_id);
 		}

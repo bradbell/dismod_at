@@ -46,7 +46,7 @@ option_dict = collections.OrderedDict([
 ('child_dtime_std','   dtime standard deviation for random effects'),
 ('time_grid','         the time grid as space seperated values'),
 ('parent_node_name','  name of the parent node'),
-('random_bound','      bound for the random effects')
+('random_bound','      bound for the random effects, empty text for no bound')
 ])
 usage = '''bin/import_cascade.py option_csv
 
@@ -965,18 +965,21 @@ dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 parent_node_id = node_name2id[ option_table_in['parent_node_name'] ]
 col_name = [ 'option_name', 'option_value' ]
 col_type = [ 'text unique', 'text' ]
+random_bound = option_table_in['random_bound']
+if random_bound == '' :
+	random_bound = None
 row_list = [
 	[ 'parent_node_id',         str(parent_node_id)              ],
 	[ 'ode_step_size',          option_table_in['ode_step_size'] ],
 	[ 'number_sample',          '10'                             ],
-	[ 'fit_sample_index',       ''                               ],
+	[ 'fit_sample_index',       None                             ],
 	[ 'random_seed',            str(int( timer.time() ))         ],
 	[ 'rate_case',              option_table_in['rate_case']     ],
 	[ 'quasi_fixed',            'true'                           ],
 	[ 'print_level_fixed',      '5'                              ],
 	[ 'print_level_random',     '0'                              ],
 	[ 'tolerance_fixed',        '1e-8'                           ],
-	[ 'random_bound',           option_table_in['random_bound']  ],
+	[ 'random_bound',           random_bound                     ],
 	[ 'tolerance_random',       '1e-8'                           ],
 	[ 'max_num_iter_fixed',     '20'                             ],
 	[ 'max_num_iter_random',    '50'                             ],
