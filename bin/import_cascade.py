@@ -691,32 +691,49 @@ for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
 # pini_smooth_id
 #
 prior_in         = simple_prior_in['p_zero']
-name             = 'pini_prior'
-prior_out        = gaussian_cascade2at(name, prior_in)
-pini_prior_id    = len( prior_row_list )
-prior_row_list.append(prior_out)
+lower            = prior_in['lower']
+upper            = prior_in['upper']
+if float(upper) == 0.0 :
+	pini_smooth_id = None
+else :
+	name             = 'pini_prior'
+	prior_out        = gaussian_cascade2at(name, prior_in)
+	pini_prior_id    = len( prior_row_list )
+	prior_row_list.append(prior_out)
+	#
+	n_age          = 1
+	n_time         = len( time_list )
+	pini_smooth_id = len( smooth_row_list )
+	smooth_row_list.append(
+		[ 'pini_smooth', n_age, n_time, None, None, None ]
+	)
+	age_id        = 0
+	dage_prior_id = None
+	for time_id in range( n_time ) :
+		if time_id + 1 < n_time :
+			dtime_prior_id = rate_dtime_prior_id['pini']
+		else :
+			dtime_prior_id = None
+		smooth_grid_row_list.append([
+			pini_smooth_id,
+			age_id,
+			time_id,
+			pini_prior_id,
+			dage_prior_id,
+			dtime_prior_id
+		])
+# --------------------------------------------------------------------------
+# rate_is_zero
 #
-n_age          = 1
-n_time         = len( time_list )
-pini_smooth_id = len( smooth_row_list )
-smooth_row_list.append(
-	[ 'pini_smooth', n_age, n_time, None, None, None ]
-)
-age_id        = 0
-dage_prior_id = None
-for time_id in range( n_time ) :
-	if time_id + 1 < n_time :
-		dtime_prior_id = rate_dtime_prior_id['pini']
-	else :
-		dtime_prior_id = None
-	smooth_grid_row_list.append([
-		pini_smooth_id,
-		age_id,
-		time_id,
-		pini_prior_id,
-		dage_prior_id,
-		dtime_prior_id
-	])
+rate_is_zero = { 'omega':False }
+rate_is_zero['pini'] = pini_smooth_id == None
+rate_is_zero['iota'] = rate_case.find('iota_zero') != -1
+rate_is_zero['rho']  = rate_case.find('rho_zero') != -1
+#
+rate_is_zero['chi'] = True
+for row in rate_prior_in :
+	if row['type'] == 'chi' and float( row['upper'] ) != 0.0 :
+		rate_is_zero['chi'] = False;
 # --------------------------------------------------------------------------
 # rate_smooth_id
 #
@@ -730,8 +747,8 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	drate = 'd' + rate
 	xi    = float( simple_prior_in['xi_' + rate]['mean'] )
 	#
-	rate_is_zero = rate_case.find( rate + '_zero') != -1
-	rate_is_pos  = rate_case.find( rate + '_pos') != -1
+	is_zero = rate_is_zero[rate]
+	is_pos  = rate_case.find( rate + '_pos') != -1
 	#
 	# initialize some lists for this rate
 	local_list     = list()
@@ -745,92 +762,92 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	n_age  = len(age_list)
 	n_time = len(time_list)
 	name   = rate + '_smooth'
-	rate_smooth_id[rate] = len(smooth_row_list)
-	smooth_row_list.append(
-			[ name, n_age, n_time, None, None, None ]
-	)
-	# need to fill in smooth_grid entries for this smoothing
-	for age_id in range( n_age ) :
-		# --------------------------------------------------------------------
-		# determine value_prior_id
-		name  = rate + '_prior'
-		prior_in = rate_prior_in_dict[rate][age_id]
-		if rate == 'omega' :
-			# The cascade converts all cause mortality to constraints on omega
-			# and does not really use its prior for omega, so overide its mean.
-			prior_in['mean'] = 0.01
-		#
-		if rate_is_zero :
-			prior_in['lower'] = '0'
-			prior_in['upper'] = '0'
-			prior_in['mean']  = '0'
-			prior_in['std']   = 'inf'
-		if rate_is_pos :
-			eta   = float( value_table_in['kappa_' + rate] )
-			lower = eta / 100.
-			prior_in['lower'] = str( lower )
-			if float( prior_in['upper'] ) < lower :
-				prior_in['mean']  = prior_in['lower']
-				prior_in['upper'] = prior_in['lower']
-				if rate not in warn_rate_bounds :
-					msg = 'option.csv: rate_case = ' + rate_case + '\n'
-					msg += 'some bounds for ' + rate + ' were changed '
-					msg += 'so that it is positive.'
-					print(msg)
-					warn_rate_bounds.add(rate)
-		#
-		prior_at = gaussian_cascade2at(name, prior_in)
-		(name, lower, upper, mean, std, eta, density_id) = prior_at
-		if lower == upper :
-			density_id = density_name2id['uniform']
-		#
-		# check if this prior already specified
-		element = (lower, upper, mean, std)
-		if element not in local_list :
-			local_list_id.append( len(prior_row_list) )
-			local_list.append( element )
-			prior_row_list.append( prior_at )
-		value_prior_id = local_list_id [ local_list.index(element) ]
-		if age_id + 1 < n_age :
-			# ----------------------------------------------------------------
-			# determine dage_prior_id
+	if is_zero :
+		rate_smooth_id[rate] = None
+	else :
+		rate_smooth_id[rate] = len(smooth_row_list)
+		smooth_row_list.append(
+				[ name, n_age, n_time, None, None, None ]
+		)
+		# need to fill in smooth_grid entries for this smoothing
+		for age_id in range( n_age ) :
+			# -----------------------------------------------------------------
+			# determine value_prior_id
+			name  = rate + '_prior'
+			prior_in = rate_prior_in_dict[rate][age_id]
+			if rate == 'omega' :
+				# The cascade converts all cause mortality to constraints on
+				# omega and does not really use its prior for omega, so
+				# overide its mean.
+				prior_in['mean'] = 0.01
 			#
-			# ignoring this prior
-			# prior_in = rate_prior_in_dict[drate][age_id]
+			assert not is_zero
+			if is_pos :
+				eta   = float( value_table_in['kappa_' + rate] )
+				lower = eta / 100.
+				prior_in['lower'] = str( lower )
+				if float( prior_in['upper'] ) < lower :
+					prior_in['mean']  = prior_in['lower']
+					prior_in['upper'] = prior_in['lower']
+					if rate not in warn_rate_bounds :
+						msg = 'option.csv: rate_case = ' + rate_case + '\n'
+						msg += 'some bounds for ' + rate + ' were changed '
+						msg += 'so that it is positive.'
+						print(msg)
+						warn_rate_bounds.add(rate)
 			#
-			# using these values
-			density_id = density_name2id['log_gaussian']
-			name       = 'd' + rate + '_prior'
-			eta        = value_table_in[ 'kappa_' + rate ]
-			lower      = None
-			mean       = 0.0
-			upper      = None
-			std        = xi * math.sqrt( delta_age )
+			prior_at = gaussian_cascade2at(name, prior_in)
+			(name, lower, upper, mean, std, eta, density_id) = prior_at
+			if lower == upper :
+				density_id = density_name2id['uniform']
 			#
 			# check if this prior already specified
 			element = (lower, upper, mean, std)
-			if element not in dlocal_list :
-				prior_at = [name, lower, upper, mean, std, eta, density_id]
-				dlocal_list_id.append( len(prior_row_list) )
-				dlocal_list.append( element )
+			if element not in local_list :
+				local_list_id.append( len(prior_row_list) )
+				local_list.append( element )
 				prior_row_list.append( prior_at )
-			dage_prior_id = dlocal_list_id [ dlocal_list.index(element) ]
-		else :
-			dage_prior_id  = None
-		# --------------------------------------------------------------------
-		for time_id in range( n_time ) :
-			if time_id + 1 < n_time :
-				dtime_prior_id = rate_dtime_prior_id[rate]
+			value_prior_id = local_list_id [ local_list.index(element) ]
+			if age_id + 1 < n_age :
+				# ----------------------------------------------------------------
+				# determine dage_prior_id
+				#
+				# ignoring this prior
+				# prior_in = rate_prior_in_dict[drate][age_id]
+				#
+				# using these values
+				density_id = density_name2id['log_gaussian']
+				name       = 'd' + rate + '_prior'
+				eta        = value_table_in[ 'kappa_' + rate ]
+				lower      = None
+				mean       = 0.0
+				upper      = None
+				std        = xi * math.sqrt( delta_age )
+				#
+				# check if this prior already specified
+				element = (lower, upper, mean, std)
+				if element not in dlocal_list :
+					prior_at = [name, lower, upper, mean, std, eta, density_id]
+					dlocal_list_id.append( len(prior_row_list) )
+					dlocal_list.append( element )
+					prior_row_list.append( prior_at )
+				dage_prior_id = dlocal_list_id [ dlocal_list.index(element) ]
 			else :
-				dtime_prior_id = None
-			smooth_grid_row_list.append([
-				rate_smooth_id[rate],
-				age_id,
-				time_id,
-				value_prior_id,
-				dage_prior_id,
-				dtime_prior_id
-			])
+				dage_prior_id  = None
+			# --------------------------------------------------------------------
+			for time_id in range( n_time ) :
+				if time_id + 1 < n_time :
+					dtime_prior_id = rate_dtime_prior_id[rate]
+				else :
+					dtime_prior_id = None
+				smooth_grid_row_list.append([
+					rate_smooth_id[rate],
+					age_id,
+					time_id,
+					value_prior_id,
+					dage_prior_id,
+					dtime_prior_id
+				])
 # --------------------------------------------------------------------------
 # Output rate table
 col_name = [  'rate_name', 'parent_smooth_id', 'child_smooth_id'  ]
@@ -838,9 +855,11 @@ col_type = [  'text',      'integer',         'integer'          ]
 row_list = list()
 #
 for rate in [ 'pini', 'iota', 'rho', 'chi' ] :
-	row_list.append(
-		[ rate, rate_smooth_id[rate], child_smooth_id ]
-)
+	if rate_smooth_id[rate] == None :
+		row = [ rate , None, None ]
+	else :
+		row = [ rate, rate_smooth_id[rate], child_smooth_id ]
+	row_list.append( row )
 rate     = 'omega'
 row_list.append( [ rate, rate_smooth_id[rate], child_omega_smooth_id ] )
 tbl_name = 'rate'

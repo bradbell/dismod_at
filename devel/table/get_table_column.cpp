@@ -59,7 +59,7 @@ depending on the type of the column in the database.
 $head result$$
 The input size of this vector must be zero.
 Upon return it contains the values in the specified column.
-The results are ordered using the $cref/primary key/input/Primary Key/$$
+The results are ordered using the $cref/primary key/table/Primary Key/$$
 for this table.
 
 $subhead text$$

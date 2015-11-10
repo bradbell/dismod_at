@@ -32,8 +32,8 @@ $codei%
 	%data_subset_id% = %fit_residual_id%
 %$$
 The extra column is included to abide by the conventions for naming
-$cref/primary/input/Primary Key/$$ and
-$cref/foreign keys/input/Foreign Key/$$.
+$cref/primary/table/Primary Key/$$ and
+$cref/foreign keys/table/Foreign Key/$$.
 
 $head avg_integrand$$
 The column has type $code real$$ and contains the
