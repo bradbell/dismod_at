@@ -94,7 +94,7 @@ for row in table_data['option'] :
 	#
 	if row['option_name'] == 'fit_sample_index' :
 		fit_sample_index = row['option_value']
-		if fit_sample_index != "" :
+		if fit_sample_index != None :
 			sample_index = int(fit_sample_index)
 # ----------------------------------------------------------------------------
 def convert2output(value_in) :
@@ -242,7 +242,7 @@ header = [
 ]
 for row in table_data['covariate'] :
 	header.append( row['covariate_name'] )
-if fit_sample_index != "" :
+if fit_sample_index != None :
 	index         = header.index('meas_value')
 	header[index] = 'sim_value'
 csv_writer = csv.DictWriter(csv_file, fieldnames=header)
@@ -297,7 +297,7 @@ for subset_row in table_data['data_subset'] :
 		row                 = table_data['fit_residual'][subset_id]
 		row_out['avgint']   = convert2output( row['avg_integrand'] )
 		row_out['residual'] = convert2output( row['weighted_residual'] )
-	if fit_sample_index == "" :
+	if fit_sample_index == None :
 		row_out['meas_value']  = convert2output( row_in['meas_value'] )
 	else :
 		if have_simulate :
