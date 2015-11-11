@@ -14,6 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <map>
 # include <cppad/cppad.hpp>
 # include <dismod_at/newton_step.hpp>
+# include <dismod_at/sparse_hes_info.hpp>
 
 // private examples
 extern bool constraint_eval_xam(void);
@@ -184,7 +185,8 @@ $childtable%
 	devel/cppad_mixed/fix_like.omh%
 	devel/cppad_mixed/constraint.omh%
 	devel/cppad_mixed/optimize_random.cpp%
-	devel/cppad_mixed/optimize_fixed.cpp
+	devel/cppad_mixed/optimize_fixed.cpp%
+	include/dismod_at/sparse_hes_info.hpp
 %$$
 $end
 */
@@ -288,18 +290,24 @@ $codep */
 
 $subhead hes_ran_$$
 If $icode%n_random_% > 0%$$ and $code init_hes_ran_done_$$,
-$cref/hes_ran_row_/init_hes_ran/hes_ran_row_/$$,
-$cref/hes_ran_col_/init_hes_ran/hes_ran_col_/$$, and
-$cref/hes_ran_work_/init_hes_ran/hes_ran_work_/$$,
-can be used to compute the sparse Hessian
+$cref/hes_ran_/init_hes_ran/hes_ran_/$$ contains
+information for the Hessian of the
+$cref/random likelihood
+	/cppad_mixed_theory
+	/Random Likelihood, f(theta, u)
+/$$
+with respect to the random effects; i.e.
 $latex f_{uu}^{(2)} ( \theta , u )$$.
-This sparse Hessian computation is recorded in
-$cref/hes_ran_fun_/init_hes_ran/hes_ran_fun_/$$.
+The corresponding ADFun object is
+$cref/ran_like_fun_  or ran_like_a1fun_
+	/init_hes_ran
+	/hes_ran_
+	/ran_like_fun_, ran_like_a1fun_
+/$$.
 $codep */
-	CppAD::vector<size_t>      hes_ran_row_;  // row indices
-	CppAD::vector<size_t>      hes_ran_col_;  // column indices
-	CppAD::sparse_hessian_work hes_ran_work_; // work structure
-	CppAD::ADFun<double>       hes_ran_fun_;  // recording of Hessian calc
+	sparse_hes_info hes_ran_;
+	// recording of sparse Hessian calculation
+	CppAD::ADFun<double>  hes_ran_fun_;
 	//
 	friend bool ::hes_ran_fun_xam(void);
 /* $$

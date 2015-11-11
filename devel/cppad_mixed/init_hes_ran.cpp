@@ -51,51 +51,27 @@ It specifies the value of the
 $cref/random effects/cppad_mixed/Random Effects, u/$$
 vector $latex u$$ at which the initialization is done.
 
-$head hes_ran_row_$$
+$head hes_ran_$$
 The input value of the member variable
 $codei%
-	CppAD::vector<size_t> hes_ran_row_
+	sparse_hes_info hes_ran_
 %$$
 does not matter.
-Upon return it contains the row indices
-for the lower triangle of the sparse Hessian;
-
-$head hes_ran_col_$$
-The input value of the member variable
-$codei%
-	CppAD::vector<size_t> hes_ran_col_
-%$$
-does not matter.
-Upon return it contains the column indices
-
-$head hes_ran_work_$$
-The input value of the member variable
-$codei%
-	CppAD::sparse_hessian_work hes_ran_work_
-%$$
-does not matter.
-Upon return it contains the CppAD work information so that
-$codei%
-	ran_like_a1fun_.SparseHessian(
-		%a1_both_vec%,
-		%a1_w%,
-		%not_used%,
-		hes_ran_row_,
-		hes_ran_col_,
-		%a1_val_out%,
-		hes_ran_work_
-	);
-%$$
-(where $icode a1_both_vec$$, $icode a1_w$$, and
-$icode a1_value_out$$, are $code a1_double$$ vectors)
-can be used to calculate the lower triangle of the sparse Hessian
+Upon return it contains the
+$cref sparse_hes_info$$
+for the lower triangle of the Hessian
 $latex \[
 	f_{uu}^{(2)} ( \theta , u )
 \]$$
 see $cref/f(theta, u)/
 	cppad_mixed_theory/
 	Random Likelihood, f(theta, u)
-/$$.
+/$$
+
+$subhead ran_like_fun_, ran_like_a1fun_$$
+Either $code ran_like_fun_$$ or $code ran_like_a1fun_$$
+can be used for the ADFun object in the
+$cref/sparse Hessian Call/sparse_hes_info/Sparse Hessian Call/f/$$.
 
 $list number$$
 The matrix is symmetric and hence can be recovered from
@@ -113,8 +89,8 @@ $head Random Effects Index$$
 To get the indices relative to just the random effects, subtract
 $code n_fixed_$$; i.e.,
 $codei%
-	hes_ran_row_[%k%] - n_fixed_
-	hes_ran_col_[%k%] - n_fixed_
+	hes_ran_.row[%k%] - n_fixed_
+	hes_ran_.col[%k%] - n_fixed_
 %$$
 are between zero and the $code n_random_$$ and
 are the row and column indices for the Hessian element
@@ -124,15 +100,15 @@ $icode a1_val_out$$ in the call to $code SparseHessian$$.
 $head Lower Triangle$$
 The result are only for the lower triangle of the Hessian; i.e.,
 $codei%
-	hes_ran_row_[%k%] >= hes_ran_col_[%k%]
+	hes_ran_.row[%k%] >= hes_ran_.col[%k%]
 %$$
 
 $head Order$$
 The results are in column major order; i.e.,
 $codei%
-	hes_ran_col_[%k%] <= hes_ran_col_[%k+1%]
-	if( hes_ran_col_[%k%] == hes_ran_col_[%k+1%] )
-		hes_ran_row_[%k%] < hes_ran_row_[%k+1%]
+	hes_ran_.col[%k%] <= hes_ran_.col[%k+1%]
+	if( hes_ran_.col[%k%] == hes_ran_.col[%k+1%] )
+		hes_ran_.row[%k%] < hes_ran_.row[%k+1%]
 %$$
 
 $head hes_ran_fun_$$
@@ -269,15 +245,15 @@ void cppad_mixed::init_hes_ran(
 # endif
 	// -----------------------------------------------------------------------
 
-	// set hes_ran_row_ and hes_ran_col_ in colum major order
+	// set hes_ran_.row and hes_ran_.col in colum major order
 	size_t K = row.size();
 	CppAD::vector<size_t> ind(K);
 	CppAD::index_sort(key, ind);
-	hes_ran_row_.resize(K);
-	hes_ran_col_.resize(K);
+	hes_ran_.row.resize(K);
+	hes_ran_.col.resize(K);
 	for(size_t k = 0; k < row.size(); k++)
-	{	hes_ran_row_[k] = row[ ind[k] ];
-		hes_ran_col_[k] = col[ ind[k] ];
+	{	hes_ran_.row[k] = row[ ind[k] ];
+		hes_ran_.col[k] = col[ ind[k] ];
 	}
 
 	// create a weighting vector
@@ -292,10 +268,10 @@ void cppad_mixed::init_hes_ran(
 		both,
 		w,
 		pattern,
-		hes_ran_row_,
-		hes_ran_col_,
+		hes_ran_.row,
+		hes_ran_.col,
 		val_out,
-		hes_ran_work_
+		hes_ran_.work
 	);
 
 	// now tape the same computation and store in hes_ran_fun_
@@ -309,10 +285,10 @@ void cppad_mixed::init_hes_ran(
 		a1_both,
 		a1_w,
 		not_used,
-		hes_ran_row_,
-		hes_ran_col_,
+		hes_ran_.row,
+		hes_ran_.col,
 		a1_val_out,
-		hes_ran_work_
+		hes_ran_.work
 	);
 	hes_ran_fun_.Dependent(a1_both, a1_val_out);
 	//

@@ -104,8 +104,8 @@ double cppad_mixed::ranobj_eval(
 	typedef Eigen::SparseMatrix<double>             sparse_matrix;
 
 	// number of non-zeros in Hessian
-	size_t K = hes_ran_row_.size();
-	assert( K == hes_ran_col_.size() );
+	size_t K = hes_ran_.row.size();
+	assert( K == hes_ran_.col.size() );
 
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	d_vector both(n_fixed_ + n_random_), val_out(K);
@@ -117,10 +117,10 @@ double cppad_mixed::ranobj_eval(
 	// 2DO: same hessian point is factorized here and in ranobj_grad, logdet_grad.
 	sparse_matrix hessian(n_random_, n_random_);
 	for(size_t k = 0; k < K; k++)
-	{	assert( n_fixed_        <= hes_ran_col_[k]  );
-		assert( hes_ran_col_[k] <= hes_ran_row_[k] );
-		size_t row = hes_ran_row_[k] - n_fixed_;
-		size_t col = hes_ran_col_[k] - n_fixed_;
+	{	assert( n_fixed_        <= hes_ran_.col[k]  );
+		assert( hes_ran_.col[k] <= hes_ran_.row[k] );
+		size_t row = hes_ran_.row[k] - n_fixed_;
+		size_t col = hes_ran_.col[k] - n_fixed_;
 		assert( row < n_random_ );
 		assert( col < n_random_ );
 		hessian.insert(row, col) = val_out[k];

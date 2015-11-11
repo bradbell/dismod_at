@@ -70,7 +70,7 @@ $codei%
 Its input size must be equal to $code n_fixed_$$.
 Upon return, it contains the value of the derivative w.r.t
 the fixed effects.
-$codei%hes_ran_col_[%k%] - n_fixed_%$$ of the Hessian.
+$codei%hes_ran_.col[%k%] - n_fixed_%$$ of the Hessian.
 
 $head logdet_ran$$
 This argument has prototype
@@ -111,8 +111,8 @@ void cppad_mixed::logdet_grad(
 	typedef Eigen::SparseMatrix<double>::InnerIterator inner_itr;
 
 	// number of non-zeros in Hessian
-	size_t K = hes_ran_row_.size();
-	assert( K == hes_ran_col_.size() );
+	size_t K = hes_ran_.row.size();
+	assert( K == hes_ran_.col.size() );
 
 	// evaluate the hessian f_{uu}^{(2)} (theta, u)
 	d_vector both(n_fixed_ + n_random_), val_out(K);
@@ -124,10 +124,10 @@ void cppad_mixed::logdet_grad(
 	// 2DO: same hessian point is factorized here as well as in ranobj_grad.
 	sparse_matrix hessian(n_random_, n_random_);
 	for(size_t k = 0; k < K; k++)
-	{	assert( n_fixed_        <= hes_ran_col_[k]  );
-		assert( hes_ran_col_[k] <= hes_ran_row_[k] );
-		size_t row = hes_ran_row_[k] - n_fixed_;
-		size_t col = hes_ran_col_[k] - n_fixed_;
+	{	assert( n_fixed_        <= hes_ran_.col[k]  );
+		assert( hes_ran_.col[k] <= hes_ran_.row[k] );
+		size_t row = hes_ran_.row[k] - n_fixed_;
+		size_t col = hes_ran_.col[k] - n_fixed_;
 		assert( row < n_random_ );
 		assert( col < n_random_ );
 		hessian.insert(row, col) = val_out[k];
@@ -139,7 +139,7 @@ void cppad_mixed::logdet_grad(
 
 	// Compute derivative of sum_k w_k hessian_k
 	// where w_k is the inverse of the Hessian at (row[k], col[k]).
-	// use order speicifcation for (hes_ran_row_, hes_ran_col_)
+	// use order speicifcation for (hes_ran_.row, hes_ran_.col)
 	d_vector w(K);
 	for(size_t k = 0; k < K; k++)
 		w[k] = 0.0;
@@ -147,15 +147,15 @@ void cppad_mixed::logdet_grad(
 	size_t col = n_random_;
 	size_t row = n_random_;
 	if( k < K )
-	{	row = hes_ran_row_[k] - n_fixed_;
-		col = hes_ran_col_[k] - n_fixed_;
+	{	row = hes_ran_.row[k] - n_fixed_;
+		col = hes_ran_.col[k] - n_fixed_;
 	}
 	for(size_t j = 0; j < n_random_; j++)
 	{	while( col < j )
 		{	k++;
 			if( k < K )
-			{	row = hes_ran_row_[k] - n_fixed_;
-				col = hes_ran_col_[k] - n_fixed_;
+			{	row = hes_ran_.row[k] - n_fixed_;
+				col = hes_ran_.col[k] - n_fixed_;
 			}
 			else
 				row = col = n_random_;
@@ -170,8 +170,8 @@ void cppad_mixed::logdet_grad(
 			{	while( row < i )
 				{	k++;
 					if( k < K )
-					{	row = hes_ran_row_[k] - n_fixed_;
-						col = hes_ran_col_[k] - n_fixed_;
+					{	row = hes_ran_.row[k] - n_fixed_;
+						col = hes_ran_.col[k] - n_fixed_;
 					}
 					else
 						row = col = n_random_;
@@ -181,7 +181,7 @@ void cppad_mixed::logdet_grad(
 			{	// note off diagonal elements need to be counted twice
 				// becasue only computing for lower triangle
 				w[k] = itr.value();
-				if( hes_ran_row_[k] != hes_ran_col_[k] )
+				if( hes_ran_.row[k] != hes_ran_.col[k] )
 					w[k] = 2.0 * w[k];
 			}
 		}
