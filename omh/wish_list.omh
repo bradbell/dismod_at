@@ -11,14 +11,43 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin wish_list$$
 $spell
 	Dismod
-	CppAD
 	eigen
 	optimizer
-	dage
-	dtime
+	Cholmod
+	Cholesky
+	doesn
+	covariate
+	covariates
 $$
 
 $section Dismod_at Wish List$$
+
+$head Reduce Number of ODE Solutions$$
+Currently we compute a separate solution of the ODE for each data point.
+We could solve the differential equation once for each set of data
+points that correspond to the same child (or to the parent)
+and have the same covariate values for covariates that are used with
+$cref/rate_value/mulcov_table/mulcov_type/rate_value/$$
+covariate multipliers.
+
+$head Caching Sparse Cholesky$$
+Currently, the sparse Cholesky factorization of the Hessian w.r.t. the
+random effects is being calculated in multiple places, without any
+change in the Hessian. We could improve speed by only re-calculating it
+when the fixed or random effects change. In addition, the analysis of
+the sparsity pattern could be done once, instead of every time the Hessian
+is calculated (since the sparsity pattern doesn't not change).
+
+$head Cholmod$$
+The speed and memory usage may be improved if we use the
+$href%http://faculty.cse.tamu.edu/davis/SuiteSparse/%SuiteSparse%$$
+cholmod routines instead of the eigen package
+$href%http://eigen.tuxfamily.org/dox-devel/group__SparseCholesky__Module.html
+	%sparse choleksy
+%$$.
+This cannot be done for AD records but that is only necessary
+for the full Newton method which seems to consume to much memory; see
+$cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$.
 
 $head Constrain Omega$$
 Right now we are fitting $latex \omega(a, t)$$ while $code dismod_ode$$
@@ -66,10 +95,5 @@ at both the fixed and random effects levels.
 
 $head Windows Install$$
 Make and test a set of Windows install instructions for $code dismod_at$$.
-
-$head Constrain Rate$$
-If a rate is constrained to have upper and lower limits equal at the parent
-level, remove it from the random effect in the inner problem.
-
 
 $end
