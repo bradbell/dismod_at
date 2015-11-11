@@ -119,22 +119,19 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		s_vector constraint_2_lag_; // maps constraint_hes_row to lag_hes_row
 		// ---------------------------------------------------------------
 		// temporaries (size set by constructor only)
-		d_vector        fixed_tmp_;      // size n_fixed_
-		d_vector        random_tmp_;     // size n_random_
+		d_vector        fixed_tmp_;         // size n_fixed_
 		d_vector        fix_like_vec_tmp_;  // size fix_like_n_abs_ + 1
-		d_vector        c_vec_tmp_;      // size n_constraint_
-		d_vector        H_beta_tmp_;     // size n_fixed_
-		d_vector        w_fix_like_tmp_;     // size 2 * fix_like_n_abs
-		d_vector        w_constraint_tmp_;// size n_constraint
+		d_vector        c_vec_tmp_;         // size n_constraint_
+		d_vector        H_beta_tmp_;        // size n_fixed_
+		d_vector        w_fix_like_tmp_;    // size 2 * fix_like_n_abs
+		d_vector        w_constraint_tmp_;  // size n_constraint
 		// ---------------------------------------------------------------
-		// set by eval_f only (constructor does not modify)
-		d_vector fixed_opt_; // empty until finalize_solution called
-		d_vector random_h_;  // random effect at previous eval_h
+		// empty until finalize_solution called
+		d_vector fixed_opt_;
 		// ---------------------------------------------------------------
-		// set by constructor
-		// ---------------------------------------------------------------
-		// set by any eval routine when new_x is true
-		d_vector random_cur_; // random effects corresponding to current x
+		// Optimal random effects cooressponding to current fixed effects.
+		// Set by any eval routine when new_x is true, i.e. new fixed effects.
+		d_vector random_cur_;
 		// ---------------------------------------------------------------
 	public:
 		// get minus infinity

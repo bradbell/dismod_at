@@ -446,7 +446,6 @@ mixed_object_      ( mixed_object    )
 	// set size of temporary vectors
 	// -----------------------------------------------------------------------
 	fixed_tmp_.resize( n_fixed_ );
-	random_tmp_.resize( n_random_ );
 	c_vec_tmp_.resize( n_constraint_ );
 	H_beta_tmp_.resize( n_fixed_ );
 	w_fix_like_tmp_.resize( fix_like_n_abs_ + 1 );
@@ -749,12 +748,6 @@ bool ipopt_fixed::eval_f(
 {
 	assert( n > 0 && size_t(n) == n_fixed_ + fix_like_n_abs_ );
 	//
-	// initialize random effects
-	if( random_h_.size() == 0 )
-		random_tmp_ = random_in_;
-	else
-		random_tmp_ = random_h_;
-	//
 	// value of fixed effects corresponding to this x
 	for(size_t j = 0; j < n_fixed_; j++)
 		fixed_tmp_[j] = double( x[j] );
@@ -766,7 +759,7 @@ bool ipopt_fixed::eval_f(
 		// compute the optimal random effects corresponding to fixed effects
 		if( new_x )
 		random_cur_ = mixed_object_.optimize_random(
-		random_options_, fixed_tmp_, random_lower_, random_upper_, random_tmp_
+		random_options_, fixed_tmp_, random_lower_, random_upper_, random_in_
 		);
 		H = mixed_object_.ranobj_eval(fixed_tmp_, random_cur_);
 	}
@@ -841,12 +834,6 @@ bool ipopt_fixed::eval_grad_f(
 	for(size_t j = 0; j < n_fixed_; j++)
 		fixed_tmp_[j] = double( x[j] );
 	//
-	// initialize random effects
-	if( random_h_.size() == 0 )
-		random_tmp_ = random_in_;
-	else
-		random_tmp_ = random_h_;
-	//
 	// random part of objective
 	assert( H_beta_tmp_.size() == n_fixed_ );
 	for(size_t j = 0; j < n_fixed_; j++)
@@ -858,7 +845,7 @@ bool ipopt_fixed::eval_grad_f(
 		// compute the optimal random effects corresponding to fixed effects
 		if( new_x )
 		random_cur_ = mixed_object_.optimize_random(
-		random_options_, fixed_tmp_, random_lower_, random_upper_, random_tmp_
+		random_options_, fixed_tmp_, random_lower_, random_upper_, random_in_
 		);
 		// Jacobian for random part of the Lalpace objective
 		mixed_object_.ranobj_grad(
@@ -1246,12 +1233,6 @@ bool ipopt_fixed::eval_h(
 	for(size_t j = 0; j < n_fixed_; j++)
 		fixed_tmp_[j] = double( x[j] );
 	//
-	// initialize random effects
-	if( random_h_.size() == 0 )
-		random_tmp_ = random_in_;
-	else
-		random_tmp_ = random_h_;
-	//
 	// initialize return value
 	for(size_t k = 0; k < nnz_h_lag_; k++)
 		values[k] = Number( 0.0 );
@@ -1262,11 +1243,8 @@ bool ipopt_fixed::eval_h(
 		// compute the optimal random effects corresponding to fixed effects
 		if( new_x )
 		random_cur_ = mixed_object_.optimize_random(
-		random_options_, fixed_tmp_, random_lower_, random_upper_, random_tmp_
+		random_options_, fixed_tmp_, random_lower_, random_upper_, random_in_
 		);
-		//
-		random_h_   = random_cur_;
-		//
 		// compute Hessian of random part w.r.t. fixed effects
 		mixed_object_.ranobj_hes(
 			fixed_tmp_, random_cur_,
