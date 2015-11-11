@@ -248,7 +248,7 @@ void init_command(
 	// rate variables
 	size_t n_rate  = db_input.rate_table.size();
 	size_t n_child = child_object.child_size();
-	size_t smooth_id, n_var, n_age, node_id;
+	size_t smooth_id, n_var, n_time, node_id;
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
 		{	if( child_id == n_child )
@@ -264,15 +264,15 @@ void init_command(
 			else
 			{	offset    = info.offset;
 				n_var     = info.n_var;
-				n_age     = db_input.smooth_table[smooth_id].n_age;
+				n_time    = db_input.smooth_table[smooth_id].n_time;
 # ifndef NDEBUG
-				size_t n_time    = db_input.smooth_table[smooth_id].n_time;
+				size_t n_age = db_input.smooth_table[smooth_id].n_age;
 				assert( n_var == n_age * n_time );
 # endif
 			}
 			for(size_t index = 0; index < n_var; index++)
-			{	size_t i       = index % n_age;
-				size_t j       = index / n_age;
+			{	size_t i       = index / n_time;
+				size_t j       = index % n_time;
 				var_id         = offset + index;
 				size_t age_id  = s_info_vec[smooth_id].age_id(i);
 				size_t time_id = s_info_vec[smooth_id].time_id(j);
@@ -334,14 +334,14 @@ void init_command(
 		offset    = info.offset;
 		assert( smooth_id == info.smooth_id);
 		n_var     = info.n_var;
-		n_age     = db_input.smooth_table[smooth_id].n_age;
+		n_time    = db_input.smooth_table[smooth_id].n_time;
 # ifndef NDEBUG
-		size_t n_time = db_input.smooth_table[smooth_id].n_time;
+		size_t n_age = db_input.smooth_table[smooth_id].n_age;
 		assert( n_var == n_age * n_time );
 # endif
 		for(size_t index = 0; index < n_var; index++)
-		{	size_t age_id   = index % n_age;
-			size_t time_id  = index / n_age;
+		{	size_t age_id   = index / n_time;
+			size_t time_id  = index % n_time;
 			var_id          = offset + index;
 # ifndef NDEBUG
 			for(size_t j = 0; j < n_col; j++)

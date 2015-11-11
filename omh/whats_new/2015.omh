@@ -75,6 +75,10 @@ fixed likelihood $latex g(\theta)$$
 and the $cref/constraint/cppad_mixed_constraint/$$ function
 $latex c(\theta)$$
 when $cref/quasi_fixed/cppad_mixed_derived_ctor/quasi_fixed/$$ is false.
+$lnext
+Fix transposition of correspondence between
+$icode age_id$$, $icode time_id$$ and $icode var_id$$
+the $cref var_table$$.
 $lend
 
 $head 11-09$$
