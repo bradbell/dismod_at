@@ -37,10 +37,13 @@ To be specific, the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$ $latex ( \theta )$$,
 maximize the total objective
 $cref/L(theta)/cppad_mixed_theory/Objective/Total Objective, L(theta)/$$
-and the
-$cref/random effects/model_variables/Random Effects, u/$$ $latex ( u )$$
-maximize the random part of the objective (given the fixed effect); see
-$cref/u^(theta)/cppad_mixed_theory/Objective/u^(theta)/$$.
+and the corresponding
+$cref/optimal random effects
+	/cppad_mixed_theory
+	/Objective
+	/Optimal Random Effects, u^(theta)
+/$$
+$latex \hat{u} ( \theta )$$.
 
 $head Example$$
 See the $cref fit_command.py$$ example and test.

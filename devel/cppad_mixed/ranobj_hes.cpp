@@ -61,9 +61,13 @@ This argument has prototype
 $codei%
 	const CppAD::vector<double>& %random_vec%
 %$$
-Given the fixed effects $latex \theta$$, it is the corresponding optimal value
-for the random effects vector; i.e.,
-$cref/u^(theta)/cppad_mixed_theory/Objective/u^(theta)/$$.
+Given the fixed effects $latex \theta$$, it is the corresponding
+$cref/optimal random effects
+	/cppad_mixed_theory
+	/Objective
+	/Optimal Random Effects, u^(theta)
+/$$
+$latex \hat{u} ( \theta )$$.
 
 $head row_out$$
 This argument has prototype

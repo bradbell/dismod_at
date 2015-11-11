@@ -62,7 +62,7 @@ Furthermore, there may be  constraints on the value of $latex \theta$$.
 
 $head Objective$$
 
-$subhead u^(theta)$$
+$subhead Optimal Random Effects, u^(theta)$$
 Given the fixed effects $latex \theta$$,
 we use $latex \hat{u} ( \theta )$$ to denote
 the random effects that maximize the random likelihood; i.e.,

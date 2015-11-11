@@ -61,8 +61,13 @@ It specifies the value of the
 $cref/random effects/cppad_mixed/Random Effects, u/$$
 vector $latex u$$ at which $latex h( \theta , u)$$ is evaluated.
 Note that the Laplace approximation is equal to the random objective when
-$latex u$$ is optimal; i.e. equal to
-$cref/u^(theta)/cppad_mixed_theory/Objective/u^(theta)/$$,
+$latex u$$ is the
+$cref/optimal random effects
+	/cppad_mixed_theory
+	/Objective
+	/Optimal Random Effects, u^(theta)
+/$$
+$latex \hat{u} ( \theta )$$.
 
 $head h$$
 The return value has prototype
