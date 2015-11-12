@@ -17,10 +17,10 @@ fi
 if [ "$1" != 'get' ] && [ "$1" != 'set' ] && [ "$1" != 'copy' ]
 then
 	echo 'usage: bin/version.sh (get | set | copy) [version]'
-	echo 'get:  Gets the current version number from setup.py'
-	echo 'set:  Sets setup.py version number to version.'
+	echo 'get:  Gets the current version number from ./CMakeLists.txt'
+	echo 'set:  Sets ./CMakeLists.txt version number to version.'
 	echo '      If version is not present, uses current yyyymmdd'
-	echo 'copy: Copies version number from setup.py to other files.'
+	echo 'copy: Copies version number from ./CMakeLists.txt to other files.'
 	exit 1
 fi
 echo_eval() {
@@ -73,7 +73,7 @@ list='
 for name in $list
 do
 	sed -e "s|dismod_at-[0-9]\{8\}|dismod_at-$version|"  \
-		-e "s|version = '[0-9]\{8\}|version = '$version'|" \
+		-e "s|version = '[0-9]\{8\}'|version = '$version'|" \
 		-i.old $name
 	#
 	echo '-------------------------------------------------------------'

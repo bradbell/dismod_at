@@ -61,6 +61,11 @@ Change the log table format for the
 $cref/command/log_table/message_type/command/$$ message type.
 In addition, improve documentation of what value
 is used for the $cref/random_seed/log_table/random_seed/$$.
+$lnext
+There was a problem with the updating of the version number in
+$code bin/setup.py$$ that could cause the
+$cref/python install/install_unix/dismod_at/Install/$$ command to fail.
+This has been fixed.
 $lend
 
 $head 11-10$$
