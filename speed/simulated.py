@@ -9,9 +9,21 @@
 # ---------------------------------------------------------------------------
 # $begin user_simulated.py$$ $newlinech #$$
 # $spell
+#	py
 # $$
 #
 # $section A Simulate Data Speed Test$$
+#
+# $head Syntax$$
+# $icode%python3% speed/simulated.py %random_seed%$$
+#
+# $head python3$$
+# This is the $cref/python_three_command/run_cmake.sh/python_three_command/$$
+# on your system.
+#
+# $head random_seed$$
+# Is the $cref/random_seed/option_table/random_seed/$$ used during the
+# simulation.
 #
 # $code
 # $verbatim%
@@ -31,14 +43,18 @@ n_data                    = 200
 # ------------------------------------------------------------------------
 import sys
 import os
+import time
 import distutils.dir_util
 import subprocess
 test_program = 'speed/simulated.py'
-if sys.argv[0] != test_program  or len(sys.argv) != 1 :
-	usage  = 'python3 ' + test_program + '\n'
+if sys.argv[0] != test_program  or len(sys.argv) != 2 :
+	usage  = 'python3 ' + test_program + ' random_seed\n'
 	usage += 'where python3 is the python 3 program on your system\n'
 	usage += 'and working directory is the dismod_at distribution directory\n'
 	sys.exit(usage)
+#
+random_seed_arg = sys.argv[1]
+start_time      = time.time();
 #
 # import dismod_at
 sys.path.append( os.getcwd() + '/python' )
@@ -256,23 +272,23 @@ def example_db (file_name) :
 	# option_dict
 	option_dict = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_pos' },
-		{ 'name':'parent_node_name',       'value':'world'        },
-		{ 'name':'number_sample',          'value':'1'            },
-		{ 'name':'fit_sample_index',       'value':'0'            },
-		{ 'name':'ode_step_size',          'value':'10.0'         },
-		{ 'name':'random_seed',            'value':'0'            },
+		{ 'name':'parent_node_name',       'value':'world'            },
+		{ 'name':'number_sample',          'value':'1'                },
+		{ 'name':'fit_sample_index',       'value':'0'                },
+		{ 'name':'ode_step_size',          'value':'10.0'             },
+		{ 'name':'random_seed',            'value':random_seed_arg    },
 
-		{ 'name':'quasi_fixed',            'value':'true'         },
-		{ 'name':'derivative_test_fixed',  'value':'none'         },
-		{ 'name':'max_num_iter_fixed',     'value':'100'          },
-		{ 'name':'print_level_fixed',      'value':'5'            },
-		{ 'name':'tolerance_fixed',        'value':'1e-8'         },
-		{ 'name':'random_bound',           'value':None           },
+		{ 'name':'quasi_fixed',            'value':'true'             },
+		{ 'name':'derivative_test_fixed',  'value':'none'             },
+		{ 'name':'max_num_iter_fixed',     'value':'100'              },
+		{ 'name':'print_level_fixed',      'value':'5'                },
+		{ 'name':'tolerance_fixed',        'value':'1e-8'             },
+		{ 'name':'random_bound',           'value':None               },
 
-		{ 'name':'derivative_test_random', 'value':'none'         },
-		{ 'name':'max_num_iter_random',    'value':'100'          },
-		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-8'         }
+		{ 'name':'derivative_test_random', 'value':'none'             },
+		{ 'name':'max_num_iter_random',    'value':'100'              },
+		{ 'name':'print_level_random',     'value':'0'                },
+		{ 'name':'tolerance_random',       'value':'1e-8'             }
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: empty
@@ -368,8 +384,19 @@ for command in [ 'simulate', 'sample' ] :
 new          = False
 connection   = dismod_at.create_connection(file_name, new)
 sample_dict  = dismod_at.get_table_dict(connection, 'sample')
+log_dict     = dismod_at.get_table_dict(connection, 'log')
 connection.close()
-#
+# -----------------------------------------------------------------------
+# determine random seed the was used
+random_seed = int(random_seed_arg)
+if random_seed == 0 :
+	for row in log_dict :
+		if row['message_type'] == 'command' :
+			message = row['message'].split()
+			if message[0] == 'begin' and message[1] == 'sample' :
+				random_seed = int(row['unix_time'])
+	assert random_seed != 0
+# -----------------------------------------------------------------------
 number_variable = len(var_dict)
 assert( len(sample_dict) % number_variable == 0 )
 number_sample   = int( len(sample_dict) / number_variable )
@@ -384,8 +411,11 @@ for sample_index in range(number_sample) :
 			max_error = max(abs(fit_value) , max_error)
 		else :
 			max_error = max( abs(fit_value / true_value - 1.0), max_error)
+print('elapsed seconds =', time.time() - start_time)
+print('random_seed = ', random_seed)
 if max_error > 5e-2 :
 	print('max_error = ', max_error)
+	print('simulated.py: Error')
 	assert(False)
 # -----------------------------------------------------------------------------
 print('simulated.py: OK')

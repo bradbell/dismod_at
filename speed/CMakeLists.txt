@@ -10,6 +10,8 @@
 # ---------------------------------------------------------------------------
 # cppad_mixed speed test
 #
+SET(random_seed 0)
+#
 LINK_DIRECTORIES(
 	${ipopt_LIBRARY_DIRS}
 	${dismod_at_BINARY_DIR}/cpp
@@ -35,14 +37,18 @@ TARGET_LINK_LIBRARIES(capture_xam
 	gsl
 	gslcblas
 )
-ADD_CUSTOM_TARGET(speed_capture_xam capture_xam DEPENDS capture_xam )
+ADD_CUSTOM_TARGET(
+	speed_capture_xam
+	capture_xam ${random_seed}
+	DEPENDS capture_xam
+)
 ADD_DEPENDENCIES(speed_capture_xam devel cppad_mixed cppad_mixed_eigen)
 # -----------------------------------------------------------------------------
 # dismod_at speed test
 #
 ADD_CUSTOM_TARGET(
 	speed_simulated
-	${python_three_command} speed/simulated.py
+	${python_three_command} speed/simulated.py ${random_seed}
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 	DEPENDS dismod_at
 )

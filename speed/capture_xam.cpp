@@ -17,9 +17,17 @@ $spell
 	Resample
 	Poisson
 	covariate
+	xam
 $$
 
 $section A Capture Re-capture Model$$
+
+$head Syntax$$
+$codei%build/speed/capture_xam %random_seed%$$
+
+$head random_seed$$
+Is the $cref/random_seed/option_table/random_seed/$$ used during the
+simulation.
 
 $head Notation$$
 $table
@@ -368,10 +376,20 @@ public:
 };
 } // END_EMPTY_NAMESPACE
 
-int main(void)
+int main(int argc, char *argv[])
 {	bool ok = true;
+	using std::cout;
+	using std::endl;
+	//
+	if( argc != 2 )
+	{	std::cerr << "usage: " << argv[0] << " random_seed" << endl;
+		std::exit(1);
+	}
+	//
+	size_t random_seed = std::atoi( argv[1] );
+	random_seed        = dismod_at::new_gsl_rng( random_seed );
+	//
 	size_t n_fixed  = 3;
-	size_t random_seed = dismod_at::new_gsl_rng(0);
 	std::time_t start_time = std::time( DISMOD_AT_NULL_PTR );
 	// problem size
 	size_t n_random = 30;
@@ -417,12 +435,12 @@ int main(void)
 		mixed_object.initialize(theta_in, u_in);
 
 	// print sizes
-	std::cout << std::endl
-	<< "n_fixed = "  << n_fixed << std::endl
-	<< "n_random = " << n_random << std::endl;
+	cout << endl
+	<< "n_fixed = "  << n_fixed << endl
+	<< "n_random = " << n_random << endl;
 	std::map<std::string, size_t>::const_iterator itr;
 	for(itr = size_map.begin(); itr != size_map.end(); ++itr)
-		std::cout << itr->first << " = " << itr->second << std::endl;
+		cout << itr->first << " = " << itr->second << endl;
 
 	// optimize the fixed effects
 	std::string fixed_options =
@@ -461,16 +479,14 @@ int main(void)
 	for(size_t j = 0; j < n_fixed; j++)
 		ok &= std::fabs( theta_out[j] / theta_sim[j] - 1.0 ) < 3e-1;
 	//
-	using std::cout;
-	using std::endl;
-	cout << "capture_xam: elapsed seconds = " << end_time - start_time << endl;
+	cout << "elapsed seconds = " << end_time - start_time << endl;
+	cout << "random_seed = " << random_seed << endl;
 	if( ok )
-		std::cout << "capture_xam: OK" << endl;
+		cout << "capture_xam: OK" << endl;
 	else
 	{	cout << "capture_xam: Error" << endl;
 		for(size_t j = 0; j < n_fixed; j++)
 			cout << theta_out[j] / theta_sim[j] - 1.0 << endl;
-		cout << "random_seed = " << random_seed << endl;
 	}
 	//
 	dismod_at::free_gsl_rng();

@@ -1150,7 +1150,7 @@ int main(int n_arg, const char** argv)
 	bool new_file = false;
 	sqlite3* db   = dismod_at::open_connection(file_name_arg, new_file);
 	// --------------- log start of this command -----------------------------
-	message = command_arg + " start";
+	message = "begin " + command_arg;
 	std::time_t unix_time = dismod_at::log_message(db, "command", message);
 	// --------------- get the input tables ---------------------------------
 	std::time_t current_time = trace("Reading data base");
@@ -1177,19 +1177,19 @@ int main(int n_arg, const char** argv)
 	{
 # ifndef NDEBUG
 		size_t actual_seed = dismod_at::new_gsl_rng( size_t(unix_time) );
+		assert( std::time_t( actual_seed ) == unix_time );
 # else
 		dismod_at::new_gsl_rng( size_t(unix_time) );
 # endif
-		assert( std::time_t( actual_seed ) == unix_time );
 	}
 	else
 	{
 # ifndef NDEBUG
 		size_t actual_seed = dismod_at::new_gsl_rng(random_seed);
+		assert( actual_seed == random_seed );
 # else
 		dismod_at::new_gsl_rng(random_seed);
 # endif
-		assert( actual_seed == random_seed );
 	}
 	// ---------------------------------------------------------------------
 	// n_covariate
@@ -1409,7 +1409,7 @@ int main(int n_arg, const char** argv)
 		}
 	}
 	// ---------------------------------------------------------------------
-	message = command_arg + " done";
+	message = "end " + command_arg;
 	dismod_at::log_message(db, "command", message);
 	sqlite3_close(db);
 	return 0;

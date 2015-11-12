@@ -52,6 +52,17 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-12$$
+$list number$$
+Add $cref/random_seed/option_table/random_seed/$$ to the speed tests
+$cref user_simulated.py$$ and $cref capture_xam.cpp$$.
+$lnext
+Change the log table format for the
+$cref/command/log_table/message_type/command/$$ message type.
+In addition, improve documentation of what value
+is used for the $cref/random_seed/log_table/random_seed/$$.
+$lend
+
 $head 11-10$$
 $list number$$
 Group all of the user database documentation under the section

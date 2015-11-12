@@ -1,3 +1,4 @@
+# /usr/bin/bash -e
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
@@ -14,7 +15,15 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-python3 speed/simulated.py | tee build/speed/time.out
+if [ "$1" == '' ]
+then
+	echo 'usage: time_memory random_seed'
+	echo 'use zero for choosing seed from clock'
+	exit 1
+fi
+random_seed="$1"
+# -----------------------------------------------------------------------------
+python3 speed/simulated.py $random_seed | tee build/speed/time.out
 cd build/speed
 ../devel/dismod_at example.db start
 rm memory.out.*

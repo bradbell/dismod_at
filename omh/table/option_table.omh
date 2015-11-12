@@ -106,7 +106,8 @@ $cref/simulate_table/simulate_table/meas_value/$$.
 $head random_seed$$
 This is a non-negative integer used to seed the random number
 generator (used to generate simulated measurement noise).
-If this value is zero, the clock is used to seed the random number generator.
+If this value is zero, the clock is used to seed the random number generator;
+see $cref/random_seed/log_table/random_seed/$$ in the log table.
 
 $head rate_case$$
 The $icode rate_case$$ value does not matter for the following integrands:
