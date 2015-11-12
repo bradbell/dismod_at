@@ -75,7 +75,12 @@ It returns true, if the test passes, and false otherwise.
 $end
 */
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
-
+// would be member of cppad_mixed class if it were not for all the
+// warnings Eigen generates.
+	extern Eigen::SimplicialLDLT<
+		Eigen::SparseMatrix<double> , Eigen::Lower
+	> chol_hes_ran_;
+//
 // ----------------------------------------------------------------------------
 void cppad_mixed::ranobj_grad(
 	const d_vector& fixed_vec  ,
@@ -100,9 +105,7 @@ void cppad_mixed::ranobj_grad(
 	val_out = hes_ran_fun_.Forward(0, both);
 
 	// create a lower triangular eigen sparse matrix representation of Hessian
-	// 2DO: only do analyze pattern once and store in chol
-	// 2DO: same hessian point is factorized here as well as in logdet_grad.
-	sparse_matrix hessian(n_random_, n_random_);
+	sparse_matrix hessian_value(n_random_, n_random_);
 	for(size_t k = 0; k < K; k++)
 	{	assert( n_fixed_        <= hes_ran_.col[k]  );
 		assert( hes_ran_.col[k] <= hes_ran_.row[k] );
@@ -110,12 +113,10 @@ void cppad_mixed::ranobj_grad(
 		size_t col = hes_ran_.col[k] - n_fixed_;
 		assert( row < n_random_ );
 		assert( col < n_random_ );
-		hessian.insert(row, col) = val_out[k];
+		hessian_value.insert(row, col) = val_out[k];
 	}
 	// compute an LDL^T Cholesky factorization of f_{uu}^{(2)}(theta, u)
-	Eigen::SimplicialLDLT<sparse_matrix, Eigen::Lower> chol;
-	chol.analyzePattern(hessian);
-	chol.factorize(hessian);
+	chol_hes_ran_.factorize(hessian_value);
 	//
 	// Compute derivative of logdet of f_{uu}^{(2)} ( theta , u )
 	d_vector logdet_fix(n_fixed_), logdet_ran(n_random_);
@@ -181,7 +182,7 @@ void cppad_mixed::ranobj_grad(
 		}
 		//
 		// compute the partial of uhat(theta) w.r.t theta[j]
-		sparse_matrix x = chol.solve(b);
+		sparse_matrix x = chol_hes_ran_.solve(b);
 		//
 		// compute effect on the total derivative
 		assert( x.outerSize() == 1 );
