@@ -138,7 +138,7 @@ void cppad_mixed::ranobj_hes(
 	assert( n_random_ == random_vec.size() );
 
 	// size of outputs
-	size_t n_nonzero = hes_ranobj_row_.size();
+	size_t n_nonzero = hes_ranobj_.row.size();
 	if( n_nonzero == 0 )
 	{	// special case where Hessian is zero.
 		assert( row_out.size() == 0 );
@@ -147,7 +147,7 @@ void cppad_mixed::ranobj_hes(
 		return;
 	}
 	// check recording
-	assert( hes_ranobj_col_.size() == n_nonzero );
+	assert( hes_ranobj_.col.size() == n_nonzero );
 
 	// make sure outputs have proper dimension
 	assert( row_out.size() == col_out.size() );
@@ -159,8 +159,8 @@ void cppad_mixed::ranobj_hes(
 		col_out.resize(n_nonzero);
 		val_out.resize(n_nonzero);
 		for(size_t k = 0; k < n_nonzero; k++)
-		{	row_out[k] = hes_ranobj_row_[k];
-			col_out[k] = hes_ranobj_col_[k];
+		{	row_out[k] = hes_ranobj_.row[k];
+			col_out[k] = hes_ranobj_.col[k];
 		}
 	}
 
@@ -180,16 +180,16 @@ void cppad_mixed::ranobj_hes(
 		beta_theta_u,
 		w,
 		not_used,
-		hes_ranobj_row_,
-		hes_ranobj_col_,
+		hes_ranobj_.row,
+		hes_ranobj_.col,
 		val_out,
-		hes_ranobj_work_
+		hes_ranobj_.work
 	);
 
 # ifndef NDEBUG
 	for(size_t k = 0; k < n_nonzero; k++)
-	{	assert( row_out[k] == hes_ranobj_row_[k] );
-		assert( col_out[k] == hes_ranobj_col_[k] );
+	{	assert( row_out[k] == hes_ranobj_.row[k] );
+		assert( col_out[k] == hes_ranobj_.col[k] );
 	}
 # endif
 }

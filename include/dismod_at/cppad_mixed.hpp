@@ -358,19 +358,18 @@ $codep */
 $subhead hes_ranobj_$$
 If $icode%n_random_% > 0%$$, quasi_fixed_ is false, and
 $code init_hes_ranobj_done_$$,
-$cref/hes_ranobj_row_/init_hes_ranobj/hes_ranobj_row_/$$,
-$cref/hes_ranobj_col_/init_hes_ranobj/hes_ranobj_col_/$$, and
-$cref/hes_ranobj_work_/init_hes_ranobj/hes_ranobj_work_/$$,
-can be used to compute the lower triangle of the sparse Hessian
-$latex r^{(2)} ( \theta )$$.
+$cref/hes_ranobj_/init_hes_ranobj/hes_ranobj_/$$ contains
+information for the Hessian of the
+$cref/random objective
+	/cppad_mixed_theory
+	/Objective
+	/Random Objective, r(theta)
+/$$
+The corresponding ADFun object is
+$cref/ranobj_fun_/init_hes_ranobj/hes_ranobj_/$$
 $codep */
-	CppAD::vector<size_t>      hes_ranobj_row_; // corresponding row indices
-	CppAD::vector<size_t>      hes_ranobj_col_; // corresponding column indices
-	CppAD::sparse_hessian_work hes_ranobj_work_;
+	sparse_hes_info hes_ranobj_;
 /* $$
-Note that if $code init_hes_ranobj_done_$$ is true and
-$code hes_ranobj_row_.size() == 0$$, then this Hessian is zero; i.e.,
-the second derivative of the Laplace approximation is zero.
 
 $head fix_like_$$
 $cref/fix_like_fun_/init_fix_like/fix_like_fun_/$$

@@ -67,6 +67,7 @@ see $cref/f(theta, u)/
 	cppad_mixed_theory/
 	Random Likelihood, f(theta, u)
 /$$
+
 $subhead ran_like_fun_, ran_like_a1fun_$$
 Either $code ran_like_fun_$$ or $code ran_like_a1fun_$$
 can be used for the ADFun object in the

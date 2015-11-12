@@ -51,47 +51,15 @@ It specifies the initial value for the
 $cref/random effects/cppad_mixed/Random Effects, u/$$ optimization.
 
 
-$head hes_ranobj_row_$$
+$head hes_ranobj_$$
 The input value of the member variable
 $codei%
-	CppAD::vector<size_t> hes_ranobj_row_
+	sparse_hes_info hes_ranobj_
 %$$
 does not matter.
-Upon return it contains the row indices
-for the lower triangle of the sparse Hessian of the random
-part of the objective.
-
-$head hes_ranobj_col_$$
-The input value of the member variable
-$codei%
-	CppAD::vector<size_t> hes_ranobj_col_
-%$$
-does not matter.
-Upon return it contains the column indices
-for the lower triangle of the sparse Hessian of the random
-part of the objective.
-
-$head hes_ranobj_work_$$
-The input value of the member variable
-$codei%
-	CppAD::sparse_hessian_work hes_ranobj_work_
-%$$
-does not matter.
-Upon return it contains the CppAD work information so that
-$codei%
-	ranobj_fun_.SparseHessian(
-		%beta_theta_u%,
-		%w%,
-		%not_used%,
-		hes_ranobj_row_,
-		hes_ranobj_col_,
-		%val_out%,
-		hes_ranobj_work_
-	);
-%$$
-(where $icode beta_theta_vec$$, $icode w$$, and $icode val_out$$
-are $code double$$ vectors)
-can be used to calculate the lower triangle of the sparse Hessian
+Upon return it contains the
+$cref sparse_hes_info$$
+for the Hessian
 $latex \[
 	r^{(2)} ( \theta )
 	=
@@ -105,6 +73,10 @@ $cref/H(beta, theta, u)
 /$$.
 Note that the matrix is symmetric and hence can be recovered from
 its lower triangle.
+
+$subhead ranobj_fun_$$
+This ADFun object can be used in the
+$cref/sparse Hessian Call/sparse_hes_info/Sparse Hessian Call/f/$$.
 
 $end
 */
@@ -144,8 +116,8 @@ void cppad_mixed::init_hes_ranobj(
 		ranobj_fun_.RevSparseHes(n_fixed_, s, transpose);
 
 	// determine row and column indices in lower triangle of Hessian
-	hes_ranobj_row_.clear();
-	hes_ranobj_col_.clear();
+	hes_ranobj_.row.clear();
+	hes_ranobj_.col.clear();
 	std::set<size_t>::iterator itr;
 	for(i = 0; i < n_fixed_; i++)
 	{	for(
@@ -156,8 +128,8 @@ void cppad_mixed::init_hes_ranobj(
 		{	j = *itr;
 			// only compute lower triangular part
 			if( i >= j )
-			{	hes_ranobj_row_.push_back(i);
-				hes_ranobj_col_.push_back(j);
+			{	hes_ranobj_.row.push_back(i);
+				hes_ranobj_.col.push_back(j);
 			}
 		}
 	}
@@ -167,17 +139,17 @@ void cppad_mixed::init_hes_ranobj(
 	w[0] = 1.0;
 
 	// place where results go (not used here)
-	d_vector val_out( hes_ranobj_row_.size() );
+	d_vector val_out( hes_ranobj_.row.size() );
 
 	// compute the work vector
 	ranobj_fun_.SparseHessian(
 		beta_theta_u,
 		w,
 		pattern,
-		hes_ranobj_row_,
-		hes_ranobj_col_,
+		hes_ranobj_.row,
+		hes_ranobj_.col,
 		val_out,
-		hes_ranobj_work_
+		hes_ranobj_.work
 	);
 	//
 	init_hes_ranobj_done_ = true;
