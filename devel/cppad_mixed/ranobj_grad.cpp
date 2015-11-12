@@ -132,22 +132,22 @@ void cppad_mixed::ranobj_grad(
 	// Compute the Hessian cross terms f_{u theta}^{(2)} ( theta , u )
 	// 2DO: another ran_like_fun_.Forward(0, both) is done by SparseHessian
 	CppAD::vector< std::set<size_t> > not_used;
-	K = hes_cross_row_.size();
+	K = hes_cross_.row.size();
 	val_out.resize(K);
 	ran_like_fun_.SparseHessian(
 		both,
 		w,
 		not_used,
-		hes_cross_row_,
-		hes_cross_col_,
+		hes_cross_.row,
+		hes_cross_.col,
 		val_out,
-		hes_cross_work_
+		hes_cross_.work
 	);
-	// initialize index in hes_cross_row_, hes_cross_col_
+	// initialize index in hes_cross_.row, hes_cross_.col
 	size_t k = 0;
 	size_t col = n_fixed_;
 	if( k < K )
-		col = hes_cross_col_[k];
+		col = hes_cross_.col[k];
 	assert( col <= n_fixed_ );
 	//
 	// Loop over fixed effects and compute r_fixed one component at a time
@@ -162,20 +162,20 @@ void cppad_mixed::ranobj_grad(
 			if( k >= K )
 				col = n_fixed_;
 			else
-			{	col = hes_cross_col_[k];
+			{	col = hes_cross_.col[k];
 				assert( col < n_fixed_ );
 			}
 		}
 		while( col == j )
-		{	assert( hes_cross_row_[k] >= n_fixed_ );
-			size_t row = hes_cross_row_[k] - n_fixed_;
+		{	assert( hes_cross_.row[k] >= n_fixed_ );
+			size_t row = hes_cross_.row[k] - n_fixed_;
 			assert( row < n_random_ );
 			b.insert(row, 0) = - val_out[k];
 			k++;
 			if( k >= K )
 				col = n_fixed_;
 			else
-			{	col = hes_cross_col_[k];
+			{	col = hes_cross_.col[k];
 				assert( col < n_fixed_ );
 			}
 		}

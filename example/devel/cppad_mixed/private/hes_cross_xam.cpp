@@ -132,8 +132,8 @@ bool hes_cross_xam(void)
 	mixed_object.initialize(theta, u);
 
 	// number of non-zeros in Hessian cross terms
-	ok &= mixed_object.hes_cross_row_.size() == n_random;
-	ok &= mixed_object.hes_cross_col_.size() == n_random;
+	ok &= mixed_object.hes_cross_.row.size() == n_random;
+	ok &= mixed_object.hes_cross_.col.size() == n_random;
 
 	// compute Hessian cross terms
 	vector<double> w(1), val_out(n_random), both(n_fixed + n_random);
@@ -144,14 +144,14 @@ bool hes_cross_xam(void)
 		both,
 		w,
 		not_used,
-		mixed_object.hes_cross_row_,
-		mixed_object.hes_cross_col_,
+		mixed_object.hes_cross_.row,
+		mixed_object.hes_cross_.col,
 		val_out,
-		mixed_object.hes_cross_work_
+		mixed_object.hes_cross_.work
 	);
 
-	CppAD::vector<size_t>& row(mixed_object.hes_cross_row_);
-	CppAD::vector<size_t>& col(mixed_object.hes_cross_col_);
+	CppAD::vector<size_t>& row(mixed_object.hes_cross_.row);
+	CppAD::vector<size_t>& col(mixed_object.hes_cross_.col);
 
 	// check Hessian
 	for(size_t k = 0; k < n_random; k++)

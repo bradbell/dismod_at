@@ -314,18 +314,23 @@ $codep */
 
 $subhead hes_cross_$$
 If $icode%n_random_% > 0%$$ and $code init_hes_cross_done_$$,
-$cref/hes_cross_row_/init_hes_cross/hes_cross_row_/$$,
-$cref/hes_cross_col_/init_hes_cross/hes_cross_col_/$$, and
-$cref/hes_cross_work_/init_hes_cross/hes_cross_work_/$$,
-can be used to compute the cross terms in the sparse Hessian
-$latex f_{u \theta}^{(2)} ( \theta , u )$$.
+$cref/hes_cross_/init_hes_cross/hes_cross_/$$ contains
+information for the cross partials of the Hessian of the
+$cref/random likelihood
+	/cppad_mixed_theory
+	/Random Likelihood, f(theta, u)
+/$$
+; i.e.  $latex f_{u theta}^{(2)} ( \theta , u )$$.
+The corresponding ADFun object is
+$cref/ran_like_fun_  or ran_like_a1fun_
+	/init_hes_cross
+	/hes_cross_
+	/ran_like_fun_, ran_like_a1fun_
+/$$.
 $codep */
-	CppAD::vector<size_t>      hes_cross_row_; // corresponding row indices
-	CppAD::vector<size_t>      hes_cross_col_; // corresponding column indices
-	CppAD::sparse_hessian_work hes_cross_work_;
+	sparse_hes_info hes_cross_;
 	//
 	friend bool ::hes_cross_xam(void);
-
 /* $$
 
 $head newton_atom_$$

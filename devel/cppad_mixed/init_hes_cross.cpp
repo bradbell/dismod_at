@@ -51,52 +51,35 @@ It specifies the value of the
 $cref/random effects/cppad_mixed/Random Effects, u/$$
 vector $latex u$$ at which the initialization is done.
 
-$head hes_cross_row_$$
-The input value of this member variable does not matter.
-Upon return
+$head hes_cross_$$
+The input value of the member variable
 $codei%
-	hes_cross_row_[%k%] - n_fixed_
+	sparse_hes_info hes_cross_
 %$$
-is the random effects index for this cross partial in
-$latex f_{u \theta}^{(2)}$$.
+does not matter.
+Upon return it contains the
+$cref sparse_hes_info$$
+for the Hessian
+$latex \[
+	f_{u \theta}^{(2)} ( \theta , u )
+\]$$
+see $cref/f(theta, u)/
+	cppad_mixed_theory/
+	Random Likelihood, f(theta, u)
+/$$
+$subhead ran_like_fun_, ran_like_a1fun_$$
+Either $code ran_like_fun_$$ or $code ran_like_a1fun_$$
+can be used for the ADFun object in the
+$cref/sparse Hessian Call/sparse_hes_info/Sparse Hessian Call/f/$$.
 
-$head hes_cross_col_$$
-The input value of this member variable does not matter.
-Upon return
-$codei%
-	hes_cross_col_[%k%]
-%$$
-is the fixed effects index for this cross partial in
-$latex f_{u \theta}^{(2)}$$.
 
 $head Order$$
 The results are in column major order; i.e.,
 $codei%
-	hes_cross_col_[%k%] <= hes_cross_col_[%k+1%]
-	if( hes_cross_col_[%k%] == hes_cross_col_[%k+1%] )
-		hes_cross_row_[%k%] < hes_cross_row_[%k+1%]
+	hes_cross_.col[%k%] <= hes_cross_.col[%k+1%]
+	if( hes_cross_.col[%k%] == hes_cross_.col[%k+1%] )
+		hes_cross_.row[%k%] < hes_cross_.row[%k+1%]
 %$$
-
-$head hes_cross_work_$$
-The input value of the member variable
-$codei%
-	CppAD::sparse_hessian_work hes_cross_work_
-%$$
-does not matter.
-Upon return it contains the necessary information so that
-$codei%
-	ran_like_fun_.SparseHessian(
-		%both_vec%,
-		%w%,
-		%not_used%,
-		hes_cross_row_,
-		hes_cross_col_,
-		%val_out%,
-		hes_cross_work_
-	);
-%$$
-can be used to calculate the non-zero cross terms in
-$latex f_{u \theta}^{(2)}$$.
 
 $children%
 	example/devel/cppad_mixed/private/hes_cross_xam.cpp
@@ -217,15 +200,15 @@ void cppad_mixed::init_hes_cross(
 	}
 # endif
 	// ----------------------------------------------------------------------
-	// set hes_cross_row_ and hes_cross_col_ in colum major order
+	// set hes_cross_.row and hes_cross_.col in colum major order
 	size_t K = row.size();
 	CppAD::vector<size_t> ind(K);
 	CppAD::index_sort(key, ind);
-	hes_cross_row_.resize(K);
-	hes_cross_col_.resize(K);
+	hes_cross_.row.resize(K);
+	hes_cross_.col.resize(K);
 	for(size_t k = 0; k < row.size(); k++)
-	{	hes_cross_row_[k] = row[ ind[k] ];
-		hes_cross_col_[k] = col[ ind[k] ];
+	{	hes_cross_.row[k] = row[ ind[k] ];
+		hes_cross_.col[k] = col[ ind[k] ];
 	}
 
 	// create a weighting vector
@@ -240,10 +223,10 @@ void cppad_mixed::init_hes_cross(
 		both,
 		w,
 		pattern,
-		hes_cross_row_,
-		hes_cross_col_,
+		hes_cross_.row,
+		hes_cross_.col,
 		val_out,
-		hes_cross_work_
+		hes_cross_.work
 	);
 	//
 	init_hes_cross_done_ = true;

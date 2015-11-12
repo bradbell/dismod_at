@@ -208,7 +208,7 @@ std::map<std::string, size_t> cppad_mixed::initialize(
 	// return value
 	std::map<std::string, size_t> size_map;
 	size_map["hes_ran_row"]    = hes_ran_.row.size();
-	size_map["hes_cross_row"]  = hes_cross_row_.size();
+	size_map["hes_cross_row"]  = hes_cross_.row.size();
 	size_map["ran_like_fun"]   = ran_like_fun_.size_var();
 	size_map["ran_like_a1fun"] = ran_like_a1fun_.size_var();
 	size_map["hes_ran_fun"]    = hes_ran_fun_.size_var();
