@@ -75,7 +75,7 @@ Note that the matrix is symmetric and hence can be recovered from
 its lower triangle.
 
 $subhead ranobj_fun_$$
-This ADFun object can be used in the
+This ADFun object should be used in the
 $cref/sparse Hessian Call/sparse_hes_info/Sparse Hessian Call/f/$$.
 
 $end

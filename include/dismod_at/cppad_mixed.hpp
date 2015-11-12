@@ -286,8 +286,10 @@ $codep */
 	CppAD::ADFun<double>      ran_like_fun_;
 	CppAD::ADFun<a1_double>   ran_like_a1fun_;
 /* $$
+The following objects hold information for computing derivatives
+with these ADFun objects:
 
-$head hes_ran_$$
+$subhead hes_ran_$$
 If $icode%n_random_% > 0%$$ and $code init_hes_ran_done_$$,
 $cref/hes_ran_/init_hes_ran/hes_ran_/$$ contains
 information for the Hessian of the
@@ -297,21 +299,15 @@ $cref/random likelihood
 /$$
 with respect to the random effects; i.e.
 $latex f_{uu}^{(2)} ( \theta , u )$$.
-The corresponding ADFun object is
-$cref/ran_like_fun_  or ran_like_a1fun_
-	/init_hes_ran
-	/hes_ran_
-	/ran_like_fun_, ran_like_a1fun_
-/$$.
 $codep */
-	sparse_hes_info hes_ran_;
+	sparse_hes_info             hes_ran_;
 	// recording of sparse Hessian calculation
-	CppAD::ADFun<double>  hes_ran_fun_;
+	CppAD::ADFun<double>        hes_ran_fun_;
 	//
 	friend bool ::hes_ran_fun_xam(void);
 /* $$
 
-$head hes_cross_$$
+$subhead hes_cross_$$
 If $icode%n_random_% > 0%$$ and $code init_hes_cross_done_$$,
 $cref/hes_cross_/init_hes_cross/hes_cross_/$$ contains
 information for the cross partials of the Hessian of the
@@ -320,17 +316,12 @@ $cref/random likelihood
 	/Random Likelihood, f(theta, u)
 /$$
 ; i.e.  $latex f_{u \theta}^{(2)} ( \theta , u )$$.
-The corresponding ADFun object is
-$cref/ran_like_fun_  or ran_like_a1fun_
-	/init_hes_cross
-	/hes_cross_
-	/ran_like_fun_, ran_like_a1fun_
-/$$.
 $codep */
-	sparse_hes_info hes_cross_;
+	sparse_hes_info             hes_cross_;
 	//
 	friend bool ::hes_cross_xam(void);
 /* $$
+
 
 $head newton_atom_$$
 If $icode%n_random_% > 0%$$, quasi_fixed_ is false, and
@@ -341,7 +332,7 @@ as the log of the determinant of $latex f_{uu} ( \theta , u )$$;
 see $cref/initialize newton_step/newton_step/initialize/$$.
 $codep */
 	// computation of the Hessian as an atomic operation
-	newton_step                newton_atom_;
+	newton_step                 newton_atom_;
 /* $$
 
 $head ranobj_fun_$$
@@ -351,10 +342,12 @@ this is a recording of the second approximation for the
 random part of the Laplace approximation, $latex H( \beta , \theta , u)$$;
 see $cref/ranobj_fun_/init_ranobj/ranobj_fun_/$$.
 $codep */
-	CppAD::ADFun<double>    ranobj_fun_;     // for computing H_beta_beta
+	CppAD::ADFun<double>        ranobj_fun_;   // for computing H_beta_beta
 /* $$
+The following objects hold information for computing derivatives
+with this ADFun object:
 
-$head hes_ranobj_$$
+$subhead hes_ranobj_$$
 If $icode%n_random_% > 0%$$, quasi_fixed_ is false, and
 $code init_hes_ranobj_done_$$,
 $cref/hes_ranobj_/init_hes_ranobj/hes_ranobj_/$$ contains
@@ -364,10 +357,8 @@ $cref/random objective
 	/Objective
 	/Random Objective, r(theta)
 /$$
-The corresponding ADFun object is
-$cref/ranobj_fun_/init_hes_ranobj/hes_ranobj_/$$
 $codep */
-	sparse_hes_info hes_ranobj_;
+	sparse_hes_info             hes_ranobj_;
 /* $$
 
 $head fix_like_$$
@@ -377,25 +368,26 @@ $cref/fix_like/cppad_mixed_fix_like/$$.
 $codep */
 	CppAD::ADFun<double>        fix_like_fun_;     // g(theta)
 /* $$
-$head fix_like_jac_$$
+The following objects hold information for computing derivatives
+with this ADFun object:
+
+$subhead fix_like_jac_$$
 $cref/fix_like_jac_/init_fix_like/fix_like_jac_/$$
 contains information for the Jacobian of the
 $cref/fixed likelihood/cppad_mixed_theory/Fixed Likelihood, g(theta)/$$.
-The corresponding ADFun object is
-$cref/fix_like_fun_/init_fix_like/fix_like_fun_/$$.
 $codep */
 	sparse_jac_info             fix_like_jac_;
 /* $$
-$head fix_like_hes_$$
+
+$subhead fix_like_hes_$$
 If $icode quasi_fixed$$ is false,
 $cref/fix_like_hes_/init_fix_like/fix_like_hes_/$$
 contains information for the Hessian of the
 $cref/fixed likelihood/cppad_mixed_theory/Fixed Likelihood, g(theta)/$$.
-The corresponding ADFun object is
-$cref/fix_like_fun_/init_fix_like/fix_like_fun_/$$.
 $codep */
-	sparse_hes_info fix_like_hes_;
+	sparse_hes_info             fix_like_hes_;
 /* $$
+
 $head constraint_fun_$$
 $cref/constraint_fun_/init_constraint/constraint_fun_/$$
 is a recording of the fixed part of the likelihood function; see,
@@ -403,16 +395,18 @@ $cref/constraint/cppad_mixed_constraint/$$.
 $codep */
 	CppAD::ADFun<double>        constraint_fun_;     // c(theta)
 /* $$
-$head constraint_jac_$$
+The following objects hold information for computing derivatives
+with this ADFun object:
+
+$subhead constraint_jac_$$
 $cref/constraint_jac_/init_constraint/constraint_jac_/$$
 contains information for the Jacobian of the
 constraint function $latex c ( \theta )$$.
-The corresponding ADFun object is
-$cref/constraint_fun_/init_constraint/constraint_fun_/$$.
 $codep */
 	sparse_jac_info             constraint_jac_;
 /* $$
-$head constraint_hes_$$
+
+$subhead constraint_hes_$$
 If $icode quasi_fixed$$ is false,
 $cref/constraint_hes_/init_constraint/constraint_hes_/$$
 contains information for the Hessian of the
@@ -420,7 +414,7 @@ $cref/constraints/cppad_mixed_constraint/$$ function $latex c( \theta )$$.
 The corresponding ADFun object is
 $cref/constraint_fun_/init_constraint/constraint_fun_/$$.
 $codep */
-	sparse_hes_info constraint_hes_;
+	sparse_hes_info             constraint_hes_;
 /* $$
 ------------------------------------------------------------------------------
 $head pack$$
