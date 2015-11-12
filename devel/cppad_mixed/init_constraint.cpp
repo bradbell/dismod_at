@@ -60,45 +60,20 @@ Otherwise,
 upon return it contains the corresponding recording for the
 $cref/constraint/cppad_mixed_constraint/$$ $latex c( \theta )$$.
 
-$head constraint_jac_row_$$
-The input value of the member variable
+$head constraint_jac_$$
+The input value of
 $codei%
-	CppAD::vector<size_t> constraint_jac_row_
+	sparse_jac_info constraint_jac_
 %$$
 does not matter.
-Upon return it contains the row indices
-that correspond to non-zero elements in the Jacobian corresponding to
-$code constraint_fun_$$.
+If $icode quasi_fixed$$ is false,
+upon return $code constraint_jac_$$ contains
+$cref sparse_jac_info$$ for the
+Jacobian of the $cref/constraints/cppad_mixed_constraint/$$.
 
-$head constraint_jac_col_$$
-The input value of the member variable
-$codei%
-	CppAD::vector<size_t> constraint_jac_col_
-%$$
-does not matter.
-Upon return it contains the column indices
-that correspond to non-zero elements in the Jacobian corresponding to
-$code constraint_fun_$$.
-
-$head constraint_jac_work_$$
-The input value of the member variables
-$codei%
-	CppAD::sparse_jacobian_work constraint_jac_work_
-%$$
-does not matter.
-Upon return it contains the CppAD work information so that
-$codei%
-	constraint_fun_.SparseJacobianForward(
-		%theta%,
-		%not_used%,
-		constraint_jac_row_,
-		constraint_jac_col_,
-		%jac%,
-		constraint_jac_work_
-	)
-%$$
-(where $icode x$$ and $icode jac$$ $code double$$ vectors)
-can be used to calculate the Jacobian of the constraints.
+$subhead constraint_fun_$$
+This ADFun object can be used for the
+$cref/sparse jacobian call/sparse_jac_info/Sparse Jacobian Call/f/$$.
 
 $head constraint_hes_$$
 The input value of
@@ -153,7 +128,7 @@ void cppad_mixed::init_constraint(const d_vector& fixed_vec  )
 # endif
 
 	// ------------------------------------------------------------------------
-	// constraint_jac_row_, constraint_jac_col_, constraint_jac_work_
+	// constraint_jac_.row, constraint_jac_.col, constraint_jac_.work
 	// ------------------------------------------------------------------------
 	// compute the sparsity pattern for the Jacobian
 	using CppAD::vectorBool;
@@ -202,26 +177,29 @@ void cppad_mixed::init_constraint(const d_vector& fixed_vec  )
 		}
 	}
 	// convert sparsity to row and column index form
-	constraint_jac_row_.clear();
-	constraint_jac_col_.clear();
+	constraint_jac_.row.clear();
+	constraint_jac_.col.clear();
 	std::set<size_t>::iterator itr;
 	for(size_t i = 0; i < m; i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	size_t j = *itr;
-			constraint_jac_row_.push_back(i);
-			constraint_jac_col_.push_back(j);
+			constraint_jac_.row.push_back(i);
+			constraint_jac_.col.push_back(j);
 		}
 	}
 
+	// set direction for the sparse jacobian calculation
+	constraint_jac_.direction = sparse_jac_info::Forward;
+
 	// compute the work vector for reuse during Jacobian sparsity calculations
-	d_vector jac( constraint_jac_row_.size() );
+	d_vector jac( constraint_jac_.row.size() );
 	constraint_fun_.SparseJacobianForward(
 		fixed_vec       ,
 		pattern         ,
-		constraint_jac_row_  ,
-		constraint_jac_col_  ,
+		constraint_jac_.row  ,
+		constraint_jac_.col  ,
 		jac             ,
-		constraint_jac_work_
+		constraint_jac_.work
 	);
 	if( quasi_fixed_ )
 	{	init_constraint_done_ = true;

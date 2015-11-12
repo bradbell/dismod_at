@@ -102,12 +102,12 @@ void cppad_mixed::constraint_jac(
 		"cppad_mixed::initialize was not called before constraint_jac";
 		fatal_error(error_message);
 	}
-	if( constraint_jac_row_.size() == 0 )
+	if( constraint_jac_.row.size() == 0 )
 	{	// sparse Jacobian has no rows
 		assert( row_out.size() == 0 );
 		assert( col_out.size() == 0 );
-		assert( constraint_jac_row_.size() == 0 );
-		assert( constraint_jac_col_.size() == 0 );
+		assert( constraint_jac_.row.size() == 0 );
+		assert( constraint_jac_.col.size() == 0 );
 		val_out.resize(0);
 		return;
 	}
@@ -115,17 +115,17 @@ void cppad_mixed::constraint_jac(
 	assert( row_out.size() == col_out.size() );
 	assert( row_out.size() == val_out.size() );
 	if( row_out.size() == 0 )
-	{	row_out = constraint_jac_row_;
-		col_out = constraint_jac_col_;
+	{	row_out = constraint_jac_.row;
+		col_out = constraint_jac_.col;
 		val_out.resize( row_out.size() );
 	}
 # ifndef NDEBUG
 	else
-	{	size_t n_nonzero = constraint_jac_row_.size();
+	{	size_t n_nonzero = constraint_jac_.row.size();
 		assert( row_out.size() == n_nonzero );
 		for(size_t k = 0; k < n_nonzero; k++)
-		{	assert( row_out[k] == constraint_jac_row_[k] );
-			assert( col_out[k] == constraint_jac_col_[k] );
+		{	assert( row_out[k] == constraint_jac_.row[k] );
+			assert( col_out[k] == constraint_jac_.col[k] );
 		}
 	}
 # endif
@@ -138,7 +138,7 @@ void cppad_mixed::constraint_jac(
 		row_out         ,
 		col_out         ,
 		val_out         ,
-		constraint_jac_work_
+		constraint_jac_.work
 	);
 
 	return;

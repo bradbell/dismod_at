@@ -79,7 +79,7 @@ $cref/g(theta)/cppad_mixed_theory/Fixed Likelihood, g(theta)/$$.
 
 $subhead fix_like_fun_$$
 This ADFun object can be used for the
-$cref/sparse Hessian call/sparse_hes_info/Sparse Hessian Call/f/$$.
+$cref/sparse Jacobian call/sparse_jac_info/Sparse Jacobian Call/f/$$.
 
 $head fix_like_hes_$$
 The input value of
