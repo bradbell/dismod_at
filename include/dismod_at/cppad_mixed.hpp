@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/cppad.hpp>
 # include <dismod_at/newton_step.hpp>
 # include <dismod_at/sparse_hes_info.hpp>
+# include <dismod_at/sparse_jac_info.hpp>
 
 // private examples
 extern bool constraint_eval_xam(void);
@@ -186,7 +187,8 @@ $childtable%
 	devel/cppad_mixed/constraint.omh%
 	devel/cppad_mixed/optimize_random.cpp%
 	devel/cppad_mixed/optimize_fixed.cpp%
-	include/dismod_at/sparse_hes_info.hpp
+	include/dismod_at/sparse_hes_info.hpp%
+	include/dismod_at/sparse_jac_info.hpp
 %$$
 $end
 */
@@ -372,20 +374,17 @@ $head fix_like_$$
 $cref/fix_like_fun_/init_fix_like/fix_like_fun_/$$
 is a recording of the fixed part of the likelihood function; see,
 $cref/fix_like/cppad_mixed_fix_like/$$.
-The vectors
-$cref/fix_like_jac_row_/init_fix_like/fix_like_jac_row_/$$,
-$cref/fix_like_jac_col_/init_fix_like/fix_like_jac_col_/$$, and
-$cref/fix_like_jac_work_/init_fix_like/fix_like_jac_work_/$$,
-can be used to compute the sparse Jacobian corresponding
-to $code fix_like_fun_$$.
 $codep */
 	CppAD::ADFun<double>        fix_like_fun_;     // g(theta)
-	//
-	CppAD::vector<size_t>       fix_like_jac_row_; // row indices for g^{(1)}
-	CppAD::vector<size_t>       fix_like_jac_col_; // column indices  g^{(1)}
-	CppAD::sparse_jacobian_work fix_like_jac_work_;// work info for   g^{(1)}
 /* $$
-
+$cref/fix_like_jac_/init_fix_like/fix_like_jac_/$$
+contains information for the Jacobian of the
+$cref/fixed likelihood/cppad_mixed_theory/Fixed Likelihood, g(theta)/$$.
+The corresponding ADFun object is
+$cref/fix_like_fun_/init_fix_like/fix_like_fun_/$$.
+$codep */
+	sparse_jac_info             fix_like_jac_;
+/* $$
 $head fix_like_hes_$$
 If $icode quasi_fixed$$ is false,
 $cref/fix_like_hes_/init_fix_like/fix_like_hes_/$$
@@ -414,22 +413,15 @@ $codep */
 	CppAD::vector<size_t>       constraint_jac_col_; // column indices  c^{(1)}
 	CppAD::sparse_jacobian_work constraint_jac_work_;// work info for   c^{(1)}
 /* $$
-$subhead quasi_fixed false$$
+$head constraint_hes_$$
 If $icode quasi_fixed$$ is false,
-the vectors
-$cref/constraint_hes_row_
-	/init_constraint
-	/quasi_fixed false
-	/constraint_hes_row_
-/$$,
-$code constraint_hes_row_$$, and
-$code constraint_hes_work_$$,
-can be used to compute the lower triangle of the
-sparse Hessian corresponding to $code constraint_fun_$$.
+$cref/constraint_hes_/init_constraint/constraint_hes_/$$
+contains information for the Hessian of the
+$cref/constraints/cppad_mixed_constraint/$$.
+The corresponding ADFun object i
+$cref/constraint_fun_/init_constraint/constraint_fun_/$$.
 $codep */
-	CppAD::vector<size_t>       constraint_hes_row_; // row indices for c^{(2)}
-	CppAD::vector<size_t>       constraint_hes_col_; // column indices  c^{(2)}
-	CppAD::sparse_hessian_work  constraint_hes_work_;// work info for   c^{(2)}
+	sparse_hes_info constraint_hes_;
 /* $$
 ------------------------------------------------------------------------------
 $head pack$$

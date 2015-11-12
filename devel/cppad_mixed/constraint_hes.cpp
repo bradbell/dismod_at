@@ -122,12 +122,12 @@ void cppad_mixed::constraint_hes(
 		"cppad_mixed::initialize was not called before constraint_hes";
 		fatal_error(error_message);
 	}
-	if( constraint_hes_row_.size() == 0 )
+	if( constraint_hes_.row.size() == 0 )
 	{	// Sparse Hessian has no rows
 		assert( row_out.size() == 0 );
 		assert( col_out.size() == 0 );
-		assert( constraint_hes_row_.size() == 0 );
-		assert( constraint_hes_col_.size() == 0 );
+		assert( constraint_hes_.row.size() == 0 );
+		assert( constraint_hes_.col.size() == 0 );
 		val_out.resize(0);
 		return;
 	}
@@ -135,17 +135,17 @@ void cppad_mixed::constraint_hes(
 	assert( row_out.size() == col_out.size() );
 	assert( row_out.size() == val_out.size() );
 	if( row_out.size() == 0 )
-	{	row_out = constraint_hes_row_;
-		col_out = constraint_hes_col_;
+	{	row_out = constraint_hes_.row;
+		col_out = constraint_hes_.col;
 		val_out.resize( row_out.size() );
 	}
 # ifndef NDEBUG
 	else
-	{	size_t n_nonzero = constraint_hes_row_.size();
+	{	size_t n_nonzero = constraint_hes_.row.size();
 		assert( row_out.size() == n_nonzero );
 		for(size_t k = 0; k < n_nonzero; k++)
-		{	assert( row_out[k] == constraint_hes_row_[k] );
-			assert( col_out[k] == constraint_hes_col_[k] );
+		{	assert( row_out[k] == constraint_hes_.row[k] );
+			assert( col_out[k] == constraint_hes_.col[k] );
 		}
 	}
 # endif
@@ -159,7 +159,7 @@ void cppad_mixed::constraint_hes(
 		row_out         ,
 		col_out         ,
 		val_out         ,
-		constraint_hes_work_
+		constraint_hes_.work
 	);
 
 	return;

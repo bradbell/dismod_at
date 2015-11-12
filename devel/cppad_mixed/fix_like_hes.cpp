@@ -121,8 +121,8 @@ void cppad_mixed::fix_like_hes(
 	assert( row_out.size() == col_out.size() );
 	assert( row_out.size() == val_out.size() );
 	//
-	if( fix_like_jac_row_.size() == 0 )
-	{	assert( fix_like_jac_col_.size() == 0 );
+	if( fix_like_jac_.row.size() == 0 )
+	{	assert( fix_like_jac_.col.size() == 0 );
 		assert( row_out.size() == 0 );
 		val_out.resize(0);
 		return;

@@ -99,31 +99,32 @@ void cppad_mixed::fix_like_jac(
 	assert( row_out.size() == col_out.size() );
 	assert( row_out.size() == val_out.size() );
 	//
-	if( fix_like_jac_row_.size() == 0 )
+	if( fix_like_jac_.row.size() == 0 )
 	{	// sparse Jacobian has no rows
-		assert( fix_like_jac_col_.size() == 0 );
+		assert( fix_like_jac_.col.size() == 0 );
 		assert( row_out.size() == 0 );
 		val_out.resize(0);
 		return;
 	}
 	if( row_out.size() == 0 )
-	{	row_out = fix_like_jac_row_;
-		col_out = fix_like_jac_col_;
+	{	row_out = fix_like_jac_.row;
+		col_out = fix_like_jac_.col;
 		val_out.resize( row_out.size() );
 	}
 # ifndef NDEBUG
 	else
-	{	size_t n_nonzero = fix_like_jac_row_.size();
+	{	size_t n_nonzero = fix_like_jac_.row.size();
 		assert( row_out.size() == n_nonzero );
 		for(size_t k = 0; k < n_nonzero; k++)
-		{	assert( row_out[k] == fix_like_jac_row_[k] );
-			assert( col_out[k] == fix_like_jac_col_[k] );
+		{	assert( row_out[k] == fix_like_jac_.row[k] );
+			assert( col_out[k] == fix_like_jac_.col[k] );
 		}
 	}
 # endif
 	// just checking to see if example/devel/model/fit_model_xam is this case
 	assert( row_out.size() != 0 );
 
+	assert( fix_like_jac_.direction == sparse_jac_info::Forward );
 	CppAD::vector< std::set<size_t> > not_used;
 	fix_like_fun_.SparseJacobianForward(
 		fixed_vec       ,
@@ -131,7 +132,7 @@ void cppad_mixed::fix_like_jac(
 		row_out         ,
 		col_out         ,
 		val_out         ,
-		fix_like_jac_work_
+		fix_like_jac_.work
 	);
 
 	return;

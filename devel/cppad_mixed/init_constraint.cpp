@@ -100,54 +100,21 @@ $codei%
 (where $icode x$$ and $icode jac$$ $code double$$ vectors)
 can be used to calculate the Jacobian of the constraints.
 
-$head quasi_fixed false$$
-If $icode quasi_fixed_$$ is false,
-the following values are also initialized:
-
-$subhead constraint_hes_row_$$
-The input value of the member variable
+$head constraint_hes_$$
+The input value of
 $codei%
-	CppAD::vector<size_t> constraint_hes_row_
+	sparse_hes_info constraint_hes_
 %$$
 does not matter.
-Upon return it contains the row indices
-that correspond to non-zero elements in the
-lower triangle of a Hessian corresponding to
-$code constraint_fun_$$.
+If $icode quasi_fixed$$ is false,
+upon return $code constraint_hes_$$ contains
+$cref sparse_hes_info$$ for the
+lower triangle of a weighted Hessian for the
+$cref/constraints/cppad_mixed_constraint/$$.
 
-$subhead constraint_hes_col_$$
-The input value of the member variable
-$codei%
-	CppAD::vector<size_t> constraint_hes_col_
-%$$
-does not matter.
-Upon return it contains the column indices
-that correspond to non-zero elements in the
-lower triangle of a Hessian corresponding to
-$code constraint_fun_$$.
-
-$subhead constraint_hes_work_$$
-The input value of the member variables
-$codei%
-	CppAD::sparse_hessian_work constraint_hes_work_
-%$$
-does not matter.
-Upon return it contains the CppAD work information so that
-$codei%
-	constraint_fun_.SparseHessian(
-		%theta%,
-		%weight%
-		%not_used%,
-		constraint_hes_row_,
-		constraint_hes_col_,
-		%hes%,
-		constraint_hes_work_
-	)
-%$$
-(where $icode theta$$, $icode weight$$, and $icode hes$$
-are $code double$$ vectors)
-can be used to calculate the
-lower triangle of a weighted Hessian for the constraints.
+$subhead constraint_fun_$$
+This ADFun object can be used for the
+$cref/sparse Hessian call/sparse_hes_info/Sparse Hessian Call/f/$$.
 
 $end
 */
@@ -261,7 +228,7 @@ void cppad_mixed::init_constraint(const d_vector& fixed_vec  )
 		return;
 	}
 	// ------------------------------------------------------------------------
-	// constraint_hes_row_, constraint_hes_col_, constraint_hes_work_
+	// constraint_hes_.row, constraint_hes_.col, constraint_hes_.work
 	// ------------------------------------------------------------------------
 	// sparsity pattern for the Hessian
 	size_t n_col = vectorBool::bit_per_unit();
@@ -291,19 +258,19 @@ void cppad_mixed::init_constraint(const d_vector& fixed_vec  )
 		}
 	}
 	// determine row and column indices in lower triangle of Hessian
-	constraint_hes_row_.clear();
-	constraint_hes_col_.clear();
+	constraint_hes_.row.clear();
+	constraint_hes_.col.clear();
 	for(size_t i = 0; i < n_fixed_; i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	size_t j = *itr;
 			// only compute lower triangular part
 			if( i >= j )
-			{	constraint_hes_row_.push_back(i);
-				constraint_hes_col_.push_back(j);
+			{	constraint_hes_.row.push_back(i);
+				constraint_hes_.col.push_back(j);
 			}
 		}
 	}
-	size_t K = constraint_hes_row_.size();
+	size_t K = constraint_hes_.row.size();
 
 	// compute the work vector for reuse during Hessian sparsity calculations
 	d_vector weight( constraint_fun_.Range() ), hes(K);
@@ -311,10 +278,10 @@ void cppad_mixed::init_constraint(const d_vector& fixed_vec  )
 		fixed_vec       ,
 		weight          ,
 		pattern         ,
-		constraint_hes_row_  ,
-		constraint_hes_col_  ,
+		constraint_hes_.row  ,
+		constraint_hes_.col  ,
 		hes             ,
-		constraint_hes_work_
+		constraint_hes_.work
 	);
 
 	init_constraint_done_ = true;

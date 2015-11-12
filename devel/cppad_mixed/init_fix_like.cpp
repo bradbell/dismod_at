@@ -64,45 +64,22 @@ $cref/negative log-density vector/cppad_mixed/Negative Log-Density Vector/$$
 corresponding to the function
 $cref/g(theta)/cppad_mixed_theory/Fixed Likelihood, g(theta)/$$.
 
-$head fix_like_jac_row_$$
-The input value of the member variable
+$head fix_like_jac_$$
+The input value of
 $codei%
-	CppAD::vector<size_t> fix_like_jac_row_
+	sparse_jac_info fix_like_jac_
 %$$
 does not matter.
-Upon return it contains the row indices
-that correspond to non-zero elements in the Jacobian corresponding to
-$code fix_like_fun_$$.
+If $icode quasi_fixed$$ is false,
+upon return $code fix_like_jac_$$ contains
+$cref sparse_jac_info$$ for the
+Jacobian corresponding to
+$latex g^{(1)}) ( \theta )$$ see
+$cref/g(theta)/cppad_mixed_theory/Fixed Likelihood, g(theta)/$$.
 
-$head fix_like_jac_col_$$
-The input value of the member variable
-$codei%
-	CppAD::vector<size_t> fix_like_jac_col_
-%$$
-does not matter.
-Upon return it contains the column indices
-that correspond to non-zero elements in the Jacobian corresponding to
-$code fix_like_fun_$$.
-
-$head fix_like_jac_work_$$
-The input value of the member variables
-$codei%
-	CppAD::sparse_jacobian_work fix_like_jac_work_
-%$$
-does not matter.
-Upon return it contains the CppAD work information so that
-$codei%
-	fix_like_fun_.SparseJacobianForward(
-		%theta%,
-		%not_used%,
-		fix_like_jac_row_,
-		fix_like_jac_col_,
-		%jac%,
-		fix_like_jac_work_
-	)
-%$$
-(where $icode x$$ and $icode jac$$ $code double$$ vectors)
-can be used to calculate the Jacobian of the fixed likelihood.
+$subhead fix_like_fun_$$
+This ADFun object can be used for the
+$cref/sparse Hessian call/sparse_hes_info/Sparse Hessian Call/f/$$.
 
 $head fix_like_hes_$$
 The input value of
@@ -114,8 +91,12 @@ If $icode quasi_fixed$$ is false,
 upon return $code fix_like_hes_$$ contains
 $cref sparse_hes_info$$ for the
 lower triangle of a Hessian corresponding to
-$latex g_{\theta \theta}^{(1)}) ( \theta )$$ see
+$latex g^{(2)}) ( \theta )$$ see
 $cref/g(theta)/cppad_mixed_theory/Fixed Likelihood, g(theta)/$$.
+
+$subhead fix_like_fun_$$
+This ADFun object can be used for the
+$cref/sparse Hessian call/sparse_hes_info/Sparse Hessian Call/f/$$.
 
 $end
 */
@@ -168,7 +149,7 @@ void cppad_mixed::init_fix_like(const d_vector& fixed_vec  )
 # endif
 
 	// ------------------------------------------------------------------------
-	// fix_like_jac_row_, fix_like_jac_col_, fix_like_jac_work_
+	// fix_like_jac_.row, fix_like_jac_.col, fix_like_jac_.work
 	// ------------------------------------------------------------------------
 	// compute the sparsity pattern for the Jacobian
 	typedef CppAD::vector< std::set<size_t> > sparsity_pattern;
@@ -178,26 +159,29 @@ void cppad_mixed::init_fix_like(const d_vector& fixed_vec  )
 	sparsity_pattern pattern = fix_like_fun_.ForSparseJac(n_fixed_, r);
 
 	// convert sparsity to row and column index form
-	fix_like_jac_row_.clear();
-	fix_like_jac_col_.clear();
+	fix_like_jac_.row.clear();
+	fix_like_jac_.col.clear();
 	std::set<size_t>::iterator itr;
 	for(size_t i = 0; i < fix_like_fun_.Range(); i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	size_t j = *itr;
-			fix_like_jac_row_.push_back(i);
-			fix_like_jac_col_.push_back(j);
+			fix_like_jac_.row.push_back(i);
+			fix_like_jac_.col.push_back(j);
 		}
 	}
 
+	// direction for this sparse Jacobian
+	fix_like_jac_.direction = sparse_jac_info::Forward;
+
 	// compute the work vector for reuse during Jacobian sparsity calculations
-	d_vector jac( fix_like_jac_row_.size() );
+	d_vector jac( fix_like_jac_.row.size() );
 	fix_like_fun_.SparseJacobianForward(
 		fixed_vec       ,
 		pattern         ,
-		fix_like_jac_row_  ,
-		fix_like_jac_col_  ,
+		fix_like_jac_.row  ,
+		fix_like_jac_.col  ,
 		jac             ,
-		fix_like_jac_work_
+		fix_like_jac_.work
 	);
 	if( quasi_fixed_ )
 	{	init_fix_like_done_ = true;
