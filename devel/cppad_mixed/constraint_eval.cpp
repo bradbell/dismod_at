@@ -37,7 +37,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/fixed effects/cppad_mixed/Fixed Effects, theta/$$
-vector $latex \theta$$ at which $latex g( \theta )$$ is evaluated.
+vector $latex \theta$$ at which $latex c( \theta )$$ is evaluated.
 
 $head c_vec$$
 The return value has prototype

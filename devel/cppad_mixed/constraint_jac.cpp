@@ -22,7 +22,7 @@ $spell
 	jac
 $$
 
-$section cppad_mixed: Jacobian of Prior for Fixed Effects$$
+$section cppad_mixed: Jacobian of Constraint w.r.t Fixed Effects$$
 
 $head Syntax$$
 $icode%mixed_object%.constraint_jac(
@@ -41,7 +41,7 @@ $codei%
 %$$
 It specifies the value of the
 $cref/fixed effects/cppad_mixed/Fixed Effects, theta/$$
-vector $latex \theta$$ at which $latex g^{(1)} ( \theta )$$ is evaluated.
+vector $latex \theta$$ at which $latex c^{(1)} ( \theta )$$ is evaluated.
 
 $head row_out$$
 This argument has prototype

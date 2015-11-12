@@ -21,7 +21,7 @@ $spell
 	hes
 $$
 
-$section cppad_mixed: Hessian of Prior for Fixed Effects$$
+$section cppad_mixed: Hessian of Constraints w.r.t Fixed Effects$$
 
 $head Syntax$$
 $icode%mixed_object%.constraint_hes(
