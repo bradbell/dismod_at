@@ -128,17 +128,17 @@ void cppad_mixed::fix_like_hes(
 		return;
 	}
 	if( row_out.size() == 0 )
-	{	row_out = fix_like_hes_row_;
-		col_out = fix_like_hes_col_;
+	{	row_out = fix_like_hes_.row;
+		col_out = fix_like_hes_.col;
 		val_out.resize( row_out.size() );
 	}
 # ifndef NDEBUG
 	else
-	{	size_t n_nonzero = fix_like_hes_row_.size();
+	{	size_t n_nonzero = fix_like_hes_.row.size();
 		assert( row_out.size() == n_nonzero );
 		for(size_t k = 0; k < n_nonzero; k++)
-		{	assert( row_out[k] == fix_like_hes_row_[k] );
-			assert( col_out[k] == fix_like_hes_col_[k] );
+		{	assert( row_out[k] == fix_like_hes_.row[k] );
+			assert( col_out[k] == fix_like_hes_.col[k] );
 		}
 	}
 # endif
@@ -151,7 +151,7 @@ void cppad_mixed::fix_like_hes(
 		row_out         ,
 		col_out         ,
 		val_out         ,
-		fix_like_hes_work_
+		fix_like_hes_.work
 	);
 
 	return;

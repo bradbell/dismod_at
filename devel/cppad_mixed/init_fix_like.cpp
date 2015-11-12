@@ -104,54 +104,18 @@ $codei%
 (where $icode x$$ and $icode jac$$ $code double$$ vectors)
 can be used to calculate the Jacobian of the fixed likelihood.
 
-$head quasi_fixed false$$
+$head fix_like_hes_$$
+The input value of
+$codei%
+	sparse_hes_info fix_like_hes_
+%$$
+does not matter.
 If $icode quasi_fixed$$ is false,
-the following values are also initialized:
-
-$subhead fix_like_hes_row_$$
-The input value of the member variable
-$codei%
-	CppAD::vector<size_t> fix_like_hes_row_
-%$$
-does not matter.
-Upon return it contains the row indices
-that correspond to non-zero elements in the
+upon return $code fix_like_hes_$$ contains
+$cref sparse_hes_info$$ for the
 lower triangle of a Hessian corresponding to
-$code fix_like_fun_$$.
-
-$subhead fix_like_hes_col_$$
-The input value of the member variable
-$codei%
-	CppAD::vector<size_t> fix_like_hes_col_
-%$$
-does not matter.
-Upon return it contains the column indices
-that correspond to non-zero elements in the
-lower triangle of a Hessian corresponding to
-$code fix_like_fun_$$.
-
-$subhead fix_like_hes_work_$$
-The input value of the member variables
-$codei%
-	CppAD::sparse_hessian_work fix_like_hes_work_
-%$$
-does not matter.
-Upon return it contains the CppAD work information so that
-$codei%
-	fix_like_fun_.SparseHessian(
-		%theta%,
-		%weight%
-		%not_used%,
-		fix_like_hes_row_,
-		fix_like_hes_col_,
-		%hes%,
-		fix_like_hes_work_
-	)
-%$$
-(where $icode theta$$, $icode weight$$, and $icode hes$$
-are $code double$$ vectors)
-can be used to calculate the
-lower triangle of a weighted Hessian for the fixed likelihood.
+$latex g_{\theta \theta}^{(1)}) ( \theta )$$ see
+$cref/g(theta)/cppad_mixed_theory/Fixed Likelihood, g(theta)/$$.
 
 $end
 */
@@ -240,7 +204,7 @@ void cppad_mixed::init_fix_like(const d_vector& fixed_vec  )
 		return;
 	}
 	// ------------------------------------------------------------------------
-	// fix_like_hes_row_, fix_like_hes_col_, fix_like_hes_work_
+	// fix_like_hes_.row, fix_like_hes_.col, fix_like_hes_.work
 	// ------------------------------------------------------------------------
 	// no need to recalculate forward sparsity pattern.
 	//
@@ -252,19 +216,19 @@ void cppad_mixed::init_fix_like(const d_vector& fixed_vec  )
 	pattern = fix_like_fun_.RevSparseHes(n_fixed_, s);
 
 	// determine row and column indices in lower triangle of Hessian
-	fix_like_hes_row_.clear();
-	fix_like_hes_col_.clear();
+	fix_like_hes_.row.clear();
+	fix_like_hes_.col.clear();
 	for(size_t i = 0; i < n_fixed_; i++)
 	{	for(itr = pattern[i].begin(); itr != pattern[i].end(); itr++)
 		{	size_t j = *itr;
 			// only compute lower triangular part
 			if( i >= j )
-			{	fix_like_hes_row_.push_back(i);
-				fix_like_hes_col_.push_back(j);
+			{	fix_like_hes_.row.push_back(i);
+				fix_like_hes_.col.push_back(j);
 			}
 		}
 	}
-	size_t K = fix_like_hes_row_.size();
+	size_t K = fix_like_hes_.row.size();
 
 	// compute the work vector for reuse during Hessian sparsity calculations
 	d_vector weight( fix_like_fun_.Range() ), hes(K);
@@ -272,10 +236,10 @@ void cppad_mixed::init_fix_like(const d_vector& fixed_vec  )
 		fixed_vec       ,
 		weight          ,
 		pattern         ,
-		fix_like_hes_row_  ,
-		fix_like_hes_col_  ,
+		fix_like_hes_.row  ,
+		fix_like_hes_.col  ,
 		hes             ,
-		fix_like_hes_work_
+		fix_like_hes_.work
 	);
 
 	init_fix_like_done_ = true;

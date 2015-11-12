@@ -274,10 +274,7 @@ $codep */
 	bool                init_hes_ranobj_done_;
 /* $$
 
-$head n_random_ > 0$$
-The following values are only defined when $icode%n_random_% > 0%$$:
-
-$subhead ran_like$$
+$head ran_like$$
 If $icode%n_random_% > 0%$$ and $code init_ran_like_done_$$,
 $cref/ran_like_fun_/init_ran_like/ran_like_fun_/$$ and
 $cref/ran_like_a1fun_/init_ran_like/ran_like_a1fun_/$$ are
@@ -288,7 +285,7 @@ $codep */
 	CppAD::ADFun<a1_double>   ran_like_a1fun_;
 /* $$
 
-$subhead hes_ran_$$
+$head hes_ran_$$
 If $icode%n_random_% > 0%$$ and $code init_hes_ran_done_$$,
 $cref/hes_ran_/init_hes_ran/hes_ran_/$$ contains
 information for the Hessian of the
@@ -312,7 +309,7 @@ $codep */
 	friend bool ::hes_ran_fun_xam(void);
 /* $$
 
-$subhead hes_cross_$$
+$head hes_cross_$$
 If $icode%n_random_% > 0%$$ and $code init_hes_cross_done_$$,
 $cref/hes_cross_/init_hes_cross/hes_cross_/$$ contains
 information for the cross partials of the Hessian of the
@@ -320,7 +317,7 @@ $cref/random likelihood
 	/cppad_mixed_theory
 	/Random Likelihood, f(theta, u)
 /$$
-; i.e.  $latex f_{u theta}^{(2)} ( \theta , u )$$.
+; i.e.  $latex f_{u \theta}^{(2)} ( \theta , u )$$.
 The corresponding ADFun object is
 $cref/ran_like_fun_  or ran_like_a1fun_
 	/init_hes_cross
@@ -345,7 +342,7 @@ $codep */
 	newton_step                newton_atom_;
 /* $$
 
-$subhead ranobj_fun_$$
+$head ranobj_fun_$$
 If $icode%n_random_% > 0%$$, quasi_fixed_ is false, and
 $code init_ranobj_done_$$,
 this is a recording of the second approximation for the
@@ -355,7 +352,7 @@ $codep */
 	CppAD::ADFun<double>    ranobj_fun_;     // for computing H_beta_beta
 /* $$
 
-$subhead hes_ranobj_$$
+$head hes_ranobj_$$
 If $icode%n_random_% > 0%$$, quasi_fixed_ is false, and
 $code init_hes_ranobj_done_$$,
 $cref/hes_ranobj_/init_hes_ranobj/hes_ranobj_/$$ contains
@@ -388,22 +385,16 @@ $codep */
 	CppAD::vector<size_t>       fix_like_jac_col_; // column indices  g^{(1)}
 	CppAD::sparse_jacobian_work fix_like_jac_work_;// work info for   g^{(1)}
 /* $$
-$subhead quasi_fixed false$$
+
+$head fix_like_hes_$$
 If $icode quasi_fixed$$ is false,
-the vectors
-$cref/fix_like_hes_row_
-	/init_fix_like
-	/quasi_fixed false
-	/fix_like_hes_row_
-/$$,
-$code fix_like_hes_col_$$ and
-$code fix_like_hes_work_$$
-can be used to compute the lower triangle of the
-sparse Hessian corresponding to $code fix_like_fun_$$.
+$cref/fix_like_hes_/init_fix_like/fix_like_hes_/$$
+contains information for the Hessian of the
+$cref/fixed likelihood/cppad_mixed_theory/Fixed Likelihood, g(theta)/$$.
+The corresponding ADFun object is
+$cref/fix_like_fun_/init_fix_like/fix_like_fun_/$$.
 $codep */
-	CppAD::vector<size_t>       fix_like_hes_row_; // row indices for g^{(2)}
-	CppAD::vector<size_t>       fix_like_hes_col_; // column indices  g^{(2)}
-	CppAD::sparse_hessian_work  fix_like_hes_work_;// work info for   g^{(2)}
+	sparse_hes_info fix_like_hes_;
 /* $$
 $head constraint_fun_$$
 $cref/constraint_fun_/init_constraint/constraint_fun_/$$
