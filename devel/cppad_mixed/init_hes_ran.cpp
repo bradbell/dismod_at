@@ -135,7 +135,7 @@ in the same order as the $icode a1_val_out$$ above.
 
 $head chol_hes_ran_$$
 The static $code chol_hes_ran_$$ is initialized by a call to
-$cref/init_chol_hes_ran/chol_hes_ran/init_chol_hes_ran/$$.
+$cref/analyze_chol_hes_ran/chol_hes_ran/analyze_chol_hes_ran/$$.
 
 $contents%example/devel/cppad_mixed/private/hes_ran_fun_xam.cpp
 %$$
@@ -308,20 +308,13 @@ void cppad_mixed::init_hes_ran(
 	init_hes_ran_done_ = true;
 
 	// now analyze the lower triangular Cholesky factorization
-	// (the values in value_out[k] do not really matter here)
-	Eigen::SparseMatrix<double> hessian_pattern(n_random_, n_random_);
 	for(size_t k = 0; k < K; k++)
 	{	assert( n_fixed_        <= hes_ran_.col[k]  );
-		assert( hes_ran_.col[k] <= hes_ran_.row[k] );
-		size_t row = hes_ran_.row[k] - n_fixed_;
-		size_t col = hes_ran_.col[k] - n_fixed_;
-		assert( row < n_random_ );
-		assert( col < n_random_ );
-		hessian_pattern.insert(row, col) = val_out[k];
+		assert( n_fixed_        <= hes_ran_.row[k]  );
+		row[k] = hes_ran_.row[k] - n_fixed_;
+		col[k] = hes_ran_.col[k] - n_fixed_;
 	}
-	// analyze the pattern for an LDL^T Cholesky factorization of
-	// f_{uu}^{(2)}(theta, u)
-	chol_hes_ran_.analyzePattern(hessian_pattern);
+	analyze_chol_hes_ran(n_random_, row, col);
 }
 
 

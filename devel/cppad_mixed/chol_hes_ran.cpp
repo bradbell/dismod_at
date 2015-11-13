@@ -31,7 +31,7 @@ $$
 $section Sparse Cholesky Factorization of Hessian w.r.t Random Effects$$
 
 $head Syntax$$
-$codei%init_chol_hes_ran(%n_random%, %row%, %col%)%$$
+$codei%analyze_chol_hes_ran(%n_random%, %row%, %col%)%$$
 
 $head Private$$
 This function should not used by a derived
@@ -59,32 +59,40 @@ $cref/random likelihood
 with respect to the random effects; i.e.
 $latex f_{uu}^{(2)} ( \theta , u )$$.
 
-$head init_chol_hes_ran$$
 
 $head n_random$$
 This argument has prototype
 $codei%
 	size_t %n_random%
 %$$
+It is then number of random effects.
 
-$subhead row$$
+$head row$$
 This argument has prototype
 $codei%
 	const CppAD::vector<size_t>& %row%
 %$$
-These are the non-zero row indices in the sparsity pattern for the Hessian.
-All of its elements must be less than $icode n_random$$.
+These are the non-zero row indices in the sparsity pattern
+for the lower triangle of the Hessian.
+For $icode%k% = 0 , %...% , %row%.size()%$$,
+$codei%
+	%row%[%k%] < %n_random%
+%$$
 
 $subhead col$$
 This argument has prototype
 $codei%
 	const CppAD::vector<size_t>& %col%
 %$$
-These are the non-zero column indices in the sparsity pattern for the Hessian.
+These are the non-zero column indices in the sparsity pattern
+for the lower triangle of the Hessian.
 It must have the same size as $icode row$$ and
-all of its elements must be less than $icode n_random$$.
+for $icode%k% = 0 , %...% , %col%.size()%$$,
+$codei%
+	%col%[%k%] <= %row%[%k%]
+%$$
 
-$subhead chol_hes_ran_$$
+$head analyze_chol_hes_ran$$
 The input value of this factorization does not matter.
 Upon return, the sparsity pattern has been analyzed; i.e.,
 $codei%
@@ -106,7 +114,7 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-void init_chol_hes_ran(
+void analyze_chol_hes_ran(
 	size_t                       n_random ,
 	const CppAD::vector<size_t>& row      ,
 	const CppAD::vector<size_t>& col      )
@@ -116,7 +124,7 @@ void init_chol_hes_ran(
 	assert( row.size() == col.size() );
 	for(size_t k = 0; k < row.size(); k++)
 	{	assert( row[k] < n_random );
-		assert( col[k] < n_random );
+		assert( col[k] <= row[k] );
 		hessian_pattern.insert(row[k], col[k]) = not_used;
 	}
 	// analyze the pattern for an LDL^T Cholesky factorization of
