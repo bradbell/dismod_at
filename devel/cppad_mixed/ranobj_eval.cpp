@@ -8,8 +8,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# include <Eigen/Sparse>
 # include <dismod_at/cppad_mixed.hpp>
+# include <dismod_at/chol_hes_ran.hpp>
 
 /*
 $begin ranobj_eval$$
@@ -88,12 +88,7 @@ $end
 */
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
-// would be member of cppad_mixed class if it were not for all the
-// warnings Eigen generates.
-	extern Eigen::SimplicialLDLT<
-		Eigen::SparseMatrix<double> , Eigen::Lower
-	> chol_hes_ran_;
-//
+// ----------------------------------------------------------------------------
 double cppad_mixed::ranobj_eval(
 	const d_vector& fixed_vec  ,
 	const d_vector& random_vec )

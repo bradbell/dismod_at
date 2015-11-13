@@ -10,7 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/cppad_mixed.hpp>
 # include <dismod_at/configure.hpp>
-# include <Eigen/Sparse>
+# include <dismod_at/chol_hes_ran.hpp>
 
 /*
 $begin init_hes_ran$$
@@ -134,37 +134,9 @@ $latex \[
 in the same order as the $icode a1_val_out$$ above.
 
 $head chol_hes_ran_$$
-This is lower triangular Cholesky factorization of the Hessian of the
-$cref/random likelihood
-	/cppad_mixed_theory
-	/Random Likelihood, f(theta, u)
-/$$
-with respect to the random effects; i.e.
-$latex f_{uu}^{(2)} ( \theta , u )$$.
-The input value of this factorization does not matter.
-Upon return, the sparsity pattern has been analyzed; i.e.,
-$codei%
-	chol_hes_ran_.analyzePattern(%hessian_pattern%)
-%$$
-has been called.
-A factorization can be computed using
-$codei%
-	chol_hes_ran_.factorize(%hessian_value%)
-%$$
-where $icode hessian_value$$ has the same sparsity pattern as
-$icode hessian_pattern$$.
-This should be a $cref cppad_mixed_private$$ member variable,
-but it is instead a static in the $code dismod_at$$ namespace
-so that the warnings that Eigen generates
-do not need to be suppressed by all the routines that include
-$code dismod_at/cppad_mixed.hpp$$.
-$codep */
-	namespace dismod_at {
-		Eigen::SimplicialLDLT<
-			Eigen::SparseMatrix<double> , Eigen::Lower
-		> chol_hes_ran_;
-	}
-/* $$
+The static $code chol_hes_ran_$$ is initialized by a call to
+$cref/init_chol_hes_ran/chol_hes_ran/init_chol_hes_ran/$$.
+
 $contents%example/devel/cppad_mixed/private/hes_ran_fun_xam.cpp
 %$$
 

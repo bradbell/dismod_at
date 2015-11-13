@@ -35,6 +35,7 @@ SET_TARGET_PROPERTIES(cppad_mixed
 # ---------------------------------------------------------------------------
 # cppad_mixed_eigen
 ADD_LIBRARY(cppad_mixed_eigen
+	cppad_mixed/chol_hes_ran.cpp
 	cppad_mixed/init_hes_ran.cpp
 	cppad_mixed/init_ranobj.cpp
 	cppad_mixed/newton_step.cpp

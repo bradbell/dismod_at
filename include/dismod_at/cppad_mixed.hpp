@@ -187,6 +187,7 @@ $childtable%
 	devel/cppad_mixed/constraint.omh%
 	devel/cppad_mixed/optimize_random.cpp%
 	devel/cppad_mixed/optimize_fixed.cpp%
+	devel/cppad_mixed/chol_hes_ran.cpp%
 	include/dismod_at/sparse_hes_info.hpp%
 	include/dismod_at/sparse_jac_info.hpp
 %$$

@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/cppad_mixed.hpp>
-# include <Eigen/Sparse>
+# include <dismod_at/chol_hes_ran.hpp>
 /*
 $begin ranobj_grad$$
 $spell
@@ -75,12 +75,6 @@ It returns true, if the test passes, and false otherwise.
 $end
 */
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
-// would be member of cppad_mixed class if it were not for all the
-// warnings Eigen generates.
-	extern Eigen::SimplicialLDLT<
-		Eigen::SparseMatrix<double> , Eigen::Lower
-	> chol_hes_ran_;
-//
 // ----------------------------------------------------------------------------
 void cppad_mixed::ranobj_grad(
 	const d_vector& fixed_vec  ,
