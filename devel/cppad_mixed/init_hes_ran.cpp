@@ -308,13 +308,7 @@ void cppad_mixed::init_hes_ran(
 	init_hes_ran_done_ = true;
 
 	// now analyze the lower triangular Cholesky factorization
-	for(size_t k = 0; k < K; k++)
-	{	assert( n_fixed_        <= hes_ran_.col[k]  );
-		assert( n_fixed_        <= hes_ran_.row[k]  );
-		row[k] = hes_ran_.row[k] - n_fixed_;
-		col[k] = hes_ran_.col[k] - n_fixed_;
-	}
-	analyze_chol_hes_ran(n_random_, row, col);
+	analyze_chol_hes_ran(n_fixed_, n_random_, hes_ran_.row, hes_ran_.col);
 }
 
 

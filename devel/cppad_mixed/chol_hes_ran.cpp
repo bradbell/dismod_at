@@ -31,7 +31,10 @@ $$
 $section Sparse Cholesky Factorization of Hessian w.r.t Random Effects$$
 
 $head Syntax$$
-$codei%analyze_chol_hes_ran(%n_random%, %row%, %col%)%$$
+$codei%analyze_chol_hes_ran(%n_fixed%, %n_random%, %row%, %col%)
+%$$
+$codei%factorize_chol_hes_ran(%n_fixed%, %n_random%, %row%, %col%, %val%)
+%$$
 
 $head Private$$
 This function should not used by a derived
@@ -60,37 +63,60 @@ with respect to the random effects; i.e.
 $latex f_{uu}^{(2)} ( \theta , u )$$.
 
 
+$head n_fixed$$
+This argument has prototype
+$codei%
+	size_t %n_fixed%
+%$$
+and is then number of fixed effects.
+
+
 $head n_random$$
 This argument has prototype
 $codei%
 	size_t %n_random%
 %$$
-It is then number of random effects.
+and is then number of random effects.
 
 $head row$$
 This argument has prototype
 $codei%
 	const CppAD::vector<size_t>& %row%
 %$$
-These are the non-zero row indices in the sparsity pattern
-for the lower triangle of the Hessian.
+These are the possibly non-zero row indices in the sparsity pattern
+of the lower triangle of the Hessian w.r.t just the random effects.
 For $icode%k% = 0 , %...% , %row%.size()%$$,
 $codei%
-	%row%[%k%] < %n_random%
+	%n_fixed% <= %row%[%k%] < %n_fixed% + %n_random%
 %$$
+The reason for the offset is that these indices are relative to both
+the fixed and random effects and the fixed effects come before the
+random effects.
 
-$subhead col$$
+$head col$$
 This argument has prototype
 $codei%
 	const CppAD::vector<size_t>& %col%
 %$$
-These are the non-zero column indices in the sparsity pattern
-for the lower triangle of the Hessian.
+These are the possibly non-zero column indices in the sparsity pattern
+of the lower triangle of the Hessian.
 It must have the same size as $icode row$$ and
 for $icode%k% = 0 , %...% , %col%.size()%$$,
 $codei%
-	%col%[%k%] <= %row%[%k%]
+	%n_fixed% <= %col%[%k%] <= %row%[%k%]
 %$$
+
+$head val$$
+This argument has prototype
+$codei%
+	const CppAD::vector<size_t>& %val%
+%$$
+These are the values in the possibly non-zero entries
+of the lower triangle of the Hessian.
+It must have the same size as $icode row$$, $icode col$$ and
+for $icode%k% = 0 , %...% , %col%.size()%$$,
+$icode%val%[%k%]%$$ is the Hessian value at the corresponding
+row and column index.
 
 $head analyze_chol_hes_ran$$
 The input value of this factorization does not matter.
@@ -100,6 +126,14 @@ $codei%
 %$$
 has been called with the pattern corresponding to $icode row$$ and
 $icode col$$.
+
+$head factorize_chol_hes_ran$$
+The input value of this factorization does not matter.
+Upon return, the sparsity pattern has been analyzed; i.e.,
+$codei%
+	chol_hes_ran_.factorize(%hessian_value%)
+%$$
+has been called with the values corresponding to $icode val$$.
 
 $codep */
 	namespace dismod_at {
@@ -115,6 +149,7 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void analyze_chol_hes_ran(
+	size_t                       n_fixed  ,
 	size_t                       n_random ,
 	const CppAD::vector<size_t>& row      ,
 	const CppAD::vector<size_t>& col      )
@@ -123,13 +158,33 @@ void analyze_chol_hes_ran(
 	Eigen::SparseMatrix<double> hessian_pattern(n_random, n_random);
 	assert( row.size() == col.size() );
 	for(size_t k = 0; k < row.size(); k++)
-	{	assert( row[k] < n_random );
-		assert( col[k] <= row[k] );
-		hessian_pattern.insert(row[k], col[k]) = not_used;
+	{
+		assert( n_fixed <= row[k] && row[k] < n_fixed + n_random );
+		assert( n_fixed <= col[k] && col[k] <= row[k] );
+		hessian_pattern.insert(row[k] - n_fixed, col[k] - n_fixed) = not_used;
 	}
 	// analyze the pattern for an LDL^T Cholesky factorization of
 	// f_{uu}^{(2)}(theta, u)
 	chol_hes_ran_.analyzePattern(hessian_pattern);
+}
+
+void factorize_chol_hes_ran(
+	size_t                       n_fixed  ,
+	size_t                       n_random ,
+	const CppAD::vector<size_t>& row      ,
+	const CppAD::vector<size_t>& col      ,
+	const CppAD::vector<double>& val      )
+{
+	Eigen::SparseMatrix<double> hessian_value(n_random, n_random);
+	assert( row.size() == col.size() );
+	for(size_t k = 0; k < row.size(); k++)
+	{	assert( n_fixed <= row[k] && row[k] < n_fixed + n_random );
+		assert( n_fixed <= col[k] && col[k] <= row[k] );
+		hessian_value.insert(row[k] - n_fixed, col[k] - n_fixed) = val[k];
+	}
+	// LDL^T Cholesky factorization of for specified values of the Hessian
+	// f_{uu}^{(2)}(theta, u)
+	chol_hes_ran_.factorize(hessian_value);
 }
 
 

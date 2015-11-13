@@ -118,19 +118,10 @@ void cppad_mixed::logdet_grad(
 	pack(fixed_vec, random_vec, both);
 	val_out = hes_ran_fun_.Forward(0, both);
 
-	// create a lower triangular eigen sparse matrix representation of Hessian
-	sparse_matrix hessian_value(n_random_, n_random_);
-	for(size_t k = 0; k < K; k++)
-	{	assert( n_fixed_        <= hes_ran_.col[k]  );
-		assert( hes_ran_.col[k] <= hes_ran_.row[k] );
-		size_t row = hes_ran_.row[k] - n_fixed_;
-		size_t col = hes_ran_.col[k] - n_fixed_;
-		assert( row < n_random_ );
-		assert( col < n_random_ );
-		hessian_value.insert(row, col) = val_out[k];
-	}
 	// compute an LDL^T Cholesky factorization of f_{uu}^{(2)}(theta, u)
-	chol_hes_ran_.factorize(hessian_value);
+	factorize_chol_hes_ran(
+		n_fixed_, n_random_, hes_ran_.row, hes_ran_.col, val_out
+	);
 
 	// Compute derivative of sum_k w_k hessian_k
 	// where w_k is the inverse of the Hessian at (row[k], col[k]).

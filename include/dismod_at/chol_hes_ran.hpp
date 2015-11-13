@@ -19,6 +19,20 @@ namespace dismod_at {
 	extern Eigen::SimplicialLDLT<
 		Eigen::SparseMatrix<double> , Eigen::Lower
 	> chol_hes_ran_;
+
+	extern void analyze_chol_hes_ran(
+		size_t                       n_fixed  ,
+		size_t                       n_random ,
+		const CppAD::vector<size_t>& row      ,
+		const CppAD::vector<size_t>& col
+	);
+	extern void factorize_chol_hes_ran(
+		size_t                       n_fixed  ,
+		size_t                       n_random ,
+		const CppAD::vector<size_t>& row      ,
+		const CppAD::vector<size_t>& col      ,
+		const CppAD::vector<double>& val
+	);
 }
 
 
