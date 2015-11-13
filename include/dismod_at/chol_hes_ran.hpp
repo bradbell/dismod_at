@@ -31,7 +31,8 @@ namespace dismod_at {
 		size_t                       n_random ,
 		const CppAD::vector<size_t>& row      ,
 		const CppAD::vector<size_t>& col      ,
-		const CppAD::vector<double>& val
+		const CppAD::vector<double>& both     ,
+		CppAD::ADFun<double>&        hessian
 	);
 }
 

@@ -93,15 +93,13 @@ void cppad_mixed::ranobj_grad(
 	size_t K = hes_ran_.row.size();
 	assert( K == hes_ran_.col.size() );
 
-	// evaluate the hessian f_{uu}^{(2)} (theta, u)
-	d_vector both(n_fixed_ + n_random_), val_out(K);
-	pack(fixed_vec, random_vec, both);
-	val_out = hes_ran_fun_.Forward(0, both);
-
 	// compute an LDL^T Cholesky factorization of f_{uu}^{(2)}(theta, u)
+	d_vector both(n_fixed_ + n_random_);
+	pack(fixed_vec, random_vec, both);
 	factorize_chol_hes_ran(
-		n_fixed_, n_random_, hes_ran_.row, hes_ran_.col, val_out
+		n_fixed_, n_random_, hes_ran_.row, hes_ran_.col, both, hes_ran_fun_
 	);
+
 	//
 	// Compute derivative of logdet of f_{uu}^{(2)} ( theta , u )
 	d_vector logdet_fix(n_fixed_), logdet_ran(n_random_);
@@ -119,7 +117,7 @@ void cppad_mixed::ranobj_grad(
 	// 2DO: another ran_like_fun_.Forward(0, both) is done by SparseHessian
 	CppAD::vector< std::set<size_t> > not_used;
 	K = hes_cross_.row.size();
-	val_out.resize(K);
+	CppAD::vector<double> val_out(K);
 	ran_like_fun_.SparseHessian(
 		both,
 		w,

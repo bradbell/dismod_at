@@ -106,14 +106,11 @@ double cppad_mixed::ranobj_eval(
 	size_t K = hes_ran_.row.size();
 	assert( K == hes_ran_.col.size() );
 
-	// evaluate the hessian f_{uu}^{(2)} (theta, u)
-	d_vector both(n_fixed_ + n_random_), val_out(K);
-	pack(fixed_vec, random_vec, both);
-	val_out = hes_ran_fun_.Forward(0, both);
-
 	// compute an LDL^T Cholesky factorization of f_{uu}^{(2)}(theta, u)
+	d_vector both(n_fixed_ + n_random_);
+	pack(fixed_vec, random_vec, both);
 	factorize_chol_hes_ran(
-		n_fixed_, n_random_, hes_ran_.row, hes_ran_.col, val_out
+		n_fixed_, n_random_, hes_ran_.row, hes_ran_.col, both, hes_ran_fun_
 	);
 
 	// compute the logdet( f_{uu}^{(2)}(theta, u )

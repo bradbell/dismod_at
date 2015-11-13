@@ -33,8 +33,9 @@ $section Sparse Cholesky Factorization of Hessian w.r.t Random Effects$$
 $head Syntax$$
 $codei%analyze_chol_hes_ran(%n_fixed%, %n_random%, %row%, %col%)
 %$$
-$codei%factorize_chol_hes_ran(%n_fixed%, %n_random%, %row%, %col%, %val%)
-%$$
+$codei%factorize_chol_hes_ran(
+	%n_fixed%, %n_random%, %row%, %col%, %both%, %hessian%
+)%$$
 
 $head Private$$
 This function should not used by a derived
@@ -106,17 +107,32 @@ $codei%
 	%n_fixed% <= %col%[%k%] <= %row%[%k%]
 %$$
 
-$head val$$
+$head both$$
 This argument has prototype
 $codei%
-	const CppAD::vector<size_t>& %val%
+	const CppAD::vector<double>& %both%
 %$$
-These are the values in the possibly non-zero entries
-of the lower triangle of the Hessian.
-It must have the same size as $icode row$$, $icode col$$ and
-for $icode%k% = 0 , %...% , %col%.size()%$$,
-$icode%val%[%k%]%$$ is the Hessian value at the corresponding
-row and column index.
+and has size $icode%n_fixed% + %n_random%$$.
+This is the values of the fixed and random effects at which the Hessian
+is being computed and factored.
+
+$head hessian$$
+This argument has prototype
+$codei%
+	CppAD::ADFun<double>& %hessian%
+%$$
+It has $icode%hessian%.Domain() = %n_fixed% + %n_random%$$
+and $icode%hessian%.Range() = %row%.size()%$$
+The function call
+$codei%
+	%val% = %hessian%.Forward(0, %both%)
+%$$
+is used to compute the values of the Hessian.
+To be specific,
+for $icode%k% = 0 , %...% , %col%.size()%%$$,
+$icode%val%[%k%]%$$ is the value of the Hessian
+at row index $icode%row%[%k%]%$$
+and column index $icode%col%[%k%]%$$.
 
 $head analyze_chol_hes_ran$$
 The input value of this factorization does not matter.
@@ -129,11 +145,12 @@ $icode col$$.
 
 $head factorize_chol_hes_ran$$
 The input value of this factorization does not matter.
-Upon return, the sparsity pattern has been analyzed; i.e.,
+Upon return, the Hessian has been evaluated and then factorized; i.e.,
 $codei%
 	chol_hes_ran_.factorize(%hessian_value%)
 %$$
-has been called with the values corresponding to $icode val$$.
+has been called with the values corresponding to the Hessian at the
+fixed and random effects specified by $icode both$$.
 
 $codep */
 	namespace dismod_at {
@@ -173,8 +190,13 @@ void factorize_chol_hes_ran(
 	size_t                       n_random ,
 	const CppAD::vector<size_t>& row      ,
 	const CppAD::vector<size_t>& col      ,
-	const CppAD::vector<double>& val      )
+	const CppAD::vector<double>& both     ,
+	CppAD::ADFun<double>&        hessian  )
 {
+	size_t K = row.size();
+	CppAD::vector<double> val(K);
+	val = hessian.Forward(0, both);
+
 	Eigen::SparseMatrix<double> hessian_value(n_random, n_random);
 	assert( row.size() == col.size() );
 	for(size_t k = 0; k < row.size(); k++)
