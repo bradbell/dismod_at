@@ -48,7 +48,11 @@ if len(result) == 0 :
 	msg += '\tdismod_at ' + file_name + ' init'
 	sys.exit(msg)
 #
-cmd = cmd.replace('var', 'simulate')
+cmd = cmd.replace('var', 'sample')
+result  = cursor.execute(cmd).fetchall()
+have_sample = len(result) > 0
+#
+cmd = cmd.replace('sample', 'simulate')
 result  = cursor.execute(cmd).fetchall()
 have_simulate = len(result) > 0
 #
@@ -79,11 +83,13 @@ table_list  = [
 	'var',
 	'weight'
 ]
+if have_sample :
+	table_list.append('sample')
+if have_simulate :
+	table_list.append('simulate')
 if have_fit :
 	table_list.append('fit_var')
 	table_list.append('fit_residual')
-if have_simulate :
-	table_list.append('simulate')
 for table in table_list :
 	table_data[table] = dismod_at.get_table_dict(connection, table)
 # ----------------------------------------------------------------------------
@@ -166,7 +172,8 @@ header = [
 	'covariate',
 	'node',
 	'fixed',
-	'fit_value'
+	'fit_value',
+	'sample_value'
 ]
 for extension in ['_v', '_a', '_t' ] :
 	for root in ['lower', 'upper', 'mean', 'std', 'eta', 'density' ] :
@@ -193,6 +200,8 @@ for row_in in table_data['var'] :
 	#
 	if have_fit :
 		row_out['fit_value'] = table_lookup('fit_var', var_id, 'fit_var_value')
+	if have_sample :
+		row_out['sample_value'] = table_lookup('sample', var_id, 'var_value')
 	#
 	row_out['fixed'] = 'true'
 	if row_in['var_type'] == 'rate' :
