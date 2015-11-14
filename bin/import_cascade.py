@@ -39,16 +39,17 @@ if sys.argv[0] != 'bin/import_cascade.py' :
 #
 option_dict = collections.OrderedDict([
 ('cascade_path','        path to directory where cascade input files are'),
+('parent_node_name','    name of the parent node'),
 ('ode_step_size','       step size of ODE solution in age and time'),
 ('mtall2mtother','       treat mtall data as if it were mtother [yes/no]'),
+('chi_zero','            should chi be constrainted to be zero [yes/no]'),
 ('rate_case','           are iota and rho zero or non-zero; see option_table'),
 ('child_value_std','     value standard deviation for random effects'),
 ('child_dtime_std','     dtime standard deviation for random effects'),
-('parent_node_name','    name of the parent node'),
 ('xi_factor','           factor that multiplies cascade_ode xi value'),
 ('random_bound','        bound for random effects, empty text for no bound'),
 ('time_grid','           the time grid as space seperated values'),
-('include_covariates','  all or list of spaced separated covariate to include')
+('include_covariates','  all or list of space separated covariate to include')
 ])
 usage = '''bin/import_cascade.py option_csv
 
@@ -93,12 +94,13 @@ if not float(ode_step_size) > 0.0 :
 	msg += ' is not greater than zero'
 	sys.exit(msg)
 #
-mtall2mtother = option_table_in['mtall2mtother']
-if not mtall2mtother in [ 'yes', 'no' ] :
-	msg  = usage + '\n'
-	msg += 'in ' + option_csv + ' mtall2mtother = "' + mtall2mtother
-	msg += '" is not "yes" or "no"'
-	sys.exit(msg)
+for name in [ 'mtall2mtother' , 'chi_zero' ] :
+	value = option_table_in[name]
+	if not value in [ 'yes', 'no' ] :
+		msg  = usage + '\n'
+		msg += 'in ' + option_csv + ' name = "' + value
+		msg += '" is not "yes" or "no"'
+		sys.exit(msg)
 #
 cascade_path = option_table_in['cascade_path']
 if not os.path.isdir( cascade_path ) :
@@ -742,10 +744,13 @@ rate_is_zero['pini'] = pini_smooth_id == None
 rate_is_zero['iota'] = rate_case.find('iota_zero') != -1
 rate_is_zero['rho']  = rate_case.find('rho_zero') != -1
 #
-rate_is_zero['chi'] = True
+rate_is_zero['chi'] = option_table_in['chi_zero'] == 'yes'
+has_non_zero_bound  = False
 for row in rate_prior_in :
 	if row['type'] == 'chi' and float( row['upper'] ) != 0.0 :
-		rate_is_zero['chi'] = False;
+		has_non_zero_bound = True
+if rate_is_zero['chi'] and has_non_zero_bound :
+	print('chi will be zero, but has non-zero bounds in cascade file')
 # --------------------------------------------------------------------------
 # rate_smooth_id
 #
