@@ -439,36 +439,38 @@ for row_in in data_table_in :
 		if row_in[level] != 'none' :
 			node_id = node_name2id[ row_in[level] ]
 	#
-	row_out = [
-		integrand_id, # 0
-		density_id,   # 1
-		node_id,      # 2
-		weight_id,    # 3
-		hold_out,     # 4
-		meas_value,   # 5
-		meas_std,     # 6
-		age_lower,    # 7
-		age_upper,    # 8
-		time_lower,   # 9
-		time_upper    # 10
-	]
-	if mtall :
-		parent_node_id = node_name2id[ option_table_in['parent_node_name'] ]
-		ok = node_id == parent_node_id
-		while node_id != None and not ok :
-			parent_index = 1
-			node_id = node_table_list[node_id][parent_index]
-			ok      = node_id == parent_node_id
-		ok = ok and float(age_lower) >= 5.0
-		if ok :
-			mtall_list.append(row_out)
-	else :
-		for name in covariate_name2id :
-			value        = row_in[name]
-			if math.isnan( float(value) ) :
-				value = None
-			row_out.append(value)
-		row_list.append( row_out )
+	# check if node_id is at or below parent_node_id
+	parent_node_id = node_name2id[ option_table_in['parent_node_name'] ]
+	ok = node_id == parent_node_id
+	while node_id != None and not ok :
+		parent_index = 1
+		node_id = node_table_list[node_id][parent_index]
+		ok      = node_id == parent_node_id
+	if ok :
+		row_out = [
+			integrand_id, # 0
+			density_id,   # 1
+			node_id,      # 2
+			weight_id,    # 3
+			hold_out,     # 4
+			meas_value,   # 5
+			meas_std,     # 6
+			age_lower,    # 7
+			age_upper,    # 8
+			time_lower,   # 9
+			time_upper    # 10
+		]
+		if mtall :
+			ok = ok and float(age_lower) >= 5.0
+			if ok :
+				mtall_list.append(row_out)
+		else :
+			for name in covariate_name2id :
+				value        = row_in[name]
+				if math.isnan( float(value) ) :
+					value = None
+				row_out.append(value)
+			row_list.append( row_out )
 #
 # sort the mtall data by age_lower, time_lower, node_id
 mtall_list = sorted(mtall_list, key=lambda row: row[2]) # by node_id

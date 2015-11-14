@@ -226,6 +226,7 @@ double logdet_chol_hes_ran(size_t n_random)
 	for(size_t j = 0; j < n_random; j++)
 		logdet += log( diag(j) );
 
+	return logdet;
 }
 
 
