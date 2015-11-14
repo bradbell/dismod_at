@@ -46,6 +46,7 @@ option_dict = collections.OrderedDict([
 ('child_dtime_std','   dtime standard deviation for random effects'),
 ('time_grid','         the time grid as space seperated values'),
 ('parent_node_name','  name of the parent node'),
+('xi_factor','         factor that multiplies cascade_ode xi value'),
 ('random_bound','      bound for the random effects, empty text for no bound')
 ])
 usage = '''bin/import_cascade.py option_csv
@@ -347,7 +348,7 @@ for density_id in range( len(row_list) ) :
 	density_name2id[name] = density_id
 # ---------------------------------------------------------------------------
 # Output node table
-# node_name2id
+# node_name2id, node_table_list
 #
 col_name      = [ 'node_name', 'parent'  ]
 col_type      = [ 'text',      'integer' ]
@@ -370,6 +371,7 @@ for row in data_table_in :
 			parent = node_name2id[name]
 tbl_name = 'node'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
+node_table_list = row_list
 # ---------------------------------------------------------------------------
 # Output weight table
 # Output weight_grid table
@@ -423,15 +425,11 @@ for row_in in data_table_in :
 	time_lower   = row_in['time_lower']
 	time_upper   = row_in['time_upper']
 	#
-	# node_is
+	# node_id
 	node_id      = node_name2id['world']
-	if mtall :
-		if row_in['super'] != 'none' :
-			node_id = node_name2id[ row_in['super'] ]
-	else :
-		for level in [ 'super', 'region', 'subreg', 'atom' ] :
-			if row_in[level] != 'none' :
-				node_id = node_name2id[ row_in[level] ]
+	for level in [ 'super', 'region', 'subreg', 'atom' ] :
+		if row_in[level] != 'none' :
+			node_id = node_name2id[ row_in[level] ]
 	#
 	row_out = [
 		integrand_id, # 0
@@ -447,7 +445,14 @@ for row_in in data_table_in :
 		time_upper    # 10
 	]
 	if mtall :
-		if float(age_lower) >= 5.0 :
+		parent_node_id = node_name2id[ option_table_in['parent_node_name'] ]
+		ok = node_id == parent_node_id
+		while node_id != None and not ok :
+			parent_index = 1
+			node_id = node_table_list[node_id][parent_index]
+			ok      = node_id == parent_node_id
+		ok = ok and float(age_lower) >= 5.0
+		if ok :
 			mtall_list.append(row_out)
 	else :
 		for name in covariate_name2id :
@@ -822,7 +827,8 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 				lower      = None
 				mean       = 0.0
 				upper      = None
-				std        = xi * math.sqrt( delta_age )
+				xi_factor  = float( option_table_in['xi_factor'] )
+				std        = xi_factor * xi * math.sqrt( delta_age )
 				#
 				# check if this prior already specified
 				element = (lower, upper, mean, std)
