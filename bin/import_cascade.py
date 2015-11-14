@@ -799,7 +799,7 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 			assert not is_zero
 			if is_pos :
 				eta   = float( value_table_in['kappa_' + rate] )
-				lower = eta / 100.
+				lower = eta
 				prior_in['lower'] = str( lower )
 				if float( prior_in['upper'] ) < lower :
 					prior_in['mean']  = prior_in['lower']
