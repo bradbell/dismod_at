@@ -156,7 +156,20 @@ std::map<std::string, size_t> cppad_mixed::initialize(
 	size_t thread           = CppAD::thread_alloc::thread_num();
 	size_t num_bytes_before = CppAD::thread_alloc::inuse(thread);
 	//
-	if( n_random_ > 0 )
+	if( n_random_ == 0 )
+	{	a1d_vector a1_fixed_vec( n_fixed_ ), a1_random_vec;
+		for(size_t i = 0; i < n_fixed_; i++)
+			a1_fixed_vec[i] = fixed_vec[i];
+		a1d_vector vec = ran_like(a1_fixed_vec, a1_random_vec);
+# if 0
+		if( vec.size() != 0 )
+		{	std::string msg = "There are no random effects (n_random = 0),";
+			msg += "\nbut the function ran_like returns a non-empty vector";
+			fatal_error(msg);
+		}
+# endif
+	}
+	else
 	{
 		// ran_like_
 		assert( ! init_ran_like_done_ );
