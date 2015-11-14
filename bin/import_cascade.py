@@ -47,7 +47,8 @@ option_dict = collections.OrderedDict([
 ('time_grid','         the time grid as space seperated values'),
 ('parent_node_name','  name of the parent node'),
 ('xi_factor','         factor that multiplies cascade_ode xi value'),
-('random_bound','      bound for the random effects, empty text for no bound')
+('random_bound','      bound for the random effects, empty text for no bound'),
+('fit_covariates','    include or exclude the covariate multipliers from fit')
 ])
 usage = '''bin/import_cascade.py option_csv
 
@@ -96,6 +97,13 @@ mtall2mtother = option_table_in['mtall2mtother']
 if not mtall2mtother in [ 'yes', 'no' ] :
 	msg  = usage + '\n'
 	msg += 'in ' + option_csv + ' mtall2mtother = "' + mtall2mtother
+	msg += '" is not "yes" or "no"'
+	sys.exit(msg)
+#
+fit_covariates = option_table_in['fit_covariates']
+if not mtall2mtother in [ 'yes', 'no' ] :
+	msg  = usage + '\n'
+	msg += 'in ' + option_csv + ' fit_covariates = "' + fit_covariates
 	msg += '" is not "yes" or "no"'
 	sys.exit(msg)
 #
@@ -883,53 +891,54 @@ col_name = list( col_name2type.keys() )
 col_type = list( col_name2type.values() )
 row_list = list()
 #
-for row in effect_prior_in :
-	effect = row['effect']
-	if effect in [ 'zeta', 'beta' ] :
-		integrand    = row['integrand']
-		covariate    = row['name']
-		covariate_id = covariate_name2id[covariate]
-		#
-		if row['effect'] == 'zeta' :
-			mulcov_type  = 'meas_std'
-			integrand_id = integrand_name2id[integrand]
-			rate_id      = None
-			name         = integrand
-		elif integrand in [ 'incidence', 'remission', 'mtexcess' ] :
-			mulcov_type       = 'rate_value'
-			integrand_id      = None
-			# rate table order is pini, iota, rho, chi, omega
-			if integrand == 'incidence' :
-				rate_id = 1
-				name    = 'iota'
-			if integrand == 'remission' :
-				rate_id = 2
-				name    = 'rho'
-			if integrand == 'mtexcess' :
-				rate_id = 3
-				name    = 'chi'
-		else :
-			mulcov_type  = 'meas_value'
-			integrand_id = integrand_name2id[integrand]
-			rate_id      = None
-		#
-		prior_name   = name + '_' + covariate + '_prior'
-		prior_at     = gaussian_cascade2at(prior_name, row)
-		prior_id     = len( prior_row_list )
-		prior_row_list.append( prior_at )
-		#
-		smooth_name  = name + '_' + covariate + '_smooth'
-		smooth_id    = len( smooth_row_list )
-		smooth_row_list.append(
-			[ smooth_name,  1, 1, None, None, None ]
-		)
-		smooth_grid_row_list.append(
-			[ smooth_id, 0, 0, prior_id, None, None ]
-		)
-		#
-		row_list.append(
-			[ mulcov_type, rate_id, integrand_id, covariate_id, smooth_id ]
-		)
+if option_table_in['fit_covariates'] == 'yes' :
+	for row in effect_prior_in :
+		effect = row['effect']
+		if effect in [ 'zeta', 'beta' ] :
+			integrand    = row['integrand']
+			covariate    = row['name']
+			covariate_id = covariate_name2id[covariate]
+			#
+			if row['effect'] == 'zeta' :
+				mulcov_type  = 'meas_std'
+				integrand_id = integrand_name2id[integrand]
+				rate_id      = None
+				name         = integrand
+			elif integrand in [ 'incidence', 'remission', 'mtexcess' ] :
+				mulcov_type       = 'rate_value'
+				integrand_id      = None
+				# rate table order is pini, iota, rho, chi, omega
+				if integrand == 'incidence' :
+					rate_id = 1
+					name    = 'iota'
+				if integrand == 'remission' :
+					rate_id = 2
+					name    = 'rho'
+				if integrand == 'mtexcess' :
+					rate_id = 3
+					name    = 'chi'
+			else :
+				mulcov_type  = 'meas_value'
+				integrand_id = integrand_name2id[integrand]
+				rate_id      = None
+			#
+			prior_name   = name + '_' + covariate + '_prior'
+			prior_at     = gaussian_cascade2at(prior_name, row)
+			prior_id     = len( prior_row_list )
+			prior_row_list.append( prior_at )
+			#
+			smooth_name  = name + '_' + covariate + '_smooth'
+			smooth_id    = len( smooth_row_list )
+			smooth_row_list.append(
+				[ smooth_name,  1, 1, None, None, None ]
+			)
+			smooth_grid_row_list.append(
+				[ smooth_id, 0, 0, prior_id, None, None ]
+			)
+			#
+			row_list.append(
+				[ mulcov_type, rate_id, integrand_id, covariate_id, smooth_id ]
+			)
 #
 tbl_name = 'mulcov'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
@@ -987,7 +996,7 @@ row_list = [
 	[ 'tolerance_fixed',        '1e-8'                           ],
 	[ 'random_bound',           random_bound                     ],
 	[ 'tolerance_random',       '1e-8'                           ],
-	[ 'max_num_iter_fixed',     '20'                             ],
+	[ 'max_num_iter_fixed',     '50'                             ],
 	[ 'max_num_iter_random',    '50'                             ],
 	[ 'derivative_test_fixed',  'none'                           ],
 	[ 'derivative_test_random', 'none'                           ]
