@@ -98,10 +98,6 @@ double cppad_mixed::ranobj_eval(
 	assert( fixed_vec.size() == n_fixed_ );
 	assert( random_vec.size() == n_random_ );
 
-	// declare eigen matrix types
-	using Eigen::Dynamic;
-	typedef Eigen::Matrix<double, Dynamic, Dynamic> dense_matrix;
-
 	// number of non-zeros in Hessian
 	size_t K = hes_ran_.row.size();
 	assert( K == hes_ran_.col.size() );
@@ -114,10 +110,7 @@ double cppad_mixed::ranobj_eval(
 	);
 
 	// compute the logdet( f_{uu}^{(2)}(theta, u )
-	dense_matrix diag = chol_hes_ran_.vectorD();
-	double logdet = 0.0;
-	for(size_t j = 0; j < n_random_; j++)
-		logdet += log( diag(j) );
+	double logdet = logdet_chol_hes_ran(n_random_);
 
 	// constant term
 	double pi   = CppAD::atan(1.0) * 4.0;

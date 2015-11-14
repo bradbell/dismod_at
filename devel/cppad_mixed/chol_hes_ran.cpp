@@ -26,6 +26,7 @@ $spell
 	Simplicial
 	triangular
 	dismod
+	logdet
 $$
 
 $section Sparse Cholesky Factorization of Hessian w.r.t Random Effects$$
@@ -50,11 +51,13 @@ $code dismod_at/cppad_mixed.hpp$$.
 
 $head chol_hes_ran_$$
 This variable has prototype
-$codei%
-	static Eigen::SimplicialLDLT<
-		Eigen::SparseMatrix<double> , Eigen::Lower
-	> chol_hes_ran_;
-%$$
+$codep */
+	namespace dismod_at {
+		Eigen::SimplicialLDLT<
+			Eigen::SparseMatrix<double> , Eigen::Lower
+		> chol_hes_ran_;
+	}
+/* $$
 This is lower triangular Cholesky factorization of the Hessian of the
 $cref/random likelihood
 	/cppad_mixed_theory
@@ -144,7 +147,9 @@ has been called with the pattern corresponding to $icode row$$ and
 $icode col$$.
 
 $head factorize_chol_hes_ran$$
-The input value of this factorization does not matter.
+The $icode row$$ and $icode col$$ values must be the same as for
+the previous call to
+$cref/analyze_chol_hes_ran/chol_hes_ran/analyze_chol_hes_ran/$$.
 Upon return, the Hessian has been evaluated and then factorized; i.e.,
 $codei%
 	chol_hes_ran_.factorize(%hessian_value%)
@@ -152,13 +157,14 @@ $codei%
 has been called with the values corresponding to the Hessian at the
 fixed and random effects specified by $icode both$$.
 
-$codep */
-	namespace dismod_at {
-		Eigen::SimplicialLDLT<
-			Eigen::SparseMatrix<double> , Eigen::Lower
-		> chol_hes_ran_;
-	}
-/* $$
+$head logdet$$
+This return value has prototype
+$codei%
+	double %logdet%
+%$$
+Is the log of the determinant of the Hessian corresponding
+to the previous call to
+$cref/factorize_chol_hes_ran/chol_hes_ran/factorize_chol_hes_ran/$$.
 
 $end
 */
@@ -207,6 +213,19 @@ void factorize_chol_hes_ran(
 	// LDL^T Cholesky factorization of for specified values of the Hessian
 	// f_{uu}^{(2)}(theta, u)
 	chol_hes_ran_.factorize(hessian_value);
+}
+
+double logdet_chol_hes_ran(size_t n_random)
+{	using Eigen::Dynamic;
+    typedef Eigen::Matrix<double, Dynamic, Dynamic> dense_matrix;
+
+	// compute the logdet( f_{uu}^{(2)}(theta, u )
+	dense_matrix diag = chol_hes_ran_.vectorD();
+	assert( diag.size() == int(n_random) );
+	double logdet = 0.0;
+	for(size_t j = 0; j < n_random; j++)
+		logdet += log( diag(j) );
+
 }
 
 

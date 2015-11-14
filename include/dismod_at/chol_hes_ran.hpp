@@ -34,6 +34,7 @@ namespace dismod_at {
 		const CppAD::vector<double>& both     ,
 		CppAD::ADFun<double>&        hessian
 	);
+	extern double logdet_chol_hes_ran(size_t n_random);
 }
 
 
