@@ -38,18 +38,19 @@ if sys.argv[0] != 'bin/import_cascade.py' :
 	sys.exit(msg)
 #
 option_dict = collections.OrderedDict([
-('cascade_path','        path to directory where cascade input files are'),
-('parent_node_name','    name of the parent node'),
-('ode_step_size','       step size of ODE solution in age and time'),
-('mtall2mtother','       treat mtall data as if it were mtother [yes/no]'),
-('chi_zero','            should chi be constrainted to be zero [yes/no]'),
-('rate_case','           are iota and rho zero or non-zero; see option_table'),
-('child_value_std','     value standard deviation for random effects'),
-('child_dtime_std','     dtime standard deviation for random effects'),
-('xi_factor','           factor that multiplies cascade_ode xi value'),
-('random_bound','        bound for random effects, empty text for no bound'),
-('time_grid','           the time grid as space seperated values'),
-('include_covariates','  all or list of space separated covariate to include')
+('cascade_path','       path to directory where cascade input files are'),
+('parent_node_name','   name of the parent node'),
+('ode_step_size','      step size of ODE solution in age and time'),
+('mtall2mtother','      treat mtall data as if it were mtother [yes/no]'),
+('chi_zero','           should chi be constrainted to be zero [yes/no]'),
+('rate_case','          are iota and rho zero or non-zero; see option_table'),
+('child_value_std','    value standard deviation for random effects'),
+('child_dtime_std','    dtime standard deviation for random effects'),
+('xi_factor','          factor that multiplies cascade_ode xi value'),
+('random_bound','       bound for random effects, empty text for no bound'),
+('time_grid','          list of time grid (as space seperated values)'),
+('include_covariates',' all or list of covariates to include'),
+('include_integrands',' all or list of cascade integand names to include')
 ])
 usage = '''bin/import_cascade.py option_csv
 
@@ -317,20 +318,28 @@ for covariate_id in range( len(covariate_name_list) ) :
 # integrand_name2id
 #
 integrand_name2id   = dict()
-for integrand_id in range( len(integrand_table_in) ) :
-	name                    = integrand_table_in[integrand_id]['integrand']
-	integrand_name2id[name] = integrand_id
+include             = dict()
+include_integrands  = option_table_in['include_integrands']
+integrand_id        = 0
+for row in integrand_table_in :
+	name          = row['integrand']
+	include[name] = include_integrands.find(name) != -1
+	include[name] = include[name] or include_integrands == 'all'
+	if include[name] :
+		integrand_name2id[name] = integrand_id
+		integrand_id           += 1
 #
 col_name = [ 'integrand_name', 'eta' ]
 col_type = [ 'text',           'real']
 row_list = list()
 for row in integrand_table_in :
-	integrand_name = row['integrand']
-	if integrand_name == 'incidence' :
-		integrand_name = 'Sincidence'
-	if integrand_name == 'mtall' and option_table_in['mtall2mtother']=='yes' :
-		integrand_name = 'mtother'
-	row_list.append( [ integrand_name , float( row['eta'] ) ] )
+	name = row['integrand']
+	if include[name] :
+		if name == 'incidence' :
+			name = 'Sincidence'
+		if name == 'mtall' and option_table_in['mtall2mtother']=='yes' :
+			name = 'mtother'
+		row_list.append( [ name , float( row['eta'] ) ] )
 tbl_name = 'integrand'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
@@ -420,56 +429,58 @@ for name in covariate_name2id :
 mtall_list    = list()
 row_list      = list()
 for row_in in data_table_in :
-	mtall        = row_in['integrand'] == 'mtall'
-	integrand_id = integrand_name2id[ row_in['integrand'] ]
-	density_id   = density_name2id[ row_in['data_like'] ]
-	weight_id    = 0
-	hold_out     = row_in['hold_out']
-	meas_value   = row_in['meas_value']
-	meas_std     = row_in['meas_stdev']
-	age_lower    = row_in['age_lower']
-	age_upper    = row_in['age_upper']
-	time_lower   = row_in['time_lower']
-	time_upper   = row_in['time_upper']
-	#
-	# node_id
-	node_id      = node_name2id['world']
-	for level in [ 'super', 'region', 'subreg', 'atom' ] :
-		if row_in[level] != 'none' :
-			node_id = node_name2id[ row_in[level] ]
-	#
-	# check if node_id is at or below parent_node_id
-	parent_node_id = node_name2id[ option_table_in['parent_node_name'] ]
-	ok = node_id == parent_node_id
-	while node_id != None and not ok :
-		parent_index = 1
-		node_id = node_table_list[node_id][parent_index]
-		ok      = node_id == parent_node_id
-	if ok :
-		row_out = [
-			integrand_id, # 0
-			density_id,   # 1
-			node_id,      # 2
-			weight_id,    # 3
-			hold_out,     # 4
-			meas_value,   # 5
-			meas_std,     # 6
-			age_lower,    # 7
-			age_upper,    # 8
-			time_lower,   # 9
-			time_upper    # 10
-		]
-		if mtall :
-			ok = ok and float(age_lower) >= 5.0
-			if ok :
-				mtall_list.append(row_out)
-		else :
-			for name in covariate_name2id :
-				value        = row_in[name]
-				if math.isnan( float(value) ) :
-					value = None
-				row_out.append(value)
-			row_list.append( row_out )
+	integrand    = row_in['integrand']
+	if integrand in integrand_name2id :
+		mtall        = integrand == 'mtall'
+		integrand_id = integrand_name2id[ row_in['integrand'] ]
+		density_id   = density_name2id[ row_in['data_like'] ]
+		weight_id    = 0
+		hold_out     = row_in['hold_out']
+		meas_value   = row_in['meas_value']
+		meas_std     = row_in['meas_stdev']
+		age_lower    = row_in['age_lower']
+		age_upper    = row_in['age_upper']
+		time_lower   = row_in['time_lower']
+		time_upper   = row_in['time_upper']
+		#
+		# node_id
+		node_id      = node_name2id['world']
+		for level in [ 'super', 'region', 'subreg', 'atom' ] :
+			if row_in[level] != 'none' :
+				node_id = node_name2id[ row_in[level] ]
+		#
+		# check if node_id is at or below parent_node_id
+		parent_node_id = node_name2id[ option_table_in['parent_node_name'] ]
+		ok = node_id == parent_node_id
+		while node_id != None and not ok :
+			parent_index = 1
+			node_id = node_table_list[node_id][parent_index]
+			ok      = node_id == parent_node_id
+		if ok :
+			row_out = [
+				integrand_id, # 0
+				density_id,   # 1
+				node_id,      # 2
+				weight_id,    # 3
+				hold_out,     # 4
+				meas_value,   # 5
+				meas_std,     # 6
+				age_lower,    # 7
+				age_upper,    # 8
+				time_lower,   # 9
+				time_upper    # 10
+			]
+			if mtall :
+				ok = ok and float(age_lower) >= 5.0
+				if ok :
+					mtall_list.append(row_out)
+			else :
+				for name in covariate_name2id :
+					value        = row_in[name]
+					if math.isnan( float(value) ) :
+						value = None
+					row_out.append(value)
+				row_list.append( row_out )
 #
 # sort the mtall data by age_lower, time_lower, node_id
 mtall_list = sorted(mtall_list, key=lambda row: row[2]) # by node_id
@@ -899,10 +910,13 @@ include_covariates = option_table_in['include_covariates']
 for row in effect_prior_in :
 	effect = row['effect']
 	if effect in [ 'zeta', 'beta' ] :
-		covariate = row['name']
-		include = include_covariates.find(covariate) != -1
-		include = include or include_covariates == 'all'
-		if include :
+		covariate    = row['name']
+		integrand    = row['integrand']
+		include_cov  = include_covariates.find(covariate) != -1
+		include_cov  = include_cov or include_covariates == 'all'
+		include_int  = include_integrands.find(integrand) != -1
+		include_int  = include_int or include_integrands == 'all'
+		if include_cov and include_int  :
 			integrand    = row['integrand']
 			covariate_id = covariate_name2id[covariate]
 			#
