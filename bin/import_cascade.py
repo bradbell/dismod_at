@@ -38,17 +38,17 @@ if sys.argv[0] != 'bin/import_cascade.py' :
 	sys.exit(msg)
 #
 option_dict = collections.OrderedDict([
-('cascade_path','      path to directory where cascade input files are'),
-('ode_step_size','     step size of ODE solution in age and time'),
-('mtall2mtother','     treat mtall data as if it were mtother [yes/no]'),
-('rate_case','         are iota and rho zero or non-zero; see option_table'),
-('child_value_std','   value standard deviation for random effects'),
-('child_dtime_std','   dtime standard deviation for random effects'),
-('time_grid','         the time grid as space seperated values'),
-('parent_node_name','  name of the parent node'),
-('xi_factor','         factor that multiplies cascade_ode xi value'),
-('random_bound','      bound for the random effects, empty text for no bound'),
-('fit_covariates','    include or exclude the covariate multipliers from fit')
+('cascade_path','        path to directory where cascade input files are'),
+('ode_step_size','       step size of ODE solution in age and time'),
+('mtall2mtother','       treat mtall data as if it were mtother [yes/no]'),
+('rate_case','           are iota and rho zero or non-zero; see option_table'),
+('child_value_std','     value standard deviation for random effects'),
+('child_dtime_std','     dtime standard deviation for random effects'),
+('parent_node_name','    name of the parent node'),
+('xi_factor','           factor that multiplies cascade_ode xi value'),
+('random_bound','        bound for random effects, empty text for no bound'),
+('time_grid','           the time grid as space seperated values'),
+('include_covariates','  all or list of spaced separated covariate to include')
 ])
 usage = '''bin/import_cascade.py option_csv
 
@@ -97,13 +97,6 @@ mtall2mtother = option_table_in['mtall2mtother']
 if not mtall2mtother in [ 'yes', 'no' ] :
 	msg  = usage + '\n'
 	msg += 'in ' + option_csv + ' mtall2mtother = "' + mtall2mtother
-	msg += '" is not "yes" or "no"'
-	sys.exit(msg)
-#
-fit_covariates = option_table_in['fit_covariates']
-if not mtall2mtother in [ 'yes', 'no' ] :
-	msg  = usage + '\n'
-	msg += 'in ' + option_csv + ' fit_covariates = "' + fit_covariates
 	msg += '" is not "yes" or "no"'
 	sys.exit(msg)
 #
@@ -306,8 +299,12 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 #
 header        = list( data_table_in[0].keys() )
 covariate_name_list = list()
+include_covariates  = option_table_in['include_covariates']
 for name in header :
-	if name.startswith('r_') or name.startswith('a_') :
+	include = include_covariates.find(name) != -1
+	include = include or include_covariates == 'all'
+	include = include and ( name.startswith('r_') or name.startswith('a_') )
+	if include :
 		covariate_name_list.append(name)
 covariate_name2id = collections.OrderedDict()
 for covariate_id in range( len(covariate_name_list) ) :
@@ -893,12 +890,15 @@ col_name = list( col_name2type.keys() )
 col_type = list( col_name2type.values() )
 row_list = list()
 #
-if option_table_in['fit_covariates'] == 'yes' :
-	for row in effect_prior_in :
-		effect = row['effect']
-		if effect in [ 'zeta', 'beta' ] :
+include_covariates = option_table_in['include_covariates']
+for row in effect_prior_in :
+	effect = row['effect']
+	if effect in [ 'zeta', 'beta' ] :
+		covariate = row['name']
+		include = include_covariates.find(covariate) != -1
+		include = include or include_covariates == 'all'
+		if include :
 			integrand    = row['integrand']
-			covariate    = row['name']
 			covariate_id = covariate_name2id[covariate]
 			#
 			if row['effect'] == 'zeta' :
