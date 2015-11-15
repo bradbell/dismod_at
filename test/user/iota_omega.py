@@ -13,7 +13,8 @@ iota_20        = 1e-4
 iota_100       = 1e-1
 omega_20       = 2e-4
 omega_100      = 2e-1
-age_list       = [  0.0, 20.0, 40.0, 60.0 , 80.0, 100.0 ]
+age_list       = [  0.0, 20.0, 100.0 ]
+group_by_age   = True # should be same but fails when this is False
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -86,7 +87,7 @@ def example_db (file_name) :
 		'time_upper':   time_list[-1]
 	}
 	# values that change between rows:
-	for age in range(0, 100, 10) :
+	for age in range(0, 100, 20) :
 		#
 		if age < 20.0 :
 			meas_value = iota_20
@@ -100,15 +101,29 @@ def example_db (file_name) :
 		row['meas_std']     = meas_value * 0.1
 		data_dict.append( copy.copy(row) )
 		#
-		if age < 20.0 :
-			meas_value = omega_20
-		else :
-			slope      = (omega_100 - omega_20) / 80.0
-			meas_value = omega_20 + (age - 20.0)  * slope
-		row['integrand']    = 'mtother'
-		row['meas_value']   = meas_value
-		row['meas_std']     = meas_value * 0.1
-		data_dict.append( copy.copy(row) )
+		if group_by_age :
+			if age < 20.0 :
+				meas_value = omega_20
+			else :
+				slope      = (omega_100 - omega_20) / 80.0
+				meas_value = omega_20 + (age - 20.0)  * slope
+			row['integrand']    = 'mtother'
+			row['meas_value']   = meas_value
+			row['meas_std']     = meas_value * 0.1
+			data_dict.append( copy.copy(row) )
+	if not group_by_age :
+		# values that change between rows:
+		for age in range(0, 100, 10) :
+			#
+			if age < 20.0 :
+				meas_value = omega_20
+			else :
+				slope      = (omega_100 - omega_20) / 80.0
+				meas_value = omega_20 + (age - 20.0)  * slope
+			row['integrand']    = 'mtother'
+			row['meas_value']   = meas_value
+			row['meas_std']     = meas_value * 0.1
+			data_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
 	prior_dict = [
