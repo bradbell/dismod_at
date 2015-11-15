@@ -173,6 +173,9 @@ header = [
 	'node',
 	'fixed',
 	'fit_value',
+	'fit_res',
+	'fit_dage',
+	'fit_dtime',
 	'sample_value'
 ]
 for extension in ['_v', '_a', '_t' ] :
@@ -199,7 +202,10 @@ for row_in in table_data['var'] :
 	row_out['node'] = table_lookup('node', row_in['node_id'], 'node_name')
 	#
 	if have_fit :
-		row_out['fit_value'] = table_lookup('fit_var', var_id, 'variable_value')
+		row_out['fit_value']= table_lookup('fit_var', var_id, 'variable_value')
+		row_out['fit_res']  = table_lookup('fit_var', var_id, 'residual_value')
+		row_out['fit_dage'] = table_lookup('fit_var', var_id, 'residual_dage')
+		row_out['fit_dtime']= table_lookup('fit_var', var_id, 'residual_dtime')
 	if have_sample :
 		row_out['sample_value'] = table_lookup('sample', var_id, 'var_value')
 	#

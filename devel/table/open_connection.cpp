@@ -76,7 +76,12 @@ sqlite3* open_connection(const std::string& file_name, bool new_file)
 	sqlite3* db;
 	int rc = sqlite3_open(file_name.c_str(), &db);
 	if( rc )
-	{	std::cerr << "Can't create database: " << file_name << std::endl;
+	{	std::string msg;
+		if( new_file )
+			msg = "Can't create a new database in file ";
+		else
+			msg = "Can't open the existing database in file ";
+		std::cerr << msg << file_name << std::endl;
 		sqlite3_close(db);
 		std::exit(1);
 	}
