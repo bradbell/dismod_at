@@ -342,11 +342,11 @@ for var_id in range( len(var_dict) ) :
 	match = match and row['node_id'] == parent_node_id
 	if match and row['rate_id'] == iota_rate_id :
 		count += 1
-		value = fit_var_dict[var_id]['fit_var_value']
+		value = fit_var_dict[var_id]['variable_value']
 		assert abs( value / iota_true - 1.0 ) < 5.0 * tol
 	if match and row['rate_id'] == remission_rate_id :
 		count += 1
-		value = fit_var_dict[var_id]['fit_var_value']
+		value = fit_var_dict[var_id]['variable_value']
 		assert abs( value / remission_true - 1.0 ) < 5.0 * tol
 assert count == 8
 #
@@ -360,7 +360,7 @@ for var_id in range( len(var_dict) ) :
 	if match :
 		integrand_id = row['integrand_id']
 		count       += 1
-		value        = fit_var_dict[var_id]['fit_var_value']
+		value        = fit_var_dict[var_id]['variable_value']
 		if integrand_id == remission_integrand_id :
 			assert abs( value / mulcov_income - 1.0 ) < 1e3 * tol
 		else :

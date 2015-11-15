@@ -295,7 +295,7 @@ for rate_id in range(n_rate) :
 			time_id = row['time_id']
 			if age_id not in rate_value :
 				rate_value[age_id] = dict()
-			value = fit_var_dict[var_id]['fit_var_value']
+			value = fit_var_dict[var_id]['variable_value']
 			rate_value[age_id][time_id] = value
 			count += 1
 	if rate_id == 0 :

@@ -39,7 +39,7 @@ $head avg_integrand$$
 The column has type $code real$$ and contains the
 $cref avg_integrand$$ that correspond to the
 $cref model_variables$$ obtained by the fit; see
-$cref/fit_var_value/fit_var_table/fit_var_value/$$.
+$cref/variable_value/fit_var_table/variable_value/$$.
 
 $head weighted_residual$$
 The column has type $code real$$ and contains the
@@ -49,7 +49,7 @@ $cref/weighted_residuals
 /$$
 that correspond to the
 $cref model_variables$$ obtained by the fit; see
-$cref/fit_var_value/fit_var_table/fit_var_value/$$.
+$cref/variable_value/fit_var_table/variable_value/$$.
 
 $head Example$$
 See the $cref fit_command.py$$ example and test.

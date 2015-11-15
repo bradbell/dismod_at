@@ -468,7 +468,7 @@ $code dismod_at$$ $cref input$$ tables which are not modified.
 $head fit_var_table$$
 A new $cref fit_var_table$$ is created each time this command is run.
 It contains the results of the fit in its
-$cref/fit_var_value/fit_var_table/fit_var_value/$$ column.
+$cref/variable_value/fit_var_table/variable_value/$$ column.
 
 $head fit_residual_table$$
 A new $cref fit_residual_table$$ is created each time this command is run.
@@ -551,12 +551,12 @@ void fit_command(
 	size_t n_var = solution.size();
 	vector<string> col_name(1), col_type(1), row_value(n_var);
 	vector<bool>   col_unique(1);
-	col_name[0]       = "fit_var_value";
+	col_name[0]       = "variable_value";
 	col_type[0]       = "real";
 	col_unique[0]     = false;
 	for(size_t fit_var_id = 0; fit_var_id < n_var; fit_var_id++)
-	{	double fit_var_value   = solution[fit_var_id];
-		row_value[fit_var_id] = to_string( fit_var_value );
+	{	double variable_value   = solution[fit_var_id];
+		row_value[fit_var_id] = to_string( variable_value );
 	}
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
@@ -656,7 +656,7 @@ in the fit_var table;
 to be specific,
 $codei%
 	%truth_var_id% = %fit_var_id% = %var_id%
-	%truth_var_value% = %fit_var_value%
+	%truth_var_value% = %variable_value%
 %$$
 
 $children%example/get_started/truth_command.py%$$
@@ -673,24 +673,24 @@ void truth_command(sqlite3* db)
 	using dismod_at::to_string;
 	//
 	// get fit_var table information
-	vector<double> fit_var_value;
+	vector<double> variable_value;
 	string table_name  = "fit_var";
-	string column_name = "fit_var_value";
-	dismod_at::get_table_column(db, table_name, column_name, fit_var_value);
+	string column_name = "variable_value";
+	dismod_at::get_table_column(db, table_name, column_name, variable_value);
 	//
 	// create truth_var table
 	string sql_cmd = "drop table if exists truth_var";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	table_name   = "truth_var";
-	size_t n_var = fit_var_value.size();
+	size_t n_var = variable_value.size();
 	vector<string> col_name(1), col_type(1), row_value(n_var);
 	vector<bool>   col_unique(1);
 	col_name[0]       = "truth_var_value";
 	col_type[0]       = "real";
 	col_unique[0]     = false;
 	for(size_t fit_var_id = 0; fit_var_id < n_var; fit_var_id++)
-	{	double truth_var_value  = fit_var_value[fit_var_id];
+	{	double truth_var_value  = variable_value[fit_var_id];
 		row_value[fit_var_id]   = to_string( truth_var_value );
 	}
 	dismod_at::create_table(

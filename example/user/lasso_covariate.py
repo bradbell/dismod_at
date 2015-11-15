@@ -334,7 +334,7 @@ for var_id in range( len(var_dict) ) :
 	match = match and row['node_id'] == parent_node_id
 	if match :
 		count += 1
-		value = fit_var_dict[var_id]['fit_var_value']
+		value = fit_var_dict[var_id]['variable_value']
 		assert abs( value / iota_true - 1.0 ) < tol
 assert count == 4
 #
@@ -345,7 +345,7 @@ for var_id in range( len(var_dict) ) :
 	if row['rate_id'] == iota_rate_id :
 		match = match and row['node_id'] != parent_node_id
 	if match :
-		value = fit_var_dict[var_id]['fit_var_value']
+		value = fit_var_dict[var_id]['variable_value']
 		assert abs( value ) < tol
 #
 # check covariate multiplier values
@@ -356,7 +356,7 @@ for var_id in range( len(var_dict) ) :
 	match = row['var_type'] == 'mulcov_rate_value'
 	if match :
 		count       += 1
-		value        = fit_var_dict[var_id]['fit_var_value']
+		value        = fit_var_dict[var_id]['variable_value']
 		covariate_id = row['covariate_id']
 		if covariate_id == 0 :
 			assert abs( value / mulcov_income - 1.0 ) < 1e3 * tol

@@ -52,6 +52,10 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-15$$
+The $code fit_var_value$$ column in the fit table has been changed to
+the $cref/variable_value/fit_var_table/variable_value/$$ column.
+
 $head 11-14$$
 There was a bug when running models with no
 $cref/random effects/model_variables/Random Effects, u/$$

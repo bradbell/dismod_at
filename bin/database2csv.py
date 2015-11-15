@@ -199,7 +199,7 @@ for row_in in table_data['var'] :
 	row_out['node'] = table_lookup('node', row_in['node_id'], 'node_name')
 	#
 	if have_fit :
-		row_out['fit_value'] = table_lookup('fit_var', var_id, 'fit_var_value')
+		row_out['fit_value'] = table_lookup('fit_var', var_id, 'variable_value')
 	if have_sample :
 		row_out['sample_value'] = table_lookup('sample', var_id, 'var_value')
 	#

@@ -289,7 +289,7 @@ for var_id in range( len(var_dict) ) :
 	assert row['var_type'] == 'rate'
 	if row['node_id'] == parent_node_id :
 		count += 1
-		value  = fit_var_dict[var_id]['fit_var_value']
+		value  = fit_var_dict[var_id]['variable_value']
 		rate   = rate_dict[ row['rate_id'] ]['rate_name']
 		if rate == 'pini' :
 			assert abs( value ) < eps
@@ -306,7 +306,7 @@ for var_id in range( len(var_dict) ) :
 	row   = var_dict[var_id]
 	if row['node_id'] != parent_node_id :
 		count += 1
-		value = fit_var_dict[var_id]['fit_var_value']
+		value = fit_var_dict[var_id]['variable_value']
 		assert abs(value) < eps
 assert count == 5 * 2
 # -----------------------------------------------------------------------------

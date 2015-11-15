@@ -80,7 +80,7 @@ for smooth_id in range( n_smooth ) :
 			if match :
 				count += 1
 				fit_var_id     = var_id
-				variable_value = fit_var_dict[fit_var_id]['fit_var_value']
+				variable_value = fit_var_dict[fit_var_id]['variable_value']
 				assert variable_value == 1.0
 		assert count == 0
 #
@@ -102,14 +102,14 @@ for rate_id in range(n_rate) :
 				count += 1
 				check          = rate_true[rate_id]
 				fit_var_id     = var_id
-				fit_var_value  = fit_var_dict[fit_var_id]['fit_var_value']
+				variable_value  = fit_var_dict[fit_var_id]['variable_value']
 				if node_id == parent_node_id :
-					err = fit_var_value / check - 1.0
+					err = variable_value / check - 1.0
 					if count == 1 :
-						rate_value.append( fit_var_value )
+						rate_value.append( variable_value )
 				else :
 					# child node
-					err = fit_var_value / check
+					err = variable_value / check
 				assert abs(err) <= check_tol
 		# number of point in smoothing for all rates
 		assert count == 2

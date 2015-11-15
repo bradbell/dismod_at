@@ -300,7 +300,7 @@ for smooth_id in range( n_smooth ) :
 			if match :
 				count += 1
 				fit_var_id     = var_id
-				variable_value = fit_var_dict[fit_var_id]['fit_var_value']
+				variable_value = fit_var_dict[fit_var_id]['variable_value']
 				assert variable_value == 1.0
 		assert count == 0
 #
@@ -319,8 +319,8 @@ for rate_id in range(n_rate) :
 			count         += 1
 			check          = rate_true[rate_id]
 			fit_var_id     = var_id
-			fit_var_value  = fit_var_dict[fit_var_id]['fit_var_value']
-			err            = fit_var_value / check - 1.0
+			variable_value  = fit_var_dict[fit_var_id]['variable_value']
+			err            = variable_value / check - 1.0
 			assert abs(err) <= check_tol
 	# There is one age point and two time points for each rate
 	assert count == 2
