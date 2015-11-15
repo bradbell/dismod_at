@@ -15,7 +15,7 @@ $spell
 	xam
 $$
 
-$section C++ pack_prior: Example and Test$$
+$section C++ fit_model: Example and Test$$
 
 $code
 $verbatim%example/devel/model/fit_model_xam.cpp%0
