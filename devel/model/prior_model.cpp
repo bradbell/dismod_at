@@ -113,6 +113,7 @@ residual_struct<Float> prior_model::log_prior(
 	const Float&          mulstd     ,  // multiplies prior std
 	const Float&          z          ,  // first random variable
 	const Float&          y          ,  // second random variable
+	size_t                id         ,  // the identifier for this residual
 	bool                  difference ) const // is this a difference residual
 {	assert ( 0 <= prior.density_id  );
 	assert ( prior.density_id < number_density_enum );
@@ -122,7 +123,7 @@ residual_struct<Float> prior_model::log_prior(
 	Float        delta   = mulstd * Float(prior.std);
 	Float        eta     = Float(prior.eta);
 	return residual_density(
-		z, y, mu, delta, eta, density, difference
+		z, y, mu, delta, eta, density, id, difference
 	);
 }
 
@@ -145,11 +146,14 @@ void prior_model::log_prior_on_grid(
 	Float not_used;
 	for(size_t i = 0; i < n_age; i++)
 	{	for(size_t j = 0; j < n_time; j++)
-		{	Float  var      = Float(pack_vec[offset + i * n_time + j]);
+		{	size_t var_id              = offset + i * n_time + j;
+			Float  var                 = Float(pack_vec[var_id]);
 			size_t prior_id            = s_info.value_prior_id(i, j);
 			const prior_struct&  prior = prior_table_[prior_id];
+			// use 3 * var_id + 0 for value priors
+			size_t id                  = 3 * var_id + 0;
 			residual  = log_prior(
-				prior, mulstd_vec[0], not_used, var, difference
+				prior, mulstd_vec[0], not_used, var, id, difference
 			);
 			residual_vec.push_back(residual);
 		}
@@ -164,12 +168,15 @@ void prior_model::log_prior_on_grid(
 		assert( a1 > a0 );
 # endif
 		for(size_t j = 0; j < n_time; j++)
-		{	Float  v0       = pack_vec[offset + i * n_time + j];
-			Float  v1       = pack_vec[offset + (i+1) * n_time + j];
+		{	size_t var_id   = offset + i * n_time + j;
+			Float  v0       = pack_vec[var_id];
+			Float  v1       = pack_vec[var_id + n_time];
 			size_t prior_id           = s_info.dage_prior_id(i, j);
 			const prior_struct& prior = prior_table_[prior_id];
+			// use 3 * var_id + 1 for dage priors
+			size_t id                  = 3 * var_id + 1;
 			residual  = log_prior(
-				prior, mulstd_vec[1], v1,  v0, difference
+				prior, mulstd_vec[1], v1,  v0, id, difference
 			);
 			residual_vec.push_back(residual);
 		}
@@ -184,13 +191,15 @@ void prior_model::log_prior_on_grid(
 		assert( t1 > t0 );
 # endif
 		for(size_t i = 0; i < n_age; i++)
-		{
-			Float  v0       = pack_vec[offset + i * n_time + j];
-			Float  v1       = pack_vec[offset + i * n_time + j + 1];
+		{	size_t var_id   = offset + i * n_time + j;
+			Float  v0       = pack_vec[var_id];
+			Float  v1       = pack_vec[var_id + 1];
 			size_t prior_id           = s_info.dtime_prior_id(i, j);
 			const prior_struct& prior = prior_table_[prior_id];
+			// use 3 * var_id + 2 for dtime priors
+			size_t id                  = 3 * var_id + 2;
 			residual  = log_prior(
-				prior, mulstd_vec[2], v1, v0, difference
+				prior, mulstd_vec[2], v1, v0, id, difference
 			);
 			residual_vec.push_back(residual);
 		}
@@ -301,11 +310,14 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 				}
 
 				// prior for this multilier
-				const prior_struct* prior = &prior_table_[prior_id];
+				const prior_struct& prior = prior_table_[prior_id];
+
+				// use 3 * var_id + 0 for value priors
+				size_t id = 3 * offset + 0;
 
 				// add fixed negative log-likelihood for this multiplier
 				residual  = log_prior(
-					*prior, Float(1.0), not_used, mulstd, difference
+					prior, Float(1.0), not_used, mulstd, id, difference
 				);
 				residual_vec.push_back(residual);
 			}

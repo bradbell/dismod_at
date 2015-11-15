@@ -35,6 +35,7 @@ namespace dismod_at {
 			const Float&        mulstd       ,
 			const Float&        z            ,
 			const Float&        y            ,
+			size_t              id           ,
 			bool                difference
 		) const;
 		template <class Float>

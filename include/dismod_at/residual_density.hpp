@@ -23,6 +23,7 @@ namespace dismod_at {
 		Float              logden_smooth;
 		Float              logden_sub_abs;
 		density_enum       density;
+		size_t             id;
 	};
 
 	template <class Float>
@@ -33,6 +34,7 @@ namespace dismod_at {
 		const Float&       delta       ,
 		const Float&       eta         ,
 		density_enum       d           ,
+		size_t             id          ,
 		bool               difference
 	);
 }

@@ -1379,6 +1379,10 @@ $codei%
 see $cref/residual_struct/residual_density/residual/residual_struct/$$.
 It contains the weighted residual and the corresponding log-density.
 
+$subhead id$$
+Note that the $cref/id/residual_density/id/$$ field is set to
+the value $icode subset_id$$.
+
 $children%example/devel/model/like_one_xam.cpp
 %$$
 $head Example$$
@@ -1481,7 +1485,7 @@ residual_struct<Float> data_model::like_one(
 	Float not_used;
 	bool difference = false;
 	return residual_density(
-		not_used, adjust, avg, delta, Float(eta), density, difference
+	not_used, adjust, avg, delta, Float(eta), density, subset_id, difference
 	);
 }
 /*
@@ -1528,8 +1532,7 @@ If it is true, the flagged data will be held out,
 otherwise it will not.
 
 $head random_depend$$
-This argument has prototype
-$codei%
+This argument has prototype $codei%
 	bool %random_depend%
 %$$
 If it is true, the residuals that depend on the random effects
@@ -1550,6 +1553,12 @@ The return value has prototype
 $codei%
 	CppAD::vector< residual_struct<%Float%> > %residual_vec%
 %$$
+
+$subhead id$$
+For each element of $icode residual_vec$$,
+the residual $cref/id/residual_density/id/$$
+is set to the $cref/data_subset_id/data_subset_table/data_subset_id/$$
+for the corresponding residual.
 
 $subhead Include Hold Outs$$
 If $icode hold_out$$ is false,

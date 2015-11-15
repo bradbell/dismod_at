@@ -19,13 +19,14 @@ $spell
 	logden
 	fabs
 	bool
+	var
 $$
 
 $section Compute Weighted Residual and Log-Density$$
 
 $head Syntax$$
 $icode%residual% = residual_density(
-	%z%, %y%, %mu%, %delta%, %eta%, %d%, %difference%
+	%z%, %y%, %mu%, %delta%, %eta%, %d%, %id, %difference%
 )%$$
 
 $head d$$
@@ -79,6 +80,18 @@ $code log_gaussian_enum$$ or $code log_laplace_enum$$,
 it specifies the offset in the log transformation.
 Otherwise it is not used.
 
+$head id$$
+This argument has prototype
+$codei%
+	size_t %id%
+%$$
+and is an identifier for the residual.
+For example, when computing the prior residuals it could be
+$code 3$$ times $cref/var_id/var_table/var_id/$$
+plus zero for value priors,
+plus one for age difference prior, and
+plus two for time difference prior.
+
 $head difference$$
 This argument has prototype
 $codei%
@@ -109,19 +122,19 @@ $icode Float$$ $cnext
 	$cref/log-density/statistic/Log-Density Function, D/$$
 $rnext
 $icode Float$$ $cnext
-	$icode logden_sub_abs$$ $cnext
+	$code logden_sub_abs$$ $cnext
 	absolute value of this smooth term is in log-density
 $rnext
 $code density_enum$$ $cnext
-	$icode density$$ $cnext
+	$code density$$ $cnext
 	type of density function; see
 	$cref/density_enum/get_density_table/density_enum/$$
 $rnext
+$code id$$ $cnext
+	$code id$$ $cnext
+	identifier for this residual; see
+	$cref/id/residual_density/id/$$ above.
 $tend
-The $cref/log-density function
-	/statistic
-	/Log-Density Function, D
-/$$
 
 $subhead wres$$
 If $icode difference$$ is false, $icode wres$$ is the value of
@@ -198,6 +211,7 @@ residual_struct<Float> residual_density(
 	const Float&       delta      ,
 	const Float&       eta        ,
 	density_enum       d          ,
+	size_t             id         ,
 	bool               difference )
 {	Float nan(std::numeric_limits<double>::quiet_NaN());
 	Float tiny( 10.0 / std::numeric_limits<double>::max() );
@@ -274,6 +288,7 @@ residual_struct<Float> residual_density(
 	residual.logden_smooth  = logden_smooth;
 	residual.logden_sub_abs = logden_sub_abs;
 	residual.density        = d;
+	residual.id             = id;
 	return residual;
 }
 
@@ -286,6 +301,7 @@ residual_struct<Float> residual_density(
 		const Float&       delta        ,                     \
 		const Float&       eta          ,                     \
 		density_enum       density      ,                     \
+		size_t             id           ,                     \
 		bool               difference                         \
 	);
 
