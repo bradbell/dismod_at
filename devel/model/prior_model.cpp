@@ -155,7 +155,9 @@ void prior_model::log_prior_on_grid(
 			residual  = log_prior(
 				prior, mulstd_vec[0], not_used, var, id, difference
 			);
-			residual_vec.push_back(residual);
+			// residuals for uniform densities are always zero
+			if( residual.density != uniform_enum )
+				residual_vec.push_back(residual);
 		}
 	}
 	// age difference smoothing
@@ -178,7 +180,8 @@ void prior_model::log_prior_on_grid(
 			residual  = log_prior(
 				prior, mulstd_vec[1], v1,  v0, id, difference
 			);
-			residual_vec.push_back(residual);
+			if( residual.density != uniform_enum )
+				residual_vec.push_back(residual);
 		}
 	}
 	// time difference smoothing
@@ -201,7 +204,8 @@ void prior_model::log_prior_on_grid(
 			residual  = log_prior(
 				prior, mulstd_vec[2], v1, v0, id, difference
 			);
-			residual_vec.push_back(residual);
+			if( residual.density != uniform_enum )
+				residual_vec.push_back(residual);
 		}
 	}
 	return;
@@ -319,7 +323,8 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 				residual  = log_prior(
 					prior, Float(1.0), not_used, mulstd, id, difference
 				);
-				residual_vec.push_back(residual);
+				if( residual.density != uniform_enum )
+					residual_vec.push_back(residual);
 			}
 		}
 	}

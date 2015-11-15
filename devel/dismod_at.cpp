@@ -549,14 +549,48 @@ void fit_command(
 	//
 	table_name   = "fit_var";
 	size_t n_var = solution.size();
-	vector<string> col_name(1), col_type(1), row_value(n_var);
-	vector<bool>   col_unique(1);
+	size_t n_col = 4;
+	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_var);
+	vector<bool>   col_unique(n_col);
+	//
 	col_name[0]       = "variable_value";
 	col_type[0]       = "real";
 	col_unique[0]     = false;
-	for(size_t fit_var_id = 0; fit_var_id < n_var; fit_var_id++)
-	{	double variable_value   = solution[fit_var_id];
-		row_value[fit_var_id] = to_string( variable_value );
+	//
+	col_name[1]       = "residual_value";
+	col_type[1]       = "real";
+	col_unique[1]     = false;
+	//
+	//
+	col_name[2]       = "residual_dage";
+	col_type[2]       = "real";
+	col_unique[2]     = false;
+	//
+	col_name[3]       = "residual_dtime";
+	col_type[3]       = "real";
+	col_unique[3]     = false;
+	//
+	for(size_t var_id = 0; var_id < n_var; var_id++)
+	{	double variable_value   = solution[var_id];
+		row_value[var_id * n_col + 0] = to_string( variable_value );
+		// initialzie all the residuals as empty (null in database)
+		for(size_t k = 1; k < 4; k++)
+			row_value[var_id * n_col + k] = "";
+	}
+	for(size_t variable_type = 0; variable_type < 2; variable_type++)
+	{	CppAD::vector< dismod_at::residual_struct<double> > residual;
+		if( variable_type == 0 )
+			residual  = prior_object.fixed(solution);
+		else
+			residual  = prior_object.random(solution);
+		//
+		for(size_t i = 0; i < residual.size(); i++)
+		{	size_t id     = residual[i].id;
+			size_t var_id = id / 3;
+			size_t k      = 1 + id % 3;
+			assert( var_id < n_var );
+			row_value[var_id * n_col + k] = to_string( residual[i].wres );
+		}
 	}
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
@@ -565,10 +599,10 @@ void fit_command(
 	sql_cmd = "drop table if exists fit_residual";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	size_t n_col    = 3;
 	size_t n_subset = data_subset_obj.size();
 	table_name      = "fit_residual";
 	//
+	n_col           = 3;
 	col_name.resize(n_col);
 	col_type.resize(n_col);
 	col_unique.resize(n_col);

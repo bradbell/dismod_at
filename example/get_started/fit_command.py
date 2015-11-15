@@ -79,9 +79,6 @@ for smooth_id in range( n_smooth ) :
 			match = match and row['smooth_id'] == smooth_id
 			if match :
 				count += 1
-				fit_var_id     = var_id
-				variable_value = fit_var_dict[fit_var_id]['variable_value']
-				assert variable_value == 1.0
 		assert count == 0
 #
 # rate variables
@@ -100,6 +97,8 @@ for rate_id in range(n_rate) :
 			match = match and row['node_id'] == node_id
 			if match :
 				count += 1
+				#
+				# check variable_value
 				check          = rate_true[rate_id]
 				fit_var_id     = var_id
 				variable_value  = fit_var_dict[fit_var_id]['variable_value']
@@ -111,6 +110,31 @@ for rate_id in range(n_rate) :
 					# child node
 					err = variable_value / check
 				assert abs(err) <= check_tol
+				#
+				# check residual_value
+				residual_value  = fit_var_dict[fit_var_id]['residual_value']
+				if node_id == parent_node_id :
+					# uniform prior
+					assert residual_value == None
+				else :
+					# gaussian prior
+					assert abs(residual_value) <= check_tol
+				#
+				# check residual_dage
+				residual_dage  = fit_var_dict[fit_var_id]['residual_dage']
+				# only one age point in each smoothing grid
+				assert residual_dage == None
+				#
+				# check residual_dtime
+				residual_dtime  = fit_var_dict[fit_var_id]['residual_dtime']
+				time_id = row['time_id']
+				if time_id == 2 :
+					assert residual_dtime == None
+				else :
+					assert time_id == 0
+					# gaussian prior
+					assert abs(residual_dtime) <= check_tol
+
 		# number of point in smoothing for all rates
 		assert count == 2
 assert len(rate_value) == n_rate

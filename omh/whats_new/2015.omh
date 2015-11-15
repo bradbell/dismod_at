@@ -53,8 +53,16 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 11-15$$
+$list number$$
 The $code fit_var_value$$ column in the fit table has been changed to
 the $cref/variable_value/fit_var_table/variable_value/$$ column.
+$lnext
+Add residual columns for
+$cref/value/fit_var_table/residual_value/$$
+$cref/dage/fit_var_table/residual_dage/$$ and
+$cref/dtime/fit_var_table/residual_dtime/$$
+to the fit_var table.
+$lend
 
 $head 11-14$$
 There was a bug when running models with no

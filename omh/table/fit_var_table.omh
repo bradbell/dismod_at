@@ -12,6 +12,8 @@ $begin fit_var_table$$
 $spell
 	cppad
 	var
+	dage
+	dtime
 $$
 
 $section The Optimization Results for Variables$$
@@ -32,7 +34,7 @@ $codei%
 In addition, the size of both tables is the same.
 
 $head variable_value$$
-The column has type $code real$$ and contains the model variable values.
+This column has type $code real$$ and contains the model variable values.
 To be specific, the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$ $latex ( \theta )$$,
 maximize the total objective
@@ -44,6 +46,31 @@ $cref/optimal random effects
 	/Optimal Random Effects, u^(theta)
 /$$
 $latex \hat{u} ( \theta )$$.
+
+$head residual_value$$
+This column has type $code real$$ and contains the
+$cref/weighted residual/statistic/Weighted Residual Function, R/$$
+corresponding to the $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
+for this variable.
+If there is no such residual, this column is $code null$$.
+For example, if the corresponding $cref/density/density_table/$$ is
+uniform.
+
+$head residual_dage$$
+This column has type $code real$$ and contains the
+$cref/weighted residual/statistic/Weighted Residual Function, R/$$
+corresponding to the $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
+for this variable.
+If there is no such residual, this column is $code null$$.
+For example, if the corresponding $icode dage_prior_id$$ is $code null$$.
+
+$head residual_dtime$$
+This column has type $code real$$ and contains the
+$cref/weighted residual/statistic/Weighted Residual Function, R/$$
+corresponding to the $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
+for this variable.
+If there is no such residual, this column is $code null$$.
+For example, if the corresponding $icode dtime_prior_id$$ is $code null$$.
 
 $head Example$$
 See the $cref fit_command.py$$ example and test.
