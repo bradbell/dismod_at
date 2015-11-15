@@ -247,9 +247,10 @@ bool like_all_xam(void)
 	// check results
 	ok &= data_table.size() == data_subset_obj.size();
 	bool hold_out = false;
-	bool parent   = true;  // data is for parent node
-	CppAD::vector< dismod_at::residual_struct<Float> >
-		residual_vec = data_object.like_all(hold_out, parent, pack_vec);
+	// parent node data does not depend on random effects
+	bool random_depend = false;
+	CppAD::vector< dismod_at::residual_struct<Float> > residual_vec =
+		data_object.like_all(hold_out, random_depend, pack_vec);
 	for(size_t data_id = 0; data_id < data_table.size(); data_id++)
 	{	Float avg         = data_object.avg_no_ode(data_id, pack_vec);
 		Float  wres       = residual_vec[data_id].wres;

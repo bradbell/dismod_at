@@ -350,14 +350,18 @@ CppAD::vector<Float> fit_model::implement_ran_like(
 	//
 	// evaluate the data and prior residuals
 	CppAD::vector< residual_struct<Float> > data_like, prior_ran;
-	bool hold_out = true;
-	bool parent   = false;
-	data_like  = data_object_.like_all(hold_out, parent, pack_vec);
+	bool hold_out       = true;
+	bool random_depend  = true;
+	data_like  = data_object_.like_all(hold_out, random_depend, pack_vec);
 	prior_ran  = prior_object_.random(pack_vec);
 	//
 	// number of data and prior residuals
 	size_t n_data_like  = data_like.size();
 	size_t n_prior_ran   = prior_ran.size();
+	//
+	// check for the case where we return the empty vector
+	if( n_data_like == 0 && n_prior_ran == 0 )
+		return CppAD::vector<Float>(0);
 	//
 	// count the number of absolute value terms
 	size_t n_abs = 0;
@@ -428,10 +432,10 @@ fit_model::a1d_vector fit_model::fix_like(
 	//
 	// evaluate prior residuals (data residuals empty for now)
 	CppAD::vector< residual_struct<a1_double> > data_like, prior_fix;
-	bool hold_out = true;
-	bool parent   = true;
-	data_like     = data_object_.like_all(hold_out, parent, a1_pack_vec);
-	prior_fix     = prior_object_.fixed(a1_pack_vec);
+	bool hold_out      = true;
+	bool random_depend = false;
+	data_like = data_object_.like_all(hold_out, random_depend, a1_pack_vec);
+	prior_fix = prior_object_.fixed(a1_pack_vec);
 	//
 	// number of data and prior residuals
 	size_t n_data_like   = data_like.size();

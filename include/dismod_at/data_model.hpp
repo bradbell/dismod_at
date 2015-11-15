@@ -37,6 +37,7 @@ class data_model {
 		size_t                n_time;
 		double                eta;
 		CppAD::vector<double> c_ode;
+		bool                  random_depend;
 	} data_ode_info;
 private:
 	const size_t                              n_covariate_;

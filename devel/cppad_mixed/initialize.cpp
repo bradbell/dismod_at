@@ -161,13 +161,11 @@ std::map<std::string, size_t> cppad_mixed::initialize(
 		for(size_t i = 0; i < n_fixed_; i++)
 			a1_fixed_vec[i] = fixed_vec[i];
 		a1d_vector vec = ran_like(a1_fixed_vec, a1_random_vec);
-# if 0
 		if( vec.size() != 0 )
 		{	std::string msg = "There are no random effects (n_random = 0),";
 			msg += "\nbut the function ran_like returns a non-empty vector";
 			fatal_error(msg);
 		}
-# endif
 	}
 	else
 	{

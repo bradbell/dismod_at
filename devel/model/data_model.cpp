@@ -501,6 +501,47 @@ pack_object_   (pack_object)
 		data_info_[subset_id].c_ode.resize(n_age * n_time);
 		for(k = 0; k < n_age * n_time; k++)
 			data_info_[subset_id].c_ode[k] = c_sum[k] / sum;
+
+		// does this data point depend on the random effects
+		bool random_depend = false;
+		if( child < n_child_ )
+		{	CppAD::vector<size_t> rate_id;
+			switch( integrand )
+			{	case Sincidence_enum:
+				rate_id.push_back( size_t(iota_enum) );
+				break;
+
+				case remission_enum:
+				rate_id.push_back( size_t(rho_enum) );
+				break;
+
+				case mtexcess_enum:
+				rate_id.push_back( size_t(chi_enum) );
+				break;
+
+				case mtother_enum:
+				rate_id.push_back( size_t(omega_enum) );
+				break;
+
+				case mtwith_enum:
+				case relrisk_enum:
+				rate_id.push_back( size_t(chi_enum) );
+				rate_id.push_back( size_t(omega_enum) );
+				break;
+
+				default:
+				for(size_t ell = 0; ell < number_rate_enum; ell++)
+					rate_id.push_back( ell );
+				break;
+			}
+			for(size_t ell = 0; ell < rate_id.size(); ell++)
+			{	size_t smooth_id =
+					pack_object.rate_info(rate_id[ell], child).smooth_id;
+				if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+					random_depend = true;
+			}
+		}
+		data_info_[subset_id].random_depend = random_depend;
 	}
 }
 /*
@@ -1460,7 +1501,7 @@ $section All the Weighted Residuals and Log-Likelihoods$$
 
 $head Syntax$$
 $icode%residual_vec% = %data_object%.like_all(
-	%hold_out%, %parent%, %pack_vec%
+	%hold_out%, %random_depend%, %pack_vec%
 )%$$
 
 $head Requirement$$
@@ -1486,16 +1527,14 @@ $codei%
 If it is true, the flagged data will be held out,
 otherwise it will not.
 
-$head parent$$
+$head random_depend$$
 This argument has prototype
 $codei%
-	bool %parent%
+	bool %random_depend%
 %$$
-If it is true, all the
-$cref/parent/option_table/parent_node_id/$$ data is returned.
-If it is false, all the
-$cref/child/node_table/parent/Child Group/$$ data is returned
-(including any level of descendant).
+If it is true, the residuals that depend on the random effects
+are included.
+If it is false, all of the other residuals are included.
 
 $head pack_vec$$
 This argument has prototype
@@ -1539,9 +1578,9 @@ $end
 */
 template <class Float>
 CppAD::vector< residual_struct<Float> > data_model::like_all(
-	bool                        hold_out ,
-	bool                        parent   ,
-	const CppAD::vector<Float>& pack_vec ) const
+	bool                        hold_out      ,
+	bool                        random_depend ,
+	const CppAD::vector<Float>& pack_vec      ) const
 {	assert( replace_like_called_ );
 	CppAD::vector< residual_struct<Float> > residual_vec;
 
@@ -1549,10 +1588,10 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 	for(size_t subset_id = 0; subset_id < data_subset_obj_.size(); subset_id++)
 	{	bool keep = hold_out == false;
 		keep     |= data_subset_obj_[subset_id].hold_out == 0;
-		if( parent )
-			keep &= data_info_[subset_id].child == n_child_;
+		if( random_depend )
+			keep &= data_info_[subset_id].random_depend == true;
 		else
-			keep &= data_info_[subset_id].child != n_child_;
+			keep &= data_info_[subset_id].random_depend == false;
 		assert( data_info_[subset_id].child <= n_child_ );
 		if( keep )
 		{	// compute avgerage of integrand for this data

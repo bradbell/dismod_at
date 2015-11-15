@@ -52,6 +52,18 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-14$$
+There was a bug when running models with no
+$cref/random effects/model_variables/Random Effects, u/$$
+because the $cref cppad_mixed_ran_like$$ was non-empty.
+This has been fixed.
+In addition, the $cref cppad_mixed$$ sub-package now detects
+when this is the case and reports the error.
+Furthermore, there were some cases where the model for the data
+did not depend on the random effects, but the Laplace approximation
+was still being applied (correct but not efficient).
+This has also been fixed.
+
 $head 11-12$$
 $list number$$
 Add $cref/random_seed/option_table/random_seed/$$ to the speed tests
