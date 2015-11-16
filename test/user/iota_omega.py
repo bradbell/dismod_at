@@ -13,8 +13,8 @@ iota_20        = 1e-4
 iota_100       = 1e-1
 omega_0        = 2e-4
 omega_100      = 2e-1
-age_list       = [  0.0, 20.0, 21.0, 100.0 ]
-omega_id_list  = [0, 1, 3] # exclude age 21
+iota_age_list  = [ 0.0, 20.0, 21.0, 100.0 ]
+omega_age_list = [ 0.0, 20.0, 40.0, 80.0, 100.0]
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -68,6 +68,7 @@ def example_db (file_name) :
 	import math
 	# ----------------------------------------------------------------------
 	# age table (in age_list above)
+	age_list = sorted( set( iota_age_list + omega_age_list ) )
 	#
 	# time table
 	time_list   = [ 1995.0, 2015.0 ]
@@ -105,7 +106,7 @@ def example_db (file_name) :
 		'time_lower':   time_list[0],
 		'time_upper':   time_list[-1]
 	}
-	# values that change between rows:
+	# Sincidence data (exclude data at 100)
 	for age in range(0, 100, 20) :
 		#
 		meas_value = iota_true(age)
@@ -116,8 +117,8 @@ def example_db (file_name) :
 		row['meas_std']     = meas_value * 0.1
 		data_dict.append( copy.copy(row) )
 		#
-	# values that change between rows:
-	for age in range(0, 100, 20) :
+	# mtother data (include data at 100)
+	for age in range(0, 101, 20) :
 		meas_value = omega_true(age)
 		row['age_lower']    = age
 		row['age_upper']    = age
@@ -180,10 +181,19 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# smooth table
+	#
+	iota_age_id = list()
+	for age in iota_age_list :
+		iota_age_id.append( age_list.index(age) )
+	#
+	omega_age_id = list()
+	for age in omega_age_list :
+		omega_age_id.append( age_list.index(age) )
+	#
 	smooth_dict = [
 		{ # smooth_omega_parent
 			'name':                     'smooth_omega_parent',
-			'age_id':                   omega_id_list,
+			'age_id':                   omega_age_id,
 			'time_id':                  range(len(time_list)),
 			'mulstd_value_prior_name':  '',
 			'mulstd_dage_prior_name':   '',
@@ -191,7 +201,7 @@ def example_db (file_name) :
 			'fun':                       fun_omega_parent
 		},{ # smooth_iota_parent
 			'name':                     'smooth_iota_parent',
-			'age_id':                   range(len(age_list)),
+			'age_id':                   iota_age_id,
 			'time_id':                  range(len(time_list)),
 			'mulstd_value_prior_name':  '',
 			'mulstd_dage_prior_name':   '',
@@ -306,11 +316,12 @@ iota_rate_id      = 1
 omega_rate_id     = 4
 max_err           = 0.0
 tolerance         = 1e-3
+age_list          = sorted( set( iota_age_list + omega_age_list ) )
 for var_id in range( len(var_dict) ) :
 	row   = var_dict[var_id]
 	assert row['var_type'] == 'rate'
 	assert row['node_id']  == 0
-	age     = age_list[ row['age_id'] ]
+	age    = age_list[ row['age_id'] ]
 	rate_id = row['rate_id']
 	value  = fit_var_dict[var_id]['variable_value']
 	if rate_id == iota_rate_id :
