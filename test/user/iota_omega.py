@@ -39,8 +39,13 @@ def constant_weight_fun(a, t) :
 # note that the a, t values are not used for this case
 def fun_zero(a, t) :
 	return ('prior_zero', 'prior_none', 'prior_none')
-def fun_rate_parent(a, t) :
+def fun_omega_parent(a, t) :
 	return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+def fun_iota_parent(a, t) :
+	if a <= 20.0 :
+		return ('prior_iota_20', 'prior_gauss_zero', 'prior_gauss_zero')
+	else :
+		return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import copy
@@ -148,19 +153,35 @@ def example_db (file_name) :
 			'mean':     0.1,
 			'std':      None,
 			'eta':      None
+		},{ # prior_iota_20
+			'name':     'prior_iota_20',
+			'density':  'uniform',
+			'lower':    iota_20,
+			'upper':    iota_20,
+			'mean':     iota_20,
+			'std':      None,
+			'eta':      None
 		}
 	]
 	# --------------------------------------------------------------------------
 	# smooth table
 	smooth_dict = [
-		{ # smooth_rate_parent
-			'name':                     'smooth_rate_parent',
+		{ # smooth_omega_parent
+			'name':                     'smooth_omega_parent',
 			'age_id':                   range(len(age_list)),
 			'time_id':                  range(len(time_list)),
 			'mulstd_value_prior_name':  '',
 			'mulstd_dage_prior_name':   '',
 			'mulstd_dtime_prior_name':  '',
-			'fun':                       fun_rate_parent
+			'fun':                       fun_omega_parent
+		},{ # smooth_iota_parent
+			'name':                     'smooth_iota_parent',
+			'age_id':                   range(len(age_list)),
+			'time_id':                  range(len(time_list)),
+			'mulstd_value_prior_name':  '',
+			'mulstd_dage_prior_name':   '',
+			'mulstd_dtime_prior_name':  '',
+			'fun':                       fun_iota_parent
 		},{ # smooth_zero
 			'name':                     'smooth_zero',
 			'age_id':                   [ 0 ],
@@ -180,7 +201,7 @@ def example_db (file_name) :
 			'child_smooth':  ''
 		},{
 			'name':          'iota',
-			'parent_smooth': 'smooth_rate_parent',
+			'parent_smooth': 'smooth_iota_parent',
 			'child_smooth':  ''
 		},{
 			'name':          'rho',
@@ -192,7 +213,7 @@ def example_db (file_name) :
 			'child_smooth':  ''
 		},{
 			'name':          'omega',
-			'parent_smooth': 'smooth_rate_parent',
+			'parent_smooth': 'smooth_omega_parent',
 			'child_smooth':  ''
 		}
 	]
