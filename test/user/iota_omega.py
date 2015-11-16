@@ -36,16 +36,32 @@ os.chdir('build/test/user')
 # ------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
-# note that the a, t values are not used for this case
+#
 def fun_zero(a, t) :
 	return ('prior_zero', 'prior_none', 'prior_none')
+#
 def fun_omega_parent(a, t) :
 	return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+#
 def fun_iota_parent(a, t) :
 	if a <= 20.0 :
 		return ('prior_iota_20', 'prior_gauss_zero', 'prior_gauss_zero')
 	else :
 		return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+#
+def iota_true(age) :
+	if age <= 20.0 :
+		return iota_20
+	else :
+		slope = (iota_100 - iota_20) / (100. - 20.)
+		return iota_20 + (age - 20.0) * slope
+#
+def omega_true(age) :
+	if age <= 20.0 :
+		return omega_20
+	else :
+		slope = (omega_100 - omega_20) / (100. - 20.)
+		return omega_20 + (age - 20.0) * slope
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import copy
@@ -93,11 +109,7 @@ def example_db (file_name) :
 	# values that change between rows:
 	for age in range(0, 100, 20) :
 		#
-		if age < 20.0 :
-			meas_value = iota_20
-		else :
-			slope      = (iota_100 - iota_20) / 80.0
-			meas_value = iota_20 + (age - 20.0)  * slope
+		meas_value = iota_true(age)
 		row['age_lower']    = age
 		row['age_upper']    = age
 		row['integrand']    = 'Sincidence'
@@ -107,11 +119,7 @@ def example_db (file_name) :
 		#
 	# values that change between rows:
 	for age in range(0, 100, 20) :
-		if age < 20.0 :
-			meas_value = omega_20
-		else :
-			slope      = (omega_100 - omega_20) / 80.0
-			meas_value = omega_20 + (age - 20.0)  * slope
+		meas_value = omega_true(age)
 		row['age_lower']    = age
 		row['age_upper']    = age
 		row['integrand']    = 'mtother'
@@ -289,6 +297,7 @@ eps            = 1e-4
 count             = 0
 iota_rate_id      = 1
 omega_rate_id     = 4
+max_err           = 0.0
 tolerance         = 1e-3
 for var_id in range( len(var_dict) ) :
 	row   = var_dict[var_id]
@@ -298,19 +307,14 @@ for var_id in range( len(var_dict) ) :
 	rate_id = row['rate_id']
 	value  = fit_var_dict[var_id]['variable_value']
 	if rate_id == iota_rate_id :
-		if age <= 20.0 :
-			value_true = iota_20
-		else :
-			slope      = (iota_100 - iota_20) / 80.0
-			value_true = iota_20 + (age - 20.0) * slope
+		value_true = iota_true(age)
 	else :
 		assert rate_id == omega_rate_id
-		if age <= 20.0 :
-			value_true = omega_20
-		else :
-			slope      = (omega_100 - omega_20) / 80.0
-			value_true = omega_20 + (age - 20.0) * slope
-	assert( value / value_true - 1.0 ) < tolerance
+		value_true = omega_true(age)
+	max_err = max(max_err, abs( value / value_true - 1.0 ) )
+	if( abs(value / value_true - 1.0) > tolerance ) :
+		print(age, value / value_true - 1.0 )
+assert max_err <= tolerance
 # -----------------------------------------------------------------------------
 print('iota_omega.py: OK')
 # -----------------------------------------------------------------------------
