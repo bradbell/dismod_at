@@ -14,8 +14,8 @@ iota_100       = 1e-1
 omega_0        = 2e-4
 omega_100      = 2e-1
 iota_age_list  = [ 0.0, 20.0, 21.0, 100.0 ]
-omega_age_list = [ 0.0, 10.0, 20.0, 40.0, 80.0, 100.0]
-data_age_list  = [ 0.0, 20.0, 40.0, 80.0, 100.0 ]
+omega_age_list = [ 0.0, 1.0, 5.0, 10.0, 20.0, 40.0, 80.0, 100.0 ]
+data_age_list  = [ 0.0, 1.0, 5.0, 10.0, 20.0, 40.0, 80.0, 100.0 ]
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -76,8 +76,8 @@ def example_db (file_name) :
 	#
 	# integrand table
 	integrand_dict = [
-		{ 'name':'Sincidence',  'eta':1e-4 },
-		{ 'name':'mtother',     'eta':1e-4 }
+		{ 'name':'Sincidence',  'eta':1e-5 },
+		{ 'name':'mtother',     'eta':1e-5 }
 	]
 	#
 	# node table: world
@@ -125,7 +125,7 @@ def example_db (file_name) :
 		row['age_upper']    = age
 		row['integrand']    = 'mtother'
 		row['meas_value']   = meas_value
-		row['meas_std']     = meas_value * 0.1
+		row['meas_std']     = meas_value * 0.01
 		data_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
@@ -148,12 +148,12 @@ def example_db (file_name) :
 			'eta':      None
 		},{ # prior_difference
 			'name':     'prior_difference',
-			'density':  'gaussian',
+			'density':  'log_gaussian',
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
 			'std':      1.0,
-			'eta':      None
+			'eta':      1e-4
 		},{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
@@ -249,13 +249,13 @@ def example_db (file_name) :
 		{ 'name':'parent_node_name',       'value':'world'             },
 		{ 'name':'number_sample',          'value':'1'                 },
 		{ 'name':'fit_sample_index',       'value':None                },
-		{ 'name':'ode_step_size',          'value':'5.0'               },
+		{ 'name':'ode_step_size',          'value':'1.0'               },
 		{ 'name':'random_seed',            'value':'0'                 },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
 		{ 'name':'quasi_fixed',            'value':'true'              },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'       },
-		{ 'name':'max_num_iter_fixed',     'value':'100'               },
+		{ 'name':'max_num_iter_fixed',     'value':'200'               },
 		{ 'name':'print_level_fixed',      'value':'0'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-6'              },
 		{ 'name':'random_bound',           'value':None                },
