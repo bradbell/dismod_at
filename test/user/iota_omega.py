@@ -11,9 +11,10 @@
 # true values used to simulate data
 iota_20        = 1e-4
 iota_100       = 1e-1
-omega_20       = 2e-4
+omega_0        = 2e-4
 omega_100      = 2e-1
-age_list       = [  0.0, 20.0, 100.0 ]
+age_list       = [  0.0, 20.0, 21.0, 100.0 ]
+omega_id_list  = [0, 1, 3] # exclude age 21
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -45,7 +46,9 @@ def fun_omega_parent(a, t) :
 #
 def fun_iota_parent(a, t) :
 	if a <= 20.0 :
-		return ('prior_iota_20', 'prior_gauss_zero', 'prior_gauss_zero')
+		return ('prior_iota_20', 'prior_none', 'prior_none')
+	elif a <= 21.0 :
+		return ('prior_iota_21', 'prior_gauss_zero', 'prior_gauss_zero')
 	else :
 		return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
 #
@@ -53,15 +56,11 @@ def iota_true(age) :
 	if age <= 20.0 :
 		return iota_20
 	else :
-		slope = (iota_100 - iota_20) / (100. - 20.)
-		return iota_20 + (age - 20.0) * slope
+		return iota_100
 #
 def omega_true(age) :
-	if age <= 20.0 :
-		return omega_20
-	else :
-		slope = (omega_100 - omega_20) / (100. - 20.)
-		return omega_20 + (age - 20.0) * slope
+	slope = (omega_100 - omega_0) / (100. - 0.)
+	return omega_0 + (age - 0.0) * slope
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import copy
@@ -156,7 +155,7 @@ def example_db (file_name) :
 		},{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
-			'lower':    min(iota_20 , omega_20) / 2.0 ,
+			'lower':    min(omega_true(0.0), iota_20),
 			'upper':    1.0,
 			'mean':     0.1,
 			'std':      None,
@@ -169,6 +168,14 @@ def example_db (file_name) :
 			'mean':     iota_20,
 			'std':      None,
 			'eta':      None
+		},{ # prior_iota_21
+			'name':     'prior_iota_21',
+			'density':  'uniform',
+			'lower':    iota_20,
+			'upper':    1.0,
+			'mean':     0.1,
+			'std':      None,
+			'eta':      None
 		}
 	]
 	# --------------------------------------------------------------------------
@@ -176,7 +183,7 @@ def example_db (file_name) :
 	smooth_dict = [
 		{ # smooth_omega_parent
 			'name':                     'smooth_omega_parent',
-			'age_id':                   range(len(age_list)),
+			'age_id':                   omega_id_list,
 			'time_id':                  range(len(time_list)),
 			'mulstd_value_prior_name':  '',
 			'mulstd_dage_prior_name':   '',
@@ -308,12 +315,14 @@ for var_id in range( len(var_dict) ) :
 	value  = fit_var_dict[var_id]['variable_value']
 	if rate_id == iota_rate_id :
 		value_true = iota_true(age)
+		rate       = 'iota'
 	else :
 		assert rate_id == omega_rate_id
 		value_true = omega_true(age)
+		rate       = 'omega'
 	max_err = max(max_err, abs( value / value_true - 1.0 ) )
 	if( abs(value / value_true - 1.0) > tolerance ) :
-		print(age, value / value_true - 1.0 )
+		print(rate, age, value / value_true - 1.0 )
 assert max_err <= tolerance
 # -----------------------------------------------------------------------------
 print('iota_omega.py: OK')
