@@ -10,7 +10,7 @@
 # ---------------------------------------------------------------------------
 # Build get_started Examples / Tests
 
-FOREACH(user_case zero_random iota_omega)
+FOREACH(user_case zero_random)
 	ADD_CUSTOM_TARGET(
 		check_test_user_${user_case}
 		${python_three_command} test/user/${user_case}.py
@@ -22,5 +22,4 @@ ADD_CUSTOM_TARGET(
 	check_test_user
 	DEPENDS
 	check_test_user_zero_random
-	check_test_user_iota_omega
 )

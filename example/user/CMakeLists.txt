@@ -12,10 +12,11 @@
 
 FOREACH(user_case
 	diff_constraint
-	no_children
+	fit_sim
+	jump_at_age
 	lasso_covariate
 	meas_covariate
-	fit_sim
+	no_children
 )
 	ADD_CUSTOM_TARGET(
 		check_example_user_${user_case}
@@ -28,8 +29,9 @@ ADD_CUSTOM_TARGET(
 	check_example_user
 	DEPENDS
 	check_example_user_diff_constraint
-	check_example_user_no_children
+	check_example_user_fit_sim
+	check_example_user_jump_at_age
 	check_example_user_lasso_covariate
 	check_example_user_meas_covariate
-	check_example_user_fit_sim
+	check_example_user_no_children
 )

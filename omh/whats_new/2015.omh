@@ -52,6 +52,9 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-16$$
+Add the $cref user_jump_at_age.py$$ example.
+
 $head 11-15$$
 $list number$$
 The $code fit_var_value$$ column in the fit table has been changed to

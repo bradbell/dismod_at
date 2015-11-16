@@ -8,6 +8,20 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
+# $begin user_jump_at_age.py$$ $newlinech #$$
+# $spell
+# $$
+#
+# $section Case with a Jump in Rate at an Age$$
+#
+# $code
+# $verbatim%
+#	example/user/jump_at_age.py
+#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $$
+# $end
+# ---------------------------------------------------------------------------
+# BEGIN PYTHON
 # true values used to simulate data
 iota_20        = 1e-4
 iota_100       = 1e-1
@@ -21,7 +35,7 @@ import sys
 import os
 import distutils.dir_util
 import subprocess
-test_program = 'test/user/iota_omega.py'
+test_program = 'example/user/jump_at_age.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -32,9 +46,9 @@ if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 sys.path.append( os.getcwd() + '/python' )
 import dismod_at
 #
-# change into the build/test/user directory
-distutils.dir_util.mkpath('build/test/user')
-os.chdir('build/test/user')
+# change into the build/example/user directory
+distutils.dir_util.mkpath('build/example/user')
+os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
@@ -337,6 +351,6 @@ for var_id in range( len(var_dict) ) :
 		print(rate, age, value / value_true - 1.0 )
 assert max_err <= tolerance
 # -----------------------------------------------------------------------------
-print('iota_omega.py: OK')
+print('jump_at_age.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

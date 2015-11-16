@@ -18,10 +18,11 @@ $section User Examples and Tests$$
 
 $childtable%example/get_started/get_started.omh
 	%example/user/diff_constraint.py
-	%example/user/no_children.py
+	%example/user/fit_sim.py
+	%example/user/jump_at_age.py
 	%example/user/lasso_covariate.py
 	%example/user/meas_covariate.py
-	%example/user/fit_sim.py
+	%example/user/no_children.py
 	%speed/simulated.py
 %$$
 
