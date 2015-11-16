@@ -14,7 +14,6 @@ iota_100       = 1e-1
 omega_20       = 2e-4
 omega_100      = 2e-1
 age_list       = [  0.0, 20.0, 100.0 ]
-group_by_age   = False # if false, group by integrand
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -101,30 +100,19 @@ def example_db (file_name) :
 		row['meas_std']     = meas_value * 0.1
 		data_dict.append( copy.copy(row) )
 		#
-		if group_by_age :
-			if age < 20.0 :
-				meas_value = omega_20
-			else :
-				slope      = (omega_100 - omega_20) / 80.0
-				meas_value = omega_20 + (age - 20.0)  * slope
-			row['integrand']    = 'mtother'
-			row['meas_value']   = meas_value
-			row['meas_std']     = meas_value * 0.1
-			data_dict.append( copy.copy(row) )
-	if not group_by_age :
-		# values that change between rows:
-		for age in range(0, 100, 20) :
-			if age < 20.0 :
-				meas_value = omega_20
-			else :
-				slope      = (omega_100 - omega_20) / 80.0
-				meas_value = omega_20 + (age - 20.0)  * slope
-			row['age_lower']    = age
-			row['age_upper']    = age
-			row['integrand']    = 'mtother'
-			row['meas_value']   = meas_value
-			row['meas_std']     = meas_value * 0.1
-			data_dict.append( copy.copy(row) )
+	# values that change between rows:
+	for age in range(0, 100, 20) :
+		if age < 20.0 :
+			meas_value = omega_20
+		else :
+			slope      = (omega_100 - omega_20) / 80.0
+			meas_value = omega_20 + (age - 20.0)  * slope
+		row['age_lower']    = age
+		row['age_upper']    = age
+		row['integrand']    = 'mtother'
+		row['meas_value']   = meas_value
+		row['meas_std']     = meas_value * 0.1
+		data_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
 	prior_dict = [
@@ -168,7 +156,7 @@ def example_db (file_name) :
 		{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
 			'age_id':                   range(len(age_list)),
-			'time_id':                  [ 0 ],
+			'time_id':                  range(len(time_list)),
 			'mulstd_value_prior_name':  '',
 			'mulstd_dage_prior_name':   '',
 			'mulstd_dtime_prior_name':  '',
@@ -285,7 +273,6 @@ for var_id in range( len(var_dict) ) :
 	row   = var_dict[var_id]
 	assert row['var_type'] == 'rate'
 	assert row['node_id']  == 0
-	assert row['time_id']  == 0
 	age     = age_list[ row['age_id'] ]
 	rate_id = row['rate_id']
 	value  = fit_var_dict[var_id]['variable_value']
