@@ -14,7 +14,8 @@ iota_100       = 1e-1
 omega_0        = 2e-4
 omega_100      = 2e-1
 iota_age_list  = [ 0.0, 20.0, 21.0, 100.0 ]
-omega_age_list = [ 0.0, 20.0, 40.0, 80.0, 100.0]
+omega_age_list = [ 0.0, 10.0, 20.0, 40.0, 80.0, 100.0]
+data_age_list  = [ 0.0, 20.0, 40.0, 80.0, 100.0 ]
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -42,15 +43,15 @@ def fun_zero(a, t) :
 	return ('prior_zero', 'prior_none', 'prior_none')
 #
 def fun_omega_parent(a, t) :
-	return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+	return ('prior_rate_parent', 'prior_difference', 'prior_difference')
 #
 def fun_iota_parent(a, t) :
 	if a <= 20.0 :
 		return ('prior_iota_20', 'prior_none', 'prior_none')
 	elif a <= 21.0 :
-		return ('prior_iota_21', 'prior_gauss_zero', 'prior_gauss_zero')
+		return ('prior_iota_21', 'prior_difference', 'prior_difference')
 	else :
-		return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+		return ('prior_rate_parent', 'prior_difference', 'prior_difference')
 #
 def iota_true(age) :
 	if age <= 20.0 :
@@ -107,7 +108,7 @@ def example_db (file_name) :
 		'time_upper':   time_list[-1]
 	}
 	# Sincidence data (exclude data at 100)
-	for age in range(0, 100, 20) :
+	for age in data_age_list :
 		#
 		meas_value = iota_true(age)
 		row['age_lower']    = age
@@ -118,7 +119,7 @@ def example_db (file_name) :
 		data_dict.append( copy.copy(row) )
 		#
 	# mtother data (include data at 100)
-	for age in range(0, 101, 20) :
+	for age in data_age_list :
 		meas_value = omega_true(age)
 		row['age_lower']    = age
 		row['age_upper']    = age
@@ -145,8 +146,8 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      None,
 			'eta':      None
-		},{ # prior_gauss_zero
-			'name':     'prior_gauss_zero',
+		},{ # prior_difference
+			'name':     'prior_difference',
 			'density':  'gaussian',
 			'lower':    None,
 			'upper':    None,
