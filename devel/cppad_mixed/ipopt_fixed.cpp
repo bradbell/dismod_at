@@ -148,6 +148,7 @@ namespace {
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /* $$
+------------------------------------------------------------------------------
 $begin ipopt_fixed_ctor$$
 $spell
 	ranobj
@@ -289,6 +290,7 @@ of the Lagrangian (for any Lagrange multiplier values).
 
 
 $end
+-------------------------------------------------------------------------------
 */
 ipopt_fixed::ipopt_fixed(
 	const std::string&  random_options     ,
@@ -1518,4 +1520,162 @@ void ipopt_fixed::finalize_solution(
 	// set member variable finalize_solution_ok_
 	finalize_solution_ok_ = ok;
 }
+/*
+-------------------------------------------------------------------------------
+$begin ipopt_fixed_check_grad_f$$
+$spell
+	eval
+	tol
+	bool
+$$
+
+$section Check eval_grad_f Routine Using Finite Differences$$
+
+$head Syntax$$
+$icode%ok% = check_grad_f(%trace%, %relative_step%, %relative_tol%)%$$
+
+$head trace$$
+This argument has prototype
+$codei%
+	bool %trace%
+%$$
+If it is true, a trace of this computation is printed on standard output.
+
+$head relative_step$$
+This argument has prototype
+$codei%
+	double %relative_step%
+%$$
+If the upper and lower bounds are finite,
+It is the fraction of the upper minus the lower bound
+(for each component of $icode x$$) used for the step size.
+If the upper and lower bounds are infinite, and the component of
+$icode x$$ is non-zero,
+it is the fraction of the component of $icode x$$ used for the step size.
+If the upper and lower bounds are infinite, and the component of
+$icode x$$ is zero, it is the absolute step size.
+
+$head relative_tol$$
+This argument has prototype
+$codei%
+	double %relative_tol%
+%$$
+and is the relative tolerance for the difference between a finite difference
+approximation and the evaluated derivative.
+The tolerance is relative to the absolute value of the gradient plus
+the relative step size.
+
+$head ok$$
+The return value has prototype
+$codei%
+	bool %ok%
+%$$
+It is true if
+all the differences between the finite difference approximation
+and the evaluated derivative are within the relative tolerance.
+Otherwise, it is false.
+
+$head 2DO$
+Create a check for the constaint functions.
+
+$end
+-------------------------------------------------------------------------------
+*/
+bool ipopt_fixed::check_grad_f(
+	bool trace, double relative_step, double relative_tol
+)
+{	using CppAD::abs;
+	size_t n   = n_fixed_ + fix_like_n_abs_;
+	size_t m   = 2 * fix_like_n_abs_ + n_constraint_;
+
+	// each x will be different
+	bool  new_x = true;
+
+	// start starting point
+	CppAD::vector<double> x_start(n);
+	bool init_x = true, init_z = false, init_lambda = false;
+	double *z_L = CPPAD_NULL, *z_U = CPPAD_NULL, *lambda = CPPAD_NULL;
+	bool ok = get_starting_point(
+		Index(n),
+		init_x,
+		x_start.data(),
+		init_z,
+		z_L,
+		z_U,
+		m,
+		init_lambda,
+		lambda
+	);
+	assert( ok );
+
+	// get lower and upper bounds
+	CppAD::vector<double> x_lower(n), x_upper(n), g_lower(m), g_upper(m);
+	ok = get_bounds_info(
+		Index(n),
+		x_lower.data(),
+		x_upper.data(),
+		Index(m),
+		g_lower.data(),
+		g_upper.data()
+	);
+	assert( ok );
+
+	// eval_grad_f
+	CppAD::vector<double> grad_f(n);
+	eval_grad_f( Index(n), x_start.data(), new_x, grad_f.data() );
+
+
+	// initialize x_step
+	CppAD::vector<double> x_step(x_start);
+
+	// loop over directions where upper > lower
+	for(size_t j = 0; j < n; j++) if( x_lower[j] < x_upper[j] )
+	{	// step size
+		double step = relative_step * ( x_upper[j] - x_lower[j] );
+		if( x_upper[j] == nlp_upper_bound_inf_ ||
+			x_lower[j] == nlp_lower_bound_inf_  )
+		{	step = relative_step * x_start[j];
+			if( x_start[j] == 0.0 )
+				step = relative_step;
+		}
+
+		// x_plus, obj_plus
+		double obj_plus;
+		double x_plus = std::min(x_start[j] + step, x_upper[j]);
+		x_step[j]     = x_plus;
+		eval_f(n, x_step.data(), new_x, obj_plus);
+
+		// x_minus, obj_minus
+		double obj_minus;
+		double x_minus = std::max(x_start[j] - step, x_lower[j]);
+		x_step[j]      = x_minus;
+		eval_f(n, x_step.data(), new_x, obj_minus);
+
+		// restore j-th component of x_step
+		x_step[j]      = x_start[j];
+
+		// finite difference approximation for derivative
+		double finite_diff = (obj_plus - obj_minus) / (x_plus - x_minus);
+
+		// relative error
+		double diff  = grad_f[j] - finite_diff;
+		double relative_diff  = abs(diff) / (relative_step + abs(grad_f[j]) );
+
+		// trace
+		bool trace_j = trace || relative_diff > relative_tol;
+		if( trace_j ) std::cout
+			<< std::setprecision(3)
+			<< "j="        << std::setw(2) << j
+			<< ", step="   << std::setw(6) << step
+			<< ", grad_f=" << std::setw(9) << grad_f[j]
+			<< ", df_dx="  << std::setw(9) << finite_diff
+			<< ", reldif=" << std::setw(9) << relative_diff
+			<< std::endl;
+		//
+		// ok
+		ok &= ok && relative_diff <= relative_tol;
+	}
+	return ok;
+}
+// ---------------------------------------------------------------------------
 } // END_DISMOD_AT_NAMESPACE

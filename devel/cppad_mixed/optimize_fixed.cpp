@@ -279,7 +279,7 @@ CppAD::vector<double> cppad_mixed::optimize_fixed(
 		if ( tok_1 == "String" )
 		{	app->Options()->SetStringValue(tok_2.c_str(), tok_3.c_str());
 			if( quasi_fixed_ )
-			{	bool ok = true;
+			{	ok = true;
 				if( tok_2 == "hessian_approximation" )
 					ok &= tok_3 == "limited-memory";
 				if( tok_2 == "derivative_test" )
@@ -327,6 +327,17 @@ CppAD::vector<double> cppad_mixed::optimize_fixed(
 		random_in,
 		mixed_object
 	);
+
+# ifndef NDEBUG
+	// check derivative calculation
+	bool   trace         = false;
+	double relative_step = 1e-5;
+	double relative_tol  = 1e-3;
+	ok = fixed_nlp->check_grad_f(trace, relative_step, relative_tol);
+	if( ! ok )
+	{	fatal_error("optimize_fixed: check_grad_f failed");
+	}
+# endif
 
 	// Set values used for minus and plus infinity
 	app->Options()->SetNumericValue(

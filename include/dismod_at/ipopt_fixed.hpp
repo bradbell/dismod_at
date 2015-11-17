@@ -164,7 +164,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		//
 		// default destructor
 		virtual ~ipopt_fixed(void);
-		//
+		// -----------------------------------------------------------------
 		virtual bool get_nlp_info(
 			Index&          n            ,
 			Index&          m            ,
@@ -245,6 +245,12 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 			Number                            obj_value ,
 			const Ipopt::IpoptData*           ip_data   ,
 			Ipopt::IpoptCalculatedQuantities* ip_cq
+		);
+		// -----------------------------------------------------------------
+		bool check_grad_f(
+			bool                         trace             ,
+			double                       relative_step     ,
+			double                       relative_tol
 		);
 	};
 } // END_DISMOD_AT_NAMESPACE
