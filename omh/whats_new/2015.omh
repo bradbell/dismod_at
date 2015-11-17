@@ -52,6 +52,11 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-17$$
+Add another derivative checker
+$cref ipopt_fixed_check_grad_f$$
+(not yet part of $cref cppad_mixed$$ user API).
+
 $head 11-16$$
 Add the $cref user_jump_at_age.py$$ example.
 

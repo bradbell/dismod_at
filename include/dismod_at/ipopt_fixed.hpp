@@ -249,8 +249,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 		// -----------------------------------------------------------------
 		bool check_grad_f(
 			bool                         trace             ,
-			double                       relative_step     ,
-			double                       relative_tol
+			double                       relative_tol      ,
+			double                       aboslute_tol
 		);
 	};
 } // END_DISMOD_AT_NAMESPACE
