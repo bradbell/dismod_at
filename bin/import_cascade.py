@@ -482,7 +482,7 @@ for row_in in data_table_in :
 					value = None
 				row_out.append(value)
 			if mtall :
-				ok = ok and float(age_lower) >= 5.0
+				ok = ok and float(age_upper) >= 1.0
 				if ok :
 					mtall_list.append(row_out)
 			else :
@@ -647,6 +647,7 @@ for time_id in range( n_time ) :
 	] )
 # --------------------------------------------------------------------------
 # child_omega_smooth_id
+# 2DO: make child grid same as parent grid for corresponding rate.
 #
 n_age                 = len(age_list)
 n_time                = len(time_list)
@@ -789,7 +790,10 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	dlocal_list_id = list()
 	#
 	# smooth_row_list
-	n_age  = len( rate_prior_in_dict[rate] )
+	age_id_list = rate_prior_in_dict[rate].keys()
+	if rate == 'omega' :
+		age_id_list = range( len( age_list ) )
+	n_age       = len( age_id_list )
 	n_time = len(time_list)
 	name   = rate + '_smooth'
 	if is_zero :
@@ -800,17 +804,25 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 				[ name, n_age, n_time, None, None, None ]
 		)
 		# need to fill in smooth_grid entries for this smoothing
-		for age_id in rate_prior_in_dict[rate] :
+		for age_id in age_id_list :
 			# -----------------------------------------------------------------
 			# determine value_prior_id
 			name  = rate + '_prior'
-			prior_in = rate_prior_in_dict[rate][age_id]
 			if rate == 'omega' :
 				# The cascade converts all cause mortality to constraints on
 				# omega and does not really use its prior for omega, so
 				# overide its mean.
-				prior_in['mean'] = 0.01
+				prior_in = {
+					'lower':0.0,
+					'upper':1.0,
+					'mean': 0.1,
+					'std':  'inf',
+					'eta':  None,
+					'density': 'uniform'
+				}
 			#
+			else :
+				prior_in = rate_prior_in_dict[rate][age_id]
 			assert not is_zero
 			if is_pos :
 				eta   = float( value_table_in['kappa_' + rate] )
