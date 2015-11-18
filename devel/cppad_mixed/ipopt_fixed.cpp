@@ -1534,7 +1534,7 @@ $$
 $section Check eval_grad_f Routine Using Finite Differences$$
 
 $head Syntax$$
-$icode%ok% = check_grad_f(%trace%, %relative_tol%, %absolute_tol%)%$$
+$icode%ok% = check_grad_f(%trace%, %relative_tol%)%$$
 
 $head trace$$
 This argument has prototype
@@ -1561,13 +1561,9 @@ $codei%
 %$$
 and is the relative tolerance for the difference between a finite difference
 approximation and the evaluated derivative.
-
-This argument has prototype
-$codei%
-	double %absolute_tol%
-%$$
-The tolerance is the relative tolerance times the absolute
-value of the gradient plus the $icode absolute_tol$$.
+The absolute tolerance is the relative tolerance times the
+sum of the absolute value of the gradient plus
+the square root of machine epsilon times the absolute value of $latex f(x)$$.
 Each component passes the tolerance test if it does so
 for one of the relative steps.
 
@@ -1589,12 +1585,11 @@ to the cppad_mixed API (as an alternative to Ipopt's derivative checker).
 $end
 -------------------------------------------------------------------------------
 */
-bool ipopt_fixed::check_grad_f(
-	bool trace, double relative_tol, double absolute_tol
-)
+bool ipopt_fixed::check_grad_f(bool trace, double relative_tol)
 {	using CppAD::abs;
-	size_t n   = n_fixed_ + fix_like_n_abs_;
-	size_t m   = 2 * fix_like_n_abs_ + n_constraint_;
+	size_t n        = n_fixed_ + fix_like_n_abs_;
+	size_t m        = 2 * fix_like_n_abs_ + n_constraint_;
+	double root_eps = std::sqrt( std::numeric_limits<double>::epsilon() );
 
 	// each x will be different
 	bool  new_x = true;
@@ -1636,6 +1631,12 @@ bool ipopt_fixed::check_grad_f(
 	// initialize x_step
 	CppAD::vector<double> x_step(x_start);
 
+	// eval_f
+	double obj_value;
+	new_x = false;
+	eval_f(Index(n), x_step.data(), new_x, obj_value);
+	new_x = true;
+
 	// loop over directions where upper > lower
 	for(size_t j = 0; j < n; j++) if( x_lower[j] < x_upper[j] )
 	{	// loop over relative step sizes
@@ -1676,7 +1677,7 @@ bool ipopt_fixed::check_grad_f(
 
 			// relative difference
 			double diff           = grad_f[j] - approx;
-			double denominator    = absolute_tol + abs(grad_f[j]);
+			double denominator    = abs(grad_f[j]) + root_eps * obj_value;
 			double relative_diff  = abs(diff) / denominator;
 
 			// best
@@ -1694,10 +1695,11 @@ bool ipopt_fixed::check_grad_f(
 		if( trace_j ) std::cout
 			<< std::setprecision(3)
 			<< "j="        << std::setw(2) << j
-			<< ", step="   << std::setw(6) << best_step
-			<< ", grad_f=" << std::setw(9) << grad_f[j]
-			<< ", approx=" << std::setw(9) << best_approx
-			<< ", reldif=" << std::setw(9) << best_diff
+			<< ",step="   << std::setw(6) << best_step
+			<< ",f="      << std::setw(9) << obj_value
+			<< ",grad_f=" << std::setw(9) << grad_f[j]
+			<< ",approx=" << std::setw(9) << best_approx
+			<< ",reldif=" << std::setw(9) << best_diff
 			<< std::endl;
 		//
 		// ok

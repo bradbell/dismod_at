@@ -247,11 +247,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 			Ipopt::IpoptCalculatedQuantities* ip_cq
 		);
 		// -----------------------------------------------------------------
-		bool check_grad_f(
-			bool                         trace             ,
-			double                       relative_tol      ,
-			double                       aboslute_tol
-		);
+		bool check_grad_f(bool trace, double relative_tol);
 	};
 } // END_DISMOD_AT_NAMESPACE
 

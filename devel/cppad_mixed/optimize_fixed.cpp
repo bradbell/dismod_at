@@ -332,8 +332,7 @@ CppAD::vector<double> cppad_mixed::optimize_fixed(
 	// check derivative calculation
 	bool   trace         = false;
 	double relative_tol  = 1e-3;
-	double absolute_tol  = 1e-8;
-	ok = fixed_nlp->check_grad_f(trace, relative_tol, absolute_tol);
+	ok = fixed_nlp->check_grad_f(trace, relative_tol);
 	if( ! ok )
 	{	fatal_error("optimize_fixed: check_grad_f failed");
 	}
