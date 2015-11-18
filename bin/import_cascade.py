@@ -116,8 +116,10 @@ if len( option_table_in['time_grid'].split() ) < 2 :
 #
 rate_case = option_table_in['rate_case']
 case_list = [
-	'iota_pos_rho_zero', 'iota_zero_rho_pos',
-	'iota_zero_rho_pos', 'iota_pos_rho_pos'
+	'iota_zero_rho_zero',
+	'iota_zero_rho_pos',
+	'iota_pos_rho_zero',
+	'iota_pos_rho_pos'
 ]
 if rate_case not in case_list :
 	msg  = usage + '\n'
@@ -470,16 +472,16 @@ for row_in in data_table_in :
 				time_lower,   # 9
 				time_upper    # 10
 			]
+			for name in covariate_name2id :
+				value        = row_in[name]
+				if math.isnan( float(value) ) :
+					value = None
+				row_out.append(value)
 			if mtall :
 				ok = ok and float(age_lower) >= 5.0
 				if ok :
 					mtall_list.append(row_out)
 			else :
-				for name in covariate_name2id :
-					value        = row_in[name]
-					if math.isnan( float(value) ) :
-						value = None
-					row_out.append(value)
 				row_list.append( row_out )
 #
 # sort the mtall data by age_lower, time_lower, node_id
@@ -507,8 +509,6 @@ for row  in mtall_list :
 			meas_std     = math.sqrt( meas_std / n_sum**2  )
 			previous_row[5] = meas_value
 			previous_row[6] = meas_std
-			for name in covariate_name2id :
-				previous_row.append(None)
 			row_list.append(previous_row)
 		n_sum        = 0
 		meas_value   = 0.0
@@ -522,8 +522,6 @@ meas_value   = meas_value / n_sum
 meas_std     = math.sqrt( meas_std / n_sum**2  )
 previous_row[5] = meas_value
 previous_row[6] = meas_std
-for name in covariate_name2id :
-	previous_row.append('0')  # drop the covariates in mtall data
 row_list.append(previous_row)
 #
 #
