@@ -48,6 +48,7 @@ option_dict = collections.OrderedDict([
 ('child_dtime_std','    dtime standard deviation for random effects'),
 ('xi_factor','          factor that multiplies cascade_ode xi value'),
 ('random_bound','       bound for random effects, empty text for no bound'),
+('age_grid','           list of age grid (as space seperated values)'),
 ('time_grid','          list of time grid (as space seperated values)'),
 ('include_covariates',' all or list of covariates to include'),
 ('include_integrands',' all or list of cascade integand names to include')
@@ -260,24 +261,19 @@ dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
 # Output age table.
 # age_list:
-#
-age_dict = dict()
-for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
-	drate           = 'd' + rate
-	age_dict[rate]  = list()
-	age_dict[drate] = list()
-	for row in rate_prior_in :
-		if row['type'] == rate :
-			age_dict[rate].append( float( row['age'] ) )
-		if row['type'] == drate :
-			age_dict[drate].append( float( row['age'] ) )
-#
-# This program assumes only one age grid in rate_prior_in
-age_list = sorted( age_dict['iota'] )
-for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
-	drate = 'd' + rate
-	assert age_dict[rate] == age_list
-	assert age_dict[drate] == age_list[0:-1]
+age_grid = option_table_in['age_grid']
+age_list  = age_grid.split()
+for i in range( len(age_list) ) :
+	age_list[i] = float( age_list[i] )
+ok = True
+for row in rate_prior_in :
+	age = float( row['age'] )
+	if not age in age_list :
+		print('age ', age, ' is not in age_grid')
+		age_list.add(age)
+if not ok :
+	msg  = 'rate prior file has a age not in option.csv age grid'
+	sys.exit(msg)
 #
 col_name = [ 'age' ]
 col_type = [ 'real' ]
@@ -290,15 +286,23 @@ dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # rate_prior_in_dict:
 #
 rate_prior_in_dict = dict()
+rate_max_age_id    = dict()
 for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	drate           = 'd' + rate
-	rate_prior_in_dict[rate]  = list()
-	rate_prior_in_dict[drate] = list()
+	rate_prior_in_dict[rate]  = dict()
+	rate_prior_in_dict[drate] = dict()
+	rate_max_age_id[rate]     = None
 	for row in rate_prior_in :
+		age_id = age_list.index( float( row['age'] ) )
+		if rate_max_age_id[rate]  == None :
+			rate_max_age_id[rate] = age_id
+		else :
+			rate_max_age_id[rate] = max( age_id, rate_max_age_id[rate] )
+		#
 		if row['type'] == rate :
-			rate_prior_in_dict[rate].append( row )
+			rate_prior_in_dict[rate][age_id] = row
 		if row['type'] == drate :
-			rate_prior_in_dict[drate].append( row )
+			rate_prior_in_dict[drate][age_id] = row
 # ---------------------------------------------------------------------------
 # covariate_name2id
 #
@@ -785,7 +789,7 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 	dlocal_list_id = list()
 	#
 	# smooth_row_list
-	n_age  = len(age_list)
+	n_age  = len( rate_prior_in_dict[rate] )
 	n_time = len(time_list)
 	name   = rate + '_smooth'
 	if is_zero :
@@ -796,7 +800,7 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 				[ name, n_age, n_time, None, None, None ]
 		)
 		# need to fill in smooth_grid entries for this smoothing
-		for age_id in range( n_age ) :
+		for age_id in rate_prior_in_dict[rate] :
 			# -----------------------------------------------------------------
 			# determine value_prior_id
 			name  = rate + '_prior'
@@ -834,8 +838,8 @@ for rate in [ 'iota', 'rho', 'chi', 'omega' ] :
 				local_list.append( element )
 				prior_row_list.append( prior_at )
 			value_prior_id = local_list_id [ local_list.index(element) ]
-			if age_id + 1 < n_age :
-				# ----------------------------------------------------------------
+			if age_id != rate_max_age_id[rate] :
+				# -------------------------------------------------------------
 				# determine dage_prior_id
 				#
 				# ignoring this prior
