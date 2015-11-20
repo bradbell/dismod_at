@@ -1548,11 +1548,9 @@ For each $icode%relative_step% = 1e-3, 1e-4, %...%, 1e-8%$$:
 If the upper and lower bounds are finite,
 the step is relative to the upper minus the lower bound
 (for each component of $icode x$$).
-If the upper and lower bounds are infinite, and the component of
-$icode x$$ is non-zero,
-the step is relative to the component of $icode x$$.
-If the upper and lower bounds are infinite, and the component of
-$icode x$$ is zero, the relative step is used as an absolute step.
+If the upper or lower bound is infinite,
+the step is the maximum of the relative step
+and the relative step times the absolute component of $icode x$$.
 
 $head relative_tol$$
 This argument has prototype
