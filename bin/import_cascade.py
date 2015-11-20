@@ -41,13 +41,15 @@ option_dict = collections.OrderedDict([
 ('cascade_path','       path to directory where cascade input files are'),
 ('parent_node_name','   name of the parent node'),
 ('ode_step_size','      step size of ODE solution in age and time'),
-('mtall2mtother','      treat mtall data as if it were mtother [yes/no]'),
-('chi_zero','           should chi be constrainted to be zero [yes/no]'),
+('mtall2mtother','      treat mtall data as if it were mtother [true/false]'),
+('chi_zero','           should chi be constrainted to be zero [true/false]'),
+('quasi_fixed','        quasi-Newton fixed effects optimization [true/false]'),
 ('rate_case','          are iota and rho zero or non-zero; see option_table'),
 ('parent_dtime_std','   dtime standard deviation for the fixed effects'),
 ('child_value_std','    value standard deviation for random effects'),
 ('child_dtime_std','    dtime standard deviation for random effects'),
 ('xi_factor','          factor that multiplies cascade_ode xi value'),
+('zeta_factor','        factor that multiplies upper limits for zeta'),
 ('random_bound','       bound for random effects, empty text for no bound'),
 ('age_grid','           list of age grid (as space seperated values)'),
 ('time_grid','          list of time grid (as space seperated values)'),
@@ -97,12 +99,12 @@ if not float(ode_step_size) > 0.0 :
 	msg += ' is not greater than zero'
 	sys.exit(msg)
 #
-for name in [ 'mtall2mtother' , 'chi_zero' ] :
+for name in [ 'mtall2mtother' , 'chi_zero', 'quasi_fixed' ] :
 	value = option_table_in[name]
-	if not value in [ 'yes', 'no' ] :
+	if not value in [ 'true', 'false' ] :
 		msg  = usage + '\n'
 		msg += 'in ' + option_csv + ' name = "' + value
-		msg += '" is not "yes" or "no"'
+		msg += '" is not "true" or "false"'
 		sys.exit(msg)
 #
 cascade_path = option_table_in['cascade_path']
@@ -344,7 +346,7 @@ for row in integrand_table_in :
 	if include[name] :
 		if name == 'incidence' :
 			name = 'Sincidence'
-		if name == 'mtall' and option_table_in['mtall2mtother']=='yes' :
+		if name == 'mtall' and option_table_in['mtall2mtother']=='true' :
 			name = 'mtother'
 		row_list.append( [ name , float( row['eta'] ) ] )
 tbl_name = 'integrand'
@@ -762,7 +764,7 @@ rate_is_zero['pini'] = pini_smooth_id == None
 rate_is_zero['iota'] = rate_case.find('iota_zero') != -1
 rate_is_zero['rho']  = rate_case.find('rho_zero') != -1
 #
-rate_is_zero['chi'] = option_table_in['chi_zero'] == 'yes'
+rate_is_zero['chi'] = option_table_in['chi_zero'] == 'true'
 has_non_zero_bound  = False
 for row in rate_prior_in :
 	if row['type'] == 'chi' and float( row['upper'] ) != 0.0 :
@@ -924,6 +926,7 @@ col_name = list( col_name2type.keys() )
 col_type = list( col_name2type.values() )
 row_list = list()
 #
+zeta_factor = float( option_table_in['zeta_factor'] )
 include_covariates = option_table_in['include_covariates']
 for row in effect_prior_in :
 	effect = row['effect']
@@ -963,6 +966,9 @@ for row in effect_prior_in :
 			#
 			prior_name   = name + '_' + covariate + '_prior'
 			prior_at     = gaussian_cascade2at(prior_name, row)
+			if row['effect'] == 'zeta' :
+				# multiply upper bound
+				prior_at[2] = zeta_factor * prior_at[2]
 			prior_id     = len( prior_row_list )
 			prior_row_list.append( prior_at )
 			#
@@ -979,7 +985,7 @@ for row in effect_prior_in :
 				[ mulcov_type, rate_id, integrand_id, covariate_id, smooth_id ]
 			)
 if 'a_local' in covariate_name2id and have_mtall_data :
-	if option_table_in['mtall2mtother'] == 'yes' :
+	if option_table_in['mtall2mtother'] == 'true' :
 		mulcov_type  = 'meas_std'
 		rate_id      = 4 # omega
 		integrand_id = integrand_name2id['mtall']
@@ -1069,7 +1075,7 @@ row_list = [
 	[ 'fit_sample_index',       None                             ],
 	[ 'random_seed',            str(int( timer.time() ))         ],
 	[ 'rate_case',              option_table_in['rate_case']     ],
-	[ 'quasi_fixed',            'true'                           ],
+	[ 'quasi_fixed',            option_table_in['quasi_fixed']   ],
 	[ 'print_level_fixed',      '5'                              ],
 	[ 'print_level_random',     '0'                              ],
 	[ 'tolerance_fixed',        '1e-8'                           ],
