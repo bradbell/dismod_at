@@ -50,8 +50,8 @@ option_dict = collections.OrderedDict([
 ('random_bound','       bound for random effects, empty text for no bound'),
 ('age_grid','           list of age grid (as space seperated values)'),
 ('time_grid','          list of time grid (as space seperated values)'),
-('include_covariates',' all or list of covariates to include'),
-('include_integrands',' all or list of cascade integand names to include')
+('include_covariates',' empty or list of covariates to include'),
+('include_integrands',' empty or list of cascade integand names to include')
 ])
 usage = '''bin/import_cascade.py option_csv
 
@@ -311,7 +311,7 @@ covariate_name_list = list()
 include_covariates  = option_table_in['include_covariates']
 for name in header :
 	include = include_covariates.find(name) != -1
-	include = include or include_covariates == 'all'
+	include = include or include_covariates == ''
 	include = include and ( name.startswith('r_') or name.startswith('a_') )
 	if include :
 		covariate_name_list.append(name)
@@ -330,7 +330,7 @@ integrand_id        = 0
 for row in integrand_table_in :
 	name          = row['integrand']
 	include[name] = include_integrands.find(name) != -1
-	include[name] = include[name] or include_integrands == 'all'
+	include[name] = include[name] or include_integrands == ''
 	if include[name] :
 		integrand_name2id[name] = integrand_id
 		integrand_id           += 1
@@ -411,6 +411,7 @@ tbl_name = 'weight_grid'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
 # Output data table
+# have_mtall_data
 #
 col_name2type = collections.OrderedDict([
 	# required columns
@@ -494,9 +495,9 @@ mtall_list = sorted(mtall_list, key=lambda row: row[9]) # by time_lower
 mtall_list = sorted(mtall_list, key=lambda row: row[7]) # by age_lower
 #
 # combine the mtall data that has the same node_id, time_lower, age_lower
-previous_row  = [None]
+previous_row  = None
 for row  in mtall_list :
-	if previous_row[0] == None :
+	if previous_row == None :
 		match = False
 	else :
 		match = True
@@ -508,7 +509,7 @@ for row  in mtall_list :
 		meas_value += float( previous_row[5] )
 		meas_std   += float( previous_row[6] )**2
 	else :
-		if previous_row[0] != None :
+		if previous_row != None :
 			meas_value   = meas_value / n_sum
 			meas_std     = math.sqrt( meas_std / n_sum**2  )
 			previous_row[5] = meas_value
@@ -519,16 +520,18 @@ for row  in mtall_list :
 		meas_std     = 0.0
 	previous_row = row
 #
-n_sum       += 1
-meas_value  += float( previous_row[5] )
-meas_std    += float( previous_row[6] )**2
-meas_value   = meas_value / n_sum
-meas_std     = math.sqrt( meas_std / n_sum**2  )
-previous_row[5] = meas_value
-previous_row[6] = meas_std
-row_list.append(previous_row)
+if previous_row != None :
+	n_sum       += 1
+	meas_value  += float( previous_row[5] )
+	meas_std    += float( previous_row[6] )**2
+	meas_value   = meas_value / n_sum
+	meas_std     = math.sqrt( meas_std / n_sum**2  )
+	previous_row[5] = meas_value
+	previous_row[6] = meas_std
+	row_list.append(previous_row)
 #
 #
+have_mtall_data = len(mtall_list) > 0
 tbl_name = 'data'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
 # ---------------------------------------------------------------------------
@@ -927,9 +930,9 @@ for row in effect_prior_in :
 		covariate    = row['name']
 		integrand    = row['integrand']
 		include_cov  = include_covariates.find(covariate) != -1
-		include_cov  = include_cov or include_covariates == 'all'
+		include_cov  = include_cov or include_covariates == ''
 		include_int  = include_integrands.find(integrand) != -1
-		include_int  = include_int or include_integrands == 'all'
+		include_int  = include_int or include_integrands == ''
 		if include_cov and include_int  :
 			integrand    = row['integrand']
 			covariate_id = covariate_name2id[covariate]
@@ -974,7 +977,7 @@ for row in effect_prior_in :
 			row_list.append(
 				[ mulcov_type, rate_id, integrand_id, covariate_id, smooth_id ]
 			)
-if 'a_local' in covariate_name2id :
+if 'a_local' in covariate_name2id and have_mtall_data :
 	if option_table_in['mtall2mtother'] == 'yes' :
 		mulcov_type  = 'meas_std'
 		rate_id      = 4 # omega
