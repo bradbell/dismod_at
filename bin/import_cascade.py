@@ -482,7 +482,7 @@ for row_in in data_table_in :
 					value = None
 				row_out.append(value)
 			if mtall :
-				ok = ok and float(age_upper) >= 1.0
+				ok = float(age_lower) >= 1.0
 				if ok :
 					mtall_list.append(row_out)
 			else :
@@ -974,6 +974,46 @@ for row in effect_prior_in :
 			row_list.append(
 				[ mulcov_type, rate_id, integrand_id, covariate_id, smooth_id ]
 			)
+if 'a_local' in covariate_name2id :
+	if option_table_in['mtall2mtother'] == 'yes' :
+		mulcov_type  = 'meas_std'
+		rate_id      = 4 # omega
+		integrand_id = integrand_name2id['mtall']
+		covariate_id = covariate_name2id['a_local']
+		smooth_id    = len(smooth_row_list)
+		row_list.append(
+			[ mulcov_type, rate_id, integrand_id, covariate_id, smooth_id ]
+		)
+		#
+		name         = 'smooth_mulcov_mtother_std'
+		n_age        = 1
+		n_time       = 1
+		smooth_row_list.append(
+				[ name , n_age, n_time, None, None, None ]
+		)
+		#
+		age_id         = 0
+		time_id        = 0
+		value_prior_id = len(prior_row_list)
+		dage_prior_id  = None
+		dtime_prior_id = None
+		smooth_grid_row_list.append( [
+			smooth_id,
+			age_id,
+			time_id,
+			value_prior_id,
+			dage_prior_id,
+			dtime_prior_id
+		] )
+		#
+		name       = 'prior_zero_one'
+		lower      = 0.0
+		upper      = 1.0
+		mean       = 0.1
+		density_id = density_name2id['uniform']
+		prior_row_list.append(
+			[name, lower, upper, mean, std, eta, density_id]
+		);
 #
 tbl_name = 'mulcov'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)
