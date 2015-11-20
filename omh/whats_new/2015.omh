@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2015$$
 $spell
+	num_iter
 	relrisk
 	mtwith
 	cppad
@@ -51,6 +52,23 @@ $spell
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 11-20$$
+$list number$$
+Improve the new derivative checker.
+$lnext
+Improve $code bin/import_cascade.py$$.
+$lnext
+The $code fit_command$$ was using the mean for the variable values,
+instead of the values specified in $cref start_var_table$$.
+This has been fixed.
+$lnext
+The optimization $cref/max_num_iter/option_table/Optimizer/max_num_iter/$$
+was changed to allow for zero.
+This enables one to use the starting values in the
+$cref fit_var_table$$ and $cref fit_residual_table$$ tables.
+$lend
+
 
 $head 11-17$$
 Add another derivative checker

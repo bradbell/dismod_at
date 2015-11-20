@@ -224,9 +224,9 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			name_vec[i] == "max_num_iter_random"
 		)
 		{	int max_num_iter = std::atoi( option_value[match].c_str() );
-			bool ok = 0 < max_num_iter;
+			bool ok = 0 <= max_num_iter;
 			if( ! ok )
-			{	msg = "option_value is not greater than zero";
+			{	msg = "option_value is less than zero";
 				error_exit(db, msg, table_name, match);
 			}
 		}

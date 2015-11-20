@@ -39,6 +39,7 @@ namespace dismod_at {
 		const size_t                       n_fixed_;
 		const size_t                       n_random_;
 		const pack_info&                   pack_object_;
+		const CppAD::vector<double>&       start_var_;
 		const CppAD::vector<prior_struct>& prior_table_;
 		const CppAD::vector<smooth_info>&  s_info_vec_;
 		const data_model&                  data_object_;

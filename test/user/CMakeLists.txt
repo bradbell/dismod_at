@@ -10,7 +10,7 @@
 # ---------------------------------------------------------------------------
 # Build get_started Examples / Tests
 
-FOREACH(user_case zero_random)
+FOREACH(user_case zero_random zero_iteration)
 	ADD_CUSTOM_TARGET(
 		check_test_user_${user_case}
 		${python_three_command} test/user/${user_case}.py
@@ -22,4 +22,5 @@ ADD_CUSTOM_TARGET(
 	check_test_user
 	DEPENDS
 	check_test_user_zero_random
+	check_test_user_zero_iteration
 )

@@ -1652,9 +1652,8 @@ bool ipopt_fixed::check_grad_f(bool trace, double relative_tol)
 			double step = relative_step[i_try] * ( x_upper[j] - x_lower[j] );
 			if( x_upper[j] == nlp_upper_bound_inf_ ||
 				x_lower[j] == nlp_lower_bound_inf_  )
-			{	step = relative_step[i_try] * x_start[j];
-				if( x_start[j] == 0.0 )
-					step = relative_step[i_try];
+			{	step = relative_step[i_try] * abs( x_start[j] );
+				step = std::max( step, relative_step[i_try] );
 			}
 
 			// x_plus, obj_plus
@@ -1694,12 +1693,12 @@ bool ipopt_fixed::check_grad_f(bool trace, double relative_tol)
 		bool trace_j = trace || best_diff > relative_tol;
 		if( trace_j ) std::cout
 			<< std::setprecision(3)
-			<< "j="        << std::setw(2) << j
-			<< ",step="   << std::setw(6) << best_step
-			<< ",f="      << std::setw(9) << obj_value
-			<< ",grad_f=" << std::setw(9) << grad_f[j]
-			<< ",approx=" << std::setw(9) << best_approx
-			<< ",reldif=" << std::setw(9) << best_diff
+			<< "j="     << std::setw(2) << j
+			<< ",step=" << std::setw(9) << best_step
+			<< ",f="    << std::setw(9) << obj_value
+			<< ",grad=" << std::setw(9) << grad_f[j]
+			<< ",appr=" << std::setw(9) << best_approx
+			<< ",diff=" << std::setw(9) << best_diff
 			<< std::endl;
 		//
 		// ok

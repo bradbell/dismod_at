@@ -184,6 +184,7 @@ db_            (db)                                 ,
 n_fixed_       ( size_fixed_effect(pack_object)  )  ,
 n_random_      ( size_random_effect(pack_object) )  ,
 pack_object_   ( pack_object )                      ,
+start_var_     ( start_var   )                      ,
 prior_table_   ( prior_table )                      ,
 s_info_vec_    ( s_info_vec  )                      ,
 data_object_   ( data_object )                      ,
@@ -265,15 +266,11 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 
 	// fixed_in
 	CppAD::vector<double> fixed_in(n_fixed_);
-	for(size_t i = 0; i < n_var; i++)
-		pack_vec[i] = prior_table_[ value_prior_[i] ].mean;
-	get_fixed_effect(pack_object_, pack_vec, fixed_in);
+	get_fixed_effect(pack_object_, start_var_, fixed_in);
 
 	// random_in
 	CppAD::vector<double> random_in(n_random_);
-	for(size_t i = 0; i < n_var; i++)
-		pack_vec[i] = prior_table_[ value_prior_[i] ].mean;
-	get_random_effect(pack_object_, pack_vec, random_in);
+	get_random_effect(pack_object_, start_var_, random_in);
 
 	// Ipopt fixed effects optimization options
 	std::string options = "";

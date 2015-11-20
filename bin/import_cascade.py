@@ -44,6 +44,7 @@ option_dict = collections.OrderedDict([
 ('mtall2mtother','      treat mtall data as if it were mtother [yes/no]'),
 ('chi_zero','           should chi be constrainted to be zero [yes/no]'),
 ('rate_case','          are iota and rho zero or non-zero; see option_table'),
+('parent_dtime_std','   dtime standard deviation for the fixed effects'),
 ('child_value_std','    value standard deviation for random effects'),
 ('child_dtime_std','    dtime standard deviation for random effects'),
 ('xi_factor','          factor that multiplies cascade_ode xi value'),
@@ -702,7 +703,7 @@ density_id          = density_name2id['log_gaussian']
 lower               = None
 upper               = None
 mean                = 0.0
-std                 = math.log( avg_delta_time / 10. )
+std                 = float( option_table_in['parent_dtime_std'] )
 for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
 	if rate == 'pini' :
 		eta = 1e-7
