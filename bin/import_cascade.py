@@ -206,13 +206,10 @@ if not os.path.isdir('build') :
 	print('mkdir build')
 	os.mkdir('build')
 #
-subdir=os.path.join('build', cascade_dir)
-if not os.path.isdir(subdir) :
-	print('mkdir ' + subdir)
-	os.mkdir(subdir)
+option_dir = os.path.dirname(option_csv)
 #
 new = True
-file_name        = os.path.join(subdir, cascade_dir + '.db')
+file_name        = os.path.join(option_dir, cascade_dir + '.db')
 db_connection    = dismod_at.create_connection(file_name, new)
 # ---------------------------------------------------------------------------
 # integrand_table_in: integrand file as a list of dictionaries
