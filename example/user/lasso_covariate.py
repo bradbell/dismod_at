@@ -195,25 +195,25 @@ def example_db (file_name) :
 			'name':                     'smooth_rate_child',
 			'age_id':                   [ last_age_id ],
 			'time_id':                  [ last_time_id ],
-			'mulstd_value_prior_name':  '',
-			'mulstd_dage_prior_name':   '',
-			'mulstd_dtime_prior_name':  '',
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_rate_child
 		},{ # smooth_iota_parent
 			'name':                     'smooth_iota_parent',
 			'age_id':                   [ 0, last_age_id ],
 			'time_id':                  [ 0, last_time_id ],
-			'mulstd_value_prior_name':  '',
-			'mulstd_dage_prior_name':   '',
-			'mulstd_dtime_prior_name':  '',
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                       fun_iota_parent
 		},{ # smooth_mulcov
 			'name':                     'smooth_mulcov',
 			'age_id':                   [ middle_age_id ],
 			'time_id':                  [ middle_time_id ],
-			'mulstd_value_prior_name':  '',
-			'mulstd_dage_prior_name':   '',
-			'mulstd_dtime_prior_name':  '',
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                       fun_mulcov
 		}
 	]
@@ -222,24 +222,24 @@ def example_db (file_name) :
 	rate_dict = [
 		{
 			'name':          'pini',
-			'parent_smooth': '',
-			'child_smooth':  ''
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_iota_parent',
 			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'rho',
-			'parent_smooth': '',
-			'child_smooth':  ''
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{
 			'name':          'chi',
-			'parent_smooth': '',
-			'child_smooth':  ''
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{
 			'name':          'omega',
-			'parent_smooth': '',
-			'child_smooth':  ''
+			'parent_smooth': None,
+			'child_smooth':  None
 		}
 	]
 	# ------------------------------------------------------------------------

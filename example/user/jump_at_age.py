@@ -210,25 +210,25 @@ def example_db (file_name) :
 			'name':                     'smooth_omega_parent',
 			'age_id':                   omega_age_id,
 			'time_id':                  range(len(time_list)),
-			'mulstd_value_prior_name':  '',
-			'mulstd_dage_prior_name':   '',
-			'mulstd_dtime_prior_name':  '',
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                       fun_omega_parent
 		},{ # smooth_iota_parent
 			'name':                     'smooth_iota_parent',
 			'age_id':                   iota_age_id,
 			'time_id':                  range(len(time_list)),
-			'mulstd_value_prior_name':  '',
-			'mulstd_dage_prior_name':   '',
-			'mulstd_dtime_prior_name':  '',
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                       fun_iota_parent
 		},{ # smooth_zero
 			'name':                     'smooth_zero',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0 ],
-			'mulstd_value_prior_name':  '',
-			'mulstd_dage_prior_name':   '',
-			'mulstd_dtime_prior_name':  '',
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                       fun_zero
 		}
 	]
@@ -237,24 +237,24 @@ def example_db (file_name) :
 	rate_dict = [
 		{
 			'name':          'pini',
-			'parent_smooth': '',
-			'child_smooth':  ''
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_iota_parent',
-			'child_smooth':  ''
+			'child_smooth':  None
 		},{
 			'name':          'rho',
-			'parent_smooth': '',
-			'child_smooth':  ''
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{
 			'name':          'chi',
-			'parent_smooth': '',
-			'child_smooth':  ''
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{
 			'name':          'omega',
 			'parent_smooth': 'smooth_omega_parent',
-			'child_smooth':  ''
+			'child_smooth':  None
 		}
 	]
 	# ------------------------------------------------------------------------

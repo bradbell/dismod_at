@@ -164,17 +164,17 @@ def example_db (file_name) :
 			'name':                     'smooth_rate_child',
 			'age_id':                   [ 0, last_age_id ],
 			'time_id':                  [ 0, last_time_id ],
-			'mulstd_value_prior_name':  '',
-			'mulstd_dage_prior_name':   '',
-			'mulstd_dtime_prior_name':  '',
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_rate_child
 		},{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
 			'age_id':                   [ 0, last_age_id ],
 			'time_id':                  [ 0, last_time_id ],
-			'mulstd_value_prior_name':  '',
-			'mulstd_dage_prior_name':   '',
-			'mulstd_dtime_prior_name':  '',
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                       fun_rate_parent
 		}
 	]
@@ -183,8 +183,8 @@ def example_db (file_name) :
 	rate_dict = [
 		{
 			'name':          'pini',
-			'parent_smooth': '',
-			'child_smooth':  ''
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_rate_parent',

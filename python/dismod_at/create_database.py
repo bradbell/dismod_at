@@ -177,29 +177,35 @@
 # The dictionary $icode%smooth_dict%[%i%]%$$ has the following:
 # $table
 # Key     $cnext Value Type  $pre  $$ $cnext Description       $rnext
-# name    $cnext str         $cnext name of $th i$$ smoothing  $rnext
-# age_id  $cnext list of int $cnext indices for age values     $rnext
-# time_id $cnext list of int $cnext indices for time values    $rnext
-# mulstd_value_prior_name   $cnext str   $cnext
+# name    $cnext $code str$$         $cnext name of $th i$$ smoothing  $rnext
+# age_id  $cnext list of $code int$$ $cnext indices for age values     $rnext
+# time_id $cnext list of $code int$$ $cnext indices for time values    $rnext
+# mulstd_value_prior_name    $cnext $code str$$   $cnext
 #	name of prior for $cref/
 #		mulstd_value_prior_name/smooth_table/mulstd_value_prior_id/$$
-#	(empty string for $code null$$) $rnext
-# mulstd_dage_prior_name   $cnext str   $cnext
+#	$rnext
+# mulstd_dage_prior_name   $cnext $code str$$   $cnext
 #	name of prior for $cref/
 #		mulstd_dage_prior_name/smooth_table/mulstd_dage_prior_id/$$
-#	(empty string for $code null$$) $rnext
-# mulstd_dtime_prior_name   $cnext str   $cnext
+#	$rnext
+# mulstd_dtime_prior_name   $cnext $code str$$   $cnext
 #	name of prior for $cref/
 #		mulstd_dtime_prior_name/smooth_table/mulstd_dtime_prior_id/$$
-#	(empty string for $code null$$) $rnext
-# fun     $cnext function    $cnext $icode%(%v%,%da%,%dt%)%=%fun%(%a%, %t%)%$$
+#	$rnext
+# fun     $cnext function  $cnext $codei%(%v%,%da%,%dt%)=%fun%(%a%, %t%)%$$
 # $tend
+# $list number$$
+# The value $code None$$ is used to represent $code null$$ for
+# the smoothing multipliers names; e.g., $icode mulstd_value_prior_name$$.
+# $lnext
 # The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
 # are the prior names for the value, difference in age,
 # and difference in time corresponding to this smoothing name.
-# Note that $icode age_id$$ and $code time_id$$ must be in increasing order,
+# $lnext
+# The $icode age_id$$ and $icode time_id$$ must be in increasing order,
 # $icode da$$ is not used when age $icode%a% = %age_id%[-1]%$$ and
 # $icode dt$$ is not used when time $icode%t% = %time_id%[-1]%$$.
+# $lend
 #
 # $head rate_dict$$
 # This is a list of $code dict$$
@@ -214,7 +220,7 @@
 # Furthermore the order of the rate names must be
 # pini, iota, rho, chi, omega; i.e., the only order allowed for
 # the $cref rate_table$$.
-# The empty string is used to represent a $code null$$ value for
+# The value $code None$$ is used to represent a $code null$$ value for
 # the parent and child smoothings.
 #
 # $head mulcov_dict$$
@@ -462,19 +468,19 @@ def create_database(
 		n_time        = len( smooth['time_id'] )
 		#
 		prior_name    = smooth['mulstd_value_prior_name']
-		if prior_name == '' :
+		if prior_name == None :
 			mulstd_value_prior_id = None
 		else :
 			mulstd_value_prior_id = global_prior_name2id[prior_name]
 		#
 		prior_name    = smooth['mulstd_dage_prior_name']
-		if prior_name == '' :
+		if prior_name == None :
 			mulstd_dage_prior_id = None
 		else :
 			mulstd_dage_prior_id = global_prior_name2id[prior_name]
 		#
 		prior_name    = smooth['mulstd_dtime_prior_name']
-		if prior_name == '' :
+		if prior_name == None :
 			mulstd_dtime_prior_id = None
 		else :
 			mulstd_dtime_prior_id = global_prior_name2id[prior_name]
@@ -538,11 +544,11 @@ def create_database(
 	for i in range( len(rate_dict) ) :
 		rate             = rate_dict[i]
 		rate_name        = rate['name']
-		if rate['parent_smooth'] == '' :
+		if rate['parent_smooth'] == None :
 			parent_smooth_id = None
 		else :
 			parent_smooth_id = global_smooth_name2id[ rate['parent_smooth'] ]
-		if rate['child_smooth'] == '' :
+		if rate['child_smooth'] == None :
 			child_smooth_id = None
 		else :
 			child_smooth_id  = global_smooth_name2id[ rate['child_smooth'] ]

@@ -127,16 +127,16 @@ def create_database() :
 		{	'name':'uniform_01_constant',
 			'age_id':[0],
 			'time_id':[0],
-			'mulstd_value_prior_name':'',
-			'mulstd_dage_prior_name':'',
-			'mulstd_dtime_prior_name':'',
+			'mulstd_value_prior_name':None,
+			'mulstd_dage_prior_name':None,
+			'mulstd_dtime_prior_name':None,
 			'fun':smooth_uniform_01_fun
 		},{	'name':'gaussian_01_constant',
 			'age_id':[0],
 			'time_id':[0],
-			'mulstd_value_prior_name':'',
-			'mulstd_dage_prior_name':'',
-			'mulstd_dtime_prior_name':'',
+			'mulstd_value_prior_name':None,
+			'mulstd_dage_prior_name':None,
+			'mulstd_dtime_prior_name':None,
 			'fun':smooth_gaussian_01_fun
 		}
 	]

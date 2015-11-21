@@ -49,9 +49,23 @@ $spell
 	csv
 	pos
 	Jacobian
+	mulstd
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
+
+$head 11-21$$
+Change $cref create_database$$ so that it always uses $code None$$
+(not empty string) when the corresponding database value is $code null$$.
+The effected the
+$cref/smooth_dict/create_database/smooth_dict/$$ values for
+$icode mulstd_value_prior_name$$,
+$icode mulstd_dage_prior_name$$,
+$icode mulstd_dtime_prior_name$$.
+It also effected the
+$cref/rate_dict/create_database/rate_dict/$$ values for
+$icode parent_smooth$$, $icode child_smooth$$.
+
 
 $head 11-20$$
 $list number$$

@@ -246,14 +246,14 @@ def example_db (file_name) :
 	for dictionary in smooth_dict :
 		for name in [ 'value' , 'dage', 'dtime' ] :
 			key   = 'mulstd_' + name + '_prior_name'
-			value = ''
+			value = None
 			dictionary[key] = value
 	# --------------------------------------------------------------------------
 	# rate table:
 	rate_dict = [
 		{	'name':          'pini',
-			'parent_smooth': '',
-			'child_smooth':  ''
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{	'name':          'iota',
 			'parent_smooth': 'smooth_iota_parent',
 			'child_smooth':  'smooth_rate_child'
@@ -261,11 +261,11 @@ def example_db (file_name) :
 			'parent_smooth': 'smooth_rho_parent',
 			'child_smooth':  'smooth_rate_child'
 		},{	'name':          'chi',
-			'parent_smooth': '',
-			'child_smooth':  ''
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{	'name':          'omega',
-			'parent_smooth': '',
-			'child_smooth':  ''
+			'parent_smooth': None,
+			'child_smooth':  None
 		}
 	]
 	# ------------------------------------------------------------------------
