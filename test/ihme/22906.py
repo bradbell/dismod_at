@@ -66,6 +66,23 @@ flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit(program_name + ';: import failed')
 # ---------------------------------------------------------------------------
+# modifications to database
+#
+file_name  = output_dir + '/' + database_name
+new        = False
+connection = dismod_at.create_connection(file_name, new)
+cursor     = connection.cursor()
+#
+# Remove dage and dtime priors for jump between age 30 and 31
+sql_cmd  = 'UPDATE smooth_grid '
+sql_cmd += 'SET dage_prior_id=1 ' # prior_none
+sql_cmd += 'WHERE smooth_id=2 and age_id=3'
+cursor.execute(sql_cmd);
+#
+# flush bufferes
+connection.commit()
+connection.close()
+# ---------------------------------------------------------------------------
 file_name      = output_dir + '/' + database_name
 program        = 'build/devel/dismod_at'
 for command in [ 'init', 'start', 'fit' ] :

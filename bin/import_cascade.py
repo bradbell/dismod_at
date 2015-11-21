@@ -603,6 +603,30 @@ prior_row_list       = list()
 smooth_row_list      = list()
 smooth_grid_row_list = list()
 # --------------------------------------------------------------------------
+# prior_none_id
+# prior_zero_one_id
+#
+lower         = None
+upper         = None
+mean          = 0.0
+density_id    = density_name2id['uniform']
+std           = None
+eta           = None
+name          = 'prior_none'
+prior_none_id = len( prior_row_list )
+prior_row_list.append(
+		[ name , lower, upper, mean, std, eta, density_id ]
+)
+lower         = 0.0
+upper         = 1.0
+mean          = 0.0
+density_id    = density_name2id['uniform']
+name          = 'prior_zero_one'
+prior_none_id = len( prior_row_list )
+prior_row_list.append(
+		[ name , lower, upper, mean, std, eta, density_id ]
+)
+# --------------------------------------------------------------------------
 # child_smooth_id
 #
 lower      = None
@@ -1000,7 +1024,7 @@ if 'a_local' in covariate_name2id and have_mtall_data :
 		#
 		age_id         = 0
 		time_id        = 0
-		value_prior_id = len(prior_row_list)
+		value_prior_id = prior_zero_one_id
 		dage_prior_id  = None
 		dtime_prior_id = None
 		smooth_grid_row_list.append( [
@@ -1011,15 +1035,6 @@ if 'a_local' in covariate_name2id and have_mtall_data :
 			dage_prior_id,
 			dtime_prior_id
 		] )
-		#
-		name       = 'prior_zero_one'
-		lower      = 0.0
-		upper      = 1.0
-		mean       = 0.1
-		density_id = density_name2id['uniform']
-		prior_row_list.append(
-			[name, lower, upper, mean, std, eta, density_id]
-		);
 #
 tbl_name = 'mulcov'
 dismod_at.create_table(db_connection, tbl_name, col_name, col_type, row_list)

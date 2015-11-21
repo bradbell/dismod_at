@@ -248,9 +248,9 @@ header = [
 	'weight',
 	'hold_out',
 	'density',
-	'meas_value',
-	'meas_std',
 	'eta',
+	'meas_std',
+	'meas_value',
 	'avgint',
 	'residual',
 	'node'
