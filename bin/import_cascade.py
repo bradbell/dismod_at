@@ -700,7 +700,6 @@ for age_id in range( n_age ):
 # rate_dtime_prior_id
 #
 rate_dtime_prior_id = dict()
-avg_delta_time      = (time_list[-1] - time_list[0]) / (len(time_list) - 1)
 density_id          = density_name2id['log_gaussian']
 lower               = None
 upper               = None
