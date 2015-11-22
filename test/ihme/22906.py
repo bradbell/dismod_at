@@ -36,12 +36,13 @@ distutils.dir_util.mkpath(output_dir)
 # option.csv
 text='''name,value
 cascade_path,/home/bradbell/cascade_ode.git/build/''' + test_name + '''
+rate_case,iota_pos_rho_zero
 parent_node_name,usa
-ode_step_size,1.0
+max_num_iter,50
 mtall2mtother,true
 chi_zero,true
 quasi_fixed,false
-rate_case,iota_pos_rho_zero
+ode_step_size,1.0
 parent_dtime_std,0.2
 child_value_std,0.2
 child_dtime_std,0.2

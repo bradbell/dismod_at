@@ -40,24 +40,25 @@ if sys.argv[0] != 'bin/import_cascade.py' :
 option_dict = collections.OrderedDict([
 ('cascade_path','       directory where cascade input files are [path]'),
 ('rate_case','          are iota and rho zero or non-zero [see option_table]'),
-('parent_node_name','   name of the parent node [int]'),
+('parent_node_name','   name of the parent node [str]'),
+('max_num_iter','       maximum for optimizing fixed effects [int]'),
 
 ('mtall2mtother','      treat mtall data as if it were mtother [true/false]'),
 ('chi_zero','           should chi be constrainted to be zero [true/false]'),
 ('quasi_fixed','        quasi-Newton fixed effects optimization [true/false]'),
 
-('ode_step_size','      age and time step size for ODE solution [double]'),
-('parent_dtime_std','   dtime std for the fixed effects [double]'),
-('child_value_std','    value std for random effects [double]'),
-('child_dtime_std','    dtime std for random effects [double]'),
-('xi_factor','          multiplies cascade_ode xi value [double]'),
-('zeta_factor','        multiplies upper limits for zeta [double]'),
-('random_bound','       bound for random effects [empty or double]'),
+('ode_step_size','      age and time step size for ODE solution [float]'),
+('parent_dtime_std','   dtime std for the fixed effects [float]'),
+('child_value_std','    value std for random effects [float]'),
+('child_dtime_std','    dtime std for random effects [float]'),
+('xi_factor','          multiplies cascade_ode xi value [float]'),
+('zeta_factor','        multiplies upper limits for zeta [float]'),
+('random_bound','       bound for random effects [empty or float]'),
 
-('age_grid','           age grid [space seperated list of doubles]'),
-('time_grid','          time grid [list of doubles]'),
-('include_covariates',' covariates to include [empty or list of names]'),
-('include_integrands',' cascade integands to include [empty or list of names]')
+('age_grid','           age grid [space seperated list of float]'),
+('time_grid','          time grid [list of float]'),
+('include_covariates',' covariates to include [empty or list of str]'),
+('include_integrands',' cascade integands included [empty or list of str]')
 ])
 usage = '''bin/import_cascade.py option_csv
 
@@ -100,6 +101,13 @@ if not float(ode_step_size) > 0.0 :
 	msg  = usage + '\n'
 	msg += 'in ' + option_csv + ' ode_step_size = ' + ode_step_size
 	msg += ' is not greater than zero'
+	sys.exit(msg)
+#
+max_num_iter = option_table_in['max_num_iter']
+if not int(max_num_iter) >= 0 :
+	msg  = usage + '\n'
+	msg += 'in ' + option_csv + ' max_num_iter = ' + max_num_iter
+	msg += ' is not greater than or equal zero'
 	sys.exit(msg)
 #
 for name in [ 'mtall2mtother' , 'chi_zero', 'quasi_fixed' ] :
@@ -1095,7 +1103,7 @@ row_list = [
 	[ 'tolerance_fixed',        '1e-8'                           ],
 	[ 'random_bound',           random_bound                     ],
 	[ 'tolerance_random',       '1e-8'                           ],
-	[ 'max_num_iter_fixed',     '50'                             ],
+	[ 'max_num_iter_fixed',     option_table_in['max_num_iter']  ],
 	[ 'max_num_iter_random',    '50'                             ],
 	[ 'derivative_test_fixed',  'none'                           ],
 	[ 'derivative_test_random', 'none'                           ]
