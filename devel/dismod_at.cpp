@@ -401,7 +401,9 @@ The start command argument $icode source$$ must be one of the following:
 
 $table
 $icode source$$    $cnext Description $rnext
-$code prior_mean$$ $cnext Use mean of prior as the value for each variable
+$code prior_mean$$ $cnext Use mean of priors; see $cref prior_table$$.
+$rnext
+$code fit_var$$ $cnext Use results of previous fit; see $cref fit_var_table$$.
 $tend
 
 $head start_var_table$$
@@ -428,18 +430,15 @@ void start_command(
 {	using std::string;
 	using dismod_at::to_string;
 	//
-	if( source != "prior_mean" )
+	if( source != "prior_mean" && source != "fit_var" )
 	{	string msg = "dismod_at start command source = ";
 		msg       += source + " is not one of the following:";
-		msg       += "prior_mean";
+		msg       += "prior_mean, fit_var";
 		dismod_at::error_exit(db, msg);
 	}
 	//
 	string sql_cmd = "drop table if exists start_var";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
-	//
-	// Value prior_id in pack_info order
-	vector<size_t> value_prior_id = pack_value_prior(pack_object, s_info_vec);
 	//
 	// create start_var table
 	string table_name = "start_var";
@@ -449,9 +448,34 @@ void start_command(
 	col_name[0]       = "start_var_value";
 	col_type[0]       = "real";
 	col_unique[0]     = false;
-	for(size_t var_id = 0; var_id < n_var; var_id++)
-	{	double start_var_value = prior_table[ value_prior_id[var_id] ].mean;
-		row_value[var_id]      = to_string(start_var_value);
+	//
+	if( source == "prior_mean" )
+	{	//
+		// get prior_id in pack_info order
+		vector<size_t> value_prior_id =
+			pack_value_prior(pack_object, s_info_vec);
+		//
+		// put means in row_value
+		for(size_t var_id = 0; var_id < n_var; var_id++)
+		{	double start_var_value =
+				prior_table[ value_prior_id[var_id] ].mean;
+			row_value[var_id] = to_string(start_var_value);
+		}
+	}
+	else
+	{	assert( source == "fit_var" );
+		//
+		// get fit_var table information
+		vector<double> variable_value;
+		string table_name  = "fit_var";
+		string column_name = "variable_value";
+		dismod_at::get_table_column(
+			db, table_name, column_name, variable_value
+		);
+		//
+		// put it in row_value
+		for(size_t var_id = 0; var_id < n_var; var_id++)
+			row_value[var_id] = to_string(variable_value[var_id]);
 	}
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
