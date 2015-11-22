@@ -56,11 +56,17 @@ $$
 $section Changes and Additions to Dismod_at During 2015$$
 
 $head 11-22$$
+$list number$$
 Move the $code fit_residual$$ table to the
 $cref fit_data_subset_table$$.
 This is a better name as evidenced by the fact that a
 separate $code data_subset_id$$ column is no longer necessary;
 see $cref/fit_data_subset_id/fit_data_subset_table/fit_data_subset_id/$$.
+$lnext
+Change the previous the $cref start_command$$ to have the
+$cref/source/start_command/source/$$ argument.
+The $icode source$$ corresponding to its previous usage is $code prior_mean$$.
+$lend
 
 $head 11-21$$
 $list number$$

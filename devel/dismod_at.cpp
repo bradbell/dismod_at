@@ -385,23 +385,30 @@ $$
 $section The Start Command$$
 
 $head Syntax$$
-$codei%dismod_at %file_name% start%$$
+$codei%dismod_at %file_name% start %source%$$
 
 $head Purpose$$
-This command uses the variable prior means to creates the following table:
-$table
-$cref start_var_table$$ $cnext $title start_var_table$$ $rnext
-$tend
+This command copies the values specified by $icode source$$
+to the $cref start_var_table$$.
 
 $head file_name$$
 Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
+$head source$$
+The start command argument $icode source$$ must be one of the following:
+
+$table
+$icode source$$    $cnext Description $rnext
+$code prior_mean$$ $cnext Use mean of prior as the value for each variable
+$tend
+
 $head start_var_table$$
-The start table is required for the $cref fit_command$$.
-This command creates a $cref start_var_table$$ using the means
-for the prior for each $cref/model_variables/model_variables/$$.
+This command creates a $cref start_var_table$$ using the
+$cref model_variables$$ values specified by $icode source$$.
+These values are used as the starting point for subsequent
+$cref/fit_commands/fit_command/$$.
 
 $children%example/get_started/start_command.py%$$
 $head Example$$
@@ -413,12 +420,20 @@ $end
 
 // ----------------------------------------------------------------------------
 void start_command(
-	sqlite3*          db        ,
+	std::string                            source      ,
+	sqlite3*                               db          ,
 	const vector<dismod_at::prior_struct>& prior_table ,
 	const dismod_at::pack_info&            pack_object ,
 	const vector<dismod_at::smooth_info>&  s_info_vec  )
 {	using std::string;
 	using dismod_at::to_string;
+	//
+	if( source != "prior_mean" )
+	{	string msg = "dismod_at start command source = ";
+		msg       += source + " is not one of the following:";
+		msg       += "prior_mean";
+		dismod_at::error_exit(db, msg);
+	}
 	//
 	string sql_cmd = "drop table if exists start_var";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
@@ -1162,7 +1177,7 @@ int main(int n_arg, const char** argv)
 	// ---------------- command line arguments ---------------------------
 	struct { const char* name; int n_arg; } command_info[] = {
 		"init",      3,
-		"start",     3,
+		"start",     4,
 		"truth",     3,
 		"fit",       3,
 		"simulate",  3,
@@ -1184,9 +1199,8 @@ int main(int n_arg, const char** argv)
 		<< "arguments: optional arguments depending on particular command\n";
 		std::exit(1);
 	}
-	size_t i_arg = 0;
-	const string file_name_arg  = argv[++i_arg];
-	const string command_arg    = argv[++i_arg];
+	const string file_name_arg  = argv[1];
+	const string command_arg    = argv[2];
 	for(size_t i = 0; i < n_command; i++)
 	{	if( command_arg == command_info[i].name )
 		{	if( n_arg != command_info[i].n_arg )
@@ -1312,6 +1326,7 @@ int main(int n_arg, const char** argv)
 	);
 	if( command_arg == "start" )
 	{	start_command(
+			argv[3]              , // source
 			db                   ,
 			db_input.prior_table ,
 			pack_object          ,

@@ -323,6 +323,8 @@ connection.close()
 # Run the simulate and sample commands
 for command in [ 'simulate', 'start', 'fit' ] :
 	cmd = [ program, file_name, command ]
+	if command == 'start' :
+		cmd.append('prior_mean')
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :
