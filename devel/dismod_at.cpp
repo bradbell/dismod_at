@@ -1160,6 +1160,17 @@ int main(int n_arg, const char** argv)
 	using std::endl;
 	using std::string;
 	// ---------------- command line arguments ---------------------------
+	const char* command_name[] = {
+		"init",
+		"start",
+		"truth",
+		"fit",
+		"simulate",
+		"sample",
+		"predict"
+	};
+	size_t n_command = sizeof( command_name ) / sizeof( command_name[0] );
+	//
 	string program = "dismod_at-";
 	program       += DISMOD_AT_VERSION;
 	if( n_arg != 3 )
@@ -1173,13 +1184,10 @@ int main(int n_arg, const char** argv)
 	const string file_name_arg  = argv[++i_arg];
 	const string command_arg    = argv[++i_arg];
 	bool ok = false;
-	ok     |= command_arg == "init";
-	ok     |= command_arg == "start";
-	ok     |= command_arg == "truth";
-	ok     |= command_arg == "fit";
-	ok     |= command_arg == "simulate";
-	ok     |= command_arg == "sample";
-	ok     |= command_arg == "predict";
+	for(size_t i = 0; i < n_command; i++)
+	{	if( command_arg == command_name[i] )
+			ok = true;
+	}
 	string message;
 	if( ! ok )
 	{	message =  "dismod_at: command not one the following:\n";
