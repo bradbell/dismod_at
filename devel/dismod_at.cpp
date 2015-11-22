@@ -1160,41 +1160,44 @@ int main(int n_arg, const char** argv)
 	using std::endl;
 	using std::string;
 	// ---------------- command line arguments ---------------------------
-	const char* command_name[] = {
-		"init",
-		"start",
-		"truth",
-		"fit",
-		"simulate",
-		"sample",
-		"predict"
+	struct { const char* name; int n_arg; } command_info[] = {
+		"init",      3,
+		"start",     3,
+		"truth",     3,
+		"fit",       3,
+		"simulate",  3,
+		"sample",    3,
+		"predict",   3
 	};
-	size_t n_command = sizeof( command_name ) / sizeof( command_name[0] );
+	size_t n_command = sizeof( command_info ) / sizeof( command_info[0] );
 	//
 	string program = "dismod_at-";
 	program       += DISMOD_AT_VERSION;
-	if( n_arg != 3 )
+	if( n_arg < 3 )
 	{	cerr << program << endl
-		<< "usage:     dismod_at file_name command\n"
-		<< "command:   init, start, fit, truth, simulate, sample, or predict\n"
-		<< "file_name: sqlite database\n";
+		<< "usage:     dismod_at file_name command [arguments]\n"
+		<< "file_name: sqlite database\n"
+		<< "command:   " << command_info[0].name;
+		for(size_t i = 1; i < n_command; i++)
+			cerr << ", " << command_info[i].name;
+		cerr << endl
+		<< "arguments: optional arguments depending on particular command\n";
 		std::exit(1);
 	}
 	size_t i_arg = 0;
 	const string file_name_arg  = argv[++i_arg];
 	const string command_arg    = argv[++i_arg];
-	bool ok = false;
 	for(size_t i = 0; i < n_command; i++)
-	{	if( command_arg == command_name[i] )
-			ok = true;
+	{	if( command_arg == command_info[i].name )
+		{	if( n_arg != command_info[i].n_arg )
+			{	cerr << program << endl
+				<< "expected " << command_info[i].n_arg - 3
+				<< " arguments to follow " << command_info[i].name << "\n";
+				std::exit(1);
+			}
+		}
 	}
 	string message;
-	if( ! ok )
-	{	message =  "dismod_at: command not one the following:\n";
-		message += "\tinit, start, fit, truth, simulate, sample, predict";
-		cerr << message << endl;
-		std::exit(1);
-	}
 	// --------------- open connection to datbase ---------------------------
 	bool new_file = false;
 	sqlite3* db   = dismod_at::open_connection(file_name_arg, new_file);
