@@ -61,7 +61,7 @@ result  = cursor.execute(cmd).fetchall()
 have_fit = len(result) > 0
 if have_fit :
 	assert len(result) == 1
-	cmd = cmd.replace('fit_var', 'fit_residual')
+	cmd = cmd.replace('fit_var', 'fit_data_subset')
 	result  = cursor.execute(cmd).fetchall()
 	assert len(result) == 1
 #
@@ -89,7 +89,7 @@ if have_simulate :
 	table_list.append('simulate')
 if have_fit :
 	table_list.append('fit_var')
-	table_list.append('fit_residual')
+	table_list.append('fit_data_subset')
 for table in table_list :
 	table_data[table] = dismod_at.get_table_dict(connection, table)
 # ----------------------------------------------------------------------------
@@ -309,7 +309,7 @@ for subset_row in table_data['data_subset'] :
 		covariate_id += 1
 	#
 	if have_fit :
-		row                 = table_data['fit_residual'][subset_id]
+		row                 = table_data['fit_data_subset'][subset_id]
 		row_out['avgint']   = convert2output( row['avg_integrand'] )
 		row_out['residual'] = convert2output( row['weighted_residual'] )
 	if fit_sample_index == None :

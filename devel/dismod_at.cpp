@@ -470,8 +470,8 @@ A new $cref fit_var_table$$ is created each time this command is run.
 It contains the results of the fit in its
 $cref/variable_value/fit_var_table/variable_value/$$ column.
 
-$head fit_residual_table$$
-A new $cref fit_residual_table$$ is created each time this command is run.
+$head fit_data_subset_table$$
+A new $cref fit_data_subset_table$$ is created each time this command is run.
 It is a comparison of the model and data corresponding to the fit results.
 
 $children%example/get_started/fit_command.py%$$
@@ -602,12 +602,12 @@ void fit_command(
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
-	// ------------------ fit_residual table --------------------------------
-	sql_cmd = "drop table if exists fit_residual";
+	// ------------------ fit_data_subset table --------------------------------
+	sql_cmd = "drop table if exists fit_data_subset";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	size_t n_subset = data_subset_obj.size();
-	table_name      = "fit_residual";
+	table_name      = "fit_data_subset";
 	//
 	n_col           = 3;
 	col_name.resize(n_col);

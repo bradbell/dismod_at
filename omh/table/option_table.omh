@@ -41,7 +41,7 @@ all of the output tables become invalid.
 $lnext
 If you change the
 $cref/fit_sample_index/option_table/fit_sample_index/$$, the
-$cref/fit_var/fit_var_table/$$ and $cref/fit_residual/fit_residual_table/$$
+$cref/fit_var/fit_var_table/$$ and $cref/fit_data_subset/fit_data_subset_table/$$
 tables become invalid.
 $lnext
 If you change

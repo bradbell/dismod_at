@@ -32,7 +32,7 @@ $children%omh/table/log_table.omh
 	%omh/table/var_table.omh
 	%omh/table/start_var_table.omh
 	%omh/table/fit_var_table.omh
-	%omh/table/fit_residual_table.omh
+	%omh/table/fit_data_subset_table.omh
 	%omh/table/truth_var_table.omh
 	%omh/table/simulate_table.omh
 	%omh/table/sample_table.omh
@@ -55,7 +55,7 @@ $rnext
 	$cref/start_var/start_var_table/$$      $cnext
 $rnext
 	$cref/fit/fit_command/$$ $cnext
-	$cref/fit_var/fit_var_table/$$, $cref/fit_residual/fit_residual_table/$$
+	$cref/fit_var/fit_var_table/$$, $cref/fit_data_subset/fit_data_subset_table/$$
 	$pre  $$ $cnext
 	$cref/start_var/start_var_table/$$
 $rnext

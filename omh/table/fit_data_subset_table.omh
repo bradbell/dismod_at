@@ -8,32 +8,27 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin fit_residual_table$$
+$begin fit_data_subset_table$$
 $spell
 	var
 $$
 
 $section The Model and Weighted Residuals Corresponding to a Fit$$.
-The fit_residual table compares the model and data
+The fit_data_subset table compares the model and data
 for the $cref model_variables$$
 corresponding to a $cref fit_command$$.
-A new $code fit_residual$$ table is created each time the
+A new $code fit_data_subset$$ table is created each time the
 $cref fit_command$$ is executed.
 
-$head fit_residual_id$$
+$head fit_data_subset_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
-
-$head data_subset_id$$
-The $icode data_subset_id$$ has type $code integer$$
-and is the $cref/data_subset_id/data_subset_table/data_subset_id/$$
-for this row. This information is redundant because
+The $icode fit_data_subset_id$$ column is also a foreign key for the
+$cref data_subset_table$$; i.e.,
 $codei%
-	%data_subset_id% = %fit_residual_id%
+	%data_subset_id% = %fit_data_subset_id%
 %$$
-The extra column is included to abide by the conventions for naming
-$cref/primary/table/Primary Key/$$ and
-$cref/foreign keys/table/Foreign Key/$$.
+In addition, the size of both tables is the same.
 
 $head avg_integrand$$
 The column has type $code real$$ and contains the

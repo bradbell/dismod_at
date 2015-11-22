@@ -55,6 +55,13 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-22$$
+Move the $code fit_residual$$ table to the
+$cref fit_data_subset_table$$.
+This is a better name as evidenced by the fact that a
+separate $code data_subset_id$$ column is no longer necessary;
+see $cref/fit_data_subset_id/fit_data_subset_table/fit_data_subset_id/$$.
+
 $head 11-21$$
 $list number$$
 Change $cref create_database$$ so that it always uses $code None$$
@@ -101,7 +108,7 @@ $lnext
 The optimization $cref/max_num_iter/option_table/Optimizer/max_num_iter/$$
 was changed to allow for zero.
 This enables one to use the starting values in the
-$cref fit_var_table$$ and $cref fit_residual_table$$ tables.
+$cref fit_var_table$$ and $cref fit_data_subset_table$$ tables.
 $lend
 
 
@@ -887,7 +894,7 @@ add $code Error:$$ ($code Warning:$$)
 to beginning of error messages (warning messages).
 $lnext
 The $cref init_command$$ no longer deletes the current
-fit, fit_residual, truth_var, simulate, sample and predict tables.
+fit, fit_data_subset, truth_var, simulate, sample and predict tables.
 These table get overwritten when the corresponding command is executed;
 see $cref output$$.
 $lend
@@ -897,7 +904,7 @@ $list number$$
 Add $cref/hold_out/data_table/hold_out/$$ to the data table
 and exclude the flagged data during the $cref fit_command$$.
 $lnext
-Add the $cref fit_residual_table$$
+Add the $cref fit_data_subset_table$$
 and compute it during a $cref fit_command$$.
 $lend
 
