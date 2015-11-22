@@ -40,7 +40,7 @@ parent_node_name,usa
 ode_step_size,1.0
 mtall2mtother,true
 chi_zero,true
-quasi_fixed,true
+quasi_fixed,false
 rate_case,iota_pos_rho_zero
 parent_dtime_std,0.2
 child_value_std,0.2

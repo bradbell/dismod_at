@@ -617,12 +617,12 @@ prior_none_id = len( prior_row_list )
 prior_row_list.append(
 		[ name , lower, upper, mean, std, eta, density_id ]
 )
-lower         = 0.0
-upper         = 1.0
-mean          = 0.0
-density_id    = density_name2id['uniform']
-name          = 'prior_zero_one'
-prior_none_id = len( prior_row_list )
+lower             = 0.0
+upper             = 1.0
+mean              = 0.0
+density_id        = density_name2id['uniform']
+name              = 'prior_zero_one'
+prior_zero_one_id = len( prior_row_list )
 prior_row_list.append(
 		[ name , lower, upper, mean, std, eta, density_id ]
 )

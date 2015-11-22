@@ -76,6 +76,15 @@ and should be in a directory that is special for the particular case.
 $lnext
 Created $code test/ihme/22906.py$$, a test (under construction)
 that fits ihme model number 22906.
+$lnext
+Change column order in $code bin/database2csv.py$$ $code data.csv$$
+file so $icode meas_value$$ is next to $icode avgint$$.
+$lnext
+Make the $code prior_none$$ and $code prior_zero_one$$ the first
+two priors so they are easy to reference by their $icode prior_id$$.
+$lnext
+Have $code test/ihme/22906.py$$ allow for jump between age 30
+and 31 (at any time).
 $lend
 
 
