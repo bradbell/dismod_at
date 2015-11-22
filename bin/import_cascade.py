@@ -38,23 +38,26 @@ if sys.argv[0] != 'bin/import_cascade.py' :
 	sys.exit(msg)
 #
 option_dict = collections.OrderedDict([
-('cascade_path','       path to directory where cascade input files are'),
-('parent_node_name','   name of the parent node'),
-('ode_step_size','      step size of ODE solution in age and time'),
+('cascade_path','       directory where cascade input files are [path]'),
+('rate_case','          are iota and rho zero or non-zero [see option_table]'),
+('parent_node_name','   name of the parent node [int]'),
+
 ('mtall2mtother','      treat mtall data as if it were mtother [true/false]'),
 ('chi_zero','           should chi be constrainted to be zero [true/false]'),
 ('quasi_fixed','        quasi-Newton fixed effects optimization [true/false]'),
-('rate_case','          are iota and rho zero or non-zero; see option_table'),
-('parent_dtime_std','   dtime standard deviation for the fixed effects'),
-('child_value_std','    value standard deviation for random effects'),
-('child_dtime_std','    dtime standard deviation for random effects'),
-('xi_factor','          factor that multiplies cascade_ode xi value'),
-('zeta_factor','        factor that multiplies upper limits for zeta'),
-('random_bound','       bound for random effects, empty text for no bound'),
-('age_grid','           list of age grid (as space seperated values)'),
-('time_grid','          list of time grid (as space seperated values)'),
-('include_covariates',' empty or list of covariates to include'),
-('include_integrands',' empty or list of cascade integand names to include')
+
+('ode_step_size','      age and time step size for ODE solution [double]'),
+('parent_dtime_std','   dtime std for the fixed effects [double]'),
+('child_value_std','    value std for random effects [double]'),
+('child_dtime_std','    dtime std for random effects [double]'),
+('xi_factor','          multiplies cascade_ode xi value [double]'),
+('zeta_factor','        multiplies upper limits for zeta [double]'),
+('random_bound','       bound for random effects [empty or double]'),
+
+('age_grid','           age grid [space seperated list of doubles]'),
+('time_grid','          time grid [list of doubles]'),
+('include_covariates',' covariates to include [empty or list of names]'),
+('include_integrands',' cascade integands to include [empty or list of names]')
 ])
 usage = '''bin/import_cascade.py option_csv
 

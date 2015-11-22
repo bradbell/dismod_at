@@ -63,7 +63,7 @@ def fun_iota_parent(a, t) :
 	if a <= 20.0 :
 		return ('prior_iota_20', 'prior_none', 'prior_none')
 	elif a <= 21.0 :
-		return ('prior_iota_21', 'prior_difference', 'prior_difference')
+		return ('prior_rate_parent', 'prior_none', 'prior_difference')
 	else :
 		return ('prior_rate_parent', 'prior_difference', 'prior_difference')
 #
@@ -182,14 +182,6 @@ def example_db (file_name) :
 			'lower':    iota_20,
 			'upper':    iota_20,
 			'mean':     iota_20,
-			'std':      None,
-			'eta':      None
-		},{ # prior_iota_21
-			'name':     'prior_iota_21',
-			'density':  'uniform',
-			'lower':    iota_20,
-			'upper':    1.0,
-			'mean':     0.1,
 			'std':      None,
 			'eta':      None
 		}
