@@ -275,6 +275,7 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 	// Ipopt fixed effects optimization options
 	std::string options = "";
 	options += "String  sb  yes";
+	options += "\nNumeric bound_relax_factor 0.0";
 	options += "\nNumeric tol " + option_map["tolerance_fixed"];
 	options += "\nInteger max_iter " + option_map["max_num_iter_fixed"];
 	options += "\nInteger print_level " + option_map["print_level_fixed"];
@@ -284,6 +285,7 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 	// Ipopt random effects optimization options
 	options = "";
 	options += "String  sb  yes";
+	options += "\nNumeric bound_relax_factor 0.0";
 	options += "\nNumeric tol " + option_map["tolerance_random"];
 	options += "\nInteger max_iter " + option_map["max_num_iter_random"];
 	options += "\nInteger print_level " + option_map["print_level_random"];

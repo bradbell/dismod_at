@@ -55,6 +55,11 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 11-23$$
+The Ipopt optimizer has a bound relaxation factor that caused
+dismod_at to try and evaluate its object at negative rates.
+This has been fixed by setting this factor to zero.
+
 $head 11-22$$
 $list number$$
 Move the $code fit_residual$$ table to the
