@@ -65,7 +65,10 @@ see $cref/fit_data_subset_id/fit_data_subset_table/fit_data_subset_id/$$.
 $lnext
 Change the previous the $cref start_command$$ to have the
 $cref/source/start_command/source/$$ argument.
-The $icode source$$ corresponding to its previous usage is $code prior_mean$$.
+The $icode source$$ corresponding to its previous usage is
+$cref/prior_mean/start_command/source/prior_mean/$$.
+The $cref/fit_var/start_command/source/fit_var/$$ option
+uses the results of one fit as the starting value for the next.
 $lend
 
 $head 11-21$$

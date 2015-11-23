@@ -399,12 +399,15 @@ $code dismod_at$$ $cref input$$ tables which are not modified.
 $head source$$
 The start command argument $icode source$$ must be one of the following:
 
-$table
-$icode source$$    $cnext Description $rnext
-$code prior_mean$$ $cnext Use mean of priors; see $cref prior_table$$.
-$rnext
-$code fit_var$$ $cnext Use results of previous fit; see $cref fit_var_table$$.
-$tend
+$subhead prior_mean$$
+If $icode source$$ is $code prior_mean$$,
+the mean of the priors is used as the starting values for the
+next fit; see $cref prior_table$$.
+
+$subhead fit_var$$
+If $icode source$$ is $code fit_var$$,
+the results of the previous fit is used as the starting values for the
+next fit; see $cref prior_table$$.
 
 $head start_var_table$$
 This command creates a $cref start_var_table$$ using the
