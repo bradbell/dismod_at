@@ -12,13 +12,11 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_CONFIGURE_HPP
 
 # define DISMOD_AT_VERSION         "@dismod_at_version@"
-# define DISMOD_AT_HAS_SUITESPARSE @suitesparse_prefix_01@
+
 # if @dismod_at_has_nullptr_01@
 # define DISMOD_AT_NULL_PTR  nullptr
 # else
 # define DISMOD_AT_NULL_PTR  0
 # endif
-
-# define CPPAD_MIXED_SET_SPARSITY @cppad_mixed_set_sparsity_01@
 
 # endif

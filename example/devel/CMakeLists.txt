@@ -10,22 +10,8 @@
 # ---------------------------------------------------------------------------
 # Build C++ Examples / Tests
 #
-IF( suitesparse_prefix )
-	# no pkg-config for SuiteSparse so explicitly set corresponding values
-	SET(suitesparse_LIBRARY_DIRS ${suitesparse_prefix}/lib )
-	SET(suitesparse_LIBRARIES
-		"cholmod;amd;camd;colamd;ccolamd;suitesparseconfig"
-	)
-	SET(suitesparse_EXAMPLES "cppad_mixed/cholmod_xam.cpp")
-ELSE( suitesparse_prefix )
-	SET(suitesparse_LIBRARY_DIRS "")
-	SET(suitesparse_LIBRARIES    "")
-	SET(suitesparse_EXAMPLES     "")
-ENDIF( suitesparse_prefix )
-
 LINK_DIRECTORIES(
 	${ipopt_LIBRARY_DIRS}
-	${suitesparse_LIBRARY_DIRS}
 	${dismod_at_BINARY_DIR}/cpp
 )
 # -----------------------------------------------------------------------------
@@ -99,7 +85,6 @@ TARGET_LINK_LIBRARIES(example_devel
 	cppad_mixed_eigen
 	cppad_mixed
 	${ipopt_LIBRARIES}
-	${suitesparse_LIBRARIES}
 	sqlite3
 	gsl
 	gslcblas

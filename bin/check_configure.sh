@@ -17,9 +17,7 @@ fi
 file_list=`git ls-files | sed -n -e '/\.cpp$/p'`
 define_list='
 	DISMOD_AT_VERSION
-	DISMOD_AT_HAS_SUITESPARSE
 	DISMOD_AT_NULL_PTR
-	CPPAD_MIXED_SET_SPARSITY
 '
 for file in $file_list
 do

@@ -19,9 +19,6 @@
 #                        -D cppad_prefix=value \
 #                        -D eigen_prefix=value \
 #                        -D ipopt_prefix=value \
-# optional variables:    -D cppad_mixed_set_sparsity=value \
-#                        -D cppad_mixed_libdir=value \
-#                        -D suitesparse_prefix=value \
 #                         ..
 # ============================================================================
 # Macro definitions
@@ -71,31 +68,6 @@ MACRO( required_definition variable type docstring )
 	ENDIF( ${variable} )
 ENDMACRO( required_definition )
 # ----------------------------------------------------------------------------
-# optional_definition( variable type docstring )
-#
-# variable
-# echo this variables value in the output.
-#
-# type
-# Is the type of the variable in the CMake Gui, must be one of the following:.
-# FILEPATH, PATH, STRING, BOOL.
-#
-# docstring
-# Is the description used for the variable in the CMake Gui.
-#
-#
-MACRO( optional_definition variable type docstring )
-	SET( ${variable} NOTFOUND CACHE ${type} "${docstring}" )
-	MESSAGE( STATUS "${variable} = ${${variable}}" )
-	IF( ${type} STREQUAL "BOOL" )
-		IF( ${variable} )
-			SET( ${variable}_01 1 )
-		ELSE( ${variable} )
-			SET( ${variable}_01 0 )
-		ENDIF( ${variable} )
-	ENDIF( ${type} STREQUAL "BOOL" )
-ENDMACRO( optional_definition )
-# ----------------------------------------------------------------------------
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
 SET(dismod_at_version "20151123" )
@@ -124,26 +96,15 @@ get_prefix(cppad)
 get_prefix(eigen)
 get_prefix(ipopt)
 # ----------------------------------------------------------------------------
-# optional special cmake variables
-optional_definition(cppad_mixed_set_sparsity BOOL
-	"use sets (instead of bools) to represent sparsity patterns"
-)
-optional_definition( cppad_mixed_libdir STRING
-	"directory below dismod_at_prefix where cppad_mixed library is installed"
-)
-IF( suitesparse_prefix )
-	SET( suitesparse_prefix_01 1 )
-	get_prefix(suitesparse)
-ELSE( suitesparse_prefix )
-	SET( suitesparse_prefix_01 0 )
-	MESSAGE(STATUS "examples that use suitesparse will not be tested")
-ENDIF( suitesparse_prefix )
+FOREACH( var cppad_mixed_set_sparsity cppad_mixed_libdir suitesparse_prefix )
+IF( ${var} )
+	MESSAGE(FATAL_ERROR "${var} is no longer used in dismod_at cmake command")
+ENDIF( ${var} )
+ENDFOREACH( var )
+# ----------------------------------------------------------------------------
+
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
-# ----------------------------------------------------------------------------
-IF( NOT cppad_mixed_libdir )
-	MESSAGE( STATUS "cppad_mixed library will not be installed")
-ENDIF( NOT cppad_mixed_libdir )
 # ----------------------------------------------------------------------------
 # set eigen_cxx_flags
 SET(eigen_cxx_flags

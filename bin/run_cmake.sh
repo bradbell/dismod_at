@@ -19,9 +19,9 @@
 # &section bin/run_cmake.sh: User Configuration Options&&
 #
 # &head cmake_verbose_makefile&&
-# Use '0' for normal and '1' for verbose make output:
+# Use 'NO' for normal and 'YES' for verbose make output:
 # &codep
-cmake_verbose_makefile='0'
+cmake_verbose_makefile='NO'
 # &&
 #
 # &head cmake_build_type&&
@@ -56,26 +56,6 @@ ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
 # &&
 #
-# &head cppad_mixed_set_sparsity&&
-# If YES, use sets of indices for sparsity patterns.
-# If NO use arrays of bools:
-# &codep
-cppad_mixed_set_sparsity="NO"
-# &&
-#
-# &head cppad_mixed_libdir&&
-# Sub-directory of dismod_at_prefix where cppad_mixed libraries are installed.
-# The eigen part of the library is separate so different flags can be used
-# to compile the part of the code that uses eigen.
-# The following will properly link the &code cppad_mixed&& library:
-# &codep
-#	-lcppad_mixed -lcppad_mixed_eigen -lcppad_mixed
-# &&
-# If you do not need to install cppad_mixed, use NOTFOUND for this setting:
-# &codep
-cppad_mixed_libdir='lib64'
-# &&
-#
 # &head suitesparse_prefix&&
 # Prefix where optional package was installed (use NOTFOUND if not installed).
 # This is only required by example/devel/cppad_mixed/cholmod_xam.cpp.
@@ -103,7 +83,6 @@ then
 usage: bin/run_cmake.sh \\
 	[--help] \\
 	[--verbose] \\
-	[--set_sparsity]
 EOF
 	exit 0
 else
@@ -111,10 +90,7 @@ else
 fi
 if [ "$user_option" == '--verbose' ]
 then
-	cmake_verbose_makefile='1'
-elif [ "$user_option" == '--set_sparsity' ]
-then
-	cppad_mixed_set_sparsity="YES"
+	cmake_verbose_makefile='YES'
 elif [ "$user_option" != '' ]
 then
 	echo "'$1' is an invalid option"
@@ -127,6 +103,10 @@ then
 	echo_eval mkdir build
 fi
 echo_eval cd build
+if [ -e 'CMakeCache.txt' ]
+then
+	rm CMakeCache.txt
+fi
 cmake \
 	-Wno-dev \
 	-D CMAKE_VERBOSE_MAKEFILE=$cmake_verbose_makefile \
@@ -138,8 +118,4 @@ cmake \
 	-D cppad_prefix="$cppad_prefix" \
 	-D ipopt_prefix="$cppad_prefix" \
 	-D eigen_prefix="$eigen_prefix" \
-	\
-	-D cppad_mixed_set_sparsity="$cppad_mixed_set_sparsity" \
-	-D cppad_mixed_libdir="$cppad_mixed_libdir" \
-	-D suitesparse_prefix="$suitesparse_prefix" \
 	..

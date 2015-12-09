@@ -60,6 +60,11 @@ $head 12-09$$
 First version of $code dismod_at$$ that has
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
 split out as a separate package.
+The following definitions are no longer used by the
+$cref/dismod_at cmake command/install_unix/dismod_at/Cmake Command/$$:
+$code cppad_mixed_set_sparsity$$,
+$code cppad_mixed_libdir$$, and
+$code cppad_mixed_prefix$$.
 
 $head 11-23$$
 The Ipopt optimizer has a bound relaxation factor that caused
