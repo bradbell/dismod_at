@@ -10,6 +10,8 @@
 # ---------------------------------------------------------------------------
 # dismod_at speed test
 #
+SET(random_seed 0)
+#
 ADD_CUSTOM_TARGET(
 	speed_simulated
 	${python_three_command} speed/simulated.py ${random_seed}

@@ -35,9 +35,4 @@ if [ "$speed_test" == 'y' ]
 then
 	make speed
 fi
-make install
-cd ..
-#
-bin/check_cppad_mixed.sh
-#
 echo 'check_all.sh: OK'
