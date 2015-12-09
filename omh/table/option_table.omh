@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin option_table$$
 $spell
+	cppad
 	var
 	pos
 	dismod
@@ -225,7 +226,9 @@ $cref/random effects/model_variables/Random Effects, u/$$.
 Note that if $latex u_j$$ is a random effects,
 $latex \exp( u_j )$$ multiplies the  corresponding rate in the
 $cref avg_integrand$$ model.
-Note that the $cref/theory/cppad_mixed_theory/$$ does not include bounds
+Note that the theory for
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
+does not include bounds for the random effects
 and this is only intended as a kludge to help certain problems converge.
 The value plus infinity (for no bounds) is represented by a $code null$$
 should be preferred; i.e., used where possible.

@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2015$$
 $spell
+	mixed mixed
 	num_iter
 	relrisk
 	mtwith
@@ -804,11 +805,7 @@ in a case where there are no random effects.
 $lnext
 There was a bug in the case where the second derivative
 of the random part of the objective
-$cref/H(beta, theta, u)
-	/cppad_mixed_theory
-	/Hessian of Random Objective
-	/Approximate Random Objective, H(beta, theta, u)
-/$$
+$latex H( \beta , \theta, u)$$
 with respect to $latex \beta$$ was zero.
 This has been fixed.
 $lnext

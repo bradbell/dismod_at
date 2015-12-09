@@ -37,15 +37,11 @@ $head variable_value$$
 This column has type $code real$$ and contains the model variable values.
 To be specific, the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$ $latex ( \theta )$$,
-maximize the total objective
-$cref/L(theta)/cppad_mixed_theory/Objective/Total Objective, L(theta)/$$
-and the corresponding
-$cref/optimal random effects
-	/cppad_mixed_theory
-	/Objective
-	/Optimal Random Effects, u^(theta)
-/$$
-$latex \hat{u} ( \theta )$$.
+maximize the total objective $latex L( \theta)$$
+and the corresponding optimal random effects
+$latex \hat{u} ( \theta )$$; see the
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
+documentation.
 
 $head residual_value$$
 This column has type $code real$$ and contains the

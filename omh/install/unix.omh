@@ -124,6 +124,22 @@ $code
 $verbatim%bin/install_cppad.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
 $$
 
+$subhead cppad_mixed$$
+The $href%http://moby.ihme.washington.edu/bradbell/cppad_mixed%cppad_mixed%$$
+C++ random effects modeling package.
+The commands
+$codei%
+	cd dismod_at-20151123
+	bin/install_cppad_mixed.sh
+%$$
+can be used for this purpose.
+If necessary, first adjust the setting
+of the following variables in that script.
+$code
+$verbatim%bin/install_cppad_mixed.sh
+	%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
+$$
+
 $head dismod_at$$
 The steps above should only need to be executed once, not for
 each new version of $code dismod_at$$
