@@ -32,14 +32,14 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include <dismod_at/cppad_mixed.hpp>
+# include <cppad/mixed/cppad_mixed.hpp>
 
 namespace {
 	using CppAD::vector;
 	using CppAD::log;
 	using CppAD::AD;
 
-	class mixed_derived : public dismod_at::cppad_mixed {
+	class mixed_derived : public cppad_mixed {
 	private:
 		size_t                n_fixed_;
 		const vector<double>& y_;
@@ -50,7 +50,7 @@ namespace {
 			size_t n_random                   ,
 			const vector<double>& y           ) :
 			// quasi_fixed = false
-			dismod_at::cppad_mixed(n_fixed, n_random, false) ,
+			cppad_mixed(n_fixed, n_random, false) ,
 			n_fixed_(n_fixed) ,
 			y_(y)
 		{	assert( n_fixed == 2);

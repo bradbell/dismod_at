@@ -26,7 +26,7 @@ $end
 */
 // BEGIN C++
 # include <cmath>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/manage_gsl_rng.hpp>
 # include <dismod_at/sim_random.hpp>

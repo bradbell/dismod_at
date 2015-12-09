@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_PUT_TABLE_ROW_HPP
 
 # include <sqlite3.h>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
 	extern void put_table_row(

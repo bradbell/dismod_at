@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # ifndef DISMOD_AT_PRIOR_MODEL_HPP
 # define DISMOD_AT_PRIOR_MODEL_HPP
 
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include "pack_info.hpp"
 # include "get_prior_table.hpp"
 # include "get_smooth_table.hpp"

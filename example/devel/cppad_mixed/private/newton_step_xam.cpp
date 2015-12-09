@@ -29,7 +29,7 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include <dismod_at/newton_step.hpp>
+# include <cppad/mixed/newton_step.hpp>
 
 bool newton_step_xam(void)
 {

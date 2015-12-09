@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-15 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_GET_RATE_TABLE_HPP
 
 # include <sqlite3.h>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
 	enum rate_enum {

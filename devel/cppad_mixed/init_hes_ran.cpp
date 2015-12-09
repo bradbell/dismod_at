@@ -8,9 +8,9 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# include <dismod_at/cppad_mixed.hpp>
+# include <cppad/mixed/cppad_mixed.hpp>
 # include <dismod_at/configure.hpp>
-# include <dismod_at/chol_hes_ran.hpp>
+# include <cppad/mixed/chol_hes_ran.hpp>
 
 /*
 $begin init_hes_ran$$

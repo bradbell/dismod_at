@@ -65,7 +65,7 @@ $cref/H(beta, theta, u)
 $end
 */
 # include <Eigen/Sparse>
-# include <dismod_at/cppad_mixed.hpp>
+# include <cppad/mixed/cppad_mixed.hpp>
 
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE

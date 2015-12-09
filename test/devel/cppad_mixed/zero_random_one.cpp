@@ -58,14 +58,14 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include <dismod_at/cppad_mixed.hpp>
+# include <cppad/mixed/cppad_mixed.hpp>
 
 namespace {
 	using CppAD::vector;
 	using CppAD::log;
 	using CppAD::AD;
 
-	class mixed_derived : public dismod_at::cppad_mixed {
+	class mixed_derived : public cppad_mixed {
 	private:
 		const size_t n_fixed_;
 		const size_t n_random_;
@@ -82,7 +82,7 @@ namespace {
 			double sigma_y                    ,
 			const vector<double>& y           ) :
 			// quasi_fixed = false
-			dismod_at::cppad_mixed(n_fixed, n_random, false) ,
+			cppad_mixed(n_fixed, n_random, false) ,
 			n_fixed_(n_fixed)                          ,
 			n_random_(n_random)                        ,
 			sigma_u_(sigma_u)                          ,

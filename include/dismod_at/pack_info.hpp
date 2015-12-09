@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_PACK_INFO_HPP
 
 # include <sqlite3.h>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include "get_node_table.hpp"
 # include "get_data_table.hpp"
 # include "get_smooth_table.hpp"

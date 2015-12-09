@@ -8,45 +8,6 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# cppad_mixed
-ADD_LIBRARY(cppad_mixed
-	cppad_mixed/constraint_eval.cpp
-	cppad_mixed/constraint_eval.cpp
-	cppad_mixed/constraint_jac.cpp
-	cppad_mixed/constraint_hes.cpp
-	cppad_mixed/ran_like_grad.cpp
-	cppad_mixed/ranobj_hes.cpp
-	cppad_mixed/initialize.cpp
-	cppad_mixed/ipopt_fixed.cpp
-	cppad_mixed/optimize_fixed.cpp
-	cppad_mixed/optimize_random.cpp
-	cppad_mixed/fix_like_eval.cpp
-	cppad_mixed/fix_like_jac.cpp
-	cppad_mixed/fix_like_hes.cpp
-	cppad_mixed/init_fix_like.cpp
-	cppad_mixed/init_constraint.cpp
-	cppad_mixed/init_hes_cross.cpp
-	cppad_mixed/init_hes_ranobj.cpp
-	cppad_mixed/init_ran_like.cpp
-)
-SET_TARGET_PROPERTIES(cppad_mixed
-	PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
-)
-# ---------------------------------------------------------------------------
-# cppad_mixed_eigen
-ADD_LIBRARY(cppad_mixed_eigen
-	cppad_mixed/chol_hes_ran.cpp
-	cppad_mixed/init_hes_ran.cpp
-	cppad_mixed/init_ranobj.cpp
-	cppad_mixed/newton_step.cpp
-	cppad_mixed/ranobj_eval.cpp
-	cppad_mixed/logdet_grad.cpp
-	cppad_mixed/ranobj_grad.cpp
-)
-SET_TARGET_PROPERTIES(cppad_mixed_eigen
-	PROPERTIES COMPILE_FLAGS "${eigen_cxx_flags}"
-)
-# ---------------------------------------------------------------------------
 # devel
 ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	model/data_model.cpp
@@ -112,7 +73,7 @@ SET_TARGET_PROPERTIES(devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
 LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 ADD_EXECUTABLE(dismod_at dismod_at.cpp )
 SET_TARGET_PROPERTIES(dismod_at PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}" )
-ADD_DEPENDENCIES(dismod_at devel cppad_mixed cppad_mixed_eigen)
+ADD_DEPENDENCIES(dismod_at devel )
 TARGET_LINK_LIBRARIES(dismod_at
 	devel
 	cppad_mixed
@@ -129,14 +90,3 @@ INSTALL(
 	TARGETS dismod_at
 	DESTINATION ${dismod_at_prefix}/bin
 )
-IF( cppad_mixed_libdir )
-	INSTALL(
-		TARGETS cppad_mixed cppad_mixed_eigen
-		DESTINATION ${dismod_at_prefix}/${cppad_mixed_libdir}
-	)
-	INSTALL(
-		FILES ${dismod_at_SOURCE_DIR}/include/dismod_at/cppad_mixed.hpp
-		DESTINATION ${dismod_at_prefix}/include/dismod_at
-	)
-ENDIF( cppad_mixed_libdir )
-

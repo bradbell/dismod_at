@@ -29,40 +29,8 @@ LINK_DIRECTORIES(
 	${dismod_at_BINARY_DIR}/cpp
 )
 # -----------------------------------------------------------------------------
-# example_devel_eigen
-ADD_LIBRARY(example_devel_eigen
-	cppad_mixed/private/eigen_xam.cpp
-)
-SET_TARGET_PROPERTIES(example_devel_eigen
-	PROPERTIES COMPILE_FLAGS "${eigen_cxx_flags}"
-)
-# -----------------------------------------------------------------------------
 ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	example_devel.cpp
-
-	${suitesparse_EXAMPLES}
-
-	cppad_mixed/ipopt_xam_run.cpp
-	cppad_mixed/private/constraint_eval_xam.cpp
-	cppad_mixed/private/constraint_hes_xam.cpp
-	cppad_mixed/private/constraint_jac_xam.cpp
-	cppad_mixed/private/logdet_grad_xam.cpp
-	cppad_mixed/private/ranobj_grad_xam.cpp
-	cppad_mixed/private/fix_like_hes_xam.cpp
-	cppad_mixed/private/fix_like_jac_xam.cpp
-	cppad_mixed/private/hes_cross_xam.cpp
-	cppad_mixed/private/hes_ran_fun_xam.cpp
-	cppad_mixed/private/ranobj_eval_xam.cpp
-	cppad_mixed/private/newton_step_xam.cpp
-	cppad_mixed/private/fix_like_eval_xam.cpp
-	cppad_mixed/private/ran_like_grad_xam.cpp
-	cppad_mixed/private/ranobj_hes_xam.cpp
-	cppad_mixed/user/mixed_constraint_xam.cpp
-	cppad_mixed/user/mixed_derived_xam.cpp
-	cppad_mixed/user/data_mismatch_xam.cpp
-	cppad_mixed/user/no_random_xam.cpp
-	cppad_mixed/user/optimize_fixed_xam.cpp
-	cppad_mixed/user/optimize_random_xam.cpp
 
 	model/avg_no_ode_xam.cpp
 	model/avg_yes_ode_xam.cpp
@@ -126,7 +94,6 @@ SET_TARGET_PROPERTIES(
 	example_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
 TARGET_LINK_LIBRARIES(example_devel
-	example_devel_eigen
 	devel
 	cppad_mixed
 	cppad_mixed_eigen
@@ -138,4 +105,4 @@ TARGET_LINK_LIBRARIES(example_devel
 	gslcblas
 )
 ADD_CUSTOM_TARGET(check_example_devel example_devel DEPENDS example_devel )
-ADD_DEPENDENCIES(check_example_devel devel cppad_mixed cppad_mixed_eigen)
+ADD_DEPENDENCIES(check_example_devel devel )

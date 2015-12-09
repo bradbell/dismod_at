@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_GET_DATA_TABLE_HPP
 
 # include <sqlite3.h>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include "get_covariate_table.hpp"
 
 namespace dismod_at {

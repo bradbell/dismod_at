@@ -149,7 +149,7 @@ $end
 ----------------------------------------------------------------------------
 */
 # include <Eigen/Sparse>
-# include <dismod_at/newton_step.hpp>
+# include <cppad/mixed/newton_step.hpp>
 # include <dismod_at/configure.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE

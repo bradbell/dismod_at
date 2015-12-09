@@ -12,7 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_DATA_MODEL_HPP
 
 # include <limits>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include "data_subset.hpp"
 # include "get_integrand_table.hpp"
 # include "get_density_table.hpp"

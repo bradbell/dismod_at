@@ -198,7 +198,6 @@ ADD_SUBDIRECTORY(speed)
 ADD_CUSTOM_TARGET(check DEPENDS
 	dismod_at
 	devel
-	cppad_mixed
 	check_example_table
 	check_example_devel
 	check_test_devel
@@ -207,7 +206,6 @@ ADD_CUSTOM_TARGET(check DEPENDS
 	check_example_user
 )
 ADD_CUSTOM_TARGET(speed DEPENDS
-	speed_capture_xam
 	speed_simulated
 )
 ADD_CUSTOM_TARGET(

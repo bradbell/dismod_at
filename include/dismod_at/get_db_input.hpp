@@ -13,7 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <string>
 # include <sqlite3.h>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 
 # include "get_option_table.hpp"
 # include "get_covariate_table.hpp"

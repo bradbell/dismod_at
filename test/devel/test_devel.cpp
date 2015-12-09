@@ -19,13 +19,6 @@ extern bool meas_mulcov(void);
 extern bool n_mixture(void);
 extern bool rate_mulcov(void);
 
-// cppad_mixed subdirectory
-extern bool binomial(void);
-extern bool delta_ranobj(void);
-extern bool der_var_hes(void);
-extern bool zero_random_one(void);
-extern bool zero_random_two(void);
-
 // anonymous namespace
 namespace {
 	using std::cout;
@@ -65,13 +58,6 @@ int main(void)
 	RUN(meas_mulcov);
 	RUN(n_mixture);
 	RUN(rate_mulcov);
-
-	// cppad_mixed subdirectory
-	RUN(binomial);
-	RUN(delta_ranobj);
-	RUN(der_var_hes);
-	RUN(zero_random_one);
-	RUN(zero_random_two);
 
 	// summary report
 	int return_flag;

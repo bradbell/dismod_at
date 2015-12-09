@@ -25,7 +25,7 @@ $$
 $end
 */
 // BEGIN C++
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <gsl/gsl_randist.h>
 # include <dismod_at/manage_gsl_rng.hpp>
 

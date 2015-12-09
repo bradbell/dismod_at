@@ -13,7 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cassert>
 # include <string>
 # include <iostream>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <dismod_at/avgint_subset.hpp>
 # include <dismod_at/child_info.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>

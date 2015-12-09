@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # ifndef DISMOD_AT_DATA_SUBSET_HPP
 # define DISMOD_AT_DATA_SUBSET_HPP
 
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include "get_data_table.hpp"
 # include "get_covariate_table.hpp"
 # include "child_info.hpp"

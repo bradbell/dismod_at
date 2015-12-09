@@ -11,7 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # ifndef DISMOD_AT_BILINEAR_INTERP_HPP
 # define DISMOD_AT_BILINEAR_INTERP_HPP
 
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
 		double bilinear_interp(
