@@ -26,7 +26,6 @@ $end
 # include <iostream>
 # include <cassert>
 # include <cstring>
-# include <dismod_at/configure.hpp>
 
 // model subdirectory
 extern bool avg_no_ode_xam(void);

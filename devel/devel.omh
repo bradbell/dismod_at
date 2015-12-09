@@ -20,7 +20,6 @@ $childtable%
 	devel/table/table.omh
 	%devel/utility/utility.omh
 	%devel/model/model.omh
-	%devel/cppad_mixed/cppad_mixed.omh
 %$$
 
 $end

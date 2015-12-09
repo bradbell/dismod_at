@@ -128,8 +128,8 @@ $lend
 
 $head 11-17$$
 Add another derivative checker
-$cref ipopt_fixed_check_grad_f$$
-(not yet part of $cref cppad_mixed$$ user API).
+$code cppad_mixed ipopt_fixed_check_grad_f$$
+(not yet part of $code cppad_mixed$$ user API).
 
 $head 11-16$$
 Add the $cref user_jump_at_age.py$$ example.
@@ -149,9 +149,9 @@ $lend
 $head 11-14$$
 There was a bug when running models with no
 $cref/random effects/model_variables/Random Effects, u/$$
-because the $cref cppad_mixed_ran_like$$ was non-empty.
+because the $code cppad_mixed ran_like$$ was non-empty.
 This has been fixed.
-In addition, the $cref cppad_mixed$$ sub-package now detects
+In addition, the $code cppad_mixed$$ sub-package now detects
 when this is the case and reports the error.
 Furthermore, there were some cases where the model for the data
 did not depend on the random effects, but the Laplace approximation
@@ -161,7 +161,7 @@ This has also been fixed.
 $head 11-12$$
 $list number$$
 Add $cref/random_seed/option_table/random_seed/$$ to the speed tests
-$cref user_simulated.py$$ and $cref capture_xam.cpp$$.
+$cref user_simulated.py$$ and $code cppad_mixed capture_xam.cpp$$.
 $lnext
 Change the log table format for the
 $cref/command/log_table/message_type/command/$$ message type.
@@ -189,14 +189,14 @@ Change from text can be empty to text can be null
 $cref/text can be null, not empty/table/Text can be Null, not Empty/$$).
 $lnext
 Implement the space saving Jacobian and Hessian calculations for the
-$cref/fixed likelihood/cppad_mixed_theory/Fixed Likelihood, g(theta)/$$
+$code cppad_mixed fixed likelihood$$
 $latex g(\theta)$$.
 $lnext
 Only initialize the Hessian terms for
 fixed likelihood $latex g(\theta)$$
-and the $cref/constraint/cppad_mixed_constraint/$$ function
+and the $code cppad_mixed constraint$$ function
 $latex c(\theta)$$
-when $cref/quasi_fixed/cppad_mixed_derived_ctor/quasi_fixed/$$ is false.
+when $code cppad_mixed quasi_fixed$$ is false.
 $lnext
 Fix transposition of correspondence between
 $icode age_id$$, $icode time_id$$ and $icode var_id$$
@@ -209,11 +209,11 @@ Advance to a new version of CppAD; i.e., need to rerun
 $code bin/install_cppad.sh$$.
 $lnext
 Remove derivative testing from the tests in the $code speed$$ directory.
-Increase the number of random effects in $cref capture_xam.cpp$$ to
+Increase the number of random effects in $code cppad_mixed capture_xam.cpp$$ to
 reduce the change of false negative tests.
 Increase the number of data points in $cref user_simulated.py$$
 for the same reason.
-(This is reasonable because $cref cppad_mixed$$ is now faster and uses
+(This is reasonable because $code cppad_mixed$$ is now faster and uses
 less memory.)
 $lnext
 The dismod_at $cref python$$ module is now part of the distribution; see
@@ -253,8 +253,8 @@ $lend
 
 $head 11-06$$
 Add lower and upper limits to the random effects in
-$cref/optimize_random/cppad_mixed_optimize_random/random_lower/$$ and
-$cref/optimize_fixed/cppad_mixed_optimize_random/random_lower/$$.
+$code cppad_mixed optimize_random$$ and
+$code cppad_mixed optimize_fixed$$.
 This is represented by
 $cref/random_bound/option_table/Optimizer/random_bound/$$ in the option table.
 
@@ -292,7 +292,7 @@ $cref/rate_case/option_table/rate_case/$$ options were reversed.
 This bug was introduced on $cref/10-29/whats_new_2015/10-29/$$
 and has been fixed.
 $lnext
-The $cref/ran_like/cppad_mixed_ran_like/Virtual Function/$$ virtual
+The $code cppad_mixed ran_like$$ virtual
 function must be implemented for both $code a1_double$$ and $code a2_double$$
 (one used to only need to implement $code a2_double$$).
 $lend
@@ -458,8 +458,8 @@ $codei%
 $head 10-25$$
 $list number$$
 Make the choice between quasi-Newton and full Newton
-a program option for the $cref cppad_mixed$$ package; see
-$cref/quasi_fixed/cppad_mixed_derived_ctor/quasi_fixed/$$.
+a program option for the $code cppad_mixed$$ package; see
+$code cppad_mixed quasi_fixed$$.
 $lnext
 The option to choose between quasi-Newton and full Newton
 for the fixed effects optimization was moved into the options table; see
@@ -472,7 +472,7 @@ Reduce the probability of the
 $code test/cppad_mixed/binomial.cpp$$ test failed by chance
 during $cref/testing/install_unix/dismod_at/Test/$$.
 $lnext
-The $cref/optimize_fixed/cppad_mixed_optimize_fixed/$$ effects
+The $code cppad_mixed optimize_fixed$$ effects
 procedure can now uses a BFGS method (and requires much less memory).
 The $icode cppad_mixed_newton$$ option in the
 $cref/setup/install_unix/dismod_at/Setup/$$
@@ -489,9 +489,9 @@ $lend
 $head 10-20$$
 $list number$$
 The $code approx_mixed$$ sub-package name was changed to
-$cref cppad_mixed$$. In addition example names of the form
+$code cppad_mixed$$. In addition example names of the form
 $codei%approx_%name%$$ where changed to $codei%mixed_%name%$$; e.g.,
-$cref/mixed_derived/cppad_mixed_derived_ctor/mixed_derived/$$.
+$code cppad_mixed mixed_derived$$.
 $lnext
 The $code cppad_mixed_eigen$$ library was not being installed
 and the $code bin/check_cppad_mixed.sh$$ test failed.
@@ -501,7 +501,7 @@ $lend
 $head 10-19$$
 Added an example that demonstrates that the random effects variance
 term may cause the solution to move from an exact match with the
-data values; see $cref data_mismatch_xam.cpp$$.
+data values; see $code cppad_mixed data_mismatch_xam.cpp$$.
 
 $head 10-16$$
 Two new tests were added to check cases where the solution
@@ -516,9 +516,9 @@ The instructions in $cref install_unix$$ were modified to make it clear
 that the external package installers only need to be run once; see
 $cref/special requirements/install_unix/Special Requirements/$$.
 $lnext
-A separate $cref ipopt_options$$ was added for the random effect in
-$cref/optimize_random/cppad_mixed_optimize_random/options/$$ and
-$cref/optimize_fixed/cppad_mixed_optimize_fixed/random_options/$$.
+A separate $code cppad_mixed ipopt_options$$ was added for the random effect in
+$code cppad_mixed optimize_random$$ and
+$code cppad_mixed optimize_fixed$$.
 $lnext
 The splitting of the optimization options between fixed and random
 effects was extend to the dismod_at API;
@@ -546,12 +546,12 @@ Advance to a newer version of CppAD
 (to avoid a bug when used with c++98 compilers)
 and hence requires $code bin/install_cppad.sh$$ to be re-run.
 $lnext
-The $cref newton_step$$ function was not taking advantage
+The $code cppad_mixed newton_step$$ function was not taking advantage
 of the recent memory saving changes to CppAD
 (using $code bool_sparsity_enum$$ instead of $code pack_sparsity_enum$$).
 This has been fixed.
 $lnext
-The $cref newton_step$$ was being recorded, but not used,
+The $code cppad_mixed newton_step$$ was being recorded, but not used,
 and hence more memory was used, instead of memory being saved.
 This has been fixed.
 $lnext
@@ -564,7 +564,7 @@ $cref/cmake command/install_unix/dismod_at/Cmake Command/$$
 $lend
 
 $head 08-31$$
-Reduce memory required by $cref cppad_mixed$$ sub-package.
+Reduce memory required by $code cppad_mixed$$ sub-package.
 This required some recent improvements to CppAD and hence requires
 $code bin/install_cppad.sh$$ to be re-run.
 
@@ -604,10 +604,10 @@ $lend
 
 $head 08-15$$
 $list number$$
-Improve the $cref cppad_mixed_theory$$ section.
+Improve the $code cppad_mixed theory$$ section.
 $lnext
-Add diagnostics as to the size of the $cref cppad_mixed$$ problem
-representation; see $cref/size_map/cppad_mixed_initialize/size_map/$$.
+Add diagnostics as to the size of the $code cppad_mixed$$ problem
+representation; see $code cppad_mixed size_map$$.
 $lend
 
 $head 08-14$$
@@ -692,7 +692,7 @@ $cref/sqlite3/install_unix/System Requirements/sqlite3/$$ was specified.
 
 $head 08-03$$
 $list number$$
-First version that actually installs the $cref cppad_mixed$$ sub-package
+First version that actually installs the $code cppad_mixed$$ sub-package
 using the $code cppad_mixed_libdir$$ option to the
 $cref/cmake command/install_unix/dismod_at/Cmake Command/$$.
 $lnext
@@ -706,13 +706,13 @@ $lend
 $head 08-02$$
 $list number$$
 Remove the option to include Laplace likelihoods (absolute value terms)
-in the $cref/random negative log likelihood/cppad_mixed_ran_like/$$.
+in the $code cppad_mixed random negative log likelihood$$.
 This reduces the number of necessary recordings and corresponding memory.
 $lnext
-The $cref/ran_like/cppad_mixed_ran_like/$$ function was changed from
+The $code cppad_mixed ran_like$$ function was changed from
 use $code a3_double$$ objects to $code a2_double$$ objects.
 $lnext
-Add the $cref capture_xam.cpp$$ example and test.
+Add the $code cppad_mixed capture_xam.cpp$$ example and test.
 This is both a correctness and speed test.
 $lend
 
@@ -727,7 +727,7 @@ evaluated using the recording for $latex H( \beta , \theta , u)$$
 (instead of its own separate recording.
 The greatly reduced the program memory requirements.
 $lnext
-The $cref/ran_like/cppad_mixed_ran_like/$$ function was changed from
+The $code cppad_mixed ran_like$$ function was changed from
 use $code a5_double$$ objects to $code a3_double$$ objects.
 $lend
 
@@ -735,13 +735,13 @@ $head 07-29$$
 $list number$$
 The term
 'prior negative log-likelihood' was change to
-$cref/fixed likelihood/cppad_mixed_theory/
+$code cppad_mixed fixed likelihood
 	Fixed Likelihood, g(theta)
 /$$.
 $lnext
 The term
 'joint negative log-likelihood' was change to
-$cref/random likelihood/cppad_mixed_theory/
+$code cppad_mixed random likelihood
 	Random Likelihood, f(theta, u)
 /$$.
 $lend
@@ -751,19 +751,19 @@ $head 07-28$$
 $list number$$
 Some example were missing, or were including the wrong source code.
 This has been fixed in the following user examples:
-$cref no_random_xam.cpp$$,
+$code cppad_mixed no_random_xam.cpp$$,
 $cref create_database.py$$.
 It was also fixed for the following developer examples:
 $cref avgint_subset_xam.cpp$$,
 $cref data_subset_xam.cpp$$.
 $lnext
 Handle the case where the
-$cref/fix_like/cppad_mixed_fix_like/$$ is empty.
+$code cppad_mixed fix_like$$ is empty.
 $lend
 
 $head 07-27$$
-Grouped all the user level $cref cppad_mixed$$ examples in the
-section $cref cppad_mixed_user$$.
+Grouped all the user level $code cppad_mixed$$ examples in the
+section $code cppad_mixed user$$.
 
 $head 07-25$$
 Add the $cref cpp_create_table$$ routine,
@@ -799,7 +799,7 @@ $list number$$
 Add the $cref user_no_children.py$$ example.
 $lnext
 Exit with an error if
-$cref/optimize_random/cppad_mixed_optimize_random/$$ is called
+$code cppad_mixed optimize_random$$ is called
 in a case where there are no random effects.
 $lnext
 There was a bug in the case where the second derivative
@@ -814,8 +814,8 @@ This has been fixed.
 $lnext
 The data corresponding to the
 $cref/parent node/option_table/parent_node_id/$$ is now in represented using
-$cref/p(z | theta)/cppad_mixed/Density Functions/p(z | theta)/$$ instead of
-$cref/p(y | theta, u)/cppad_mixed/Density Functions/p(y | theta, u)/$$.
+$code cppad_mixed p(z | theta)$$ instead of
+$code cppad_mixed p(y | theta, u)$$.
 This speeds up the computation and enables one to use
 Laplace and Log-Laplace likelihoods for this data
 (with out affecting the Laplace approximation for the integral).
@@ -824,7 +824,7 @@ $lend
 $head 07-21$$
 The $code cppad_mixed$$ sub-package was extended to work in the case
 were there are
-$cref/no random effects/cppad_mixed/Problem/No Random Effects/$$.
+$code cppad_mixed no random effects$$.
 
 $head 07-20$$
 $list number$$
@@ -840,9 +840,9 @@ Simplify the $cref/command/log_table/message_type/command/$$ start
 and done messages.
 $lnext
 Include data that is independent of the random effects
-$cref/z/cppad_mixed/Data, y, z/$$
+$code cppad_mixed z$$
 in the discussion of the $code cppad_mixed$$
-$cref/problem/cppad_mixed/Problem/$$.
+$code cppad_mixed problem$$.
 Also fix a $latex \B{p} ( y , \theta )$$ that was written as
 $latex \B{p} ( y | \theta )$$ in the problem discussion.
 $lend
@@ -851,7 +851,7 @@ $head 07-19$$
 $list number$$
 The name of the $code argument_table$$ was change to the $cref option_table$$.
 Some bugs were fixed in the
-$cref/constraint/cppad_mixed/Problem/Constraints/$$ option.
+$code cppad_mixed constraint$$ option.
 $lnext
 The $cref/print_level/option_table/Optimizer/print_level/$$ option
 was added to control tracing during optimization,
@@ -878,8 +878,8 @@ $lend
 $head 07-17$$
 $list number$$
 First version of the $code cppad_mixed$$ sub-package that works with
-$cref/constraints/cppad_mixed/Problem/Constraints/$$; e.g., see
-$cref mixed_constraint_xam.cpp$$.
+$code cppad_mixed constraints$$; e.g., see
+$code cppad_mixed mixed_constraint_xam.cpp$$.
 $lnext
 The $code solution check failed$$ warning was printing
 when the check actually passed (since 07-15).
@@ -891,11 +891,11 @@ message type to the log table
 $lend
 
 $head 07-16$$
-In the $cref cppad_mixed$$ sub-package,
+In the $code cppad_mixed$$ sub-package,
 changed $code joint_density$$ to
-$cref/ran_like/cppad_mixed_public/User Defined/ran_like/$$
+$code cppad_mixed ran_like$$
 and changed $code prior_density$$ to
-$cref/fix_like/cppad_mixed_public/User Defined/fix_like/$$.
+$code cppad_mixed fix_like$$.
 
 $head 07-15$$
 $list number$$
@@ -932,7 +932,7 @@ $cref/connection/open_connection/$$,
 use $cref log_table$$ to record all error messages before exiting.
 $lnext
 The pure virtual function
-$cref/fatal_error/cppad_mixed_public/User Defined/fatal_error/$$
+$code cppad_mixed fatal_error$$
 was added to the $code cppad_mixed$$ derived class.
 This enabled $code dismod_at$$ to log the $code cppad_mixed$$ error messages.
 $lend
@@ -1152,7 +1152,7 @@ This has been fixed.
 $lnext
 There were some non-standard references,
 in $cref open_connection$$,
-$cref ipopt_xam$$, and
+$code cppad_mixed ipopt_xam$$, and
 $cref get_column_max_xam.cpp$$,
 that gave compiler errors on some systems.
 This has been fixed.
