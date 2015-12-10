@@ -56,6 +56,10 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 12-10$$
+Advance to a newer version of $code cppad_mixed$$
+(rerun $code bin/install_cppad_mixed.sh$$).
+
 $head 12-09$$
 First version of $code dismod_at$$ that has
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
