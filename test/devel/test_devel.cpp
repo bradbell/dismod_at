@@ -16,7 +16,6 @@ see http://www.gnu.org/licenses/agpl.txt
 extern bool age_time_order(void);
 extern bool data_model_subset(void);
 extern bool meas_mulcov(void);
-extern bool n_mixture(void);
 extern bool rate_mulcov(void);
 
 // anonymous namespace
@@ -56,7 +55,6 @@ int main(void)
 	RUN(age_time_order);
 	RUN(data_model_subset);
 	RUN(meas_mulcov);
-	RUN(n_mixture);
 	RUN(rate_mulcov);
 
 	// summary report

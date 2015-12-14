@@ -250,8 +250,8 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		pack_vec[i] = prior_table_[ value_prior_[i] ].upper;
 	get_fixed_effect(pack_object_, pack_vec, fixed_upper);
 
-	// constraint_lower, constraint_upper
-	CppAD::vector<double> constraint_lower, constraint_upper;
+	// fix_constraint_lower, fix_constraint_upper
+	CppAD::vector<double> fix_constraint_lower, fix_constraint_upper;
 	for(size_t k = 0; k < diff_prior_.size(); k++)
 	{	// make sure these variable ids correspond to fixed effects
 		assert( var_id2fixed_[ diff_prior_[k].plus_var_id ] < n_fixed_ );
@@ -260,8 +260,8 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		size_t prior_id = diff_prior_[k].prior_id;
 		double lower    = prior_table_[prior_id].lower;
 		double upper    = prior_table_[prior_id].upper;
-		constraint_lower.push_back(lower);
-		constraint_upper.push_back(upper);
+		fix_constraint_lower.push_back(lower);
+		fix_constraint_upper.push_back(upper);
 	}
 
 	// fixed_in
@@ -310,8 +310,8 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		random_options,
 		fixed_lower,
 		fixed_upper,
-		constraint_lower,
-		constraint_upper,
+		fix_constraint_lower,
+		fix_constraint_upper,
 		fixed_in,
 		random_lower,
 		random_upper,
@@ -335,7 +335,7 @@ CppAD::vector<double> fit_model::get_solution(void)
 // ===========================================================================
 // private functions
 // ===========================================================================
-// ran_like
+// ran_likelihood
 template <class Float>
 CppAD::vector<Float> fit_model::implement_ran_like(
 	const CppAD::vector<Float>& fixed_vec   ,
@@ -404,18 +404,18 @@ CppAD::vector<Float> fit_model::implement_ran_like(
 	return ran_den;
 }
 //
-fit_model::a2d_vector fit_model::ran_like(
+fit_model::a2d_vector fit_model::ran_likelihood(
 	const a2d_vector& fixed_vec    ,
 	const a2d_vector& random_vec   )
 {	return implement_ran_like(fixed_vec, random_vec); }
 //
-fit_model::a1d_vector fit_model::ran_like(
+fit_model::a1d_vector fit_model::ran_likelihood(
 	const a1d_vector& fixed_vec    ,
 	const a1d_vector& random_vec   )
 {	return implement_ran_like(fixed_vec, random_vec); }
 // ---------------------------------------------------------------------------
-// fix_like
-fit_model::a1d_vector fit_model::fix_like(
+// fix_likelihood
+fit_model::a1d_vector fit_model::fix_likelihood(
 	const a1d_vector& fixed_vec   )
 {	// local vectors
 	a1d_vector random_vec( size_random_effect(pack_object_) );
@@ -483,8 +483,8 @@ fit_model::a1d_vector fit_model::fix_like(
 	return prior_den;
 }
 // --------------------------------------------------------------------------
-// constraint
-fit_model::a1d_vector fit_model::constraint(const a1d_vector& fixed_vec)
+// fix_constraint
+fit_model::a1d_vector fit_model::fix_constraint(const a1d_vector& fixed_vec)
 {	a1d_vector ret_val( diff_prior_.size() );
 	for(size_t k = 0; k < diff_prior_.size(); k++)
 	{	size_t plus_var_id    = diff_prior_[k].plus_var_id;

@@ -68,20 +68,20 @@ namespace dismod_at {
 			const CppAD::vector<Float>& fixed_vec   ,
 			const CppAD::vector<Float>& random_vec
 		);
-		virtual a2d_vector ran_like(
+		virtual a2d_vector ran_likelihood(
 			const a2d_vector& fixed_vec   ,
 			const a2d_vector& random_vec
 		);
-		virtual a1d_vector ran_like(
+		virtual a1d_vector ran_likelihood(
 			const a1d_vector& fixed_vec   ,
 			const a1d_vector& random_vec
 		);
 		// pass fixed negative log-likelihood to base class
-		virtual a1d_vector fix_like(
+		virtual a1d_vector fix_likelihood(
 			const a1d_vector& fixed_vec
 		);
 		// pass constraint functions to base class
-		virtual a1d_vector constraint(
+		virtual a1d_vector fix_constraint(
 			const a1d_vector& fixed_vec
 		);
 		// display error message and terminate program
