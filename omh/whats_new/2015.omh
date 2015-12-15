@@ -56,6 +56,12 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 12-15$$
+Advance to newer version of $code cppad$$
+(rerun $code bin/install_cppad.sh$$).
+This should have been done on 12-09 when we converted to using
+$code cppad_mixed$$ package.
+
 $head 12-14$$
 Advance to a newer version of $code cppad_mixed$$
 (rerun $code bin/install_cppad_mixed.sh$$).
