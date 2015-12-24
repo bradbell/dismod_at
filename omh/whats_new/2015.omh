@@ -56,6 +56,11 @@ $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head 12-24$$
+Advance to newer version of $code cppad_mixed$$
+(rerun $code bin/install_cppad_mixed.sh$$).
+This fixed a bug in that package.
+
 $head 12-15$$
 Advance to newer version of $code cppad$$
 (rerun $code bin/install_cppad.sh$$).
