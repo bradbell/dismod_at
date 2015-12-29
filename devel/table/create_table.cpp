@@ -114,7 +114,7 @@ $end
 ---------------------------------------------------------------------------
 */
 # include <dismod_at/create_table.hpp>
-# include <dismod_at/to_string.hpp>
+# include <cppad/utility/to_string.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -126,7 +126,9 @@ void create_table(
 	const CppAD::vector<std::string>&   col_type       ,
 	const CppAD::vector<bool>&          col_unique     ,
 	const CppAD::vector<std::string>&   row_value      )
-{	std::string cmd;
+{	using CppAD::to_string;
+
+	std::string cmd;
 	size_t n_col = col_name.size();
 	size_t n_row = row_value.size() / n_col;
 	//

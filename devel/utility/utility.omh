@@ -34,7 +34,6 @@ $childtable%include/dismod_at/a2_double.hpp
 	%devel/utility/random_effect.cpp
 	%devel/utility/smooth2ode.cpp
 	%devel/utility/solve_ode.cpp
-	%include/dismod_at/to_string.hpp
 %$$
 
 $end

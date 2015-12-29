@@ -96,7 +96,7 @@ $end
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/null_int.hpp>
-# include <dismod_at/to_string.hpp>
+# include <cppad/utility/to_string.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -108,7 +108,7 @@ void check_child_prior(
 {	assert( rate_table.size()   == number_rate_enum );
 	using std::endl;
 	using std::string;
-	using dismod_at::to_string;
+	using CppAD::to_string;
 	string msg;
 	//
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)

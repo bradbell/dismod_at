@@ -308,7 +308,7 @@ $end
 # include <dismod_at/smooth_info.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/error_exit.hpp>
-# include <dismod_at/to_string.hpp>
+# include <cppad/utility/to_string.hpp>
 
 namespace {
 	struct key_id {
@@ -443,6 +443,7 @@ smooth_info::smooth_info(
 	const CppAD::vector<smooth_grid_struct>& smooth_grid_table )
 {	size_t i, j, id;
 	using std::string;
+	using CppAD::to_string;
 	//
 	// for erorr messaging
 	string msg, table_name;

@@ -52,12 +52,19 @@ $spell
 	Jacobian
 	mulstd
 	ihme
+	hpp
 $$
 
 $section Changes and Additions to Dismod_at During 2015$$
 
-$head 12-28$$
+
+$head 12-29$$
+$list number$$
 Advance to newer version of $code cppad$$ and $code cppad_mixed$$.
+$lnext
+Use new CppAD $code to_string$$ utility in place off
+$code dismod_at/include/to_string.hpp$$.
+$lend
 
 $head 12-24$$
 Advance to newer version of $code cppad_mixed$$

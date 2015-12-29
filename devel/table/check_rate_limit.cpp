@@ -69,7 +69,7 @@ $end
 */
 # include <dismod_at/check_rate_limit.hpp>
 # include <dismod_at/error_exit.hpp>
-# include <dismod_at/to_string.hpp>
+# include <cppad/utility/to_string.hpp>
 # include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
@@ -81,6 +81,7 @@ void check_rate_limit(
 	const CppAD::vector<prior_struct>&        prior_table   ,
 	const CppAD::vector<smooth_grid_struct>&  smooth_grid   )
 {	assert( rate_table.size()   == number_rate_enum );
+	using CppAD::to_string;
 	//
 	CppAD::vector<bool> rate_zero(number_rate_enum);
 	if( rate_case == "iota_zero_rho_zero" )

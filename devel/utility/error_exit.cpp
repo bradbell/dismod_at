@@ -82,7 +82,7 @@ $end
 # include <dismod_at/log_message.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/get_column_max.hpp>
-# include <dismod_at/to_string.hpp>
+# include <cppad/utility/to_string.hpp>
 # include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE

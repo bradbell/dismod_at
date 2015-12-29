@@ -28,7 +28,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/sim_random.hpp>
-# include <dismod_at/to_string.hpp>
+# include <cppad/utility/to_string.hpp>
 # include <dismod_at/log_message.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/pack_prior.hpp>
@@ -117,7 +117,7 @@ void init_command(
 	const dismod_at::child_info&                     child_object        ,
 	const vector<dismod_at::smooth_info>&            s_info_vec          )
 {	using std::string;
-	using dismod_at::to_string;
+	using CppAD::to_string;
 
 	// -----------------------------------------------------------------------
 	const char* drop_list[] = {
@@ -431,7 +431,7 @@ void start_command(
 	const dismod_at::pack_info&            pack_object ,
 	const vector<dismod_at::smooth_info>&  s_info_vec  )
 {	using std::string;
-	using dismod_at::to_string;
+	using CppAD::to_string;
 	//
 	if( source != "prior_mean" && source != "fit_var" )
 	{	string msg = "dismod_at start command source = ";
@@ -537,7 +537,7 @@ void fit_command(
 	std::map<std::string, std::string>&          option_map
 )
 {	using std::string;
-	using dismod_at::to_string;
+	using CppAD::to_string;
 	// -----------------------------------------------------------------------
 	string fit_sample_index = option_map["fit_sample_index"];
 	if( fit_sample_index != "" )
@@ -753,7 +753,7 @@ $end
 // ----------------------------------------------------------------------------
 void truth_command(sqlite3* db)
 {	using std::string;
-	using dismod_at::to_string;
+	using CppAD::to_string;
 	//
 	// get fit_var table information
 	vector<double> variable_value;
@@ -834,7 +834,7 @@ void simulate_command(
 )
 {
 	using std::string;
-	using dismod_at::to_string;
+	using CppAD::to_string;
 	// -----------------------------------------------------------------------
 	// read truth_var table into truth_var
 	vector<double> truth_var;
@@ -963,7 +963,7 @@ void sample_command(
 )
 {
 	using std::string;
-	using dismod_at::to_string;
+	using CppAD::to_string;
 	// -----------------------------------------------------------------------
 	// read truth_var table into truth_var
 	vector<double> truth_var;
@@ -1105,7 +1105,7 @@ void predict_command(
 )
 {
 	using std::string;
-	using dismod_at::to_string;
+	using CppAD::to_string;
 
 	// sample table
 	vector<dismod_at::sample_struct> sample_table =

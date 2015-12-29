@@ -153,7 +153,7 @@ $end
 # include <cppad/cppad.hpp>
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/error_exit.hpp>
-# include <dismod_at/to_string.hpp>
+# include <cppad/utility/to_string.hpp>
 # include <dismod_at/configure.hpp>
 # include <dismod_at/null_int.hpp>
 
@@ -877,6 +877,8 @@ pack_info::variable_name(
 	const CppAD::vector<smooth_info>&      s_info_vec      ,
 	const child_info&                      child_object    ) const
 {	using std::string;
+	using CppAD::to_string;
+
 	std::string name;
 	// see get_rate_table.cpp where this table also appears
 	const char* rate_id2name[] = {

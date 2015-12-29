@@ -93,7 +93,7 @@ $end
 # include <dismod_at/log_message.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/get_column_max.hpp>
-# include <dismod_at/to_string.hpp>
+# include <cppad/utility/to_string.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/configure.hpp>
 
@@ -107,6 +107,7 @@ std::time_t log_message(
 	const size_t&      row_id       )
 {	static bool recursive = false;
 	using std::string;
+	using CppAD::to_string;
 
 	// check assumption one table_name and row_id columns of log
 	assert( table_name != "" || row_id == size_t( DISMOD_AT_NULL_INT ) );

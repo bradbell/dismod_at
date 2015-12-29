@@ -55,7 +55,6 @@ extern bool residual_density_xam(void);
 extern bool sim_random_xam(void);
 extern bool smooth2ode_xam(void);
 extern bool solve_ode_xam(void);
-extern bool to_string_xam(void);
 extern bool variable_name_xam(void);
 
 // table subdirectory
@@ -143,7 +142,6 @@ int main(void)
 	RUN(sim_random_xam);
 	RUN(smooth2ode_xam);
 	RUN(solve_ode_xam);
-	RUN(to_string_xam);
 	RUN(variable_name_xam);
 
 	// table subdirectory

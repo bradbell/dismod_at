@@ -103,7 +103,7 @@ $end
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/get_column_max.hpp>
-# include <dismod_at/to_string.hpp>
+# include <cppad/utility/to_string.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -113,7 +113,8 @@ void put_table_row(
 	const CppAD::vector<std::string>& col_name_vec ,
 	const CppAD::vector<std::string>& row_val_vec  ,
 	const size_t&                     primary_key  )
-{
+{	using CppAD::to_string;
+
 	size_t n_col = col_name_vec.size();
 	std::string table_name_id = to_string(primary_key);
 	//

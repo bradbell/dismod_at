@@ -83,7 +83,7 @@ $end
 # include <dismod_at/check_rate_limit.hpp>
 # include <dismod_at/check_child_prior.hpp>
 # include <dismod_at/null_int.hpp>
-# include <dismod_at/to_string.hpp>
+# include <cppad/utility/to_string.hpp>
 # include <dismod_at/error_exit.hpp>
 
 
@@ -106,6 +106,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void get_db_input(sqlite3* db, db_input_struct& db_input)
 {	using CppAD::vector;
+	using CppAD::to_string;
 	//
 	assert( db_input.age_table.size() == 0 );
 	assert( db_input.time_table.size() == 0 );

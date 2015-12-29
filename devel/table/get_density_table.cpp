@@ -73,7 +73,7 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
-# include <dismod_at/to_string.hpp>
+# include <cppad/utility/to_string.hpp>
 # include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
@@ -81,6 +81,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<density_enum> get_density_table(sqlite3* db)
 {	using std::string;
+	using CppAD::to_string;
 	//
 	// for error messaging
 	string message;
