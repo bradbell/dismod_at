@@ -221,6 +221,7 @@ option_dir = os.path.dirname(option_csv)
 #
 new = True
 file_name        = os.path.join(option_dir, cascade_dir + '.db')
+print file_name
 db_connection    = dismod_at.create_connection(file_name, new)
 # ---------------------------------------------------------------------------
 # integrand_table_in: integrand file as a list of dictionaries
@@ -281,7 +282,7 @@ for row in rate_prior_in :
 	age = float( row['age'] )
 	if not age in age_list :
 		print('age ', age, ' is not in age_grid')
-		age_list.add(age)
+		age_list.append(age)
 if not ok :
 	msg  = 'rate prior file has a age not in option.csv age grid'
 	sys.exit(msg)
@@ -1135,7 +1136,7 @@ row[2]  = weight_id
 for time_id in range( len(time_list) ) :
 	row[5]  = time_list[time_id]
 	row[6]  = time_list[time_id]
-	for age_id in range(len(time_list) ) :
+	for age_id in range(len(age_list) ) :
 		row[3]  = age_list[age_id]
 		row[4]  = age_list[age_id]
 		for integrand in integrand_name2id :
