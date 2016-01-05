@@ -22,7 +22,7 @@ $childtable%omh/whats_new/2015.omh
 
 $head 01-05$$
 Advance to a newer version of cppad_mixed
-(rerun bin/install_cppad_mixed.sh).
+(rerun $code bin/install_cppad_mixed.sh$$).
 
 $end
 
