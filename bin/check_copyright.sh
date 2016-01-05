@@ -6,7 +6,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 if [ "$0" != "bin/check_copyright.sh" ]
@@ -40,11 +40,11 @@ for file in $list
 do
 	if [ -e "$file" ] && [ "$file" != '.gitignore' ]
 	then
-		text='Copyright (C) 2014-15 University of Washington'
+		text='Copyright (C) 2014-16 University of Washington'
 		if ! grep "$text" $file > /dev/null
 		then
 			echo $file
-			sed -e 's|Copyright (C) 2014-..|Copyright (C) 2014-15|' -i.$$ $file
+			sed -e 's|Copyright (C) 2014-..|Copyright (C) 2014-16|' -i.$$ $file
 			if diff $file.$$ $file
 			then
 				echo 'bin/check_copyright.sh: program error'
