@@ -2,19 +2,31 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin import_cascade$$ $newlinech #$$
+# $begin import_cascade.py$$ $newlinech #$$
+# $spell
+#	py
+#	dismod
+# $$
 #
 # $section Import an IHME Cascade Study$$
 #
 # $head Syntax$$
-# $codei%import_cascade.py %cascade_path% %option_file%$$
+# $codei%bin/import_cascade.py %option_file%$$
+#
+# $head Purpose$$
+# This program is for testing $code dismod_at$$ on realistic data sets
+# at $code IHME$$ and is not for general use.
+#
+# $head option_file$$
+# Execute the command $code bin/import_cascade.py$$, with no arguments,
+# to get a message that describes this comma separate value file.
 #
 # $end
 # ---------------------------------------------------------------------------
@@ -221,7 +233,7 @@ option_dir = os.path.dirname(option_csv)
 #
 new = True
 file_name        = os.path.join(option_dir, cascade_dir + '.db')
-print file_name
+print('Output database: ', file_name)
 db_connection    = dismod_at.create_connection(file_name, new)
 # ---------------------------------------------------------------------------
 # integrand_table_in: integrand file as a list of dictionaries

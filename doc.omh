@@ -30,7 +30,7 @@ $spell
 	integrands
 	covariate
 $$
-$section Disease Rates as Functions of Age and Time: dismod_at-20160105$$
+$section Disease Rates as Functions of Age and Time: dismod_at-20160106$$
 
 $childtable%omh/install/unix.omh
 	%example/user/user.omh
@@ -41,6 +41,7 @@ $childtable%omh/install/unix.omh
 	%devel/devel.omh
 	%omh/whats_new/2016.omh
 	%omh/wish_list.omh
+	%bin/import_cascade.py
 %$$
 
 $end
