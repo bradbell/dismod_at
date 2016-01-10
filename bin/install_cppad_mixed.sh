@@ -17,7 +17,8 @@ extra_cxx_flags='-std=c++11 -Wall'
 # prefix for packages
 cppad_prefix="$HOME/prefix/dismod_at"
 ipopt_prefix="$HOME/prefix/dismod_at"
-eigen_prefix="$HOME/prefix/dismod_at"
+# use a special prefix inorder to supress warnings in eigen
+eigen_prefix="$HOME/prefix/dismod_at/eigen"
 # use set_sparsity YES or NO
 set_sparsity='NO'
 # directory below prefix with libraries are installed
@@ -41,8 +42,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='4347dbfa53e3710ea62aceda91f81d0788d386e6'
-version='20160105'
+hash_key='8495bb868d8104df051514bc35025c8c271e2c7e'
+version='20160110'
 # --------------------------------------------------------------------------
 if [ ! -e build/external ]
 then

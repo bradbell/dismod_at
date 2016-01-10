@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -11,7 +11,7 @@
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
 # prefix below which eigen will be installed
-eigen_prefix="$HOME/prefix/dismod_at"
+eigen_prefix="$HOME/prefix/dismod_at/eigen"
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 if [ $0 != 'bin/install_eigen.sh' ]
@@ -26,7 +26,7 @@ echo_eval() {
 	eval $*
 }
 # ---------------------------------------------------------------------------
-version='3.2.1'
+version='3.2.7'
 web_page='https://bitbucket.org/eigen/eigen/get'
 # --------------------------------------------------------------------------
 if [ ! -e build/external ]

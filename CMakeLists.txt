@@ -40,7 +40,11 @@ MACRO(get_prefix package)
 		MESSAGE(FATAL_ERROR "${package}_prefix not set by cmake command")
 	ENDIF( NOT ${package}_prefix )
 	MESSAGE(STATUS "${package}_prefix = ${${package}_prefix}")
-	INCLUDE_DIRECTORIES( ${${package}_prefix}/include )
+	IF( ${package} STREQUAL "eigen" )
+		INCLUDE_DIRECTORIES( SYSTEM ${${package}_prefix}/include )
+	ELSE( ${package} STREQUAL "eigen" )
+		INCLUDE_DIRECTORIES( ${${package}_prefix}/include )
+	ENDIF( ${package} STREQUAL "eigen" )
 ENDMACRO(get_prefix)
 # ----------------------------------------------------------------------------
 # required_definition( variable type docstring )
@@ -70,7 +74,7 @@ ENDMACRO( required_definition )
 # ----------------------------------------------------------------------------
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
-SET(dismod_at_version "20160106" )
+SET(dismod_at_version "20160110" )
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 INCLUDE(CheckCXXSourceRuns)
 # ============================================================================
@@ -105,12 +109,6 @@ ENDFOREACH( var )
 
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
-# ----------------------------------------------------------------------------
-# set eigen_cxx_flags
-SET(eigen_cxx_flags
-	"${extra_cxx_flags} -Wno-shadow -Wno-deprecated-declarations"
-)
-MESSAGE(STATUS "eigen_cxx_flags = ${eigen_cxx_flags}")
 # ----------------------------------------------------------------------------
 # set ipopt_LIBRARY_DIRS, ipopt_LIBRARIES
 # (note CppAD must be installed with ipopt_prefix specified)
