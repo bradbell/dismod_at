@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -219,7 +219,7 @@ prior_object_  ( prior_object )
 	for(size_t j = 0; j < n_fixed_; j++)
 		var_id2fixed_[ pack_index[j] ] = j;
 	// ---------------------------------------------------------------------
-	// initialize the aprox_mixed object
+	// initialize the cppad_mixed object
 	//
 	// fixed_vec
 	CppAD::vector<double> fixed_vec(n_fixed_);
@@ -228,7 +228,8 @@ prior_object_  ( prior_object )
 	CppAD::vector<double> random_vec(n_random_);
 	get_random_effect(pack_object_, start_var, random_vec);
 	//
-	initialize(fixed_vec, random_vec);
+	CppAD::mixed::sparse_mat_info A_info; // empty matrix
+	initialize(A_info, fixed_vec, random_vec);
 }
 // ---------------------------------------------------------------------------
 // run_fit

@@ -22,6 +22,9 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 01-15$$
+Advance to newer version of $code cppad_mixed$$.
+
 $head 01-10$$
 Advance to newer version of $code Eigen$$ and $code cppad_mixed$$.
 You should rerun $code bin/install_eigen.sh$$ and then

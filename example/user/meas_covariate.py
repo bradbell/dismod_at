@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -17,6 +17,9 @@
 # $$
 #
 # $section Using Measurement Covariates on Multiple Integrands$$
+#
+# $head See Also$$
+# $cref user_lasso_covariate.py$$
 #
 # $code
 # $verbatim%
@@ -128,7 +131,8 @@ def example_db (file_name) :
 		'age_upper':    0.0
 	}
 	# values that change between rows:
-	mulcov_income    = 1.0
+	mulcov_incidence = 1.0
+	mulcov_remission = 2.0;
 	income_reference = 0.5
 	n_integrand      = len( integrand_dict )
 	for data_id in range( n_data ) :
@@ -136,9 +140,12 @@ def example_db (file_name) :
 		income      = data_id / float(n_data-1)
 		sex         = ( data_id % 3 - 1.0 ) / 2.0
 		meas_value  = iota_true
+		effect      = (income - income_reference) * mulcov_incidence
+		meas_value *= math.exp(effect)
 		if integrand == 'remission' :
 			meas_value  = remission_true
-			effect      = (income - income_reference) * mulcov_income
+			# note that sex has no effect
+			effect      = (income - income_reference) * mulcov_remission
 			meas_value *= math.exp(effect)
 		meas_std    = 0.1 * meas_value
 		row['meas_value'] = meas_value
@@ -184,11 +191,11 @@ def example_db (file_name) :
 			'eta':      None
 		},{ # prior_mulcov
 			'name':     'prior_mulcov',
-			'density':  'laplace',
-			'lower':    None,
-			'upper':    None,
+			'density':  'uniform',
+			'lower':    -5.0,
+			'upper':     5.0,
 			'mean':     0.0,
-			'std':      1.0,
+			'std':      None,
 			'eta':      None
 		}
 	]
@@ -354,7 +361,8 @@ assert count == 8
 #
 # check covariate multiplier values
 count                   = 0
-mulcov_income           = 1.0
+mulcov_incidence        = 1.0
+mulcov_remission        = 2.0;
 remission_integrand_id  = 1
 for var_id in range( len(var_dict) ) :
 	row   = var_dict[var_id]
@@ -364,9 +372,10 @@ for var_id in range( len(var_dict) ) :
 		count       += 1
 		value        = fit_var_dict[var_id]['variable_value']
 		if integrand_id == remission_integrand_id :
-			assert abs( value / mulcov_income - 1.0 ) < 1e3 * tol
+			assert abs( value / mulcov_remission - 1.0 ) < tol
 		else :
-			assert abs( value ) < 5.0 * tol
+			assert abs( value / mulcov_incidence - 1.0 ) < tol
+			assert abs( value / mulcov_incidence - 1.0 ) < tol
 assert count == 2
 # -----------------------------------------------------------------------------
 print('meas_covariate.py: OK')

@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -16,6 +16,9 @@
 #
 # $section Using Lasso with Covariates$$
 #
+# $head See Also$$
+# $cref user_meas_covariate.py$$
+#
 # $code
 # $verbatim%
 #	example/user/lasso_covariate.py
@@ -26,7 +29,7 @@
 # BEGIN PYTHON
 # true values used to simulate data
 iota_true        = 0.05
-n_data           = 101
+n_data           = 201
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -180,7 +183,7 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      1.0,
+			'std':      0.01,
 			'eta':      None
 		}
 	]
@@ -227,7 +230,7 @@ def example_db (file_name) :
 		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_iota_parent',
-			'child_smooth':  'smooth_rate_child'
+			'child_smooth':  None
 		},{
 			'name':          'rho',
 			'parent_smooth': None,
@@ -324,31 +327,6 @@ middle_time_id = 1
 last_age_id    = 2
 last_time_id   = 2
 parent_node_id = 0
-tol            = 1e-8
-#
-# check parent iota values
-count          = 0
-iota_rate_id   = 1
-for var_id in range( len(var_dict) ) :
-	row   = var_dict[var_id]
-	match = row['var_type'] == 'rate'
-	match = match and row['rate_id'] == iota_rate_id
-	match = match and row['node_id'] == parent_node_id
-	if match :
-		count += 1
-		value = fit_var_dict[var_id]['variable_value']
-		assert abs( value / iota_true - 1.0 ) < tol
-assert count == 4
-#
-# check other iota values
-for var_id in range( len(var_dict) ) :
-	row   = var_dict[var_id]
-	match = row['var_type'] == 'rate'
-	if row['rate_id'] == iota_rate_id :
-		match = match and row['node_id'] != parent_node_id
-	if match :
-		value = fit_var_dict[var_id]['variable_value']
-		assert abs( value ) < tol
 #
 # check covariate multiplier values
 count          = 0
@@ -361,9 +339,12 @@ for var_id in range( len(var_dict) ) :
 		value        = fit_var_dict[var_id]['variable_value']
 		covariate_id = row['covariate_id']
 		if covariate_id == 0 :
-			assert abs( value / mulcov_income - 1.0 ) < 1e3 * tol
+			# income covariate
+			assert value >= 0.75 * mulcov_income
+			assert value < mulcov_income
 		else :
-			assert abs( value ) < tol
+			# sex covariate
+			assert abs(value) <= mulcov_income * 1e-9;
 assert count == 2
 # -----------------------------------------------------------------------
 # Results for fitting with noise
@@ -382,10 +363,12 @@ for var_id in range( len(var_dict) ) :
 		value        = sample_dict[var_id]['var_value']
 		covariate_id = row['covariate_id']
 		if covariate_id == 0 :
-			# print( value / mulcov_income - 1.0 )
-			assert abs( value / mulcov_income - 1.0 ) < 1e-1
+			# income covariate
+			assert value >= 0.75 * mulcov_income
+			assert value < mulcov_income
 		else :
-			assert abs( value ) < 1e-1
+			# sex covariate
+			assert abs(value) <= mulcov_income * 1e-9;
 assert count == 2
 # -----------------------------------------------------------------------------
 print('lasso_covariate.py: OK')
