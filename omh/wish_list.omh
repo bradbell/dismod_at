@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -22,6 +22,11 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Use Hessian of Objective To Compute Posterior Statistics$$
+It would be much faster to use a Cholesky factor of the
+Hessian of the objective to approximate the posterior distribution of the
+$cref model_variables$$.
+
 $head Reduce Number of ODE Solutions$$
 Currently we compute a separate solution of the ODE for each data point.
 We could solve the differential equation once for each set of data
@@ -30,41 +35,11 @@ and have the same covariate values for covariates that are used with
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$
 covariate multipliers.
 
-$head Caching Sparse Cholesky$$
-Currently, the sparse Cholesky factorization of the Hessian w.r.t. the
-random effects is being calculated in multiple places, without any
-change in the Hessian. We could improve speed by only re-calculating it
-when the fixed or random effects change. In addition, the analysis of
-the sparsity pattern could be done once, instead of every time the Hessian
-is calculated (since the sparsity pattern doesn't not change).
-
-$head Cholmod$$
-The speed and memory usage may be improved if we use the
-$href%http://faculty.cse.tamu.edu/davis/SuiteSparse/%SuiteSparse%$$
-cholmod routines instead of the eigen package
-$href%http://eigen.tuxfamily.org/dox-devel/group__SparseCholesky__Module.html
-	%sparse choleksy
-%$$.
-This cannot be done for AD records but that is only necessary
-for the full Newton method which seems to consume to much memory; see
-$cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$.
-
 $head Constrain Omega$$
 Right now we are fitting $latex \omega(a, t)$$ while $code dismod_ode$$
 constrains it to match the data.
 We could do the same, and in addition, have the random
 effect constraints match the data for each child.
-
-$head Sum of Random Effects$$
-It would be nice to add a prior on the sum of the random effects at each
-age-time grid point.
-This feature is in $code dismod_at$$ and it made that program
-much more robust.
-Preliminary testing showed that doing this directly destroys the
-sparsity of the Hessian w.r.t. the random effects (and hence makes the
-problem consume much more memory and time).
-I think this can be done without changing
-the Hessian w.r.t. the random effects.
 
 $head Widowing Data and Analysis$$
 It would be nice to have an option to restrict the data
@@ -77,12 +52,6 @@ Have a command that copies the final fit results to the starting
 point so that optimization can be continued.
 Currently one can do this directly by replacing the variable values in
 $cref start_var_table$$ using the variable values in $cref fit_var_table$$.
-
-$head Optimizing Random Effects$$
-It may save significant execution time and memory to write a special
-purpose optimizer for the random effects.
-We already have a recording for the Hessian w.r.t. the random effects,
-it is wasteful use an optimizer that does not take advantage of that Hessian.
 
 $head Random Starting Point$$
 Have an option to start at a random point from the prior for the fixed effects

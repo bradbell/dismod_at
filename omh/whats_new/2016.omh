@@ -22,6 +22,14 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 01-16$$
+Remove some $cref wish_list$$ items that have been completed
+and move some others to the
+$href%moby.ihme.washington.edu/bradbell/cppad_mixed/wish_list.htm
+	%cppad_mixed
+%$$
+package.
+
 $head 01-15$$
 Advance to newer version of $code cppad_mixed$$.
 
