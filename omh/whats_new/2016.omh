@@ -14,6 +14,8 @@ $spell
 	cppad
 	avgint
 	Eigen
+	cholmod
+	Cholesky
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -21,6 +23,19 @@ $section Changes and Additions to Dismod_at During 2016$$
 
 $childtable%omh/whats_new/2015.omh
 %$$
+
+$head 01-26$$
+$list number$$
+Advance to a newer version of cppad_mixed
+(rerun $code bin/install_cppad_mixed.sh$$).
+$lnext
+The $cref/SuiteSparse/install_unix/Special Requirements/suitesparse/$$
+package is now required.
+This is because one now has the option to use it for Cholesky factorization;
+see the $code cholmod_cholesky$$ setting for installing
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
+$lend
+
 
 $head 01-16$$
 Remove some $cref wish_list$$ items that have been completed

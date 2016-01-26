@@ -54,19 +54,12 @@ dismod_at_prefix="$HOME/prefix/dismod_at"
 eigen_prefix="$HOME/prefix/dismod_at/eigen"
 ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
-# &&
-#
-# &head suitesparse_prefix&&
-# Prefix where optional package was installed (use NOTFOUND if not installed).
-# This is only required by example/devel/cppad_mixed/cholmod_xam.cpp.
-# &codep
-suitesparse_prefix="$HOME/prefix/suitesparse"
+suitesparse_prefix="$HOME/prefix/dismod_at"
 # &&
 #
 # &head IHME Cluster Settings&&
 # Here are some example changes that are used for the IHME cluster
 # &codep
-# suitesparse_prefix="NOTFOUND"
 # python_three_command='/usr/local/anaconda3-current/bin/python'
 # extra_cxx_flags='-Wall'
 # &&
@@ -114,8 +107,10 @@ cmake \
 	\
 	-D python_three_command=$python_three_command \
 	-D extra_cxx_flags="$extra_cxx_flags" \
+	\
 	-D dismod_at_prefix="$dismod_at_prefix" \
-	-D cppad_prefix="$cppad_prefix" \
-	-D ipopt_prefix="$cppad_prefix" \
+	-D ipopt_prefix="$ipopt_prefix" \
 	-D eigen_prefix="$eigen_prefix" \
+	-D cppad_prefix="$cppad_prefix" \
+	-D suitesparse_prefix="$suitesparse_prefix" \
 	..

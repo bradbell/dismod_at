@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin install_unix$$
 $dollar @$$
 $spell
+	suitesparse
 	tgz
 	pkgconfig
 	cppad
@@ -87,11 +88,26 @@ $codei%
 	cd dismod_at-20160115
 	bin/install_eigen.sh
 %$$
-can be used for this purpose.
+can be used to install this package.
 If necessary, first adjust the setting
 of the following variables in that script.
 $code
 $verbatim%bin/install_eigen.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
+$$
+
+$subhead suitesparse$$
+The $href%http://faculty.cse.tamu.edu/davis/suitesparse.html%SuiteSparse%$$
+sparse matrix package.
+The commands
+$codei%
+	cd dismod_at-20160115
+	bin/install_suitesparse.sh
+%$$
+can be used to install this package.
+If necessary, first adjust the setting
+of the following variables in that script.
+$code
+$verbatim%bin/install_suitesparse.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
 $$
 
 $subhead Ipopt$$
@@ -102,7 +118,7 @@ $codei%
 	cd dismod_at-20160115
 	bin/install_ipopt.sh
 %$$
-can be used for this purpose.
+can be used to install this package.
 If necessary, first adjust the setting
 of the following variables in that script.
 $code
@@ -117,7 +133,7 @@ $codei%
 	cd dismod_at-20160115
 	bin/install_cppad.sh
 %$$
-can be used for this purpose.
+can be used to install this package.
 If necessary, first adjust the setting
 of the following variables in that script.
 $code
@@ -132,7 +148,7 @@ $codei%
 	cd dismod_at-20160115
 	bin/install_cppad_mixed.sh
 %$$
-can be used for this purpose.
+can be used to install this package.
 If necessary, first adjust the setting
 of the following variables in that script.
 $code

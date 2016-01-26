@@ -10,7 +10,8 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-# prefix below which eigen will be installed
+# special prefix below which eigen will be installed, special so that we
+# can suppress warnings for the eigen include files.
 eigen_prefix="$HOME/prefix/dismod_at/eigen"
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------

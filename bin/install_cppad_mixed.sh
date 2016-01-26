@@ -12,17 +12,20 @@
 # BEGIN USER_SETTINGS
 # type of build DEBUG or RELEASE
 cmake_build_type='DEBUG'
-# extra c++ flags used during compliation
-extra_cxx_flags='-std=c++11 -Wall'
-# prefix for packages
+# use dismod_at prefix for packages
 cppad_prefix="$HOME/prefix/dismod_at"
 ipopt_prefix="$HOME/prefix/dismod_at"
-# use a special prefix inorder to supress warnings in eigen
+suitesparse_prefix="$HOME/prefix/dismod_at"
+# special prefix for eigen so we can supress warnings in eigen include files
 eigen_prefix="$HOME/prefix/dismod_at/eigen"
-# use set_sparsity YES or NO
-set_sparsity='NO'
+# extra c++ flags used during compliation
+extra_cxx_flags='-std=c++11 -Wall'
 # directory below prefix with libraries are installed
 cmake_libdir='lib64'
+# use bool_sparsity YES or NO
+bool_sparsity='YES'
+# use cholmod (not eigen) for Cholesky factorization (where possible)
+cholmod_cholesky='YES'
 # ----------------------------------------------------------------------------
 # setings for IHME cluster
 # extra_cxx_flags='-Wall'
@@ -42,8 +45,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='01e56b0af690319c1742ef3638f779cde03e338e'
-version='20160114'
+hash_key='d353c3d9ae9141a59de0cb1ff946b80dca633fbe'
+version='20160125'
 # --------------------------------------------------------------------------
 if [ ! -e build/external ]
 then
@@ -88,12 +91,16 @@ fi
 #
 cmake_args="-D CMAKE_VERBOSE_MAKEFILE=NO"
 cmake_args="$cmake_args -D CMAKE_BUILD_TYPE=$cmake_build_type"
-cmake_args="$cmake_args -D extra_cxx_flags=$extra_cxx_flags"
+#
 cmake_args="$cmake_args -D cppad_prefix=$cppad_prefix"
 cmake_args="$cmake_args -D ipopt_prefix=$ipopt_prefix"
 cmake_args="$cmake_args -D eigen_prefix=$eigen_prefix"
-cmake_args="$cmake_args -D set_sparsity=$set_sparsity"
+cmake_args="$cmake_args -D suitesparse_prefix=$suitesparse_prefix"
+#
+cmake_args="$cmake_args -D extra_cxx_flags=$extra_cxx_flags"
 cmake_args="$cmake_args -D cmake_libdir=$cmake_libdir"
+cmake_args="$cmake_args -D bool_sparsity=$bool_sparsity"
+cmake_args="$cmake_args -D cholmod_cholesky=$cholmod_cholesky"
 echo "cmake $cmake_args .."
 cmake $cmake_args ..
 # -----------------------------------------------------------------------------

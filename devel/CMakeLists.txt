@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -70,16 +70,18 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 # devel
 SET_TARGET_PROPERTIES(devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
 #
-LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
+LINK_DIRECTORIES(
+	${ipopt_LIBRARY_DIRS}
+	${suitesparse_LIBRARY_DIRS}
+)
 ADD_EXECUTABLE(dismod_at dismod_at.cpp )
 SET_TARGET_PROPERTIES(dismod_at PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}" )
 ADD_DEPENDENCIES(dismod_at devel )
 TARGET_LINK_LIBRARIES(dismod_at
 	devel
 	cppad_mixed
-	cppad_mixed_eigen
-	cppad_mixed
 	${ipopt_LIBRARIES}
+	${suitesparse_LIBRARIES}
 	sqlite3
 	gsl
 	gslcblas

@@ -99,14 +99,13 @@ required_definition(dismod_at_prefix PATH
 get_prefix(cppad)
 get_prefix(eigen)
 get_prefix(ipopt)
+get_prefix(suitesparse)
 # ----------------------------------------------------------------------------
-FOREACH( var cppad_mixed_set_sparsity cppad_mixed_libdir suitesparse_prefix )
+FOREACH( var cppad_mixed_set_sparsity cppad_mixed_libdir )
 IF( ${var} )
 	MESSAGE(FATAL_ERROR "${var} is no longer used in dismod_at cmake command")
 ENDIF( ${var} )
 ENDFOREACH( var )
-# ----------------------------------------------------------------------------
-
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
 # ----------------------------------------------------------------------------
@@ -114,6 +113,10 @@ MESSAGE(STATUS "END:")
 # (note CppAD must be installed with ipopt_prefix specified)
 FIND_PACKAGE(PkgConfig)
 pkg_check_modules(ipopt REQUIRED ipopt)
+# ----------------------------------------------------------------------------
+# no pkg-config for SuiteSparse so explicitly set corresponding values
+SET(suitesparse_LIBRARY_DIRS ${suitesparse_prefix}/lib )
+SET(suitesparse_LIBRARIES "cholmod;amd;camd;colamd;ccolamd;suitesparseconfig" )
 # ----------------------------------------------------------------------------
 # dismod_at_has_nullptr_01
 #
