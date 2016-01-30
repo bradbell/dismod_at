@@ -53,6 +53,7 @@ option_dict = collections.OrderedDict([
 ('cascade_path','       directory where cascade input files are [path]'),
 ('rate_case','          are iota and rho zero or non-zero [see option_table]'),
 ('parent_node_name','   name of the parent node [str]'),
+('sex_reference','      sex [female/male/both]'),
 ('max_num_iter','       maximum for optimizing fixed effects [int]'),
 
 ('mtall2mtother','      treat mtall data as if it were mtother [true/false]'),
@@ -108,6 +109,13 @@ for option in option_table_in :
 		msg += option + ' in ' + option_csv + ' is not a valid option'
 		sys.exit(msg)
 #
+sex_reference = option_table_in['sex_reference']
+if sex_reference not in [ 'male', 'female', 'both' ] :
+	msg  = usage + '\n'
+	msg += 'in ' + option_csv + ' sex = ' + sex
+	msg += ' is not male, female, or both'
+	sys.exit(msg)
+#
 ode_step_size = option_table_in['ode_step_size']
 if not float(ode_step_size) > 0.0 :
 	msg  = usage + '\n'
@@ -157,6 +165,21 @@ if rate_case not in case_list :
 		if i + 1 < len( case_list ) :
 			msg += ', '
 	sys.exit(msg)
+#
+include_covariates = option_table_in['include_covariates']
+if 'a_sex' not in include_covariates.split(' ') :
+	msg  = usage + '\n'
+	msg += 'in ' + option_csv + ' include_covariates = '
+	msg += include_covariates + '\n'
+	msg += 'does not include a_sex\n'
+	sys.exit(msg)
+# ----------------------------------------------------------------------------
+def sex_reference() :
+	if option_table_in['sex_reference'] == 'male' :
+		return 0.5
+	if option_table_in['sex_reference'] == 'female' :
+		return -0.5
+	return 0.0
 # ----------------------------------------------------------------------------
 # cascade_path_dict
 #
@@ -225,13 +248,8 @@ def log_gaussian_cascade2at(prior_name, cascade_prior_row, eta) :
 # ---------------------------------------------------------------------------
 # db_connection
 #
-if not os.path.isdir('build') :
-	print('mkdir build')
-	os.mkdir('build')
-#
 option_dir = os.path.dirname(option_csv)
-#
-new = True
+new        = True
 file_name        = os.path.join(option_dir, cascade_dir + '.db')
 print('Output database: ', file_name)
 db_connection    = dismod_at.create_connection(file_name, new)
@@ -473,6 +491,7 @@ for row_in in data_table_in :
 		age_upper    = row_in['age_upper']
 		time_lower   = row_in['time_lower']
 		time_upper   = row_in['time_upper']
+		a_sex        = row_in['a_sex']
 		#
 		# node_id
 		node_id      = node_name2id['world']
@@ -507,7 +526,8 @@ for row_in in data_table_in :
 					value = None
 				row_out.append(value)
 			if mtall :
-				ok = float(age_lower) >= 1.0
+				ok = abs( float(a_sex) - sex_reference() ) < 0.6
+				ok = ok and float(age_lower) >= 1.0
 				if ok :
 					mtall_list.append(row_out)
 			else :
@@ -520,6 +540,7 @@ mtall_list = sorted(mtall_list, key=lambda row: row[7]) # by age_lower
 #
 # combine the mtall data that has the same node_id, time_lower, age_lower
 previous_row  = None
+match         = False
 for row  in mtall_list :
 	if previous_row == None :
 		match = False
@@ -530,29 +551,27 @@ for row  in mtall_list :
 	#
 	if match :
 		n_sum      += 1
-		meas_value += float( previous_row[5] )
-		meas_std   += float( previous_row[6] )**2
+		sum_value  += float( row[5] )
+		sum_stdsq  += float( row[6] )**2
 	else :
 		if previous_row != None :
-			meas_value   = meas_value / n_sum
-			meas_std     = math.sqrt( meas_std / n_sum**2  )
+			meas_value   = sum_value / n_sum
+			meas_std     = math.sqrt( sum_stdsq / n_sum  )
 			previous_row[5] = meas_value
 			previous_row[6] = meas_std
 			row_list.append(previous_row)
-		n_sum        = 0
-		meas_value   = 0.0
-		meas_std     = 0.0
+		n_sum        = 1
+		sum_value    = float( row[5] )
+		sum_stdsq    = float( row[6] )**2
 	previous_row = row
 #
-if previous_row != None :
-	n_sum       += 1
-	meas_value  += float( previous_row[5] )
-	meas_std    += float( previous_row[6] )**2
+if match :
 	meas_value   = meas_value / n_sum
-	meas_std     = math.sqrt( meas_std / n_sum**2  )
+	meas_std     = math.sqrt( meas_stdsq / n_sum  )
 	previous_row[5] = meas_value
 	previous_row[6] = meas_std
 	row_list.append(previous_row)
+pdb.set_trace()
 #
 #
 have_mtall_data = len(mtall_list) > 0
@@ -582,6 +601,7 @@ for name in covariate_name2id :
 		assert name.startswith('a_')
 		reference = 0.0
 		if name == 'a_sex' :
+			reference      = sex_reference()
 			max_difference = 0.6
 		else :
 			max_difference = None
