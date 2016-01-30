@@ -540,7 +540,6 @@ mtall_list = sorted(mtall_list, key=lambda row: row[7]) # by age_lower
 #
 # combine the mtall data that has the same node_id, time_lower, age_lower
 previous_row  = None
-match         = False
 for row  in mtall_list :
 	if previous_row == None :
 		match = False
@@ -565,13 +564,12 @@ for row  in mtall_list :
 		sum_stdsq    = float( row[6] )**2
 	previous_row = row
 #
-if match :
-	meas_value   = meas_value / n_sum
-	meas_std     = math.sqrt( meas_stdsq / n_sum  )
+if previous_row != None :
+	meas_value   = sum_value / n_sum
+	meas_std     = math.sqrt( sum_stdsq / n_sum  )
 	previous_row[5] = meas_value
 	previous_row[6] = meas_std
 	row_list.append(previous_row)
-pdb.set_trace()
 #
 #
 have_mtall_data = len(mtall_list) > 0
