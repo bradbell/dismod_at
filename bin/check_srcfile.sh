@@ -2,26 +2,26 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-if [ ! -e "bin/check_verbatim.sh" ]
+if [ ! -e "bin/check_srcfile.sh" ]
 then
-	echo "bin/check_verbatim.sh: must be executed from its parent directory"
+	echo "bin/check_srcfile.sh: must be executed from its parent directory"
 	exit 1
 fi
 cat << EOF > junk.sed
-/\$verbatim[^a-z]/! b skip
+/\$srcfile[^a-z]/! b skip
 N
 s/^#[ \\t]//
 s/^[ \\t]//
 s/\\n#[ \\t]//
 s/\\n[ \\t]//
-s/\$verbatim%//
+s/\$srcfile%//
 s/%.*//
 p
 : skip
@@ -30,11 +30,12 @@ special_case='
 	devel/table/get_db_input.cpp
 	devel/utility/pack_info.cpp
 	omh/install/unix.omh
-	bin/check_verbatim.sh
+	bin/check_srcfile.sh
+	bin/batch_edit.sh
 '
 # -----------------------------------------------------------------------------
-# Make sure that OMhelp verbatim commands referr to same file as command
-echo "Checking that OMhelp verbatim commands include from file they appear in."
+# Make sure that OMhelp srcfile commands referr to same file as command
+echo "Checking that OMhelp srcfile commands include from file they appear in."
 echo "----------------------------------------------------------------------"
 list=`git ls-files`
 different="no"
@@ -52,7 +53,7 @@ do
 	then
 		if [ "$file" != "$reference" ]
 		then
-			echo "\$verbatim in $file references $reference"
+			echo "\$srcfile in $file references $reference"
 			different="yes"
 		fi
 	fi

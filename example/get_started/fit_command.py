@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -16,7 +16,7 @@
 # $section dismod_at fit: Example and Test$$
 #
 # $code
-# $verbatim%
+# $srcfile%
 #	example/get_started/fit_command.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$

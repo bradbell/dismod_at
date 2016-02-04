@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -22,7 +22,7 @@ do
 done
 bin/check_devel_xam.sh
 bin/check_include.sh
-bin/check_verbatim.sh
+bin/check_srcfile.sh
 bin/check_configure.sh
 #
 bin/run_omhelp.sh xml

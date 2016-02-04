@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -20,7 +20,7 @@ $index example, C++ smooth2ode$$
 $index smooth2ode, C++ example$$
 
 $code
-$verbatim%example/devel/utility/smooth2ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/devel/utility/smooth2ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -129,7 +129,7 @@ bool smooth2ode_xam(void)
 	//
 	size_t i_si = 0, j_si = 0;
 	for(k = 0; k < ode_index.size(); k++)
- 	{
+	{
 		Float  v_ode = var_ode[k];
 		//
 		size_t i_ode  = ode_index[k] / n_time_ode;

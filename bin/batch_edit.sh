@@ -12,20 +12,19 @@
 new_directories='
 '
 rename_files='
+	 bin/check_verbatim.sh
 '
 spell_files='
 '
 no_change_files='
 '
 #
-rename_cmd='s|cholesky.\([hc]\)pp|choleig.\1pp|'
+rename_cmd='s|_verbatim|_srcfile|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
 cat << EOF > junk.sed
-/^\\tcppad_mixed\$/N
-/^\\tcppad_mixed\\n\\tcppad_mixed_eigen/d
-s|\${ipopt_LIBRARY_DIRS}|&\\n\\t\${suitesparse_LIBRARY_DIRS}|
-s|\${ipopt_LIBRARIES}|&\\n\\t\${suitesparse_LIBRARIES}|
+s|\$verbatim|\$srcfile|g
+s|check_verbatim|check_srcfile|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
@@ -35,10 +34,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 cp bin/batch_edit.sh $HOME/trash/batch_edit.sh
-cp bin/ls_files.sh $HOME/trash/ls_files.sh
 git reset --hard
-cp $HOME/trash/batch_edit.sh bin/batch_edit.sh
-cp $HOME/trash/ls_files.sh bin/ls_files.sh
 # ----------------------------------------------------------------------------
 # new directories
 for dir in $new_directories
@@ -92,3 +88,7 @@ if [ "$git_new" == 'yes' ]
 then
 	git_new.sh from
 fi
+# ----------------------------------------------------------------------------
+cp $HOME/trash/batch_edit.sh bin/batch_edit.sh
+echo 'batch_edit.sh: OK'
+exit 0

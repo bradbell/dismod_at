@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -431,7 +431,7 @@ $icode%info% = %pack_object%.rate_info(%rate_id%, %j%)
 $head subvec_info$$
 the type $code pack_info::subvec_info$$ is defined as follows:
 $code
-$verbatim%include/dismod_at/pack_info.hpp
+$srcfile%include/dismod_at/pack_info.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
@@ -545,7 +545,7 @@ covariate multipliers.
 $head subvec_info$$
 The type $code pack_info::subvec_info$$ is defined as follows:
 $code
-$verbatim%include/dismod_at/pack_info.hpp
+$srcfile%include/dismod_at/pack_info.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 
@@ -656,7 +656,7 @@ $icode%info% = %pack_object%.mulcov_rate_value_info(%rate_id%, %j%)
 $head subvec_info$$
 The type $code pack_info::subvec_info$$ is defined as follows:
 $code
-$verbatim%include/dismod_at/pack_info.hpp
+$srcfile%include/dismod_at/pack_info.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
 $$
 

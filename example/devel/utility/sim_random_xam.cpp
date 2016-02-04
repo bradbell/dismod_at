@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -18,7 +18,7 @@ $$
 $section Manage GSL Random Number Generator: Example and Test$$
 
 $code
-$verbatim%example/devel/utility/sim_random_xam.cpp%
+$srcfile%example/devel/utility/sim_random_xam.cpp%
 	0%// BEGIN C++%// END C++%1%$$
 $$
 
