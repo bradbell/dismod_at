@@ -1,4 +1,4 @@
-#! /bin/python3
+#! /usr/bin/env python3
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
@@ -552,23 +552,29 @@ for row  in mtall_list :
 		n_sum      += 1
 		sum_value  += float( row[5] )
 		sum_stdsq  += float( row[6] )**2
+		sum_sex    += float( row[11] )
 	else :
 		if previous_row != None :
 			meas_value   = sum_value / n_sum
-			meas_std     = math.sqrt( sum_stdsq / n_sum  )
+			meas_std     = math.sqrt( sum_stdsq ) / n_sum
+			meas_sex     = sum_sex / n_sum
 			previous_row[5] = meas_value
 			previous_row[6] = meas_std
+			previous_row[11] = meas_sex
 			row_list.append(previous_row)
 		n_sum        = 1
 		sum_value    = float( row[5] )
 		sum_stdsq    = float( row[6] )**2
+		sum_sex      = float( row[11] )
 	previous_row = row
 #
 if previous_row != None :
 	meas_value   = sum_value / n_sum
-	meas_std     = math.sqrt( sum_stdsq / n_sum  )
+	meas_std     = math.sqrt( sum_stdsq ) / n_sum
+	meas_sex     = sum_sex / n_sum
 	previous_row[5] = meas_value
 	previous_row[6] = meas_std
+	previous_row[11] = meas_sex
 	row_list.append(previous_row)
 #
 #
