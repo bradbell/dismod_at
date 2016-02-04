@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -32,11 +32,11 @@ Defines the type $code a2_double$$ as two levels of $code AD$$ in
 the CppAD package.
 
 $head Source Code$$
-$codep */
+$srccode%cpp% */
 namespace dismod_at {
 	typedef CppAD::AD< CppAD::AD<double> > a2_double;
 }
-/* $$
+/* %$$
 $end
 */
 
