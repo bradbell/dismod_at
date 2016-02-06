@@ -166,19 +166,21 @@ namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 // ===========================================================================
 // constructor
 fit_model::fit_model(
-	sqlite3*                           db           ,
-	const pack_info&                   pack_object  ,
-	const CppAD::vector<double>&       start_var    ,
-	const CppAD::vector<prior_struct>& prior_table  ,
-	const CppAD::vector<smooth_info>&  s_info_vec   ,
-	const data_model&                  data_object  ,
-	const prior_model&                 prior_object ,
-	bool                               quasi_fixed  ) :
+	sqlite3*                              db           ,
+	const pack_info&                      pack_object  ,
+	const CppAD::vector<double>&          start_var    ,
+	const CppAD::vector<prior_struct>&    prior_table  ,
+	const CppAD::vector<smooth_info>&     s_info_vec   ,
+	const data_model&                     data_object  ,
+	const prior_model&                    prior_object ,
+	bool                                  quasi_fixed  ,
+	const CppAD::mixed::sparse_mat_info&  A_info       ) :
 // base class constructor
 cppad_mixed(
-	size_fixed_effect(pack_object) ,  // n_fixed
-	size_random_effect(pack_object) , // n_random
-	quasi_fixed
+	size_fixed_effect(pack_object)  ,  // n_fixed
+	size_random_effect(pack_object) ,  // n_random
+	quasi_fixed                     ,
+	A_info
 ) ,
 db_            (db)                                 ,
 n_fixed_       ( size_fixed_effect(pack_object)  )  ,
@@ -228,8 +230,7 @@ prior_object_  ( prior_object )
 	CppAD::vector<double> random_vec(n_random_);
 	get_random_effect(pack_object_, start_var, random_vec);
 	//
-	CppAD::mixed::sparse_mat_info A_info; // empty matrix
-	initialize(A_info, fixed_vec, random_vec);
+	initialize(fixed_vec, random_vec);
 }
 // ---------------------------------------------------------------------------
 // run_fit

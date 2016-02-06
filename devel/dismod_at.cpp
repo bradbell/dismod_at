@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -579,6 +579,7 @@ void fit_command(
 	else
 	{	bool quasi_fixed = option_map["quasi_fixed"] == "true";
 		assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
+		CppAD::mixed::sparse_mat_info A_info; // empty matrix
 		dismod_at::fit_model fit_object(
 			db                   ,
 			pack_object          ,
@@ -587,7 +588,8 @@ void fit_command(
 			s_info_vec           ,
 			data_object          ,
 			prior_object         ,
-			quasi_fixed
+			quasi_fixed          ,
+			A_info
 		);
 		fit_object.run_fit(option_map);
 		solution = fit_object.get_solution();
@@ -1024,6 +1026,7 @@ void sample_command(
 		data_object.replace_like(data_subset_obj);
 
 		// fit_model
+		CppAD::mixed::sparse_mat_info A_info; // empty matrix
 		dismod_at::fit_model fit_object(
 			db                   ,
 			pack_object          ,
@@ -1032,7 +1035,8 @@ void sample_command(
 			s_info_vec           ,
 			data_object          ,
 			prior_object         ,
-			quasi_fixed
+			quasi_fixed          ,
+			A_info
 		);
 		fit_object.run_fit(option_map);
 		vector<double> solution = fit_object.get_solution();

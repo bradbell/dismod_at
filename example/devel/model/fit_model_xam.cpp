@@ -318,6 +318,7 @@ bool fit_model_xam(void)
 	}
 	// ----------------------- run the fit -------------------------------
 	bool quasi_fixed = false;
+	CppAD::mixed::sparse_mat_info A_info; // empty matrix
 	dismod_at::fit_model fit_object(
 		db,
 		pack_object,
@@ -326,7 +327,8 @@ bool fit_model_xam(void)
 		s_info_vec,
 		data_object,
 		prior_object,
-		quasi_fixed
+		quasi_fixed,
+		A_info
 	);
 	std::map<std::string, std::string> option_map;
 	option_map["max_num_iter_fixed"]       = "100";
