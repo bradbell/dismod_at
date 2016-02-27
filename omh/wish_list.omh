@@ -28,7 +28,7 @@ Write automated tests and documentation for
 $code bin/database2csv.py$$ and make it part of the
 $code dismod_at$$ distribution.
 
-$head Use Hessian of Objective To Compute Posterior Statistics$$
+$head Compute Posterior Statistics$$
 It would be much faster to use a Cholesky factor of the
 Hessian of the objective to approximate the posterior distribution of the
 $cref model_variables$$.
@@ -41,23 +41,11 @@ and have the same covariate values for covariates that are used with
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$
 covariate multipliers.
 
-$head Constrain Omega$$
-Right now we are fitting $latex \omega(a, t)$$ while $code dismod_ode$$
-constrains it to match the data.
-We could do the same, and in addition, have the random
-effect constraints match the data for each child.
-
 $head Widowing Data and Analysis$$
 It would be nice to have an option to restrict the data
 and analysis to a rectangular subset.
 Currently one can do this by removing some of the input data
 and changing the $cref/age/age_table/$$ and $cref/time/time_table/$$.
-
-$head Continue Optimization$$
-Have a command that copies the final fit results to the starting
-point so that optimization can be continued.
-Currently one can do this directly by replacing the variable values in
-$cref start_var_table$$ using the variable values in $cref fit_var_table$$.
 
 $head Random Starting Point$$
 Have an option to start at a random point from the prior for the fixed effects
