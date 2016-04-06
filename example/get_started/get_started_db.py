@@ -37,6 +37,10 @@
 # note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
+def fun_zero(a, t) :
+	return ('prior_zero', 'prior_zero', 'prior_zero')
+def fun_one(a, t) :
+	return ('prior_one', 'prior_one', 'prior_one')
 def fun_rate_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_rate_parent(a, t) :
@@ -132,6 +136,14 @@ def get_started_db (file_name) :
 			'mean':     0.0,
 			'std':      None,
 			'eta':      None
+		},{ # prior_one
+			'name':     'prior_one',
+			'density':  'uniform',
+			'lower':    1.0,
+			'upper':    1.0,
+			'mean':     1.0,
+			'std':      None,
+			'eta':      None
 		},{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
@@ -155,7 +167,23 @@ def get_started_db (file_name) :
 	middle_age_id  = 1
 	last_time_id   = 2
 	smooth_dict = [
-		{   # smooth_rate_child
+		{   # smooth_zero (not used in this example)
+			'name':                     'smooth_zero',
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
+			'fun':                      fun_zero
+		},{ # smooth_one (not used in this example)
+			'name':                     'smooth_one',
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
+			'fun':                      fun_one
+		},{ # smooth_rate_child
 			'name':                     'smooth_rate_child',
 			'age_id':                   [ middle_age_id ],
 			'time_id':                  [ 0, last_time_id ],

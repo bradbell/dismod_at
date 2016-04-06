@@ -19,9 +19,20 @@ $spell
 	covariate
 	covariates
 	csv.py
+	mtall
 $$
 
 $section Dismod_at Wish List$$
+
+$head Constrain Random Effects$$
+When converting
+$cref/mtall/avg_integrand/I_i (a, t)/mtall/$$ data to
+constraints on other cause mortality
+$cref/omega/rate_table/rate_name/omega/$$ it would be helpful
+to specify the value of omega for each child area.
+This requires changing the  child smoothing
+$cref/restrictions/rate_table/child_smooth_id/Restrictions/$$
+to allow for a uniform with equal lower and upper limits.
 
 $head database2csv.py$$
 Write automated tests and documentation for
