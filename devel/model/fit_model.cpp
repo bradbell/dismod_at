@@ -307,7 +307,7 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		random_lower[j] = - random_bound;
 	}
 	// optimal fixed effects
-	CppAD::vector<double> optimal_fixed = optimize_fixed(
+	CppAD::mixed::fixed_solution fixed_sol = optimize_fixed(
 		fixed_options,
 		random_options,
 		fixed_lower,
@@ -319,6 +319,7 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		random_upper,
 		random_in
 	);
+	CppAD::vector<double> optimal_fixed = fixed_sol.fixed_opt;
 	// store solution_
 	solution_.resize( pack_object_.size() );
 	put_fixed_effect(pack_object_, solution_, optimal_fixed);

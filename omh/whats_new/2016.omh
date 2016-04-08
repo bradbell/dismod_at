@@ -24,6 +24,12 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 04-07$$
+Advance to a newer version of cppad_mixed
+(rerun $code bin/install_cppad_mixed.sh$$).
+This has a change to the routine that checks derivatives
+of the fixed effects optimization problem.
+
 $head 03-29$$
 Advance to a newer version of cppad_mixed
 (rerun $code bin/install_cppad_mixed.sh$$).
