@@ -16,6 +16,7 @@ $spell
 	Eigen
 	cholmod
 	Cholesky
+	num_max_iter
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -23,6 +24,14 @@ $section Changes and Additions to Dismod_at During 2016$$
 
 $childtable%omh/whats_new/2015.omh
 %$$
+
+$head 04-09$$
+Advance to a newer version of cppad_mixed.
+This has a change so that when
+$cref/max_num_iter/option_table/Optimizer/max_num_iter/$$ is zero,
+for the fixed effects optimization problem,
+the resulting fixed effects estimate is the same as in the
+$cref start_var_table$$.
 
 $head 04-07$$
 Advance to a newer version of cppad_mixed
