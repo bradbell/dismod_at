@@ -20,9 +20,27 @@ $spell
 	covariates
 	csv.py
 	mtall
+	cppad
+	CppAD
+	checkpointing
 $$
 
 $section Dismod_at Wish List$$
+
+$head Checkpointing ODE$$
+A new option enables the cppad_mixed user
+(in this case dismod_at) to define a special way to compute
+the Hessian w.r.t the random effects; see
+$href%
+http://moby.ihme.washington.edu/bradbell/cppad_mixed/ran_likelihood_hes.htm
+%ran_likelihood_hes
+%$$
+It should greatly reduce memory if we combine this with
+CppAD checkpointing of an ODE that has been
+extended to include derivatives with respect to parameters; see
+$href%http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm
+	%checkpoint_extended_ode
+%$$.
 
 $head Constrain Random Effects$$
 When converting
