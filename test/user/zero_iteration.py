@@ -1,16 +1,18 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# true values used to simulate data
+# Test a case where lower limit == initial value < upper limit
 iota_true        = 0.05
-iota_initial     = iota_true * 2.0
+iota_upper       = iota_true * 10;
+iota_initial     = iota_true / 2.0;
+iota_lower       = iota_initial
 n_data           = 3
 # ------------------------------------------------------------------------
 import sys
@@ -83,7 +85,6 @@ def example_db (file_name) :
 	data_dict = list()
 	# values that are the same for all data rows
 	row = {
-		'node':        'world',
 		'density':     'gaussian',
 		'weight':      'constant',
 		'hold_out':     False,
@@ -127,13 +128,13 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      1.0, # 2DO: 1.0 and 0.01 work but 0.1 fails
+			'std':      0.1,
 			'eta':      None
 		},{ # prior_iota_parent
 			'name':     'prior_iota_parent',
 			'density':  'uniform',
-			'lower':    iota_true / 10.,
-			'upper':    10. * iota_true,
+			'lower':    iota_lower,
+			'upper':    iota_upper,
 			'mean':     iota_initial,
 			'std':      None,
 			'eta':      None
@@ -173,24 +174,24 @@ def example_db (file_name) :
 	rate_dict = [
 		{
 			'name':          'pini',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_rate_parent',
 			'child_smooth':  'smooth_rate_child'
 		},{
 			'name':          'rho',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': None,
+			'child_smooth':  None,
 		},{
 			'name':          'chi',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': None,
+			'child_smooth':  None,
 		},{
 			'name':          'omega',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': None,
+			'child_smooth':  None,
 		}
 	]
 	# ------------------------------------------------------------------------
@@ -211,7 +212,7 @@ def example_db (file_name) :
 		{ 'name':'random_bound',           'value':None                },
 
 		{ 'name':'derivative_test_random', 'value':'second-order'      },
-		{ 'name':'max_num_iter_random',    'value':'0'                 },
+		{ 'name':'max_num_iter_random',    'value':'50'                },
 		{ 'name':'print_level_random',     'value':'0'                 },
 		{ 'name':'tolerance_random',       'value':'1e-10'             }
 	]
@@ -274,8 +275,6 @@ for var_id in range( len(var_dict) ) :
 			assert value == iota_initial
 		else :
 			assert value ==  0.0
-	else :
-		assert value == 0.0
 # -----------------------------------------------------------------------------
 print('zero_iteration.py: OK')
 # -----------------------------------------------------------------------------

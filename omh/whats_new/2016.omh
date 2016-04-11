@@ -25,6 +25,10 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 04-11$$
+Initialize the optimization when $icode max_num_iter_fixed$$
+is zero, (this does more model checking).
+
 $head 04-09$$
 Advance to a newer version of cppad_mixed.
 This has a change so that when

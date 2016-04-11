@@ -281,8 +281,8 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 	options += "\nNumeric bound_relax_factor 0.0";
 	options += "\nNumeric tol " + option_map["tolerance_fixed"];
 	options += "\nInteger print_level " + option_map["print_level_fixed"];
-	options += "\nString derivative_test "
-		+ option_map["derivative_test_fixed"];
+	options += "\nString derivative_test "+option_map["derivative_test_fixed"];
+	//
 	size_t max_iter = std::atoi( option_map["max_num_iter_fixed"].c_str() );
 	if( max_iter != 0 )
 		options += "\nInteger max_iter " + option_map["max_num_iter_fixed"];

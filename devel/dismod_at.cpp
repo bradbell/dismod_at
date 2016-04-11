@@ -572,28 +572,22 @@ void fit_command(
 	dismod_at::get_table_column(db, table_name, column_name, start_var);
 	// ------------------ run fit_model ------------------------------------
 	vector<double> solution;
-	int max_fixed  = std::atoi( option_map["max_num_iter_fixed"].c_str() );
-	int max_random = std::atoi( option_map["max_num_iter_random"].c_str() );
-	if( max_fixed == 0 && max_random == 0 )
-		solution = start_var;
-	else
-	{	bool quasi_fixed = option_map["quasi_fixed"] == "true";
-		assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
-		CppAD::mixed::sparse_mat_info A_info; // empty matrix
-		dismod_at::fit_model fit_object(
-			db                   ,
-			pack_object          ,
-			start_var            ,
-			db_input.prior_table ,
-			s_info_vec           ,
-			data_object          ,
-			prior_object         ,
-			quasi_fixed          ,
-			A_info
-		);
-		fit_object.run_fit(option_map);
-		solution = fit_object.get_solution();
-	}
+	bool quasi_fixed = option_map["quasi_fixed"] == "true";
+	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
+	CppAD::mixed::sparse_mat_info A_info; // empty matrix
+	dismod_at::fit_model fit_object(
+		db                   ,
+		pack_object          ,
+		start_var            ,
+		db_input.prior_table ,
+		s_info_vec           ,
+		data_object          ,
+		prior_object         ,
+		quasi_fixed          ,
+		A_info
+	);
+	fit_object.run_fit(option_map);
+	solution = fit_object.get_solution();
 	// -------------------- fit_var table --------------------------------------
 	string sql_cmd = "drop table if exists fit_var";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
