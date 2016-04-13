@@ -27,6 +27,14 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Conditionals in ODE$$
+It is now possible to use conditional expressions in the ODE solution
+(CppAD has improved so that this will now work properly with two levels
+of AD and revere mode).
+This change would remove the need for the
+$cref/rate_case/option_table/rate_case/$$ option.
+Note that this will also work with checkpointing.
+
 $head Checkpointing ODE$$
 A new option enables the cppad_mixed user
 (in this case dismod_at) to define a special way to compute
