@@ -15,10 +15,15 @@ then
 	exit 1
 fi
 # ---------------------------------------------------------------------------
-speed_test=''
-while [ "$speed_test" != 'y' ] && [ "$speed_test" != 'n' ]
+input=''
+while [ "$input" != 'd' ] \
+&&    [ "$input" != 'r' ] \
+&&    [ "$input" != 'ds' ] \
+&&    [ "$input" != 'rs' ]
 do
-	read -p 'Include speed tests [y/n] ?' speed_test
+	msg='Debug [d], Release [r], Debug with speed test [ds]'
+	msg="$msg, Release with speed [rs] ?"
+	read -p "$msg" input
 done
 bin/check_devel_xam.sh
 bin/check_include.sh
@@ -27,11 +32,16 @@ bin/check_configure.sh
 #
 bin/run_omhelp.sh xml
 #
-bin/run_cmake.sh
+if [ "$input" == 'r' ] || [ "$input" == 'rs' ]
+then
+	bin/run_cmake.sh --release
+else
+	bin/run_cmake.sh
+fi
 #
 cd build
 make check
-if [ "$speed_test" == 'y' ]
+if [ "$input" == 'ds' ] || [ "$input" == 'rs' ]
 then
 	make speed
 fi

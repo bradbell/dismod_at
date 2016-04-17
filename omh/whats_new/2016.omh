@@ -17,6 +17,7 @@ $spell
 	cholmod
 	Cholesky
 	num_max_iter
+	cmake
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -24,6 +25,13 @@ $section Changes and Additions to Dismod_at During 2016$$
 
 $childtable%omh/whats_new/2015.omh
 %$$
+
+$head 04-17$$
+Fix some errors and warnings when
+$cref/cmake_build_type/run_cmake.sh/cmake_build_type/$$ was
+$code RELEASE$$. Note that release version is about twice as fast
+as the debug version (when using the debug version of
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
 
 $head 04-11$$
 Initialize the optimization when $icode max_num_iter_fixed$$

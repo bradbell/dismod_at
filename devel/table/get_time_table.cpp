@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -66,12 +66,14 @@ CppAD::vector<double> get_time_table(sqlite3* db)
 {	using std::string;
 
 	string table_name  = "time";
-	size_t n_time      = check_table_id(db, table_name);
-
-	string column_name =  "time";
+	string column_name = "time";
 	CppAD::vector<double>  time;
 	get_table_column(db, table_name, column_name, time);
+
+# ifndef NDEBUG
+	size_t n_time      = check_table_id(db, table_name);
 	assert( time.size() == n_time );
+# endif
 
 	return time;
 }

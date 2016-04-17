@@ -265,8 +265,10 @@ bool variable_name_xam(void)
 	//
 	// mulcov_meas_value
 	size_t integrand_id = 0;
+# ifndef NDEBUG
 	size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
 	assert( n_cov == 1 );
+# endif
 	info   = pack_object.mulcov_meas_value_info(integrand_id, 0);
 	n_var  = info.n_var;
 	offset = info.offset;
@@ -282,8 +284,10 @@ bool variable_name_xam(void)
 	//
 	// mulcov_meas_std
 	integrand_id = 1;
+# ifndef NDEBUG
 	n_cov        = pack_object.mulcov_meas_std_n_cov(integrand_id);
 	assert( n_cov == 1 );
+# endif
 	info   = pack_object.mulcov_meas_std_info(integrand_id, 0);
 	n_var  = info.n_var;
 	offset = info.offset;
@@ -293,8 +297,10 @@ bool variable_name_xam(void)
 	//
 	// mulcov_rate_value
 	size_t rate_id = 1;
+# ifndef NDEBUG
 	n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
 	assert( n_cov == 1 );
+# endif
 	info   = pack_object.mulcov_rate_value_info(rate_id, 0);
 	n_var  = info.n_var;
 	offset = info.offset;
