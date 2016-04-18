@@ -18,6 +18,7 @@ $spell
 	Cholesky
 	num_max_iter
 	cmake
+	CppAD
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -25,6 +26,10 @@ $section Changes and Additions to Dismod_at During 2016$$
 
 $childtable%omh/whats_new/2015.omh
 %$$
+
+$head 04-18$$
+Advance to new version of CppAD and cppad_mixed
+this fixes the compiler warnings when building the release version.
 
 $head 04-17$$
 Fix some errors and warnings when
