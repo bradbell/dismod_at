@@ -18,7 +18,7 @@ setup(
 	author  = 'Bradley M. Bell',
 	author_email= 'bradbell@uw.edu',
 	url='http://moby.ihme.washington.edu/bradbell/dismod_at',
-	version = '20160411',
+	version = '20160418',
 	packages = ['dismod_at' ],
 	package_dir = { 'dismod_at' : 'python/dismod_at' },
 	scripts     = list(),
