@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -47,8 +47,9 @@ $head simulate_struct$$
 This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
-$code int$$ $cnext $code sample_index$$ $cnext
-	The $cref/sample_index/simulate_table/sample_index/$$
+$rnext
+$code int$$ $cnext $code simulate_index$$ $cnext
+	The $cref/simulate_index/simulate_table/simulate_index/$$
 	for this simulated measurement.
 $rnext
 $code int$$ $cnext $code data_subset_id$$ $cnext
@@ -82,10 +83,10 @@ CppAD::vector<simulate_struct> get_simulate_table(sqlite3* db)
 	string table_name  = "simulate";
 	size_t n_simulate = check_table_id(db, table_name);
 
-	std::string column_name =  "sample_index";
-	CppAD::vector<int>          sample_index;
-	get_table_column(db, table_name, column_name, sample_index);
-	assert( sample_index.size() == n_simulate );
+	std::string column_name =  "simulate_index";
+	CppAD::vector<int>          simulate_index;
+	get_table_column(db, table_name, column_name, simulate_index);
+	assert( simulate_index.size() == n_simulate );
 
 	column_name             =  "data_subset_id";
 	CppAD::vector<int>          data_subset_id;
@@ -99,9 +100,9 @@ CppAD::vector<simulate_struct> get_simulate_table(sqlite3* db)
 
 	CppAD::vector<simulate_struct> simulate_table(n_simulate);
 	for(size_t i = 0; i < n_simulate; i++)
-	{	simulate_table[i].sample_index   = sample_index[i];
-		simulate_table[i].data_subset_id = data_subset_id[i];
-		simulate_table[i].meas_value    = meas_value[i];
+	{	simulate_table[i].simulate_index   = simulate_index[i];
+		simulate_table[i].data_subset_id   = data_subset_id[i];
+		simulate_table[i].meas_value       = meas_value[i];
 	}
 	return simulate_table;
 }

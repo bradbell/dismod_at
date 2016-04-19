@@ -849,7 +849,7 @@ void simulate_command(
 	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_row);
 	vector<bool>   col_unique(n_col);
 	//
-	col_name[0]   = "sample_index";
+	col_name[0]   = "simulate_index";
 	col_type[0]   = "integer";
 	col_unique[0] = false;
 	//
@@ -861,7 +861,7 @@ void simulate_command(
 	col_type[2]   = "real";
 	col_unique[2] = false;
 	//
-	for(size_t sample_index = 0; sample_index < number_sample; sample_index++)
+	for(size_t sim_index = 0; sim_index < number_sample; sim_index++)
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	size_t integrand_id =  data_subset_obj[subset_id].integrand_id;
 		dismod_at::integrand_enum integrand =
@@ -898,8 +898,8 @@ void simulate_command(
 		double meas_value   = dismod_at::sim_random(
 			density, avg, meas_std, eta
 		);
-		size_t simulate_id = sample_index * n_subset + subset_id;
-		row_value[simulate_id * n_col + 0] = to_string( sample_index );
+		size_t simulate_id = sim_index * n_subset + subset_id;
+		row_value[simulate_id * n_col + 0] = to_string( sim_index );
 		row_value[simulate_id * n_col + 1] = to_string( subset_id );
 		row_value[simulate_id * n_col + 2] = to_string(meas_value);
 	}
@@ -935,7 +935,7 @@ which was created by a previous $cref simulate_command$$.
 $head sample_table$$
 A new $cref sample_table$$ is created each time this command is run.
 It contains the optimal $cref/model_variables/model_variables/$$ values
-for each simulated $cref/sample_index/simulate_table/sample_index/$$.
+for each simulated measurement set; see $cref simulate_table$$.
 
 $children%example/get_started/sample_command.py%$$
 $head Example$$
@@ -1006,7 +1006,7 @@ void sample_command(
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	size_t simulate_id = offset + subset_id;
 			size_t sample_check =
-				size_t(simulate_table[simulate_id].sample_index);
+				size_t(simulate_table[simulate_id].simulate_index);
 			size_t subset_check =
 				size_t(simulate_table[simulate_id].data_subset_id);
 			if( sample_check != sample_index || subset_check != subset_id )

@@ -41,7 +41,7 @@ bool get_simulate_table_xam(void)
 	const char* sql_cmd[] = {
 	"create table simulate("
 		" simulate_id    integer primary key,"
-		" sample_index   integer,"
+		" simulate_index integer,"
 		" data_subset_id integer,"
 		" meas_value     real"
 	")",
@@ -62,12 +62,12 @@ bool get_simulate_table_xam(void)
 		dismod_at::get_simulate_table(db);
 	ok  &= simulate_table.size() == 6;
 	//
-	ok  &= simulate_table[0].sample_index == 0;
-	ok  &= simulate_table[1].sample_index == 0;
-	ok  &= simulate_table[2].sample_index == 0;
-	ok  &= simulate_table[3].sample_index == 1;
-	ok  &= simulate_table[4].sample_index == 1;
-	ok  &= simulate_table[5].sample_index == 1;
+	ok  &= simulate_table[0].simulate_index == 0;
+	ok  &= simulate_table[1].simulate_index == 0;
+	ok  &= simulate_table[2].simulate_index == 0;
+	ok  &= simulate_table[3].simulate_index == 1;
+	ok  &= simulate_table[4].simulate_index == 1;
+	ok  &= simulate_table[5].simulate_index == 1;
 	//
 	ok  &= simulate_table[0].data_subset_id == 0;
 	ok  &= simulate_table[1].data_subset_id == 1;

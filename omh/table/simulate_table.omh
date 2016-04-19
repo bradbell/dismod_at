@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -18,6 +18,9 @@ $$
 $section The Simulated Table: Samples Simulated Measurements$$
 The $code simulate$$ table is created during a
 $cref simulate_command$$.
+It contains $cref/number_sample/option_table/number_sample/$$
+sets of measurements where each set
+has one value for each entry in the $cref data_subset_table$$.
 
 $head simulate_id$$
 This column has type $code integer$$ and is the primary key for this table.
@@ -27,12 +30,12 @@ $cref truth_var_table$$,
 the measurement uncertainty is independent for each row
 and has standard deviation $cref/meas_std/data_table/meas_std/$$.
 
-$head sample_index$$
-The column has type $code integer$$. It specifies the sample index
-for this simulated measurement value. This index starts at zero,
+$head simulate_index$$
+The column has type $code integer$$. It specifies the index
+for this simulated measurement set. This index starts at zero,
 repeats as the same for the entire subset of $icode data_id$$ values,
-and then increments by one between samples (of the data subset).
-The final (maximum) value for $icode sample_index$$ is
+and then increments by one between measurement sets.
+The final (maximum) value for $icode simulate_index$$ is
 $cref/number_sample/option_table/number_sample/$$ minus one.
 
 $head data_subset_id$$
@@ -42,8 +45,10 @@ This identifies which $cref/data_id/data_subset_table/data_id/$$
 each row of the simulate table corresponds to
 If $icode n_subset$$ is the number of rows in the data_subset table,
 $codei%
-	%simulate_id% = %sample_index% * %n_subset% + %data_subset_id%
+	%simulate_id% = %simulate_index% * %n_subset% + %data_subset_id%
 %$$
+for $icode simulate_index$$ equal zero to $icode%number_sample%-1%$$
+and $icode data_subset_id$$ equal zero to $codei%n_subset%-1%$$.
 
 
 $head meas_value$$

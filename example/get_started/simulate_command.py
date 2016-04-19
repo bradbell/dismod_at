@@ -103,7 +103,7 @@ data_subset_dict = dismod_at.get_table_dict(connection, 'data_subset')
 simulate_dict    = dismod_at.get_table_dict(connection, 'simulate')
 for simulate_id in range( len(simulate_dict) ) :
 	row = simulate_dict[simulate_id];
-	sample_index    = row['sample_index']
+	simulate_index  = row['simulate_index']
 	data_subset_id  = row['data_subset_id']
 	data_id         = data_subset_dict[data_subset_id]['data_id']
 	meas_value      = row['meas_value']
@@ -113,7 +113,7 @@ for simulate_id in range( len(simulate_dict) ) :
 	else :
 		rate_id = data_id # for this example case
 	truth_var_value  = 5e-3 * (rate_id + 1)
-	assert sample_index == 0
+	assert simulate_index == 0
 	assert meas_value != data_dict[data_id]['meas_value']
 	assert meas_value != truth_var_value
 	assert abs( meas_value - truth_var_value ) < 4.0 * meas_std

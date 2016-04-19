@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -14,10 +14,16 @@ $spell
 $$
 
 $section The Sample Table: Samples of Variable Values$$
+
+$head Simulated Data$$
 The $cref sample_command$$ creates this table with
-one optimal estimate of the $cref model_variables$$
-for each valid $cref/sample_index/simulate_table/sample_index/$$
-in the simulate table.
+one optimal estimates of the $cref model_variables$$.
+For each valid $cref/simulate_index/simulate_table/simulate_index/$$.
+in the $cref simulate_table$$, there is an equal
+$icode sample_index$$ in the table with the optimal variables
+for the corresponding measurement.
+
+$head User's Choice$$
 This table may also be created directly by the user,
 with the aid of the $cref var_table$$.
 This is useful when one wants to use the
@@ -29,9 +35,9 @@ This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
 $head sample_index$$
-This column has type $code integer$$ and specifies the
-$cref/sample_index/simulate_table/sample_index/$$
-in the simulated data table that $icode var_value$$ corresponds to.
+This column has type $code integer$$ and specifies the index,
+in the simulated data table, that a complete set of $cref model_variables$$
+corresponds to.
 
 $head var_id$$
 This column has type $code integer$$ and specifies the
