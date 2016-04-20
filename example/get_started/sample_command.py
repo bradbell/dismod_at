@@ -100,7 +100,8 @@ if flag != 0 :
 # sample command
 program        = '../../devel/dismod_at'
 command        = 'sample'
-cmd = [ program, file_name, command ]
+method         = 'simulate'
+cmd = [ program, file_name, command, method ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :

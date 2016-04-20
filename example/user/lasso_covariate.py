@@ -310,6 +310,8 @@ for command in [ 'init', 'start', 'fit', 'truth', 'simulate', 'sample' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'start' :
 		cmd.append('prior_mean')
+	if command == 'sample' :
+		cmd.append('simulate')
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :

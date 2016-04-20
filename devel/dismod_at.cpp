@@ -425,7 +425,7 @@ $end
 
 // ----------------------------------------------------------------------------
 void start_command(
-	std::string                            source      ,
+	const std::string&                     source      ,
 	sqlite3*                               db          ,
 	const vector<dismod_at::prior_struct>& prior_table ,
 	const dismod_at::pack_info&            pack_object ,
@@ -435,7 +435,7 @@ void start_command(
 	//
 	if( source != "prior_mean" && source != "fit_var" )
 	{	string msg = "dismod_at start command source = ";
-		msg       += source + " is not one of the following:";
+		msg       += source + " is not one of the following: ";
 		msg       += "prior_mean, fit_var";
 		dismod_at::error_exit(db, msg);
 	}
@@ -921,21 +921,60 @@ $$
 $section The Sample Command$$
 
 $head Syntax$$
-$codei%dismod_at %file_name% sample%$$
+$codei%dismod_at %file_name% sample %method%$$
 
 $head file_name$$
 Is an
 $href%http://www.sqlite.org/sqlite/%$$ data base containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
+$head method$$
+The sample command argument $icode method$$ must be one of the following:
+
+$subhead simulate$$
+If $icode method$$ is $code simulate$$,
+the measurements in the $cref simulate_table$$ table will be used
+to create the $cref sample_table$$.
+For $cref/sample_index/sample_table/sample_index/$$ equal zero to
+$cref/number_simulate/option_table/number_simulate/$$ minus one,
+the corresponding measurement set has
+$cref/simulate_index/simulate_table/simulate_index/$$ in the
+simulate table equal to $icode sample_index$$ in the sample table.
+The $cref model_variables$$ in the sample table are the optimal values
+for the corresponding measurement set in the simulate table.
+This requires running $icode number_simulate$$ fits of the model variables.
+
+$subhead asymptotic$$
+Under Construction:
+If $icode method$$ is $code asymptotic$$,
+The number of samples of the model variables in the simulate table is
+$cref/number_simulate/option_table/number_simulate/$$.
+For each value of $code sample_index$$,
+the asymptotic statics of the model variables is used to generate
+the corresponding in the sample table.
+Sample with different values of $icode sample_index$$ are independent.
+
+$subhead fit_var$$
+Under Construction:
+If $icode method$$ is $code fit_var$$,
+the values in the $cref fit_var_table$$ are copied to the $cref sample_table$$.
+In this case, there is only one sample of the $cref model_variables$$
+in the sample table and
+$cref/sample_index/sample_table/sample_index/$$ is always zero.
+
 $head simulate_table$$
-This command has the extra input $cref  simulate_table$$
+If $icode method$$ is $code simulate$$,
+this command has the extra input $cref  simulate_table$$
 which was created by a previous $cref simulate_command$$.
+
+$head fit_var_table$$
+If $icode method$$ is $code asymptotic$$ or $code fit_var$$,
+this command has the extra input $cref fit_var_table$$
+which was created by a previous $cref fit_command$$.
 
 $head sample_table$$
 A new $cref sample_table$$ is created each time this command is run.
-It contains the optimal $cref/model_variables/model_variables/$$ values
-for each simulated measurement set; see $cref simulate_table$$.
+It contains samples of the model variables.
 
 $children%example/get_started/sample_command.py%$$
 $head Example$$
@@ -944,9 +983,8 @@ of using this command.
 
 $end
 */
-
 // ----------------------------------------------------------------------------
-void sample_command(
+void sample_command_simulate(
 	sqlite3*                                    db               ,
 	vector<dismod_at::data_subset_struct>&      data_subset_obj  ,
 	dismod_at::data_model&                      data_object      ,
@@ -1001,7 +1039,7 @@ void sample_command(
 	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
 	//
 	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
-	{	// set the measurement values for this simulation subset
+	{	// set the measurement values for corresponding simulation
 		size_t offset = n_subset * sample_index;
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	size_t simulate_id = offset + subset_id;
@@ -1050,6 +1088,37 @@ void sample_command(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
 	return;
+}
+void sample_command(
+	const std::string&                          method           ,
+	sqlite3*                                    db               ,
+	vector<dismod_at::data_subset_struct>&      data_subset_obj  ,
+	dismod_at::data_model&                      data_object      ,
+	const dismod_at::pack_info&                 pack_object      ,
+	const dismod_at::db_input_struct&           db_input         ,
+	const vector<dismod_at::smooth_info>&       s_info_vec       ,
+	const dismod_at::prior_model&               prior_object     ,
+	// effectively const
+	std::map<std::string, std::string>&         option_map
+)
+{	if( method == "simulate" )
+	{	sample_command_simulate(
+			db               ,
+			data_subset_obj  ,
+			data_object      ,
+			pack_object      ,
+			db_input         ,
+			s_info_vec       ,
+			prior_object     ,
+			option_map
+		);
+	}
+	else
+	{	std::string msg = "dismod_at sample command method = ";
+		msg += method + " is not one of the following: ";
+		msg += "simulate";
+		dismod_at::error_exit(db, msg);
+	}
 }
 /*
 -------------------------------------------------------------------------------
@@ -1206,7 +1275,7 @@ int main(int n_arg, const char** argv)
 		"truth",     3,
 		"fit",       3,
 		"simulate",  3,
-		"sample",    3,
+		"sample",    4,
 		"predict",   3
 	};
 	size_t n_command = sizeof( command_info ) / sizeof( command_info[0] );
@@ -1476,6 +1545,7 @@ int main(int n_arg, const char** argv)
 			else if( command_arg == "sample" )
 			{
 				sample_command(
+					argv[3]          , // method
 					db               ,
 					data_subset_obj  ,
 					data_object      ,

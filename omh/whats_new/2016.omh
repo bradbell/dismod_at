@@ -28,8 +28,13 @@ $childtable%omh/whats_new/2015.omh
 %$$
 
 $head 04-20$$
+$list number$$
 Change $code number_sample$$ in option table to
 $cref/number_simulate/option_table/number_simulate/$$.
+$lnext
+The $cref/method/sample_command/method/$$ argument was added
+to the sample command.
+$lend
 
 $head 04-19$$
 $list number$$

@@ -92,6 +92,8 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 program        = '../../devel/dismod_at'
 for command in [ 'simulate', 'sample', 'predict' ] :
 	cmd = [ program, file_name, command ]
+	if command == 'sample' :
+		cmd.append('simulate')
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :

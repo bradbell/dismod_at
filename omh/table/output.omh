@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -14,6 +14,7 @@ $spell
 	Dismod
 	init
 	var
+	xor
 $$
 
 $section Tables That Are Created By Dismod_at$$
@@ -41,39 +42,41 @@ $children%omh/table/log_table.omh
 
 $table
 	Command $pre  $$ $cnext
-	Output Tables $cnext
-	Addition Input Tables
+	Addition Input Tables $cnext
+	Output Tables
 $rnext
 	$cref/init/init_command/$$ $cnext
+	$cnext
 	$cref/var/var_table/$$
-$rnext $cnext
+$rnext $cnext $cnext
 	$cref/data_subset/data_subset_table/$$
-$rnext $cnext
+$rnext $cnext $cnext
 	$cref/avgint_subset/avgint_subset_table/$$  $pre  $$
 $rnext
 	$cref/start/start_command/$$ $cnext
-	$cref/start_var/start_var_table/$$      $cnext
-$rnext
-	$cref/fit/fit_command/$$ $cnext
-	$cref/fit_var/fit_var_table/$$, $cref/fit_data_subset/fit_data_subset_table/$$
-	$pre  $$ $cnext
+	$cnext
 	$cref/start_var/start_var_table/$$
 $rnext
-	$cref/truth/truth_command/$$ $cnext
-	$cref/truth_var/truth_var_table/$$      $cnext
-	$cref/fit_var/fit_var_table/$$
+	$cref/fit/fit_command/$$ $cnext
+	$cref/start_var/start_var_table/$$ $cnext
+	$cref/fit_var/fit_var_table/$$,
+	$cref/fit_data_subset/fit_data_subset_table/$$
 $rnext
-	$cref/simulate/simulate_command/$$ $cnext
-	$cref/simulate/simulate_table/$$             $cnext
+	$cref/truth/truth_command/$$ $cnext
+	$cref/fit_var/fit_var_table/$$ $cnext
 	$cref/truth_var/truth_var_table/$$
 $rnext
-	$cref/sample/sample_command/$$ $cnext
-	$cref/sample/sample_table/$$           $cnext
+	$cref/simulate/simulate_command/$$ $cnext
+	$cref/truth_var/truth_var_table/$$ $cnext
 	$cref/simulate/simulate_table/$$
 $rnext
-	$cref/predict/predict_command/$$ $cnext
-	$cref/predict/predict_table/$$            $cnext
+	$cref/sample/sample_command/$$ $cnext
+	$cref/simulate/simulate_table/$$, $cref/fit_var/fit_var_table/$$ $cnext
 	$cref/sample/sample_table/$$
+$rnext
+	$cref/predict/predict_command/$$ $cnext
+	$cref/sample/sample_table/$$     $cnext
+	$cref/predict/predict_table/$$
 $tend
 
 $end
