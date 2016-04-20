@@ -1038,6 +1038,7 @@ void sample_command_simulate(
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
 	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
 	//
+	assert( n_sample * n_subset == simulate_table.size() );
 	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
 	{	// set the measurement values for corresponding simulation
 		size_t offset = n_subset * sample_index;
@@ -1083,7 +1084,6 @@ void sample_command_simulate(
 			row_value[n_col * sample_id + 2] = to_string( solution[var_id] );
 		}
 	}
-	assert( n_sample * n_subset == simulate_table.size() );
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
@@ -1101,7 +1101,10 @@ void sample_command(
 	// effectively const
 	std::map<std::string, std::string>&         option_map
 )
-{	if( method == "simulate" )
+{	using std::string;
+	using CppAD::to_string;
+	//
+	if( method == "simulate" )
 	{	sample_command_simulate(
 			db               ,
 			data_subset_obj  ,
@@ -1112,13 +1115,61 @@ void sample_command(
 			prior_object     ,
 			option_map
 		);
+		return;
 	}
-	else
-	{	std::string msg = "dismod_at sample command method = ";
-		msg += method + " is not one of the following: ";
-		msg += "simulate";
+	else if( method != "fit_var" )
+	{	string msg = "dismod_at sample command method = ";
+		msg       += method + " is not one of the following: ";
+		msg       += "simulate, fit_var";
 		dismod_at::error_exit(db, msg);
 	}
+	// -----------------------------------------------------------------------
+	size_t n_sample     = 1;
+	// -----------------------------------------------------------------------
+	// get fit_var table information
+	vector<double> variable_value;
+	string table_name  = "fit_var";
+	string column_name = "variable_value";
+	dismod_at::get_table_column(
+		db, table_name, column_name, variable_value
+	);
+	// -----------------------------------------------------------------------
+	// create a new sample table
+	string sql_cmd = "drop table if exists sample";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	table_name = "sample";
+	size_t n_col    = 3;
+	size_t n_var    = pack_object.size();
+	size_t n_row    = n_sample * n_var;
+	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_row);
+	vector<bool>   col_unique(n_col);
+	//
+	col_name[0]   = "sample_index";
+	col_type[0]   = "integer";
+	col_unique[0] = false;
+	//
+	col_name[1]   = "var_id";
+	col_type[1]   = "integer";
+	col_unique[1] = false;
+	//
+	col_name[2]   = "var_value";
+	col_type[2]   = "real";
+	col_unique[2] = false;
+	//
+	size_t sample_index     = 0;
+	string sample_index_str = to_string( sample_index );
+	assert( variable_value.size() == n_var );
+	for(size_t var_id = 0; var_id < n_var; var_id++)
+	{	size_t sample_id = sample_index * n_var + var_id;
+		row_value[n_col * sample_id + 0] = sample_index_str;
+		row_value[n_col * sample_id + 1] = to_string( var_id );
+		row_value[n_col * sample_id + 2] = to_string( variable_value[var_id] );
+	}
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
+	return;
 }
 /*
 -------------------------------------------------------------------------------

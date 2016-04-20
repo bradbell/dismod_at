@@ -321,7 +321,7 @@ for var_id in range( len(var_dict) ) :
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
-# Run the simulate and sample commands
+# Simulate and then fit the data
 for command in [ 'simulate', 'start', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'start' :
