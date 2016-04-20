@@ -541,7 +541,7 @@ void fit_command(
 	// -----------------------------------------------------------------------
 	string fit_simulate_index = option_map["fit_simulate_index"];
 	if( fit_simulate_index != "" )
-	{	size_t sample_index = std::atoi( fit_simulate_index.c_str() );
+	{	size_t simulate_index = std::atoi( fit_simulate_index.c_str() );
 		//
 		// get simulation data
 		vector<dismod_at::simulate_struct> simulate_table =
@@ -549,7 +549,7 @@ void fit_command(
 		size_t n_subset = data_subset_obj.size();
 		size_t n_sample = simulate_table.size() / n_subset;
 		//
-		if( sample_index >= n_sample )
+		if( simulate_index >= n_sample )
 		{	string msg = "dismod_at fit command fit_simulate_index = ";
 			msg += fit_simulate_index + "\nis greater than number of samples";
 			msg += " in the simulate table";
@@ -558,7 +558,7 @@ void fit_command(
 		}
 		// replace the data with the simulated values
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-		{	size_t simulate_id = n_subset * sample_index + subset_id;
+		{	size_t simulate_id = n_subset * simulate_index + subset_id;
 			data_subset_obj[subset_id].meas_value =
 				simulate_table[simulate_id].meas_value;
 		}

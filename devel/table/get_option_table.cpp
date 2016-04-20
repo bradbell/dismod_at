@@ -274,7 +274,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	}
 	if( fit_simulate_index != "" )
 	{	if( std::atoi( fit_simulate_index.c_str() ) >= number_sample )
-		{	msg  = "sample_index is greater than or equal number_sample";
+		{	msg  = "fit_simulate_index is greater than or equal number_sample";
 			error_exit(db, msg, table_name);
 		}
 	}

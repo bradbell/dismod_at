@@ -101,7 +101,7 @@ for row in table_data['option'] :
 	if row['option_name'] == 'fit_simulate_index' :
 		fit_simulate_index = row['option_value']
 		if fit_simulate_index != None :
-			sample_index = int(fit_simulate_index)
+			simulate_index = int(fit_simulate_index)
 # ----------------------------------------------------------------------------
 def convert2output(value_in) :
 	if value_in == None :
@@ -316,7 +316,7 @@ for subset_row in table_data['data_subset'] :
 		row_out['meas_value']  = convert2output( row_in['meas_value'] )
 	else :
 		if have_simulate :
-			simulate_id =  n_subset * sample_index + subset_id
+			simulate_id =  n_subset * simulate_index + subset_id
 			sim_value = table_data['simulate'][simulate_id]['meas_value']
 			row_out['sim_value'] = sim_value
 	csv_writer.writerow(row_out)
