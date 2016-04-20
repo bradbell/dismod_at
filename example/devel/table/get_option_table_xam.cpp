@@ -62,7 +62,7 @@ bool get_option_table_xam(void)
 	"insert into option values(12,'print_level_random',     '0'            )",
 	"insert into option values(13,'tolerance_random',       '1e-8'         )",
 
-	"insert into option values(14,'fit_sample_index',       null           )",
+	"insert into option values(14,'fit_simulate_index',     null           )",
 	"insert into option values(15,'random_bound',           null           )"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
@@ -117,7 +117,7 @@ bool get_option_table_xam(void)
 	ok  &= option_table[13].option_name    == "tolerance_random";
 	ok  &= option_table[13].option_value   == "1e-8";
 	//
-	ok  &= option_table[14].option_name    == "fit_sample_index";
+	ok  &= option_table[14].option_name    == "fit_simulate_index";
 	ok  &= option_table[14].option_value   == "";
 	//
 	ok  &= option_table[15].option_name    == "random_bound";

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -89,7 +89,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	//
 	const char* name_list[] = {
 		"number_sample",
-		"fit_sample_index",
+		"fit_simulate_index",
 		"ode_step_size",
 		"parent_node_id",
 		"random_seed",
@@ -132,7 +132,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	int quasi_fixed = -1;
 	//
 	int number_sample = -1;
-	string fit_sample_index;
+	string fit_simulate_index;
 	for(size_t i = 0; i < n_name; i++)
 	{	size_t match = n_option;
 		for(size_t option_id = 0; option_id < n_option; option_id++)
@@ -178,12 +178,12 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(db, msg, table_name, match);
 			}
 		}
-		if( name_vec[i] == "fit_sample_index" )
-		{	fit_sample_index = option_value[match].c_str();
-			if( fit_sample_index != "" )
-			{	bool ok = std::atoi( fit_sample_index.c_str() ) >= 0;
+		if( name_vec[i] == "fit_simulate_index" )
+		{	fit_simulate_index = option_value[match].c_str();
+			if( fit_simulate_index != "" )
+			{	bool ok = std::atoi( fit_simulate_index.c_str() ) >= 0;
 				if( ! ok )
-				{	msg = "option_value is < 0 for fit_sample_index";
+				{	msg = "option_value is < 0 for fit_simulate_index";
 					error_exit(db, msg, table_name, match);
 				}
 			}
@@ -272,8 +272,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		msg += " is second-order or only-second-order";
 		error_exit(db, msg, table_name);
 	}
-	if( fit_sample_index != "" )
-	{	if( std::atoi( fit_sample_index.c_str() ) >= number_sample )
+	if( fit_simulate_index != "" )
+	{	if( std::atoi( fit_simulate_index.c_str() ) >= number_sample )
 		{	msg  = "sample_index is greater than or equal number_sample";
 			error_exit(db, msg, table_name);
 		}

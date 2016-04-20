@@ -41,7 +41,7 @@ $cref/parent_node_id/option_table/parent_node_id/$$,
 all of the output tables become invalid.
 $lnext
 If you change the
-$cref/fit_sample_index/option_table/fit_sample_index/$$, the
+$cref/fit_simulate_index/option_table/fit_simulate_index/$$, the
 $cref/fit_var/fit_var_table/$$ and $cref/fit_data_subset/fit_data_subset_table/$$
 tables become invalid.
 $lnext
@@ -96,12 +96,13 @@ is a positive integer specifying the
 number of independent samples of the
 $cref/data subset/data_subset_table/$$.
 
-$head fit_sample_index$$
-If the value of $icode fit_sample_index$$ is $code null$$,
+$head fit_simulate_index$$
+If the value of $icode fit_simulate_index$$ is $code null$$,
 the measurement values in the $cref/data_table/data_table/meas_value/$$
 are used during the $cref fit_command$$.
-Otherwise, $icode fit_sample_index$$ is the
-$icode sample_index$$ for the measurement values in the
+Otherwise, $icode fit_simulate_index$$ is the
+$cref/simulate_index/simulate_table/simulate_index/$$
+for the measurement values in the
 $cref/simulate_table/simulate_table/meas_value/$$.
 
 $head random_seed$$

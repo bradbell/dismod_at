@@ -224,12 +224,12 @@ def example_db (file_name) :
 	]
 	# ------------------------------------------------------------------------
 	# option_dict
-	# Note that fit_sample_index is not empty (so will fit simulted data)
+	# Note that fit_simulate_index is not empty (so will fit simulted data)
 	option_dict = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		{ 'name':'parent_node_name',       'value':'world'        },
 		{ 'name':'number_sample',          'value':'1'            },
-		{ 'name':'fit_sample_index',       'value':'0'            },
+		{ 'name':'fit_simulate_index',     'value':'0'            },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },
 

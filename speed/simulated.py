@@ -274,7 +274,7 @@ def example_db (file_name) :
 		{ 'name':'rate_case',              'value':'iota_pos_rho_pos' },
 		{ 'name':'parent_node_name',       'value':'world'            },
 		{ 'name':'number_sample',          'value':'1'                },
-		{ 'name':'fit_sample_index',       'value':'0'                },
+		{ 'name':'fit_simulate_index',     'value':'0'                },
 		{ 'name':'ode_step_size',          'value':'10.0'             },
 		{ 'name':'random_seed',            'value':random_seed_arg    },
 

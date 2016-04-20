@@ -22,14 +22,8 @@ rename_cmd='s|_verbatim|_srcfile|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
 cat << EOF > junk.sed
-/\$codep [*]\//! b two
-: one
-N
-/\/[*] *\$\\\$/! b one
-s|\$codep [*]/|\$srccode%cpp% */|
-s|/[*] *\$\\\$|/* %\$\$|
-#
-: two
+s|fit_sample_index|fit_simulate_index|g
+s|fit_simulate_index',   |fit_simulate_index', |
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

@@ -539,9 +539,9 @@ void fit_command(
 {	using std::string;
 	using CppAD::to_string;
 	// -----------------------------------------------------------------------
-	string fit_sample_index = option_map["fit_sample_index"];
-	if( fit_sample_index != "" )
-	{	size_t sample_index = std::atoi( fit_sample_index.c_str() );
+	string fit_simulate_index = option_map["fit_simulate_index"];
+	if( fit_simulate_index != "" )
+	{	size_t sample_index = std::atoi( fit_simulate_index.c_str() );
 		//
 		// get simulation data
 		vector<dismod_at::simulate_struct> simulate_table =
@@ -550,8 +550,8 @@ void fit_command(
 		size_t n_sample = simulate_table.size() / n_subset;
 		//
 		if( sample_index >= n_sample )
-		{	string msg = "dismod_at fit command fit_sample_index = ";
-			msg += fit_sample_index + "\nis greater than number of samples";
+		{	string msg = "dismod_at fit command fit_simulate_index = ";
+			msg += fit_simulate_index + "\nis greater than number of samples";
 			msg += " in the simulate table";
 			string table_name = "simulate";
 			dismod_at::error_exit(db, msg, table_name);
