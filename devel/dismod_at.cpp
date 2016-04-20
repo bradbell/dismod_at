@@ -826,7 +826,7 @@ void simulate_command(
 	const vector<dismod_at::integrand_struct>&          integrand_table ,
 	const vector<dismod_at::data_subset_struct>&        data_subset_obj ,
 	const dismod_at::data_model&                        data_object     ,
-	const size_t&                                       number_sample
+	const size_t&                                       number_simulate
 )
 {
 	using std::string;
@@ -845,7 +845,7 @@ void simulate_command(
 	table_name      = "simulate";
 	size_t n_col    = 3;
 	size_t n_subset = data_subset_obj.size();
-	size_t n_row    = number_sample * n_subset;
+	size_t n_row    = number_simulate * n_subset;
 	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_row);
 	vector<bool>   col_unique(n_col);
 	//
@@ -861,7 +861,7 @@ void simulate_command(
 	col_type[2]   = "real";
 	col_unique[2] = false;
 	//
-	for(size_t sim_index = 0; sim_index < number_sample; sim_index++)
+	for(size_t sim_index = 0; sim_index < number_simulate; sim_index++)
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	size_t integrand_id =  data_subset_obj[subset_id].integrand_id;
 		dismod_at::integrand_enum integrand =
@@ -1462,15 +1462,15 @@ int main(int n_arg, const char** argv)
 				);
 			}
 			else if( command_arg == "simulate" )
-			{	size_t number_sample = std::atoi(
-					option_map["number_sample"].c_str()
+			{	size_t number_simulate = std::atoi(
+					option_map["number_simulate"].c_str()
 				);
 				simulate_command(
 					db                       ,
 					db_input.integrand_table ,
 					data_subset_obj          ,
 					data_object              ,
-					number_sample
+					number_simulate
 				);
 			}
 			else if( command_arg == "sample" )

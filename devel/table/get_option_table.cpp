@@ -88,7 +88,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	size_t null_id  = size_t(DISMOD_AT_NULL_INT);
 	//
 	const char* name_list[] = {
-		"number_sample",
+		"number_simulate",
 		"fit_simulate_index",
 		"ode_step_size",
 		"parent_node_id",
@@ -131,7 +131,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	int derivative_test_fixed_level = -1;
 	int quasi_fixed = -1;
 	//
-	int number_sample = -1;
+	int number_simulate = -1;
 	string fit_simulate_index;
 	for(size_t i = 0; i < n_name; i++)
 	{	size_t match = n_option;
@@ -170,11 +170,11 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(db, msg, table_name, match);
 			}
 		}
-		if( name_vec[i] == "number_sample" )
-		{	number_sample = std::atoi( option_value[match].c_str() );
-			bool ok = number_sample >= 1;
+		if( name_vec[i] == "number_simulate" )
+		{	number_simulate = std::atoi( option_value[match].c_str() );
+			bool ok = number_simulate >= 1;
 			if( ! ok )
-			{	msg = "option_value is < 1 for number_sample";
+			{	msg = "option_value is < 1 for number_simulate";
 				error_exit(db, msg, table_name, match);
 			}
 		}
@@ -273,8 +273,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		error_exit(db, msg, table_name);
 	}
 	if( fit_simulate_index != "" )
-	{	if( std::atoi( fit_simulate_index.c_str() ) >= number_sample )
-		{	msg  = "fit_simulate_index is greater than or equal number_sample";
+	{	if( std::atoi( fit_simulate_index.c_str() ) >= number_simulate )
+		{	msg  = "fit_simulate_index is greater than or equal number_simulate";
 			error_exit(db, msg, table_name);
 		}
 	}

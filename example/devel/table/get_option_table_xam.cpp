@@ -46,7 +46,7 @@ bool get_option_table_xam(void)
 		" option_value    text"
 	")",
 	"insert into option values(0, 'parent_node_id',  '0'            )",
-	"insert into option values(1, 'number_sample',   '1'            )",
+	"insert into option values(1, 'number_simulate', '1'            )",
 	"insert into option values(2, 'ode_step_size',   '20.0'         )",
 	"insert into option values(3, 'random_seed',     '0'            )",
 	"insert into option values(4, 'rate_case',       'iota_pos_rho_pos' )",
@@ -78,7 +78,7 @@ bool get_option_table_xam(void)
 	ok  &= option_table[0].option_name    == "parent_node_id";
 	ok  &= option_table[0].option_value   == "0";
 	//
-	ok  &= option_table[1].option_name    == "number_sample";
+	ok  &= option_table[1].option_name    == "number_simulate";
 	ok  &= option_table[1].option_value   == "1";
 	//
 	ok  &= option_table[2].option_name    == "ode_step_size";

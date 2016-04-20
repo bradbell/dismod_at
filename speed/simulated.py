@@ -273,7 +273,7 @@ def example_db (file_name) :
 	option_dict = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_pos' },
 		{ 'name':'parent_node_name',       'value':'world'            },
-		{ 'name':'number_sample',          'value':'1'                },
+		{ 'name':'number_simulate',        'value':'1'                },
 		{ 'name':'fit_simulate_index',     'value':'0'                },
 		{ 'name':'ode_step_size',          'value':'10.0'             },
 		{ 'name':'random_seed',            'value':random_seed_arg    },
@@ -399,9 +399,9 @@ if random_seed == 0 :
 # -----------------------------------------------------------------------
 number_variable = len(var_dict)
 assert( len(sample_dict) % number_variable == 0 )
-number_sample   = int( len(sample_dict) / number_variable )
+number_simulate   = int( len(sample_dict) / number_variable )
 max_error       = 0.0
-for sample_index in range(number_sample) :
+for sample_index in range(number_simulate) :
 	for var_id in range( len(var_dict) ) :
 		sample_id  = sample_index * number_variable + var_id
 		row        = sample_dict[sample_id]

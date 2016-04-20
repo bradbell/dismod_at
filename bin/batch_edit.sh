@@ -22,8 +22,8 @@ rename_cmd='s|_verbatim|_srcfile|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
 cat << EOF > junk.sed
-s|fit_sample_index|fit_simulate_index|g
-s|fit_simulate_index',   |fit_simulate_index', |
+s|number_sample',   |number_simulate', |g
+s|number_sample|number_simulate|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

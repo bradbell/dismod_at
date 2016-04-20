@@ -1130,7 +1130,7 @@ if random_bound == '' :
 row_list = [
 	[ 'parent_node_id',         str(parent_node_id)              ],
 	[ 'ode_step_size',          option_table_in['ode_step_size'] ],
-	[ 'number_sample',          '10'                             ],
+	[ 'number_simulate',        '10'                             ],
 	[ 'fit_simulate_index',     None                             ],
 	[ 'random_seed',            str(int( timer.time() ))         ],
 	[ 'rate_case',              option_table_in['rate_case']     ],

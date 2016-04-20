@@ -46,7 +46,7 @@ $cref/fit_var/fit_var_table/$$ and $cref/fit_data_subset/fit_data_subset_table/$
 tables become invalid.
 $lnext
 If you change
-$cref/number_sample/option_table/number_sample/$$, the
+$cref/number_simulate/option_table/number_simulate/$$, the
 $cref/simulate/simulate_table/$$
 $cref/sample/sample_table/$$ and
 $cref/predict/predict_table/$$ tables become invalid.
@@ -89,8 +89,8 @@ $code mtexcess$$,
 $code mtwith$$,
 $code relrisk$$.
 
-$head number_sample$$
-If $icode%option_name% = number_sample%$$,
+$head number_simulate$$
+If $icode%option_name% = number_simulate%$$,
 the corresponding $icode option_value$$
 is a positive integer specifying the
 number of independent samples of the

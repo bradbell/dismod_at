@@ -250,7 +250,7 @@ def example_db (file_name) :
 	# option_dict
 	option_dict = [
 		{ 'name':'parent_node_name',       'value':'world'        },
-		{ 'name':'number_sample',          'value':'1'            },
+		{ 'name':'number_simulate',        'value':'1'            },
 		{ 'name':'fit_simulate_index',     'value':None           },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },
@@ -354,7 +354,7 @@ sample_dict = dismod_at.get_table_dict(connection, 'sample')
 # check covariate multiplier values
 count = 0
 for var_id in range( len(var_dict) ) :
-	# We can use var_id as sample_id because number_sample = 1
+	# We can use var_id as sample_id because number_simulate = 1
 	assert sample_dict[var_id]['var_id'] == var_id
 	#
 	row   = var_dict[var_id]

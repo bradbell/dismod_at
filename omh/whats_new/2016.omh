@@ -27,6 +27,10 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 04-20$$
+Change $code number_sample$$ in option table to
+$cref/number_simulate/option_table/number_simulate/$$.
+
 $head 04-19$$
 $list number$$
 In the simulate table, change $code sample_index$$ to

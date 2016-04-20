@@ -228,7 +228,7 @@ def example_db (file_name) :
 	option_dict = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		{ 'name':'parent_node_name',       'value':'world'        },
-		{ 'name':'number_sample',          'value':'1'            },
+		{ 'name':'number_simulate',        'value':'1'            },
 		{ 'name':'fit_simulate_index',     'value':'0'            },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },
