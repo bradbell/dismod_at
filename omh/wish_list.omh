@@ -27,6 +27,20 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Log-Gaussian$$
+There seems to be a problem with specifying a
+$cref/Log-Gaussian
+	/statistic
+	/Log-Density Function, D
+	/Log-Gaussian
+/$$
+prior the values in the
+$cref/parent smoothing/rate_table/parent_smooth_id/$$.
+The test $code test/user/no_data.py$$ demonstrates this problem.
+This should be understood and fixed.
+This problem may also extend to the data likelihoods; for example,
+consider the case where the prior is replaced by measurements.
+
 $head Conditionals in ODE$$
 It is now possible to use conditional expressions in the ODE solution
 (CppAD has improved so that this will now work properly with two levels
