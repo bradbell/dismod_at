@@ -19,6 +19,7 @@ $spell
 	num_max_iter
 	cmake
 	CppAD
+	var
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -26,6 +27,16 @@ $section Changes and Additions to Dismod_at During 2016$$
 
 $childtable%omh/whats_new/2015.omh
 %$$
+
+$head 04-21$$
+Change the sample command so that it has a
+$cref/method/sample_command/method/$$ argument.
+Using $icode%method% = simulate%$$ does the same as the
+sample command before this change.
+The new feature is $icode%method% = fit_var%$$.
+The
+$cref/asymptotic/sample_command/method/asymptotic/$$ method
+is not yet implemented.
 
 $head 04-20$$
 $list number$$

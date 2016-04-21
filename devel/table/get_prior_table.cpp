@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -168,7 +168,7 @@ CppAD::vector<prior_struct> get_prior_table(sqlite3* db)
 			error_exit(db, msg, table_name, i);
 		}
 		if(	mean[i] < prior_table[i].lower )
-		{	msg = "mean less than upper limit";
+		{	msg = "mean less than lower limit";
 			error_exit(db, msg, table_name, i);
 		}
 		if( density_id[i] != uniform_enum && std[i] <= 0.0 )

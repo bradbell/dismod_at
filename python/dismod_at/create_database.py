@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -263,7 +263,10 @@
 # The dictionary $icode%avgint_dict%[%i%]%$$ has the same description as
 # $cref/data_dict[i]/create_database/data_dict/$$ except that the
 # following keys (and corresponding values) are not present:
-# $code density$$, $code meas_value$$, $code meas_std$$.
+# $code density$$,
+# $code hold_out$$,
+# $code meas_value$$,
+# $code meas_std$$.
 #
 #
 # $childtable%example/table/create_database.py

@@ -1207,8 +1207,9 @@ in the avgint_subset table.
 
 $children%example/get_started/predict_command.py%$$
 $head Example$$
-The file $cref predict_command.py$$ contains an example and test
-of using this command.
+The files $cref predict_command.py$$ and
+$cref user_predict_fit.py$$ contain examples and tests
+using this command.
 
 $end
 */

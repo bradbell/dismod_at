@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -17,6 +17,7 @@ FOREACH(user_case
 	lasso_covariate
 	meas_covariate
 	no_children
+	predict_fit
 )
 	ADD_CUSTOM_TARGET(
 		check_example_user_${user_case}
@@ -34,4 +35,5 @@ ADD_CUSTOM_TARGET(
 	check_example_user_lasso_covariate
 	check_example_user_meas_covariate
 	check_example_user_no_children
+	check_example_user_predict_fit
 )

@@ -27,6 +27,24 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Constrain Random Effects$$
+
+$subhead Sum to Zero$$
+The $code cppad_mixed$$ package will handle an arbitrary linear
+constraint on the random effects estimates. This could be used to
+constrain the random effects to sum to zero for each of the rates,
+and at every age, time grid point in the smoothing.
+
+$subhead Omega Constraint$$
+When converting
+$cref/mtall/avg_integrand/I_i (a, t)/mtall/$$ data to
+constraints on other cause mortality
+$cref/omega/rate_table/rate_name/omega/$$ it would be helpful
+to specify the value of omega for each child area.
+This requires changing the  child smoothing
+$cref/restrictions/rate_table/child_smooth_id/Restrictions/$$
+to allow for a uniform with equal lower and upper limits.
+
 $head Log-Gaussian$$
 There seems to be a problem with specifying a
 $cref/Log-Gaussian
@@ -63,16 +81,6 @@ extended to include derivatives with respect to parameters; see
 $href%http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm
 	%checkpoint_extended_ode
 %$$.
-
-$head Constrain Random Effects$$
-When converting
-$cref/mtall/avg_integrand/I_i (a, t)/mtall/$$ data to
-constraints on other cause mortality
-$cref/omega/rate_table/rate_name/omega/$$ it would be helpful
-to specify the value of omega for each child area.
-This requires changing the  child smoothing
-$cref/restrictions/rate_table/child_smooth_id/Restrictions/$$
-to allow for a uniform with equal lower and upper limits.
 
 $head database2csv.py$$
 Write automated tests and documentation for
