@@ -47,7 +47,7 @@ namespace dismod_at {
 		// -------------------------------------------------------------------
 		// set during constructor and otherwise const
 		//
-		// prior for each variable
+		// prior for value of each variable
 		CppAD::vector<size_t>             value_prior_;
 		//
 		// Prior for variable differences. Only difference for which
@@ -55,19 +55,47 @@ namespace dismod_at {
 		// is greater than minus infinity are included. Note that all the
 		// corresponding variables should be fixed effects.
 		CppAD::vector<diff_prior_struct>  diff_prior_;
+		//
 		// Converts a packed variable id to index in fixed vector.
 		// Uses the invalid value n_fixed_ if not a fixed variable.
 		CppAD::vector<size_t>             var_id2fixed_;
+		//
+		// Offset in log scaling for each component of the fixed vector;
+		// If fixed_is_scaled_[j], fixed_vec[j] in dismod_at has value
+		// log( fixed_vec[j] + fixed_scale_eta_[j] ) during optimization.
+		CppAD::vector<bool>   fixed_is_scaled_;
+		CppAD::vector<double> fixed_scale_eta_;
 		// -------------------------------------------------------------------
 		// solution found by run_fit and in pack_info form
 		CppAD::vector<double>              solution_;
 		// ---------------------------------------------------------------
-		// pass random likelihood to base class
+		// implement_ran_like
 		template <class Float>
 		CppAD::vector<Float> implement_ran_like(
 			const CppAD::vector<Float>& fixed_vec   ,
 			const CppAD::vector<Float>& random_vec
 		);
+		// ---------------------------------------------------------------
+		// scaling
+		template <class Float>
+		void scale_fixed_effect(CppAD::vector<Float>& fixed_vec)
+		{	assert( fixed_vec.size() == n_fixed_ );
+			for(size_t j = 0; j < n_fixed_; j++)
+			{	if( fixed_is_scaled_[j] );
+					fixed_vec[j] = log( fixed_vec[j] + fixed_scale_eta_[j] );
+			}
+		}
+		// unscaling
+		template <class Float>
+		void unscale_fixed_effect(CppAD::vector<Float>& fixed_vec)
+		{	assert( fixed_vec.size() == n_fixed_ );
+			for(size_t j = 0; j < n_fixed_; j++)
+			{	if( fixed_is_scaled_[j] );
+					fixed_vec[j] = exp( fixed_vec[j] ) - fixed_scale_eta_[j];
+			}
+		}
+		// -------------------------------------------------------------------
+		// virtual functions used by cppad_mixed base class
 		virtual a2d_vector ran_likelihood(
 			const a2d_vector& fixed_vec   ,
 			const a2d_vector& random_vec
@@ -99,9 +127,11 @@ namespace dismod_at {
 			const CppAD::vector<smooth_info>&    s_info_vec   ,
 			const data_model&                    data_object  ,
 			const prior_model&                   prior_object ,
+			const CppAD::vector<rate_struct>&    rate_table   ,
 			bool                                 quasi_fixed  ,
 			const CppAD::mixed::sparse_mat_info& A_info
 		);
+		//
 		// run fit
 		void run_fit(
 			// effectively const

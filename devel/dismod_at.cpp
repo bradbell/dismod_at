@@ -583,6 +583,7 @@ void fit_command(
 		s_info_vec           ,
 		data_object          ,
 		prior_object         ,
+		db_input.rate_table  ,
 		quasi_fixed          ,
 		A_info
 	);
@@ -1068,6 +1069,7 @@ void sample_command_simulate(
 			s_info_vec           ,
 			data_object          ,
 			prior_object         ,
+			db_input.rate_table  ,
 			quasi_fixed          ,
 			A_info
 		);

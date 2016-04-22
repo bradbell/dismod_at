@@ -12,6 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/log_message.hpp>
+# include <dismod_at/null_int.hpp>
 /*
 $begin fit_model$$
 $spell
@@ -173,6 +174,7 @@ fit_model::fit_model(
 	const CppAD::vector<smooth_info>&     s_info_vec   ,
 	const data_model&                     data_object  ,
 	const prior_model&                    prior_object ,
+	const CppAD::vector<rate_struct>&     rate_table   ,
 	bool                                  quasi_fixed  ,
 	const CppAD::mixed::sparse_mat_info&  A_info       ) :
 // base class constructor
@@ -192,14 +194,13 @@ s_info_vec_    ( s_info_vec  )                      ,
 data_object_   ( data_object )                      ,
 prior_object_  ( prior_object )
 {
-	//
+	// ----------------------------------------------------------------------
 	size_t n_var = n_fixed_ + n_random_;
-	assert( pack_object_.size() == n_var );
-	//
+	assert( pack_object.size() == n_var );
 	// value_prior_
 	value_prior_ = pack_value_prior(pack_object, s_info_vec);
 	assert( value_prior_.size() == n_var );
-	//
+	// ----------------------------------------------------------------------
 	// diff_prior_
 	CppAD::vector<diff_prior_struct> diff_prior_tmp =
 			pack_diff_prior(pack_object, s_info_vec);
@@ -212,23 +213,74 @@ prior_object_  ( prior_object )
 		if( - inf < lower || upper < + inf )
 			diff_prior_.push_back( diff_prior_tmp[k] );
 	}
-	//
+	// ----------------------------------------------------------------------
 	// var_id2fixed_
 	var_id2fixed_.resize(n_var);
 	for(size_t k = 0; k < n_var; k++)
 		var_id2fixed_[k] = n_fixed_;
-	CppAD::vector<size_t> pack_index = fixed2var_id(pack_object);
+	CppAD::vector<size_t> pack_index(n_fixed_);
+	pack_index = fixed2var_id(pack_object);
 	for(size_t j = 0; j < n_fixed_; j++)
 		var_id2fixed_[ pack_index[j] ] = j;
+	// ----------------------------------------------------------------------
+	// fixed_is_scaled_, fixed_scale_eta_
+	fixed_is_scaled_.resize(n_fixed_);
+	fixed_scale_eta_.resize(n_fixed_);
+	for(size_t j = 0; j < n_fixed_; j++)
+	{	fixed_is_scaled_[j] = false;
+		fixed_scale_eta_[j] = std::numeric_limits<double>::quiet_NaN();
+	}
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	{	size_t            smooth_id = rate_table[rate_id].parent_smooth_id;
+		if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		{
+			const smooth_info& s_info   = s_info_vec[smooth_id];
+			size_t             n_age    = s_info.age_size();
+			size_t             n_time   = s_info.time_size();
+			size_t             n_child  = pack_object.child_size();
+			//
+			// information for parrent smooting for this rate
+			pack_info::subvec_info info =
+				pack_object.rate_info(rate_id, n_child);
+			for(size_t i = 0; i < n_age; i++)
+			{	for(size_t j = 0; j < n_time; j++)
+				{	// same ordering for each smoothing as in prior_model.cpp
+					size_t       var_id   = info.offset + i * n_time + j;
+					size_t       fixed_id = var_id2fixed_[var_id];
+					size_t       prior_id = s_info.value_prior_id(i, j);
+					const prior_struct& prior = prior_table[prior_id];
+					density_enum density      = density_enum(prior.density_id);
+					switch( density )
+					{
+						case uniform_enum:
+						case gaussian_enum:
+						case laplace_enum:
+						break;
+
+						case log_gaussian_enum:
+						case log_laplace_enum:
+						assert( prior.eta > 0 );
+						if( fixed_id < n_fixed_ )
+						{	fixed_is_scaled_[fixed_id] = true;
+							fixed_scale_eta_[fixed_id] = prior.eta;
+						}
+
+						default:
+						assert(false);
+					}
+				}
+			}
+		}
+	}
 	// ---------------------------------------------------------------------
 	// initialize the cppad_mixed object
 	//
 	// fixed_vec
 	CppAD::vector<double> fixed_vec(n_fixed_);
-	get_fixed_effect(pack_object_, start_var, fixed_vec);
+	get_fixed_effect(pack_object, start_var, fixed_vec);
 	// random_vec
 	CppAD::vector<double> random_vec(n_random_);
-	get_random_effect(pack_object_, start_var, random_vec);
+	get_random_effect(pack_object, start_var, random_vec);
 	//
 	initialize(fixed_vec, random_vec);
 }
