@@ -264,6 +264,7 @@ prior_object_  ( prior_object )
 						{	fixed_is_scaled_[fixed_id] = true;
 							fixed_scale_eta_[fixed_id] = prior.eta;
 						}
+						break;
 
 						default:
 						assert(false);
@@ -278,6 +279,7 @@ prior_object_  ( prior_object )
 	// fixed_vec
 	CppAD::vector<double> fixed_vec(n_fixed_);
 	get_fixed_effect(pack_object, start_var, fixed_vec);
+	scale_fixed_effect(fixed_vec, fixed_vec);
 	// random_vec
 	CppAD::vector<double> random_vec(n_random_);
 	get_random_effect(pack_object, start_var, random_vec);
@@ -297,12 +299,14 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 	for(size_t i = 0; i < n_var; i++)
 		pack_vec[i] = prior_table_[ value_prior_[i] ].lower;
 	get_fixed_effect(pack_object_, pack_vec, fixed_lower);
+	scale_fixed_effect(fixed_lower, fixed_lower);
 
 	// fixed_upper
 	CppAD::vector<double> fixed_upper(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
 		pack_vec[i] = prior_table_[ value_prior_[i] ].upper;
 	get_fixed_effect(pack_object_, pack_vec, fixed_upper);
+	scale_fixed_effect(fixed_upper, fixed_upper);
 
 	// fix_constraint_lower, fix_constraint_upper
 	CppAD::vector<double> fix_constraint_lower, fix_constraint_upper;
@@ -321,6 +325,7 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 	// fixed_in
 	CppAD::vector<double> fixed_in(n_fixed_);
 	get_fixed_effect(pack_object_, start_var_, fixed_in);
+	scale_fixed_effect(fixed_in, fixed_in);
 
 	// random_in
 	CppAD::vector<double> random_in(n_random_);
@@ -379,17 +384,21 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		random_upper,
 		random_in
 	);
+	// optimal fixed effects
 	CppAD::vector<double> optimal_fixed = fixed_sol.fixed_opt;
-	// store solution_
-	solution_.resize( pack_object_.size() );
-	put_fixed_effect(pack_object_, solution_, optimal_fixed);
+	// optimal random effects
+	CppAD::vector<double> optimal_random;
 	if( n_random_ > 0 )
-	{	// corresponding optimal random effects
-		CppAD::vector<double> optimal_random = optimize_random(
+	{	optimal_random = optimize_random(
 		random_options, optimal_fixed, random_lower, random_upper, random_in
 		);
-		put_random_effect(pack_object_, solution_, optimal_random);
 	}
+	// store solution_
+	solution_.resize( pack_object_.size() );
+	unscale_fixed_effect(optimal_fixed, optimal_fixed);
+	put_fixed_effect(pack_object_, solution_, optimal_fixed);
+	if ( n_random_ > 0 )
+		put_random_effect(pack_object_, solution_, optimal_random);
 }
 // ---------------------------------------------------------------------------
 // get_solution
@@ -407,7 +416,9 @@ CppAD::vector<Float> fit_model::implement_ran_like(
 	CppAD::vector<Float> pack_vec( pack_object_.size() );
 	//
 	// put the fixed and random effects into pack_vec
-	put_fixed_effect(pack_object_, pack_vec, fixed_vec);
+	CppAD::vector<Float> fixed_tmp(n_fixed_);
+	unscale_fixed_effect(fixed_vec, fixed_tmp);
+	put_fixed_effect(pack_object_, pack_vec, fixed_tmp);
 	put_random_effect(pack_object_, pack_vec, random_vec);
 	//
 	// evaluate the data and prior residuals
@@ -489,7 +500,9 @@ fit_model::a1d_vector fit_model::fix_likelihood(
 		random_vec[i] = CppAD::nan( a1_double(0.0) );
 	//
 	// put the fixed and random effects into pack_vec
-	put_fixed_effect(pack_object_, a1_pack_vec, fixed_vec);
+	a1d_vector fixed_tmp(n_fixed_);
+	unscale_fixed_effect(fixed_vec, fixed_tmp);
+	put_fixed_effect(pack_object_, a1_pack_vec, fixed_tmp);
 	put_random_effect(pack_object_, a1_pack_vec, random_vec);
 	//
 	// evaluate prior residuals (data residuals empty for now)

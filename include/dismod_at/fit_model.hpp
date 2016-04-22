@@ -78,20 +78,32 @@ namespace dismod_at {
 		// ---------------------------------------------------------------
 		// scaling
 		template <class Float>
-		void scale_fixed_effect(CppAD::vector<Float>& fixed_vec)
-		{	assert( fixed_vec.size() == n_fixed_ );
+		void scale_fixed_effect(
+			const CppAD::vector<Float>& fixed_in  ,
+			CppAD::vector<Float>&       fixed_out
+		)
+		{	assert( fixed_in.size()  == n_fixed_ );
+			assert( fixed_out.size() == n_fixed_ );
 			for(size_t j = 0; j < n_fixed_; j++)
-			{	if( fixed_is_scaled_[j] );
-					fixed_vec[j] = log( fixed_vec[j] + fixed_scale_eta_[j] );
+			{	if( fixed_is_scaled_[j] )
+					fixed_out[j] = log( fixed_in[j] + fixed_scale_eta_[j] );
+				else
+					fixed_out[j] = fixed_in[j];
 			}
 		}
 		// unscaling
 		template <class Float>
-		void unscale_fixed_effect(CppAD::vector<Float>& fixed_vec)
-		{	assert( fixed_vec.size() == n_fixed_ );
+		void unscale_fixed_effect(
+			const CppAD::vector<Float>& fixed_in  ,
+			CppAD::vector<Float>&       fixed_out
+		)
+		{	assert( fixed_in.size()  == n_fixed_ );
+			assert( fixed_out.size() == n_fixed_ );
 			for(size_t j = 0; j < n_fixed_; j++)
-			{	if( fixed_is_scaled_[j] );
-					fixed_vec[j] = exp( fixed_vec[j] ) - fixed_scale_eta_[j];
+			{	if( fixed_is_scaled_[j] )
+					fixed_out[j] = exp( fixed_in[j] ) - fixed_scale_eta_[j];
+				else
+					fixed_out[j] = fixed_in[j];
 			}
 		}
 		// -------------------------------------------------------------------
