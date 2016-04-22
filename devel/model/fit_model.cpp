@@ -230,46 +230,27 @@ prior_object_  ( prior_object )
 	{	fixed_is_scaled_[j] = false;
 		fixed_scale_eta_[j] = std::numeric_limits<double>::quiet_NaN();
 	}
-	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t            smooth_id = rate_table[rate_id].parent_smooth_id;
-		if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
-		{
-			const smooth_info& s_info   = s_info_vec[smooth_id];
-			size_t             n_age    = s_info.age_size();
-			size_t             n_time   = s_info.time_size();
-			size_t             n_child  = pack_object.child_size();
-			//
-			// information for parrent smooting for this rate
-			pack_info::subvec_info info =
-				pack_object.rate_info(rate_id, n_child);
-			for(size_t i = 0; i < n_age; i++)
-			{	for(size_t j = 0; j < n_time; j++)
-				{	// same ordering for each smoothing as in prior_model.cpp
-					size_t       var_id   = info.offset + i * n_time + j;
-					size_t       fixed_id = var_id2fixed_[var_id];
-					size_t       prior_id = s_info.value_prior_id(i, j);
-					const prior_struct& prior = prior_table[prior_id];
-					density_enum density      = density_enum(prior.density_id);
-					switch( density )
-					{
-						case uniform_enum:
-						case gaussian_enum:
-						case laplace_enum:
-						break;
+	for(size_t var_id = 0; var_id < n_var; var_id++)
+	{	size_t fixed_id = var_id2fixed_[var_id];
+		if( fixed_id < n_fixed_ )
+		{	prior_struct prior   = prior_table[ value_prior_[var_id] ];
+			density_enum density = density_enum(prior.density_id);
+			switch( density )
+			{
+				case uniform_enum:
+				case gaussian_enum:
+				case laplace_enum:
+				break;
 
-						case log_gaussian_enum:
-						case log_laplace_enum:
-						assert( prior.eta > 0 );
-						if( fixed_id < n_fixed_ )
-						{	fixed_is_scaled_[fixed_id] = true;
-							fixed_scale_eta_[fixed_id] = prior.eta;
-						}
-						break;
+				case log_gaussian_enum:
+				case log_laplace_enum:
+				assert( prior.eta > 0 );
+				fixed_is_scaled_[fixed_id] = true;
+				fixed_scale_eta_[fixed_id] = prior.eta;
+				break;
 
-						default:
-						assert(false);
-					}
-				}
+				default:
+				assert(false);
 			}
 		}
 	}
