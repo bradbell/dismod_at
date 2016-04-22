@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -135,7 +135,7 @@ bool residual_density_xam(void)
 	d           = dismod_at::log_gaussian_enum;
 	eta         = 0.5;
 	residual    = residual_density(z, y, mu, delta, eta, d, ++id, difference);
-	sigma       = log(y + eta + delta) - log(y + eta);
+	sigma       = log(mu + eta + delta) - log(mu + eta);
 	wres        = ( log(y + eta) - log(mu + eta) ) / sigma;
 	smooth      = - log(sigma * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 	sub_abs     = 0.0;
@@ -145,7 +145,7 @@ bool residual_density_xam(void)
 	d           = dismod_at::log_laplace_enum;
 	eta         = 3.0;
 	residual    = residual_density(z, y, mu, delta, eta, d, ++id, difference);
-	sigma       = log(y + eta + delta) - log(y + eta);
+	sigma       = log(mu + eta + delta) - log(mu + eta);
 	wres        = ( log(y + eta) - log(mu + eta) ) / sigma;
 	smooth      = - log(sigma * sqrt(2.0) );
 	sub_abs     = sqrt(2.0) * wres;

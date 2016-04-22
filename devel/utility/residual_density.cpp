@@ -247,7 +247,7 @@ residual_struct<Float> residual_density(
 			wres  = ( log( z + eta ) - log( y + eta ) - mu ) / sigma;
 		}
 		else
-		{	sigma = log( 1.0 + delta / (y + eta) );
+		{	sigma = log( 1.0 + delta / (mu + eta) );
 			wres  = ( log( y + eta ) - log( mu + eta ) ) / sigma;
 		}
 		break;

@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -10,7 +10,12 @@
 # ---------------------------------------------------------------------------
 # Build get_started Examples / Tests
 
-FOREACH(user_case relrisk zero_random zero_iteration)
+FOREACH(user_case
+	no_data
+	relrisk
+	zero_random
+	zero_iteration
+)
 	ADD_CUSTOM_TARGET(
 		check_test_user_${user_case}
 		${python_three_command} test/user/${user_case}.py
@@ -21,6 +26,7 @@ ENDFOREACH(user_case zero_random)
 ADD_CUSTOM_TARGET(
 	check_test_user
 	DEPENDS
+	check_test_user_no_data
 	check_test_user_relrisk
 	check_test_user_zero_random
 	check_test_user_zero_iteration

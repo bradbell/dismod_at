@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -17,7 +17,7 @@ We define the standard deviation log-transform by
 $latex \[
 \sigma( y, \delta , \eta )
 =
-\log ( y + \eta + \delta ) - \log ( y + \eta )
+\log ( \mu + \eta + \delta ) - \log ( \mu + \eta )
 \] $$
 
 $head Weighted Residual Function, R$$

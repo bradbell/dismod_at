@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -179,9 +179,9 @@ $head Weighted Residual and Likelihood$$
 Given the random effects $latex u$$ and the fixed effects $latex \theta$$,
 the weighted residual is
 $latex \[
-R [
-	v_i ( \theta )        \W{,}
+- R [
 	A_i ( u, \theta )    \W{,}
+	v_i ( \theta )        \W{,}
 	\delta_i ( \theta )  \W{,}
 	\eta_i               \W{,}
 	d_i
@@ -189,13 +189,16 @@ R [
 \] $$
 see the weight residual function
 $cref/R/statistic/Weighted Residual Function, R/$$.
+Note the negative sign in front of the weighted residual is so that
+it has the same sign as $latex v_i ( \theta ) - A_i ( \theta )$$
+(data minus model).
 The likelihood is
 $latex \[
 \B{p}( y_i | u , \theta )
 =
 \exp \left( D [
-	v_i ( \theta )        \W{,}
 	A_i ( u, \theta )    \W{,}
+	v_i ( \theta )        \W{,}
 	\delta_i ( \theta )  \W{,}
 	\eta_i               \W{,}
 	d_i

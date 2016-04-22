@@ -124,6 +124,9 @@ $cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$.
 
 $head run_fit$$
 Run the optimization process to determine the optimal fixed and random effects.
+Scale (during optimization of fixed effects) all the $cref model_variables$$
+that have a log-Gaussian or log-Laplace distribution for their value prior.
+To be specific, the optimization variables are the offset log transform
 
 $head option_map$$
 This argument has prototype

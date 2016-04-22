@@ -11,7 +11,6 @@
 # Test a case where there is not data and fit does not agree with mean.
 # ------------------------------------------------------------------------
 iota_mean     = 0.01
-use_fail_case = True
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -36,10 +35,10 @@ os.chdir('build/test/user')
 def constant_weight_fun(a, t) :
 	return 1.0
 # note that the a, t values are not used for this case
-def fun_iota_parent_ok(a, t) :
-	return ('prior_iota_parent_ok', 'prior_none', 'prior_none')
-def fun_iota_parent_fail(a, t) :
-	return ('prior_iota_parent_fail', 'prior_none', 'prior_none')
+def fun_iota_parent_gaussian(a, t) :
+	return ('prior_iota_parent_gaussian', 'prior_none', 'prior_none')
+def fun_iota_parent_log_gaussian(a, t) :
+	return ('prior_iota_parent_log_gaussian', 'prior_none', 'prior_none')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import copy
@@ -88,16 +87,16 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      None,
 			'eta':      None
-		},{ # prior_iota_parent_ok
-			'name':     'prior_iota_parent_ok',
+		},{ # prior_iota_parent_gaussian
+			'name':     'prior_iota_parent_gaussian',
 			'density':  'gaussian',
 			'lower':    1e-2 * iota_mean,
 			'upper':    1e+2 * iota_mean,
 			'mean':     iota_mean,
 			'std':      iota_mean,
 			'eta':      None
-		},{ # prior_iota_parent_fail
-			'name':     'prior_iota_parent_fail',
+		},{ # prior_iota_parent_log_gaussian
+			'name':     'prior_iota_parent_log_gaussian',
 			'density':  'log_gaussian',
 			'lower':    1e-2 * iota_mean,
 			'upper':    1e+2 * iota_mean,
@@ -110,10 +109,6 @@ def example_db (file_name) :
 	# smooth table
 	age_id_list = range( len( age_list ) )
 	time_id_list = range( len( time_list ) )
-	if use_fail_case :
-		fun = fun_iota_parent_fail
-	else :
-		fun = fun_iota_parent_ok
 	smooth_dict = [
 		{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
@@ -122,7 +117,7 @@ def example_db (file_name) :
 			'mulstd_value_prior_name':  None,
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
-			'fun':                      fun
+			'fun':                      fun_iota_parent_log_gaussian
 		}
 	]
 	# --------------------------------------------------------------------------
@@ -163,7 +158,7 @@ def example_db (file_name) :
 		{ 'name':'quasi_fixed',            'value':'true'              },
 		{ 'name':'derivative_test_fixed',  'value':'none'              },
 		{ 'name':'max_num_iter_fixed',     'value':'50'                },
-		{ 'name':'print_level_fixed',      'value':'5'                 },
+		{ 'name':'print_level_fixed',      'value':'0'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-10'             },
 		{ 'name':'random_bound',           'value':None                },
 
@@ -230,7 +225,6 @@ for var_id in range( len(var_dict) ) :
 	assert row['node_id'] == parent_node_id
 	assert row['rate_id'] == iota_rate_id
 	max_err = max(max_err, abs( value / iota_mean - 1.0 ) )
-print(max_err)
 assert abs(value / iota_mean - 1.0 ) <= 1e-2
 # -----------------------------------------------------------------------------
 print('no_data.py: OK')
