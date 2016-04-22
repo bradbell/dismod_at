@@ -43,6 +43,7 @@ $cref/sigma/statistic/Standard Deviation Log-Transform, sigma/$$.
 This was a feature (it agreed with the documentation) but it was not desirable.
 This have been changed so that $icode sigma$$ is defined in terms of the
 prior mean and not in terms of the model value.
+The corresponding log-Gaussian wish list item has been removed.
 $lend
 
 $head 04-21$$
