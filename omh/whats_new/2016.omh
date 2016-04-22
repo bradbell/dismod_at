@@ -28,6 +28,13 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 04-22$$
+Scale (during optimization of fixed effects) all the $cref model_variables$$
+that have a log-Gaussian or log-Laplace distribution for their value prior.
+To be specific, the optimization variables are the offset log transform
+of the corresponding model variables.
+
+
 $head 04-21$$
 Change the sample command so that it has a
 $cref/method/sample_command/method/$$ argument.
