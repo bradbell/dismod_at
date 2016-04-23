@@ -177,7 +177,6 @@ fit_model::fit_model(
 	const CppAD::vector<smooth_info>&     s_info_vec   ,
 	const data_model&                     data_object  ,
 	const prior_model&                    prior_object ,
-	const CppAD::vector<rate_struct>&     rate_table   ,
 	bool                                  quasi_fixed  ,
 	const CppAD::mixed::sparse_mat_info&  A_info       ) :
 // base class constructor

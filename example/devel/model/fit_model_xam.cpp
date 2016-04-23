@@ -327,7 +327,6 @@ bool fit_model_xam(void)
 		s_info_vec,
 		data_object,
 		prior_object,
-		rate_table,
 		quasi_fixed,
 		A_info
 	);
