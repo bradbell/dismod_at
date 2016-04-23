@@ -21,8 +21,7 @@ while [ "$input" != 'd' ] \
 &&    [ "$input" != 'ds' ] \
 &&    [ "$input" != 'rs' ]
 do
-	msg='Debug [d], Release [r], Debug with speed test [ds]'
-	msg="$msg, Release with speed [rs] ?"
+	msg='Debug + Speed [ds], Release + Speed [rs], Debug [d], Release [s] ?'
 	read -p "$msg" input
 done
 bin/check_devel_xam.sh
