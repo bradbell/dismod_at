@@ -128,9 +128,14 @@ $cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$.
 
 $head run_fit$$
 Run the optimization process to determine the optimal fixed and random effects.
-Scale (during optimization of fixed effects) all the $cref model_variables$$
-that have a log-Gaussian or log-Laplace distribution for their value prior.
-To be specific, the optimization variables are the offset log transform
+
+$subhead Scaled$$
+During optimization of fixed effects all the $cref model_variables$$
+that have a log-Gaussian or log-Laplace distribution for their value prior
+are scaled.
+To be specific,
+the optimization take place in the offset log transform space defined
+by the prior for each variable.
 
 $head option_map$$
 This argument has prototype
@@ -414,21 +419,32 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		random_in
 	);
 	// optimal fixed effects
-	CppAD::vector<double> optimal_fixed = fixed_sol.fixed_opt;
+	CppAD::vector<double>& optimal_fixed  = fixed_sol.fixed_opt;
+	CppAD::vector<double>& lagrange_value = fixed_sol.fixed_lag;
 	// optimal random effects
-	CppAD::vector<double> optimal_random;
+	CppAD::vector<double> random_opt;
 	if( n_random_ > 0 )
-	{	optimal_random = optimize_random(
+	{	random_opt = optimize_random(
 		random_options, optimal_fixed, random_lower, random_upper, random_in
 		);
 	}
+	// Lagrange multipliers are not unscaled
+	unscale_fixed_effect(optimal_fixed, optimal_fixed);
+	//
 	// store solution_.variable_value
 	solution_.variable_value.resize(n_var);
-	unscale_fixed_effect(optimal_fixed, optimal_fixed);
+	solution_.lagrange_value.resize(n_var);
+	//
 	put_fixed_effect(pack_object_, solution_.variable_value, optimal_fixed);
-	if ( n_random_ > 0 ) put_random_effect(
-		pack_object_, solution_.variable_value, optimal_random
-	);
+	put_fixed_effect(pack_object_, solution_.lagrange_value, lagrange_value);
+	//
+	if ( n_random_ > 0 )
+	{	CppAD::vector<double> zero(n_random_);
+		for(size_t i = 0; i < n_random_; i++)
+			zero[i] = 0.0;
+		put_random_effect(pack_object_, solution_.variable_value, random_opt);
+		put_random_effect(pack_object_, solution_.lagrange_value, zero);
+	}
 }
 // ---------------------------------------------------------------------------
 // get_solution

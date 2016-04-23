@@ -586,17 +586,17 @@ void fit_command(
 		A_info
 	);
 	fit_object.run_fit(option_map);
-	vector<double> solution, lag_value, lag_dage, lag_dtime;
+	vector<double> opt_value, lag_value, lag_dage, lag_dtime;
 	fit_object.get_solution(
-		solution, lag_value, lag_dage, lag_dtime
+		opt_value, lag_value, lag_dage, lag_dtime
 	);
 	// -------------------- fit_var table --------------------------------------
 	string sql_cmd = "drop table if exists fit_var";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	table_name   = "fit_var";
-	size_t n_var = solution.size();
-	size_t n_col = 4;
+	size_t n_var = opt_value.size();
+	size_t n_col = 5;
 	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_var);
 	vector<bool>   col_unique(n_col);
 	//
@@ -617,19 +617,28 @@ void fit_command(
 	col_type[3]       = "real";
 	col_unique[3]     = false;
 	//
+	col_name[4]       = "lagrange_value";
+	col_type[4]       = "real";
+	col_unique[4]     = false;
+	//
 	for(size_t var_id = 0; var_id < n_var; var_id++)
-	{	double variable_value   = solution[var_id];
-		row_value[var_id * n_col + 0] = to_string( variable_value );
-		// initialzie all the residuals as empty (null in database)
-		for(size_t k = 1; k < 4; k++)
+	{	// initialzie entire row as empty (null in database)
+		for(size_t k = 0; k < n_col; k++)
 			row_value[var_id * n_col + k] = "";
+		//
+		// variable_value
+		row_value[var_id * n_col + 0] = to_string( opt_value[var_id] );
+		//
+		// lagrange_value
+		row_value[var_id * n_col + 4] = to_string( lag_value[var_id] );
 	}
+	// residual_value, residual_dage, residual_dtime
 	for(size_t variable_type = 0; variable_type < 2; variable_type++)
 	{	CppAD::vector< dismod_at::residual_struct<double> > residual;
 		if( variable_type == 0 )
-			residual  = prior_object.fixed(solution);
+			residual  = prior_object.fixed(opt_value);
 		else
-			residual  = prior_object.random(solution);
+			residual  = prior_object.random(opt_value);
 		//
 		for(size_t i = 0; i < residual.size(); i++)
 		{	size_t id     = residual[i].id;
@@ -681,7 +690,7 @@ void fit_command(
 			case dismod_at::mtother_enum:
 			case dismod_at::mtwith_enum:
 			case dismod_at::relrisk_enum:
-			avg = data_object.avg_no_ode(subset_id, solution);
+			avg = data_object.avg_no_ode(subset_id, opt_value);
 			break;
 
 			case dismod_at::prevalence_enum:
@@ -689,7 +698,7 @@ void fit_command(
 			case dismod_at::mtspecific_enum:
 			case dismod_at::mtall_enum:
 			case dismod_at::mtstandard_enum:
-			avg = data_object.avg_yes_ode(subset_id, solution);
+			avg = data_object.avg_yes_ode(subset_id, opt_value);
 			break;
 
 			default:
@@ -697,7 +706,7 @@ void fit_command(
 		}
 		// compute its residual and log likelihood
 		dismod_at::residual_struct<double> residual =
-			data_object.like_one(subset_id, solution, avg);
+			data_object.like_one(subset_id, opt_value, avg);
 		//
 		row_value[ subset_id * n_col + 0] = to_string( subset_id );
 		row_value[ subset_id * n_col + 1] = to_string( avg );
@@ -1114,11 +1123,11 @@ void sample_command(
 			A_info
 		);
 		fit_object.run_fit(option_map);
-		vector<double> solution, lag_value, lag_dage, lag_dtime;
+		vector<double> opt_value, lag_value, lag_dage, lag_dtime;
 		fit_object.get_solution(
-			solution, lag_value, lag_dage, lag_dtime
+			opt_value, lag_value, lag_dage, lag_dtime
 		);
-		assert( solution.size() == n_var );
+		assert( opt_value.size() == n_var );
 		//
 		// put solution for this sample_index in row_value
 		string sample_index_str = to_string( sample_index );
@@ -1126,7 +1135,7 @@ void sample_command(
 		{	size_t sample_id = sample_index * n_var + var_id;
 			row_value[n_col * sample_id + 0] = sample_index_str;
 			row_value[n_col * sample_id + 1] = to_string( var_id );
-			row_value[n_col * sample_id + 2] = to_string( solution[var_id] );
+			row_value[n_col * sample_id + 2] = to_string( opt_value[var_id] );
 		}
 	}
 	table_name = "sample";

@@ -176,6 +176,7 @@ header = [
 	'fit_res',
 	'fit_dage',
 	'fit_dtime',
+	'lag_value',
 	'sample_value'
 ]
 for extension in ['_v', '_a', '_t' ] :
@@ -206,6 +207,7 @@ for row_in in table_data['var'] :
 		row_out['fit_res']  = table_lookup('fit_var', var_id, 'residual_value')
 		row_out['fit_dage'] = table_lookup('fit_var', var_id, 'residual_dage')
 		row_out['fit_dtime']= table_lookup('fit_var', var_id, 'residual_dtime')
+		row_out['lag_value']= table_lookup('fit_var', var_id, 'lagrange_value')
 	if have_sample :
 		row_out['sample_value'] = table_lookup('sample', var_id, 'var_value')
 	#
