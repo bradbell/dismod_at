@@ -33,9 +33,13 @@ $head 04-23$$
 Change the data
 $cref/weighted residual/data_like/Weighted Residual and Likelihood/$$
 to be on the measurement values, not the adjusted measurement values.
-This not only simplifies the residuals, but avoids the condition where the
+This simplifies the weighted residuals and avoids the condition where the
 $cref/mean_value/mulcov_table/mulcov_type/meas_value/$$ covariate multipliers
-affect the measurement standard deviation.
+affect the
+$cref/adjusted standard deviation
+	/data_like
+	/Adjusted Standard Deviation, delta_i
+/$$.
 
 $head 04-22$$
 $list number$$
