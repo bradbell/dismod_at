@@ -136,6 +136,18 @@ for rate_id in range(n_rate) :
 					assert time_id == 0
 					# gaussian prior
 					assert abs(residual_dtime) <= check_tol
+				#
+				# check lagrange_value
+				lagrange_value = fit_var_dict[fit_var_id]['lagrange_value']
+				assert lagrange_value == 0.0
+				#
+				# check lagrange_dage
+				lagrange_dage = fit_var_dict[fit_var_id]['lagrange_dage']
+				assert lagrange_dage == 0.0
+				#
+				# check lagrange_dtime
+				lagrange_dtime = fit_var_dict[fit_var_id]['lagrange_dtime']
+				assert lagrange_dtime == 0.0
 
 		# number of point in smoothing for all rates
 		assert count == 2

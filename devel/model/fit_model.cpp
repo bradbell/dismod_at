@@ -419,25 +419,30 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		random_in
 	);
 	// optimal fixed effects
-	CppAD::vector<double>& optimal_fixed  = fixed_sol.fixed_opt;
-	CppAD::vector<double>& lagrange_value = fixed_sol.fixed_lag;
+	CppAD::vector<double>& fixed_opt      = fixed_sol.fixed_opt;
+	CppAD::vector<double>& fixed_lag      = fixed_sol.fixed_lag;
+	CppAD::vector<double>& fixed_con_lag  = fixed_sol.fix_con_lag;
 	// optimal random effects
 	CppAD::vector<double> random_opt;
 	if( n_random_ > 0 )
 	{	random_opt = optimize_random(
-		random_options, optimal_fixed, random_lower, random_upper, random_in
+			random_options, fixed_opt, random_lower, random_upper, random_in
 		);
 	}
-	// Lagrange multipliers are not unscaled
-	unscale_fixed_effect(optimal_fixed, optimal_fixed);
+	// The optimal solution is scaled, but the Lagrange multilpiers are not
+	unscale_fixed_effect(fixed_opt, fixed_opt);
 	//
-	// store solution_.variable_value
+	// size store solution_
 	solution_.variable_value.resize(n_var);
 	solution_.lagrange_value.resize(n_var);
+	solution_.lagrange_dage.resize(n_var);
+	solution_.lagrange_dtime.resize(n_var);
 	//
-	put_fixed_effect(pack_object_, solution_.variable_value, optimal_fixed);
-	put_fixed_effect(pack_object_, solution_.lagrange_value, lagrange_value);
+	// values that are stored by fixed effect index
+	put_fixed_effect(pack_object_, solution_.variable_value, fixed_opt);
+	put_fixed_effect(pack_object_, solution_.lagrange_value, fixed_lag);
 	//
+	// values that are stored by random effect index
 	if ( n_random_ > 0 )
 	{	CppAD::vector<double> zero(n_random_);
 		for(size_t i = 0; i < n_random_; i++)
@@ -445,6 +450,21 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		put_random_effect(pack_object_, solution_.variable_value, random_opt);
 		put_random_effect(pack_object_, solution_.lagrange_value, zero);
 	}
+	//
+	// difference constraints
+	for(size_t i = 0; i < n_var; i++)
+	{	solution_.lagrange_dage[i]  = 0.0;
+		solution_.lagrange_dtime[i] = 0.0;
+	}
+	for(size_t k = 0; k < diff_prior_.size(); k++)
+	{	size_t minus_var_id   = diff_prior_[k].minus_var_id;
+		assert( var_id2fixed_[minus_var_id] < n_fixed_ );
+		if( diff_prior_[k].direction == diff_prior_struct::dage_enum )
+			solution_.lagrange_dage[minus_var_id] = fixed_con_lag[k];
+		else
+			solution_.lagrange_dtime[minus_var_id] = fixed_con_lag[k];
+	}
+	return;
 }
 // ---------------------------------------------------------------------------
 // get_solution

@@ -78,6 +78,26 @@ The Lagrange multipliers are in the
 $cref/scaled space/fit_model/run_fit/Scaled/$$
 where the optimization takes place.
 
+$head lagrange_dage$$
+This column has type $code real$$ and contains the Lagrange multipliers for
+the $cref/lower/prior_table/lower/$$ and upper limits corresponding the
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ for this variable.
+If it is positive (negative) the upper (lower) limit is active.
+If neither prior limit is active, this column is zero.
+The Lagrange multipliers are in the
+$cref/scaled space/fit_model/run_fit/Scaled/$$
+where the optimization takes place.
+
+$head lagrange_dtime$$
+This column has type $code real$$ and contains the Lagrange multipliers for
+the $cref/lower/prior_table/lower/$$ and upper limits corresponding the
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ for this variable.
+If it is positive (negative) the upper (lower) limit is active.
+If neither prior limit is active, this column is zero.
+The Lagrange multipliers are in the
+$cref/scaled space/fit_model/run_fit/Scaled/$$
+where the optimization takes place.
+
 $head Example$$
 See the $cref fit_command.py$$ example and test.
 

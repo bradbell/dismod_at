@@ -596,7 +596,7 @@ void fit_command(
 	//
 	table_name   = "fit_var";
 	size_t n_var = opt_value.size();
-	size_t n_col = 5;
+	size_t n_col = 7;
 	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_var);
 	vector<bool>   col_unique(n_col);
 	//
@@ -621,16 +621,31 @@ void fit_command(
 	col_type[4]       = "real";
 	col_unique[4]     = false;
 	//
+	col_name[5]       = "lagrange_dage";
+	col_type[5]       = "real";
+	col_unique[5]     = false;
+	//
+	col_name[6]       = "lagrange_dtime";
+	col_type[6]       = "real";
+	col_unique[6]     = false;
+	//
 	for(size_t var_id = 0; var_id < n_var; var_id++)
-	{	// initialzie entire row as empty (null in database)
-		for(size_t k = 0; k < n_col; k++)
-			row_value[var_id * n_col + k] = "";
-		//
+	{
 		// variable_value
 		row_value[var_id * n_col + 0] = to_string( opt_value[var_id] );
 		//
+		// initialzie residuals as empty (null in database)
+		for(size_t k = 1; k < 4; k++)
+			row_value[var_id * n_col + k] = "";
+		//
 		// lagrange_value
 		row_value[var_id * n_col + 4] = to_string( lag_value[var_id] );
+		//
+		// lagrange_dage
+		row_value[var_id * n_col + 5] = to_string( lag_dage[var_id] );
+		//
+		// lagrange_dtime
+		row_value[var_id * n_col + 6] = to_string( lag_dtime[var_id] );
 	}
 	// residual_value, residual_dage, residual_dtime
 	for(size_t variable_type = 0; variable_type < 2; variable_type++)

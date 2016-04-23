@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -41,7 +41,8 @@ namespace {
 		if( n_age > 1 )
 		{	for(size_t i = 0; i < n_age-1; i++)
 			{	for(size_t j = 0; j < n_time; j++)
-				{	one_prior.minus_var_id = offset + i * n_time + j;
+				{	one_prior.direction    = diff_prior_struct::dage_enum;
+					one_prior.minus_var_id = offset + i * n_time + j;
 					one_prior.plus_var_id  = offset + (i+1) * n_time + j;
 					one_prior.prior_id     = s_info.dage_prior_id(i, j);
 					assert( one_prior.prior_id != size_t(DISMOD_AT_NULL_INT) );
@@ -54,7 +55,8 @@ namespace {
 		if( n_time > 1 )
 		{	for(size_t i = 0; i < n_age; i++)
 			{	for(size_t j = 0; j < n_time-1; j++)
-				{	one_prior.minus_var_id = offset + i * n_time + j;
+				{	one_prior.direction    = diff_prior_struct::dtime_enum;
+					one_prior.minus_var_id = offset + i * n_time + j;
 					one_prior.plus_var_id  = offset + i * n_time + j+1;
 					one_prior.prior_id     = s_info.dtime_prior_id(i, j);
 					assert( one_prior.prior_id != size_t(DISMOD_AT_NULL_INT) );

@@ -172,12 +172,14 @@ header = [
 	'covariate',
 	'node',
 	'fixed',
+	'sam_value',
 	'fit_value',
 	'fit_res',
 	'fit_dage',
 	'fit_dtime',
 	'lag_value',
-	'sample_value'
+	'lag_dage',
+	'lag_dtime',
 ]
 for extension in ['_v', '_a', '_t' ] :
 	for root in ['lower', 'upper', 'mean', 'std', 'eta', 'density' ] :
@@ -202,14 +204,16 @@ for row_in in table_data['var'] :
 	)
 	row_out['node'] = table_lookup('node', row_in['node_id'], 'node_name')
 	#
+	if have_sample :
+		row_out['sam_value'] = table_lookup('sample', var_id, 'var_value')
 	if have_fit :
 		row_out['fit_value']= table_lookup('fit_var', var_id, 'variable_value')
 		row_out['fit_res']  = table_lookup('fit_var', var_id, 'residual_value')
 		row_out['fit_dage'] = table_lookup('fit_var', var_id, 'residual_dage')
 		row_out['fit_dtime']= table_lookup('fit_var', var_id, 'residual_dtime')
 		row_out['lag_value']= table_lookup('fit_var', var_id, 'lagrange_value')
-	if have_sample :
-		row_out['sample_value'] = table_lookup('sample', var_id, 'var_value')
+		row_out['lag_dage'] = table_lookup('fit_var', var_id, 'lagrange_dage')
+		row_out['lag_dtime']= table_lookup('fit_var', var_id, 'lagrange_dtime')
 	#
 	row_out['fixed'] = 'true'
 	if row_in['var_type'] == 'rate' :

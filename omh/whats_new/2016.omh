@@ -21,6 +21,8 @@ $spell
 	CppAD
 	var
 	covariate
+	dage
+	dtime
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -30,6 +32,7 @@ $childtable%omh/whats_new/2015.omh
 %$$
 
 $head 04-23$$
+$list number$$
 Change the data
 $cref/weighted residual/data_like/Weighted Residual and Likelihood/$$
 to be on the measurement values, not the adjusted measurement values.
@@ -40,6 +43,11 @@ $cref/adjusted standard deviation
 	/data_like
 	/Adjusted Standard Deviation, delta_i
 /$$.
+$lnext
+Add the Lagrange multipliers
+$cref/lagrange_value/fit_var_table/lagrange_value/$$,
+$code lagrange_dage$$ and $code lagrange_dtime$$ to the fit_var table.
+$lend
 
 $head 04-22$$
 $list number$$
