@@ -20,6 +20,7 @@ $spell
 	cmake
 	CppAD
 	var
+	covariate
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -27,6 +28,14 @@ $section Changes and Additions to Dismod_at During 2016$$
 
 $childtable%omh/whats_new/2015.omh
 %$$
+
+$head 04-23$$
+Change the data
+$cref/weighted residual/data_like/Weighted Residual and Likelihood/$$
+to be on the measurement values, not the adjusted measurement values.
+This not only simplifies the residuals, but avoids the condition where the
+$cref/mean_value/mulcov_table/mulcov_type/meas_value/$$ covariate multipliers
+affect the measurement standard deviation.
 
 $head 04-22$$
 $list number$$

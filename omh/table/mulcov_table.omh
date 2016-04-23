@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -16,6 +16,8 @@ $spell
 	dage
 	dtime
 	covariate
+	jk
+	ij
 $$
 
 $section The mulcov Table: Covariate Multipliers$$
@@ -33,15 +35,19 @@ This column has type $code text$$.
 The possible values are:
 
 $subhead rate_value$$
-This covariate adjusts a model rate.
+This covariate multiplier
+adjusts a model rate in the average integrand calculation;
+see $cref/alpha_jk/avg_integrand/Rate Functions/alpha_jk/$$.
 
 $subhead meas_value$$
-This covariate adjusts the
-$cref/measurement value/data_table/meas_value/$$.
+This covariate multiplier adjusts the average integrand to match the
+$cref/measurement value/data_table/meas_value/$$; see
+$cref/beta_ij/data_like/Measurement Value Covariates/beta_ij/$$.
 
 $subhead meas_std$$
-This covariate adjusts the
-$cref/measurement standard deviation/data_table/meas_std/$$.
+This covariate multiplier adjusts the
+$cref/measurement standard deviation/data_table/meas_std/$$; see
+$cref/gamma_ij/data_like/Measurement Standard Deviation Covariates/gamma_ij/$$.
 
 $head rate_id$$
 If $icode mulcov_type$$ is $code rate_value$$,

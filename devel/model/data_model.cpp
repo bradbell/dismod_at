@@ -1453,8 +1453,8 @@ residual_struct<Float> data_model::like_one(
 	}
 	Float mean_effect = Float(0.0);
 	for(k = 0; k < n_ode; k++)
-		mean_effect += c_ode[k] * exp( - meas_cov_ode[k] );
-	Float adjust  = Float(mean_effect * meas_value);
+		mean_effect += c_ode[k] * exp( meas_cov_ode[k] );
+	Float meas_mean  = Float(mean_effect * avg);
 
 	// measurement std covariates effect on the ode subgrid
 	for(k = 0; k < n_ode; k++)
@@ -1479,17 +1479,22 @@ residual_struct<Float> data_model::like_one(
 	Float std_effect = Float(0.0);
 	for(k = 0; k < n_ode; k++)
 		std_effect += c_ode[k] * meas_cov_ode[k];
-	Float delta  = Float(mean_effect * Delta);
-	delta       += std_effect * (adjust + eta);
+	Float delta  = Delta + std_effect * (meas_value + eta);
 	//
 	Float not_used;
 	bool difference = false;
-	//
 	struct residual_struct<Float> residual = residual_density(
-	not_used, avg, adjust, delta, Float(eta), density, subset_id, difference
+		not_used,
+		meas_mean,
+		Float(meas_value),
+		delta,
+		Float(eta),
+		density,
+		subset_id,
+		difference
 	);
 	//
-	// swith the sign of the residual because it is computed at
+	// switch the sign of the residual because it is computed at
 	// model minus adjusted data (to avoid having model scale the variance)
 	residual.wres = - residual.wres;
 	//

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -41,10 +41,10 @@ namespace {
 		double t0 ,
 		double t1 )
 	{	double sum = 0;
-		sum += exp( - x_j * mulcov(a0, t0) );
-		sum += exp( - x_j * mulcov(a0, t1) );
-		sum += exp( - x_j * mulcov(a1, t0) );
-		sum += exp( - x_j * mulcov(a1, t1) );
+		sum += exp( x_j * mulcov(a0, t0) );
+		sum += exp( x_j * mulcov(a0, t1) );
+		sum += exp( x_j * mulcov(a1, t0) );
+		sum += exp( x_j * mulcov(a1, t1) );
 		return sum / 4.0;
 	}
 }
@@ -326,11 +326,11 @@ bool meas_mulcov(void)
 	double avg_std_mulcov = (avg_mulcov_1 + avg_mulcov_2) / 2.0;
 	//
 	// check residual
-	double v     = data_table[data_id].meas_value;
+	double y     = data_table[data_id].meas_value;
 	double Delta = data_table[data_id].meas_std;
-	double y     = avg_mean_mulcov * v;
-	double delta = avg_mean_mulcov * Delta + avg_std_mulcov  * (y + eta);
-	Float  check = (y - avg_integrand) / delta;
+	Float  m     = avg_mean_mulcov * avg_integrand;
+	double delta = Delta + avg_std_mulcov  * (y + eta);
+	Float  check = (y - m) / delta;
 	ok          &= fabs( 1.0 - wres / check ) <= eps;
 	/*
 	if( data_id == 0 )

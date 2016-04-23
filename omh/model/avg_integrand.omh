@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -145,6 +145,8 @@ $cref/covariate multiplier
 /$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
+Note that these are only
+$cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ covariate multipliers.
 
 $subhead r_ik$$
 We use the notation

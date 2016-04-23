@@ -97,6 +97,8 @@ $cref/covariate multiplier
 /$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
+Note that these are only
+$cref/meas_value/mulcov_table/mulcov_type/meas_value/$$ covariate multipliers.
 
 $head Measurement Standard Deviation Covariates$$
 
@@ -120,21 +122,28 @@ $cref/covariate multiplier
 /$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
+Note that these are only
+$cref/meas_std/mulcov_table/mulcov_type/meas_std/$$ covariate multipliers.
 
 $head Effects, u, theta$$
 We use $latex u$$ and $latex \theta$$ to denote the vector of
 $cref/random effects/model_variables/Random Effects, u/$$ and
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$ respectively.
 
-$head Adjusted Measurement, v_i$$
-The adjusted data value is defined by
+$head Average Integrand$$
+Let $latex A_i ( u , \theta )$$ denote the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$ for this
+$icode data_id$$.
+
+$head Data Mean, m_i$$
+The model for the data mean is defined by
 $latex \[
-v_i ( \theta )
+m_i ( u, \theta )
 =
-\frac{y_i}{\bar{w}_i}
+\frac{A_i (u , \theta )}{\bar{w}_i}
 \int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
 \exp \left(
-	- \sum_{j \in J_i} x_{i,j} \beta_{i,j} (a, t)
+	\sum_{j \in J_i} x_{i,j} \beta_{i,j} (a, t)
 \right)
 w_i (a,t) \; \B{d} t \; \B{d} a
 \] $$
@@ -144,21 +153,11 @@ $cref/average weight/avg_integrand/Average Weight, wbar_i/$$.
 $head Adjusted Standard Deviation, delta_i$$
 The adjusted standard deviation is defined by
 $latex \[
-z_i ( \theta )
-=
-\frac{\Delta_i}{\bar{w}_i}
-\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
-\exp \left(
-	- \sum_{j \in J_i} x_{i,j} \beta_{i,j} (a, t )
-\right)
-w_i (a,t) \; \B{d} t \; \B{d} a
-\] $$
-$latex \[
 \delta_i ( \theta )
 =
-z_i ( \theta )
+\Delta_i
 +
-\frac{ v_i ( \theta ) + \eta_i }{\bar{w}_i}
+\frac{ y_i + \eta_i }{\bar{w}_i}
 	\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
 	\left(
 		\sum_{j \in K_i} x_{i,j} \gamma_{i,j} (a, t)
@@ -166,13 +165,10 @@ z_i ( \theta )
 	w_i (a,t) \; \B{d} t \; \B{d} a
 \] $$
 Note that for $latex j \in K_i$$ it should hold that
-$latex 0 \leq x_{i,j}$$ and $latex 0 \leq \gamma_{i,j} (a, t)$$
-so that $latex 0 < z_i ( \theta ) \leq \delta_i ( \theta )$$.
-
-$head Average Integrand$$
-Let $latex A_i ( u , \theta )$$ denote the
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$ for this
-$icode data_id$$.
+$latex 0 < y_i + \eta_i$$,
+$latex 0 \leq x_{i,j}$$, and
+$latex 0 \leq \gamma_{i,j} (a, t)$$
+so that $latex \Delta_i \leq \delta_i ( \theta )$$.
 
 
 $head Weighted Residual and Likelihood$$
@@ -180,8 +176,8 @@ Given the random effects $latex u$$ and the fixed effects $latex \theta$$,
 the weighted residual is
 $latex \[
 - R [
-	A_i ( u, \theta )    \W{,}
-	v_i ( \theta )        \W{,}
+	m_i ( u, \theta )    \W{,}
+	y_i                  \W{,}
 	\delta_i ( \theta )  \W{,}
 	\eta_i               \W{,}
 	d_i
@@ -190,15 +186,15 @@ $latex \[
 see the weight residual function
 $cref/R/statistic/Weighted Residual Function, R/$$.
 Note the negative sign in front of the weighted residual is so that
-it has the same sign as $latex v_i ( \theta ) - A_i ( \theta )$$
+it has the same sign as $latex y_i - m_i ( u, \theta )$$
 (data minus model).
 The likelihood is
 $latex \[
 \B{p}( y_i | u , \theta )
 =
 \exp \left( D [
-	A_i ( u, \theta )    \W{,}
-	v_i ( \theta )        \W{,}
+	m_i ( u, \theta )    \W{,}
+	y_i                  \W{,}
 	\delta_i ( \theta )  \W{,}
 	\eta_i               \W{,}
 	d_i
