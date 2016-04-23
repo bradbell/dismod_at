@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -25,10 +25,14 @@ with the two characters $code c_$$.
 These are comment columns and are ignored by $code dismod_at$$.
 
 $head Primary Key$$
-If $icode table_name$$ is a table (in this database),
-it has a column $icode%table_name%_id%$$ that is the primary key for the table.
+If $icode table_name$$ is a table (in this database), its first column
+has name $icode%table_name%_id%$$ that is the primary key for the table.
 The values in this column are $code integer$$,
 start at zero and increment by one for each row in the table.
+$comment
+The first column assumption is requred by get_name_type.py.
+No sure where else ?
+$$
 
 $head Name Column$$
 Suppose that $icode table_name$$ is a table (in this database),
