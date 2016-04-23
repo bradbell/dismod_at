@@ -66,8 +66,13 @@ namespace dismod_at {
 		CppAD::vector<bool>   fixed_is_scaled_;
 		CppAD::vector<double> fixed_scale_eta_;
 		// -------------------------------------------------------------------
-		// solution found by run_fit and in pack_info form
-		CppAD::vector<double>              solution_;
+		// solution found by run_fit and in pack_info order
+		struct {
+			CppAD::vector<double> variable_value;
+			CppAD::vector<double> lagrange_value;
+			CppAD::vector<double> lagrange_dage;
+			CppAD::vector<double> lagrange_dtime;
+		} solution_;
 		// ---------------------------------------------------------------
 		// implement_ran_like
 		template <class Float>
@@ -149,7 +154,12 @@ namespace dismod_at {
 			std::map<std::string, std::string>& option_map
 		);
 		// get_solution
-		CppAD::vector<double> get_solution(void);
+		void get_solution(
+			CppAD::vector<double>& variable_value  ,
+			CppAD::vector<double>& lagrange_value  ,
+			CppAD::vector<double>& lagrange_dage   ,
+			CppAD::vector<double>& lagrange_dtime
+		);
 	};
 }
 

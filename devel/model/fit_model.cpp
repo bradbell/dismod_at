@@ -30,6 +30,8 @@ $spell
 	struct
 	var
 	dismod
+	dage
+	dtime
 $$
 
 $section Fit the Fixed and Random Effects to the Model and Data$$
@@ -48,7 +50,9 @@ $codei%fit_model %fit_object%(
 %$$
 $codei%fit_object.run_fit(%option_map%)
 %$$
-$icode%solution% = %fit_object%.get_solution()%$$
+$codei%%fit_object%.get_solution(
+	%variable_value%, %lagrange_value%, %lagrange_dage%, %lagrange_dtime
+)%$$
 
 $head fit_object$$
 This object has prototype
@@ -146,13 +150,55 @@ $codei%
 %$$
 is the value in the $cref option_table$$ for the corresponding option.
 
-$head solution$$
-This return value has prototype
+$head get_solution$$
+
+$subhead variable_value$$
+This argument has prototype
 $codei%
-	CppAD::vector<double> %solution%
+	CppAD::vector<double>& %variable_value%
 %$$
-It is the optimal $cref/variable values/model_variables/$$ in
-$cref pack_info$$ format.
+and its size is zero or equal to the number of model variables.
+The input value of its elements does not matter,
+Upon return it is the optimal $cref/variable values/model_variables/$$ in
+$cref pack_info$$ order.
+
+$subhead lagrange_value$$
+This argument has prototype
+$codei%
+	CppAD::vector<double>& %lagrange_value%
+%$$
+and its size is zero or equal to the number of model variables.
+The input value of its elements does not matter,
+Upon return it is the Lagrange multipliers for the lower and upper
+limits on the corresponding model variables.
+If there is no limit, or if a limit is not active, the corresponding
+element is zero.
+
+$subhead lagrange_dage$$
+This argument has prototype
+$codei%
+	CppAD::vector<double>& %lagrange_dage%
+%$$
+and its size is zero or equal to the number of model variables.
+The input value of its elements does not matter,
+Upon return it is the Lagrange multipliers for the lower and upper
+limits on the forward age difference for this variable.
+If this variable does not have a forward age difference,
+if there is no limit, or if a limit is not active, the corresponding
+element is zero.
+
+$subhead lagrange_dtime$$
+This argument has prototype
+$codei%
+	CppAD::vector<double>& %lagrange_dtime%
+%$$
+and its size is zero or equal to the number of model variables.
+The input value of its elements does not matter,
+Upon return it is the Lagrange multipliers for the lower and upper
+limits on the forward time difference for this variable.
+If this variable does not have a forward time difference,
+if there is no limit, or if a limit is not active, the corresponding
+element is zero.
 
 $children%example/devel/model/fit_model_xam.cpp
 %$$
@@ -376,17 +422,27 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 		random_options, optimal_fixed, random_lower, random_upper, random_in
 		);
 	}
-	// store solution_
-	solution_.resize( pack_object_.size() );
+	// store solution_.variable_value
+	solution_.variable_value.resize(n_var);
 	unscale_fixed_effect(optimal_fixed, optimal_fixed);
-	put_fixed_effect(pack_object_, solution_, optimal_fixed);
-	if ( n_random_ > 0 )
-		put_random_effect(pack_object_, solution_, optimal_random);
+	put_fixed_effect(pack_object_, solution_.variable_value, optimal_fixed);
+	if ( n_random_ > 0 ) put_random_effect(
+		pack_object_, solution_.variable_value, optimal_random
+	);
 }
 // ---------------------------------------------------------------------------
 // get_solution
-CppAD::vector<double> fit_model::get_solution(void)
-{	return solution_; }
+void fit_model::get_solution(
+	CppAD::vector<double>& variable_value  ,
+	CppAD::vector<double>& lagrange_value  ,
+	CppAD::vector<double>& lagrange_dage   ,
+	CppAD::vector<double>& lagrange_dtime  )
+{	variable_value = solution_.variable_value;
+	lagrange_value = solution_.lagrange_value;
+	lagrange_dage  = solution_.lagrange_dage;
+	lagrange_dtime = solution_.lagrange_dtime;
+	return;
+}
 // ===========================================================================
 // private functions
 // ===========================================================================

@@ -341,7 +341,8 @@ bool fit_model_xam(void)
 	option_map["print_level_random"]       = "0";
 	option_map["tolerance_random"]         = "1e-8";
 	fit_object.run_fit( option_map );
-	CppAD::vector<double> solution = fit_object.get_solution();
+	CppAD::vector<double> solution, lag_value, lag_dage, lag_dtime;
+	fit_object.get_solution(solution, lag_value, lag_dage, lag_dtime);
 
 	// check against known solution
 	double check_tol = 1e-3;

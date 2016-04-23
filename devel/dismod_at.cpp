@@ -571,7 +571,6 @@ void fit_command(
 	string column_name = "start_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, start_var);
 	// ------------------ run fit_model ------------------------------------
-	vector<double> solution;
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
 	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
 	CppAD::mixed::sparse_mat_info A_info; // empty matrix
@@ -587,7 +586,10 @@ void fit_command(
 		A_info
 	);
 	fit_object.run_fit(option_map);
-	solution = fit_object.get_solution();
+	vector<double> solution, lag_value, lag_dage, lag_dtime;
+	fit_object.get_solution(
+		solution, lag_value, lag_dage, lag_dtime
+	);
 	// -------------------- fit_var table --------------------------------------
 	string sql_cmd = "drop table if exists fit_var";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
@@ -1112,7 +1114,10 @@ void sample_command(
 			A_info
 		);
 		fit_object.run_fit(option_map);
-		vector<double> solution = fit_object.get_solution();
+		vector<double> solution, lag_value, lag_dage, lag_dtime;
+		fit_object.get_solution(
+			solution, lag_value, lag_dage, lag_dtime
+		);
 		assert( solution.size() == n_var );
 		//
 		// put solution for this sample_index in row_value
