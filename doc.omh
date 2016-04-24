@@ -34,7 +34,7 @@ $section Disease Rates as Functions of Age and Time: dismod_at-20160423$$
 
 $childtable%omh/install/unix.omh
 	%example/user/user.omh
-	%omh/table/table.omh
+	%omh/table/database.omh
 	%omh/model/model.omh
 	%devel/command.omh
 	%python/dismod_at/__init__.py

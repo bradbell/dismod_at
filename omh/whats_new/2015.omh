@@ -217,7 +217,7 @@ $lend
 $head 11-10$$
 $list number$$
 Group all of the user database documentation under the section
-$cref table$$
+$cref database$$
 $lnext
 Modify $code bin/import_cascade.py$$ to take advantage of the
 $code null$$ option for the rate
@@ -226,7 +226,7 @@ $icode child_smooth_id$$.
 $lnext
 Change from text can be empty to text can be null
 (to make it more like other types); see
-$cref/text can be null, not empty/table/Text can be Null, not Empty/$$).
+$cref/text can be null, not empty/database/Text can be Null, not Empty/$$).
 $lnext
 Implement the space saving Jacobian and Hessian calculations for the
 $code cppad_mixed fixed likelihood$$
@@ -427,7 +427,7 @@ In addition, the correction of the bug in $cref eigen_ode2$$
 was retained.
 $lnext
 It is now an error if the value $code nan$$ appears in the database;
-see $cref/real cannot be nan/table/Real Can be Null, not Nan/$$.
+see $cref/real cannot be nan/database/Real Can be Null, not Nan/$$.
 $lnext
 Add tracing, during CppAD's forward mode, of values in the
 $cref residual_density$$ function that should not be negative.
@@ -617,7 +617,7 @@ $head 08-21$$
 $list number$$
 Edit discussion of text can be empty
 (now it must be $code null$$ instead of empty) see
-$cref/text can be null, not empty/table/Text can be Null, not Empty/$$).
+$cref/text can be null, not empty/database/Text can be Null, not Empty/$$).
 $lnext
 Remove the special prior that is a constant one from the
 $cref user$$ examples (since 08-12 $code null$$ can be used to
@@ -976,9 +976,9 @@ $lend
 $head 07-11$$
 $list number$$
 Add an error message when the text value in a table is empty; see
-$cref/text can be null, not empty/table/Text can be Null, not Empty/$$.
+$cref/text can be null, not empty/database/Text can be Null, not Empty/$$.
 Allow for $code null$$ integer values; see
-$cref/integer can be null/table/Integer Can be Null/$$.
+$cref/integer can be null/database/Integer Can be Null/$$.
 $lnext
 The example $cref sim_random_xam.cpp$$ was missing from documentation.
 Increase $icode sample_size$$ in $code sim_random_xam.cpp$$
@@ -990,7 +990,7 @@ There is no $cref/parent/node_table/parent/$$ node,
 there is no $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$,
 there is no $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
 $lnext
-Add the constraint that a $cref/foreign key/table/Foreign Key/$$
+Add the constraint that a $cref/foreign key/database/Foreign Key/$$
 must appear in the corresponding primary key column,
 or it must be $code null$$.
 $lend
@@ -1060,7 +1060,7 @@ $head 07-03$$
 $list number$$
 Remove the $code variable_name$$ from the $cref var_table$$,
 add extra columns to specify the exact variable using
-$cref/foreign keys/table/Foreign Key/$$.
+$cref/foreign keys/database/Foreign Key/$$.
 $lnext
 Change the $code mean_mean$$ covariate multiplier type to
 $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$.
@@ -1086,7 +1086,7 @@ has added the gnu scientific library
 $cref/gsl/install_unix/System Requirements/gsl/$$
 the system requirements.
 $lnext
-The $cref/foreign key/table/Foreign Key/$$ convention
+The $cref/foreign key/database/Foreign Key/$$ convention
 was added to the documentation.
 $lend
 
@@ -1094,7 +1094,7 @@ $head 06-30$$
 $list number$$
 The python routine $code create_table$$ now adds the
 $cref/unique/create_table/col_name/unique/$$ constraint to
-$cref/name columns/table/Name Column/$$.
+$cref/name columns/database/Name Column/$$.
 This in turn is used by, and does the same for, $code create_database$$.
 In addition, the C++ examples for $cref/tables/devel_table/$$
 were changed to include is constraint; e.g.,

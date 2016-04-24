@@ -59,10 +59,10 @@
 # elements in the corresponding table is the same as the corresponding list.
 # For example, $icode%age_list%[%i%]%$$ corresponds to the $th i$$ row
 # of the $code age$$ table which has
-# $cref/primary key/table/Primary Key/$$ value $icode%age_id% = %i%$$.
+# $cref/primary key/database/Primary Key/$$ value $icode%age_id% = %i%$$.
 #
 # $head Name Column$$
-# The $cref/name columns/table/Name Column/$$ are created with th unique
+# The $cref/name columns/database/Name Column/$$ are created with th unique
 # constraint; i.e., it will be an error to have the same value appear
 # twice in a column $icode%table_name%_name%$$ in the table
 # $icode table_name$$.

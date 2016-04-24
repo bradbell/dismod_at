@@ -32,8 +32,12 @@ $childtable%omh/whats_new/2015.omh
 %$$
 
 $head 04-24$$
+$list number$$
 The $cref database2csv.py$$ utility
 has been documented and is now part of the user API.
+$lnext
+The name of the $code table$$ section has been changed to $cref database$$.
+$lend
 
 $head 04-23$$
 $list number$$

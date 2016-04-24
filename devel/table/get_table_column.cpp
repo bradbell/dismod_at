@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -59,7 +59,7 @@ depending on the type of the column in the database.
 $head result$$
 The input size of this vector must be zero.
 Upon return it contains the values in the specified column.
-The results are ordered using the $cref/primary key/table/Primary Key/$$
+The results are ordered using the $cref/primary key/database/Primary Key/$$
 for this table.
 
 $subhead text$$

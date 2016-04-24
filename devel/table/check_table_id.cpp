@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -53,7 +53,7 @@ $head Speed$$
 Note that if one only wants to determine $icode n_row$$,
 it should be faster to use $cref get_column_max$$ to find the maximum
 value of $icode%table_name%_id%$$ (the primary key) and then add one;
-see $cref/primary key/table/Primary Key/$$.
+see $cref/primary key/database/Primary Key/$$.
 
 $end
 ------------------------------------------------------------------------------
