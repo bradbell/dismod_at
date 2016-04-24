@@ -298,8 +298,11 @@ for rate_id in range(n_rate) :
 			time_id = row['time_id']
 			if age_id not in rate_value :
 				rate_value[age_id] = dict()
-			value = fit_var_dict[var_id]['variable_value']
-			rate_value[age_id][time_id] = value
+			rate_value[age_id][time_id] = \
+				fit_var_dict[var_id]['variable_value']
+			#
+			assert fit_var_dict[var_id]['lagrange_value'] == 0.0
+
 			count += 1
 	if rate_id == 0 :
 		# no pini variables because its parent and child smoothings are null
