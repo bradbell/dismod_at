@@ -22,6 +22,7 @@
 #	std
 #	sim
 #	avgint
+#	dir
 # $$
 #
 # $section Summary of Database as Two Csv Files$$
@@ -45,9 +46,14 @@
 # is the path from the currently directory to the database.
 # The $cref init_command$$ must have been run on the database.
 #
+# $subhead dir$$
+# We use the notation $icode dir$$ for the directory where $icode database$$
+# is located.
+#
 # $head variable.csv$$
-# This contains one row for each of the $cref model_variables$$
-# and has the following information:
+# The file $icode%dir%/variable.csv%$$ is written by $code database2csv.py$$.
+# It is a CSV file with one row for each of the $cref model_variables$$
+# and has the following columns:
 #
 # $subhead var_id$$
 # is the $cref/var_id/var_table/var_id/$$.
@@ -133,8 +139,9 @@
 # $cref/density_name/density_table/density_name/$$.
 #
 # $head data.csv$$
-# This contains one row for each row in the $cref data_subset_table$$
-# and has the following information:
+# The file $icode%dir%/data.csv%$$ is written by $code database2csv.py$$.
+# It is a CSV file with one row for each row in the $cref data_subset_table$$
+# and has the following columns:
 #
 # $subhead data_id$$
 # is the
