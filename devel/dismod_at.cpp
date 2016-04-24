@@ -1085,79 +1085,85 @@ void sample_command(
 		return;
 	}
 	// -----------------------------------------------------------------------
-	assert( method == "simulate" );
-	//
-	// read truth_var table into truth_var
-	vector<double> truth_var;
-	table_name         = "truth_var";
-	string column_name = "truth_var_value";
-	dismod_at::get_table_column(db, table_name, column_name, truth_var);
-	//
-	// get simulated data
-	vector<dismod_at::simulate_struct> simulate_table =
-			dismod_at::get_simulate_table(db);
-	//
-	size_t n_subset = data_subset_obj.size();
-	assert( simulate_table.size() % n_subset == 0 );
-	assert( n_sample == simulate_table.size() / n_subset );
-	//
-	bool quasi_fixed = option_map["quasi_fixed"] == "true";
-	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
-	//
-	assert( n_sample * n_subset == simulate_table.size() );
-	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
-	{	// set the measurement values for corresponding simulation
-		size_t offset = n_subset * sample_index;
-		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-		{	size_t simulate_id = offset + subset_id;
-			size_t sample_check =
-				size_t(simulate_table[simulate_id].simulate_index);
-			size_t subset_check =
-				size_t(simulate_table[simulate_id].data_subset_id);
-			if( sample_check != sample_index || subset_check != subset_id )
-			{	string msg = "database modified, restart with init command";
-				table_name = "simulate";
-				dismod_at::error_exit(db, msg, table_name, simulate_id);
-			}
-			data_subset_obj[subset_id].meas_value =
-				simulate_table[simulate_id].meas_value;
-		}
-		data_object.replace_like(data_subset_obj);
-
-		// fit_model
-		CppAD::mixed::sparse_mat_info A_info; // empty matrix
-		dismod_at::fit_model fit_object(
-			db                   ,
-			pack_object          ,
-			truth_var            ,
-			db_input.prior_table ,
-			s_info_vec           ,
-			data_object          ,
-			prior_object         ,
-			quasi_fixed          ,
-			A_info
-		);
-		fit_object.run_fit(option_map);
-		vector<double> opt_value, lag_value, lag_dage, lag_dtime;
-		fit_object.get_solution(
-			opt_value, lag_value, lag_dage, lag_dtime
-		);
-		assert( opt_value.size() == n_var );
+	if( method == "simulate" )
+	{
 		//
-		// put solution for this sample_index in row_value
-		string sample_index_str = to_string( sample_index );
-		for(size_t var_id = 0; var_id < n_var; var_id++)
-		{	size_t sample_id = sample_index * n_var + var_id;
-			row_value[n_col * sample_id + 0] = sample_index_str;
-			row_value[n_col * sample_id + 1] = to_string( var_id );
-			row_value[n_col * sample_id + 2] = to_string( opt_value[var_id] );
+		// read truth_var table into truth_var
+		vector<double> truth_var;
+		table_name         = "truth_var";
+		string column_name = "truth_var_value";
+		dismod_at::get_table_column(db, table_name, column_name, truth_var);
+		//
+		// get simulated data
+		vector<dismod_at::simulate_struct> simulate_table =
+				dismod_at::get_simulate_table(db);
+		//
+		size_t n_subset = data_subset_obj.size();
+		assert( simulate_table.size() % n_subset == 0 );
+		assert( n_sample == simulate_table.size() / n_subset );
+		//
+		bool quasi_fixed = option_map["quasi_fixed"] == "true";
+		assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
+		//
+		assert( n_sample * n_subset == simulate_table.size() );
+		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
+		{	// set the measurement values for corresponding simulation
+			size_t offset = n_subset * sample_index;
+			for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+			{	size_t simulate_id = offset + subset_id;
+				size_t sample_check =
+					size_t(simulate_table[simulate_id].simulate_index);
+				size_t subset_check =
+					size_t(simulate_table[simulate_id].data_subset_id);
+				if( sample_check != sample_index || subset_check != subset_id )
+				{	string msg = "dismod_at database sample simulate\n";
+					msg  += "size of simulate table does not make sense\n";
+					msg +=  "restart with init command";
+					table_name = "simulate";
+					dismod_at::error_exit(db, msg, table_name, simulate_id);
+				}
+				data_subset_obj[subset_id].meas_value =
+					simulate_table[simulate_id].meas_value;
+			}
+			data_object.replace_like(data_subset_obj);
+
+			// fit_model
+			CppAD::mixed::sparse_mat_info A_info; // empty matrix
+			dismod_at::fit_model fit_object(
+				db                   ,
+				pack_object          ,
+				truth_var            ,
+				db_input.prior_table ,
+				s_info_vec           ,
+				data_object          ,
+				prior_object         ,
+				quasi_fixed          ,
+				A_info
+			);
+			fit_object.run_fit(option_map);
+			vector<double> opt_value, lag_value, lag_dage, lag_dtime;
+			fit_object.get_solution(
+				opt_value, lag_value, lag_dage, lag_dtime
+			);
+			assert( opt_value.size() == n_var );
+			//
+			// put solution for this sample_index in row_value
+			string sample_index_str = to_string( sample_index );
+			for(size_t var_id = 0; var_id < n_var; var_id++)
+			{	size_t sample_id = sample_index * n_var + var_id;
+				row_value[n_col * sample_id + 0] = sample_index_str;
+				row_value[n_col * sample_id + 1] = to_string( var_id );
+				row_value[n_col * sample_id + 2] =
+					to_string(opt_value[var_id] );
+			}
 		}
+		table_name = "sample";
+		dismod_at::create_table(
+			db, table_name, col_name, col_type, col_unique, row_value
+		);
+		return;
 	}
-	table_name = "sample";
-	dismod_at::create_table(
-		db, table_name, col_name, col_type, col_unique, row_value
-	);
-	return;
+	assert(false);
 }
 /*
 -------------------------------------------------------------------------------
