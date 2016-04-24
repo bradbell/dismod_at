@@ -69,7 +69,7 @@ $$
 $section The Variable Command$$
 
 $head Syntax$$
-$codei%dismod_at %file_name% init%$$
+$codei%dismod_at %database% init%$$
 
 $head Purpose$$
 This command creates the following tables
@@ -79,9 +79,9 @@ $cref data_subset_table$$   $cnext $title data_subset_table$$ $rnext
 $cref avgint_subset_table$$ $cnext $title avgint_subset_table$$ $rnext
 $tend
 
-$head file_name$$
+$head database$$
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ data base containing the
+$href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $head var_table$$
@@ -385,15 +385,15 @@ $$
 $section The Start Command$$
 
 $head Syntax$$
-$codei%dismod_at %file_name% start %source%$$
+$codei%dismod_at %database% start %source%$$
 
 $head Purpose$$
 This command copies the values specified by $icode source$$
 to the $cref start_var_table$$.
 
-$head file_name$$
+$head database$$
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ data base containing the
+$href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $head source$$
@@ -500,11 +500,11 @@ $$
 $section The Fit Command$$
 
 $head Syntax$$
-$codei%dismod_at %file_name% fit%$$
+$codei%dismod_at %database% fit%$$
 
-$head file_name$$
+$head database$$
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ data base containing the
+$href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $head fit_var_table$$
@@ -744,11 +744,11 @@ $$
 $section The Truth Command$$
 
 $head Syntax$$
-$codei%dismod_at %file_name% truth%$$
+$codei%dismod_at %database% truth%$$
 
-$head file_name$$
+$head database$$
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ data base containing the
+$href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $head fit_var_table$$
@@ -818,11 +818,11 @@ $spell
 $$
 
 $head Syntax$$
-$codei%dismod_at %file_name% simulate%$$
+$codei%dismod_at %database% simulate%$$
 
-$head file_name$$
+$head database$$
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ data base containing the
+$href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $head truth_var_table$$
@@ -947,11 +947,11 @@ $$
 $section The Sample Command$$
 
 $head Syntax$$
-$codei%dismod_at %file_name% sample %method%$$
+$codei%dismod_at %database% sample %method%$$
 
-$head file_name$$
+$head database$$
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ data base containing the
+$href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $head method$$
@@ -1172,11 +1172,11 @@ $$
 $section The Predict Command$$
 
 $head Syntax$$
-$codei%dismod_at %file_name% predict%$$
+$codei%dismod_at %database% predict%$$
 
-$head file_name$$
+$head database$$
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ data base containing the
+$href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $head sample_table$$
@@ -1324,16 +1324,16 @@ int main(int n_arg, const char** argv)
 	program       += DISMOD_AT_VERSION;
 	if( n_arg < 3 )
 	{	cerr << program << endl
-		<< "usage:     dismod_at file_name command [arguments]\n"
-		<< "file_name: sqlite database\n"
-		<< "command:   " << command_info[0].name;
+		<< "usage:    dismod_at database command [arguments]\n"
+		<< "database: sqlite database\n"
+		<< "command:  " << command_info[0].name;
 		for(size_t i = 1; i < n_command; i++)
 			cerr << ", " << command_info[i].name;
 		cerr << endl
 		<< "arguments: optional arguments depending on particular command\n";
 		std::exit(1);
 	}
-	const string file_name_arg  = argv[1];
+	const string database_arg  = argv[1];
 	const string command_arg    = argv[2];
 	for(size_t i = 0; i < n_command; i++)
 	{	if( command_arg == command_info[i].name )
@@ -1348,12 +1348,12 @@ int main(int n_arg, const char** argv)
 	string message;
 	// --------------- open connection to datbase ---------------------------
 	bool new_file = false;
-	sqlite3* db   = dismod_at::open_connection(file_name_arg, new_file);
+	sqlite3* db   = dismod_at::open_connection(database_arg, new_file);
 	// --------------- log start of this command -----------------------------
 	message = "begin " + command_arg;
 	std::time_t unix_time = dismod_at::log_message(db, "command", message);
 	// --------------- get the input tables ---------------------------------
-	std::time_t current_time = trace("Reading data base");
+	std::time_t current_time = trace("Reading database");
 	dismod_at::db_input_struct db_input;
 	get_db_input(db, db_input);
 	trace("elapsed time = ", current_time);

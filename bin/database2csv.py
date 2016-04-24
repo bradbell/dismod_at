@@ -9,12 +9,206 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin import_cascade$$ $newlinech #$$
+# $begin database2csv.py$$ $newlinech #$$
+# $spell
+#	Csv
+#	py
+#	dismod
+#	var
+#	covariate
+#	res
+#	dage
+#	dtime
+#	std
+#	sim
+#	avgint
+# $$
 #
-# $section Import an IHME Cascade Study$$
+# $section Summary of Database as Two Csv Files$$
 #
 # $head Syntax$$
-# $codei%import_cascade.py %cascade_path% %option_file%$$
+# $codei%bin/database2csv.py %database%$$
+#
+# $head 2DO$$
+# $list number$$
+# Install this program so that it can be run from locations other than
+# the dismod_at distribution directory.
+# $lnext
+# Write some automated tests for this program.
+# $lend
+#
+# $head Convention$$
+# The $code null$$ value in the database corresponds
+# to an empty string in the csv files.
+#
+# $head database$$
+# is the path from the currently directory to the database.
+# The $cref init_command$$ must have been run on the database.
+#
+# $head variable.csv$$
+# This contains one row for each of the $cref model_variables$$
+# and has the following information:
+#
+# $subhead var_id$$
+# is the $cref/var_id/var_table/var_id/$$.
+#
+# $subhead var_type$$
+# is the $cref/var_type/var_table/var_type/$$.
+#
+# $subhead age$$
+# is the $cref/age/age_table/age/$$.
+#
+# $subhead time$$
+# is the $cref/time/time_table/time/$$.
+#
+# $subhead rate$$
+# is the $cref/rate_name/rate_table/rate_name/$$.
+#
+# $subhead integrand$$
+# is the
+# $cref/integrand_name/integrand_table/integrand_name/$$.
+#
+# $subhead covariate$$
+# is the
+# $cref/covariate_name/covariate_table/covariate_name/$$.
+#
+# $subhead node$$
+# is the
+# $cref/node_name/node_table/node_name/$$.
+#
+# $subhead fixed$$
+# is $code true$$ if this variable is a
+# $cref/fixed effect/model_variables/Fixed Effects, theta/$$,
+# otherwise it is $code false$$.
+#
+# $subhead sam_value$$
+# If the $cref sample_command$$ has not been run, this is the
+# $cref/var_value/sample_table/var_value/$$.
+#
+# $subhead fit_value$$
+# If the $cref fit_command$$ has not been run, this is the
+# $cref/variable_value/fit_var_table/variable_value/$$.
+#
+# $subhead fit_res$$
+# If the $cref fit_command$$ has not been run, this is the
+# $cref/residual_value/fit_var_table/residual_value/$$.
+#
+# $subhead fit_dage$$
+# If the $cref fit_command$$ has not been run, this is the
+# $cref/residual_dage/fit_var_table/residual_dage/$$.
+#
+# $subhead fit_dtime$$
+# If the $cref fit_command$$ has not been run, this is the
+# $cref/residual_dtime/fit_var_table/residual_dtime/$$.
+#
+# $subhead lag_value$$
+# If the $cref fit_command$$ has not been run, this is the
+# $cref/lagrange_value/fit_var_table/lagrange_value/$$.
+#
+# $subhead lag_dage$$
+# If the $cref fit_command$$ has not been run, this is the
+# $cref/lagrange_dage/fit_var_table/lagrange_dage/$$.
+#
+# $subhead lag_dtime$$
+# If the $cref fit_command$$ has not been run, this is the
+# $cref/lagrange_dtime/fit_var_table/lagrange_dtime/$$.
+#
+# $subhead prior_info$$
+# There is a column named
+# $codei%
+#	%field%_%character%
+# %$$
+# for $icode character$$ equal to $code v$$, $code a$$ and $code t$$
+# and for $icode field$$ equal to
+# $cref/lower/prior_table/lower/$$,
+# $cref/upper/prior_table/upper/$$,
+# $cref/mean/prior_table/mean/$$,
+# $cref/std/prior_table/std/$$,
+# $cref/eta/prior_table/eta/$$ and
+# $cref/density/prior_table/density_id/$$.
+# The character $code v$$ denotes this is the prior information for a value,
+# $code a$$ the prior information for an age difference, and
+# $code t$$ the prior information for a time difference.
+# The density has been mapped to the corresponding
+# $cref/density_name/density_table/density_name/$$.
+#
+# $head data.csv$$
+# This contains one row for each row in the $cref data_subset_table$$
+# and has the following information:
+#
+# $subhead data_id$$
+# is the
+# $cref/data_id/data_table/data_id/$$.
+#
+# $subhead age_lo$$
+# is the
+# $cref/age_lower/data_table/age_lower/$$.
+#
+# $subhead age_up$$
+# is the
+# $cref/age_upper/data_table/age_upper/$$.
+#
+# $subhead time_lo$$
+# is the
+# $cref/time_lower/data_table/time_lower/$$.
+#
+# $subhead time_up$$
+# is the
+# $cref/time_upper/data_table/time_upper/$$.
+#
+# $subhead integrand$$
+# is the
+# $cref/integrand_name/integrand_table/integrand_name/$$.
+#
+# $subhead weight$$
+# is the
+# $cref/weight_name/weight_table/weight_name/$$.
+#
+# $subhead hold_out$$
+# is the
+# $cref/hold_out/data_table/hold_out/$$.
+#
+# $subhead density$$
+# is the
+# $cref/density_name/density_table/density_name/$$.
+#
+# $subhead eta$$
+# is the
+# $cref/eta/integrand_table/eta/$$.
+#
+# $subhead meas_std$$
+# is the
+# $cref/meas_std/data_table/meas_std/$$.
+#
+# $subhead meas_value$$
+# This column is present when
+# $cref/fit_simulate_index/option_table/fit_simulate_index/$$
+# is $code null$$.
+# It is the $cref/meas_value/data_table/meas_value/$$ in the
+# data table.
+#
+# $subhead sim_value$$
+# This column is present when
+# $cref/fit_simulate_index/option_table/fit_simulate_index/$$
+# is $bold not$$ $code null$$.
+# It is the $cref/meas_value/simulate_table/meas_value/$$ in the
+# simulate table for the specified
+# $cref/simulate_index/simulate_table/simulate_index/$$.
+#
+# $subhead avgint$$
+# If the $cref fit_command$$ has not been run, this is the
+# $cref/avg_integrand/fit_data_subset_table/avg_integrand/$$.
+#
+# $subhead residual$$
+# If the $cref fit_command$$ has not been run, this is the
+# $cref/weighted_residual/fit_data_subset_table/weighted_residual/$$.
+#
+# $subhead node$$
+# is the
+# $cref/node_name/node_table/node_name/$$ that this data is associated with
+# during a $code dismod_at$$ fit.
+# This will correspond directly to the $cref/node_id/data_table/node_id/$$
+# in the data table, or be an ascendant of that node.
 #
 # $end
 # ---------------------------------------------------------------------------
@@ -30,7 +224,7 @@ if sys.argv[0] != 'bin/database2csv.py' :
 	msg  = 'bin/database2csv.py: must be executed from its parent directory'
 	sys.exit(msg)
 #
-usage = 'bin/database2csv.py database_file'
+usage = 'bin/database2csv.py database'
 if len(sys.argv) != 2 :
 	sys.exit(usage)
 #
@@ -204,6 +398,11 @@ for row_in in table_data['var'] :
 	)
 	row_out['node'] = table_lookup('node', row_in['node_id'], 'node_name')
 	#
+	row_out['fixed'] = 'true'
+	if row_in['var_type'] == 'rate' :
+		if row_in['node_id'] != parent_node_id :
+			row_out['fixed'] = 'false'
+	#
 	if have_sample :
 		row_out['sam_value'] = table_lookup('sample', var_id, 'var_value')
 	if have_fit :
@@ -214,11 +413,6 @@ for row_in in table_data['var'] :
 		row_out['lag_value']= table_lookup('fit_var', var_id, 'lagrange_value')
 		row_out['lag_dage'] = table_lookup('fit_var', var_id, 'lagrange_dage')
 		row_out['lag_dtime']= table_lookup('fit_var', var_id, 'lagrange_dtime')
-	#
-	row_out['fixed'] = 'true'
-	if row_in['var_type'] == 'rate' :
-		if row_in['node_id'] != parent_node_id :
-			row_out['fixed'] = 'false'
 	#
 	smooth_id = row_in['smooth_id']
 	if row_in['var_type'].startswith('mulstd_') :
@@ -296,12 +490,11 @@ for subset_row in table_data['data_subset'] :
 	row_out['density'] = table_lookup(
 		'density', row_in['density_id'], 'density_name'
 	)
+	row_out['eta']  = table_lookup(
+			'integrand', row_in['integrand_id'], 'eta'
+	)
 	row_out['node'] = node_id2child_or_parent( row_in['node_id'] )
 	#
-	if row_out['density'] != 'gaussian' :
-		row_out['eta']         = table_lookup(
-			'integrand', row_in['integrand_id'], 'eta'
-		)
 	#
 	covariate_id = 0
 	for row in table_data['covariate'] :

@@ -302,6 +302,16 @@ for rate_id in range(n_rate) :
 				fit_var_dict[var_id]['variable_value']
 			#
 			assert fit_var_dict[var_id]['lagrange_value'] == 0.0
+			if age_id == last_age_id :
+				assert fit_var_dict[var_id]['lagrange_dage'] == 0.0
+			else :
+				# lower limit is active, so multiplier is less than zero
+				assert fit_var_dict[var_id]['lagrange_dage'] < 0.0
+			if time_id == last_time_id :
+				assert fit_var_dict[var_id]['lagrange_dtime'] == 0.0
+			else :
+				# lower limit is active, so multiplier is less than zero
+				assert fit_var_dict[var_id]['lagrange_dtime'] < 0.0
 
 			count += 1
 	if rate_id == 0 :
