@@ -981,17 +981,21 @@ the corresponding in the sample table.
 Sample with different values of $icode sample_index$$ are independent.
 
 $subhead fit_var$$
-Under Construction:
 If $icode method$$ is $code fit_var$$,
 the values in the $cref fit_var_table$$ are copied to the $cref sample_table$$.
 In this case, there is only one sample of the $cref model_variables$$
 in the sample table and
 $cref/sample_index/sample_table/sample_index/$$ is always zero.
 
+$head truth_var_table$$
+If $icode method$$ is $code simulate$$,
+this command has the extra input $cref truth_var_table$$
+which was input to the previous $cref simulate_command$$.
+
 $head simulate_table$$
 If $icode method$$ is $code simulate$$,
 this command has the extra input $cref  simulate_table$$
-which was created by a previous $cref simulate_command$$.
+which was created by the previous $cref simulate_command$$.
 
 $head fit_var_table$$
 If $icode method$$ is $code asymptotic$$ or $code fit_var$$,
@@ -1040,7 +1044,6 @@ void sample_command(
 	string sql_cmd = "drop table if exists sample";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	string table_name = "sample";
 	size_t n_col      = 3;
 	size_t n_var      = pack_object.size();
 	size_t n_row      = n_sample * n_var;
@@ -1062,7 +1065,7 @@ void sample_command(
 	if( method == "fit_var" )
 	{	// get fit_var table information
 		vector<double> variable_value;
-		table_name         = "fit_var";
+		string table_name  = "fit_var";
 		string column_name = "variable_value";
 		dismod_at::get_table_column(
 			db, table_name, column_name, variable_value
@@ -1084,16 +1087,24 @@ void sample_command(
 		);
 		return;
 	}
+	// ----------------------------------------------------------------------
+	// quasi_fixed
+	bool quasi_fixed = option_map["quasi_fixed"] == "true";
+	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
+	//
+	// A_info = empty matrix
+	CppAD::mixed::sparse_mat_info A_info;
 	// -----------------------------------------------------------------------
 	if( method == "simulate" )
 	{
 		//
-		// read truth_var table into truth_var
-		vector<double> truth_var;
-		table_name         = "truth_var";
+		// fit_var.variable_value
+		vector<double> truth_var_value;
+		string table_name  = "truth_var";
 		string column_name = "truth_var_value";
-		dismod_at::get_table_column(db, table_name, column_name, truth_var);
-		//
+		dismod_at::get_table_column(
+			db, table_name, column_name, truth_var_value
+		);
 		// get simulated data
 		vector<dismod_at::simulate_struct> simulate_table =
 				dismod_at::get_simulate_table(db);
@@ -1101,9 +1112,6 @@ void sample_command(
 		size_t n_subset = data_subset_obj.size();
 		assert( simulate_table.size() % n_subset == 0 );
 		assert( n_sample == simulate_table.size() / n_subset );
-		//
-		bool quasi_fixed = option_map["quasi_fixed"] == "true";
-		assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
 		//
 		assert( n_sample * n_subset == simulate_table.size() );
 		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
@@ -1128,11 +1136,10 @@ void sample_command(
 			data_object.replace_like(data_subset_obj);
 
 			// fit_model
-			CppAD::mixed::sparse_mat_info A_info; // empty matrix
 			dismod_at::fit_model fit_object(
 				db                   ,
 				pack_object          ,
-				truth_var            ,
+				truth_var_value      ,
 				db_input.prior_table ,
 				s_info_vec           ,
 				data_object          ,
@@ -1163,6 +1170,67 @@ void sample_command(
 		);
 		return;
 	}
+	// ----------------------------------------------------------------------
+	assert( method == "asymptotic" );
+	//
+	// fit_var.variable_value
+	vector<double> variable_value;
+	string table_name  = "fit_var";
+	string column_name = "variable_value";
+	dismod_at::get_table_column(
+		db, table_name, column_name, variable_value
+	);
+	//
+	// fit_var.lagrange_value
+	vector<double> lagrange_value;
+	column_name = "lagrange_value";
+	dismod_at::get_table_column(
+		db, table_name, column_name, lagrange_value
+	);
+	//
+	// fit_var.lagrange_dage
+	vector<double> lagrange_dage;
+	column_name = "lagrange_dage";
+	dismod_at::get_table_column(
+		db, table_name, column_name, lagrange_dage
+	);
+	//
+	// fit_var.lagrange_dtime
+	vector<double> lagrange_dtime;
+	column_name = "lagrange_dtime";
+	dismod_at::get_table_column(
+		db, table_name, column_name, lagrange_dtime
+	);
+	//
+	// random_opt
+	size_t n_random = size_random_effect(pack_object);
+	vector<double> random_opt(n_random);
+	unpack_random(pack_object, variable_value, random_opt);
+	//
+	// fit_object
+	dismod_at::fit_model fit_object(
+		db                   ,
+		pack_object          ,
+		variable_value       ,
+		db_input.prior_table ,
+		s_info_vec           ,
+		data_object          ,
+		prior_object         ,
+		quasi_fixed          ,
+		A_info
+	);
+	//
+	// sample
+	vector<double> sample(n_sample * n_var);
+	fit_object.sample_posterior(
+		sample               ,
+		variable_value       ,
+		lagrange_value       ,
+		lagrange_dage        ,
+		lagrange_dtime       ,
+		option_map
+	);
+	//
 	assert(false);
 }
 /*

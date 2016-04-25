@@ -60,6 +60,10 @@ namespace dismod_at {
 		// Uses the invalid value n_fixed_ if not a fixed variable.
 		CppAD::vector<size_t>             var_id2fixed_;
 		//
+		// Lower and upper limits for fixed effects
+		CppAD::vector<double>             fixed_lower_;
+		CppAD::vector<double>             fixed_upper_;
+		//
 		// Offset in log scaling for each component of the fixed vector;
 		// If fixed_is_scaled_[j], fixed_vec[j] in dismod_at has value
 		// log( fixed_vec[j] + fixed_scale_eta_[j] ) during optimization.
@@ -159,6 +163,16 @@ namespace dismod_at {
 			CppAD::vector<double>& lagrange_value  ,
 			CppAD::vector<double>& lagrange_dage   ,
 			CppAD::vector<double>& lagrange_dtime
+		);
+		// sample from asympotitic approximation for posterior distribution
+		void sample_posterior(
+			CppAD::vector<double>&              sample          ,
+			const CppAD::vector<double>&        variable_value  ,
+			const CppAD::vector<double>&        lagrange_value  ,
+			const CppAD::vector<double>&        lagrange_dage   ,
+			const CppAD::vector<double>&        lagrange_dtime  ,
+			// effectively const
+			std::map<std::string, std::string>& option_map
 		);
 	};
 }

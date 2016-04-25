@@ -140,7 +140,7 @@ by the prior for each variable.
 $head option_map$$
 This argument has prototype
 $code
-	std::map<std::string, std::string>& %option_map%
+	const std::map<std::string, std::string>& %option_map%
 %$$
 It is effectively $code const$$ and
 must have the following values:
@@ -477,6 +477,136 @@ void fit_model::get_solution(
 	lagrange_value = solution_.lagrange_value;
 	lagrange_dage  = solution_.lagrange_dage;
 	lagrange_dtime = solution_.lagrange_dtime;
+	return;
+}
+// ---------------------------------------------------------------------------
+// sample_posterior
+void fit_model::sample_posterior(
+	CppAD::vector<double>&              sample          ,
+	const CppAD::vector<double>&        variable_value  ,
+	const CppAD::vector<double>&        lagrange_value  ,
+	const CppAD::vector<double>&        lagrange_dage   ,
+	const CppAD::vector<double>&        lagrange_dtime  ,
+	std::map<std::string, std::string>& option_map      )
+{
+	size_t n_var = n_fixed_ + n_random_;
+	assert( sample.size() % n_var == 0     );
+	assert( variable_value.size() == n_var );
+	assert( lagrange_value.size() == n_var );
+	assert( lagrange_dage.size()  == n_var );
+	assert( lagrange_dtime.size() == n_var );
+
+	// n_sample
+	size_t n_sample = sample.size() / n_var;
+
+	// solution.fixed_opt
+	CppAD::mixed::fixed_solution solution;
+	solution.fixed_opt.resize(n_fixed_);
+	unpack_fixed(pack_object_, variable_value, solution.fixed_opt);
+	//
+	// solution.fixed_lag
+	solution.fixed_lag.resize(n_fixed_);
+	unpack_fixed(pack_object_, lagrange_value, solution.fixed_lag);
+	//
+	// solution.fix_con_lag
+	size_t n_fix_con = diff_prior_.size();
+	solution.fix_con_lag.resize(n_fix_con);
+	for(size_t k = 0; k < n_fix_con; k++)
+	{	size_t minus_var_id   = diff_prior_[k].minus_var_id;
+		if( diff_prior_[k].direction==dismod_at::diff_prior_struct::dage_enum )
+			solution.fix_con_lag[k] = lagrange_dage[minus_var_id];
+		else
+			solution.fix_con_lag[k] = lagrange_dtime[minus_var_id];
+	}
+	//
+	// random_opt
+	CppAD::vector<double> random_opt(n_random_);
+	unpack_random(pack_object_, variable_value, random_opt);
+	//
+	// information_info
+	CppAD::mixed::sparse_mat_info information_info = information_mat(
+		solution, random_opt
+	);
+
+	// fixed_lower
+	CppAD::vector<double> pack_vec( n_var );
+	CppAD::vector<double> fixed_lower(n_fixed_);
+	for(size_t i = 0; i < n_var; i++)
+		pack_vec[i] = prior_table_[ value_prior_[i] ].lower;
+	unpack_fixed(pack_object_, pack_vec, fixed_lower);
+	scale_fixed_effect(fixed_lower, fixed_lower);
+
+	// fixed_upper
+	CppAD::vector<double> fixed_upper(n_fixed_);
+	for(size_t i = 0; i < n_var; i++)
+		pack_vec[i] = prior_table_[ value_prior_[i] ].upper;
+	unpack_fixed(pack_object_, pack_vec, fixed_upper);
+	scale_fixed_effect(fixed_upper, fixed_upper);
+	//
+	// sample_fix
+	CppAD::vector<double> sample_fix(n_sample * n_fixed_);
+	sample_fixed(
+		sample_fix,
+		information_info,
+		solution,
+		fixed_lower,
+		fixed_upper,
+		random_opt
+	);
+	//
+	// random_options
+	// (same as in run_fit)
+	std::string options = "";
+	options += "String  sb  yes";
+	options += "\nNumeric bound_relax_factor 0.0";
+	options += "\nNumeric tol " + option_map["tolerance_random"];
+	options += "\nInteger max_iter " + option_map["max_num_iter_random"];
+	options += "\nInteger print_level " + option_map["print_level_random"];
+	options += "\nString derivative_test "
+		+ option_map["derivative_test_random"] + "\n";
+	std::string random_options = options;
+	//
+	// random_bound
+	std::string random_bound_string = option_map["random_bound"];
+	double random_bound = std::numeric_limits<double>::infinity();
+	if( random_bound_string  != "" )
+		random_bound = std::atof( random_bound_string.c_str() );
+	assert( random_bound >= 1.0 );
+	//
+	// random_lower, random_upper
+	CppAD::vector<double> random_lower(n_random_), random_upper(n_random_);
+	for(size_t j = 0; j < n_random_; j++)
+	{	random_upper[j] = random_bound;
+		random_lower[j] = - random_bound;
+	}
+	// random_in
+	CppAD::vector<double> random_in(n_random_);
+	unpack_random(pack_object_, start_var_, random_in);
+	//
+	CppAD::vector<double> one_sample_random(n_random_);
+	CppAD::vector<double> one_sample_fixed(n_fixed_);
+	for(size_t i_sample = 0; i_sample < n_sample; i_sample++)
+	{	for(size_t j = 0; j < n_fixed_; j++)
+			one_sample_fixed[j] = sample_fix[ i_sample * n_fixed_ + j];
+			//
+			sample_random(
+				one_sample_random,
+				random_options,
+				one_sample_fixed,
+				random_lower,
+				random_upper,
+				random_in
+			);
+			//
+			// pack_vec
+			unscale_fixed_effect(one_sample_fixed, one_sample_fixed);
+			pack_fixed(pack_object_, pack_vec, one_sample_fixed);
+			pack_random(pack_object_, pack_vec, one_sample_random);
+			//
+			// copy to output vector
+			for(size_t i = 0; i < n_var; i++)
+				sample[ i_sample * n_var + i ] = pack_vec[i];
+	}
 	return;
 }
 // ===========================================================================
