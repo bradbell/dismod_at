@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -25,9 +25,9 @@ $icode%size_fixed% = size_fixed_effect(%pack_object%)
 %$$
 $icode%pack_index% = fixed2var_id(%pack_object%)
 %$$
-$codei%put_fixed_effect(%pack_object%, %pack_vec%, %fixed_vec%)
+$codei%pack_fixed(%pack_object%, %pack_vec%, %fixed_vec%)
 %$$
-$codei%get_fixed_effect(%pack_object%, %pack_vec%, %fixed_vec%)
+$codei%unpack_fixed(%pack_object%, %pack_vec%, %fixed_vec%)
 %$$
 
 $head Float$$
@@ -36,7 +36,7 @@ $code double$$, $code AD<double>$$, or $cref a2_double$$.
 
 $head Order of Fixed Effects$$
 The order of the fixed effects is unspecified, except for the
-fact that $code put_fixed_effect$$ and $code get_fixed_effect$$
+fact that $code pack_fixed$$ and $code unpack_fixed$$
 are inverses of each other; i.e., if you pack the fixed effects using a
 $icode fixed_vec$$, and then do a unpack, you will get that
 $icode fixed_vec$$ back.
@@ -68,7 +68,7 @@ For each fixed effect index $icode j$$,
 the value $icode%pack_index%[%j%]%$$ is the corresponding
 index in a packed vector (with both fixed and random effects).
 
-$head put_fixed_effect$$
+$head unpack_fixed$$
 This functions copies information from $icode pack_vec$$
 to $icode fixed_vec$$.
 
@@ -91,7 +91,7 @@ It is a copy of the fixed effects in $icode pack_vec$$
 as one contiguous vector in an unspecified order.
 
 
-$head get_fixed_effect$$
+$head pack_fixed$$
 This functions copies information from $icode fixed_vec$$
 to $icode pack_vec$$.
 
@@ -204,7 +204,7 @@ CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
 // ---------------------------------------------------------------------------
 
 template <class Float>
-void get_fixed_effect(
+void unpack_fixed(
 	const pack_info&             pack_object  ,
 	const CppAD::vector<Float>&  pack_vec     ,
 	CppAD::vector<Float>&        fixed_vec    )
@@ -274,7 +274,7 @@ void get_fixed_effect(
 // ---------------------------------------------------------------------------
 
 template <class Float>
-void put_fixed_effect(
+void pack_fixed(
 	const pack_info&             pack_object  ,
 	CppAD::vector<Float>&        pack_vec     ,
 	const CppAD::vector<Float>&  fixed_vec    )
@@ -343,12 +343,12 @@ void put_fixed_effect(
 // ---------------------------------------------------------------------------
 
 # define DISMOD_AT_INSTANTIATE_FIXED_EFFECT(Float)        \
-	template void get_fixed_effect(                       \
+	template void unpack_fixed(                       \
 	const pack_info&             pack_object  ,           \
 	const CppAD::vector<Float>&  pack_vec     ,           \
 	CppAD::vector<Float>&        fixed_vec                \
 	);                                                    \
-	template void put_fixed_effect(                       \
+	template void pack_fixed(                       \
 	const pack_info&             pack_object  ,           \
 	CppAD::vector<Float>&        pack_vec     ,           \
 	const CppAD::vector<Float>&  fixed_vec                \

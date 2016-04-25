@@ -312,11 +312,11 @@ prior_object_  ( prior_object )
 	//
 	// fixed_vec
 	CppAD::vector<double> fixed_vec(n_fixed_);
-	get_fixed_effect(pack_object, start_var, fixed_vec);
+	unpack_fixed(pack_object, start_var, fixed_vec);
 	scale_fixed_effect(fixed_vec, fixed_vec);
 	// random_vec
 	CppAD::vector<double> random_vec(n_random_);
-	get_random_effect(pack_object, start_var, random_vec);
+	unpack_random(pack_object, start_var, random_vec);
 	//
 	initialize(fixed_vec, random_vec);
 }
@@ -332,14 +332,14 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 	CppAD::vector<double> fixed_lower(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
 		pack_vec[i] = prior_table_[ value_prior_[i] ].lower;
-	get_fixed_effect(pack_object_, pack_vec, fixed_lower);
+	unpack_fixed(pack_object_, pack_vec, fixed_lower);
 	scale_fixed_effect(fixed_lower, fixed_lower);
 
 	// fixed_upper
 	CppAD::vector<double> fixed_upper(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
 		pack_vec[i] = prior_table_[ value_prior_[i] ].upper;
-	get_fixed_effect(pack_object_, pack_vec, fixed_upper);
+	unpack_fixed(pack_object_, pack_vec, fixed_upper);
 	scale_fixed_effect(fixed_upper, fixed_upper);
 
 	// fix_constraint_lower, fix_constraint_upper
@@ -358,12 +358,12 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 
 	// fixed_in
 	CppAD::vector<double> fixed_in(n_fixed_);
-	get_fixed_effect(pack_object_, start_var_, fixed_in);
+	unpack_fixed(pack_object_, start_var_, fixed_in);
 	scale_fixed_effect(fixed_in, fixed_in);
 
 	// random_in
 	CppAD::vector<double> random_in(n_random_);
-	get_random_effect(pack_object_, start_var_, random_in);
+	unpack_random(pack_object_, start_var_, random_in);
 
 
 	// Ipopt fixed effects optimization options
@@ -439,16 +439,16 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 	solution_.lagrange_dtime.resize(n_var);
 	//
 	// values that are stored by fixed effect index
-	put_fixed_effect(pack_object_, solution_.variable_value, fixed_opt);
-	put_fixed_effect(pack_object_, solution_.lagrange_value, fixed_lag);
+	pack_fixed(pack_object_, solution_.variable_value, fixed_opt);
+	pack_fixed(pack_object_, solution_.lagrange_value, fixed_lag);
 	//
 	// values that are stored by random effect index
 	if ( n_random_ > 0 )
 	{	CppAD::vector<double> zero(n_random_);
 		for(size_t i = 0; i < n_random_; i++)
 			zero[i] = 0.0;
-		put_random_effect(pack_object_, solution_.variable_value, random_opt);
-		put_random_effect(pack_object_, solution_.lagrange_value, zero);
+		pack_random(pack_object_, solution_.variable_value, random_opt);
+		pack_random(pack_object_, solution_.lagrange_value, zero);
 	}
 	//
 	// difference constraints
@@ -493,8 +493,8 @@ CppAD::vector<Float> fit_model::implement_ran_like(
 	// put the fixed and random effects into pack_vec
 	CppAD::vector<Float> fixed_tmp(n_fixed_);
 	unscale_fixed_effect(fixed_vec, fixed_tmp);
-	put_fixed_effect(pack_object_, pack_vec, fixed_tmp);
-	put_random_effect(pack_object_, pack_vec, random_vec);
+	pack_fixed(pack_object_, pack_vec, fixed_tmp);
+	pack_random(pack_object_, pack_vec, random_vec);
 	//
 	// evaluate the data and prior residuals
 	CppAD::vector< residual_struct<Float> > data_like, prior_ran;
@@ -577,8 +577,8 @@ fit_model::a1d_vector fit_model::fix_likelihood(
 	// put the fixed and random effects into pack_vec
 	a1d_vector fixed_tmp(n_fixed_);
 	unscale_fixed_effect(fixed_vec, fixed_tmp);
-	put_fixed_effect(pack_object_, a1_pack_vec, fixed_tmp);
-	put_random_effect(pack_object_, a1_pack_vec, random_vec);
+	pack_fixed(pack_object_, a1_pack_vec, fixed_tmp);
+	pack_random(pack_object_, a1_pack_vec, random_vec);
 	//
 	// evaluate prior residuals (data residuals empty for now)
 	CppAD::vector< residual_struct<a1_double> > data_like, prior_fix;

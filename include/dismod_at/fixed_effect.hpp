@@ -22,14 +22,14 @@ namespace dismod_at {
 	);
 	//
 	template <class Float>
-	extern void get_fixed_effect(
+	extern void unpack_fixed(
 		const pack_info&            pack_object  ,
 		const CppAD::vector<Float>& pack_vec     ,
 		CppAD::vector<Float>&       fixed_vec
 	);
 	//
 	template <class Float>
-	extern void put_fixed_effect(
+	extern void pack_fixed(
 		const pack_info&            pack_object  ,
 		CppAD::vector<Float>&       pack_vec     ,
 		const CppAD::vector<Float>& fixed_vec

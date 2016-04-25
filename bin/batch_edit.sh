@@ -12,7 +12,6 @@
 new_directories='
 '
 rename_files='
-	omh/table/table.omh
 '
 spell_files='
 '
@@ -23,11 +22,10 @@ rename_cmd='s|table.omh|database.omh|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
 cat << EOF > junk.sed
-s|\$begin table\\\$|\$begin database\$|
-s|/table\\.omh|/database.omh|
-s|devel/table/database.omh|devel/table/table.omh|
-s|\$cref  *table\\\$|\$cref database\$|
-s|\$cref/\\([^/]*\\)/table/|\$cref/\\1/database/|
+s|get_fixed_effect|unpack_fixed|g
+s|put_fixed_effect|pack_fixed|g
+s|get_random_effect|unpack_random|g
+s|put_random_effect|pack_random|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

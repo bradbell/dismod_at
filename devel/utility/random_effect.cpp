@@ -23,9 +23,9 @@ $section Setting and Getting the Random Effect Vector$$
 $head Syntax$$
 $icode%size_random% = size_random_effect(%pack_object%)
 %$$
-$codei%put_random_effect(%pack_object%, %pack_vec%, %random_vec%)
+$codei%pack_random(%pack_object%, %pack_vec%, %random_vec%)
 %$$
-$codei%get_random_effect(%pack_object%, %pack_vec%, %random_vec%)
+$codei%unpack_random(%pack_object%, %pack_vec%, %random_vec%)
 %$$
 
 $head Float$$
@@ -34,7 +34,7 @@ $code double$$, $code AD<double>$$, or $cref a2_double$$.
 
 $head Order of Random Effects$$
 The order of the random effects is unspecified, except for the
-fact that $code put_random_effect$$ and $code get_random_effect$$
+fact that $code pack_random$$ and $code unpack_random$$
 are inverses of each other; i.e., if you pack the random effects using a
 $icode random_vec$$, and then do a unpack, you will get that
 $icode random_vec$$ back.
@@ -55,7 +55,7 @@ $codei%
 It is the number of
 $cref/random effects/model_variables/Random Effects, u/$$ in the model.
 
-$head put_random_effect$$
+$head unpack_random$$
 This functions copies information from $icode pack_vec$$
 to $icode random_vec$$.
 
@@ -78,7 +78,7 @@ It is a copy of the random effects in $icode pack_vec$$
 as one contiguous vector in an unspecified order.
 
 
-$head get_random_effect$$
+$head pack_random$$
 This functions copies information from $icode random_vec$$
 to $icode pack_vec$$.
 
@@ -141,7 +141,7 @@ size_t size_random_effect(const pack_info&  pack_object)
 }
 
 template <class Float>
-void get_random_effect(
+void unpack_random(
 	const pack_info&              pack_object  ,
 	const CppAD::vector<Float>&  pack_vec   ,
 	CppAD::vector<Float>&        random_vec )
@@ -171,7 +171,7 @@ void get_random_effect(
 }
 
 template <class Float>
-void put_random_effect(
+void pack_random(
 	const pack_info&              pack_object  ,
 	CppAD::vector<Float>&        pack_vec   ,
 	const CppAD::vector<Float>&  random_vec )
@@ -201,12 +201,12 @@ void put_random_effect(
 }
 
 # define DISMOD_AT_INSTANTIATE_RANDOM_EFFECT(Float)           \
-	template void get_random_effect(                       \
+	template void unpack_random(                       \
 	const pack_info&              pack_object  ,                 \
 	const CppAD::vector<Float>&  pack_vec   ,                 \
 	CppAD::vector<Float>&        random_vec                   \
 	);                                                        \
-	template void put_random_effect(                         \
+	template void pack_random(                         \
 	const pack_info&              pack_object  ,                 \
 	CppAD::vector<Float>&        pack_vec   ,                 \
 	const CppAD::vector<Float>&  random_vec                   \
