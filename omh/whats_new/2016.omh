@@ -55,6 +55,8 @@ $lnext
 Add the Lagrange multipliers
 $cref/lagrange_value/fit_var_table/lagrange_value/$$,
 $code lagrange_dage$$ and $code lagrange_dtime$$ to the fit_var table.
+$lnext
+Advance to $code cppad_mixed-20160423$$.
 $lend
 
 $head 04-22$$
