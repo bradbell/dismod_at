@@ -13,28 +13,16 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/log_message.hpp>
 # include <dismod_at/null_int.hpp>
+
+namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 /*
-$begin fit_model$$
+$begin fit_model_ctor$$
 $spell
-	bool
-	cppad
-	sqlite
-	str
-	num_iter
-	std
-	Ipopt
-	tol
-	vec
-	const
-	CppAD
-	struct
 	var
-	dismod
-	dage
-	dtime
+	vec
 $$
 
-$section Fit the Fixed and Random Effects to the Model and Data$$
+$section Fit Model Constructor$$
 
 $head Syntax$$
 $codei%fit_model %fit_object%(
@@ -48,54 +36,26 @@ $codei%fit_model %fit_object%(
 	%quasi_fixed%
 )
 %$$
-$codei%fit_object.run_fit(%option_map%)
-%$$
-$codei%%fit_object%.get_solution(
-	%variable_value%, %lagrange_value%, %lagrange_dage%, %lagrange_dtime
-)%$$
 
 $head fit_object$$
-This object has prototype
-$codei%
-	fit_model %fit_object%
-%$$
+The $code fit_model$$ object being constructed.
 
 $head db$$
-This argument has prototype
-$codei%
-	sqlite3* %db%
-%$$
-and is the database connection for
+This argument is the database connection for
 $cref/logging/log_message/$$ errors and warnings.
 
 $head pack_object$$
-This argument has prototype
-$codei%
-	const pack_info& %pack_object%
-%$$
-and is the $cref pack_info$$ information corresponding to the
+This argument is the $cref pack_info$$ information corresponding to the
 $cref model_variables$$.
 
 $head start_var$$
-This vector has prototype
-$codei%
-	const CppAD::vector<double>& %start_var%
-%$$
-and is the starting $cref model_variables$$ in the order
+This vector is the starting $cref model_variables$$ in the order
 specified by $cref pack_info$$.
 
 $head prior_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<prior_struct>&  %prior_table%
-%$$
-and is the $cref/prior_table/get_prior_table/prior_table/$$.
+This argument is the $cref/prior_table/get_prior_table/prior_table/$$.
 
 $head s_info_vec$$
-This argument has prototype
-$codei%
-	const CppAD::vector<smooth_info>& %s_info_vec%
-%$$
 For each $cref/smooth_id/smooth_table/smooth_id/$$,
 $codei%
 	%s_info_vec%[ %smooth_id% ]
@@ -103,123 +63,21 @@ $codei%
 is the corresponding $cref smooth_info$$ information.
 
 $head data_object$$
-This object has prototype
-$codei%
-	const data_model %data_object%
-%$$
-It contains the model for the data density;
+This object contains the model for the data density;
 see $cref/data_model/devel_data_model/$$.
 
 $head prior_object$$
-This object has prototype
-$codei%
-	const prior_model %prior_object%
-%$$
-It contains the model for the fixed negative log-likelihood; see $cref prior_model$$.
+This object contains the model for the fixed negative log-likelihood;
+see $cref prior_model$$.
 
 $head quasi_fixed$$
-This argument has prototype
-$codei%
-	bool quasi_fixed
-%$$
-If it is true, a quasi-Newton method is used when optimizing the fixed effects.
+If this argument is true,
+a quasi-Newton method is used when optimizing the fixed effects.
 Otherwise a full Newton method is used; see
 $cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$.
 
-$head run_fit$$
-Run the optimization process to determine the optimal fixed and random effects.
-
-$subhead Scaled$$
-During optimization of fixed effects all the $cref model_variables$$
-that have a log-Gaussian or log-Laplace distribution for their value prior
-are scaled.
-To be specific,
-the optimization take place in the offset log transform space defined
-by the prior for each variable.
-
-$head option_map$$
-This argument has prototype
-$code
-	const std::map<std::string, std::string>& %option_map%
-%$$
-It is effectively $code const$$ and
-must have the following values:
-For $icode name$$ equal to
-$cref/derivative_test/option_table/Optimizer/derivative_test/$$,
-$cref/tolerance/option_table/Optimizer/tolerance/$$,
-$cref/max_num_iter/option_table/Optimizer/max_num_iter/$$,
-$cref/print_level/option_table/Optimizer/print_level/$$,
-and for $icode fit$$ equal to $code fixed$$ and $code random$$
-$codei%
-	%option_map%["%name%_%fit%"]
-%$$
-is the value in the $cref option_table$$ for the corresponding option.
-
-$head get_solution$$
-
-$subhead variable_value$$
-This argument has prototype
-$codei%
-	CppAD::vector<double>& %variable_value%
-%$$
-and its size is zero or equal to the number of model variables.
-The input value of its elements does not matter,
-Upon return it is the optimal $cref/variable values/model_variables/$$ in
-$cref pack_info$$ order.
-
-$subhead lagrange_value$$
-This argument has prototype
-$codei%
-	CppAD::vector<double>& %lagrange_value%
-%$$
-and its size is zero or equal to the number of model variables.
-The input value of its elements does not matter,
-Upon return it is the Lagrange multipliers for the lower and upper
-limits on the corresponding model variables.
-If there is no limit, or if a limit is not active, the corresponding
-element is zero.
-
-$subhead lagrange_dage$$
-This argument has prototype
-$codei%
-	CppAD::vector<double>& %lagrange_dage%
-%$$
-and its size is zero or equal to the number of model variables.
-The input value of its elements does not matter,
-Upon return it is the Lagrange multipliers for the lower and upper
-limits on the forward age difference for this variable.
-If this variable does not have a forward age difference,
-if there is no limit, or if a limit is not active, the corresponding
-element is zero.
-
-$subhead lagrange_dtime$$
-This argument has prototype
-$codei%
-	CppAD::vector<double>& %lagrange_dtime%
-%$$
-and its size is zero or equal to the number of model variables.
-The input value of its elements does not matter,
-Upon return it is the Lagrange multipliers for the lower and upper
-limits on the forward time difference for this variable.
-If this variable does not have a forward time difference,
-if there is no limit, or if a limit is not active, the corresponding
-element is zero.
-
-$children%example/devel/model/fit_model_xam.cpp
-%$$
-$head Example$$
-The file $cref fit_model_xam.cpp$$ contains an example and test
-of using this routine.
-
-$end
-*/
-
-namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
-
-// ===========================================================================
-// public functions
-// ===========================================================================
-// constructor
+$head Prototype$$
+$srccode%cpp% */
 fit_model::fit_model(
 	sqlite3*                              db           ,
 	const pack_info&                      pack_object  ,
@@ -230,6 +88,9 @@ fit_model::fit_model(
 	const prior_model&                    prior_object ,
 	bool                                  quasi_fixed  ,
 	const CppAD::mixed::sparse_mat_info&  A_info       ) :
+/* %$$
+$end
+*/
 // base class constructor
 cppad_mixed(
 	size_fixed_effect(pack_object)  ,  // n_fixed
@@ -320,9 +181,51 @@ prior_object_  ( prior_object )
 	//
 	initialize(fixed_vec, random_vec);
 }
-// ---------------------------------------------------------------------------
-// run_fit
+/*
+-----------------------------------------------------------------------------
+$begin fit_model_run_fit$$
+$spell
+	const
+	num
+	iter
+$$
+
+$section Run optimization to determine the optimal fixed and random effects$$
+
+$head Syntax$$
+$codei%fit_object.run_fit(%option_map%)
+%$$
+
+$head fit_object$$
+see $cref/fit_object/fit_model_ctor/fit_object/$$.
+
+$head Scaled$$
+During optimization of fixed effects all the $cref model_variables$$
+that have a log-Gaussian or log-Laplace distribution for their value prior
+are scaled.
+To be specific,
+the optimization take place in the offset log transform space defined
+by the prior for each variable.
+
+$head option_map$$
+This argument is effectively $code const$$ and
+must have the following values:
+For $icode name$$ equal to
+$cref/derivative_test/option_table/Optimizer/derivative_test/$$,
+$cref/tolerance/option_table/Optimizer/tolerance/$$,
+$cref/max_num_iter/option_table/Optimizer/max_num_iter/$$,
+$cref/print_level/option_table/Optimizer/print_level/$$,
+and for $icode fit$$ equal to $code fixed$$ and $code random$$
+$codei%
+	%option_map%["%name%_%fit%"]
+%$$
+is the value in the $cref option_table$$ for the corresponding option.
+$head Prototype$$
+$srccode%cpp% */
 void fit_model::run_fit(std::map<std::string, std::string>& option_map)
+/* %$$
+$end
+*/
 {	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
 	assert( value_prior_.size() == n_var );
@@ -466,21 +369,148 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 	}
 	return;
 }
-// ---------------------------------------------------------------------------
-// get_solution
+/*
+---------------------------------------------------------------------------
+$begin fit_model_get_solution$$
+$spell
+	dage
+	dtime
+	CppAD
+$$
+
+$section Get Solution Corresponding to Previous Fit$$
+
+$head Syntax$$
+$codei%%fit_object%.get_solution(
+	%variable_value%, %lagrange_value%, %lagrange_dage%, %lagrange_dtime
+)%$$
+
+$head fit_object$$
+see $cref/fit_object/fit_model_ctor/fit_object/$$.
+
+$head variable_value$$
+The size of this vector size is zero or
+equal to the number of model variables.
+The input value of its elements does not matter.
+Upon return it is the optimal $cref/variable values/model_variables/$$ in
+$cref pack_info$$ order.
+
+$head lagrange_value$$
+The size of this vector size is zero or
+equal to the number of model variables.
+The input value of its elements does not matter.
+Upon return it is the Lagrange multipliers for the lower and upper
+limits on the corresponding model variables.
+If there is no limit, or if a limit is not active, the corresponding
+element is zero.
+
+$head lagrange_dage$$
+The size of this vector size is zero or
+equal to the number of model variables.
+The input value of its elements does not matter.
+Upon return it is the Lagrange multipliers for the lower and upper
+limits on the forward age difference for all the variables.
+If a variable does not have a forward age difference,
+if there is no limit, or if a limit is not active, the corresponding
+element is zero.
+
+$head lagrange_dtime$$
+The size of this vector size is zero or
+equal to the number of model variables.
+The input value of its elements does not matter,
+Upon return it is the Lagrange multipliers for the lower and upper
+limits on the forward time difference for all the variable.
+If a variable does not have a forward time difference,
+if there is no limit, or if a limit is not active, the corresponding
+element is zero.
+
+$children%example/devel/model/fit_model_xam.cpp
+%$$
+$head Example$$
+The file $cref fit_model_xam.cpp$$ contains an example and test
+of using this routine.
+
+$head Prototype$$
+$srccode%cpp% */
 void fit_model::get_solution(
 	CppAD::vector<double>& variable_value  ,
 	CppAD::vector<double>& lagrange_value  ,
 	CppAD::vector<double>& lagrange_dage   ,
 	CppAD::vector<double>& lagrange_dtime  )
+/* %$$
+$end
+*/
 {	variable_value = solution_.variable_value;
 	lagrange_value = solution_.lagrange_value;
 	lagrange_dage  = solution_.lagrange_dage;
 	lagrange_dtime = solution_.lagrange_dtime;
 	return;
 }
-// ---------------------------------------------------------------------------
-// sample_posterior
+/*
+---------------------------------------------------------------------------
+$begin sample_posterior$$
+$spell
+	dage
+	dtime
+	var
+$$
+
+$section Sample From Posterior Distribution for a Fit$$
+
+$head Syntax$$
+$codei%sample_posterior(
+	%sample%,
+	%variable_value%,
+	%lagrange_dage%,
+	%lagrange_dtime%,
+	%option_map%
+)%$$
+
+$head sample$$
+This argument is a vector with size equal to the number of samples
+$icode n_sample$$ times the number of $cref model_variables$$ $icode n_var$$.
+The input value of its elements does not matter.
+Upon return, for
+$icode%i% = 0 , %...% , %n_sample%-1%$$,
+$icode%j% = 0 , %...% , %n_var%-1%$$,
+$codei%
+	%sample%[ %i% * %n_sample% + %j% ]
+%$$
+is the $th j$$ component of the $th i$$ sample of the model variables.
+These samples are independent for different $icode i$$,
+and for fixed $icode i$$ they have the asymptotic covariance
+for the model variables.
+
+$head variable_value$$
+This vector has size equal to the number of model variables.
+It is the optimal $cref/variable values/model_variables/$$ in
+$cref pack_info$$ order.
+
+$head lagrange_value$$
+This vector has size equal to the number of model variables.
+It is the Lagrange multipliers for the lower and upper
+limits on the corresponding model variables.
+If there is no limit, or if a limit is not active, the corresponding
+element is zero.
+
+$head lagrange_dage$$
+This vector has size equal to the number of model variables.
+It is the Lagrange multipliers for the lower and upper
+limits on the forward age difference for all the variables.
+If a variable does not have a forward age difference,
+if there is no limit, or if a limit is not active, the corresponding
+element is zero.
+
+$head lagrange_dtime$$
+This vector has size equal to the number of model variables.
+It is the Lagrange multipliers for the lower and upper
+limits on the forward time difference for all the variable.
+If a variable does not have a forward time difference,
+if there is no limit, or if a limit is not active, the corresponding
+element is zero.
+
+$head Prototype$$
+$srccode%cpp% */
 void fit_model::sample_posterior(
 	CppAD::vector<double>&              sample          ,
 	const CppAD::vector<double>&        variable_value  ,
@@ -488,6 +518,9 @@ void fit_model::sample_posterior(
 	const CppAD::vector<double>&        lagrange_dage   ,
 	const CppAD::vector<double>&        lagrange_dtime  ,
 	std::map<std::string, std::string>& option_map      )
+/* %$$
+$end
+*/
 {
 	size_t n_var = n_fixed_ + n_random_;
 	assert( sample.size() % n_var == 0     );

@@ -75,7 +75,7 @@ $cref/value_prior_id/smooth_grid_table/value_prior_id/$$ for this variable.
 If it is positive (negative) the upper (lower) limit is active.
 If neither prior limit is active, this column is zero.
 The Lagrange multipliers are in the
-$cref/scaled space/fit_model/run_fit/Scaled/$$
+$cref/scaled space/fit_model_run_fit/Scaled/$$
 where the optimization takes place.
 
 $head lagrange_dage$$
@@ -85,7 +85,7 @@ $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ for this variable.
 If it is positive (negative) the upper (lower) limit is active.
 If neither prior limit is active, this column is zero.
 The Lagrange multipliers are in the
-$cref/scaled space/fit_model/run_fit/Scaled/$$
+$cref/scaled space/fit_model_run_fit/Scaled/$$
 where the optimization takes place.
 
 $head lagrange_dtime$$
@@ -95,7 +95,7 @@ $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ for this variable.
 If it is positive (negative) the upper (lower) limit is active.
 If neither prior limit is active, this column is zero.
 The Lagrange multipliers are in the
-$cref/scaled space/fit_model/run_fit/Scaled/$$
+$cref/scaled space/fit_model_run_fit/Scaled/$$
 where the optimization takes place.
 
 $head Example$$
