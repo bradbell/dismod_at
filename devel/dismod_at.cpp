@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <iostream>
 # include <cppad/utility/vector.hpp>
 # include <cppad/mixed/manage_gsl_rng.hpp>
+# include <dismod_at/min_max_vector.hpp>
 # include <dismod_at/avgint_subset.hpp>
 # include <dismod_at/child_info.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
@@ -1487,14 +1488,14 @@ int main(int n_arg, const char** argv)
 	size_t n_covariate = db_input.covariate_table.size();
 	// ---------------------------------------------------------------------
 	// n_age_ode
-	double age_min    = db_input.age_table[0];
-	double age_max    = db_input.age_table[ db_input.age_table.size() - 1 ];
+	double age_min    = dismod_at::min_vector( db_input.age_table );
+	double age_max    = dismod_at::max_vector( db_input.age_table );
 	size_t n_age_ode  = size_t( (age_max - age_min) / ode_step_size + 2.0 );
 	assert( age_max  <= age_min  + (n_age_ode - 1) * ode_step_size );
 	// ---------------------------------------------------------------------
 	// n_time_ode
-	double time_min   = db_input.time_table[0];
-	double time_max   = db_input.time_table[ db_input.time_table.size() - 1 ];
+	double time_min   = dismod_at::min_vector( db_input.time_table );
+	double time_max   = dismod_at::max_vector( db_input.time_table );
 	size_t n_time_ode = size_t( (time_max - time_min) / ode_step_size + 2.0 );
 	assert( time_max <= time_min  + (n_time_ode - 1) * ode_step_size );
 	// ---------------------------------------------------------------------

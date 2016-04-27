@@ -49,6 +49,11 @@ Add a choice of $cref/method/sample_command/method/$$ to the
 sample command. This makes it easier to $cref/predict/predict_command/$$
 with the $cref model_variables$$ equal to the results of a fit.
 It also provides asymptotic posterior sampling for the model_variables.
+$lnext
+There were some place in the code where $code dismod_at$$ was assuming
+that the minimum  and maximum age and time were the first and last
+entries in the $cref age_table$$ and $cref time_table$$ respectively.
+This has been fixed.
 $lend
 
 $head 04-24$$

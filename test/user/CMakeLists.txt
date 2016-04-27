@@ -12,6 +12,7 @@
 
 FOREACH(user_case
 	no_data
+	not_ordered
 	relrisk
 	zero_random
 	zero_iteration
@@ -27,6 +28,7 @@ ADD_CUSTOM_TARGET(
 	check_test_user
 	DEPENDS
 	check_test_user_no_data
+	check_test_user_not_ordered
 	check_test_user_relrisk
 	check_test_user_zero_random
 	check_test_user_zero_iteration

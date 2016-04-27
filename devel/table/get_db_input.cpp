@@ -76,6 +76,7 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <limits>
+# include <dismod_at/min_max_vector.hpp>
 # include <dismod_at/get_db_input.hpp>
 # include <dismod_at/get_age_table.hpp>
 # include <dismod_at/get_time_table.hpp>
@@ -139,12 +140,10 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.option_table      = get_option_table(db);
 	//
 	size_t n_covariate      = db_input.covariate_table.size();
-	size_t n_age            = db_input.age_table.size();
-	double age_min          = db_input.age_table[0];
-	double age_max          = db_input.age_table[n_age - 1];
-	size_t n_time           = db_input.time_table.size();
-	double time_min         = db_input.time_table[0];
-	double time_max         = db_input.time_table[n_time - 1];
+	double age_min          = min_vector( db_input.age_table );
+	double age_max          = max_vector( db_input.age_table );
+	double time_min         = min_vector( db_input.time_table );
+	double time_max         = max_vector( db_input.time_table );
 	get_data_table(
 		db, n_covariate, age_min, age_max, time_min, time_max,
 		db_input.data_table, db_input.data_cov_value

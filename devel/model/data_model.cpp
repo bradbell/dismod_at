@@ -185,6 +185,7 @@ parent node, node table, and data table.
 $end
 -----------------------------------------------------------------------------
 */
+# include <dismod_at/min_max_vector.hpp>
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/integrate_1d.hpp>
 # include <dismod_at/integrate_2d.hpp>
@@ -283,11 +284,11 @@ pack_object_   (pack_object)
 	data_info_.resize( n_subset );
 	//
 	// limits of the ode grid
-	double age_min    = age_table[0];
-	double time_min   = time_table[0];
+	double age_min    = min_vector( age_table );
+	double time_min   = min_vector( time_table );
 # ifndef NDEBUG
-	double age_max    = age_table[ age_table.size() - 1 ];
-	double time_max   = time_table[ time_table.size() - 1 ];
+	double age_max    = max_vector( age_table );
+	double time_max   = max_vector( time_table );
 # endif
 	//
 	assert( age_max  <= age_min  + n_age_ode * ode_step_size );
