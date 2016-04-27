@@ -44,6 +44,11 @@ $cref/CppAD::mixed::manage_gsl_rng/manage_gsl_rng/$$.
 This fixed that use of
 $cref/random_seed/option_table/random_seed/$$ so that it applies
 to all $code dismod_at$$ simulated values.
+$lnext
+Add a choice of $cref/method/sample_command/method/$$ to the
+sample command. This makes it easier to $cref/predict/predict_command/$$
+with the $cref model_variables$$ equal to the results of a fit.
+It also provides asymptotic posterior sampling for the model_variables.
 $lend
 
 $head 04-24$$
