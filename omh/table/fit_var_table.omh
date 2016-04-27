@@ -14,6 +14,7 @@ $spell
 	var
 	dage
 	dtime
+	dismod
 $$
 
 $section The Optimization Results for Variables$$
@@ -22,6 +23,11 @@ for the $cref model_variables$$ corresponding to
 the data table $cref/meas_value/data_table/meas_value/$$.
 A new $code fit_var$$ table is created each time the
 $cref fit_command$$ is executed.
+
+$head Lagrange Multipliers$$
+Setting good upper and lower limits, not zero or infinite,
+helps $code dismod_at$$ determine the scale for the constraints
+and gives better detection of which constraints are active.
 
 $head fit_var_id$$
 This column has type $code integer$$ and is the primary key for this table.

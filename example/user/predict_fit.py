@@ -132,7 +132,7 @@ def example_db (file_name) :
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
 			'lower':    1e-2 * iota_north_america,
-			'upper':    None,
+			'upper':    1e+2 * iota_north_america,
 			'mean':     iota_north_america,
 			'std':      None,
 			'eta':      None
