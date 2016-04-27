@@ -24,7 +24,6 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/integrate_1d.cpp
 	utility/integrate_2d.cpp
 	utility/interp_weight.cpp
-	utility/manage_gsl_rng.cpp
 	utility/random_effect.cpp
 	utility/residual_density.cpp
 	utility/sim_random.cpp

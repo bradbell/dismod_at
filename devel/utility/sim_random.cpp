@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -97,12 +97,12 @@ $end
 # include <cmath>
 # include <gsl/gsl_randist.h>
 # include <dismod_at/sim_random.hpp>
-# include <dismod_at/manage_gsl_rng.hpp>
+# include <cppad/mixed/manage_gsl_rng.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 double sim_random(density_enum density, double mu, double delta, double eta)
-{	gsl_rng* rng = get_gsl_rng();
+{	gsl_rng* rng = CppAD::mixed::get_gsl_rng();
 	//
 	assert( density != uniform_enum );
 	assert( delta > 0.0 );

@@ -23,6 +23,7 @@ $spell
 	covariate
 	dage
 	dtime
+	gsl_rng
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -30,6 +31,20 @@ $section Changes and Additions to Dismod_at During 2016$$
 
 $childtable%omh/whats_new/2015.omh
 %$$
+
+$head 04-27$$
+$list number$$
+Advance to $code cppad_mixed-20160427$$.
+$lnext
+Add discussion about bounds and
+$cref/Lagrange multipliers/fit_var_table/Lagrange Multipliers/$$.
+$lnext
+Remove $code dismod_at::manage_gsl_rng$$ and instead use
+$cref/CppAD::mixed::manage_gsl_rng/manage_gsl_rng/$$.
+This fixed that use of
+$cref/random_seed/option_table/random_seed/$$ so that it applies
+to all $code dismod_at$$ simulated values.
+$lend
 
 $head 04-24$$
 $list number$$

@@ -28,7 +28,7 @@ $end
 # include <cmath>
 # include <cppad/utility/vector.hpp>
 # include <dismod_at/get_density_table.hpp>
-# include <dismod_at/manage_gsl_rng.hpp>
+# include <cppad/mixed/manage_gsl_rng.hpp>
 # include <dismod_at/sim_random.hpp>
 
 bool sim_random_xam(void)
@@ -36,7 +36,7 @@ bool sim_random_xam(void)
 	//
 	//
 	// Initialize random number generator using the clock
-	size_t random_seed = dismod_at::new_gsl_rng(1436703881);
+	size_t random_seed = CppAD::mixed::new_gsl_rng(1436703881);
 	//
 	size_t sample_size = 10000;
 	// -------------------------------------------------------------------
@@ -156,7 +156,7 @@ bool sim_random_xam(void)
 		std::cout << "random_seed = " << random_seed << std::endl;
 	// ---------------------------------------------------------------------
 	// free random number generator
-	dismod_at::free_gsl_rng();
+	CppAD::mixed::free_gsl_rng();
 	//
 	return ok;
 }

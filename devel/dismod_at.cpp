@@ -14,6 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <string>
 # include <iostream>
 # include <cppad/utility/vector.hpp>
+# include <cppad/mixed/manage_gsl_rng.hpp>
 # include <dismod_at/avgint_subset.hpp>
 # include <dismod_at/child_info.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
@@ -24,7 +25,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_sample_table.hpp>
 # include <dismod_at/get_simulate_table.hpp>
 # include <dismod_at/get_table_column.hpp>
-# include <dismod_at/manage_gsl_rng.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/sim_random.hpp>
@@ -1450,19 +1450,19 @@ int main(int n_arg, const char** argv)
 	if( random_seed == 0 )
 	{
 # ifndef NDEBUG
-		size_t actual_seed = dismod_at::new_gsl_rng( size_t(unix_time) );
+		size_t actual_seed = CppAD::mixed::new_gsl_rng( size_t(unix_time) );
 		assert( std::time_t( actual_seed ) == unix_time );
 # else
-		dismod_at::new_gsl_rng( size_t(unix_time) );
+		CppAD::mixed::new_gsl_rng( size_t(unix_time) );
 # endif
 	}
 	else
 	{
 # ifndef NDEBUG
-		size_t actual_seed = dismod_at::new_gsl_rng(random_seed);
+		size_t actual_seed = CppAD::mixed::new_gsl_rng(random_seed);
 		assert( actual_seed == random_seed );
 # else
-		dismod_at::new_gsl_rng(random_seed);
+		CppAD::mixed::new_gsl_rng(random_seed);
 # endif
 	}
 	// ---------------------------------------------------------------------
