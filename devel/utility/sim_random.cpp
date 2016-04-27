@@ -15,12 +15,17 @@ $spell
 	sim
 	mu
 	enum
+	gsl_rng
 $$
 
 $section Simulate a Dismod_at Random Distribution$$
 
 $head Syntax$$
 $icode%z% = sim_random(%density%, %mu%, %delta%, %eta%)%$$
+
+$head manage_gsl_rng$$
+The routine $cref manage_gsl_rng$$ sets up and controls the underlying
+simulated random number generator.
 
 $head density$$
 This argument has prototype
@@ -83,8 +88,6 @@ $codei%
 %$$
 It simulates a sample from the specified distribution that is independent
 for the any previous return values.
-The routine $cref manage_gsl_rng$$ sets up and controls the underlying
-simulated random number generator.
 
 $children%example/devel/utility/sim_random_xam.cpp
 %$$

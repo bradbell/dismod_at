@@ -11,6 +11,7 @@
 # Build get_started Examples / Tests
 
 FOREACH(user_case
+	asymptotic
 	diff_constraint
 	fit_sim
 	jump_at_age
@@ -29,6 +30,7 @@ ENDFOREACH(user_case diff_constraint)
 ADD_CUSTOM_TARGET(
 	check_example_user
 	DEPENDS
+	check_example_user_asymptotic
 	check_example_user_diff_constraint
 	check_example_user_fit_sim
 	check_example_user_jump_at_age

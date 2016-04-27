@@ -1006,10 +1006,13 @@ $head sample_table$$
 A new $cref sample_table$$ is created each time this command is run.
 It contains samples of the model variables.
 
-$children%example/get_started/sample_command.py%$$
+$children%example/get_started/sample_command.py
+	%example/user/asymptotic.py
+%$$
 $head Example$$
-The file $cref sample_command.py$$ contains an example and test
-of using this command.
+The files
+$cref sample_command.py$$ and $cref user_asymptotic.py$$
+contain examples and tests of using this command.
 
 $end
 */
@@ -1029,10 +1032,10 @@ void sample_command(
 {	using std::string;
 	using CppAD::to_string;
 	// -------------------------------------------------------------------
-	if( method != "simulate" && method != "fit_var" )
+	if( method != "simulate" && method != "fit_var" && method != "asymptotic" )
 	{	string msg = "dismod_at sample command method = ";
 		msg       += method + " is not one of the following: ";
-		msg       += "simulate, fit_var";
+		msg       += "simulate, fit_var, asymptotic";
 		dismod_at::error_exit(db, msg);
 	}
 	// -----------------------------------------------------------------------
@@ -1231,7 +1234,21 @@ void sample_command(
 		option_map
 	);
 	//
-	assert(false);
+	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
+	{	string sample_index_str = to_string( sample_index );
+		for(size_t var_id = 0; var_id < n_var; var_id++)
+		{	size_t sample_id = sample_index * n_var + var_id;
+			row_value[n_col * sample_id + 0] = sample_index_str;
+			row_value[n_col * sample_id + 1] = to_string( var_id );
+			row_value[n_col * sample_id + 2] =
+					to_string( sample[ sample_index * n_var + var_id] );
+		}
+	}
+	table_name = "sample";
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
+	return;
 }
 /*
 -------------------------------------------------------------------------------
