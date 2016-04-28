@@ -17,6 +17,7 @@ FOREACH(user_case
 	jump_at_age
 	lasso_covariate
 	meas_covariate
+	metropolis
 	no_children
 	predict_fit
 )
@@ -36,6 +37,7 @@ ADD_CUSTOM_TARGET(
 	check_example_user_jump_at_age
 	check_example_user_lasso_covariate
 	check_example_user_meas_covariate
+	check_example_user_metropolis
 	check_example_user_no_children
 	check_example_user_predict_fit
 )

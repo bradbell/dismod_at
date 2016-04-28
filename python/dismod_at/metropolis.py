@@ -19,50 +19,58 @@
 #
 # $section Metropolis MCMC Algorithm$$
 #
-# $head Under Construction$$
-#
 # $head Syntax$$
 # $codei%(%a%, %c%) = dismod_at.metropolis(%log_f%, %m%, %x0%, %s%)
 # %$$
 #
 # $head log_f$$
-# Given an numpy vector of length $icode n$$, the syntax
+# Given a numpy $code float$$ vector of length $icode n$$, the syntax
 # $codei%
 #	%d% = %log_f%(%x%)
 # %$$
-# sets $icode d$$ to the log of the un-normalized density
-# corresponding to the positive function
-# $latex f : \B{R}^n \rightarrow \B{R}_+$$.
+# sets the $code float$$ $icode d$$ to the log of the un-normalized density
+# corresponding to the positive function $latex f(x)$$ mapping
+# $latex \B{R}^n$$ to the non-negative real values.
 # If $latex f(x)$$ is zero, the corresponding log-density value should equal
 # $code - float("inf")$$.
 #
 # $head m$$
-# is the number of vectors in the MCMC chain.
+# is the $code int$$ number of vectors in the MCMC chain.
 #
 # $head x0$$
-# is a numpy vector of length $icode n$$ that specifies the initial
-# vector in the chain (denote by $latex x^0$$ below).
+# is a numpy $code float$$ vector of length $icode n$$
+# that specifies the initial vector in the chain
+# (denoted by $latex x^0$$ below).
 #
 # $head s$$
-# is a numpy vector of length $icode n$$ that specifies the scaling
-# for each of the components of $latex x$$.
-# To be specific,
+# is a $code float$$ or, a numpy $code float$$ vector of length $icode n$$,
+# that specifies the scaling for each of the components of $latex x$$.
+#
+# $subhead Vector Case$$
+# If $icode s$$ is a vector,
 # for $latex i = 1 , \ldots, m-1$$,
 # and $latex j = 0 , \ldots, n-1$$,
 # the $th j$$ component of the $th i$$ proposal vector $latex y^i$$
 # is given by
 # $latex \[
-#	y_j^i = x_j^{i-1} + w_j^{i-1} * s_j
+#	y_j^i = x_j^{i-1} + w_j^{i-1} s_j
+# \] $$
+# where $latex w_j^i \sim \B{N}(0, 1)$$ are all independent.
+#
+# $subhead Float Case$$
+# If $icode s$$ is a $code float$$,
+# $latex \[
+#	y_j^i = x_j^{i-1} + w_j^{i-1} s
 # \] $$
 #
 # $head a$$
-# is the acceptance count; i.e. the number of indices $latex i$$
+# is the $code int$$ acceptance count; i.e. the number of indices $latex i$$
 # such that $latex x^i = y^i$$
 # (for the other indices $latex x^i = x^{i-1}$$).
 #
 # $head c$$
-# is an $latex m \times n$$ numpy array that contains the components
-# of the Markov Chain.
+# is an $latex m \times n$$ numpy $code float$$ array that contains
+# the components of the Markov Chain.
 # We use the notation $latex x_j^i$$ for $icode%c%[%i%, %j%]%$$.
 # For any smooth function $latex g : \B{R}^n \rightarrow \B{R}$$,
 # the Metropolis algorithm provides the following approximation as
@@ -70,7 +78,7 @@
 # $latex \[
 #	\frac{1}{m} \sum_{i=0}^{m-1} g( x^i )
 #	\rightarrow
-#	\frac{ \int_x g( x ) f ( x ) \B{d} x  }{ \int_x f( x ) \B{d} x }
+#	\frac{ \int g( x ) f ( x ) \B{d} x  }{ \int f( x ) \B{d} x }
 # \] $$
 #
 # $end
@@ -79,13 +87,14 @@ def metropolis(log_f, m, x0, s) :
 	import math
 	import numpy
 	import scipy.stats
-	assert len(s) == len(x0)
+	if not isinstance(s, float) :
+		assert len(s) == len(x0)
 	inf    = float("inf")
 	n      = len(x0)
 	x      = x0
 	lpx    = log_f(x0)
 	assert lpx > -inf
-	c      = numpy.zeors(m, n)
+	c      = numpy.zeros((m, n), dtype=float)
 	c[0:]  = x
 	a      = 0
 	for i in range(m-1) :
@@ -94,7 +103,7 @@ def metropolis(log_f, m, x0, s) :
 		lpy   = log_f(y)
 		if lpy > -inf :
 			alpha = math.exp( lpy - lpx )
-			u     = scpy.stats.uniform.rvs(loc = 0.0, scale = 1.0, size=1)
+			u     = scipy.stats.uniform.rvs(loc = 0.0, scale = 1.0, size=1)
 			if alpha >= u :
 				a   = a + 1
 				x   = y
