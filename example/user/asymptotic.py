@@ -23,11 +23,35 @@
 # samples form an asymptotic approximation for the posterior distribution
 # of the $cref model_variables$$.
 #
-# $head Problem$$
-# For this problem we are only estimating $code iota$$ for the parent area
-# $code north_america$$ and the two child areas
-# $code united_states$$, $code canada$$.
+# $head Notation$$
+# $table
+# $icode iota_n$$ $cnext model incidence for $code north_america$$ $rnext
+# $icode u_m$$ $cnext incidence random effect for $code mexico$$ $rnext
+# $icode u_c$$ $cnext incidence random effect for $code canada$$ $rnext
+# $icode y_n$$ $cnext measured incidence for $code north_america$$ $rnext
+# $icode y_m$$ $cnext measured incidence for $code mexico$$ $rnext
+# $icode y_c$$ $cnext measured incidence for $code canada$$ $rnext
+# $icode s_n$$ $cnext standard deviation for $icode y_n$$   $rnext
+# $icode s_m$$ $cnext standard deviation for $icode y_m$$   $rnext
+# $icode s_c$$ $cnext standard deviation for $icode y_c$$   $rnext
+# $icode s_r$$ $cnext standard deviation for random effects $rnext
+# $tend
 #
+# $head Likelihood$$
+# We define $latex h(y, \mu , \sigma)$$
+# to be the log-density for a $latex \B{N}(0, 1)$$ distribution; i.e.,
+# $latex \[
+#	h(y, \mu, \sigma) =
+#		- \frac{ ( y - \mu )^2 }{ \sigma^2 }
+#		- \log \left( \sigma \sqrt{ 2 \pi } \right)
+# \] $$
+# The total log-likelihood for this example is
+# $latex \[
+#	h[ y_n, \iota_n, s_n ] +
+#	h[ y_m, \exp( u_m ) \iota_m, s_m ] +
+#	h[ y_c, \exp( u_c ) \iota_c, s_c ] +
+#	h( u_m, 0, s_r ) + h( u_c , 0 , s_r ) +
+# \] $$
 #
 # $code
 # $srcfile%
@@ -36,9 +60,22 @@
 # $$
 # $end
 # ---------------------------------------------------------------------------
-iota_north_america = 1e-2
+measure = {
+	'north_america' : 1.0e-2 ,
+	'mexico'        : 2.0e-2 ,
+	'canada'        : 0.5e-2
+}
+standard = {
+	'north_america' : 1.0e-3 ,
+	'mexico'        : 2.0e-3 ,
+	'canada'        : 0.5e-3
+}
+standard_random_effect = 1.0
+number_simulate        = 500
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
+import math
+import numpy
 import sys
 import os
 import distutils.dir_util
@@ -58,6 +95,33 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
+# ---------------------------------------------------------------------------
+# no need to include sqrt{2 \pi} term (it does not depend on model variables)
+def h(y, mu, sigma ) :
+	if sigma <= 0.0 :
+		return - float("inf")
+	res = (y - mu ) / sigma
+	return - res * res - math.log( sigma )
+#
+def log_f(x) :
+	iota_n = x[0]
+	u_m    = x[1]
+	u_c    = x[2]
+	#
+	y_n    = measure['north_america']
+	y_m    = measure['mexico']
+	y_c    = measure['canada']
+	#
+	s_n    = standard['north_america']
+	s_m    = standard['mexico']
+	s_c    = standard['canada']
+	s_r    = standard_random_effect
+	#
+	ret    = h(y_n, iota_n, s_n)
+	ret   += h(y_m, math.exp(u_m) * iota_n, s_m )
+	ret   += h(y_c, math.exp(u_c) * iota_n, s_c )
+	ret   += h(u_m, 0.0, s_r ) + h(u_c, 0.0, s_r)
+	return ret
 # ---------------------------------------------------------------------------
 # note that the a, t values are not used for this example
 # note that the a, t values are not used for this example
@@ -79,10 +143,10 @@ def example_db (file_name) :
 	import dismod_at
 	# ----------------------------------------------------------------------
 	# age table
-	age_list    = [    0.0, 50.0,    100.0 ]
+	age_list    = [    0.0,   100.0 ]
 	#
 	# time table
-	time_list   = [ 1995.0, 2005.0, 2015.0 ]
+	time_list   = [ 1995.0,  2015.0 ]
 	#
 	# integrand table
 	integrand_dict = [
@@ -90,11 +154,11 @@ def example_db (file_name) :
 	]
 	#
 	# node table: world -> north_america
-	#             north_america -> (united_states, canada)
+	#             north_america -> (mexico, canada)
 	node_dict = [
-		{ 'name':'world',         'parent':'' },
-		{ 'name':'north_america', 'parent':'world' },
-		{ 'name':'united_states', 'parent':'north_america' },
+		{ 'name':'world',         'parent':''              },
+		{ 'name':'north_america', 'parent':'world'         },
+		{ 'name':'mexico',        'parent':'north_america' },
 		{ 'name':'canada',        'parent':'north_america' }
 	]
 	#
@@ -122,15 +186,19 @@ def example_db (file_name) :
 		'age_lower':    0.0,
 		'age_upper':    100.0,
 		'integrand':   'Sincidence',
-		'meas_value':   iota_north_america,
-		'meas_std':     1e-1 * iota_north_america,
+		'meas_value':   measure['north_america'],
+		'meas_std':     standard['north_america']
 	}
 	data_dict.append( copy.copy(row) )
-	row['node'] = 'canada';
-	row['meas_value'] = 2.0 * iota_north_america
+	#
+	row['node']       = 'mexico';
+	row['meas_value'] = measure['mexico']
+	row['meas_std']   = standard['mexico']
 	data_dict.append( copy.copy(row) )
-	row['node'] = 'united_states';
-	row['meas_value'] = 0.5 * iota_north_america
+	#
+	row['node']       = 'canada';
+	row['meas_value'] = measure['canada']
+	row['meas_std']   = standard['canada']
 	data_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
@@ -146,9 +214,9 @@ def example_db (file_name) :
 		},{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
-			'lower':    1e-2 * iota_north_america,
-			'upper':    1e+2 * iota_north_america,
-			'mean':     iota_north_america,
+			'lower':    1e-2 * measure['north_america'],
+			'upper':    1e+2 * measure['north_america'],
+			'mean':     measure['north_america'],
 			'std':      None,
 			'eta':      None
 		},{ # prior_gauss_zero
@@ -157,27 +225,25 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      5.0, # large so get close fit to data
+			'std':      standard_random_effect,
 			'eta':      None
 		}
 	]
 	# --------------------------------------------------------------------------
 	# smooth table
-	middle_age_id  = 1
-	last_time_id   = 2
 	smooth_dict = [
 		{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ 0, last_time_id ],
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
 			'mulstd_value_prior_name':  None,
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_rate_parent
 		}, { # smooth_rate_child
 			'name':                     'smooth_rate_child',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ 0, last_time_id ],
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
 			'mulstd_value_prior_name':  None,
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
@@ -212,12 +278,12 @@ def example_db (file_name) :
 	# ------------------------------------------------------------------------
 	# option_dict
 	option_dict = [
-		{ 'name':'parent_node_name',       'value':'north_america' },
-		{ 'name':'number_simulate',        'value':'1'             },
-		{ 'name':'fit_simulate_index',     'value':None            },
-		{ 'name':'ode_step_size',          'value':'10.0'          },
-		{ 'name':'random_seed',            'value':'0'             },
-		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
+		{ 'name':'parent_node_name',       'value':'north_america'      },
+		{ 'name':'number_simulate',        'value':str(number_simulate) },
+		{ 'name':'fit_simulate_index',     'value':None                 },
+		{ 'name':'ode_step_size',          'value':'10.0'               },
+		{ 'name':'random_seed',            'value':'0'                  },
+		{ 'name':'rate_case',              'value':'iota_pos_rho_zero'  },
 
 		{ 'name':'quasi_fixed',            'value':'true'         },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
@@ -232,23 +298,8 @@ def example_db (file_name) :
 		{ 'name':'tolerance_random',       'value':'1e-10'        }
 	]
 	# --------------------------------------------------------------------------
-	# avgint table: same order as list of integrands
+	# avgint table:
 	avgint_dict = list()
-	# values that are the same for all data rows
-	row = {
-		'integrand':   'Sincidence',
-		'node':        'north_america',
-		'weight':      'constant',
-		'time_lower':   2000.0,
-		'time_upper':   2000.0,
-		'age_lower':    50.0,
-		'age_upper':    50.0
-	}
-	avgint_dict.append( copy.copy(row) )
-	row['node'] = 'canada'
-	avgint_dict.append( copy.copy(row) )
-	row['node'] = 'united_states'
-	avgint_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
@@ -286,5 +337,58 @@ for command in [ 'init', 'start', 'fit', 'sample' ] :
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
+# get variable and fit_var tables
+var_dict     = dismod_at.get_table_dict(connection, 'var')
+node_dict    = dismod_at.get_table_dict(connection, 'node')
+rate_dict    = dismod_at.get_table_dict(connection, 'rate')
+sample_dict  = dismod_at.get_table_dict(connection, 'sample')
+# -----------------------------------------------------------------------
+# map from node name to variable id
+node_name2var_id = dict()
+for var_id in range(len(var_dict) ) :
+	assert var_id < 3
+	row = var_dict[var_id]
+	assert row['var_type'] == 'rate'
+	assert rate_dict[row['rate_id']]['rate_name']  == 'iota'
+	node_name = node_dict[row['node_id']]['node_name']
+	node_name2var_id[node_name] = var_id
+#
+# convert samples to a numpy array
+sample_array = numpy.zeros( (number_simulate, 3), dtype = float )
+for row in sample_dict :
+	var_id                              = row['var_id']
+	sample_index                        = row['sample_index']
+	sample_array[sample_index, var_id ] = row['var_value']
+#
+# compute statistics
+var_avg = numpy.average(sample_array, axis=0);
+var_std = numpy.std(sample_array, axis=0);
+# -----------------------------------------------------------------------
+# now use MCMC to calculate the same values
+m          = 10 * number_simulate
+x0         = numpy.array( [ 1e-2, 0.0, 0.0 ] )
+s          = numpy.array( [ 1e-3, 1e-1, 1e-1] )
+(a, c)     = dismod_at.metropolis(log_f, m, x0, s)
+burn_in    = int( 0.1 * m )
+c          = c[burn_in :, :]
+x_avg_mcmc = numpy.average(c, axis=0)
+x_std_mcmc = numpy.std(c, axis=0)
+mcmc_order = [ 'north_america', 'mexico', 'canada' ]
+# -----------------------------------------------------------------------
+# now check values
+for i in range(3) :
+	node_name = mcmc_order[i]
+	value     = var_avg[ node_name2var_id[node_name] ]
+	check     = x_avg_mcmc[i]
+	avg_diff  = check / value - 1.0
+	assert abs(avg_diff) < 0.05
+	value     = var_std[ node_name2var_id[node_name] ]
+	check     = x_std_mcmc[i]
+	std_diff  = check / value - 1.0
+	# This is a small sample case (only three data points)
+	# so we do not expect the asymptotic statistics to be correct.
+	# Note that in this case, the asymptotics are an over estimate.
+	assert std_diff < 0.0 and abs(std_diff) < 0.5
+
 print('asymptotic.py: OK')
 # END PYTHON

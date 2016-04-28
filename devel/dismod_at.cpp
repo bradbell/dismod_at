@@ -972,7 +972,6 @@ for the corresponding measurement set in the simulate table.
 This requires running $icode number_simulate$$ fits of the model variables.
 
 $subhead asymptotic$$
-Under Construction:
 If $icode method$$ is $code asymptotic$$,
 The number of samples of the model variables in the simulate table is
 $cref/number_simulate/option_table/number_simulate/$$.

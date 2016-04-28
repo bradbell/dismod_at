@@ -32,6 +32,15 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 04-28$$
+$list number$$
+Add the $cref metropolis$$ MCMC utility for testing results.
+$lnext
+Complete implementation and testing of the sample command
+with $cref/method/sample_command/method/$$ equal to $code asymptotic$$;
+see the example and test in $cref user_asymptotic.py$$.
+$lend
+
 $head 04-27$$
 $list number$$
 Advance to $code cppad_mixed-20160427$$.

@@ -81,6 +81,12 @@
 #	\frac{ \int g( x ) f ( x ) \B{d} x  }{ \int f( x ) \B{d} x }
 # \] $$
 #
+# $children%example/user/metropolis.py
+# %$$
+# $head Example$$
+# The file $cref user_metropolis.py$$ contains an example and test of this
+# routine.
+#
 # $end
 # ---------------------------------------------------------------------------
 def metropolis(log_f, m, x0, s) :
