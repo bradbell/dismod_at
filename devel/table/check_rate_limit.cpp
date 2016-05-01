@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -109,7 +109,7 @@ void check_rate_limit(
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	if( rate_enum(rate_id) == iota_enum || rate_enum(rate_id) == rho_enum )
 	{	size_t smooth_id = rate_table[rate_id].parent_smooth_id;
-		if( smooth_id == size_t(DISMOD_AT_NULL_INT) )
+		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
 		{	if( ! rate_zero[rate_id] )
 			{	std::string msg = "parent_smooth_id for this rate is null";
 				msg += "\nbut this rate is expected to be positive.";

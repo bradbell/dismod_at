@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -66,10 +66,10 @@ $codei%
 %$$
 This value gets written in the
 $cref/row_id/log_table/row_id/$$ column of the log table.
-Note that the value $code size_t(DISMOD_AT_NULL_INT)$$
+Note that the value $code DISMOD_AT_NULL_SIZE_T$$
 gets converted to a $code null$$.
 If $icode row_id$$ is not present, $code null$$ is used.
-If $icode row_id$$ is present and not $code size_t(DISMOD_AT_NULL_INT)$$,
+If $icode row_id$$ is present and not $code DISMOD_AT_NULL_SIZE_T$$,
 $icode table_name$$ must not be empty.
 
 $head unix_time$$
@@ -110,7 +110,7 @@ std::time_t log_message(
 	using CppAD::to_string;
 
 	// check assumption one table_name and row_id columns of log
-	assert( table_name != "" || row_id == size_t( DISMOD_AT_NULL_INT ) );
+	assert( table_name != "" || row_id == DISMOD_AT_NULL_SIZE_T );
 
 	// check message type
 	assert(
@@ -160,7 +160,7 @@ std::time_t log_message(
 		sql_cmd += "' , '";
 		sql_cmd += table_name;
 		sql_cmd += "' , ";
-		if( row_id == size_t( DISMOD_AT_NULL_INT ) )
+		if( row_id == DISMOD_AT_NULL_SIZE_T )
 			sql_cmd += "null";
 		else
 			sql_cmd += to_string( row_id );
@@ -180,7 +180,7 @@ std::time_t log_message(
 	const std::string& message_type ,
 	const std::string& message      )
 {	std::string table_name = "";
-	size_t      row_id     = size_t( DISMOD_AT_NULL_INT );
+	size_t      row_id     = DISMOD_AT_NULL_SIZE_T;
 	return log_message(db, message_type, message, table_name, row_id);
 }
 

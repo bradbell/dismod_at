@@ -126,7 +126,7 @@ size_t size_random_effect(const pack_info&  pack_object)
 	size_t sum = 0;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	pack_info::subvec_info info = pack_object.rate_info(rate_id, 0);
-		if( info.smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		if( info.smooth_id != DISMOD_AT_NULL_SIZE_T )
 		{	size_t n_var = pack_object.rate_info(rate_id, 0).n_var;
 			sum += n_var * n_child;
 # ifndef NDEBUG
@@ -158,7 +158,7 @@ void unpack_random(
 	size_t random_index = 0;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	pack_info::subvec_info info = pack_object.rate_info(rate_id, 0);
-		if( info.smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		if( info.smooth_id != DISMOD_AT_NULL_SIZE_T )
 		{	for(size_t j = 0; j < n_child; j++)
 			{	info = pack_object.rate_info(rate_id, j);
 				size_t pack_index = info.offset;
@@ -188,7 +188,7 @@ void pack_random(
 	size_t random_index = 0;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	pack_info::subvec_info info = pack_object.rate_info(rate_id, 0);
-		if( info.smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		if( info.smooth_id != DISMOD_AT_NULL_SIZE_T )
 		{	for(size_t j = 0; j < n_child; j++)
 			{	info = pack_object.rate_info(rate_id, j);
 				size_t pack_index = info.offset;

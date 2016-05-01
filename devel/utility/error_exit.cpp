@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -64,10 +64,10 @@ $codei%
 %$$
 This value gets written in the
 $cref/row_id/log_table/row_id/$$ column of the log table.
-Note that the value $code size_t(DISMOD_AT_NULL_INT)$$
+Note that the value $code DISMOD_AT_NULL_SIZE_T$$
 gets converted to a $code null$$.
 If $icode row_id$$ is not present, $code null$$ is used.
-If $icode row_id$$ is present and not $code size_t(DISMOD_AT_NULL_INT)$$,
+If $icode row_id$$ is present and not $code DISMOD_AT_NULL_SIZE_T$$,
 $icode table_name$$ must not be empty.
 In this case, $icode row_id$$ is also written (with a label) to standard error.
 
@@ -97,7 +97,7 @@ void error_exit(
 	using std::endl;
 
 	// check assumption one table_name and row_id columns of log
-	assert( table_name != "" || row_id == size_t( DISMOD_AT_NULL_INT ) );
+	assert( table_name != "" || row_id == DISMOD_AT_NULL_SIZE_T );
 
 	// write to log table
 	string message_type = "error";
@@ -107,7 +107,7 @@ void error_exit(
 	cerr << "Error: " << message << endl;
 	if( table_name != "" )
 	{	cerr << "Detected in table " << table_name;
-		if( row_id != size_t(DISMOD_AT_NULL_INT) )
+		if( row_id != DISMOD_AT_NULL_SIZE_T )
 			cerr << " in row with " << table_name << "_id = " << row_id;
 		cerr << endl;
 	}
@@ -118,7 +118,7 @@ void error_exit(
 	sqlite3*           db           ,
 	const std::string& message      ,
 	const std::string& table_name   )
-{	size_t      row_id     = size_t( DISMOD_AT_NULL_INT );
+{	size_t      row_id     = DISMOD_AT_NULL_SIZE_T;
 	error_exit(db, message, table_name, row_id);
 	return;
 }

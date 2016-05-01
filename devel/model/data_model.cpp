@@ -538,7 +538,7 @@ pack_object_   (pack_object)
 			for(size_t ell = 0; ell < rate_id.size(); ell++)
 			{	size_t smooth_id =
 					pack_object.rate_info(rate_id[ell], child).smooth_id;
-				if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+				if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 					random_depend = true;
 			}
 		}
@@ -853,7 +853,7 @@ Float data_model::avg_no_ode(
 		info             = pack_object_.rate_info(rate_id[ell], n_child_);
 		size_t smooth_id = info.smooth_id;
 		size_t n_var;
-		if( smooth_id == size_t(DISMOD_AT_NULL_INT) )
+		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
 		{	for(k = 0; k < n_ode; k++)
 				rate_ode[ell][k] = 0.0;
 		}
@@ -878,7 +878,7 @@ Float data_model::avg_no_ode(
 		if( child < n_child_ )
 		{	info      = pack_object_.rate_info(rate_id[ell], child);
 			smooth_id = info.smooth_id;
-			if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	n_var     = info.n_var;
 				//
 				CppAD::vector<Float> var_si(n_var);
@@ -1126,7 +1126,7 @@ Float data_model::avg_yes_ode(
 		info             = pack_object_.rate_info(rate_id, n_child_);
 		size_t smooth_id = info.smooth_id;
 		size_t n_var;
-		if( smooth_id == size_t(DISMOD_AT_NULL_INT) )
+		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
 		{	for(k = 0; k < n_index; k++)
 				rate_ode[rate_id][k] = 0.0;
 		}
@@ -1151,7 +1151,7 @@ Float data_model::avg_yes_ode(
 		if( child < n_child_ )
 		{	info      = pack_object_.rate_info(rate_id, child);
 			smooth_id = info.smooth_id;
-			if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	n_var     = info.n_var;
 				//
 				CppAD::vector<Float> var_si(n_var);

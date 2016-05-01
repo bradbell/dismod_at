@@ -215,7 +215,7 @@ void init_command(
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
 		{	offset  = pack_object.mulstd_offset(smooth_id, k);
-			if( offset != size_t(DISMOD_AT_NULL_INT) )
+			if( offset != DISMOD_AT_NULL_SIZE_T )
 			{	var_id  = offset;
 # ifndef NDEBUG
 				for(size_t j = 0; j < n_col; j++)
@@ -260,7 +260,7 @@ void init_command(
 			dismod_at::pack_info::subvec_info info;
 			info      = pack_object.rate_info(rate_id, child_id);
 			smooth_id = info.smooth_id;
-			if( smooth_id == size_t(DISMOD_AT_NULL_INT) )
+			if( smooth_id == DISMOD_AT_NULL_SIZE_T )
 				n_var = 0;
 			else
 			{	offset    = info.offset;

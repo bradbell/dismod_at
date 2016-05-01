@@ -180,19 +180,19 @@ n_child_        ( n_child )
 	for(size_t smooth_id = 0; smooth_id < n_smooth_; smooth_id++)
 	{	int prior_id = smooth_table[smooth_id].mulstd_value_prior_id;
 		if( prior_id == DISMOD_AT_NULL_INT )
-			mulstd_offset_[smooth_id * 3 + 0] = size_t(DISMOD_AT_NULL_INT);
+			mulstd_offset_[smooth_id * 3 + 0] = DISMOD_AT_NULL_SIZE_T;
 		else
 			mulstd_offset_[smooth_id * 3 + 0] = offset++;
 		//
 		prior_id = smooth_table[smooth_id].mulstd_dage_prior_id;
 		if( prior_id == DISMOD_AT_NULL_INT )
-			mulstd_offset_[smooth_id * 3 + 1] = size_t(DISMOD_AT_NULL_INT);
+			mulstd_offset_[smooth_id * 3 + 1] = DISMOD_AT_NULL_SIZE_T;
 		else
 			mulstd_offset_[smooth_id * 3 + 1] = offset++;
 		//
 		prior_id = smooth_table[smooth_id].mulstd_dtime_prior_id;
 		if( prior_id == DISMOD_AT_NULL_INT )
-			mulstd_offset_[smooth_id * 3 + 2] = size_t(DISMOD_AT_NULL_INT);
+			mulstd_offset_[smooth_id * 3 + 2] = DISMOD_AT_NULL_SIZE_T;
 		else
 			mulstd_offset_[smooth_id * 3 + 2] = offset++;
 	}
@@ -208,9 +208,9 @@ n_child_        ( n_child )
 			else
 				smooth_id = rate_table[rate_id].parent_smooth_id;
 			rate_info_[rate_id][j].smooth_id = smooth_id;
-			if( smooth_id == size_t(DISMOD_AT_NULL_INT) )
-			{	rate_info_[rate_id][j].n_var  = size_t(DISMOD_AT_NULL_INT);
-				rate_info_[rate_id][j].offset = size_t(DISMOD_AT_NULL_INT);
+			if( smooth_id == DISMOD_AT_NULL_SIZE_T )
+			{	rate_info_[rate_id][j].n_var  = DISMOD_AT_NULL_SIZE_T;
+				rate_info_[rate_id][j].offset = DISMOD_AT_NULL_SIZE_T;
 			}
 			else
 			{	size_t n_age  = smooth_table[smooth_id].n_age;
@@ -392,7 +392,7 @@ and is the offset (index) in the packed variable vector
 where this multiplier is located.
 If it has value
 $codei%
-	size_t(DISMOD_AT_NULL_INT)
+	DISMOD_AT_NULL_SIZE_T
 %$$
 This multiplier has value one and is not a variable.
 
@@ -473,7 +473,7 @@ Otherwise it corresponds to the child rates and is the same
 for all children.
 If
 $codei%
-	%smooth_id% == size_t(DISMOD_AT_NULL_INT)
+	%smooth_id% == DISMOD_AT_NULL_SIZE_T
 %$$
 then this rate is identically zero and there are no corresponding variables.
 
@@ -905,7 +905,7 @@ pack_info::variable_name(
 	for(size_t smooth_id = 0; smooth_id < n_smooth_; smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
 		{	size_t offset = mulstd_offset(smooth_id, k);
-			if( offset != size_t(DISMOD_AT_NULL_INT) )
+			if( offset != DISMOD_AT_NULL_SIZE_T )
 			{	assert( base == offset );
 				if( base == index )
 				{

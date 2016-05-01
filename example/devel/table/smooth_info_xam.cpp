@@ -104,7 +104,7 @@ bool smooth_info_xam(void)
 		db, age_table, time_table, smooth_id, smooth_table, smooth_grid_table
 	);
 	//
-	size_t null_size_t = size_t ( DISMOD_AT_NULL_INT );
+	size_t null_size_t = DISMOD_AT_NULL_SIZE_T;
 
 	ok  &= s_info.age_size()  == 3;
 	ok  &= s_info.time_size() == 2;

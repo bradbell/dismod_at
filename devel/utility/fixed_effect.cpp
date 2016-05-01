@@ -154,7 +154,7 @@ CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
 		{	pack_index = pack_object.mulstd_offset(smooth_id, k);
-			if( pack_index != size_t(DISMOD_AT_NULL_INT) )
+			if( pack_index != DISMOD_AT_NULL_SIZE_T )
 				ret_val[fixed_index++] = pack_index;
 		}
 	}
@@ -162,7 +162,7 @@ CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
 	// parent rates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	info       = pack_object.rate_info(rate_id, n_child);
-		if( info.smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		if( info.smooth_id != DISMOD_AT_NULL_SIZE_T )
 		{	pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				ret_val[fixed_index++] = pack_index++;
@@ -224,7 +224,7 @@ void unpack_fixed(
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
 		{	pack_index = pack_object.mulstd_offset(smooth_id, k);
-			if( pack_index != size_t(DISMOD_AT_NULL_INT) )
+			if( pack_index != DISMOD_AT_NULL_SIZE_T )
 				fixed_vec[fixed_index++] = pack_vec[pack_index];
 		}
 	}
@@ -232,7 +232,7 @@ void unpack_fixed(
 	// parent rates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	info       = pack_object.rate_info(rate_id, n_child);
-		if( info.smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		if( info.smooth_id != DISMOD_AT_NULL_SIZE_T )
 		{	pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				fixed_vec[fixed_index++] = pack_vec[pack_index++];
@@ -293,7 +293,7 @@ void pack_fixed(
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
 		{	pack_index = pack_object.mulstd_offset(smooth_id, k);
-			if( pack_index != size_t(DISMOD_AT_NULL_INT) )
+			if( pack_index != DISMOD_AT_NULL_SIZE_T )
 				pack_vec[pack_index] = fixed_vec[fixed_index++];
 		}
 	}
@@ -301,7 +301,7 @@ void pack_fixed(
 	// parent rates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	info       = pack_object.rate_info(rate_id, n_child);
-		if( info.smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		if( info.smooth_id != DISMOD_AT_NULL_SIZE_T )
 		{	pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				pack_vec[pack_index++] = fixed_vec[fixed_index++];

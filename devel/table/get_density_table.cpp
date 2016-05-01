@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -85,7 +85,7 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 	//
 	// for error messaging
 	string message;
-	size_t null_id  = size_t(DISMOD_AT_NULL_INT);
+	size_t null_id  = DISMOD_AT_NULL_SIZE_T;
 	//
 	// density names in same order as enum type in get_density_table.hpp
 	// and in th documentationf for density_table.omh

@@ -289,7 +289,7 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
 		{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-			if( offset != size_t(DISMOD_AT_NULL_INT) )
+			if( offset != DISMOD_AT_NULL_SIZE_T )
 			{
 				// value of the multiplier
 				Float mulstd = Float(pack_vec[offset]);
@@ -340,12 +340,12 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 
 		info = pack_object_.rate_info(rate_id, child);
 		size_t smooth_id          = info.smooth_id;
-		if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+		if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 		{
 			const smooth_info& s_info = s_info_vec_[smooth_id];
 			for(size_t k = 0; k < 3; k++)
 			{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-				if( offset == size_t(DISMOD_AT_NULL_INT) )
+				if( offset == DISMOD_AT_NULL_SIZE_T )
 					mulstd_vec[k] = 1.0;
 				else
 					mulstd_vec[k] = pack_vec[offset];
@@ -369,7 +369,7 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 			const smooth_info& s_info = s_info_vec_[smooth_id];
 			for(size_t k = 0; k < 3; k++)
 			{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-				if( offset == size_t(DISMOD_AT_NULL_INT) )
+				if( offset == DISMOD_AT_NULL_SIZE_T )
 					mulstd_vec[k] = 1.0;
 				else
 					mulstd_vec[k] = pack_vec[offset];
@@ -394,7 +394,7 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 			const smooth_info& s_info = s_info_vec_[smooth_id];
 			for(size_t k = 0; k < 3; k++)
 			{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-				if( offset == size_t(DISMOD_AT_NULL_INT) )
+				if( offset == DISMOD_AT_NULL_SIZE_T )
 					mulstd_vec[k] = 1.0;
 				else
 					mulstd_vec[k] = pack_vec[offset];
@@ -414,7 +414,7 @@ CppAD::vector< residual_struct<Float> > prior_model::fixed(
 			const smooth_info& s_info = s_info_vec_[smooth_id];
 			for(size_t k = 0; k < 3; k++)
 			{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-				if( offset == size_t(DISMOD_AT_NULL_INT) )
+				if( offset == DISMOD_AT_NULL_SIZE_T )
 					mulstd_vec[k] = 1.0;
 				else
 					mulstd_vec[k] = pack_vec[offset];
@@ -509,12 +509,12 @@ CppAD::vector< residual_struct<Float> > prior_model::random(
 		for(size_t child = 0; child < n_child; child++)
 		{	info = pack_object_.rate_info(rate_id, child);
 			size_t smooth_id          = info.smooth_id;
-			if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{
 				const smooth_info& s_info = s_info_vec_[smooth_id];
 				for(size_t k = 0; k < 3; k++)
 				{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-					if( offset == size_t(DISMOD_AT_NULL_INT) )
+					if( offset == DISMOD_AT_NULL_SIZE_T )
 						mulstd_vec[k] = 1.0;
 					else
 						mulstd_vec[k] = pack_vec[offset];

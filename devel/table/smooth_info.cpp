@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -448,7 +448,7 @@ smooth_info::smooth_info(
 	// for erorr messaging
 	string msg, table_name;
 	size_t row_id;
-	size_t null_size_t = size_t( DISMOD_AT_NULL_INT );
+	size_t null_size_t = DISMOD_AT_NULL_SIZE_T;
 
 	// only use of smooth_table is to determine multiplier priors
 	mulstd_value_   = smooth_table[smooth_id].mulstd_value_prior_id;

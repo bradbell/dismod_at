@@ -273,7 +273,7 @@ void get_table_column(
 	const std::string&          column_name         ,
 	CppAD::vector<std::string>& text_result         )
 {	// for error message
-	size_t null_id = size_t( DISMOD_AT_NULL_INT );
+	size_t null_id = DISMOD_AT_NULL_SIZE_T;
 
 	// set globals used by error messages
 	table_name_ = table_name;
@@ -302,7 +302,7 @@ void get_table_column(
 	const std::string&          column_name        ,
 	CppAD::vector<int>&         int_result         )
 {	// for error message
-	size_t null_id = size_t( DISMOD_AT_NULL_INT );
+	size_t null_id = DISMOD_AT_NULL_SIZE_T;
 
 	// set globals used by error messages
 	table_name_ = table_name;
@@ -331,7 +331,7 @@ void get_table_column(
 	const std::string&          column_name        ,
 	CppAD::vector<double>&      double_result      )
 {	// for error message
-	size_t null_id = size_t( DISMOD_AT_NULL_INT );
+	size_t null_id = DISMOD_AT_NULL_SIZE_T;
 
 	// set globals used by error messages
 	table_name_ = table_name;

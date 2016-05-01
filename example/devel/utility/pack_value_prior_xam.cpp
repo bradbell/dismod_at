@@ -214,7 +214,7 @@ bool pack_value_prior_xam(void)
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
 		{	size_t offset  = pack_object.mulstd_offset(smooth_id, k);
-			assert( offset != size_t(DISMOD_AT_NULL_INT) );
+			assert( offset != DISMOD_AT_NULL_SIZE_T );
 			ok &= value_prior[offset] == k;
 		}
 	}

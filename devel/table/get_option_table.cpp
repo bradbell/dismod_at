@@ -85,7 +85,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	//
 	// for error messaging
 	string msg;
-	size_t null_id  = size_t(DISMOD_AT_NULL_INT);
+	size_t null_id  = DISMOD_AT_NULL_SIZE_T;
 	//
 	const char* name_list[] = {
 		"number_simulate",

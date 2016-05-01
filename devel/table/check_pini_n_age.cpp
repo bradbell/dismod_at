@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -69,7 +69,7 @@ void check_pini_n_age(
 	//
 	size_t rate_id = size_t( pini_enum );
 	size_t parent_smooth_id = rate_table[rate_id].parent_smooth_id;
-	if( parent_smooth_id != size_t(DISMOD_AT_NULL_INT) )
+	if( parent_smooth_id != DISMOD_AT_NULL_SIZE_T )
 	{	size_t n_age = smooth_table[parent_smooth_id].n_age;
 		if( n_age != 1 )
 		{	message = "parent_smooth_id, for pini, corresponds to a smoothing"
@@ -77,7 +77,7 @@ void check_pini_n_age(
 		}
 	}
 	size_t child_smooth_id  = rate_table[rate_id].child_smooth_id;
-	if( child_smooth_id != size_t(DISMOD_AT_NULL_INT) )
+	if( child_smooth_id != DISMOD_AT_NULL_SIZE_T )
 	{	size_t n_age = smooth_table[child_smooth_id].n_age;
 		if( n_age != 1 )
 		{	message = "child_smooth_id, for pini, corresponds to a smoothing"

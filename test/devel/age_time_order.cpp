@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -115,14 +115,14 @@ test_smooth_info(void)
 	//
 	ok  &= s_info.dage_prior_id(0, 1)  ==  2;
 	ok  &= s_info.dage_prior_id(1, 1)  ==  3;
-	ok  &= s_info.dage_prior_id(2, 1)  == size_t(DISMOD_AT_NULL_INT);
+	ok  &= s_info.dage_prior_id(2, 1)  == DISMOD_AT_NULL_SIZE_T;
 	ok  &= s_info.dage_prior_id(0, 0)  ==  6;
 	ok  &= s_info.dage_prior_id(1, 0)  ==  8;
-	ok  &= s_info.dage_prior_id(2, 0)  == size_t(DISMOD_AT_NULL_INT);
+	ok  &= s_info.dage_prior_id(2, 0)  == DISMOD_AT_NULL_SIZE_T;
 	//
-	ok  &= s_info.dtime_prior_id(0, 1) == size_t(DISMOD_AT_NULL_INT);
-	ok  &= s_info.dtime_prior_id(1, 1) == size_t(DISMOD_AT_NULL_INT);
-	ok  &= s_info.dtime_prior_id(2, 1) == size_t(DISMOD_AT_NULL_INT);
+	ok  &= s_info.dtime_prior_id(0, 1) == DISMOD_AT_NULL_SIZE_T;
+	ok  &= s_info.dtime_prior_id(1, 1) == DISMOD_AT_NULL_SIZE_T;
+	ok  &= s_info.dtime_prior_id(2, 1) == DISMOD_AT_NULL_SIZE_T;
 	ok  &= s_info.dtime_prior_id(0, 0) ==  7;
 	ok  &= s_info.dtime_prior_id(1, 0) ==  9;
 	ok  &= s_info.dtime_prior_id(2, 0) ==  3;

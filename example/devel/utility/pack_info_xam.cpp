@@ -118,7 +118,7 @@ bool pack_info_xam(void)
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
 		{	size_t offset    =	pack_object.mulstd_offset(smooth_id, k);
-			if( offset != size_t(DISMOD_AT_NULL_INT) )
+			if( offset != DISMOD_AT_NULL_SIZE_T )
 			{	pack_vec[offset] = smooth_id + k;
 				count++;
 			}
@@ -182,7 +182,7 @@ bool pack_info_xam(void)
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
 		{	offset =	pack_object.mulstd_offset(smooth_id, k);
-			if( offset != size_t(DISMOD_AT_NULL_INT) )
+			if( offset != DISMOD_AT_NULL_SIZE_T )
 				ok &= pack_vec[offset] == smooth_id + k;
 		}
 	}

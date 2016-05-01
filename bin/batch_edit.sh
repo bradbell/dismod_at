@@ -22,10 +22,7 @@ rename_cmd='s|table.omh|database.omh|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
 cat << EOF > junk.sed
-s|get_fixed_effect|unpack_fixed|g
-s|put_fixed_effect|pack_fixed|g
-s|get_random_effect|unpack_random|g
-s|put_random_effect|pack_random|g
+s|size_t *( *DISMOD_AT_NULL_INT *)|DISMOD_AT_NULL_SIZE_T|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

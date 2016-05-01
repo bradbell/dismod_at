@@ -45,7 +45,7 @@ namespace {
 					one_prior.minus_var_id = offset + i * n_time + j;
 					one_prior.plus_var_id  = offset + (i+1) * n_time + j;
 					one_prior.prior_id     = s_info.dage_prior_id(i, j);
-					assert( one_prior.prior_id != size_t(DISMOD_AT_NULL_INT) );
+					assert( one_prior.prior_id != DISMOD_AT_NULL_SIZE_T );
 					ret_val.push_back(one_prior);
 				}
 			}
@@ -59,7 +59,7 @@ namespace {
 					one_prior.minus_var_id = offset + i * n_time + j;
 					one_prior.plus_var_id  = offset + i * n_time + j+1;
 					one_prior.prior_id     = s_info.dtime_prior_id(i, j);
-					assert( one_prior.prior_id != size_t(DISMOD_AT_NULL_INT) );
+					assert( one_prior.prior_id != DISMOD_AT_NULL_SIZE_T );
 					ret_val.push_back(one_prior);
 				}
 			}
@@ -138,7 +138,7 @@ CppAD::vector<size_t> pack_value_prior(
 	{	for(size_t k = 0; k < 3; k++)
 		{	// mulstd
 			size_t offset     = pack_object.mulstd_offset(smooth_id, k);
-			if( offset != size_t(DISMOD_AT_NULL_INT) )
+			if( offset != DISMOD_AT_NULL_SIZE_T )
 			{	size_t prior_id;
 				switch(k)
 				{	case 0:
@@ -166,7 +166,7 @@ CppAD::vector<size_t> pack_value_prior(
 	{	for(size_t j = 0; j <= n_child; j++)
 		{	info             = pack_object.rate_info(rate_id, j);
 			size_t smooth_id = info.smooth_id;
-			if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	size_t offset    = info.offset;
 				set_value_prior(ret_val, offset, s_info_vec[smooth_id]);
 			}
@@ -179,7 +179,7 @@ CppAD::vector<size_t> pack_value_prior(
 		for(size_t j = 0; j < n_cov; j++)
 		{	info   = pack_object.mulcov_rate_value_info(rate_id, j);
 			size_t smooth_id = info.smooth_id;
-			if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	size_t offset    = info.offset;
 				set_value_prior(ret_val, offset, s_info_vec[smooth_id]);
 			}
@@ -298,7 +298,7 @@ CppAD::vector<diff_prior_struct> pack_diff_prior(
 	{	for(size_t j = 0; j <= n_child; j++)
 		{	info             = pack_object.rate_info(rate_id, j);
 			size_t smooth_id = info.smooth_id;
-			if( smooth_id != size_t(DISMOD_AT_NULL_INT) )
+			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	size_t offset    = info.offset;
 				set_diff_prior(ret_val, offset, s_info_vec[smooth_id]);
 			}
