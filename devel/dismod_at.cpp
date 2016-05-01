@@ -307,6 +307,7 @@ void init_command(
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 		count_rate_value[rate_id] = 0;
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
+	if( mulcov_table[mulcov_id].smooth_id != DISMOD_AT_NULL_SIZE_T )
 	{	dismod_at::mulcov_type_enum mulcov_type;
 		mulcov_type         = mulcov_table[mulcov_id].mulcov_type;
 		size_t rate_id      = mulcov_table[mulcov_id].rate_id;

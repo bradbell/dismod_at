@@ -79,6 +79,11 @@ in the $code smooth_grid$$ table.
 It specifies the smoothing uses as a prior for this covariate multiplier.
 (Note that all covariate multipliers are fixed effects.)
 
+$subhead null$$
+If the $icode smooth_id$$ is $code null$$, the corresponding
+covariate multiplier is always zero and no $cref model_variables$$ are
+allocated for it.
+
 $subhead pini$$
 Consider the case where $icode mulcov_type$$ is $code rate_value$$
 and $icode rate_id$$ corresponds to

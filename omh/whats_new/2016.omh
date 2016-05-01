@@ -34,6 +34,11 @@ $childtable%omh/whats_new/2015.omh
 
 $head 05-01$$
 $list number$$
+Allow for a covariate multiplier $icode smooth_id$$ to be
+$cref/null/mulcov_table/smooth_id/null/$$.
+This enables on the include, or drop out, a multiplier by
+only changing one entry the $cref mulcov_table$$.
+$lnext
 Fix problem with documentation for
 $cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$
 that occurred in changes on $cref/04-22/whats_new_2016/04-22/$$.

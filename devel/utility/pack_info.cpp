@@ -235,6 +235,7 @@ n_child_        ( n_child )
 			match  = mulcov_table[mulcov_id].mulcov_type  == meas_value_enum;
 			match |= mulcov_table[mulcov_id].mulcov_type  == meas_std_enum;
 			match &= mulcov_table[mulcov_id].integrand_id == int(integrand_id);
+			match &= mulcov_table[mulcov_id].smooth_id!=DISMOD_AT_NULL_SIZE_T;
 			if( match )
 			{	size_t covariate_id = size_t(
 					mulcov_table[mulcov_id].covariate_id
@@ -282,6 +283,7 @@ n_child_        ( n_child )
 		{	bool match;
 			match  = mulcov_table[mulcov_id].mulcov_type  == rate_value_enum;
 			match &= mulcov_table[mulcov_id].rate_id == int(rate_id);
+			match &= mulcov_table[mulcov_id].smooth_id!=DISMOD_AT_NULL_SIZE_T;
 			if( match )
 			{	size_t covariate_id = size_t(
 					mulcov_table[mulcov_id].covariate_id
@@ -982,6 +984,7 @@ pack_info::variable_name(
 			match  = mulcov_table[mulcov_id].mulcov_type  == meas_value_enum;
 			match |= mulcov_table[mulcov_id].mulcov_type  == meas_std_enum;
 			match &= mulcov_table[mulcov_id].integrand_id == int(integrand_id);
+			match &= mulcov_table[mulcov_id].smooth_id!=DISMOD_AT_NULL_SIZE_T;
 			if( match )
 			{	subvec_info info;
 				if( mulcov_table[mulcov_id].mulcov_type == meas_value_enum )
@@ -1031,6 +1034,7 @@ pack_info::variable_name(
 		{	bool match;
 			match  = mulcov_table[mulcov_id].mulcov_type  == rate_value_enum;
 			match &= mulcov_table[mulcov_id].rate_id == int(rate_id);
+			match &= mulcov_table[mulcov_id].smooth_id!=DISMOD_AT_NULL_SIZE_T;
 			if( match )
 			{	subvec_info info;
 				info = mulcov_rate_value_info_[rate_id][count++];
