@@ -33,9 +33,18 @@ $childtable%omh/whats_new/2015.omh
 %$$
 
 $head 05-01$$
+$list number$$
 Fix problem with documentation for
 $cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$
 that occurred in changes on $cref/04-22/whats_new_2016/04-22/$$.
+$lnext
+Fix discussion of
+$cref/lambda_j/fixed_value/lambda_j/$$
+in the value prior for fixed effects.
+To be specific, all fixed effects $latex \theta_j$$,
+not just the parent rates,
+have a value prior multiplier $latex \lambda_j$$.
+$lend
 
 $head 04-28$$
 $list number$$
