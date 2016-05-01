@@ -32,6 +32,11 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 05-01$$
+Fix problem with documentation for
+$cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$
+that occurred in changes on $cref/04-22/whats_new_2016/04-22/$$.
+
 $head 04-28$$
 $list number$$
 Add the $cref metropolis$$ MCMC utility for testing results.
@@ -104,7 +109,7 @@ When there was no data, and prior for the $cref model_variables$$
 was log-Gaussian or log-Laplace, the prior mean was not the optimal estimate.
 This was because the estimate for the model variance affected the
 log-transformed standard deviation
-$cref/sigma/statistic/Standard Deviation Log-Transform, sigma/$$.
+$cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$.
 This was a feature (it agreed with the documentation) but it was not desirable.
 This have been changed so that $icode sigma$$ is defined in terms of the
 prior mean and not in terms of the model value.

@@ -185,7 +185,13 @@ $latex \[
 \] $$
 see the weight residual function
 $cref/R/statistic/Weighted Residual Function, R/$$.
-Note the negative sign in front of the weighted residual is so that
+Note that $latex y_i$$ ($latex \mu$$) here is plays the role of
+$latex \mu$$ ($latex y$$) in the function
+$latex R(y, \mu , \delta , \eta , d)$$.
+This is so that
+$cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$
+does not depend on the $cref model_variables$$.
+Also note the negative sign in front of the weighted residual is so that
 it has the same sign as $latex y_i - m_i ( u, \theta )$$
 (data minus model).
 The likelihood is

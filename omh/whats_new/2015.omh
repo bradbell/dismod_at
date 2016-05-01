@@ -402,9 +402,9 @@ of Gaussian density for the measured values.
 $lnext
 A large reduction in memory, and an increase in speed,
 was accomplished by making the
-$cref/standard deviation log-transform
+$cref/log-transformed standard deviation
 	/statistic
-	/Standard Deviation Log-Transform, sigma
+	/Log-Transformed Standard Deviation, sigma
 /$$
 depend the data and not on the $cref model_variables$$.
 To be specific, $code valgrind --tool=massif$$ reported the following

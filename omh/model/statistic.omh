@@ -12,10 +12,10 @@ $begin statistic$$
 
 $section Some Statistical Function Definitions$$
 
-$head Standard Deviation Log-Transform, sigma$$
-We define the standard deviation log-transform by
+$head Log-Transformed Standard Deviation, sigma$$
+We define the log-transformed standard deviation by
 $latex \[
-\sigma( y, \delta , \eta )
+\sigma( \mu, \delta , \eta )
 =
 \log ( \mu + \eta + \delta ) - \log ( \mu + \eta )
 \] $$
@@ -68,7 +68,7 @@ R(y, \mu, \delta, \eta , d)
 \frac{
 	\log( y + \eta ) - \log( \mu + \eta )
 }{
-	\sigma( y , \delta , \eta )
+	\sigma( \mu , \delta , \eta )
 }
 \] $$
 $latex \[
@@ -150,7 +150,7 @@ the log-density functions are
 $latex \[
 D(y, \mu, \delta, \eta , d)
 =
-- \log \left[ \sigma( y , \delta , \eta ) \sqrt{2 \pi} \right]
+- \log \left[ \sigma( \mu , \delta , \eta ) \sqrt{2 \pi} \right]
 - \frac{1}{2} R(y, \mu, \delta, \eta, d)^2
 \] $$
 $latex \[
@@ -159,9 +159,9 @@ D(z, y, \mu, \delta, \eta , d)
 - \log \left( \delta \sqrt{2 \pi} \right)
 - \frac{1}{2} R(z, y, \mu, \delta, \eta, d)^2
 \] $$
-see $cref/log-standard deviation function
+see $cref/Log-Transformed standard deviation
 	/statistic
-	/Standard Deviation Log-Transform, sigma
+	/Log-Transformed Standard Deviation, sigma
 /$$.
 
 $subhead Log-Laplace$$
@@ -170,7 +170,7 @@ the log-density functions are
 $latex \[
 D(y, \mu, \delta, \eta , d)
 =
-- \log \left[ \sigma( y , \delta , \eta ) \sqrt{2} \right]
+- \log \left[ \sigma( \mu , \delta , \eta ) \sqrt{2} \right]
 - \left| R(y, \mu, \delta, \eta, d) \right|
 \] $$
 $latex \[
