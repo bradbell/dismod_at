@@ -24,6 +24,7 @@ $spell
 	dage
 	dtime
 	gsl_rng
+	devel
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
