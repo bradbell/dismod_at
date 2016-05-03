@@ -24,8 +24,8 @@ extra_cxx_flags='-std=c++11 -Wall'
 cmake_libdir='lib64'
 # use bool_sparsity YES or NO
 bool_sparsity='YES'
-# use cholmod (not eigen) for Cholesky factorization (where possible)
-cholmod_cholesky='YES'
+# use cholmod (not eigen) for LDLT factorization (where possible)
+ldlt_cholmod='YES'
 # ----------------------------------------------------------------------------
 # setings for IHME cluster
 # extra_cxx_flags='-Wall'
@@ -45,8 +45,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='920bc1c8b21a654df1aee4daa5ec30624be4c4dd'
-version='20160427'
+hash_key='05cd0948dee137489c22368b472afd111c64998e'
+version='20160503'
 # --------------------------------------------------------------------------
 if [ ! -e build/external ]
 then
@@ -100,7 +100,7 @@ cmake_args="$cmake_args -D suitesparse_prefix=$suitesparse_prefix"
 cmake_args="$cmake_args -D extra_cxx_flags=$extra_cxx_flags"
 cmake_args="$cmake_args -D cmake_libdir=$cmake_libdir"
 cmake_args="$cmake_args -D bool_sparsity=$bool_sparsity"
-cmake_args="$cmake_args -D cholmod_cholesky=$cholmod_cholesky"
+cmake_args="$cmake_args -D ldlt_cholmod=$ldlt_cholmod"
 echo "cmake $cmake_args .."
 cmake $cmake_args ..
 # -----------------------------------------------------------------------------

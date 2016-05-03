@@ -32,6 +32,13 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 05-03$$
+$list number$$
+Advance to $code cppad_mixed-20160503$$.
+$lnext
+Fix warning in $code devel/utility/pack_info.cpp$$.
+$lend
+
 $head 05-01$$
 $list number$$
 Allow for a covariate multiplier $icode smooth_id$$ to be
