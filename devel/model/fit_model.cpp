@@ -282,6 +282,7 @@ $end
 		options += "\nInteger max_iter " + option_map["max_num_iter_fixed"];
 	else // zero in dismod_at is -1 in cppad_mixed.
 		options += "\nInteger max_iter -1";
+	options += "\nString nlp_scaling_method none";
 	options += "\n";
 	//
 	std::string fixed_options = options;
