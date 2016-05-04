@@ -38,7 +38,10 @@ $codei%
 	const std::string& %message_type%
 %$$
 and must be one of the following:
-$code command$$, $code error$$.
+$code command$$,
+$code error$$,
+$code warning$$,
+$code value$$.
 This value gets written in the
 $cref/message_type/log_table/message_type/$$ column of the log table.
 

@@ -25,6 +25,10 @@ $spell
 	dtime
 	gsl_rng
 	devel
+	Ipopt
+	res
+	relrisk
+	py
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -32,6 +36,31 @@ $section Changes and Additions to Dismod_at During 2016$$
 
 $childtable%omh/whats_new/2015.omh
 %$$
+
+$head 05-04$$
+$list number$$
+Print the $cref/Ipopt/install_unix/Special Requirements/Ipopt/$$
+library directories during the
+$cref/cmake command/install_unix/dismod_at/Cmake Command/$$.
+$lnext
+In the $cref database2csv.py$$ program,
+change $code fit_res$$, $code fit_dage$$ and $code fit_dtime$$
+to $cref/res_value/database2csv.py/variable.csv/res_value/$$
+$code res_dage$$ and $code res_dtime$$ respectively.
+$lnext
+Put $code cppad_mixed:$$ at the beginning of warnings and error messages
+that come from the
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$ package.
+$lnext
+Add missing $cref/message_type/log_message/message_type/$$ cases
+to the $code log_message$$ documentation.
+$lnext
+Change $cref user_meas_covariate.py$$ to use $code null$$ smoothing
+pointer in the middle (not last) covariate multiplier (better test).
+$lnext
+Change $code test/user/relrisk.py$$ tolerance so that the
+$code cppad_mixed$$ solution check passes.
+$lend
 
 $head 05-03$$
 $list number$$

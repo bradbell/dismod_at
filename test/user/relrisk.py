@@ -131,7 +131,7 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      0.1,
+			'std':      1.0,
 			'eta':      None
 		},{ # prior_other_parent
 			'name':     'prior_other_parent',
@@ -227,7 +227,7 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_fixed',  'value':'first-order'       },
 		{ 'name':'max_num_iter_fixed',     'value':'100'               },
 		{ 'name':'print_level_fixed',      'value':'0'                 },
-		{ 'name':'tolerance_fixed',        'value':'1e-10'             },
+		{ 'name':'tolerance_fixed',        'value':'1e-8'              },
 		{ 'name':'random_bound',           'value':None                },
 
 		{ 'name':'derivative_test_random', 'value':'second-order'      },
@@ -282,7 +282,7 @@ fit_var_dict = dismod_at.get_table_dict(connection, 'fit_var')
 rate_dict    = dismod_at.get_table_dict(connection, 'rate')
 #
 parent_node_id = 1
-eps            = 1e-4
+eps            = 1e-5
 #
 # check parent rates values
 count             = 0

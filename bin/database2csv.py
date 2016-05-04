@@ -95,15 +95,15 @@
 # If the $cref fit_command$$ has not been run, this is the
 # $cref/variable_value/fit_var_table/variable_value/$$.
 #
-# $subhead fit_res$$
+# $subhead res_value$$
 # If the $cref fit_command$$ has not been run, this is the
 # $cref/residual_value/fit_var_table/residual_value/$$.
 #
-# $subhead fit_dage$$
+# $subhead res_dage$$
 # If the $cref fit_command$$ has not been run, this is the
 # $cref/residual_dage/fit_var_table/residual_dage/$$.
 #
-# $subhead fit_dtime$$
+# $subhead res_dtime$$
 # If the $cref fit_command$$ has not been run, this is the
 # $cref/residual_dtime/fit_var_table/residual_dtime/$$.
 #
@@ -375,9 +375,9 @@ header = [
 	'fixed',
 	'sam_value',
 	'fit_value',
-	'fit_res',
-	'fit_dage',
-	'fit_dtime',
+	'res_value',
+	'res_dage',
+	'res_dtime',
 	'lag_value',
 	'lag_dage',
 	'lag_dtime',
@@ -414,9 +414,9 @@ for row_in in table_data['var'] :
 		row_out['sam_value'] = table_lookup('sample', var_id, 'var_value')
 	if have_fit :
 		row_out['fit_value']= table_lookup('fit_var', var_id, 'variable_value')
-		row_out['fit_res']  = table_lookup('fit_var', var_id, 'residual_value')
-		row_out['fit_dage'] = table_lookup('fit_var', var_id, 'residual_dage')
-		row_out['fit_dtime']= table_lookup('fit_var', var_id, 'residual_dtime')
+		row_out['res_value']= table_lookup('fit_var', var_id, 'residual_value')
+		row_out['res_dage'] = table_lookup('fit_var', var_id, 'residual_dage')
+		row_out['res_dtime']= table_lookup('fit_var', var_id, 'residual_dtime')
 		row_out['lag_value']= table_lookup('fit_var', var_id, 'lagrange_value')
 		row_out['lag_dage'] = table_lookup('fit_var', var_id, 'lagrange_dage')
 		row_out['lag_dtime']= table_lookup('fit_var', var_id, 'lagrange_dtime')

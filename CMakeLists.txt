@@ -113,6 +113,10 @@ MESSAGE(STATUS "END:")
 # (note CppAD must be installed with ipopt_prefix specified)
 FIND_PACKAGE(PkgConfig)
 pkg_check_modules(ipopt REQUIRED ipopt)
+# for debugging
+FOREACH( dir ${ipopt_LIBRARY_DIRS} )
+	MESSAGE(STATUS "ipopt_LIBRARY_DIR = ${dir}")
+ENDFOREACH( dir )
 # ----------------------------------------------------------------------------
 # no pkg-config for SuiteSparse so explicitly set corresponding values
 SET(suitesparse_LIBRARY_DIRS ${suitesparse_prefix}/lib )

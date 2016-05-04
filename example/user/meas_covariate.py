@@ -110,16 +110,16 @@ def example_db (file_name) :
 			'type':      'meas_value',
 			'effected':  'Sincidence',
 			'smooth':    'smooth_mulcov'
-		},{
-			'covariate': 'income',
-			'type':      'meas_value',
-			'effected':  'remission',
-			'smooth':    'smooth_mulcov'
 		},{	# Example of a mulcov table entry that is not used
 			'covariate': 'income',
 			'type':      'rate_value',
 			'effected':  'rho',
 			'smooth':    None
+		},{
+			'covariate': 'income',
+			'type':      'meas_value',
+			'effected':  'remission',
+			'smooth':    'smooth_mulcov'
 		}
 	]
 	# --------------------------------------------------------------------------
