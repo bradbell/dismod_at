@@ -37,6 +37,7 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+
 $head 05-04$$
 $list number$$
 Print the $cref/Ipopt/install_unix/Special Requirements/Ipopt/$$
@@ -60,6 +61,8 @@ pointer in the middle (not last) covariate multiplier (better test).
 $lnext
 Change $code test/user/relrisk.py$$ tolerance so that the
 $code cppad_mixed$$ solution check passes.
+$lnext
+Advance to $code cppad_mixed-20160504$$.
 $lend
 
 $head 05-03$$

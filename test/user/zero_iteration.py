@@ -197,6 +197,7 @@ def example_db (file_name) :
 	]
 	# ------------------------------------------------------------------------
 	# option_dict
+	# use very large tolerance_fixed to avoid warning during test.
 	option_dict = [
 		{ 'name':'parent_node_name',       'value':'north_america'     },
 		{ 'name':'number_simulate',        'value':'1'                 },
@@ -209,7 +210,7 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_fixed',  'value':'none'              },
 		{ 'name':'max_num_iter_fixed',     'value':'0'                 },
 		{ 'name':'print_level_fixed',      'value':'0'                 },
-		{ 'name':'tolerance_fixed',        'value':'1e-10'             },
+		{ 'name':'tolerance_fixed',        'value':'1e+10'             },
 		{ 'name':'random_bound',           'value':None                },
 
 		{ 'name':'derivative_test_random', 'value':'second-order'      },
