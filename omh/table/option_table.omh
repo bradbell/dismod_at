@@ -27,9 +27,11 @@ $spell
 $$
 
 $section The Option Table$$
-Each $code dismod_at$$ $cref command$$ has a required set of
-$icode option_name$$, $icode option_value$$ pairs
-that must be present in the option table.
+These options control how the
+$code dismod_at$$ $cref/commands/command/$$ behave.
+Each option is an $icode option_name$$, $icode option_value$$ pair
+and has a default value that is used when the name
+is not present in the option table.
 
 $head Changing Values$$
 This table is special in that you can change almost all its values
@@ -71,6 +73,9 @@ the corresponding $icode option_value$$
 is a non-negative integer (greater than or equal zero)
 that specifies the parent $cref/node_id/node_table/node_id/$$.
 
+$subhead Default$$
+The default value for this option is $code 0$$.
+
 $head ode_step_size$$
 If $icode%option_name% = ode_step_size%$$,
 the corresponding $icode option_value$$
@@ -89,12 +94,22 @@ $code mtexcess$$,
 $code mtwith$$,
 $code relrisk$$.
 
+$subhead Default$$
+The default value for this option is $code 10.0$$,
+which is reasonable if all the rates
+$icode iota$$, $icode rho$$, $icode chi$$, and $icode omega$$
+are all less than $code 0.1$$.
+
 $head number_simulate$$
 If $icode%option_name% = number_simulate%$$,
 the corresponding $icode option_value$$
 is a positive integer specifying the
 number of independent samples of the
 $cref/data subset/data_subset_table/$$.
+
+$subhead Default$$
+The default value for this option is $code 1$$,
+which is good for testing, but not reasonable for true simulations.
 
 $head fit_simulate_index$$
 If the value of $icode fit_simulate_index$$ is $code null$$,
@@ -105,11 +120,17 @@ $cref/simulate_index/simulate_table/simulate_index/$$
 for the measurement values in the
 $cref/simulate_table/simulate_table/meas_value/$$.
 
+$subhead Default$$
+The default value for this option is $code null$$.
+
 $head random_seed$$
 This is a non-negative integer used to seed the random number
 generator that is used by $code dismod_at$$.
 If this value is zero, the clock is used to seed the random number generator;
 see $cref/random_seed/log_table/random_seed/$$ in the log table.
+
+$subhead Default$$
+The default value for this option is $code 0$$.
 
 $head rate_case$$
 The $icode rate_case$$ value does not matter for the following integrands:
@@ -148,6 +169,9 @@ the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
 $icode iota$$ and $icode rho$$
 must always have lower limit greater than zero.
 
+$subhead Default$$
+The default value for this option is $code iota_pos_rho_zero$$.
+
 $head Optimizer$$
 The following options control the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$ optimization
@@ -160,6 +184,7 @@ the corresponding possible values are
 $code true$$ or $code false$$.
 If it is $code true$$, a quasi-Newton method is used to optimize
 the fixed effects. Otherwise a full Newton method is used.
+The default value for this option is $code true$$.
 
 $subhead derivative_test$$
 If $icode option_name$$ is
@@ -183,6 +208,7 @@ $tend
 If $icode quasi_fixed$$ is $code true$$
 and $icode option_name$$ is $code derivative_text_fixed$$,
 the $icode option_value$$ cannot be $code second-order$$.
+The default value for this option is $code none$$.
 
 $subhead max_num_iter$$
 If $icode option_name$$ is
@@ -197,6 +223,7 @@ is replace by the initial fixed effects; i.e.,
 the fit $cref/variable_value/fit_var_table/variable_value/$$ column
 will contain the same values as the start table column
 $cref/start_var_value/start_var_table/start_var_value/$$.
+The default value for this option is $code 100$$.
 
 $subhead print_level$$
 If $icode option_name$$ is
@@ -209,6 +236,7 @@ Zero, corresponds to no printing and should be the default for use
 with $code dismod_at$$ (the value 5 is the normal default for Ipopt).
 At least one these two print values
 (for the fixed and random effects) should be zero.
+The default value for this option is $code 0$$.
 
 $subhead tolerance$$
 If $icode option_name$$ is
@@ -218,6 +246,7 @@ is a positive floating point number
 that specifies the desired relative convergence tolerance
 for optimizing the fixed effects (random effects).
 (This is called $code tol$$ in Ipopt documentation.)
+The default value for this option is $code 1e-8$$.
 
 $subhead random_bound$$
 If $icode option_name$$ is
@@ -235,6 +264,7 @@ and this is only intended as a kludge to help certain problems converge.
 The value plus infinity (for no bounds) is represented by a $code null$$
 should be preferred; i.e., used where possible.
 (This value must be greater than or equal one.)
+The default value for this option is $code null$$.
 
 
 $children%example/table/option_table.py

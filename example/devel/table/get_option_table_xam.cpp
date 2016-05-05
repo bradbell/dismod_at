@@ -24,6 +24,7 @@ $$
 $end
 */
 // BEGIN C++
+# include <cppad/utility/to_string.hpp>
 # include <dismod_at/get_option_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
@@ -37,92 +38,87 @@ bool get_option_table_xam(void)
 	string   file_name = "example.db";
 	bool     new_file  = true;
 	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
-
-	// sql commands
-	const char* sql_cmd[] = {
+	//
+	// option name and corresponding values
+	// Testing with different order than in get_option_table
+	// Furthermore, we have not included max_num_iter_fixed in list
+	// so that its default value of 100 gets used.
+	struct { const char* name; const char* value; } option_list[] = {
+		//
+		"quasi_fixed",                   "false",
+		"derivative_test_fixed",         "second-order",
+		"derivative_test_random",        "first-order",
+		"max_num_iter_random",           "50",
+		"print_level_fixed",             "5",
+		"print_level_random",            "5",
+		"tolerance_fixed",               "1e-7",
+		"tolerance_random",              "1e-7",
+		"random_bound",                  "3.0",
+		//
+		"parent_node_id",                "1",
+		"ode_step_size",                 "20.0",
+		"number_simulate",               "2",
+		"fit_simulate_index",            "0",
+		"random_seed",                   "123",
+		"rate_case",                     "iota_zero_rho_zero"
+	};
+	size_t n_option = sizeof(option_list) / sizeof( option_list[0] );
+	//
+	// create table
+	string sql_cmd =
 	"create table option("
 		" option_id       integer primary key,"
 		" option_name     text unique,"
 		" option_value    text"
-	")",
-	"insert into option values(0, 'parent_node_id',  '0'            )",
-	"insert into option values(1, 'number_simulate', '1'            )",
-	"insert into option values(2, 'ode_step_size',   '20.0'         )",
-	"insert into option values(3, 'random_seed',     '0'            )",
-	"insert into option values(4, 'rate_case',       'iota_pos_rho_pos' )",
-
-	"insert into option values(5, 'quasi_fixed',           'true'         )",
-	"insert into option values(6, 'derivative_test_fixed', 'first-order'  )",
-	"insert into option values(7, 'max_num_iter_fixed',    '100'          )",
-	"insert into option values(8, 'print_level_fixed',     '0'            )",
-	"insert into option values(9, 'tolerance_fixed',       '1e-8'         )",
-
-	"insert into option values(10, 'derivative_test_random', 'second-order' )",
-	"insert into option values(11,'max_num_iter_random',    '100'          )",
-	"insert into option values(12,'print_level_random',     '0'            )",
-	"insert into option values(13,'tolerance_random',       '1e-8'         )",
-
-	"insert into option values(14,'fit_simulate_index',     null           )",
-	"insert into option values(15,'random_bound',           null           )"
-	};
-	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
-	for(size_t i = 0; i < n_command; i++)
-		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
-
-
+	")";
+	dismod_at::exec_sql_cmd(db, sql_cmd.c_str());
+	//
+	// put name, value pairs in table
+	for(size_t option_id = 0; option_id < n_option; option_id++)
+	{	sql_cmd  = "insert into option values(";
+		sql_cmd += CppAD::to_string(option_id);
+		sql_cmd += ", '";
+		sql_cmd += option_list[option_id].name;
+		if( string( option_list[option_id].value ) == "" )
+			sql_cmd += "', null)";
+		else
+		{	sql_cmd += "', '";
+			sql_cmd += option_list[option_id].value;
+			sql_cmd += "')";
+		}
+		dismod_at::exec_sql_cmd(db, sql_cmd.c_str());
+	}
 	// get the option table
 	vector<dismod_at::option_struct> option_table =
 		dismod_at::get_option_table(db);
-	ok  &= option_table.size() == 16;
 	//
-	ok  &= option_table[0].option_name    == "parent_node_id";
-	ok  &= option_table[0].option_value   == "0";
+	// check that this test sets all the possible values in the option table
+	// (whiht max_num_iter_fixed left out)
+	ok &=  n_option + 1 == option_table.size();
 	//
-	ok  &= option_table[1].option_name    == "number_simulate";
-	ok  &= option_table[1].option_value   == "1";
-	//
-	ok  &= option_table[2].option_name    == "ode_step_size";
-	ok  &= option_table[2].option_value   == "20.0";
-	//
-	ok  &= option_table[3].option_name    == "random_seed";
-	ok  &= option_table[3].option_value   == "0";
-	//
-	ok  &= option_table[4].option_name    == "rate_case";
-	ok  &= option_table[4].option_value   == "iota_pos_rho_pos";
-	//
-	ok  &= option_table[5].option_name    == "quasi_fixed";
-	ok  &= option_table[5].option_value   == "true";
-	//
-	ok  &= option_table[6].option_name    == "derivative_test_fixed";
-	ok  &= option_table[6].option_value   == "first-order";
-	//
-	ok  &= option_table[7].option_name    == "max_num_iter_fixed";
-	ok  &= option_table[7].option_value   == "100";
-	//
-	ok  &= option_table[8].option_name    == "print_level_fixed";
-	ok  &= option_table[8].option_value   == "0";
-	//
-	ok  &= option_table[9].option_name    == "tolerance_fixed";
-	ok  &= option_table[9].option_value   == "1e-8";
-	//
-	ok  &= option_table[10].option_name   == "derivative_test_random";
-	ok  &= option_table[10].option_value  == "second-order";
-	//
-	ok  &= option_table[11].option_name    == "max_num_iter_random";
-	ok  &= option_table[11].option_value   == "100";
-	//
-	ok  &= option_table[12].option_name    == "print_level_random";
-	ok  &= option_table[12].option_value   == "0";
-	//
-	ok  &= option_table[13].option_name    == "tolerance_random";
-	ok  &= option_table[13].option_value   == "1e-8";
-	//
-	ok  &= option_table[14].option_name    == "fit_simulate_index";
-	ok  &= option_table[14].option_value   == "";
-	//
-	ok  &= option_table[15].option_name    == "random_bound";
-	ok  &= option_table[15].option_value   == "";
-	//
+	// check the table entries
+	CppAD::vector<bool> found(n_option);
+	for(size_t option_id = 0; option_id < n_option; option_id++)
+		found[option_id] = false;
+	for(size_t i = 0; i < n_option + 1; i++)
+	{	size_t match = n_option;
+		for(size_t option_id = 0; option_id < n_option; option_id++)
+		{	if( option_table[i].option_name == option_list[option_id].name )
+				match = option_id;
+		}
+		if( option_table[i].option_name == "max_num_iter_fixed" )
+		{	ok &= match == n_option;
+			ok &= option_table[i].option_value == "100";
+		}
+		else
+		{	ok &= match < n_option;
+			if( ok )
+			{	ok &= ! found[match];
+				found[match] = true;
+				ok &= option_list[match].value == option_table[i].option_value;
+			}
+		}
+	}
 	//
 	// close database and return
 	sqlite3_close(db);

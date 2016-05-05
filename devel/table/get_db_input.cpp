@@ -203,9 +203,11 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	// get rate_case
 	std::string rate_case;
 	size_t n_option = db_input.option_table.size();
-	for(size_t option_id = 0; option_id < n_option; option_id++)
-		if( db_input.option_table[option_id].option_name == "rate_case" )
-			rate_case = db_input.option_table[option_id].option_value;
+	//
+	// note index is option_table is not the same as in database
+	for(size_t i = 0; i < n_option; i++)
+		if( db_input.option_table[i].option_name == "rate_case" )
+			rate_case = db_input.option_table[i].option_value;
 	assert( rate_case != "" );
 	// -----------------------------------------------------------------------
 	// other checks

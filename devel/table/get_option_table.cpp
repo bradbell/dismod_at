@@ -17,7 +17,7 @@ $spell
 	std
 $$
 
-$section C++: Get the Node Table Information$$
+$section C++: Get the Option Table Information$$
 
 $head Syntax$$
 $icode%option_table% = get_option_table(%db%)%$$
@@ -52,11 +52,17 @@ The return value $icode option_table$$ has prototype
 $codei%
 	CppAD::vector<option_struct>  %option_table%
 %$$
-For each $cref/option_id/option_table/option_id/$$,
+For $icode%i% = 0 , %...%, %n_option%$$,
 $codei%
-	%option_table%[%option_id%]
+	%option_table%[%i%]
 %$$
-is the information for the corresponding command option.
+is the information for the one option.
+
+$head Special Note$$
+This table is special because the index $icode i$$
+is not the same as $icode option_id$$ in the $cref option_table$$.
+This is because all the options have default values that are used when
+an option does not appear in the actual table.
 
 $children%example/devel/table/get_option_table_xam.cpp
 %$$
@@ -85,189 +91,187 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	//
 	// for error messaging
 	string msg;
-	size_t null_id  = DISMOD_AT_NULL_SIZE_T;
 	//
-	const char* name_list[] = {
-		"number_simulate",
-		"fit_simulate_index",
-		"ode_step_size",
-		"parent_node_id",
-		"random_seed",
-		"rate_case",
-		"quasi_fixed",
-		"derivative_test_fixed",
-		"derivative_test_random",
-		"print_level_fixed",
-		"print_level_random",
-		"max_num_iter_fixed",
-		"max_num_iter_random",
-		"tolerance_fixed",
-		"tolerance_random",
-		"random_bound"
+	// option name and its default value
+	struct { const char* name; const char* value; } option_list[] = {
+		"parent_node_id",                "0",
+		"ode_step_size",                 "10.0",
+		"number_simulate",               "1",
+		"fit_simulate_index",            "",
+		"random_seed",                   "0",
+		"rate_case",                     "iota_pos_rho_zero",
+		//
+		"quasi_fixed",                   "true",
+		"derivative_test_fixed",         "none",
+		"derivative_test_random",        "none",
+		"max_num_iter_fixed",            "100",
+		"max_num_iter_random",           "100",
+		"print_level_fixed",             "0",
+		"print_level_random",            "0",
+		"tolerance_fixed",               "1e-8",
+		"tolerance_random",              "1e-8",
+		"random_bound",                  ""
 	};
-	size_t n_name = sizeof( name_list ) / sizeof( name_list[0] );
-	CppAD::vector<string> name_vec(n_name);
-	for(size_t i = 0; i < n_name; i++)
-		name_vec[i] = name_list[i];
+	size_t n_option = sizeof( option_list ) / sizeof( option_list[0] );
+	CppAD::vector<string> name_vec(n_option), value_vec(n_option);
+	for(size_t i = 0; i < n_option; i++)
+	{	name_vec[i]   = option_list[i].name;
+		value_vec[i]  = option_list[i].value;
+	}
 	//
 	string table_name  = "option";
-	size_t n_option      = check_table_id(db, table_name);
-	if( n_name != n_option )
-	{	msg = "option table does not have " + to_string(n_name) + " rows.";
-		error_exit(db, msg, table_name, null_id);
-	}
+	size_t n_in_table  = check_table_id(db, table_name);
 	//
 	string column_name = "option_name";
 	CppAD::vector<string>  option_name;
 	get_table_column(db, table_name, column_name, option_name);
-	assert( n_option == option_name.size() );
+	assert( n_in_table == option_name.size() );
 	//
 	column_name = "option_value";
 	CppAD::vector<string>  option_value;
 	get_table_column(db, table_name, column_name, option_value);
-	assert( n_option == option_value.size() );
+	assert( n_in_table == option_value.size() );
 	//
-	// check table
-	int derivative_test_fixed_level = -1;
-	int quasi_fixed = -1;
-	//
-	int number_simulate = -1;
-	string fit_simulate_index;
-	for(size_t i = 0; i < n_name; i++)
+	// values in table
+	size_t  derivative_test_fixed_level = 0;
+	bool    quasi_fixed                 = true;
+	int     number_simulate             = 1;
+	string  fit_simulate_index          = "";
+	for(size_t option_id = 0; option_id < n_in_table; option_id++)
 	{	size_t match = n_option;
-		for(size_t option_id = 0; option_id < n_option; option_id++)
+		for(size_t i = 0; i < n_option; i++)
 			if( name_vec[i] == option_name[option_id] )
-				match = option_id;
+				match = i;
 		if( match == n_option )
-		{	msg  = "table does not have a row with ";
-			msg +=  "option_name = ";
-			msg +=  name_vec[i];
-			error_exit(db, msg, table_name, null_id);
+		{	msg +=  option_name[option_id];
+			msg += " is not a valid option_name";
+			error_exit(db, msg, table_name, option_id);
 		}
-		if( name_vec[i] == "rate_case" )
+		value_vec[match] = option_value[option_id];
+		//
+		if( name_vec[match] == "rate_case" )
 		{	bool ok = false;
-			ok     |= option_value[match] == "iota_pos_rho_zero";
-			ok     |= option_value[match] == "iota_zero_rho_pos";
-			ok     |= option_value[match] == "iota_zero_rho_zero";
-			ok     |= option_value[match] == "iota_pos_rho_pos";
+			ok     |= option_value[option_id] == "iota_pos_rho_zero";
+			ok     |= option_value[option_id] == "iota_zero_rho_pos";
+			ok     |= option_value[option_id] == "iota_zero_rho_zero";
+			ok     |= option_value[option_id] == "iota_pos_rho_pos";
 			if( ! ok )
 			{	msg = "option table: rate_case = '";
-				msg += option_value[match] + "'";
-				error_exit(db, msg, table_name, match);
+				msg += option_value[option_id] + "'";
+				error_exit(db, msg, table_name, option_id);
 			}
 		}
-		if( name_vec[i] == "ode_step_size" )
-		{	bool ok = std::atof( option_value[match].c_str() ) > 0.0;
+		if( name_vec[match] == "ode_step_size" )
+		{	bool ok = std::atof( option_value[option_id].c_str() ) > 0.0;
 			if( ! ok )
 			{	msg = "option_value is <= 0.0 for ode_step_size";
-				error_exit(db, msg, table_name, match);
+				error_exit(db, msg, table_name, option_id);
 			}
 		}
-		if( name_vec[i] == "random_seed" )
-		{	bool ok = std::atoi( option_value[match].c_str() ) >= 0;
+		if( name_vec[match] == "random_seed" )
+		{	bool ok = std::atoi( option_value[option_id].c_str() ) >= 0;
 			if( ! ok )
 			{	msg = "option_value is < 0 for random_seed";
-				error_exit(db, msg, table_name, match);
+				error_exit(db, msg, table_name, option_id);
 			}
 		}
-		if( name_vec[i] == "number_simulate" )
-		{	number_simulate = std::atoi( option_value[match].c_str() );
+		if( name_vec[match] == "number_simulate" )
+		{	number_simulate = std::atoi( option_value[option_id].c_str() );
 			bool ok = number_simulate >= 1;
 			if( ! ok )
 			{	msg = "option_value is < 1 for number_simulate";
-				error_exit(db, msg, table_name, match);
+				error_exit(db, msg, table_name, option_id);
 			}
 		}
-		if( name_vec[i] == "fit_simulate_index" )
-		{	fit_simulate_index = option_value[match].c_str();
+		if( name_vec[match] == "fit_simulate_index" )
+		{	fit_simulate_index = option_value[option_id].c_str();
 			if( fit_simulate_index != "" )
 			{	bool ok = std::atoi( fit_simulate_index.c_str() ) >= 0;
 				if( ! ok )
 				{	msg = "option_value is < 0 for fit_simulate_index";
-					error_exit(db, msg, table_name, match);
+					error_exit(db, msg, table_name, option_id);
 				}
 			}
 		}
-		if( name_vec[i] == "quasi_fixed" )
-		{	if( option_value[match] == "true" )
-				quasi_fixed = 1;
-			else if( option_value[match] == "false" )
-				quasi_fixed = 0;
+		if( name_vec[match] == "quasi_fixed" )
+		{	if( option_value[option_id] == "true" )
+				quasi_fixed = true;
+			else if( option_value[option_id] == "false" )
+				quasi_fixed = false;
 			else
 			{	msg = "option_value is not true or false";
-				error_exit(db, msg, table_name, match);
+				error_exit(db, msg, table_name, option_id);
 			}
 		}
 		if(
-			name_vec[i] == "tolerance_fixed" ||
-			name_vec[i] == "tolerance_random"
+			name_vec[match] == "tolerance_fixed" ||
+			name_vec[match] == "tolerance_random"
 		)
-		{	double tolerance = std::atof( option_value[match].c_str() );
+		{	double tolerance = std::atof( option_value[option_id].c_str() );
 			bool ok = 0.0 < tolerance;
 			if( ! ok )
 			{	msg = "option_value is not greater than zero";
-				error_exit(db, msg, table_name, match);
+				error_exit(db, msg, table_name, option_id);
 			}
 		}
-		if( name_vec[i] == "random_bound" )
-		{	std::string random_bound_str = option_value[match];
+		if( name_vec[match] == "random_bound" )
+		{	std::string random_bound_str = option_value[option_id];
 			if( random_bound_str != "" )
 			{	double random_bound = std::atof( random_bound_str.c_str() );
 				bool ok = 1.0 <= random_bound;
 				if( ! ok )
 				{	msg = "option_value is not greater than or equal one.";
-					error_exit(db, msg, table_name, match);
+					error_exit(db, msg, table_name, option_id);
 				}
 			}
 		}
 		if(
-			name_vec[i] == "max_num_iter_fixed" ||
-			name_vec[i] == "max_num_iter_random"
+			name_vec[match] == "max_num_iter_fixed" ||
+			name_vec[match] == "max_num_iter_random"
 		)
-		{	int max_num_iter = std::atoi( option_value[match].c_str() );
+		{	int max_num_iter = std::atoi( option_value[option_id].c_str() );
 			bool ok = -1 <= max_num_iter;
 			if( ! ok )
 			{	msg = "option_value is less than minus one";
-				error_exit(db, msg, table_name, match);
+				error_exit(db, msg, table_name, option_id);
 			}
 		}
 		if(
-			name_vec[i] == "print_level_fixed" ||
-			name_vec[i] == "print_level_random"
+			name_vec[match] == "print_level_fixed" ||
+			name_vec[match] == "print_level_random"
 		)
-		{	int print_level = std::atoi( option_value[match].c_str() );
+		{	int print_level = std::atoi( option_value[option_id].c_str() );
 			bool ok = 0 <= print_level && print_level <= 12;
 			if( ! ok )
 			{	msg = "option_value is not between 0 and 12 inclusive";
-				error_exit(db, msg, table_name, match);
+				error_exit(db, msg, table_name, option_id);
 			}
 		}
 		if(
-			name_vec[i] == "derivative_test_fixed" ||
-			name_vec[i] == "derivative_test_random"
+			name_vec[match] == "derivative_test_fixed" ||
+			name_vec[match] == "derivative_test_random"
 		)
 		{	bool ok = false;
-			ok     |= option_value[match] == "none";
-			ok     |= option_value[match] == "first-order";
-			ok     |= option_value[match] == "second-order";
-			ok     |= option_value[match] == "only-second-order";
+			ok     |= option_value[option_id] == "none";
+			ok     |= option_value[option_id] == "first-order";
+			ok     |= option_value[option_id] == "second-order";
+			ok     |= option_value[option_id] == "only-second-order";
 			if( ! ok )
 			{	msg  = "option_value not one of the following: ";
 				msg += "none, first-order, second-order, only-second-order";
-				error_exit(db, msg, table_name, match);
+				error_exit(db, msg, table_name, option_id);
 			}
-			if( name_vec[i] == "derivative_test_fixed" )
-			{	if( option_value[match] == "none" )
+			if( name_vec[match] == "derivative_test_fixed" )
+			{	if( option_value[option_id] == "none" )
 					derivative_test_fixed_level = 0;
-				else if( option_value[match] == "first-order" )
+				else if( option_value[option_id] == "first-order" )
 					derivative_test_fixed_level = 1;
 				else
 					derivative_test_fixed_level = 2;
 			}
 		}
 	}
-	assert( quasi_fixed != -1 );
-	if( (quasi_fixed == 1) && (derivative_test_fixed_level > 1 ) )
+	if( quasi_fixed && (derivative_test_fixed_level > 1 ) )
 	{	msg  = "quasi_fixed option is true and derivative_test_fixed";
 		msg += " is second-order or only-second-order";
 		error_exit(db, msg, table_name);
@@ -282,8 +286,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	// return table
 	CppAD::vector<option_struct> option_table(n_option);
 	for(size_t i = 0; i < n_option; i++)
-	{	option_table[i].option_name  = option_name[i];
-		option_table[i].option_value = option_value[i];
+	{	option_table[i].option_name  = name_vec[i];
+		option_table[i].option_value = value_vec[i];
 	}
 	return option_table;
 }
