@@ -276,12 +276,7 @@ $end
 	options += "\nNumeric tol " + option_map["tolerance_fixed"];
 	options += "\nInteger print_level " + option_map["print_level_fixed"];
 	options += "\nString derivative_test "+option_map["derivative_test_fixed"];
-	//
-	size_t max_iter = std::atoi( option_map["max_num_iter_fixed"].c_str() );
-	if( max_iter != 0 )
-		options += "\nInteger max_iter " + option_map["max_num_iter_fixed"];
-	else // zero in dismod_at is -1 in cppad_mixed.
-		options += "\nInteger max_iter -1";
+	options += "\nInteger max_iter " + option_map["max_num_iter_fixed"];
 	options += "\nString nlp_scaling_method none";
 	options += "\n";
 	//

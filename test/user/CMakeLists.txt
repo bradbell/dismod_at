@@ -11,11 +11,11 @@
 # Build get_started Examples / Tests
 
 FOREACH(user_case
+	neg_iteration
 	no_data
 	not_ordered
 	relrisk
 	zero_random
-	zero_iteration
 )
 	ADD_CUSTOM_TARGET(
 		check_test_user_${user_case}
@@ -27,9 +27,9 @@ ENDFOREACH(user_case zero_random)
 ADD_CUSTOM_TARGET(
 	check_test_user
 	DEPENDS
+	check_test_user_neg_iteration
 	check_test_user_no_data
 	check_test_user_not_ordered
 	check_test_user_relrisk
 	check_test_user_zero_random
-	check_test_user_zero_iteration
 )

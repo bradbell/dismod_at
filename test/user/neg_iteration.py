@@ -9,6 +9,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # Test a case where lower limit == initial value < upper limit
+# and using max_num_iter_fixed = -1.
 iota_true        = 0.05
 iota_upper       = iota_true * 10;
 iota_initial     = iota_true / 2.0;
@@ -19,7 +20,7 @@ import sys
 import os
 import distutils.dir_util
 import subprocess
-test_program = 'test/user/zero_iteration.py'
+test_program = 'test/user/neg_iteration.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -208,7 +209,7 @@ def example_db (file_name) :
 
 		{ 'name':'quasi_fixed',            'value':'true'              },
 		{ 'name':'derivative_test_fixed',  'value':'none'              },
-		{ 'name':'max_num_iter_fixed',     'value':'0'                 },
+		{ 'name':'max_num_iter_fixed',     'value':'-1'               },
 		{ 'name':'print_level_fixed',      'value':'0'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e+10'             },
 		{ 'name':'random_bound',           'value':None                },
@@ -278,6 +279,6 @@ for var_id in range( len(var_dict) ) :
 		else :
 			assert value ==  0.0
 # -----------------------------------------------------------------------------
-print('zero_iteration.py: OK')
+print('neg_iteration.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

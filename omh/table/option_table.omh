@@ -188,7 +188,7 @@ $subhead max_num_iter$$
 If $icode option_name$$ is
 $code max_num_iter_fixed$$ ($code max_num_iter_random$$),
 the corresponding $icode option_value$$
-is a non-negative integer that specifies the
+is an integer greater than or equal $code -1$$ that specifies the
 maximum number of iterations
 ($code max_iter$$ in Ipopt documentation).
 In the special case $icode%max_num_iter_fixed% == -1%$$,
