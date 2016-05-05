@@ -54,6 +54,7 @@ bool get_option_table_xam(void)
 		"tolerance_fixed",               "1e-7",
 		"tolerance_random",              "1e-7",
 		"random_bound",                  "3.0",
+		"fixed_bound_frac",              "1e-3",
 		//
 		"parent_node_id",                "1",
 		"ode_step_size",                 "20.0",

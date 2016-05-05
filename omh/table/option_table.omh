@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin option_table$$
 $spell
+	frac
 	cppad
 	var
 	pos
@@ -265,6 +266,16 @@ The value plus infinity (for no bounds) is represented by a $code null$$
 should be preferred; i.e., used where possible.
 (This value must be greater than or equal one.)
 The default value for this option is $code null$$.
+
+$subhead fixed_bound_frac$$
+If $icode option_name$$ is
+$code fixed_bound_frac$$
+the corresponding $icode option_value$$
+is greater than zero and lese than or equal one half.
+It determines how much the initial point might have to be modified
+in order to be sufficiently inside the bounds.
+This is called $code bound_frac$$ in the Ipopt documentation.
+The default value for this option is $code 1e-2$$.
 
 
 $children%example/table/option_table.py

@@ -30,6 +30,7 @@ $spell
 	relrisk
 	py
 	nlp
+	frac
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -47,11 +48,13 @@ and $code 0$$, includes the move of the initial variable values
 $lnext
 Change the $cref option_table$$ so that all entries have default values
 and do not need to appear in the table.
+$lnext
+Add the $cref/fixed_bound_frac/option_table/Optimizer/fixed_bound_frac/$$
+option.
 $lend
 
 $head 05-04$$
 $list number$$
-$lnext
 Print the $cref/Ipopt/install_unix/Special Requirements/Ipopt/$$
 library directories during the
 $cref/cmake command/install_unix/dismod_at/Cmake Command/$$.

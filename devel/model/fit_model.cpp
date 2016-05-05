@@ -185,6 +185,7 @@ prior_object_  ( prior_object )
 -----------------------------------------------------------------------------
 $begin fit_model_run_fit$$
 $spell
+	frac
 	const
 	num
 	iter
@@ -220,6 +221,10 @@ $codei%
 	%option_map%["%name%_%fit%"]
 %$$
 is the value in the $cref option_table$$ for the corresponding option.
+It must also have
+$codei%
+	%option_map%["fixed_bound_frac"]
+%$$
 $head Prototype$$
 $srccode%cpp% */
 void fit_model::run_fit(std::map<std::string, std::string>& option_map)
@@ -274,6 +279,7 @@ $end
 	options += "String  sb  yes";
 	options += "\nNumeric bound_relax_factor 0.0";
 	options += "\nNumeric tol " + option_map["tolerance_fixed"];
+	options += "\nNumeric bound_frac " + option_map["fixed_bound_frac"];
 	options += "\nInteger print_level " + option_map["print_level_fixed"];
 	options += "\nString derivative_test "+option_map["derivative_test_fixed"];
 	options += "\nInteger max_iter " + option_map["max_num_iter_fixed"];

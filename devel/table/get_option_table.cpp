@@ -110,7 +110,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		"print_level_random",            "0",
 		"tolerance_fixed",               "1e-8",
 		"tolerance_random",              "1e-8",
-		"random_bound",                  ""
+		"random_bound",                  "",
+		"fixed_bound_frac",              "1e-2"
 	};
 	size_t n_option = sizeof( option_list ) / sizeof( option_list[0] );
 	CppAD::vector<string> name_vec(n_option), value_vec(n_option);

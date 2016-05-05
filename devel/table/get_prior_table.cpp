@@ -162,23 +162,29 @@ CppAD::vector<prior_struct> get_prior_table(sqlite3* db)
 		prior_table[i].std        = std[i];
 		prior_table[i].eta        = eta[i];
 		//
-		// check values
-		if(	mean[i] > prior_table[i].upper )
+		// check values using ok so that nan returns correct result
+		bool ok = mean[i] <= prior_table[i].upper;
+		if(	! ok )
 		{	msg = "mean greater than upper limit";
 			error_exit(db, msg, table_name, i);
 		}
-		if(	mean[i] < prior_table[i].lower )
+		ok = prior_table[i].lower <= mean[i];
+		if(	! ok )
 		{	msg = "mean less than lower limit";
 			error_exit(db, msg, table_name, i);
 		}
-		if( density_id[i] != uniform_enum && std[i] <= 0.0 )
+		ok = density_id[i] == uniform_enum || std[i] > 0.0;
+		if( ! ok )
 		{	msg = "std <= 0 and density is not uniform";
 			error_exit(db, msg, table_name, i);
 		}
-		bool nan_error = density_id[i] == log_gaussian_enum;
-		nan_error     |= density_id[i] == log_laplace_enum;
-		if( nan_error && std::isnan( eta[i] ) )
-		{	msg = "density is log gaussian or log laplace and eta is null";
+		ok  = eta[i] > 0.0;
+		ok |= density_id[i] == gaussian_enum;
+		ok |= density_id[i] == laplace_enum;
+		ok |= density_id[i] == uniform_enum;
+		if( ! ok )
+		{	msg = "density is not guassian, laplace, or uniform\n"
+			"and eta is not greater than zero.";
 			error_exit(db, msg, table_name, i);
 		}
 	}
