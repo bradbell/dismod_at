@@ -526,15 +526,23 @@ def create_database(
 		age_id  = smooth['age_id']
 		time_id = smooth['time_id']
 		fun     = smooth['fun']
+		max_j   = 0
+		for j in age_id :
+			if age_list[j] > age_list[max_j] :
+				max_j = j
+		max_k   = 0
+		for k in time_id :
+			if time_list[k] > age_list[max_k] :
+				max_k = k
 		for j in age_id :
 			for k in time_id :
 				(v,da,dt) = fun(age_list[j], time_list[k])
 				v         = global_prior_name2id[v]
 				da        = global_prior_name2id[da]
 				dt        = global_prior_name2id[dt]
-				if j == age_id[-1] :
+				if j == max_j :
 					da = None
-				if k == time_id[-1] :
+				if k == max_k :
 					dt = None
 				row_list.append( [ i, j, k, v, da, dt] )
 	tbl_name = 'smooth_grid'

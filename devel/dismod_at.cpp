@@ -150,7 +150,7 @@ void init_command(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
 	// -----------------------------------------------------------------------
-	// create data_subset_table
+	// create avgint_subset_table
 	n_subset   = avgint_subset_obj.size();
 	row_value.clear();
 	row_value.resize(n_subset);
