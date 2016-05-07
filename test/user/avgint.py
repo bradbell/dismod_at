@@ -8,7 +8,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin diabetes.py$$ $newlinech #$$
+# $begin avgint.py$$ $newlinech #$$
 # $spell
 # $$
 #
@@ -16,7 +16,7 @@
 #
 # $code
 # $srcfile%
-#	test/user/diabetes.py
+#	test/user/avgint.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -27,7 +27,7 @@ import os
 import copy
 import distutils.dir_util
 import subprocess
-test_program = 'test/user/diabetes.py'
+test_program = 'test/user/avgint.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -48,20 +48,6 @@ def fun_one(a, t) :
 	return 1.0
 def fun_rate(a, t) :
 	return ('prior_rate', 'prior_difference', 'prior_difference')
-def fun_omega(a, t) :
-	if a == 10 :
-		return ('prior_omega_10', 'prior_difference', 'prior_difference')
-	if a == 40 :
-		return ('prior_omega_40', 'prior_difference', 'prior_difference')
-	if a == 65 :
-		return ('prior_omega_65', 'prior_difference', 'prior_difference')
-	if a == 80 :
-		return ('prior_omega_80', 'prior_difference', 'prior_difference')
-	assert False
-def fun_mulcov_std(a, t) :
-	return ('prior_zero', 'prior_difference', 'prior_difference')
-def fun_mulcov_rate(a, t) :
-	return ('prior_zero', 'prior_difference', 'prior_difference')
 # ---------------------------------------------------------------------------
 def data_list2dict(value_list) :
 	key_list = [
@@ -75,21 +61,19 @@ def data_list2dict(value_list) :
 		dict_out[key_list[i]] = value_list[i]
 	return copy.copy( dict_out )
 # ------------------------------------------------------------------------
+# age table: first list fails, second works.
+#             ages are not in order
+age_list    = [ 10.0, 40.0, 0.0,  100.0 ]
+# age_list    = [ 0.0,  10.0, 40.0, 100.0 ]
+# ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
-	# age table
-	#             [ 4 ages for omega, 2 more for rates  ]
-	age_list    = [ 10.0, 40.0, 65.0, 80.0, 0.0, 100.0 ]
-	#
 	# time table
 	time_list   = [ 1990.0, 2015.0 ]
 	#
 	# integrand table
 	integrand_dict = [
-		{ 'name':'Sincidence',  'eta':1e-6 },
-		{ 'name':'prevalence',  'eta':1e-6 },
-		{ 'name':'mtexcess',    'eta':1e-6 },
-		{ 'name': 'relrisk',    'eta':1e-6}
+		{ 'name':'Sincidence',  'eta':1e-6 }
 	]
 	#
 	# node table: world
@@ -103,27 +87,10 @@ def example_db (file_name) :
 	]
 	#
 	# covariate table:
-	covariate_dict = [
-		{'name':'sex', 'reference':0.0, 'max_difference':0.6 },
-		{'name':'one', 'reference':0.0, 'max_difference':None}
-	]
+	covariate_dict = list()
 	#
 	# mulcov table
 	mulcov_dict = list()
-	for integrand in integrand_dict :
-		mulcov_dict.append( {
-			'covariate': 'one',
-			'type':      'meas_std',
-			'effected':  integrand['name'],
-			'smooth':    'smooth_mulcov_std'
-		} )
-	for rate in ['iota', 'chi'] :
-		mulcov_dict.append( {
-			'covariate': 'sex',
-			'type':      'rate_value',
-			'effected':  rate,
-			'smooth':    'smooth_mulcov_rate'
-		} )
 	#
 	# --------------------------------------------------------------------------
 	# data table: order for value_list
@@ -142,35 +109,7 @@ def example_db (file_name) :
 	#
 	value_list = [
 		'Sincidence', 'log_gaussian', 'world',    'weight_one',  0,
-		4.0e-2,       2.0e-2,         80,          80,
-		1995,         1995,           0.0,         1
-	]
-	data_dict.append( data_list2dict( value_list ) );
-	#
-	# mtexcess
-	value_list = [
-		'mtexcess',   'log_gaussian', 'world',    'weight_one',  0,
-		1.6e-4,       0.8e-4,         40,          40,
-		1995,         1995,           0.0,         1
-	]
-	data_dict.append( data_list2dict( value_list ) );
-	value_list = [
-		'mtexcess',   'log_gaussian', 'world',    'weight_one',  0,
-		1.6e-3,       0.8e-3,         80,          80,
-		1995,         1995,           0.0,         1
-	]
-	data_dict.append( data_list2dict( value_list ) );
-	#
-	# prevalence
-	value_list = [
-		'prevalence', 'log_gaussian', 'world',    'weight_one',  0,
-		1.0e-1,       0.5e-1,         40,          40,
-		1995,         1995,           0.0,         1
-	]
-	data_dict.append( data_list2dict( value_list ) );
-	value_list = [
-		'prevalence', 'log_gaussian', 'world',    'weight_one',  0,
-		5.0e-1,       2.5e-1,         80,          80,
+		4.0e-2,       2.0e-2,         100,          100,
 		1995,         1995,           0.0,         1
 	]
 	data_dict.append( data_list2dict( value_list ) );
@@ -201,79 +140,22 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      1.0,
 			'eta':      1e-5
-		},{ # prior_omega_10
-			'name':     'prior_omega_10',
-			'density':  'uniform',
-			'lower':    0.0001,
-			'upper':    0.0001,
-			'mean':     0.0001,
-			'std':      None,
-			'eta':      None
-		},{ # prior_omega_40
-			'name':     'prior_omega_40',
-			'density':  'uniform',
-			'lower':    0.001,
-			'upper':    0.001,
-			'mean':     0.001,
-			'std':      None,
-			'eta':      None
-		},{ # prior_omega_65
-			'name':     'prior_omega_65',
-			'density':  'uniform',
-			'lower':    0.01,
-			'upper':    0.01,
-			'mean':     0.01,
-			'std':      None,
-			'eta':      None
-		},{ # prior_omega_80
-			'name':     'prior_omega_80',
-			'density':  'uniform',
-			'lower':    0.04,
-			'upper':    0.04,
-			'mean':     0.04,
-			'std':      None,
-			'eta':      None
 		}
 	]
 	# --------------------------------------------------------------------------
 	# smooth table
+	middle_age_id  = 1
+	last_time_id   = 2
 	smooth_dict = [
 		{
 		# smooth_rate
 			'name':                     'smooth_rate',
-			'age_id':                   [ 0, 1, 2, 3, 4, 5],
+			'age_id':                   range(len(age_list)),
 			'time_id':                  [0],
 			'mulstd_value_prior_name':  None,
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_rate
-		},{
-		# smooth_omega
-			'name':                     'smooth_omega',
-			'age_id':                   [0, 1, 2, 3],
-			'time_id':                  [0],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
-			'fun':                      fun_omega
-		},{
-		# smooth_mulcov_std
-			'name':                     'smooth_mulcov_std',
-			'age_id':                   [0],
-			'time_id':                  [0],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
-			'fun':                      fun_mulcov_std
-		},{
-		# smooth_mulcov_rate
-			'name':                     'smooth_mulcov_rate',
-			'age_id':                   [0],
-			'time_id':                  [0],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
-			'fun':                      fun_mulcov_rate
 		}
 	]
 	# --------------------------------------------------------------------------
@@ -293,11 +175,11 @@ def example_db (file_name) :
 			'child_smooth':  None
 		},{
 			'name':          'chi',
-			'parent_smooth': 'smooth_rate',
+			'parent_smooth': None,
 			'child_smooth':  None
 		},{
 			'name':          'omega',
-			'parent_smooth': 'smooth_omega',
+			'parent_smooth': None,
 			'child_smooth':  None
 		}
 	]
@@ -373,8 +255,25 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get variable and fit_var tables
-var_dict       = dismod_at.get_table_dict(connection, 'var')
-fit_var_dict   = dismod_at.get_table_dict(connection, 'fit_var')
+var_dict             = dismod_at.get_table_dict(connection, 'var')
+fit_var_dict         = dismod_at.get_table_dict(connection, 'fit_var')
+fit_data_subset_dict = dismod_at.get_table_dict(connection, 'fit_data_subset')
 # -----------------------------------------------------------------------------
-print('diabetes.py: OK')
+count = 0
+n_var = len(var_dict)
+for var_id in range(n_var) :
+	var    = var_dict[var_id]
+	age_id = var['age_id']
+	age    = age_list[age_id]
+	if age == 40 :
+		fit           = fit_var_dict[var_id]
+		iota_at_40    = fit['variable_value']
+		data          = fit_data_subset_dict[0]
+		avgint_at_40  = data['avg_integrand']
+		print(iota_at_40, avgint_at_40)
+		assert abs( avgint_at_40 / iota_at_40 - 1.0 ) < 1e-10
+		count += 1
+
+
+print('avgint.py: OK')
 # END PYTHON

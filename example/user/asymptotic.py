@@ -78,6 +78,7 @@ import math
 import numpy
 import sys
 import os
+import copy
 import distutils.dir_util
 import subprocess
 test_program = 'example/user/asymptotic.py'
@@ -137,10 +138,6 @@ def fun_rate_parent(a, t) :
 	return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
-	import sys
-	import os
-	import copy
-	import dismod_at
 	# ----------------------------------------------------------------------
 	# age table
 	age_list    = [    0.0,   100.0 ]

@@ -28,6 +28,7 @@ import sys
 import os
 import distutils.dir_util
 import subprocess
+import copy
 test_program = 'example/user/predict_fit.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -58,10 +59,6 @@ def fun_rate_parent(a, t) :
 	return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
-	import sys
-	import os
-	import copy
-	import dismod_at
 	# ----------------------------------------------------------------------
 	# age table
 	age_list    = [    0.0, 50.0,    100.0 ]

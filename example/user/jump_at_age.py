@@ -35,6 +35,7 @@ import sys
 import os
 import distutils.dir_util
 import subprocess
+import copy
 test_program = 'example/user/jump_at_age.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -79,9 +80,6 @@ def omega_true(age) :
 	return omega_0 + (age - 0.0) * slope
 # ------------------------------------------------------------------------
 def example_db (file_name) :
-	import copy
-	import dismod_at
-	import math
 	# ----------------------------------------------------------------------
 	# age table (in age_list above)
 	age_list = sorted( set( iota_age_list + omega_age_list ) )

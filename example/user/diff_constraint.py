@@ -29,6 +29,7 @@ import sys
 import os
 import distutils.dir_util
 import subprocess
+import copy
 test_program = 'example/user/diff_constraint.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -54,8 +55,6 @@ def fun_rate_parent(a, t) :
 	return ('prior_value_parent', 'prior_diff_parent', 'prior_diff_parent')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
-	import copy
-	import dismod_at
 	# ----------------------------------------------------------------------
 	# age table
 	age_list    = [    0.0, 50.0,    100.0 ]

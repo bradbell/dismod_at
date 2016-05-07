@@ -31,6 +31,7 @@ import sys
 import os
 import distutils.dir_util
 import subprocess
+import copy
 test_program = 'example/user/fit_sim.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -58,9 +59,6 @@ def fun_mulcov(a, t) :
 	return ('prior_mulcov', 'prior_gauss_zero', 'prior_gauss_zero')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
-	import copy
-	import dismod_at
-	import math
 	# ----------------------------------------------------------------------
 	# age table:
 	age_list    = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]
