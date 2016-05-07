@@ -32,10 +32,17 @@
 #
 # $head 2DO$$
 # $list number$$
-# Install this program so that it can be run from locations other than
-# the dismod_at distribution directory.
+# Install a program so that this operation can be run from locations other than
+# the dismod_at distribution directory; see
+# $cref/wish_list/wish_list/database2csv/$$
 # $lnext
 # Write some automated tests for this program.
+# $lnext
+# If the $cref predict_table$$ is available, include the information for
+# $cref/sample_index/predict_table/sample_index/$$ zero
+# in the $code data.csv$$ file.
+# (This will corresponding to the $cref/sam_value/database2csv.py/$$ column
+# because it also uses $icode%sample_index% == 0%$$.
 # $lend
 #
 # $head Convention$$
@@ -89,7 +96,8 @@
 #
 # $subhead sam_value$$
 # If the $cref sample_command$$ has not been run, this is the
-# $cref/var_value/sample_table/var_value/$$.
+# $cref/var_value/sample_table/var_value/$$ corresponding to
+# $cref/sample_index/sample_table/sample_index/$$ equal to zero.
 #
 # $subhead fit_value$$
 # If the $cref fit_command$$ has not been run, this is the

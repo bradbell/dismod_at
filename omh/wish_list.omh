@@ -27,15 +27,26 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head database2csv$$
+Add the command
+$codei%
+	dismod_at %database% database2csv
+%$$
+which would output two csv files similar to the current behavior of
+$cref database2csv.py$$. This would have the advantage that it could be run
+from any directory. The program $code database2csv.py$$ must be run from
+the distribution directory. It would require installing a python module to get
+$codei%
+	dismod_a.py %database% database2csv
+%$$
+to work.
+
 $head Scaling Optimization$$
 Better documentation (and testing) for the
 $cref/scaling/fit_model_run_fit/Scaled/$$ in the fixed effects optimization problem.
 In addition key the scaling off the fixed effects value prior having
 a non $code null$$  value for $cref/eta_j/fixed_value/eta_j/$$;
 see $cref/eta/prior_table/eta/$$.
-
-$head database2csv.py$$
-Write automated tests for $cref database2csv.py$$.
 
 $head Constrain Random Effects$$
 

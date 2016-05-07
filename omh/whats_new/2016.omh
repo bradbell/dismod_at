@@ -31,6 +31,7 @@ $spell
 	py
 	nlp
 	frac
+	csv
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -38,6 +39,14 @@ $section Changes and Additions to Dismod_at During 2016$$
 
 $childtable%omh/whats_new/2015.omh
 %$$
+
+$head 05-07$$
+$list number$$
+Add a $cref/database2csv/wish_list/database2csv/$$ item
+to the wish list.
+$lnext
+Start work on $code test/diabetes.py$$ (under construction).
+$lend
 
 $head 05-06$$
 Advance to $code cppad_mixed-20160506$$ to fix a bug in
