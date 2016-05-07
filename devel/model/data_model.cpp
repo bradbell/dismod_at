@@ -1495,8 +1495,8 @@ residual_struct<Float> data_model::like_one(
 		difference
 	);
 	//
-	// switch the sign of the residual because it is computed at
-	// model minus adjusted data (to avoid having model scale the variance)
+	// switch the sign of the residual because it is computed as
+	// model minus data (to avoid having model scale the variance)
 	residual.wres = - residual.wres;
 	//
 	return residual;
