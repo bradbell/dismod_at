@@ -46,8 +46,6 @@ os.chdir('build/test/user')
 # note that the a, t values are not used for this example
 def fun_one(a, t) :
 	return 1.0
-def fun_zero(a, t) :
-	return ('prior_zero', 'prior_difference', 'prior_difference')
 def fun_rate(a, t) :
 	return ('prior_rate', 'prior_difference', 'prior_difference')
 def fun_omega(a, t) :
@@ -244,15 +242,6 @@ def example_db (file_name) :
 	last_time_id   = 2
 	smooth_dict = [
 		{
-		# smooth_zero
-			'name':                     'smooth_zero',
-			'age_id':                   [0],
-			'time_id':                  [0],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
-			'fun':                      fun_zero
-		},{
 		# smooth_rate
 			'name':                     'smooth_rate',
 			'age_id':                   [ 0, 1, 2, 3, 4, 5],
@@ -295,7 +284,7 @@ def example_db (file_name) :
 	rate_dict = [
 		{
 			'name':          'pini',
-			'parent_smooth': 'smooth_zero',
+			'parent_smooth': None,
 			'child_smooth':  None
 		},{
 			'name':          'iota',
@@ -303,7 +292,7 @@ def example_db (file_name) :
 			'child_smooth':  None
 		},{
 			'name':          'rho',
-			'parent_smooth': 'smooth_zero',
+			'parent_smooth': None,
 			'child_smooth':  None
 		},{
 			'name':          'chi',
