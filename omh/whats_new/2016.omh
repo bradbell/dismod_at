@@ -42,6 +42,10 @@ $childtable%omh/whats_new/2015.omh
 
 $head 05-07$$
 $list number$$
+Fix a bug that occurred when the minimum (maximum)
+value in the $cref age_table$$ and $cref time_table$$ was not
+the first (last) entry.
+$lnext
 Add a $cref/database2csv/wish_list/database2csv/$$ item
 to the wish list.
 $lnext

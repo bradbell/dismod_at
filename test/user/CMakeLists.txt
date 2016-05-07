@@ -11,6 +11,7 @@
 # Build get_started Examples / Tests
 
 FOREACH(user_case
+	avgint
 	bound_frac
 	neg_iteration
 	no_data
@@ -28,6 +29,7 @@ ENDFOREACH(user_case zero_random)
 ADD_CUSTOM_TARGET(
 	check_test_user
 	DEPENDS
+	check_test_user_avgint
 	check_test_user_bound_frac
 	check_test_user_neg_iteration
 	check_test_user_no_data

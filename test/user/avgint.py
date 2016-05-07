@@ -8,20 +8,9 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin avgint.py$$ $newlinech #$$
-# $spell
-# $$
-#
-# $section A Diabetes Example$$
-#
-# $code
-# $srcfile%
-#	test/user/avgint.py
-#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
-# $end
+# This tests for a bug in the average integrand when the first (last) entry in
+# the age (time) table was not the minimum (maximum) entry.
 # ---------------------------------------------------------------------------
-# BEGIN PYTHON
 import sys
 import os
 import copy
@@ -64,7 +53,6 @@ def data_list2dict(value_list) :
 # age table: first list fails, second works.
 #             ages are not in order
 age_list    = [ 10.0, 40.0, 0.0,  100.0 ]
-# age_list    = [ 0.0,  10.0, 40.0, 100.0 ]
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
@@ -187,24 +175,12 @@ def example_db (file_name) :
 	# option_dict
 	option_dict = [
 		{ 'name':'parent_node_name',       'value':'world'             },
-		{ 'name':'number_simulate',        'value':'1'                 },
-		{ 'name':'fit_simulate_index',     'value':None                },
-		{ 'name':'ode_step_size',          'value':'10.0'              },
-		{ 'name':'random_seed',            'value':'0'                 },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		#
 		{ 'name':'quasi_fixed',            'value':'false'             },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'       },
-		{ 'name':'max_num_iter_fixed',     'value':'100'               },
-		{ 'name':'print_level_fixed',      'value':'5'                 },
-		{ 'name':'tolerance_fixed',        'value':'1e-8'              },
-		{ 'name':'fixed_bound_frac',       'value':'1e-2'              },
 		#
-		{ 'name':'random_bound',           'value':None                },
-		{ 'name':'derivative_test_random', 'value':'second-order'      },
-		{ 'name':'max_num_iter_random',    'value':'100'               },
-		{ 'name':'print_level_random',     'value':'0'                 },
-		{ 'name':'tolerance_random',       'value':'1e-10'             }
+		{ 'name':'derivative_test_random', 'value':'second-order'      }
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: same order as list of integrands
@@ -270,10 +246,8 @@ for var_id in range(n_var) :
 		iota_at_40    = fit['variable_value']
 		data          = fit_data_subset_dict[0]
 		avgint_at_40  = data['avg_integrand']
-		print(iota_at_40, avgint_at_40)
 		assert abs( avgint_at_40 / iota_at_40 - 1.0 ) < 1e-10
 		count += 1
 
 
 print('avgint.py: OK')
-# END PYTHON

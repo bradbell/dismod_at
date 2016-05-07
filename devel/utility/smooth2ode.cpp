@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -139,9 +139,11 @@ $codei%
 %$$
 is the value of the interpolated value for the variable at
 $codei%
-	%age%  = %a_i% =  %age_table%[0] + %i%(%k%) * %ode_step_size%
-	%time% = %t_j% = %time_table%[0] + %j%(%k%) * %ode_step_size%
+	%age%  = %a_i% =  %age_min% + %i%(%k%) * %ode_step_size%
+	%time% = %t_j% =  %time_min% + %j%(%k%) * %ode_step_size%
 %$$
+where $icode age_min$$ ($icode time_min$$) is the minimum value
+in $icode age_table$$ ($icode time_table$$).
 
 $children%example/devel/utility/smooth2ode_xam.cpp
 %$$
@@ -152,6 +154,7 @@ of using this routine.
 $end
 -----------------------------------------------------------------------------
 */
+# include <dismod_at/min_max_vector.hpp>
 # include <dismod_at/smooth2ode.hpp>
 # include <dismod_at/a2_double.hpp>
 
@@ -172,14 +175,14 @@ n_age_si_        ( s_info.age_size() )   ,
 n_time_si_       ( s_info.time_size() )
 {	size_t i, j;
 	//
+	double age_min  = min_vector( age_table );
+	double time_min = min_vector( time_table );
 # ifndef NDEBUG
-	double age_min = age_table[0];
-	double age_max = age_table[ age_table.size() - 1];
+	double age_max    = max_vector( age_table );
 	assert( age_max  <= age_min + (n_age_ode-1) * ode_step_size );
 	//
-	double time_min = time_table[0];
-	double time_max = time_table[ time_table.size() - 1];
-	assert( time_max  <= time_min + (n_time_ode-1) * ode_step_size );
+	double time_max   = max_vector( time_table );
+	assert( time_max <= time_min + (n_time_ode-1) * ode_step_size );
 # endif
 	// smoothing grid information
 	size_t i_si        = 0;
@@ -194,7 +197,7 @@ n_time_si_       ( s_info.time_size() )
 	// compute the coefficients for each computational grid point
 	coefficient_.resize( n_age_ode * n_time_ode );
 	for(i = 0; i < n_age_ode; i++)
-	{	double age   = i * ode_step_size + age_table[0];
+	{	double age   = i * ode_step_size + age_min;
 		//
 		if( age <= age_min_si )
 			i_si = 0;
@@ -215,7 +218,7 @@ n_time_si_       ( s_info.time_size() )
 		//
 		for(j = 0; j < n_time_ode; j++)
 		{	// ode grid information
-			double time  = j * ode_step_size + time_table[0];
+			double time  = j * ode_step_size + time_min;
 			//
 			if( time <= time_min_si )
 				j_si = 0;
