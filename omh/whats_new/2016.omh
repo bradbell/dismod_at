@@ -40,6 +40,20 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 05-08$$
+$list number$$
+Advance to $code cppad_mixed-20160508$$.
+This enables one the sample using
+$cref/asymptotic/sample_command/method/asymptotic/$$ statistics
+when the information matrix is singular,
+by setting the $cref/lower/prior_table/lower/$$ and upper limits
+equal for variables that have non-positive Hessian.
+$lnext
+During the $cref sample_command$$,
+detect when the Hessian with respect to a fixed effect is not positive
+and report the corresponding $cref/var_id/var_table/var_id/$$.
+$lend
+
 $head 05-07$$
 $list number$$
 Fix a bug that occurred when the minimum (maximum)

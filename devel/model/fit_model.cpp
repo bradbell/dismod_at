@@ -463,6 +463,7 @@ $head Syntax$$
 $codei%sample_posterior(
 	%sample%,
 	%variable_value%,
+	%lagrange_value%,
 	%lagrange_dage%,
 	%lagrange_dtime%,
 	%option_map%
@@ -577,6 +578,37 @@ $end
 		pack_vec[i] = prior_table_[ value_prior_[i] ].upper;
 	unpack_fixed(pack_object_, pack_vec, fixed_upper);
 	scale_fixed_effect(fixed_upper, fixed_upper);
+	//
+	// check diagonal of information matrix is positive
+	// (except for bound constrained variables)
+	CppAD::vector<size_t> pack_index = fixed2var_id(pack_object_);
+	CppAD::vector<bool>   ok(n_fixed_);
+	for(size_t j = 0; j < n_fixed_; j++)
+	{	ok[j]  = fixed_lower[j] == fixed_upper[j];
+		ok[j] |= solution.fixed_lag[j] != 0.0;
+	}
+	size_t K = information_info.row.size();
+	for(size_t k = 0; k < K; k++)
+	{	size_t i = information_info.row[k];
+		size_t j = information_info.col[k];
+		double v = information_info.val[k];
+		if( i == j )
+			ok[j] = v > 0.0;
+	}
+	std::string msg = "";
+	for(size_t j = 0; j < n_fixed_; j++)
+	{	if( ! ok[j] )
+		{	if( msg == "" )
+			{	msg = "Hessian w.r.t following variables not positive\n";
+				msg += "and they are not bound constrained: var_id =";
+				msg += " " + CppAD::to_string( pack_index[j] );
+			}
+			else
+				msg += "," + CppAD::to_string( pack_index[j] );
+		}
+	}
+	if( msg != "" )
+		error_exit(db_, msg);
 	//
 	// sample_fix
 	CppAD::vector<double> sample_fix(n_sample * n_fixed_);
