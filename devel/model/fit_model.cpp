@@ -44,6 +44,13 @@ $head db$$
 This argument is the database connection for
 $cref/logging/log_message/$$ errors and warnings.
 
+$head fit_or_sample$$
+This argument is either $code fit$$ or $code sample$$.
+If it is $code fit$$ ($code sample$$)
+the $cref/run_fit/fit_model_run_fit/$$
+( $cref/sample_posterior/fit_model_sample_posterior/$$ )
+function can be used with this object.
+
 $head pack_object$$
 This argument is the $cref pack_info$$ information corresponding to the
 $cref model_variables$$.
@@ -80,6 +87,7 @@ $head Prototype$$
 $srccode%cpp% */
 fit_model::fit_model(
 	sqlite3*                              db           ,
+	const std::string&                    fit_or_sample,
 	const pack_info&                      pack_object  ,
 	const CppAD::vector<double>&          start_var    ,
 	const CppAD::vector<prior_struct>&    prior_table  ,
@@ -99,6 +107,7 @@ cppad_mixed(
 	A_info
 ) ,
 db_            (db)                                 ,
+fit_or_sample_ ( fit_or_sample                   )  ,
 n_fixed_       ( size_fixed_effect(pack_object)  )  ,
 n_random_      ( size_random_effect(pack_object) )  ,
 pack_object_   ( pack_object )                      ,
@@ -107,7 +116,8 @@ prior_table_   ( prior_table )                      ,
 s_info_vec_    ( s_info_vec  )                      ,
 data_object_   ( data_object )                      ,
 prior_object_  ( prior_object )
-{
+{	assert( fit_or_sample == "fit" || fit_or_sample == "sample" );
+	//
 	// ----------------------------------------------------------------------
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object.size() == n_var );
@@ -145,10 +155,11 @@ prior_object_  ( prior_object )
 	for(size_t var_id = 0; var_id < n_var; var_id++)
 	{	size_t fixed_id = var_id2fixed_[var_id];
 		if( fixed_id < n_fixed_ )
-		{	size_t prior_id            = value_prior_[var_id];
-			prior_struct prior         = prior_table[prior_id];
-			fixed_scale_eta_[fixed_id] = prior.eta;
-			fixed_is_scaled_[fixed_id] = ! std::isnan( prior.eta );
+		{	size_t prior_id             = value_prior_[var_id];
+			prior_struct prior          = prior_table[prior_id];
+			fixed_scale_eta_[fixed_id]  = prior.eta;
+			fixed_is_scaled_[fixed_id]  = ! std::isnan( prior.eta );
+			fixed_is_scaled_[fixed_id] &= fit_or_sample == "fit";
 			bool ok = std::isnan(prior.eta);
 			ok     |= prior.lower + prior.eta > 0.0;
 			if( ! ok  )
@@ -193,7 +204,8 @@ $icode%fit_object%.run_fit(%option_map%)
 %$$
 
 $head fit_object$$
-see $cref/fit_object/fit_model_ctor/fit_object/$$.
+This object must have been constructed with
+$cref/fit_or_sample/fit_model_ctor/fit_or_sample/$$ equal to $code fit$$.
 
 $head Scaled$$
 During optimization of fixed effects all the $cref model_variables$$
@@ -224,7 +236,9 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 /* %$$
 $end
 */
-{	size_t n_var = n_fixed_ + n_random_;
+{	assert( fit_or_sample_ == "fit" );
+	//
+	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
 	assert( value_prior_.size() == n_var );
 	CppAD::vector<double> pack_vec( n_var );
@@ -443,7 +457,7 @@ $end
 }
 /*
 ---------------------------------------------------------------------------
-$begin sample_posterior$$
+$begin fit_model_sample_posterior$$
 $spell
 	dage
 	dtime
@@ -453,7 +467,7 @@ $$
 $section Sample From Posterior Distribution for a Fit$$
 
 $head Syntax$$
-$codei%sample_posterior(
+$icode%fit_object%.sample_posterior(
 	%sample%,
 	%variable_value%,
 	%lagrange_value%,
@@ -461,6 +475,10 @@ $codei%sample_posterior(
 	%lagrange_dtime%,
 	%option_map%
 )%$$
+
+$head fit_object$$
+This object must have been constructed with
+$cref/fit_or_sample/fit_model_ctor/fit_or_sample/$$ equal to $code sample$$.
 
 $head sample$$
 This argument is a vector with size equal to the number of samples
@@ -517,7 +535,8 @@ void fit_model::sample_posterior(
 /* %$$
 $end
 */
-{
+{	assert( fit_or_sample_ == "sample" );
+	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( sample.size() % n_var == 0     );
 	assert( variable_value.size() == n_var );
@@ -586,7 +605,8 @@ $end
 		size_t j = information_info.col[k];
 		double v = information_info.val[k];
 		if( i == j )
-			ok[j] |= v > 0.0;
+		{	ok[j] |= v > 0.0;
+		}
 	}
 	std::string msg = "";
 	for(size_t j = 0; j < n_fixed_; j++)

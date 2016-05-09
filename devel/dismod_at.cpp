@@ -576,8 +576,10 @@ void fit_command(
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
 	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
 	CppAD::mixed::sparse_mat_info A_info; // empty matrix
+	string fit_or_sample = "fit";
 	dismod_at::fit_model fit_object(
 		db                   ,
+		fit_or_sample        ,
 		pack_object          ,
 		start_var            ,
 		db_input.prior_table ,
@@ -1140,8 +1142,10 @@ void sample_command(
 			data_object.replace_like(data_subset_obj);
 
 			// fit_model
+			string fit_or_sample = "fit";
 			dismod_at::fit_model fit_object(
 				db                   ,
+				fit_or_sample        ,
 				pack_object          ,
 				truth_var_value      ,
 				db_input.prior_table ,
@@ -1212,8 +1216,10 @@ void sample_command(
 	unpack_random(pack_object, variable_value, random_opt);
 	//
 	// fit_object
+	string fit_or_sample = "sample";
 	dismod_at::fit_model fit_object(
 		db                   ,
+		fit_or_sample        ,
 		pack_object          ,
 		variable_value       ,
 		db_input.prior_table ,

@@ -319,8 +319,10 @@ bool fit_model_xam(void)
 	// ----------------------- run the fit -------------------------------
 	bool quasi_fixed = false;
 	CppAD::mixed::sparse_mat_info A_info; // empty matrix
+	std::string fit_or_sample = "fit";
 	dismod_at::fit_model fit_object(
 		db,
+		fit_or_sample,
 		pack_object,
 		start_var,
 		prior_table,

@@ -36,6 +36,7 @@ namespace dismod_at {
 	private:
 		// const member variables
 		sqlite3*                           db_;
+		const std::string                  fit_or_sample_;
 		const size_t                       n_fixed_;
 		const size_t                       n_random_;
 		const pack_info&                   pack_object_;
@@ -142,6 +143,7 @@ namespace dismod_at {
 		// constructor
 		fit_model(
 			sqlite3*                             db           ,
+			const std::string&                   fit_or_sample,
 			const pack_info&                     pack_object  ,
 			const CppAD::vector<double>&         start_var    ,
 			const CppAD::vector<prior_struct>&   prior_table  ,

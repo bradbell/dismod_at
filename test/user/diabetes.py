@@ -208,7 +208,7 @@ def example_db (file_name) :
 			'upper':    0.0001,
 			'mean':     0.0001,
 			'std':      None,
-			'eta':      None
+			'eta':      1e-5
 		},{ # prior_omega_40
 			'name':     'prior_omega_40',
 			'density':  'uniform',
@@ -216,7 +216,7 @@ def example_db (file_name) :
 			'upper':    0.001,
 			'mean':     0.001,
 			'std':      None,
-			'eta':      None
+			'eta':      1e-5
 		},{ # prior_omega_65
 			'name':     'prior_omega_65',
 			'density':  'uniform',
@@ -224,7 +224,7 @@ def example_db (file_name) :
 			'upper':    0.01,
 			'mean':     0.01,
 			'std':      None,
-			'eta':      None
+			'eta':      1e-5
 		},{ # prior_omega_80
 			'name':     'prior_omega_80',
 			'density':  'uniform',
@@ -232,7 +232,7 @@ def example_db (file_name) :
 			'upper':    0.04,
 			'mean':     0.04,
 			'std':      None,
-			'eta':      None
+			'eta':      1e-5
 		}
 	]
 	# --------------------------------------------------------------------------
