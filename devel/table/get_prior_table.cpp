@@ -79,6 +79,8 @@ The standard deviation $icode%std% > 0%$$
 (except for the uniform density case).
 $lnext
 In the log density cases $icode eta$$ is not null.
+In the other density cases $icode%eta% > 0%$$.
+$lnext
 $lend
 
 $children%example/devel/table/get_prior_table_xam.cpp

@@ -40,6 +40,12 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 05-09$$
+Change the scaling of fixed effect
+to key off $icode eta$$ not $code null$$ in value priors; see
+$cref/scaling/prior_table/eta/Scaling/$$.
+This enables more user choice over which fixed effects get scaled.
+
 $head 05-08$$
 $list number$$
 Advance to $code cppad_mixed-20160508$$.

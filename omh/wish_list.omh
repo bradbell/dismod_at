@@ -41,13 +41,6 @@ $codei%
 %$$
 to work.
 
-$head Scaling Optimization$$
-Better documentation (and testing) for the
-$cref/scaling/fit_model_run_fit/Scaled/$$ in the fixed effects optimization problem.
-In addition key the scaling off the fixed effects value prior having
-a non $code null$$  value for $cref/eta_j/fixed_value/eta_j/$$;
-see $cref/eta/prior_table/eta/$$.
-
 $head Constrain Random Effects$$
 
 $subhead Sum to Zero$$
@@ -88,11 +81,6 @@ extended to include derivatives with respect to parameters; see
 $href%http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm
 	%checkpoint_extended_ode
 %$$.
-
-$head Compute Posterior Statistics$$
-It would be much faster to use a Cholesky factor of the
-Hessian of the objective to approximate the posterior distribution of the
-$cref model_variables$$.
 
 $head Reduce Number of ODE Solutions$$
 Currently we compute a separate solution of the ODE for each data point.

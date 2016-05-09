@@ -141,33 +141,28 @@ prior_object_  ( prior_object )
 	fixed_is_scaled_.resize(n_fixed_);
 	fixed_scale_eta_.resize(n_fixed_);
 	for(size_t j = 0; j < n_fixed_; j++)
-	{	fixed_is_scaled_[j] = false;
-		fixed_scale_eta_[j] = std::numeric_limits<double>::quiet_NaN();
-	}
+		fixed_scale_eta_[j] = - inf;
 	for(size_t var_id = 0; var_id < n_var; var_id++)
 	{	size_t fixed_id = var_id2fixed_[var_id];
 		if( fixed_id < n_fixed_ )
-		{	prior_struct prior   = prior_table[ value_prior_[var_id] ];
-			density_enum density = density_enum(prior.density_id);
-			switch( density )
-			{
-				case uniform_enum:
-				case gaussian_enum:
-				case laplace_enum:
-				break;
-
-				case log_gaussian_enum:
-				case log_laplace_enum:
-				assert( prior.eta > 0 );
-				fixed_is_scaled_[fixed_id] = true;
-				fixed_scale_eta_[fixed_id] = prior.eta;
-				break;
-
-				default:
-				assert(false);
+		{	size_t prior_id            = value_prior_[var_id];
+			prior_struct prior         = prior_table[prior_id];
+			fixed_scale_eta_[fixed_id] = prior.eta;
+			fixed_is_scaled_[fixed_id] = ! std::isnan( prior.eta );
+			bool ok = std::isnan(prior.eta);
+			ok     |= prior.lower + prior.eta > 0.0;
+			if( ! ok  )
+			{	std::string	msg = "eta != null, lower + eta <= 0, and\n";
+				msg += "this is a value prior for a fixed effect";
+				error_exit(db_, msg, "prior", prior_id);
 			}
 		}
 	}
+# ifndef NDEBUG
+	// check that all the fixed effects scale values have been set
+	for(size_t j = 0; j < n_fixed_; j++)
+		assert( ! (fixed_scale_eta_[j] == - inf) );
+# endif
 	// ---------------------------------------------------------------------
 	// initialize the cppad_mixed object
 	//
@@ -194,7 +189,7 @@ $$
 $section Run optimization to determine the optimal fixed and random effects$$
 
 $head Syntax$$
-$codei%fit_object.run_fit(%option_map%)
+$icode%fit_object%.run_fit(%option_map%)
 %$$
 
 $head fit_object$$
@@ -202,11 +197,9 @@ see $cref/fit_object/fit_model_ctor/fit_object/$$.
 
 $head Scaled$$
 During optimization of fixed effects all the $cref model_variables$$
-that have a log-Gaussian or log-Laplace distribution for their value prior
-are scaled.
-To be specific,
-the optimization take place in the offset log transform space defined
-by the prior for each variable.
+that do not have $code null$$ $icode eta$$ in their value prior
+are scaled during optimization; see
+$cref/scaling/prior_table/eta/Scaling/$$.
 
 $head option_map$$
 This argument is effectively $code const$$ and
