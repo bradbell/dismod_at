@@ -45,7 +45,7 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='ffe5a082ecc9b035de6979d425cd4a85b60dc210'
+hash_key='ce6671056958be2b4e0a4db848d7495be90d1949'
 version='20160508'
 # --------------------------------------------------------------------------
 if [ ! -e build/external ]
