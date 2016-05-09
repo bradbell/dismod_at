@@ -314,7 +314,7 @@ def example_db (file_name) :
 		{ 'name':'quasi_fixed',            'value':'false'             },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'       },
 		{ 'name':'max_num_iter_fixed',     'value':'100'               },
-		{ 'name':'print_level_fixed',      'value':'5'                 },
+		{ 'name':'print_level_fixed',      'value':'0'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-8'              },
 		{ 'name':'fixed_bound_frac',       'value':'1e-2'              },
 		#
@@ -359,10 +359,12 @@ def example_db (file_name) :
 file_name             = 'example.db'
 (n_smooth, rate_true) = example_db(file_name)
 program               = '../../devel/dismod_at'
-for command in [ 'init', 'start', 'fit' ] :
+for command in [ 'init', 'start', 'fit', 'sample' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'start' :
 		cmd.append('prior_mean')
+	if command == 'sample' :
+		cmd.append('asymptotic')
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :

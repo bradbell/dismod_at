@@ -586,7 +586,7 @@ $end
 		size_t j = information_info.col[k];
 		double v = information_info.val[k];
 		if( i == j )
-			ok[j] = v > 0.0;
+			ok[j] |= v > 0.0;
 	}
 	std::string msg = "";
 	for(size_t j = 0; j < n_fixed_; j++)
