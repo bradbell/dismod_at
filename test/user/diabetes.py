@@ -25,6 +25,7 @@
 import sys
 import os
 import copy
+import numpy
 import distutils.dir_util
 import subprocess
 test_program = 'test/user/diabetes.py'
@@ -88,8 +89,7 @@ def example_db (file_name) :
 	integrand_dict = [
 		{ 'name':'Sincidence',  'eta':1e-6 },
 		{ 'name':'prevalence',  'eta':1e-6 },
-		{ 'name':'mtexcess',    'eta':1e-6 },
-		{ 'name': 'relrisk',    'eta':1e-6}
+		{ 'name':'mtexcess',    'eta':1e-6 }
 	]
 	#
 	# node table: world
@@ -199,7 +199,7 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      1.0,
+			'std':      0.7,
 			'eta':      1e-5
 		},{ # prior_omega_10
 			'name':     'prior_omega_10',
@@ -305,7 +305,7 @@ def example_db (file_name) :
 	# option_dict
 	option_dict = [
 		{ 'name':'parent_node_name',       'value':'world'             },
-		{ 'name':'number_simulate',        'value':'1'                 },
+		{ 'name':'number_simulate',        'value':'1000'              },
 		{ 'name':'fit_simulate_index',     'value':None                },
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'random_seed',            'value':'0'                 },
@@ -377,6 +377,31 @@ connection      = dismod_at.create_connection(file_name, new)
 # get variable and fit_var tables
 var_dict       = dismod_at.get_table_dict(connection, 'var')
 fit_var_dict   = dismod_at.get_table_dict(connection, 'fit_var')
+sample_dict    = dismod_at.get_table_dict(connection, 'sample')
 # -----------------------------------------------------------------------------
+n_var     = len( var_dict )
+assert len( sample_dict ) % n_var == 0
+n_sample      = len( sample_dict ) / n_var
+sample_array  = numpy.zeros( (n_sample, n_var) , dtype = float )
+for row in sample_dict :
+	sample_index = row['sample_index']
+	var_id       = row['var_id']
+	var_value    = row['var_value']
+	sample_array[sample_index, var_id] = var_value
+axis = 0
+sample_mean  = numpy.mean(sample_array, axis)
+sample_std   = numpy.std(sample_array, axis)
+text = "{:>11s} {:>11s} {:>11s} {:>11s}"
+text = text.format('i_var', 'value', 'mean', 'cv' )
+print(text)
+for i in range( n_var ) :
+	variable_value = fit_var_dict[i]['variable_value']
+	mean = sample_mean[i]
+	cv   = float('nan')
+	if variable_value != 0 :
+		cv   = sample_std[i] / variable_value
+	text = "{:11d} {:11.4g} {:11.4g} {:11.4g}"
+	text = text.format(i, variable_value, mean, cv )
+	print(text)
 print('diabetes.py: OK')
 # END PYTHON
