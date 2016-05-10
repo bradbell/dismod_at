@@ -287,6 +287,7 @@ table_list  = [
 	'node',
 	'prior',
 	'rate',
+	'smooth',
 	'smooth_grid',
 	'time',
 	'var',
@@ -374,6 +375,7 @@ csv_file  = open(file_name, 'w')
 header = [
 	'var_id',
 	'var_type',
+	's_id',
 	'age',
 	'time',
 	'rate',
@@ -402,6 +404,7 @@ for field in header :
 for row_in in table_data['var'] :
 	row_out['var_id']    = var_id
 	row_out['var_type']  = row_in['var_type']
+	row_out['s_id']      = row_in['smooth_id']
 	row_out['age']       = table_lookup('age',  row_in['age_id'], 'age')
 	row_out['time']      = table_lookup('time', row_in['time_id'], 'time')
 	row_out['rate']      = table_lookup('rate', row_in['rate_id'], 'rate_name')
@@ -430,8 +433,14 @@ for row_in in table_data['var'] :
 		row_out['lag_dtime']= table_lookup('fit_var', var_id, 'lagrange_dtime')
 	#
 	smooth_id = row_in['smooth_id']
-	if row_in['var_type'].startswith('mulstd_') :
-		prior_id_dict = table_data['smooth'][smooth_id]
+	if row_in['var_type'] in ['mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
+		prior_id_dict = {
+			'value_prior_id':None, 'dage_prior_id':None, 'dtime_prior_id':None
+		}
+		smooth_id_dict = table_data['smooth'][smooth_id]
+		key            = row_in['var_type'] + '_prior_id'
+		prior_id       = smooth_id_dict[key]
+		prior_id_dict['value_prior_id'] = prior_id
 		get_prior_info(row_out, prior_id_dict)
 	else :
 		age_id    = row_in['age_id']
