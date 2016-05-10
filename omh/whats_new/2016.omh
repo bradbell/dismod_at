@@ -40,6 +40,17 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 05-10$$
+Fix $cref database2csv.py$$ so that it work with
+$cref/smoothing standard deviation multipliers
+	/model_variables
+	/Fixed Effects, theta
+	/Smoothing Standard Deviation Multipliers, lambda
+/$$.
+This required adding the
+$cref/s_id/database2csv.py/variable.csv/s_id/$$ column to the
+$code variable.csv$$ file.
+
 $head 05-09$$
 $list number$$
 Change the scaling of fixed effect

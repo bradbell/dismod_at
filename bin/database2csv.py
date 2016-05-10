@@ -68,6 +68,18 @@
 # $subhead var_type$$
 # is the $cref/var_type/var_table/var_type/$$.
 #
+# $subhead s_id$$
+# is the $cref/smooth_id/smooth_table/smooth_id/$$ for this variable.
+# If the variable is a
+# $cref/smoothing standard deviation multiplier
+#    /model_variables
+#    /Fixed Effects, theta
+#    /Smoothing Standard Deviation Multipliers, lambda
+#/$$
+# this is the smoothing that this multiplier effects.
+# Otherwise, it is the smoothing where the prior for this variable
+# comes from.
+#
 # $subhead age$$
 # is the $cref/age/age_table/age/$$.
 #
