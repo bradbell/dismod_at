@@ -53,6 +53,8 @@ $lnext
 The $cref/sample asymptotic/sample_command/method/asymptotic/$$
 command was using the $cref/scaled/prior_table/eta/Scaling/$$
 information matrix. This has been fixed.
+$lnext
+Advance to $code cppad_mixed-20160511$$.
 $lend
 
 $head 05-08$$
