@@ -27,6 +27,14 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Sampling Random Effects$$
+It is not expected that the
+$cref/asymptotic/sample_command/method/asymptotic/$$ statistics for the
+random effects will always be accurate
+(due to insufficient data for individual random effects).
+One could use multiple asymptotic random effects samples as a proposal
+density for a Metropolis algorithm to get better sampling of these variables.
+
 $head database2csv$$
 Add the command
 $codei%
