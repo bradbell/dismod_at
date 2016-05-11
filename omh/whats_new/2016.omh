@@ -40,6 +40,17 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 05-11$$
+$list number$$
+Advance to $code cppad_mixed-20150511$$.
+This yields sampling when covariance matrix is not positive definite
+(for diagnostic purposes).
+$lnext
+Add $cref/sampling random effects/wish_list/Sampling Random Effects/$$
+wish list item.
+$lend
+
+
 $head 05-10$$
 Fix $cref database2csv.py$$ so that it work with
 $cref/smoothing standard deviation multipliers
