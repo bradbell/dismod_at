@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -165,5 +165,26 @@ The smoothing for the subvector only depends on the rate; i.e.,
 given a rate, it is the same for all children.
 This smoothing is specified by
 $cref/child_smooth_id/rate_table/child_smooth_id/$$.
+
+$head Age and Time Variation$$
+
+$subhead Smoothing Standard Deviation Multiplier$$
+Each smoothing standard deviation multiplier $latex \lambda$$
+is a fixed effect and has a prior
+(not a smoothing) and hence is constant w.r.t.  age and time.
+
+$subhead Initial Prevalence$$
+The initial prevalence $latex p_0 (t)$$ for the parent is a fixed effects,
+and for each child is a random effect.
+Each initial prevalence has a smoothing with only one age point and
+hence is constant w.r.t. age and may vary w.r.t. time.
+
+$subhead Other Variables Types$$
+All the other model variable types, whether a fixed or random effect,
+have an arbitrary smoothing and
+hence may vary w.r.t age, may vary w.r.t time, or both.
+
+
+
 
 $end

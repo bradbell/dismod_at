@@ -48,6 +48,10 @@ This yields sampling when covariance matrix is not positive definite
 $lnext
 Add $cref/sampling random effects/wish_list/Sampling Random Effects/$$
 wish list item.
+$lnext
+Add a description of the
+$cref/age and time variation/model_variables/Age and Time Variation/$$
+for each of the model variables.
 $lend
 
 
