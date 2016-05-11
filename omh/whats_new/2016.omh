@@ -52,7 +52,7 @@ $lend
 
 
 $head 05-10$$
-Fix $cref database2csv.py$$ so that it work with
+Fix $cref database2csv.py$$ so that it works with
 $cref/smoothing standard deviation multipliers
 	/model_variables
 	/Fixed Effects, theta
