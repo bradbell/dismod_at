@@ -360,7 +360,8 @@ def get_prior_info(row_out, prior_id_dict) :
 				value_in = table_data['prior'][prior_id][field_in]
 				if field_in == 'eta' :
 					if density_name in [ 'uniform', 'gaussian', 'laplace' ] :
-						value_in = None
+						if extension in [ '_a', '_t' ] :
+							value_in = None
 				if field_in == 'std' and density_name == 'uniform' :
 						value_in = None
 				row_out[field_out] = convert2output( value_in )
