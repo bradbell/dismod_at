@@ -258,7 +258,7 @@ $subhead mtspecific$$
 $latex I_i (a, t) = \chi (a,t) p(a, t)$$
 
 $subhead mtall$$
-$latex I_i (a, t) = \omega (a,t) + \chi (a,t) p(a,t) ]$$
+$latex I_i (a, t) = \omega (a,t) + \chi (a,t) p(a,t)$$
 
 $subhead mtstandard$$
 $latex I_i (a, t) =
