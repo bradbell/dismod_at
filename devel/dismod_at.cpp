@@ -509,6 +509,14 @@ Is an
 $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
+$head simulate_table$$
+If $cref/fit_simulate_index/option_table/fit_simulate_index/$$ is
+not $code null$$, the fit uses the corresponding
+$cref/meas_value/simulate_table/meas_value/$$ in the simulate table
+in place of the
+$cref/meas_value/data_table/meas_value/$$ in the data table.
+
+
 $head fit_var_table$$
 A new $cref fit_var_table$$ is created each time this command is run.
 It contains the results of the fit in its

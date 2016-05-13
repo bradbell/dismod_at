@@ -58,7 +58,9 @@ $rnext
 	$cref/start_var/start_var_table/$$
 $rnext
 	$cref/fit/fit_command/$$ $cnext
-	$cref/start_var/start_var_table/$$ $cnext
+	$cref/start_var/start_var_table/$$,
+	$cref/simulate/simulate_table/$$
+	$cnext
 	$cref/fit_var/fit_var_table/$$,
 	$cref/fit_data_subset/fit_data_subset_table/$$
 $rnext
