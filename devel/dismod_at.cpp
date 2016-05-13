@@ -990,11 +990,6 @@ In this case, there is only one sample of the $cref model_variables$$
 in the sample table and
 $cref/sample_index/sample_table/sample_index/$$ is always zero.
 
-$head truth_var_table$$
-If $icode method$$ is $code simulate$$,
-this command has the extra input $cref truth_var_table$$
-which was input to the previous $cref simulate_command$$.
-
 $head simulate_table$$
 If $icode method$$ is $code simulate$$,
 this command has the extra input $cref  simulate_table$$
