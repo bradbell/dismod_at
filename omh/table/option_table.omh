@@ -205,10 +205,18 @@ $code second-order$$  $cnext
 $rnext
 $code only-second-order $$ $cnext
 	test second derivatives at starting point
+$rnext
+$code adaptive $$ $cnext
+	perform a step size adaptive first order derivative test
+$rnext
+$code trace-adaptive $$ $cnext
+	trace (on standard output) the adaptive first order derivative test
 $tend
 If $icode quasi_fixed$$ is $code true$$
-and $icode option_name$$ is $code derivative_text_fixed$$,
-the $icode option_value$$ cannot be $code second-order$$.
+the $icode option_value$$ cannot be
+$code second-order$$ or $code only-second-order$$.
+The $code adaptive$$ and $code trace-adaptive$$ values are only available
+for the $code derivative_test_fixed$$ option.
 The default value for this option is $code none$$.
 
 $subhead max_num_iter$$
