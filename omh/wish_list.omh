@@ -27,10 +27,6 @@ $$
 
 $section Dismod_at Wish List$$
 
-$head db2csv_command$$
-Install the files necessary for the user to use
-$cref db2csv_command$$ form any directory.
-
 $head Sampling Random Effects$$
 It is not expected that the
 $cref/asymptotic/sample_command/method/asymptotic/$$ statistics for the

@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin install_unix$$
 $dollar @$$
 $spell
+	py
 	suitesparse
 	tgz
 	pkgconfig
@@ -207,17 +208,16 @@ $codep
 	cd build
 	make install
 $$
-
-$subhead Install Python$$
-To install the dismod_at $cref python$$ model, execute the following command
-$codep
-	cd build
-	make install_python
-$$
-Note that the python module $code dismod_at$$ will bin installed in below the
+Note that the python module $code dismod_at$$ will be installed below
 $cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$
 in the standard place for your
 $cref/python3_executable/run_cmake.sh/python3_executable/$$.
+Hence
+$codei%
+	%dismod_at_prefix%/lib/python/%py_version%/site-packages
+%$$
+will need to be in your $code PYTHON_PATH$$ where
+$icode py_version$$ is the version of python you are using.
 
 $subhead Path Setting$$
 After the install you will be able to execute the command

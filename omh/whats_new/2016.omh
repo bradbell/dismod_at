@@ -45,14 +45,14 @@ $head 05-16$$
 $list number$$
 The $code database2csv$$ program has been moved to the
 $cref db2csv_command$$.
-This program is not yet installed and still needs to be run from the
-distribution directory with the syntax
-$codei%
-	bin/dismodat.py %database% db2csv
-%$$
 $lnext
 The $code python_three_command$$ installation setting has been changed to the
 $cref/python3_executable/run_cmake.sh/python3_executable/$$ setting.
+$lnext
+The dismod_at $cref python$$ module is now installed during the
+$cref/make install/install_unix/dismod_at/Install/$$ command.
+The $code dismodat.py$$ program is also installed by this command; e.g.
+see $cref db2csv_command$$.
 $lend
 
 $head 05-15$$
@@ -134,7 +134,7 @@ Fix a bug that occurred when the minimum (maximum)
 value in the $cref age_table$$ and $cref time_table$$ was not
 the first (last) entry.
 $lnext
-Add a $cref/db2csv_command/wish_list/db2csv_command/$$ item
+Add a $code db2csv_command$$ item
 to the wish list.
 $lnext
 Start work on $code test/diabetes.py$$ (under construction).

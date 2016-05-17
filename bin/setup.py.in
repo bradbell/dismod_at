@@ -1,3 +1,4 @@
+#! @python3_executable@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
@@ -20,7 +21,7 @@ setup(
 	url='http://moby.ihme.washington.edu/bradbell/dismod_at',
 	version = '20160516',
 	packages = ['dismod_at' ],
-	package_dir = { 'dismod_at' : 'python/dismod_at' },
-	scripts     = list(),
+	package_dir = { 'dismod_at' : '@CMAKE_SOURCE_DIR@/python/dismod_at' },
+	scripts     = [ 'bin/dismodat.py' ],
 	data_files  = list()
 )

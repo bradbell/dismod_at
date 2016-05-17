@@ -12,6 +12,7 @@ example/devel/gprof.out
 # cmake configure filess
 include/dismod_at/configure.hpp
 bin/dismodat.py
+bin/setup.py
 #
 # web version of documentation directory
 doc.tgz
