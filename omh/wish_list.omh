@@ -27,6 +27,10 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head db2csv_command$$
+Install the files necessary for the user to use
+$cref db2csv_command$$ form any directory.
+
 $head Sampling Random Effects$$
 It is not expected that the
 $cref/asymptotic/sample_command/method/asymptotic/$$ statistics for the
@@ -34,20 +38,6 @@ random effects will always be accurate
 (due to insufficient data for individual random effects).
 One could use multiple asymptotic random effects samples as a proposal
 density for a Metropolis algorithm to get better sampling of these variables.
-
-$head database2csv$$
-Add the command
-$codei%
-	dismod_at %database% database2csv
-%$$
-which would output two csv files similar to the current behavior of
-$cref database2csv.py$$. This would have the advantage that it could be run
-from any directory. The program $code database2csv.py$$ must be run from
-the distribution directory. It would require installing a python module to get
-$codei%
-	dismod_a.py %database% database2csv
-%$$
-to work.
 
 $head Constrain Random Effects$$
 

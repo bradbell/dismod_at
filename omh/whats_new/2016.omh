@@ -32,12 +32,22 @@ $spell
 	nlp
 	frac
 	csv
+	dismodat
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
 
 
 $childtable%omh/whats_new/2015.omh
+%$$
+
+$head 05-16$$
+The $code database2csv$$ program has been moved to the
+$cref db2csv_command$$.
+This program is not yet installed and still needs to be run from the
+distribution directory with the syntax
+$codei%
+	bin/dismodat.py %database% db2csv
 %$$
 
 $head 05-15$$
@@ -69,14 +79,14 @@ $lend
 
 
 $head 05-10$$
-Fix $cref database2csv.py$$ so that it works with
+Fix $cref db2csv_command$$ so that it works with
 $cref/smoothing standard deviation multipliers
 	/model_variables
 	/Fixed Effects, theta
 	/Smoothing Standard Deviation Multipliers, lambda
 /$$.
 This required adding the
-$cref/s_id/database2csv.py/variable.csv/s_id/$$ column to the
+$cref/s_id/db2csv_command/variable.csv/s_id/$$ column to the
 $code variable.csv$$ file.
 
 $head 05-09$$
@@ -119,7 +129,7 @@ Fix a bug that occurred when the minimum (maximum)
 value in the $cref age_table$$ and $cref time_table$$ was not
 the first (last) entry.
 $lnext
-Add a $cref/database2csv/wish_list/database2csv/$$ item
+Add a $cref/db2csv_command/wish_list/db2csv_command/$$ item
 to the wish list.
 $lnext
 Start work on $code test/diabetes.py$$ (under construction).
@@ -150,9 +160,9 @@ Print the $cref/Ipopt/install_unix/Special Requirements/Ipopt/$$
 library directories during the
 $cref/cmake command/install_unix/dismod_at/Cmake Command/$$.
 $lnext
-In the $cref database2csv.py$$ program,
+In the $cref db2csv_command$$ program,
 change $code fit_res$$, $code fit_dage$$ and $code fit_dtime$$
-to $cref/res_value/database2csv.py/variable.csv/res_value/$$
+to $cref/res_value/db2csv_command/variable.csv/res_value/$$
 $code res_dage$$ and $code res_dtime$$ respectively.
 $lnext
 Put $code cppad_mixed:$$ at the beginning of warnings and error messages
@@ -236,7 +246,7 @@ $lend
 
 $head 04-24$$
 $list number$$
-The $cref database2csv.py$$ utility
+The $cref db2csv_command$$ utility
 has been documented and is now part of the user API.
 $lnext
 The name of the $code table$$ section has been changed to $cref database$$.

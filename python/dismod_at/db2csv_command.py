@@ -9,7 +9,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin database2csv.py$$ $newlinech #$$
+# $begin db2csv_command$$ $newlinech #$$
 # $spell
 #	Csv
 #	py
@@ -23,25 +23,27 @@
 #	sim
 #	avgint
 #	dir
+#	dismodat
 # $$
 #
 # $section Summary of Database as Two Csv Files$$
 #
 # $head Syntax$$
-# $codei%bin/database2csv.py %database%$$
+#
+# $subhead As Program$$
+# $codei%dismodat.py %database% db2csv%$$
+#
+# $subhead As Python Function$$
+# $codei%dismod_at.db2csv_command.py( %database% )%$$
 #
 # $head 2DO$$
 # $list number$$
-# Install a program so that this operation can be run from locations other than
-# the dismod_at distribution directory; see
-# $cref/wish_list/wish_list/database2csv/$$
-# $lnext
 # Write some automated tests for this program.
 # $lnext
 # If the $cref predict_table$$ is available, include the information for
 # $cref/sample_index/predict_table/sample_index/$$ zero
 # in the $code data.csv$$ file.
-# (This will corresponding to the $cref/sam_value/database2csv.py/$$ column
+# (This will corresponding to the $cref/sam_value/db2csv_command/$$ column
 # because it also uses $icode%sample_index% == 0%$$.
 # $lend
 #
@@ -58,7 +60,7 @@
 # is located.
 #
 # $head variable.csv$$
-# The file $icode%dir%/variable.csv%$$ is written by $code database2csv.py$$.
+# The file $icode%dir%/variable.csv%$$ is written by this command.
 # It is a CSV file with one row for each of the $cref model_variables$$
 # and has the following columns:
 #
@@ -159,7 +161,7 @@
 # $cref/density_name/density_table/density_name/$$.
 #
 # $head data.csv$$
-# The file $icode%dir%/data.csv%$$ is written by $code database2csv.py$$.
+# The file $icode%dir%/data.csv%$$ is written by this command.
 # It is a CSV file with one row for each row in the $cref data_subset_table$$
 # and has the following columns:
 #
@@ -240,6 +242,10 @@
 # $end
 # ----------------------------------------------------------------------------
 def db2csv_command(database_file_arg) :
+	import os
+	import csv
+	import dismod_at
+	#
 	file_name    = database_file_arg
 	database_dir = os.path.split(database_file_arg)[0]
 	new          = False
@@ -248,7 +254,7 @@ def db2csv_command(database_file_arg) :
 	cursor  = connection.cursor()
 	result  = cursor.execute(cmd).fetchall()
 	if len(result) == 0 :
-		msg  = 'bin/database2csv.py: must first run init command; i.e.\n'
+		msg  = 'db2csv_command: must first run init command; i.e.\n'
 		msg += '\tdismod_at ' + file_name + ' init'
 		sys.exit(msg)
 	#
@@ -550,22 +556,3 @@ def db2csv_command(database_file_arg) :
 		csv_writer.writerow(row_out)
 		subset_id += 1
 	csv_file.close()
-# ---------------------------------------------------------------------------
-import sys
-import os
-import csv
-import pdb
-#
-sys.path.append( os.path.join( os.getcwd(), 'python' ) )
-import dismod_at
-# ---------------------------------------------------------------------------
-if sys.argv[0] != 'bin/database2csv.py' :
-	msg  = 'bin/database2csv.py: must be executed from its parent directory'
-	sys.exit(msg)
-#
-usage = 'bin/database2csv.py database'
-if len(sys.argv) != 2 :
-	sys.exit(usage)
-#
-database_file_arg = sys.argv[1]
-db2csv_command(database_file_arg)

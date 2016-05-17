@@ -15,6 +15,7 @@
 # $childtable%python/dismod_at/create_connection.py
 #	%python/dismod_at/create_table.py
 #	%python/dismod_at/create_database.py
+#	%python/dismod_at/db2csv_command.py
 #	%python/dismod_at/get_name_type.py
 #	%python/dismod_at/get_row_list.py
 #	%python/dismod_at/get_table_dict.py
@@ -27,6 +28,7 @@
 from .create_connection   import create_connection
 from .create_database     import create_database
 from .create_table        import create_table
+from .db2csv_command      import db2csv_command
 from .get_name_type       import get_name_type
 from .get_row_list        import get_row_list
 from .get_table_dict      import get_table_dict

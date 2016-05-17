@@ -78,7 +78,6 @@ the value $code nan$$ appears in a table that is read by dismod_at.
 $childtable%
 	omh/table/input.omh
 	%omh/table/output.omh
-	%bin/database2csv.py
 %$$
 
 $end
