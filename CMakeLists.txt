@@ -150,6 +150,10 @@ CONFIGURE_FILE(
 	${CMAKE_CURRENT_SOURCE_DIR}/include/dismod_at/configure.hpp.in
 	${CMAKE_CURRENT_SOURCE_DIR}/include/dismod_at/configure.hpp
 )
+CONFIGURE_FILE(
+	${CMAKE_CURRENT_SOURCE_DIR}/bin/dismodat.py.in
+	${CMAKE_CURRENT_SOURCE_DIR}/bin/dismodat.py
+)
 # ----------------------------------------------------------------------------
 # subdirectories
 ADD_SUBDIRECTORY(devel)

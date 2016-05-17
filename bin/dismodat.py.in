@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#! @python_three_command@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time

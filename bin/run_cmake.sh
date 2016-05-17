@@ -31,9 +31,9 @@ cmake_build_type='DEBUG'
 # &&
 #
 # &head python_three_command&&
-# Command used to execute python3 on this machine:
+# Path to the python3 executable on this machine:
 # &codep
-python_three_command='python3'
+python_three_command='/usr/bin/python3'
 # &&
 #
 # &head extra_cxx_flags&&

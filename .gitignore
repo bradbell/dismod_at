@@ -1,26 +1,37 @@
 # temporary file used to make commits.
 git_commit.sh
+3
 # temporary file for all purposes
 junk
 junk.*
+#
 # gnu profiling files
 example/devel/gmon.out
 example/devel/gprof.out
-# cmake confiuration files
+#
+# cmake configure filess
 include/dismod_at/configure.hpp
+bin/dismodat.py
+#
 # web version of documentation directory
 doc.tgz
+#
 # directories that are automatically created
 build
 doc
+#
 # directories that are used for running omhelp by hand
 htm
+#
 # directories that are used for stashing files
 new
 new.*
+#
 # vim swap files
 *.swp
+#
 # log files
 *.log
+#
 # python complilation files
 *.pyc
