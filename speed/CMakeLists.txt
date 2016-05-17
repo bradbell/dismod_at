@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -14,7 +14,7 @@ SET(random_seed 0)
 #
 ADD_CUSTOM_TARGET(
 	speed_simulated
-	${python_three_command} speed/simulated.py ${random_seed}
+	${python3_executable} speed/simulated.py ${random_seed}
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 	DEPENDS dismod_at
 )

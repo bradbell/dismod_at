@@ -22,7 +22,7 @@ rename_cmd='s|table.omh|database.omh|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
 cat << EOF > junk.sed
-s|size_t *( *DISMOD_AT_NULL_INT *)|DISMOD_AT_NULL_SIZE_T|g
+s|python_three_command|python3_executable|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
@@ -55,7 +55,20 @@ for file in $list_all
 do
 	if [ "$file" != 'bin/batch_edit.sh' ]
 	then
-		echo_eval sed -f junk.sed -i $file
+		sed -f junk.sed $file > junk.$$
+		if diff $file junk.$$ > /dev/null
+		then
+			rm junk.$$
+		else
+			echo "sed -f junk.sed -i $file"
+			if [ -x "$file" ]
+			then
+				mv junk.$$ $file
+				chmod +x $file
+			else
+				mv junk.$$ $file
+			fi
+		fi
 	fi
 done
 # ----------------------------------------------------------------------------

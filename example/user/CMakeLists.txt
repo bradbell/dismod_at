@@ -23,7 +23,7 @@ FOREACH(user_case
 )
 	ADD_CUSTOM_TARGET(
 		check_example_user_${user_case}
-		${python_three_command} example/user/${user_case}.py
+		${python3_executable} example/user/${user_case}.py
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		DEPENDS dismod_at
 	)

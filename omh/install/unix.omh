@@ -217,7 +217,7 @@ $$
 Note that the python module $code dismod_at$$ will bin installed in below the
 $cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$
 in the standard place for your
-$cref/python_three_command/run_cmake.sh/python_three_command/$$.
+$cref/python3_executable/run_cmake.sh/python3_executable/$$.
 
 $subhead Path Setting$$
 After the install you will be able to execute the command

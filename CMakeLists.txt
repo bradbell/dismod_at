@@ -13,7 +13,7 @@
 #                        -Wno-dev \
 # standard variables:    -D CMAKE_VERBOSE_MAKEFILE=value \
 #                        -D CMAKE_BUILD_TYPE=value \
-# required variables:    -D python_three_command=value \
+# required variables:    -D python3_executable=value \
 #                        -D extra_cxx_flags=value \
 #                        -D dismod_at_prefix=value \
 #                        -D cppad_prefix=value \
@@ -85,7 +85,7 @@ MESSAGE(STATUS "CMAKE_VERBOSE_MAKEFILE = ${CMAKE_VERBOSE_MAKEFILE}")
 MESSAGE(STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 # ----------------------------------------------------------------------------
 # required special cmake variables
-required_definition( python_three_command STRING
+required_definition( python3_executable STRING
 	"command for python3 on this system"
 )
 required_definition( extra_cxx_flags STRING
@@ -180,7 +180,7 @@ ADD_CUSTOM_TARGET(speed DEPENDS
 )
 ADD_CUSTOM_TARGET(
 	install_python
-	${python_three_command} bin/setup.py install --prefix=${dismod_at_prefix}
+	${python3_executable} bin/setup.py install --prefix=${dismod_at_prefix}
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 # ----------------------------------------------------------------------------

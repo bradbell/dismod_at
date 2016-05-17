@@ -30,10 +30,10 @@ cmake_verbose_makefile='NO'
 cmake_build_type='DEBUG'
 # &&
 #
-# &head python_three_command&&
+# &head python3_executable&&
 # Path to the python3 executable on this machine:
 # &codep
-python_three_command='/usr/bin/python3'
+python3_executable='/usr/bin/python3'
 # &&
 #
 # &head extra_cxx_flags&&
@@ -60,7 +60,7 @@ suitesparse_prefix="$HOME/prefix/dismod_at"
 # &head IHME Cluster Settings&&
 # Here are some example changes that are used for the IHME cluster
 # &codep
-# python_three_command='/usr/local/anaconda3-current/bin/python'
+# python3_executable='/usr/local/anaconda3-current/bin/python'
 # extra_cxx_flags='-Wall'
 # &&
 # &end
@@ -111,7 +111,7 @@ cmake \
 	-D CMAKE_VERBOSE_MAKEFILE=$cmake_verbose_makefile \
 	-D CMAKE_BUILD_TYPE=$cmake_build_type \
 	\
-	-D python_three_command=$python_three_command \
+	-D python3_executable=$python3_executable \
 	-D extra_cxx_flags="$extra_cxx_flags" \
 	\
 	-D dismod_at_prefix="$dismod_at_prefix" \

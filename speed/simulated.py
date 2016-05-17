@@ -18,7 +18,7 @@
 # $icode%python3% speed/simulated.py %random_seed%$$
 #
 # $head python3$$
-# This is the $cref/python_three_command/run_cmake.sh/python_three_command/$$
+# This is the $cref/python3_executable/run_cmake.sh/python3_executable/$$
 # on your system.
 #
 # $head random_seed$$
