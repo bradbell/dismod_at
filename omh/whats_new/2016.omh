@@ -42,6 +42,7 @@ $childtable%omh/whats_new/2015.omh
 %$$
 
 $head 05-16$$
+$list number$$
 The $code database2csv$$ program has been moved to the
 $cref db2csv_command$$.
 This program is not yet installed and still needs to be run from the
@@ -49,6 +50,10 @@ distribution directory with the syntax
 $codei%
 	bin/dismodat.py %database% db2csv
 %$$
+$lnext
+The $code python_three_command$$ installation setting has been changed to the
+$cref/python3_executable/run_cmake.sh/python3_executable/$$ setting.
+$lend
 
 $head 05-15$$
 $list number$$
