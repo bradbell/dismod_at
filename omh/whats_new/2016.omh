@@ -45,6 +45,17 @@ $head 06-05$$
 Hook up new option to choose between $code ipopt$$ and $code box_newton$$
 for optimizing the random effects; see
 $cref/random_box_newton/option_table/Optimizer/random_box_newton/$$.
+The $cref user_simulated.py$$ speed test time (on one machine) changed from
+$code elapsed seconds = 68.09$$
+to
+$code elapsed seconds = 42.31$$
+when $icode random_box_newton$$ was changed from $code false$$ (the default)
+to $code true$$.
+The random seed for both cases above was
+$code random_seed = 1465142803$$.
+The results for the two cases were the same.
+
+
 
 $head 05-16$$
 $list number$$
