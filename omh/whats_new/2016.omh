@@ -41,6 +41,11 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 06-05$$
+Hook up new option to choose between $code ipopt$$ and $code box_newton$$
+for optimizing the random effects; see
+$cref/random_box_newton/option_table/Optimizer/random_box_newton/$$.
+
 $head 05-16$$
 $list number$$
 The $code database2csv$$ program has been moved to the

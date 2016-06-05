@@ -174,9 +174,12 @@ $subhead Default$$
 The default value for this option is $code iota_pos_rho_zero$$.
 
 $head Optimizer$$
-The following options control the
-$href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$ optimization
-for both the fixed and random effects:
+The following options control the optimization for the
+fixed and random effects.
+The fixed effects are optimized using
+$href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$.
+The random effects can optimized using
+$code ipopt$$ or $code cppad::mixed::box_newton$$.
 
 $subhead quasi_fixed$$
 If $icode option_name$$ is
@@ -186,6 +189,8 @@ $code true$$ or $code false$$.
 If it is $code true$$, a quasi-Newton method is used to optimize
 the fixed effects. Otherwise a full Newton method is used.
 The default value for this option is $code true$$.
+Except where otherwise specified, the options only apply to the
+$code ipopt$$ optimizer.
 
 $subhead derivative_test$$
 If $icode option_name$$ is
@@ -233,6 +238,8 @@ the fit $cref/variable_value/fit_var_table/variable_value/$$ column
 will contain the same values as the start table column
 $cref/start_var_value/start_var_table/start_var_value/$$.
 The default value for this option is $code 100$$.
+The value $code max_num_iter_random$$
+affects the $code box_newton$$ optimizer.
 
 $subhead print_level$$
 If $icode option_name$$ is
@@ -246,6 +253,7 @@ with $code dismod_at$$ (the value 5 is the normal default for Ipopt).
 At least one these two print values
 (for the fixed and random effects) should be zero.
 The default value for this option is $code 0$$.
+The value $code print_level_random$$ affects the $code box_newton$$ optimizer.
 
 $subhead tolerance$$
 If $icode option_name$$ is
@@ -256,6 +264,7 @@ that specifies the desired relative convergence tolerance
 for optimizing the fixed effects (random effects).
 (This is called $code tol$$ in Ipopt documentation.)
 The default value for this option is $code 1e-8$$.
+The value $code tolerance_random$$ affects the $code box_newton$$ optimizer.
 
 $subhead random_bound$$
 If $icode option_name$$ is
@@ -274,16 +283,27 @@ The value plus infinity (for no bounds) is represented by a $code null$$
 should be preferred; i.e., used where possible.
 (This value must be greater than or equal one.)
 The default value for this option is $code null$$.
+The value $code random_bound$$ affects the $code box_newton$$ optimizer.
 
 $subhead fixed_bound_frac$$
 If $icode option_name$$ is
 $code fixed_bound_frac$$
 the corresponding $icode option_value$$
-is greater than zero and lese than or equal one half.
+is greater than zero and less than or equal one half.
 It determines how much the initial point might have to be modified
 in order to be sufficiently inside the bounds.
 This is called $code bound_frac$$ in the Ipopt documentation.
 The default value for this option is $code 1e-2$$.
+
+$subhead random_box_newton$$
+If $icode option_name$$ is $code random_box_newton$$,
+the corresponding $icode option_value$$ is
+$code true$$ or $code false$$.
+If it is $code true$$, the $code box_newton$$ optimizer is used
+to optimize the random effects.
+Otherwise the $code ipopt$$ optimizer is used
+to optimize the random effects.
+The default value for this option is $code false$$.
 
 
 $children%example/table/option_table.py
