@@ -43,12 +43,12 @@ constraint on the random effects estimates. This could be used to
 constrain the random effects to sum to zero for each of the rates,
 and at every age, time grid point in the smoothing.
 
-$subhead Omega Constraint$$
+$subhead Child Omega Constraint$$
 When converting
 $cref/mtall/avg_integrand/I_i (a, t)/mtall/$$ data to
 constraints on other cause mortality
-$cref/omega/rate_table/rate_name/omega/$$ it would be helpful
-to specify the value of omega for each child area.
+$cref/omega/rate_table/rate_name/omega/$$ it would be useful if one could
+specify the value of omega for each child area.
 This requires changing the  child smoothing
 $cref/restrictions/rate_table/child_smooth_id/Restrictions/$$
 to allow for a uniform with equal lower and upper limits.
@@ -83,12 +83,6 @@ points that correspond to the same child (or to the parent)
 and have the same covariate values for covariates that are used with
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$
 covariate multipliers.
-
-$head Widowing Data and Analysis$$
-It would be nice to have an option to restrict the data
-and analysis to a rectangular subset.
-Currently one can do this by removing some of the input data
-and changing the $cref/age/age_table/$$ and $cref/time/time_table/$$.
 
 $head Random Starting Point$$
 Have an option to start at a random point from the prior for the fixed effects

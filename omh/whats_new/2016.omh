@@ -55,8 +55,6 @@ The random seed for both cases above was
 $code random_seed = 1465142803$$.
 The results for the two cases were the same.
 
-
-
 $head 05-16$$
 $list number$$
 The $code database2csv$$ program has been moved to the
