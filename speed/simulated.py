@@ -284,7 +284,6 @@ def example_db (file_name) :
 		{ 'name':'print_level_fixed',      'value':'5'                },
 		{ 'name':'tolerance_fixed',        'value':'1e-8'             },
 		{ 'name':'random_bound',           'value':None               },
-		{ 'name':'random_box_newton',      'value':'true'             },
 
 		{ 'name':'derivative_test_random', 'value':'none'             },
 		{ 'name':'max_num_iter_random',    'value':'100'              },

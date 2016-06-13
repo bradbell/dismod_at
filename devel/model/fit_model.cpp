@@ -295,31 +295,16 @@ $end
 	//
 	std::string fixed_options = options;
 	//
-	// random_ipopt_options
-	std::string tolerance_random    = option_map["tolerance_random"];
-	std::string max_num_iter_random = option_map["max_num_iter_random"];
-	std::string print_level_random  = option_map["print_level_random"];
+	// Ipopt random effects optimization options
 	options = "";
 	options += "String  sb  yes";
 	options += "\nNumeric bound_relax_factor 0.0";
-	options += "\nNumeric tol "         + tolerance_random;
-	options += "\nInteger max_iter "    + max_num_iter_random;
-	options += "\nInteger print_level " + print_level_random;
+	options += "\nNumeric tol " + option_map["tolerance_random"];
+	options += "\nInteger max_iter " + option_map["max_num_iter_random"];
+	options += "\nInteger print_level " + option_map["print_level_random"];
 	options += "\nString derivative_test "
 		+ option_map["derivative_test_random"] + "\n";
-	std::string random_ipopt_options = options;
-	if( option_map["random_box_newton"] == "true" )
-		random_ipopt_options = "";
-	//
-	// random_box_options
-	CppAD::mixed::box_newton_options random_box_options;
-	random_box_options.tolerance =
-		std::atof( tolerance_random.c_str() );
-	random_box_options.print_level =
-		size_t( std::atoi( print_level_random.c_str() ) );
-	random_box_options.max_iter =
-		size_t( std::atoi( max_num_iter_random.c_str() ) );
-	random_box_options.max_line = 20;
+	std::string random_options = options;
 	//
 	std::string random_bound_string = option_map["random_bound"];
 	double random_bound = std::numeric_limits<double>::infinity();
@@ -335,8 +320,7 @@ $end
 	// optimal fixed effects
 	CppAD::mixed::fixed_solution fixed_sol = optimize_fixed(
 		fixed_options,
-		random_box_options,
-		random_ipopt_options,
+		random_options,
 		fixed_lower,
 		fixed_upper,
 		fix_constraint_lower,
@@ -353,14 +337,9 @@ $end
 	// optimal random effects
 	CppAD::vector<double> random_opt;
 	if( n_random_ > 0 )
-	{	if( option_map["random_box_newton"] == "true" )
-			random_opt = optimize_random( random_box_options,
-				fixed_opt, random_lower, random_upper, random_in
-			);
-		else
-			random_opt = optimize_random( random_ipopt_options,
-				fixed_opt, random_lower, random_upper, random_in
-			);
+	{	random_opt = optimize_random(
+			random_options, fixed_opt, random_lower, random_upper, random_in
+		);
 	}
 	// The optimal solution is scaled, but the Lagrange multilpiers are not
 	unscale_fixed_effect(fixed_opt, fixed_opt);
@@ -655,32 +634,17 @@ $end
 		random_opt
 	);
 	//
-	// random_ipopt_options
+	// random_options
 	// (same as in run_fit)
-	std::string tolerance_random    = option_map["tolerance_random"];
-	std::string max_num_iter_random = option_map["max_num_iter_random"];
-	std::string print_level_random  = option_map["print_level_random"];
 	std::string options = "";
 	options += "String  sb  yes";
 	options += "\nNumeric bound_relax_factor 0.0";
-	options += "\nNumeric tol "         + tolerance_random;
-	options += "\nInteger max_iter "    + max_num_iter_random;
-	options += "\nInteger print_level " + print_level_random;
+	options += "\nNumeric tol " + option_map["tolerance_random"];
+	options += "\nInteger max_iter " + option_map["max_num_iter_random"];
+	options += "\nInteger print_level " + option_map["print_level_random"];
 	options += "\nString derivative_test "
 		+ option_map["derivative_test_random"] + "\n";
-	std::string random_ipopt_options = options;
-	if( option_map["random_box_newton"] == "true" )
-		random_ipopt_options = "";
-	//
-	// random_box_options
-	CppAD::mixed::box_newton_options random_box_options;
-	random_box_options.tolerance =
-		std::atof( tolerance_random.c_str() );
-	random_box_options.print_level =
-		size_t( std::atoi( print_level_random.c_str() ) );
-	random_box_options.max_iter =
-		size_t( std::atoi( max_num_iter_random.c_str() ) );
-	random_box_options.max_line = 20;
+	std::string random_options = options;
 	//
 	// random_bound
 	std::string random_bound_string = option_map["random_bound"];
@@ -707,8 +671,7 @@ $end
 			//
 			sample_random(
 				one_sample_random,
-				random_box_options,
-				random_ipopt_options,
+				random_options,
 				one_sample_fixed,
 				random_lower,
 				random_upper,

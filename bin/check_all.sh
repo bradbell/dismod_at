@@ -11,11 +11,12 @@
 # ---------------------------------------------------------------------------
 if [ "$0" != "bin/check_all.sh" ]
 then
-	echo "bin/check_all.sh: must be executed from its parent directory"
+	echo 'bin/check_all.sh [d|r|ds|rs]'
+	echo 'must be executed from its parent directory'
 	exit 1
 fi
 # ---------------------------------------------------------------------------
-input=''
+input="$1"
 while [ "$input" != 'd' ] \
 &&    [ "$input" != 'r' ] \
 &&    [ "$input" != 'ds' ] \
