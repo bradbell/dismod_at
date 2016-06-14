@@ -41,6 +41,12 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 06-13$$
+Advance to $code cppad_mixed-20150613$$.
+This fixes a bug in the
+$cref/asymptotic/sample_command/method/asymptotic/$$ version
+of the sample command.
+
 $head 06-12$$
 Advance to $code cppad_mixed-20150612$$.
 This removes the choice between $code ipopt$$ and $code box_newton$$
