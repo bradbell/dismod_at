@@ -418,6 +418,7 @@ def db2csv_command(database_file_arg) :
 		)
 		row_out['node'] = table_lookup('node', row_in['node_id'], 'node_name')
 		#
+		# The random effects are all rate variables for the child nodes.
 		row_out['fixed'] = 'true'
 		if row_in['var_type'] == 'rate' :
 			if row_in['node_id'] != parent_node_id :
