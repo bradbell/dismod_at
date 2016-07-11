@@ -33,6 +33,7 @@ $spell
 	frac
 	csv
 	dismodat
+	optimizer
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -40,6 +41,15 @@ $section Changes and Additions to Dismod_at During 2016$$
 
 $childtable%omh/whats_new/2015.omh
 %$$
+
+$head 07-11$$
+Advance to $code cppad_mixed-20150711$$.
+This should give better recovery when the
+fixed effects enter a region where the Hessian w.r.t the random effects
+it is not positive definite.
+To be specific, the optimizer should try backing up the fixed effects and if
+that fails, it should exit the optimization and report the value of the
+fixed effects.
 
 $head 06-13$$
 Advance to $code cppad_mixed-20150613$$.
