@@ -18,16 +18,16 @@
 #
 # &section bin/run_cmake.sh: User Configuration Options&&
 #
-# &head cmake_verbose_makefile&&
+# &head verbose_makefile&&
 # Use 'NO' for normal and 'YES' for verbose make output:
 # &codep
-cmake_verbose_makefile='NO'
+verbose_makefile='NO'
 # &&
 #
-# &head cmake_build_type&&
-# Use either 'DEBUG' or 'RELEASE' for the type of this build:
+# &head build_type&&
+# Use either &code 'DEBUG'&& or &code 'RELEASE'&& for the type of this build:
 # &codep
-cmake_build_type='DEBUG'
+build_type='DEBUG'
 # &&
 #
 # &head python3_executable&&
@@ -85,10 +85,10 @@ EOF
 	fi
 	if [ "$1" == '--verbose' ]
 	then
-		cmake_verbose_makefile='YES'
+		verbose_makefile='YES'
 	elif [ "$1" == '--release' ]
 	then
-		cmake_build_type='RELEASE'
+		build_type='RELEASE'
 	else
 		echo "'$1' is an invalid option"
 		bin/run_cmake.sh --help
@@ -108,8 +108,8 @@ then
 fi
 cmake \
 	-Wno-dev \
-	-D CMAKE_VERBOSE_MAKEFILE=$cmake_verbose_makefile \
-	-D CMAKE_BUILD_TYPE=$cmake_build_type \
+	-D CMAKE_VERBOSE_MAKEFILE=$verbose_makefile \
+	-D CMAKE_BUILD_TYPE=$build_type \
 	\
 	-D python3_executable=$python3_executable \
 	-D extra_cxx_flags="$extra_cxx_flags" \

@@ -169,17 +169,18 @@ $children%bin/run_cmake.sh%$$
 The file $cref%bin/run_cmake.sh%run_cmake.sh%$$ has setting that
 you should change so they correspond to your machine.
 
+$subhead build_type$$
+Note that the $code dismod_at$$
+$cref/build_type/run_cmake.sh/build_type/$$
+(in the $code run_cmake.sh$$ file)
+must be the same as the build type in the
+$code bin/install_cppad_mixed.sh$$ file.
+
 $subhead Cmake Command$$
 After changing $code bin/run_cmake.sh$$ to work for your system,
 execute the following command:
 $codep
 	bin/run_cmake.sh
-$$
-This assumes you chose the $icode%build_type%=DEBUG%$$ in
-$code bin/install_cppad_mixed.sh$$.
-If you choose $code RELEASE$$, execute the following command
-$codep
-	bin/run_cmake.sh --release
 $$
 It is possible that, when running the $code bin/run_cmake.sh$$ command,
 you will get the message $code package 'ipopt' not found$$.
