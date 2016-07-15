@@ -34,6 +34,7 @@ $spell
 	csv
 	dismodat
 	optimizer
+	suitesparse
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -41,6 +42,21 @@ $section Changes and Additions to Dismod_at During 2016$$
 
 $childtable%omh/whats_new/2015.omh
 %$$
+
+$head 07-15$$
+In $code bin/install_cppad_mixed.sh$$
+change $code cmake_build_type$$ to $code build_type$$; see
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
+In addition, add this parameter to the install for
+$cref/eigen/install_unix/Special Requirements/eigen/$$,
+$cref/suitesparse/install_unix/Special Requirements/suitesparse/$$, and
+$cref/ipopt/install_unix/Special Requirements/Ipopt/$$.
+CppAD does not need this choice as it adapter to the choice of
+the systems that use it.
+Note however that the install for $code dismod_at$$
+must have the same build type as for $code cppad_mixed$$; see
+$cref/cmake command/install_unix/dismod_at/Cmake Command/$$.
+
 
 $head 07-14$$
 Advance to $code cppad_mixed-20150711$$.

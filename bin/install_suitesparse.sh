@@ -12,8 +12,8 @@
 # BEGIN USER_SETTINGS
 # prefix below which suitesparse will be installed
 suitesparse_prefix="$HOME/prefix/dismod_at"
-# is this a debugging version of suitesparse ('true' or 'false')
-debug='true'
+# build type can be DEBUG or RELEASE
+build_type="DEBUG";
 # END USER_SETTINGS
 # --------------------------------------------------------------------------
 program='bin/install_suitesparse.sh'
@@ -54,7 +54,7 @@ sed \
 	-e 's|-lopenblas|-lblas|' \
 	-i.bak SuiteSparse_config/SuiteSparse_config.mk
 #
-if [ "$debug" == 'true' ]
+if [ "$build_type" == 'DEBUG' ]
 then
 	sed \
 		-e 's|^ *CFLAGS *= *$|CFLAGS = -g|' \

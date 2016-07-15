@@ -2,16 +2,18 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
 # prefix below which ipopt will be installed
 ipopt_prefix="$HOME/prefix/dismod_at"
+# build type can be DEBUG or RELEASE
+build_type="DEBUG";
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 if [ $0 != 'bin/install_ipopt.sh' ]
@@ -72,9 +74,15 @@ then
 	echo_eval mkdir build
 fi
 cd build
+if [ "$build_type" == 'DEBUG' ]
+then
+	debug_flag='--enable-debug'
+else
+	debug_flag=''
+fi
 cat << EOF > config.sh
 ../configure \\
-	--enable-debug \\
+	$debug_flag \\
 	--prefix=$ipopt_prefix \\
 	--libdir=$ipopt_prefix/$libdir \\
 	--with-blas-lib="-lblas" \\

@@ -175,6 +175,12 @@ execute the following command:
 $codep
 	bin/run_cmake.sh
 $$
+This assumes you chose the $icode%build_type%=DEBUG%$$ in
+$code bin/install_cppad_mixed.sh$$.
+If you choose $code RELEASE$$, execute the following command
+$codep
+	bin/run_cmake.sh --release
+$$
 It is possible that, when running the $code bin/run_cmake.sh$$ command,
 you will get the message $code package 'ipopt' not found$$.
 In this case, you need to execute the following command

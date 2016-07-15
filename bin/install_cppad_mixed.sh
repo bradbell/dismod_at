@@ -10,8 +10,8 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-# type of build DEBUG or RELEASE
-cmake_build_type='DEBUG'
+# build type can be DEBUG or RELEASE
+build_type='DEBUG'
 # use dismod_at prefix for packages
 cppad_prefix="$HOME/prefix/dismod_at"
 ipopt_prefix="$HOME/prefix/dismod_at"
@@ -90,7 +90,7 @@ else
 fi
 #
 cmake_args="-D CMAKE_VERBOSE_MAKEFILE=NO"
-cmake_args="$cmake_args -D CMAKE_BUILD_TYPE=$cmake_build_type"
+cmake_args="$cmake_args -D CMAKE_BUILD_TYPE=$build_type"
 #
 cmake_args="$cmake_args -D cppad_prefix=$cppad_prefix"
 cmake_args="$cmake_args -D ipopt_prefix=$ipopt_prefix"
