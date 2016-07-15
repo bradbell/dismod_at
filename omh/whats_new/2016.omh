@@ -42,6 +42,15 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 07-14$$
+Advance to $code cppad_mixed-20150711$$.
+This should increase the speed of the
+$cref/asymptotic/sample_command/method/asymptotic/$$ version
+of the $code sample_command$$.
+It also includes a change to optimizing the random effects
+that should eventually improve the speed of $cref fit_command$$.
+(At this point, the change does not always result in an improvement.)
+
 $head 07-11$$
 Advance to $code cppad_mixed-20150711$$.
 This should give better recovery when the
