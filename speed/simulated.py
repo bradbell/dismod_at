@@ -373,10 +373,10 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
 # Run the simulate and sample commands
-for command in [ 'simulate', 'sample' ] :
+for command in [ 'simulate', 'start', 'fit' ] :
 	cmd = [ program, file_name, command ]
-	if command == 'sample' :
-		cmd.append('simulate')
+	if command == 'start' :
+		cmd.append('prior_mean')
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :
@@ -385,7 +385,7 @@ for command in [ 'simulate', 'sample' ] :
 # check simulation results
 new          = False
 connection   = dismod_at.create_connection(file_name, new)
-sample_dict  = dismod_at.get_table_dict(connection, 'sample')
+fit_var_dict = dismod_at.get_table_dict(connection, 'fit_var')
 log_dict     = dismod_at.get_table_dict(connection, 'log')
 connection.close()
 # -----------------------------------------------------------------------
@@ -400,19 +400,16 @@ if random_seed == 0 :
 	assert random_seed != 0
 # -----------------------------------------------------------------------
 number_variable = len(var_dict)
-assert( len(sample_dict) % number_variable == 0 )
-number_simulate   = int( len(sample_dict) / number_variable )
+assert( len(fit_var_dict) == number_variable )
 max_error       = 0.0
-for sample_index in range(number_simulate) :
-	for var_id in range( len(var_dict) ) :
-		sample_id  = sample_index * number_variable + var_id
-		row        = sample_dict[sample_id]
-		fit_value  = row['var_value']
-		true_value = var_id2true[var_id]
-		if true_value == 0.0 :
-			max_error = max(abs(fit_value) , max_error)
-		else :
-			max_error = max( abs(fit_value / true_value - 1.0), max_error)
+for var_id in range( number_variable ) :
+	row        = fit_var_dict[var_id]
+	fit_value  = row['variable_value']
+	true_value = var_id2true[var_id]
+	if true_value == 0.0 :
+		max_error = max(abs(fit_value) , max_error)
+	else :
+		max_error = max( abs(fit_value / true_value - 1.0), max_error)
 print('elapsed seconds =', time.time() - start_time)
 print('random_seed = ', random_seed)
 if max_error > 5e-2 :

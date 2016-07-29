@@ -10,8 +10,8 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-# build type can be DEBUG or RELEASE
-build_type='DEBUG'
+# build type can be debug or release
+build_type='debug'
 # use dismod_at prefix for packages
 cppad_prefix="$HOME/prefix/dismod_at"
 ipopt_prefix="$HOME/prefix/dismod_at"
@@ -45,8 +45,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='9426fcdc0b145396d288f3ccf75ec6f60963bf6e'
-version='20160714'
+hash_key='e038e95beb4fa9a79a7d3cc74771589578db1da5'
+version='20160728'
 # --------------------------------------------------------------------------
 if [ ! -e build/external ]
 then

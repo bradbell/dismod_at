@@ -27,8 +27,12 @@ verbose_makefile='NO'
 # &head build_type&&
 # Use either &code 'DEBUG'&& or &code 'RELEASE'&& for the type of this build:
 # &codep
-build_type='DEBUG'
+build_type='debug'
 # &&
+# Note that &code run_cmake.sh&& looks for a &icode%dismod_prefix%.debug%&&
+# and &icode%dismod_prefix%.release%&& and uses them if they are present.
+# Also note that it builds dismod_at in &code build.debug&& or
+# &code build.release&& depending on &icode build_type&&.
 #
 # &head python3_executable&&
 # Path to the python3 executable on this machine:
@@ -88,7 +92,7 @@ EOF
 		verbose_makefile='YES'
 	elif [ "$1" == '--release' ]
 	then
-		build_type='RELEASE'
+		build_type='release'
 	else
 		echo "'$1' is an invalid option"
 		bin/run_cmake.sh --help
@@ -97,6 +101,23 @@ EOF
 	shift
 done
 # ---------------------------------------------------------------------------
+if [ -e "$dismod_at_prefix.$build_type" ]
+then
+	if [ -e "$dismod_at_prefix" ]
+	then
+		echo_eval rm "$dismod_at_prefix"
+	fi
+	echo_eval ln -s $dismod_at_prefix.$build_type $dismod_at_prefix
+fi
+if [ ! -e "build.$build_type" ]
+then
+	echo_eval mkdir "build.$build_type"
+fi
+if [ -e build ]
+then
+	echo_eval rm build
+fi
+echo_eval ln -s build.$build_type build
 if [ ! -e build ]
 then
 	echo_eval mkdir build

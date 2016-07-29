@@ -25,10 +25,7 @@
 # true values used to simulate data
 iota_20        = 1e-4
 iota_100       = 1e-1
-omega_0        = 2e-4
-omega_100      = 2e-1
 iota_age_list  = [ 0.0, 20.0, 21.0, 100.0 ]
-omega_age_list = [ 0.0, 1.0, 5.0, 10.0, 20.0, 40.0, 80.0, 100.0 ]
 data_age_list  = [ 0.0, 1.0, 5.0, 10.0, 20.0, 40.0, 80.0, 100.0 ]
 # ------------------------------------------------------------------------
 import sys
@@ -58,13 +55,8 @@ def constant_weight_fun(a, t) :
 def fun_zero(a, t) :
 	return ('prior_zero', 'prior_none', 'prior_none')
 #
-def fun_omega_parent(a, t) :
-	return ('prior_rate_parent', 'prior_difference', 'prior_difference')
-#
 def fun_iota_parent(a, t) :
-	if a <= 20.0 :
-		return ('prior_iota_20', 'prior_none', 'prior_none')
-	elif a <= 21.0 :
+	if 19.5 <= a and a <= 20.5 :
 		return ('prior_rate_parent', 'prior_none', 'prior_difference')
 	else :
 		return ('prior_rate_parent', 'prior_difference', 'prior_difference')
@@ -75,14 +67,11 @@ def iota_true(age) :
 	else :
 		return iota_100
 #
-def omega_true(age) :
-	slope = (omega_100 - omega_0) / (100. - 0.)
-	return omega_0 + (age - 0.0) * slope
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# age table (in age_list above)
-	age_list = sorted( set( iota_age_list + omega_age_list ) )
+	age_list = sorted( set( iota_age_list  ) )
 	#
 	# time table
 	time_list   = [ 1995.0, 2015.0 ]
@@ -131,15 +120,6 @@ def example_db (file_name) :
 		row['meas_std']     = meas_value * 0.1
 		data_dict.append( copy.copy(row) )
 		#
-	# mtother data (include data at 100)
-	for age in data_age_list :
-		meas_value = omega_true(age)
-		row['age_lower']    = age
-		row['age_upper']    = age
-		row['integrand']    = 'mtother'
-		row['meas_value']   = meas_value
-		row['meas_std']     = meas_value * 0.01
-		data_dict.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
 	prior_dict = [
@@ -170,7 +150,7 @@ def example_db (file_name) :
 		},{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
-			'lower':    min(omega_true(0.0), iota_20),
+			'lower':    1e-5,
 			'upper':    1.0,
 			'mean':     0.1,
 			'std':      None,
@@ -192,20 +172,8 @@ def example_db (file_name) :
 	for age in iota_age_list :
 		iota_age_id.append( age_list.index(age) )
 	#
-	omega_age_id = list()
-	for age in omega_age_list :
-		omega_age_id.append( age_list.index(age) )
-	#
 	smooth_dict = [
-		{ # smooth_omega_parent
-			'name':                     'smooth_omega_parent',
-			'age_id':                   omega_age_id,
-			'time_id':                  range(len(time_list)),
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
-			'fun':                       fun_omega_parent
-		},{ # smooth_iota_parent
+		{ # smooth_iota_parent
 			'name':                     'smooth_iota_parent',
 			'age_id':                   iota_age_id,
 			'time_id':                  range(len(time_list)),
@@ -244,7 +212,7 @@ def example_db (file_name) :
 			'child_smooth':  None
 		},{
 			'name':          'omega',
-			'parent_smooth': 'smooth_omega_parent',
+			'parent_smooth': None,
 			'child_smooth':  None
 		}
 	]
@@ -321,10 +289,9 @@ eps            = 1e-4
 # check rates values
 count             = 0
 iota_rate_id      = 1
-omega_rate_id     = 4
 max_err           = 0.0
 tolerance         = 1e-3
-age_list          = sorted( set( iota_age_list + omega_age_list ) )
+age_list          = sorted( set( iota_age_list ) )
 for var_id in range( len(var_dict) ) :
 	row   = var_dict[var_id]
 	assert row['var_type'] == 'rate'
@@ -332,13 +299,9 @@ for var_id in range( len(var_dict) ) :
 	age    = age_list[ row['age_id'] ]
 	rate_id = row['rate_id']
 	value  = fit_var_dict[var_id]['variable_value']
-	if rate_id == iota_rate_id :
-		value_true = iota_true(age)
-		rate       = 'iota'
-	else :
-		assert rate_id == omega_rate_id
-		value_true = omega_true(age)
-		rate       = 'omega'
+	assert rate_id == iota_rate_id
+	value_true = iota_true(age)
+	rate       = 'iota'
 	max_err = max(max_err, abs( value / value_true - 1.0 ) )
 	if( abs(value / value_true - 1.0) > tolerance ) :
 		print(rate, age, value / value_true - 1.0 )

@@ -19,6 +19,8 @@ doc.tgz
 #
 # directories that are automatically created
 build
+build.debug
+build.release
 doc
 #
 # directories that are used for running omhelp by hand
