@@ -13,8 +13,8 @@
 # special prefix below which eigen will be installed, special so that we
 # can suppress warnings for the eigen include files.
 eigen_prefix="$HOME/prefix/dismod_at/eigen"
-# build type can be DEBUG or RELEASE
-build_type="DEBUG";
+# build type can be debug or release
+build_type='debug';
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 if [ $0 != 'bin/install_eigen.sh' ]
@@ -64,7 +64,7 @@ echo_eval cd build
 echo_eval cmake \
 	-Wno-dev \
 	-D CMAKE_INSTALL_PREFIX=$eigen_prefix \
-	-D CMAKE_BUILD_TYPE=$buld_type \
+	-D CMAKE_BUILD_TYPE=$build_type \
 	..
 echo_eval make install
 # --------------------------------------------------------------------------

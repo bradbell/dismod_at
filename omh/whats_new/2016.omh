@@ -56,6 +56,14 @@ to fit the simulated data.
 $lnext
 Add comments about debug and release builds under
 $cref/build_type/run_cmake.sh/build_type/$$ in $code run_cmake.sh$$.
+$lnext
+Change $code DEBUG$$ and $code RELEASE$$ to $code debug$$ and $code release$$
+in
+$cref run_cmake.sh$$ and the install for
+$cref/eigen/install_unix/Special Requirements/eigen/$$,
+$cref/suitesparse/install_unix/Special Requirements/suitesparse/$$,
+$cref/ipopt/install_unix/Special Requirements/Ipopt/$$,
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
 $lend
 
 $head 07-15$$

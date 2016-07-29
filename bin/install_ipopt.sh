@@ -12,8 +12,8 @@
 # BEGIN USER_SETTINGS
 # prefix below which ipopt will be installed
 ipopt_prefix="$HOME/prefix/dismod_at"
-# build type can be DEBUG or RELEASE
-build_type="DEBUG";
+# build type can be debug or release
+build_type='debug';
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 if [ $0 != 'bin/install_ipopt.sh' ]
@@ -74,7 +74,7 @@ then
 	echo_eval mkdir build
 fi
 cd build
-if [ "$build_type" == 'DEBUG' ]
+if [ "$build_type" == 'debug' ]
 then
 	debug_flag='--enable-debug'
 else

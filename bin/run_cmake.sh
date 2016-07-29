@@ -29,10 +29,13 @@ verbose_makefile='NO'
 # &codep
 build_type='debug'
 # &&
-# Note that &code run_cmake.sh&& looks for a &icode%dismod_prefix%.debug%&&
-# and &icode%dismod_prefix%.release%&& and uses them if they are present.
-# Also note that it builds dismod_at in &code build.debug&& or
+# Note that &code run_cmake.sh&& looks for a &icode%dismod_at_prefix%.debug%&&
+# and &icode%dismod_at_prefix%.release%&& and uses them if they are present.
+# Note that it builds dismod_at in &code build.debug&& or
 # &code build.release&& depending on &icode build_type&&.
+# Also note that it uses a soft link from
+# &icode dismod_at_prefix&&  and &code build&& to the corresponding debug
+# and release directories.
 #
 # &head python3_executable&&
 # Path to the python3 executable on this machine:
