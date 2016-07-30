@@ -221,6 +221,7 @@ $cref/derivative_test/option_table/Optimizer/derivative_test/$$,
 $cref/tolerance/option_table/Optimizer/tolerance/$$,
 $cref/max_num_iter/option_table/Optimizer/max_num_iter/$$,
 $cref/print_level/option_table/Optimizer/print_level/$$,
+$cref/accept_after_max_steps/option_table/Optimizer/accept_after_max_steps/$$,
 and for $icode fit$$ equal to $code fixed$$ and $code random$$
 $codei%
 	%option_map%["%name%_%fit%"]
@@ -290,6 +291,8 @@ $end
 	options += "\nInteger print_level " + option_map["print_level_fixed"];
 	options += "\nString derivative_test "+option_map["derivative_test_fixed"];
 	options += "\nInteger max_iter " + option_map["max_num_iter_fixed"];
+	options += "\nInteger accept_after_max_steps "
+		+ option_map["accept_after_max_steps_fixed"];
 	options += "\nString nlp_scaling_method none";
 	options += "\n";
 	//
@@ -302,6 +305,9 @@ $end
 	options += "\nNumeric tol " + option_map["tolerance_random"];
 	options += "\nInteger max_iter " + option_map["max_num_iter_random"];
 	options += "\nInteger print_level " + option_map["print_level_random"];
+	options += "\nInteger print_level " + option_map["print_level_random"];
+	options += "\nInteger accept_after_max_steps "
+		+ option_map["accept_after_max_steps_random"];
 	options += "\nString derivative_test "
 		+ option_map["derivative_test_random"] + "\n";
 	std::string random_options = options;

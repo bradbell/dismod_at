@@ -43,6 +43,19 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 07-29$$
+$list number$$
+Add the optimizer
+$cref/accept_after_max_steps
+	/option_table
+	/Optimizer
+	/accept_after_max_steps
+/$$
+option to both the fixed and random effects optimization.
+$lnext
+Correct a problem with detecting the actual random seed in
+the $cref user_simulated.py$$ speed test.
+$lend
 
 $head 07-28$$
 $list number$$

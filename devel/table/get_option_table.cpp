@@ -108,6 +108,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		"max_num_iter_random",           "100",
 		"print_level_fixed",             "0",
 		"print_level_random",            "0",
+		"accept_after_max_steps_fixed",  "5",
+		"accept_after_max_steps_random", "5",
 		"tolerance_fixed",               "1e-8",
 		"tolerance_random",              "1e-8",
 		"random_bound",                  "",
@@ -245,6 +247,17 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			bool ok = 0 <= print_level && print_level <= 12;
 			if( ! ok )
 			{	msg = "option_value is not between 0 and 12 inclusive";
+				error_exit(db, msg, table_name, option_id);
+			}
+		}
+		if(
+			name_vec[match] == "accept_after_max_steps_fixed" ||
+			name_vec[match] == "accept_after_max_steps_random"
+		)
+		{	int max_steps = std::atoi( option_value[option_id].c_str() );
+			bool ok = 0 < max_steps;
+			if( ! ok )
+			{	msg = "option_value is not positive";
 				error_exit(db, msg, table_name, option_id);
 			}
 		}

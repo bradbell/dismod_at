@@ -284,6 +284,7 @@ def example_db (file_name) :
 		{ 'name':'print_level_fixed',      'value':'5'                },
 		{ 'name':'tolerance_fixed',        'value':'1e-8'             },
 		{ 'name':'random_bound',           'value':None               },
+		{ 'name':'accept_after_max_steps_fixed',  'value':'2'         },
 
 		{ 'name':'derivative_test_random', 'value':'none'             },
 		{ 'name':'max_num_iter_random',    'value':'100'              },
@@ -395,7 +396,7 @@ if random_seed == 0 :
 	for row in log_dict :
 		if row['message_type'] == 'command' :
 			message = row['message'].split()
-			if message[0] == 'begin' and message[1] == 'sample' :
+			if message[0] == 'begin' and message[1] == 'simulate' :
 				random_seed = int(row['unix_time'])
 	assert random_seed != 0
 # -----------------------------------------------------------------------

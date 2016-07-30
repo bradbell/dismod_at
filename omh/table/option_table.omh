@@ -247,6 +247,11 @@ At least one these two print values
 (for the fixed and random effects) should be zero.
 The default value for this option is $code 0$$.
 
+$subhead accept_after_max_steps$$
+This is a positive integer specifying the maximum number of
+backtracking steps to take before accepting a line search point.
+The default value for this option is $code 5$$.
+
 $subhead tolerance$$
 If $icode option_name$$ is
 $code tolerance_fixed$$ ($code tolerance_random$$),

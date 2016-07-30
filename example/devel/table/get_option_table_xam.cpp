@@ -51,6 +51,8 @@ bool get_option_table_xam(void)
 		"max_num_iter_random",           "50",
 		"print_level_fixed",             "5",
 		"print_level_random",            "5",
+		"accept_after_max_steps_fixed",  "6",
+		"accept_after_max_steps_random", "6",
 		"tolerance_fixed",               "1e-7",
 		"tolerance_random",              "1e-7",
 		"random_bound",                  "3.0",
