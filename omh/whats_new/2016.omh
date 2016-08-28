@@ -43,6 +43,12 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 08-28$$
+Change
+'If the $code fit_command$$ has not been run' to
+'If the $code fit_command$$ has been run' in $cref db2csv_command$$.
+Make the same change for the reference to running the $code sample_command$$.
+
 $head 07-29$$
 $list number$$
 Add the optimizer

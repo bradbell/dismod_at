@@ -109,36 +109,36 @@
 # otherwise it is $code false$$.
 #
 # $subhead sam_value$$
-# If the $cref sample_command$$ has not been run, this is the
+# If the $cref sample_command$$ has been run, this is the
 # $cref/var_value/sample_table/var_value/$$ corresponding to
 # $cref/sample_index/sample_table/sample_index/$$ equal to zero.
 #
 # $subhead fit_value$$
-# If the $cref fit_command$$ has not been run, this is the
+# If the $cref fit_command$$ has been run, this is the
 # $cref/variable_value/fit_var_table/variable_value/$$.
 #
 # $subhead res_value$$
-# If the $cref fit_command$$ has not been run, this is the
+# If the $cref fit_command$$ has been run, this is the
 # $cref/residual_value/fit_var_table/residual_value/$$.
 #
 # $subhead res_dage$$
-# If the $cref fit_command$$ has not been run, this is the
+# If the $cref fit_command$$ has been run, this is the
 # $cref/residual_dage/fit_var_table/residual_dage/$$.
 #
 # $subhead res_dtime$$
-# If the $cref fit_command$$ has not been run, this is the
+# If the $cref fit_command$$ has been run, this is the
 # $cref/residual_dtime/fit_var_table/residual_dtime/$$.
 #
 # $subhead lag_value$$
-# If the $cref fit_command$$ has not been run, this is the
+# If the $cref fit_command$$ has been run, this is the
 # $cref/lagrange_value/fit_var_table/lagrange_value/$$.
 #
 # $subhead lag_dage$$
-# If the $cref fit_command$$ has not been run, this is the
+# If the $cref fit_command$$ has been run, this is the
 # $cref/lagrange_dage/fit_var_table/lagrange_dage/$$.
 #
 # $subhead lag_dtime$$
-# If the $cref fit_command$$ has not been run, this is the
+# If the $cref fit_command$$ has been run, this is the
 # $cref/lagrange_dtime/fit_var_table/lagrange_dtime/$$.
 #
 # $subhead prior_info$$
@@ -225,11 +225,11 @@
 # $cref/simulate_index/simulate_table/simulate_index/$$.
 #
 # $subhead avgint$$
-# If the $cref fit_command$$ has not been run, this is the
+# If the $cref fit_command$$ has been run, this is the
 # $cref/avg_integrand/fit_data_subset_table/avg_integrand/$$.
 #
 # $subhead residual$$
-# If the $cref fit_command$$ has not been run, this is the
+# If the $cref fit_command$$ has been run, this is the
 # $cref/weighted_residual/fit_data_subset_table/weighted_residual/$$.
 #
 # $subhead node$$
