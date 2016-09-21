@@ -93,27 +93,27 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	string msg;
 	//
 	// option name and its default value
+	// Changes here must also be made in python/dismod_at/db2csv_command.py
 	struct { const char* name; const char* value; } option_list[] = {
-		"parent_node_id",                "0",
-		"ode_step_size",                 "10.0",
-		"number_simulate",               "1",
-		"fit_simulate_index",            "",
-		"random_seed",                   "0",
-		"rate_case",                     "iota_pos_rho_zero",
-		//
-		"quasi_fixed",                   "true",
-		"derivative_test_fixed",         "none",
-		"derivative_test_random",        "none",
-		"max_num_iter_fixed",            "100",
-		"max_num_iter_random",           "100",
-		"print_level_fixed",             "0",
-		"print_level_random",            "0",
 		"accept_after_max_steps_fixed",  "5",
 		"accept_after_max_steps_random", "5",
-		"tolerance_fixed",               "1e-8",
-		"tolerance_random",              "1e-8",
+		"derivative_test_fixed",         "none",
+		"derivative_test_random",        "none",
+		"fit_simulate_index",            "",
+		"fixed_bound_frac",              "1e-2",
+		"max_num_iter_fixed",            "100",
+		"max_num_iter_random",           "100",
+		"number_simulate",               "1",
+		"ode_step_size",                 "10.0",
+		"parent_node_id",                "0",
+		"print_level_fixed",             "0",
+		"print_level_random",            "0",
+		"quasi_fixed",                   "true",
 		"random_bound",                  "",
-		"fixed_bound_frac",              "1e-2"
+		"random_seed",                   "0",
+		"rate_case",                     "iota_pos_rho_zero",
+		"tolerance_fixed",               "1e-8",
+		"tolerance_random",              "1e-8"
 	};
 	size_t n_option = sizeof( option_list ) / sizeof( option_list[0] );
 	CppAD::vector<string> name_vec(n_option), value_vec(n_option);

@@ -34,7 +34,7 @@
 # $codei%dismodat.py %database% db2csv%$$
 #
 # $subhead As Python Function$$
-# $codei%dismod_at.db2csv_command.py( %database% )%$$
+# $codei%dismod_at.db2csv_command( %database% )%$$
 #
 # $head 2DO$$
 # $list number$$
@@ -58,6 +58,19 @@
 # $subhead dir$$
 # We use the notation $icode dir$$ for the directory where $icode database$$
 # is located.
+#
+# $head option.csv$$
+# The file $icode%dir%/option.csv%$$ is written by this command.
+# It is a CSV file with one row for each option.
+#
+# $subhead option_name$$
+# This is the $cref/option_name/option_table/option_name/$$ for the
+# corresponding option.
+#
+# $subhead option_value$$
+# This is its $cref/option_value/option_table/option_value/$$
+# in the option table (or its default if no value is specified
+# for this option).
 #
 # $head variable.csv$$
 # The file $icode%dir%/variable.csv%$$ is written by this command.
@@ -368,6 +381,48 @@ def db2csv_command(database_file_arg) :
 				return name
 			descendant_id = parent_id
 		return None
+	# =========================================================================
+	# variable.csv
+	# =========================================================================
+	file_name  = os.path.join(database_dir, 'option.csv')
+	csv_file   = open(file_name, 'w')
+	header     = [ 'option_name', 'option_value' ]
+	csv_writer = csv.DictWriter(csv_file, fieldnames=header)
+	csv_writer.writeheader()
+	# This table must have the same values as in
+	# devel/table/get_option_table.cpp
+	option_list = [
+		[ "accept_after_max_steps_fixed",  "5"],
+		[ "accept_after_max_steps_random", "5"],
+		[ "derivative_test_fixed",         "none"],
+		[ "derivative_test_random",        "none"],
+		[ "fit_simulate_index",            ""],
+		[ "fixed_bound_frac",              "1e-2"],
+		[ "max_num_iter_fixed",            "100"],
+		[ "max_num_iter_random",           "100"],
+		[ "number_simulate",               "1"],
+		[ "ode_step_size",                 "10.0"],
+		[ "parent_node_id",                "0"],
+		[ "print_level_fixed",             "0"],
+		[ "print_level_random",            "0"],
+		[ "quasi_fixed",                   "true"],
+		[ "random_bound",                  ""],
+		[ "random_seed",                   "0"],
+		[ "rate_case",                     "iota_pos_rho_zero"],
+		[ "tolerance_fixed",               "1e-8"],
+		[ "tolerance_random",              "1e-8"]
+	]
+	for row in table_data['option'] :
+		found = False
+		for choice in option_list :
+			if row['option_name'] == choice[0] :
+				found = True
+				choice[1] = row['option_value']
+		assert found
+	for row in option_list :
+		row_out = { 'option_name' : row[0], 'option_value' : row[1] }
+		csv_writer.writerow(row_out)
+	csv_file.close()
 	# =========================================================================
 	# variable.csv
 	# =========================================================================
