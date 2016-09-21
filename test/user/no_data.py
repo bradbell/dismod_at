@@ -36,9 +36,9 @@ def constant_weight_fun(a, t) :
 	return 1.0
 # note that the a, t values are not used for this case
 def fun_iota_parent_gaussian(a, t) :
-	return ('prior_iota_parent_gaussian', 'prior_none', 'prior_none')
+	return ('prior_iota_parent_gaussian', 'prior_diff', 'prior_diff')
 def fun_iota_parent_log_gaussian(a, t) :
-	return ('prior_iota_parent_log_gaussian', 'prior_none', 'prior_none')
+	return ('prior_iota_parent_log_gaussian', 'prior_diff', 'prior_diff')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import copy
@@ -79,14 +79,14 @@ def example_db (file_name) :
 	# --------------------------------------------------------------------------
 	# prior_table
 	prior_dict = [
-		{ # prior_none
-			'name':     'prior_none',
-			'density':  'uniform',
+		{ # prior_diff
+			'name':     'prior_diff',
+			'density':  'log_gaussian',
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
+			'std':      1.0,
+			'eta':      1e-5
 		},{ # prior_iota_parent_gaussian
 			'name':     'prior_iota_parent_gaussian',
 			'density':  'gaussian',
