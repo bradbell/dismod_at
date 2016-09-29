@@ -10,10 +10,13 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # --------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-# prefix below which suitesparse will be installed
-suitesparse_prefix="$HOME/prefix/dismod_at"
 # build type can be debug or release
-build_type='debug';
+build_type='debug'
+#
+# Prefix below which suitesparse will be installed.
+# If this directory ends with /dismod_at, separate directories are used
+# for the debug and release versions.
+suitesparse_prefix="$HOME/prefix/dismod_at"
 # END USER_SETTINGS
 # --------------------------------------------------------------------------
 program='bin/install_suitesparse.sh'
@@ -31,6 +34,11 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 tarball='SuiteSparse-4.4.3.tar.gz'
 web_page='http://faculty.cse.tamu.edu/davis/SuiteSparse'
+# --------------------------------------------------------------------------
+if echo "$suitesparse_prefix" | grep '/dismod_at$' > /dev/null
+then
+	bin/build_type.sh install_suitesparse $suitesparse_prefix $build_type
+fi
 # --------------------------------------------------------------------------
 if [ ! -e build/external ]
 then

@@ -10,11 +10,14 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-# special prefix below which eigen will be installed, special so that we
-# can suppress warnings for the eigen include files.
-eigen_prefix="$HOME/prefix/dismod_at/eigen"
 # build type can be debug or release
-build_type='debug';
+build_type='debug'
+#
+# Prefix below which eigen will be installed. Note that eigen_prefix/eigen
+# is actually used so we can suppress warnings for the eigen include files.
+# If this directory ends with /dismod_at, separate directories are used
+# for the debug and release versions.
+eigen_prefix="$HOME/prefix/dismod_at"
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 if [ $0 != 'bin/install_eigen.sh' ]
@@ -29,8 +32,13 @@ echo_eval() {
 	eval $*
 }
 # ---------------------------------------------------------------------------
-version='3.2.7'
+version='3.2.9'
 web_page='https://bitbucket.org/eigen/eigen/get'
+# --------------------------------------------------------------------------
+if echo "$eigen_prefix" | grep '/dismod_at$' > /dev/null
+then
+	bin/build_type.sh install_eigen $eigen_prefix $build_type
+fi
 # --------------------------------------------------------------------------
 if [ ! -e build/external ]
 then
@@ -63,12 +71,12 @@ echo_eval cd build
 # --------------------------------------------------------------------------
 echo_eval cmake \
 	-Wno-dev \
-	-D CMAKE_INSTALL_PREFIX=$eigen_prefix \
+	-D CMAKE_INSTALL_PREFIX=$eigen_prefix/eigen \
 	-D CMAKE_BUILD_TYPE=$build_type \
 	..
 echo_eval make install
 # --------------------------------------------------------------------------
-include_dir="$eigen_prefix/include"
+include_dir="$eigen_prefix/eigen/include"
 if [ ! -h $include_dir/Eigen ]
 then
 	echo_eval ln -s $include_dir/eigen3/Eigen $include_dir/Eigen

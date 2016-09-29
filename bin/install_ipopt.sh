@@ -10,10 +10,13 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-# prefix below which ipopt will be installed
-ipopt_prefix="$HOME/prefix/dismod_at"
 # build type can be debug or release
-build_type='debug';
+build_type='debug'
+#
+# Prefix below which ipopt will be installed.
+# If this directory ends with /dismod_at, separate directories are used
+# for the debug and release versions.
+ipopt_prefix="$HOME/prefix/dismod_at"
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 if [ $0 != 'bin/install_ipopt.sh' ]
@@ -39,6 +42,11 @@ else
 	libdir='lib'
 fi
 export PKG_CONFIG_PATH=$ipopt_prefix/$libdir/pkgconfig
+# --------------------------------------------------------------------------
+if echo "$ipopt_prefix" | grep '/dismod_at$' > /dev/null
+then
+	bin/build_type.sh install_ipopt $ipopt_prefix $build_type
+fi
 # --------------------------------------------------------------------------
 if [ ! -e build/external ]
 then

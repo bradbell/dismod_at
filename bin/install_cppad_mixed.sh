@@ -12,18 +12,23 @@
 # BEGIN USER_SETTINGS
 # build type can be debug or release
 build_type='debug'
+#
 # use dismod_at prefix for packages
 cppad_prefix="$HOME/prefix/dismod_at"
 ipopt_prefix="$HOME/prefix/dismod_at"
 suitesparse_prefix="$HOME/prefix/dismod_at"
-# special prefix for eigen so we can supress warnings in eigen include files
-eigen_prefix="$HOME/prefix/dismod_at/eigen"
+eigen_prefix="$HOME/prefix/dismod_at"
+# note eigen actually is assumed to be in $eigen_prefix/eigen
+#
 # extra c++ flags used during compliation
 extra_cxx_flags='-std=c++11 -Wall'
+#
 # directory below prefix with libraries are installed
 cmake_libdir='lib64'
+#
 # use bool_sparsity YES or NO
 bool_sparsity='YES'
+#
 # use cholmod (not eigen) for LDLT factorization (where possible)
 ldlt_cholmod='YES'
 # ----------------------------------------------------------------------------
@@ -47,6 +52,11 @@ echo_eval() {
 web_page='https://github.com/bradbell/cppad_mixed.git'
 hash_key='e038e95beb4fa9a79a7d3cc74771589578db1da5'
 version='20160728'
+# --------------------------------------------------------------------------
+if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
+then
+	bin/build_type.sh install_cppad_mixed $cppad_prefix $build_type
+fi
 # --------------------------------------------------------------------------
 if [ ! -e build/external ]
 then
@@ -94,7 +104,7 @@ cmake_args="$cmake_args -D CMAKE_BUILD_TYPE=$build_type"
 #
 cmake_args="$cmake_args -D cppad_prefix=$cppad_prefix"
 cmake_args="$cmake_args -D ipopt_prefix=$ipopt_prefix"
-cmake_args="$cmake_args -D eigen_prefix=$eigen_prefix"
+cmake_args="$cmake_args -D eigen_prefix=$eigen_prefix/eigen"
 cmake_args="$cmake_args -D suitesparse_prefix=$suitesparse_prefix"
 #
 cmake_args="$cmake_args -D extra_cxx_flags=$extra_cxx_flags"
