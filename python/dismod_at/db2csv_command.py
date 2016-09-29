@@ -258,6 +258,7 @@ def db2csv_command(database_file_arg) :
 	import os
 	import csv
 	import dismod_at
+	import sys
 	#
 	file_name    = database_file_arg
 	database_dir = os.path.split(database_file_arg)[0]

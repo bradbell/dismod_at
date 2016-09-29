@@ -37,6 +37,7 @@ $spell
 	suitesparse
 	gcc
 	Wmisleading
+	sys
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -53,11 +54,13 @@ $cref/special requirements/install_unix/Special Requirements/$$.
 $lnext
 Advance to eigen-3.2.9 and cppad-20160929.
 $lnext
-There was a but in the sampling of the random effects
-during the
+There was a bug in the sampling of the random effects during the
 $cref/sample asymptotic/sample_command/method/asymptotic/$$ command
 (found by a gcc-6.2.1 $code -Wmisleading-indentation$$ warning).
 This has been fixed.
+$lnext
+Add a missing $code import sys$$ to
+$code db2csv_command.py$$.
 $lend
 
 $head 09-21$$
