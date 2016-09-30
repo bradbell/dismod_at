@@ -62,10 +62,6 @@ echo_eval mv $git_name eigen-$version
 # --------------------------------------------------------------------------
 echo_eval cd eigen-$version
 #
-echo 'patch eigen source code'
-sed -e 's|Scalar l_ii = 0|Scalar l_ii = Scalar(0)|' \
-	-i.old Eigen/src/SparseCore/TriangularSolver.h
-#
 echo_eval mkdir build
 echo_eval cd build
 # --------------------------------------------------------------------------

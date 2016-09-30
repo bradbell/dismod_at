@@ -31,16 +31,11 @@ echo_eval() {
 	eval $*
 }
 # --------------------------------------------------------------------------
-version="Ipopt-3.11.9"
+version="Ipopt-3.12.6"
 third_party="Mumps Metis"
 web_page="http://www.coin-or.org/download/source/Ipopt"
 # --------------------------------------------------------------------------
-if [ -e /usr/lib64 ]
-then
-	libdir='lib64'
-else
-	libdir='lib'
-fi
+libdir=`bin/libdir.sh`
 export PKG_CONFIG_PATH=$ipopt_prefix/$libdir/pkgconfig
 # --------------------------------------------------------------------------
 if echo "$ipopt_prefix" | grep '/dismod_at$' > /dev/null

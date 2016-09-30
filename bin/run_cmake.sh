@@ -12,7 +12,7 @@
 # $OMhelpKeyCharacter=&
 # &begin run_cmake.sh&& &newlinech #&&
 # &spell
-#	cmake makefile cxx std dismod libdir lcppad cholmod xam cpp
+#	cmake makefile cxx std dismod lcppad cholmod xam cpp
 #	usr eigen ipopt cppad bools suitesparse devel hpp
 # &&
 #
@@ -103,24 +103,15 @@ EOF
 	fi
 	shift
 done
-# ---------------------------------------------------------------------------
-if [ -e "$dismod_at_prefix.$build_type" ]
+# --------------------------------------------------------------------------
+libdir=`bin/libdir.sh`
+export PKG_CONFIG_PATH="$ipopt_prefix/$libdir/pkgconfig"
+# --------------------------------------------------------------------------
+if echo "$dismod_at_prefix" | grep '/dismod_at$' > /dev/null
 then
-	if [ -e "$dismod_at_prefix" ]
-	then
-		echo_eval rm "$dismod_at_prefix"
-	fi
-	echo_eval ln -s $dismod_at_prefix.$build_type $dismod_at_prefix
+	bin/build_type.sh run_cmake $dismod_at_prefix $build_type
 fi
-if [ ! -e "build.$build_type" ]
-then
-	echo_eval mkdir "build.$build_type"
-fi
-if [ -e build ]
-then
-	echo_eval rm build
-fi
-echo_eval ln -s build.$build_type build
+# --------------------------------------------------------------------------
 if [ ! -e build ]
 then
 	echo_eval mkdir build
@@ -137,6 +128,7 @@ cmake \
 	\
 	-D python3_executable=$python3_executable \
 	-D extra_cxx_flags="$extra_cxx_flags" \
+	-D cmake_libdir="$libdir" \
 	\
 	-D dismod_at_prefix="$dismod_at_prefix" \
 	-D ipopt_prefix="$ipopt_prefix" \

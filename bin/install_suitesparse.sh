@@ -34,6 +34,7 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 tarball='SuiteSparse-4.4.3.tar.gz'
 web_page='http://faculty.cse.tamu.edu/davis/SuiteSparse'
+libdir=`bin/libdir.sh`
 # --------------------------------------------------------------------------
 if echo "$suitesparse_prefix" | grep '/dismod_at$' > /dev/null
 then
@@ -57,10 +58,11 @@ fi
 echo_eval tar -xzf $tarball
 cd SuiteSparse
 # -----------------------------------------------------------------------------
-sed \
-	-e "s|/usr/local/|$suitesparse_prefix/|" \
-	-e 's|-lopenblas|-lblas|' \
-	-i.bak SuiteSparse_config/SuiteSparse_config.mk
+sed -e \
+"s|^\( *INSTALL_INCLUDE *\)=.*|\1= $suitesparse_prefix.$build_type/include|" \
+-e "s|^\( *INSTALL_LIB *\)=.*|\1= $suitesparse_prefix.$build_type/$libdir|" \
+-e 's|^\( *BLAS *\)=.*|\1= -lblas|' \
+-i.bak SuiteSparse_config/SuiteSparse_config.mk
 #
 if [ "$build_type" == 'debug' ]
 then

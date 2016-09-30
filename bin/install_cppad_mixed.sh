@@ -23,9 +23,6 @@ eigen_prefix="$HOME/prefix/dismod_at"
 # extra c++ flags used during compliation
 extra_cxx_flags='-std=c++11 -Wall'
 #
-# directory below prefix with libraries are installed
-cmake_libdir='lib64'
-#
 # use bool_sparsity YES or NO
 bool_sparsity='YES'
 #
@@ -52,6 +49,7 @@ echo_eval() {
 web_page='https://github.com/bradbell/cppad_mixed.git'
 hash_key='e038e95beb4fa9a79a7d3cc74771589578db1da5'
 version='20160728'
+libdir=`bin/libdir.sh`
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
 then
@@ -92,13 +90,6 @@ then
 	echo_eval rm CMakeCache.txt
 fi
 # -----------------------------------------------------------------------------
-if [ -e /usr/lib64 ]
-then
-	libdirs="'lib64;lib'"
-else
-	libdirs="'lib;lib64'"
-fi
-#
 cmake_args="-D CMAKE_VERBOSE_MAKEFILE=NO"
 cmake_args="$cmake_args -D CMAKE_BUILD_TYPE=$build_type"
 #
@@ -108,7 +99,7 @@ cmake_args="$cmake_args -D eigen_prefix=$eigen_prefix/eigen"
 cmake_args="$cmake_args -D suitesparse_prefix=$suitesparse_prefix"
 #
 cmake_args="$cmake_args -D extra_cxx_flags=$extra_cxx_flags"
-cmake_args="$cmake_args -D cmake_libdir=$cmake_libdir"
+cmake_args="$cmake_args -D cmake_libdir=$libdir"
 cmake_args="$cmake_args -D bool_sparsity=$bool_sparsity"
 cmake_args="$cmake_args -D ldlt_cholmod=$ldlt_cholmod"
 echo "cmake $cmake_args .."

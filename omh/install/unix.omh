@@ -28,6 +28,7 @@ $spell
 	gsl
 	sqlite
 	devel
+	libdir
 $$
 
 $section Installing dismod_at in Unix$$
@@ -78,8 +79,16 @@ Note that the development headers are required; e.g.,
 on Fedora or Red-Hat one needs to install $code gsl-devel$$.
 
 $head Special Requirements$$
-The following programs are required by dismod_at
-and may not have standard system installs:
+The packages listed below are required by dismod_at
+and may not have standard system installs
+($code libdir.sh$$ is a file not a package).
+
+$subhead libdir.sh$$
+The script $code bin/libdir.sh$$ determines what directory,
+below the prefix directories, is use for libraries by the install
+programs discussed below. The following is the default value
+for this script
+$srcfile%bin/libdir.sh%4%$$
 
 $subhead eigen$$
 The $href%http://eigen.tuxfamily.org%eigen%$$

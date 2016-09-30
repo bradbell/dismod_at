@@ -94,6 +94,9 @@ required_definition( extra_cxx_flags STRING
 required_definition(dismod_at_prefix PATH
 	"prefix where dismod_at will be installed"
 )
+required_definition(cmake_libdir STRING
+	"directory below prefix where libraries are stored; e.g, lib64"
+)
 # ----------------------------------------------------------------------------
 # get required package prefixes
 get_prefix(cppad)
@@ -101,7 +104,7 @@ get_prefix(eigen)
 get_prefix(ipopt)
 get_prefix(suitesparse)
 # ----------------------------------------------------------------------------
-FOREACH( var cppad_mixed_set_sparsity cppad_mixed_libdir )
+FOREACH( var cppad_mixed_set_sparsity )
 IF( ${var} )
 	MESSAGE(FATAL_ERROR "${var} is no longer used in dismod_at cmake command")
 ENDIF( ${var} )
@@ -119,8 +122,12 @@ FOREACH( dir ${ipopt_LIBRARY_DIRS} )
 ENDFOREACH( dir )
 # ----------------------------------------------------------------------------
 # no pkg-config for SuiteSparse so explicitly set corresponding values
-SET(suitesparse_LIBRARY_DIRS ${suitesparse_prefix}/lib )
+SET(suitesparse_LIBRARY_DIRS ${suitesparse_prefix}/${cmake_libdir} )
 SET(suitesparse_LIBRARIES "cholmod;amd;camd;colamd;ccolamd;suitesparseconfig" )
+# ----------------------------------------------------------------------------
+# no pkg-config for cppad_mixed so explicitly set corresponding varialbe
+SET(cppad_mixed_LIBRARY_DIRS ${cppad_mixed_prefix}/${cmake_libdir} )
+SET(cppad_mixed_LIBRARIES "cppad_mixed" )
 # ----------------------------------------------------------------------------
 # dismod_at_has_nullptr_01
 #

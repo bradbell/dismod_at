@@ -40,6 +40,7 @@ echo_eval() {
 web_page='https://github.com/coin-or/CppAD.git'
 hash_key='96c804b50258c73501bb0ae7460038223c426edb'
 version='20160929'
+libdir=`bin/libdir.sh`
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
 then
@@ -73,16 +74,9 @@ then
 	rm -r CMakeCache.txt
 fi
 # -----------------------------------------------------------------------------
-if [ -e /usr/lib64 ]
-then
-	libdirs="'lib64;lib'"
-else
-	libdirs="'lib;lib64'"
-fi
-#
 cmake_args="-D CMAKE_VERBOSE_MAKEFILE=0"
 cmake_args="$cmake_args -D cppad_prefix=$cppad_prefix"
-cmake_args="$cmake_args -D cmake_install_libdirs=$libdirs"
+cmake_args="$cmake_args -D cmake_install_libdirs=$libdir"
 echo "cmake $cmake_args -D cppad_cxx_flags='$extra_cxx_flags' .."
 cmake $cmake_args -D cppad_cxx_flags="$extra_cxx_flags" ..
 #
