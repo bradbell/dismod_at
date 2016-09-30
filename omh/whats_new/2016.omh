@@ -46,6 +46,14 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 09-30$$
+A new assert, that checks for infinity or nan results during the integration,
+was added. This should be converted to a more useful error message; see
+$cref/error messages/wish_list/Error Messages/$$ in the wish list.
+Furthermore, in some cases it can be avoided; see
+$cref/large excess mortality/wish_list/Large Excess Mortality/$$
+in the wish list.
+
 $head 09-29$$
 $list number$$
 In the case where $code dismod_at$$ is in the prefix,

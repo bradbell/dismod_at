@@ -1076,40 +1076,68 @@ Float data_model::avg_yes_ode(
 	// check that this data's node is a descendent of the parent node
 	assert( child <= n_child_ );
 
+	// information that maps cohorts to indices in the ODE grid
 	CppAD::vector<size_t> ode_index, cohort_start;
+	//
 	// cohorts that end at maximum age index
 	for(j = 0; j < n_time_sub; j++)
 	{	size_t i_end, j_end, ik, jk;
-		i_end = i_min + n_age_sub - 1; // cohort ends at this age index
-		j_end = j_min + j;             // cohort ends at this time index
+		//
+		// age index that this cohort integration will end at
+		i_end = i_min + n_age_sub - 1;
 		assert( i_end < n_age_ode_ );
+		assert( i_min < i_end );
+		//
+		// time index that this cohort integration will end at
+		j_end = j_min + j;
 		assert( j_end < n_time_ode_ );
+		//
+		// k is index in ode_index at which this cohort integration starts
 		k     = ode_index.size();
 		cohort_start.push_back(k);
+		//
+		// start integration at age index zero and end at i_end
 		for(ik = 0; ik <= i_end; ik++)
-		{	if( i_end - ik < j_end )
+		{	// time index corresponding to index ik in this cohort
+			if( i_end - ik < j_end )
 				jk = j_end - (i_end - ik);
 			else
+			{	// below the minimum time for ODE grid
 				jk = 0;
+			}
+			// pack age index ik and time index jk as one number
 			ode_index.push_back( ik * n_time_ode_ + jk);
 		}
 	}
+	//
 	// cohorts that end at maximum time index
 	// (except for the one that also ends at maximum age)
 	for(i = 0; i < n_age_sub - 1; i++)
 	{	size_t i_end, j_end, ik, jk;
+		//
+		// time index that this cohort integration will end at
 		j_end = j_min + n_time_sub - 1;
+		assert( j_end < n_time_ode_ );
+		assert( j_min < j_end );
+		//
+		// age index that this cohort integation will end at
 		i_end = i_min + i;
 		assert( i_end < n_age_ode_ );
-		assert( j_end < n_time_ode_ );
+		//
+		// k is index in ode_index at which this cohort integration starts
 		k     = ode_index.size();
 		cohort_start.push_back(k);
-		// note that this loop is empty when i = 0
+		//
+		// start integration at age index zero and ent at i_end
 		for(ik = 0; ik <= i_end; ik++)
-		{	if( i_end - ik < j_end )
+		{	// time index corresponding to index ik in this cohort
+			if( i_end - ik < j_end )
 				jk = j_end - (i_end - ik);
 			else
+			{	// before minimum time for ODE grid
 				jk = 0;
+			}
+			// pack age index ik and time index jk as one number
 			ode_index.push_back( ik * n_time_ode_ + jk);
 		}
 
@@ -1194,6 +1222,7 @@ Float data_model::avg_yes_ode(
 	CppAD::vector<Float> iota, rho, chi, omega, S_out, C_out;
 	CppAD::vector<Float> integrand_sub( n_ode_sub );
 	Float zero = Float(0.0);
+	Float infinity  = Float( std::numeric_limits<double>::infinity() );
 	for(k = 0; k < n_ode_sub; k++)
 			integrand_sub[k] = CppAD::nan(zero);
 	for(ell = 0; ell < n_cohort; ell++)
@@ -1231,6 +1260,7 @@ Float data_model::avg_yes_ode(
 			size_t j = ode_index[k_start + k] % n_time_ode_;
 			if( i_min <= i && j_min <= j )
 			{	Float P   = C_out[k] / ( S_out[k]  + C_out[k]);
+				assert( zero <= P && P < infinity );
 				size_t ij = (i - i_min) * n_time_sub + (j - j_min);
 				switch(integrand)
 				{
