@@ -29,6 +29,11 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head data_name$$
+Add a $icode data_name$$ column to the $cref data_table$$.
+This will allow the user to put an alternate id in the data table;
+for example, the data identifier in the IHME database.
+
 $head Error Messages$$
 Some places in the code the sqlite database pointer is not available and hence
 $cref error_exit$$ cannot be used to log an error condition.
