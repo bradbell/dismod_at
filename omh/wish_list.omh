@@ -25,9 +25,20 @@ $spell
 	checkpointing
 	sqlite
 	pos
+	var
 $$
 
 $section Dismod_at Wish List$$
+
+$head random_bound$$
+Make a special case of
+$cref/random_bound/option_table/Optimizer/random_bound/$$
+equal to zero.
+This could be used to obtain an estimate for the fixed effects
+using the same variable indices as when the random effects are added.
+The $cref/start fit_var/start_command/source/fit_var/$$ command
+could then be used to initialize
+the optimization with random effects
 
 $head data_name$$
 Add a $icode data_name$$ column to the $cref data_table$$.
