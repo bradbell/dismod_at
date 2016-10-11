@@ -61,9 +61,10 @@ namespace dismod_at {
 		// Uses the invalid value n_fixed_ if not a fixed variable.
 		CppAD::vector<size_t>             var_id2fixed_;
 		//
-		// Lower and upper limits for fixed effects
-		CppAD::vector<double>             fixed_lower_;
-		CppAD::vector<double>             fixed_upper_;
+		// Lower and upper limits for randoim effects
+		// (used to remove random effects before cppad_mixed sees them).
+		CppAD::vector<double>             random_lower_;
+		CppAD::vector<double>             random_upper_;
 		//
 		// Offset in log scaling for each component of the fixed vector;
 		// If fixed_is_scaled_[j], fixed_vec[j] in dismod_at has value
