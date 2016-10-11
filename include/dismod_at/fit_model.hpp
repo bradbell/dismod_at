@@ -123,10 +123,6 @@ namespace dismod_at {
 			const a2d_vector& fixed_vec   ,
 			const a2d_vector& random_vec
 		);
-		virtual a1d_vector ran_likelihood(
-			const a1d_vector& fixed_vec   ,
-			const a1d_vector& random_vec
-		);
 		// pass fixed negative log-likelihood to base class
 		virtual a1d_vector fix_likelihood(
 			const a1d_vector& fixed_vec

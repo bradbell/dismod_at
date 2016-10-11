@@ -713,21 +713,20 @@ $end
 // private functions
 // ===========================================================================
 // ran_likelihood
-template <class Float>
-CppAD::vector<Float> fit_model::implement_ran_like(
-	const CppAD::vector<Float>& fixed_vec   ,
-	const CppAD::vector<Float>& random_vec  )
+fit_model::a2d_vector fit_model::ran_likelihood(
+	const a2d_vector& fixed_vec    ,
+	const a2d_vector& random_vec   )
 {	// packed vector
-	CppAD::vector<Float> pack_vec( pack_object_.size() );
+	CppAD::vector<a2_double> pack_vec( pack_object_.size() );
 	//
 	// put the fixed and random effects into pack_vec
-	CppAD::vector<Float> fixed_tmp(n_fixed_);
+	CppAD::vector<a2_double> fixed_tmp(n_fixed_);
 	unscale_fixed_effect(fixed_vec, fixed_tmp);
 	pack_fixed(pack_object_, pack_vec, fixed_tmp);
 	pack_random(pack_object_, pack_vec, random_vec);
 	//
 	// evaluate the data and prior residuals
-	CppAD::vector< residual_struct<Float> > data_like, prior_ran;
+	CppAD::vector< residual_struct<a2_double> > data_like, prior_ran;
 	bool hold_out       = true;
 	bool random_depend  = true;
 	data_like  = data_object_.like_all(hold_out, random_depend, pack_vec);
@@ -739,7 +738,7 @@ CppAD::vector<Float> fit_model::implement_ran_like(
 	//
 	// check for the case where we return the empty vector
 	if( n_data_like == 0 && n_prior_ran == 0 )
-		return CppAD::vector<Float>(0);
+		return CppAD::vector<a2_double>(0);
 	//
 	// count the number of absolute value terms
 	size_t n_abs = 0;
@@ -754,10 +753,10 @@ CppAD::vector<Float> fit_model::implement_ran_like(
 			n_abs++;
 	}
 	// size ran_den
-	CppAD::vector<Float> ran_den(1 + n_abs);
+	CppAD::vector<a2_double> ran_den(1 + n_abs);
 	//
 	// initialize summation of smooth part
-	ran_den[0] = Float(0.0);
+	ran_den[0] = a2_double(0.0);
 	//
 	// initialize index for non-smooth part
 	size_t i_abs = 0;
@@ -782,16 +781,6 @@ CppAD::vector<Float> fit_model::implement_ran_like(
 	//
 	return ran_den;
 }
-//
-fit_model::a2d_vector fit_model::ran_likelihood(
-	const a2d_vector& fixed_vec    ,
-	const a2d_vector& random_vec   )
-{	return implement_ran_like(fixed_vec, random_vec); }
-//
-fit_model::a1d_vector fit_model::ran_likelihood(
-	const a1d_vector& fixed_vec    ,
-	const a1d_vector& random_vec   )
-{	return implement_ran_like(fixed_vec, random_vec); }
 // ---------------------------------------------------------------------------
 // fix_likelihood
 fit_model::a1d_vector fit_model::fix_likelihood(
