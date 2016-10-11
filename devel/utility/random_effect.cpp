@@ -142,7 +142,7 @@ size_t size_random_effect(const pack_info&  pack_object)
 
 template <class Float>
 void unpack_random(
-	const pack_info&              pack_object  ,
+	const pack_info&             pack_object  ,
 	const CppAD::vector<Float>&  pack_vec   ,
 	CppAD::vector<Float>&        random_vec )
 {
@@ -172,7 +172,7 @@ void unpack_random(
 
 template <class Float>
 void pack_random(
-	const pack_info&              pack_object  ,
+	const pack_info&             pack_object  ,
 	CppAD::vector<Float>&        pack_vec   ,
 	const CppAD::vector<Float>&  random_vec )
 {
@@ -202,12 +202,12 @@ void pack_random(
 
 # define DISMOD_AT_INSTANTIATE_RANDOM_EFFECT(Float)           \
 	template void unpack_random(                       \
-	const pack_info&              pack_object  ,                 \
+	const pack_info&             pack_object  ,                 \
 	const CppAD::vector<Float>&  pack_vec   ,                 \
 	CppAD::vector<Float>&        random_vec                   \
 	);                                                        \
 	template void pack_random(                         \
-	const pack_info&              pack_object  ,                 \
+	const pack_info&             pack_object  ,                 \
 	CppAD::vector<Float>&        pack_vec   ,                 \
 	const CppAD::vector<Float>&  random_vec                   \
 	);
