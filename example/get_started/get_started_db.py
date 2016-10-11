@@ -245,8 +245,7 @@ def get_started_db (file_name) :
 		{ 'name':'derivative_test_random', 'value':'second-order' },
 		{ 'name':'max_num_iter_random',    'value':'100'          },
 		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-10'        },
-		{ 'name':'random_bound',           'value':None           }
+		{ 'name':'tolerance_random',       'value':'1e-10'        }
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: same order as list of integrands

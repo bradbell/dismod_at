@@ -48,6 +48,11 @@ $head db$$
 This argument is the database connection for
 $cref/logging/log_message/$$ errors and warnings.
 
+$head n_random_equal$$
+This is the number of random constraints that have equal
+lower and upper bounds; see
+$cref random_limits$$.
+
 $head fit_or_sample$$
 This argument is either $code fit$$ or $code sample$$.
 If it is $code fit$$ ($code sample$$)
@@ -96,15 +101,6 @@ $latex \[
 where $latex \hat{u} ( \theta )$$ is the optimal random effects corresponding
 to the fixed effects $latex \theta$$.
 This matrix can be empty, in which case there are no random constraints.
-
-$head option_map$$
-This argument is effectively $code const$$ and
-$codei%
-	%option_map%["random_bound"]
-%$$
-is the value in the value of
-$cref/random_bound/option_table/Optimizer/random_bound/$$
-in the option table.
 
 $head Prototype$$
 $srccode%cpp% */
