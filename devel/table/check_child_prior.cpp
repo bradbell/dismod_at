@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -124,15 +124,18 @@ void check_child_prior(
 			name[1]     = "child dage prior";
 			prior_id[2] = smooth_grid[grid_id].dtime_prior_id;
 			name[2]     = "child dtime prior";
-			msg         = "";
 			// skip dage and dtime priors for last age and last time
 			for(size_t i = 0; i < 3; i++)
 			if( prior_id[i] != DISMOD_AT_NULL_INT )
-			{	int    density_id = prior_table[prior_id[i]].density_id;
+			{
+				int    density_id = prior_table[prior_id[i]].density_id;
 				double mean       = prior_table[prior_id[i]].mean;
 				double std        = prior_table[prior_id[i]].std;
 				double lower      = prior_table[prior_id[i]].lower;
 				double upper      = prior_table[prior_id[i]].upper ;
+				//
+				// check for an error
+				msg = "";
 				if( density_id != int( gaussian_enum ) )
 				{	msg += "density not gaussian";
 				}
@@ -157,8 +160,12 @@ void check_child_prior(
 						msg += ", ";
 					msg += "upper not plus infinity";
 				}
-				if( msg != "" )
-				{	msg = name[i]
+				// check for special case that is ok
+				bool value_prior = i == 0;
+				bool ok = value_prior && (lower == upper);
+				if( msg != "" ) if( ! ok )
+				{
+					msg = name[i]
 					+ ": child_smooth_id = " + to_string(child_smooth_id)
 					+ ", smooth_grid_id = " + to_string(grid_id)
 					+ ", prior_id = " + to_string( prior_id[i] )

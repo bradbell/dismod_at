@@ -121,16 +121,16 @@ $end
 */
 // base class constructor
 : cppad_mixed(
-	size_fixed_effect(pack_object)  ,  // n_fixed
-	size_random_effect(pack_object) ,  // n_random
-	quasi_fixed                     ,
+	size_fixed_effect(pack_object)                  ,  // n_fixed
+	size_random_effect(pack_object) - n_random_equal,  // n_random
+	quasi_fixed                                     ,
 	A_info
 ) ,
 db_            (db)                                 ,
 n_random_equal_(n_random_equal)                     ,
 fit_or_sample_ ( fit_or_sample                   )  ,
 n_fixed_       ( size_fixed_effect(pack_object)  )  ,
-n_random_      ( size_random_effect(pack_object) - n_random_equal )  ,
+n_random_      ( size_random_effect(pack_object) )  ,
 pack_object_   ( pack_object )                      ,
 start_var_     ( start_var   )                      ,
 prior_table_   ( prior_table )                      ,
@@ -213,7 +213,10 @@ prior_object_  ( prior_object )
 	CppAD::vector<double> random_vec(n_random_);
 	unpack_random(pack_object, start_var, random_vec);
 	//
-	initialize(fixed_vec, random_vec);
+	CppAD::vector<double> cppad_mixed_random_vec =
+		random_dismod_at2cppad_mixed( random_vec );
+	//
+	initialize(fixed_vec, cppad_mixed_random_vec);
 }
 /*
 -----------------------------------------------------------------------------
@@ -371,7 +374,7 @@ $end
 	d_vector& fixed_lag      = fixed_sol.fixed_lag;
 	d_vector& fixed_con_lag  = fixed_sol.fix_con_lag;
 	// optimal random effects
-	d_vector random_opt;
+	d_vector random_opt(n_random_);
 	if( n_random_ > n_random_equal_ )
 	{	d_vector cppad_mixed_random_opt = optimize_random(
 			random_options,
@@ -750,25 +753,25 @@ fit_model::a2d_vector fit_model::ran_likelihood(
 	pack_fixed(pack_object_, pack_vec, fixed_tmp);
 	pack_random(pack_object_, pack_vec, random_vec);
 	//
-	// evaluate the data and prior residuals
-	CppAD::vector< residual_struct<a2_double> > data_like, prior_ran;
+	// evaluate the data and prior residuals that depend on the  random effects
+	CppAD::vector< residual_struct<a2_double> > data_ran, prior_ran;
 	bool hold_out       = true;
 	bool random_depend  = true;
-	data_like  = data_object_.like_all(hold_out, random_depend, pack_vec);
+	data_ran   = data_object_.like_all(hold_out, random_depend, pack_vec);
 	prior_ran  = prior_object_.random(pack_vec);
 	//
 	// number of data and prior residuals
-	size_t n_data_like  = data_like.size();
+	size_t n_data_ran    = data_ran.size();
 	size_t n_prior_ran   = prior_ran.size();
 	//
 	// check for the case where we return the empty vector
-	if( n_data_like == 0 && n_prior_ran == 0 )
+	if( n_data_ran == 0 && n_prior_ran == 0 )
 		return a2d_vector(0);
 	//
 	// count the number of absolute value terms
 	size_t n_abs = 0;
-	for(size_t i = 0; i < n_data_like; i++)
-	{	density_enum density = data_like[i].density;
+	for(size_t i = 0; i < n_data_ran; i++)
+	{	density_enum density = data_ran[i].density;
 		if( density == laplace_enum || density == log_laplace_enum )
 			n_abs++;
 	}
@@ -786,12 +789,12 @@ fit_model::a2d_vector fit_model::ran_likelihood(
 	// initialize index for non-smooth part
 	size_t i_abs = 0;
 	//
-	// data_like terms
-	for(size_t i = 0; i < n_data_like; i++)
-	{	ran_den[0] += data_like[i].logden_smooth;
-		density_enum density = data_like[i].density;
+	// data_ran terms
+	for(size_t i = 0; i < n_data_ran; i++)
+	{	ran_den[0] += data_ran[i].logden_smooth;
+		density_enum density = data_ran[i].density;
 		if( density == laplace_enum || density == log_laplace_enum )
-			ran_den[1 + i_abs++] = data_like[i].logden_sub_abs;
+			ran_den[1 + i_abs++] = data_ran[i].logden_sub_abs;
 	}
 	//
 	// random effects prior
@@ -825,20 +828,20 @@ fit_model::a1d_vector fit_model::fix_likelihood(
 	pack_random(pack_object_, a1_pack_vec, random_vec);
 	//
 	// evaluate prior residuals (data residuals empty for now)
-	CppAD::vector< residual_struct<a1_double> > data_like, prior_fix;
+	CppAD::vector< residual_struct<a1_double> > data_fix, prior_fix;
 	bool hold_out      = true;
 	bool random_depend = false;
-	data_like = data_object_.like_all(hold_out, random_depend, a1_pack_vec);
+	data_fix  = data_object_.like_all(hold_out, random_depend, a1_pack_vec);
 	prior_fix = prior_object_.fixed(a1_pack_vec);
 	//
 	// number of data and prior residuals
-	size_t n_data_like   = data_like.size();
+	size_t n_data_fix    = data_fix.size();
 	size_t n_prior_fix   = prior_fix.size();
 	//
 	// count the number of absolute value terms
 	size_t n_abs = 0;
-	for(size_t i = 0; i < n_data_like; i++)
-	{	density_enum density = data_like[i].density;
+	for(size_t i = 0; i < n_data_fix; i++)
+	{	density_enum density = data_fix[i].density;
 		if( density == laplace_enum || density == log_laplace_enum )
 			n_abs++;
 	}
@@ -847,35 +850,35 @@ fit_model::a1d_vector fit_model::fix_likelihood(
 		if( density == laplace_enum || density == log_laplace_enum )
 			n_abs++;
 	}
-	// size prior_den
-	a1d_vector prior_den(1 + n_abs);
+	// size fix_den
+	a1d_vector fix_den(1 + n_abs);
 	//
 	// initialize summation of smooth part
-	prior_den[0] = a1_double(0.0);
+	fix_den[0] = a1_double(0.0);
 	//
 	// initialize index for non-smooth part
 	size_t i_abs = 0;
 	//
-	// data_like terms
-	for(size_t i = 0; i < n_data_like; i++)
-	{	prior_den[0] += data_like[i].logden_smooth;
-		density_enum density = data_like[i].density;
+	// data_fix terms
+	for(size_t i = 0; i < n_data_fix; i++)
+	{	fix_den[0] += data_fix[i].logden_smooth;
+		density_enum density = data_fix[i].density;
 		if( density == laplace_enum || density == log_laplace_enum )
-			prior_den[1 + i_abs++] = data_like[i].logden_sub_abs;
+			fix_den[1 + i_abs++] = data_fix[i].logden_sub_abs;
 	}
 	//
 	// fixed effects prior
 	for(size_t i = 0; i < n_prior_fix; i++)
-	{	prior_den[0] += prior_fix[i].logden_smooth;
+	{	fix_den[0] += prior_fix[i].logden_smooth;
 		density_enum density = prior_fix[i].density;
 		if( density == laplace_enum || density == log_laplace_enum )
-			prior_den[1 + i_abs++] = prior_fix[i].logden_sub_abs;
+			fix_den[1 + i_abs++] = prior_fix[i].logden_sub_abs;
 	}
 	//
 	// convert from log-density to negative log density
-	prior_den[0] = - prior_den[0];
+	fix_den[0] = - fix_den[0];
 	//
-	return prior_den;
+	return fix_den;
 }
 // --------------------------------------------------------------------------
 // fix_constraint
