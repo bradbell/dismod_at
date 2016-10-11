@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/log_message.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/random_limits.hpp>
 
 namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 /*
@@ -108,18 +109,17 @@ in the option table.
 $head Prototype$$
 $srccode%cpp% */
 fit_model::fit_model(
-	sqlite3*                              db           ,
-	const std::string&                    fit_or_sample,
-	const pack_info&                      pack_object  ,
-	const CppAD::vector<double>&          start_var    ,
-	const CppAD::vector<prior_struct>&    prior_table  ,
-	const CppAD::vector<smooth_info>&     s_info_vec   ,
-	const data_model&                     data_object  ,
-	const prior_model&                    prior_object ,
-	bool                                  quasi_fixed  ,
-	const CppAD::mixed::sparse_mat_info&  A_info       ,
-    // effectively const
-    std::map<std::string, std::string>&   option_map   )
+	sqlite3*                              db               ,
+	size_t                                n_random_equal   ,
+	const std::string&                    fit_or_sample    ,
+	const pack_info&                      pack_object      ,
+	const CppAD::vector<double>&          start_var        ,
+	const CppAD::vector<prior_struct>&    prior_table      ,
+	const CppAD::vector<smooth_info>&     s_info_vec       ,
+	const data_model&                     data_object      ,
+	const prior_model&                    prior_object     ,
+	bool                                  quasi_fixed      ,
+	const CppAD::mixed::sparse_mat_info&  A_info           )
 /* %$$
 $end
 */
@@ -131,6 +131,7 @@ $end
 	A_info
 ) ,
 db_            (db)                                 ,
+n_random_equal_(n_random_equal)                     ,
 fit_or_sample_ ( fit_or_sample                   )  ,
 n_fixed_       ( size_fixed_effect(pack_object)  )  ,
 n_random_      ( size_random_effect(pack_object) )  ,
@@ -143,19 +144,10 @@ prior_object_  ( prior_object )
 {	assert( fit_or_sample == "fit" || fit_or_sample == "sample" );
 	// ----------------------------------------------------------------------
 	// random_lower_, random_upper_
-	std::string random_bound_string = option_map["random_bound"];
-	double random_bound = std::numeric_limits<double>::infinity();
-	if( random_bound_string  != "" )
-		random_bound = std::atof( random_bound_string.c_str() );
-	random_lower_.resize(n_random_);
-	random_upper_.resize(n_random_);
-	n_random_equal_ = 0;
-	for(size_t j = 0; j < n_random_; j++)
-	{	random_upper_[j] = + random_bound;
-		random_lower_[j] = - random_bound;
-		if( random_lower_[j] == random_upper_[j] )
-			++n_random_equal_;
-	}
+	size_t check = random_limits(
+		pack_object, prior_table, s_info_vec, random_lower_, random_upper_
+	);
+	assert( check == n_random_equal );
 	// ----------------------------------------------------------------------
 	// value_prior_
 	size_t n_var = n_fixed_ + n_random_;

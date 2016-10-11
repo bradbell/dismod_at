@@ -40,6 +40,7 @@ namespace dismod_at {
 		//
 		// const member variables
 		sqlite3*                           db_;
+		const size_t                       n_random_equal_;
 		const std::string                  fit_or_sample_;
 		const size_t                       n_fixed_;
 		const size_t                       n_random_;
@@ -65,11 +66,9 @@ namespace dismod_at {
 		// Uses the invalid value n_fixed_ if not a fixed variable.
 		CppAD::vector<size_t>             var_id2fixed_;
 		//
-		// Lower and upper limits for randoim effects and number of
-		// components where the limits are equal.
+		// Lower and upper limits for randoim effects.
 		CppAD::vector<double>             random_lower_;
 		CppAD::vector<double>             random_upper_;
-		size_t                            n_random_equal_;
 		//
 		// Offset in log scaling for each component of the fixed vector;
 		// If fixed_is_scaled_[j], fixed_vec[j] in dismod_at has value
@@ -169,19 +168,17 @@ namespace dismod_at {
 	public:
 		// constructor
 		fit_model(
-			sqlite3*                             db           ,
-			const std::string&                   fit_or_sample,
-			const pack_info&                     pack_object  ,
-			const CppAD::vector<double>&         start_var    ,
-			const CppAD::vector<prior_struct>&   prior_table  ,
-			const CppAD::vector<smooth_info>&    s_info_vec   ,
-			const data_model&                    data_object  ,
-			const prior_model&                   prior_object ,
-			bool                                 quasi_fixed  ,
-			const CppAD::mixed::sparse_mat_info& A_info       ,
-			// effectively const
-			std::map<std::string, std::string>&  option_map
-
+			sqlite3*                             db              ,
+			size_t                               n_random_equal  ,
+			const std::string&                   fit_or_sample   ,
+			const pack_info&                     pack_object     ,
+			const CppAD::vector<double>&         start_var       ,
+			const CppAD::vector<prior_struct>&   prior_table     ,
+			const CppAD::vector<smooth_info>&    s_info_vec      ,
+			const data_model&                    data_object     ,
+			const prior_model&                   prior_object    ,
+			bool                                 quasi_fixed     ,
+			const CppAD::mixed::sparse_mat_info& A_info
 		);
 		//
 		// run fit

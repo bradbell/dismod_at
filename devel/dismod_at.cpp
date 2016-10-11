@@ -36,6 +36,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/create_table.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/configure.hpp>
+# include <dismod_at/random_limits.hpp>
 
 # define DISMOD_AT_TRACE 0
 
@@ -583,10 +584,20 @@ void fit_command(
 	// ------------------ run fit_model ------------------------------------
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
 	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
+	//
+	// n_random_equal
+	CppAD::vector<double> random_lower, random_upper;
+	size_t n_random_equal = dismod_at::random_limits(
+	pack_object, db_input.prior_table, s_info_vec, random_lower, random_upper
+	); // number of constraints with lower and upper equal
+	//
+	// A_info
 	CppAD::mixed::sparse_mat_info A_info; // empty matrix
+	//
 	string fit_or_sample = "fit";
 	dismod_at::fit_model fit_object(
 		db                   ,
+		n_random_equal       ,
 		fit_or_sample        ,
 		pack_object          ,
 		start_var            ,
@@ -595,8 +606,7 @@ void fit_command(
 		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
-		A_info               ,
-		option_map
+		A_info
 	);
 	fit_object.run_fit(option_map);
 	vector<double> opt_value, lag_value, lag_dage, lag_dtime;
@@ -1102,6 +1112,12 @@ void sample_command(
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
 	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
 	//
+	// n_random_equal
+	CppAD::vector<double> random_lower, random_upper;
+	size_t n_random_equal = dismod_at::random_limits(
+	pack_object, db_input.prior_table, s_info_vec, random_lower, random_upper
+	); // number of constraints with lower and upper equal
+	//
 	// A_info = empty matrix
 	CppAD::mixed::sparse_mat_info A_info;
 	// -----------------------------------------------------------------------
@@ -1149,6 +1165,7 @@ void sample_command(
 			string fit_or_sample = "fit";
 			dismod_at::fit_model fit_object(
 				db                   ,
+				n_random_equal       ,
 				fit_or_sample        ,
 				pack_object          ,
 				truth_var_value      ,
@@ -1157,8 +1174,7 @@ void sample_command(
 				data_object          ,
 				prior_object         ,
 				quasi_fixed          ,
-				A_info               ,
-				option_map
+				A_info
 			);
 			fit_object.run_fit(option_map);
 			vector<double> opt_value, lag_value, lag_dage, lag_dtime;
@@ -1224,6 +1240,7 @@ void sample_command(
 	string fit_or_sample = "sample";
 	dismod_at::fit_model fit_object(
 		db                   ,
+		n_random_equal       ,
 		fit_or_sample        ,
 		pack_object          ,
 		variable_value       ,
@@ -1232,8 +1249,7 @@ void sample_command(
 		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
-		A_info               ,
-		option_map
+		A_info
 	);
 	//
 	// sample

@@ -32,6 +32,7 @@ $end
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/pack_prior.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/random_limits.hpp>
 
 bool fit_model_xam(void)
 {	bool   ok = true;
@@ -333,10 +334,20 @@ bool fit_model_xam(void)
 	option_map["accept_after_max_steps_random"] = "5";
 	// ----------------------- run the fit -------------------------------
 	bool quasi_fixed = false;
+	//
+	// n_random_equal
+	CppAD::vector<double> random_lower, random_upper;
+	size_t n_random_equal = dismod_at::random_limits(
+		pack_object, prior_table, s_info_vec, random_lower, random_upper
+	); // number of constraints with lower and upper equal
+	//
+	// A_info
 	CppAD::mixed::sparse_mat_info A_info; // empty matrix
+	//
 	std::string fit_or_sample = "fit";
 	dismod_at::fit_model fit_object(
 		db,
+		n_random_equal,
 		fit_or_sample,
 		pack_object,
 		start_var,
@@ -345,8 +356,7 @@ bool fit_model_xam(void)
 		data_object,
 		prior_object,
 		quasi_fixed,
-		A_info,
-		option_map
+		A_info
 	);
 	fit_object.run_fit( option_map );
 	CppAD::vector<double> solution, lag_value, lag_dage, lag_dtime;
