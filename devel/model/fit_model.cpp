@@ -134,14 +134,15 @@ db_            (db)                                 ,
 n_random_equal_(n_random_equal)                     ,
 fit_or_sample_ ( fit_or_sample                   )  ,
 n_fixed_       ( size_fixed_effect(pack_object)  )  ,
-n_random_      ( size_random_effect(pack_object) )  ,
+n_random_      ( size_random_effect(pack_object) - n_random_equal )  ,
 pack_object_   ( pack_object )                      ,
 start_var_     ( start_var   )                      ,
 prior_table_   ( prior_table )                      ,
 s_info_vec_    ( s_info_vec  )                      ,
 data_object_   ( data_object )                      ,
 prior_object_  ( prior_object )
-{	assert( fit_or_sample == "fit" || fit_or_sample == "sample" );
+{	assert( size_random_effect(pack_object) >= n_random_equal );
+	assert( fit_or_sample == "fit" || fit_or_sample == "sample" );
 	// ----------------------------------------------------------------------
 	// random_lower_, random_upper_
 	size_t check = random_limits(
@@ -270,6 +271,7 @@ void fit_model::run_fit(std::map<std::string, std::string>& option_map)
 $end
 */
 {	assert( fit_or_sample_ == "fit" );
+	typedef CppAD::vector<double> d_vector;
 	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
@@ -344,6 +346,17 @@ $end
 		+ option_map["derivative_test_random"] + "\n";
 	std::string random_options = options;
 	//
+	// convert from dismod_at random effects to cppad_mixed random effects
+	d_vector cppad_mixed_random_lower = random_dismod_at2cppad_mixed(
+		random_lower_
+	);
+	d_vector cppad_mixed_random_upper = random_dismod_at2cppad_mixed(
+		random_upper_
+	);
+	d_vector cppad_mixed_random_in = random_dismod_at2cppad_mixed(
+		random_in
+	);
+	//
 	// optimal fixed effects
 	CppAD::mixed::fixed_solution fixed_sol = optimize_fixed(
 		fixed_options,
@@ -353,9 +366,9 @@ $end
 		fix_constraint_lower,
 		fix_constraint_upper,
 		fixed_in,
-		random_lower_,
-		random_upper_,
-		random_in
+		cppad_mixed_random_lower,
+		cppad_mixed_random_upper,
+		cppad_mixed_random_in
 	);
 	// optimal fixed effects
 	CppAD::vector<double>& fixed_opt      = fixed_sol.fixed_opt;
@@ -363,10 +376,20 @@ $end
 	CppAD::vector<double>& fixed_con_lag  = fixed_sol.fix_con_lag;
 	// optimal random effects
 	CppAD::vector<double> random_opt;
-	if( n_random_ > 0 )
-	{	random_opt = optimize_random(
-			random_options, fixed_opt, random_lower_, random_upper_, random_in
+	if( n_random_ > n_random_equal_ )
+	{	d_vector cppad_mixed_random_opt = optimize_random(
+			random_options,
+			fixed_opt,
+			cppad_mixed_random_lower,
+			cppad_mixed_random_upper,
+			cppad_mixed_random_in
 		);
+		random_opt = random_cppad_mixed2dismod_at( cppad_mixed_random_opt );
+	}
+	else
+	{	assert( n_random_ == n_random_equal_ );
+		for(size_t i = 0; i < n_random_; i++)
+			random_opt[i] = random_lower_[i];
 	}
 	// The optimal solution is scaled, but the Lagrange multilpiers are not
 	unscale_fixed_effect(fixed_opt, fixed_opt);
@@ -709,9 +732,20 @@ $end
 // ===========================================================================
 // ran_likelihood
 fit_model::a2d_vector fit_model::ran_likelihood(
-	const a2d_vector& fixed_vec    ,
-	const a2d_vector& random_vec   )
-{	// packed vector
+	const a2d_vector& fixed_vec                ,
+	const a2d_vector& cppad_mixed_random_vec   )
+{	//
+	// check for case where all random effects are constrained
+	assert( n_random_ >= n_random_equal_ );
+	if( n_random_ == n_random_equal_ )
+		return a2d_vector(0);
+	//
+	// convert from cppad_mixed random effects to dismod_at random effects
+	a2d_vector random_vec = random_cppad_mixed2dismod_at(
+		cppad_mixed_random_vec
+	);
+	//
+	// packed vector
 	a2d_vector pack_vec( pack_object_.size() );
 	//
 	// put the fixed and random effects into pack_vec
