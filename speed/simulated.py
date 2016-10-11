@@ -283,7 +283,6 @@ def example_db (file_name) :
 		{ 'name':'max_num_iter_fixed',     'value':'100'              },
 		{ 'name':'print_level_fixed',      'value':'5'                },
 		{ 'name':'tolerance_fixed',        'value':'1e-8'             },
-		{ 'name':'random_bound',           'value':None               },
 		{ 'name':'accept_after_max_steps_fixed',  'value':'2'         },
 
 		{ 'name':'derivative_test_random', 'value':'none'             },

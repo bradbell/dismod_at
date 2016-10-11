@@ -318,7 +318,6 @@ def example_db (file_name) :
 		{ 'name':'tolerance_fixed',        'value':'1e-8'              },
 		{ 'name':'fixed_bound_frac',       'value':'1e-2'              },
 		#
-		{ 'name':'random_bound',           'value':None                },
 		{ 'name':'derivative_test_random', 'value':'second-order'      },
 		{ 'name':'max_num_iter_random',    'value':'100'               },
 		{ 'name':'print_level_random',     'value':'0'                 },

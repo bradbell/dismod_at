@@ -22,7 +22,9 @@ rename_cmd='s|table.omh|database.omh|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
 cat << EOF > junk.sed
-s|python_three_command|python3_executable|g
+/'name':'random_bound', *'value':None *},/d
+/^random_bound,\$/d
+/\\[ *'random_bound' *, *'' *\\] *,/d
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

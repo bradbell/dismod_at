@@ -33,7 +33,6 @@ def option_table() :
 		['parent_node_id',  '0'            ] ,
 		['ode_step_size',   '20.0'         ] ,
 		['tolerance',       '1e-8'         ] ,
-		['random_bound',    ''             ] ,
 		['max_num_iter',    '100'          ] ,
 		['print_level',     '0'            ] ,
 		['derivative_test', 'second-order' ] ,
