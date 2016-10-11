@@ -316,6 +316,21 @@ bool fit_model_xam(void)
 	{	size_t prior_id = pack_prior_id[var_id];
 		start_var[var_id] = prior_table[prior_id].mean;
 	}
+	//
+	// option_map
+	std::map<std::string, std::string> option_map;
+	option_map["derivative_test_fixed"]         = "second-order";
+	option_map["tolerance_fixed"]               = "1e-8";
+	option_map["max_num_iter_fixed"]            = "100";
+	option_map["print_level_fixed"]             = "0";
+	option_map["accept_after_max_steps_fixed"]  = "5";
+	option_map["fixed_bound_frac"]              = "1e-2";
+	//
+	option_map["derivative_test_random"]        = "second-order";
+	option_map["tolerance_random"]              = "1e-8";
+	option_map["max_num_iter_random"]           = "100";
+	option_map["print_level_random"]            = "0";
+	option_map["accept_after_max_steps_random"] = "5";
 	// ----------------------- run the fit -------------------------------
 	bool quasi_fixed = false;
 	CppAD::mixed::sparse_mat_info A_info; // empty matrix
@@ -330,21 +345,9 @@ bool fit_model_xam(void)
 		data_object,
 		prior_object,
 		quasi_fixed,
-		A_info
+		A_info,
+		option_map
 	);
-	std::map<std::string, std::string> option_map;
-	option_map["derivative_test_fixed"]         = "second-order";
-	option_map["tolerance_fixed"]               = "1e-8";
-	option_map["max_num_iter_fixed"]            = "100";
-	option_map["print_level_fixed"]             = "0";
-	option_map["accept_after_max_steps_fixed"]  = "5";
-	option_map["fixed_bound_frac"]              = "1e-2";
-	//
-	option_map["derivative_test_random"]        = "second-order";
-	option_map["tolerance_random"]              = "1e-8";
-	option_map["max_num_iter_random"]           = "100";
-	option_map["print_level_random"]            = "0";
-	option_map["accept_after_max_steps_random"] = "5";
 	fit_object.run_fit( option_map );
 	CppAD::vector<double> solution, lag_value, lag_dage, lag_dtime;
 	fit_object.get_solution(solution, lag_value, lag_dage, lag_dtime);

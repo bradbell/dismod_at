@@ -20,6 +20,7 @@ $begin fit_model_ctor$$
 $spell
 	var
 	vec
+	const
 $$
 
 $section Fit Model Constructor$$
@@ -33,7 +34,9 @@ $codei%fit_model %fit_object%(
 	%s_info_vec%,
 	%data_object%,
 	%prior_object%,
-	%quasi_fixed%
+	%quasi_fixed%,
+	%A_info%,
+	%option_map%
 )
 %$$
 
@@ -83,6 +86,25 @@ a quasi-Newton method is used when optimizing the fixed effects.
 Otherwise a full Newton method is used; see
 $cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$.
 
+$head A_info$$
+This argument holds the matrix $latex A$$ in
+the random effects constraint equation
+$latex \[
+	A * \hat{u} ( \theta ) = 0
+\] $$
+where $latex \hat{u} ( \theta )$$ is the optimal random effects corresponding
+to the fixed effects $latex \theta$$.
+This matrix can be empty, in which case there are no random constraints.
+
+$head option_map$$
+This argument is effectively $code const$$ and
+$codei%
+	%option_map%["random_bound"]
+%$$
+is the value in the value of
+$cref/random_bound/option_table/Optimizer/random_bound/$$
+in the option table.
+
 $head Prototype$$
 $srccode%cpp% */
 fit_model::fit_model(
@@ -95,12 +117,14 @@ fit_model::fit_model(
 	const data_model&                     data_object  ,
 	const prior_model&                    prior_object ,
 	bool                                  quasi_fixed  ,
-	const CppAD::mixed::sparse_mat_info&  A_info       ) :
+	const CppAD::mixed::sparse_mat_info&  A_info       ,
+    // effectively const
+    std::map<std::string, std::string>&   option_map   )
 /* %$$
 $end
 */
 // base class constructor
-cppad_mixed(
+: cppad_mixed(
 	size_fixed_effect(pack_object)  ,  // n_fixed
 	size_random_effect(pack_object) ,  // n_random
 	quasi_fixed                     ,
@@ -117,8 +141,20 @@ s_info_vec_    ( s_info_vec  )                      ,
 data_object_   ( data_object )                      ,
 prior_object_  ( prior_object )
 {	assert( fit_or_sample == "fit" || fit_or_sample == "sample" );
-	//
 	// ----------------------------------------------------------------------
+	// random_lower_, random_upper_
+	std::string random_bound_string = option_map["random_bound"];
+	double random_bound = std::numeric_limits<double>::infinity();
+	if( random_bound_string  != "" )
+		random_bound = std::atof( random_bound_string.c_str() );
+	random_lower_.resize(n_random_);
+	random_upper_.resize(n_random_);
+	for(size_t j = 0; j < n_random_; j++)
+	{	random_upper_[j] = + random_bound;
+		random_lower_[j] = - random_bound;
+	}
+	// ----------------------------------------------------------------------
+	// value_prior_
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object.size() == n_var );
 	// value_prior_
@@ -231,6 +267,7 @@ It must also have
 $codei%
 	%option_map%["fixed_bound_frac"]
 %$$
+
 $head Prototype$$
 $srccode%cpp% */
 void fit_model::run_fit(std::map<std::string, std::string>& option_map)
@@ -312,17 +349,6 @@ $end
 		+ option_map["derivative_test_random"] + "\n";
 	std::string random_options = options;
 	//
-	std::string random_bound_string = option_map["random_bound"];
-	double random_bound = std::numeric_limits<double>::infinity();
-	if( random_bound_string  != "" )
-		random_bound = std::atof( random_bound_string.c_str() );
-
-	assert( random_bound >= 1.0 );
-	CppAD::vector<double> random_lower(n_random_), random_upper(n_random_);
-	for(size_t j = 0; j < n_random_; j++)
-	{	random_upper[j] = random_bound;
-		random_lower[j] = - random_bound;
-	}
 	// optimal fixed effects
 	CppAD::mixed::fixed_solution fixed_sol = optimize_fixed(
 		fixed_options,
@@ -332,8 +358,8 @@ $end
 		fix_constraint_lower,
 		fix_constraint_upper,
 		fixed_in,
-		random_lower,
-		random_upper,
+		random_lower_,
+		random_upper_,
 		random_in
 	);
 	// optimal fixed effects
@@ -344,7 +370,7 @@ $end
 	CppAD::vector<double> random_opt;
 	if( n_random_ > 0 )
 	{	random_opt = optimize_random(
-			random_options, fixed_opt, random_lower, random_upper, random_in
+			random_options, fixed_opt, random_lower_, random_upper_, random_in
 		);
 	}
 	// The optimal solution is scaled, but the Lagrange multilpiers are not
@@ -652,19 +678,6 @@ $end
 		+ option_map["derivative_test_random"] + "\n";
 	std::string random_options = options;
 	//
-	// random_bound
-	std::string random_bound_string = option_map["random_bound"];
-	double random_bound = std::numeric_limits<double>::infinity();
-	if( random_bound_string  != "" )
-		random_bound = std::atof( random_bound_string.c_str() );
-	assert( random_bound >= 1.0 );
-	//
-	// random_lower, random_upper
-	CppAD::vector<double> random_lower(n_random_), random_upper(n_random_);
-	for(size_t j = 0; j < n_random_; j++)
-	{	random_upper[j] = random_bound;
-		random_lower[j] = - random_bound;
-	}
 	// random_in
 	CppAD::vector<double> random_in(n_random_);
 	unpack_random(pack_object_, start_var_, random_in);
@@ -679,8 +692,8 @@ $end
 				one_sample_random,
 				random_options,
 				one_sample_fixed,
-				random_lower,
-				random_upper,
+				random_lower_,
+				random_upper_,
 				random_in
 			);
 			//

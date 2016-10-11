@@ -595,7 +595,8 @@ void fit_command(
 		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
-		A_info
+		A_info               ,
+		option_map
 	);
 	fit_object.run_fit(option_map);
 	vector<double> opt_value, lag_value, lag_dage, lag_dtime;
@@ -1156,7 +1157,8 @@ void sample_command(
 				data_object          ,
 				prior_object         ,
 				quasi_fixed          ,
-				A_info
+				A_info               ,
+				option_map
 			);
 			fit_object.run_fit(option_map);
 			vector<double> opt_value, lag_value, lag_dage, lag_dtime;
@@ -1230,7 +1232,8 @@ void sample_command(
 		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
-		A_info
+		A_info               ,
+		option_map
 	);
 	//
 	// sample
