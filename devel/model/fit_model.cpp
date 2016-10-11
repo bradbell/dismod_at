@@ -720,10 +720,10 @@ fit_model::a2d_vector fit_model::ran_likelihood(
 	const a2d_vector& fixed_vec    ,
 	const a2d_vector& random_vec   )
 {	// packed vector
-	CppAD::vector<a2_double> pack_vec( pack_object_.size() );
+	a2d_vector pack_vec( pack_object_.size() );
 	//
 	// put the fixed and random effects into pack_vec
-	CppAD::vector<a2_double> fixed_tmp(n_fixed_);
+	a2d_vector fixed_tmp(n_fixed_);
 	unscale_fixed_effect(fixed_vec, fixed_tmp);
 	pack_fixed(pack_object_, pack_vec, fixed_tmp);
 	pack_random(pack_object_, pack_vec, random_vec);
@@ -741,7 +741,7 @@ fit_model::a2d_vector fit_model::ran_likelihood(
 	//
 	// check for the case where we return the empty vector
 	if( n_data_like == 0 && n_prior_ran == 0 )
-		return CppAD::vector<a2_double>(0);
+		return a2d_vector(0);
 	//
 	// count the number of absolute value terms
 	size_t n_abs = 0;
@@ -756,7 +756,7 @@ fit_model::a2d_vector fit_model::ran_likelihood(
 			n_abs++;
 	}
 	// size ran_den
-	CppAD::vector<a2_double> ran_den(1 + n_abs);
+	a2d_vector ran_den(1 + n_abs);
 	//
 	// initialize summation of smooth part
 	ran_den[0] = a2_double(0.0);
