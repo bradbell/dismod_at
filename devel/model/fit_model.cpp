@@ -276,24 +276,24 @@ $end
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
 	assert( value_prior_.size() == n_var );
-	CppAD::vector<double> pack_vec( n_var );
+	d_vector pack_vec( n_var );
 
 	// fixed_lower
-	CppAD::vector<double> fixed_lower(n_fixed_);
+	d_vector fixed_lower(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
 		pack_vec[i] = prior_table_[ value_prior_[i] ].lower;
 	unpack_fixed(pack_object_, pack_vec, fixed_lower);
 	scale_fixed_effect(fixed_lower, fixed_lower);
 
 	// fixed_upper
-	CppAD::vector<double> fixed_upper(n_fixed_);
+	d_vector fixed_upper(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
 		pack_vec[i] = prior_table_[ value_prior_[i] ].upper;
 	unpack_fixed(pack_object_, pack_vec, fixed_upper);
 	scale_fixed_effect(fixed_upper, fixed_upper);
 
 	// fix_constraint_lower, fix_constraint_upper
-	CppAD::vector<double> fix_constraint_lower, fix_constraint_upper;
+	d_vector fix_constraint_lower, fix_constraint_upper;
 	for(size_t k = 0; k < diff_prior_.size(); k++)
 	{	// make sure these variable ids correspond to fixed effects
 		assert( var_id2fixed_[ diff_prior_[k].plus_var_id ] < n_fixed_ );
@@ -307,12 +307,12 @@ $end
 	}
 
 	// fixed_in
-	CppAD::vector<double> fixed_in(n_fixed_);
+	d_vector fixed_in(n_fixed_);
 	unpack_fixed(pack_object_, start_var_, fixed_in);
 	scale_fixed_effect(fixed_in, fixed_in);
 
 	// random_in
-	CppAD::vector<double> random_in(n_random_);
+	d_vector random_in(n_random_);
 	unpack_random(pack_object_, start_var_, random_in);
 
 
@@ -371,11 +371,11 @@ $end
 		cppad_mixed_random_in
 	);
 	// optimal fixed effects
-	CppAD::vector<double>& fixed_opt      = fixed_sol.fixed_opt;
-	CppAD::vector<double>& fixed_lag      = fixed_sol.fixed_lag;
-	CppAD::vector<double>& fixed_con_lag  = fixed_sol.fix_con_lag;
+	d_vector& fixed_opt      = fixed_sol.fixed_opt;
+	d_vector& fixed_lag      = fixed_sol.fixed_lag;
+	d_vector& fixed_con_lag  = fixed_sol.fix_con_lag;
 	// optimal random effects
-	CppAD::vector<double> random_opt;
+	d_vector random_opt;
 	if( n_random_ > n_random_equal_ )
 	{	d_vector cppad_mixed_random_opt = optimize_random(
 			random_options,
@@ -406,7 +406,7 @@ $end
 	//
 	// values that are stored by random effect index
 	if ( n_random_ > 0 )
-	{	CppAD::vector<double> zero(n_random_);
+	{	d_vector zero(n_random_);
 		for(size_t i = 0; i < n_random_; i++)
 			zero[i] = 0.0;
 		pack_random(pack_object_, solution_.variable_value, random_opt);
