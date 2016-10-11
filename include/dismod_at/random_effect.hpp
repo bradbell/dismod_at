@@ -19,15 +19,15 @@ namespace dismod_at {
 	//
 	template <class Float>
 	extern void unpack_random(
-		const pack_info&             pack_object  ,
-		const CppAD::vector<Float>& pack_vec   ,
+		const pack_info&            pack_object  ,
+		const CppAD::vector<Float>& pack_vec     ,
 		CppAD::vector<Float>&       random_vec
 	);
 	//
 	template <class Float>
 	extern void pack_random(
-		const pack_info&             pack_object  ,
-		CppAD::vector<Float>&       pack_vec   ,
+		const pack_info&            pack_object  ,
+		CppAD::vector<Float>&       pack_vec     ,
 		const CppAD::vector<Float>& random_vec
 	);
 }

@@ -34,6 +34,10 @@ namespace dismod_at {
 		//
 	// =======================================================================
 	private:
+		// ---------------------------------------------------------------
+		// private member data
+		// ---------------------------------------------------------------
+		//
 		// const member variables
 		sqlite3*                           db_;
 		const std::string                  fit_or_sample_;
@@ -61,10 +65,11 @@ namespace dismod_at {
 		// Uses the invalid value n_fixed_ if not a fixed variable.
 		CppAD::vector<size_t>             var_id2fixed_;
 		//
-		// Lower and upper limits for randoim effects
-		// (used to remove random effects before cppad_mixed sees them).
+		// Lower and upper limits for randoim effects and number of
+		// components where the limits are equal.
 		CppAD::vector<double>             random_lower_;
 		CppAD::vector<double>             random_upper_;
+		size_t                            n_random_equal_;
 		//
 		// Offset in log scaling for each component of the fixed vector;
 		// If fixed_is_scaled_[j], fixed_vec[j] in dismod_at has value
@@ -80,12 +85,7 @@ namespace dismod_at {
 			CppAD::vector<double> lagrange_dtime;
 		} solution_;
 		// ---------------------------------------------------------------
-		// implement_ran_like
-		template <class Float>
-		CppAD::vector<Float> implement_ran_like(
-			const CppAD::vector<Float>& fixed_vec   ,
-			const CppAD::vector<Float>& random_vec
-		);
+		// private member functions
 		// ---------------------------------------------------------------
 		// scaling
 		template <class Float>
@@ -116,6 +116,36 @@ namespace dismod_at {
 				else
 					fixed_out[j] = fixed_in[j];
 			}
+		}
+		// random_dismod_at2cppad_mixed (remove compoents with equal limits)
+		template <class Float>
+		CppAD::vector<Float> random_dismod_at2cppad_mixed(
+			const CppAD::vector<Float>& dismod_at_vec )
+		{	assert( dismod_at_vec.size() == n_random_ );
+			CppAD::vector<Float> result( n_random_ - n_random_equal_ );
+			size_t k = 0;
+			for(size_t i = 0; i < n_random_; i++)
+			{	if( random_lower_[i] != random_upper_[i] )
+					result[k++] = dismod_at_vec[i];
+			}
+			assert( k == n_random_ - n_random_equal_ );
+			return result;
+		}
+		// random_cppad_mixed2dismod_at (add compoents with equal limits)
+		template <class Float>
+		CppAD::vector<Float> random_cppad_mixed2dismod_at(
+			const CppAD::vector<Float>& cppad_mixed_vec )
+		{	assert( cppad_mixed_vec.size() == n_random_ - n_random_equal_ );
+			CppAD::vector<Float> result( n_random_ );
+			size_t k = 0;
+			for(size_t i = 0; i < n_random_; i++)
+			{	if( random_lower_[i] == random_upper_[i] )
+					result[i] = random_lower_[i];
+				else
+					result[i] = cppad_mixed_vec[k++];
+			}
+			assert( k == n_random_ - n_random_equal_ );
+			return result;
 		}
 		// -------------------------------------------------------------------
 		// virtual functions used by cppad_mixed base class

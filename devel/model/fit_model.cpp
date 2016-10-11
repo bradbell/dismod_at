@@ -149,9 +149,12 @@ prior_object_  ( prior_object )
 		random_bound = std::atof( random_bound_string.c_str() );
 	random_lower_.resize(n_random_);
 	random_upper_.resize(n_random_);
+	n_random_equal_ = 0;
 	for(size_t j = 0; j < n_random_; j++)
 	{	random_upper_[j] = + random_bound;
 		random_lower_[j] = - random_bound;
+		if( random_lower_[j] == random_upper_[j] )
+			++n_random_equal_;
 	}
 	// ----------------------------------------------------------------------
 	// value_prior_
@@ -710,7 +713,7 @@ $end
 	return;
 }
 // ===========================================================================
-// private functions
+// private virtual functions
 // ===========================================================================
 // ran_likelihood
 fit_model::a2d_vector fit_model::ran_likelihood(
