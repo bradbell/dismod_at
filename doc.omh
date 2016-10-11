@@ -41,7 +41,6 @@ $childtable%omh/install/unix.omh
 	%devel/devel.omh
 	%omh/whats_new/2016.omh
 	%omh/wish_list.omh
-	%bin/import_cascade.py
 %$$
 
 $end
