@@ -22,10 +22,10 @@
 # $lnext
 # Optimize with the random effects constrained to zero.
 # $lnext
+# Remove the random bound (or set it to a larger value).
+# $lnext
 # Use the zero random effect optimal solution as a starting point for next
 # optimization.
-# $lnext
-# Remove the random bound (or set it to a larger value).
 # $lnext
 # Optimize with non-zero random effects.
 # $lend

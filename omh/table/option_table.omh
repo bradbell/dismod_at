@@ -282,7 +282,8 @@ The special case where $icode random_bound$$ is zero,
 fits as if there were no random effects except for the fact that
 the resulting optimal value can be used as a starting point for fitting
 with random effects; see
-$cref/start fit_var/start_command/source/fit_var/$$.
+$cref/start fit_var/start_command/source/fit_var/$$; see
+$cref user_random_bound.py$$.
 Note that fitting with no random effects corresponds to
 a $code null$$ value for the
 $cref/child_smooth_id/rate_table/child_smooth_id/$$.
