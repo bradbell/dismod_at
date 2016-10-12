@@ -14,16 +14,23 @@ $spell
 	vec
 $$
 
-$section Limits for Random Effects Vector$$
+$section Limits for Random Effects Smoothing$$
 
 $head Syntax$$
-$icode%n_equal% = get_random_limits(
+$codei%get_random_limits(
 	%pack_object%, %prior_table%, %s_info_vec%, %random_lower%, %random_upper%
 )%$$
 
 $head Prototype$$
 $srcfile%devel/utility/random_limits.cpp
 	%4%// BEGIN PROTOTYPE%// END PROTOTYPE%1%$$
+
+$head Remark$$
+Currently, these lower and upper limits are minus and plus infinity
+respectively. This routine is used in the expectation that in the future
+one may be able to constrain the random effects to be specific values; see
+$cref/constrain random effects/wish_list/Constrain Random Effects/$$
+in the wish list.
 
 $head Order of Random Effects$$
 The order of the random effects is unspecified, except for the fact that
@@ -55,9 +62,6 @@ The input size and contents of this vector does not matter.
 Upon return it has size equal to the number of random effects
 and contains the corresponding prior upper limits.
 
-$head n_equal$$
-The return value is the number of lower and upper limits that are equal.
-
 $end
 */
 # include <dismod_at/random_limits.hpp>
@@ -66,7 +70,7 @@ $end
 
 namespace dismod_at {
 	// BEGIN PROTOTYPE
-	size_t random_limits(
+	void random_limits(
 		const pack_info&                   pack_object   ,
 		const CppAD::vector<prior_struct>& prior_table   ,
 		const CppAD::vector<smooth_info>&  s_info_vec    ,
@@ -98,13 +102,6 @@ namespace dismod_at {
 		unpack_random(pack_object, packed_lower, random_lower);
 		unpack_random(pack_object, packed_upper, random_upper);
 		//
-		// determine the number of limits that are equal
-		size_t n_equal = 0;
-		for(size_t i = 0; i < n_random; i++)
-			if( random_lower[i] == random_upper[i] )
-				++n_equal;
-		//
-		return n_equal;
 	}
 }
 

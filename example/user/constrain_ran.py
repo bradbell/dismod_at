@@ -133,10 +133,10 @@ def example_db (file_name) :
 		},{ # prior_rate_child
 			'name':     'prior_rate_child',
 			'density':  'gaussian',
-			'lower':    0.0,
-			'upper':    0.0,
+			'lower':    None,
+			'upper':    None,
 			'mean':     0.0,
-			'std':      1.0,
+			'std':      10.0,
 			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
@@ -200,10 +200,9 @@ def example_db (file_name) :
 	# option_dict
 	option_dict = [
 		{ 'name':'parent_node_name',       'value':'north_america'     },
-		{ 'name':'number_simulate',        'value':'1'                 },
-		{ 'name':'fit_simulate_index',     'value':None                },
-		{ 'name':'ode_step_size',          'value':'10.0'              },
+		{ 'name':'random_bound',           'value':'0.0'               },
 		{ 'name':'random_seed',            'value':'0'                 },
+		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
 		{ 'name':'quasi_fixed',            'value':'true'          },

@@ -277,7 +277,7 @@ does not include bounds for the random effects
 and this is only intended as a kludge to help certain problems converge.
 The value plus infinity (for no bounds) is represented by a $code null$$
 should be preferred; i.e., used where possible.
-(This value must be greater than or equal one.)
+(This value must be greater than or equal zero.)
 The default value for this option is $code null$$.
 
 $subhead fixed_bound_frac$$

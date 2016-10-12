@@ -160,10 +160,7 @@ void check_child_prior(
 						msg += ", ";
 					msg += "upper not plus infinity";
 				}
-				// check for special case that is ok
-				bool value_prior = i == 0;
-				bool ok = value_prior && (lower == upper);
-				if( msg != "" ) if( ! ok )
+				if( msg != "" )
 				{
 					msg = name[i]
 					+ ": child_smooth_id = " + to_string(child_smooth_id)

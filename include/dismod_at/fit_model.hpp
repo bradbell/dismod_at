@@ -40,7 +40,6 @@ namespace dismod_at {
 		//
 		// const member variables
 		sqlite3*                           db_;
-		const size_t                       n_random_equal_;
 		const std::string                  fit_or_sample_;
 		const size_t                       n_fixed_;
 		const size_t                       n_random_;
@@ -66,9 +65,11 @@ namespace dismod_at {
 		// Uses the invalid value n_fixed_ if not a fixed variable.
 		CppAD::vector<size_t>             var_id2fixed_;
 		//
-		// Lower and upper limits for randoim effects.
+		// Lower and upper limits for random effects and
+		// number of components that have eqaul lower and upper limits.
 		CppAD::vector<double>             random_lower_;
 		CppAD::vector<double>             random_upper_;
+		size_t                            n_random_equal_;
 		//
 		// Offset in log scaling for each component of the fixed vector;
 		// If fixed_is_scaled_[j], fixed_vec[j] in dismod_at has value
@@ -169,7 +170,7 @@ namespace dismod_at {
 		// constructor
 		fit_model(
 			sqlite3*                             db              ,
-			size_t                               n_random_equal  ,
+			double                               random_bound    ,
 			const std::string&                   fit_or_sample   ,
 			const pack_info&                     pack_object     ,
 			const CppAD::vector<double>&         start_var       ,

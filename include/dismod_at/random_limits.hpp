@@ -11,14 +11,13 @@ see http://www.gnu.org/licenses/agpl.txt
 # ifndef DISMOD_AT_RANDOM_LIMITS_HPP
 # define DISMOD_AT_RANDOM_LIMITS_HPP
 
-# include <cstddef>
 # include <cppad/utility/vector.hpp>
 # include "pack_info.hpp"
 # include "get_prior_table.hpp"
 # include "get_smooth_table.hpp"
 
 namespace dismod_at {
-	size_t random_limits(
+	void random_limits(
 		const pack_info&                   pack_object   ,
 		const CppAD::vector<prior_struct>& prior_table   ,
 		const CppAD::vector<smooth_info>&  s_info_vec    ,

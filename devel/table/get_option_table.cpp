@@ -221,9 +221,9 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{	std::string random_bound_str = option_value[option_id];
 			if( random_bound_str != "" )
 			{	double random_bound = std::atof( random_bound_str.c_str() );
-				bool ok = 1.0 <= random_bound;
+				bool ok = 0.0 <= random_bound;
 				if( ! ok )
-				{	msg = "option_value is not greater than or equal one.";
+				{	msg = "option_value is less than zero.";
 					error_exit(db, msg, table_name, option_id);
 				}
 			}

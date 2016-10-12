@@ -585,11 +585,11 @@ void fit_command(
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
 	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
 	//
-	// n_random_equal
-	CppAD::vector<double> random_lower, random_upper;
-	size_t n_random_equal = dismod_at::random_limits(
-	pack_object, db_input.prior_table, s_info_vec, random_lower, random_upper
-	); // number of constraints with lower and upper equal
+	// random_bound, null corresponds to infinity
+	std::string tmp_str = option_map["random_bound"];
+	double random_bound = std::numeric_limits<double>::infinity();
+	if( tmp_str != "" )
+		random_bound = std::atof( tmp_str.c_str() );
 	//
 	// A_info
 	CppAD::mixed::sparse_mat_info A_info; // empty matrix
@@ -597,7 +597,7 @@ void fit_command(
 	string fit_or_sample = "fit";
 	dismod_at::fit_model fit_object(
 		db                   ,
-		n_random_equal       ,
+		random_bound         ,
 		fit_or_sample        ,
 		pack_object          ,
 		start_var            ,
@@ -1112,11 +1112,11 @@ void sample_command(
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
 	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
 	//
-	// n_random_equal
-	CppAD::vector<double> random_lower, random_upper;
-	size_t n_random_equal = dismod_at::random_limits(
-	pack_object, db_input.prior_table, s_info_vec, random_lower, random_upper
-	); // number of constraints with lower and upper equal
+	// random_bound, null corresponds to infinity
+	std::string tmp_str = option_map["random_bound"];
+	double random_bound = std::numeric_limits<double>::infinity();
+	if( tmp_str != "" )
+		random_bound = std::atof( tmp_str.c_str() );
 	//
 	// A_info = empty matrix
 	CppAD::mixed::sparse_mat_info A_info;
@@ -1165,7 +1165,7 @@ void sample_command(
 			string fit_or_sample = "fit";
 			dismod_at::fit_model fit_object(
 				db                   ,
-				n_random_equal       ,
+				random_bound         ,
 				fit_or_sample        ,
 				pack_object          ,
 				truth_var_value      ,
@@ -1240,7 +1240,7 @@ void sample_command(
 	string fit_or_sample = "sample";
 	dismod_at::fit_model fit_object(
 		db                   ,
-		n_random_equal       ,
+		random_bound         ,
 		fit_or_sample        ,
 		pack_object          ,
 		variable_value       ,

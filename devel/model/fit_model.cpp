@@ -29,6 +29,7 @@ $section Fit Model Constructor$$
 $head Syntax$$
 $codei%fit_model %fit_object%(
 	%db%,
+	%random_bound%,
 	%pack_object%,
 	%start_var%,
 	%prior_table%,
@@ -48,10 +49,10 @@ $head db$$
 This argument is the database connection for
 $cref/logging/log_message/$$ errors and warnings.
 
-$head n_random_equal$$
-This is the number of random constraints that have equal
-lower and upper bounds; see
-$cref random_limits$$.
+$head random_bound$$
+This is the value of the
+$cref/random_bound/option_table/Optimizer/random_bound/$$
+in the option table.
 
 $head fit_or_sample$$
 This argument is either $code fit$$ or $code sample$$.
@@ -106,7 +107,7 @@ $head Prototype$$
 $srccode%cpp% */
 fit_model::fit_model(
 	sqlite3*                              db               ,
-	size_t                                n_random_equal   ,
+	double                                random_bound     ,
 	const std::string&                    fit_or_sample    ,
 	const pack_info&                      pack_object      ,
 	const CppAD::vector<double>&          start_var        ,
@@ -121,13 +122,12 @@ $end
 */
 // base class constructor
 : cppad_mixed(
-	size_fixed_effect(pack_object)                  ,  // n_fixed
-	size_random_effect(pack_object) - n_random_equal,  // n_random
-	quasi_fixed                                     ,
+	size_fixed_effect(pack_object)                         ,  // n_fixed
+	size_random_effect(pack_object) * (random_bound > 0.0) , // n_random
+	quasi_fixed                                            ,
 	A_info
 ) ,
 db_            (db)                                 ,
-n_random_equal_(n_random_equal)                     ,
 fit_or_sample_ ( fit_or_sample                   )  ,
 n_fixed_       ( size_fixed_effect(pack_object)  )  ,
 n_random_      ( size_random_effect(pack_object) )  ,
@@ -137,14 +137,20 @@ prior_table_   ( prior_table )                      ,
 s_info_vec_    ( s_info_vec  )                      ,
 data_object_   ( data_object )                      ,
 prior_object_  ( prior_object )
-{	assert( size_random_effect(pack_object) >= n_random_equal );
+{	assert( random_bound >= 0.0 );
 	assert( fit_or_sample == "fit" || fit_or_sample == "sample" );
 	// ----------------------------------------------------------------------
 	// random_lower_, random_upper_
-	size_t check = random_limits(
+	random_limits(
 		pack_object, prior_table, s_info_vec, random_lower_, random_upper_
 	);
-	assert( check == n_random_equal );
+	n_random_equal_ = 0;
+	for(size_t i = 0; i < n_random_; i++)
+	{	random_lower_[i] = std::max( random_lower_[i], - random_bound );
+		random_upper_[i] = std::min( random_upper_[i], + random_bound );
+		if( random_lower_[i] == random_upper_[i] )
+			++n_random_equal_;
+	}
 	// ----------------------------------------------------------------------
 	// value_prior_
 	size_t n_var = n_fixed_ + n_random_;

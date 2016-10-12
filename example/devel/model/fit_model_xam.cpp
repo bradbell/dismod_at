@@ -326,6 +326,7 @@ bool fit_model_xam(void)
 	option_map["print_level_fixed"]             = "0";
 	option_map["accept_after_max_steps_fixed"]  = "5";
 	option_map["fixed_bound_frac"]              = "1e-2";
+	option_map["random_bound"]                  = "";
 	//
 	option_map["derivative_test_random"]        = "second-order";
 	option_map["tolerance_random"]              = "1e-8";
@@ -335,11 +336,8 @@ bool fit_model_xam(void)
 	// ----------------------- run the fit -------------------------------
 	bool quasi_fixed = false;
 	//
-	// n_random_equal
-	CppAD::vector<double> random_lower, random_upper;
-	size_t n_random_equal = dismod_at::random_limits(
-		pack_object, prior_table, s_info_vec, random_lower, random_upper
-	); // number of constraints with lower and upper equal
+	// random_bound
+	double random_bound = std::numeric_limits<double>::infinity();
 	//
 	// A_info
 	CppAD::mixed::sparse_mat_info A_info; // empty matrix
@@ -347,7 +345,7 @@ bool fit_model_xam(void)
 	std::string fit_or_sample = "fit";
 	dismod_at::fit_model fit_object(
 		db,
-		n_random_equal,
+		random_bound,
 		fit_or_sample,
 		pack_object,
 		start_var,
