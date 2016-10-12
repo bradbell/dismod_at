@@ -24,6 +24,7 @@ $childtable%example/get_started/get_started.omh
 	%example/user/meas_covariate.py
 	%example/user/no_children.py
 	%example/user/predict_fit.py
+	%example/user/random_bound.py
 	%speed/simulated.py
 %$$
 

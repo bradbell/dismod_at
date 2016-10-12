@@ -7,24 +7,41 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_constrain_ran.py$$ $newlinech #$$
+# $begin user_random_bound.py$$ $newlinech #$$
 # $spell
 # $$
 #
-# $section Fitting Simulated Data Example$$
+# $section Fitting With Random Bounds$$
 #
-# $head Under Construction$$
+# $head Discussion$$
+# The $cref/random_bound/option_table/Optimizer/random_bound/$$
+# can be used to stabilized the optimization when starting far from the
+# solution. This example demonstrates the following use of the random bound:
+# $list number$$
+# Set the random bound to zero.
+# $lnext
+# Optimize with the random effects constrained to zero.
+# $lnext
+# Use the zero random effect optimal solution as a starting point for next
+# optimization.
+# $lnext
+# Remove the random bound (or set it to a larger value).
+# $lnext
+# Optimize with non-zero random effects.
+# $lend
+#
+#
 #
 # $code
 # $srcfile%
-#	example/user/constrain_ran.py
+#	example/user/random_bound.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------
-iota_true         = 1e-2;
+iota_no_random    = 1e-2;
 iota_child_offset = +0.5;
 # ------------------------------------------------------------------------
 import sys
@@ -33,7 +50,7 @@ import distutils.dir_util
 import subprocess
 import copy
 import math
-test_program = 'example/user/constrain_ran.py'
+test_program = 'example/user/random_bound.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -104,18 +121,18 @@ def example_db (file_name) :
 		'age_lower':    50.0,
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
-		'meas_std':     iota_true / 10.
+		'meas_std':     iota_no_random / 10.
 	}
 	# make sure both child and parent data gets included in fit
 	# by balancing the offset between the two
 	row['node']        = 'united_states'
-	row['meas_value']  = iota_true * (1.0 + iota_child_offset)
+	row['meas_value']  = iota_no_random * (1.0 + iota_child_offset)
 	data_dict.append( copy.copy(row) )
 	row['node']        = 'canada'
-	row['meas_value']  = iota_true * (1.0 + iota_child_offset)
+	row['meas_value']  = iota_no_random * (1.0 + iota_child_offset)
 	data_dict.append( copy.copy(row) )
 	row['node']        = 'north_america'
-	row['meas_value']  = iota_true * (1.0 - iota_child_offset)
+	row['meas_value']  = iota_no_random * (1.0 - iota_child_offset)
 	data_dict.append( copy.copy(row) )
 	data_dict.append( copy.copy(row) )
 
@@ -136,7 +153,7 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      10.0,
+			'std':      100.0, # very large so like a uniform distribution
 			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
@@ -258,6 +275,8 @@ for command in [ 'init', 'start', 'fit' ] :
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
+# check the zero random effects solution
+#
 # get variable and fit_var tables
 var_dict       = dismod_at.get_table_dict(connection, 'var')
 fit_var_dict   = dismod_at.get_table_dict(connection, 'fit_var')
@@ -268,6 +287,7 @@ node_dict      = dismod_at.get_table_dict(connection, 'node')
 n_var = len(var_dict)
 assert n_var == 6
 #
+# check of values uses the fact that the data density is Gaussian
 for var_id in range( n_var ) :
 	var_type = var_dict[var_id]['var_type']
 	assert( var_type == 'rate' )
@@ -280,8 +300,8 @@ for var_id in range( n_var ) :
 	node_id  = var_dict[var_id]['node_id']
 	parent   = node_dict[node_id]['node_name'] == 'north_america'
 	if parent :
-		err = value / iota_true - 1.0
-		assert abs(err) < 1e-6
+		err = value / iota_no_random - 1.0
+		assert abs(err) < 1e-10
 	else :
 		canada         = node_dict[node_id]['node_name'] == 'canada'
 		united_states  = node_dict[node_id]['node_name'] == 'united_states'
@@ -289,5 +309,53 @@ for var_id in range( n_var ) :
 		assert value == 0.0
 		assert canada or united_states
 # -----------------------------------------------------------------------
-print('constrain_ran: OK')
+# Remove the random bound
+cmd  = "update option set option_value=null where option_name='random_bound'"
+cursor = connection.cursor()
+cursor.execute(cmd);
+connection.commit()
+# -----------------------------------------------------------------------
+# Copy results of previous fit to start table
+cmd = '../../devel/dismod_at example.db start fit_var'
+print(cmd)
+flag = subprocess.call( cmd.split() )
+if flag != 0 :
+	sys.exit('The dismod_at start command failed')
+# -----------------------------------------------------------------------
+# Fit without bounds on random effects
+cmd = '../../devel/dismod_at example.db fit'
+print(cmd)
+flag = subprocess.call( cmd.split() )
+if flag != 0 :
+	sys.exit('The dismod_at start command failed')
+# -----------------------------------------------------------------------
+# check the non-zero random effects solution
+#
+# get solution from fit_var table
+fit_var_dict   = dismod_at.get_table_dict(connection, 'fit_var')
+#
+# optimal values when standard deviation of random effects is infinity
+parent_optimal = iota_no_random * (1.0 - iota_child_offset)
+child_optimal  = math.log(
+	iota_no_random * (1.0 + iota_child_offset) / parent_optimal
+)
+for var_id in range( n_var ) :
+	var_type = var_dict[var_id]['var_type']
+	assert( var_type == 'rate' )
+	#
+	rate_id = var_dict[var_id]['rate_id']
+	assert( rate_dict[rate_id]['rate_name'] == 'iota' )
+	#
+	value   = fit_var_dict[var_id]['variable_value']
+	#
+	node_id  = var_dict[var_id]['node_id']
+	parent   = node_dict[node_id]['node_name'] == 'north_america'
+	if parent :
+		err = value / parent_optimal - 1.0
+		assert( abs(err) < 1e-5 )
+	else :
+		err = value / child_optimal - 1.0
+		assert( abs(err) < 1e-5 )
+# -----------------------------------------------------------------------
+print('random_bound: OK')
 # END PYTHON

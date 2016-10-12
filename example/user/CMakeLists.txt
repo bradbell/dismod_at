@@ -12,7 +12,6 @@
 
 FOREACH(user_case
 	asymptotic
-	constrain_ran
 	diff_constraint
 	fit_sim
 	jump_at_age
@@ -21,6 +20,7 @@ FOREACH(user_case
 	metropolis
 	no_children
 	predict_fit
+	random_bound
 )
 	ADD_CUSTOM_TARGET(
 		check_example_user_${user_case}
@@ -33,7 +33,6 @@ ADD_CUSTOM_TARGET(
 	check_example_user
 	DEPENDS
 	check_example_user_asymptotic
-	check_example_user_constrain_ran
 	check_example_user_diff_constraint
 	check_example_user_fit_sim
 	check_example_user_jump_at_age
@@ -42,4 +41,5 @@ ADD_CUSTOM_TARGET(
 	check_example_user_metropolis
 	check_example_user_no_children
 	check_example_user_predict_fit
+	check_example_user_random_bound
 )

@@ -268,17 +268,28 @@ $code random_bound$$,
 plus and minus the corresponding $icode option_value$$
 are the bounds for each of the
 $cref/random effects/model_variables/Random Effects, u/$$.
-Note that if $latex u_j$$ is a random effects,
+$list number$$
+If $latex u_j$$ is a random effects,
 $latex \exp( u_j )$$ multiplies the  corresponding rate in the
 $cref avg_integrand$$ model.
-Note that the theory for
+$lnext
+The theory for
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
 does not include bounds for the random effects
 and this is only intended as a kludge to help certain problems converge.
-The value plus infinity (for no bounds) is represented by a $code null$$
-should be preferred; i.e., used where possible.
-(This value must be greater than or equal zero.)
-The default value for this option is $code null$$.
+$lnext
+The special case where $icode random_bound$$ is zero,
+fits as if there were no random effects except for the fact that
+the resulting optimal value can be used as a starting point for fitting
+with random effects; see
+$cref/start fit_var/start_command/source/fit_var/$$.
+Note that fitting with no random effects corresponds to
+a $code null$$ value for the
+$cref/child_smooth_id/rate_table/child_smooth_id/$$.
+The theory for fitting with $icode random_bound$$ equal to zero
+is just fine (since it corresponds to no random effects not constrained
+random effects).
+$lend
 
 $subhead fixed_bound_frac$$
 If $icode option_name$$ is
