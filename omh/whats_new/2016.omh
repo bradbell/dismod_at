@@ -48,8 +48,14 @@ $childtable%omh/whats_new/2015.omh
 %$$
 
 $head 10-12$$
+$list number$$
 Add the option to set the
 $cref/random_bound/option_table/Optimizer/random_bound/$$ to zero.
+$lnext
+Change $icode%name%_dict%$$ to $icode%name%_table%$$ in the python examples.
+For example, $code data_dict$$ was changed to
+$cref/data_table/create_database/data_table/$$.
+$lend
 
 $head 10-11$$
 The $code import_cascade.py$$ program was removed

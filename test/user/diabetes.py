@@ -86,39 +86,39 @@ def example_db (file_name) :
 	time_list   = [ 1990.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_dict = [
+	integrand_table = [
 		{ 'name':'Sincidence',  'eta':1e-6 },
 		{ 'name':'prevalence',  'eta':1e-6 },
 		{ 'name':'mtexcess',    'eta':1e-6 }
 	]
 	#
 	# node table: world
-	node_dict = [
+	node_table = [
 		{ 'name':'world',         'parent':'' }
 	]
 	#
 	# weight table: The constant function 1.0 (one age and one time point)
-	weight_dict = [
+	weight_table = [
 		{ 'name':'weight_one',  'age_id':[1], 'time_id':[1], 'fun':fun_one }
 	]
 	#
 	# covariate table:
-	covariate_dict = [
+	covariate_table = [
 		{'name':'sex', 'reference':0.0, 'max_difference':0.6 },
 		{'name':'one', 'reference':0.0, 'max_difference':None}
 	]
 	#
 	# mulcov table
-	mulcov_dict = list()
-	for integrand in integrand_dict :
-		mulcov_dict.append( {
+	mulcov_table = list()
+	for integrand in integrand_table :
+		mulcov_table.append( {
 			'covariate': 'one',
 			'type':      'meas_std',
 			'effected':  integrand['name'],
 			'smooth':    'smooth_mulcov_std'
 		} )
 	for rate in ['iota', 'chi'] :
-		mulcov_dict.append( {
+		mulcov_table.append( {
 			'covariate': 'sex',
 			'type':      'rate_value',
 			'effected':  rate,
@@ -130,7 +130,7 @@ def example_db (file_name) :
 	#	'integrand',  'density',    'node',      'weight', '     hold_out',
 	#	'meas_value', 'meas_std',   'age_lower', 'age_upper',
 	#   'time_lower', 'time_upper', 'sex',       'one'
-	data_dict = list()
+	data_table = list()
 	#
 	# Sincidence
 	value_list = [
@@ -138,14 +138,14 @@ def example_db (file_name) :
 		4.0e-3,       2.0e-3,         40,          40,
 		1995,         1995,           0.0,         1
 	]
-	data_dict.append( data_list2dict( value_list ) );
+	data_table.append( data_list2dict( value_list ) );
 	#
 	value_list = [
 		'Sincidence', 'log_gaussian', 'world',    'weight_one',  0,
 		4.0e-2,       2.0e-2,         80,          80,
 		1995,         1995,           0.0,         1
 	]
-	data_dict.append( data_list2dict( value_list ) );
+	data_table.append( data_list2dict( value_list ) );
 	#
 	# mtexcess
 	value_list = [
@@ -153,13 +153,13 @@ def example_db (file_name) :
 		1.6e-4,       0.8e-4,         40,          40,
 		1995,         1995,           0.0,         1
 	]
-	data_dict.append( data_list2dict( value_list ) );
+	data_table.append( data_list2dict( value_list ) );
 	value_list = [
 		'mtexcess',   'log_gaussian', 'world',    'weight_one',  0,
 		1.6e-3,       0.8e-3,         80,          80,
 		1995,         1995,           0.0,         1
 	]
-	data_dict.append( data_list2dict( value_list ) );
+	data_table.append( data_list2dict( value_list ) );
 	#
 	# prevalence
 	value_list = [
@@ -167,16 +167,16 @@ def example_db (file_name) :
 		1.0e-1,       0.5e-1,         40,          40,
 		1995,         1995,           0.0,         1
 	]
-	data_dict.append( data_list2dict( value_list ) );
+	data_table.append( data_list2dict( value_list ) );
 	value_list = [
 		'prevalence', 'log_gaussian', 'world',    'weight_one',  0,
 		5.0e-1,       2.5e-1,         80,          80,
 		1995,         1995,           0.0,         1
 	]
-	data_dict.append( data_list2dict( value_list ) );
+	data_table.append( data_list2dict( value_list ) );
 	# --------------------------------------------------------------------------
 	# prior_table
-	prior_dict = [
+	prior_table = [
 		{   # prior_zero
 			'name':     'prior_zero',
 			'density':  'uniform',
@@ -237,7 +237,7 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# smooth table
-	smooth_dict = [
+	smooth_table = [
 		{
 		# smooth_rate
 			'name':                     'smooth_rate',
@@ -278,7 +278,7 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# rate table
-	rate_dict = [
+	rate_table = [
 		{
 			'name':          'pini',
 			'parent_smooth': None,
@@ -302,8 +302,8 @@ def example_db (file_name) :
 		}
 	]
 	# ------------------------------------------------------------------------
-	# option_dict
-	option_dict = [
+	# option_table
+	option_table = [
 		{ 'name':'parent_node_name',       'value':'world'             },
 		{ 'name':'number_simulate',        'value':'1000'              },
 		{ 'name':'fit_simulate_index',     'value':None                },
@@ -325,32 +325,32 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: same order as list of integrands
-	avgint_dict = list()
+	avgint_table = list()
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
 		age_list,
 		time_list,
-		integrand_dict,
-		node_dict,
-		weight_dict,
-		covariate_dict,
-		data_dict,
-		prior_dict,
-		smooth_dict,
-		rate_dict,
-		mulcov_dict,
-		option_dict,
-		avgint_dict
+		integrand_table,
+		node_table,
+		weight_table,
+		covariate_table,
+		data_table,
+		prior_table,
+		smooth_table,
+		rate_table,
+		mulcov_table,
+		option_table,
+		avgint_table
 	)
 	# -----------------------------------------------------------------------
-	n_smooth  = len( smooth_dict )
+	n_smooth  = len( smooth_table )
 	rate_true = []
-	for rate_id in range( len( data_dict ) ) :
+	for rate_id in range( len( data_table ) ) :
 		# for this particular example
 		data_id    = rate_id
-		meas_value = data_dict[data_id]['meas_value']
+		meas_value = data_table[data_id]['meas_value']
 		rate_true.append(meas_value)
 	#
 	return (n_smooth, rate_true)

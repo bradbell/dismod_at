@@ -88,16 +88,16 @@ def example_db (file_name) :
 	time_list   = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
 	#
 	# integrand table:
-	integrand_dict = [
+	integrand_table = [
 		{ 'name':'Sincidence',  'eta': 1e-2 * iota_parent  },
 		{ 'name':'prevalence',  'eta': 1e-3 * (iota_parent / rho_parent)  }
 	]
 	#
 	# node table:
-	node_dict = [ { 'name':'world', 'parent':'' } ]
+	node_table = [ { 'name':'world', 'parent':'' } ]
 	for i in range(n_children) :
 		name = 'child_' + str(i + 1)
-		node_dict.append( { 'name':name, 'parent':'world' } )
+		node_table.append( { 'name':name, 'parent':'world' } )
 	#
 	# weight table:
 	# The constant function 1.0, note any valid age and time id would work
@@ -105,19 +105,19 @@ def example_db (file_name) :
 	fun     = constant_weight_fun
 	age_id  = int( len(age_list) / 2 )
 	time_id = int( len(time_list) / 2 )
-	weight_dict = [
+	weight_table = [
 		{ 'name':name,  'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
 	]
 	#
 	# covariate table:
-	covariate_dict = [
+	covariate_table = [
 		{'name':'income', 'reference':0.5, 'max_difference':None},
 		{'name':'sex',    'reference':0.0, 'max_difference':0.6}
 	]
 	#
 	# mulcov table:
 	# income has been scaled the same as sex so man use same smoothing
-	mulcov_dict = [
+	mulcov_table = [
 		{
 			'covariate': 'income',
 			'type':      'rate_value',
@@ -132,7 +132,7 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# data table:
-	data_dict = list()
+	data_table = list()
 	# values that are the same for all data rows
 	row = {
 		'meas_value':  0.0,             # not used (will be simulated)
@@ -149,17 +149,17 @@ def example_db (file_name) :
 		row['node']      = 'child_' + str( (data_id % n_children) + 1 )
 		row['income']    = data_id / float(n_data-1)
 		row['sex']       = ( data_id % 3 - 1.0 ) / 2.0
-		row['integrand'] = integrand_dict[ data_id % 2 ]['name']
+		row['integrand'] = integrand_table[ data_id % 2 ]['name']
 		if row['integrand'] == 'Sincidence' :
 			row['meas_std']  = 0.05 * iota_parent
 		elif row['integrand'] == 'prevalence' :
 			row['meas_std']  = 0.05 * (iota_parent / rho_parent)
 		else :
 			assert(False)
-		data_dict.append( copy.copy(row) )
+		data_table.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
-	prior_dict = [
+	prior_table = [
 		{   # prior_zero
 			'name':     'prior_zero',
 			'density':  'uniform',
@@ -224,33 +224,33 @@ def example_db (file_name) :
 	fun            = fun_rate_child
 	age_grid       = [ 0, len(age_list)-1 ]
 	time_grid      = [ 0, len(time_list)-1 ]
-	smooth_dict = [
+	smooth_table = [
 		{'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun }
 	]
 	name = 'smooth_iota_parent'
 	fun  = fun_iota_parent
-	smooth_dict.append(
+	smooth_table.append(
 		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
 	)
 	name = 'smooth_rho_parent'
 	fun  = fun_rho_parent
-	smooth_dict.append(
+	smooth_table.append(
 		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
 	)
 	name = 'smooth_mulcov'
 	fun  = fun_mulcov
-	smooth_dict.append(
+	smooth_table.append(
 		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
 	)
 	# no standard deviation multipliers
-	for dictionary in smooth_dict :
+	for dictionary in smooth_table :
 		for name in [ 'value' , 'dage', 'dtime' ] :
 			key   = 'mulstd_' + name + '_prior_name'
 			value = None
 			dictionary[key] = value
 	# --------------------------------------------------------------------------
 	# rate table:
-	rate_dict = [
+	rate_table = [
 		{	'name':          'pini',
 			'parent_smooth': None,
 			'child_smooth':  None
@@ -269,8 +269,8 @@ def example_db (file_name) :
 		}
 	]
 	# ------------------------------------------------------------------------
-	# option_dict
-	option_dict = [
+	# option_table
+	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_pos' },
 		{ 'name':'parent_node_name',       'value':'world'            },
 		{ 'name':'number_simulate',        'value':'1'                },
@@ -292,24 +292,24 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: empty
-	avgint_dict = list()
+	avgint_table = list()
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
 		age_list,
 		time_list,
-		integrand_dict,
-		node_dict,
-		weight_dict,
-		covariate_dict,
-		data_dict,
-		prior_dict,
-		smooth_dict,
-		rate_dict,
-		mulcov_dict,
-		option_dict,
-		avgint_dict
+		integrand_table,
+		node_table,
+		weight_table,
+		covariate_table,
+		data_table,
+		prior_table,
+		smooth_table,
+		rate_table,
+		mulcov_table,
+		option_table,
+		avgint_table
 	)
 	# -----------------------------------------------------------------------
 	return
@@ -328,8 +328,8 @@ if flag != 0 :
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 var_dict        = dismod_at.get_table_dict(connection, 'var')
-rate_dict       = dismod_at.get_table_dict(connection, 'rate')
-covariate_dict  = dismod_at.get_table_dict(connection, 'covariate')
+rate_table     = dismod_at.get_table_dict(connection, 'rate')
+covariate_table= dismod_at.get_table_dict(connection, 'covariate')
 # -----------------------------------------------------------------------
 # truth table:
 tbl_name     = 'truth_var'
@@ -343,22 +343,22 @@ for var_id in range( len(var_dict) ) :
 	var_type = var_info['var_type']
 	if var_type == 'mulcov_rate_value' :
 		rate_id   = var_info['rate_id']
-		rate_name = rate_dict[rate_id]['rate_name']
+		rate_name = rate_table[rate_id]['rate_name']
 		if rate_name == 'iota' :
 			covariate_id   = var_info['covariate_id']
-			covariate_name = covariate_dict[covariate_id]['covariate_name' ]
+			covariate_name = covariate_table[covariate_id]['covariate_name' ]
 			assert( covariate_name == 'income' )
 			truth_var_value = mulcov_income_iota_true
 		else :
 			assert( rate_name == 'rho' )
 			covariate_id   = var_info['covariate_id']
-			covariate_name = covariate_dict[covariate_id]['covariate_name' ]
+			covariate_name = covariate_table[covariate_id]['covariate_name' ]
 			assert( covariate_name == 'sex' )
 			truth_var_value = mulcov_sex_rho_true
 	else :
 		assert( var_type == 'rate' )
 		rate_id   = var_info['rate_id']
-		rate_name = rate_dict[rate_id]['rate_name']
+		rate_name = rate_table[rate_id]['rate_name']
 		node_id   = var_info['node_id']
 		# node zero is the world
 		if node_id == 0 and rate_name == 'iota' :

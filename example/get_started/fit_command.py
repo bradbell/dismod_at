@@ -155,7 +155,7 @@ assert len(rate_value) == n_rate
 # -----------------------------------------------------------------------
 # get fit_data_subset table
 fit_data_subset_dict = dismod_at.get_table_dict(connection, 'fit_data_subset')
-data_dict         = dismod_at.get_table_dict(connection, 'data')
+data_table       = dismod_at.get_table_dict(connection, 'data')
 density_dict      = dismod_at.get_table_dict(connection, 'density')
 #
 # all data included in subset
@@ -169,9 +169,9 @@ for data_id in range(n_rate) :
 	err           = avg_integrand / rate_value[rate_id] - 1.0;
 	#
 	weighted_residual = fit_data_subset_dict[data_id]['avg_integrand']
-	meas_value        = data_dict[data_id]['meas_value']
-	meas_std          = data_dict[data_id]['meas_std']
-	density_id        = data_dict[data_id]['density_id']
+	meas_value        = data_table[data_id]['meas_value']
+	meas_std          = data_table[data_id]['meas_std']
+	density_id        = data_table[data_id]['density_id']
 	assert density_dict[density_id]['density_name'] == 'gaussian'
 	check             = (meas_value - avg_integrand) / meas_std;
 	err               = weighted_residual / rate_value[rate_id] - 1.0;

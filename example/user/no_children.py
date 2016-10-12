@@ -61,7 +61,7 @@ def example_db (file_name) :
 	time_list   = [ 1995.0, 2005.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_dict = [
+	integrand_table = [
 		{ 'name':'prevalence',  'eta':1e-6 },
 		{ 'name':'Sincidence',  'eta':1e-6 },
 		{ 'name':'remission',   'eta':1e-6 },
@@ -71,7 +71,7 @@ def example_db (file_name) :
 	#
 	# node table: world -> north_america
 	#             north_america -> (united_states, canada)
-	node_dict = [
+	node_table = [
 		{ 'name':'world',         'parent':'' },
 		{ 'name':'north_america', 'parent':'world' },
 		{ 'name':'united_states', 'parent':'north_america' },
@@ -80,18 +80,18 @@ def example_db (file_name) :
 	#
 	# weight table: The constant function 1.0 (one age and one time point)
 	fun = constant_weight_fun
-	weight_dict = [
+	weight_table = [
 		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
 	]
 	#
 	# covariate table: no covriates
-	covariate_dict = list()
+	covariate_table = list()
 	#
 	# mulcov table
-	mulcov_dict = list()
+	mulcov_table = list()
 	# --------------------------------------------------------------------------
 	# data table: same order as list of integrands
-	data_dict = list()
+	data_table = list()
 	# values that are the same for all data rows
 	row = {
 		'node':        'canada',
@@ -103,11 +103,11 @@ def example_db (file_name) :
 		'age_lower':    0.0
 	}
 	# values that change between rows: (one data point for each integrand)
-	for integrand_id in range( len(integrand_dict) ) :
+	for integrand_id in range( len(integrand_table) ) :
 		rate_id           = integrand_id
 		meas_value        = 1e-2 * (rate_id + 1)
 		meas_std          = 0.2 * meas_value
-		integrand         = integrand_dict[integrand_id]['name']
+		integrand         = integrand_table[integrand_id]['name']
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
 		row['integrand']  = integrand
@@ -118,18 +118,18 @@ def example_db (file_name) :
 			# other integrands are averaged from age zero to one hundred
 			row['age_upper'] = 100.0
 		# data_id = rate_id = integand_id
-		data_dict.append( copy.copy(row) )
+		data_table.append( copy.copy(row) )
 	#
 	# add one outlyer at end of data table with hold_out true
 	row['hold_out']   = True # if outlyer were false, fit would fail
-	row['integrand']  = data_dict[0]['integrand']
-	row['meas_std']   = data_dict[0]['meas_std']
-	row['age_upper']  = data_dict[0]['age_upper']
-	row['meas_value'] = 10. * data_dict[0]['meas_value']
-	data_dict.append( copy.copy(row) )
+	row['integrand']  = data_table[0]['integrand']
+	row['meas_std']   = data_table[0]['meas_std']
+	row['age_upper']  = data_table[0]['age_upper']
+	row['meas_value'] = 10. * data_table[0]['meas_value']
+	data_table.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
-	prior_dict = [
+	prior_table = [
 		{   # prior_zero
 			'name':     'prior_zero',
 			'density':  'uniform',
@@ -160,7 +160,7 @@ def example_db (file_name) :
 	# smooth table
 	middle_age_id  = 1
 	last_time_id   = 2
-	smooth_dict = [
+	smooth_table = [
 		{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
 			'age_id':                   [ middle_age_id ],
@@ -173,7 +173,7 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# rate table
-	rate_dict = [
+	rate_table = [
 		{
 			'name':          'pini',
 			'parent_smooth': 'smooth_rate_parent',
@@ -197,8 +197,8 @@ def example_db (file_name) :
 		}
 	]
 	# ------------------------------------------------------------------------
-	# option_dict
-	option_dict = [
+	# option_table
+	option_table = [
 		{ 'name':'parent_node_name',       'value':'canada'       },
 		{ 'name':'number_simulate',        'value':'1'            },
 		{ 'name':'fit_simulate_index',     'value':None           },
@@ -219,7 +219,7 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: same order as list of integrands
-	avgint_dict = list()
+	avgint_table = list()
 	# values that are the same for all data rows
 	row = {
 		'node':        'canada',
@@ -229,8 +229,8 @@ def example_db (file_name) :
 		'age_lower':    0.0
 	}
 	# values that change between rows: (one data point for each integrand)
-	for avgint_id in range( len(integrand_dict) ) :
-		integrand         = integrand_dict[avgint_id]['name']
+	for avgint_id in range( len(integrand_table) ) :
+		integrand         = integrand_table[avgint_id]['name']
 		row['integrand']  = integrand
 		if integrand == 'prevalence' :
 			# prevalence is measured at age zero
@@ -238,32 +238,32 @@ def example_db (file_name) :
 		else :
 			# other integrands are averaged from age zero to one hundred
 			row['age_upper'] = 100.0
-		avgint_dict.append( copy.copy(row) )
+		avgint_table.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
 		age_list,
 		time_list,
-		integrand_dict,
-		node_dict,
-		weight_dict,
-		covariate_dict,
-		data_dict,
-		prior_dict,
-		smooth_dict,
-		rate_dict,
-		mulcov_dict,
-		option_dict,
-		avgint_dict
+		integrand_table,
+		node_table,
+		weight_table,
+		covariate_table,
+		data_table,
+		prior_table,
+		smooth_table,
+		rate_table,
+		mulcov_table,
+		option_table,
+		avgint_table
 	)
 	# -----------------------------------------------------------------------
-	n_smooth  = len( smooth_dict )
+	n_smooth  = len( smooth_table )
 	rate_true = []
-	for rate_id in range( len( data_dict ) ) :
+	for rate_id in range( len( data_table ) ) :
 		# for this particular example
 		data_id    = rate_id
-		meas_value = data_dict[data_id]['meas_value']
+		meas_value = data_table[data_id]['meas_value']
 		rate_true.append(meas_value)
 	#
 	return (n_smooth, rate_true)

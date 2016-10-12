@@ -52,33 +52,33 @@ def example_db (file_name) :
 	time_list   = [ 1960, 1995 ]
 	#
 	# integrand table
-	integrand_dict = [
+	integrand_table = [
 		{ 'name':'Sincidence',  'eta':1e-6 }
 	]
 	#
 	# node table: world -> north_america
 	#             north_america -> (united_states, canada)
-	node_dict = [
+	node_table = [
 		{ 'name':'world',         'parent':'' }
 	]
 	#
 	# weight table: The constant function 1.0 (one age and one time point)
 	fun = constant_weight_fun
-	weight_dict = [
+	weight_table = [
 		{ 'name':'constant',  'age_id':[0], 'time_id':[0], 'fun':fun }
 	]
 	#
 	# covariate table:
-	covariate_dict = list()
+	covariate_table = list()
 	#
 	# mulcov table
-	mulcov_dict = list()
+	mulcov_table = list()
 	# --------------------------------------------------------------------------
 	# data table:
-	data_dict = list()
+	data_table = list()
 	# --------------------------------------------------------------------------
 	# prior_table
-	prior_dict = [
+	prior_table = [
 		{ # prior_diff
 			'name':     'prior_diff',
 			'density':  'log_gaussian',
@@ -109,7 +109,7 @@ def example_db (file_name) :
 	# smooth table
 	age_id_list = range( len( age_list ) )
 	time_id_list = range( len( time_list ) )
-	smooth_dict = [
+	smooth_table = [
 		{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
 			'age_id':                   age_id_list,
@@ -122,7 +122,7 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# rate table
-	rate_dict = [
+	rate_table = [
 		{
 			'name':          'pini',
 			'parent_smooth': None,
@@ -146,8 +146,8 @@ def example_db (file_name) :
 		}
 	]
 	# ------------------------------------------------------------------------
-	# option_dict
-	option_dict = [
+	# option_table
+	option_table = [
 		{ 'name':'parent_node_name',       'value':'world'             },
 		{ 'name':'number_simulate',        'value':'1'                 },
 		{ 'name':'fit_simulate_index',     'value':None                },
@@ -168,27 +168,27 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: empty
-	avgint_dict = list()
+	avgint_table = list()
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
 		age_list,
 		time_list,
-		integrand_dict,
-		node_dict,
-		weight_dict,
-		covariate_dict,
-		data_dict,
-		prior_dict,
-		smooth_dict,
-		rate_dict,
-		mulcov_dict,
-		option_dict,
-		avgint_dict
+		integrand_table,
+		node_table,
+		weight_table,
+		covariate_table,
+		data_table,
+		prior_table,
+		smooth_table,
+		rate_table,
+		mulcov_table,
+		option_table,
+		avgint_table
 	)
 	# -----------------------------------------------------------------------
-	n_smooth  = len( smooth_dict )
+	n_smooth  = len( smooth_table )
 	return
 # ===========================================================================
 file_name      = 'example.db'

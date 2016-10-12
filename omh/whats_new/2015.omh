@@ -121,12 +121,12 @@ $list number$$
 Change $cref create_database$$ so that it always uses $code None$$
 (not empty string) when the corresponding database value is $code null$$.
 The effected the
-$cref/smooth_dict/create_database/smooth_dict/$$ values for
+$cref/smooth_table/create_database/smooth_table/$$ values for
 $icode mulstd_value_prior_name$$,
 $icode mulstd_dage_prior_name$$,
 $icode mulstd_dtime_prior_name$$.
 It also effected the
-$cref/rate_dict/create_database/rate_dict/$$ values for
+$cref/rate_table/create_database/rate_table/$$ values for
 $icode parent_smooth$$, $icode child_smooth$$.
 $lnext
 The $code bin/import_cascade.py$$ example now outputs its files
@@ -485,7 +485,7 @@ $lend
 
 $head 10-26$$
 Changed the specification for the $cref create_database$$ argument
-$cref/option_dict/create_database/option_dict/$$.
+$cref/option_table/create_database/option_table/$$.
 To be specific, the row
 $codei%
 	{ 'name':'parent_node_id' , 'value':'%parent_node_id%' }

@@ -84,13 +84,13 @@ def example_db (file_name) :
 	time_list   = [ 1995.0, 2005.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_dict = [
+	integrand_table = [
 		{ 'name':'Sincidence',  'eta':1e-6 }
 	]
 	#
 	# node table: world -> north_america
 	#             north_america -> (united_states, canada)
-	node_dict = [
+	node_table = [
 		{ 'name':'world',         'parent':'' },
 		{ 'name':'north_america', 'parent':'world' },
 		{ 'name':'united_states', 'parent':'north_america' },
@@ -99,18 +99,18 @@ def example_db (file_name) :
 	#
 	# weight table: The constant function 1.0 (one age and one time point)
 	fun = constant_weight_fun
-	weight_dict = [
+	weight_table = [
 		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
 	]
 	#
 	# covariate table: no covriates
-	covariate_dict = list()
+	covariate_table = list()
 	#
 	# mulcov table
-	mulcov_dict = list()
+	mulcov_table = list()
 	# --------------------------------------------------------------------------
 	# data table: same order as list of integrands
-	data_dict = list()
+	data_table = list()
 	# write out data
 	row = {
 		'density':     'gaussian',
@@ -127,18 +127,18 @@ def example_db (file_name) :
 	# by balancing the offset between the two
 	row['node']        = 'united_states'
 	row['meas_value']  = iota_no_random * (1.0 + iota_child_offset)
-	data_dict.append( copy.copy(row) )
+	data_table.append( copy.copy(row) )
 	row['node']        = 'canada'
 	row['meas_value']  = iota_no_random * (1.0 + iota_child_offset)
-	data_dict.append( copy.copy(row) )
+	data_table.append( copy.copy(row) )
 	row['node']        = 'north_america'
 	row['meas_value']  = iota_no_random * (1.0 - iota_child_offset)
-	data_dict.append( copy.copy(row) )
-	data_dict.append( copy.copy(row) )
+	data_table.append( copy.copy(row) )
+	data_table.append( copy.copy(row) )
 
 	# --------------------------------------------------------------------------
 	# prior_table
-	prior_dict = [
+	prior_table = [
 		{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
@@ -169,7 +169,7 @@ def example_db (file_name) :
 	# smooth table
 	middle_age_id  = 1
 	last_time_id   = 2
-	smooth_dict = [
+	smooth_table = [
 		{ # smooth_rate_child
 			'name':                     'smooth_rate_child',
 			'age_id':                   [ middle_age_id ],
@@ -190,7 +190,7 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# rate table
-	rate_dict = [
+	rate_table = [
 		{
 			'name':          'pini',
 			'parent_smooth': None,
@@ -214,8 +214,8 @@ def example_db (file_name) :
 		}
 	]
 	# ------------------------------------------------------------------------
-	# option_dict
-	option_dict = [
+	# option_table
+	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america'     },
 		{ 'name':'random_bound',           'value':'0.0'               },
 		{ 'name':'random_seed',            'value':'0'                 },
@@ -235,27 +235,27 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: same order as list of integrands
-	avgint_dict = list()
+	avgint_table = list()
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
 		age_list,
 		time_list,
-		integrand_dict,
-		node_dict,
-		weight_dict,
-		covariate_dict,
-		data_dict,
-		prior_dict,
-		smooth_dict,
-		rate_dict,
-		mulcov_dict,
-		option_dict,
-		avgint_dict
+		integrand_table,
+		node_table,
+		weight_table,
+		covariate_table,
+		data_table,
+		prior_table,
+		smooth_table,
+		rate_table,
+		mulcov_table,
+		option_table,
+		avgint_table
 	)
 	# -----------------------------------------------------------------------
-	n_smooth  = len( smooth_dict )
+	n_smooth  = len( smooth_table )
 	return
 # ===========================================================================
 # Create database and run init, stgart, fit
@@ -280,8 +280,8 @@ connection      = dismod_at.create_connection(file_name, new)
 # get variable and fit_var tables
 var_dict       = dismod_at.get_table_dict(connection, 'var')
 fit_var_dict   = dismod_at.get_table_dict(connection, 'fit_var')
-rate_dict      = dismod_at.get_table_dict(connection, 'rate')
-node_dict      = dismod_at.get_table_dict(connection, 'node')
+rate_table    = dismod_at.get_table_dict(connection, 'rate')
+node_table    = dismod_at.get_table_dict(connection, 'node')
 #
 # one age and two times for each of north_america, canada, unites_states
 n_var = len(var_dict)
@@ -293,18 +293,18 @@ for var_id in range( n_var ) :
 	assert( var_type == 'rate' )
 	#
 	rate_id = var_dict[var_id]['rate_id']
-	assert( rate_dict[rate_id]['rate_name'] == 'iota' )
+	assert( rate_table[rate_id]['rate_name'] == 'iota' )
 	#
 	value   = fit_var_dict[var_id]['variable_value']
 	#
 	node_id  = var_dict[var_id]['node_id']
-	parent   = node_dict[node_id]['node_name'] == 'north_america'
+	parent   = node_table[node_id]['node_name'] == 'north_america'
 	if parent :
 		err = value / iota_no_random - 1.0
 		assert abs(err) < 1e-10
 	else :
-		canada         = node_dict[node_id]['node_name'] == 'canada'
-		united_states  = node_dict[node_id]['node_name'] == 'united_states'
+		canada         = node_table[node_id]['node_name'] == 'canada'
+		united_states  = node_table[node_id]['node_name'] == 'united_states'
 		#
 		assert value == 0.0
 		assert canada or united_states
@@ -344,12 +344,12 @@ for var_id in range( n_var ) :
 	assert( var_type == 'rate' )
 	#
 	rate_id = var_dict[var_id]['rate_id']
-	assert( rate_dict[rate_id]['rate_name'] == 'iota' )
+	assert( rate_table[rate_id]['rate_name'] == 'iota' )
 	#
 	value   = fit_var_dict[var_id]['variable_value']
 	#
 	node_id  = var_dict[var_id]['node_id']
-	parent   = node_dict[node_id]['node_name'] == 'north_america'
+	parent   = node_table[node_id]['node_name'] == 'north_america'
 	if parent :
 		err = value / parent_optimal - 1.0
 		assert( abs(err) < 1e-5 )

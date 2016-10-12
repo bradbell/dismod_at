@@ -21,11 +21,14 @@ no_change_files='
 rename_cmd='s|table.omh|database.omh|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
-cat << EOF > junk.sed
-/'name':'random_bound', *'value':None *},/d
-/^random_bound,\$/d
-/\\[ *'random_bound' *, *'' *\\] *,/d
+rm junk.sed
+for name in integrand node weight covariate data prior smooth rate mulcov option avgint
+do
+cat << EOF >> junk.sed
+s|${name}_dict  |${name}_table|g
+s|${name}_dict|${name}_table|g
 EOF
+done
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
 then

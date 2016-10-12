@@ -67,13 +67,13 @@ def example_db (file_name) :
 	time_list   = [ 1995.0, 2005.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_dict = [
+	integrand_table = [
 		{ 'name':'Sincidence',  'eta':1e-6 }
 	]
 	#
 	# node table: world -> north_america
 	#             north_america -> (united_states, canada)
-	node_dict = [
+	node_table = [
 		{ 'name':'world',         'parent':'' },
 		{ 'name':'north_america', 'parent':'world' },
 		{ 'name':'united_states', 'parent':'north_america' },
@@ -82,18 +82,18 @@ def example_db (file_name) :
 	#
 	# weight table: The constant function 1.0 (one age and one time point)
 	fun = constant_weight_fun
-	weight_dict = [
+	weight_table = [
 		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
 	]
 	#
 	# covariate table: no covriates
-	covariate_dict = list()
+	covariate_table = list()
 	#
 	# mulcov table
-	mulcov_dict = list()
+	mulcov_table = list()
 	# --------------------------------------------------------------------------
 	# data table:
-	data_dict = list()
+	data_table = list()
 	row = {
 		'node':        'north_america',
 		'density':     'gaussian',
@@ -107,16 +107,16 @@ def example_db (file_name) :
 		'meas_value':   iota_north_america,
 		'meas_std':     1e-1 * iota_north_america,
 	}
-	data_dict.append( copy.copy(row) )
+	data_table.append( copy.copy(row) )
 	row['node'] = 'canada';
 	row['meas_value'] = 2.0 * iota_north_america
-	data_dict.append( copy.copy(row) )
+	data_table.append( copy.copy(row) )
 	row['node'] = 'united_states';
 	row['meas_value'] = 0.5 * iota_north_america
-	data_dict.append( copy.copy(row) )
+	data_table.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
-	prior_dict = [
+	prior_table = [
 		{   # prior_zero
 			'name':     'prior_zero',
 			'density':  'uniform',
@@ -147,7 +147,7 @@ def example_db (file_name) :
 	# smooth table
 	middle_age_id  = 1
 	last_time_id   = 2
-	smooth_dict = [
+	smooth_table = [
 		{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
 			'age_id':                   [ middle_age_id ],
@@ -168,7 +168,7 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# rate table
-	rate_dict = [
+	rate_table = [
 		{
 			'name':          'pini',
 			'parent_smooth': None,
@@ -192,8 +192,8 @@ def example_db (file_name) :
 		}
 	]
 	# ------------------------------------------------------------------------
-	# option_dict
-	option_dict = [
+	# option_table
+	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america' },
 		{ 'name':'number_simulate',        'value':'1'             },
 		{ 'name':'fit_simulate_index',     'value':None            },
@@ -214,7 +214,7 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: same order as list of integrands
-	avgint_dict = list()
+	avgint_table = list()
 	# values that are the same for all data rows
 	row = {
 		'integrand':   'Sincidence',
@@ -225,28 +225,28 @@ def example_db (file_name) :
 		'age_lower':    50.0,
 		'age_upper':    50.0
 	}
-	avgint_dict.append( copy.copy(row) )
+	avgint_table.append( copy.copy(row) )
 	row['node'] = 'canada'
-	avgint_dict.append( copy.copy(row) )
+	avgint_table.append( copy.copy(row) )
 	row['node'] = 'united_states'
-	avgint_dict.append( copy.copy(row) )
+	avgint_table.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
 		age_list,
 		time_list,
-		integrand_dict,
-		node_dict,
-		weight_dict,
-		covariate_dict,
-		data_dict,
-		prior_dict,
-		smooth_dict,
-		rate_dict,
-		mulcov_dict,
-		option_dict,
-		avgint_dict
+		integrand_table,
+		node_table,
+		weight_table,
+		covariate_table,
+		data_table,
+		prior_table,
+		smooth_table,
+		rate_table,
+		mulcov_table,
+		option_table,
+		avgint_table
 	)
 # ===========================================================================
 file_name             = 'example.db'
@@ -269,8 +269,8 @@ connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get predict table
 predict_dict    = dismod_at.get_table_dict(connection, 'predict')
-avgint_dict     = dismod_at.get_table_dict(connection, 'avgint')
-node_dict       = dismod_at.get_table_dict(connection, 'node')
+avgint_table   = dismod_at.get_table_dict(connection, 'avgint')
+node_table     = dismod_at.get_table_dict(connection, 'node')
 subset_dict     = dismod_at.get_table_dict(connection, 'avgint_subset')
 #
 # check that all the avgint_table values were predicted (no subsetting)
@@ -284,8 +284,8 @@ truth = {
 for i in range(3) :
 	subset_id = predict_dict[i]['avgint_subset_id']
 	avgint_id = subset_dict[subset_id]['avgint_id']
-	node_id   = avgint_dict[avgint_id]['node_id']
-	node      = node_dict[node_id]['node_name']
+	node_id   = avgint_table[avgint_id]['node_id']
+	node      = node_table[node_id]['node_name']
 	check     = truth[node]
 	value     = predict_dict[i]['avg_integrand']
 	assert( abs( value / check - 1.0 ) ) < 1e-2

@@ -36,17 +36,17 @@
 #	%file_name%,
 #	%age_list%
 #	%time_list%
-#	%integrand_dict%,
-#	%node_dict%,
-#	%weight_dict%,
-#	%covariate_dict%,
-#	%data_dict%,
-#	%prior_dict%,
-#	%smooth_dict%,
-#	%rate_dict%,
-#	%mulcov_dict%,
-#	%option_dict%,
-#	%avgint_dict%
+#	%integrand_table%,
+#	%node_table%,
+#	%weight_table%,
+#	%covariate_table%,
+#	%data_table%,
+#	%prior_table%,
+#	%smooth_table%,
+#	%rate_table%,
+#	%mulcov_table%,
+#	%option_table%,
+#	%avgint_table%
 # )%$$
 #
 # $head Purpose$$
@@ -80,20 +80,20 @@
 # is a $code list$$ of $code float$$ that
 # specify the time grid values.
 #
-# $head integrand_dict$$
+# $head integrand_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref integrand_table$$.
-# The dictionary $icode%integrand_dict%[%i%]%$$ has the following:
+# The dictionary $icode%integrand_table%[%i%]%$$ has the following:
 # $table
 # Key     $cnext Value Type $pre  $$ $cnext Description            $rnext
 # name    $cnext str        $cnext name for the $th i$$ integrand  $rnext
 # eta     $cnext str        $cnext offset in log transform fro this integrand
 # $tend
 #
-# $head node_dict$$
+# $head node_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref node_table$$.
-# The dictionary $icode%node_dict%[%i%]%$$ has the following:
+# The dictionary $icode%node_table%[%i%]%$$ has the following:
 # $table
 # Key     $cnext Value Type    $pre  $$ $cnext Description       $rnext
 # name    $cnext str           $cnext name for the $th i$$ node  $rnext
@@ -102,11 +102,11 @@
 # Note that if the i-th node does not have a parent, the empty string
 # should be used for the parent of that node.
 #
-# $head weight_dict$$
+# $head weight_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref weight_table$$ and
 # $cref weight_grid_table$$.
-# The dictionary $icode%weight_dict%[%i%]%$$ has the following:
+# The dictionary $icode%weight_table%[%i%]%$$ has the following:
 # $table
 # Key     $cnext Value Type    $pre  $$ $cnext Description       $rnext
 # name    $cnext str           $cnext name of $th i$$ weighting  $rnext
@@ -117,10 +117,10 @@
 # The float $icode w$$ is the value of this weighting a the corresponding
 # float age $icode a$$ and float time $icode t$$.
 #
-# $head covariate_dict$$
+# $head covariate_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref covariate_table$$.
-# The dictionary $icode%covariate_dict%[%i%]%$$ has the following:
+# The dictionary $icode%covariate_table%[%i%]%$$ has the following:
 # $table
 # Key       $cnext Value Type  $pre  $$ $cnext Description            $rnext
 # name      $cnext str         $cnext name for the $th i$$ covariate  $rnext
@@ -129,10 +129,10 @@
 # max_difference $cnext float $cnext maximum difference for $th i$$ covariate
 # $tend
 #
-# $head data_dict$$
+# $head data_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref data_table$$.
-# The dictionary $icode%data_dict%[%i%]%$$ has the following:
+# The dictionary $icode%data_table%[%i%]%$$ has the following:
 # $table
 # Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
 # integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext
@@ -150,16 +150,16 @@
 # ...          $cnext ...         $cnext  ...                        $rnext
 # $icode c_J$$ $cnext float       $cnext value of last covariate
 # $tend
-# Note that $icode%J% = len(%covariate_dict%) - 1%$$ and for
+# Note that $icode%J% = len(%covariate_table%) - 1%$$ and for
 # $icode%j% = 0 , %...% , %J%$$,
 # $codei%
-#	%c_j% = %covariate_dict%[%j%]['name']
+#	%c_j% = %covariate_table%[%j%]['name']
 # %$$
 #
-# $head prior_dict$$
+# $head prior_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref prior_table$$.
-# The dictionary $icode%prior_dict%[%i%]%$$ has the following:
+# The dictionary $icode%prior_table%[%i%]%$$ has the following:
 # $table
 # Key     $cnext Value Type    $pre  $$ $cnext Description       $rnext
 # name    $cnext str           $cnext name of $th i$$ prior $rnext
@@ -170,11 +170,11 @@
 # eta     $cnext float         $cnext offset in log densities
 # $tend
 #
-# $head smooth_dict$$
+# $head smooth_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref smooth_table$$ and
 # $cref smooth_grid_table$$.
-# The dictionary $icode%smooth_dict%[%i%]%$$ has the following:
+# The dictionary $icode%smooth_table%[%i%]%$$ has the following:
 # $table
 # Key     $cnext Value Type  $pre  $$ $cnext Description       $rnext
 # name    $cnext $code str$$         $cnext name of $th i$$ smoothing  $rnext
@@ -207,10 +207,10 @@
 # $icode dt$$ is not used when time $icode%t% = %time_id%[-1]%$$.
 # $lend
 #
-# $head rate_dict$$
+# $head rate_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref rate_table$$.
-# The dictionary $icode%rate_dict%[%i%]%$$ has the following:
+# The dictionary $icode%rate_table%[%i%]%$$ has the following:
 # $table
 # Key           $cnext Value Type  $pre  $$ $cnext Description         $rnext
 # name          $cnext str     $cnext pini, iota, rho, chi, or omega   $rnext
@@ -223,10 +223,10 @@
 # The value $code None$$ is used to represent a $code null$$ value for
 # the parent and child smoothings.
 #
-# $head mulcov_dict$$
+# $head mulcov_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref mulcov_table$$.
-# The dictionary $icode%mulcov_dict%[%i%]%$$ has the following:
+# The dictionary $icode%mulcov_table%[%i%]%$$ has the following:
 # $table
 # Key       $cnext Value Type  $pre  $$ $cnext Description       $rnext
 # covariate $cnext str         $cnext is the covariate column    $rnext
@@ -235,33 +235,33 @@
 # smooth    $cnext str         $cnext smoothing name
 # $tend
 #
-# $head option_dict$$
+# $head option_table$$
 # This is a list of $code dict$$
 # that define the values
 # $cref/option_name/option_table/option_name/$$,
 # $cref/option_value/option_table/option_value/$$ in the option table.
 # The $th i$$ row of the table will have
 # $codei%
-#	%option_name%  = %option_dict%[%i%]['name']
-#	%option_value% = %option_dict%[%i%]['value']
+#	%option_name%  = %option_table%[%i%]['name']
+#	%option_value% = %option_table%[%i%]['value']
 # %$$
 # There is one exception to this rule.
 # The row of the table with $icode option_name$$ equal to
 # $cref/parent_node_id/option_table/parent_node_id/$$ is represented by
 # $codei%
-#	%option_dict%[%i%]['name']  = 'parent_node_name'
-#	%option_dict%[%i%]['value'] = %value%
+#	%option_table%[%i%]['name']  = 'parent_node_name'
+#	%option_table%[%i%]['value'] = %value%
 # %$$
 # where $icode value$$ is the value of
 # $cref/node_name/node_table/node_name/$$ in the node table that
 # corresponds to the $icode node_id$$ equal to
 # $icode parent_node_id$$ in the option table.
 #
-# $head avgint_dict$$
+# $head avgint_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref avgint_table$$.
-# The dictionary $icode%avgint_dict%[%i%]%$$ has the same description as
-# $cref/data_dict[i]/create_database/data_dict/$$ except that the
+# The dictionary $icode%avgint_table%[%i%]%$$ has the same description as
+# $cref/data_table[i]/create_database/data_table/$$ except that the
 # following keys (and corresponding values) are not present:
 # $code density$$,
 # $code hold_out$$,
@@ -280,17 +280,17 @@ def create_database(
 	file_name,
 	age_list,
 	time_list,
-	integrand_dict,
-	node_dict,
-	weight_dict,
-	covariate_dict,
-	data_dict,
-	prior_dict,
-	smooth_dict,
-	rate_dict,
-	mulcov_dict,
-	option_dict,
-	avgint_dict
+	integrand_table,
+	node_table,
+	weight_table,
+	covariate_table,
+	data_table,
+	prior_table,
+	smooth_table,
+	rate_table,
+	mulcov_table,
+	option_table,
+	avgint_table
 ) :
 	import sys
 	import dismod_at
@@ -321,7 +321,7 @@ def create_database(
 	col_name = [ 'integrand_name', 'eta' ]
 	col_type = [ 'text',           'real']
 	row_list = []
-	for row in integrand_dict :
+	for row in integrand_table :
 		row_list.append( [ row['name'], row['eta'] ]  )
 	tbl_name = 'integrand'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
@@ -351,30 +351,30 @@ def create_database(
 	col_name = [ 'covariate_name',	'reference', 'max_difference' ]
 	col_type = [ 'text',             'real',     'real'           ]
 	row_list = [ ]
-	for i in range( len(covariate_dict) ) :
+	for i in range( len(covariate_table) ) :
 		row       = [
-			covariate_dict[i]['name'],
-			covariate_dict[i]['reference'],
-			covariate_dict[i]['max_difference']
+			covariate_table[i]['name'],
+			covariate_table[i]['reference'],
+			covariate_table[i]['max_difference']
 		]
 		row_list.append(row)
 	tbl_name = 'covariate'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_covariate_name2id = {}
-	for i in range( len(covariate_dict) ) :
-		global_covariate_name2id[ covariate_dict[i]['name'] ] = i
+	for i in range( len(covariate_table) ) :
+		global_covariate_name2id[ covariate_table[i]['name'] ] = i
 	# ------------------------------------------------------------------------
 	# create node table
 	global_node_name2id = {}
-	for i in range( len(node_dict) ) :
-		global_node_name2id[ node_dict[i]['name'] ] = i
+	for i in range( len(node_table) ) :
+		global_node_name2id[ node_table[i]['name'] ] = i
 	#
 	col_name = [ 'node_name', 'parent' ]
 	col_type = [ 'text',      'integer'   ]
 	row_list = []
-	for i in range( len(node_dict) ) :
-		node   = node_dict[i]
+	for i in range( len(node_table) ) :
+		node   = node_table[i]
 		name   = node['name']
 		parent = node['parent']
 		if parent == '' :
@@ -393,8 +393,8 @@ def create_database(
 		'text',       'real', 'real',  'real', 'real', 'integer',    'real'
 	]
 	row_list = [ ]
-	for i in range( len( prior_dict ) ) :
-		prior         = prior_dict[i]
+	for i in range( len( prior_table ) ) :
+		prior         = prior_table[i]
 		density_id   = global_density_name2id[ prior['density'] ]
 		row  = [
 			prior['name'],
@@ -417,8 +417,8 @@ def create_database(
 	col_name = [ 'weight_name', 'n_age',   'n_time'   ]
 	col_type = [ 'text',        'integer', 'integer'  ]
 	row_list = [ ]
-	for i in range( len(weight_dict) ) :
-		weight = weight_dict[i]
+	for i in range( len(weight_table) ) :
+		weight = weight_table[i]
 		name   = weight['name']
 		n_age  = len( weight['age_id'] )
 		n_time = len( weight['time_id'] )
@@ -427,15 +427,15 @@ def create_database(
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_weight_name2id = {}
-	for i in range( len(weight_dict) ) :
-		global_weight_name2id[ weight_dict[i]['name'] ] = i
+	for i in range( len(weight_table) ) :
+		global_weight_name2id[ weight_table[i]['name'] ] = i
 	# ------------------------------------------------------------------------
 	# create weight_grid table
 	col_name = [  'weight_id', 'age_id',   'time_id',  'weight' ]
 	col_type = [  'integer',   'integer',  'integer',  'real'   ]
 	row_list = [ ]
-	for i in range( len(weight_dict) ) :
-		weight  = weight_dict[i]
+	for i in range( len(weight_table) ) :
+		weight  = weight_table[i]
 		age_id  = weight['age_id']
 		time_id = weight['time_id']
 		fun    = weight['fun']
@@ -464,8 +464,8 @@ def create_database(
 		'integer'
 	]
 	row_list = [ ]
-	for i in range( len(smooth_dict) ) :
-		smooth        = smooth_dict[i]
+	for i in range( len(smooth_table) ) :
+		smooth        = smooth_table[i]
 		name          = smooth['name']
 		n_age         = len( smooth['age_id'] )
 		n_time        = len( smooth['time_id'] )
@@ -500,8 +500,8 @@ def create_database(
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_smooth_name2id = {}
-	for i in range( len(smooth_dict) ) :
-		global_smooth_name2id[ smooth_dict[i]['name'] ] = i
+	for i in range( len(smooth_table) ) :
+		global_smooth_name2id[ smooth_table[i]['name'] ] = i
 	# ------------------------------------------------------------------------
 	# create smooth_grid table
 	col_name = [
@@ -521,8 +521,8 @@ def create_database(
 		'integer',  # dtime_prior_id
 	]
 	row_list = [ ]
-	for i in range( len(smooth_dict) ) :
-		smooth  = smooth_dict[i]
+	for i in range( len(smooth_table) ) :
+		smooth  = smooth_table[i]
 		age_id  = smooth['age_id']
 		time_id = smooth['time_id']
 		fun     = smooth['fun']
@@ -552,8 +552,8 @@ def create_database(
 	col_name = [  'rate_name', 'parent_smooth_id', 'child_smooth_id'  ]
 	col_type = [  'text',      'integer',         'integer'          ]
 	row_list = [ ]
-	for i in range( len(rate_dict) ) :
-		rate             = rate_dict[i]
+	for i in range( len(rate_table) ) :
+		rate             = rate_table[i]
 		rate_name        = rate['name']
 		if rate['parent_smooth'] == None :
 			parent_smooth_id = None
@@ -586,8 +586,8 @@ def create_database(
 		'integer'  # smooth_id'
 	]
 	row_list = []
-	for i in range( len(mulcov_dict) ) :
-		mulcov          = mulcov_dict[i]
+	for i in range( len(mulcov_table) ) :
+		mulcov          = mulcov_table[i]
 		mulcov_type     = mulcov['type']
 		effected        = mulcov['effected']
 		if mulcov_type == 'rate_value' :
@@ -621,7 +621,7 @@ def create_database(
 		'time_lower',
 		'time_upper',
 	]
-	for j in range( len(covariate_dict) ) :
+	for j in range( len(covariate_table) ) :
 		col_name.append( 'x_%s' % j )
 	col_type = [
 		'integer',              # integrand_id
@@ -636,11 +636,11 @@ def create_database(
 		'real',                 # time_lower
 		'real',                 # time_upper
 	]
-	for j in range( len(covariate_dict) )  :
+	for j in range( len(covariate_table) )  :
 		col_type.append( 'real' )
 	row_list = [ ]
-	for i in range( len(data_dict) ) :
-		data = data_dict[i]
+	for i in range( len(data_table) ) :
+		data = data_table[i]
 		data_id      = i
 		integrand_id = global_integrand_name2id[ data['integrand'] ]
 		density_id   = global_density_name2id[ data['density'] ]
@@ -660,8 +660,8 @@ def create_database(
 			data['time_lower'],
 			data['time_upper']
 		]
-		for j in range( len(covariate_dict) ) :
-			row.append( data[ covariate_dict[j]['name'] ] )
+		for j in range( len(covariate_table) ) :
+			row.append( data[ covariate_table[j]['name'] ] )
 		row_list.append(row)
 	tbl_name = 'data'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
@@ -670,15 +670,15 @@ def create_database(
 	col_name = [ 'option_name', 'option_value' ]
 	col_type = [ 'text unique', 'text' ]
 	row_list = []
-	for row in option_dict :
+	for row in option_table :
 		name  = row['name']
 		value = row['value']
 		if name == 'parent_node_id' :
 			value = str(value)
-			msg   = 'create_database.py: option_dict has the following row:\n'
+			msg   = 'create_database.py: option_table has the following row:\n'
 			msg  += "\t{ 'name':'parent_node_id' , 'value':'" + value + "' }\n"
 			msg  += 'This is an error and should probably be replaced by\n'
-			value = node_dict[int(value)]['name']
+			value = node_table[int(value)]['name']
 			msg  += "\t{ 'name':'parent_node_name' , 'value':'" + value + "' }"
 			sys.exit(msg)
 		if name == 'parent_node_name' :
@@ -698,7 +698,7 @@ def create_database(
 		'time_lower',
 		'time_upper'
 	]
-	for j in range( len(covariate_dict) ) :
+	for j in range( len(covariate_table) ) :
 		col_name.append( 'x_%s' % j )
 	col_type = [
 		'integer',              # integrand_id
@@ -709,11 +709,11 @@ def create_database(
 		'real',                 # time_lower
 		'real'                  # time_upper
 	]
-	for j in range( len(covariate_dict) )  :
+	for j in range( len(covariate_table) )  :
 		col_type.append( 'real' )
 	row_list = [ ]
-	for i in range( len(avgint_dict) ) :
-		avgint = avgint_dict[i]
+	for i in range( len(avgint_table) ) :
+		avgint = avgint_table[i]
 		avgint_id      = i
 		integrand_id = global_integrand_name2id[ avgint['integrand'] ]
 		node_id      = global_node_name2id[ avgint['node'] ]
@@ -727,8 +727,8 @@ def create_database(
 			avgint['time_lower'],
 			avgint['time_upper']
 		]
-		for j in range( len(covariate_dict) ) :
-			row.append( avgint[ covariate_dict[j]['name'] ] )
+		for j in range( len(covariate_table) ) :
+			row.append( avgint[ covariate_table[j]['name'] ] )
 		row_list.append(row)
 	tbl_name = 'avgint'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

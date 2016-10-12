@@ -75,14 +75,14 @@ def example_db (file_name) :
 	time_list   = [ 1995.0, 2005.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_dict = [
+	integrand_table = [
 		{ 'name':'Sincidence',  'eta':1e-6 },
 		{ 'name':'remission',   'eta':1e-6 }
 	]
 	#
 	# node table: world -> north_america
 	#             north_america -> (united_states, canada)
-	node_dict = [
+	node_table = [
 		{ 'name':'world',         'parent':'' },
 		{ 'name':'north_america', 'parent':'world' },
 		{ 'name':'united_states', 'parent':'north_america' },
@@ -91,19 +91,19 @@ def example_db (file_name) :
 	#
 	# weight table: The constant function 1.0 (one age and one time point)
 	fun = constant_weight_fun
-	weight_dict = [
+	weight_table = [
 		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
 	]
 	#
 	# covariate table:
-	covariate_dict = [
+	covariate_table = [
 		{'name':'income', 'reference':0.5, 'max_difference':None},
 		{'name':'sex',    'reference':0.0, 'max_difference':0.6}
 	]
 	#
 	# mulcov table
 	# income has been scaled the same as sex so man use same smoothing
-	mulcov_dict = [
+	mulcov_table = [
 		{
 			'covariate': 'income',
 			'type':      'meas_value',
@@ -123,7 +123,7 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# data table:
-	data_dict = list()
+	data_table = list()
 	# values that are the same for all data rows
 	row = {
 		'node':        'world',
@@ -139,9 +139,9 @@ def example_db (file_name) :
 	mulcov_incidence = 1.0
 	mulcov_remission = 2.0;
 	income_reference = 0.5
-	n_integrand      = len( integrand_dict )
+	n_integrand      = len( integrand_table )
 	for data_id in range( n_data ) :
-		integrand   = integrand_dict[ data_id % n_integrand ]['name']
+		integrand   = integrand_table[ data_id % n_integrand ]['name']
 		income      = data_id / float(n_data-1)
 		sex         = ( data_id % 3 - 1.0 ) / 2.0
 		meas_value  = iota_true
@@ -158,10 +158,10 @@ def example_db (file_name) :
 		row['integrand']  = integrand
 		row['income']     = income
 		row['sex']        = sex
-		data_dict.append( copy.copy(row) )
+		data_table.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
-	prior_dict = [
+	prior_table = [
 		{   # prior_zero
 			'name':     'prior_zero',
 			'density':  'uniform',
@@ -210,7 +210,7 @@ def example_db (file_name) :
 	middle_time_id = 1
 	last_age_id    = 2
 	last_time_id   = 2
-	smooth_dict = [
+	smooth_table = [
 		{   # smooth_rate_child
 			'name':                     'smooth_rate_child',
 			'age_id':                   [ last_age_id ],
@@ -239,7 +239,7 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# rate table
-	rate_dict = [
+	rate_table = [
 		{
 			'name':          'pini',
 			'parent_smooth': None,
@@ -263,8 +263,8 @@ def example_db (file_name) :
 		}
 	]
 	# ------------------------------------------------------------------------
-	# option_dict
-	option_dict = [
+	# option_table
+	option_table = [
 		{ 'name':'parent_node_name',       'value':'world'        },
 		{ 'name':'number_simulate',        'value':'1'            },
 		{ 'name':'fit_simulate_index',     'value':None           },
@@ -285,32 +285,32 @@ def example_db (file_name) :
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: empty
-	avgint_dict = list()
+	avgint_table = list()
 	# --------------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
 		age_list,
 		time_list,
-		integrand_dict,
-		node_dict,
-		weight_dict,
-		covariate_dict,
-		data_dict,
-		prior_dict,
-		smooth_dict,
-		rate_dict,
-		mulcov_dict,
-		option_dict,
-		avgint_dict
+		integrand_table,
+		node_table,
+		weight_table,
+		covariate_table,
+		data_table,
+		prior_table,
+		smooth_table,
+		rate_table,
+		mulcov_table,
+		option_table,
+		avgint_table
 	)
 	# -----------------------------------------------------------------------
-	n_smooth  = len( smooth_dict )
+	n_smooth  = len( smooth_table )
 	rate_true = []
-	for rate_id in range( len( data_dict ) ) :
+	for rate_id in range( len( data_table ) ) :
 		# for this particular example
 		data_id    = rate_id
-		meas_value = data_dict[data_id]['meas_value']
+		meas_value = data_table[data_id]['meas_value']
 		rate_true.append(meas_value)
 	#
 	return
