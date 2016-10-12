@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2016$$
 $spell
+	hpp
 	Dismod
 	cppad
 	avgint
@@ -55,6 +56,12 @@ $lnext
 Change $icode%name%_dict%$$ to $icode%name%_table%$$ in the python examples.
 For example, $code data_dict$$ was changed to
 $cref/data_table/create_database/data_table/$$.
+$lnext
+There was a problem with the
+$cref/cppad/install_unix/Special Requirements/CppAD/$$ install script
+$code bin/install_cppad.sh$$ that caused a compiler error in
+$code forward2sweep.hpp$$ when CppAD was not using c++11 features.
+This has been fixed.
 $lend
 
 $head 10-11$$
