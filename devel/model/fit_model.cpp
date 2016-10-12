@@ -753,7 +753,7 @@ fit_model::a2d_vector fit_model::ran_likelihood(
 	pack_fixed(pack_object_, pack_vec, fixed_tmp);
 	pack_random(pack_object_, pack_vec, random_vec);
 	//
-	// evaluate the data and prior residuals that depend on the  random effects
+	// evaluate the data and prior residuals that depend on the random effects
 	CppAD::vector< residual_struct<a2_double> > data_ran, prior_ran;
 	bool hold_out       = true;
 	bool random_depend  = true;
@@ -817,7 +817,7 @@ fit_model::a1d_vector fit_model::fix_likelihood(
 	a1d_vector random_vec( size_random_effect(pack_object_) );
 	a1d_vector a1_pack_vec( pack_object_.size() );
 	//
-	// set random_vec to nan (not used)
+	// set random_vec
 	for(size_t i = 0; i < random_vec.size(); i++)
 		random_vec[i] = CppAD::nan( a1_double(0.0) );
 	//
@@ -827,12 +827,29 @@ fit_model::a1d_vector fit_model::fix_likelihood(
 	pack_fixed(pack_object_, a1_pack_vec, fixed_tmp);
 	pack_random(pack_object_, a1_pack_vec, random_vec);
 	//
-	// evaluate prior residuals (data residuals empty for now)
+	// evaluate the data and prior residuals that only depend on fixed effects
 	CppAD::vector< residual_struct<a1_double> > data_fix, prior_fix;
 	bool hold_out      = true;
 	bool random_depend = false;
 	data_fix  = data_object_.like_all(hold_out, random_depend, a1_pack_vec);
 	prior_fix = prior_object_.fixed(a1_pack_vec);
+	//
+	if( n_random_ == n_random_equal_ )
+	{	// ran_likelihood returns the empty vector in this case
+		// so we need to include rest of the data here.
+		random_depend = true;
+		for(size_t i = 0; i < n_random_; i++)
+		{	assert( random_lower_[i] == random_upper_[i] );
+			random_vec[i] = random_lower_[i];
+		}
+		pack_random(pack_object_, a1_pack_vec, random_vec);
+		CppAD::vector< residual_struct<a1_double> > data_ran;
+		data_ran  = data_object_.like_all(hold_out, random_depend, a1_pack_vec);
+		//
+		// data_fix = data_fix + data_ran
+		for(size_t i = 0; i < data_ran.size(); i++)
+			data_fix.push_back( data_ran[i] );
+	}
 	//
 	// number of data and prior residuals
 	size_t n_data_fix    = data_fix.size();
@@ -896,7 +913,8 @@ fit_model::a1d_vector fit_model::fix_constraint(const a1d_vector& fixed_vec)
 // ---------------------------------------------------------------------------
 // fatal_error
 void fit_model::fatal_error(const std::string& error_message)
-{	std::string msg = "cppad_mixed: " + error_message;
+{	assert(false);
+	std::string msg = "cppad_mixed: " + error_message;
 	error_exit(db_, msg);
 }
 // warning

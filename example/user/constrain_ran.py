@@ -24,8 +24,8 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------
-iota_true           = 1e-2;
-iota_random_effect  = +0.5;
+iota_true         = 1e-2;
+iota_child_offset = +0.5;
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -96,7 +96,6 @@ def example_db (file_name) :
 	data_dict = list()
 	# write out data
 	row = {
-		'node':        'united_states',
 		'density':     'gaussian',
 		'weight':      'constant',
 		'hold_out':     False,
@@ -105,13 +104,21 @@ def example_db (file_name) :
 		'age_lower':    50.0,
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
-		'meas_value':   iota_true * math.exp(iota_random_effect),
-		'meas_std':     iota_true / 100.
+		'meas_std':     iota_true / 10.
 	}
+	# make sure both child and parent data gets included in fit
+	# by balancing the offset between the two
+	row['node']        = 'united_states'
+	row['meas_value']  = iota_true * (1.0 + iota_child_offset)
 	data_dict.append( copy.copy(row) )
-	row['node']       = 'canada'
-	row['meas_value'] = iota_true * math.exp(iota_random_effect)
+	row['node']        = 'canada'
+	row['meas_value']  = iota_true * (1.0 + iota_child_offset)
 	data_dict.append( copy.copy(row) )
+	row['node']        = 'north_america'
+	row['meas_value']  = iota_true * (1.0 - iota_child_offset)
+	data_dict.append( copy.copy(row) )
+	data_dict.append( copy.copy(row) )
+
 	# --------------------------------------------------------------------------
 	# prior_table
 	prior_dict = [
@@ -126,10 +133,10 @@ def example_db (file_name) :
 		},{ # prior_rate_child
 			'name':     'prior_rate_child',
 			'density':  'gaussian',
-			'lower':    iota_random_effect,
-			'upper':    iota_random_effect,
-			'mean':     iota_random_effect,
-			'std':      10.0,
+			'lower':    0.0,
+			'upper':    0.0,
+			'mean':     0.0,
+			'std':      1.0,
 			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
@@ -192,17 +199,17 @@ def example_db (file_name) :
 	# ------------------------------------------------------------------------
 	# option_dict
 	option_dict = [
-		{ 'name':'parent_node_name',       'value':'north_america' },
-		{ 'name':'number_simulate',        'value':'1'             },
-		{ 'name':'fit_simulate_index',     'value':None            },
-		{ 'name':'ode_step_size',          'value':'10.0'          },
-		{ 'name':'random_seed',            'value':'0'             },
+		{ 'name':'parent_node_name',       'value':'north_america'     },
+		{ 'name':'number_simulate',        'value':'1'                 },
+		{ 'name':'fit_simulate_index',     'value':None                },
+		{ 'name':'ode_step_size',          'value':'10.0'              },
+		{ 'name':'random_seed',            'value':'0'                 },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
 		{ 'name':'quasi_fixed',            'value':'true'          },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'   },
 		{ 'name':'max_num_iter_fixed',     'value':'100'           },
-		{ 'name':'print_level_fixed',      'value':'5'             },
+		{ 'name':'print_level_fixed',      'value':'0'             },
 		{ 'name':'tolerance_fixed',        'value':'1e-10'         },
 
 		{ 'name':'derivative_test_random', 'value':'second-order'  },
@@ -255,11 +262,33 @@ connection      = dismod_at.create_connection(file_name, new)
 # get variable and fit_var tables
 var_dict       = dismod_at.get_table_dict(connection, 'var')
 fit_var_dict   = dismod_at.get_table_dict(connection, 'fit_var')
+rate_dict      = dismod_at.get_table_dict(connection, 'rate')
+node_dict      = dismod_at.get_table_dict(connection, 'node')
 #
-for var_id in range( len(var_dict) ) :
-	node_id = var_dict[var_id]['node_id']
+# one age and two times for each of north_america, canada, unites_states
+n_var = len(var_dict)
+assert n_var == 6
+#
+for var_id in range( n_var ) :
+	var_type = var_dict[var_id]['var_type']
+	assert( var_type == 'rate' )
+	#
+	rate_id = var_dict[var_id]['rate_id']
+	assert( rate_dict[rate_id]['rate_name'] == 'iota' )
+	#
 	value   = fit_var_dict[var_id]['variable_value']
-	print('node_id = ', node_id, ', value =', value)
+	#
+	node_id  = var_dict[var_id]['node_id']
+	parent   = node_dict[node_id]['node_name'] == 'north_america'
+	if parent :
+		err = value / iota_true - 1.0
+		assert abs(err) < 1e-6
+	else :
+		canada         = node_dict[node_id]['node_name'] == 'canada'
+		united_states  = node_dict[node_id]['node_name'] == 'united_states'
+		#
+		assert value == 0.0
+		assert canada or united_states
 # -----------------------------------------------------------------------
 print('constrain_ran: OK')
 # END PYTHON

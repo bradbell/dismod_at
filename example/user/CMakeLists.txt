@@ -12,6 +12,7 @@
 
 FOREACH(user_case
 	asymptotic
+	constrain_ran
 	diff_constraint
 	fit_sim
 	jump_at_age
@@ -32,6 +33,7 @@ ADD_CUSTOM_TARGET(
 	check_example_user
 	DEPENDS
 	check_example_user_asymptotic
+	check_example_user_constrain_ran
 	check_example_user_diff_constraint
 	check_example_user_fit_sim
 	check_example_user_jump_at_age
