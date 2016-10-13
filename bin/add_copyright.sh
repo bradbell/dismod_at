@@ -116,3 +116,5 @@ then
 	chmod +x bin/add_copyright.$$
 fi
 mv bin/add_copyright.$$ $file_name
+# -----------------------------------------------------------------------------
+echo 'add_copyright.sh: OK'

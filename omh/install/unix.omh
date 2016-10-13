@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin install_unix$$
 $dollar @$$
 $spell
+	metis
 	py
 	suitesparse
 	tgz
@@ -105,21 +106,6 @@ $code
 $srcfile%bin/install_eigen.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
 $$
 
-$subhead suitesparse$$
-The $href%http://faculty.cse.tamu.edu/davis/suitesparse.html%SuiteSparse%$$
-sparse matrix package.
-The commands
-$codei%
-	cd dismod_at-20161012
-	bin/install_suitesparse.sh
-%$$
-can be used to install this package.
-If necessary, first adjust the setting
-of the following variables in that script.
-$code
-$srcfile%bin/install_suitesparse.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
-$$
-
 $subhead Ipopt$$
 The $href%https://projects.coin-or.org/Ipopt%Ipopt%$$
 optimization package.
@@ -134,6 +120,24 @@ of the following variables in that script.
 $code
 $srcfile%bin/install_ipopt.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
 $$
+
+$subhead suitesparse$$
+The $href%http://faculty.cse.tamu.edu/davis/suitesparse.html%SuiteSparse%$$
+sparse matrix package.
+The commands
+$codei%
+	cd dismod_at-20161012
+	bin/install_suitesparse.sh
+%$$
+can be used to install this package.
+If necessary, first adjust the setting
+of the following variables in that script.
+$code
+$srcfile%bin/install_suitesparse.sh%5%# BEGIN USER_SETTINGS%# END USER_SETTINGS%$$
+$$
+Note that the proper value for
+$icode ipopt_prefix$$ and $icode metis_version$$ are printed
+at the end of the Ipopt install.
 
 $subhead CppAD$$
 The $href%http://www.coin-or.org/CppAD/%cppad%$$

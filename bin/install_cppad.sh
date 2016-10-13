@@ -20,9 +20,6 @@ cppad_prefix="$HOME/prefix/dismod_at"
 #
 # extra c++ flags used during compliation
 extra_cxx_flags='-std=c++11 -Wall'
-# ----------------------------------------------------------------------------
-# settings for IHME cluster
-# extra_cxx_flags='-Wall'
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 if [ $0 != 'bin/install_cppad.sh' ]
@@ -81,3 +78,5 @@ echo "cmake $cmake_args -D cppad_cxx_flags='$extra_cxx_flags' .."
 cmake $cmake_args -D cppad_cxx_flags="$extra_cxx_flags" ..
 #
 echo_eval make install
+# -----------------------------------------------------------------------------
+echo 'install_cppad.sh: OK'

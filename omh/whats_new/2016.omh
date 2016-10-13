@@ -40,6 +40,7 @@ $spell
 	Wmisleading
 	sys
 	libdir
+	metis
 $$
 
 $section Changes and Additions to Dismod_at During 2016$$
@@ -47,6 +48,13 @@ $section Changes and Additions to Dismod_at During 2016$$
 
 $childtable%omh/whats_new/2015.omh
 %$$
+
+$head 10-13$$
+Improve the $cref/suitesparse/install_unix/Special Requirements/suitesparse/$$
+so that it automatically includes the $code metis$$ package.
+Note that the proper value for $icode metis_version$$,
+in the suitesparse install,
+is printed at the end of the ipopt install.
 
 $head 10-12$$
 $list number$$

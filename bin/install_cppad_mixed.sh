@@ -28,9 +28,6 @@ bool_sparsity='YES'
 #
 # use cholmod (not eigen) for LDLT factorization (where possible)
 ldlt_cholmod='YES'
-# ----------------------------------------------------------------------------
-# setings for IHME cluster
-# extra_cxx_flags='-Wall'
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 name='bin/install_cppad_mixed.sh'

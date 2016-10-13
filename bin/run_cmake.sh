@@ -136,3 +136,5 @@ cmake \
 	-D cppad_prefix="$cppad_prefix" \
 	-D suitesparse_prefix="$suitesparse_prefix" \
 	..
+# --------------------------------------------------------------------------
+echo 'run_cmake.sh: OK'

@@ -2,11 +2,11 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-16 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 if [ "$0" != 'bin/run_omhelp.sh' ]
@@ -89,5 +89,6 @@ if grep '^OMhelp Warning:' ../omhelp.$ext.log
 then
 	exit 1
 fi
+# -----------------------------------------------------------------------------
 echo 'run_omhelp.sh: OK'
 exit 0
