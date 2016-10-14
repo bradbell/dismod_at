@@ -12,7 +12,7 @@
 # BEGIN BASH
 web_page='http://moby.ihme.washington.edu/bradbell/dismod_at'
 tarball='dismod_at-20161013.tgz'
-python3='/usr/local/anaconda3-current/bin/python3'
+anaconda='/usr/local/anaconda3-current'
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -65,7 +65,7 @@ list="
 	cmake
 	pkg-config
 	sqlite3
-	$python3
+	$anaconda/bin/python3
 "
 for program in $list
 do
@@ -97,6 +97,15 @@ then
 	echo_eval tar -xzf $tarball
 fi
 echo_eval cd $version
+# -----------------------------------------------------------------------------
+cat << EOF > junk.sed
+s|^# *include *<sqlite3\\.h> *\$|# include <$anaconda/include/sqlite3.h>|
+EOF
+list=`find . -name '*.hpp'`
+for file in $list
+do
+	echo_eval sed -f junk.sed -i $file
+done
 # -----------------------------------------------------------------------------
 libdir=`bin/libdir.sh`
 gsl_dir=''
@@ -131,7 +140,7 @@ do
 done
 # -----------------------------------------------------------------------------
 cat << EOF > junk.sed
-s|\\(^python3_executable\\)=.*|\\1='$python3'|
+s|\\(^python3_executable\\)=.*|\\1='$anaconda/bin/python3'|
 s|-std=c++11|-std=c++0x|
 EOF
 echo_eval sed -f junk.sed -i bin/run_cmake.sh
