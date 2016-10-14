@@ -9,12 +9,6 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # Build C++ Examples / Tests
-#
-LINK_DIRECTORIES(
-	${ipopt_LIBRARY_DIRS}
-	${suitesparse_LIBRARY_DIRS}
-	${dismod_at_BINARY_DIR}/cpp
-)
 # -----------------------------------------------------------------------------
 ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	example_devel.cpp
@@ -71,20 +65,20 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	table/put_table_row_xam.cpp
 	table/weight_info_xam.cpp
 )
-
-LINK_DIRECTORIES(
-	${dismod_at_BINARY_DIR}/cpp
-	${ipopt_LIBRARY_DIRS}
-	${suitesparse_LIBRARY_DIRS}
-)
+#
+SET( library_list "" )
+FOREACH( package cppad_mixed;suitesparse;ipopt )
+	FOREACH( library ${${package}_LIBRARIES} )
+		LIST( APPEND library_list ${${library}_library_path} )
+	ENDFOREACH( library ${package}_LIBRARIES )
+ENDFOREACH( package ipopt;suitesparse;cppad_mixed )
+#
 SET_TARGET_PROPERTIES(
 	example_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
 TARGET_LINK_LIBRARIES(example_devel
 	devel
-	cppad_mixed
-	${ipopt_LIBRARIES}
-	${suitesparse_LIBRARIES}
+	${library_list}
 	sqlite3
 	gsl
 	gslcblas

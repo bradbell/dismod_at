@@ -10,12 +10,15 @@
 # ---------------------------------------------------------------------------
 # Build C++ Examples / Tests
 #
-LINK_DIRECTORIES(
-	${dismod_at_BINARY_DIR}/cpp
-	${ipopt_LIBRARY_DIRS}
-	${suitesparse_LIBRARY_DIRS}
-)
-# Program cpp, not installed, and depends on following source files
+#
+SET( library_list "" )
+FOREACH( package cppad_mixed;suitesparse;ipopt )
+	FOREACH( library ${${package}_LIBRARIES} )
+		LIST( APPEND library_list ${${library}_library_path} )
+	ENDFOREACH( library ${package}_LIBRARIES )
+ENDFOREACH( package ipopt;suitesparse;cppad_mixed )
+#
+# Program is not installed, and depends on following source files
 ADD_EXECUTABLE(test_devel EXCLUDE_FROM_ALL
 	age_time_order.cpp
 	data_model_subset.cpp
@@ -28,9 +31,7 @@ SET_TARGET_PROPERTIES(
 )
 TARGET_LINK_LIBRARIES(test_devel
 	devel
-	cppad_mixed
-	${ipopt_LIBRARIES}
-	${suitesparse_LIBRARIES}
+	${library_list}
 	sqlite3
 	gsl
 	gslcblas

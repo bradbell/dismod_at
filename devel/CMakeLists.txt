@@ -70,19 +70,19 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 # devel
 SET_TARGET_PROPERTIES(devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")
 #
-LINK_DIRECTORIES(
-	${cppad_mixed_LIBRARY_DIRS}
-	${ipopt_LIBRARY_DIRS}
-	${suitesparse_LIBRARY_DIRS}
-)
+SET( library_list "" )
+FOREACH( package cppad_mixed;suitesparse;ipopt )
+	FOREACH( library ${${package}_LIBRARIES} )
+		LIST( APPEND library_list ${${library}_library_path} )
+	ENDFOREACH( library ${package}_LIBRARIES )
+ENDFOREACH( package ipopt;suitesparse;cppad_mixed )
+#
 ADD_EXECUTABLE(dismod_at dismod_at.cpp )
 SET_TARGET_PROPERTIES(dismod_at PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}" )
 ADD_DEPENDENCIES(dismod_at devel )
 TARGET_LINK_LIBRARIES(dismod_at
 	devel
-	${cppad_mixed_LIBRARIES}
-	${suitesparse_LIBRARIES}
-	${ipopt_LIBRARIES}
+	${library_list}
 	sqlite3
 	gsl
 	gslcblas

@@ -72,6 +72,32 @@ MACRO( required_definition variable type docstring )
 	ENDIF( ${variable} )
 ENDMACRO( required_definition )
 # ----------------------------------------------------------------------------
+# set_libary_path( directory_list type library_list )
+#
+# directory_list
+# is a list of directories to search for the specified libraries.
+#
+# library_list
+# is a list of libraries to be search for. It is a fatal error if one
+# of the libraries cannot be found. Otherwise, for each library
+# a variable called ${library}_library_path is set to the full
+# path for the required library.
+#
+MACRO( set_library_path directory_list library_list )
+	FOREACH( library ${library_list} )
+		FIND_LIBRARY(
+			${library}_library_path ${library}
+			PATHS ${directory_list}
+		)
+		IF( ${${library}_library_path} STREQUAL
+			"${library}_library_path-NOTFOUND" )
+			MESSAGE( STATUS "directory_list=${directory_list}")
+			MESSAGE( FATAL_ERROR "Cannot find library=${library}" )
+		ENDIF( ${${library}_library_path} STREQUAL "${library}-NOTFOUND" )
+		MESSAGE(STATUS "${library}_library_path = ${${library}_library_path}")
+	ENDFOREACH( library )
+ENDMACRO( set_library_path )
+# ============================================================================
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
 SET(dismod_at_version "20161013" )
@@ -112,22 +138,23 @@ ENDFOREACH( var )
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
 # ----------------------------------------------------------------------------
-# set ipopt_LIBRARY_DIRS, ipopt_LIBRARIES
+# For each library in ${ipopt_LIBRARIES} set ${library}_library_path
 # (note CppAD must be installed with ipopt_prefix specified)
 FIND_PACKAGE(PkgConfig)
 pkg_check_modules(ipopt REQUIRED ipopt)
-# for debugging
-FOREACH( dir ${ipopt_LIBRARY_DIRS} )
-	MESSAGE(STATUS "ipopt_LIBRARY_DIR = ${dir}")
-ENDFOREACH( dir )
+set_library_path( "${ipopt_LIBRARY_DIRS}" "${ipopt_LIBRARIES}" )
 # ----------------------------------------------------------------------------
+# For each library in ${suitesparse_LIBRARIES} set ${library}_library_path
 # no pkg-config for SuiteSparse so explicitly set corresponding values
 SET(suitesparse_LIBRARY_DIRS ${suitesparse_prefix}/${cmake_libdir} )
 SET(suitesparse_LIBRARIES "cholmod;amd;camd;colamd;ccolamd;suitesparseconfig" )
+set_library_path( "${suitesparse_LIBRARY_DIRS}" "${suitesparse_LIBRARIES}" )
 # ----------------------------------------------------------------------------
-# no pkg-config for cppad_mixed so explicitly set corresponding varialbe
-SET(cppad_mixed_LIBRARY_DIRS ${cppad_mixed_prefix}/${cmake_libdir} )
+# For each library in ${cppad_mixed_LIBRARIES} set ${library}_library_path
+# no pkg-config for cppad_mixed so explicitly set corresponding values
+SET(cppad_mixed_LIBRARY_DIRS ${cppad_prefix}/${cmake_libdir} )
 SET(cppad_mixed_LIBRARIES "cppad_mixed" )
+set_library_path( "${cppad_mixed_LIBRARY_DIRS}" "${cppad_mixed_LIBRARIES}" )
 # ----------------------------------------------------------------------------
 # dismod_at_has_nullptr_01
 #

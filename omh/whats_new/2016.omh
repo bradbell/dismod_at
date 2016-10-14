@@ -50,11 +50,18 @@ $childtable%omh/whats_new/2015.omh
 %$$
 
 $head 10-13$$
+$list number$$
 Improve the $cref/suitesparse/install_unix/Special Requirements/suitesparse/$$
 so that it automatically includes the $code metis$$ package.
 Note that the proper value for $icode metis_version$$,
 in the suitesparse install,
 is printed at the end of the ipopt install.
+$lnext
+Improve the way that
+$cref/cmake/run_cmake.sh/$$ searches for libraries and reports failure
+to find a particular library.
+The search was failing on a particular Mac system.
+$lend
 
 $head 10-12$$
 $list number$$
