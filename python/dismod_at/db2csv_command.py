@@ -254,43 +254,30 @@
 #
 # $end
 # ----------------------------------------------------------------------------
+def check4table(cursor, table_name) :
+	cmd     = "SELECT * FROM sqlite_master WHERE type='table' AND name="
+	cmd    += "'" + table_name + "';"
+	info    = cursor.execute(cmd).fetchall()
+	if len(info) == 0 :
+		result  = False
+	else :
+		assert len(info) == 1
+		result = True
+	return result
+#
 def db2csv_command(database_file_arg) :
 	import os
 	import csv
 	import dismod_at
 	import sys
+	import copy
 	#
 	file_name    = database_file_arg
 	database_dir = os.path.split(database_file_arg)[0]
 	new          = False
 	connection   = dismod_at.create_connection(file_name, new)
-	cmd     = "SELECT * FROM sqlite_master WHERE type='table' AND name='var'"
-	cursor  = connection.cursor()
-	result  = cursor.execute(cmd).fetchall()
-	if len(result) == 0 :
-		msg  = 'db2csv_command: must first run init command; i.e.\n'
-		msg += '\tdismod_at ' + file_name + ' init'
-		sys.exit(msg)
-	#
-	cmd = cmd.replace('var', 'sample')
-	result  = cursor.execute(cmd).fetchall()
-	have_sample = len(result) > 0
-	#
-	cmd = cmd.replace('sample', 'simulate')
-	result  = cursor.execute(cmd).fetchall()
-	have_simulate = len(result) > 0
-	#
-	cmd = cmd.replace('simulate', 'fit_var')
-	result  = cursor.execute(cmd).fetchall()
-	have_fit = len(result) > 0
-	if have_fit :
-		assert len(result) == 1
-		cmd = cmd.replace('fit_var', 'fit_data_subset')
-		result  = cursor.execute(cmd).fetchall()
-		assert len(result) == 1
-	#
-	table_data  = dict()
-	table_list  = [
+	cursor       = connection.cursor()
+	required_table_list  = [
 		'age',
 		'covariate',
 		'data',
@@ -308,13 +295,33 @@ def db2csv_command(database_file_arg) :
 		'var',
 		'weight'
 	]
-	if have_sample :
-		table_list.append('sample')
-	if have_simulate :
-		table_list.append('simulate')
-	if have_fit :
-		table_list.append('fit_var')
-		table_list.append('fit_data_subset')
+	for table in required_table_list :
+		if not check4table( cursor, table ):
+			msg  = 'db2csv_command: the required table ' + table + '\n'
+			msg += 'is missing from file ' + file_name + '\n'
+			sys.exit(msg)
+	#
+	have_table = dict()
+	have_table['sample']          = check4table(cursor, 'sample')
+	have_table['simulate']        = check4table(cursor, 'simulate')
+	have_table['fit_var']         = check4table(cursor, 'fit_var')
+	have_table['fit_data_subset'] = check4table(cursor, 'fit_data_subset')
+	if have_table['fit_var'] != have_table['fit_data_subset'] :
+		msg = 'db2csv_command: '
+		for table in [ 'fit_var', 'fit_data_subset' ] :
+			if have_table[table] :
+				msg  += 'have ' + table + ' = true\n'
+			else :
+				msg  += 'have ' + table + ' = false\n'
+		msg += 'in ' + file_name + '\n'
+		sys.exit(msg)
+	#
+	table_data  = dict()
+	table_list  = copy.copy( required_table_list )
+	for key in have_table :
+		if have_table[key] :
+			table_list.append(key)
+	#
 	for table in table_list :
 		table_data[table] = dismod_at.get_table_dict(connection, table)
 	# -------------------------------------------------------------------------
@@ -480,10 +487,10 @@ def db2csv_command(database_file_arg) :
 			if row_in['node_id'] != parent_node_id :
 				row_out['fixed'] = 'false'
 		#
-		if have_sample :
+		if have_table['sample'] :
 			row_out['sam_value'] = \
 				 table_lookup('sample', var_id, 'var_value')
-		if have_fit :
+		if have_table['fit_var'] :
 			row_out['fit_value'] = \
 				 table_lookup('fit_var', var_id, 'variable_value')
 			row_out['res_value'] = \
@@ -599,14 +606,14 @@ def db2csv_command(database_file_arg) :
 					 convert2output(row_in[field_in] - reference)
 			covariate_id += 1
 		#
-		if have_fit :
+		if have_table['fit_var'] :
 			row                 = table_data['fit_data_subset'][subset_id]
 			row_out['avgint']   = convert2output( row['avg_integrand'] )
 			row_out['residual'] = convert2output( row['weighted_residual'] )
 		if fit_simulate_index == None :
 			row_out['meas_value']  = convert2output( row_in['meas_value'] )
 		else :
-			if have_simulate :
+			if have_table['simulate'] :
 				simulate_id =  n_subset * simulate_index + subset_id
 				sim_value = table_data['simulate'][simulate_id]['meas_value']
 				row_out['sim_value'] = sim_value
