@@ -17,6 +17,9 @@ build_type='debug'
 # If this directory ends with /dismod_at, separate directories are used
 # for the debug and release versions.
 ipopt_prefix="$HOME/prefix/dismod_at"
+#
+# which c++ compiler to use (empty means autotools will choose it)
+autotools_cxx_compiler=''
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 if [ $0 != 'bin/install_ipopt.sh' ]
@@ -83,9 +86,22 @@ then
 else
 	debug_flag=''
 fi
+if [ "$autotools_cxx_compiler" == '' ]
+then
+	comipler=''
+	skip_warn=''
+else
+	compiler="CXX=$autotools_cxx_compiler"
+	if [ "$autotools_cxx_compiler" == 'clang' ]
+	then
+		skip_warn='coin_skip_warn_cxxflags=yes'
+	fi
+fi
 cat << EOF > config.sh
 ../configure \\
 	$debug_flag \\
+	$compiler \\
+	$skip_warn \\
 	--prefix=$ipopt_prefix \\
 	--libdir=$ipopt_prefix/$libdir \\
 	--with-blas-lib="-lblas" \\
@@ -104,4 +120,4 @@ metis_version=`echo $wget_cmd | sed -e 's|.*/||' -e 's|\.tar\.gz||'`
 echo "ipopt_prefix=$ipopt_prefix"
 echo "metis_version=$metis_version"
 # ----------------------------------------------------------------------------
-echo 'install_ipoopt.sh: OK'
+echo 'install_ipopt.sh: OK'
