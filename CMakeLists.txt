@@ -109,6 +109,7 @@ MESSAGE(STATUS "BEGIN:")
 # standard cmake variables
 MESSAGE(STATUS "CMAKE_VERBOSE_MAKEFILE = ${CMAKE_VERBOSE_MAKEFILE}")
 MESSAGE(STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
+MESSAGE(STATUS "CMAKE_CXX_COMPILER = ${CMAKE_CXX_COMPILER}")
 # ----------------------------------------------------------------------------
 # required special cmake variables
 required_definition( python3_executable STRING

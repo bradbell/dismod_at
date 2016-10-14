@@ -64,8 +64,12 @@ cppad_prefix="$HOME/prefix/dismod_at"
 suitesparse_prefix="$HOME/prefix/dismod_at"
 # &&
 #
-# &head IHME Cluster Settings&&
-# Here are some example changes that are used for the IHME cluster
+# &head Choosing C++ Compiler&&
+# Which c++ compiler should cmake use (empty means cmake will choose it).
+# &codep
+cmake_cxx_compiler=''
+# &&
+#
 # &codep
 # python3_executable='/usr/local/anaconda3-current/bin/python'
 # extra_cxx_flags='-Wall'
@@ -117,14 +121,25 @@ then
 	echo_eval mkdir build
 fi
 echo_eval cd build
+if [ -e 'CMakeFiles' ]
+then
+	rm -r CMakeFiles
+fi
 if [ -e 'CMakeCache.txt' ]
 then
 	rm CMakeCache.txt
+fi
+if [ "$cmake_cxx_compiler" == '' ]
+then
+	compiler=''
+else
+	compiler="-D CMAKE_CXX_COMPILER=$cmake_cxx_compiler"
 fi
 cmake \
 	-Wno-dev \
 	-D CMAKE_VERBOSE_MAKEFILE=$verbose_makefile \
 	-D CMAKE_BUILD_TYPE=$build_type \
+	$compiler \
 	\
 	-D python3_executable=$python3_executable \
 	-D extra_cxx_flags="$extra_cxx_flags" \
