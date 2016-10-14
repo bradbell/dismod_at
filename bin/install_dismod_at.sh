@@ -47,12 +47,17 @@ then
 	rm "$test_dir/junk.$$"
 fi
 # ----------------------------------------------------------------------------
-original_dir=`pwd`
-if [ -e install_dismod_at.log ]
-then
-	echo 'Must first remove old install_dismod_at.log file'
-	exit 1
-fi
+start_dir=`pwd`
+log_file='install_dismod_at.log'
+err_file='install_dismod_at.err'
+for ext in log err
+do
+	if [ -e install_dismod_at.$exgt ]
+	then
+		echo "Must first remove old $log_file and $err_file"
+		exit 1
+	fi
+done
 # ----------------------------------------------------------------------------
 list="
 	g++
@@ -120,8 +125,9 @@ do
 	echo "sed -e 's|-std=c++11|-std=c++0x|' -i bin/install_$package.sh"
 	sed -e 's|-std=c++11|-std=c++0x|' -i bin/install_$package.sh
 	#
-	echo "bin/install_$package.sh >> install_dismod_at.log"
-	bin/install_$package.sh >> $original_dir/install_dismod_at.log
+	program="bin/install_$package.sh"
+	echo "$program 1>> $log_file 2>> $err_file"
+	$program 1>> "$start_dir/$log_file" 2>> "$start_dir/$err_file"
 done
 # -----------------------------------------------------------------------------
 cat << EOF > junk.sed

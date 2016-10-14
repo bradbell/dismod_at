@@ -61,6 +61,9 @@ Improve the way that
 $cref/cmake/run_cmake.sh/$$ searches for libraries and reports failure
 to find a particular library.
 The search was failing on a particular Mac system.
+$lnext
+Advance cppad-20161012. This fixes a problem in the detection of c++ 2011
+feature availability.
 $lend
 
 $head 10-12$$

@@ -35,8 +35,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/coin-or/CppAD.git'
-hash_key='07eb8e3c9f6ac0b65816e4484ab18d0954c7218d'
-version='20160929'
+hash_key='92164d66f4c3d0da8b22ab5052d366be568c61dc'
+version='20161012'
 libdir=`bin/libdir.sh`
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
