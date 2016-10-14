@@ -47,24 +47,35 @@ then
 	rm "$test_dir/junk.$$"
 fi
 # ----------------------------------------------------------------------------
+# check for old log and error files
 start_dir=`pwd`
 log_file='install_dismod_at.log'
 err_file='install_dismod_at.err'
 for ext in log err
 do
-	if [ -e install_dismod_at.$exgt ]
+	if [ -e install_dismod_at.$ext ]
 	then
-		echo "Must first remove old $log_file and $err_file"
-		exit 1
+		read -p "install_dismod_at.$ext exists, remove or append [r/a] ?" \
+			response
+		if [ "$response" != 'r' ] && [ "$response" != 'a' ]
+		then
+			echo "response is not 'r' or 'a'"
+			exit 1
+		fi
+		if [ "$response" != 'r' ]
+		then
+			echo_eval rm install_dismod_at.$ext
+		fi
 	fi
 done
 # ----------------------------------------------------------------------------
+# check for necessary programs
 list="
 	g++
 	gfortran
 	cmake
 	pkg-config
-	sqlite3
+	$anaconda/bin/sqlite3
 	$anaconda/bin/python3
 "
 for program in $list
@@ -76,6 +87,7 @@ do
 	fi
 done
 # ----------------------------------------------------------------------------
+# download the most recent version
 version=`echo $tarball | sed -e 's|.*/||' -e 's|\.tgz||'`
 #
 if ! cd $HOME/install
@@ -98,15 +110,7 @@ then
 fi
 echo_eval cd $version
 # -----------------------------------------------------------------------------
-cat << EOF > junk.sed
-s|^# *include *<sqlite3\\.h> *\$|# include <$anaconda/include/sqlite3.h>|
-EOF
-list=`find . -name '*.hpp'`
-for file in $list
-do
-	echo_eval sed -f junk.sed -i $file
-done
-# -----------------------------------------------------------------------------
+# check for gsl library
 libdir=`bin/libdir.sh`
 gsl_dir=''
 for prefix in /usr /usr/local
@@ -122,6 +126,32 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
+# Patch references to sqlite3
+cat << EOF > junk.sed
+s|^# *include *<sqlite3\\.h> *\$|# include <$anaconda/include/sqlite3.h>|
+EOF
+list=`find . -name '*.hpp'`
+for file in $list
+do
+	echo_eval sed -f junk.sed -i $file
+done
+list='
+	devel/CMakeLists.txt
+	example/devel/CMakeLists.txt
+	test/devel/CMakeLists.txt
+'
+for file in $list
+do
+	sed -e "s|^\tsqlite3\$|\t$anaconda/lib/libsqlite3.a|" -i $file
+done
+# -----------------------------------------------------------------------------
+# Patch references to python3
+cat << EOF > junk.sed
+s|\\(^python3_executable\\)=.*|\\1='$anaconda/bin/python3'|
+EOF
+echo_eval sed -f junk.sed -i bin/run_cmake.sh
+# -----------------------------------------------------------------------------
+# Patch the C++ compile flags
 list="
 	eigen
 	ipopt
@@ -131,19 +161,27 @@ list="
 "
 for package in $list
 do
-	echo "sed -e 's|-std=c++11|-std=c++0x|' -i bin/install_$package.sh"
+	echo "sed -e 's|-std=c++11|-std=c++0x|' -i install_$package.sh"
 	sed -e 's|-std=c++11|-std=c++0x|' -i bin/install_$package.sh
-	#
+done
+echo_eval sed -f junk.sed -i bin/run_cmake.sh
+# -----------------------------------------------------------------------------
+# Build and install all the special requirements
+list="
+	eigen
+	ipopt
+	suitesparse
+	cppad
+	cppad_mixed
+"
+for package in $list
+do
 	program="bin/install_$package.sh"
-	echo "$program 1>> $log_file 2>> $err_file"
+	echo "install_$package.sh 1>> $log_file 2>> $err_file"
 	$program 1>> "$start_dir/$log_file" 2>> "$start_dir/$err_file"
 done
 # -----------------------------------------------------------------------------
-cat << EOF > junk.sed
-s|\\(^python3_executable\\)=.*|\\1='$anaconda/bin/python3'|
-s|-std=c++11|-std=c++0x|
-EOF
-echo_eval sed -f junk.sed -i bin/run_cmake.sh
+# Build and install dismod_at
 echo_eval bin/run_cmake.sh
 echo_eval cd build
 pkg_path="$HOME/prefix/dismod_at/$libdir/pkgconfig"
