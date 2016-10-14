@@ -30,7 +30,7 @@ $spell
 	integrands
 	covariate
 $$
-$section Disease Rates as Functions of Age and Time: dismod_at-20161013$$
+$section Disease Rates as Functions of Age and Time: dismod_at-20161014$$
 
 $childtable%omh/install/unix.omh
 	%example/user/user.omh
