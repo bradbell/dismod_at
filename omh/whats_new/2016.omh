@@ -49,6 +49,10 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 10-14$$
+Fix a warning (that appeared on some systems) about missing braces in
+$code devel/dismod_at.cpp$$.
+
 $head 10-13$$
 $list number$$
 Improve the $cref/suitesparse/install_unix/Special Requirements/suitesparse/$$

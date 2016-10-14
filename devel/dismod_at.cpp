@@ -1430,13 +1430,13 @@ int main(int n_arg, const char** argv)
 	using std::string;
 	// ---------------- command line arguments ---------------------------
 	struct { const char* name; int n_arg; } command_info[] = {
-		"init",      3,
-		"start",     4,
-		"truth",     3,
-		"fit",       3,
-		"simulate",  3,
-		"sample",    4,
-		"predict",   3
+		{"init",      3},
+		{"start",     4},
+		{"truth",     3},
+		{"fit",       3},
+		{"simulate",  3},
+		{"sample",    4},
+		{"predict",   3}
 	};
 	size_t n_command = sizeof( command_info ) / sizeof( command_info[0] );
 	//
