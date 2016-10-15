@@ -28,6 +28,9 @@ bool_sparsity='YES'
 #
 # use cholmod (not eigen) for LDLT factorization (where possible)
 ldlt_cholmod='YES'
+#
+# which c++ compiler to use (empty means cmake will choose it)
+cmake_cxx_compiler=''
 # END USER_SETTINGS
 # ---------------------------------------------------------------------------
 name='bin/install_cppad_mixed.sh'
@@ -99,6 +102,10 @@ cmake_args="$cmake_args -D extra_cxx_flags=$extra_cxx_flags"
 cmake_args="$cmake_args -D cmake_libdir=$libdir"
 cmake_args="$cmake_args -D bool_sparsity=$bool_sparsity"
 cmake_args="$cmake_args -D ldlt_cholmod=$ldlt_cholmod"
+if [ "$cmake_cxx_compiler" != '' ]
+then
+	cmake_args="$cmake_args -D CMAKE_CXX_COMPILER=$cmake_cxx_compiler"
+fi
 echo "cmake $cmake_args .."
 cmake $cmake_args ..
 # -----------------------------------------------------------------------------

@@ -50,9 +50,18 @@ $childtable%omh/whats_new/2015.omh
 %$$
 
 $head 10-14$$
+$list number$$
+Fix a warning (that appeared on some systems) about missing braces in
+$code devel/dismod_at.cpp$$.
+$lnext
+Add option so that user can specify the C++ compiler during the install of
+$cref/ipopt/install_unix/Special Requirements/Ipopt/$$ and
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
+$lnext
 $bold API Change:$$
 the $cref/data_name/data_table/data_name/$$ field
 was added to the data table.
+$lend
 
 $head 10-13$$
 $list number$$
@@ -66,6 +75,9 @@ Improve the way that
 $cref/cmake/run_cmake.sh/$$ searches for libraries and reports failure
 to find a particular library.
 The search was failing on a particular Mac system.
+$lnext
+Advance cppad-20161012. This fixes a problem in the detection of c++ 2011
+feature availability.
 $lend
 
 $head 10-12$$
