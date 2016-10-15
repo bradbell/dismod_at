@@ -122,15 +122,15 @@ $end
 */
 // base class constructor
 : cppad_mixed(
-	size_fixed_effect(pack_object)                         ,  // n_fixed
-	size_random_effect(pack_object) * (random_bound > 0.0) , // n_random
+	number_fixed(pack_object)                         ,  // n_fixed
+	number_random(pack_object) * (random_bound > 0.0) , // n_random
 	quasi_fixed                                            ,
 	A_info
 ) ,
 db_            (db)                                 ,
 fit_or_sample_ ( fit_or_sample                   )  ,
-n_fixed_       ( size_fixed_effect(pack_object)  )  ,
-n_random_      ( size_random_effect(pack_object) )  ,
+n_fixed_       ( number_fixed(pack_object)  )  ,
+n_random_      ( number_random(pack_object) )  ,
 pack_object_   ( pack_object )                      ,
 start_var_     ( start_var   )                      ,
 prior_table_   ( prior_table )                      ,
@@ -820,7 +820,7 @@ fit_model::a2d_vector fit_model::ran_likelihood(
 fit_model::a1d_vector fit_model::fix_likelihood(
 	const a1d_vector& fixed_vec   )
 {	// local vectors
-	a1d_vector random_vec( size_random_effect(pack_object_) );
+	a1d_vector random_vec( number_random(pack_object_) );
 	a1d_vector a1_pack_vec( pack_object_.size() );
 	//
 	// set random_vec

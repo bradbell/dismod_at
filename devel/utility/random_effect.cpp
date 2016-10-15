@@ -21,7 +21,7 @@ $$
 $section Setting and Getting the Random Effect Vector$$
 
 $head Syntax$$
-$icode%size_random% = size_random_effect(%pack_object%)
+$icode%n_random% = number_random(%pack_object%)
 %$$
 $codei%pack_random(%pack_object%, %pack_vec%, %random_vec%)
 %$$
@@ -47,10 +47,10 @@ $codei%
 It is the $cref pack_info$$ information corresponding
 to the $cref model_variables$$.
 
-$head size_random$$
+$head n_random$$
 This return value has prototype
 $codei%
-	size_t %size_random%
+	size_t %n_random%
 %$$
 It is the number of
 $cref/random effects/model_variables/Random Effects, u/$$ in the model.
@@ -73,7 +73,7 @@ This argument has prototype
 $codei%
 	CppAD::vector<%Float%>& %random_vec%
 %$$
-and its size is $icode size_random$$.
+and its size is $icode n_random$$.
 It is a copy of the random effects in $icode pack_vec$$
 as one contiguous vector in an unspecified order.
 
@@ -98,7 +98,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %random_vec%
 %$$
-and its size is $icode size_random$$.
+and its size is $icode n_random$$.
 It contains the random effects
 as one contiguous vector in an unspecified order.
 
@@ -118,7 +118,7 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-size_t size_random_effect(const pack_info&  pack_object)
+size_t number_random(const pack_info&  pack_object)
 {	size_t n_child = pack_object.child_size();
 	if( n_child == 0 )
 		return 0;
@@ -146,7 +146,7 @@ void unpack_random(
 	const CppAD::vector<Float>&  pack_vec   ,
 	CppAD::vector<Float>&        random_vec )
 {
-	assert( random_vec.size() == size_random_effect(pack_object) );
+	assert( random_vec.size() == number_random(pack_object) );
 	assert( pack_vec.size()   == pack_object.size() );
 	//
 	size_t n_child = pack_object.child_size();
@@ -176,7 +176,7 @@ void pack_random(
 	CppAD::vector<Float>&        pack_vec   ,
 	const CppAD::vector<Float>&  random_vec )
 {
-	assert( random_vec.size() == size_random_effect(pack_object) );
+	assert( random_vec.size() == number_random(pack_object) );
 	assert( pack_vec.size()   == pack_object.size() );
 	//
 	size_t n_child = pack_object.child_size();

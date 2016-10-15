@@ -15,7 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "pack_info.hpp"
 
 namespace dismod_at {
-	extern size_t size_random_effect(const pack_info& pack_object);
+	extern size_t number_random(const pack_info& pack_object);
 	//
 	template <class Float>
 	extern void unpack_random(

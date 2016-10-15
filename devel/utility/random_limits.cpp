@@ -94,7 +94,7 @@ namespace dismod_at {
 		}
 		//
 		// number of random effects
-		size_t n_random = size_random_effect(pack_object);
+		size_t n_random = number_random(pack_object);
 		random_lower.resize(n_random);
 		random_upper.resize(n_random);
 		//

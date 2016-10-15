@@ -21,7 +21,7 @@ $$
 $section Setting and Getting the Fixed Effect Vector$$
 
 $head Syntax$$
-$icode%size_fixed% = size_fixed_effect(%pack_object%)
+$icode%n_fixed% = number_fixed(%pack_object%)
 %$$
 $icode%pack_index% = fixed2var_id(%pack_object%)
 %$$
@@ -49,10 +49,10 @@ $codei%
 It is the $cref pack_info$$ information corresponding
 to the $cref model_variables$$.
 
-$head size_fixed$$
+$head n_fixed$$
 This return value has prototype
 $codei%
-	size_t %size_fixed%
+	size_t %n_fixed%
 %$$
 It is the number of
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$ in the model.
@@ -62,7 +62,7 @@ This return value has prototype
 $codei%
 	CppAD::vector<size_t> %pack_index%
 %$$
-It size is equal to $icode size_fixed$$; i.e., the number of
+It size is equal to $icode n_fixed$$; i.e., the number of
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$ in the model.
 For each fixed effect index $icode j$$,
 the value $icode%pack_index%[%j%]%$$ is the corresponding
@@ -86,7 +86,7 @@ This argument has prototype
 $codei%
 	CppAD::vector<%Float%>& %fixed_vec%
 %$$
-and its size is $icode size_fixed$$.
+and its size is $icode n_fixed$$.
 It is a copy of the fixed effects in $icode pack_vec$$
 as one contiguous vector in an unspecified order.
 
@@ -111,7 +111,7 @@ This argument has prototype
 $codei%
 	const CppAD::vector<%Float%>& %fixed_vec%
 %$$
-and its size is $icode size_fixed$$.
+and its size is $icode n_fixed$$.
 It contains the fixed effects
 as one contiguous vector in an unspecified order.
 
@@ -132,9 +132,9 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-size_t size_fixed_effect(const pack_info&  pack_object)
-{	assert( pack_object.size() > size_random_effect(pack_object) );
-	return pack_object.size() - size_random_effect(pack_object);
+size_t number_fixed(const pack_info&  pack_object)
+{	assert( pack_object.size() > number_random(pack_object) );
+	return pack_object.size() - number_random(pack_object);
 }
 // ---------------------------------------------------------------------------
 CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
@@ -147,7 +147,7 @@ CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
 	pack_info::subvec_info info;
 	size_t pack_index;
 	size_t fixed_index = 0;
-	size_t n_fixed     = size_fixed_effect(pack_object);
+	size_t n_fixed     = number_fixed(pack_object);
 	CppAD::vector<size_t> ret_val(n_fixed);
 
 	// mulstd
@@ -208,7 +208,7 @@ void unpack_fixed(
 	const pack_info&             pack_object  ,
 	const CppAD::vector<Float>&  pack_vec     ,
 	CppAD::vector<Float>&        fixed_vec    )
-{	assert( fixed_vec.size() == size_fixed_effect(pack_object) );
+{	assert( fixed_vec.size() == number_fixed(pack_object) );
 	assert( pack_vec.size()  == pack_object.size() );
 	//
 	size_t n_integrand = pack_object.integrand_size();
@@ -278,7 +278,7 @@ void pack_fixed(
 	const pack_info&             pack_object  ,
 	CppAD::vector<Float>&        pack_vec     ,
 	const CppAD::vector<Float>&  fixed_vec    )
-{	assert( fixed_vec.size() == size_fixed_effect(pack_object) );
+{	assert( fixed_vec.size() == number_fixed(pack_object) );
 	assert( pack_vec.size()  == pack_object.size() );
 	//
 	size_t n_integrand = pack_object.integrand_size();

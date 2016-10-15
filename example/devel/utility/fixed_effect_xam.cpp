@@ -98,8 +98,8 @@ bool fixed_effect_xam(void)
 		smooth_table, mulcov_table, rate_table
 	);
 	//
-	// check size_fixed_effect
-	ok &= n_fixed_effect == dismod_at::size_fixed_effect(pack_object);
+	// check n_fixed_effect
+	ok &= n_fixed_effect == dismod_at::number_fixed(pack_object);
 
 	// pack_index
 	CppAD::vector<size_t> pack_index = dismod_at::fixed2var_id(pack_object);

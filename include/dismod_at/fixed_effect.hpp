@@ -15,7 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "pack_info.hpp"
 
 namespace dismod_at {
-	extern size_t size_fixed_effect(const pack_info& pack_object);
+	extern size_t number_fixed(const pack_info& pack_object);
 	//
 	extern CppAD::vector<size_t> fixed2var_id(
 		const pack_info&             pack_object

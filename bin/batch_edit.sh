@@ -25,8 +25,11 @@ rm junk.sed
 for name in integrand node weight covariate data prior smooth rate mulcov option avgint
 do
 cat << EOF >> junk.sed
-s|${name}_dict  |${name}_table|g
-s|${name}_dict|${name}_table|g
+s|size_fixed|n_fixed|g
+s|size_random|n_random|g
+#
+s|n_fixed_effect(|number_fixed(|g
+s|n_random_effect*(|number_random(|g
 EOF
 done
 # -----------------------------------------------------------------------------

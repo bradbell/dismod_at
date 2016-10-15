@@ -1232,7 +1232,7 @@ void sample_command(
 	);
 	//
 	// random_opt
-	size_t n_random = size_random_effect(pack_object);
+	size_t n_random = number_random(pack_object);
 	vector<double> random_opt(n_random);
 	unpack_random(pack_object, variable_value, random_opt);
 	//

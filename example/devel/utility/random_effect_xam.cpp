@@ -71,8 +71,8 @@ bool random_effect_xam(void)
 		smooth_table, mulcov_table, rate_table
 	);
 	//
-	// check size_random_effect
-	ok &= n_random_effect == dismod_at::size_random_effect(pack_object);
+	// check n_random_effect
+	ok &= n_random_effect == dismod_at::number_random(pack_object);
 
 	// pack_vec
 	CppAD::vector<double> pack_vec( pack_object.size() );
