@@ -135,6 +135,7 @@
 # The dictionary $icode%data_table%[%i%]%$$ has the following:
 # $table
 # Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
+# data_name    $cnext str         $cnext name for $th i$$ data       $rnext
 # integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext
 # density      $cnext str         $cnext density                     $rnext
 # node         $cnext str         $cnext node in graph               $rnext
@@ -609,6 +610,7 @@ def create_database(
 	# ------------------------------------------------------------------------
 	# create data table
 	col_name = [
+		'data_name',
 		'integrand_id',
 		'density_id',
 		'node_id',
@@ -624,6 +626,7 @@ def create_database(
 	for j in range( len(covariate_table) ) :
 		col_name.append( 'x_%s' % j )
 	col_type = [
+		'text',                 # data_name
 		'integer',              # integrand_id
 		'integer',              # density_id
 		'integer',              # node_id
@@ -648,6 +651,7 @@ def create_database(
 		weight_id    = global_weight_name2id[ data['weight'] ]
 		hold_out     = int( data['hold_out'] )
 		row = [
+			data['data_name'],
 			integrand_id,
 			density_id,
 			node_id,

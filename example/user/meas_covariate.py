@@ -159,6 +159,9 @@ def example_db (file_name) :
 		row['income']     = income
 		row['sex']        = sex
 		data_table.append( copy.copy(row) )
+	#
+	for data_id in range( len( data_table ) ) :
+		data_table[data_id]['data_name'] = 'd' + str(data_id)
 	# --------------------------------------------------------------------------
 	# prior_table
 	prior_table = [

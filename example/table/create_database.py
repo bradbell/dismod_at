@@ -72,12 +72,15 @@ def create_database() :
 		'time_upper':2010.0,
 		'sex':0.5
 	}
+	row['data_name']  = 'one'
 	row['node']       = 'north_america'
 	row['meas_value'] = 1.0e-5
 	data_table.append( copy.copy(row) )
+	row['data_name']  = 'two'
 	row['node']       = 'united_states'
 	row['meas_value'] = 1.5e-5
 	data_table.append( copy.copy(row) )
+	row['data_name']  = 'three'
 	row['node']       = 'canada'
 	row['meas_value'] = 0.5e-5
 	data_table.append( copy.copy(row) )

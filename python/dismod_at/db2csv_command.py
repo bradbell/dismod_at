@@ -182,6 +182,10 @@
 # is the
 # $cref/data_id/data_table/data_id/$$.
 #
+# $subhead data_name$$
+# is the
+# $cref/data_name/data_table/data_name/$$.
+#
 # $subhead age_lo$$
 # is the
 # $cref/age_lower/data_table/age_lower/$$.
@@ -538,6 +542,7 @@ def db2csv_command(database_file_arg) :
 	#
 	header = [
 		'data_id',
+		'data_name',
 		'age_lo',
 		'age_up',
 		'time_lo',
@@ -569,10 +574,11 @@ def db2csv_command(database_file_arg) :
 	for subset_row in table_data['data_subset'] :
 		for field in header :
 			row_out[field] = ''
-		data_id = subset_row['data_id']
-		row_in  = table_data['data'][data_id]
+		data_id   = subset_row['data_id']
+		row_in    = table_data['data'][data_id]
 		#
 		row_out['data_id']     = data_id
+		row_out['data_name']   = row_in['data_name']
 		row_out['age_lo']      = row_in['age_lower']
 		row_out['age_up']      = row_in['age_upper']
 		row_out['time_lo']     = row_in['time_lower']

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -111,6 +111,10 @@ This is a structure with the following fields
 $table
 Type  $cnext Field $cnext Description
 $rnext
+$code std::string$$ $cnext $code data_name$$ $cnext
+	The $cref/data_name/data_table/data_name/$$
+	for this data point
+$rnext
 $code int$$ $cnext $code integrand_id$$ $cnext
 	The $cref/integrand_id/data_table/integrand_id/$$ for this measurement
 $rnext
@@ -193,7 +197,12 @@ void get_data_table(
 	string table_name  = "data";
 	size_t n_data      = check_table_id(db, table_name);
 
-	string column_name = "integrand_id";
+	string column_name =  "data_name";
+	CppAD::vector<string>  data_name;
+	get_table_column(db, table_name, column_name, data_name);
+	assert( n_data == data_name.size() );
+
+	column_name = "integrand_id";
 	CppAD::vector<int>    integrand_id;
 	get_table_column(db, table_name, column_name, integrand_id);
 	assert( n_data == integrand_id.size() );
@@ -252,7 +261,8 @@ void get_data_table(
 	assert( data_table.size() == 0 );
 	data_table.resize(n_data);
 	for(size_t i = 0; i < n_data; i++)
-	{	data_table[i].integrand_id  = integrand_id[i];
+	{	data_table[i].data_name     = data_name[i];
+		data_table[i].integrand_id  = integrand_id[i];
 		data_table[i].density_id    = density_id[i];
 		data_table[i].node_id       = node_id[i];
 		data_table[i].weight_id     = weight_id[i];

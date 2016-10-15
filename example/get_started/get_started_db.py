@@ -106,6 +106,7 @@ def get_started_db (file_name) :
 		meas_value        = 1e-2 * (rate_id + 1)
 		meas_std          = 0.2 * meas_value
 		integrand         = integrand_table[integrand_id]['name']
+		row['data_name']  = 'i' + str(integrand_id)
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
 		row['integrand']  = integrand
@@ -119,6 +120,7 @@ def get_started_db (file_name) :
 		data_table.append( copy.copy(row) )
 	#
 	# add one outlyer at end of data table with hold_out true
+	row['data_name']  = 'outlyer'
 	row['hold_out']   = True # if outlyer were false, fit would fail
 	row['integrand']  = data_table[0]['integrand']
 	row['meas_std']   = data_table[0]['meas_std']

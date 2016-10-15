@@ -9,6 +9,9 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
+# Test this version, not previous install
+export PYTHONPATH=''
+# ---------------------------------------------------------------------------
 if [ "$0" != "bin/check_all.sh" ]
 then
 	echo 'bin/check_all.sh [d|r|ds|rs]'

@@ -135,7 +135,9 @@ def example_db (file_name) :
 	row['meas_value']  = iota_no_random * (1.0 - iota_child_offset)
 	data_table.append( copy.copy(row) )
 	data_table.append( copy.copy(row) )
-
+	#
+	for data_id in range( len( data_table ) ) :
+		data_table[data_id]['data_name'] = 'd' + str(data_id)
 	# --------------------------------------------------------------------------
 	# prior_table
 	prior_table = [

@@ -28,6 +28,7 @@ def data_table() :
 	#
 	col_name2type = collections.OrderedDict([
 		# required columns
+		('data_name',    'text'   ),
 		('integrand_id', 'integer'),
 		('density_id',   'integer'),
 		('node_id',      'integer'),
@@ -48,6 +49,7 @@ def data_table() :
 	col_name = list(col_name2type.keys())
 	col_type = list(col_name2type.values())
 	row_list = [ [
+		'one',                  # data_name
 		1,                      # integrand_id
 		0,                      # density_id
 		3,                      # node_id

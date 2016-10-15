@@ -114,6 +114,9 @@ def example_db (file_name) :
 	row['node'] = 'united_states';
 	row['meas_value'] = 0.5 * iota_north_america
 	data_table.append( copy.copy(row) )
+	#
+	for data_id in range( len( data_table ) ) :
+		data_table[data_id]['data_name'] = 'd' + str(data_id)
 	# --------------------------------------------------------------------------
 	# prior_table
 	prior_table = [

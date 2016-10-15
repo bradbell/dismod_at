@@ -49,6 +49,11 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 10-14$$
+$bold API Change:$$
+the $cref/data_name/data_table/data_name/$$ field
+was added to the data table.
+
 $head 10-13$$
 $list number$$
 Improve the $cref/suitesparse/install_unix/Special Requirements/suitesparse/$$

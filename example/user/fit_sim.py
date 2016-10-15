@@ -122,6 +122,9 @@ def example_db (file_name) :
 		row['integrand'] = integrand_table[0]['name']
 		row['meas_std']  = 1e-3
 		data_table.append( copy.copy(row) )
+	#
+	for data_id in range( len( data_table ) ) :
+		data_table[data_id]['data_name'] = 'd' + str(data_id)
 	# --------------------------------------------------------------------------
 	# prior_table
 	prior_table = [
