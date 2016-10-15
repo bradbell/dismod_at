@@ -30,21 +30,6 @@ $$
 
 $section Dismod_at Wish List$$
 
-$head random_bound$$
-Make a special case of
-$cref/random_bound/option_table/Optimizer/random_bound/$$
-equal to zero.
-This could be used to obtain an estimate for the fixed effects
-using the same variable indices as when the random effects are added.
-The $cref/start fit_var/start_command/source/fit_var/$$ command
-could then be used to initialize
-the optimization with random effects
-
-$head data_name$$
-Add a $icode data_name$$ column to the $cref data_table$$.
-This will allow the user to put an alternate id in the data table;
-for example, the data identifier in the IHME database.
-
 $head Error Messages$$
 Some places in the code the sqlite database pointer is not available and hence
 $cref error_exit$$ cannot be used to log an error condition.
@@ -54,6 +39,9 @@ $codep
 $$
 in $code data_model.cpp$$. This should be changed so that meaningful
 error messages can be generated where possible.
+In addition, have an option during the
+$cref/install/install_unix/$$ to convert all error messages to asserts
+(so that the corresponding event can seen in the debugger).
 
 $head Large Excess Mortality$$
 The case where $icode rate_case$$ is
@@ -80,16 +68,6 @@ The $code cppad_mixed$$ package will handle an arbitrary linear
 constraint on the random effects estimates. This could be used to
 constrain the random effects to sum to zero for each of the rates,
 and at every age, time grid point in the smoothing.
-
-$subhead Child Omega Constraint$$
-When converting
-$cref/mtall/avg_integrand/I_i (a, t)/mtall/$$ data to
-constraints on other cause mortality
-$cref/omega/rate_table/rate_name/omega/$$ it would be useful if one could
-specify the value of omega for each child area.
-This requires changing the  child smoothing
-$cref/restrictions/rate_table/child_smooth_id/Restrictions/$$
-to allow for a uniform with equal lower and upper limits.
 
 $head Conditionals in ODE$$
 It is now possible to use conditional expressions in the ODE solution
