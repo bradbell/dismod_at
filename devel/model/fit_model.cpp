@@ -124,8 +124,7 @@ $end
 : cppad_mixed(
 	number_fixed(pack_object)                         ,  // n_fixed
 	number_random(pack_object) * (random_bound > 0.0) , // n_random
-	quasi_fixed                                            ,
-	A_info
+	quasi_fixed
 ) ,
 db_            (db)                                 ,
 fit_or_sample_ ( fit_or_sample                   )  ,
@@ -222,7 +221,7 @@ prior_object_  ( prior_object )
 	CppAD::vector<double> cppad_mixed_random_vec =
 		random_dismod_at2cppad_mixed( random_vec );
 	//
-	initialize(fixed_vec, cppad_mixed_random_vec);
+	initialize(fixed_vec, cppad_mixed_random_vec, A_info);
 }
 /*
 -----------------------------------------------------------------------------

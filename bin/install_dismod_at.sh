@@ -11,7 +11,7 @@
 # ---------------------------------------------------------------------------
 # BEGIN BASH
 web_page='http://moby.ihme.washington.edu/bradbell/dismod_at'
-tarball='dismod_at-20161014.tgz'
+tarball='dismod_at-20161015.tgz'
 anaconda='/usr/local/anaconda3-current'
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command

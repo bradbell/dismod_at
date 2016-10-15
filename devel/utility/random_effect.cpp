@@ -23,6 +23,8 @@ $section Setting and Getting the Random Effect Vector$$
 $head Syntax$$
 $icode%n_random% = number_random(%pack_object%)
 %$$
+$icode%pack_index% = random2var_id(%pack_object%)
+%$$
 $codei%pack_random(%pack_object%, %pack_vec%, %random_vec%)
 %$$
 $codei%unpack_random(%pack_object%, %pack_vec%, %random_vec%)
@@ -54,6 +56,18 @@ $codei%
 %$$
 It is the number of
 $cref/random effects/model_variables/Random Effects, u/$$ in the model.
+
+$head pack_index$$
+This return value has prototype
+$codei%
+	CppAD::vector<size_t> %pack_index%
+%$$
+It size is equal to $icode n_random$$; i.e., the number of
+$cref/random effects/model_variables/Random Effects, u/$$ in the model.
+For each random effect index
+$icode%j%  = 0%,..., n_random%-1%$$,
+$icode%pack_index%[%j%]%$$ is the corresponding
+index in a packed vector (with both fixed and random effects).
 
 $head unpack_random$$
 This functions copies information from $icode pack_vec$$
@@ -117,7 +131,8 @@ $end
 # include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
-
+// -------------------------------------------------------------------------
+// number random
 size_t number_random(const pack_info&  pack_object)
 {	size_t n_child = pack_object.child_size();
 	if( n_child == 0 )
@@ -139,7 +154,36 @@ size_t number_random(const pack_info&  pack_object)
 	}
 	return sum;
 }
+// -------------------------------------------------------------------------
+// random2var_id
+CppAD::vector<size_t> random2var_id(const pack_info& pack_object )
+{
+	// n_child
+	size_t n_child = pack_object.child_size();
+	CppAD::vector<size_t> result;
+	if( n_child == 0 )
+		return result;
 
+	// resize result
+	size_t n_random = number_random(pack_object);
+	result.resize( n_random );
+
+	size_t random_index = 0;
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	{	pack_info::subvec_info info = pack_object.rate_info(rate_id, 0);
+		if( info.smooth_id != DISMOD_AT_NULL_SIZE_T )
+		{	for(size_t j = 0; j < n_child; j++)
+			{	info = pack_object.rate_info(rate_id, j);
+				size_t pack_index = info.offset;
+				for(size_t k = 0; k < info.n_var; k++)
+					result[random_index++] = pack_index++;
+			}
+		}
+	}
+	return result;
+}
+// -------------------------------------------------------------------------
+// unpack_random
 template <class Float>
 void unpack_random(
 	const pack_info&             pack_object  ,
@@ -169,7 +213,8 @@ void unpack_random(
 	}
 	return;
 }
-
+// -------------------------------------------------------------------------
+// pack_random
 template <class Float>
 void pack_random(
 	const pack_info&             pack_object  ,

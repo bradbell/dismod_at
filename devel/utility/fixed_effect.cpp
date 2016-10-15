@@ -64,7 +64,8 @@ $codei%
 %$$
 It size is equal to $icode n_fixed$$; i.e., the number of
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$ in the model.
-For each fixed effect index $icode j$$,
+For each fixed effect index
+$icode%j%  = 0%,..., n_fixed%-1%$$,
 the value $icode%pack_index%[%j%]%$$ is the corresponding
 index in a packed vector (with both fixed and random effects).
 
@@ -132,11 +133,14 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
+// ---------------------------------------------------------------------------
+// number fixed
 size_t number_fixed(const pack_info&  pack_object)
 {	assert( pack_object.size() > number_random(pack_object) );
 	return pack_object.size() - number_random(pack_object);
 }
 // ---------------------------------------------------------------------------
+// fixed2var_id
 CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
 {
 	//
@@ -202,7 +206,7 @@ CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
 	return ret_val;
 }
 // ---------------------------------------------------------------------------
-
+// unpack_fixed
 template <class Float>
 void unpack_fixed(
 	const pack_info&             pack_object  ,
@@ -272,7 +276,7 @@ void unpack_fixed(
 	return;
 }
 // ---------------------------------------------------------------------------
-
+// pack_fixed
 template <class Float>
 void pack_fixed(
 	const pack_info&             pack_object  ,

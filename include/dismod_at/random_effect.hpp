@@ -17,6 +17,10 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 	extern size_t number_random(const pack_info& pack_object);
 	//
+	extern CppAD::vector<size_t> random2var_id(
+		const pack_info&             pack_object
+	);
+	//
 	template <class Float>
 	extern void unpack_random(
 		const pack_info&            pack_object  ,
