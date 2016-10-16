@@ -126,7 +126,7 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 	if( n_rate != size_t( number_rate_enum ) )
 	{	message  = "rate table does not have ";
 		message += to_string( size_t( number_rate_enum) )  + "rows.";
-		error_exit(db, message, table_name, null_id);
+		error_exit(message, table_name, null_id);
 	}
 
 	string column_name  = "rate_name";
@@ -150,7 +150,7 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 		{	message  = "expected rate_name to be ";
 			message += rate_enum2name[rate_id];
 			message += " but found " + rate_name[rate_id];
-			error_exit(db, message, table_name, rate_id);
+			error_exit(message, table_name, rate_id);
 		}
 		rate_table[rate_id].rate             = rate_enum(rate_id);
 		rate_table[rate_id].parent_smooth_id = parent_smooth_id[rate_id];

@@ -19,39 +19,42 @@ $$
 $section Log and Print an Error Message and then Exit$$
 
 $head Syntax$$
-$codei%error_exit(%db%, %message%)
+$codei%error_exit(%db%)
 %$$
-$codei%error_exit(%db%, %message%, %table_name%)
+$codei%error_exit(%message%)
 %$$
-$codei%error_exit(%db%, %message%, %table_name%, %row_id%)%$$
+$codei%error_exit(%message%, %table_name%)
+%$$
+$codei%error_exit(%message%, %table_name%, %row_id%)%$$
 
 $head db$$
 This argument has prototype
 $codei%
 	sqlite3* %db%
 %$$
-and is the database connection where the log entry is written.
-This connection is closed using
-$codei%
-	sqlite3_close(%db%)
-%$$
-before the program exits.
 
 $head message$$
 This argument has prototype
 $codei%
 	const std::string& %message%
 %$$
-This value gets written in the
+This value gets written to
+standard error (and an end of line is printed after it).
+
+$subhead null$$
+If the previous $icode db$$ was a the null pointer
+(or there was no previous $icode db$$), an assert is generated.
+It is not the null pointer,
+the value $icode message$$ is also written to the
 $cref/message/log_table/message/$$ column of the log table
-and to standard error (and an end of line is printed after it).
+(as well as to standard error).
 
 $head table_name$$
 This argument has prototype
 $codei%
 	const std::string& %table_name%
 %$$
-This value gets written in the
+If $icode db$$ is not the null pointer, this value gets written in the
 $cref/table_name/log_table/table_name/$$ column of the log table.
 If $icode table_name$$ it is not present, the empty string is used.
 If $icode table_name$$ is not empty, it is also written
@@ -62,7 +65,7 @@ This argument has prototype
 $codei%
 	const size_t& %row_id%
 %$$
-This value gets written in the
+If $icode db$$ is not the null pointer, this value gets written in the
 $cref/row_id/log_table/row_id/$$ column of the log table.
 Note that the value $code DISMOD_AT_NULL_SIZE_T$$
 gets converted to a $code null$$.
@@ -78,35 +81,40 @@ $end
 # include <ctime>
 # include <cassert>
 # include <iostream>
+# include <iostream>
+# include <sqlite3.h>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/log_message.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/get_column_max.hpp>
 # include <cppad/utility/to_string.hpp>
 # include <dismod_at/null_int.hpp>
-// defines DISMOD_AT_LOG_FATAL_ERROR
 # include <dismod_at/configure.hpp>
+
+namespace {
+	sqlite3* db_previous_ = DISMOD_AT_NULL_PTR;
+}
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void error_exit(
-	sqlite3*           db           ,
 	const std::string& message      ,
 	const std::string& table_name   ,
 	const size_t&      row_id       )
 {	using std::string;
 	using std::cerr;
 	using std::endl;
-
-	// check if we are loging fatal errors, or generating an assert
-	assert( DISMOD_AT_LOG_FATAL_ERROR );
+	sqlite3* db = db_previous_;
 
 	// check assumption one table_name and row_id columns of log
 	assert( table_name != "" || row_id == DISMOD_AT_NULL_SIZE_T );
 
 	// write to log table
 	string message_type = "error";
-	log_message(db, message_type, message, table_name, row_id);
+	if( db != DISMOD_AT_NULL_PTR )
+	{	log_message(db, message_type, message, table_name, row_id);
+		sqlite3_close(db);
+	}
 
 	// write to standard error
 	cerr << "Error: " << message << endl;
@@ -116,23 +124,23 @@ void error_exit(
 			cerr << " in row with " << table_name << "_id = " << row_id;
 		cerr << endl;
 	}
-	sqlite3_close(db);
 	std::exit(1);
 }
 void error_exit(
-	sqlite3*           db           ,
 	const std::string& message      ,
 	const std::string& table_name   )
 {	size_t      row_id     = DISMOD_AT_NULL_SIZE_T;
-	error_exit(db, message, table_name, row_id);
+	error_exit(message, table_name, row_id);
 	return;
 }
 void error_exit(
-	sqlite3*           db           ,
 	const std::string& message      )
 {	std::string table_name = "";
-	error_exit(db, message, table_name);
+	error_exit(message, table_name);
 	return;
 }
+
+void error_exit(sqlite3* db)
+{	db_previous_ = db; }
 
 } // END_DISMOD_AT_NAMESPACE

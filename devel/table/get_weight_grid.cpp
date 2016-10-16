@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -118,7 +118,7 @@ CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3* db)
 		weight_grid[i].weight    = weight[i];
 		if( weight[i] <= 0.0 )
 		{	string message = "weight is less than or equal zero.";
-			error_exit(db, message, table_name, i);
+			error_exit(message, table_name, i);
 		}
 	}
 	return weight_grid;

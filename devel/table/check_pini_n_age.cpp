@@ -85,7 +85,7 @@ void check_pini_n_age(
 		}
 	}
 	if( message != "" )
-		error_exit(db, message, table_name, rate_id);
+		error_exit(message, table_name, rate_id);
 }
 
 } // END DISMOD_AT_NAMESPACE

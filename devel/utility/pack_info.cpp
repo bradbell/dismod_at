@@ -256,7 +256,7 @@ n_child_        ( n_child )
 							"mulcov_type equal to";
 						msg += mulcov_type;
 						string table_name = "mulcov";
-						error_exit(db, msg, table_name, mulcov_id);
+						error_exit(msg, table_name, mulcov_id);
 					}
 				}
 				size_t smooth_id = mulcov_table[mulcov_id].smooth_id;
@@ -295,7 +295,7 @@ n_child_        ( n_child )
 					{	string msg = "covariate_id appears twice with "
 							"mulcov_type equal to 'rate_value'";
 						string table_name = "mulcov";
-						error_exit(db, msg, table_name, mulcov_id);
+						error_exit(msg, table_name, mulcov_id);
 					}
 				}
 				size_t smooth_id = mulcov_table[mulcov_id].smooth_id;

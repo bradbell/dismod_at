@@ -192,7 +192,7 @@ prior_object_  ( prior_object )
 			if( ! ok  )
 			{	std::string	msg = "eta != null, lower + eta <= 0, and\n";
 				msg += "this is a value prior for a fixed effect";
-				error_exit(db_, msg, "prior", prior_id);
+				error_exit(msg, "prior", prior_id);
 			}
 		}
 	}
@@ -730,7 +730,7 @@ $end
 		}
 	}
 	if( msg != "" )
-		error_exit(db_, msg);
+		error_exit(msg);
 	//
 	// sample_fix
 	CppAD::vector<double> sample_fix(n_sample * n_fixed_);
@@ -975,7 +975,7 @@ fit_model::a1d_vector fit_model::fix_constraint(const a1d_vector& fixed_vec)
 void fit_model::fatal_error(const std::string& error_message)
 {	assert(false);
 	std::string msg = "cppad_mixed: " + error_message;
-	error_exit(db_, msg);
+	error_exit(msg);
 }
 // warning
 void fit_model::warning(const std::string& warning_message)

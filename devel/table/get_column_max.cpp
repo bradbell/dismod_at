@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -117,7 +117,7 @@ std::string get_column_max(
 		message += sqlite3_errmsg(db);
 		message += ". SQL command: " + cmd;
 		sqlite3_free(zErrMsg);
-		error_exit(db, message);
+		error_exit(message);
 	}
 	assert( count_callback == 1 );
 	return max_str;

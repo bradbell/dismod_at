@@ -481,7 +481,7 @@ smooth_info::smooth_info(
 		msg += ", n_age = " + to_string(n_age) + ".\n";
 		msg +=  "In smooth table n_age = ";
 		msg += to_string( smooth_table[smooth_id].n_age ) + ".";
-		error_exit(db, msg, table_name, smooth_id);
+		error_exit(msg, table_name, smooth_id);
 	}
 	size_t n_time = time_vec.size();
 	if( n_time != size_t( smooth_table[smooth_id].n_time ) )
@@ -490,7 +490,7 @@ smooth_info::smooth_info(
 		msg += ", n_time = " + to_string(n_time) + ".\n";
 		msg +=  "In smooth table n_time = ";
 		msg += to_string( smooth_table[smooth_id].n_time ) + ".";
-		error_exit(db, msg, table_name, smooth_id);
+		error_exit(msg, table_name, smooth_id);
 	}
 
 	// age ids in order of increasing age for this smoothing
@@ -540,7 +540,7 @@ smooth_info::smooth_info(
 				msg += " is the maximum age for smooth_id = ";
 				msg += to_string(smooth_id) + " but dage_prior_id = ";
 				msg += to_string( dage_prior_id_[index] ) + " is not null";
-				error_exit(db, msg, table_name, row_id);
+				error_exit(msg, table_name, row_id);
 			}
 			if( j_age != n_age -1 && dage_prior_id_[index] == null_size_t )
 			{	table_name = "smooth_grid";
@@ -548,7 +548,7 @@ smooth_info::smooth_info(
 				msg  = "age_id = " + to_string( age_id_[j_age] );
 				msg += " is not the maximum age for smooth_id = ";
 				msg += to_string(smooth_id) + " but dage_prior_id is null ";
-				error_exit(db, msg, table_name, row_id);
+				error_exit(msg, table_name, row_id);
 			}
 			//
 			// check dtime_prior_id
@@ -559,7 +559,7 @@ smooth_info::smooth_info(
 				msg += " is the maximum time for smooth_id = ";
 				msg += to_string(smooth_id) + " but dtime_prior_id = ";
 				msg += to_string( dtime_prior_id_[index] ) + " is not null";
-				error_exit(db, msg, table_name, row_id);
+				error_exit(msg, table_name, row_id);
 			}
 			if( j_time != n_time -1 && dtime_prior_id_[index] == null_size_t )
 			{	table_name = "smooth_grid";
@@ -567,7 +567,7 @@ smooth_info::smooth_info(
 				msg  = "time_id = " + to_string( time_id_[j_time] );
 				msg += " is not the maximum time for smooth_id = ";
 				msg += to_string(smooth_id) + " but dtime_prior_id is null ";
-				error_exit(db, msg, table_name, row_id);
+				error_exit(msg, table_name, row_id);
 			}
 		}
 	}
@@ -584,7 +584,7 @@ smooth_info::smooth_info(
 			msg += ", time_id = " + to_string( time_id_[j_time] );
 			msg += ": appears " + to_string(count[i]) + " times";
 			msg += " (should be one time). ";
-			error_exit(db, msg, table_name, row_id);
+			error_exit(msg, table_name, row_id);
 		}
 	}
 

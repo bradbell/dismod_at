@@ -439,7 +439,7 @@ void start_command(
 	{	string msg = "dismod_at start command source = ";
 		msg       += source + " is not one of the following: ";
 		msg       += "prior_mean, fit_var";
-		dismod_at::error_exit(db, msg);
+		dismod_at::error_exit(msg);
 	}
 	//
 	string sql_cmd = "drop table if exists start_var";
@@ -564,7 +564,7 @@ void fit_command(
 			msg += fit_simulate_index + "\nis greater than number of samples";
 			msg += " in the simulate table";
 			string table_name = "simulate";
-			dismod_at::error_exit(db, msg, table_name);
+			dismod_at::error_exit(msg, table_name);
 		}
 		// replace the data with the simulated values
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
@@ -1053,7 +1053,7 @@ void sample_command(
 	{	string msg = "dismod_at sample command method = ";
 		msg       += method + " is not one of the following: ";
 		msg       += "simulate, fit_var, asymptotic";
-		dismod_at::error_exit(db, msg);
+		dismod_at::error_exit(msg);
 	}
 	// -----------------------------------------------------------------------
 	// create new sample table and prepare to write into it
@@ -1155,7 +1155,7 @@ void sample_command(
 					msg  += "size of simulate table does not make sense\n";
 					msg +=  "restart with init command";
 					table_name = "simulate";
-					dismod_at::error_exit(db, msg, table_name, simulate_id);
+					dismod_at::error_exit(msg, table_name, simulate_id);
 				}
 				data_subset_obj[subset_id].meas_value =
 					simulate_table[simulate_id].meas_value;
@@ -1378,7 +1378,7 @@ void predict_command(
 			if( sample_check != sample_index || var_check != var_id )
 			{	string msg = "database modified, restart with init command";
 				table_name = "sample";
-				dismod_at::error_exit(db, msg, table_name, sample_id);
+				dismod_at::error_exit(msg, table_name, sample_id);
 			}
 			pack_vec[var_id] = sample_table[sample_id++].var_value;
 		}
@@ -1470,6 +1470,9 @@ int main(int n_arg, const char** argv)
 	// --------------- open connection to datbase ---------------------------
 	bool new_file = false;
 	sqlite3* db   = dismod_at::open_connection(database_arg, new_file);
+# if DISMOD_AT_LOG_FATAL_ERROR
+	dismod_at::error_exit(db);
+# endif
 	// --------------- log start of this command -----------------------------
 	message = "begin " + command_arg;
 	std::time_t unix_time = dismod_at::log_message(db, "command", message);

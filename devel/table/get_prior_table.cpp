@@ -168,17 +168,17 @@ CppAD::vector<prior_struct> get_prior_table(sqlite3* db)
 		bool ok = mean[i] <= prior_table[i].upper;
 		if(	! ok )
 		{	msg = "mean greater than upper limit";
-			error_exit(db, msg, table_name, i);
+			error_exit(msg, table_name, i);
 		}
 		ok = prior_table[i].lower <= mean[i];
 		if(	! ok )
 		{	msg = "mean less than lower limit";
-			error_exit(db, msg, table_name, i);
+			error_exit(msg, table_name, i);
 		}
 		ok = density_id[i] == uniform_enum || std[i] > 0.0;
 		if( ! ok )
 		{	msg = "std <= 0 and density is not uniform";
-			error_exit(db, msg, table_name, i);
+			error_exit(msg, table_name, i);
 		}
 		ok  = eta[i] > 0.0;
 		ok |= density_id[i] == gaussian_enum;
@@ -187,7 +187,7 @@ CppAD::vector<prior_struct> get_prior_table(sqlite3* db)
 		if( ! ok )
 		{	msg = "density is not guassian, laplace, or uniform\n"
 			"and eta is not greater than zero.";
-			error_exit(db, msg, table_name, i);
+			error_exit(msg, table_name, i);
 		}
 	}
 	return prior_table;

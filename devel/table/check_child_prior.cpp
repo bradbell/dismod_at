@@ -168,7 +168,7 @@ void check_child_prior(
 					+ ", prior_id = " + to_string( prior_id[i] )
 					+ ": " + msg;
 					string table_name  = "rate";
-					error_exit(db, msg,  table_name, rate_id);
+					error_exit(msg,  table_name, rate_id);
 				}
 			}
 		}

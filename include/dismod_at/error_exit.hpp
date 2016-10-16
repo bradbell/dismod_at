@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -14,17 +14,17 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <sqlite3.h>
 # include <string>
 namespace dismod_at {
-	extern void error_exit(
-		sqlite3*           db           ,
+	void error_exit(
+		sqlite3* db
+	);
+	void error_exit(
 		const std::string& message
 	);
-	extern void error_exit(
-		sqlite3*           db           ,
+	void error_exit(
 		const std::string& message      ,
 		const std::string& table_name
 	);
-	extern void error_exit(
-		sqlite3*           db           ,
+	void error_exit(
 		const std::string& message      ,
 		const std::string& table_name   ,
 		const size_t&      row_id

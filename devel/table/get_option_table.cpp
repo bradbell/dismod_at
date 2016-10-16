@@ -149,7 +149,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		if( match == n_option )
 		{	msg +=  option_name[option_id];
 			msg += " is not a valid option_name";
-			error_exit(db, msg, table_name, option_id);
+			error_exit(msg, table_name, option_id);
 		}
 		value_vec[match] = option_value[option_id];
 		//
@@ -162,21 +162,21 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			if( ! ok )
 			{	msg = "option table: rate_case = '";
 				msg += option_value[option_id] + "'";
-				error_exit(db, msg, table_name, option_id);
+				error_exit(msg, table_name, option_id);
 			}
 		}
 		if( name_vec[match] == "ode_step_size" )
 		{	bool ok = std::atof( option_value[option_id].c_str() ) > 0.0;
 			if( ! ok )
 			{	msg = "option_value is <= 0.0 for ode_step_size";
-				error_exit(db, msg, table_name, option_id);
+				error_exit(msg, table_name, option_id);
 			}
 		}
 		if( name_vec[match] == "random_seed" )
 		{	bool ok = std::atoi( option_value[option_id].c_str() ) >= 0;
 			if( ! ok )
 			{	msg = "option_value is < 0 for random_seed";
-				error_exit(db, msg, table_name, option_id);
+				error_exit(msg, table_name, option_id);
 			}
 		}
 		if( name_vec[match] == "number_simulate" )
@@ -184,7 +184,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			bool ok = number_simulate >= 1;
 			if( ! ok )
 			{	msg = "option_value is < 1 for number_simulate";
-				error_exit(db, msg, table_name, option_id);
+				error_exit(msg, table_name, option_id);
 			}
 		}
 		if( name_vec[match] == "fit_simulate_index" )
@@ -193,7 +193,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			{	bool ok = std::atoi( fit_simulate_index.c_str() ) >= 0;
 				if( ! ok )
 				{	msg = "option_value is < 0 for fit_simulate_index";
-					error_exit(db, msg, table_name, option_id);
+					error_exit(msg, table_name, option_id);
 				}
 			}
 		}
@@ -204,7 +204,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				quasi_fixed = false;
 			else
 			{	msg = "option_value is not true or false";
-				error_exit(db, msg, table_name, option_id);
+				error_exit(msg, table_name, option_id);
 			}
 		}
 		if( name_vec[match] == "random_zero_sum" )
@@ -212,7 +212,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				option_value[option_id] != "true" &&
 				option_value[option_id] != "false" )
 			{	msg = "option_value is not true or false";
-				error_exit(db, msg, table_name, option_id);
+				error_exit(msg, table_name, option_id);
 			}
 		}
 		if(
@@ -223,7 +223,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			bool ok = 0.0 < tolerance;
 			if( ! ok )
 			{	msg = "option_value is not greater than zero";
-				error_exit(db, msg, table_name, option_id);
+				error_exit(msg, table_name, option_id);
 			}
 		}
 		if( name_vec[match] == "random_bound" )
@@ -233,7 +233,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				bool ok = 0.0 <= random_bound;
 				if( ! ok )
 				{	msg = "option_value is less than zero.";
-					error_exit(db, msg, table_name, option_id);
+					error_exit(msg, table_name, option_id);
 				}
 			}
 		}
@@ -245,7 +245,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			bool ok = -1 <= max_num_iter;
 			if( ! ok )
 			{	msg = "option_value is less than minus one";
-				error_exit(db, msg, table_name, option_id);
+				error_exit(msg, table_name, option_id);
 			}
 		}
 		if(
@@ -256,7 +256,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			bool ok = 0 <= print_level && print_level <= 12;
 			if( ! ok )
 			{	msg = "option_value is not between 0 and 12 inclusive";
-				error_exit(db, msg, table_name, option_id);
+				error_exit(msg, table_name, option_id);
 			}
 		}
 		if(
@@ -267,7 +267,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			bool ok = 0 < max_steps;
 			if( ! ok )
 			{	msg = "option_value is not positive";
-				error_exit(db, msg, table_name, option_id);
+				error_exit(msg, table_name, option_id);
 			}
 		}
 		if(
@@ -282,7 +282,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			if( ! ok )
 			{	msg  = "option_value not one of the following: ";
 				msg += "none, first-order, second-order, only-second-order";
-				error_exit(db, msg, table_name, option_id);
+				error_exit(msg, table_name, option_id);
 			}
 			if( name_vec[match] == "derivative_test_fixed" )
 			{	if( option_value[option_id] == "none" )
@@ -297,12 +297,12 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	if( quasi_fixed && (derivative_test_fixed_level > 1 ) )
 	{	msg  = "quasi_fixed option is true and derivative_test_fixed";
 		msg += " is second-order or only-second-order";
-		error_exit(db, msg, table_name);
+		error_exit(msg, table_name);
 	}
 	if( fit_simulate_index != "" )
 	{	if( std::atoi( fit_simulate_index.c_str() ) >= number_simulate )
 		{	msg  = "fit_simulate_index is greater than or equal number_simulate";
-			error_exit(db, msg, table_name);
+			error_exit(msg, table_name);
 		}
 	}
 	//

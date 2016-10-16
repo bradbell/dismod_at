@@ -99,7 +99,7 @@ for(size_t row_id = 0; row_id < db_input.in_table ## _table.size(); row_id++) \
 		message    = #in_name " = "; \
 		message   += to_string( id_value ) + " does not appear as "; \
 		message   += #primary_table "_id in " #primary_table " table"; \
-		error_exit(db, message, table_name, row_id); \
+		error_exit(message, table_name, row_id); \
 	} \
 }
 

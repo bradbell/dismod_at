@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -250,30 +250,30 @@ void get_avgint_table(
 		double age_upper  = avgint_table[avgint_id].age_upper;
 		if( age_lower < age_min )
 		{	msg = "age_lower is less than minimum age in age table";
-			error_exit(db, msg, table_name, avgint_id);
+			error_exit(msg, table_name, avgint_id);
 		}
 		if( age_max < age_upper )
 		{	msg = "age_upper is greater than maximum age in age table";
-			error_exit(db, msg, table_name, avgint_id);
+			error_exit(msg, table_name, avgint_id);
 		}
 		if( age_upper < age_lower )
 		{	msg = "age_lower is greater than age_upper";
-			error_exit(db, msg, table_name, avgint_id);
+			error_exit(msg, table_name, avgint_id);
 		}
 		// ------------------------------------------------------------
 		double time_lower = avgint_table[avgint_id].time_lower;
 		double time_upper = avgint_table[avgint_id].time_upper;
 		if( time_lower < time_min )
 		{	msg = "time_lower is less than minimum time in time table";
-			error_exit(db, msg, table_name, avgint_id);
+			error_exit(msg, table_name, avgint_id);
 		}
 		if( time_max < time_upper )
 		{	msg = "time_upper is greater than maximum time in time table";
-			error_exit(db, msg, table_name, avgint_id);
+			error_exit(msg, table_name, avgint_id);
 		}
 		if( time_upper < time_lower )
 		{	msg = "time_lower is greater than time_upper";
-			error_exit(db, msg, table_name, avgint_id);
+			error_exit(msg, table_name, avgint_id);
 		}
 	}
 	return;

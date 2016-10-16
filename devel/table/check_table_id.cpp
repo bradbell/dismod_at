@@ -77,7 +77,7 @@ namespace dismod_at {
 		{	if( table_id[i] != int(i) )
 			{	string msg = table_name + "_id must start at zero";
 				msg       += " and increment by one.";
-				error_exit(db, msg, table_name, i);
+				error_exit(msg, table_name, i);
 			}
 		}
 		return n_row;

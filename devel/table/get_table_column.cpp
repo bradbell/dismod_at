@@ -130,7 +130,7 @@ namespace {
 		if( *v == '\0' )
 		{	string msg = "The empty string appears in the text column ";
 			msg += column_name_;
-			dismod_at::error_exit(db_, msg, table_name_, row_id);
+			dismod_at::error_exit(msg, table_name_, row_id);
 		}
 		return v;
 	}
@@ -144,7 +144,7 @@ namespace {
 		if( value == DISMOD_AT_NULL_INT )
 		{	string msg = "The minimum integer appears in the int column ";
 			msg += column_name_;
-			dismod_at::error_exit(db_, msg, table_name_, row_id);
+			dismod_at::error_exit(msg, table_name_, row_id);
 		}
 		//
 		return value;
@@ -156,7 +156,7 @@ namespace {
 		if( value != value )
 		{	string msg = "The value nan appears in the double column ";
 			msg += column_name_;
-			dismod_at::error_exit(db_, msg, table_name_, row_id);
+			dismod_at::error_exit(msg, table_name_, row_id);
 		}
 		return value;
 	}
@@ -205,7 +205,7 @@ namespace {
 			message += sqlite3_errmsg(db);
 			message += ". SQL command: " + cmd;
 			sqlite3_free(zErrMsg);
-			dismod_at::error_exit(db, message);
+			dismod_at::error_exit(message);
 		}
 		return;
 	}
@@ -244,7 +244,7 @@ std::string get_table_column_type(
 	if( rc )
 	{	std::string message = "SQL error: ";
 		message += sqlite3_errmsg(db);
-		error_exit(db, message);
+		error_exit(message);
 	}
 	std::string ctype(zDataType);
 	//
@@ -260,7 +260,7 @@ std::string get_table_column_type(
 	if( ! ok )
 	{	string msg = "Column " + column_name + " has type " + ctype
 			+ "\nwhich is not one of the following: integer, real, or text";
-		dismod_at::error_exit(db_, msg, table_name_);
+		dismod_at::error_exit(msg, table_name_);
 	}
 
 	return ctype;
@@ -287,7 +287,7 @@ void get_table_column(
 	if( col_type != "text" )
 	{	std::string message = "get_table_column for column = " + column_name;
 		message += ". Expected type to be text not " + col_type;
-		error_exit(db, message, table_name, null_id);
+		error_exit(message, table_name, null_id);
 	}
 
 	// Use template function for rest
@@ -316,7 +316,7 @@ void get_table_column(
 	if( col_type != "integer" )
 	{	std::string message = "get_table_column for column = " + column_name;
 		message += ". Expected type to be integer not " + col_type;
-		error_exit(db, message, table_name, null_id);
+		error_exit(message, table_name, null_id);
 	}
 
 	// Use template function for rest
@@ -345,7 +345,7 @@ void get_table_column(
 	if( col_type != "real" )
 	{	std::string message = "get_table_column for column = " + column_name;
 		message += ". Expected type to be real not " + col_type;
-		error_exit(db, message, table_name, null_id);
+		error_exit(message, table_name, null_id);
 	}
 
 	// Use template function for rest

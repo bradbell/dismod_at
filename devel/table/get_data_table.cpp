@@ -294,47 +294,47 @@ void get_data_table(
 	{	int hold_out = data_table[data_id].hold_out;
 		if( hold_out != 0 && hold_out != 1 )
 		{	msg = "hold_out is not equal to zero or one";
-			error_exit(db, msg, table_name, data_id);
+			error_exit(msg, table_name, data_id);
 		}
 		// -------------------------------------------------------------
 		double age_lower  = data_table[data_id].age_lower;
 		double age_upper  = data_table[data_id].age_upper;
 		if( age_lower < age_min )
 		{	msg = "age_lower is less than minimum age in age table";
-			error_exit(db, msg, table_name, data_id);
+			error_exit(msg, table_name, data_id);
 		}
 		if( age_max < age_upper )
 		{	msg = "age_upper is greater than maximum age in age table";
-			error_exit(db, msg, table_name, data_id);
+			error_exit(msg, table_name, data_id);
 		}
 		if( age_upper < age_lower )
 		{	msg = "age_lower is greater than age_upper";
-			error_exit(db, msg, table_name, data_id);
+			error_exit(msg, table_name, data_id);
 		}
 		// ------------------------------------------------------------
 		double time_lower = data_table[data_id].time_lower;
 		double time_upper = data_table[data_id].time_upper;
 		if( time_lower < time_min )
 		{	msg = "time_lower is less than minimum time in time table";
-			error_exit(db, msg, table_name, data_id);
+			error_exit(msg, table_name, data_id);
 		}
 		if( time_max < time_upper )
 		{	msg = "time_upper is greater than maximum time in time table";
-			error_exit(db, msg, table_name, data_id);
+			error_exit(msg, table_name, data_id);
 		}
 		if( time_upper < time_lower )
 		{	msg = "time_lower is greater than time_upper";
-			error_exit(db, msg, table_name, data_id);
+			error_exit(msg, table_name, data_id);
 		}
 		int density_id = data_table[data_id].density_id;
 		if( density_enum( density_id ) == uniform_enum )
 		{	msg = "density_id corresponds to the uniform distribution";
-			error_exit(db, msg, table_name, data_id);
+			error_exit(msg, table_name, data_id);
 		}
 		double meas_std = data_table[data_id].meas_std;
 		if( meas_std <= 0.0 )
 		{	msg = "meas_std is less than or equal zero";
-			error_exit(db, msg, table_name, data_id);
+			error_exit(msg, table_name, data_id);
 		}
 	}
 	return;

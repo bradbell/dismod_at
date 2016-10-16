@@ -114,7 +114,7 @@ void check_rate_limit(
 			{	std::string msg = "parent_smooth_id for this rate is null";
 				msg += "\nbut this rate is expected to be positive.";
 				std::string table_name = "rate";
-				error_exit(db, msg, table_name, rate_id);
+				error_exit(msg, table_name, rate_id);
 			}
 		}
 		else
@@ -155,7 +155,7 @@ void check_rate_limit(
 		message += "\nsmooth_grid_id = " + to_string(error_grid_id);
 		message += ", value_prior_id = " + to_string(error_prior_id);
 		std::string table_name = "rate";
-		error_exit(db, message, table_name, error_rate_id);
+		error_exit(message, table_name, error_rate_id);
 	}
 }
 

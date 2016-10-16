@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -150,7 +150,7 @@ CppAD::vector<integrand_struct> get_integrand_table(sqlite3* db)
 		if( integrand == number_integrand_enum )
 		{	string msg = integrand_name[integrand_id];
 			msg       += " is not a valid choice for integrand_name.";
-			error_exit(db, msg, table_name, integrand_id);
+			error_exit(msg, table_name, integrand_id);
 		}
 		integrand_table[integrand_id].integrand = integrand;
 		integrand_table[integrand_id].eta       = eta[integrand_id];

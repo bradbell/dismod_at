@@ -108,7 +108,7 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 	if( n_density != size_t( number_density_enum ) )
 	{	message  = "density table does not have ";
 		message += to_string( size_t( number_density_enum) ) + "rows.";
-		error_exit(db, message, table_name, null_id);
+		error_exit(message, table_name, null_id);
 	}
 
 	string column_name =  "density_name";
@@ -122,7 +122,7 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 		{	message = "expected density_name to be ";
 			message += density_enum2name[density_id];
 			message += " but found " + density_name[density_id];
-			error_exit(db, message, table_name, density_id);
+			error_exit(message, table_name, density_id);
 		}
 			density_table[density_id] = density_enum(density_id);
 	}
