@@ -84,6 +84,8 @@ $end
 # include <dismod_at/get_column_max.hpp>
 # include <cppad/utility/to_string.hpp>
 # include <dismod_at/null_int.hpp>
+// defines DISMOD_AT_LOG_FATAL_ERROR
+# include <dismod_at/configure.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -95,6 +97,9 @@ void error_exit(
 {	using std::string;
 	using std::cerr;
 	using std::endl;
+
+	// check if we are loging fatal errors, or generating an assert
+	assert( DISMOD_AT_LOG_FATAL_ERROR );
 
 	// check assumption one table_name and row_id columns of log
 	assert( table_name != "" || row_id == DISMOD_AT_NULL_SIZE_T );

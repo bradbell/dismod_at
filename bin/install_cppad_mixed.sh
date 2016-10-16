@@ -29,6 +29,9 @@ bool_sparsity='YES'
 # use cholmod (not eigen) for LDLT factorization (where possible)
 ldlt_cholmod='YES'
 #
+# put fatal error messages in log table or generate asserts
+log_fatal_error='YES'
+#
 # which c++ compiler to use (empty means cmake will choose it)
 cmake_cxx_compiler=''
 # END USER_SETTINGS
@@ -47,8 +50,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='b4c5c224a3d19c4e7ac4946cec1d7f921d91e723'
-version='20161015'
+hash_key='9cf30a0caf3fe3c8197fe7f2af062419bd621f87'
+version='20161016'
 libdir=`bin/libdir.sh`
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
@@ -102,6 +105,7 @@ cmake_args="$cmake_args -D extra_cxx_flags=$extra_cxx_flags"
 cmake_args="$cmake_args -D cmake_libdir=$libdir"
 cmake_args="$cmake_args -D bool_sparsity=$bool_sparsity"
 cmake_args="$cmake_args -D ldlt_cholmod=$ldlt_cholmod"
+cmake_args="$cmake_args -D log_fatal_error=$log_fatal_error"
 if [ "$cmake_cxx_compiler" != '' ]
 then
 	cmake_args="$cmake_args -D CMAKE_CXX_COMPILER=$cmake_cxx_compiler"

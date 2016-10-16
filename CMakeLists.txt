@@ -65,11 +65,18 @@ ENDMACRO(get_prefix)
 #
 MACRO( required_definition variable type docstring )
 	SET( ${variable} NOTFOUND CACHE ${type} "${docstring}" )
-	IF( ${variable} )
-		MESSAGE( STATUS "${variable} = ${${variable}}" )
-	ELSE( ${variable} )
+	IF( ${variable} STREQUAL NOTFOUND )
 		MESSAGE( FATAL_ERROR "${variable} is not set by cmake command" )
-	ENDIF( ${variable} )
+	ELSE( ${variable} STREQUAL NOTFOUND )
+		MESSAGE( STATUS "${variable} = ${${variable}}" )
+	ENDIF( ${variable} STREQUAL NOTFOUND )
+	IF( ${type} STREQUAL "BOOL" )
+		IF( ${variable} )
+			SET( ${variable}_01 1 )
+		ELSE( ${variable} )
+			SET( ${variable}_01 0 )
+		ENDIF( ${variable} )
+	ENDIF( ${type} STREQUAL "BOOL" )
 ENDMACRO( required_definition )
 # ----------------------------------------------------------------------------
 # set_libary_path( directory_list type library_list )
@@ -123,6 +130,9 @@ required_definition(dismod_at_prefix PATH
 )
 required_definition(cmake_libdir STRING
 	"directory below prefix where libraries are stored; e.g, lib64"
+)
+required_definition(log_fatal_error BOOL
+	"should dismod_at log fatal errors or generate asserts"
 )
 # ----------------------------------------------------------------------------
 # get required package prefixes

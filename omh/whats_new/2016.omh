@@ -59,6 +59,10 @@ $cref create_database$$.
 This bug would sometimes mark the wrong time index as having a $code null$$
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
 in the smooth_grid table.
+$lnext
+Add the
+$cref/log_fatal_error/run_cmake.sh/log_fatal_error/$$ flag
+to the dismod_at configuration.
 $lend
 
 $head 10-15$$

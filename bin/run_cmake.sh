@@ -74,6 +74,15 @@ cmake_cxx_compiler=''
 # python3_executable='/usr/local/anaconda3-current/bin/python'
 # extra_cxx_flags='-Wall'
 # &&
+#
+# &head log_fatal_error&&
+# If YES, &code dismod_at&& will use the &cref log_table&&
+# to report its fatal error messages.
+# If NO, it will convert fatal errors to asserts
+# (which is useful when running a program in a debugger).
+# &codep
+log_fatal_error='YES'
+# &&
 # &end
 # ============================================================================
 # bash function that echos and executes a command
@@ -90,6 +99,7 @@ do
 usage: bin/run_cmake.sh \\
 	[--help] \\
 	[--verbose] \\
+	[--no_log] \\
 	[--release]
 EOF
 		exit 0
@@ -97,6 +107,9 @@ EOF
 	if [ "$1" == '--verbose' ]
 	then
 		verbose_makefile='YES'
+	elif [ "$1" == '--no_log' ]
+	then
+		log_fatal_error='NO'
 	elif [ "$1" == '--release' ]
 	then
 		build_type='release'
@@ -150,6 +163,7 @@ cmake \
 	-D eigen_prefix="$eigen_prefix" \
 	-D cppad_prefix="$cppad_prefix" \
 	-D suitesparse_prefix="$suitesparse_prefix" \
+	-D log_fatal_error="$log_fatal_error" \
 	..
 # --------------------------------------------------------------------------
 echo 'run_cmake.sh: OK'
