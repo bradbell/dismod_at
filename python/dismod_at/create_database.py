@@ -533,7 +533,7 @@ def create_database(
 				max_j = j
 		max_k   = 0
 		for k in time_id :
-			if time_list[k] > age_list[max_k] :
+			if time_list[k] > time_list[max_k] :
 				max_k = k
 		for j in age_id :
 			for k in time_id :

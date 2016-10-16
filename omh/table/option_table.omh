@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin option_table$$
 $spell
+	py
 	frac
 	cppad
 	var
@@ -143,6 +144,8 @@ $cref/rate/rate_table/$$, age, and time, the sum of the
 $cref/random effects/model_variables/Random Effects, u/$$,
 estimates is constrained to be zero when optimizing the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$.
+The file $cref/random_zero_sum.py/user_random_zero_sum.py/$$
+contains and example and test using this constraint.
 
 $subhead Default$$
 The default value for this option is $code false$$.
@@ -297,7 +300,7 @@ fits as if there were no random effects except for the fact that
 the resulting optimal value can be used as a starting point for fitting
 with random effects; see
 $cref/start fit_var/start_command/source/fit_var/$$; see
-$cref user_random_bound.py$$.
+$cref/random_bound.py/user_random_bound.py/$$.
 Note that fitting with no random effects corresponds to
 a $code null$$ value for the
 $cref/child_smooth_id/rate_table/child_smooth_id/$$.

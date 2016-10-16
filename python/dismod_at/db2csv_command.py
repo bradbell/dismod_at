@@ -330,6 +330,8 @@ def db2csv_command(database_file_arg) :
 		table_data[table] = dismod_at.get_table_dict(connection, table)
 	# -------------------------------------------------------------------------
 	# parent_node_id, fit_simulate_index
+	parent_node_id     = None
+	fit_simulate_index = None
 	for row in table_data['option'] :
 		if row['option_name'] == 'parent_node_id' :
 			parent_node_id = int( row['option_value'] )
@@ -420,6 +422,7 @@ def db2csv_command(database_file_arg) :
 		[ "quasi_fixed",                   "true"],
 		[ "random_bound",                  ""],
 		[ "random_seed",                   "0"],
+		[ "random_zero_sum",               "false"],
 		[ "rate_case",                     "iota_pos_rho_zero"],
 		[ "tolerance_fixed",               "1e-8"],
 		[ "tolerance_random",              "1e-8"]
