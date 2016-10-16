@@ -111,6 +111,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		"quasi_fixed",                   "true",
 		"random_bound",                  "",
 		"random_seed",                   "0",
+		"random_zero_sum",               "false",
 		"rate_case",                     "iota_pos_rho_zero",
 		"tolerance_fixed",               "1e-8",
 		"tolerance_random",              "1e-8"
@@ -202,6 +203,14 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			else if( option_value[option_id] == "false" )
 				quasi_fixed = false;
 			else
+			{	msg = "option_value is not true or false";
+				error_exit(db, msg, table_name, option_id);
+			}
+		}
+		if( name_vec[match] == "random_zero_sum" )
+		{	if(
+				option_value[option_id] != "true" &&
+				option_value[option_id] != "false" )
 			{	msg = "option_value is not true or false";
 				error_exit(db, msg, table_name, option_id);
 			}

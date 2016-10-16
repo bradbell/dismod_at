@@ -63,6 +63,7 @@ bool get_option_table_xam(void)
 		"number_simulate",               "2",
 		"fit_simulate_index",            "0",
 		"random_seed",                   "123",
+		"random_zero_sum",                "true",
 		"rate_case",                     "iota_zero_rho_zero"
 	};
 	size_t n_option = sizeof(option_list) / sizeof( option_list[0] );

@@ -133,6 +133,20 @@ see $cref/random_seed/log_table/random_seed/$$ in the log table.
 $subhead Default$$
 The default value for this option is $code 0$$.
 
+$head random_zero_sum$$
+If $icode option_name$$ is
+$code random_zero_sum$$,
+the corresponding possible values are
+$code true$$ or $code false$$.
+If it is $code true$$, for each
+$cref/rate/rate_table/$$, age, and time, the sum of the
+$cref/random effects/model_variables/Random Effects, u/$$,
+estimates is constrained to be zero when optimizing the
+$cref/fixed effects/model_variables/Fixed Effects, theta/$$.
+
+$subhead Default$$
+The default value for this option is $code false$$.
+
 $head rate_case$$
 The $icode rate_case$$ value does not matter for the following integrands:
 $code Sincidence$$,

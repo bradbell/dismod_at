@@ -592,7 +592,8 @@ void fit_command(
 		random_bound = std::atof( tmp_str.c_str() );
 	//
 	// random_zero_sum
-	bool random_zero_sum = false;
+	tmp_str = option_map["random_zero_sum"];
+	bool random_zero_sum = tmp_str == "true";
 	//
 	string fit_or_sample = "fit";
 	dismod_at::fit_model fit_object(
@@ -1119,7 +1120,8 @@ void sample_command(
 		random_bound = std::atof( tmp_str.c_str() );
 	//
 	// random_zero_sum
-	bool random_zero_sum = false;
+	tmp_str = option_map["random_zero_sum"];
+	bool random_zero_sum = tmp_str == "true";
 	// -----------------------------------------------------------------------
 	if( method == "simulate" )
 	{
