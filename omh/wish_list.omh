@@ -61,14 +61,6 @@ random effects will always be accurate
 One could use multiple asymptotic random effects samples as a proposal
 density for a Metropolis algorithm to get better sampling of these variables.
 
-$head Constrain Random Effects$$
-
-$subhead Sum to Zero$$
-The $code cppad_mixed$$ package will handle an arbitrary linear
-constraint on the random effects estimates. This could be used to
-constrain the random effects to sum to zero for each of the rates,
-and at every age, time grid point in the smoothing.
-
 $head Conditionals in ODE$$
 It is now possible to use conditional expressions in the ODE solution
 (CppAD has improved so that this will now work properly with two levels

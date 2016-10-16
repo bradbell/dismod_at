@@ -27,10 +27,9 @@ $srcfile%devel/utility/random_limits.cpp
 
 $head Remark$$
 Currently, these lower and upper limits are minus and plus infinity
-respectively. This routine is used in the expectation that in the future
-one may be able to constrain the random effects to be specific values; see
-$cref/constrain random effects/wish_list/Constrain Random Effects/$$
-in the wish list.
+respectively. This routine is was created in the expectation that in the future
+one may be able to constrain the random effects to be specific values.
+(This is no longer expected).
 
 $head Order of Random Effects$$
 The order of the random effects is unspecified, except for the fact that
