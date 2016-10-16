@@ -339,8 +339,8 @@ bool fit_model_xam(void)
 	// random_bound
 	double random_bound = std::numeric_limits<double>::infinity();
 	//
-	// A_info
-	CppAD::mixed::sparse_mat_info A_info; // empty matrix
+	// random_zero_sum
+	bool random_zero_sum = false;
 	//
 	std::string fit_or_sample = "fit";
 	dismod_at::fit_model fit_object(
@@ -354,7 +354,7 @@ bool fit_model_xam(void)
 		data_object,
 		prior_object,
 		quasi_fixed,
-		A_info
+		random_zero_sum
 	);
 	fit_object.run_fit( option_map );
 	CppAD::vector<double> solution, lag_value, lag_dage, lag_dtime;

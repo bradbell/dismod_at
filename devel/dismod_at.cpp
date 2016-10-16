@@ -591,8 +591,8 @@ void fit_command(
 	if( tmp_str != "" )
 		random_bound = std::atof( tmp_str.c_str() );
 	//
-	// A_info
-	CppAD::mixed::sparse_mat_info A_info; // empty matrix
+	// random_zero_sum
+	bool random_zero_sum = false;
 	//
 	string fit_or_sample = "fit";
 	dismod_at::fit_model fit_object(
@@ -606,7 +606,7 @@ void fit_command(
 		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
-		A_info
+		random_zero_sum
 	);
 	fit_object.run_fit(option_map);
 	vector<double> opt_value, lag_value, lag_dage, lag_dtime;
@@ -1118,8 +1118,8 @@ void sample_command(
 	if( tmp_str != "" )
 		random_bound = std::atof( tmp_str.c_str() );
 	//
-	// A_info = empty matrix
-	CppAD::mixed::sparse_mat_info A_info;
+	// random_zero_sum
+	bool random_zero_sum = false;
 	// -----------------------------------------------------------------------
 	if( method == "simulate" )
 	{
@@ -1174,7 +1174,7 @@ void sample_command(
 				data_object          ,
 				prior_object         ,
 				quasi_fixed          ,
-				A_info
+				random_zero_sum
 			);
 			fit_object.run_fit(option_map);
 			vector<double> opt_value, lag_value, lag_dage, lag_dtime;
@@ -1249,7 +1249,7 @@ void sample_command(
 		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
-		A_info
+		random_zero_sum
 	);
 	//
 	// sample

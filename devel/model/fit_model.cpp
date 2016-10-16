@@ -37,7 +37,7 @@ $codei%fit_model %fit_object%(
 	%data_object%,
 	%prior_object%,
 	%quasi_fixed%,
-	%A_info%,
+	%random_zero_sum%,
 	%option_map%
 )
 %$$
@@ -93,15 +93,10 @@ a quasi-Newton method is used when optimizing the fixed effects.
 Otherwise a full Newton method is used; see
 $cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$.
 
-$head A_info$$
-This argument holds the matrix $latex A$$ in
-the random effects constraint equation
-$latex \[
-	A * \hat{u} ( \theta ) = 0
-\] $$
-where $latex \hat{u} ( \theta )$$ is the optimal random effects corresponding
-to the fixed effects $latex \theta$$.
-This matrix can be empty, in which case there are no random constraints.
+$head random_zero_sum$$
+If this argument is true,
+for each age, time and rate,
+the sum of the random effects is constrained to be zero.
 
 $head Prototype$$
 $srccode%cpp% */
@@ -116,7 +111,7 @@ fit_model::fit_model(
 	const data_model&                     data_object      ,
 	const prior_model&                    prior_object     ,
 	bool                                  quasi_fixed      ,
-	const CppAD::mixed::sparse_mat_info&  A_info           )
+	bool                                  random_zero_sum  )
 /* %$$
 $end
 */
@@ -207,6 +202,67 @@ prior_object_  ( prior_object )
 	for(size_t j = 0; j < n_fixed_; j++)
 		assert( ! (fixed_scale_eta_[j] == - inf) );
 # endif
+	// ----------------------------------------------------------------------
+	// A_info
+	CppAD::mixed::sparse_mat_info A_info;
+	//
+	// var_id2randm
+	CppAD::vector<size_t> var_id2random(n_var);
+	for(size_t k = 0; k < n_var; k++)
+		var_id2random[k] = n_random_;
+	pack_index.resize(0);
+	pack_index = random2var_id(pack_object);
+	for(size_t j = 0; j < n_random_; j++)
+		var_id2random[ pack_index[j] ] = j;
+	//
+	// count constraints so far
+	size_t number_equation = 0;
+	//
+	// n_child
+	size_t n_child = pack_object.child_size();
+	if( random_zero_sum && n_child > 0 )
+	{	pack_info::subvec_info info_0, info_j;
+		//
+		// for each rate
+		for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+		{	info_0           = pack_object.rate_info(rate_id, 0);
+			size_t smooth_id = info_0.smooth_id;
+			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
+			{	//
+				// number of grid points for the rate and each child
+				size_t n_grid = info_0.n_var;
+				//
+				// for each child for this rate
+				for(size_t j = 0; j < n_child; j++)
+				{	info_j = pack_object.rate_info(rate_id, j);
+					//
+					assert( info_j.smooth_id == info_0.smooth_id );
+					assert( info_j.n_var     == info_0.n_var );
+					//
+					// offset for this rate and child
+					size_t offset = info_j.offset;
+					//
+					// for each grid point for this rate
+					for(size_t k = 0; k < n_grid; k++)
+					{	// variable index for this grid point
+						size_t var_id = offset + k;
+						// corresponding random effect index
+						size_t random_index = var_id2random[var_id];
+						assert( random_index < n_random_ );
+						//
+						// different constraint for each grid point
+						A_info.row.push_back(number_equation + k );
+						// sum with respect to child index
+						A_info.col.push_back(random_index);
+						// value of one corresponds to summation
+						A_info.val.push_back(1.0);
+					}
+				}
+				number_equation += n_grid;
+			}
+		}
+		assert( A_info.row.size() == number_equation * n_child );
+	}
 	// ---------------------------------------------------------------------
 	// initialize the cppad_mixed object
 	//

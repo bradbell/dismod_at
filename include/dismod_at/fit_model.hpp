@@ -179,7 +179,7 @@ namespace dismod_at {
 			const data_model&                    data_object     ,
 			const prior_model&                   prior_object    ,
 			bool                                 quasi_fixed     ,
-			const CppAD::mixed::sparse_mat_info& A_info
+			bool                                 random_zero_sum
 		);
 		//
 		// run fit
