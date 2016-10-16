@@ -32,7 +32,6 @@ $end
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/pack_prior.hpp>
 # include <dismod_at/null_int.hpp>
-# include <dismod_at/random_limits.hpp>
 
 bool fit_model_xam(void)
 {	bool   ok = true;

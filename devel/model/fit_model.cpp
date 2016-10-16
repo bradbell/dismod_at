@@ -13,7 +13,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/log_message.hpp>
 # include <dismod_at/null_int.hpp>
-# include <dismod_at/random_limits.hpp>
 
 namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 /*
@@ -134,17 +133,17 @@ prior_object_  ( prior_object )
 {	assert( random_bound >= 0.0 );
 	assert( fit_or_sample == "fit" || fit_or_sample == "sample" );
 	// ----------------------------------------------------------------------
-	// random_lower_, random_upper_
-	random_limits(
-		pack_object, prior_table, s_info_vec, random_lower_, random_upper_
-	);
-	n_random_equal_ = 0;
+	// random_lower_, random_upper_, n_random_equal_
+	double infinity = std::numeric_limits<double>::infinity();
+	random_lower_.resize(n_random_);
+	random_upper_.resize(n_random_);
 	for(size_t i = 0; i < n_random_; i++)
-	{	random_lower_[i] = std::max( random_lower_[i], - random_bound );
-		random_upper_[i] = std::min( random_upper_[i], + random_bound );
-		if( random_lower_[i] == random_upper_[i] )
-			++n_random_equal_;
+	{	random_lower_[i] = std::max( - infinity, - random_bound );
+		random_upper_[i] = std::min( + infinity, + random_bound );
 	}
+	n_random_equal_ = 0;
+	if( random_bound <= 0.0 )
+		n_random_equal_ = n_random_;
 	// ----------------------------------------------------------------------
 	// value_prior_
 	size_t n_var = n_fixed_ + n_random_;
