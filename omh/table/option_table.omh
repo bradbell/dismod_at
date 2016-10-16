@@ -139,13 +139,16 @@ If $icode option_name$$ is
 $code random_zero_sum$$,
 the corresponding possible values are
 $code true$$ or $code false$$.
-If it is $code true$$, for each
-$cref/rate/rate_table/$$, age, and time, the sum of the
-$cref/random effects/model_variables/Random Effects, u/$$,
-estimates is constrained to be zero when optimizing the
+If it is $code true$$,
+for each $cref/rate/rate_table/$$,
+each age, and each time,
+the sum of the corresponding
+$cref/random effects/model_variables/Random Effects, u/$$ estimates
+is constrained to be zero.
+These are additional constraints in the optimization problem for the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$.
 The file $cref/random_zero_sum.py/user_random_zero_sum.py/$$
-contains and example and test using this constraint.
+contains an example and test using these constraints.
 
 $subhead Default$$
 The default value for this option is $code false$$.
