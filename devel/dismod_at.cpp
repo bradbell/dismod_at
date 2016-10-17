@@ -1565,7 +1565,6 @@ int main(int n_arg, const char** argv)
 	vector<dismod_at::smooth_info> s_info_vec(n_smooth);
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	s_info_vec[smooth_id] = dismod_at::smooth_info(
-			db                         ,
 			db_input.age_table         ,
 			db_input.time_table        ,
 			smooth_id                  ,

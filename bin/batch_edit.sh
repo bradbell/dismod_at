@@ -22,11 +22,10 @@ rename_cmd='s|table.omh|database.omh|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
 cat << EOF > junk.sed
-/pack_object(\$/! b done
+/smooth_info[ a-z_A-Z]*(\$/! b done
 N
 s/\\n\\t*db *,\$//
-N
-s/\\(\\n\\t*\\)db *, *n_integrand, *n_child,\\n\\t*/\\1n_integrand, n_child, /
+s/\\(\\n\\t*\)db *, *age_table,/\\1age_table,/
 : done
 EOF
 # -----------------------------------------------------------------------------

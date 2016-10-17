@@ -91,13 +91,6 @@ $codei%
 %$$
 The meaning of the corresponding constructor arguments are specified below:
 
-$subhead db$$
-This argument has prototype
-$codei%
-	sqlite3* %db%
-%$$
-and is the database connection for $cref/logging/log_message/$$ errors.
-
 $subhead age_table$$
 This argument has prototype
 $codei%
@@ -435,7 +428,6 @@ smooth_info::smooth_info(
 
 // Normal Constructor
 smooth_info::smooth_info(
-	sqlite3*                                 db                ,
 	const CppAD::vector<double>&             age_table         ,
 	const CppAD::vector<double>&             time_table        ,
 	size_t                                   smooth_id         ,
