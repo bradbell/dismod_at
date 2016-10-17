@@ -13,6 +13,7 @@
 web_page='http://moby.ihme.washington.edu/bradbell/dismod_at'
 tarball='dismod_at-20161016.tgz'
 anaconda='/usr/local/anaconda3-current'
+install_special_requirements='true'
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -108,10 +109,11 @@ then
 		exit 1
 	fi
 fi
-if [ ! -e $version ]
+if [ -e $version ]
 then
-	echo_eval tar -xzf $tarball
+	echo rm -rf $version
 fi
+echo_eval tar -xzf $tarball
 echo_eval cd $version
 # -----------------------------------------------------------------------------
 # check for gsl library
@@ -130,15 +132,31 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-# Patch references to sqlite3
+# patch source code references to sqlite3
+echo "changing <sqlite3.h> -> <$anaconda/include/sqlite3.h>"
 cat << EOF > junk.sed
 s|^# *include *<sqlite3\\.h> *\$|# include <$anaconda/include/sqlite3.h>|
 EOF
-list=`find . -name '*.hpp'`
-for file in $list
+for ext in hpp cpp
 do
-	echo_eval sed -f junk.sed -i $file
+	list=`find . -name "*.$ext"`
+	for file in $list
+	do
+		sed -f junk.sed -i $file
+	done
 done
+#
+cat << EOF > junk.sed
+/^TARGET_LINK_LIBRARIES(/! b done
+: loop
+N
+/\\n)\$/! b loop
+s|\\n\\tsqlite3\$|\\n\\\t$anaconda/lib/libsqlite3.a|
+s|)\$|\\tpthread\\n\\trt\\n)|
+: done
+EOF
+#
+# patch references to sqlite3 library
 list='
 	devel/CMakeLists.txt
 	example/devel/CMakeLists.txt
@@ -146,19 +164,15 @@ list='
 '
 for file in $list
 do
-	sed -e "s|^\tsqlite3\$|\t$anaconda/lib/libsqlite3.a|" -i $file
+	echo_eval sed -f junk.sed -i $file
 done
-# -----------------------------------------------------------------------------
-# Patches
+#
+# patch the install scripts
 cat << EOF > junk.sed
 s|\\(^python3_executable\\)=.*|\\1='$anaconda/bin/python3'|
 s|^log_fatal_error='YES'|log_fatal_error='NO'|
 s|-std=c++11|-std=c++0x|
 EOF
-echo_eval sed -f junk.sed -i bin/run_cmake.sh
-echo_eval sed -f junk.sed -i bin/install_cppad_mixed.sh
-# -----------------------------------------------------------------------------
-# Patch the C++ compile flags
 list="
 	run_cmake.sh
 	install_eigen.sh
@@ -173,25 +187,33 @@ do
 done
 # -----------------------------------------------------------------------------
 # Build and install all the special requirements
-list="
-	eigen
-	ipopt
-	suitesparse
-	cppad
-	cppad_mixed
-"
-for package in $list
-do
-	program="bin/install_$package.sh"
-	echo "install_$package.sh 1>> $log_file 2>> $err_file"
-	$program 1>> "$start_dir/$log_file" 2>> "$start_dir/$err_file"
-done
+if [ "$install_special_requirements" == 'true' ]
+then
+	list="
+		eigen
+		ipopt
+		suitesparse
+		cppad
+		cppad_mixed
+	"
+	for package in $list
+	do
+		program="bin/install_$package.sh"
+			echo "install_$package.sh 1>> $log_file 2>> $err_file"
+		$program 1>> "$start_dir/$log_file" 2>> "$start_dir/$err_file"
+	done
+elif [ "$install_special_requirements" != 'false' ]
+then
+	echo 'install_special_requirements is not true or false'
+	exit 1
+fi
 # -----------------------------------------------------------------------------
 # Build and install dismod_at
 echo_eval bin/run_cmake.sh
 echo_eval cd build
 pkg_path="$HOME/prefix/dismod_at/$libdir/pkgconfig"
 echo_eval export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$pkg_path"
+echo_eval export PYTHONPATH=''
 make check
 make speed
 make install

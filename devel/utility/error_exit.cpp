@@ -81,8 +81,6 @@ $end
 # include <ctime>
 # include <cassert>
 # include <iostream>
-# include <iostream>
-# include <sqlite3.h>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/log_message.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>

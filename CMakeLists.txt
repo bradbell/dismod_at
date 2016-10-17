@@ -93,8 +93,10 @@ ENDMACRO( required_definition )
 MACRO( set_library_path directory_list library_list )
 	FOREACH( library ${library_list} )
 		FIND_LIBRARY(
-			${library}_library_path ${library}
+			${library}_library_path
+			${library}
 			PATHS ${directory_list}
+			NO_DEFAULT_PATH
 		)
 		IF( ${${library}_library_path} STREQUAL
 			"${library}_library_path-NOTFOUND" )
