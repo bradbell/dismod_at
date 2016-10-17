@@ -100,21 +100,6 @@ public:
 	// mulcov_rate_value_
 	size_t      mulcov_rate_value_n_cov(size_t integrand_id) const;
 	subvec_info mulcov_rate_value_info(size_t integrand_id, size_t j) const;
-
-	// varialbe_name
-	std::string variable_name(
-		size_t                                 index           ,
-		size_t                                 parent_node_id  ,
-		const CppAD::vector<double>&           age_table       ,
-		const CppAD::vector<covariate_struct>& covariate_table ,
-		const CppAD::vector<integrand_struct>& integrand_table ,
-		const CppAD::vector<mulcov_struct>&    mulcov_table    ,
-		const CppAD::vector<node_struct>&      node_table      ,
-		const CppAD::vector<smooth_struct>&    smooth_table    ,
-		const CppAD::vector<double>&           time_table      ,
-		const CppAD::vector<smooth_info>&      s_info_vec      ,
-		const child_info&                      child_object
-	) const;
 };
 
 } // END DISMOD_AT_NAMESPACE:

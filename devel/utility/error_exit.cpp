@@ -16,7 +16,7 @@ $spell
 	std
 $$
 
-$section Log and Print an Error Message and then Exit$$
+$section Printing and Logging Fatal Error Messages$$
 
 $head Syntax$$
 $codei%error_exit(%db%)
