@@ -1265,7 +1265,7 @@ Float data_model::avg_yes_ode(
 				bool ok = zero <= P && P < infinity;
 				if( ! ok )
 				{	std::string message = "Numerical integration error.\n"
-					"Prevalence is not non-negative and less than infinity.";
+					"Prevalence is negative or infinite or Nan.";
 					error_exit(message);
 				}
 				size_t ij = (i - i_min) * n_time_sub + (j - j_min);
