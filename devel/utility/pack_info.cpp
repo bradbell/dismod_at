@@ -27,8 +27,7 @@ $section Devel Variable Packing Information: Constructor$$
 
 $head Syntax$$
 $codei%pack_info %pack_object%(
-	%db%, %n_integrand%,  %n_child%,
-	%smooth_table%, %mulcov_table%, %rate_table%
+	%n_integrand%,  %n_child%, %smooth_table%, %mulcov_table%, %rate_table%
 )
 %$$
 $codei%pack_info %pack_copy%(%pack_object%)
@@ -39,13 +38,6 @@ $icode%integrand_size%  = %pack_object%.integrand_size()
 %$$
 $icode%child_size%      = %pack_object%.child_size()
 %$$
-
-$head db$$
-This argument has prototype
-$codei%
-	sqlite3* %db%
-%$$
-and is the database connection for $cref/logging/log_message/$$ errors.
 
 $head n_integrand$$
 This argument has prototype
@@ -160,7 +152,6 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 pack_info::pack_info(
-	sqlite3*                             db             ,
 	size_t                               n_integrand    ,
 	size_t                               n_child        ,
 	const CppAD::vector<smooth_struct>&  smooth_table   ,

@@ -230,8 +230,7 @@ bool avg_no_ode_xam(void)
 	std::string file_name = "example.db";
 	sqlite3* db = dismod_at::open_connection(file_name, new_file);
 	dismod_at::pack_info pack_object(
-		db, n_integrand, n_child,
-		smooth_table, mulcov_table, rate_table
+		n_integrand, n_child, smooth_table, mulcov_table, rate_table
 	);
 	//
 	// child_info

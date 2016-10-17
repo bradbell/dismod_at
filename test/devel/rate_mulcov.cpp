@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -210,8 +210,7 @@ bool rate_mulcov(void)
 	std::string file_name = "example.db";
 	sqlite3* db = dismod_at::open_connection(file_name, new_file);
 	dismod_at::pack_info pack_object(
-		db, n_integrand, n_child,
-		smooth_table, mulcov_table, rate_table
+		n_integrand, n_child, smooth_table, mulcov_table, rate_table
 	);
 	// child_info
 	dismod_at::child_info child_object(

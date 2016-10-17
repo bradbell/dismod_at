@@ -192,8 +192,7 @@ bool variable_name_xam(void)
 	// pack_object
 	size_t n_integrand = integrand_table.size();
 	dismod_at::pack_info pack_object(
-		db, n_integrand, n_child,
-		smooth_table, mulcov_table, rate_table
+		n_integrand, n_child, smooth_table, mulcov_table, rate_table
 	);
 	// ------------------------------------------------------------------
 	// check mulstd

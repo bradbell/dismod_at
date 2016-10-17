@@ -22,8 +22,12 @@ rename_cmd='s|table.omh|database.omh|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
 cat << EOF > junk.sed
-s|error_exit(db, *|error_exit(|
-s|error_exit(db_, *|error_exit(|
+/pack_object(\$/! b done
+N
+s/\\n\\t*db *,\$//
+N
+s/\\(\\n\\t*\\)db *, *n_integrand, *n_child,\\n\\t*/\\1n_integrand, n_child, /
+: done
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

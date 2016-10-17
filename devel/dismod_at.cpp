@@ -1575,7 +1575,6 @@ int main(int n_arg, const char** argv)
 	}
 	// pack_object
 	dismod_at::pack_info pack_object(
-		db                    ,
 		n_integrand           ,
 		n_child               ,
 		db_input.smooth_table ,
