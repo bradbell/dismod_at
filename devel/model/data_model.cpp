@@ -197,6 +197,7 @@ $end
 # include <dismod_at/a2_double.hpp>
 # include <dismod_at/avgint_subset.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -1262,7 +1263,12 @@ Float data_model::avg_yes_ode(
 			size_t j = ode_index[k_start + k] % n_time_ode_;
 			if( i_min <= i && j_min <= j )
 			{	Float P   = C_out[k] / ( S_out[k]  + C_out[k]);
-				assert( zero <= P && P < infinity );
+				bool ok = zero <= P && P < infinity;
+				if( ! ok )
+				{	std::string message = "Numerical integration error.\n"
+					"Prevalence is not non-negative and less than infinity.";
+					error_exit(message);
+				}
 				size_t ij = (i - i_min) * n_time_sub + (j - j_min);
 				switch(integrand)
 				{

@@ -68,6 +68,10 @@ Remove the $cref pack_info$$ $code variable_name$$ routine.
 (The $cref var_table$$ and
 $cref/variable.csv/db2csv_command/variable.csv/$$ file
 provide this information.)
+$lnext
+Report invalid prevalence values in the $cref log_table$$
+(in the case were
+$cref/log_fatal_error/run_cmake.sh/log_fatal_error/$$ is true).
 $lend
 
 $head 10-15$$
