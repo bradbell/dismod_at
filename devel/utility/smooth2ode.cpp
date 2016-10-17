@@ -154,6 +154,7 @@ of using this routine.
 $end
 -----------------------------------------------------------------------------
 */
+# include <limits>
 # include <dismod_at/min_max_vector.hpp>
 # include <dismod_at/smooth2ode.hpp>
 # include <dismod_at/a2_double.hpp>
@@ -242,7 +243,8 @@ n_time_si_       ( s_info.time_size() )
 			coefficient_[index].i_si = i_si;
 			coefficient_[index].j_si = j_si;
 
-			double a0, a1, ca0, ca1;
+			double nan = std::numeric_limits<double>::quiet_NaN();
+			double a0, a1= nan, ca0= nan, ca1= nan;
 			a0  = age_table[  s_info.age_id(i_si) ];
 			if( two_age )
 			{	a1  = age_table[  s_info.age_id(i_si+1) ];
@@ -250,7 +252,7 @@ n_time_si_       ( s_info.time_size() )
 				ca1  = (age - a0) / (a1 - a0);
 			}
 
-			double t0, t1, ct0, ct1;
+			double t0, t1= nan, ct0= nan, ct1= nan;
 			t0  = time_table[  s_info.time_id(j_si) ];
 			if( two_time )
 			{	t1  = time_table[  s_info.time_id(j_si+1) ];

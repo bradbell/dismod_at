@@ -211,7 +211,7 @@ void init_command(
 	//
 	// mulstd variables
 	size_t n_smooth = db_input.smooth_table.size();
-	size_t offset, var_id;
+	size_t offset = DISMOD_AT_NULL_SIZE_T, var_id = DISMOD_AT_NULL_SIZE_T;
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
 		{	offset  = pack_object.mulstd_offset(smooth_id, k);

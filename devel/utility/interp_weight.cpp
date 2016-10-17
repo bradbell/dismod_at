@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -189,13 +189,14 @@ double interp_weight(
 	t0  = time_table[ w_info.time_id(j_wi) ];
 	w00 = w_info.weight(i_wi, j_wi);
 
-	double a1, w10, da;
+	double nan = std::numeric_limits<double>::quiet_NaN();
+	double a1 = nan, w10 = nan, da = nan;
 	if( two_age )
 	{	a1  = age_table[  w_info.age_id(i_wi+1) ];
 		w10 = w_info.weight(i_wi+1, j_wi);
 		da  = a1 - a0;
 	}
-	double t1, w01, dt;
+	double t1 = nan, w01 = nan, dt = nan;
 	if( two_time )
 	{	t1  = time_table[  w_info.time_id(j_wi+1) ];
 		w01 = w_info.weight(i_wi, j_wi+1);

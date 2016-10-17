@@ -329,6 +329,21 @@ def db2csv_command(database_file_arg) :
 	for table in table_list :
 		table_data[table] = dismod_at.get_table_dict(connection, table)
 	# -------------------------------------------------------------------------
+	# check tables that are supposed to be the same length
+	pair_list = [
+		[ 'var',         'fit_var'],
+		[ 'data_subset', 'fit_data_subset' ]
+	]
+	for [left, right] in pair_list :
+		if have_table[right] :
+			len_left  = len( table_data[left]  )
+			len_right = len( table_data[right] )
+			if len_left != len_right :
+				msg  = 'db2csv_command: tables should have same length:\n'
+				msg += 'length ' + left + '_table = ' + str(len_left) + '\n'
+				msg += 'length ' + right + '_table = ' + str(len_right) + '\n'
+				sys.exit(msg)
+	# -------------------------------------------------------------------------
 	# parent_node_id, fit_simulate_index
 	parent_node_id     = None
 	fit_simulate_index = None
