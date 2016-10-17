@@ -77,12 +77,13 @@ then
 	echo 'install_suitesparse.sh: cannot get metis source'
 	exit 1
 fi
+# suitesparse wants the metis sourcews here
+echo_eval mv $metis_version metis-4.0
 # -----------------------------------------------------------------------------
 sed -e \
 "s|^\( *INSTALL_INCLUDE *\)=.*|\1= $suitesparse_prefix.$build_type/include|" \
 -e "s|^\( *INSTALL_LIB *\)=.*|\1= $suitesparse_prefix.$build_type/$libdir|" \
 -e 's|^\( *BLAS *\)=.*|\1= -lblas|' \
--e "s|^\( *METIS_PATH *\)=.*|\1= ../../$metis_version|" \
 -e "s|^\( *METIS *\)=.*|\1= $ipopt_prefix/$libdir/libcoinmetis.a|" \
 -i.bak SuiteSparse_config/SuiteSparse_config.mk
 #

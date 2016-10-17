@@ -48,14 +48,15 @@ then
 fi
 # ----------------------------------------------------------------------------
 # check for old log and error files
-start_dir=`pwd`
-log_file='install_dismod_at.log'
-err_file='install_dismod_at.err'
+if [ ! -e log ]
+then
+	echo_eval mkdir log
+fi
 for ext in log err
 do
-	if [ -e install_dismod_at.$ext ]
+	if [ -e log/install_dismod_at.$ext ]
 	then
-		read -p "install_dismod_at.$ext exists, remove or append [r/a] ?" \
+		read -p "log/install_dismod_at.$ext exists, remove or append [r/a] ?" \
 			response
 		if [ "$response" != 'r' ] && [ "$response" != 'a' ]
 		then
@@ -64,10 +65,13 @@ do
 		fi
 		if [ "$response" != 'r' ]
 		then
-			echo_eval rm install_dismod_at.$ext
+			echo_eval rm log/install_dismod_at.$ext
 		fi
 	fi
 done
+start_dir=`pwd`
+log_file='log/install_dismod_at.log'
+err_file='log/install_dismod_at.err'
 # ----------------------------------------------------------------------------
 # check for necessary programs
 list="
@@ -145,26 +149,28 @@ do
 	sed -e "s|^\tsqlite3\$|\t$anaconda/lib/libsqlite3.a|" -i $file
 done
 # -----------------------------------------------------------------------------
-# Patch references to python3
+# Patches
 cat << EOF > junk.sed
 s|\\(^python3_executable\\)=.*|\\1='$anaconda/bin/python3'|
+s|^log_fatal_error='YES'|log_fatal_error='NO'|
+s|-std=c++11|-std=c++0x|
 EOF
 echo_eval sed -f junk.sed -i bin/run_cmake.sh
+echo_eval sed -f junk.sed -i bin/install_cppad_mixed.sh
 # -----------------------------------------------------------------------------
 # Patch the C++ compile flags
 list="
-	eigen
-	ipopt
-	suitesparse
-	cppad
-	cppad_mixed
+	run_cmake.sh
+	install_eigen.sh
+	install_ipopt.sh
+	install_suitesparse.sh
+	install_cppad.sh
+	install_cppad_mixed.sh
 "
-for package in $list
+for file in $list
 do
-	echo "sed -e 's|-std=c++11|-std=c++0x|' -i install_$package.sh"
-	sed -e 's|-std=c++11|-std=c++0x|' -i bin/install_$package.sh
+	echo_eval sed -f junk.sed -i bin/$file
 done
-echo_eval sed -f junk.sed -i bin/run_cmake.sh
 # -----------------------------------------------------------------------------
 # Build and install all the special requirements
 list="
