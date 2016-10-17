@@ -1223,9 +1223,8 @@ Float data_model::avg_yes_ode(
 	CppAD::vector<Float> iota, rho, chi, omega, S_out, C_out;
 	CppAD::vector<Float> integrand_sub( n_ode_sub );
 	Float zero = Float(0.0);
-# ifndef NDEBUG
 	Float infinity  = Float( std::numeric_limits<double>::infinity() );
-# endif
+	//
 	for(k = 0; k < n_ode_sub; k++)
 			integrand_sub[k] = CppAD::nan(zero);
 	for(ell = 0; ell < n_cohort; ell++)

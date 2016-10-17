@@ -10,10 +10,25 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN BASH
+# upstream source for dismod_at tarballs
 web_page='http://moby.ihme.washington.edu/bradbell/dismod_at'
+#
+# which local tarball to use (if not there get it from upstream)
 tarball='dismod_at-20161016.tgz'
+#
+# location on this system of python3 and newer version of sqlite3
 anaconda='/usr/local/anaconda3-current'
+#
+# either 'true' or 'false' (can use special requirements from previous version)
 install_special_requirements='true'
+#
+build_type="$1"
+if [ "$build_type" != 'debug' ] && [ "$build_type" != 'release' ]
+then
+	echo 'usage: ./install_dismod_at.sh build_type'
+	echo 'where build_type is debug or release'
+	exit 1
+fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -167,10 +182,18 @@ do
 	echo_eval sed -f junk.sed -i $file
 done
 #
+if [ "$build_type" == 'release' ]
+then
+	log_fatal_error='YES'
+else
+	log_fatal_error='NO'
+fi
+#
 # patch the install scripts
 cat << EOF > junk.sed
+s|^build_type=.*|build_type=\'$build_type\'|
+s|^log_fatal_error=.*|log_fatal_error=\'$log_fatal_error\'|
 s|\\(^python3_executable\\)=.*|\\1='$anaconda/bin/python3'|
-s|^log_fatal_error='YES'|log_fatal_error='NO'|
 s|-std=c++11|-std=c++0x|
 EOF
 list="
@@ -185,6 +208,8 @@ for file in $list
 do
 	echo_eval sed -f junk.sed -i bin/$file
 done
+# using a static link from suitespace to ipopt version of metis library.
+sed -e 's|^\.\./configure |& -enable-static |' -i bin/install_ipopt.sh
 # -----------------------------------------------------------------------------
 # Build and install all the special requirements
 if [ "$install_special_requirements" == 'true' ]
