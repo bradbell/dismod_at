@@ -151,7 +151,7 @@ cat << EOF > junk.sed
 : loop
 N
 /\\n)\$/! b loop
-s|\\n\\tsqlite3\$|\\n\\\t$anaconda/lib/libsqlite3.a|
+s|\\n\\tsqlite3\\n|\\n\\t$anaconda/lib/libsqlite3.a\\n|
 s|)\$|\\tpthread\\n\\trt\\n)|
 : done
 EOF
