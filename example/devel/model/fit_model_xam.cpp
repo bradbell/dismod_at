@@ -376,6 +376,9 @@ bool fit_model_xam(void)
 			}
 		}
 	}
+	// close the database connection
+	sqlite3_close(db);
+	//
 	return ok;
 }
 // END C++
