@@ -83,6 +83,7 @@ ENDMACRO( required_definition )
 #
 # directory_list
 # is a list of directories to search for the specified libraries.
+# The system default library directory will be searched last.
 #
 # library_list
 # is a list of libraries to be search for. It is a fatal error if one
@@ -91,25 +92,28 @@ ENDMACRO( required_definition )
 # path for the required library.
 #
 MACRO( set_library_path directory_list library_list )
-	FOREACH( library ${library_list} )
+	FOREACH( lib ${library_list} )
 		FIND_LIBRARY(
-			${library}_library_path
-			${library}
+			${lib}_library_path
+			${lib}
 			PATHS ${directory_list}
 			NO_DEFAULT_PATH
 		)
-		IF( ${${library}_library_path} STREQUAL
-			"${library}_library_path-NOTFOUND" )
+		IF( ${${lib}_library_path} STREQUAL "${lib}_library_path-NOTFOUND" )
+			# search the default library path only if not in directory_list
+			FIND_LIBRARY( ${lib}_library_path ${lib} )
+		ENDIF( ${${lib}_library_path} STREQUAL "${lib}_library_path-NOTFOUND" )
+		IF( ${${lib}_library_path} STREQUAL "${lib}_library_path-NOTFOUND" )
 			MESSAGE( STATUS "directory_list=${directory_list}")
-			MESSAGE( FATAL_ERROR "Cannot find library=${library}" )
-		ENDIF( ${${library}_library_path} STREQUAL "${library}-NOTFOUND" )
-		MESSAGE(STATUS "${library}_library_path = ${${library}_library_path}")
-	ENDFOREACH( library )
+			MESSAGE( FATAL_ERROR "Cannot find library=${lib}" )
+		ENDIF( ${${lib}_library_path} STREQUAL "${lib}-NOTFOUND" )
+		MESSAGE(STATUS "${lib}_library_path = ${${lib}_library_path}")
+	ENDFOREACH( lib )
 ENDMACRO( set_library_path )
 # ============================================================================
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
-SET(dismod_at_version "20161016" )
+SET(dismod_at_version "20161017" )
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 INCLUDE(CheckCXXSourceRuns)
 # ============================================================================

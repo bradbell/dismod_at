@@ -49,6 +49,23 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 10-17$$
+$list number$$
+Improve the invalid prevalence error message.
+$lnext
+Fix some more warnings on a old compiler (g++4.4.7).
+$lnext
+Add choice for debug or release build in
+the IHME cluster program $code install_dismod_at.sh$$.
+$lnext
+In cmake, search the default library directory last.
+This enables choosing a non-default version of a library as
+well as finding the default libraries when needed.
+$lnext
+Fix assertion when
+$cref/log_fatal_error/run_cmake.sh/log_fatal_error/$$ is false.
+$lend
+
 $head 10-16$$
 $list number$$
 The $cref/random_zero_sum.py/user_random_zero_sum.py/$$

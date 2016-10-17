@@ -90,6 +90,7 @@ $end
 # include <dismod_at/configure.hpp>
 
 namespace {
+	// initial value correspoind to no error  logging
 	sqlite3* db_previous_ = DISMOD_AT_NULL_PTR;
 }
 
@@ -107,13 +108,6 @@ void error_exit(
 	// check assumption one table_name and row_id columns of log
 	assert( table_name != "" || row_id == DISMOD_AT_NULL_SIZE_T );
 
-	// write to log table
-	string message_type = "error";
-	if( db != DISMOD_AT_NULL_PTR )
-	{	log_message(db, message_type, message, table_name, row_id);
-		sqlite3_close(db);
-	}
-
 	// write to standard error
 	cerr << "Error: " << message << endl;
 	if( table_name != "" )
@@ -122,6 +116,18 @@ void error_exit(
 			cerr << " in row with " << table_name << "_id = " << row_id;
 		cerr << endl;
 	}
+
+	// If db is null, we are generting an assert instead of logging errors
+	assert( db != DISMOD_AT_NULL_PTR );
+
+	// write to log table
+	string message_type = "error";
+	log_message(db, message_type, message, table_name, row_id);
+	//
+	// close the database
+	sqlite3_close(db);
+	//
+	// exit
 	std::exit(1);
 }
 void error_exit(
@@ -138,6 +144,7 @@ void error_exit(
 	return;
 }
 
+// Turn error logging on and off using this call
 void error_exit(sqlite3* db)
 {	db_previous_ = db; }
 

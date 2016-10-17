@@ -14,7 +14,7 @@
 web_page='http://moby.ihme.washington.edu/bradbell/dismod_at'
 #
 # which local tarball to use (if not there get it from upstream)
-tarball='dismod_at-20161016.tgz'
+tarball='dismod_at-20161017.tgz'
 #
 # location on this system of python3 and newer version of sqlite3
 anaconda='/usr/local/anaconda3-current'
