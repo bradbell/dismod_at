@@ -680,11 +680,16 @@ $end
 	CppAD::vector<double> random_opt(n_random_);
 	unpack_random(pack_object_, variable_value, random_opt);
 	//
+	// convert dismod_at random effects to cppad_mixed random effects
+	d_vector cppad_mixed_random_opt = random_dismod_at2cppad_mixed(
+		random_opt
+	);
+	//
 	// information_info
 	CppAD::mixed::sparse_mat_info information_info = information_mat(
-		solution, random_opt
+		solution, cppad_mixed_random_opt
 	);
-
+	//
 	// fixed_lower
 	CppAD::vector<double> pack_vec( n_var );
 	CppAD::vector<double> fixed_lower(n_fixed_);
@@ -740,7 +745,7 @@ $end
 		solution,
 		fixed_lower,
 		fixed_upper,
-		random_opt
+		cppad_mixed_random_opt
 	);
 	//
 	// random_options
@@ -759,19 +764,36 @@ $end
 	CppAD::vector<double> random_in(n_random_);
 	unpack_random(pack_object_, start_var_, random_in);
 	//
-	CppAD::vector<double> one_sample_random(n_random_);
+	// convert from dismod_at random effects to cppad_mixed random effects
+	d_vector cppad_mixed_random_lower = random_dismod_at2cppad_mixed(
+		random_lower_
+	);
+	d_vector cppad_mixed_random_upper = random_dismod_at2cppad_mixed(
+		random_upper_
+	);
+	d_vector cppad_mixed_random_in = random_dismod_at2cppad_mixed(
+		random_in
+	);
+	//
+	CppAD::vector<double> one_sample_random(n_random_),
+		cppad_mixed_one_sample_random(n_random_ - n_random_equal_);
 	CppAD::vector<double> one_sample_fixed(n_fixed_);
 	for(size_t i_sample = 0; i_sample < n_sample; i_sample++)
 	{	for(size_t j = 0; j < n_fixed_; j++)
 		{	one_sample_fixed[j] = sample_fix[ i_sample * n_fixed_ + j];
 			//
-			sample_random(
-				one_sample_random,
-				random_options,
-				one_sample_fixed,
-				random_lower_,
-				random_upper_,
-				random_in
+			if( n_random_ > n_random_equal_ )
+			{	sample_random(
+					cppad_mixed_one_sample_random,
+					random_options,
+					one_sample_fixed,
+					cppad_mixed_random_lower,
+					cppad_mixed_random_upper,
+					cppad_mixed_random_in
+				);
+			}
+			one_sample_random = random_cppad_mixed2dismod_at(
+				cppad_mixed_one_sample_random
 			);
 			//
 			// pack_vec

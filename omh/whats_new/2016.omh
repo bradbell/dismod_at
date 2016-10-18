@@ -50,11 +50,19 @@ $childtable%omh/whats_new/2015.omh
 %$$
 
 $head 10-18$$
+$list number$$
 In the $cref user$$ examples,
 change $icode%name%_dict%$$ to $icode%name%_table%$$
 for $icode name$$ equal to $code var$$, $code predict$$, and $code sample$$.
 This makes it clearer that they are copies of the corresponding tables
 as a python list of dictionaries; see $cref get_table_dict$$.
+$lnext
+If $cref/random_bound/option_table/Optimizer/random_bound/$$ was zero,
+the $cref sample_command$$ would terminate with a $code cppad_mixed$$
+error message. This has been fixed. In addition, the random bound documentation
+now includes mention that is not accounted for in the
+$cref/asymptotic/sample_command/method/asymptotic/$$.
+$lend
 
 $head 10-17$$
 $list number$$

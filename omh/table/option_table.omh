@@ -304,12 +304,18 @@ the resulting optimal value can be used as a starting point for fitting
 with random effects; see
 $cref/start fit_var/start_command/source/fit_var/$$; see
 $cref/random_bound.py/user_random_bound.py/$$.
+$lnext
 Note that fitting with no random effects corresponds to
 a $code null$$ value for the
 $cref/child_smooth_id/rate_table/child_smooth_id/$$.
 The theory for fitting with $icode random_bound$$ equal to zero
 is just fine (since it corresponds to no random effects not constrained
 random effects).
+$lnext
+Note that the theory used to compute
+$cref/asymptotic/sample_command/method/asymptotic/$$ samples does not take
+$icode random_bound$$ into account; i.e., these samples are computed as if
+$icode random_bound$$ is infinity.
 $lend
 
 $subhead fixed_bound_frac$$

@@ -16,6 +16,7 @@ FOREACH(user_case
 	neg_iteration
 	no_data
 	not_ordered
+	random_bound
 	relrisk
 	zero_random
 )
@@ -34,6 +35,7 @@ ADD_CUSTOM_TARGET(
 	check_test_user_neg_iteration
 	check_test_user_no_data
 	check_test_user_not_ordered
+	check_test_user_random_bound
 	check_test_user_relrisk
 	check_test_user_zero_random
 )
