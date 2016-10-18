@@ -62,6 +62,10 @@ the $cref sample_command$$ would terminate with a $code cppad_mixed$$
 error message. This has been fixed. In addition, the random bound documentation
 now includes mention that is not accounted for in the
 $cref/asymptotic/sample_command/method/asymptotic/$$.
+$lnext
+Advance to $code cppad_mixed-20161018$$.
+This fixed a bug in $code cppad_mixed$$
+logging error messages versus generating asserts.
 $lend
 
 $head 10-17$$
