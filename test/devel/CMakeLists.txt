@@ -11,13 +11,6 @@
 # Build C++ Examples / Tests
 #
 #
-SET( library_list "" )
-FOREACH( package cppad_mixed;suitesparse;ipopt )
-	FOREACH( library ${${package}_LIBRARIES} )
-		LIST( APPEND library_list ${${library}_library_path} )
-	ENDFOREACH( library ${package}_LIBRARIES )
-ENDFOREACH( package ipopt;suitesparse;cppad_mixed )
-#
 # Program is not installed, and depends on following source files
 ADD_EXECUTABLE(test_devel EXCLUDE_FROM_ALL
 	age_time_order.cpp
@@ -31,9 +24,12 @@ SET_TARGET_PROPERTIES(
 )
 TARGET_LINK_LIBRARIES(test_devel
 	devel
-	${library_list}
+	${cppad_mixed_library_path_list}
+	${suitesparse_library_path_list}
+	${ipopt_library_path_list}
 	sqlite3
 	gsl
 	gslcblas
+	${system_specific_library_list}
 )
 ADD_CUSTOM_TARGET(check_test_devel test_devel DEPENDS test_devel )

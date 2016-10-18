@@ -11,15 +11,21 @@
 # Sample Command line
 #                     cmake \
 #                        -Wno-dev \
-# standard variables:    -D CMAKE_VERBOSE_MAKEFILE=value \
-#                        -D CMAKE_BUILD_TYPE=value \
 # required variables:    -D python3_executable=value \
 #                        -D extra_cxx_flags=value \
+#                        -D cmake_libdir=value \
 #                        -D dismod_at_prefix=value \
 #                        -D cppad_prefix=value \
 #                        -D eigen_prefix=value \
 #                        -D ipopt_prefix=value \
+#                        -D log_fatal_error=value \
 #                         ..
+# optional
+# standard variables:    -D CMAKE_VERBOSE_MAKEFILE=value \
+#                        -D CMAKE_BUILD_TYPE=value \
+#                        -D CMAKE_CXX_COMPILER=value \
+#
+# optional variables:    -D system_specific_library_list=value \
 # ============================================================================
 # Macro definitions
 # ============================================================================
@@ -79,37 +85,49 @@ MACRO( required_definition variable type docstring )
 	ENDIF( ${type} STREQUAL "BOOL" )
 ENDMACRO( required_definition )
 # ----------------------------------------------------------------------------
-# set_libary_path( directory_list type library_list )
+# set_library_path_list(library_path_list search_directory_list library_list)
 #
-# directory_list
-# is a list of directories to search for the specified libraries.
-# The system default library directory will be searched last.
+# library_path_list
+# The input value of this variable does not matter. Upon return it is a list
+# containing an absolute path for each of the requested libraries.
+# The order for the libraries is the same as in library_list.
+#
+# search_directory_list
+# is a list of directories to search for the specified libraries. The system
+# default library directory is only searched when the libraries cannot
+# be found in this list.
 #
 # library_list
 # is a list of libraries to be search for. It is a fatal error if one
-# of the libraries cannot be found. Otherwise, for each library
-# a variable called ${library}_library_path is set to the full
-# path for the required library.
+# of the libraries cannot be found. Otherwise, the absolute path for each
+# library is included in library_path_list
 #
-MACRO( set_library_path directory_list library_list )
+MACRO( set_library_path_list
+	library_path_list  search_directory_list library_list
+)
+	SET( ${library_path_list} "" )
 	FOREACH( lib ${library_list} )
 		FIND_LIBRARY(
-			${lib}_library_path
+			library_path
 			${lib}
-			PATHS ${directory_list}
+			PATHS ${search_directory_list}
 			NO_DEFAULT_PATH
 		)
-		IF( ${${lib}_library_path} STREQUAL "${lib}_library_path-NOTFOUND" )
-			# search the default library path only if not in directory_list
-			FIND_LIBRARY( ${lib}_library_path ${lib} )
-		ENDIF( ${${lib}_library_path} STREQUAL "${lib}_library_path-NOTFOUND" )
-		IF( ${${lib}_library_path} STREQUAL "${lib}_library_path-NOTFOUND" )
-			MESSAGE( STATUS "directory_list=${directory_list}")
-			MESSAGE( FATAL_ERROR "Cannot find library=${lib}" )
-		ENDIF( ${${lib}_library_path} STREQUAL "${lib}-NOTFOUND" )
-		MESSAGE(STATUS "${lib}_library_path = ${${lib}_library_path}")
+		# Only search the system default library directory when
+		# the library is not in any of the specified search directories
+		FIND_LIBRARY( library_path ${lib} )
+		#
+		IF( ${library_path} STREQUAL "library_path-NOTFOUND" )
+			MESSAGE(STATUS "directory_list = ${search_directory_list}")
+			MESSAGE(STATUS "CMAKE_LIBRARY_PATH = ${CMAKE_LIBRARY_PATH}")
+			MESSAGE(FATAL_ERROR "Cannot find library = ${lib}" )
+		ENDIF( ${library_path} STREQUAL "library_path-NOTFOUND" )
+		MESSAGE(STATUS "${lib} path = ${library_path}")
+		SET( ${library_path_list} "${${library_path_list}};${library_path}" )
+		UNSET( library_path CACHE )
 	ENDFOREACH( lib )
-ENDMACRO( set_library_path )
+	# MESSAGE(STATUS "${library_path_list}=${${library_path_list}}"  )
+ENDMACRO( set_library_path_list )
 # ============================================================================
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
@@ -141,6 +159,19 @@ required_definition(log_fatal_error BOOL
 	"should dismod_at log fatal errors or generate asserts"
 )
 # ----------------------------------------------------------------------------
+# system_specific_library_list
+#
+SET( system_specific_library_list NOTFOUND CACHE STRING
+	"include extra libraries that are needed by this particular system."
+)
+IF( "${system_specific_library_list}" STREQUAL "NOTFOUND"  )
+	SET( system_specific_library_list "" )
+ELSEIF( "${system_specific_library_list}" STREQUAL "NOTFOUND"  )
+	MESSAGE(STATUS
+		"system_specific_library_list = ${system_specific_library_list}"
+	)
+ENDIF( "${system_specific_library_list}" STREQUAL "NOTFOUND"  )
+# ----------------------------------------------------------------------------
 # get required package prefixes
 get_prefix(cppad)
 get_prefix(eigen)
@@ -155,23 +186,31 @@ ENDFOREACH( var )
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
 # ----------------------------------------------------------------------------
-# For each library in ${ipopt_LIBRARIES} set ${library}_library_path
-# (note CppAD must be installed with ipopt_prefix specified)
+# ipopt_library_path_list
+#
 FIND_PACKAGE(PkgConfig)
 pkg_check_modules(ipopt REQUIRED ipopt)
-set_library_path( "${ipopt_LIBRARY_DIRS}" "${ipopt_LIBRARIES}" )
+set_library_path_list(
+	ipopt_library_path_list "${ipopt_LIBRARY_DIRS}" "${ipopt_LIBRARIES}"
+)
 # ----------------------------------------------------------------------------
-# For each library in ${suitesparse_LIBRARIES} set ${library}_library_path
+# suitesparse_path_list
+#
 # no pkg-config for SuiteSparse so explicitly set corresponding values
 SET(suitesparse_LIBRARY_DIRS ${suitesparse_prefix}/${cmake_libdir} )
 SET(suitesparse_LIBRARIES "cholmod;amd;camd;colamd;ccolamd;suitesparseconfig" )
-set_library_path( "${suitesparse_LIBRARY_DIRS}" "${suitesparse_LIBRARIES}" )
+set_library_path_list( suitesparse_library_path_list
+	"${suitesparse_LIBRARY_DIRS}" "${suitesparse_LIBRARIES}"
+)
 # ----------------------------------------------------------------------------
-# For each library in ${cppad_mixed_LIBRARIES} set ${library}_library_path
+# cppad_mixed_library_path_list
+#
 # no pkg-config for cppad_mixed so explicitly set corresponding values
 SET(cppad_mixed_LIBRARY_DIRS ${cppad_prefix}/${cmake_libdir} )
 SET(cppad_mixed_LIBRARIES "cppad_mixed" )
-set_library_path( "${cppad_mixed_LIBRARY_DIRS}" "${cppad_mixed_LIBRARIES}" )
+set_library_path_list( cppad_mixed_library_path_list
+	"${cppad_mixed_LIBRARY_DIRS}" "${cppad_mixed_LIBRARIES}"
+)
 # ----------------------------------------------------------------------------
 # dismod_at_has_nullptr_01
 #

@@ -13,7 +13,7 @@
 # &begin run_cmake.sh&& &newlinech #&&
 # &spell
 #	cmake makefile cxx std dismod lcppad cholmod xam cpp
-#	usr eigen ipopt cppad bools suitesparse devel hpp
+#	usr eigen ipopt cppad bools suitesparse devel hpp pthread
 # &&
 #
 # &section bin/run_cmake.sh: User Configuration Options&&
@@ -82,6 +82,15 @@ cmake_cxx_compiler=''
 # (which is useful when running a program in a debugger).
 # &codep
 log_fatal_error='YES'
+# &&
+#
+# &head system_specific_library_list&&
+# List of libraries that are needed for a particular system. For example,
+# if when you build &code dismod_at&& the &code pthread&& library is
+# required by your system, then include it here.
+# Libraries in the list can be separated by spaces or semi-colons.
+# &codep
+system_specific_library_list=''
 # &&
 # &end
 # ============================================================================
@@ -164,6 +173,7 @@ cmake \
 	-D cppad_prefix="$cppad_prefix" \
 	-D suitesparse_prefix="$suitesparse_prefix" \
 	-D log_fatal_error="$log_fatal_error" \
+	-D system_specific_library_list="$system_specific_library_list" \
 	..
 # --------------------------------------------------------------------------
 echo 'run_cmake.sh: OK'

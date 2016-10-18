@@ -65,22 +65,18 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	table/weight_info_xam.cpp
 )
 #
-SET( library_list "" )
-FOREACH( package cppad_mixed;suitesparse;ipopt )
-	FOREACH( library ${${package}_LIBRARIES} )
-		LIST( APPEND library_list ${${library}_library_path} )
-	ENDFOREACH( library ${package}_LIBRARIES )
-ENDFOREACH( package ipopt;suitesparse;cppad_mixed )
-#
 SET_TARGET_PROPERTIES(
 	example_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
 TARGET_LINK_LIBRARIES(example_devel
 	devel
-	${library_list}
+	${cppad_mixed_library_path_list}
+	${suitesparse_library_path_list}
+	${ipopt_library_path_list}
 	sqlite3
 	gsl
 	gslcblas
+	${system_specific_library_list}
 )
 ADD_CUSTOM_TARGET(check_example_devel example_devel DEPENDS example_devel )
 ADD_DEPENDENCIES(check_example_devel devel )

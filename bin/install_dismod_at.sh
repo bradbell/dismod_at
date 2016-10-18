@@ -13,14 +13,16 @@
 # upstream source for dismod_at tarballs
 web_page='http://moby.ihme.washington.edu/bradbell/dismod_at'
 #
-# which local tarball to use (if not there get it from upstream)
+# Which local tarball to use. If it is not present in $HOME/install
+# this script will try to retreive it from upstream.
 tarball='dismod_at-20161017.tgz'
 #
 # location on this system of python3 and newer version of sqlite3
 anaconda='/usr/local/anaconda3-current'
 #
-# either 'true' or 'false' (can use special requirements from previous version)
-install_special_requirements='true'
+# Use 'true' if you have not yet installed the special requirements.
+# Use 'false' if you want to use the previously installed special requirements.
+install_special_requirements='false'
 #
 build_type="$1"
 if [ "$build_type" != 'debug' ] && [ "$build_type" != 'release' ]
@@ -167,7 +169,6 @@ cat << EOF > junk.sed
 N
 /\\n)\$/! b loop
 s|\\n\\tsqlite3\\n|\\n\\t$anaconda/lib/libsqlite3.a\\n|
-s|)\$|\\tpthread\\n\\trt\\n)|
 : done
 EOF
 #
@@ -193,7 +194,8 @@ fi
 cat << EOF > junk.sed
 s|^build_type=.*|build_type=\'$build_type\'|
 s|^log_fatal_error=.*|log_fatal_error=\'$log_fatal_error\'|
-s|\\(^python3_executable\\)=.*|\\1='$anaconda/bin/python3'|
+s|^\\(system_specific_library_list\\)=.*|\\1='pthread;rt'|
+s|^\\(python3_executable\\)=.*|\\1='$anaconda/bin/python3'|
 s|-std=c++11|-std=c++0x|
 EOF
 list="

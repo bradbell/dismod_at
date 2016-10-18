@@ -64,6 +64,10 @@ well as finding the default libraries when needed.
 $lnext
 Fix assertion when
 $cref/log_fatal_error/run_cmake.sh/log_fatal_error/$$ is false.
+$lnext
+Add the
+$cref/system_specific_library_list/run_cmake.sh/system_specific_library_list/$$
+argument to the cmake install script.
 $lend
 
 $head 10-16$$
