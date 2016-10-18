@@ -30,19 +30,6 @@ $$
 
 $section Dismod_at Wish List$$
 
-$head Error Messages$$
-Some places in the code the sqlite database pointer is not available and hence
-$cref error_exit$$ cannot be used to log an error condition.
-This result in asserts instead of more meaningful error messages; e.g.,
-$codep
-	assert( zero <= P && P < infinity );
-$$
-in $code data_model.cpp$$. This should be changed so that meaningful
-error messages can be generated where possible.
-In addition, have an option during the
-$cref/install/install_unix/$$ to convert all error messages to asserts
-(so that the corresponding event can seen in the debugger).
-
 $head Large Excess Mortality$$
 The case where $icode rate_case$$ is
 $cref/iota_pos_rho_zero/option_table/rate_case/iota_pos_rho_zero/$$

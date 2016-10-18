@@ -150,8 +150,8 @@ The $code import_cascade.py$$ program was removed
 $head 09-30$$
 $list number$$
 A new assert, that checks for infinity or nan results during the integration,
-was added. This should be converted to a more useful error message; see
-$cref/error messages/wish_list/Error Messages/$$ in the wish list.
+was added. This should be converted to a more useful error message;
+(this was done on $cref/10-16/whats_new_2016/10-16/$$).
 Furthermore, in some cases it can be avoided; see
 $cref/large excess mortality/wish_list/Large Excess Mortality/$$
 in the wish list.
