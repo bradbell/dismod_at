@@ -377,11 +377,11 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get variable and fit_var tables
-var_dict       = dismod_at.get_table_dict(connection, 'var')
-fit_var_dict   = dismod_at.get_table_dict(connection, 'fit_var')
+var_table       = dismod_at.get_table_dict(connection, 'var')
+fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 sample_dict    = dismod_at.get_table_dict(connection, 'sample')
 # -----------------------------------------------------------------------------
-n_var     = len( var_dict )
+n_var     = len( var_table )
 assert len( sample_dict ) % n_var == 0
 n_sample      = len( sample_dict ) / n_var
 sample_array  = numpy.zeros( (n_sample, n_var) , dtype = float )
@@ -397,7 +397,7 @@ text = "{:>11s} {:>11s} {:>11s} {:>11s}"
 text = text.format('i_var', 'value', 'mean', 'cv' )
 print(text)
 for i in range( n_var ) :
-	variable_value = fit_var_dict[i]['variable_value']
+	variable_value = fit_var_table[i]['variable_value']
 	mean = sample_mean[i]
 	cv   = float('nan')
 	if variable_value != 0 :

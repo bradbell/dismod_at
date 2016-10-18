@@ -338,8 +338,8 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # Results for fitting with no noise
-var_dict     = dismod_at.get_table_dict(connection, 'var')
-fit_var_dict = dismod_at.get_table_dict(connection, 'fit_var')
+var_table     = dismod_at.get_table_dict(connection, 'var')
+fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 #
 middle_age_id  = 1
 middle_time_id = 1
@@ -352,17 +352,17 @@ tol            = 1e-7
 count             = 0
 iota_rate_id      = 1
 remission_rate_id = 2
-for var_id in range( len(var_dict) ) :
-	row   = var_dict[var_id]
+for var_id in range( len(var_table) ) :
+	row   = var_table[var_id]
 	match = row['var_type'] == 'rate'
 	match = match and row['node_id'] == parent_node_id
 	if match and row['rate_id'] == iota_rate_id :
 		count += 1
-		value = fit_var_dict[var_id]['variable_value']
+		value = fit_var_table[var_id]['variable_value']
 		assert abs( value / iota_true - 1.0 ) < 5.0 * tol
 	if match and row['rate_id'] == remission_rate_id :
 		count += 1
-		value = fit_var_dict[var_id]['variable_value']
+		value = fit_var_table[var_id]['variable_value']
 		assert abs( value / remission_true - 1.0 ) < 5.0 * tol
 assert count == 8
 #
@@ -371,13 +371,13 @@ count                   = 0
 mulcov_incidence        = 1.0
 mulcov_remission        = 2.0;
 remission_integrand_id  = 1
-for var_id in range( len(var_dict) ) :
-	row   = var_dict[var_id]
+for var_id in range( len(var_table) ) :
+	row   = var_table[var_id]
 	match = row['var_type'] == 'mulcov_meas_value'
 	if match :
 		integrand_id = row['integrand_id']
 		count       += 1
-		value        = fit_var_dict[var_id]['variable_value']
+		value        = fit_var_table[var_id]['variable_value']
 		if integrand_id == remission_integrand_id :
 			assert abs( value / mulcov_remission - 1.0 ) < tol
 		else :

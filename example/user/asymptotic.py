@@ -337,16 +337,16 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get variable and fit_var tables
-var_dict     = dismod_at.get_table_dict(connection, 'var')
+var_table     = dismod_at.get_table_dict(connection, 'var')
 node_table  = dismod_at.get_table_dict(connection, 'node')
 rate_table  = dismod_at.get_table_dict(connection, 'rate')
 sample_dict  = dismod_at.get_table_dict(connection, 'sample')
 # -----------------------------------------------------------------------
 # map from node name to variable id
 node_name2var_id = dict()
-for var_id in range(len(var_dict) ) :
+for var_id in range(len(var_table) ) :
 	assert var_id < 3
-	row = var_dict[var_id]
+	row = var_table[var_id]
 	assert row['var_type'] == 'rate'
 	assert rate_table[row['rate_id']]['rate_name']  == 'iota'
 	node_name = node_table[row['node_id']]['node_name']

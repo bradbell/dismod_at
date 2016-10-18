@@ -323,8 +323,8 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # Results for fitting with no noise
-var_dict     = dismod_at.get_table_dict(connection, 'var')
-fit_var_dict = dismod_at.get_table_dict(connection, 'fit_var')
+var_table     = dismod_at.get_table_dict(connection, 'var')
+fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 #
 middle_age_id  = 1
 middle_time_id = 1
@@ -335,12 +335,12 @@ parent_node_id = 0
 # check covariate multiplier values
 count          = 0
 mulcov_income  = 1.0
-for var_id in range( len(var_dict) ) :
-	row   = var_dict[var_id]
+for var_id in range( len(var_table) ) :
+	row   = var_table[var_id]
 	match = row['var_type'] == 'mulcov_rate_value'
 	if match :
 		count       += 1
-		value        = fit_var_dict[var_id]['variable_value']
+		value        = fit_var_table[var_id]['variable_value']
 		covariate_id = row['covariate_id']
 		if covariate_id == 0 :
 			# income covariate
@@ -356,11 +356,11 @@ sample_dict = dismod_at.get_table_dict(connection, 'sample')
 #
 # check covariate multiplier values
 count = 0
-for var_id in range( len(var_dict) ) :
+for var_id in range( len(var_table) ) :
 	# We can use var_id as sample_id because number_simulate = 1
 	assert sample_dict[var_id]['var_id'] == var_id
 	#
-	row   = var_dict[var_id]
+	row   = var_table[var_id]
 	match = row['var_type'] == 'mulcov_rate_value'
 	if match :
 		count       += 1

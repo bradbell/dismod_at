@@ -68,15 +68,15 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get variable and fit_var tables
-var_dict       = dismod_at.get_table_dict(connection, 'var')
-fit_var_dict   = dismod_at.get_table_dict(connection, 'fit_var')
+var_table       = dismod_at.get_table_dict(connection, 'var')
+fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 #
 # mulstd variables
 for smooth_id in range( n_smooth ) :
 	for var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
 		count = 0
-		for var_id in range( len(var_dict) ) :
-			row   = var_dict[var_id]
+		for var_id in range( len(var_table) ) :
+			row   = var_table[var_id]
 			match = row['var_type'] == var_type
 			match = match and row['smooth_id'] == smooth_id
 			if match :
@@ -92,8 +92,8 @@ rate_value     = list()
 for rate_id in range(n_rate) :
 	for node_id in [ parent_node_id, child_node_id ] :
 		count = 0
-		for var_id in range( len(var_dict) ) :
-			row   = var_dict[var_id]
+		for var_id in range( len(var_table) ) :
+			row   = var_table[var_id]
 			match = row['var_type'] == 'rate'
 			match = match and row['rate_id'] == rate_id
 			match = match and row['node_id'] == node_id
@@ -103,7 +103,7 @@ for rate_id in range(n_rate) :
 				# check variable_value
 				check          = rate_true[rate_id]
 				fit_var_id     = var_id
-				variable_value  = fit_var_dict[fit_var_id]['variable_value']
+				variable_value  = fit_var_table[fit_var_id]['variable_value']
 				if node_id == parent_node_id :
 					err = variable_value / check - 1.0
 					if count == 1 :
@@ -114,7 +114,7 @@ for rate_id in range(n_rate) :
 				assert abs(err) <= check_tol
 				#
 				# check residual_value
-				residual_value  = fit_var_dict[fit_var_id]['residual_value']
+				residual_value  = fit_var_table[fit_var_id]['residual_value']
 				if node_id == parent_node_id :
 					# uniform prior
 					assert residual_value == None
@@ -123,12 +123,12 @@ for rate_id in range(n_rate) :
 					assert abs(residual_value) <= check_tol
 				#
 				# check residual_dage
-				residual_dage  = fit_var_dict[fit_var_id]['residual_dage']
+				residual_dage  = fit_var_table[fit_var_id]['residual_dage']
 				# only one age point in each smoothing grid
 				assert residual_dage == None
 				#
 				# check residual_dtime
-				residual_dtime  = fit_var_dict[fit_var_id]['residual_dtime']
+				residual_dtime  = fit_var_table[fit_var_id]['residual_dtime']
 				time_id = row['time_id']
 				if time_id == 2 :
 					assert residual_dtime == None
@@ -138,15 +138,15 @@ for rate_id in range(n_rate) :
 					assert abs(residual_dtime) <= check_tol
 				#
 				# check lagrange_value
-				lagrange_value = fit_var_dict[fit_var_id]['lagrange_value']
+				lagrange_value = fit_var_table[fit_var_id]['lagrange_value']
 				assert lagrange_value == 0.0
 				#
 				# check lagrange_dage
-				lagrange_dage = fit_var_dict[fit_var_id]['lagrange_dage']
+				lagrange_dage = fit_var_table[fit_var_id]['lagrange_dage']
 				assert lagrange_dage == 0.0
 				#
 				# check lagrange_dtime
-				lagrange_dtime = fit_var_dict[fit_var_id]['lagrange_dtime']
+				lagrange_dtime = fit_var_table[fit_var_id]['lagrange_dtime']
 				assert lagrange_dtime == 0.0
 
 		# number of point in smoothing for all rates

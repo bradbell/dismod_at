@@ -271,13 +271,13 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get predict table
-predict_dict    = dismod_at.get_table_dict(connection, 'predict')
+predict_table    = dismod_at.get_table_dict(connection, 'predict')
 avgint_table   = dismod_at.get_table_dict(connection, 'avgint')
 node_table     = dismod_at.get_table_dict(connection, 'node')
 subset_dict     = dismod_at.get_table_dict(connection, 'avgint_subset')
 #
 # check that all the avgint_table values were predicted (no subsetting)
-assert len(predict_dict) == 3
+assert len(predict_table) == 3
 #
 truth = {
 	'north_america' : iota_north_america,
@@ -285,12 +285,12 @@ truth = {
 	'united_states' : 0.5 * iota_north_america
 }
 for i in range(3) :
-	subset_id = predict_dict[i]['avgint_subset_id']
+	subset_id = predict_table[i]['avgint_subset_id']
 	avgint_id = subset_dict[subset_id]['avgint_id']
 	node_id   = avgint_table[avgint_id]['node_id']
 	node      = node_table[node_id]['node_name']
 	check     = truth[node]
-	value     = predict_dict[i]['avg_integrand']
+	value     = predict_table[i]['avg_integrand']
 	assert( abs( value / check - 1.0 ) ) < 1e-2
 # -----------------------------------------------------------------------------
 print('predict_fit.py: OK')

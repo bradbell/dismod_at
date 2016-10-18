@@ -22,11 +22,9 @@ rename_cmd='s|table.omh|database.omh|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
 cat << EOF > junk.sed
-/smooth_info[ a-z_A-Z]*(\$/! b done
-N
-s/\\n\\t*db *,\$//
-s/\\(\\n\\t*\)db *, *age_table,/\\1age_table,/
-: done
+s|var_dict|var_table|g
+s|predict_dict|predict_table|g
+s|samaple_dict|samaple_table|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

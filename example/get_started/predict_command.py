@@ -67,15 +67,15 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get the variable information
-var_dict  = dismod_at.get_table_dict(connection, 'var')
+var_table  = dismod_at.get_table_dict(connection, 'var')
 # -----------------------------------------------------------------------
 # create a truth_var table with variables values to use during simulation
 tbl_name = 'truth_var'
 col_name = [ 'truth_var_value' ]
 col_type = [ 'real'        ]
 row_list = list()
-for var_id in range( len(var_dict) ) :
-	variable_row  = var_dict[var_id]
+for var_id in range( len(var_table) ) :
+	variable_row  = var_table[var_id]
 	var_type = variable_row['var_type']
 	if var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
 		assert False
@@ -100,9 +100,9 @@ for command in [ 'simulate', 'sample', 'predict' ] :
 		sys.exit('The dismod_at ' + command + ' command failed')
 # -----------------------------------------------------------------------
 # check the predict table
-var_dict     = dismod_at.get_table_dict(connection, 'var')
+var_table     = dismod_at.get_table_dict(connection, 'var')
 sample_dict  = dismod_at.get_table_dict(connection, 'sample')
-predict_dict = dismod_at.get_table_dict(connection, 'predict')
+predict_table = dismod_at.get_table_dict(connection, 'predict')
 #
 # rate variables
 parent_node_id = 0
@@ -113,15 +113,15 @@ check          = list()
 for rate_id in range(n_rate) :
 	integrand_id = rate_id
 	count        = 0
-	for var_id in range( len(var_dict) ) :
-		row   = var_dict[var_id]
+	for var_id in range( len(var_table) ) :
+		row   = var_table[var_id]
 		match = row['var_type'] == 'rate'
 		match = match and row['rate_id'] == rate_id
 		match = match and row['node_id'] == parent_node_id
 		if match :
 			count         += 1
 			var_value      = sample_dict[var_id]['var_value']
-			avg_integrand  = predict_dict[integrand_id]['avg_integrand']
+			avg_integrand  = predict_table[integrand_id]['avg_integrand']
 			err            = avg_integrand / var_value - 1.0
 			assert abs(err) <= check_tol
 	# two time points, one age point, for each rate

@@ -49,6 +49,13 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 10-18$$
+In the $cref user$$ examples,
+change $icode%name%_dict%$$ to $icode%name%_table%$$
+for $icode name$$ equal to $code var$$, $code predict$$, and $code sample$$.
+This makes it clearer that they are copies of the corresponding tables
+as a python list of dictionaries; see $cref get_table_dict$$.
+
 $head 10-17$$
 $list number$$
 Improve the invalid prevalence error message.

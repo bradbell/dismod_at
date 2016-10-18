@@ -282,7 +282,7 @@ if flag != 0 :
 # read database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
-var_dict        = dismod_at.get_table_dict(connection, 'var')
+var_table        = dismod_at.get_table_dict(connection, 'var')
 rate_table     = dismod_at.get_table_dict(connection, 'rate')
 covariate_table= dismod_at.get_table_dict(connection, 'covariate')
 # -----------------------------------------------------------------------
@@ -292,8 +292,8 @@ col_name     = [ 'truth_var_value' ]
 col_type     = [ 'real' ]
 row_list     = list()
 var_id2true  = list()
-for var_id in range( len(var_dict) ) :
-	var_info        = var_dict[var_id]
+for var_id in range( len(var_table) ) :
+	var_info        = var_table[var_id]
 	truth_var_value = None
 	var_type = var_info['var_type']
 	if var_type == 'mulcov_rate_value' :
@@ -334,12 +334,12 @@ for command in [ 'simulate', 'start', 'fit' ] :
 # check fit results
 new          = False
 connection   = dismod_at.create_connection(file_name, new)
-fit_var_dict = dismod_at.get_table_dict(connection, 'fit_var')
+fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 connection.close()
 #
 max_error    = 0.0
-for var_id in range( len(var_dict) ) :
-	row      = fit_var_dict[var_id]
+for var_id in range( len(var_table) ) :
+	row      = fit_var_table[var_id]
 	fit_value  = row['variable_value']
 	true_value = var_id2true[var_id]
 	if true_value == 0.0 :

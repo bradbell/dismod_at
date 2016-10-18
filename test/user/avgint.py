@@ -234,18 +234,18 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get variable and fit_var tables
-var_dict             = dismod_at.get_table_dict(connection, 'var')
-fit_var_dict         = dismod_at.get_table_dict(connection, 'fit_var')
+var_table             = dismod_at.get_table_dict(connection, 'var')
+fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
 fit_data_subset_dict = dismod_at.get_table_dict(connection, 'fit_data_subset')
 # -----------------------------------------------------------------------------
 count = 0
-n_var = len(var_dict)
+n_var = len(var_table)
 for var_id in range(n_var) :
-	var    = var_dict[var_id]
+	var    = var_table[var_id]
 	age_id = var['age_id']
 	age    = age_list[age_id]
 	if age == 40 :
-		fit           = fit_var_dict[var_id]
+		fit           = fit_var_table[var_id]
 		iota_at_40    = fit['variable_value']
 		data          = fit_data_subset_dict[0]
 		avgint_at_40  = data['avg_integrand']

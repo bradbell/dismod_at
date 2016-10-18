@@ -261,8 +261,8 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # Results for fitting with no noise
-var_dict     = dismod_at.get_table_dict(connection, 'var')
-fit_var_dict = dismod_at.get_table_dict(connection, 'fit_var')
+var_table     = dismod_at.get_table_dict(connection, 'var')
+fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 #
 parent_node_id = 1
 eps            = 1e-4
@@ -270,12 +270,12 @@ eps            = 1e-4
 # check parent rates values
 count             = 0
 iota_rate_id      = 1
-for var_id in range( len(var_dict) ) :
-	row   = var_dict[var_id]
+for var_id in range( len(var_table) ) :
+	row   = var_table[var_id]
 	assert row['var_type'] == 'rate'
 	if row['node_id'] == parent_node_id :
 		count += 1
-		value  = fit_var_dict[var_id]['variable_value']
+		value  = fit_var_table[var_id]['variable_value']
 		if row['rate_id'] == iota_rate_id :
 			assert abs( value / iota_true - 1.0 ) < eps
 		else :
@@ -284,11 +284,11 @@ assert count == 5
 #
 # check child rates values
 count             = 0
-for var_id in range( len(var_dict) ) :
-	row   = var_dict[var_id]
+for var_id in range( len(var_table) ) :
+	row   = var_table[var_id]
 	if row['node_id'] != parent_node_id :
 		count += 1
-		value = fit_var_dict[var_id]['variable_value']
+		value = fit_var_table[var_id]['variable_value']
 		assert abs(value) < eps
 assert count == 5 * 2
 # -----------------------------------------------------------------------------

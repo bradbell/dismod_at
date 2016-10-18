@@ -82,13 +82,13 @@ for subset_id in range( n_subset ) :
 	assert subset_id == avgint_subset_dict[subset_id]['avgint_id']
 # -----------------------------------------------------------------------
 # check var table
-var_dict  = dismod_at.get_table_dict(connection, 'var')
+var_table  = dismod_at.get_table_dict(connection, 'var')
 #
 # mulstd variables
 for smooth_id in range( n_smooth ) :
 	for var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
 		count = 0
-		for row in var_dict :
+		for row in var_table :
 			match = row['var_type'] == var_type
 			match = match and row['smooth_id'] == smooth_id
 			if match :
@@ -102,7 +102,7 @@ n_rate         = 5;
 for rate_id in range(n_rate) :
 	for node_id in [ parent_node_id, child_node_id ] :
 		count = 0
-		for row in var_dict :
+		for row in var_table :
 			match = row['var_type'] == 'rate'
 			match = match and row['rate_id'] == rate_id
 			match = match and row['node_id'] == node_id

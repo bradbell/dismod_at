@@ -276,8 +276,8 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get parent rate variable values
-var_dict     = dismod_at.get_table_dict(connection, 'var')
-fit_var_dict = dismod_at.get_table_dict(connection, 'fit_var')
+var_table     = dismod_at.get_table_dict(connection, 'var')
+fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 #
 middle_age_id  = 1
 middle_time_id = 1
@@ -289,8 +289,8 @@ tol            = 1e-8
 for rate_id in range(n_rate) :
 	rate_value = dict()
 	count      = 0
-	for var_id in range( len(var_dict) ) :
-		row   = var_dict[var_id]
+	for var_id in range( len(var_table) ) :
+		row   = var_table[var_id]
 		match = row['var_type'] == 'rate'
 		match = match and row['rate_id'] == rate_id
 		match = match and row['node_id'] == parent_node_id
@@ -300,19 +300,19 @@ for rate_id in range(n_rate) :
 			if age_id not in rate_value :
 				rate_value[age_id] = dict()
 			rate_value[age_id][time_id] = \
-				fit_var_dict[var_id]['variable_value']
+				fit_var_table[var_id]['variable_value']
 			#
-			assert fit_var_dict[var_id]['lagrange_value'] == 0.0
+			assert fit_var_table[var_id]['lagrange_value'] == 0.0
 			if age_id == last_age_id :
-				assert fit_var_dict[var_id]['lagrange_dage'] == 0.0
+				assert fit_var_table[var_id]['lagrange_dage'] == 0.0
 			else :
 				# lower limit is active, so multiplier is less than zero
-				assert fit_var_dict[var_id]['lagrange_dage'] < 0.0
+				assert fit_var_table[var_id]['lagrange_dage'] < 0.0
 			if time_id == last_time_id :
-				assert fit_var_dict[var_id]['lagrange_dtime'] == 0.0
+				assert fit_var_table[var_id]['lagrange_dtime'] == 0.0
 			else :
 				# lower limit is active, so multiplier is less than zero
-				assert fit_var_dict[var_id]['lagrange_dtime'] < 0.0
+				assert fit_var_table[var_id]['lagrange_dtime'] < 0.0
 
 			count += 1
 	if rate_id == 0 :

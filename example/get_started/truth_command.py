@@ -68,14 +68,14 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get fit and truth_var tables
-fit_var_dict= dismod_at.get_table_dict(connection, 'fit_var')
-truth_var_dict  = dismod_at.get_table_dict(connection, 'truth_var')
+fit_var_table= dismod_at.get_table_dict(connection, 'fit_var')
+truth_var_table  = dismod_at.get_table_dict(connection, 'truth_var')
 # -----------------------------------------------------------------------
 # check result
-assert len(fit_var_dict) == len(truth_var_dict)
-for fit_var_id in range( len(fit_var_dict) ) :
-	variable_value   = fit_var_dict[fit_var_id]['variable_value']
-	truth_var_value = truth_var_dict[fit_var_id]['truth_var_value']
+assert len(fit_var_table) == len(truth_var_table)
+for fit_var_id in range( len(fit_var_table) ) :
+	variable_value   = fit_var_table[fit_var_id]['variable_value']
+	truth_var_value = truth_var_table[fit_var_id]['truth_var_value']
 	if truth_var_value == 0.0 :
 		assert variable_value == truth_var_value
 	else :

@@ -280,26 +280,26 @@ connection      = dismod_at.create_connection(file_name, new)
 # check the zero random effects solution
 #
 # get variable and fit_var tables
-var_dict       = dismod_at.get_table_dict(connection, 'var')
-fit_var_dict   = dismod_at.get_table_dict(connection, 'fit_var')
+var_table       = dismod_at.get_table_dict(connection, 'var')
+fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 rate_table    = dismod_at.get_table_dict(connection, 'rate')
 node_table    = dismod_at.get_table_dict(connection, 'node')
 #
 # one age and two times for each of north_america, canada, unites_states
-n_var = len(var_dict)
+n_var = len(var_table)
 assert n_var == 6
 #
 # check of values uses the fact that the data density is Gaussian
 for var_id in range( n_var ) :
-	var_type = var_dict[var_id]['var_type']
+	var_type = var_table[var_id]['var_type']
 	assert( var_type == 'rate' )
 	#
-	rate_id = var_dict[var_id]['rate_id']
+	rate_id = var_table[var_id]['rate_id']
 	assert( rate_table[rate_id]['rate_name'] == 'iota' )
 	#
-	value   = fit_var_dict[var_id]['variable_value']
+	value   = fit_var_table[var_id]['variable_value']
 	#
-	node_id  = var_dict[var_id]['node_id']
+	node_id  = var_table[var_id]['node_id']
 	parent   = node_table[node_id]['node_name'] == 'north_america'
 	if parent :
 		err = value / iota_no_random - 1.0
@@ -334,7 +334,7 @@ if flag != 0 :
 # check the non-zero random effects solution
 #
 # get solution from fit_var table
-fit_var_dict   = dismod_at.get_table_dict(connection, 'fit_var')
+fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 #
 # optimal values when standard deviation of random effects is infinity
 parent_optimal = iota_no_random * (1.0 - iota_child_offset)
@@ -342,15 +342,15 @@ child_optimal  = math.log(
 	iota_no_random * (1.0 + iota_child_offset) / parent_optimal
 )
 for var_id in range( n_var ) :
-	var_type = var_dict[var_id]['var_type']
+	var_type = var_table[var_id]['var_type']
 	assert( var_type == 'rate' )
 	#
-	rate_id = var_dict[var_id]['rate_id']
+	rate_id = var_table[var_id]['rate_id']
 	assert( rate_table[rate_id]['rate_name'] == 'iota' )
 	#
-	value   = fit_var_dict[var_id]['variable_value']
+	value   = fit_var_table[var_id]['variable_value']
 	#
-	node_id  = var_dict[var_id]['node_id']
+	node_id  = var_table[var_id]['node_id']
 	parent   = node_table[node_id]['node_name'] == 'north_america'
 	if parent :
 		err = value / parent_optimal - 1.0

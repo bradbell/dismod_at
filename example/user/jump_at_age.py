@@ -282,8 +282,8 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # Results for fitting with no noise
-var_dict     = dismod_at.get_table_dict(connection, 'var')
-fit_var_dict = dismod_at.get_table_dict(connection, 'fit_var')
+var_table     = dismod_at.get_table_dict(connection, 'var')
+fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 #
 parent_node_id = 1
 eps            = 1e-4
@@ -294,13 +294,13 @@ iota_rate_id      = 1
 max_err           = 0.0
 tolerance         = 1e-3
 age_list          = sorted( set( iota_age_list ) )
-for var_id in range( len(var_dict) ) :
-	row   = var_dict[var_id]
+for var_id in range( len(var_table) ) :
+	row   = var_table[var_id]
 	assert row['var_type'] == 'rate'
 	assert row['node_id']  == 0
 	age    = age_list[ row['age_id'] ]
 	rate_id = row['rate_id']
-	value  = fit_var_dict[var_id]['variable_value']
+	value  = fit_var_table[var_id]['variable_value']
 	assert rate_id == iota_rate_id
 	value_true = iota_true(age)
 	rate       = 'iota'

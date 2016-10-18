@@ -288,21 +288,21 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get variable and fit_var tables
-var_dict       = dismod_at.get_table_dict(connection, 'var')
-fit_var_dict   = dismod_at.get_table_dict(connection, 'fit_var')
+var_table       = dismod_at.get_table_dict(connection, 'var')
+fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 #
 # mulstd variables
 for smooth_id in range( n_smooth ) :
 	for var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
 		count = 0
-		for var_id in range( len(var_dict) ) :
-			row   = var_dict[var_id]
+		for var_id in range( len(var_table) ) :
+			row   = var_table[var_id]
 			match = row['var_type'] == var_type
 			match = match and row['smooth_id'] == smooth_id
 			if match :
 				count += 1
 				fit_var_id     = var_id
-				variable_value = fit_var_dict[fit_var_id]['variable_value']
+				variable_value = fit_var_table[fit_var_id]['variable_value']
 				assert variable_value == 1.0
 		assert count == 0
 #
@@ -312,8 +312,8 @@ check_tol      = 1e-3
 n_rate         = 5;
 for rate_id in range(n_rate) :
 	count = 0
-	for var_id in range( len(var_dict) ) :
-		row   = var_dict[var_id]
+	for var_id in range( len(var_table) ) :
+		row   = var_table[var_id]
 		match = row['var_type'] == 'rate'
 		match = match and row['rate_id'] == rate_id
 		if match :
@@ -321,7 +321,7 @@ for rate_id in range(n_rate) :
 			count         += 1
 			check          = rate_true[rate_id]
 			fit_var_id     = var_id
-			variable_value  = fit_var_dict[fit_var_id]['variable_value']
+			variable_value  = fit_var_table[fit_var_id]['variable_value']
 			err            = variable_value / check - 1.0
 			assert abs(err) <= check_tol
 	# There is one age point and two time points for each rate
