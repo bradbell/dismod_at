@@ -81,7 +81,7 @@ cmake_cxx_compiler=''
 # If NO, it will convert fatal errors to asserts
 # (which is useful when running a program in a debugger).
 # &codep
-log_fatal_error='YES'
+log_fatal_error='NO'
 # &&
 #
 # &head system_specific_library_list&&

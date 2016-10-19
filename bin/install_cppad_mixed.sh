@@ -30,7 +30,7 @@ bool_sparsity='YES'
 ldlt_cholmod='YES'
 #
 # put fatal error messages in log table or generate asserts
-log_fatal_error='YES'
+log_fatal_error='NO'
 #
 # which c++ compiler to use (empty means cmake will choose it)
 cmake_cxx_compiler=''

@@ -102,6 +102,7 @@ cat << EOF > config.sh
 	$debug_flag \\
 	$compiler \\
 	$skip_warn \\
+	--enable-static \\
 	--prefix=$ipopt_prefix \\
 	--libdir=$ipopt_prefix/$libdir \\
 	--with-blas-lib="-lblas" \\
