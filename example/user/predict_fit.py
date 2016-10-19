@@ -261,6 +261,7 @@ for command in [ 'init', 'start', 'fit', 'sample', 'predict' ] :
 		cmd.append('prior_mean')
 	if command == 'sample' :
 		cmd.append('fit_var')
+		cmd.append('1') # number_sample must be 1 for fit_var method
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :

@@ -313,6 +313,7 @@ for command in [ 'init', 'start', 'fit', 'truth', 'simulate', 'sample' ] :
 		cmd.append('prior_mean')
 	if command == 'sample' :
 		cmd.append('simulate')
+		cmd.append('1') # number_sample = number_simulate = 1
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :

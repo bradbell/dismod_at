@@ -970,44 +970,43 @@ $$
 $section The Sample Command$$
 
 $head Syntax$$
-$codei%dismod_at %database% sample %method%$$
+$codei%dismod_at %database% sample %method% %number_sample%$$
 
 $head database$$
 Is an
 $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
+$head number_sample$$
+Is the number of samples. Each sample contains a complete
+set of model variables. See the different methods below
+for more discussion of $icode number_sample$$.
+
 $head method$$
 The sample command argument $icode method$$ must be one of the following:
 
 $subhead simulate$$
 If $icode method$$ is $code simulate$$,
-the measurements in the $cref simulate_table$$ table will be used
-to create the $cref sample_table$$.
-For $cref/sample_index/sample_table/sample_index/$$ equal zero to
-$cref/number_simulate/option_table/number_simulate/$$ minus one,
-the corresponding measurement set has
-$cref/simulate_index/simulate_table/simulate_index/$$ in the
-simulate table equal to $icode sample_index$$ in the sample table.
-The $cref model_variables$$ in the sample table are the optimal values
-for the corresponding measurement set in the simulate table.
-This requires running $icode number_simulate$$ fits of the model variables.
+$icode number_sample$$ must be equal to
+$cref/number_simulate/option_table/number_simulate/$$.
+The variable sample corresponding to each
+$cref/sample_index/sample_table/sample_index/$$ the sample table
+is the optimal estimate corresponding to data in the simulate table with
+$cref/simulate_index/simulate_table/simulate_index/$$ equal to
+the sample index.
+This requires running $icode number_sample$$ fits of the model variables.
 
 $subhead asymptotic$$
 If $icode method$$ is $code asymptotic$$,
-The number of samples of the model variables in the simulate table is
-$cref/number_simulate/option_table/number_simulate/$$.
-For each value of $code sample_index$$,
-the asymptotic statics of the model variables is used to generate
-the corresponding in the sample table.
-Sample with different values of $icode sample_index$$ are independent.
+The asymptotic statics of the model variables is used to generate
+$icode number_sample$$ samples of the model variables
+The samples with different values of $icode sample_index$$ are independent.
 
 $subhead fit_var$$
 If $icode method$$ is $code fit_var$$,
 the values in the $cref fit_var_table$$ are copied to the $cref sample_table$$.
 In this case, there is only one sample of the $cref model_variables$$
-in the sample table and
-$cref/sample_index/sample_table/sample_index/$$ is always zero.
+and $icode number_sample$$ must be equal one.
 
 $head simulate_table$$
 If $icode method$$ is $code simulate$$,
@@ -1036,6 +1035,7 @@ $end
 // ----------------------------------------------------------------------------
 void sample_command(
 	const std::string&                          method           ,
+	const std::string&                          number_sample    ,
 	sqlite3*                                    db               ,
 	vector<dismod_at::data_subset_struct>&      data_subset_obj  ,
 	dismod_at::data_model&                      data_object      ,
@@ -1048,18 +1048,34 @@ void sample_command(
 )
 {	using std::string;
 	using CppAD::to_string;
+	string msg;
 	// -------------------------------------------------------------------
 	if( method != "simulate" && method != "fit_var" && method != "asymptotic" )
-	{	string msg = "dismod_at sample command method = ";
-		msg       += method + " is not one of the following: ";
-		msg       += "simulate, fit_var, asymptotic";
+	{	msg  = "dismod_at sample command method = ";
+		msg += method + " is not one of the following: ";
+		msg += "simulate, fit_var, asymptotic";
+		dismod_at::error_exit(msg);
+	}
+	int tmp = std::atoi( number_sample.c_str() );
+	if( tmp <= 0 )
+	{	msg  = "dismod_at sample command number_sample = ";
+		msg += number_sample + " is not an integer greater than zero";
+		dismod_at::error_exit(msg);
+	}
+	size_t n_sample = size_t(tmp);
+	if( method == "fit_var" && n_sample != 1 )
+	{	msg  = "dismod_at sample command method = fit_var and";
+		msg += " number_sample is not one";
+		dismod_at::error_exit(msg);
+	}
+	size_t number_simulate = std::atoi(option_map["number_simulate"].c_str());
+	if( method == "simulate" && n_sample != number_simulate )
+	{	msg  = "dismod_at sample command method = simulate and";
+		msg += " number_sample is not equal number_simulate";
 		dismod_at::error_exit(msg);
 	}
 	// -----------------------------------------------------------------------
 	// create new sample table and prepare to write into it
-	size_t n_sample = 1;
-	if( method != "fit_var" )
-		n_sample = std::atoi( option_map["number_simulate"].c_str() );
 	//
 	string sql_cmd = "drop table if exists sample";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
@@ -1124,7 +1140,6 @@ void sample_command(
 	// -----------------------------------------------------------------------
 	if( method == "simulate" )
 	{
-		//
 		// fit_var.variable_value
 		vector<double> truth_var_value;
 		string table_name  = "truth_var";
@@ -1151,8 +1166,8 @@ void sample_command(
 				size_t subset_check =
 					size_t(simulate_table[simulate_id].data_subset_id);
 				if( sample_check != sample_index || subset_check != subset_id )
-				{	string msg = "dismod_at database sample simulate\n";
-					msg  += "size of simulate table does not make sense\n";
+				{	msg  = "dismod_at database sample simulate\n";
+					msg += "size of simulate table does not make sense\n";
 					msg +=  "restart with init command";
 					table_name = "simulate";
 					dismod_at::error_exit(msg, table_name, simulate_id);
@@ -1436,7 +1451,7 @@ int main(int n_arg, const char** argv)
 		{"truth",     3},
 		{"fit",       3},
 		{"simulate",  3},
-		{"sample",    4},
+		{"sample",    5},
 		{"predict",   3}
 	};
 	size_t n_command = sizeof( command_info ) / sizeof( command_info[0] );
@@ -1708,6 +1723,7 @@ int main(int n_arg, const char** argv)
 			{
 				sample_command(
 					argv[3]          , // method
+					argv[4]          , // number_sample
 					db               ,
 					data_subset_obj  ,
 					data_object      ,

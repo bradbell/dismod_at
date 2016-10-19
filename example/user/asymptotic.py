@@ -71,7 +71,7 @@ standard = {
 	'canada'        : 0.5e-3
 }
 standard_random_effect = 1.0
-number_simulate        = 500
+number_sample          = 500
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import math
@@ -279,7 +279,6 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america'      },
-		{ 'name':'number_simulate',        'value':str(number_simulate) },
 		{ 'name':'fit_simulate_index',     'value':None                 },
 		{ 'name':'ode_step_size',          'value':'10.0'               },
 		{ 'name':'random_seed',            'value':'0'                  },
@@ -327,6 +326,7 @@ for command in [ 'init', 'start', 'fit', 'sample' ] :
 		cmd.append('prior_mean')
 	if command == 'sample' :
 		cmd.append('asymptotic')
+		cmd.append( str(number_sample) )
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :
@@ -353,7 +353,7 @@ for var_id in range(len(var_table) ) :
 	node_name2var_id[node_name] = var_id
 #
 # convert samples to a numpy array
-sample_array = numpy.zeros( (number_simulate, 3), dtype = float )
+sample_array = numpy.zeros( (number_sample, 3), dtype = float )
 for row in sample_dict :
 	var_id                              = row['var_id']
 	sample_index                        = row['sample_index']
@@ -364,7 +364,7 @@ var_avg = numpy.average(sample_array, axis=0);
 var_std = numpy.std(sample_array, axis=0);
 # -----------------------------------------------------------------------
 # now use MCMC to calculate the same values
-m          = 10 * number_simulate
+m          = 10 * number_sample
 x0         = numpy.array( [ 1e-2, 0.0, 0.0 ] )
 s          = numpy.array( [ 1e-3, 1e-1, 1e-1] )
 (a, c)     = dismod_at.metropolis(log_f, m, x0, s)

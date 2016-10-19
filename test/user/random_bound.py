@@ -233,6 +233,7 @@ for command in [ 'init', 'start', 'fit', 'sample' ] :
 		cmd.append('prior_mean')
 	if command == 'sample' :
 		cmd.append('asymptotic')
+		cmd.append('1') # number_sample
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :

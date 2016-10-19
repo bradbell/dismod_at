@@ -98,10 +98,15 @@ if flag != 0 :
 	sys.exit('The dismod_at simulate command failed')
 # -----------------------------------------------------------------------
 # sample command
+option_table  = dismod_at.get_table_dict(connection, 'option')
+number_sample = None
+for row in option_table :
+	if row['option_name'] == 'number_simulate' :
+		number_sample = row['option_value']
 program        = '../../devel/dismod_at'
 command        = 'sample'
 method         = 'simulate'
-cmd = [ program, file_name, command, method ]
+cmd = [ program, file_name, command, method , number_sample  ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
