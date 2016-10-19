@@ -48,20 +48,8 @@ if [ "$input" == 'ds' ] || [ "$input" == 'rs' ]
 then
 	make speed
 fi
+cd ..
 #
-# test install of python module and executable
-echo_eval rm -rf $HOME/prefix/dismod_at/bin/dismodat.py
-echo_eval rm -rf $HOME/prefix/dismod_at/lib/python*
-echo_eval rm -rf example/user/data.csv
-echo_eval rm -rf example/user/variable.csv
-make install
-python_dir=`find -L $HOME/prefix/dismod_at -name site-packages`
-export PYTHONPATH="$PYTHONPATH:$python_dir"
-echo "PYTHONPATH=$PYTHONPATH"
-$HOME/prefix/dismod_at/bin/dismodat.py example/user/example.db db2csv
-if [ ! -e 'example/user/data.csv' ] || [ ! -e 'example/user/variable.csv' ]
-then
-	'check_all.sh: check of python install failed'
-fi
+bin/check_install.sh
 # -----------------------------------------------------------------------------
 echo 'check_all.sh: OK'

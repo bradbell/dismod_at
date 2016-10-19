@@ -62,15 +62,20 @@
 # $head option.csv$$
 # The file $icode%dir%/option.csv%$$ is written by this command.
 # It is a CSV file with one row for each option.
+# The columns in this table are
+# $cref/option_name/option_table/option_name/$$ and
+# $cref/option_value/option_table/option_value/$$.
 #
-# $subhead option_name$$
-# This is the $cref/option_name/option_table/option_name/$$ for the
-# corresponding option.
+# $head log.csv$$
+# The file $icode%dir%/log.csv%$$ is written by this command.
+# It is a CSV file with one row for each message in the $cref log_table$$.
+# The columns in this table are
+# $cref/message_type/log_table/message_type/$$,
+# $cref/table_name/log_table/table_name/$$,
+# $cref/row_id/log_table/row_id/$$,
+# $cref/unix_time/log_table/unix_time/$$, and
+# $cref/message/log_table/message/$$.
 #
-# $subhead option_value$$
-# This is its $cref/option_value/option_table/option_value/$$
-# in the option table (or its default if no value is specified
-# for this option).
 #
 # $head variable.csv$$
 # The file $icode%dir%/variable.csv%$$ is written by this command.
@@ -288,6 +293,7 @@ def db2csv_command(database_file_arg) :
 		'data_subset',
 		'density',
 		'integrand',
+		'log',
 		'option',
 		'mulcov',
 		'node',
@@ -429,7 +435,6 @@ def db2csv_command(database_file_arg) :
 		[ "fixed_bound_frac",              "1e-2"],
 		[ "max_num_iter_fixed",            "100"],
 		[ "max_num_iter_random",           "100"],
-		[ "number_simulate",               "1"],
 		[ "ode_step_size",                 "10.0"],
 		[ "parent_node_id",                "0"],
 		[ "print_level_fixed",             "0"],
@@ -452,6 +457,17 @@ def db2csv_command(database_file_arg) :
 	for row in option_list :
 		row_out = { 'option_name' : row[0], 'option_value' : row[1] }
 		csv_writer.writerow(row_out)
+	csv_file.close()
+	# =========================================================================
+	# log.csv
+	# =========================================================================
+	file_name = os.path.join(database_dir, 'log.csv')
+	csv_file  = open(file_name, 'w')
+	header = ['message_type', 'table_name', 'row_id', 'unix_time', 'message']
+	csv_writer = csv.DictWriter(csv_file, fieldnames=header)
+	csv_writer.writeheader()
+	for row in table_data['log'] :
+		csv_writer.writerow(row)
 	csv_file.close()
 	# =========================================================================
 	# variable.csv

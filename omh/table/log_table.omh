@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -38,6 +38,13 @@ If $code done$$ does not appear after the command starts,
 the command failed to finish.
 $lend
 
+$subhead random_seed$$
+If the option table version of $cref/random_seed/option_table/random_seed/$$
+is zero, the value of $icode unix_time$$ in the log message with
+$icode%message_type% = 'command'%$$ and with
+$icode%message% = 'begin %command%'%$$
+is used as the random seed during the specified $icode command$$.
+
 $subhead error$$
 This is a fatal error.
 The message was added to the log table
@@ -47,13 +54,6 @@ $subhead warning$$
 This is a warning.
 The message was added to the log file and then program execution
 continued as if nothing was wrong.
-
-$head random_seed$$
-If the option table version of $cref/random_seed/option_table/random_seed/$$
-is zero, the value of $icode unix_time$$ in the log message with
-$icode%message_type% = 'command'%$$ and with
-$icode%message% = 'begin %command%'%$$
-is used as the random seed during the specified $icode command$$.
 
 $head table_name$$
 This column has type $code text$$.

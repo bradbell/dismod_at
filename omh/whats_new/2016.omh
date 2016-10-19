@@ -50,14 +50,18 @@ $childtable%omh/whats_new/2015.omh
 %$$
 
 $head 10-19$$
-$bold API Changes$$
 $list number$$
+$bold API Change$$:
 The argument $cref/number_sample/sample_command/number_sample/$$
 was added to the sample command.
 $lnext
+$bold API Change$$:
 The $icode number_simulate$$ option was removed from the $cref option_table$$
 and the argument $cref/number_simulate/simulate_command/number_simulate/$$
 was added to the simulate command.
+$lnext
+The $cref/log.csv/db2csv_command/log.csv/$$ file was added too the
+db2csv command output.
 $lend
 
 $head 10-18$$
