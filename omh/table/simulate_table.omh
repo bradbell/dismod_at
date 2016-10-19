@@ -18,7 +18,7 @@ $$
 $section The Simulated Table: Samples Simulated Measurements$$
 The $code simulate$$ table is created during a
 $cref simulate_command$$.
-It contains $cref/number_simulate/option_table/number_simulate/$$
+It contains $cref/number_simulate/simulate_command/number_simulate/$$
 sets of measurements where each set
 has one value for each entry in the $cref data_subset_table$$.
 
@@ -36,7 +36,7 @@ for this simulated measurement set. This index starts at zero,
 repeats as the same for the entire subset of $icode data_id$$ values,
 and then increments by one between measurement sets.
 The final (maximum) value for $icode simulate_index$$ is
-$cref/number_simulate/option_table/number_simulate/$$ minus one.
+$cref/number_simulate/simulate_command/number_simulate/$$ minus one.
 
 $head data_subset_id$$
 This column has type $code integer$$ and is the primary key

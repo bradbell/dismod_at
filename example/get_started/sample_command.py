@@ -57,6 +57,9 @@ file_name              = 'example.db'
 program        = '../../devel/dismod_at'
 command        = 'init'
 cmd = [ program, file_name, command ]
+if command == 'simulate' :
+	number_simulate = '1'
+	cmd.append(number_simulate)
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
@@ -92,6 +95,9 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 program        = '../../devel/dismod_at'
 command        = 'simulate'
 cmd = [ program, file_name, command ]
+if command == 'simulate' :
+	number_simulate = '1'
+	cmd.append(number_simulate)
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
@@ -99,10 +105,7 @@ if flag != 0 :
 # -----------------------------------------------------------------------
 # sample command
 option_table  = dismod_at.get_table_dict(connection, 'option')
-number_sample = None
-for row in option_table :
-	if row['option_name'] == 'number_simulate' :
-		number_sample = row['option_value']
+number_sample = '1'
 program        = '../../devel/dismod_at'
 command        = 'sample'
 method         = 'simulate'

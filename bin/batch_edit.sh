@@ -22,9 +22,24 @@ rename_cmd='s|table.omh|database.omh|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
 cat << EOF > junk.sed
-s|var_dict|var_table|g
-s|predict_dict|predict_table|g
-s|samaple_dict|samaple_table|g
+/^number_sample *= *None/!b two
+N
+N
+N
+s/.*/number_sample = '1'/
+b done
+#
+: two
+/cmd = \[ program, file_name, command \]/!b default
+s|^\\(\\t*\\)cmd.*|&\\n\\1if command == 'simulate' :\\
+\\1\\tnumber_simulate = '1'\\
+\\1\\tcmd.append(number_simulate)|
+#
+:default
+s|/option_table/number_simulate/|/simulate_command/number_simulate/|
+/'name':'number_simulate',/d
+#
+: done
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

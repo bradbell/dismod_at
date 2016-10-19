@@ -48,7 +48,7 @@ $codei%
 	%sample_id% = %sample_index% * %n_var% + %var_id%
 %$$
 for $icode sample_index$$ equal zero to the
-$cref/number_simulate/option_table/number_simulate/$$ minus one.
+$cref/number_simulate/simulate_command/number_simulate/$$ minus one.
 
 $head var_value$$
 This column type $code real$$ and is the optimal variable value

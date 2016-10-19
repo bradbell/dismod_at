@@ -49,6 +49,17 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 10-19$$
+$bold API Changes$$
+$list number$$
+The argument $cref/number_sample/sample_command/number_sample/$$
+was added to the sample command.
+$lnext
+The $icode number_simulate$$ option was removed from the $cref option_table$$
+and the argument $cref/number_simulate/simulate_command/number_simulate/$$
+was added to the simulate command.
+$lend
+
 $head 10-18$$
 $list number$$
 In the $cref user$$ examples,
@@ -588,7 +599,7 @@ is not yet implemented.
 $head 04-20$$
 $list number$$
 Change $code number_sample$$ in option table to
-$cref/number_simulate/option_table/number_simulate/$$.
+$cref/number_simulate/simulate_command/number_simulate/$$.
 $lnext
 The $cref/method/sample_command/method/$$ argument was added
 to the sample command.

@@ -48,12 +48,6 @@ If you change the
 $cref/fit_simulate_index/option_table/fit_simulate_index/$$, the
 $cref/fit_var/fit_var_table/$$ and $cref/fit_data_subset/fit_data_subset_table/$$
 tables become invalid.
-$lnext
-If you change
-$cref/number_simulate/option_table/number_simulate/$$, the
-$cref/simulate/simulate_table/$$
-$cref/sample/sample_table/$$ and
-$cref/predict/predict_table/$$ tables become invalid.
 $lend
 
 $head option_id$$
@@ -101,17 +95,6 @@ The default value for this option is $code 10.0$$,
 which is reasonable if all the rates
 $icode iota$$, $icode rho$$, $icode chi$$, and $icode omega$$
 are all less than $code 0.1$$.
-
-$head number_simulate$$
-If $icode%option_name% = number_simulate%$$,
-the corresponding $icode option_value$$
-is a positive integer specifying the
-number of independent samples of the
-$cref/data subset/data_subset_table/$$.
-
-$subhead Default$$
-The default value for this option is $code 1$$,
-which is good for testing, but not reasonable for true simulations.
 
 $head fit_simulate_index$$
 If the value of $icode fit_simulate_index$$ is $code null$$,

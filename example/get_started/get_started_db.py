@@ -232,7 +232,6 @@ def get_started_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'world'        },
-		{ 'name':'number_simulate',        'value':'1'            },
 		{ 'name':'fit_simulate_index',     'value':None           },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },

@@ -556,13 +556,13 @@ void fit_command(
 		// get simulation data
 		vector<dismod_at::simulate_struct> simulate_table =
 				dismod_at::get_simulate_table(db);
-		size_t n_subset = data_subset_obj.size();
-		size_t n_sample = simulate_table.size() / n_subset;
+		size_t n_subset   = data_subset_obj.size();
+		size_t n_simulate = simulate_table.size() / n_subset;
 		//
-		if( simulate_index >= n_sample )
+		if( simulate_index >= n_simulate )
 		{	string msg = "dismod_at fit command fit_simulate_index = ";
-			msg += fit_simulate_index + "\nis greater than number of samples";
-			msg += " in the simulate table";
+			msg += fit_simulate_index + "\nis greater than or equal ";
+			msg += "number of samples in the simulate table.";
 			string table_name = "simulate";
 			dismod_at::error_exit(msg, table_name);
 		}
@@ -841,12 +841,16 @@ $spell
 $$
 
 $head Syntax$$
-$codei%dismod_at %database% simulate%$$
+$codei%dismod_at %database% simulate %number_simulate%$$
 
 $head database$$
 Is an
 $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
+
+$head number_simulate$$
+Is the number of simulations. Each simulation contains a complete
+data set.
 
 $head truth_var_table$$
 The $cref truth_var_table$$ is an addition input table for this command.
@@ -856,12 +860,14 @@ This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref init_command$$).
 
-$head simulate_table$$
+$head sample_table$$
 A new $cref simulate_table$$ is created.
 It contains simulated measurement values that can be used in place of
 the data table $cref/meas_value/data_table/meas_value/$$ column.
 Only the $cref/data_id/data_subset_table/data_id/$$ that are in the
-data_subset table are included.
+data_subset table are included in the simulated measurements.
+Hence the number of rows in this table is $icode number_simulate$$
+times the number of rows in $cref data_subset_table$$.
 
 $children%example/get_started/simulate_command.py%$$
 $head Example$$
@@ -871,15 +877,24 @@ of using this command.
 $end
 */
 void simulate_command(
+	const std::string&                                  number_simulate ,
 	sqlite3*                                            db              ,
 	const vector<dismod_at::integrand_struct>&          integrand_table ,
 	const vector<dismod_at::data_subset_struct>&        data_subset_obj ,
-	const dismod_at::data_model&                        data_object     ,
-	const size_t&                                       number_simulate
+	const dismod_at::data_model&                        data_object
 )
 {
 	using std::string;
 	using CppAD::to_string;
+	string msg;
+	// -----------------------------------------------------------------------
+	int tmp = std::atoi( number_simulate.c_str() );
+	if( tmp <= 0 )
+	{	msg  = "dismod_at simulate command number_simulate = ";
+		msg += number_simulate + " is not an integer greater than zero";
+		dismod_at::error_exit(msg);
+	}
+	size_t n_simulate = size_t(tmp);
 	// -----------------------------------------------------------------------
 	// read truth_var table into truth_var
 	vector<double> truth_var;
@@ -894,7 +909,7 @@ void simulate_command(
 	table_name      = "simulate";
 	size_t n_col    = 3;
 	size_t n_subset = data_subset_obj.size();
-	size_t n_row    = number_simulate * n_subset;
+	size_t n_row    = n_simulate * n_subset;
 	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_row);
 	vector<bool>   col_unique(n_col);
 	//
@@ -910,7 +925,7 @@ void simulate_command(
 	col_type[2]   = "real";
 	col_unique[2] = false;
 	//
-	for(size_t sim_index = 0; sim_index < number_simulate; sim_index++)
+	for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	size_t integrand_id =  data_subset_obj[subset_id].integrand_id;
 		dismod_at::integrand_enum integrand =
@@ -988,7 +1003,7 @@ The sample command argument $icode method$$ must be one of the following:
 $subhead simulate$$
 If $icode method$$ is $code simulate$$,
 $icode number_sample$$ must be equal to
-$cref/number_simulate/option_table/number_simulate/$$.
+$cref/number_simulate/simulate_command/number_simulate/$$.
 The variable sample corresponding to each
 $cref/sample_index/sample_table/sample_index/$$ the sample table
 is the optimal estimate corresponding to data in the simulate table with
@@ -1021,6 +1036,8 @@ which was created by a previous $cref fit_command$$.
 $head sample_table$$
 A new $cref sample_table$$ is created each time this command is run.
 It contains samples of the model variables.
+Hence the number of rows in this table is $icode number_sample$$
+times the number of rows in the $cref var_table$$.
 
 $children%example/get_started/sample_command.py
 	%example/user/asymptotic.py
@@ -1063,17 +1080,6 @@ void sample_command(
 		dismod_at::error_exit(msg);
 	}
 	size_t n_sample = size_t(tmp);
-	if( method == "fit_var" && n_sample != 1 )
-	{	msg  = "dismod_at sample command method = fit_var and";
-		msg += " number_sample is not one";
-		dismod_at::error_exit(msg);
-	}
-	size_t number_simulate = std::atoi(option_map["number_simulate"].c_str());
-	if( method == "simulate" && n_sample != number_simulate )
-	{	msg  = "dismod_at sample command method = simulate and";
-		msg += " number_sample is not equal number_simulate";
-		dismod_at::error_exit(msg);
-	}
 	// -----------------------------------------------------------------------
 	// create new sample table and prepare to write into it
 	//
@@ -1099,7 +1105,13 @@ void sample_command(
 	col_unique[2] = false;
 	// -----------------------------------------------------------------------
 	if( method == "fit_var" )
-	{	// get fit_var table information
+	{	// check number_sample
+		if( n_sample != 1 )
+		{	msg  = "dismod_at sample command method = fit_var and";
+			msg += " number_sample is not one";
+			dismod_at::error_exit(msg);
+		}
+		// get fit_var table information
 		vector<double> variable_value;
 		string table_name  = "fit_var";
 		string column_name = "variable_value";
@@ -1152,10 +1164,17 @@ void sample_command(
 				dismod_at::get_simulate_table(db);
 		//
 		size_t n_subset = data_subset_obj.size();
-		assert( simulate_table.size() % n_subset == 0 );
-		assert( n_sample == simulate_table.size() / n_subset );
-		//
-		assert( n_sample * n_subset == simulate_table.size() );
+		if( simulate_table.size() % n_subset != 0  )
+		{	msg  = "dismod_at sample command method = simulate and ";
+			msg += "sample table size modulo data_subset table size not zero.";
+			dismod_at::error_exit(msg);
+		}
+		if( n_sample != simulate_table.size() / n_subset )
+		{	msg  = "dismod_at sample command method = simulate and ";
+			msg += "sample table size not equal number_sample times ";
+			msg += "data_subset table size.";
+			dismod_at::error_exit(msg);
+		}
 		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
 		{	// set the measurement values for corresponding simulation
 			size_t offset = n_subset * sample_index;
@@ -1450,7 +1469,7 @@ int main(int n_arg, const char** argv)
 		{"start",     4},
 		{"truth",     3},
 		{"fit",       3},
-		{"simulate",  3},
+		{"simulate",  4},
 		{"sample",    5},
 		{"predict",   3}
 	};
@@ -1708,15 +1727,12 @@ int main(int n_arg, const char** argv)
 				);
 			}
 			else if( command_arg == "simulate" )
-			{	size_t number_simulate = std::atoi(
-					option_map["number_simulate"].c_str()
-				);
-				simulate_command(
+			{	simulate_command(
+					argv[3]          , // number_simulate
 					db                       ,
 					db_input.integrand_table ,
 					data_subset_obj          ,
-					data_object              ,
-					number_simulate
+					data_object
 				);
 			}
 			else if( command_arg == "sample" )

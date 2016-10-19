@@ -229,7 +229,6 @@ def example_db (file_name) :
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		{ 'name':'parent_node_name',       'value':'world'        },
-		{ 'name':'number_simulate',        'value':'1'            },
 		{ 'name':'fit_simulate_index',     'value':'0'            },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },
@@ -324,6 +323,9 @@ connection.close()
 # Simulate and then fit the data
 for command in [ 'simulate', 'start', 'fit' ] :
 	cmd = [ program, file_name, command ]
+	if command == 'simulate' :
+		number_simulate = '1'
+		cmd.append(number_simulate)
 	if command == 'start' :
 		cmd.append('prior_mean')
 	print( ' '.join(cmd) )

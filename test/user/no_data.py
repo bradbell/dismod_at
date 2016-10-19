@@ -149,7 +149,6 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'world'             },
-		{ 'name':'number_simulate',        'value':'1'                 },
 		{ 'name':'fit_simulate_index',     'value':None                },
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'random_seed',            'value':'0'                 },
@@ -196,6 +195,9 @@ example_db(file_name)
 program        = '../../devel/dismod_at'
 for command in [ 'init', 'start', 'fit' ] :
 	cmd = [ program, file_name, command ]
+	if command == 'simulate' :
+		number_simulate = '1'
+		cmd.append(number_simulate)
 	if command == 'start' :
 		cmd.append('prior_mean')
 	print( ' '.join(cmd) )
