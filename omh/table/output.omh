@@ -19,18 +19,17 @@ $$
 
 $section Tables That Are Created By Dismod_at$$
 Each of the tables in this section is created by a dismod_at $cref command$$.
-There is one possible exception,
-the $cref truth_var_table$$ may be directly by the user
-(instead of by using the $cref truth_command$$).
+Some of the tables may be created, or replaced, by the dismod_at user.
 Also note that a row is written in the $cref log_table$$ at the beginning
 and end of every command.
 In addition, the log table is cumulative; i.e.,
 it is never erased and restarted.
 
+$comment Same order as table below$$
 $children%omh/table/log_table.omh
+	%omh/table/var_table.omh
 	%omh/table/data_subset_table.omh
 	%omh/table/avgint_subset_table.omh
-	%omh/table/var_table.omh
 	%omh/table/start_var_table.omh
 	%omh/table/fit_var_table.omh
 	%omh/table/fit_data_subset_table.omh
@@ -40,45 +39,105 @@ $children%omh/table/log_table.omh
 	%omh/table/predict_table.omh
 %$$
 
+$comment Same order as children above$$
+
+$head Output Tables$$
+Here is a list of the $code dismod_at$$ output tables.
 $table
-	Command $pre  $$ $cnext
-	Addition Input Tables $cnext
-	Output Tables
+Table $cnext
+Output By $cnext
+By User   $cnext
 $rnext
-	$cref/init/init_command/$$ $cnext
-	$cnext
-	$cref/var/var_table/$$
-$rnext $cnext $cnext
-	$cref/data_subset/data_subset_table/$$
-$rnext $cnext $cnext
-	$cref/avgint_subset/avgint_subset_table/$$  $pre  $$
+$cref/log/log_table/$$ $cnext
+all commands $cnext
+no
 $rnext
-	$cref/start/start_command/$$ $cnext
-	$cnext
-	$cref/start_var/start_var_table/$$
+$cref/var/var_table/$$ $cnext
+$cref/init/init_command/$$ $cnext
+no
 $rnext
-	$cref/fit/fit_command/$$ $cnext
-	$cref/start_var/start_var_table/$$,
-	$cref/simulate/simulate_table/$$
-	$cnext
-	$cref/fit_var/fit_var_table/$$,
-	$cref/fit_data_subset/fit_data_subset_table/$$
+$cref/data_subset/data_subset_table/$$ $cnext
+$cref/init/init_command/$$ $cnext
+no
 $rnext
-	$cref/truth/truth_command/$$ $cnext
-	$cref/fit_var/fit_var_table/$$ $cnext
-	$cref/truth_var/truth_var_table/$$
+$cref/avgint_subset/avgint_subset_table/$$ $cnext
+$cref/init/init_command/$$ $cnext
+no
 $rnext
-	$cref/simulate/simulate_command/$$ $cnext
-	$cref/truth_var/truth_var_table/$$ $cnext
-	$cref/simulate/simulate_table/$$
+$cref/start_var/start_var_table/$$ $cnext
+$cref/start/start_command/$$ $cnext
+yes
 $rnext
-	$cref/sample/sample_command/$$ $cnext
-	$cref/simulate/simulate_table/$$, $cref/fit_var/fit_var_table/$$ $cnext
-	$cref/sample/sample_table/$$
+$cref/fit_var/fit_var_table/$$ $cnext
+$cref/fit/fit_command/$$ $cnext
+no
 $rnext
-	$cref/predict/predict_command/$$ $cnext
-	$cref/sample/sample_table/$$     $cnext
-	$cref/predict/predict_table/$$
+$cref/fit_data_subset/fit_data_subset_table/$$ $cnext
+$cref/fit/fit_command/$$ $cnext
+no
+$rnext
+$cref/truth_var/truth_var_table/$$ $cnext
+$cref/truth/truth_command/$$ $cnext
+yes
+$rnext
+$cref/simulate/simulate_table/$$ $cnext
+$cref/simulate/simulate_command/$$ $cnext
+no
+$rnext
+$cref/sample/sample_table/$$ $cnext
+$cref/sample/sample_command/$$ $cnext
+no
+$rnext
+$cref/predict/predict_table/$$ $cnext
+$cref/predict/predict_command/$$ $cnext
+no
+$tend
+
+
+
+$head Extra Input Tables$$
+Here is list of command and their list of the extra input tables.
+An extra input table is one that is not in the $cref input$$ list
+and is not created by the $cref init_command$$.
+(The tables created by the init command are
+$cref/var/var_table/$$,
+$cref/data_subset/data_subset_table/$$, and
+$cref/start_var/start_var_table/$$.)
+
+$table
+Command $cnext
+Extra Input
+$rnext
+$cref/start prior_mean/start_command/source/prior_mean/$$ $cnext
+none
+$rnext
+$cref/start fit_var/start_command/source/fit_var/$$ $cnext
+$cref/fit_var/fit_var_table/$$
+$rnext
+$cref/fit/fit_command/$$ $cnext
+$cref/start_var/start_var_table/$$
+$rnext
+$cref/fit simulate_index/fit_command/simulate_index/$$ $cnext
+$cref/start_var/start_var_table/$$,
+$cref/simulate/simulate_table/$$
+$rnext
+$cref/truth/truth_command/$$   $cnext
+$cref/fit_var/fit_var_table/$$
+$rnext
+$cref/simulate/simulate_command/$$ $cnext
+$cref/truth_var/truth_var_table/$$
+$rnext
+$cref/sample fit_var/sample_command/method/fit_var/$$ $cnext
+$cref/fit_var/fit_var_table/$$
+$rnext
+$cref/sample asymptotic/sample_command/method/asymptotic/$$ $cnext
+$cref/fit_var/fit_var_table/$$
+$rnext
+$cref/sample simulate/sample_command/method/simulate/$$ $cnext
+$cref/simulate/simulate_table/$$
+$rnext
+$cref/predict/predict_command/$$ $cnext
+$cref/sample/sample_table/$$
 $tend
 
 $end

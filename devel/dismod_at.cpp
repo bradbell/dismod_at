@@ -409,7 +409,7 @@ next fit; see $cref prior_table$$.
 $subhead fit_var$$
 If $icode source$$ is $code fit_var$$,
 the results of the previous fit is used as the starting values for the
-next fit; see $cref prior_table$$.
+next fit; see $cref fit_var_table$$.
 
 $head start_var_table$$
 This command creates a $cref start_var_table$$ using the
@@ -1023,6 +1023,7 @@ If $icode method$$ is $code asymptotic$$,
 The asymptotic statics of the model variables is used to generate
 $icode number_sample$$ samples of the model variables
 The samples with different values of $icode sample_index$$ are independent.
+(Note that the $cref fit_var_table$$ is an additional input in this case.)
 
 $subhead fit_var$$
 If $icode method$$ is $code fit_var$$,

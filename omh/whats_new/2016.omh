@@ -57,6 +57,8 @@ from the $cref option_table$$
 and the argument $cref/simulate_index/fit_command/simulate_index/$$
 was added to the simulate command.
 $lnext
+Improve the discussion of the $cref output$$ tables.
+$lnext
 Fix some compiler warnings.
 $lend
 

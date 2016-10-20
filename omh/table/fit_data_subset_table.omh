@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -13,7 +13,7 @@ $spell
 	var
 $$
 
-$section The Model and Weighted Residuals Corresponding to a Fit$$.
+$section The Model and Weighted Residuals Corresponding to a Fit$$
 The fit_data_subset table compares the model and data
 for the $cref model_variables$$
 corresponding to a $cref fit_command$$.
