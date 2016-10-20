@@ -81,7 +81,7 @@ do
 			echo "response is not 'r' or 'a'"
 			exit 1
 		fi
-		if [ "$response" != 'r' ]
+		if [ "$response" == 'r' ]
 		then
 			echo_eval rm log/install_dismod_at.$ext
 		fi
