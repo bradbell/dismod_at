@@ -225,11 +225,9 @@ def example_db (file_name) :
 	]
 	# ------------------------------------------------------------------------
 	# option_table
-	# Note that fit_simulate_index is not empty (so will fit simulted data)
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		{ 'name':'parent_node_name',       'value':'world'        },
-		{ 'name':'fit_simulate_index',     'value':'0'            },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },
 
@@ -328,6 +326,9 @@ for command in [ 'simulate', 'start', 'fit' ] :
 		cmd.append(number_simulate)
 	if command == 'start' :
 		cmd.append('prior_mean')
+	if command == 'fit' :
+		simulate_index = '0';
+		cmd.append(simulate_index)
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :

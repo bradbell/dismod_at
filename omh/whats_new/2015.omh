@@ -311,7 +311,7 @@ $lend
 
 $head 11-04$$
 $list number$$
-Add $cref/fit_simulate_index/option_table/fit_simulate_index/$$
+Add $cref/fit_simulate_index/fit_command/simulate_index/$$
 to the option table and
 change $code bin/database2csv.py$$ to display simulated data
 $icode fit_simulate_index$$ is not empty.

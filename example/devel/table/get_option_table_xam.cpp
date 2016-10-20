@@ -60,7 +60,6 @@ bool get_option_table_xam(void)
 		//
 		"parent_node_id",                "1",
 		"ode_step_size",                 "20.0",
-		"fit_simulate_index",            "0",
 		"random_seed",                   "123",
 		"random_zero_sum",                "true",
 		"rate_case",                     "iota_zero_rho_zero"

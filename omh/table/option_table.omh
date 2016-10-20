@@ -38,17 +38,7 @@ is not present in the option table.
 $head Changing Values$$
 This table is special in that you can change almost all its values
 without invalidating the $cref/output tables/output/$$.
-There are some exceptions listed below:
-$list number$$
-If you change the
-$cref/parent_node_id/option_table/parent_node_id/$$,
-all of the output tables become invalid.
-$lnext
-If you change the
-$cref/fit_simulate_index/option_table/fit_simulate_index/$$, the
-$cref/fit_var/fit_var_table/$$ and $cref/fit_data_subset/fit_data_subset_table/$$
-tables become invalid.
-$lend
+There are one main exceptions $icode parent_node_id$$; see below.
 
 $head option_id$$
 This column has type $code integer$$ and is the primary key for this table.
@@ -68,6 +58,9 @@ If $icode%option_name% = parent_node%$$,
 the corresponding $icode option_value$$
 is a non-negative integer (greater than or equal zero)
 that specifies the parent $cref/node_id/node_table/node_id/$$.
+If you change the
+$cref/parent_node_id/option_table/parent_node_id/$$,
+all of the output tables become invalid.
 
 $subhead Default$$
 The default value for this option is $code 0$$.
@@ -95,18 +88,6 @@ The default value for this option is $code 10.0$$,
 which is reasonable if all the rates
 $icode iota$$, $icode rho$$, $icode chi$$, and $icode omega$$
 are all less than $code 0.1$$.
-
-$head fit_simulate_index$$
-If the value of $icode fit_simulate_index$$ is $code null$$,
-the measurement values in the $cref/data_table/data_table/meas_value/$$
-are used during the $cref fit_command$$.
-Otherwise, $icode fit_simulate_index$$ is the
-$cref/simulate_index/simulate_table/simulate_index/$$
-for the measurement values in the
-$cref/simulate_table/simulate_table/meas_value/$$.
-
-$subhead Default$$
-The default value for this option is $code null$$.
 
 $head random_seed$$
 This is a non-negative integer used to seed the random number

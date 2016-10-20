@@ -502,20 +502,27 @@ $$
 $section The Fit Command$$
 
 $head Syntax$$
-$codei%dismod_at %database% fit%$$
+$codei%dismod_at %database% fit
+%$$
+$codei%dismod_at %database% fit %simulate_index%$$
 
 $head database$$
 Is an
 $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
-$head simulate_table$$
-If $cref/fit_simulate_index/option_table/fit_simulate_index/$$ is
-not $code null$$, the fit uses the corresponding
-$cref/meas_value/simulate_table/meas_value/$$ in the simulate table
-in place of the
-$cref/meas_value/data_table/meas_value/$$ in the data table.
+$head simulate_index$$
+If $icode simulate_index$$ is present, it must be less than
+$cref/number_simulate/simulate_command/number_simulate/$$.
+In this case the corresponding simulate table
+$cref/meas_value/simulate_table/meas_value/$$ entries
+are used in place of the data table
+$cref/meas_value/data_table/meas_value/$$ entries.
 
+$head simulate_table$$
+If $icode simulate_index$$ is present,
+the corresponding $icode meas_value$$ entries the simulate table
+are used as inputs.
 
 $head fit_var_table$$
 A new $cref fit_var_table$$ is created each time this command is run.
@@ -536,6 +543,7 @@ $end
 
 // ----------------------------------------------------------------------------
 void fit_command(
+	const std::string&                           simulate_index   ,
 	sqlite3*                                     db               ,
 	dismod_at::data_model&                       data_object      ,
 	vector<dismod_at::data_subset_struct>&       data_subset_obj  ,
@@ -549,9 +557,8 @@ void fit_command(
 {	using std::string;
 	using CppAD::to_string;
 	// -----------------------------------------------------------------------
-	string fit_simulate_index = option_map["fit_simulate_index"];
-	if( fit_simulate_index != "" )
-	{	size_t simulate_index = std::atoi( fit_simulate_index.c_str() );
+	if( simulate_index != "" )
+	{	size_t sim_index = std::atoi( simulate_index.c_str() );
 		//
 		// get simulation data
 		vector<dismod_at::simulate_struct> simulate_table =
@@ -559,16 +566,16 @@ void fit_command(
 		size_t n_subset   = data_subset_obj.size();
 		size_t n_simulate = simulate_table.size() / n_subset;
 		//
-		if( simulate_index >= n_simulate )
-		{	string msg = "dismod_at fit command fit_simulate_index = ";
-			msg += fit_simulate_index + "\nis greater than or equal ";
+		if( sim_index >= n_simulate )
+		{	string msg = "dismod_at fit command simulate_index = ";
+			msg += simulate_index + "\nis greater than or equal ";
 			msg += "number of samples in the simulate table.";
 			string table_name = "simulate";
 			dismod_at::error_exit(msg, table_name);
 		}
 		// replace the data with the simulated values
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-		{	size_t simulate_id = n_subset * simulate_index + subset_id;
+		{	size_t simulate_id = n_subset * sim_index + subset_id;
 			data_subset_obj[subset_id].meas_value =
 				simulate_table[simulate_id].meas_value;
 		}
@@ -672,7 +679,7 @@ void fit_command(
 	}
 	// residual_value, residual_dage, residual_dtime
 	for(size_t variable_type = 0; variable_type < 2; variable_type++)
-	{	CppAD::vector< dismod_at::residual_struct<double> > residual;
+	{	vector< dismod_at::residual_struct<double> > residual;
 		if( variable_type == 0 )
 			residual  = prior_object.fixed(opt_value);
 		else
@@ -1399,7 +1406,7 @@ void predict_command(
 	col_unique[2] = false;
 	//
 	// pack_vec
-	CppAD::vector<double> pack_vec(n_var);
+	vector<double> pack_vec(n_var);
 	//
 	size_t sample_id = 0;
 	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
@@ -1469,6 +1476,7 @@ int main(int n_arg, const char** argv)
 		{"start",     4},
 		{"truth",     3},
 		{"fit",       3},
+		{"fit",       4},
 		{"simulate",  4},
 		{"sample",    5},
 		{"predict",   3}
@@ -1489,16 +1497,27 @@ int main(int n_arg, const char** argv)
 		std::exit(1);
 	}
 	const string database_arg  = argv[1];
-	const string command_arg    = argv[2];
+	const string command_arg   = argv[2];
+	vector<size_t> command_match;
+	bool match = false;
 	for(size_t i = 0; i < n_command; i++)
 	{	if( command_arg == command_info[i].name )
-		{	if( n_arg != command_info[i].n_arg )
-			{	cerr << program << endl
-				<< "expected " << command_info[i].n_arg - 3
-				<< " arguments to follow " << command_info[i].name << "\n";
-				std::exit(1);
-			}
+		{	command_match.push_back( command_info[i].n_arg );
+			match |= n_arg == command_info[i].n_arg;
 		}
+	}
+	if( command_match.size() == 0 )
+	{	cerr << program << endl;
+		cerr << command_arg << " is not a valid command" << endl;
+		std::exit(1);
+	}
+	if( ! match )
+	{	cerr << program << endl << command_arg << " command expected "
+			<< command_match[0] - 3;
+		if( command_match.size() == 2 )
+			cerr << " or " << command_match[1] - 3;
+		cerr << " arguments to follow " << command_arg << endl;
+		std::exit(1);
 	}
 	string message;
 	// --------------- open connection to datbase ---------------------------
@@ -1715,7 +1734,11 @@ int main(int n_arg, const char** argv)
 			avgint_object.set_eigen_ode2_case_number(rate_case);
 			// ------------------------------------------------------------------
 			if( command_arg == "fit" )
-			{	fit_command(
+			{	string simulate_index = "";
+				if( n_arg == 4 )
+					simulate_index = argv[3];
+				fit_command(
+					simulate_index   ,
 					db               ,
 					data_object      ,
 					data_subset_obj  ,
@@ -1728,7 +1751,7 @@ int main(int n_arg, const char** argv)
 			}
 			else if( command_arg == "simulate" )
 			{	simulate_command(
-					argv[3]          , // number_simulate
+					argv[3]                  , // number_simulate
 					db                       ,
 					db_input.integrand_table ,
 					data_subset_obj          ,

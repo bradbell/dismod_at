@@ -233,14 +233,14 @@
 #
 # $subhead meas_value$$
 # This column is present when
-# $cref/fit_simulate_index/option_table/fit_simulate_index/$$
+# $cref/fit_simulate_index/fit_command/simulate_index/$$
 # is $code null$$.
 # It is the $cref/meas_value/data_table/meas_value/$$ in the
 # data table.
 #
 # $subhead sim_value$$
 # This column is present when
-# $cref/fit_simulate_index/option_table/fit_simulate_index/$$
+# $cref/fit_simulate_index/fit_command/simulate_index/$$
 # is $bold not$$ $code null$$.
 # It is the $cref/meas_value/simulate_table/meas_value/$$ in the
 # simulate table for the specified

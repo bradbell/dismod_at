@@ -49,6 +49,13 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 10-20$$
+$bold API Change$$:
+The $icode fit_simulate_index$$ option was removed
+from the $cref option_table$$
+and the argument $cref/simulate_index/fit_command/simulate_index/$$
+was added to the simulate command.
+
 $head 10-19$$
 $list number$$
 $bold API Change$$:
@@ -615,7 +622,7 @@ In the simulate table, change $code sample_index$$ to
 $cref/simulate_index/simulate_table/simulate_index/$$.
 $lnext
 In the option table, change $code fit_sample_index$$ to
-$cref/fit_simulate_index/option_table/fit_simulate_index/$$.
+$cref/fit_simulate_index/fit_command/simulate_index/$$.
 $lend
 
 

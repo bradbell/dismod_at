@@ -197,9 +197,6 @@ bool pack_value_prior_xam(void)
 	// pack_object
 	size_t n_integrand = 0;
 	size_t n_child     = 1;
-	bool new_file = true;
-	std::string file_name = "example.db";
-	sqlite3* db = dismod_at::open_connection(file_name, new_file);
 	dismod_at::pack_info pack_object(
 		n_integrand, n_child, smooth_table, mulcov_table, rate_table
 	);

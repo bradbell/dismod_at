@@ -99,7 +99,6 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "accept_after_max_steps_random", "5"                  },
 		{ "derivative_test_fixed",         "none"               },
 		{ "derivative_test_random",        "none"               },
-		{ "fit_simulate_index",            ""                   },
 		{ "fixed_bound_frac",              "1e-2"               },
 		{ "max_num_iter_fixed",            "100"                },
 		{ "max_num_iter_random",           "100"                },
@@ -138,7 +137,6 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	// values in table
 	size_t  derivative_test_fixed_level = 0;
 	bool    quasi_fixed                 = true;
-	string  fit_simulate_index          = "";
 	for(size_t option_id = 0; option_id < n_in_table; option_id++)
 	{	size_t match = n_option;
 		for(size_t i = 0; i < n_option; i++)
@@ -175,16 +173,6 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			if( ! ok )
 			{	msg = "option_value is < 0 for random_seed";
 				error_exit(msg, table_name, option_id);
-			}
-		}
-		if( name_vec[match] == "fit_simulate_index" )
-		{	fit_simulate_index = option_value[option_id].c_str();
-			if( fit_simulate_index != "" )
-			{	bool ok = std::atoi( fit_simulate_index.c_str() ) >= 0;
-				if( ! ok )
-				{	msg = "option_value is < 0 for fit_simulate_index";
-					error_exit(msg, table_name, option_id);
-				}
 			}
 		}
 		if( name_vec[match] == "quasi_fixed" )
