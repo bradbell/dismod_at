@@ -80,6 +80,8 @@ cmake_cxx_compiler=''
 # to report its fatal error messages.
 # If NO, it will convert fatal errors to asserts
 # (which is useful when running a program in a debugger).
+# In addition, warnings
+# where the context in the debugger is helpful, are also converted to asserts.
 # &codep
 log_fatal_error='NO'
 # &&
