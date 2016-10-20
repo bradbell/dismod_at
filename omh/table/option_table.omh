@@ -38,7 +38,8 @@ is not present in the option table.
 $head Changing Values$$
 This table is special in that you can change almost all its values
 without invalidating the $cref/output tables/output/$$.
-There are one main exceptions $icode parent_node_id$$; see below.
+There is one main exception
+$cref/parent_node_id/option_table/parent_node_id/$$; see below.
 
 $head option_id$$
 This column has type $code integer$$ and is the primary key for this table.
@@ -61,6 +62,9 @@ that specifies the parent $cref/node_id/node_table/node_id/$$.
 If you change the
 $cref/parent_node_id/option_table/parent_node_id/$$,
 all of the output tables become invalid.
+This value is in the option table,
+and not an argument to a particular command,
+because it is used by all the commands.
 
 $subhead Default$$
 The default value for this option is $code 0$$.
