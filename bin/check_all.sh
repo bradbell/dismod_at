@@ -41,13 +41,24 @@ then
 else
 	bin/run_cmake.sh
 fi
-#
+# ----------------------------------------------------------------------------
 cd build
-make check
+echo "make check >& check_all.log"
+if ! make check >& ../check_all.log
+then
+	echo 'check_all.sh: make check failed, see check_all.log'
+	exit 1
+fi
+if grep ': *warning *:' ../check_all.log
+then
+	echo 'check_all.sh: aborting: see compiler warnings in check_all.log'
+	exit 1
+fi
 if [ "$input" == 'ds' ] || [ "$input" == 'rs' ]
 then
 	make speed
 fi
+# ----------------------------------------------------------------------------
 cd ..
 #
 bin/check_install.sh
