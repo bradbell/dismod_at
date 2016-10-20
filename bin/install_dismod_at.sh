@@ -210,8 +210,6 @@ for file in $list
 do
 	echo_eval sed -f junk.sed -i bin/$file
 done
-# using a static link from suitespace to ipopt version of metis library.
-sed -e 's|^\.\./configure |& -enable-static |' -i bin/install_ipopt.sh
 # -----------------------------------------------------------------------------
 # Build and install all the special requirements
 if [ "$install_special_requirements" == 'true' ]
