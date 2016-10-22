@@ -15,7 +15,7 @@ web_page='http://moby.ihme.washington.edu/bradbell/dismod_at'
 #
 # Which local tarball to use. If it is not present in $HOME/install
 # this script will try to retreive it from upstream.
-tarball='dismod_at-20161020.tgz'
+tarball='dismod_at-20161022.tgz'
 #
 # location on this system of python3 and newer version of sqlite3
 anaconda='/usr/local/anaconda3-current'
