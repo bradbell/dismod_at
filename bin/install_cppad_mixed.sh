@@ -51,7 +51,7 @@ echo_eval() {
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
 hash_key='781af73035b02d709d444a218c6de8d8e84c48bc'
-version='20161018'
+version='20161016'
 libdir=`bin/libdir.sh`
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null

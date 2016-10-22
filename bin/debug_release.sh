@@ -9,6 +9,9 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
+ipopt='Ipopt-3.12.6'
+cppad_mixed='cppad_mixed-20161016'
+# ---------------------------------------------------------------------------
 if [ "$0" != "bin/debug_release.sh" ]
 then
 	echo "bin/debug_release.sh: must be executed from its parent directory"
@@ -25,17 +28,16 @@ b done
 : one
 /app = IpoptApplicationFactory()/! b two
 s|$|\\
-\\tstd::cout << "app = " << Ipopt::GetRawPtr(app) << std::endl;|
+\\tstd::cout << "Factory: app = " << Ipopt::GetRawPtr(app) << std::endl;\\
+\\tstd::cout << "quasi_fixed_ = " << quasi_fixed_ << std::endl;|
 b done
 #
 : two
 /^\\tstatus *= *app->Initialize();/! b three
 s|^|\\tstd::cout << "Call app->Initilaize\\\\n";\\
 |
-s|^|\\tstd::cout << "app = " << Ipopt::GetRawPtr(app) << std::endl;\\
-|
 s|$|\\
-\\tstd::cout << "Done app->Initilaize\\\\n";|
+\\tstd::cout << "Init: app = " << Ipopt::GetRawPtr(app) << std::endl;|
 b done
 #
 : three
@@ -44,15 +46,39 @@ s|virtual *||
 b done
 #
 : four
+/^\\t\\t"accept_after_max_steps", 2\$/! b five
+N
+s|$|\\
+\\tstd::cout << "max_steps: app = " << Ipopt::GetRawPtr(app) << std::endl;|
+b done
+#
+:five
+/^\\t\\t\\t"hessian_approximation", "limited-memory");\$/! b six
+s|$|\\
+\\t\\tstd::cout << "hessian: app = " << Ipopt::GetRawPtr(app) << std::endl;|
+b done
+#
+:six
+/^  bool OptionsList::SetStringValue(/! b seven
+N
+N
+N
+N
+s|\$|\\
+    std::cout << "Begin OptionsList::SetStringValue" << std::endl;|
+b done
+#
+: seven
 : done
 EOF
 # -----------------------------------------------------------------------------
 # modify source code
-source_list='
-	build/external/Ipopt-3.12.6/Ipopt/src/Interfaces/IpIpoptApplication.hpp
-	build/external/Ipopt-3.12.6/Ipopt/src/Interfaces/IpIpoptApplication.cpp
-	build/external/cppad_mixed-20161018/src/optimize_fixed.cpp
-'
+source_list="
+	build/external/$ipopt/Ipopt/src/Interfaces/IpIpoptApplication.hpp
+	build/external/$ipopt/Ipopt/src/Interfaces/IpIpoptApplication.cpp
+	build/external/$ipopt/Ipopt/src/Common/IpOptionsList.cpp
+	build/external/$cppad_mixed/src/optimize_fixed.cpp
+"
 for src in $source_list
 do
 	dir=`echo $src | sed -e 's|/[^/]*$||'`
