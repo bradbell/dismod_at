@@ -102,11 +102,11 @@ read -p 'debug_release.sh: hit return to continue' text
 # -----------------------------------------------------------------------------
 # rebuild
 start_dir=`pwd`
-dir_list='
-	build/external/Ipopt-3.12.6/build
-	build/external/cppad_mixed-20161018/build
+dir_list="
+	build/external/$ipopt/build
+	build/external/$cppad_mixed/build
 	build
-'
+"
 for build_dir in $dir_list
 do
 	echo_eval cd $build_dir
