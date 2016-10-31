@@ -49,6 +49,17 @@ $section Changes and Additions to Dismod_at During 2016$$
 $childtable%omh/whats_new/2015.omh
 %$$
 
+$head 10-31$$
+$list number$$
+Include documentation for the
+$cref/covariate/db2csv_command/data.csv/covariates/$$ columns in
+the $code data.csv$$ file.
+$lnext
+Improve the documentation for the
+$cref/sample_index/predict_table/sample_index/$$ column in the
+predict table. (It refers to variable and not data samples.)
+$lend
+
 $head 10-20$$
 $list number$$
 $bold API Change$$:

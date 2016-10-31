@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -29,9 +29,10 @@ This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
 $head sample_index$$
-This column has type $code integer$$ and specifies the
-$cref/sample_index/sample_table/sample_index/$$
-in the sample data table that $icode avg_integrand$$ corresponds to.
+This column has type $code integer$$ and specifies the set of
+$cref model_variables$$ that the $icode avg_integrand$$ corresponds to.
+The be specific, the model variables are those that have the sample
+$icode sample$$ index in the $cref/sample_table/sample_table/sample_index/$$.
 
 $head avgint_subset_id$$
 This column has type $code integer$$ and specifies the
@@ -53,6 +54,6 @@ $icode sample_index$$ in $cref sample_table$$
 and the average integrand case specified by $icode avgint_subset_id$$.
 
 $head Example$$
-2DO: The $code predict_command.py$$ is an example that creates this table.
+The $cref predict_command.py$$ is an example that creates this table.
 
 $end

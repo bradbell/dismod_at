@@ -16,6 +16,7 @@
 #	dismod
 #	var
 #	covariate
+#	covariates
 #	res
 #	dage
 #	dtime
@@ -75,7 +76,6 @@
 # $cref/row_id/log_table/row_id/$$,
 # $cref/unix_time/log_table/unix_time/$$, and
 # $cref/message/log_table/message/$$.
-#
 #
 # $head variable.csv$$
 # The file $icode%dir%/variable.csv%$$ is written by this command.
@@ -260,6 +260,12 @@
 # during a $code dismod_at$$ fit.
 # This will correspond directly to the $cref/node_id/data_table/node_id/$$
 # in the data table, or be an ascendant of that node.
+#
+# $subhead covariates$$
+# For each covariate in the $cref covariate_table$$ there is a column with
+# the corresponding $icode covariate_name$$.
+# The value in this column, for each row of $code data.csv$$,
+# is the value of the covariate for measurement in the row.
 #
 # $end
 # ----------------------------------------------------------------------------
