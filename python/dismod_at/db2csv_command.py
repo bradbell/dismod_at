@@ -311,7 +311,7 @@
 # is the
 # $cref/node_name/node_table/node_name/$$.
 #
-# $head sample_index$$
+# $subhead sample_index$$
 # This identifies the set model variables in the sample table.
 # To be specific, the model variables correspond to the rows on the
 # sample table with the same $cref/sample_index/sample_table/sample_index/$$.
