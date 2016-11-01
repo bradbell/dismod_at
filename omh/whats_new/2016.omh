@@ -52,12 +52,15 @@ $childtable%omh/whats_new/2015.omh
 $head 10-31$$
 $list number$$
 Include documentation for the
-$cref/covariate/db2csv_command/data.csv/covariates/$$ columns in
+$cref/covariate/db2csv_command/data.csv/Covariates/$$ columns in
 the $code data.csv$$ file.
 $lnext
 Improve the documentation for the
 $cref/sample_index/predict_table/sample_index/$$ column in the
 predict table. (It refers to variable and not data samples.)
+$lnext
+Add the $cref/predict.csv/db2csv_command/predict.csv/$$ output
+file to the $code db2csv$$ command.
 $lend
 
 $head 10-20$$

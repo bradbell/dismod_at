@@ -31,10 +31,15 @@ $codei%
 In addition, the size of both tables is the same.
 
 $head avg_integrand$$
-The column has type $code real$$ and contains the
-$cref avg_integrand$$ that correspond to the
-$cref model_variables$$ obtained by the fit; see
-$cref/variable_value/fit_var_table/variable_value/$$.
+This column type $code real$$ and is the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
+$latex A_i(u, \theta)$$.
+The model variables $latex (u, \theta)$$ corresponding to the
+$cref fit_var_table$$.
+The subscript $latex i$$ denotes the
+information in the data table for the
+$cref/data_id/data_table/data_id/$$ that corresponds to this
+$cref/data_subset_id/data_subset_table/data_subset_id/$$.
 
 $head weighted_residual$$
 The column has type $code real$$ and contains the

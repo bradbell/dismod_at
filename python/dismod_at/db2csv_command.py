@@ -261,11 +261,67 @@
 # This will correspond directly to the $cref/node_id/data_table/node_id/$$
 # in the data table, or be an ascendant of that node.
 #
-# $subhead covariates$$
+# $subhead Covariates$$
 # For each covariate in the $cref covariate_table$$ there is a column with
 # the corresponding $icode covariate_name$$.
-# The value in this column, for each row of $code data.csv$$,
-# is the value of the covariate for measurement in the row.
+# For each covariate column and measurement row, the value in the
+# covariate column is covariate value for this measurement minus
+# the reference value for this covariate.
+#
+# $head predict.csv$$
+# If the $cref predict_command$$ has was executed,
+# the CSV file $code predict.csv$$ is written.
+# For each set of $cref model_variables$$ in the $cref sample_table$$,
+# and each row of $cref avgint_subset_table$$, there is a corresponding
+# row in $code predict.csv$$.
+#
+# $subhead avgint$$
+# is the $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
+# $latex A_i(u, \theta)$$. The model variables $latex (u, \theta)$$
+# correspond to the $icode sample_index$$, and measurement subscript $latex i$$
+# denotes to the $cref avgint_table$$ information
+# for this row of $code predict.csv$$; i.e., $icode age_lo$$, $icode age_up$$,
+# ...
+#
+# $subhead age_lo$$
+# is the
+# $cref/age_lower/data_table/age_lower/$$.
+#
+# $subhead age_up$$
+# is the
+# $cref/age_upper/data_table/age_upper/$$.
+#
+# $subhead time_lo$$
+# is the
+# $cref/time_lower/data_table/time_lower/$$.
+#
+# $subhead time_up$$
+# is the
+# $cref/time_upper/data_table/time_upper/$$.
+#
+# $subhead integrand$$
+# is the
+# $cref/integrand_name/integrand_table/integrand_name/$$.
+#
+# $subhead weight$$
+# is the
+# $cref/weight_name/weight_table/weight_name/$$.
+#
+# $subhead node$$
+# is the
+# $cref/node_name/node_table/node_name/$$.
+#
+# $head sample_index$$
+# This identifies the set model variables in the sample table.
+# To be specific, the model variables correspond to the rows on the
+# sample table with the same $cref/sample_index/sample_table/sample_index/$$.
+#
+# $subhead Covariates$$
+# For each covariate in the $cref covariate_table$$ there is a column with
+# the corresponding $icode covariate_name$$.
+# For each covariate column and measurement row, the value in the
+# covariate column is covariate value in the $cref avgint_table$$
+# minus the reference value for this covariate.
 #
 # $end
 # ----------------------------------------------------------------------------
@@ -294,6 +350,8 @@ def db2csv_command(database_file_arg) :
 	cursor       = connection.cursor()
 	required_table_list  = [
 		'age',
+		'avgint',
+		'avgint_subset',
 		'covariate',
 		'data',
 		'data_subset',
@@ -322,6 +380,7 @@ def db2csv_command(database_file_arg) :
 	have_table['simulate']        = check4table(cursor, 'simulate')
 	have_table['fit_var']         = check4table(cursor, 'fit_var')
 	have_table['fit_data_subset'] = check4table(cursor, 'fit_data_subset')
+	have_table['predict']         = check4table(cursor, 'predict')
 	if have_table['fit_var'] != have_table['fit_data_subset'] :
 		msg = 'db2csv_command: '
 		for table in [ 'fit_var', 'fit_data_subset' ] :
@@ -423,7 +482,7 @@ def db2csv_command(database_file_arg) :
 			descendant_id = parent_id
 		return None
 	# =========================================================================
-	# variable.csv
+	# option.csv
 	# =========================================================================
 	file_name  = os.path.join(database_dir, 'option.csv')
 	csv_file   = open(file_name, 'w')
@@ -666,3 +725,71 @@ def db2csv_command(database_file_arg) :
 		csv_writer.writerow(row_out)
 		subset_id += 1
 	csv_file.close()
+	# =========================================================================
+	# predict.csv
+	# =========================================================================
+	if have_table['predict'] :
+		file_name = os.path.join(database_dir, 'predict.csv')
+		csv_file  = open(file_name, 'w')
+		#
+		header = [
+			'avgint',
+			'age_lo',
+			'age_up',
+			'time_lo',
+			'time_up',
+			'integrand',
+			'weight',
+			'node',
+			'sample_index'
+		]
+		for row in table_data['covariate'] :
+			header.append( row['covariate_name'] )
+		if fit_simulate_index != None :
+			index         = header.index('meas_value')
+			header[index] = 'sim_value'
+		csv_writer = csv.DictWriter(csv_file, fieldnames=header)
+		csv_writer.writeheader()
+		#
+		for predict_row in table_data['predict'] :
+			row_out = dict()
+			#
+			# avgint, sample_index
+			row_out['avgint']  = convert2output( predict_row['avg_integrand'] )
+			row_out['sample_index'] = predict_row['sample_index']
+			#
+			# age_lo, age_up, time_lo, time_up
+			avgint_id          = int( table_lookup(
+				'avgint_subset', predict_row['avgint_subset_id'], 'avgint_id'
+			) )
+			avgint_row         = table_data['avgint'][avgint_id]
+			row_out['age_lo']  = avgint_row['age_lower']
+			row_out['age_up']  = avgint_row['age_upper']
+			row_out['time_lo'] = avgint_row['time_lower']
+			row_out['time_up'] = avgint_row['time_upper']
+			#
+			# integrand
+			row_out['integrand'] = table_lookup(
+				'integrand', avgint_row['integrand_id'], 'integrand_name'
+			)
+			# weight
+			row_out['weight']    = table_lookup(
+				'weight', avgint_row['weight_id'], 'weight_name'
+			)
+			# node
+			row_out['node']      = table_lookup(
+				'node', avgint_row['node_id'], 'node_name'
+			)
+			# covariates
+			covariate_id = 0
+			for row in table_data['covariate'] :
+				field_in  = 'x_' + str(covariate_id)
+				field_out = row['covariate_name']
+				if avgint_row[field_in] == None :
+					row_out[field_out] = ''
+				else :
+					row_out[field_out] = \
+						convert2output(row_in[field_in] - reference)
+			#
+			csv_writer.writerow(row_out)
+		csv_file.close()

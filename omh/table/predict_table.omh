@@ -49,9 +49,12 @@ $cref avgint_table$$.
 $head avg_integrand$$
 This column type $code real$$ and is the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
-corresponding to the model variables with
-$icode sample_index$$ in $cref sample_table$$
-and the average integrand case specified by $icode avgint_subset_id$$.
+$latex A_i(u, \theta)$$.
+The model variables $latex (u, \theta)$$ corresponding to the
+model variables with $icode sample_index$$ in $cref sample_table$$.
+The subscript $latex i$$ denotes the
+information in the $cref avgint_subset_table$$ for this
+$icode avgint_subset_id$$.
 
 $head Example$$
 The $cref predict_command.py$$ is an example that creates this table.
