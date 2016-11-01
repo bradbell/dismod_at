@@ -705,7 +705,7 @@ def db2csv_command(database_file_arg) :
 			field_out = row['covariate_name']
 			reference = row['reference']
 			if row_in[field_in] == None :
-				row_out[field_out] = ''
+				row_out[field_out] = '0.0'
 			else :
 				row_out[field_out] = \
 					 convert2output(row_in[field_in] - reference)
@@ -786,7 +786,7 @@ def db2csv_command(database_file_arg) :
 				field_in  = 'x_' + str(covariate_id)
 				field_out = row['covariate_name']
 				if avgint_row[field_in] == None :
-					row_out[field_out] = ''
+					row_out[field_out] = '0.0'
 				else :
 					row_out[field_out] = \
 						convert2output(row_in[field_in] - reference)
