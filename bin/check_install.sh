@@ -37,6 +37,7 @@ list='
 	log.csv
 	data.csv
 	variable.csv
+	predict.csv
 '
 for name in $list
 do
