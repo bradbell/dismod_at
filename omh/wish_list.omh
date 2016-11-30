@@ -30,6 +30,12 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Simulating Data$$
+The random effects currently use their value in the $cref truth_var_table$$
+during the $cref simulate_command$$.
+Perhaps it would be good to have an option whereby the priors for the
+random effects are used to simulate different value for each sample.
+
 $head Large Excess Mortality$$
 The case where $icode rate_case$$ is
 $cref/iota_pos_rho_zero/option_table/rate_case/iota_pos_rho_zero/$$
