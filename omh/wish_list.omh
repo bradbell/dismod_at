@@ -30,11 +30,29 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Eta$$
+Perhaps the value of $cref/eta/integrand_table/eta/$$ should be
+specified in the $cref data_table$$ so it can be different for each
+measurement. For example, it could be .01 times the corresponding
+$cref/meas_value/data_table/meas_value/$$.
+
 $head Simulating Data$$
-The random effects currently use their value in the $cref truth_var_table$$
+$list number$$
+The random effects currently use the value in the $cref truth_var_table$$
 during the $cref simulate_command$$.
 Perhaps it would be good to have an option whereby the priors for the
 random effects are used to simulate different value for each sample.
+$lnext
+Perhaps the adjusted standard deviation
+$cref/delta_i/data_like/Adjusted Standard Deviation, delta_i/$$
+should be used from simulating the measurement noise.
+$lnext
+Perhaps the $cref/meas_value/data_table/meas_value/$$,
+and not the model value,
+should be used to compute the log-transformed standard deviation
+$cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$
+for the simulated data.
+$lend
 
 $head Large Excess Mortality$$
 The case where $icode rate_case$$ is

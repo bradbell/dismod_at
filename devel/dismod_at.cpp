@@ -867,7 +867,7 @@ This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref init_command$$).
 
-$head sample_table$$
+$head simulate_table$$
 A new $cref simulate_table$$ is created.
 It contains simulated measurement values that can be used in place of
 the data table $cref/meas_value/data_table/meas_value/$$ column.
