@@ -1339,7 +1339,9 @@ $$
 $section One Weighted Residual and Log-Likelihood for any Integrands$$
 
 $head Syntax$$
-$icode%residual% = %data_object%.like_one(%subset_id%, %pack_vec%, %avg%)%$$
+$icode%residual% = %data_object%.like_one(
+	%subset_id%, %pack_vec%, %avg%, %delta_out%
+)%$$
 
 $head Requirement$$
 One must call $cref/replace_like/data_model_replace_like/$$
@@ -1409,6 +1411,12 @@ $cref data_model_avg_yes_ode$$ $cnext
 
 $tend
 
+$head delta_out$$
+The input value of $icode delta_out$$ does not matter.
+Upon return it is the adjusted standard deviation
+$cref/delta/data_like/Adjusted Standard Deviation, delta_i/$$
+for this data point.
+
 $head residual$$
 The return value has prototype
 $codei%
@@ -1433,7 +1441,8 @@ template <class Float>
 residual_struct<Float> data_model::like_one(
 	size_t                        subset_id ,
 	const CppAD::vector<Float>&   pack_vec  ,
-	const Float&                  avg       ) const
+	const Float&                  avg       ,
+	Float&                        delta_out ) const
 {	size_t i, j, k;
 	assert( pack_object_.size() == pack_vec.size() );
 	assert( replace_like_called_ );
@@ -1517,7 +1526,9 @@ residual_struct<Float> data_model::like_one(
 	Float std_effect = Float(0.0);
 	for(k = 0; k < n_ode; k++)
 		std_effect += c_ode[k] * meas_cov_ode[k];
-	Float delta  = Delta + std_effect * (meas_value + eta);
+	//
+	// Compute the adusted standard deviation
+	delta_out  = Delta + std_effect * (meas_value + eta);
 	//
 	Float not_used;
 	bool difference = false;
@@ -1525,7 +1536,7 @@ residual_struct<Float> data_model::like_one(
 		not_used,
 		meas_mean,
 		Float(meas_value),
-		delta,
+		delta_out,
 		Float(eta),
 		density,
 		subset_id,
@@ -1678,8 +1689,9 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 				assert(false);
 			}
 			// compute its residual and log likelihood
+			Float not_used;
 			residual_struct<Float> residual =
-				like_one(subset_id, pack_vec, avg);
+				like_one(subset_id, pack_vec, avg, not_used);
 			residual_vec.push_back( residual );
 		}
 	}
@@ -1721,7 +1733,8 @@ DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)
 	data_model::like_one(                                   \
 		size_t                        subset_id,            \
 		const CppAD::vector<Float>&   pack_vec ,            \
-		const Float&                  avg                   \
+		const Float&                  avg      ,            \
+		Float&                        delta_out             \
 	) const;                                                \
 	template CppAD::vector< residual_struct<Float> >        \
 	data_model::like_all(                                   \

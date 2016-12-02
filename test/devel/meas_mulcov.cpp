@@ -221,9 +221,7 @@ bool meas_mulcov(void)
 		rate_table[rate_id].child_smooth_id =  smooth_id;
 	}
 	// pack_object
-	bool new_file = true;
 	std::string file_name = "example.db";
-	sqlite3* db = dismod_at::open_connection(file_name, new_file);
 	dismod_at::pack_info pack_object(
 		n_integrand, n_child, smooth_table, mulcov_table, rate_table
 	);
@@ -298,8 +296,9 @@ bool meas_mulcov(void)
 	// evaluate residual
 	data_id = 0;
 	Float avg_integrand = data_object.avg_no_ode(data_id, pack_vec);
+	Float delta_out;
 	dismod_at::residual_struct<Float> residual    =
-		data_object.like_one(data_id, pack_vec, avg_integrand);
+		data_object.like_one(data_id, pack_vec, avg_integrand, delta_out);
 	Float wres = residual.wres;
 	//
 	// average mean mulcov
@@ -331,6 +330,9 @@ bool meas_mulcov(void)
 	double delta = Delta + avg_std_mulcov  * (y + eta);
 	Float  check = (y - m) / delta;
 	ok          &= fabs( 1.0 - wres / check ) <= eps;
+	//
+	// check delta_out
+	ok          &= fabs( 1.0 - delta_out / delta ) <= eps;
 	/*
 	if( data_id == 0 )
 		cout << "Debugging" << std::endl;

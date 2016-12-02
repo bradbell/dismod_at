@@ -243,8 +243,9 @@ bool like_one_xam(void)
 	ok &= data_table.size() == data_subset_obj.size();
 	for(size_t data_id = 0; data_id < data_table.size(); data_id++)
 	{	Float avg   = data_object.avg_no_ode(data_id, pack_vec);
+		Float delta_out;
 		dismod_at::residual_struct<Float> residual
-		            = data_object.like_one(data_id, pack_vec, avg);
+		            = data_object.like_one(data_id, pack_vec, avg, delta_out);
 		Float  wres       = residual.wres;
 		Float  loglike    = residual.logden_smooth;
 		loglike          -= fabs( residual.logden_sub_abs );
@@ -254,6 +255,9 @@ bool like_one_xam(void)
 		size_t density_id = data_table[data_id].density_id;
 		bool log_density = density_id == dismod_at::log_gaussian_enum;
 		log_density     |= density_id == dismod_at::log_laplace_enum;
+
+		// check delta_out
+		ok &= fabs( 1.0 - Value(delta_out) / delta ) <= eps;
 
 		// check wres
 		Float check;

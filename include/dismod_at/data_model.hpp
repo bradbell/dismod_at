@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-16 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -112,8 +112,9 @@ public:
 	template <class Float>
 	residual_struct<Float> like_one(
 		size_t                        data_id  ,
-		const  CppAD::vector<Float>&  pack_vec  ,
-		const  Float&                 avg
+		const  CppAD::vector<Float>&  pack_vec ,
+		const  Float&                 avg      ,
+		Float&                        delta
 	) const;
 	// compute weighted residual and log-likelihood for all data points
 	template <class Float>

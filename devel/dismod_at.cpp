@@ -750,8 +750,9 @@ void fit_command(
 			assert(false);
 		}
 		// compute its residual and log likelihood
+		double not_used;
 		dismod_at::residual_struct<double> residual =
-			data_object.like_one(subset_id, opt_value, avg);
+			data_object.like_one(subset_id, opt_value, avg, not_used);
 		//
 		row_value[ subset_id * n_col + 0] = to_string( subset_id );
 		row_value[ subset_id * n_col + 1] = to_string( avg );
