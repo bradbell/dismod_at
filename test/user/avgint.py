@@ -222,9 +222,6 @@ file_name             = 'example.db'
 program               = '../../devel/dismod_at'
 for command in [ 'init', 'start', 'fit' ] :
 	cmd = [ program, file_name, command ]
-	if command == 'simulate' :
-		number_simulate = '1'
-		cmd.append(number_simulate)
 	if command == 'start' :
 		cmd.append('prior_mean')
 	print( ' '.join(cmd) )
