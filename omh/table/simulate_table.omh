@@ -57,6 +57,14 @@ the simulated measurement value that for the specified row of the data table;
 i.e., it can act as a replacement for the value
 $cref/meas_value/data_table/meas_value/$$ in the data table.
 
+$head meas_std$$
+The column has type $code real$$ and is
+the simulated measurement standard deviation
+that for the specified row of the data table;
+i.e., it acts as a replacement for the value
+$cref/meas_std/data_table/meas_std/$$ where the simulated
+$icode meas_value$$ is used.
+
 $head Example$$
 See the $cref simulate_command.py$$ example and test.
 

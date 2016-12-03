@@ -43,14 +43,15 @@ bool get_simulate_table_xam(void)
 		" simulate_id    integer primary key,"
 		" simulate_index integer,"
 		" data_subset_id integer,"
-		" meas_value     real"
+		" meas_value     real,"
+		" meas_std       real"
 	")",
-	"insert into simulate values(0, 0, 0, 0e-3)",
-	"insert into simulate values(1, 0, 1, 1e-3)",
-	"insert into simulate values(2, 0, 2, 2e-3)",
-	"insert into simulate values(3, 1, 0, 0e-3)",
-	"insert into simulate values(4, 1, 1, 1e-3)",
-	"insert into simulate values(5, 1, 2, 2e-3)",
+	"insert into simulate values(0, 0, 0, 0e-3, 6e-4)",
+	"insert into simulate values(1, 0, 1, 1e-3, 5e-4)",
+	"insert into simulate values(2, 0, 2, 2e-3, 4e-4)",
+	"insert into simulate values(3, 1, 0, 0e-3, 3e-4)",
+	"insert into simulate values(4, 1, 1, 1e-3, 2e-4)",
+	"insert into simulate values(5, 1, 2, 2e-3, 1e-4)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -82,6 +83,13 @@ bool get_simulate_table_xam(void)
 	ok  &= simulate_table[3].meas_value   == 0e-3;
 	ok  &= simulate_table[4].meas_value   == 1e-3;
 	ok  &= simulate_table[5].meas_value   == 2e-3;
+	//
+	ok  &= simulate_table[0].meas_std     == 6e-4;
+	ok  &= simulate_table[1].meas_std     == 5e-4;
+	ok  &= simulate_table[2].meas_std     == 4e-4;
+	ok  &= simulate_table[3].meas_std     == 3e-4;
+	ok  &= simulate_table[4].meas_std     == 2e-4;
+	ok  &= simulate_table[5].meas_std     == 1e-4;
 	//
 	// close database and return
 	sqlite3_close(db);

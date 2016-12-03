@@ -24,13 +24,15 @@ Its initial value is zero, and it increments by one for each row.
 
 $head message_type$$
 This column has type $code text$$ and is one of the following values:
-$code command$$, $code error$$.
+$code command$$, $code error$$, $code warning$$.
 
 $subhead command$$
 $list number$$
 The start of every command is logged with $code begin$$,
 followed by white space,
 followed by the name of the command.
+If optional arguments follow the command name,
+they are included after the command name and are separated by spaces.
 $lnext
 The end of every command is logged with the name of the command followed by
 $code done$$.
@@ -76,6 +78,6 @@ $codei%
 %$$
 
 $head message$$
-This column has type $code test$$ and is the message.
+This column has type $code text$$ and is the message.
 
 $end

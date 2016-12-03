@@ -14,6 +14,7 @@ $spell
 	sqlite
 	CppAD
 	struct
+	std
 $$
 
 $section C++: Get the Simulate Table$$
@@ -59,6 +60,10 @@ $rnext
 $code double$$ $cnext $code meas_value$$ $cnext
 	The $cref/meas_value/data_table/meas_value/$$
 	for this simulated measurement.
+$rnext
+$code double$$ $cnext $code meas_std$$ $cnext
+	The $cref/meas_std/data_table/meas_std/$$
+	for this simulated measurement.
 $tend
 
 $children%example/devel/table/get_simulate_table_xam.cpp
@@ -98,11 +103,17 @@ CppAD::vector<simulate_struct> get_simulate_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, meas_value);
 	assert( meas_value.size() == n_simulate );
 
+	column_name             =  "meas_std";
+	CppAD::vector<double>       meas_std;
+	get_table_column(db, table_name, column_name, meas_std);
+	assert( meas_std.size() == n_simulate );
+
 	CppAD::vector<simulate_struct> simulate_table(n_simulate);
 	for(size_t i = 0; i < n_simulate; i++)
 	{	simulate_table[i].simulate_index   = simulate_index[i];
 		simulate_table[i].data_subset_id   = data_subset_id[i];
 		simulate_table[i].meas_value       = meas_value[i];
+		simulate_table[i].meas_std         = meas_std[i];
 	}
 	return simulate_table;
 }

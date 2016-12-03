@@ -870,12 +870,16 @@ $cref var_table$$ (created by the $cref init_command$$).
 
 $head simulate_table$$
 A new $cref simulate_table$$ is created.
-It contains simulated measurement values that can be used in place of
-the data table $cref/meas_value/data_table/meas_value/$$ column.
+It contains simulated measurement values
+$cref/meas_value/simulate_table/meas_value/$$ and standard deviations
+$cref/meas_std/simulate_table/meas_std/$$.
+These values can be used in place of the data table values for
+$cref/meas_value/data_table/meas_value/$$ and
+$cref/meas_std/data_table/meas_std/$$.
 Only the $cref/data_id/data_subset_table/data_id/$$ that are in the
 data_subset table are included in the simulated measurements.
-Hence the number of rows in this table is $icode number_simulate$$
-times the number of rows in $cref data_subset_table$$.
+Hence the number of rows in $cref simulate_table$$ is
+$icode number_simulate$$ times the number of rows in $cref data_subset_table$$.
 
 $children%example/get_started/simulate_command.py%$$
 $head Example$$
@@ -915,7 +919,7 @@ void simulate_command(
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	table_name      = "simulate";
-	size_t n_col    = 3;
+	size_t n_col    = 4;
 	size_t n_subset = data_subset_obj.size();
 	size_t n_row    = n_simulate * n_subset;
 	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_row);
@@ -932,6 +936,10 @@ void simulate_command(
 	col_name[2]   = "meas_value";
 	col_type[2]   = "real";
 	col_unique[2] = false;
+	//
+	col_name[3]   = "meas_std";
+	col_type[3]   = "real";
+	col_unique[3] = false;
 	//
 	for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
@@ -974,6 +982,7 @@ void simulate_command(
 		row_value[simulate_id * n_col + 0] = to_string( sim_index );
 		row_value[simulate_id * n_col + 1] = to_string( subset_id );
 		row_value[simulate_id * n_col + 2] = to_string(meas_value);
+		row_value[simulate_id * n_col + 3] = to_string(meas_std);
 	}
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
@@ -1529,7 +1538,11 @@ int main(int n_arg, const char** argv)
 	dismod_at::error_exit(db);
 # endif
 	// --------------- log start of this command -----------------------------
-	message = "begin " + command_arg;
+	message = "begin";
+	for(int i_arg = 2; i_arg < n_arg; i_arg++)
+	{	message += " ";
+		message += argv[i_arg];
+	}
 	std::time_t unix_time = dismod_at::log_message(db, "command", message);
 	// --------------- get the input tables ---------------------------------
 	std::time_t current_time = trace("Reading database");

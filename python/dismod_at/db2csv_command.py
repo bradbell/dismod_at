@@ -1,4 +1,3 @@
-#! /usr/bin/env python3
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
@@ -38,15 +37,7 @@
 # $codei%dismod_at.db2csv_command( %database% )%$$
 #
 # $head 2DO$$
-# $list number$$
 # Write some automated tests for this program.
-# $lnext
-# If the $cref predict_table$$ is available, include the information for
-# $cref/sample_index/predict_table/sample_index/$$ zero
-# in the $code data.csv$$ file.
-# (This will corresponding to the $cref/sam_value/db2csv_command/$$ column
-# because it also uses $icode%sample_index% == 0%$$.
-# $lend
 #
 # $head Convention$$
 # The $code null$$ value in the database corresponds
@@ -184,82 +175,84 @@
 # and has the following columns:
 #
 # $subhead data_id$$
-# is the
+# is the data table
 # $cref/data_id/data_table/data_id/$$.
 #
 # $subhead data_name$$
-# is the
+# is the data table
 # $cref/data_name/data_table/data_name/$$.
 #
 # $subhead age_lo$$
-# is the
+# is the data table
 # $cref/age_lower/data_table/age_lower/$$.
 #
 # $subhead age_up$$
-# is the
+# is the data table
 # $cref/age_upper/data_table/age_upper/$$.
 #
 # $subhead time_lo$$
-# is the
+# is the data table
 # $cref/time_lower/data_table/time_lower/$$.
 #
 # $subhead time_up$$
-# is the
+# is the data table
 # $cref/time_upper/data_table/time_upper/$$.
 #
 # $subhead integrand$$
-# is the
+# is the data table
 # $cref/integrand_name/integrand_table/integrand_name/$$.
 #
 # $subhead weight$$
 # is the
-# $cref/weight_name/weight_table/weight_name/$$.
+# $cref/weight_name/weight_table/weight_name/$$ for this row.
 #
 # $subhead hold_out$$
-# is the
+# is the data table
 # $cref/hold_out/data_table/hold_out/$$.
 #
 # $subhead density$$
 # is the
-# $cref/density_name/density_table/density_name/$$.
+# $cref/density_name/density_table/density_name/$$ for this row.
 #
 # $subhead eta$$
 # is the
-# $cref/eta/integrand_table/eta/$$.
-#
-# $subhead meas_std$$
-# is the
-# $cref/meas_std/data_table/meas_std/$$.
+# $cref/eta/integrand_table/eta/$$ for this row.
 #
 # $subhead meas_value$$
-# This column is present when
-# $cref/fit_simulate_index/fit_command/simulate_index/$$
-# is $code null$$.
-# It is the $cref/meas_value/data_table/meas_value/$$ in the
-# data table.
+# is the data table
+# $cref/meas_value/data_table/meas_value/$$.
+#
+# $subhead meas_std$$
+# is the data table
+# $cref/meas_std/data_table/meas_std/$$.
 #
 # $subhead sim_value$$
-# This column is present when
-# $cref/fit_simulate_index/fit_command/simulate_index/$$
-# is $bold not$$ $code null$$.
-# It is the $cref/meas_value/simulate_table/meas_value/$$ in the
-# simulate table for the specified
-# $cref/simulate_index/simulate_table/simulate_index/$$.
+# If $cref/simulate_index/fit_command/simulate_index/$$
+# is present in the previous fit command, it is the simulate table
+# $cref/meas_value/simulate_table/meas_value/$$ for
+# the specified $cref/simulate_index/simulate_table/simulate_index/$$.
+#
+# $subhead sim_std$$
+# If $cref/simulate_index/fit_command/simulate_index/$$
+# is present in the previous fit command, it is the simulate table
+# $cref/meas_std/simulate_table/meas_std/$$ for
+# the specified $cref/simulate_index/simulate_table/simulate_index/$$.
 #
 # $subhead avgint$$
 # If the $cref fit_command$$ has been run, this is the
-# $cref/avg_integrand/fit_data_subset_table/avg_integrand/$$.
+# $cref/avg_integrand/fit_data_subset_table/avg_integrand/$$ for this row.
 #
 # $subhead residual$$
 # If the $cref fit_command$$ has been run, this is the
-# $cref/weighted_residual/fit_data_subset_table/weighted_residual/$$.
+# $cref/weighted_residual/fit_data_subset_table/weighted_residual/$$
+# for this row.
 #
 # $subhead node$$
-# is the
-# $cref/node_name/node_table/node_name/$$ that this data is associated with
+# is the $cref/node_name/node_table/node_name/$$ that this
+# row is associated with
 # during a $code dismod_at$$ fit.
-# This will correspond directly to the $cref/node_id/data_table/node_id/$$
-# in the data table, or be an ascendant of that node.
+# This will correspond directly to the data table
+# $cref/node_id/data_table/node_id/$$, or be an ascendant of that node.
 #
 # $subhead Covariates$$
 # For each covariate in the $cref covariate_table$$ there is a column with
@@ -284,32 +277,32 @@
 # ...
 #
 # $subhead age_lo$$
-# is the
-# $cref/age_lower/data_table/age_lower/$$.
+# is the avgint table
+# $cref/age_lower/avgint_table/age_lower/$$.
 #
 # $subhead age_up$$
-# is the
+# is the avgint table
 # $cref/age_upper/data_table/age_upper/$$.
 #
 # $subhead time_lo$$
-# is the
+# is the avgint table
 # $cref/time_lower/data_table/time_lower/$$.
 #
 # $subhead time_up$$
-# is the
+# is the avgint table
 # $cref/time_upper/data_table/time_upper/$$.
 #
 # $subhead integrand$$
-# is the
+# is the avgint table
 # $cref/integrand_name/integrand_table/integrand_name/$$.
 #
 # $subhead weight$$
 # is the
-# $cref/weight_name/weight_table/weight_name/$$.
+# $cref/weight_name/weight_table/weight_name/$$ for this row.
 #
 # $subhead node$$
 # is the
-# $cref/node_name/node_table/node_name/$$.
+# $cref/node_name/node_table/node_name/$$ for this row.
 #
 # $subhead sample_index$$
 # This identifies the set model variables in the sample table.
@@ -415,17 +408,37 @@ def db2csv_command(database_file_arg) :
 				msg += 'length ' + right + '_table = ' + str(len_right) + '\n'
 				sys.exit(msg)
 	# -------------------------------------------------------------------------
-	# parent_node_id, fit_simulate_index
+	# parent_node_id
 	parent_node_id     = None
-	fit_simulate_index = None
 	for row in table_data['option'] :
 		if row['option_name'] == 'parent_node_id' :
 			parent_node_id = int( row['option_value'] )
-		#
-		if row['option_name'] == 'fit_simulate_index' :
-			fit_simulate_index = row['option_value']
-			if fit_simulate_index != None :
-				simulate_index = int(fit_simulate_index)
+	# -------------------------------------------------------------------------
+	# simulate_index
+	simulate_index = None
+	log_data       = dismod_at.get_table_dict(connection, 'log')
+	# search for the last fit commmand in the log table
+	for i in range( len(log_data) ) :
+		log_id        = len(log_data) - i - 1
+		row           = log_data[log_id]
+		if simulate_index == None and row['message_type'] == 'command' :
+			message = row['message']
+			if message.startswith('begin fit') :
+				simulate_index = message[ len('begin fit') : ].strip()
+	if simulate_index == None :
+		if have_table['fit_var'] :
+			msg = 'Have fit_var table but cannot find '
+			msg += 'fit command in the log table\n'
+			sys.exit(msg)
+		simulate_index = ''
+	if simulate_index != '' and not have_table['simulate'] :
+		msg  = 'Previous fit command used simulated data but\n'
+		msg += 'cannot find simulate_table\n'
+		sys.exit(msg)
+	if simulate_index == '' :
+		simulate_index = None
+	else :
+		simulate_index = int(simulate_index)
 	# -------------------------------------------------------------------------
 	def convert2output(value_in) :
 		if value_in == None :
@@ -496,7 +509,6 @@ def db2csv_command(database_file_arg) :
 		[ "accept_after_max_steps_random", "5"],
 		[ "derivative_test_fixed",         "none"],
 		[ "derivative_test_random",        "none"],
-		[ "fit_simulate_index",            ""],
 		[ "fixed_bound_frac",              "1e-2"],
 		[ "max_num_iter_fixed",            "100"],
 		[ "max_num_iter_random",           "100"],
@@ -657,11 +669,11 @@ def db2csv_command(database_file_arg) :
 		'residual',
 		'node'
 	]
+	if simulate_index != None :
+		header.append('sim_value')
+		header.append('sim_std')
 	for row in table_data['covariate'] :
 		header.append( row['covariate_name'] )
-	if fit_simulate_index != None :
-		index         = header.index('meas_value')
-		header[index] = 'sim_value'
 	csv_writer = csv.DictWriter(csv_file, fieldnames=header)
 	csv_writer.writeheader()
 	#
@@ -684,6 +696,7 @@ def db2csv_command(database_file_arg) :
 		row_out['time_up']     = row_in['time_upper']
 		row_out['hold_out']    = row_in['hold_out']
 		row_out['meas_std']    = convert2output( row_in['meas_std'] )
+		row_out['meas_value']  = convert2output( row_in['meas_value'] )
 		row_out['integrand'] = table_lookup(
 			'integrand', row_in['integrand_id'], 'integrand_name'
 		)
@@ -715,13 +728,12 @@ def db2csv_command(database_file_arg) :
 			row                 = table_data['fit_data_subset'][subset_id]
 			row_out['avgint']   = convert2output( row['avg_integrand'] )
 			row_out['residual'] = convert2output( row['weighted_residual'] )
-		if fit_simulate_index == None :
-			row_out['meas_value']  = convert2output( row_in['meas_value'] )
-		else :
-			if have_table['simulate'] :
-				simulate_id =  n_subset * simulate_index + subset_id
-				sim_value = table_data['simulate'][simulate_id]['meas_value']
-				row_out['sim_value'] = sim_value
+		if simulate_index != None :
+			simulate_id =  n_subset * simulate_index + subset_id
+			sim_value = table_data['simulate'][simulate_id]['meas_value']
+			sim_std   = table_data['simulate'][simulate_id]['meas_std']
+			row_out['sim_value'] = sim_value
+			row_out['sim_std']   = sim_std
 		csv_writer.writerow(row_out)
 		subset_id += 1
 	csv_file.close()
@@ -745,9 +757,6 @@ def db2csv_command(database_file_arg) :
 		]
 		for row in table_data['covariate'] :
 			header.append( row['covariate_name'] )
-		if fit_simulate_index != None :
-			index         = header.index('meas_value')
-			header[index] = 'sim_value'
 		csv_writer = csv.DictWriter(csv_file, fieldnames=header)
 		csv_writer.writeheader()
 		#
