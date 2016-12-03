@@ -77,6 +77,12 @@ This has been fixed.
 $lnext
 The $cref/message_type/log_table/message_type/$$ $code warning$$
 was missing in the log file documentation. It has been added.
+$lnext
+Change the $cref simulate_command$$ so that it adjusts
+$cref/meas_std/simulate_command/simulate_table/meas_std/$$
+to be relative to the simulated measurements instead of
+using the data table
+$cref/meas_std/data_table/meas_std/$$.
 $lend
 
 $head 10-31$$

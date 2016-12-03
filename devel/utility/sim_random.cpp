@@ -66,7 +66,14 @@ $codei%
 In the case were $icode density$$ is
 $code gaussian_enum$$ or $code laplace_enum$$,
 it is the standard deviation for the distribution that we are simulating.
-Otherwise it is the transformed standard deviation.
+Otherwise,
+$codei%
+	log( %mu% + %eta% + %delta% ) - log( %mu% + %eta% )
+%$$
+it is the standard deviation of
+$codei%
+	log( %z% + %eta% ) - log( %mu% + %eta% )
+%$$
 It is assumed $icode delta$$ is greater than zero and not infinity.
 
 $head eta$$

@@ -868,6 +868,14 @@ This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref init_command$$).
 
+$head data_table$$
+It the data
+$cref/density/data_table/density_id/$$ is
+$code log_gaussian$$ or $code log_laplace$$,
+$cref/meas_value/data_table/meas_value/$$ is used to
+log-transform the standard deviations.
+Otherwise, it is not used by the simulate command.
+
 $head simulate_table$$
 A new $cref simulate_table$$ is created.
 It contains simulated measurement values
@@ -880,6 +888,33 @@ Only the $cref/data_id/data_subset_table/data_id/$$ that are in the
 data_subset table are included in the simulated measurements.
 Hence the number of rows in $cref simulate_table$$ is
 $icode number_simulate$$ times the number of rows in $cref data_subset_table$$.
+
+$subhead meas_value$$
+Negative simulated data values are converted to zero. Hence
+$icode meas_value$$ in the simulate table are all non-negative.
+
+$subhead meas_std$$
+It the data
+$cref/density/data_table/density_id/$$ is
+$code uniform$$, $code gaussian$$, or $code laplace$$,
+$icode meas_std$$ in the simulate table
+is set so that the adjusted standard deviation
+$cref/delta/data_like/Adjusted Standard Deviation, delta_i/$$
+is the same as for the data table.
+Note that a small minimum is chosen if the condition above
+would require $icode meas_std$$ to be near zero or negative.
+$pre
+
+$$
+It the data
+$cref/density/data_table/density_id/$$ is $code log_gaussian$$
+or $code log_laplace$$, $icode meas_std$$ in the simulate table
+is set so that the log-transformed standard deviation
+$cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$
+is the same as for the data table.
+Note that the adjusted standard deviation is used in the log transformation.
+Also note that a small minimum is chosen if the condition above
+would require $icode meas_std$$ to be near zero or negative.
 
 $children%example/get_started/simulate_command.py%$$
 $head Example$$
@@ -943,7 +978,9 @@ void simulate_command(
 	//
 	for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	size_t integrand_id =  data_subset_obj[subset_id].integrand_id;
+	{	//
+		// compute the average integrand, avg
+		size_t integrand_id =  data_subset_obj[subset_id].integrand_id;
 		dismod_at::integrand_enum integrand =
 			integrand_table[integrand_id].integrand;
 		double avg;
@@ -969,20 +1006,69 @@ void simulate_command(
 			avg = std::numeric_limits<double>::quiet_NaN();
 			assert(false);
 		}
-		// need to simulate random noise with proper density
-		dismod_at::density_enum density = dismod_at::density_enum(
-			data_subset_obj[subset_id].density_id
-		);
+		//
+		// compute the adjusted standard deviation corresponding
+		// to the values in the data table, delta_data.
+		double delta_data;
+		data_object.like_one(subset_id, truth_var, avg, delta_data);
+		//
+		// determine gamma for this data point where
+		// delta_data = meas_std + (meas_value + eta) * gamma
+		double meas_value   = data_subset_obj[subset_id].meas_value;
 		double meas_std     = data_subset_obj[subset_id].meas_std;
 		double eta          = integrand_table[integrand_id].eta;
-		double meas_value   = dismod_at::sim_random(
-			density, avg, meas_std, eta
+		CPPAD_ASSERT_KNOWN( meas_value + eta > 0.0 ,
+			"simulate_command: meas_value plus eta is not positive"
 		);
+		CPPAD_ASSERT_KNOWN( avg + eta > 0.0 ,
+			"simulate_command: average interand plus eta is not positive"
+		);
+		CPPAD_ASSERT_UNKNOWN( delta_data >= meas_std );
+		double gamma        = (delta_data - meas_std) / (meas_value + eta);
+		//
+		// compute value of delta relative to avg, delta_avg
+		dismod_at::density_enum density =
+			dismod_at::density_enum( data_subset_obj[subset_id].density_id );
+		bool log = density == dismod_at::log_gaussian_enum;
+		log     |= density == dismod_at::log_laplace_enum;
+		double delta_avg = delta_data;
+		if( log )
+		{	// log-transformed standard deviation relative to data is
+			// log[ (meas_value + eta + delta_data) / (meas_value + eta) ]
+			// should be equal to
+			// log[ (avg + eta + delta_avg) / (avg + eta) ]
+			double ratio = (meas_value + eta + delta_data)/(meas_value + eta);
+			delta_avg    = (ratio - 1.0) * (avg + eta);
+		}
+		CPPAD_ASSERT_UNKNOWN( delta_avg > 0.0 );
+		//
+		// compute the simulated measurement value
+		double sim_value   = dismod_at::sim_random(
+			density, avg, delta_avg, eta
+		);
+		// ensure sim_value is non-negative
+		sim_value = std::max( sim_value , 0.0);
+		//
+		// The adjusted standard deviation for the simulated measurement is
+		// delta_sim = sim_std + (sim_value + eta) * gamma
+		// in the linear case, this is equal to delta_avg; i.e.,
+		double sim_std = delta_avg - (sim_value + eta) * gamma;
+		if( log )
+		{	// The log-transformed standad deviations are equal in this case
+			// log[ (avg + eta + delta_avg) / (avg + eta) ] =
+			// log[ (sim_value + eta + delta_sim) / (sim_value + eta) ]
+			double ratio     = (avg + eta + delta_avg)/(avg + eta);
+			double delta_sim = (ratio - 1.0) * (sim_value + eta);
+			sim_std          = delta_sim - (sim_value + eta) * gamma;
+		}
+		// ensure that sim_std is greater than zero
+		sim_std        = std::max(sim_std, (avg + eta)* 1e-5 );
+		//
 		size_t simulate_id = sim_index * n_subset + subset_id;
 		row_value[simulate_id * n_col + 0] = to_string( sim_index );
 		row_value[simulate_id * n_col + 1] = to_string( subset_id );
-		row_value[simulate_id * n_col + 2] = to_string(meas_value);
-		row_value[simulate_id * n_col + 3] = to_string(meas_std);
+		row_value[simulate_id * n_col + 2] = to_string(sim_value);
+		row_value[simulate_id * n_col + 3] = to_string(sim_std);
 	}
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
