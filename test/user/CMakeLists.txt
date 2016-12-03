@@ -13,6 +13,7 @@
 FOREACH(user_case
 	avgint
 	bound_frac
+	fit_sim
 	neg_iteration
 	no_data
 	not_ordered
@@ -32,6 +33,7 @@ ADD_CUSTOM_TARGET(
 	DEPENDS
 	check_test_user_avgint
 	check_test_user_bound_frac
+	check_test_user_fit_sim
 	check_test_user_neg_iteration
 	check_test_user_no_data
 	check_test_user_not_ordered
