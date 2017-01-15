@@ -25,7 +25,7 @@ $childtable%
 $head 01-14$$
 The $code adaptive$$ and $code trace-adaptive$$
 $cref/derivative_test/option_table/Optimizer/derivative_test/$$ options
-did not work. This has been fixed.
+generated error messages. This has been fixed and they now work.
 
 $head 01-15$$
 Advance to cppad-20161113 and cppad_mixed-20170114.

@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -15,7 +15,7 @@ web_page='http://moby.ihme.washington.edu/bradbell/dismod_at'
 #
 # Which local tarball to use. If it is not present in $HOME/install
 # this script will try to retreive it from upstream.
-tarball='dismod_at-20161203.tgz'
+tarball='dismod_at-20170115.tgz'
 #
 # location on this system of python3 and newer version of sqlite3
 anaconda='/usr/local/anaconda3-current'
