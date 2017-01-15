@@ -1,0 +1,33 @@
+$Id:$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-17 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin whats_new_2017$$
+$spell
+	Dismod
+	cppad
+$$
+
+$section Changes and Additions to Dismod_at During 2017$$
+
+
+$childtable%
+	omh/whats_new/2016.omh%
+	omh/whats_new/2015.omh
+%$$
+
+$head 01-14$$
+The $code adaptive$$ and $code trace-adaptive$$
+$cref/derivative_test/option_table/Optimizer/derivative_test/$$ options
+did not work. This has been fixed.
+
+$head 01-15$$
+Advance to cppad-20161113 and cppad_mixed-20170114.
+
+$end

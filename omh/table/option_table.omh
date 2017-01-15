@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -195,10 +195,11 @@ $code only-second-order $$ $cnext
 	test second derivatives at starting point
 $rnext
 $code adaptive $$ $cnext
-	perform a step size adaptive first order derivative test
+	a step size adaptive first order derivative test
+	(fixed case only)
 $rnext
 $code trace-adaptive $$ $cnext
-	trace (on standard output) the adaptive first order derivative test
+	trace adaptive test on standard output (fixed case only)
 $tend
 If $icode quasi_fixed$$ is $code true$$
 the $icode option_value$$ cannot be

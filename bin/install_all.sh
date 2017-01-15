@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -69,8 +69,8 @@ list="
 for package in $list
 do
 	program="bin/install_$package.sh"
-	## echo "install_$package.sh 1>> install_all.log 2>> install_all.err"
-	## $program 1>> install_all.log 2>> install_all.err
+	echo "install_$package.sh 1>> install_all.log 2>> install_all.err"
+	$program 1>> install_all.log 2>> install_all.err
 done
 # -----------------------------------------------------------------------------
 # build and install dismod_at

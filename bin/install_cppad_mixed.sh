@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -32,6 +32,15 @@ ldlt_cholmod='YES'
 # put fatal error messages in log table or generate asserts
 log_fatal_error='NO'
 #
+# use atomic Cholesky factorization (strongly suggest NO)
+use_atomic_cholesky='NO'
+#
+# use checkpointing of Newton step to reduce memory and increase execution time
+checkpoint_newton_step='YES'
+#
+# optimize the AD operation sequences (makes of AD operations harder)
+optimize_cppad_function='YES'
+#
 # which c++ compiler to use (empty means cmake will choose it)
 cmake_cxx_compiler=''
 # END USER_SETTINGS
@@ -50,8 +59,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='781af73035b02d709d444a218c6de8d8e84c48bc'
-version='20161016'
+hash_key='ddb3ddc57a2962470a33f39c3b75fd6080ceac00'
+version='20170114'
 libdir=`bin/libdir.sh`
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
@@ -106,6 +115,10 @@ cmake_args="$cmake_args -D cmake_libdir=$libdir"
 cmake_args="$cmake_args -D bool_sparsity=$bool_sparsity"
 cmake_args="$cmake_args -D ldlt_cholmod=$ldlt_cholmod"
 cmake_args="$cmake_args -D log_fatal_error=$log_fatal_error"
+cmake_args="$cmake_args -D use_atomic_cholesky=$use_atomic_cholesky"
+cmake_args="$cmake_args -D checkpoint_newton_step=$checkpoint_newton_step"
+cmake_args="$cmake_args -D optimize_cppad_function=$optimize_cppad_function"
+
 if [ "$cmake_cxx_compiler" != '' ]
 then
 	cmake_args="$cmake_args -D CMAKE_CXX_COMPILER=$cmake_cxx_compiler"
