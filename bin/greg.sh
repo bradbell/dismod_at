@@ -1,8 +1,8 @@
-#! /bin/bash -e
+#! /bin/bash -eu
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -10,14 +10,14 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 remote_dir='/snfs2/HOME/gma1/tmp'
-database='94723_constrained_sim.db'
 # ---------------------------------------------------------------------------
 remote_dir='/snfs2/HOME/gma1/tmp'
-if [ "$0" != 'bin/greg.sh' ]
+if [ "$0" != 'bin/greg.sh' ] || [ "$#" != '1' ]
 then
-	echo 'usage: bin/greg.sh'
-	exit
+	echo 'usage: bin/greg.sh database'
+	exit 1
 fi
+database="$1"
 # ---------------------------------------------------------------------------
 if [ ! -e "$remote_dir" ]
 then

@@ -1,11 +1,11 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # $begin get_table_dict$$ $newlinech #$$
@@ -24,7 +24,7 @@
 # $head connection$$
 # is a $cref/connection/create_connection/connection/$$ for this database.
 #
-# $head table_name$$
+# $head tbl_name$$
 # is a $code str$$ that specifies the name of the table.
 # We use the notation $icode n_row$$ for the number of rows in
 # the table.
@@ -36,7 +36,7 @@
 # (excluding the primary key $icode%tbl_name%_id%$$).
 # The value $icode%table_dict%[%i%][%col_name%]%$$ corresponds to
 # and the column with name $icode col_name$$ and primary key
-# $icode%table_name%_id = %i%$$.
+# $icode%tbl_name%_id = %i%$$.
 # The python type corresponding to the values in the table are
 # as follows:
 # $table
