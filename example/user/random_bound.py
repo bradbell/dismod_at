@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -303,7 +303,7 @@ for var_id in range( n_var ) :
 	parent   = node_table[node_id]['node_name'] == 'north_america'
 	if parent :
 		err = value / iota_no_random - 1.0
-		assert abs(err) < 1e-10
+		assert abs(err) < 1e-5
 	else :
 		canada         = node_table[node_id]['node_name'] == 'canada'
 		united_states  = node_table[node_id]['node_name'] == 'united_states'

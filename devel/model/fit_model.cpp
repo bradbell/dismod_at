@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -386,7 +386,6 @@ $end
 	options += "\nInteger max_iter " + option_map["max_num_iter_fixed"];
 	options += "\nInteger accept_after_max_steps "
 		+ option_map["accept_after_max_steps_fixed"];
-	options += "\nString nlp_scaling_method none";
 	options += "\n";
 	//
 	std::string fixed_options = options;

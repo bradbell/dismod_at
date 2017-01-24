@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -287,12 +287,12 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
 		{ 'name':'max_num_iter_fixed',     'value':'100'          },
 		{ 'name':'print_level_fixed',      'value':'0'            },
-		{ 'name':'tolerance_fixed',        'value':'1e-10'        },
+		{ 'name':'tolerance_fixed',        'value':'1e-12'        },
 
 		{ 'name':'derivative_test_random', 'value':'second-order' },
 		{ 'name':'max_num_iter_random',    'value':'100'          },
 		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-10'        }
+		{ 'name':'tolerance_random',       'value':'1e-12'        }
 	]
 	# --------------------------------------------------------------------------
 	# avgint table:
