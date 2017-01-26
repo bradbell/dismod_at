@@ -12,6 +12,7 @@ $begin whats_new_2017$$
 $spell
 	Dismod
 	cppad
+	optimizer
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -21,6 +22,12 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+
+$head 01-26$$
+Advance to cppad_mixed-20171126.
+This version includes the scaling mentioned under 01-24,
+but prints the original (unscaled) objective in the optimizer trace.
 
 $head 01-24$$
 Advance to cppad_mixed-20171124.
