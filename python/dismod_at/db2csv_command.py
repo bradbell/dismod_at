@@ -1,7 +1,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -798,7 +798,8 @@ def db2csv_command(database_file_arg) :
 					row_out[field_out] = '0.0'
 				else :
 					row_out[field_out] = \
-						convert2output(row_in[field_in] - reference)
+						convert2output(avgint_row[field_in] - reference)
+				covariate_id += 1
 			#
 			csv_writer.writerow(row_out)
 		csv_file.close()

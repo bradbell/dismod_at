@@ -13,6 +13,8 @@ $spell
 	Dismod
 	cppad
 	optimizer
+	covariate
+	csv
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -22,6 +24,13 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 01-27$$
+The values in the
+$cref/covariate/db2csv_command/predict.csv/Covariates/$$ columns
+of the $code predict.csv$$ file were not correct
+(did not correspond to the $cref avgint_table$$.
+This has been fixed.
 
 
 $head 01-26$$
