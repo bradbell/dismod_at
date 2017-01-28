@@ -57,7 +57,7 @@ $head Data or Avgint Table Notation$$
 $subhead i$$
 We use $latex i$$ to denote either,
 $cref/data_id/data_table/data_id/$$ for a row in the data table or,
-$cref/avgint_id/avgint_table/avgint_id/$$, for a row in the avgint table
+$cref/avgint_id/avgint_table/avgint_id/$$ for a row in the avgint table.
 
 $subhead a_i$$
 We use $latex a_i$$ to denote the corresponding
