@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin avg_integrand$$
 $spell
+	Avgint
 	Sincidence
 	Tincidence
 	wbar
@@ -51,13 +52,12 @@ The reason for the variation between data points due both to the
 $cref/random effects/model_variables/Random Effects, u/$$ as well as the
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ covariates.
 
-
-$head Data Table Notation$$
+$head Data or Avgint Table Notation$$
 
 $subhead i$$
-We use $latex i$$
-to denote the $cref/data_id/data_table/data_id/$$
-for a row in the data table.
+We use $latex i$$ to denote either,
+$cref/data_id/data_table/data_id/$$ for a row in the data table or,
+$cref/avgint_id/avgint_table/avgint_id/$$, for a row in the avgint table
 
 $subhead a_i$$
 We use $latex a_i$$ to denote the corresponding
