@@ -46,7 +46,8 @@
 #
 # $head database$$
 # is the path from the currently directory to the database.
-# The $cref init_command$$ must have been run on the database.
+# This must be a $cref/dismod_at/database/$$ and
+# the $cref init_command$$ must have been run on the database.
 #
 # $subhead dir$$
 # We use the notation $icode dir$$ for the directory where $icode database$$
