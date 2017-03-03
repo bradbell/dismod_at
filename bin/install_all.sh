@@ -10,13 +10,10 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN BASH
-build_type="$1"
-if [ "$build_type" != 'debug' ] && [ "$build_type" != 'release' ]
-then
-	echo 'usage: ./install_all.sh build_type'
-	echo 'where build_type is debug or release'
-	exit 1
-fi
+# ---------------------------------------------------------------------------
+# build_type
+cmd=`grep '^build_type=' bin/run_cmake.sh`
+eval $cmd
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -43,7 +40,6 @@ else
 fi
 #
 cat << EOF > junk.sed
-s|^build_type=.*|build_type=\'$build_type\'|
 s|^log_fatal_error=.*|log_fatal_error=\'$log_fatal_error\'|
 EOF
 list="
@@ -86,7 +82,6 @@ cd ..
 # -----------------------------------------------------------------------------
 # modify install scripts to have proper flags
 cat << EOF > junk.sed
-s|^build_type=.*|build_type=\'debug\'|
 s|^log_fatal_error=.*|log_fatal_error=\'NO'|
 EOF
 list="

@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -10,9 +10,6 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # --------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-# build type can be debug or release
-build_type='debug'
-#
 # Prefix below which suitesparse will be installed.
 # If this directory ends with /dismod_at, separate directories are used
 # for the debug and release versions.
@@ -39,6 +36,10 @@ echo_eval() {
 tarball='SuiteSparse-4.4.3.tar.gz'
 web_page='http://faculty.cse.tamu.edu/davis/SuiteSparse'
 libdir=`bin/libdir.sh`
+# ---------------------------------------------------------------------------
+# build_type
+cmd=`grep '^build_type=' bin/run_cmake.sh`
+eval $cmd
 # --------------------------------------------------------------------------
 if echo "$suitesparse_prefix" | grep '/dismod_at$' > /dev/null
 then

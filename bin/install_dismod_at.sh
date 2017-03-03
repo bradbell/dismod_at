@@ -23,20 +23,16 @@ anaconda='/usr/local/anaconda3-current'
 # Use 'true' if you have not yet installed the special requirements.
 # Use 'false' if you want to use the previously installed special requirements.
 install_special_requirements='false'
-#
-build_type="$1"
-if [ "$build_type" != 'debug' ] && [ "$build_type" != 'release' ]
-then
-	echo 'usage: ./install_dismod_at.sh build_type'
-	echo 'where build_type is debug or release'
-	exit 1
-fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
 	echo $*
 	eval $*
 }
+# ---------------------------------------------------------------------------
+# build_type
+cmd=`grep '^build_type=' bin/run_cmake.sh`
+eval $cmd
 # -----------------------------------------------------------------------------
 # check that we are on the IHME cluster
 if [ -e "$HOME/junk.$$" ] || [ -e "/snfs2/HOME/$USERE/junk.$$" ]

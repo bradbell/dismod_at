@@ -10,8 +10,6 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-# build type can be debug or release
-build_type='debug'
 #
 # use dismod_at prefix for packages
 cppad_prefix="$HOME/prefix/dismod_at"
@@ -62,6 +60,10 @@ web_page='https://github.com/bradbell/cppad_mixed.git'
 hash_key='2cffa28af396ecd6d7ddb1acd7f09da26bbabd73'
 version='20170126'
 libdir=`bin/libdir.sh`
+# ---------------------------------------------------------------------------
+# build_type
+cmd=`grep '^build_type=' bin/run_cmake.sh`
+eval $cmd
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
 then

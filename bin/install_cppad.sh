@@ -10,8 +10,6 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-# build type can be debug or release
-build_type='debug'
 #
 # Prefix below which cppad will be installed.
 # If this directory ends with /dismod_at, separate directories are used
@@ -38,6 +36,10 @@ web_page='https://github.com/coin-or/CppAD.git'
 hash_key='cd5824ab1b676cbd261cf924e31313177319abc2'
 version='20161113'
 libdir=`bin/libdir.sh`
+# ---------------------------------------------------------------------------
+# build_type
+cmd=`grep '^build_type=' bin/run_cmake.sh`
+eval $cmd
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
 then

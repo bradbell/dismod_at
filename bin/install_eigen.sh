@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -10,9 +10,6 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-# build type can be debug or release
-build_type='debug'
-#
 # Prefix below which eigen will be installed. Note that eigen_prefix/eigen
 # is actually used so we can suppress warnings for the eigen include files.
 # If this directory ends with /dismod_at, separate directories are used
@@ -34,6 +31,10 @@ echo_eval() {
 # ---------------------------------------------------------------------------
 version='3.2.9'
 web_page='https://bitbucket.org/eigen/eigen/get'
+# ---------------------------------------------------------------------------
+# build_type
+cmd=`grep '^build_type=' bin/run_cmake.sh`
+eval $cmd
 # --------------------------------------------------------------------------
 if echo "$eigen_prefix" | grep '/dismod_at$' > /dev/null
 then
