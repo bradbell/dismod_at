@@ -27,9 +27,6 @@ bool_sparsity='YES'
 # use cholmod (not eigen) for LDLT factorization (where possible)
 ldlt_cholmod='YES'
 #
-# put fatal error messages in log table or generate asserts
-log_fatal_error='NO'
-#
 # use atomic Cholesky factorization (strongly suggest NO)
 use_atomic_cholesky='NO'
 #
@@ -64,6 +61,11 @@ libdir=`bin/libdir.sh`
 # build_type
 cmd=`grep '^build_type=' bin/run_cmake.sh`
 eval $cmd
+#
+# log_fatal_error
+cmd=`grep '^log_fatal_error=' bin/run_cmake.sh`
+eval $cmd
+#
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
 then

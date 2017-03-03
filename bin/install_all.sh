@@ -31,30 +31,6 @@ then
 	echo_eval rm install_all.err
 fi
 # -----------------------------------------------------------------------------
-# modify install scripts to have proper flags
-if [ "$build_type" == 'release' ]
-then
-	log_fatal_error='YES'
-else
-	log_fatal_error='NO'
-fi
-#
-cat << EOF > junk.sed
-s|^log_fatal_error=.*|log_fatal_error=\'$log_fatal_error\'|
-EOF
-list="
-	run_cmake.sh
-	install_eigen.sh
-	install_ipopt.sh
-	install_suitesparse.sh
-	install_cppad.sh
-	install_cppad_mixed.sh
-"
-for file in $list
-do
-	echo_eval sed -f junk.sed -i bin/$file
-done
-# -----------------------------------------------------------------------------
 list="
 	eigen
 	ipopt
@@ -79,23 +55,6 @@ make check
 make speed
 make install
 cd ..
-# -----------------------------------------------------------------------------
-# modify install scripts to have proper flags
-cat << EOF > junk.sed
-s|^log_fatal_error=.*|log_fatal_error=\'NO'|
-EOF
-list="
-	run_cmake.sh
-	install_eigen.sh
-	install_ipopt.sh
-	install_suitesparse.sh
-	install_cppad.sh
-	install_cppad_mixed.sh
-"
-for file in $list
-do
-	echo_eval sed -f junk.sed -i bin/$file
-done
 # -----------------------------------------------------------------------------
 echo 'install_all.sh: OK'
 # END BASH
