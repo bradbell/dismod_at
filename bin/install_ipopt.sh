@@ -9,12 +9,6 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# BEGIN USER_SETTINGS
-#
-# which c++ compiler to use (empty means autotools will choose it)
-autotools_cxx_compiler=''
-# END USER_SETTINGS
-# ---------------------------------------------------------------------------
 if [ $0 != 'bin/install_ipopt.sh' ]
 then
 	echo 'bin/install_ipopt.sh: must be executed from its parent directory'
@@ -37,6 +31,10 @@ eval $cmd
 #
 # ipopt_prefix
 cmd=`grep '^ipopt_prefix=' bin/run_cmake.sh`
+eval $cmd
+#
+# cmake_cxx_compiler
+cmd=`grep '^cmake_cxx_compiler=' bin/run_cmake.sh`
 eval $cmd
 # --------------------------------------------------------------------------
 libdir=`bin/libdir.sh`
@@ -87,13 +85,13 @@ then
 else
 	debug_flag=''
 fi
-if [ "$autotools_cxx_compiler" == '' ]
+if [ "$cmake_cxx_compiler" == '' ]
 then
 	comipler=''
 	skip_warn=''
 else
-	compiler="CXX=$autotools_cxx_compiler"
-	if [ "$autotools_cxx_compiler" == 'clang' ]
+	compiler="CXX=$cmake_cxx_compiler"
+	if [ "$cmake_cxx_compiler" == 'clang' ]
 	then
 		skip_warn='coin_skip_warn_cxxflags=yes'
 	fi

@@ -9,27 +9,6 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# BEGIN USER_SETTINGS
-#
-# use bool_sparsity YES or NO
-bool_sparsity='YES'
-#
-# use cholmod (not eigen) for LDLT factorization (where possible)
-ldlt_cholmod='YES'
-#
-# use atomic Cholesky factorization (strongly suggest NO)
-use_atomic_cholesky='NO'
-#
-# use checkpointing of Newton step to reduce memory and increase execution time
-checkpoint_newton_step='YES'
-#
-# optimize the AD operation sequences (makes of AD operations harder)
-optimize_cppad_function='YES'
-#
-# which c++ compiler to use (empty means cmake will choose it)
-cmake_cxx_compiler=''
-# END USER_SETTINGS
-# ---------------------------------------------------------------------------
 name='bin/install_cppad_mixed.sh'
 if [ $0 != $name ]
 then
@@ -47,6 +26,24 @@ web_page='https://github.com/bradbell/cppad_mixed.git'
 hash_key='2cffa28af396ecd6d7ddb1acd7f09da26bbabd73'
 version='20170126'
 libdir=`bin/libdir.sh`
+# ---------------------------------------------------------------------------
+# special cppad_mixed settings
+#
+# use bool_sparsity YES or NO
+bool_sparsity='YES'
+#
+# use cholmod (not eigen) for LDLT factorization (where possible)
+ldlt_cholmod='YES'
+#
+# use atomic Cholesky factorization (strongly suggest NO)
+use_atomic_cholesky='NO'
+#
+# use checkpointing of Newton step to reduce memory and increase execution time
+checkpoint_newton_step='YES'
+#
+# optimize the AD operation sequences (makes of AD operations harder)
+optimize_cppad_function='YES'
+#
 # ---------------------------------------------------------------------------
 # build_type
 cmd=`grep '^build_type=' bin/run_cmake.sh`
@@ -74,6 +71,10 @@ eval $cmd
 #
 # suitesparse_prefix
 cmd=`grep '^suitesparse_prefix=' bin/run_cmake.sh`
+eval $cmd
+#
+# cmake_cxx_compiler
+cmd=`grep '^cmake_cxx_compiler=' bin/run_cmake.sh`
 eval $cmd
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
