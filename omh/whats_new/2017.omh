@@ -15,6 +15,7 @@ $spell
 	optimizer
 	covariate
 	csv
+	cmake
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -24,6 +25,13 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 03-03$$
+Simplify the install procedure. Now it is only necessary to adjust
+the settings in
+$cref/run_cmake.sh/install_unix/Special Requirements/run_cmake.sh/$$.
+These settings are automatically used by all the
+$codei%bin/install_%package%.sh%$$ scripts.
 
 $head 01-27$$
 The values in the
