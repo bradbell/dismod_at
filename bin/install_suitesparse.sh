@@ -9,12 +9,6 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # --------------------------------------------------------------------------
-# BEGIN USER_SETTINGS
-#
-# Must be same as values printed at end of bin/install_ipopt.sh output.
-metis_version='metis-4.0.3'
-# END USER_SETTINGS
-# --------------------------------------------------------------------------
 program='bin/install_suitesparse.sh'
 if [ $0 != "$program" ]
 then
@@ -43,6 +37,24 @@ eval $cmd
 # suitesparse_prefix
 cmd=`grep '^suitesparse_prefix=' bin/run_cmake.sh`
 eval $cmd
+#
+# metis_web_page
+metis_web_page='http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/OLD'
+#
+# ipopt_version
+cmd=`grep '^version=' bin/install_ipopt.sh | sed -e 's|version|ipopt_version|'`
+eval $cmd
+#
+# metis_version
+get_metis="build/external/$ipopt_version/ThirdParty/Metis/get.Metis"
+if [ ! -e "$get_metis" ]
+then
+	echo "$get_metis does not exists"
+	echo "must execute bin/install_ipopt.sh before bin/install_suitesparse.sh"
+	exit 1
+fi
+metis_version=`grep "$metis_web_page" $get_metis | \
+	sed -e 's|.*/||' -e 's|\.tar\.gz||'`
 # --------------------------------------------------------------------------
 if echo "$suitesparse_prefix" | grep '/dismod_at$' > /dev/null
 then
@@ -81,7 +93,7 @@ then
 	echo 'install_suitesparse.sh: cannot get metis source'
 	exit 1
 fi
-# suitesparse wants the metis sourcews here
+# suitesparse wants the metis source here
 echo_eval mv $metis_version metis-4.0
 # -----------------------------------------------------------------------------
 sed -e \
