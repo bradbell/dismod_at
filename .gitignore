@@ -1,3 +1,5 @@
+# temporary file used by bin/install_all.sh
+install_all.err
 # temporary file used to make commits.
 git_commit.sh
 # temporary file for all purposes

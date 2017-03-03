@@ -11,11 +11,6 @@
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
 #
-# Prefix below which cppad will be installed.
-# If this directory ends with /dismod_at, separate directories are used
-# for the debug and release versions.
-cppad_prefix="$HOME/prefix/dismod_at"
-#
 # extra c++ flags used during compliation
 extra_cxx_flags='-std=c++11 -Wall'
 # END USER_SETTINGS
@@ -39,6 +34,10 @@ libdir=`bin/libdir.sh`
 # ---------------------------------------------------------------------------
 # build_type
 cmd=`grep '^build_type=' bin/run_cmake.sh`
+eval $cmd
+#
+# cppad_prefix
+cmd=`grep '^cppad_prefix=' bin/run_cmake.sh`
 eval $cmd
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null

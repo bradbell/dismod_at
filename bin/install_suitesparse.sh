@@ -10,13 +10,8 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # --------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-# Prefix below which suitesparse will be installed.
-# If this directory ends with /dismod_at, separate directories are used
-# for the debug and release versions.
-suitesparse_prefix="$HOME/prefix/dismod_at"
 #
 # Must be same as values printed at end of bin/install_ipopt.sh output.
-ipopt_prefix="$HOME/prefix/dismod_at"
 metis_version='metis-4.0.3'
 # END USER_SETTINGS
 # --------------------------------------------------------------------------
@@ -39,6 +34,14 @@ libdir=`bin/libdir.sh`
 # ---------------------------------------------------------------------------
 # build_type
 cmd=`grep '^build_type=' bin/run_cmake.sh`
+eval $cmd
+#
+# ipopt_prefix
+cmd=`grep '^ipopt_prefix=' bin/run_cmake.sh`
+eval $cmd
+#
+# suitesparse_prefix
+cmd=`grep '^suitesparse_prefix=' bin/run_cmake.sh`
 eval $cmd
 # --------------------------------------------------------------------------
 if echo "$suitesparse_prefix" | grep '/dismod_at$' > /dev/null

@@ -11,13 +11,6 @@
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
 #
-# use dismod_at prefix for packages
-cppad_prefix="$HOME/prefix/dismod_at"
-ipopt_prefix="$HOME/prefix/dismod_at"
-suitesparse_prefix="$HOME/prefix/dismod_at"
-eigen_prefix="$HOME/prefix/dismod_at"
-# note eigen actually is assumed to be in $eigen_prefix/eigen
-#
 # extra c++ flags used during compliation
 extra_cxx_flags='-std=c++11 -Wall'
 #
@@ -66,6 +59,21 @@ eval $cmd
 cmd=`grep '^log_fatal_error=' bin/run_cmake.sh`
 eval $cmd
 #
+# eigen_prefix
+cmd=`grep '^eigen_prefix=' bin/run_cmake.sh`
+eval $cmd
+#
+# ipopt_prefix
+cmd=`grep '^ipopt_prefix=' bin/run_cmake.sh`
+eval $cmd
+#
+# cppad_prefix
+cmd=`grep '^cppad_prefix=' bin/run_cmake.sh`
+eval $cmd
+#
+# suitesparse_prefix
+cmd=`grep '^suitesparse_prefix=' bin/run_cmake.sh`
+eval $cmd
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
 then
@@ -111,7 +119,7 @@ cmake_args="$cmake_args -D CMAKE_BUILD_TYPE=$build_type"
 #
 cmake_args="$cmake_args -D cppad_prefix=$cppad_prefix"
 cmake_args="$cmake_args -D ipopt_prefix=$ipopt_prefix"
-cmake_args="$cmake_args -D eigen_prefix=$eigen_prefix/eigen"
+cmake_args="$cmake_args -D eigen_prefix=$eigen_prefix"
 cmake_args="$cmake_args -D suitesparse_prefix=$suitesparse_prefix"
 #
 cmake_args="$cmake_args -D extra_cxx_flags=$extra_cxx_flags"

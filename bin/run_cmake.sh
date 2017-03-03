@@ -2,7 +2,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -42,12 +42,14 @@ build_type='debug'
 # &codep
 python3_executable='/usr/bin/python3'
 # &&
+# An alternative might be $code '/usr/local/anaconda3-current/bin/python'$$.
 #
 # &head extra_cxx_flags&&
 # Extra C++ flags used during compilation:
 # &codep
 extra_cxx_flags='-std=c++11 -Wall'
 # &&
+# An alternative might be $code '-Wall'.
 #
 # &head dismod_at_prefix&&
 # Prefix where dismod_at will be installed:
@@ -55,24 +57,24 @@ extra_cxx_flags='-std=c++11 -Wall'
 dismod_at_prefix="$HOME/prefix/dismod_at"
 # &&
 #
-# &head Other Prefixes&&
-# Prefixes where the required packages were installed:
+# &head Special Requirements&&
+# Prefixes where the
+# &cref/special requirements/install_unix/Special Requirements/&&
+# will be installed:
 # &codep
 eigen_prefix="$HOME/prefix/dismod_at/eigen"
 ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
 suitesparse_prefix="$HOME/prefix/dismod_at"
 # &&
+# Note that the Eigen package is installed in a special prefix
+# so that we can suppress warnings coming from its include files
+# (without suppressing warnings from other include files).
 #
 # &head Choosing C++ Compiler&&
 # Which c++ compiler should cmake use (empty means cmake will choose it).
 # &codep
 cmake_cxx_compiler=''
-# &&
-#
-# &codep
-# python3_executable='/usr/local/anaconda3-current/bin/python'
-# extra_cxx_flags='-Wall'
 # &&
 #
 # &head log_fatal_error&&

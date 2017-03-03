@@ -14,7 +14,6 @@
 # Prefix below which ipopt will be installed.
 # If this directory ends with /dismod_at, separate directories are used
 # for the debug and release versions.
-ipopt_prefix="$HOME/prefix/dismod_at"
 #
 # which c++ compiler to use (empty means autotools will choose it)
 autotools_cxx_compiler=''
@@ -38,6 +37,10 @@ web_page="http://www.coin-or.org/download/source/Ipopt"
 # ---------------------------------------------------------------------------
 # build_type
 cmd=`grep '^build_type=' bin/run_cmake.sh`
+eval $cmd
+#
+# ipopt_prefix
+cmd=`grep '^ipopt_prefix=' bin/run_cmake.sh`
 eval $cmd
 # --------------------------------------------------------------------------
 libdir=`bin/libdir.sh`

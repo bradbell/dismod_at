@@ -35,7 +35,17 @@ web_page='https://bitbucket.org/eigen/eigen/get'
 # build_type
 cmd=`grep '^build_type=' bin/run_cmake.sh`
 eval $cmd
+#
+# eigen_prefix
+cmd=`grep '^eigen_prefix=' bin/run_cmake.sh`
+eval $cmd
 # --------------------------------------------------------------------------
+dismod_at_dir=`echo $eigen_prefix | sed -e 's|/dismod_at/.*|/dismod_at|'`
+if echo "$dismod_at_dir" | grep '/dismod_at$' > /dev/null
+then
+	bin/build_type.sh install_eigen $dismod_at_dir $build_type
+fi
+
 if echo "$eigen_prefix" | grep '/dismod_at$' > /dev/null
 then
 	bin/build_type.sh install_eigen $eigen_prefix $build_type
@@ -68,12 +78,12 @@ echo_eval cd build
 # --------------------------------------------------------------------------
 echo_eval cmake \
 	-Wno-dev \
-	-D CMAKE_INSTALL_PREFIX=$eigen_prefix/eigen \
+	-D CMAKE_INSTALL_PREFIX=$eigen_prefix \
 	-D CMAKE_BUILD_TYPE=$build_type \
 	..
 echo_eval make install
 # --------------------------------------------------------------------------
-include_dir="$eigen_prefix/eigen/include"
+include_dir="$eigen_prefix/include"
 if [ ! -h $include_dir/Eigen ]
 then
 	echo_eval ln -s $include_dir/eigen3/Eigen $include_dir/Eigen
