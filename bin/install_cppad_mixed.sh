@@ -11,9 +11,6 @@
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
 #
-# extra c++ flags used during compliation
-extra_cxx_flags='-std=c++11 -Wall'
-#
 # use bool_sparsity YES or NO
 bool_sparsity='YES'
 #
@@ -57,6 +54,10 @@ eval $cmd
 #
 # log_fatal_error
 cmd=`grep '^log_fatal_error=' bin/run_cmake.sh`
+eval $cmd
+#
+# extra_cxx_flags
+cmd=`grep '^extra_cxx_flags=' bin/run_cmake.sh`
 eval $cmd
 #
 # eigen_prefix

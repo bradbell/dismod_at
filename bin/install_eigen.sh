@@ -9,14 +9,6 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# BEGIN USER_SETTINGS
-# Prefix below which eigen will be installed. Note that eigen_prefix/eigen
-# is actually used so we can suppress warnings for the eigen include files.
-# If this directory ends with /dismod_at, separate directories are used
-# for the debug and release versions.
-eigen_prefix="$HOME/prefix/dismod_at"
-# END USER_SETTINGS
-# ---------------------------------------------------------------------------
 if [ $0 != 'bin/install_eigen.sh' ]
 then
 	echo 'bin/install_eigen.sh: must be executed from its parent directory'

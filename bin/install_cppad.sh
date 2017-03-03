@@ -9,12 +9,6 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# BEGIN USER_SETTINGS
-#
-# extra c++ flags used during compliation
-extra_cxx_flags='-std=c++11 -Wall'
-# END USER_SETTINGS
-# ---------------------------------------------------------------------------
 if [ $0 != 'bin/install_cppad.sh' ]
 then
 	echo 'bin/install_cppad.sh: must be executed from its parent directory'
@@ -38,6 +32,10 @@ eval $cmd
 #
 # cppad_prefix
 cmd=`grep '^cppad_prefix=' bin/run_cmake.sh`
+eval $cmd
+#
+# extra_cxx_flags
+cmd=`grep '^extra_cxx_flags=' bin/run_cmake.sh`
 eval $cmd
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null

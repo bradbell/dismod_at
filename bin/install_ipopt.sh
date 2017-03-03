@@ -10,10 +10,6 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN USER_SETTINGS
-# build type can be debug or release
-# Prefix below which ipopt will be installed.
-# If this directory ends with /dismod_at, separate directories are used
-# for the debug and release versions.
 #
 # which c++ compiler to use (empty means autotools will choose it)
 autotools_cxx_compiler=''
