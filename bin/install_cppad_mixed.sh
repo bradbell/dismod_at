@@ -23,8 +23,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='2cffa28af396ecd6d7ddb1acd7f09da26bbabd73'
-version='20170126'
+hash_key='edc5863cf38228b9b1bb9f31fda3ffc5bc95dbf3'
+version='20170304'
 libdir=`bin/libdir.sh`
 # ---------------------------------------------------------------------------
 # special cppad_mixed settings
@@ -39,9 +39,9 @@ ldlt_cholmod='YES'
 use_atomic_cholesky='NO'
 #
 # use checkpointing of Newton step to reduce memory and increase execution time
-checkpoint_newton_step='YES'
+checkpoint_newton_step='NO'
 #
-# optimize the AD operation sequences (makes of AD operations harder)
+# optimize the AD operation sequences
 optimize_cppad_function='YES'
 #
 # ---------------------------------------------------------------------------
@@ -124,7 +124,7 @@ cmake_args="$cmake_args -D ipopt_prefix=$ipopt_prefix"
 cmake_args="$cmake_args -D eigen_prefix=$eigen_prefix"
 cmake_args="$cmake_args -D suitesparse_prefix=$suitesparse_prefix"
 #
-cmake_args="$cmake_args -D extra_cxx_flags=$extra_cxx_flags"
+cmake_args="$cmake_args -D cppad_cxx_flags=$extra_cxx_flags"
 cmake_args="$cmake_args -D cmake_libdir=$libdir"
 cmake_args="$cmake_args -D bool_sparsity=$bool_sparsity"
 cmake_args="$cmake_args -D ldlt_cholmod=$ldlt_cholmod"

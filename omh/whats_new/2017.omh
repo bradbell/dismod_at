@@ -26,6 +26,15 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 03-04$$
+Advance to
+$cref/cppad-20170304/install_unix/Special Requirements/CppAD/$$.
+This fixes a bug in Cppad.
+Advance to
+$cref/cppad_mixed-20170304/install_unix/Special Requirements/cppad_mixed/$$.
+This improves the scaling and solution check for optimization of the
+fixed effects.
+
 $head 03-03$$
 Simplify the install procedure. Now it is only necessary to adjust
 the settings in

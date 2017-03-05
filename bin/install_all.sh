@@ -11,8 +11,13 @@
 # ---------------------------------------------------------------------------
 # BEGIN BASH
 # ---------------------------------------------------------------------------
+#
 # build_type
 cmd=`grep '^build_type=' bin/run_cmake.sh`
+eval $cmd
+#
+# ipopt_prefix
+cmd=`grep '^ipopt_prefix=' bin/run_cmake.sh`
 eval $cmd
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
@@ -45,12 +50,19 @@ do
 	$program 1>> install_all.log 2>> install_all.err
 done
 # -----------------------------------------------------------------------------
+dir=`find -L $ipopt_prefix -name 'ipopt.pc' | sed -e 's|/ipopt.pc||'`
+if [ "$dir" == '' ]
+then
+	echo "Cannot find ipopt.pc in $ipopt_prefix directory"
+	exit 1
+else
+	echo_eval export PKG_CONFIG_PATH="$dir"
+fi
+echo_eval export PYTHONPATH=''
+# -----------------------------------------------------------------------------
 # build and install dismod_at
 echo_eval bin/run_cmake.sh
 echo_eval cd build
-pkg_path="$HOME/prefix/dismod_at/$libdir/pkgconfig"
-echo_eval export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$pkg_path"
-echo_eval export PYTHONPATH=''
 make check
 make speed
 make install

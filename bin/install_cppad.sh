@@ -22,8 +22,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/coin-or/CppAD.git'
-hash_key='cd5824ab1b676cbd261cf924e31313177319abc2'
-version='20161113'
+hash_key='3b109e81aefcb411666ec6e837a7f4f446f9e5ee'
+version='20170304'
 libdir=`bin/libdir.sh`
 # ---------------------------------------------------------------------------
 # build_type
