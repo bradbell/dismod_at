@@ -26,6 +26,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 03-06$$
+Advance to
+$cref/cppad-20170306/install_unix/Special Requirements/CppAD/$$.
+This fixes another bug in Cppad.
+
+
 $head 03-04$$
 Advance to
 $cref/cppad-20170304/install_unix/Special Requirements/CppAD/$$.
