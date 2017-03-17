@@ -28,8 +28,8 @@ $childtable%
 
 $head 03-17$$
 Advance to cppad_mixed-20170317.
-This has a change to the $code cppad_mixed$$,
-but no change to $code dismod_at$$ from the user's perspective.
+This includes a change to the $code cppad_mixed$$,
+but no change from the $code dismod_at$$ user's perspective.
 
 $head 03-06$$
 Advance to
