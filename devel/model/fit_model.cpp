@@ -14,6 +14,121 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/log_message.hpp>
 # include <dismod_at/null_int.hpp>
 
+namespace { // BEGIN_EMPTY_NAMESPACE
+CppAD::mixed::sparse_rcv ran_con_rcv(
+	bool                          random_zero_sum ,
+	const dismod_at::pack_info&   pack_object     )
+{	// number of fixed plus random effects
+	size_t n_var = pack_object.size();
+	//
+	// number of random effects
+	size_t n_random = number_random(pack_object);
+	//
+	// number of rates
+	size_t n_rate = dismod_at::number_rate_enum;
+	//
+	// var_id2random
+	CppAD::vector<size_t> var_id2random(n_var);
+	for(size_t k = 0; k < n_var; k++)
+		var_id2random[k] = n_random;
+	//
+	CppAD::vector<size_t> pack_index = random2var_id(pack_object);
+	for(size_t j = 0; j < n_random; j++)
+		var_id2random[ pack_index[j] ] = j;
+	//
+	// initilaize count of number of random constraint equations
+	size_t A_nr = 0;
+	//
+	// n_child
+	size_t n_child = pack_object.child_size();
+	if( random_zero_sum && n_child > 0 )
+	{	// for each rate
+		for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+		{	// packing information for first child
+			dismod_at::pack_info::subvec_info
+				info_0 = pack_object.rate_info(rate_id, 0);
+			// child smoothing id for this rate
+			size_t smooth_id = info_0.smooth_id;
+			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
+			{	// number of grid points for child soothing for this rate
+				// all child rates have the same smoothing
+				size_t n_grid = info_0.n_var;
+				// each grid point corresponds to a random constraint equation
+				A_nr += n_grid;
+			}
+		}
+	}
+	// check for case where random constraint matrix is empty
+	CppAD::mixed::sparse_rcv A_rcv;
+	if( A_nr == 0 )
+		return A_rcv;
+	//
+	// number of columns in random constraint equations
+	size_t A_nc = n_random;
+	//
+	// number of non-zeros in random constraint equations
+	size_t A_nnz = A_nr * n_child;
+	//
+	// sparsity pattern for random constraints
+	CppAD::mixed::sparse_rc A_rc(A_nr, A_nc, A_nnz);
+	//
+	// initialize index of next set of rows and next non-zero entry
+	size_t row_index = 0;
+	size_t nnz_index = 0;
+	//
+	// for each rate
+	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	{	// packing information for first child and this rate
+		dismod_at::pack_info::subvec_info
+			info_0 = pack_object.rate_info(rate_id, 0);
+		// child smoothing ide for this rate
+		size_t smooth_id = info_0.smooth_id;
+		if( smooth_id != DISMOD_AT_NULL_SIZE_T )
+		{	//
+			// number of grid points for child smoothing for this rate
+			size_t n_grid = info_0.n_var;
+			//
+			// for each child for this rate
+			for(size_t j = 0; j < n_child; j++)
+			{	// packing information for this child and this rate
+				dismod_at::pack_info::subvec_info
+					info_j = pack_object.rate_info(rate_id, j);
+				//
+				// for each rate, all children have the same smoothing
+				assert( info_j.smooth_id == info_0.smooth_id );
+				assert( info_j.n_var     == info_0.n_var );
+				//
+				// offset for this rate and child
+				size_t offset = info_j.offset;
+				//
+				// for each grid point for this rate
+				for(size_t k = 0; k < n_grid; k++)
+				{	// variable index for this grid point
+					size_t var_id = offset + k;
+					//
+					// corresponding random effect index
+					size_t random_index = var_id2random[var_id];
+					assert( random_index < n_random );
+					//
+					// set this entry in the random constraint pattern
+					A_rc.set(nnz_index++, row_index + k, random_index);
+				}
+			}
+			row_index += n_grid;
+		}
+	}
+	assert( row_index == A_nr );
+	assert( nnz_index == A_nnz );
+	//
+	// non-empty value of A_rcv
+	A_rcv = CppAD::mixed::sparse_rcv( A_rc );
+	for(size_t k = 0; k < A_nnz; k++)
+		A_rcv.set(k, 1.0);
+	//
+	return A_rcv;
+}
+} /// END_EMPTY_NAMESPACE
+
 namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 /*
 $begin fit_model_ctor$$
@@ -116,10 +231,12 @@ $end
 */
 // base class constructor
 : cppad_mixed(
-	number_fixed(pack_object)                         ,  // n_fixed
-	number_random(pack_object) * (random_bound > 0.0) , // n_random
-	quasi_fixed
-) ,
+	number_fixed(pack_object)                          , // n_fixed
+	number_random(pack_object) * (random_bound > 0.0)  , // n_random
+	quasi_fixed                                        , // quasi_fixed
+	true                                               , // bool_sparsity
+	ran_con_rcv(random_zero_sum, pack_object)          ) // A_rcv
+,
 db_            (db)                                 ,
 fit_or_sample_ ( fit_or_sample                   )  ,
 n_fixed_       ( number_fixed(pack_object)  )  ,
@@ -201,67 +318,6 @@ prior_object_  ( prior_object )
 	for(size_t j = 0; j < n_fixed_; j++)
 		assert( ! (fixed_scale_eta_[j] == - inf) );
 # endif
-	// ----------------------------------------------------------------------
-	// A_info
-	CppAD::mixed::sparse_mat_info A_info;
-	//
-	// var_id2randm
-	CppAD::vector<size_t> var_id2random(n_var);
-	for(size_t k = 0; k < n_var; k++)
-		var_id2random[k] = n_random_;
-	pack_index.resize(0);
-	pack_index = random2var_id(pack_object);
-	for(size_t j = 0; j < n_random_; j++)
-		var_id2random[ pack_index[j] ] = j;
-	//
-	// count constraints so far
-	size_t number_equation = 0;
-	//
-	// n_child
-	size_t n_child = pack_object.child_size();
-	if( random_zero_sum && n_child > 0 )
-	{	pack_info::subvec_info info_0, info_j;
-		//
-		// for each rate
-		for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-		{	info_0           = pack_object.rate_info(rate_id, 0);
-			size_t smooth_id = info_0.smooth_id;
-			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
-			{	//
-				// number of grid points for the rate and each child
-				size_t n_grid = info_0.n_var;
-				//
-				// for each child for this rate
-				for(size_t j = 0; j < n_child; j++)
-				{	info_j = pack_object.rate_info(rate_id, j);
-					//
-					assert( info_j.smooth_id == info_0.smooth_id );
-					assert( info_j.n_var     == info_0.n_var );
-					//
-					// offset for this rate and child
-					size_t offset = info_j.offset;
-					//
-					// for each grid point for this rate
-					for(size_t k = 0; k < n_grid; k++)
-					{	// variable index for this grid point
-						size_t var_id = offset + k;
-						// corresponding random effect index
-						size_t random_index = var_id2random[var_id];
-						assert( random_index < n_random_ );
-						//
-						// different constraint for each grid point
-						A_info.row.push_back(number_equation + k );
-						// sum with respect to child index
-						A_info.col.push_back(random_index);
-						// value of one corresponds to summation
-						A_info.val.push_back(1.0);
-					}
-				}
-				number_equation += n_grid;
-			}
-		}
-		assert( A_info.row.size() == number_equation * n_child );
-	}
 	// ---------------------------------------------------------------------
 	// initialize the cppad_mixed object
 	//
@@ -276,7 +332,7 @@ prior_object_  ( prior_object )
 	CppAD::vector<double> cppad_mixed_random_vec =
 		random_dismod_at2cppad_mixed( random_vec );
 	//
-	initialize(fixed_vec, cppad_mixed_random_vec, A_info);
+	initialize(fixed_vec, cppad_mixed_random_vec);
 }
 /*
 -----------------------------------------------------------------------------
@@ -684,8 +740,8 @@ $end
 		random_opt
 	);
 	//
-	// information_info
-	CppAD::mixed::sparse_mat_info information_info = information_mat(
+	// information_rcv
+	CppAD::mixed::sparse_rcv information_rcv = information_mat(
 		solution, cppad_mixed_random_opt
 	);
 	//
@@ -712,11 +768,11 @@ $end
 	{	ok[j]  = fixed_lower[j] == fixed_upper[j];
 		ok[j] |= solution.fixed_lag[j] != 0.0;
 	}
-	size_t K = information_info.row.size();
+	size_t K = information_rcv.nnz();
 	for(size_t k = 0; k < K; k++)
-	{	size_t i = information_info.row[k];
-		size_t j = information_info.col[k];
-		double v = information_info.val[k];
+	{	size_t i = information_rcv.row()[k];
+		size_t j = information_rcv.col()[k];
+		double v = information_rcv.val()[k];
 		if( i == j )
 		{	ok[j] |= v > 0.0;
 		}
@@ -740,7 +796,7 @@ $end
 	CppAD::vector<double> sample_fix(n_sample * n_fixed_);
 	sample_fixed(
 		sample_fix,
-		information_info,
+		information_rcv,
 		solution,
 		fixed_lower,
 		fixed_upper,
