@@ -1,6 +1,5 @@
-#  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -38,7 +37,7 @@ iota_parent               = 0.05
 rho_parent                = 0.2
 mulcov_income_iota_true   = 1.0
 mulcov_sex_rho_true       = -1.0
-n_children                = 5
+n_children                = 10
 n_data                    = 200
 # ------------------------------------------------------------------------
 import sys
@@ -101,13 +100,13 @@ def example_db (file_name) :
 	#
 	# weight table:
 	# The constant function 1.0, note any valid age and time id would work
-	name    = 'constant'
-	fun     = constant_weight_fun
-	age_id  = int( len(age_list) / 2 )
-	time_id = int( len(time_list) / 2 )
-	weight_table = [
-		{ 'name':name,  'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
-	]
+	name        = 'constant'
+	fun         = constant_weight_fun
+	age_mid_id  = int( len(age_list) / 2 )
+	time_mid_id = int( len(time_list) / 2 )
+	weight_table = [ {
+		'name':name, 'age_id':[age_mid_id], 'time_id':[time_mid_id], 'fun':fun
+	} ]
 	#
 	# covariate table:
 	covariate_table = [
@@ -225,26 +224,26 @@ def example_db (file_name) :
 	# smooth table
 	name           = 'smooth_rate_child'
 	fun            = fun_rate_child
-	age_grid       = [ 0, len(age_list)-1 ]
-	time_grid      = [ 0, len(time_list)-1 ]
+	age_grid       = [ 0, age_mid_id, len(age_list)-1 ]
+	time_grid      = [ 0, time_mid_id, len(time_list)-1 ]
 	smooth_table = [
 		{'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun }
 	]
 	name = 'smooth_iota_parent'
 	fun  = fun_iota_parent
-	smooth_table.append(
-		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
-	)
+	smooth_table.append( {
+		'name':name, 'age_id':[age_mid_id], 'time_id':[time_mid_id], 'fun':fun
+	} )
 	name = 'smooth_rho_parent'
 	fun  = fun_rho_parent
-	smooth_table.append(
-		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
-	)
+	smooth_table.append( {
+		'name':name, 'age_id':[age_mid_id], 'time_id':[time_mid_id], 'fun':fun
+	} )
 	name = 'smooth_mulcov'
 	fun  = fun_mulcov
-	smooth_table.append(
-		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
-	)
+	smooth_table.append( {
+		'name':name, 'age_id':[age_mid_id], 'time_id':[time_mid_id], 'fun':fun
+	} )
 	# no standard deviation multipliers
 	for dictionary in smooth_table :
 		for name in [ 'value' , 'dage', 'dtime' ] :

@@ -230,11 +230,12 @@ fit_model::fit_model(
 $end
 */
 // base class constructor
+// (The value of bool_sparsity does not seem to affect speed test results.)
 : cppad_mixed(
 	number_fixed(pack_object)                          , // n_fixed
 	number_random(pack_object) * (random_bound > 0.0)  , // n_random
 	quasi_fixed                                        , // quasi_fixed
-	true                                               , // bool_sparsity
+	false                                              , // bool_sparsity
 	ran_con_rcv(random_zero_sum, pack_object)          ) // A_rcv
 ,
 db_            (db)                                 ,
