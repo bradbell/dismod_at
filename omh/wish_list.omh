@@ -24,15 +24,6 @@ $$
 
 $section Dismod_at Wish List$$
 
-$head Initialization$$
-Sometimes the initialization of the fixed effects problem fails; e.g.,
-during the computation of the Jacobian of the log of the determinant of the
-Hessian w.r.t. the random effects. Perhaps this would happen less often
-if the initialization of the fixed effects problem used the optimal
-values for the random effects.
-The example failure mentioned above was noticed in a case where the data
-has a large residual at the starting parameter values.
-
 $head Eta$$
 Perhaps the value of $cref/eta/integrand_table/eta/$$ should be
 specified in the $cref data_table$$ so it can be different for each

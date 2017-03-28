@@ -275,11 +275,11 @@ $cref/start fit_var/start_command/source/fit_var/$$; see
 $cref/random_bound.py/user_random_bound.py/$$.
 $lnext
 Note that fitting with no random effects corresponds to
-a $code null$$ value for the
-$cref/child_smooth_id/rate_table/child_smooth_id/$$.
+a $code null$$ value for all the
+$cref/child_smooth_id/rate_table/child_smooth_id/$$ in the rate table.
 The theory for fitting with $icode random_bound$$ equal to zero
-is just fine (since it corresponds to no random effects not constrained
-random effects).
+is just fine, it corresponds to no random effects instead of constrained
+random effects.
 $lnext
 Note that the theory used to compute
 $cref/asymptotic/sample_command/method/asymptotic/$$ samples does not take

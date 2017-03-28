@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -532,6 +532,17 @@ $cref/variable_value/fit_var_table/variable_value/$$ column.
 $head fit_data_subset_table$$
 A new $cref fit_data_subset_table$$ is created each time this command is run.
 It is a comparison of the model and data corresponding to the fit results.
+
+$head Random Effects$$
+A model has random effects if one of the
+$icode child_smooth_id$$ values is not
+$cref/null/rate_table/child_smooth_id/null/$$.
+In this case, it is suggest that you first fit with
+$cref/random_bound/option_table/Optimizer/random_bound/$$ equal to zero.
+Then change the random bound to be non-zero,
+then use the start command with $icode source$$ equal to
+$cref/fit_var/start_command/source/$$,
+and then to your fit with random effects.
 
 $children%example/get_started/fit_command.py%$$
 $head Example$$
