@@ -26,6 +26,9 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 03-29$$
+Advance to cppad-20170329 and cppad_mixed-20170329.
+
 $head 03-17$$
 Advance to cppad_mixed-20170317.
 This includes a change to the $code cppad_mixed$$,
