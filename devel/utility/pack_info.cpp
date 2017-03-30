@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -585,7 +585,7 @@ $th j$$ covariate multiplier for this $icode integrand_id$$.
 
 $subhead smooth_id$$
 is the $cref/smooth_id/smooth_table/smooth_id/$$ for the
-$th j$$ covariate multiplier fro this $icode integrand_id$$.
+$th j$$ covariate multiplier for this $icode integrand_id$$.
 
 $subhead n_var$$
 is the number of variables for this covariate multiplier; i.e.
@@ -696,7 +696,7 @@ $th j$$ covariate multiplier for this $icode rate_id$$.
 
 $subhead smooth_id$$
 is the $cref/smooth_id/smooth_table/smooth_id/$$ for the
-$th j$$ covariate multiplier fro this $icode rate_id$$.
+$th j$$ covariate multiplier for this $icode rate_id$$.
 
 $subhead n_var$$
 is the number of variables for this covariate multiplier; i.e.

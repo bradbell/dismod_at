@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -228,13 +228,13 @@ bool fit_model_xam(void)
 	size_t n_covariate = 0;
 	vector<dismod_at::covariate_struct> covariate_table(n_covariate);
 	//
-	// data_table
+	// data_table: data_id == rate_id
 	dismod_at::integrand_enum integrand_vec[] = {
-		dismod_at::prevalence_enum , // rate_id = 0
-		dismod_at::Sincidence_enum , // rate_id = 1
-		dismod_at::remission_enum  , // rate_id = 2
-		dismod_at::mtexcess_enum   , // rate_id = 3
-		dismod_at::mtother_enum      // rate_id = 4
+		dismod_at::prevalence_enum , // rate_id = 0 (initial prevalence)
+		dismod_at::Sincidence_enum , // rate_id = 1 (iota)
+		dismod_at::remission_enum  , // rate_id = 2 (rho)
+		dismod_at::mtexcess_enum   , // rate_id = 3 (chi)
+		dismod_at::mtother_enum      // rate_id = 4 (omega)
 	};
 	size_t n_data = sizeof(integrand_vec) / sizeof(integrand_vec[0]);
 	vector<dismod_at::data_struct> data_table(n_data);

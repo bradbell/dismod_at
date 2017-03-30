@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -31,7 +31,6 @@ $end
 
 bool avg_yes_ode_xam(void)
 {	bool   ok = true;
-	size_t i, k;
 	using CppAD::abs;
 	using CppAD::vector;
 	using std::cout;
@@ -80,7 +79,7 @@ bool avg_yes_ode_xam(void)
 	// weight value should not matter when constant
 	size_t n_si = n_age_si * n_time_si;
 	vector<double> weight(n_si);
-	for(k = 0; k < n_si; k++)
+	for(size_t k = 0; k < n_si; k++)
 		weight[k] = 0.5;
 	dismod_at::weight_info w_info(
 		age_table, time_table, age_id, time_id, weight
@@ -113,12 +112,13 @@ bool avg_yes_ode_xam(void)
 		s_info_vec[smooth_id] = s_info;
 	}
 	//
-	// integrand_table
+	// integrand_id = number_integrand - integrand_enum - 1
 	size_t n_integrand = dismod_at::number_integrand_enum;
 	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
-	for(i = 0; i < n_integrand; i++)
-	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
-		integrand_table[i].eta       = 1e-6;
+	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
+	{	integrand_table[integrand_id].integrand =
+			dismod_at::integrand_enum(n_integrand - integrand_id - 1);
+		integrand_table[integrand_id].eta  = 1e-6;
 	}
 	//
 	// n_age_ode
@@ -145,10 +145,11 @@ bool avg_yes_ode_xam(void)
 	vector<dismod_at::covariate_struct> covariate_table(n_covariate);
 	//
 	// data_table
-	vector<dismod_at::data_struct> data_table(1);
+	vector<dismod_at::data_struct> data_table(3);
 	vector<double> data_cov_value(data_table.size() * n_covariate);
 	size_t data_id = 0;
-	data_table[data_id].integrand_id = dismod_at::prevalence_enum;
+	data_table[data_id].integrand_id =
+		n_integrand - size_t(dismod_at::susceptible_enum) - 1;
 	data_table[data_id].node_id      = 1; // child node
 	data_table[data_id].weight_id    = 0;
 	data_table[data_id].age_lower    = 0.0;
@@ -158,6 +159,22 @@ bool avg_yes_ode_xam(void)
 	data_table[data_id].meas_value   = 0.0;
 	data_table[data_id].meas_std     = 1e-3;
 	data_table[data_id].density_id   = dismod_at::uniform_enum;
+	//
+	data_id = 1;
+	data_table[data_id]              = data_table[0];
+	data_table[data_id].age_lower    = 10.;
+	data_table[data_id].age_upper    = 90.0;
+	data_table[data_id].time_lower   = 1990.0;
+	data_table[data_id].integrand_id =
+		n_integrand - size_t(dismod_at::withC_enum) - 1;
+	//
+	data_id = 2;
+	data_table[data_id]              = data_table[0];
+	data_table[data_id].age_lower    = 30.;
+	data_table[data_id].age_upper    = 60.0;
+	data_table[data_id].time_lower   = 1990.0;
+	data_table[data_id].integrand_id =
+		n_integrand - size_t(dismod_at::prevalence_enum) - 1;
 	//
 	// smooth_table
 	size_t n_child        = 2;
@@ -229,7 +246,7 @@ bool avg_yes_ode_xam(void)
 	for(size_t child_id = 0; child_id <= n_child; child_id++)
 	{	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 		{	info = pack_object.rate_info(rate_id, child_id);
-			for(k = 0; k < info.n_var; k++)
+			for(size_t k = 0; k < info.n_var; k++)
 			{	if( rate_id == size_t(dismod_at::iota_enum) )
 				{	if( child_id == n_child )
 						pack_vec[info.offset + k] = beta_parent;
@@ -242,24 +259,39 @@ bool avg_yes_ode_xam(void)
 		}
 	}
 	/*
-	Solution is S(a) = exp( -beta * a ), P(a) = C(a) = 1.0 - exp( -beta * a )
-	int_b^c P(a) / (c - b) = [ a  + exp( -beta a ) / beta ]_b^c / (c - b)
+	No remission and no excess mortality so solution is:
+	S(a) = exp( -beta * a )
+	P(a) = C(a) = 1.0 - exp( -beta * a )
+
+	int_b^c S(a) / (c - b) = - [ exp( -beta a ) / beta ]_b^c / (c - b)
+	int_b^c C(a) / (c - b) = 1.0 - int_b^c S(a) / (c - b)
+	int_b^c P(a) / (c - b) = 1.0 - int_b^c S(a) / (c - b)
 	*/
 	using CppAD::exp;
 	ok            &= data_table.size() == data_subset_obj.size();
+	//
 	data_id = 0;
 	Float avg      = data_object.avg_yes_ode(data_id, pack_vec);
 	double b       = data_table[data_id].age_lower;
 	double c       = data_table[data_id].age_upper;
-	double check   = c - b + ( exp(-beta * c) - exp(-beta * b) ) / beta;
-	check         /= (c - b);
-	ok             &= fabs( 1.0 - avg / check ) <= 1e-3;
-	/*
-	cout << "Debugging" << std::endl;
-	cout << "avg = " << avg;
-	cout << ", check = " << check;
-	cout << ", relerr    = " << 1.0 - avg / check  << std::endl;
-	*/
+	double avg_S   = - ( exp(-beta * c) - exp(-beta * b) ) / (beta * (c - b));
+	ok             &= fabs( 1.0 - avg / avg_S ) <= 1e-3;
+	//
+	data_id = 1;
+	avg            = data_object.avg_yes_ode(data_id, pack_vec);
+	b              = data_table[data_id].age_lower;
+	c              = data_table[data_id].age_upper;
+	avg_S          = - ( exp(-beta * c) - exp(-beta * b) ) / (beta * (c - b));
+	double avg_C   = 1.0 - avg_S;
+	ok             &= fabs( 1.0 - avg / avg_C ) <= 1e-3;
+	//
+	data_id = 2;
+	avg            = data_object.avg_yes_ode(data_id, pack_vec);
+	b              = data_table[data_id].age_lower;
+	c              = data_table[data_id].age_upper;
+	avg_S          = - ( exp(-beta * c) - exp(-beta * b) ) / (beta * (c - b));
+	double avg_P   = 1.0 - avg_S;
+	ok             &= fabs( 1.0 - avg / avg_P ) <= 1e-3;
 	return ok;
 }
 // END C++

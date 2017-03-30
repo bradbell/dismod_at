@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -87,7 +87,7 @@
 # $table
 # Key     $cnext Value Type $pre  $$ $cnext Description            $rnext
 # name    $cnext str        $cnext name for the $th i$$ integrand  $rnext
-# eta     $cnext str        $cnext offset in log transform fro this integrand
+# eta     $cnext str        $cnext offset in log transform for this integrand
 # $tend
 #
 # $head node_table$$

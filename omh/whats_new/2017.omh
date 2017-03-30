@@ -26,6 +26,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 03-30$$
+Add $code susceptible$$ and $code withC$$ to the list
+of possible integrand names; see
+$cref/integrand_name/integrand_table/integrand_name/$$.
+
 $head 03-29$$
 Advance to cppad-20170329 and cppad_mixed-20170329.
 

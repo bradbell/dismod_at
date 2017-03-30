@@ -69,7 +69,8 @@ def example_db (file_name) :
 	#
 	# integrand table
 	integrand_table = [
-		{ 'name':'Sincidence',  'eta':1e-6 }
+		{ 'name':'Sincidence',  'eta':1e-6 },
+		{ 'name':'susceptible', 'eta':1e-6 }
 	]
 	#
 	# node table: world -> north_america
@@ -235,7 +236,7 @@ def example_db (file_name) :
 	avgint_table = list()
 	# values that are the same for all data rows
 	row = {
-		'integrand':   'Sincidence',
+		'integrand':   'susceptible',
 		'node':        'north_america',
 		'weight':      'constant',
 		'time_lower':   2000.0,
@@ -295,10 +296,14 @@ subset_dict    = dismod_at.get_table_dict(connection, 'avgint_subset')
 # check that all the avgint_table values were predicted (no subsetting)
 assert len(predict_table) == 3
 #
+# S(a) = exp( - iota * a )
+S_north_america = math.exp( - iota_north_america * 50.0 )
+S_canada        = math.exp( - math.exp(0.2) * iota_north_america * 50.0 )
+S_united_states = math.exp( - math.exp(-0.2) * iota_north_america * 50.0 )
 truth = {
-	'north_america' : iota_north_america,
-	'canada' : math.exp(0.2) * iota_north_america,
-	'united_states' : math.exp(-0.2) * iota_north_america
+	'north_america' : S_north_america,
+	'canada'        : S_canada,
+	'united_states' : S_united_states
 }
 for i in range(3) :
 	subset_id = predict_table[i]['avgint_subset_id']

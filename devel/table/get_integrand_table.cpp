@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -78,6 +78,8 @@ $code remission_enum$$  $pre  $$ $cnext $code remission$$     $rnext
 $code mtexcess_enum$$   $pre  $$ $cnext $code mtexcess$$      $rnext
 $code mtother_enum$$    $pre  $$ $cnext $code mtother$$       $rnext
 $code mtwith_enum$$     $pre  $$ $cnext $code mtwith$$        $rnext
+$code susceptible_enum$$ $pre  $$ $cnext $code susceptible$$  $rnext
+$code withC_enum$$       $pre  $$  $cnext $code withC$$       $rnext
 $code prevalence_enum$$ $pre  $$ $cnext $code prevalence$$    $rnext
 $code mtspecific_enum$$ $pre  $$ $cnext $code mtspecific$$    $rnext
 $code mtall_enum$$      $pre  $$ $cnext $code mtall$$         $rnext
@@ -118,6 +120,8 @@ const char* integrand_enum2name[] = {
 	"mtexcess",
 	"mtother",
 	"mtwith",
+	"susceptible",
+	"withC",
 	"prevalence",
 	"mtspecific",
 	"mtall",

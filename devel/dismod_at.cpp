@@ -749,6 +749,8 @@ void fit_command(
 			avg = data_object.avg_no_ode(subset_id, opt_value);
 			break;
 
+			case dismod_at::susceptible_enum:
+			case dismod_at::withC_enum:
 			case dismod_at::prevalence_enum:
 			case dismod_at::Tincidence_enum:
 			case dismod_at::mtspecific_enum:
@@ -1005,6 +1007,8 @@ void simulate_command(
 			avg = data_object.avg_no_ode(subset_id, truth_var);
 			break;
 
+			case dismod_at::susceptible_enum:
+			case dismod_at::withC_enum:
 			case dismod_at::prevalence_enum:
 			case dismod_at::Tincidence_enum:
 			case dismod_at::mtspecific_enum:
@@ -1547,6 +1551,8 @@ void predict_command(
 				avg = avgint_object.avg_no_ode(subset_id, pack_vec);
 				break;
 				//
+				case dismod_at::susceptible_enum:
+				case dismod_at::withC_enum:
 				case dismod_at::prevalence_enum:
 				case dismod_at::Tincidence_enum:
 				case dismod_at::mtspecific_enum:

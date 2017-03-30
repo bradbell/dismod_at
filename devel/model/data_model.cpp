@@ -1001,6 +1001,8 @@ $subhead Integrand$$
 The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
 $cref/subset_id/data_subset/data_subset_obj/subset_id/$$
 must be one of the following:
+$code susceptible_enum$$,
+$code withC_enum$$,
 $code prevalence_enum$$,
 $code Tincidence_enum$$,
 $code mtspecific_enum$$,
@@ -1125,7 +1127,7 @@ Float data_model::avg_yes_ode(
 		i_end = i_min + i;
 		assert( i_end < n_age_ode_ );
 		//
-		// k is index in ode_index at which this cohort integration starts
+		// k is ode_index at which this cohort integration starts
 		k     = ode_index.size();
 		cohort_start.push_back(k);
 		//
@@ -1263,6 +1265,8 @@ Float data_model::avg_yes_ode(
 			if( i_min <= i && j_min <= j )
 			{	Float P   = C_out[k] / ( S_out[k]  + C_out[k]);
 				bool ok = zero <= P && P < infinity;
+				ok     |= integrand == susceptible_enum;
+				ok     |= integrand == withC_enum;
 				if( ! ok )
 				{	std::string message = "Numerical integration error.\n"
 					"Prevalence is negative or infinite or Nan.";
@@ -1270,7 +1274,14 @@ Float data_model::avg_yes_ode(
 				}
 				size_t ij = (i - i_min) * n_time_sub + (j - j_min);
 				switch(integrand)
-				{
+				{	case susceptible_enum:
+					integrand_sub[ij] = S_out[k];
+					break;
+
+					case withC_enum:
+					integrand_sub[ij] = C_out[k];
+					break;
+
 					case prevalence_enum:
 					integrand_sub[ij] = P;
 					break;
@@ -1407,7 +1418,7 @@ $cref data_model_avg_no_ode$$ $cnext
 	Sincidence, remission, mtexcess, mtother, mtwith, relrisk
 $rnext
 $cref data_model_avg_yes_ode$$ $cnext
-	Tincidence, prevalence, mtspecific, mtall, mtstandard
+	susceptible, with, Tincidence, prevalence, mtspecific, mtall, mtstandard
 
 $tend
 
@@ -1677,6 +1688,8 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 				avg = avg_no_ode(subset_id, pack_vec);
 				break;
 
+				case susceptible_enum:
+				case withC_enum:
 				case prevalence_enum:
 				case Tincidence_enum:
 				case mtspecific_enum:
