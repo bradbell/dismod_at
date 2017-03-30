@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -29,6 +29,7 @@ import os
 import distutils.dir_util
 import subprocess
 import copy
+import math
 test_program = 'example/user/predict_fit.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -54,9 +55,9 @@ def fun_zero(a, t) :
 def fun_one(a, t) :
 	return ('prior_one', 'prior_one', 'prior_one')
 def fun_rate_child(a, t) :
-	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
+	return ('prior_rate_child', 'prior_zero', 'prior_dtime_child')
 def fun_rate_parent(a, t) :
-	return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+	return ('prior_rate_parent', 'prior_zero', 'prior_dtime_parent')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
@@ -91,7 +92,7 @@ def example_db (file_name) :
 	#
 	# mulcov table
 	mulcov_table = list()
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# data table:
 	data_table = list()
 	row = {
@@ -109,15 +110,15 @@ def example_db (file_name) :
 	}
 	data_table.append( copy.copy(row) )
 	row['node'] = 'canada';
-	row['meas_value'] = 2.0 * iota_north_america
+	row['meas_value'] = math.exp(0.2) * iota_north_america
 	data_table.append( copy.copy(row) )
 	row['node'] = 'united_states';
-	row['meas_value'] = 0.5 * iota_north_america
+	row['meas_value'] = math.exp(-0.2) * iota_north_america
 	data_table.append( copy.copy(row) )
 	#
 	for data_id in range( len( data_table ) ) :
 		data_table[data_id]['data_name'] = 'd' + str(data_id)
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
 		{   # prior_zero
@@ -136,17 +137,33 @@ def example_db (file_name) :
 			'mean':     iota_north_america,
 			'std':      None,
 			'eta':      None
-		},{ # prior_gauss_zero
-			'name':     'prior_gauss_zero',
+		},{ # prior_rate_child
+			'name':     'prior_rate_child',
 			'density':  'gaussian',
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      5.0, # large so get close fit to data
+			'std':      3.0,
 			'eta':      None
+		},{ # prior_dtime_parent
+			'name':     'prior_dtime_parent',
+			'density':  'log_gaussian',
+			'lower':    None,
+			'upper':    None,
+			'mean':     0.0,
+			'std':      1.0,
+			'eta':      1e-5
+		},{ # prior_dtime
+			'name':     'prior_dtime_child',
+			'density':  'gaussian',
+			'lower':    None,
+			'upper':    None,
+			'mean':     0.0,
+			'std':      1.0,
+			'eta':      1e-5
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# smooth table
 	middle_age_id  = 1
 	last_time_id   = 2
@@ -169,7 +186,7 @@ def example_db (file_name) :
 			'fun':                      fun_rate_child
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# rate table
 	rate_table = [
 		{
@@ -194,26 +211,26 @@ def example_db (file_name) :
 			'child_smooth':  None
 		}
 	]
-	# ------------------------------------------------------------------------
+	# --------------------------------------------------------------------
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america' },
-		{ 'name':'ode_step_size',          'value':'10.0'          },
+		{ 'name':'ode_step_size',          'value':'1.0'           },
 		{ 'name':'random_seed',            'value':'0'             },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
 		{ 'name':'quasi_fixed',            'value':'true'         },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
-		{ 'name':'max_num_iter_fixed',     'value':'100'          },
+		{ 'name':'max_num_iter_fixed',     'value':'30'           },
 		{ 'name':'print_level_fixed',      'value':'0'            },
 		{ 'name':'tolerance_fixed',        'value':'1e-10'        },
 
 		{ 'name':'derivative_test_random', 'value':'second-order' },
-		{ 'name':'max_num_iter_random',    'value':'100'          },
+		{ 'name':'max_num_iter_random',    'value':'30'           },
 		{ 'name':'print_level_random',     'value':'0'            },
 		{ 'name':'tolerance_random',       'value':'1e-10'        }
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# avgint table: same order as list of integrands
 	avgint_table = list()
 	# values that are the same for all data rows
@@ -231,7 +248,7 @@ def example_db (file_name) :
 	avgint_table.append( copy.copy(row) )
 	row['node'] = 'united_states'
 	avgint_table.append( copy.copy(row) )
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
@@ -270,18 +287,18 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get predict table
-predict_table    = dismod_at.get_table_dict(connection, 'predict')
+predict_table  = dismod_at.get_table_dict(connection, 'predict')
 avgint_table   = dismod_at.get_table_dict(connection, 'avgint')
 node_table     = dismod_at.get_table_dict(connection, 'node')
-subset_dict     = dismod_at.get_table_dict(connection, 'avgint_subset')
+subset_dict    = dismod_at.get_table_dict(connection, 'avgint_subset')
 #
 # check that all the avgint_table values were predicted (no subsetting)
 assert len(predict_table) == 3
 #
 truth = {
 	'north_america' : iota_north_america,
-	'canada' : 2.0 * iota_north_america,
-	'united_states' : 0.5 * iota_north_america
+	'canada' : math.exp(0.2) * iota_north_america,
+	'united_states' : math.exp(-0.2) * iota_north_america
 }
 for i in range(3) :
 	subset_id = predict_table[i]['avgint_subset_id']
