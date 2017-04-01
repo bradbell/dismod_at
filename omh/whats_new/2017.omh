@@ -26,6 +26,17 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-01$$
+$list number$$
+Remove the need to set $icode PKG_CONFIG_PATH$$ during the
+$cref install_unix$$ procedure
+($cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$
+in $code bin/run_cmake.sh$$ is used to determine this setting automatically).
+$lnext
+Improve the discussion on setting the
+$cref/python path/install_unix/Python Path/$$.
+$lend
+
 $head 03-30$$
 Add $code susceptible$$ and $code withC$$ to the list
 of possible integrand names; see

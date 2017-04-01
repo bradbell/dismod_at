@@ -82,6 +82,9 @@ then
 	bin/build_type.sh install_cppad_mixed $cppad_prefix $build_type
 fi
 # --------------------------------------------------------------------------
+libdir=`bin/libdir.sh`
+export PKG_CONFIG_PATH="$ipopt_prefix/$libdir/pkgconfig"
+# --------------------------------------------------------------------------
 if [ ! -e build/external ]
 then
 	mkdir -p build/external

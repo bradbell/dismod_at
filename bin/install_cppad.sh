@@ -24,7 +24,9 @@ echo_eval() {
 web_page='https://github.com/coin-or/CppAD.git'
 hash_key='67b6f270e094c8d610bb5b20009c8676f4e0cccb'
 version='20170329'
+# --------------------------------------------------------------------------
 libdir=`bin/libdir.sh`
+export PKG_CONFIG_PATH="$ipopt_prefix/$libdir/pkgconfig"
 # ---------------------------------------------------------------------------
 # build_type
 cmd=`grep '^build_type=' bin/run_cmake.sh`
@@ -73,6 +75,7 @@ fi
 cmake_args="-D CMAKE_VERBOSE_MAKEFILE=0"
 cmake_args="$cmake_args -D cppad_prefix=$cppad_prefix"
 cmake_args="$cmake_args -D cmake_install_libdirs=$libdir"
+cmake_args="$cmake_args -D ipopt_prefix=$ipopt_prefix"
 echo "cmake $cmake_args -D cppad_cxx_flags='$extra_cxx_flags' .."
 cmake $cmake_args -D cppad_cxx_flags="$extra_cxx_flags" ..
 #
