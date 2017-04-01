@@ -220,16 +220,17 @@ $head Python Path$$
 After the install you will be able to import the $code dismod_at$$
 python library as follows:
 $codei%
-	python3
+	%python3%
 	import dismod_at
 	quit()
 %$$
+where $icode python3$$ is your
+$cref/python3 executable/run_cmake.sh/python3_executable/$$.
 If you get the error $code No module named 'dismod_at'$$,
 you will need to add to your python path.
 The python module $code dismod_at$$ is installed below
 $cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$
-in the standard place for your
-$cref/python3_executable/run_cmake.sh/python3_executable/$$.
+in the standard place for your python3 executable.
 Use the command
 $codei%
 	ls %dismod_at_prefix%/lib/python/%py_version%/site-packages

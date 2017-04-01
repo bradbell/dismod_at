@@ -42,7 +42,7 @@ build_type='debug'
 # &codep
 python3_executable='/usr/bin/python3'
 # &&
-# An alternative might be $code '/usr/local/anaconda3-current/bin/python'$$.
+# An alternative might be &code '/usr/local/anaconda3-current/bin/python'&&.
 #
 # &head extra_cxx_flags&&
 # Extra C++ flags used during compilation:
