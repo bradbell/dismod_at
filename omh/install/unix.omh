@@ -212,7 +212,7 @@ $codei%
 to check that $code dismod_at$$ is in that directory.
 Use the command
 $codei%
-	PATH="@PATH:%dismod_at_prefix%/bin"
+	export PATH="@PATH:%dismod_at_prefix%/bin"
 %$$
 to add that directory to your executable path.
 
@@ -245,11 +245,11 @@ $codei%
 to see if your initial python path is empty. If it is empty,
 use the command
 $codei%
-	PYTHONPATH="%site_packages%"
+	export PYTHONPATH="%site_packages%"
 %$$
 to set your python path. If it is non-empty, use
 $codei%
-	PYTHONPATH="@PYTHONPATH:%site_packages%"
+	export PYTHONPATH="@PYTHONPATH:%site_packages%"
 %$$
 to set your python path.
 
