@@ -26,6 +26,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-03$$
+Advance to $code cppad-20170402$$ and $code cppad_mixed-20170403$$.
+The Cppad change fixes a bug in the optimization of conditional expressions.
+This in turn enables Cppad Mixed to make more use of AD function optimization
+(and still pass all the tests in $code dismod_at$$).
+
 $head 04-01$$
 $list number$$
 Remove the need to set $icode PKG_CONFIG_PATH$$ during the
