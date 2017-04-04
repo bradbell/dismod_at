@@ -26,6 +26,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-04$$
+The notation $italic average weight$$ (for $latex \bar{w}_i$$) was
+corrected to be
+$cref/weight integral/avg_integrand/Weight Integral, wbar_i/$$.
+
 $head 04-03$$
 Advance to $code cppad-20170402$$ and $code cppad_mixed-20170403$$.
 The Cppad change fixes a bug in the optimization of conditional expressions.

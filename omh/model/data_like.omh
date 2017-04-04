@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -148,7 +148,7 @@ m_i ( u, \theta )
 w_i (a,t) \; \B{d} t \; \B{d} a
 \] $$
 where $latex \bar{w}_i$$ is the
-$cref/average weight/avg_integrand/Average Weight, wbar_i/$$.
+$cref/weight integral/avg_integrand/Weight Integral, wbar_i/$$.
 
 $head Adjusted Standard Deviation, delta_i$$
 The adjusted standard deviation is defined by
