@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -175,6 +175,7 @@ for data_id in range(n_rate) :
 	assert density_dict[density_id]['density_name'] == 'gaussian'
 	check             = (meas_value - avg_integrand) / meas_std;
 	err               = weighted_residual / rate_value[rate_id] - 1.0;
+	assert abs(err) <= 1e-5
 
 #
 # -----------------------------------------------------------------------
