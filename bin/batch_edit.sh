@@ -22,8 +22,7 @@ rename_cmd='s|table.omh|database.omh|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
 cat << EOF > junk.sed
-s|average *weight|weight integral|g
-s|Average *Weight|Weight Integral|g
+s|smoohting|smoothing|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

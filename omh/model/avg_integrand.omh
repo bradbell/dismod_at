@@ -268,6 +268,40 @@ $$
 $subhead relrisk$$
 $latex I_i (a, t) = [ \omega (a,t) + \chi (a,t) ] / \omega (a,t) $$
 
+$head Measurement Value Covariates$$
+
+$subhead K_i$$
+There is a set of rows in the mulcov table such that
+$cref/integrand_id/mulcov_table/integrand_id/$$ is equal to $latex I_i$$.
+and
+$cref/mulcov_type/mulcov_table/mulcov_type/$$ is equal to $code meas_value$$.
+We use $latex K_i$$ to denote the corresponding set of
+$cref/covariate_id/mulcov_table/covariate_id/$$ values for
+which this is the case.
+
+$subhead beta_ij$$
+For each covariate index $latex j \in K_i$$,
+we use $latex \beta_{i,j} (a, t) $$ to denote the
+piecewise linear function corresponding to the
+$cref/covariate multiplier
+	/model_variables/
+	Fixed Effects, theta/
+	Covariate Multipliers
+/$$
+variables for the corresponding
+$cref/mulcov_id/mulcov_table/mulcov_id/$$.
+Note that these are only
+$cref/meas_value/mulcov_table/mulcov_type/meas_value/$$ covariate multipliers.
+
+$subhead Total Effect$$
+The total effect for the $th i$$ measurement value,
+as a function of the fixed effects $latex \theta$$, is
+$latex \[
+	E_i ( a, t ) = \sum_{j \in K_i} x_{i,j} \beta_{i,j} (a, t)
+\] $$
+The set $latex K_i$$ and the function $latex \beta_{i,j} (a, t)$$
+are defined below:
+
 $head Weight Integral, wbar_i$$
 We use $latex \bar{w}_i$$ to denote the weight integral defined by
 $latex \[
@@ -286,11 +320,14 @@ A_i ( u , \theta )
 =
 \frac{1}{\bar{w}_i} \left[
 \int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
-	w_i (a,t) I_i (a, t) \; \B{d} t \; \B{d} a
+	w_i (a,t) I_i (a, t) \; E_i (a, t)  \; \B{d} t \; \B{d} a
 \right]
 \;
 \] $$
-Note that in the case where
+Note that this is actually a weighted average of the integrand function
+$latex I_i (a, t)$$ times the total measurement covariate effect
+$latex E_i (a, t)$$
+Also note that in the case where
 $latex a(i) = b(i)$$, $latex s(i) = t(i)$$, or both,
 the average is defined as the limiting value.
 

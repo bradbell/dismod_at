@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -33,18 +33,6 @@ namespace {
 		sum += x_j * mulcov(a0, t1);
 		sum += x_j * mulcov(a1, t0);
 		sum += x_j * mulcov(a1, t1);
-		return sum / 4.0;
-	}
-	double exp_avg_mulcov(
-		double a0 ,
-		double a1 ,
-		double t0 ,
-		double t1 )
-	{	double sum = 0;
-		sum += exp( x_j * mulcov(a0, t0) );
-		sum += exp( x_j * mulcov(a0, t1) );
-		sum += exp( x_j * mulcov(a1, t0) );
-		sum += exp( x_j * mulcov(a1, t1) );
 		return sum / 4.0;
 	}
 }
@@ -301,23 +289,12 @@ bool meas_mulcov(void)
 		data_object.like_one(data_id, pack_vec, avg_integrand, delta_out);
 	Float wres = residual.wres;
 	//
-	// average mean mulcov
-	double avg_mulcov_1 = exp_avg_mulcov(
-		age_lower, age_lower + ode_step_size,
-		time_lower, time_lower + ode_step_size
-	);
-	double avg_mulcov_2  = exp_avg_mulcov(
-		age_lower + ode_step_size, age_lower + 2.0 *ode_step_size,
-		time_lower,                time_lower + ode_step_size
-	);
-	double avg_mean_mulcov = (avg_mulcov_1 + avg_mulcov_2) / 2.0;
-	//
 	// average std mulcov
-	avg_mulcov_1 = avg_mulcov(
+	double avg_mulcov_1 = avg_mulcov(
 		age_lower, age_lower + ode_step_size,
 		time_lower, time_lower + ode_step_size
 	);
-	avg_mulcov_2  = avg_mulcov(
+	double avg_mulcov_2  = avg_mulcov(
 		age_lower + ode_step_size, age_lower + 2.0 *ode_step_size,
 		time_lower,                time_lower + ode_step_size
 	);
@@ -326,9 +303,8 @@ bool meas_mulcov(void)
 	// check residual
 	double y     = data_table[data_id].meas_value;
 	double Delta = data_table[data_id].meas_std;
-	Float  m     = avg_mean_mulcov * avg_integrand;
 	double delta = Delta + avg_std_mulcov  * (y + eta);
-	Float  check = (y - m) / delta;
+	Float  check = (y - avg_integrand) / delta;
 	ok          &= fabs( 1.0 - wres / check ) <= eps;
 	//
 	// check delta_out

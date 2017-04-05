@@ -783,6 +783,9 @@ Float data_model::avg_no_ode(
 {	size_t i, j, k, ell;
 	assert( pack_object_.size() == pack_vec.size() );
 
+	// integrand_id
+	size_t integrand_id = data_subset_obj_[subset_id].integrand_id;
+
 	// covariate information for this data point
 	CppAD::vector<double> x(n_covariate_);
 	for(j = 0; j < n_covariate_; j++)
@@ -893,6 +896,7 @@ Float data_model::avg_no_ode(
 					effect_ode[k] += var_ode[k];
 			}
 		}
+		//
 		// include effect of rate covariates
 		size_t n_cov = pack_object_.mulcov_rate_value_n_cov(rate_id[ell]);
 		for(size_t j = 0; j < n_cov; j++)
@@ -911,6 +915,27 @@ Float data_model::avg_no_ode(
 			for(k = 0; k < n_ode; k++)
 				effect_ode[k] += var_ode[k] * x_j;
 		}
+		//
+		// include effect of measurement covariates
+		n_cov = pack_object_.mulcov_meas_value_n_cov(integrand_id);
+		for(size_t j = 0; j < n_cov; j++)
+		{	info       = pack_object_.mulcov_meas_value_info(integrand_id, j);
+			n_var      = info.n_var;
+			smooth_id  = info.smooth_id;
+			double x_j = x[ info.covariate_id ];
+			//
+			CppAD::vector<Float> var_si(n_var);
+			for(k = 0; k < n_var; k++)
+				var_si[k] = pack_vec[info.offset + k];
+			//
+			CppAD::vector<Float> var_ode =
+				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
+			//
+			for(k = 0; k < n_ode; k++)
+				effect_ode[k] += var_ode[k] * x_j;
+		}
+		//
+		// apply the total effect
 		for(k = 0; k < n_ode; k++)
 			rate_ode[ell][k] *= exp( effect_ode[k] );
 	}
@@ -948,11 +973,11 @@ Float data_model::avg_no_ode(
 		default:
 		assert( false );
 	}
-	Float sum = Float(0.0);
+	Float avg = Float(0.0);
 	for(k = 0; k < n_ode; k++)
-		sum += c_ode[k] * var_ode[k];
+		avg += c_ode[k] * var_ode[k];
 	//
-	return sum;
+	return avg;
 }
 /*
 -----------------------------------------------------------------------------
@@ -1309,14 +1334,45 @@ Float data_model::avg_yes_ode(
 			}
 		}
 	}
-
-	Float sum = Float(0.0);
-	for(k = 0; k < n_ode_sub; k++)
-	{	assert( ! CppAD::isnan( integrand_sub[k] ) );
-		sum += c_ode[k] * integrand_sub[k];
+	// ode_index in the same order as c_ode and integrand
+	for(i = 0; i < n_age_sub; i++)
+	{	for(j = 0; j < n_time_sub; j++)
+		{	k = i * n_time_sub + j;
+			ode_index[k] = (i_min + i) * n_time_ode_ + j_min + j;
+		}
 	}
 	//
-	return sum;
+	// measurement value covariate on ode subgrid
+	size_t integrand_id = data_subset_obj_[subset_id].integrand_id;
+	CppAD::vector<Float> meas_cov_ode(n_ode_sub);
+	for(k = 0; k < n_ode_sub; k++)
+		meas_cov_ode[k] = 0.0;
+	size_t n_cov = pack_object_.mulcov_meas_value_n_cov(integrand_id);
+	for(size_t j = 0; j < n_cov; j++)
+	{	info  = pack_object_.mulcov_meas_value_info(integrand_id, j);
+		size_t n_var      = info.n_var;
+		size_t smooth_id  = info.smooth_id;
+		double x_j        = x[ info.covariate_id ];
+		//
+		CppAD::vector<Float> var_si(n_var);
+		for(k = 0; k < n_var; k++)
+			var_si[k] = pack_vec[info.offset + k];
+		//
+		CppAD::vector<Float> var_ode =
+			si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
+		//
+		for(k = 0; k < n_ode_sub; k++)
+			meas_cov_ode[k] += var_ode[k] * x_j;
+	}
+	//
+	// compute the average integrand
+	Float avg = Float(0.0);
+	for(k = 0; k < n_ode_sub; k++)
+	{	assert( ! CppAD::isnan( integrand_sub[k] ) );
+		avg += c_ode[k] * integrand_sub[k] * exp( meas_cov_ode[k] );
+	}
+	//
+	return avg;
 }
 /*
 -----------------------------------------------------------------------------
@@ -1486,38 +1542,12 @@ residual_struct<Float> data_model::like_one(
 		}
 	}
 
-	// measurement mean covariates effect on the ode subgrid
+	// measurement std covariates effect on the ode subgrid
 	CppAD::vector<Float> meas_cov_ode(n_ode);
 	for(k = 0; k < n_ode; k++)
 		meas_cov_ode[k] = 0.0;
-	size_t n_cov = pack_object_.mulcov_meas_value_n_cov(integrand_id);
-	//
+	size_t n_cov = pack_object_.mulcov_meas_std_n_cov(integrand_id);
 	pack_info::subvec_info  info;
-	for(size_t j = 0; j < n_cov; j++)
-	{	info              = pack_object_.mulcov_meas_value_info(integrand_id, j);
-		size_t n_var      = info.n_var;
-		size_t smooth_id  = info.smooth_id;
-		double x_j = x[ info.covariate_id ];
-		//
-		CppAD::vector<Float> var_si(n_var);
-		for(k = 0; k < n_var; k++)
-			var_si[k] = pack_vec[info.offset + k];
-		//
-		CppAD::vector<Float> var_ode =
-			si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
-		//
-		for(k = 0; k < n_ode; k++)
-			meas_cov_ode[k] += var_ode[k] * x_j;
-	}
-	Float mean_effect = Float(0.0);
-	for(k = 0; k < n_ode; k++)
-		mean_effect += c_ode[k] * exp( meas_cov_ode[k] );
-	Float meas_mean  = Float(mean_effect * avg);
-
-	// measurement std covariates effect on the ode subgrid
-	for(k = 0; k < n_ode; k++)
-		meas_cov_ode[k] = 0.0;
-	n_cov = pack_object_.mulcov_meas_std_n_cov(integrand_id);
 	for(size_t j = 0; j < n_cov; j++)
 	{	info              = pack_object_.mulcov_meas_std_info(integrand_id, j);
 		size_t n_var      = info.n_var;
@@ -1545,7 +1575,7 @@ residual_struct<Float> data_model::like_one(
 	bool difference = false;
 	struct residual_struct<Float> residual = residual_density(
 		not_used,
-		meas_mean,
+		avg,
 		Float(meas_value),
 		delta_out,
 		Float(eta),
