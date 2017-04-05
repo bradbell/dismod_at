@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -61,7 +61,7 @@ def constant_weight_fun(a, t) :
 # note that the a, t values are not used for this case
 def fun_rate_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
-def fun_iota_parent(a, t) :
+def fun_rate_parent(a, t) :
 	return ('prior_value_parent', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_mulcov(a, t) :
 	return ('prior_mulcov', 'prior_gauss_zero', 'prior_gauss_zero')
@@ -229,7 +229,7 @@ def example_db (file_name) :
 			'mulstd_value_prior_name':  None,
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
-			'fun':                       fun_iota_parent
+			'fun':                       fun_rate_parent
 		},{ # smooth_mulcov
 			'name':                     'smooth_mulcov',
 			'age_id':                   [ middle_age_id ],
@@ -277,12 +277,12 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
 		{ 'name':'max_num_iter_fixed',     'value':'100'          },
 		{ 'name':'print_level_fixed',      'value':'0'            },
-		{ 'name':'tolerance_fixed',        'value':'1e-7'         },
+		{ 'name':'tolerance_fixed',        'value':'1e-8'         },
 
 		{ 'name':'derivative_test_random', 'value':'second-order' },
 		{ 'name':'max_num_iter_random',    'value':'100'          },
 		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-7'         }
+		{ 'name':'tolerance_random',       'value':'1e-10'        }
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: empty
@@ -344,7 +344,7 @@ middle_time_id = 1
 last_age_id    = 2
 last_time_id   = 2
 parent_node_id = 0
-tol            = 1e-7
+tol            = 5e-7
 #
 # check parent iota and remission values
 count             = 0
@@ -357,7 +357,7 @@ for var_id in range( len(var_table) ) :
 	if match and row['rate_id'] == iota_rate_id :
 		count += 1
 		value = fit_var_table[var_id]['variable_value']
-		assert abs( value / iota_true - 1.0 ) < 5.0 * tol
+		assert abs( value / iota_true - 1.0 ) < tol
 	if match and row['rate_id'] == remission_rate_id :
 		count += 1
 		value = fit_var_table[var_id]['variable_value']

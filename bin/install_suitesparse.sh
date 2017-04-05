@@ -101,6 +101,8 @@ sed -e \
 -e "s|^\( *INSTALL_LIB *\)=.*|\1= $suitesparse_prefix.$build_type/$libdir|" \
 -e 's|^\( *BLAS *\)=.*|\1= -lblas|' \
 -e "s|^\( *METIS *\)=.*|\1= $ipopt_prefix/$libdir/libcoinmetis.a|" \
+-e 's|^ *CF *=.*|& -DNTIMER|' \
+-e '/^ *LIB *=/s| -lrt||' \
 -i.bak SuiteSparse_config/SuiteSparse_config.mk
 #
 if [ "$build_type" == 'debug' ]
@@ -108,7 +110,8 @@ then
 	sed \
 		-e 's|^ *CFLAGS *= *$|CFLAGS = -g|' \
 		-e '/^ *CF *=/s|-O3|-O0|' \
-		-i SuiteSparse_config/SuiteSparse_config.mk
+		-i.tmp SuiteSparse_config/SuiteSparse_config.mk
+	rm SuiteSparse_config/SuiteSparse_config.mk.tmp
 	sed \
 		-e 's|^\( *Common->print *\)= *3 *;|\1= 4 ;|' \
 		-i.bak CHOLMOD/Core/cholmod_common.c

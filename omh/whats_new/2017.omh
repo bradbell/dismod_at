@@ -16,6 +16,8 @@ $spell
 	covariate
 	csv
 	cmake
+	suitesparse
+	lrt
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -27,12 +29,20 @@ $childtable%
 %$$
 
 $head 04-05$$
+$list number$$
 The definition of the average integrand has been changed to include the
 $cref/measurement value covariate effect
 	/avg_integrand
 	/Measurement Value Covariates
 	/Total Effect
 /$$.
+$lnext
+The $code bin/install_suitesparse.sh$$ script has been changed to
+work on the MAC (where the $code -lrt$$ library is not available).
+$lnext
+The optimization tolerance in $cref user_meas_covariate.py$$
+was made smaller to avoid test failures on some machines.
+$lend
 
 $head 04-04$$
 The notation $italic average weight$$ (for $latex \bar{w}_i$$) was
