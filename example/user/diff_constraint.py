@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -323,7 +323,7 @@ for rate_id in range(n_rate) :
 		#
 		diff  = rate_value[last_age_id][0] - rate_value[0][0]
 		assert diff - 0.01 > - tol             # due to contraint
-		assert abs(diff / 0.01 - 1.0) < 1e-3   # due to smoohting objective
+		assert abs(diff / 0.01 - 1.0) < 1e-3   # due to smoothing objective
 		#
 		diff  = rate_value[0][last_time_id] - rate_value[0][0]
 		assert diff - 0.01 > - tol

@@ -65,7 +65,7 @@ bool avg_yes_ode_xam(void)
 	double time_min     = time_table[0];
 	double time_max     = time_table[n_time_table - 1];
 
-	// age and time smoohting grid indices
+	// age and time smoothing grid indices
 	size_t n_age_si   = 3;
 	size_t n_time_si  = 2;
 	vector<size_t> age_id(n_age_si), time_id(n_time_si);
