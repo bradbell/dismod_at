@@ -38,7 +38,9 @@ if sys.argv[0] != example  or len(sys.argv) != 1 :
 	sys.exit(usage)
 #
 # import dismod_at
-sys.path.append( os.getcwd() + '/python' )
+local_dir = os.getcwd() + '/python'
+if( os.path.isdir( local_dir + '/dismod_at' ) ) :
+	sys.path.insert(0, local_dir)
 import dismod_at
 #
 # import get_started_db example

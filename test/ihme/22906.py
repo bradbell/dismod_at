@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -27,7 +27,9 @@ if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	sys.exit(usage)
 #
 # import dismod_at
-sys.path.append( os.getcwd() + '/python' )
+local_dir = os.getcwd() + '/python'
+if( os.path.isdir( local_dir + '/dismod_at' ) ) :
+	sys.path.insert(0, local_dir)
 import dismod_at
 #
 # create output dir

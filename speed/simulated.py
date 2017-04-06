@@ -56,7 +56,9 @@ random_seed_arg = sys.argv[1]
 start_time      = time.time();
 #
 # import dismod_at
-sys.path.append( os.getcwd() + '/python' )
+local_dir = os.getcwd() + '/python'
+if( os.path.isdir( local_dir + '/dismod_at' ) ) :
+	sys.path.insert(0, local_dir)
 import dismod_at
 #
 # change into the build/speed directory

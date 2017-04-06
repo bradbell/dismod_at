@@ -49,7 +49,9 @@ if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 print(test_program)
 #
 # import dismod_at
-sys.path.append( os.getcwd() + '/python' )
+local_dir = os.getcwd() + '/python'
+if( os.path.isdir( local_dir + '/dismod_at' ) ) :
+	sys.path.insert(0, local_dir)
 import dismod_at
 #
 # change into the build/example/user directory
