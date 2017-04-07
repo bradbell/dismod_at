@@ -2,7 +2,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -55,7 +55,8 @@ echo "PYTHONPATH=$PYTHONPATH"
 python_executable=`head -1 $prefix/bin/dismodat.py | sed -e 's|^#!||'`
 echo_eval $python_executable example/get_started/predict_command.py
 #
-echo_eval $prefix/bin/dismodat.py build/example/get_started/example.db db2csv
+echo_eval \
+	$prefix/bin/dismodat.py build/example/get_started/get_started.db db2csv
 #
 for name in $list
 do
