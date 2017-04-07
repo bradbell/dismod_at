@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -14,20 +14,7 @@ $spell
 	covariates
 $$
 
-$section The Subset of the avgint Table Rows is Included$$.
-The $code avgint_subset$$ table identifies which rows of the
-$cref avgint_table$$ are used.
-This subset is defined as the set rows
-(or the set of $cref/avgint_id/avgint_table/avgint_id/$$)
-such that the following conditions hold:
-$list number$$
-The $cref/node/avgint_table/node_id/$$ is a descendant of the
-$cref/parent_node/option_table/parent_node_id/$$.
-$lnext
-All of the
-$cref/covariates/avgint_table/Covariates/$$ satisfy the
-$cref/max_difference/covariate_table/max_difference/$$ criteria.
-$lend
+$section The Avgint Subset Table$$.
 
 $head avgint_subset_id$$
 This column has type $code integer$$ and is the primary key for this table.
@@ -38,6 +25,22 @@ This column has type $code integer$$ and is a
 $cref/avgint_id/avgint_table/avgint_id/$$ in the avgint table.
 These values are unique and monotone increasing with
 $icode avgint_subset_id$$.
+
+$head Discussion$$
+The $code avgint_subset$$ table identifies which rows of the
+$cref avgint_table$$ are included in the $cref predict_table$$.
+This is defined by the set of rows in the $code avgint$$ table
+such that the following conditions hold:
+
+$subhead Node$$
+The $cref/node/avgint_table/node_id/$$ is a
+$cref/descendant/node_table/parent/Descendant/$$
+of the parent node.
+
+$subhead Covariates$$
+All of the
+$cref/covariates/avgint_table/Covariates/$$ satisfy the
+$cref/max_difference/covariate_table/max_difference/$$ criteria.
 
 
 $head Example$$

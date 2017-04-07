@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -39,6 +39,10 @@ $cref/foreign key/database/Foreign Key/parent/$$ naming convention.
 $subhead Child Group$$
 The child group for node $icode p$$ is the sent of $icode node_id$$ values
 such that the corresponding $icode parent$$ is equal to $icode p$$.
+
+$subhead Descendant$$
+The set of descendants for a node $icode p$$ is the
+set children of $icode p$$, grand children of $icode p$$, $icode ...$$.
 
 $children%example/table/node_table.py
 %$$

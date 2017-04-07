@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -12,6 +12,7 @@ $begin covariate_table$$
 $spell
 	covariate
 	covariates
+	avgint
 $$
 
 $section The Covariate Table$$
@@ -36,18 +37,29 @@ the covariate value that corresponds to no adjustment.
 
 $head max_difference$$
 The column has type $code real$$ and is
-the maximum absolute difference,
-from the reference value for the corresponding covariate.
-The value $icode max_difference$$ must be greater than or equal zero.
-Data for which the
+the maximum absolute difference, from the reference value,
+for the corresponding covariate.
+This value must be greater than or equal zero.
+The $icode max_difference$$ value $code null$$ is interpreted
+as plus infinity and hence no exclusion is done for the corresponding
+covariate.
+
+$subhead Data Subset Table$$
+Rows in the $code data$$ table for which the
 $cref/covariate/data_table/Covariates/$$
 corresponding to this $icode covariate_id$$
 has a maximum absolute difference greater than $icode max_difference$$,
-is not included.
-The covariate value $code null$$ is interpreted
-as the reference value and hence not excluded.
-In addition, the $icode max_difference$$ value $code null$$ is interpreted
-as plus infinity and hence no exclusion is done for such covariates.
+are not included in the $cref data_subset_table$$ and the
+$cref fit_data_subset_table$$.
+
+$subhead Avgint Subset Table$$
+Rows in the $code avgint$$ table for which the
+$cref/covariate/data_table/Covariates/$$
+corresponding to this $icode covariate_id$$
+has a maximum absolute difference greater than $icode max_difference$$,
+are not included in the $cref avgint_subset_table$$ and the
+$cref predict_table$$.
+
 
 $children%example/table/covariate_table.py
 %$$

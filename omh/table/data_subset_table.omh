@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -13,22 +13,7 @@ $spell
 	covariates
 $$
 
-$section The Subset of Data Table Rows that is Included$$
-The $code data_subset$$ table identifies which rows of the
-$cref data_table$$ are used.
-This subset is defined as the set rows
-(or the set of $cref/data_id/data_table/data_id/$$)
-such that the following conditions hold:
-
-$list number$$
-The $cref/node_id/data_table/node_id/$$ is the
-$cref/parent_node_id/option_table/parent_node_id/$$ or corresponds to a
-descendant of the parent node.
-$lnext
-All of the
-$cref/covariates/data_table/Covariates/$$ satisfy the
-$cref/max_difference/covariate_table/max_difference/$$ criteria.
-$lend
+$section The Data Subset Table$$.
 
 $head data_subset_id$$
 This column has type $code integer$$ and is the primary key for this table.
@@ -39,6 +24,22 @@ This column has type $code integer$$ and is a
 $cref/data_id/data_table/data_id/$$ in the data table.
 These values are unique and monotone increasing with
 $icode data_subset_id$$.
+
+$head Discussion$$
+The $code data_subset$$ table identifies which rows of the
+$cref data_table$$ are included in the $cref fit_data_subset_table$$.
+This is defined by the set of rows in the $code data$$ table
+such that the following conditions hold:
+
+$subhead Node$$
+The $cref/node/data_table/node_id/$$ is a
+$cref/descendant/node_table/parent/Descendant/$$
+of the parent node.
+
+$subhead Covariates$$
+All of the
+$cref/covariates/data_table/Covariates/$$ satisfy the
+$cref/max_difference/covariate_table/max_difference/$$ criteria.
 
 
 $head Example$$

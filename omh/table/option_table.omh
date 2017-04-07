@@ -26,6 +26,7 @@ $spell
 	Ipopt
 	Optimizer
 	inf
+	avgint
 $$
 
 $section The Option Table$$
@@ -68,6 +69,23 @@ because it is used by all the commands.
 
 $subhead Default$$
 The default value for this option is $code 0$$.
+
+$subhead Data Subset Table$$
+Rows in the $code data$$ table for which the
+$cref/node/data_table/node_id/$$
+is not a $cref/descendant/node_table/parent/Descendant/$$
+of the parent node,
+are not included in the $cref data_subset_table$$ and the
+$cref fit_data_subset_table$$.
+
+$subhead Avgint Subset Table$$
+Rows in the $code avgint$$ table for which the
+$cref/node/data_table/node_id/$$
+is not a $cref/descendant/node_table/parent/Descendant/$$
+of the parent node,
+are not included in the $cref avgint_subset_table$$ and the
+$cref predict_table$$.
+
 
 $head ode_step_size$$
 If $icode%option_name% = ode_step_size%$$,
