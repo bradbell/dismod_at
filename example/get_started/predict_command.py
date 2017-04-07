@@ -28,6 +28,7 @@ import os
 import copy
 import subprocess
 import distutils.dir_util
+from math import exp
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
 example = 'example/get_started/predict_command.py'
@@ -51,89 +52,59 @@ import get_started_db
 distutils.dir_util.mkpath('build/example/get_started')
 os.chdir('build/example/get_started')
 # ---------------------------------------------------------------------------
-# create input tables
-file_name              = 'example.db'
-(n_smooth, rate_true)  = get_started_db.get_started_db(file_name)
+# create get_started.db
+get_started_db.get_started_db()
 # -----------------------------------------------------------------------
-# create the var table
 program        = '../../devel/dismod_at'
-command        = 'init'
-cmd = [ program, file_name, command ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at init command failed')
-# -----------------------------------------------------------------------
-# connect to database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
-# -----------------------------------------------------------------------
-# get the variable information
-var_table  = dismod_at.get_table_dict(connection, 'var')
-# -----------------------------------------------------------------------
-# create a truth_var table with variables values to use during simulation
-tbl_name = 'truth_var'
-col_name = [ 'truth_var_value' ]
-col_type = [ 'real'        ]
-row_list = list()
-for var_id in range( len(var_table) ) :
-	variable_row  = var_table[var_id]
-	var_type = variable_row['var_type']
-	if var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
-		assert False
-	elif var_type == 'rate' :
-		rate_id   = variable_row['rate_id']
-		truth_var_value = 5e-3 * (rate_id + 1)
-	else :
-		assert False
-	truth_row = [ truth_var_value ]
-	row_list.append( truth_row )
-dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-# -----------------------------------------------------------------------
-# simulate, sample, and then predict
-option_table  = dismod_at.get_table_dict(connection, 'option')
-number_sample = '1'
-program        = '../../devel/dismod_at'
-for command in [ 'simulate', 'sample', 'predict' ] :
+file_name      = 'get_started.db'
+for command in [ 'init', 'start', 'fit', 'sample', 'predict' ] :
 	cmd = [ program, file_name, command ]
-	if command == 'simulate' :
-		number_simulate = '1'
-		cmd.append(number_simulate)
+	if command == 'start' :
+		cmd.append('prior_mean')
 	if command == 'sample' :
-		cmd.append('simulate')
-		cmd.append(number_sample)
+		cmd.append('fit_var')
+		cmd.append('1')
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :
 		sys.exit('The dismod_at ' + command + ' command failed')
 # -----------------------------------------------------------------------
-# check the predict table
-var_table     = dismod_at.get_table_dict(connection, 'var')
-sample_dict  = dismod_at.get_table_dict(connection, 'sample')
-predict_table = dismod_at.get_table_dict(connection, 'predict')
+# connect to database
+new        = False
+connection = dismod_at.create_connection(file_name, new)
+# -----------------------------------------------------------------------
+# get variable and predict tables
+var_table      = dismod_at.get_table_dict(connection, 'var')
+fit_var_table  = dismod_at.get_table_dict(connection, 'fit_var')
+avgint_table   = dismod_at.get_table_dict(connection, 'avgint')
+predict_table  = dismod_at.get_table_dict(connection, 'predict')
+assert len(avgint_table) == 1
 #
-# rate variables
-parent_node_id = 0
-child_node_id  = 1
-check_tol      = 1e-2
-n_rate         = 5;
-check          = list()
-for rate_id in range(n_rate) :
-	integrand_id = rate_id
-	count        = 0
-	for var_id in range( len(var_table) ) :
-		row   = var_table[var_id]
-		match = row['var_type'] == 'rate'
-		match = match and row['rate_id'] == rate_id
-		match = match and row['node_id'] == parent_node_id
-		if match :
-			count         += 1
-			var_value      = sample_dict[var_id]['var_value']
-			avg_integrand  = predict_table[integrand_id]['avg_integrand']
-			err            = avg_integrand / var_value - 1.0
-			assert abs(err) <= check_tol
-	# two time points, one age point, for each rate
-	assert count == 2
-
+for var_id in range( len(var_table) ) :
+	var_row     = var_table[var_id]
+	fit_row     = fit_var_table[var_id]
+	var_type    = var_row['var_type']
+	if var_type == 'mulcov_rate_value' :
+		income_multiplier = fit_row['variable_value']
+	elif var_type == 'rate' :
+		omega_world = fit_row['variable_value']
+	else :
+		assert False
+#
+# use fact that avgint_id == avgint_subset_id and number_sample == 1
+avgint_row = avgint_table[0]
+#
+assert avgint_row['age_lower'] == avgint_row['age_upper']
+age     = avgint_row['age_lower']
+income  = avgint_row['x_0']
+adjusted_omega = omega_world * exp(income_multiplier * income)
+model_value    = exp( - adjusted_omega * age)
+#
+assert len(predict_table) == len(avgint_table)
+predict_row   = predict_table[0]
+avg_integrand = predict_row['avg_integrand']
+assert abs( avg_integrand / model_value - 1.0 ) < 1e-7
+#
+# -----------------------------------------------------------------------
 print('predict_command: OK')
 # END PYTHON

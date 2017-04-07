@@ -51,12 +51,12 @@ import get_started_db
 distutils.dir_util.mkpath('build/example/get_started')
 os.chdir('build/example/get_started')
 # ---------------------------------------------------------------------------
-# create input tables
-file_name              = 'example.db'
-(n_smooth, rate_true)  = get_started_db.get_started_db(file_name)
+# create get_started.db
+get_started_db.get_started_db()
 # -----------------------------------------------------------------------
 # create the var table
 program        = '../../devel/dismod_at'
+file_name      = 'get_started.db'
 command        = 'init'
 cmd = [ program, file_name, command ]
 print( ' '.join(cmd) )
@@ -72,18 +72,19 @@ connection      = dismod_at.create_connection(file_name, new)
 var_table  = dismod_at.get_table_dict(connection, 'var')
 # -----------------------------------------------------------------------
 # create a truth_var table with variables values to use during simulation
-tbl_name = 'truth_var'
-col_name = [ 'truth_var_value' ]
-col_type = [ 'real'        ]
-row_list = list()
+tbl_name          = 'truth_var'
+col_name          = [ 'truth_var_value' ]
+col_type          = [ 'real'        ]
+row_list          = list()
+omega_world       = 2e-2
+income_multiplier = -1e-3
 for var_id in range( len(var_table) ) :
-	variable_row  = var_table[var_id]
-	var_type = variable_row['var_type']
-	if var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
-		assert False
+	var_row  = var_table[var_id]
+	var_type = var_row['var_type']
+	if var_type == 'mulcov_rate_value' :
+		truth_var_value = income_multiplier
 	elif var_type == 'rate' :
-		rate_id   = variable_row['rate_id']
-		truth_var_value = 5e-3 * (rate_id + 1)
+		truth_var_value = omega_world
 	else :
 		assert False
 	truth_row = [ truth_var_value ]
@@ -91,23 +92,22 @@ for var_id in range( len(var_table) ) :
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 # -----------------------------------------------------------------------
 # simulate command
-program        = '../../devel/dismod_at'
-command        = 'simulate'
-cmd = [ program, file_name, command ]
-if command == 'simulate' :
-	number_simulate = '1'
-	cmd.append(number_simulate)
+program         = '../../devel/dismod_at'
+command         = 'simulate'
+number_simulate = '1'
+cmd = [ program, file_name, command , number_simulate ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at simulate command failed')
+
 # -----------------------------------------------------------------------
 # sample command
 option_table  = dismod_at.get_table_dict(connection, 'option')
+program       = '../../devel/dismod_at'
+command       = 'sample'
+method        = 'simulate'
 number_sample = '1'
-program        = '../../devel/dismod_at'
-command        = 'sample'
-method         = 'simulate'
 cmd = [ program, file_name, command, method , number_sample  ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
@@ -115,38 +115,21 @@ if flag != 0 :
 	sys.exit('The dismod_at sample command failed')
 # -----------------------------------------------------------------------
 # check the sample table
-var_table       = dismod_at.get_table_dict(connection, 'var')
-simulate_dict  = dismod_at.get_table_dict(connection, 'simulate')
-sample_dict    = dismod_at.get_table_dict(connection, 'sample')
+var_table    = dismod_at.get_table_dict(connection, 'var')
+sample_table = dismod_at.get_table_dict(connection, 'sample')
 #
-# rate variables
-parent_node_id    = 0
-child_node_id     = 1
-check_tol         = 1e-5
-n_rate            = 5;
-parent_rate_lower = 1e-4;
-for rate_id in range(n_rate) :
-	for node_id in [ parent_node_id, child_node_id ] :
-		count = 0
-		for var_id in range( len(var_table) ) :
-			row   = var_table[var_id]
-			match = row['var_type'] == 'rate'
-			match = match and row['rate_id'] == rate_id
-			match = match and row['node_id'] == node_id
-			if match :
-				count += 1
-				sample_id      = rate_id
-				check          = simulate_dict[sample_id]['meas_value']
-				check          = max(check, parent_rate_lower)
-				variable_value = sample_dict[var_id]['var_value']
-				if node_id == 0 :
-					# parent node
-					err = variable_value / check - 1.0
-				else :
-					# child node
-					err = variable_value / check
-				assert abs(err) <= check_tol
-		# number of point in smoothing for all rates
-		assert count == 2
+assert int(number_sample) == 1
+assert len(sample_table) == len(var_table)
+for var_id in range( len(var_table) ) :
+	var_row    = var_table[var_id]
+	sample_row = sample_table[var_id]
+	var_type   = var_row['var_type']
+	var_value  = sample_row['var_value']
+	if var_type == 'mulcov_rate_value' :
+		assert var_value == income_multiplier
+	elif var_type == 'rate' :
+		assert abs( var_value / omega_world  - 1.0 ) < 0.5
+#
+# -----------------------------------------------------------------------
 print('sample_command: OK')
 # END PYTHON

@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -36,8 +36,8 @@ Its initial value is zero, and it increments by one for each row.
 
 $head sample_index$$
 This column has type $code integer$$ and specifies the index,
-in the simulated data table, that a complete set of $cref model_variables$$
-corresponds to.
+in the $code simulate$$ table, that a complete set of $cref model_variables$$,
+in the $code sample$$ table, corresponds to.
 
 $head var_id$$
 This column has type $code integer$$ and specifies the

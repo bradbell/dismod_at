@@ -28,6 +28,7 @@ import os
 import copy
 import subprocess
 import distutils.dir_util
+from math import exp
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
 example = 'example/get_started/truth_command.py'
@@ -51,12 +52,12 @@ import get_started_db
 distutils.dir_util.mkpath('build/example/get_started')
 os.chdir('build/example/get_started')
 # ---------------------------------------------------------------------------
-# create input tables
-file_name              = 'example.db'
-(n_smooth, rate_true)  = get_started_db.get_started_db(file_name)
+# create get_started.db
+get_started_db.get_started_db()
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
-for command in [ 'init', 'start', 'fit', 'truth'  ] :
+file_name      = 'get_started.db'
+for command in [ 'init', 'start', 'fit', 'truth' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'start' :
 		cmd.append('prior_mean')
@@ -66,22 +67,20 @@ for command in [ 'init', 'start', 'fit', 'truth'  ] :
 		sys.exit('The dismod_at ' + command + ' command failed')
 # -----------------------------------------------------------------------
 # connect to database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+new        = False
+connection = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
-# get fit and truth_var tables
-fit_var_table= dismod_at.get_table_dict(connection, 'fit_var')
-truth_var_table  = dismod_at.get_table_dict(connection, 'truth_var')
-# -----------------------------------------------------------------------
-# check result
-assert len(fit_var_table) == len(truth_var_table)
-for fit_var_id in range( len(fit_var_table) ) :
-	variable_value   = fit_var_table[fit_var_id]['variable_value']
-	truth_var_value = truth_var_table[fit_var_id]['truth_var_value']
-	if truth_var_value == 0.0 :
-		assert variable_value == truth_var_value
-	else :
-		assert abs( variable_value / truth_var_value - 1.0 ) <= 1e-10
+# get variable and predict tables
+fit_var_table  = dismod_at.get_table_dict(connection, 'fit_var')
+truth_table    = dismod_at.get_table_dict(connection, 'truth_var')
+assert len(fit_var_table) == len(truth_table)
+#
+for var_id in range( len(fit_var_table) ) :
+	fit_row     = fit_var_table[var_id]
+	truth_row   = truth_table[var_id]
+	fit_value   = fit_row['variable_value']
+	truth_value = truth_row['truth_var_value']
+	assert abs( fit_value / truth_value - 1.0 ) < 1e-10
 # -----------------------------------------------------------------------
 print('truth_command: OK')
 # END PYTHON

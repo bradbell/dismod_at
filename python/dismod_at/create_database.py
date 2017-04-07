@@ -231,7 +231,8 @@
 # $table
 # Key       $cnext Value Type  $pre  $$ $cnext Description       $rnext
 # covariate $cnext str         $cnext is the covariate column    $rnext
-# type      $cnext str  $cnext rate_value, meas_value, or meas_std $rnext
+# type      $cnext str  $cnext
+# $code rate_value$$, $code meas_value$$, or $code meas_std$$ $rnext
 # effected  $cnext str         $cnext integrand or rate effected $rnext
 # smooth    $cnext str         $cnext smoothing name
 # $tend
@@ -264,10 +265,11 @@
 # The dictionary $icode%avgint_table%[%i%]%$$ has the same description as
 # $cref/data_table[i]/create_database/data_table/$$ except that the
 # following keys (and corresponding values) are not present:
-# $code density$$,
-# $code hold_out$$,
-# $code meas_value$$,
-# $code meas_std$$.
+# $icode data_name$$,
+# $icode density$$,
+# $icode hold_out$$,
+# $icode meas_value$$,
+# $icode meas_std$$.
 #
 #
 # $childtable%example/table/create_database.py

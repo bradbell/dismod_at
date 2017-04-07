@@ -53,65 +53,72 @@ import get_started_db
 distutils.dir_util.mkpath('build/example/get_started')
 os.chdir('build/example/get_started')
 # ---------------------------------------------------------------------------
-# create input tables
-file_name              = 'example.db'
-(n_smooth, rate_true)  = get_started_db.get_started_db(file_name)
+# create get_started.db
+get_started_db.get_started_db()
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
+file_name      = 'get_started.db'
 command        = 'init'
-cmd = [ program, file_name, command ]
+cmd            = [ program, file_name, command ]
+#
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at init command failed')
 # -----------------------------------------------------------------------
 # connect to database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
-# -----------------------------------------------------------------------
+new        = False
+connection = dismod_at.create_connection(file_name, new)
+#
 # check data_subset table
-data_subset_dict = dismod_at.get_table_dict(connection, 'data_subset');
-n_subset         = len( data_subset_dict )
-for subset_id in range( n_subset ) :
-	# all the data is included for this example
-	assert subset_id == data_subset_dict[subset_id]['data_id']
-# -----------------------------------------------------------------------
+data_subset_table = dismod_at.get_table_dict(connection, 'data_subset');
+assert len(data_subset_table) == 1
+assert data_subset_table[0]['data_id'] == 0
+#
 # check avgint_subset table
-avgint_subset_dict = dismod_at.get_table_dict(connection, 'avgint_subset');
-n_subset         = len( avgint_subset_dict )
-for subset_id in range( n_subset ) :
-	# all the avgint is included for this example
-	assert subset_id == avgint_subset_dict[subset_id]['avgint_id']
+avgint_subset_table = dismod_at.get_table_dict(connection, 'avgint_subset');
+assert len(avgint_subset_table) == 1
+assert avgint_subset_table[0]['avgint_id'] == 0
 # -----------------------------------------------------------------------
 # check var table
-var_table  = dismod_at.get_table_dict(connection, 'var')
-#
-# mulstd variables
-for smooth_id in range( n_smooth ) :
-	for var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
-		count = 0
-		for row in var_table :
-			match = row['var_type'] == var_type
-			match = match and row['smooth_id'] == smooth_id
-			if match :
-				count += 1
-		assert count == 0
-#
-# rate variables
-parent_node_id = 0
-child_node_id  = 1
-n_rate         = 5;
-for rate_id in range(n_rate) :
-	for node_id in [ parent_node_id, child_node_id ] :
-		count = 0
-		for row in var_table :
-			match = row['var_type'] == 'rate'
-			match = match and row['rate_id'] == rate_id
-			match = match and row['node_id'] == node_id
-			if match :
-				count += 1
-		# number of point in smoothing for all rates
-		assert count == 2
+var_table        = dismod_at.get_table_dict(connection, 'var')
+integrand_table  = dismod_at.get_table_dict(connection, 'integrand')
+covariate_table  = dismod_at.get_table_dict(connection, 'covariate')
+smooth_table     = dismod_at.get_table_dict(connection, 'smooth')
+rate_table       = dismod_at.get_table_dict(connection, 'rate')
+assert len(var_table) == 2
+for row in var_table :
+	var_type     = row['var_type']
+	smooth_id    = row['smooth_id']
+	age_id       = row['age_id']
+	time_id      = row['time_id']
+	node_id      = row['node_id']
+	rate_id      = row['rate_id']
+	integrand_id = row['integrand_id']
+	covariate_id = row['covariate_id']
+	smooth_name  = smooth_table[smooth_id]['smooth_name']
+	rate_name    = rate_table[rate_id]['rate_name']
+	#
+	assert age_id  == 0
+	assert time_id == 0
+	if var_type == 'mulcov_rate_value' :
+		assert smooth_name    == 'smooth_income_multiplier'
+		assert rate_name == 'omega'
+		#
+		covariate_name = covariate_table[covariate_id]['covariate_name']
+		assert covariate_name == 'income'
+		#
+		node_id == None
+		integrand_id  == None
+	elif var_type == 'rate' :
+		assert smooth_name  == 'smooth_omega_parent'
+		assert rate_name == 'omega'
+		assert node_id == 0
+		#
+		covariate_id == None
+		integrand_id  == None
+	else :
+		assert False
 # -----------------------------------------------------------------------
 print('init_command: OK')
 # END PYTHON

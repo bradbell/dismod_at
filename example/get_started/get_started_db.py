@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -12,17 +12,43 @@
 # $spell
 #	avgint
 #	dismod
+#	covariate
 # $$
 #
 # $section Create get_started Input Tables: Example and Test$$
 #
 # $head Syntax$$
-# $codei%(%n_smooth%, %rate_true%) = get_started_db.get_started_db()%$$
+# $codei%get_started_db.get_started_db()%$$
 #
 # $head Purpose$$
-# Creates the database $code get_started.db$$ in the current working directory.
-# This is a very simple case that is defined by the source code below
-# and the specifications for $cref create_database$$.
+# The python command above creates the database $code get_started.db$$
+# in the current working directory.
+# This is a very simple case where:
+# $list number$$
+# The model is constant in age and time.
+# $lnext
+# The initial prevalence,
+# incidence, remission, and excess mortality are all zero.
+# $lnext
+# There is only one susceptible measurement (at age 50).
+# $lnext
+# There is only one node corresponding to the world, and hence
+# there are no children (no random effects).
+# $lnext
+# There is one covariate, income, on the rate of other cause mortality
+# $lend
+# The other cause mortality $cref/omega/rate_table/rate_name/omega/$$
+# is constant in age and time. Hence the susceptible population satisfies the
+# following ODE in age $latex a$$:
+# $latex \[
+#	S(0) = 1 \; S'(t) = - \omega S(t)
+# \] $$
+# where $latex \omega$$ is the rate of other cause mortality
+# (after the covariate effect).
+# The solution is $latex S(a) = \exp( - \omega \; a )$$.
+#
+# $head Reference$$
+# See $cref create_database$$.
 #
 # $head Source Code$$
 # $code
@@ -34,103 +60,91 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ---------------------------------------------------------------------------
-# note that the a, t values are not used for this example
-def constant_weight_fun(a, t) :
+# note that the (a, t) arguments are not used by these example functions
+unknown_omega_world     = 1e-2
+known_income_multiplier = -1e-3
+#
+def constant_one_fun(a, t):
 	return 1.0
-def fun_zero(a, t) :
+def fun_zero(a, t):
 	return ('prior_zero', 'prior_zero', 'prior_zero')
-def fun_one(a, t) :
+def fun_one(a, t):
 	return ('prior_one', 'prior_one', 'prior_one')
-def fun_rate_child(a, t) :
-	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
-def fun_rate_parent(a, t) :
-	return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+def fun_omega_parent(a, t):
+	return ('prior_omega_parent', 'prior_not_used', 'prior_not_used')
+def fun_income_multiplier(a, t):
+	return ('prior_income_multiplier', 'prior_not_used', 'prior_not_used')
 # ------------------------------------------------------------------------
-def get_started_db (file_name) :
+def get_started_db ():
 	import sys
 	import os
 	import copy
 	import dismod_at
+	from math import exp
 	# ----------------------------------------------------------------------
-	# age table
-	age_list    = [    0.0, 50.0,    100.0 ]
+	# age list
+	age_list    = [ 0.0, 100.0 ]
 	#
-	# time table
-	time_list   = [ 1995.0, 2005.0, 2015.0 ]
+	# time list
+	time_list   = [ 1995.0, 2015.0 ]
 	#
 	# integrand table
 	integrand_table = [
-		{ 'name':'prevalence',  'eta':1e-6 },
-		{ 'name':'Sincidence',  'eta':1e-6 },
-		{ 'name':'remission',   'eta':1e-6 },
-		{ 'name':'mtexcess',    'eta':1e-6 },
-		{ 'name':'mtother',     'eta':1e-6 }
+		{ 'name':'susceptible', 'eta':1e-6 }
 	]
 	#
-	# node table: world -> north_america
-	#             north_america -> (united_states, canada)
+	# node table: is just the world (which has no parent)
 	node_table = [
-		{ 'name':'world',         'parent':'' },
-		{ 'name':'north_america', 'parent':'world' },
-		{ 'name':'united_states', 'parent':'north_america' },
-		{ 'name':'canada',        'parent':'north_america' }
+		{ 'name':'world', 'parent':'' }
 	]
 	#
-	# weight table: The constant function 1.0 (one age and one time point)
-	fun = constant_weight_fun
+	# weight table: any constant function can be represented with one
+	# (age, time) pair and the corresponding value
+	fun = constant_one_fun
 	weight_table = [
-		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
+		{ 'name':'constant_one', 'age_id':[0], 'time_id':[0], 'fun':fun }
 	]
 	#
-	# covariate table: no covriates
-	covariate_table = list()
-	#
-	# mulcov table
-	mulcov_table = list()
-	# --------------------------------------------------------------------------
-	# data table: same order as list of integrands
-	data_table = list()
-	# values that are the same for all data rows
-	row = {
-		'node':        'world',
-		'density':     'gaussian',
-		'weight':      'constant',
-		'hold_out':     False,
-		'time_lower':   2000.0,
-		'time_upper':   2000.0,
-		'age_lower':    0.0
-	}
-	# values that change between rows: (one data point for each integrand)
-	for integrand_id in range( len(integrand_table) ) :
-		rate_id           = integrand_id
-		meas_value        = 1e-2 * (rate_id + 1)
-		meas_std          = 0.2 * meas_value
-		integrand         = integrand_table[integrand_id]['name']
-		row['data_name']  = 'i' + str(integrand_id)
-		row['meas_value'] = meas_value
-		row['meas_std']   = meas_std
-		row['integrand']  = integrand
-		if integrand == 'prevalence' :
-			# prevalence is measured at age zero
-			row['age_upper'] = 0.0
-		else :
-			# other integrands are averaged from age zero to one hundred
-			row['age_upper'] = 100.0
-		# data_id = rate_id = integand_id
-		data_table.append( copy.copy(row) )
-	#
-	# add one outlyer at end of data table with hold_out true
-	row['data_name']  = 'outlyer'
-	row['hold_out']   = True # if outlyer were false, fit would fail
-	row['integrand']  = data_table[0]['integrand']
-	row['meas_std']   = data_table[0]['meas_std']
-	row['age_upper']  = data_table[0]['age_upper']
-	row['meas_value'] = 10. * data_table[0]['meas_value']
-	data_table.append( copy.copy(row) )
-	# --------------------------------------------------------------------------
+	# covariate table: the reference value for income is zero and
+	# do not exclude any values becuse they are to far from the reference.
+	covariate_table = [
+		{ 'name':'income', 'reference':0.0, 'max_difference':None }
+	]
+	# ---------------------------------------------------------------------
+	# data table: note the income for this measurement is 1,000.
+	adjusted_omega = unknown_omega_world * exp(known_income_multiplier*1000.0)
+	meas_value     = exp( - adjusted_omega * 50.0 )
+	meas_std       = meas_value / 20.
+	data_table = [
+		{
+			'data_name':   'd1',
+			'integrand':   'susceptible',
+			'density':     'gaussian',
+			'node':        'world',
+			'weight':      'constant_one',
+			'hold_out':    False,
+			'meas_value':  meas_value,
+			'meas_std':    meas_std,
+			'age_lower':   50.0,
+			'age_upper':   50.0,
+			'time_lower':  2000.0,
+			'time_upper':  2000.0,
+			'income':      1000.0
+		}
+	]
+	# ---------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{   # prior_zero
+		{   # prior_not_used:
+			# not used because there are no age or time differences
+			'name':     'prior_not_used',
+			'density':  'uniform',
+			'lower':    None,
+			'upper':    None,
+			'mean':     0.0,
+			'std':      None,
+			'eta':      None
+		},{ # prior_zero
 			'name':     'prior_zero',
 			'density':  'uniform',
 			'lower':    0.0,
@@ -146,131 +160,106 @@ def get_started_db (file_name) :
 			'mean':     1.0,
 			'std':      None,
 			'eta':      None
-		},{ # prior_rate_parent
-			'name':     'prior_rate_parent',
+		},{ # prior_omega_parent
+			'name':     'prior_omega_parent',
 			'density':  'uniform',
 			'lower':    1e-4,
-			'upper':    None,
+			'upper':    1.0,
 			'mean':     1e-1,
 			'std':      None,
 			'eta':      None
-		},{ # prior_gauss_zero
-			'name':     'prior_gauss_zero',
-			'density':  'gaussian',
-			'lower':    None,
-			'upper':    None,
-			'mean':     0.0,
-			'std':      1e-2,
+		},{ # prior_income_multiplier (constrained to be 1e-3)
+			'name':     'prior_income_multiplier',
+			'density':  'uniform',
+			'lower':    known_income_multiplier,
+			'upper':    known_income_multiplier,
+			'mean':     known_income_multiplier,
+			'std':      None,
 			'eta':      None
 		}
 	]
-	# --------------------------------------------------------------------------
-	# smooth table
-	middle_age_id  = 1
-	last_time_id   = 2
+	# ---------------------------------------------------------------------
+	# smooth table: omega for the parent is constant in (age, time) and
+	# and is a uniform distribution on the interval [1e-4, 1.0]. The prior
+	# mean 1e-1, for this case, is only used to initilaize the optimization
 	smooth_table = [
-		{   # smooth_zero (not used in this example)
-			'name':                     'smooth_zero',
-			'age_id':                   [ 0 ],
-			'time_id':                  [ 0 ],
+		{	# smooth_omega_parent
+			'name':                     'smooth_omega_parent',
+			'age_id':                   [0],
+			'time_id':                  [0],
 			'mulstd_value_prior_name':  None,
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
-			'fun':                      fun_zero
-		},{ # smooth_one (not used in this example)
-			'name':                     'smooth_one',
-			'age_id':                   [ 0 ],
-			'time_id':                  [ 0 ],
+			'fun':                      fun_omega_parent
+		},{	# smooth_income_multiplier
+			'name':                     'smooth_income_multiplier',
+			'age_id':                   [0],
+			'time_id':                  [0],
 			'mulstd_value_prior_name':  None,
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
-			'fun':                      fun_one
-		},{ # smooth_rate_child
-			'name':                     'smooth_rate_child',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ 0, last_time_id ],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
-			'fun':                      fun_rate_child
-		},{ # smooth_rate_parent
-			'name':                     'smooth_rate_parent',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ 0, last_time_id ],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
-			'fun':                       fun_rate_parent
+			'fun':                      fun_income_multiplier
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ---------------------------------------------------------------------
 	# rate table
 	rate_table = [
 		{
 			'name':          'pini',
-			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{
 			'name':          'iota',
-			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{
 			'name':          'rho',
-			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{
 			'name':          'chi',
-			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': None,
+			'child_smooth':  None
 		},{
 			'name':          'omega',
-			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child'
+			'parent_smooth': 'smooth_omega_parent',
+			'child_smooth':  None
 		}
 	]
-	# ------------------------------------------------------------------------
+	# -------------------------------------------------------------------
+	# mulcov table: there is one covariate multiplier for income and it
+	# affects the other cause mortality rate:
+	mulcov_table = [
+		{	'covariate':'income',
+			'type':     'rate_value',
+			'effected': 'omega',
+			'smooth':   'smooth_income_multiplier'
+		}
+	]
+	# -------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'parent_node_name',       'value':'world'        },
-		{ 'name':'ode_step_size',          'value':'10.0'         },
-		{ 'name':'random_seed',            'value':'0'            },
-		{ 'name':'rate_case',              'value':'iota_pos_rho_pos' },
-
-		{ 'name':'quasi_fixed',            'value':'true'         },
-		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
-		{ 'name':'max_num_iter_fixed',     'value':'100'          },
-		{ 'name':'print_level_fixed',      'value':'0'            },
-		{ 'name':'tolerance_fixed',        'value':'1e-10'        },
-
-		{ 'name':'derivative_test_random', 'value':'second-order' },
-		{ 'name':'max_num_iter_random',    'value':'100'          },
-		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-10'        }
+		{ 'name':'parent_node_name',       'value':'world'              },
+		{ 'name':'ode_step_size',          'value':'10.0'               },
+		{ 'name':'rate_case',              'value':'iota_zero_rho_zero' }
 	]
-	# --------------------------------------------------------------------------
-	# avgint table: same order as list of integrands
-	avgint_table = list()
-	# values that are the same for all data rows
-	row = {
-		'node':        'world',
-		'weight':      'constant',
-		'time_lower':   2000.0,
-		'time_upper':   2000.0,
-		'age_lower':    0.0
-	}
-	# values that change between rows: (one data point for each integrand)
-	for avgint_id in range( len(integrand_table) ) :
-		integrand         = integrand_table[avgint_id]['name']
-		row['integrand']  = integrand
-		if integrand == 'prevalence' :
-			# prevalence is measured at age zero
-			row['age_upper'] = 0.0
-		else :
-			# other integrands are averaged from age zero to one hundred
-			row['age_upper'] = 100.0
-		avgint_table.append( copy.copy(row) )
-	# --------------------------------------------------------------------------
+	# ---------------------------------------------------------------------
+	# avgint table: predict the susceptible fraction for no income at age 100
+	avgint_table =  [
+		{
+			'integrand':   'susceptible',
+			'node':        'world',
+			'weight':      'constant_one',
+			'age_lower':   100.0,
+			'age_upper':   100.0,
+			'time_lower':  2000.0,
+			'time_upper':  2000.0,
+			'income':      0.0
+		}
+	]
+	# ---------------------------------------------------------------------
 	# create database
+	file_name = 'get_started.db'
 	dismod_at.create_database(
 		file_name,
 		age_list,
@@ -287,14 +276,4 @@ def get_started_db (file_name) :
 		option_table,
 		avgint_table
 	)
-	# -----------------------------------------------------------------------
-	n_smooth  = len( smooth_table )
-	rate_true = []
-	for rate_id in range( len( data_table ) ) :
-		# for this particular example
-		data_id    = rate_id
-		meas_value = data_table[data_id]['meas_value']
-		rate_true.append(meas_value)
-	#
-	return (n_smooth, rate_true)
 # END PYTHON

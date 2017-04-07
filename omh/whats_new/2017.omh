@@ -30,12 +30,19 @@ $childtable%
 %$$
 
 $head 04-07$$
+$list number$$
 More discussion was added for how the
 $cref/parent node/option_table/parent_node_id/$$
 and the
 $cref/max_difference/covariate_table/max_difference/$$
 affect the
 $cref data_subset_table$$ and $cref avgint_subset_table$$.
+$lnext
+The $cref get_started$$ example was changed to use a single
+exponential model.
+In addition, the $cref get_started_db.py$$ example is now
+a good starting point for editing to add more complexity to the model.
+$lend
 
 $head 04-05$$
 $list number$$

@@ -28,6 +28,7 @@ import os
 import copy
 import subprocess
 import distutils.dir_util
+from math import exp
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
 example = 'example/get_started/simulate_command.py'
@@ -51,12 +52,12 @@ import get_started_db
 distutils.dir_util.mkpath('build/example/get_started')
 os.chdir('build/example/get_started')
 # ---------------------------------------------------------------------------
-# create input tables
-file_name              = 'example.db'
-(n_smooth, rate_true)  = get_started_db.get_started_db(file_name)
+# create get_started.db
+get_started_db.get_started_db()
 # -----------------------------------------------------------------------
 # create the var table
 program        = '../../devel/dismod_at'
+file_name      = 'get_started.db'
 command        = 'init'
 cmd = [ program, file_name, command ]
 print( ' '.join(cmd) )
@@ -72,18 +73,19 @@ connection      = dismod_at.create_connection(file_name, new)
 var_table  = dismod_at.get_table_dict(connection, 'var')
 # -----------------------------------------------------------------------
 # create a truth_var table with variables values to use during simulation
-tbl_name = 'truth_var'
-col_name = [ 'truth_var_value' ]
-col_type = [ 'real'        ]
-row_list = list()
+tbl_name          = 'truth_var'
+col_name          = [ 'truth_var_value' ]
+col_type          = [ 'real'        ]
+row_list          = list()
+omega_world       = 2e-2
+income_multiplier = -1e-3
 for var_id in range( len(var_table) ) :
-	variable_row  = var_table[var_id]
-	var_type = variable_row['var_type']
-	if var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
-		assert False
+	var_row  = var_table[var_id]
+	var_type = var_row['var_type']
+	if var_type == 'mulcov_rate_value' :
+		truth_var_value = income_multiplier
 	elif var_type == 'rate' :
-		rate_id   = variable_row['rate_id']
-		truth_var_value = 5e-3 * (rate_id + 1)
+		truth_var_value = omega_world
 	else :
 		assert False
 	truth_row = [ truth_var_value ]
@@ -91,12 +93,10 @@ for var_id in range( len(var_table) ) :
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 # -----------------------------------------------------------------------
 # simulate command
-program        = '../../devel/dismod_at'
-command        = 'simulate'
-cmd = [ program, file_name, command ]
-if command == 'simulate' :
-	number_simulate = '1'
-	cmd.append(number_simulate)
+program         = '../../devel/dismod_at'
+command         = 'simulate'
+number_simulate = '1'
+cmd = [ program, file_name, command , number_simulate ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
@@ -104,23 +104,29 @@ if flag != 0 :
 # -----------------------------------------------------------------------
 # check the simulate table
 data_table      = dismod_at.get_table_dict(connection, 'data')
-data_subset_dict = dismod_at.get_table_dict(connection, 'data_subset')
-simulate_dict    = dismod_at.get_table_dict(connection, 'simulate')
-for simulate_id in range( len(simulate_dict) ) :
-	row = simulate_dict[simulate_id];
-	simulate_index  = row['simulate_index']
-	data_subset_id  = row['data_subset_id']
-	data_id         = data_subset_dict[data_subset_id]['data_id']
-	meas_value      = row['meas_value']
-	meas_std        = data_table[data_id]['meas_std']
-	if data_id == len(data_table) - 1 :
-		rate_id = 0       # in original data set this is outlyer at then
-	else :
-		rate_id = data_id # for this example case
-	truth_var_value  = 5e-3 * (rate_id + 1)
-	assert simulate_index == 0
-	assert meas_value != data_table[data_id]['meas_value']
-	assert meas_value != truth_var_value
-	assert abs( meas_value - truth_var_value ) < 4.0 * meas_std
+simulate_table  = dismod_at.get_table_dict(connection, 'simulate')
+assert len(data_table) == 1
+assert len(simulate_table) == 1
+data_row = data_table[0]
+sim_row  = simulate_table[0]
+#
+# There is only on simulation so
+assert sim_row['simulate_index'] == 0
+# For this case, data_subset_id is same as data_id
+assert sim_row['data_subset_id'] == 0
+# There are no measurement standard deviation covariates, so
+assert abs( sim_row['meas_std'] / data_row['meas_std'] - 1.0 ) < 1e-7
+# Compute the model value for the measurement (with no noise)
+# Note that age_lower is equal age_upper
+age            = data_row['age_lower']
+income         = data_row['x_0']
+adjusted_omega = omega_world * exp(income_multiplier * income)
+model_value    = exp( - adjusted_omega * age )
+# check if model value is within 3 standard deviations of the simulated value
+meas_value = sim_row['meas_value']
+meas_std   = sim_row['meas_std']
+assert abs( model_value - meas_value ) < 3.0 * meas_std
+#
+# -----------------------------------------------------------------------
 print('simulate_command: OK')
 # END PYTHON
