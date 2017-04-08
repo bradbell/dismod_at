@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -30,6 +30,8 @@ private:
 	CppAD::vector<size_t> dage_prior_id_;
 	// prior_id for function difference in time direction
 	CppAD::vector<size_t> dtime_prior_id_;
+	// constraint value
+	CppAD::vector<double> const_value_;
 	// prior_id for multiplier of value prior standard deviations
 	size_t mulstd_value_;
 	// prior_id for multiplier of dage prior standard deviations
@@ -58,6 +60,7 @@ public:
 		const CppAD::vector<size_t>&  value_prior_id ,
 		const CppAD::vector<size_t>&  dage_prior_id  ,
 		const CppAD::vector<size_t>&  dtime_prior_id ,
+		const CppAD::vector<double>&  const_value    ,
 		size_t                        mulstd_value   ,
 		size_t                        mulstd_dage    ,
 		size_t                        mulstd_dtime
@@ -72,6 +75,7 @@ public:
 	size_t value_prior_id(size_t i, size_t j) const;
 	size_t dage_prior_id(size_t i, size_t j)  const;
 	size_t dtime_prior_id(size_t i, size_t j) const;
+	double const_value(size_t i, size_t j) const;
 	//
 	size_t mulstd_value(void) const;
 	size_t mulstd_dage(void)  const;

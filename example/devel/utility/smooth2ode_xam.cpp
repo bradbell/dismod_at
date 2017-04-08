@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -37,7 +37,7 @@ bool smooth2ode_xam(void)
 	using  std::string;
 	using  CppAD::vector;
 	typedef CppAD::AD<double> Float;
-
+	//
 	double eps = std::numeric_limits<double>::epsilon();
 
 	// use smooth_info test constructor
@@ -57,6 +57,7 @@ bool smooth2ode_xam(void)
 	vector<size_t> value_prior_id(n_age_si * n_time_si);
 	vector<size_t> dage_prior_id(n_age_si * n_time_si);
 	vector<size_t> dtime_prior_id(n_age_si * n_time_si);
+	vector<double> const_value;
 	size_t mulstd_value   = 1;
 	size_t mulstd_dage    = 1;
 	size_t mulstd_dtime   = 1;
@@ -70,6 +71,7 @@ bool smooth2ode_xam(void)
 		value_prior_id,
 		dage_prior_id,
 		dtime_prior_id,
+		const_value,
 		mulstd_value,
 		mulstd_dage,
 		mulstd_dtime

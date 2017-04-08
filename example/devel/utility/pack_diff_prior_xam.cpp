@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -40,6 +40,7 @@ bool pack_diff_prior_xam(void)
 	using std::cout;
 	using std::endl;
 	double inf = std::numeric_limits<double>::infinity();
+	double nan = std::numeric_limits<double>::quiet_NaN();
 
 
 	// --------------------------------------------------------------------
@@ -95,6 +96,7 @@ bool pack_diff_prior_xam(void)
 	// smoothing information
 	vector<size_t> age_id, time_id;
 	vector<size_t> value_prior_id, dage_prior_id, dtime_prior_id;
+	vector<double> const_value;
 	size_t mulstd_value, mulstd_dage, mulstd_dtime;
 	size_t n_age, n_time, n_grid;
 	//
@@ -120,11 +122,13 @@ bool pack_diff_prior_xam(void)
 	value_prior_id.resize(n_grid);
 	dage_prior_id.resize(n_grid);
 	dtime_prior_id.resize(n_grid);
+	const_value.resize(n_grid);
 	for(i = 0; i < n_age; i++)
 	{	for(j = 0; j < n_time; j++)
 		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian;
 			dage_prior_id[ i * n_time + j ]  = prior_id_laplace;
 			dtime_prior_id[ i * n_time + j ] = prior_id_log_gaussian;
+			const_value[ i * n_time + j ]    = nan;
 		}
 	}
 	//
@@ -132,7 +136,7 @@ bool pack_diff_prior_xam(void)
 	size_t smooth_id_3_by_2 = 0;
 	s_info_vec[0] = dismod_at::smooth_info(
 		age_table, time_table, age_id, time_id,
-		value_prior_id, dage_prior_id, dtime_prior_id,
+		value_prior_id, dage_prior_id, dtime_prior_id, const_value,
 		mulstd_value, mulstd_dage, mulstd_dtime
 	);
 	// ------------------ second smoothing -----------------------------------
@@ -154,11 +158,13 @@ bool pack_diff_prior_xam(void)
 	value_prior_id.resize(n_grid);
 	dage_prior_id.resize(n_grid);
 	dtime_prior_id.resize(n_grid);
+	const_value.resize(n_grid);
 	for(i = 0; i < n_age; i++)
 	{	for(j = 0; j < n_time; j++)
 		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian;
 			dage_prior_id[ i * n_time + j ]  = prior_id_laplace;
 			dtime_prior_id[ i * n_time + j ] = prior_id_log_gaussian;
+			const_value[ i * n_time + j ]    = nan;
 		}
 	}
 	//
@@ -166,7 +172,7 @@ bool pack_diff_prior_xam(void)
 	size_t smooth_id_1_by_2 = 1;
 	s_info_vec[1] = dismod_at::smooth_info(
 		age_table, time_table, age_id, time_id,
-		value_prior_id, dage_prior_id, dtime_prior_id,
+		value_prior_id, dage_prior_id, dtime_prior_id, const_value,
 		mulstd_value, mulstd_dage, mulstd_dtime
 	);
 	// ----------------------- pack_object --------------------------------
