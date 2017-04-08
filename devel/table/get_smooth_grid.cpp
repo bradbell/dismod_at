@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -73,6 +73,10 @@ $rnext
 $code int$$ $cnext $code dtime_prior_id$$    $pre  $$ $cnext
 	The $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
 	for this smoothing, age, and time.
+$rnext
+$code int$$ $cnext $code value_prior_id$$    $pre  $$ $cnext
+	The $cref/const_value/smooth_grid_table/const_value/$$
+	for this smoothing, age, and time.
 $tend
 
 $children%example/devel/table/get_smooth_grid_xam.cpp
@@ -120,7 +124,6 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(sqlite3* db)
 	get_table_column(db, table_name, column_name, value_prior_id);
 	assert( value_prior_id.size() == n_smooth );
 
-
 	column_name        =  "dage_prior_id";
 	CppAD::vector<int>     dage_prior_id;
 	get_table_column(db, table_name, column_name, dage_prior_id);
@@ -131,6 +134,11 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(sqlite3* db)
 	get_table_column(db, table_name, column_name, dtime_prior_id);
 	assert( dtime_prior_id.size() == n_smooth );
 
+	column_name        =  "const_value";
+	CppAD::vector<double> const_value;
+	get_table_column(db, table_name, column_name, const_value);
+	assert( const_value.size() == n_smooth );
+
 	CppAD::vector<smooth_grid_struct> smooth_grid(n_smooth);
 	for(size_t i = 0; i < n_smooth; i++)
 	{	smooth_grid[i].smooth_id      = smooth_id[i];
@@ -139,6 +147,7 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(sqlite3* db)
 		smooth_grid[i].value_prior_id = value_prior_id[i];
 		smooth_grid[i].dage_prior_id  = dage_prior_id[i];
 		smooth_grid[i].dtime_prior_id = dtime_prior_id[i];
+		smooth_grid[i].const_value    = const_value[i];
 	}
 	return smooth_grid;
 }

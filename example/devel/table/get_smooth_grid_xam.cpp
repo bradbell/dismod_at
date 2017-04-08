@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -30,6 +30,7 @@ $end
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/null_int.hpp>
+# include <cmath>
 
 bool get_smooth_grid_xam(void)
 {
@@ -63,13 +64,14 @@ bool get_smooth_grid_xam(void)
 		" time_id        integer,"
 		" value_prior_id integer,"
 		" dage_prior_id  integer,"
-		" dtime_prior_id integer)",
-	//            smooth_grid_id, smooth_id,age_id,time_id,   prior_ids
-	"insert into smooth_grid values(0,    0,     1,      1,   1, null, null)",
-	"insert into smooth_grid values(1,    3,     0,      0,   1,    2,    3)",
-	"insert into smooth_grid values(2,    3,     2,      0,   1, null,    3)",
-	"insert into smooth_grid values(3,    3,     0,      2,   1,    2, null)",
-	"insert into smooth_grid values(4,    3,     2,      2,   1, null, null)",
+		" dtime_prior_id integer,"
+		" const_value    real)",
+	// smooth_grid_id, smooth_id, age_id, time_id, prior_ids, const_value
+	"insert into smooth_grid values(0, 0, 1, 1,   1,    null, null, null)",
+	"insert into smooth_grid values(1, 3, 0, 0,   1,       2,    3, null)",
+	"insert into smooth_grid values(2, 3, 2, 0,   1,    null,    3, null)",
+	"insert into smooth_grid values(3, 3, 0, 2,   1,       2, null, null)",
+	"insert into smooth_grid values(4, 3, 2, 2,   null, null, null, 12.0)",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -112,40 +114,45 @@ bool get_smooth_grid_xam(void)
 		smooth_grid = dismod_at::get_smooth_grid(db);
 	ok  &= smooth_grid.size() == 5;
 	//
-	ok  &= smooth_grid[0].smooth_id     ==  0;
-	ok  &= smooth_grid[0].age_id        ==  1;
-	ok  &= smooth_grid[0].time_id       ==  1;
+	ok  &= smooth_grid[0].smooth_id      ==  0;
+	ok  &= smooth_grid[0].age_id         ==  1;
+	ok  &= smooth_grid[0].time_id        ==  1;
 	ok  &= smooth_grid[0].value_prior_id ==  1;
-	ok  &= smooth_grid[0].dage_prior_id == DISMOD_AT_NULL_INT;
-	ok  &= smooth_grid[0].dtime_prior_id == DISMOD_AT_NULL_INT;
+	ok  &= smooth_grid[0].dage_prior_id  ==  DISMOD_AT_NULL_INT;
+	ok  &= smooth_grid[0].dtime_prior_id ==  DISMOD_AT_NULL_INT;
+	ok  &= std::isnan( smooth_grid[0].const_value );
 	//
-	ok  &= smooth_grid[1].smooth_id     ==  3;
-	ok  &= smooth_grid[1].age_id        ==  0;
-	ok  &= smooth_grid[1].time_id       ==  0;
+	ok  &= smooth_grid[1].smooth_id      ==  3;
+	ok  &= smooth_grid[1].age_id         ==  0;
+	ok  &= smooth_grid[1].time_id        ==  0;
 	ok  &= smooth_grid[1].value_prior_id ==  1;
-	ok  &= smooth_grid[1].dage_prior_id ==  2;
+	ok  &= smooth_grid[1].dage_prior_id  ==  2;
 	ok  &= smooth_grid[1].dtime_prior_id ==  3;
+	ok  &= std::isnan( smooth_grid[1].const_value );
 	//
-	ok  &= smooth_grid[2].smooth_id     ==  3;
-	ok  &= smooth_grid[2].age_id        ==  2;
-	ok  &= smooth_grid[2].time_id       ==  0;
+	ok  &= smooth_grid[2].smooth_id      ==  3;
+	ok  &= smooth_grid[2].age_id         ==  2;
+	ok  &= smooth_grid[2].time_id        ==  0;
 	ok  &= smooth_grid[2].value_prior_id ==  1;
-	ok  &= smooth_grid[2].dage_prior_id == DISMOD_AT_NULL_INT;
+	ok  &= smooth_grid[2].dage_prior_id  ==  DISMOD_AT_NULL_INT;
 	ok  &= smooth_grid[2].dtime_prior_id ==  3;
+	ok  &= std::isnan( smooth_grid[2].const_value );
 	//
-	ok  &= smooth_grid[3].smooth_id     ==  3;
-	ok  &= smooth_grid[3].age_id        ==  0;
-	ok  &= smooth_grid[3].time_id       ==  2;
+	ok  &= smooth_grid[3].smooth_id      ==  3;
+	ok  &= smooth_grid[3].age_id         ==  0;
+	ok  &= smooth_grid[3].time_id        ==  2;
 	ok  &= smooth_grid[3].value_prior_id ==  1;
-	ok  &= smooth_grid[3].dage_prior_id ==  2;
-	ok  &= smooth_grid[3].dtime_prior_id == DISMOD_AT_NULL_INT;
+	ok  &= smooth_grid[3].dage_prior_id  ==  2;
+	ok  &= smooth_grid[3].dtime_prior_id ==  DISMOD_AT_NULL_INT;
+	ok  &= std::isnan( smooth_grid[3].const_value );
 	//
-	ok  &= smooth_grid[4].smooth_id     ==  3;
-	ok  &= smooth_grid[4].age_id        ==  2;
-	ok  &= smooth_grid[4].time_id       ==  2;
-	ok  &= smooth_grid[4].value_prior_id ==  1;
-	ok  &= smooth_grid[4].dage_prior_id == DISMOD_AT_NULL_INT;
-	ok  &= smooth_grid[4].dtime_prior_id == DISMOD_AT_NULL_INT;
+	ok  &= smooth_grid[4].smooth_id      ==  3;
+	ok  &= smooth_grid[4].age_id         ==  2;
+	ok  &= smooth_grid[4].time_id        ==  2;
+	ok  &= smooth_grid[4].value_prior_id ==  DISMOD_AT_NULL_INT;
+	ok  &= smooth_grid[4].dage_prior_id  ==  DISMOD_AT_NULL_INT;
+	ok  &= smooth_grid[4].dtime_prior_id ==  DISMOD_AT_NULL_INT;
+	ok  &= smooth_grid[4].const_value    ==  12.0;
 	//
 	// close database and return
 	sqlite3_close(db);

@@ -207,6 +207,9 @@
 # $icode da$$ is not used when age $icode%a% = %age_id%[-1]%$$ and
 # $icode dt$$ is not used when time $icode%t% = %time_id%[-1]%$$.
 # $lend
+# If the return value $icode v$$ is a $code float$$,
+# the value of the function at the corresponding age and time is constrained
+# to be $icode v$$.
 #
 # $head rate_table$$
 # This is a list of $code dict$$
@@ -514,6 +517,7 @@ def create_database(
 		'value_prior_id',
 		'dage_prior_id',
 		'dtime_prior_id',
+		'const_value',
 	]
 	col_type = [
 		'integer',  # smooth_id
@@ -522,6 +526,7 @@ def create_database(
 		'integer',  # value_prior_id
 		'integer',  # dage_prior_id
 		'integer',  # dtime_prior_id
+		'real',     # const_value
 	]
 	row_list = [ ]
 	for i in range( len(smooth_table) ) :
@@ -547,7 +552,11 @@ def create_database(
 					da = None
 				if k == max_k :
 					dt = None
-				row_list.append( [ i, j, k, v, da, dt] )
+				const_value = None
+				if isinstance(v, float) :
+					const_value = v
+					v = None
+				row_list.append( [ i, j, k, v, da, dt, const_value] )
 	tbl_name = 'smooth_grid'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
