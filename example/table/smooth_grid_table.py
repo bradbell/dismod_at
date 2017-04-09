@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -58,7 +58,8 @@ def smooth_grid_table() :
 		('time_id',         'integer' ),
 		('value_prior_id',  'integer' ),
 		('dage_prior_id',   'integer' ),
-		('dtime_prior_id',  'integer' )
+		('dtime_prior_id',  'integer' ),
+		('const_value',     'real'    )
 	] )
 	col_name = list(col_name2type.keys())
 	col_type = list(col_name2type.values())
@@ -71,7 +72,8 @@ def smooth_grid_table() :
 		None,       # time_id            (time_id index is 2 in default)
 		1,          # value_prior_id
 		2,          # dage_prior_id
-		3           # dtime_prior_id
+		3,          # dtime_prior_id
+		None        # const_value
 	]
 	age_time_list = list()
 	for age_id in [0, 1, 2] :            # n_age is 3
@@ -99,7 +101,7 @@ def smooth_grid_table() :
 	count        = 0
 	cursor       = connection.cursor()
 	for row in cursor.execute(cmd) :
-		assert len(row) == 7
+		assert len(row) == 8
 		assert row[0] == count
 		assert row[1] == 3
 		assert row[2] == age_time_list[count][0]
@@ -113,6 +115,7 @@ def smooth_grid_table() :
 			assert row[6] == None
 		else :
 			assert row[6] == 3
+		assert row[7] == None
 		count += 1
 	assert count == len(row_list)
 	#
