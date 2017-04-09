@@ -80,6 +80,12 @@ $code int$$ $cnext $code value_prior_id$$    $pre  $$ $cnext
 	for this smoothing, age, and time.
 $tend
 
+$head Check$$
+The values in the $code smooth_grid_table$$ are checked to make sure that
+$cref/const_value/smooth_grid_table/const_value/$$ is $code null$$ or
+$cref/value_prior_id/smooth_grid_table/value_prior_id/$$ is $code null$$
+and not both are $code null$$.
+
 $children%example/devel/table/get_smooth_grid_xam.cpp
 %$$
 $head Example$$
@@ -96,6 +102,8 @@ $end
 # include <dismod_at/get_smooth_grid.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
+# include <dismod_at/error_exit.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -149,6 +157,16 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(sqlite3* db)
 		smooth_grid[i].dage_prior_id  = dage_prior_id[i];
 		smooth_grid[i].dtime_prior_id = dtime_prior_id[i];
 		smooth_grid[i].const_value    = const_value[i];
+		bool ok = false;
+		if( std::isnan( const_value[i] ) )
+			ok = value_prior_id[i] != DISMOD_AT_NULL_INT;
+		else
+			ok = value_prior_id[i] == DISMOD_AT_NULL_INT;
+		if( ! ok )
+		{	string msg = "value_prior_id and const_value are both null\n"
+			"or are both not null.";
+			error_exit(msg, table_name, i);
+		}
 	}
 	return smooth_grid;
 }
