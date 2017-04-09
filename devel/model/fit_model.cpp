@@ -323,7 +323,8 @@ prior_object_  ( prior_object )
 # ifndef NDEBUG
 	// check that all the fixed effects scale values have been set
 	for(size_t j = 0; j < n_fixed_; j++)
-		assert( ! (fixed_scale_eta_[j] == - inf) );
+		if( fixed_is_scaled_[j] )
+			assert( ! (fixed_scale_eta_[j] == - inf) );
 # endif
 	// ---------------------------------------------------------------------
 	// initialize the cppad_mixed object

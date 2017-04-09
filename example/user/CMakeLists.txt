@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -12,6 +12,7 @@
 
 FOREACH(user_case
 	asymptotic
+	const_value
 	diff_constraint
 	fit_sim
 	jump_at_age
@@ -34,6 +35,7 @@ ADD_CUSTOM_TARGET(
 	check_example_user
 	DEPENDS
 	check_example_user_asymptotic
+	check_example_user_const_value
 	check_example_user_diff_constraint
 	check_example_user_fit_sim
 	check_example_user_jump_at_age

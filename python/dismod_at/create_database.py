@@ -545,7 +545,6 @@ def create_database(
 		for j in age_id :
 			for k in time_id :
 				(v,da,dt) = fun(age_list[j], time_list[k])
-				v         = global_prior_name2id[v]
 				da        = global_prior_name2id[da]
 				dt        = global_prior_name2id[dt]
 				if j == max_j :
@@ -556,6 +555,8 @@ def create_database(
 				if isinstance(v, float) :
 					const_value = v
 					v = None
+				else :
+					v = global_prior_name2id[v]
 				row_list.append( [ i, j, k, v, da, dt, const_value] )
 	tbl_name = 'smooth_grid'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

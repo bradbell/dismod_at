@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -12,11 +12,28 @@ $begin user$$
 $spell
 	dage
 	dtime
+	py
+	sqlite
 $$
 
 $section User Examples and Tests$$
+Note the each of the examples below can by run with the command
+$codei%
+	%python3_executable% example/user/%name%
+%$$
+where $cref/python3_executable/run_cmake.sh/python3_executable/$$
+is the python3 program and $icode name$$ is the name of the example
+(including the $code .py$$ extension at the end but not the $code user_$$
+at the front).
+Running the example will create the database
+$code%
+	build/example/user/example.db
+%$$
+which can be inspected using any sqlite viewer; e.g.,
+$href%https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/%firefox%$$.
 
 $childtable%example/get_started/get_started.omh
+	%example/user/const_value.py
 	%example/user/diff_constraint.py
 	%example/user/fit_sim.py
 	%example/user/jump_at_age.py

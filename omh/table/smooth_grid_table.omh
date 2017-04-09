@@ -76,6 +76,15 @@ This column has type $code real$$.
 If $icode value_prior_id$$ is $code null$$,
 $icode const_value$$ specifies the value of
 the function at the corresponding age and time.
+This case is equivalent to
+$cref/lower/prior_table/lower/$$,
+$cref/upper/prior_table/upper/$$, and
+$cref/mean/prior_table/mean/$$, equal to $icode const_value$$
+and
+$cref/density/prior_table/density_id/$$ is $code uniform$$.
+$pre
+
+$$
 If $icode value_prior_id$$ is not $code null$$,
 $icode const_value$$ must be $code null$$.
 

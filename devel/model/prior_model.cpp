@@ -151,7 +151,7 @@ void prior_model::log_prior_on_grid(
 			size_t prior_id            = s_info.value_prior_id(i, j);
 			//
 			// const_value priors correspond to uniform and have no residual
-			if( prior_id !=- DISMOD_AT_NULL_SIZE_T )
+			if( prior_id != DISMOD_AT_NULL_SIZE_T )
 			{	const prior_struct&  prior = prior_table_[prior_id];
 				// use 3 * var_id + 0 for value priors
 				size_t id                  = 3 * var_id + 0;

@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 # $begin db2csv_command$$ $newlinech #$$
 # $spell
+#	const
 #	ij
 #	Csv
 #	py
@@ -165,11 +166,18 @@
 # $cref/std/prior_table/std/$$,
 # $cref/eta/prior_table/eta/$$ and
 # $cref/density/prior_table/density_id/$$.
+# $list number$$
 # The character $code v$$ denotes this is the prior information for a value,
 # $code a$$ the prior information for an age difference, and
 # $code t$$ the prior information for a time difference.
+# $lnext
 # The density has been mapped to the corresponding
 # $cref/density_name/density_table/density_name/$$.
+# $lnext
+# If the corresponding $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
+# is $code null$$,
+# the $cref/const_value/smooth_grid_table/const_value/$$ prior is displayed.
+# $lend
 #
 # $head data.csv$$
 # The file $icode%dir%/data.csv%$$ is written by this command.
@@ -464,12 +472,25 @@ def db2csv_command(database_file_arg) :
 	def get_prior_info(row_out, prior_id_dict) :
 		extension2name = {'_v':'value_', '_a':'dage_', '_t':'dtime_' }
 		for extension in extension2name :
-			name      = extension2name[extension]
-			key       = name + 'prior_id'
-			prior_id  = prior_id_dict[key]
+			name         = extension2name[extension]
+			key          = name + 'prior_id'
+			prior_id     = prior_id_dict[key]
+			const_value  = prior_id_dict['const_value']
+			if extension == '_v' :
+				if prior_id == None and const_value == None :
+					msg = 'both value_prior_id and const_value are null '
+					msg += 'in smooth_grid table\n'
+					sys.exit(msg)
+				if prior_id != None and const_value != None :
+					msg = 'both value_prior_id and const_value are not null '
+					msg += 'in smooth_grid table\n'
+					sys.exit(msg)
 			field_out = 'density' + extension
 			if prior_id == None :
-				row_out[field_out] = ''
+				if extension == '_v' :
+					row_out[field_out] = 'uniform'
+				else :
+					row_out[field_out] = ''
 			else :
 				density_id   = table_data['prior'][prior_id]['density_id']
 				density_name = table_data['density'][density_id]['density_name']
@@ -480,12 +501,15 @@ def db2csv_command(database_file_arg) :
 				if prior_id != None :
 					value_in = table_data['prior'][prior_id][field_in]
 					if field_in == 'eta' :
-						if density_name in [ 'uniform', 'gaussian', 'laplace' ] :
+						if density_name in [ 'uniform','gaussian','laplace' ] :
 							if extension in [ '_a', '_t' ] :
 								value_in = None
 					if field_in == 'std' and density_name == 'uniform' :
 							value_in = None
 					row_out[field_out] = convert2output( value_in )
+				elif extension == '_v' :
+					if field_in in [ 'lower', 'upper', 'mean' ] :
+						row_out[field_out] = convert2output( const_value )
 
 	# -------------------------------------------------------------------------
 	def node_id2child_or_parent(node_id) :
