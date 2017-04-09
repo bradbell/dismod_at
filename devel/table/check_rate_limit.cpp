@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -101,10 +101,11 @@ void check_rate_limit(
 		rate_zero[rho_enum]  = false;
 	}
 	size_t n_grid = smooth_grid.size();
-	size_t error_rate_id    = number_rate_enum;
-	size_t error_smooth_id  = 0;
-	size_t error_grid_id    = 0;
-	size_t error_prior_id   = 0;
+	size_t error_rate_id     = number_rate_enum;
+	size_t error_smooth_id   = 0;
+	size_t error_grid_id     = 0;
+	size_t error_prior_id    = 0;
+	double error_const_value = 0.0;
 	bool   error_zero       = false;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	if( rate_enum(rate_id) == iota_enum || rate_enum(rate_id) == rho_enum )
@@ -120,9 +121,13 @@ void check_rate_limit(
 		else
 		{	for(size_t grid_id = 0; grid_id < n_grid; grid_id++)
 			if( size_t( smooth_grid[grid_id].smooth_id ) == smooth_id )
-			{	size_t prior_id = smooth_grid[grid_id].value_prior_id;
-				double lower    = prior_table[prior_id].lower;
-				double upper    = prior_table[prior_id].upper;
+			{	double lower    = smooth_grid[grid_id].const_value;
+				double upper    = smooth_grid[grid_id].const_value;
+				size_t prior_id = smooth_grid[grid_id].value_prior_id;
+				if( prior_id != DISMOD_AT_NULL_SIZE_T )
+				{	lower    = prior_table[prior_id].lower;
+					upper    = prior_table[prior_id].upper;
+				}
 				bool error;
 				if( rate_zero[rate_id] )
 					error = upper != 0.0;
@@ -130,11 +135,12 @@ void check_rate_limit(
 					error = lower <= 0.0;
 				if( error )
 				{
-					error_rate_id   = rate_id;
-					error_smooth_id = smooth_id;
-					error_grid_id   = grid_id;
-					error_prior_id  = prior_id;
-					error_zero     = rate_zero[rate_id];
+					error_rate_id     = rate_id;
+					error_smooth_id   = smooth_id;
+					error_grid_id     = grid_id;
+					error_prior_id    = prior_id;
+					error_const_value = smooth_grid[grid_id].const_value;
+					error_zero       = rate_zero[rate_id];
 				}
 			}
 		}
@@ -153,7 +159,10 @@ void check_rate_limit(
 		message += "rate_case = " + rate_case;
 		message += ", parent_smooth_id = " + to_string(error_smooth_id);
 		message += "\nsmooth_grid_id = " + to_string(error_grid_id);
-		message += ", value_prior_id = " + to_string(error_prior_id);
+		if( error_prior_id == DISMOD_AT_NULL_SIZE_T )
+			message += ", const_value = " + to_string(error_const_value);
+		else
+			message += ", value_prior_id = " + to_string(error_prior_id);
 		std::string table_name = "rate";
 		error_exit(message, table_name, error_rate_id);
 	}

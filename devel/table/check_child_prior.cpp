@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -28,12 +28,11 @@ $codei%check_child_prior(%db%, %rate_table%, %smooth_grid%, %prior_table%)%$$
 $head Purpose$$
 Checks the
 $cref/child smoothing assumptions/rate_table/child_smooth_id/$$.
-Note that
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
-for the last age point, and
+Note that a $code null$$ prior for
+$cref/value_prior_id/smooth_grid_table/value_prior_id/$$,
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
-for the last time point,
-are $code null$$ and there is no prior to check for these cases.
+is considered OK.
 
 $list number$$
 The $cref/density_id/prior_table/density_id/$$ must correspond
