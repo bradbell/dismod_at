@@ -170,6 +170,14 @@ void check_child_prior(
 					error_exit(msg,  table_name, rate_id);
 				}
 			}
+			if( prior_id[0] == DISMOD_AT_NULL_INT )
+			{	msg = name[0]
+				+ ": child_smooth_id = " + to_string(child_smooth_id)
+				+ ", smooth_grid_id = " + to_string(grid_id)
+				+ ", prior_id = null";
+				string table_name  = "rate";
+				error_exit(msg,  table_name, rate_id);
+			}
 		}
 	}
 }
