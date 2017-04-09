@@ -17,6 +17,8 @@ $spell
 $$
 
 $section User Examples and Tests$$
+
+$head example.db$$
 Note the each of the examples below can by run with the command
 $codei%
 	%python3_executable% example/user/%name%
@@ -26,7 +28,7 @@ is the python3 program and $icode name$$ is the name of the example
 (including the $code .py$$ extension at the end but not the $code user_$$
 at the front).
 Running the example will create the database
-$code%
+$codei%
 	build/example/user/example.db
 %$$
 which can be inspected using any sqlite viewer; e.g.,

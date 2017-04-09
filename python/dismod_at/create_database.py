@@ -10,6 +10,7 @@
 # -------------------------------------------------------------------------- */
 # $begin create_database$$ $newlinech #$$
 # $spell
+#	const
 #	smoothings
 #	avgint
 #	num_iter
@@ -207,9 +208,13 @@
 # $icode da$$ is not used when age $icode%a% = %age_id%[-1]%$$ and
 # $icode dt$$ is not used when time $icode%t% = %time_id%[-1]%$$.
 # $lend
+#
+# $subhead const_value$$
 # If the return value $icode v$$ is a $code float$$,
-# the value of the function at the corresponding age and time is constrained
-# to be $icode v$$.
+# the value of the function, at the corresponding age and time,
+# is constrained to be $icode v$$ using the
+# $cref/const_value/smooth_grid_table/const_value/$$ column in the
+# $code smooth_grid$$ table.
 #
 # $head rate_table$$
 # This is a list of $code dict$$

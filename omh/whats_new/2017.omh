@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2017$$
 $spell
+	const
 	Dismod
 	cppad
 	optimizer
@@ -28,6 +29,19 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 04-09$$
+$list number$$
+The $cref/const_value/smooth_grid_table/const_value/$$ option
+was added to the $code smooth_grid$$ table.
+This makes it much easier to constrain a variable to
+have a specific value at a specific age and time.
+$lnext
+Instructions on how to create the database
+$cref/example.db/user/example.db/$$ for a specific example,
+were added to the user example section.
+$lend
+
 
 $head 04-07$$
 $list number$$

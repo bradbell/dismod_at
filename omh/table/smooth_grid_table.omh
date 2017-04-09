@@ -82,6 +82,8 @@ $cref/upper/prior_table/upper/$$, and
 $cref/mean/prior_table/mean/$$, equal to $icode const_value$$
 and
 $cref/density/prior_table/density_id/$$ is $code uniform$$.
+See the $cref/const_value/create_database/smooth_table/const_value/$$
+heading for instructions on using this with $cref create_database$$.
 $pre
 
 $$
