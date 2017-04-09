@@ -310,8 +310,10 @@ bool fit_model_xam(void)
 	data_object.replace_like(data_subset_obj);
 	//
 	// start_var
-	vector<size_t> pack_prior_id =
-		dismod_at::pack_value_prior(pack_object, s_info_vec
+	vector<size_t> pack_prior_id;
+	vector<double> pack_const;
+	dismod_at::pack_value_prior(
+		pack_prior_id, pack_const, pack_object, s_info_vec
 	);
 	vector<double> start_var( pack_object.size() );
 	for(size_t var_id = 0; var_id < start_var.size(); var_id++)

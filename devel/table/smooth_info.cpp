@@ -268,7 +268,7 @@ $codei%
 If it is $code nan$$, then $icode i_value$$ (see below) specifies
 the prior distribution for the value at this grid point.
 If $icode c_value$$ is not $code nan$$,
-the value at this grid point is constrainted to be $icode c_value$$.
+the value at this grid point is constrained to be $icode c_value$$.
 
 $head i_type$$
 For $icode type$$ equal to

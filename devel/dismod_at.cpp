@@ -456,14 +456,17 @@ void start_command(
 	//
 	if( source == "prior_mean" )
 	{	//
-		// get prior_id in pack_info order
-		vector<size_t> value_prior_id =
-			pack_value_prior(pack_object, s_info_vec);
+		// get value_prior_id and const_value in pack_info order
+		vector<size_t> value_prior_id;
+		vector<double> const_value;
+		pack_value_prior(value_prior_id, const_value, pack_object, s_info_vec);
 		//
 		// put means in row_value
 		for(size_t var_id = 0; var_id < n_var; var_id++)
-		{	double start_var_value =
-				prior_table[ value_prior_id[var_id] ].mean;
+		{	double start_var_value = const_value[var_id];
+			size_t prior_id = value_prior_id[var_id];
+			if( prior_id != DISMOD_AT_NULL_SIZE_T )
+				start_var_value = prior_table[ value_prior_id[var_id] ].mean;
 			row_value[var_id] = to_string(start_var_value);
 		}
 	}

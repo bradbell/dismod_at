@@ -263,12 +263,14 @@ prior_object_  ( prior_object )
 	if( random_bound <= 0.0 )
 		n_random_equal_ = n_random_;
 	// ----------------------------------------------------------------------
-	// value_prior_
+	// n_var
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object.size() == n_var );
-	// value_prior_
-	value_prior_ = pack_value_prior(pack_object, s_info_vec);
-	assert( value_prior_.size() == n_var );
+	//
+	// value_prior_id_, const_value_
+	pack_value_prior(value_prior_id_, const_value_, pack_object, s_info_vec);
+	assert( value_prior_id_.size() == n_var );
+	assert( const_value_.size() == n_var );
 	// ----------------------------------------------------------------------
 	// diff_prior_
 	CppAD::vector<diff_prior_struct> diff_prior_tmp =
@@ -300,7 +302,7 @@ prior_object_  ( prior_object )
 	for(size_t var_id = 0; var_id < n_var; var_id++)
 	{	size_t fixed_id = var_id2fixed_[var_id];
 		if( fixed_id < n_fixed_ )
-		{	size_t prior_id             = value_prior_[var_id];
+		{	size_t prior_id             = value_prior_id_[var_id];
 			prior_struct prior          = prior_table[prior_id];
 			fixed_scale_eta_[fixed_id]  = prior.eta;
 			fixed_is_scaled_[fixed_id]  = ! std::isnan( prior.eta );
@@ -391,20 +393,20 @@ $end
 	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
-	assert( value_prior_.size() == n_var );
+	assert( value_prior_id_.size() == n_var );
 	d_vector pack_vec( n_var );
 
 	// fixed_lower
 	d_vector fixed_lower(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
-		pack_vec[i] = prior_table_[ value_prior_[i] ].lower;
+		pack_vec[i] = prior_table_[ value_prior_id_[i] ].lower;
 	unpack_fixed(pack_object_, pack_vec, fixed_lower);
 	scale_fixed_effect(fixed_lower, fixed_lower);
 
 	// fixed_upper
 	d_vector fixed_upper(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
-		pack_vec[i] = prior_table_[ value_prior_[i] ].upper;
+		pack_vec[i] = prior_table_[ value_prior_id_[i] ].upper;
 	unpack_fixed(pack_object_, pack_vec, fixed_upper);
 	scale_fixed_effect(fixed_upper, fixed_upper);
 
@@ -750,14 +752,14 @@ $end
 	CppAD::vector<double> pack_vec( n_var );
 	CppAD::vector<double> fixed_lower(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
-		pack_vec[i] = prior_table_[ value_prior_[i] ].lower;
+		pack_vec[i] = prior_table_[ value_prior_id_[i] ].lower;
 	unpack_fixed(pack_object_, pack_vec, fixed_lower);
 	scale_fixed_effect(fixed_lower, fixed_lower);
 
 	// fixed_upper
 	CppAD::vector<double> fixed_upper(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
-		pack_vec[i] = prior_table_[ value_prior_[i] ].upper;
+		pack_vec[i] = prior_table_[ value_prior_id_[i] ].upper;
 	unpack_fixed(pack_object_, pack_vec, fixed_upper);
 	scale_fixed_effect(fixed_upper, fixed_upper);
 	//

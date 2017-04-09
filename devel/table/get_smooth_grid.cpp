@@ -17,6 +17,7 @@ $spell
 	std
 	dage
 	dtime
+	const
 $$
 
 $section C++: Get the Smoothing Grid Information$$

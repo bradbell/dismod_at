@@ -207,8 +207,10 @@ bool pack_value_prior_xam(void)
 		n_integrand, n_child, smooth_table, mulcov_table, rate_table
 	);
 	// ----------------------- value_prior -------------------------------
-	vector<size_t> value_prior = dismod_at::pack_value_prior(
-		pack_object, s_info_vec
+	vector<size_t> pack_prior;
+	vector<double> pack_const;
+	dismod_at::pack_value_prior(
+		pack_prior, pack_const, pack_object, s_info_vec
 	);
 	dismod_at::pack_info::subvec_info info;
 	//
@@ -217,7 +219,7 @@ bool pack_value_prior_xam(void)
 	{	for(size_t k = 0; k < 3; k++)
 		{	size_t offset  = pack_object.mulstd_offset(smooth_id, k);
 			assert( offset != DISMOD_AT_NULL_SIZE_T );
-			ok &= value_prior[offset] == k;
+			ok &= pack_prior[offset] == k;
 		}
 	}
 	//
@@ -231,7 +233,7 @@ bool pack_value_prior_xam(void)
 			for(i = 0; i < n_age; i++)
 			{	for(j = 0; j < n_time; j++)
 				{	size_t index   = info.offset + i * n_time + j;
-					ok &= s_info.value_prior_id(i, j) == value_prior[index];
+					ok &= s_info.value_prior_id(i, j) == pack_prior[index];
 				}
 			}
 		}

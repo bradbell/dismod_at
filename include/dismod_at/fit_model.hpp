@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -53,7 +53,8 @@ namespace dismod_at {
 		// set during constructor and otherwise const
 		//
 		// prior for value of each variable
-		CppAD::vector<size_t>             value_prior_;
+		CppAD::vector<size_t>             value_prior_id_;
+		CppAD::vector<double>             const_value_;
 		//
 		// Prior for variable differences. Only difference for which
 		// the upper limit is less than + infinity or the lower limit
