@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -149,15 +149,19 @@ void prior_model::log_prior_on_grid(
 		{	size_t var_id              = offset + i * n_time + j;
 			Float  var                 = Float(pack_vec[var_id]);
 			size_t prior_id            = s_info.value_prior_id(i, j);
-			const prior_struct&  prior = prior_table_[prior_id];
-			// use 3 * var_id + 0 for value priors
-			size_t id                  = 3 * var_id + 0;
-			residual  = log_prior(
-				prior, mulstd_vec[0], not_used, var, id, difference
-			);
-			// residuals for uniform densities are always zero
-			if( residual.density != uniform_enum )
-				residual_vec.push_back(residual);
+			//
+			// const_value priors correspond to uniform and have no residual
+			if( prior_id !=- DISMOD_AT_NULL_SIZE_T )
+			{	const prior_struct&  prior = prior_table_[prior_id];
+				// use 3 * var_id + 0 for value priors
+				size_t id                  = 3 * var_id + 0;
+				residual  = log_prior(
+					prior, mulstd_vec[0], not_used, var, id, difference
+				);
+				// residuals for uniform densities are always zero
+				if( residual.density != uniform_enum )
+					residual_vec.push_back(residual);
+			}
 		}
 	}
 	// age difference smoothing
