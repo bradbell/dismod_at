@@ -405,6 +405,7 @@ time_id_(0),
 value_prior_id_(0),
 dage_prior_id_(0),
 dtime_prior_id_(0),
+const_value_(0),
 mulstd_value_(0),
 mulstd_dage_(0),
 mulstd_dtime_(0)
