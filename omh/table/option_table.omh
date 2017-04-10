@@ -60,8 +60,7 @@ If $icode%option_name% = parent_node%$$,
 the corresponding $icode option_value$$
 is a non-negative integer (greater than or equal zero)
 that specifies the parent $cref/node_id/node_table/node_id/$$.
-If you change the
-$cref/parent_node_id/option_table/parent_node_id/$$,
+If you change the $icode parent_node_id$$,
 all of the output tables become invalid.
 This value is in the option table,
 and not an argument to a particular command,

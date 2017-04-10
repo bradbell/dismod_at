@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -74,10 +74,9 @@ $head d_j$$
 We use $latex d_j$$ for the
 density corresponding to the
 $icode value_prior_id$$ which must be Gaussian; see the
-$cref/child smoothing restrictions
+$cref/child restrictions
 	/rate_table
-	/child_smooth_id
-	/Restrictions
+	/Child Restrictions
 /$$.
 
 $head mu_j$$

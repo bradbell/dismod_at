@@ -1,0 +1,45 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-17 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin smooth_list_table$$
+$spell
+	smoothings
+$$
+
+$section Lists of Smoothing$$
+This table can be used to specify a lists of nodes with
+corresponding smoothings.
+
+$head smooth_list_id$$
+This column has type $code integer$$ and is the primary key for
+the $code smooth_list$$ table.
+Its initial value is zero, and it increments by one for each row.
+
+$head smooth_list_index$$
+This column has type integer and is used to identify an individual lists
+in this table.
+
+$head node_id$$
+This column has type $code integer$$ and is a
+$cref/node_id/node_table/node_id/$$ in the $code node$$ table.
+It specifies which node this smoothing should be applied to.
+
+$head smooth_id$$
+This column has type $code integer$$ and is a
+$cref/smooth_id/smooth_table/smooth_id/$$.
+It specifies which smoothing to apply at this node.
+
+$children%example/table/smooth_list_table.py
+%$$
+$head Example$$
+The files $cref smooth_list_table.py$$ and $comment get_smooth_list_xam.cpp$$
+contain example $code smooth_list$$ tables.
+
+$end
