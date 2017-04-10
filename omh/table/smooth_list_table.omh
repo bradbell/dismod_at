@@ -39,7 +39,7 @@ It specifies which smoothing to apply at this node.
 $children%example/table/smooth_list_table.py
 %$$
 $head Example$$
-The files $cref smooth_list_table.py$$ and $comment get_smooth_list_xam.cpp$$
+The files $cref smooth_list_table.py$$ and $cref get_smooth_list_xam.cpp$$
 contain example $code smooth_list$$ tables.
 
 $end
