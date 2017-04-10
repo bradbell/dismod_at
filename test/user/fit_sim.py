@@ -198,19 +198,24 @@ def example_db (file_name) :
 	rate_table = [
 		{	'name':          'pini',
 			'parent_smooth': None,
-			'child_smooth':  None
+			'child_smooth':  None,
+			'smooth_list':   None
 		},{	'name':          'iota',
 			'parent_smooth': 'smooth_iota_parent',
-			'child_smooth':  'smooth_rate_child'
+			'child_smooth':  'smooth_rate_child',
+			'smooth_list':   None
 		},{	'name':          'rho',
 			'parent_smooth': None,
-			'child_smooth':  None
+			'child_smooth':  None,
+			'smooth_list':   None
 		},{	'name':          'chi',
 			'parent_smooth': None,
-			'child_smooth':  None
+			'child_smooth':  None,
+			'smooth_list':   None
 		},{	'name':          'omega',
 			'parent_smooth': None,
-			'child_smooth':  None
+			'child_smooth':  None,
+			'smooth_list':   None
 		}
 	]
 	# ------------------------------------------------------------------------

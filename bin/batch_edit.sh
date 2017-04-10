@@ -22,9 +22,11 @@ rename_cmd='s|table.omh|database.omh|'
 spell_cmd='s|^$spell|&\n\tcholeig|'
 #
 cat << EOF > junk.sed
-s|sys.path.append( os.getcwd() + '/python' )|local_dir = os.getcwd() + '/python'\\
-if( os.path.isdir( local_dir + '/dismod_at' ) ) :\\
-	sys.path.insert(0, local_dir)|
+/'child_smooth':/! b one
+s|\\('child_smooth': *['a-zA-Z_]*\\),|\\1|
+s|^\\(\\t*\\)'child_smooth':\\( *\\)['a-zA-Z_]*\$|&,\\
+\\1'smooth_list':\\2 None|
+: one
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -42,15 +42,16 @@ bool get_rate_table_xam(void)
 	// sql commands
 	const char* sql_cmd[] = {
 		"create table rate("
-			"rate_id          integer primary key,"
-			"rate_name        text unique,"
-			"parent_smooth_id integer,"
-			"child_smooth_id  integer)",
-		"insert into rate values(0, 'pini',  0, 1)",
-		"insert into rate values(1, 'iota',  0, 1)",
-		"insert into rate values(2, 'rho',   0, 1)",
-		"insert into rate values(3, 'chi',   0, 1)",
-		"insert into rate values(4, 'omega', 0, 1)"
+			"rate_id           integer primary key,"
+			"rate_name         text unique,"
+			"parent_smooth_id  integer,"
+			"child_smooth_id   integer,"
+			"smooth_list_index integer)",
+		"insert into rate values(0, 'pini',  0, 1, null)",
+		"insert into rate values(1, 'iota',  0, 1, null)",
+		"insert into rate values(2, 'rho',   0, 1, null)",
+		"insert into rate values(3, 'chi',   0, 1, null)",
+		"insert into rate values(4, 'omega', 0, 1, null)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
