@@ -8,19 +8,19 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_GET_SMOOTH_LIST_HPP
-# define DISMOD_AT_GET_SMOOTH_LIST_HPP
+# ifndef DISMOD_AT_GET_NSLIST_PAIR_HPP
+# define DISMOD_AT_GET_NSLIST_PAIR_HPP
 
 # include <sqlite3.h>
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	struct smooth_list_struct {
-		int         smooth_list_index;
+	struct nslist_pair_struct {
+		int         nslist_id;
 		int         node_id;
 		int         smooth_id;
 	};
-	CppAD::vector<smooth_list_struct> get_smooth_list(sqlite3*  db);
+	CppAD::vector<nslist_pair_struct> get_nslist_pair(sqlite3*  db);
 }
 
 # endif

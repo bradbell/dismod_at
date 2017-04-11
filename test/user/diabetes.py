@@ -288,27 +288,27 @@ def example_db (file_name) :
 			'name':          'pini',
 			'parent_smooth': None,
 			'child_smooth':  None,
-			'smooth_list':   None
+			'nslist_pair':   None
 		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_rate',
 			'child_smooth':  None,
-			'smooth_list':   None
+			'nslist_pair':   None
 		},{
 			'name':          'rho',
 			'parent_smooth': None,
 			'child_smooth':  None,
-			'smooth_list':   None
+			'nslist_pair':   None
 		},{
 			'name':          'chi',
 			'parent_smooth': 'smooth_rate',
 			'child_smooth':  None,
-			'smooth_list':   None
+			'nslist_pair':   None
 		},{
 			'name':          'omega',
 			'parent_smooth': 'smooth_omega',
 			'child_smooth':  None,
-			'smooth_list':   None
+			'nslist_pair':   None
 		}
 	]
 	# ------------------------------------------------------------------------

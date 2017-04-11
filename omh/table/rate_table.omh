@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin rate_table$$
 $spell
+	nslist
 	std
 	dage
 	dtime
@@ -91,16 +92,16 @@ in the $code smooth_grid$$ table.
 It specifies the default smoothing used as a prior for this rate
 when fitting all the children (all the random effects for this rate).
 
-$head smooth_list_index$$
+$head nslist_id$$
 This column has type $code integer$$ and is $code null$$ or a
-$cref/smooth_list_index/smooth_list_table/smooth_list_index/$$.
-If $icode smooth_list_index$$ is $code null$$,
+$cref/nslist_id/nslist_pair_table/nslist_id/$$.
+If $icode nslist_id$$ is $code null$$,
 the default smoothing is used for all the children.
 If it is not $code null$$,
 it specifies a list of smoothing that is used to override the
 default $icode child_smooth_id$$ for this rate.
 For each smoothing in the list,
-$cref/node_id/smooth_list_table/node_id/$$ must correspond to a child node.
+$cref/node_id/nslist_pair_table/node_id/$$ must correspond to a child node.
 
 $head Child Restrictions$$
 The child smoothing
@@ -130,7 +131,7 @@ The $cref/upper/prior_table/upper/$$ limit must be $code null$$
 $lend
 
 $subhead null$$
-If $icode child_smooth_id$$ and $icode smooth_list_index$$
+If $icode child_smooth_id$$ and $icode nslist_id$$
 are $code null$$, the corresponding child rate
 is always zero and no variables are allocated for the corresponding
 $cref/random effects/model_variables/Random Effects, u/$$.

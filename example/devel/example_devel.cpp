@@ -73,7 +73,7 @@ extern bool get_node_table_xam(void);
 extern bool get_rate_table_xam(void);
 extern bool get_sample_table_xam(void);
 extern bool get_simulate_table_xam(void);
-extern bool get_smooth_list_xam(void);
+extern bool get_nslist_pair_xam(void);
 extern bool get_smooth_grid_xam(void);
 extern bool get_table_column_xam(void);
 extern bool get_time_table_xam(void);
@@ -161,7 +161,7 @@ int main(void)
 	RUN(get_sample_table_xam);
 	RUN(get_simulate_table_xam);
 	RUN(get_smooth_grid_xam);
-	RUN(get_smooth_list_xam);
+	RUN(get_nslist_pair_xam);
 	RUN(get_table_column_xam);
 	RUN(get_time_table_xam);
 	RUN(get_weight_grid_xam);

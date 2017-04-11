@@ -57,7 +57,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	table/get_sample_table_xam.cpp
 	table/get_simulate_table_xam.cpp
 	table/get_smooth_grid_xam.cpp
-	table/get_smooth_list_xam.cpp
+	table/get_nslist_pair_xam.cpp
 	table/get_table_column_xam.cpp
 	table/get_time_table_xam.cpp
 	table/get_weight_grid_xam.cpp

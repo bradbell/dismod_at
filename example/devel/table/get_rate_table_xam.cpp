@@ -46,7 +46,7 @@ bool get_rate_table_xam(void)
 			"rate_name         text unique,"
 			"parent_smooth_id  integer,"
 			"child_smooth_id   integer,"
-			"smooth_list_index integer)",
+			"nslist_id         integer)",
 		"insert into rate values(0, 'pini',  0, 1, null)",
 		"insert into rate values(1, 'iota',  0, 1, null)",
 		"insert into rate values(2, 'rho',   0, 1, null)",

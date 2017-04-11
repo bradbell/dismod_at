@@ -9,25 +9,26 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_smooth_list_xam.cpp$$
+$begin get_nslist_pair_xam.cpp$$
 $spell
+	nslist
 	xam
 $$
 
-$section C++ get_smooth_list_table: Example and Test$$
+$section C++ get_nslist_pair_table: Example and Test$$
 
 $code
-$srcfile%example/devel/table/get_smooth_list_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/devel/table/get_nslist_pair_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
 // BEGIN C++
-# include <dismod_at/get_smooth_list.hpp>
+# include <dismod_at/get_nslist_pair.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
 
-bool get_smooth_list_xam(void)
+bool get_nslist_pair_xam(void)
 {
 	bool   ok = true;
 	using  std::string;
@@ -39,33 +40,33 @@ bool get_smooth_list_xam(void)
 
 	// sql commands
 	const char* sql_cmd[] = {
-		"create table smooth_list("
-			"smooth_list_id       integer primary key,"
-			"smooth_list_index    integer,"
+		"create table nslist_pair("
+			"nslist_pair_id       integer primary key,"
+			"nslist_id            integer,"
 			"node_id              integer,"
 			"smooth_id            integer)",
-		"insert into smooth_list values(0, 0, 0, 1)",
-		"insert into smooth_list values(1, 0, 1, 2)",
-		"insert into smooth_list values(2, 0, 2, 3)",
-		"insert into smooth_list values(3, 1, 0, 4)",
-		"insert into smooth_list values(4, 1, 1, 5)",
-		"insert into smooth_list values(5, 1, 2, 6)",
+		"insert into nslist_pair values(0, 0, 0, 1)",
+		"insert into nslist_pair values(1, 0, 1, 2)",
+		"insert into nslist_pair values(2, 0, 2, 3)",
+		"insert into nslist_pair values(3, 1, 0, 4)",
+		"insert into nslist_pair values(4, 1, 1, 5)",
+		"insert into nslist_pair values(5, 1, 2, 6)",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
 	// get the rate table
-	vector<dismod_at::smooth_list_struct> smooth_list_table =
-			dismod_at::get_smooth_list(db);
-	size_t n_smooth_list = smooth_list_table.size();
-	ok  &= n_smooth_list == 6;
+	vector<dismod_at::nslist_pair_struct> nslist_pair_table =
+			dismod_at::get_nslist_pair(db);
+	size_t n_nslist_pair = nslist_pair_table.size();
+	ok  &= n_nslist_pair == 6;
 	//
-	for(size_t id = 0; id < n_smooth_list; id++)
+	for(size_t id = 0; id < n_nslist_pair; id++)
 	{
-		ok &= size_t(smooth_list_table[id].smooth_list_index)    == (id / 3);
-		ok &= size_t(smooth_list_table[id].node_id)    == (id % 3);
-		ok &= size_t(smooth_list_table[id].smooth_id)  == (id + 1);
+		ok &= size_t(nslist_pair_table[id].nslist_id)    == (id / 3);
+		ok &= size_t(nslist_pair_table[id].node_id)    == (id % 3);
+		ok &= size_t(nslist_pair_table[id].smooth_id)  == (id + 1);
 	}
 
 	// close database and return

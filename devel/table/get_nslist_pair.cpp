@@ -9,8 +9,9 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_smooth_list_table$$
+$begin get_nslist_pair_table$$
 $spell
+	nslist
 	sqlite
 	struct
 	cpp
@@ -21,10 +22,10 @@ $$
 $section C++: Get the List of Smoothing Table$$
 
 $head Syntax$$
-$icode%smooth_list_table% = get_smooth_list_table(%db%)%$$
+$icode%nslist_pair_table% = get_nslist_pair_table(%db%)%$$
 
 $head Purpose$$
-To read the $cref smooth_list_table$$ and return it as a C++ data structure.
+To read the $cref nslist_pair_table$$ and return it as a C++ data structure.
 
 $head db$$
 The argument $icode db$$ has prototype
@@ -33,22 +34,22 @@ $codei%
 %$$
 and is an open connection to the database.
 
-$head smooth_list_table$$
-The return value $icode smooth_list_table$$ has prototype
+$head nslist_pair_table$$
+The return value $icode nslist_pair_table$$ has prototype
 $codei%
-	CppAD::vector<smooth_list_struct> %smooth_list_table%
+	CppAD::vector<nslist_pair_struct> %nslist_pair_table%
 %$$
-For each $cref/smooth_list_id/smooth_list_table/smooth_list_id/$$,
+For each $cref/nslist_pair_id/nslist_pair_table/nslist_pair_id/$$,
 $codei%
-	%smooth_list_table%[%smooth_list_id%]
+	%nslist_pair_table%[%nslist_pair_id%]
 %$$
 is the information for one entry in one smoothing list.
 
-$head smooth_list_struct$$
+$head nslist_pair_struct$$
 This is a structure with the following fields
 $table
 $code int$$ $cnext $code density_id$$  $cnext
-	$cref/smooth_list_index/smooth_list_table/smooth_list_index/$$
+	$cref/nslist_id/nslist_pair_table/nslist_id/$$
 	identifies this list of smoothings.
 $rnext
 $code int$$ $cnext $code node_id$$ $cnext
@@ -60,54 +61,54 @@ $code int$$ $cnext $code smooth_id$$ $cnext
 	that is applied to this node (for this list).
 $tend
 
-$children%example/devel/table/get_smooth_list_xam.cpp
+$children%example/devel/table/get_nslist_pair_xam.cpp
 %$$
 $head Example$$
-The file $cref get_smooth_list_xam.cpp$$ contains an example that uses
+The file $cref get_nslist_pair_xam.cpp$$ contains an example that uses
 this function.
 
 $end
 -----------------------------------------------------------------------------
 */
 # include <cmath>
-# include <dismod_at/get_smooth_list.hpp>
+# include <dismod_at/get_nslist_pair.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include<dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<smooth_list_struct> get_smooth_list(sqlite3* db)
+CppAD::vector<nslist_pair_struct> get_nslist_pair(sqlite3* db)
 {	using std::string;
 
 	// user for error messaging
 	string msg, table_name, column_name;
 
-	table_name         = "smooth_list";
-	size_t n_smooth_list  = check_table_id(db, table_name);
+	table_name         = "nslist_pair";
+	size_t n_nslist_pair  = check_table_id(db, table_name);
 
-	column_name        =  "smooth_list_index";
-	CppAD::vector<int>     smooth_list_index;
-	get_table_column(db, table_name, column_name, smooth_list_index);
-	assert( smooth_list_index.size() == n_smooth_list );
+	column_name        =  "nslist_id";
+	CppAD::vector<int>     nslist_id;
+	get_table_column(db, table_name, column_name, nslist_id);
+	assert( nslist_id.size() == n_nslist_pair );
 
 	column_name        =  "node_id";
 	CppAD::vector<int>     node_id;
 	get_table_column(db, table_name, column_name, node_id);
-	assert( node_id.size() == n_smooth_list );
+	assert( node_id.size() == n_nslist_pair );
 
 	column_name        =  "smooth_id";
 	CppAD::vector<int>     smooth_id;
 	get_table_column(db, table_name, column_name, smooth_id);
-	assert( smooth_id.size() == n_smooth_list );
+	assert( smooth_id.size() == n_nslist_pair );
 
-	CppAD::vector<smooth_list_struct> smooth_list_table(n_smooth_list);
-	for(size_t i = 0; i < n_smooth_list; i++)
-	{	smooth_list_table[i].smooth_list_index  = smooth_list_index[i];
-		smooth_list_table[i].node_id            = node_id[i];
-		smooth_list_table[i].smooth_id          = smooth_id[i];
+	CppAD::vector<nslist_pair_struct> nslist_pair_table(n_nslist_pair);
+	for(size_t i = 0; i < n_nslist_pair; i++)
+	{	nslist_pair_table[i].nslist_id          = nslist_id[i];
+		nslist_pair_table[i].node_id            = node_id[i];
+		nslist_pair_table[i].smooth_id          = smooth_id[i];
 	}
-	return smooth_list_table;
+	return nslist_pair_table;
 }
 
 } // END DISMOD_AT_NAMESPACE

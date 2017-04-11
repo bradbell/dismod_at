@@ -31,7 +31,7 @@ $childtable%
 	%omh/table/node_table.omh
 	%omh/table/prior_table.omh
 	%omh/table/rate_table.omh
-	%omh/table/smooth_list_table.omh
+	%omh/table/nslist_pair_table.omh
 	%omh/table/smooth_grid_table.omh
 	%omh/table/smooth_table.omh
 	%omh/table/time_table.omh

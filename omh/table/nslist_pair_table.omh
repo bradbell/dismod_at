@@ -8,8 +8,9 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin smooth_list_table$$
+$begin nslist_pair_table$$
 $spell
+	nslist
 	smoothings
 $$
 
@@ -17,12 +18,12 @@ $section Lists of Smoothing$$
 This table can be used to specify a lists of nodes with
 corresponding smoothings.
 
-$head smooth_list_id$$
+$head nslist_pair_id$$
 This column has type $code integer$$ and is the primary key for
-the $code smooth_list$$ table.
+the $code nslist_pair$$ table.
 Its initial value is zero, and it increments by one for each row.
 
-$head smooth_list_index$$
+$head nslist_id$$
 This column has type integer and is used to identify an individual lists
 in this table.
 
@@ -36,10 +37,10 @@ This column has type $code integer$$ and is a
 $cref/smooth_id/smooth_table/smooth_id/$$.
 It specifies which smoothing to apply at this node.
 
-$children%example/table/smooth_list_table.py
+$children%example/table/nslist_pair_table.py
 %$$
 $head Example$$
-The files $cref smooth_list_table.py$$ and $cref get_smooth_list_xam.cpp$$
-contain example $code smooth_list$$ tables.
+The files $cref nslist_pair_table.py$$ and $cref get_nslist_pair_xam.cpp$$
+contain example $code nslist_pair$$ tables.
 
 $end

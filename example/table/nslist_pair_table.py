@@ -8,16 +8,19 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -------------------------------------------------------------------------- */
-# $begin smooth_list_table.py$$ $newlinech #$$
+# $begin nslist_pair_table.py$$ $newlinech #$$
+# $spell
+#	nslist
+# $$
 #
-# $section smooth_list_table: Example and Test$$
+# $section nslist_pair_table: Example and Test$$
 #
 # $code
-# $srcfile%example/table/smooth_list_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $srcfile%example/table/nslist_pair_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # BEGIN PYTHON
-def smooth_list_table() :
+def nslist_pair_table() :
 	import dismod_at
 	import copy
 	import collections
@@ -27,9 +30,9 @@ def smooth_list_table() :
 	connection     = dismod_at.create_connection(file_name, new)
 	cursor         = connection.cursor()
 	#
-	# create smooth_list table column names and types
+	# create nslist_pair table column names and types
 	col_name2type = collections.OrderedDict( [
-		('smooth_list_index',       'integer' ),
+		('nslist_id',       'integer' ),
 		('node_id',                 'integer' ),
 		('smooth_id',                'integer' )
 	] )
@@ -37,7 +40,7 @@ def smooth_list_table() :
 	col_type = list(col_name2type.values())
 	# two lists with different smoothing for each node
 	row_list = [
-		# smooth_list_index, node_id, smooth_id
+		# nslist_id, node_id, smooth_id
 		[                 0,       0,         0 ],
 		[                 0,       1,         1 ],
 		[                 0,       2,         2 ],
@@ -45,7 +48,7 @@ def smooth_list_table() :
 		[                 1,       1,         4 ],
 		[                 1,       2,         5 ]
 	]
-	tbl_name = 'smooth_list'
+	tbl_name = 'nslist_pair'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# include primary key in test
@@ -58,5 +61,5 @@ def smooth_list_table() :
 	assert row_list == check_list
 	# ------------------------------------------------------------------------
 	connection.close()
-	print('smooth_list_table: OK')
+	print('nslist_pair_table: OK')
 # END PYTHON
