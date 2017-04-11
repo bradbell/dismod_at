@@ -257,6 +257,9 @@ def example_db (file_name) :
 	row['node'] = 'united_states'
 	avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
+	# nslist_table:
+	nslist_table = dict()
+	# -----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
@@ -269,6 +272,7 @@ def example_db (file_name) :
 		data_table,
 		prior_table,
 		smooth_table,
+		nslist_table,
 		rate_table,
 		mulcov_table,
 		option_table,

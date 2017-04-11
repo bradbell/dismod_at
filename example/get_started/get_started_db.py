@@ -263,6 +263,9 @@ def get_started_db ():
 		}
 	]
 	# ---------------------------------------------------------------------
+	# nslist_table:
+	nslist_table = dict()
+	# -----------------------------------------------------------------------
 	# create database
 	file_name = 'get_started.db'
 	dismod_at.create_database(
@@ -276,6 +279,7 @@ def get_started_db ():
 		data_table,
 		prior_table,
 		smooth_table,
+		nslist_table,
 		rate_table,
 		mulcov_table,
 		option_table,

@@ -28,6 +28,8 @@
 #	std
 #	str
 #	bool
+#	nslist
+#	tuples
 # $$
 #
 # $section Create a Dismod_at Database$$
@@ -44,6 +46,7 @@
 #	%data_table%,
 #	%prior_table%,
 #	%smooth_table%,
+#	%nslist_table%,
 #	%rate_table%,
 #	%mulcov_table%,
 #	%option_table%,
@@ -216,6 +219,13 @@
 # $cref/const_value/smooth_grid_table/const_value/$$ column in the
 # $code smooth_grid$$ table.
 #
+# $head nslist_table$$
+# This is a $code dict$$ that specifies the
+# $cref nslist_pair_table$$.
+# For each $icode nslist_name$$, $icode%nslist_table%[%nslist_name%]%$$ is
+# a $code list$$ of tuples of the form $codei%( %node_name%, %smooth_name% )%$$
+# that specify the node, smoothing paris for this list.
+#
 # $head rate_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref rate_table$$.
@@ -224,13 +234,18 @@
 # Key           $cnext Value Type  $pre  $$ $cnext Description         $rnext
 # name          $cnext str     $cnext pini, iota, rho, chi, or omega   $rnext
 # parent_smooth $cnext str     $cnext parent smoothing                 $rnext
-# child_smooth  $cnext str     $cnext child smoothing
+# child_smooth  $cnext str     $cnext a single child smoothing         $rnext
+# child_nslist  $cnext str     $cnext list of child smoothings
 # $tend
 # Furthermore the order of the rate names must be
 # pini, iota, rho, chi, omega; i.e., the only order allowed for
 # the $cref rate_table$$.
 # The value $code None$$ is used to represent a $code null$$ value for
 # the parent and child smoothings.
+# The smoothings in $icode child_nslist$$ override the child smoothing
+# specified by $icode child_smooth$$.
+# If $icode child_smooth$$ is $code None$$, $icode child_nslist$$ must
+# also be $code None$$
 #
 # $head mulcov_table$$
 # This is a list of $code dict$$
@@ -298,6 +313,7 @@ def create_database(
 	data_table,
 	prior_table,
 	smooth_table,
+	nslist_table,
 	rate_table,
 	mulcov_table,
 	option_table,
@@ -564,6 +580,31 @@ def create_database(
 					v = global_prior_name2id[v]
 				row_list.append( [ i, j, k, v, da, dt, const_value] )
 	tbl_name = 'smooth_grid'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------
+	# create nslist table
+	col_name = [ 'nslist_name' ]
+	col_type = [ 'text' ]
+	row_list = list( nslist_table.keys() )
+	tbl_name = 'nslist'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	#
+	global_nslist_name2id = dict()
+	for i in range( len( row_list ) ) :
+		global_nslist_name2id[ row_list[i] ] = i
+	# ------------------------------------------------------------------------
+	# create nslist_pair table
+	col_name = [ 'nslist_id', 'node_id', 'smooth_id' ]
+	col_type = [ 'integer',   'integer', 'integer'   ]
+	row_list = list()
+	tbl_name = 'nslist_pair'
+	for key in nslist_table :
+		pair_list = nslist_table[key]
+		nslist_id = global_nslist_name2id[key]
+		for pair in pair_list :
+			node_id   = global_node_name2id[ pair[0] ]
+			smooth_id = global_node_name2id[ pair[1] ]
+			row_list.append( [ nslist_id, node_id, smooth_id ] )
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create rate table

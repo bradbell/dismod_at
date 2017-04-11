@@ -12,18 +12,8 @@
 new_directories='
 '
 rename_files='
-	omh/table/smooth_list_table.omh
-	devel/table/get_smooth_list.cpp
-	example/devel/table/get_smooth_list_xam.cpp
-	include/dismod_at/get_smooth_list.hpp
-	example/table/smooth_list_table.py
 '
 spell_files='
-	omh/table/rate_table.omh
-	omh/table/nslist_pair_table.omh
-	example/table/nslist_pair_table.py
-	devel/table/get_nslist_pair.cpp
-	example/devel/table/get_nslist_pair_xam.cpp
 '
 no_change_files='
 '
@@ -32,15 +22,15 @@ rename_cmd='s|smooth_list|nslist_pair|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|smooth_list_index\\(  *\\)|nslist_id        \\1|g
-s|smooth_list_id|nslist_pair_id|g
-s|smooth_list_table|nslist_pair_table|g
+/\\t# create database/! b skip
+s|^|\\t# nslist_table:\\n\\tnslist_table = dict()\\
+\\t# -----------------------------------------------------------------------\\n|
+: loop
+N
+/smooth_table/! b loop
+s|\$|\\n\\t\\tnslist_table,|
 #
-s|'smooth_list':|'nslist_pair':|g
-#
-s|smooth_list_index|nslist_id|g
-s|smooth_list|nslist_pair|g
-s|SMOOTH_LIST|NSLIST_PAIR|g
+: skip
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
