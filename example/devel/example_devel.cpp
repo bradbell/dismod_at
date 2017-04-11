@@ -60,6 +60,7 @@ extern bool solve_ode_xam(void);
 extern bool check_pini_n_age_xam(void);
 extern bool create_table_xam(void);
 extern bool get_age_table_xam(void);
+extern bool get_nslist_table_xam(void);
 extern bool get_avgint_table_xam(void);
 extern bool get_option_table_xam(void);
 extern bool get_column_max_xam(void);
@@ -147,6 +148,7 @@ int main(void)
 	RUN(check_pini_n_age_xam);
 	RUN(create_table_xam);
 	RUN(get_age_table_xam);
+	RUN(get_nslist_table_xam);
 	RUN(get_avgint_table_xam);
 	RUN(get_option_table_xam);
 	RUN(get_column_max_xam);

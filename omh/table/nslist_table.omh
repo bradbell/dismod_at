@@ -1,0 +1,38 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-17 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin nslist_table$$
+$spell
+	nslist
+$$
+
+$section The Node Smoothing List Table$$
+This table uses
+$cref/nslist_id/nslist_pair_table/nslist_id/$$ to attach
+a name to each list in the $code nslist_pair$$ table.
+
+$head nslist_id$$
+This column has type $code integer$$ and is the primary key for
+the this table.
+Its initial value is zero, and it increments by one for each row.
+
+$head nslist_name$$
+This column has type $code text$$ and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+
+$children%example/table/nslist_table.py
+%$$
+$head Example$$
+The files $cref nslist_table.py$$ and $cref get_nslist_table_xam.cpp$$
+contain example $code nslist$$ tables.
+
+$end

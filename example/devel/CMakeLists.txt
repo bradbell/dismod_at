@@ -43,6 +43,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	table/check_pini_n_age_xam.cpp
 	table/create_table_xam.cpp
 	table/get_age_table_xam.cpp
+	table/get_nslist_table_xam.cpp
 	table/get_avgint_table_xam.cpp
 	table/get_option_table_xam.cpp
 	table/get_column_max_xam.cpp

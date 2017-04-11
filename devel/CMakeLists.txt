@@ -55,6 +55,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	table/get_simulate_table.cpp
 	table/get_smooth_grid.cpp
 	table/get_nslist_pair.cpp
+	table/get_nslist_table.cpp
 	table/get_smooth_table.cpp
 	table/get_table_column.cpp
 	table/get_time_table.cpp
