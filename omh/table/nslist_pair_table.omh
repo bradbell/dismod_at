@@ -26,6 +26,10 @@ Its initial value is zero, and it increments by one for each row.
 $head nslist_id$$
 This column has type integer and is used to identify an individual lists
 in this table.
+This column has type $code integer$$ and is the primary key for
+the $cref nslist_table$$.
+Each $icode nslist_id$$ value corresponds to a different list of
+$codei%(%node_id%, %smooth_id%)%$$ pairs.
 
 $head node_id$$
 This column has type $code integer$$ and is a

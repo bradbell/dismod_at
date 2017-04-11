@@ -31,7 +31,7 @@ Its initial value is zero, and it increments by one for each row.
 $head smooth_id$$
 This column has type $code integer$$ and is the primary key for
 the $cref smooth_table$$.
-Each value $icode smooth_id$$ corresponds to a different smoothing.
+Each $icode smooth_id$$ value corresponds to a different smoothing.
 
 $head age_id$$
 This column has type $code integer$$ and is a
