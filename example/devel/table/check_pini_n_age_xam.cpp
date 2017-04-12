@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -25,6 +25,7 @@ $end
 */
 # include <dismod_at/check_pini_n_age.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 bool check_pini_n_age_xam(void)
 {	bool ok = true;
@@ -41,10 +42,12 @@ bool check_pini_n_age_xam(void)
 	{	if( rate_id == dismod_at::pini_enum )
 		{	rate_table[rate_id].parent_smooth_id = 0;
 			rate_table[rate_id].child_smooth_id  = 1;
+			rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
 		}
 		else
 		{	rate_table[rate_id].parent_smooth_id = 2;
 			rate_table[rate_id].child_smooth_id  = 3;
+			rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
 		}
 	}
 	//

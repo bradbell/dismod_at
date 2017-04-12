@@ -177,11 +177,13 @@ bool fit_model_xam(void)
 		{	// smoothing must have only one age
 			rate_table[rate_id].parent_smooth_id = smooth_id_positive;
 			rate_table[rate_id].child_smooth_id  = smooth_id_gaussian_zero;
+			rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
 		}
 		else
 		{	// eventually plan to use a 3 by 2 smoothing here
 			rate_table[rate_id].parent_smooth_id = smooth_id_positive;
 			rate_table[rate_id].child_smooth_id  = smooth_id_gaussian_zero;
+			rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
 		}
 	}
 	//

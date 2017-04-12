@@ -205,6 +205,7 @@ bool rate_mulcov(void)
 			smooth_id = 1; // only one age
 		rate_table[rate_id].parent_smooth_id = smooth_id;
 		rate_table[rate_id].child_smooth_id = smooth_id;
+		rate_table[rate_id].child_nslist_id = DISMOD_AT_NULL_INT;
 	}
 	// pack_object
 	std::string file_name = "example.db";

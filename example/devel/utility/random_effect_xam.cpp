@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -28,6 +28,7 @@ $end
 # include <dismod_at/random_effect.hpp>
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 bool random_effect_xam(void)
 {	bool ok = true;
@@ -57,6 +58,7 @@ bool random_effect_xam(void)
 			child_smooth_id  = 0;
 		rate_table[rate_id].parent_smooth_id = parent_smooth_id;
 		rate_table[rate_id].child_smooth_id  = child_smooth_id;
+		rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
 		size_t n_age  = smooth_table[child_smooth_id].n_age;
 		size_t n_time = smooth_table[child_smooth_id].n_time;
 		n_random_effect += n_child * n_age * n_time;

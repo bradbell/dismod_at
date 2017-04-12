@@ -169,6 +169,7 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 		rate_table[rate_id].rate             = rate_enum(rate_id);
 		rate_table[rate_id].parent_smooth_id = parent_smooth_id[rate_id];
 		rate_table[rate_id].child_smooth_id  = child_smooth_id[rate_id];
+		rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
 		rate_table[rate_id].child_nslist_id  = child_nslist_id[rate_id];
 	}
 

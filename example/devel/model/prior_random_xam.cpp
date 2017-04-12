@@ -201,10 +201,12 @@ bool prior_random_xam(void)
 		{	// smoothing must have only one age
 			rate_table[rate_id].parent_smooth_id = smooth_id_1_by_2;
 			rate_table[rate_id].child_smooth_id  = smooth_id_1_by_2;
+			rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
 		}
 		else
 		{	rate_table[rate_id].parent_smooth_id = smooth_id_3_by_2;
 			rate_table[rate_id].child_smooth_id  = smooth_id_3_by_2;
+			rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
 		}
 	}
 	// pack_object
