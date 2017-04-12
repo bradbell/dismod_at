@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -16,6 +16,7 @@ $spell
 	enum
 	cpp
 	pini
+	nslist
 $$
 
 $section C++: Get the Rate Table Information$$
@@ -49,6 +50,9 @@ $code int$$ $cnext $code parent_smooth_id$$  $cnext
 $rnext
 $code int$$ $cnext $code child_smooth_id$$  $cnext
 	The $cref/child_smooth_id/rate_table/child_smooth_id/$$
+$rnext
+$code int$$ $cnext $code child_nslist_id$$  $cnext
+	The $cref/child_nslist_id/rate_table/child_nslist_id/$$
 $tend
 
 $head rate_table$$
@@ -144,6 +148,11 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, child_smooth_id);
 	assert( n_rate == child_smooth_id.size() );
 
+	column_name         = "child_nslist_id";
+	CppAD::vector<int>     child_nslist_id;
+	get_table_column(db, table_name, column_name, child_nslist_id);
+	assert( n_rate == child_nslist_id.size() );
+
 	CppAD::vector<rate_struct> rate_table(number_rate_enum);
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	if( rate_name[rate_id] != rate_enum2name[rate_id] )
@@ -155,6 +164,7 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 		rate_table[rate_id].rate             = rate_enum(rate_id);
 		rate_table[rate_id].parent_smooth_id = parent_smooth_id[rate_id];
 		rate_table[rate_id].child_smooth_id  = child_smooth_id[rate_id];
+		rate_table[rate_id].child_nslist_id  = child_nslist_id[rate_id];
 	}
 	return rate_table;
 }

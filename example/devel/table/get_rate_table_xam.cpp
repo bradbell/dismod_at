@@ -12,11 +12,10 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin get_rate_table_xam.cpp$$
 $spell
 	xam
+	nslist
 $$
 
 $section C++ get_rate_table: Example and Test$$
-$index example, C++ get_rate_table$$
-$index get_rate_table, C++ example$$
 
 $code
 $srcfile%example/devel/table/get_rate_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -28,6 +27,7 @@ $end
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 bool get_rate_table_xam(void)
 {
@@ -46,7 +46,7 @@ bool get_rate_table_xam(void)
 			"rate_name         text unique,"
 			"parent_smooth_id  integer,"
 			"child_smooth_id   integer,"
-			"nslist_id         integer)",
+			"child_nslist_id   integer)",
 		"insert into rate values(0, 'pini',  0, 1, null)",
 		"insert into rate values(1, 'iota',  0, 1, null)",
 		"insert into rate values(2, 'rho',   0, 1, null)",
@@ -65,6 +65,7 @@ bool get_rate_table_xam(void)
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	ok &= rate_table[rate_id].parent_smooth_id == 0;
 		ok &= rate_table[rate_id].child_smooth_id  == 1;
+		ok &= rate_table[rate_id].child_nslist_id  == DISMOD_AT_NULL_INT;
 
 		// check that one can use rate_enum values in place of rate_id
 		dismod_at::rate_enum rate = rate_table[rate_id].rate;

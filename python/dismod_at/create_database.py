@@ -608,21 +608,34 @@ def create_database(
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
 	# create rate table
-	col_name = [  'rate_name', 'parent_smooth_id', 'child_smooth_id'  ]
-	col_type = [  'text',      'integer',         'integer'          ]
+	col_name = [
+		'rate_name', 'parent_smooth_id', 'child_smooth_id', 'child_nslist_id'
+	]
+	col_type = [
+		'text',      'integer',         'integer',           'integer'
+	]
 	row_list = [ ]
 	for i in range( len(rate_table) ) :
 		rate             = rate_table[i]
 		rate_name        = rate['name']
+		#
 		if rate['parent_smooth'] == None :
 			parent_smooth_id = None
 		else :
 			parent_smooth_id = global_smooth_name2id[ rate['parent_smooth'] ]
+		#
 		if rate['child_smooth'] == None :
 			child_smooth_id = None
 		else :
 			child_smooth_id  = global_smooth_name2id[ rate['child_smooth'] ]
-		row_list.append( [ rate_name, parent_smooth_id, child_smooth_id ] )
+		#
+		if rate['child_nslist'] == None :
+			child_nslist_id = None
+		else :
+			child_nslist_id  = global_nslist_name2id[ rate['child_nslist'] ]
+		#
+		row = [ rate_name, parent_smooth_id, child_smooth_id, child_nslist_id ]
+		row_list.append(row)
 	tbl_name = 'rate'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	global_rate_name2id = {}

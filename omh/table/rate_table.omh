@@ -92,10 +92,10 @@ in the $code smooth_grid$$ table.
 It specifies the default smoothing used as a prior for this rate
 when fitting all the children (all the random effects for this rate).
 
-$head nslist_id$$
+$head child_nslist_id$$
 This column has type $code integer$$ and is $code null$$ or a
 $cref/nslist_id/nslist_pair_table/nslist_id/$$.
-If $icode nslist_id$$ is $code null$$,
+If $icode child_nslist_id$$ is $code null$$,
 the default smoothing is used for all the children.
 If it is not $code null$$,
 it specifies a list of smoothing that is used to override the
@@ -131,7 +131,7 @@ The $cref/upper/prior_table/upper/$$ limit must be $code null$$
 $lend
 
 $subhead null$$
-If $icode child_smooth_id$$ and $icode nslist_id$$
+If $icode child_smooth_id$$ and $icode child_nslist_id$$
 are $code null$$, the corresponding child rate
 is always zero and no variables are allocated for the corresponding
 $cref/random effects/model_variables/Random Effects, u/$$.

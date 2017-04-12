@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -29,6 +29,8 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_smooth_table.hpp"
 # include "get_weight_grid.hpp"
 # include "get_weight_table.hpp"
+# include "get_nslist_table.hpp"
+# include "get_nslist_pair.hpp"
 
 namespace dismod_at {
 	// BEGIN STRUCT
@@ -37,7 +39,7 @@ namespace dismod_at {
 		CppAD::vector<double>             time_table;
 		//
 		CppAD::vector<option_struct>      option_table;
-		CppAD::vector<avgint_struct>    avgint_table;
+		CppAD::vector<avgint_struct>      avgint_table;
 		CppAD::vector<double>             avgint_cov_value;
 		CppAD::vector<covariate_struct>   covariate_table;
 		CppAD::vector<data_struct>        data_table;
@@ -52,6 +54,8 @@ namespace dismod_at {
 		CppAD::vector<smooth_grid_struct> smooth_grid_table;
 		CppAD::vector<weight_struct>      weight_table;
 		CppAD::vector<weight_grid_struct> weight_grid_table;
+		CppAD::vector<std::string>        nslist_table;
+		CppAD::vector<nslist_pair_struct> nslist_pair_table;
 	};
 	// END STRUCT
 	extern void get_db_input(

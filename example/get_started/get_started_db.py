@@ -208,27 +208,27 @@ def get_started_db ():
 			'name':          'pini',
 			'parent_smooth': None,
 			'child_smooth':  None,
-			'nslist_pair':   None
+			'child_nslist':  None
 		},{
 			'name':          'iota',
 			'parent_smooth': None,
 			'child_smooth':  None,
-			'nslist_pair':   None
+			'child_nslist':  None
 		},{
 			'name':          'rho',
 			'parent_smooth': None,
 			'child_smooth':  None,
-			'nslist_pair':   None
+			'child_nslist':  None
 		},{
 			'name':          'chi',
 			'parent_smooth': None,
 			'child_smooth':  None,
-			'nslist_pair':   None
+			'child_nslist':  None
 		},{
 			'name':          'omega',
 			'parent_smooth': 'smooth_omega_parent',
 			'child_smooth':  None,
-			'nslist_pair':   None
+			'child_nslist':  None
 		}
 	]
 	# -------------------------------------------------------------------

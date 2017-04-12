@@ -22,15 +22,7 @@ rename_cmd='s|smooth_list|nslist_pair|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-/\\t# create database/! b skip
-s|^|\\t# nslist_table:\\n\\tnslist_table = dict()\\
-\\t# -----------------------------------------------------------------------\\n|
-: loop
-N
-/smooth_table/! b loop
-s|\$|\\n\\t\\tnslist_table,|
-#
-: skip
+s|'nslist_pair': |'child_nslist':|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

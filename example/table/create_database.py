@@ -149,23 +149,28 @@ def create_database() :
 		{
 			'name':'pini',
 			'parent_smooth':'uniform_01_constant',
-			'child_smooth':'gaussian_01_constant'
+			'child_smooth':'gaussian_01_constant',
+			'child_nslist':None
 		},{
 			'name':'iota',
 			'parent_smooth':'uniform_01_constant',
-			'child_smooth':'gaussian_01_constant'
+			'child_smooth':'gaussian_01_constant',
+			'child_nslist':None
 		},{
 			'name':'rho',
 			'parent_smooth':'uniform_01_constant',
-			'child_smooth':'gaussian_01_constant'
+			'child_smooth':'gaussian_01_constant',
+			'child_nslist':None
 		},{
 			'name':'chi',
 			'parent_smooth':'uniform_01_constant',
-			'child_smooth':'gaussian_01_constant'
+			'child_smooth':'gaussian_01_constant',
+			'child_nslist':None
 		},{
 			'name':'omega',
 			'parent_smooth':'uniform_01_constant',
-			'child_smooth':'gaussian_01_constant'
+			'child_smooth':'gaussian_01_constant',
+			'child_nslist':None
 		}
 	]
 	#
