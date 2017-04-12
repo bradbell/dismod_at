@@ -14,7 +14,7 @@
 #	covariate
 # $$
 #
-# $section Using Lasso with Covariates$$
+# $section Using Lasso on Covariate Multiplier$$
 #
 # $head See Also$$
 # $cref user_meas_covariate.py$$

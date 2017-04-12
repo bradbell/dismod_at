@@ -9,9 +9,10 @@
 # ---------------------------------------------------------------------------
 # $begin user_const_value.py$$ $newlinech #$$
 # $spell
+#	const
 # $$
 #
-# $section Fitting Simulated Data Example$$
+# $section Fitting Using const_value in Smoothing Grid$$
 #
 # $code
 # $srcfile%
