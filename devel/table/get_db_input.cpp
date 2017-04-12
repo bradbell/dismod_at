@@ -232,6 +232,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 		db                         ,
 		db_input.rate_table        ,
 		db_input.smooth_grid_table ,
+		db_input.nslist_pair_table ,
 		db_input.prior_table
 	);
 

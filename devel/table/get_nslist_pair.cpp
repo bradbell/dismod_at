@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_nslist_pair_table$$
+$begin get_nslist_pair$$
 $spell
 	nslist
 	sqlite
@@ -22,7 +22,7 @@ $$
 $section C++: Get the List of Smoothing Table$$
 
 $head Syntax$$
-$icode%nslist_pair_table% = get_nslist_pair_table(%db%)%$$
+$icode%nslist_pair% = get_nslist_pair_table(%db%)%$$
 
 $head Purpose$$
 To read the $cref nslist_pair_table$$ and return it as a C++ data structure.
@@ -34,10 +34,10 @@ $codei%
 %$$
 and is an open connection to the database.
 
-$head nslist_pair_table$$
-The return value $icode nslist_pair_table$$ has prototype
+$head nslist_pair$$
+The return value $icode nslist_pair$$ has prototype
 $codei%
-	CppAD::vector<nslist_pair_struct> %nslist_pair_table%
+	CppAD::vector<nslist_pair_struct> %nslist_pair%
 %$$
 For each $cref/nslist_pair_id/nslist_pair_table/nslist_pair_id/$$,
 $codei%
@@ -102,13 +102,13 @@ CppAD::vector<nslist_pair_struct> get_nslist_pair(sqlite3* db)
 	get_table_column(db, table_name, column_name, smooth_id);
 	assert( smooth_id.size() == n_nslist_pair );
 
-	CppAD::vector<nslist_pair_struct> nslist_pair_table(n_nslist_pair);
+	CppAD::vector<nslist_pair_struct> nslist_pair(n_nslist_pair);
 	for(size_t i = 0; i < n_nslist_pair; i++)
-	{	nslist_pair_table[i].nslist_id          = nslist_id[i];
-		nslist_pair_table[i].node_id            = node_id[i];
-		nslist_pair_table[i].smooth_id          = smooth_id[i];
+	{	nslist_pair[i].nslist_id          = nslist_id[i];
+		nslist_pair[i].node_id            = node_id[i];
+		nslist_pair[i].smooth_id          = smooth_id[i];
 	}
-	return nslist_pair_table;
+	return nslist_pair;
 }
 
 } // END DISMOD_AT_NAMESPACE

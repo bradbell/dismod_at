@@ -18,12 +18,15 @@ $spell
 	const
 	CppAD
 	struct
+	nslist
 $$
 
 $section Check Priors in Child Smoothing$$
 
 $head syntax$$
-$codei%check_child_prior(%db%, %rate_table%, %smooth_grid%, %prior_table%)%$$
+$codei%check_child_prior(
+	%db%, %rate_table%, %smooth_grid%, %nslist_pair%, %prior_table%
+)%$$
 
 $head Purpose$$
 Checks the
@@ -75,6 +78,14 @@ For this table, only the
 $code value_prior_id$$, $code dage_prior_id$$, and $code dtime_prior_id$$
 fields are used.
 
+$head nslist_pair$$
+This argument has prototype
+$codei%
+	const CppAD::vector<nslist_pair_struct>& %nslist_pair%
+%$$
+and it is the
+$cref/nslist_pair/get_nslist_pair/nslist_pair/$$.
+
 $head prior_table$$
 This argument has prototype
 $codei%
@@ -92,6 +103,7 @@ field are used.
 $end
 */
 # include <dismod_at/check_child_prior.hpp>
+# include <dismod_at/get_nslist_pair.hpp>
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/null_int.hpp>
@@ -103,6 +115,7 @@ void check_child_prior(
 	sqlite3*                                 db            ,
 	const CppAD::vector<rate_struct>&        rate_table    ,
 	const CppAD::vector<smooth_grid_struct>& smooth_grid   ,
+	const CppAD::vector<nslist_pair_struct>& nslist_pair   ,
 	const CppAD::vector<prior_struct>&       prior_table   )
 {	assert( rate_table.size()   == number_rate_enum );
 	using std::endl;
@@ -113,8 +126,24 @@ void check_child_prior(
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{
 		int child_smooth_id  = rate_table[rate_id].child_smooth_id;
+		int child_nslist_id  = rate_table[rate_id].child_smooth_id;
+		//
+		// list of child smooth_id for this rate
+		CppAD::vector<int> smooth_list;
+		if( child_smooth_id != DISMOD_AT_NULL_INT )
+			smooth_list.push_back(child_smooth_id);
+		if( child_nslist_id != DISMOD_AT_NULL_INT )
+		{	assert( child_smooth_id != DISMOD_AT_NULL_INT );
+			for(size_t i = 0; i < nslist_pair.size(); i++)
+			{	if( nslist_pair[i].nslist_id == child_nslist_id )
+				{	int smooth_id = nslist_pair[i].smooth_id;
+					smooth_list.push_back( smooth_id );
+				}
+			}
+		}
+		for(size_t i = 0; i < smooth_list.size(); i++)
 		for(size_t grid_id = 0; grid_id < smooth_grid.size(); grid_id++)
-		if( smooth_grid[grid_id].smooth_id == child_smooth_id )
+		if( smooth_grid[grid_id].smooth_id == smooth_list[i] )
 		{	CppAD::vector<int> prior_id(3);
 			CppAD::vector<string> name(3);
 			prior_id[0] = smooth_grid[grid_id].value_prior_id;

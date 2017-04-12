@@ -106,7 +106,7 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 	using CppAD::to_string;
 	//
 	// for error messaging
-	string message;
+	string msg;
 	size_t null_id  = DISMOD_AT_NULL_SIZE_T;
 	//
 	// rate names in same order as enum type in get_rate_table.hpp
@@ -128,9 +128,9 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 	string table_name   = "rate";
 	size_t n_rate       = check_table_id(db, table_name);
 	if( n_rate != size_t( number_rate_enum ) )
-	{	message  = "rate table does not have ";
-		message += to_string( size_t( number_rate_enum) )  + "rows.";
-		error_exit(message, table_name, null_id);
+	{	msg  = "rate table does not have ";
+		msg += to_string( size_t( number_rate_enum) )  + "rows.";
+		error_exit(msg, table_name, null_id);
 	}
 
 	string column_name  = "rate_name";
@@ -156,16 +156,22 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 	CppAD::vector<rate_struct> rate_table(number_rate_enum);
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	if( rate_name[rate_id] != rate_enum2name[rate_id] )
-		{	message  = "expected rate_name to be ";
-			message += rate_enum2name[rate_id];
-			message += " but found " + rate_name[rate_id];
-			error_exit(message, table_name, rate_id);
+		{	msg  = "expected rate_name to be ";
+			msg += rate_enum2name[rate_id];
+			msg += " but found " + rate_name[rate_id];
+			error_exit(msg, table_name, rate_id);
+		}
+		if( child_smooth_id[rate_id] == DISMOD_AT_NULL_INT
+		&&  child_nslist_id[rate_id] != DISMOD_AT_NULL_INT )
+		{	msg = "child_smooth_id is null, but child_nslist_id is not null";
+			error_exit(msg, table_name, rate_id);
 		}
 		rate_table[rate_id].rate             = rate_enum(rate_id);
 		rate_table[rate_id].parent_smooth_id = parent_smooth_id[rate_id];
 		rate_table[rate_id].child_smooth_id  = child_smooth_id[rate_id];
 		rate_table[rate_id].child_nslist_id  = child_nslist_id[rate_id];
 	}
+
 	return rate_table;
 }
 
