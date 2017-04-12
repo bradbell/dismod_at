@@ -183,7 +183,6 @@ bool rate_mulcov(void)
 	data_cov_value[0] = x_j;
 	//
 	// smooth_table
-	size_t n_child        = 2;
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
 	{	smooth_table[smooth_id].n_age  = s_info_vec[smooth_id].age_size();
@@ -207,16 +206,20 @@ bool rate_mulcov(void)
 		rate_table[rate_id].child_smooth_id = smooth_id;
 		rate_table[rate_id].child_nslist_id = DISMOD_AT_NULL_INT;
 	}
-	// pack_object
-	std::string file_name = "example.db";
-	dismod_at::pack_info pack_object(
-		n_integrand, n_child, smooth_table, mulcov_table, rate_table
-	);
 	// child_info
 	dismod_at::child_info child_object(
 		parent_node_id ,
 		node_table     ,
 		data_table
+	);
+	size_t n_child = child_object.child_size();
+	assert( n_child == 2 );
+	// pack_object
+	// values in child_id2node_id do not matter because child_nslist_id is null
+	vector<size_t> child_id2node_id(n_child);
+	vector<dismod_at::nslist_pair_struct> nslist_pair(0);
+	dismod_at::pack_info pack_object(n_integrand,
+		child_id2node_id, smooth_table, mulcov_table, rate_table, nslist_pair
 	);
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj;

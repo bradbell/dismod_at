@@ -207,14 +207,10 @@ bool fit_model_xam(void)
 	// parent_node_id
 	size_t parent_node_id = 0;
 	//
-	// pack_object
-	size_t n_child     = 1;
+	//  open database
 	bool new_file = true;
 	std::string file_name = "example.db";
 	sqlite3* db = dismod_at::open_connection(file_name, new_file);
-	dismod_at::pack_info pack_object(
-		n_integrand, n_child, smooth_table, mulcov_table, rate_table
-	);
 	//
 	// w_info_vec (the constant one)
 	vector<double> weight(1);
@@ -266,15 +262,25 @@ bool fit_model_xam(void)
 		data_table[data_id].density_id   = dismod_at::gaussian_enum;
 	}
 	//
-	// prior_object
-	dismod_at::prior_model prior_object(
-		pack_object, age_table, time_table, prior_table, s_info_vec
-	);
 	// child_info
 	dismod_at::child_info child_object(
 		parent_node_id ,
 		node_table     ,
 		data_table
+	);
+	size_t n_child = child_object.child_size();
+	assert( n_child == 1 );
+	// pack_object
+	// values in child_id2node_id do not matter because child_nslist_id is null
+	vector<size_t> child_id2node_id(n_child);
+	vector<dismod_at::nslist_pair_struct> nslist_pair(0);
+	dismod_at::pack_info pack_object(n_integrand,
+		child_id2node_id, smooth_table, mulcov_table, rate_table, nslist_pair
+	);
+	//
+	// prior_object
+	dismod_at::prior_model prior_object(
+		pack_object, age_table, time_table, prior_table, s_info_vec
 	);
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj;

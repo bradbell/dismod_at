@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -22,6 +22,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "child_info.hpp"
 # include "get_integrand_table.hpp"
 # include "get_covariate_table.hpp"
+# include "get_nslist_pair.hpp"
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -64,11 +65,12 @@ private:
 	size_t size_;
 public:
 	pack_info(
-		size_t                              n_integrand    ,
-		size_t                              n_child        ,
-		const CppAD::vector<smooth_struct>& smooth_table   ,
-		const CppAD::vector<mulcov_struct>& mulcov_table   ,
-		const CppAD::vector<rate_struct>&   rate_table
+	size_t                                    n_integrand      ,
+	const CppAD::vector<size_t>               child_id2node_id ,
+	const CppAD::vector<smooth_struct>&       smooth_table     ,
+	const CppAD::vector<mulcov_struct>&       mulcov_table     ,
+	const CppAD::vector<rate_struct>&         rate_table       ,
+	const CppAD::vector<nslist_pair_struct>&  nslist_pair
 	);
 
 	// size of entire packed vector

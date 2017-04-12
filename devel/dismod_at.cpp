@@ -1747,12 +1747,19 @@ int main(int n_arg, const char** argv)
 		);
 	}
 	// pack_object
+	vector<size_t> child_id2node_id(n_child);
+	for(size_t child_id = 0; child_id < n_child; child_id++)
+	{	size_t node_id = child_data.child_id2node_id(child_id);
+		assert( node_id == child_avgint.child_id2node_id(child_id) );
+		child_id2node_id[child_id] = node_id;
+	}
 	dismod_at::pack_info pack_object(
-		n_integrand           ,
-		n_child               ,
-		db_input.smooth_table ,
-		db_input.mulcov_table ,
-		db_input.rate_table
+		n_integrand                 ,
+		child_id2node_id            ,
+		db_input.smooth_table       ,
+		db_input.mulcov_table       ,
+		db_input.rate_table         ,
+		db_input.nslist_pair_table
 	);
 	if( command_arg == "start" )
 	{	start_command(

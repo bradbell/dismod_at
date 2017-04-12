@@ -203,10 +203,13 @@ bool pack_diff_prior_xam(void)
 		}
 	}
 	// pack_object
+	// values in child_id2node_id do not matter because child_nslist_id is null
 	size_t n_integrand = 0;
 	size_t n_child     = 1;
-	dismod_at::pack_info pack_object(
-		n_integrand, n_child, smooth_table, mulcov_table, rate_table
+	vector<size_t> child_id2node_id(n_child);
+	vector<dismod_at::nslist_pair_struct> nslist_pair(0);
+	dismod_at::pack_info pack_object(n_integrand,
+		child_id2node_id, smooth_table, mulcov_table, rate_table, nslist_pair
 	);
 	// ----------------------- diff_prior -------------------------------
 	vector<dismod_at::diff_prior_struct> diff_prior =

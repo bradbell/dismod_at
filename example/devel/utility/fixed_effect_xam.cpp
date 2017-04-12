@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -89,9 +89,12 @@ bool fixed_effect_xam(void)
 	mulcov_table[2].smooth_id    = 1;
 	n_fixed_effect += smooth_table[1].n_age * smooth_table[1].n_time;
 	//
-	// construct pack_object, pack_vec, and subvec_info
-	dismod_at::pack_info pack_object(
-		n_integrand, n_child, smooth_table, mulcov_table, rate_table
+	// pack_object
+	// values in child_id2node_id do not matter because child_nslist_id is null
+	vector<size_t> child_id2node_id(n_child);
+	vector<dismod_at::nslist_pair_struct> nslist_pair(0);
+	dismod_at::pack_info pack_object(n_integrand,
+		child_id2node_id, smooth_table, mulcov_table, rate_table, nslist_pair
 	);
 	//
 	// check n_fixed_effect

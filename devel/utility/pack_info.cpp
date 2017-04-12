@@ -21,13 +21,19 @@ $spell
 	const
 	integrands
 	sqlite
+	nslist
 $$
 
 $section Devel Variable Packing Information: Constructor$$
 
 $head Syntax$$
 $codei%pack_info %pack_object%(
-	%n_integrand%,  %n_child%, %smooth_table%, %mulcov_table%, %rate_table%
+	%n_integrand%,
+	%child_id2node_id%,
+	%smooth_table%,
+	%mulcov_table%,
+	%rate_table%,
+	%nslist_pair%
 )
 %$$
 $codei%pack_info %pack_copy%(%pack_object%)
@@ -49,15 +55,21 @@ $cref/integrand_table/get_integrand_table/integrand_table/$$.
 If $cref/mulcov_table/pack_info_ctor/mulcov_table/$$ has size zero,
 then $icode n_integrand$$ can be zero (a case used for testing purposes).
 
-$head n_child$$
+$head child_id2node_id$$
 This argument has prototype
 $codei%
-	size_t %n_child%
+	const CppAD::vector<size_t> %child2node%
 %$$
-and is the number of children; i.e., the size of
-$cref/child group/node_table/parent/Child Group/$$
-corresponding to the
-$cref/parent_node/option_table/parent_node_id/$$.
+and is a mapping from $icode child_id$$ to $icode node_id$$; see
+$cref/child_id2node_id/child_info/child_id2node_id/$$.
+The size of this vector is the number of children; see
+$cref/child_size/child_info/child_size/$$.
+If
+$codei%
+	%rate_table%[%rate_id%].child_nslist_id == DISMOD_AT_NULL_INT
+%$$
+for all $icode rate_id$$, only the size of this vector matters
+(its values are not used).
 
 $head smooth_table$$
 This argument has prototype
@@ -84,8 +96,21 @@ $codei%
 %$$
 and is the
 $cref/rate_table/get_rate_table/rate_table/$$.
-Only the following fields of this table are used:
-$code parent_smooth_id$$, $code child_smooth_id$$.
+
+$head nslist_pair$$
+This argument has prototype
+$codei%
+	const CppAD::vector<nslist_pair_struct>& %nslist_pair%
+%$$
+and is the
+$cref/nslist_pair/get_nslist_pair/nslist_pair/$$.
+If
+$codei%
+	%rate_table%[%rate_id%].child_nslist_id == DISMOD_AT_NULL_INT
+%$$
+for all $icode rate_id$$, this table is not used and can be empty; i.e.,
+have size zero.
+
 
 $head pack_copy$$
 This object is a copy of the $icode pack_object$$ object
@@ -114,7 +139,8 @@ Its return value has prototype
 $codei%
 	size_t %child_size%
 %$$
-and is the value of $icode n_child$$ in the constructor.
+and is the value of
+$icode%child_id2node_id%.size()%$$.
 
 $head smooth_size$$
 This function is $code const$$.
@@ -152,15 +178,16 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 pack_info::pack_info(
-	size_t                               n_integrand    ,
-	size_t                               n_child        ,
-	const CppAD::vector<smooth_struct>&  smooth_table   ,
-	const CppAD::vector<mulcov_struct>&  mulcov_table   ,
-	const CppAD::vector<rate_struct>&    rate_table
+	size_t                                    n_integrand      ,
+	const CppAD::vector<size_t>               child_id2node_id ,
+	const CppAD::vector<smooth_struct>&       smooth_table     ,
+	const CppAD::vector<mulcov_struct>&       mulcov_table     ,
+	const CppAD::vector<rate_struct>&         rate_table       ,
+	const CppAD::vector<nslist_pair_struct>&  nslist_pair
 ) :
-n_smooth_       ( smooth_table.size() ) ,
-n_integrand_    ( n_integrand )         ,
-n_child_        ( n_child )
+n_smooth_       ( smooth_table.size() )   ,
+n_integrand_    ( n_integrand )           ,
+n_child_        ( child_id2node_id.size() )
 {	using std::string;
 
 	// initialize offset
@@ -191,13 +218,26 @@ n_child_        ( n_child )
 	// rate_info_
 	rate_info_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	rate_info_[rate_id].resize(n_child + 1);
-		for(size_t j = 0;  j <= n_child; j++)
+	{	rate_info_[rate_id].resize(n_child_ + 1);
+		for(size_t j = 0;  j <= n_child_; j++)
 		{	size_t smooth_id;
-			if(j < n_child )
+			if(j < n_child_ )
 				smooth_id = rate_table[rate_id].child_smooth_id;
 			else
 				smooth_id = rate_table[rate_id].parent_smooth_id;
+			size_t child_nslist_id = rate_table[rate_id].child_nslist_id;
+			if( j < n_child_ &&  child_nslist_id != DISMOD_AT_NULL_SIZE_T )
+			{	// search for a replacement smooth_id for this child
+				size_t child_node_id = child_id2node_id[j];
+				for(size_t i = 0; i < nslist_pair.size(); i++)
+				{	size_t nslist_id = nslist_pair[i].nslist_id;
+					size_t node_id   = nslist_pair[i].node_id;
+					bool   match     = nslist_id == child_nslist_id;
+					match           &= node_id   == child_node_id;
+					if( match )
+						smooth_id = nslist_pair[i].smooth_id;
+				}
+			}
 			rate_info_[rate_id][j].smooth_id = smooth_id;
 			if( smooth_id == DISMOD_AT_NULL_SIZE_T )
 			{	rate_info_[rate_id][j].n_var  = DISMOD_AT_NULL_SIZE_T;
