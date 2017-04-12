@@ -24,7 +24,7 @@
 # values used to simulate data
 iota_true                 = 0.01
 chi_true                  = 0.1
-n_data                    = 21
+n_data                    = 51
 # ------------------------------------------------------------------------
 import sys
 import os
