@@ -10,6 +10,7 @@
 # -------------------------------------------------------------------------- */
 # $begin create_database$$ $newlinech #$$
 # $spell
+#	tuple
 #	const
 #	smoothings
 #	avgint
@@ -221,10 +222,18 @@
 #
 # $head nslist_table$$
 # This is a $code dict$$ that specifies the
-# $cref nslist_pair_table$$.
-# For each $icode nslist_name$$, $icode%nslist_table%[%nslist_name%]%$$ is
-# a $code list$$ of tuples of the form $codei%( %node_name%, %smooth_name% )%$$
-# that specify the node, smoothing paris for this list.
+# $cref nslist_table$$ and the $cref nslist_pair_table$$.
+# For each $cref/nslist_name/nslist_table/nslist_name/$$,
+# $codei%
+#	%nslist_table%[%nslist_name%] = [ (%node_name%, %smooth_name%), %...% ]
+# %$$
+# Note that each pair above is a python $code tuple$$:
+# $table
+# Variable    $cnext Value Type $pre  $$ $cnext Description              $rnext
+# nslist_name $cnext str $cnext name of one list of node,smoothing pairs $rnext
+# node_name   $cnext str $cnext name of the node for this pair           $rnext
+# smooth_name $cnext str $cnext name of the smoothing for this pair
+# $tend
 #
 # $head rate_table$$
 # This is a list of $code dict$$
