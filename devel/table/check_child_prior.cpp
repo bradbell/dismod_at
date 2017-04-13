@@ -133,7 +133,7 @@ void check_child_prior(
 		if( child_smooth_id != DISMOD_AT_NULL_INT )
 			smooth_list.push_back(child_smooth_id);
 		if( child_nslist_id != DISMOD_AT_NULL_INT )
-		{	assert( child_smooth_id != DISMOD_AT_NULL_INT );
+		{	assert( child_smooth_id == DISMOD_AT_NULL_INT );
 			for(size_t i = 0; i < nslist_pair.size(); i++)
 			{	if( nslist_pair[i].nslist_id == child_nslist_id )
 				{	int smooth_id = nslist_pair[i].smooth_id;
@@ -141,17 +141,20 @@ void check_child_prior(
 				}
 			}
 		}
-		for(size_t i = 0; i < smooth_list.size(); i++)
 		for(size_t grid_id = 0; grid_id < smooth_grid.size(); grid_id++)
-		if( smooth_grid[grid_id].smooth_id == smooth_list[i] )
+		{	bool check = false;
+			for(size_t i = 0; i < smooth_list.size(); i++)
+				check |= smooth_grid[grid_id].smooth_id == smooth_list[i];
+			if( check)
 		{	CppAD::vector<int> prior_id(3);
+			double const_value = smooth_grid[grid_id].const_value;
 			CppAD::vector<string> name(3);
 			prior_id[0] = smooth_grid[grid_id].value_prior_id;
-			name[0]     = "child value prior";
+			name[0]     = "child value prior:\n";
 			prior_id[1] = smooth_grid[grid_id].dage_prior_id;
-			name[1]     = "child dage prior";
+			name[1]     = "child dage prior:\n";
 			prior_id[2] = smooth_grid[grid_id].dtime_prior_id;
-			name[2]     = "child dtime prior";
+			name[2]     = "child dtime prior:\n";
 			// skip dage and dtime priors for last age and last time
 			for(size_t i = 0; i < 3; i++)
 			if( prior_id[i] != DISMOD_AT_NULL_INT )
@@ -189,24 +192,28 @@ void check_child_prior(
 					msg += "upper not plus infinity";
 				}
 				if( msg != "" )
-				{
+				{	size_t smooth_id = smooth_grid[grid_id].smooth_id;
 					msg = name[i]
-					+ ": child_smooth_id = " + to_string(child_smooth_id)
-					+ ", smooth_grid_id = " + to_string(grid_id)
-					+ ", prior_id = " + to_string( prior_id[i] )
+					+ "smooth_id = "         + to_string(smooth_id)
+					+ ", smooth_grid_id = "  + to_string(grid_id)
+					+ ", prior_id = "        + to_string( prior_id[i] )
 					+ ": " + msg;
 					string table_name  = "rate";
 					error_exit(msg,  table_name, rate_id);
 				}
 			}
-			if( prior_id[0] == DISMOD_AT_NULL_INT )
-			{	msg = name[0]
-				+ ": child_smooth_id = " + to_string(child_smooth_id)
+			bool no_value_prior = prior_id[0] == DISMOD_AT_NULL_INT;
+			no_value_prior     &= std::isnan( const_value );
+			if( no_value_prior )
+			{	size_t smooth_id = smooth_grid[grid_id].smooth_id;
+				msg = name[0]
+				+ "smooth_id = "        + to_string(smooth_id)
 				+ ", smooth_grid_id = " + to_string(grid_id)
-				+ ", prior_id = null";
+				+ ", prior_id = null, const_value = null";
 				string table_name  = "rate";
 				error_exit(msg,  table_name, rate_id);
 			}
+		}
 		}
 	}
 }

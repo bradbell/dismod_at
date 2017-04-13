@@ -594,13 +594,15 @@ def create_database(
 	# create nslist table
 	col_name = [ 'nslist_name' ]
 	col_type = [ 'text' ]
-	row_list = list( nslist_table.keys() )
+	row_list = list()
+	for nslist_name in nslist_table :
+		row_list.append( [ nslist_name ] )
 	tbl_name = 'nslist'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#
 	global_nslist_name2id = dict()
 	for i in range( len( row_list ) ) :
-		global_nslist_name2id[ row_list[i] ] = i
+		global_nslist_name2id[ row_list[i][0] ] = i
 	# ------------------------------------------------------------------------
 	# create nslist_pair table
 	col_name = [ 'nslist_id', 'node_id', 'smooth_id' ]
@@ -612,7 +614,7 @@ def create_database(
 		nslist_id = global_nslist_name2id[key]
 		for pair in pair_list :
 			node_id   = global_node_name2id[ pair[0] ]
-			smooth_id = global_node_name2id[ pair[1] ]
+			smooth_id = global_smooth_name2id[ pair[1] ]
 			row_list.append( [ nslist_id, node_id, smooth_id ] )
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------

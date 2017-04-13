@@ -62,11 +62,11 @@ def fun_iota_child(a, t) :
 	return ('prior_iota_child',   'prior_difference', 'prior_difference')
 #
 def fun_chi_world(a, t) :
-	return (chi_true['world',     'prior_difference', 'prior_difference')
+	return (chi_true['world'],    'prior_difference', 'prior_difference')
 def fun_chi_child_1(a, t) :
-	return (chi_true['child_1',   'prior_difference', 'prior_difference')
+	return (chi_true['child_1'],  'prior_difference', 'prior_difference')
 def fun_chi_child_2(a, t) :
-	return (chi_true['child_2',   'prior_difference', 'prior_difference')
+	return (chi_true['child_2'],  'prior_difference', 'prior_difference')
 # ------------------------------------------------------------------------
 # function that creates example database
 def example_db (file_name) :
@@ -92,7 +92,7 @@ def example_db (file_name) :
 			'name':         'weight_constant',
 			'age_id':       [0],
 			'time_id':      [0],
-			'fun':          const_fun_1
+			'fun':          constant_one_fun
 	} ]
 	#
 	# covariate table:
@@ -101,7 +101,7 @@ def example_db (file_name) :
 	# mulcov table:
 	mulcov_table = list()
 	#
-	# avgint table: empty
+	# avgint table:
 	avgint_table = list()
 	# --------------------------------------------------------------------------
 	# data table:
@@ -110,7 +110,7 @@ def example_db (file_name) :
 	row = {
 		'meas_value':  0.0,             # not used (will be simulated)
 		'density':     'gaussian',
-		'weight':      'constant',
+		'weight':      'weight_constant',
 		'hold_out':     False,
 		'time_lower':   2000.,
 		'time_upper':   2000.
@@ -216,17 +216,17 @@ def example_db (file_name) :
 			'child_smooth':  None,
 			'child_nslist':  None
 		},{	'name':          'iota',
-			'parent_smooth': 'smooth_iota',
-			'child_smooth':  None,
+			'parent_smooth': 'smooth_iota_world',
+			'child_smooth':  'smooth_iota_child',
 			'child_nslist':  None
 		},{	'name':          'rho',
 			'parent_smooth': None,
 			'child_smooth':  None,
 			'child_nslist':  None
 		},{	'name':          'chi',
-			'parent_smooth': 'smooth_chi',
+			'parent_smooth': 'smooth_chi_world',
 			'child_smooth':  None,
-			'child_nslist':  'smooth_chi_children'
+			'child_nslist':  'nslist_chi_children'
 		},{	'name':          'omega',
 			'parent_smooth': None,
 			'child_smooth':  None,
@@ -236,7 +236,7 @@ def example_db (file_name) :
 	# --------------------------------------------------------------------------
 	# nslist_table:
 	nslist_table = dict()
-	nslist_table['smooth_chi_children'] = [
+	nslist_table['nslist_chi_children'] = [
 		('child_1', 'smooth_chi_child_1'),
 		('child_2', 'smooth_chi_child_2')
 	]
@@ -308,7 +308,7 @@ for var_id in range( len(var_table) ) :
 	#
 	var_type  = var_row ['var_type']
 	node_id   = var_row ['node_id']
-	rate_id   = var_info['rate_id']
+	rate_id   = var_row['rate_id']
 	rate_name = rate_table[rate_id]['rate_name']
 	node_name = node_table[node_id]['node_name']
 	#

@@ -139,16 +139,15 @@ void check_child_nslist(
 			child_found[i] = false;
 		//
 		// run thourgh the entries in this list
-		for(size_t i = 0; i < nslist_pair.size(); i++)
-		if( nslist_pair[i].nslist_id == nslist_id )
-		{	size_t node_id        = nslist_pair[i].node_id;
-			size_t nslist_pair_id = i;
+		for(size_t pair_id = 0; pair_id < nslist_pair.size(); pair_id++)
+		if( nslist_pair[pair_id].nslist_id == nslist_id )
+		{	size_t node_id        = nslist_pair[pair_id].node_id;
 			string table_name     = "nslist_pair";
 			if( node_table[node_id].parent != parent_node_id )
 			{	msg  = node_table[node_id].node_name;
 				msg += " is not a child of the parent node in option table ";
 				msg += node_table[parent_node_id].node_name;
-				error_exit(msg, table_name, nslist_pair_id);
+				error_exit(msg, table_name, pair_id);
 			}
 			for(size_t i = 0; i < n_child; i++)
 			{	if( child_node_id[i] == node_id )
@@ -156,18 +155,19 @@ void check_child_nslist(
 					{	msg += "node " + node_table[node_id].node_name;
 						msg += " found multiple times in the list ";
 						msg += nslist_table[nslist_id];
-						error_exit(msg, table_name, nslist_pair_id);
+						error_exit(msg, table_name, pair_id);
 					}
 					child_found[i] = true;
 				}
 			}
-			for(size_t i = 0; i < n_child; i++) if( ! child_found[i] )
-			{	size_t node_id = child_node_id[i];
-				msg += "child node " + node_table[node_id].node_name;
-				msg += " not found in the list ";
-				msg += nslist_table[nslist_id];
-				error_exit(msg, table_name, nslist_pair_id);
-			}
+		}
+		for(size_t i = 0; i < n_child; i++) if( ! child_found[i] )
+		{	size_t node_id = child_node_id[i];
+			string table_name = "nslist";
+			msg += "child node " + node_table[node_id].node_name;
+			msg += " not found in the list ";
+			msg += nslist_table[nslist_id];
+			error_exit(msg, table_name, nslist_id);
 		}
 	}
 }
