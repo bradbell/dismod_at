@@ -126,7 +126,7 @@ void check_child_prior(
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{
 		int child_smooth_id  = rate_table[rate_id].child_smooth_id;
-		int child_nslist_id  = rate_table[rate_id].child_smooth_id;
+		int child_nslist_id  = rate_table[rate_id].child_nslist_id;
 		//
 		// list of child smooth_id for this rate
 		CppAD::vector<int> smooth_list;

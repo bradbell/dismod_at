@@ -221,21 +221,25 @@ n_child_        ( child_id2node_id.size() )
 	{	rate_info_[rate_id].resize(n_child_ + 1);
 		for(size_t j = 0;  j <= n_child_; j++)
 		{	size_t smooth_id;
-			if(j < n_child_ )
-				smooth_id = rate_table[rate_id].child_smooth_id;
-			else
+			if(j == n_child_ )
 				smooth_id = rate_table[rate_id].parent_smooth_id;
-			size_t child_nslist_id = rate_table[rate_id].child_nslist_id;
-			if( j < n_child_ &&  child_nslist_id != DISMOD_AT_NULL_SIZE_T )
-			{	// search for a replacement smooth_id for this child
-				size_t child_node_id = child_id2node_id[j];
-				for(size_t i = 0; i < nslist_pair.size(); i++)
-				{	size_t nslist_id = nslist_pair[i].nslist_id;
-					size_t node_id   = nslist_pair[i].node_id;
-					bool   match     = nslist_id == child_nslist_id;
-					match           &= node_id   == child_node_id;
-					if( match )
-						smooth_id = nslist_pair[i].smooth_id;
+			else
+			{	smooth_id = rate_table[rate_id].child_smooth_id;
+				size_t child_nslist_id = rate_table[rate_id].child_nslist_id;
+				if( child_nslist_id != DISMOD_AT_NULL_SIZE_T )
+				{	// search for the smooth_id for this child
+					assert( smooth_id == DISMOD_AT_NULL_SIZE_T );
+					size_t child_node_id = child_id2node_id[j];
+					for(size_t i = 0; i < nslist_pair.size(); i++)
+					{	size_t nslist_id = nslist_pair[i].nslist_id;
+						size_t node_id   = nslist_pair[i].node_id;
+						bool   match     = nslist_id == child_nslist_id;
+						match           &= node_id   == child_node_id;
+						if( match )
+							smooth_id = nslist_pair[i].smooth_id;
+					}
+					// following should have been checked previously
+					assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
 				}
 			}
 			rate_info_[rate_id][j].smooth_id = smooth_id;

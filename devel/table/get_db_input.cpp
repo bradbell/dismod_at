@@ -83,6 +83,7 @@ $end
 # include <dismod_at/check_pini_n_age.hpp>
 # include <dismod_at/check_rate_limit.hpp>
 # include <dismod_at/check_child_prior.hpp>
+# include <dismod_at/check_child_nslist.hpp>
 # include <dismod_at/null_int.hpp>
 # include <cppad/utility/to_string.hpp>
 # include <dismod_at/error_exit.hpp>
@@ -204,6 +205,11 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(rate, parent_smooth_id, smooth);
 	DISMOD_AT_CHECK_PRIMARY_ID(rate, child_nslist_id,  nslist);
 
+	// nslist_pair table
+	DISMOD_AT_CHECK_PRIMARY_ID(nslist_pair, nslist_id, nslist);
+	DISMOD_AT_CHECK_PRIMARY_ID(nslist_pair, smooth_id, smooth);
+	DISMOD_AT_CHECK_PRIMARY_ID(nslist_pair, node_id,   node);
+
 	// -----------------------------------------------------------------------
 	// get rate_case
 	std::string rate_case;
@@ -235,7 +241,14 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 		db_input.nslist_pair_table ,
 		db_input.prior_table
 	);
-
+	check_child_nslist(
+		db                         ,
+		db_input.option_table      ,
+		db_input.rate_table        ,
+		db_input.node_table        ,
+		db_input.nslist_table      ,
+		db_input.nslist_pair_table
+	);
 	return;
 }
 

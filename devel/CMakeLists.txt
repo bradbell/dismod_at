@@ -33,6 +33,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/pack_prior.cpp
 
 	table/check_child_prior.cpp
+	table/check_child_nslist.cpp
 	table/check_pini_n_age.cpp
 	table/check_rate_limit.cpp
 	table/check_table_id.cpp

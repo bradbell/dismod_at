@@ -161,9 +161,9 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 			msg += " but found " + rate_name[rate_id];
 			error_exit(msg, table_name, rate_id);
 		}
-		if( child_smooth_id[rate_id] == DISMOD_AT_NULL_INT
+		if( child_smooth_id[rate_id] != DISMOD_AT_NULL_INT
 		&&  child_nslist_id[rate_id] != DISMOD_AT_NULL_INT )
-		{	msg = "child_smooth_id is null, but child_nslist_id is not null";
+		{	msg = "both child_smooth_id and child_nslist_id are not null";
 			error_exit(msg, table_name, rate_id);
 		}
 		rate_table[rate_id].rate             = rate_enum(rate_id);

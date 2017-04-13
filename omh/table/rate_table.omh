@@ -89,19 +89,21 @@ $head child_smooth_id$$
 This column has type $code integer$$ and its value is a
 $cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
-It specifies the default smoothing used as a prior for this rate
+It specifies a single smoothing used as a prior for this rate
 when fitting all the children (all the random effects for this rate).
+If $icode child_smooth_id$$ is not $code null$$,
+$icode child_nslist_list$$ must be $code null$$.
+If both are $code null$$, there are no random effects for this rate.
 
 $head child_nslist_id$$
-This column has type $code integer$$ and is $code null$$ or a
+This column has type $code integer$$ and is a
 $cref/nslist_id/nslist_pair_table/nslist_id/$$.
-If $icode child_nslist_id$$ is $code null$$,
-the default smoothing is used for all the children.
-If it is not $code null$$,
-it specifies a list of smoothing that is used to override the
-default $icode child_smooth_id$$ for this rate.
 For each smoothing in the list,
-$cref/node_id/nslist_pair_table/node_id/$$ must correspond to a child node.
+$cref/node_id/nslist_pair_table/node_id/$$ must correspond to a child node
+and all the child nodes must be included.
+If $icode child_nslist_list$$ is not $code null$$,
+$icode child_smooth_id$$ must be $code null$$.
+If both are $code null$$, there are no random effects for this rate.
 
 $head Child Restrictions$$
 The child smoothing
