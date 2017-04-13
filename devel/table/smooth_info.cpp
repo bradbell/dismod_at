@@ -52,7 +52,7 @@ $icode%a_id%      = %s_info%.age_id(%i%)
 %$$
 $icode%t_id%      = %s_info%.time_id(%j%)
 %$$
-$icode%c_value%   = %s_info%.%type%const_value(%i%, %j%)
+$icode%c_value%   = %s_info%.const_value(%i%, %j%)
 %$$
 $icode%i_type%    = %s_info%.%type%_prior_id(%i%, %j%)
 %$$

@@ -82,7 +82,7 @@ $$
 $section Prior Ids In Same Order As Packed Variables$$
 
 $head Syntax$$
-$icode%pack_value_prior(
+$codei%pack_value_prior(
 	%value_prior_id_out%, %const_value_out%, %pack_object%, %s_info_vec%
 )%$$
 

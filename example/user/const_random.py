@@ -25,7 +25,7 @@
 # Values used to simulate data, child values are in log space; e.g.,
 # actual iota_child_1 = exp( iota_true['child_1'] ) * iota_true['world')
 iota_true = {'world':0.01, 'child_1':-0.7, 'child_2':+0.7}
-chi_true  = {'world':0.1,  'child_1':-0.7, 'child_2':+0.7}
+chi_true  = {'world':0.1,  'child_1':+0.7, 'child_2':-0.7}
 n_data    = 51
 # ------------------------------------------------------------------------
 import sys
@@ -121,10 +121,11 @@ def example_db (file_name) :
 		age              = age_list[0] + (age_list[-1] - age_list[0])*fraction
 		row['age_lower'] = age
 		row['age_upper'] = age
-		row['node']      = 'world'
 		row['integrand'] = 'prevalence'
 		row['meas_std']  = 0.01
 		row['data_name'] = 'd' + str(data_id)
+		node_id          = data_id % len( node_table )
+		row['node']      = node_table[node_id]['name']
 		data_table.append( copy.copy(row) )
 	# --------------------------------------------------------------------------
 	# prior_table
@@ -349,7 +350,7 @@ for var_id in range( len(var_table) ) :
 	fit_value = fit_var_table[var_id]['variable_value']
 	var_row   = var_table[var_id]
 	node_id   = var_row ['node_id']
-	rate_id   = var_info['rate_id']
+	rate_id   = var_row['rate_id']
 	rate_name = rate_table[rate_id]['rate_name']
 	node_name = node_table[node_id]['node_name']
 	if rate_name == 'iota' :
