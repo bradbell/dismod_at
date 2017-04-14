@@ -46,6 +46,9 @@ private:
 	// number of children
 	const size_t n_child_;
 
+	// number of random effects
+	size_t n_random_;
+
 	// mulstd variable offsets
 	CppAD::vector<size_t>  mulstd_offset_;
 
@@ -84,6 +87,9 @@ public:
 
 	// number of smoothings
 	size_t smooth_size(void) const;
+
+	// number of random_effects
+	size_t random_size(void) const;
 
 	// mulstd
 	size_t mulstd_offset(size_t smooth_id, size_t k) const;

@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -21,8 +21,6 @@ $$
 $section Setting and Getting the Random Effect Vector$$
 
 $head Syntax$$
-$icode%n_random% = number_random(%pack_object%)
-%$$
 $icode%pack_index% = random2var_id(%pack_object%)
 %$$
 $codei%pack_random(%pack_object%, %pack_vec%, %random_vec%)
@@ -49,11 +47,6 @@ $codei%
 It is the $cref pack_info$$ information corresponding
 to the $cref model_variables$$.
 
-$head n_random$$
-This return value has prototype
-$codei%
-	size_t %n_random%
-%$$
 It is the number of
 $cref/random effects/model_variables/Random Effects, u/$$ in the model.
 
@@ -132,29 +125,6 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 // -------------------------------------------------------------------------
-// number random
-size_t number_random(const pack_info&  pack_object)
-{	size_t n_child = pack_object.child_size();
-	if( n_child == 0 )
-		return 0;
-	//
-	size_t sum = 0;
-	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	pack_info::subvec_info info = pack_object.rate_info(rate_id, 0);
-		if( info.smooth_id != DISMOD_AT_NULL_SIZE_T )
-		{	size_t n_var = pack_object.rate_info(rate_id, 0).n_var;
-			sum += n_var * n_child;
-# ifndef NDEBUG
-			for(size_t j = 0; j < n_child; j++)
-			{	info = pack_object.rate_info(rate_id, j);
-				assert( n_var == info.n_var );
-			}
-# endif
-		}
-	}
-	return sum;
-}
-// -------------------------------------------------------------------------
 // random2var_id
 CppAD::vector<size_t> random2var_id(const pack_info& pack_object )
 {
@@ -165,7 +135,7 @@ CppAD::vector<size_t> random2var_id(const pack_info& pack_object )
 		return result;
 
 	// resize result
-	size_t n_random = number_random(pack_object);
+	size_t n_random = pack_object.random_size();
 	result.resize( n_random );
 
 	size_t random_index = 0;
@@ -190,7 +160,7 @@ void unpack_random(
 	const CppAD::vector<Float>&  pack_vec   ,
 	CppAD::vector<Float>&        random_vec )
 {
-	assert( random_vec.size() == number_random(pack_object) );
+	assert( random_vec.size() == pack_object.random_size() );
 	assert( pack_vec.size()   == pack_object.size() );
 	//
 	size_t n_child = pack_object.child_size();
@@ -221,7 +191,7 @@ void pack_random(
 	CppAD::vector<Float>&        pack_vec   ,
 	const CppAD::vector<Float>&  random_vec )
 {
-	assert( random_vec.size() == number_random(pack_object) );
+	assert( random_vec.size() == pack_object.random_size() );
 	assert( pack_vec.size()   == pack_object.size() );
 	//
 	size_t n_child = pack_object.child_size();

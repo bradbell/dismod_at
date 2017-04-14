@@ -72,7 +72,7 @@ bool random_effect_xam(void)
 	);
 	//
 	// check n_random_effect
-	ok &= n_random_effect == dismod_at::number_random(pack_object);
+	ok &= n_random_effect == pack_object.random_size();
 
 	// pack_vec
 	CppAD::vector<double> pack_vec( pack_object.size() );

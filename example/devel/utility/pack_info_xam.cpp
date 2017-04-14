@@ -57,26 +57,27 @@ bool pack_info_xam(void)
 	size_t n_mulcov = 4;
 	vector<dismod_at::mulcov_struct> mulcov_table(n_mulcov);
 	mulcov_table[0].mulcov_type  = dismod_at::meas_value_enum;
-	mulcov_table[0].rate_id      = -1;
+	mulcov_table[0].rate_id      = DISMOD_AT_NULL_INT;
 	mulcov_table[0].integrand_id = 0;
 	mulcov_table[0].covariate_id = 0;
 	mulcov_table[0].smooth_id    = 0;
 	mulcov_table[1].mulcov_type  = dismod_at::meas_value_enum;
-	mulcov_table[1].rate_id      = -1;
+	mulcov_table[1].rate_id      = DISMOD_AT_NULL_INT;
 	mulcov_table[1].integrand_id = 1;
 	mulcov_table[1].covariate_id = 1;
 	mulcov_table[1].smooth_id    = 1;
 	mulcov_table[2].mulcov_type  = dismod_at::meas_std_enum;
-	mulcov_table[2].rate_id      = -1;
+	mulcov_table[2].rate_id      = DISMOD_AT_NULL_INT;
 	mulcov_table[2].integrand_id = 2;
 	mulcov_table[2].covariate_id = 2;
 	mulcov_table[2].smooth_id    = 2;
 	mulcov_table[3].mulcov_type  = dismod_at::rate_value_enum;
 	mulcov_table[3].rate_id      = 3;
-	mulcov_table[3].integrand_id = -1;
+	mulcov_table[3].integrand_id = DISMOD_AT_NULL_INT;
 	mulcov_table[3].covariate_id = 3;
 	mulcov_table[3].smooth_id    = 3;
 	//
+	size_t n_random = 0;
 	vector<dismod_at::rate_struct> rate_table(dismod_at::number_rate_enum);
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	size_t parent_smooth_id = 0;
@@ -85,6 +86,9 @@ bool pack_info_xam(void)
 		{	parent_smooth_id = 2;
 			child_smooth_id  = 2;
 		}
+		size_t n_age  = smooth_table[child_smooth_id].n_age;
+		size_t n_time = smooth_table[child_smooth_id].n_time;
+		n_random += n_child * n_age * n_time;
 		rate_table[rate_id].parent_smooth_id = parent_smooth_id;
 		rate_table[rate_id].child_smooth_id  = child_smooth_id;
 		rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
@@ -98,10 +102,11 @@ bool pack_info_xam(void)
 		child_id2node_id, smooth_table, mulcov_table, rate_table, nslist_pair
 	);
 	//
-	// check integrand_size, child_size, and smooth_size
+	// check integrand_size, child_size, smooth_size, and random_size
 	ok &= n_child == pack_object.child_size();
 	ok &= n_integrand == pack_object.integrand_size();
 	ok &= n_smooth == pack_object.smooth_size();
+	ok &= n_random == pack_object.random_size();
 	//
 	// packed vector
 	size_t size = pack_object.size();

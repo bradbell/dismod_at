@@ -150,6 +150,16 @@ $codei%
 %$$
 and is the value is $icode%smooth_table%.size()%$$ in the constructor.
 
+$head random_size$$
+This function is $code const$$.
+Its return value has prototype
+$codei%
+	size_t %random_size%
+%$$
+and is the number of
+$cref/random effects/model_variables/Random Effects, u/$$ in the model
+(counting those that are constrained with equal upper and lower limits).
+
 $head Age-Time Order$$
 When an function of age and time is stored with a specified $icode offset$$
 in a packed vector,
@@ -215,7 +225,8 @@ n_child_        ( child_id2node_id.size() )
 			mulstd_offset_[smooth_id * 3 + 2] = offset++;
 	}
 
-	// rate_info_
+	// rate_info_ and n_random_
+	n_random_ = 0;
 	rate_info_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	rate_info_[rate_id].resize(n_child_ + 1);
@@ -256,6 +267,11 @@ n_child_        ( child_id2node_id.size() )
 				offset += n_var;
 				// check_rate_table should have checked this assumption
 				assert( rate_id != pini_enum || n_age == 1 );
+				//
+				if( j < n_child_ )
+				{	// these variables are random effects
+					n_random_ += n_var;
+				}
 			}
 		}
 	}
@@ -370,6 +386,10 @@ size_t pack_info::child_size(void) const
 // smooth_size
 size_t pack_info::smooth_size(void) const
 {	return n_smooth_; }
+
+// random_size
+size_t pack_info::random_size(void) const
+{	return n_random_; }
 
 /*
 ------------------------------------------------------------------------------

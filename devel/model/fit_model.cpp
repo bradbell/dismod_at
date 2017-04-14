@@ -22,7 +22,7 @@ CppAD::mixed::sparse_rcv ran_con_rcv(
 	size_t n_var = pack_object.size();
 	//
 	// number of random effects
-	size_t n_random = number_random(pack_object);
+	size_t n_random = pack_object.random_size();
 	//
 	// number of rates
 	size_t n_rate = dismod_at::number_rate_enum;
@@ -233,15 +233,15 @@ $end
 // (The value of bool_sparsity does not seem to affect speed test results.)
 : cppad_mixed(
 	number_fixed(pack_object)                          , // n_fixed
-	number_random(pack_object) * (random_bound > 0.0)  , // n_random
+	pack_object.random_size() * (random_bound > 0.0)   , // n_random
 	quasi_fixed                                        , // quasi_fixed
 	false                                              , // bool_sparsity
 	ran_con_rcv(random_zero_sum, pack_object)          ) // A_rcv
 ,
 db_            (db)                                 ,
 fit_or_sample_ ( fit_or_sample                   )  ,
-n_fixed_       ( number_fixed(pack_object)  )  ,
-n_random_      ( number_random(pack_object) )  ,
+n_fixed_       ( number_fixed(pack_object) )        ,
+n_random_      ( pack_object.random_size() )        ,
 pack_object_   ( pack_object )                      ,
 start_var_     ( start_var   )                      ,
 prior_table_   ( prior_table )                      ,
@@ -967,7 +967,7 @@ fit_model::a2d_vector fit_model::ran_likelihood(
 fit_model::a1d_vector fit_model::fix_likelihood(
 	const a1d_vector& fixed_vec   )
 {	// local vectors
-	a1d_vector random_vec( number_random(pack_object_) );
+	a1d_vector random_vec( pack_object_.random_size() );
 	a1d_vector a1_pack_vec( pack_object_.size() );
 	//
 	// set random_vec
