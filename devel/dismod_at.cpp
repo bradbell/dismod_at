@@ -1388,11 +1388,6 @@ void sample_command(
 		db, table_name, column_name, lagrange_dtime
 	);
 	//
-	// random_opt
-	size_t n_random = number_random(pack_object);
-	vector<double> random_opt(n_random);
-	unpack_random(pack_object, variable_value, random_opt);
-	//
 	// fit_object
 	string fit_or_sample = "sample";
 	dismod_at::fit_model fit_object(
