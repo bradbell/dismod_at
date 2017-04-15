@@ -26,7 +26,7 @@
 # actual iota_child_1 = exp( iota_true['child_1'] ) * iota_true['world')
 iota_true = {'world':0.01, 'child_1':-0.7, 'child_2':+0.7}
 chi_true  = {'world':0.1,  'child_1':+0.7, 'child_2':-0.7}
-n_data    = 51
+n_data    = 21
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -122,7 +122,7 @@ def example_db (file_name) :
 		row['age_lower'] = age
 		row['age_upper'] = age
 		row['integrand'] = 'prevalence'
-		row['meas_std']  = 0.01
+		row['meas_std']  = 0.001
 		row['data_name'] = 'd' + str(data_id)
 		node_id          = data_id % len( node_table )
 		row['node']      = node_table[node_id]['name']
@@ -354,9 +354,10 @@ for var_id in range( len(var_table) ) :
 	rate_name = rate_table[rate_id]['rate_name']
 	node_name = node_table[node_id]['node_name']
 	if rate_name == 'iota' :
-		ok = abs( fit_value / iota_true[node_name] - 1.0 ) < .05
+		relerr = fit_value / iota_true[node_name] - 1.0
+		ok     = abs(relerr)  < .05
 		if not ok :
-			print( "iota relative error = ", fit_value / iota_true[node_name] )
+			print( "iota relative error = ", relerr )
 			assert False
 	else :
 		assert fit_value == chi_true[node_name]

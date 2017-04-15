@@ -18,7 +18,7 @@ $$
 $section C++ n_random_const: Example and Test$$
 
 $code
-$srcfile%example/devel/utility/pack_value_prior_xam.cpp%0
+$srcfile%example/devel/utility/n_random_const_xam.cpp%0
 	%// BEGIN C++%// END C++%1%$$
 $$
 

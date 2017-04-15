@@ -12,6 +12,7 @@
 
 FOREACH(user_case
 	asymptotic
+	const_random
 	const_value
 	diff_constraint
 	fit_sim
@@ -35,6 +36,7 @@ ADD_CUSTOM_TARGET(
 	check_example_user
 	DEPENDS
 	check_example_user_asymptotic
+	check_example_user_const_random
 	check_example_user_const_value
 	check_example_user_diff_constraint
 	check_example_user_fit_sim

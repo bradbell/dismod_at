@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/log_message.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/n_random_const.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 CppAD::mixed::sparse_rcv ran_con_rcv(
@@ -232,12 +233,19 @@ $end
 // base class constructor
 // (The value of bool_sparsity does not seem to affect speed test results.)
 : cppad_mixed(
-	number_fixed(pack_object)                          , // n_fixed
-	pack_object.random_size() * (random_bound > 0.0)   , // n_random
-	quasi_fixed                                        , // quasi_fixed
-	false                                              , // bool_sparsity
-	ran_con_rcv(random_zero_sum, pack_object)          ) // A_rcv
-,
+	// n_fixed
+	number_fixed(pack_object),
+	// n_random in dismod_at minus number random effects that are constant
+	pack_object.random_size() - number_random_const(
+		random_bound, pack_object, s_info_vec, prior_table
+	),
+	// quasi_fixed
+	quasi_fixed,
+	// bool_sparsity
+	false,
+	// A_rcv
+	ran_con_rcv(random_zero_sum, pack_object)
+),
 db_            (db)                                 ,
 fit_or_sample_ ( fit_or_sample                   )  ,
 n_fixed_       ( number_fixed(pack_object) )        ,
@@ -251,18 +259,6 @@ prior_object_  ( prior_object )
 {	assert( random_bound >= 0.0 );
 	assert( fit_or_sample == "fit" || fit_or_sample == "sample" );
 	// ----------------------------------------------------------------------
-	// random_lower_, random_upper_, n_random_equal_
-	double infinity = std::numeric_limits<double>::infinity();
-	random_lower_.resize(n_random_);
-	random_upper_.resize(n_random_);
-	for(size_t i = 0; i < n_random_; i++)
-	{	random_lower_[i] = std::max( - infinity, - random_bound );
-		random_upper_[i] = std::min( + infinity, + random_bound );
-	}
-	n_random_equal_ = 0;
-	if( random_bound <= 0.0 )
-		n_random_equal_ = n_random_;
-	// ----------------------------------------------------------------------
 	// n_var
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object.size() == n_var );
@@ -271,6 +267,39 @@ prior_object_  ( prior_object )
 	pack_value_prior(value_prior_id_, const_value_, pack_object, s_info_vec);
 	assert( value_prior_id_.size() == n_var );
 	assert( const_value_.size() == n_var );
+	// ----------------------------------------------------------------------
+	// random_lower_, random_upper_
+	random_lower_.resize(n_random_);
+	random_upper_.resize(n_random_);
+	if( random_bound == 0.0 )
+	{	for(size_t i = 0; i < n_random_; i++)
+		{	random_lower_[i] = 0.0;
+			random_upper_[i] = 0.0;
+		}
+	}
+	else
+	{	d_vector pack_vec = const_value_;
+		for(size_t i = 0; i < n_var; i++)
+			if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
+				pack_vec[i] = prior_table_[ value_prior_id_[i] ].lower;
+		unpack_random(pack_object_, pack_vec, random_lower_);
+		pack_vec = const_value_;
+		for(size_t i = 0; i < n_var; i++)
+			if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
+				pack_vec[i] = prior_table_[ value_prior_id_[i] ].upper;
+		unpack_random(pack_object_, pack_vec, random_upper_);
+	}
+	// -----------------------------------------------------------------------
+	// n_random_equal_
+	n_random_equal_ = 0;
+	for(size_t i = 0; i < n_random_; i++)
+	{	if( random_lower_[i] == random_upper_[i] )
+			++n_random_equal_;
+	}
+	//
+	assert( n_random_equal_ == number_random_const(
+		random_bound, pack_object, s_info_vec, prior_table
+	) );
 	// ----------------------------------------------------------------------
 	// diff_prior_
 	CppAD::vector<diff_prior_struct> diff_prior_tmp =
