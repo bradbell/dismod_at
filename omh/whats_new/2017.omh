@@ -30,6 +30,15 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-15$$
+It is now possible to constrain each random effect to have a specific value;
+see
+$cref/constant random effects
+	/rate_table
+	/Child Restrictions
+	/Constant Random Effects
+/$$.
+
 $head 04-09$$
 $list number$$
 The $cref/const_value/smooth_grid_table/const_value/$$ option

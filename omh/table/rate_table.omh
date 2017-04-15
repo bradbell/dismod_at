@@ -91,9 +91,13 @@ $cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
 It specifies a single smoothing used as a prior for this rate
 when fitting all the children (all the random effects for this rate).
+
+$subhead null$$
 If $icode child_smooth_id$$ is not $code null$$,
 $icode child_nslist_list$$ must be $code null$$.
-If both are $code null$$, there are no random effects for this rate.
+If both are $code null$$, there are no
+$cref/random effects/model_variables/Random Effects, u/$$.
+for this rate.
 
 $head child_nslist_id$$
 This column has type $code integer$$ and is a
@@ -101,9 +105,13 @@ $cref/nslist_id/nslist_pair_table/nslist_id/$$.
 For each smoothing in the list,
 $cref/node_id/nslist_pair_table/node_id/$$ must correspond to a child node
 and all the child nodes must be included.
+
+$subhead null$$
 If $icode child_nslist_list$$ is not $code null$$,
 $icode child_smooth_id$$ must be $code null$$.
-If both are $code null$$, there are no random effects for this rate.
+If both are $code null$$, there are no
+$cref/random effects/model_variables/Random Effects, u/$$.
+for this rate.
 
 $head Child Restrictions$$
 The child smoothing
@@ -112,31 +120,29 @@ $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
 must satisfy the following conditions at each grid point:
 
-$list number$$
+$subhead Constant Random Effects$$
 If the
 $cref/lower/prior_table/lower/$$ and $cref/upper/prior_table/upper/$$ limit
-are equal, not other conditions need be satisfied.
-Otherwise the other conditions below must be satisfied:
-$lnext
+are equal, no other conditions need be satisfied.
+Otherwise the other conditions below must be satisfied.
+
+$subhead Gaussian$$
 The $cref/density_id/prior_table/density_id/$$ must correspond
 to a Gaussian.
-$lnext
+
+$subhead mean$$
 The $cref/mean/prior_table/mean/$$ must be zero.
-$lnext
+
+$subhead std$$
 The $cref/std/prior_table/std/$$ must be greater than zero.
-$lnext
+
+$subhead lower$$
 The $cref/lower/prior_table/lower/$$ limit must be $code null$$
 (which gets interpreted as minus infinity).
-$lnext
+
+$subhead upper$$
 The $cref/upper/prior_table/upper/$$ limit must be $code null$$
 (which gets interpreted as plus infinity).
-$lend
-
-$subhead null$$
-If $icode child_smooth_id$$ and $icode child_nslist_id$$
-are $code null$$, the corresponding child rate
-is always zero and no variables are allocated for the corresponding
-$cref/random effects/model_variables/Random Effects, u/$$.
 
 $children%example/table/rate_table.py
 %$$

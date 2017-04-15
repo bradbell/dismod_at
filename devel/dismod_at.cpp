@@ -495,6 +495,7 @@ void start_command(
 -----------------------------------------------------------------------------
 $begin fit_command$$
 $spell
+	nslist
 	avgint
 	var
 	arg
@@ -538,8 +539,8 @@ It is a comparison of the model and data corresponding to the fit results.
 
 $head Random Effects$$
 A model has random effects if one of the
-$icode child_smooth_id$$ values is not
-$cref/null/rate_table/Child Restrictions/null/$$.
+$cref/child_smooth_id/rate_table/child_smooth_id/$$ or
+$cref/child_nslist_id/rate_table/child_nslist_id/$$ is not $code null$$.
 In this case, it is suggest that you first fit with
 $cref/random_bound/option_table/Optimizer/random_bound/$$ equal to zero.
 Then change the random bound to be non-zero,
