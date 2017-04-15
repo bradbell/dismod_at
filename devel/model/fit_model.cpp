@@ -269,25 +269,31 @@ prior_object_  ( prior_object )
 	assert( const_value_.size() == n_var );
 	// ----------------------------------------------------------------------
 	// random_lower_, random_upper_
+	//
+	// lower
+	d_vector pack_vec = const_value_;
+	for(size_t i = 0; i < n_var; i++)
+		if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = prior_table_[ value_prior_id_[i] ].lower;
 	random_lower_.resize(n_random_);
+	unpack_random(pack_object_, pack_vec, random_lower_);
+	//
+	// upper
+	pack_vec = const_value_;
+	for(size_t i = 0; i < n_var; i++)
+		if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = prior_table_[ value_prior_id_[i] ].upper;
 	random_upper_.resize(n_random_);
+	unpack_random(pack_object_, pack_vec, random_upper_);
+	//
+	// check bound
 	if( random_bound == 0.0 )
 	{	for(size_t i = 0; i < n_random_; i++)
-		{	random_lower_[i] = 0.0;
-			random_upper_[i] = 0.0;
+		{	if( random_upper_[i] == std::numeric_limits<double>::infinity() )
+				random_lower_[i] = random_upper_[i] = 0.0;
+			else
+				assert( random_lower_[i] == random_upper_[i] );
 		}
-	}
-	else
-	{	d_vector pack_vec = const_value_;
-		for(size_t i = 0; i < n_var; i++)
-			if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
-				pack_vec[i] = prior_table_[ value_prior_id_[i] ].lower;
-		unpack_random(pack_object_, pack_vec, random_lower_);
-		pack_vec = const_value_;
-		for(size_t i = 0; i < n_var; i++)
-			if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
-				pack_vec[i] = prior_table_[ value_prior_id_[i] ].upper;
-		unpack_random(pack_object_, pack_vec, random_upper_);
 	}
 	// -----------------------------------------------------------------------
 	// n_random_equal_
