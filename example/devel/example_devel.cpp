@@ -51,6 +51,7 @@ extern bool pack_info_xam(void);
 extern bool pack_diff_prior_xam(void);
 extern bool pack_value_prior_xam(void);
 extern bool random_effect_xam(void);
+extern bool n_random_const_xam(void);
 extern bool residual_density_xam(void);
 extern bool sim_random_xam(void);
 extern bool smooth2ode_xam(void);
@@ -140,6 +141,7 @@ int main(void)
 	RUN(pack_value_prior_xam);
 	RUN(residual_density_xam);
 	RUN(random_effect_xam);
+	RUN(n_random_const_xam);
 	RUN(sim_random_xam);
 	RUN(smooth2ode_xam);
 	RUN(solve_ode_xam);
