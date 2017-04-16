@@ -293,11 +293,6 @@ because they are treated a parameters, and not random effects,
 in the Laplace approximation.
 
 $lnext
-If $latex u_j$$ is a random effects,
-$latex \exp( u_j )$$ multiplies the  corresponding rate in the
-$cref avg_integrand$$ model.
-
-$lnext
 The special case where $icode random_bound$$ is zero,
 fits as if there were no random effects except for the fact that
 the resulting optimal value can be used as a starting point for fitting
