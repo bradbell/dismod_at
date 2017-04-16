@@ -31,10 +31,20 @@ $childtable%
 %$$
 
 $head 04-16$$
+$list number$$
 The change on 04-15 introduced a bug whereby non-zero values for
 $cref/random_bound/option_table/Optimizer/random_bound/$$ were not having
 any effects.
 This has been fixed.
+$lnext
+The $cref/variables/fit_command/variables/$$ argument was added to the
+fit command. It is better to use $icode variables$$ equal to $code fixed$$,
+a apposed to changing
+$cref/random_bound/option_table/Optimizer/random_bound/$$
+in the $code option$$ table.
+$lnext
+The $cref wish_list$$ was updated.
+$lend
 
 $head 04-15$$
 It is now possible to constrain each random effect to have a specific value;

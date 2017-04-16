@@ -20,9 +20,36 @@ $spell
 	checkpointing
 	pos
 	Jacobian
+	std
 $$
 
 $section Dismod_at Wish List$$
+
+$head Improve Documentation$$
+There are some subtitle issues in the documentation that perhaps should
+be made more explicit (easier to read). For example,
+consider the case where the value and difference priors are
+Log-Gaussian or Log-Laplace.
+In the function
+$cref/V_j/fixed_value/V_j/$$,
+the standard deviation
+$cref/delta_j/fixed_value/delta_j/$$ has the
+same units as the corresponding
+$cref/std/prior_table/std/$$ in the $code prior_table$$.
+In the function
+$cref/A^theta/fixed_diff/Age Differences/A^theta/$$,
+the standard deviation
+$cref/delta_j/fixed_diff/delta_i,j,k/$$ is a coefficient of variation
+for the log of the corresponding values.
+This can be seen by noting the difference in the corresponding
+weighted residual function; see
+Log-Gaussian and Log-Laplace weighted residual functions
+$cref/R
+	/statistic
+	/Weighted Residual Function, R
+	/Log-Gaussian and Log-Laplace
+/$$.
+
 
 $head Fitting Only Random Effect$$
 Extend the $cref fit_command$$ to allow for fitting only
@@ -66,15 +93,17 @@ This change would remove the need for the
 $cref/rate_case/option_table/rate_case/$$ option.
 Note that this will also work with checkpointing.
 
-$head Checkpointing ODE$$
+$head Special Random Effects Hessian$$
 A new option enables the cppad_mixed user
 (in this case dismod_at) to define a special way to compute
 the Hessian w.r.t the random effects; see
 $href%
 http://moby.ihme.washington.edu/bradbell/cppad_mixed/ran_likelihood_hes.htm
 %ran_likelihood_hes
-%$$
-It should greatly reduce memory if we combine this with
+%$$.
+
+$head Checkpointing ODE$$
+It should greatly reduce memory if we use
 CppAD checkpointing of an ODE that has been
 extended to include derivatives with respect to parameters; see
 $href%http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm
