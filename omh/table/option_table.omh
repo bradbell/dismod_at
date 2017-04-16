@@ -316,9 +316,10 @@ $cref model_variables$$.
 
 $lnext
 Note that the theory used to compute
-$cref/asymptotic/sample_command/method/asymptotic/$$ samples does not take
-$icode random_bound$$ into account; i.e., these samples are computed as if
-$icode random_bound$$ is infinity.
+$cref/asymptotic/sample_command/method/asymptotic/$$ samples of the fixed
+effects, does not take $icode random_bound$$ into account.
+On the other hand; the samples of the random effects are withing the
+limits specified by $icode random_bound$$.
 $lend
 
 $subhead fixed_bound_frac$$

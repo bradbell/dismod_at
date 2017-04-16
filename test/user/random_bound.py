@@ -8,23 +8,23 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 #
-# testing effect of random bounds on sample command
+# testing effect of random bounds greater than zero and less than infinity
 #
-iota_true = 1e-2;
+iota_true = { 'north_america' : 1e-2, 'united_states' : 0.7, 'canada' : -0.7 }
+random_bound = 0.6
 # ------------------------------------------------------------------------
 import sys
 import os
 import distutils.dir_util
 import subprocess
 import copy
-import math
+from math import exp
 test_program = 'test/user/random_bound.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
 	usage += 'and working directory is the dismod_at distribution directory\n'
 	sys.exit(usage)
-print(test_program)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
@@ -91,17 +91,16 @@ def example_db (file_name) :
 		'age_lower':    50.0,
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
-		'meas_std':     iota_true * 0.2
+		'meas_std':     iota_true['north_america'] * 0.2
 	}
-	row['node']        = 'united_states'
-	row['meas_value']  = iota_true * 1.2
-	data_table.append( copy.copy(row) )
-	row['node']        = 'canada'
-	row['meas_value']  = iota_true * 0.8;
-	data_table.append( copy.copy(row) )
-	row['node']        = 'north_america'
-	row['meas_value']  = iota_true
-	data_table.append( copy.copy(row) )
+	for node in [ 'north_america', 'united_states', 'canada' ] :
+		row['node']        = node
+		if node == 'north_america' :
+			row['meas_value']  = iota_true[node]
+		else :
+			effect = exp( iota_true[node] )
+			row['meas_value']  = iota_true['north_america'] * effect
+		data_table.append( copy.copy(row) )
 	#
 	for data_id in range( len( data_table ) ) :
 		data_table[data_id]['data_name'] = 'd' + str(data_id)
@@ -122,7 +121,7 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      100.0, # very large so like a uniform distribution
+			'std':      10.0, # very large so like a uniform distribution
 			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
@@ -152,7 +151,7 @@ def example_db (file_name) :
 			'mulstd_value_prior_name':  None,
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
-			'fun':                       fun_rate_parent
+			'fun':                      fun_rate_parent
 		}
 	]
 	# --------------------------------------------------------------------------
@@ -189,7 +188,7 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america'     },
-		{ 'name':'random_bound',           'value':'0.0'               },
+		{ 'name':'random_bound',           'value':str(random_bound)   },
 		{ 'name':'random_seed',            'value':'0'                 },
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
@@ -198,12 +197,12 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_fixed',  'value':'first-order'   },
 		{ 'name':'max_num_iter_fixed',     'value':'100'           },
 		{ 'name':'print_level_fixed',      'value':'0'             },
-		{ 'name':'tolerance_fixed',        'value':'1e-10'         },
+		{ 'name':'tolerance_fixed',        'value':'1e-11'         },
 
 		{ 'name':'derivative_test_random', 'value':'second-order'  },
 		{ 'name':'max_num_iter_random',    'value':'100'           },
 		{ 'name':'print_level_random',     'value':'0'             },
-		{ 'name':'tolerance_random',       'value':'1e-10'         }
+		{ 'name':'tolerance_random',       'value':'1e-11'         }
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: same order as list of integrands
@@ -238,13 +237,10 @@ def example_db (file_name) :
 file_name = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
-for command in [ 'init', 'start', 'fit', 'sample' ] :
+for command in [ 'init', 'start', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'start' :
 		cmd.append('prior_mean')
-	if command == 'sample' :
-		cmd.append('asymptotic')
-		cmd.append('1') # number_sample
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :
@@ -261,7 +257,6 @@ var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 rate_table      = dismod_at.get_table_dict(connection, 'rate')
 node_table      = dismod_at.get_table_dict(connection, 'node')
-sample_table    = dismod_at.get_table_dict(connection, 'sample')
 #
 # one age and one time for each of north_america, canada, unites_states
 n_var = len(var_table)
@@ -275,25 +270,24 @@ for var_id in range( n_var ) :
 	rate_id = var_table[var_id]['rate_id']
 	assert( rate_table[rate_id]['rate_name'] == 'iota' )
 	#
-	value   = fit_var_table[var_id]['variable_value']
-	#
-	node_id  = var_table[var_id]['node_id']
-	parent   = node_table[node_id]['node_name'] == 'north_america'
-	if parent :
-		err = value / iota_true - 1.0
-		assert abs(err) < 1e-7
-	else :
-		canada         = node_table[node_id]['node_name'] == 'canada'
-		united_states  = node_table[node_id]['node_name'] == 'united_states'
-		#
-		assert value == 0.0
-		assert canada or united_states
-# -----------------------------------------------------------------------
-# Remove the random bound
-# cmd  = "update option set option_value=null where option_name='random_bound'"
-# cursor = connection.cursor()
-# cursor.execute(cmd);
-# connection.commit()
+	fit_value = fit_var_table[var_id]['variable_value']
+	node_id   = var_table[var_id]['node_id']
+	node_name = node_table[node_id]['node_name']
+	truth     = iota_true[node_name]
+	assert node_name in [ 'north_america', 'united_states', 'canada' ]
+	if node_name == 'north_america' :
+		# parent fit is not perfect because it tries to fit child data
+		# and Laplace term in the objective.
+		relerr = fit_value / iota_true['north_america'] - 1.0
+		assert abs(relerr) < 1e-1
+	if node_name == 'united_states' :
+		assert( truth > random_bound )
+		relerr = fit_value / random_bound - 1.0
+		assert abs(relerr) < 1e-7
+	if node_name == 'canada' :
+		assert( truth < - random_bound )
+		relerr = fit_value / random_bound + 1.0
+		assert abs(relerr) < 1e-7
 # -----------------------------------------------------------------------
 print('random_bound: OK')
 # END PYTHON

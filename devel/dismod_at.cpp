@@ -1162,6 +1162,11 @@ It contains samples of the model variables.
 Hence the number of rows in this table is $icode number_sample$$
 times the number of rows in the $cref var_table$$.
 
+$head Bounds$$
+The samples are all within the specified bounds, including the bounds
+on the random effects specified by
+$cref/random_bound/option_table/Optimizer/random_bound/$$.
+
 $children%example/get_started/sample_command.py
 	%example/user/asymptotic.py
 %$$

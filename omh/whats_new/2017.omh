@@ -30,6 +30,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-16$$
+The change on 04-15 introduced a bug whereby non-zero values for
+$cref/random_bound/option_table/Optimizer/random_bound/$$ were not having
+any effects.
+This has been fixed.
+
 $head 04-15$$
 It is now possible to constrain each random effect to have a specific value;
 see

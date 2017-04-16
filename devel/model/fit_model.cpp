@@ -258,6 +258,7 @@ data_object_   ( data_object )                      ,
 prior_object_  ( prior_object )
 {	assert( random_bound >= 0.0 );
 	assert( fit_or_sample == "fit" || fit_or_sample == "sample" );
+	double inf = std::numeric_limits<double>::infinity();
 	// ----------------------------------------------------------------------
 	// n_var
 	size_t n_var = n_fixed_ + n_random_;
@@ -270,7 +271,7 @@ prior_object_  ( prior_object )
 	// ----------------------------------------------------------------------
 	// random_lower_, random_upper_
 	//
-	// lower
+	// random lower in prior
 	d_vector pack_vec = const_value_;
 	for(size_t i = 0; i < n_var; i++)
 		if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
@@ -278,7 +279,7 @@ prior_object_  ( prior_object )
 	random_lower_.resize(n_random_);
 	unpack_random(pack_object_, pack_vec, random_lower_);
 	//
-	// upper
+	// random upper in prior
 	pack_vec = const_value_;
 	for(size_t i = 0; i < n_var; i++)
 		if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
@@ -286,14 +287,15 @@ prior_object_  ( prior_object )
 	random_upper_.resize(n_random_);
 	unpack_random(pack_object_, pack_vec, random_upper_);
 	//
-	// check bound
-	if( random_bound == 0.0 )
-	{	for(size_t i = 0; i < n_random_; i++)
-		{	if( random_upper_[i] == std::numeric_limits<double>::infinity() )
-				random_lower_[i] = random_upper_[i] = 0.0;
-			else
-				assert( random_lower_[i] == random_upper_[i] );
+	// apply random bound
+	for(size_t i = 0; i < n_random_; i++)
+	{	if( random_lower_[i] == - inf )
+		{	assert( random_upper_[i] == + inf );
+			random_lower_[i] = - random_bound;
+			random_upper_[i]  = random_bound;
 		}
+		else
+			assert( random_lower_[i] == random_upper_[i] );
 	}
 	// -----------------------------------------------------------------------
 	// n_random_equal_
@@ -311,7 +313,6 @@ prior_object_  ( prior_object )
 	CppAD::vector<diff_prior_struct> diff_prior_tmp =
 			pack_diff_prior(pack_object, s_info_vec);
 	assert( diff_prior_.size() == 0 );
-	double inf = std::numeric_limits<double>::infinity();
 	for(size_t k = 0; k < diff_prior_tmp.size(); k++)
 	{	size_t prior_id = diff_prior_tmp[k].prior_id;
 		double lower    = prior_table[prior_id].lower;

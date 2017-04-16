@@ -26,7 +26,7 @@
 # actual iota_child_1 = exp( iota_true['child_1'] ) * iota_true['world')
 iota_true = {'world':0.01, 'child_1':-0.7, 'child_2':+0.7}
 chi_true  = {'world':0.1,  'child_1':+0.7, 'child_2':-0.7}
-n_data    = 21
+n_data    = 41
 # ------------------------------------------------------------------------
 import sys
 import os
