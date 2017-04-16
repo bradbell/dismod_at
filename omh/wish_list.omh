@@ -25,7 +25,20 @@ $$
 
 $section Dismod_at Wish List$$
 
-$head Improve Documentation$$
+$head Documentation$$
+
+$subhead Real World Example$$
+It would be good to include a real world example.
+Since this is an open source program, we would need a data set
+that could be made distributed freely without any restriction on its use.
+
+$subhead Improve Examples$$
+Many of the $cref user$$ examples were written a long ago
+before certain options were available. It would improve the documentation
+to go over the user examples and make them more of a how do to certain
+things.
+
+$subhead Improve Model Documentation$$
 There are some subtitle issues in the documentation that perhaps should
 be made more explicit (easier to read). For example,
 consider the case where the value and difference priors are
