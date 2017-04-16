@@ -61,6 +61,9 @@ for command in [ 'init', 'start', 'fit', 'sample', 'predict' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'start' :
 		cmd.append('prior_mean')
+	if command == 'fit' :
+		variables = 'both'
+		cmd.append(variables)
 	if command == 'sample' :
 		cmd.append('fit_var')
 		cmd.append('1')

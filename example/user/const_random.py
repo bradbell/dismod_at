@@ -333,6 +333,9 @@ for command in [ 'simulate', 'start', 'fit' ] :
 	if command == 'start' :
 		cmd.append('prior_mean')
 	if command == 'fit' :
+		variables = 'both'
+		cmd.append(variables)
+	if command == 'fit' :
 		simulate_index = '0';
 		cmd.append(simulate_index)
 	print( ' '.join(cmd) )

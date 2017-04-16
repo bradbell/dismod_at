@@ -94,6 +94,9 @@ for command in [ 'init', 'start', 'fit' ] :
 		cmd.append(number_simulate)
 	if command == 'start' :
 		cmd.append('prior_mean')
+	if command == 'fit' :
+		variables = 'both'
+		cmd.append(variables)
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :

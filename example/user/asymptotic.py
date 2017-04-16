@@ -334,6 +334,9 @@ for command in [ 'init', 'start', 'fit', 'sample' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'start' :
 		cmd.append('prior_mean')
+	if command == 'fit' :
+		variables = 'both'
+		cmd.append(variables)
 	if command == 'sample' :
 		cmd.append('asymptotic')
 		cmd.append( str(number_sample) )

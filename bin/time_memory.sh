@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -27,7 +27,7 @@ python3 speed/simulated.py $random_seed | tee build/speed/time.out
 cd build/speed
 ../devel/dismod_at example.db start
 rm memory.out.*
-valgrind --tool=massif ../devel/dismod_at example.db fit
+valgrind --tool=massif ../devel/dismod_at example.db fit both
 ms_print massif.out.* > memory.out
 new.sh time.out memory.out
 cd ../..

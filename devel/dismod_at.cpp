@@ -501,19 +501,43 @@ $spell
 	arg
 	num_iter
 	dismod
+	py
 $$
 
 $section The Fit Command$$
 
 $head Syntax$$
-$codei%dismod_at %database% fit
+$codei%dismod_at %database% %variables% fit
 %$$
-$codei%dismod_at %database% fit %simulate_index%$$
+$codei%dismod_at %database% fit %variables% %simulate_index%$$
 
 $head database$$
 Is an
 $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
+
+$head variables$$
+This argument is either $code fixed$$ or $code both$$.
+If it is fixed, only the fixed effects are fit
+
+$subhead fixed$$
+This option is equivalent to fitting with
+$cref/random_bound/option_table/Optimizer/random_bound/$$ equal to zero.
+This is useful when one uses fitting with no random effects as
+a starting point for fitting with random effects; see
+$cref/start fit_var/start_command/source/fit_var/$$ and
+$cref/random_bound.py/user_random_bound.py/$$.
+This enables one to see the different between the two
+fits in the $cref log_table$$
+(as apposed to changing
+$cref/random_bound/option_table/Optimizer/random_bound/$$
+in the $code option$$ table).
+
+$subhead both$$
+This option fits both the
+$cref/fixed/model_variables/Fixed Effects, theta/$$ and
+$cref/random/model_variables/Random Effects, u/$$ effects.
+
 
 $head simulate_index$$
 If $icode simulate_index$$ is present, it must be less than
@@ -558,6 +582,7 @@ $end
 
 // ----------------------------------------------------------------------------
 void fit_command(
+	const std::string&                           variables        ,
 	const std::string&                           simulate_index   ,
 	sqlite3*                                     db               ,
 	dismod_at::data_model&                       data_object      ,
@@ -571,6 +596,23 @@ void fit_command(
 )
 {	using std::string;
 	using CppAD::to_string;
+	// -----------------------------------------------------------------------
+	if( variables != "fixed" && variables != "both" )
+	{	string msg = "dismod_at fit command variables = ";
+			msg += variables + "\nis not 'fixed' or 'both'";
+			string table_name = "simulate";
+			dismod_at::error_exit(msg);
+	}
+	//
+	double random_bound = 0.0;
+	if( variables == "both" )
+	{	// null corresponds to infinity
+		std::string tmp_str = option_map["random_bound"];
+		if( tmp_str == "" )
+			random_bound = std::numeric_limits<double>::infinity();
+		else
+			random_bound = std::atof( tmp_str.c_str() );
+	}
 	// -----------------------------------------------------------------------
 	if( simulate_index != "" )
 	{	size_t sim_index = std::atoi( simulate_index.c_str() );
@@ -606,14 +648,8 @@ void fit_command(
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
 	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
 	//
-	// random_bound, null corresponds to infinity
-	std::string tmp_str = option_map["random_bound"];
-	double random_bound = std::numeric_limits<double>::infinity();
-	if( tmp_str != "" )
-		random_bound = std::atof( tmp_str.c_str() );
-	//
 	// random_zero_sum
-	tmp_str = option_map["random_zero_sum"];
+	string tmp_str = option_map["random_zero_sum"];
 	bool random_zero_sum = tmp_str == "true";
 	//
 	string fit_or_sample = "fit";
@@ -1593,8 +1629,8 @@ int main(int n_arg, const char** argv)
 		{"init",      3},
 		{"start",     4},
 		{"truth",     3},
-		{"fit",       3},
 		{"fit",       4},
+		{"fit",       5},
 		{"simulate",  4},
 		{"sample",    5},
 		{"predict",   3}
@@ -1863,10 +1899,12 @@ int main(int n_arg, const char** argv)
 			avgint_object.set_eigen_ode2_case_number(rate_case);
 			// ------------------------------------------------------------------
 			if( command_arg == "fit" )
-			{	string simulate_index = "";
-				if( n_arg == 4 )
-					simulate_index = argv[3];
+			{	string variables      = argv[3];
+				string simulate_index = "";
+				if( n_arg == 5 )
+					simulate_index = argv[4];
 				fit_command(
+					variables        ,
 					simulate_index   ,
 					db               ,
 					data_object      ,

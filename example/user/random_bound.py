@@ -279,6 +279,9 @@ for command in [ 'init', 'start', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'start' :
 		cmd.append('prior_mean')
+	if command == 'fit' :
+		variables = 'both'
+		cmd.append(variables)
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :
@@ -336,7 +339,7 @@ if flag != 0 :
 	sys.exit('The dismod_at start command failed')
 # -----------------------------------------------------------------------
 # Fit without bounds on random effects
-cmd = '../../devel/dismod_at example.db fit'
+cmd = '../../devel/dismod_at example.db fit both'
 print(cmd)
 flag = subprocess.call( cmd.split() )
 if flag != 0 :

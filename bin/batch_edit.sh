@@ -22,7 +22,12 @@ rename_cmd='s|smooth_list|nslist_pair|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|'nslist_pair': |'child_nslist':|
+s|^\\t\\(\\t*\\)cmd.append('prior_mean')|&\\
+\\1if command == 'fit' : \\
+\\t\\1variables = 'both'\\
+\\t\\1cmd.append(variables)|
+#
+s|dismod_at example.db fit|& both|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

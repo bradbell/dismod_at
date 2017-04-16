@@ -323,6 +323,9 @@ for command in [ 'init', 'start', 'fit', 'truth', 'simulate', 'sample' ] :
 		cmd.append(number_simulate)
 	if command == 'start' :
 		cmd.append('prior_mean')
+	if command == 'fit' :
+		variables = 'both'
+		cmd.append(variables)
 	if command == 'sample' :
 		cmd.append('simulate')
 		cmd.append('1') # number_sample = number_simulate = 1

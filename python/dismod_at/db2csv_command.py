@@ -437,8 +437,10 @@ def db2csv_command(database_file_arg) :
 		row           = log_data[log_id]
 		if simulate_index == None and row['message_type'] == 'command' :
 			message = row['message']
-			if message.startswith('begin fit') :
-				simulate_index = message[ len('begin fit') : ].strip()
+			if message.startswith('begin fit fixed') :
+				simulate_index = message[ len('begin fit fixed') : ].strip()
+			if message.startswith('begin fit both') :
+				simulate_index = message[ len('begin fit both') : ].strip()
 	if simulate_index == None :
 		if have_table['fit_var'] :
 			msg = 'Have fit_var table but cannot find '
