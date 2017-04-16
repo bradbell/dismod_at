@@ -14,22 +14,10 @@
 # $section Fitting With Random Bounds$$
 #
 # $head Discussion$$
-# The $cref/random_bound/option_table/Optimizer/random_bound/$$
-# can be used to stabilized the optimization when starting far from the
-# solution. This example demonstrates the following use of the random bound:
-# $list number$$
-# Set the random bound to zero.
-# $lnext
-# Optimize with the random effects constrained to zero.
-# $lnext
-# Remove the random bound (or set it to a larger value).
-# $lnext
-# Use the zero random effect optimal solution as a starting point for next
-# optimization.
-# $lnext
-# Optimize with non-zero random effects.
-# $lend
-#
+# This example demonstrates using the
+# $cref/variables/fit_command/variables/$$ option
+# to stabilize the optimization when starting the fixed effects
+# far from the solution:
 #
 #
 # $code
@@ -226,7 +214,6 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america'     },
-		{ 'name':'random_bound',           'value':'0.0'               },
 		{ 'name':'random_seed',            'value':'0'                 },
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
@@ -271,7 +258,7 @@ def example_db (file_name) :
 	n_smooth  = len( smooth_table )
 	return
 # ===========================================================================
-# Create database and run init, start, fit
+# Create database and run init, start, fit with just fixed effects
 file_name = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
@@ -280,7 +267,7 @@ for command in [ 'init', 'start', 'fit' ] :
 	if command == 'start' :
 		cmd.append('prior_mean')
 	if command == 'fit' :
-		variables = 'both'
+		variables = 'fixed'
 		cmd.append(variables)
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
@@ -325,12 +312,6 @@ for var_id in range( n_var ) :
 		assert value == 0.0
 		assert canada or united_states
 # -----------------------------------------------------------------------
-# Remove the random bound
-cmd  = "update option set option_value=null where option_name='random_bound'"
-cursor = connection.cursor()
-cursor.execute(cmd);
-connection.commit()
-# -----------------------------------------------------------------------
 # Copy results of previous fit to start table
 cmd = '../../devel/dismod_at example.db start fit_var'
 print(cmd)
@@ -338,7 +319,7 @@ flag = subprocess.call( cmd.split() )
 if flag != 0 :
 	sys.exit('The dismod_at start command failed')
 # -----------------------------------------------------------------------
-# Fit without bounds on random effects
+# Fit both fixed and random effects
 cmd = '../../devel/dismod_at example.db fit both'
 print(cmd)
 flag = subprocess.call( cmd.split() )
