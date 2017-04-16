@@ -7,7 +7,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_random_bound.py$$ $newlinech #$$
+# $begin user_fit_fixed.py$$ $newlinech #$$
 # $spell
 # $$
 #
@@ -22,7 +22,7 @@
 #
 # $code
 # $srcfile%
-#	example/user/random_bound.py
+#	example/user/fit_fixed.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -38,7 +38,7 @@ import distutils.dir_util
 import subprocess
 import copy
 import math
-test_program = 'example/user/random_bound.py'
+test_program = 'example/user/fit_fixed.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'

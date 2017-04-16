@@ -22,7 +22,7 @@ FOREACH(user_case
 	metropolis
 	no_children
 	predict_fit
-	random_bound
+	fit_fixed
 	random_zero_sum
 )
 	ADD_CUSTOM_TARGET(
@@ -46,6 +46,6 @@ ADD_CUSTOM_TARGET(
 	check_example_user_metropolis
 	check_example_user_no_children
 	check_example_user_predict_fit
-	check_example_user_random_bound
+	check_example_user_fit_fixed
 	check_example_user_random_zero_sum
 )

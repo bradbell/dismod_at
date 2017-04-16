@@ -12,22 +12,22 @@
 new_directories='
 '
 rename_files='
+	example/user/random_bound.py
 '
 spell_files='
 '
 no_change_files='
+	test/user/random_bound.py
+	test/user/CMakeLists.txt
 '
 #
-rename_cmd='s|smooth_list|nslist_pair|'
+rename_cmd='s|random_bound.py|fit_fixed.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|^\\t\\(\\t*\\)cmd.append('prior_mean')|&\\
-\\1if command == 'fit' : \\
-\\t\\1variables = 'both'\\
-\\t\\1cmd.append(variables)|
-#
-s|dismod_at example.db fit|& both|
+s|random_bound.py|fit_fixed.py|g
+s|check_example_user_random_bound|check_example_user_fit_fixed|
+s|\\trandom_bound\$|\\tfit_fixed|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
@@ -84,9 +84,7 @@ do
 done
 # ----------------------------------------------------------------------------
 # files that should not change at all
-list='
-'
-for file in $list
+for file in $no_change_files
 do
 	echo_eval git checkout $file
 done
