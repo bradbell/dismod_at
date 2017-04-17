@@ -7,29 +7,28 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_fit_fixed.py$$ $newlinech #$$
+# $begin user_fit_random.py$$ $newlinech #$$
 # $spell
 # $$
 #
-# $section Fitting Just Fixed Effects$$
+# $section Fitting Just Random Effects$$
 #
 # $head Discussion$$
 # This example demonstrates using the
 # $cref/variables/fit_command/variables/$$ option
-# to stabilize the optimization when starting the fixed effects
-# far from the solution:
+# to fit the random effects at the current value for the fixed effects.
 #
 #
 # $code
 # $srcfile%
-#	example/user/fit_fixed.py
+#	example/user/fit_random.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------
-iota_no_random    = 1e-2;
+iota_parent_true  = 1e-2;
 iota_child_offset = +0.5;
 # ------------------------------------------------------------------------
 import sys
@@ -37,8 +36,8 @@ import os
 import distutils.dir_util
 import subprocess
 import copy
-import math
-test_program = 'example/user/fit_fixed.py'
+from math import exp
+test_program = 'example/user/fit_random.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -111,18 +110,16 @@ def example_db (file_name) :
 		'age_lower':    50.0,
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
-		'meas_std':     iota_no_random / 10.
+		'meas_std':     iota_parent_true * 1e-2
 	}
-	# make sure both child and parent data gets included in fit
-	# by balancing the offset between the two
 	row['node']        = 'united_states'
-	row['meas_value']  = iota_no_random * (1.0 + iota_child_offset)
+	row['meas_value']  = iota_parent_true * exp(iota_child_offset)
 	data_table.append( copy.copy(row) )
 	row['node']        = 'canada'
-	row['meas_value']  = iota_no_random * (1.0 + iota_child_offset)
+	row['meas_value']  = iota_parent_true * exp(- iota_child_offset)
 	data_table.append( copy.copy(row) )
 	row['node']        = 'north_america'
-	row['meas_value']  = iota_no_random * (1.0 - iota_child_offset)
+	row['meas_value']  = iota_parent_true
 	data_table.append( copy.copy(row) )
 	data_table.append( copy.copy(row) )
 	#
@@ -136,7 +133,8 @@ def example_db (file_name) :
 			'density':  'uniform',
 			'lower':    1e-4,
 			'upper':    None,
-			'mean':     1e-1,
+			# set prior so north_amaerica is set to value for united_states
+			'mean':     iota_parent_true * exp(iota_child_offset),
 			'std':      None,
 			'eta':      None
 		},{ # prior_rate_child
@@ -267,7 +265,7 @@ for command in [ 'init', 'start', 'fit' ] :
 	if command == 'start' :
 		cmd.append('prior_mean')
 	if command == 'fit' :
-		variables = 'fixed'
+		variables = 'random'
 		cmd.append(variables)
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
@@ -303,56 +301,21 @@ for var_id in range( n_var ) :
 	node_id  = var_table[var_id]['node_id']
 	parent   = node_table[node_id]['node_name'] == 'north_america'
 	if parent :
-		err = value / iota_no_random - 1.0
-		assert abs(err) < 1e-5
+		# chekc that north_america has prior value
+		check = iota_parent_true * exp(iota_child_offset)
+		relerr   = value / check - 1.0
+		assert abs(relerr) < 1e-10
 	else :
-		canada         = node_table[node_id]['node_name'] == 'canada'
-		united_states  = node_table[node_id]['node_name'] == 'united_states'
-		#
-		assert value == 0.0
-		assert canada or united_states
+		if node_table[node_id]['node_name'] == 'canada' :
+			# canada needs twice the offset to reach its data
+			check = - 2 * iota_child_offset
+			relerr   = value / check - 1.0
+			assert abs(relerr) < 1e-6
+		else :
+			assert node_table[node_id]['node_name'] == 'united_states'
+			# united_states needs no offset to reach its data
+			check = 0.0
+			assert abs( value ) < 1e-6
 # -----------------------------------------------------------------------
-# Copy results of previous fit to start table
-cmd = '../../devel/dismod_at example.db start fit_var'
-print(cmd)
-flag = subprocess.call( cmd.split() )
-if flag != 0 :
-	sys.exit('The dismod_at start command failed')
-# -----------------------------------------------------------------------
-# Fit both fixed and random effects
-cmd = '../../devel/dismod_at example.db fit both'
-print(cmd)
-flag = subprocess.call( cmd.split() )
-if flag != 0 :
-	sys.exit('The dismod_at fit command failed')
-# -----------------------------------------------------------------------
-# check the non-zero random effects solution
-#
-# get solution from fit_var table
-fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
-#
-# optimal values when standard deviation of random effects is infinity
-parent_optimal = iota_no_random * (1.0 - iota_child_offset)
-child_optimal  = math.log(
-	iota_no_random * (1.0 + iota_child_offset) / parent_optimal
-)
-for var_id in range( n_var ) :
-	var_type = var_table[var_id]['var_type']
-	assert( var_type == 'rate' )
-	#
-	rate_id = var_table[var_id]['rate_id']
-	assert( rate_table[rate_id]['rate_name'] == 'iota' )
-	#
-	value   = fit_var_table[var_id]['variable_value']
-	#
-	node_id  = var_table[var_id]['node_id']
-	parent   = node_table[node_id]['node_name'] == 'north_america'
-	if parent :
-		err = value / parent_optimal - 1.0
-		assert( abs(err) < 1e-5 )
-	else :
-		err = value / child_optimal - 1.0
-		assert( abs(err) < 1e-5 )
-# -----------------------------------------------------------------------
-print('fit_fixed: OK')
+print('fit_random: OK')
 # END PYTHON

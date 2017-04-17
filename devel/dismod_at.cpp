@@ -517,8 +517,11 @@ $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $head variables$$
-This argument is either $code fixed$$ or $code both$$.
-If it is fixed, only the fixed effects are fit
+This argument is $code fixed$$, $code random$$ or $code both$$.
+If it is $code fixed$$ ($code random$$)
+only the fixed effects (random effects) are optimized.
+If it is $code both$$, both the fixed and random effects
+are optimized.
 
 $subhead fixed$$
 This option is equivalent to fitting with
@@ -533,10 +536,16 @@ fits in the $cref log_table$$
 $cref/random_bound/option_table/Optimizer/random_bound/$$
 in the $code option$$ table).
 
+$subhead random$$
+This optimizes the random effects with
+the fixed effects set to their starting values; see
+$cref start_var_table$$.
+
 $subhead both$$
 This option fits both the
 $cref/fixed/model_variables/Fixed Effects, theta/$$ and
 $cref/random/model_variables/Random Effects, u/$$ effects.
+
 
 
 $head simulate_index$$
@@ -597,15 +606,18 @@ void fit_command(
 {	using std::string;
 	using CppAD::to_string;
 	// -----------------------------------------------------------------------
-	if( variables != "fixed" && variables != "both" )
+	bool ok = variables == "fixed";
+	ok     |= variables == "random";
+	ok     |= variables == "both";
+	if( ! ok )
 	{	string msg = "dismod_at fit command variables = ";
-			msg += variables + "\nis not 'fixed' or 'both'";
+			msg += variables + "\nis not 'fixed', 'random' or 'both'";
 			string table_name = "simulate";
 			dismod_at::error_exit(msg);
 	}
 	//
 	double random_bound = 0.0;
-	if( variables == "both" )
+	if( variables != "fixed" )
 	{	// null corresponds to infinity
 		std::string tmp_str = option_map["random_bound"];
 		if( tmp_str == "" )
@@ -613,6 +625,7 @@ void fit_command(
 		else
 			random_bound = std::atof( tmp_str.c_str() );
 	}
+	bool random_only = variables == "random";
 	// -----------------------------------------------------------------------
 	if( simulate_index != "" )
 	{	size_t sim_index = std::atoi( simulate_index.c_str() );
@@ -666,7 +679,7 @@ void fit_command(
 		quasi_fixed          ,
 		random_zero_sum
 	);
-	fit_object.run_fit(option_map);
+	fit_object.run_fit(random_only, option_map);
 	vector<double> opt_value, lag_value, lag_dage, lag_dtime;
 	fit_object.get_solution(
 		opt_value, lag_value, lag_dage, lag_dtime
@@ -1362,6 +1375,7 @@ void sample_command(
 
 			// fit_model
 			string fit_or_sample = "fit";
+			bool   random_only   = false;
 			dismod_at::fit_model fit_object(
 				db                   ,
 				random_bound         ,
@@ -1375,7 +1389,7 @@ void sample_command(
 				quasi_fixed          ,
 				random_zero_sum
 			);
-			fit_object.run_fit(option_map);
+			fit_object.run_fit(random_only, option_map);
 			vector<double> opt_value, lag_value, lag_dage, lag_dtime;
 			fit_object.get_solution(
 				opt_value, lag_value, lag_dage, lag_dtime

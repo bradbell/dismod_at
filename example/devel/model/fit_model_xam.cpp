@@ -367,7 +367,8 @@ bool fit_model_xam(void)
 		quasi_fixed,
 		random_zero_sum
 	);
-	fit_object.run_fit( option_map );
+	bool random_only = false;
+	fit_object.run_fit( random_only, option_map );
 	CppAD::vector<double> solution, lag_value, lag_dage, lag_dtime;
 	fit_object.get_solution(solution, lag_value, lag_dage, lag_dtime);
 

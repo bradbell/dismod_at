@@ -30,6 +30,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-17$$
+Add $code random$$ to possible choices for
+$cref/variables/fit_command/variables/$$ during the fit.
+
 $head 04-16$$
 $list number$$
 The change on 04-15 introduced a bug whereby non-zero values for

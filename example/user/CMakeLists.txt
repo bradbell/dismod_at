@@ -15,6 +15,8 @@ FOREACH(user_case
 	const_random
 	const_value
 	diff_constraint
+	fit_fixed
+	fit_random
 	fit_sim
 	jump_at_age
 	lasso_covariate
@@ -22,7 +24,6 @@ FOREACH(user_case
 	metropolis
 	no_children
 	predict_fit
-	fit_fixed
 	random_zero_sum
 )
 	ADD_CUSTOM_TARGET(
@@ -39,6 +40,8 @@ ADD_CUSTOM_TARGET(
 	check_example_user_const_random
 	check_example_user_const_value
 	check_example_user_diff_constraint
+	check_example_user_fit_fixed
+	check_example_user_fit_random
 	check_example_user_fit_sim
 	check_example_user_jump_at_age
 	check_example_user_lasso_covariate
@@ -46,6 +49,5 @@ ADD_CUSTOM_TARGET(
 	check_example_user_metropolis
 	check_example_user_no_children
 	check_example_user_predict_fit
-	check_example_user_fit_fixed
 	check_example_user_random_zero_sum
 )

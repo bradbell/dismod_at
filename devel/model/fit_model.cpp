@@ -391,18 +391,24 @@ $$
 $section Run optimization to determine the optimal fixed and random effects$$
 
 $head Syntax$$
-$icode%fit_object%.run_fit(%option_map%)
+$icode%fit_object%.run_fit(%random_only%, %option_map%)
 %$$
 
 $head fit_object$$
 This object must have been constructed with
 $cref/fit_or_sample/fit_model_ctor/fit_or_sample/$$ equal to $code fit$$.
 
-$head Scaled$$
-During optimization of fixed effects all the $cref model_variables$$
-that do not have $code null$$ $icode eta$$ in their value prior
-are scaled during optimization; see
+$head Scaling$$
+During optimization the
+$cref/fixed effects/model_variables/Fixed Effects, theta/$$,
+that have $icode eta$$ not $code null$$ in their value prior, are scaled; see
 $cref/scaling/prior_table/eta/Scaling/$$.
+
+$head random_only$$
+If this argument is true,
+the fixed effects are set to their starting value and only the
+random effects are optimized.
+Otherwise, both the fixed and random effects are optimized.
 
 $head option_map$$
 This argument is effectively $code const$$ and
@@ -425,7 +431,9 @@ $codei%
 
 $head Prototype$$
 $srccode%cpp% */
-void fit_model::run_fit(std::map<std::string, std::string>& option_map)
+void fit_model::run_fit(
+	bool                                random_only    ,
+	std::map<std::string, std::string>& option_map     )
 /* %$$
 $end
 */
@@ -519,23 +527,31 @@ $end
 		random_in
 	);
 	//
-	// optimal fixed effects
-	CppAD::mixed::fixed_solution fixed_sol = optimize_fixed(
-		fixed_options,
-		random_options,
-		fixed_lower,
-		fixed_upper,
-		fix_constraint_lower,
-		fix_constraint_upper,
-		fixed_in,
-		cppad_mixed_random_lower,
-		cppad_mixed_random_upper,
-		cppad_mixed_random_in
-	);
-	// optimal fixed effects
-	d_vector& fixed_opt      = fixed_sol.fixed_opt;
-	d_vector& fixed_lag      = fixed_sol.fixed_lag;
-	d_vector& fixed_con_lag  = fixed_sol.fix_con_lag;
+	// optimize the fixed effects
+	d_vector fixed_opt = fixed_in;
+	d_vector fixed_lag(n_fixed_);
+	d_vector fixed_con_lag( diff_prior_.size() );
+	for(size_t j = 0; j < fixed_lag.size(); j++)
+		fixed_lag[j] = 0.0;
+	for(size_t j = 0; j < fixed_con_lag.size(); j++)
+		fixed_con_lag[j] = 0.0;
+	if( ! random_only )
+	{	CppAD::mixed::fixed_solution fixed_sol = optimize_fixed(
+			fixed_options,
+			random_options,
+			fixed_lower,
+			fixed_upper,
+			fix_constraint_lower,
+			fix_constraint_upper,
+			fixed_in,
+			cppad_mixed_random_lower,
+			cppad_mixed_random_upper,
+			cppad_mixed_random_in
+		);
+		fixed_opt      = fixed_sol.fixed_opt;
+		fixed_lag      = fixed_sol.fixed_lag;
+		fixed_con_lag  = fixed_sol.fix_con_lag;
+	}
 	// optimal random effects
 	d_vector random_opt(n_random_);
 	if( n_random_ > n_random_equal_ )

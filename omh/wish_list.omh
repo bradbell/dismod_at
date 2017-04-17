@@ -108,10 +108,6 @@ $cref/R
 /$$.
 
 
-$head Fitting Only Random Effect$$
-Extend the $cref fit_command$$ to allow for fitting only
-the random effects at the current value for the fixed effects.
-
 $head Eta$$
 Perhaps the value of $cref/eta/integrand_table/eta/$$ should be
 specified in the $cref data_table$$ so it can be different for each

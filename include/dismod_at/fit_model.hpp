@@ -185,6 +185,7 @@ namespace dismod_at {
 		//
 		// run fit
 		void run_fit(
+			bool                                random_only ,
 			// effectively const
 			std::map<std::string, std::string>& option_map
 		);
