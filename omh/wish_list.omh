@@ -25,6 +25,50 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head ODE Solution$$
+
+$subhead Step Size$$
+Currently there is a single
+$cref/ode_step_size/option_table/ode_step_size/$$ that is used
+for all ages and times.
+In many models, the older ages have much larger mortality rates.
+Perhaps it would be good to have a step size that varied with age.
+
+$subhead Large Excess Mortality$$
+If case where $icode rate_case$$ is
+$cref/iota_pos_rho_zero/option_table/rate_case/iota_pos_rho_zero/$$
+corresponds to
+$cref/case three/eigen_ode2/Method/Case Three/$$ in the ODE solver.
+If excess mortality $latex \chi$$ is unreasonably large,
+this can result in exponential overflow and infinity or nan.
+It is possible to redo the calculations in case three to properly
+handle this condition.
+
+$subhead Conditionals$$
+It is now possible to use conditional expressions in the ODE solution
+(CppAD this will now work properly these conditionals
+and two levels of AD and revere mode).
+This change would remove the need for the
+$cref/rate_case/option_table/rate_case/$$ option.
+Note that this will also work with checkpointing.
+
+$subhead Checkpointing$$
+It should greatly reduce memory if we use
+CppAD checkpointing of an ODE that has been
+extended to include derivatives with respect to parameters; see
+$href%http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm
+	%checkpoint_extended_ode
+%$$.
+
+$subhead Reduce Number of ODE Solutions$$
+Currently we compute a separate solution of the ODE for each data point.
+We could solve the differential equation once for each set of data
+points that correspond to the same child (or to the parent)
+and have the same covariate values for covariates that are used with
+$cref/rate_value/mulcov_table/mulcov_type/rate_value/$$
+covariate multipliers.
+
+
 $head Documentation$$
 
 $subhead Real World Example$$
@@ -32,15 +76,15 @@ It would be good to include a real world example.
 Since this is an open source program, we would need a data set
 that could be made distributed freely without any restriction on its use.
 
-$subhead Improve Examples$$
+$subhead User Examples$$
 Many of the $cref user$$ examples were written a long ago
 before certain options were available. It would improve the documentation
 to go over the user examples and make them more of a how do to certain
 things.
 
-$subhead Improve Model Documentation$$
+$subhead Model Documentation$$
 There are some subtitle issues in the documentation that perhaps should
-be made more explicit (easier to read). For example,
+be made easier to read. For example,
 consider the case where the value and difference priors are
 Log-Gaussian or Log-Laplace.
 In the function
@@ -72,23 +116,14 @@ $head Eta$$
 Perhaps the value of $cref/eta/integrand_table/eta/$$ should be
 specified in the $cref data_table$$ so it can be different for each
 measurement. For example, it could be .01 times the corresponding
-$cref/meas_value/data_table/meas_value/$$.
+$cref/meas_value/data_table/meas_value/$$
+(when the measurement was larger than some threshold).
 
 $head Simulating Data$$
 The random effects currently use the value in the $cref truth_var_table$$
 during the $cref simulate_command$$.
 Perhaps it would be good to have an option whereby the priors for the
 random effects are used to simulate different value for each sample.
-
-$head Large Excess Mortality$$
-The case where $icode rate_case$$ is
-$cref/iota_pos_rho_zero/option_table/rate_case/iota_pos_rho_zero/$$
-corresponds to
-$cref/case three/eigen_ode2/Method/Case Three/$$ in the ODE solver.
-If excess mortality $latex \chi$$ is unreasonably large,
-this can result in exponential overflow and infinity or nan.
-It is possible to redo the calculations in case three to properly
-handle this condition.
 
 $head Sampling Random Effects$$
 It is not expected that the
@@ -98,14 +133,6 @@ random effects will always be accurate
 One could use multiple asymptotic random effects samples as a proposal
 density for a Metropolis algorithm to get better sampling of these variables.
 
-$head Conditionals in ODE$$
-It is now possible to use conditional expressions in the ODE solution
-(CppAD has improved so that this will now work properly with two levels
-of AD and revere mode).
-This change would remove the need for the
-$cref/rate_case/option_table/rate_case/$$ option.
-Note that this will also work with checkpointing.
-
 $head Special Random Effects Hessian$$
 A new option enables the cppad_mixed user
 (in this case dismod_at) to define a special way to compute
@@ -114,22 +141,6 @@ $href%
 http://moby.ihme.washington.edu/bradbell/cppad_mixed/ran_likelihood_hes.htm
 %ran_likelihood_hes
 %$$.
-
-$head Checkpointing ODE$$
-It should greatly reduce memory if we use
-CppAD checkpointing of an ODE that has been
-extended to include derivatives with respect to parameters; see
-$href%http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm
-	%checkpoint_extended_ode
-%$$.
-
-$head Reduce Number of ODE Solutions$$
-Currently we compute a separate solution of the ODE for each data point.
-We could solve the differential equation once for each set of data
-points that correspond to the same child (or to the parent)
-and have the same covariate values for covariates that are used with
-$cref/rate_value/mulcov_table/mulcov_type/rate_value/$$
-covariate multipliers.
 
 $head Random Starting Point$$
 Have an option to start at a random point from the prior for the fixed effects

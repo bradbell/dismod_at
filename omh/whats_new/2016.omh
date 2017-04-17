@@ -250,7 +250,7 @@ A new assert, that checks for infinity or nan results during the integration,
 was added. This should be converted to a more useful error message;
 (this was done on $cref/10-16/whats_new_2016/10-16/$$).
 Furthermore, in some cases it can be avoided; see
-$cref/large excess mortality/wish_list/Large Excess Mortality/$$
+$cref/large excess mortality/wish_list/ODE Solution/Large Excess Mortality/$$
 in the wish list.
 $lnext
 Use one value for $icode libdir$$ for all the install scripts;
