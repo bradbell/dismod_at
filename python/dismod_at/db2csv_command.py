@@ -439,6 +439,8 @@ def db2csv_command(database_file_arg) :
 			message = row['message']
 			if message.startswith('begin fit fixed') :
 				simulate_index = message[ len('begin fit fixed') : ].strip()
+			if message.startswith('begin fit random') :
+				simulate_index = message[ len('begin fit random') : ].strip()
 			if message.startswith('begin fit both') :
 				simulate_index = message[ len('begin fit both') : ].strip()
 	if simulate_index == None :
