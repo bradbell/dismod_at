@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin model_variables$$
 $spell
+	const
 	std
 	subvectors
 	subvector
@@ -25,15 +26,14 @@ $spell
 $$
 
 $section The Model Variables$$
-This section describes the model variables.
+This section describes the model variables
+(often referred to as model parameters in the statistical literature).
 The vector of model variables are divided into a set of subvectors
 described below.
 
-$head Notation$$
-
-$subhead Prior$$
-For each variable there is a $cref/prior_id/prior_table/prior_id/$$
-that specifies its
+$head Prior$$
+A $cref/prior_id/prior_table/prior_id/$$
+specifies the following information:
 $table
 $cref/density_id/prior_table/density_id/$$ $cnext
 	density function corresponding for this prior
@@ -54,32 +54,33 @@ $cref/eta/prior_table/eta/$$ $cnext
 	offset in log transformation for this prior
 $tend
 
-$subhead Smoothing$$
-For each subvector, except the smoothing standard deviation multipliers,
-there is a smoothing.
-The smoothing determines the number of elements in the subvector
-and the prior for each of these elements; see
+$head Smoothing$$
+There is a smoothing corresponding to each subvector of variables
+(except the subvector of smoothing standard deviation multipliers; see below).
+The smoothing determines the number of variables in the subvector,
+the age and time corresponding to each variable,
+and the prior for each variable:
 $table
 $cref/n_age/smooth_table/n_age/$$ $cnext
-	number of age points
+	number of age points in subvector
 $rnext
 $cref/n_time/smooth_table/n_time/$$ $cnext
-	number of time points
+	number of time points in subvector
 $rnext
 $icode%n_age% * %n_time%$$ $cnext
 	number of elements in the subvector
-$tend
-In addition, each element of the subvector corresponds to a single
-variable and has the following information:
-$table
+$rnext
 $cref/age_id/smooth_grid_table/age_id/$$ $cnext
 	identifies age value for this variable
 $rnext
 $cref/time_id/smooth_grid_table/time_id/$$ $cnext
 	identifies time value for this variable
 $rnext
+$cref/const_value/smooth_grid_table/const_value/$$ $cnext
+	null or a value that this variable is constrained to
+$rnext
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$ $cnext
-	identifies prior for value at this age and time
+	identifies prior for this variables value
 $rnext
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$  $cnext
 	identifies prior for forward differences w.r.t age
@@ -87,26 +88,16 @@ $rnext
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$  $cnext
 	identifies prior for forward differences w.r.t time
 $tend
-The prior standard deviations for
-values, age differences, and time differences, are multiplied by
-$latex \lambda_i^v$$,
-$latex \lambda_i^a$$, and
-$latex \lambda_i^t$$  respectively; see
-$cref/lambda
-	/model_variables
-	/Fixed Effects, theta
-	/Smoothing Standard Deviation Multipliers, lambda
-/$$
-below.
 
 
-$subhead Number of Children$$
+
+$head Number of Children$$
 The number of children $icode n_child$$ is the size of the
 $cref/child group/node_table/parent/Child Group/$$ for which
 the parent node is
 $cref/parent_node_id/option_table/parent_node_id/$$.
 
-$subhead Initial Prevalence$$
+$head Initial Prevalence$$
 Let $latex p_0 (t)$$ to denote the
 $cref/prevalence/avg_integrand/I_i (a, t)/prevalence/$$
 at the initial age; i.e., the first age in $cref age_table$$.
