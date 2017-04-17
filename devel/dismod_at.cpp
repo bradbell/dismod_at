@@ -507,7 +507,7 @@ $$
 $section The Fit Command$$
 
 $head Syntax$$
-$codei%dismod_at %database% %variables% fit
+$codei%dismod_at %database% fit %variables%
 %$$
 $codei%dismod_at %database% fit %variables% %simulate_index%$$
 
@@ -524,8 +524,15 @@ If it is $code both$$, both the fixed and random effects
 are optimized.
 
 $subhead fixed$$
-This option is equivalent to fitting with
-$cref/random_bound/option_table/Optimizer/random_bound/$$ equal to zero.
+This option optimizes the fixed effects with the
+$cref/constant random effects
+	/rate_table
+	/Child Restrictions
+	/Constant Random Effects
+/$$ at their constrained values and the other random effects
+constrained to be zero.
+(This is equivalent to fitting with
+$cref/random_bound/option_table/Optimizer/random_bound/$$ equal to zero.)
 This is useful when one uses fitting with no random effects as
 a starting point for fitting with random effects; see
 $cref/start fit_var/start_command/source/fit_var/$$ and
@@ -574,12 +581,9 @@ $head Random Effects$$
 A model has random effects if one of the
 $cref/child_smooth_id/rate_table/child_smooth_id/$$ or
 $cref/child_nslist_id/rate_table/child_nslist_id/$$ is not $code null$$.
-In this case, it is suggest that you first fit with
-$cref/random_bound/option_table/Optimizer/random_bound/$$ equal to zero.
-Then change the random bound to be non-zero,
-then use the start command with $icode source$$ equal to
-$cref/fit_var/start_command/source/$$,
-and then to your fit with random effects.
+In this case, it is suggest that you
+first fit with $icode variables$$ equal to $code fixed$$
+and then fit with $icode variables$$ equal to $code both$$.
 
 $children%example/get_started/fit_command.py%$$
 $head Example$$
