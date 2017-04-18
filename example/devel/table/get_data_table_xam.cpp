@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -24,6 +24,7 @@ $$
 $end
 */
 // BEGIN C++
+# include <cmath>
 # include <dismod_at/get_data_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
@@ -50,6 +51,7 @@ bool get_data_table_xam(void)
 		" hold_out       integer,"
 		" meas_value     real,"
 		" meas_std       real,"
+		" eta            real,"
 		" age_lower      real,"
 		" age_upper      real,"
 		" time_lower     real,"
@@ -61,12 +63,13 @@ bool get_data_table_xam(void)
 		"0,"                       // data_id
 		"'one',"                   // data_name
 		"1,"                       // integrand_id
-		"1,"                       // density_id (not uniform)
+		"1,"                       // density_id (gaussian)
 		"3,"                       // node_id
 		"4,"                       // weight_id
 		"1,"                       // hold_out
 		"1e-4,"                    // meas_value
 		"1e-5,"                    // meas_std
+		"null,"                    // eta
 		"10.0,"                    // age_lower
 		"90.0,"                    // age_upper
 		"2000,"                    // time_lower
@@ -101,6 +104,7 @@ bool get_data_table_xam(void)
 	ok  &= data_table[0].hold_out          == 1;
 	ok  &= data_table[0].meas_value        == 1e-4;
 	ok  &= data_table[0].meas_std          == 1e-5;
+	ok  &= std::isnan( data_table[0].eta );
 	ok  &= data_table[0].age_lower         == 10.0;
 	ok  &= data_table[0].age_upper         == 90.0;
 	ok  &= data_table[0].time_lower        == 2000.0;

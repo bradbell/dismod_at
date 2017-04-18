@@ -148,6 +148,7 @@
 # hold_out     $cnext bool        $cnext hold out flag               $rnext
 # meas_value   $cnext float       $cnext measured value              $rnext
 # meas_std     $cnext float       $cnext standard deviation          $rnext
+# eta          $cnext float       $cnext offset in log-transform     $rnext
 # age_lower    $cnext float       $cnext lower age limit             $rnext
 # age_upper    $cnext float       $cnext upper age limit             $rnext
 # time_lower   $cnext float       $cnext lower time limit            $rnext
@@ -700,6 +701,7 @@ def create_database(
 		'hold_out',
 		'meas_value',
 		'meas_std',
+		'eta',
 		'age_lower',
 		'age_upper',
 		'time_lower',
@@ -716,6 +718,7 @@ def create_database(
 		'integer',              # hold_out
 		'real',                 # meas_value
 		'real',                 # meas_std
+		'real',                 # eta
 		'real',                 # age_lower
 		'real',                 # age_upper
 		'real',                 # time_lower
@@ -732,6 +735,10 @@ def create_database(
 		node_id      = global_node_name2id[ data['node'] ]
 		weight_id    = global_weight_name2id[ data['weight'] ]
 		hold_out     = int( data['hold_out'] )
+		eta          = None
+		# 2DO: use data['eta'] when it becomes available
+		if data['density'] == 'log_gaussian' or data['density'] == 'log_laplace' :
+			eta = 0.0;
 		row = [
 			data['data_name'],
 			integrand_id,
@@ -741,6 +748,7 @@ def create_database(
 			hold_out,
 			data['meas_value'],
 			data['meas_std'],
+			eta,
 			data['age_lower'],
 			data['age_upper'],
 			data['time_lower'],

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -136,6 +136,9 @@ $rnext
 $code double$$ $cnext $code meas_std$$ $cnext
 	The $cref/meas_std/data_table/meas_std/$$ for this measurement
 $rnext
+$code double$$ $cnext $code eta$$ $cnext
+	The $cref/eta/data_table/eta/$$ for this measurement
+$rnext
 $code double$$ $cnext $code age_lower$$ $cnext
 	The $cref/age_lower/data_table/age_lower/$$ for this measurement
 $rnext
@@ -173,6 +176,7 @@ this function.
 $end
 -----------------------------------------------------------------------------
 */
+# include <cmath>
 # include <dismod_at/get_data_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
@@ -237,6 +241,11 @@ void get_data_table(
 	get_table_column(db, table_name, column_name, meas_std);
 	assert( n_data == meas_std.size() );
 
+	column_name           =  "eta";
+	CppAD::vector<double>     eta;
+	get_table_column(db, table_name, column_name, eta);
+	assert( n_data == eta.size() );
+
 	column_name           =  "age_lower";
 	CppAD::vector<double>     age_lower;
 	get_table_column(db, table_name, column_name, age_lower);
@@ -269,6 +278,7 @@ void get_data_table(
 		data_table[i].hold_out      = hold_out[i];
 		data_table[i].meas_value    = meas_value[i];
 		data_table[i].meas_std      = meas_std[i];
+		data_table[i].eta           = eta[i];
 		data_table[i].age_lower     = age_lower[i];
 		data_table[i].age_upper     = age_upper[i];
 		data_table[i].time_lower    = time_lower[i];
@@ -334,6 +344,22 @@ void get_data_table(
 		double meas_std = data_table[data_id].meas_std;
 		if( meas_std <= 0.0 )
 		{	msg = "meas_std is less than or equal zero";
+			error_exit(msg, table_name, data_id);
+		}
+		double eta       = data_table[data_id].eta;
+		bool eta_null    = std::isnan(eta);
+		bool log_density = density_enum(density_id) == log_gaussian_enum;
+		log_density     |= density_enum(density_id) == log_laplace_enum;
+		if( ! log_density && ! eta_null )
+		{	msg = "density is gaussian or laplace and eta is not null";
+			error_exit(msg, table_name, data_id);
+		}
+		if( log_density && eta_null )
+		{	msg = "density is log_gaussian or log_laplace and eta is null";
+			error_exit(msg, table_name, data_id);
+		}
+		if( log_density &&  eta < 0.0 )
+		{	msg = "eta is less than or equal zero";
 			error_exit(msg, table_name, data_id);
 		}
 	}
