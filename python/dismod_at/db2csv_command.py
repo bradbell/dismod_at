@@ -226,7 +226,7 @@
 #
 # $subhead eta$$
 # is the
-# $cref/eta/integrand_table/eta/$$ for this row.
+# $cref/eta/data_table/eta/$$ for this row.
 #
 # $subhead meas_value$$
 # is the data table

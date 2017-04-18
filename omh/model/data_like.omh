@@ -60,7 +60,7 @@ $cref/integrand_id/data_table/integrand_id/$$ value.
 
 $subhead eta_i$$
 We use $latex \eta_i$$ to denote the
-$cref/eta/integrand_table/eta/$$ value corresponding to $latex I_i$$.
+$cref/eta/data_table/eta/$$ value corresponding to $latex i$$.
 
 $subhead x_ij$$
 We use $latex x_{i,j}$$ to denote the corresponding

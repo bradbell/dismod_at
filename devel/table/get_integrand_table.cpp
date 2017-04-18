@@ -53,7 +53,7 @@ $code integrand_enum$$ $cnext $code integrand$$  $cnext
 enum corresponding to $cref/integrand_name/integrand_table/integrand_name/$$
 $rnext
 $code double$$ $cnext $code eta$$  $cnext
-	The $cref/eta/integrand_table/eta/$$
+	The integrand table value for eta
 $tend
 
 $head integrand_table$$
