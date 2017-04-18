@@ -108,6 +108,7 @@ def example_db (file_name) :
 		row['node']      = 'world'
 		row['integrand'] = 'prevalence'
 		row['meas_std']  = 0.01
+		row['eta']       = None;
 		data_table.append( copy.copy(row) )
 	#
 	for data_id in range( len( data_table ) ) :

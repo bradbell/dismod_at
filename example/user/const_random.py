@@ -123,6 +123,7 @@ def example_db (file_name) :
 		row['age_upper'] = age
 		row['integrand'] = 'prevalence'
 		row['meas_std']  = 0.001
+		row['eta']       = None;
 		row['data_name'] = 'd' + str(data_id)
 		node_id          = data_id % len( node_table )
 		row['node']      = node_table[node_id]['name']

@@ -112,6 +112,7 @@ def example_db (file_name) :
 		integrand         = integrand_table[integrand_id]['name']
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
+		row['eta']        = None;
 		row['integrand']  = integrand
 		if integrand == 'prevalence' :
 			# prevalence is measured at age zero
@@ -126,6 +127,7 @@ def example_db (file_name) :
 	row['hold_out']   = True # if outlyer were false, fit would fail
 	row['integrand']  = data_table[0]['integrand']
 	row['meas_std']   = data_table[0]['meas_std']
+	row['eta']        = None;
 	row['age_upper']  = data_table[0]['age_upper']
 	row['meas_value'] = 10. * data_table[0]['meas_value']
 	data_table.append( copy.copy(row) )

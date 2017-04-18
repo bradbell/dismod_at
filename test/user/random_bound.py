@@ -91,7 +91,8 @@ def example_db (file_name) :
 		'age_lower':    50.0,
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
-		'meas_std':     iota_true['north_america'] * 0.2
+		'meas_std':     iota_true['north_america'] * 0.2,
+		'eta':          None
 	}
 	for node in [ 'north_america', 'united_states', 'canada' ] :
 		row['node']        = node

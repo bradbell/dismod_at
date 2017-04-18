@@ -99,6 +99,7 @@ def example_db (file_name) :
 		'age_upper':    age_list[-1],
 		'meas_value':   relrisk_true,
 		'meas_std':     relrisk_true * 0.01,
+		'eta':          None,
 		'integrand':    'relrisk'
 	}
 	# values that change between rows:

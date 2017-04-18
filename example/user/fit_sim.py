@@ -123,6 +123,7 @@ def example_db (file_name) :
 		row['income']    = fraction
 		row['integrand'] = integrand_table[0]['name']
 		row['meas_std']  = 1e-3
+		row['eta']       = None;
 		data_table.append( copy.copy(row) )
 	#
 	for data_id in range( len( data_table ) ) :

@@ -96,6 +96,7 @@ def example_db (file_name) :
 	row = {
 		'meas_value':  100., # measurement is way off truth
 		'meas_std':    1,    # 1 percent coefficient of variation
+		'eta':         1e-6,
 		'density':     'log_gaussian',
 		'weight':      'constant',
 		'hold_out':     False,

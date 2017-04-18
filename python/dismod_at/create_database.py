@@ -735,10 +735,6 @@ def create_database(
 		node_id      = global_node_name2id[ data['node'] ]
 		weight_id    = global_weight_name2id[ data['weight'] ]
 		hold_out     = int( data['hold_out'] )
-		eta          = None
-		# 2DO: use data['eta'] when it becomes available
-		if data['density'] == 'log_gaussian' or data['density'] == 'log_laplace' :
-			eta = 0.0;
 		row = [
 			data['data_name'],
 			integrand_id,
@@ -748,7 +744,7 @@ def create_database(
 			hold_out,
 			data['meas_value'],
 			data['meas_std'],
-			eta,
+			data['eta'],
 			data['age_lower'],
 			data['age_upper'],
 			data['time_lower'],

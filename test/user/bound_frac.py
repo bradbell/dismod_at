@@ -98,6 +98,7 @@ def example_db (file_name) :
 		'age_upper':    age_list[-1],
 		'meas_value':   iota_true,
 		'meas_std':     iota_true * 0.1,
+		'eta':          None,
 		'integrand':    'Sincidence'
 	}
 	# values that change between rows:

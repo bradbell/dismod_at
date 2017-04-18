@@ -22,7 +22,8 @@ rename_cmd='s|random_bound.py|fit_fixed.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|'eta'\\( *\\):\\( *\\)1e-5|'eta'\\1:\\21e-6|
+s|^\\(\\t*\\)'meas_std':\\( *\\).*|&\\n\\1'eta':     \\2None,|
+s|^\\(\\t*\\)row\\['meas_std'\\]\\( *\\)=\\( *\\).*|&\\n\\1row['eta']     \\2=\\3None;|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

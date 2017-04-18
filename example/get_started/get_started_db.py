@@ -125,6 +125,7 @@ def get_started_db ():
 			'hold_out':    False,
 			'meas_value':  meas_value,
 			'meas_std':    meas_std,
+			'eta':         None,
 			'age_lower':   50.0,
 			'age_upper':   50.0,
 			'time_lower':  2000.0,

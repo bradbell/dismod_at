@@ -132,11 +132,13 @@ def example_db (file_name) :
 		if data_id < number_data / 2 :
 			row['integrand']  = 'Sincidence'
 			row['meas_std']   = iota_true * incidence_cv
+			row['eta']        = None;
 			noise             = iota_true * random.gauss(0.0, incidence_cv)
 			row['meas_value'] = iota_true + noise
 		else :
 			row['integrand']  = 'remission'
 			row['meas_std']   = rho_true * incidence_cv
+			row['eta']        = None;
 			noise             = rho_true * random.gauss(0.0, incidence_cv)
 			row['meas_value'] = rho_true + noise
 		#

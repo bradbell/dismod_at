@@ -43,7 +43,7 @@ def fun_rate(a, t) :
 def data_list2dict(value_list) :
 	key_list = [
 		'integrand',  'density',    'node',      'weight',    'hold_out',
-		'meas_value', 'meas_std',   'age_lower', 'age_upper',
+		'meas_value', 'meas_std',   'eta',       'age_lower', 'age_upper',
 		'time_lower', 'time_upper', 'sex',       'one'
 	]
 	assert len(value_list) == len(key_list)
@@ -92,14 +92,14 @@ def example_db (file_name) :
 	# Sincidence
 	value_list = [
 		'Sincidence', 'log_gaussian', 'world',    'weight_one',  0,
-		4.0e-3,       2.0e-3,         40,          40,
+		4.0e-3,       2.0e-3,         1e-6,        40,          40,
 		1995,         1995,           0.0,         1
 	]
 	data_table.append( data_list2dict( value_list ) );
 	#
 	value_list = [
 		'Sincidence', 'log_gaussian', 'world',    'weight_one',  0,
-		4.0e-2,       2.0e-2,         100,          100,
+		4.0e-2,       2.0e-2,         1e-6,        100,          100,
 		1995,         1995,           0.0,         1
 	]
 	data_table.append( data_list2dict( value_list ) );

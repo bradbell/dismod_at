@@ -115,6 +115,7 @@ def example_db (file_name) :
 		integrand         = integrand_table[integrand_id]['name']
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
+		row['eta']        = None;
 		row['integrand']  = integrand
 		# data_id = rate_id = integand_id
 		data_table.append( copy.copy(row) )

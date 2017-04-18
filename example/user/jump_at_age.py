@@ -120,6 +120,7 @@ def example_db (file_name) :
 		row['integrand']    = 'Sincidence'
 		row['meas_value']   = meas_value
 		row['meas_std']     = meas_value * 0.1
+		row['eta']          = 1e-6;
 		data_table.append( copy.copy(row) )
 		#
 	#

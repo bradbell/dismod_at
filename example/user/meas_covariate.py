@@ -157,6 +157,7 @@ def example_db (file_name) :
 		meas_std    = 0.1 * meas_value
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
+		row['eta']        = None;
 		row['integrand']  = integrand
 		row['income']     = income
 		row['sex']        = sex
