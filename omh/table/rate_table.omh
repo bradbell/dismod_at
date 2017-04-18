@@ -44,7 +44,9 @@ In addition, these values must appear in the order above.
 (Note that this column is unique; i.e., each name only appears once.)
 
 $subhead pini$$
-The initial prevalence $icode pini$$ is the prevalence at the initial age; i.e.,
+The initial
+$cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$
+$icode pini$$ is the prevalence at the initial age; i.e.,
 the value $cref/age/age_table/age/$$ corresponding to
 $icode%age_id% == 0%$$.
 If $icode rate_name$$ is $code pini$$, the
@@ -52,6 +54,13 @@ $icode parent_smooth_id$$ and $icode child_smooth_id$$ smoothings must have
 $cref/n_age/smooth_table/n_age/$$ equal to one.
 This is because prevalence at the initial age
 is only a function of time, and does not depend on age.
+Note that, unlike the other rates, initial prevalence is not a rate in the
+$cref/ordinary differential equation
+	/avg_integrand
+	/Ordinary Differential Equation
+/$$.
+On the other hand, and like the other rates,
+initial prevalence is a necessary input to solve the ODE.
 
 $subhead iota$$
 The susceptible incidence rate $icode iota$$ is the rate at which people who

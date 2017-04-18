@@ -222,7 +222,7 @@ C(a, a+c)
 \] $$
 where we have dropped the subscript $latex i$$ to simplify the notation.
 
-$head I_i (a, t)$$
+$head I_i(a,t)$$
 We use $latex I_i (a, t)$$ to denote the integrand as a function of
 age and time.
 We define prevalence by
