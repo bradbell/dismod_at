@@ -195,7 +195,7 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      0.1,
-			'eta':      1e-5
+			'eta':      1e-6
 		},{ # prior_iota_parent
 			'name':     'prior_iota_parent',
 			'density':  'uniform',

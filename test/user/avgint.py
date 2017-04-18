@@ -124,7 +124,7 @@ def example_db (file_name) :
 			'upper':    1e+0,
 			'mean':     1e-2,
 			'std':      1e-0,
-			'eta':      1e-5
+			'eta':      1e-6
 		},{ # prior_difference
 			'name':     'prior_difference',
 			'density':  'log_gaussian',
@@ -132,7 +132,7 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      1.0,
-			'eta':      1e-5
+			'eta':      1e-6
 		}
 	]
 	# --------------------------------------------------------------------------

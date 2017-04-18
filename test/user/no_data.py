@@ -88,7 +88,7 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      1.0,
-			'eta':      1e-5
+			'eta':      1e-6
 		},{ # prior_iota_parent_gaussian
 			'name':     'prior_iota_parent_gaussian',
 			'density':  'gaussian',

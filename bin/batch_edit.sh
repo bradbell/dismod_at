@@ -12,22 +12,17 @@
 new_directories='
 '
 rename_files='
-	example/user/random_bound.py
 '
 spell_files='
 '
 no_change_files='
-	test/user/random_bound.py
-	test/user/CMakeLists.txt
 '
 #
 rename_cmd='s|random_bound.py|fit_fixed.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|random_bound.py|fit_fixed.py|g
-s|check_example_user_random_bound|check_example_user_fit_fixed|
-s|\\trandom_bound\$|\\tfit_fixed|
+s|'eta'\\( *\\):\\( *\\)1e-5|'eta'\\1:\\21e-6|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

@@ -155,7 +155,7 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      1.0,
-			'eta':      1e-5
+			'eta':      1e-6
 		},{ # prior_dtime
 			'name':     'prior_dtime_child',
 			'density':  'gaussian',
@@ -163,7 +163,7 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      1.0,
-			'eta':      1e-5
+			'eta':      1e-6
 		}
 	]
 	# ----------------------------------------------------------------------

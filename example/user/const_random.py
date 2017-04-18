@@ -78,7 +78,7 @@ def example_db (file_name) :
 	time_list   = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
 	#
 	# integrand table:
-	integrand_table = [ { 'name':'prevalence',  'eta': 1e-5 } ]
+	integrand_table = [ { 'name':'prevalence',  'eta': 1e-6 } ]
 	#
 	# node table:
 	node_table = [

@@ -80,8 +80,8 @@ def example_db (file_name) :
 	#
 	# integrand table
 	integrand_table = [
-		{ 'name':'Sincidence',  'eta':1e-5 },
-		{ 'name':'mtother',     'eta':1e-5 }
+		{ 'name':'Sincidence',  'eta':1e-6 },
+		{ 'name':'mtother',     'eta':1e-6 }
 	]
 	#
 	# node table: world

@@ -144,7 +144,7 @@ def example_db (file_name) :
 			'upper':    iota_upper,
 			'mean':     iota_initial,
 			'std':      0.1,
-			'eta':      1e-5
+			'eta':      1e-6
 		}
 	]
 	# --------------------------------------------------------------------------
