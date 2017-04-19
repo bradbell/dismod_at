@@ -483,10 +483,9 @@ pack_object_   (pack_object)
 			sum += c_sum[k];
 		assert( sum > 0.0 );
 
-		// integrand and eta
+		// integrand as an enum instead of integrand_id
 		size_t  integrand_id     = subset_object[subset_id].integrand_id;
 		integrand_enum integrand = integrand_table[integrand_id].integrand;
-		double eta               = integrand_table[integrand_id].eta;
 
 		// child of parent node that this data is associated with
 		size_t  child            = child_object.table_id2child(original_id);
@@ -498,7 +497,6 @@ pack_object_   (pack_object)
 		data_info_[subset_id].j_min     = j_min;
 		data_info_[subset_id].n_age     = n_age;
 		data_info_[subset_id].n_time    = n_time;
-		data_info_[subset_id].eta       = eta;
 		//
 		data_info_[subset_id].c_ode.resize(n_age * n_time);
 		for(k = 0; k < n_age * n_time; k++)

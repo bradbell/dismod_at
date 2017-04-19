@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -35,7 +35,6 @@ class data_model {
 		size_t                j_min;
 		size_t                n_age;
 		size_t                n_time;
-		double                eta;
 		CppAD::vector<double> c_ode;
 		bool                  random_depend;
 	} data_ode_info;
