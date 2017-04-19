@@ -89,8 +89,8 @@ def get_started_db ():
 	time_list   = [ 1995.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_table = [
-		{ 'name':'susceptible', 'eta':1e-6 }
+	integrand_list = [
+		'susceptible'
 	]
 	#
 	# node table: is just the world (which has no parent)
@@ -273,7 +273,7 @@ def get_started_db ():
 		file_name,
 		age_list,
 		time_list,
-		integrand_table,
+		integrand_list,
 		node_table,
 		weight_table,
 		covariate_table,

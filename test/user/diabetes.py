@@ -88,10 +88,10 @@ def example_db (file_name) :
 	time_list   = [ 1990.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_table = [
-		{ 'name':'Sincidence',  'eta':1e-6 },
-		{ 'name':'prevalence',  'eta':1e-6 },
-		{ 'name':'mtexcess',    'eta':1e-6 }
+	integrand_list = [
+		'Sincidence',
+		'prevalence',
+		'mtexcess'
 	]
 	#
 	# node table: world
@@ -343,7 +343,7 @@ def example_db (file_name) :
 		file_name,
 		age_list,
 		time_list,
-		integrand_table,
+		integrand_list,
 		node_table,
 		weight_table,
 		covariate_table,

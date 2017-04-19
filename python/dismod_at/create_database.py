@@ -40,7 +40,7 @@
 #	%file_name%,
 #	%age_list%
 #	%time_list%
-#	%integrand_table%,
+#	%integrand_list%,
 #	%node_table%,
 #	%weight_table%,
 #	%covariate_table%,
@@ -85,15 +85,9 @@
 # is a $code list$$ of $code float$$ that
 # specify the time grid values.
 #
-# $head integrand_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref integrand_table$$.
-# The dictionary $icode%integrand_table%[%i%]%$$ has the following:
-# $table
-# Key     $cnext Value Type $pre  $$ $cnext Description            $rnext
-# name    $cnext str        $cnext name for the $th i$$ integrand  $rnext
-# eta     $cnext str        $cnext offset in log transform for this integrand
-# $tend
+# $head integrand_list$$
+# This is a list of $code str$$
+# that specify the $cref/integrand names/integrand_table/integrand_name/$$.
 #
 # $head node_table$$
 # This is a list of $code dict$$
@@ -316,7 +310,7 @@ def create_database(
 	file_name,
 	age_list,
 	time_list,
-	integrand_table,
+	integrand_list,
 	node_table,
 	weight_table,
 	covariate_table,
@@ -355,11 +349,11 @@ def create_database(
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# create integrand table
-	col_name = [ 'integrand_name', 'eta' ]
-	col_type = [ 'text',           'real']
+	col_name = [ 'integrand_name' ]
+	col_type = [ 'text' ]
 	row_list = []
-	for row in integrand_table :
-		row_list.append( [ row['name'], row['eta'] ]  )
+	for integrand in integrand_list :
+		row_list.append( [ integrand ] )
 	tbl_name = 'integrand'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#

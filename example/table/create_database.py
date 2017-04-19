@@ -40,7 +40,7 @@ def create_database() :
 	file_name      = 'example.db'
 	age_list       = [ 50.0 ]
 	time_list      = [ 2000.0 ]
-	integrand_table = [ { 'name':'mtother',    'eta':1e-6 } ]
+	integrand_list = [ 'mtother' ]
 	#
 	# node_table
 	node_table = [
@@ -220,7 +220,7 @@ def create_database() :
 		file_name,
 		age_list,
 		time_list,
-		integrand_table,
+		integrand_list,
 		node_table,
 		weight_table,
 		covariate_table,
@@ -257,9 +257,9 @@ def create_database() :
 	#
 	# intergrand_table
 	tbl_name   = 'integrand'
-	col_name   = [ 'integrand_name', 'eta' ]
+	col_name   = [ 'integrand_name' ]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
-	check_list = [ ['mtother', 1e-6] ]
+	check_list = [ ['mtother'] ]
 	assert row_list == check_list
 	#
 	# weight_table

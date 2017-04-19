@@ -60,8 +60,8 @@ def example_db (file_name) :
 	time_list   = [ 1995.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_table = [
-		{ 'name':'relrisk',  'eta':1e-6 }
+	integrand_list = [
+		'relrisk'
 	]
 	#
 	# node table: world -> north_america
@@ -255,7 +255,7 @@ def example_db (file_name) :
 		file_name,
 		age_list,
 		time_list,
-		integrand_table,
+		integrand_list,
 		node_table,
 		weight_table,
 		covariate_table,

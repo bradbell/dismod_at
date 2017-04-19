@@ -69,7 +69,7 @@ def example_db (file_name) :
 	time_list   = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
 	#
 	# integrand table:
-	integrand_table = [ { 'name':'prevalence',  'eta': 1e-6 } ]
+	integrand_list = [ 'prevalence' ]
 	#
 	# node table:
 	node_table = [ { 'name':'world', 'parent':'' } ]
@@ -121,7 +121,7 @@ def example_db (file_name) :
 		row['age_upper'] = age
 		row['node']      = 'child_' + str( (data_id % n_children) + 1 )
 		row['income']    = fraction
-		row['integrand'] = integrand_table[0]['name']
+		row['integrand'] = integrand_list[0]
 		row['meas_std']  = 1e-3
 		row['eta']       = None;
 		data_table.append( copy.copy(row) )
@@ -262,7 +262,7 @@ def example_db (file_name) :
 		file_name,
 		age_list,
 		time_list,
-		integrand_table,
+		integrand_list,
 		node_table,
 		weight_table,
 		covariate_table,

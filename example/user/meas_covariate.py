@@ -77,9 +77,9 @@ def example_db (file_name) :
 	time_list   = [ 1995.0, 2005.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_table = [
-		{ 'name':'Sincidence',  'eta':1e-6 },
-		{ 'name':'remission',   'eta':1e-6 }
+	integrand_list = [
+		'Sincidence',
+		'remission'
 	]
 	#
 	# node table: world -> north_america
@@ -141,9 +141,9 @@ def example_db (file_name) :
 	mulcov_incidence = 1.0
 	mulcov_remission = 2.0;
 	income_reference = 0.5
-	n_integrand      = len( integrand_table )
+	n_integrand      = len( integrand_list )
 	for data_id in range( n_data ) :
-		integrand   = integrand_table[ data_id % n_integrand ]['name']
+		integrand   = integrand_list[ data_id % n_integrand ]
 		income      = data_id / float(n_data-1)
 		sex         = ( data_id % 3 - 1.0 ) / 2.0
 		meas_value  = iota_true
@@ -304,7 +304,7 @@ def example_db (file_name) :
 		file_name,
 		age_list,
 		time_list,
-		integrand_table,
+		integrand_list,
 		node_table,
 		weight_table,
 		covariate_table,

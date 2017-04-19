@@ -82,7 +82,7 @@ assert avgint_subset_table[0]['avgint_id'] == 0
 # -----------------------------------------------------------------------
 # check var table
 var_table        = dismod_at.get_table_dict(connection, 'var')
-integrand_table  = dismod_at.get_table_dict(connection, 'integrand')
+integrand_list  = dismod_at.get_table_dict(connection, 'integrand')
 covariate_table  = dismod_at.get_table_dict(connection, 'covariate')
 smooth_table     = dismod_at.get_table_dict(connection, 'smooth')
 rate_table       = dismod_at.get_table_dict(connection, 'rate')

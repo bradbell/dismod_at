@@ -1,17 +1,17 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 import sys
 import os
-sys.path.append('@CMAKE_SOURCE_DIR@/python')
-sys.path.append('@CMAKE_CURRENT_SOURCE_DIR@')
+sys.path.insert(0, '@CMAKE_SOURCE_DIR@/python')
+sys.path.insert(0, '@CMAKE_CURRENT_SOURCE_DIR@')
 file_list=os.listdir('@CMAKE_CURRENT_SOURCE_DIR@')
 file_list=sorted(file_list)
 #
