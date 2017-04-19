@@ -679,6 +679,8 @@ void data_model::replace_like(
 			data_subset_obj[subset_id].meas_value;
 		data_subset_obj_[subset_id].meas_std =
 			data_subset_obj[subset_id].meas_std;
+		data_subset_obj_[subset_id].eta =
+			data_subset_obj[subset_id].eta;
 		//
 		data_info_[subset_id].density = density_enum(
 			data_subset_obj[subset_id].density_id

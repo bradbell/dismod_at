@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -18,18 +18,21 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	struct data_subset_struct {
+		// values in avgint_subset_struct
 		int         original_id;
 		int         integrand_id;
-		int         density_id;
 		int         node_id;
 		int         weight_id;
-		int         hold_out;
-		double      meas_value;
-		double      meas_std;
 		double      age_lower;
 		double      age_upper;
 		double      time_lower;
 		double      time_upper;
+		// values not in avging_subset_struct
+		int         hold_out;
+		int         density_id;
+		double      meas_value;
+		double      meas_std;
+		double      eta;
 	};
 	extern void data_subset(
 		const CppAD::vector<data_struct>&      data_table            ,
