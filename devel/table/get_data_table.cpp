@@ -358,8 +358,8 @@ void get_data_table(
 		{	msg = "density is log_gaussian or log_laplace and eta is null";
 			error_exit(msg, table_name, data_id);
 		}
-		if( log_density &&  eta < 0.0 )
-		{	msg = "eta is less than or equal zero";
+		if( log_density && eta < 0.0 )
+		{	msg = "eta is less than zero";
 			error_exit(msg, table_name, data_id);
 		}
 	}
