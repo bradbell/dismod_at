@@ -1569,7 +1569,10 @@ residual_struct<Float> data_model::like_one(
 		std_effect += c_ode[k] * meas_cov_ode[k];
 	//
 	// Compute the adusted standard deviation
-	delta_out  = Delta + std_effect * (meas_value + eta);
+	if( density == log_gaussian_enum || density == log_laplace_enum )
+		delta_out  = Delta + std_effect * (meas_value + eta);
+	else
+		delta_out  = Delta * ( 1.0 + std_effect);
 	//
 	Float not_used;
 	bool difference = false;

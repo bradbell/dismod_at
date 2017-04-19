@@ -1084,35 +1084,46 @@ void simulate_command(
 		double delta_data;
 		data_object.like_one(subset_id, truth_var, avg, delta_data);
 		//
-		// determine gamma for this data point where
-		// delta_data = meas_std + (meas_value + eta) * gamma
+		// density corresponding to this data point
+		dismod_at::density_enum density =
+			dismod_at::density_enum( data_subset_obj[subset_id].density_id );
+		//
 		double meas_value   = data_subset_obj[subset_id].meas_value;
 		double meas_std     = data_subset_obj[subset_id].meas_std;
 		double eta          = integrand_table[integrand_id].eta;
-		CPPAD_ASSERT_KNOWN( meas_value + eta > 0.0 ,
-			"simulate_command: meas_value plus eta is not positive"
-		);
-		CPPAD_ASSERT_KNOWN( avg + eta > 0.0 ,
-			"simulate_command: average interand plus eta is not positive"
-		);
-		CPPAD_ASSERT_UNKNOWN( delta_data >= meas_std );
-		double gamma        = (delta_data - meas_std) / (meas_value + eta);
-		//
-		// compute value of delta relative to avg, delta_avg
-		dismod_at::density_enum density =
-			dismod_at::density_enum( data_subset_obj[subset_id].density_id );
-		bool log = density == dismod_at::log_gaussian_enum;
-		log     |= density == dismod_at::log_laplace_enum;
-		double delta_avg = delta_data;
-		if( log )
-		{	// log-transformed standard deviation relative to data is
-			// log[ (meas_value + eta + delta_data) / (meas_value + eta) ]
-			// should be equal to
-			// log[ (avg + eta + delta_avg) / (avg + eta) ]
-			double ratio = (meas_value + eta + delta_data)/(meas_value + eta);
-			delta_avg    = (ratio - 1.0) * (avg + eta);
+		// coefficient of variation for this data value
+		double cof_var      = std::numeric_limits<double>::quiet_NaN();
+		// standard deviation covariate effect
+		double std_effect   = std::numeric_limits<double>::quiet_NaN();
+		// delta realtive to avg
+		double delta_avg    = std::numeric_limits<double>::quiet_NaN();
+		bool log = false;
+		switch( density )
+		{	// log
+			case dismod_at::log_gaussian_enum:
+			case dismod_at::log_laplace_enum:
+			log = true;
+			CPPAD_ASSERT_KNOWN( meas_value + eta > 0.0 ,
+				"simulate_command: meas_value plus eta is not positive"
+			);
+			CPPAD_ASSERT_KNOWN( avg + eta > 0.0 ,
+				"simulate_command: average interand plus eta is not positive"
+			);
+			cof_var    = meas_std / (meas_value + eta);
+			std_effect = (delta_data - meas_std) / (meas_value + eta);
+			delta_avg  = (cof_var + std_effect) * (avg + eta);
+			break;
+
+			// linear
+			case dismod_at::gaussian_enum:
+			case dismod_at::laplace_enum:
+			std_effect = delta_data / meas_std - 1.0;
+			delta_avg  = delta_data;
+			break;
+
+			default:
+			assert(false);
 		}
-		CPPAD_ASSERT_UNKNOWN( delta_avg > 0.0 );
 		//
 		// compute the simulated measurement value
 		double sim_value   = dismod_at::sim_random(
@@ -1121,20 +1132,10 @@ void simulate_command(
 		// ensure sim_value is non-negative
 		sim_value = std::max( sim_value , 0.0);
 		//
-		// The adjusted standard deviation for the simulated measurement is
-		// delta_sim = sim_std + (sim_value + eta) * gamma
-		// in the linear case, this is equal to delta_avg; i.e.,
-		double sim_std = delta_avg - (sim_value + eta) * gamma;
+		// The standard deviation before including std_effect
+		double sim_std = delta_avg / (1.0 + std_effect);
 		if( log )
-		{	// The log-transformed standad deviations are equal in this case
-			// log[ (avg + eta + delta_avg) / (avg + eta) ] =
-			// log[ (sim_value + eta + delta_sim) / (sim_value + eta) ]
-			double ratio     = (avg + eta + delta_avg)/(avg + eta);
-			double delta_sim = (ratio - 1.0) * (sim_value + eta);
-			sim_std          = delta_sim - (sim_value + eta) * gamma;
-		}
-		// ensure that sim_std is greater than zero
-		sim_std        = std::max(sim_std, (avg + eta)* 1e-5 );
+			sim_std = cof_var * (sim_value + eta);
 		//
 		size_t simulate_id = sim_index * n_subset + subset_id;
 		row_value[simulate_id * n_col + 0] = to_string( sim_index );
