@@ -119,7 +119,6 @@ bool like_all_xam(void)
 	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
 	for(i = 0; i < n_integrand; i++)
 	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
-		integrand_table[i].eta       = 1e-4;
 	}
 	//
 	// n_age_ode

@@ -123,11 +123,9 @@ bool meas_mulcov(void)
 	//
 	// integrand_table
 	size_t n_integrand = dismod_at::number_integrand_enum;
-	double eta = 1e-6;
 	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
 	for(i = 0; i < n_integrand; i++)
 	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
-		integrand_table[i].eta       = eta;
 	}
 	//
 	// n_age_ode
@@ -178,6 +176,7 @@ bool meas_mulcov(void)
 	data_table[data_id].time_upper   = time_upper;
 	data_table[data_id].meas_value   = 1e-2;
 	data_table[data_id].meas_std     = 1e-3;
+	data_table[data_id].eta          = 1e-6;
 	data_table[data_id].density_id   = dismod_at::gaussian_enum;
 	//
 	data_cov_value[0] = x_j;

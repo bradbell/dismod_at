@@ -1090,7 +1090,7 @@ void simulate_command(
 		//
 		double meas_value   = data_subset_obj[subset_id].meas_value;
 		double meas_std     = data_subset_obj[subset_id].meas_std;
-		double eta          = integrand_table[integrand_id].eta;
+		double eta          = data_subset_obj[subset_id].eta;
 		// coefficient of variation for this data value
 		double cof_var      = std::numeric_limits<double>::quiet_NaN();
 		// standard deviation covariate effect

@@ -42,13 +42,13 @@ bool get_integrand_table_xam(void)
 	// sql commands
 	const char* sql_cmd[] = {
 	"create table integrand"
-	"(integrand_id integer primary key, integrand_name text unique, eta real)",
-	"insert into integrand values(0, 'mtall',       1e-7)",
-	"insert into integrand values(1, 'prevalence',  1e-6)",
-	"insert into integrand values(2, 'remission',   1e-5)",
-	"insert into integrand values(3, 'Sincidence',  1e-4)",
-	"insert into integrand values(4, 'susceptible', 1e-3)",
-	"insert into integrand values(5, 'withC',       1e-2)",
+	"(integrand_id integer primary key, integrand_name text unique)",
+	"insert into integrand values(0, 'mtall'       )",
+	"insert into integrand values(1, 'prevalence'  )",
+	"insert into integrand values(2, 'remission'   )",
+	"insert into integrand values(3, 'Sincidence'  )",
+	"insert into integrand values(4, 'susceptible' )",
+	"insert into integrand values(5, 'withC'       )",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -66,13 +66,6 @@ bool get_integrand_table_xam(void)
 	ok  &= integrand_table[3].integrand == dismod_at::Sincidence_enum;
 	ok  &= integrand_table[4].integrand == dismod_at::susceptible_enum;
 	ok  &= integrand_table[5].integrand == dismod_at::withC_enum;
-	//
-	ok  &= integrand_table[0].eta == 1e-7;
-	ok  &= integrand_table[1].eta == 1e-6;
-	ok  &= integrand_table[2].eta == 1e-5;
-	ok  &= integrand_table[3].eta == 1e-4;
-	ok  &= integrand_table[4].eta == 1e-3;
-	ok  &= integrand_table[5].eta == 1e-2;
 	//
 	// close database and return
 	sqlite3_close(db);

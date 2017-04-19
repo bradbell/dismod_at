@@ -119,7 +119,6 @@ bool avg_yes_ode_xam(void)
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	integrand_table[integrand_id].integrand =
 			dismod_at::integrand_enum(n_integrand - integrand_id - 1);
-		integrand_table[integrand_id].eta  = 1e-6;
 	}
 	//
 	// n_age_ode
@@ -159,6 +158,7 @@ bool avg_yes_ode_xam(void)
 	data_table[data_id].time_upper   = 2000.0;
 	data_table[data_id].meas_value   = 0.0;
 	data_table[data_id].meas_std     = 1e-3;
+	data_table[data_id].eta          = 1e-6;
 	data_table[data_id].density_id   = dismod_at::uniform_enum;
 	//
 	data_id = 1;

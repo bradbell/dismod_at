@@ -139,11 +139,6 @@ CppAD::vector<integrand_struct> get_integrand_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, integrand_name);
 	assert( n_integrand == integrand_name.size() );
 
-	column_name =  "eta";
-	CppAD::vector<double>  eta;
-	get_table_column(db, table_name, column_name, eta);
-	assert( n_integrand == eta.size() );
-
 	CppAD::vector<integrand_struct> integrand_table(n_integrand);
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	integrand_enum integrand = number_integrand_enum;
@@ -157,7 +152,6 @@ CppAD::vector<integrand_struct> get_integrand_table(sqlite3* db)
 			error_exit(msg, table_name, integrand_id);
 		}
 		integrand_table[integrand_id].integrand = integrand;
-		integrand_table[integrand_id].eta       = eta[integrand_id];
 	}
 	return integrand_table;
 }

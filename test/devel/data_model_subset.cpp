@@ -119,7 +119,6 @@ bool data_model_subset(void)
 	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
 	for(i = 0; i < n_integrand; i++)
 	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
-		integrand_table[i].eta       = 1e-6;
 	}
 	//
 	// n_age_ode
@@ -165,6 +164,7 @@ bool data_model_subset(void)
 		data_table[data_id].time_upper   = 1990.0 + data_id * 5;
 		data_table[data_id].meas_value   = 0.0;
 		data_table[data_id].meas_std     = 1e-3;
+		data_table[data_id].eta          = 1e-6;
 		data_table[data_id].density_id   = dismod_at::uniform_enum;
 	}
 	//

@@ -192,7 +192,6 @@ bool fit_model_xam(void)
 	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
 	for(i = 0; i < n_integrand; i++)
 	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
-		integrand_table[i].eta       = 1e-6;
 	}
 	//
 	// node_table:    0
@@ -259,6 +258,7 @@ bool fit_model_xam(void)
 		data_table[data_id].time_upper   = 1995.0;
 		data_table[data_id].meas_value   = meas_value;
 		data_table[data_id].meas_std     = meas_std;
+		data_table[data_id].eta          = 1e-6;
 		data_table[data_id].density_id   = dismod_at::gaussian_enum;
 	}
 	//
