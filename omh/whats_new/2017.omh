@@ -30,6 +30,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-19$$
+The offset in the log transformation for the data is now specified
+in the data table (for each data point) instead of in the
+integrand table (for all data points corresponding to an integrand); see
+$cref/eta/data_table/eta/$$.
+
 $head 04-18$$
 Change the definition of adjusted standard deviation for data in the
 $cref/Gaussian and Laplace
