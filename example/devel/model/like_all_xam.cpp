@@ -159,6 +159,7 @@ bool like_all_xam(void)
 		data_table[data_id].time_upper = 2000.0;
 		data_table[data_id].meas_value = ( 50. * 1995) / (100.0 * 2000.0);
 		data_table[data_id].meas_std   = data_table[data_id].meas_value / 10.;
+		data_table[data_id].eta        = 1e-4;
 		if( data_id == 0 )
 			data_table[data_id].density_id = dismod_at::gaussian_enum;
 		else
