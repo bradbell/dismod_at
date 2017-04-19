@@ -730,6 +730,7 @@ def db2csv_command(database_file_arg) :
 		row_out['time_up']     = row_in['time_upper']
 		row_out['hold_out']    = row_in['hold_out']
 		row_out['meas_std']    = convert2output( row_in['meas_std'] )
+		row_out['eta']         = convert2output( row_in['eta'] )
 		row_out['meas_value']  = convert2output( row_in['meas_value'] )
 		row_out['integrand'] = table_lookup(
 			'integrand', row_in['integrand_id'], 'integrand_name'
@@ -739,9 +740,6 @@ def db2csv_command(database_file_arg) :
 		)
 		row_out['density'] = table_lookup(
 			'density', row_in['density_id'], 'density_name'
-		)
-		row_out['eta']  = table_lookup(
-				'integrand', row_in['integrand_id'], 'eta'
 		)
 		row_out['node'] = node_id2child_or_parent( row_in['node_id'] )
 		#
