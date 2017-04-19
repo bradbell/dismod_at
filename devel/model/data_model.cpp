@@ -219,7 +219,7 @@ data_model::data_model(
 	double                                   ode_step_size   ,
 	const CppAD::vector<double>&             age_table       ,
 	const CppAD::vector<double>&             time_table      ,
-	const CppAD::vector<integrand_struct>&   integrand_table ,
+	const CppAD::vector<integrand_enum>&     integrand_table ,
 	const CppAD::vector<node_struct>&        node_table      ,
 	const CppAD::vector<SubsetStruct>&       subset_object   ,
 	const CppAD::vector<double>&             subset_cov_value,
@@ -485,7 +485,7 @@ pack_object_   (pack_object)
 
 		// integrand as an enum instead of integrand_id
 		size_t  integrand_id     = subset_object[subset_id].integrand_id;
-		integrand_enum integrand = integrand_table[integrand_id].integrand;
+		integrand_enum integrand = integrand_table[integrand_id];
 
 		// child of parent node that this data is associated with
 		size_t  child            = child_object.table_id2child(original_id);
@@ -1754,7 +1754,7 @@ template data_model::data_model(                                \
 	double                                   ode_step_size   ,  \
 	const CppAD::vector<double>&             age_table       ,  \
 	const CppAD::vector<double>&             time_table      ,  \
-	const CppAD::vector<integrand_struct>&   integrand_table ,  \
+	const CppAD::vector<integrand_enum>&     integrand_table ,  \
 	const CppAD::vector<node_struct>&        node_table      ,  \
 	const CppAD::vector<SubsetStruct>&       subset_object   ,  \
 	const CppAD::vector<double>&             subset_cov_value,  \

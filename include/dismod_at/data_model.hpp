@@ -77,7 +77,7 @@ public:
 		double                                   ode_step_size   ,
 		const CppAD::vector<double>&             age_table       ,
 		const CppAD::vector<double>&             time_table      ,
-		const CppAD::vector<integrand_struct>&   integrand_table ,
+		const CppAD::vector<integrand_enum>&     integrand_table ,
 		const CppAD::vector<node_struct>&        node_table      ,
 		const CppAD::vector<SubsetStruct>&       subset_object   ,
 		const CppAD::vector<double>&             subset_cov_value,
