@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -20,10 +20,10 @@ $spell
 	std
 $$
 
-$section Mapping var_id To Variable Description$$
+$section Identifying Model Variables$$
 The $code variable$$ table maps the $icode var_id$$
 to information that specifies exactly which
-$cref/model_variables/model_variables/$$ it corresponds to.
+$cref/model_variable/model_variables/$$ it corresponds to.
 You can use this information to interpret a $cref fit_var_table$$
 created by the $cref fit_command$$,
 or to create a $cref truth_var_table$$

@@ -118,7 +118,7 @@ the adjusted standard deviation is defined by
 $latex \[
 \delta_i ( \theta )
 =
-\Delta_i +
+\Delta_i
 +
 \frac{ \Delta_i }{\bar{w}_i}
 	\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}

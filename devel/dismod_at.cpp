@@ -80,6 +80,12 @@ $cref data_subset_table$$   $cnext $title data_subset_table$$ $rnext
 $cref avgint_subset_table$$ $cnext $title avgint_subset_table$$ $rnext
 $tend
 
+$head Changing Values$$
+You must re-run this command when ever any of the
+$cref input$$ tables is changed.
+The option table is an exception to this rule; see
+$cref/changing Values/option_table/Changing Values/$$.
+
 $head database$$
 Is an
 $href%http://www.sqlite.org/sqlite/%$$ database containing the

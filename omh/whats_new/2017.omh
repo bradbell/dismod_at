@@ -20,6 +20,7 @@ $spell
 	suitesparse
 	lrt
 	avgint
+	init
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -29,6 +30,21 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 04-20$$
+$list number$$
+Add a comment about
+$cref/changing values/init_command/Changing Values/$$, in the input tables,
+to the $code init$$ command.
+$lnext
+Add more links that show how the different $cref model_variables$$ appear
+in the $cref avg_integrand$$.
+$lnext
+Correct the discussion of model variables to state that it is now
+possible to have a different smoothing for each
+$cref/child rate/model_variables/Random Effects, u/Child Rates/$$.
+$lend
+
 
 $head 04-19$$
 The offset in the log transformation for the data is now specified

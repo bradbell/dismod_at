@@ -25,6 +25,8 @@ $spell
 	covariate
 	interpolant
 	csv
+	ik
+	nslist
 $$
 
 $section The Model Variables$$
@@ -150,14 +152,22 @@ $code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$
 there is a subvector corresponding to the parent value for the rate.
 The smoothing for each of these subvectors is specified by the corresponding
 $cref/parent_smooth_id/rate_table/parent_smooth_id/$$.
-(Recall that the smoothing determine the number of variables in the
-subvector as well as the corresponding age and time locations.)
+Recall that the smoothing determines the number of variables in the
+subvector as well as the corresponding age and time values.
+For an example use, see
+$cref/q_k/avg_integrand/Rate Functions/q_k/$$ in the average integrand model.
 
 $subhead Covariate Multipliers$$
 For each $cref/mulcov_id/mulcov_table/mulcov_id/$$
 there is a corresponding subvector and its
 smoothing is specified by the corresponding
 $cref/smooth_id/mulcov_table/smooth_id/$$.
+For more clarification, see the discussion for
+$cref/rate_value/mulcov_table/mulcov_type/rate_value/$$,
+$cref/meas_value/mulcov_table/mulcov_type/meas_value/$$,
+and
+$cref/meas_std/mulcov_table/mulcov_type/meas_std/$$
+covariate multipliers.
 
 $head Random Effects, u$$
 we use $latex u$$ to denote the vector of random effects; i.e.,
@@ -170,13 +180,15 @@ For each rate
 ($code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$)
 there is a
 subvector corresponding to the child random effects for the rate.
-The smoothing for the subvector only depends on the rate; i.e.,
-given a rate, it is the same for all children.
-This smoothing is specified by
-$cref/child_smooth_id/rate_table/child_smooth_id/$$.
+For each rate, the smoothing can be the same for all the children,
+$cref/child_smooth_id/rate_table/child_smooth_id/$$,
+or it can have a different value for each child
+$cref/child_nslist_id/rate_table/child_nslist_id/$$.
 If $latex u_j$$ is a random effect,
 the rate for the child in the $cref avg_integrand$$ model
 is $latex \exp( u_j )$$ times the rate for the parent.
+For an example use, see
+$cref/r_ik/avg_integrand/Rate Functions/r_ik/$$ in the average integrand model.
 
 $head Age and Time Variation$$
 
