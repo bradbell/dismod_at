@@ -33,9 +33,10 @@ We use $latex y_i$$ to denote the corresponding
 $cref/meas_value/data_table/meas_value/$$ value.
 
 $subhead Delta_i$$
-We define the notation $latex \Delta_i$$ by
+We use the notation $latex \Delta_i$$
+for the actual standard deviation used in the model
 $codei%
-	%Delta_i% = max(%meas_std_i%, %minimum_meas_cv% * %meas_value_i%)
+	%Delta_i% = max(%meas_std_i%, %minimum_meas_cv% * |%meas_value_i%| )
 %$$
 where
 $cref/meas_value_i/data_table/meas_value/$$

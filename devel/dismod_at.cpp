@@ -1001,6 +1001,7 @@ $end
 */
 void simulate_command(
 	const std::string&                                  number_simulate ,
+	double                                              minimum_meas_cv ,
 	sqlite3*                                            db              ,
 	const vector<dismod_at::integrand_enum>&            integrand_table ,
 	const vector<dismod_at::data_subset_struct>&        data_subset_obj ,
@@ -1096,6 +1097,9 @@ void simulate_command(
 		double meas_value   = data_subset_obj[subset_id].meas_value;
 		double meas_std     = data_subset_obj[subset_id].meas_std;
 		double eta          = data_subset_obj[subset_id].eta;
+		double Delta        = std::max(
+			meas_std, minimum_meas_cv * std::fabs(meas_value)
+		);
 		// coefficient of variation for this data value
 		double cof_var      = std::numeric_limits<double>::quiet_NaN();
 		// standard deviation covariate effect
@@ -1114,15 +1118,15 @@ void simulate_command(
 			CPPAD_ASSERT_KNOWN( avg + eta > 0.0 ,
 				"simulate_command: average interand plus eta is not positive"
 			);
-			cof_var    = meas_std / (meas_value + eta);
-			std_effect = (delta_data - meas_std) / (meas_value + eta);
+			cof_var    = Delta / (meas_value + eta);
+			std_effect = (delta_data - Delta) / (meas_value + eta);
 			delta_avg  = (cof_var + std_effect) * (avg + eta);
 			break;
 
 			// linear
 			case dismod_at::gaussian_enum:
 			case dismod_at::laplace_enum:
-			std_effect = delta_data / meas_std - 1.0;
+			std_effect = delta_data / Delta - 1.0;
 			delta_avg  = delta_data;
 			break;
 
@@ -1948,6 +1952,7 @@ int main(int n_arg, const char** argv)
 			else if( command_arg == "simulate" )
 			{	simulate_command(
 					argv[3]                  , // number_simulate
+					minimum_meas_cv          ,
 					db                       ,
 					db_input.integrand_table ,
 					data_subset_obj          ,

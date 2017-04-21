@@ -101,7 +101,7 @@ $cref/meas_value/data_table/meas_value/$$ is the measurement value, and
 $cref/meas_std/data_table/meas_std/$$ is the measurement standard,
 the measurement standard deviation used in the model is
 $codei%
-	%Delta% = max(%meas_std%, %minimum_meas_cv% * %meas_value%)
+	%Delta% = max(%meas_std%, %minimum_meas_cv% * |%meas_value%| )
 %$$
 see $cref/Delta/data_like/Data Table Notation/Delta_i/$$
 in the data likelihood section.

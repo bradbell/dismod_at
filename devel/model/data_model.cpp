@@ -1534,7 +1534,7 @@ residual_struct<Float> data_model::like_one(
 	size_t integrand_id  = data_subset_obj_[subset_id].integrand_id;
 	double meas_value    = data_subset_obj_[subset_id].meas_value;
 	assert( Delta > 0.0 );
-	Delta = std::max(Delta, minimum_meas_cv_);
+	Delta = std::max(Delta, minimum_meas_cv_ * std::fabs(meas_value) );
 
 	// data_info information for this data point
 	density_enum   density             = data_info_[subset_id].density;
