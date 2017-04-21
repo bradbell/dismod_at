@@ -14,7 +14,7 @@ $spell
 	smoothings
 $$
 
-$section Lists of Smoothing$$
+$section Lists of Node Smoothing Pairs$$
 This table can be used to specify a lists of nodes with
 corresponding smoothings.
 
