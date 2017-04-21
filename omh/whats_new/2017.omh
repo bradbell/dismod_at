@@ -31,6 +31,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-21$$
+Change the name of the output section to the
+$cref data_flow$$ section.
+
 $head 04-20$$
 $list number$$
 Add a comment about
