@@ -39,6 +39,7 @@ class data_model {
 		bool                  random_depend;
 	} data_ode_info;
 private:
+	const double                              minimum_meas_cv_;
 	const size_t                              n_covariate_;
 	const size_t                              n_age_ode_;
 	const size_t                              n_time_ode_;
@@ -71,6 +72,7 @@ public:
 	template <class SubsetStruct>
 	data_model(
 		size_t                                   parent_node_id  ,
+		double                                   minimum_meas_cv ,
 		size_t                                   n_covariate     ,
 		size_t                                   n_age_ode       ,
 		size_t                                   n_time_ode      ,

@@ -206,6 +206,9 @@ bool fit_model_xam(void)
 	// parent_node_id
 	size_t parent_node_id = 0;
 	//
+	// minimum_meas_cv
+	double minimum_meas_cv= 0.0;
+	//
 	//  open database
 	bool new_file = true;
 	std::string file_name = "example.db";
@@ -300,6 +303,7 @@ bool fit_model_xam(void)
 	double ode_step_size = 20.;
 	dismod_at::data_model data_object(
 		parent_node_id,
+		minimum_meas_cv,
 		n_covariate,
 		n_age_ode,
 		n_time_ode,

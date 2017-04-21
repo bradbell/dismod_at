@@ -16,6 +16,7 @@ $spell
 	covariate
 	covariates
 	mulcov
+	cv
 $$
 
 $section The Data Weighted Residuals and Likelihood Functions$$
@@ -32,8 +33,17 @@ We use $latex y_i$$ to denote the corresponding
 $cref/meas_value/data_table/meas_value/$$ value.
 
 $subhead Delta_i$$
-We use $latex \Delta_i$$ to denote the corresponding
-$cref/meas_std/data_table/meas_std/$$ value.
+We define the notation $latex \Delta_i$$ by
+$codei%
+	%Delta_i% = max(%meas_std_i%, %minimum_meas_cv% * %meas_value_i%)
+%$$
+where
+$cref/meas_value_i/data_table/meas_value/$$
+is the corresponding measurement value,
+$cref/meas_std_i/data_table/meas_std/$$
+is the corresponding measurement standard deviation, and
+$cref/minimum_meas_cv/option_table/minimum_meas_cv/$$
+is the minimum coefficient of variation for the measurement values.
 
 $subhead a_i$$
 We use $latex a_i$$ to denote the corresponding

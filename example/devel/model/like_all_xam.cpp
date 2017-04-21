@@ -138,6 +138,9 @@ bool like_all_xam(void)
 	// parent_node_id
 	size_t parent_node_id = 0;
 	//
+	// minimum_meas_cv
+	double minimum_meas_cv= 0.0;
+	//
 	// covariate table
 	size_t n_covariate = 0;
 	vector<dismod_at::covariate_struct> covariate_table(n_covariate);
@@ -213,6 +216,7 @@ bool like_all_xam(void)
 	// data_model
 	dismod_at::data_model data_object(
 		parent_node_id,
+		minimum_meas_cv,
 		n_covariate,
 		n_age_ode,
 		n_time_ode,

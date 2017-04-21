@@ -145,6 +145,9 @@ bool data_model_subset(void)
 	// choose parent note so that only a subset of the data is used
 	size_t parent_node_id = 2;
 	//
+	// minimum_meas_cv
+	double minimum_meas_cv = 0.0;
+	//
 	// covariate table
 	size_t n_covariate = 0;
 	vector<dismod_at::covariate_struct> covariate_table(n_covariate);
@@ -216,6 +219,7 @@ bool data_model_subset(void)
 	// data_model
 	dismod_at::data_model data_object(
 		parent_node_id,
+		minimum_meas_cv,
 		n_covariate,
 		n_age_ode,
 		n_time_ode,

@@ -1872,6 +1872,9 @@ int main(int n_arg, const char** argv)
 		}
 		else
 		{	// ---------------------------------------------------------------
+			double minimum_meas_cv = std::atof(
+				option_map["minimum_meas_cv"].c_str()
+			);
 			// prior_object
 			dismod_at::prior_model prior_object(
 				pack_object           ,
@@ -1883,6 +1886,7 @@ int main(int n_arg, const char** argv)
 			// data_object
 			dismod_at::data_model data_object(
 				parent_node_id           ,
+				minimum_meas_cv          ,
 				n_covariate              ,
 				n_age_ode                ,
 				n_time_ode               ,
@@ -1905,6 +1909,7 @@ int main(int n_arg, const char** argv)
 			// avgint_object
 			dismod_at::data_model avgint_object(
 				parent_node_id           ,
+				minimum_meas_cv          ,
 				n_covariate              ,
 				n_age_ode                ,
 				n_time_ode               ,

@@ -23,6 +23,7 @@ $spell
 	covariate
 	covariates
 	cov
+	cv
 $$
 
 $section Data Model: Constructor$$
@@ -30,6 +31,7 @@ $section Data Model: Constructor$$
 $head Syntax$$
 $codei%data_model %data_object%(
 	%parent_node_id%,
+	%minimum_meas_cv%,
 	%n_covariate%,
 	%n_age_ode%,
 	%n_time_ode%,
@@ -59,7 +61,14 @@ $codei%
 %$$
 and is the
 $cref/parent_node_id/option_table/parent_node_id/$$.
-in the fit command.
+
+$head minimum_meas_cv$$
+This argument has prototype
+$codei%
+	double %minimum_meas_cv%
+%$$
+and is the
+$cref/minimum_meas_cv/option_table/minimum_meas_cv/$$.
 
 $head n_covariate$$
 This argument has prototype
@@ -213,6 +222,7 @@ data_model::~data_model(void)
 template <class SubsetStruct>
 data_model::data_model(
 	size_t                                   parent_node_id  ,
+	double                                   minimum_meas_cv ,
 	size_t                                   n_covariate     ,
 	size_t                                   n_age_ode       ,
 	size_t                                   n_time_ode      ,
@@ -228,11 +238,12 @@ data_model::data_model(
 	const pack_info&                         pack_object     ,
 	const child_info&                        child_object    )
 :
-n_covariate_   (n_covariate)      ,
-n_age_ode_     (n_age_ode)        ,
-n_time_ode_    (n_time_ode)       ,
-ode_step_size_ (ode_step_size)    ,
-pack_object_   (pack_object)
+minimum_meas_cv_ (minimum_meas_cv)  ,
+n_covariate_     (n_covariate)      ,
+n_age_ode_       (n_age_ode)        ,
+n_time_ode_      (n_time_ode)       ,
+ode_step_size_   (ode_step_size)    ,
+pack_object_     (pack_object)
 {	using std::string;
 	size_t i, j, k;
 	//
@@ -1523,6 +1534,7 @@ residual_struct<Float> data_model::like_one(
 	size_t integrand_id  = data_subset_obj_[subset_id].integrand_id;
 	double meas_value    = data_subset_obj_[subset_id].meas_value;
 	assert( Delta > 0.0 );
+	Delta = std::max(Delta, minimum_meas_cv_);
 
 	// data_info information for this data point
 	density_enum   density             = data_info_[subset_id].density;
@@ -1748,6 +1760,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)   \
 template data_model::data_model(                                \
 	size_t                                   parent_node_id  ,  \
+	double                                   minimum_meas_cv ,  \
 	size_t                                   n_covariate     ,  \
 	size_t                                   n_age_ode       ,  \
 	size_t                                   n_time_ode      ,  \

@@ -102,6 +102,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "fixed_bound_frac",              "1e-2"               },
 		{ "max_num_iter_fixed",            "100"                },
 		{ "max_num_iter_random",           "100"                },
+		{ "minimum_meas_cv",               "0.0"                },
 		{ "ode_step_size",                 "10.0"               },
 		{ "parent_node_id",                "0"                  },
 		{ "print_level_fixed",             "0"                  },
@@ -158,6 +159,13 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			if( ! ok )
 			{	msg = "option table: rate_case = '";
 				msg += option_value[option_id] + "'";
+				error_exit(msg, table_name, option_id);
+			}
+		}
+		if( name_vec[match] == "minimuim_meas_cv" )
+		{	bool ok = std::atof( option_value[option_id].c_str() ) >= 0.0;
+			if( ! ok )
+			{	msg = "option_value is < 0.0 for minimum_meas_cv";
 				error_exit(msg, table_name, option_id);
 			}
 		}
