@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -96,13 +96,17 @@ $tend
 
 
 $head Extra Input Tables$$
-Here is list of command and their list of the extra input tables.
 An extra input table is one that is not in the $cref input$$ list
 and is not created by the $cref init_command$$.
-(The tables created by the init command are
+The tables created by the init command are
 $cref/var/var_table/$$,
 $cref/data_subset/data_subset_table/$$, and
-$cref/start_var/start_var_table/$$.)
+$cref/start_var/start_var_table/$$.
+The following extra input tables may be created by the user
+(with the aid of the $cref var_table$$):
+$cref/start_var/start_var_table/$$,
+$cref/truth_var/truth_var_table/$$.
+Below is list of commands and their extra input tables.
 
 $table
 Command $cnext

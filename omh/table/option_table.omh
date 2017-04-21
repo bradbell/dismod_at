@@ -40,8 +40,8 @@ is not present in the option table.
 $head Changing Values$$
 This table is special in that you can change almost all its values
 without invalidating the $cref/output tables/output/$$.
-There is one main exception
-$cref/parent_node_id/option_table/parent_node_id/$$; see below.
+There is one exception; see
+$cref/parent_node_id/option_table/parent_node_id/$$ below.
 
 $head option_id$$
 This column has type $code integer$$ and is the primary key for this table.
