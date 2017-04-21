@@ -267,8 +267,8 @@
 # $head option_table$$
 # This is a list of $code dict$$
 # that define the values
-# $cref/option_name/option_table/option_name/$$,
-# $cref/option_value/option_table/option_value/$$ in the option table.
+# $cref/option_name/option_table/Conventions/option_name/$$,
+# $cref/option_value/option_table/Conventions/option_value/$$ in the option table.
 # The $th i$$ row of the table will have
 # $codei%
 #	%option_name%  = %option_table%[%i%]['name']

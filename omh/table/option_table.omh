@@ -37,24 +37,28 @@ Each option is an $icode option_name$$, $icode option_value$$ pair
 and has a default value that is used when the name
 is not present in the option table.
 
-$head Changing Values$$
+$head Conventions$$
+
+$subhead Changing Values$$
 This table is special in that you can change almost all its values
 without invalidating the $cref/output tables/data_flow/Output Tables/$$.
 There is one exception; see
 $cref/parent_node_id/option_table/parent_node_id/$$ below.
 
-$head option_id$$
-This column has type $code integer$$ and is the primary key for this table.
+$subhead option_id$$
+This column
+has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
-$head option_name$$
-This column has type $code text$$ and has a different value for every row;
+$subhead option_name$$
+This column
+has type $code text$$ and has a different value for every row;
 i.e., the names are unique and can act as substitutes for the primary key.
-The following option names, and only the following, must appear:
+The possible values for $icode option_name$$ are listed below.
 
-$head option_value$$
+$subhead option_value$$
 This column has type $code text$$ and is
-the value for the corresponding command argument.
+the value for the corresponding option.
 
 $head parent_node_id$$
 If $icode%option_name% = parent_node%$$,

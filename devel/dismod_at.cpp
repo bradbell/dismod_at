@@ -84,7 +84,7 @@ $head Changing Values$$
 You must re-run this command when ever any of the
 $cref input$$ tables is changed.
 The option table is an exception to this rule; see
-$cref/changing Values/option_table/Changing Values/$$.
+$cref/changing values/option_table/Conventions/Changing Values/$$.
 
 $head database$$
 Is an

@@ -567,7 +567,7 @@ $codei%
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head rate_case$$
-Is the $cref/option_value/option_table/option_value/$$
+Is the $cref/option_value/option_table/Conventions/option_value/$$
 corresponding to $icode%option_name% = rate_case%$$ in the option table.
 $end
 */

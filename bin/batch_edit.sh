@@ -12,7 +12,6 @@
 new_directories='
 '
 rename_files='
-	omh/table/output.omh
 '
 spell_files='
 '
@@ -23,11 +22,14 @@ rename_cmd='s|output.omh|data_flow.omh|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|output\\.omh|data_flow.omh|g
-s|\$begin output\\\$|\$begin data_flow\$|
-s|\$cref output\\\$\\\$ tables|\$cref/output tables/data_flow/Output Tables/\$\$|
-s|\$cref/output tables/output/\\\$\\\$|\$cref/output tables/data_flow/Output Tables/\$\$|
-s|\$cref output\\\$\\\$|\$cref/output tables/data_flow/Output Tables/\$\$|
+s|\$cref/option_name/option_table/option_name/\\\$\\\$|\$cref/option_name/option_table/Conventions/option_name/\$\$|
+s|\$cref/option_value/option_table/option_value/\\\$\\\$|\$cref/option_value/option_table/Conventions/option_value/\$\$|
+s|\$cref/changing Values/option_table/Changing Values/\\\$\\\$|\$cref/changing values/option_table/Conventions/Changing Values/\$\$|
+#
+s|\$cref/option_table/option_table/Changing Values/\\\$\\\$|\$cref/option_table/option_table/Conventions/Changing Values/\$\$|
+#
+s|\$cref/name/option_table/option_name/\\\$\\\$|\$cref/name/option_table/Conventions/option_name/\$\$|
+s|\$cref/value/option_table/option_value/\\\$\\\$|\$cref/value/option_table/Conventions/option_value/\$\$|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

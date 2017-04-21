@@ -58,8 +58,8 @@
 # The file $icode%dir%/option.csv%$$ is written by this command.
 # It is a CSV file with one row for each option.
 # The columns in this table are
-# $cref/option_name/option_table/option_name/$$ and
-# $cref/option_value/option_table/option_value/$$.
+# $cref/option_name/option_table/Conventions/option_name/$$ and
+# $cref/option_value/option_table/Conventions/option_value/$$.
 #
 # $head log.csv$$
 # The file $icode%dir%/log.csv%$$ is written by this command.

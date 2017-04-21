@@ -38,11 +38,11 @@ $table
 Type $cnext Field $cnext Description
 $rnext
 $code std::string$$ $cnext $code option_name$$  $cnext
-	The $cref/name/option_table/option_name/$$
+	The $cref/name/option_table/Conventions/option_name/$$
 	for this option
 $rnext
 $code std::string$$ $cnext $code option_value$$  $cnext
-	The $cref/value/option_table/option_value/$$
+	The $cref/value/option_table/Conventions/option_value/$$
 	for this option
 $rnext
 $tend
