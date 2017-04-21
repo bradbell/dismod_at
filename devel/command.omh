@@ -16,10 +16,14 @@ $$
 
 $section The dismod_at Commands$$
 
-$head Output Tables$$
-Each of these commands creates one or more $cref output$$ tables.
-Except for the $code init$$ command, the output table has the
-same name as the command, or at least starts with the name of the command.
+$head Data Flow$$
+Except for the $code init$$ command,
+each of the commands below creates a single
+$cref/output table/data_flow/Output Tables/$$
+with the same name as the command.
+An output table for one command man be an
+$cref/extra input table/data_flow/Extra Input Tables/$$
+for another command.
 
 $head Log Messages$$
 Each command also has messages with message_type

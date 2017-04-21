@@ -8,7 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin output$$
+$begin data_flow$$
 $spell
 	avgint
 	Dismod
@@ -17,9 +17,12 @@ $spell
 	xor
 $$
 
-$section Tables That Are Created By Dismod_at$$
-Each of the tables in this section is created by a dismod_at $cref command$$.
-Some of the tables may be created, or replaced, by the dismod_at user.
+$section The Dismod_at Data Flow$$
+Tables are used to transfer information for one command to another.
+Each of the output tables
+below is created by a $cref command$$.
+Some of the extra input tables
+may be created, or replaced, by the dismod_at user.
 Also note that a row is written in the $cref log_table$$ at the beginning
 and end of every command.
 In addition, the log table is cumulative; i.e.,

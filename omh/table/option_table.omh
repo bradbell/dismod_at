@@ -39,7 +39,7 @@ is not present in the option table.
 
 $head Changing Values$$
 This table is special in that you can change almost all its values
-without invalidating the $cref/output tables/output/$$.
+without invalidating the $cref/output tables/data_flow/Output Tables/$$.
 There is one exception; see
 $cref/parent_node_id/option_table/parent_node_id/$$ below.
 
