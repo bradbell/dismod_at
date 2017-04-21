@@ -98,14 +98,19 @@ $head Rate Functions$$
 
 $subhead q_k$$
 We use $latex k$$ to denote a
-$cref/rate_id/rate_table/rate_id/$$.
-The function $latex q_k (a, t)$$ is the piecewise linear rate function
-for the corresponding
+$cref/rate_id/rate_table/rate_id/$$ and
+$latex q_k (a, t)$$ the piecewise linear rate function
+for the corresponding to the
 $cref/parent rate
 	/model_variables
 	/Fixed Effects, theta
 	/Parent Rates
 /$$
+model variables.
+This is an unadjusted rate corresponding to the
+$cref/parent node/option_table/parent_node_id/$$.
+The adjusted rates are discussed below; see
+$cref/r_ik/avg_integrand/Rate Functions/r_ik/$$.
 
 $subhead u_i,k$$
 If $latex n_i$$ is equal to or a descendant of one of the children of the
@@ -149,7 +154,7 @@ Note that these are only
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ covariate multipliers.
 
 $subhead r_ik$$
-We use the notation
+We use the following notation for the adjusted rates:
 $latex \[
 r_{i,k} (a , t)
 =
@@ -158,6 +163,8 @@ r_{i,k} (a , t)
 \right]
 q_{i,k} ( a, t )
 \] $$
+Note that this is the adjusted rate for node $latex n_i$$
+which may, or may not, be the parent node.
 
 $subhead p_0$$
 We use $latex p_0 (t)$$ to denote the value of
@@ -320,7 +327,7 @@ A_i ( u , \theta )
 =
 \frac{1}{\bar{w}_i} \left[
 \int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
-	w_i (a,t) I_i (a, t) \; E_i (a, t)  \; \B{d} t \; \B{d} a
+w_i (a,t) I_i (a, t) \; \exp \left[ E_i (a, t) \right]  \; \B{d} t \; \B{d} a
 \right]
 \;
 \] $$
