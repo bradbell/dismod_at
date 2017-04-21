@@ -944,13 +944,17 @@ This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref init_command$$).
 
+
 $head data_table$$
 It the data
 $cref/density/data_table/density_id/$$ is
 $code log_gaussian$$ or $code log_laplace$$,
 $cref/meas_value/data_table/meas_value/$$ is used to
 log-transform the standard deviations.
-Otherwise, it is not used by the simulate command.
+If the density is $code gaussian$$ or $code laplace$$,
+the simulation standard deviation is the same as
+$cref/meas_std/data_table/meas_std/$$ and negative simulated measurements
+are not converted to zero.
 
 $head simulate_table$$
 A new $cref simulate_table$$ is created.
@@ -1138,8 +1142,9 @@ void simulate_command(
 		double sim_value   = dismod_at::sim_random(
 			density, avg, delta_avg, eta
 		);
-		// ensure sim_value is non-negative
-		sim_value = std::max( sim_value , 0.0);
+		// in the log case, ensure sim_value is non-negative
+		if( log )
+			sim_value = std::max( sim_value , 0.0);
 		//
 		// The standard deviation before including std_effect
 		double sim_std = delta_avg / (1.0 + std_effect);
