@@ -121,8 +121,6 @@ for col in col_name :
 	if col == primary_key :
 		primary_index = count
 	count += 1
-print(expression)
-print(condition)
 # ---------------------------------------------------------------------------
 # modify the column in the table
 count       = 0
