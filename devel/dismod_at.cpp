@@ -65,6 +65,7 @@ $spell
 	init
 	var
 	dismod
+	initializes
 $$
 
 $section The Variable Command$$
@@ -73,7 +74,11 @@ $head Syntax$$
 $codei%dismod_at %database% init%$$
 
 $head Purpose$$
-This command creates the following tables
+This command initializes the data flow.
+To be specific, it begins by deleting any existing
+$cref/output tables/data_flow/Output Tables/$$,
+except for the $cref log_table$$,
+and then creates new versions of the following tables:
 $table
 $cref var_table$$           $cnext $title var_table$$ $rnext
 $cref data_subset_table$$   $cnext $title data_subset_table$$ $rnext
@@ -131,6 +136,13 @@ void init_command(
 		"var",
 		"data_subset",
 		"avgint_subset",
+		"start_var",
+		"fit_var",
+		"fit_data_subset",
+		"truth_var",
+		"simulate",
+		"sample",
+		"predict"
 	};
 	size_t n_drop = sizeof( drop_list ) / sizeof( drop_list[0] );
 	string sql_cmd;
