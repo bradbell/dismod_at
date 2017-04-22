@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -69,7 +69,7 @@ list='
 	doc.omh
 	omh/install/unix.omh
 	bin/install_dismod_at.sh
-	bin/setup.py
+	bin/setup.py.in
 '
 for name in $list
 do

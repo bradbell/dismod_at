@@ -32,6 +32,17 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-22$$
+$list number$$
+The $cref init_command$$ now deletes any existing
+$cref/output tables/data_flow/Output Tables/$$.
+$lnext
+The version number in the dismod_at python package
+(see $cref/python path/install_unix/Python Path/$$)
+was stuck at $code 20160516$$; i.e., not being updated.
+This has been fixed.
+$lend
+
 $head 04-21$$
 $list number$$
 Change the name of the output section to the
