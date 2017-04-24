@@ -22,6 +22,8 @@ $spell
 	avgint
 	init
 	cv
+	std
+	fabs
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -33,9 +35,16 @@ $childtable%
 %$$
 
 $head 04-23$$
+$list number$$
 Advance to cppad_mixed-20170423, this improves the detection of
 convergence of the fixed effects optimization problem, see
 $cref fit_command$$.
+$lnext
+Fix bug in $cref eigen_ode2$$ where
+the $code std::abs$$ function was being called and $code std::fabs$$
+should have been called.
+(This caused some tests to fail on the Mac but not on Fedora.)
+$lend
 
 $head 04-22$$
 $list number$$
