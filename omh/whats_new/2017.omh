@@ -32,6 +32,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-23$$
+Advance to cppad_mixed-20170423, this improves the detection of
+convergence of the fixed effects optimization problem, see
+$cref fit_command$$.
+
 $head 04-22$$
 $list number$$
 The $cref init_command$$ now deletes any existing

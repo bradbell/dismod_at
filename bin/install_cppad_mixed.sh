@@ -23,26 +23,29 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='b3922e1f2688b021280b1e2e35bc7f126c262642'
-version='20170406'
+hash_key='8ce627f1fd40b9f3643a3210475eae58de96a482'
+version='20170423'
 libdir=`bin/libdir.sh`
 # ---------------------------------------------------------------------------
 # special cppad_mixed settings
 #
-# use bool_sparsity YES or NO
-bool_sparsity='YES'
+# use bool_sparsity yes or no
+bool_sparsity='no'
 #
 # use cholmod (not eigen) for LDLT factorization (where possible)
-ldlt_cholmod='YES'
+ldlt_cholmod='yes'
 #
-# use atomic Cholesky factorization (strongly suggest NO)
-use_atomic_cholesky='NO'
+# use atomic Cholesky factorization (strongly suggest no)
+use_atomic_cholesky='no'
 #
 # use checkpointing of Newton step to reduce memory and increase execution time
-checkpoint_newton_step='NO'
+checkpoint_newton_step='no'
 #
 # optimize the AD operation sequences
-optimize_cppad_function='YES'
+optimize_cppad_function='yes'
+#
+# show ipopt re-scaling
+show_ipopt_scaling='no'
 #
 # ---------------------------------------------------------------------------
 # build_type
@@ -119,7 +122,7 @@ then
 	echo_eval rm CMakeCache.txt
 fi
 # -----------------------------------------------------------------------------
-cmake_args="-D CMAKE_VERBOSE_MAKEFILE=NO"
+cmake_args="-D CMAKE_VERBOSE_MAKEFILE=no"
 cmake_args="$cmake_args -D CMAKE_BUILD_TYPE=$build_type"
 #
 cmake_args="$cmake_args -D cppad_prefix=$cppad_prefix"
@@ -135,7 +138,8 @@ cmake_args="$cmake_args -D log_fatal_error=$log_fatal_error"
 cmake_args="$cmake_args -D use_atomic_cholesky=$use_atomic_cholesky"
 cmake_args="$cmake_args -D checkpoint_newton_step=$checkpoint_newton_step"
 cmake_args="$cmake_args -D optimize_cppad_function=$optimize_cppad_function"
-
+cmake_args="$cmake_args -D show_ipopt_scaling=$show_ipopt_scaling"
+#
 if [ "$cmake_cxx_compiler" != '' ]
 then
 	cmake_args="$cmake_args -D CMAKE_CXX_COMPILER=$cmake_cxx_compiler"
