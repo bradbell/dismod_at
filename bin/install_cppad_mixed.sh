@@ -23,7 +23,7 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='8ce627f1fd40b9f3643a3210475eae58de96a482'
+hash_key='08ca7c7d72f72ddbcd8b8c4454751be64ed0a4e8'
 version='20170423'
 libdir=`bin/libdir.sh`
 # ---------------------------------------------------------------------------
@@ -44,8 +44,8 @@ checkpoint_newton_step='no'
 # optimize the AD operation sequences
 optimize_cppad_function='yes'
 #
-# show ipopt re-scaling
-show_ipopt_scaling='no'
+# show ipopt the cppad_mixed re-scaling
+hide_ipopt_scaling='yes'
 #
 # ---------------------------------------------------------------------------
 # build_type
@@ -138,7 +138,7 @@ cmake_args="$cmake_args -D log_fatal_error=$log_fatal_error"
 cmake_args="$cmake_args -D use_atomic_cholesky=$use_atomic_cholesky"
 cmake_args="$cmake_args -D checkpoint_newton_step=$checkpoint_newton_step"
 cmake_args="$cmake_args -D optimize_cppad_function=$optimize_cppad_function"
-cmake_args="$cmake_args -D show_ipopt_scaling=$show_ipopt_scaling"
+cmake_args="$cmake_args -D hide_ipopt_scaling=$hide_ipopt_scaling"
 #
 if [ "$cmake_cxx_compiler" != '' ]
 then
