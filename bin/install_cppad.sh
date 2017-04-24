@@ -28,6 +28,8 @@ version='20170402'
 libdir=`bin/libdir.sh`
 export PKG_CONFIG_PATH="$ipopt_prefix/$libdir/pkgconfig"
 # ---------------------------------------------------------------------------
+# Get user configuration options from run_cmake.sh
+#
 # build_type
 cmd=`grep '^build_type=' bin/run_cmake.sh`
 eval $cmd

@@ -11,6 +11,7 @@
 # ---------------------------------------------------------------------------
 # BEGIN BASH
 # ---------------------------------------------------------------------------
+# Get user configuration options from run_cmake.sh
 #
 # build_type
 cmd=`grep '^build_type=' bin/run_cmake.sh`

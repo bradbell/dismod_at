@@ -27,7 +27,7 @@ hash_key='08ca7c7d72f72ddbcd8b8c4454751be64ed0a4e8'
 version='20170423'
 libdir=`bin/libdir.sh`
 # ---------------------------------------------------------------------------
-# special cppad_mixed settings
+# special cppad_mixed settings (it is not suggested that you change these)
 #
 # use bool_sparsity yes or no
 bool_sparsity='no'
@@ -48,6 +48,8 @@ optimize_cppad_function='yes'
 hide_ipopt_scaling='yes'
 #
 # ---------------------------------------------------------------------------
+# Get user configuration options from run_cmake.sh
+#
 # build_type
 cmd=`grep '^build_type=' bin/run_cmake.sh`
 eval $cmd
