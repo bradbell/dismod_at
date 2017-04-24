@@ -41,6 +41,8 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 	using CppAD::vector;
+	// -----------------------------------------------------------------------
+	// trace
 # if DISMOD_AT_TRACE
 	std::time_t trace(const char* message, std::time_t previous_time = 0)
 	{	std::time_t current_time = std::time( DISMOD_AT_NULL_PTR );
@@ -57,6 +59,30 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 		return current_time;
 	}
 # endif
+	// -----------------------------------------------------------------------
+	// prior_mean
+	vector<double> get_prior_mean(
+		const vector<dismod_at::prior_struct>& prior_table ,
+		const dismod_at::pack_info&            pack_object ,
+		const vector<dismod_at::smooth_info>&  s_info_vec  )
+	{
+		// get value_prior_id and const_value in pack_info order
+		vector<size_t> value_prior_id;
+		vector<double> const_value;
+		pack_value_prior(value_prior_id, const_value, pack_object, s_info_vec);
+		//
+		// put means in return value
+		size_t n_var = pack_object.size();
+		vector<double> return_value(n_var);
+		for(size_t var_id = 0; var_id < n_var; var_id++)
+		{	double var_value = const_value[var_id];
+			size_t prior_id  = value_prior_id[var_id];
+			if( prior_id != DISMOD_AT_NULL_SIZE_T )
+				var_value = prior_table[ value_prior_id[var_id] ].mean;
+			return_value[var_id] = var_value;
+		}
+		return return_value;
+	}
 /*
 -----------------------------------------------------------------------------
 $begin init_command$$
@@ -473,20 +499,11 @@ void start_command(
 	col_unique[0]     = false;
 	//
 	if( source == "prior_mean" )
-	{	//
-		// get value_prior_id and const_value in pack_info order
-		vector<size_t> value_prior_id;
-		vector<double> const_value;
-		pack_value_prior(value_prior_id, const_value, pack_object, s_info_vec);
-		//
-		// put means in row_value
+	{	vector<double> prior_mean = get_prior_mean(
+			prior_table, pack_object, s_info_vec
+		);
 		for(size_t var_id = 0; var_id < n_var; var_id++)
-		{	double start_var_value = const_value[var_id];
-			size_t prior_id = value_prior_id[var_id];
-			if( prior_id != DISMOD_AT_NULL_SIZE_T )
-				start_var_value = prior_table[ value_prior_id[var_id] ].mean;
-			row_value[var_id] = to_string(start_var_value);
-		}
+			row_value[var_id] = CppAD::to_string( prior_mean[var_id] );
 	}
 	else
 	{	assert( source == "fit_var" );
