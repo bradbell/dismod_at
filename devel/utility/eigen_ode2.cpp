@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -305,7 +305,7 @@ namespace {
 		// exp[ (b0 - b3) * tf ] / (b0 - b3);
 		Float term   = expm1( diff_03 * tf ) / diff_03;
 		Float approx = tf  + diff_03 * tf * tf / Float(2.0);
-		term = CppAD::CondExpLt(abs(diff_03), small, approx, term);
+		term = CppAD::CondExpLt(fabs(diff_03), small, approx, term);
 		//
 		// y_1 ( tf )
 		yf[1] = exp( b[3] * tf ) * ( yi[1] + b[2] * yi[0] * term );
@@ -330,7 +330,7 @@ namespace {
 		// exp[ (b3 - b0) * tf ] / (b3 - b0);
 		Float term   = expm1( diff_30 * tf ) / diff_30;
 		Float approx = tf  + diff_30 * tf * tf / Float(2.0);
-		term = CppAD::CondExpLt(abs(diff_30), small, approx, term);
+		term = CppAD::CondExpLt(fabs(diff_30), small, approx, term);
 		//
 		// y_0 ( tf )
 		yf[0] = exp( b[0] * tf ) * ( yi[0] + b[1] * yi[1] * term );

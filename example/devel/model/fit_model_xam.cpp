@@ -390,7 +390,7 @@ bool fit_model_xam(void)
 			{	double err = solution[offset + i] / meas_value - 1.0;
 				if( child_id != n_child )
 					err = solution[offset + i] / meas_value;
-				ok    &= CppAD::abs( err ) <= check_tol;
+				ok    &= fabs( err ) <= check_tol;
 			}
 		}
 	}
