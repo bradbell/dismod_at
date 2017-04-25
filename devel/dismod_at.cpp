@@ -60,7 +60,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 	}
 # endif
 	// -----------------------------------------------------------------------
-	// prior_mean
+	// get_prior_mean
 	vector<double> get_prior_mean(
 		const vector<dismod_at::prior_struct>& prior_table ,
 		const dismod_at::pack_info&            pack_object ,
@@ -473,9 +473,7 @@ $end
 void start_command(
 	const std::string&                     source      ,
 	sqlite3*                               db          ,
-	const vector<dismod_at::prior_struct>& prior_table ,
-	const dismod_at::pack_info&            pack_object ,
-	const vector<dismod_at::smooth_info>&  s_info_vec  )
+	const vector<double>&                  prior_mean  )
 {	using std::string;
 	using CppAD::to_string;
 	//
@@ -491,7 +489,7 @@ void start_command(
 	//
 	// create start_var table
 	string table_name = "start_var";
-	size_t n_var      = pack_object.size();
+	size_t n_var      = prior_mean.size();
 	vector<string> col_name(1), col_type(1), row_value(n_var);
 	vector<bool>   col_unique(1);
 	col_name[0]       = "start_var_value";
@@ -499,10 +497,7 @@ void start_command(
 	col_unique[0]     = false;
 	//
 	if( source == "prior_mean" )
-	{	vector<double> prior_mean = get_prior_mean(
-			prior_table, pack_object, s_info_vec
-		);
-		for(size_t var_id = 0; var_id < n_var; var_id++)
+	{	for(size_t var_id = 0; var_id < n_var; var_id++)
 			row_value[var_id] = CppAD::to_string( prior_mean[var_id] );
 	}
 	else
@@ -1804,20 +1799,23 @@ int main(int n_arg, const char** argv)
 	size_t n_time_ode = size_t( (time_max - time_min) / ode_step_size + 2.0 );
 	assert( time_max <= time_min  + (n_time_ode - 1) * ode_step_size );
 	// ---------------------------------------------------------------------
-	// child_data, child_avgint, and some more size_t values
+	// parent_node_id
 	size_t parent_node_id = std::atoi(
 		option_map["parent_node_id"].c_str()
 	);
+	// child_data
 	dismod_at::child_info child_data(
 		parent_node_id          ,
 		db_input.node_table     ,
 		db_input.data_table
 	);
+	// child_avgint
 	dismod_at::child_info child_avgint(
 		parent_node_id          ,
 		db_input.node_table     ,
 		db_input.avgint_table
 	);
+	// n_child, n_integrand, n_weight, n_smooth
 	size_t n_child     = child_data.child_size();
 	size_t n_integrand = db_input.integrand_table.size();
 	size_t n_weight    = db_input.weight_table.size();
@@ -1845,13 +1843,14 @@ int main(int n_arg, const char** argv)
 			db_input.smooth_grid_table
 		);
 	}
-	// pack_object
+	// child_id2node_id
 	vector<size_t> child_id2node_id(n_child);
 	for(size_t child_id = 0; child_id < n_child; child_id++)
 	{	size_t node_id = child_data.child_id2node_id(child_id);
 		assert( node_id == child_avgint.child_id2node_id(child_id) );
 		child_id2node_id[child_id] = node_id;
 	}
+	// pack_object
 	dismod_at::pack_info pack_object(
 		n_integrand                 ,
 		child_id2node_id            ,
@@ -1860,13 +1859,18 @@ int main(int n_arg, const char** argv)
 		db_input.rate_table         ,
 		db_input.nslist_pair_table
 	);
+	// prior_mean
+	vector<double> prior_mean = get_prior_mean(
+		db_input.prior_table,
+		pack_object,
+		s_info_vec
+	);
+	// =======================================================================
 	if( command_arg == "start" )
 	{	start_command(
 			argv[3]              , // source
 			db                   ,
-			db_input.prior_table ,
-			pack_object          ,
-			s_info_vec
+			prior_mean
 		);
 	}
 	else if( command_arg == "truth" )
