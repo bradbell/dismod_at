@@ -285,10 +285,16 @@
 # and each row of $cref avgint_subset_table$$, there is a corresponding
 # row in $code predict.csv$$.
 #
+# $subhead s_index$$
+# This identifies the set model variables in the sample table.
+# To be specific, the model variables correspond to the rows on the
+# sample table with the same $cref/sample_index/sample_table/sample_index/$$
+# equal to $icode s_index$$.
+#
 # $subhead avgint$$
 # is the $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 # $latex A_i(u, \theta)$$. The model variables $latex (u, \theta)$$
-# correspond to the $icode sample_index$$, and measurement subscript $latex i$$
+# correspond to the $icode s_index$$, and measurement subscript $latex i$$
 # denotes to the $cref avgint_table$$ information
 # for this row of $code predict.csv$$; i.e., $icode age_lo$$, $icode age_up$$,
 # ...
@@ -321,10 +327,10 @@
 # is the
 # $cref/node_name/node_table/node_name/$$ for this row.
 #
-# $subhead sample_index$$
-# This identifies the set model variables in the sample table.
-# To be specific, the model variables correspond to the rows on the
-# sample table with the same $cref/sample_index/sample_table/sample_index/$$.
+# $subhead avgint_columns$$
+# Each column specified by the
+# $cref/avgint_columns/option_table/avgint_columns/$$ option is included
+# in the $code predict.csv$$ file.
 #
 # $subhead Covariates$$
 # For each covariate in the $cref covariate_table$$ there is a column with
@@ -438,6 +444,12 @@ def db2csv_command(database_file_arg) :
 	for row in table_data['option'] :
 		if row['option_name'] == 'minimum_meas_cv' :
 			minimum_meas_cv = float( row['option_value'] )
+	# -------------------------------------------------------------------------
+	# avgint_columns
+	avgint_columns = []
+	for row in table_data['option'] :
+		if row['option_name'] == 'avgint_columns' :
+			avgint_columns = row['avgint_columns'].split()
 	# -------------------------------------------------------------------------
 	# simulate_index
 	simulate_index = None
@@ -795,6 +807,7 @@ def db2csv_command(database_file_arg) :
 		csv_file  = open(file_name, 'w')
 		#
 		header = [
+			's_index',
 			'avgint',
 			'age_lo',
 			'age_up',
@@ -802,9 +815,10 @@ def db2csv_command(database_file_arg) :
 			'time_up',
 			'integrand',
 			'weight',
-			'node',
-			'sample_index'
+			'node'
 		]
+		for column in avgint_columns :
+			header.append(column )
 		for row in table_data['covariate'] :
 			header.append( row['covariate_name'] )
 		csv_writer = csv.DictWriter(csv_file, fieldnames=header)
@@ -813,9 +827,11 @@ def db2csv_command(database_file_arg) :
 		for predict_row in table_data['predict'] :
 			row_out = dict()
 			#
-			# avgint, sample_index
+			# s_index
+			row_out['s_index'] = predict_row['sample_index']
+			#
+			# avgint
 			row_out['avgint']  = convert2output( predict_row['avg_integrand'] )
-			row_out['sample_index'] = predict_row['sample_index']
 			#
 			# age_lo, age_up, time_lo, time_up
 			avgint_id          = int( table_lookup(
@@ -839,6 +855,10 @@ def db2csv_command(database_file_arg) :
 			row_out['node']      = table_lookup(
 				'node', avgint_row['node_id'], 'node_name'
 			)
+			# avgint_columns
+			for column in avgint_columns :
+				row_out[column] = avgint_row[column]
+			#
 			# covariates
 			covariate_id = 0
 			for row in table_data['covariate'] :

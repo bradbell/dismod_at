@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin option_table$$
 $spell
+	csv
 	nslist
 	py
 	frac
@@ -92,6 +93,14 @@ is not a $cref/descendant/node_table/parent/Descendant/$$
 of the parent node,
 are not included in the $cref avgint_subset_table$$ and the
 $cref predict_table$$.
+
+$head avgint_columns$$
+If $icode option_name$$ is $code avgint_columns$$,
+the corresponding value is space separated list of extra columns,
+in the $cref avgint_table$$.
+These columns are not used by $code dismod_at$$ except that
+they get displayed in the
+$cref/predict.csv/db2csv_command/predict.csv/avgint_columns/$$ file.
 
 $head warn_on_stderr$$
 If $icode option_name$$ is
