@@ -37,6 +37,7 @@ $href%https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/%firefox%$$.
 $childtable%example/get_started/get_started.omh
 	%example/user/const_random.py
 	%example/user/const_value.py
+	%example/user/continue_fit.py
 	%example/user/diff_constraint.py
 	%example/user/fit_sim.py
 	%example/user/jump_at_age.py

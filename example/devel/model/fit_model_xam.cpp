@@ -357,9 +357,13 @@ bool fit_model_xam(void)
 	// random_zero_sum
 	bool random_zero_sum = false;
 	//
+	// warn_on_stderr
+	bool warn_on_stderr = true;
+	//
 	std::string fit_or_sample = "fit";
 	dismod_at::fit_model fit_object(
 		db,
+		warn_on_stderr,
 		random_bound,
 		fit_or_sample,
 		pack_object,

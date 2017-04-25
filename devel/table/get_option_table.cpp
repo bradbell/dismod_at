@@ -113,7 +113,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "random_zero_sum",               "false"              },
 		{ "rate_case",                     "iota_pos_rho_zero"  },
 		{ "tolerance_fixed",               "1e-8"               },
-		{ "tolerance_random",              "1e-8"               }
+		{ "tolerance_random",              "1e-8"               },
+		{ "warn_on_stderr",                "true"               }
 	};
 	size_t n_option = sizeof( option_list ) / sizeof( option_list[0] );
 	CppAD::vector<string> name_vec(n_option), value_vec(n_option);
@@ -193,7 +194,10 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(msg, table_name, option_id);
 			}
 		}
-		if( name_vec[match] == "random_zero_sum" )
+		if(
+			name_vec[match] == "random_zero_sum" ||
+			name_vec[match] == "warn_on_stderr"
+		)
 		{	if(
 				option_value[option_id] != "true" &&
 				option_value[option_id] != "false" )

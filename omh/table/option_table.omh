@@ -30,6 +30,7 @@ $spell
 	avgint
 	cv
 	std
+	stderr
 $$
 
 $section The Option Table$$
@@ -91,6 +92,20 @@ is not a $cref/descendant/node_table/parent/Descendant/$$
 of the parent node,
 are not included in the $cref avgint_subset_table$$ and the
 $cref predict_table$$.
+
+$head warn_on_stderr$$
+If $icode option_name$$ is
+$code warn_on_stderr$$,
+the corresponding possible values are
+$code true$$ or $code false$$.
+If the value is true,
+warning messages are written to standard error.
+In either case, these messages are recorded in the $cref log_table$$.
+Error messages are always written to standard error
+and recorded in the log table.
+
+$subhead Default$$
+The default value for this option is $code true$$.
 
 $head minimum_meas_cv$$
 If $icode%option_name% = minimum_meas_cv%$$,

@@ -217,6 +217,7 @@ $head Prototype$$
 $srccode%cpp% */
 fit_model::fit_model(
 	sqlite3*                              db               ,
+	bool                                  warn_on_stderr   ,
 	double                                random_bound     ,
 	const std::string&                    fit_or_sample    ,
 	const pack_info&                      pack_object      ,
@@ -247,7 +248,8 @@ $end
 	ran_con_rcv(random_zero_sum, pack_object)
 ),
 db_            (db)                                 ,
-fit_or_sample_ ( fit_or_sample                   )  ,
+warn_on_stderr_( warn_on_stderr )                   ,
+fit_or_sample_ ( fit_or_sample )                    ,
 n_fixed_       ( number_fixed(pack_object) )        ,
 n_random_      ( pack_object.random_size() )        ,
 pack_object_   ( pack_object )                      ,
@@ -1135,7 +1137,8 @@ void fit_model::fatal_error(const std::string& error_message)
 // warning
 void fit_model::warning(const std::string& warning_message)
 {	std::string msg = "cppad_mixed: " + warning_message;
-	std::cerr << "Warning: " << msg << std::endl;
+	if( warn_on_stderr_ )
+		std::cerr << "Warning: " << msg << std::endl;
 	log_message(db_, "warning", msg);
 }
 } // DISMOD_AT_END_NAMESPACE

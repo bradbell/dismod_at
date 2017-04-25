@@ -692,16 +692,19 @@ void fit_command(
 	string column_name = "start_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, start_var);
 	// ------------------ run fit_model ------------------------------------
+	// quasi_fixed
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
-	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
 	//
 	// random_zero_sum
-	string tmp_str = option_map["random_zero_sum"];
-	bool random_zero_sum = tmp_str == "true";
+	bool random_zero_sum = option_map["random_zero_sum"] == "true";
+	//
+	// warn_on_stderr
+	bool warn_on_stderr = option_map["warn_on_stderr"] == "true";
 	//
 	string fit_or_sample = "fit";
 	dismod_at::fit_model fit_object(
 		db                   ,
+		warn_on_stderr       ,
 		random_bound         ,
 		fit_or_sample        ,
 		pack_object          ,
@@ -1358,17 +1361,18 @@ void sample_command(
 	// ----------------------------------------------------------------------
 	// quasi_fixed
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
-	assert( quasi_fixed || option_map["quasi_fixed"] == "false" );
+	//
+	// random_zero_sum
+	bool random_zero_sum = option_map["random_zero_sum"] == "true";
+	//
+	// warn_on_stderr
+	bool warn_on_stderr = option_map["warn_on_stderr"] == "true";
 	//
 	// random_bound, null corresponds to infinity
 	std::string tmp_str = option_map["random_bound"];
 	double random_bound = std::numeric_limits<double>::infinity();
 	if( tmp_str != "" )
 		random_bound = std::atof( tmp_str.c_str() );
-	//
-	// random_zero_sum
-	tmp_str = option_map["random_zero_sum"];
-	bool random_zero_sum = tmp_str == "true";
 	// -----------------------------------------------------------------------
 	if( method == "simulate" )
 	{
@@ -1421,6 +1425,7 @@ void sample_command(
 			bool   random_only   = false;
 			dismod_at::fit_model fit_object(
 				db                   ,
+				warn_on_stderr       ,
 				random_bound         ,
 				fit_or_sample        ,
 				pack_object          ,
@@ -1491,6 +1496,7 @@ void sample_command(
 	string fit_or_sample = "sample";
 	dismod_at::fit_model fit_object(
 		db                   ,
+		warn_on_stderr       ,
 		random_bound         ,
 		fit_or_sample        ,
 		pack_object          ,

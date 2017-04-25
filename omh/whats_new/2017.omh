@@ -24,6 +24,7 @@ $spell
 	cv
 	std
 	fabs
+	stderr
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -45,6 +46,10 @@ fixed effects, see $cref/print_level/option_table/Optimizer/print_level/$$.
 These values used to be relative to the
 $cref/starting variables/start_var_table/$$ which would change
 when one continued an optimization.
+$lnext
+Add the $cref user_continue_fit.py$$ example.
+$lnext
+Add the $cref/warn_on_stderr/option_table/warn_on_stderr/$$ option.
 $lend
 
 $head 04-24$$
