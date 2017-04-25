@@ -544,6 +544,7 @@ $end
 			fix_constraint_lower,
 			fix_constraint_upper,
 			fixed_in,
+			fixed_in,
 			cppad_mixed_random_lower,
 			cppad_mixed_random_upper,
 			cppad_mixed_random_in

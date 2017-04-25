@@ -34,6 +34,9 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-25$$
+Advance to cppad_mixed-20170424.
+
 $head 04-24$$
 Fix bug in $cref eigen_ode2$$ where
 the $code std::abs$$ function was being called and $code std::fabs$$
