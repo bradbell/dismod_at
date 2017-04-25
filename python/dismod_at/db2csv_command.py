@@ -449,7 +449,7 @@ def db2csv_command(database_file_arg) :
 	avgint_columns = []
 	for row in table_data['option'] :
 		if row['option_name'] == 'avgint_columns' :
-			avgint_columns = row['avgint_columns'].split()
+			avgint_columns = row['option_value'].split()
 	# -------------------------------------------------------------------------
 	# simulate_index
 	simulate_index = None
@@ -564,6 +564,7 @@ def db2csv_command(database_file_arg) :
 	option_list = [
 		[ "accept_after_max_steps_fixed",  "5"],
 		[ "accept_after_max_steps_random", "5"],
+		[ "avgint_columns",                ""],
 		[ "derivative_test_fixed",         "none"],
 		[ "derivative_test_random",        "none"],
 		[ "fixed_bound_frac",              "1e-2"],

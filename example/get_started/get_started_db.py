@@ -247,10 +247,12 @@ def get_started_db ():
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'world'              },
 		{ 'name':'ode_step_size',          'value':'10.0'               },
-		{ 'name':'rate_case',              'value':'iota_zero_rho_zero' }
+		{ 'name':'rate_case',              'value':'iota_zero_rho_zero' },
+		{ 'name':'avgint_columns',         'value':'extra_info'         }
 	]
 	# ---------------------------------------------------------------------
 	# avgint table: predict the susceptible fraction for no income at age 100
+	# avgint_name is an extra column that gets displayed in predict.csv
 	avgint_table =  [
 		{
 			'integrand':   'susceptible',
@@ -260,7 +262,8 @@ def get_started_db ():
 			'age_upper':   100.0,
 			'time_lower':  2000.0,
 			'time_upper':  2000.0,
-			'income':      0.0
+			'income':      0.0,
+			'extra_info': 'a0'
 		}
 	]
 	# ---------------------------------------------------------------------

@@ -289,15 +289,28 @@
 # $head avgint_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref avgint_table$$.
-# The dictionary $icode%avgint_table%[%i%]%$$ has the same description as
-# $cref/data_table[i]/create_database/data_table/$$ except that the
-# following keys (and corresponding values) are not present:
-# $icode data_name$$,
-# $icode density$$,
-# $icode hold_out$$,
-# $icode meas_value$$,
-# $icode meas_std$$.
-#
+# The dictionary $icode%avgint_table%[%i%]%$$ has the following:
+# $table
+# Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
+# integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext
+# node         $cnext str         $cnext node in graph               $rnext
+# weight       $cnext str         $cnext weighting function          $rnext
+# age_lower    $cnext float       $cnext lower age limit             $rnext
+# age_upper    $cnext float       $cnext upper age limit             $rnext
+# time_lower   $cnext float       $cnext lower time limit            $rnext
+# time_lower   $cnext float       $cnext upper time limit            $rnext
+# $icode c_0$$ $cnext float       $cnext value of first covariate    $rnext
+# ...          $cnext ...         $cnext  ...                        $rnext
+# $icode c_J$$ $cnext float       $cnext value of last covariate
+# $tend
+# Note that $icode%J% = len(%covariate_table%) - 1%$$ and for
+# $icode%j% = 0 , %...% , %J%$$,
+# $codei%
+#	%c_j% = %covariate_table%[%j%]['name']
+# %$$
+# Any column in $icode avgint_table$$, that is not listed above,
+# must have type $code str$$, $code int$$, or $code float$$ and
+# is copied to the $code avgint$$ table.
 #
 # $childtable%example/table/create_database.py
 # %$$
@@ -772,7 +785,37 @@ def create_database(
 	tbl_name = 'option'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
-	# create avgint table
+	# avgint table
+	#
+	# extra_name, extra_type
+	col_name = [
+		'integrand',
+		'node',
+		'weight',
+		'age_lower',
+		'age_upper',
+		'time_lower',
+		'time_upper'
+	]
+	for j in range( len(covariate_table) ) :
+		col_name.append( covariate_table[j]['name'] )
+	extra_name = []
+	extra_type = []
+	if( len( avgint_table ) > 0 ) :
+		row = avgint_table[0]
+		for key in row :
+			if key not in col_name :
+				extra_name.append( key )
+				if isinstance(row[key], str) :
+					extra_type.append('text')
+				elif isinstance(row[key], int) :
+					extra_type.append('integer')
+				elif isinstance(row[key], float) :
+					extra_type.append('real')
+				else :
+					assert False
+	#
+	# col_name
 	col_name = [
 		'integrand_id',
 		'node_id',
@@ -782,8 +825,12 @@ def create_database(
 		'time_lower',
 		'time_upper'
 	]
+	for name in extra_name :
+		col_name.append(name)
 	for j in range( len(covariate_table) ) :
 		col_name.append( 'x_%s' % j )
+	#
+	# col_type
 	col_type = [
 		'integer',              # integrand_id
 		'integer',              # node_id
@@ -793,8 +840,13 @@ def create_database(
 		'real',                 # time_lower
 		'real'                  # time_upper
 	]
+	for ty in extra_type :
+		col_type.append(ty)
 	for j in range( len(covariate_table) )  :
 		col_type.append( 'real' )
+	#
+	# row_list
+	print(extra_name)
 	row_list = [ ]
 	for i in range( len(avgint_table) ) :
 		avgint = avgint_table[i]
@@ -811,6 +863,8 @@ def create_database(
 			avgint['time_lower'],
 			avgint['time_upper']
 		]
+		for name in extra_name :
+			row.append( avgint[ name ] )
 		for j in range( len(covariate_table) ) :
 			row.append( avgint[ covariate_table[j]['name'] ] )
 		row_list.append(row)
