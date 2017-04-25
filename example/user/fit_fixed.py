@@ -223,12 +223,12 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_fixed',  'value':'first-order'   },
 		{ 'name':'max_num_iter_fixed',     'value':'100'           },
 		{ 'name':'print_level_fixed',      'value':'0'             },
-		{ 'name':'tolerance_fixed',        'value':'1e-10'         },
+		{ 'name':'tolerance_fixed',        'value':'1e-11'         },
 
 		{ 'name':'derivative_test_random', 'value':'second-order'  },
 		{ 'name':'max_num_iter_random',    'value':'100'           },
 		{ 'name':'print_level_random',     'value':'0'             },
-		{ 'name':'tolerance_random',       'value':'1e-10'         }
+		{ 'name':'tolerance_random',       'value':'1e-11'         }
 	]
 	# --------------------------------------------------------------------------
 	# avgint table: same order as list of integrands
@@ -282,8 +282,8 @@ connection      = dismod_at.create_connection(file_name, new)
 # check the zero random effects solution
 #
 # get variable and fit_var tables
-var_table       = dismod_at.get_table_dict(connection, 'var')
-fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+var_table     = dismod_at.get_table_dict(connection, 'var')
+fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 rate_table    = dismod_at.get_table_dict(connection, 'rate')
 node_table    = dismod_at.get_table_dict(connection, 'node')
 #

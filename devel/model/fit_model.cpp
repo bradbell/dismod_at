@@ -463,6 +463,15 @@ $end
 	unpack_fixed(pack_object_, pack_vec, fixed_upper);
 	scale_fixed_effect(fixed_upper, fixed_upper);
 
+	// fixed_mean
+	d_vector fixed_mean(n_fixed_);
+	pack_vec = const_value_;
+	for(size_t i = 0; i < n_var; i++)
+		if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = prior_table_[ value_prior_id_[i] ].mean;
+	unpack_fixed(pack_object_, pack_vec, fixed_mean);
+	scale_fixed_effect(fixed_mean, fixed_mean);
+
 	// fix_constraint_lower, fix_constraint_upper
 	d_vector fix_constraint_lower, fix_constraint_upper;
 	for(size_t k = 0; k < diff_prior_.size(); k++)
@@ -543,7 +552,7 @@ $end
 			fixed_upper,
 			fix_constraint_lower,
 			fix_constraint_upper,
-			fixed_in,
+			fixed_mean,
 			fixed_in,
 			cppad_mixed_random_lower,
 			cppad_mixed_random_upper,
