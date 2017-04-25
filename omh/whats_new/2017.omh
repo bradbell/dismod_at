@@ -35,7 +35,17 @@ $childtable%
 %$$
 
 $head 04-25$$
+$list number$$
 Advance to cppad_mixed-20170424.
+$lnext
+The convergence criteria, is now relative to the derivative values
+at the mean of the prior for the fixed effects.
+This also holds for the values printed during the optimization of the
+fixed effects, see $cref/print_level/option_table/Optimizer/print_level/$$.
+These values used to be relative to the
+$cref/starting variables/start_var_table/$$ which would change
+when one continued an optimization.
+$lend
 
 $head 04-24$$
 Fix bug in $cref eigen_ode2$$ where
