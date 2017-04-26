@@ -376,14 +376,14 @@ def create_database() :
 	col_name = [ 'option_name', 'option_value' ]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
 	check_list = [
-		[ 'parent_node_id',   '0'            ],
-		[ 'ode_step_size',    '10.0'         ],
-		[ 'random_seed',      '0'            ],
-		[ 'rate_case',        'chi_positive' ],
-		[ 'tolerance',        '1e-8'         ],
-		[ 'max_num_iter',     '100'          ],
-		[ 'print_level',      '0'            ],
-		[ 'derivative_test',  'second-order' ]
+		[ 'parent_node_id',   '0'                ],
+		[ 'ode_step_size',    '10.0'             ],
+		[ 'random_seed',      '0'                ],
+		[ 'rate_case',        'iota_pos_rho_pos' ],
+		[ 'tolerance',        '1e-8'             ],
+		[ 'max_num_iter',     '100'              ],
+		[ 'print_level',      '0'                ],
+		[ 'derivative_test',  'second-order'     ]
 	]
 	assert row_list == check_list
 	#
