@@ -91,7 +91,7 @@ def example_db (file_name) :
 	#
 	# mulcov table
 	mulcov_table = list()
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# data table: same order as list of integrands
 	data_table = list()
 	# values that are the same for all data rows
@@ -134,7 +134,7 @@ def example_db (file_name) :
 	#
 	for data_id in range( len( data_table ) ) :
 		data_table[data_id]['data_name'] = 'd' + str(data_id)
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
 		{   # prior_zero
@@ -163,7 +163,7 @@ def example_db (file_name) :
 			'eta':      None
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# smooth table
 	middle_age_id  = 1
 	last_time_id   = 2
@@ -178,7 +178,7 @@ def example_db (file_name) :
 			'fun':                       fun_rate_parent
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# rate table
 	rate_table = [
 		{
@@ -208,7 +208,7 @@ def example_db (file_name) :
 			'child_nslist':  None
 		}
 	]
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'canada'       },
@@ -227,7 +227,7 @@ def example_db (file_name) :
 		{ 'name':'print_level_random',     'value':'0'            },
 		{ 'name':'tolerance_random',       'value':'1e-10'        }
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# avgint table: same order as list of integrands
 	avgint_table = list()
 	# values that are the same for all data rows
@@ -249,10 +249,10 @@ def example_db (file_name) :
 			# other integrands are averaged from age zero to one hundred
 			row['age_upper'] = 100.0
 		avgint_table.append( copy.copy(row) )
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# nslist_table:
 	nslist_table = dict()
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
@@ -271,7 +271,7 @@ def example_db (file_name) :
 		mulcov_table,
 		option_table
 	)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	n_smooth  = len( smooth_table )
 	rate_true = []
 	for rate_id in range( len( data_table ) ) :

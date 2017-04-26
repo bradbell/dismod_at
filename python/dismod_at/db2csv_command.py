@@ -422,7 +422,7 @@ def db2csv_command(database_file_arg) :
 	#
 	for table in table_list :
 		table_data[table] = dismod_at.get_table_dict(connection, table)
-	# -------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# check tables that are supposed to be the same length
 	pair_list = [
 		[ 'var',         'fit_var'],
@@ -437,25 +437,25 @@ def db2csv_command(database_file_arg) :
 				msg += 'length ' + left + '_table = ' + str(len_left) + '\n'
 				msg += 'length ' + right + '_table = ' + str(len_right) + '\n'
 				sys.exit(msg)
-	# -------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# parent_node_id
 	parent_node_id     = None
 	for row in table_data['option'] :
 		if row['option_name'] == 'parent_node_id' :
 			parent_node_id = int( row['option_value'] )
-	# -------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# minimum_meas_cv
 	minimum_meas_cv    = 0.0
 	for row in table_data['option'] :
 		if row['option_name'] == 'minimum_meas_cv' :
 			minimum_meas_cv = float( row['option_value'] )
-	# -------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# avgint_extra_columns
 	avgint_extra_columns = []
 	for row in table_data['option'] :
 		if row['option_name'] == 'avgint_extra_columns' :
 			avgint_extra_columns = row['option_value'].split()
-	# -------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# simulate_index
 	simulate_index = None
 	log_data       = dismod_at.get_table_dict(connection, 'log')
@@ -485,7 +485,7 @@ def db2csv_command(database_file_arg) :
 		simulate_index = None
 	else :
 		simulate_index = int(simulate_index)
-	# -------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	def convert2output(value_in) :
 		if value_in == None :
 			value_out = ''
@@ -494,13 +494,13 @@ def db2csv_command(database_file_arg) :
 		else :
 			value_out = str(value_in)
 		return value_out
-	# -------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	def table_lookup(table_name, row_id, column_name) :
 		if row_id == None :
 			return ''
 		value_in = table_data[table_name][row_id][column_name]
 		return convert2output(value_in)
-	# -------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	def get_prior_info(row_out, prior_id_dict) :
 		extension2name = {'_v':'value_', '_a':'dage_', '_t':'dtime_' }
 		for extension in extension2name :
@@ -543,7 +543,7 @@ def db2csv_command(database_file_arg) :
 					if field_in in [ 'lower', 'upper', 'mean' ] :
 						row_out[field_out] = convert2output( const_value )
 
-	# -------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	def node_id2child_or_parent(node_id) :
 		if node_id == parent_node_id :
 			name = table_data['node'][node_id]['node_name']
@@ -707,7 +707,7 @@ def db2csv_command(database_file_arg) :
 					get_prior_info(row_out, prior_id_dict)
 		csv_writer.writerow(row_out)
 		var_id += 1
-	# -------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	csv_file.close()
 	# =========================================================================
 	# data.csv

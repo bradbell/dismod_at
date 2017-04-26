@@ -336,11 +336,11 @@ def create_database(
 ) :
 	import sys
 	import dismod_at
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create database
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create age table
 	col_name = [ 'age' ]
 	col_type = [ 'real' ]
@@ -349,7 +349,7 @@ def create_database(
 		row_list.append( [age] )
 	tbl_name = 'age'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create time table
 	col_name = [ 'time' ]
 	col_type = [ 'real' ]
@@ -358,7 +358,7 @@ def create_database(
 		row_list.append( [time] )
 	tbl_name = 'time'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create integrand table
 	col_name = [ 'integrand_name' ]
 	col_type = [ 'text' ]
@@ -371,7 +371,7 @@ def create_database(
 	global_integrand_name2id = {}
 	for i in range( len(row_list) ) :
 		global_integrand_name2id[ row_list[i][0] ] = i
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create density table
 	col_name = [  'density_name'   ]
 	col_type = [  'text'        ]
@@ -388,7 +388,7 @@ def create_database(
 	global_density_name2id = {}
 	for i in range( len(row_list) ) :
 		global_density_name2id[ row_list[i][0] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create covariate table
 	col_name = [ 'covariate_name',	'reference', 'max_difference' ]
 	col_type = [ 'text',             'real',     'real'           ]
@@ -406,7 +406,7 @@ def create_database(
 	global_covariate_name2id = {}
 	for i in range( len(covariate_table) ) :
 		global_covariate_name2id[ covariate_table[i]['name'] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create node table
 	global_node_name2id = {}
 	for i in range( len(node_table) ) :
@@ -426,7 +426,7 @@ def create_database(
 		row_list.append( [ name, parent ] )
 	tbl_name = 'node'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create prior table
 	col_name = [
 		'prior_name', 'lower', 'upper', 'mean', 'std',  'density_id', 'eta'
@@ -454,7 +454,7 @@ def create_database(
 	global_prior_name2id = {}
 	for i in range( len(row_list) ) :
 		global_prior_name2id[ row_list[i][0] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create weight table
 	col_name = [ 'weight_name', 'n_age',   'n_time'   ]
 	col_type = [ 'text',        'integer', 'integer'  ]
@@ -471,7 +471,7 @@ def create_database(
 	global_weight_name2id = {}
 	for i in range( len(weight_table) ) :
 		global_weight_name2id[ weight_table[i]['name'] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create weight_grid table
 	col_name = [  'weight_id', 'age_id',   'time_id',  'weight' ]
 	col_type = [  'integer',   'integer',  'integer',  'real'   ]
@@ -487,7 +487,7 @@ def create_database(
 				row_list.append( [ i, j, k, w] )
 	tbl_name = 'weight_grid'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create smooth table
 	col_name = [
 		'smooth_name',
@@ -544,7 +544,7 @@ def create_database(
 	global_smooth_name2id = {}
 	for i in range( len(smooth_table) ) :
 		global_smooth_name2id[ smooth_table[i]['name'] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create smooth_grid table
 	col_name = [
 		'smooth_id',
@@ -596,7 +596,7 @@ def create_database(
 				row_list.append( [ i, j, k, v, da, dt, const_value] )
 	tbl_name = 'smooth_grid'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create nslist table
 	col_name = [ 'nslist_name' ]
 	col_type = [ 'text' ]
@@ -609,7 +609,7 @@ def create_database(
 	global_nslist_name2id = dict()
 	for i in range( len( row_list ) ) :
 		global_nslist_name2id[ row_list[i][0] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create nslist_pair table
 	col_name = [ 'nslist_id', 'node_id', 'smooth_id' ]
 	col_type = [ 'integer',   'integer', 'integer'   ]
@@ -623,7 +623,7 @@ def create_database(
 			smooth_id = global_smooth_name2id[ pair[1] ]
 			row_list.append( [ nslist_id, node_id, smooth_id ] )
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create rate table
 	col_name = [
 		'rate_name', 'parent_smooth_id', 'child_smooth_id', 'child_nslist_id'
@@ -658,7 +658,7 @@ def create_database(
 	global_rate_name2id = {}
 	for i in range( len(row_list) ) :
 		global_rate_name2id[ row_list[i][0] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create mulcov table
 	col_name = [
 		'mulcov_type',
@@ -695,7 +695,7 @@ def create_database(
 		)
 	tbl_name = 'mulcov'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# avgint table
 	#
 	# extra_name, extra_type
@@ -781,7 +781,7 @@ def create_database(
 		row_list.append(row)
 	tbl_name = 'avgint'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create data table
 	col_name = [
 		'data_name',
@@ -846,7 +846,7 @@ def create_database(
 		row_list.append(row)
 	tbl_name = 'data'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create option table
 	col_name = [ 'option_name', 'option_value' ]
 	col_type = [ 'text unique', 'text' ]
@@ -868,7 +868,7 @@ def create_database(
 		row_list.append( [ name, value ] )
 	tbl_name = 'option'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# close the connection
 	connection.close()
 	return

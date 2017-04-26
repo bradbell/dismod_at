@@ -103,7 +103,7 @@ def example_db (file_name) :
 	#
 	# avgint table:
 	avgint_table = list()
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# data table:
 	data_table = list()
 	# values that are the same for all data rows
@@ -128,7 +128,7 @@ def example_db (file_name) :
 		node_id          = data_id % len( node_table )
 		row['node']      = node_table[node_id]['name']
 		data_table.append( copy.copy(row) )
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
 		{   # prior_zero
@@ -165,7 +165,7 @@ def example_db (file_name) :
 			'eta':      None
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# smooth table
 	smooth_table = [
 		{
@@ -210,7 +210,7 @@ def example_db (file_name) :
 			'fun':                      fun_chi_child_2
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# rate table:
 	rate_table = [
 		{	'name':          'pini',
@@ -235,14 +235,14 @@ def example_db (file_name) :
 			'child_nslist':  None
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# nslist_table:
 	nslist_table = dict()
 	nslist_table['nslist_chi_children'] = [
 		('child_1', 'smooth_chi_child_1'),
 		('child_2', 'smooth_chi_child_2')
 	]
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
@@ -259,7 +259,7 @@ def example_db (file_name) :
 		{ 'name':'print_level_random',     'value':'0'            },
 		{ 'name':'tolerance_random',       'value':'1e-8'         }
 	]
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
@@ -278,7 +278,7 @@ def example_db (file_name) :
 		mulcov_table,
 		option_table
 	)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	return
 # ===========================================================================
 # Run the init command to create the var table

@@ -50,7 +50,7 @@ def nslist_pair_table() :
 	]
 	tbl_name = 'nslist_pair'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# include primary key in test
 	check_name = [ tbl_name + '_id' ] + col_name
 	check_list = list()
@@ -59,7 +59,7 @@ def nslist_pair_table() :
 	#
 	row_list = dismod_at.get_row_list(connection, tbl_name, check_name)
 	assert row_list == check_list
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	connection.close()
 	print('nslist_pair_table: OK')
 # END PYTHON
