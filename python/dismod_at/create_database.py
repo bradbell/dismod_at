@@ -727,7 +727,7 @@ def create_database(
 					assert False
 	#
 	# col_name
-	col_name = [
+	col_name = extra_name + [
 		'integrand_id',
 		'node_id',
 		'weight_id',
@@ -736,13 +736,11 @@ def create_database(
 		'time_lower',
 		'time_upper'
 	]
-	for name in extra_name :
-		col_name.append(name)
 	for j in range( len(covariate_table) ) :
 		col_name.append( 'x_%s' % j )
 	#
 	# col_type
-	col_type = [
+	col_type = extra_type + [
 		'integer',              # integrand_id
 		'integer',              # node_id
 		'integer',              # weight_id
@@ -751,21 +749,24 @@ def create_database(
 		'real',                 # time_lower
 		'real'                  # time_upper
 	]
-	for ty in extra_type :
-		col_type.append(ty)
 	for j in range( len(covariate_table) )  :
 		col_type.append( 'real' )
 	#
 	# row_list
-	print(extra_name)
 	row_list = [ ]
 	for i in range( len(avgint_table) ) :
 		avgint = avgint_table[i]
+		#
+		# extra columns first
+		row = list()
+		for name in extra_name :
+			row.append( avgint[ name ] )
+		#
 		avgint_id      = i
 		integrand_id = global_integrand_name2id[ avgint['integrand'] ]
 		node_id      = global_node_name2id[ avgint['node'] ]
 		weight_id    = global_weight_name2id[ avgint['weight'] ]
-		row = [
+		row = row + [
 			integrand_id,
 			node_id,
 			weight_id,
@@ -774,8 +775,6 @@ def create_database(
 			avgint['time_lower'],
 			avgint['time_upper']
 		]
-		for name in extra_name :
-			row.append( avgint[ name ] )
 		for j in range( len(covariate_table) ) :
 			row.append( avgint[ covariate_table[j]['name'] ] )
 		row_list.append(row)
