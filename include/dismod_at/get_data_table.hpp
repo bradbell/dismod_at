@@ -17,7 +17,6 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	struct data_struct {
-		std::string data_name;
 		// values in avgint_struct
 		int         integrand_id;
 		int         node_id;
