@@ -97,6 +97,12 @@ def example_db (file_name) :
 	#
 	# mulcov table
 	mulcov_table = list()
+	#
+	# avgint table: same order as list of integrands
+	avgint_table = list()
+	#
+	# nslist_table:
+	nslist_table = dict()
 	# ----------------------------------------------------------------------
 	# data table: same order as list of integrands
 	data_table = list()
@@ -228,12 +234,6 @@ def example_db (file_name) :
 		{ 'name':'print_level_random',     'value':'0'             },
 		{ 'name':'tolerance_random',       'value':'1e-10'         }
 	]
-	# ----------------------------------------------------------------------
-	# avgint table: same order as list of integrands
-	avgint_table = list()
-	# ----------------------------------------------------------------------
-	# nslist_table:
-	nslist_table = dict()
 	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
