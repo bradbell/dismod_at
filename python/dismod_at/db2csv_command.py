@@ -192,6 +192,11 @@
 # is the
 # $cref/data_name/data_table/data_name/$$.
 #
+# $subhead data_extra_columns$$
+# Each column specified by the
+# $cref/data_extra_columns/option_table/data_extra_columns/$$
+# option is included in the $code data.csv$$ file.
+#
 # $subhead integrand$$
 # is the integrand table
 # $cref/integrand_name/integrand_table/integrand_name/$$.
@@ -269,11 +274,6 @@
 # $cref/meas_std/simulate_table/meas_std/$$ for
 # the specified $cref/simulate_index/simulate_table/simulate_index/$$.
 #
-# $subhead data_extra_columns$$
-# Each column specified by the
-# $cref/data_extra_columns/option_table/data_extra_columns/$$
-# option is included in the $code data.csv$$ file.
-#
 # $subhead Covariates$$
 # For each covariate in the $cref covariate_table$$ there is a column with
 # the corresponding $icode covariate_name$$.
@@ -289,6 +289,11 @@
 # For each set of $cref model_variables$$ in the $cref sample_table$$,
 # and each row of $cref avgint_subset_table$$, there is a corresponding
 # row in $code predict.csv$$.
+#
+# $subhead avgint_extra_columns$$
+# Each column specified by the
+# $cref/avgint_extra_columns/option_table/avgint_extra_columns/$$
+# option is included in the $code predict.csv$$ file.
 #
 # $subhead s_index$$
 # This identifies the set model variables in the sample table.
@@ -331,11 +336,6 @@
 # $subhead node$$
 # is the
 # $cref/node_name/node_table/node_name/$$ for this row.
-#
-# $subhead avgint_extra_columns$$
-# Each column specified by the
-# $cref/avgint_extra_columns/option_table/avgint_extra_columns/$$
-# option is included in the $code predict.csv$$ file.
 #
 # $subhead Covariates$$
 # For each covariate in the $cref covariate_table$$ there is a column with
@@ -812,7 +812,7 @@ def db2csv_command(database_file_arg) :
 		file_name = os.path.join(database_dir, 'predict.csv')
 		csv_file  = open(file_name, 'w')
 		#
-		header = [
+		header = avgint_extra_columns + [
 			's_index',
 			'avgint',
 			'age_lo',
@@ -823,27 +823,27 @@ def db2csv_command(database_file_arg) :
 			'weight',
 			'node'
 		]
-		for column in avgint_extra_columns :
-			header.append(column )
 		for row in table_data['covariate'] :
 			header.append( row['covariate_name'] )
 		csv_writer = csv.DictWriter(csv_file, fieldnames=header)
 		csv_writer.writeheader()
 		#
 		for predict_row in table_data['predict'] :
-			row_out = dict()
+			row_out     = dict()
+			avgint_id   = int( table_lookup(
+				'avgint_subset', predict_row['avgint_subset_id'], 'avgint_id'
+			) )
+			avgint_row  = table_data['avgint'][avgint_id]
+			#
+			# avgint_extra_columns
+			for column in avgint_extra_columns :
+				row_out[column] = avgint_row[column]
 			#
 			# s_index
 			row_out['s_index'] = predict_row['sample_index']
 			#
-			# avgint
+			# avgint, age_lo, age_up, time_lo, time_up
 			row_out['avgint']  = convert2output( predict_row['avg_integrand'] )
-			#
-			# age_lo, age_up, time_lo, time_up
-			avgint_id          = int( table_lookup(
-				'avgint_subset', predict_row['avgint_subset_id'], 'avgint_id'
-			) )
-			avgint_row         = table_data['avgint'][avgint_id]
 			row_out['age_lo']  = avgint_row['age_lower']
 			row_out['age_up']  = avgint_row['age_upper']
 			row_out['time_lo'] = avgint_row['time_lower']
@@ -861,10 +861,6 @@ def db2csv_command(database_file_arg) :
 			row_out['node']      = table_lookup(
 				'node', avgint_row['node_id'], 'node_name'
 			)
-			# avgint_extra_columns
-			for column in avgint_extra_columns :
-				row_out[column] = avgint_row[column]
-			#
 			# covariates
 			covariate_id = 0
 			for row in table_data['covariate'] :
