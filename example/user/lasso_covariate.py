@@ -29,7 +29,7 @@
 # BEGIN PYTHON
 # true values used to simulate data
 iota_true        = 0.05
-n_data           = 201
+n_data           = 301
 # ------------------------------------------------------------------------
 import sys
 import os
