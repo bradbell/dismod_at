@@ -290,6 +290,10 @@
 # and each row of $cref avgint_subset_table$$, there is a corresponding
 # row in $code predict.csv$$.
 #
+# $subhead avgint_id$$
+# is the avgint table
+# $cref/avgint_id/avgint_table/avgint_id/$$.
+#
 # $subhead avgint_extra_columns$$
 # Each column specified by the
 # $cref/avgint_extra_columns/option_table/avgint_extra_columns/$$
@@ -812,7 +816,7 @@ def db2csv_command(database_file_arg) :
 		file_name = os.path.join(database_dir, 'predict.csv')
 		csv_file  = open(file_name, 'w')
 		#
-		header = avgint_extra_columns + [
+		header = ['avgint_id'] + avgint_extra_columns + [
 			's_index',
 			'avgint',
 			'age_lo',
@@ -834,6 +838,9 @@ def db2csv_command(database_file_arg) :
 				'avgint_subset', predict_row['avgint_subset_id'], 'avgint_id'
 			) )
 			avgint_row  = table_data['avgint'][avgint_id]
+			#
+			# avgint_id
+			row_out['avgint_id'] = avgint_id
 			#
 			# avgint_extra_columns
 			for column in avgint_extra_columns :
