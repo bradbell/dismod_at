@@ -101,6 +101,12 @@ def example_db (file_name) :
 			'smooth':    'smooth_mulcov'
 		}
 	]
+	#
+	# avgint table: empty
+	avgint_table = list()
+	#
+	# nslist_table:
+	nslist_table = dict()
 	# ----------------------------------------------------------------------
 	# data table:
 	data_table = list()
@@ -250,12 +256,6 @@ def example_db (file_name) :
 		{ 'name':'print_level_random',     'value':'0'            },
 		{ 'name':'tolerance_random',       'value':'1e-8'         }
 	]
-	# ----------------------------------------------------------------------
-	# avgint table: empty
-	avgint_table = list()
-	# ----------------------------------------------------------------------
-	# nslist_table:
-	nslist_table = dict()
 	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(

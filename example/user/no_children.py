@@ -91,6 +91,31 @@ def example_db (file_name) :
 	#
 	# mulcov table
 	mulcov_table = list()
+	#
+	# nslist_table:
+	nslist_table = dict()
+	# ----------------------------------------------------------------------
+	# avgint table: same order as list of integrands
+	avgint_table = list()
+	# values that are the same for all data rows
+	row = {
+		'node':        'canada',
+		'weight':      'constant',
+		'time_lower':   2000.0,
+		'time_upper':   2000.0,
+		'age_lower':    0.0
+	}
+	# values that change between rows: (one data point for each integrand)
+	for avgint_id in range( len(integrand_list) ) :
+		integrand         = integrand_list[avgint_id]
+		row['integrand']  = integrand
+		if integrand == 'prevalence' :
+			# prevalence is measured at age zero
+			row['age_upper'] = 0.0
+		else :
+			# other integrands are averaged from age zero to one hundred
+			row['age_upper'] = 100.0
+		avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# data table: same order as list of integrands
 	data_table = list()
@@ -227,31 +252,6 @@ def example_db (file_name) :
 		{ 'name':'print_level_random',     'value':'0'            },
 		{ 'name':'tolerance_random',       'value':'1e-10'        }
 	]
-	# ----------------------------------------------------------------------
-	# avgint table: same order as list of integrands
-	avgint_table = list()
-	# values that are the same for all data rows
-	row = {
-		'node':        'canada',
-		'weight':      'constant',
-		'time_lower':   2000.0,
-		'time_upper':   2000.0,
-		'age_lower':    0.0
-	}
-	# values that change between rows: (one data point for each integrand)
-	for avgint_id in range( len(integrand_list) ) :
-		integrand         = integrand_list[avgint_id]
-		row['integrand']  = integrand
-		if integrand == 'prevalence' :
-			# prevalence is measured at age zero
-			row['age_upper'] = 0.0
-		else :
-			# other integrands are averaged from age zero to one hundred
-			row['age_upper'] = 100.0
-		avgint_table.append( copy.copy(row) )
-	# ----------------------------------------------------------------------
-	# nslist_table:
-	nslist_table = dict()
 	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(

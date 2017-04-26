@@ -95,6 +95,27 @@ def example_db (file_name) :
 	#
 	# mulcov table
 	mulcov_table = list()
+	#
+	# nslist_table:
+	nslist_table = dict()
+	# ----------------------------------------------------------------------
+	# avgint table: same order as list of integrands
+	avgint_table = list()
+	# values that are the same for all data rows
+	row = {
+		'integrand':   'susceptible',
+		'node':        'north_america',
+		'weight':      'constant',
+		'time_lower':   2000.0,
+		'time_upper':   2000.0,
+		'age_lower':    50.0,
+		'age_upper':    50.0
+	}
+	avgint_table.append( copy.copy(row) )
+	row['node'] = 'canada'
+	avgint_table.append( copy.copy(row) )
+	row['node'] = 'united_states'
+	avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# data table:
 	data_table = list()
@@ -239,27 +260,6 @@ def example_db (file_name) :
 		{ 'name':'print_level_random',     'value':'0'            },
 		{ 'name':'tolerance_random',       'value':'1e-10'        }
 	]
-	# ----------------------------------------------------------------------
-	# avgint table: same order as list of integrands
-	avgint_table = list()
-	# values that are the same for all data rows
-	row = {
-		'integrand':   'susceptible',
-		'node':        'north_america',
-		'weight':      'constant',
-		'time_lower':   2000.0,
-		'time_upper':   2000.0,
-		'age_lower':    50.0,
-		'age_upper':    50.0
-	}
-	avgint_table.append( copy.copy(row) )
-	row['node'] = 'canada'
-	avgint_table.append( copy.copy(row) )
-	row['node'] = 'united_states'
-	avgint_table.append( copy.copy(row) )
-	# ----------------------------------------------------------------------
-	# nslist_table:
-	nslist_table = dict()
 	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
