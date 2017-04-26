@@ -126,8 +126,6 @@ def example_db (file_name) :
 		# data_id = rate_id = integand_id
 		data_table.append( copy.copy(row) )
 	#
-	for data_id in range( len( data_table ) ) :
-		data_table[data_id]['data_name'] = 'd' + str(data_id)
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [

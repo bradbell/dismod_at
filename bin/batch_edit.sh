@@ -22,7 +22,11 @@ rename_cmd='s|output.omh|data_flow.omh|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|^\\(\\t# -\\{70\}\\)-*|\\1|
+/for data_id in range/! b end
+N
+/'data_name'/! b end
+d
+: end
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

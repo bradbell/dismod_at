@@ -46,6 +46,9 @@ because they are so similar.
 $lnext
 The $cref/avgint_id/db2csv_command/predict.csv/avgint_id/$$ was
 added to the $code predict.csv$$ file.
+$lnext
+Add $cref/data_extra_columns/option_table/data_extra_columns/$$
+and remove $code data_name$$ column from the data table.
 $lend
 
 $head 04-25$$

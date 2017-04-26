@@ -157,8 +157,6 @@ def example_db (file_name) :
 	row['meas_value'] = 10. * data_table[0]['meas_value']
 	data_table.append( copy.copy(row) )
 	#
-	for data_id in range( len( data_table ) ) :
-		data_table[data_id]['data_name'] = 'd' + str(data_id)
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
