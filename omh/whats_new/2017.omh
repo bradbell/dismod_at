@@ -50,6 +50,8 @@ $lnext
 Add the $cref user_continue_fit.py$$ example.
 $lnext
 Add the $cref/warn_on_stderr/option_table/warn_on_stderr/$$ option.
+$lnext
+Add the $cref/avgint_columns/option_table/avgint_columns/$$ option.
 $lend
 
 $head 04-24$$
