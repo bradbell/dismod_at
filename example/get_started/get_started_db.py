@@ -111,26 +111,41 @@ def get_started_db ():
 		{ 'name':'income', 'reference':0.0, 'max_difference':None }
 	]
 	# ---------------------------------------------------------------------
+	# avgint table: predict the susceptible fraction for no income at age 100
+	avgint_table =  [
+		{
+			'avgint_info': 'a0',
+			'integrand':   'susceptible',
+			'node':        'world',
+			'weight':      'constant_one',
+			'age_lower':   100.0,
+			'age_upper':   100.0,
+			'time_lower':  2000.0,
+			'time_upper':  2000.0,
+			'income':      0.0,
+		}
+	]
+	# ---------------------------------------------------------------------
 	# data table: note the income for this measurement is 1,000.
 	adjusted_omega = unknown_omega_world * exp(known_income_multiplier*1000.0)
 	meas_value     = exp( - adjusted_omega * 50.0 )
 	meas_std       = meas_value / 20.
 	data_table = [
 		{
-			'data_name':   'd1',
+			'data_info':   'd1',
 			'integrand':   'susceptible',
-			'density':     'gaussian',
 			'node':        'world',
 			'weight':      'constant_one',
-			'hold_out':    False,
-			'meas_value':  meas_value,
-			'meas_std':    meas_std,
-			'eta':         None,
 			'age_lower':   50.0,
 			'age_upper':   50.0,
 			'time_lower':  2000.0,
 			'time_upper':  2000.0,
-			'income':      1000.0
+			'income':      1000.0,
+			'density':     'gaussian',
+			'hold_out':    False,
+			'meas_value':  meas_value,
+			'meas_std':    meas_std,
+			'eta':         None
 		}
 	]
 	# ---------------------------------------------------------------------
@@ -248,28 +263,13 @@ def get_started_db ():
 		{ 'name':'parent_node_name',       'value':'world'              },
 		{ 'name':'ode_step_size',          'value':'10.0'               },
 		{ 'name':'rate_case',              'value':'iota_zero_rho_zero' },
-		{ 'name':'avgint_extra_columns',   'value':'extra_info'         }
-	]
-	# ---------------------------------------------------------------------
-	# avgint table: predict the susceptible fraction for no income at age 100
-	# avgint_name is an extra column that gets displayed in predict.csv
-	avgint_table =  [
-		{
-			'integrand':   'susceptible',
-			'node':        'world',
-			'weight':      'constant_one',
-			'age_lower':   100.0,
-			'age_upper':   100.0,
-			'time_lower':  2000.0,
-			'time_upper':  2000.0,
-			'income':      0.0,
-			'extra_info': 'a0'
-		}
+		{ 'name':'avgint_extra_columns',   'value':'avgint_info'        },
+		{ 'name':'data_extra_columns',     'value':'data_info'          }
 	]
 	# ---------------------------------------------------------------------
 	# nslist_table:
 	nslist_table = dict()
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create database
 	file_name = 'get_started.db'
 	dismod_at.create_database(
@@ -280,13 +280,13 @@ def get_started_db ():
 		node_table,
 		weight_table,
 		covariate_table,
+		avgint_table,
 		data_table,
 		prior_table,
 		smooth_table,
 		nslist_table,
 		rate_table,
 		mulcov_table,
-		option_table,
-		avgint_table
+		option_table
 	)
 # END PYTHON

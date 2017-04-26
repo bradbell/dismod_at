@@ -84,7 +84,7 @@ def example_db (file_name) :
 	#
 	# mulcov table
 	mulcov_table = list()
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# data table:
 	data_table = list()
 	# values that are the same for all data rows
@@ -109,9 +109,7 @@ def example_db (file_name) :
 			row['node'] = 'canada'
 		data_table.append( copy.copy(row) )
 	#
-	for data_id in range( len( data_table ) ) :
-		data_table[data_id]['data_name'] = 'd' + str(data_id)
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
 		{   # prior_zero
@@ -148,7 +146,7 @@ def example_db (file_name) :
 			'eta':      1e-6
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# smooth table
 	smooth_table = [
 		{   # smooth_rate_child
@@ -177,7 +175,7 @@ def example_db (file_name) :
 			'fun':                       fun_zero
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# rate table
 	rate_table = [
 		{
@@ -207,7 +205,7 @@ def example_db (file_name) :
 			'child_nslist':  None
 		}
 	]
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# option_table
 	# use very large tolerance_fixed to avoid warning during test.
 	option_table = [
@@ -220,13 +218,13 @@ def example_db (file_name) :
 		{ 'name':'fixed_bound_frac',       'value':str(bound_frac)     }
 
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# avgint table: empty
 	avgint_table = list()
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# nslist_table:
 	nslist_table = dict()
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
@@ -236,16 +234,16 @@ def example_db (file_name) :
 		node_table,
 		weight_table,
 		covariate_table,
+		avgint_table,
 		data_table,
 		prior_table,
 		smooth_table,
 		nslist_table,
 		rate_table,
 		mulcov_table,
-		option_table,
-		avgint_table
+		option_table
 	)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	n_smooth  = len( smooth_table )
 	return
 # ===========================================================================

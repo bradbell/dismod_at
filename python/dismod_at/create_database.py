@@ -44,14 +44,14 @@
 #	%node_table%,
 #	%weight_table%,
 #	%covariate_table%,
+#	%avgint_table%,
 #	%data_table%,
 #	%prior_table%,
 #	%smooth_table%,
 #	%nslist_table%,
 #	%rate_table%,
 #	%mulcov_table%,
-#	%option_table%,
-#	%avgint_table%
+#	%option_table%
 # )%$$
 #
 # $head Purpose$$
@@ -128,21 +128,15 @@
 # max_difference $cnext float $cnext maximum difference for $th i$$ covariate
 # $tend
 #
-# $head data_table$$
+# $head avgint_table$$
 # This is a list of $code dict$$
-# that define the rows of the $cref data_table$$.
-# The dictionary $icode%data_table%[%i%]%$$ has the following:
+# that define the rows of the $cref avgint_table$$.
+# The dictionary $icode%avgint_table%[%i%]%$$ has the following:
 # $table
 # Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
-# data_name    $cnext str         $cnext name for $th i$$ data       $rnext
 # integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext
-# density      $cnext str         $cnext density                     $rnext
 # node         $cnext str         $cnext node in graph               $rnext
 # weight       $cnext str         $cnext weighting function          $rnext
-# hold_out     $cnext bool        $cnext hold out flag               $rnext
-# meas_value   $cnext float       $cnext measured value              $rnext
-# meas_std     $cnext float       $cnext standard deviation          $rnext
-# eta          $cnext float       $cnext offset in log-transform     $rnext
 # age_lower    $cnext float       $cnext lower age limit             $rnext
 # age_upper    $cnext float       $cnext upper age limit             $rnext
 # time_lower   $cnext float       $cnext lower time limit            $rnext
@@ -156,6 +150,36 @@
 # $codei%
 #	%c_j% = %covariate_table%[%j%]['name']
 # %$$
+# We refer to the columns above as the required columns for
+# $icode avgint_table$$.
+#
+# $subhead Extra Columns$$
+# Any column in $icode avgint_table$$, that is not required,
+# must have type $code str$$, $code int$$, or $code float$$ and
+# is copied to the $cref avgint_table$$ table.
+#
+# $head data_table$$
+# This is a list of $code dict$$
+# that define the rows of the $cref data_table$$.
+# It has all the columns required for the $icode avgint_table$$.
+# In addition, the dictionary $icode%data_table%[%i%]%$$ has the following:
+# $table
+# Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
+# hold_out     $cnext bool        $cnext hold out flag               $rnext
+# density      $cnext str         $cnext density                     $rnext
+# meas_value   $cnext float       $cnext measured value              $rnext
+# meas_std     $cnext float       $cnext standard deviation          $rnext
+# eta          $cnext float       $cnext offset in log-transform     $rnext
+# $tend
+# We refer to the columns above,
+# plus the $icode avgint_table$$ required columns,
+# as the required columns for $icode data_table$$.
+#
+# $subhead Extra Columns$$
+# Any column in $icode data_table$$, that is not listed above
+# (or listed as a required column for the $icode avgint_table$$),
+# must have type $code str$$, $code int$$, or $code float$$ and
+# is copied to the $cref data_table$$ table.
 #
 # $head prior_table$$
 # This is a list of $code dict$$
@@ -286,32 +310,6 @@
 # corresponds to the $icode node_id$$ equal to
 # $icode parent_node_id$$ in the option table.
 #
-# $head avgint_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref avgint_table$$.
-# The dictionary $icode%avgint_table%[%i%]%$$ has the following:
-# $table
-# Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
-# integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext
-# node         $cnext str         $cnext node in graph               $rnext
-# weight       $cnext str         $cnext weighting function          $rnext
-# age_lower    $cnext float       $cnext lower age limit             $rnext
-# age_upper    $cnext float       $cnext upper age limit             $rnext
-# time_lower   $cnext float       $cnext lower time limit            $rnext
-# time_lower   $cnext float       $cnext upper time limit            $rnext
-# $icode c_0$$ $cnext float       $cnext value of first covariate    $rnext
-# ...          $cnext ...         $cnext  ...                        $rnext
-# $icode c_J$$ $cnext float       $cnext value of last covariate
-# $tend
-# Note that $icode%J% = len(%covariate_table%) - 1%$$ and for
-# $icode%j% = 0 , %...% , %J%$$,
-# $codei%
-#	%c_j% = %covariate_table%[%j%]['name']
-# %$$
-# Any column in $icode avgint_table$$, that is not listed above,
-# must have type $code str$$, $code int$$, or $code float$$ and
-# is copied to the $code avgint$$ table.
-#
 # $childtable%example/table/create_database.py
 # %$$
 # $head Example$$
@@ -327,22 +325,22 @@ def create_database(
 	node_table,
 	weight_table,
 	covariate_table,
+	avgint_table,
 	data_table,
 	prior_table,
 	smooth_table,
 	nslist_table,
 	rate_table,
 	mulcov_table,
-	option_table,
-	avgint_table
+	option_table
 ) :
 	import sys
 	import dismod_at
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create database
 	new            = True
 	connection     = dismod_at.create_connection(file_name, new)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create age table
 	col_name = [ 'age' ]
 	col_type = [ 'real' ]
@@ -351,7 +349,7 @@ def create_database(
 		row_list.append( [age] )
 	tbl_name = 'age'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create time table
 	col_name = [ 'time' ]
 	col_type = [ 'real' ]
@@ -360,7 +358,7 @@ def create_database(
 		row_list.append( [time] )
 	tbl_name = 'time'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create integrand table
 	col_name = [ 'integrand_name' ]
 	col_type = [ 'text' ]
@@ -373,7 +371,7 @@ def create_database(
 	global_integrand_name2id = {}
 	for i in range( len(row_list) ) :
 		global_integrand_name2id[ row_list[i][0] ] = i
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create density table
 	col_name = [  'density_name'   ]
 	col_type = [  'text'        ]
@@ -390,7 +388,7 @@ def create_database(
 	global_density_name2id = {}
 	for i in range( len(row_list) ) :
 		global_density_name2id[ row_list[i][0] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create covariate table
 	col_name = [ 'covariate_name',	'reference', 'max_difference' ]
 	col_type = [ 'text',             'real',     'real'           ]
@@ -408,7 +406,7 @@ def create_database(
 	global_covariate_name2id = {}
 	for i in range( len(covariate_table) ) :
 		global_covariate_name2id[ covariate_table[i]['name'] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create node table
 	global_node_name2id = {}
 	for i in range( len(node_table) ) :
@@ -428,7 +426,7 @@ def create_database(
 		row_list.append( [ name, parent ] )
 	tbl_name = 'node'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create prior table
 	col_name = [
 		'prior_name', 'lower', 'upper', 'mean', 'std',  'density_id', 'eta'
@@ -456,7 +454,7 @@ def create_database(
 	global_prior_name2id = {}
 	for i in range( len(row_list) ) :
 		global_prior_name2id[ row_list[i][0] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create weight table
 	col_name = [ 'weight_name', 'n_age',   'n_time'   ]
 	col_type = [ 'text',        'integer', 'integer'  ]
@@ -473,7 +471,7 @@ def create_database(
 	global_weight_name2id = {}
 	for i in range( len(weight_table) ) :
 		global_weight_name2id[ weight_table[i]['name'] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create weight_grid table
 	col_name = [  'weight_id', 'age_id',   'time_id',  'weight' ]
 	col_type = [  'integer',   'integer',  'integer',  'real'   ]
@@ -489,7 +487,7 @@ def create_database(
 				row_list.append( [ i, j, k, w] )
 	tbl_name = 'weight_grid'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create smooth table
 	col_name = [
 		'smooth_name',
@@ -546,7 +544,7 @@ def create_database(
 	global_smooth_name2id = {}
 	for i in range( len(smooth_table) ) :
 		global_smooth_name2id[ smooth_table[i]['name'] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create smooth_grid table
 	col_name = [
 		'smooth_id',
@@ -598,7 +596,7 @@ def create_database(
 				row_list.append( [ i, j, k, v, da, dt, const_value] )
 	tbl_name = 'smooth_grid'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create nslist table
 	col_name = [ 'nslist_name' ]
 	col_type = [ 'text' ]
@@ -611,7 +609,7 @@ def create_database(
 	global_nslist_name2id = dict()
 	for i in range( len( row_list ) ) :
 		global_nslist_name2id[ row_list[i][0] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create nslist_pair table
 	col_name = [ 'nslist_id', 'node_id', 'smooth_id' ]
 	col_type = [ 'integer',   'integer', 'integer'   ]
@@ -625,7 +623,7 @@ def create_database(
 			smooth_id = global_smooth_name2id[ pair[1] ]
 			row_list.append( [ nslist_id, node_id, smooth_id ] )
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create rate table
 	col_name = [
 		'rate_name', 'parent_smooth_id', 'child_smooth_id', 'child_nslist_id'
@@ -660,7 +658,7 @@ def create_database(
 	global_rate_name2id = {}
 	for i in range( len(row_list) ) :
 		global_rate_name2id[ row_list[i][0] ] = i
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create mulcov table
 	col_name = [
 		'mulcov_type',
@@ -697,94 +695,7 @@ def create_database(
 		)
 	tbl_name = 'mulcov'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
-	# create data table
-	col_name = [
-		'data_name',
-		'integrand_id',
-		'density_id',
-		'node_id',
-		'weight_id',
-		'hold_out',
-		'meas_value',
-		'meas_std',
-		'eta',
-		'age_lower',
-		'age_upper',
-		'time_lower',
-		'time_upper',
-	]
-	for j in range( len(covariate_table) ) :
-		col_name.append( 'x_%s' % j )
-	col_type = [
-		'text',                 # data_name
-		'integer',              # integrand_id
-		'integer',              # density_id
-		'integer',              # node_id
-		'integer',              # weight_id
-		'integer',              # hold_out
-		'real',                 # meas_value
-		'real',                 # meas_std
-		'real',                 # eta
-		'real',                 # age_lower
-		'real',                 # age_upper
-		'real',                 # time_lower
-		'real',                 # time_upper
-	]
-	for j in range( len(covariate_table) )  :
-		col_type.append( 'real' )
-	row_list = [ ]
-	for i in range( len(data_table) ) :
-		data = data_table[i]
-		data_id      = i
-		integrand_id = global_integrand_name2id[ data['integrand'] ]
-		density_id   = global_density_name2id[ data['density'] ]
-		node_id      = global_node_name2id[ data['node'] ]
-		weight_id    = global_weight_name2id[ data['weight'] ]
-		hold_out     = int( data['hold_out'] )
-		row = [
-			data['data_name'],
-			integrand_id,
-			density_id,
-			node_id,
-			weight_id,
-			hold_out,
-			data['meas_value'],
-			data['meas_std'],
-			data['eta'],
-			data['age_lower'],
-			data['age_upper'],
-			data['time_lower'],
-			data['time_upper']
-		]
-		for j in range( len(covariate_table) ) :
-			row.append( data[ covariate_table[j]['name'] ] )
-		row_list.append(row)
-	tbl_name = 'data'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# -----------------------------------------------------------------------
-	# create option table
-	col_name = [ 'option_name', 'option_value' ]
-	col_type = [ 'text unique', 'text' ]
-	row_list = []
-	for row in option_table :
-		name  = row['name']
-		value = row['value']
-		if name == 'parent_node_id' :
-			value = str(value)
-			msg   = 'create_database.py: option_table has the following row:\n'
-			msg  += "\t{ 'name':'parent_node_id' , 'value':'" + value + "' }\n"
-			msg  += 'This is an error and should probably be replaced by\n'
-			value = node_table[int(value)]['name']
-			msg  += "\t{ 'name':'parent_node_name' , 'value':'" + value + "' }"
-			sys.exit(msg)
-		if name == 'parent_node_name' :
-			name  = 'parent_node_id'
-			value = global_node_name2id[value]
-		row_list.append( [ name, value ] )
-	tbl_name = 'option'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# avgint table
 	#
 	# extra_name, extra_type
@@ -816,7 +727,7 @@ def create_database(
 					assert False
 	#
 	# col_name
-	col_name = [
+	col_name = extra_name + [
 		'integrand_id',
 		'node_id',
 		'weight_id',
@@ -825,13 +736,11 @@ def create_database(
 		'time_lower',
 		'time_upper'
 	]
-	for name in extra_name :
-		col_name.append(name)
 	for j in range( len(covariate_table) ) :
 		col_name.append( 'x_%s' % j )
 	#
 	# col_type
-	col_type = [
+	col_type = extra_type + [
 		'integer',              # integrand_id
 		'integer',              # node_id
 		'integer',              # weight_id
@@ -840,21 +749,24 @@ def create_database(
 		'real',                 # time_lower
 		'real'                  # time_upper
 	]
-	for ty in extra_type :
-		col_type.append(ty)
 	for j in range( len(covariate_table) )  :
 		col_type.append( 'real' )
 	#
 	# row_list
-	print(extra_name)
 	row_list = [ ]
 	for i in range( len(avgint_table) ) :
 		avgint = avgint_table[i]
+		#
+		# extra columns first
+		row = list()
+		for name in extra_name :
+			row.append( avgint[ name ] )
+		#
 		avgint_id      = i
 		integrand_id = global_integrand_name2id[ avgint['integrand'] ]
 		node_id      = global_node_name2id[ avgint['node'] ]
 		weight_id    = global_weight_name2id[ avgint['weight'] ]
-		row = [
+		row = row + [
 			integrand_id,
 			node_id,
 			weight_id,
@@ -863,14 +775,138 @@ def create_database(
 			avgint['time_lower'],
 			avgint['time_upper']
 		]
-		for name in extra_name :
-			row.append( avgint[ name ] )
 		for j in range( len(covariate_table) ) :
 			row.append( avgint[ covariate_table[j]['name'] ] )
 		row_list.append(row)
 	tbl_name = 'avgint'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
+	# create data table
+	#
+	# extra_name, extra_type
+	col_name = [
+		'integrand',
+		'node',
+		'weight',
+		'age_lower',
+		'age_upper',
+		'time_lower',
+		'time_upper',
+		'hold_out',
+		'density',
+		'meas_value',
+		'meas_std',
+		'eta'
+	]
+	for j in range( len(covariate_table) ) :
+		col_name.append( covariate_table[j]['name'] )
+	extra_name = []
+	extra_type = []
+	if( len( data_table ) > 0 ) :
+		row = data_table[0]
+		for key in row :
+			if key not in col_name :
+				extra_name.append( key )
+				if isinstance(row[key], str) :
+					extra_type.append('text')
+				elif isinstance(row[key], int) :
+					extra_type.append('integer')
+				elif isinstance(row[key], float) :
+					extra_type.append('real')
+				else :
+					assert False
+	#
+	# col_name
+	col_name = extra_name + [
+		'integrand_id',
+		'node_id',
+		'weight_id',
+		'age_lower',
+		'age_upper',
+		'time_lower',
+		'time_upper',
+		'hold_out',
+		'density_id',
+		'meas_value',
+		'meas_std',
+		'eta',
+	]
+	for j in range( len(covariate_table) ) :
+		col_name.append( 'x_%s' % j )
+	#
+	# col_type
+	col_type = extra_type + [
+		'integer',              # integrand_id
+		'integer',              # node_id
+		'integer',              # weight_id
+		'real',                 # age_lower
+		'real',                 # age_upper
+		'real',                 # time_lower
+		'real',                 # time_upper
+		'integer',              # hold_out
+		'integer',              # density_id
+		'real',                 # meas_value
+		'real',                 # meas_std
+		'real',                 # eta
+	]
+	for j in range( len(covariate_table) )  :
+		col_type.append( 'real' )
+	row_list = [ ]
+	for i in range( len(data_table) ) :
+		data         = data_table[i]
+		#
+		# extra columns first
+		row = list()
+		for name in extra_name :
+			row.append( data[name] )
+		#
+		integrand_id = global_integrand_name2id[ data['integrand'] ]
+		density_id   = global_density_name2id[ data['density'] ]
+		node_id      = global_node_name2id[ data['node'] ]
+		weight_id    = global_weight_name2id[ data['weight'] ]
+		hold_out     = int( data['hold_out'] )
+		row = row + [
+			integrand_id,
+			node_id,
+			weight_id,
+			data['age_lower'],
+			data['age_upper'],
+			data['time_lower'],
+			data['time_upper'],
+			hold_out,
+			density_id,
+			data['meas_value'],
+			data['meas_std'],
+			data['eta'],
+		]
+		for j in range( len(covariate_table) ) :
+			row.append( data[ covariate_table[j]['name'] ] )
+		row_list.append(row)
+	tbl_name = 'data'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ----------------------------------------------------------------------
+	# create option table
+	col_name = [ 'option_name', 'option_value' ]
+	col_type = [ 'text unique', 'text' ]
+	row_list = []
+	for row in option_table :
+		name  = row['name']
+		value = row['value']
+		if name == 'parent_node_id' :
+			value = str(value)
+			msg   = 'create_database.py: option_table has the following row:\n'
+			msg  += "\t{ 'name':'parent_node_id' , 'value':'" + value + "' }\n"
+			msg  += 'This is an error and should probably be replaced by\n'
+			value = node_table[int(value)]['name']
+			msg  += "\t{ 'name':'parent_node_name' , 'value':'" + value + "' }"
+			sys.exit(msg)
+		if name == 'parent_node_name' :
+			name  = 'parent_node_id'
+			value = global_node_name2id[value]
+		row_list.append( [ name, value ] )
+	tbl_name = 'option'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ----------------------------------------------------------------------
 	# close the connection
 	connection.close()
 	return

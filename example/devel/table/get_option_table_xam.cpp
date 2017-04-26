@@ -60,6 +60,7 @@ bool get_option_table_xam(void)
 		//
 		"parent_node_id",                "1",
 		"avgint_extra_columns",          "",
+		"data_extra_columns",            "",
 		"warn_on_stderr",                "true",
 		"minimum_meas_cv",               "0.1",
 		"ode_step_size",                 "20.0",

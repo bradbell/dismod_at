@@ -43,7 +43,6 @@ bool get_data_table_xam(void)
 	const char* sql_cmd[] = {
 	"create table data("
 		" data_id        integer primary key,"
-		" data_name      text,"
 		" integrand_id   integer,"
 		" density_id     integer,"
 		" node_id        integer,"
@@ -61,7 +60,6 @@ bool get_data_table_xam(void)
 		" c_data_source  text)",
 	"insert into data values("
 		"0,"                       // data_id
-		"'one',"                   // data_name
 		"1,"                       // integrand_id
 		"1,"                       // density_id (gaussian)
 		"3,"                       // node_id
@@ -96,7 +94,6 @@ bool get_data_table_xam(void)
 	);
 	ok  &= data_table.size() == 1;
 	//
-	ok  &= data_table[0].data_name         == "one";
 	ok  &= data_table[0].integrand_id      == 1;
 	ok  &= data_table[0].density_id        == 1;
 	ok  &= data_table[0].node_id           == 3;

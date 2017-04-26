@@ -91,7 +91,32 @@ def example_db (file_name) :
 	#
 	# mulcov table
 	mulcov_table = list()
-	# --------------------------------------------------------------------------
+	#
+	# nslist_table:
+	nslist_table = dict()
+	# ----------------------------------------------------------------------
+	# avgint table: same order as list of integrands
+	avgint_table = list()
+	# values that are the same for all data rows
+	row = {
+		'node':        'canada',
+		'weight':      'constant',
+		'time_lower':   2000.0,
+		'time_upper':   2000.0,
+		'age_lower':    0.0
+	}
+	# values that change between rows: (one data point for each integrand)
+	for avgint_id in range( len(integrand_list) ) :
+		integrand         = integrand_list[avgint_id]
+		row['integrand']  = integrand
+		if integrand == 'prevalence' :
+			# prevalence is measured at age zero
+			row['age_upper'] = 0.0
+		else :
+			# other integrands are averaged from age zero to one hundred
+			row['age_upper'] = 100.0
+		avgint_table.append( copy.copy(row) )
+	# ----------------------------------------------------------------------
 	# data table: same order as list of integrands
 	data_table = list()
 	# values that are the same for all data rows
@@ -132,9 +157,7 @@ def example_db (file_name) :
 	row['meas_value'] = 10. * data_table[0]['meas_value']
 	data_table.append( copy.copy(row) )
 	#
-	for data_id in range( len( data_table ) ) :
-		data_table[data_id]['data_name'] = 'd' + str(data_id)
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
 		{   # prior_zero
@@ -163,7 +186,7 @@ def example_db (file_name) :
 			'eta':      None
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# smooth table
 	middle_age_id  = 1
 	last_time_id   = 2
@@ -178,7 +201,7 @@ def example_db (file_name) :
 			'fun':                       fun_rate_parent
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# rate table
 	rate_table = [
 		{
@@ -208,7 +231,7 @@ def example_db (file_name) :
 			'child_nslist':  None
 		}
 	]
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'canada'       },
@@ -227,32 +250,7 @@ def example_db (file_name) :
 		{ 'name':'print_level_random',     'value':'0'            },
 		{ 'name':'tolerance_random',       'value':'1e-10'        }
 	]
-	# --------------------------------------------------------------------------
-	# avgint table: same order as list of integrands
-	avgint_table = list()
-	# values that are the same for all data rows
-	row = {
-		'node':        'canada',
-		'weight':      'constant',
-		'time_lower':   2000.0,
-		'time_upper':   2000.0,
-		'age_lower':    0.0
-	}
-	# values that change between rows: (one data point for each integrand)
-	for avgint_id in range( len(integrand_list) ) :
-		integrand         = integrand_list[avgint_id]
-		row['integrand']  = integrand
-		if integrand == 'prevalence' :
-			# prevalence is measured at age zero
-			row['age_upper'] = 0.0
-		else :
-			# other integrands are averaged from age zero to one hundred
-			row['age_upper'] = 100.0
-		avgint_table.append( copy.copy(row) )
-	# --------------------------------------------------------------------------
-	# nslist_table:
-	nslist_table = dict()
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
@@ -262,16 +260,16 @@ def example_db (file_name) :
 		node_table,
 		weight_table,
 		covariate_table,
+		avgint_table,
 		data_table,
 		prior_table,
 		smooth_table,
 		nslist_table,
 		rate_table,
 		mulcov_table,
-		option_table,
-		avgint_table
+		option_table
 	)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	n_smooth  = len( smooth_table )
 	rate_true = []
 	for rate_id in range( len( data_table ) ) :

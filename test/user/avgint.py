@@ -82,7 +82,7 @@ def example_db (file_name) :
 	# mulcov table
 	mulcov_table = list()
 	#
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# data table: order for value_list
 	#	'integrand',  'density',    'node',      'weight', '     hold_out',
 	#	'meas_value', 'meas_std',   'age_lower', 'age_upper',
@@ -104,9 +104,7 @@ def example_db (file_name) :
 	]
 	data_table.append( data_list2dict( value_list ) );
 	#
-	for data_id in range( len( data_table ) ) :
-		data_table[data_id]['data_name'] = 'd' + str(data_id)
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
 		{   # prior_zero
@@ -135,7 +133,7 @@ def example_db (file_name) :
 			'eta':      1e-6
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# smooth table
 	middle_age_id  = 1
 	last_time_id   = 2
@@ -151,7 +149,7 @@ def example_db (file_name) :
 			'fun':                      fun_rate
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# rate table
 	rate_table = [
 		{
@@ -181,7 +179,7 @@ def example_db (file_name) :
 			'child_nslist':  None
 		}
 	]
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'world'             },
@@ -192,13 +190,13 @@ def example_db (file_name) :
 		#
 		{ 'name':'derivative_test_random', 'value':'second-order'      }
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# avgint table: same order as list of integrands
 	avgint_table = list()
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# nslist_table:
 	nslist_table = dict()
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
@@ -208,16 +206,16 @@ def example_db (file_name) :
 		node_table,
 		weight_table,
 		covariate_table,
+		avgint_table,
 		data_table,
 		prior_table,
 		smooth_table,
 		nslist_table,
 		rate_table,
 		mulcov_table,
-		option_table,
-		avgint_table
+		option_table
 	)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	n_smooth  = len( smooth_table )
 	rate_true = []
 	for rate_id in range( len( data_table ) ) :

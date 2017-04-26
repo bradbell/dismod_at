@@ -98,6 +98,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "accept_after_max_steps_fixed",  "5"                  },
 		{ "accept_after_max_steps_random", "5"                  },
 		{ "avgint_extra_columns",          ""                   },
+		{ "data_extra_columns",            ""                   },
 		{ "derivative_test_fixed",         "none"               },
 		{ "derivative_test_random",        "none"               },
 		{ "fixed_bound_frac",              "1e-2"               },

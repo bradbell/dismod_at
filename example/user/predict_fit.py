@@ -95,6 +95,27 @@ def example_db (file_name) :
 	#
 	# mulcov table
 	mulcov_table = list()
+	#
+	# nslist_table:
+	nslist_table = dict()
+	# ----------------------------------------------------------------------
+	# avgint table: same order as list of integrands
+	avgint_table = list()
+	# values that are the same for all data rows
+	row = {
+		'integrand':   'susceptible',
+		'node':        'north_america',
+		'weight':      'constant',
+		'time_lower':   2000.0,
+		'time_upper':   2000.0,
+		'age_lower':    50.0,
+		'age_upper':    50.0
+	}
+	avgint_table.append( copy.copy(row) )
+	row['node'] = 'canada'
+	avgint_table.append( copy.copy(row) )
+	row['node'] = 'united_states'
+	avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# data table:
 	data_table = list()
@@ -120,8 +141,6 @@ def example_db (file_name) :
 	row['meas_value'] = math.exp(-0.2) * iota_north_america
 	data_table.append( copy.copy(row) )
 	#
-	for data_id in range( len( data_table ) ) :
-		data_table[data_id]['data_name'] = 'd' + str(data_id)
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
@@ -240,27 +259,6 @@ def example_db (file_name) :
 		{ 'name':'tolerance_random',       'value':'1e-10'        }
 	]
 	# ----------------------------------------------------------------------
-	# avgint table: same order as list of integrands
-	avgint_table = list()
-	# values that are the same for all data rows
-	row = {
-		'integrand':   'susceptible',
-		'node':        'north_america',
-		'weight':      'constant',
-		'time_lower':   2000.0,
-		'time_upper':   2000.0,
-		'age_lower':    50.0,
-		'age_upper':    50.0
-	}
-	avgint_table.append( copy.copy(row) )
-	row['node'] = 'canada'
-	avgint_table.append( copy.copy(row) )
-	row['node'] = 'united_states'
-	avgint_table.append( copy.copy(row) )
-	# ----------------------------------------------------------------------
-	# nslist_table:
-	nslist_table = dict()
-	# -----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
@@ -270,14 +268,14 @@ def example_db (file_name) :
 		node_table,
 		weight_table,
 		covariate_table,
+		avgint_table,
 		data_table,
 		prior_table,
 		smooth_table,
 		nslist_table,
 		rate_table,
 		mulcov_table,
-		option_table,
-		avgint_table
+		option_table
 	)
 # ===========================================================================
 file_name             = 'example.db'

@@ -106,7 +106,13 @@ def example_db (file_name) :
 	#
 	# mulcov table:
 	mulcov_table = list()
-	# --------------------------------------------------------------------------
+	#
+	# avgint table: empty
+	avgint_table = list()
+	#
+	# nslist_table:
+	nslist_table = dict()
+	# ----------------------------------------------------------------------
 	# data table:
 	data_table = list()
 	# values that are the same for all data rows
@@ -130,9 +136,7 @@ def example_db (file_name) :
 		row['eta']       = None;
 		data_table.append( copy.copy(row) )
 	#
-	for data_id in range( len( data_table ) ) :
-		data_table[data_id]['data_name'] = 'd' + str(data_id)
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
 		{	# prior_gauss_zero
@@ -153,7 +157,7 @@ def example_db (file_name) :
 			'eta':      None
 		}
 	]
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# smooth table
 	name           = 'smooth_iota'
 	fun            = fun_iota
@@ -183,7 +187,7 @@ def example_db (file_name) :
 			'fun':fun
 		}
 	)
-	# --------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# rate table:
 	rate_table = [
 		{	'name':          'pini',
@@ -208,7 +212,7 @@ def example_db (file_name) :
 			'child_nslist':  None
 		}
 	]
-	# ------------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero'   },
@@ -226,13 +230,7 @@ def example_db (file_name) :
 		{ 'name':'print_level_random',     'value':'0'                   },
 		{ 'name':'tolerance_random',       'value':'1e-10'               }
 	]
-	# --------------------------------------------------------------------------
-	# avgint table: empty
-	avgint_table = list()
-	# --------------------------------------------------------------------------
-	# nslist_table:
-	nslist_table = dict()
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
@@ -242,16 +240,16 @@ def example_db (file_name) :
 		node_table,
 		weight_table,
 		covariate_table,
+		avgint_table,
 		data_table,
 		prior_table,
 		smooth_table,
 		nslist_table,
 		rate_table,
 		mulcov_table,
-		option_table,
-		avgint_table
+		option_table
 	)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	return
 # ===========================================================================
 # Run the init command to create the var table

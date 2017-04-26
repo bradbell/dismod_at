@@ -224,18 +224,18 @@ def create_database() :
 		node_table,
 		weight_table,
 		covariate_table,
+		avgint_table,
 		data_table,
 		prior_table,
 		smooth_table,
 		nslist_table,
 		rate_table,
 		mulcov_table,
-		option_table,
-		avgint_table
+		option_table
 	)
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	# Check database
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	#
 	# connection
 	new        = False;
@@ -376,14 +376,14 @@ def create_database() :
 	col_name = [ 'option_name', 'option_value' ]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
 	check_list = [
-		[ 'parent_node_id',   '0'            ],
-		[ 'ode_step_size',    '10.0'         ],
-		[ 'random_seed',      '0'            ],
-		[ 'rate_case',        'chi_positive' ],
-		[ 'tolerance',        '1e-8'         ],
-		[ 'max_num_iter',     '100'          ],
-		[ 'print_level',      '0'            ],
-		[ 'derivative_test',  'second-order' ]
+		[ 'parent_node_id',   '0'                ],
+		[ 'ode_step_size',    '10.0'             ],
+		[ 'random_seed',      '0'                ],
+		[ 'rate_case',        'iota_pos_rho_pos' ],
+		[ 'tolerance',        '1e-8'             ],
+		[ 'max_num_iter',     '100'              ],
+		[ 'print_level',      '0'                ],
+		[ 'derivative_test',  'second-order'     ]
 	]
 	assert row_list == check_list
 	#
@@ -397,7 +397,7 @@ def create_database() :
 		[ 0, 3, 0.0, 100.0 ]
 	]
 	assert row_list == check_list
-	# -----------------------------------------------------------------------
+	# ----------------------------------------------------------------------
 	connection.close()
 	print('create_database: OK')
 # END PYTHON
