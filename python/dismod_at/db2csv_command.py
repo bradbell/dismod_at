@@ -269,6 +269,11 @@
 # $cref/meas_std/simulate_table/meas_std/$$ for
 # the specified $cref/simulate_index/simulate_table/simulate_index/$$.
 #
+# $subhead data_extra_columns$$
+# Each column specified by the
+# $cref/data_extra_columns/option_table/data_extra_columns/$$
+# option is included in the $code data.csv$$ file.
+#
 # $subhead Covariates$$
 # For each covariate in the $cref covariate_table$$ there is a column with
 # the corresponding $icode covariate_name$$.
@@ -329,8 +334,8 @@
 #
 # $subhead avgint_extra_columns$$
 # Each column specified by the
-# $cref/avgint_extra_columns/option_table/avgint_extra_columns/$$ option is included
-# in the $code predict.csv$$ file.
+# $cref/avgint_extra_columns/option_table/avgint_extra_columns/$$
+# option is included in the $code predict.csv$$ file.
 #
 # $subhead Covariates$$
 # For each covariate in the $cref covariate_table$$ there is a column with

@@ -44,14 +44,14 @@
 #	%node_table%,
 #	%weight_table%,
 #	%covariate_table%,
+#	%avgint_table%,
 #	%data_table%,
 #	%prior_table%,
 #	%smooth_table%,
 #	%nslist_table%,
 #	%rate_table%,
 #	%mulcov_table%,
-#	%option_table%,
-#	%avgint_table%
+#	%option_table%
 # )%$$
 #
 # $head Purpose$$
@@ -128,21 +128,15 @@
 # max_difference $cnext float $cnext maximum difference for $th i$$ covariate
 # $tend
 #
-# $head data_table$$
+# $head avgint_table$$
 # This is a list of $code dict$$
-# that define the rows of the $cref data_table$$.
-# The dictionary $icode%data_table%[%i%]%$$ has the following:
+# that define the rows of the $cref avgint_table$$.
+# The dictionary $icode%avgint_table%[%i%]%$$ has the following:
 # $table
 # Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
-# data_name    $cnext str         $cnext name for $th i$$ data       $rnext
 # integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext
-# density      $cnext str         $cnext density                     $rnext
 # node         $cnext str         $cnext node in graph               $rnext
 # weight       $cnext str         $cnext weighting function          $rnext
-# hold_out     $cnext bool        $cnext hold out flag               $rnext
-# meas_value   $cnext float       $cnext measured value              $rnext
-# meas_std     $cnext float       $cnext standard deviation          $rnext
-# eta          $cnext float       $cnext offset in log-transform     $rnext
 # age_lower    $cnext float       $cnext lower age limit             $rnext
 # age_upper    $cnext float       $cnext upper age limit             $rnext
 # time_lower   $cnext float       $cnext lower time limit            $rnext
@@ -156,6 +150,36 @@
 # $codei%
 #	%c_j% = %covariate_table%[%j%]['name']
 # %$$
+# We refer to the columns above as the required columns for
+# $icode avgint_table$$.
+#
+# $subhead Extra Columns$$
+# Any column in $icode avgint_table$$, that is not required,
+# must have type $code str$$, $code int$$, or $code float$$ and
+# is copied to the $cref avgint_table$$ table.
+#
+# $head data_table$$
+# This is a list of $code dict$$
+# that define the rows of the $cref data_table$$.
+# It has all the columns required for the $icode avgint_table$$.
+# In addition, the dictionary $icode%data_table%[%i%]%$$ has the following:
+# $table
+# Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
+# density      $cnext str         $cnext density                     $rnext
+# hold_out     $cnext bool        $cnext hold out flag               $rnext
+# meas_value   $cnext float       $cnext measured value              $rnext
+# meas_std     $cnext float       $cnext standard deviation          $rnext
+# eta          $cnext float       $cnext offset in log-transform     $rnext
+# $tend
+# We refer to the columns above,
+# plus the $icode avgint_table$$ required columns,
+# as the required columns for $icode data_table$$.
+#
+# $subhead Extra Columns$$
+# Any column in $icode data_table$$, that is not listed above
+# (or listed as a required column for the $icode avgint_table$$),
+# must have type $code str$$, $code int$$, or $code float$$ and
+# is copied to the $cref data_table$$ table.
 #
 # $head prior_table$$
 # This is a list of $code dict$$
@@ -285,32 +309,6 @@
 # $cref/node_name/node_table/node_name/$$ in the node table that
 # corresponds to the $icode node_id$$ equal to
 # $icode parent_node_id$$ in the option table.
-#
-# $head avgint_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref avgint_table$$.
-# The dictionary $icode%avgint_table%[%i%]%$$ has the following:
-# $table
-# Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
-# integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext
-# node         $cnext str         $cnext node in graph               $rnext
-# weight       $cnext str         $cnext weighting function          $rnext
-# age_lower    $cnext float       $cnext lower age limit             $rnext
-# age_upper    $cnext float       $cnext upper age limit             $rnext
-# time_lower   $cnext float       $cnext lower time limit            $rnext
-# time_lower   $cnext float       $cnext upper time limit            $rnext
-# $icode c_0$$ $cnext float       $cnext value of first covariate    $rnext
-# ...          $cnext ...         $cnext  ...                        $rnext
-# $icode c_J$$ $cnext float       $cnext value of last covariate
-# $tend
-# Note that $icode%J% = len(%covariate_table%) - 1%$$ and for
-# $icode%j% = 0 , %...% , %J%$$,
-# $codei%
-#	%c_j% = %covariate_table%[%j%]['name']
-# %$$
-# Any column in $icode avgint_table$$, that is not listed above,
-# must have type $code str$$, $code int$$, or $code float$$ and
-# is copied to the $code avgint$$ table.
 #
 # $childtable%example/table/create_database.py
 # %$$

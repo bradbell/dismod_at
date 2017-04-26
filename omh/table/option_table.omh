@@ -95,6 +95,18 @@ of the parent node,
 are not included in the $cref avgint_subset_table$$ and the
 $cref predict_table$$.
 
+$head data_extra_columns$$
+If $icode option_name$$ is $code data_extra_columns$$,
+the corresponding value is space separated list of extra columns,
+in the $cref data_table$$.
+These columns are not used by $code dismod_at$$ except that
+they get displayed in the
+$cref/data.csv/db2csv_command/data.csv/data_extra_columns/$$ file.
+
+$subhead Default$$
+The default value for this option is null; i.e.,
+no extra columns displayed in $code data.csv$$.
+
 $head avgint_extra_columns$$
 If $icode option_name$$ is $code avgint_extra_columns$$,
 the corresponding value is space separated list of extra columns,
@@ -102,6 +114,10 @@ in the $cref avgint_table$$.
 These columns are not used by $code dismod_at$$ except that
 they get displayed in the
 $cref/predict.csv/db2csv_command/predict.csv/avgint_extra_columns/$$ file.
+
+$subhead Default$$
+The default value for this option is null; i.e.,
+no extra columns displayed in $code predict.csv$$.
 
 $head warn_on_stderr$$
 If $icode option_name$$ is
