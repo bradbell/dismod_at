@@ -243,14 +243,14 @@ def example_db (file_name) :
 		node_table,
 		weight_table,
 		covariate_table,
+		avgint_table,
 		data_table,
 		prior_table,
 		smooth_table,
 		nslist_table,
 		rate_table,
 		mulcov_table,
-		option_table,
-		avgint_table
+		option_table
 	)
 	# -----------------------------------------------------------------------
 	n_smooth  = len( smooth_table )

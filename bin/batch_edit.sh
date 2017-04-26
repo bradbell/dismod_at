@@ -22,9 +22,14 @@ rename_cmd='s|output.omh|data_flow.omh|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|'avgint_columns',      |'avgint_extra_columns',|
-s|"avgint_columns",      |"avgint_extra_columns",|
-s|avgint_columns|avgint_extra_columns|g
+/dismod_at\\.create_database(/! b end
+: loop
+N
+/\\n\\t*)/! b loop
+s|option_table,\\n\\t\\tavgint_table|option_table|
+s|\\n\\t\\tdata_table,|\\n\\t\\tavgint_table,&|
+#
+: end
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
