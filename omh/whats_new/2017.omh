@@ -36,12 +36,17 @@ $childtable%
 %$$
 
 $head 04-26$$
+$list number$$
 In the $cref user$$ examples,
 move the setup of
 $cref/avgint_table/create_database/avgint_table/$$
 just before the setup of
 $cref/data_table/create_database/data_table/$$
 because they are so similar.
+$lnext
+The $cref/avgint_id/db2csv_command/predict.csv/avgint_id/$$ was
+added to the $code predict.csv$$ file.
+$lend
 
 $head 04-25$$
 $list number$$
