@@ -696,6 +696,92 @@ def create_database(
 	tbl_name = 'mulcov'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ------------------------------------------------------------------------
+	# avgint table
+	#
+	# extra_name, extra_type
+	col_name = [
+		'integrand',
+		'node',
+		'weight',
+		'age_lower',
+		'age_upper',
+		'time_lower',
+		'time_upper'
+	]
+	for j in range( len(covariate_table) ) :
+		col_name.append( covariate_table[j]['name'] )
+	extra_name = []
+	extra_type = []
+	if( len( avgint_table ) > 0 ) :
+		row = avgint_table[0]
+		for key in row :
+			if key not in col_name :
+				extra_name.append( key )
+				if isinstance(row[key], str) :
+					extra_type.append('text')
+				elif isinstance(row[key], int) :
+					extra_type.append('integer')
+				elif isinstance(row[key], float) :
+					extra_type.append('real')
+				else :
+					assert False
+	#
+	# col_name
+	col_name = [
+		'integrand_id',
+		'node_id',
+		'weight_id',
+		'age_lower',
+		'age_upper',
+		'time_lower',
+		'time_upper'
+	]
+	for name in extra_name :
+		col_name.append(name)
+	for j in range( len(covariate_table) ) :
+		col_name.append( 'x_%s' % j )
+	#
+	# col_type
+	col_type = [
+		'integer',              # integrand_id
+		'integer',              # node_id
+		'integer',              # weight_id
+		'real',                 # age_lower
+		'real',                 # age_upper
+		'real',                 # time_lower
+		'real'                  # time_upper
+	]
+	for ty in extra_type :
+		col_type.append(ty)
+	for j in range( len(covariate_table) )  :
+		col_type.append( 'real' )
+	#
+	# row_list
+	print(extra_name)
+	row_list = [ ]
+	for i in range( len(avgint_table) ) :
+		avgint = avgint_table[i]
+		avgint_id      = i
+		integrand_id = global_integrand_name2id[ avgint['integrand'] ]
+		node_id      = global_node_name2id[ avgint['node'] ]
+		weight_id    = global_weight_name2id[ avgint['weight'] ]
+		row = [
+			integrand_id,
+			node_id,
+			weight_id,
+			avgint['age_lower'],
+			avgint['age_upper'],
+			avgint['time_lower'],
+			avgint['time_upper']
+		]
+		for name in extra_name :
+			row.append( avgint[ name ] )
+		for j in range( len(covariate_table) ) :
+			row.append( avgint[ covariate_table[j]['name'] ] )
+		row_list.append(row)
+	tbl_name = 'avgint'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ------------------------------------------------------------------------
 	# create data table
 	col_name = [
 		'data_name',
@@ -781,92 +867,6 @@ def create_database(
 			value = global_node_name2id[value]
 		row_list.append( [ name, value ] )
 	tbl_name = 'option'
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	# ------------------------------------------------------------------------
-	# avgint table
-	#
-	# extra_name, extra_type
-	col_name = [
-		'integrand',
-		'node',
-		'weight',
-		'age_lower',
-		'age_upper',
-		'time_lower',
-		'time_upper'
-	]
-	for j in range( len(covariate_table) ) :
-		col_name.append( covariate_table[j]['name'] )
-	extra_name = []
-	extra_type = []
-	if( len( avgint_table ) > 0 ) :
-		row = avgint_table[0]
-		for key in row :
-			if key not in col_name :
-				extra_name.append( key )
-				if isinstance(row[key], str) :
-					extra_type.append('text')
-				elif isinstance(row[key], int) :
-					extra_type.append('integer')
-				elif isinstance(row[key], float) :
-					extra_type.append('real')
-				else :
-					assert False
-	#
-	# col_name
-	col_name = [
-		'integrand_id',
-		'node_id',
-		'weight_id',
-		'age_lower',
-		'age_upper',
-		'time_lower',
-		'time_upper'
-	]
-	for name in extra_name :
-		col_name.append(name)
-	for j in range( len(covariate_table) ) :
-		col_name.append( 'x_%s' % j )
-	#
-	# col_type
-	col_type = [
-		'integer',              # integrand_id
-		'integer',              # node_id
-		'integer',              # weight_id
-		'real',                 # age_lower
-		'real',                 # age_upper
-		'real',                 # time_lower
-		'real'                  # time_upper
-	]
-	for ty in extra_type :
-		col_type.append(ty)
-	for j in range( len(covariate_table) )  :
-		col_type.append( 'real' )
-	#
-	# row_list
-	print(extra_name)
-	row_list = [ ]
-	for i in range( len(avgint_table) ) :
-		avgint = avgint_table[i]
-		avgint_id      = i
-		integrand_id = global_integrand_name2id[ avgint['integrand'] ]
-		node_id      = global_node_name2id[ avgint['node'] ]
-		weight_id    = global_weight_name2id[ avgint['weight'] ]
-		row = [
-			integrand_id,
-			node_id,
-			weight_id,
-			avgint['age_lower'],
-			avgint['age_upper'],
-			avgint['time_lower'],
-			avgint['time_upper']
-		]
-		for name in extra_name :
-			row.append( avgint[ name ] )
-		for j in range( len(covariate_table) ) :
-			row.append( avgint[ covariate_table[j]['name'] ] )
-		row_list.append(row)
-	tbl_name = 'avgint'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# -----------------------------------------------------------------------
 	# close the connection
