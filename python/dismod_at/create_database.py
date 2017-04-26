@@ -165,8 +165,8 @@
 # In addition, the dictionary $icode%data_table%[%i%]%$$ has the following:
 # $table
 # Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
-# density      $cnext str         $cnext density                     $rnext
 # hold_out     $cnext bool        $cnext hold out flag               $rnext
+# density      $cnext str         $cnext density                     $rnext
 # meas_value   $cnext float       $cnext measured value              $rnext
 # meas_std     $cnext float       $cnext standard deviation          $rnext
 # eta          $cnext float       $cnext offset in log-transform     $rnext
@@ -782,63 +782,102 @@ def create_database(
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ----------------------------------------------------------------------
 	# create data table
+	#
+	# extra_name, extra_type
 	col_name = [
-		'data_name',
-		'integrand_id',
-		'density_id',
-		'node_id',
-		'weight_id',
-		'hold_out',
-		'meas_value',
-		'meas_std',
-		'eta',
+		'integrand',
+		'node',
+		'weight',
 		'age_lower',
 		'age_upper',
 		'time_lower',
 		'time_upper',
+		'hold_out',
+		'density',
+		'meas_value',
+		'meas_std',
+		'eta'
+	]
+	for j in range( len(covariate_table) ) :
+		col_name.append( covariate_table[j]['name'] )
+	extra_name = []
+	extra_type = []
+	if( len( data_table ) > 0 ) :
+		row = data_table[0]
+		for key in row :
+			if key not in col_name :
+				extra_name.append( key )
+				if isinstance(row[key], str) :
+					extra_type.append('text')
+				elif isinstance(row[key], int) :
+					extra_type.append('integer')
+				elif isinstance(row[key], float) :
+					extra_type.append('real')
+				else :
+					assert False
+	#
+	# col_name
+	col_name = extra_name + [
+		'integrand_id',
+		'node_id',
+		'weight_id',
+		'age_lower',
+		'age_upper',
+		'time_lower',
+		'time_upper',
+		'hold_out',
+		'density_id',
+		'meas_value',
+		'meas_std',
+		'eta',
 	]
 	for j in range( len(covariate_table) ) :
 		col_name.append( 'x_%s' % j )
-	col_type = [
-		'text',                 # data_name
+	#
+	# col_type
+	col_type = extra_type + [
 		'integer',              # integrand_id
-		'integer',              # density_id
 		'integer',              # node_id
 		'integer',              # weight_id
-		'integer',              # hold_out
-		'real',                 # meas_value
-		'real',                 # meas_std
-		'real',                 # eta
 		'real',                 # age_lower
 		'real',                 # age_upper
 		'real',                 # time_lower
 		'real',                 # time_upper
+		'integer',              # hold_out
+		'integer',              # density_id
+		'real',                 # meas_value
+		'real',                 # meas_std
+		'real',                 # eta
 	]
 	for j in range( len(covariate_table) )  :
 		col_type.append( 'real' )
 	row_list = [ ]
 	for i in range( len(data_table) ) :
-		data = data_table[i]
-		data_id      = i
+		data         = data_table[i]
+		#
+		# extra columns first
+		row = list()
+		for name in extra_name :
+			row.append( data[name] )
+		#
 		integrand_id = global_integrand_name2id[ data['integrand'] ]
 		density_id   = global_density_name2id[ data['density'] ]
 		node_id      = global_node_name2id[ data['node'] ]
 		weight_id    = global_weight_name2id[ data['weight'] ]
 		hold_out     = int( data['hold_out'] )
-		row = [
-			data['data_name'],
+		row = row + [
 			integrand_id,
-			density_id,
 			node_id,
 			weight_id,
-			hold_out,
-			data['meas_value'],
-			data['meas_std'],
-			data['eta'],
 			data['age_lower'],
 			data['age_upper'],
 			data['time_lower'],
-			data['time_upper']
+			data['time_upper'],
+			hold_out,
+			density_id,
+			data['meas_value'],
+			data['meas_std'],
+			data['eta'],
 		]
 		for j in range( len(covariate_table) ) :
 			row.append( data[ covariate_table[j]['name'] ] )
