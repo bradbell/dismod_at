@@ -186,14 +186,14 @@ def create_database() :
 	#
 	# option_table
 	option_table = [
-		{ 'name':'parent_node_name','value':'world'        },
-		{ 'name':'ode_step_size',   'value':'10.0'         },
-		{ 'name':'random_seed',     'value':'0'            },
-		{ 'name':'rate_case',       'value':'chi_positive' },
-		{ 'name':'tolerance',       'value':'1e-8'         },
-		{ 'name':'max_num_iter',    'value':'100'          },
-		{ 'name':'print_level',     'value':'0'            },
-		{ 'name':'derivative_test', 'value':'second-order' }
+		{ 'name':'parent_node_name','value':'world'               },
+		{ 'name':'ode_step_size',   'value':'10.0'                },
+		{ 'name':'random_seed',     'value':'0'                   },
+		{ 'name':'rate_case',       'value':'iota_pos_rho_pos'    },
+		{ 'name':'tolerance',       'value':'1e-8'                },
+		{ 'name':'max_num_iter',    'value':'100'                 },
+		{ 'name':'print_level',     'value':'0'                   },
+		{ 'name':'derivative_test', 'value':'second-order'        }
 	]
 	# avgint_table
 	avgint_table = []
