@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin option_table$$
 $spell
+	mtother
 	csv
 	nslist
 	py
@@ -148,7 +149,8 @@ The $icode ode_step_size$$ value does not matter for the following integrands:
 $code Sincidence$$,
 $code remission$$,
 $code mtexcess$$,
-$code mtwith$$,
+$code mtother$$,
+$code mtwith$$, and
 $code relrisk$$.
 
 $subhead Default$$
