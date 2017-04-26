@@ -35,6 +35,14 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-26$$
+In the $cref user$$ examples,
+move the setup of
+$cref/avgint_table/create_database/avgint_table/$$
+just before the setup of
+$cref/data_table/create_database/data_table/$$
+because they are so similar.
+
 $head 04-25$$
 $list number$$
 Advance to cppad_mixed-20170424.
