@@ -327,9 +327,9 @@
 # is the
 # $cref/node_name/node_table/node_name/$$ for this row.
 #
-# $subhead avgint_columns$$
+# $subhead avgint_extra_columns$$
 # Each column specified by the
-# $cref/avgint_columns/option_table/avgint_columns/$$ option is included
+# $cref/avgint_extra_columns/option_table/avgint_extra_columns/$$ option is included
 # in the $code predict.csv$$ file.
 #
 # $subhead Covariates$$
@@ -445,11 +445,11 @@ def db2csv_command(database_file_arg) :
 		if row['option_name'] == 'minimum_meas_cv' :
 			minimum_meas_cv = float( row['option_value'] )
 	# -------------------------------------------------------------------------
-	# avgint_columns
-	avgint_columns = []
+	# avgint_extra_columns
+	avgint_extra_columns = []
 	for row in table_data['option'] :
-		if row['option_name'] == 'avgint_columns' :
-			avgint_columns = row['option_value'].split()
+		if row['option_name'] == 'avgint_extra_columns' :
+			avgint_extra_columns = row['option_value'].split()
 	# -------------------------------------------------------------------------
 	# simulate_index
 	simulate_index = None
@@ -564,7 +564,7 @@ def db2csv_command(database_file_arg) :
 	option_list = [
 		[ "accept_after_max_steps_fixed",  "5"],
 		[ "accept_after_max_steps_random", "5"],
-		[ "avgint_columns",                ""],
+		[ "avgint_extra_columns",          ""],
 		[ "derivative_test_fixed",         "none"],
 		[ "derivative_test_random",        "none"],
 		[ "fixed_bound_frac",              "1e-2"],
@@ -818,7 +818,7 @@ def db2csv_command(database_file_arg) :
 			'weight',
 			'node'
 		]
-		for column in avgint_columns :
+		for column in avgint_extra_columns :
 			header.append(column )
 		for row in table_data['covariate'] :
 			header.append( row['covariate_name'] )
@@ -856,8 +856,8 @@ def db2csv_command(database_file_arg) :
 			row_out['node']      = table_lookup(
 				'node', avgint_row['node_id'], 'node_name'
 			)
-			# avgint_columns
-			for column in avgint_columns :
+			# avgint_extra_columns
+			for column in avgint_extra_columns :
 				row_out[column] = avgint_row[column]
 			#
 			# covariates

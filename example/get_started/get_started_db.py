@@ -248,7 +248,7 @@ def get_started_db ():
 		{ 'name':'parent_node_name',       'value':'world'              },
 		{ 'name':'ode_step_size',          'value':'10.0'               },
 		{ 'name':'rate_case',              'value':'iota_zero_rho_zero' },
-		{ 'name':'avgint_columns',         'value':'extra_info'         }
+		{ 'name':'avgint_extra_columns',   'value':'extra_info'         }
 	]
 	# ---------------------------------------------------------------------
 	# avgint table: predict the susceptible fraction for no income at age 100

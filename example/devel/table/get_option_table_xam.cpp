@@ -59,7 +59,7 @@ bool get_option_table_xam(void)
 		"fixed_bound_frac",              "1e-3",
 		//
 		"parent_node_id",                "1",
-		"avgint_columns",                "",
+		"avgint_extra_columns",          "",
 		"warn_on_stderr",                "true",
 		"minimum_meas_cv",               "0.1",
 		"ode_step_size",                 "20.0",
