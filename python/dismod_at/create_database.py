@@ -156,7 +156,7 @@
 # $subhead avgint_extra_columns$$
 # If a $icode row$$ of $icode option_table$$ has $icode%row%['name']%$$
 # equal to $code 'avgint_extra_columns'$$, the corresponding
-# $icode%row%['value'].split()%$$ is the list of extr avgint table columns.
+# $icode%row%['value'].split()%$$ is the list of extra avgint table columns.
 # Otherwise the list of extra avgint table columns is empty.
 #
 # $head data_table$$
