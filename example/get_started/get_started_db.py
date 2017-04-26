@@ -111,6 +111,21 @@ def get_started_db ():
 		{ 'name':'income', 'reference':0.0, 'max_difference':None }
 	]
 	# ---------------------------------------------------------------------
+	# avgint table: predict the susceptible fraction for no income at age 100
+	avgint_table =  [
+		{
+			'extra_info': 'a0',
+			'integrand':   'susceptible',
+			'node':        'world',
+			'weight':      'constant_one',
+			'age_lower':   100.0,
+			'age_upper':   100.0,
+			'time_lower':  2000.0,
+			'time_upper':  2000.0,
+			'income':      0.0,
+		}
+	]
+	# ---------------------------------------------------------------------
 	# data table: note the income for this measurement is 1,000.
 	adjusted_omega = unknown_omega_world * exp(known_income_multiplier*1000.0)
 	meas_value     = exp( - adjusted_omega * 50.0 )
@@ -119,18 +134,18 @@ def get_started_db ():
 		{
 			'data_name':   'd1',
 			'integrand':   'susceptible',
-			'density':     'gaussian',
 			'node':        'world',
 			'weight':      'constant_one',
-			'hold_out':    False,
-			'meas_value':  meas_value,
-			'meas_std':    meas_std,
-			'eta':         None,
 			'age_lower':   50.0,
 			'age_upper':   50.0,
 			'time_lower':  2000.0,
 			'time_upper':  2000.0,
-			'income':      1000.0
+			'income':      1000.0,
+			'density':     'gaussian',
+			'hold_out':    False,
+			'meas_value':  meas_value,
+			'meas_std':    meas_std,
+			'eta':         None
 		}
 	]
 	# ---------------------------------------------------------------------
@@ -249,22 +264,6 @@ def get_started_db ():
 		{ 'name':'ode_step_size',          'value':'10.0'               },
 		{ 'name':'rate_case',              'value':'iota_zero_rho_zero' },
 		{ 'name':'avgint_extra_columns',   'value':'extra_info'         }
-	]
-	# ---------------------------------------------------------------------
-	# avgint table: predict the susceptible fraction for no income at age 100
-	# avgint_name is an extra column that gets displayed in predict.csv
-	avgint_table =  [
-		{
-			'integrand':   'susceptible',
-			'node':        'world',
-			'weight':      'constant_one',
-			'age_lower':   100.0,
-			'age_upper':   100.0,
-			'time_lower':  2000.0,
-			'time_upper':  2000.0,
-			'income':      0.0,
-			'extra_info': 'a0'
-		}
 	]
 	# ---------------------------------------------------------------------
 	# nslist_table:
