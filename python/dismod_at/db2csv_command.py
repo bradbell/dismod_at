@@ -372,6 +372,35 @@ def db2csv_command(database_file_arg) :
 			result = True
 		return result
 	# -------------------------------------------------------------------------
+	def check_table_columns(table_name, table_columns) :
+		if len( table_name ) == 0 :
+			return True
+		row    = table_data[table_name][0]
+		keys   = row.keys()
+		for pair in table_columns :
+			name = pair[0]
+			ty   = pair[1]
+			if name not in keys :
+				msg = 'expected column ' + name + ' in table ' + table_name
+				sys.exit(msg)
+			if  ty == 'text' :
+				if not isinstance(row[name], str) :
+					msg = 'expected text in column ' + name
+					msg = 'of table ' + table_name
+					sys.exit(msg)
+			elif ty == 'real' :
+				if not isinstance(row[name], float) :
+					msg = 'expected real in column ' + name
+					msg = 'of table ' + table_name
+					sys.exit(msg)
+			elif ty == 'int' :
+				if not isinstance(row[name], int) :
+					msg = 'expected integer in column ' + name
+					msg = 'of table ' + table_name
+					sys.exit(msg)
+			else :
+				assert False
+	# -------------------------------------------------------------------------
 	def convert2output(value_in) :
 		if value_in == None :
 			value_out = ''
@@ -514,6 +543,16 @@ def db2csv_command(database_file_arg) :
 				msg += 'length ' + left + '_table = ' + str(len_left) + '\n'
 				msg += 'length ' + right + '_table = ' + str(len_right) + '\n'
 				sys.exit(msg)
+	# ----------------------------------------------------------------------
+	# check age table
+	table_name   = 'age'
+	table_columns = [ ('age', 'real') ]
+	check_table_columns(table_name, table_columns)
+	#
+	# check option table
+	table_name   = 'option'
+	table_columns = [ ('option_name', 'text'), ('option_value', 'text') ]
+	check_table_columns(table_name, table_columns)
 	# ----------------------------------------------------------------------
 	# parent_node_id
 	parent_node_id     = 0  # default
