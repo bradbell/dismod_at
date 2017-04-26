@@ -460,6 +460,12 @@ def db2csv_command(database_file_arg) :
 		if row['option_name'] == 'avgint_extra_columns' :
 			avgint_extra_columns = row['option_value'].split()
 	# ----------------------------------------------------------------------
+	# data_extra_columns
+	data_extra_columns = []
+	for row in table_data['option'] :
+		if row['option_name'] == 'data_extra_columns' :
+			data_extra_columns = row['option_value'].split()
+	# ----------------------------------------------------------------------
 	# simulate_index
 	simulate_index = None
 	log_data       = dismod_at.get_table_dict(connection, 'log')
@@ -574,6 +580,7 @@ def db2csv_command(database_file_arg) :
 		[ "accept_after_max_steps_fixed",  "5"],
 		[ "accept_after_max_steps_random", "5"],
 		[ "avgint_extra_columns",          ""],
+		[ "data_extra_columns",            ""],
 		[ "derivative_test_fixed",         "none"],
 		[ "derivative_test_random",        "none"],
 		[ "fixed_bound_frac",              "1e-2"],
@@ -719,9 +726,7 @@ def db2csv_command(database_file_arg) :
 	file_name = os.path.join(database_dir, 'data.csv')
 	csv_file  = open(file_name, 'w')
 	#
-	header = [
-		'data_id',
-		'data_name',
+	header = ['data_id'] + data_extra_columns + [
 		'integrand',
 		'node',
 		'weight',
@@ -757,8 +762,13 @@ def db2csv_command(database_file_arg) :
 		data_id   = subset_row['data_id']
 		row_in    = table_data['data'][data_id]
 		#
+		# data_id
 		row_out['data_id']     = data_id
-		row_out['data_name']   = row_in['data_name']
+		#
+		# data_extra_columns
+		for column in data_extra_columns :
+			row_out[column] = row_in[column]
+		#
 		row_out['age_lo']      = row_in['age_lower']
 		row_out['age_up']      = row_in['age_upper']
 		row_out['time_lo']     = row_in['time_lower']

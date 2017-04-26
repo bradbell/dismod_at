@@ -114,7 +114,7 @@ def get_started_db ():
 	# avgint table: predict the susceptible fraction for no income at age 100
 	avgint_table =  [
 		{
-			'extra_info': 'a0',
+			'avgint_info': 'a0',
 			'integrand':   'susceptible',
 			'node':        'world',
 			'weight':      'constant_one',
@@ -132,7 +132,7 @@ def get_started_db ():
 	meas_std       = meas_value / 20.
 	data_table = [
 		{
-			'data_name':   'd1',
+			'data_info':   'd1',
 			'integrand':   'susceptible',
 			'node':        'world',
 			'weight':      'constant_one',
@@ -263,7 +263,8 @@ def get_started_db ():
 		{ 'name':'parent_node_name',       'value':'world'              },
 		{ 'name':'ode_step_size',          'value':'10.0'               },
 		{ 'name':'rate_case',              'value':'iota_zero_rho_zero' },
-		{ 'name':'avgint_extra_columns',   'value':'extra_info'         }
+		{ 'name':'avgint_extra_columns',   'value':'avgint_info'        },
+		{ 'name':'data_extra_columns',     'value':'data_info'          }
 	]
 	# ---------------------------------------------------------------------
 	# nslist_table:
