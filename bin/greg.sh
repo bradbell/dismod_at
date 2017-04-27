@@ -10,42 +10,49 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 remote_dir='/snfs2/HOME/gma1/tmp'
+local_dir='build/greg'
 # ---------------------------------------------------------------------------
-remote_dir='/snfs2/HOME/gma1/tmp'
-if [ "$0" != 'bin/greg.sh' ] || [ "$#" != '1' ]
+if [ "$0" != 'bin/greg.sh' ] || [ "$#" != '2' ]
 then
-	echo 'usage: bin/greg.sh database'
+	echo 'usage: bin/greg.sh direction database'
+	echo 'where direction is from or to (gregs file system)'
 	exit 1
 fi
-database="$1"
-# ---------------------------------------------------------------------------
-if [ ! -e "$remote_dir" ]
+direction="$1"
+database="$2"
+if [ "$direction" != 'from' ] && [ "$direction" != 'to' ]
 then
-	echo "remote_dir=$remote_dir: does not exist"
-	exit 1
-fi
-# ---------------------------------------------------------------------------
-if [ ! -e "$remote_dir/$database" ]
-then
-	echo "database=$database: does not exist"
+	echo 'greg.sh: direction is not "from" or "to"'
 	exit 1
 fi
 # ---------------------------------------------------------------------------
-if [ ! -e build/devel/dismod_at ]
+if [ "$direction" == 'from' ] && [ ! -e "$remote_dir/$database" ]
 then
-	echo 'build/devel/dismod_at does not exist'
+	echo "$remote/$database: does not exist"
+	exit 1
+fi
+if [ "$direction" == 'to' ] && [ ! -e "$local_dir/$database" ]
+then
+	echo "$local_dir/$database: does not exist"
+	exit 1
+fi
+if [ ! -e bin/dismodat.py ]
+then
+	echo 'bin/dismodat.py does not exist'
 	exit 1
 fi
 # ---------------------------------------------------------------------------
-if [ -e build/greg ]
+if [ "$direction" == 'from' ]
 then
-	echo_eval rm -r build/greg
+	if [ ! -e build/greg ]
+	then
+		echo_eval mkdir -p build/greg
+	fi
+	echo_eval cp $remote_dir/$database build/greg/$database
+	echo_eval bin/dismodat.py $local_dir/$database db2csv
+else
+	echo_eval cp $local_dir/$database $remote_dir/$database
 fi
-echo_eval mkdir build/greg
 # ---------------------------------------------------------------------------
-echo_eval cp $remote_dir/$database build/greg/$database
-echo_eval bin/dismodat.py build/greg/$database db2csv
-# ---------------------------------------------------------------------------
-echo_eval ls build/greg
 echo 'bin/greg.sh: OK'
 exit 0
