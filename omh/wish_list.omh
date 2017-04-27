@@ -21,9 +21,25 @@ $spell
 	pos
 	Jacobian
 	std
+	avgint
 $$
 
 $section Dismod_at Wish List$$
+
+$head avgint_subset Table$$
+There is really no need for the $cref avgint_subset_table$$.
+The subset can be determined when the $cref predict_command$$ is executed.
+All one needs to do is replace
+$cref/avgint_subset_id/predict_table/avgint_subset_id/$$ in the
+predict table by
+$cref/avgint_id/avgint_table/avgint_id/$$.
+This would allow one to change the
+$cref avgint_table$$ and run a $cref predict_command$$
+without having to re-run the $cref fit_command$$.
+Also note that, for each
+$cref/sample_index/predict_table/sample_index/$$
+the $code avgint_id$$ would be monotone increasing.
+
 
 $head ODE Solution$$
 
