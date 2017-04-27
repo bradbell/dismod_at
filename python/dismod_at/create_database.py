@@ -153,10 +153,11 @@
 # We refer to the columns above as the required columns for
 # $icode avgint_table$$.
 #
-# $subhead Extra Columns$$
-# Any column in $icode avgint_table$$, that is not required,
-# must have type $code str$$, $code int$$, or $code float$$ and
-# is copied to the $cref avgint_table$$ table.
+# $subhead avgint_extra_columns$$
+# If a $icode row$$ of $icode option_table$$ has $icode%row%['name']%$$
+# equal to $code 'avgint_extra_columns'$$, the corresponding
+# $icode%row%['value'].split()%$$ is the list of extra avgint table columns.
+# Otherwise the list of extra avgint table columns is empty.
 #
 # $head data_table$$
 # This is a list of $code dict$$
@@ -175,11 +176,12 @@
 # plus the $icode avgint_table$$ required columns,
 # as the required columns for $icode data_table$$.
 #
-# $subhead Extra Columns$$
-# Any column in $icode data_table$$, that is not listed above
-# (or listed as a required column for the $icode avgint_table$$),
-# must have type $code str$$, $code int$$, or $code float$$ and
-# is copied to the $cref data_table$$ table.
+#
+# $subhead data_extra_columns$$
+# If a $icode row$$ of $icode option_table$$ has $icode%row%['name']%$$
+# equal to $code 'data_extra_columns'$$, the corresponding
+# $icode%row%['value'].split()%$$ is the list of extra data table columns.
+# Otherwise the list of extra data table columns is empty.
 #
 # $head prior_table$$
 # This is a list of $code dict$$
@@ -336,6 +338,15 @@ def create_database(
 ) :
 	import sys
 	import dismod_at
+	# ----------------------------------------------------------------------
+	# avgint_extra_columns, data_extra_columns
+	avgint_extra_columns = list()
+	data_extra_columns   = list()
+	for row in option_table :
+		if row['name'] == 'avgint_extra_columns' :
+			avgint_extra_columns = row['value'].split()
+		if row['name'] == 'data_extra_columns' :
+			data_extra_columns = row['value'].split()
 	# ----------------------------------------------------------------------
 	# create database
 	new            = True
@@ -699,32 +710,20 @@ def create_database(
 	# avgint table
 	#
 	# extra_name, extra_type
-	col_name = [
-		'integrand',
-		'node',
-		'weight',
-		'age_lower',
-		'age_upper',
-		'time_lower',
-		'time_upper'
-	]
-	for j in range( len(covariate_table) ) :
-		col_name.append( covariate_table[j]['name'] )
 	extra_name = []
 	extra_type = []
 	if( len( avgint_table ) > 0 ) :
-		row = avgint_table[0]
-		for key in row :
-			if key not in col_name :
-				extra_name.append( key )
-				if isinstance(row[key], str) :
-					extra_type.append('text')
-				elif isinstance(row[key], int) :
-					extra_type.append('integer')
-				elif isinstance(row[key], float) :
-					extra_type.append('real')
-				else :
-					assert False
+		extra_name = avgint_extra_columns
+		row        = avgint_table[0]
+		for key in extra_name :
+			if isinstance(row[key], str) :
+				extra_type.append('text')
+			elif isinstance(row[key], int) :
+				extra_type.append('integer')
+			elif isinstance(row[key], float) :
+				extra_type.append('real')
+			else :
+				assert False
 	#
 	# col_name
 	col_name = extra_name + [
@@ -783,38 +782,22 @@ def create_database(
 	# ----------------------------------------------------------------------
 	# create data table
 	#
+	#
 	# extra_name, extra_type
-	col_name = [
-		'integrand',
-		'node',
-		'weight',
-		'age_lower',
-		'age_upper',
-		'time_lower',
-		'time_upper',
-		'hold_out',
-		'density',
-		'meas_value',
-		'meas_std',
-		'eta'
-	]
-	for j in range( len(covariate_table) ) :
-		col_name.append( covariate_table[j]['name'] )
 	extra_name = []
 	extra_type = []
 	if( len( data_table ) > 0 ) :
-		row = data_table[0]
-		for key in row :
-			if key not in col_name :
-				extra_name.append( key )
-				if isinstance(row[key], str) :
-					extra_type.append('text')
-				elif isinstance(row[key], int) :
-					extra_type.append('integer')
-				elif isinstance(row[key], float) :
-					extra_type.append('real')
-				else :
-					assert False
+		extra_name = data_extra_columns
+		row        = data_table[0]
+		for key in extra_name :
+			if isinstance(row[key], str) :
+				extra_type.append('text')
+			elif isinstance(row[key], int) :
+				extra_type.append('integer')
+			elif isinstance(row[key], float) :
+				extra_type.append('real')
+			else :
+				assert False
 	#
 	# col_name
 	col_name = extra_name + [

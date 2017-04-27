@@ -351,25 +351,126 @@
 # for the average integrand.
 #
 # $end
-# ----------------------------------------------------------------------------
-def check4table(cursor, table_name) :
-	cmd     = "SELECT * FROM sqlite_master WHERE type='table' AND name="
-	cmd    += "'" + table_name + "';"
-	info    = cursor.execute(cmd).fetchall()
-	if len(info) == 0 :
-		result  = False
-	else :
-		assert len(info) == 1
-		result = True
-	return result
-#
 def db2csv_command(database_file_arg) :
 	import os
 	import csv
 	import dismod_at
 	import sys
 	import copy
-	#
+	# -------------------------------------------------------------------------
+	table_data     = dict()
+	parent_node_id = None
+	# -------------------------------------------------------------------------
+	def check4table(cursor, table_name) :
+		cmd     = "SELECT * FROM sqlite_master WHERE type='table' AND name="
+		cmd    += "'" + table_name + "';"
+		info    = cursor.execute(cmd).fetchall()
+		if len(info) == 0 :
+			result  = False
+		else :
+			assert len(info) == 1
+			result = True
+		return result
+	# -------------------------------------------------------------------------
+	def check_table_columns(table_name, table_columns) :
+		if len( table_name ) == 0 :
+			return True
+		row    = table_data[table_name][0]
+		keys   = row.keys()
+		for pair in table_columns :
+			name = pair[0]
+			ty   = pair[1]
+			if name not in keys :
+				msg = 'expected column ' + name + ' in table ' + table_name
+				sys.exit(msg)
+			if  ty == 'text' :
+				if not isinstance(row[name], str) :
+					msg = 'expected text in column ' + name
+					msg = 'of table ' + table_name
+					sys.exit(msg)
+			elif ty == 'real' :
+				if not isinstance(row[name], float) :
+					msg = 'expected real in column ' + name
+					msg = 'of table ' + table_name
+					sys.exit(msg)
+			elif ty == 'int' :
+				if not isinstance(row[name], int) :
+					msg = 'expected integer in column ' + name
+					msg = 'of table ' + table_name
+					sys.exit(msg)
+			else :
+				assert False
+	# -------------------------------------------------------------------------
+	def convert2output(value_in) :
+		if value_in == None :
+			value_out = ''
+		elif type(value_in) is float :
+			value_out = '%13.5g' % value_in
+		else :
+			value_out = str(value_in)
+		return value_out
+	# -------------------------------------------------------------------------
+	def table_lookup(table_name, row_id, column_name) :
+		if row_id == None :
+			return ''
+		value_in = table_data[table_name][row_id][column_name]
+		return convert2output(value_in)
+	# -------------------------------------------------------------------------
+	def get_prior_info(row_out, prior_id_dict) :
+		extension2name = {'_v':'value_', '_a':'dage_', '_t':'dtime_' }
+		for extension in extension2name :
+			name         = extension2name[extension]
+			key          = name + 'prior_id'
+			prior_id     = prior_id_dict[key]
+			const_value  = prior_id_dict['const_value']
+			if extension == '_v' :
+				if prior_id == None and const_value == None :
+					msg = 'both value_prior_id and const_value are null '
+					msg += 'in smooth_grid table\n'
+					sys.exit(msg)
+				if prior_id != None and const_value != None :
+					msg = 'both value_prior_id and const_value are not null '
+					msg += 'in smooth_grid table\n'
+					sys.exit(msg)
+			field_out = 'density' + extension
+			if prior_id == None :
+				if extension == '_v' :
+					row_out[field_out] = 'uniform'
+				else :
+					row_out[field_out] = ''
+			else :
+				density_id   = table_data['prior'][prior_id]['density_id']
+				density_name = table_data['density'][density_id]['density_name']
+				row_out[field_out] = density_name
+			for field_in in [ 'lower', 'upper', 'mean', 'std', 'eta' ] :
+				field_out = field_in + extension
+				row_out[field_out] = ''
+				if prior_id != None :
+					value_in = table_data['prior'][prior_id][field_in]
+					if field_in == 'eta' :
+						if density_name in [ 'uniform','gaussian','laplace' ] :
+							if extension in [ '_a', '_t' ] :
+								value_in = None
+					if field_in == 'std' and density_name == 'uniform' :
+							value_in = None
+					row_out[field_out] = convert2output( value_in )
+				elif extension == '_v' :
+					if field_in in [ 'lower', 'upper', 'mean' ] :
+						row_out[field_out] = convert2output( const_value )
+	# -------------------------------------------------------------------------
+	def node_id2child_or_parent(node_id) :
+		if node_id == parent_node_id :
+			name = table_data['node'][node_id]['node_name']
+			return name
+		descendant_id = node_id
+		while descendant_id != None :
+			parent_id  = table_data['node'][descendant_id]['parent']
+			if parent_id == parent_node_id :
+				name = table_data['node'][descendant_id]['node_name']
+				return name
+			descendant_id = parent_id
+		return None
+	# -------------------------------------------------------------------------
 	file_name    = database_file_arg
 	database_dir = os.path.split(database_file_arg)[0]
 	new          = False
@@ -418,19 +519,20 @@ def db2csv_command(database_file_arg) :
 		msg += 'in ' + file_name + '\n'
 		sys.exit(msg)
 	#
-	table_data  = dict()
 	table_list  = copy.copy( required_table_list )
 	for key in have_table :
 		if have_table[key] :
 			table_list.append(key)
-	#
+	# ----------------------------------------------------------------------
+	# table_data
 	for table in table_list :
 		table_data[table] = dismod_at.get_table_dict(connection, table)
 	# ----------------------------------------------------------------------
 	# check tables that are supposed to be the same length
 	pair_list = [
-		[ 'var',         'fit_var'],
-		[ 'data_subset', 'fit_data_subset' ]
+		[ 'var',            'fit_var'],
+		[ 'data_subset',    'fit_data_subset' ],
+		[ 'avgint_subset',  'predict' ]
 	]
 	for [left, right] in pair_list :
 		if have_table[right] :
@@ -442,26 +544,36 @@ def db2csv_command(database_file_arg) :
 				msg += 'length ' + right + '_table = ' + str(len_right) + '\n'
 				sys.exit(msg)
 	# ----------------------------------------------------------------------
+	# check age table
+	table_name   = 'age'
+	table_columns = [ ('age', 'real') ]
+	check_table_columns(table_name, table_columns)
+	#
+	# check option table
+	table_name   = 'option'
+	table_columns = [ ('option_name', 'text'), ('option_value', 'text') ]
+	check_table_columns(table_name, table_columns)
+	# ----------------------------------------------------------------------
 	# parent_node_id
-	parent_node_id     = None
+	parent_node_id     = 0  # default
 	for row in table_data['option'] :
 		if row['option_name'] == 'parent_node_id' :
 			parent_node_id = int( row['option_value'] )
 	# ----------------------------------------------------------------------
 	# minimum_meas_cv
-	minimum_meas_cv    = 0.0
+	minimum_meas_cv    = 0.0  # default
 	for row in table_data['option'] :
 		if row['option_name'] == 'minimum_meas_cv' :
 			minimum_meas_cv = float( row['option_value'] )
 	# ----------------------------------------------------------------------
 	# avgint_extra_columns
-	avgint_extra_columns = []
+	avgint_extra_columns = []  # default
 	for row in table_data['option'] :
 		if row['option_name'] == 'avgint_extra_columns' :
 			avgint_extra_columns = row['option_value'].split()
 	# ----------------------------------------------------------------------
 	# data_extra_columns
-	data_extra_columns = []
+	data_extra_columns = []  # default
 	for row in table_data['option'] :
 		if row['option_name'] == 'data_extra_columns' :
 			data_extra_columns = row['option_value'].split()
@@ -469,6 +581,7 @@ def db2csv_command(database_file_arg) :
 	# simulate_index
 	simulate_index = None
 	log_data       = dismod_at.get_table_dict(connection, 'log')
+	#
 	# search for the last fit commmand in the log table
 	for i in range( len(log_data) ) :
 		log_id        = len(log_data) - i - 1
@@ -495,77 +608,7 @@ def db2csv_command(database_file_arg) :
 		simulate_index = None
 	else :
 		simulate_index = int(simulate_index)
-	# ----------------------------------------------------------------------
-	def convert2output(value_in) :
-		if value_in == None :
-			value_out = ''
-		elif type(value_in) is float :
-			value_out = '%13.5g' % value_in
-		else :
-			value_out = str(value_in)
-		return value_out
-	# ----------------------------------------------------------------------
-	def table_lookup(table_name, row_id, column_name) :
-		if row_id == None :
-			return ''
-		value_in = table_data[table_name][row_id][column_name]
-		return convert2output(value_in)
-	# ----------------------------------------------------------------------
-	def get_prior_info(row_out, prior_id_dict) :
-		extension2name = {'_v':'value_', '_a':'dage_', '_t':'dtime_' }
-		for extension in extension2name :
-			name         = extension2name[extension]
-			key          = name + 'prior_id'
-			prior_id     = prior_id_dict[key]
-			const_value  = prior_id_dict['const_value']
-			if extension == '_v' :
-				if prior_id == None and const_value == None :
-					msg = 'both value_prior_id and const_value are null '
-					msg += 'in smooth_grid table\n'
-					sys.exit(msg)
-				if prior_id != None and const_value != None :
-					msg = 'both value_prior_id and const_value are not null '
-					msg += 'in smooth_grid table\n'
-					sys.exit(msg)
-			field_out = 'density' + extension
-			if prior_id == None :
-				if extension == '_v' :
-					row_out[field_out] = 'uniform'
-				else :
-					row_out[field_out] = ''
-			else :
-				density_id   = table_data['prior'][prior_id]['density_id']
-				density_name = table_data['density'][density_id]['density_name']
-				row_out[field_out] = density_name
-			for field_in in [ 'lower', 'upper', 'mean', 'std', 'eta' ] :
-				field_out = field_in + extension
-				row_out[field_out] = ''
-				if prior_id != None :
-					value_in = table_data['prior'][prior_id][field_in]
-					if field_in == 'eta' :
-						if density_name in [ 'uniform','gaussian','laplace' ] :
-							if extension in [ '_a', '_t' ] :
-								value_in = None
-					if field_in == 'std' and density_name == 'uniform' :
-							value_in = None
-					row_out[field_out] = convert2output( value_in )
-				elif extension == '_v' :
-					if field_in in [ 'lower', 'upper', 'mean' ] :
-						row_out[field_out] = convert2output( const_value )
 
-	# ----------------------------------------------------------------------
-	def node_id2child_or_parent(node_id) :
-		if node_id == parent_node_id :
-			name = table_data['node'][node_id]['node_name']
-			return name
-		descendant_id = node_id
-		while descendant_id != None :
-			parent_id  = table_data['node'][descendant_id]['parent']
-			if parent_id == parent_node_id :
-				name = table_data['node'][descendant_id]['node_name']
-				return name
-			descendant_id = parent_id
-		return None
 	# =========================================================================
 	# option.csv
 	# =========================================================================
