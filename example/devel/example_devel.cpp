@@ -56,6 +56,7 @@ extern bool residual_density_xam(void);
 extern bool sim_random_xam(void);
 extern bool smooth2ode_xam(void);
 extern bool solve_ode_xam(void);
+extern bool split_space_xam(void);
 
 // table subdirectory
 extern bool check_pini_n_age_xam(void);
@@ -145,6 +146,7 @@ int main(void)
 	RUN(sim_random_xam);
 	RUN(smooth2ode_xam);
 	RUN(solve_ode_xam);
+	RUN(split_space_xam);
 
 	// table subdirectory
 	RUN(check_pini_n_age_xam);

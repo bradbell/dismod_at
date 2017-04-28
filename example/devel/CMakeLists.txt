@@ -40,6 +40,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/sim_random_xam.cpp
 	utility/smooth2ode_xam.cpp
 	utility/solve_ode_xam.cpp
+	utility/split_space_xam.cpp
 
 	table/check_pini_n_age_xam.cpp
 	table/create_table_xam.cpp

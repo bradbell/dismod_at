@@ -35,6 +35,7 @@ $childtable%include/dismod_at/a2_double.hpp
 	%devel/utility/n_random_const.cpp
 	%devel/utility/smooth2ode.cpp
 	%devel/utility/solve_ode.cpp
+	%devel/utility/split_space.cpp
 %$$
 
 $end

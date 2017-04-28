@@ -30,6 +30,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/sim_random.cpp
 	utility/smooth2ode.cpp
 	utility/solve_ode.cpp
+	utility/split_space.cpp
 	utility/pack_info.cpp
 	utility/pack_prior.cpp
 
