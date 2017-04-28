@@ -17,18 +17,24 @@ $spell
 	cpp
 	pini
 	nslist
+	std
 $$
 
 $section C++: Get the Rate Table Information$$
-$index get, rate table$$
-$index rate, get table$$
-$index table, get rate$$
 
 $head Syntax$$
-$icode%rate_table% = get_rate_table(%db%)%$$
+$icode%rate_table% = get_rate_table(%db%)
+%$$
+$icode%rate_name% = get_rate_name(%rate_id%)%$$
 
-$head Purpose$$
-To read the $cref rate_table$$ and return it as a C++ data structure.
+$head get_rate_table$$
+Reads the $cref rate_table$$ and return it as a C++ data structure.
+
+$head get_rate_name$$
+Sets
+$cref/rate_name/rate_table/rate_name/$$
+to a $code std::string$$ that corresponds to
+$cref/rate_id/rate_table/rate_id/$$.
 
 $head db$$
 The argument $icode db$$ has prototype
@@ -101,13 +107,10 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
+std::string get_rate_name(size_t rate_id)
 {	using std::string;
-	using CppAD::to_string;
-	//
-	// for error messaging
-	string msg;
-	size_t null_id  = DISMOD_AT_NULL_SIZE_T;
+
+	assert( rate_id < size_t( number_rate_enum ) );
 	//
 	// rate names in same order as enum type in get_rate_table.hpp
 	// and in the documentation for rate_table.omh
@@ -123,6 +126,17 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 	assert( string("rho")   == rate_enum2name[rho_enum] );
 	assert( string("chi")   == rate_enum2name[chi_enum] );
 	assert( string("omega") == rate_enum2name[omega_enum] );
+	//
+	return  std::string( rate_enum2name[rate_id] );
+}
+
+CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
+{	using std::string;
+	using CppAD::to_string;
+	//
+	// for error messaging
+	string msg;
+	size_t null_id  = DISMOD_AT_NULL_SIZE_T;
 
 
 	string table_name   = "rate";
@@ -155,9 +169,9 @@ CppAD::vector<rate_struct> get_rate_table(sqlite3* db)
 
 	CppAD::vector<rate_struct> rate_table(number_rate_enum);
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	if( rate_name[rate_id] != rate_enum2name[rate_id] )
+	{	if( rate_name[rate_id] != get_rate_name(rate_id) )
 		{	msg  = "expected rate_name to be ";
-			msg += rate_enum2name[rate_id];
+			msg += get_rate_name(rate_id);
 			msg += " but found " + rate_name[rate_id];
 			error_exit(msg, table_name, rate_id);
 		}

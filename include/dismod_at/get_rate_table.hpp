@@ -30,6 +30,7 @@ namespace dismod_at {
 		int        child_nslist_id;
 	};
 	extern CppAD::vector<rate_struct> get_rate_table(sqlite3*  db);
+	extern std::string get_rate_name(size_t rate_id);
 }
 
 # endif
