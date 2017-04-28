@@ -691,12 +691,19 @@ void fit_command(
 	string table_name = "start_var";
 	string column_name = "start_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, start_var);
+	// ----------------------------------------------------------------------
+	// random_zero_sum
+	size_t n_rate      = size_t(dismod_at::number_rate_enum);
+	size_t option_size = option_map["random_zero_sum"].size();
+	vector<bool> random_zero_sum(n_rate);
+	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	{	string rate_name = dismod_at::get_rate_name(rate_id);
+		size_t found     = option_map["random_zero_sum"].find( rate_name );
+		random_zero_sum[rate_id] = found < option_size;
+	}
 	// ------------------ run fit_model ------------------------------------
 	// quasi_fixed
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
-	//
-	// random_zero_sum
-	bool random_zero_sum = option_map["random_zero_sum"] == "true";
 	//
 	// warn_on_stderr
 	bool warn_on_stderr = option_map["warn_on_stderr"] == "true";
@@ -1359,11 +1366,18 @@ void sample_command(
 		return;
 	}
 	// ----------------------------------------------------------------------
+	// random_zero_sum
+	size_t n_rate      = size_t(dismod_at::number_rate_enum);
+	size_t option_size = option_map["random_zero_sum"].size();
+	vector<bool> random_zero_sum(n_rate);
+	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	{	string rate_name = dismod_at::get_rate_name(rate_id);
+		size_t found     = option_map["random_zero_sum"].find( rate_name );
+		random_zero_sum[rate_id] = found < option_size;
+	}
+	// ----------------------------------------------------------------------
 	// quasi_fixed
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
-	//
-	// random_zero_sum
-	bool random_zero_sum = option_map["random_zero_sum"] == "true";
 	//
 	// warn_on_stderr
 	bool warn_on_stderr = option_map["warn_on_stderr"] == "true";

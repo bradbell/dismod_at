@@ -234,7 +234,7 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america'     },
-		{ 'name':'random_zero_sum',        'value':'true'              },
+		{ 'name':'random_zero_sum',        'value':'iota rho'          },
 		{ 'name':'random_seed',            'value':'0'                 },
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_pos'  },
@@ -273,7 +273,7 @@ def example_db (file_name) :
 	n_smooth  = len( smooth_table )
 	return
 # ===========================================================================
-# Create database and run init, start, fit with random_zero_sum false
+# Create database and run init, start, fit with zero sum for random effects
 file_name = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'

@@ -355,7 +355,9 @@ bool fit_model_xam(void)
 	double random_bound = std::numeric_limits<double>::infinity();
 	//
 	// random_zero_sum
-	bool random_zero_sum = false;
+	vector<bool> random_zero_sum( dismod_at::number_rate_enum );
+	for(size_t rate_id = 0; rate_id < dismod_at::number_rate_enum; rate_id++)
+		random_zero_sum[rate_id] = false;
 	//
 	// warn_on_stderr
 	bool warn_on_stderr = true;

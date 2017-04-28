@@ -25,6 +25,7 @@ $spell
 	std
 	fabs
 	stderr
+	nslist
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -34,6 +35,14 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 04-27$$
+Change the $cref/random_zero_sum/option_table/random_zero_sum/$$ option
+so it can select specific rates to have zero sum.
+This was necessary so that
+$cref/child_nslist_id/rate_table/child_nslist_id/$$ can be used
+to use different priors for each child and some rates,
+while other rates have the same prior for each child and zero sum.
 
 $head 04-26$$
 $list number$$

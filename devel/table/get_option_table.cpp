@@ -76,12 +76,14 @@ $end
 
 
 
+# include <cppad/utility/to_string.hpp>
+# include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/get_option_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/null_int.hpp>
-# include <cppad/utility/to_string.hpp>
+# include <dismod_at/split_space.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -112,7 +114,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "quasi_fixed",                   "true"               },
 		{ "random_bound",                  ""                   },
 		{ "random_seed",                   "0"                  },
-		{ "random_zero_sum",               "false"              },
+		{ "random_zero_sum",               ""                   },
 		{ "rate_case",                     "iota_pos_rho_zero"  },
 		{ "tolerance_fixed",               "1e-8"               },
 		{ "tolerance_random",              "1e-8"               },
@@ -196,10 +198,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(msg, table_name, option_id);
 			}
 		}
-		if(
-			name_vec[match] == "random_zero_sum" ||
-			name_vec[match] == "warn_on_stderr"
-		)
+		if( name_vec[match] == "warn_on_stderr" )
 		{	if(
 				option_value[option_id] != "true" &&
 				option_value[option_id] != "false" )
@@ -288,6 +287,23 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 					derivative_test_fixed_level = 2;
 				else
 					derivative_test_fixed_level = 1;
+			}
+		}
+		if( name_vec[match] == "random_zero_sum" )
+		{	CppAD::vector<string> rate_list = split_space(
+					option_value[option_id]
+			);
+			size_t n_rate = number_rate_enum;
+			for(size_t i = 0; i < rate_list.size(); i++)
+			{	string rate_name = rate_list[i];
+				bool found = false;
+				for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+					found = found || rate_name == get_rate_name(rate_id);
+				if( ! found )
+				{	msg  = rate_name + " in option_value list";
+					msg += " is not a valid rate name";
+					error_exit(msg, table_name, option_id);
+				}
 			}
 		}
 	}

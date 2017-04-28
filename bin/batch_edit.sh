@@ -22,10 +22,11 @@ rename_cmd='s|output.omh|data_flow.omh|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-/for data_id in range/! b end
-N
-/'data_name'/! b end
-d
+/bool random_zero_sum *= *false/! b end
+s|.*|\\tvector<bool> random_zero_sum( dismod_at::number_rate_enum );\\
+\\tfor(size_t rate_id = 0; rate_id < dismod_at::number_rate_enum; rate_id++)\\
+\\t\\trandom_zero_sum[rate_id] = false;|
+#
 : end
 EOF
 # -----------------------------------------------------------------------------
