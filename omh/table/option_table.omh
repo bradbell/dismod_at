@@ -107,7 +107,7 @@ These are additional constraints in the optimization problem for the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$.
 The file $cref/random_zero_sum.py/user_random_zero_sum.py/$$
 contains an example and test using these constraints.
-Note that for each rate in the list,
+Note that for each rate in $icode random_zero_sum$$,
 $cref/child_nslist_id/rate_table/child_nslist_id/$$ must be null; i.e.,
 all of the child must use the same smoothing for this rate.
 
