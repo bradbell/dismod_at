@@ -37,12 +37,21 @@ $childtable%
 %$$
 
 $head 04-29$$
+$list number$$
+There was a bug and the case
+$cref/fit fixed/fit_command/variables/fixed/$$ would not run
+when
+$cref/random_zero_sum/option_table/random_zero_sum/$$ was not null
+(specified one or more rates).
+This has been fixed.
+$lnext
 For each $icode rate_name$$ in
 $cref/random_zero_sum/option_table/random_zero_sum/$$
 the corresponding
 $cref/child_nslist_id/rate_table/child_nslist_id/$$
 must be null.
 An error messages is reported if this is not the case.
+$lend
 
 $head 04-27$$
 Change the $cref/random_zero_sum/option_table/random_zero_sum/$$ option

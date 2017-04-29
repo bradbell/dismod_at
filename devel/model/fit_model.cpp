@@ -17,6 +17,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 CppAD::mixed::sparse_rcv ran_con_rcv(
+	double                        random_bound    ,
 	const CppAD::vector<bool>&    random_zero_sum ,
 	const dismod_at::pack_info&   pack_object     )
 {	// number of fixed plus random effects
@@ -42,7 +43,7 @@ CppAD::mixed::sparse_rcv ran_con_rcv(
 	//
 	// check for first case where random constraint matrix is empty
 	CppAD::mixed::sparse_rcv A_rcv;
-	if( n_child == 0 )
+	if( n_child == 0 || random_bound == 0 )
 		return A_rcv;
 	//
 	// initilaize count of number of random constraint equations
@@ -58,7 +59,9 @@ CppAD::mixed::sparse_rcv ran_con_rcv(
 			size_t smooth_id = info_0.smooth_id;
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	// number of grid points for child soothing for this rate
-				// all child rates have the same smoothing
+				// all child rates have the same smoothing, in addition
+				// the lower and upper limits for the smoothing are infinite
+				// (Hence not equal so they are random effects in cppad_mixed)
 				size_t n_grid = info_0.n_var;
 				assert( n_grid > 0 );
 				// each grid point corresponds to a random constraint equation
@@ -257,7 +260,7 @@ $end
 	// bool_sparsity
 	false,
 	// A_rcv
-	ran_con_rcv(random_zero_sum, pack_object)
+	ran_con_rcv(random_bound, random_zero_sum, pack_object)
 ),
 db_            (db)                                 ,
 warn_on_stderr_( warn_on_stderr )                   ,

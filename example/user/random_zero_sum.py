@@ -277,12 +277,16 @@ def example_db (file_name) :
 file_name = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
-for command in [ 'init', 'start', 'fit' ] :
+fit_count      = 0
+for command in [ 'init', 'start', 'fit', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'start' :
 		cmd.append('prior_mean')
 	if command == 'fit' :
-		variables = 'both'
+		if fit_count == 0 :
+			variables = 'fixed' # not necessary, but here for testing
+		else :
+			variables = 'both'
 		cmd.append(variables)
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
