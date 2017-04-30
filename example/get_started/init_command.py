@@ -10,7 +10,6 @@
 # ---------------------------------------------------------------------------
 # $begin init_command.py$$ $newlinech #$$
 # $spell
-#	avgint
 #	init
 #	dismod
 # $$
@@ -74,11 +73,6 @@ connection = dismod_at.create_connection(file_name, new)
 data_subset_table = dismod_at.get_table_dict(connection, 'data_subset');
 assert len(data_subset_table) == 1
 assert data_subset_table[0]['data_id'] == 0
-#
-# check avgint_subset table
-avgint_subset_table = dismod_at.get_table_dict(connection, 'avgint_subset');
-assert len(avgint_subset_table) == 1
-assert avgint_subset_table[0]['avgint_id'] == 0
 # -----------------------------------------------------------------------
 # check var table
 var_table        = dismod_at.get_table_dict(connection, 'var')

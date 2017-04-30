@@ -156,7 +156,6 @@ void init_command(
 	const char* drop_list[] = {
 		"var",
 		"data_subset",
-		"avgint_subset",
 		"start_var",
 		"fit_var",
 		"fit_data_subset",
@@ -184,23 +183,6 @@ void init_command(
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	int data_id    = data_subset_obj[subset_id].original_id;
 		row_value[subset_id] = to_string( data_id );
-	}
-	dismod_at::create_table(
-		db, table_name, col_name, col_type, col_unique, row_value
-	);
-	// -----------------------------------------------------------------------
-	// create avgint_subset_table
-	n_subset   = avgint_subset_obj.size();
-	row_value.clear();
-	row_value.resize(n_subset);
-	table_name     = "avgint_subset";
-	n_subset       = avgint_subset_obj.size();
-	col_name[0]    = "avgint_id";
-	col_type[0]    = "integer";
-	col_unique[0]  = true;
-	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	int avgint_id    = avgint_subset_obj[subset_id].original_id;
-		row_value[subset_id] = to_string( avgint_id );
 	}
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
@@ -1622,7 +1604,7 @@ void predict_command(
 	col_type[0]   = "integer";
 	col_unique[0] = false;
 	//
-	col_name[1]   = "avgint_subset_id";
+	col_name[1]   = "avgint_id";
 	col_type[1]   = "integer";
 	col_unique[1] = false;
 	//
@@ -1650,6 +1632,7 @@ void predict_command(
 		}
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	int integrand_id = avgint_subset_obj[subset_id].integrand_id;
+			int avgint_id    = avgint_subset_obj[subset_id].original_id;
 			double avg = 0.0;
 			dismod_at::integrand_enum integrand =
 				db_input.integrand_table[integrand_id];
@@ -1679,7 +1662,7 @@ void predict_command(
 			}
 			size_t predict_id = sample_index * n_subset + subset_id;
 			row_value[n_col * predict_id + 0] = to_string( sample_index );
-			row_value[n_col * predict_id + 1] = to_string( subset_id );
+			row_value[n_col * predict_id + 1] = to_string( avgint_id );
 			row_value[n_col * predict_id + 2] = to_string( avg );
 		}
 	}

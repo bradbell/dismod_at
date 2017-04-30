@@ -478,7 +478,6 @@ def db2csv_command(database_file_arg) :
 	required_table_list  = [
 		'age',
 		'avgint',
-		'avgint_subset',
 		'covariate',
 		'data',
 		'data_subset',
@@ -530,8 +529,7 @@ def db2csv_command(database_file_arg) :
 	# check tables that are supposed to be the same length
 	pair_list = [
 		[ 'var',            'fit_var'],
-		[ 'data_subset',    'fit_data_subset' ],
-		[ 'avgint_subset',  'predict' ]
+		[ 'data_subset',    'fit_data_subset' ]
 	]
 	for [left, right] in pair_list :
 		if have_table[right] :
@@ -886,9 +884,8 @@ def db2csv_command(database_file_arg) :
 		#
 		for predict_row in table_data['predict'] :
 			row_out     = dict()
-			avgint_id   = int( table_lookup(
-				'avgint_subset', predict_row['avgint_subset_id'], 'avgint_id'
-			) )
+			#
+			avgint_id   = predict_row['avgint_id']
 			avgint_row  = table_data['avgint'][avgint_id]
 			#
 			# avgint_id
