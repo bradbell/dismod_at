@@ -238,7 +238,6 @@ data_model::data_model(
 	const pack_info&                         pack_object     ,
 	const child_info&                        child_object    )
 :
-minimum_meas_cv_ (minimum_meas_cv)  ,
 n_covariate_     (n_covariate)      ,
 n_age_ode_       (n_age_ode)        ,
 n_time_ode_      (n_time_ode)       ,
@@ -246,6 +245,9 @@ ode_step_size_   (ode_step_size)    ,
 pack_object_     (pack_object)
 {	using std::string;
 	size_t i, j, k;
+	//
+	// set to nan (until replace_like is called)
+	minimum_meas_cv_ = std::numeric_limits<double>::quiet_NaN();
 	//
 	// only set the fileds that are common to data_subset and avgint_subset
 	size_t n_subset = subset_object.size();
@@ -616,6 +618,7 @@ $spell
 	struct
 	std
 	obj
+	cv
 $$
 
 $section Set Value Necessary for Likelihood (not for Average Integrand)$$
@@ -635,8 +638,6 @@ However, the are necessary to use the functions
 $cref/data_object.like_one/data_model_like_one/$$ and
 $cref/data_object.like_all/data_model_like_all/$$.
 
-
-
 $head data_object$$
 This object has prototype
 $codei%
@@ -644,18 +645,28 @@ $codei%
 %$$
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
-$head subset_object$$
+$subhead minimum_meas_cv$$
+This argument has prototype
+$codei%
+	double %minimum_meas_cv%
+%$$
+and is the
+$cref/minimum_meas_cv/option_table/minimum_meas_cv/$$.
+The $code minimum_meas_cv_$$ value in $icode data_object$$ is
+replaced by $icode minimum_meas_cv$$.
+
+$subhead subset_object$$
 We use $icode subset_object$$
 for the $cref/subset_object/data_model_ctor/$$ in the $icode data_object$$
 constructor.
 
-$head n_subset$$
+$subhead n_subset$$
 We use the notation
 $codei%
 	%n_subset% = %subset_object%.size()
 %$$
 
-$head subset_id$$
+$subhead subset_id$$
 This an index between zero and $icode%n_subset% - 1%$$.
 It is used to refer to the corresponding element of
 $icode subset_object$$.
@@ -675,10 +686,16 @@ $icode%subset_object[%subset_id%]%.%field%$$.
 $end
 */
 void data_model::replace_like(
+		double                                    minimum_meas_cv ,
 		const CppAD::vector<data_subset_struct>&  data_subset_obj )
-{	size_t n_subset = data_subset_obj_.size();
+{	// replace minimum_meas_cv
+	minimum_meas_cv_ = minimum_meas_cv;
+	//
+	// n_subset
+	size_t n_subset = data_subset_obj_.size();
 	assert( data_subset_obj.size() == n_subset );
 	//
+	// replace density_id, hold_out, meas_value, meas_std, eta
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	data_subset_obj_[subset_id].density_id =
 			data_subset_obj[subset_id].density_id;

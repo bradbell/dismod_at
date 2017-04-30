@@ -319,7 +319,7 @@ bool fit_model_xam(void)
 		pack_object,
 		child_object
 	);
-	data_object.replace_like(data_subset_obj);
+	data_object.replace_like(minimum_meas_cv, data_subset_obj);
 	//
 	// start_var
 	vector<size_t> pack_prior_id;

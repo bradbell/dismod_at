@@ -626,6 +626,7 @@ void fit_command(
 			dismod_at::error_exit(msg);
 	}
 	//
+	// random_bound
 	double random_bound = 0.0;
 	if( variables != "fixed" )
 	{	// null corresponds to infinity
@@ -635,7 +636,12 @@ void fit_command(
 		else
 			random_bound = std::atof( tmp_str.c_str() );
 	}
+	// random_only
 	bool random_only = variables == "random";
+	// minimum_meas_cv
+	double minimum_meas_cv = std::atof(
+		option_map["minimum_meas_cv"].c_str()
+	);
 	// -----------------------------------------------------------------------
 	if( simulate_index != "" )
 	{	size_t sim_index = std::atoi( simulate_index.c_str() );
@@ -660,7 +666,7 @@ void fit_command(
 				simulate_table[simulate_id].meas_value;
 		}
 	}
-	data_object.replace_like(data_subset_obj);
+	data_object.replace_like(minimum_meas_cv, data_subset_obj);
 	// -----------------------------------------------------------------------
 	// read start_var table into start_var
 	vector<double> start_var;
@@ -1362,6 +1368,10 @@ void sample_command(
 	double random_bound = std::numeric_limits<double>::infinity();
 	if( tmp_str != "" )
 		random_bound = std::atof( tmp_str.c_str() );
+	// minimum_meas_cv
+	double minimum_meas_cv = std::atof(
+		option_map["minimum_meas_cv"].c_str()
+	);
 	// -----------------------------------------------------------------------
 	if( method == "simulate" )
 	{
@@ -1408,7 +1418,7 @@ void sample_command(
 					simulate_table[simulate_id].meas_value;
 			}
 			// replace_like
-			data_object.replace_like(data_subset_obj);
+			data_object.replace_like(minimum_meas_cv, data_subset_obj);
 			//
 			// fit_model
 			string fit_or_sample = "fit";
@@ -1454,7 +1464,7 @@ void sample_command(
 	assert( method == "asymptotic" );
 	//
 	// replace_like
-	data_object.replace_like(data_subset_obj);
+	data_object.replace_like(minimum_meas_cv, data_subset_obj);
 	//
 	// fit_var.variable_value
 	vector<double> variable_value;
@@ -1926,7 +1936,8 @@ int main(int n_arg, const char** argv)
 		);
 	}
 	else
-	{	// data_subset_obj
+	{	// -------------------------------------------------------------------
+		// data_subset_obj
 		vector<dismod_at::data_subset_struct> data_subset_obj;
 		vector<double> data_subset_cov_value;
 		data_subset(
@@ -1937,7 +1948,6 @@ int main(int n_arg, const char** argv)
 			data_subset_obj,
 			data_subset_cov_value
 		);
-		// -------------------------------------------------------------------
 		if( command_arg == "init" )
 		{	init_command(
 				db,
@@ -1979,7 +1989,7 @@ int main(int n_arg, const char** argv)
 				child_data
 			);
 			data_object.set_eigen_ode2_case_number(rate_case);
-			// ----------------------------------------------------------------
+			//
 			if( command_arg == "sample" )
 			{	sample_command(
 					argv[3]          , // method
@@ -2013,7 +2023,8 @@ int main(int n_arg, const char** argv)
 				);
 			}
 			else if( command_arg == "simulate" )
-			{	data_object.replace_like( data_subset_obj );
+			{	// replace_like
+				data_object.replace_like(minimum_meas_cv, data_subset_obj );
 				simulate_command(
 					argv[3]                  , // number_simulate
 					minimum_meas_cv          ,

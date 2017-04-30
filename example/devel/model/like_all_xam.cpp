@@ -232,7 +232,7 @@ bool like_all_xam(void)
 		pack_object,
 		child_object
 	);
-	data_object.replace_like(data_subset_obj);
+	data_object.replace_like(minimum_meas_cv, data_subset_obj);
 	//
 	// pack_vec
 	vector<Float> pack_vec( pack_object.size() );

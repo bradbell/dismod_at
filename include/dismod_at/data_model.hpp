@@ -39,7 +39,6 @@ class data_model {
 		bool                  random_depend;
 	} data_ode_info;
 private:
-	const double                              minimum_meas_cv_;
 	const size_t                              n_covariate_;
 	const size_t                              n_age_ode_;
 	const size_t                              n_time_ode_;
@@ -58,6 +57,9 @@ private:
 	// Has replace_like been called.
 	// Set false by constructor and true by replace_like.
 	bool                         replace_like_called_;
+
+	// set by replace_like
+	double                       minimum_meas_cv_;
 
 	// set by consructor, except that following fields set by replace_like
 	// data_subset_obj_[subset_id].density_id
@@ -94,6 +96,7 @@ public:
 	void set_eigen_ode2_case_number(const std::string& rate_case_arg);
 	//
 	void replace_like(
+		double                                   minimum_meas_cv ,
 		const CppAD::vector<data_subset_struct>& data_subset_obj
 	);
 	//
