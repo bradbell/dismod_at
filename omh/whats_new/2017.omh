@@ -38,6 +38,12 @@ $childtable%
 
 $head 04-29$$
 $list number$$
+The avgint_subset table has been removed.
+The avgint table is only
+$cref/used/avgint_table/Usage/$$ by the $cref predict_command$$.
+As such, it can be changed, and the predict command can be re-run,
+without having to first run any other commands.
+$lnext
 There was a bug and the case
 $cref/fit fixed/fit_command/variables/fixed/$$ would not run
 when
