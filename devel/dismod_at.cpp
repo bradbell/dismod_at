@@ -143,7 +143,6 @@ $end
 void init_command(
 	sqlite3*                                         db                  ,
 	const vector<dismod_at::data_subset_struct>&     data_subset_obj     ,
-	const vector<dismod_at::avgint_subset_struct>& avgint_subset_obj ,
 	const dismod_at::pack_info&                      pack_object         ,
 	const dismod_at::db_input_struct&                db_input            ,
 	const size_t&                                    parent_node_id      ,
@@ -1903,7 +1902,6 @@ int main(int n_arg, const char** argv)
 		{	init_command(
 				db,
 				data_subset_obj,
-				avgint_subset_obj,
 				pack_object,
 				db_input,
 				parent_node_id,
