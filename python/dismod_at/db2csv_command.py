@@ -286,9 +286,8 @@
 # $head predict.csv$$
 # If the $cref predict_command$$ has was executed,
 # the CSV file $code predict.csv$$ is written.
-# For each set of $cref model_variables$$ in the $cref sample_table$$,
-# and each row of $cref avgint_subset_table$$, there is a corresponding
-# row in $code predict.csv$$.
+# For each row of the $cref predict_table$$
+# there is a corresponding row in $code predict.csv$$.
 #
 # $subhead avgint_id$$
 # is the avgint table

@@ -214,7 +214,7 @@ $cref/parent node/option_table/parent_node_id/$$
 and the
 $cref/max_difference/covariate_table/max_difference/$$
 affect the
-$cref data_subset_table$$ and $cref avgint_subset_table$$.
+$cref data_subset_table$$ and $code avgint_subset_table$$.
 $lnext
 The $cref get_started$$ example was changed to use a single
 exponential model.

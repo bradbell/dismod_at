@@ -108,7 +108,6 @@ and then creates new versions of the following tables:
 $table
 $cref var_table$$           $cnext $title var_table$$ $rnext
 $cref data_subset_table$$   $cnext $title data_subset_table$$ $rnext
-$cref avgint_subset_table$$ $cnext $title avgint_subset_table$$ $rnext
 $tend
 
 $head Changing Values$$
@@ -131,10 +130,6 @@ $cref model_variables$$.
 $head data_subset_table$$
 A new $cref data_subset_table$$ is created.
 This makes explicit exactly which rows of the data table are used.
-
-$head avgint_subset_table$$
-A new $cref avgint_subset_table$$ is created.
-This makes explicit exactly which rows of the avgint table are used.
 
 $children%example/get_started/init_command.py%$$
 $head Example$$
@@ -1581,8 +1576,9 @@ $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 values for each
 $cref/sample_index/sample_table/sample_index/$$ in the sample table
 and each
-$cref/avgint_subset_id/avgint_subset_table/avgint_subset_id/$$
-in the avgint_subset table.
+$cref/avgint_id/predict_table/avgint_id/$$
+in the
+$cref/avgint subset/predict_table/Avgint Subset/$$.
 
 $children%example/get_started/predict_command.py%$$
 $head Example$$
