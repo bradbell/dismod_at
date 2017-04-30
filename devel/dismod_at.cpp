@@ -653,14 +653,14 @@ void fit_command(
 			string table_name = "simulate";
 			dismod_at::error_exit(msg, table_name);
 		}
-		// replace the data with the simulated values
+		// replace meas_value in data_subset_obj
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	size_t simulate_id = n_subset * sim_index + subset_id;
 			data_subset_obj[subset_id].meas_value =
 				simulate_table[simulate_id].meas_value;
 		}
-		data_object.replace_like(data_subset_obj);
 	}
+	data_object.replace_like(data_subset_obj);
 	// -----------------------------------------------------------------------
 	// read start_var table into start_var
 	vector<double> start_var;
@@ -953,7 +953,6 @@ $cref model_variables$$ used during the simulation.
 This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref init_command$$).
-
 
 $head data_table$$
 It the data
@@ -1995,39 +1994,37 @@ int main(int n_arg, const char** argv)
 					option_map
 				);
 			}
-			else
-			{	data_object.replace_like( data_subset_obj );
-				if( command_arg == "fit" )
-				{	string variables      = argv[3];
-					string simulate_index = "";
-					if( n_arg == 5 )
-						simulate_index = argv[4];
-					fit_command(
-						variables        ,
-						simulate_index   ,
-						db               ,
-						data_object      ,
-						data_subset_obj  ,
-						pack_object      ,
-						db_input         ,
-						s_info_vec       ,
-						prior_object     ,
-						option_map
-					);
-				}
-				else if( command_arg == "simulate" )
-				{	simulate_command(
-						argv[3]                  , // number_simulate
-						minimum_meas_cv          ,
-						db                       ,
-						db_input.integrand_table ,
-						data_subset_obj          ,
-						data_object
-					);
-				}
-				else
-					assert(false);
+			else if( command_arg == "fit" )
+			{	string variables      = argv[3];
+				string simulate_index = "";
+				if( n_arg == 5 )
+					simulate_index = argv[4];
+				fit_command(
+					variables        ,
+					simulate_index   ,
+					db               ,
+					data_object      ,
+					data_subset_obj  ,
+					pack_object      ,
+					db_input         ,
+					s_info_vec       ,
+					prior_object     ,
+					option_map
+				);
 			}
+			else if( command_arg == "simulate" )
+			{	data_object.replace_like( data_subset_obj );
+				simulate_command(
+					argv[3]                  , // number_simulate
+					minimum_meas_cv          ,
+					db                       ,
+					db_input.integrand_table ,
+					data_subset_obj          ,
+					data_object
+				);
+			}
+			else
+				assert(false);
 		}
 	}
 	// ---------------------------------------------------------------------
