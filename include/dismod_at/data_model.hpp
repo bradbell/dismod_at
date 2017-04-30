@@ -74,7 +74,6 @@ public:
 	template <class SubsetStruct>
 	data_model(
 		size_t                                   parent_node_id  ,
-		double                                   minimum_meas_cv ,
 		size_t                                   n_covariate     ,
 		size_t                                   n_age_ode       ,
 		size_t                                   n_time_ode      ,

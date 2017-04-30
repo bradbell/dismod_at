@@ -31,7 +31,6 @@ $section Data Model: Constructor$$
 $head Syntax$$
 $codei%data_model %data_object%(
 	%parent_node_id%,
-	%minimum_meas_cv%,
 	%n_covariate%,
 	%n_age_ode%,
 	%n_time_ode%,
@@ -61,14 +60,6 @@ $codei%
 %$$
 and is the
 $cref/parent_node_id/option_table/parent_node_id/$$.
-
-$head minimum_meas_cv$$
-This argument has prototype
-$codei%
-	double %minimum_meas_cv%
-%$$
-and is the
-$cref/minimum_meas_cv/option_table/minimum_meas_cv/$$.
 
 $head n_covariate$$
 This argument has prototype
@@ -222,7 +213,6 @@ data_model::~data_model(void)
 template <class SubsetStruct>
 data_model::data_model(
 	size_t                                   parent_node_id  ,
-	double                                   minimum_meas_cv ,
 	size_t                                   n_covariate     ,
 	size_t                                   n_age_ode       ,
 	size_t                                   n_time_ode      ,
@@ -1777,7 +1767,6 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)   \
 template data_model::data_model(                                \
 	size_t                                   parent_node_id  ,  \
-	double                                   minimum_meas_cv ,  \
 	size_t                                   n_covariate     ,  \
 	size_t                                   n_age_ode       ,  \
 	size_t                                   n_time_ode      ,  \

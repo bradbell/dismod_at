@@ -1909,7 +1909,6 @@ int main(int n_arg, const char** argv)
 		// avgint_object
 		dismod_at::data_model avgint_object(
 			parent_node_id           ,
-			minimum_meas_cv          ,
 			n_covariate              ,
 			n_age_ode                ,
 			n_time_ode               ,
@@ -1972,7 +1971,6 @@ int main(int n_arg, const char** argv)
 			// data_object
 			dismod_at::data_model data_object(
 				parent_node_id           ,
-				minimum_meas_cv          ,
 				n_covariate              ,
 				n_age_ode                ,
 				n_time_ode               ,

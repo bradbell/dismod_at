@@ -303,7 +303,6 @@ bool fit_model_xam(void)
 	double ode_step_size = 20.;
 	dismod_at::data_model data_object(
 		parent_node_id,
-		minimum_meas_cv,
 		n_covariate,
 		n_age_ode,
 		n_time_ode,
