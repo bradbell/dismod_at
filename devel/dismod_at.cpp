@@ -1863,6 +1863,12 @@ int main(int n_arg, const char** argv)
 		pack_object,
 		s_info_vec
 	);
+	// minimum_meas_cv
+	double minimum_meas_cv = std::atof(
+		option_map["minimum_meas_cv"].c_str()
+	);
+	// rate_case
+	string rate_case = option_map["rate_case"];
 	// =======================================================================
 	if( command_arg == "start" )
 	{	start_command(
@@ -1873,6 +1879,48 @@ int main(int n_arg, const char** argv)
 	}
 	else if( command_arg == "truth" )
 	{	truth_command(db);
+	}
+	else if( command_arg == "predict" )
+	{	// avgint_subset_obj
+		vector<dismod_at::avgint_subset_struct> avgint_subset_obj;
+		vector<double> avgint_subset_cov_value;
+		avgint_subset(
+				db_input.avgint_table,
+				db_input.avgint_cov_value,
+				db_input.covariate_table,
+				child_avgint,
+				avgint_subset_obj,
+				avgint_subset_cov_value
+		);
+		//
+		// avgint_object
+		dismod_at::data_model avgint_object(
+			parent_node_id           ,
+			minimum_meas_cv          ,
+			n_covariate              ,
+			n_age_ode                ,
+			n_time_ode               ,
+			ode_step_size            ,
+			db_input.age_table       ,
+			db_input.time_table      ,
+			db_input.integrand_table ,
+			db_input.node_table      ,
+			avgint_subset_obj        ,
+			avgint_subset_cov_value  ,
+			w_info_vec               ,
+			s_info_vec               ,
+			pack_object              ,
+			child_avgint
+		);
+		avgint_object.set_eigen_ode2_case_number(rate_case);
+		size_t n_var = pack_object.size();
+		predict_command(
+			db                   ,
+			db_input             ,
+			n_var                ,
+			avgint_object      ,
+			avgint_subset_obj
+		);
 	}
 	else
 	{	// data_subset_obj
@@ -1885,17 +1933,6 @@ int main(int n_arg, const char** argv)
 			child_data,
 			data_subset_obj,
 			data_subset_cov_value
-		);
-		// avgint_subset_obj
-		vector<dismod_at::avgint_subset_struct> avgint_subset_obj;
-		vector<double> avgint_subset_cov_value;
-		avgint_subset(
-				db_input.avgint_table,
-				db_input.avgint_cov_value,
-				db_input.covariate_table,
-				child_avgint,
-				avgint_subset_obj,
-				avgint_subset_cov_value
 		);
 		// -------------------------------------------------------------------
 		if( command_arg == "init" )
@@ -1911,9 +1948,6 @@ int main(int n_arg, const char** argv)
 		}
 		else
 		{	// ---------------------------------------------------------------
-			double minimum_meas_cv = std::atof(
-				option_map["minimum_meas_cv"].c_str()
-			);
 			// prior_object
 			dismod_at::prior_model prior_object(
 				pack_object           ,
@@ -1941,30 +1975,8 @@ int main(int n_arg, const char** argv)
 				pack_object              ,
 				child_data
 			);
-			string rate_case = option_map["rate_case"];
 			data_object.set_eigen_ode2_case_number(rate_case);
 			data_object.replace_like( data_subset_obj );
-			//
-			// avgint_object
-			dismod_at::data_model avgint_object(
-				parent_node_id           ,
-				minimum_meas_cv          ,
-				n_covariate              ,
-				n_age_ode                ,
-				n_time_ode               ,
-				ode_step_size            ,
-				db_input.age_table       ,
-				db_input.time_table      ,
-				db_input.integrand_table ,
-				db_input.node_table      ,
-				avgint_subset_obj        ,
-				avgint_subset_cov_value  ,
-				w_info_vec               ,
-				s_info_vec               ,
-				pack_object              ,
-				child_avgint
-			);
-			avgint_object.set_eigen_ode2_case_number(rate_case);
 			// ------------------------------------------------------------------
 			if( command_arg == "fit" )
 			{	string variables      = argv[3];
@@ -2007,16 +2019,6 @@ int main(int n_arg, const char** argv)
 					s_info_vec       ,
 					prior_object     ,
 					option_map
-				);
-			}
-			else if( command_arg == "predict" )
-			{	size_t n_var = pack_object.size();
-				predict_command(
-					db                   ,
-					db_input             ,
-					n_var                ,
-					avgint_object      ,
-					avgint_subset_obj
 				);
 			}
 			else
