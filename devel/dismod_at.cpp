@@ -1390,7 +1390,7 @@ void sample_command(
 			dismod_at::error_exit(msg);
 		}
 		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
-		{	// set the measurement values for corresponding simulation
+		{	// replace meas_value in data_subset_obj
 			size_t offset = n_subset * sample_index;
 			for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 			{	size_t simulate_id = offset + subset_id;
@@ -1408,8 +1408,9 @@ void sample_command(
 				data_subset_obj[subset_id].meas_value =
 					simulate_table[simulate_id].meas_value;
 			}
+			// replace_like
 			data_object.replace_like(data_subset_obj);
-
+			//
 			// fit_model
 			string fit_or_sample = "fit";
 			bool   random_only   = false;
@@ -1452,6 +1453,9 @@ void sample_command(
 	}
 	// ----------------------------------------------------------------------
 	assert( method == "asymptotic" );
+	//
+	// replace_like
+	data_object.replace_like(data_subset_obj);
 	//
 	// fit_var.variable_value
 	vector<double> variable_value;
@@ -1976,39 +1980,9 @@ int main(int n_arg, const char** argv)
 				child_data
 			);
 			data_object.set_eigen_ode2_case_number(rate_case);
-			data_object.replace_like( data_subset_obj );
-			// ------------------------------------------------------------------
-			if( command_arg == "fit" )
-			{	string variables      = argv[3];
-				string simulate_index = "";
-				if( n_arg == 5 )
-					simulate_index = argv[4];
-				fit_command(
-					variables        ,
-					simulate_index   ,
-					db               ,
-					data_object      ,
-					data_subset_obj  ,
-					pack_object      ,
-					db_input         ,
-					s_info_vec       ,
-					prior_object     ,
-					option_map
-				);
-			}
-			else if( command_arg == "simulate" )
-			{	simulate_command(
-					argv[3]                  , // number_simulate
-					minimum_meas_cv          ,
-					db                       ,
-					db_input.integrand_table ,
-					data_subset_obj          ,
-					data_object
-				);
-			}
-			else if( command_arg == "sample" )
-			{
-				sample_command(
+			// ----------------------------------------------------------------
+			if( command_arg == "sample" )
+			{	sample_command(
 					argv[3]          , // method
 					argv[4]          , // number_sample
 					db               ,
@@ -2022,7 +1996,38 @@ int main(int n_arg, const char** argv)
 				);
 			}
 			else
-				assert(false);
+			{	data_object.replace_like( data_subset_obj );
+				if( command_arg == "fit" )
+				{	string variables      = argv[3];
+					string simulate_index = "";
+					if( n_arg == 5 )
+						simulate_index = argv[4];
+					fit_command(
+						variables        ,
+						simulate_index   ,
+						db               ,
+						data_object      ,
+						data_subset_obj  ,
+						pack_object      ,
+						db_input         ,
+						s_info_vec       ,
+						prior_object     ,
+						option_map
+					);
+				}
+				else if( command_arg == "simulate" )
+				{	simulate_command(
+						argv[3]                  , // number_simulate
+						minimum_meas_cv          ,
+						db                       ,
+						db_input.integrand_table ,
+						data_subset_obj          ,
+						data_object
+					);
+				}
+				else
+					assert(false);
+			}
 		}
 	}
 	// ---------------------------------------------------------------------
