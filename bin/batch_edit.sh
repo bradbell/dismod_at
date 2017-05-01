@@ -12,21 +12,19 @@
 new_directories='
 '
 rename_files='
+	speed/simulated.py
 '
 spell_files='
 '
 no_change_files='
 '
 #
-rename_cmd='s|output.omh|data_flow.omh|'
+rename_cmd='s|speed/simulated.py|example/user/speed.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-/for data_id in range/! b end
-N
-/'data_name'/! b end
-d
-: end
+s|user_simulated.py|user_speed.py|
+s|speed/simulated.py|example/user/speed.py|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

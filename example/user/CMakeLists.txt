@@ -8,8 +8,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# Build get_started Examples / Tests
-
+# Build check_user_example
 FOREACH(user_case
 	asymptotic
 	const_random
@@ -53,3 +52,14 @@ ADD_CUSTOM_TARGET(
 	check_example_user_predict_fit
 	check_example_user_random_zero_sum
 )
+# ---------------------------------------------------------------------------
+# Build speed_user_example
+SET(random_seed 0)
+#
+ADD_CUSTOM_TARGET(
+	speed_example_user
+	${python3_executable} example/user/speed.py ${random_seed}
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+	DEPENDS dismod_at
+)
+# -----------------------------------------------------------------------------

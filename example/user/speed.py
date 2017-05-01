@@ -6,7 +6,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_simulated.py$$ $newlinech #$$
+# $begin user_speed.py$$ $newlinech #$$
 # $spell
 #	py
 # $$
@@ -14,7 +14,7 @@
 # $section A Simulate Data Speed Test$$
 #
 # $head Syntax$$
-# $icode%python3% speed/simulated.py %random_seed%$$
+# $icode%python3% example/user/speed.py %random_seed%$$
 #
 # $head python3$$
 # This is the $cref/python3_executable/run_cmake.sh/python3_executable/$$
@@ -26,7 +26,7 @@
 #
 # $code
 # $srcfile%
-#	speed/simulated.py
+#	example/user/speed.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -45,7 +45,7 @@ import os
 import time
 import distutils.dir_util
 import subprocess
-test_program = 'speed/simulated.py'
+test_program = 'example/user/speed.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 2 :
 	usage  = 'python3 ' + test_program + ' random_seed\n'
 	usage += 'where python3 is the python 3 program on your system\n'

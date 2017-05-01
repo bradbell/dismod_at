@@ -201,7 +201,7 @@ This has also been fixed.
 $head 11-12$$
 $list number$$
 Add $cref/random_seed/option_table/random_seed/$$ to the speed tests
-$cref user_simulated.py$$ and $code cppad_mixed capture_xam.cpp$$.
+$cref user_speed.py$$ and $code cppad_mixed capture_xam.cpp$$.
 $lnext
 Change the log table format for the
 $cref/command/log_table/message_type/command/$$ message type.
@@ -251,7 +251,7 @@ $lnext
 Remove derivative testing from the tests in the $code speed$$ directory.
 Increase the number of random effects in $code cppad_mixed capture_xam.cpp$$ to
 reduce the change of false negative tests.
-Increase the number of data points in $cref user_simulated.py$$
+Increase the number of data points in $cref user_speed.py$$
 for the same reason.
 (This is reasonable because $code cppad_mixed$$ is now faster and uses
 less memory.)
@@ -273,7 +273,7 @@ $cref/parent_smooth_id/rate_table/parent_smooth_id/null/$$
 to $code null$$.
 This reduces the number of $cref model_variables$$.
 $lnext
-The $code speed/simulated.py$$ test was modified to take advantage
+The $code example/user/speed.py$$ test was modified to take advantage
 of this feature.
 The memory requirement reported by massif decreased from
 21.45 MB to 12.64 MB.
@@ -396,7 +396,7 @@ $cref/log-density/statistic/Log-Density Function, D/$$
 was greatly simplified by adding the
 $cref/density/density_table/$$ as an argument.
 $lnext
-The $cref/simulated.py/user_simulated.py/$$
+The $cref/simulated.py/user_speed.py/$$
 speed test was changed to use the log-Gaussian instead
 of Gaussian density for the measured values.
 $lnext
@@ -451,7 +451,7 @@ $cref get_started_db.py$$).
 In addition, simply setting of the standard deviation multipliers
 to one (in the dismod_at $cref user$$ examples).
 $lnext
-Add a $cref/simulated data/user_simulated.py/$$ example
+Add a $cref/simulated data/user_speed.py/$$ example
 that also serves as a dismod_at speed test (the size of the problem
 can be easily scaled up).
 $lnext

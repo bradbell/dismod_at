@@ -47,7 +47,7 @@ $childtable%example/get_started/get_started.omh
 	%example/user/predict_fit.py
 	%example/user/fit_fixed.py
 	%example/user/random_zero_sum.py
-	%speed/simulated.py
+	%example/user/speed.py
 %$$
 
 $end

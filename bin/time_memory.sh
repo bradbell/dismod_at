@@ -23,7 +23,7 @@ then
 fi
 random_seed="$1"
 # -----------------------------------------------------------------------------
-python3 speed/simulated.py $random_seed | tee build/speed/time.out
+python3 example/user/speed.py $random_seed | tee build/speed/time.out
 cd build/speed
 ../devel/dismod_at example.db start
 rm memory.out.*

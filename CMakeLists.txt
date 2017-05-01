@@ -257,7 +257,6 @@ ADD_SUBDIRECTORY(example/table)
 ADD_SUBDIRECTORY(example/user)
 ADD_SUBDIRECTORY(test/devel)
 ADD_SUBDIRECTORY(test/user)
-ADD_SUBDIRECTORY(speed)
 # ----------------------------------------------------------------------------
 ADD_CUSTOM_TARGET(check DEPENDS
 	dismod_at
@@ -269,8 +268,9 @@ ADD_CUSTOM_TARGET(check DEPENDS
 	check_example_get_started
 	check_example_user
 )
+# Note that check_example_user_speed is not inclued in check_example_user
 ADD_CUSTOM_TARGET(speed DEPENDS
-	speed_simulated
+	speed_example_user
 )
 ADD_CUSTOM_TARGET(
 	install_python
@@ -287,4 +287,3 @@ SET(work_dir
 INSTALL(CODE
 	"EXECUTE_PROCESS( COMMAND ${setup_py} ${work_dir} )"
 )
-
