@@ -164,23 +164,7 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{   # prior_zero
-			'name':     'prior_zero',
-			'density':  'uniform',
-			'lower':    0.0,
-			'upper':    0.0,
-			'mean':     0.0,
-			'std':      None,
-			'eta':      None
-		}, { # prior_none
-			'name':     'prior_none',
-			'density':  'uniform',
-			'lower':    None,
-			'upper':    None,
-			'mean':     0.0,
-			'std':      None,
-			'eta':      None
-		},{ # prior_gauss_zero
+		{	# prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
 			'lower':    None,
