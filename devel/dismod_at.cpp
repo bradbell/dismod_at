@@ -1251,7 +1251,6 @@ on the random effects specified by
 $cref/random_bound/option_table/Optimizer/random_bound/$$.
 
 $children%example/get_started/sample_command.py
-	%example/user/asymptotic.py
 %$$
 $head Example$$
 The files
