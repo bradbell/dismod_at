@@ -51,6 +51,10 @@ Provide more information by splitting node into
 $cref/child/db2csv_command/data.csv/child/$$ and
 $cref/node/db2csv_command/data.csv/node/$$ in
 data.csv
+$lnext
+The $cref get_started$$ section has been moved to the same level as
+$cref user$$ and the
+$cref/Commands/user/Commands/$$ heading has been added to the user section.
 $lend
 
 

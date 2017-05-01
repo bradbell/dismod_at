@@ -9,6 +9,7 @@
 # $begin user_speed.py$$ $newlinech #$$
 # $spell
 #	py
+#	init
 # $$
 #
 # $section A Simulate Data Speed Test$$
@@ -23,6 +24,9 @@
 # $head random_seed$$
 # Is the $cref/random_seed/option_table/random_seed/$$ used during the
 # simulation.
+#
+# $head Commands$$
+# init, simulate, start, fit
 #
 # $code
 # $srcfile%
