@@ -39,6 +39,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	table/check_pini_n_age.cpp
 	table/check_rate_limit.cpp
 	table/check_table_id.cpp
+	table/check_zero_sum.cpp
 	table/create_table.cpp
 	table/exec_sql_cmd.cpp
 	table/get_age_table.cpp

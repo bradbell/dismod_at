@@ -9,9 +9,13 @@
 # ---------------------------------------------------------------------------
 # $begin user_random_zero_sum.py$$ $newlinech #$$
 # $spell
+#	init
 # $$
 #
 # $section Fitting With Sum of Random Effect Constrained to Zero$$
+#
+# $head Commands$$
+# init, start, fit, fit
 #
 # $head Discussion$$
 # This example demonstrates using
@@ -62,7 +66,7 @@ os.chdir('build/example/user')
 python_seed = int( time.time() )
 random.seed( python_seed )
 # ------------------------------------------------------------------------
-# note that the a, t values are not used for this example
+# Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
 def fun_rate_child(a, t) :
@@ -234,7 +238,7 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america'     },
-		{ 'name':'random_zero_sum',        'value':'true'              },
+		{ 'name':'random_zero_sum',        'value':'iota rho'          },
 		{ 'name':'random_seed',            'value':'0'                 },
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_pos'  },
@@ -273,16 +277,20 @@ def example_db (file_name) :
 	n_smooth  = len( smooth_table )
 	return
 # ===========================================================================
-# Create database and run init, start, fit with random_zero_sum false
+# Create database and run init, start, fit with zero sum for random effects
 file_name = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
-for command in [ 'init', 'start', 'fit' ] :
+fit_count      = 0
+for command in [ 'init', 'start', 'fit', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'start' :
 		cmd.append('prior_mean')
 	if command == 'fit' :
-		variables = 'both'
+		if fit_count == 0 :
+			variables = 'fixed' # not necessary, but here for testing
+		else :
+			variables = 'both'
 		cmd.append(variables)
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )

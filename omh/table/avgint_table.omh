@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -27,6 +27,11 @@ $head Purpose$$
 Given a value for the $cref model_variables$$,
 this table contains the other information necessary to compute the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
+
+$head Usage$$
+This table is only used by the $cref predict_command$$,
+and hence it can be changed and the predict command can be re-run,
+without needing to re-run any other commands.
 
 $head avgint_id$$
 This column has type $code integer$$ and is the primary key for the

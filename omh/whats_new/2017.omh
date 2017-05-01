@@ -25,6 +25,7 @@ $spell
 	std
 	fabs
 	stderr
+	nslist
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -34,6 +35,47 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 05-01$$
+Remove recommendation for using
+$code prior_zero$$ and $code prior_one$$ as
+$cref/prior names/prior_table/prior_name/$$.
+These have been replace by more flexible, and easier to use
+$cref/const_value/smooth_grid_table/const_value/$$,
+and use of null as smoothing; e.g.,
+null as a $icode parent_smooth_id$$ in the
+$cref/rate table/rate_table/parent_smooth_id/$$.
+
+$head 04-29$$
+$list number$$
+The avgint_subset table has been removed.
+The avgint table is only
+$cref/used/avgint_table/Usage/$$ by the $cref predict_command$$.
+As such, it can be changed, and the predict command can be re-run,
+without having to first run any other commands.
+$lnext
+There was a bug and the case
+$cref/fit fixed/fit_command/variables/fixed/$$ would not run
+when
+$cref/random_zero_sum/option_table/random_zero_sum/$$ was not null
+(specified one or more rates).
+This has been fixed.
+$lnext
+For each $icode rate_name$$ in
+$cref/random_zero_sum/option_table/random_zero_sum/$$
+the corresponding
+$cref/child_nslist_id/rate_table/child_nslist_id/$$
+must be null.
+An error messages is reported if this is not the case.
+$lend
+
+$head 04-27$$
+Change the $cref/random_zero_sum/option_table/random_zero_sum/$$ option
+so it can select specific rates to have zero sum.
+This was necessary so that
+$cref/child_nslist_id/rate_table/child_nslist_id/$$ can be used
+to use different priors for each child and some rates,
+while other rates have the same prior for each child and zero sum.
 
 $head 04-26$$
 $list number$$
@@ -188,7 +230,7 @@ $cref/parent node/option_table/parent_node_id/$$
 and the
 $cref/max_difference/covariate_table/max_difference/$$
 affect the
-$cref data_subset_table$$ and $cref avgint_subset_table$$.
+$cref data_subset_table$$ and $code avgint_subset_table$$.
 $lnext
 The $cref get_started$$ example was changed to use a single
 exponential model.

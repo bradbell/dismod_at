@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -21,22 +21,6 @@ $section The Smoothing Table$$
 $head smooth_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
-
-$subhead zero$$
-It is suggested that
-$icode%smooth_id% == 0%$$
-correspond to
-$icode%n_age% == 1%$$,
-$icode%n_time% == 1%$$, and
-the $cref/zero/prior_table/prior_id/zero/$$ prior.
-
-$subhead one$$
-It is suggested that
-$icode%smooth_id% == 1%$$
-correspond to
-$icode%n_age% == 1%$$,
-$icode%n_time% == 1%$$, and
-the $cref/one/prior_table/prior_id/one/$$ prior.
 
 $head smooth_name$$
 This column has type $code text$$ and has a different value for every row;

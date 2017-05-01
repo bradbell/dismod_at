@@ -1011,7 +1011,7 @@ $lnext
 The $cref avgint_table$$ was added to the set of
 $cref input$$ tables.
 $lnext
-The $cref avgint_subset_table$$ was added as an output
+The $code avgint_subset_table$$ was added as an output
 of the $cref init_command$$.
 $lend
 

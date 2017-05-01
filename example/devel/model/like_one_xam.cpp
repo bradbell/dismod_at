@@ -216,7 +216,6 @@ bool like_one_xam(void)
 	// data_model
 	dismod_at::data_model data_object(
 		parent_node_id,
-		minimum_meas_cv,
 		n_covariate,
 		n_age_ode,
 		n_time_ode,
@@ -232,7 +231,7 @@ bool like_one_xam(void)
 		pack_object,
 		child_object
 	);
-	data_object.replace_like(data_subset_obj);
+	data_object.replace_like(minimum_meas_cv, data_subset_obj);
 	//
 	// pack_vec
 	vector<Float> pack_vec( pack_object.size() );

@@ -45,6 +45,9 @@ See $cref check_rate_limit$$.
 $subhead Child Priors$$
 See $cref check_child_prior$$.
 
+$subhead Check Zero Sum Constraint$$
+See $cref check_zero_sum$$.
+
 $head db$$
 The argument $icode db$$ has prototype
 $codei%
@@ -84,6 +87,7 @@ $end
 # include <dismod_at/check_rate_limit.hpp>
 # include <dismod_at/check_child_prior.hpp>
 # include <dismod_at/check_child_nslist.hpp>
+# include <dismod_at/check_zero_sum.hpp>
 # include <dismod_at/null_int.hpp>
 # include <cppad/utility/to_string.hpp>
 # include <dismod_at/error_exit.hpp>
@@ -248,6 +252,11 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 		db_input.node_table        ,
 		db_input.nslist_table      ,
 		db_input.nslist_pair_table
+	);
+	check_zero_sum(
+		db                         ,
+		db_input.rate_table        ,
+		db_input.option_table
 	);
 	return;
 }

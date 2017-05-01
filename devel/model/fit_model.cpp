@@ -17,7 +17,8 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 CppAD::mixed::sparse_rcv ran_con_rcv(
-	bool                          random_zero_sum ,
+	double                        random_bound    ,
+	const CppAD::vector<bool>&    random_zero_sum ,
 	const dismod_at::pack_info&   pack_object     )
 {	// number of fixed plus random effects
 	size_t n_var = pack_object.size();
@@ -37,14 +38,20 @@ CppAD::mixed::sparse_rcv ran_con_rcv(
 	for(size_t j = 0; j < n_random; j++)
 		var_id2random[ pack_index[j] ] = j;
 	//
+	// n_child
+	size_t n_child = pack_object.child_size();
+	//
+	// check for first case where random constraint matrix is empty
+	CppAD::mixed::sparse_rcv A_rcv;
+	if( n_child == 0 || random_bound == 0 )
+		return A_rcv;
+	//
 	// initilaize count of number of random constraint equations
 	size_t A_nr = 0;
 	//
-	// n_child
-	size_t n_child = pack_object.child_size();
-	if( random_zero_sum && n_child > 0 )
-	{	// for each rate
-		for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	// for each rate
+	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	{	if( random_zero_sum[rate_id] )
 		{	// packing information for first child
 			dismod_at::pack_info::subvec_info
 				info_0 = pack_object.rate_info(rate_id, 0);
@@ -52,15 +59,18 @@ CppAD::mixed::sparse_rcv ran_con_rcv(
 			size_t smooth_id = info_0.smooth_id;
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	// number of grid points for child soothing for this rate
-				// all child rates have the same smoothing
+				// all child rates have the same smoothing, in addition
+				// the lower and upper limits for the smoothing are infinite
+				// (Hence not equal so they are random effects in cppad_mixed)
 				size_t n_grid = info_0.n_var;
+				assert( n_grid > 0 );
 				// each grid point corresponds to a random constraint equation
 				A_nr += n_grid;
 			}
 		}
 	}
-	// check for case where random constraint matrix is empty
-	CppAD::mixed::sparse_rcv A_rcv;
+	//
+	// check for second case where random constraint matrix is empty
 	if( A_nr == 0 )
 		return A_rcv;
 	//
@@ -79,10 +89,12 @@ CppAD::mixed::sparse_rcv ran_con_rcv(
 	//
 	// for each rate
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	if( random_zero_sum[rate_id] )
 	{	// packing information for first child and this rate
 		dismod_at::pack_info::subvec_info
 			info_0 = pack_object.rate_info(rate_id, 0);
-		// child smoothing ide for this rate
+		//
+		// child smoothing id for first rate
 		size_t smooth_id = info_0.smooth_id;
 		if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 		{	//
@@ -111,7 +123,7 @@ CppAD::mixed::sparse_rcv ran_con_rcv(
 					size_t random_index = var_id2random[var_id];
 					assert( random_index < n_random );
 					//
-					// set this entry in the random constraint pattern
+					// set this entry for grid point k, child j, rate rate_id
 					A_rc.set(nnz_index++, row_index + k, random_index);
 				}
 			}
@@ -137,6 +149,7 @@ $spell
 	var
 	vec
 	const
+	enum
 $$
 
 $section Fit Model Constructor$$
@@ -209,9 +222,11 @@ Otherwise a full Newton method is used; see
 $cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$.
 
 $head random_zero_sum$$
-If this argument is true,
-for each age, time and rate,
-the sum of the random effects is constrained to be zero.
+If this vector has size $code number_rate_enum$$.
+If $icode%random_zero_sum%[%rate_id%]%$$ is true,
+for each age, time,
+the sum of the random effects for the corresponding rate
+is constrained to be zero.
 
 $head Prototype$$
 $srccode%cpp% */
@@ -227,7 +242,7 @@ fit_model::fit_model(
 	const data_model&                     data_object      ,
 	const prior_model&                    prior_object     ,
 	bool                                  quasi_fixed      ,
-	bool                                  random_zero_sum  )
+	const CppAD::vector<bool>&            random_zero_sum  )
 /* %$$
 $end
 */
@@ -245,7 +260,7 @@ $end
 	// bool_sparsity
 	false,
 	// A_rcv
-	ran_con_rcv(random_zero_sum, pack_object)
+	ran_con_rcv(random_bound, random_zero_sum, pack_object)
 ),
 db_            (db)                                 ,
 warn_on_stderr_( warn_on_stderr )                   ,

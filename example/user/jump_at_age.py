@@ -10,9 +10,13 @@
 # ---------------------------------------------------------------------------
 # $begin user_jump_at_age.py$$ $newlinech #$$
 # $spell
+#	init
 # $$
 #
 # $section Case with a Jump in Rate at an Age$$
+#
+# $head Commands$$
+# init, start, fit
 #
 # $code
 # $srcfile%
@@ -51,11 +55,9 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
+# Note that the a, t values are used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
-#
-def fun_zero(a, t) :
-	return ('prior_zero', 'prior_none', 'prior_none')
 #
 def fun_iota_parent(a, t) :
 	if 19.5 <= a and a <= 20.5 :
@@ -133,15 +135,7 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{   # prior_zero
-			'name':     'prior_zero',
-			'density':  'uniform',
-			'lower':    0.0,
-			'upper':    0.0,
-			'mean':     0.0,
-			'std':      None,
-			'eta':      None
-		},{ # prior_none
+		{	# prior_none
 			'name':     'prior_none',
 			'density':  'uniform',
 			'lower':    None,
@@ -191,14 +185,6 @@ def example_db (file_name) :
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
 			'fun':                       fun_iota_parent
-		},{ # smooth_zero
-			'name':                     'smooth_zero',
-			'age_id':                   [ 0 ],
-			'time_id':                  [ 0 ],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
-			'fun':                       fun_zero
 		}
 	]
 	# ----------------------------------------------------------------------

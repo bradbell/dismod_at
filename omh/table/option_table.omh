@@ -92,8 +92,29 @@ Rows in the $code avgint$$ table for which the
 $cref/node/data_table/node_id/$$
 is not a $cref/descendant/node_table/parent/Descendant/$$
 of the parent node,
-are not included in the $cref avgint_subset_table$$ and the
-$cref predict_table$$.
+are not included in the $cref predict_table$$;
+see the heading Note for the
+$cref/predict table/predict_table/Avgint Subset/Node/$$.
+
+$head random_zero_sum$$
+If $icode option_name$$ is $code random_zero_sum$$,
+the corresponding value is a space separated subset of the
+$cref/rate names/rate_table/rate_name/$$.
+For each rate in the list, each age, and each time,
+the sum of the corresponding
+$cref/random effects/model_variables/Random Effects, u/$$ estimates
+is constrained to be zero.
+These are additional constraints in the optimization problem for the
+$cref/fixed effects/model_variables/Fixed Effects, theta/$$.
+The file $cref/random_zero_sum.py/user_random_zero_sum.py/$$
+contains an example and test using these constraints.
+Note that for each rate in $icode random_zero_sum$$,
+$cref/child_nslist_id/rate_table/child_nslist_id/$$ must be null; i.e.,
+all of the child must use the same smoothing for this rate.
+
+$subhead Default$$
+The default value for this option is null; i.e.,
+no zero sum constraints on the random effects.
 
 $head data_extra_columns$$
 If $icode option_name$$ is $code data_extra_columns$$,
@@ -183,25 +204,6 @@ see $cref/random_seed/log_table/message_type/random_seed/$$ in the log table.
 
 $subhead Default$$
 The default value for this option is $code 0$$.
-
-$head random_zero_sum$$
-If $icode option_name$$ is
-$code random_zero_sum$$,
-the corresponding possible values are
-$code true$$ or $code false$$.
-If it is $code true$$,
-for each $cref/rate/rate_table/$$,
-each age, and each time,
-the sum of the corresponding
-$cref/random effects/model_variables/Random Effects, u/$$ estimates
-is constrained to be zero.
-These are additional constraints in the optimization problem for the
-$cref/fixed effects/model_variables/Fixed Effects, theta/$$.
-The file $cref/random_zero_sum.py/user_random_zero_sum.py/$$
-contains an example and test using these constraints.
-
-$subhead Default$$
-The default value for this option is $code false$$.
 
 $head rate_case$$
 The $icode rate_case$$ value does not matter for the following integrands:

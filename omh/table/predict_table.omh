@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -13,6 +13,8 @@ $spell
 	avgint
 	var
 	py
+	covariate
+	covariates
 $$
 
 $section The Predict Table: Average Integrand Predictions$$
@@ -24,6 +26,24 @@ $head Purpose$$
 This table contains model predictions for the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
 
+$head Avgint Subset$$
+For each row in the predict table,
+the $icode avgint_id$$ column below identifies
+the corresponding row in the $cref avgint_table$$.
+Only a subset of the rows of the avgint table is included.
+The subset is defined by the following node and covariate conditions:
+
+$subhead Node$$
+The $cref/node/avgint_table/node_id/$$ must be
+$cref/descendant/node_table/parent/Descendant/$$ of the
+$cref/parent node/option_table/parent_node_id/$$ specified by the
+option table.
+
+$subhead Covariates$$
+All of the
+$cref/covariates/avgint_table/Covariates/$$ must satisfy the
+$cref/max_difference/covariate_table/max_difference/$$ criteria.
+
 $head predict_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
@@ -31,20 +51,22 @@ Its initial value is zero, and it increments by one for each row.
 $head sample_index$$
 This column has type $code integer$$ and specifies the set of
 $cref model_variables$$ that the $icode avg_integrand$$ corresponds to.
-The be specific, the model variables are those that have the sample
+To be specific, the model variables are those that have the sample
 $icode sample$$ index in the $cref/sample_table/sample_table/sample_index/$$.
+This column is monotone non-decreasing; i.e. the value in each row
+is greater than or equal the value in the previous row.
+Each
+$cref/sample_index/sample_table/sample_index/$$ value
+in the sample table appears multiple times in the predict table,
+once for each $icode avgint_id$$ is the subset defined above.
 
-$head avgint_subset_id$$
+$head avgint_id$$
 This column has type $code integer$$ and specifies the
-$cref/avgint_subset_id/avgint_subset_table/avgint_subset_id/$$ that
+$cref/avgint_id/avgint_table/avgint_id/$$ that
 $icode avg_integrand$$ corresponds to.
-If $icode n_subset$$ is the number of rows in the avgint_subset table,
-$codei%
-	%predict_id% = %sample_index% * %n_subset% + %avgint_subset_id%
-%$$
-See the corresponding
-$cref/avgint_id/avgint_subset_table/avgint_id/$$ and the
-$cref avgint_table$$.
+For each $icode sample_index$$ value,
+$icode avgint_id$$ is monotone increasing and every element
+of the subset appears.
 
 $head avg_integrand$$
 This column type $code real$$ and is the
@@ -53,8 +75,8 @@ $latex A_i(u, \theta)$$.
 The model variables $latex (u, \theta)$$ corresponding to the
 model variables with $icode sample_index$$ in $cref sample_table$$.
 The subscript $latex i$$ denotes the
-information in the $cref avgint_subset_table$$ for this
-$icode avgint_subset_id$$.
+information in the avgint table for the specified
+$cref/avgint_id/avgint_table/avgint_id/$$.
 
 $head Example$$
 The $cref predict_command.py$$ is an example that creates this table.

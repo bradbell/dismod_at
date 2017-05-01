@@ -19,9 +19,9 @@
 # &section bin/run_cmake.sh: User Configuration Options&&
 #
 # &head verbose_makefile&&
-# Use 'NO' for normal and 'YES' for verbose make output:
+# Use 'no' for normal and 'yes' for verbose make output:
 # &codep
-verbose_makefile='NO'
+verbose_makefile='no'
 # &&
 #
 # &head build_type&&
@@ -78,14 +78,14 @@ cmake_cxx_compiler=''
 # &&
 #
 # &head log_fatal_error&&
-# If YES, &code dismod_at&& will use the &cref log_table&&
+# If yes, &code dismod_at&& will use the &cref log_table&&
 # to report its fatal error messages.
-# If NO, it will convert fatal errors to asserts
+# If no, it will convert fatal errors to asserts
 # (which is useful when running a program in a debugger).
 # In addition, warnings
 # where the context in the debugger is helpful, are also converted to asserts.
 # &codep
-log_fatal_error='NO'
+log_fatal_error='no'
 # &&
 #
 # &head system_specific_library_list&&
@@ -119,10 +119,10 @@ EOF
 	fi
 	if [ "$1" == '--verbose' ]
 	then
-		verbose_makefile='YES'
+		verbose_makefile='yes'
 	elif [ "$1" == '--no_log' ]
 	then
-		log_fatal_error='NO'
+		log_fatal_error='no'
 	elif [ "$1" == '--release' ]
 	then
 		build_type='release'

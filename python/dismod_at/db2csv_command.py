@@ -124,6 +124,11 @@
 # If the $cref sample_command$$ has been run, this is the
 # $cref/var_value/sample_table/var_value/$$ corresponding to
 # $cref/sample_index/sample_table/sample_index/$$ equal to zero.
+# If the previous sample command method was
+# $cref/fit_var/sample_command/method/fit_var/$$,
+# These are the model variables corresponding to the previous fit; i.e.,
+# $cref/variable values/fit_var_table/variable_value/$$ in the
+# fit_var table.
 #
 # $subhead fit_value$$
 # If the $cref fit_command$$ has been run, this is the
@@ -286,9 +291,8 @@
 # $head predict.csv$$
 # If the $cref predict_command$$ has was executed,
 # the CSV file $code predict.csv$$ is written.
-# For each set of $cref model_variables$$ in the $cref sample_table$$,
-# and each row of $cref avgint_subset_table$$, there is a corresponding
-# row in $code predict.csv$$.
+# For each row of the $cref predict_table$$
+# there is a corresponding row in $code predict.csv$$.
 #
 # $subhead avgint_id$$
 # is the avgint table
@@ -479,7 +483,6 @@ def db2csv_command(database_file_arg) :
 	required_table_list  = [
 		'age',
 		'avgint',
-		'avgint_subset',
 		'covariate',
 		'data',
 		'data_subset',
@@ -531,8 +534,7 @@ def db2csv_command(database_file_arg) :
 	# check tables that are supposed to be the same length
 	pair_list = [
 		[ 'var',            'fit_var'],
-		[ 'data_subset',    'fit_data_subset' ],
-		[ 'avgint_subset',  'predict' ]
+		[ 'data_subset',    'fit_data_subset' ]
 	]
 	for [left, right] in pair_list :
 		if have_table[right] :
@@ -887,9 +889,8 @@ def db2csv_command(database_file_arg) :
 		#
 		for predict_row in table_data['predict'] :
 			row_out     = dict()
-			avgint_id   = int( table_lookup(
-				'avgint_subset', predict_row['avgint_subset_id'], 'avgint_id'
-			) )
+			#
+			avgint_id   = predict_row['avgint_id']
 			avgint_row  = table_data['avgint'][avgint_id]
 			#
 			# avgint_id

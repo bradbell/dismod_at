@@ -108,7 +108,6 @@ and then creates new versions of the following tables:
 $table
 $cref var_table$$           $cnext $title var_table$$ $rnext
 $cref data_subset_table$$   $cnext $title data_subset_table$$ $rnext
-$cref avgint_subset_table$$ $cnext $title avgint_subset_table$$ $rnext
 $tend
 
 $head Changing Values$$
@@ -132,10 +131,6 @@ $head data_subset_table$$
 A new $cref data_subset_table$$ is created.
 This makes explicit exactly which rows of the data table are used.
 
-$head avgint_subset_table$$
-A new $cref avgint_subset_table$$ is created.
-This makes explicit exactly which rows of the avgint table are used.
-
 $children%example/get_started/init_command.py%$$
 $head Example$$
 The file $cref init_command.py$$ contains an example and test
@@ -148,7 +143,6 @@ $end
 void init_command(
 	sqlite3*                                         db                  ,
 	const vector<dismod_at::data_subset_struct>&     data_subset_obj     ,
-	const vector<dismod_at::avgint_subset_struct>& avgint_subset_obj ,
 	const dismod_at::pack_info&                      pack_object         ,
 	const dismod_at::db_input_struct&                db_input            ,
 	const size_t&                                    parent_node_id      ,
@@ -161,7 +155,6 @@ void init_command(
 	const char* drop_list[] = {
 		"var",
 		"data_subset",
-		"avgint_subset",
 		"start_var",
 		"fit_var",
 		"fit_data_subset",
@@ -189,23 +182,6 @@ void init_command(
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	int data_id    = data_subset_obj[subset_id].original_id;
 		row_value[subset_id] = to_string( data_id );
-	}
-	dismod_at::create_table(
-		db, table_name, col_name, col_type, col_unique, row_value
-	);
-	// -----------------------------------------------------------------------
-	// create avgint_subset_table
-	n_subset   = avgint_subset_obj.size();
-	row_value.clear();
-	row_value.resize(n_subset);
-	table_name     = "avgint_subset";
-	n_subset       = avgint_subset_obj.size();
-	col_name[0]    = "avgint_id";
-	col_type[0]    = "integer";
-	col_unique[0]  = true;
-	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	int avgint_id    = avgint_subset_obj[subset_id].original_id;
-		row_value[subset_id] = to_string( avgint_id );
 	}
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
@@ -650,6 +626,7 @@ void fit_command(
 			dismod_at::error_exit(msg);
 	}
 	//
+	// random_bound
 	double random_bound = 0.0;
 	if( variables != "fixed" )
 	{	// null corresponds to infinity
@@ -659,7 +636,12 @@ void fit_command(
 		else
 			random_bound = std::atof( tmp_str.c_str() );
 	}
+	// random_only
 	bool random_only = variables == "random";
+	// minimum_meas_cv
+	double minimum_meas_cv = std::atof(
+		option_map["minimum_meas_cv"].c_str()
+	);
 	// -----------------------------------------------------------------------
 	if( simulate_index != "" )
 	{	size_t sim_index = std::atoi( simulate_index.c_str() );
@@ -677,26 +659,33 @@ void fit_command(
 			string table_name = "simulate";
 			dismod_at::error_exit(msg, table_name);
 		}
-		// replace the data with the simulated values
+		// replace meas_value in data_subset_obj
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	size_t simulate_id = n_subset * sim_index + subset_id;
 			data_subset_obj[subset_id].meas_value =
 				simulate_table[simulate_id].meas_value;
 		}
-		data_object.replace_like(data_subset_obj);
 	}
+	data_object.replace_like(minimum_meas_cv, data_subset_obj);
 	// -----------------------------------------------------------------------
 	// read start_var table into start_var
 	vector<double> start_var;
 	string table_name = "start_var";
 	string column_name = "start_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, start_var);
+	// ----------------------------------------------------------------------
+	// random_zero_sum
+	size_t n_rate      = size_t(dismod_at::number_rate_enum);
+	size_t option_size = option_map["random_zero_sum"].size();
+	vector<bool> random_zero_sum(n_rate);
+	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	{	string rate_name = dismod_at::get_rate_name(rate_id);
+		size_t found     = option_map["random_zero_sum"].find( rate_name );
+		random_zero_sum[rate_id] = found < option_size;
+	}
 	// ------------------ run fit_model ------------------------------------
 	// quasi_fixed
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
-	//
-	// random_zero_sum
-	bool random_zero_sum = option_map["random_zero_sum"] == "true";
 	//
 	// warn_on_stderr
 	bool warn_on_stderr = option_map["warn_on_stderr"] == "true";
@@ -970,7 +959,6 @@ $cref model_variables$$ used during the simulation.
 This table can be create by the $cref truth_command$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref init_command$$).
-
 
 $head data_table$$
 It the data
@@ -1359,11 +1347,18 @@ void sample_command(
 		return;
 	}
 	// ----------------------------------------------------------------------
+	// random_zero_sum
+	size_t n_rate      = size_t(dismod_at::number_rate_enum);
+	size_t option_size = option_map["random_zero_sum"].size();
+	vector<bool> random_zero_sum(n_rate);
+	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	{	string rate_name = dismod_at::get_rate_name(rate_id);
+		size_t found     = option_map["random_zero_sum"].find( rate_name );
+		random_zero_sum[rate_id] = found < option_size;
+	}
+	// ----------------------------------------------------------------------
 	// quasi_fixed
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
-	//
-	// random_zero_sum
-	bool random_zero_sum = option_map["random_zero_sum"] == "true";
 	//
 	// warn_on_stderr
 	bool warn_on_stderr = option_map["warn_on_stderr"] == "true";
@@ -1373,6 +1368,10 @@ void sample_command(
 	double random_bound = std::numeric_limits<double>::infinity();
 	if( tmp_str != "" )
 		random_bound = std::atof( tmp_str.c_str() );
+	// minimum_meas_cv
+	double minimum_meas_cv = std::atof(
+		option_map["minimum_meas_cv"].c_str()
+	);
 	// -----------------------------------------------------------------------
 	if( method == "simulate" )
 	{
@@ -1400,7 +1399,7 @@ void sample_command(
 			dismod_at::error_exit(msg);
 		}
 		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
-		{	// set the measurement values for corresponding simulation
+		{	// replace meas_value in data_subset_obj
 			size_t offset = n_subset * sample_index;
 			for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 			{	size_t simulate_id = offset + subset_id;
@@ -1418,8 +1417,9 @@ void sample_command(
 				data_subset_obj[subset_id].meas_value =
 					simulate_table[simulate_id].meas_value;
 			}
-			data_object.replace_like(data_subset_obj);
-
+			// replace_like
+			data_object.replace_like(minimum_meas_cv, data_subset_obj);
+			//
 			// fit_model
 			string fit_or_sample = "fit";
 			bool   random_only   = false;
@@ -1462,6 +1462,9 @@ void sample_command(
 	}
 	// ----------------------------------------------------------------------
 	assert( method == "asymptotic" );
+	//
+	// replace_like
+	data_object.replace_like(minimum_meas_cv, data_subset_obj);
 	//
 	// fit_var.variable_value
 	vector<double> variable_value;
@@ -1567,8 +1570,9 @@ $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 values for each
 $cref/sample_index/sample_table/sample_index/$$ in the sample table
 and each
-$cref/avgint_subset_id/avgint_subset_table/avgint_subset_id/$$
-in the avgint_subset table.
+$cref/avgint_id/predict_table/avgint_id/$$
+in the
+$cref/avgint subset/predict_table/Avgint Subset/$$.
 
 $children%example/get_started/predict_command.py%$$
 $head Example$$
@@ -1612,7 +1616,7 @@ void predict_command(
 	col_type[0]   = "integer";
 	col_unique[0] = false;
 	//
-	col_name[1]   = "avgint_subset_id";
+	col_name[1]   = "avgint_id";
 	col_type[1]   = "integer";
 	col_unique[1] = false;
 	//
@@ -1640,6 +1644,7 @@ void predict_command(
 		}
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	int integrand_id = avgint_subset_obj[subset_id].integrand_id;
+			int avgint_id    = avgint_subset_obj[subset_id].original_id;
 			double avg = 0.0;
 			dismod_at::integrand_enum integrand =
 				db_input.integrand_table[integrand_id];
@@ -1669,7 +1674,7 @@ void predict_command(
 			}
 			size_t predict_id = sample_index * n_subset + subset_id;
 			row_value[n_col * predict_id + 0] = to_string( sample_index );
-			row_value[n_col * predict_id + 1] = to_string( subset_id );
+			row_value[n_col * predict_id + 1] = to_string( avgint_id );
 			row_value[n_col * predict_id + 2] = to_string( avg );
 		}
 	}
@@ -1871,6 +1876,12 @@ int main(int n_arg, const char** argv)
 		pack_object,
 		s_info_vec
 	);
+	// minimum_meas_cv
+	double minimum_meas_cv = std::atof(
+		option_map["minimum_meas_cv"].c_str()
+	);
+	// rate_case
+	string rate_case = option_map["rate_case"];
 	// =======================================================================
 	if( command_arg == "start" )
 	{	start_command(
@@ -1882,19 +1893,8 @@ int main(int n_arg, const char** argv)
 	else if( command_arg == "truth" )
 	{	truth_command(db);
 	}
-	else
-	{	// data_subset_obj
-		vector<dismod_at::data_subset_struct> data_subset_obj;
-		vector<double> data_subset_cov_value;
-		data_subset(
-			db_input.data_table,
-			db_input.data_cov_value,
-			db_input.covariate_table,
-			child_data,
-			data_subset_obj,
-			data_subset_cov_value
-		);
-		// avgint_subset_obj
+	else if( command_arg == "predict" )
+	{	// avgint_subset_obj
 		vector<dismod_at::avgint_subset_struct> avgint_subset_obj;
 		vector<double> avgint_subset_cov_value;
 		avgint_subset(
@@ -1905,12 +1905,52 @@ int main(int n_arg, const char** argv)
 				avgint_subset_obj,
 				avgint_subset_cov_value
 		);
-		// -------------------------------------------------------------------
+		//
+		// avgint_object
+		dismod_at::data_model avgint_object(
+			parent_node_id           ,
+			n_covariate              ,
+			n_age_ode                ,
+			n_time_ode               ,
+			ode_step_size            ,
+			db_input.age_table       ,
+			db_input.time_table      ,
+			db_input.integrand_table ,
+			db_input.node_table      ,
+			avgint_subset_obj        ,
+			avgint_subset_cov_value  ,
+			w_info_vec               ,
+			s_info_vec               ,
+			pack_object              ,
+			child_avgint
+		);
+		avgint_object.set_eigen_ode2_case_number(rate_case);
+		size_t n_var = pack_object.size();
+		predict_command(
+			db                   ,
+			db_input             ,
+			n_var                ,
+			avgint_object      ,
+			avgint_subset_obj
+		);
+	}
+	else
+	{	// -------------------------------------------------------------------
+		// data_subset_obj
+		vector<dismod_at::data_subset_struct> data_subset_obj;
+		vector<double> data_subset_cov_value;
+		data_subset(
+			db_input.data_table,
+			db_input.data_cov_value,
+			db_input.covariate_table,
+			child_data,
+			data_subset_obj,
+			data_subset_cov_value
+		);
 		if( command_arg == "init" )
 		{	init_command(
 				db,
 				data_subset_obj,
-				avgint_subset_obj,
 				pack_object,
 				db_input,
 				parent_node_id,
@@ -1920,9 +1960,6 @@ int main(int n_arg, const char** argv)
 		}
 		else
 		{	// ---------------------------------------------------------------
-			double minimum_meas_cv = std::atof(
-				option_map["minimum_meas_cv"].c_str()
-			);
 			// prior_object
 			dismod_at::prior_model prior_object(
 				pack_object           ,
@@ -1934,7 +1971,6 @@ int main(int n_arg, const char** argv)
 			// data_object
 			dismod_at::data_model data_object(
 				parent_node_id           ,
-				minimum_meas_cv          ,
 				n_covariate              ,
 				n_age_ode                ,
 				n_time_ode               ,
@@ -1950,32 +1986,23 @@ int main(int n_arg, const char** argv)
 				pack_object              ,
 				child_data
 			);
-			string rate_case = option_map["rate_case"];
 			data_object.set_eigen_ode2_case_number(rate_case);
-			data_object.replace_like( data_subset_obj );
 			//
-			// avgint_object
-			dismod_at::data_model avgint_object(
-				parent_node_id           ,
-				minimum_meas_cv          ,
-				n_covariate              ,
-				n_age_ode                ,
-				n_time_ode               ,
-				ode_step_size            ,
-				db_input.age_table       ,
-				db_input.time_table      ,
-				db_input.integrand_table ,
-				db_input.node_table      ,
-				avgint_subset_obj        ,
-				avgint_subset_cov_value  ,
-				w_info_vec               ,
-				s_info_vec               ,
-				pack_object              ,
-				child_avgint
-			);
-			avgint_object.set_eigen_ode2_case_number(rate_case);
-			// ------------------------------------------------------------------
-			if( command_arg == "fit" )
+			if( command_arg == "sample" )
+			{	sample_command(
+					argv[3]          , // method
+					argv[4]          , // number_sample
+					db               ,
+					data_subset_obj  ,
+					data_object      ,
+					pack_object      ,
+					db_input         ,
+					s_info_vec       ,
+					prior_object     ,
+					option_map
+				);
+			}
+			else if( command_arg == "fit" )
 			{	string variables      = argv[3];
 				string simulate_index = "";
 				if( n_arg == 5 )
@@ -1994,38 +2021,15 @@ int main(int n_arg, const char** argv)
 				);
 			}
 			else if( command_arg == "simulate" )
-			{	simulate_command(
+			{	// replace_like
+				data_object.replace_like(minimum_meas_cv, data_subset_obj );
+				simulate_command(
 					argv[3]                  , // number_simulate
 					minimum_meas_cv          ,
 					db                       ,
 					db_input.integrand_table ,
 					data_subset_obj          ,
 					data_object
-				);
-			}
-			else if( command_arg == "sample" )
-			{
-				sample_command(
-					argv[3]          , // method
-					argv[4]          , // number_sample
-					db               ,
-					data_subset_obj  ,
-					data_object      ,
-					pack_object      ,
-					db_input         ,
-					s_info_vec       ,
-					prior_object     ,
-					option_map
-				);
-			}
-			else if( command_arg == "predict" )
-			{	size_t n_var = pack_object.size();
-				predict_command(
-					db                   ,
-					db_input             ,
-					n_var                ,
-					avgint_object      ,
-					avgint_subset_obj
 				);
 			}
 			else

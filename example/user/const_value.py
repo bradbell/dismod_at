@@ -9,10 +9,14 @@
 # ---------------------------------------------------------------------------
 # $begin user_const_value.py$$ $newlinech #$$
 # $spell
+#	init
 #	const
 # $$
 #
 # $section Fitting Using const_value in Smoothing Grid$$
+#
+# $head Commands$$
+# init, simulate, start, fit
 #
 # $code
 # $srcfile%
@@ -50,9 +54,9 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
+# Note that the a, t values are not used for this case
 def constant_weight_fun(a, t) :
 	return 1.0
-# note that the a, t values are not used for this case
 def fun_iota(a, t) :
 	return ('prior_iota', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_chi(a, t) :

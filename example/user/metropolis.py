@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 # $begin user_metropolis.py$$ $newlinech #$$
 # $spell
+#	init
 # $$
 #
 # $section Predict Average Integrand Using Results of a Fit$$

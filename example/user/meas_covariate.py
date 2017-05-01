@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 # $begin user_meas_covariate.py$$ $newlinech #$$
 # $spell
+#	init
 #	avgint
 #	Covariates
 #	covariate
@@ -17,6 +18,9 @@
 # $$
 #
 # $section Using Measurement Covariates on Multiple Integrands$$
+#
+# $head Commands$$
+# init, start, fit
 #
 # $head See Also$$
 # $cref user_lasso_covariate.py$$
@@ -58,6 +62,7 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
+# Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
 # note that the a, t values are not used for this case
@@ -172,23 +177,7 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{   # prior_zero
-			'name':     'prior_zero',
-			'density':  'uniform',
-			'lower':    0.0,
-			'upper':    0.0,
-			'mean':     0.0,
-			'std':      None,
-			'eta':      None
-		},{ # prior_none
-			'name':     'prior_none',
-			'density':  'uniform',
-			'lower':    None,
-			'upper':    None,
-			'mean':     0.0,
-			'std':      None,
-			'eta':      None
-		},{ # prior_gauss_zero
+		{	# prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
 			'lower':    None,

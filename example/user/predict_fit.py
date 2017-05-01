@@ -10,9 +10,13 @@
 # ---------------------------------------------------------------------------
 # $begin user_predict_fit.py$$ $newlinech #$$
 # $spell
+#	init
 # $$
 #
 # $section Predict Average Integrand Using Results of a Fit$$
+#
+# $head Commands$$
+# init, start, fit, sample, predict
 #
 # $code
 # $srcfile%
@@ -48,14 +52,9 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ---------------------------------------------------------------------------
-# note that the a, t values are not used for this example
-# note that the a, t values are not used for this example
+# Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
-def fun_zero(a, t) :
-	return ('prior_zero', 'prior_zero', 'prior_zero')
-def fun_one(a, t) :
-	return ('prior_one', 'prior_one', 'prior_one')
 def fun_rate_child(a, t) :
 	return ('prior_rate_child', 'prior_zero', 'prior_dtime_child')
 def fun_rate_parent(a, t) :
@@ -176,7 +175,7 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      1.0,
 			'eta':      1e-6
-		},{ # prior_dtime
+		},{ # prior_dtime_child
 			'name':     'prior_dtime_child',
 			'density':  'gaussian',
 			'lower':    None,
@@ -304,7 +303,6 @@ connection      = dismod_at.create_connection(file_name, new)
 predict_table  = dismod_at.get_table_dict(connection, 'predict')
 avgint_table   = dismod_at.get_table_dict(connection, 'avgint')
 node_table     = dismod_at.get_table_dict(connection, 'node')
-subset_dict    = dismod_at.get_table_dict(connection, 'avgint_subset')
 #
 # check that all the avgint_table values were predicted (no subsetting)
 assert len(predict_table) == 3
@@ -319,8 +317,7 @@ truth = {
 	'united_states' : S_united_states
 }
 for i in range(3) :
-	subset_id = predict_table[i]['avgint_subset_id']
-	avgint_id = subset_dict[subset_id]['avgint_id']
+	avgint_id = predict_table[i]['avgint_id']
 	node_id   = avgint_table[avgint_id]['node_id']
 	node      = node_table[node_id]['node_name']
 	check     = truth[node]

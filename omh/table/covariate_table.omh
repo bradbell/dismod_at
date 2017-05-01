@@ -52,13 +52,14 @@ has a maximum absolute difference greater than $icode max_difference$$,
 are not included in the $cref data_subset_table$$ and the
 $cref fit_data_subset_table$$.
 
-$subhead Avgint Subset Table$$
-Rows in the $code avgint$$ table for which the
+$subhead Avgint Subset$$
+Rows in the $cref avgint_table$$ for which the
 $cref/covariate/data_table/Covariates/$$
 corresponding to this $icode covariate_id$$
 has a maximum absolute difference greater than $icode max_difference$$,
-are not included in the $cref avgint_subset_table$$ and the
-$cref predict_table$$.
+are not included in the $cref predict_table$$;
+see the heading Covariates for the
+$cref/predict table/predict_table/Avgint Subset/Covariates/$$.
 
 
 $children%example/table/covariate_table.py

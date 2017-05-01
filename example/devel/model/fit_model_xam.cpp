@@ -303,7 +303,6 @@ bool fit_model_xam(void)
 	double ode_step_size = 20.;
 	dismod_at::data_model data_object(
 		parent_node_id,
-		minimum_meas_cv,
 		n_covariate,
 		n_age_ode,
 		n_time_ode,
@@ -319,7 +318,7 @@ bool fit_model_xam(void)
 		pack_object,
 		child_object
 	);
-	data_object.replace_like(data_subset_obj);
+	data_object.replace_like(minimum_meas_cv, data_subset_obj);
 	//
 	// start_var
 	vector<size_t> pack_prior_id;
@@ -355,7 +354,9 @@ bool fit_model_xam(void)
 	double random_bound = std::numeric_limits<double>::infinity();
 	//
 	// random_zero_sum
-	bool random_zero_sum = false;
+	vector<bool> random_zero_sum( dismod_at::number_rate_enum );
+	for(size_t rate_id = 0; rate_id < dismod_at::number_rate_enum; rate_id++)
+		random_zero_sum[rate_id] = false;
 	//
 	// warn_on_stderr
 	bool warn_on_stderr = true;

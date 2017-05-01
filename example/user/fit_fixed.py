@@ -9,9 +9,13 @@
 # ---------------------------------------------------------------------------
 # $begin user_fit_fixed.py$$ $newlinech #$$
 # $spell
+#	init
 # $$
 #
 # $section Fitting Just Fixed Effects$$
+#
+# $head Commands$$
+# init, start, fit
 #
 # $head Discussion$$
 # This example demonstrates using the
@@ -56,7 +60,7 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
-# note that the a, t values are not used for this example
+# Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
 def fun_rate_child(a, t) :

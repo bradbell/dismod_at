@@ -32,7 +32,6 @@ $comment Same order as table below$$
 $children%omh/table/log_table.omh
 	%omh/table/var_table.omh
 	%omh/table/data_subset_table.omh
-	%omh/table/avgint_subset_table.omh
 	%omh/table/start_var_table.omh
 	%omh/table/fit_var_table.omh
 	%omh/table/fit_data_subset_table.omh
@@ -60,10 +59,6 @@ $cref/init/init_command/$$ $cnext
 no
 $rnext
 $cref/data_subset/data_subset_table/$$ $cnext
-$cref/init/init_command/$$ $cnext
-no
-$rnext
-$cref/avgint_subset/avgint_subset_table/$$ $cnext
 $cref/init/init_command/$$ $cnext
 no
 $rnext
