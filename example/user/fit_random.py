@@ -9,9 +9,13 @@
 # ---------------------------------------------------------------------------
 # $begin user_fit_random.py$$ $newlinech #$$
 # $spell
+#	init
 # $$
 #
 # $section Fitting Just Random Effects$$
+#
+# $head Commands$$
+# init, start, fit
 #
 # $head Discussion$$
 # This example demonstrates using the

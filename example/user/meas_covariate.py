@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 # $begin user_meas_covariate.py$$ $newlinech #$$
 # $spell
+#	init
 #	avgint
 #	Covariates
 #	covariate
@@ -17,6 +18,9 @@
 # $$
 #
 # $section Using Measurement Covariates on Multiple Integrands$$
+#
+# $head Commands$$
+# init, start, fit
 #
 # $head See Also$$
 # $cref user_lasso_covariate.py$$

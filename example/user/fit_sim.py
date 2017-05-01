@@ -9,9 +9,13 @@
 # ---------------------------------------------------------------------------
 # $begin user_fit_sim.py$$ $newlinech #$$
 # $spell
+#	init
 # $$
 #
 # $section Fitting Simulated Data Example$$
+#
+# $head Commands$$
+# init, simulate, start, fit
 #
 # $code
 # $srcfile%

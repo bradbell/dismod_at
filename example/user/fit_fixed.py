@@ -9,9 +9,13 @@
 # ---------------------------------------------------------------------------
 # $begin user_fit_fixed.py$$ $newlinech #$$
 # $spell
+#	init
 # $$
 #
 # $section Fitting Just Fixed Effects$$
+#
+# $head Commands$$
+# init, start, fit
 #
 # $head Discussion$$
 # This example demonstrates using the

@@ -9,12 +9,16 @@
 # ---------------------------------------------------------------------------
 # $begin user_lasso_covariate.py$$ $newlinech #$$
 # $spell
+#	init
 #	avgint
 #	Covariates
 #	covariate
 # $$
 #
 # $section Using Lasso on Covariate Multiplier$$
+#
+# $head Commands$$
+# init, start, fit, truth, simulate, sample
 #
 # $head See Also$$
 # $cref user_meas_covariate.py$$

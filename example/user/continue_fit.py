@@ -9,6 +9,7 @@
 # ---------------------------------------------------------------------------
 # $begin user_continue_fit.py$$ $newlinech #$$
 # $spell
+#	init
 #	num_iter
 #	stderr
 #	py
@@ -16,6 +17,9 @@
 # $$
 #
 # $section Continuing a Fit From Where it Left Off$$
+#
+# $head Commands$$
+# init, simulate, start, fit, start, fit
 #
 # $head Option Table$$
 # In the option table defined below,

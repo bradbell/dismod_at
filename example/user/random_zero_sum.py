@@ -9,9 +9,13 @@
 # ---------------------------------------------------------------------------
 # $begin user_random_zero_sum.py$$ $newlinech #$$
 # $spell
+#	init
 # $$
 #
 # $section Fitting With Sum of Random Effect Constrained to Zero$$
+#
+# $head Commands$$
+# init, start, fit, fit
 #
 # $head Discussion$$
 # This example demonstrates using

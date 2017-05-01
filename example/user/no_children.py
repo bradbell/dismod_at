@@ -10,12 +10,16 @@
 # ---------------------------------------------------------------------------
 # $begin user_no_children.py$$ $newlinech #$$
 # $spell
+#	init
 #	avgint
 #	dage
 #	dtime
 # $$
 #
 # $section Case with no Children; i.e., no Random Effects$$
+#
+# $head Commands$$
+# init, start, fit
 #
 # $code
 # $srcfile%

@@ -10,9 +10,13 @@
 # ---------------------------------------------------------------------------
 # $begin user_predict_fit.py$$ $newlinech #$$
 # $spell
+#	init
 # $$
 #
 # $section Predict Average Integrand Using Results of a Fit$$
+#
+# $head Commands$$
+# init, start, fit, sample, predict
 #
 # $code
 # $srcfile%

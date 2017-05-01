@@ -9,10 +9,14 @@
 # ---------------------------------------------------------------------------
 # $begin user_const_random.py$$ $newlinech #$$
 # $spell
+#	init
 #	const
 # $$
 #
 # $section Fitting With Non-Zero Constant Random Effects in Smoothing Grid$$
+#
+# $head Commands$$
+# init, simulate, start, fit
 #
 # $code
 # $srcfile%

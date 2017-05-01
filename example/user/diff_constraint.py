@@ -10,12 +10,16 @@
 # ---------------------------------------------------------------------------
 # $begin user_diff_constraint.py$$ $newlinech #$$
 # $spell
+#	init
 #	avgint
 #	dage
 #	dtime
 # $$
 #
 # $section Constraints on Differences in Age and Time$$
+#
+# $head Commands$$
+# init, start, fit
 #
 # $code
 # $srcfile%
