@@ -193,26 +193,25 @@
 # is the data table
 # $cref/data_id/data_table/data_id/$$.
 #
-# $subhead data_name$$
-# is the
-# $cref/data_name/data_table/data_name/$$.
-#
 # $subhead data_extra_columns$$
 # Each column specified by the
 # $cref/data_extra_columns/option_table/data_extra_columns/$$
 # option is included in the $code data.csv$$ file.
 #
-# $subhead integrand$$
-# is the integrand table
-# $cref/integrand_name/integrand_table/integrand_name/$$.
+# $subhead child$$
+# If this data row is associated with a child,
+# this is the name of the child. Otherwise, this data is associated
+# with the $cref/parent node/option_table/parent_node_id/$$.
 #
 # $subhead node$$
 # is the
-# $cref/node_name/node_table/node_name/$$ that this
-# row is associated with
-# during a $code dismod_at$$ fit.
+# $cref/node_name/node_table/node_name/$$ for this data row.
 # This will correspond directly to the data table
-# $cref/node_id/data_table/node_id/$$, or be an ascendant of that node.
+# $cref/node_id/data_table/node_id/$$.
+3
+# $subhead integrand$$
+# is the integrand table
+# $cref/integrand_name/integrand_table/integrand_name/$$.
 #
 # $subhead weight$$
 # is the
@@ -462,10 +461,9 @@ def db2csv_command(database_file_arg) :
 					if field_in in [ 'lower', 'upper', 'mean' ] :
 						row_out[field_out] = convert2output( const_value )
 	# -------------------------------------------------------------------------
-	def node_id2child_or_parent(node_id) :
+	def node_id2child(node_id) :
 		if node_id == parent_node_id :
-			name = table_data['node'][node_id]['node_name']
-			return name
+			return ''
 		descendant_id = node_id
 		while descendant_id != None :
 			parent_id  = table_data['node'][descendant_id]['parent']
@@ -473,7 +471,7 @@ def db2csv_command(database_file_arg) :
 				name = table_data['node'][descendant_id]['node_name']
 				return name
 			descendant_id = parent_id
-		return None
+		assert False
 	# -------------------------------------------------------------------------
 	file_name    = database_file_arg
 	database_dir = os.path.split(database_file_arg)[0]
@@ -772,8 +770,9 @@ def db2csv_command(database_file_arg) :
 	csv_file  = open(file_name, 'w')
 	#
 	header = ['data_id'] + data_extra_columns + [
-		'integrand',
+		'child',
 		'node',
+		'integrand',
 		'weight',
 		'age_lo',
 		'age_up',
@@ -836,8 +835,8 @@ def db2csv_command(database_file_arg) :
 		row_out['density'] = table_lookup(
 			'density', row_in['density_id'], 'density_name'
 		)
-		row_out['node'] = node_id2child_or_parent( row_in['node_id'] )
-		#
+		row_out['child'] = node_id2child( row_in['node_id'] )
+		row_out['node']  = table_data['node'][ row_in['node_id'] ]['node_name']
 		#
 		covariate_id = 0
 		for row in table_data['covariate'] :

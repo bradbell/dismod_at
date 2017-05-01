@@ -37,6 +37,7 @@ $childtable%
 %$$
 
 $head 05-01$$
+$list number$$
 Remove recommendation for using
 $code prior_zero$$ and $code prior_one$$ as
 $cref/prior names/prior_table/prior_name/$$.
@@ -45,6 +46,13 @@ $cref/const_value/smooth_grid_table/const_value/$$,
 and use of null as smoothing; e.g.,
 null as a $icode parent_smooth_id$$ in the
 $cref/rate table/rate_table/parent_smooth_id/$$.
+$lnext
+Provide more information by splitting node into
+$cref/child/db2csv_command/data.csv/child/$$ and
+$cref/node/db2csv_command/data.csv/node/$$ in
+data.csv
+$lend
+
 
 $head 04-29$$
 $list number$$

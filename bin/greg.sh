@@ -28,7 +28,7 @@ fi
 # ---------------------------------------------------------------------------
 if [ "$direction" == 'from' ] && [ ! -e "$remote_dir/$database" ]
 then
-	echo "$remote/$database: does not exist"
+	echo "$remote_dir/$database: does not exist"
 	exit 1
 fi
 if [ "$direction" == 'to' ] && [ ! -e "$local_dir/$database" ]
