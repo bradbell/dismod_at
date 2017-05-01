@@ -51,7 +51,7 @@ then
 	echo_eval cp $remote_dir/$database build/greg/$database
 	echo_eval bin/dismodat.py $local_dir/$database db2csv
 else
-	echo_eval cp $local_dir/$database $remote_dir/$database
+	echo_eval cp $local_dir/$database $remote_dir/brad.$database
 fi
 # ---------------------------------------------------------------------------
 echo 'bin/greg.sh: OK'
