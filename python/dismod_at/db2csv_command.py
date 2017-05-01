@@ -124,6 +124,11 @@
 # If the $cref sample_command$$ has been run, this is the
 # $cref/var_value/sample_table/var_value/$$ corresponding to
 # $cref/sample_index/sample_table/sample_index/$$ equal to zero.
+# If the previous sample command method was
+# $cref/fit_var/sample_command/method/fit_var/$$,
+# These are the model variables corresponding to the previous fit; i.e.,
+# $cref/variable values/fit_var_table/variable_value/$$ in the
+# fit_var table.
 #
 # $subhead fit_value$$
 # If the $cref fit_command$$ has been run, this is the
