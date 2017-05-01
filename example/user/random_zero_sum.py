@@ -62,7 +62,7 @@ os.chdir('build/example/user')
 python_seed = int( time.time() )
 random.seed( python_seed )
 # ------------------------------------------------------------------------
-# note that the a, t values are not used for this example
+# Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
 def fun_rate_child(a, t) :

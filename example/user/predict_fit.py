@@ -48,14 +48,9 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ---------------------------------------------------------------------------
-# note that the a, t values are not used for this example
-# note that the a, t values are not used for this example
+# Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
-def fun_zero(a, t) :
-	return ('prior_zero', 'prior_zero', 'prior_zero')
-def fun_one(a, t) :
-	return ('prior_one', 'prior_one', 'prior_one')
 def fun_rate_child(a, t) :
 	return ('prior_rate_child', 'prior_zero', 'prior_dtime_child')
 def fun_rate_parent(a, t) :
@@ -176,7 +171,7 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      1.0,
 			'eta':      1e-6
-		},{ # prior_dtime
+		},{ # prior_dtime_child
 			'name':     'prior_dtime_child',
 			'density':  'gaussian',
 			'lower':    None,

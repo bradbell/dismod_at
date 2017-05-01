@@ -51,16 +51,14 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
-# functions used to define priors on age-time grid
+# Note that the a, t values are not used for this example
 #
 def constant_one_fun(a, t) :
 	return 1.0
-#
 def fun_iota_world(a, t) :
 	return ('prior_iota_world',   'prior_difference', 'prior_difference')
 def fun_iota_child(a, t) :
 	return ('prior_iota_child',   'prior_difference', 'prior_difference')
-#
 def fun_chi_world(a, t) :
 	return (chi_true['world'],    'prior_difference', 'prior_difference')
 def fun_chi_child_1(a, t) :
@@ -131,15 +129,7 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{   # prior_zero
-			'name':     'prior_zero',
-			'density':  'uniform',
-			'lower':    0.0,
-			'upper':    0.0,
-			'mean':     0.0,
-			'std':      None,
-			'eta':      None
-		},{ # prior_difference
+		{	# prior_difference
 			'name':     'prior_difference',
 			'density':  'gaussian',
 			'lower':    None,

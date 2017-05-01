@@ -69,6 +69,7 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
+# Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
 # note that the a, t values are not used for this case

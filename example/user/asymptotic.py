@@ -39,7 +39,8 @@
 #
 # $head Likelihood$$
 # We define $latex h(y, \mu , \sigma)$$
-# to be the log-density for a $latex \B{N}(0, 1)$$ distribution; i.e.,
+# to be the log-density for a $latex \B{N}( \mu, \sigma^2 )$$ distribution;
+# i.e.,
 # $latex \[
 #	h(y, \mu, \sigma) =
 #		- \frac{ ( y - \mu )^2 }{ \sigma^2 }
@@ -50,7 +51,7 @@
 #	h[ y_n, \iota_n, s_n ] +
 #	h[ y_m, \exp( u_m ) \iota_m, s_m ] +
 #	h[ y_c, \exp( u_c ) \iota_c, s_c ] +
-#	h( u_m, 0, s_r ) + h( u_c , 0 , s_r ) +
+#	h( u_m, 0, s_r ) + h( u_c , 0 , s_r )
 # \] $$
 #
 # $code
@@ -126,14 +127,9 @@ def log_f(x) :
 	ret   += h(u_m, 0.0, s_r ) + h(u_c, 0.0, s_r)
 	return ret
 # ---------------------------------------------------------------------------
-# note that the a, t values are not used for this example
-# note that the a, t values are not used for this example
+# Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
-def fun_zero(a, t) :
-	return ('prior_zero', 'prior_zero', 'prior_zero')
-def fun_one(a, t) :
-	return ('prior_one', 'prior_one', 'prior_one')
 def fun_rate_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_rate_parent(a, t) :
@@ -212,15 +208,7 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{   # prior_zero
-			'name':     'prior_zero',
-			'density':  'uniform',
-			'lower':    0.0,
-			'upper':    0.0,
-			'mean':     0.0,
-			'std':      None,
-			'eta':      None
-		},{ # prior_rate_parent
+		{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
 			'lower':    1e-2 * measure['north_america'],
