@@ -10,7 +10,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 remote_dir='/snfs2/HOME/gma1/tmp'
-local_dir='build/greg'
+local_dir='greg'
 # ---------------------------------------------------------------------------
 if [ "$0" != 'bin/greg.sh' ] || [ "$#" != '2' ]
 then
@@ -49,9 +49,8 @@ then
 		echo_eval mkdir -p build/greg
 	fi
 	echo_eval cp $remote_dir/$database build/greg/$database
-	echo_eval bin/dismodat.py $local_dir/$database db2csv
 else
-	echo_eval cp $local_dir/$database $remote_dir/brad.$database
+	echo_eval cp $local_dir/$database $remote_dir/brad/$database
 fi
 # ---------------------------------------------------------------------------
 echo 'bin/greg.sh: OK'
