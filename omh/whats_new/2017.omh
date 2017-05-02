@@ -26,6 +26,8 @@ $spell
 	fabs
 	stderr
 	nslist
+	dage
+	dtime
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -55,6 +57,13 @@ $lnext
 The $cref get_started$$ section has been moved to the same level as
 $cref user$$ and the
 $cref/Commands/user/Commands/$$ heading has been added to the user section.
+$lnext
+Improve smooth_grid table
+documentation for cases and meaning when the following value are null:
+$cref/const_value/smooth_grid_table/const_value/$$,
+$cref/value_prior_id/smooth_grid_table/value_prior_id/$$,
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$,
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
 $lend
 
 
