@@ -131,7 +131,7 @@ $latex \[
 =
 \Delta_i
 +
-\frac{ \Delta_i }{\bar{w}_i}
+\frac{1}{\bar{w}_i}
 	\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
 	\left(
 		\sum_{j \in K_i} x_{i,j} \gamma_{i,j} (a, t)
@@ -151,7 +151,7 @@ $latex \[
 =
 \Delta_i
 +
-\frac{ y_i + \eta_i }{\bar{w}_i}
+\frac{1}{\bar{w}_i}
 	\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
 	\left(
 		\sum_{j \in K_i} x_{i,j} \gamma_{i,j} (a, t)

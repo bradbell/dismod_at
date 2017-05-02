@@ -38,6 +38,20 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-02$$
+The standard deviation covariate multipliers effect
+used to scale the measurement standard deviation.
+Now it is directly added to the measurement standard deviation; see
+$cref/adjusted standard deviation
+	/data_like
+	/Adjusted Standard Deviation, delta_i
+/$$.
+This makes the $cref/meas_std/mulcov_table/mulcov_type/meas_std/$$
+covariate multipliers more difficult to use because they have units.
+On the other hand, it is more flexible for
+use in meta-regression when the standard deviations for some measurements
+is small and the difference between measurement sets is large.
+
 $head 05-01$$
 $list number$$
 Remove recommendation for using

@@ -310,7 +310,7 @@ bool meas_mulcov(void)
 	// check residual
 	double y     = data_table[data_id].meas_value;
 	double Delta = data_table[data_id].meas_std;
-	double delta = Delta * ( 1.0 + avg_std_mulcov );
+	double delta = Delta  + avg_std_mulcov;
 	Float  check = (y - avg_integrand) / delta;
 	ok          &= fabs( 1.0 - wres / check ) <= eps;
 	//
