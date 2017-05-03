@@ -44,11 +44,11 @@ fi
 # ---------------------------------------------------------------------------
 if [ "$direction" == 'from' ]
 then
-	if [ ! -e build/greg ]
+	if [ ! -e greg ]
 	then
-		echo_eval mkdir -p build/greg
+		echo_eval mkdir -p greg
 	fi
-	echo_eval cp $remote_dir/$database build/greg/$database
+	echo_eval cp $remote_dir/$database $local_dir/$database
 else
 	echo_eval cp $local_dir/$database $remote_dir/brad/$database
 fi
