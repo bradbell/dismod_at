@@ -15,23 +15,23 @@ local_dir='greg'
 if [ "$0" != 'bin/greg.sh' ] || [ "$#" != '2' ]
 then
 	echo 'usage: bin/greg.sh direction database'
-	echo 'where direction is from or to (gregs file system)'
+	echo 'where direction is get or put (gregs file system)'
 	exit 1
 fi
 direction="$1"
 database="$2"
-if [ "$direction" != 'from' ] && [ "$direction" != 'to' ]
+if [ "$direction" != 'get' ] && [ "$direction" != 'put' ]
 then
-	echo 'greg.sh: direction is not "from" or "to"'
+	echo 'greg.sh: direction is not "get" or "put"'
 	exit 1
 fi
 # ---------------------------------------------------------------------------
-if [ "$direction" == 'from' ] && [ ! -e "$remote_dir/$database" ]
+if [ "$direction" == 'get' ] && [ ! -e "$remote_dir/$database" ]
 then
 	echo "$remote_dir/$database: does not exist"
 	exit 1
 fi
-if [ "$direction" == 'to' ] && [ ! -e "$local_dir/$database" ]
+if [ "$direction" == 'put' ] && [ ! -e "$local_dir/$database" ]
 then
 	echo "$local_dir/$database: does not exist"
 	exit 1
@@ -42,7 +42,7 @@ then
 	exit 1
 fi
 # ---------------------------------------------------------------------------
-if [ "$direction" == 'from' ]
+if [ "$direction" == 'get' ]
 then
 	if [ ! -e greg ]
 	then
