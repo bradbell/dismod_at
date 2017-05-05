@@ -17,6 +17,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_integrand_table.hpp"
 # include "get_density_table.hpp"
 # include "get_node_table.hpp"
+# include "get_prior_table.hpp"
 # include "weight_info.hpp"
 # include "smooth2ode.hpp"
 # include "pack_info.hpp"
@@ -82,6 +83,7 @@ public:
 		const CppAD::vector<double>&             time_table      ,
 		const CppAD::vector<integrand_enum>&     integrand_table ,
 		const CppAD::vector<node_struct>&        node_table      ,
+		const CppAD::vector<prior_struct>&       prior_table     ,
 		const CppAD::vector<SubsetStruct>&       subset_object   ,
 		const CppAD::vector<double>&             subset_cov_value,
 		const CppAD::vector<weight_info>&        w_info_vec      ,

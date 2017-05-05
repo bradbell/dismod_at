@@ -221,6 +221,7 @@ data_model::data_model(
 	const CppAD::vector<double>&             time_table      ,
 	const CppAD::vector<integrand_enum>&     integrand_table ,
 	const CppAD::vector<node_struct>&        node_table      ,
+	const CppAD::vector<prior_struct>&       prior_table     ,
 	const CppAD::vector<SubsetStruct>&       subset_object   ,
 	const CppAD::vector<double>&             subset_cov_value,
 	const CppAD::vector<weight_info>&        w_info_vec      ,
@@ -538,10 +539,26 @@ pack_object_     (pack_object)
 				break;
 			}
 			for(size_t ell = 0; ell < rate_id.size(); ell++)
-			{	size_t smooth_id =
+			{	// check if any random effects for this rate are not constant
+				size_t smooth_id =
 					pack_object.rate_info(rate_id[ell], child).smooth_id;
 				if( smooth_id != DISMOD_AT_NULL_SIZE_T )
-					random_depend = true;
+				{	const smooth_info& s_info = s_info_vec[smooth_id];
+					size_t             n_age  = s_info.age_size();
+					size_t             n_time = s_info.time_size();
+					for(size_t i = 0; i < n_age; i++)
+					{	for(size_t j = 0; j < n_time; j++)
+						{	size_t prior_id    = s_info.value_prior_id(i, j);
+							// if prior_id is null then const_value is not null
+							if( prior_id != DISMOD_AT_NULL_SIZE_T )
+							{	double lower = prior_table[prior_id].lower;
+								double upper = prior_table[prior_id].upper;
+								if( lower != upper )
+									random_depend = true;
+							}
+						}
+					}
+				}
 			}
 		}
 		data_info_[subset_id].random_depend = random_depend;
@@ -1775,6 +1792,7 @@ template data_model::data_model(                                \
 	const CppAD::vector<double>&             time_table      ,  \
 	const CppAD::vector<integrand_enum>&     integrand_table ,  \
 	const CppAD::vector<node_struct>&        node_table      ,  \
+	const CppAD::vector<prior_struct>&       prior_table     ,  \
 	const CppAD::vector<SubsetStruct>&       subset_object   ,  \
 	const CppAD::vector<double>&             subset_cov_value,  \
 	const CppAD::vector<weight_info>&        w_info_vec      ,  \

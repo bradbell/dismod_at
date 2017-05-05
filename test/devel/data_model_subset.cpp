@@ -88,6 +88,17 @@ bool data_model_subset(void)
 	vector<dismod_at::weight_info> w_info_vec(1);
 	w_info_vec[0] = w_info;
 	//
+	// prior table
+	double nan = std::numeric_limits<double>::quiet_NaN();
+	vector<dismod_at::prior_struct> prior_table(1);
+	prior_table[0].prior_name = "prior_zero";
+	prior_table[0].density_id = 0;
+	prior_table[0].lower      = -1.0;
+	prior_table[0].upper      = +1.0;
+	prior_table[0].mean       = 0.0;
+	prior_table[0].std        = nan;
+	prior_table[0].eta        = nan;
+	//
 	// s_info_vec
 	vector<dismod_at::smooth_info> s_info_vec(2);
 	size_t mulstd_value = 1, mulstd_dage = 1, mulstd_dtime = 1;
@@ -105,6 +116,8 @@ bool data_model_subset(void)
 		//
 		vector<size_t> value_prior_id(n_si),
 			dage_prior_id(n_si), dtime_prior_id(n_si);
+		for(size_t i = 0; i < n_si; i++)
+			value_prior_id[i] = 0;
 		vector<double> const_value(n_si);
 		dismod_at::smooth_info s_info(
 			age_table, time_table, age_id_tmp, time_id,
@@ -224,6 +237,7 @@ bool data_model_subset(void)
 		time_table,
 		integrand_table,
 		node_table,
+		prior_table,
 		data_subset_obj,
 		data_subset_cov_value,
 		w_info_vec,

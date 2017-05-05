@@ -31,9 +31,9 @@ then
 	echo "$remote_dir/$database: does not exist"
 	exit 1
 fi
-if [ "$direction" == 'put' ] && [ ! -e "$local_dir/$database" ]
+if [ "$direction" == 'put' ] && [ ! -e "$local_dir/brad/$database" ]
 then
-	echo "$local_dir/$database: does not exist"
+	echo "$local_dir/brad/$database: does not exist"
 	exit 1
 fi
 if [ ! -e bin/dismodat.py ]
@@ -50,7 +50,7 @@ then
 	fi
 	echo_eval cp $remote_dir/$database $local_dir/$database
 else
-	echo_eval cp $local_dir/$database $remote_dir/brad/$database
+	echo_eval cp $local_dir/brad/$database $remote_dir/brad/$database
 fi
 # ---------------------------------------------------------------------------
 echo 'bin/greg.sh: OK'
