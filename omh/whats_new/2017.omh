@@ -38,6 +38,14 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-05$$
+Improved the detection of which
+$cref data_table$$ rows do not require the
+$cref/random effects/model_variables/Random Effects, u/$$
+to make correspond $cref avg_integrand$$ model prediction.
+This may make the computation more efficient, but otherwise
+the user should see no difference.
+
 $head 05-02$$
 The standard deviation covariate multipliers effect
 used to scale the measurement standard deviation.
