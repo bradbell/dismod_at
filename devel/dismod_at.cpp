@@ -508,6 +508,7 @@ $spell
 	num_iter
 	dismod
 	py
+	std
 $$
 
 $section The Fit Command$$
@@ -568,6 +569,10 @@ In this case the corresponding simulate table
 $cref/meas_value/simulate_table/meas_value/$$ entries
 are used in place of the data table
 $cref/meas_value/data_table/meas_value/$$ entries.
+All the rest of the inputs are the same as when $icode simulated_index$$
+is not present; e.g.,
+$cref/meas_std/data_table/meas_std/$$ comes from the data table.
+
 
 $head simulate_table$$
 If $icode simulate_index$$ is present,
