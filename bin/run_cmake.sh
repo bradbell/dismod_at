@@ -104,6 +104,9 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
+switch_build_type='no'
+switch_link_type='no'
+# -----------------------------------------------------------------------------
 while [ "$1" != '' ]
 do
 	if [ "$1" == '--help' ]
@@ -113,7 +116,8 @@ usage: bin/run_cmake.sh \\
 	[--help] \\
 	[--verbose] \\
 	[--no_log] \\
-	[--release]
+	[--switch_build_type]
+	[--switch_link_type]
 EOF
 		exit 0
 	fi
@@ -123,9 +127,12 @@ EOF
 	elif [ "$1" == '--no_log' ]
 	then
 		log_fatal_error='no'
-	elif [ "$1" == '--release' ]
+	elif [ "$1" == '--switch_build_type' ]
 	then
-		build_type='release'
+		switch_build_type='yes'
+	elif [ "$1" == '--switch_link_type' ]
+	then
+		switch_link_type='yes'
 	else
 		echo "'$1' is an invalid option"
 		bin/run_cmake.sh --help
@@ -133,13 +140,34 @@ EOF
 	fi
 	shift
 done
+# final build_type
+if [ "$switch_build_type" == 'yes' ]
+then
+	if [ "$build_type" == 'debug' ]
+	then
+		build_type='release'
+	else
+		build_type='debug'
+	fi
+fi
+# final link_type
+link_type="$build_type"
+if [ "$switch_link_type" == 'yes' ]
+then
+	if [ "$build_type" == 'debug' ]
+	then
+		link_type='release'
+	else
+		link_type='debug'
+	fi
+fi
 # --------------------------------------------------------------------------
 libdir=`bin/libdir.sh`
 export PKG_CONFIG_PATH="$ipopt_prefix/$libdir/pkgconfig"
 # --------------------------------------------------------------------------
 if echo "$dismod_at_prefix" | grep '/dismod_at$' > /dev/null
 then
-	bin/build_type.sh run_cmake $dismod_at_prefix $build_type
+	bin/build_type.sh run_cmake $dismod_at_prefix $link_type
 fi
 # --------------------------------------------------------------------------
 if [ ! -e build ]
