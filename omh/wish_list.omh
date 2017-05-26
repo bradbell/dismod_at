@@ -22,9 +22,18 @@ $spell
 	Jacobian
 	std
 	avgint
+	dage
+	dtime
+	var
 $$
 
 $section Dismod_at Wish List$$
+
+$head Lagrange Multipliers$$
+Change the Lagrange multipliers
+$cref/lagrange_dage/fit_var_table/lagrange_dage/$$ (dtime) in the
+fit_var table to be null when there is no corresponding age (time) different; i.e.,
+at the maximum age (time).
 
 $head ODE Solution$$
 
