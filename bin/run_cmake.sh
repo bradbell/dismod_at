@@ -47,7 +47,7 @@ python3_executable='/usr/bin/python3'
 # &head extra_cxx_flags&&
 # Extra C++ flags used during compilation:
 # &codep
-extra_cxx_flags='-std=c++11 -Wall'
+extra_cxx_flags='-std=c++11 -Wall -DCPPAD_DEBUG_AND_RELEASE'
 # &&
 # An alternative might be $code '-Wall'.
 #

@@ -132,7 +132,6 @@ cmake_args="$cmake_args -D ipopt_prefix=$ipopt_prefix"
 cmake_args="$cmake_args -D eigen_prefix=$eigen_prefix"
 cmake_args="$cmake_args -D suitesparse_prefix=$suitesparse_prefix"
 #
-cmake_args="$cmake_args -D cppad_cxx_flags=$extra_cxx_flags"
 cmake_args="$cmake_args -D cmake_libdir=$libdir"
 cmake_args="$cmake_args -D bool_sparsity=$bool_sparsity"
 cmake_args="$cmake_args -D ldlt_cholmod=$ldlt_cholmod"
@@ -146,8 +145,8 @@ if [ "$cmake_cxx_compiler" != '' ]
 then
 	cmake_args="$cmake_args -D CMAKE_CXX_COMPILER=$cmake_cxx_compiler"
 fi
-echo "cmake $cmake_args .."
-cmake $cmake_args ..
+echo "cmake $cmake_args -D cppad_cxx_flags=\"$extra_cxx_flags\" .."
+cmake $cmake_args -D cppad_cxx_flags="$extra_cxx_flags" ..
 # -----------------------------------------------------------------------------
 echo_eval make install
 # -----------------------------------------------------------------------------
