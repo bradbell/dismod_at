@@ -9,6 +9,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
+# /snfs2/HOME/gma1/dismod_at_models/2017.06.05-World_and_Super_from_priors/both
 remote_dir='/snfs2/HOME/gma1/tmp'
 local_dir='greg'
 # ---------------------------------------------------------------------------

@@ -29,6 +29,12 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head parent_node$$
+It would be easier for the user if
+$cref/parent_node_id/option_table/parent_node_id/$$,
+in the option table,
+were replaced by $icode parent_node_name$$.
+
 $head Simulated Data$$
 It seems to me that
 $cref/meas_std/simulate_table/meas_std/$$ from the simulate table should
