@@ -68,7 +68,6 @@ fi
 list='
 	doc.omh
 	omh/install/unix.omh
-	bin/install_dismod_at.sh
 	bin/setup.py.in
 '
 for name in $list
