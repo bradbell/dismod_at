@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2017$$
 $spell
+	ran_obj_tst
 	const
 	Dismod
 	cppad
@@ -37,6 +38,21 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 08-07$$
+$list number$$
+Advance to $code cppad_mixed-20170801$$ to fix an install problem where
+$code ran_obj_tst$$ was not defined.
+$lnext
+The postscripts $code fixed$$ and $code random$$ were missing from the
+$cref/accept_after_max_steps/option_table/Optimizer/accept_after_max_steps/$$
+documentation.
+$lnext
+It would be nice to have a sample_data_subset table that is similar to the
+$cref fit_data_subset_table$$, but corresponds to
+$cref/sample command/sample_command/method/simulate/$$
+with $icode method$$ equal to $code simulate$$.
+$lend
 
 $head 05-23$$
 Advance to cppad-20170522.

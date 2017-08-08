@@ -321,7 +321,10 @@ At least one these two print values
 The default value for this option is $code 0$$.
 
 $subhead accept_after_max_steps$$
-This is a positive integer specifying the maximum number of
+If $icode option_name$$ is
+$code accept_after_max_steps_fixed$$ ($code accept_after_max_steps_random$$),
+the corresponding $icode option_value$$
+is a positive integer specifying the maximum number of
 backtracking steps to take before accepting a line search point.
 The default value for this option is $code 5$$.
 
