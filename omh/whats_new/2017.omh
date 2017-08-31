@@ -39,6 +39,13 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 08-30$$
+Advance to cppad-20170830. This fixes a problem with the cmake command;
+to be specific,
+$codei%
+	Policy CMP0046 is not set: Error on non-existent dependency
+%$$
+
 $head 08-07$$
 $list number$$
 Advance to $code cppad_mixed-20170801$$ to fix an install problem where

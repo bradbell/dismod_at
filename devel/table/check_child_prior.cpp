@@ -191,6 +191,8 @@ void check_child_prior(
 						msg += ", ";
 					msg += "upper not plus infinity";
 				}
+				if( lower == upper )
+					msg = "";
 				if( msg != "" )
 				{	size_t smooth_id = smooth_grid[grid_id].smooth_id;
 					msg = name[i]

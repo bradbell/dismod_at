@@ -22,8 +22,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/coin-or/CppAD.git'
-hash_key='d225143a5aacbefe940cd113ef0eb6e974452e7f'
-version='20170617'
+hash_key='6c98eba3dfcaa5729815e25993b88994ea7c685d'
+version='20170830'
 # --------------------------------------------------------------------------
 libdir=`bin/libdir.sh`
 export PKG_CONFIG_PATH="$ipopt_prefix/$libdir/pkgconfig"
