@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -14,33 +14,23 @@ export PYTHONPATH=''
 # ---------------------------------------------------------------------------
 if [ "$0" != "bin/check_all.sh" ]
 then
-	echo 'bin/check_all.sh [d|r|ds|rs]'
+	echo 'bin/check_all.sh (+speed | -speed)'
 	echo 'must be executed from its parent directory'
 	exit 1
 fi
 # ---------------------------------------------------------------------------
-input="$1"
-while [ "$input" != 'd' ] \
-&&    [ "$input" != 'r' ] \
-&&    [ "$input" != 'ds' ] \
-&&    [ "$input" != 'rs' ]
-do
-	msg='Debug + Speed [ds], Release + Speed [rs], Debug [d], Release [s] ?'
-	read -p "$msg" input
-done
+if [ "$1" != '+speed' ] && [ "$1" != '-speed' ]
+then
+	echo 'check_all.sh: option is not +speed or -speed'
+	exit 1
+fi
 bin/check_devel_xam.sh
 bin/check_include.sh
 bin/check_srcfile.sh
 bin/check_configure.sh
 #
 bin/run_omhelp.sh xml
-#
-if [ "$input" == 'r' ] || [ "$input" == 'rs' ]
-then
-	bin/run_cmake.sh --release
-else
-	bin/run_cmake.sh
-fi
+bin/run_cmake.sh
 # ----------------------------------------------------------------------------
 cd build
 echo "make check >& check_all.log"
@@ -54,7 +44,7 @@ then
 	echo 'check_all.sh: aborting: see compiler warnings in check_all.log'
 	exit 1
 fi
-if [ "$input" == 'ds' ] || [ "$input" == 'rs' ]
+if [ "$input" == '+speed' ]
 then
 	make speed
 fi
