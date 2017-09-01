@@ -15,7 +15,8 @@
 # $section A Simulate Data Speed Test$$
 #
 # $head Syntax$$
-# $icode%python3% example/user/speed.py %random_seed% %n_children%$$
+# $icode%python3% example/user/speed.py \
+#	%random_seed% %n_children% %n_data_per_child%$$
 #
 # $head python3$$
 # This is the $cref/python3_executable/run_cmake.sh/python3_executable/$$
@@ -28,6 +29,9 @@
 # $head n_children$$
 # is a positive integer specifying the number of
 # $cref/children/option_table/parent_node_id/Children/$$.
+#
+# $head n_data_per_child$$
+# is the number of measurement values (data points) for each child node.
 #
 # $head Commands$$
 # init, simulate, start, fit
@@ -45,7 +49,6 @@ iota_parent               = 0.05
 rho_parent                = 0.2
 mulcov_income_iota_true   = 1.0
 mulcov_sex_rho_true       = -1.0
-n_data_per_child          = 20
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -53,18 +56,20 @@ import time
 import distutils.dir_util
 import subprocess
 test_program = 'example/user/speed.py'
-if sys.argv[0] != test_program  or len(sys.argv) != 3 :
+if sys.argv[0] != test_program  or len(sys.argv) != 4 :
 	usage  = 'python3 ' + test_program + ' random_seed n_children\n'
 	usage += 'where working directory is dismod_at distribution directory\n'
-	usage += 'python3:     is the python 3 program on your system\n'
-	usage += 'random_seed: is non-negative random seed; if zero, use clock\n'
-	usage += 'n_children:  is the positive number of child nodes\n'
+	usage += 'python3:          the python 3 program on your system\n'
+	usage += 'random_seed:      non-negative random seed; if zero, use clock\n'
+	usage += 'n_children:       positive number of child nodes\n'
+	usage += 'n_data_per_child: number of data points for each child node\n'
 	sys.exit(usage)
 #
-start_time      = time.time();
-random_seed_arg = sys.argv[1]
-n_children      = int( sys.argv[2] )
-n_data          = n_data_per_child * n_children
+start_time       = time.time();
+random_seed_arg  = sys.argv[1]
+n_children       = int( sys.argv[2] )
+n_data_per_child = int( sys.argv[3] )
+n_data           = n_data_per_child * n_children
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
@@ -425,10 +430,11 @@ for var_id in range( number_variable ) :
 		max_error = max(abs(fit_value) , max_error)
 	else :
 		max_error = max( abs(fit_value / true_value - 1.0), max_error)
-print('elapsed seconds =', time.time() - start_time)
-print('random_seed = ', random_seed)
-print('n_children = ', n_children)
-print('max_error = ', max_error)
+print('random_seed      = ', random_seed)
+print('n_children       = ', n_children)
+print('n_data_per_child = ', n_data_per_child)
+print('elapsed seconds  =', time.time() - start_time)
+print('max_error        = ', max_error)
 if max_error > 5e-2 :
 	print('simulated.py: Error')
 	assert(False)

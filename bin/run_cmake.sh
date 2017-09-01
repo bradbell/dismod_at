@@ -107,6 +107,11 @@ echo_eval() {
 switch_build_type='no'
 switch_link_type='no'
 # -----------------------------------------------------------------------------
+if [ "$0" != 'bin/run_cmake.sh' ]
+then
+	echo 'bin/run_cmake.sh: must be executed from its parent directory'
+	exit 1
+fi
 while [ "$1" != '' ]
 do
 	if [ "$1" == '--help' ]

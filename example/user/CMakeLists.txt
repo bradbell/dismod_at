@@ -54,12 +54,14 @@ ADD_CUSTOM_TARGET(
 )
 # ---------------------------------------------------------------------------
 # Build speed_user_example
-SET(random_seed 0)
-SET(n_children 10)
+SET(random_seed      0)
+SET(n_children       10)
+SET(n_data_per_child 20)
 #
 ADD_CUSTOM_TARGET(
 	speed_example_user
-	${python3_executable} example/user/speed.py ${random_seed}
+	${python3_executable} example/user/speed.py
+		${random_seed} ${n_children} ${n_data_per_child}
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 	DEPENDS dismod_at
 )
