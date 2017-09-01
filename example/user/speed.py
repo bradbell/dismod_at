@@ -427,6 +427,7 @@ for var_id in range( number_variable ) :
 		max_error = max( abs(fit_value / true_value - 1.0), max_error)
 print('elapsed seconds =', time.time() - start_time)
 print('random_seed = ', random_seed)
+print('n_children = ', n_children)
 print('max_error = ', max_error)
 if max_error > 5e-2 :
 	print('simulated.py: Error')
