@@ -55,6 +55,7 @@ ADD_CUSTOM_TARGET(
 # ---------------------------------------------------------------------------
 # Build speed_user_example
 SET(random_seed 0)
+SET(n_children 10)
 #
 ADD_CUSTOM_TARGET(
 	speed_example_user

@@ -87,7 +87,8 @@ This column has type $code integer$$ and its value is a
 $cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
 It specifies the smoothing used as a prior for this rate
-when fitting the parent (fixed effects).
+when fitting the parent (fixed effects);
+see $cref/parent_node_id/option_table/parent_node_id/$$.
 
 $subhead null$$
 If the $icode parent_smooth_id$$ is $code null$$, the corresponding
@@ -99,7 +100,9 @@ This column has type $code integer$$ and its value is a
 $cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
 It specifies a single smoothing used as a prior for this rate
-when fitting all the children (all the random effects for this rate).
+when fitting all the
+$cref/children/option_table/parent_node_id/Children/$$; i.e.,
+all the random effects for this rate.
 
 $subhead null$$
 If $icode child_smooth_id$$ is not $code null$$,

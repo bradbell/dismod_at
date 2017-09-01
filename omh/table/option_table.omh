@@ -79,6 +79,11 @@ because it is used by all the commands.
 $subhead Default$$
 The default value for this option is $code 0$$.
 
+$subhead Children$$
+The child nodes are the elements of the
+$cref/child group/node_table/parent/Child Group/$$ corresponding to
+the specified $icode parent_node_id$$.
+
 $subhead Data Subset Table$$
 Rows in the $code data$$ table for which the
 $cref/node/data_table/node_id/$$
