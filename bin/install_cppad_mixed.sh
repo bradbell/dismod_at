@@ -42,7 +42,7 @@ use_atomic_cholesky='no'
 checkpoint_newton_step='no'
 #
 # optimize the AD operation sequences
-optimize_cppad_function='yes'
+optimize_cppad_function='no'
 #
 # show ipopt the cppad_mixed re-scaling
 hide_ipopt_scaling='yes'
