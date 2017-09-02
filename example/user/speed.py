@@ -78,8 +78,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/speed directory
-distutils.dir_util.mkpath('build/speed')
-os.chdir('build/speed')
+distutils.dir_util.mkpath('build/example/user')
+os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
@@ -328,7 +328,7 @@ def example_db (file_name) :
 # Run the init command to create the var table
 file_name      = 'example.db'
 example_db(file_name)
-program        = '../devel/dismod_at'
+program        = '../../devel/dismod_at'
 cmd            = [ program, file_name, 'init' ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
@@ -383,7 +383,7 @@ for var_id in range( len(var_table) ) :
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
-# Run the simulate and sample commands
+# Run the simulate and start, and fit commands
 for command in [ 'simulate', 'start', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'simulate' :
