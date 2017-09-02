@@ -40,9 +40,18 @@ $childtable%
 %$$
 
 $head 09-02$$
+$list number$$
 Instructions were added for building both
 $cref/debug and release/run_cmake.sh/Prefixes/Debug and Release/$$
 version of $code dismod_at$$.
+$lnext
+The $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
+install script was changed so that it does not optimize AD functions when
+$cref/build_type/run_cmake.sh/build_type/$$ is $code debug$$.
+This can be used to verify that optimizing to AD functions only
+affects the speed and memory used by $code dismod_at$$ and
+not its results.
+$lend
 
 $head 09-01$$
 $list number$$
