@@ -23,8 +23,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='d82c11ad027cdc473f7d99be5018e4ddb5f27ba5'
-version='20170801'
+hash_key='21ba7f77d6f85a528bf27f7e8915c0cc71648720'
+version='20170916'
 libdir=`bin/libdir.sh`
 # ---------------------------------------------------------------------------
 # special cppad_mixed settings (it is not suggested that you change these)
@@ -49,10 +49,6 @@ hide_ipopt_scaling='yes'
 #
 # build_type
 cmd=`grep '^build_type=' bin/run_cmake.sh`
-eval $cmd
-#
-# log_fatal_error
-cmd=`grep '^log_fatal_error=' bin/run_cmake.sh`
 eval $cmd
 #
 # extra_cxx_flags
@@ -144,7 +140,6 @@ cmake_args="$cmake_args -D suitesparse_prefix=$suitesparse_prefix"
 cmake_args="$cmake_args -D cmake_libdir=$libdir"
 cmake_args="$cmake_args -D bool_sparsity=$bool_sparsity"
 cmake_args="$cmake_args -D ldlt_cholmod=$ldlt_cholmod"
-cmake_args="$cmake_args -D log_fatal_error=$log_fatal_error"
 cmake_args="$cmake_args -D use_atomic_cholesky=$use_atomic_cholesky"
 cmake_args="$cmake_args -D checkpoint_newton_step=$checkpoint_newton_step"
 cmake_args="$cmake_args -D optimize_cppad_function=$optimize_cppad_function"
