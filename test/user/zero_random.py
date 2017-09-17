@@ -9,9 +9,9 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # true values used to simulate data
-iota_true      = 0.05
-chi_true       = 0.1
-n_data         = 6
+iota_true            = 0.05
+chi_true             = 0.1
+n_data_per_integrand = 6
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -100,7 +100,7 @@ def example_db (file_name) :
 		'integrand':    'Sincidence'
 	}
 	# incidence data
-	for i_data in range( n_data ) :
+	for i_data in range( n_data_per_integrand ) :
 		if i_data % 3 == 0 :
 			row['node'] = 'north_america'
 		elif i_data % 3 == 1 :
@@ -113,7 +113,7 @@ def example_db (file_name) :
 	row['meas_value'] = chi_true
 	row['meas_std']   = chi_true * 0.1
 	row['integrand']  = 'mtexcess'
-	for i_data in range( n_data ) :
+	for i_data in range( n_data_per_integrand ) :
 		if i_data % 3 == 0 :
 			row['node'] = 'north_america'
 		elif i_data % 3 == 1 :
