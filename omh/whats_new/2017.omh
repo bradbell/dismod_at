@@ -39,6 +39,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 09-17$$
+Make $cref bilinear$$ and $cref ode_grid$$ separate sections
+and improve their presentations.
+
 $head 09-16$$
 Advance to $code cppad_mixed-20160916$$; see
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
