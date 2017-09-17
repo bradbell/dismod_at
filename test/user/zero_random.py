@@ -9,8 +9,9 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # true values used to simulate data
-iota_true        = 0.05
-n_data           = 3
+iota_true      = 0.05
+chi_true       = 0.1
+n_data         = 3
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -36,11 +37,14 @@ os.chdir('build/test/user')
 # ------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
-# note that the a, t values are not used for this case
+#
+# changing the first prior_guass_zero to prior_zero should, but does not, work
 def fun_iota_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
-def fun_iota_parent(a, t) :
-	return ('prior_iota_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+def fun_chi_child(a, t) :
+	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
+def fun_rate_parent(a, t) :
+	return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import copy
@@ -54,9 +58,7 @@ def example_db (file_name) :
 	time_list   = [ 1995.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_list = [
-		'Sincidence'
-	]
+	integrand_list = [ 'Sincidence', 'mtexcess' ]
 	#
 	# node table: world -> north_america
 	#             north_america -> (united_states, canada)
@@ -96,9 +98,20 @@ def example_db (file_name) :
 		'eta':          None,
 		'integrand':    'Sincidence'
 	}
-	# values that change between rows:
-	for data_id in range( n_data ) :
-		if data_id % 2 == 0 :
+	# incidence data
+	for i_data in range( n_data ) :
+		if i_data % 2 == 0 :
+			row['node'] = 'north_america'
+		else :
+			row['node'] = 'canada'
+		data_table.append( copy.copy(row) )
+	#
+	# mtxcess data
+	row['meas_value'] = chi_true
+	row['meas_std']   = chi_true * 0.1
+	row['integrand']  = 'mtexcess'
+	for i_data in range( n_data ) :
+		if i_data % 2 == 0 :
 			row['node'] = 'north_america'
 		else :
 			row['node'] = 'canada'
@@ -131,8 +144,8 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      1.0, # 2DO: 1.0 and 0.01 work but 0.1 fails
 			'eta':      None
-		},{ # prior_iota_parent
-			'name':     'prior_iota_parent',
+		},{ # prior_rate_parent
+			'name':     'prior_rate_parent',
 			'density':  'uniform',
 			'lower':    iota_true / 10.,
 			'upper':    10. * iota_true,
@@ -152,14 +165,22 @@ def example_db (file_name) :
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_iota_child
-		},{ # smooth_iota_parent
-			'name':                     'smooth_iota_parent',
+		},{ # smooth_chi_child
+			'name':                     'smooth_chi_child',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0 ],
 			'mulstd_value_prior_name':  None,
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
-			'fun':                       fun_iota_parent
+			'fun':                      fun_chi_child
+		},{ # smooth_rate_parent
+			'name':                     'smooth_rate_parent',
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
+			'fun':                      fun_rate_parent
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -172,7 +193,7 @@ def example_db (file_name) :
 			'child_nslist':  None
 		},{
 			'name':          'iota',
-			'parent_smooth': 'smooth_iota_parent',
+			'parent_smooth': 'smooth_rate_parent',
 			'child_smooth':  'smooth_iota_child',
 			'child_nslist':  None
 		},{
@@ -182,8 +203,8 @@ def example_db (file_name) :
 			'child_nslist':  None
 		},{
 			'name':          'chi',
-			'parent_smooth': None,
-			'child_smooth':  None,
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_chi_child',
 			'child_nslist':  None
 		},{
 			'name':          'omega',
@@ -269,6 +290,7 @@ eps            = 1e-4
 # check parent rates values
 count             = 0
 iota_rate_id      = 1
+chi_rate_id       = 3
 for var_id in range( len(var_table) ) :
 	row   = var_table[var_id]
 	assert row['var_type'] == 'rate'
@@ -277,9 +299,11 @@ for var_id in range( len(var_table) ) :
 		value  = fit_var_table[var_id]['variable_value']
 		if row['rate_id'] == iota_rate_id :
 			assert abs( value / iota_true - 1.0 ) < eps
+		elif row['rate_id'] == chi_rate_id :
+			assert abs( value / chi_true - 1.0 ) < eps
 		else :
 			assert abs(value) <  eps
-assert count == 1
+assert count == 2
 #
 # check child rates values
 count             = 0
@@ -289,7 +313,7 @@ for var_id in range( len(var_table) ) :
 		count += 1
 		value = fit_var_table[var_id]['variable_value']
 		assert abs(value) < eps
-assert count == 2
+assert count == 2 * 2
 # -----------------------------------------------------------------------------
 print('zero_random.py: OK')
 # -----------------------------------------------------------------------------
