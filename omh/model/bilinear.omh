@@ -17,81 +17,112 @@ $$
 
 $section dismod_at Bilinear Interpolation$$
 
-$head Interpolation Grid$$
+$head Age Grid$$
 We are given a grid of $latex M$$ age values
-$latex \[
-	\{ a_i \; | \; i = 0, \ldots , M-1 \}
-\] $$
-and of $latex N$$ time values
-$latex \[
-	\{ t_j \; | \; j = 0, \ldots , N-1 \} \; .
-\] $$
+$latex \{ a_i \; | \; i = 0, \ldots , M-1 \}$$.
+
+$head Time Grid$$
+We are also given a grid of $latex N$$ time values
+$latex \{ t_j \; | \; j = 0, \ldots , N-1 \} $$.
+
+$head Function Grid$$
 In addition,
-we are given a grid of values to be interpolated
+we are given a grid of function values to be interpolated
 $latex \[
-	\{ v_{i,j} \; | \; i = 0, \ldots , M-1 , j = 0 , \ldots , N-1 \} \; .
+	\{ f_{i,j} \; | \; i = 0, \ldots , M-1 , j = 0 , \ldots , N-1 \} \; .
 \] $$
-This constitutes an Interpolation Grid.
 
 $head Interpolant$$
-The corresponding interpolant at age $latex \alpha$$ and time
-$latex \theta$$, $latex v( \alpha , \theta )$$ is defined as follows:
+The corresponding interpolating function at age $latex \alpha$$ and time
+$latex s$$, $latex f( \alpha , s )$$ is defined as follows:
 
-$list number$$
-Case where there is an index pair $latex i < M-1$$, $latex j < N-1$$ such that
+$subhead Bilinear$$
+Consider the case
+where there is an index pair $latex i < M-1$$, $latex j < N-1$$ such that
 $latex a_i \leq \alpha \leq a_{i+1}$$ and
-$latex t_j \leq \theta \leq t_{j+1}$$:
+$latex t_j \leq s \leq t_{j+1}$$.
+In this case the function is defined by
 $latex \[
-v( \alpha , \theta )
+f( \alpha , s )
 =
 \frac{a_{i+1} - \alpha}{a_{i+1} - a_i}
-	\frac{t_{j+1} - \theta}{t_{j+1} - t_j} v_{i,j}
+	\frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i,j}
 +
 \frac{\alpha - a_i}{a_{i+1} - a_i}
-	\frac{t_{j+1} - \theta}{t_{j+1} - t_j} v_{i+1,j}
+	\frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i+1,j}
 +
-\frac{a_{i+1} - \theta}{a_{i+1} - a_i}
-	\frac{\theta - t_j}{t_{j+1} - t_j} v_{i+1,j}
+\frac{a_{i+1} - s}{a_{i+1} - a_i}
+	\frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j}
 +
 \frac{\alpha - a_i}{a_{i+1} - a_i}
-	\frac{\theta - t_j}{t_{j+1} - t_j} v_{i+1,j+1}
+	\frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j+1}
 \] $$
 
-$lnext
-Case where $latex i = 0$$ and $latex \alpha < a_i$$
-or $latex i = M-1$$ and $latex a_i < \alpha$$ and
+$subhead Below Minimum Age$$
+Consider the case where $latex \alpha < a_0$$ and
 there is an index $latex j < N-1$$ such that
-$latex t_j \leq \theta \leq t_{j+1}$$:
+$latex t_j \leq s \leq t_{j+1}$$.
+In this case the function is defined by
 $latex \[
-v( \alpha , \theta )
+f( \alpha , s )
 =
-\frac{t_{j+1} - \theta}{t_{j+1} - t_j} v_{i,j}
+\frac{t_{j+1} - s}{t_{j+1} - t_j} v_{0,j}
 +
-\frac{\theta - t_j}{t_{j+1} - t_j} v_{i,j+1}
+\frac{s - t_j}{t_{j+1} - t_j} v_{0,j+1}
 \] $$
 
-$lnext
-Case where $latex j = 0$$ and $latex \theta < t_j$$
-or $latex j = N-1$$ and $latex t_j < \theta$$ and
+$subhead Above Maximum Age$$
+Consider the case where $latex a_{M-1} < \alpha$$ and
+there is an index $latex j < N-1$$ such that
+$latex t_j \leq s \leq t_{j+1}$$.
+In this case the function is defined by
+$latex \[
+f( \alpha , s )
+=
+\frac{t_{j+1} - s}{t_{j+1} - t_j} v_{M-1,j}
++
+\frac{s - t_j}{t_{j+1} - t_j} v_{M-1,j+1}
+\] $$
+
+$subhead Below Minimum Time$$
+Consider the case where $latex s < t_0$$ and
 there is an index $latex i < M-1$$ such that
-$latex a_i \leq \alpha \leq a_{i+1}$$:
+$latex a_i \leq \alpha \leq a_{i+1}$$.
+In this case the function is defined by
 $latex \[
-v( \alpha , \theta )
+f( \alpha , s )
 =
-\frac{a_{i+1} - \alpha}{a_{i+1} - a_i} v_{i,j}
+\frac{a_{i+1} - \alpha}{a_{i+1} - a_i} v_{i,0}
 +
-\frac{\alpha - a_i}{a_{i+1} - a_i}  v_{i+1,j}
+\frac{\alpha - a_i}{a_{i+1} - a_i}  v_{i+1,0}
 \] $$
 
-$lnext
-Case where $latex i = 0$$ and $latex \alpha < a_i$$
-or $latex i = M-1$$ and $latex a_i < \alpha$$.
-Furthermore, $latex j = 0$$ and $latex \theta < t_j$$
-or $latex j = N-1$$ and $latex t_j < \theta$$:
+$subhead Above Maximum Time$$
+Consider the case where $latex t_{N-1} < s$$ and
+there is an index $latex i < M-1$$ such that
+$latex a_i \leq \alpha \leq a_{i+1}$$.
+In this case the function is defined by
 $latex \[
-v( \alpha , \theta )  = v_{i,j}
+f( \alpha , s )
+=
+\frac{a_{i+1} - \alpha}{a_{i+1} - a_i} v_{i,N-1}
++
+\frac{\alpha - a_i}{a_{i+1} - a_i}  v_{i+1,N-1}
 \] $$
 
+$subhead Outside Age and Time Limits$$
+$list number$$
+If $latex \alpha < a_0$$ and $latex t < t_0$$,
+$latex f( \alpha , t ) = v_{0,0}$$.
+$lnext
+If $latex \alpha < a_0$$ and $latex t_{N-1} < s$$,
+$latex f( \alpha , t ) = v_{0,N-1}$$.
+$lnext
+If $latex a_{M-1} < \alpha$$ and $latex t_{N-1} < s$$,
+$latex f( \alpha , t ) = v_{M-1,N-1}$$.
+$lnext
+If $latex a_{M-1} < \alpha$$ and $latex s < t_0$$,
+$latex f( \alpha , t ) = v_{M-1,0}$$.
 $lend
 
 $end
