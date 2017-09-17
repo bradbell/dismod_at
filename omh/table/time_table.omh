@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -24,15 +24,15 @@ $head time$$
 This column has type $code real$$ and is a set of time values.
 The values in the time column must be unique; i.e.,
 none of the values may be repeated.
-$pre
 
-$$
-Note that the maximum minus the minimum time divided by
-the ode integration step size
-$cref/ode_step_size/option_table/ode_step_size/$$ will determine
-the number of time points used to integrate the
-$cref/
-ordinary differential equation /avg_integrand/Ordinary Differential Equation
+$subhead Ode Grid$$
+Note that the maximum minus the minimum time divided by the
+$cref/ode_step_size/option_table/ode_step_size/$$ will determine the
+$cref/number of time points/ode_grid/Number of Time Points, N/$$
+in the grid used to integrate the
+$cref/ordinary differential equation
+	/avg_integrand
+	/Ordinary Differential Equation
 /$$.
 
 $children%example/table/time_table.py
