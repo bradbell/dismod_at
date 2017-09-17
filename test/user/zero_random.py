@@ -37,9 +37,7 @@ os.chdir('build/test/user')
 def constant_weight_fun(a, t) :
 	return 1.0
 # note that the a, t values are not used for this case
-def fun_zero(a, t) :
-	return ('prior_zero', 'prior_none', 'prior_none')
-def fun_rate_child(a, t) :
+def fun_iota_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_iota_parent(a, t) :
 	return ('prior_iota_parent', 'prior_gauss_zero', 'prior_gauss_zero')
@@ -146,30 +144,22 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# smooth table
 	smooth_table = [
-		{   # smooth_rate_child
-			'name':                     'smooth_rate_child',
+		{   # smooth_iota_child
+			'name':                     'smooth_iota_child',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0 ],
 			'mulstd_value_prior_name':  None,
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
-			'fun':                      fun_rate_child
-		},{ # smooth_rate_parent
-			'name':                     'smooth_rate_parent',
+			'fun':                      fun_iota_child
+		},{ # smooth_iota_parent
+			'name':                     'smooth_iota_parent',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0 ],
 			'mulstd_value_prior_name':  None,
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
 			'fun':                       fun_iota_parent
-		},{ # smooth_zero
-			'name':                     'smooth_zero',
-			'age_id':                   [ 0 ],
-			'time_id':                  [ 0 ],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
-			'fun':                       fun_zero
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -177,28 +167,28 @@ def example_db (file_name) :
 	rate_table = [
 		{
 			'name':          'pini',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child',
+			'parent_smooth': None,
+			'child_smooth':  None,
 			'child_nslist':  None
 		},{
 			'name':          'iota',
-			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child',
+			'parent_smooth': 'smooth_iota_parent',
+			'child_smooth':  'smooth_iota_child',
 			'child_nslist':  None
 		},{
 			'name':          'rho',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child',
+			'parent_smooth': None,
+			'child_smooth':  None,
 			'child_nslist':  None
 		},{
 			'name':          'chi',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child',
+			'parent_smooth': None,
+			'child_smooth':  None,
 			'child_nslist':  None
 		},{
 			'name':          'omega',
-			'parent_smooth': 'smooth_zero',
-			'child_smooth':  'smooth_rate_child',
+			'parent_smooth': None,
+			'child_smooth':  None,
 			'child_nslist':  None
 		}
 	]
@@ -289,7 +279,7 @@ for var_id in range( len(var_table) ) :
 			assert abs( value / iota_true - 1.0 ) < eps
 		else :
 			assert abs(value) <  eps
-assert count == 5
+assert count == 1
 #
 # check child rates values
 count             = 0
@@ -299,7 +289,7 @@ for var_id in range( len(var_table) ) :
 		count += 1
 		value = fit_var_table[var_id]['variable_value']
 		assert abs(value) < eps
-assert count == 5 * 2
+assert count == 2
 # -----------------------------------------------------------------------------
 print('zero_random.py: OK')
 # -----------------------------------------------------------------------------
