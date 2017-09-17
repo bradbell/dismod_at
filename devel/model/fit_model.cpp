@@ -1051,7 +1051,10 @@ fit_model::a1d_vector fit_model::fix_likelihood(
 	//
 	// set random_vec
 	for(size_t i = 0; i < random_vec.size(); i++)
-		random_vec[i] = CppAD::nan( a1_double(0.0) );
+	{	random_vec[i] = CppAD::nan( a1_double(0.0) );
+		if( random_lower_[i] == random_upper_[i] )
+			random_vec[i] = random_lower_[i];
+	}
 	//
 	// put the fixed and random effects into pack_vec
 	a1d_vector fixed_tmp(n_fixed_);
@@ -1070,10 +1073,10 @@ fit_model::a1d_vector fit_model::fix_likelihood(
 	{	// ran_likelihood returns the empty vector in this case
 		// so we need to include rest of the data here.
 		random_depend = true;
+# ifndef NDEBUG
 		for(size_t i = 0; i < n_random_; i++)
-		{	assert( random_lower_[i] == random_upper_[i] );
-			random_vec[i] = random_lower_[i];
-		}
+			assert( random_lower_[i] == random_upper_[i] );
+# endif
 		pack_random(pack_object_, a1_pack_vec, random_vec);
 		CppAD::vector< residual_struct<a1_double> > data_ran;
 		data_ran  = data_object_.like_all(hold_out, random_depend, a1_pack_vec);

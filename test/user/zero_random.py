@@ -41,7 +41,7 @@ def constant_weight_fun(a, t) :
 # Changing first fun_iota_child entry to prior_zero or 0.0 should wrok
 # but does not.
 def fun_iota_child(a, t) :
-	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
+	return (0.0, 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_chi_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_rate_parent(a, t) :

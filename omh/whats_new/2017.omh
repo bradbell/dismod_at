@@ -40,8 +40,14 @@ $childtable%
 %$$
 
 $head 09-17$$
+$list number$$
+There was a bug in setting the lower and upper limits of random effects
+equal that sometimes caused a $code nan$$ result during $code initialize$$.
+This has been fixed.
+$lnext
 Make $cref bilinear$$ and $cref ode_grid$$ separate sections
 and improve their presentations.
+$lend
 
 $head 09-16$$
 Advance to $code cppad_mixed-20160916$$; see
