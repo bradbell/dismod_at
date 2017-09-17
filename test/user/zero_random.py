@@ -11,7 +11,7 @@
 # true values used to simulate data
 iota_true      = 0.05
 chi_true       = 0.1
-n_data         = 3
+n_data         = 6
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -38,7 +38,8 @@ os.chdir('build/test/user')
 def constant_weight_fun(a, t) :
 	return 1.0
 #
-# changing the first prior_guass_zero to prior_zero should, but does not, work
+# Changing first fun_iota_child entry to prior_zero or 0.0 should wrok
+# but does not.
 def fun_iota_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_chi_child(a, t) :
@@ -100,8 +101,10 @@ def example_db (file_name) :
 	}
 	# incidence data
 	for i_data in range( n_data ) :
-		if i_data % 2 == 0 :
+		if i_data % 3 == 0 :
 			row['node'] = 'north_america'
+		elif i_data % 3 == 1 :
+			row['node'] = 'united_states'
 		else :
 			row['node'] = 'canada'
 		data_table.append( copy.copy(row) )
@@ -111,8 +114,10 @@ def example_db (file_name) :
 	row['meas_std']   = chi_true * 0.1
 	row['integrand']  = 'mtexcess'
 	for i_data in range( n_data ) :
-		if i_data % 2 == 0 :
+		if i_data % 3 == 0 :
 			row['node'] = 'north_america'
+		elif i_data % 3 == 1 :
+			row['node'] = 'united_states'
 		else :
 			row['node'] = 'canada'
 		data_table.append( copy.copy(row) )
