@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -44,7 +44,7 @@ $codei%
 	size_t %n_age_ode%
 %$$
 It is the number of points in the
-$cref/ode age grid/glossary/Ode Grid/Age, a_i/$$.
+$cref/ode age grid/ode_grid/Age, a_i/$$.
 
 $subhead n_time_ode$$
 This argument has prototype
@@ -52,7 +52,7 @@ $codei%
 	size_t %n_time_ode%
 %$$
 It is the number of points in the
-$cref/ode time grid/glossary/Ode Grid/Time, t_j/$$.
+$cref/ode time grid/ode_grid/Time, t_j/$$.
 
 $subhead ode_step_size$$
 This argument has prototype
@@ -117,12 +117,12 @@ $codei%
 %$$
 For $icode%k% = 0 , %...%, %ode_index%.size()%$$
 the corresponding ode grid point age
-$cref/a_i/glossary/Ode Grid/Age, a_i/$$ is defined by
+$cref/a_i/ode_grid/Age, a_i/$$ is defined by
 $codei%
 	%i%(%k%) = int( %ode_index%[%k%] / %n_time_ode% )
 %$$
 and the ode grid point time
-$cref/t_i/glossary/Ode Grid/Time, t_j/$$ is defined by
+$cref/t_j/ode_grid/Time, t_j/$$ is defined by
 $codei%
 	%j%(%k%) = mod( %ode_index%[%k%], %n_time_ode% )
 %$$

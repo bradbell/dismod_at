@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -37,7 +37,7 @@ $head Purpose$$
 This routine determines the value of $latex C(a,t)$$
 and $latex S(a, t)$$ that solve the dismod
 $cref/differential equation/avg_integrand/Differential Equation/$$
-for a subset of the $cref/ode grid/glossary/Ode Grid/$$ corresponding
+for a subset of the $cref ode_grid$$ corresponding
 to a cohort (constant time minus age).
 
 $head Notation$$
@@ -54,7 +54,7 @@ $codei%
 	size_t %i_max%
 %$$
 It is the maximum
-$cref/ode age grid/glossary/Ode Grid/Age, a_i/$$ index for this cohort.
+$cref/ode age grid/ode_grid/Age, a_i/$$ index for this cohort.
 
 $head j_max$$
 This argument has prototype
@@ -62,7 +62,7 @@ $codei%
 	size_t %j_max%
 %$$
 It is the maximum
-$cref/ode time grid/glossary/Ode Grid/Time, t_j/$$ index for this cohort.
+$cref/ode time grid/ode_grid/Time, t_j/$$ index for this cohort.
 
 $head step_size$$
 This argument has prototype

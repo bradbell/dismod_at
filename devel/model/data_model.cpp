@@ -75,7 +75,7 @@ $codei%
 	size_t %n_age_ode%
 %$$
 It is the number of points in the
-$cref/ode age grid/glossary/Ode Grid/Age, a_i/$$.
+$cref/ode age grid/ode_grid/Age, a_i/$$.
 
 $head n_time_ode$$
 This argument has prototype
@@ -83,7 +83,7 @@ $codei%
 	size_t %n_time_ode%
 %$$
 It is the number of points in the
-$cref/ode time grid/glossary/Ode Grid/Time, t_j/$$.
+$cref/ode time grid/ode_grid/Time, t_j/$$.
 
 $head ode_step_size$$
 This argument has prototype

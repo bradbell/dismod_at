@@ -102,7 +102,7 @@ $tend
 
 $subhead Interpolation$$
 Given values on a smoothing grid,
-$cref/bilinear interpolation/glossary/Bilinear Interpolant/$$
+$cref bilinear$$ interpolation
 is used to define a corresponding function of age and time.
 For example, given the subvector of model variables corresponding
 to $code omega$$, the function $latex \omega(a, t)$$ is the

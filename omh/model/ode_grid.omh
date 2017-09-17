@@ -1,0 +1,51 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-17 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin ode_grid$$
+$spell
+	dismod
+$$
+
+$section The dismod_at Ode Grid$$
+
+$head Notation$$
+We use the notation $latex \Delta s$$ for the
+$cref/ode_step_size/option_table/ode_step_size/$$.
+We use $latex a_\R{min}$$ and $latex a_\R{max}$$ to denote
+the minimum and maximum
+$cref/age/age_table/age/$$ values in the age table.
+We use $latex t_\R{min}$$ and $latex t_\R{max}$$ to denote
+the minimum and maximum
+$cref/time/time_table/time/$$ values in the time table.
+We define $latex M$$ and $latex N$$ as the minimum integers such that
+$latex \[
+\begin{array}{rcl}
+	a_\R{max} & \leq & a_\R{min} + (M-1) * \Delta s
+	\\
+	t_\R{max} & \leq & t_\R{min} + (N-1) * \Delta s
+\end{array}
+\] $$
+
+$head Age, a_i$$
+We define $latex a_i = a_\R{min} + i \Delta s$$ and
+the Ode Age Grid is
+$latex \[
+	\{ a_i \; | \; i = 0, \ldots , M-1 \} \; .
+\] $$
+
+$head Time, t_j$$
+We define $latex t_j = t_\R{min} + j \Delta s$$ and
+the Ode Time Grid is
+$latex \[
+	\{ t_j \; | \; j = 0, \ldots , N-1 \} \; .
+\] $$
+
+
+$end

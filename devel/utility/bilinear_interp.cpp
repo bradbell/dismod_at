@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -117,7 +117,7 @@ $codei%
 	double %z%
 %$$
 It is the value of the
-$cref/bilinear interpolant/glossary/Bilinear Interpolant/$$ at the specified
+$cref bilinear$$ interpolant at the specified
 $icode x$$ and $icode y$$.
 
 $children%example/devel/utility/bilinear_interp_xam.cpp
