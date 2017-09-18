@@ -349,6 +349,9 @@ $code random_bound$$,
 plus and minus the corresponding $icode option_value$$
 are the bounds for each of the
 $cref/random effects/model_variables/Random Effects, u/$$.
+If $icode random_bound$$ is $code null$$,
+plus and minus infinity is used for the bounds; see
+$cref/bounds that are null/database/Bounds That are Null/$$.
 
 $list number$$
 The theory for

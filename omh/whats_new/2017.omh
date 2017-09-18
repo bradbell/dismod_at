@@ -41,10 +41,16 @@ $childtable%
 %$$
 
 $head 09-18$$
+$list number$$
 Advance to $code cppad_mixed-20160918$$; see
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
 This provides more error messaging when nan's occur in the
 random effects objective.
+$lnext
+The documentation for
+$cref/bounds that are null/database/Bounds That are Null/$$
+was improved.
+$lend
 
 $head 09-17$$
 $list number$$

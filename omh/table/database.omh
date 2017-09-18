@@ -75,6 +75,10 @@ If a real value is $code null$$, it is represented as $code nan$$.
 An error message will be generated if
 the value $code nan$$ appears in a table that is read by dismod_at.
 
+$head Bounds That are Null$$
+If a lower (upper) bound is $code null$$,
+it is interpreted as minus (plus) infinity.
+
 $childtable%
 	omh/table/input.omh
 	%omh/table/data_flow.omh

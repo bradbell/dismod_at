@@ -34,20 +34,16 @@ $cref density_table$$ primary key that identifies the
 density function for this prior.
 
 $head lower$$
-$index lower, minus infinity$$
-$index infinity, minus lower$$
 This column has type $code real$$ and specifies a lower bound
 for the prior.
-Note that the value $code null$$ is interpreted as minus infinity; i.e.,
-no lower limit.
+Note that the value $code null$$ is interpreted as minus infinity; see
+$cref/bounds that are null/database/Bounds That are Null/$$.
 
 $head upper$$
-$index upper, plus infinity$$
-$index infinity, plus upper$$
 This column has type $code real$$ and specifies a upper bound
 for the prior.
-Note that the value $code null$$ is interpreted as plus infinity; i.e.,
-no upper limit.
+Note that the value $code null$$ is interpreted as plus infinity; see
+$cref/bounds that are null/database/Bounds That are Null/$$.
 
 $head mean$$
 This column has type $code real$$ and specifies the mean
@@ -59,8 +55,6 @@ $codei%
 %$$
 
 $head std$$
-$index std, plus infinity$$
-$index infinity, plus std$$
 This column has type $code real$$ and specifies the standard deviation
 (before truncation by the lower and upper limits)
 for the prior.

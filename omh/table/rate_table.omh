@@ -149,12 +149,14 @@ $subhead std$$
 The $cref/std/prior_table/std/$$ must be greater than zero.
 
 $subhead lower$$
-The $cref/lower/prior_table/lower/$$ limit must be $code null$$
-(which gets interpreted as minus infinity).
+The $cref/lower/prior_table/lower/$$ limit must be $code null$$,
+which gets interpreted as minus infinity; see
+$cref/bounds that are null/database/Bounds That are Null/$$.
 
 $subhead upper$$
-The $cref/upper/prior_table/upper/$$ limit must be $code null$$
-(which gets interpreted as plus infinity).
+The $cref/upper/prior_table/upper/$$ limit must be $code null$$,
+which gets interpreted as plus infinity; see
+$cref/bounds that are null/database/Bounds That are Null/$$.
 
 $children%example/table/rate_table.py
 %$$
