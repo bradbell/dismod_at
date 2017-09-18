@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 # true values used to simulate data
 iota_true            = 0.05
+rho_true             = 0.2
 chi_true             = 0.1
 n_data_per_integrand = 6
 # ------------------------------------------------------------------------
@@ -42,6 +43,8 @@ def constant_weight_fun(a, t) :
 # but does not.
 def fun_iota_child(a, t) :
 	return (0.0, 'prior_gauss_zero', 'prior_gauss_zero')
+def fun_rho_child(a, t) :
+	return ('prior_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_chi_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_rate_parent(a, t) :
@@ -59,7 +62,7 @@ def example_db (file_name) :
 	time_list   = [ 1995.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_list = [ 'Sincidence', 'mtexcess' ]
+	integrand_list = [ 'Sincidence', 'remission', 'mtexcess' ]
 	#
 	# node table: world -> north_america
 	#             north_america -> (united_states, canada)
@@ -99,7 +102,21 @@ def example_db (file_name) :
 		'eta':          None,
 		'integrand':    'Sincidence'
 	}
+	#
 	# incidence data
+	for i_data in range( n_data_per_integrand ) :
+		if i_data % 3 == 0 :
+			row['node'] = 'north_america'
+		elif i_data % 3 == 1 :
+			row['node'] = 'united_states'
+		else :
+			row['node'] = 'canada'
+		data_table.append( copy.copy(row) )
+	#
+	# remission data
+	row['meas_value'] = rho_true
+	row['meas_std']   = rho_true * 0.1
+	row['integrand']  = 'remission'
 	for i_data in range( n_data_per_integrand ) :
 		if i_data % 3 == 0 :
 			row['node'] = 'north_america'
@@ -170,6 +187,14 @@ def example_db (file_name) :
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_iota_child
+		},{ # smooth_rho_child
+			'name':                     'smooth_rho_child',
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
+			'fun':                      fun_rho_child
 		},{ # smooth_chi_child
 			'name':                     'smooth_chi_child',
 			'age_id':                   [ 0 ],
@@ -203,8 +228,8 @@ def example_db (file_name) :
 			'child_nslist':  None
 		},{
 			'name':          'rho',
-			'parent_smooth': None,
-			'child_smooth':  None,
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_rho_child',
 			'child_nslist':  None
 		},{
 			'name':          'chi',
@@ -224,7 +249,7 @@ def example_db (file_name) :
 		{ 'name':'parent_node_name',       'value':'north_america'     },
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'random_seed',            'value':'0'                 },
-		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
+		{ 'name':'rate_case',              'value':'iota_pos_rho_pos'  },
 
 		{ 'name':'quasi_fixed',            'value':'true'              },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'       },
@@ -295,6 +320,7 @@ eps            = 1e-4
 # check parent rates values
 count             = 0
 iota_rate_id      = 1
+rho_rate_id       = 2
 chi_rate_id       = 3
 for var_id in range( len(var_table) ) :
 	row   = var_table[var_id]
@@ -304,11 +330,13 @@ for var_id in range( len(var_table) ) :
 		value  = fit_var_table[var_id]['variable_value']
 		if row['rate_id'] == iota_rate_id :
 			assert abs( value / iota_true - 1.0 ) < eps
+		elif row['rate_id'] == rho_rate_id :
+			assert abs( value / rho_true - 1.0 ) < eps
 		elif row['rate_id'] == chi_rate_id :
 			assert abs( value / chi_true - 1.0 ) < eps
 		else :
 			assert abs(value) <  eps
-assert count == 2
+assert count == 3
 #
 # check child rates values
 count             = 0
@@ -318,7 +346,7 @@ for var_id in range( len(var_table) ) :
 		count += 1
 		value = fit_var_table[var_id]['variable_value']
 		assert abs(value) < eps
-assert count == 2 * 2
+assert count == 3 * 2
 # -----------------------------------------------------------------------------
 print('zero_random.py: OK')
 # -----------------------------------------------------------------------------
