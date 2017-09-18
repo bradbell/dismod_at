@@ -23,7 +23,6 @@ build
 build.debug
 build.release
 doc
-greg
 #
 # directories that are used for running omhelp by hand
 htm

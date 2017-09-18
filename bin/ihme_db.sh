@@ -9,32 +9,33 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# /snfs2/HOME/gma1/dismod_at_models/2017.06.05-World_and_Super_from_priors/both
-remote_dir='/snfs2/HOME/gma1/tmp'
-local_dir='greg'
-# ---------------------------------------------------------------------------
-if [ "$0" != 'bin/greg.sh' ] || [ "$#" != '2' ]
+if [ "$0" != 'bin/ihme_db.sh' ] || [ "$#" != '2' ]
 then
-	echo 'usage: bin/greg.sh direction database'
-	echo 'where direction is get or put (gregs file system)'
+	echo 'usage: bin/ihme_db.sh direction database_path'
+	echo 'direction:     is get or put'
+	echo 'database_path: is an ihme directory following by database name'
+	echo 'alex directory: /snfs1/Project/dismod_at/test_databases'
+	echo 'greg directory: /snfs2/HOME/gma1/tmp'
 	exit 1
 fi
 direction="$1"
-database="$2"
+database_path="$2"
+database=`echo $database_path | sed -e 's|.*/||'`
+# ---------------------------------------------------------------------------
 if [ "$direction" != 'get' ] && [ "$direction" != 'put' ]
 then
-	echo 'greg.sh: direction is not "get" or "put"'
+	echo 'ihme_db.sh: direction is not "get" or "put"'
 	exit 1
 fi
 # ---------------------------------------------------------------------------
-if [ "$direction" == 'get' ] && [ ! -e "$remote_dir/$database" ]
+if [ "$direction" == 'get' ] && [ ! -e "$database_path" ]
 then
-	echo "$remote_dir/$database: does not exist"
+	echo "$database_path: does not exist"
 	exit 1
 fi
-if [ "$direction" == 'put' ] && [ ! -e "$local_dir/brad/$database" ]
+if [ "$direction" == 'put' ] && [ ! -e "imhe_db/$database" ]
 then
-	echo "$local_dir/brad/$database: does not exist"
+	echo "build/ihme_db/$database: does not exist"
 	exit 1
 fi
 if [ ! -e bin/dismodat.py ]
@@ -45,14 +46,14 @@ fi
 # ---------------------------------------------------------------------------
 if [ "$direction" == 'get' ]
 then
-	if [ ! -e greg ]
+	if [ ! -e build/ihme_db ]
 	then
-		echo_eval mkdir -p greg
+		echo_eval mkdir -p build/ihme_db
 	fi
-	echo_eval cp $remote_dir/$database $local_dir/$database
+	echo_eval cp $database_path build/ihme_db/$database
 else
-	echo_eval cp $local_dir/brad/$database $remote_dir/brad/$database
+	echo_eval cp build/ihme_db/$database $database
 fi
 # ---------------------------------------------------------------------------
-echo 'bin/greg.sh: OK'
+echo 'bin/ihme_db.sh: OK'
 exit 0

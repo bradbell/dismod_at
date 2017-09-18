@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -118,7 +118,7 @@ void error_exit(
 	}
 
 	// If db is null, we are generting an assert instead of logging errors
-	assert( db != DISMOD_AT_NULL_PTR );
+	assert( db != DISMOD_AT_NULL_PTR ); // asserting instead of logging errros
 
 	// write to log table
 	string message_type = "error";
