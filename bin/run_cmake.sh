@@ -74,9 +74,9 @@ suitesparse_prefix="$HOME/prefix/dismod_at"
 # all the prefixes must be the same,
 # except for the Eigen prefix which has an extra sub-directory at the end.
 # In this case,
-# &code bin/run_cmake.sh&& can be used to switch between a debug and release
-# version of &code dismod_at&&
-# (depending on &cref/build_type/run_cmake.sh/build_type/&&).
+# &code bin/run_cmake.sh&& will switch between a debug and release
+# version of &code dismod_at&&,
+# depending on &cref/build_type/run_cmake.sh/build_type/&&.
 # The debug version will have an extra &code .debug&& and the release version
 # will have an extra &code .release&& at the end of the prefix.
 # In addition, a soft link will be used to map the prefix to either
