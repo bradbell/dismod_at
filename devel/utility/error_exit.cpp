@@ -128,7 +128,8 @@ void error_exit(
 	sqlite3_close(db);
 	//
 	// exit
-	std::exit(1);
+	assert(false); // assert when we are running in debugger
+	std::exit(1);  // can not continue from this point
 }
 void error_exit(
 	const std::string& message      ,

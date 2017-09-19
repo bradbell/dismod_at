@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -18,7 +18,6 @@ file_list=`git ls-files | sed -n -e '/\.cpp$/p'`
 define_list='
 	DISMOD_AT_VERSION
 	DISMOD_AT_NULL_PTR
-	DISMOD_AT_LOG_FATAL_ERROR
 '
 for file in $file_list
 do

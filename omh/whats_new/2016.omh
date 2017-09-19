@@ -156,7 +156,7 @@ This enables choosing a non-default version of a library as
 well as finding the default libraries when needed.
 $lnext
 Fix assertion when
-$cref/log_fatal_error/run_cmake.sh/log_fatal_error/$$ is false.
+$code log_fatal_error$$ is false.
 $lnext
 Add the
 $cref/system_specific_library_list/run_cmake.sh/system_specific_library_list/$$
@@ -175,7 +175,7 @@ $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
 in the smooth_grid table.
 $lnext
 Add the
-$cref/log_fatal_error/run_cmake.sh/log_fatal_error/$$ flag
+$code log_fatal_error$$ flag
 to the dismod_at configuration.
 $lnext
 Remove the $cref pack_info$$ $code variable_name$$ routine.
@@ -185,7 +185,7 @@ provide this information.)
 $lnext
 Report invalid prevalence values in the $cref log_table$$
 (in the case were
-$cref/log_fatal_error/run_cmake.sh/log_fatal_error/$$ is true).
+$code log_fatal_error$$ is true).
 $lend
 
 $head 10-15$$

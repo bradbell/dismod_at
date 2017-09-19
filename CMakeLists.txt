@@ -18,7 +18,6 @@
 #                        -D cppad_prefix=value \
 #                        -D eigen_prefix=value \
 #                        -D ipopt_prefix=value \
-#                        -D log_fatal_error=value \
 #                         ..
 # optional
 # standard variables:    -D CMAKE_VERBOSE_MAKEFILE=value \
@@ -155,9 +154,6 @@ required_definition(dismod_at_prefix PATH
 required_definition(cmake_libdir STRING
 	"directory below prefix where libraries are stored; e.g, lib64"
 )
-required_definition(log_fatal_error BOOL
-	"should dismod_at log fatal errors or generate asserts"
-)
 # ----------------------------------------------------------------------------
 # system_specific_library_list
 #
@@ -183,6 +179,10 @@ IF( ${var} )
 	MESSAGE(FATAL_ERROR "${var} is no longer used in dismod_at cmake command")
 ENDIF( ${var} )
 ENDFOREACH( var )
+# ----------------------------------------------------------------------------
+IF( NOT "${log_fatal_error}" STREQUAL ""  )
+	MESSAGE(FATAL_ERROR "log_fatal_error has been removed from cmake command")
+ENDIF( NOT "${log_fatal_error}" STREQUAL ""  )
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
 # ----------------------------------------------------------------------------

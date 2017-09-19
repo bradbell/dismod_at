@@ -1749,9 +1749,10 @@ int main(int n_arg, const char** argv)
 	// --------------- open connection to datbase ---------------------------
 	bool new_file = false;
 	sqlite3* db   = dismod_at::open_connection(database_arg, new_file);
-# if DISMOD_AT_LOG_FATAL_ERROR
+	//
+	// set error_exit database so it can log fatal errors
+	assert( db != DISMOD_AT_NULL_PTR );
 	dismod_at::error_exit(db);
-# endif
 	// --------------- log start of this command -----------------------------
 	message = "begin";
 	for(int i_arg = 2; i_arg < n_arg; i_arg++)

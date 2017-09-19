@@ -39,14 +39,19 @@ os.chdir('build/test/user')
 def constant_weight_fun(a, t) :
 	return 1.0
 #
-# Changing first fun_iota_child entry to prior_zero or 0.0 should wrok
-# but does not.
+# test using const_value 0.0 for random effects
 def fun_iota_child(a, t) :
 	return (0.0, 'prior_gauss_zero', 'prior_gauss_zero')
+#
+# test using lower and upper limit 0.0 for random effects
 def fun_rho_child(a, t) :
 	return ('prior_zero', 'prior_gauss_zero', 'prior_gauss_zero')
+#
+# test optimizing for random effects
 def fun_chi_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
+#
+# prior for parent rates
 def fun_rate_parent(a, t) :
 	return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
 # ------------------------------------------------------------------------
