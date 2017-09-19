@@ -194,6 +194,20 @@ set_library_path_list(
 	ipopt_library_path_list "${ipopt_LIBRARY_DIRS}" "${ipopt_LIBRARIES}"
 )
 # ----------------------------------------------------------------------------
+# gsl_library_path_list
+#
+pkg_check_modules(gsl REQUIRED gsl)
+set_library_path_list(
+	gsl_library_path_list "${gsl_LIBRARY_DIRS}" "${gsl_LIBRARIES}"
+)
+# ----------------------------------------------------------------------------
+# sqlite3_library_path_list
+#
+pkg_check_modules(sqlite3 REQUIRED sqlite3)
+set_library_path_list(
+	sqlite3_library_path_list "${sqlite3_LIBRARY_DIRS}" "${sqlite3_LIBRARIES}"
+)
+# ----------------------------------------------------------------------------
 # suitesparse_path_list
 #
 # no pkg-config for SuiteSparse so explicitly set corresponding values

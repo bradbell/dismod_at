@@ -30,6 +30,7 @@ $spell
 	dage
 	dtime
 	messaging
+	config
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -41,8 +42,17 @@ $childtable%
 %$$
 
 $head 09-19$$
+$list number$$
+Some of the
+$cref/system requirements/install_unix/System Requirements/$$
+were not being installed in the proper place on the MAC.
+The install has been modified to use
+$cref/pkg-config/install_unix/System Requirements/pkg-config/$$ to find these
+non-standard locations.
+$lnext
 The $code log_fatal_error$$ option was removed from $cref run_cmake.sh$$
 (by putting an assert before the exit in the fatal error routine).
+$lend
 
 $head 09-18$$
 $list number$$
