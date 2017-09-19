@@ -25,17 +25,15 @@ verbose_makefile='no'
 # &&
 #
 # &head build_type&&
-# Use either &code 'DEBUG'&& or &code 'RELEASE'&& for the type of this build:
+# Use either 'debug' or 'release' for the type of this build:
 # &codep
 build_type='debug'
 # &&
-# Note that &code run_cmake.sh&& looks for a &icode%dismod_at_prefix%.debug%&&
-# and &icode%dismod_at_prefix%.release%&& and uses them if they are present.
-# Note that it builds dismod_at in &code build.debug&& or
-# &code build.release&& depending on &icode build_type&&.
-# Also note that it uses a soft link from
-# &icode dismod_at_prefix&&  and &code build&& to the corresponding debug
-# and release directories.
+# Note that if &icode dismod_at_prefix&& ends in &code dismod_at&&,
+# &code run_cmake.sh&& will use a link from the prefix to
+# &icode%dismod_at_prefix%.debug%&& or
+# &icode%dismod_at_prefix%.release%&&
+# depending on the choice &icode build_type&&.
 #
 # &head python3_executable&&
 # Path to the python3 executable on this machine:
@@ -72,8 +70,10 @@ suitesparse_prefix="$HOME/prefix/dismod_at"
 # (without suppressing warnings from other include files).
 #
 # &subhead Debug and Release&&
-# If all the prefixes are the same and end in &code /dismod_at&&,
-# except for the Eigen prefix which has an extra sub-directory at the end,
+# If &icode dismod_at_prefix&& ends in &code dismod_at&&,
+# all the prefixes must be the same,
+# except for the Eigen prefix which has an extra sub-directory at the end.
+# In this case,
 # &code bin/run_cmake.sh&& can be used to switch between a debug and release
 # version of &code dismod_at&&
 # (depending on &cref/build_type/run_cmake.sh/build_type/&&).
@@ -84,7 +84,7 @@ suitesparse_prefix="$HOME/prefix/dismod_at"
 # Note that the same technique will be used to map the &code build&&
 # directory to the debug or release version.
 # Also note that if you are using both a debug and release, both versions
-# of the  &cref/special requirements/install_unix/Special Requirements/&&
+# of the &cref/special requirements/install_unix/Special Requirements/&&
 # will need to be installed.
 #
 # &head Choosing C++ Compiler&&
