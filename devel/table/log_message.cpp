@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -44,6 +44,8 @@ $code warning$$,
 $code value$$.
 This value gets written in the
 $cref/message_type/log_table/message_type/$$ column of the log table.
+If $icode message_type$$ is $code error$$ or $code warning$$,
+the message is also written to standard error and ends with a new line.
 
 $head message$$
 This argument has prototype
@@ -109,6 +111,7 @@ std::time_t log_message(
 	const std::string& table_name   ,
 	const size_t&      row_id       )
 {	static bool recursive = false;
+	using std::cerr;
 	using std::string;
 	using CppAD::to_string;
 
@@ -124,6 +127,17 @@ std::time_t log_message(
 	);
 	// get time
 	std::time_t unix_time = std::time( DISMOD_AT_NULL_PTR );
+	//
+	// write errors and warnings to standard error
+	if( message_type == "error" || message_type == "warning" )
+	{	cerr << "dismod_at " << message_type << ": " << message << std::endl;
+		if( table_name != "" )
+		{	cerr << "detected in table << table_name";
+			if( row_id != DISMOD_AT_NULL_SIZE_T )
+				cerr << " in row with " << table_name << "_id = " << row_id;
+			cerr << std::endl;
+		}
+	}
 	//
 	if( ! recursive )
 	{	recursive = true;

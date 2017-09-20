@@ -90,7 +90,8 @@ $end
 # include <dismod_at/configure.hpp>
 
 namespace {
-	// initial value correspoind to no error  logging
+	// initial value correspoind to not initialize
+	// 2DO: this is not thread safe
 	sqlite3* db_previous_ = DISMOD_AT_NULL_PTR;
 }
 
@@ -100,36 +101,27 @@ void error_exit(
 	const std::string& message      ,
 	const std::string& table_name   ,
 	const size_t&      row_id       )
-{	using std::string;
-	using std::cerr;
-	using std::endl;
+{
 	sqlite3* db = db_previous_;
 
-	// check assumption one table_name and row_id columns of log
+	// check that if table_name is empty, row_id is null
 	assert( table_name != "" || row_id == DISMOD_AT_NULL_SIZE_T );
 
-	// write to standard error
-	cerr << "Error: " << message << endl;
-	if( table_name != "" )
-	{	cerr << "Detected in table " << table_name;
-		if( row_id != DISMOD_AT_NULL_SIZE_T )
-			cerr << " in row with " << table_name << "_id = " << row_id;
-		cerr << endl;
-	}
+	// db should never be null
+	assert( db != DISMOD_AT_NULL_PTR );
 
-	// If db is null, we are generting an assert instead of logging errors
-	assert( db != DISMOD_AT_NULL_PTR ); // asserting instead of logging errros
-
-	// write to log table
-	string message_type = "error";
+	// write to standard error and log table
+	std::string message_type = "error";
 	log_message(db, message_type, message, table_name, row_id);
 	//
 	// close the database
 	sqlite3_close(db);
 	//
-	// exit
-	assert(false); // assert when we are running in debugger
-	std::exit(1);  // can not continue from this point
+	// if running in debugger, stop here
+	assert(false);
+	//
+	// now exit program
+	std::exit(1);
 }
 void error_exit(
 	const std::string& message      ,
