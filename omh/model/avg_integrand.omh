@@ -232,10 +232,6 @@ where we have dropped the subscript $latex i$$ to simplify the notation.
 $head I_i(a,t)$$
 We use $latex I_i (a, t)$$ to denote the integrand as a function of
 age and time.
-We define prevalence by
-$latex \[
-	p(a,t) = C(a,t) / [ S(a,t) + C(a,t) ]
-\] $$
 Depending on the value of
 see $cref/integrand_id/data_table/integrand_id/$$ for data index $latex i$$,
 the function $latex I_i (a, t)$$ is defined by
@@ -255,8 +251,14 @@ $latex I_i (a, t) = \omega (a,t)$$
 $subhead mtwith$$
 $latex I_i (a, t) = \omega (a,t) + \chi (a,t)$$
 
+$subhead susceptible$$
+$latex I_i (a, t) = S(a, t)$$
+
+$subhead withC$$
+$latex I_i (a, t) = C(a, t)$$
+
 $subhead prevalence$$
-$latex I_i (a, t) = p(a,t) $$
+$latex I_i (a, t) = p(a,t) = C(a,t) / [ S(a,t) + C(a,t) ] $$
 
 $subhead Tincidence$$
 $latex I_i (a, t) = \iota(a, t) [ 1 - p(a,t) ]$$

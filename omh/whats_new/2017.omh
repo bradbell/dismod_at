@@ -31,6 +31,7 @@ $spell
 	dtime
 	messaging
 	config
+	integrands
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -42,10 +43,17 @@ $childtable%
 %$$
 
 $head 09-21$$
+$list number$$
 Advance to $code cppad_mixed-20160919$$
 We are working on improving error messaging when $code nan$$ occurs
 during optimization.
-
+$lnext
+Add $code susceptible$$ and $code withC$$ to
+the documentation for the types of average integrands
+$cref/I_i(a,t)/avg_integrand/I_i(a,t)/$$.
+These integrands were already available, see
+$cref/integrand_name/integrand_table/integrand_name/$$.
+$lend
 
 $head 09-20$$
 All warnings are now printed to standard error as well as being
