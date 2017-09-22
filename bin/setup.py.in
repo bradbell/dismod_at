@@ -19,7 +19,7 @@ setup(
 	author  = 'Bradley M. Bell',
 	author_email= 'bradbell@uw.edu',
 	url='http://moby.ihme.washington.edu/bradbell/dismod_at',
-	version = '20170921',
+	version = '20170922',
 	packages = ['dismod_at' ],
 	package_dir = { 'dismod_at' : '@CMAKE_SOURCE_DIR@/python/dismod_at' },
 	scripts     = [ 'bin/dismodat.py' ],
