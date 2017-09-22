@@ -45,6 +45,8 @@ $comment Same order as children above$$
 
 $head Output Tables$$
 Here is a list of the $code dismod_at$$ output tables.
+The ones that can be created directly by the user have
+yes under By User.
 $table
 Table $cnext
 Output By $cnext
@@ -84,7 +86,7 @@ no
 $rnext
 $cref/sample/sample_table/$$ $cnext
 $cref/sample/sample_command/$$ $cnext
-no
+yes
 $rnext
 $cref/predict/predict_table/$$ $cnext
 $cref/predict/predict_command/$$ $cnext
