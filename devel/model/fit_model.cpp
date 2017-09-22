@@ -1150,13 +1150,13 @@ fit_model::a1d_vector fit_model::fix_constraint(const a1d_vector& fixed_vec)
 void fit_model::fatal_error(const std::string& error_message)
 {	assert(false);
 	std::string msg = "cppad_mixed: " + error_message;
+	// prints on std::cerr as well as logs in database
 	error_exit(msg);
 }
 // warning
 void fit_model::warning(const std::string& warning_message)
 {	std::string msg = "cppad_mixed: " + warning_message;
-	if( warn_on_stderr_ )
-		std::cerr << "Warning: " << msg << std::endl;
+	// prints on std::cerr as well as logs in database
 	log_message(db_, "warning", msg);
 }
 } // DISMOD_AT_END_NAMESPACE
