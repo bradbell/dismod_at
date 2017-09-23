@@ -110,7 +110,6 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 switch_build_type='no'
-switch_link_type='no'
 # -----------------------------------------------------------------------------
 if [ "$0" != 'bin/run_cmake.sh' ]
 then
@@ -126,7 +125,6 @@ usage: bin/run_cmake.sh \\
 	[--help] \\
 	[--verbose] \\
 	[--switch_build_type]
-	[--switch_link_type]
 EOF
 		exit 0
 	fi
@@ -136,9 +134,6 @@ EOF
 	elif [ "$1" == '--switch_build_type' ]
 	then
 		switch_build_type='yes'
-	elif [ "$1" == '--switch_link_type' ]
-	then
-		switch_link_type='yes'
 	else
 		echo "'$1' is an invalid option"
 		bin/run_cmake.sh --help
@@ -156,24 +151,13 @@ then
 		build_type='debug'
 	fi
 fi
-# final link_type
-link_type="$build_type"
-if [ "$switch_link_type" == 'yes' ]
-then
-	if [ "$build_type" == 'debug' ]
-	then
-		link_type='release'
-	else
-		link_type='debug'
-	fi
-fi
 # --------------------------------------------------------------------------
 libdir=`bin/libdir.sh`
 export PKG_CONFIG_PATH="$ipopt_prefix/$libdir/pkgconfig"
 # --------------------------------------------------------------------------
 if echo "$dismod_at_prefix" | grep '/dismod_at$' > /dev/null
 then
-	bin/build_type.sh run_cmake $dismod_at_prefix $link_type
+	bin/build_type.sh run_cmake $dismod_at_prefix $build_type
 fi
 # --------------------------------------------------------------------------
 if [ ! -e build ]

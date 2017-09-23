@@ -185,6 +185,7 @@ parent node, node table, and data table.
 $end
 -----------------------------------------------------------------------------
 */
+# include <cppad/mixed/exception.hpp>
 # include <dismod_at/min_max_vector.hpp>
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/integrate_1d.hpp>
@@ -1330,7 +1331,9 @@ Float data_model::avg_yes_ode(
 				if( ! ok )
 				{	std::string message = "Numerical integration error.\n"
 					"Prevalence is negative or infinite or Nan.";
-					error_exit(message);
+					throw CppAD::mixed::exception(
+						"avg_yes_ode", message
+					);
 				}
 				size_t ij = (i - i_min) * n_time_sub + (j - j_min);
 				switch(integrand)
