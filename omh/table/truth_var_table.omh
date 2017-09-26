@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -37,6 +37,6 @@ the value of the corresponding $cref/model_variables/model_variables/$$
 used during the $cref simulate_command$$.
 
 $head Example$$
-See the $cref truth_command.py$$ example and test.
+See the $cref variable_command.py$$ example and test.
 
 $end

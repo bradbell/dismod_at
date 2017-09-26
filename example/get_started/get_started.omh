@@ -30,7 +30,6 @@ $table
 $rref init_command.py$$
 $rref variable_command.py$$
 $rref fit_command.py$$
-$rref truth_command.py$$
 $rref simulate_command.py$$
 $rref sample_command.py$$
 $rref predict_command.py$$

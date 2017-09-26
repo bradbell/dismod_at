@@ -132,7 +132,7 @@ the results of the previous fit is used for the values in $icode table_out$$.
 
 $head Example$$
 The files
-$cref variable_command.py$$ and $cref truth_command.py$$
+$cref variable_command.py$$ and $cref variable_command.py$$
 contains examples and tests using this command.
 
 $end
@@ -975,9 +975,8 @@ $codei%
 	%truth_var_value% = %variable_value%
 %$$
 
-$children%example/get_started/truth_command.py%$$
 $head Example$$
-The file $cref truth_command.py$$ contains an example and test
+The file $cref variable_command.py$$ contains an example and test
 of using this command.
 
 $end
