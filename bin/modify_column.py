@@ -68,6 +68,7 @@ sys.path.append( os.path.join( os.getcwd(), 'python' ) )
 import dismod_at
 # ---------------------------------------------------------------------------
 if len(sys.argv) < 6 :
+	print('sys.argv = ', sys.argv)
 	msg  = 'bin/modify_column.py database'
 	msg += ' table_name column_name row_expression value_expression'
 	sys.exit(msg)
