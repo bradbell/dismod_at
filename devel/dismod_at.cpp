@@ -140,16 +140,16 @@ $end
 
 // ----------------------------------------------------------------------------
 void variable_command(
-	const std::string&                     table       ,
+	const std::string&                     table_out   ,
 	const std::string&                     source      ,
 	sqlite3*                               db          ,
 	const vector<double>&                  prior_mean  )
 {	using std::string;
 	using CppAD::to_string;
 	//
-	if( table != "start_var" && table != "truth_var" )
-	{	string msg = "dismod_at variable command table = ";
-		msg       += table + " is not one of the following: ";
+	if( table_out != "start_var" && table_out != "truth_var" )
+	{	string msg = "dismod_at variable command table_out = ";
+		msg       += table_out + " is not one of the following: ";
 		msg       += "start_var, truth_var";
 		dismod_at::error_exit(msg);
 	}
@@ -161,15 +161,15 @@ void variable_command(
 	}
 	//
 	string sql_cmd = "drop table if exists ";
-	sql_cmd       += table;
+	sql_cmd       += table_out;
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	// create table
-	string table_name = table;
+	// create table_out
+	string table_name = table_out;
 	size_t n_var      = prior_mean.size();
 	vector<string> col_name(1), col_type(1), row_value(n_var);
 	vector<bool>   col_unique(1);
-	col_name[0]       = table + "_value";
+	col_name[0]       = table_out + "_value";
 	col_type[0]       = "real";
 	col_unique[0]     = false;
 	//
@@ -220,8 +220,10 @@ $cref/output tables/data_flow/Output Tables/$$,
 except for the $cref log_table$$,
 and then creates new versions of the following tables:
 $table
-$cref var_table$$           $cnext $title var_table$$ $rnext
+$cref var_table$$           $cnext $title var_table$$         $rnext
 $cref data_subset_table$$   $cnext $title data_subset_table$$ $rnext
+$cref start_var_table$$     $cnext $title start_var_table$$   $rnext
+$cref truth_var_table$$     $cnext $title truth_var_table$$
 $tend
 
 $head Changing Values$$
@@ -245,6 +247,14 @@ $head data_subset_table$$
 A new $cref data_subset_table$$ is created.
 This makes explicit exactly which rows of the data table are used.
 
+$head start_var_table$$
+A new $cref start_var_table$$ is created using the
+means of the priors for the model variables.
+
+$head truth_var_table$$
+A new $cref truth_var_table$$ is created using the
+means of the priors for the model variables.
+
 $children%example/get_started/init_command.py%$$
 $head Example$$
 The file $cref init_command.py$$ contains an example and test
@@ -256,6 +266,7 @@ $end
 // ----------------------------------------------------------------------------
 void init_command(
 	sqlite3*                                         db                  ,
+	const vector<double>&                            prior_mean          ,
 	const vector<dismod_at::data_subset_struct>&     data_subset_obj     ,
 	const dismod_at::pack_info&                      pack_object         ,
 	const dismod_at::db_input_struct&                db_input            ,
@@ -285,7 +296,17 @@ void init_command(
 		dismod_at::exec_sql_cmd(db, sql_cmd);
 	}
 	// -----------------------------------------------------------------------
-	// create data_subset_table
+	// start_var table
+	string table_out = "start_var";
+	string source    = "prior_mean";
+	variable_command(table_out, source, db, prior_mean);
+	// -----------------------------------------------------------------------
+	// truth_var table
+	table_out = "truth_var";
+	source    = "prior_mean";
+	variable_command(table_out, source, db, prior_mean);
+	// -----------------------------------------------------------------------
+	// data_subset table
 	string table_name = "data_subset";
 	size_t n_subset   = data_subset_obj.size();
 	vector<string> col_name(1), col_type(1), row_value(n_subset);
@@ -1996,6 +2017,7 @@ int main(int n_arg, const char** argv)
 		if( command_arg == "init" )
 		{	init_command(
 				db,
+				prior_mean,
 				data_subset_obj,
 				pack_object,
 				db_input,

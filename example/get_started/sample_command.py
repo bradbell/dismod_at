@@ -89,6 +89,7 @@ for var_id in range( len(var_table) ) :
 		assert False
 	truth_row = [ truth_var_value ]
 	row_list.append( truth_row )
+dismod_at.sql_command(connection, 'drop table truth_var')
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 # -----------------------------------------------------------------------
 # simulate command
