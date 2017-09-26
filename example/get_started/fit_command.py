@@ -56,10 +56,8 @@ get_started_db.get_started_db()
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
 file_name      = 'get_started.db'
-for command in [ 'init', 'start', 'fit' ] :
+for command in [ 'init', 'fit' ] :
 	cmd = [ program, file_name, command ]
-	if command == 'start' :
-		cmd.append('prior_mean')
 	if command == 'fit' :
 		variables = 'both'
 		cmd.append(variables)

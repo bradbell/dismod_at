@@ -22,16 +22,17 @@ rename_cmd='s|speed/simulated.py|example/user/speed.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|\$cref/ode grid/glossary/Ode Grid/\\\$|\$cref ode_grid\$|
+/'init', 'start', 'fit'/! b end
+N
+N
+N
+/if command == 'start' :/! b end
+/cmd.append('prior_mean')/! b end
 #
-s|\$cref/ode time grid/glossary/Ode Grid/Time, t_j/\\\$|\$cref/ode time grid/ode_grid/Time, t_j/\$|
-s|\$cref/ode age grid/glossary/Ode Grid/Age, a_i/\\\$|\$cref/ode age grid/ode_grid/Age, a_i/\$|
+s|\\n\\tif command == 'start'.*||
+s|'init', 'start', 'fit'|'init', 'fit'|
 #
-s|\$cref/t_[ij]/glossary/Ode Grid/Time, t_j/\\\$|\$cref/t_j/ode_grid/Time, t_j/\$|
-s|\$cref/a_i/glossary/Ode Grid/Age, a_i/\\\$|\$cref/a_i/ode_grid/Age, a_i/\$|
-#
-s|\$cref/bilinear interpolation/glossary/Bilinear Interpolant/\$\\\$|\$cref bilinear\$\$ interpolation|
-s|\$cref/bilinear interpolant/glossary/Bilinear Interpolant/\$\\\$|\$cref bilinear\$\$ interpolant|
+:end
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

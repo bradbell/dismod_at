@@ -279,10 +279,8 @@ def example_db (file_name) :
 file_name             = 'example.db'
 (n_smooth, rate_true) = example_db(file_name)
 program               = '../../devel/dismod_at'
-for command in [ 'init', 'start', 'fit' ] :
+for command in [ 'init', 'fit' ] :
 	cmd = [ program, file_name, command ]
-	if command == 'start' :
-		cmd.append('prior_mean')
 	if command == 'fit' :
 		variables = 'both'
 		cmd.append(variables)

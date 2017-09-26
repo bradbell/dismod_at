@@ -282,10 +282,8 @@ file_name = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
 fit_count      = 0
-for command in [ 'init', 'start', 'fit', 'fit' ] :
+for command in [ 'init', 'fit', 'fit' ] :
 	cmd = [ program, file_name, command ]
-	if command == 'start' :
-		cmd.append('prior_mean')
 	if command == 'fit' :
 		if fit_count == 0 :
 			variables = 'fixed' # not necessary, but here for testing
