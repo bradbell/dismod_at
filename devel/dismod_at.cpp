@@ -85,6 +85,120 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 	}
 /*
 -----------------------------------------------------------------------------
+$begin variable_command$$
+$spell
+	var
+	dismod
+$$
+
+$section The Variable Command$$
+
+$head Syntax$$
+$codei%dismod_at %database% variable %table_out% %source%$$
+
+$head Purpose$$
+This command copies the values specified by $icode source$$
+to the specified output table.
+Note that $icode table_out$$ may also be created directly by the user
+(with the aid of the $cref var_table$$).
+
+$head database$$
+Is an
+$href%http://www.sqlite.org/sqlite/%$$ database containing the
+$code dismod_at$$ $cref input$$ tables which are not modified.
+
+$head table_out$$
+If this table exists before the command,
+the values originally in the table are lost.
+
+$subhead start_var$$
+In this case,
+the $cref/start_var/start_var_table/$$ table is created.
+
+$subhead truth_var$$
+In this case,
+the $cref/truth_var/truth_var_table/$$ table is created.
+
+$head source$$
+The start command argument $icode source$$ must be one of the following:
+
+$subhead prior_mean$$
+If $icode source$$ is $code prior_mean$$,
+the mean of the priors is used for the values in $icode table_out$$.
+
+$subhead fit_var$$
+If $icode source$$ is $code fit_var$$,
+the results of the previous fit is used for the values in $icode table_out$$.
+
+$head Example$$
+The files
+$cref start_command.py$$ and $cref truth_command.py$$
+contains examples and tests using this command.
+
+$end
+*/
+
+// ----------------------------------------------------------------------------
+void variable_command(
+	const std::string&                     table       ,
+	const std::string&                     source      ,
+	sqlite3*                               db          ,
+	const vector<double>&                  prior_mean  )
+{	using std::string;
+	using CppAD::to_string;
+	//
+	if( table != "start_var" && table != "truth_var" )
+	{	string msg = "dismod_at variable command table = ";
+		msg       += table + " is not one of the following: ";
+		msg       += "start_var, truth_var";
+		dismod_at::error_exit(msg);
+	}
+	if( source != "prior_mean" && source != "fit_var" )
+	{	string msg = "dismod_at variable command source = ";
+		msg       += source + " is not one of the following: ";
+		msg       += "prior_mean, fit_var";
+		dismod_at::error_exit(msg);
+	}
+	//
+	string sql_cmd = "drop table if exists ";
+	sql_cmd       += table;
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	// create table
+	string table_name = table;
+	size_t n_var      = prior_mean.size();
+	vector<string> col_name(1), col_type(1), row_value(n_var);
+	vector<bool>   col_unique(1);
+	col_name[0]       = table + "_value";
+	col_type[0]       = "real";
+	col_unique[0]     = false;
+	//
+	if( source == "prior_mean" )
+	{	for(size_t var_id = 0; var_id < n_var; var_id++)
+			row_value[var_id] = CppAD::to_string( prior_mean[var_id] );
+	}
+	else
+	{	assert( source == "fit_var" );
+		//
+		// get fit_var table information
+		vector<double> variable_value;
+		string table_name  = "fit_var";
+		string column_name = "variable_value";
+		dismod_at::get_table_column(
+			db, table_name, column_name, variable_value
+		);
+		//
+		// put it in row_value
+		for(size_t var_id = 0; var_id < n_var; var_id++)
+			row_value[var_id] = to_string(variable_value[var_id]);
+	}
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
+	return;
+}
+/*
+-----------------------------------------------------------------------------
 $begin init_command$$
 $spell
 	avgint
@@ -444,59 +558,6 @@ of using this command.
 
 $end
 */
-
-// ----------------------------------------------------------------------------
-void start_command(
-	const std::string&                     source      ,
-	sqlite3*                               db          ,
-	const vector<double>&                  prior_mean  )
-{	using std::string;
-	using CppAD::to_string;
-	//
-	if( source != "prior_mean" && source != "fit_var" )
-	{	string msg = "dismod_at start command source = ";
-		msg       += source + " is not one of the following: ";
-		msg       += "prior_mean, fit_var";
-		dismod_at::error_exit(msg);
-	}
-	//
-	string sql_cmd = "drop table if exists start_var";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	//
-	// create start_var table
-	string table_name = "start_var";
-	size_t n_var      = prior_mean.size();
-	vector<string> col_name(1), col_type(1), row_value(n_var);
-	vector<bool>   col_unique(1);
-	col_name[0]       = "start_var_value";
-	col_type[0]       = "real";
-	col_unique[0]     = false;
-	//
-	if( source == "prior_mean" )
-	{	for(size_t var_id = 0; var_id < n_var; var_id++)
-			row_value[var_id] = CppAD::to_string( prior_mean[var_id] );
-	}
-	else
-	{	assert( source == "fit_var" );
-		//
-		// get fit_var table information
-		vector<double> variable_value;
-		string table_name  = "fit_var";
-		string column_name = "variable_value";
-		dismod_at::get_table_column(
-			db, table_name, column_name, variable_value
-		);
-		//
-		// put it in row_value
-		for(size_t var_id = 0; var_id < n_var; var_id++)
-			row_value[var_id] = to_string(variable_value[var_id]);
-	}
-	dismod_at::create_table(
-		db, table_name, col_name, col_type, col_unique, row_value
-	);
-	return;
-}
-
 /*
 -----------------------------------------------------------------------------
 $begin fit_command$$
@@ -900,37 +961,6 @@ of using this command.
 $end
 */
 
-// ----------------------------------------------------------------------------
-void truth_command(sqlite3* db)
-{	using std::string;
-	using CppAD::to_string;
-	//
-	// get fit_var table information
-	vector<double> variable_value;
-	string table_name  = "fit_var";
-	string column_name = "variable_value";
-	dismod_at::get_table_column(db, table_name, column_name, variable_value);
-	//
-	// create truth_var table
-	string sql_cmd = "drop table if exists truth_var";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	//
-	table_name   = "truth_var";
-	size_t n_var = variable_value.size();
-	vector<string> col_name(1), col_type(1), row_value(n_var);
-	vector<bool>   col_unique(1);
-	col_name[0]       = "truth_var_value";
-	col_type[0]       = "real";
-	col_unique[0]     = false;
-	for(size_t fit_var_id = 0; fit_var_id < n_var; fit_var_id++)
-	{	double truth_var_value  = variable_value[fit_var_id];
-		row_value[fit_var_id]   = to_string( truth_var_value );
-	}
-	dismod_at::create_table(
-		db, table_name, col_name, col_type, col_unique, row_value
-	);
-	return;
-}
 /*
 -----------------------------------------------------------------------------
 $begin simulate_command$$
@@ -1889,14 +1919,24 @@ int main(int n_arg, const char** argv)
 	string rate_case = option_map["rate_case"];
 	// =======================================================================
 	if( command_arg == "start" )
-	{	start_command(
-			argv[3]              , // source
-			db                   ,
+	{	std::string table_out = "start_var";
+		std::string source    = argv[3];
+		variable_command(
+			table_out       ,
+			source          ,
+			db              ,
 			prior_mean
 		);
 	}
 	else if( command_arg == "truth" )
-	{	truth_command(db);
+	{	std::string table_out = "truth_var";
+		std::string source    = "fit_var";
+		variable_command(
+			table_out       ,
+			source          ,
+			db              ,
+			prior_mean
+		);
 	}
 	else if( command_arg == "predict" )
 	{	// avgint_subset_obj
