@@ -277,13 +277,11 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
 # Simulate one data set and fit it
-for command in [ 'simulate', 'start', 'fit' ] :
+for command in [ 'simulate', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'simulate' :
 		number_simulate = '1'
 		cmd.append(number_simulate)
-	if command == 'start' :
-		cmd.append('prior_mean')
 	if command == 'fit' :
 		variables = 'both'
 		cmd.append(variables)

@@ -298,21 +298,17 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
 # Simulate one data set, start at prior mean fit, start at fit results, fit
-fit_count = 0
-for command in [ 'simulate', 'start', 'fit', 'start', 'fit' ] :
+for command in [ 'simulate', 'fit', 'variable', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'simulate' :
 		number_simulate = '1'
 		cmd.append(number_simulate)
-	if command == 'start' :
-		if fit_count == 0 :
-			cmd.append('prior_mean')
-		else :
-			cmd.append('fit_var')
 	if command == 'fit' :
 		variables = 'both'
 		cmd.append(variables)
-		fit_count += 1
+	if command == 'variable' :
+		cmd.append('start_var')
+		cmd.append('fit_var')
 	if command == 'fit' :
 		simulate_index = '0';
 		cmd.append(simulate_index)

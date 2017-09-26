@@ -1750,6 +1750,7 @@ int main(int n_arg, const char** argv)
 	// ---------------- command line arguments ---------------------------
 	struct { const char* name; int n_arg; } command_info[] = {
 		{"init",      3},
+		{"variable",  5},
 		{"start",     4},
 		{"truth",     3},
 		{"fit",       4},
@@ -1939,7 +1940,17 @@ int main(int n_arg, const char** argv)
 	// rate_case
 	string rate_case = option_map["rate_case"];
 	// =======================================================================
-	if( command_arg == "start" )
+	if( command_arg == "variable" )
+	{	std::string table_out = argv[3];
+		std::string source    = argv[4];
+		variable_command(
+			table_out       ,
+			source          ,
+			db              ,
+			prior_mean
+		);
+	}
+	else if( command_arg == "start" )
 	{	std::string table_out = "start_var";
 		std::string source    = argv[3];
 		variable_command(
