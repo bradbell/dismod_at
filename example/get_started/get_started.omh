@@ -28,7 +28,7 @@ $cref get_started_db.py$$
 $head Commands$$
 $table
 $rref init_command.py$$
-$rref start_command.py$$
+$rref variable_command.py$$
 $rref fit_command.py$$
 $rref truth_command.py$$
 $rref simulate_command.py$$

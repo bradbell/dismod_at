@@ -8,16 +8,16 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin start_command.py$$ $newlinech #$$
+# $begin variable_command.py$$ $newlinech #$$
 # $spell
 #	dismod
 # $$
 #
-# $section dismod_at start: Example and Test$$
+# $section dismod_at variable: Example and Test$$
 #
 # $code
 # $srcfile%
-#	example/get_started/start_command.py
+#	example/get_started/variable_command.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -30,7 +30,7 @@ import subprocess
 import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
-example = 'example/get_started/start_command.py'
+example = 'example/get_started/variable_command.py'
 if sys.argv[0] != example  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + example + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -73,7 +73,7 @@ for command in [ 'init', 'fit', 'variable' ] :
 new        = False
 connection = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
-# get variable and start_var tables
+# get start_var and truth_var tables
 var_table       = dismod_at.get_table_dict(connection, 'var')
 start_var_table = dismod_at.get_table_dict(connection, 'start_var')
 truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
@@ -96,5 +96,5 @@ for var_id in range( len(var_table) ) :
 	else :
 		assert False
 # -----------------------------------------------------------------------
-print('start_command: OK')
+print('variable_command: OK')
 # END PYTHON

@@ -132,7 +132,7 @@ the results of the previous fit is used for the values in $icode table_out$$.
 
 $head Example$$
 The files
-$cref start_command.py$$ and $cref truth_command.py$$
+$cref variable_command.py$$ and $cref truth_command.py$$
 contains examples and tests using this command.
 
 $end
@@ -572,9 +572,9 @@ $cref model_variables$$ values specified by $icode source$$.
 These values are used as the starting point for subsequent
 $cref/fit_commands/fit_command/$$.
 
-$children%example/get_started/start_command.py%$$
+$children%example/get_started/variable_command.py%$$
 $head Example$$
-The file $cref start_command.py$$ contains an example and test
+The file $cref variable_command.py$$ contains an example and test
 of using this command.
 
 $end
@@ -624,7 +624,8 @@ constrained to be zero.
 $cref/random_bound/option_table/Optimizer/random_bound/$$ equal to zero.)
 This is useful when one uses fitting with no random effects as
 a starting point for fitting with random effects; see
-$cref/start fit_var/start_command/source/fit_var/$$ and
+$cref variable_command$$,
+$cref start_var_table$$, and
 $cref/fit_fixed.py/user_fit_fixed.py/$$.
 This enables one to see the different between the two
 fits in the $cref log_table$$
