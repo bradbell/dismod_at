@@ -570,13 +570,15 @@ def db2csv_command(database_file_arg) :
 	avgint_extra_columns = []  # default
 	for row in table_data['option'] :
 		if row['option_name'] == 'avgint_extra_columns' :
-			avgint_extra_columns = row['option_value'].split()
+			if row['option_value'] != None :
+				avgint_extra_columns = row['option_value'].split()
 	# ----------------------------------------------------------------------
 	# data_extra_columns
 	data_extra_columns = []  # default
 	for row in table_data['option'] :
 		if row['option_name'] == 'data_extra_columns' :
-			data_extra_columns = row['option_value'].split()
+			if row['option_value'] != None :
+				data_extra_columns = row['option_value'].split()
 	# ----------------------------------------------------------------------
 	# simulate_index
 	simulate_index = None
@@ -640,15 +642,21 @@ def db2csv_command(database_file_arg) :
 		[ "random_zero_sum",               "false"],
 		[ "rate_case",                     "iota_pos_rho_zero"],
 		[ "tolerance_fixed",               "1e-8"],
-		[ "tolerance_random",              "1e-8"]
+		[ "tolerance_random",              "1e-8"],
+		[ "warn_on_stderr",                "true"],
 	]
+	option_id = 0
 	for row in table_data['option'] :
-		found = False
+		found        = False
 		for choice in option_list :
 			if row['option_name'] == choice[0] :
 				found = True
 				choice[1] = row['option_value']
-		assert found
+		if not found :
+			msg  = 'Error in option table at option_id = ' + str(option_id)
+			msg += '\noption_name = ' + row['option_name'] + ' is not valid'
+			sys.exit(msg)
+		option_id += 1
 	for row in option_list :
 		row_out = { 'option_name' : row[0], 'option_value' : row[1] }
 		csv_writer.writerow(row_out)
@@ -742,7 +750,10 @@ def db2csv_command(database_file_arg) :
 		smooth_id = row_in['smooth_id']
 		if row_in['var_type'] in ['mulstd_value','mulstd_dage','mulstd_dtime'] :
 			prior_id_dict = {
-			'value_prior_id':None, 'dage_prior_id':None, 'dtime_prior_id':None
+				'value_prior_id' : None,
+				'dage_prior_id'  : None,
+				'dtime_prior_id' : None,
+				'const_value'    : None,
 			}
 			smooth_id_dict = table_data['smooth'][smooth_id]
 			key            = row_in['var_type'] + '_prior_id'

@@ -25,9 +25,15 @@ $spell
 	dage
 	dtime
 	var
+	csv
 $$
 
 $section Dismod_at Wish List$$
+
+$head db2csv$$
+We should set up more automated testing of
+$cref db2csv_command$$.
+It has very little and this has lead to bugs that the user sees.
 
 $head parent_node$$
 It would be easier for the user if
