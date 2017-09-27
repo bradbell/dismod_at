@@ -943,44 +943,6 @@ void fit_command(
 	);
 	return;
 }
-/*
------------------------------------------------------------------------------
-$begin truth_command$$
-$spell
-	avgint
-	var
-	dismod
-$$
-
-$section The Truth Command$$
-
-$head Syntax$$
-$codei%dismod_at %database% truth%$$
-
-$head database$$
-Is an
-$href%http://www.sqlite.org/sqlite/%$$ database containing the
-$code dismod_at$$ $cref input$$ tables which are not modified.
-
-$head fit_var_table$$
-In addition to the standard $cref input$$ tables,
-there must be a $cref fit_var_table$$.
-
-$head truth_var_table$$
-A new $cref truth_var_table$$ is created with the information
-in the fit_var table;
-to be specific,
-$codei%
-	%truth_var_id% = %fit_var_id% = %var_id%
-	%truth_var_value% = %variable_value%
-%$$
-
-$head Example$$
-The file $cref variable_command.py$$ contains an example and test
-of using this command.
-
-$end
-*/
 
 /*
 -----------------------------------------------------------------------------
@@ -1012,7 +974,8 @@ $head truth_var_table$$
 The $cref truth_var_table$$ is an addition input table for this command.
 It specifies the true values for the
 $cref model_variables$$ used during the simulation.
-This table can be create by the $cref truth_command$$,
+This table can be create by the
+$cref/variable_command/variable_command/table_out/truth_var/$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref init_command$$).
 
@@ -1752,7 +1715,6 @@ int main(int n_arg, const char** argv)
 		{"init",      3},
 		{"variable",  5},
 		{"start",     4},
-		{"truth",     3},
 		{"fit",       4},
 		{"fit",       5},
 		{"simulate",  4},
@@ -1953,16 +1915,6 @@ int main(int n_arg, const char** argv)
 	else if( command_arg == "start" )
 	{	std::string table_out = "start_var";
 		std::string source    = argv[3];
-		variable_command(
-			table_out       ,
-			source          ,
-			db              ,
-			prior_mean
-		);
-	}
-	else if( command_arg == "truth" )
-	{	std::string table_out = "truth_var";
-		std::string source    = "fit_var";
 		variable_command(
 			table_out       ,
 			source          ,

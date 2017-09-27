@@ -77,7 +77,7 @@ $cref/fit/fit_command/$$ $cnext
 no
 $rnext
 $cref/truth_var/truth_var_table/$$ $cnext
-$cref/truth/truth_command/$$ $cnext
+$cref/variable/variable_command/table_out/truth_var/$$ $cnext
 yes
 $rnext
 $cref/simulate/simulate_table/$$ $cnext
@@ -97,49 +97,36 @@ $head Extra Input Tables$$
 An extra input table is one that is not in the $cref input$$ list
 and is not created by the $cref init_command$$.
 The tables created by the init command are
-$cref/var/var_table/$$,
-$cref/data_subset/data_subset_table/$$, and
-$cref/start_var/start_var_table/$$.
-The following extra input tables may be created by the user
-(with the aid of the $cref var_table$$):
-$cref/start_var/start_var_table/$$,
-$cref/truth_var/truth_var_table/$$.
+$cref var_table$$,
+$cref data_subset_table$$,
+$cref start_var_table$$,  and
+$cref truth_var_table$$.
 Below is list of commands and their extra input tables.
 
 $table
 Command $cnext
 Extra Input
 $rnext
-$cref/start prior_mean/start_command/source/prior_mean/$$ $cnext
-none
+$cref/variable start_var fit_var/start_command/source/fit_var/$$ $cnext
+	$cref/fit_var/fit_var_table/$$
 $rnext
-$cref/start fit_var/start_command/source/fit_var/$$ $cnext
-$cref/fit_var/fit_var_table/$$
-$rnext
-$cref/fit/fit_command/$$ $cnext
-$cref/start_var/start_var_table/$$
+$cref/variable truth_var fit_var/start_command/source/fit_var/$$ $cnext
+	$cref/fit_var/fit_var_table/$$
 $rnext
 $cref/fit simulate_index/fit_command/simulate_index/$$ $cnext
-$cref/start_var/start_var_table/$$,
-$cref/simulate/simulate_table/$$
-$rnext
-$cref/truth/truth_command/$$   $cnext
-$cref/fit_var/fit_var_table/$$
-$rnext
-$cref/simulate/simulate_command/$$ $cnext
-$cref/truth_var/truth_var_table/$$
+	$cref/simulate/simulate_table/$$
 $rnext
 $cref/sample fit_var/sample_command/method/fit_var/$$ $cnext
-$cref/fit_var/fit_var_table/$$
+	$cref/fit_var/fit_var_table/$$
 $rnext
 $cref/sample asymptotic/sample_command/method/asymptotic/$$ $cnext
-$cref/fit_var/fit_var_table/$$
+	$cref/fit_var/fit_var_table/$$
 $rnext
 $cref/sample simulate/sample_command/method/simulate/$$ $cnext
-$cref/simulate/simulate_table/$$
+	$cref/simulate/simulate_table/$$
 $rnext
 $cref/predict/predict_command/$$ $cnext
-$cref/sample/sample_table/$$
+	$cref/sample/sample_table/$$
 $tend
 
 $end

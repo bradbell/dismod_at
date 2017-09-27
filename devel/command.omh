@@ -37,7 +37,7 @@ $table
 $rref init_command$$
 $rref start_command$$
 $rref fit_command$$
-$rref truth_command$$
+$rref variable_command$$
 $rref simulate_command$$
 $rref sample_command$$
 $rref predict_command$$
