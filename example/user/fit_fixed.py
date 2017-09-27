@@ -314,7 +314,7 @@ for var_id in range( n_var ) :
 		assert canada or united_states
 # -----------------------------------------------------------------------
 # Copy results of previous fit to start table
-cmd = '../../devel/dismod_at example.db start fit_var'
+cmd = '../../devel/dismod_at example.db set start_var fit_var'
 print(cmd)
 flag = subprocess.call( cmd.split() )
 if flag != 0 :

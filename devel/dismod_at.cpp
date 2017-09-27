@@ -1905,16 +1905,6 @@ int main(int n_arg, const char** argv)
 			prior_mean
 		);
 	}
-	else if( command_arg == "start" )
-	{	std::string table_out = "start_var";
-		std::string source    = argv[3];
-		set_command(
-			table_out       ,
-			source          ,
-			db              ,
-			prior_mean
-		);
-	}
 	else if( command_arg == "predict" )
 	{	// avgint_subset_obj
 		vector<dismod_at::avgint_subset_struct> avgint_subset_obj;

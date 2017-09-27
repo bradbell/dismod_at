@@ -47,6 +47,12 @@ $childtable%
 
 $head 09-27$$
 $list number$$
+Remove the $code start$$ command.
+It has been replace by the $cref set_command$$ syntax
+$codei%
+	dismod_at set start_var %source%
+%$$
+$lnext
 Fix a bug in $cref db2csv_command$$ that occurred when
 $cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$
 was not null.
