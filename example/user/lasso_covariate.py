@@ -303,7 +303,7 @@ def example_db (file_name) :
 file_name      = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
-for command in [ 'init', 'fit', 'variable', 'simulate', 'sample' ] :
+for command in [ 'init', 'fit', 'set', 'simulate', 'sample' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'simulate' :
 		number_simulate = '1'
@@ -311,7 +311,7 @@ for command in [ 'init', 'fit', 'variable', 'simulate', 'sample' ] :
 	if command == 'fit' :
 		variables = 'both'
 		cmd.append(variables)
-	if command == 'variable' :
+	if command == 'set' :
 		cmd.append('truth_var')
 		cmd.append('fit_var')
 	if command == 'sample' :

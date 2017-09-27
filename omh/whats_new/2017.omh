@@ -33,6 +33,7 @@ $spell
 	config
 	integrands
 	mulstd
+	var
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -67,6 +68,12 @@ Add the $cref sql_command$$ python function.
 $lnext
 Change $cref init_command$$ so that it also creates a version of the
 $cref start_var_table$$ using the prior means.
+$lnext
+Remove the $code truth$$ command.
+It has been replace by the $cref set_command$$ syntax
+$codei%
+	dismod_at set truth_var fit_var
+%$$
 $lend
 
 

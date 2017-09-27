@@ -12,17 +12,20 @@
 new_directories='
 '
 rename_files='
+	example/get_started/variable_command.py
 '
 spell_files='
 '
 no_change_files='
 '
 #
-rename_cmd='s|speed/simulated.py|example/user/speed.py|'
+rename_cmd='s|variable_command.py|set_command.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-/drop table truth_var/d
+s|variable_command|set_command|g
+s|'fit', 'variable'|'fit', 'set'|
+s|command == 'variable'|command == 'set'|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

@@ -8,7 +8,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin variable_command.py$$ $newlinech #$$
+# $begin set_command.py$$ $newlinech #$$
 # $spell
 #	dismod
 # $$
@@ -17,7 +17,7 @@
 #
 # $code
 # $srcfile%
-#	example/get_started/variable_command.py
+#	example/get_started/set_command.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -30,7 +30,7 @@ import subprocess
 import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
-example = 'example/get_started/variable_command.py'
+example = 'example/get_started/set_command.py'
 if sys.argv[0] != example  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + example + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -56,12 +56,12 @@ get_started_db.get_started_db()
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
 file_name      = 'get_started.db'
-for command in [ 'init', 'fit', 'variable' ] :
+for command in [ 'init', 'fit', 'set' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'fit' :
 		variables = 'both'
 		cmd.append(variables)
-	if command == 'variable' :
+	if command == 'set' :
 		cmd.append('truth_var')
 		cmd.append('fit_var')
 	print( ' '.join(cmd) )
@@ -96,5 +96,5 @@ for var_id in range( len(var_table) ) :
 	else :
 		assert False
 # -----------------------------------------------------------------------
-print('variable_command: OK')
+print('set_command: OK')
 # END PYTHON

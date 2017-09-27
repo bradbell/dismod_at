@@ -85,22 +85,20 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 	}
 /*
 -----------------------------------------------------------------------------
-$begin variable_command$$
+$begin set_command$$
 $spell
 	var
 	dismod
 $$
 
-$section The Variable Command$$
+$section Directly Setting Table Values$$
 
 $head Syntax$$
-$codei%dismod_at %database% variable %table_out% %source%$$
+$codei%dismod_at %database% set %table_out% %source%$$
 
 $head Purpose$$
-This command copies the values specified by $icode source$$
-to the specified output table.
-Note that $icode table_out$$ may also be created directly by the user
-(with the aid of the $cref var_table$$).
+This command sets the values in $icode table_out$$
+using the values specified by $icode source$$.
 
 $head database$$
 Is an
@@ -114,10 +112,14 @@ the values originally in the table are lost.
 $subhead start_var$$
 In this case,
 the $cref/start_var/start_var_table/$$ table is created.
+Note that this table may also be created directly by the user
+(with the aid of the $cref var_table$$).
 
 $subhead truth_var$$
 In this case,
 the $cref/truth_var/truth_var_table/$$ table is created.
+Note that this table may also be created directly by the user
+(with the aid of the $cref var_table$$).
 
 $head source$$
 The start command argument $icode source$$ must be one of the following:
@@ -132,14 +134,14 @@ the results of the previous fit is used for the values in $icode table_out$$.
 
 $head Example$$
 The files
-$cref variable_command.py$$ and $cref variable_command.py$$
+$cref set_command.py$$ and $cref set_command.py$$
 contains examples and tests using this command.
 
 $end
 */
 
 // ----------------------------------------------------------------------------
-void variable_command(
+void set_command(
 	const std::string&                     table_out   ,
 	const std::string&                     source      ,
 	sqlite3*                               db          ,
@@ -148,13 +150,13 @@ void variable_command(
 	using CppAD::to_string;
 	//
 	if( table_out != "start_var" && table_out != "truth_var" )
-	{	string msg = "dismod_at variable command table_out = ";
+	{	string msg = "dismod_at set command table_out = ";
 		msg       += table_out + " is not one of the following: ";
 		msg       += "start_var, truth_var";
 		dismod_at::error_exit(msg);
 	}
 	if( source != "prior_mean" && source != "fit_var" )
-	{	string msg = "dismod_at variable command source = ";
+	{	string msg = "dismod_at set command source = ";
 		msg       += source + " is not one of the following: ";
 		msg       += "prior_mean, fit_var";
 		dismod_at::error_exit(msg);
@@ -295,7 +297,7 @@ void init_command(
 	// start_var table
 	string table_out = "start_var";
 	string source    = "prior_mean";
-	variable_command(table_out, source, db, prior_mean);
+	set_command(table_out, source, db, prior_mean);
 	// -----------------------------------------------------------------------
 	// data_subset table
 	string table_name = "data_subset";
@@ -563,9 +565,9 @@ $cref model_variables$$ values specified by $icode source$$.
 These values are used as the starting point for subsequent
 $cref/fit_commands/fit_command/$$.
 
-$children%example/get_started/variable_command.py%$$
+$children%example/get_started/set_command.py%$$
 $head Example$$
-The file $cref variable_command.py$$ contains an example and test
+The file $cref set_command.py$$ contains an example and test
 of using this command.
 
 $end
@@ -615,7 +617,7 @@ constrained to be zero.
 $cref/random_bound/option_table/Optimizer/random_bound/$$ equal to zero.)
 This is useful when one uses fitting with no random effects as
 a starting point for fitting with random effects; see
-$cref variable_command$$,
+$cref set_command$$,
 $cref start_var_table$$, and
 $cref/fit_fixed.py/user_fit_fixed.py/$$.
 This enables one to see the different between the two
@@ -966,7 +968,7 @@ The $cref truth_var_table$$ is an addition input table for this command.
 It specifies the true values for the
 $cref model_variables$$ used during the simulation.
 This table can be create by the
-$cref/variable_command/variable_command/table_out/truth_var/$$,
+$cref/set_command/set_command/table_out/truth_var/$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref init_command$$).
 
@@ -1704,7 +1706,7 @@ int main(int n_arg, const char** argv)
 	// ---------------- command line arguments ---------------------------
 	struct { const char* name; int n_arg; } command_info[] = {
 		{"init",      3},
-		{"variable",  5},
+		{"set",       5},
 		{"start",     4},
 		{"fit",       4},
 		{"fit",       5},
@@ -1893,10 +1895,10 @@ int main(int n_arg, const char** argv)
 	// rate_case
 	string rate_case = option_map["rate_case"];
 	// =======================================================================
-	if( command_arg == "variable" )
+	if( command_arg == "set" )
 	{	std::string table_out = argv[3];
 		std::string source    = argv[4];
-		variable_command(
+		set_command(
 			table_out       ,
 			source          ,
 			db              ,
@@ -1906,7 +1908,7 @@ int main(int n_arg, const char** argv)
 	else if( command_arg == "start" )
 	{	std::string table_out = "start_var";
 		std::string source    = argv[3];
-		variable_command(
+		set_command(
 			table_out       ,
 			source          ,
 			db              ,

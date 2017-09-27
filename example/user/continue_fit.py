@@ -297,7 +297,7 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
 # Simulate one data set, start at prior mean fit, start at fit results, fit
-for command in [ 'simulate', 'fit', 'variable', 'fit' ] :
+for command in [ 'simulate', 'fit', 'set', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'simulate' :
 		number_simulate = '1'
@@ -305,7 +305,7 @@ for command in [ 'simulate', 'fit', 'variable', 'fit' ] :
 	if command == 'fit' :
 		variables = 'both'
 		cmd.append(variables)
-	if command == 'variable' :
+	if command == 'set' :
 		cmd.append('start_var')
 		cmd.append('fit_var')
 	if command == 'fit' :

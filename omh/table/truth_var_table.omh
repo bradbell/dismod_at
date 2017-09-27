@@ -17,7 +17,7 @@ $section The truth_var Table: True Values Used During Simulations$$
 The truth_var table contains one value for each $cref/model_variables/model_variables/$$.
 A new $code truth_var$$ table is created,
 as a copy of the $cref fit_var_table$$,
-by the $cref/variable truth_var fit_var/variable_command/$$ command.
+by the $cref/variable truth_var fit_var/set_command/$$ command.
 It may also be created directly by the user
 (with the aid of the $cref var_table$$).
 
@@ -37,6 +37,6 @@ the value of the corresponding $cref/model_variables/model_variables/$$
 used during the $cref simulate_command$$.
 
 $head Example$$
-See the $cref variable_command.py$$ example and test.
+See the $cref set_command.py$$ example and test.
 
 $end

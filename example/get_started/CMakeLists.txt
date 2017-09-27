@@ -10,20 +10,20 @@
 # ---------------------------------------------------------------------------
 # Build get_started Examples / Tests
 
-FOREACH(cmd init fit variable simulate sample predict)
+FOREACH(cmd init fit set simulate sample predict)
 	ADD_CUSTOM_TARGET(
 		check_example_get_started_${cmd}
 		${python3_executable} example/get_started/${cmd}_command.py
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		DEPENDS dismod_at
 	)
-ENDFOREACH(cmd init fit variable simulate sample predict)
+ENDFOREACH(cmd init fit set simulate sample predict)
 ADD_CUSTOM_TARGET(
 	check_example_get_started
 	DEPENDS
 	check_example_get_started_init
 	check_example_get_started_fit
-	check_example_get_started_variable
+	check_example_get_started_set
 	check_example_get_started_simulate
 	check_example_get_started_sample
 	check_example_get_started_predict

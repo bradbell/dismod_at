@@ -77,7 +77,7 @@ $cref/fit/fit_command/$$ $cnext
 no
 $rnext
 $cref/truth_var/truth_var_table/$$ $cnext
-$cref/variable/variable_command/table_out/truth_var/$$ $cnext
+$cref/variable/set_command/table_out/truth_var/$$ $cnext
 yes
 $rnext
 $cref/simulate/simulate_table/$$ $cnext
