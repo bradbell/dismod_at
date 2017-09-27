@@ -22,17 +22,7 @@ rename_cmd='s|speed/simulated.py|example/user/speed.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-/'init', 'start', 'fit'/! b end
-N
-N
-N
-/if command == 'start' :/! b end
-/cmd.append('prior_mean')/! b end
-#
-s|\\n\\tif command == 'start'.*||
-s|'init', 'start', 'fit'|'init', 'fit'|
-#
-:end
+/drop table truth_var/d
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

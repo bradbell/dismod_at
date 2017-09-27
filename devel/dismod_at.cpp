@@ -222,8 +222,7 @@ and then creates new versions of the following tables:
 $table
 $cref var_table$$           $cnext $title var_table$$         $rnext
 $cref data_subset_table$$   $cnext $title data_subset_table$$ $rnext
-$cref start_var_table$$     $cnext $title start_var_table$$   $rnext
-$cref truth_var_table$$     $cnext $title truth_var_table$$
+$cref start_var_table$$     $cnext $title start_var_table$$
 $tend
 
 $head Changing Values$$
@@ -251,9 +250,6 @@ $head start_var_table$$
 A new $cref start_var_table$$ is created using the
 means of the priors for the model variables.
 
-$head truth_var_table$$
-A new $cref truth_var_table$$ is created using the
-means of the priors for the model variables.
 
 $children%example/get_started/init_command.py%$$
 $head Example$$
@@ -299,11 +295,6 @@ void init_command(
 	// start_var table
 	string table_out = "start_var";
 	string source    = "prior_mean";
-	variable_command(table_out, source, db, prior_mean);
-	// -----------------------------------------------------------------------
-	// truth_var table
-	table_out = "truth_var";
-	source    = "prior_mean";
 	variable_command(table_out, source, db, prior_mean);
 	// -----------------------------------------------------------------------
 	// data_subset table

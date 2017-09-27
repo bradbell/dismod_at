@@ -272,7 +272,6 @@ for var_id in range( len(var_table) ) :
 	else :
 		assert False
 	row_list.append( [ value ] )
-dismod_at.sql_command(connection, 'drop table truth_var')
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------

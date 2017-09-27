@@ -65,9 +65,8 @@ $head 09-26$$
 $list number$$
 Add the $cref sql_command$$ python function.
 $lnext
-Have the $cref init_command$$ create the
-$cref start_var_table$$ and $cref truth_var_table$$
-using the prior means.
+Change $cref init_command$$ so that it also creates a version of the
+$cref start_var_table$$ using the prior means.
 $lend
 
 
