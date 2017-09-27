@@ -72,8 +72,14 @@ x_estimate     = numpy.average(c, axis=0)
 mu_estimate    = x_estimate[0]
 sigma_estimate = x_estimate[1]
 #
-assert abs( mu_estimate / mu_true - 1.0 ) <= 0.05
-assert abs( sigma_estimate / sigma_true - 1.0 )  <= 0.05
+relerr = abs( mu_estimate / mu_true - 1.0 )
+if relerr > 0.05 :
+	print('relerr = ', relerr)
+	assert(False)
+relerr = abs( sigma_estimate / sigma_true - 1.0 )
+if relerr > 0.05 :
+	print('relerr = ', relerr)
+	assert(False)
 # -----------------------------------------------------------------------------
 print('metropolis.py: OK')
 # END PYTHON
