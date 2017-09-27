@@ -65,12 +65,16 @@ $cref/init/init_command/$$ $cnext
 no
 $rnext
 $cref/start_var/start_var_table/$$ $cnext
-$cref/start/start_command/$$ $cnext
+$cref/set_command/set_command/table_out/start_var/$$ $cnext
 yes
 $rnext
 $cref/fit_var/fit_var_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 no
+$rnext
+$cref/truth_var/truth_var_table/$$ $cnext
+$cref/set_command/set_command/table_out/truth_var/$$ $cnext
+yes
 $rnext
 $cref/fit_data_subset/fit_data_subset_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
@@ -98,19 +102,15 @@ An extra input table is one that is not in the $cref input$$ list
 and is not created by the $cref init_command$$.
 The tables created by the init command are
 $cref var_table$$,
-$cref data_subset_table$$,
-$cref start_var_table$$,  and
-$cref truth_var_table$$.
+$cref data_subset_table$$, and
+$cref start_var_table$$.
 Below is list of commands and their extra input tables.
 
 $table
 Command $cnext
 Extra Input
 $rnext
-$cref/variable start_var fit_var/start_command/source/fit_var/$$ $cnext
-	$cref/fit_var/fit_var_table/$$
-$rnext
-$cref/variable truth_var fit_var/start_command/source/fit_var/$$ $cnext
+$cref/set table fit_var/set_command/source/fit_var/$$ $cnext
 	$cref/fit_var/fit_var_table/$$
 $rnext
 $cref/fit simulate_index/fit_command/simulate_index/$$ $cnext

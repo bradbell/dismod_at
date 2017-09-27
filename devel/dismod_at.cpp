@@ -132,6 +132,7 @@ $subhead fit_var$$
 If $icode source$$ is $code fit_var$$,
 the results of the previous fit is used for the values in $icode table_out$$.
 
+$children%example/get_started/set_command.py%$$
 $head Example$$
 The files
 $cref set_command.py$$ and $cref set_command.py$$
@@ -523,55 +524,6 @@ void init_command(
 	// ----------------------------------------------------------------------
 	return;
 }
-/*
------------------------------------------------------------------------------
-$begin start_command$$
-$spell
-	avgint
-	var
-	dismod
-$$
-
-$section The Start Command$$
-
-$head Syntax$$
-$codei%dismod_at %database% start %source%$$
-
-$head Purpose$$
-This command copies the values specified by $icode source$$
-to the $cref start_var_table$$.
-
-$head database$$
-Is an
-$href%http://www.sqlite.org/sqlite/%$$ database containing the
-$code dismod_at$$ $cref input$$ tables which are not modified.
-
-$head source$$
-The start command argument $icode source$$ must be one of the following:
-
-$subhead prior_mean$$
-If $icode source$$ is $code prior_mean$$,
-the mean of the priors is used as the starting values for the
-next fit; see $cref prior_table$$.
-
-$subhead fit_var$$
-If $icode source$$ is $code fit_var$$,
-the results of the previous fit is used as the starting values for the
-next fit; see $cref fit_var_table$$.
-
-$head start_var_table$$
-This command creates a $cref start_var_table$$ using the
-$cref model_variables$$ values specified by $icode source$$.
-These values are used as the starting point for subsequent
-$cref/fit_commands/fit_command/$$.
-
-$children%example/get_started/set_command.py%$$
-$head Example$$
-The file $cref set_command.py$$ contains an example and test
-of using this command.
-
-$end
-*/
 /*
 -----------------------------------------------------------------------------
 $begin fit_command$$

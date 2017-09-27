@@ -374,7 +374,7 @@ The special case where $icode random_bound$$ is zero,
 fits as if there were no random effects except for the fact that
 the resulting optimal value can be used as a starting point for fitting
 with random effects; see
-$cref/start fit_var/start_command/source/fit_var/$$; see
+$cref/set start_var fit_var/set_command/table_out/start_var/$$ and
 $cref/fit_fixed.py/user_fit_fixed.py/$$.
 
 $lnext

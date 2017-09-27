@@ -35,7 +35,6 @@ $children%devel/dismod_at.cpp
 $head Commands$$
 $table
 $rref init_command$$
-$rref start_command$$
 $rref fit_command$$
 $rref set_command$$
 $rref simulate_command$$

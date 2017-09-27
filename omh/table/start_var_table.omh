@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -17,8 +17,10 @@ $section Starting Values Used During a Fit$$
 The start_var table contains one value for each $cref/model_variables/model_variables/$$.
 A new $code start_var$$ table is created,
 using the mean of the prior for the model variables,
-by the $cref start_command$$.
-It may also be created directly by the user
+by the $cref init_command$$.
+It may also be created using the
+$cref/set_command/set_command/table_out/start_var/$$.
+In addition, it may be created directly by the user
 (with the aid of the $cref var_table$$).
 A normal use case in this regard is to continue a fit by making
 the $code start_var$$ table a copy of the $cref fit_var_table$$
