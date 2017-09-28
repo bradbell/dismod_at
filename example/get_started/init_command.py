@@ -74,13 +74,15 @@ data_subset_table = dismod_at.get_table_dict(connection, 'data_subset');
 assert len(data_subset_table) == 1
 assert data_subset_table[0]['data_id'] == 0
 # -----------------------------------------------------------------------
-# check var table
+# check var table and determine prior_mean for each variable
 var_table        = dismod_at.get_table_dict(connection, 'var')
-integrand_list  = dismod_at.get_table_dict(connection, 'integrand')
 covariate_table  = dismod_at.get_table_dict(connection, 'covariate')
 smooth_table     = dismod_at.get_table_dict(connection, 'smooth')
+smooth_grid      = dismod_at.get_table_dict(connection, 'smooth_grid')
+prior_table      = dismod_at.get_table_dict(connection, 'prior')
 rate_table       = dismod_at.get_table_dict(connection, 'rate')
 assert len(var_table) == 2
+prior_mean       = list()
 for row in var_table :
 	var_type     = row['var_type']
 	smooth_id    = row['smooth_id']
@@ -95,8 +97,19 @@ for row in var_table :
 	#
 	assert age_id  == 0
 	assert time_id == 0
+	#
+	# determine prior_mean for this variable
+	prior_id = len( prior_table )
+	for grid_row in smooth_grid :
+		if grid_row['smooth_id'] == smooth_id :
+			assert grid_row['age_id'] == age_id
+			assert grid_row['time_id'] == time_id
+			prior_id = grid_row['value_prior_id']
+	assert prior_id < len( prior_table )
+	prior_mean.append( prior_table[prior_id]['mean'] )
+	#
 	if var_type == 'mulcov_rate_value' :
-		assert smooth_name    == 'smooth_income_multiplier'
+		assert smooth_name == 'smooth_income_multiplier'
 		assert rate_name == 'omega'
 		#
 		covariate_name = covariate_table[covariate_id]['covariate_name']
@@ -105,7 +118,7 @@ for row in var_table :
 		node_id == None
 		integrand_id  == None
 	elif var_type == 'rate' :
-		assert smooth_name  == 'smooth_omega_parent'
+		assert smooth_name == 'smooth_omega_parent'
 		assert rate_name == 'omega'
 		assert node_id == 0
 		#
@@ -113,6 +126,13 @@ for row in var_table :
 		integrand_id  == None
 	else :
 		assert False
+# -----------------------------------------------------------------------
+# check start_var and scale_var tables
+start_var = dismod_at.get_table_dict(connection, 'start_var')
+scale_var = dismod_at.get_table_dict(connection, 'scale_var')
+for var_id in range( len(var_table) ) :
+	assert start_var[var_id]['start_var_value'] == prior_mean[var_id]
+	assert scale_var[var_id]['scale_var_value'] == prior_mean[var_id]
 # -----------------------------------------------------------------------
 print('init_command: OK')
 # END PYTHON

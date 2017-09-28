@@ -115,6 +115,12 @@ the $cref/start_var/start_var_table/$$ table is created.
 Note that this table may also be created directly by the user
 (with the aid of the $cref var_table$$).
 
+$subhead scale_var$$
+In this case,
+the $cref/scale_var/scale_var_table/$$ table is created.
+Note that this table may also be created directly by the user
+(with the aid of the $cref var_table$$).
+
 $subhead truth_var$$
 In this case,
 the $cref/truth_var/truth_var_table/$$ table is created.
@@ -150,10 +156,12 @@ void set_command(
 {	using std::string;
 	using CppAD::to_string;
 	//
-	if( table_out != "start_var" && table_out != "truth_var" )
+	if( table_out != "start_var"
+	&&  table_out != "scale_var"
+	&&  table_out != "truth_var" )
 	{	string msg = "dismod_at set command table_out = ";
 		msg       += table_out + " is not one of the following: ";
-		msg       += "start_var, truth_var";
+		msg       += "start_var, scale_var, truth_var";
 		dismod_at::error_exit(msg);
 	}
 	if( source != "prior_mean" && source != "fit_var" )
@@ -225,7 +233,8 @@ and then creates new versions of the following tables:
 $table
 $cref var_table$$           $cnext $title var_table$$         $rnext
 $cref data_subset_table$$   $cnext $title data_subset_table$$ $rnext
-$cref start_var_table$$     $cnext $title start_var_table$$
+$cref start_var_table$$     $cnext $title start_var_table$$   $rnext
+$cref scale_var_table$$     $cnext $title scale_var_table$$
 $tend
 
 $head Changing Values$$
@@ -253,6 +262,9 @@ $head start_var_table$$
 A new $cref start_var_table$$ is created using the
 means of the priors for the model variables.
 
+$head scale_var_table$$
+A new $cref scale_var_table$$ is created using the
+means of the priors for the model variables.
 
 $children%example/get_started/init_command.py%$$
 $head Example$$
@@ -298,6 +310,11 @@ void init_command(
 	// start_var table
 	string table_out = "start_var";
 	string source    = "prior_mean";
+	set_command(table_out, source, db, prior_mean);
+	// -----------------------------------------------------------------------
+	// scale_var table
+	table_out = "scale_var";
+	source    = "prior_mean";
 	set_command(table_out, source, db, prior_mean);
 	// -----------------------------------------------------------------------
 	// data_subset table

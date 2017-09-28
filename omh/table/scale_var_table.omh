@@ -8,39 +8,44 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin truth_var_table$$
+$begin scale_var_table$$
 $spell
 	var
 	py
+	init
 $$
 
-$section True Values Used During Simulations$$
+$section Scaling Values Used During Fit$$
 
 $head Discussion$$
-The truth_var table contains one value for each of the
+The scale_var table contains one value for each of the
 $cref model_variables$$.
-The $cref/set_command/set_command/table_out/truth_var/$$
-can be used to create a truth_var table.
+The $cref/init_command/init_command/scale_var_table/$$
+creates a scale_var table
+using the mean of the priors for the model variables values.
+The $cref/set_command/set_command/table_out/scale_var/$$
+can also be used to create a start_var table.
 This table may also be created directly by the user
 (with the aid of the $cref var_table$$).
 
-$head truth_var_id$$
+$head scale_var_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
-The $icode truth_var_id$$ column is also a foreign key for the
+The $icode scale_var_id$$ column is also a foreign key for the
 $cref var_table$$; i.e.,
 $codei%
-	%var_id% = %truth_var_id%
+	%var_id% = %scale_var_id%
 %$$
 In addition, the size of both tables is the same.
 
-$head truth_var_value$$
+$head scale_var_value$$
 The column has type $code real$$ and is
 the value of the $cref/model_variables/model_variables/$$
-used during the $cref simulate_command$$.
+used to scale the likelihood function during the $cref fit_command$$.
+To be specific, the objective function is scaled so that its derivative
+is order one at this value of the model variables.
 
 $head Example$$
-See the $cref/set_command.py/set_command.py/truth_var Table/$$
-example and test.
+See the $cref init_command.py$$ example and test.
 
 $end

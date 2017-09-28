@@ -39,7 +39,7 @@ In addition, the size of both tables is the same.
 
 $head start_var_value$$
 The column has type $code real$$ and is
-the value of the corresponding $cref/model_variables/model_variables/$$
+the value of the $cref/model_variables/model_variables/$$
 where the optimization procedure is started during the
 $cref fit_command$$.
 

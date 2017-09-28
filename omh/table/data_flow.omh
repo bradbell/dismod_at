@@ -33,6 +33,7 @@ $children%omh/table/log_table.omh
 	%omh/table/var_table.omh
 	%omh/table/data_subset_table.omh
 	%omh/table/start_var_table.omh
+	%omh/table/scale_var_table.omh
 	%omh/table/fit_var_table.omh
 	%omh/table/fit_data_subset_table.omh
 	%omh/table/truth_var_table.omh
@@ -68,6 +69,10 @@ $cref/start_var/start_var_table/$$ $cnext
 $cref/set_command/set_command/table_out/start_var/$$ $cnext
 yes
 $rnext
+$cref/scale_var/scale_var_table/$$ $cnext
+$cref/set_command/set_command/table_out/scale_var/$$ $cnext
+yes
+$rnext
 $cref/fit_var/fit_var_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 no
@@ -100,17 +105,18 @@ $tend
 $head Extra Input Tables$$
 An extra input table is one that is not in the $cref input$$ list
 and is not created by the $cref init_command$$.
-The tables created by the init command are
-$cref var_table$$,
-$cref data_subset_table$$, and
-$cref start_var_table$$.
+The tables created by the init command are the
+$cref/var/init_command/var_table/$$,
+$cref/data_subset/init_command/data_subset_table/$$,
+$cref/start_var/init_command/start_var_table/$$, and
+$cref/scale_var/init_command/scale_var_table/$$ tables.
 Below is list of commands and their extra input tables.
 
 $table
 Command $cnext
 Extra Input
 $rnext
-$cref/set table fit_var/set_command/source/fit_var/$$ $cnext
+$cref/set table_out fit_var/set_command/source/fit_var/$$ $cnext
 	$cref/fit_var/fit_var_table/$$
 $rnext
 $cref/fit simulate_index/fit_command/simulate_index/$$ $cnext
@@ -118,6 +124,9 @@ $cref/fit simulate_index/fit_command/simulate_index/$$ $cnext
 $rnext
 $cref/sample fit_var/sample_command/method/fit_var/$$ $cnext
 	$cref/fit_var/fit_var_table/$$
+$rnext
+$cref/simulate number_simulate/simulate_command/$$ $cnext
+	$cref/truth_var/set_command/table_out/truth_var/$$
 $rnext
 $cref/sample asymptotic/sample_command/method/asymptotic/$$ $cnext
 	$cref/fit_var/fit_var_table/$$
