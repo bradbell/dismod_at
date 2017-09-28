@@ -1659,7 +1659,6 @@ int main(int n_arg, const char** argv)
 	struct { const char* name; int n_arg; } command_info[] = {
 		{"init",      3},
 		{"set",       5},
-		{"start",     4},
 		{"fit",       4},
 		{"fit",       5},
 		{"simulate",  4},
@@ -1692,7 +1691,23 @@ int main(int n_arg, const char** argv)
 		}
 	}
 	if( command_match.size() == 0 )
-	{	cerr << program << endl;
+	{	// commands that no longer exist
+		if( command_arg == "start" )
+		{	cerr <<
+				"dismod_at database start source\n"
+				"\thas been changed to\n"
+				"dismod_at database set start_var source\n";
+			std::exit(1);
+		}
+		if( command_arg == "truth" )
+		{	cerr <<
+				"dismod_at database truth\n"
+				"\thas been changed to\n"
+				"dismod_at database set truth_var fit_var\n";
+			std::exit(1);
+		}
+		// commands that never existed
+		cerr << program << endl;
 		cerr << command_arg << " is not a valid command" << endl;
 		std::exit(1);
 	}
