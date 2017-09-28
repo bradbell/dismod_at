@@ -18,9 +18,6 @@
 #
 # $section Case with no Children; i.e., no Random Effects$$
 #
-# $head Commands$$
-# init, start, fit
-#
 # $code
 # $srcfile%
 #	example/user/no_children.py

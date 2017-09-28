@@ -33,9 +33,6 @@
 # $head n_data_per_child$$
 # is the number of measurement values (data points) for each child node.
 #
-# $head Commands$$
-# init, simulate, start, fit
-#
 # $code
 # $srcfile%
 #	example/user/speed.py

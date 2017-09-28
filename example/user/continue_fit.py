@@ -18,9 +18,6 @@
 #
 # $section Continuing a Fit From Where it Left Off$$
 #
-# $head Commands$$
-# init, simulate, start, fit, start, fit
-#
 # $head Option Table$$
 # In the option table defined below,
 # $icode%max_num_iter_fixed% = 5%$$.

@@ -14,9 +14,6 @@
 #
 # $section Fitting With Sum of Random Effect Constrained to Zero$$
 #
-# $head Commands$$
-# init, start, fit, fit
-#
 # $head Discussion$$
 # This example demonstrates using
 # The $cref/random_zero_sum/option_table/random_zero_sum/$$

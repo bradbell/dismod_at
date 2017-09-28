@@ -14,9 +14,6 @@
 #
 # $section Fitting Simulated Data Example$$
 #
-# $head Commands$$
-# init, simulate, start, fit
-#
 # $code
 # $srcfile%
 #	example/user/fit_sim.py

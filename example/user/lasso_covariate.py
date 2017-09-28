@@ -17,9 +17,6 @@
 #
 # $section Using Lasso on Covariate Multiplier$$
 #
-# $head Commands$$
-# init, start, fit, truth, simulate, sample
-#
 # $head See Also$$
 # $cref user_meas_covariate.py$$
 #

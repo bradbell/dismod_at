@@ -22,7 +22,11 @@ rename_cmd='s|variable_command.py|set_command.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|\$section dismod_at \\([a-z][a-z]*\\):|\$section \\1 Command:|
+/^# \$head Commands\$\\\$/! b skip
+N
+N
+d
+: skip
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

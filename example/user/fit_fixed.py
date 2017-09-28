@@ -14,9 +14,6 @@
 #
 # $section Fitting Just Fixed Effects$$
 #
-# $head Commands$$
-# init, start, fit
-#
 # $head Discussion$$
 # This example demonstrates using the
 # $cref/variables/fit_command/variables/$$ option

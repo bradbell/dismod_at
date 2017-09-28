@@ -18,9 +18,6 @@
 #
 # $section Constraints on Differences in Age and Time$$
 #
-# $head Commands$$
-# init, start, fit
-#
 # $code
 # $srcfile%
 #	example/user/diff_constraint.py

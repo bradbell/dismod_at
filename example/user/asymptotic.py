@@ -16,9 +16,6 @@
 #
 # $section Sample from Asymptotic Distribution for Model Variables$$
 #
-# $head Commands$$
-# init, start, fit, sample
-#
 # $head Purpose$$
 # The command
 # $codei%
