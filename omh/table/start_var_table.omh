@@ -11,22 +11,21 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin start_var_table$$
 $spell
 	var
+	init
 $$
 
 $section Starting Values Used During a Fit$$
-The start_var table contains one value for each $cref/model_variables/model_variables/$$.
-A new $code start_var$$ table is created,
-using the mean of the prior for the model variables,
-by the $cref init_command$$.
-It may also be created using the
-$cref/set_command/set_command/table_out/start_var/$$.
-In addition, it may be created directly by the user
+
+$head Discussion$$
+The start_var table contains one value for each of the
+$cref model_variables$$.
+The $cref/init_command/init_command/start_var_table/$$
+creates a start_var table
+using the mean of the priors for the model variables values.
+The $cref/set_command/set_command/table_out/start_var/$$
+can also be used to create a start_var table.
+This table may also be created directly by the user
 (with the aid of the $cref var_table$$).
-A normal use case in this regard is to continue a fit by making
-the $code start_var$$ table a copy of the $cref fit_var_table$$
-from a previous fit.
-Another use case is to check for local minima
-by starting at different locations.
 
 $head start_var_id$$
 This column has type $code integer$$ and is the primary key for this table.

@@ -10,10 +10,14 @@
 # ---------------------------------------------------------------------------
 # $begin set_command.py$$ $newlinech #$$
 # $spell
-#	dismod
+#	var
 # $$
 #
 # $section variable Command: Example and Test$$
+#
+# $head truth_var Table$$
+# The $cref set_command$$ in this example creates a
+# truth_var table.
 #
 # $code
 # $srcfile%

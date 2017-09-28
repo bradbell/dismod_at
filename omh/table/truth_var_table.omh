@@ -11,14 +11,17 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin truth_var_table$$
 $spell
 	var
+	py
 $$
 
-$section The truth_var Table: True Values Used During Simulations$$
-The truth_var table contains one value for each $cref/model_variables/model_variables/$$.
-A new $code truth_var$$ table is created,
-as a copy of the $cref fit_var_table$$,
-by the $cref/variable truth_var fit_var/set_command/$$ command.
-It may also be created directly by the user
+$section True Values Used During Simulations$$
+
+$head Discussion$$
+The truth_var table contains one value for each of the
+$cref model_variables$$.
+The $cref/set_command/set_command/table_out/truth_var/$$
+can be used to create a truth_var table.
+This table may also be created directly by the user
 (with the aid of the $cref var_table$$).
 
 $head truth_var_id$$
@@ -37,6 +40,7 @@ the value of the corresponding $cref/model_variables/model_variables/$$
 used during the $cref simulate_command$$.
 
 $head Example$$
-See the $cref set_command.py$$ example and test.
+See the $cref/set_command.py/set_command.py/truth_var Table/$$
+example and test.
 
 $end
