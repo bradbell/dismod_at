@@ -22,7 +22,7 @@ rename_cmd='s|variable_command.py|set_command.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|dismod_at example.db start fit_var|dismod_at example.db set start_var fit_var|
+s|\$section dismod_at \\([a-z][a-z]*\\):|\$section \\1 Command:|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

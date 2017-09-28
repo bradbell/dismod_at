@@ -14,7 +14,7 @@
 #	dismod
 # $$
 #
-# $section dismod_at init: Example and Test$$
+# $section init Command: Example and Test$$
 #
 # $code
 # $srcfile%

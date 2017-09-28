@@ -13,7 +13,7 @@
 #	dismod
 # $$
 #
-# $section dismod_at simulate: Example and Test$$
+# $section simulate Command: Example and Test$$
 #
 # $code
 # $srcfile%

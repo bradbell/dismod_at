@@ -13,7 +13,7 @@
 #	dismod
 # $$
 #
-# $section dismod_at predict: Example and Test$$
+# $section predict Command: Example and Test$$
 #
 # $code
 # $srcfile%

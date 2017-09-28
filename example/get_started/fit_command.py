@@ -13,7 +13,7 @@
 #	dismod
 # $$
 #
-# $section dismod_at fit: Example and Test$$
+# $section fit Command: Example and Test$$
 #
 # $code
 # $srcfile%
