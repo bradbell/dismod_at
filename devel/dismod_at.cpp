@@ -605,8 +605,6 @@ This option fits both the
 $cref/fixed/model_variables/Fixed Effects, theta/$$ and
 $cref/random/model_variables/Random Effects, u/$$ effects.
 
-
-
 $head simulate_index$$
 If $icode simulate_index$$ is present, it must be less than
 $cref/number_simulate/simulate_command/number_simulate/$$.
@@ -617,7 +615,6 @@ $cref/meas_value/data_table/meas_value/$$ entries.
 All the rest of the inputs are the same as when $icode simulated_index$$
 is not present; e.g.,
 $cref/meas_std/data_table/meas_std/$$ comes from the data table.
-
 
 $head simulate_table$$
 If $icode simulate_index$$ is present,
@@ -723,6 +720,12 @@ void fit_command(
 	string table_name = "start_var";
 	string column_name = "start_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, start_var);
+	// -----------------------------------------------------------------------
+	// read scale_var table into scale_var
+	vector<double> scale_var;
+	table_name = "scale_var";
+	column_name = "scale_var_value";
+	dismod_at::get_table_column(db, table_name, column_name, scale_var);
 	// ----------------------------------------------------------------------
 	// random_zero_sum
 	size_t n_rate      = size_t(dismod_at::number_rate_enum);
@@ -748,6 +751,7 @@ void fit_command(
 		fit_or_sample        ,
 		pack_object          ,
 		start_var            ,
+		scale_var            ,
 		db_input.prior_table ,
 		s_info_vec           ,
 		data_object          ,
@@ -1355,12 +1359,19 @@ void sample_command(
 	// -----------------------------------------------------------------------
 	if( method == "simulate" )
 	{
-		// fit_var.variable_value
+		// truth_var
 		vector<double> truth_var_value;
 		string table_name  = "truth_var";
 		string column_name = "truth_var_value";
 		dismod_at::get_table_column(
 			db, table_name, column_name, truth_var_value
+		);
+		// scale_var
+		vector<double> scale_var_value;
+		table_name  = "scale_var";
+		column_name = "scale_var_value";
+		dismod_at::get_table_column(
+			db, table_name, column_name, scale_var_value
 		);
 		// get simulated data
 		vector<dismod_at::simulate_struct> simulate_table =
@@ -1410,6 +1421,7 @@ void sample_command(
 				fit_or_sample        ,
 				pack_object          ,
 				truth_var_value      ,
+				scale_var_value      ,
 				db_input.prior_table ,
 				s_info_vec           ,
 				data_object          ,
@@ -1483,6 +1495,7 @@ void sample_command(
 		random_bound         ,
 		fit_or_sample        ,
 		pack_object          ,
+		variable_value       ,
 		variable_value       ,
 		db_input.prior_table ,
 		s_info_vec           ,
@@ -1711,16 +1724,17 @@ int main(int n_arg, const char** argv)
 	{	// commands that no longer exist
 		if( command_arg == "start" )
 		{	cerr <<
-				"dismod_at database start source\n"
-				"\thas been changed to\n"
-				"dismod_at database set start_var source\n";
+			"dismod_at database start source\n"
+			"\thas been changed to\n"
+			"dismod_at database set start_var source\n";
+			"Furthermore, the init command now creates a start_var table\n";
 			std::exit(1);
 		}
 		if( command_arg == "truth" )
 		{	cerr <<
-				"dismod_at database truth\n"
-				"\thas been changed to\n"
-				"dismod_at database set truth_var fit_var\n";
+			"dismod_at database truth\n"
+			"\thas been changed to\n"
+			"dismod_at database set truth_var fit_var\n";
 			std::exit(1);
 		}
 		// commands that never existed

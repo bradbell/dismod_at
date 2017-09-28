@@ -1,4 +1,3 @@
-// $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
           Copyright (C) 2014-17 University of Washington
@@ -237,6 +236,7 @@ fit_model::fit_model(
 	const std::string&                    fit_or_sample    ,
 	const pack_info&                      pack_object      ,
 	const CppAD::vector<double>&          start_var        ,
+	const CppAD::vector<double>&          scale_var        ,
 	const CppAD::vector<prior_struct>&    prior_table      ,
 	const CppAD::vector<smooth_info>&     s_info_vec       ,
 	const data_model&                     data_object      ,
@@ -269,6 +269,7 @@ n_fixed_       ( number_fixed(pack_object) )        ,
 n_random_      ( pack_object.random_size() )        ,
 pack_object_   ( pack_object )                      ,
 start_var_     ( start_var   )                      ,
+scale_var_     ( scale_var   )                      ,
 prior_table_   ( prior_table )                      ,
 s_info_vec_    ( s_info_vec  )                      ,
 data_object_   ( data_object )                      ,
@@ -508,10 +509,15 @@ $end
 	unpack_fixed(pack_object_, start_var_, fixed_in);
 	scale_fixed_effect(fixed_in, fixed_in);
 
+	// Note that scale_fixed_effect scales argument values.
+	// The fixed_scale vector is used by cppad_mixed to scale function values.
+	d_vector fixed_scale(n_fixed_);
+	unpack_fixed(pack_object_, scale_var_, fixed_scale);
+	scale_fixed_effect(fixed_scale, fixed_scale);
+
 	// random_in
 	d_vector random_in(n_random_);
 	unpack_random(pack_object_, start_var_, random_in);
-
 
 	// Ipopt fixed effects optimization options
 	std::string options = "";
@@ -569,7 +575,7 @@ $end
 			fixed_upper,
 			fix_constraint_lower,
 			fix_constraint_upper,
-			fixed_mean,
+			fixed_scale,
 			fixed_in,
 			cppad_mixed_random_lower,
 			cppad_mixed_random_upper,

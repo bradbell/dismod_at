@@ -328,9 +328,11 @@ bool fit_model_xam(void)
 		pack_prior_id, pack_const, pack_object, s_info_vec
 	);
 	vector<double> start_var( pack_object.size() );
+	vector<double> scale_var( pack_object.size() );
 	for(size_t var_id = 0; var_id < start_var.size(); var_id++)
 	{	size_t prior_id = pack_prior_id[var_id];
 		start_var[var_id] = prior_table[prior_id].mean;
+		scale_var[var_id] = prior_table[prior_id].mean;
 	}
 	//
 	// option_map
@@ -370,6 +372,7 @@ bool fit_model_xam(void)
 		fit_or_sample,
 		pack_object,
 		start_var,
+		scale_var,
 		prior_table,
 		s_info_vec,
 		data_object,

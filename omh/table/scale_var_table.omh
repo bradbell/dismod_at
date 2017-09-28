@@ -42,8 +42,10 @@ $head scale_var_value$$
 The column has type $code real$$ and is
 the value of the $cref/model_variables/model_variables/$$
 used to scale the likelihood function during the $cref fit_command$$.
-To be specific, the objective function is scaled so that its derivative
-is order one at this value of the model variables.
+To be specific, the fixed effects objective function is scaled so that its
+derivative is order one at this value of the model variables.
+The random effects objective is not currently scaled and so that
+value of the random effects does not matter (currently).
 
 $head Example$$
 See the $cref init_command.py$$ example and test.

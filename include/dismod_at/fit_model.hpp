@@ -46,6 +46,7 @@ namespace dismod_at {
 		const size_t                       n_random_;
 		const pack_info&                   pack_object_;
 		const CppAD::vector<double>&       start_var_;
+		const CppAD::vector<double>&       scale_var_;
 		const CppAD::vector<prior_struct>& prior_table_;
 		const CppAD::vector<smooth_info>&  s_info_vec_;
 		const data_model&                  data_object_;
@@ -177,6 +178,7 @@ namespace dismod_at {
 			const std::string&                   fit_or_sample   ,
 			const pack_info&                     pack_object     ,
 			const CppAD::vector<double>&         start_var       ,
+			const CppAD::vector<double>&         scale_var       ,
 			const CppAD::vector<prior_struct>&   prior_table     ,
 			const CppAD::vector<smooth_info>&    s_info_vec      ,
 			const data_model&                    data_object     ,

@@ -44,6 +44,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 09-28$$
+Add the scale_var table which enables the user
+to have more control over scaling the objective. See
+$cref/scale_var_value/scale_var_table/scale_var_value/$$ and
+$cref/set command/set_command/table_out/scale_var/$$.
 
 $head 09-27$$
 $list number$$
