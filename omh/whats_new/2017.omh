@@ -62,6 +62,7 @@ $cref/set command/set_command/table_out/scale_var/$$.
 
 $head 09-27$$
 $list number$$
+This change was merged into the master branch on 09-29.
 Remove the $code start$$ command.
 It has been replace by the $cref set_command$$ syntax
 $codei%
@@ -84,6 +85,7 @@ A $cref/db2csv/wish_list/db2csv/$$ wish list item was added.
 $lend
 
 $head 09-26$$
+These changes were merged into the master branch on 09-29.
 $list number$$
 Add the $cref sql_command$$ python function.
 $lnext
