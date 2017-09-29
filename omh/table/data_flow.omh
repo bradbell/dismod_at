@@ -66,11 +66,13 @@ $cref/init/init_command/$$ $cnext
 no
 $rnext
 $cref/start_var/start_var_table/$$ $cnext
-$cref/set_command/set_command/table_out/start_var/$$ $cnext
+$cref/init/init_command/$$,
+$cref/set/set_command/table_out/start_var/$$ $cnext
 yes
 $rnext
 $cref/scale_var/scale_var_table/$$ $cnext
-$cref/set_command/set_command/table_out/scale_var/$$ $cnext
+$cref/init/init_command/$$,
+$cref/set/set_command/table_out/scale_var/$$ $cnext
 yes
 $rnext
 $cref/fit_var/fit_var_table/$$ $cnext
@@ -78,7 +80,7 @@ $cref/fit/fit_command/$$ $cnext
 no
 $rnext
 $cref/truth_var/truth_var_table/$$ $cnext
-$cref/set_command/set_command/table_out/truth_var/$$ $cnext
+$cref/set/set_command/table_out/truth_var/$$ $cnext
 yes
 $rnext
 $cref/fit_data_subset/fit_data_subset_table/$$ $cnext
