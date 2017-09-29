@@ -1726,7 +1726,7 @@ int main(int n_arg, const char** argv)
 		{	cerr <<
 			"dismod_at database start source\n"
 			"\thas been changed to\n"
-			"dismod_at database set start_var source\n";
+			"dismod_at database set start_var source\n"
 			"Furthermore, the init command now creates a start_var table\n";
 			std::exit(1);
 		}
@@ -1764,7 +1764,8 @@ int main(int n_arg, const char** argv)
 	{	message += " ";
 		message += argv[i_arg];
 	}
-	std::time_t unix_time = dismod_at::log_message(db, "command", message);
+	std::time_t unix_time =
+		dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", message);
 	// --------------- get the input tables ---------------------------------
 	std::time_t current_time = trace("Reading database");
 	dismod_at::db_input_struct db_input;
@@ -2051,7 +2052,7 @@ int main(int n_arg, const char** argv)
 	}
 	// ---------------------------------------------------------------------
 	message = "end " + command_arg;
-	dismod_at::log_message(db, "command", message);
+	dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", message);
 	sqlite3_close(db);
 	return 0;
 }

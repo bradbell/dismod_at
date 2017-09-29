@@ -33,3 +33,4 @@
 def sql_command(connection, command) :
 	cursor = connection.cursor()
 	cursor.execute(command)
+	connection.commit()

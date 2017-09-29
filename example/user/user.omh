@@ -56,28 +56,8 @@ $childtable%example/user/asymptotic.py
 	%example/user/no_children.py
 	%example/user/predict_fit.py
 	%example/user/random_zero_sum.py
+	%example/user/re_scale.py
 	%example/user/speed.py
 %$$
-
-$head Commands$$
-$table
-asymptotic.py       $cnext  init, start, fit, sample                   $rnext
-const_random.py     $cnext  init, simulate, start, fit                 $rnext
-const_value.py      $cnext  init, simulate, start, fit                 $rnext
-continue_fit.py     $cnext  init, simulate, start, fit, start, fit     $rnext
-diff_constraint.py  $cnext  init, start, fit                           $rnext
-fit_fixed.py        $cnext  init, start, fit                           $rnext
-fit_random.py       $cnext  init, start, fit                           $rnext
-fit_sim.py          $cnext  init, simulate, start, fit                 $rnext
-jump_at_age.py      $cnext  init, start, fit                           $rnext
-lasso_covariate.py  $cnext  init, start, fit, truth, simulate, sample  $rnext
-meas_covariate.py   $cnext  init, start, fit                           $rnext
-no_children.py      $cnext  init, start, fit                           $rnext
-predict_fit.py      $cnext  init, start, fit, sample, predict          $rnext
-random_zero_sum.py  $cnext  init, start, fit, fit                      $rnext
-speed.py            $cnext  init, simulate, start, fit
-$tend
-
-
 
 $end

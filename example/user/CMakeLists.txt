@@ -25,6 +25,7 @@ FOREACH(user_case
 	no_children
 	predict_fit
 	random_zero_sum
+	re_scale
 )
 	ADD_CUSTOM_TARGET(
 		check_example_user_${user_case}

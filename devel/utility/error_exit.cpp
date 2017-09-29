@@ -112,7 +112,7 @@ void error_exit(
 
 	// write to standard error and log table
 	std::string message_type = "error";
-	log_message(db, message_type, message, table_name, row_id);
+	log_message(db, &std::cerr, message_type, message, table_name, row_id);
 	//
 	// close the database
 	sqlite3_close(db);

@@ -14,15 +14,16 @@ $spell
 	sqlite
 	const
 	std
+	ostream
 $$
 
 $section Put a Message in the Log Table$$
 
 $head Syntax$$
-$icode%unix_time% = log_message(%db%, %message_type%, %message%)
+$icode%unix_time% = log_message(%db%, %os%, %message_type%, %message%)
 %$$
 $icode%unix_time% = %log_message(
-	%db%, %message_type%, %message%, %table_name%, %row_id%
+	%db%, %os%, %message_type%, %message%, %table_name%, %row_id%
 )%$$
 
 $head db$$
@@ -31,6 +32,17 @@ $codei%
 	sqlite3* %db%
 %$$
 and is the database connection.
+
+$head os$$
+This argument has prototype
+$code%
+	std::ostream* %os%
+%$$
+If it is not null and
+$icode message_type$$ is $code error$$ or $code warning$$,
+the message is also written to the output stream
+with a new line added at the end
+(as well as being logged in the database).
 
 $head message_type$$
 This argument has prototype
@@ -44,8 +56,6 @@ $code warning$$,
 $code value$$.
 This value gets written in the
 $cref/message_type/log_table/message_type/$$ column of the log table.
-If $icode message_type$$ is $code error$$ or $code warning$$,
-the message is also written to standard error and ends with a new line.
 
 $head message$$
 This argument has prototype
@@ -106,12 +116,12 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 std::time_t log_message(
 	sqlite3*           db           ,
+	std::ostream*      os           ,
 	const std::string& message_type ,
 	const std::string& message      ,
 	const std::string& table_name   ,
 	const size_t&      row_id       )
 {	static bool recursive = false;
-	using std::cerr;
 	using std::string;
 	using CppAD::to_string;
 
@@ -129,13 +139,15 @@ std::time_t log_message(
 	std::time_t unix_time = std::time( DISMOD_AT_NULL_PTR );
 	//
 	// write errors and warnings to standard error
-	if( message_type == "error" || message_type == "warning" )
-	{	cerr << "dismod_at " << message_type << ": " << message << std::endl;
+	bool write2os = os != DISMOD_AT_NULL_PTR;
+	write2os &= (message_type == "error" || message_type == "warning" );
+	if( write2os )
+	{	*os << "dismod_at " << message_type << ": " << message << std::endl;
 		if( table_name != "" )
-		{	cerr << "detected in table << table_name";
+		{	*os << "detected in table << table_name";
 			if( row_id != DISMOD_AT_NULL_SIZE_T )
-				cerr << " in row with " << table_name << "_id = " << row_id;
-			cerr << std::endl;
+				*os << " in row with " << table_name << "_id = " << row_id;
+			*os << std::endl;
 		}
 	}
 	//
@@ -194,11 +206,12 @@ std::time_t log_message(
 }
 std::time_t log_message(
 	sqlite3*           db           ,
+	std::ostream*      os           ,
 	const std::string& message_type ,
 	const std::string& message      )
 {	std::string table_name = "";
 	size_t      row_id     = DISMOD_AT_NULL_SIZE_T;
-	return log_message(db, message_type, message, table_name, row_id);
+	return log_message(db, os, message_type, message, table_name, row_id);
 }
 
 } // END_DISMOD_AT_NAMESPACE

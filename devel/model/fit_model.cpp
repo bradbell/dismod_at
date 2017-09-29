@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/log_message.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/n_random_const.hpp>
+# include <dismod_at/configure.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 CppAD::mixed::sparse_rcv ran_con_rcv(
@@ -1163,6 +1164,9 @@ void fit_model::fatal_error(const std::string& error_message)
 void fit_model::warning(const std::string& warning_message)
 {	std::string msg = "cppad_mixed: " + warning_message;
 	// prints on std::cerr as well as logs in database
-	log_message(db_, "warning", msg);
+	if( warn_on_stderr_ )
+		log_message(db_, &std::cerr, "warning", msg);
+	else
+		log_message(db_, DISMOD_AT_NULL_PTR, "warning", msg);
 }
 } // DISMOD_AT_END_NAMESPACE
