@@ -52,6 +52,10 @@ $cref/warn_on_stderr/option_table/warn_on_stderr/$$ option.
 This has been fixed.
 $lnext
 The $cref user_re_scale.py$$ example was added.
+$lnext
+Add the $cref/option/set_command/option/$$ version of the set command.
+Changes to the option table that are done this way get recorded in the
+$cref log_table$$.
 $lend
 
 $head 09-28$$

@@ -94,18 +94,30 @@ $$
 $section Directly Setting Table Values$$
 
 $head Syntax$$
-$codei%dismod_at %database% set %table_out% %source%$$
-
-$head Purpose$$
-This command sets the values in $icode table_out$$
-using the values specified by $icode source$$.
+$codei%dismod_at %database% set %table_out% %source%
+%$$
+$codei%dismod_at %database% set option %name% %value%$$
 
 $head database$$
 Is an
 $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
+$head option$$
+The $code option$$ syntax sets
+$codei%
+	%option_value% = %value%
+%$$
+in the row of the $cref option_table$$ specified by
+$codei%
+	%option_name% = %name%
+%$$
+see $cref/option_name/option_table/Conventions/option_name/$$ and
+$cref/option_value/option_table/Conventions/option_value/$$.
+
 $head table_out$$
+The $icode table_out$$ syntax sets the values in $icode table_out$$
+using the values specified by $icode source$$.
 If this table exists before the command,
 the values originally in the table are lost.
 
@@ -148,6 +160,34 @@ $end
 */
 
 // ----------------------------------------------------------------------------
+void set_option_command(
+	sqlite3*                                   db          ,
+	const std::string&                         name        ,
+	const std::string&                         value       )
+{	using std::string;
+	string table_name  = "option";
+	string column_name = "option_name";
+	CppAD::vector<string> option_name;
+	dismod_at::get_table_column(db, table_name, column_name, option_name);
+	bool found = false;
+	for(size_t i = 0; i < option_name.size(); i++)
+		found |= option_name[i] == name;
+	string sql_cmd;
+	if( found )
+	{	sql_cmd  = "update option set option_value = '" + value + "' ";
+		sql_cmd += "where option_name = '" + name + "'";
+		dismod_at::exec_sql_cmd(db, sql_cmd);
+	}
+	else
+	{	string option_id = CppAD::to_string( option_name.size() );
+		sql_cmd  = "insert into option ";
+		sql_cmd += "values ('" + option_id + "','";
+		sql_cmd += name + "','" + value + "')";
+		dismod_at::exec_sql_cmd(db, sql_cmd);
+	}
+	//
+	return;
+}
 void set_command(
 	const std::string&                     table_out   ,
 	const std::string&                     source      ,
@@ -1689,6 +1729,7 @@ int main(int n_arg, const char** argv)
 	struct { const char* name; int n_arg; } command_info[] = {
 		{"init",      3},
 		{"set",       5},
+		{"set",       6},
 		{"fit",       4},
 		{"fit",       5},
 		{"simulate",  4},
@@ -1895,14 +1936,31 @@ int main(int n_arg, const char** argv)
 	string rate_case = option_map["rate_case"];
 	// =======================================================================
 	if( command_arg == "set" )
-	{	std::string table_out = argv[3];
-		std::string source    = argv[4];
-		set_command(
-			table_out       ,
-			source          ,
-			db              ,
-			prior_mean
-		);
+	{	if( std::strcmp(argv[3], "option") == 0 )
+		{	if( n_arg != 6 )
+			{	cerr << "expected name and value to follow "
+				"dismod_at database set option\n";
+				std::exit(1);
+			}
+			std::string name  = argv[4];
+			std::string value = argv[5];
+			set_option_command(db, name, value);
+		}
+		else
+		{	if( n_arg != 5 )
+			{	cerr << "expected only source to follow "
+				"dismod_at database set table_out\n";
+				std::exit(1);
+			}
+			std::string table_out = argv[3];
+			std::string source    = argv[4];
+			set_command(
+				table_out       ,
+				source          ,
+				db              ,
+				prior_mean
+			);
+		}
 	}
 	else if( command_arg == "predict" )
 	{	// avgint_subset_obj

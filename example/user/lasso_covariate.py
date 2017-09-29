@@ -373,7 +373,9 @@ for var_id in range( len(var_table) ) :
 			assert value < mulcov_income
 		else :
 			# sex covariate
-			assert abs(value) <= mulcov_income * 1e-7;
+			if abs(value) > mulcov_income * 1e-7 :
+				print(value, mulcov_income * 1e-7 )
+				assert(False)
 assert count == 2
 # -----------------------------------------------------------------------------
 print('lasso_covariate.py: OK')

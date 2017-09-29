@@ -182,7 +182,7 @@ def example_db (file_name) :
 		}
 	]
 	# ----------------------------------------------------------------------
-	# option_table: max_num_iter_fixed will be replaced
+	# option_table: max_num_iter_fixed will be set later
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'canada'       },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
@@ -192,7 +192,6 @@ def example_db (file_name) :
 
 		{ 'name':'quasi_fixed',            'value':'true'         },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
-		{ 'name':'max_num_iter_fixed',     'value':None           },
 		{ 'name':'print_level_fixed',      'value':'0'            },
 		{ 'name':'tolerance_fixed',        'value':'1e-12'        },
 
@@ -226,45 +225,31 @@ def example_db (file_name) :
 file_name  = 'example.db'
 example_db(file_name)
 #
-# initialize the database
-program  = '../../devel/dismod_at'
-cmd      = [ program, file_name, 'init' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at init command failed')
-#
+program   = '../../devel/dismod_at'
+set_count = 0
+for command in [ 'init', 'set', 'fit', 'set', 'set', 'set', 'fit' ] :
+	cmd  = [ program, file_name, command ]
+	if command == 'set' :
+		set_count += 1
+		if set_count == 1 :
+			cmd +=  [ 'option' , 'max_num_iter_fixed', '1' ]
+		if set_count == 2 :
+			cmd +=  [ 'scale_var' , 'fit_var' ]
+		if set_count == 3 :
+			cmd +=  [ 'option' , 'max_num_iter_fixed', '30' ]
+		if set_count == 4 :
+			cmd +=  [ 'option' , 'warn_on_stderr', 'true' ]
+	if command == 'fit' :
+		cmd.append('both')
+	print( ' '.join(cmd) )
+	flag = subprocess.call( cmd )
+	if flag != 0 :
+		sys.exit('The dismod_at ' + command + ' command failed')
+# -----------------------------------------------------------------------
 # connect to database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 #
-# fit one step
-cmd  = "update option set "
-cmd += "option_value='1' where option_name == 'max_num_iter_fixed'"
-dismod_at.sql_command(connection, cmd)
-cmd  = [ program, file_name, 'fit', 'both' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The first dismod_at fit command failed')
-#
-# copy fit_var to scale_var
-cmd = [ program, file_name, 'set', 'scale_var', 'fit_var' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at set command failed')
-#
-# fit with max_iter eqaul to 100
-cmd  = "update option set "
-cmd += "option_value='100' where option_name == 'max_num_iter_fixed'"
-dismod_at.sql_command(connection, cmd)
-cmd  = [ program, file_name, 'fit', 'both' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The second dismod_at fit command failed')
-# -----------------------------------------------------------------------
 # get tables
 var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')

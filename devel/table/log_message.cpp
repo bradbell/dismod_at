@@ -144,7 +144,7 @@ std::time_t log_message(
 	if( write2os )
 	{	*os << "dismod_at " << message_type << ": " << message << std::endl;
 		if( table_name != "" )
-		{	*os << "detected in table << table_name";
+		{	*os << "detected in table " << table_name;
 			if( row_id != DISMOD_AT_NULL_SIZE_T )
 				*os << " in row with " << table_name << "_id = " << row_id;
 			*os << std::endl;
