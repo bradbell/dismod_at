@@ -44,6 +44,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 09-30$$
+Advance to cppad_mixed-20170930.
+This fixes a bug where the optimization of the fixed effects
+was terminating (instead of backing up) when the optimization
+of the random effects failed.
+
 $head 09-29$$
 $list number$$
 The change on $cref/09-20/whats_new_2017/09-20/$$
