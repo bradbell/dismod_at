@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -51,13 +51,10 @@ $head delta_j$$
 We use $latex \delta_j$$ to denote the standard deviation
 $cref/std/prior_table/std/$$ corresponding to $icode prior_id$$.
 
-$head eta_j$$
-We use $latex \eta_j$$ to denote the log transformation offset
-$cref/eta/prior_table/eta/$$ corresponding to $icode prior_id$$.
-
 $head d_j$$
 We use $latex d_j$$ to denote the
-$cref/density_id/prior_table/density_id/$$ corresponding to $icode prior_id$$.
+$cref/density_name/density_table/density_name/$$ and
+$cref/eta/prior_table/eta/$$ corresponding to $icode j$$.
 
 $head V_j$$
 The value density for the $th j$$ component of $latex \theta$$ is
@@ -68,7 +65,6 @@ V_j^\theta ( \theta )
 	\theta_j \W{,}
 	\mu_j \W{,}
 	\lambda_j \delta_j \W{,}
-	\eta_j \W{,}
 	d_j
 \right) \right]
 \] $$

@@ -44,6 +44,14 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-01$$
+Combing the $cref/density_name/density_table/density_name/$$
+and $cref/eta/prior_table/eta/$$ into $latex d$$ in the
+weighted residual function
+$cref/R/statistic/Weighted Residual Function, R/$$
+and the log density function
+$cref/D/statistic/Log-Density Function, D/$$.
+
 $head 09-30$$
 Advance to cppad_mixed-20170930.
 This fixes a bug where the optimization of the fixed effects

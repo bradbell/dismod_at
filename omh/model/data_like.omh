@@ -62,16 +62,13 @@ $subhead t_i$$
 We use $latex a_i$$ to denote the corresponding
 
 $subhead d_i$$
-We use $latex d_i$$ to denote the corresponding
-$cref/density_id/data_table/density_id/$$ value.
+We use $latex d_i$$ to denote the
+$cref/density_name/density_table/density_name/$$ and
+$cref/eta/data_table/eta/$$ value corresponding to $latex i$$.
 
 $subhead I_i$$
 We use $latex I_i$$ to denote the corresponding
 $cref/integrand_id/data_table/integrand_id/$$ value.
-
-$subhead eta_i$$
-We use $latex \eta_i$$ to denote the
-$cref/eta/data_table/eta/$$ value corresponding to $latex i$$.
 
 $subhead x_ij$$
 We use $latex x_{i,j}$$ to denote the corresponding
@@ -159,7 +156,7 @@ $latex \[
 	w_i (a,t) \; \B{d} t \; \B{d} a
 \] $$
 Note that for $latex j \in K_i$$ it should hold that
-$latex 0 < y_i + \eta_i$$,
+$latex 0 < y_i + d_i:\eta$$,
 $latex 0 \leq x_{i,j}$$, and
 $latex 0 \leq \gamma_{i,j} (a, t)$$
 so that $latex \Delta_i \leq \delta_i ( \theta )$$.
@@ -173,7 +170,6 @@ $latex \[
 	A_i ( u, \theta )    \W{,}
 	y_i                  \W{,}
 	\delta_i ( \theta )  \W{,}
-	\eta_i               \W{,}
 	d_i
 ]
 \] $$
@@ -181,7 +177,7 @@ see the weight residual function
 $cref/R/statistic/Weighted Residual Function, R/$$.
 Note that $latex y_i$$ ($latex \mu$$) here is plays the role of
 $latex \mu$$ ($latex y$$) in the function
-$latex R(y, \mu , \delta , \eta , d)$$.
+$latex R(y, \mu , \delta , d)$$.
 This is so that
 $cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$
 does not depend on the $cref model_variables$$.
@@ -196,7 +192,6 @@ $latex \[
 	A_i ( u, \theta )    \W{,}
 	y_i                  \W{,}
 	\delta_i ( \theta )  \W{,}
-	\eta_i               \W{,}
 	d_i
 ] \right)
 \] $$

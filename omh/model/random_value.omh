@@ -71,9 +71,11 @@ $cref/value_prior_id/smooth_grid_table/value_prior_id/$$, and the
 rate, age, and time specified by $icode j$$.
 
 $head d_j$$
-We use $latex d_j$$ for the
-density corresponding to the
-$icode value_prior_id$$ which must be Gaussian; see the
+We use $latex d_j$$ to denote the
+$cref/density_name/density_table/density_name/$$ and
+$cref/eta/prior_table/eta/$$ corresponding to $icode j$$.
+Note that $icode eta$$ does not matter because
+the density name must be $code gaussian$$; see the
 $cref/child restrictions
 	/rate_table
 	/Child Restrictions
@@ -85,11 +87,6 @@ mean corresponding to the
 $icode value_prior_id$$ which must be zero; see the
 child smoothing restrictions.
 
-$head eta_j$$
-We use $latex \eta_j$$ for the
-offset in the log transformation
-(which does not matter because $icode d_j$$ is Gaussian).
-
 $head V_c,j^u$$
 The definition of the value density function for $latex u_{c,j}$$ is
 $latex \[
@@ -99,16 +96,15 @@ V_{c,j}^u ( u | \theta )
 	u_{c,j} \W{,}
 	\mu_j \W{,}
 	\lambda_j \delta_j  \W{,}
-	\eta_j \W{,}
 	d_j
 ) \right]
 \] $$
 where $latex D$$ is the
 $cref/log-density function/statistic/Log-Density Function, D/$$.
-(As noted above,
+As noted above,
 $latex \mu_j$$ must be zero,
-$latex d_j$$ must be Gaussian,
-and $latex \eta_j$$ does not matter.)
+$latex d_j:name$$ must be $code gaussian$$,
+and $latex \eta_j$$ does not matter.
 
 $head V^u$$
 Let $latex m$$ be the number of random effects.

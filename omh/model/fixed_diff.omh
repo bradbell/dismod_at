@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -84,24 +84,14 @@ rate or covariate index $latex k$$,
 age index $latex i$$ and
 time index $latex j$$.
 
-$head eta_i,j,k$$
-We use
-$latex \eta_{i,j,k}^a$$
-( $latex \eta_{i,j,k}^t$$ )
-to denote the
-$cref/eta/prior_table/eta/$$ corresponding to the
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
-( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-rate or covariate index $latex k$$,
-age index $latex i$$ and
-time index $latex j$$.
-
 $head d_i,j,k$$
 We use
 $latex d_{i,j,k}^a$$
 ( $latex d_{i,j,k}^t )$$
 to denote the
-$cref/density_id/prior_table/density_id/$$ corresponding to
+$cref/density_name/density_table/density_name/$$ and
+$cref/eta/prior_table/eta/$$
+corresponding to
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
 ( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
 rate or covariate index $latex k$$,
@@ -123,7 +113,6 @@ A_{i,j,k}^\theta ( \theta )
 	\theta_{i,j,k}   \W{,}
 	\mu_{i,j,k}^a    \W{,}
 	\lambda_k^a \delta_{i,j,k}^a \W{,}
-	\eta_{i,j,k}^a \W{,}
 	d_{i,j,k}^a
 \right) \right]
 \] $$
@@ -159,7 +148,6 @@ T_{i,j,k}^\theta ( \theta )
 	\theta_{i,j,k}   \W{,}
 	\mu_{i,j,k}^t    \W{,}
 	\lambda_k^t \delta_{i,j,k}^t \W{,}
-	\eta_{i,j,k}^t \W{,}
 	d_{i,j,k}^t
 \right) \right]
 \] $$

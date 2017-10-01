@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -26,13 +26,13 @@ $section Compute Weighted Residual and Log-Density$$
 
 $head Syntax$$
 $icode%residual% = residual_density(
-	%z%, %y%, %mu%, %delta%, %eta%, %d%, %id, %difference%
+	%z%, %y%, %mu%, %delta%, %d_eta%, %d_enum%, %id, %difference%
 )%$$
 
-$head d$$
+$head d_enum$$
 This argument has prototype
 $codei%
-	density_enum %d%
+	density_enum %d_enum%
 %$$
 It specifies the $cref/density/get_density_table/density_enum/$$.
 
@@ -74,7 +74,7 @@ $codei%
 It is either the standard deviation or a parameter in the standard deviation;
 see below.
 
-$head eta$$
+$head d_eta$$
 If the density $icode d$$ is
 $code log_gaussian_enum$$ or $code log_laplace_enum$$,
 it specifies the offset in the log transformation.
@@ -139,7 +139,7 @@ $tend
 $subhead wres$$
 If $icode difference$$ is false, $icode wres$$ is the value of
 $latex \[
-	R(y, \mu, \delta, \eta, d)
+	R(y, \mu, \delta, d)
 \]$$
 see $cref/weighted residual function
 	/statistic
@@ -147,13 +147,13 @@ see $cref/weighted residual function
 /$$.
 If $icode difference$$ is true, $icode wres$$ is the value of
 $latex \[
-	R(z, y, \mu, \delta, \eta, d)
+	R(z, y, \mu, \delta, d)
 \]$$
 
 $subhead logden$$
 If $icode difference$$ is false, the log-density function
 $latex \[
-	D(y, \mu, \delta, \eta, d)
+	D(y, \mu, \delta, d)
 \]$$
 is equal to
 $codei%
@@ -165,7 +165,7 @@ see $cref/log-density function
 /$$.
 If $icode difference$$ is true, the log-density function
 $latex \[
-	D(z, y, \mu, \delta, \eta, d)
+	D(z, y, \mu, \delta, d)
 \]$$
 is equal to
 $codei%
@@ -209,8 +209,8 @@ residual_struct<Float> residual_density(
 	const Float&       y          ,
 	const Float&       mu         ,
 	const Float&       delta      ,
-	const Float&       eta        ,
-	density_enum       d          ,
+	const Float&       d_eta      ,
+	density_enum       d_enum     ,
 	size_t             id         ,
 	bool               difference )
 {	Float nan(std::numeric_limits<double>::quiet_NaN());
@@ -218,7 +218,7 @@ residual_struct<Float> residual_density(
 
 	Float wres = nan;
 	Float sigma = nan;
-	switch( d )
+	switch( d_enum )
 	{
 		case uniform_enum:
 		wres = 0.0;
@@ -244,11 +244,11 @@ residual_struct<Float> residual_density(
 		assert( delta > 0.0 );
 		if( difference )
 		{	sigma = delta;
-			wres  = ( log( z + eta ) - log( y + eta ) - mu ) / sigma;
+			wres  = ( log( z + d_eta ) - log( y + d_eta ) - mu ) / sigma;
 		}
 		else
-		{	sigma = log( 1.0 + delta / (mu + eta) );
-			wres  = ( log( y + eta ) - log( mu + eta ) ) / sigma;
+		{	sigma = log( 1.0 + delta / (mu + d_eta) );
+			wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / sigma;
 		}
 		break;
 
@@ -257,7 +257,7 @@ residual_struct<Float> residual_density(
 	}
 	Float logden_smooth = nan;
 	Float logden_sub_abs = nan;
-	switch( d )
+	switch( d_enum )
 	{
 		case uniform_enum:
 		logden_smooth  = 0.0;
@@ -288,7 +288,7 @@ residual_struct<Float> residual_density(
 	residual.wres           = wres;
 	residual.logden_smooth  = logden_smooth;
 	residual.logden_sub_abs = logden_sub_abs;
-	residual.density        = d;
+	residual.density        = d_enum;
 	residual.id             = id;
 	return residual;
 }
@@ -300,7 +300,7 @@ residual_struct<Float> residual_density(
 		const Float&       y            ,                     \
 		const Float&       mu           ,                     \
 		const Float&       delta        ,                     \
-		const Float&       eta          ,                     \
+		const Float&       d_eta        ,                     \
 		density_enum       density      ,                     \
 		size_t             id           ,                     \
 		bool               difference                         \

@@ -79,6 +79,9 @@ We use
 $latex d_{i,j,k}^a$$
 ( $latex d_{i,j,k}^t )$$
 to denote the
+$cref/density_name/density_table/density_name/$$ and
+$cref/eta/prior_table/eta/$$
+corresponding to
 $cref/density_id/prior_table/density_id/$$ corresponding to
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
 ( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
@@ -90,6 +93,8 @@ $cref/child restrictions
 	/rate_table
 	/Child Restrictions
 /$$.
+Note that $latex { d_{i,j,k}^a }:\eta$$ and $latex { d_{i,j,k}^t }:\eta$$
+do not matter because the corresponding densities are Gaussian.
 
 
 $head mu_i,j,k$$
@@ -106,19 +111,6 @@ time index $latex j$$.
 This mean must be zero; see the
 child smoothing restrictions.
 
-$head eta_i,j,k$$
-We use
-$latex \eta_{i,j,k}^a$$
-( $latex \eta_{i,j,k}^t$$ )
-to denote the
-$cref/eta/prior_table/eta/$$ corresponding to the
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
-( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-rate index $latex k$$,
-age index $latex i$$ and
-time index $latex j$$.
-Note that $latex \eta_{i,j,k}^a$$ and $latex \eta_{i,j,k}^t$$
-do not matter because the corresponding densities are Gaussian.
 
 $head Age Differences$$
 For
@@ -136,7 +128,6 @@ A_{i,j,k,c}^u ( u | \theta )
 	u_{i,j,k,c}      \W{,}
 	\mu_{i,j,k}^a    \W{,}
 	\lambda_k^a \delta_{i,j,k}^a \W{,}
-	\eta_{i,j,k}^a   \W{,}
 	d_{i,j,k}^a
 \right) \right]
 \] $$
@@ -148,8 +139,8 @@ $cref/difference log-density function
 /$$.
 (As noted above,
 $latex \mu_{i,j,k}^a$$ must be zero,
-$latex d_{i,j,k}^a$$ must be Gaussian,
-and $latex \eta_{i,j,k}^a$$ does not matter.)
+$latex { d_{i,j,k}^a }:name$$ must be $code gaussian$$,
+and $latex {d_{i,j,k}^a}:\eta$$ does not matter.)
 
 $subhead A^u$$
 The age difference density
@@ -177,15 +168,14 @@ T_{i,j,k,c}^u ( u | \theta )
 	u_{i,j,k,c}      \W{,}
 	\mu_{i,j,k}^t    \W{,}
 	\lambda_k^t \delta_{i,j,k}^t \W{,}
-	\eta_{i,j,k}^t   \W{,}
 	d_{i,j,k}^t
 \right) \right]
 \] $$
 where $latex D$$ is the difference log density function.
 (As noted above,
 $latex \mu_{i,j,k}^t$$ must be zero,
-$latex d_{i,j,k}^t$$ must be Gaussian,
-and $latex \eta_{i,j,k}^t$$ does not matter.)
+$latex { d_{i,j,k}^t }:name$$ must be $code gaussian$$,
+and $latex { d_{i,j,k}^t }:\eta$$ does not matter.)
 
 $subhead T^u$$
 The time difference density
