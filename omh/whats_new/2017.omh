@@ -45,8 +45,16 @@ $childtable%
 %$$
 
 $head 10-02$$
+$list number$$
+Change the $code create_database$$
+$cref/data_table/create_database/data_table/$$ so that
+$icode meas_std$$ and $icode eta$$ need not appear when they are null.
+In addition, remove the null $icode eta$$ values from the
+$cref user$$ examples.
+$lnext
 Reduce the chance of random
 failure in the $cref user_lasso_covariate.py$$ example.
+$lend
 
 $head 10-01$$
 Simplify the weighted residual function

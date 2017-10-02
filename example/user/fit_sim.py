@@ -131,7 +131,6 @@ def example_db (file_name) :
 		row['income']    = fraction
 		row['integrand'] = integrand_list[0]
 		row['meas_std']  = 1e-3
-		row['eta']       = None;
 		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------

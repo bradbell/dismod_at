@@ -118,7 +118,6 @@ def example_db (file_name) :
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
 		'meas_std':     iota_parent_true * 1e-2,
-		'eta':          None
 	}
 	row['node']        = 'united_states'
 	row['meas_value']  = iota_parent_true * exp(iota_child_offset)

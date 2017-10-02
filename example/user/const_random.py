@@ -116,13 +116,12 @@ def example_db (file_name) :
 	}
 	# values that change between rows:
 	for data_id in range( n_data ) :
-		fraction         = data_id / float(n_data-1)
-		age              = age_list[0] + (age_list[-1] - age_list[0])*fraction
+		fraction = data_id / float(n_data-1)
+		age      = age_list[0] + (age_list[-1] - age_list[0])*fraction
 		row['age_lower'] = age
 		row['age_upper'] = age
 		row['integrand'] = 'prevalence'
 		row['meas_std']  = 0.001
-		row['eta']       = None;
 		row['data_name'] = 'd' + str(data_id)
 		node_id          = data_id % len( node_table )
 		row['node']      = node_table[node_id]['name']

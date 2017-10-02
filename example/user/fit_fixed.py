@@ -119,7 +119,6 @@ def example_db (file_name) :
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
 		'meas_std':     iota_no_random / 10.,
-		'eta':          None
 	}
 	# make sure both child and parent data gets included in fit
 	# by balancing the offset between the two

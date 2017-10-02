@@ -190,20 +190,17 @@ def example_db (file_name) :
 		'integrand':   'Sincidence',
 		'meas_value':   measure['north_america'],
 		'meas_std':     standard['north_america'],
-		'eta':          None
 	}
 	data_table.append( copy.copy(row) )
 	#
 	row['node']       = 'mexico';
 	row['meas_value'] = measure['mexico']
 	row['meas_std']   = standard['mexico']
-	row['eta']        = None;
 	data_table.append( copy.copy(row) )
 	#
 	row['node']       = 'canada';
 	row['meas_value'] = measure['canada']
 	row['meas_std']   = standard['canada']
-	row['eta']        = None;
 	data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------

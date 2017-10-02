@@ -127,7 +127,6 @@ def example_db (file_name) :
 		'integrand':   'Sincidence',
 		'meas_value':   iota_north_america,
 		'meas_std':     1e-1 * iota_north_america,
-		'eta':          None,
 	}
 	data_table.append( copy.copy(row) )
 	row['node'] = 'canada';

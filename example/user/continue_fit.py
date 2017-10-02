@@ -128,14 +128,13 @@ def example_db (file_name) :
 	}
 	# values that change between rows:
 	for data_id in range( n_data ) :
-		fraction         = data_id / float(n_data-1)
-		age              = age_list[0] + (age_list[-1] - age_list[0])*fraction
+		fraction = data_id / float(n_data-1)
+		age      = age_list[0] + (age_list[-1] - age_list[0])*fraction
 		row['age_lower'] = age
 		row['age_upper'] = age
 		row['node']      = 'world'
 		row['integrand'] = 'prevalence'
 		row['meas_std']  = 0.01
-		row['eta']       = None;
 		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------

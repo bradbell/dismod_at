@@ -177,10 +177,8 @@ def example_db (file_name) :
 		row['integrand'] = integrand_list[ data_id % 2 ]
 		if row['integrand'] == 'Sincidence' :
 			row['meas_std']  = 0.05 * iota_parent
-			row['eta']       = None;
 		elif row['integrand'] == 'prevalence' :
 			row['meas_std']  = 0.05 * (iota_parent / rho_parent)
-			row['eta']       = None;
 		else :
 			assert(False)
 		data_table.append( copy.copy(row) )

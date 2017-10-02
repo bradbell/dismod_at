@@ -147,7 +147,6 @@ def example_db (file_name) :
 		integrand   = integrand_list[0]
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
-		row['eta']        = None;
 		row['integrand']  = integrand
 		row['income']     = income
 		row['sex']        = sex

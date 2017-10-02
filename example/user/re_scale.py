@@ -99,7 +99,6 @@ def example_db (file_name) :
 	row = {
 		'node':        'canada',
 		'density':     'gaussian',
-		'eta':         None,
 		'weight':      'constant',
 		'hold_out':     False,
 		'time_lower':   2000.0,
