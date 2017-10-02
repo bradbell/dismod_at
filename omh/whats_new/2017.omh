@@ -44,6 +44,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-02$$
+Reduce the chance of random
+failure in the $cref user_lasso_covariate.py$$ example.
+
 $head 10-01$$
 Simplify the weighted residual function
 $cref/R/statistic/Weighted Residual Function, R/$$

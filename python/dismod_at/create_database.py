@@ -171,11 +171,11 @@
 # meas_value   $cnext float       $cnext measured value              $rnext
 # meas_std     $cnext float       $cnext standard deviation          $rnext
 # eta          $cnext float       $cnext offset in log-transform     $rnext
+# nu           $cnext float       $cnext Student's-t degrees of freedom
 # $tend
-# We refer to the columns above,
-# plus the $icode avgint_table$$ required columns,
-# as the required columns for $icode data_table$$.
-#
+# The columns keys $code meas_std$$, $code eta$$, and $code nu$$
+# are optional. If they are not present, the value $code null$$ is used
+# for the corresponding row of the data table.
 #
 # $subhead data_extra_columns$$
 # If a $icode row$$ of $icode option_table$$ has $icode%row%['name']%$$
@@ -815,6 +815,7 @@ def create_database(
 		'meas_value',
 		'meas_std',
 		'eta',
+		'nu',
 	]
 	for j in range( len(covariate_table) ) :
 		col_name.append( 'x_%s' % j )
@@ -833,6 +834,7 @@ def create_database(
 		'real',                 # meas_value
 		'real',                 # meas_std
 		'real',                 # eta
+		'real',                 # nu
 	]
 	for j in range( len(covariate_table) )  :
 		col_type.append( 'real' )
@@ -844,6 +846,11 @@ def create_database(
 		row = list()
 		for name in extra_name :
 			row.append( data[name] )
+		#
+		# columns that have null for default value
+		for key in [ 'meas_std', 'eta', 'nu' ] :
+			if not key in data :
+				data[key] = None
 		#
 		integrand_id = global_integrand_name2id[ data['integrand'] ]
 		density_id   = global_density_name2id[ data['density'] ]
@@ -863,6 +870,7 @@ def create_database(
 			data['meas_value'],
 			data['meas_std'],
 			data['eta'],
+			data['nu']
 		]
 		for j in range( len(covariate_table) ) :
 			row.append( data[ covariate_table[j]['name'] ] )

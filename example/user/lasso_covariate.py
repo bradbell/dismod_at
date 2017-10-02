@@ -178,7 +178,7 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      0.01,
+			'std':      0.005,
 			'eta':      None
 		}
 	]
@@ -345,7 +345,7 @@ for var_id in range( len(var_table) ) :
 		covariate_id = row['covariate_id']
 		if covariate_id == 0 :
 			# income covariate
-			assert value >= 0.75 * mulcov_income
+			assert value >= 0.50 * mulcov_income
 			assert value < mulcov_income
 		else :
 			# sex covariate
@@ -369,7 +369,7 @@ for var_id in range( len(var_table) ) :
 		covariate_id = row['covariate_id']
 		if covariate_id == 0 :
 			# income covariate
-			assert value >= 0.75 * mulcov_income
+			assert value >= 0.50 * mulcov_income
 			assert value < mulcov_income
 		else :
 			# sex covariate

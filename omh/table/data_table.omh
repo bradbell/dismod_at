@@ -70,10 +70,10 @@ $head eta$$
 This column has type $code real$$.
 If $icode density_id$$ corresponds to
 $code log_gaussian$$, $code log_laplace$$, or $code log_students$$,
-$icode eta$$ must be greater than zero and is
+$icode eta$$ must be greater than or equal zero and is
 the offset in the log transformation for this data point; see
 the definition of the
-$cref/Log-Gaussian and Log-Laplace
+$cref/Log-Gaussian, Log-Laplace, Log-Student's-t
 	/statistic
 	/Weighted Residual Function, R
 	/Log-Gaussian, Log-Laplace, Log-Student's-t

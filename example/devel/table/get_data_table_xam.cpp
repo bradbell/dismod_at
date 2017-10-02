@@ -51,6 +51,7 @@ bool get_data_table_xam(void)
 		" meas_value     real,"
 		" meas_std       real,"
 		" eta            real,"
+		" nu             real,"
 		" age_lower      real,"
 		" age_upper      real,"
 		" time_lower     real,"
@@ -68,6 +69,7 @@ bool get_data_table_xam(void)
 		"1e-4,"                    // meas_value
 		"1e-5,"                    // meas_std
 		"null,"                    // eta
+		"null,"                    // nu
 		"10.0,"                    // age_lower
 		"90.0,"                    // age_upper
 		"2000,"                    // time_lower
@@ -102,6 +104,7 @@ bool get_data_table_xam(void)
 	ok  &= data_table[0].meas_value        == 1e-4;
 	ok  &= data_table[0].meas_std          == 1e-5;
 	ok  &= std::isnan( data_table[0].eta );
+	ok  &= std::isnan( data_table[0].nu  );
 	ok  &= data_table[0].age_lower         == 10.0;
 	ok  &= data_table[0].age_upper         == 90.0;
 	ok  &= data_table[0].time_lower        == 2000.0;

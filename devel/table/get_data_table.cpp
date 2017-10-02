@@ -134,6 +134,9 @@ $rnext
 $code double$$ $cnext $code eta$$ $cnext
 	The $cref/eta/data_table/eta/$$ for this measurement
 $rnext
+$code double$$ $cnext $code nu$$ $cnext
+	The $cref/nu/data_table/nu/$$ for this measurement
+$rnext
 $code double$$ $cnext $code age_lower$$ $cnext
 	The $cref/age_lower/data_table/age_lower/$$ for this measurement
 $rnext
@@ -239,6 +242,11 @@ void get_data_table(
 	get_table_column(db, table_name, column_name, eta);
 	assert( n_data == eta.size() );
 
+	column_name           =  "nu";
+	CppAD::vector<double>     nu;
+	get_table_column(db, table_name, column_name, nu);
+	assert( n_data == nu.size() );
+
 	column_name           =  "age_lower";
 	CppAD::vector<double>     age_lower;
 	get_table_column(db, table_name, column_name, age_lower);
@@ -272,6 +280,7 @@ void get_data_table(
 		data_table[i].meas_value    = meas_value[i];
 		data_table[i].meas_std      = meas_std[i];
 		data_table[i].eta           = eta[i];
+		data_table[i].nu            = nu[i];
 		data_table[i].age_lower     = age_lower[i];
 		data_table[i].age_upper     = age_upper[i];
 		data_table[i].time_lower    = time_lower[i];
@@ -339,20 +348,38 @@ void get_data_table(
 		{	msg = "meas_std is less than or equal zero";
 			error_exit(msg, table_name, data_id);
 		}
+		//
 		double eta       = data_table[data_id].eta;
 		bool eta_null    = std::isnan(eta);
 		bool log_density = density_enum(density_id) == log_gaussian_enum;
 		log_density     |= density_enum(density_id) == log_laplace_enum;
 		if( ! log_density && ! eta_null )
-		{	msg = "density is gaussian or laplace and eta is not null";
+		{	msg = "density is not a log density and eta is not null";
 			error_exit(msg, table_name, data_id);
 		}
 		if( log_density && eta_null )
-		{	msg = "density is log_gaussian or log_laplace and eta is null";
+		{	msg = "density is a log density and eta is null";
 			error_exit(msg, table_name, data_id);
 		}
 		if( log_density && eta < 0.0 )
 		{	msg = "eta is less than zero";
+			error_exit(msg, table_name, data_id);
+		}
+		//
+		double nu        = data_table[data_id].nu;
+		bool nu_null     = std::isnan(nu);
+		bool students    = density_enum(density_id) == students_enum;
+		students        |= density_enum(density_id) == log_students_enum;
+		if( ! students && ! nu_null )
+		{	msg = "density is not students or log_students and nu is not null";
+			error_exit(msg, table_name, data_id);
+		}
+		if( students && eta_null )
+		{	msg = "density is students or log_students and nu is null";
+			error_exit(msg, table_name, data_id);
+		}
+		if( students && nu <= 2.0 )
+		{	msg = "nu is less than or equal two";
 			error_exit(msg, table_name, data_id);
 		}
 	}
