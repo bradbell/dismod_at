@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin statistic$$
 $spell
 	differencing
+	nu
 $$
 
 $section Some Statistical Function Definitions$$
@@ -29,10 +30,14 @@ $rnext
 $latex \delta$$  $cnext
 standard derivative for $latex y$$, difference, or difference of logs
 $rnext
-$latex d$$       $cnext
-$cref/density_id/prior_table/density_id/$$ $latex d:id$$,
-and $cref/eta/prior_table/eta/$$ the offset in log transform
-$latex d:\eta$$.
+$latex d:id$$    $cnext
+$cref/density_id/prior_table/density_id/$$
+$rnext
+$latex d:\eta$$  $cnext
+$cref/eta/prior_table/eta/$$ the offset in log transform
+$rnext
+$latex d:\nu$$   $cnext
+$cref/nu/data_table/nu/$$ degrees of freedom in Student's-t.
 $tend
 
 $head Log-Transformed Standard Deviation, sigma$$
@@ -70,8 +75,9 @@ $latex \[
 	R(z, y, \mu, \delta, d) = 0
 \] $$
 
-$subhead Gaussian, Laplace$$
-If the density name is $code gaussian$$ or $code laplace$$,
+$subhead Gaussian, Laplace, Student's-t$$
+If the density name is
+$code gaussian$$, $code laplace$$, or $code students$$.
 the weighted residual functions are
 $latex \[
 	R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
@@ -80,8 +86,9 @@ $latex \[
 	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
 \] $$
 
-$subhead Log-Gaussian and Log-Laplace$$
-If the density name is $code log_gaussian$$ or $code log_laplace$$,
+$subhead Log-Gaussian, Log-Laplace, Log-Student's-t$$
+If the density name is
+$code log_gaussian$$, $code log_laplace$$, or $code log_students$$,
 the weighted residual functions are
 $latex \[
 R(y, \mu, \delta, d)
@@ -121,29 +128,21 @@ of the density name.
 
 $subhead Uniform$$
 If the density name is $code uniform$$,
-the log-density functions are
-$latex \[
-	D(y, \mu, \delta, d) = 0
-\] $$
-$latex \[
-	D(z, y, \mu, \delta, d) = 0
-\] $$
+the log-density functions
+$latex D(y, \mu, \delta, d)$$, and $latex D(z, y, \mu, \delta, d)$$
+are define by $latex D = 0$$.
 
 $subhead Gaussian$$
 If the density name is $code gaussian$$,
-the log-density functions are
+the log-density functions
+$latex D(y, \mu, \delta, d)$$, and $latex D(z, y, \mu, \delta, d)$$
+are define by
 $latex \[
-D(y, \mu, \delta, d)
+D
 =
-- \log \left( \delta \sqrt{2 \pi} \right)
-- \frac{1}{2} R(y, \mu, \delta , d )^2
+- \log \left( \delta \sqrt{2 \pi} \right) - \frac{1}{2} R^2
 \] $$
-$latex \[
-D(z, y, \mu, \delta, d)
-=
-- \log \left( \delta \sqrt{2 \pi} \right)
-- \frac{1}{2} R(z, y, \mu, \delta , d)^2
-\] $$
+where $latex D$$ and $latex R$$ have the same arguments;
 see $cref/Weighted Residual Function, R
 	/statistic
 	/Weighted Residual Function, R
@@ -151,23 +150,34 @@ see $cref/Weighted Residual Function, R
 
 $subhead Laplace$$
 If the density name is $code laplace$$,
-the log-density functions are
+the log-density functions
+$latex D(y, \mu, \delta, d)$$, and $latex D(z, y, \mu, \delta, d)$$
+are define by
 $latex \[
-D(y, \mu, \delta, d)
+D
 =
-- \log \left( \delta \sqrt{2} \right)
-- \sqrt{2} \left| R(y, \mu, \delta , d) \right|
+- \log \left( \delta \sqrt{2} \right) - \sqrt{2} | R |
 \] $$
+where $latex D$$ and $latex R$$ have the same arguments.
+
+$subhead Student's-t$$
+If the density name is $code students$$,
+the log-density functions
+$latex D(y, \mu, \delta, d)$$, and $latex D(z, y, \mu, \delta, d)$$
+are define by
 $latex \[
-D(z, y, \mu, \delta, d)
+D
 =
-- \log \left( \delta \sqrt{2} \right)
-- \sqrt{2} \left| R(z, y, \mu, \delta , d) \right|
+- \log \left(
+\frac{ \Gamma( ( \nu + 1 ) / 2 ) }{ \sqrt{ \nu \pi } \Gamma( \nu / 2 ) }
+\right)
++ \frac{\nu + 1}{2} \log \left( 1 + R^2 / ( \nu - 2 ) \right)
 \] $$
+where $latex D$$ and $latex R$$ have the same arguments.
 
 $subhead Log-Gaussian$$
 If the density name is $code log_gaussian$$,
-the log-density functions are
+the log-density functions are defined by
 $latex \[
 D(y, \mu, \delta, d)
 =
@@ -192,13 +202,28 @@ $latex \[
 D(y, \mu, \delta, d)
 =
 - \log \left[ \sigma( \mu , \delta , d:\eta ) \sqrt{2} \right]
-- \left| R(y, \mu, \delta, d) \right|
+- \sqrt{2} \left| R(y, \mu, \delta, d) \right|
 \] $$
 $latex \[
 D(z, y, \mu, \delta, d)
 =
 - \log \left( \delta \sqrt{2} \right)
-- \left| R(z, y, \mu, \delta, d) \right|
+- \sqrt{2} \left| R(z, y, \mu, \delta, d) \right|
 \] $$
+
+$subhead Log-Student's-t$$
+If the density name is $code log_students$$,
+the log-density functions
+$latex D(y, \mu, \delta, d)$$, and $latex D(z, y, \mu, \delta, d)$$
+are define by
+$latex \[
+D
+=
+- \log \left(
+\frac{ \Gamma( ( \nu + 1 ) / 2 ) }{ \sqrt{ \nu \pi } \Gamma( \nu / 2 ) }
+\right)
++ \frac{\nu + 1}{2} \log \left( 1 + R^2 / ( \nu - 2 ) \right)
+\] $$
+where $latex D$$ and $latex R$$ have the same arguments.
 
 $end

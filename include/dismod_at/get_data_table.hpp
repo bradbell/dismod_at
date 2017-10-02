@@ -31,6 +31,7 @@ namespace dismod_at {
 		double      meas_value;
 		double      meas_std;
 		double      eta;
+		double      nu;
 	};
 	extern void get_data_table(
 		sqlite3* db                                 ,

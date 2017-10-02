@@ -315,7 +315,7 @@ def create_database() :
 		[ 'one',           0, 1.0,   1.0 ],
 		[ 'uniform_01',    0, 0.0,   1.0 ],
 		[ 'gaussian_01',   1, None, None ],
-		[ 'log_gaussian',  3, None, None ]
+		[ 'log_gaussian',  4, None, None ]
 	]
 	assert row_list == check_list
 	#

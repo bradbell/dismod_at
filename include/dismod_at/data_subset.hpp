@@ -33,6 +33,7 @@ namespace dismod_at {
 		double      meas_value;
 		double      meas_std;
 		double      eta;
+		double      nu;
 	};
 	extern void data_subset(
 		const CppAD::vector<data_struct>&      data_table            ,

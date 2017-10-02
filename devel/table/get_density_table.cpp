@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -54,8 +54,10 @@ $icode density_id$$        $pre  $$ $cnext $icode density_name$$ $rnext
 $code uniform_enum$$       $pre  $$ $cnext $code uniform$$       $rnext
 $code gaussian_enum$$      $pre  $$ $cnext $code gaussian$$      $rnext
 $code laplace_enum$$       $pre  $$ $cnext $code laplace$$       $rnext
+$code students_enum$$      $pre  $$ $cnext $code students$$      $rnext
 $code log_gaussian_enum$$  $pre  $$ $cnext $code log_gaussian$$  $rnext
 $code log_laplace_enum$$   $pre  $$ $cnext $code log_laplace$$
+$code log_students_enum$$  $pre  $$ $cnext $code log_students$$
 $tend
 The number of these enum values is $code number_density_enum$$.
 
@@ -93,21 +95,25 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 		"uniform",
 		"gaussian",
 		"laplace",
+		"students",
 		"log_gaussian",
-		"log_laplace"
+		"log_laplace",
+		"log_students"
 	};
 	assert( string("uniform")      == density_enum2name[uniform_enum] );
 	assert( string("gaussian")     == density_enum2name[gaussian_enum] );
 	assert( string("laplace")      == density_enum2name[laplace_enum] );
+	assert( string("students")     == density_enum2name[students_enum] );
 	assert( string("log_gaussian") == density_enum2name[log_gaussian_enum] );
 	assert( string("log_laplace")  == density_enum2name[log_laplace_enum] );
+	assert( string("log_students") == density_enum2name[log_students_enum] );
 	//
 	string table_name  = "density";
 	size_t n_density   = check_table_id(db, table_name);
 
 	if( n_density != size_t( number_density_enum ) )
 	{	message  = "density table does not have ";
-		message += to_string( size_t( number_density_enum) ) + "rows.";
+		message += to_string( size_t( number_density_enum) ) + " rows.";
 		error_exit(message, table_name, null_id);
 	}
 

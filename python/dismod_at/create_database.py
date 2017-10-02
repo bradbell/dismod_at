@@ -390,8 +390,10 @@ def create_database(
 		['uniform'],
 		['gaussian'],
 		['laplace'],
+		['students'],
 		['log_gaussian'],
-		['log_laplace']
+		['log_laplace'],
+		['log_students']
 	]
 	tbl_name = 'density'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

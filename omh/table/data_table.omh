@@ -67,20 +67,34 @@ for this measurement value.
 This standard for this measurement and is in the same units at the data.
 
 $head eta$$
-This column has type $code real$$ and its value must be greater than
-or equal zero.
-If $icode density_id$$ corresponds to $code log_gaussian$$
-or $code log_laplace$$, $icode eta$$ is
+This column has type $code real$$.
+If $icode density_id$$ corresponds to
+$code log_gaussian$$, $code log_laplace$$, or $code log_students$$,
+$icode eta$$ must be greater than zero and is
 the offset in the log transformation for this data point; see
 the definition of the
 $cref/Log-Gaussian and Log-Laplace
 	/statistic
 	/Weighted Residual Function, R
-	/Log-Gaussian and Log-Laplace
+	/Log-Gaussian, Log-Laplace, Log-Student's-t
 /$$
 weighted residual function.
-If $icode density_id$$ does not correspond to $code log_gaussian$$
-or $code log_laplace$$, $icode eta$$ must be $code null$$.
+If $icode density_id$$ does not correspond to
+$code log_gaussian$$, $code log_laplace$$, or $code log_students$$,
+$icode eta$$ must be $code null$$.
+
+$head nu$$
+This column has type $code real$$.
+If $icode density_id$$ corresponds to
+$code students$$ or $code log_students$$,
+$icode nu$$ must be greater than two and is
+number of degrees of freedom in the distribution for this point; see
+the definition of the log-density for
+$cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$ and
+$cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$.
+If $icode density_id$$ does not correspond to
+$code log_gaussian$$, $code log_laplace$$, or $code log_students$$,
+$icode eta$$ must be $code null$$.
 
 $head age_lower$$
 This column has type $code real$$ and is the lower age limit

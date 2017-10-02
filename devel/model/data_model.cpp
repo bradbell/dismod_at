@@ -703,7 +703,7 @@ void data_model::replace_like(
 	size_t n_subset = data_subset_obj_.size();
 	assert( data_subset_obj.size() == n_subset );
 	//
-	// replace density_id, hold_out, meas_value, meas_std, eta
+	// replace density_id, hold_out, meas_value, meas_std, eta, nu
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	data_subset_obj_[subset_id].density_id =
 			data_subset_obj[subset_id].density_id;
@@ -715,6 +715,8 @@ void data_model::replace_like(
 			data_subset_obj[subset_id].meas_std;
 		data_subset_obj_[subset_id].eta =
 			data_subset_obj[subset_id].eta;
+		data_subset_obj_[subset_id].nu =
+			data_subset_obj[subset_id].nu;
 		//
 		data_info_[subset_id].density = density_enum(
 			data_subset_obj[subset_id].density_id
