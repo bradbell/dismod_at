@@ -72,7 +72,8 @@ This argument has prototype
 $codei%
 	density_enum %d_id%
 %$$
-It specifies the $cref/density_id/prior_table/density_id/$$.
+This value is equal to the corresponding
+$cref/density_id/prior_table/density_id/$$.
 
 $head d_eta$$
 If the density $icode d_id$$ corresponds to
