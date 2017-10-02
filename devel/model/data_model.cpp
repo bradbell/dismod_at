@@ -1530,8 +1530,8 @@ $codei%
 see $cref/residual_struct/residual_density/residual/residual_struct/$$.
 It contains the weighted residual and the corresponding log-density.
 
-$subhead id$$
-Note that the $cref/id/residual_density/id/$$ field is set to
+$subhead index$$
+Note that the $cref/index/residual_density/index/$$ field is set to
 the value $icode subset_id$$.
 
 $children%example/devel/model/like_one_xam.cpp
@@ -1700,7 +1700,7 @@ $codei%
 
 $subhead id$$
 For each element of $icode residual_vec$$,
-the residual $cref/id/residual_density/id/$$
+the residual $cref/index/residual_density/index/$$
 is set to the $cref/data_subset_id/data_subset_table/data_subset_id/$$
 for the corresponding residual.
 

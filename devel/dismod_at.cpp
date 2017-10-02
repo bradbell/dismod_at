@@ -870,9 +870,9 @@ void fit_command(
 			residual  = prior_object.random(opt_value);
 		//
 		for(size_t i = 0; i < residual.size(); i++)
-		{	size_t id     = residual[i].id;
-			size_t var_id = id / 3;
-			size_t k      = 1 + id % 3;
+		{	size_t index  = residual[i].index;
+			size_t var_id = index / 3;
+			size_t k      = 1 + index % 3;
 			assert( var_id < n_var );
 			row_value[var_id * n_col + k] = to_string( residual[i].wres );
 		}

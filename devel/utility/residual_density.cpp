@@ -26,7 +26,7 @@ $section Compute Weighted Residual and Log-Density$$
 
 $head Syntax$$
 $icode%residual% = residual_density(
-	%z%, %y%, %mu%, %delta%, %d_eta%, %d_enum%, %id, %difference%
+	%z%, %y%, %mu%, %delta%, %d_eta%, %d_enum%, %index%, %difference%
 )%$$
 
 $head d_enum$$
@@ -80,12 +80,12 @@ $code log_gaussian_enum$$ or $code log_laplace_enum$$,
 it specifies the offset in the log transformation.
 Otherwise it is not used.
 
-$head id$$
+$head index$$
 This argument has prototype
 $codei%
-	size_t %id%
+	size_t %index%
 %$$
-and is an identifier for the residual.
+and is an identifying index for the residual.
 For example, when computing the prior residuals it could be
 $code 3$$ times $cref/var_id/var_table/var_id/$$
 plus zero for value priors,
@@ -117,7 +117,7 @@ $icode Float$$ $cnext
 	$cref/weighted residual/statistic/Weighted Residual Function, R/$$
 $rnext
 $icode Float$$ $cnext
-	$icode logden_smooth$$ $cnext
+	$code logden_smooth$$ $cnext
 	this smooth term is in
 	$cref/log-density/statistic/Log-Density Function, D/$$
 $rnext
@@ -130,10 +130,10 @@ $code density_enum$$ $cnext
 	type of density function; see
 	$cref/density_enum/get_density_table/density_enum/$$
 $rnext
-$code id$$ $cnext
-	$code id$$ $cnext
+$code size_t$$ $cnext
+	$code index$$ $cnext
 	identifier for this residual; see
-	$cref/id/residual_density/id/$$ above.
+	$cref/index/residual_density/index/$$ above.
 $tend
 
 $subhead wres$$
@@ -211,7 +211,7 @@ residual_struct<Float> residual_density(
 	const Float&       delta      ,
 	const Float&       d_eta      ,
 	density_enum       d_enum     ,
-	size_t             id         ,
+	size_t             index      ,
 	bool               difference )
 {	Float nan(std::numeric_limits<double>::quiet_NaN());
 	Float tiny( 10.0 / std::numeric_limits<double>::max() );
@@ -289,7 +289,7 @@ residual_struct<Float> residual_density(
 	residual.logden_smooth  = logden_smooth;
 	residual.logden_sub_abs = logden_sub_abs;
 	residual.density        = d_enum;
-	residual.id             = id;
+	residual.index          = index;
 	return residual;
 }
 
