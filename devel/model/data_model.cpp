@@ -1698,7 +1698,7 @@ $codei%
 	CppAD::vector< residual_struct<%Float%> > %residual_vec%
 %$$
 
-$subhead id$$
+$subhead index$$
 For each element of $icode residual_vec$$,
 the residual $cref/index/residual_density/index/$$
 is set to the $cref/data_subset_id/data_subset_table/data_subset_id/$$

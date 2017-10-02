@@ -79,7 +79,7 @@ We use
 $latex d_{i,j,k}^a$$
 ( $latex d_{i,j,k}^t )$$
 to denote the
-$cref/density_name/density_table/density_name/$$ and
+$cref/density_id/prior_table/density_id/$$ and
 $cref/eta/prior_table/eta/$$
 corresponding to
 $cref/density_id/prior_table/density_id/$$ corresponding to

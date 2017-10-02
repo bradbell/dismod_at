@@ -72,7 +72,7 @@ rate, age, and time specified by $icode j$$.
 
 $head d_j$$
 We use $latex d_j$$ to denote the
-$cref/density_name/density_table/density_name/$$ and
+$cref/density_id/prior_table/density_id/$$ and
 $cref/eta/prior_table/eta/$$ corresponding to $icode j$$.
 Note that $icode eta$$ does not matter because
 the density name must be $code gaussian$$; see the

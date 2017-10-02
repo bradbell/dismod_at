@@ -30,8 +30,9 @@ $latex \delta$$  $cnext
 standard derivative for $latex y$$, difference, or difference of logs
 $rnext
 $latex d$$       $cnext
-$cref/density_name/density_table/density_name/$$ and offset in log transform,
-$latex d:name$$, $latex d:\eta$$.
+$cref/density_id/prior_table/density_id/$$ $latex d:id$$,
+and $cref/eta/prior_table/eta/$$ the offset in log transform
+$latex d:\eta$$.
 $tend
 
 $head Log-Transformed Standard Deviation, sigma$$

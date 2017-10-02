@@ -26,15 +26,15 @@ $section Compute Weighted Residual and Log-Density$$
 
 $head Syntax$$
 $icode%residual% = residual_density(
-	%z%, %y%, %mu%, %delta%, %d_eta%, %d_enum%, %index%, %difference%
+	%z%, %y%, %mu%, %delta%, %d_eta%, %d_id%, %index%, %difference%
 )%$$
 
-$head d_enum$$
+$head d_id$$
 This argument has prototype
 $codei%
-	density_enum %d_enum%
+	density_enum %d_id%
 %$$
-It specifies the $cref/density/get_density_table/density_enum/$$.
+It specifies the $cref/density_id/prior_table/density_id/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -75,7 +75,7 @@ It is either the standard deviation or a parameter in the standard deviation;
 see below.
 
 $head d_eta$$
-If the density $icode d$$ is
+If the density $icode d_id$$ is
 $code log_gaussian_enum$$ or $code log_laplace_enum$$,
 it specifies the offset in the log transformation.
 Otherwise it is not used.
@@ -210,7 +210,7 @@ residual_struct<Float> residual_density(
 	const Float&       mu         ,
 	const Float&       delta      ,
 	const Float&       d_eta      ,
-	density_enum       d_enum     ,
+	density_enum       d_id       ,
 	size_t             index      ,
 	bool               difference )
 {	Float nan(std::numeric_limits<double>::quiet_NaN());
@@ -218,7 +218,7 @@ residual_struct<Float> residual_density(
 
 	Float wres = nan;
 	Float sigma = nan;
-	switch( d_enum )
+	switch( d_id )
 	{
 		case uniform_enum:
 		wres = 0.0;
@@ -257,7 +257,7 @@ residual_struct<Float> residual_density(
 	}
 	Float logden_smooth = nan;
 	Float logden_sub_abs = nan;
-	switch( d_enum )
+	switch( d_id )
 	{
 		case uniform_enum:
 		logden_smooth  = 0.0;
@@ -288,7 +288,7 @@ residual_struct<Float> residual_density(
 	residual.wres           = wres;
 	residual.logden_smooth  = logden_smooth;
 	residual.logden_sub_abs = logden_sub_abs;
-	residual.density        = d_enum;
+	residual.density        = d_id;
 	residual.index          = index;
 	return residual;
 }

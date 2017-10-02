@@ -53,7 +53,7 @@ $cref/std/prior_table/std/$$ corresponding to $icode prior_id$$.
 
 $head d_j$$
 We use $latex d_j$$ to denote the
-$cref/density_name/density_table/density_name/$$ and
+$cref/density_id/prior_table/density_id/$$ and
 $cref/eta/prior_table/eta/$$ corresponding to $icode j$$.
 
 $head V_j$$

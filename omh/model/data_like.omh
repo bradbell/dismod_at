@@ -63,8 +63,8 @@ We use $latex a_i$$ to denote the corresponding
 
 $subhead d_i$$
 We use $latex d_i$$ to denote the
-$cref/density_name/density_table/density_name/$$ and
-$cref/eta/data_table/eta/$$ value corresponding to $latex i$$.
+$cref/density_id/prior_table/density_id/$$ and
+$cref/eta/prior_table/eta/$$ value corresponding to $latex i$$.
 
 $subhead I_i$$
 We use $latex I_i$$ to denote the corresponding
