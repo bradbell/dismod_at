@@ -26,15 +26,8 @@ $section Compute Weighted Residual and Log-Density$$
 
 $head Syntax$$
 $icode%residual% = residual_density(
-	%z%, %y%, %mu%, %delta%, %d_eta%, %d_id%, %index%, %difference%
+	%z%, %y%, %mu%, %delta%, %d_id%, %d_eta%, %d_nu%, %index%, %difference%
 )%$$
-
-$head d_id$$
-This argument has prototype
-$codei%
-	density_enum %d_id%
-%$$
-It specifies the $cref/density_id/prior_table/density_id/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -74,10 +67,23 @@ $codei%
 It is either the standard deviation or a parameter in the standard deviation;
 see below.
 
+$head d_id$$
+This argument has prototype
+$codei%
+	density_enum %d_id%
+%$$
+It specifies the $cref/density_id/prior_table/density_id/$$.
+
 $head d_eta$$
-If the density $icode d_id$$ is
-$code log_gaussian_enum$$ or $code log_laplace_enum$$,
-it specifies the offset in the log transformation.
+If the density $icode d_id$$ corresponds to
+$code log_gaussian$$, $code log_laplace$$, or $code log_students$$,
+$icode eta$$ specifies the offset in the log transformation.
+Otherwise it is not used.
+
+$head d_nu$$
+If the density $icode d_id$$ corresponds to
+$code students$$ or $code log_students$$,
+$icode nu$$ specifies the degrees of freedom in the Students-t distribution.
 Otherwise it is not used.
 
 $head index$$
@@ -209,8 +215,9 @@ residual_struct<Float> residual_density(
 	const Float&       y          ,
 	const Float&       mu         ,
 	const Float&       delta      ,
-	const Float&       d_eta      ,
 	density_enum       d_id       ,
+	const Float&       d_eta      ,
+	const Float&       d_nu       ,
 	size_t             index      ,
 	bool               difference )
 {	Float nan(std::numeric_limits<double>::quiet_NaN());
@@ -300,8 +307,9 @@ residual_struct<Float> residual_density(
 		const Float&       y            ,                     \
 		const Float&       mu           ,                     \
 		const Float&       delta        ,                     \
+		density_enum       d_id         ,                     \
 		const Float&       d_eta        ,                     \
-		density_enum       density      ,                     \
+		const Float&       d_nu         ,                     \
 		size_t             id           ,                     \
 		bool               difference                         \
 	);

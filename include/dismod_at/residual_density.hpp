@@ -32,8 +32,9 @@ namespace dismod_at {
 		const Float&       y           ,
 		const Float&       mu          ,
 		const Float&       delta       ,
-		const Float&       eta         ,
-		density_enum       d           ,
+		density_enum       d_id        ,
+		const Float&       d_eta       ,
+		const Float&       d_nu        ,
 		size_t             index       ,
 		bool               difference
 	);

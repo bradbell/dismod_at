@@ -1560,6 +1560,7 @@ residual_struct<Float> data_model::like_one(
 		x[j] = data_cov_value_[subset_id * n_covariate_ + j];
 	double Delta         = data_subset_obj_[subset_id].meas_std;
 	double eta           = data_subset_obj_[subset_id].eta;
+	double nu            = data_subset_obj_[subset_id].nu;
 	size_t integrand_id  = data_subset_obj_[subset_id].integrand_id;
 	double meas_value    = data_subset_obj_[subset_id].meas_value;
 	assert( Delta > 0.0 );
@@ -1622,8 +1623,9 @@ residual_struct<Float> data_model::like_one(
 		avg,
 		Float(meas_value),
 		delta_out,
-		Float(eta),
 		density,
+		Float(eta),
+		Float(nu),
 		subset_id,
 		difference
 	);

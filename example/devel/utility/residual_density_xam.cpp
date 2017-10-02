@@ -19,7 +19,7 @@ namespace {
 		double                                    wres           ,
 		double                                    smooth         ,
 		double                                    sub_abs        ,
-		dismod_at::density_enum                   d              ,
+		dismod_at::density_enum                   d_id           ,
 		size_t                                    index          ,
 		bool                                      difference     )
 	{	bool ok    = true;
@@ -30,7 +30,7 @@ namespace {
 			ok &= residual.logden_sub_abs == 0.0;
 		else
 			ok &= fabs(1.0 - residual.logden_sub_abs / sub_abs) <= eps;
-		ok &= residual.density == d;
+		ok &= residual.density == d_id;
 		ok &= residual.index   == index;
 		return ok;
 	}
@@ -45,146 +45,147 @@ bool residual_density_xam(void)
 	using std::fabs;
 	dismod_at::residual_struct<double> residual;
 	double wres, smooth, sub_abs, sigma;
-	dismod_at::density_enum d;
 	size_t                  index;
 
+	dismod_at::density_enum d_id;
 	double z          = 3.0;
 	double y          = 2.5;
 	double mu         = 2.0;
 	double delta      = 1.5;
-	double eta        = nan;
+	double d_eta      = nan;
+	double d_nu       = nan;
 
 	// -----------------------------------------------------------------------
 	bool   difference = true;
 	//
 	// uniform
-	d           = dismod_at::uniform_enum;
+	d_id        = dismod_at::uniform_enum;
 	index       = 1;
 	residual    = residual_density(
-		z, y, mu, delta, eta, d, index, difference
+		z, y, mu, delta, d_id, d_eta, d_nu, index, difference
 	);
 	ok         &= residual.wres           == 0.0;
 	ok         &= residual.logden_smooth  == 0.0;
 	ok         &= residual.logden_sub_abs == 0.0;
-	ok         &= residual.density        == d;
+	ok         &= residual.density        == d_id;
 	ok         &= residual.index          == index;
 
 	// gaussian
-	d           = dismod_at::gaussian_enum;
+	d_id        = dismod_at::gaussian_enum;
 	residual    = residual_density(
-		z, y, mu, delta, eta, d, ++index, difference
+		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
 	);
 	wres        = (z - y - mu) / delta;
 	smooth      = - log(delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 	sub_abs     = 0.0;
 	ok         &= check(
-		residual, wres, smooth, sub_abs, d, index, difference
+		residual, wres, smooth, sub_abs, d_id, index, difference
 	);
 
 	// laplace
-	d           = dismod_at::laplace_enum;
+	d_id        = dismod_at::laplace_enum;
 	residual    = residual_density(
-		z, y, mu, delta, eta, d, ++index, difference
+		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
 	);
 	wres        = (z - y - mu) / delta;
 	smooth      = - log(delta * sqrt(2.0) );
 	sub_abs     =  sqrt(2.0) * wres;
 	ok         &= check(
-		residual, wres, smooth, sub_abs, d, index, difference
+		residual, wres, smooth, sub_abs, d_id, index, difference
 	);
 
 	// log-gaussian
-	d           = dismod_at::log_gaussian_enum;
-	eta         = 0.5;
+	d_id        = dismod_at::log_gaussian_enum;
+	d_eta       = 0.5;
 	residual    = residual_density(
-		z, y, mu, delta, eta, d, ++index, difference
+		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
 	);
 	sigma       = delta;
-	wres        = ( log(z + eta) - log(y + eta) - mu ) / sigma;
+	wres        = ( log(z + d_eta) - log(y + d_eta) - mu ) / sigma;
 	smooth      = - log(sigma * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 	sub_abs     = 0.0;
 	ok         &= check(
-		residual, wres, smooth, sub_abs, d, index, difference
+		residual, wres, smooth, sub_abs, d_id, index, difference
 	);
 
 	// log-laplace
-	d           = dismod_at::log_laplace_enum;
-	eta         = 3.0;
+	d_id        = dismod_at::log_laplace_enum;
+	d_eta       = 3.0;
 	residual    = residual_density(
-		z, y, mu, delta, eta, d, ++index, difference
+		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
 	);
 	sigma       = delta;
-	wres        = ( log(z + eta) - log(y + eta) - mu) / sigma;
+	wres        = ( log(z + d_eta) - log(y + d_eta) - mu) / sigma;
 	smooth      = - log(sigma * sqrt(2.0) );
 	sub_abs     = sqrt(2.0) * wres;
 	ok         &= check(
-		residual, wres, smooth, sub_abs, d, index, difference
+		residual, wres, smooth, sub_abs, d_id, index, difference
 	);
 
 	// -----------------------------------------------------------------------
 	difference = false;
 	//
 	// uniform
-	d           = dismod_at::uniform_enum;
+	d_id        = dismod_at::uniform_enum;
 	residual    = residual_density(
-		z, y, mu, delta, eta, d, ++index, difference
+		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
 	);
 	ok         &= residual.wres           == 0.0;
 	ok         &= residual.logden_smooth  == 0.0;
 	ok         &= residual.logden_sub_abs == 0.0;
-	ok         &= residual.density        == d;
+	ok         &= residual.density        == d_id;
 	ok         &= residual.index          == index;
 
 	// gaussian
-	d           = dismod_at::gaussian_enum;
+	d_id        = dismod_at::gaussian_enum;
 	residual    = residual_density(
-		z, y, mu, delta, eta, d, ++index, difference
+		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
 	);
 	wres        = (y - mu) / delta;
 	smooth      = - log(delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 	sub_abs     = 0.0;
 	ok         &= check(
-		residual, wres, smooth, sub_abs, d, index, difference
+		residual, wres, smooth, sub_abs, d_id, index, difference
 	);
 
 	// laplace
-	d           = dismod_at::laplace_enum;
+	d_id        = dismod_at::laplace_enum;
 	residual    = residual_density(
-		z, y, mu, delta, eta, d, ++index, difference
+		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
 	);
 	wres        = (y - mu) / delta;
 	smooth      = - log(delta * sqrt(2.0) );
 	sub_abs     =  sqrt(2.0) * wres;
 	ok         &= check(
-		residual, wres, smooth, sub_abs, d, index, difference
+		residual, wres, smooth, sub_abs, d_id, index, difference
 	);
 
 	// log-gaussian
-	d           = dismod_at::log_gaussian_enum;
-	eta         = 0.5;
+	d_id        = dismod_at::log_gaussian_enum;
+	d_eta       = 0.5;
 	residual    = residual_density(
-		z, y, mu, delta, eta, d, ++index, difference
+		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
 	);
-	sigma       = log(mu + eta + delta) - log(mu + eta);
-	wres        = ( log(y + eta) - log(mu + eta) ) / sigma;
+	sigma       = log(mu + d_eta + delta) - log(mu + d_eta);
+	wres        = ( log(y + d_eta) - log(mu + d_eta) ) / sigma;
 	smooth      = - log(sigma * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 	sub_abs     = 0.0;
 	ok         &= check(
-		residual, wres, smooth, sub_abs, d, index, difference
+		residual, wres, smooth, sub_abs, d_id, index, difference
 	);
 
 	// log-laplace
-	d           = dismod_at::log_laplace_enum;
-	eta         = 3.0;
+	d_id        = dismod_at::log_laplace_enum;
+	d_eta       = 3.0;
 	residual    = residual_density(
-		z, y, mu, delta, eta, d, ++index, difference
+		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
 	);
-	sigma       = log(mu + eta + delta) - log(mu + eta);
-	wres        = ( log(y + eta) - log(mu + eta) ) / sigma;
+	sigma       = log(mu + d_eta + delta) - log(mu + d_eta);
+	wres        = ( log(y + d_eta) - log(mu + d_eta) ) / sigma;
 	smooth      = - log(sigma * sqrt(2.0) );
 	sub_abs     = sqrt(2.0) * wres;
 	ok         &= check(
-		residual, wres, smooth, sub_abs, d, index, difference
+		residual, wres, smooth, sub_abs, d_id, index, difference
 	);
 
 	return ok;
