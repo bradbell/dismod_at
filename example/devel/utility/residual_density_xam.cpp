@@ -53,7 +53,7 @@ bool residual_density_xam(void)
 	double mu         = 2.0;
 	double delta      = 1.5;
 	double d_eta      = nan;
-	double d_nu       = nan;
+	double d_nu       = 3.0;
 
 	// -----------------------------------------------------------------------
 	bool   difference = true;
@@ -94,6 +94,18 @@ bool residual_density_xam(void)
 		residual, wres, smooth, sub_abs, d_id, index, difference
 	);
 
+	// students
+	d_id        = dismod_at::students_enum;
+	residual    = residual_density(
+		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
+	);
+	wres        = (z - y - mu) / delta;
+	smooth      = log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
+	sub_abs     = 0.0;
+	ok         &= check(
+		residual, wres, smooth, sub_abs, d_id, index, difference
+	);
+
 	// log-gaussian
 	d_id        = dismod_at::log_gaussian_enum;
 	d_eta       = 0.5;
@@ -118,6 +130,19 @@ bool residual_density_xam(void)
 	wres        = ( log(z + d_eta) - log(y + d_eta) - mu) / sigma;
 	smooth      = - log(sigma * sqrt(2.0) );
 	sub_abs     = sqrt(2.0) * wres;
+	ok         &= check(
+		residual, wres, smooth, sub_abs, d_id, index, difference
+	);
+
+	// log-students
+	d_id        = dismod_at::log_students_enum;
+	residual    = residual_density(
+		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
+	);
+	sigma       = delta;
+	wres        = ( log(z + d_eta) - log(y + d_eta) - mu) / sigma;
+	smooth      = log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
+	sub_abs     = 0.0;
 	ok         &= check(
 		residual, wres, smooth, sub_abs, d_id, index, difference
 	);
@@ -160,6 +185,18 @@ bool residual_density_xam(void)
 		residual, wres, smooth, sub_abs, d_id, index, difference
 	);
 
+	// students
+	d_id        = dismod_at::students_enum;
+	residual    = residual_density(
+		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
+	);
+	wres        = (y - mu) / delta;
+	smooth      = log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
+	sub_abs     = 0.0;
+	ok         &= check(
+		residual, wres, smooth, sub_abs, d_id, index, difference
+	);
+
 	// log-gaussian
 	d_id        = dismod_at::log_gaussian_enum;
 	d_eta       = 0.5;
@@ -184,6 +221,19 @@ bool residual_density_xam(void)
 	wres        = ( log(y + d_eta) - log(mu + d_eta) ) / sigma;
 	smooth      = - log(sigma * sqrt(2.0) );
 	sub_abs     = sqrt(2.0) * wres;
+	ok         &= check(
+		residual, wres, smooth, sub_abs, d_id, index, difference
+	);
+
+	// log-students
+	d_id        = dismod_at::log_students_enum;
+	residual    = residual_density(
+		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
+	);
+	sigma       = log(mu + d_eta + delta) - log(mu + d_eta);
+	wres        = ( log(y + d_eta) - log(mu + d_eta) ) / sigma;
+	smooth      = log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
+	sub_abs     = 0.0;
 	ok         &= check(
 		residual, wres, smooth, sub_abs, d_id, index, difference
 	);
