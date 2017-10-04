@@ -234,6 +234,7 @@ void data_subset(
 			one_sample.meas_value   = data_table[data_id].meas_value;
 			one_sample.meas_std     = data_table[data_id].meas_std;
 			one_sample.eta          = data_table[data_id].eta;
+			one_sample.nu           = data_table[data_id].nu;
 			//
 			// advance to next sample
 			subset_id++;

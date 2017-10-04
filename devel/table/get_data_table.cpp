@@ -374,7 +374,7 @@ void get_data_table(
 		{	msg = "density is not students or log_students and nu is not null";
 			error_exit(msg, table_name, data_id);
 		}
-		if( students && eta_null )
+		if( students && nu_null )
 		{	msg = "density is students or log_students and nu is null";
 			error_exit(msg, table_name, data_id);
 		}
