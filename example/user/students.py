@@ -23,9 +23,10 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------
-iota_parent        = 1e-2
-iota_random_effect = 0.5;
+iota_parent        = 1e-2   # true value of iota for parent
+iota_random_effect = 0.5;   # true positive random effect value
 n_data             = 30;    # must be a multiple of 3
+n_outlier          = 3;     # number of data points that are outliers
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -111,24 +112,26 @@ def example_db (file_name) :
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
 		'meas_std':     iota_parent / 10.,
-		'nu':           5.0
+		'nu':           3.0
 	}
 	for data_id in range( n_data ):
 		# make sure both child and parent data gets included in fit
 		# by balancing the offset between the two
 		if data_id % 3 == 0 :
 			row['node']        = 'united_states'
-			row['meas_value']  = iota_parent * math.exp( iota_random_effect )
-			data_table.append( copy.copy(row) )
+			meas_value = iota_parent * math.exp( iota_random_effect )
 		elif data_id % 3 == 1 :
 			row['node']        = 'canada'
-			row['meas_value']  = iota_parent * math.exp( -iota_random_effect )
-			data_table.append( copy.copy(row) )
+			meas_value = iota_parent * math.exp( -iota_random_effect )
 		else :
 			row['node']        = 'north_america'
-			row['meas_value']  = iota_parent
-			data_table.append( copy.copy(row) )
-			data_table.append( copy.copy(row) )
+			meas_value = iota_parent
+		#
+		sign = 2.0 * (data_id % 2) - 1.0
+		if data_id < n_outlier :
+			meas_value = math.exp(sign * 5.0) * meas_value
+		row['meas_value']  = meas_value
+		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
@@ -295,20 +298,20 @@ for var_id in range( n_var ) :
 	canada          = node_table[node_id]['node_name'] == 'canada'
 	if north_america :
 		err = value / iota_parent - 1.0
-		if abs(err) > 1e-4 :
+		if abs(err) > 1e-2 :
 			print('north_america', iota_parent, value, err)
-			assert(false)
+			assert False
 	elif united_states :
 		err = value / iota_random_effect - 1.0
-		if abs(err) > 1e-4 :
+		if abs(err) > 1e-2 :
 			print('united_states', iota_random_effect, value, err)
-			assert(false)
+			assert False
 	else :
 		assert canada
 		err = value / iota_random_effect + 1.0
-		if abs(err) > 1e-4 :
+		if abs(err) > 1e-2 :
 			print('canada', - iota_random_effect, value, err)
-			assert(false)
+			assert False
 # -----------------------------------------------------------------------
 print('students: OK')
 # END PYTHON
