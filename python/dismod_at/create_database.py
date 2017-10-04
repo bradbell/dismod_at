@@ -194,8 +194,12 @@
 # upper   $cnext float         $cnext upper limit                $rnext
 # std     $cnext float         $cnext standard deviation         $rnext
 # density $cnext float         $cnext density function           $rnext
-# eta     $cnext float         $cnext offset in log densities
+# eta     $cnext float         $cnext offset in log densities    $rnext
+# nu      $cnext float         $cnext degrees of freed in Student densities
 # $tend
+# The columns keys $code std$$, $code eta$$, and $code nu$$
+# are optional. If they are not present, the value $code null$$ is used
+# for the corresponding row of the prior table.
 #
 # $head smooth_table$$
 # This is a list of $code dict$$
@@ -442,15 +446,21 @@ def create_database(
 	# ----------------------------------------------------------------------
 	# create prior table
 	col_name = [
-		'prior_name', 'lower', 'upper', 'mean', 'std',  'density_id', 'eta'
+	'prior_name', 'lower', 'upper', 'mean', 'std',  'density_id', 'eta', 'nu'
 	]
 	col_type = [
-		'text',       'real', 'real',  'real', 'real', 'integer',    'real'
+	'text', 'real',  'real',  'real', 'real', 'integer',  'real', 'real'
 	]
 	row_list = [ ]
 	for i in range( len( prior_table ) ) :
 		prior         = prior_table[i]
 		density_id   = global_density_name2id[ prior['density'] ]
+		#
+		# columns that have null for default value
+		for key in [ 'meas_std', 'eta', 'nu' ] :
+			if not key in prior :
+				prior[key] = None
+		#
 		row  = [
 			prior['name'],
 			prior['lower'],
@@ -458,7 +468,8 @@ def create_database(
 			prior['mean'],
 			prior['std'],
 			density_id,
-			prior['eta']
+			prior['eta'],
+			prior['nu'],
 		]
 		row_list.append( row )
 	tbl_name = 'prior'

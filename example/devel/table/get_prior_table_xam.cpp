@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -50,9 +50,10 @@ bool get_prior_table_xam(void)
 			" upper        real,"
 			" mean         real,"
 			" std          real,"
-			" eta          real)",
-		"insert into prior values(0, 'none', 0, null, null, 0.0, null, null)",
-		"insert into prior values(1, 'rate', 1, 0.0,  1.0,  0.1, 1e-4, 1e-5)"
+			" eta          real,"
+			" nu           real)",
+	"insert into prior values(0, 'none', 0, null, null, 0.0, null, null, null)",
+	"insert into prior values(1, 'rate', 1, 0.0,  1.0,  0.1, 1e-4, 1e-5, 5.0)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -60,7 +61,8 @@ bool get_prior_table_xam(void)
 
 
 	// get the prior table
-	vector<dismod_at::prior_struct> prior_table = dismod_at::get_prior_table(db);
+	vector<dismod_at::prior_struct> prior_table =
+			dismod_at::get_prior_table(db);
 	ok  &= prior_table.size() == 2;
 	//
 	ok  &= prior_table[0].prior_name  == "none";
@@ -76,6 +78,7 @@ bool get_prior_table_xam(void)
 	ok  &= prior_table[1].mean       == 0.1;
 	ok  &= prior_table[1].std        == 1e-4;
 	ok  &= prior_table[1].eta        == 1e-5;
+	ok  &= prior_table[1].nu         == 5.0;
 	//
 	// close database and return
 	sqlite3_close(db);

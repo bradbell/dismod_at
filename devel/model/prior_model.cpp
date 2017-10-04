@@ -66,7 +66,8 @@ Only to following fields are used
 $cref/density_id/prior_table/density_id/$$,
 $cref/mean/prior_table/mean/$$,
 $cref/std/prior_table/std/$$,
-$cref/eta/prior_table/eta/$$.
+$cref/eta/prior_table/eta/$$,
+$cref/nu/prior_table/nu/$$.
 
 $head s_info_vec$$
 This argument has prototype
@@ -122,7 +123,7 @@ residual_struct<Float> prior_model::log_prior(
 	Float        mu      = Float(prior.mean);
 	Float        delta   = mulstd * Float(prior.std);
 	Float        eta     = Float(prior.eta);
-	Float        nu      = CppAD::nan( Float(0.0) );
+	Float        nu      = Float(prior.nu);
 	return residual_density(
 		z, y, mu, delta, density, eta, nu, index, difference
 	);

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -68,6 +68,8 @@ $code double$$ $cnext $code std$$           $cnext
 	The $cref/std/prior_table/std/$$ for this prior  $rnext
 $code double$$ $cnext $code eta$$           $cnext
 	The $cref/eta/prior_table/eta/$$ for this prior
+$code double$$ $cnext $code nu$$            $cnext
+	The $cref/nu/prior_table/nu/$$ for this prior
 $tend
 
 $head Checks$$
@@ -78,9 +80,11 @@ $lnext
 The standard deviation $icode%std% > 0%$$
 (except for the uniform density case).
 $lnext
-In the log density cases $icode eta$$ is not null.
-In the other density cases $icode%eta% > 0%$$.
+In the log density cases $icode eta$$ is not null
+and $icode%eta% > 0%$$.
 $lnext
+In the Student density cases $icode nu$$ is not null
+and $icode%nu% > 2%$$.
 $lend
 
 $children%example/devel/table/get_prior_table_xam.cpp
@@ -145,6 +149,11 @@ CppAD::vector<prior_struct> get_prior_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, eta);
 	assert( eta.size() == n_prior );
 
+	column_name        =  "nu";
+	CppAD::vector<double>  nu;
+	get_table_column(db, table_name, column_name, nu);
+	assert( nu.size() == n_prior );
+
 	double minus_infinity = std::atof("-inf");
 	double plus_infinity  = std::atof("+inf");
 	CppAD::vector<prior_struct> prior_table(n_prior);
@@ -163,6 +172,7 @@ CppAD::vector<prior_struct> get_prior_table(sqlite3* db)
 		prior_table[i].mean       = mean[i];
 		prior_table[i].std        = std[i];
 		prior_table[i].eta        = eta[i];
+		prior_table[i].nu         = nu[i];
 		//
 		// check values using ok so that nan returns correct result
 		bool ok = mean[i] <= prior_table[i].upper;
@@ -180,13 +190,31 @@ CppAD::vector<prior_struct> get_prior_table(sqlite3* db)
 		{	msg = "std <= 0 and density is not uniform";
 			error_exit(msg, table_name, i);
 		}
-		ok  = eta[i] > 0.0;
-		ok |= density_id[i] == gaussian_enum;
-		ok |= density_id[i] == laplace_enum;
-		ok |= density_id[i] == uniform_enum;
+		switch( density_enum( density_id[i] ) )
+		{	case log_gaussian_enum:
+			case log_laplace_enum:
+			case log_students_enum:
+			ok = eta[i] > 0.0;
+			break;
+
+			default:
+			ok = true;
+		}
 		if( ! ok )
-		{	msg = "density is not guassian, laplace, or uniform\n"
-			"and eta is not greater than zero.";
+		{	msg = "This is a log density and eta not greater than zero.";
+			error_exit(msg, table_name, i);
+		}
+		switch( density_enum( density_id[i] ) )
+		{	case students_enum:
+			case log_students_enum:
+			ok = nu[i] > 2.0;
+			break;
+
+			default:
+			ok = true;
+		}
+		if( ! ok )
+		{	msg = "This is a Student's density and num not greater than two.";
 			error_exit(msg, table_name, i);
 		}
 	}

@@ -353,10 +353,6 @@ void get_data_table(
 		bool eta_null    = std::isnan(eta);
 		bool log_density = density_enum(density_id) == log_gaussian_enum;
 		log_density     |= density_enum(density_id) == log_laplace_enum;
-		if( ! log_density && ! eta_null )
-		{	msg = "density is not a log density and eta is not null";
-			error_exit(msg, table_name, data_id);
-		}
 		if( log_density && eta_null )
 		{	msg = "density is a log density and eta is null";
 			error_exit(msg, table_name, data_id);
@@ -370,10 +366,6 @@ void get_data_table(
 		bool nu_null     = std::isnan(nu);
 		bool students    = density_enum(density_id) == students_enum;
 		students        |= density_enum(density_id) == log_students_enum;
-		if( ! students && ! nu_null )
-		{	msg = "density is not students or log_students and nu is not null";
-			error_exit(msg, table_name, data_id);
-		}
 		if( students && nu_null )
 		{	msg = "density is students or log_students and nu is null";
 			error_exit(msg, table_name, data_id);

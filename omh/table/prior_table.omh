@@ -69,8 +69,7 @@ or $code log_laplace$$.
 In these cases, it is the offset in the corresponding log transformation.
 
 $subhead null$$
-In the case where $code density$$ is
-$code uniform$$, $code gaussian$$ or $code laplace$$,
+In the cases that are not log densities,
 this field can be $code null$$.
 
 $subhead Scaling$$
@@ -83,6 +82,17 @@ is the corresponding offset in the log transformation,
 the optimizer sees the variable
 $latex \log( \theta_j + \eta_j)$$ in place of $latex \theta_j$$.
 In this case it must hold that $icode%lower% + %eta% > 0%$$.
+
+$head nu$$
+This column has type $code real$$ and is only used in the
+cases where $icode density$$ is $code students$$
+or $code log_students$$.
+In these cases, it is the
+degrees of freedom in the corresponding distribution.
+
+$subhead null$$
+In the cases that are not Student densities,
+this field can be $code null$$.
 
 $children%example/table/prior_table.py
 %$$

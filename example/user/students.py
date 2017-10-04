@@ -12,7 +12,7 @@
 #	init
 # $$
 #
-# $section Under Construction: Fitting With Student's-T$$
+# $section Using Student's-t to Fitting Data with OUtliers$$
 #
 # $code
 # $srcfile%
@@ -102,6 +102,7 @@ def example_db (file_name) :
 	# data table: same order as list of integrands
 	data_table = list()
 	# valeus that are the same for all data
+	# If you change the density to gaussian, this program will report a bad fit.
 	row = {
 		'density':     'students',
 		'weight':      'constant',
