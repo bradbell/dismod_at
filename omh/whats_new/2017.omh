@@ -44,6 +44,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-04$$
+Add the $cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$ and
+$cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$
+density functions; see $cref user_students.py$$.
+
 $head 10-02$$
 $list number$$
 Change the $code create_database$$

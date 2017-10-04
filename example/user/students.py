@@ -12,7 +12,7 @@
 #	init
 # $$
 #
-# $section Using Student's-t to Fitting Data with OUtliers$$
+# $section Using Student's-t to Fitting Data with Outliers$$
 #
 # $code
 # $srcfile%

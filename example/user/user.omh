@@ -58,6 +58,7 @@ $childtable%example/user/asymptotic.py
 	%example/user/random_zero_sum.py
 	%example/user/re_scale.py
 	%example/user/speed.py
+	%example/user/students.py
 %$$
 
 $end
