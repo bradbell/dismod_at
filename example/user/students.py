@@ -23,10 +23,9 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------
-iota_parent        = 1e-2;
-iota_random_effect = +0.5;
-n_data             = 9;  # must be a multiple of 3
-n_outlier          = 0;
+iota_parent        = 1e-2
+iota_random_effect = 0.5;
+n_data             = 30;    # must be a multiple of 3
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -112,26 +111,24 @@ def example_db (file_name) :
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
 		'meas_std':     iota_parent / 10.,
-		'nu':           5
+		'nu':           5.0
 	}
 	for data_id in range( n_data ):
 		# make sure both child and parent data gets included in fit
 		# by balancing the offset between the two
 		if data_id % 3 == 0 :
 			row['node']        = 'united_states'
-			row['meas_value']  = iota_parent * math.exp(+iota_random_effect)
+			row['meas_value']  = iota_parent * math.exp( iota_random_effect )
 			data_table.append( copy.copy(row) )
 		elif data_id % 3 == 1 :
 			row['node']        = 'canada'
-			row['meas_value']  = iota_parent * math.exp(-iota_random_effect)
+			row['meas_value']  = iota_parent * math.exp( -iota_random_effect )
 			data_table.append( copy.copy(row) )
 		else :
 			row['node']        = 'north_america'
 			row['meas_value']  = iota_parent
 			data_table.append( copy.copy(row) )
 			data_table.append( copy.copy(row) )
-		if data_id < n_outlier :
-			row['meas_value'] = row['meas_value'] * 100
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
@@ -140,8 +137,8 @@ def example_db (file_name) :
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
 			'lower':    1e-4,
-			'upper':    None,
-			'mean':     1e-1,
+			'upper':    1.0,
+			'mean':     0.1,
 			'std':      None,
 			'eta':      None
 		},{ # prior_rate_child
@@ -150,7 +147,7 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      1.0,
+			'std':      10.0,
 			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
@@ -182,7 +179,7 @@ def example_db (file_name) :
 			'mulstd_value_prior_name':  None,
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
-			'fun':                       fun_rate_parent
+			'fun':                      fun_rate_parent
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -224,16 +221,15 @@ def example_db (file_name) :
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
 		{ 'name':'quasi_fixed',            'value':'true'          },
-		{ 'name':'derivative_test_fixed',  'value':'trace-adaptive'},
+		{ 'name':'derivative_test_fixed',  'value':'adaptive'      },
 		{ 'name':'max_num_iter_fixed',     'value':'100'           },
-		{ 'name':'print_level_fixed',      'value':'5'             },
+		{ 'name':'print_level_fixed',      'value':'0'             },
 		{ 'name':'tolerance_fixed',        'value':'1e-11'         },
 
 		{ 'name':'derivative_test_random', 'value':'second-order'  },
 		{ 'name':'max_num_iter_random',    'value':'100'           },
 		{ 'name':'print_level_random',     'value':'0'             },
-		{ 'name':'tolerance_random',       'value':'1e-11'         },
-		{ 'name':'random_bound',           'value':'2.0'           }
+		{ 'name':'tolerance_random',       'value':'1e-11'         }
 	]
 	# ----------------------------------------------------------------------
 	# create database
@@ -265,7 +261,7 @@ program        = '../../devel/dismod_at'
 for command in [ 'init', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'fit' :
-		variables = 'fixed'
+		variables = 'both'
 		cmd.append(variables)
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
@@ -299,14 +295,20 @@ for var_id in range( n_var ) :
 	canada          = node_table[node_id]['node_name'] == 'canada'
 	if north_america :
 		err = value / iota_parent - 1.0
-		print('north_america', iota_parent, value)
+		if abs(err) > 1e-4 :
+			print('north_america', iota_parent, value, err)
+			assert(false)
 	elif united_states :
 		err = value / iota_random_effect - 1.0
-		print('united_states', iota_random_effect, value)
+		if abs(err) > 1e-4 :
+			print('united_states', iota_random_effect, value, err)
+			assert(false)
 	else :
 		assert canada
 		err = value / iota_random_effect + 1.0
-		print('canada', - iota_random_effect, value)
+		if abs(err) > 1e-4 :
+			print('canada', - iota_random_effect, value, err)
+			assert(false)
 # -----------------------------------------------------------------------
 print('students: OK')
 # END PYTHON

@@ -26,6 +26,7 @@ FOREACH(user_case
 	predict_fit
 	random_zero_sum
 	re_scale
+	students
 )
 	ADD_CUSTOM_TARGET(
 		check_example_user_${user_case}
@@ -33,7 +34,8 @@ FOREACH(user_case
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		DEPENDS dismod_at
 	)
-ENDFOREACH(user_case diff_constraint)
+ENDFOREACH(user_case)
+#
 ADD_CUSTOM_TARGET(
 	check_example_user
 	DEPENDS
@@ -52,6 +54,8 @@ ADD_CUSTOM_TARGET(
 	check_example_user_no_children
 	check_example_user_predict_fit
 	check_example_user_random_zero_sum
+	check_example_user_re_scale
+	check_example_user_students
 )
 # ---------------------------------------------------------------------------
 # Build speed_user_example

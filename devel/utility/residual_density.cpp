@@ -292,9 +292,9 @@ residual_struct<Float> residual_density(
 
 		case students_enum:
 		case log_students_enum:
-		{	Float  r       = 1.0 + wres * wres / (d_nu - 2.0);
-			logden_smooth  =  log( r ) * (d_nu + 1.0) / 2.0;
-			print_forward_if_not_positive("logden_smooth", logden_smooth);
+		{	Float  r       = 1.0 + wres * wres / ( d_nu - 2.0 );
+			logden_smooth  =  - log( r ) * (d_nu + 1.0) / 2.0;
+			print_forward_if_not_positive("- logden_smooth", - logden_smooth);
 			logden_sub_abs = 0.0;
 		}
 		break;

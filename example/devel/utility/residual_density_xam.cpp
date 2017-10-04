@@ -100,7 +100,7 @@ bool residual_density_xam(void)
 		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
 	);
 	wres        = (z - y - mu) / delta;
-	smooth      = log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
+	smooth      = - log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
 	sub_abs     = 0.0;
 	ok         &= check(
 		residual, wres, smooth, sub_abs, d_id, index, difference
@@ -141,7 +141,7 @@ bool residual_density_xam(void)
 	);
 	sigma       = delta;
 	wres        = ( log(z + d_eta) - log(y + d_eta) - mu) / sigma;
-	smooth      = log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
+	smooth      = - log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
 	sub_abs     = 0.0;
 	ok         &= check(
 		residual, wres, smooth, sub_abs, d_id, index, difference
@@ -191,7 +191,7 @@ bool residual_density_xam(void)
 		z, y, mu, delta, d_id, d_eta, d_nu, ++index, difference
 	);
 	wres        = (y - mu) / delta;
-	smooth      = log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
+	smooth      = - log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
 	sub_abs     = 0.0;
 	ok         &= check(
 		residual, wres, smooth, sub_abs, d_id, index, difference
@@ -232,7 +232,7 @@ bool residual_density_xam(void)
 	);
 	sigma       = log(mu + d_eta + delta) - log(mu + d_eta);
 	wres        = ( log(y + d_eta) - log(mu + d_eta) ) / sigma;
-	smooth      = log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
+	smooth      = - log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
 	sub_abs     = 0.0;
 	ok         &= check(
 		residual, wres, smooth, sub_abs, d_id, index, difference
