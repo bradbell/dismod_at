@@ -140,8 +140,6 @@ def example_db (file_name) :
 			'upper':    None,
 			# set prior so north_amaerica is set to value for united_states
 			'mean':     iota_parent_true * exp(iota_child_offset),
-			'std':      None,
-			'eta':      None
 		},{ # prior_rate_child
 			'name':     'prior_rate_child',
 			'density':  'gaussian',
@@ -149,7 +147,6 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      100.0, # very large so like a uniform distribution
-			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
@@ -157,7 +154,6 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      1e-2,
-			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------

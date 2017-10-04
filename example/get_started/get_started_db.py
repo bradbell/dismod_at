@@ -145,7 +145,6 @@ def get_started_db ():
 			'hold_out':    False,
 			'meas_value':  meas_value,
 			'meas_std':    meas_std,
-			'eta':         None
 		}
 	]
 	# ---------------------------------------------------------------------
@@ -158,40 +157,30 @@ def get_started_db ():
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_zero
 			'name':     'prior_zero',
 			'density':  'uniform',
 			'lower':    0.0,
 			'upper':    0.0,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_one
 			'name':     'prior_one',
 			'density':  'uniform',
 			'lower':    1.0,
 			'upper':    1.0,
 			'mean':     1.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_omega_parent
 			'name':     'prior_omega_parent',
 			'density':  'uniform',
 			'lower':    1e-4,
 			'upper':    1.0,
 			'mean':     1e-1,
-			'std':      None,
-			'eta':      None
 		},{ # prior_income_multiplier (constrained to be 1e-3)
 			'name':     'prior_income_multiplier',
 			'density':  'uniform',
 			'lower':    known_income_multiplier,
 			'upper':    known_income_multiplier,
 			'mean':     known_income_multiplier,
-			'std':      None,
-			'eta':      None
 		}
 	]
 	# ---------------------------------------------------------------------

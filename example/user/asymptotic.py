@@ -212,8 +212,6 @@ def example_db (file_name) :
 			'lower':    1e-2 * measure['north_america'],
 			'upper':    1e+2 * measure['north_america'],
 			'mean':     measure['north_america'],
-			'std':      None,
-			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
@@ -221,7 +219,6 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      standard_random_effect,
-			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------

@@ -136,15 +136,12 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      0.1,
-			'eta':      None
 		},{ # prior_iota_world
 			'name':     'prior_iota_world',
 			'density':  'uniform',
 			'lower':    iota_true['world'] / 10.,
 			'upper':    iota_true['world'] * 10.,
 			'mean':     iota_true['world'] * 2.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_iota_child
 			'name':     'prior_iota_child',
 			'density':  'gaussian',
@@ -152,7 +149,6 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      0.5,
-			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------

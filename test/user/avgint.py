@@ -113,8 +113,6 @@ def example_db (file_name) :
 			'lower':    0.0,
 			'upper':    0.0,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_rate
 			'name':     'prior_rate',
 			'density':  'log_gaussian',

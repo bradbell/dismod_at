@@ -104,7 +104,6 @@ def example_db (file_name) :
 		'age_upper':    age_list[-1],
 		'meas_value':   iota_true,
 		'meas_std':     iota_true * 0.1,
-		'eta':          None,
 		'integrand':    'Sincidence'
 	}
 	#
@@ -153,16 +152,12 @@ def example_db (file_name) :
 			'lower':    0.0,
 			'upper':    0.0,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_none
 			'name':     'prior_none',
 			'density':  'uniform',
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
@@ -170,15 +165,12 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      1.0, # 2DO: 1.0 and 0.01 work but 0.1 fails
-			'eta':      None
 		},{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
 			'lower':    iota_true / 10.,
 			'upper':    10. * iota_true,
 			'mean':     iota_true,
-			'std':      None,
-			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------

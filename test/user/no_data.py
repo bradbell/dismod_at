@@ -96,7 +96,6 @@ def example_db (file_name) :
 			'upper':    1e+2 * iota_mean,
 			'mean':     iota_mean,
 			'std':      iota_mean,
-			'eta':      None
 		},{ # prior_iota_parent_log_gaussian
 			'name':     'prior_iota_parent_log_gaussian',
 			'density':  'log_gaussian',

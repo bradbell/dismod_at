@@ -186,8 +186,6 @@ def example_db (file_name) :
 			'lower':    0.0,
 			'upper':    0.0,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_rate
 			'name':     'prior_rate',
 			'density':  'log_gaussian',
@@ -210,7 +208,6 @@ def example_db (file_name) :
 			'lower':    0.0001,
 			'upper':    0.0001,
 			'mean':     0.0001,
-			'std':      None,
 			'eta':      1e-6
 		},{ # prior_omega_40
 			'name':     'prior_omega_40',
@@ -218,7 +215,6 @@ def example_db (file_name) :
 			'lower':    0.001,
 			'upper':    0.001,
 			'mean':     0.001,
-			'std':      None,
 			'eta':      1e-6
 		},{ # prior_omega_65
 			'name':     'prior_omega_65',
@@ -226,7 +222,6 @@ def example_db (file_name) :
 			'lower':    0.01,
 			'upper':    0.01,
 			'mean':     0.01,
-			'std':      None,
 			'eta':      1e-6
 		},{ # prior_omega_80
 			'name':     'prior_omega_80',
@@ -234,7 +229,6 @@ def example_db (file_name) :
 			'lower':    0.04,
 			'upper':    0.04,
 			'mean':     0.04,
-			'std':      None,
 			'eta':      1e-6
 		}
 	]

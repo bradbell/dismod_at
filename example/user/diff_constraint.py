@@ -137,15 +137,12 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      0.01,
-			'eta':      None
 		},{ # prior_value_parent
 			'name':     'prior_value_parent',
 			'density':  'uniform',
 			'lower':    0.01,
 			'upper':    1.00,
 			'mean':     0.1,
-			'std':      None,
-			'eta':      None
 		},{ # prior_diff_parent
 			'name':     'prior_diff_parent',
 			'density':  'gaussian',
@@ -153,7 +150,6 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.01,
 			'std':      0.01,
-			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------

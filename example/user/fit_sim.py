@@ -143,7 +143,6 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      0.01,
-			'eta':      None
 		},{ # prior_loggauss_zero
 			'name':     'prior_loggauss_zero',
 			'density':  'log_gaussian',
@@ -158,16 +157,12 @@ def example_db (file_name) :
 			'lower':    iota_parent / 100.,
 			'upper':    1.0,
 			'mean':     0.1,
-			'std':      None,
-			'eta':      None
 		},{ # prior_mulcov
 			'name':     'prior_mulcov',
 			'density':  'uniform',
 			'lower':    -2.0,
 			'upper':    +2.0,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------

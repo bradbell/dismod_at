@@ -98,7 +98,6 @@ def example_db (file_name) :
 		'age_upper':    age_list[-1],
 		'meas_value':   iota_true,
 		'meas_std':     iota_true * 0.1,
-		'eta':          None,
 		'integrand':    'Sincidence'
 	}
 	# values that change between rows:
@@ -118,16 +117,12 @@ def example_db (file_name) :
 			'lower':    0.0,
 			'upper':    0.0,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_none
 			'name':     'prior_none',
 			'density':  'uniform',
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
@@ -135,15 +130,12 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      0.1,
-			'eta':      None
 		},{ # prior_iota_parent
 			'name':     'prior_iota_parent',
 			'density':  'uniform',
 			'lower':    iota_lower,
 			'upper':    iota_upper,
 			'mean':     iota_initial,
-			'std':      None,
-			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------

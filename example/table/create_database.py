@@ -66,7 +66,6 @@ def create_database() :
 		'weight':'constant',
 		'hold_out':False,
 		'meas_std':1e-5,
-		'eta':     None,
 		'age_lower':0.0,
 		'age_upper':100.0,
 		'time_lower':1990.0,
@@ -93,35 +92,27 @@ def create_database() :
 			'lower':0.0,
 			'upper':0.0,
 			'mean':0.0,
-			'std':None,
-			'eta':None
 		},{	'name':'one',
 			'density':'uniform',
 			'lower':1.0,
 			'upper':1.0,
 			'mean':1.0,
-			'std':None,
-			'eta':None
 		},{	'name':'uniform_01',
 			'density':'uniform',
 			'lower':0.0,
 			'upper':1.0,
 			'mean':0.1,
-			'std':None,
-			'eta':None
 		},{	'name':'gaussian_01',
 			'density':'gaussian',
 			'lower':None,
 			'upper':None,
 			'mean':0.0,
 			'std':1.0,
-			'eta':None
 		},{	'name':'log_gaussian',
 			'density':'log_gaussian',
 			'lower':None,
 			'upper':None,
 			'mean':0.0,
-			'std':None,
 			'eta':1e-6
 		}
 	]

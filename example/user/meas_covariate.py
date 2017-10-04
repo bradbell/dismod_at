@@ -180,23 +180,18 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      0.01,
-			'eta':      None
 		},{ # prior_value_parent
 			'name':     'prior_value_parent',
 			'density':  'uniform',
 			'lower':    0.01,
 			'upper':    1.00,
 			'mean':     0.1,
-			'std':      None,
-			'eta':      None
 		},{ # prior_mulcov
 			'name':     'prior_mulcov',
 			'density':  'uniform',
 			'lower':    -5.0,
 			'upper':     5.0,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------

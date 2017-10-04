@@ -127,15 +127,12 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      0.01,
-			'eta':      None
 		},{ # prior_iota
 			'name':     'prior_iota',
 			'density':  'uniform',
 			'lower':    iota_true / 10.,
 			'upper':    iota_true * 10.,
 			'mean':     iota_true * 2.0,
-			'std':      None,
-			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------

@@ -457,7 +457,7 @@ def create_database(
 		density_id   = global_density_name2id[ prior['density'] ]
 		#
 		# columns that have null for default value
-		for key in [ 'meas_std', 'eta', 'nu' ] :
+		for key in [ 'std', 'eta', 'nu' ] :
 			if not key in prior :
 				prior[key] = None
 		#

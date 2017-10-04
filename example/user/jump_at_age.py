@@ -138,8 +138,6 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_difference
 			'name':     'prior_difference',
 			'density':  'log_gaussian',
@@ -154,16 +152,12 @@ def example_db (file_name) :
 			'lower':    1e-5,
 			'upper':    1.0,
 			'mean':     0.1,
-			'std':      None,
-			'eta':      None
 		},{ # prior_iota_20
 			'name':     'prior_iota_20',
 			'density':  'uniform',
 			'lower':    iota_20,
 			'upper':    iota_20,
 			'mean':     iota_20,
-			'std':      None,
-			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------

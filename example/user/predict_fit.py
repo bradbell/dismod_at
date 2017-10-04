@@ -145,16 +145,12 @@ def example_db (file_name) :
 			'lower':    0.0,
 			'upper':    0.0,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
 			'lower':    1e-2 * iota_north_america,
 			'upper':    1e+2 * iota_north_america,
 			'mean':     iota_north_america,
-			'std':      None,
-			'eta':      None
 		},{ # prior_rate_child
 			'name':     'prior_rate_child',
 			'density':  'gaussian',
@@ -162,7 +158,6 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      3.0,
-			'eta':      None
 		},{ # prior_dtime_parent
 			'name':     'prior_dtime_parent',
 			'density':  'log_gaussian',

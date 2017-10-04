@@ -99,7 +99,6 @@ def example_db (file_name) :
 		'age_upper':    age_list[-1],
 		'meas_value':   relrisk_true,
 		'meas_std':     relrisk_true * 0.01,
-		'eta':          None,
 		'integrand':    'relrisk'
 	}
 	# values that change between rows:
@@ -119,16 +118,12 @@ def example_db (file_name) :
 			'lower':    0.0,
 			'upper':    0.0,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_none
 			'name':     'prior_none',
 			'density':  'uniform',
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      None,
-			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
@@ -136,23 +131,18 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      1.0,
-			'eta':      None
 		},{ # prior_other_parent
 			'name':     'prior_other_parent',
 			'density':  'uniform',
 			'lower':    other_true,
 			'upper':    other_true,
 			'mean':     other_true,
-			'std':      None,
-			'eta':      None
 		},{ # prior_chi_parent
 			'name':     'prior_chi_parent',
 			'density':  'uniform',
 			'lower':    0.0,
 			'upper':    1.0,
 			'mean':     0.1,
-			'std':      None,
-			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------

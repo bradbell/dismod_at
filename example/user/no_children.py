@@ -166,8 +166,6 @@ def example_db (file_name) :
 			'lower':    1e-4,
 			'upper':    None,
 			'mean':     1e-1,
-			'std':      None,
-			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
@@ -175,7 +173,6 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      1e-2,
-			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------

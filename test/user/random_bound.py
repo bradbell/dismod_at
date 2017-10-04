@@ -93,7 +93,6 @@ def example_db (file_name) :
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
 		'meas_std':     iota_true['north_america'] * 0.2,
-		'eta':          None
 	}
 	for node in [ 'north_america', 'united_states', 'canada' ] :
 		row['node']        = node
@@ -113,8 +112,6 @@ def example_db (file_name) :
 			'lower':    1e-4,
 			'upper':    None,
 			'mean':     1e-1,
-			'std':      None,
-			'eta':      None
 		},{ # prior_rate_child
 			'name':     'prior_rate_child',
 			'density':  'gaussian',
@@ -122,7 +119,6 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      10.0, # very large so like a uniform distribution
-			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
@@ -130,7 +126,6 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      1e-2,
-			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------
