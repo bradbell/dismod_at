@@ -91,7 +91,7 @@ def example_db (file_name) :
 	#
 	# covariate table:
 	covariate_table = [
-		{'name':'income', 'reference':0.5, 'max_difference':None}
+		{'name':'income', 'reference':0.5}
 	]
 	#
 	# mulcov table:

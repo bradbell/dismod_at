@@ -127,6 +127,11 @@
 # $rnext
 # max_difference $cnext float $cnext maximum difference for $th i$$ covariate
 # $tend
+# If $icode max_difference$$ is $code None$$, the corresponding table entry
+# is null and this corresponds to an infinite maximum difference.
+# If $icode max_difference$$ does not appear, null is written for the
+# corresponding covariate entry.
+#
 #
 # $head avgint_table$$
 # This is a list of $code dict$$
@@ -411,10 +416,13 @@ def create_database(
 	col_type = [ 'text',             'real',     'real'           ]
 	row_list = [ ]
 	for i in range( len(covariate_table) ) :
+		max_difference = None
+		if 'max_difference' in covariate_table[i] :
+			max_difference = covariate_table[i]['max_difference']
 		row       = [
 			covariate_table[i]['name'],
 			covariate_table[i]['reference'],
-			covariate_table[i]['max_difference']
+			max_difference
 		]
 		row_list.append(row)
 	tbl_name = 'covariate'

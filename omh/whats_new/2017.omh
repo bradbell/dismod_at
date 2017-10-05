@@ -60,20 +60,8 @@ $lnext
 Add specifications for
 $cref/comment tables/database/Comment Columns and Tables/$$.
 $lnext
-Change the $code create_database$$
-$cref/smooth_table/create_database/smooth_table/$$ so that
-for $icode type$$ equal to $code value$$, $code dage$$ and $code dtime$$,
-$codei%mulstd_%type%_prior_name%$$ need not appear when it is null.
-In addition, remove the corresponding setting to $code None$$ in the
-$cref user$$ examples.
-$lnext
-Change the $code create_database$$
-$cref/rate_table/create_database/rate_table/$$ so that
-for $icode name$$ equal to
-$code parent_smooth$$,
-$code child_smooth$$ and
-$code child_nslist$$,
-$icode name$$ need not appear when it is null.
+Change the $code create_database$$ so that when certain entries
+are not present, the default value null is used for the entry in the database.
 In addition, remove the corresponding setting to $code None$$ in the
 $cref user$$ examples.
 $lend

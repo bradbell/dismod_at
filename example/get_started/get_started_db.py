@@ -108,7 +108,7 @@ def get_started_db ():
 	# covariate table: the reference value for income is zero and
 	# do not exclude any values becuse they are to far from the reference.
 	covariate_table = [
-		{ 'name':'income', 'reference':0.0, 'max_difference':None }
+		{ 'name':'income', 'reference':0.0}
 	]
 	# ---------------------------------------------------------------------
 	# avgint table: predict the susceptible fraction for no income at age 100
