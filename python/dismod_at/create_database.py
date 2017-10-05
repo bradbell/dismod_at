@@ -271,15 +271,15 @@
 # child_smooth  $cnext str     $cnext a single child smoothing         $rnext
 # child_nslist  $cnext str     $cnext list of child smoothings
 # $tend
-# Furthermore the order of the rate names must be
+# $list number$$
+# The order of the rate names must be
 # pini, iota, rho, chi, omega; i.e., the only order allowed for
 # the $cref rate_table$$.
+# $lnext
 # The value $code None$$ is used to represent a $code null$$ value for
 # the parent and child smoothings.
-# The smoothings in $icode child_nslist$$ override the child smoothing
-# specified by $icode child_smooth$$.
-# If $icode child_smooth$$ is $code None$$, $icode child_nslist$$ must
-# also be $code None$$
+# If a key name does not appear, null is used for the corresponding value.
+# $lend
 #
 # $head mulcov_table$$
 # This is a list of $code dict$$
@@ -646,28 +646,22 @@ def create_database(
 	col_type = [
 		'text',      'integer',         'integer',           'integer'
 	]
-	row_list = [ ]
+	row_list = list()
 	for i in range( len(rate_table) ) :
-		rate             = rate_table[i]
-		rate_name        = rate['name']
-		#
-		if rate['parent_smooth'] == None :
-			parent_smooth_id = None
-		else :
-			parent_smooth_id = global_smooth_name2id[ rate['parent_smooth'] ]
-		#
-		if rate['child_smooth'] == None :
-			child_smooth_id = None
-		else :
-			child_smooth_id  = global_smooth_name2id[ rate['child_smooth'] ]
-		#
-		if rate['child_nslist'] == None :
-			child_nslist_id = None
-		else :
-			child_nslist_id  = global_nslist_name2id[ rate['child_nslist'] ]
-		#
-		row = [ rate_name, parent_smooth_id, child_smooth_id, child_nslist_id ]
-		row_list.append(row)
+		rate       = rate_table[i]
+		rate_name  = rate['name']
+		row = [ rate_name ]
+		for key in ['parent_smooth', 'child_smooth', 'child_nslist'] :
+			entry  = None
+			if key in rate :
+				entry = rate[key]
+			if entry != None :
+				if key == 'child_nslist' :
+					entry = global_nslist_name2id[ entry ]
+				else :
+					entry = global_smooth_name2id[ entry ]
+			row.append( entry )
+		row_list.append( row )
 	tbl_name = 'rate'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	global_rate_name2id = {}

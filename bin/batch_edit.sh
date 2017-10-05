@@ -22,9 +22,9 @@ rename_cmd='s|variable_command.py|set_command.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-/'mulstd_value_prior_name':  *None,/d
-/'mulstd_dage_prior_name':  *None,/d
-/'mulstd_dtime_prior_name':  *None,/d
+/'parent_smooth':  *None*,\$/d
+/'child_smooth':  *None,\$/d
+/'child_nslist':  *None\$/d
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

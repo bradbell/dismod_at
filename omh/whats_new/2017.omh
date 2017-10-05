@@ -66,6 +66,16 @@ for $icode type$$ equal to $code value$$, $code dage$$ and $code dtime$$,
 $codei%mulstd_%type%_prior_name%$$ need not appear when it is null.
 In addition, remove the corresponding setting to $code None$$ in the
 $cref user$$ examples.
+$lnext
+Change the $code create_database$$
+$cref/rate_table/create_database/rate_table/$$ so that
+for $icode name$$ equal to
+$code parent_smooth$$,
+$code child_smooth$$ and
+$code child_nslist$$,
+$icode name$$ need not appear when it is null.
+In addition, remove the corresponding setting to $code None$$ in the
+$cref user$$ examples.
 $lend
 
 $head 10-04$$
