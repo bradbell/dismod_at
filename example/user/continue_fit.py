@@ -165,9 +165,6 @@ def example_db (file_name) :
 		{	'name':name,
 			'age_id':[age_id],
 			'time_id':[time_id],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
 			'fun':fun
 		}
 	]
@@ -179,9 +176,6 @@ def example_db (file_name) :
 		{	'name':name,
 			'age_id':[age_id],
 			'time_id':[time_id],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
 			'fun':fun
 		}
 	)

@@ -240,36 +240,24 @@ def example_db (file_name) :
 			'name':                     'smooth_rate',
 			'age_id':                   [ 0, 1, 2, 3, 4, 5],
 			'time_id':                  [0],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_rate
 		},{
 		# smooth_omega
 			'name':                     'smooth_omega',
 			'age_id':                   [0, 1, 2, 3],
 			'time_id':                  [0],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_omega
 		},{
 		# smooth_mulcov_std
 			'name':                     'smooth_mulcov_std',
 			'age_id':                   [0],
 			'time_id':                  [0],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_mulcov_std
 		},{
 		# smooth_mulcov_rate
 			'name':                     'smooth_mulcov_rate',
 			'age_id':                   [0],
 			'time_id':                  [0],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_mulcov_rate
 		}
 	]

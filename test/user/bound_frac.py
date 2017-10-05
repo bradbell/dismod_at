@@ -147,25 +147,16 @@ def example_db (file_name) :
 			'name':                     'smooth_rate_child',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0 ],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_rate_child
 		},{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0 ],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
 			'fun':                       fun_iota_parent
 		},{ # smooth_zero
 			'name':                     'smooth_zero',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0 ],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
 			'fun':                       fun_zero
 		}
 	]

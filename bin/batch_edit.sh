@@ -22,8 +22,9 @@ rename_cmd='s|variable_command.py|set_command.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-/'eta': *None/d
-/'std': *None/d
+/'mulstd_value_prior_name':  *None,/d
+/'mulstd_dage_prior_name':  *None,/d
+/'mulstd_dtime_prior_name':  *None,/d
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

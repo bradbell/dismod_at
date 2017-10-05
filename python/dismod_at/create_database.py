@@ -540,9 +540,10 @@ def create_database(
 		for key in [ 'value', 'dage', 'dtime' ] :
 			prior_id[key] = None
 			mulstd_key    = 'mulstd_' + key + '_prior_name'
-			prior_name    = smooth[mulstd_key]
-			if prior_name != None :
-				prior_id[key] = global_prior_name2id[prior_name]
+			if mulstd_key in smooth :
+				prior_name    = smooth[mulstd_key]
+				if prior_name != None :
+					prior_id[key] = global_prior_name2id[prior_name]
 		#
 		row_list.append( [
 			name,

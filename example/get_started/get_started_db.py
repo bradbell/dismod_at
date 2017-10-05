@@ -192,17 +192,11 @@ def get_started_db ():
 			'name':                     'smooth_omega_parent',
 			'age_id':                   [0],
 			'time_id':                  [0],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_omega_parent
 		},{	# smooth_income_multiplier
 			'name':                     'smooth_income_multiplier',
 			'age_id':                   [0],
 			'time_id':                  [0],
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_income_multiplier
 		}
 	]

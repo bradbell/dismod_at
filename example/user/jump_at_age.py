@@ -172,9 +172,6 @@ def example_db (file_name) :
 			'name':                     'smooth_iota_parent',
 			'age_id':                   iota_age_id,
 			'time_id':                  range(len(time_list)),
-			'mulstd_value_prior_name':  None,
-			'mulstd_dage_prior_name':   None,
-			'mulstd_dtime_prior_name':  None,
 			'fun':                       fun_iota_parent
 		}
 	]
