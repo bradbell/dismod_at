@@ -25,37 +25,32 @@ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
 $head density_name$$
-The following values,
-and only the following values,
-appear in the $icode density_name$$ column:
-$table
-$icode density_name$$  $pre   $$ $cnext
-	Description
-$rnext
-$code uniform$$ $pre  $$ $cnext
-	$cref/Uniform/statistic/Log-Density Function, D/Uniform/$$
-$rnext
-$code gaussian$$ $pre  $$ $cnext
-	$cref/Gaussian/statistic/Log-Density Function, D/Gaussian/$$
-$rnext
-$code laplace$$ $pre  $$ $cnext
-	$cref/Laplace/statistic/Log-Density Function, D/Laplace/$$
-$rnext
-$rnext
-$code students $$ $pre  $$ $cnext
-	$cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$
-$rnext
-$code log_gaussian$$ $pre  $$ $cnext
-	$cref/Log-Gaussian/statistic/Log-Density Function, D/Log-Gaussian/$$
-$rnext
-$code log_laplace$$ $pre  $$ $cnext
-	$cref/Log-Laplace/statistic/Log-Density Function, D/Log-Laplace/$$
-$rnext
-$code log_students$$ $pre  $$ $cnext
-	$cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$
-$tend
-In addition, these values must appear in the order above.
-Note that $icode density_name$$ is unique; i.e., each name only appears once.
+The names listed below and only the those names,
+must appear in the $icode density_name$$ column.
+In addition, they  must appear in the order below..
+Note that $icode density_name$$ is unique;
+i.e., each name only appears once.
+
+$subhead uniform$$
+$cref/Uniform/statistic/Log-Density Function, D/Uniform/$$
+
+$subhead gaussian$$
+$cref/Gaussian/statistic/Log-Density Function, D/Gaussian/$$
+
+$subhead laplace$$
+$cref/Laplace/statistic/Log-Density Function, D/Laplace/$$
+
+$subhead students$$
+$cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$
+
+$subhead log_gaussian$$
+$cref/Log-Gaussian/statistic/Log-Density Function, D/Log-Gaussian/$$
+
+$subhead log_laplace$$
+$cref/Log-Laplace/statistic/Log-Density Function, D/Log-Laplace/$$
+
+$subhead log_students$$
+$cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$
 
 
 $children%example/table/density_table.py

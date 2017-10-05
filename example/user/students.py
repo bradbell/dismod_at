@@ -56,9 +56,9 @@ os.chdir('build/example/user')
 def constant_weight_fun(a, t) :
 	return 1.0
 def fun_rate_child(a, t) :
-	return ('prior_rate_child', 'prior_gauss_zero', 'prior_gauss_zero')
+	return ('prior_rate_child', 'prior_students_zero', 'prior_students_zero')
 def fun_rate_parent(a, t) :
-	return ('prior_rate_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+	return ('prior_rate_parent', 'prior_students_zero', 'prior_students_zero')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import dismod_at
@@ -145,18 +145,20 @@ def example_db (file_name) :
 			'mean':     0.1,
 		},{ # prior_rate_child
 			'name':     'prior_rate_child',
-			'density':  'gaussian',
+			'density':  'students',
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
 			'std':      10.0,
-		},{ # prior_gauss_zero
-			'name':     'prior_gauss_zero',
-			'density':  'gaussian',
+			'nu':       10.0,
+		},{ # prior_students_zero
+			'name':     'prior_students_zero',
+			'density':  'students',
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
 			'std':      1e-2,
+			'nu':       10.0,
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -295,18 +297,18 @@ for var_id in range( n_var ) :
 	canada          = node_table[node_id]['node_name'] == 'canada'
 	if north_america :
 		err = value / iota_parent - 1.0
-		if abs(err) > 1e-2 :
+		if abs(err) > 1e-2:
 			print('north_america', iota_parent, value, err)
 			assert False
 	elif united_states :
 		err = value / iota_random_effect - 1.0
-		if abs(err) > 1e-2 :
+		if abs(err) > 1e-2:
 			print('united_states', iota_random_effect, value, err)
 			assert False
 	else :
 		assert canada
 		err = value / iota_random_effect + 1.0
-		if abs(err) > 1e-2 :
+		if abs(err) > 1e-2:
 			print('canada', - iota_random_effect, value, err)
 			assert False
 # -----------------------------------------------------------------------

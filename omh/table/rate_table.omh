@@ -104,6 +104,12 @@ when fitting all the
 $cref/children/option_table/parent_node_id/Children/$$; i.e.,
 all the random effects for this rate.
 
+$subhead Random Effects Hessian$$
+The Hessian of the joint likelihood with respect to the random
+effects must be positive definite.
+If the data does not ensure this, the user will have to make the
+standard deviation for the prior of the random effects small.
+
 $subhead null$$
 If $icode child_smooth_id$$ is not $code null$$,
 $icode child_nslist_list$$ must be $code null$$.
@@ -135,18 +141,13 @@ must satisfy the following conditions at each grid point:
 $subhead Constant Random Effects$$
 If the
 $cref/lower/prior_table/lower/$$ and $cref/upper/prior_table/upper/$$ limit
-are equal, no other conditions need be satisfied.
+are equal, they must be finite and no other conditions need be satisfied.
 Otherwise the other conditions below must be satisfied.
 
-$subhead Gaussian$$
-The $cref/density_id/prior_table/density_id/$$ must correspond
-to a Gaussian.
-
-$subhead mean$$
-The $cref/mean/prior_table/mean/$$ must be zero.
-
-$subhead std$$
-The $cref/std/prior_table/std/$$ must be greater than zero.
+$subhead density$$
+The $cref/density_id/prior_table/density_id/$$ must not correspond to
+$cref/laplace/density_table/density_name/laplace/$$ or
+$cref/log_laplace/density_table/density_name/log_laplace/$$.
 
 $subhead lower$$
 The $cref/lower/prior_table/lower/$$ limit must be $code null$$,

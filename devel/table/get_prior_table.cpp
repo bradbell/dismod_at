@@ -214,7 +214,7 @@ CppAD::vector<prior_struct> get_prior_table(sqlite3* db)
 			ok = true;
 		}
 		if( ! ok )
-		{	msg = "This is a Student's density and num not greater than two.";
+		{	msg = "This is a Student's density and nu not greater than two.";
 			error_exit(msg, table_name, i);
 		}
 	}

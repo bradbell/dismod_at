@@ -44,6 +44,18 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-05$$
+The restrictions on the
+$cref/child rates/rate_table/Child Restrictions/$$ have been changed.
+To be specific, the density need not be Gaussian,
+it can be anything but Laplace and Log-Laplace.
+The user needs to be careful to ensure that the Hessian
+of the likelihood with respect to the random effects is positive definite; see
+$cref/random effects Hessian/rate_table
+	/child_smooth_id
+	/Random Effects Hessian
+/$$.
+
 $head 10-04$$
 Add the $cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$ and
 $cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$

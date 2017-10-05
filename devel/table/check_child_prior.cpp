@@ -31,23 +31,17 @@ $codei%check_child_prior(
 $head Purpose$$
 Checks the
 $cref/child smoothing assumptions/rate_table/child_smooth_id/$$.
-Note that a $code null$$ prior for
-$cref/value_prior_id/smooth_grid_table/value_prior_id/$$,
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
-$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
-is considered OK.
 
 $list number$$
-The $cref/density_id/prior_table/density_id/$$ must correspond
-to a Gaussian density.
+The $cref/density_id/prior_table/density_id/$$ cannot correspond to a
+$cref/laplace/density_table/density_name/laplace/$$ or
+$cref/log_laplace/density_table/density_name/log_laplace/$$ density.
 $lnext
-The $cref/mean/prior_table/mean/$$ must be zero.
+The $cref/lower/prior_table/lower/$$ limit must be minus infinity
+or equal to the upper limit and finite.
 $lnext
-The $cref/std/prior_table/std/$$ must be greater than zero.
-$lnext
-The $cref/lower/prior_table/lower/$$ limit must be minus infinity.
-$lnext
-The $cref/upper/prior_table/upper/$$ limit must be plus infinity.
+The $cref/upper/prior_table/upper/$$ limit must be plus infinity
+or equal to the lower limit and finite.
 $lend
 
 $head db$$
@@ -146,76 +140,53 @@ void check_child_prior(
 			for(size_t i = 0; i < smooth_list.size(); i++)
 				check |= smooth_grid[grid_id].smooth_id == smooth_list[i];
 			if( check)
-		{	CppAD::vector<int> prior_id(3);
-			double const_value = smooth_grid[grid_id].const_value;
-			CppAD::vector<string> name(3);
-			prior_id[0] = smooth_grid[grid_id].value_prior_id;
-			name[0]     = "child value prior:\n";
-			prior_id[1] = smooth_grid[grid_id].dage_prior_id;
-			name[1]     = "child dage prior:\n";
-			prior_id[2] = smooth_grid[grid_id].dtime_prior_id;
-			name[2]     = "child dtime prior:\n";
-			// skip dage and dtime priors for last age and last time
-			for(size_t i = 0; i < 3; i++)
-			if( prior_id[i] != DISMOD_AT_NULL_INT )
-			{
-				int    density_id = prior_table[prior_id[i]].density_id;
-				double mean       = prior_table[prior_id[i]].mean;
-				double std        = prior_table[prior_id[i]].std;
-				double lower      = prior_table[prior_id[i]].lower;
-				double upper      = prior_table[prior_id[i]].upper ;
-				//
-				// check for an error
-				msg = "";
-				if( density_id != int( gaussian_enum ) )
-				{	msg += "density not gaussian";
-				}
-				if( mean != 0.0 )
-				{	if( msg != "" )
-						msg += ", ";
-					msg += "mean not zero";
-				}
-				if( std <= 0.0 )
-				{	if(msg != "" )
-						msg += ", ";
-					msg += "std not greater than zero";
-				}
-				double inf = std::numeric_limits<double>::infinity();
-				if( lower != -inf )
-				{	if(msg != "" )
-						msg += ", ";
-					msg += "lower not minus infinity";
-				}
-				if( upper != +inf )
-				{	if(msg != "" )
-						msg += ", ";
-					msg += "upper not plus infinity";
-				}
-				if( lower == upper )
+			{	CppAD::vector<int> prior_id(3);
+				CppAD::vector<string> name(3);
+				prior_id[0] = smooth_grid[grid_id].value_prior_id;
+				name[0]     = "child value prior:\n";
+				prior_id[1] = smooth_grid[grid_id].dage_prior_id;
+				name[1]     = "child dage prior:\n";
+				prior_id[2] = smooth_grid[grid_id].dtime_prior_id;
+				name[2]     = "child dtime prior:\n";
+				// skip dage and dtime priors for last age and last time
+				for(size_t i = 0; i < 3; i++)
+				if( prior_id[i] != DISMOD_AT_NULL_INT )
+				{
+					int    density_id = prior_table[prior_id[i]].density_id;
+					double lower      = prior_table[prior_id[i]].lower;
+					double upper      = prior_table[prior_id[i]].upper ;
+					//
+					// check for an error
 					msg = "";
-				if( msg != "" )
-				{	size_t smooth_id = smooth_grid[grid_id].smooth_id;
-					msg = name[i]
-					+ "smooth_id = "         + to_string(smooth_id)
-					+ ", smooth_grid_id = "  + to_string(grid_id)
-					+ ", prior_id = "        + to_string( prior_id[i] )
-					+ ": " + msg;
-					string table_name  = "rate";
-					error_exit(msg,  table_name, rate_id);
+					if( density_id == int(laplace_enum) )
+					{	msg += "density is Laplace";
+					}
+					if( density_id == int(log_laplace_enum) )
+					{	msg += "density is Log-Laplace ";
+					}
+					double inf = std::numeric_limits<double>::infinity();
+					if( lower != -inf  && ( lower != upper && upper < inf ) )
+					{	if(msg != "" )
+							msg += ", ";
+						msg += "lower != -inf and not finite and equal uppper";
+					}
+					if( upper != +inf && ( lower != upper && upper < inf ) )
+					{	if(msg != "" )
+							msg += ", ";
+						msg += "upper != +inf and not finite and equal uppper";
+					}
+					if( msg != "" )
+					{	size_t smooth_id = smooth_grid[grid_id].smooth_id;
+						msg = name[i]
+						+ "smooth_id = "         + to_string(smooth_id)
+						+ ", smooth_grid_id = "  + to_string(grid_id)
+						+ ", prior_id = "        + to_string( prior_id[i] )
+						+ ": " + msg;
+						string table_name  = "rate";
+						error_exit(msg,  table_name, rate_id);
+					}
 				}
 			}
-			bool no_value_prior = prior_id[0] == DISMOD_AT_NULL_INT;
-			no_value_prior     &= std::isnan( const_value );
-			if( no_value_prior )
-			{	size_t smooth_id = smooth_grid[grid_id].smooth_id;
-				msg = name[0]
-				+ "smooth_id = "        + to_string(smooth_id)
-				+ ", smooth_grid_id = " + to_string(grid_id)
-				+ ", prior_id = null, const_value = null";
-				string table_name  = "rate";
-				error_exit(msg,  table_name, rate_id);
-			}
-		}
 		}
 	}
 }
