@@ -45,6 +45,7 @@ $childtable%
 %$$
 
 $head 10-05$$
+$list number$$
 The restrictions on the
 $cref/child rates/rate_table/Child Restrictions/$$ have been changed.
 To be specific, the density need not be Gaussian,
@@ -55,6 +56,10 @@ $cref/random effects Hessian/rate_table
 	/child_smooth_id
 	/Random Effects Hessian
 /$$.
+$lnext
+Add specifications for
+$cref/comment tables/database/Comment Columns and Tables/$$.
+$lend
 
 $head 10-04$$
 Add the $cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$ and

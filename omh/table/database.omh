@@ -18,11 +18,13 @@ $$
 
 $section The Dismod_at Database Tables$$
 
-$head Comment Columns$$
-Any input table (in this database)
+$head Comment Columns and Tables$$
+Any table (in this database)
 may have any number of columns with names that begin
 with the two characters $code c_$$.
 These are comment columns and are ignored by $code dismod_at$$.
+In addition, tables with a names beginning with $code c_$$
+are also considered comments and are ignored by $code dismod_at$$.
 
 $head Primary Key$$
 If $icode table_name$$ is a table (in this database), its first column
