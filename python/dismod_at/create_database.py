@@ -276,15 +276,11 @@
 # child_smooth  $cnext str     $cnext a single child smoothing         $rnext
 # child_nslist  $cnext str     $cnext list of child smoothings
 # $tend
-# $list number$$
-# The order of the rate names must be
-# pini, iota, rho, chi, omega; i.e., the only order allowed for
-# the $cref rate_table$$.
-# $lnext
 # The value $code None$$ is used to represent a $code null$$ value for
 # the parent and child smoothings.
 # If a key name does not appear, null is used for the corresponding value.
-# $lend
+# If a $icode name$$; e.g. $code rho$$, does not appear, the value
+# null is used for the parent and child smoothings for the corresponding rate.
 #
 # $head mulcov_table$$
 # This is a list of $code dict$$
@@ -655,20 +651,22 @@ def create_database(
 		'text',      'integer',         'integer',           'integer'
 	]
 	row_list = list()
-	for i in range( len(rate_table) ) :
-		rate       = rate_table[i]
-		rate_name  = rate['name']
-		row = [ rate_name ]
-		for key in ['parent_smooth', 'child_smooth', 'child_nslist'] :
-			entry  = None
-			if key in rate :
-				entry = rate[key]
-			if entry != None :
-				if key == 'child_nslist' :
-					entry = global_nslist_name2id[ entry ]
-				else :
-					entry = global_smooth_name2id[ entry ]
-			row.append( entry )
+	for rate_name in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
+		row = [ rate_name, None, None, None ]
+		for i in range( len(rate_table) ) :
+			rate = rate_table[i]
+			if rate['name'] == rate_name :
+				row = [ rate_name ]
+				for key in ['parent_smooth', 'child_smooth', 'child_nslist'] :
+					entry  = None
+					if key in rate :
+						entry = rate[key]
+					if entry != None :
+						if key == 'child_nslist' :
+							entry = global_nslist_name2id[ entry ]
+						else :
+							entry = global_smooth_name2id[ entry ]
+					row.append( entry )
 		row_list.append( row )
 	tbl_name = 'rate'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

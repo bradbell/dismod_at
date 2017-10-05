@@ -201,8 +201,6 @@ def example_db (file_name) :
 	# rate table
 	rate_table = [
 		{
-			'name':          'pini',
-		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_iota_parent',
 		},{

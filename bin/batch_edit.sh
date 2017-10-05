@@ -22,8 +22,11 @@ rename_cmd='s|variable_command.py|set_command.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-/'lower' *: *None *,/d
-/'upper' *: *None *,/d
+/^\\t\\t{/N
+/'name' *: *'pini' *,/! b one
+N
+s|.*},{|\\t\\t{|
+: one
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
