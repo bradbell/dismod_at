@@ -219,11 +219,11 @@ def get_started_db ():
 	# -------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'parent_node_name',       'value':'world'              },
-		{ 'name':'ode_step_size',          'value':'10.0'               },
-		{ 'name':'rate_case',              'value':'iota_zero_rho_zero' },
-		{ 'name':'avgint_extra_columns',   'value':'avgint_info'        },
-		{ 'name':'data_extra_columns',     'value':'data_info'          }
+		{'name':'parent_node_name',     'value':'world'             },
+		{'name':'ode_step_size',        'value':'10.0'              },
+		{'name':'rate_case',            'value':'iota_zero_rho_zero'},
+		{'name':'avgint_extra_columns', 'value':'avgint_info'       },
+		{'name':'data_extra_columns',   'value':'data_info'         }
 	]
 	# ---------------------------------------------------------------------
 	# nslist_table:
