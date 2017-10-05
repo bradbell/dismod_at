@@ -536,31 +536,21 @@ def create_database(
 		n_age         = len( smooth['age_id'] )
 		n_time        = len( smooth['time_id'] )
 		#
-		prior_name    = smooth['mulstd_value_prior_name']
-		if prior_name == None :
-			mulstd_value_prior_id = None
-		else :
-			mulstd_value_prior_id = global_prior_name2id[prior_name]
-		#
-		prior_name    = smooth['mulstd_dage_prior_name']
-		if prior_name == None :
-			mulstd_dage_prior_id = None
-		else :
-			mulstd_dage_prior_id = global_prior_name2id[prior_name]
-		#
-		prior_name    = smooth['mulstd_dtime_prior_name']
-		if prior_name == None :
-			mulstd_dtime_prior_id = None
-		else :
-			mulstd_dtime_prior_id = global_prior_name2id[prior_name]
+		prior_id = dict()
+		for key in [ 'value', 'dage', 'dtime' ] :
+			prior_id[key] = None
+			mulstd_key    = 'mulstd_' + key + '_prior_name'
+			prior_name    = smooth[mulstd_key]
+			if prior_name != None :
+				prior_id[key] = global_prior_name2id[prior_name]
 		#
 		row_list.append( [
 			name,
 			n_age,
 			n_time,
-			mulstd_value_prior_id,
-			mulstd_dage_prior_id,
-			mulstd_dtime_prior_id
+			prior_id['value'],
+			prior_id['dage'],
+			prior_id['dtime'],
 		] )
 	tbl_name = 'smooth'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
