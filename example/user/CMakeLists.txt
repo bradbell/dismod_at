@@ -9,6 +9,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # Build check_user_example
+SET(depends "")
 FOREACH(user_case
 	asymptotic
 	const_random
@@ -34,29 +35,10 @@ FOREACH(user_case
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		DEPENDS dismod_at
 	)
+	SET( depends ${depends} check_example_user_${user_case} )
 ENDFOREACH(user_case)
 #
-ADD_CUSTOM_TARGET(
-	check_example_user
-	DEPENDS
-	check_example_user_asymptotic
-	check_example_user_const_random
-	check_example_user_const_value
-	check_example_user_continue_fit
-	check_example_user_diff_constraint
-	check_example_user_fit_fixed
-	check_example_user_fit_random
-	check_example_user_fit_sim
-	check_example_user_jump_at_age
-	check_example_user_lasso_covariate
-	check_example_user_meas_covariate
-	check_example_user_metropolis
-	check_example_user_no_children
-	check_example_user_predict_fit
-	check_example_user_random_zero_sum
-	check_example_user_re_scale
-	check_example_user_students
-)
+ADD_CUSTOM_TARGET( check_example_user DEPENDS ${depends} )
 # ---------------------------------------------------------------------------
 # Build speed_user_example
 SET(random_seed      0)

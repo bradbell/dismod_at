@@ -9,7 +9,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # Build get_started Examples / Tests
-
+SET(depends "")
 FOREACH(cmd init fit set simulate sample predict)
 	ADD_CUSTOM_TARGET(
 		check_example_get_started_${cmd}
@@ -17,14 +17,6 @@ FOREACH(cmd init fit set simulate sample predict)
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		DEPENDS dismod_at
 	)
-ENDFOREACH(cmd init fit set simulate sample predict)
-ADD_CUSTOM_TARGET(
-	check_example_get_started
-	DEPENDS
-	check_example_get_started_init
-	check_example_get_started_fit
-	check_example_get_started_set
-	check_example_get_started_simulate
-	check_example_get_started_sample
-	check_example_get_started_predict
-)
+	SET( depends ${depends} check_example_get_started_${cmd} )
+ENDFOREACH(cmd)
+ADD_CUSTOM_TARGET( check_example_get_started DEPENDS ${depends} )

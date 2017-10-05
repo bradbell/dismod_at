@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -9,7 +9,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # Build get_started Examples / Tests
-
+SET(depends "")
 FOREACH(user_case
 	avgint
 	bound_frac
@@ -27,17 +27,6 @@ FOREACH(user_case
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		DEPENDS dismod_at
 	)
+	SET(depends ${depends} check_test_user_${user_case} )
 ENDFOREACH(user_case zero_random)
-ADD_CUSTOM_TARGET(
-	check_test_user
-	DEPENDS
-	check_test_user_avgint
-	check_test_user_bound_frac
-	check_test_user_fit_sim
-	check_test_user_neg_iteration
-	check_test_user_no_data
-	check_test_user_not_ordered
-	check_test_user_random_bound
-	check_test_user_relrisk
-	check_test_user_zero_random
-)
+ADD_CUSTOM_TARGET( check_test_user DEPENDS ${depends} )
