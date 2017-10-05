@@ -154,23 +154,17 @@ def example_db (file_name) :
 		},{ # prior_rate_child
 			'name':     'prior_rate_child',
 			'density':  'gaussian',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      3.0,
 		},{ # prior_dtime_parent
 			'name':     'prior_dtime_parent',
 			'density':  'log_gaussian',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      1.0,
 			'eta':      1e-6
 		},{ # prior_dtime_child
 			'name':     'prior_dtime_child',
 			'density':  'gaussian',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      1.0,
 			'eta':      1e-6

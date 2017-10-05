@@ -61,7 +61,8 @@ Add specifications for
 $cref/comment tables/database/Comment Columns and Tables/$$.
 $lnext
 Change the $code create_database$$ so that when certain entries
-are not present, the default value null is used for the entry in the database.
+are not present, the value null is used for the corresponding
+entry in the database.
 In addition, remove the corresponding setting to $code None$$ in the
 $cref user$$ examples.
 $lend

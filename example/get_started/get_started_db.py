@@ -154,8 +154,6 @@ def get_started_db ():
 			# not used because there are no age or time differences
 			'name':     'prior_not_used',
 			'density':  'uniform',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 		},{ # prior_zero
 			'name':     'prior_zero',

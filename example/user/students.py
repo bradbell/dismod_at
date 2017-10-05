@@ -146,16 +146,12 @@ def example_db (file_name) :
 		},{ # prior_rate_child
 			'name':     'prior_rate_child',
 			'density':  'students',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      10.0,
 			'nu':       10.0,
 		},{ # prior_students_zero
 			'name':     'prior_students_zero',
 			'density':  'students',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      1e-2,
 			'nu':       10.0,

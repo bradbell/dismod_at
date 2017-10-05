@@ -132,8 +132,6 @@ def example_db (file_name) :
 		{	# prior_difference
 			'name':     'prior_difference',
 			'density':  'gaussian',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      0.1,
 		},{ # prior_iota_world
@@ -145,8 +143,6 @@ def example_db (file_name) :
 		},{ # prior_iota_child
 			'name':     'prior_iota_child',
 			'density':  'gaussian',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      0.5,
 		}

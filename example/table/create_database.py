@@ -104,14 +104,10 @@ def create_database() :
 			'mean':0.1,
 		},{	'name':'gaussian_01',
 			'density':'gaussian',
-			'lower':None,
-			'upper':None,
 			'mean':0.0,
 			'std':1.0,
 		},{	'name':'log_gaussian',
 			'density':'log_gaussian',
-			'lower':None,
-			'upper':None,
 			'mean':0.0,
 			'eta':1e-6
 		}

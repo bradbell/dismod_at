@@ -133,8 +133,6 @@ def example_db (file_name) :
 		{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      0.01,
 		},{ # prior_value_parent
@@ -147,7 +145,6 @@ def example_db (file_name) :
 			'name':     'prior_diff_parent',
 			'density':  'gaussian',
 			'lower':    0.01,
-			'upper':    None,
 			'mean':     0.01,
 			'std':      0.01,
 		}

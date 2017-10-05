@@ -158,8 +158,6 @@ def example_db (file_name) :
 		{	# prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      0.01,
 		},{ # prior_value_parent
@@ -171,8 +169,6 @@ def example_db (file_name) :
 		},{ # prior_mulcov
 			'name':     'prior_mulcov',
 			'density':  'laplace',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      0.005,
 		}

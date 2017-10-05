@@ -16,15 +16,14 @@ rename_files='
 spell_files='
 '
 no_change_files='
-	test/user/diabetes.py
-	test/user/fit_sim.py
 '
 #
 rename_cmd='s|variable_command.py|set_command.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|, *'max_difference': *None *}|}|
+/'lower' *: *None *,/d
+/'upper' *: *None *,/d
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

@@ -140,20 +140,15 @@ def example_db (file_name) :
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
 			'lower':    1e-4,
-			'upper':    None,
 			'mean':     1e-1,
 		},{ # prior_rate_child
 			'name':     'prior_rate_child',
 			'density':  'gaussian',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      100.0, # very large so like a uniform distribution
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      1e-2,
 		}

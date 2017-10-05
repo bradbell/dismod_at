@@ -135,14 +135,10 @@ def example_db (file_name) :
 		{	# prior_none
 			'name':     'prior_none',
 			'density':  'uniform',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 		},{ # prior_difference
 			'name':     'prior_difference',
 			'density':  'log_gaussian',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      1.0,
 			'eta':      1e-4

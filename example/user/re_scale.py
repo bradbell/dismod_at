@@ -123,13 +123,10 @@ def example_db (file_name) :
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
 			'lower':    1e-4,
-			'upper':    None,
 			'mean':     0.01,
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
-			'lower':    None,
-			'upper':    None,
 			'mean':     0.0,
 			'std':      1e-6,
 		}
