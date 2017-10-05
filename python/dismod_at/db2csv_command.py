@@ -169,7 +169,8 @@
 # $cref/upper/prior_table/upper/$$,
 # $cref/mean/prior_table/mean/$$,
 # $cref/std/prior_table/std/$$,
-# $cref/eta/prior_table/eta/$$ and
+# $cref/eta/prior_table/eta/$$,
+# $cref/nu/prior_table/nu/$$ and
 # $cref/density/prior_table/density_id/$$.
 # $list number$$
 # The character $code v$$ denotes this is the prior information for a value,
@@ -252,6 +253,10 @@
 # $subhead eta$$
 # is the data table
 # $cref/eta/data_table/eta/$$ for this row.
+#
+# $subhead nu$$
+# is the data table
+# $cref/nu/data_table/nu/$$ for this row.
 #
 # $subhead Delta$$
 # is the actual standard deviation used by the model; see
@@ -435,25 +440,25 @@ def db2csv_command(database_file_arg) :
 					msg = 'both value_prior_id and const_value are not null '
 					msg += 'in smooth_grid table\n'
 					sys.exit(msg)
+			#
 			field_out = 'density' + extension
-			if prior_id == None :
-				if extension == '_v' :
-					row_out[field_out] = 'uniform'
-				else :
-					row_out[field_out] = ''
-			else :
+			row_out[field_out] = ''
+			if prior_id != None :
 				density_id   = table_data['prior'][prior_id]['density_id']
 				density_name = table_data['density'][density_id]['density_name']
 				row_out[field_out] = density_name
-			for field_in in [ 'lower', 'upper', 'mean', 'std', 'eta' ] :
+				log_density      = density_name.startswith('log_')
+				students_density = density_name in ['students', 'log_students']
+			#
+			for field_in in [ 'lower', 'upper', 'mean', 'std', 'eta', 'nu' ] :
 				field_out = field_in + extension
 				row_out[field_out] = ''
 				if prior_id != None :
 					value_in = table_data['prior'][prior_id][field_in]
-					if field_in == 'eta' :
-						if density_name in [ 'uniform','gaussian','laplace' ] :
-							if extension in [ '_a', '_t' ] :
-								value_in = None
+					if field_in == 'nu' and not students_density :
+						value_in = None
+					if field_in == 'eta' and not log_density :
+						value_in = None
 					if field_in == 'std' and density_name == 'uniform' :
 							value_in = None
 					row_out[field_out] = convert2output( value_in )
@@ -699,7 +704,7 @@ def db2csv_command(database_file_arg) :
 		'lag_dtime',
 	]
 	for extension in ['_v', '_a', '_t' ] :
-		for root in ['lower', 'upper', 'mean', 'std', 'eta', 'density' ] :
+		for root in ['lower', 'upper', 'mean', 'std', 'eta', 'nu', 'density'] :
 			header.append( root + extension )
 	csv_writer = csv.DictWriter(csv_file, fieldnames=header)
 	csv_writer.writeheader()
@@ -794,6 +799,7 @@ def db2csv_command(database_file_arg) :
 		'meas_value',
 		'meas_std',
 		'eta',
+		'nu',
 		'Delta',
 		'avgint',
 		'residual'
@@ -831,6 +837,7 @@ def db2csv_command(database_file_arg) :
 		row_out['out']         = row_in['hold_out']
 		row_out['meas_std']    = convert2output( row_in['meas_std'] )
 		row_out['eta']         = convert2output( row_in['eta'] )
+		row_out['nu']          = convert2output( row_in['nu'] )
 		row_out['meas_value']  = convert2output( row_in['meas_value'] )
 		#
 		Delta                  =  minimum_meas_cv * abs( row_in['meas_value'] )
