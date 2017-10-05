@@ -181,12 +181,6 @@ def example_db (file_name) :
 			'name':          'iota',
 			'parent_smooth': 'smooth_rate_parent',
 			'child_smooth':  'smooth_rate_child',
-		},{
-			'name':          'rho',
-		},{
-			'name':          'chi',
-		},{
-			'name':          'omega',
 		}
 	]
 	# ----------------------------------------------------------------------

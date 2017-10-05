@@ -227,10 +227,6 @@ def example_db (file_name) :
 			'name':          'rho',
 			'parent_smooth': 'smooth_rate_parent',
 			'child_smooth':  'smooth_rate_child',
-		},{
-			'name':          'chi',
-		},{
-			'name':          'omega',
 		}
 	]
 	# ----------------------------------------------------------------------

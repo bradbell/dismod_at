@@ -183,11 +183,9 @@ def example_db (file_name) :
 		{	'name':          'iota',
 			'parent_smooth': 'smooth_iota_world',
 			'child_smooth':  'smooth_iota_child',
-		},{	'name':          'rho',
 		},{	'name':          'chi',
 			'parent_smooth': 'smooth_chi_world',
 			'child_nslist':  'nslist_chi_children'
-		},{	'name':          'omega',
 		}
 	]
 	# ----------------------------------------------------------------------
