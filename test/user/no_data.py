@@ -96,6 +96,7 @@ def example_db (file_name) :
 			'upper':    1e+2 * iota_mean,
 			'mean':     iota_mean,
 			'std':      iota_mean,
+			'eta':      None
 		},{ # prior_iota_parent_log_gaussian
 			'name':     'prior_iota_parent_log_gaussian',
 			'density':  'log_gaussian',
@@ -115,6 +116,9 @@ def example_db (file_name) :
 			'name':                     'smooth_rate_parent',
 			'age_id':                   age_id_list,
 			'time_id':                  time_id_list,
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_iota_parent_log_gaussian
 		}
 	]
@@ -123,15 +127,29 @@ def example_db (file_name) :
 	rate_table = [
 		{
 			'name':          'pini',
+			'parent_smooth': None,
+			'child_smooth':  None,
+			'child_nslist':  None
 		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  None,
+			'child_nslist':  None
 		},{
 			'name':          'rho',
+			'parent_smooth': None,
+			'child_smooth':  None,
+			'child_nslist':  None
 		},{
 			'name':          'chi',
+			'parent_smooth': None,
+			'child_smooth':  None,
+			'child_nslist':  None
 		},{
 			'name':          'omega',
+			'parent_smooth': None,
+			'child_smooth':  None,
+			'child_nslist':  None
 		}
 	]
 	# ----------------------------------------------------------------------

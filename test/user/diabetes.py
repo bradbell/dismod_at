@@ -186,6 +186,8 @@ def example_db (file_name) :
 			'lower':    0.0,
 			'upper':    0.0,
 			'mean':     0.0,
+			'std':      None,
+			'eta':      None
 		},{ # prior_rate
 			'name':     'prior_rate',
 			'density':  'log_gaussian',
@@ -208,6 +210,7 @@ def example_db (file_name) :
 			'lower':    0.0001,
 			'upper':    0.0001,
 			'mean':     0.0001,
+			'std':      None,
 			'eta':      1e-6
 		},{ # prior_omega_40
 			'name':     'prior_omega_40',
@@ -215,6 +218,7 @@ def example_db (file_name) :
 			'lower':    0.001,
 			'upper':    0.001,
 			'mean':     0.001,
+			'std':      None,
 			'eta':      1e-6
 		},{ # prior_omega_65
 			'name':     'prior_omega_65',
@@ -222,6 +226,7 @@ def example_db (file_name) :
 			'lower':    0.01,
 			'upper':    0.01,
 			'mean':     0.01,
+			'std':      None,
 			'eta':      1e-6
 		},{ # prior_omega_80
 			'name':     'prior_omega_80',
@@ -229,6 +234,7 @@ def example_db (file_name) :
 			'lower':    0.04,
 			'upper':    0.04,
 			'mean':     0.04,
+			'std':      None,
 			'eta':      1e-6
 		}
 	]
@@ -240,24 +246,36 @@ def example_db (file_name) :
 			'name':                     'smooth_rate',
 			'age_id':                   [ 0, 1, 2, 3, 4, 5],
 			'time_id':                  [0],
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_rate
 		},{
 		# smooth_omega
 			'name':                     'smooth_omega',
 			'age_id':                   [0, 1, 2, 3],
 			'time_id':                  [0],
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_omega
 		},{
 		# smooth_mulcov_std
 			'name':                     'smooth_mulcov_std',
 			'age_id':                   [0],
 			'time_id':                  [0],
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_mulcov_std
 		},{
 		# smooth_mulcov_rate
 			'name':                     'smooth_mulcov_rate',
 			'age_id':                   [0],
 			'time_id':                  [0],
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_mulcov_rate
 		}
 	]
@@ -266,17 +284,29 @@ def example_db (file_name) :
 	rate_table = [
 		{
 			'name':          'pini',
+			'parent_smooth': None,
+			'child_smooth':  None,
+			'child_nslist':  None
 		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_rate',
+			'child_smooth':  None,
+			'child_nslist':  None
 		},{
 			'name':          'rho',
+			'parent_smooth': None,
+			'child_smooth':  None,
+			'child_nslist':  None
 		},{
 			'name':          'chi',
 			'parent_smooth': 'smooth_rate',
+			'child_smooth':  None,
+			'child_nslist':  None
 		},{
 			'name':          'omega',
 			'parent_smooth': 'smooth_omega',
+			'child_smooth':  None,
+			'child_nslist':  None
 		}
 	]
 	# ----------------------------------------------------------------------

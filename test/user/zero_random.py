@@ -104,6 +104,7 @@ def example_db (file_name) :
 		'age_upper':    age_list[-1],
 		'meas_value':   iota_true,
 		'meas_std':     iota_true * 0.1,
+		'eta':          None,
 		'integrand':    'Sincidence'
 	}
 	#
@@ -152,12 +153,16 @@ def example_db (file_name) :
 			'lower':    0.0,
 			'upper':    0.0,
 			'mean':     0.0,
+			'std':      None,
+			'eta':      None
 		},{ # prior_none
 			'name':     'prior_none',
 			'density':  'uniform',
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
+			'std':      None,
+			'eta':      None
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
@@ -165,12 +170,15 @@ def example_db (file_name) :
 			'upper':    None,
 			'mean':     0.0,
 			'std':      1.0, # 2DO: 1.0 and 0.01 work but 0.1 fails
+			'eta':      None
 		},{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
 			'lower':    iota_true / 10.,
 			'upper':    10. * iota_true,
 			'mean':     iota_true,
+			'std':      None,
+			'eta':      None
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -180,21 +188,33 @@ def example_db (file_name) :
 			'name':                     'smooth_iota_child',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0 ],
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_iota_child
 		},{ # smooth_rho_child
 			'name':                     'smooth_rho_child',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0 ],
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_rho_child
 		},{ # smooth_chi_child
 			'name':                     'smooth_chi_child',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0 ],
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_chi_child
 		},{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0 ],
+			'mulstd_value_prior_name':  None,
+			'mulstd_dage_prior_name':   None,
+			'mulstd_dtime_prior_name':  None,
 			'fun':                      fun_rate_parent
 		}
 	]
@@ -203,20 +223,29 @@ def example_db (file_name) :
 	rate_table = [
 		{
 			'name':          'pini',
+			'parent_smooth': None,
+			'child_smooth':  None,
+			'child_nslist':  None
 		},{
 			'name':          'iota',
 			'parent_smooth': 'smooth_rate_parent',
 			'child_smooth':  'smooth_iota_child',
+			'child_nslist':  None
 		},{
 			'name':          'rho',
 			'parent_smooth': 'smooth_rate_parent',
 			'child_smooth':  'smooth_rho_child',
+			'child_nslist':  None
 		},{
 			'name':          'chi',
 			'parent_smooth': 'smooth_rate_parent',
 			'child_smooth':  'smooth_chi_child',
+			'child_nslist':  None
 		},{
 			'name':          'omega',
+			'parent_smooth': None,
+			'child_smooth':  None,
+			'child_nslist':  None
 		}
 	]
 	# ----------------------------------------------------------------------
