@@ -202,12 +202,6 @@ def get_started_db ():
 	# rate table
 	rate_table = [
 		{
-			'name':          'iota',
-		},{
-			'name':          'rho',
-		},{
-			'name':          'chi',
-		},{
 			'name':          'omega',
 			'parent_smooth': 'smooth_omega_parent',
 		}
