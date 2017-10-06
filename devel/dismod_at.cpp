@@ -1672,8 +1672,8 @@ void predict_command(
 		dismod_at::error_exit(msg);
 	}
 	// ------------------------------------------------------------------------
-	// fit_var_value
-	vector<double> fit_var_value;
+	// variable_value
+	vector<double> variable_value;
 	string table_name = source;
 	string column_name;
 	if( source == "sample" )
@@ -1683,10 +1683,10 @@ void predict_command(
 	else
 		column_name = "truth_var_value";
 	dismod_at::get_table_column(
-		db, table_name, column_name, fit_var_value
+		db, table_name, column_name, variable_value
 	);
-	size_t n_sample = fit_var_value.size() / n_var;
-	assert( n_sample * n_var == fit_var_value.size() );
+	size_t n_sample = variable_value.size() / n_var;
+	assert( n_sample * n_var == variable_value.size() );
 # ifndef NDEBUG
 	// ------------------------------------------------------------------------
 	// check sample table
@@ -1741,7 +1741,7 @@ void predict_command(
 	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
 	{	// copy the variable values for this sample index into pack_vec
 		for(size_t var_id = 0; var_id < n_var; var_id++)
-			pack_vec[var_id] = fit_var_value[sample_id++];
+			pack_vec[var_id] = variable_value[sample_id++];
 		//
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	int integrand_id = avgint_subset_obj[subset_id].integrand_id;

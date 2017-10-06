@@ -65,6 +65,9 @@ $cref/method/sample_command/method/$$
 for the sample command has been removed.
 It was no longer useful
 given the ability to specify fit_var in the $cref predict_command$$.
+$lnext
+In the fit table, change $code variable_value$$ to
+$cref/fit_var_value/fit_var_table/fit_var_value/$$.
 $lend
 
 $head 10-05$$
