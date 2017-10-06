@@ -82,7 +82,7 @@ namespace dismod_at {
 		// -------------------------------------------------------------------
 		// solution found by run_fit and in pack_info order
 		struct {
-			CppAD::vector<double> variable_value;
+			CppAD::vector<double> fit_var_value;
 			CppAD::vector<double> lagrange_value;
 			CppAD::vector<double> lagrange_dage;
 			CppAD::vector<double> lagrange_dtime;
@@ -195,7 +195,7 @@ namespace dismod_at {
 		);
 		// get_solution
 		void get_solution(
-			CppAD::vector<double>& variable_value  ,
+			CppAD::vector<double>& fit_var_value   ,
 			CppAD::vector<double>& lagrange_value  ,
 			CppAD::vector<double>& lagrange_dage   ,
 			CppAD::vector<double>& lagrange_dtime
@@ -203,7 +203,7 @@ namespace dismod_at {
 		// sample from asympotitic approximation for posterior distribution
 		void sample_posterior(
 			CppAD::vector<double>&              sample          ,
-			const CppAD::vector<double>&        variable_value  ,
+			const CppAD::vector<double>&        fit_var_value   ,
 			const CppAD::vector<double>&        lagrange_value  ,
 			const CppAD::vector<double>&        lagrange_dage   ,
 			const CppAD::vector<double>&        lagrange_dtime  ,

@@ -253,17 +253,17 @@ void set_command(
 			row_value[var_id] = CppAD::to_string( prior_mean[var_id] );
 	}
 	else if( source == "fit_var" )
-	{	// variable_value
-		vector<double> variable_value;
+	{	// fit_var_value
+		vector<double> fit_var_value;
 		string table_name  = "fit_var";
-		string column_name = "variable_value";
+		string column_name = "fit_var_value";
 		dismod_at::get_table_column(
-			db, table_name, column_name, variable_value
+			db, table_name, column_name, fit_var_value
 		);
 		//
 		// put it in row_value
 		for(size_t var_id = 0; var_id < n_var; var_id++)
-			row_value[var_id] = to_string(variable_value[var_id]);
+			row_value[var_id] = to_string(fit_var_value[var_id]);
 	}
 	else
 	{	assert( source == "sample" );
@@ -538,7 +538,7 @@ void init_command(
 				size_t age_id  = s_info_vec[smooth_id].age_id(i);
 				size_t time_id = s_info_vec[smooth_id].time_id(j);
 				//
-				// variable_value
+				// fit_var_value
 # ifndef NDEBUG
 				for(size_t j = 0; j < n_col; j++)
 					assert( row_value[ n_col * var_id + j ] == "" );
@@ -718,7 +718,7 @@ are used as inputs.
 $head fit_var_table$$
 A new $cref fit_var_table$$ is created each time this command is run.
 It contains the results of the fit in its
-$cref/variable_value/fit_var_table/variable_value/$$ column.
+$cref/fit_var_value/fit_var_table/fit_var_value/$$ column.
 
 $head fit_data_subset_table$$
 A new $cref fit_data_subset_table$$ is created each time this command is run.
@@ -868,7 +868,7 @@ void fit_command(
 	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_var);
 	vector<bool>   col_unique(n_col);
 	//
-	col_name[0]       = "variable_value";
+	col_name[0]       = "fit_var_value";
 	col_type[0]       = "real";
 	col_unique[0]     = false;
 	//
@@ -899,7 +899,7 @@ void fit_command(
 	//
 	for(size_t var_id = 0; var_id < n_var; var_id++)
 	{
-		// variable_value
+		// fit_var_value
 		row_value[var_id * n_col + 0] = to_string( opt_value[var_id] );
 		//
 		// initialzie residuals as empty (null in database)
@@ -1514,12 +1514,12 @@ void sample_command(
 	// replace_like
 	data_object.replace_like(minimum_meas_cv, data_subset_obj);
 	//
-	// fit_var.variable_value
-	vector<double> variable_value;
+	// fit_var.fit_var_value
+	vector<double> fit_var_value;
 	string table_name  = "fit_var";
-	string column_name = "variable_value";
+	string column_name = "fit_var_value";
 	dismod_at::get_table_column(
-		db, table_name, column_name, variable_value
+		db, table_name, column_name, fit_var_value
 	);
 	//
 	// fit_var.lagrange_value
@@ -1551,8 +1551,8 @@ void sample_command(
 		bound_random         ,
 		fit_or_sample        ,
 		pack_object          ,
-		variable_value       ,
-		variable_value       ,
+		fit_var_value        ,
+		fit_var_value        ,
 		db_input.prior_table ,
 		s_info_vec           ,
 		data_object          ,
@@ -1565,7 +1565,7 @@ void sample_command(
 	vector<double> sample(n_sample * n_var);
 	fit_object.sample_posterior(
 		sample               ,
-		variable_value       ,
+		fit_var_value        ,
 		lagrange_value       ,
 		lagrange_dage        ,
 		lagrange_dtime       ,
@@ -1672,21 +1672,21 @@ void predict_command(
 		dismod_at::error_exit(msg);
 	}
 	// ------------------------------------------------------------------------
-	// variable_value
-	vector<double> variable_value;
+	// fit_var_value
+	vector<double> fit_var_value;
 	string table_name = source;
 	string column_name;
 	if( source == "sample" )
 		column_name = "var_value";
 	else if( source == "fit_var" )
-		column_name = "variable_value";
+		column_name = "fit_var_value";
 	else
 		column_name = "truth_var_value";
 	dismod_at::get_table_column(
-		db, table_name, column_name, variable_value
+		db, table_name, column_name, fit_var_value
 	);
-	size_t n_sample = variable_value.size() / n_var;
-	assert( n_sample * n_var == variable_value.size() );
+	size_t n_sample = fit_var_value.size() / n_var;
+	assert( n_sample * n_var == fit_var_value.size() );
 # ifndef NDEBUG
 	// ------------------------------------------------------------------------
 	// check sample table
@@ -1741,7 +1741,7 @@ void predict_command(
 	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
 	{	// copy the variable values for this sample index into pack_vec
 		for(size_t var_id = 0; var_id < n_var; var_id++)
-			pack_vec[var_id] = variable_value[sample_id++];
+			pack_vec[var_id] = fit_var_value[sample_id++];
 		//
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	int integrand_id = avgint_subset_obj[subset_id].integrand_id;

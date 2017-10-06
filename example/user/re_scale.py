@@ -236,7 +236,7 @@ assert log_table[fit_log_id + 1]['message'] == 'end fit'
 assert len(age_table) == 3
 iota_optimal = 1e-4 * (50.0 + age_table[1]['age'])
 for var_id in range( len(var_table) ) :
-	iota_fit   = fit_var_table[var_id]['variable_value']
+	iota_fit   = fit_var_table[var_id]['fit_var_value']
 	assert abs( iota_fit / iota_optimal - 1.0 ) < 1e-4
 # -----------------------------------------------------------------------------
 print('re_scale.py: OK')

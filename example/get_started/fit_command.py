@@ -79,10 +79,10 @@ for var_id in range( len(var_table) ) :
 	fit_row     = fit_var_table[var_id]
 	var_type    = var_row['var_type']
 	if var_type == 'mulcov_rate_value' :
-		income_multiplier = fit_row['variable_value']
+		income_multiplier = fit_row['fit_var_value']
 		assert income_multiplier == -1e-3
 	elif var_type == 'rate' :
-		omega_world = fit_row['variable_value']
+		omega_world = fit_row['fit_var_value']
 		assert abs( omega_world / 1e-2 - 1.0) < 1e-6
 	else :
 		assert False

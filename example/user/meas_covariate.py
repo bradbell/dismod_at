@@ -319,11 +319,11 @@ for var_id in range( len(var_table) ) :
 	match = match and row['node_id'] == parent_node_id
 	if match and row['rate_id'] == iota_rate_id :
 		count += 1
-		value = fit_var_table[var_id]['variable_value']
+		value = fit_var_table[var_id]['fit_var_value']
 		assert abs( value / iota_true - 1.0 ) < tol
 	if match and row['rate_id'] == remission_rate_id :
 		count += 1
-		value = fit_var_table[var_id]['variable_value']
+		value = fit_var_table[var_id]['fit_var_value']
 		assert abs( value / remission_true - 1.0 ) < 5.0 * tol
 assert count == 8
 #
@@ -338,7 +338,7 @@ for var_id in range( len(var_table) ) :
 	if match :
 		integrand_id = row['integrand_id']
 		count       += 1
-		value        = fit_var_table[var_id]['variable_value']
+		value        = fit_var_table[var_id]['fit_var_value']
 		if integrand_id == remission_integrand_id :
 			assert abs( value / mulcov_remission - 1.0 ) < tol
 		else :

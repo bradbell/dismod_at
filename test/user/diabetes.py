@@ -405,13 +405,13 @@ text = "{:>11s} {:>11s} {:>11s} {:>11s}"
 text = text.format('i_var', 'value', 'mean', 'cv' )
 print(text)
 for i in range( n_var ) :
-	variable_value = fit_var_table[i]['variable_value']
+	fit_var_value  = fit_var_table[i]['fit_var_value']
 	mean = sample_mean[i]
 	cv   = float('nan')
-	if variable_value != 0 :
-		cv   = sample_std[i] / variable_value
+	if fit_var_value  != 0 :
+		cv   = sample_std[i] / fit_var_value
 	text = "{:11d} {:11.4g} {:11.4g} {:11.4g}"
-	text = text.format(i, variable_value, mean, cv )
+	text = text.format(i, fit_var_value, mean, cv )
 	print(text)
 print('diabetes.py: OK')
 # END PYTHON

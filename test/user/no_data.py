@@ -229,7 +229,7 @@ iota_rate_id      = 1
 max_err           = 0.0;
 for var_id in range( len(var_table) ) :
 	row    = var_table[var_id]
-	value  = fit_var_table[var_id]['variable_value']
+	value  = fit_var_table[var_id]['fit_var_value']
 	assert row['var_type'] == 'rate'
 	assert row['node_id'] == parent_node_id
 	assert row['rate_id'] == iota_rate_id

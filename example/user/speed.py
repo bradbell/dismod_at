@@ -403,7 +403,7 @@ assert( len(fit_var_table) == number_variable )
 max_error       = 0.0
 for var_id in range( number_variable ) :
 	row        = fit_var_table[var_id]
-	fit_value  = row['variable_value']
+	fit_value  = row['fit_var_value']
 	true_value = var_id2true[var_id]
 	if true_value == 0.0 :
 		max_error = max(abs(fit_value) , max_error)

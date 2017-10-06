@@ -301,7 +301,7 @@ assert warning_count == 1
 #
 max_error    = 0.0
 for var_id in range( len(var_table) ) :
-	fit_value = fit_var_table[var_id]['variable_value']
+	fit_value = fit_var_table[var_id]['fit_var_value']
 	var_row   = var_table[var_id]
 	rate_id   = var_row['rate_id']
 	rate_name = rate_table[rate_id]['rate_name']

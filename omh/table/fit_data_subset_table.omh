@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -49,7 +49,7 @@ $cref/weighted_residuals
 /$$
 that correspond to the
 $cref model_variables$$ obtained by the fit; see
-$cref/variable_value/fit_var_table/variable_value/$$.
+$cref/fit_var_value/fit_var_table/fit_var_value/$$.
 
 $head Example$$
 See the $cref fit_command.py$$ example and test.

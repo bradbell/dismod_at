@@ -280,7 +280,7 @@ for rate_id in range(n_rate) :
 			if age_id not in rate_value :
 				rate_value[age_id] = dict()
 			rate_value[age_id][time_id] = \
-				fit_var_table[var_id]['variable_value']
+				fit_var_table[var_id]['fit_var_value']
 			#
 			assert fit_var_table[var_id]['lagrange_value'] == 0.0
 			if age_id == last_age_id :

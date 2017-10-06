@@ -132,7 +132,7 @@
 #
 # $subhead fit_value$$
 # If the $cref fit_command$$ has been run, this is the
-# $cref/variable_value/fit_var_table/variable_value/$$.
+# $cref/fit_var_value/fit_var_table/fit_var_value/$$.
 #
 # $subhead res_value$$
 # If the $cref fit_command$$ has been run, this is the
@@ -743,7 +743,7 @@ def db2csv_command(database_file_arg) :
 				 table_lookup('sample', var_id, 'var_value')
 		if have_table['fit_var'] :
 			row_out['fit_value'] = \
-				 table_lookup('fit_var', var_id, 'variable_value')
+				 table_lookup('fit_var', var_id, 'fit_var_value')
 			row_out['res_value'] = \
 				 table_lookup('fit_var', var_id, 'residual_value')
 			row_out['res_dage']  = \

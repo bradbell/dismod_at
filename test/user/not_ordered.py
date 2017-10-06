@@ -284,7 +284,7 @@ for var_id in range( len(var_table) ) :
 	assert row['var_type'] == 'rate'
 	if row['node_id'] == parent_node_id :
 		count += 1
-		value  = fit_var_table[var_id]['variable_value']
+		value  = fit_var_table[var_id]['fit_var_value']
 		if row['rate_id'] == iota_rate_id :
 			assert abs( value / iota_true - 1.0 ) < eps
 		else :
@@ -297,7 +297,7 @@ for var_id in range( len(var_table) ) :
 	row   = var_table[var_id]
 	if row['node_id'] != parent_node_id :
 		count += 1
-		value = fit_var_table[var_id]['variable_value']
+		value = fit_var_table[var_id]['fit_var_value']
 		assert abs(value) < eps
 assert count == 5 * 2
 # -----------------------------------------------------------------------------

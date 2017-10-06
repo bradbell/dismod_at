@@ -256,7 +256,7 @@ for var_id in range(n_var) :
 	age    = age_list[age_id]
 	if age == 40 :
 		fit           = fit_var_table[var_id]
-		iota_at_40    = fit['variable_value']
+		iota_at_40    = fit['fit_var_value']
 		data          = fit_data_subset_dict[0]
 		avgint_at_40  = data['avg_integrand']
 		assert abs( avgint_at_40 / iota_at_40 - 1.0 ) < 1e-10

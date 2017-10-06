@@ -271,7 +271,7 @@ for var_id in range( n_var ) :
 	rate_id = var_table[var_id]['rate_id']
 	assert( rate_table[rate_id]['rate_name'] == 'iota' )
 	#
-	fit_value = fit_var_table[var_id]['variable_value']
+	fit_value = fit_var_table[var_id]['fit_var_value']
 	node_id   = var_table[var_id]['node_id']
 	node_name = node_table[node_id]['node_name']
 	truth     = iota_true[node_name]

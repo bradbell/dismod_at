@@ -301,7 +301,7 @@ for var_id in range( len(var_table) ) :
 	match = row['var_type'] == 'mulcov_rate_value'
 	if match :
 		count       += 1
-		value        = fit_var_table[var_id]['variable_value']
+		value        = fit_var_table[var_id]['fit_var_value']
 		covariate_id = row['covariate_id']
 		if covariate_id == 0 :
 			# income covariate

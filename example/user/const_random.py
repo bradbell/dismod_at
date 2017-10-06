@@ -302,7 +302,7 @@ fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 connection.close()
 #
 for var_id in range( len(var_table) ) :
-	fit_value = fit_var_table[var_id]['variable_value']
+	fit_value = fit_var_table[var_id]['fit_var_value']
 	var_row   = var_table[var_id]
 	node_id   = var_row ['node_id']
 	rate_id   = var_row['rate_id']

@@ -258,7 +258,7 @@ for var_id in range( n_var ) :
 	rate_id = var_table[var_id]['rate_id']
 	assert( rate_table[rate_id]['rate_name'] == 'iota' )
 	#
-	value   = fit_var_table[var_id]['variable_value']
+	value   = fit_var_table[var_id]['fit_var_value']
 	#
 	node_id  = var_table[var_id]['node_id']
 	north_america   = node_table[node_id]['node_name'] == 'north_america'

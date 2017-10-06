@@ -607,13 +607,13 @@ $end
 	unscale_fixed_effect(fixed_opt, fixed_opt);
 	//
 	// size store solution_
-	solution_.variable_value.resize(n_var);
+	solution_.fit_var_value.resize(n_var);
 	solution_.lagrange_value.resize(n_var);
 	solution_.lagrange_dage.resize(n_var);
 	solution_.lagrange_dtime.resize(n_var);
 	//
 	// values that are stored by fixed effect index
-	pack_fixed(pack_object_, solution_.variable_value, fixed_opt);
+	pack_fixed(pack_object_, solution_.fit_var_value, fixed_opt);
 	pack_fixed(pack_object_, solution_.lagrange_value, fixed_lag);
 	//
 	// values that are stored by random effect index
@@ -621,7 +621,7 @@ $end
 	{	d_vector zero(n_random_);
 		for(size_t i = 0; i < n_random_; i++)
 			zero[i] = 0.0;
-		pack_random(pack_object_, solution_.variable_value, random_opt);
+		pack_random(pack_object_, solution_.fit_var_value, random_opt);
 		pack_random(pack_object_, solution_.lagrange_value, zero);
 	}
 	//
@@ -647,19 +647,20 @@ $spell
 	dage
 	dtime
 	CppAD
+	var
 $$
 
 $section Get Solution Corresponding to Previous Fit$$
 
 $head Syntax$$
 $codei%%fit_object%.get_solution(
-	%variable_value%, %lagrange_value%, %lagrange_dage%, %lagrange_dtime
+	%fit_var_value%, %lagrange_value%, %lagrange_dage%, %lagrange_dtime%
 )%$$
 
 $head fit_object$$
 see $cref/fit_object/fit_model_ctor/fit_object/$$.
 
-$head variable_value$$
+$head fit_var_value$$
 The size of this vector size is zero or
 equal to the number of model variables.
 The input value of its elements does not matter.
@@ -704,14 +705,14 @@ of using this routine.
 $head Prototype$$
 $srccode%cpp% */
 void fit_model::get_solution(
-	CppAD::vector<double>& variable_value  ,
+	CppAD::vector<double>& fit_var_value   ,
 	CppAD::vector<double>& lagrange_value  ,
 	CppAD::vector<double>& lagrange_dage   ,
 	CppAD::vector<double>& lagrange_dtime  )
 /* %$$
 $end
 */
-{	variable_value = solution_.variable_value;
+{	fit_var_value  = solution_.fit_var_value;
 	lagrange_value = solution_.lagrange_value;
 	lagrange_dage  = solution_.lagrange_dage;
 	lagrange_dtime = solution_.lagrange_dtime;
@@ -731,7 +732,7 @@ $section Sample From Posterior Distribution for a Fit$$
 $head Syntax$$
 $icode%fit_object%.sample_posterior(
 	%sample%,
-	%variable_value%,
+	%fit_var_value%,
 	%lagrange_value%,
 	%lagrange_dage%,
 	%lagrange_dtime%,
@@ -757,7 +758,7 @@ These samples are independent for different $icode i$$,
 and for fixed $icode i$$ they have the asymptotic covariance
 for the model variables.
 
-$head variable_value$$
+$head fit_var_value$$
 This vector has size equal to the number of model variables.
 It is the optimal $cref/variable values/model_variables/$$ in
 $cref pack_info$$ order.
@@ -789,7 +790,7 @@ $head Prototype$$
 $srccode%cpp% */
 void fit_model::sample_posterior(
 	CppAD::vector<double>&              sample          ,
-	const CppAD::vector<double>&        variable_value  ,
+	const CppAD::vector<double>&        fit_var_value   ,
 	const CppAD::vector<double>&        lagrange_value  ,
 	const CppAD::vector<double>&        lagrange_dage   ,
 	const CppAD::vector<double>&        lagrange_dtime  ,
@@ -801,7 +802,7 @@ $end
 	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( sample.size() % n_var == 0     );
-	assert( variable_value.size() == n_var );
+	assert( fit_var_value.size() == n_var );
 	assert( lagrange_value.size() == n_var );
 	assert( lagrange_dage.size()  == n_var );
 	assert( lagrange_dtime.size() == n_var );
@@ -812,7 +813,7 @@ $end
 	// solution.fixed_opt
 	CppAD::mixed::fixed_solution solution;
 	solution.fixed_opt.resize(n_fixed_);
-	unpack_fixed(pack_object_, variable_value, solution.fixed_opt);
+	unpack_fixed(pack_object_, fit_var_value, solution.fixed_opt);
 	//
 	// solution.fixed_lag
 	solution.fixed_lag.resize(n_fixed_);
@@ -831,7 +832,7 @@ $end
 	//
 	// random_opt
 	CppAD::vector<double> random_opt(n_random_);
-	unpack_random(pack_object_, variable_value, random_opt);
+	unpack_random(pack_object_, fit_var_value, random_opt);
 	//
 	// convert dismod_at random effects to cppad_mixed random effects
 	d_vector cppad_mixed_random_opt = random_dismod_at2cppad_mixed(

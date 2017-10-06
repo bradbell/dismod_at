@@ -39,7 +39,7 @@ $codei%
 %$$
 In addition, the size of both tables is the same.
 
-$head variable_value$$
+$head fit_var_value$$
 This column has type $code real$$ and contains the model variable values.
 To be specific, the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$ $latex ( \theta )$$,

@@ -299,7 +299,7 @@ for var_id in range( n_var ) :
 	time_id   = var_table[var_id]['time_id']
 	time      = time_table[time_id]['time']
 	#
-	value     = fit_var_table[var_id]['variable_value']
+	value     = fit_var_table[var_id]['fit_var_value']
 	#
 	if node_name == 'north_america' :
 		if rate_name == 'iota' :

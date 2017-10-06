@@ -282,7 +282,7 @@ eps            = 1e-4
 iota_rate_id      = 1
 for var_id in range( len(var_table) ) :
 	row    = var_table[var_id]
-	value  = fit_var_table[var_id]['variable_value']
+	value  = fit_var_table[var_id]['fit_var_value']
 	assert row['var_type'] == 'rate'
 	if row['node_id'] == parent_node_id :
 		if row['rate_id'] == iota_rate_id :

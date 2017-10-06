@@ -177,7 +177,7 @@ Add the $cref user_jump_at_age.py$$ example.
 $head 11-15$$
 $list number$$
 The $code fit_var_value$$ column in the fit table has been changed to
-the $cref/variable_value/fit_var_table/variable_value/$$ column.
+the $cref/fit_var_value/fit_var_table/fit_var_value/$$ column.
 $lnext
 Add residual columns for
 $cref/value/fit_var_table/residual_value/$$
