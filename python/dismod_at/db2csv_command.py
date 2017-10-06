@@ -26,9 +26,10 @@
 #	avgint
 #	dir
 #	dismodat
+#	tru
 # $$
 #
-# $section Summary of Database as Two Csv Files$$
+# $section Create Csv Files that Summarize The Database$$
 #
 # $head Syntax$$
 #
@@ -120,15 +121,14 @@
 # $cref/fixed effect/model_variables/Fixed Effects, theta/$$,
 # otherwise it is $code false$$.
 #
+# $subhead tru_value$$
+# If the truth_var table exists, this is the corresponding
+# $cref/truth_var_value/truth_var_table/truth_var_value/$$.
+#
 # $subhead sam_value$$
-# If the $cref sample_command$$ has been run, this is the
+# If the sample table exists, this is the
 # $cref/var_value/sample_table/var_value/$$ corresponding to
 # $cref/sample_index/sample_table/sample_index/$$ equal to zero.
-# If the previous sample command method was
-# $cref/fit_var/sample_command/method/fit_var/$$,
-# These are the model variables corresponding to the previous fit; i.e.,
-# $cref/variable values/fit_var_table/variable_value/$$ in the
-# fit_var table.
 #
 # $subhead fit_value$$
 # If the $cref fit_command$$ has been run, this is the
@@ -510,6 +510,7 @@ def db2csv_command(database_file_arg) :
 			sys.exit(msg)
 	#
 	have_table = dict()
+	have_table['truth_var']       = check4table(cursor, 'truth_var')
 	have_table['sample']          = check4table(cursor, 'sample')
 	have_table['simulate']        = check4table(cursor, 'simulate')
 	have_table['fit_var']         = check4table(cursor, 'fit_var')
@@ -694,6 +695,7 @@ def db2csv_command(database_file_arg) :
 		'covariate',
 		'node',
 		'fixed',
+		'tru_value',
 		'sam_value',
 		'fit_value',
 		'res_value',
@@ -733,6 +735,9 @@ def db2csv_command(database_file_arg) :
 			if row_in['node_id'] != parent_node_id :
 				row_out['fixed'] = 'false'
 		#
+		if have_table['truth_var'] :
+			row_out['tru_value'] = \
+				 table_lookup('truth_var', var_id, 'truth_var_value')
 		if have_table['sample'] :
 			row_out['sam_value'] = \
 				 table_lookup('sample', var_id, 'var_value')

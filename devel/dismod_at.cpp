@@ -94,9 +94,12 @@ $$
 $section Directly Setting Table Values$$
 
 $head Syntax$$
+$codei%dismod_at %database% set option %name% %value%
+%$$
 $codei%dismod_at %database% set %table_out% %source%
 %$$
-$codei%dismod_at %database% set option %name% %value%$$
+$codei%dismod_at %database% set %table_out% %source% %sample_index%
+%$$
 
 $head database$$
 Is an
@@ -122,33 +125,43 @@ If this table exists before the command,
 the values originally in the table are lost.
 
 $subhead start_var$$
-In this case,
+If $icode table_out$$ is $code start_var$$,
 the $cref/start_var/start_var_table/$$ table is created.
 Note that this table may also be created directly by the user
 (with the aid of the $cref var_table$$).
 
 $subhead scale_var$$
-In this case,
+If $icode table_out$$ is $code scale_var$$,
 the $cref/scale_var/scale_var_table/$$ table is created.
 Note that this table may also be created directly by the user
 (with the aid of the $cref var_table$$).
 
 $subhead truth_var$$
-In this case,
+If $icode table_out$$ is $code truth_var$$,
 the $cref/truth_var/truth_var_table/$$ table is created.
 Note that this table may also be created directly by the user
 (with the aid of the $cref var_table$$).
 
 $head source$$
-The start command argument $icode source$$ must be one of the following:
+The set command argument $icode source$$ must be one of the following:
 
 $subhead prior_mean$$
 If $icode source$$ is $code prior_mean$$,
 the mean of the priors is used for the values in $icode table_out$$.
+In this case $icode sample_index$$ is not present.
 
 $subhead fit_var$$
 If $icode source$$ is $code fit_var$$,
 the results of the previous fit is used for the values in $icode table_out$$.
+In this case $icode sample_index$$ is not present.
+
+$subhead sample$$
+If $icode source$$ is $code sample$$,
+$icode sample_index$$ must be present.
+In this case the $cref model_variables$$ in the sample table,
+and corresponding to the specified sample index,
+are used for the values in $icode table_out$$.
+
 
 $children%example/get_started/set_command.py%$$
 $head Example$$
@@ -189,25 +202,36 @@ void set_option_command(
 	return;
 }
 void set_command(
-	const std::string&                     table_out   ,
-	const std::string&                     source      ,
-	sqlite3*                               db          ,
-	const vector<double>&                  prior_mean  )
+	const std::string&                     table_out    ,
+	const std::string&                     source       ,
+	const std::string&                     sample_index ,
+	sqlite3*                               db           ,
+	const vector<double>&                  prior_mean   )
 {	using std::string;
 	using CppAD::to_string;
+	//
+	// string used for error messaging
+	string msg;
 	//
 	if( table_out != "start_var"
 	&&  table_out != "scale_var"
 	&&  table_out != "truth_var" )
-	{	string msg = "dismod_at set command table_out = ";
-		msg       += table_out + " is not one of the following: ";
-		msg       += "start_var, scale_var, truth_var";
+	{	msg  = "dismod_at set command table_out = ";
+		msg += table_out + " is not one of the following: ";
+		msg += "start_var, scale_var, truth_var";
 		dismod_at::error_exit(msg);
 	}
-	if( source != "prior_mean" && source != "fit_var" )
-	{	string msg = "dismod_at set command source = ";
-		msg       += source + " is not one of the following: ";
-		msg       += "prior_mean, fit_var";
+	if( source != "prior_mean"
+	&&  source != "fit_var"
+	&&  source != "sample" )
+	{	msg  = "dismod_at set command source = ";
+		msg += source + " is not one of the following: ";
+		msg += "prior_mean, fit_var, sample";
+		dismod_at::error_exit(msg);
+	}
+	if( source == "sample" && sample_index == "" )
+	{	msg  = "dismod_at set command source = sample";
+		msg += " sample_index is missing";
 		dismod_at::error_exit(msg);
 	}
 	//
@@ -228,10 +252,8 @@ void set_command(
 	{	for(size_t var_id = 0; var_id < n_var; var_id++)
 			row_value[var_id] = CppAD::to_string( prior_mean[var_id] );
 	}
-	else
-	{	assert( source == "fit_var" );
-		//
-		// get fit_var table information
+	else if( source == "fit_var" )
+	{	// variable_value
 		vector<double> variable_value;
 		string table_name  = "fit_var";
 		string column_name = "variable_value";
@@ -242,6 +264,36 @@ void set_command(
 		// put it in row_value
 		for(size_t var_id = 0; var_id < n_var; var_id++)
 			row_value[var_id] = to_string(variable_value[var_id]);
+	}
+	else
+	{	assert( source == "sample" );
+		//
+		// index
+		size_t index = size_t ( std::atoi( sample_index.c_str() ) );
+		//
+		// var_value
+		vector<double> var_value;
+		string table_name  = "sample";
+		string column_name = "var_value";
+		dismod_at::get_table_column(
+			db, table_name, column_name, var_value
+		);
+		// n_sample
+		if( var_value.size() % n_var != 0 )
+		{	msg  = "sample table size not a multiple of number of variables";
+			dismod_at::error_exit(msg);
+		}
+		size_t n_sample = var_value.size() / n_var;
+		if( n_sample <= index )
+		{	msg  = "dismod_at set command: sample_index >= number of samples";
+			dismod_at::error_exit(msg);
+		}
+		//
+		// put in row_value
+		for(size_t var_id = 0; var_id < n_var; var_id++)
+		{	size_t sample_id = index * n_var + var_id;
+				row_value[var_id] = to_string(var_value[sample_id]);
+		}
 	}
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
@@ -348,14 +400,16 @@ void init_command(
 	}
 	// -----------------------------------------------------------------------
 	// start_var table
-	string table_out = "start_var";
-	string source    = "prior_mean";
-	set_command(table_out, source, db, prior_mean);
+	string table_out    = "start_var";
+	string source       = "prior_mean";
+	string sample_index = "";
+	set_command(table_out, source, sample_index, db, prior_mean);
 	// -----------------------------------------------------------------------
 	// scale_var table
-	table_out = "scale_var";
-	source    = "prior_mean";
-	set_command(table_out, source, db, prior_mean);
+	table_out    = "scale_var";
+	source       = "prior_mean";
+	sample_index = "";
+	set_command(table_out, source, sample_index, db, prior_mean);
 	// -----------------------------------------------------------------------
 	// data_subset table
 	string table_name = "data_subset";
@@ -1947,16 +2001,15 @@ int main(int n_arg, const char** argv)
 			set_option_command(db, name, value);
 		}
 		else
-		{	if( n_arg != 5 )
-			{	cerr << "expected only source to follow "
-				"dismod_at database set table_out\n";
-				std::exit(1);
-			}
-			std::string table_out = argv[3];
-			std::string source    = argv[4];
+		{	std::string table_out     = argv[3];
+			std::string source        = argv[4];
+			std::string sample_index  = "";
+			if( n_arg == 6 )
+				sample_index = argv[5];
 			set_command(
 				table_out       ,
 				source          ,
+				sample_index    ,
 				db              ,
 				prior_mean
 			);

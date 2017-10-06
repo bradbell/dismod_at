@@ -7,6 +7,8 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
+# Simulate a data set and fit it. In addition, using sample table
+# as the source in a set command.
 # Test a case where sim_std is much different from meas_std.
 #
 # values used to simulate data
@@ -320,7 +322,7 @@ connection.close()
 for command in [ 'simulate', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'simulate' :
-		number_simulate = '1'
+		number_simulate = '2'
 		cmd.append(number_simulate)
 	if command == 'fit' :
 		variables = 'both'
@@ -337,7 +339,6 @@ for command in [ 'simulate', 'fit' ] :
 new          = False
 connection   = dismod_at.create_connection(file_name, new)
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
-connection.close()
 #
 max_error    = 0.0
 for var_id in range( len(var_table) ) :
@@ -352,4 +353,30 @@ if max_error > 5e-2 :
 	print('max_error = ', max_error)
 	assert(False)
 # -----------------------------------------------------------------------------
+# set start_var so it corresponds to second set of model variables
+cmd = [ program, file_name, 'sample', 'simulate', '2' ]
+print( ' '.join(cmd) )
+flag = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at sample command failed')
+cmd = [ program, file_name, 'set', 'start_var', 'sample', '1' ]
+print( ' '.join(cmd) )
+flag = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at set command failed')
+start_var_table = dismod_at.get_table_dict(connection, 'start_var')
+sample_table    = dismod_at.get_table_dict(connection, 'sample')
+sample_index    = 1
+n_var           = len(var_table)
+for var_id in range( n_var ) :
+	start_value  = start_var_table[var_id]['start_var_value']
+	sample_value = sample_table[ sample_index * n_var + var_id ]['var_value']
+	start_value  = float( start_value )
+	sample_value = float( sample_value )
+	if start_value == 0.0 :
+		assert sample_value == 0.0
+	else :
+		assert abs( start_value / sample_value - 1.0 )  < 1e-10
+# -----------------------------------------------------------------------------
+connection.close()
 print('fit_sim.py: OK')
