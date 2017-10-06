@@ -34,6 +34,7 @@ $spell
 	integrands
 	mulstd
 	var
+	frac
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -70,6 +71,8 @@ Change $code random_bound$$ to
 $cref/bound_random/option_table/Optimizer/bound_random/$$.
 Change $code zero_sum_random$$ to
 $cref/zero_sum_random/option_table/zero_sum_random/$$.
+Change $code fixed_bound_frac$$ to
+$cref/bound_frac_fixed/option_table/Optimizer/bound_frac_fixed/$$.
 $lend
 
 $head 10-04$$

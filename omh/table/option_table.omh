@@ -394,9 +394,9 @@ On the other hand; the samples of the random effects are withing the
 limits specified by $icode bound_random$$.
 $lend
 
-$subhead fixed_bound_frac$$
+$subhead bound_frac_fixed$$
 If $icode option_name$$ is
-$code fixed_bound_frac$$
+$code bound_frac_fixed$$
 the corresponding $icode option_value$$
 is greater than zero and lese than or equal one half.
 It determines how much the initial point might have to be modified

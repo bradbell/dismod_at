@@ -215,7 +215,7 @@ def example_db (file_name) :
 		{ 'name':'max_num_iter_fixed',     'value':'0'                 },
 		{ 'name':'print_level_fixed',      'value':'0'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e+10'             },
-		{ 'name':'fixed_bound_frac',       'value':str(bound_frac)     }
+		{ 'name':'bound_frac_fixed',       'value':str(bound_frac)     }
 
 	]
 	# ----------------------------------------------------------------------

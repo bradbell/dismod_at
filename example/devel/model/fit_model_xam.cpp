@@ -342,7 +342,7 @@ bool fit_model_xam(void)
 	option_map["max_num_iter_fixed"]            = "100";
 	option_map["print_level_fixed"]             = "0";
 	option_map["accept_after_max_steps_fixed"]  = "5";
-	option_map["fixed_bound_frac"]              = "1e-2";
+	option_map["bound_frac_fixed"]              = "1e-2";
 	option_map["bound_random"]                  = "";
 	//
 	option_map["derivative_test_random"]        = "second-order";

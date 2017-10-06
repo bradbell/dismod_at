@@ -509,7 +509,7 @@ $lnext
 Change the $cref option_table$$ so that all entries have default values
 and do not need to appear in the table.
 $lnext
-Add the $cref/fixed_bound_frac/option_table/Optimizer/fixed_bound_frac/$$
+Add the $cref/bound_frac_fixed/option_table/Optimizer/bound_frac_fixed/$$
 option.
 $lend
 
