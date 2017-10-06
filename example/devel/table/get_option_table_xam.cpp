@@ -65,7 +65,7 @@ bool get_option_table_xam(void)
 		"minimum_meas_cv",               "0.1",
 		"ode_step_size",                 "20.0",
 		"random_seed",                   "123",
-		"random_zero_sum",                "iota  omega",
+		"zero_sum_random",                "iota  omega",
 		"rate_case",                     "iota_zero_rho_zero"
 	};
 	size_t n_option = sizeof(option_list) / sizeof( option_list[0] );

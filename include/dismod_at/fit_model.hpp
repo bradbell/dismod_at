@@ -184,7 +184,7 @@ namespace dismod_at {
 			const data_model&                    data_object     ,
 			const prior_model&                   prior_object    ,
 			bool                                 quasi_fixed     ,
-			const CppAD::vector<bool>&           random_zero_sum
+			const CppAD::vector<bool>&           zero_sum_random
 		);
 		//
 		// run fit

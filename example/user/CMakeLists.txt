@@ -25,7 +25,7 @@ FOREACH(user_case
 	metropolis
 	no_children
 	predict_fit
-	random_zero_sum
+	zero_sum_random
 	re_scale
 	students
 )

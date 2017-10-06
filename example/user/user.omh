@@ -55,7 +55,7 @@ $childtable%example/user/asymptotic.py
 	%example/user/meas_covariate.py
 	%example/user/no_children.py
 	%example/user/predict_fit.py
-	%example/user/random_zero_sum.py
+	%example/user/zero_sum_random.py
 	%example/user/re_scale.py
 	%example/user/speed.py
 	%example/user/students.py

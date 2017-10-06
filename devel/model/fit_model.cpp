@@ -18,7 +18,7 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace { // BEGIN_EMPTY_NAMESPACE
 CppAD::mixed::sparse_rcv ran_con_rcv(
 	double                        bound_random    ,
-	const CppAD::vector<bool>&    random_zero_sum ,
+	const CppAD::vector<bool>&    zero_sum_random ,
 	const dismod_at::pack_info&   pack_object     )
 {	// number of fixed plus random effects
 	size_t n_var = pack_object.size();
@@ -51,7 +51,7 @@ CppAD::mixed::sparse_rcv ran_con_rcv(
 	//
 	// for each rate
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	if( random_zero_sum[rate_id] )
+	{	if( zero_sum_random[rate_id] )
 		{	// packing information for first child
 			dismod_at::pack_info::subvec_info
 				info_0 = pack_object.rate_info(rate_id, 0);
@@ -89,7 +89,7 @@ CppAD::mixed::sparse_rcv ran_con_rcv(
 	//
 	// for each rate
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	if( random_zero_sum[rate_id] )
+	if( zero_sum_random[rate_id] )
 	{	// packing information for first child and this rate
 		dismod_at::pack_info::subvec_info
 			info_0 = pack_object.rate_info(rate_id, 0);
@@ -165,7 +165,7 @@ $codei%fit_model %fit_object%(
 	%data_object%,
 	%prior_object%,
 	%quasi_fixed%,
-	%random_zero_sum%,
+	%zero_sum_random%,
 	%option_map%
 )
 %$$
@@ -221,9 +221,9 @@ a quasi-Newton method is used when optimizing the fixed effects.
 Otherwise a full Newton method is used; see
 $cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$.
 
-$head random_zero_sum$$
+$head zero_sum_random$$
 If this vector has size $code number_rate_enum$$.
-If $icode%random_zero_sum%[%rate_id%]%$$ is true,
+If $icode%zero_sum_random%[%rate_id%]%$$ is true,
 for each age, time,
 the sum of the random effects for the corresponding rate
 is constrained to be zero.
@@ -243,7 +243,7 @@ fit_model::fit_model(
 	const data_model&                     data_object      ,
 	const prior_model&                    prior_object     ,
 	bool                                  quasi_fixed      ,
-	const CppAD::vector<bool>&            random_zero_sum  )
+	const CppAD::vector<bool>&            zero_sum_random  )
 /* %$$
 $end
 */
@@ -261,7 +261,7 @@ $end
 	// bool_sparsity
 	false,
 	// A_rcv
-	ran_con_rcv(bound_random, random_zero_sum, pack_object)
+	ran_con_rcv(bound_random, zero_sum_random, pack_object)
 ),
 db_            (db)                                 ,
 warn_on_stderr_( warn_on_stderr )                   ,

@@ -12,18 +12,18 @@
 new_directories='
 '
 rename_files='
-	test/user/random_bound.py
+	example/user/random_zero_sum.py
 '
 spell_files='
 '
 no_change_files='
 '
 #
-rename_cmd='s|random_bound.py|bound_random.py|'
+rename_cmd='s|random_zero_sum.py|zero_sum_random.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|random_bound|bound_random|g
+s|random_zero_sum|zero_sum_random|g
 
 EOF
 # -----------------------------------------------------------------------------

@@ -19,7 +19,7 @@ $spell
 	nslist
 $$
 
-$section Check Only One Smoothing for Each Rate in random_zero_sum$$
+$section Check Only One Smoothing for Each Rate in zero_sum_random$$
 
 $head syntax$$
 $codei%check_zero_sum(
@@ -28,7 +28,7 @@ $codei%check_zero_sum(
 
 $head Purpose$$
 For each $icode rate_name$$ in
-$cref/random_zero_sum/option_table/random_zero_sum/$$,
+$cref/zero_sum_random/option_table/zero_sum_random/$$,
 the corresponding
 $cref/child_nslist_id/rate_table/child_nslist_id/$$ must be null.
 
@@ -58,7 +58,7 @@ and it is the
 $cref/option_table/get_option_table/option_table/$$.
 For this table, only the row  with
 $codei%
-	%option_name% = "random_zero_sum"
+	%option_name% = "zero_sum_random"
 %$$
 is used.
 
@@ -79,7 +79,7 @@ void check_zero_sum(
 	string msg;
 	//
 	for(size_t option_id = 0; option_id < option_table.size(); option_id++)
-	if( option_table[option_id].option_name == "random_zero_sum" )
+	if( option_table[option_id].option_name == "zero_sum_random" )
 	{	string option_value = option_table[option_id].option_value;
 		size_t option_size  = option_value.size();
 		for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
@@ -87,7 +87,7 @@ void check_zero_sum(
 			bool found        = option_value.find( rate_name ) < option_size;
 			int child_nslist_id = rate_table[rate_id].child_nslist_id;
 			if( found && child_nslist_id != DISMOD_AT_NULL_INT )
-			{	msg = "found " + rate_name + " in value for random_zero_sum";
+			{	msg = "found " + rate_name + " in value for zero_sum_random";
 				msg += " option and corresponding child_nslist_id not null";
 				string table_name = "rate";
 				error_exit(msg, table_name, rate_id);

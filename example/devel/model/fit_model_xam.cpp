@@ -356,10 +356,10 @@ bool fit_model_xam(void)
 	// bound_random
 	double bound_random = std::numeric_limits<double>::infinity();
 	//
-	// random_zero_sum
-	vector<bool> random_zero_sum( dismod_at::number_rate_enum );
+	// zero_sum_random
+	vector<bool> zero_sum_random( dismod_at::number_rate_enum );
 	for(size_t rate_id = 0; rate_id < dismod_at::number_rate_enum; rate_id++)
-		random_zero_sum[rate_id] = false;
+		zero_sum_random[rate_id] = false;
 	//
 	// warn_on_stderr
 	bool warn_on_stderr = true;
@@ -378,7 +378,7 @@ bool fit_model_xam(void)
 		data_object,
 		prior_object,
 		quasi_fixed,
-		random_zero_sum
+		zero_sum_random
 	);
 	bool random_only = false;
 	fit_object.run_fit( random_only, option_map );

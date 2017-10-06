@@ -68,6 +68,8 @@ $cref user$$ examples.
 $lnext
 Change $code random_bound$$ to
 $cref/bound_random/option_table/Optimizer/bound_random/$$.
+Change $code zero_sum_random$$ to
+$cref/zero_sum_random/option_table/zero_sum_random/$$.
 $lend
 
 $head 10-04$$
@@ -348,12 +350,12 @@ $lnext
 There was a bug and the case
 $cref/fit fixed/fit_command/variables/fixed/$$ would not run
 when
-$cref/random_zero_sum/option_table/random_zero_sum/$$ was not null
+$cref/zero_sum_random/option_table/zero_sum_random/$$ was not null
 (specified one or more rates).
 This has been fixed.
 $lnext
 For each $icode rate_name$$ in
-$cref/random_zero_sum/option_table/random_zero_sum/$$
+$cref/zero_sum_random/option_table/zero_sum_random/$$
 the corresponding
 $cref/child_nslist_id/rate_table/child_nslist_id/$$
 must be null.
@@ -361,7 +363,7 @@ An error messages is reported if this is not the case.
 $lend
 
 $head 04-27$$
-Change the $cref/random_zero_sum/option_table/random_zero_sum/$$ option
+Change the $cref/zero_sum_random/option_table/zero_sum_random/$$ option
 so it can select specific rates to have zero sum.
 This was necessary so that
 $cref/child_nslist_id/rate_table/child_nslist_id/$$ can be used

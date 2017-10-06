@@ -7,7 +7,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_random_zero_sum.py$$ $newlinech #$$
+# $begin user_zero_sum_random.py$$ $newlinech #$$
 # $spell
 #	init
 # $$
@@ -16,12 +16,12 @@
 #
 # $head Discussion$$
 # This example demonstrates using
-# The $cref/random_zero_sum/option_table/random_zero_sum/$$
+# The $cref/zero_sum_random/option_table/zero_sum_random/$$
 # to improve the estimation of the fixed effects.
 #
 # $code
 # $srcfile%
-#	example/user/random_zero_sum.py
+#	example/user/zero_sum_random.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -42,7 +42,7 @@ import copy
 import math
 import random
 import time
-test_program = 'example/user/random_zero_sum.py'
+test_program = 'example/user/zero_sum_random.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -201,7 +201,7 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america'     },
-		{ 'name':'random_zero_sum',        'value':'iota rho'          },
+		{ 'name':'zero_sum_random',        'value':'iota rho'          },
 		{ 'name':'random_seed',            'value':'0'                 },
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_pos'  },
@@ -319,5 +319,5 @@ if not ok :
 	print('python_seed = ', python_seed)
 assert ok
 # -----------------------------------------------------------------------
-print('random_zero_sum: OK')
+print('zero_sum_random: OK')
 # END PYTHON

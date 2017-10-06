@@ -767,14 +767,14 @@ void fit_command(
 	column_name = "scale_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, scale_var);
 	// ----------------------------------------------------------------------
-	// random_zero_sum
+	// zero_sum_random
 	size_t n_rate      = size_t(dismod_at::number_rate_enum);
-	size_t option_size = option_map["random_zero_sum"].size();
-	vector<bool> random_zero_sum(n_rate);
+	size_t option_size = option_map["zero_sum_random"].size();
+	vector<bool> zero_sum_random(n_rate);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	string rate_name = dismod_at::get_rate_name(rate_id);
-		size_t found     = option_map["random_zero_sum"].find( rate_name );
-		random_zero_sum[rate_id] = found < option_size;
+		size_t found     = option_map["zero_sum_random"].find( rate_name );
+		zero_sum_random[rate_id] = found < option_size;
 	}
 	// ------------------ run fit_model ------------------------------------
 	// quasi_fixed
@@ -797,7 +797,7 @@ void fit_command(
 		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
-		random_zero_sum
+		zero_sum_random
 	);
 	fit_object.run_fit(random_only, option_map);
 	vector<double> opt_value, lag_value, lag_dage, lag_dtime;
@@ -1371,14 +1371,14 @@ void sample_command(
 		return;
 	}
 	// ----------------------------------------------------------------------
-	// random_zero_sum
+	// zero_sum_random
 	size_t n_rate      = size_t(dismod_at::number_rate_enum);
-	size_t option_size = option_map["random_zero_sum"].size();
-	vector<bool> random_zero_sum(n_rate);
+	size_t option_size = option_map["zero_sum_random"].size();
+	vector<bool> zero_sum_random(n_rate);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	string rate_name = dismod_at::get_rate_name(rate_id);
-		size_t found     = option_map["random_zero_sum"].find( rate_name );
-		random_zero_sum[rate_id] = found < option_size;
+		size_t found     = option_map["zero_sum_random"].find( rate_name );
+		zero_sum_random[rate_id] = found < option_size;
 	}
 	// ----------------------------------------------------------------------
 	// quasi_fixed
@@ -1467,7 +1467,7 @@ void sample_command(
 				data_object          ,
 				prior_object         ,
 				quasi_fixed          ,
-				random_zero_sum
+				zero_sum_random
 			);
 			fit_object.run_fit(random_only, option_map);
 			vector<double> opt_value, lag_value, lag_dage, lag_dtime;
@@ -1542,7 +1542,7 @@ void sample_command(
 		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
-		random_zero_sum
+		zero_sum_random
 	);
 	//
 	// sample

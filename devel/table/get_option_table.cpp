@@ -114,7 +114,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "quasi_fixed",                   "true"               },
 		{ "bound_random",                  ""                   },
 		{ "random_seed",                   "0"                  },
-		{ "random_zero_sum",               ""                   },
+		{ "zero_sum_random",               ""                   },
 		{ "rate_case",                     "iota_pos_rho_zero"  },
 		{ "tolerance_fixed",               "1e-8"               },
 		{ "tolerance_random",              "1e-8"               },
@@ -289,7 +289,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 					derivative_test_fixed_level = 1;
 			}
 		}
-		if( name_vec[match] == "random_zero_sum" )
+		if( name_vec[match] == "zero_sum_random" )
 		{	CppAD::vector<string> rate_list = split_space(
 					option_value[option_id]
 			);

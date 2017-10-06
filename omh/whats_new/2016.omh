@@ -165,7 +165,7 @@ $lend
 
 $head 10-16$$
 $list number$$
-The $cref/random_zero_sum.py/user_random_zero_sum.py/$$
+The $cref/zero_sum_random.py/user_zero_sum_random.py/$$
 example / test was added.
 $lnext
 There was a bug (that has been fixed) in
@@ -190,7 +190,7 @@ $lend
 
 $head 10-15$$
 Add the
-$cref/random_zero_sum/option_table/random_zero_sum/$$ option which
+$cref/zero_sum_random/option_table/zero_sum_random/$$ option which
 constrains the sum of the random effects to be zero.
 
 $head 10-14$$

@@ -101,8 +101,8 @@ are not included in the $cref predict_table$$;
 see the heading Note for the
 $cref/predict table/predict_table/Avgint Subset/Node/$$.
 
-$head random_zero_sum$$
-If $icode option_name$$ is $code random_zero_sum$$,
+$head zero_sum_random$$
+If $icode option_name$$ is $code zero_sum_random$$,
 the corresponding value is a space separated subset of the
 $cref/rate names/rate_table/rate_name/$$.
 For each rate in the list, each age, and each time,
@@ -111,9 +111,9 @@ $cref/random effects/model_variables/Random Effects, u/$$ estimates
 is constrained to be zero.
 These are additional constraints in the optimization problem for the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$.
-The file $cref/random_zero_sum.py/user_random_zero_sum.py/$$
+The file $cref/zero_sum_random.py/user_zero_sum_random.py/$$
 contains an example and test using these constraints.
-Note that for each rate in $icode random_zero_sum$$,
+Note that for each rate in $icode zero_sum_random$$,
 $cref/child_nslist_id/rate_table/child_nslist_id/$$ must be null; i.e.,
 all of the child must use the same smoothing for this rate.
 
