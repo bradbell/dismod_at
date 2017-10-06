@@ -642,7 +642,7 @@ def db2csv_command(database_file_arg) :
 		[ "print_level_fixed",             "0"],
 		[ "print_level_random",            "0"],
 		[ "quasi_fixed",                   "true"],
-		[ "random_bound",                  ""],
+		[ "bound_random",                  ""],
 		[ "random_seed",                   "0"],
 		[ "random_zero_sum",               "false"],
 		[ "rate_case",                     "iota_pos_rho_zero"],

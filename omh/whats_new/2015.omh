@@ -296,7 +296,7 @@ Add lower and upper limits to the random effects in
 $code cppad_mixed optimize_random$$ and
 $code cppad_mixed optimize_fixed$$.
 This is represented by
-$cref/random_bound/option_table/Optimizer/random_bound/$$ in the option table.
+$cref/bound_random/option_table/Optimizer/bound_random/$$ in the option table.
 
 $head 11-05$$
 $list number$$

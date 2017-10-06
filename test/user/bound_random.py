@@ -11,7 +11,7 @@
 # testing effect of random bounds greater than zero and less than infinity
 #
 iota_true = { 'north_america' : 1e-2, 'united_states' : 0.7, 'canada' : -0.7 }
-random_bound = 0.6
+bound_random = 0.6
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -19,7 +19,7 @@ import distutils.dir_util
 import subprocess
 import copy
 from math import exp
-test_program = 'test/user/random_bound.py'
+test_program = 'test/user/bound_random.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -188,7 +188,7 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america'     },
-		{ 'name':'random_bound',           'value':str(random_bound)   },
+		{ 'name':'bound_random',           'value':str(bound_random)   },
 		{ 'name':'random_seed',            'value':'0'                 },
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
@@ -282,13 +282,13 @@ for var_id in range( n_var ) :
 		relerr = fit_value / iota_true['north_america'] - 1.0
 		assert abs(relerr) < 1e-1
 	if node_name == 'united_states' :
-		assert( truth > random_bound )
-		relerr = fit_value / random_bound - 1.0
+		assert( truth > bound_random )
+		relerr = fit_value / bound_random - 1.0
 		assert abs(relerr) < 1e-7
 	if node_name == 'canada' :
-		assert( truth < - random_bound )
-		relerr = fit_value / random_bound + 1.0
+		assert( truth < - bound_random )
+		relerr = fit_value / bound_random + 1.0
 		assert abs(relerr) < 1e-7
 # -----------------------------------------------------------------------
-print('random_bound: OK')
+print('bound_random: OK')
 # END PYTHON

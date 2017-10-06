@@ -12,21 +12,19 @@
 new_directories='
 '
 rename_files='
+	test/user/random_bound.py
 '
 spell_files='
 '
 no_change_files='
 '
 #
-rename_cmd='s|variable_command.py|set_command.py|'
+rename_cmd='s|random_bound.py|bound_random.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-/^\\t\\t{/N
-/'name' *: *'pini' *,/! b one
-N
-s|.*},{|\\t\\t{|
-: one
+s|random_bound|bound_random|g
+
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

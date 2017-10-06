@@ -17,7 +17,7 @@ FOREACH(user_case
 	neg_iteration
 	no_data
 	not_ordered
-	random_bound
+	bound_random
 	relrisk
 	zero_random
 )

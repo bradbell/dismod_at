@@ -343,7 +343,7 @@ bool fit_model_xam(void)
 	option_map["print_level_fixed"]             = "0";
 	option_map["accept_after_max_steps_fixed"]  = "5";
 	option_map["fixed_bound_frac"]              = "1e-2";
-	option_map["random_bound"]                  = "";
+	option_map["bound_random"]                  = "";
 	//
 	option_map["derivative_test_random"]        = "second-order";
 	option_map["tolerance_random"]              = "1e-8";
@@ -353,8 +353,8 @@ bool fit_model_xam(void)
 	// ----------------------- run the fit -------------------------------
 	bool quasi_fixed = false;
 	//
-	// random_bound
-	double random_bound = std::numeric_limits<double>::infinity();
+	// bound_random
+	double bound_random = std::numeric_limits<double>::infinity();
 	//
 	// random_zero_sum
 	vector<bool> random_zero_sum( dismod_at::number_rate_enum );
@@ -368,7 +368,7 @@ bool fit_model_xam(void)
 	dismod_at::fit_model fit_object(
 		db,
 		warn_on_stderr,
-		random_bound,
+		bound_random,
 		fit_or_sample,
 		pack_object,
 		start_var,

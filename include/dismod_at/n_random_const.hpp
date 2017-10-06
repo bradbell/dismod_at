@@ -18,7 +18,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	extern size_t number_random_const(
-		double                               random_bound ,
+		double                               bound_random ,
 		const pack_info&                     pack_object  ,
 		const CppAD::vector<smooth_info>&    s_info_vec   ,
 		const CppAD::vector<prior_struct>&   prior_table

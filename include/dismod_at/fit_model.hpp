@@ -174,7 +174,7 @@ namespace dismod_at {
 		fit_model(
 			sqlite3*                             db              ,
 			bool                                 warn_on_stderr  ,
-			double                               random_bound    ,
+			double                               bound_random    ,
 			const std::string&                   fit_or_sample   ,
 			const pack_info&                     pack_object     ,
 			const CppAD::vector<double>&         start_var       ,

@@ -131,7 +131,7 @@ for $icode name$$ equal to $code var$$, $code predict$$, and $code sample$$.
 This makes it clearer that they are copies of the corresponding tables
 as a python list of dictionaries; see $cref get_table_dict$$.
 $lnext
-If $cref/random_bound/option_table/Optimizer/random_bound/$$ was zero,
+If $cref/bound_random/option_table/Optimizer/bound_random/$$ was zero,
 the $cref sample_command$$ would terminate with a $code cppad_mixed$$
 error message. This has been fixed. In addition, the random bound documentation
 now includes mention that is not accounted for in the
@@ -227,7 +227,7 @@ $lend
 $head 10-12$$
 $list number$$
 Add the option to set the
-$cref/random_bound/option_table/Optimizer/random_bound/$$ to zero.
+$cref/bound_random/option_table/Optimizer/bound_random/$$ to zero.
 $lnext
 Change $icode%name%_dict%$$ to $icode%name%_table%$$ in the python examples.
 For example, $code data_dict$$ was changed to

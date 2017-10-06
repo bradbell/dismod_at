@@ -19,12 +19,12 @@ $section Determine Number of Random Effects that are Constant$$
 
 $head Syntax$$
 $icode%n_random_const% = number_random_const(
-	%random_bound%, %pack_object%, %s_info_vec%, %prior_table%
+	%bound_random%, %pack_object%, %s_info_vec%, %prior_table%
 )%$$
 
-$head random_bound$$
+$head bound_random$$
 This is the value of the
-$cref/random_bound/option_table/Optimizer/random_bound/$$
+$cref/bound_random/option_table/Optimizer/bound_random/$$
 in the option table.
 
 $head pack_object$$
@@ -51,17 +51,17 @@ $end
 namespace dismod_at {
 	// number_random_const
 	size_t number_random_const(
-		double                               random_bound ,
+		double                               bound_random ,
 		const pack_info&                     pack_object  ,
 	    const CppAD::vector<smooth_info>&    s_info_vec   ,
 		const CppAD::vector<prior_struct>&   prior_table  )
-	{	assert( random_bound >= 0.0 );
+	{	assert( bound_random >= 0.0 );
 		//
 		// mapping from random effects to all variables
 		CppAD::vector<size_t> pack_index = random2var_id(pack_object);
 		assert( pack_index.size() == pack_object.random_size() );
 		//
-		if( random_bound == 0.0 )
+		if( bound_random == 0.0 )
 		{	// all random effects are the constant zero
 			return pack_index.size();
 		}

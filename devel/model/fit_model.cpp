@@ -17,7 +17,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 CppAD::mixed::sparse_rcv ran_con_rcv(
-	double                        random_bound    ,
+	double                        bound_random    ,
 	const CppAD::vector<bool>&    random_zero_sum ,
 	const dismod_at::pack_info&   pack_object     )
 {	// number of fixed plus random effects
@@ -43,7 +43,7 @@ CppAD::mixed::sparse_rcv ran_con_rcv(
 	//
 	// check for first case where random constraint matrix is empty
 	CppAD::mixed::sparse_rcv A_rcv;
-	if( n_child == 0 || random_bound == 0 )
+	if( n_child == 0 || bound_random == 0 )
 		return A_rcv;
 	//
 	// initilaize count of number of random constraint equations
@@ -157,7 +157,7 @@ $section Fit Model Constructor$$
 $head Syntax$$
 $codei%fit_model %fit_object%(
 	%db%,
-	%random_bound%,
+	%bound_random%,
 	%pack_object%,
 	%start_var%,
 	%prior_table%,
@@ -177,9 +177,9 @@ $head db$$
 This argument is the database connection for
 $cref/logging/log_message/$$ errors and warnings.
 
-$head random_bound$$
+$head bound_random$$
 This is the value of the
-$cref/random_bound/option_table/Optimizer/random_bound/$$
+$cref/bound_random/option_table/Optimizer/bound_random/$$
 in the option table.
 
 $head fit_or_sample$$
@@ -233,7 +233,7 @@ $srccode%cpp% */
 fit_model::fit_model(
 	sqlite3*                              db               ,
 	bool                                  warn_on_stderr   ,
-	double                                random_bound     ,
+	double                                bound_random     ,
 	const std::string&                    fit_or_sample    ,
 	const pack_info&                      pack_object      ,
 	const CppAD::vector<double>&          start_var        ,
@@ -254,14 +254,14 @@ $end
 	number_fixed(pack_object),
 	// n_random in dismod_at minus number random effects that are constant
 	pack_object.random_size() - number_random_const(
-		random_bound, pack_object, s_info_vec, prior_table
+		bound_random, pack_object, s_info_vec, prior_table
 	),
 	// quasi_fixed
 	quasi_fixed,
 	// bool_sparsity
 	false,
 	// A_rcv
-	ran_con_rcv(random_bound, random_zero_sum, pack_object)
+	ran_con_rcv(bound_random, random_zero_sum, pack_object)
 ),
 db_            (db)                                 ,
 warn_on_stderr_( warn_on_stderr )                   ,
@@ -275,7 +275,7 @@ prior_table_   ( prior_table )                      ,
 s_info_vec_    ( s_info_vec  )                      ,
 data_object_   ( data_object )                      ,
 prior_object_  ( prior_object )
-{	assert( random_bound >= 0.0 );
+{	assert( bound_random >= 0.0 );
 	assert( fit_or_sample == "fit" || fit_or_sample == "sample" );
 	double inf = std::numeric_limits<double>::infinity();
 	// ----------------------------------------------------------------------
@@ -310,8 +310,8 @@ prior_object_  ( prior_object )
 	for(size_t i = 0; i < n_random_; i++)
 	{	if( random_lower_[i] == - inf )
 		{	assert( random_upper_[i] == + inf );
-			random_lower_[i] = - random_bound;
-			random_upper_[i]  = random_bound;
+			random_lower_[i] = - bound_random;
+			random_upper_[i]  = bound_random;
 		}
 		else
 			assert( random_lower_[i] == random_upper_[i] );
@@ -325,7 +325,7 @@ prior_object_  ( prior_object )
 	}
 	//
 	assert( n_random_equal_ == number_random_const(
-		random_bound, pack_object, s_info_vec, prior_table
+		bound_random, pack_object, s_info_vec, prior_table
 	) );
 	// ----------------------------------------------------------------------
 	// diff_prior_

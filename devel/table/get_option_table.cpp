@@ -112,7 +112,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "print_level_fixed",             "0"                  },
 		{ "print_level_random",            "0"                  },
 		{ "quasi_fixed",                   "true"               },
-		{ "random_bound",                  ""                   },
+		{ "bound_random",                  ""                   },
 		{ "random_seed",                   "0"                  },
 		{ "random_zero_sum",               ""                   },
 		{ "rate_case",                     "iota_pos_rho_zero"  },
@@ -217,11 +217,11 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(msg, table_name, option_id);
 			}
 		}
-		if( name_vec[match] == "random_bound" )
-		{	std::string random_bound_str = option_value[option_id];
-			if( random_bound_str != "" )
-			{	double random_bound = std::atof( random_bound_str.c_str() );
-				bool ok = 0.0 <= random_bound;
+		if( name_vec[match] == "bound_random" )
+		{	std::string bound_random_str = option_value[option_id];
+			if( bound_random_str != "" )
+			{	double bound_random = std::atof( bound_random_str.c_str() );
+				bool ok = 0.0 <= bound_random;
 				if( ! ok )
 				{	msg = "option_value is less than zero.";
 					error_exit(msg, table_name, option_id);

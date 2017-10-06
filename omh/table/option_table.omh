@@ -343,13 +343,13 @@ for optimizing the fixed effects (random effects).
 (This is called $code tol$$ in Ipopt documentation.)
 The default value for this option is $code 1e-8$$.
 
-$subhead random_bound$$
+$subhead bound_random$$
 If $icode option_name$$ is
-$code random_bound$$,
+$code bound_random$$,
 plus and minus the corresponding $icode option_value$$
 are the bounds for each of the
 $cref/random effects/model_variables/Random Effects, u/$$.
-If $icode random_bound$$ is $code null$$,
+If $icode bound_random$$ is $code null$$,
 plus and minus infinity is used for the bounds; see
 $cref/bounds that are null/database/Bounds That are Null/$$.
 
@@ -359,7 +359,7 @@ $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
 does not include bounds for the random effects.
 
 $lnext
-The bound $icode random_bound$$ does not affect the
+The bound $icode bound_random$$ does not affect the
 $cref/constant random effects
 	/rate_table
 	/Child Restrictions
@@ -370,7 +370,7 @@ because they are treated a parameters, and not random effects,
 in the Laplace approximation.
 
 $lnext
-The special case where $icode random_bound$$ is zero,
+The special case where $icode bound_random$$ is zero,
 fits as if there were no random effects except for the fact that
 the resulting optimal value can be used as a starting point for fitting
 with random effects; see
@@ -382,16 +382,16 @@ Fitting with no random effects corresponds to
 a $code null$$ value for all the
 $cref/child_smooth_id/rate_table/child_smooth_id/$$ and
 $cref/child_nslist_id/rate_table/child_nslist_id/$$ in the rate table.
-This is different from $icode random_bound$$ zero which includes
+This is different from $icode bound_random$$ zero which includes
 the random effects (with value zero) in the
 $cref model_variables$$.
 
 $lnext
 Note that the theory used to compute
 $cref/asymptotic/sample_command/method/asymptotic/$$ samples of the fixed
-effects, does not take $icode random_bound$$ into account.
+effects, does not take $icode bound_random$$ into account.
 On the other hand; the samples of the random effects are withing the
-limits specified by $icode random_bound$$.
+limits specified by $icode bound_random$$.
 $lend
 
 $subhead fixed_bound_frac$$

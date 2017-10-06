@@ -623,7 +623,7 @@ $cref/constant random effects
 /$$ at their constrained values and the other random effects
 constrained to be zero.
 (This is equivalent to fitting with
-$cref/random_bound/option_table/Optimizer/random_bound/$$ equal to zero.)
+$cref/bound_random/option_table/Optimizer/bound_random/$$ equal to zero.)
 This is useful when one uses fitting with no random effects as
 a starting point for fitting with random effects; see
 $cref set_command$$,
@@ -632,7 +632,7 @@ $cref/fit_fixed.py/user_fit_fixed.py/$$.
 This enables one to see the different between the two
 fits in the $cref log_table$$
 (as apposed to changing
-$cref/random_bound/option_table/Optimizer/random_bound/$$
+$cref/bound_random/option_table/Optimizer/bound_random/$$
 in the $code option$$ table).
 
 $subhead random$$
@@ -713,15 +713,15 @@ void fit_command(
 			dismod_at::error_exit(msg);
 	}
 	//
-	// random_bound
-	double random_bound = 0.0;
+	// bound_random
+	double bound_random = 0.0;
 	if( variables != "fixed" )
 	{	// null corresponds to infinity
-		std::string tmp_str = option_map["random_bound"];
+		std::string tmp_str = option_map["bound_random"];
 		if( tmp_str == "" )
-			random_bound = std::numeric_limits<double>::infinity();
+			bound_random = std::numeric_limits<double>::infinity();
 		else
-			random_bound = std::atof( tmp_str.c_str() );
+			bound_random = std::atof( tmp_str.c_str() );
 	}
 	// random_only
 	bool random_only = variables == "random";
@@ -787,7 +787,7 @@ void fit_command(
 	dismod_at::fit_model fit_object(
 		db                   ,
 		warn_on_stderr       ,
-		random_bound         ,
+		bound_random         ,
 		fit_or_sample        ,
 		pack_object          ,
 		start_var            ,
@@ -1273,7 +1273,7 @@ times the number of rows in the $cref var_table$$.
 $head Bounds$$
 The samples are all within the specified bounds, including the bounds
 on the random effects specified by
-$cref/random_bound/option_table/Optimizer/random_bound/$$.
+$cref/bound_random/option_table/Optimizer/bound_random/$$.
 
 $children%example/get_started/sample_command.py
 %$$
@@ -1387,11 +1387,11 @@ void sample_command(
 	// warn_on_stderr
 	bool warn_on_stderr = option_map["warn_on_stderr"] == "true";
 	//
-	// random_bound, null corresponds to infinity
-	std::string tmp_str = option_map["random_bound"];
-	double random_bound = std::numeric_limits<double>::infinity();
+	// bound_random, null corresponds to infinity
+	std::string tmp_str = option_map["bound_random"];
+	double bound_random = std::numeric_limits<double>::infinity();
 	if( tmp_str != "" )
-		random_bound = std::atof( tmp_str.c_str() );
+		bound_random = std::atof( tmp_str.c_str() );
 	// minimum_meas_cv
 	double minimum_meas_cv = std::atof(
 		option_map["minimum_meas_cv"].c_str()
@@ -1457,7 +1457,7 @@ void sample_command(
 			dismod_at::fit_model fit_object(
 				db                   ,
 				warn_on_stderr       ,
-				random_bound         ,
+				bound_random         ,
 				fit_or_sample        ,
 				pack_object          ,
 				truth_var_value      ,
@@ -1532,7 +1532,7 @@ void sample_command(
 	dismod_at::fit_model fit_object(
 		db                   ,
 		warn_on_stderr       ,
-		random_bound         ,
+		bound_random         ,
 		fit_or_sample        ,
 		pack_object          ,
 		variable_value       ,

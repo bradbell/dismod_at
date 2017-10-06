@@ -65,6 +65,9 @@ are not present, the value null is used for the corresponding
 entry in the database.
 In addition, remove the corresponding setting to $code None$$ in the
 $cref user$$ examples.
+$lnext
+Change $code random_bound$$ to
+$cref/bound_random/option_table/Optimizer/bound_random/$$.
 $lend
 
 $head 10-04$$
@@ -476,14 +479,14 @@ $cref/variables/fit_command/variables/$$ during the fit.
 $head 04-16$$
 $list number$$
 The change on 04-15 introduced a bug whereby non-zero values for
-$cref/random_bound/option_table/Optimizer/random_bound/$$ were not having
+$cref/bound_random/option_table/Optimizer/bound_random/$$ were not having
 any effects.
 This has been fixed.
 $lnext
 The $cref/variables/fit_command/variables/$$ argument was added to the
 fit command. It is better to use $icode variables$$ equal to $code fixed$$,
 a apposed to changing
-$cref/random_bound/option_table/Optimizer/random_bound/$$
+$cref/bound_random/option_table/Optimizer/bound_random/$$
 in the $code option$$ table.
 $lnext
 The $cref wish_list$$ was updated.
