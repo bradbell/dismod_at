@@ -28,7 +28,6 @@ and end of every command.
 In addition, the log table is cumulative; i.e.,
 it is never erased and restarted.
 
-$comment Same order as table below$$
 $children%omh/table/log_table.omh
 	%omh/table/var_table.omh
 	%omh/table/data_subset_table.omh
@@ -41,9 +40,6 @@ $children%omh/table/log_table.omh
 	%omh/table/sample_table.omh
 	%omh/table/predict_table.omh
 %$$
-
-$comment Same order as children above$$
-
 $head Output Tables$$
 Here is a list of the $code dismod_at$$ output tables.
 The ones that can be created directly by the user have
@@ -88,7 +84,7 @@ $cref/fit/fit_command/$$ $cnext
 no
 $rnext
 $cref/truth_var/truth_var_table/$$ $cnext
-$cref/variable/set_command/table_out/truth_var/$$ $cnext
+$cref/set/set_command/table_out/truth_var/$$ $cnext
 yes
 $rnext
 $cref/simulate/simulate_table/$$ $cnext
@@ -104,7 +100,7 @@ $cref/predict/predict_command/$$ $cnext
 no
 $tend
 
-$head Extra Input Tables$$
+$head Input and Output by Command$$
 An extra input table is one that is not in the $cref input$$ list
 and is not created by the $cref init_command$$.
 The tables created by the init command are the
@@ -112,32 +108,31 @@ $cref/var/init_command/var_table/$$,
 $cref/data_subset/init_command/data_subset_table/$$,
 $cref/start_var/init_command/start_var_table/$$, and
 $cref/scale_var/init_command/scale_var_table/$$ tables.
-Below is list of commands and their extra input tables.
 
 $table
-Command $cnext
-Extra Input
+Command     $cnext
+Extra Input $cnext
+Output      $cnext
 $rnext
-$cref/set table_out fit_var/set_command/source/fit_var/$$ $cnext
-	$cref/fit_var/fit_var_table/$$
+$cref/set/set_command/$$                     $cnext
+$cref fit_var_table$$, $cref sample_table$$  $cnext
+$cref start_var_table$$, $cref scale_var_table$$, $cref truth_var_table$$
 $rnext
-$cref/fit simulate_index/fit_command/simulate_index/$$ $cnext
-	$cref/simulate/simulate_table/$$
+$cref/fit/fit_command/$$     $cnext
+	$cref simulate_table$$  $cnext
+	$cref fit_var_table$$, $cref data_subset_table$$.
 $rnext
-$cref/predict fit_var/predict_command/source/fit_var/$$ $cnext
-	$cref/fit_var/fit_var_table/$$
+$cref/simulate/simulate_command/$$ $cnext
+	$cref truth_var_table$$        $cnext
+	$cref simulate_table$$
 $rnext
-$cref/simulate number_simulate/simulate_command/$$ $cnext
-	$cref/truth_var/set_command/table_out/truth_var/$$
-$rnext
-$cref/sample asymptotic/sample_command/method/asymptotic/$$ $cnext
-	$cref/fit_var/fit_var_table/$$
-$rnext
-$cref/sample simulate/sample_command/method/simulate/$$ $cnext
-	$cref/simulate/simulate_table/$$
+$cref/sample/sample_command/$$ $cnext
+	$cref fit_var_table$$, $cref simulate_table$$ $cnext
+	$cref sample_table$$
 $rnext
 $cref/predict/predict_command/$$ $cnext
-	$cref/sample/sample_table/$$
+	$cref sample_table$$, $cref fit_var_table$$, $cref truth_var_table$$ $cnext
+	$cref predict_table$$
 $tend
 
 $end

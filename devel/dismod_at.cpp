@@ -1308,7 +1308,7 @@ this command has the extra input $cref  simulate_table$$
 which was created by the previous $cref simulate_command$$.
 
 $head fit_var_table$$
-If $icode method$$ is $code asymptotic$$ or $code fit_var$$,
+If $icode method$$ is $code asymptotic$$,
 this command has the extra input $cref fit_var_table$$
 which was created by a previous $cref fit_command$$.
 
