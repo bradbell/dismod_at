@@ -59,6 +59,12 @@ Add the fit_var and truth_var tables as a possible source for the
 predict command.
 Note that the predict command now requires the
 $cref/predict command/predict_command/source/$$ argument.
+$lnext
+The fit_var
+$cref/method/sample_command/method/$$
+for the sample command has been removed.
+It was no longer useful
+given the ability to specify fit_var in the $cref predict_command$$.
 $lend
 
 $head 10-05$$

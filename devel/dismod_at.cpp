@@ -1302,12 +1302,6 @@ $icode number_sample$$ samples of the model variables
 The samples with different values of $icode sample_index$$ are independent.
 (Note that the $cref fit_var_table$$ is an additional input in this case.)
 
-$subhead fit_var$$
-If $icode method$$ is $code fit_var$$,
-the values in the $cref fit_var_table$$ are copied to the $cref sample_table$$.
-In this case, there is only one sample of the $cref model_variables$$
-and $icode number_sample$$ must be equal one.
-
 $head simulate_table$$
 If $icode method$$ is $code simulate$$,
 this command has the extra input $cref  simulate_table$$
@@ -1356,10 +1350,10 @@ void sample_command(
 	using CppAD::to_string;
 	string msg;
 	// -------------------------------------------------------------------
-	if( method != "simulate" && method != "fit_var" && method != "asymptotic" )
+	if( method != "simulate" && method != "asymptotic" )
 	{	msg  = "dismod_at sample command method = ";
 		msg += method + " is not one of the following: ";
-		msg += "simulate, fit_var, asymptotic";
+		msg += "simulate, asymptotic";
 		dismod_at::error_exit(msg);
 	}
 	int tmp = std::atoi( number_sample.c_str() );
@@ -1393,38 +1387,6 @@ void sample_command(
 	col_type[2]   = "real";
 	col_unique[2] = false;
 	// -----------------------------------------------------------------------
-	if( method == "fit_var" )
-	{	// check number_sample
-		if( n_sample != 1 )
-		{	msg  = "dismod_at sample command method = fit_var and";
-			msg += " number_sample is not one";
-			dismod_at::error_exit(msg);
-		}
-		// get fit_var table information
-		vector<double> variable_value;
-		string table_name  = "fit_var";
-		string column_name = "variable_value";
-		dismod_at::get_table_column(
-			db, table_name, column_name, variable_value
-		);
-		//
-		size_t sample_index     = 0;
-		string sample_index_str = to_string( sample_index );
-		assert( variable_value.size() == n_var );
-		for(size_t var_id = 0; var_id < n_var; var_id++)
-		{	size_t sample_id = sample_index * n_var + var_id;
-			row_value[n_col * sample_id + 0] = sample_index_str;
-			row_value[n_col * sample_id + 1] = to_string( var_id );
-			row_value[n_col * sample_id + 2] =
-				to_string( variable_value[var_id] );
-		}
-		table_name = "sample";
-		dismod_at::create_table(
-			db, table_name, col_name, col_type, col_unique, row_value
-		);
-		return;
-	}
-	// ----------------------------------------------------------------------
 	// zero_sum_random
 	size_t n_rate      = size_t(dismod_at::number_rate_enum);
 	size_t option_size = option_map["zero_sum_random"].size();

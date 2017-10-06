@@ -124,7 +124,7 @@ $rnext
 $cref/fit simulate_index/fit_command/simulate_index/$$ $cnext
 	$cref/simulate/simulate_table/$$
 $rnext
-$cref/sample fit_var/sample_command/method/fit_var/$$ $cnext
+$cref/predict fit_var/predict_command/source/fit_var/$$ $cnext
 	$cref/fit_var/fit_var_table/$$
 $rnext
 $cref/simulate number_simulate/simulate_command/$$ $cnext
