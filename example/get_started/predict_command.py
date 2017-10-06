@@ -57,14 +57,13 @@ get_started_db.get_started_db()
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
 file_name      = 'get_started.db'
-for command in [ 'init', 'fit', 'sample', 'predict' ] :
+for command in [ 'init', 'fit', 'predict' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'fit' :
 		variables = 'both'
 		cmd.append(variables)
-	if command == 'sample' :
+	if command == 'predict' :
 		cmd.append('fit_var')
-		cmd.append('1')
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :

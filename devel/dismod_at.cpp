@@ -1639,23 +1639,41 @@ $$
 $section The Predict Command$$
 
 $head Syntax$$
-$codei%dismod_at %database% predict%$$
+$codei%dismod_at %database% predict %source%$$
 
 $head database$$
 Is an
 $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
-$head sample_table$$
-This command has the extra input $cref sample_table$$
-which was created by a previous $cref sample_command$$.
+$head source$$
+This argument specifies where model variable values to use
+for the predictions. The possible values are listed below:
+
+$subhead sample$$
+If $icode source$$ is $code sample$$,
+the values in the $cref sample_table$$ are used for the predictions.
+In this case there are
+$cref/number_simulate/simulate_command/number_simulate/$$ sets
+of model variables that predictions are computed for.
+
+$subhead fit_var$$
+If $icode source$$ is $code fit_var$$,
+the values in the $cref fit_var_table$$ are used for the predictions.
+In this case there is only one set of model variables that the
+predictions are computed for.
+
+$subhead truth_var$$
+If $icode source$$ is $code truth_var$$,
+the values in the $cref truth_var_table$$ are used for the predictions.
+In this case there is only one set of model variables that the
+predictions are computed for.
 
 $head predict_table$$
 A new $cref predict_table$$ is created each time this command is run.
 It contains the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
-values for each
-$cref/sample_index/sample_table/sample_index/$$ in the sample table
+values for set of model variables
 and each
 $cref/avgint_id/predict_table/avgint_id/$$
 in the
@@ -1672,6 +1690,7 @@ $end
 
 // ----------------------------------------------------------------------------
 void predict_command(
+	const std::string&                                source              ,
 	sqlite3*                                          db                  ,
 	const dismod_at::db_input_struct&                 db_input            ,
 	size_t                                            n_var               ,
@@ -1681,19 +1700,61 @@ void predict_command(
 {
 	using std::string;
 	using CppAD::to_string;
-
-	// sample table
-	vector<dismod_at::sample_struct> sample_table =
-		dismod_at::get_sample_table(db);
-
+	//
+	if( source != "sample"
+	&&  source != "fit_var"
+	&&  source != "truth_var" )
+	{	string msg  = "dismod_at predict command source = ";
+		msg        += source + " is not one of the following: ";
+		msg        += "sample, fit_var, truth_var";
+		dismod_at::error_exit(msg);
+	}
+	// ------------------------------------------------------------------------
+	// variable_value
+	vector<double> variable_value;
+	string table_name = source;
+	string column_name;
+	if( source == "sample" )
+		column_name = "var_value";
+	else if( source == "fit_var" )
+		column_name = "variable_value";
+	else
+		column_name = "truth_var_value";
+	dismod_at::get_table_column(
+		db, table_name, column_name, variable_value
+	);
+	size_t n_sample = variable_value.size() / n_var;
+	assert( n_sample * n_var == variable_value.size() );
+# ifndef NDEBUG
+	// ------------------------------------------------------------------------
+	// check sample table
+	if( source == "sample" )
+	{	// sample table
+		vector<dismod_at::sample_struct> sample_table =
+			dismod_at::get_sample_table(db);
+		size_t sample_id = 0;
+		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
+		{	for(size_t var_id = 0; var_id < n_var; var_id++)
+			{	size_t sample_check =
+					size_t( sample_table[sample_id].sample_index);
+				size_t var_check =
+					size_t( sample_table[sample_id].var_id);
+				if( sample_check != sample_index || var_check != var_id )
+				{	string msg = "database modified, restart with init command";
+					table_name = "sample";
+					dismod_at::error_exit(msg, table_name, sample_id);
+				}
+			}
+		}
+	}
+# endif
 	// -----------------------------------------------------------------------
 	// create a new predict table
 	string sql_cmd = "drop table if exists predict";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	string table_name = "predict";
+	table_name = "predict";
 	size_t n_col      = 3;
-	size_t n_sample   = sample_table.size() / n_var;
 	size_t n_subset   = avgint_subset_obj.size();
 	size_t n_row      = n_sample * n_subset;
 	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_row);
@@ -1718,17 +1779,8 @@ void predict_command(
 	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
 	{	// copy the variable values for this sample index into pack_vec
 		for(size_t var_id = 0; var_id < n_var; var_id++)
-		{	size_t sample_check =
-				size_t( sample_table[sample_id].sample_index);
-			size_t var_check =
-				size_t( sample_table[sample_id].var_id);
-			if( sample_check != sample_index || var_check != var_id )
-			{	string msg = "database modified, restart with init command";
-				table_name = "sample";
-				dismod_at::error_exit(msg, table_name, sample_id);
-			}
-			pack_vec[var_id] = sample_table[sample_id++].var_value;
-		}
+			pack_vec[var_id] = variable_value[sample_id++];
+		//
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	int integrand_id = avgint_subset_obj[subset_id].integrand_id;
 			int avgint_id    = avgint_subset_obj[subset_id].original_id;
@@ -1765,7 +1817,6 @@ void predict_command(
 			row_value[n_col * predict_id + 2] = to_string( avg );
 		}
 	}
-	assert( n_sample * n_var == sample_table.size() );
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
@@ -1788,7 +1839,7 @@ int main(int n_arg, const char** argv)
 		{"fit",       5},
 		{"simulate",  4},
 		{"sample",    5},
-		{"predict",   3}
+		{"predict",   4}
 	};
 	size_t n_command = sizeof( command_info ) / sizeof( command_info[0] );
 	//
@@ -2049,7 +2100,9 @@ int main(int n_arg, const char** argv)
 		);
 		avgint_object.set_eigen_ode2_case_number(rate_case);
 		size_t n_var = pack_object.size();
+		std::string source = argv[3];
 		predict_command(
+			source               ,
 			db                   ,
 			db_input             ,
 			n_var                ,

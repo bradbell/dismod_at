@@ -238,14 +238,13 @@ def example_db (file_name) :
 file_name             = 'example.db'
 example_db(file_name)
 program               = '../../devel/dismod_at'
-for command in [ 'init', 'fit', 'sample', 'predict' ] :
+for command in [ 'init', 'fit', 'predict' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'fit' :
 		variables = 'both'
 		cmd.append(variables)
-	if command == 'sample' :
+	if command == 'predict' :
 		cmd.append('fit_var')
-		cmd.append('1') # number_sample must be 1 for fit_var method
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :

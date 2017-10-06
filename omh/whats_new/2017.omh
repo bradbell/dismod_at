@@ -54,6 +54,11 @@ $cref db2csv_command$$.
 $lnext
 Add the sample table as a possible source for the values used in the
 $cref/set command/set_command/source/sample/$$.
+$lnext
+Add the fit_var and truth_var tables as a possible source for the
+predict command.
+Note that the predict command now requires the
+$cref/predict command/predict_command/source/$$ argument.
 $lend
 
 $head 10-05$$
