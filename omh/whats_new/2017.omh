@@ -61,7 +61,7 @@ $lnext
 Add the fit_var and truth_var tables as a possible source for the
 predict command.
 Note that the predict command now requires the
-$cref/predict command/predict_command/source/$$ argument.
+$cref/source/predict_command/source/$$ argument.
 $lnext
 The fit_var
 $cref/method/sample_command/method/$$
