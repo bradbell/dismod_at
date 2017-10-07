@@ -36,6 +36,9 @@ $spell
 	var
 	frac
 	tru
+	sqlite
+	gsl
+	ipopt
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -68,6 +71,14 @@ given the ability to specify fit_var in the $cref predict_command$$.
 $lnext
 In the fit table, change $code variable_value$$ to
 $cref/fit_var_value/fit_var_table/fit_var_value/$$.
+$lnext
+There was a problem with the install process where by the include
+directories for
+$cref/sqlite3/install_unix/System Requirements/sqlite3/$$,
+$cref/gsl/install_unix/System Requirements/gsl/$$, or
+$cref/ipopt/install_unix/Special Requirements/ipopt/$$,
+might not be set correctly.
+This has been fixed.
 $lend
 
 $head 10-05$$

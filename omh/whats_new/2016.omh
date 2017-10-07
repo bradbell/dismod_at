@@ -199,7 +199,7 @@ Fix a warning (that appeared on some systems) about missing braces in
 $code devel/dismod_at.cpp$$.
 $lnext
 Add option so that user can specify the C++ compiler during the install of
-$cref/ipopt/install_unix/Special Requirements/Ipopt/$$ and
+$cref/ipopt/install_unix/Special Requirements/ipopt/$$ and
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
 $lnext
 $bold API Change:$$
@@ -325,7 +325,7 @@ in
 $cref run_cmake.sh$$ and the install for
 $cref/eigen/install_unix/Special Requirements/eigen/$$,
 $cref/suitesparse/install_unix/Special Requirements/suitesparse/$$,
-$cref/ipopt/install_unix/Special Requirements/Ipopt/$$,
+$cref/ipopt/install_unix/Special Requirements/ipopt/$$,
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
 $lend
 
@@ -336,7 +336,7 @@ $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
 In addition, add this parameter to the install for
 $cref/eigen/install_unix/Special Requirements/eigen/$$,
 $cref/suitesparse/install_unix/Special Requirements/suitesparse/$$, and
-$cref/ipopt/install_unix/Special Requirements/Ipopt/$$.
+$cref/ipopt/install_unix/Special Requirements/ipopt/$$.
 CppAD does not need this choice as it adapter to the choice of
 the systems that use it.
 Note that the install for $code dismod_at$$
@@ -515,7 +515,7 @@ $lend
 
 $head 05-04$$
 $list number$$
-Print the $cref/Ipopt/install_unix/Special Requirements/Ipopt/$$
+Print the $cref/ipopt/install_unix/Special Requirements/ipopt/$$
 library directories during the
 $cref/cmake command/install_unix/dismod_at/Cmake Command/$$.
 $lnext

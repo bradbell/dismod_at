@@ -186,27 +186,30 @@ ENDIF( NOT "${log_fatal_error}" STREQUAL ""  )
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
 # ----------------------------------------------------------------------------
-# ipopt_library_path_list
+# ipopt_library_path_list and include directories
 #
 FIND_PACKAGE(PkgConfig)
 pkg_check_modules(ipopt REQUIRED ipopt)
 set_library_path_list(
 	ipopt_library_path_list "${ipopt_LIBRARY_DIRS}" "${ipopt_LIBRARIES}"
 )
+INCLUDE_DIRECTORIES( ${ipopt_INCLUDE_DIRS} )
 # ----------------------------------------------------------------------------
-# gsl_library_path_list
+# gsl_library_path_list and include directories
 #
 pkg_check_modules(gsl REQUIRED gsl)
 set_library_path_list(
 	gsl_library_path_list "${gsl_LIBRARY_DIRS}" "${gsl_LIBRARIES}"
 )
+INCLUDE_DIRECTORIES( ${gsl_INCLUDE_DIRS} )
 # ----------------------------------------------------------------------------
-# sqlite3_library_path_list
+# sqlite3_library_path_list and include directories
 #
 pkg_check_modules(sqlite3 REQUIRED sqlite3)
 set_library_path_list(
 	sqlite3_library_path_list "${sqlite3_LIBRARY_DIRS}" "${sqlite3_LIBRARIES}"
 )
+INCLUDE_DIRECTORIES( ${sqlite3_INCLUDE_DIRS} )
 # ----------------------------------------------------------------------------
 # suitesparse_path_list
 #

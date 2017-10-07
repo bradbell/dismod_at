@@ -120,7 +120,7 @@ $codei%
 %$$
 can be used to install this package.
 
-$subhead Ipopt$$
+$subhead ipopt$$
 The $href%https://projects.coin-or.org/Ipopt%Ipopt%$$
 optimization package.
 The commands
