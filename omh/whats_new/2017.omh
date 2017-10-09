@@ -49,6 +49,9 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-09$$
+Advance to cppad_mixed-20171009.
+
 $head 10-06$$
 $list number$$
 Add the $cref/tru_value/db2csv_command/variable.csv/tru_value/$$
