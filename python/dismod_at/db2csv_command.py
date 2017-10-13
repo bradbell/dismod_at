@@ -125,10 +125,24 @@
 # If the truth_var table exists, this is the corresponding
 # $cref/truth_var_value/truth_var_table/truth_var_value/$$.
 #
-# $subhead sam_value$$
-# If the sample table exists, this is the
-# $cref/var_value/sample_table/var_value/$$ corresponding to
-# $cref/sample_index/sample_table/sample_index/$$ equal to zero.
+# $subhead sam_avg$$
+# If the sample table exists,
+# for each $cref/var_id/sample_table/var_id/$$
+# this is the average with respect to
+# with respect to $cref/sample_index/sample_table/sample_index/$$
+# of the $cref/var_value/sample_table/var_value/$$ corresponding to
+# this $icode var_id$$.
+#
+# $subhead sam_std$$
+# If the sample table exists,
+# for each fixed $cref/var_id/sample_table/var_id/$$
+# this is the estimated standard deviation with respect to
+# with respect to $cref/sample_index/sample_table/sample_index/$$
+# of the # $cref/var_value/sample_table/var_value/$$ corresponding to
+# this $icode var_id$$.
+# If there is only one $icode sample_index$$ in the sample table,
+# this column is empty because the standard deviation cannot be estimated
+# from one sample.
 #
 # $subhead fit_value$$
 # If the $cref fit_command$$ has been run, this is the
@@ -365,9 +379,16 @@ def db2csv_command(database_file_arg) :
 	import dismod_at
 	import sys
 	import copy
+	import math
 	# -------------------------------------------------------------------------
 	table_data     = dict()
 	parent_node_id = None
+	# -------------------------------------------------------------------------
+	def round_to(x, n_digits) :
+		if x == None or x == 0.0:
+			return x
+		first_digit = int( math.floor( math.log10( abs(x) ) ) )
+		return round(x, n_digits - first_digit - 1)
 	# -------------------------------------------------------------------------
 	def check4table(cursor, table_name) :
 		cmd     = "SELECT * FROM sqlite_master WHERE type='table' AND name="
@@ -684,6 +705,35 @@ def db2csv_command(database_file_arg) :
 	file_name = os.path.join(database_dir, 'variable.csv')
 	csv_file  = open(file_name, 'w')
 	#
+	# compute: sam_avg, sam_std
+	n_var   = len( table_data['var'] )
+	sam_avg = n_var * [None]
+	sam_std = n_var * [None]
+	if have_table['sample'] :
+		n_sample = len( table_data['sample'] )
+		if n_sample % n_var != 0 :
+			msg = 'length of sample table is not multiple of length var table'
+			sys.exit(msg)
+		n_sample = n_sample / n_var
+		sam_avg  = n_var * [0.]
+		for row in table_data['sample'] :
+			sample_index       = row['sample_index']
+			var_id             = row['var_id']
+			var_value          = row['var_value']
+			sam_avg[var_id]   += var_value / float(n_sample)
+		if n_sample > 1 :
+			sam_std = n_var * [0.]
+			for row in table_data['sample'] :
+				sample_index     = row['sample_index']
+				var_id           = row['var_id']
+				var_value        = row['var_value']
+				avg              = sam_avg[var_id]
+				sq               = (var_value - avg) * (var_value - avg)
+				sam_std[var_id] += sq
+			for var_id in range( n_var ) :
+				sum_sq          = sam_std[var_id];
+				sam_std[var_id] = math.sqrt( sum_sq / float(n_sample - 1.0) )
+	#
 	header = [
 		'var_id',
 		'var_type',
@@ -696,7 +746,8 @@ def db2csv_command(database_file_arg) :
 		'node',
 		'fixed',
 		'tru_value',
-		'sam_value',
+		'sam_avg',
+		'sam_std',
 		'fit_value',
 		'res_value',
 		'res_dage',
@@ -720,7 +771,11 @@ def db2csv_command(database_file_arg) :
 		row_out['s_id']      = row_in['smooth_id']
 		row_out['age']       = table_lookup('age',  row_in['age_id'], 'age')
 		row_out['time']      = table_lookup('time', row_in['time_id'], 'time')
-		row_out['rate'] = table_lookup('rate', row_in['rate_id'], 'rate_name')
+		row_out['sam_avg']   = round_to(sam_avg[var_id], 3)
+		row_out['sam_std']   = round_to(sam_std[var_id], 3)
+		row_out['rate']      = table_lookup(
+			'rate', row_in['rate_id'], 'rate_name'
+		)
 		row_out['integrand'] = table_lookup(
 			'integrand', row_in['integrand_id'], 'integrand_name'
 		)
@@ -738,9 +793,6 @@ def db2csv_command(database_file_arg) :
 		if have_table['truth_var'] :
 			row_out['tru_value'] = \
 				 table_lookup('truth_var', var_id, 'truth_var_value')
-		if have_table['sample'] :
-			row_out['sam_value'] = \
-				 table_lookup('sample', var_id, 'var_value')
 		if have_table['fit_var'] :
 			row_out['fit_value'] = \
 				 table_lookup('fit_var', var_id, 'fit_var_value')

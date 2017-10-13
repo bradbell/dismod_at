@@ -49,6 +49,13 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-13$$
+In the
+$cref/variable.csv/db2csv_command/variable.csv/$$ file
+replace the $icode sam_value$$ column by the
+$cref/sam_avg/db2csv_command/variable.csv/sam_avg/$$ and
+$cref/sam_std/db2csv_command/variable.csv/sam_std/$$ columns.
+
 $head 10-09$$
 Advance to cppad_mixed-20171009.
 
