@@ -49,6 +49,19 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-14$$
+$list number$$
+Specifications were added to forbid
+$cref/child data/data_table/node_id/Child Data Random Effects/$$
+from having
+$cref/laplace/density_table/density_name/laplace/$$ or
+$cref/log_laplace/density_table/density_name/log_laplace/$$ densities.
+$lnext
+In addition, the discussion of
+$cref/random effects/data_like/Effects, u, theta/$$ vector $latex u$$
+in the data likelihood model was improved.
+$lend
+
 $head 10-13$$
 $list number$$
 In the

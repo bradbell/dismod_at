@@ -48,6 +48,12 @@ The subsampled rows are the same as the corresponding original row
 except that for each covariate, its
 $cref/reference/covariate_table/reference/$$ value is subtracted
 from the value of the covariate in $icode data_table$$.
+$lnext
+All of the
+$cref/child data/data_table/node_id/Child Data Random Effects/$$
+is checked to make sure that it does not use a
+$cref/laplace/density_table/density_name/laplace/$$ or
+$cref/log_laplace/density_table/density_name/log_laplace/$$ density.
 $lend
 
 $head data_table$$
@@ -161,6 +167,8 @@ $end
 
 # include <cmath>
 # include <dismod_at/data_subset.hpp>
+# include <dismod_at/get_density_table.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -184,6 +192,17 @@ void data_subset(
 	CppAD::vector<bool> ok(n_data);
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	size_t child = child_object.table_id2child(data_id);
+		if( child < n_child )
+		{	density_enum density = density_enum(
+				data_table[data_id].density_id
+			);
+			if( density == laplace_enum || density == log_laplace_enum )
+			{	std::string message =
+					"child data has laplace or log_lapace density";
+				std::string table_name = "data";
+				error_exit(message, table_name, data_id);
+			}
+		}
 		// check if this data is for parent or one of its descendents
 		ok[data_id] = child <= n_child;
 		if( ok[data_id] )

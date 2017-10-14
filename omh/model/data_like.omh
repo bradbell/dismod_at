@@ -112,6 +112,12 @@ $head Effects, u, theta$$
 We use $latex u$$ and $latex \theta$$ to denote the vector of
 $cref/random effects/model_variables/Random Effects, u/$$ and
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$ respectively.
+There is a different random effects vector $latex u$$ for each child.
+The $icode node_id$$ for each data point determines the random effects for
+$cref/child data/data_table/node_id/Child Data Random Effects/$$.
+Note that there are no random effects for
+$cref/parent data/data_table/node_id/Parent Data Random Effects/$$.
+This corresponds to $latex u = 0$$.
 
 $head Average Integrand$$
 Let $latex A_i ( u , \theta )$$ denote the

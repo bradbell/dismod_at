@@ -39,13 +39,31 @@ $head density_id$$
 This column has type $code integer$$ and is the
 $cref/density_id/density_table/density_id/$$ that identifies
 the density function for the measurement nose.
-The corresponding $cref/density_name/density_table/density_name/$$
-cannot be $code uniform$$.
+The $cref/density_name/density_table/density_name/$$
+corresponding to $icode density_id$$ cannot be $code uniform$$.
+(Use $cref/hold_out/data_table/hold_out/$$ to ignore data during fitting.)
 
 $head node_id$$
 This column has type $code integer$$ and is the
 $cref/node_id/node_table/node_id/$$ that identifies
 the node for this measurement.
+
+$subhead Parent Data Random Effects$$
+If the $icode node_id$$ is the
+$cref/parent_node_id/option_table/parent_node_id/$$,
+this data will be associated with the parent node and not
+have any random effects in its model.
+
+$subhead Child Data Random Effects$$
+If the $icode node_id$$ is a
+$cref/child/node_table/parent/Child Group/$$ of the parent node,
+or a $cref/descendant/node_table/parent/Descendant/$$ of a child,
+the data will be associated with the random effects for that child.
+In this case $icode density_id$$ cannot correspond to
+$cref/laplace/density_table/density_name/laplace/$$ or
+$cref/log_laplace/density_table/density_name/log_laplace/$$.
+The corresponding densities would not be differentiable at zero
+and the Laplace approximation would not make sense in this case.
 
 $head weight_id$$
 This column has type $code integer$$ and is the
