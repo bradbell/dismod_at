@@ -94,12 +94,14 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# data table:
 	data_table = list()
+	#
+	density_list = [ "gaussian", "students", "log_gaussian", "log_students" ]
 	# values that are the same for all data rows
 	row = {
 		'meas_value':  100., # measurement is way off truth
 		'meas_std':    1,    # 1 percent coefficient of variation
 		'eta':         1e-6,
-		'density':     'log_gaussian',
+		'nu':          10,
 		'weight':      'constant',
 		'hold_out':     False,
 		'time_lower':   2000.,
@@ -107,6 +109,14 @@ def example_db (file_name) :
 	}
 	# values that change between rows:
 	for data_id in range( n_data ) :
+		density          = density_list[ data_id % 4 ]
+		row['density']   = density
+		#
+		# one percent coefficient of variation
+		if density == 'gaussian' or density == 'students' :
+			row['meas_std'] = iota_parent / 100.
+		else :
+			row['meas_std'] = row['meas_value'] / 100.
 		fraction         = data_id / float(n_data-1)
 		age              = age_list[0] + (age_list[-1] - age_list[0])*fraction
 		row['age_lower'] = age

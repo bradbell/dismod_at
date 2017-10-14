@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -48,8 +48,9 @@ bool sim_random_xam(void)
 	double sum_z   = 0.0;
 	double sum_zsq = 0.0;
 	double eta     = 0.0; // not used (avoid warning)
+	double nu      = 0.0; // not used (avoid warning)
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z = dismod_at::sim_random(density, mu, delta, eta);
+	{	double z = dismod_at::sim_random(density, mu, delta, eta, nu);
 		if( 0.5 <= z / delta )
 			count ++;
 		sum_z   += z;
@@ -74,9 +75,8 @@ bool sim_random_xam(void)
 	count   = 0;
 	sum_z   = 0.0;
 	sum_zsq = 0.0;
-	eta     = 0.0; // not used (avoid warning)
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z = dismod_at::sim_random(density, mu, delta, eta);
+	{	double z = dismod_at::sim_random(density, mu, delta, eta, nu);
 		if( 0.5 <= z / delta )
 			count ++;
 		sum_z   += z;
@@ -105,7 +105,7 @@ bool sim_random_xam(void)
 	double sum_wsq = 0.0;
 	double sigma   = log(mu + eta + delta) - log(mu + eta);
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z     = dismod_at::sim_random(density, mu, delta, eta);
+	{	double z     = dismod_at::sim_random(density, mu, delta, eta, nu);
 		double w     = ( log(z + eta) - log(mu + eta) ) / sigma;
 		if( 0.5 <= w )
 			count ++;
@@ -133,7 +133,7 @@ bool sim_random_xam(void)
 	sum_wsq = 0.0;
 	sigma   = log(mu + eta + delta) - log(mu + eta);
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z     = dismod_at::sim_random(density, mu, delta, eta);
+	{	double z     = dismod_at::sim_random(density, mu, delta, eta, nu);
 		double w     = ( log(z + eta) - log(mu + eta) ) / sigma;
 		if( 0.5 <= w )
 			count ++;

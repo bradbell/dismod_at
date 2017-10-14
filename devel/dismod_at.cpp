@@ -1195,6 +1195,7 @@ void simulate_command(
 		double meas_value   = data_subset_obj[subset_id].meas_value;
 		double meas_std     = data_subset_obj[subset_id].meas_std;
 		double eta          = data_subset_obj[subset_id].eta;
+		double nu           = data_subset_obj[subset_id].nu;
 		double Delta        = std::max(
 			meas_std, minimum_meas_cv * std::fabs(meas_value)
 		);
@@ -1209,6 +1210,7 @@ void simulate_command(
 		{	// log
 			case dismod_at::log_gaussian_enum:
 			case dismod_at::log_laplace_enum:
+			case dismod_at::log_students_enum:
 			log = true;
 			CPPAD_ASSERT_KNOWN( meas_value + eta > 0.0 ,
 				"simulate_command: meas_value plus eta is not positive"
@@ -1224,6 +1226,7 @@ void simulate_command(
 			// linear
 			case dismod_at::gaussian_enum:
 			case dismod_at::laplace_enum:
+			case dismod_at::students_enum:
 			std_effect = delta_data / Delta - 1.0;
 			delta_avg  = delta_data;
 			break;
@@ -1234,7 +1237,7 @@ void simulate_command(
 		//
 		// compute the simulated measurement value
 		double sim_value   = dismod_at::sim_random(
-			density, avg, delta_avg, eta
+			density, avg, delta_avg, eta, nu
 		);
 		// in the log case, ensure sim_value is non-negative
 		if( log )

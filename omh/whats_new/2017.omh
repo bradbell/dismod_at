@@ -50,11 +50,20 @@ $childtable%
 %$$
 
 $head 10-13$$
+$list number$$
 In the
 $cref/variable.csv/db2csv_command/variable.csv/$$ file
 replace the $icode sam_value$$ column by the
 $cref/sam_avg/db2csv_command/variable.csv/sam_avg/$$ and
 $cref/sam_std/db2csv_command/variable.csv/sam_std/$$ columns.
+$lnext
+The $cref simulate_command$$ has been extended to handle
+$cref/students/density_table/density_name/students/$$ and
+$cref/log_students/density_table/density_name/log_students/$$
+densities in the
+$cref/density_id/data_table/density_id/$$.
+$lend
+
 
 $head 10-09$$
 Advance to cppad_mixed-20171009.

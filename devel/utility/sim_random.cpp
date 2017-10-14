@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -42,10 +42,14 @@ $code gaussian_enum$$ $pre  $$ $cnext
 	$cref/Gaussian/statistic/Log-Density Function, D/Gaussian/$$ $rnext
 $code laplace_enum$$ $pre  $$ $cnext
 	$cref/Laplace/statistic/Log-Density Function, D/Laplace/$$ $rnext
+$code students_enum$$ $pre  $$ $cnext
+	$cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$ $rnext
 $code log_gaussian_enum$$ $pre  $$ $cnext
 	$cref/Log-Gaussian/statistic/Log-Density Function, D/Log-Gaussian/$$ $rnext
 $code log_laplace_enum$$ $pre  $$ $cnext
 	$cref/Log-Laplace/statistic/Log-Density Function, D/Log-Laplace/$$ $rnext
+$code log_students_enum$$ $pre  $$ $cnext
+	$cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$
 $tend
 
 $head mu$$
@@ -82,11 +86,21 @@ $codei%
 	double %eta%
 %$$
 In the case were $icode density$$ is
-$code uniform_enum$$, $code gaussian_enum$$ or $code laplace_enum$$,
-$icode eta$$ is not used.
-Otherwise, $icode eta$$
+$code log_gaussian_enum$$, $code log_laplace_enum$$
+or $code log_students_enum$$,
 this is the offset in the log transformation for the distribution.
 In this case, it is assumed that $icode%mu% + %eta% > 0%$$.
+Otherwise, $icode eta$$ is not used.
+
+$head nu$$
+This argument has prototype
+$codei%
+	double %nu%
+%$$
+In the case were $icode density$$ is
+$code students_enum$$ or $code log_students_enum$$, it is
+the degrees of freedom in the Student's-t distribution.
+Otherwise it is not used.
 
 $head z$$
 The return value has prototype
@@ -111,7 +125,8 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-double sim_random(density_enum density, double mu, double delta, double eta)
+double sim_random(
+	density_enum density, double mu, double delta, double eta, double nu )
 {	gsl_rng* rng = CppAD::mixed::get_gsl_rng();
 	//
 	assert( density != uniform_enum );
@@ -124,6 +139,11 @@ double sim_random(density_enum density, double mu, double delta, double eta)
 	{	double width = delta / std::sqrt(2.0);
 		return mu + gsl_ran_laplace(rng, width);
 	}
+	if( density == students_enum )
+	{	assert( nu > 2.0 );
+		double x = gsl_ran_tdist(rng, nu);
+		return  mu +  x * std::sqrt( (nu - 2.0) / nu ) * delta;
+	}
 	//
 	assert( mu + eta > 0.0 );
 	//
@@ -134,10 +154,16 @@ double sim_random(density_enum density, double mu, double delta, double eta)
 	double d_log;
 	if( density == log_gaussian_enum )
 		d_log = gsl_ran_gaussian(rng, sigma);
-	else
+	else if( density == log_laplace_enum )
 	{	assert( density == log_laplace_enum );
 		double width = sigma / std::sqrt(2.0);
 		d_log = gsl_ran_laplace(rng, width);
+	}
+	else
+	{	assert( density == log_students_enum );
+		assert( nu > 2.0 );
+		double x = gsl_ran_tdist(rng, nu);
+		d_log = x * std::sqrt( (nu - 2.0) / nu ) * sigma;
 	}
 	//
 	// d_log = log(z + eta) - log(mu + eta)
