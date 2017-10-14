@@ -14,6 +14,7 @@ FOREACH(user_case
 	avgint
 	bound_frac
 	fit_sim
+	laplace
 	neg_iteration
 	no_data
 	not_ordered
