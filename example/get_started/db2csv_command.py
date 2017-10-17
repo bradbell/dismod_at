@@ -30,6 +30,7 @@ import copy
 import subprocess
 import distutils.dir_util
 import csv
+import math
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
 example = 'example/get_started/db2csv_command.py'
@@ -99,12 +100,41 @@ def get_table(name) :
 	file_ptr.close()
 	return table
 # --------------------------------------------------------------------------
+omega_world       = 1e-2
+income_multiplier = -1e-3
+adjusted_omega    = omega_world * math.exp(income_multiplier * 1000.0)
+meas_value        = math.exp( - adjusted_omega * 50.0 )
+meas_std          = meas_value / 20.
+# --------------------------------------------------------------------------
 # data.csv
 data_table = get_table('data')
 #
-# check data.csv correspond to data_subset table
+# check data.csv correspond to the single row of data
 assert len(data_table) == 1
-assert int( data_table[0]['data_id'] ) == 0
+row = data_table[0]
+assert row['data_info']          == 'd1'
+assert row['integrand']          == 'susceptible'
+assert row['weight']             == 'constant_one'
+assert row['density']            == 'gaussian'
+assert row['eta']                == ''
+assert row['nu']                 == ''
+assert row['Delta']              == row['meas_std']
+assert int( row['data_id'] )     == 0
+assert int(row['out'])           == 0
+assert float(row['age_lo'])      == 50.0
+assert float(row['age_up'])      == 50.0
+assert float(row['time_lo'])     == 2000.0
+assert float(row['time_up'])     == 2000.0
+assert float(row['income'])      == 1000.0
+#
+relerr = float( row['residual'] )
+assert abs(relerr) < 1e-5
+relerr = float( row['meas_value'] ) / meas_value - 1.0
+assert abs(relerr) < 1e-5
+relerr = float( row['avgint'] ) / meas_value - 1.0
+assert abs(relerr) < 1e-5
+relerr = float( row['meas_std'] ) / meas_std - 1.0
+assert abs(relerr) < 1e-5
 # -----------------------------------------------------------------------
 print('db2csv_command: OK')
 # END PYTHON
