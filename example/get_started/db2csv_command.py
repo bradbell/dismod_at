@@ -100,6 +100,12 @@ def get_table(name) :
 		table.append(row)
 	file_ptr.close()
 	return table
+#
+# near_equal
+def near_equal(x, y, eps) :
+	if y == 0.0 :
+		return float(x) < eps
+	return abs( float(x) / y - 1.0 ) <= eps
 # --------------------------------------------------------------------------
 omega_world       = 1e-2
 income_multiplier = -1e-3
@@ -128,14 +134,42 @@ assert float(row['time_lo'])     == 2000.0
 assert float(row['time_up'])     == 2000.0
 assert float(row['income'])      == 1000.0
 #
-relerr = float( row['residual'] )
-assert abs(relerr) < 1e-5
-relerr = float( row['meas_value'] ) / meas_value - 1.0
-assert abs(relerr) < 1e-5
-relerr = float( row['avgint'] ) / meas_value - 1.0
-assert abs(relerr) < 1e-5
-relerr = float( row['meas_std'] ) / meas_std - 1.0
-assert abs(relerr) < 1e-5
+assert near_equal(row['residual'],   0.0,        1e-5)
+assert near_equal(row['meas_value'], meas_value, 1e-5)
+assert near_equal(row['avgint'],     meas_value, 1e-5)
+assert near_equal(row['meas_std'],   meas_std,   1e-5)
+# -----------------------------------------------------------------------
+# variable.csv
+variable_table = get_table('variable')
+# note  that res_value is empty because value prior is uniform
+empty_field  = [ 'integrand', 'tru_value', 'sam_avg', 'sam_std' ]
+empty_field += [ 'res_value', 'res_dage', 'res_dtime' ]
+empty_field += [ 'std_v', 'eta_v', 'nu_v' ]
+for prefix in [ 'lower', 'upper', 'mean', 'std', 'eta', 'nu', 'density' ] :
+	for suffix in ['_a', '_t'] :
+		empty_field.append( prefix + suffix )
+for row in variable_table :
+	for field in empty_field :
+		assert row[field] == ''
+	assert row['rate']               == 'omega'
+	assert row['fixed']              == 'true'
+	assert row['density_v']          == 'uniform'
+	assert float( row['age'] )       == 0.0
+	assert float( row['time'] )      == 1995.0
+	assert float( row['lag_dage'] )  == 0.0
+	assert float( row['lag_dtime'] ) == 0.0
+	assert near_equal(row['lag_value'], 0.0, 1e-5)
+	if row['var_type'] == 'rate' :
+		assert row['covariate']   == ''
+		assert row['node']        == 'world'
+		assert int( row['s_id'] ) == 0 # smooth_omega_parent
+		assert near_equal(row['fit_value'], omega_world, 1e-5)
+	else :
+		assert row['var_type'] == 'mulcov_rate_value'
+		assert row['covariate']   == 'income'
+		assert row['node']        == ''
+		assert int( row['s_id'] ) == 1 # smooth_income_multiplier
+		assert near_equal(row['fit_value'], income_multiplier, 1e-5)
 # -----------------------------------------------------------------------
 print('db2csv_command: OK')
 # END PYTHON
