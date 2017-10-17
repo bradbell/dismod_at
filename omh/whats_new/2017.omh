@@ -49,6 +49,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-17$$
+The $cref db2csv_command.py$$ example / test was added
+and the corresponding $cref wish_list$$ item was removed.
+
 $head 10-14$$
 $list number$$
 Specifications were added to forbid
@@ -222,7 +226,8 @@ $cref/data_extra_columns/option_table/data_extra_columns/$$ or
 $cref/avgint_extra_columns/option_table/avgint_extra_columns/$$ was
 present and null.
 $lnext
-A $cref/db2csv/wish_list/db2csv/$$ wish list item was added.
+A $code db2csv$$ wish list item was added (fulfilled on
+$cref/10-17/whats_new_2017/10-17/$$).
 $lend
 
 $head 09-26$$

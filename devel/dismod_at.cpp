@@ -163,7 +163,8 @@ and corresponding to the specified sample index,
 are used for the values in $icode table_out$$.
 
 
-$children%example/get_started/set_command.py%$$
+$children%example/get_started/set_command.py
+%$$
 $head Example$$
 The files
 $cref set_command.py$$ and $cref set_command.py$$
@@ -358,10 +359,11 @@ $head scale_var_table$$
 A new $cref scale_var_table$$ is created using the
 means of the priors for the model variables.
 
-$children%example/get_started/init_command.py%$$
+$children%example/get_started/init_command.py
+%$$
 $head Example$$
 The file $cref init_command.py$$ contains an example and test
-of using this command.
+using this command.
 
 $end
 */
@@ -732,10 +734,11 @@ In this case, it is suggest that you
 first fit with $icode variables$$ equal to $code fixed$$
 and then fit with $icode variables$$ equal to $code both$$.
 
-$children%example/get_started/fit_command.py%$$
+$children%example/get_started/fit_command.py
+%$$
 $head Example$$
 The file $cref fit_command.py$$ contains an example and test
-of using this command.
+using this command.
 
 $end
 */
@@ -1090,10 +1093,11 @@ Note that the adjusted standard deviation is used in the log transformation.
 Also note that a small minimum is chosen if the condition above
 would require $icode meas_std$$ to be near zero or negative.
 
-$children%example/get_started/simulate_command.py%$$
+$children%example/get_started/simulate_command.py
+%$$
 $head Example$$
 The file $cref simulate_command.py$$ contains an example and test
-of using this command.
+using this command.
 
 $end
 */
@@ -1331,7 +1335,7 @@ $children%example/get_started/sample_command.py
 $head Example$$
 The files
 $cref sample_command.py$$ and $cref user_asymptotic.py$$
-contain examples and tests of using this command.
+contain examples and tests using this command.
 
 $end
 */
@@ -1644,7 +1648,8 @@ $cref/avgint_id/predict_table/avgint_id/$$
 in the
 $cref/avgint subset/predict_table/Avgint Subset/$$.
 
-$children%example/get_started/predict_command.py%$$
+$children%example/get_started/predict_command.py
+%$$
 $head Example$$
 The files $cref predict_command.py$$ and
 $cref user_predict_fit.py$$ contain examples and tests

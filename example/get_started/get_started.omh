@@ -33,6 +33,7 @@ $rref fit_command.py$$
 $rref simulate_command.py$$
 $rref sample_command.py$$
 $rref predict_command.py$$
+$rref db2csv_command.py$$
 $tend
 
 $end

@@ -43,8 +43,11 @@ import dismod_at
 #
 import scipy.stats
 import numpy
+import time
 # -----------------------------------------------------------------------------
 # Simulate data with and N(2, 0.5^2) distribution
+python_seed = int( time.time() )
+numpy.random.seed(seed = python_seed)
 N          = 1000
 mu_true    = 2.0
 sigma_true = 0.5
@@ -60,7 +63,7 @@ def log_f(x) :
 	return sum( scipy.stats.norm.logpdf(y, loc=mu, scale=sigma) )
 # -----------------------------------------------------------------------------
 # run the metropolis algorithm to estimate (mu, sigma)
-m   = 1000                 # length of the chain
+m   = 2000                 # length of the chain
 x0  = numpy.array([1, 1])  # start at mu = 1, sigma = 1
 s   = 0.03                 # scale factor for proposal random walk
 (a, c) = dismod_at.metropolis(log_f, m, x0, s)
@@ -74,11 +77,11 @@ sigma_estimate = x_estimate[1]
 #
 relerr = abs( mu_estimate / mu_true - 1.0 )
 if relerr > 0.05 :
-	print('relerr = ', relerr)
+	print('relerr = ', relerr, ", python_seed = ", python_seed)
 	assert(False)
 relerr = abs( sigma_estimate / sigma_true - 1.0 )
 if relerr > 0.05 :
-	print('relerr = ', relerr)
+	print('relerr = ', relerr, ", python_seed = ", python_seed)
 	assert(False)
 # -----------------------------------------------------------------------------
 print('metropolis.py: OK')

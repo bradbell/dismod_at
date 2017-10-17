@@ -10,7 +10,7 @@
 # ---------------------------------------------------------------------------
 # Build get_started Examples / Tests
 SET(depends "")
-FOREACH(cmd init fit set simulate sample predict)
+FOREACH(cmd db2csv init fit set simulate sample predict)
 	ADD_CUSTOM_TARGET(
 		check_example_get_started_${cmd}
 		${python3_executable} example/get_started/${cmd}_command.py

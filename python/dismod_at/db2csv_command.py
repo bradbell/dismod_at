@@ -372,6 +372,12 @@
 # $cref/x_ij/avg_integrand/Data or Avgint Table Notation/x_ij/$$ in the model
 # for the average integrand.
 #
+# $children%example/get_started/db2csv_command.py
+# %$$
+# $head Example$$
+# The file $cref db2csv_command.py$$ contains an example and test
+# using this command.
+#
 # $end
 def db2csv_command(database_file_arg) :
 	import os
