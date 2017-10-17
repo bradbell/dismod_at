@@ -1,11 +1,11 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # $begin create_connection$$ $newlinech #$$
@@ -46,7 +46,12 @@
 import sqlite3
 def create_connection(file_name, new) :
 	import os
+	import sys
 	if new and os.path.isfile(file_name) :
 		os.remove(file_name)
+	else :
+		if not os.path.isfile(file_name) :
+			msg = 'create_connection: ' + file_name + ' does not exist.'
+			sys.exit(msg)
 	connection = sqlite3.connect(file_name)
 	return connection
