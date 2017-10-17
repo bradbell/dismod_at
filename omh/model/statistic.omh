@@ -28,7 +28,7 @@ $latex \mu$$     $cnext
 expected value $latex y$$, difference, or difference of logs
 $rnext
 $latex \delta$$  $cnext
-standard derivative for $latex y$$, difference, or difference of logs
+standard deviation for $latex y$$, difference, or difference of logs
 $rnext
 $latex d:id$$    $cnext
 $cref/density_id/prior_table/density_id/$$
