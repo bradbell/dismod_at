@@ -24,8 +24,10 @@ $cref/input and output by command
 /$$.
 
 $head Log Messages$$
-Each command also has messages with message_type
+Each command also has two messages with message_type
 $cref/command/log_table/message_type/command/$$ in the log table.
+The first one is a $code begin$$ message and includes the command arguments.
+The second is an $code end$$ message and signifies that the command completed.
 
 
 $children%devel/dismod_at.cpp

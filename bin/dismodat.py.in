@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -11,17 +11,63 @@
 # ---------------------------------------------------------------------------
 import sys
 import os
+import time
 #
-sys.path.append( os.path.join( os.getcwd(), 'python' ) )
+# import dismod_at
+sandbox = 'python/dismod_at'
+if os.path.isdir(sandbox) :
+	print('using ' + sandbox)
+	sys.path.insert(0,  os.path.join( os.getcwd(), 'python' ) )
 import dismod_at
 # ---------------------------------------------------------------------------
-usage  = 'dismodat.py database command'
+# check usage
+usage  = 'dismodat.py database command arguments'
 usage += '\nwhere db2csv is the only command so far'
-if len(sys.argv) != 3 :
+if len(sys.argv) < 3 :
 	sys.exit(usage)
 if sys.argv[2] != 'db2csv' :
 	sys.exit(usage)
-#
 database_file_arg = sys.argv[1]
+# ---------------------------------------------------------------------------
+# write begin for this command
+new           = False
+connection    = dismod_at.create_connection(database_file_arg, new)
+log_table     = dismod_at.get_table_dict(connection, 'log')
+#
+log_id        = len( log_table )
+unix_time     = int( time.time() )
+#
+# message
+message       = 'begin'
+for i in range(len(sys.argv) - 1) :
+	message += ' ' + sys.argv[i+1]
+#
+cmd  = 'insert into log'
+cmd += ' (log_id,message_type,table_name,row_id,unix_time,message) values('
+cmd += str(log_id) + ','     # log_id
+cmd += '"command",'          # message_type
+cmd += 'null,'               # table_name
+cmd += 'null,'               # row_id
+cmd += str(unix_time) + ','  # unix_time
+cmd += '"' + message + '")'  # message
+dismod_at.sql_command(connection, cmd)
+connection.close()
+# ---------------------------------------------------------------------------
+# execute command
 dismod_at.db2csv_command(database_file_arg)
+# ---------------------------------------------------------------------------
+# write end for this command
+message = 'end ' + sys.argv[2]
+cmd  = 'insert into log'
+cmd += ' (log_id,message_type,table_name,row_id,unix_time,message) values('
+cmd += str(log_id+1) + ','   # log_id
+cmd += '"command",'          # message_type
+cmd += 'null,'               # table_name
+cmd += 'null,'               # row_id
+cmd += str(unix_time) + ','  # unix_time
+cmd += '"' + message + '")'  # message
+connection = dismod_at.create_connection(database_file_arg, new)
+dismod_at.sql_command(connection, cmd)
+connection.close()
+# ---------------------------------------------------------------------------
 print('dismodat.py: OK')

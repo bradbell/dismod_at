@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -59,13 +59,13 @@ continued as if nothing was wrong.
 
 $head table_name$$
 This column has type $code text$$.
-If it is non-empty, $icode message$$ must be $code error$$
+If it is not $code null$$, $icode message$$ must be $code error$$
 and it is the $cref input$$ table in which the error occurred.
 
 $head row_id$$
 This column has type $code int$$.
 If it is not $code null$$, $icode table_name$$ is not
-empty and $icode row_id$$ is the primary key value in
+$code null$$ and $icode row_id$$ is the primary key value in
 the specified table where the error occurred.
 
 $head unix_time$$

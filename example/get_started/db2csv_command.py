@@ -78,6 +78,7 @@ for command in [ 'init', 'fit' ] :
 # change into distribution directory to run sandbox version of dismodat.py
 # return to test_dir when done.
 os.chdir(dist_dir)
+print( os.getcwd() )
 program        = 'bin/dismodat.py'
 file_name      = test_dir + '/get_started.db'
 command        = 'db2csv'

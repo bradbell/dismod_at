@@ -72,7 +72,7 @@ $codei%
 %$$
 This value gets written in the
 $cref/table_name/log_table/table_name/$$ column of the log table.
-If $icode table_name$$ it is not present, the empty string is used.
+If $icode table_name$$ it is not present or empty, null is used.
 
 $head row_id$$
 This argument has prototype
@@ -186,9 +186,10 @@ std::time_t log_message(
 		sql_cmd += to_string( log_id );
 		sql_cmd += " , '";
 		sql_cmd += message_type;
-		sql_cmd += "' , '";
-		sql_cmd += table_name;
-		sql_cmd += "' , ";
+		if( table_name  == "" )
+			sql_cmd += "' , null,";
+		else
+			sql_cmd += "' , '" + table_name + "', ";
 		if( row_id == DISMOD_AT_NULL_SIZE_T )
 			sql_cmd += "null";
 		else

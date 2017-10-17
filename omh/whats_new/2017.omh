@@ -50,8 +50,19 @@ $childtable%
 %$$
 
 $head 10-17$$
+$list number$$
 The $cref db2csv_command.py$$ example / test was added
 and the corresponding $cref wish_list$$ item was removed.
+$lnext
+The $cref/log messages/command/Log Messages/$$ were missing
+for the $cref db2csv_command$$.
+This has been fixed.
+$lnext
+The empty text was sometimes placed in
+the $cref/table_name/log_table/table_name/$$ column of the log table.
+This was a bug and has been fixed by using $code null$$ in these cases; see
+$cref/text can be null, not empty/database/Text can be Null, not Empty/$$.
+$lend
 
 $head 10-14$$
 $list number$$
