@@ -13,6 +13,7 @@
 #	avgint
 #	dismod
 #	covariate
+#	mtother
 # $$
 #
 # $section Create get_started Input Tables: Example and Test$$
@@ -25,26 +26,35 @@
 # in the current working directory.
 # This is a very simple case where:
 # $list number$$
-# The model is constant in age and time.
+# All of the rates are zero except for
+# $cref/omega/rate_table/rate_name/omega/$$.
 # $lnext
-# The initial prevalence,
-# incidence, remission, and excess mortality are all zero.
+# The model for other cause mortality
+# $cref/omega/rate_table/rate_name/omega/$$
+# is constant in age and time.
 # $lnext
-# There is only one susceptible measurement (at age 50).
+# There is only one node corresponding to the world, and hence there are no
+# $cref/children/option_table/parent_node_id/Children/$$ or
+# $cref/random effects/model_variables/Random Effects, u/$$.
 # $lnext
-# There is only one node corresponding to the world, and hence
-# there are no children (no random effects).
+# There is only one measurement and it is for
+# $cref/mtother/integrand_table/integrand_name/mtother/$$
+# (at age 50).
 # $lnext
-# There is one covariate, income, on the rate of other cause mortality
+# There is one
+# $cref/covariate/covariate_table/$$ income and a corresponding
+# covariate multiplier on the
+# $cref/rate value/mulcov_table/mulcov_type/rate_value/$$ for
+# $cref/omega/avg_integrand/Rate Functions/omega_i(a,t)/$$.
 # $lend
-# The other cause mortality $cref/omega/rate_table/rate_name/omega/$$
-# is constant in age and time. Hence the susceptible population satisfies the
+# Because other cause mortality $latex \omega$$ is constant in age and time,
+# the susceptible population satisfies the
 # following ODE in age $latex a$$:
 # $latex \[
-#	S(0) = 1 \; S'(t) = - \omega S(t)
+#	S(0) = 1 \; S'(a) = - \omega S(a)
 # \] $$
-# where $latex \omega$$ is the rate of other cause mortality
-# (after the covariate effect).
+# Note that $latex \omega$$ is the rate of other cause mortality
+# after the covariate effect.
 # The solution is $latex S(a) = \exp( - \omega \; a )$$.
 #
 # $head Reference$$

@@ -50,10 +50,16 @@ $childtable%
 %$$
 
 $head 10-18$$
-Improve $cref avg_integrand$$ and $cref model_variables$$ documentation.
+$list number$$
+Improve documentation for following sections:
+$cref avg_integrand$$,
+$cref model_variables$$,
+$cref get_started_db.py$$.
+$lnext
 Add cross references from values in the
 $cref rate_table$$ and $cref integrand_table$$
 to the corresponding average integrand notation.
+$lend
 
 $head 10-17$$
 $list number$$
