@@ -50,9 +50,9 @@ $childtable%
 %$$
 
 $head 10-18$$
-Improve $cref avg_integrand$$ documentation and add cross references
-from values in the $cref rate_table$$ to the corresponding
-average integrand notation.
+Improve $cref avg_integrand$$ and $cref model_variables$$ documentation.
+Add cross references from values in the $cref rate_table$$
+to the corresponding average integrand notation.
 
 $head 10-17$$
 $list number$$

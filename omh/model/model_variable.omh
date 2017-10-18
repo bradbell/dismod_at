@@ -108,7 +108,6 @@ For example, given the subvector of model variables corresponding
 to $code omega$$, the function $latex \omega(a, t)$$ is the
 corresponding bilinear piecewise interpolant.
 
-
 $head Number of Children$$
 The parent node is specified by
 $cref/parent_node_id/option_table/parent_node_id/$$ in the
@@ -116,21 +115,6 @@ option table.
 The number of children $icode n_child$$ is the size of the
 $cref/child group/node_table/parent/Child Group/$$
 corresponding to this parent node.
-
-$head Initial Prevalence$$
-Let $latex p_0 (t)$$ to denote the
-$cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$
-at the initial age $latex a_0$$; i.e., the first age in $cref age_table$$.
-The initial susceptible fraction
-$cref/S(a,t)/avg_integrand/S_i(a,t)/$$ is
-$latex \[
-	S ( a_0 , t ) = p_0 (t)
-\] $$
-and the initial with condition faction
-$cref/C(a,t)/avg_integrand/C_i(a,t)/$$ is
-$latex \[
-	C ( a_0 , t ) = 1 - p_0 (t)
-\] $$
 
 $head Fixed Effects, theta$$
 we use $latex \theta$$ to denote the vector of fixed effects; i.e.,
@@ -147,14 +131,14 @@ $cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$, and
 $cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$.
 
 $subhead Parent Rates$$
-For each rate (see $cref rate_table$$)
-$code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$
+For each $cref/rate/rate_table/rate_name/$$
+($code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$)
 there is a subvector corresponding to the parent value for the rate.
 The smoothing for each of these subvectors is specified by the corresponding
 $cref/parent_smooth_id/rate_table/parent_smooth_id/$$.
 Recall that the smoothing determines the number of variables in the
-subvector as well as the corresponding age and time values.
-For an example use, see
+subvector as well as the corresponding age and time values;
+see the unadjusted rates
 $cref/q_k/avg_integrand/Rate Functions/q_k/$$ in the average integrand model.
 
 $subhead Covariate Multipliers$$
@@ -176,18 +160,19 @@ Currently, the only random effects are the rates
 for the children.
 
 $subhead Child Rates$$
-For each rate
+For each $cref/rate/rate_table/rate_name/$$
 ($code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$)
 there is a
 subvector corresponding to the child random effects for the rate.
-For each rate, the smoothing can be the same for all the children,
-$cref/child_smooth_id/rate_table/child_smooth_id/$$,
+The smoothing can be the same for all the children
+(see $cref/child_smooth_id/rate_table/child_smooth_id/$$)
 or it can have a different value for each child
-$cref/child_nslist_id/rate_table/child_nslist_id/$$.
-If $latex u_j$$ is a random effect,
-the rate for the child in the $cref avg_integrand$$ model
-is $latex \exp( u_j )$$ times the rate for the parent.
-For an example use, see
+(see $cref/child_nslist_id/rate_table/child_nslist_id/$$).
+If $cref/u_i,k/avg_integrand/Rate Functions/u_i,k/$$
+is a random effect for a rate and child,
+the rate for the child is $latex \exp( u_{i,k} )$$
+times the rate for the parent;
+see the adjusted rates
 $cref/r_ik/avg_integrand/Rate Functions/r_ik/$$ in the average integrand model.
 
 $head Age and Time Variation$$

@@ -165,6 +165,8 @@ q_{i,k} ( a, t )
 \] $$
 Note that this is the adjusted rate for node $latex n_i$$
 which may, or may not, be the parent node.
+In the $cref/parent_node/option_table/parent_node_id/$$ case,
+the random effects in the equation above $latex u_{i,k} (a, t)$$ are zero.
 
 $subhead p_i,0(t), pini$$
 We use $latex p_{i,0} (t)$$ to denote the model value
