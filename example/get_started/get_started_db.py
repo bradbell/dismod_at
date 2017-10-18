@@ -14,6 +14,7 @@
 #	dismod
 #	covariate
 #	mtother
+#	r_ik
 # $$
 #
 # $section Create get_started Input Tables: Example and Test$$
@@ -29,10 +30,6 @@
 # All of the rates are zero except for
 # $cref/omega/rate_table/rate_name/omega/$$.
 # $lnext
-# The model for other cause mortality
-# $cref/omega/rate_table/rate_name/omega/$$
-# is constant in age and time.
-# $lnext
 # There is only one node corresponding to the world, and hence there are no
 # $cref/children/option_table/parent_node_id/Children/$$ or
 # $cref/random effects/model_variables/Random Effects, u/$$.
@@ -46,16 +43,25 @@
 # covariate multiplier on the
 # $cref/rate value/mulcov_table/mulcov_type/rate_value/$$ for
 # $cref/omega/avg_integrand/Rate Functions/omega_i(a,t)/$$.
+# $lnext
+# The model for other cause mortality
+# $cref/omega/rate_table/rate_name/omega/$$,
+# and the model for the rate covariate multiplier
+# $cref/alpha/avg_integrand/Rate Functions/alpha_jk/$$,
+# are constant in age and time.
 # $lend
-# Because other cause mortality $latex \omega$$ is constant in age and time,
+# Because other cause mortality and the covariate multiplier are
+# constant in age and time,
 # the susceptible population satisfies the
 # following ODE in age $latex a$$:
 # $latex \[
-#	S(0) = 1 \; S'(a) = - \omega S(a)
+#	S(0) = 1 \; S'(a) = - \alpha x \omega S(a)
 # \] $$
-# Note that $latex \omega$$ is the rate of other cause mortality
-# after the covariate effect.
-# The solution is $latex S(a) = \exp( - \omega \; a )$$.
+# where $latex \omega$$ is the other cause mortality rate,
+# $latex x$$ is the value of the income for this measurement, and
+# $latex \alpha$$ is the covariate multiplier;
+# see $cref/r_ik/avg_integrand/Rate Functions/r_ik/$$.
+# The solution is $latex S(a) = \exp( - \alpha x \omega \; a )$$.
 #
 # $head Reference$$
 # See $cref create_database$$.
@@ -76,19 +82,12 @@ known_income_multiplier = -1e-3
 #
 def constant_one_fun(a, t):
 	return 1.0
-def fun_zero(a, t):
-	return ('prior_zero', 'prior_zero', 'prior_zero')
-def fun_one(a, t):
-	return ('prior_one', 'prior_one', 'prior_one')
 def fun_omega_parent(a, t):
 	return ('prior_omega_parent', 'prior_not_used', 'prior_not_used')
 def fun_income_multiplier(a, t):
 	return ('prior_income_multiplier', 'prior_not_used', 'prior_not_used')
 # ------------------------------------------------------------------------
 def get_started_db ():
-	import sys
-	import os
-	import copy
 	import dismod_at
 	from math import exp
 	# ----------------------------------------------------------------------
@@ -98,28 +97,20 @@ def get_started_db ():
 	# time list
 	time_list   = [ 1995.0, 2015.0 ]
 	#
-	# integrand table
-	integrand_list = [
-		'susceptible'
-	]
+	# only one integrand in this example
+	integrand_list = [ 'susceptible' ]
 	#
-	# node table: is just the world (which has no parent)
-	node_table = [
-		{ 'name':'world', 'parent':'' }
-	]
+	# just the world (which has no parent)
+	node_table = [ { 'name':'world', 'parent':'' } ]
 	#
-	# weight table: any constant function can be represented with one
-	# (age, time) pair and the corresponding value
+	# weight table is represented by one (age, time) point with value 1.0
 	fun = constant_one_fun
 	weight_table = [
 		{ 'name':'constant_one', 'age_id':[0], 'time_id':[0], 'fun':fun }
 	]
 	#
-	# covariate table: the reference value for income is zero and
-	# do not exclude any values becuse they are to far from the reference.
-	covariate_table = [
-		{ 'name':'income', 'reference':0.0}
-	]
+	# covariate table: the reference value for income is zero
+	covariate_table = [ { 'name':'income', 'reference':0.0} ]
 	# ---------------------------------------------------------------------
 	# avgint table: predict the susceptible fraction for no income at age 100
 	avgint_table =  [
@@ -137,7 +128,7 @@ def get_started_db ():
 	]
 	# ---------------------------------------------------------------------
 	# data table: note the income for this measurement is 1,000.
-	adjusted_omega = unknown_omega_world * exp(known_income_multiplier*1000.0)
+	adjusted_omega = unknown_omega_world * exp(known_income_multiplier * 1000.0)
 	meas_value     = exp( - adjusted_omega * 50.0 )
 	meas_std       = meas_value / 20.
 	data_table = [
@@ -160,30 +151,23 @@ def get_started_db ():
 	# ---------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{   # prior_not_used:
-			# not used because there are no age or time differences
+		{   # prior_not_used
+			# (not used because there are no age or time differences)
 			'name':     'prior_not_used',
 			'density':  'uniform',
 			'mean':     0.0,
-		},{ # prior_zero
-			'name':     'prior_zero',
-			'density':  'uniform',
-			'lower':    0.0,
-			'upper':    0.0,
-			'mean':     0.0,
-		},{ # prior_one
-			'name':     'prior_one',
-			'density':  'uniform',
-			'lower':    1.0,
-			'upper':    1.0,
-			'mean':     1.0,
 		},{ # prior_omega_parent
+			# omega for the parent is constant in (age, time) and
+			# and is a uniform distribution on the interval [1e-4, 1.0].
+			# Becasue the prior is uniform, its mean 1e-1 is only used to
+			# start the optimization
 			'name':     'prior_omega_parent',
 			'density':  'uniform',
 			'lower':    1e-4,
 			'upper':    1.0,
 			'mean':     1e-1,
-		},{ # prior_income_multiplier (constrained to be 1e-3)
+		},{ # prior_income_multiplier
+			# (constrained to be equal to know_income_multiplier)
 			'name':     'prior_income_multiplier',
 			'density':  'uniform',
 			'lower':    known_income_multiplier,
@@ -192,9 +176,7 @@ def get_started_db ():
 		}
 	]
 	# ---------------------------------------------------------------------
-	# smooth table: omega for the parent is constant in (age, time) and
-	# and is a uniform distribution on the interval [1e-4, 1.0]. The prior
-	# mean 1e-1, for this case, is only used to initilaize the optimization
+	# smooth table:
 	smooth_table = [
 		{	# smooth_omega_parent
 			'name':                     'smooth_omega_parent',
@@ -211,8 +193,7 @@ def get_started_db ():
 	# ---------------------------------------------------------------------
 	# rate table
 	rate_table = [
-		{
-			'name':          'omega',
+		{	'name':          'omega',
 			'parent_smooth': 'smooth_omega_parent',
 		}
 	]

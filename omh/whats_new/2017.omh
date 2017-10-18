@@ -59,6 +59,8 @@ $lnext
 Add cross references from values in the
 $cref rate_table$$ and $cref integrand_table$$
 to the corresponding average integrand notation.
+$lnext
+Simplify the python code in $cref get_started_db.py$$.
 $lend
 
 $head 10-17$$
