@@ -62,6 +62,12 @@ The empty text was sometimes placed in
 the $cref/table_name/log_table/table_name/$$ column of the log table.
 This was a bug and has been fixed by using $code null$$ in these cases; see
 $cref/text can be null, not empty/database/Text can be Null, not Empty/$$.
+$lnext
+The $code create_connection$$ routine now exist with a fatal
+error message when the specified
+$cref/file_name/create_connection/file_name/$$ does not exist.
+$lnext
+The $cref modify_command$$ was added.
 $lend
 
 $head 10-14$$
@@ -75,12 +81,6 @@ $lnext
 In addition, the discussion of
 $cref/random effects/data_like/Effects, u, theta/$$ vector $latex u$$
 in the data likelihood model was improved.
-$lnext
-The $code create_connection$$ routine now exist with a fatal
-error message when the specified
-$cref/file_name/create_connection/file_name/$$ does not exist.
-$lnext
-The $cref modify_command$$ was added.
 $lend
 
 $head 10-13$$
