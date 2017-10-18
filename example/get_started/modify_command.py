@@ -70,10 +70,10 @@ print( os.getcwd() )
 program          = 'bin/dismodat.py'
 file_name        = test_dir + '/get_started.db'
 command          = 'modify'
-table_name       = 'option'
-column_name      = 'option_value'
-row_expression   = 'option_name==\'ode_step_size\''
-value_expression = '5.0'
+table_name       = 'data'       # table we are modifiying
+column_name      = 'density_id' # column we are modifying
+row_expression   = 'data_id==0' # row we are modifiying
+value_expression = '6'          # value we are placeing in that row, column
 cmd            = [
 	program,
 	file_name,
@@ -90,17 +90,14 @@ if flag != 0 :
 	sys.exit('The dismod_at modify command failed')
 os.chdir(test_dir)
 # -----------------------------------------------------------------------
-# option.csv
+# get data table
 new        = False
 connection = dismod_at.create_connection(file_name, new)
-option_table = dismod_at.get_table_dict( connection, 'option')
+data_table = dismod_at.get_table_dict( connection, 'data')
 connection.close()
-found = False
-for row in option_table :
-	if row['option_name'] == 'ode_step_size' :
-		found = True
-		assert float( row['option_value'] ) == 5.0
-assert found
+data_id     = 0
+column_name = 'density_id'
+assert data_table[data_id][column_name] == 6
 # -----------------------------------------------------------------------
 print('modify_command.py: OK')
 # END PYTHON

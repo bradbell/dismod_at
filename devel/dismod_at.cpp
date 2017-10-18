@@ -118,6 +118,11 @@ $codei%
 see $cref/option_name/option_table/Conventions/option_name/$$ and
 $cref/option_value/option_table/Conventions/option_value/$$.
 
+$subhead Warning$$
+If $icode option_name$$ is $code parent_node_id$$,
+the set of $cref model_variables$$ will change and you must
+re-run the $cref init_command$$.
+
 $head table_out$$
 The $icode table_out$$ syntax sets the values in $icode table_out$$
 using the values specified by $icode source$$.

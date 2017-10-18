@@ -61,6 +61,10 @@ $cref rate_table$$ and $cref integrand_table$$
 to the corresponding average integrand notation.
 $lnext
 Simplify the python code in $cref get_started_db.py$$.
+$lnext
+A warning was added to the
+$cref/set_command/set_command/option/Warning/$$ and the
+$cref/modify_command/modify_command/Warning/$$.
 $lend
 
 $head 10-17$$

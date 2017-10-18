@@ -29,6 +29,16 @@
 # $subhead As Python Function$$
 # $codei%dismod_at.modify_command(%database%, %arg_list%)%$$
 #
+# $head See Also$$
+# It is simpler to use the $cref set_command$$ when it is
+# it is capable of making a change.
+#
+# $head Warning$$
+# You can change any value in the database using the modify command.
+# It is suggested that you re-run the $cref init_command$$,
+# unless you are certain that the set of
+# $cref model_variables$$ was not affected by this change.
+#
 # $head arg_list$$
 # This is a list of strings containing the arguments in the
 # program syntax. To be specific,
