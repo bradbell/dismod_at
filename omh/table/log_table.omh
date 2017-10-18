@@ -63,13 +63,13 @@ If it is not $code null$$, $icode message$$ must be $code error$$
 and it is the $cref input$$ table in which the error occurred.
 
 $head row_id$$
-This column has type $code int$$.
+This column has type $code integer$$.
 If it is not $code null$$, $icode table_name$$ is not
 $code null$$ and $icode row_id$$ is the primary key value in
 the specified table where the error occurred.
 
 $head unix_time$$
-This column has type $code int$$ and is
+This column has type $code integer$$ and is
 the return value of the C++ function $code std::time$$; i.e.,
 the number of seconds since January 1, 1970.
 You can convert it to GMT with the SQL command

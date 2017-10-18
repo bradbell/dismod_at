@@ -41,6 +41,7 @@ $rref simulate_command$$
 $rref sample_command$$
 $rref predict_command$$
 $rref db2csv_command$$
+$rref modify_command$$
 $tend
 
 

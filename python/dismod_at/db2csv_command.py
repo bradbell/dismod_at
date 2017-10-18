@@ -39,9 +39,6 @@
 # $subhead As Python Function$$
 # $codei%dismod_at.db2csv_command( %database% )%$$
 #
-# $head 2DO$$
-# Write some automated tests for this program.
-#
 # $head Convention$$
 # The $code null$$ value in the database corresponds
 # to an empty string in the csv files.

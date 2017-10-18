@@ -20,13 +20,13 @@
 #	%python/dismod_at/get_row_list.py
 #	%python/dismod_at/get_table_dict.py
 #	%python/dismod_at/metropolis.py
+#	%python/dismod_at/modify_command.py
 #	%python/dismod_at/unicode_tuple.py
 #	%python/dismod_at/sql_command.py
 # %$$
 #
 # $end
 # -----------------------------------------------------------------------------
-from .create_connection   import create_connection
 from .create_connection   import create_connection
 from .create_database     import create_database
 from .create_table        import create_table
@@ -35,5 +35,6 @@ from .get_name_type       import get_name_type
 from .get_row_list        import get_row_list
 from .get_table_dict      import get_table_dict
 from .metropolis          import metropolis
+from .modify_command      import modify_command
 from .unicode_tuple       import unicode_tuple
 from .sql_command         import sql_command

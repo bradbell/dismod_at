@@ -79,6 +79,8 @@ $lnext
 The $code create_connection$$ routine now exist with a fatal
 error message when the specified
 $cref/file_name/create_connection/file_name/$$ does not exist.
+$lnext
+The $cref modify_command$$ was added.
 $lend
 
 $head 10-13$$

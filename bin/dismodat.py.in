@@ -21,17 +21,32 @@ if os.path.isdir(sandbox) :
 import dismod_at
 # ---------------------------------------------------------------------------
 # check usage
-usage  = 'dismodat.py database command arguments'
-usage += '\nwhere db2csv is the only command so far'
+usage  = 'dismodat.py database db2csv\n'
+usage += 'dismodat.py database modify\\\n'
+usage += '\ttable_name column_name row_expression value_expression\\\n'
+usage += '\t[statement_one [statement_two ...] ]'
 if len(sys.argv) < 3 :
 	sys.exit(usage)
-if sys.argv[2] != 'db2csv' :
-	sys.exit(usage)
+#
 database_file_arg = sys.argv[1]
+command_arg       = sys.argv[2]
+arg_list          = sys.argv[3:]
 # ---------------------------------------------------------------------------
-# write begin for this command
+# connection
 new           = False
 connection    = dismod_at.create_connection(database_file_arg, new)
+# ---------------------------------------------------------------------------
+# create log table if it does not yet exist
+cmd  = 'create table if not exists log('
+cmd += ' log_id        integer primary key,'
+cmd += ' message_type  text               ,'
+cmd += ' table_name    text               ,'
+cmd += ' row_id        integer            ,'
+cmd += ' unix_time     integer            ,'
+cmd += ' message       text               )'
+dismod_at.sql_command(connection, cmd)
+# ---------------------------------------------------------------------------
+# write begin for this command
 log_table     = dismod_at.get_table_dict(connection, 'log')
 #
 log_id        = len( log_table )
@@ -54,7 +69,16 @@ dismod_at.sql_command(connection, cmd)
 connection.close()
 # ---------------------------------------------------------------------------
 # execute command
-dismod_at.db2csv_command(database_file_arg)
+if command_arg == 'db2csv' :
+	if len(sys.argv) != 3 :
+		sys.exit(usage)
+	dismod_at.db2csv_command(database_file_arg)
+elif command_arg == 'modify' :
+	if len(sys.argv) < 7 :
+		sys.exit(usage)
+	dismod_at.modify_command(database_file_arg, arg_list)
+else :
+	sys.exit(usage)
 # ---------------------------------------------------------------------------
 # write end for this command
 message = 'end ' + sys.argv[2]
