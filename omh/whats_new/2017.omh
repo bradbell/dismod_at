@@ -49,6 +49,9 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-18$$
+Improve $cref avg_integrand$$ documentation.
+
 $head 10-17$$
 $list number$$
 The $cref db2csv_command.py$$ example / test was added

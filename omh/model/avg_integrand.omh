@@ -166,51 +166,59 @@ q_{i,k} ( a, t )
 Note that this is the adjusted rate for node $latex n_i$$
 which may, or may not, be the parent node.
 
-$subhead p_0$$
-We use $latex p_0 (t)$$ to denote the value of
-prevalence at the initial age as a function of time; i.e.,
-$latex r_{i,0} (a, t)$$.
+$subhead p_i,0(t), pini$$
+We use $latex p_{i,0} (t)$$ to denote the model value
+(as apposed to a measurement value)
+for prevalence at the initial age as a function of time.
 Note that this function is constant with respect to age $latex a$$;
 see $cref/pini/rate_table/rate_name/pini/$$.
+This is denoted by $latex r_{i,0} (a, t)$$ above.
 
 $subhead iota_i(a,t)$$
 We use $codei%iota_i(%a%, %t%)%$$ and $latex \iota_i (a,t)$$
-to denote the adjusted susceptible incidence as a function of age and time; i.e.
-$latex r_{i,1} ( a, t )$$
+to denote the model value for adjusted susceptible incidence
+as a function of age and time;
+see $cref/iota/rate_table/rate_name/iota/$$.
+This is denoted by $latex r_{i,1} ( a, t )$$ above.
 
 $subhead rho_i(a,t)$$
 We use $codei%rho_i(%a%, %t%)%$$ and $latex \rho_i (a,t)$$
-to denote the adjusted remission as a function of age and time; i.e.,
-$latex r_{i,2} ( a, t )$$
+to denote the model value for adjusted remission
+as a function of age and time;
+see $cref/rho/rate_table/rate_name/rho/$$.
+This is denoted by $latex r_{i,2} ( a, t )$$ above.
 
 $subhead chi_i(a,t)$$
 We use $codei%chi_i(%a%, %t%)%$$ and $latex \chi_i (a,t)$$
-to denote the adjusted excess mortality
-(mortality due to the cause) as a function of age and time; i.e.,
-$latex r_{i,3} ( a, t )$$
+to denote the model value for adjusted excess mortality
+(mortality due to the cause) as a function of age and time.
+This is denoted by $latex r_{i,3} ( a, t )$$ above.
 
 $subhead omega_i(a,t)$$
 We use $codei%omega_i(%a%, %t%)%$$ and $latex \omega_i (a,t)$$
-to denote the adjusted other cause mortality as a function of age and time;
-i.e., $latex r_{i,4} ( a, t )$$
+to denote the model value for adjusted other cause mortality
+as a function of age and time;
+see $cref/omega/rate_table/rate_name/omega/$$.
+This is denoted by $latex r_{i,4} ( a, t )$$ above.
 
 $head S_i(a,t)$$
-We use $latex S_i (a,t)$$ to denote the susceptible fraction
-of the population.
+We use $latex S_i (a,t)$$ to denote the
+model value for susceptible fraction of the population.
 
 $head C_i(a,t)$$
-We use $latex C_i (a,t)$$ to denote the with condition fraction of the
-population.
+We use $latex C_i (a,t)$$ to denote the
+model value for with condition fraction of the population.
 
 
 $head Differential Equation$$
+We drop the subscript $latex i$$ to simplify notation in the equations below.
 The with condition and susceptible fractions at age zero are
 $latex \[
-	C_i (0, t) =  p_0 (t) \; , \; S_i (0, t) = 1 - p_0 (t)
+	C (0, t) =  p_0 (t) \; , \; S (0, t) = 1 - p_0 (t)
 \] $$
 We use $latex c$$ to denote cohort; i.e., $latex t = a + c$$,
 Given the rates (initial prevalence is called a rate),
-the functions $latex S_i (a,t)$$ and $latex C_i (a,t)$$ for $latex a > 0$$
+the functions $latex S (a,t)$$ and $latex C (a,t)$$ for $latex a > 0$$
 are defined by
 $latex \[
 \begin{array}{rcl}
@@ -227,62 +235,62 @@ C(a, a+c)
 - [ \rho(a, a+c) + \chi(a, a+c) + \omega(a, a+c) ] C(a, a+c)
 \end{array}
 \] $$
-where we have dropped the subscript $latex i$$ to simplify the notation.
 
 $head I_i(a,t)$$
 We use $latex I_i (a, t)$$ to denote the integrand as a function of
 age and time.
 Depending on the value of
 see $cref/integrand_id/data_table/integrand_id/$$ for data index $latex i$$,
-the function $latex I_i (a, t)$$ is defined by
+the function $latex I_i (a, t)$$ is defined as follows
+(with the subscript $latex i$$ once again dropped to simplify notation):
 
 $subhead Sincidence$$
-$latex I_i (a, t) = \iota (a,t)$$
+$latex I (a, t) = \iota (a,t)$$
 
 $subhead remission$$
-$latex I_i (a, t) = \rho (a,t) $$
+$latex I (a, t) = \rho (a,t) $$
 
 $subhead mtexcess$$
-$latex I_i (a, t) = \chi (a,t)$$
+$latex I (a, t) = \chi (a,t)$$
 
 $subhead mtother$$
-$latex I_i (a, t) = \omega (a,t)$$
+$latex I (a, t) = \omega (a,t)$$
 
 $subhead mtwith$$
-$latex I_i (a, t) = \omega (a,t) + \chi (a,t)$$
+$latex I (a, t) = \omega (a,t) + \chi (a,t)$$
 
 $subhead susceptible$$
-$latex I_i (a, t) = S(a, t)$$
+$latex I (a, t) = S(a, t)$$
 
 $subhead withC$$
-$latex I_i (a, t) = C(a, t)$$
+$latex I (a, t) = C(a, t)$$
 
 $subhead prevalence$$
-$latex I_i (a, t) = p(a,t) = C(a,t) / [ S(a,t) + C(a,t) ] $$
+$latex I (a, t) = p(a,t) = C(a,t) / [ S(a,t) + C(a,t) ] $$
 
 $subhead Tincidence$$
-$latex I_i (a, t) = \iota(a, t) [ 1 - p(a,t) ]$$
+$latex I (a, t) = \iota(a, t) [ 1 - p(a,t) ]$$
 
 $subhead mtspecific$$
-$latex I_i (a, t) = \chi (a,t) p(a, t)$$
+$latex I (a, t) = \chi (a,t) p(a, t)$$
 
 $subhead mtall$$
-$latex I_i (a, t) = \omega (a,t) + \chi (a,t) p(a,t)$$
+$latex I (a, t) = \omega (a,t) + \chi (a,t) p(a,t)$$
 
 $subhead mtstandard$$
-$latex I_i (a, t) =
+$latex I (a, t) =
 	[ \omega (a,t) + \chi (a,t) ] / [ \omega (a,t) + \chi (a,t) p(a,t) ]
 $$
 
 $subhead relrisk$$
-$latex I_i (a, t) = [ \omega (a,t) + \chi (a,t) ] / \omega (a,t) $$
+$latex I (a, t) = [ \omega (a,t) + \chi (a,t) ] / \omega (a,t) $$
 
 $head Measurement Value Covariates$$
 
 $subhead K_i$$
 There is a set of rows in the mulcov table such that
-$cref/integrand_id/mulcov_table/integrand_id/$$ is equal to $latex I_i$$.
-and
+$cref/integrand_id/mulcov_table/integrand_id/$$ corresponds to
+$latex I_i (a, t)$$ and
 $cref/mulcov_type/mulcov_table/mulcov_type/$$ is equal to $code meas_value$$.
 We use $latex K_i$$ to denote the corresponding set of
 $cref/covariate_id/mulcov_table/covariate_id/$$ values for

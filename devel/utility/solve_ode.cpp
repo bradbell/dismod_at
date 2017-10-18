@@ -77,8 +77,8 @@ This argument has prototype
 $code%
 	const %Float%& %pini%
 %$$
-and is the initial prevalence for this cohort; i.e.
-$cref/p_0/avg_integrand/Rate Functions/p_0/$$ for this cohort.
+and is the initial prevalence for this cohort; see
+$cref/pini/avg_integrand/Rate Functions/p_i,0(t), pini/$$.
 
 $head rate$$
 For $icode rate$$ equal to
