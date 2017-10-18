@@ -46,9 +46,10 @@ In addition, these values must appear in the order above.
 $subhead pini$$
 The initial
 $cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$
-$icode pini$$ is the prevalence at the initial age; i.e.,
+$icode pini$$ is the model for prevalence at the initial age; i.e.,
 the value $cref/age/age_table/age/$$ corresponding to
-$icode%age_id% == 0%$$.
+$icode%age_id% == 0%$$;
+see $cref/p_i,0(t)/avg_integrand/Rate Functions/p_i,0(t), pini/$$.
 If $icode rate_name$$ is $code pini$$, the
 $icode parent_smooth_id$$ and $icode child_smooth_id$$ smoothings must have
 $cref/n_age/smooth_table/n_age/$$ equal to one.
@@ -63,23 +64,30 @@ On the other hand, and like the other rates,
 initial prevalence is a necessary input to solve the ODE.
 
 $subhead iota$$
-The susceptible incidence rate $icode iota$$ is the rate at which people who
+The model for susceptible incidence rate $icode iota$$
+is the rate at which people who
 are in the susceptible state $icode S$$
-transfer to the with condition state $icode C$$.
+transfer to the with condition state $icode C$$;
+see $cref/iota_i(a, t)/avg_integrand/Rate Functions/iota_i(a,t)/$$.
 
 $subhead rho$$
-The remission rate $icode rho$$ is the rate at which people who
+The model for remission rate $icode rho$$ is the rate at which people who
 are in the with condition state $icode C$$
-transfer to the susceptible state $icode S$$.
+transfer to the susceptible state $icode S$$;
+see $cref/rho_i(a, t)/avg_integrand/Rate Functions/rho_i(a,t)/$$.
 
 $subhead chi$$
-The excess mortality rate $icode chi$$ is the rate at which people who
-are in the with condition state $icode C$$ die from the condition.
+The model for excess mortality rate $icode chi$$
+is the rate at which people who
+are in the with condition state $icode C$$ die from the condition;
+see $cref/chi_i(a, t)/avg_integrand/Rate Functions/chi_i(a,t)/$$.
 
 $subhead omega$$
-The other mortality rate $icode omega$$ is the rate at which people who
+The model for other mortality rate $icode omega$$
+is the rate at which people who
 are in either state, $icode S$$ or $icode C$$,
-die from causes other than the condition.
+die from causes other than the condition;
+see $cref/omega_i(a, t)/avg_integrand/Rate Functions/omega_i(a,t)/$$.
 
 
 $head parent_smooth_id$$
