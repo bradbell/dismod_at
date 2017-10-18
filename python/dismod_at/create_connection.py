@@ -24,7 +24,8 @@
 #
 # $head file_name$$
 # is as $code str$$ containing the name of the file where the data base
-# is stored.
+# is stored. If the file does not exist, an error message is printed
+# and the program is terminated with a non-zero error status.
 #
 # $head new$$
 # is either $code True$$ or $code False$$.

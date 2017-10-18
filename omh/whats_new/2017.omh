@@ -75,6 +75,10 @@ $lnext
 In addition, the discussion of
 $cref/random effects/data_like/Effects, u, theta/$$ vector $latex u$$
 in the data likelihood model was improved.
+$lnext
+The $code create_connection$$ routine now exist with a fatal
+error message when the specified
+$cref/file_name/create_connection/file_name/$$ does not exist.
 $lend
 
 $head 10-13$$
