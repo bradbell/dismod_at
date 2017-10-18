@@ -35,53 +35,62 @@ Its initial value is zero, and it increments by one for each row.
 
 $head integrand_name$$
 This column has type $code text$$.
-The following table lists the possible values for $icode integrand_name$$.
+The following is a list of the possible values for $icode integrand_name$$.
 This column is unique; i.e., each name can only appear once in this table.
 Only the $cref/integrand_id/data_table/integrand_id/$$ that appear
 in the data table need appear in the integrand table.
-$table
-$icode integrand_name$$ $pre   $$ $cnext Description $cnext  $pre  $$
-	Definition
-$rnext
-$code Sincidence$$      $cnext susceptible incidence rate $cnext $pre  $$
-	$icode iota$$
-$rnext
-$code remission$$       $cnext remission rate $cnext $pre  $$
-	$icode rho$$
-$rnext
-$code mtexcess$$        $cnext excess mortality rate $cnext $pre  $$
-	$icode chi$$
-$rnext
-$code mtother$$         $cnext other cause mortality rate $cnext $pre  $$
-	$icode omega$$
-$rnext
-$code mtwith$$          $cnext with condition mortality rate $cnext $pre  $$
-	$icode%omega% + %chi%$$
-$rnext
-$code susceptible$$     $cnext the susceptible fraction of the population
-	$cnext $pre  $$ $icode%S%$$
-$rnext
-$code withC$$  $cnext the fraction of the population with the condition
-	$cnext $pre  $$ $icode%C%$$
-$rnext
-$code prevalence$$      $cnext prevalence $cnext $pre  $$
-	$icode%P% = %C% / (%S% + %C%)%$$
-$rnext
-$code Tincidence$$      $cnext total incidence rate $cnext $pre  $$
-	$icode%iota% * (1 - %P%)%$$
-$rnext
-$code mtspecific$$      $cnext cause specific mortality rate $cnext $pre  $$
-	$icode%chi% * %P%$$
-$rnext
-$code mtall$$           $cnext all-cause mortality rate $cnext $pre  $$
-	$icode%omega% + %chi% * %P%$$
-$rnext
-$code mtstandard$$      $cnext standardized mortality ratio $cnext $pre  $$
-	$codei%[ %omega% + %chi% ] / [ %omega% + %chi% * %P% ]%$$
-$rnext
-$code relrisk$$         $cnext relative risk ratio $cnext $pre  $$
-	$codei%[ %omega% + %chi% ] / %omega%$$
-$tend
+
+$subhead Sincidence$$
+The susceptible incidence rate;
+see $cref/Sincidence/avg_integrand/I_i(a,t)/Sincidence/$$.
+
+$subhead remission$$
+The remission rate;
+see $cref/remission/avg_integrand/I_i(a,t)/remission/$$.
+
+$subhead mtexcess$$
+The excess mortality rate;
+see $cref/mtexcess/avg_integrand/I_i(a,t)/mtexcess/$$.
+
+$subhead mtother$$
+The other cause mortality rate;
+see $cref/mtother/avg_integrand/I_i(a,t)/mtother/$$.
+
+$subhead mtwith$$
+The mtwith rate;
+see $cref/mtwith/avg_integrand/I_i(a,t)/mtwith/$$.
+
+$subhead susceptible$$
+The susceptible fraction of the population;
+see $cref/susceptible/avg_integrand/I_i(a,t)/susceptible/$$.
+
+$subhead withC$$
+The with condition fraction of the population;
+see $cref/withC/avg_integrand/I_i(a,t)/withC/$$.
+
+$subhead prevalence$$
+The prevalence of the condition;
+see $cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$.
+
+$subhead Tincidence$$
+The total incidence rate;
+see $cref/Tincidence/avg_integrand/I_i(a,t)/Tincidence/$$.
+
+$subhead mtspecific$$
+The cause specific mortality rate;
+see $cref/mtspecific/avg_integrand/I_i(a,t)/mtspecific/$$.
+
+$subhead mtall$$
+The all cause mortality rate;
+see $cref/mtall/avg_integrand/I_i(a,t)/mtall/$$.
+
+$subhead mtstandard$$
+The standardized mortality ratio;
+see $cref/mtstandard/avg_integrand/I_i(a,t)/mtstandard/$$.
+
+$subhead relrisk$$
+The relative risk;
+see $cref/relrisk/avg_integrand/I_i(a,t)/relrisk/$$.
 
 $children%example/table/integrand_table.py
 %$$
