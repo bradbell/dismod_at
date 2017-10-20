@@ -15,7 +15,14 @@ n_children='20'
 n_data_per_child='40'
 quasi_fixed='false'
 # ---------------------------------------------------------------------------
+if [ $0 != 'bin/compare_checkpoint.sh' ]
+then
+	echo 'bin/compare_atomic.sh: must be executed from its parent directory'
+	exit 1
+fi
+# ---------------------------------------------------------------------------
 # convert to release build
+git checkout bin/run_cmake.sh
 sed -i bin/run_cmake.sh \
 	-e 's|^build_type=.*|build_type=release|'
 bin/run_cmake.sh
@@ -31,23 +38,24 @@ echo_eval python3 example/user/speed.py \
 database='example/user/example.db'
 program='devel/dismod_at'
 #
-for atomic in yes no
+for checkpoint in yes no
 do
-	# install cppad_mixed with this setting for atomic cholesky
+	# install cppad_mixed with this setting for chekcpoint newton
+	git checkout bin/install_cppad_mixed.sh
 	sed -i bin/install_cppad_mixed.sh \
-		-e "s|^use_atomic_cholesky=.*|use_atomic_cholesky=$atomic|"
+		-e "s|^checkpoint_newton_step=.*|checkpoint_newton_step=$checkpoint|"
 	#
 	bin/install_cppad_mixed.sh
 	cd build
 	make dismod_at
 	#
 	# timing test
-	echo "(time $program $database fit both 2> time.$atomic"
-	(time $program $database fit both 0) 2> time.$atomic
+	echo "(time $program $database fit both 2> time.$checkpoint"
+	(time $program $database fit both 0) 2> time.$checkpoint
 	#
 	# memory test
 	echo_eval massif.sh $program $database fit both 0
-	echo_eval mv massif.out massif.$atomic
+	echo_eval mv massif.out massif.$checkpoint
 	#
 	cd ..
 done
