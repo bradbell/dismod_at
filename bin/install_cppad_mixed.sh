@@ -38,9 +38,6 @@ ldlt_cholmod='yes'
 # use atomic Cholesky factorization (strongly suggest no)
 use_atomic_cholesky='no'
 #
-# use checkpointing of Newton step to reduce memory and increase execution time
-checkpoint_newton_step='no'
-#
 # show ipopt the cppad_mixed re-scaling
 hide_ipopt_scaling='yes'
 #
@@ -73,6 +70,10 @@ eval $cmd
 #
 # cmake_cxx_compiler
 cmd=`grep '^cmake_cxx_compiler=' bin/run_cmake.sh`
+eval $cmd
+#
+# checkpoint_newton_step
+cmd=`grep '^checkpoint_newton_step=' bin/run_cmake.sh`
 eval $cmd
 # ---------------------------------------------------------------------------
 # optimize the AD operation sequences

@@ -14,6 +14,7 @@
 # &spell
 #	cmake makefile cxx std dismod lcppad cholmod xam cpp
 #	usr eigen ipopt cppad bools suitesparse devel hpp pthread
+#	checkpointing
 # &&
 #
 # &section bin/run_cmake.sh: User Configuration Options&&
@@ -47,7 +48,7 @@ python3_executable='/usr/bin/python3'
 # &codep
 extra_cxx_flags='-std=c++11 -Wall -DCPPAD_DEBUG_AND_RELEASE'
 # &&
-# An alternative might be $code '-Wall'.
+# An alternative might be '-Wall'.
 #
 # &head dismod_at_prefix&&
 # Prefix where dismod_at will be installed:
@@ -91,6 +92,17 @@ suitesparse_prefix="$HOME/prefix/dismod_at"
 # Which c++ compiler should cmake use (empty means cmake will choose it).
 # &codep
 cmake_cxx_compiler=''
+# &&
+#
+# &head checkpoint_newton_step&&
+# If &code yes&&, &code cppad_mixed&& will use checkpointing during
+# calculation of second derivatives. This affects optimization when
+# &cref/quasi_fixed/option_table/Optimizer/quasi_fixed/&& is false, and the
+# &cref/asymptotic/sample_command/method/asymptotic/&& sampling method.
+# For these computations, checkpointing should use less memory, but
+# take more time.
+# &codep
+checkpoint_newton_step='yes'
 # &&
 #
 # &head system_specific_library_list&&

@@ -49,6 +49,13 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-20$$
+Add the
+$cref/checkpoint_newton_step/run_cmake.sh/checkpoint_newton_step/$$
+option to the dismod_at configuration script.
+The default value in $code run_cmake.sh$$ for this setting
+is $code yes$$ (it used to be set at $code no$$).
+
 $head 10-18$$
 $list number$$
 Improve documentation for following sections:
