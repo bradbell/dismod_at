@@ -13,10 +13,12 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-// data_model
+// ---------------------------------------------------------------------------
+// data_depend
+// ---------------------------------------------------------------------------
 CppAD::vector<bool> data_depend(
-	const CppAD::vector<double>& pack_vec ,
-	const data_model&  data_object        )
+	const CppAD::vector<double>& pack_vec     ,
+	const data_model&            data_object  )
 {	typedef CppAD::AD<double>        a1_double;
 	typedef CppAD::vector<a1_double> a1d_vector;
 	//
@@ -33,16 +35,16 @@ CppAD::vector<bool> data_depend(
 	{	// compute likelihood for fixed or random effects part
 		bool random_depend = bool( random );
 		bool hold_out      = true;
-		CppAD::vector< residual_struct<a1_double> > a1_data_like =
+		CppAD::vector< residual_struct<a1_double> > a1_like_vec =
 			data_object.like_all(hold_out, random_depend, a1_pack_vec);
 		//
 		// add this part to the sum
-		size_t n_data = a1_data_like.size();
-		for(size_t i = 0; i < n_data; i++)
-		{	a1_sum += a1_data_like[i].logden_smooth;
-			density_enum density = a1_data_like[i].density;
+		size_t n_like = a1_like_vec.size();
+		for(size_t i = 0; i < n_like; i++)
+		{	a1_sum += a1_like_vec[i].logden_smooth;
+			density_enum density = a1_like_vec[i].density;
 			if( density == laplace_enum || density == log_laplace_enum )
-				a1_sum -= fabs( a1_data_like[i].logden_sub_abs );
+				a1_sum -= fabs( a1_like_vec[i].logden_sub_abs );
 		}
 	}
 	//
@@ -78,7 +80,7 @@ CppAD::vector<bool> data_depend(
 	assert( pattern_out.nr() == 1 );
 	assert( pattern_out.nc() == n_var );
 	//
-	// compute the data dependency vector
+	// compute the dependency vector
 	CppAD::vector<bool> result(n_var);
 	for(size_t i = 0; i < n_var; i++)
 		result[i] = false;
