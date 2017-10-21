@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -41,22 +41,25 @@ list=`git ls-files`
 different="no"
 for file in $list
 do
-	reference=`sed -n -f junk.sed $file`
+	references=`sed -n -f junk.sed $file`
 	for name in $special_case
 	do
 		if [ "$file" == "$name" ]
 		then
-			reference=''
+			references=''
 		fi
 	done
-	if [ "$reference" != '' ]
-	then
-		if [ "$file" != "$reference" ]
+	for reference in $references
+	do
+		if [ "$reference" != '' ]
 		then
-			echo "\$srcfile in $file references $reference"
-			different="yes"
+			if [ "$file" != "$reference" ]
+			then
+				echo "\$srcfile in '$file' references '$reference'"
+				different="yes"
+			fi
 		fi
-	fi
+	done
 done
 echo "-------------------------------------------------------------------"
 if [ $different = "yes" ]
