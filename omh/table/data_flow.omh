@@ -31,6 +31,7 @@ it is never erased and restarted.
 $children%omh/table/log_table.omh
 	%omh/table/var_table.omh
 	%omh/table/data_subset_table.omh
+	%omh/table/depend_var_table.omh
 	%omh/table/start_var_table.omh
 	%omh/table/scale_var_table.omh
 	%omh/table/fit_var_table.omh

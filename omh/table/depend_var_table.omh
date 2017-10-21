@@ -1,0 +1,44 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-17 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin depend_var_table$$
+$spell
+	py
+	var
+$$
+
+$section Which Variables The Model Depends On$$
+
+$head depend_var_id$$
+This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+The $icode depend_var_id$$ column is also a foreign key for the
+$cref var_table$$; i.e.,
+$codei%
+	%depend_var_id% = %var_id%
+%$$
+In addition, the size of both tables is the same.
+
+$head data_depend$$
+This column type $code integer$$ and is either zero or one.
+If it is one (zero), the model for the data does (does not) depend on the
+$cref/model_variable/model_variables/$$ corresponding to this
+$cref/var_id/var_table/var_id/$$.
+
+$head prior_depend$$
+This column type $code integer$$ and is either zero or one.
+If it is one (zero), the model for the prior does (does not) depend on the
+$cref/model_variable/model_variables/$$ corresponding to this
+$cref/var_id/var_table/var_id/$$.
+
+$head Example$$
+See the $code depend_command.py$$ example and test.
+
+$end
