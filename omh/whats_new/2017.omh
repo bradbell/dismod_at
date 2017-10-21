@@ -49,6 +49,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-21$$
+The $cref/input and output by command/data_flow/Input and Output by Command/$$
+in the data flow page was corrected.
+To be specific $cref fit_data_subset_table$$, not $cref data_subset_table$$,
+is output by the $cref fit_command$$.
+
 $head 10-20$$
 Add the
 $cref/checkpoint_newton_step/run_cmake.sh/checkpoint_newton_step/$$

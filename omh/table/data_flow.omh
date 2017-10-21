@@ -120,7 +120,7 @@ $cref start_var_table$$, $cref scale_var_table$$, $cref truth_var_table$$
 $rnext
 $cref/fit/fit_command/$$     $cnext
 	$cref simulate_table$$  $cnext
-	$cref fit_var_table$$, $cref data_subset_table$$.
+	$cref fit_var_table$$, $cref fit_data_subset_table$$.
 $rnext
 $cref/simulate/simulate_command/$$ $cnext
 	$cref truth_var_table$$        $cnext
