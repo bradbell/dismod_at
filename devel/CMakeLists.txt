@@ -13,6 +13,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	model/data_model.cpp
 	model/fit_model.cpp
 	model/prior_model.cpp
+	model/depend.cpp
 
 	utility/avgint_subset.cpp
 	utility/bilinear_interp.cpp
