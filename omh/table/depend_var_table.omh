@@ -16,6 +16,13 @@ $$
 
 $section Which Variables The Model Depends On$$
 
+$head Purpose$$
+This table is created by the $cref depend_command$$ and
+is not used by any commands.
+It is only meant as a diagnostic to see if the model has more
+variables than necessary; e.g.,
+random effects with not associated data.
+
 $head depend_var_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.

@@ -72,6 +72,10 @@ $cref/init/init_command/$$,
 $cref/set/set_command/table_out/scale_var/$$ $cnext
 yes
 $rnext
+$cref/depend_var/depend_var_table/$$ $cnext
+$cref/depend/depend_command/$$ $cnext
+no
+$rnext
 $cref/fit_var/fit_var_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 no
@@ -114,6 +118,10 @@ $table
 Command     $cnext
 Extra Input $cnext
 Output      $cnext
+$rnext
+$cref/depend/depend_command/$$   $cnext
+$cnext
+$cref depend_var_table$$
 $rnext
 $cref/set/set_command/$$                     $cnext
 $cref fit_var_table$$, $cref sample_table$$  $cnext

@@ -12,9 +12,6 @@ $begin depend$$
 
 $section Compute Data or Prior Dependencies$$
 
-$head Under Construction$$
-These sections are under construction.
-
 $childtable%devel/model/depend.cpp
 %$$
 

@@ -118,6 +118,13 @@
 # $cref/fixed effect/model_variables/Fixed Effects, theta/$$,
 # otherwise it is $code false$$.
 #
+# $subhead depend$$
+# If the $cref depend_var_table$$ exists, this has one of the following:
+# $code none$$ if neither the data nor the prior depends on this variable,
+# $code data$$ if only the data depends on this variable,
+# $code prior$$ if only the prior depends on this variable,
+# $code both$$ if both the data and the prior depend on this variable.
+#
 # $subhead tru_value$$
 # If the truth_var table exists, this is the corresponding
 # $cref/truth_var_value/truth_var_table/truth_var_value/$$.
@@ -534,6 +541,7 @@ def db2csv_command(database_file_arg) :
 			sys.exit(msg)
 	#
 	have_table = dict()
+	have_table['depend_var']      = check4table(cursor, 'depend_var')
 	have_table['truth_var']       = check4table(cursor, 'truth_var')
 	have_table['sample']          = check4table(cursor, 'sample')
 	have_table['simulate']        = check4table(cursor, 'simulate')
@@ -748,6 +756,7 @@ def db2csv_command(database_file_arg) :
 		'covariate',
 		'node',
 		'fixed',
+		'depend',
 		'tru_value',
 		'sam_avg',
 		'sam_std',
@@ -793,6 +802,20 @@ def db2csv_command(database_file_arg) :
 			if row_in['node_id'] != parent_node_id :
 				row_out['fixed'] = 'false'
 		#
+		if have_table['depend_var'] :
+			data_depend  = table_data['depend_var'][var_id]['data_depend']
+			prior_depend = table_data['depend_var'][var_id]['prior_depend']
+			assert data_depend in [ 0, 1 ]
+			assert prior_depend in [ 0, 1 ]
+			both = data_depend == 1 and prior_depend == 1
+			if both :
+				row_out['depend'] = 'both'
+			elif data_depend == 1 :
+				row_out['depend'] = 'data'
+			elif prior_depend == 1 :
+				row_out['depend'] = 'prior'
+			else :
+				row_out['depend'] = 'none'
 		if have_table['truth_var'] :
 			row_out['tru_value'] = \
 				 table_lookup('truth_var', var_id, 'truth_var_value')
