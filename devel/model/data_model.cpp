@@ -632,7 +632,7 @@ $$
 $section Set Value Necessary for Likelihood (not for Average Integrand)$$
 
 $head Syntax$$
-$icode%data_object%.replace_like(%data_subset_obj%)%$$
+$icode%data_object%.replace_like(%minimum_meas_cv%, %data_subset_obj%)%$$
 
 $head Purpose$$
 The values

@@ -667,15 +667,30 @@ that maps a $cref/var_id/var_table/var_id/$$
 to its meaning in terms of the
 $cref model_variables$$.
 
+$children%example/get_started/depend_command.py
+%$$
+$head Example$$
+The file $cref depend_command.py$$ contains an example and test
+using this command.
+
 $end
 */
 void depend_command(
-	sqlite3*                        db               ,
-	const vector<double>&           prior_mean       ,
-	const dismod_at::data_model&    data_object      ,
-	const dismod_at::prior_model&   prior_object     )
+	sqlite3*                                      db               ,
+	const vector<double>&                         prior_mean       ,
+	dismod_at::data_model&                        data_object      ,
+	const vector<dismod_at::data_subset_struct>&  data_subset_obj  ,
+	const dismod_at::prior_model&                 prior_object     ,
+	// effectively const
+	std::map<std::string, std::string>&           option_map       )
 {	using std::string;
 	string table_name = "depend_var";
+	//
+	// minimum_meas_cv
+	double minimum_meas_cv = std::atof(
+		option_map["minimum_meas_cv"].c_str()
+	);
+	data_object.replace_like(minimum_meas_cv, data_subset_obj);
 	//
 	// compute the dependencies
 	vector<bool> data_depend  =
@@ -2224,7 +2239,9 @@ int main(int n_arg, const char** argv)
 					db               ,
 					prior_mean       ,
 					data_object      ,
-					prior_object
+					data_subset_obj  ,
+					prior_object     ,
+					option_map
 				);
 			}
 			else if( command_arg == "sample" )

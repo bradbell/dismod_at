@@ -39,6 +39,6 @@ $cref/model_variable/model_variables/$$ corresponding to this
 $cref/var_id/var_table/var_id/$$.
 
 $head Example$$
-See the $code depend_command.py$$ example and test.
+See the $cref depend_command.py$$ example and test.
 
 $end
