@@ -36,6 +36,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/create_table.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/configure.hpp>
+# include <dismod_at/depend.hpp>
 
 # define DISMOD_AT_TRACE 0
 
@@ -642,6 +643,82 @@ void init_command(
 	// ----------------------------------------------------------------------
 	return;
 }
+/*
+-----------------------------------------------------------------------------
+$begin depend_command$$
+$spell
+	dismod
+	var
+$$
+
+$section The Depend Command$$
+
+$head Syntax$$
+$codei%dismod_at %database% depend%$$
+
+$head database$$
+Is an
+$href%http://www.sqlite.org/sqlite/%$$ database containing the
+$code dismod_at$$ $cref input$$ tables which are not modified.
+
+$head depend_var_table$$
+A new $cref depend_var_table$$ is created with the information
+that maps a $cref/var_id/var_table/var_id/$$
+to its meaning in terms of the
+$cref model_variables$$.
+
+$end
+*/
+void depend_command(
+	sqlite3*                        db               ,
+	const vector<double>&           prior_mean       ,
+	const dismod_at::data_model&    data_object      ,
+	const dismod_at::prior_model&   prior_object     )
+{	using std::string;
+	string table_name = "depend_var";
+	//
+	// compute the dependencies
+	vector<bool> data_depend  =
+		dismod_at::data_depend(prior_mean, data_object);
+	vector<bool> prior_depend =
+		dismod_at::prior_depend(prior_mean, prior_object);
+	//
+	// delete old version of depend_var table
+	string sql_cmd = "drop table if exists ";
+	sql_cmd       += table_name;
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	// create new depend_var table
+	size_t n_var      = prior_mean.size();
+	vector<string> col_name(2), col_type(2), row_value(2 * n_var);
+	vector<bool>   col_unique(2);
+	col_name[0]       = "data_depend";
+	col_type[0]       = "integer";
+	col_unique[0]     = false;
+	col_name[1]       = "prior_depend";
+	col_type[1]       = "integer";
+	col_unique[1]     = false;
+	for(size_t i = 0; i < n_var; i++)
+	{	// values in i-th row
+		//
+		// data_depend
+		if( data_depend[i]  )
+			row_value[i * 2 + 0] = "1";
+		else
+			row_value[i * 2 + 0] = "0";
+		//
+		// prior_depend
+		if( prior_depend[i]  )
+			row_value[i * 2 + 1] = "1";
+		else
+			row_value[i * 2 + 1] = "0";
+	}
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
+	return;
+}
+
 /*
 -----------------------------------------------------------------------------
 $begin fit_command$$
@@ -1810,6 +1887,7 @@ int main(int n_arg, const char** argv)
 		{"init",      3},
 		{"set",       5},
 		{"set",       6},
+		{"depend",    3},
 		{"fit",       4},
 		{"fit",       5},
 		{"simulate",  4},
@@ -2141,7 +2219,15 @@ int main(int n_arg, const char** argv)
 			);
 			data_object.set_eigen_ode2_case_number(rate_case);
 			//
-			if( command_arg == "sample" )
+			if( command_arg == "depend" )
+			{	depend_command(
+					db               ,
+					prior_mean       ,
+					data_object      ,
+					prior_object
+				);
+			}
+			else if( command_arg == "sample" )
 			{	sample_command(
 					argv[3]          , // method
 					argv[4]          , // number_sample
