@@ -59,6 +59,7 @@ bool get_option_table_xam(void)
 		"bound_frac_fixed",              "1e-3",
 		//
 		"parent_node_id",                "1",
+		"parent_node_name",              "north_america",
 		"avgint_extra_columns",          "",
 		"data_extra_columns",            "",
 		"warn_on_stderr",                "true",

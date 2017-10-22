@@ -66,18 +66,25 @@ This column has type $code text$$ and is
 the value for the corresponding option.
 
 $head parent_node_id$$
-If $icode%option_name% = parent_node%$$,
+If $icode%option_name% = parent_node_id%$$
 the corresponding $icode option_value$$
-is a non-negative integer (greater than or equal zero)
-that specifies the parent $cref/node_id/node_table/node_id/$$.
-If you change the $icode parent_node_id$$,
-all of the output tables become invalid.
-This value is in the option table,
-and not an argument to a particular command,
-because it is used by all the commands.
+is an integer that specifies the parent
+$cref/node_id/node_table/node_id/$$.
+
+$subhead parent_node_name$$
+If $icode%option_name% = parent_node_name%$$
+the corresponding $icode option_value$$
+is an string that specifies the parent
+$cref/node_name/node_table/node_name/$$.
+If $icode parent_node_id$$ is also specified,
+the corresponding node id and node name must agree.
+If $icode parent_node_id$$ is not specified,
+the $cref node_table$$ is searched to determine
+the corresponding $icode parent_node_id$$.
 
 $subhead Default$$
-The default value for this option is $code 0$$.
+There is no default value when neither
+$icode parent_node_id$$ nor $icode parent_node_name$$ is present.
 
 $subhead Children$$
 The child nodes are the elements of the
@@ -100,6 +107,13 @@ of the parent node,
 are not included in the $cref predict_table$$;
 see the heading Note for the
 $cref/predict table/predict_table/Avgint Subset/Node/$$.
+
+$subhead Changing$$
+If you change the parent node
+all of the output tables become invalid.
+This value is in the option table,
+and not an argument to a particular command,
+because it is used by all the commands.
 
 $head zero_sum_random$$
 If $icode option_name$$ is $code zero_sum_random$$,

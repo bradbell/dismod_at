@@ -2036,9 +2036,34 @@ int main(int n_arg, const char** argv)
 	assert( time_max <= time_min  + (n_time_ode - 1) * ode_step_size );
 	// ---------------------------------------------------------------------
 	// parent_node_id
-	size_t parent_node_id = std::atoi(
-		option_map["parent_node_id"].c_str()
-	);
+	size_t parent_node_id   = db_input.node_table.size();
+	string parent_node_name = option_map["parent_node_name"];
+	if( option_map["parent_node_id"] != "" )
+	{	parent_node_id   = std::atoi( option_map["parent_node_id"].c_str() );
+		if( parent_node_name != "" )
+		{	string node_name = db_input.node_table[parent_node_id].node_name;
+			if( parent_node_name != node_name )
+			{	message = "both parent_node_id and parent_node_name"
+				" specify different nodes";
+				string table_name = "option";
+				dismod_at::error_exit(message, table_name);
+			}
+		}
+	}
+	else if( parent_node_name != "" )
+	{	size_t n_node  = db_input.node_table.size();
+		for(size_t node_id = 0; node_id < n_node; node_id++)
+		{	if( db_input.node_table[node_id].node_name == parent_node_name )
+				parent_node_id = node_id;
+		}
+	}
+	else
+	{	message = "neither parent_node_id nor parent_node_name is present";
+		string table_name = "option";
+		dismod_at::error_exit(message, table_name);
+	}
+	// ------------------------------------------------------------------------
+
 	// child_data
 	dismod_at::child_info child_data(
 		parent_node_id          ,

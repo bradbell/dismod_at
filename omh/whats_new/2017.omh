@@ -49,6 +49,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-22$$
+Add the option to specify
+$cref/parent_node_name/option_table/parent_node_id/parent_node_name/$$
+instead of parent_node_id.
+
 $head 10-21$$
 $list number$$
 The $cref depend_command$$ was added and the
