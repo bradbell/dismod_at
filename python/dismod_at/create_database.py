@@ -305,17 +305,6 @@
 #	%option_name%  = %option_table%[%i%]['name']
 #	%option_value% = %option_table%[%i%]['value']
 # %$$
-# There is one exception to this rule.
-# The row of the table with $icode option_name$$ equal to
-# $cref/parent_node_id/option_table/parent_node_id/$$ is represented by
-# $codei%
-#	%option_table%[%i%]['name']  = 'parent_node_name'
-#	%option_table%[%i%]['value'] = %value%
-# %$$
-# where $icode value$$ is the value of
-# $cref/node_name/node_table/node_name/$$ in the node table that
-# corresponds to the $icode node_id$$ equal to
-# $icode parent_node_id$$ in the option table.
 #
 # $childtable%example/table/create_database.py
 # %$$
@@ -887,17 +876,6 @@ def create_database(
 	for row in option_table :
 		name  = row['name']
 		value = row['value']
-		if name == 'parent_node_id' :
-			value = str(value)
-			msg   = 'create_database.py: option_table has the following row:\n'
-			msg  += "\t{ 'name':'parent_node_id' , 'value':'" + value + "' }\n"
-			msg  += 'This is an error and should probably be replaced by\n'
-			value = node_table[int(value)]['name']
-			msg  += "\t{ 'name':'parent_node_name' , 'value':'" + value + "' }"
-			sys.exit(msg)
-		if name == 'parent_node_name' :
-			name  = 'parent_node_id'
-			value = global_node_name2id[value]
 		row_list.append( [ name, value ] )
 	tbl_name = 'option'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

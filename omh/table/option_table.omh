@@ -80,7 +80,8 @@ If $icode parent_node_id$$ is also specified,
 the corresponding node id and node name must agree.
 If $icode parent_node_id$$ is not specified,
 the $cref node_table$$ is searched to determine
-the corresponding $icode parent_node_id$$.
+the corresponding $icode parent_node_id$$
+(this takes some extra time that it is not expected to be significant).
 
 $subhead Default$$
 There is no default value when neither

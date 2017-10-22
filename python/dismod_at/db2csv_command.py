@@ -605,7 +605,7 @@ def db2csv_command(database_file_arg) :
 		msg += 'is present in the option table\n'
 		sys.exit(msg)
 	if parent_node_id == None :
-		node_table = table_data['node_table']
+		node_table = table_data['node']
 		for node_id in range( len( node_table ) ) :
 			if node_table[node_id]['node_name'] == parent_node_name :
 				parent_node_id = node_id
@@ -686,7 +686,8 @@ def db2csv_command(database_file_arg) :
 		[ "max_num_iter_fixed",            "100"],
 		[ "max_num_iter_random",           "100"],
 		[ "ode_step_size",                 "10.0"],
-		[ "parent_node_id",                "0"],
+		[ "parent_node_id",                ""],
+		[ "parent_node_name",              ""],
 		[ "minimum_meas_cv",               "0.0"],
 		[ "print_level_fixed",             "0"],
 		[ "print_level_random",            "0"],

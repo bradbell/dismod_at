@@ -363,7 +363,7 @@ def create_database() :
 	col_name = [ 'option_name', 'option_value' ]
 	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
 	check_list = [
-		[ 'parent_node_id',   '0'                ],
+		[ 'parent_node_name', 'world'            ],
 		[ 'ode_step_size',    '10.0'             ],
 		[ 'random_seed',      '0'                ],
 		[ 'rate_case',        'iota_pos_rho_pos' ],
