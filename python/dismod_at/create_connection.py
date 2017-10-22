@@ -48,8 +48,9 @@ import sqlite3
 def create_connection(file_name, new) :
 	import os
 	import sys
-	if new and os.path.isfile(file_name) :
-		os.remove(file_name)
+	if new :
+		if	os.path.isfile(file_name) :
+			os.remove(file_name)
 	else :
 		if not os.path.isfile(file_name) :
 			msg = 'create_connection: ' + file_name + ' does not exist.'

@@ -50,6 +50,7 @@ $childtable%
 %$$
 
 $head 10-22$$
+$list number$$
 Add the option to specify
 $cref/parent_node_name/option_table/parent_node_id/parent_node_name/$$
 instead of parent_node_id.
@@ -57,6 +58,12 @@ The $cref create_database$$ routine was changed to put the parent_node_name
 in the option table, instead of mapping it to the parent_node_id.
 (Using parent_node_id avoids a lookup in the node table,
 but the time for this lookup is not expected to be significant.)
+$lnext
+Fix $code create_connection$$ in case where
+$cref/new/create_connection/new/$$ is true and previous version
+of the file did not exist.
+(Not sure why this did not create more failures.)
+$lend
 
 
 $head 10-21$$

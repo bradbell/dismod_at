@@ -57,9 +57,7 @@ def example_db (file_name) :
 	integrand_list = [
 		'Sincidence'
 	]
-	#
-	# node table: world -> north_america
-	#             north_america -> (united_states, canada)
+	# node table
 	node_table = [
 		{ 'name':'world',         'parent':'' }
 	]
