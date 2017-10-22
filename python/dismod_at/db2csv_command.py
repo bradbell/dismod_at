@@ -593,10 +593,26 @@ def db2csv_command(database_file_arg) :
 	check_table_columns(table_name, table_columns)
 	# ----------------------------------------------------------------------
 	# parent_node_id
-	parent_node_id     = 0  # default
+	parent_node_id     = None
+	parent_node_name   = None
 	for row in table_data['option'] :
 		if row['option_name'] == 'parent_node_id' :
 			parent_node_id = int( row['option_value'] )
+		if row['option_name'] == 'parent_node_name' :
+			parent_node_name = row['option_value']
+	if parent_node_id == None and parent_node_name == None :
+		msg  = 'db2csv_command: neither parent_node_id nor parent_node_name\n'
+		msg += 'is present in the option table\n'
+		sys.exit(msg)
+	if parent_node_id == None :
+		node_table = table_data['node_table']
+		for node_id in range( len( node_table ) ) :
+			if node_table[node_id]['node_name'] == parent_node_name :
+				parent_node_id = node_id
+	if parent_node_id == None :
+		msg  = 'db2csv_command: parent_node_name in option table '
+		msg += 'does not appear in the node table\n'
+		sys.exit(msg)
 	# ----------------------------------------------------------------------
 	# minimum_meas_cv
 	minimum_meas_cv    = 0.0  # default

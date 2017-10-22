@@ -2038,14 +2038,14 @@ int main(int n_arg, const char** argv)
 	// parent_node_id
 	size_t parent_node_id   = db_input.node_table.size();
 	string parent_node_name = option_map["parent_node_name"];
+	string table_name       = "option";
 	if( option_map["parent_node_id"] != "" )
 	{	parent_node_id   = std::atoi( option_map["parent_node_id"].c_str() );
 		if( parent_node_name != "" )
 		{	string node_name = db_input.node_table[parent_node_id].node_name;
 			if( parent_node_name != node_name )
-			{	message = "both parent_node_id and parent_node_name"
+			{	message = "parent_node_id and parent_node_name"
 				" specify different nodes";
-				string table_name = "option";
 				dismod_at::error_exit(message, table_name);
 			}
 		}
@@ -2056,12 +2056,16 @@ int main(int n_arg, const char** argv)
 		{	if( db_input.node_table[node_id].node_name == parent_node_name )
 				parent_node_id = node_id;
 		}
+		if( parent_node_id == n_node )
+		{	message = "cannot find parent_node_name in node table";
+			dismod_at::error_exit(message, table_name);
+		}
 	}
 	else
 	{	message = "neither parent_node_id nor parent_node_name is present";
-		string table_name = "option";
 		dismod_at::error_exit(message, table_name);
 	}
+	assert( parent_node_id < db_input.node_table.size() );
 	// ------------------------------------------------------------------------
 
 	// child_data
