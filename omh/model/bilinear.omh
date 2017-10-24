@@ -29,7 +29,10 @@ $head Function Grid$$
 In addition,
 we are given a grid of function values to be interpolated
 $latex \[
-	\{ f_{i,j} \; | \; i = 0, \ldots , M-1 , j = 0 , \ldots , N-1 \} \; .
+	\left\{
+			\left. v_{i,j} = f( a_i , t_j ) \; \right| \;
+			i = 0, \ldots , M-1 , j = 0 , \ldots , N-1
+	\right\} \; .
 \] $$
 
 $head Interpolant$$
@@ -110,19 +113,26 @@ f( \alpha , s )
 \frac{\alpha - a_i}{a_{i+1} - a_i}  v_{i+1,N-1}
 \] $$
 
-$subhead Outside Age and Time Limits$$
+$subhead Outside Both Limits$$
 $list number$$
-If $latex \alpha < a_0$$ and $latex t < t_0$$,
-$latex f( \alpha , t ) = v_{0,0}$$.
+If $latex \alpha < a_0$$ and $latex s < t_0$$,
+$latex f( \alpha , s ) = v_{0,0}$$.
 $lnext
 If $latex \alpha < a_0$$ and $latex t_{N-1} < s$$,
-$latex f( \alpha , t ) = v_{0,N-1}$$.
+$latex f( \alpha , s ) = v_{0,N-1}$$.
 $lnext
 If $latex a_{M-1} < \alpha$$ and $latex t_{N-1} < s$$,
-$latex f( \alpha , t ) = v_{M-1,N-1}$$.
+$latex f( \alpha , s ) = v_{M-1,N-1}$$.
 $lnext
 If $latex a_{M-1} < \alpha$$ and $latex s < t_0$$,
-$latex f( \alpha , t ) = v_{M-1,0}$$.
+$latex f( \alpha , s ) = v_{M-1,0}$$.
 $lend
+
+$head Plotting$$
+Functions of age and time are usually plotted with
+age on the vertical axis and time on the horizontal axis.
+This is opposite the usual convention where
+the first variable is plotted on the horizontal axis
+and the second variable on the vertical axis.
 
 $end
