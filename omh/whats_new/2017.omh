@@ -39,6 +39,8 @@ $spell
 	sqlite
 	gsl
 	ipopt
+	hes
+	rev
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -48,6 +50,10 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 10-25$$
+Advance to $code cppad_mixed-20171025$$
+and install it using the rev_hes_sparsity option.
 
 $head 10-24$$
 Some minor changes were made to the bilinear interpolation section.

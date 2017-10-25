@@ -23,8 +23,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='4d987c0c7a51114b2a6ee86423e4882e8ddc4273'
-version='20171009'
+hash_key='8d2fe551d2a7af9ff1d2c236eaed435b076d9521'
+version='20171025'
 libdir=`bin/libdir.sh`
 # ---------------------------------------------------------------------------
 # special cppad_mixed settings (it is not suggested that you change these)
@@ -38,8 +38,11 @@ ldlt_cholmod='yes'
 # use atomic Cholesky factorization (strongly suggest no)
 use_atomic_cholesky='no'
 #
-# show ipopt the cppad_mixed re-scaling
+# hide the re-scaling from ipopt
 hide_ipopt_scaling='yes'
+#
+# use for_hes_sparsity (rev_hes_sparsity) for Hessian w.r.t random effects
+for_hes_sparsity='yes'
 #
 # ---------------------------------------------------------------------------
 # Get user configuration options from run_cmake.sh
@@ -145,6 +148,7 @@ cmake_args="$cmake_args -D use_atomic_cholesky=$use_atomic_cholesky"
 cmake_args="$cmake_args -D checkpoint_newton_step=$checkpoint_newton_step"
 cmake_args="$cmake_args -D optimize_cppad_function=$optimize_cppad_function"
 cmake_args="$cmake_args -D hide_ipopt_scaling=$hide_ipopt_scaling"
+cmake_args="$cmake_args -D for_hes_sparsity=$for_hes_sparsity"
 #
 if [ "$cmake_cxx_compiler" != '' ]
 then

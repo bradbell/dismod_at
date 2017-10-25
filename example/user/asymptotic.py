@@ -76,6 +76,7 @@ standard_random_effect = 1.0
 number_sample          = 500
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
+import time
 import math
 import numpy
 import sys
@@ -330,6 +331,8 @@ var_avg = numpy.average(sample_array, axis=0);
 var_std = numpy.std(sample_array, axis=0);
 # -----------------------------------------------------------------------
 # now use MCMC to calculate the same values
+python_seed = int( time.time() )
+numpy.random.seed( seed = python_seed )
 m          = 10 * number_sample
 x0         = numpy.array( [ 1e-2, 0.0, 0.0 ] )
 s          = numpy.array( [ 1e-3, 1e-1, 1e-1] )
@@ -346,14 +349,17 @@ for i in range(3) :
 	value     = var_avg[ node_name2var_id[node_name] ]
 	check     = x_avg_mcmc[i]
 	avg_diff  = check / value - 1.0
-	assert abs(avg_diff) < 0.05
+	if abs( avg_diff ) > 0.05 :
+		print('avg_diff = ', avg_diff, ', python_seed = ', python_seed )
+		assert(False)
 	value     = var_std[ node_name2var_id[node_name] ]
 	check     = x_std_mcmc[i]
 	std_diff  = check / value - 1.0
 	# This is a small sample case (only three data points)
 	# so we do not expect the asymptotic statistics to be correct.
 	# Note that in this case, the asymptotics are an over estimate.
-	assert std_diff < 0.0 and abs(std_diff) < 0.5
-
+	if std_diff >= 0.0 or abs(std_diff) > 0.5 :
+		print('std_diff = ', std_diff, ', python_seed = ', python_seed )
+		assert(False)
 print('asymptotic.py: OK')
 # END PYTHON
