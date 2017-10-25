@@ -52,8 +52,13 @@ $childtable%
 %$$
 
 $head 10-25$$
+$list number$$
 Advance to $code cppad_mixed-20171025$$
 and install it using the rev_hes_sparsity option.
+$lnext
+Advance to $code cppad-20171023$$
+to avoid a compiler warning.
+$lend
 
 $head 10-24$$
 Some minor changes were made to the bilinear interpolation section.
