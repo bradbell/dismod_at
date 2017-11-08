@@ -51,6 +51,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 11-08$$
+Change the title of the $cref data_like$$ section and
+fix minor typos in the notation for the
+age upper limit $cref/b_i/data_like/Data Table Notation/b_i/$$ and
+time upper limit $cref/t_i/data_like/Data Table Notation/t_i/$$.
+
 $head 10-25$$
 $list number$$
 Advance to $code cppad_mixed-20171025$$
