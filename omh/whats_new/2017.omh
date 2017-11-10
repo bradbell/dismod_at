@@ -643,9 +643,9 @@ Change the definition of adjusted standard deviation for data in the
 $cref/Gaussian and Laplace
 	/data_like
 	/Adjusted Standard Deviation, delta_i
-	/Gaussian and Laplace
 /$$
 case (it is now different from the Log-Gaussian and Log-Laplace case).
+(This has since been changed back.)
 
 $head 04-17$$
 Add $code random$$ to possible choices for
