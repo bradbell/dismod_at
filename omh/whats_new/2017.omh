@@ -62,12 +62,20 @@ for the measurement values
 (the definition for log an linear cases is the same).
 $lnext
 Fix the definition of the
-$cref/standard deviation covariate multipliers
+$cref/meas_value/mulcov_table/mulcov_type/meas_value/$$ covariate multipliers
+$cref/beta_j
+	/avg_integrand
+	/Measurement Value Covariates
+	/beta_j
+/$$
+and the
+$cref/meas_std/mulcov_table/mulcov_type/meas_std/$$ covariate multipliers
+$cref/gamma_j
 	/data_like
 	/Measurement Standard Deviation Covariates/gamma_j
-/$$ $latex \gamma_j$$.
-They used to be $latex \gamma_{i,j}$$ but they do not
-depend on the data index $latex i$$.
+/$$.
+They used to be $latex \beta_{i,j}$$ and $latex \gamma_{i,j}$$
+but they do not depend on the data index $latex i$$.
 $lend
 
 

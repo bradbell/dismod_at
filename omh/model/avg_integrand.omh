@@ -298,9 +298,9 @@ We use $latex K_i$$ to denote the corresponding set of
 $cref/covariate_id/mulcov_table/covariate_id/$$ values for
 which this is the case.
 
-$subhead beta_ij$$
+$subhead beta_j$$
 For each covariate index $latex j \in K_i$$,
-we use $latex \beta_{i,j} (a, t) $$ to denote the
+we use $latex \beta_j (a, t) $$ to denote the
 piecewise linear function corresponding to the
 $cref/covariate multiplier
 	/model_variables/
@@ -316,10 +316,8 @@ $subhead Total Effect$$
 The total effect for the $th i$$ measurement value,
 as a function of the fixed effects $latex \theta$$, is
 $latex \[
-	E_i ( a, t ) = \sum_{j \in K_i} x_{i,j} \beta_{i,j} (a, t)
+	E_i ( a, t ) = \sum_{j \in K_i} x_{i,j} \beta_j (a, t)
 \] $$
-The set $latex K_i$$ and the function $latex \beta_{i,j} (a, t)$$
-are defined below:
 
 $head Weight Integral, wbar_i$$
 We use $latex \bar{w}_i$$ to denote the weight integral defined by

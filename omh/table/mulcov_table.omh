@@ -42,7 +42,7 @@ see $cref/alpha_jk/avg_integrand/Rate Functions/alpha_jk/$$.
 $subhead meas_value$$
 This covariate multiplier adjusts the average integrand to match the
 $cref/measurement value/data_table/meas_value/$$; see
-$cref/beta_ij/avg_integrand/Measurement Value Covariates/beta_ij/$$.
+$cref/beta_j/avg_integrand/Measurement Value Covariates/beta_j/$$.
 
 $subhead meas_std$$
 This covariate multiplier adjusts the
