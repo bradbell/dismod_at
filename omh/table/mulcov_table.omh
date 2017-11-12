@@ -47,7 +47,7 @@ $cref/beta_ij/avg_integrand/Measurement Value Covariates/beta_ij/$$.
 $subhead meas_std$$
 This covariate multiplier adjusts the
 $cref/measurement standard deviation/data_table/meas_std/$$; see
-$cref/gamma_ij/data_like/Measurement Standard Deviation Covariates/gamma_ij/$$.
+$cref/gamma_j/data_like/Measurement Standard Deviation Covariates/gamma_j/$$.
 
 $head rate_id$$
 If $icode mulcov_type$$ is $code rate_value$$,
