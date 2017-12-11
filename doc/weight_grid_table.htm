@@ -1,0 +1,225 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Weight Grid Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Weight Grid Table">
+<meta name="keywords" id="keywords" content=" the weight grid table weight_grid_id weight_id age_id time_id rectangular example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_weight_grid_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="time_table.py.htm" target="_top">Prev</a>
+</td><td><a href="weight_grid_table.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>weight_grid_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>weight_grid_table-&gt;</option>
+<option>weight_grid_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>weight_grid_id</option>
+<option>weight_id</option>
+<option>age_id</option>
+<option>time_id</option>
+<option>weight</option>
+<option>Rectangular Grid</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Weight Grid Table</big></big></b></center>
+This table specifies the age-time weighting functions on a grid.
+It has the following columns:
+
+<br>
+<br>
+<b><big><a name="weight_grid_id" id="weight_grid_id">weight_grid_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for
+the <code><font color="blue">weight_grid</font></code> table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="weight_id" id="weight_id">weight_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is a
+<a href="weight_table.htm#weight_id" target="_top"><span style='white-space: nowrap'>weight_id</span></a>
+ in the weight table.
+Each 
+<code><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i></code>
+ value corresponds to a different weighting.
+
+<br>
+<br>
+<b><big><a name="age_id" id="age_id">age_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is a
+<a href="age_table.htm#age_id" target="_top"><span style='white-space: nowrap'>age_id</span></a>
+ in the age table.
+Each 
+<code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
+ value corresponds to a specific age.
+
+<br>
+<br>
+<b><big><a name="time_id" id="time_id">time_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is a
+<a href="time_table.htm#time_id" target="_top"><span style='white-space: nowrap'>time_id</span></a>
+ in the time table.
+Each 
+<code><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i></code>
+ value corresponds to a specific time.
+
+<br>
+<br>
+<b><big><a name="weight" id="weight">weight</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code>.
+For each row in the table, the value in this column
+is the weighting, at the corresponding age and time,
+and for the specified 
+<code><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i></code>
+,
+Each value in this column must be greater than zero.
+
+<br>
+<br>
+<b><big><a name="Rectangular Grid" id="Rectangular Grid">Rectangular Grid</a></big></b>
+<br>
+For each fixed value of 
+<code><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i></code>
+
+the set of 
+<code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i></code>
+ pairs is rectangular.
+In other words,
+if an 
+<code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
+ value appears,
+it appears once with each 
+<code><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i></code>
+
+that appears with this 
+<code><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i></code>
+.
+This also means,
+if a 
+<code><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i></code>
+ value appears,
+it appears once with each 
+<code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
+
+that appears with this 
+<code><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="weight_grid_table.py.htm" target="_top"><span style='white-space: nowrap'>weight_grid_table.py</span></a>
+ and <a href="get_weight_grid_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_weight_grid_xam.cpp</span></a>
+
+contain example <code><font color="blue">weight_grid</font></code> tables.
+
+
+<hr>Input File: omh/table/weight_grid_table.omh
+
+</body>
+</html>

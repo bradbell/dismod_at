@@ -1,0 +1,223 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Smoothing Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Smoothing Table">
+<meta name="keywords" id="keywords" content=" the smoothing table smooth_id smooth_name n_age n_time mulstd_value_prior_id null mulstd_dage_prior_id mulstd_dtime_prior_id example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_smooth_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="smooth_grid_table.py.htm" target="_top">Prev</a>
+</td><td><a href="time_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>smooth_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>smooth_table</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>smooth_id</option>
+<option>smooth_name</option>
+<option>n_age</option>
+<option>n_time</option>
+<option>mulstd_value_prior_id</option>
+<option>---..null</option>
+<option>mulstd_dage_prior_id</option>
+<option>---..null</option>
+<option>mulstd_dtime_prior_id</option>
+<option>---..null</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Smoothing Table</big></big></b></center>
+<br>
+<b><big><a name="smooth_id" id="smooth_id">smooth_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="smooth_name" id="smooth_name">smooth_name</a></big></b>
+<br>
+This column has type <code><font color="blue">text</font></code> and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+<br>
+<br>
+<b><big><a name="n_age" id="n_age">n_age</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the number of age values
+in this smoothing grid. It must be greater than zero.
+
+<br>
+<br>
+<b><big><a name="n_time" id="n_time">n_time</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the number of _time values
+in this smoothing grid. It must be greater than zero.
+
+<br>
+<br>
+<b><big><a name="mulstd_value_prior_id" id="mulstd_value_prior_id">mulstd_value_prior_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and its value is the
+<a href="prior_table.htm#prior_id" target="_top"><span style='white-space: nowrap'>prior_id</span></a>
+ for the variable that multiplies the
+<a href="smooth_grid_table.htm#value_prior_id" target="_top"><span style='white-space: nowrap'>value_prior_id</span></a>
+ standard deviations
+for this
+<a href="smooth_grid_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+.
+
+<br>
+<br>
+<b><a name="mulstd_value_prior_id.null" id="mulstd_value_prior_id.null">null</a></b>
+<br>
+If this variable is not needed,
+use the value <code><font color="blue">null</font></code> (which corresponds to a multiplier of one).
+
+<br>
+<br>
+<b><big><a name="mulstd_dage_prior_id" id="mulstd_dage_prior_id">mulstd_dage_prior_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and its value is the
+<a href="prior_table.htm#prior_id" target="_top"><span style='white-space: nowrap'>prior_id</span></a>
+ for the variable that multiplies the
+<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
+ standard deviations
+for this
+<a href="smooth_grid_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+.
+
+<br>
+<br>
+<b><a name="mulstd_dage_prior_id.null" id="mulstd_dage_prior_id.null">null</a></b>
+<br>
+If this variable is not needed,
+use the value <code><font color="blue">null</font></code> (which corresponds to a multiplier of one).
+
+<br>
+<br>
+<b><big><a name="mulstd_dtime_prior_id" id="mulstd_dtime_prior_id">mulstd_dtime_prior_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and its value is the
+<a href="prior_table.htm#prior_id" target="_top"><span style='white-space: nowrap'>prior_id</span></a>
+ for the variable that multiplies the
+<a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
+ standard deviations
+for this
+<a href="smooth_grid_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+.
+
+<br>
+<br>
+<b><a name="mulstd_dtime_prior_id.null" id="mulstd_dtime_prior_id.null">null</a></b>
+<br>
+If this variable is not needed,
+use the value <code><font color="blue">null</font></code> (which corresponds to a multiplier of one).
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="smooth_grid_table.py.htm" target="_top"><span style='white-space: nowrap'>smooth_grid_table.py</span></a>
+ and <a href="get_smooth_grid_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_smooth_grid_xam.cpp</span></a>
+
+contain example <code><font color="blue">smooth</font></code> tables.
+
+
+<hr>Input File: omh/table/smooth_table.omh
+
+</body>
+</html>

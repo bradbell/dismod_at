@@ -1,0 +1,251 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Simulate Command</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Simulate Command">
+<meta name="keywords" id="keywords" content=" the simulate command syntax database number_simulate truth_var_table data_table simulate_table meas_value meas_std example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_simulate_command_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="fit_command.py.htm" target="_top">Prev</a>
+</td><td><a href="simulate_command.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>command</option>
+<option>simulate_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>command-&gt;</option>
+<option>set_command</option>
+<option>init_command</option>
+<option>depend_command</option>
+<option>fit_command</option>
+<option>simulate_command</option>
+<option>sample_command</option>
+<option>predict_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>simulate_command-&gt;</option>
+<option>simulate_command.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>database</option>
+<option>number_simulate</option>
+<option>truth_var_table</option>
+<option>data_table</option>
+<option>simulate_table</option>
+<option>---..meas_value</option>
+<option>---..meas_std</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+<center><b><big><big>The Simulate Command</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;simulate&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number_simulate</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="database" id="database">database</a></big></b>
+<br>
+Is an
+<a href="http://www.sqlite.org/sqlite/" target="_top"><span style='white-space: nowrap'>http://www.sqlite.org/sqlite/</span></a>
+ database containing the
+<code><font color="blue">dismod_at</font></code> <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
+ tables which are not modified.
+
+<br>
+<br>
+<b><big><a name="number_simulate" id="number_simulate">number_simulate</a></big></b>
+<br>
+Is the number of simulations. Each simulation contains a complete
+data set.
+
+<br>
+<br>
+<b><big><a name="truth_var_table" id="truth_var_table">truth_var_table</a></big></b>
+<br>
+The <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
+ is an addition input table for this command.
+It specifies the true values for the
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ used during the simulation.
+This table can be create by the
+<a href="set_command.htm#table_out.truth_var" target="_top"><span style='white-space: nowrap'>set_command</span></a>
+,
+or the user can create it directly with the aid of the
+<a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+ (created by the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="data_table" id="data_table">data_table</a></big></b>
+<br>
+It the data
+<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density</span></a>
+ is
+<code><font color="blue">log_gaussian</font></code> or <code><font color="blue">log_laplace</font></code>,
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ is used to
+log-transform the standard deviations.
+If the density is <code><font color="blue">gaussian</font></code> or <code><font color="blue">laplace</font></code>,
+the simulation standard deviation is the same as
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+ and negative simulated measurements
+are not converted to zero.
+
+<br>
+<br>
+<b><big><a name="simulate_table" id="simulate_table">simulate_table</a></big></b>
+<br>
+A new <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+ is created.
+It contains simulated measurement values
+<a href="simulate_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ and standard deviations
+<a href="simulate_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+.
+These values can be used in place of the data table values for
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ and
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+.
+Only the <a href="data_subset_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+ that are in the
+data_subset table are included in the simulated measurements.
+Hence the number of rows in <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+ is
+
+<code><i><font color="black"><span style='white-space: nowrap'>number_simulate</span></font></i></code>
+ times the number of rows in <a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
+.
+
+<br>
+<br>
+<b><a name="simulate_table.meas_value" id="simulate_table.meas_value">meas_value</a></b>
+<br>
+Negative simulated data values are converted to zero. Hence
+
+<code><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i></code>
+ in the simulate table are all non-negative.
+
+<br>
+<br>
+<b><a name="simulate_table.meas_std" id="simulate_table.meas_std">meas_std</a></b>
+<br>
+It the data
+<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density</span></a>
+ is
+<code><font color="blue">uniform</font></code>, <code><font color="blue">gaussian</font></code>, or <code><font color="blue">laplace</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
+ in the simulate table
+is set so that the adjusted standard deviation
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>delta</span></a>
+
+is the same as for the data table.
+Note that a small minimum is chosen if the condition above
+would require 
+<code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
+ to be near zero or negative.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>It the data
+<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density</span></a>
+ is <code><font color="blue">log_gaussian</font></code>
+or <code><font color="blue">log_laplace</font></code>, 
+<code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
+ in the simulate table
+is set so that the log-transformed standard deviation
+<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
+
+is the same as for the data table.
+Note that the adjusted standard deviation is used in the log transformation.
+Also note that a small minimum is chosen if the condition above
+would require 
+<code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
+ to be near zero or negative.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="simulate_command.py.htm" target="_top"><span style='white-space: nowrap'>simulate_command.py</span></a>
+ contains an example and test
+using this command.
+
+
+<hr>Input File: devel/dismod_at.cpp
+
+</body>
+</html>

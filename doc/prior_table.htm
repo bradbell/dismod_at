@@ -1,0 +1,280 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Prior Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Prior Table">
+<meta name="keywords" id="keywords" content=" the prior table prior_id prior_name density_id lower upper mean std eta null scaling nu example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_prior_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="option_table.py.htm" target="_top">Prev</a>
+</td><td><a href="prior_table.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>prior_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>prior_table-&gt;</option>
+<option>prior_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>prior_id</option>
+<option>prior_name</option>
+<option>density_id</option>
+<option>lower</option>
+<option>upper</option>
+<option>mean</option>
+<option>std</option>
+<option>eta</option>
+<option>---..null</option>
+<option>---..Scaling</option>
+<option>nu</option>
+<option>---..null</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Prior Table</big></big></b></center>
+The <code><font color="blue">prior</font></code> table is used to define the
+prior for a single <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+.
+It has the following columns:
+
+<br>
+<br>
+<b><big><a name="prior_id" id="prior_id">prior_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="prior_name" id="prior_name">prior_name</a></big></b>
+<br>
+This column has type <code><font color="blue">text</font></code> and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+<br>
+<br>
+<b><big><a name="density_id" id="density_id">density_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and its value is the
+<a href="density_table.htm" target="_top"><span style='white-space: nowrap'>density_table</span></a>
+ primary key that identifies the
+density function for this prior.
+
+<br>
+<br>
+<b><big><a name="lower" id="lower">lower</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and specifies a lower bound
+for the prior.
+Note that the value <code><font color="blue">null</font></code> is interpreted as minus infinity; see
+<a href="database.htm#Bounds That are Null" target="_top"><span style='white-space: nowrap'>bounds&nbsp;that&nbsp;are&nbsp;null</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="upper" id="upper">upper</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and specifies a upper bound
+for the prior.
+Note that the value <code><font color="blue">null</font></code> is interpreted as plus infinity; see
+<a href="database.htm#Bounds That are Null" target="_top"><span style='white-space: nowrap'>bounds&nbsp;that&nbsp;are&nbsp;null</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="mean" id="mean">mean</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and specifies the mean
+(before truncation by the lower and upper limits)
+for the prior.
+It must hold that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>upper</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="std" id="std">std</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and specifies the standard deviation
+(before truncation by the lower and upper limits)
+for the prior.
+In the case where 
+<code><i><font color="black"><span style='white-space: nowrap'>density</span></font></i></code>
+ is <code><font color="blue">uniform</font></code>,
+this value is not used and can be <code><font color="blue">null</font></code>.
+Otherwise, this value must be a positive number.
+
+<br>
+<br>
+<b><big><a name="eta" id="eta">eta</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is only used in the
+cases where 
+<code><i><font color="black"><span style='white-space: nowrap'>density</span></font></i></code>
+ is <code><font color="blue">log_gaussian</font></code>
+or <code><font color="blue">log_laplace</font></code>.
+In these cases, it is the offset in the corresponding log transformation.
+
+<br>
+<br>
+<b><a name="eta.null" id="eta.null">null</a></b>
+<br>
+In the cases that are not log densities,
+this field can be <code><font color="blue">null</font></code>.
+
+<br>
+<br>
+<b><a name="eta.Scaling" id="eta.Scaling">Scaling</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
+ is not null, and it is a
+<a href="smooth_grid_table.htm#value_prior_id" target="_top"><span style='white-space: nowrap'>value&nbsp;prior</span></a>
+ for a
+<a href="model_variables.htm#Fixed Effects, theta" target="_top"><span style='white-space: nowrap'>fixed&nbsp;effect</span></a>
+,
+the model variable is offset log scaled during the optimization.
+To be specified, if <small>@(@
+\theta_j
+@)@</small> is the fixed effect and <small>@(@
+\eta_j
+@)@</small>
+is the corresponding offset in the log transformation,
+the optimizer sees the variable
+<small>@(@
+\log( \theta_j + \eta_j)
+@)@</small> in place of <small>@(@
+\theta_j
+@)@</small>.
+In this case it must hold that 
+<code><i><font color="black"><span style='white-space: nowrap'>lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;0</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="nu" id="nu">nu</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is only used in the
+cases where 
+<code><i><font color="black"><span style='white-space: nowrap'>density</span></font></i></code>
+ is <code><font color="blue">students</font></code>
+or <code><font color="blue">log_students</font></code>.
+In these cases, it is the
+degrees of freedom in the corresponding distribution.
+
+<br>
+<br>
+<b><a name="nu.null" id="nu.null">null</a></b>
+<br>
+In the cases that are not Student densities,
+this field can be <code><font color="blue">null</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="prior_table.py.htm" target="_top"><span style='white-space: nowrap'>prior_table.py</span></a>
+ and <a href="get_prior_table_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_prior_table_xam.cpp</span></a>
+
+contain example <code><font color="blue">prior</font></code> tables.
+
+
+<hr>Input File: omh/table/prior_table.omh
+
+</body>
+</html>

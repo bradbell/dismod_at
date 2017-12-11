@@ -1,0 +1,264 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Metropolis MCMC Algorithm</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Metropolis MCMC Algorithm">
+<meta name="keywords" id="keywords" content=" metropolis mcmc algorithm syntax log_f m x0 s vector case float c example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_metropolis_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="get_table_dict.py.htm" target="_top">Prev</a>
+</td><td><a href="user_metropolis.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>metropolis</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>python-&gt;</option>
+<option>create_connection</option>
+<option>create_table</option>
+<option>create_database</option>
+<option>db2csv_command</option>
+<option>get_name_type</option>
+<option>get_row_list</option>
+<option>get_table_dict</option>
+<option>metropolis</option>
+<option>modify_command</option>
+<option>unicode_tuple</option>
+<option>sql_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>metropolis-&gt;</option>
+<option>user_metropolis.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>log_f</option>
+<option>m</option>
+<option>x0</option>
+<option>s</option>
+<option>---..Vector Case</option>
+<option>---..Float Case</option>
+<option>a</option>
+<option>c</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Metropolis MCMC Algorithm</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;dismod_at.metropolis(</span></font><i><font color="black"><span style='white-space: nowrap'>log_f</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x0</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="log_f" id="log_f">log_f</a></big></b>
+<br>
+Given a numpy <code><font color="blue">float</font></code> vector of length 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+, the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>log_f</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+sets the <code><font color="blue">float</font></code> 
+<code><i><font color="black"><span style='white-space: nowrap'>d</span></font></i></code>
+ to the log of the un-normalized density
+corresponding to the positive function <small>@(@
+f(x)
+@)@</small> mapping
+<small>@(@
+\B{R}^n
+@)@</small> to the non-negative real values.
+If <small>@(@
+f(x)
+@)@</small> is zero, the corresponding log-density value should equal
+<code><font color="blue">- float(&quot;inf&quot;)</font></code>.
+
+<br>
+<br>
+<b><big><a name="m" id="m">m</a></big></b>
+<br>
+is the <code><font color="blue">int</font></code> number of vectors in the MCMC chain.
+
+<br>
+<br>
+<b><big><a name="x0" id="x0">x0</a></big></b>
+<br>
+is a numpy <code><font color="blue">float</font></code> vector of length 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+
+that specifies the initial vector in the chain
+(denoted by <small>@(@
+x^0
+@)@</small> below).
+
+<br>
+<br>
+<b><big><a name="s" id="s">s</a></big></b>
+<br>
+is a <code><font color="blue">float</font></code> or, a numpy <code><font color="blue">float</font></code> vector of length 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+,
+that specifies the scaling for each of the components of <small>@(@
+x
+@)@</small>.
+
+<br>
+<br>
+<b><a name="s.Vector Case" id="s.Vector Case">Vector Case</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ is a vector,
+for <small>@(@
+i = 1 , \ldots, m-1
+@)@</small>,
+and <small>@(@
+j = 0 , \ldots, n-1
+@)@</small>,
+the <code><i>j</i></code>-th component of the <code><i>i</i></code>-th proposal vector <small>@(@
+y^i
+@)@</small>
+is given by
+<small>@[@
+
+	y_j^i = x_j^{i-1} + w_j^{i-1} s_j
+
+@]@</small>
+where <small>@(@
+w_j^i \sim \B{N}(0, 1)
+@)@</small> are all independent.
+
+<br>
+<br>
+<b><a name="s.Float Case" id="s.Float Case">Float Case</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>s</span></font></i></code>
+ is a <code><font color="blue">float</font></code>,
+<small>@[@
+
+	y_j^i = x_j^{i-1} + w_j^{i-1} s
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="a" id="a">a</a></big></b>
+<br>
+is the <code><font color="blue">int</font></code> acceptance count; i.e. the number of indices <small>@(@
+i
+@)@</small>
+such that <small>@(@
+x^i = y^i
+@)@</small>
+(for the other indices <small>@(@
+x^i = x^{i-1}
+@)@</small>).
+
+<br>
+<br>
+<b><big><a name="c" id="c">c</a></big></b>
+<br>
+is an <small>@(@
+m \times n
+@)@</small> numpy <code><font color="blue">float</font></code> array that contains
+the components of the Markov Chain.
+We use the notation <small>@(@
+x_j^i
+@)@</small> for 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+.
+For any smooth function <small>@(@
+g : \B{R}^n \rightarrow \B{R}
+@)@</small>,
+the Metropolis algorithm provides the following approximation as
+<small>@(@
+m \rightarrow \infty
+@)@</small>,
+<small>@[@
+
+	\frac{1}{m} \sum_{i=0}^{m-1} g( x^i )
+	\rightarrow
+	\frac{ \int g( x ) f ( x ) \B{d} x  }{ \int f( x ) \B{d} x }
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="user_metropolis.py.htm" target="_top"><span style='white-space: nowrap'>user_metropolis.py</span></a>
+ contains an example and test of this
+routine.
+
+
+<hr>Input File: python/dismod_at/metropolis.py
+
+</body>
+</html>

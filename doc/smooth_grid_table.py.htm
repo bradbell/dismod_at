@@ -1,0 +1,220 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>smooth_grid_table: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="smooth_grid_table: Example and Test">
+<meta name="keywords" id="keywords" content=" smooth_grid_table: example test smooth_grid_table ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_smooth_grid_table.py_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="smooth_grid_table.htm" target="_top">Prev</a>
+</td><td><a href="smooth_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>smooth_grid_table</option>
+<option>smooth_grid_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>smooth_grid_table-&gt;</option>
+<option>smooth_grid_table.py</option>
+</select>
+</td>
+<td>smooth_grid_table.py</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@ 
+
+<center><b><big><big>smooth_grid_table: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#0000FF">def</font></b> <b><font color="#000000">smooth_grid_table</font></b><font color="#990000">()</font> <font color="#990000">:</font>
+     <b><font color="#000080">import</font></b> dismod_at
+     <b><font color="#000080">import</font></b> copy
+     <b><font color="#000080">import</font></b> collections
+     <i><font color="#9A1900">#</font></i>
+     file_name      <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
+     new            <font color="#990000">=</font> True
+     connection     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
+     cursor         <font color="#990000">=</font> connection<font color="#990000">.</font><b><font color="#000000">cursor</font></b><font color="#990000">()</font>
+     <i><font color="#9A1900">#</font></i>
+     <i><font color="#9A1900"># create smooth table</font></i>
+     ptype    <font color="#990000">=</font> <font color="#FF0000">'integer primary key'</font>
+     col_name2type <font color="#990000">=</font> collections<font color="#990000">.</font><b><font color="#000000">OrderedDict</font></b><font color="#990000">(</font> <font color="#990000">[</font>
+          <font color="#990000">(</font><font color="#FF0000">'smooth_name'</font><font color="#990000">,</font>             <font color="#FF0000">'text'</font>    <font color="#990000">),</font>
+          <font color="#990000">(</font><font color="#FF0000">'n_age'</font><font color="#990000">,</font>                   <font color="#FF0000">'integer'</font> <font color="#990000">),</font>
+          <font color="#990000">(</font><font color="#FF0000">'n_time'</font><font color="#990000">,</font>                  <font color="#FF0000">'integer'</font> <font color="#990000">),</font>
+          <font color="#990000">(</font><font color="#FF0000">'mulstd_value_prior_id'</font><font color="#990000">,</font>   <font color="#FF0000">'integer'</font> <font color="#990000">),</font>
+          <font color="#990000">(</font><font color="#FF0000">'mulstd_dage_prior_id'</font><font color="#990000">,</font>    <font color="#FF0000">'integer'</font> <font color="#990000">),</font>
+          <font color="#990000">(</font><font color="#FF0000">'mulstd_dtime_prior_id'</font><font color="#990000">,</font>   <font color="#FF0000">'integer'</font> <font color="#990000">)</font>
+     <font color="#990000">]</font> <font color="#990000">)</font>
+     col_name <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font>col_name2type<font color="#990000">.</font><b><font color="#000000">keys</font></b><font color="#990000">())</font>
+     col_type <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font>col_name2type<font color="#990000">.</font><b><font color="#000000">values</font></b><font color="#990000">())</font>
+     row_list <font color="#990000">=</font> <font color="#990000">[</font>
+                <font color="#990000">[</font> <font color="#FF0000">'constant'</font><font color="#990000">,</font>    <font color="#993399">1</font><font color="#990000">,</font>          <font color="#993399">1</font><font color="#990000">,</font>        <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">],</font>
+                <font color="#990000">[</font> <font color="#FF0000">'age_only'</font><font color="#990000">,</font>    <font color="#993399">3</font><font color="#990000">,</font>          <font color="#993399">1</font><font color="#990000">,</font>        <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">],</font>
+                <font color="#990000">[</font> <font color="#FF0000">'time_only'</font><font color="#990000">,</font>   <font color="#993399">1</font><font color="#990000">,</font>          <font color="#993399">2</font><font color="#990000">,</font>        <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">],</font>
+                <font color="#990000">[</font> <font color="#FF0000">'bilinear'</font><font color="#990000">,</font>    <font color="#993399">3</font><font color="#990000">,</font>          <font color="#993399">2</font><font color="#990000">,</font>        <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">]</font>
+     <font color="#990000">]</font>
+     tbl_name <font color="#990000">=</font> <font color="#FF0000">'smooth'</font>
+     dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
+     <i><font color="#9A1900">#</font></i>
+     <i><font color="#9A1900"># smooth_grid table column names</font></i>
+     col_name2type <font color="#990000">=</font> collections<font color="#990000">.</font><b><font color="#000000">OrderedDict</font></b><font color="#990000">(</font> <font color="#990000">[</font>
+          <font color="#990000">(</font><font color="#FF0000">'smooth_id'</font><font color="#990000">,</font>       <font color="#FF0000">'integer'</font> <font color="#990000">),</font>
+          <font color="#990000">(</font><font color="#FF0000">'age_id'</font><font color="#990000">,</font>          <font color="#FF0000">'integer'</font> <font color="#990000">),</font>
+          <font color="#990000">(</font><font color="#FF0000">'time_id'</font><font color="#990000">,</font>         <font color="#FF0000">'integer'</font> <font color="#990000">),</font>
+          <font color="#990000">(</font><font color="#FF0000">'value_prior_id'</font><font color="#990000">,</font>  <font color="#FF0000">'integer'</font> <font color="#990000">),</font>
+          <font color="#990000">(</font><font color="#FF0000">'dage_prior_id'</font><font color="#990000">,</font>   <font color="#FF0000">'integer'</font> <font color="#990000">),</font>
+          <font color="#990000">(</font><font color="#FF0000">'dtime_prior_id'</font><font color="#990000">,</font>  <font color="#FF0000">'integer'</font> <font color="#990000">),</font>
+          <font color="#990000">(</font><font color="#FF0000">'const_value'</font><font color="#990000">,</font>     <font color="#FF0000">'real'</font>    <font color="#990000">)</font>
+     <font color="#990000">]</font> <font color="#990000">)</font>
+     col_name <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font>col_name2type<font color="#990000">.</font><b><font color="#000000">keys</font></b><font color="#990000">())</font>
+     col_type <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font>col_name2type<font color="#990000">.</font><b><font color="#000000">values</font></b><font color="#990000">())</font>
+     <i><font color="#9A1900">#</font></i>
+     <i><font color="#9A1900"># smooth_grid table values</font></i>
+     row_list <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
+     default  <font color="#990000">=</font> <font color="#990000">[</font>
+          <font color="#993399">3</font><font color="#990000">,</font>          <i><font color="#9A1900"># smooth_id          (smooth_id == 3 is bilinear)</font></i>
+          None<font color="#990000">,</font>       <i><font color="#9A1900"># age_id             (age_id  index is 1 in default)</font></i>
+          None<font color="#990000">,</font>       <i><font color="#9A1900"># time_id            (time_id index is 2 in default)</font></i>
+          <font color="#993399">1</font><font color="#990000">,</font>          <i><font color="#9A1900"># value_prior_id</font></i>
+          <font color="#993399">2</font><font color="#990000">,</font>          <i><font color="#9A1900"># dage_prior_id</font></i>
+          <font color="#993399">3</font><font color="#990000">,</font>          <i><font color="#9A1900"># dtime_prior_id</font></i>
+          None        <i><font color="#9A1900"># const_value</font></i>
+     <font color="#990000">]</font>
+     age_time_list <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
+     <b><font color="#0000FF">for</font></b> age_id <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">:</font>            <i><font color="#9A1900"># n_age is 3</font></i>
+          <b><font color="#0000FF">for</font></b> time_id <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">:</font>          <i><font color="#9A1900"># n_time is 2</font></i>
+               default<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> age_id
+               default<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> time_id
+               row        <font color="#990000">=</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>default<font color="#990000">)</font>
+               <b><font color="#0000FF">if</font></b> age_id <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">:</font>
+                    row<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">=</font> None <i><font color="#9A1900"># dage_prior_id null for this case</font></i>
+               <b><font color="#0000FF">if</font></b> time_id <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">:</font>
+                    row<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">=</font> None <i><font color="#9A1900"># dtime_prior_id null for this case</font></i>
+               row_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> row <font color="#990000">)</font>
+               age_time_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">(</font>age_id<font color="#990000">,</font> time_id<font color="#990000">)</font> <font color="#990000">)</font>
+     <i><font color="#9A1900">#</font></i>
+     <i><font color="#9A1900"># write the table</font></i>
+     tbl_name <font color="#990000">=</font> <font color="#FF0000">'smooth_grid'</font>
+     dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
+     <i><font color="#9A1900">#</font></i>
+     <i><font color="#9A1900"># check values in the table</font></i>
+     columns <font color="#990000">=</font> <font color="#FF0000">','</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>col_name<font color="#990000">)</font>
+     columns <font color="#990000">=</font> <font color="#FF0000">'smooth_grid_id,'</font> <font color="#990000">+</font> columns
+     cmd     <font color="#990000">=</font> <font color="#FF0000">'SELECT '</font> <font color="#990000">+</font> columns <font color="#990000">+</font> <font color="#FF0000">' FROM smooth_grid'</font>
+     cmd    <font color="#990000">+=</font> <font color="#FF0000">' JOIN smooth USING(smooth_id) '</font>
+     cmd    <font color="#990000">+=</font> <font color="#FF0000">' WHERE smooth_name = "bilinear"'</font>
+     count        <font color="#990000">=</font> <font color="#993399">0</font>
+     cursor       <font color="#990000">=</font> connection<font color="#990000">.</font><b><font color="#000000">cursor</font></b><font color="#990000">()</font>
+     <b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> cursor<font color="#990000">.</font><b><font color="#000000">execute</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">8</font>
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> count
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">3</font>
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">==</font> age_time_list<font color="#990000">[</font>count<font color="#990000">][</font><font color="#993399">0</font><font color="#990000">]</font>
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">==</font> age_time_list<font color="#990000">[</font>count<font color="#990000">][</font><font color="#993399">1</font><font color="#990000">]</font>
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1</font>
+          <b><font color="#0000FF">if</font></b> row<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">:</font>
+               <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">==</font> None
+          <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+               <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">2</font>
+          <b><font color="#0000FF">if</font></b> row<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">:</font>
+               <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">]</font> <font color="#990000">==</font> None
+          <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+               <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">3</font>
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#993399">7</font><font color="#990000">]</font> <font color="#990000">==</font> None
+          count <font color="#990000">+=</font> <font color="#993399">1</font>
+     <b><font color="#0000FF">assert</font></b> count <font color="#990000">==</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>row_list<font color="#990000">)</font>
+     <i><font color="#9A1900">#</font></i>
+     connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
+     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'smooth_grid_table: OK'</font><font color="#990000">)</font></tt></pre>
+</font></code>
+<hr>Input File: example/table/smooth_grid_table.py
+
+</body>
+</html>

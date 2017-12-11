@@ -1,0 +1,251 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>C++ smooth2ode: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++ smooth2ode: Example and Test">
+<meta name="keywords" id="keywords" content=" c++ smooth2ode: example test C++ smooth2ode ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_smooth2ode_xam.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="smooth2ode.htm" target="_top">Prev</a>
+</td><td><a href="solve_ode.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>smooth2ode</option>
+<option>smooth2ode_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_utility-&gt;</option>
+<option>a2_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_value_prior</option>
+<option>pack_diff_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>smooth2ode-&gt;</option>
+<option>smooth2ode_xam.cpp</option>
+</select>
+</td>
+<td>smooth2ode_xam.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>C++ smooth2ode: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/smooth2ode.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/bilinear_interp.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">smooth2ode_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>
+     <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b>  std<font color="#990000">::</font>string<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b>  CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font> Float<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <font color="#009900">double</font> eps <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// use smooth_info test constructor</font></i>
+     <font color="#008080">size_t</font> n_age_si  <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> n_time_si <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">age_id</font></b><font color="#990000">(</font>n_age_si<font color="#990000">),</font>    <b><font color="#000000">time_id</font></b><font color="#990000">(</font>n_time_si<font color="#990000">);</font>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">age_table</font></b><font color="#990000">(</font>n_age_si<font color="#990000">),</font> <b><font color="#000000">time_table</font></b><font color="#990000">(</font>n_time_si<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_age_si<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    age_id<font color="#990000">[</font>i<font color="#990000">]</font>    <font color="#990000">=</font> i<font color="#990000">;</font>
+          age_table<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">10.0</font> <font color="#990000">*</font> i<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_time_si<font color="#990000">;</font> j<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    time_id<font color="#990000">[</font>j<font color="#990000">]</font>    <font color="#990000">=</font> j<font color="#990000">;</font>
+          time_table<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1990.0</font> <font color="#990000">+</font> <font color="#993399">10</font> <font color="#990000">*</font> j<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// these values are not used</font></i>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">value_prior_id</font></b><font color="#990000">(</font>n_age_si <font color="#990000">*</font> n_time_si<font color="#990000">);</font>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">dage_prior_id</font></b><font color="#990000">(</font>n_age_si <font color="#990000">*</font> n_time_si<font color="#990000">);</font>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">dtime_prior_id</font></b><font color="#990000">(</font>n_age_si <font color="#990000">*</font> n_time_si<font color="#990000">);</font>
+     <font color="#008080">vector&lt;double&gt;</font> const_value<font color="#990000">;</font>
+     <font color="#008080">size_t</font> mulstd_value   <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> mulstd_dage    <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> mulstd_dtime   <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// testing constructor</font></i>
+     dismod_at<font color="#990000">::</font><font color="#008080">smooth_info</font> <b><font color="#000000">s_info</font></b><font color="#990000">(</font>
+          age_table<font color="#990000">,</font>
+          time_table<font color="#990000">,</font>
+          age_id<font color="#990000">,</font>
+          time_id<font color="#990000">,</font>
+          value_prior_id<font color="#990000">,</font>
+          dage_prior_id<font color="#990000">,</font>
+          dtime_prior_id<font color="#990000">,</font>
+          const_value<font color="#990000">,</font>
+          mulstd_value<font color="#990000">,</font>
+          mulstd_dage<font color="#990000">,</font>
+          mulstd_dtime
+     <font color="#990000">);</font>
+
+     <i><font color="#9A1900">// parameters for the ode grid</font></i>
+     <font color="#009900">double</font> ode_step_size    <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> n_age_ode <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <font color="#009900">double</font> age_min <font color="#990000">=</font> age_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+     <font color="#009900">double</font> age_max <font color="#990000">=</font> age_table<font color="#990000">[</font> age_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">-</font> <font color="#993399">1</font> <font color="#990000">];</font>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>age_min <font color="#990000">+</font> <font color="#990000">(</font>n_age_ode<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)*</font>ode_step_size <font color="#990000">&lt;</font> age_max <font color="#990000">)</font>
+          n_age_ode<font color="#990000">++;</font>
+     <font color="#008080">size_t</font> n_time_ode <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <font color="#009900">double</font> time_min <font color="#990000">=</font> time_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+     <font color="#009900">double</font> time_max <font color="#990000">=</font> time_table<font color="#990000">[</font> time_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">-</font> <font color="#993399">1</font> <font color="#990000">];</font>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>time_min <font color="#990000">+</font> <font color="#990000">(</font>n_time_ode<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)*</font>ode_step_size <font color="#990000">&lt;</font> time_max <font color="#990000">)</font>
+          n_time_ode<font color="#990000">++;</font>
+
+     <i><font color="#9A1900">// construct the interpolation object</font></i>
+     dismod_at<font color="#990000">::</font><font color="#008080">smooth2ode</font> <b><font color="#000000">si2ode</font></b><font color="#990000">(</font>
+          n_age_ode<font color="#990000">,</font> n_time_ode<font color="#990000">,</font> ode_step_size<font color="#990000">,</font> age_table<font color="#990000">,</font> time_table<font color="#990000">,</font>
+          s_info
+     <font color="#990000">);</font>
+
+     <i><font color="#9A1900">// variable values on smoothing grid</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Float&gt;</font> <b><font color="#000000">var_si</font></b><font color="#990000">(</font>n_age_si <font color="#990000">*</font> n_time_si<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_age_si<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_time_si<font color="#990000">;</font> j<font color="#990000">++)</font>
+               var_si<font color="#990000">[</font>i <font color="#990000">*</font> n_time_si <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">*</font>i <font color="#990000">+</font> j<font color="#990000">*</font>j<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// ode grid points at which to interpolate</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;size_t&gt;</font> ode_index<font color="#990000">;</font>
+     i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> i <font color="#990000">&lt;</font> n_age_ode <font color="#990000">&amp;&amp;</font> j <font color="#990000">&lt;</font> n_time_ode <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    ode_index<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font> i <font color="#990000">*</font> n_time_ode <font color="#990000">+</font> j <font color="#990000">);</font>
+          i<font color="#990000">++;</font>
+          j<font color="#990000">++;</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// interpolate from smoothing to ode grid</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Float&gt;</font> var_ode <font color="#990000">=</font> si2ode<font color="#990000">.</font><b><font color="#000000">interpolate</font></b><font color="#990000">(</font>var_si<font color="#990000">,</font> ode_index<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// check result</font></i>
+     ok <font color="#990000">&amp;=</font> var_ode<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> ode_index<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+     <i><font color="#9A1900">//</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">vdbl_si</font></b><font color="#990000">(</font>n_age_si <font color="#990000">*</font> n_time_si<font color="#990000">);</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">age_si</font></b><font color="#990000">(</font>n_age_si<font color="#990000">),</font> <b><font color="#000000">time_si</font></b><font color="#990000">(</font>n_time_si<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_age_si<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    age_si<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> age_table<font color="#990000">[</font> age_id<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">];</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_time_si<font color="#990000">;</font> j<font color="#990000">++)</font>
+               vdbl_si<font color="#990000">[</font>i <font color="#990000">*</font> n_time_si <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> i<font color="#990000">*</font>i <font color="#990000">+</font> j<font color="#990000">*</font>j<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_time_si<font color="#990000">;</font> j<font color="#990000">++)</font>
+          time_si<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> time_table<font color="#990000">[</font> time_id<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
+     <i><font color="#9A1900">//</font></i>
+     <font color="#008080">size_t</font> i_si <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">,</font> j_si <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> ode_index<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> k<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>
+          <font color="#008080">Float</font>  v_ode <font color="#990000">=</font> var_ode<font color="#990000">[</font>k<font color="#990000">];</font>
+          <i><font color="#9A1900">//</font></i>
+          <font color="#008080">size_t</font> i_ode  <font color="#990000">=</font> ode_index<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">/</font> n_time_ode<font color="#990000">;</font>
+          <font color="#008080">size_t</font> j_ode  <font color="#990000">=</font> ode_index<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">%</font> n_time_ode<font color="#990000">;</font>
+          <font color="#009900">double</font> age    <font color="#990000">=</font> age_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">+</font> ode_step_size <font color="#990000">*</font> i_ode<font color="#990000">;</font>
+          <font color="#009900">double</font> time   <font color="#990000">=</font> time_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> ode_step_size <font color="#990000">*</font> j_ode<font color="#990000">;</font>
+          <font color="#009900">double</font>  check <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">bilinear_interp</font></b><font color="#990000">(</font>
+               age<font color="#990000">,</font> time<font color="#990000">,</font> age_si<font color="#990000">,</font> time_si<font color="#990000">,</font> vdbl_si<font color="#990000">,</font> i_si<font color="#990000">,</font> j_si
+          <font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> check <font color="#990000">==</font> <font color="#993399">0.0</font> <font color="#990000">)</font>
+               ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> v_ode <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> eps <font color="#990000">;</font>
+          <b><font color="#0000FF">else</font></b>
+               ok  <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> v_ode <font color="#990000">/</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font>check<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> eps<font color="#990000">;</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// std::cout &lt;&lt; std::endl;</font></i>
+          <i><font color="#9A1900">// std::cout &lt;&lt; "check = " &lt;&lt; check &lt;&lt; std::endl;</font></i>
+          <i><font color="#9A1900">// std::cout &lt;&lt; "v_ode = " &lt;&lt; v_ode &lt;&lt; std::endl;</font></i>
+     <font color="#FF0000">}</font>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/devel/utility/smooth2ode_xam.cpp
+
+</body>
+</html>

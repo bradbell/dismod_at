@@ -1,0 +1,161 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Age Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Age Table">
+<meta name="keywords" id="keywords" content=" the age table age_id ode grid example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_age_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="input.htm" target="_top">Prev</a>
+</td><td><a href="age_table.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>age_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>age_table-&gt;</option>
+<option>age_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>age_id</option>
+<option>age</option>
+<option>---..Ode Grid</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Age Table</big></big></b></center>
+<br>
+<b><big><a name="age_id" id="age_id">age_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for
+the this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="age" id="age">age</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is a set of age values.
+The values in the age column must be unique; i.e.,
+none of the values may repeated.
+
+<br>
+<br>
+<b><a name="age.Ode Grid" id="age.Ode Grid">Ode Grid</a></b>
+<br>
+Note that the maximum minus the minimum age divided by the
+<a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+ will determine the
+<a href="ode_grid.htm#Number of Age Points, M" target="_top"><span style='white-space: nowrap'>number&nbsp;of&nbsp;age&nbsp;points</span></a>
+
+in the grid used to integrate the
+<a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="age_table.py.htm" target="_top"><span style='white-space: nowrap'>age_table.py</span></a>
+ and <a href="get_age_table_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_age_table_xam.cpp</span></a>
+
+contain example <code><font color="blue">age</font></code> tables.
+
+
+<hr>Input File: omh/table/age_table.omh
+
+</body>
+</html>

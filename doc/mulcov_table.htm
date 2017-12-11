@@ -1,0 +1,278 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The mulcov Table: Covariate Multipliers</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The mulcov Table: Covariate Multipliers">
+<meta name="keywords" id="keywords" content=" the mulcov table: covariate multipliers mulcov_id mulcov_type rate_value meas_value meas_std rate_id integrand_id covariate_id smooth_id null pini example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_mulcov_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="integrand_table.py.htm" target="_top">Prev</a>
+</td><td><a href="mulcov_table.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>mulcov_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>mulcov_table-&gt;</option>
+<option>mulcov_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>mulcov_id</option>
+<option>mulcov_type</option>
+<option>---..rate_value</option>
+<option>---..meas_value</option>
+<option>---..meas_std</option>
+<option>rate_id</option>
+<option>integrand_id</option>
+<option>covariate_id</option>
+<option>smooth_id</option>
+<option>---..null</option>
+<option>---..pini</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The mulcov Table: Covariate Multipliers</big></big></b></center>
+This table specifies the covariate multipliers and their priors.
+If this table is empty, there are no covariate multipliers in the model.
+This table has the following columns
+
+<br>
+<br>
+<b><big><a name="mulcov_id" id="mulcov_id">mulcov_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is its value is the
+primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="mulcov_type" id="mulcov_type">mulcov_type</a></big></b>
+<br>
+This column has type <code><font color="blue">text</font></code>.
+The possible values are:
+
+<br>
+<br>
+<b><a name="mulcov_type.rate_value" id="mulcov_type.rate_value">rate_value</a></b>
+<br>
+This covariate multiplier
+adjusts a model rate in the average integrand calculation;
+see <a href="avg_integrand.htm#Rate Functions.alpha_jk" target="_top"><span style='white-space: nowrap'>alpha_jk</span></a>
+.
+
+<br>
+<br>
+<b><a name="mulcov_type.meas_value" id="mulcov_type.meas_value">meas_value</a></b>
+<br>
+This covariate multiplier adjusts the average integrand to match the
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>measurement&nbsp;value</span></a>
+; see
+<a href="avg_integrand.htm#Measurement Value Covariates.beta_j" target="_top"><span style='white-space: nowrap'>beta_j</span></a>
+.
+
+<br>
+<br>
+<b><a name="mulcov_type.meas_std" id="mulcov_type.meas_std">meas_std</a></b>
+<br>
+This covariate multiplier adjusts the
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>measurement&nbsp;standard&nbsp;deviation</span></a>
+; see
+<a href="data_like.htm#Measurement Standard Deviation Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma_j</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="rate_id" id="rate_id">rate_id</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
+ is <code><font color="blue">rate_value</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>rate_id</span></font></i></code>
+ is the
+<a href="rate_table.htm#rate_id" target="_top"><span style='white-space: nowrap'>rate_id</span></a>
+ that determines
+the rate that this covariate and multiplier effects.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
+ is <code><font color="blue">meas_value</font></code> or <code><font color="blue">meas_std</font></code>,
+this column must be <code><font color="blue">null</font></code>.
+
+<br>
+<br>
+<b><big><a name="integrand_id" id="integrand_id">integrand_id</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
+ is <code><font color="blue">meas_value</font></code> or <code><font color="blue">meas_std</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>integrand_id</span></font></i></code>
+ is the
+<a href="integrand_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
+ that determines
+which measurement integrand this multiplier effects.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
+ is <code><font color="blue">rate_value</font></code>,
+this column should be <code><font color="blue">null</font></code>.
+
+<br>
+<br>
+<b><big><a name="covariate_id" id="covariate_id">covariate_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is a
+<a href="covariate_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
+
+in the <code><font color="blue">covariate</font></code> table.
+This specifies the covariate column in the
+<a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+ that this multiplier acts on.
+
+<br>
+<br>
+<b><big><a name="smooth_id" id="smooth_id">smooth_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and its value is a
+<a href="smooth_grid_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+
+in the <code><font color="blue">smooth_grid</font></code> table.
+It specifies the smoothing uses as a prior for this covariate multiplier.
+(Note that all covariate multipliers are fixed effects.)
+
+<br>
+<br>
+<b><a name="smooth_id.null" id="smooth_id.null">null</a></b>
+<br>
+If the 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+ is <code><font color="blue">null</font></code>, the corresponding
+covariate multiplier is always zero and no <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ are
+allocated for it.
+
+<br>
+<br>
+<b><a name="smooth_id.pini" id="smooth_id.pini">pini</a></b>
+<br>
+Consider the case where 
+<code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
+ is <code><font color="blue">rate_value</font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_id</span></font></i></code>
+ corresponds to
+<a href="rate_table.htm#rate_name" target="_top"><span style='white-space: nowrap'>rate_name</span></a>
+ <code><font color="blue">pini</font></code>.
+In this case, 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+ should correspond to
+<a href="smooth_table.htm#n_age" target="_top"><span style='white-space: nowrap'>n_age</span></a>
+ equal to one because
+variation w.r.t. age will have no effect (for this covariate multiplier).
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="mulcov_table.py.htm" target="_top"><span style='white-space: nowrap'>mulcov_table.py</span></a>
+ and <a href="get_mulcov_table_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_mulcov_table_xam.cpp</span></a>
+
+contain example <code><font color="blue">covariate</font></code> tables.
+
+
+<hr>Input File: omh/table/mulcov_table.omh
+
+</body>
+</html>

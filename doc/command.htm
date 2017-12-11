@@ -1,0 +1,162 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The dismod_at Commands</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The dismod_at Commands">
+<meta name="keywords" id="keywords" content=" the dismod_at commands data flow log messages ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_command_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="ode_grid.htm" target="_top">Prev</a>
+</td><td><a href="set_command.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>command-&gt;</option>
+<option>set_command</option>
+<option>init_command</option>
+<option>depend_command</option>
+<option>fit_command</option>
+<option>simulate_command</option>
+<option>sample_command</option>
+<option>predict_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Data Flow</option>
+<option>Log Messages</option>
+<option>Commands</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The dismod_at Commands</big></big></b></center>
+<br>
+<b><big><a name="Data Flow" id="Data Flow">Data Flow</a></big></b>
+<br>
+Each command as a set of extra input tables and output tables; see
+<a href="data_flow.htm#Input and Output by Command" target="_top"><span style='white-space: nowrap'>input&nbsp;and&nbsp;output&nbsp;by&nbsp;command</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Log Messages" id="Log Messages">Log Messages</a></big></b>
+<br>
+Each command also has two messages with message_type
+<a href="log_table.htm#message_type.command" target="_top"><span style='white-space: nowrap'>command</span></a>
+ in the log table.
+The first one is a <code><font color="blue">begin</font></code> message and includes the command arguments.
+The second is an <code><font color="blue">end</font></code> message and signifies that the command completed.
+
+
+
+<br>
+<br>
+<b><big><a name="Commands" id="Commands">Commands</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="init_command.htm" target="_top">init_command</a></td><td>
+The Variable Command</td></tr>
+<tr><td>
+
+<a href="fit_command.htm" target="_top">fit_command</a></td><td>
+The Fit Command</td></tr>
+<tr><td>
+
+<a href="set_command.htm" target="_top">set_command</a></td><td>
+Directly Setting Table Values</td></tr>
+<tr><td>
+
+<a href="depend_command.htm" target="_top">depend_command</a></td><td>
+The Depend Command</td></tr>
+<tr><td>
+
+<a href="simulate_command.htm" target="_top">simulate_command</a></td><td>
+The Simulate Command</td></tr>
+<tr><td>
+
+<a href="sample_command.htm" target="_top">sample_command</a></td><td>
+The Sample Command</td></tr>
+<tr><td>
+
+<a href="predict_command.htm" target="_top">predict_command</a></td><td>
+The Predict Command</td></tr>
+<tr><td>
+
+<a href="db2csv_command.htm" target="_top">db2csv_command</a></td><td>
+Create Csv Files that Summarize The Database</td></tr>
+<tr><td>
+
+<a href="modify_command.htm" target="_top">modify_command</a></td><td>
+Modify a Column of an Sqlite Database</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+
+<hr>Input File: devel/command.omh
+
+</body>
+</html>

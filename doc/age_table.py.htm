@@ -1,0 +1,146 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>age_table: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="age_table: Example and Test">
+<meta name="keywords" id="keywords" content=" age_table: example test age  table ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_age_table.py_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="age_table.htm" target="_top">Prev</a>
+</td><td><a href="avgint_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>age_table</option>
+<option>age_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>age_table-&gt;</option>
+<option>age_table.py</option>
+</select>
+</td>
+<td>age_table.py</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@ 
+
+<center><b><big><big>age_table: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#0000FF">def</font></b> <b><font color="#000000">age_table</font></b><font color="#990000">()</font> <font color="#990000">:</font>
+     <b><font color="#000080">import</font></b> dismod_at
+     <b><font color="#000080">import</font></b> copy
+     <i><font color="#9A1900">#</font></i>
+     file_name      <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
+     new            <font color="#990000">=</font> True
+     connection     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
+     cursor         <font color="#990000">=</font> connection<font color="#990000">.</font><b><font color="#000000">cursor</font></b><font color="#990000">()</font>
+     <i><font color="#9A1900">#</font></i>
+     <i><font color="#9A1900"># create the age table</font></i>
+     col_name <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'age'</font>  <font color="#990000">]</font>
+     col_type <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'real'</font> <font color="#990000">]</font>
+     row_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">[</font><font color="#993399">0.0</font><font color="#990000">],</font> <font color="#990000">[</font><font color="#993399">20.0</font><font color="#990000">],</font> <font color="#990000">[</font><font color="#993399">40.0</font><font color="#990000">],</font> <font color="#990000">[</font><font color="#993399">60.0</font><font color="#990000">],</font> <font color="#990000">[</font><font color="#993399">80.0</font><font color="#990000">],</font> <font color="#990000">[</font><font color="#993399">100.0</font><font color="#990000">]</font> <font color="#990000">]</font>
+     tbl_name <font color="#990000">=</font> <font color="#FF0000">'age'</font>
+     dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
+     <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900"># include primary key in test</font></i>
+     check_name <font color="#990000">=</font> <font color="#990000">[</font> tbl_name <font color="#990000">+</font> <font color="#FF0000">'_id'</font> <font color="#990000">]</font> <font color="#990000">+</font> col_name
+     check_list <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
+     <b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>row_list<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+          check_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> row_list<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
+     <i><font color="#9A1900">#</font></i>
+     row_list <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_row_list</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> check_name<font color="#990000">)</font>
+     <b><font color="#0000FF">assert</font></b> row_list <font color="#990000">==</font> check_list
+     <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
+     connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
+     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'age_table: OK'</font><font color="#990000">)</font></tt></pre>
+</font></code>
+<hr>Input File: example/table/age_table.py
+
+</body>
+</html>

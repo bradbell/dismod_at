@@ -1,0 +1,219 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Devel Pack Variables: Standard Deviations Multipliers</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Devel Pack Variables: Standard Deviations Multipliers">
+<meta name="keywords" id="keywords" content=" devel pack variables: standard deviations multipliers syntax mulstd_offset pack_object smooth_id k offset example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_pack_info_mulstd_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="pack_info_ctor.htm" target="_top">Prev</a>
+</td><td><a href="pack_info_rate_info.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>pack_info</option>
+<option>pack_info_mulstd</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_utility-&gt;</option>
+<option>a2_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_value_prior</option>
+<option>pack_diff_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>pack_info-&gt;</option>
+<option>pack_info_ctor</option>
+<option>pack_info_mulstd</option>
+<option>pack_info_rate_info</option>
+<option>pack_info_mulcov_meas</option>
+<option>pack_info_mulcov_rate</option>
+<option>pack_info_xam.cpp</option>
+</select>
+</td>
+<td>pack_info_mulstd</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>pack_object</option>
+<option>smooth_id</option>
+<option>k</option>
+<option>---..offset</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Devel Pack Variables: Standard Deviations Multipliers</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>offset</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.mulstd_offset(</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="pack_object" id="pack_object">pack_object</a></big></b>
+<br>
+This object has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;pack_info&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="smooth_id" id="smooth_id">smooth_id</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the
+<a href="smooth_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+
+for this multiplier.
+
+<br>
+<br>
+<b><big><a name="k" id="k">k</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies which type of priors standard deviations that get multiplied
+by this variable as follows:
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Type of prior </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">0</font></code>  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ value priors for this smoothing </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">1</font></code>  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ age difference priors for this smoothing </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">2</font></code>  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ time difference priors for this smoothing
+</td></tr>
+</table>
+<br>
+<b><a name="k.offset" id="k.offset">offset</a></b>
+<br>
+The return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;offset<br>
+</span></font></code>
+and is the offset (index) in the packed variable vector
+where this multiplier is located.
+If it has value
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DISMOD_AT_NULL_SIZE_T<br>
+</span></font></code>
+This multiplier has value one and is not a variable.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+See <a href="pack_info.htm#Example" target="_top"><span style='white-space: nowrap'>pack_info&nbsp;Example</span></a>
+.
+
+
+<hr>Input File: devel/utility/pack_info.cpp
+
+</body>
+</html>

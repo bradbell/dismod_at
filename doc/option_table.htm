@@ -1,0 +1,881 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Option Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Option Table">
+<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos optimizer quasi_fixed derivative_test max_num_iter print_level accept_after_max_steps tolerance bound_random bound_frac_fixed example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_option_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="nslist_table.py.htm" target="_top">Prev</a>
+</td><td><a href="option_table.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>option_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>option_table-&gt;</option>
+<option>option_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Conventions</option>
+<option>---..Changing Values</option>
+<option>---..option_id</option>
+<option>---..option_name</option>
+<option>---..option_value</option>
+<option>parent_node_id</option>
+<option>---..parent_node_name</option>
+<option>---..Default</option>
+<option>---..Children</option>
+<option>---..Data Subset Table</option>
+<option>---..Avgint Subset Table</option>
+<option>---..Changing</option>
+<option>zero_sum_random</option>
+<option>---..Default</option>
+<option>data_extra_columns</option>
+<option>---..Default</option>
+<option>avgint_extra_columns</option>
+<option>---..Default</option>
+<option>warn_on_stderr</option>
+<option>---..Default</option>
+<option>minimum_meas_cv</option>
+<option>---..Default</option>
+<option>ode_step_size</option>
+<option>---..Default</option>
+<option>random_seed</option>
+<option>---..Default</option>
+<option>rate_case</option>
+<option>---..iota_zero_rho_zero</option>
+<option>---..iota_pos_rho_zero</option>
+<option>---..iota_zero_rho_pos</option>
+<option>---..iota_pos_rho_pos</option>
+<option>---..Default</option>
+<option>Optimizer</option>
+<option>---..quasi_fixed</option>
+<option>---..derivative_test</option>
+<option>---..max_num_iter</option>
+<option>---..print_level</option>
+<option>---..accept_after_max_steps</option>
+<option>---..tolerance</option>
+<option>---..bound_random</option>
+<option>---..bound_frac_fixed</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Option Table</big></big></b></center>
+These options control how the
+<code><font color="blue">dismod_at</font></code> <a href="command.htm" target="_top"><span style='white-space: nowrap'>commands</span></a>
+ behave.
+Each option is an 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ pair
+and has a default value that is used when the name
+is not present in the option table.
+
+<br>
+<br>
+<b><big><a name="Conventions" id="Conventions">Conventions</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Conventions.Changing Values" id="Conventions.Changing Values">Changing Values</a></b>
+<br>
+This table is special in that you can change almost all its values
+without invalidating the <a href="data_flow.htm#Output Tables" target="_top"><span style='white-space: nowrap'>output&nbsp;tables</span></a>
+.
+There is one exception; see
+<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
+ below.
+
+<br>
+<br>
+<b><a name="Conventions.option_id" id="Conventions.option_id">option_id</a></b>
+<br>
+This column
+has type <code><font color="blue">integer</font></code> and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><a name="Conventions.option_name" id="Conventions.option_name">option_name</a></b>
+<br>
+This column
+has type <code><font color="blue">text</font></code> and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The possible values for 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ are listed below.
+
+<br>
+<br>
+<b><a name="Conventions.option_value" id="Conventions.option_value">option_value</a></b>
+<br>
+This column has type <code><font color="blue">text</font></code> and is
+the value for the corresponding option.
+
+<br>
+<br>
+<b><big><a name="parent_node_id" id="parent_node_id">parent_node_id</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;parent_node_id</span></font></code>
+
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+
+is an integer that specifies the parent
+<a href="node_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
+.
+
+<br>
+<br>
+<b><a name="parent_node_id.parent_node_name" id="parent_node_id.parent_node_name">parent_node_name</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;parent_node_name</span></font></code>
+
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+
+is an string that specifies the parent
+<a href="node_table.htm#node_name" target="_top"><span style='white-space: nowrap'>node_name</span></a>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
+ is also specified,
+the corresponding node id and node name must agree.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
+ is not specified,
+the <a href="node_table.htm" target="_top"><span style='white-space: nowrap'>node_table</span></a>
+ is searched to determine
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
+
+(this takes some extra time that it is not expected to be significant).
+
+<br>
+<br>
+<b><a name="parent_node_id.Default" id="parent_node_id.Default">Default</a></b>
+<br>
+There is no default value when neither
+
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
+ nor 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
+ is present.
+
+<br>
+<br>
+<b><a name="parent_node_id.Children" id="parent_node_id.Children">Children</a></b>
+<br>
+The child nodes are the elements of the
+<a href="node_table.htm#parent.Child Group" target="_top"><span style='white-space: nowrap'>child&nbsp;group</span></a>
+ corresponding to
+the specified 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="parent_node_id.Data Subset Table" id="parent_node_id.Data Subset Table">Data Subset Table</a></b>
+<br>
+Rows in the <code><font color="blue">data</font></code> table for which the
+<a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node</span></a>
+
+is not a <a href="node_table.htm#parent.Descendant" target="_top"><span style='white-space: nowrap'>descendant</span></a>
+
+of the parent node,
+are not included in the <a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
+ and the
+<a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset_table</span></a>
+.
+
+<br>
+<br>
+<b><a name="parent_node_id.Avgint Subset Table" id="parent_node_id.Avgint Subset Table">Avgint Subset Table</a></b>
+<br>
+Rows in the <code><font color="blue">avgint</font></code> table for which the
+<a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node</span></a>
+
+is not a <a href="node_table.htm#parent.Descendant" target="_top"><span style='white-space: nowrap'>descendant</span></a>
+
+of the parent node,
+are not included in the <a href="predict_table.htm" target="_top"><span style='white-space: nowrap'>predict_table</span></a>
+;
+see the heading Note for the
+<a href="predict_table.htm#Avgint Subset.Node" target="_top"><span style='white-space: nowrap'>predict&nbsp;table</span></a>
+.
+
+<br>
+<br>
+<b><a name="parent_node_id.Changing" id="parent_node_id.Changing">Changing</a></b>
+<br>
+If you change the parent node
+all of the output tables become invalid.
+This value is in the option table,
+and not an argument to a particular command,
+because it is used by all the commands.
+
+<br>
+<br>
+<b><big><a name="zero_sum_random" id="zero_sum_random">zero_sum_random</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is <code><font color="blue">zero_sum_random</font></code>,
+the corresponding value is a space separated subset of the
+<a href="rate_table.htm#rate_name" target="_top"><span style='white-space: nowrap'>rate&nbsp;names</span></a>
+.
+For each rate in the list, each age, and each time,
+the sum of the corresponding
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
+ estimates
+is constrained to be zero.
+These are additional constraints in the optimization problem for the
+<a href="model_variables.htm#Fixed Effects, theta" target="_top"><span style='white-space: nowrap'>fixed&nbsp;effects</span></a>
+.
+The file <a href="user_zero_sum_random.py.htm" target="_top"><span style='white-space: nowrap'>zero_sum_random.py</span></a>
+
+contains an example and test using these constraints.
+Note that for each rate in 
+<code><i><font color="black"><span style='white-space: nowrap'>zero_sum_random</span></font></i></code>
+,
+<a href="rate_table.htm#child_nslist_id" target="_top"><span style='white-space: nowrap'>child_nslist_id</span></a>
+ must be null; i.e.,
+all of the child must use the same smoothing for this rate.
+
+<br>
+<br>
+<b><a name="zero_sum_random.Default" id="zero_sum_random.Default">Default</a></b>
+<br>
+The default value for this option is null; i.e.,
+no zero sum constraints on the random effects.
+
+<br>
+<br>
+<b><big><a name="data_extra_columns" id="data_extra_columns">data_extra_columns</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is <code><font color="blue">data_extra_columns</font></code>,
+the corresponding value is space separated list of extra columns,
+in the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+.
+These columns are not used by <code><font color="blue">dismod_at</font></code> except that
+they get displayed in the
+<a href="db2csv_command.htm#data.csv.data_extra_columns" target="_top"><span style='white-space: nowrap'>data.csv</span></a>
+ file.
+
+<br>
+<br>
+<b><a name="data_extra_columns.Default" id="data_extra_columns.Default">Default</a></b>
+<br>
+The default value for this option is null; i.e.,
+no extra columns displayed in <code><font color="blue">data.csv</font></code>.
+
+<br>
+<br>
+<b><big><a name="avgint_extra_columns" id="avgint_extra_columns">avgint_extra_columns</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is <code><font color="blue">avgint_extra_columns</font></code>,
+the corresponding value is space separated list of extra columns,
+in the <a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
+.
+These columns are not used by <code><font color="blue">dismod_at</font></code> except that
+they get displayed in the
+<a href="db2csv_command.htm#predict.csv.avgint_extra_columns" target="_top"><span style='white-space: nowrap'>predict.csv</span></a>
+ file.
+
+<br>
+<br>
+<b><a name="avgint_extra_columns.Default" id="avgint_extra_columns.Default">Default</a></b>
+<br>
+The default value for this option is null; i.e.,
+no extra columns displayed in <code><font color="blue">predict.csv</font></code>.
+
+<br>
+<br>
+<b><big><a name="warn_on_stderr" id="warn_on_stderr">warn_on_stderr</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is
+<code><font color="blue">warn_on_stderr</font></code>,
+the corresponding possible values are
+<code><font color="blue">true</font></code> or <code><font color="blue">false</font></code>.
+If the value is true,
+warning messages are written to standard error.
+In either case, these messages are recorded in the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
+.
+Error messages are always written to standard error
+and recorded in the log table.
+
+<br>
+<br>
+<b><a name="warn_on_stderr.Default" id="warn_on_stderr.Default">Default</a></b>
+<br>
+The default value for this option is <code><font color="blue">true</font></code>.
+
+<br>
+<br>
+<b><big><a name="minimum_meas_cv" id="minimum_meas_cv">minimum_meas_cv</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;minimum_meas_cv</span></font></code>
+,
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ is a non-negative
+the minimum coefficient of variation for the measurement values.
+To be specific;
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ is the measurement value, and
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+ is the measurement standard,
+the measurement standard deviation used in the model is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;max(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)<br>
+</span></font></code>
+see <a href="data_like.htm#Data Table Notation.Delta_i" target="_top"><span style='white-space: nowrap'>Delta</span></a>
+
+in the data likelihood section.
+
+<br>
+<br>
+<b><a name="minimum_meas_cv.Default" id="minimum_meas_cv.Default">Default</a></b>
+<br>
+The default value for this option is <code><font color="blue">0.0</font></code>.
+
+<br>
+<br>
+<b><big><a name="ode_step_size" id="ode_step_size">ode_step_size</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;ode_step_size</span></font></code>
+,
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+
+is a positive floating point number (greater than zero)
+that specifies numerical ode step size.
+The step size is the same in age and time because it is along cohort lines.
+The smaller 
+<code><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i></code>
+, the more accurate the solution of the
+<a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
+
+and the more time required to compute this solution.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i></code>
+ value does not matter for the following integrands:
+<code><font color="blue">Sincidence</font></code>,
+<code><font color="blue">remission</font></code>,
+<code><font color="blue">mtexcess</font></code>,
+<code><font color="blue">mtother</font></code>,
+<code><font color="blue">mtwith</font></code>, and
+<code><font color="blue">relrisk</font></code>.
+
+<br>
+<br>
+<b><a name="ode_step_size.Default" id="ode_step_size.Default">Default</a></b>
+<br>
+The default value for this option is <code><font color="blue">10.0</font></code>,
+which is reasonable if all the rates
+
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>chi</span></font></i></code>
+, and 
+<code><i><font color="black"><span style='white-space: nowrap'>omega</span></font></i></code>
+
+are all less than <code><font color="blue">0.1</font></code>.
+
+<br>
+<br>
+<b><big><a name="random_seed" id="random_seed">random_seed</a></big></b>
+<br>
+This is a non-negative integer used to seed the random number
+generator that is used by <code><font color="blue">dismod_at</font></code>.
+If this value is zero, the clock is used to seed the random number generator;
+see <a href="log_table.htm#message_type.random_seed" target="_top"><span style='white-space: nowrap'>random_seed</span></a>
+ in the log table.
+
+<br>
+<br>
+<b><a name="random_seed.Default" id="random_seed.Default">Default</a></b>
+<br>
+The default value for this option is <code><font color="blue">0</font></code>.
+
+<br>
+<br>
+<b><big><a name="rate_case" id="rate_case">rate_case</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_case</span></font></i></code>
+ value does not matter for the following integrands:
+<code><font color="blue">Sincidence</font></code>,
+<code><font color="blue">remission</font></code>,
+<code><font color="blue">mtexcess</font></code>,
+<code><font color="blue">mtwith</font></code>,
+<code><font color="blue">relrisk</font></code>.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;rate_case</span></font></code>
+,
+the corresponding option value must be one of the following:
+
+<br>
+<br>
+<b><a name="rate_case.iota_zero_rho_zero" id="rate_case.iota_zero_rho_zero">iota_zero_rho_zero</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;rate_case</span></font></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;iota_zero_rho_zero</span></font></code>
+,
+the <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;smoothing</span></a>
+ for
+
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+ must always have lower and upper limit zero.
+
+<br>
+<br>
+<b><a name="rate_case.iota_pos_rho_zero" id="rate_case.iota_pos_rho_zero">iota_pos_rho_zero</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;rate_case</span></font></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;iota_pos_rho_zero</span></font></code>
+,
+the <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;smoothing</span></a>
+ for
+
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ must always have lower limit greater than zero and for
+
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+ lower and upper limit zero.
+
+<br>
+<br>
+<b><a name="rate_case.iota_zero_rho_pos" id="rate_case.iota_zero_rho_pos">iota_zero_rho_pos</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;rate_case</span></font></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;iota_zero_rho_pos</span></font></code>
+,
+the <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;smoothing</span></a>
+ for
+
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+ must always have lower limit greater than zero and for
+
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ lower and upper limit zero.
+
+<br>
+<br>
+<b><a name="rate_case.iota_pos_rho_pos" id="rate_case.iota_pos_rho_pos">iota_pos_rho_pos</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;rate_case</span></font></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;iota_zero_rho_pos</span></font></code>
+,
+the <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;smoothing</span></a>
+ for
+
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+
+must always have lower limit greater than zero.
+
+<br>
+<br>
+<b><a name="rate_case.Default" id="rate_case.Default">Default</a></b>
+<br>
+The default value for this option is <code><font color="blue">iota_pos_rho_zero</font></code>.
+
+<br>
+<br>
+<b><big><a name="Optimizer" id="Optimizer">Optimizer</a></big></b>
+<br>
+The following options control the
+<a href="http://www.coin-or.org/Ipopt/documentation/" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
+ optimization
+for both the fixed and random effects:
+
+<br>
+<br>
+<b><a name="Optimizer.quasi_fixed" id="Optimizer.quasi_fixed">quasi_fixed</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is
+<code><font color="blue">quasi_fixed</font></code>,
+the corresponding possible values are
+<code><font color="blue">true</font></code> or <code><font color="blue">false</font></code>.
+If it is <code><font color="blue">true</font></code>, a quasi-Newton method is used to optimize
+the fixed effects. Otherwise a full Newton method is used.
+The default value for this option is <code><font color="blue">true</font></code>.
+
+<br>
+<br>
+<b><a name="Optimizer.derivative_test" id="Optimizer.derivative_test">derivative_test</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is
+<code><font color="blue">derivative_test_fixed</font></code> (<code><font color="blue">derivative_test_random</font></code>),
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+
+is one of the following:
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ </td><td align='left'  valign='top'>
+ Description </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">none</font></code>          </td><td align='left'  valign='top'>
+
+	do not perform derivative test
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">first-order</font></code>   </td><td align='left'  valign='top'>
+
+	test first derivatives at starting point
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">second-order</font></code>  </td><td align='left'  valign='top'>
+
+	test first and second derivatives at starting point
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">only-second-order </font></code> </td><td align='left'  valign='top'>
+
+	test second derivatives at starting point
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">adaptive </font></code> </td><td align='left'  valign='top'>
+
+	a step size adaptive first order derivative test
+	(fixed case only)
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">trace-adaptive </font></code> </td><td align='left'  valign='top'>
+
+	trace adaptive test on standard output (fixed case only)
+</td></tr>
+</table>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>quasi_fixed</span></font></i></code>
+ is <code><font color="blue">true</font></code>
+the 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ cannot be
+<code><font color="blue">second-order</font></code> or <code><font color="blue">only-second-order</font></code>.
+The <code><font color="blue">adaptive</font></code> and <code><font color="blue">trace-adaptive</font></code> values are only available
+for the <code><font color="blue">derivative_test_fixed</font></code> option.
+The default value for this option is <code><font color="blue">none</font></code>.
+
+<br>
+<br>
+<b><a name="Optimizer.max_num_iter" id="Optimizer.max_num_iter">max_num_iter</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is
+<code><font color="blue">max_num_iter_fixed</font></code> (<code><font color="blue">max_num_iter_random</font></code>),
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+
+is an integer greater than or equal <code><font color="blue">-1</font></code> that specifies the
+maximum number of iterations
+(<code><font color="blue">max_iter</font></code> in Ipopt documentation).
+In the special case 
+<code><i><font color="black"><span style='white-space: nowrap'>max_num_iter_fixed</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;-1</span></font></code>
+,
+Ipopt is run with zero iterations, but the solution returned by Ipopt
+is replace by the initial fixed effects; i.e.,
+the fit <a href="fit_var_table.htm#fit_var_value" target="_top"><span style='white-space: nowrap'>fit_var_value</span></a>
+ column
+will contain the same values as the start table column
+<a href="start_var_table.htm#start_var_value" target="_top"><span style='white-space: nowrap'>start_var_value</span></a>
+.
+The default value for this option is <code><font color="blue">100</font></code>.
+
+<br>
+<br>
+<b><a name="Optimizer.print_level" id="Optimizer.print_level">print_level</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is
+<code><font color="blue">print_level_fixed</font></code> (<code><font color="blue">print_level_random</font></code>),
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+
+is a positive integer between 0 and 12 inclusive
+that specifies the print level
+for optimizing the fixed effects (random effects).
+Zero, corresponds to no printing and should be the default for use
+with <code><font color="blue">dismod_at</font></code> (the value 5 is the normal default for Ipopt).
+At least one these two print values
+(for the fixed and random effects) should be zero.
+The default value for this option is <code><font color="blue">0</font></code>.
+
+<br>
+<br>
+<b><a name="Optimizer.accept_after_max_steps" id="Optimizer.accept_after_max_steps">accept_after_max_steps</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is
+<code><font color="blue">accept_after_max_steps_fixed</font></code> (<code><font color="blue">accept_after_max_steps_random</font></code>),
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+
+is a positive integer specifying the maximum number of
+backtracking steps to take before accepting a line search point.
+The default value for this option is <code><font color="blue">5</font></code>.
+
+<br>
+<br>
+<b><a name="Optimizer.tolerance" id="Optimizer.tolerance">tolerance</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is
+<code><font color="blue">tolerance_fixed</font></code> (<code><font color="blue">tolerance_random</font></code>),
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+
+is a positive floating point number
+that specifies the desired relative convergence tolerance
+for optimizing the fixed effects (random effects).
+(This is called <code><font color="blue">tol</font></code> in Ipopt documentation.)
+The default value for this option is <code><font color="blue">1e-8</font></code>.
+
+<br>
+<br>
+<b><a name="Optimizer.bound_random" id="Optimizer.bound_random">bound_random</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is
+<code><font color="blue">bound_random</font></code>,
+plus and minus the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+
+are the bounds for each of the
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i></code>
+ is <code><font color="blue">null</font></code>,
+plus and minus infinity is used for the bounds; see
+<a href="database.htm#Bounds That are Null" target="_top"><span style='white-space: nowrap'>bounds&nbsp;that&nbsp;are&nbsp;null</span></a>
+.
+
+<ol type="1"><li>
+The theory for
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+
+does not include bounds for the random effects.
+
+</li><li>
+
+The bound 
+<code><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i></code>
+ does not affect the
+<a href="rate_table.htm#Child Restrictions.Constant Random Effects" target="_top"><span style='white-space: nowrap'>constant&nbsp;random&nbsp;effects</span></a>
+.
+The theory for fitting with constant random effects is just fine
+because they are treated a parameters, and not random effects,
+in the Laplace approximation.
+
+</li><li>
+
+The special case where 
+<code><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i></code>
+ is zero,
+fits as if there were no random effects except for the fact that
+the resulting optimal value can be used as a starting point for fitting
+with random effects; see
+<a href="set_command.htm#table_out.start_var" target="_top"><span style='white-space: nowrap'>set&nbsp;start_var&nbsp;fit_var</span></a>
+ and
+<a href="user_fit_fixed.py.htm" target="_top"><span style='white-space: nowrap'>fit_fixed.py</span></a>
+.
+
+</li><li>
+
+Fitting with no random effects corresponds to
+a <code><font color="blue">null</font></code> value for all the
+<a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>child_smooth_id</span></a>
+ and
+<a href="rate_table.htm#child_nslist_id" target="_top"><span style='white-space: nowrap'>child_nslist_id</span></a>
+ in the rate table.
+This is different from 
+<code><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i></code>
+ zero which includes
+the random effects (with value zero) in the
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+.
+
+</li><li>
+
+Note that the theory used to compute
+<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+ samples of the fixed
+effects, does not take 
+<code><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i></code>
+ into account.
+On the other hand; the samples of the random effects are withing the
+limits specified by 
+<code><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i></code>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><a name="Optimizer.bound_frac_fixed" id="Optimizer.bound_frac_fixed">bound_frac_fixed</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is
+<code><font color="blue">bound_frac_fixed</font></code>
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+
+is greater than zero and lese than or equal one half.
+It determines how much the initial point might have to be modified
+in order to be sufficiently inside the bounds.
+This is called <code><font color="blue">bound_frac</font></code> in the Ipopt documentation.
+The default value for this option is <code><font color="blue">1e-2</font></code>.
+
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="option_table.py.htm" target="_top"><span style='white-space: nowrap'>option_table.py</span></a>
+
+contains an example <code><font color="blue">option</font></code> table.
+
+
+<hr>Input File: omh/table/option_table.omh
+
+</body>
+</html>

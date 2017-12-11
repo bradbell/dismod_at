@@ -1,0 +1,167 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Starting Values Used During a Fit</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Starting Values Used During a Fit">
+<meta name="keywords" id="keywords" content=" starting values used during fit discussion start_var_id start_var_value example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_start_var_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="depend_var_table.htm" target="_top">Prev</a>
+</td><td><a href="scale_var_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>data_flow</option>
+<option>start_var_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>data_flow-&gt;</option>
+<option>log_table</option>
+<option>var_table</option>
+<option>data_subset_table</option>
+<option>depend_var_table</option>
+<option>start_var_table</option>
+<option>scale_var_table</option>
+<option>fit_var_table</option>
+<option>fit_data_subset_table</option>
+<option>truth_var_table</option>
+<option>simulate_table</option>
+<option>sample_table</option>
+<option>predict_table</option>
+</select>
+</td>
+<td>start_var_table</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Discussion</option>
+<option>start_var_id</option>
+<option>start_var_value</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Starting Values Used During a Fit</big></big></b></center>
+<br>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<br>
+The start_var table contains one value for each of the
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+.
+The <a href="init_command.htm#start_var_table" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+
+creates a start_var table
+using the mean of the priors for the model variables values.
+The <a href="set_command.htm#table_out.start_var" target="_top"><span style='white-space: nowrap'>set_command</span></a>
+
+can also be used to create a start_var table.
+This table may also be created directly by the user
+(with the aid of the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="start_var_id" id="start_var_id">start_var_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>start_var_id</span></font></i></code>
+ column is also a foreign key for the
+<a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_var_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+In addition, the size of both tables is the same.
+
+<br>
+<br>
+<b><big><a name="start_var_value" id="start_var_value">start_var_value</a></big></b>
+<br>
+The column has type <code><font color="blue">real</font></code> and is
+the value of the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+
+where the optimization procedure is started during the
+<a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+See the <a href="init_command.py.htm" target="_top"><span style='white-space: nowrap'>init_command.py</span></a>
+ example and test.
+
+
+<hr>Input File: omh/table/start_var_table.omh
+
+</body>
+</html>

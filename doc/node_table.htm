@@ -1,0 +1,200 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Node Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Node Table">
+<meta name="keywords" id="keywords" content=" node table the node_id node_name parent child group descendant example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_node_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="mulcov_table.py.htm" target="_top">Prev</a>
+</td><td><a href="node_table.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>node_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>node_table-&gt;</option>
+<option>node_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>node_id</option>
+<option>node_name</option>
+<option>parent</option>
+<option>---..Child Group</option>
+<option>---..Descendant</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Node Table</big></big></b></center>
+The node table defines a graph that is a tree by specifying
+the parent for each node.
+The <code><font color="blue">node</font></code> table has the following columns:
+
+<br>
+<br>
+<b><big><a name="node_id" id="node_id">node_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="node_name" id="node_name">node_name</a></big></b>
+<br>
+This column has type <code><font color="blue">text</font></code> and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+<br>
+<br>
+<b><big><a name="parent" id="parent">parent</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the 
+<code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
+
+of the parent for this node.
+If this node has no parents, 
+<code><i><font color="black"><span style='white-space: nowrap'>parent</span></font></i></code>
+ is <code><font color="blue">null</font></code>.
+Note that this is a value for the primary key in this table, but
+the name of this column does not follow the
+<a href="database.htm#Foreign Key.parent" target="_top"><span style='white-space: nowrap'>foreign&nbsp;key</span></a>
+ naming convention.
+
+<br>
+<br>
+<b><a name="parent.Child Group" id="parent.Child Group">Child Group</a></b>
+<br>
+The child group for node 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ is the sent of 
+<code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
+ values
+such that the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>parent</span></font></i></code>
+ is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="parent.Descendant" id="parent.Descendant">Descendant</a></b>
+<br>
+The set of descendants for a node 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ is the
+set children of 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+, grand children of 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>...</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="node_table.py.htm" target="_top"><span style='white-space: nowrap'>node_table.py</span></a>
+ and <a href="get_node_table_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_node_table_xam.cpp</span></a>
+
+contain example <code><font color="blue">node</font></code> tables.
+
+
+<hr>Input File: omh/table/node_table.omh
+
+</body>
+</html>

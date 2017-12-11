@@ -1,0 +1,246 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Modify a Column of an Sqlite Database</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Modify a Column of an Sqlite Database">
+<meta name="keywords" id="keywords" content=" modify column sqlite database syntax program python function see also warning arg_list table_name column_name row_expression value_expression expressions statements example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_modify_command_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="user_metropolis.py.htm" target="_top">Prev</a>
+</td><td><a href="modify_command.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>modify_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>python-&gt;</option>
+<option>create_connection</option>
+<option>create_table</option>
+<option>create_database</option>
+<option>db2csv_command</option>
+<option>get_name_type</option>
+<option>get_row_list</option>
+<option>get_table_dict</option>
+<option>metropolis</option>
+<option>modify_command</option>
+<option>unicode_tuple</option>
+<option>sql_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>modify_command-&gt;</option>
+<option>modify_command.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>---..As Program</option>
+<option>---..As Python Function</option>
+<option>See Also</option>
+<option>Warning</option>
+<option>arg_list</option>
+<option>database</option>
+<option>table_name</option>
+<option>column_name</option>
+<option>row_expression</option>
+<option>value_expression</option>
+<option>Expressions</option>
+<option>statements</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Modify a Column of an Sqlite Database</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Syntax.As Program" id="Syntax.As Program">As Program</a></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismodat.py&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;modify</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>table_name</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>column_name</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>row_expression</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>value_expression</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>statement_one</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>statement_two</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>...</span></font><i><font color="black"><span style='white-space: nowrap'><br>
+</span></font></i></code>
+<br>
+<b><a name="Syntax.As Python Function" id="Syntax.As Python Function">As Python Function</a></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at.modify_command(</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>arg_list</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+<br>
+It is simpler to use the <a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set_command</span></a>
+ when it is
+it is capable of making a change.
+
+<br>
+<br>
+<b><big><a name="Warning" id="Warning">Warning</a></big></b>
+<br>
+You can change any value in the database using the modify command.
+It is suggested that you re-run the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+,
+unless you are certain that the set of
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ was not affected by this change.
+
+<br>
+<br>
+<b><big><a name="arg_list" id="arg_list">arg_list</a></big></b>
+<br>
+This is a list of strings containing the arguments in the
+program syntax. To be specific,
+
+<code><i><font color="black"><span style='white-space: nowrap'>arg_list</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>arg_list</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]</span></font></code>
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>column_name</span></font></i></code>
+,
+e.t.c.
+
+<br>
+<br>
+<b><big><a name="database" id="database">database</a></big></b>
+<br>
+Is the file name corresponding to the Sqlite database.
+
+<br>
+<br>
+<b><big><a name="table_name" id="table_name">table_name</a></big></b>
+<br>
+Is the name of the table in the database that is modified.
+
+<br>
+<br>
+<b><big><a name="column_name" id="column_name">column_name</a></big></b>
+<br>
+Is the name of the column in the table that is modified.
+
+<br>
+<br>
+<b><big><a name="row_expression" id="row_expression">row_expression</a></big></b>
+<br>
+This is a python expression that evaluates to
+<code><font color="blue">True</font></code> or <code><font color="blue">False</font></code>.
+Only rows where the expression is <code><font color="blue">True</font></code> are modified.
+
+<br>
+<br>
+<b><big><a name="value_expression" id="value_expression">value_expression</a></big></b>
+<br>
+This is a python expression that specifies the value to be placed in the
+specified column when the row expression is <code><font color="blue">True</font></code>.
+
+<br>
+<br>
+<b><big><a name="Expressions" id="Expressions">Expressions</a></big></b>
+<br>
+For each row, an expression can reference the value in a columns using
+the corresponding column name. In other words, for each column, a variable
+with the column name is set to the value in that column.
+
+<br>
+<br>
+<b><big><a name="statements" id="statements">statements</a></big></b>
+<br>
+There may be zero or more python statements at the end of the
+command line. Each one is executed before the expressions are evaluated.
+For example, one of the statements might be
+<code><font color='blue'><pre style='display:inline'> 
+     from math import exp
+</pre></font></code>
+This would make the function 
+<code><font color="blue"><span style='white-space: nowrap'>exp(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ available for use
+in 
+<code><i><font color="black"><span style='white-space: nowrap'>row_expression</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>value_expression</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="modify_command.py.htm" target="_top"><span style='white-space: nowrap'>modify_command.py</span></a>
+ contains an example and test
+using this command.
+
+
+<hr>Input File: python/dismod_at/modify_command.py
+
+</body>
+</html>

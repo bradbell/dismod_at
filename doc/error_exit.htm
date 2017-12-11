@@ -1,0 +1,230 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Printing and Logging Fatal Error Messages</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Printing and Logging Fatal Error Messages">
+<meta name="keywords" id="keywords" content=" printing logging fatal error messages syntax db message null table_name row_id ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_error_exit_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="eigen_ode2_xam.cpp.htm" target="_top">Prev</a>
+</td><td><a href="fixed_effect.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>error_exit</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_utility-&gt;</option>
+<option>a2_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_value_prior</option>
+<option>pack_diff_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>error_exit</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>db</option>
+<option>message</option>
+<option>---..null</option>
+<option>table_name</option>
+<option>row_id</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Printing and Logging Fatal Error Messages</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>error_exit(</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>error_exit(</span></font><i><font color="black"><span style='white-space: nowrap'>message</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>error_exit(</span></font><i><font color="black"><span style='white-space: nowrap'>message</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>error_exit(</span></font><i><font color="black"><span style='white-space: nowrap'>message</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_id</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="db" id="db">db</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sqlite3*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="message" id="message">message</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::string&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>message</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This value gets written to
+standard error (and an end of line is printed after it).
+
+<br>
+<br>
+<b><a name="message.null" id="message.null">null</a></b>
+<br>
+If the previous 
+<code><i><font color="black"><span style='white-space: nowrap'>db</span></font></i></code>
+ was a the null pointer
+(or there was no previous 
+<code><i><font color="black"><span style='white-space: nowrap'>db</span></font></i></code>
+), an assert is generated.
+It is not the null pointer,
+the value 
+<code><i><font color="black"><span style='white-space: nowrap'>message</span></font></i></code>
+ is also written to the
+<a href="log_table.htm#message" target="_top"><span style='white-space: nowrap'>message</span></a>
+ column of the log table
+(as well as to standard error).
+
+<br>
+<br>
+<b><big><a name="table_name" id="table_name">table_name</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::string&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>db</span></font></i></code>
+ is not the null pointer, this value gets written in the
+<a href="log_table.htm#table_name" target="_top"><span style='white-space: nowrap'>table_name</span></a>
+ column of the log table.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i></code>
+ it is not present, the empty string is used.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i></code>
+ is not empty, it is also written
+(with a label) to standard error.
+
+<br>
+<br>
+<b><big><a name="row_id" id="row_id">row_id</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;size_t&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>db</span></font></i></code>
+ is not the null pointer, this value gets written in the
+<a href="log_table.htm#row_id" target="_top"><span style='white-space: nowrap'>row_id</span></a>
+ column of the log table.
+Note that the value <code><font color="blue">DISMOD_AT_NULL_SIZE_T</font></code>
+gets converted to a <code><font color="blue">null</font></code>.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>row_id</span></font></i></code>
+ is not present, <code><font color="blue">null</font></code> is used.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>row_id</span></font></i></code>
+ is present and not <code><font color="blue">DISMOD_AT_NULL_SIZE_T</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i></code>
+ must not be empty.
+In this case, 
+<code><i><font color="black"><span style='white-space: nowrap'>row_id</span></font></i></code>
+ is also written (with a label) to standard error.
+
+
+<hr>Input File: devel/utility/error_exit.cpp
+
+</body>
+</html>

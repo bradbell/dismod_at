@@ -1,0 +1,142 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Devel Packing Variables into a Single Vector</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Devel Packing Variables into a Single Vector">
+<meta name="keywords" id="keywords" content=" devel packing variables into single vector example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_pack_info_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="interp_weight_xam.cpp.htm" target="_top">Prev</a>
+</td><td><a href="pack_info_ctor.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>pack_info</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_utility-&gt;</option>
+<option>a2_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_value_prior</option>
+<option>pack_diff_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>pack_info-&gt;</option>
+<option>pack_info_ctor</option>
+<option>pack_info_mulstd</option>
+<option>pack_info_rate_info</option>
+<option>pack_info_mulcov_meas</option>
+<option>pack_info_mulcov_rate</option>
+<option>pack_info_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Contents</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Devel Packing Variables into a Single Vector</big></big></b></center>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="pack_info_ctor.htm" target="_top">pack_info_ctor</a></td><td>Devel&nbsp;Variable&nbsp;Packing&nbsp;Information:&nbsp;Constructor</td></tr><tr><td><a href="pack_info_mulstd.htm" target="_top">pack_info_mulstd</a></td><td>Devel&nbsp;Pack&nbsp;Variables:&nbsp;Standard&nbsp;Deviations&nbsp;Multipliers</td></tr><tr><td><a href="pack_info_rate_info.htm" target="_top">pack_info_rate_info</a></td><td>Devel&nbsp;Pack&nbsp;Variables:&nbsp;Rates</td></tr><tr><td><a href="pack_info_mulcov_meas.htm" target="_top">pack_info_mulcov_meas</a></td><td>Devel&nbsp;Pack&nbsp;Variables:&nbsp;Measurement&nbsp;Covariate&nbsp;Multipliers</td></tr><tr><td><a href="pack_info_mulcov_rate.htm" target="_top">pack_info_mulcov_rate</a></td><td>Devel&nbsp;Pack&nbsp;Variables:&nbsp;Rate&nbsp;Covariate&nbsp;Multipliers</td></tr><tr><td><a href="pack_info_xam.cpp.htm" target="_top">pack_info_xam.cpp</a></td><td>C++&nbsp;pack_info:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table><br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="pack_info_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>pack_info_xam.cpp</span></a>
+ contains
+and example and test of <code><font color="blue">pack_info</font></code>.
+It returns true for success and false for failure.
+
+
+<hr>Input File: devel/utility/pack_info.omh
+
+</body>
+</html>

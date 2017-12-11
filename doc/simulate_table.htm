@@ -1,0 +1,216 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Simulated Table: Samples Simulated Measurements</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Simulated Table: Samples Simulated Measurements">
+<meta name="keywords" id="keywords" content=" the simulated table: samples measurements simulate_id simulate_index data_subset_id meas_value meas_std example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_simulate_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="truth_var_table.htm" target="_top">Prev</a>
+</td><td><a href="sample_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>data_flow</option>
+<option>simulate_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>data_flow-&gt;</option>
+<option>log_table</option>
+<option>var_table</option>
+<option>data_subset_table</option>
+<option>depend_var_table</option>
+<option>start_var_table</option>
+<option>scale_var_table</option>
+<option>fit_var_table</option>
+<option>fit_data_subset_table</option>
+<option>truth_var_table</option>
+<option>simulate_table</option>
+<option>sample_table</option>
+<option>predict_table</option>
+</select>
+</td>
+<td>simulate_table</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>simulate_id</option>
+<option>simulate_index</option>
+<option>data_subset_id</option>
+<option>meas_value</option>
+<option>meas_std</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Simulated Table: Samples Simulated Measurements</big></big></b></center>
+The <code><font color="blue">simulate</font></code> table is created during a
+<a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
+.
+It contains <a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
+
+sets of measurements where each set
+has one value for each entry in the <a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="simulate_id" id="simulate_id">simulate_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+Given the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ as specified by
+<a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
+,
+the measurement uncertainty is independent for each row
+and has standard deviation <a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="simulate_index" id="simulate_index">simulate_index</a></big></b>
+<br>
+The column has type <code><font color="blue">integer</font></code>. It specifies the index
+for this simulated measurement set. This index starts at zero,
+repeats as the same for the entire subset of 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+ values,
+and then increments by one between measurement sets.
+The final (maximum) value for 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ is
+<a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
+ minus one.
+
+<br>
+<br>
+<b><big><a name="data_subset_id" id="data_subset_id">data_subset_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key
+for the <a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
+.
+This identifies which <a href="data_subset_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+
+each row of the simulate table corresponds to
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n_subset</span></font></i></code>
+ is the number of rows in the data_subset table,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_subset</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_subset_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ equal zero to 
+<code><i><font color="black"><span style='white-space: nowrap'>number_simulate</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>data_subset_id</span></font></i></code>
+ equal zero to 
+<code><font color="blue"><span style='white-space: nowrap'>n_subset</span></font><i><font color="black"><span style='white-space: nowrap'>-1</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="meas_value" id="meas_value">meas_value</a></big></b>
+<br>
+The column has type <code><font color="blue">real</font></code> and is
+the simulated measurement value that for the specified row of the data table;
+i.e., it can act as a replacement for the value
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ in the data table.
+
+<br>
+<br>
+<b><big><a name="meas_std" id="meas_std">meas_std</a></big></b>
+<br>
+The column has type <code><font color="blue">real</font></code> and is
+the simulated measurement standard deviation
+that for the specified row of the data table;
+i.e., it acts as a replacement for the value
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+ where the simulated
+
+<code><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i></code>
+ is used.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+See the <a href="simulate_command.py.htm" target="_top"><span style='white-space: nowrap'>simulate_command.py</span></a>
+ example and test.
+
+
+<hr>Input File: omh/table/simulate_table.omh
+
+</body>
+</html>

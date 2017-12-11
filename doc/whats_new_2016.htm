@@ -1,0 +1,1323 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Changes and Additions to Dismod_at During 2016</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Changes and Additions to Dismod_at During 2016">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2016 12-03 10-31 10-20 10-19 10-18 10-17 10-16 10-15 10-14 10-13 10-12 10-11 09-30 09-29 09-21 08-28 07-29 07-28 07-15 07-14 07-11 06-13 06-12 06-06 06-05 05-16 05-15 05-11 05-10 05-09 05-08 05-07 05-06 05-05 05-04 05-03 05-01 04-28 04-27 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-11 04-09 04-07 03-29 02-26 02-06 01-26 01-16 01-15 01-10 01-06 01-05 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_whats_new_2016_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="whats_new_2017.htm" target="_top">Prev</a>
+</td><td><a href="whats_new_2015.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>whats_new_2017</option>
+<option>whats_new_2016</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>whats_new_2017-&gt;</option>
+<option>whats_new_2016</option>
+<option>whats_new_2015</option>
+</select>
+</td>
+<td>whats_new_2016</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>12-03</option>
+<option>10-31</option>
+<option>10-20</option>
+<option>10-19</option>
+<option>10-18</option>
+<option>10-17</option>
+<option>10-16</option>
+<option>10-15</option>
+<option>10-14</option>
+<option>10-13</option>
+<option>10-12</option>
+<option>10-11</option>
+<option>09-30</option>
+<option>09-29</option>
+<option>09-21</option>
+<option>08-28</option>
+<option>07-29</option>
+<option>07-28</option>
+<option>07-15</option>
+<option>07-14</option>
+<option>07-11</option>
+<option>06-13</option>
+<option>06-12</option>
+<option>06-06</option>
+<option>06-05</option>
+<option>05-16</option>
+<option>05-15</option>
+<option>05-11</option>
+<option>05-10</option>
+<option>05-09</option>
+<option>05-08</option>
+<option>05-07</option>
+<option>05-06</option>
+<option>05-05</option>
+<option>05-04</option>
+<option>05-03</option>
+<option>05-01</option>
+<option>04-28</option>
+<option>04-27</option>
+<option>04-24</option>
+<option>04-23</option>
+<option>04-22</option>
+<option>04-21</option>
+<option>04-20</option>
+<option>04-19</option>
+<option>04-18</option>
+<option>04-17</option>
+<option>04-11</option>
+<option>04-09</option>
+<option>04-07</option>
+<option>03-29</option>
+<option>02-26</option>
+<option>02-06</option>
+<option>01-26</option>
+<option>01-16</option>
+<option>01-15</option>
+<option>01-10</option>
+<option>01-06</option>
+<option>01-05</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Changes and Additions to Dismod_at During 2016</big></big></b></center>
+<br>
+<b><big><a name="12-03" id="12-03">12-03</a></big></b>
+
+<ol type="1"><li>
+The <a href="simulate_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+ was added to the
+simulate table.
+</li><li>
+
+The option arguments were added to each
+<a href="log_table.htm#message_type.command" target="_top"><span style='white-space: nowrap'>command</span></a>
+ message in the log table.
+</li><li>
+
+The <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+ was modified so that
+<a href="db2csv_command.htm#data.csv.meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
+
+always correspond to the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+.
+The columns
+<a href="db2csv_command.htm#data.csv.sim_value" target="_top"><span style='white-space: nowrap'>sim_value</span></a>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>sim_std</span></font></i></code>
+
+correspond to the <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+ when the previous fit
+used simulated data.
+In addition, some bugs in this command, related to the
+<a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+, were fixed.
+</li><li>
+
+There was some confusion in the documentation of the columns in the
+<a href="db2csv_command.htm#predict.csv" target="_top"><span style='white-space: nowrap'>predict.csv</span></a>
+ file.
+To be specific, it was not clear that these columns correspond
+to the <a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
+ instead of the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+.
+This has been fixed.
+</li><li>
+
+The <a href="log_table.htm#message_type" target="_top"><span style='white-space: nowrap'>message_type</span></a>
+ <code><font color="blue">warning</font></code>
+was missing in the log file documentation. It has been added.
+</li><li>
+
+Change the <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
+ so that it adjusts
+<a href="simulate_command.htm#simulate_table.meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+
+to be relative to the simulated measurements instead of
+using the data table
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-31" id="10-31">10-31</a></big></b>
+
+<ol type="1"><li>
+Include documentation for the
+<a href="db2csv_command.htm#data.csv.Covariates" target="_top"><span style='white-space: nowrap'>covariate</span></a>
+ columns in
+the <code><font color="blue">data.csv</font></code> file.
+</li><li>
+
+Improve the documentation for the
+<a href="predict_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_index</span></a>
+ column in the
+predict table. (It refers to variable and not data samples.)
+</li><li>
+
+Add the <a href="db2csv_command.htm#predict.csv" target="_top"><span style='white-space: nowrap'>predict.csv</span></a>
+ output
+file to the <code><font color="blue">db2csv</font></code> command.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-20" id="10-20">10-20</a></big></b>
+
+<ol type="1"><li>
+<b>API Change</b>:
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fit_simulate_index</span></font></i></code>
+ option was removed
+from the <a href="option_table.htm" target="_top"><span style='white-space: nowrap'>option_table</span></a>
+
+and the argument <a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+
+was added to the simulate command.
+</li><li>
+
+Improve the discussion of the <a href="data_flow.htm#Output Tables" target="_top"><span style='white-space: nowrap'>output&nbsp;tables</span></a>
+.
+</li><li>
+
+Fix some compiler warnings.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-19" id="10-19">10-19</a></big></b>
+
+<ol type="1"><li>
+<b>API Change</b>:
+The argument <a href="sample_command.htm#number_sample" target="_top"><span style='white-space: nowrap'>number_sample</span></a>
+
+was added to the sample command.
+</li><li>
+
+<b>API Change</b>:
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>number_simulate</span></font></i></code>
+ option was removed from the <a href="option_table.htm" target="_top"><span style='white-space: nowrap'>option_table</span></a>
+
+and the argument <a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
+
+was added to the simulate command.
+</li><li>
+
+The <a href="db2csv_command.htm#log.csv" target="_top"><span style='white-space: nowrap'>log.csv</span></a>
+ file was added too the
+db2csv command output.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-18" id="10-18">10-18</a></big></b>
+
+<ol type="1"><li>
+In the <a href="user.htm" target="_top"><span style='white-space: nowrap'>user</span></a>
+ examples,
+change 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>_dict</span></font></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>_table</span></font></code>
+
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ equal to <code><font color="blue">var</font></code>, <code><font color="blue">predict</font></code>, and <code><font color="blue">sample</font></code>.
+This makes it clearer that they are copies of the corresponding tables
+as a python list of dictionaries; see <a href="get_table_dict.htm" target="_top"><span style='white-space: nowrap'>get_table_dict</span></a>
+.
+</li><li>
+
+If <a href="option_table.htm#Optimizer.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+ was zero,
+the <a href="sample_command.htm" target="_top"><span style='white-space: nowrap'>sample_command</span></a>
+ would terminate with a <code><font color="blue">cppad_mixed</font></code>
+error message. This has been fixed. In addition, the random bound documentation
+now includes mention that is not accounted for in the
+<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+.
+</li><li>
+
+Advance to <code><font color="blue">cppad_mixed-20161018</font></code>.
+This fixed a bug in <code><font color="blue">cppad_mixed</font></code>
+logging error messages versus generating asserts.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-17" id="10-17">10-17</a></big></b>
+
+<ol type="1"><li>
+Improve the invalid prevalence error message.
+</li><li>
+
+Fix some more warnings on a old compiler (g++4.4.7).
+</li><li>
+
+Add choice for debug or release build in
+the IHME cluster program <code><font color="blue">install_dismod_at.sh</font></code>.
+</li><li>
+
+In cmake, search the default library directory last.
+This enables choosing a non-default version of a library as
+well as finding the default libraries when needed.
+</li><li>
+
+Fix assertion when
+<code><font color="blue">log_fatal_error</font></code> is false.
+</li><li>
+
+Add the
+<a href="run_cmake.sh.htm#system_specific_library_list" target="_top"><span style='white-space: nowrap'>system_specific_library_list</span></a>
+
+argument to the cmake install script.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-16" id="10-16">10-16</a></big></b>
+
+<ol type="1"><li>
+The <a href="user_zero_sum_random.py.htm" target="_top"><span style='white-space: nowrap'>zero_sum_random.py</span></a>
+
+example / test was added.
+</li><li>
+
+There was a bug (that has been fixed) in
+<a href="create_database.htm" target="_top"><span style='white-space: nowrap'>create_database</span></a>
+.
+This bug would sometimes mark the wrong time index as having a <code><font color="blue">null</font></code>
+<a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
+
+in the smooth_grid table.
+</li><li>
+
+Add the
+<code><font color="blue">log_fatal_error</font></code> flag
+to the dismod_at configuration.
+</li><li>
+
+Remove the <a href="pack_info.htm" target="_top"><span style='white-space: nowrap'>pack_info</span></a>
+ <code><font color="blue">variable_name</font></code> routine.
+(The <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+ and
+<a href="db2csv_command.htm#variable.csv" target="_top"><span style='white-space: nowrap'>variable.csv</span></a>
+ file
+provide this information.)
+</li><li>
+
+Report invalid prevalence values in the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
+
+(in the case were
+<code><font color="blue">log_fatal_error</font></code> is true).
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-15" id="10-15">10-15</a></big></b>
+<br>
+Add the
+<a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+ option which
+constrains the sum of the random effects to be zero.
+
+<br>
+<br>
+<b><big><a name="10-14" id="10-14">10-14</a></big></b>
+
+<ol type="1"><li>
+Fix a warning (that appeared on some systems) about missing braces in
+<code><font color="blue">devel/dismod_at.cpp</font></code>.
+</li><li>
+
+Add option so that user can specify the C++ compiler during the install of
+<a href="install_unix.htm#Special Requirements.ipopt" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
+ and
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+
+</li><li>
+
+<b>API Change:</b>
+the <a href="data_table.htm#data_name" target="_top"><span style='white-space: nowrap'>data_name</span></a>
+ field
+was added to the data table.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-13" id="10-13">10-13</a></big></b>
+
+<ol type="1"><li>
+Improve the <a href="install_unix.htm#Special Requirements.suitesparse" target="_top"><span style='white-space: nowrap'>suitesparse</span></a>
+
+so that it automatically includes the <code><font color="blue">metis</font></code> package.
+Note that the proper value for 
+<code><i><font color="black"><span style='white-space: nowrap'>metis_version</span></font></i></code>
+,
+in the suitesparse install,
+is printed at the end of the ipopt install.
+</li><li>
+
+Improve the way that
+<a href="run_cmake.sh.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ searches for libraries and reports failure
+to find a particular library.
+The search was failing on a particular Mac system.
+</li><li>
+
+Advance cppad-20161012. This fixes a problem in the detection of c++ 2011
+feature availability.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-12" id="10-12">10-12</a></big></b>
+
+<ol type="1"><li>
+Add the option to set the
+<a href="option_table.htm#Optimizer.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+ to zero.
+</li><li>
+
+Change 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>_dict</span></font></code>
+ to 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>_table</span></font></code>
+ in the python examples.
+For example, <code><font color="blue">data_dict</font></code> was changed to
+<a href="create_database.htm#data_table" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+.
+</li><li>
+
+There was a problem with the
+<a href="install_unix.htm#Special Requirements.CppAD" target="_top"><span style='white-space: nowrap'>cppad</span></a>
+ install script
+<code><font color="blue">bin/install_cppad.sh</font></code> that caused a compiler error in
+<code><font color="blue">forward2sweep.hpp</font></code> when CppAD was not using c++11 features.
+This has been fixed.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-11" id="10-11">10-11</a></big></b>
+<br>
+The <code><font color="blue">import_cascade.py</font></code> program was removed
+(it has not been kept up to date).
+
+<br>
+<br>
+<b><big><a name="09-30" id="09-30">09-30</a></big></b>
+
+<ol type="1"><li>
+A new assert, that checks for infinity or nan results during the integration,
+was added. This should be converted to a more useful error message;
+(this was done on <a href="whats_new_2016.htm#10-16" target="_top"><span style='white-space: nowrap'>10-16</span></a>
+).
+Furthermore, in some cases it can be avoided; see
+<a href="wish_list.htm#ODE Solution.Large Excess Mortality" target="_top"><span style='white-space: nowrap'>large&nbsp;excess&nbsp;mortality</span></a>
+
+in the wish list.
+</li><li>
+
+Use one value for 
+<code><i><font color="black"><span style='white-space: nowrap'>libdir</span></font></i></code>
+ for all the install scripts;
+see <a href="install_unix.htm#Special Requirements.libdir.sh" target="_top"><span style='white-space: nowrap'>libdir.sh</span></a>
+.
+</li><li>
+
+Change <a href="run_cmake.sh.htm" target="_top"><span style='white-space: nowrap'>run_cmake.sh</span></a>
+ to
+use link from build and install prefix to corresponding debug or release
+directories (so same as install scripts).
+</li><li>
+
+Advance to Ipopt-3.12.6
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="09-29" id="09-29">09-29</a></big></b>
+
+<ol type="1"><li>
+In the case where <code><font color="blue">dismod_at</font></code> is in the prefix,
+build debug and release versions in separate directories; see
+<a href="install_unix.htm#Special Requirements" target="_top"><span style='white-space: nowrap'>special&nbsp;requirements</span></a>
+.
+</li><li>
+
+Advance to eigen-3.2.9 and cppad-20160929.
+</li><li>
+
+There was a bug in the sampling of the random effects during the
+<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>sample&nbsp;asymptotic</span></a>
+ command
+(found by a gcc-6.2.1 <code><font color="blue">-Wmisleading-indentation</font></code> warning).
+This has been fixed.
+</li><li>
+
+Add a missing <code><font color="blue">import sys</font></code> to
+<code><font color="blue">db2csv_command.py</font></code>.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="09-21" id="09-21">09-21</a></big></b>
+<br>
+Add the <a href="db2csv_command.htm#option.csv" target="_top"><span style='white-space: nowrap'>option.csv</span></a>
+ table to the
+output generated by the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismodat.py&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;db2csv<br>
+</span></font></code>
+<br>
+<b><big><a name="08-28" id="08-28">08-28</a></big></b>
+<br>
+Change
+'If the <code><font color="blue">fit_command</font></code> has not been run' to
+'If the <code><font color="blue">fit_command</font></code> has been run' in <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+.
+Make the same change for the reference to running the <code><font color="blue">sample_command</font></code>.
+
+<br>
+<br>
+<b><big><a name="07-29" id="07-29">07-29</a></big></b>
+
+<ol type="1"><li>
+Add the optimizer
+<a href="option_table.htm#Optimizer.accept_after_max_steps" target="_top"><span style='white-space: nowrap'>accept_after_max_steps</span></a>
+
+option to both the fixed and random effects optimization.
+</li><li>
+
+Correct a problem with detecting the actual random seed in
+the <a href="user_speed.py.htm" target="_top"><span style='white-space: nowrap'>user_speed.py</span></a>
+ speed test.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="07-28" id="07-28">07-28</a></big></b>
+
+<ol type="1"><li>
+Advance to <code><font color="blue">cppad_mixed-20150728</font></code>.
+This should increase the speed of the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+.
+It should also make it more robust; i.e., work in more cases.
+</li><li>
+
+The <a href="user_speed.py.htm" target="_top"><span style='white-space: nowrap'>user_speed.py</span></a>
+ example now uses the
+<a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+, instead of the <a href="sample_command.htm" target="_top"><span style='white-space: nowrap'>sample_command</span></a>
+
+to fit the simulated data.
+</li><li>
+
+Add comments about debug and release builds under
+<a href="run_cmake.sh.htm#build_type" target="_top"><span style='white-space: nowrap'>build_type</span></a>
+ in <code><font color="blue">run_cmake.sh</font></code>.
+</li><li>
+
+Change <code><font color="blue">DEBUG</font></code> and <code><font color="blue">RELEASE</font></code> to <code><font color="blue">debug</font></code> and <code><font color="blue">release</font></code>
+in
+<a href="run_cmake.sh.htm" target="_top"><span style='white-space: nowrap'>run_cmake.sh</span></a>
+ and the install for
+<a href="install_unix.htm#Special Requirements.eigen" target="_top"><span style='white-space: nowrap'>eigen</span></a>
+,
+<a href="install_unix.htm#Special Requirements.suitesparse" target="_top"><span style='white-space: nowrap'>suitesparse</span></a>
+,
+<a href="install_unix.htm#Special Requirements.ipopt" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
+,
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="07-15" id="07-15">07-15</a></big></b>
+<br>
+In <code><font color="blue">bin/install_cppad_mixed.sh</font></code>
+change <code><font color="blue">cmake_build_type</font></code> to <code><font color="blue">build_type</font></code>; see
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+.
+In addition, add this parameter to the install for
+<a href="install_unix.htm#Special Requirements.eigen" target="_top"><span style='white-space: nowrap'>eigen</span></a>
+,
+<a href="install_unix.htm#Special Requirements.suitesparse" target="_top"><span style='white-space: nowrap'>suitesparse</span></a>
+, and
+<a href="install_unix.htm#Special Requirements.ipopt" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
+.
+CppAD does not need this choice as it adapter to the choice of
+the systems that use it.
+Note that the install for <code><font color="blue">dismod_at</font></code>
+must have the same
+<a href="install_unix.htm#dismod_at.build_type" target="_top"><span style='white-space: nowrap'>build_type</span></a>
+
+as
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+.
+
+
+
+<br>
+<br>
+<b><big><a name="07-14" id="07-14">07-14</a></big></b>
+<br>
+Advance to <code><font color="blue">cppad_mixed-20150711</font></code>.
+This should increase the speed of the
+<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+ version
+of the <code><font color="blue">sample_command</font></code>.
+It also includes a change to optimizing the random effects
+that should eventually improve the speed of <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+.
+(At this point, the change does not always result in an improvement.)
+
+<br>
+<br>
+<b><big><a name="07-11" id="07-11">07-11</a></big></b>
+<br>
+Advance to <code><font color="blue">cppad_mixed-20150711</font></code>.
+This should give better recovery when the
+fixed effects enter a region where the Hessian w.r.t the random effects
+it is not positive definite.
+To be specific, the optimizer should try backing up the fixed effects and if
+that fails, it should exit the optimization and report the value of the
+fixed effects.
+
+<br>
+<br>
+<b><big><a name="06-13" id="06-13">06-13</a></big></b>
+<br>
+Advance to <code><font color="blue">cppad_mixed-20150613</font></code>.
+This fixes a bug in the
+<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+ version
+of the sample command.
+
+<br>
+<br>
+<b><big><a name="06-12" id="06-12">06-12</a></big></b>
+<br>
+Advance to <code><font color="blue">cppad_mixed-20150612</font></code>.
+This removes the choice between <code><font color="blue">ipopt</font></code> and <code><font color="blue">box_newton</font></code>
+for optimizing the random effects; see 06-05 below.
+
+<br>
+<br>
+<b><big><a name="06-06" id="06-06">06-06</a></big></b>
+<br>
+Advance to <code><font color="blue">cppad_mixed-20150606</font></code>.
+
+<br>
+<br>
+<b><big><a name="06-05" id="06-05">06-05</a></big></b>
+<br>
+Advance to <code><font color="blue">cppad_mixed-20150605</font></code>.
+This involved hooking
+up new option to choose between <code><font color="blue">ipopt</font></code> and <code><font color="blue">box_newton</font></code>
+for optimizing the random effects; see
+<code><font color="blue">random_box_newton</font></code>.
+The <a href="user_speed.py.htm" target="_top"><span style='white-space: nowrap'>user_speed.py</span></a>
+ speed test time (on one machine) changed from
+<code><font color="blue">elapsed seconds = 68.09</font></code>
+to
+<code><font color="blue">elapsed seconds = 42.31</font></code>
+when 
+<code><i><font color="black"><span style='white-space: nowrap'>random_box_newton</span></font></i></code>
+ was changed from <code><font color="blue">false</font></code> (the default)
+to <code><font color="blue">true</font></code>.
+The random seed for both cases above was
+<code><font color="blue">random_seed = 1465142803</font></code>.
+The results for the two cases were the same.
+
+<br>
+<br>
+<b><big><a name="05-16" id="05-16">05-16</a></big></b>
+
+<ol type="1"><li>
+The <code><font color="blue">database2csv</font></code> program has been moved to the
+<a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+.
+</li><li>
+
+The <code><font color="blue">python_three_command</font></code> installation setting has been changed to the
+<a href="run_cmake.sh.htm#python3_executable" target="_top"><span style='white-space: nowrap'>python3_executable</span></a>
+ setting.
+</li><li>
+
+The dismod_at <a href="python.htm" target="_top"><span style='white-space: nowrap'>python</span></a>
+ module is now installed during the
+<a href="install_unix.htm#dismod_at.Install" target="_top"><span style='white-space: nowrap'>make&nbsp;install</span></a>
+ command.
+The <code><font color="blue">dismodat.py</font></code> program is also installed by this command; e.g.
+see <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-15" id="05-15">05-15</a></big></b>
+
+<ol type="1"><li>
+Advance to <code><font color="blue">cppad_mixed-20150515</font></code>
+This yields better <a href="sample_command.htm" target="_top"><span style='white-space: nowrap'>sample_command</span></a>
+ results
+when the implicit information matrix is not positive definite
+(for diagnostic purposes).
+</li><li>
+
+Add the <code><font color="blue">adaptive</font></code> and <code><font color="blue">trace-adaptive</font></code> values for the
+<a href="option_table.htm#Optimizer.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
+
+(<code><font color="blue">derivative_test_fixed</font></code> only).
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="05-11" id="05-11">05-11</a></big></b>
+
+<ol type="1"><li>
+Advance to <code><font color="blue">cppad_mixed-20150511</font></code>.
+This yields sampling when covariance matrix is not positive definite
+(for diagnostic purposes).
+</li><li>
+
+Add <a href="wish_list.htm#Sampling Random Effects" target="_top"><span style='white-space: nowrap'>sampling&nbsp;random&nbsp;effects</span></a>
+
+wish list item.
+</li><li>
+
+Add a description of the
+<a href="model_variables.htm#Age and Time Variation" target="_top"><span style='white-space: nowrap'>age&nbsp;and&nbsp;time&nbsp;variation</span></a>
+
+for each of the model variables.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="05-10" id="05-10">05-10</a></big></b>
+<br>
+Fix <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+ so that it works with
+<a href="model_variables.htm#Fixed Effects, theta.Smoothing Standard Deviation Multipliers, lambda" target="_top"><span style='white-space: nowrap'>smoothing&nbsp;standard&nbsp;deviation&nbsp;multipliers</span></a>
+.
+This required adding the
+<a href="db2csv_command.htm#variable.csv.s_id" target="_top"><span style='white-space: nowrap'>s_id</span></a>
+ column to the
+<code><font color="blue">variable.csv</font></code> file.
+
+<br>
+<br>
+<b><big><a name="05-09" id="05-09">05-09</a></big></b>
+
+<ol type="1"><li>
+Change the scaling of fixed effect
+to key off 
+<code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
+ not <code><font color="blue">null</font></code> in value priors; see
+<a href="prior_table.htm#eta.Scaling" target="_top"><span style='white-space: nowrap'>scaling</span></a>
+.
+This enables more user choice over which fixed effects get scaled.
+</li><li>
+
+The error detection for non-positive Hessian (added yesterday) was
+working properly when variables were bound constrained.
+</li><li>
+
+The <a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>sample&nbsp;asymptotic</span></a>
+
+command was using the <a href="prior_table.htm#eta.Scaling" target="_top"><span style='white-space: nowrap'>scaled</span></a>
+
+information matrix. This has been fixed.
+</li><li>
+
+Advance to <code><font color="blue">cppad_mixed-20160511</font></code>.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-08" id="05-08">05-08</a></big></b>
+
+<ol type="1"><li>
+Advance to <code><font color="blue">cppad_mixed-20160508</font></code>.
+This enables one to use
+<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+ statistics
+when the information matrix is singular,
+by setting the <a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
+ and upper limits
+equal for variables that have non-positive Hessian.
+</li><li>
+
+This new version of <code><font color="blue">cppad_mixed</font></code> also has new random effects simulator
+that uses less memory and less time.
+</li><li>
+
+During the <a href="sample_command.htm" target="_top"><span style='white-space: nowrap'>sample_command</span></a>
+,
+detect when the Hessian with respect to a fixed effect is not positive
+and report the corresponding <a href="var_table.htm#var_id" target="_top"><span style='white-space: nowrap'>var_id</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-07" id="05-07">05-07</a></big></b>
+
+<ol type="1"><li>
+Fix a bug that occurred when the minimum (maximum)
+value in the <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+ and <a href="time_table.htm" target="_top"><span style='white-space: nowrap'>time_table</span></a>
+ was not
+the first (last) entry.
+</li><li>
+
+Add a <code><font color="blue">db2csv_command</font></code> item
+to the wish list.
+</li><li>
+
+Start work on <code><font color="blue">test/diabetes.py</font></code> (under construction).
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-06" id="05-06">05-06</a></big></b>
+<br>
+Advance to <code><font color="blue">cppad_mixed-20160506</font></code> to fix a bug in
+<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>sample&nbsp;asymptotic</span></a>
+ when
+there are no random effects.
+
+<br>
+<br>
+<b><big><a name="05-05" id="05-05">05-05</a></big></b>
+
+<ol type="1"><li>
+Change the <a href="option_table.htm#Optimizer.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter</span></a>
+
+option so that <code><font color="blue">-1</font></code> returns the input <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+,
+and <code><font color="blue">0</font></code>, includes the move of the initial variable values
+(to be inside the constraints).
+</li><li>
+
+Change the <a href="option_table.htm" target="_top"><span style='white-space: nowrap'>option_table</span></a>
+ so that all entries have default values
+and do not need to appear in the table.
+</li><li>
+
+Add the <a href="option_table.htm#Optimizer.bound_frac_fixed" target="_top"><span style='white-space: nowrap'>bound_frac_fixed</span></a>
+
+option.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-04" id="05-04">05-04</a></big></b>
+
+<ol type="1"><li>
+Print the <a href="install_unix.htm#Special Requirements.ipopt" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
+
+library directories during the
+<a href="install_unix.htm#dismod_at.Cmake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
+.
+</li><li>
+
+In the <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+ program,
+change <code><font color="blue">fit_res</font></code>, <code><font color="blue">fit_dage</font></code> and <code><font color="blue">fit_dtime</font></code>
+to <a href="db2csv_command.htm#variable.csv.res_value" target="_top"><span style='white-space: nowrap'>res_value</span></a>
+
+<code><font color="blue">res_dage</font></code> and <code><font color="blue">res_dtime</font></code> respectively.
+</li><li>
+
+Put <code><font color="blue">cppad_mixed:</font></code> at the beginning of warnings and error messages
+that come from the
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+ package.
+</li><li>
+
+Add missing <a href="log_message.htm#message_type" target="_top"><span style='white-space: nowrap'>message_type</span></a>
+ cases
+to the <code><font color="blue">log_message</font></code> documentation.
+</li><li>
+
+Change <a href="user_meas_covariate.py.htm" target="_top"><span style='white-space: nowrap'>user_meas_covariate.py</span></a>
+ to use <code><font color="blue">null</font></code> smoothing
+pointer in the middle (not last) covariate multiplier (better test).
+</li><li>
+
+Change <code><font color="blue">test/user/relrisk.py</font></code> tolerance so that the
+<code><font color="blue">cppad_mixed</font></code> solution check passes.
+</li><li>
+
+Advance to <code><font color="blue">cppad_mixed-20160504</font></code>.
+</li><li>
+
+Change the fixed effects optimization so that it uses the Ipopt option
+
+<code><i><font color="black"><span style='white-space: nowrap'>nlp_scaling_method</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;none</span></font></code>
+.
+This fixed the remain solution check warnings generated by <code><font color="blue">cppad_mixed</font></code>.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-03" id="05-03">05-03</a></big></b>
+
+<ol type="1"><li>
+Advance to <code><font color="blue">cppad_mixed-20160503</font></code>.
+</li><li>
+
+Fix warning in <code><font color="blue">devel/utility/pack_info.cpp</font></code>.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-01" id="05-01">05-01</a></big></b>
+
+<ol type="1"><li>
+Allow for a covariate multiplier 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+ to be
+<a href="mulcov_table.htm#smooth_id.null" target="_top"><span style='white-space: nowrap'>null</span></a>
+.
+This enables on the include, or drop out, a multiplier by
+only changing one entry the <a href="mulcov_table.htm" target="_top"><span style='white-space: nowrap'>mulcov_table</span></a>
+.
+</li><li>
+
+Fix problem with documentation for
+<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
+
+that occurred in changes on <a href="whats_new_2016.htm#04-22" target="_top"><span style='white-space: nowrap'>04-22</span></a>
+.
+</li><li>
+
+Fix discussion of
+<a href="fixed_value.htm#lambda_j" target="_top"><span style='white-space: nowrap'>lambda_j</span></a>
+
+in the value prior for fixed effects.
+To be specific, all fixed effects <small>@(@
+\theta_j
+@)@</small>,
+not just the parent rates,
+have a value prior multiplier <small>@(@
+\lambda_j
+@)@</small>.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="04-28" id="04-28">04-28</a></big></b>
+
+<ol type="1"><li>
+Add the <a href="metropolis.htm" target="_top"><span style='white-space: nowrap'>metropolis</span></a>
+ MCMC utility for testing results.
+</li><li>
+
+Complete implementation and testing of the sample command
+with <a href="sample_command.htm#method" target="_top"><span style='white-space: nowrap'>method</span></a>
+ equal to <code><font color="blue">asymptotic</font></code>;
+see the example and test in <a href="user_asymptotic.py.htm" target="_top"><span style='white-space: nowrap'>user_asymptotic.py</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="04-27" id="04-27">04-27</a></big></b>
+
+<ol type="1"><li>
+Advance to <code><font color="blue">cppad_mixed-20160427</font></code>.
+</li><li>
+
+Add discussion about bounds and
+<a href="fit_var_table.htm#Lagrange Multipliers" target="_top"><span style='white-space: nowrap'>Lagrange&nbsp;multipliers</span></a>
+.
+</li><li>
+
+Remove <code><font color="blue">dismod_at::manage_gsl_rng</font></code> and instead use
+<a href="manage_gsl_rng.htm" target="_top"><span style='white-space: nowrap'>CppAD::mixed::manage_gsl_rng</span></a>
+.
+This fixed that use of
+<a href="option_table.htm#random_seed" target="_top"><span style='white-space: nowrap'>random_seed</span></a>
+ so that it applies
+to all <code><font color="blue">dismod_at</font></code> simulated values.
+</li><li>
+
+Add a choice of <a href="sample_command.htm#method" target="_top"><span style='white-space: nowrap'>method</span></a>
+ to the
+sample command. This makes it easier to <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict</span></a>
+
+with the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ equal to the results of a fit.
+It also provides asymptotic posterior sampling for the model_variables.
+</li><li>
+
+There were some place in the code where <code><font color="blue">dismod_at</font></code> was assuming
+that the minimum  and maximum age and time were the first and last
+entries in the <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+ and <a href="time_table.htm" target="_top"><span style='white-space: nowrap'>time_table</span></a>
+ respectively.
+This has been fixed.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="04-24" id="04-24">04-24</a></big></b>
+
+<ol type="1"><li>
+The <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+ utility
+has been documented and is now part of the user API.
+</li><li>
+
+The name of the <code><font color="blue">table</font></code> section has been changed to <a href="database.htm" target="_top"><span style='white-space: nowrap'>database</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="04-23" id="04-23">04-23</a></big></b>
+
+<ol type="1"><li>
+Change the data
+<a href="data_like.htm#Weighted Residual and Likelihood" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual</span></a>
+
+to be on the measurement values, not the adjusted measurement values.
+This simplifies the weighted residuals and avoids the condition where the
+<a href="mulcov_table.htm#mulcov_type.meas_value" target="_top"><span style='white-space: nowrap'>mean_value</span></a>
+ covariate multipliers
+affect the
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
+.
+</li><li>
+
+Add the Lagrange multipliers
+<a href="fit_var_table.htm#lagrange_value" target="_top"><span style='white-space: nowrap'>lagrange_value</span></a>
+,
+<code><font color="blue">lagrange_dage</font></code> and <code><font color="blue">lagrange_dtime</font></code> to the fit_var table.
+</li><li>
+
+Advance to <code><font color="blue">cppad_mixed-20160423</font></code>.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="04-22" id="04-22">04-22</a></big></b>
+
+<ol type="1"><li>
+Scale (during optimization of fixed effects) all the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+
+that have a log-Gaussian or log-Laplace distribution for their value prior.
+To be specific, the optimization variables are the offset log transform
+of the corresponding model variables.
+</li><li>
+
+When there was no data, and prior for the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+
+was log-Gaussian or log-Laplace, the prior mean was not the optimal estimate.
+This was because the estimate for the model variance affected the
+log-transformed standard deviation
+<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
+.
+This was a feature (it agreed with the documentation) but it was not desirable.
+This have been changed so that 
+<code><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i></code>
+ is defined in terms of the
+prior mean and not in terms of the model value.
+The corresponding log-Gaussian wish list item has been removed.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="04-21" id="04-21">04-21</a></big></b>
+<br>
+Change the sample command so that it has a
+<a href="sample_command.htm#method" target="_top"><span style='white-space: nowrap'>method</span></a>
+ argument.
+Using 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;simulate</span></font></code>
+ does the same as the
+sample command before this change.
+The new feature is 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;fit_var</span></font></code>
+.
+The
+<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+ method
+is not yet implemented.
+
+<br>
+<br>
+<b><big><a name="04-20" id="04-20">04-20</a></big></b>
+
+<ol type="1"><li>
+Change <code><font color="blue">number_sample</font></code> in option table to
+<a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
+.
+</li><li>
+
+The <a href="sample_command.htm#method" target="_top"><span style='white-space: nowrap'>method</span></a>
+ argument was added
+to the sample command.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="04-19" id="04-19">04-19</a></big></b>
+
+<ol type="1"><li>
+In the simulate table, change <code><font color="blue">sample_index</font></code> to
+<a href="simulate_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+.
+</li><li>
+
+In the option table, change <code><font color="blue">fit_sample_index</font></code> to
+<a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>fit_simulate_index</span></a>
+.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="04-18" id="04-18">04-18</a></big></b>
+<br>
+Advance to new version of CppAD and cppad_mixed
+this fixes the compiler warnings when building the release version.
+
+<br>
+<br>
+<b><big><a name="04-17" id="04-17">04-17</a></big></b>
+<br>
+Fix some errors and warnings when
+<a href="run_cmake.sh.htm#build_type" target="_top"><span style='white-space: nowrap'>build_type</span></a>
+ was
+<code><font color="blue">RELEASE</font></code>. Note that release version is about twice as fast
+as the debug version (when using the debug version of
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="04-11" id="04-11">04-11</a></big></b>
+<br>
+Initialize the optimization when 
+<code><i><font color="black"><span style='white-space: nowrap'>max_num_iter_fixed</span></font></i></code>
+
+is zero, (this does more model checking).
+
+<br>
+<br>
+<b><big><a name="04-09" id="04-09">04-09</a></big></b>
+<br>
+Advance to a newer version of cppad_mixed.
+This has a change so that when
+<a href="option_table.htm#Optimizer.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter</span></a>
+ is zero,
+for the fixed effects optimization problem,
+the resulting fixed effects estimate is the same as in the
+<a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="04-07" id="04-07">04-07</a></big></b>
+<br>
+Advance to a newer version of cppad_mixed
+(rerun <code><font color="blue">bin/install_cppad_mixed.sh</font></code>).
+This has a change to the routine that checks derivatives
+of the fixed effects optimization problem.
+
+<br>
+<br>
+<b><big><a name="03-29" id="03-29">03-29</a></big></b>
+<br>
+Advance to a newer version of cppad_mixed
+(rerun <code><font color="blue">bin/install_cppad_mixed.sh</font></code>).
+This has an important bug fix (see <code><font color="blue">cppad_mixed</font></code> whats new).
+
+<br>
+<br>
+<b><big><a name="02-26" id="02-26">02-26</a></big></b>
+<br>
+Advance to a newer version of cppad_mixed
+(rerun <code><font color="blue">bin/install_cppad_mixed.sh</font></code>).
+This has an important bug fix (see <code><font color="blue">cppad_mixed</font></code> whats new).
+
+<br>
+<br>
+<b><big><a name="02-06" id="02-06">02-06</a></big></b>
+<br>
+Advance to a newer version of cppad_mixed
+(rerun <code><font color="blue">bin/install_cppad_mixed.sh</font></code>).
+
+<br>
+<br>
+<b><big><a name="01-26" id="01-26">01-26</a></big></b>
+
+<ol type="1"><li>
+Advance to a newer version of cppad_mixed
+(rerun <code><font color="blue">bin/install_cppad_mixed.sh</font></code>).
+</li><li>
+
+The <a href="install_unix.htm#Special Requirements.suitesparse" target="_top"><span style='white-space: nowrap'>SuiteSparse</span></a>
+
+package is now required.
+This is because one now has the option to use it for Cholesky factorization;
+see the <code><font color="blue">cholmod_cholesky</font></code> setting for installing
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="01-16" id="01-16">01-16</a></big></b>
+<br>
+Remove some <a href="wish_list.htm" target="_top"><span style='white-space: nowrap'>wish_list</span></a>
+ items that have been completed
+and move some others to the
+<a href="moby.ihme.washington.edu/bradbell/cppad_mixed/wish_list.htm" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+
+package.
+
+<br>
+<br>
+<b><big><a name="01-15" id="01-15">01-15</a></big></b>
+<br>
+Advance to newer version of <code><font color="blue">cppad_mixed</font></code>.
+
+<br>
+<br>
+<b><big><a name="01-10" id="01-10">01-10</a></big></b>
+<br>
+Advance to newer version of <code><font color="blue">Eigen</font></code> and <code><font color="blue">cppad_mixed</font></code>.
+You should rerun <code><font color="blue">bin/install_eigen.sh</font></code> and then
+<code><font color="blue">bin/install_cppad_mixed.sh</font></code>.
+
+<br>
+<br>
+<b><big><a name="01-06" id="01-06">01-06</a></big></b>
+<br>
+The <a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
+ created by <code><font color="blue">import_cascade.py</font></code>
+had the wrong number of age values. This has been fixed.
+
+<br>
+<br>
+<b><big><a name="01-05" id="01-05">01-05</a></big></b>
+<br>
+Advance to a newer version of cppad_mixed
+(rerun <code><font color="blue">bin/install_cppad_mixed.sh</font></code>).
+
+
+<hr>Input File: omh/whats_new/2016.omh
+
+</body>
+</html>

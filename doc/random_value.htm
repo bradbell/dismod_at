@@ -1,0 +1,329 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Random Effects Value Density Function</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Random Effects Value Density Function">
+<meta name="keywords" id="keywords" content=" the random effects value density function c j k_j a_j t_j u_cj lambda_j delta_j d_j mu_j v_cj^u v^u ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_random_value_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="fixed_prior.htm" target="_top">Prev</a>
+</td><td><a href="random_diff.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>random_value</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>model-&gt;</option>
+<option>model_variables</option>
+<option>avg_integrand</option>
+<option>data_like</option>
+<option>fixed_value</option>
+<option>fixed_diff</option>
+<option>fixed_prior</option>
+<option>random_value</option>
+<option>random_diff</option>
+<option>random_prior</option>
+<option>statistic</option>
+<option>bilinear</option>
+<option>ode_grid</option>
+</select>
+</td>
+<td>random_value</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>c</option>
+<option>j</option>
+<option>---..k_j</option>
+<option>---..a_j</option>
+<option>---..t_j</option>
+<option>u_c,j</option>
+<option>lambda_j</option>
+<option>delta_j</option>
+<option>d_j</option>
+<option>mu_j</option>
+<option>V_c,j^u</option>
+<option>V^u</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Random Effects Value Density Function</big></big></b></center>
+<br>
+<b><big><a name="c" id="c">c</a></big></b>
+<br>
+We use <small>@(@
+C
+@)@</small> to denote the size of the
+<a href="node_table.htm#parent.Child Group" target="_top"><span style='white-space: nowrap'>child&nbsp;group</span></a>
+
+corresponding to the
+<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
+.
+For <small>@(@
+c = 0 , \ldots , C-1
+@)@</small>, we use
+<small>@(@
+c
+@)@</small> to denote the corresponding child.
+
+<br>
+<br>
+<b><big><a name="j" id="j">j</a></big></b>
+<br>
+For each
+<a href="rate_table.htm#rate_id" target="_top"><span style='white-space: nowrap'>rate_id</span></a>
+ there is a corresponding
+<a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>child_smooth_id</span></a>
+.
+For each 
+<code><i><font color="black"><span style='white-space: nowrap'>child_smooth_id</span></font></i></code>
+ there is a corresponding
+number of age points <a href="smooth_table.htm#n_age" target="_top"><span style='white-space: nowrap'>n_age</span></a>
+ and
+number of time points <a href="smooth_table.htm#n_time" target="_top"><span style='white-space: nowrap'>n_time</span></a>
+.
+We use the single index <small>@(@
+j
+@)@</small> (instead of three indices)
+to denote a each possible combination of
+rate, age, and time index.
+
+<br>
+<br>
+<b><a name="j.k_j" id="j.k_j">k_j</a></b>
+<br>
+We use <small>@(@
+k_j
+@)@</small> to denote the <a href="rate_table.htm#rate_id" target="_top"><span style='white-space: nowrap'>rate_id</span></a>
+
+corresponding to index <small>@(@
+j
+@)@</small>.
+
+<br>
+<br>
+<b><a name="j.a_j" id="j.a_j">a_j</a></b>
+<br>
+We use <small>@(@
+a_j
+@)@</small> to denote the <a href="age_table.htm#age" target="_top"><span style='white-space: nowrap'>age</span></a>
+
+corresponding to index <small>@(@
+j
+@)@</small>.
+
+<br>
+<br>
+<b><a name="j.t_j" id="j.t_j">t_j</a></b>
+<br>
+We use <small>@(@
+t_j
+@)@</small> to denote the <a href="time_table.htm#time" target="_top"><span style='white-space: nowrap'>time</span></a>
+
+corresponding to index <small>@(@
+j
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="u_c,j" id="u_c,j">u_c,j</a></big></b>
+<br>
+We use <small>@(@
+u
+@)@</small> for the vector of the
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
+  and
+<small>@(@
+u_{c,j}
+@)@</small> the component
+for the child specified by <small>@(@
+c
+@)@</small> and
+the rate, age and time specified by <small>@(@
+j
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="lambda_j" id="lambda_j">lambda_j</a></big></b>
+<br>
+We use <small>@(@
+\lambda_j
+@)@</small>
+for the <a href="smooth_table.htm#mulstd_value_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_value_prior_id</span></a>
+
+multiplier for the
+<a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>child_smooth_id</span></a>
+
+corresponding to the rate specified by <small>@(@
+j
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="delta_j" id="delta_j">delta_j</a></big></b>
+<br>
+We use <small>@(@
+\delta_j
+@)@</small> to denote the standard deviation
+<a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
+ corresponding to the
+<a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>child_smooth_id</span></a>
+, the
+<a href="smooth_grid_table.htm#value_prior_id" target="_top"><span style='white-space: nowrap'>value_prior_id</span></a>
+, and the
+rate, age, and time specified by 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="d_j" id="d_j">d_j</a></big></b>
+<br>
+We use <small>@(@
+d_j
+@)@</small> to denote the
+<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+ and
+<a href="prior_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+ corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i></code>
+.
+Note that 
+<code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
+ does not matter because
+the density name must be <code><font color="blue">gaussian</font></code>; see the
+<a href="rate_table.htm#Child Restrictions" target="_top"><span style='white-space: nowrap'>child&nbsp;restrictions</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="mu_j" id="mu_j">mu_j</a></big></b>
+<br>
+We use <small>@(@
+\mu_j
+@)@</small> for the
+mean corresponding to the
+
+<code><i><font color="black"><span style='white-space: nowrap'>value_prior_id</span></font></i></code>
+ which must be zero; see the
+child smoothing restrictions.
+
+<br>
+<br>
+<b><big><a name="V_c,j^u" id="V_c,j^u">V_c,j^u</a></big></b>
+<br>
+The definition of the value density function for <small>@(@
+u_{c,j}
+@)@</small> is
+<small>@[@
+
+V_{c,j}^u ( u | \theta )
+=
+\exp \left[ D (
+	u_{c,j} \W{,}
+	\mu_j \W{,}
+	\lambda_j \delta_j  \W{,}
+	d_j
+) \right]
+
+@]@</small>
+where <small>@(@
+D
+@)@</small> is the
+<a href="statistic.htm#Log-Density Function, D" target="_top"><span style='white-space: nowrap'>log-density&nbsp;function</span></a>
+.
+As noted above,
+<small>@(@
+\mu_j
+@)@</small> must be zero,
+<small>@(@
+d_j:name
+@)@</small> must be <code><font color="blue">gaussian</font></code>,
+and <small>@(@
+\eta_j
+@)@</small> does not matter.
+
+<br>
+<br>
+<b><big><a name="V^u" id="V^u">V^u</a></big></b>
+<br>
+Let <small>@(@
+m
+@)@</small> be the number of random effects.
+The value density for all the random  effects <small>@(@
+u
+@)@</small> is defined by
+<small>@[@
+
+V^u ( u | \theta )
+=
+\prod_{c=0}^{C-1} \prod_{j=0}^{m-1} V_{c,j}^u ( u | \theta )
+
+@]@</small>
+
+
+<hr>Input File: omh/model/random_value.omh
+
+</body>
+</html>

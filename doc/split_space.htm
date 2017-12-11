@@ -1,0 +1,170 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Split String Into Substrings With Spaces as Delimiter</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Split String Into Substrings With Spaces as Delimiter">
+<meta name="keywords" id="keywords" content=" split string into substrings with spaces delimiter syntax str vec example prototype ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_split_space_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="solve_ode_xam.cpp.htm" target="_top">Prev</a>
+</td><td><a href="split_space_xam.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>split_space</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_utility-&gt;</option>
+<option>a2_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_value_prior</option>
+<option>pack_diff_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>split_space-&gt;</option>
+<option>split_space_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>str</option>
+<option>vec</option>
+<option>Example</option>
+<option>Prototype</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Split String Into Substrings With Spaces as Delimiter</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>vec</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;=&nbsp;split_space(</span></font></i><font color="blue"><span style='white-space: nowrap'>str</span></font><i><font color="black"><span style='white-space: nowrap'>)</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="str" id="str">str</a></big></b>
+<br>
+This is the string that we are splitting.
+Each substring is non-empty with by one or more spaces between them.
+
+<br>
+<br>
+<b><big><a name="vec" id="vec">vec</a></big></b>
+<br>
+This is the resulting vector of non-empty substrings.
+If all the characters in 
+<code><i><font color="black"><span style='white-space: nowrap'>str</span></font></i></code>
+ are spaces,
+the resulting vector with have size zero.
+
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="split_space_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>split_space_xam.cpp</span></a>
+ contains an example and test
+of using this routine.
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre style='display:inline'><tt>
+CppAD<font color="#990000">::</font><font color="#008080">vector&lt;std::string&gt;</font> <b><font color="#000000">split_space</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> str<font color="#990000">)</font>
+</tt></pre>
+
+<hr>Input File: devel/utility/split_space.cpp
+
+</body>
+</html>

@@ -1,0 +1,282 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>All the Weighted Residuals and Log-Likelihoods</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="All the Weighted Residuals and Log-Likelihoods">
+<meta name="keywords" id="keywords" content=" all the weighted residuals log-likelihoods syntax requirement data_object float hold_out random_depend pack_vec residual_vec index include hold outs no log density ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_data_model_like_all_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="like_one_xam.cpp.htm" target="_top">Prev</a>
+</td><td><a href="prior_model.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_model</option>
+<option>devel_data_model</option>
+<option>data_model_like_all</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_model-&gt;</option>
+<option>devel_data_model</option>
+<option>prior_model</option>
+<option>fit_model</option>
+<option>depend</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_data_model-&gt;</option>
+<option>data_model_ctor</option>
+<option>set_eigne_ode2_case_number</option>
+<option>data_model_replace_like</option>
+<option>data_model_avg_no_ode</option>
+<option>data_model_avg_yes_ode</option>
+<option>data_model_like_one</option>
+<option>data_model_like_all</option>
+</select>
+</td>
+<td>data_model_like_all</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Requirement</option>
+<option>data_object</option>
+<option>Float</option>
+<option>hold_out</option>
+<option>random_depend</option>
+<option>pack_vec</option>
+<option>residual_vec</option>
+<option>---..index</option>
+<option>---..Include Hold Outs</option>
+<option>---..No Hold Outs</option>
+<option>Log Density</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>All the Weighted Residuals and Log-Likelihoods</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>residual_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.like_all(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hold_out</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>random_depend</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Requirement" id="Requirement">Requirement</a></big></b>
+<br>
+One must call <a href="data_model_replace_like.htm" target="_top"><span style='white-space: nowrap'>replace_like</span></a>
+
+before calling this function.
+
+<br>
+<br>
+<b><big><a name="data_object" id="data_object">data_object</a></big></b>
+<br>
+This object has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;data_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+see <a href="data_model_ctor.htm#data_object" target="_top"><span style='white-space: nowrap'>data_object&nbsp;constructor</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Float" id="Float">Float</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ must be one of the following:
+<code><font color="blue">double</font></code>, <code><font color="blue">AD&lt;double&gt;</font></code>, or <a href="a2_double.htm" target="_top"><span style='white-space: nowrap'>a2_double</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="hold_out" id="hold_out">hold_out</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>hold_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If it is true, the flagged data will be held out,
+otherwise it will not.
+
+<br>
+<br>
+<b><big><a name="random_depend" id="random_depend">random_depend</a></big></b>
+<br>
+This argument has prototype 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>random_depend</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If it is true, the residuals that depend on the random effects
+are included.
+If it is false, all of the other residuals are included.
+
+<br>
+<br>
+<b><big><a name="pack_vec" id="pack_vec">pack_vec</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is all the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ in the order
+specified by <a href="pack_info.htm" target="_top"><span style='white-space: nowrap'>pack_info</span></a>
+; i.e.,
+<small>@(@
+(u , \theta)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="residual_vec" id="residual_vec">residual_vec</a></big></b>
+<br>
+The return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;&nbsp;residual_struct&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>residual_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><a name="residual_vec.index" id="residual_vec.index">index</a></b>
+<br>
+For each element of 
+<code><i><font color="black"><span style='white-space: nowrap'>residual_vec</span></font></i></code>
+,
+the residual <a href="residual_density.htm#index" target="_top"><span style='white-space: nowrap'>index</span></a>
+
+is set to the <a href="data_subset_table.htm#data_subset_id" target="_top"><span style='white-space: nowrap'>data_subset_id</span></a>
+
+for the corresponding residual.
+
+<br>
+<br>
+<b><a name="residual_vec.Include Hold Outs" id="residual_vec.Include Hold Outs">Include Hold Outs</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>hold_out</span></font></i></code>
+ is false,
+the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>residual</span></font></i></code>
+ is equal the number of subset data values
+<a href="data_subset.htm#data_subset_obj.n_subset" target="_top"><span style='white-space: nowrap'>n_subset</span></a>
+.
+The order of the residuals is the same as in
+<a href="data_model_ctor.htm#subset_object" target="_top"><span style='white-space: nowrap'>subset_object</span></a>
+ in the
+
+<code><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i></code>
+ constructor.
+
+<br>
+<br>
+<b><a name="residual_vec.No Hold Outs" id="residual_vec.No Hold Outs">No Hold Outs</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>hold_out</span></font></i></code>
+ is true,
+the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>residual</span></font></i></code>
+ is equal the number of subset data values
+<a href="data_subset.htm#data_subset_obj.n_subset" target="_top"><span style='white-space: nowrap'>n_subset</span></a>
+,
+minus the number for which
+<a href="data_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+ is one.
+The order of the residuals is not specified in this case.
+
+<br>
+<br>
+<b><big><a name="Log Density" id="Log Density">Log Density</a></big></b>
+<br>
+The log of the density
+<small>@(@
+\B{p}( y | u , \theta )
+@)@</small>,
+for the data that is included,
+is the sum of the log of the densities corresponding to all the
+<a href="residual_density.htm" target="_top"><span style='white-space: nowrap'>residuals</span></a>
+ in 
+<code><i><font color="black"><span style='white-space: nowrap'>residual_vec</span></font></i></code>
+.
+
+
+<hr>Input File: devel/model/data_model.cpp
+
+</body>
+</html>

@@ -1,0 +1,224 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>C++: Get The Maximum Values in a Table Column</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++: Get The Maximum Values in a Table Column">
+<meta name="keywords" id="keywords" content=" c++: get the maximum values table column syntax db select_cmd column_name max_str example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_get_column_max_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="get_avgint_table_xam.cpp.htm" target="_top">Prev</a>
+</td><td><a href="get_column_max_xam.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_table</option>
+<option>get_column_max</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_table-&gt;</option>
+<option>check_child_prior</option>
+<option>check_pini_n_age</option>
+<option>check_rate_limit</option>
+<option>check_table_id</option>
+<option>check_zero_sum</option>
+<option>cpp_create_table</option>
+<option>exec_sql_cmd</option>
+<option>get_age_table</option>
+<option>get_avgint_table</option>
+<option>get_column_max</option>
+<option>get_covariate_table</option>
+<option>get_data_table</option>
+<option>get_db_input</option>
+<option>get_density_table</option>
+<option>get_integrand_table</option>
+<option>get_mulcov_table</option>
+<option>get_node_table</option>
+<option>get_option_table</option>
+<option>get_prior_table</option>
+<option>get_rate_table</option>
+<option>get_sample_table</option>
+<option>get_simulate_table</option>
+<option>get_smooth_grid</option>
+<option>get_nslist_table</option>
+<option>get_nslist_pair</option>
+<option>get_smooth_table</option>
+<option>get_table_column</option>
+<option>get_time_table</option>
+<option>get_weight_grid</option>
+<option>get_weight_table</option>
+<option>log_message</option>
+<option>put_table_row</option>
+<option>open_connection</option>
+<option>smooth_info</option>
+<option>weight_info</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>get_column_max-&gt;</option>
+<option>get_column_max_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>db</option>
+<option>select_cmd</option>
+<option>column_name</option>
+<option>max_str</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>C++: Get The Maximum Values in a Table Column</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>max_str</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;get_column_max(</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_cmd</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>column_name</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="db" id="db">db</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sqlite3*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the database we are getting information from.
+
+<br>
+<br>
+<b><big><a name="select_cmd" id="select_cmd">select_cmd</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::string&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_cmd</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is a SQL select command that results in a table,
+that has a column named 
+<code><i><font color="black"><span style='white-space: nowrap'>column_name</span></font></i></code>
+.
+For example, if you want to take the maximum over all the rows
+in table 
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i></code>
+,
+you could use the following for 
+<code><i><font color="black"><span style='white-space: nowrap'>select_cmd</span></font></i></code>
+:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;*&nbsp;from&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="column_name" id="column_name">column_name</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::string&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>column_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the name of the column we are getting information from.
+
+<br>
+<br>
+<b><big><a name="max_str" id="max_str">max_str</a></big></b>
+<br>
+The return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::string&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_str</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the maximum value in the column.
+If the table is empty,
+or if all the values in the column are <code><font color="blue">null</font></code>,
+the return value of 
+<code><i><font color="black"><span style='white-space: nowrap'>max_str</span></font></i></code>
+ is the empty string.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="get_column_max_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_column_max_xam.cpp</span></a>
+ contains an example that uses
+this function.
+
+
+<hr>Input File: devel/table/get_column_max.cpp
+
+</body>
+</html>

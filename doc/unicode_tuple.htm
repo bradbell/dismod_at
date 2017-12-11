@@ -1,0 +1,185 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Convert an Iterable Object to a Unicode String</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Convert an Iterable Object to a Unicode String">
+<meta name="keywords" id="keywords" content=" iterable to string from convert object unicode syntax quote_string none infinity u_tuple example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_unicode_tuple_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="modify_command.py.htm" target="_top">Prev</a>
+</td><td><a href="unicode_tuple.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>unicode_tuple</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>python-&gt;</option>
+<option>create_connection</option>
+<option>create_table</option>
+<option>create_database</option>
+<option>db2csv_command</option>
+<option>get_name_type</option>
+<option>get_row_list</option>
+<option>get_table_dict</option>
+<option>metropolis</option>
+<option>modify_command</option>
+<option>unicode_tuple</option>
+<option>sql_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>unicode_tuple-&gt;</option>
+<option>unicode_tuple.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>iterable</option>
+<option>quote_string</option>
+<option>None</option>
+<option>Infinity</option>
+<option>u_tuple</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Convert an Iterable Object to a Unicode String</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>u_tuple</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;dismod_at.unicode_tuple(</span></font><i><font color="black"><span style='white-space: nowrap'>iterable</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>quote_string</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="iterable" id="iterable">iterable</a></big></b>
+<br>
+is any object where we can iterate over its elements
+and convert each element to a unicode value.
+
+<br>
+<br>
+<b><big><a name="quote_string" id="quote_string">quote_string</a></big></b>
+<br>
+is either <code><font color="blue">True</font></code> or <code><font color="blue">False</font></code>.
+If it is <code><font color="blue">True</font></code>, each element of 
+<code><i><font color="black"><span style='white-space: nowrap'>iterable</span></font></i></code>
+
+that is an <code><font color="blue">str</font></code> or a <code><font color="blue">unicode</font></code>
+is surrounded by the single quote character in 
+<code><i><font color="black"><span style='white-space: nowrap'>u_tuple</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="None" id="None">None</a></big></b>
+<br>
+The value <code><font color="blue">None</font></code> is converted to the unicode string <code><font color="blue">null</font></code>
+(always without quotes).
+
+<br>
+<br>
+<b><big><a name="Infinity" id="Infinity">Infinity</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>u_j</span></font></i></code>
+ is a <code><font color="blue">float</font></code> and equal to plus infinity,
+the corresponding tuple value has an exponent that is ten times the
+exponent for the maximum float.
+This is so that, when written by pythons <code><font color="blue">sqlite</font></code> package, it
+gets converted to infinity.
+Minus infinity is handled in a similar fashion.
+
+<br>
+<br>
+<b><big><a name="u_tuple" id="u_tuple">u_tuple</a></big></b>
+<br>
+is a unicode string representation of the tuple containing the elements.
+To be specific it is given by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u_tuple</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;u'(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u_1</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u_2</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u_n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)'<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ is the number of elements
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>u_1</span></font></i></code>
+ is the <code><i>i</i></code>-th element.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="unicode_tuple.py.htm" target="_top"><span style='white-space: nowrap'>unicode_tuple.py</span></a>
+ is an example use of
+<code><font color="blue">unicode_tuple</font></code>.
+
+
+<hr>Input File: python/dismod_at/unicode_tuple.py
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>C++ avgint_subset: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++ avgint_subset: Example and Test">
+<meta name="keywords" id="keywords" content=" c++ avgint_subset: example test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_avgint_subset_xam.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="avgint_subset.htm" target="_top">Prev</a>
+</td><td><a href="bilinear_interp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>avgint_subset</option>
+<option>avgint_subset_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_utility-&gt;</option>
+<option>a2_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_value_prior</option>
+<option>pack_diff_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>avgint_subset-&gt;</option>
+<option>avgint_subset_xam.cpp</option>
+</select>
+</td>
+<td>avgint_subset_xam.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>C++ avgint_subset: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/get_avgint_table.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/get_covariate_table.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/get_node_table.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/child_info.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/avgint_subset.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/null_int.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">avgint_subset_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>
+     <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b>  std<font color="#990000">::</font>string<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b>  CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+     <font color="#009900">double</font> inf <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font>
+
+     <i><font color="#9A1900">// covariate table</font></i>
+     <font color="#008080">size_t</font> n_covariate <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;dismod_at::covariate_struct&gt;</font> <b><font color="#000000">covariate_table</font></b><font color="#990000">(</font>n_covariate<font color="#990000">);</font>
+     covariate_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>reference      <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">0.5</font><font color="#990000">;</font> <i><font color="#9A1900">// sex reference value</font></i>
+     covariate_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>max_difference <font color="#990000">=</font> <font color="#993399">0.6</font><font color="#990000">;</font>  <i><font color="#9A1900">// maximum sex difference</font></i>
+     covariate_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>reference      <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+     covariate_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>max_difference <font color="#990000">=</font> inf<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// node table</font></i>
+     <font color="#008080">size_t</font> n_node <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;dismod_at::node_struct&gt;</font> <b><font color="#000000">node_table</font></b><font color="#990000">(</font>n_node<font color="#990000">);</font>
+     node_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>node_name <font color="#990000">=</font> <font color="#FF0000">"world"</font><font color="#990000">;</font>
+     node_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>node_name <font color="#990000">=</font> <font color="#FF0000">"north_america"</font><font color="#990000">;</font>
+     node_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">].</font>node_name <font color="#990000">=</font> <font color="#FF0000">"united_states"</font><font color="#990000">;</font>
+     node_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">].</font>node_name <font color="#990000">=</font> <font color="#FF0000">"canada"</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     node_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>parent <font color="#990000">=</font> DISMOD_AT_NULL_INT<font color="#990000">;</font>
+     node_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>parent <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     node_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">].</font>parent <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     node_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">].</font>parent <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// default value for a avgint table record</font></i>
+     dismod_at<font color="#990000">::</font><font color="#008080">avgint_struct</font> record<font color="#990000">;</font>
+     record<font color="#990000">.</font>integrand_id   <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     record<font color="#990000">.</font>weight_id      <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+     record<font color="#990000">.</font>age_lower      <font color="#990000">=</font> <font color="#993399">10.0</font><font color="#990000">;</font>
+     record<font color="#990000">.</font>age_upper      <font color="#990000">=</font> <font color="#993399">90.0</font><font color="#990000">;</font>
+     record<font color="#990000">.</font>time_lower     <font color="#990000">=</font> <font color="#993399">2000.0</font><font color="#990000">;</font>
+     record<font color="#990000">.</font>time_upper     <font color="#990000">=</font> <font color="#993399">2010.0</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// avgint table</font></i>
+     <font color="#008080">size_t</font> n_avgint <font color="#990000">=</font> n_node<font color="#990000">;</font>
+     <font color="#008080">vector&lt;dismod_at::avgint_struct&gt;</font> <b><font color="#000000">avgint_table</font></b><font color="#990000">(</font>n_avgint<font color="#990000">);</font>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">avgint_cov_value</font></b><font color="#990000">(</font> n_avgint <font color="#990000">*</font> n_covariate <font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> avgint_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> avgint_id <font color="#990000">&lt;</font> n_avgint<font color="#990000">;</font> avgint_id<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    avgint_table<font color="#990000">[</font>avgint_id<font color="#990000">]</font>         <font color="#990000">=</font> record<font color="#990000">;</font>
+          avgint_table<font color="#990000">[</font>avgint_id<font color="#990000">].</font>node_id <font color="#990000">=</font> avgint_id<font color="#990000">;</font>
+          avgint_cov_value<font color="#990000">[</font> avgint_id <font color="#990000">*</font> n_covariate <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">*</font> avgint_id<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     avgint_cov_value<font color="#990000">[</font><font color="#993399">0</font> <font color="#990000">*</font> n_covariate <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">0.5</font><font color="#990000">;</font> <i><font color="#9A1900">// sex reference</font></i>
+     avgint_cov_value<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> n_covariate <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">0.5</font><font color="#990000">;</font> <i><font color="#9A1900">// sex reference</font></i>
+     avgint_cov_value<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">*</font> n_covariate <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>  <i><font color="#9A1900">// within sex bounds</font></i>
+     avgint_cov_value<font color="#990000">[</font><font color="#993399">3</font> <font color="#990000">*</font> n_covariate <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>  <i><font color="#9A1900">// out of sex bounds</font></i>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// child_object</font></i>
+     <font color="#008080">size_t</font> parent_node_id <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// north_america</font></i>
+     dismod_at<font color="#990000">::</font><font color="#008080">child_info</font> <b><font color="#000000">child_object</font></b><font color="#990000">(</font>
+          parent_node_id<font color="#990000">,</font> node_table<font color="#990000">,</font> avgint_table
+     <font color="#990000">);</font>
+
+     <i><font color="#9A1900">// avgint_subset_obj</font></i>
+     <font color="#008080">vector&lt;dismod_at::avgint_subset_struct&gt;</font> avgint_subset_obj<font color="#990000">;</font>
+     <font color="#008080">vector&lt;double&gt;</font> avgint_subset_cov_value<font color="#990000">;</font>
+     <b><font color="#000000">avgint_subset</font></b><font color="#990000">(</font>
+          avgint_table<font color="#990000">,</font>
+          avgint_cov_value<font color="#990000">,</font>
+          covariate_table<font color="#990000">,</font>
+          child_object<font color="#990000">,</font>
+          avgint_subset_obj<font color="#990000">,</font>
+          avgint_subset_cov_value
+     <font color="#990000">);</font>
+
+     <i><font color="#9A1900">// avgint_id = 0 is for world and hence not included</font></i>
+     ok <font color="#990000">&amp;=</font> avgint_subset_obj<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>original_id <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// avgint_id = 1 covariate values minus corresponding reference value</font></i>
+     ok <font color="#990000">&amp;=</font> avgint_subset_cov_value<font color="#990000">[</font><font color="#993399">0</font> <font color="#990000">*</font> n_covariate <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font>    <font color="#990000">==</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> avgint_subset_cov_value<font color="#990000">[</font><font color="#993399">0</font> <font color="#990000">*</font> n_covariate <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">]</font>    <font color="#990000">==</font> <font color="#993399">100</font><font color="#990000">.;</font>
+     ok <font color="#990000">&amp;=</font> avgint_subset_obj<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>node_id <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// avgint_id = 2 covariate values minus corresponding reference value</font></i>
+     ok <font color="#990000">&amp;=</font> avgint_subset_obj<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>original_id <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> avgint_subset_cov_value<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> n_covariate <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font>    <font color="#990000">==</font> <font color="#993399">0.5</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> avgint_subset_cov_value<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> n_covariate <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">]</font>    <font color="#990000">==</font> <font color="#993399">200</font><font color="#990000">.;</font>
+     ok <font color="#990000">&amp;=</font> avgint_subset_obj<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>node_id <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// avgint_id = 3 is has a sex covariate that is out of bounds</font></i>
+     ok <font color="#990000">&amp;=</font> avgint_subset_obj<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/devel/utility/avgint_subset_xam.cpp
+
+</body>
+</html>

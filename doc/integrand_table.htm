@@ -1,0 +1,273 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Integrand Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Integrand Table">
+<meta name="keywords" id="keywords" content=" the integrand table integrand_id integrand_name sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_integrand_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="density_table.py.htm" target="_top">Prev</a>
+</td><td><a href="integrand_table.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>integrand_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>integrand_table-&gt;</option>
+<option>integrand_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>integrand_id</option>
+<option>integrand_name</option>
+<option>---..Sincidence</option>
+<option>---..remission</option>
+<option>---..mtexcess</option>
+<option>---..mtother</option>
+<option>---..mtwith</option>
+<option>---..susceptible</option>
+<option>---..withC</option>
+<option>---..prevalence</option>
+<option>---..Tincidence</option>
+<option>---..mtspecific</option>
+<option>---..mtall</option>
+<option>---..mtstandard</option>
+<option>---..relrisk</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Integrand Table</big></big></b></center>
+The <code><font color="blue">integrand</font></code> table is used to identify data integrands.
+It has the following columns:
+
+<br>
+<br>
+<b><big><a name="integrand_id" id="integrand_id">integrand_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code>
+and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="integrand_name" id="integrand_name">integrand_name</a></big></b>
+<br>
+This column has type <code><font color="blue">text</font></code>.
+The following is a list of the possible values for 
+<code><i><font color="black"><span style='white-space: nowrap'>integrand_name</span></font></i></code>
+.
+This column is unique; i.e., each name can only appear once in this table.
+Only the <a href="data_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
+ that appear
+in the data table need appear in the integrand table.
+
+<br>
+<br>
+<b><a name="integrand_name.Sincidence" id="integrand_name.Sincidence">Sincidence</a></b>
+<br>
+The susceptible incidence rate;
+see <a href="avg_integrand.htm#I_i(a,t).Sincidence" target="_top"><span style='white-space: nowrap'>Sincidence</span></a>
+.
+
+<br>
+<br>
+<b><a name="integrand_name.remission" id="integrand_name.remission">remission</a></b>
+<br>
+The remission rate;
+see <a href="avg_integrand.htm#I_i(a,t).remission" target="_top"><span style='white-space: nowrap'>remission</span></a>
+.
+
+<br>
+<br>
+<b><a name="integrand_name.mtexcess" id="integrand_name.mtexcess">mtexcess</a></b>
+<br>
+The excess mortality rate;
+see <a href="avg_integrand.htm#I_i(a,t).mtexcess" target="_top"><span style='white-space: nowrap'>mtexcess</span></a>
+.
+
+<br>
+<br>
+<b><a name="integrand_name.mtother" id="integrand_name.mtother">mtother</a></b>
+<br>
+The other cause mortality rate;
+see <a href="avg_integrand.htm#I_i(a,t).mtother" target="_top"><span style='white-space: nowrap'>mtother</span></a>
+.
+
+<br>
+<br>
+<b><a name="integrand_name.mtwith" id="integrand_name.mtwith">mtwith</a></b>
+<br>
+The mtwith rate;
+see <a href="avg_integrand.htm#I_i(a,t).mtwith" target="_top"><span style='white-space: nowrap'>mtwith</span></a>
+.
+
+<br>
+<br>
+<b><a name="integrand_name.susceptible" id="integrand_name.susceptible">susceptible</a></b>
+<br>
+The susceptible fraction of the population;
+see <a href="avg_integrand.htm#I_i(a,t).susceptible" target="_top"><span style='white-space: nowrap'>susceptible</span></a>
+.
+
+<br>
+<br>
+<b><a name="integrand_name.withC" id="integrand_name.withC">withC</a></b>
+<br>
+The with condition fraction of the population;
+see <a href="avg_integrand.htm#I_i(a,t).withC" target="_top"><span style='white-space: nowrap'>withC</span></a>
+.
+
+<br>
+<br>
+<b><a name="integrand_name.prevalence" id="integrand_name.prevalence">prevalence</a></b>
+<br>
+The prevalence of the condition;
+see <a href="avg_integrand.htm#I_i(a,t).prevalence" target="_top"><span style='white-space: nowrap'>prevalence</span></a>
+.
+
+<br>
+<br>
+<b><a name="integrand_name.Tincidence" id="integrand_name.Tincidence">Tincidence</a></b>
+<br>
+The total incidence rate;
+see <a href="avg_integrand.htm#I_i(a,t).Tincidence" target="_top"><span style='white-space: nowrap'>Tincidence</span></a>
+.
+
+<br>
+<br>
+<b><a name="integrand_name.mtspecific" id="integrand_name.mtspecific">mtspecific</a></b>
+<br>
+The cause specific mortality rate;
+see <a href="avg_integrand.htm#I_i(a,t).mtspecific" target="_top"><span style='white-space: nowrap'>mtspecific</span></a>
+.
+
+<br>
+<br>
+<b><a name="integrand_name.mtall" id="integrand_name.mtall">mtall</a></b>
+<br>
+The all cause mortality rate;
+see <a href="avg_integrand.htm#I_i(a,t).mtall" target="_top"><span style='white-space: nowrap'>mtall</span></a>
+.
+
+<br>
+<br>
+<b><a name="integrand_name.mtstandard" id="integrand_name.mtstandard">mtstandard</a></b>
+<br>
+The standardized mortality ratio;
+see <a href="avg_integrand.htm#I_i(a,t).mtstandard" target="_top"><span style='white-space: nowrap'>mtstandard</span></a>
+.
+
+<br>
+<br>
+<b><a name="integrand_name.relrisk" id="integrand_name.relrisk">relrisk</a></b>
+<br>
+The relative risk;
+see <a href="avg_integrand.htm#I_i(a,t).relrisk" target="_top"><span style='white-space: nowrap'>relrisk</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="integrand_table.py.htm" target="_top"><span style='white-space: nowrap'>integrand_table.py</span></a>
+ and <a href="get_integrand_table_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_integrand_table_xam.cpp</span></a>
+
+contain example <code><font color="blue">integrand</font></code> tables.
+
+
+<hr>Input File: omh/table/integrand_table.omh
+
+</body>
+</html>

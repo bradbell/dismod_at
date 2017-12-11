@@ -1,0 +1,190 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>C++ get_rate_table: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++ get_rate_table: Example and Test">
+<meta name="keywords" id="keywords" content=" c++ get_rate_table: example test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_get_rate_table_xam.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="get_rate_table.htm" target="_top">Prev</a>
+</td><td><a href="get_sample_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_table</option>
+<option>get_rate_table</option>
+<option>get_rate_table_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_table-&gt;</option>
+<option>check_child_prior</option>
+<option>check_pini_n_age</option>
+<option>check_rate_limit</option>
+<option>check_table_id</option>
+<option>check_zero_sum</option>
+<option>cpp_create_table</option>
+<option>exec_sql_cmd</option>
+<option>get_age_table</option>
+<option>get_avgint_table</option>
+<option>get_column_max</option>
+<option>get_covariate_table</option>
+<option>get_data_table</option>
+<option>get_db_input</option>
+<option>get_density_table</option>
+<option>get_integrand_table</option>
+<option>get_mulcov_table</option>
+<option>get_node_table</option>
+<option>get_option_table</option>
+<option>get_prior_table</option>
+<option>get_rate_table</option>
+<option>get_sample_table</option>
+<option>get_simulate_table</option>
+<option>get_smooth_grid</option>
+<option>get_nslist_table</option>
+<option>get_nslist_pair</option>
+<option>get_smooth_table</option>
+<option>get_table_column</option>
+<option>get_time_table</option>
+<option>get_weight_grid</option>
+<option>get_weight_table</option>
+<option>log_message</option>
+<option>put_table_row</option>
+<option>open_connection</option>
+<option>smooth_info</option>
+<option>weight_info</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>get_rate_table-&gt;</option>
+<option>get_rate_table_xam.cpp</option>
+</select>
+</td>
+<td>get_rate_table_xam.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>C++ get_rate_table: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/get_rate_table.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/exec_sql_cmd.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/open_connection.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/null_int.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">get_rate_table_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>
+     <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b>  std<font color="#990000">::</font>string<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b>  CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+
+     <font color="#008080">string</font>   file_name <font color="#990000">=</font> <font color="#FF0000">"example.db"</font><font color="#990000">;</font>
+     <font color="#009900">bool</font>     new_file  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     sqlite3<font color="#990000">*</font> db        <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">open_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new_file<font color="#990000">);</font>
+
+     <i><font color="#9A1900">// sql commands</font></i>
+     <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> sql_cmd<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
+          <font color="#FF0000">"create table rate("</font>
+               <font color="#FF0000">"rate_id           integer primary key,"</font>
+               <font color="#FF0000">"rate_name         text unique,"</font>
+               <font color="#FF0000">"parent_smooth_id  integer,"</font>
+               <font color="#FF0000">"child_smooth_id   integer,"</font>
+               <font color="#FF0000">"child_nslist_id   integer)"</font><font color="#990000">,</font>
+          <font color="#FF0000">"insert into rate values(0, 'pini',  0, 1, null)"</font><font color="#990000">,</font>
+          <font color="#FF0000">"insert into rate values(1, 'iota',  0, 1, null)"</font><font color="#990000">,</font>
+          <font color="#FF0000">"insert into rate values(2, 'rho',   0, 1, null)"</font><font color="#990000">,</font>
+          <font color="#FF0000">"insert into rate values(3, 'chi',   0, 1, null)"</font><font color="#990000">,</font>
+          <font color="#FF0000">"insert into rate values(4, 'omega', 0, 1, null)"</font>
+     <font color="#FF0000">}</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> n_command <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>sql_cmd<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>sql_cmd<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_command<font color="#990000">;</font> i<font color="#990000">++)</font>
+          dismod_at<font color="#990000">::</font><b><font color="#000000">exec_sql_cmd</font></b><font color="#990000">(</font>db<font color="#990000">,</font> sql_cmd<font color="#990000">[</font>i<font color="#990000">]);</font>
+
+
+     <i><font color="#9A1900">// get the rate table</font></i>
+     <font color="#008080">vector&lt;dismod_at::rate_struct&gt;</font> rate_table <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">get_rate_table</font></b><font color="#990000">(</font>db<font color="#990000">);</font>
+     <font color="#008080">size_t</font> n_rate <font color="#990000">=</font> dismod_at<font color="#990000">::</font>number_rate_enum<font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> rate_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n_rate<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> rate_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> rate_id <font color="#990000">&lt;</font> n_rate<font color="#990000">;</font> rate_id<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    ok <font color="#990000">&amp;=</font> rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>parent_smooth_id <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_smooth_id  <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_nslist_id  <font color="#990000">==</font> DISMOD_AT_NULL_INT<font color="#990000">;</font>
+
+          <i><font color="#9A1900">// check that one can use rate_enum values in place of rate_id</font></i>
+          dismod_at<font color="#990000">::</font><font color="#008080">rate_enum</font> rate <font color="#990000">=</font> rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>rate<font color="#990000">;</font>
+          ok <font color="#990000">&amp;=</font> rate <font color="#990000">==</font> dismod_at<font color="#990000">::</font><b><font color="#000000">rate_enum</font></b><font color="#990000">(</font> rate_id <font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// close database and return</font></i>
+     <b><font color="#000000">sqlite3_close</font></b><font color="#990000">(</font>db<font color="#990000">);</font>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/devel/table/get_rate_table_xam.cpp
+
+</body>
+</html>

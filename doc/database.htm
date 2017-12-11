@@ -1,0 +1,211 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Dismod_at Database Tables</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Dismod_at Database Tables">
+<meta name="keywords" id="keywords" content=" the dismod_at database tables comment columns primary key name column foreign parent text can be null not empty integer real nan bounds that are ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_database_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="user_students.py.htm" target="_top">Prev</a>
+</td><td><a href="input.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Comment Columns and Tables</option>
+<option>Primary Key</option>
+<option>Name Column</option>
+<option>Foreign Key</option>
+<option>---..parent</option>
+<option>Text can be Null, not Empty</option>
+<option>Integer Can be Null</option>
+<option>Real Can be Null, not Nan</option>
+<option>Bounds That are Null</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Dismod_at Database Tables</big></big></b></center>
+<br>
+<b><big><a name="Comment Columns and Tables" id="Comment Columns and Tables">Comment Columns and Tables</a></big></b>
+<br>
+Any table (in this database)
+may have any number of columns with names that begin
+with the two characters <code><font color="blue">c_</font></code>.
+These are comment columns and are ignored by <code><font color="blue">dismod_at</font></code>.
+In addition, tables with a names beginning with <code><font color="blue">c_</font></code>
+are also considered comments and are ignored by <code><font color="blue">dismod_at</font></code>.
+
+<br>
+<br>
+<b><big><a name="Primary Key" id="Primary Key">Primary Key</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i></code>
+ is a table (in this database), its first column
+has name 
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>_id</span></font></code>
+ that is the primary key for the table.
+The values in this column are <code><font color="blue">integer</font></code>,
+start at zero and increment by one for each row in the table.
+
+
+<br>
+<br>
+<b><big><a name="Name Column" id="Name Column">Name Column</a></big></b>
+<br>
+Suppose that 
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i></code>
+ is a table (in this database),
+and the column 
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>_name</span></font></code>
+ exists.
+In this case, the values in this column are <code><font color="blue">text</font></code> must be unique;
+i.e., the names can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+<br>
+<br>
+<b><big><a name="Foreign Key" id="Foreign Key">Foreign Key</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>this</span></font></i></code>
+ is the name of a table its primary key is
+the column 
+<code><i><font color="black"><span style='white-space: nowrap'>this</span></font></i><font color="blue"><span style='white-space: nowrap'>_id</span></font></code>
+.
+If this primary key is used in another table it is
+called a foreign key (in the other table).
+The name of the column in the other table will be 
+<code><i><font color="black"><span style='white-space: nowrap'>this</span></font></i><font color="blue"><span style='white-space: nowrap'>_id</span></font></code>
+
+or it will end with 
+<code><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>this</span></font></i><font color="blue"><span style='white-space: nowrap'>_id</span></font></code>
+.
+A value in the foreign key column must also appear in the
+corresponding primary key column, or it must be <code><font color="blue">null</font></code>.
+
+<br>
+<br>
+<b><a name="Foreign Key.parent" id="Foreign Key.parent">parent</a></b>
+<br>
+Note that the column <a href="node_table.htm#parent" target="_top"><span style='white-space: nowrap'>parent</span></a>
+ is a primary
+key value for the <a href="node_table.htm" target="_top"><span style='white-space: nowrap'>node&nbsp;table</span></a>
+; i.e, <code><font color="blue">node_id</font></code>.
+Note that this column is not named 
+<code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
+ nor does it end
+in 
+<code><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
+.
+This is not an exception because the <code><font color="blue">parent</font></code> column is itself
+in the <code><font color="blue">node</font></code> table and hence this is not a foreign key.
+
+<br>
+<br>
+<b><big><a name="Text can be Null, not Empty" id="Text can be Null, not Empty">Text can be Null, not Empty</a></big></b>
+<br>
+The empty string is used to represent a <code><font color="blue">null</font></code> text value in a table.
+An error message will be generated if the empty string
+appears in a text field that is read by dismod_at.
+
+<br>
+<br>
+<b><big><a name="Integer Can be Null" id="Integer Can be Null">Integer Can be Null</a></big></b>
+<br>
+The minimum integer (negative integer with the largest absolute value)
+is used to represent a <code><font color="blue">null</font></code> integer value in a table.
+An error message will be generated if
+the minimum integer appears in a table that is read by dismod_at.
+
+<br>
+<br>
+<b><big><a name="Real Can be Null, not Nan" id="Real Can be Null, not Nan">Real Can be Null, not Nan</a></big></b>
+<br>
+If a real value is <code><font color="blue">null</font></code>, it is represented as <code><font color="blue">nan</font></code>.
+An error message will be generated if
+the value <code><font color="blue">nan</font></code> appears in a table that is read by dismod_at.
+
+<br>
+<br>
+<b><big><a name="Bounds That are Null" id="Bounds That are Null">Bounds That are Null</a></big></b>
+<br>
+If a lower (upper) bound is <code><font color="blue">null</font></code>,
+it is interpreted as minus (plus) infinity.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="input.htm" target="_top">input</a></td><td>Tables&nbsp;That&nbsp;Are&nbsp;Only&nbsp;Used&nbsp;as&nbsp;Inputs</td></tr><tr><td><a href="data_flow.htm" target="_top">data_flow</a></td><td>The&nbsp;Dismod_at&nbsp;Data&nbsp;Flow</td></tr></table>
+<hr>Input File: omh/table/database.omh
+
+</body>
+</html>

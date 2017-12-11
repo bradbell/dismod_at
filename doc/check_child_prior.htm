@@ -1,0 +1,252 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Check Priors in Child Smoothing</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Check Priors in Child Smoothing">
+<meta name="keywords" id="keywords" content=" check priors child smoothing syntax purpose db rate_table smooth_grid nslist_pair prior_table ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_check_child_prior_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="devel_table.htm" target="_top">Prev</a>
+</td><td><a href="check_pini_n_age.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_table</option>
+<option>check_child_prior</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_table-&gt;</option>
+<option>check_child_prior</option>
+<option>check_pini_n_age</option>
+<option>check_rate_limit</option>
+<option>check_table_id</option>
+<option>check_zero_sum</option>
+<option>cpp_create_table</option>
+<option>exec_sql_cmd</option>
+<option>get_age_table</option>
+<option>get_avgint_table</option>
+<option>get_column_max</option>
+<option>get_covariate_table</option>
+<option>get_data_table</option>
+<option>get_db_input</option>
+<option>get_density_table</option>
+<option>get_integrand_table</option>
+<option>get_mulcov_table</option>
+<option>get_node_table</option>
+<option>get_option_table</option>
+<option>get_prior_table</option>
+<option>get_rate_table</option>
+<option>get_sample_table</option>
+<option>get_simulate_table</option>
+<option>get_smooth_grid</option>
+<option>get_nslist_table</option>
+<option>get_nslist_pair</option>
+<option>get_smooth_table</option>
+<option>get_table_column</option>
+<option>get_time_table</option>
+<option>get_weight_grid</option>
+<option>get_weight_table</option>
+<option>log_message</option>
+<option>put_table_row</option>
+<option>open_connection</option>
+<option>smooth_info</option>
+<option>weight_info</option>
+</select>
+</td>
+<td>check_child_prior</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>syntax</option>
+<option>Purpose</option>
+<option>db</option>
+<option>rate_table</option>
+<option>smooth_grid</option>
+<option>nslist_pair</option>
+<option>prior_table</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Check Priors in Child Smoothing</big></big></b></center>
+<br>
+<b><big><a name="syntax" id="syntax">syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>check_child_prior(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_grid</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nslist_pair</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Checks the
+<a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>child&nbsp;smoothing&nbsp;assumptions</span></a>
+.
+
+<ol type="1"><li>
+The <a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+ cannot correspond to a
+<a href="density_table.htm#density_name.laplace" target="_top"><span style='white-space: nowrap'>laplace</span></a>
+ or
+<a href="density_table.htm#density_name.log_laplace" target="_top"><span style='white-space: nowrap'>log_laplace</span></a>
+ density.
+</li><li>
+
+The <a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
+ limit must be minus infinity
+or equal to the upper limit and finite.
+</li><li>
+
+The <a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
+ limit must be plus infinity
+or equal to the lower limit and finite.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="db" id="db">db</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sqlite3*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the database connection for <a href="log_message.htm" target="_top"><span style='white-space: nowrap'>logging</span></a>
+ errors.
+
+<br>
+<br>
+<b><big><a name="rate_table" id="rate_table">rate_table</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;rate_struct&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and it is the
+<a href="get_rate_table.htm#rate_table" target="_top"><span style='white-space: nowrap'>rate_table</span></a>
+.
+For this table,
+only the <code><font color="blue">child_smooth_id</font></code> field is used.
+
+<br>
+<br>
+<b><big><a name="smooth_grid" id="smooth_grid">smooth_grid</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;smooth_grid_struct&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_grid</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and it is the
+<a href="get_smooth_grid.htm#smooth_grid" target="_top"><span style='white-space: nowrap'>smooth_grid</span></a>
+.
+For this table, only the
+<code><font color="blue">value_prior_id</font></code>, <code><font color="blue">dage_prior_id</font></code>, and <code><font color="blue">dtime_prior_id</font></code>
+fields are used.
+
+<br>
+<br>
+<b><big><a name="nslist_pair" id="nslist_pair">nslist_pair</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;nslist_pair_struct&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nslist_pair</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and it is the
+<a href="get_nslist_pair.htm#nslist_pair" target="_top"><span style='white-space: nowrap'>nslist_pair</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="prior_table" id="prior_table">prior_table</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;prior_struct&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and it is the
+<a href="get_prior_table.htm#prior_table" target="_top"><span style='white-space: nowrap'>prior_table</span></a>
+.
+For this table,
+only the
+<code><font color="blue">value_prior_id</font></code>,
+<code><font color="blue">dage_prior_id</font></code>, and
+<code><font color="blue">dtime_prior_id</font></code>,
+field are used.
+
+
+<hr>Input File: devel/table/check_child_prior.cpp
+
+</body>
+</html>

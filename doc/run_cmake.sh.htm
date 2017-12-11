@@ -1,0 +1,232 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>bin/run_cmake.sh: User Configuration Options</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="bin/run_cmake.sh: User Configuration Options">
+<meta name="keywords" id="keywords" content=" bin/run_cmake.sh: user configuration options verbose_makefile build_type python3_executable extra_cxx_flags dismod_at_prefix prefixes debug release choosing c++ compiler checkpoint_newton_step system_specific_library_list ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_run_cmake.sh_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="install_unix.htm" target="_top">Prev</a>
+</td><td><a href="get_started.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>install_unix</option>
+<option>run_cmake.sh</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>install_unix-&gt;</option>
+<option>run_cmake.sh</option>
+</select>
+</td>
+<td>run_cmake.sh</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>verbose_makefile</option>
+<option>build_type</option>
+<option>python3_executable</option>
+<option>extra_cxx_flags</option>
+<option>dismod_at_prefix</option>
+<option>Prefixes</option>
+<option>---..Debug and Release</option>
+<option>Choosing C++ Compiler</option>
+<option>checkpoint_newton_step</option>
+<option>system_specific_library_list</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@ 
+
+
+<center><b><big><big>bin/run_cmake.sh: User Configuration Options</big></big></b></center>
+<br>
+<b><big><a name="verbose_makefile" id="verbose_makefile">verbose_makefile</a></big></b>
+<br>
+Use 'no' for normal and 'yes' for verbose make output:
+<code><font color='blue'><pre style='display:inline'> 
+verbose_makefile='no'
+</pre></font></code>
+<br>
+<b><big><a name="build_type" id="build_type">build_type</a></big></b>
+<br>
+Use either 'debug' or 'release' for the type of this build:
+<code><font color='blue'><pre style='display:inline'> 
+build_type='debug'
+</pre></font></code>
+Note that if 
+<code><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i></code>
+ ends in <code><font color="blue">dismod_at</font></code>,
+<code><font color="blue">run_cmake.sh</font></code> will use a link from the prefix to
+
+<code><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>.debug</span></font></code>
+ or
+
+<code><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>.release</span></font></code>
+
+depending on the choice 
+<code><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="python3_executable" id="python3_executable">python3_executable</a></big></b>
+<br>
+Path to the python3 executable on this machine:
+<code><font color='blue'><pre style='display:inline'> 
+python3_executable='/usr/bin/python3'
+</pre></font></code>
+An alternative might be <code><font color="blue">'/usr/local/anaconda3-current/bin/python'</font></code>.
+
+<br>
+<br>
+<b><big><a name="extra_cxx_flags" id="extra_cxx_flags">extra_cxx_flags</a></big></b>
+<br>
+Extra C++ flags used during compilation:
+<code><font color='blue'><pre style='display:inline'> 
+extra_cxx_flags='-std=c++11 -Wall -DCPPAD_DEBUG_AND_RELEASE'
+</pre></font></code>
+An alternative might be '-Wall'.
+
+<br>
+<br>
+<b><big><a name="dismod_at_prefix" id="dismod_at_prefix">dismod_at_prefix</a></big></b>
+<br>
+Prefix where dismod_at will be installed:
+<code><font color='blue'><pre style='display:inline'> 
+dismod_at_prefix=&quot;$HOME/prefix/dismod_at&quot;
+</pre></font></code>
+<br>
+<b><big><a name="Prefixes" id="Prefixes">Prefixes</a></big></b>
+<br>
+Prefixes where the
+<a href="install_unix.htm#Special Requirements" target="_top"><span style='white-space: nowrap'>special&nbsp;requirements</span></a>
+
+will be installed:
+<code><font color='blue'><pre style='display:inline'> 
+eigen_prefix=&quot;$HOME/prefix/dismod_at/eigen&quot;
+ipopt_prefix=&quot;$HOME/prefix/dismod_at&quot;
+cppad_prefix=&quot;$HOME/prefix/dismod_at&quot;
+suitesparse_prefix=&quot;$HOME/prefix/dismod_at&quot;
+</pre></font></code>
+Note that the Eigen package is installed in a special prefix
+so that we can suppress warnings coming from its include files
+(without suppressing warnings from other include files).
+
+<br>
+<br>
+<b><a name="Prefixes.Debug and Release" id="Prefixes.Debug and Release">Debug and Release</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i></code>
+ ends in <code><font color="blue">dismod_at</font></code>,
+all the prefixes must be the same,
+except for the Eigen prefix which has an extra sub-directory at the end.
+In this case,
+<code><font color="blue">bin/run_cmake.sh</font></code> will switch between a debug and release
+version of <code><font color="blue">dismod_at</font></code>,
+depending on <a href="run_cmake.sh.htm#build_type" target="_top"><span style='white-space: nowrap'>build_type</span></a>
+.
+The debug version will have an extra <code><font color="blue">.debug</font></code> and the release version
+will have an extra <code><font color="blue">.release</font></code> at the end of the prefix.
+In addition, a soft link will be used to map the prefix to either
+the debug or release version.
+Note that the same technique will be used to map the <code><font color="blue">build</font></code>
+directory to the debug or release version.
+Also note that if you are using both a debug and release, both versions
+of the <a href="install_unix.htm#Special Requirements" target="_top"><span style='white-space: nowrap'>special&nbsp;requirements</span></a>
+
+will need to be installed.
+
+<br>
+<br>
+<b><big><a name="Choosing C++ Compiler" id="Choosing C++ Compiler">Choosing C++ Compiler</a></big></b>
+<br>
+Which c++ compiler should cmake use (empty means cmake will choose it).
+<code><font color='blue'><pre style='display:inline'> 
+cmake_cxx_compiler=''
+</pre></font></code>
+<br>
+<b><big><a name="checkpoint_newton_step" id="checkpoint_newton_step">checkpoint_newton_step</a></big></b>
+<br>
+If <code><font color="blue">yes</font></code>, <code><font color="blue">cppad_mixed</font></code> will use checkpointing during
+calculation of second derivatives. This affects optimization when
+<a href="option_table.htm#Optimizer.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
+ is false, and the
+<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+ sampling method.
+For these computations, checkpointing should use less memory, but
+take more time.
+<code><font color='blue'><pre style='display:inline'> 
+checkpoint_newton_step='yes'
+</pre></font></code>
+<br>
+<b><big><a name="system_specific_library_list" id="system_specific_library_list">system_specific_library_list</a></big></b>
+<br>
+List of libraries that are needed for a particular system. For example,
+if when you build <code><font color="blue">dismod_at</font></code> the <code><font color="blue">pthread</font></code> library is
+required by your system, then include it here.
+Libraries in the list can be separated by spaces or semi-colons.
+<code><font color='blue'><pre style='display:inline'> 
+system_specific_library_list=''
+</pre></font></code>
+
+<hr>Input File: bin/run_cmake.sh
+
+</body>
+</html>

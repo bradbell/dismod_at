@@ -1,0 +1,429 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Compute Weighted Residual and Log-Density</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Compute Weighted Residual and Log-Density">
+<meta name="keywords" id="keywords" content=" compute weighted residual log-density syntax float z y mu delta d_id d_eta d_nu index difference residual_struct wres logden ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_residual_density_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="pack_diff_prior_xam.cpp.htm" target="_top">Prev</a>
+</td><td><a href="random_number.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>residual_density</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_utility-&gt;</option>
+<option>a2_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_value_prior</option>
+<option>pack_diff_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>residual_density</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Float</option>
+<option>z</option>
+<option>y</option>
+<option>mu</option>
+<option>delta</option>
+<option>d_id</option>
+<option>d_eta</option>
+<option>d_nu</option>
+<option>index</option>
+<option>difference</option>
+<option>residual</option>
+<option>---..residual_struct</option>
+<option>---..wres</option>
+<option>---..logden</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Compute Weighted Residual and Log-Density</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>residual</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;residual_density(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d_eta</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d_nu</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Float" id="Float">Float</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ must be one of the following:
+<code><font color="blue">double</font></code>, <code><font color="blue">AD&lt;double&gt;</font></code>, or <a href="a2_double.htm" target="_top"><span style='white-space: nowrap'>a2_double</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="z" id="z">z</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;z<br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+ is true,
+it specifies the first random variable in the difference.
+This argument is not used when 
+<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+ is false.
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;y<br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+ is true,
+it specifies the second random variable in the difference.
+Otherwise it specifies the only random variable.
+
+<br>
+<br>
+<b><big><a name="mu" id="mu">mu</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;mu<br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+ is true, it is the central value for the difference.
+Otherwise, it is the central value for 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="delta" id="delta">delta</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;delta<br>
+</span></font></code>
+It is either the standard deviation or a parameter in the standard deviation;
+see below.
+
+<br>
+<br>
+<b><big><a name="d_id" id="d_id">d_id</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;density_enum&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This value is equal to the corresponding
+<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="d_eta" id="d_eta">d_eta</a></big></b>
+<br>
+If the density 
+<code><i><font color="black"><span style='white-space: nowrap'>d_id</span></font></i></code>
+ corresponds to
+<code><font color="blue">log_gaussian</font></code>, <code><font color="blue">log_laplace</font></code>, or <code><font color="blue">log_students</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
+ specifies the offset in the log transformation.
+Otherwise it is not used.
+
+<br>
+<br>
+<b><big><a name="d_nu" id="d_nu">d_nu</a></big></b>
+<br>
+If the density 
+<code><i><font color="black"><span style='white-space: nowrap'>d_id</span></font></i></code>
+ corresponds to
+<code><font color="blue">students</font></code> or <code><font color="blue">log_students</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>nu</span></font></i></code>
+ specifies the degrees of freedom in the Students-t distribution.
+Otherwise it is not used.
+
+<br>
+<br>
+<b><big><a name="index" id="index">index</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is an identifying index for the residual.
+For example, when computing the prior residuals it could be
+<code><font color="blue">3</font></code> times <a href="var_table.htm#var_id" target="_top"><span style='white-space: nowrap'>var_id</span></a>
+
+plus zero for value priors,
+plus one for age difference prior, and
+plus two for time difference prior.
+
+<br>
+<br>
+<b><big><a name="difference" id="difference">difference</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+ is true,
+this calculation is for the difference of the
+random variables <small>@(@
+z
+@)@</small> and <small>@(@
+y
+@)@</small>.
+Otherwise it is just for the random variable <small>@(@
+y
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="residual" id="residual">residual</a></big></b>
+<br>
+The return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;residual_struct&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>residual</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><a name="residual.residual_struct" id="residual.residual_struct">residual_struct</a></b>
+<br>
+This structure has the following fields:
+<table><tr><td align='left'  valign='top'>
+
+Type </td><td align='left'  valign='top'>
+ Field </td><td align='left'  valign='top'>
+ Description </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	<code><font color="blue">wres</font></code> </td><td align='left'  valign='top'>
+
+	<a href="statistic.htm#Weighted Residual Function, R" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	<code><font color="blue">logden_smooth</font></code> </td><td align='left'  valign='top'>
+
+	this smooth term is in
+	<a href="statistic.htm#Log-Density Function, D" target="_top"><span style='white-space: nowrap'>log-density</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	<code><font color="blue">logden_sub_abs</font></code> </td><td align='left'  valign='top'>
+
+	absolute value of this smooth term is in log-density
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">density_enum</font></code> </td><td align='left'  valign='top'>
+
+	<code><font color="blue">density</font></code> </td><td align='left'  valign='top'>
+
+	type of density function; see
+	<a href="get_density_table.htm#density_enum" target="_top"><span style='white-space: nowrap'>density_enum</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">size_t</font></code> </td><td align='left'  valign='top'>
+
+	<code><font color="blue">index</font></code> </td><td align='left'  valign='top'>
+
+	identifier for this residual; see
+	<a href="residual_density.htm#index" target="_top"><span style='white-space: nowrap'>index</span></a>
+ above.
+</td></tr>
+</table>
+<br>
+<b><a name="residual.wres" id="residual.wres">wres</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+ is false, 
+<code><i><font color="black"><span style='white-space: nowrap'>wres</span></font></i></code>
+ is the value of
+<small>@[@
+
+	R(y, \mu, \delta, d)
+
+@]@</small>
+see <a href="statistic.htm#Weighted Residual Function, R" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual&nbsp;function</span></a>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+ is true, 
+<code><i><font color="black"><span style='white-space: nowrap'>wres</span></font></i></code>
+ is the value of
+<small>@[@
+
+	R(z, y, \mu, \delta, d)
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="residual.logden" id="residual.logden">logden</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+ is false, the log-density function
+<small>@[@
+
+	D(y, \mu, \delta, d)
+
+@]@</small>
+is equal to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>logden_smooth</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;fabs(</span></font><i><font color="black"><span style='white-space: nowrap'>logden_sub_abs)</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+see <a href="statistic.htm#Log-Density Function, D" target="_top"><span style='white-space: nowrap'>log-density&nbsp;function</span></a>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+ is true, the log-density function
+<small>@[@
+
+	D(z, y, \mu, \delta, d)
+
+@]@</small>
+is equal to
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>logden_smooth</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;fabs(</span></font><i><font color="black"><span style='white-space: nowrap'>logden_sub_abs)</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+This expresses the log-density
+in terms of smooth functions (for optimization purposes).
+In the case of the uniform density,
+both 
+<code><i><font color="black"><span style='white-space: nowrap'>logden_smooth</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>logden_sub_abs</span></font></i></code>
+ will be zero.
+In the case of the gaussian and log-gaussian densities,
+
+<code><i><font color="black"><span style='white-space: nowrap'>logden_sub_abs</span></font></i></code>
+ will be zero.
+
+
+<hr>Input File: devel/utility/residual_density.cpp
+
+</body>
+</html>

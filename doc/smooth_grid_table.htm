@@ -1,0 +1,299 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Smooth Grid Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Smooth Grid Table">
+<meta name="keywords" id="keywords" content=" the smooth grid table smooth_grid_id smooth_id age_id time_id value_prior_id dage_prior_id dtime_prior_id const_value rectangular example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_smooth_grid_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="rate_table.py.htm" target="_top">Prev</a>
+</td><td><a href="smooth_grid_table.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>smooth_grid_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>smooth_grid_table-&gt;</option>
+<option>smooth_grid_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>smooth_grid_id</option>
+<option>smooth_id</option>
+<option>age_id</option>
+<option>time_id</option>
+<option>value_prior_id</option>
+<option>dage_prior_id</option>
+<option>dtime_prior_id</option>
+<option>const_value</option>
+<option>Rectangular Grid</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Smooth Grid Table</big></big></b></center>
+This table specifies smoothings for functions of age and time.
+It has the following columns:
+
+<br>
+<br>
+<b><big><a name="smooth_grid_id" id="smooth_grid_id">smooth_grid_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for
+the <code><font color="blue">smooth_grid</font></code> table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="smooth_id" id="smooth_id">smooth_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for
+the <a href="smooth_table.htm" target="_top"><span style='white-space: nowrap'>smooth_table</span></a>
+.
+Each 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+ value corresponds to a different smoothing.
+
+<br>
+<br>
+<b><big><a name="age_id" id="age_id">age_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is a
+<a href="age_table.htm#age_id" target="_top"><span style='white-space: nowrap'>age_id</span></a>
+ in the age table.
+Each 
+<code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
+ value corresponds to a specific age.
+
+<br>
+<br>
+<b><big><a name="time_id" id="time_id">time_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is a
+<a href="time_table.htm#time_id" target="_top"><span style='white-space: nowrap'>time_id</span></a>
+ in the time table.
+Each 
+<code><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i></code>
+ value corresponds to a specific time.
+
+<br>
+<br>
+<b><big><a name="value_prior_id" id="value_prior_id">value_prior_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the
+<a href="prior_table.htm#prior_id" target="_top"><span style='white-space: nowrap'>prior_id</span></a>
+ for the function's values
+at the corresponding age and time.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>value_prior_id</span></font></i></code>
+ is null (not null),
+
+<code><i><font color="black"><span style='white-space: nowrap'>const_value</span></font></i></code>
+ must not be null (must be null).
+
+<br>
+<br>
+<b><big><a name="dage_prior_id" id="dage_prior_id">dage_prior_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the
+<a href="prior_table.htm#prior_id" target="_top"><span style='white-space: nowrap'>prior_id</span></a>
+ for the function's
+forward difference w.r.t age
+at the corresponding age and time; see age differences for
+<a href="fixed_diff.htm#Age Differences" target="_top"><span style='white-space: nowrap'>fixed</span></a>
+ and
+<a href="random_diff.htm#Time Differences" target="_top"><span style='white-space: nowrap'>random</span></a>
+ effects.
+The prior at the maximum age, for each time, is not used and
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>dage_prior_id</span></font></i></code>
+ must be null.
+All of the other 
+<code><i><font color="black"><span style='white-space: nowrap'>data_prior_id</span></font></i></code>
+ must not be null.
+
+<br>
+<br>
+<b><big><a name="dtime_prior_id" id="dtime_prior_id">dtime_prior_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the
+<a href="prior_table.htm#prior_id" target="_top"><span style='white-space: nowrap'>prior_id</span></a>
+ for the function's
+forward difference w.r.t time
+at the corresponding age and time; see time differences for
+<a href="fixed_diff.htm#Time Differences" target="_top"><span style='white-space: nowrap'>fixed</span></a>
+ and
+<a href="random_diff.htm#Time Differences" target="_top"><span style='white-space: nowrap'>random</span></a>
+ effects.
+The prior at the maximum time, for each time, is not used and
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>dtime_prior_id</span></font></i></code>
+ must be null.
+All of the other 
+<code><i><font color="black"><span style='white-space: nowrap'>dtime_prior_id</span></font></i></code>
+ must not be null.
+
+<br>
+<br>
+<b><big><a name="const_value" id="const_value">const_value</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code>.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>const_value</span></font></i></code>
+ is not null, it specifies the value of
+the function at the corresponding age and time.
+This case is equivalent to
+<a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
+,
+<a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
+, and
+<a href="prior_table.htm#mean" target="_top"><span style='white-space: nowrap'>mean</span></a>
+, equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>const_value</span></font></i></code>
+
+and
+<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density</span></a>
+ is <code><font color="blue">uniform</font></code>.
+See the <a href="create_database.htm#smooth_table.const_value" target="_top"><span style='white-space: nowrap'>const_value</span></a>
+
+heading for instructions on using this with <a href="create_database.htm" target="_top"><span style='white-space: nowrap'>create_database</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Rectangular Grid" id="Rectangular Grid">Rectangular Grid</a></big></b>
+<br>
+For each fixed value of 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+
+the set of 
+<code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i></code>
+ pairs is rectangular.
+In other words,
+if an 
+<code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
+ value appears,
+it appears once with each 
+<code><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i></code>
+
+that appears with this 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+.
+This also means,
+if a 
+<code><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i></code>
+ value appears,
+it appears once with each 
+<code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
+
+that appears with this 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="smooth_grid_table.py.htm" target="_top"><span style='white-space: nowrap'>smooth_grid_table.py</span></a>
+ and <a href="get_smooth_grid_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_smooth_grid_xam.cpp</span></a>
+
+contain example <code><font color="blue">smooth</font></code> tables.
+
+
+<hr>Input File: omh/table/smooth_grid_table.omh
+
+</body>
+</html>

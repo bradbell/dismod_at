@@ -1,0 +1,376 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Data Model: Constructor</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Data Model: Constructor">
+<meta name="keywords" id="keywords" content=" data model: constructor syntax data_object parent_node_id n_covariate n_age_ode n_time_ode ode_step_size age_table time_table integrand_table node_table subset_object subset_cov_value w_info_vec s_info_vec pack_object child_object ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_data_model_ctor_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="devel_data_model.htm" target="_top">Prev</a>
+</td><td><a href="set_eigne_ode2_case_number.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_model</option>
+<option>devel_data_model</option>
+<option>data_model_ctor</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_model-&gt;</option>
+<option>devel_data_model</option>
+<option>prior_model</option>
+<option>fit_model</option>
+<option>depend</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_data_model-&gt;</option>
+<option>data_model_ctor</option>
+<option>set_eigne_ode2_case_number</option>
+<option>data_model_replace_like</option>
+<option>data_model_avg_no_ode</option>
+<option>data_model_avg_yes_ode</option>
+<option>data_model_like_one</option>
+<option>data_model_like_all</option>
+</select>
+</td>
+<td>data_model_ctor</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>data_object</option>
+<option>parent_node_id</option>
+<option>n_covariate</option>
+<option>n_age_ode</option>
+<option>n_time_ode</option>
+<option>ode_step_size</option>
+<option>age_table</option>
+<option>time_table</option>
+<option>integrand_table</option>
+<option>node_table</option>
+<option>subset_object</option>
+<option>subset_cov_value</option>
+<option>w_info_vec</option>
+<option>s_info_vec</option>
+<option>pack_object</option>
+<option>child_object</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Data Model: Constructor</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>data_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_covariate</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_age_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_time_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>node_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset_cov_value</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>child_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="data_object" id="data_object">data_object</a></big></b>
+<br>
+This object has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="parent_node_id" id="parent_node_id">parent_node_id</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the
+<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="n_covariate" id="n_covariate">n_covariate</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_covariate</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the number of covariates; i.e., number or rows in
+<a href="covariate_table.htm" target="_top"><span style='white-space: nowrap'>covariate_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="n_age_ode" id="n_age_ode">n_age_ode</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_age_ode</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the number of points in the
+<a href="ode_grid.htm#Age, a_i" target="_top"><span style='white-space: nowrap'>ode&nbsp;age&nbsp;grid</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="n_time_ode" id="n_time_ode">n_time_ode</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_time_ode</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the number of points in the
+<a href="ode_grid.htm#Time, t_j" target="_top"><span style='white-space: nowrap'>ode&nbsp;time&nbsp;grid</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="ode_step_size" id="ode_step_size">ode_step_size</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the value of <a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+
+in the fit command.
+
+<br>
+<br>
+<b><big><a name="age_table" id="age_table">age_table</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;double&gt;&amp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the <a href="get_age_table.htm#age_table" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="time_table" id="time_table">time_table</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;double&gt;&amp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the <a href="get_time_table.htm#time_table" target="_top"><span style='white-space: nowrap'>time_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="integrand_table" id="integrand_table">integrand_table</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;integrand_struct&gt;&amp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the <a href="get_integrand_table.htm#integrand_table" target="_top"><span style='white-space: nowrap'>integrand_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="node_table" id="node_table">node_table</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;node_struct&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>node_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the <a href="get_node_table.htm#node_table" target="_top"><span style='white-space: nowrap'>node_table</span></a>
+.
+Only the <code><font color="blue">parent</font></code> field of this table is used.
+
+<br>
+<br>
+<b><big><a name="subset_object" id="subset_object">subset_object</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;data_subset_struct&gt;&amp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the sub-sampled version of the data or avgint table; see
+<a href="data_subset.htm#data_subset_obj" target="_top"><span style='white-space: nowrap'>data_subset_obj</span></a>
+,
+<a href="avgint_subset.htm#avgint_subset_obj" target="_top"><span style='white-space: nowrap'>avgint_subset_obj</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="subset_cov_value" id="subset_cov_value">subset_cov_value</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;data_subset_struct&gt;&amp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset_cov_value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the sub-sampled version of the covariates; see
+<a href="data_subset.htm#data_subset_cov_value" target="_top"><span style='white-space: nowrap'>data_subset_cov_value</span></a>
+,
+<a href="avgint_subset.htm#avgint_subset_cov_value" target="_top"><span style='white-space: nowrap'>avgint_subset_cov_value</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="w_info_vec" id="w_info_vec">w_info_vec</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;weight_info&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+For each <a href="weight_table.htm#weight_id" target="_top"><span style='white-space: nowrap'>weight_id</span></a>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+is the corresponding <a href="weight_info.htm" target="_top"><span style='white-space: nowrap'>weight_info</span></a>
+ information.
+
+<br>
+<br>
+<b><big><a name="s_info_vec" id="s_info_vec">s_info_vec</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;smooth_info&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+For each <a href="smooth_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+is the corresponding <a href="smooth_info.htm" target="_top"><span style='white-space: nowrap'>smooth_info</span></a>
+ information.
+For each 
+<code><i><font color="black"><span style='white-space: nowrap'>s_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ object,
+only the following functions are used:
+<code><font color="blue">age_size</font></code>, <code><font color="blue">time_size</font></code>, <code><font color="blue">age_id</font></code>, <code><font color="blue">time_id</font></code>.
+
+<br>
+<br>
+<b><big><a name="pack_object" id="pack_object">pack_object</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;pack_info&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the <a href="pack_info.htm" target="_top"><span style='white-space: nowrap'>pack_info</span></a>
+ information corresponding to
+the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="child_object" id="child_object">child_object</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;child_info&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>child_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the <a href="child_info.htm" target="_top"><span style='white-space: nowrap'>child_info</span></a>
+ information corresponding to
+parent node, node table, and data table.
+
+
+<hr>Input File: devel/model/data_model.cpp
+
+</body>
+</html>

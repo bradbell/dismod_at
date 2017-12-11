@@ -1,0 +1,408 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Prior for Fixed Effect Values</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Prior for Fixed Effect Values">
+<meta name="keywords" id="keywords" content=" prior fixed effect values theta lambda beta value constraints theta_k l_k^v u_k^v age difference limits a_i(k) delta^a l_k^a u_k^a time normalization constant c_theta p(theta) ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_fixed_prior_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="fixed_diff.htm" target="_top">Prev</a>
+</td><td><a href="random_value.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>fixed_prior</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>model-&gt;</option>
+<option>model_variables</option>
+<option>avg_integrand</option>
+<option>data_like</option>
+<option>fixed_value</option>
+<option>fixed_diff</option>
+<option>fixed_prior</option>
+<option>random_value</option>
+<option>random_diff</option>
+<option>random_prior</option>
+<option>statistic</option>
+<option>bilinear</option>
+<option>ode_grid</option>
+</select>
+</td>
+<td>fixed_prior</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>theta</option>
+<option>---..lambda</option>
+<option>---..beta</option>
+<option>---..theta</option>
+<option>Value Constraints</option>
+<option>---..theta_k</option>
+<option>---..L_k^v</option>
+<option>---..U_k^v</option>
+<option>Age Difference Limits</option>
+<option>---..a_i(k)</option>
+<option>---..Delta^a</option>
+<option>---..L_k^a</option>
+<option>---..U_k^a</option>
+<option>Time Difference Limits</option>
+<option>Theta</option>
+<option>Normalization Constant, C_theta</option>
+<option>p(theta)</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Prior for Fixed Effect Values</big></big></b></center>
+<br>
+<b><big><a name="theta" id="theta">theta</a></big></b>
+
+
+<br>
+<br>
+<b><a name="theta.lambda" id="theta.lambda">lambda</a></b>
+<br>
+We use <small>@(@
+\lambda
+@)@</small> to denote
+the sub-vector of the fixed effects that are
+<a href="model_variables.htm#Fixed Effects, theta.Smoothing Standard Deviation Multipliers, lambda" target="_top"><span style='white-space: nowrap'>standard&nbsp;deviation&nbsp;multipliers</span></a>
+.
+
+<br>
+<br>
+<b><a name="theta.beta" id="theta.beta">beta</a></b>
+<br>
+We use <small>@(@
+\beta
+@)@</small> to denote
+the sub-vector of the fixed effects that are
+<a href="model_variables.htm#Fixed Effects, theta.Parent Rates" target="_top"><span style='white-space: nowrap'>parent&nbsp;rates</span></a>
+
+or
+<a href="model_variables.htm#Fixed Effects, theta.Covariate Multipliers" target="_top"><span style='white-space: nowrap'>covariate&nbsp;multipliers</span></a>
+.
+
+<br>
+<br>
+<b><a name="theta.theta" id="theta.theta">theta</a></b>
+<br>
+We use <small>@(@
+\theta
+@)@</small> to denote the entire fixed effects vector; i.e.,
+<small>@(@
+\theta = ( \lambda , \beta )
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Value Constraints" id="Value Constraints">Value Constraints</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Value Constraints.theta_k" id="Value Constraints.theta_k">theta_k</a></b>
+<br>
+We use <small>@(@
+\theta_k
+@)@</small> to denote
+one component of  <small>@(@
+\theta
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Value Constraints.L_k^v" id="Value Constraints.L_k^v">L_k^v</a></b>
+<br>
+We use <small>@(@
+L_k^v
+@)@</small> to denote the
+<a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
+ limit
+corresponding to the
+<a href="smooth_grid_table.htm#value_prior_id" target="_top"><span style='white-space: nowrap'>value_prior_id</span></a>
+
+that corresponds to the fixed effect <small>@(@
+\theta_k
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Value Constraints.U_k^v" id="Value Constraints.U_k^v">U_k^v</a></b>
+<br>
+We use <small>@(@
+U_k^v
+@)@</small> to denote the
+<a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
+ limit
+corresponding to the
+<a href="smooth_grid_table.htm#value_prior_id" target="_top"><span style='white-space: nowrap'>value_prior_id</span></a>
+
+that corresponds to the fixed effect <small>@(@
+\theta_k
+@)@</small>.
+
+
+<br>
+<br>
+<b><big><a name="Age Difference Limits" id="Age Difference Limits">Age Difference Limits</a></big></b>
+<br>
+The fixed effects corresponding to the standard deviations multipliers
+<a href="smooth_table.htm#mulstd_value_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_value_prior_id</span></a>
+,
+<a href="smooth_table.htm#mulstd_dage_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dage_prior_id</span></a>
+, and
+<a href="smooth_table.htm#mulstd_dtime_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dtime_prior_id</span></a>
+
+are constant with respect to age and time.
+Hence the constraints
+below do not apply to the standard deviation multipliers.
+
+<br>
+<br>
+<b><a name="Age Difference Limits.a_i(k)" id="Age Difference Limits.a_i(k)">a_i(k)</a></b>
+<br>
+We use <small>@(@
+a_{i(k)}
+@)@</small> to denote the age corresponding to the
+<a href="smooth_grid_table.htm#age_id" target="_top"><span style='white-space: nowrap'>age_id</span></a>
+ for the fixed effect
+<small>@(@
+\theta_k
+@)@</small>.
+If this is the maximum age for the corresponding
+<a href="smooth_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+,
+then there is no age difference for this fixed effect.
+Otherwise, we use <small>@(@
+a_{i(k)+1}
+@)@</small> to denote the next larger age
+in the smoothing grid and
+<small>@(@
+\theta_{\ell(k)}
+@)@</small> denote the corresponding component of
+<small>@(@
+\theta
+@)@</small> corresponding to the next larger age.
+
+<br>
+<br>
+<b><a name="Age Difference Limits.Delta^a" id="Age Difference Limits.Delta^a">Delta^a</a></b>
+<br>
+If <small>@(@
+a_{i(k)}
+@)@</small> is not the maximum age, we use the notation
+<small>@[@
+
+\Delta^a_k \theta = \theta_{\ell(k)} - \theta_k
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Age Difference Limits.L_k^a" id="Age Difference Limits.L_k^a">L_k^a</a></b>
+<br>
+We use <small>@(@
+L_k^a
+@)@</small> to denote the
+<a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
+ limit
+corresponding to the
+<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
+
+that corresponds to the fixed effect <small>@(@
+\theta_k
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Age Difference Limits.U_k^a" id="Age Difference Limits.U_k^a">U_k^a</a></b>
+<br>
+We use <small>@(@
+U_k^a
+@)@</small> to denote the
+<a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
+ limit
+corresponding to the
+<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
+
+that corresponds to the fixed effect <small>@(@
+\theta_k
+@)@</small>.
+
+
+<br>
+<br>
+<b><big><a name="Time Difference Limits" id="Time Difference Limits">Time Difference Limits</a></big></b>
+<br>
+The time difference <small>@(@
+\Delta^t_k \theta
+@)@</small>,
+the index <small>@(@
+j(k)
+@)@</small>, and limits
+<small>@(@
+L_k^t
+@)@</small> and <small>@(@
+U_k^t
+@)@</small> are defined in a fashion
+similar as for the age differences.
+
+<br>
+<br>
+<b><big><a name="Theta" id="Theta">Theta</a></big></b>
+<br>
+The constraint set <small>@(@
+\Theta
+@)@</small> is defined as the set of
+<small>@(@
+\theta
+@)@</small> such that the following conditions hold:
+
+<ol type="1"><li>
+For all <small>@(@
+k
+@)@</small>,
+<small>@[@
+
+	L_k^v \leq \theta_k \leq U_k^v
+
+@]@</small>
+</li><li>
+
+For <small>@(@
+k
+@)@</small>,
+that are not standard deviation multipliers,
+and such that <small>@(@
+a_{i(k)}
+@)@</small> is not the maximum age
+for the corresponding smoothing,
+<small>@[@
+
+	L_k^a \leq \Delta^a_k \theta \leq U_k^a
+
+@]@</small>
+</li><li>
+
+For <small>@(@
+k
+@)@</small>,
+that are not standard deviation multipliers,
+and such that <small>@(@
+t_{j(k)}
+@)@</small> is not the maximum time
+for the corresponding smoothing,
+<small>@[@
+
+	L_k^t \leq \Delta^t_k \theta \leq U_k^t
+
+@]@</small>
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="Normalization Constant, C_theta" id="Normalization Constant, C_theta">Normalization Constant, C_theta</a></big></b>
+<br>
+The normalization constant for the fixed effects density is
+<small>@[@
+
+C_\theta
+=
+\int_{\Theta}
+	V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
+		\; \B{d} \theta
+
+@]@</small>
+See <a href="fixed_value.htm#V^theta" target="_top"><span style='white-space: nowrap'>V^theta</span></a>
+,
+<a href="fixed_diff.htm#Age Differences.A^theta" target="_top"><span style='white-space: nowrap'>A^theta</span></a>
+, and
+<a href="fixed_diff.htm#Time Differences.T^theta" target="_top"><span style='white-space: nowrap'>T^theta</span></a>
+  for the definitions of
+<small>@(@
+V^\theta
+@)@</small>, <small>@(@
+A^\theta
+@)@</small> and <small>@(@
+T^\theta
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="p(theta)" id="p(theta)">p(theta)</a></big></b>
+<br>
+We define the prior for the fixed effects by
+<small>@[@
+
+C_\theta \; \B{p} ( \theta )
+=
+V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
+
+@]@</small>
+
+
+<hr>Input File: omh/model/fixed_prior.omh
+
+</body>
+</html>

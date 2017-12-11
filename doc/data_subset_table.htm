@@ -1,0 +1,177 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Data Subset Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Data Subset Table">
+<meta name="keywords" id="keywords" content=" the data subset table data_subset_id data_id discussion node covariates example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_data_subset_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="var_table.htm" target="_top">Prev</a>
+</td><td><a href="depend_var_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>data_flow</option>
+<option>data_subset_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>data_flow-&gt;</option>
+<option>log_table</option>
+<option>var_table</option>
+<option>data_subset_table</option>
+<option>depend_var_table</option>
+<option>start_var_table</option>
+<option>scale_var_table</option>
+<option>fit_var_table</option>
+<option>fit_data_subset_table</option>
+<option>truth_var_table</option>
+<option>simulate_table</option>
+<option>sample_table</option>
+<option>predict_table</option>
+</select>
+</td>
+<td>data_subset_table</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>data_subset_id</option>
+<option>data_id</option>
+<option>Discussion</option>
+<option>---..Node</option>
+<option>---..Covariates</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Data Subset Table</big></big></b></center>
+.
+
+<br>
+<br>
+<b><big><a name="data_subset_id" id="data_subset_id">data_subset_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="data_id" id="data_id">data_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is a
+<a href="data_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+ in the data table.
+These values are unique and monotone increasing with
+
+<code><i><font color="black"><span style='white-space: nowrap'>data_subset_id</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<br>
+The <code><font color="blue">data_subset</font></code> table identifies which rows of the
+<a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+ are included in the <a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset_table</span></a>
+.
+This is defined by the set of rows in the <code><font color="blue">data</font></code> table
+such that the following conditions hold:
+
+<br>
+<br>
+<b><a name="Discussion.Node" id="Discussion.Node">Node</a></b>
+<br>
+The <a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node</span></a>
+ is a
+<a href="node_table.htm#parent.Descendant" target="_top"><span style='white-space: nowrap'>descendant</span></a>
+
+of the parent node.
+
+<br>
+<br>
+<b><a name="Discussion.Covariates" id="Discussion.Covariates">Covariates</a></b>
+<br>
+All of the
+<a href="data_table.htm#Covariates" target="_top"><span style='white-space: nowrap'>covariates</span></a>
+ satisfy the
+<a href="covariate_table.htm#max_difference" target="_top"><span style='white-space: nowrap'>max_difference</span></a>
+ criteria.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+See <a href="init_command.py.htm" target="_top"><span style='white-space: nowrap'>init_command.py</span></a>
+ example and test.
+
+
+<hr>Input File: omh/table/data_subset_table.omh
+
+</body>
+</html>

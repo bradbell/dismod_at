@@ -1,0 +1,143 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>User Examples and Tests</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="User Examples and Tests">
+<meta name="keywords" id="keywords" content=" user examples tests see also example.db ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_user_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="get_started_db.py.htm" target="_top">Prev</a>
+</td><td><a href="user_asymptotic.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>user</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>user-&gt;</option>
+<option>user_asymptotic.py</option>
+<option>user_const_random.py</option>
+<option>user_const_value.py</option>
+<option>user_continue_fit.py</option>
+<option>user_diff_constraint.py</option>
+<option>user_fit_fixed.py</option>
+<option>user_fit_random.py</option>
+<option>user_fit_sim.py</option>
+<option>user_jump_at_age.py</option>
+<option>user_lasso_covariate.py</option>
+<option>user_meas_covariate.py</option>
+<option>user_no_children.py</option>
+<option>user_predict_fit.py</option>
+<option>user_zero_sum_random.py</option>
+<option>user_re_scale.py</option>
+<option>user_speed.py</option>
+<option>user_students.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>See Also</option>
+<option>example.db</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>User Examples and Tests</big></big></b></center>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="get_started.htm" target="_top"><span style='white-space: nowrap'>get_started</span></a>
+
+
+<br>
+<br>
+<b><big><a name="example.db" id="example.db">example.db</a></big></b>
+<br>
+Note the each of the examples below can by run with the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>python3_executable</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;example/user/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where <a href="run_cmake.sh.htm#python3_executable" target="_top"><span style='white-space: nowrap'>python3_executable</span></a>
+
+is the python3 program and 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ is the name of the example
+(including the <code><font color="blue">.py</font></code> extension at the end but not the <code><font color="blue">user_</font></code>
+at the front).
+Running the example will create the database
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;build/example/user/example.db<br>
+</span></font></code>
+which can be inspected using any sqlite viewer; e.g.,
+<a href="https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/" target="_top"><span style='white-space: nowrap'>firefox</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="user_asymptotic.py.htm" target="_top">user_asymptotic.py</a></td><td>Sample&nbsp;from&nbsp;Asymptotic&nbsp;Distribution&nbsp;for&nbsp;Model&nbsp;Variables</td></tr><tr><td><a href="user_const_random.py.htm" target="_top">user_const_random.py</a></td><td>Fitting&nbsp;With&nbsp;Non-Zero&nbsp;Constant&nbsp;Random&nbsp;Effects&nbsp;in&nbsp;Smoothing&nbsp;Grid</td></tr><tr><td><a href="user_const_value.py.htm" target="_top">user_const_value.py</a></td><td>Fitting&nbsp;Using&nbsp;const_value&nbsp;in&nbsp;Smoothing&nbsp;Grid</td></tr><tr><td><a href="user_continue_fit.py.htm" target="_top">user_continue_fit.py</a></td><td>Continuing&nbsp;a&nbsp;Fit&nbsp;From&nbsp;Where&nbsp;it&nbsp;Left&nbsp;Off</td></tr><tr><td><a href="user_diff_constraint.py.htm" target="_top">user_diff_constraint.py</a></td><td>Constraints&nbsp;on&nbsp;Differences&nbsp;in&nbsp;Age&nbsp;and&nbsp;Time</td></tr><tr><td><a href="user_fit_fixed.py.htm" target="_top">user_fit_fixed.py</a></td><td>Fitting&nbsp;Just&nbsp;Fixed&nbsp;Effects</td></tr><tr><td><a href="user_fit_random.py.htm" target="_top">user_fit_random.py</a></td><td>Fitting&nbsp;Just&nbsp;Random&nbsp;Effects</td></tr><tr><td><a href="user_fit_sim.py.htm" target="_top">user_fit_sim.py</a></td><td>Fitting&nbsp;Simulated&nbsp;Data&nbsp;Example</td></tr><tr><td><a href="user_jump_at_age.py.htm" target="_top">user_jump_at_age.py</a></td><td>Case&nbsp;with&nbsp;a&nbsp;Jump&nbsp;in&nbsp;Rate&nbsp;at&nbsp;an&nbsp;Age</td></tr><tr><td><a href="user_lasso_covariate.py.htm" target="_top">user_lasso_covariate.py</a></td><td>Using&nbsp;Lasso&nbsp;on&nbsp;Covariate&nbsp;Multiplier</td></tr><tr><td><a href="user_meas_covariate.py.htm" target="_top">user_meas_covariate.py</a></td><td>Using&nbsp;Measurement&nbsp;Covariates&nbsp;on&nbsp;Multiple&nbsp;Integrands</td></tr><tr><td><a href="user_no_children.py.htm" target="_top">user_no_children.py</a></td><td>Case&nbsp;with&nbsp;no&nbsp;Children;&nbsp;i.e.,&nbsp;no&nbsp;Random&nbsp;Effects</td></tr><tr><td><a href="user_predict_fit.py.htm" target="_top">user_predict_fit.py</a></td><td>Predict&nbsp;Average&nbsp;Integrand&nbsp;Using&nbsp;Results&nbsp;of&nbsp;a&nbsp;Fit</td></tr><tr><td><a href="user_zero_sum_random.py.htm" target="_top">user_zero_sum_random.py</a></td><td>Fitting&nbsp;With&nbsp;Sum&nbsp;of&nbsp;Random&nbsp;Effect&nbsp;Constrained&nbsp;to&nbsp;Zero</td></tr><tr><td><a href="user_re_scale.py.htm" target="_top">user_re_scale.py</a></td><td>Case&nbsp;Where&nbsp;Re-Scaling&nbsp;is&nbsp;Useful</td></tr><tr><td><a href="user_speed.py.htm" target="_top">user_speed.py</a></td><td>A&nbsp;Simulate&nbsp;Data&nbsp;Speed&nbsp;Test</td></tr><tr><td><a href="user_students.py.htm" target="_top">user_students.py</a></td><td>Using&nbsp;Student's-t&nbsp;to&nbsp;Fitting&nbsp;Data&nbsp;with&nbsp;Outliers</td></tr></table>
+<hr>Input File: example/user/user.omh
+
+</body>
+</html>

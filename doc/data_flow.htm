@@ -1,0 +1,354 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Dismod_at Data Flow</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Dismod_at Data Flow">
+<meta name="keywords" id="keywords" content=" the dismod_at data flow output tables input command ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_data_flow_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="weight_table.htm" target="_top">Prev</a>
+</td><td><a href="log_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>data_flow-&gt;</option>
+<option>log_table</option>
+<option>var_table</option>
+<option>data_subset_table</option>
+<option>depend_var_table</option>
+<option>start_var_table</option>
+<option>scale_var_table</option>
+<option>fit_var_table</option>
+<option>fit_data_subset_table</option>
+<option>truth_var_table</option>
+<option>simulate_table</option>
+<option>sample_table</option>
+<option>predict_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Output Tables</option>
+<option>Input and Output by Command</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Dismod_at Data Flow</big></big></b></center>
+Tables are used to transfer information from one command to another.
+Each of the output tables
+below is created by a <a href="command.htm" target="_top"><span style='white-space: nowrap'>command</span></a>
+.
+Some of the extra input tables
+may be created, or replaced, by the dismod_at user.
+Also note that a row is written in the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
+ at the beginning
+and end of every command.
+In addition, the log table is cumulative; i.e.,
+it is never erased and restarted.
+
+
+<br>
+<br>
+<b><big><a name="Output Tables" id="Output Tables">Output Tables</a></big></b>
+<br>
+Here is a list of the <code><font color="blue">dismod_at</font></code> output tables.
+The ones that can be created directly by the user have
+yes under By User.
+<table><tr><td align='left'  valign='top'>
+
+Table </td><td align='left'  valign='top'>
+
+Output By </td><td align='left'  valign='top'>
+
+By User   </td><td align='left'  valign='top'>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log</span></a>
+ </td><td align='left'  valign='top'>
+
+all commands </td><td align='left'  valign='top'>
+
+no
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init</span></a>
+ </td><td align='left'  valign='top'>
+
+no
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init</span></a>
+ </td><td align='left'  valign='top'>
+
+no
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init</span></a>
+,
+<a href="set_command.htm#table_out.start_var" target="_top"><span style='white-space: nowrap'>set</span></a>
+ </td><td align='left'  valign='top'>
+
+yes
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init</span></a>
+,
+<a href="set_command.htm#table_out.scale_var" target="_top"><span style='white-space: nowrap'>set</span></a>
+ </td><td align='left'  valign='top'>
+
+yes
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="depend_var_table.htm" target="_top"><span style='white-space: nowrap'>depend_var</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="depend_command.htm" target="_top"><span style='white-space: nowrap'>depend</span></a>
+ </td><td align='left'  valign='top'>
+
+no
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit</span></a>
+ </td><td align='left'  valign='top'>
+
+no
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="set_command.htm#table_out.truth_var" target="_top"><span style='white-space: nowrap'>set</span></a>
+ </td><td align='left'  valign='top'>
+
+yes
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit</span></a>
+ </td><td align='left'  valign='top'>
+
+no
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="set_command.htm#table_out.truth_var" target="_top"><span style='white-space: nowrap'>set</span></a>
+ </td><td align='left'  valign='top'>
+
+yes
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate</span></a>
+ </td><td align='left'  valign='top'>
+
+no
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="sample_command.htm" target="_top"><span style='white-space: nowrap'>sample</span></a>
+ </td><td align='left'  valign='top'>
+
+yes
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="predict_table.htm" target="_top"><span style='white-space: nowrap'>predict</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict</span></a>
+ </td><td align='left'  valign='top'>
+
+no
+</td></tr>
+</table>
+<br>
+<b><big><a name="Input and Output by Command" id="Input and Output by Command">Input and Output by Command</a></big></b>
+<br>
+An extra input table is one that is not in the <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
+ list
+and is not created by the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+.
+The tables created by the init command are the
+<a href="init_command.htm#var_table" target="_top"><span style='white-space: nowrap'>var</span></a>
+,
+<a href="init_command.htm#data_subset_table" target="_top"><span style='white-space: nowrap'>data_subset</span></a>
+,
+<a href="init_command.htm#start_var_table" target="_top"><span style='white-space: nowrap'>start_var</span></a>
+, and
+<a href="init_command.htm#scale_var_table" target="_top"><span style='white-space: nowrap'>scale_var</span></a>
+ tables.
+
+<table><tr><td align='left'  valign='top'>
+
+Command     </td><td align='left'  valign='top'>
+
+Extra Input </td><td align='left'  valign='top'>
+
+Output      </td><td align='left'  valign='top'>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="depend_command.htm" target="_top"><span style='white-space: nowrap'>depend</span></a>
+   </td><td align='left'  valign='top'>
+
+</td><td align='left'  valign='top'>
+
+<a href="depend_var_table.htm" target="_top"><span style='white-space: nowrap'>depend_var_table</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set</span></a>
+                     </td><td align='left'  valign='top'>
+
+<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+, <a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+  </td><td align='left'  valign='top'>
+
+<a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+, <a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var_table</span></a>
+, <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit</span></a>
+     </td><td align='left'  valign='top'>
+
+	<a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+  </td><td align='left'  valign='top'>
+
+	<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+, <a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset_table</span></a>
+.
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate</span></a>
+ </td><td align='left'  valign='top'>
+
+	<a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
+        </td><td align='left'  valign='top'>
+
+	<a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="sample_command.htm" target="_top"><span style='white-space: nowrap'>sample</span></a>
+ </td><td align='left'  valign='top'>
+
+	<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+, <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+ </td><td align='left'  valign='top'>
+
+	<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict</span></a>
+ </td><td align='left'  valign='top'>
+
+	<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+, <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+, <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
+ </td><td align='left'  valign='top'>
+
+	<a href="predict_table.htm" target="_top"><span style='white-space: nowrap'>predict_table</span></a>
+
+</td></tr>
+</table>
+
+<hr>Input File: omh/table/data_flow.omh
+
+</body>
+</html>

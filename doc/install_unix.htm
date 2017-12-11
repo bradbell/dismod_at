@@ -1,0 +1,473 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Installing dismod_at in Unix</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Installing dismod_at in Unix">
+<meta name="keywords" id="keywords" content=" installing dismod_at unix download system requirements c++ compiler fortran cmake pkg-config python3 sqlite3 gsl special run_cmake.sh libdir.sh eigen ipopt suitesparse cppad cppad_mixed setup build_type command test install executable path python example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_install_unix_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="_contents.htm" target="_top">Prev</a>
+</td><td><a href="run_cmake.sh.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>install_unix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>install_unix-&gt;</option>
+<option>run_cmake.sh</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Download</option>
+<option>System Requirements</option>
+<option>---..C++ Compiler</option>
+<option>---..Fortran Compiler</option>
+<option>---..cmake</option>
+<option>---..pkg-config</option>
+<option>---..python3</option>
+<option>---..sqlite3</option>
+<option>---..gsl</option>
+<option>Special Requirements</option>
+<option>---..run_cmake.sh</option>
+<option>---..libdir.sh</option>
+<option>---..eigen</option>
+<option>---..ipopt</option>
+<option>---..suitesparse</option>
+<option>---..CppAD</option>
+<option>---..cppad_mixed</option>
+<option>dismod_at</option>
+<option>---..Setup</option>
+<option>---..build_type</option>
+<option>---..Cmake Command</option>
+<option>---..Test</option>
+<option>---..Install</option>
+<option>---..Executable Path</option>
+<option>Python Path</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Installing dismod_at in Unix</big></big></b></center>
+<br>
+<b><big><a name="Download" id="Download">Download</a></big></b>
+<br>
+Download the tarball <a href="dismod_at-20171211.tgz" target="_top"><span style='white-space: nowrap'>dismod_at-20171211.tgz</span></a>
+
+and then extract it using the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tar&nbsp;-xzf&nbsp;dismod_at-20171211.tgz<br>
+</span></font></code>
+<br>
+<b><big><a name="System Requirements" id="System Requirements">System Requirements</a></big></b>
+<br>
+The following programs are required by dismod_at
+and should have standard system installs:
+
+<br>
+<br>
+<b><a name="System Requirements.C++ Compiler" id="System Requirements.C++ Compiler">C++ Compiler</a></b>
+<br>
+The <code><font color="blue">dismod_at</font></code> program can be compiled by any C++98 compliant compiler;
+e.g., <code><font color="blue">g++</font></code>.
+(Note that a C++11 compiler would be better.)
+
+<br>
+<br>
+<b><a name="System Requirements.Fortran Compiler" id="System Requirements.Fortran Compiler">Fortran Compiler</a></b>
+<br>
+A fortran compiler is required by <code><font color="blue">ipopt</font></code> which in turn
+is required by <code><font color="blue">dismod_at</font></code>.
+
+<br>
+<br>
+<b><a name="System Requirements.cmake" id="System Requirements.cmake">cmake</a></b>
+
+<br>
+<a href="http://www.cmake.org/" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+,
+a program that installs other programs.
+
+<br>
+<br>
+<b><a name="System Requirements.pkg-config" id="System Requirements.pkg-config">pkg-config</a></b>
+<br>
+The <a href="http://www.freedesktop.org/wiki/Software/pkg-config/" target="_top"><span style='white-space: nowrap'>pkg-config</span></a>
+
+program must be installed.
+After <code><font color="blue">sqlite3</font></code>, <code><font color="blue">gsl</font></code>, and <code><font color="blue">ipopt</font></code> are installed
+(see below), the following commands should work:
+<code><font color='blue'><pre style='display:inline'> 
+     pkg-config sqlite3 --libs
+     pkg-config gsl     --libs
+     pkg-config ipopt   --libs
+</pre></font></code>
+If one of them fails, a corresponding directory is missing
+from the <code><font color="blue">PKG_CONFIG_PATH</font></code> environment variable.
+
+<br>
+<br>
+<b><a name="System Requirements.python3" id="System Requirements.python3">python3</a></b>
+<br>
+The <a href="http://www.python.org/" target="_top"><span style='white-space: nowrap'>python3</span></a>
+,
+programming language.
+Note may need to install some standard python packages; e.g.,
+<code><font color="blue">numpy</font></code>.
+
+<br>
+<br>
+<b><a name="System Requirements.sqlite3" id="System Requirements.sqlite3">sqlite3</a></b>
+<br>
+The <a href="href" target="_top"><span style='white-space: nowrap'>http://sqlite.org/</span></a>
+ library,
+version 3.7.11 (released on 2012-03-20) or higher; see
+<a href="http://www.sqlite.org/changes.html" target="_top"><span style='white-space: nowrap'>sqlite&nbsp;releases</span></a>
+.
+Note that the development headers are required; e.g.,
+on Fedora or Red-Hat one needs to install <code><font color="blue">sqlite-devel</font></code>.
+
+<br>
+<br>
+<b><a name="System Requirements.gsl" id="System Requirements.gsl">gsl</a></b>
+
+<br>
+<a href="http://gnuwin32.sourceforge.net/packages/gsl.htm" target="_top"><span style='white-space: nowrap'>gsl</span></a>
+,
+the gnu scientific library.
+Note that the development headers are required; e.g.,
+on Fedora or Red-Hat one needs to install <code><font color="blue">gsl-devel</font></code>.
+
+<br>
+<br>
+<b><big><a name="Special Requirements" id="Special Requirements">Special Requirements</a></big></b>
+<br>
+The packages listed below are required by dismod_at
+and may not have standard system installs
+(<code><font color="blue">libdir.sh</font></code> is a file not a package).
+
+<br>
+<br>
+<b><a name="Special Requirements.run_cmake.sh" id="Special Requirements.run_cmake.sh">run_cmake.sh</a></b>
+<br>
+The settings in <a href="run_cmake.sh.htm" target="_top"><span style='white-space: nowrap'>bin/run_cmake.sh</span></a>
+ are used by the
+scripts that install the special requirements. You must first change
+these settings to the appropriate values for your system before
+running these scripts.
+
+<br>
+<br>
+<b><a name="Special Requirements.libdir.sh" id="Special Requirements.libdir.sh">libdir.sh</a></b>
+<br>
+The script <code><font color="blue">bin/libdir.sh</font></code> determines what directory,
+below the prefix directories, is use for libraries by the install
+programs discussed below. The following is the default value
+for this script
+<pre><tt>    <i><font color="#9A1900"># $Id:$</font></i>
+    <i><font color="#9A1900">#  --------------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900"># dismod_at: Estimating Disease Rates as Functions of Age and Time</font></i>
+    <i><font color="#9A1900">#           Copyright (C) 2014-16 University of Washington</font></i>
+    <i><font color="#9A1900">#              (Bradley M. Bell bradbell@uw.edu)</font></i>
+    <i><font color="#9A1900">#</font></i>
+    <i><font color="#9A1900"># This program is distributed under the terms of the</font></i>
+    <i><font color="#9A1900">#          GNU Affero General Public License version 3.0 or later</font></i>
+    <i><font color="#9A1900"># see http://www.gnu.org/licenses/agpl.txt</font></i>
+    <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900"># /bin/bash -e</font></i>
+    <i><font color="#9A1900"># determine if we should use lib or lib64</font></i>
+    <b><font color="#0000FF">if</font></b> <font color="#990000">[</font> <font color="#FF0000">"$0"</font> <font color="#990000">!=</font> <font color="#FF0000">"bin/libdir.sh"</font> <font color="#990000">]</font>
+    <b><font color="#0000FF">then</font></b>
+     echo <font color="#FF0000">"bin/libdir.sh: must be executed from its parent directory"</font>
+     <b><font color="#0000FF">exit</font></b> <font color="#993399">1</font>
+    <b><font color="#0000FF">fi</font></b>
+    <b><font color="#0000FF">if</font></b> <font color="#990000">[</font> -e /usr/lib<font color="#993399">64</font> <font color="#990000">]</font>
+    <b><font color="#0000FF">then</font></b>
+        echo <font color="#FF0000">'lib64'</font>
+    <b><font color="#0000FF">else</font></b>
+        echo <font color="#FF0000">'lib'</font>
+    <b><font color="#0000FF">fi</font></b>
+    </tt></pre>
+<b><a name="Special Requirements.eigen" id="Special Requirements.eigen">eigen</a></b>
+<br>
+The <a href="http://eigen.tuxfamily.org" target="_top"><span style='white-space: nowrap'>eigen</span></a>
+
+linear algebra package.
+The commands
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at-20171211<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_eigen.sh<br>
+</span></font></code>
+can be used to install this package.
+
+<br>
+<br>
+<b><a name="Special Requirements.ipopt" id="Special Requirements.ipopt">ipopt</a></b>
+<br>
+The <a href="https://projects.coin-or.org/Ipopt" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
+
+optimization package.
+The commands
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at-20171211<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_ipopt.sh<br>
+</span></font></code>
+can be used to install this package.
+
+<br>
+<br>
+<b><a name="Special Requirements.suitesparse" id="Special Requirements.suitesparse">suitesparse</a></b>
+<br>
+The <a href="http://faculty.cse.tamu.edu/davis/suitesparse.html" target="_top"><span style='white-space: nowrap'>SuiteSparse</span></a>
+
+sparse matrix package.
+The commands
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at-20171211<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_suitesparse.sh<br>
+</span></font></code>
+can be used to install this package.
+
+<br>
+<br>
+<b><a name="Special Requirements.CppAD" id="Special Requirements.CppAD">CppAD</a></b>
+<br>
+The <a href="http://www.coin-or.org/CppAD/" target="_top"><span style='white-space: nowrap'>cppad</span></a>
+
+C++ algorithmic differentiation package.
+The commands
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at-20171211<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_cppad.sh<br>
+</span></font></code>
+can be used to install this package.
+
+<br>
+<br>
+<b><a name="Special Requirements.cppad_mixed" id="Special Requirements.cppad_mixed">cppad_mixed</a></b>
+<br>
+The <a href="http://moby.ihme.washington.edu/bradbell/cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+
+C++ random effects modeling package.
+The commands
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at-20171211<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_cppad_mixed.sh<br>
+</span></font></code>
+can be used to install this package.
+
+<br>
+<br>
+<b><big><a name="dismod_at" id="dismod_at">dismod_at</a></big></b>
+<br>
+The steps above should only need to be executed once, not for
+each new version of <code><font color="blue">dismod_at</font></code>
+(unless the <a href="whats_new_2015.htm" target="_top"><span style='white-space: nowrap'>whats_new_2015</span></a>
+ release notes say otherwise).
+The steps below will need to be executed each time you install
+a new version of <code><font color="blue">dismod_at</font></code>:
+
+<br>
+<br>
+<b><a name="dismod_at.Setup" id="dismod_at.Setup">Setup</a></b>
+
+<br>
+The file <a href="run_cmake.sh.htm" target="_top"><span style='white-space: nowrap'>bin/run_cmake.sh</span></a>
+ has setting that
+you should change so they correspond to your machine.
+
+<br>
+<br>
+<b><a name="dismod_at.build_type" id="dismod_at.build_type">build_type</a></b>
+<br>
+Note that the <code><font color="blue">dismod_at</font></code>
+<a href="run_cmake.sh.htm#build_type" target="_top"><span style='white-space: nowrap'>build_type</span></a>
+
+(in the <code><font color="blue">run_cmake.sh</font></code> file)
+must be the same as the build type in the
+<code><font color="blue">bin/install_cppad_mixed.sh</font></code> file.
+
+<br>
+<br>
+<b><a name="dismod_at.Cmake Command" id="dismod_at.Cmake Command">Cmake Command</a></b>
+<br>
+After changing <code><font color="blue">bin/run_cmake.sh</font></code> to work for your system,
+execute the following command:
+<code><font color='blue'><pre style='display:inline'> 
+     bin/run_cmake.sh
+</pre></font></code>
+<br>
+<b><a name="dismod_at.Test" id="dismod_at.Test">Test</a></b>
+<br>
+The following commands are optional and will,
+build the dismod_at executable,
+build the examples and tests,
+and run the examples, correctness tests, and speed tests:
+<code><font color='blue'><pre style='display:inline'> 
+     cd build
+     make check
+     make speed
+</pre></font></code>
+<br>
+<b><a name="dismod_at.Install" id="dismod_at.Install">Install</a></b>
+<br>
+The following command will,
+build the dismod_at library and executable if necessary,
+and install dismod_at:
+<code><font color='blue'><pre style='display:inline'> 
+     cd build
+     make install
+</pre></font></code>
+<br>
+<b><a name="dismod_at.Executable Path" id="dismod_at.Executable Path">Executable Path</a></b>
+<br>
+After the install you will be able to execute the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismod_at<br>
+</span></font></code>
+If you get the error <code><font color="blue">dismod_at: command not found</font></code>,
+you will need to add the binary install directory to you path.
+Use the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/bin<br>
+</span></font></code>
+to check that <code><font color="blue">dismod_at</font></code> is in that directory.
+Use the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;PATH=&quot;$PATH:</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/bin&quot;<br>
+</span></font></code>
+to add that directory to your executable path.
+
+<br>
+<br>
+<b><big><a name="Python Path" id="Python Path">Python Path</a></big></b>
+<br>
+After the install you will be able to import the <code><font color="blue">dismod_at</font></code>
+python library as follows:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>python3</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;import&nbsp;dismod_at<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;quit()<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>python3</span></font></i></code>
+ is your
+<a href="run_cmake.sh.htm#python3_executable" target="_top"><span style='white-space: nowrap'>python3&nbsp;executable</span></a>
+.
+If you get the error <code><font color="blue">No module named 'dismod_at'</font></code>,
+you will need to add to your python path.
+The python module <code><font color="blue">dismod_at</font></code> is installed below
+<a href="run_cmake.sh.htm#dismod_at_prefix" target="_top"><span style='white-space: nowrap'>dismod_at_prefix</span></a>
+
+in the standard place for your python3 executable.
+Use the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib/python/</span></font><i><font color="black"><span style='white-space: nowrap'>py_version</span></font></i><font color="blue"><span style='white-space: nowrap'>/site-packages<br>
+</span></font></code>
+to be sure it is there, where
+
+<code><i><font color="black"><span style='white-space: nowrap'>py_version</span></font></i></code>
+ is the version of python3 you are using.
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>site_packages</span></font></i></code>
+ to denote the path above.
+Use the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;$PYTHONPATH<br>
+</span></font></code>
+to see if your initial python path is empty. If it is empty,
+use the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;PYTHONPATH=&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>site_packages</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;<br>
+</span></font></code>
+to set your python path. If it is non-empty, use
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;PYTHONPATH=&quot;$PYTHONPATH:</span></font><i><font color="black"><span style='white-space: nowrap'>site_packages</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;<br>
+</span></font></code>
+to set your python path.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The section <a href="get_started.htm" target="_top"><span style='white-space: nowrap'>get_started</span></a>
+ contains a list of examples and tests
+of <code><font color="blue">dismod_at</font></code>. These tests are run as part of the <code><font color="blue">make check</font></code>
+command above.
+
+
+<hr>Input File: omh/install/unix.omh
+
+</body>
+</html>

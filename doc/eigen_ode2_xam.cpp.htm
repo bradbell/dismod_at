@@ -1,0 +1,224 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Example and Test of Eigenvector Method of Solving ODE</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Example and Test of Eigenvector Method of Solving ODE">
+<meta name="keywords" id="keywords" content=" example test eigenvector method solving ode ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_eigen_ode2_xam.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="eigen_ode2.htm" target="_top">Prev</a>
+</td><td><a href="error_exit.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>eigen_ode2</option>
+<option>eigen_ode2_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_utility-&gt;</option>
+<option>a2_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_value_prior</option>
+<option>pack_diff_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>eigen_ode2-&gt;</option>
+<option>eigen_ode2_xam.cpp</option>
+</select>
+</td>
+<td>eigen_ode2_xam.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Example and Test of Eigenvector Method of Solving ODE</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/eigen_ode2.hpp&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font> Float<font color="#990000">;</font>
+     <b><font color="#0000FF">class</font></b> <font color="#008080">Fun</font> <font color="#FF0000">{</font>
+          <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Float&gt;</font> vector<font color="#990000">;</font>
+     <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+          <font color="#008080">vector</font> b_<font color="#990000">;</font>
+     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+          <font color="#009900">void</font> <b><font color="#000000">Ode</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> Float<font color="#990000">&amp;</font> t<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> vector<font color="#990000">&amp;</font> y<font color="#990000">,</font> vector<font color="#990000">&amp;</font> yp<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    yp<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> b_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> b_<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+               yp<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> b_<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">*</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> b_<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">*</font> y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+               <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          <font color="#009900">void</font> <b><font color="#000000">set</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> vector<font color="#990000">&amp;</font> b<font color="#990000">)</font>
+          <font color="#FF0000">{</font>    b_<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> b<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+               b_ <font color="#990000">=</font> b<font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">eigen_ode2_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Float&gt;</font> vector<font color="#990000">;</font>
+     <font color="#008080">Float</font> tf <font color="#990000">=</font> <font color="#993399">0.1</font><font color="#990000">;</font>
+     <font color="#008080">vector</font> <b><font color="#000000">b</font></b><font color="#990000">(</font><font color="#993399">4</font><font color="#990000">),</font> <b><font color="#000000">yi</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">yf</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+     <font color="#008080">size_t</font> case_number<font color="#990000">;</font>
+     <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+     case_number <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// b1 = 0, b2 = 0</font></i>
+     b<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">3.0</font><font color="#990000">;</font>  b<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+     b<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>   b<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">4.0</font><font color="#990000">;</font>
+     yi<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+     yi<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// solve ODE using Runge45</font></i>
+     <font color="#008080">Fun</font> F<font color="#990000">;</font>
+     F<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>b<font color="#990000">);</font>
+     <font color="#008080">size_t</font> M  <font color="#990000">=</font> <font color="#993399">20</font><font color="#990000">;</font>
+     <font color="#008080">Float</font> ti <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+     <font color="#008080">vector</font> xi <font color="#990000">=</font> yi<font color="#990000">;</font>
+     <font color="#008080">vector</font> xf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Runge45</font></b><font color="#990000">(</font>F<font color="#990000">,</font> M<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font> yi<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     yf  <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">eigen_ode2</font></b><font color="#990000">(</font>case_number<font color="#990000">,</font> b<font color="#990000">,</font> yi<font color="#990000">,</font> tf<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> yf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">/</font> xf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> yf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">/</font> xf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+     case_number <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// b1 != 0, b2 = 0, b0 != b3</font></i>
+     b<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">3.0</font> <font color="#990000">,</font> b<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font>  <font color="#993399">1.0</font><font color="#990000">;</font>
+     b<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font>  <font color="#993399">0.0</font> <font color="#990000">,</font> b<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">4.0</font><font color="#990000">;</font>
+     F<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>b<font color="#990000">);</font>
+     xf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Runge45</font></b><font color="#990000">(</font>F<font color="#990000">,</font> M<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font> yi<font color="#990000">);</font>
+     yf  <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">eigen_ode2</font></b><font color="#990000">(</font>case_number<font color="#990000">,</font> b<font color="#990000">,</font> yi<font color="#990000">,</font> tf<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> yf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">/</font> xf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> yf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">/</font> xf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// b1 != 0, b2 = 0, b0 == b3</font></i>
+     b<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> b<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">];</font>
+     F<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>b<font color="#990000">);</font>
+     xf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Runge45</font></b><font color="#990000">(</font>F<font color="#990000">,</font> M<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font> yi<font color="#990000">);</font>
+     yf  <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">eigen_ode2</font></b><font color="#990000">(</font>case_number<font color="#990000">,</font> b<font color="#990000">,</font> yi<font color="#990000">,</font> tf<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> yf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">/</font> xf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> yf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">/</font> xf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+     case_number <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// b1 = 0, b2 != 0, b0 != b3</font></i>
+     b<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">3.0</font> <font color="#990000">,</font> b<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font>  <font color="#993399">0.0</font><font color="#990000">;</font>
+     b<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font>  <font color="#993399">1.0</font> <font color="#990000">,</font> b<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">4.0</font><font color="#990000">;</font>
+     F<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>b<font color="#990000">);</font>
+     xf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Runge45</font></b><font color="#990000">(</font>F<font color="#990000">,</font> M<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font> yi<font color="#990000">);</font>
+     yf   <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">eigen_ode2</font></b><font color="#990000">(</font>case_number<font color="#990000">,</font> b<font color="#990000">,</font> yi<font color="#990000">,</font> tf<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> yf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">/</font> xf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> yf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">/</font> xf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// b1 = 0, b2 != 0, b0 == b3</font></i>
+     b<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> b<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">];</font>
+     F<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>b<font color="#990000">);</font>
+     xf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Runge45</font></b><font color="#990000">(</font>F<font color="#990000">,</font> M<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font> yi<font color="#990000">);</font>
+     yf   <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">eigen_ode2</font></b><font color="#990000">(</font>case_number<font color="#990000">,</font> b<font color="#990000">,</font> yi<font color="#990000">,</font> tf<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> yf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">/</font> xf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> yf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">/</font> xf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+     case_number <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// b1 != 0, b2 != 0</font></i>
+     b<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">3.0</font> <font color="#990000">,</font> b<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font>  <font color="#993399">1.0</font><font color="#990000">;</font>
+     b<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font>  <font color="#993399">1.0</font> <font color="#990000">,</font> b<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">3.0</font><font color="#990000">;</font>
+     F<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>b<font color="#990000">);</font>
+     xf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Runge45</font></b><font color="#990000">(</font>F<font color="#990000">,</font> M<font color="#990000">,</font> ti<font color="#990000">,</font> tf<font color="#990000">,</font> yi<font color="#990000">);</font>
+     yf   <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">eigen_ode2</font></b><font color="#990000">(</font>case_number<font color="#990000">,</font> b<font color="#990000">,</font> yi<font color="#990000">,</font> tf<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> yf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">/</font> xf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> yf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">/</font> xf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// -------------------------------------------------------------------</font></i>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/devel/utility/eigen_ode2_xam.cpp
+
+</body>
+</html>

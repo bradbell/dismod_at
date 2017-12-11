@@ -1,0 +1,247 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Sample Command</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Sample Command">
+<meta name="keywords" id="keywords" content=" the sample command syntax database number_sample method simulate asymptotic simulate_table fit_var_table sample_table bounds example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_sample_command_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="simulate_command.py.htm" target="_top">Prev</a>
+</td><td><a href="sample_command.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>command</option>
+<option>sample_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>command-&gt;</option>
+<option>set_command</option>
+<option>init_command</option>
+<option>depend_command</option>
+<option>fit_command</option>
+<option>simulate_command</option>
+<option>sample_command</option>
+<option>predict_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>sample_command-&gt;</option>
+<option>sample_command.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>database</option>
+<option>number_sample</option>
+<option>method</option>
+<option>---..simulate</option>
+<option>---..asymptotic</option>
+<option>simulate_table</option>
+<option>fit_var_table</option>
+<option>sample_table</option>
+<option>Bounds</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Sample Command</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;sample&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="database" id="database">database</a></big></b>
+<br>
+Is an
+<a href="http://www.sqlite.org/sqlite/" target="_top"><span style='white-space: nowrap'>http://www.sqlite.org/sqlite/</span></a>
+ database containing the
+<code><font color="blue">dismod_at</font></code> <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
+ tables which are not modified.
+
+<br>
+<br>
+<b><big><a name="number_sample" id="number_sample">number_sample</a></big></b>
+<br>
+Is the number of samples. Each sample contains a complete
+set of model variables. See the different methods below
+for more discussion of 
+<code><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="method" id="method">method</a></big></b>
+<br>
+The sample command argument 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
+ must be one of the following:
+
+<br>
+<br>
+<b><a name="method.simulate" id="method.simulate">simulate</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
+ is <code><font color="blue">simulate</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i></code>
+ must be equal to
+<a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
+.
+The variable sample corresponding to each
+<a href="sample_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_index</span></a>
+ the sample table
+is the optimal estimate corresponding to data in the simulate table with
+<a href="simulate_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+ equal to
+the sample index.
+This requires running 
+<code><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i></code>
+ fits of the model variables.
+
+<br>
+<br>
+<b><a name="method.asymptotic" id="method.asymptotic">asymptotic</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
+ is <code><font color="blue">asymptotic</font></code>,
+The asymptotic statics of the model variables is used to generate
+
+<code><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i></code>
+ samples of the model variables
+The samples with different values of 
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
+ are independent.
+(Note that the <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+ is an additional input in this case.)
+
+<br>
+<br>
+<b><big><a name="simulate_table" id="simulate_table">simulate_table</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
+ is <code><font color="blue">simulate</font></code>,
+this command has the extra input <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+
+which was created by the previous <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="fit_var_table" id="fit_var_table">fit_var_table</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
+ is <code><font color="blue">asymptotic</font></code>,
+this command has the extra input <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+
+which was created by a previous <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="sample_table" id="sample_table">sample_table</a></big></b>
+<br>
+A new <a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+ is created each time this command is run.
+It contains samples of the model variables.
+Hence the number of rows in this table is 
+<code><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i></code>
+
+times the number of rows in the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Bounds" id="Bounds">Bounds</a></big></b>
+<br>
+The samples are all within the specified bounds, including the bounds
+on the random effects specified by
+<a href="option_table.htm#Optimizer.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files
+<a href="sample_command.py.htm" target="_top"><span style='white-space: nowrap'>sample_command.py</span></a>
+ and <a href="user_asymptotic.py.htm" target="_top"><span style='white-space: nowrap'>user_asymptotic.py</span></a>
+
+contain examples and tests using this command.
+
+
+<hr>Input File: devel/dismod_at.cpp
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Fit Command</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Fit Command">
+<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index simulate_table fit_var_table fit_data_subset_table effects example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_fit_command_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="depend_command.py.htm" target="_top">Prev</a>
+</td><td><a href="fit_command.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>command</option>
+<option>fit_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>command-&gt;</option>
+<option>set_command</option>
+<option>init_command</option>
+<option>depend_command</option>
+<option>fit_command</option>
+<option>simulate_command</option>
+<option>sample_command</option>
+<option>predict_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>fit_command-&gt;</option>
+<option>fit_command.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>database</option>
+<option>variables</option>
+<option>---..fixed</option>
+<option>---..random</option>
+<option>---..both</option>
+<option>simulate_index</option>
+<option>simulate_table</option>
+<option>fit_var_table</option>
+<option>fit_data_subset_table</option>
+<option>Random Effects</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Fit Command</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;fit&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;fit&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="database" id="database">database</a></big></b>
+<br>
+Is an
+<a href="http://www.sqlite.org/sqlite/" target="_top"><span style='white-space: nowrap'>http://www.sqlite.org/sqlite/</span></a>
+ database containing the
+<code><font color="blue">dismod_at</font></code> <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
+ tables which are not modified.
+
+<br>
+<br>
+<b><big><a name="variables" id="variables">variables</a></big></b>
+<br>
+This argument is <code><font color="blue">fixed</font></code>, <code><font color="blue">random</font></code> or <code><font color="blue">both</font></code>.
+If it is <code><font color="blue">fixed</font></code> (<code><font color="blue">random</font></code>)
+only the fixed effects (random effects) are optimized.
+If it is <code><font color="blue">both</font></code>, both the fixed and random effects
+are optimized.
+
+<br>
+<br>
+<b><a name="variables.fixed" id="variables.fixed">fixed</a></b>
+<br>
+This option optimizes the fixed effects with the
+<a href="rate_table.htm#Child Restrictions.Constant Random Effects" target="_top"><span style='white-space: nowrap'>constant&nbsp;random&nbsp;effects</span></a>
+ at their constrained values and the other random effects
+constrained to be zero.
+(This is equivalent to fitting with
+<a href="option_table.htm#Optimizer.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+ equal to zero.)
+This is useful when one uses fitting with no random effects as
+a starting point for fitting with random effects; see
+<a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set_command</span></a>
+,
+<a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+, and
+<a href="user_fit_fixed.py.htm" target="_top"><span style='white-space: nowrap'>fit_fixed.py</span></a>
+.
+This enables one to see the different between the two
+fits in the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
+
+(as apposed to changing
+<a href="option_table.htm#Optimizer.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+
+in the <code><font color="blue">option</font></code> table).
+
+<br>
+<br>
+<b><a name="variables.random" id="variables.random">random</a></b>
+<br>
+This optimizes the random effects with
+the fixed effects set to their starting values; see
+<a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+.
+
+<br>
+<br>
+<b><a name="variables.both" id="variables.both">both</a></b>
+<br>
+This option fits both the
+<a href="model_variables.htm#Fixed Effects, theta" target="_top"><span style='white-space: nowrap'>fixed</span></a>
+ and
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random</span></a>
+ effects.
+
+<br>
+<br>
+<b><big><a name="simulate_index" id="simulate_index">simulate_index</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ is present, it must be less than
+<a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
+.
+In this case the corresponding simulate table
+<a href="simulate_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ entries
+are used in place of the data table
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ entries.
+All the rest of the inputs are the same as when 
+<code><i><font color="black"><span style='white-space: nowrap'>simulated_index</span></font></i></code>
+
+is not present; e.g.,
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+ comes from the data table.
+
+<br>
+<br>
+<b><big><a name="simulate_table" id="simulate_table">simulate_table</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ is present,
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i></code>
+ entries the simulate table
+are used as inputs.
+
+<br>
+<br>
+<b><big><a name="fit_var_table" id="fit_var_table">fit_var_table</a></big></b>
+<br>
+A new <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+ is created each time this command is run.
+It contains the results of the fit in its
+<a href="fit_var_table.htm#fit_var_value" target="_top"><span style='white-space: nowrap'>fit_var_value</span></a>
+ column.
+
+<br>
+<br>
+<b><big><a name="fit_data_subset_table" id="fit_data_subset_table">fit_data_subset_table</a></big></b>
+<br>
+A new <a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset_table</span></a>
+ is created each time this command is run.
+It is a comparison of the model and data corresponding to the fit results.
+
+<br>
+<br>
+<b><big><a name="Random Effects" id="Random Effects">Random Effects</a></big></b>
+<br>
+A model has random effects if one of the
+<a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>child_smooth_id</span></a>
+ or
+<a href="rate_table.htm#child_nslist_id" target="_top"><span style='white-space: nowrap'>child_nslist_id</span></a>
+ is not <code><font color="blue">null</font></code>.
+In this case, it is suggest that you
+first fit with 
+<code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
+ equal to <code><font color="blue">fixed</font></code>
+and then fit with 
+<code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
+ equal to <code><font color="blue">both</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="fit_command.py.htm" target="_top"><span style='white-space: nowrap'>fit_command.py</span></a>
+ contains an example and test
+using this command.
+
+
+<hr>Input File: devel/dismod_at.cpp
+
+</body>
+</html>

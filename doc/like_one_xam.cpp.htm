@@ -1,0 +1,424 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>C++ like_one: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++ like_one: Example and Test">
+<meta name="keywords" id="keywords" content=" c++ like_one: example test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_like_one_xam.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="data_model_like_one.htm" target="_top">Prev</a>
+</td><td><a href="data_model_like_all.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_model</option>
+<option>devel_data_model</option>
+<option>data_model_like_one</option>
+<option>like_one_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel_model-&gt;</option>
+<option>devel_data_model</option>
+<option>prior_model</option>
+<option>fit_model</option>
+<option>depend</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_data_model-&gt;</option>
+<option>data_model_ctor</option>
+<option>set_eigne_ode2_case_number</option>
+<option>data_model_replace_like</option>
+<option>data_model_avg_no_ode</option>
+<option>data_model_avg_yes_ode</option>
+<option>data_model_like_one</option>
+<option>data_model_like_all</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>data_model_like_one-&gt;</option>
+<option>like_one_xam.cpp</option>
+</select>
+</td>
+<td>like_one_xam.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>C++ like_one: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/data_model.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/null_int.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">like_one_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>abs<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>cout<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font> Float<font color="#990000">;</font>
+     <font color="#008080">Float</font> eps <font color="#990000">=</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Float<font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">()</font> <font color="#990000">*</font> <font color="#993399">100</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// ode_step_size</font></i>
+     <font color="#009900">double</font> ode_step_size <font color="#990000">=</font> <font color="#993399">30.0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// age_table</font></i>
+     <i><font color="#9A1900">// (make sure that ode grid lands on last age table point)</font></i>
+     <font color="#009900">double</font> age <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;double&gt;</font> age_table<font color="#990000">;</font>
+     age_table<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>age<font color="#990000">);</font>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> age <font color="#990000">&lt;</font> <font color="#993399">100</font><font color="#990000">.</font> <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    age <font color="#990000">+=</font> ode_step_size<font color="#990000">;</font>
+          age_table<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>age<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+     <font color="#008080">size_t</font> n_age_table <font color="#990000">=</font> age_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+     <font color="#009900">double</font> age_min     <font color="#990000">=</font> age_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+     <font color="#009900">double</font> age_max     <font color="#990000">=</font> age_table<font color="#990000">[</font>n_age_table <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">];</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// time_table</font></i>
+     <i><font color="#9A1900">// (make sure that ode grid lands on last time table point)</font></i>
+     <font color="#009900">double</font> time <font color="#990000">=</font> <font color="#993399">1980.0</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;double&gt;</font> time_table<font color="#990000">;</font>
+     time_table<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>time<font color="#990000">);</font>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> time <font color="#990000">&lt;</font> <font color="#993399">2020.0</font> <font color="#990000">)</font>
+     <font color="#FF0000">{</font>    time <font color="#990000">+=</font> ode_step_size<font color="#990000">;</font>
+          time_table<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>time<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+     <font color="#008080">size_t</font> n_time_table <font color="#990000">=</font> time_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+     <font color="#009900">double</font> time_min     <font color="#990000">=</font> time_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+     <font color="#009900">double</font> time_max     <font color="#990000">=</font> time_table<font color="#990000">[</font>n_time_table <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">];</font>
+
+     <i><font color="#9A1900">// age and time smoothing grid indices</font></i>
+     <font color="#008080">size_t</font> n_age_si   <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> n_time_si  <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">age_id</font></b><font color="#990000">(</font>n_age_si<font color="#990000">),</font> <b><font color="#000000">time_id</font></b><font color="#990000">(</font>n_time_si<font color="#990000">);</font>
+     age_id<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     age_id<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>   <font color="#990000">=</font> n_age_table <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">;</font>
+     age_id<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font>   <font color="#990000">=</font> n_age_table <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+     time_id<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     time_id<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>  <font color="#990000">=</font> n_time_table <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// w_info_vec</font></i>
+     <i><font color="#9A1900">// weight value should not matter when constant</font></i>
+     <font color="#008080">size_t</font> n_si <font color="#990000">=</font> n_age_si <font color="#990000">*</font> n_time_si<font color="#990000">;</font>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">weight</font></b><font color="#990000">(</font>n_si<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_si<font color="#990000">;</font> k<font color="#990000">++)</font>
+          weight<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
+     dismod_at<font color="#990000">::</font><font color="#008080">weight_info</font> <b><font color="#000000">w_info</font></b><font color="#990000">(</font>
+          age_table<font color="#990000">,</font> time_table<font color="#990000">,</font> age_id<font color="#990000">,</font> time_id<font color="#990000">,</font> weight
+     <font color="#990000">);</font>
+     <font color="#008080">vector&lt;dismod_at::weight_info&gt;</font> <b><font color="#000000">w_info_vec</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     w_info_vec<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> w_info<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// prior table</font></i>
+     <font color="#009900">double</font> nan <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">quiet_NaN</font></b><font color="#990000">();</font>
+     <font color="#008080">vector&lt;dismod_at::prior_struct&gt;</font> <b><font color="#000000">prior_table</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>prior_name <font color="#990000">=</font> <font color="#FF0000">"prior_zero"</font><font color="#990000">;</font>
+     prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>density_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>lower      <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font>
+     prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>upper      <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">1.0</font><font color="#990000">;</font>
+     prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>mean       <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+     prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>std        <font color="#990000">=</font> nan<font color="#990000">;</font>
+     prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>eta        <font color="#990000">=</font> nan<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// s_info_vec</font></i>
+     <font color="#008080">vector&lt;dismod_at::smooth_info&gt;</font> <b><font color="#000000">s_info_vec</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+     <font color="#008080">size_t</font> mulstd_value <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">,</font> mulstd_dage <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">,</font> mulstd_dtime <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> smooth_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> smooth_id <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">;</font> smooth_id<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">vector&lt;size_t&gt;</font> age_id_tmp<font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> smooth_id <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+          <font color="#FF0000">{</font>    n_si       <font color="#990000">=</font> n_age_si <font color="#990000">*</font> n_time_si<font color="#990000">;</font>
+               age_id_tmp <font color="#990000">=</font> age_id<font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          <b><font color="#0000FF">else</font></b>
+          <font color="#FF0000">{</font>    n_si <font color="#990000">=</font> n_time_si<font color="#990000">;</font>
+               age_id_tmp<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+               age_id_tmp<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">//</font></i>
+          <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">value_prior_id</font></b><font color="#990000">(</font>n_si<font color="#990000">),</font>
+               <b><font color="#000000">dage_prior_id</font></b><font color="#990000">(</font>n_si<font color="#990000">),</font> <b><font color="#000000">dtime_prior_id</font></b><font color="#990000">(</font>n_si<font color="#990000">);</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_si<font color="#990000">;</font> i<font color="#990000">++)</font>
+               value_prior_id<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">const_value</font></b><font color="#990000">(</font>n_si<font color="#990000">);</font>
+          dismod_at<font color="#990000">::</font><font color="#008080">smooth_info</font> <b><font color="#000000">s_info</font></b><font color="#990000">(</font>
+               age_table<font color="#990000">,</font> time_table<font color="#990000">,</font> age_id_tmp<font color="#990000">,</font> time_id<font color="#990000">,</font>
+               value_prior_id<font color="#990000">,</font> dage_prior_id<font color="#990000">,</font> dtime_prior_id<font color="#990000">,</font> const_value<font color="#990000">,</font>
+               mulstd_value<font color="#990000">,</font> mulstd_dage<font color="#990000">,</font> mulstd_dtime
+          <font color="#990000">);</font>
+          s_info_vec<font color="#990000">[</font>smooth_id<font color="#990000">]</font> <font color="#990000">=</font> s_info<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// integrand_table</font></i>
+     <font color="#008080">size_t</font> n_integrand <font color="#990000">=</font> dismod_at<font color="#990000">::</font>number_integrand_enum<font color="#990000">;</font>
+     <font color="#008080">vector&lt;dismod_at::integrand_enum&gt;</font> <b><font color="#000000">integrand_table</font></b><font color="#990000">(</font>n_integrand<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_integrand<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    integrand_table<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">integrand_enum</font></b><font color="#990000">(</font>i<font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// n_age_ode</font></i>
+     <font color="#008080">size_t</font> n_age_ode     <font color="#990000">=</font>  <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> age_min <font color="#990000">+</font> <font color="#990000">(</font>n_age_ode<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> ode_step_size <font color="#990000">&lt;</font> age_max <font color="#990000">)</font>
+               n_age_ode<font color="#990000">++;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// n_time_ode</font></i>
+     <font color="#008080">size_t</font> n_time_ode     <font color="#990000">=</font>  <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> time_min <font color="#990000">+</font> <font color="#990000">(</font>n_time_ode<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> ode_step_size <font color="#990000">&lt;</font> time_max <font color="#990000">)</font>
+               n_time_ode<font color="#990000">++;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// node_table:</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;dismod_at::node_struct&gt;</font> <b><font color="#000000">node_table</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     node_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>parent <font color="#990000">=</font> DISMOD_AT_NULL_INT<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// parent_node_id</font></i>
+     <font color="#008080">size_t</font> parent_node_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// minimum_meas_cv</font></i>
+     <font color="#009900">double</font> minimum_meas_cv<font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// covariate table</font></i>
+     <font color="#008080">size_t</font> n_covariate <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;dismod_at::covariate_struct&gt;</font> <b><font color="#000000">covariate_table</font></b><font color="#990000">(</font>n_covariate<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// data_table</font></i>
+     <font color="#008080">vector&lt;dismod_at::data_struct&gt;</font> <b><font color="#000000">data_table</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">data_cov_value</font></b><font color="#990000">(</font>data_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">*</font> n_covariate<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// parent node, time and age integrantion.</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> data_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> data_id <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">;</font> data_id<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>
+          data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>integrand_id <font color="#990000">=</font> dismod_at<font color="#990000">::</font>mtother_enum<font color="#990000">;</font>
+          data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>node_id    <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>weight_id  <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_lower  <font color="#990000">=</font> <font color="#993399">35.0</font><font color="#990000">;</font>
+          data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_upper  <font color="#990000">=</font> <font color="#993399">55.0</font><font color="#990000">;</font>
+          data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>time_lower <font color="#990000">=</font> <font color="#993399">1990.0</font><font color="#990000">;</font>
+          data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>time_upper <font color="#990000">=</font> <font color="#993399">2000.0</font><font color="#990000">;</font>
+          data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>meas_value <font color="#990000">=</font> <font color="#990000">(</font> <font color="#993399">50</font><font color="#990000">.</font> <font color="#990000">*</font> <font color="#993399">1995</font><font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#993399">100.0</font> <font color="#990000">*</font> <font color="#993399">2000.0</font><font color="#990000">);</font>
+          data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>meas_std   <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>meas_value <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.;</font>
+          data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>eta        <font color="#990000">=</font> <font color="#993399">1e-4</font><font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> data_id <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+               data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>density_id <font color="#990000">=</font> dismod_at<font color="#990000">::</font>gaussian_enum<font color="#990000">;</font>
+          <b><font color="#0000FF">else</font></b>
+               data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>density_id <font color="#990000">=</font> dismod_at<font color="#990000">::</font>log_gaussian_enum<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// smooth_table</font></i>
+     <font color="#008080">vector&lt;dismod_at::smooth_struct&gt;</font> <b><font color="#000000">smooth_table</font></b><font color="#990000">(</font>s_info_vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">());</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> smooth_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> smooth_id <font color="#990000">&lt;</font> s_info_vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> smooth_id<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_age  <font color="#990000">=</font> s_info_vec<font color="#990000">[</font>smooth_id<font color="#990000">].</font><b><font color="#000000">age_size</font></b><font color="#990000">();</font>
+          smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_time <font color="#990000">=</font> s_info_vec<font color="#990000">[</font>smooth_id<font color="#990000">].</font><b><font color="#000000">time_size</font></b><font color="#990000">();</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// mulcov_table</font></i>
+     <font color="#008080">vector&lt;dismod_at::mulcov_struct&gt;</font> <b><font color="#000000">mulcov_table</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+     <i><font color="#9A1900">// rate_table</font></i>
+     <font color="#008080">vector&lt;dismod_at::rate_struct&gt;</font>   <b><font color="#000000">rate_table</font></b><font color="#990000">(</font>dismod_at<font color="#990000">::</font>number_rate_enum<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> rate_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> rate_id <font color="#990000">&lt;</font> rate_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> rate_id<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> smooth_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> rate_id <font color="#990000">==</font> dismod_at<font color="#990000">::</font>pini_enum <font color="#990000">)</font>
+               smooth_id <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// only one age</font></i>
+          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>parent_smooth_id <font color="#990000">=</font> smooth_id<font color="#990000">;</font>
+          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_smooth_id  <font color="#990000">=</font> smooth_id<font color="#990000">;</font>
+          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_nslist_id  <font color="#990000">=</font> DISMOD_AT_NULL_INT<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// child_info</font></i>
+     dismod_at<font color="#990000">::</font><font color="#008080">child_info</font> <b><font color="#000000">child_object</font></b><font color="#990000">(</font>
+          parent_node_id <font color="#990000">,</font>
+          node_table     <font color="#990000">,</font>
+          data_table
+     <font color="#990000">);</font>
+     <font color="#008080">size_t</font> n_child <font color="#990000">=</font> child_object<font color="#990000">.</font><b><font color="#000000">child_size</font></b><font color="#990000">();</font>
+     <b><font color="#000000">assert</font></b><font color="#990000">(</font> n_child <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
+     <i><font color="#9A1900">// pack_object</font></i>
+     <i><font color="#9A1900">// values in child_id2node_id do not matter because child_nslist_id is null</font></i>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">child_id2node_id</font></b><font color="#990000">(</font>n_child<font color="#990000">);</font>
+     <font color="#008080">vector&lt;dismod_at::nslist_pair_struct&gt;</font> <b><font color="#000000">nslist_pair</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+     dismod_at<font color="#990000">::</font><font color="#008080">pack_info</font> <b><font color="#000000">pack_object</font></b><font color="#990000">(</font>n_integrand<font color="#990000">,</font>
+          child_id2node_id<font color="#990000">,</font> smooth_table<font color="#990000">,</font> mulcov_table<font color="#990000">,</font> rate_table<font color="#990000">,</font> nslist_pair
+     <font color="#990000">);</font>
+     <i><font color="#9A1900">// data_subset</font></i>
+     <font color="#008080">vector&lt;dismod_at::data_subset_struct&gt;</font> data_subset_obj<font color="#990000">;</font>
+     <font color="#008080">vector&lt;double&gt;</font> data_subset_cov_value<font color="#990000">;</font>
+     <b><font color="#000000">data_subset</font></b><font color="#990000">(</font>
+          data_table<font color="#990000">,</font>
+          data_cov_value<font color="#990000">,</font>
+          covariate_table<font color="#990000">,</font>
+          child_object<font color="#990000">,</font>
+          data_subset_obj<font color="#990000">,</font>
+          data_subset_cov_value
+     <font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// data_model</font></i>
+     dismod_at<font color="#990000">::</font><font color="#008080">data_model</font> <b><font color="#000000">data_object</font></b><font color="#990000">(</font>
+          parent_node_id<font color="#990000">,</font>
+          n_covariate<font color="#990000">,</font>
+          n_age_ode<font color="#990000">,</font>
+          n_time_ode<font color="#990000">,</font>
+          ode_step_size<font color="#990000">,</font>
+          age_table<font color="#990000">,</font>
+          time_table<font color="#990000">,</font>
+          integrand_table<font color="#990000">,</font>
+          node_table<font color="#990000">,</font>
+          prior_table<font color="#990000">,</font>
+          data_subset_obj<font color="#990000">,</font>
+          data_subset_cov_value<font color="#990000">,</font>
+          w_info_vec<font color="#990000">,</font>
+          s_info_vec<font color="#990000">,</font>
+          pack_object<font color="#990000">,</font>
+          child_object
+     <font color="#990000">);</font>
+     data_object<font color="#990000">.</font><b><font color="#000000">replace_like</font></b><font color="#990000">(</font>minimum_meas_cv<font color="#990000">,</font> data_subset_obj<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// pack_vec</font></i>
+     <font color="#008080">vector&lt;Float&gt;</font> <b><font color="#000000">pack_vec</font></b><font color="#990000">(</font> pack_object<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+     dismod_at<font color="#990000">::</font>pack_info<font color="#990000">::</font><font color="#008080">subvec_info</font> info<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> child_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> child_id <font color="#990000">&lt;=</font> n_child<font color="#990000">;</font> child_id<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    info <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">rate_info</font></b><font color="#990000">(</font>dismod_at<font color="#990000">::</font>omega_enum<font color="#990000">,</font> child_id<font color="#990000">);</font>
+          dismod_at<font color="#990000">::</font>smooth_info<font color="#990000">&amp;</font> s_info <font color="#990000">=</font> s_info_vec<font color="#990000">[</font>info<font color="#990000">.</font>smooth_id<font color="#990000">];</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s_info<font color="#990000">.</font><b><font color="#000000">age_size</font></b><font color="#990000">();</font> i<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    <font color="#009900">double</font> age <font color="#990000">=</font> age_table<font color="#990000">[</font> s_info<font color="#990000">.</font><b><font color="#000000">age_id</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">];</font>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> s_info<font color="#990000">.</font><b><font color="#000000">time_size</font></b><font color="#990000">();</font> j<font color="#990000">++)</font>
+               <font color="#FF0000">{</font>    <font color="#009900">double</font> time    <font color="#990000">=</font> time_table<font color="#990000">[</font> s_info<font color="#990000">.</font><b><font color="#000000">time_id</font></b><font color="#990000">(</font>j<font color="#990000">)</font> <font color="#990000">];</font>
+                    <font color="#008080">size_t</font> index   <font color="#990000">=</font> info<font color="#990000">.</font>offset <font color="#990000">+</font> i <font color="#990000">*</font> s_info<font color="#990000">.</font><b><font color="#000000">time_size</font></b><font color="#990000">()</font> <font color="#990000">+</font> j<font color="#990000">;</font>
+                    pack_vec<font color="#990000">[</font>index<font color="#990000">]</font> <font color="#990000">=</font> age <font color="#990000">*</font> time <font color="#990000">/</font> <font color="#990000">(</font>age_max<font color="#990000">*</font>time_max<font color="#990000">);</font>
+               <font color="#FF0000">}</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// check results</font></i>
+     ok <font color="#990000">&amp;=</font> data_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> data_subset_obj<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> data_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> data_id <font color="#990000">&lt;</font> data_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> data_id<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">Float</font> avg   <font color="#990000">=</font> data_object<font color="#990000">.</font><b><font color="#000000">avg_no_ode</font></b><font color="#990000">(</font>data_id<font color="#990000">,</font> pack_vec<font color="#990000">);</font>
+          <font color="#008080">Float</font> delta_out<font color="#990000">;</font>
+          dismod_at<font color="#990000">::</font>residual_struct<font color="#990000">&lt;</font>Float<font color="#990000">&gt;</font> residual
+                      <font color="#990000">=</font> data_object<font color="#990000">.</font><b><font color="#000000">like_one</font></b><font color="#990000">(</font>data_id<font color="#990000">,</font> pack_vec<font color="#990000">,</font> avg<font color="#990000">,</font> delta_out<font color="#990000">);</font>
+          <font color="#008080">Float</font>  wres       <font color="#990000">=</font> residual<font color="#990000">.</font>wres<font color="#990000">;</font>
+          <font color="#008080">Float</font>  loglike    <font color="#990000">=</font> residual<font color="#990000">.</font>logden_smooth<font color="#990000">;</font>
+          loglike          <font color="#990000">-=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> residual<font color="#990000">.</font>logden_sub_abs <font color="#990000">);</font>
+          <font color="#009900">double</font> delta      <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>meas_std<font color="#990000">;</font>
+          <font color="#009900">double</font> y          <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>meas_value<font color="#990000">;</font>
+          <font color="#009900">double</font> eta        <font color="#990000">=</font> <font color="#993399">1e-4</font><font color="#990000">;</font>
+          <font color="#008080">size_t</font> density_id <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>density_id<font color="#990000">;</font>
+          <font color="#009900">bool</font> log_density <font color="#990000">=</font> density_id <font color="#990000">==</font> dismod_at<font color="#990000">::</font>log_gaussian_enum<font color="#990000">;</font>
+          log_density     <font color="#990000">|=</font> density_id <font color="#990000">==</font> dismod_at<font color="#990000">::</font>log_laplace_enum<font color="#990000">;</font>
+
+          <i><font color="#9A1900">// check delta_out</font></i>
+          ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font>delta_out<font color="#990000">)</font> <font color="#990000">/</font> delta <font color="#990000">)</font> <font color="#990000">&lt;=</font> eps<font color="#990000">;</font>
+
+          <i><font color="#9A1900">// check wres</font></i>
+          <font color="#008080">Float</font> check<font color="#990000">;</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> log_density <font color="#990000">)</font>
+               check <font color="#990000">=</font> <font color="#990000">(</font><b><font color="#000000">log</font></b><font color="#990000">(</font>y<font color="#990000">+</font>eta<font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">log</font></b><font color="#990000">(</font>avg<font color="#990000">+</font>eta<font color="#990000">))</font> <font color="#990000">/</font> <b><font color="#000000">log</font></b><font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">+</font> delta<font color="#990000">/(</font>y<font color="#990000">+</font>eta<font color="#990000">));</font>
+          <b><font color="#0000FF">else</font></b>
+               check <font color="#990000">=</font> <font color="#990000">(</font>y <font color="#990000">-</font> avg<font color="#990000">)</font> <font color="#990000">/</font> delta<font color="#990000">;</font>
+          ok  <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> wres <font color="#990000">/</font> check <font color="#990000">)</font> <font color="#990000">&lt;=</font> eps<font color="#990000">;</font>
+          <i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900">          if( data_id == 0 )</font></i>
+<i><font color="#9A1900">               cout &lt;&lt; "Debugging" &lt;&lt; std::endl;</font></i>
+<i><font color="#9A1900">          cout &lt;&lt; "wres = " &lt;&lt; wres;</font></i>
+<i><font color="#9A1900">          cout &lt;&lt; ", check = " &lt;&lt; check;</font></i>
+<i><font color="#9A1900">          cout &lt;&lt; ", relerr    = " &lt;&lt; 1.0 - wres / check  &lt;&lt; std::endl;</font></i>
+<i><font color="#9A1900">          */</font></i>
+          <i><font color="#9A1900">// check loglike</font></i>
+          <font color="#009900">double</font> pi <font color="#990000">=</font>  <font color="#993399">3.14159265358979323846264338327950288</font><font color="#990000">;</font>
+          <b><font color="#0000FF">switch</font></b><font color="#990000">(</font> density_id <font color="#990000">)</font>
+          <font color="#FF0000">{</font>    <font color="#009900">double</font> sigma<font color="#990000">;</font>
+
+               <b><font color="#0000FF">case</font></b> dismod_at<font color="#990000">::</font>uniform_enum<font color="#990000">:</font>
+               check <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+               <b><font color="#0000FF">case</font></b> dismod_at<font color="#990000">::</font>gaussian_enum<font color="#990000">:</font>
+               check <font color="#990000">=</font> <font color="#990000">-</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> delta <font color="#990000">*</font> <b><font color="#000000">sqrt</font></b><font color="#990000">(</font><font color="#993399">2.0</font> <font color="#990000">*</font> pi<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">-</font> wres <font color="#990000">*</font> wres <font color="#990000">/</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+               <b><font color="#0000FF">case</font></b> dismod_at<font color="#990000">::</font>laplace_enum<font color="#990000">:</font>
+               check <font color="#990000">=</font> <font color="#990000">-</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> delta <font color="#990000">*</font> <b><font color="#000000">sqrt</font></b><font color="#990000">(</font><font color="#993399">2.0</font><font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">sqrt</font></b><font color="#990000">(</font><font color="#993399">2.0</font><font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>wres<font color="#990000">);</font>
+               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+               <b><font color="#0000FF">case</font></b> dismod_at<font color="#990000">::</font>log_gaussian_enum<font color="#990000">:</font>
+               sigma <font color="#990000">=</font> <b><font color="#000000">log</font></b><font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">+</font> delta <font color="#990000">/</font> <font color="#990000">(</font>y <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">);</font>
+               check <font color="#990000">=</font> <font color="#990000">-</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> sigma <font color="#990000">*</font> <b><font color="#000000">sqrt</font></b><font color="#990000">(</font><font color="#993399">2.0</font> <font color="#990000">*</font> pi<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">-</font> wres <font color="#990000">*</font> wres <font color="#990000">/</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+               <b><font color="#0000FF">case</font></b> dismod_at<font color="#990000">::</font>log_laplace_enum<font color="#990000">:</font>
+               sigma <font color="#990000">=</font> <b><font color="#000000">log</font></b><font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">+</font> delta <font color="#990000">/</font> <font color="#990000">(</font>y <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">);</font>
+               check <font color="#990000">=</font> <font color="#990000">-</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> sigma <font color="#990000">*</font> <b><font color="#000000">sqrt</font></b><font color="#990000">(</font><font color="#993399">2.0</font><font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">sqrt</font></b><font color="#990000">(</font><font color="#993399">2.0</font><font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>wres<font color="#990000">);</font>
+               <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+<b><font color="#008080">               default:</font></b>
+               <b><font color="#000000">assert</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
+          <font color="#FF0000">}</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> density_id <font color="#990000">==</font> dismod_at<font color="#990000">::</font>uniform_enum <font color="#990000">)</font>
+               ok <font color="#990000">&amp;=</font> check <font color="#990000">==</font> loglike<font color="#990000">;</font>
+          <b><font color="#0000FF">else</font></b>
+          <font color="#FF0000">{</font>    <font color="#008080">Float</font> relerr <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">-</font> loglike <font color="#990000">/</font> check<font color="#990000">;</font>
+               ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> relerr <font color="#990000">)</font> <font color="#990000">&lt;=</font> eps<font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+          <i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900">          cout &lt;&lt; "loglike = " &lt;&lt; loglike;</font></i>
+<i><font color="#9A1900">          cout &lt;&lt; ", check = " &lt;&lt; check;</font></i>
+<i><font color="#9A1900">          if( density_id != dismod_at::uniform_enum )</font></i>
+<i><font color="#9A1900">          {    Float relerr = 1.0 - loglike / check;</font></i>
+<i><font color="#9A1900">               cout &lt;&lt; ", relerr    = " &lt;&lt; relerr;</font></i>
+<i><font color="#9A1900">               ok &amp;= fabs( relerr ) &lt;= eps;</font></i>
+<i><font color="#9A1900">          }</font></i>
+<i><font color="#9A1900">          cout &lt;&lt; std::endl;</font></i>
+<i><font color="#9A1900">          */</font></i>
+     <font color="#FF0000">}</font>
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/devel/model/like_one_xam.cpp
+
+</body>
+</html>

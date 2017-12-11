@@ -1,0 +1,558 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Eigen Vector Solution of ODE with Two Components</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Eigen Vector Solution of ODE with Two Components">
+<meta name="keywords" id="keywords" content=" eigen vector solution ode with two components syntax purpose float b assumption yi tf yf case_number one three four method case example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_eigen_ode2_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="data_subset_xam.cpp.htm" target="_top">Prev</a>
+</td><td><a href="eigen_ode2_xam.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>eigen_ode2</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_utility-&gt;</option>
+<option>a2_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_value_prior</option>
+<option>pack_diff_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>eigen_ode2-&gt;</option>
+<option>eigen_ode2_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Float</option>
+<option>b</option>
+<option>Assumption</option>
+<option>yi</option>
+<option>tf</option>
+<option>yf</option>
+<option>case_number</option>
+<option>---..One</option>
+<option>---..Two</option>
+<option>---..Three</option>
+<option>---..Four</option>
+<option>Method</option>
+<option>---..Case Three</option>
+<option>---..Case Four</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Eigen Vector Solution of ODE with Two Components</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>yf</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;eigen_ode2(</span></font><i><font color="black"><span style='white-space: nowrap'>case_number</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yi</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tf</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Given <small>@(@
+y( 0 ) \in \B{R}^2
+@)@</small>,
+<small>@(@
+B \in \B{R}^{2 \times 2}
+@)@</small>,
+and <small>@(@
+t_f \in \B{R}_+
+@)@</small>,
+this routine uses the eigen vectors of <small>@(@
+B
+@)@</small> to solve for
+<small>@(@
+y( t_f )
+@)@</small> where
+<small>@[@
+
+	y' (t) = B y(t)
+
+@]@</small>
+Furthermore, the operation sequence only depends on the value of
+
+<code><i><font color="black"><span style='white-space: nowrap'>case_number</span></font></i></code>
+ and not on the value of the particular 
+<code><i><font color="black"><span style='white-space: nowrap'>b</span></font></i></code>
+
+for which this function is recorded.
+
+<br>
+<br>
+<b><big><a name="Float" id="Float">Float</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ must be one of the following:
+<code><font color="blue">double</font></code>, <code><font color="blue">AD&lt;double&gt;</font></code>, or <a href="a2_double.htm" target="_top"><span style='white-space: nowrap'>a2_double</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="b" id="b">b</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and size four.
+It specifies the matrix <small>@(@
+B
+@)@</small>
+in row-major order; i.e.,
+<small>@[@
+
+B
+=
+\left( \begin{array}{cc}
+	B_{0,0}  & B_{0,1} \\
+	B_{1,0}  & B_{1,1}
+\end{array} \right)
+=
+\left( \begin{array}{cc}
+	b_0  & b_1 \\
+	b_2  & b_3
+\end{array} \right)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Assumption" id="Assumption">Assumption</a></big></b>
+<br>
+We restrict our attention to the case where the off-diagonal elements
+of <small>@(@
+B
+@)@</small> have the same sign; i.e.
+<small>@[@
+
+	B_{0,1} B_{1,0} = b_1 b_2 \geq 0
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="yi" id="yi">yi</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yi</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and size two.
+It specifies the vector <small>@(@
+y( 0 )
+@)@</small>, to be specific,
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
+y_0 ( 0 ) =
+@)@</small> 
+<code><i><font color="black"><span style='white-space: nowrap'>yi</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
+
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
+y_1 ( 0 ) =
+@)@</small> 
+<code><i><font color="black"><span style='white-space: nowrap'>yi</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="tf" id="tf">tf</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tf</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It specifies the final time; i.e. <small>@(@
+t_f
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="yf" id="yf">yf</a></big></b>
+<br>
+The return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yf</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and size two and contains the solution of the ODE; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yf</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
+ <small>@(@
+= y_0 ( t_f )
+@)@</small>
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>yf</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]</span></font></code>
+ <small>@(@
+= y_1 ( t_f )
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="case_number" id="case_number">case_number</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>case_number</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><a name="case_number.One" id="case_number.One">One</a></b>
+<br>
+The case where <small>@(@
+b_1 = 0
+@)@</small> and <small>@(@
+b_2 = 0
+@)@</small> we denote by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>case_number</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;1<br>
+</span></font></code>
+In this case we return the solution
+<small>@[@
+
+\begin{array}{rcl}
+	y_0 ( t_f ) & = & y_0 (0) \exp( b_0 t )
+	\\
+	y_1 ( t_f ) & = & y_1 (0) \exp( b_3 t )
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="case_number.Two" id="case_number.Two">Two</a></b>
+<br>
+The case where <small>@(@
+b_1 \neq 0
+@)@</small> and <small>@(@
+b_2 = 0
+@)@</small>.
+We denote by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>case_number</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;2<br>
+</span></font></code>
+In this case, we switch the order of the rows and columns in
+<small>@(@
+B
+@)@</small> and 
+<code><i><font color="black"><span style='white-space: nowrap'>yi</span></font></i></code>
+,
+compute the solution using
+<a href="eigen_ode2.htm#Method.Case Three" target="_top"><span style='white-space: nowrap'>case&nbsp;three</span></a>
+
+and then switch the order of the result.
+
+<br>
+<br>
+<b><a name="case_number.Three" id="case_number.Three">Three</a></b>
+<br>
+The case where <small>@(@
+b_1 = 0
+@)@</small>, <small>@(@
+b_2 \neq 0
+@)@</small>.
+We denote this case by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>case_number</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;3<br>
+</span></font></code>
+In this case, we compute the solution use the method for
+<a href="eigen_ode2.htm#Method.Case Three" target="_top"><span style='white-space: nowrap'>case&nbsp;three</span></a>
+ below.
+
+<br>
+<br>
+<b><a name="case_number.Four" id="case_number.Four">Four</a></b>
+<br>
+The case where <small>@(@
+b_1 \neq 0
+@)@</small> and <small>@(@
+b_2 \neq 0
+@)@</small>.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>case_number</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;4<br>
+</span></font></code>
+In this case, we compute the solution use the method for
+<a href="eigen_ode2.htm#Method.Case Four" target="_top"><span style='white-space: nowrap'>case&nbsp;four</span></a>
+ below.
+
+<br>
+<br>
+<b><big><a name="Method" id="Method">Method</a></big></b>
+<br>
+The solution for case one is presented above.
+The solution for case two is to convert it to case three.
+
+<br>
+<br>
+<b><a name="Method.Case Three" id="Method.Case Three">Case Three</a></b>
+<br>
+For this case <small>@(@
+b_1 = 0
+@)@</small> and <small>@(@
+b_2 \neq 0
+@)@</small>.
+It follows that
+<small>@[@
+
+\begin{array}{rcl}
+y_0 ( t )   & = & y_0 ( 0 ) \exp ( b_0 t )
+\\
+y_1 ' ( t ) & = & b_3 y_1 (t) + b_2 y_0 ( t )
+\\
+y_1 (t)     & = & y_1 ( 0 ) \exp ( b_3 t ) +
+	\int_0^t \exp [ b_3 ( t - s ) ] b_2 y_0 (s) \B{d} s
+\\
+y_1 (t)     & = & y_1 ( 0 ) \exp ( b_3 t ) +
+	b_2 y_0 ( 0 ) \int_0^t \exp [ b_3 ( t - s ) + b_0 s  ] \B{d} s
+\\
+y_1 (t)     & = & y_1 ( 0 ) \exp ( b_3 t ) +
+	b_2 y_0 ( 0 ) \exp ( b_3 t ) \int_0^t \exp [ ( b_0 - b_3 ) s ] \B{d} s
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Method.Case Four" id="Method.Case Four">Case Four</a></b>
+<br>
+In this case
+<small>@[@
+
+	(b_0 - b_3)^2 + b_1 b_2 > 0
+
+@]@</small>
+A value <small>@(@
+\lambda
+@)@</small>
+is an eigen value of <small>@(@
+B
+@)@</small> if and only if:
+<small>@[@
+
+\begin{array}{rcl}
+0 & = & ( b_0 - \lambda ) ( b_3 - \lambda )  - b_1 b_2
+\\
+0 & = & \lambda^2 - (b_0 + b_3) \lambda + b_0 b_3 - b_1 b_2
+\\
+\lambda & = &  \frac{
+	(b_0 + b_3) \pm \sqrt{ (b_0 + b_3)^2 - 4 b_0 b_3 + 4 b_1 b_2 }
+}{2}
+\\
+\lambda & = &  \frac{
+	(b_0 + b_3) \pm \sqrt{ (b_0 - b_3)^2 + 4 b_1 b_2 }
+}{2}
+\end{array}
+
+@]@</small>
+We can express an arbitrary left eigenvector of <small>@(@
+B
+@)@</small>
+as <small>@(@
+(1, u)
+@)@</small> where <small>@(@
+u \in \B{R}
+@)@</small>,
+<small>@[@
+
+\begin{array}{rcl}
+	\lambda & = & b_0  + b_2 u
+	\\
+	\lambda u & = & b_1  + b_3 u
+\end{array}
+
+@]@</small>
+and <small>@(@
+\lambda
+@)@</small> is an eigenvalue of <small>@(@
+B
+@)@</small>.
+Using the first equation to solve for <small>@(@
+u
+@)@</small>, we have
+<small>@[@
+
+\lambda \; [ 1 \; , \; ( \lambda - b_0 ) / b_2  ]
+=
+[ 1 \; , \; ( \lambda - b_0 ) / b_2  ] \; B
+
+@]@</small>
+where
+<small>@[@
+
+\lambda =  \frac{
+	(b_0 + b_3) \pm \sqrt{ (b_0 - b_3)^2 + 4 b_1 b_2 }
+}{2}
+
+@]@</small>
+Define <small>@(@
+\lambda_+
+@)@</small> and <small>@(@
+\lambda_-
+@)@</small> as corresponding
+to the plus and minus the square root above and note
+<small>@(@
+\lambda_+ \neq \lambda_-
+@)@</small> because <small>@(@
+b_1 b_2 > 0
+@)@</small>.
+We also define
+<small>@[@
+
+\begin{array}{rcl}
+	u_\pm & = & ( \lambda_\pm - b_0 ) / b_2
+	\\
+	z_\pm (t) & = & y_0 (t) + u_\pm y_1 (t)
+\end{array}
+
+@]@</small>
+It follows that
+<small>@[@
+
+\begin{array}{rcl}
+z_\pm (t) & = &  (1, u_\pm ) y(t)
+\\
+z_\pm ' (t)
+& = &  (1, u_\pm ) y'(t) =  (1, u_\pm ) B y (t) = \lambda_\pm z(t)
+\\
+z_\pm (t) & = & z_\pm (0) \exp( \lambda_\pm t )
+\end{array}
+
+@]@</small>
+Which enables us to compute <small>@(@
+z_\pm (t)
+@)@</small>.
+Furthermore
+<small>@[@
+
+\begin{array}{rcl}
+y_1 (t) & = & [ z_+ (t) - z_- (t) ] / ( u_+ - u_- )
+\\
+& = & [ z_+ (t) - z_- (t) ] b_2 / ( \lambda_+ - \lambda_- )
+\\
+& = & [ z_+ (t) - z_- (t) ] b_2 / \sqrt{ (b_0 - b_3)^2 + 4 b_1 b_2 }
+\\
+y_0(t) & = & z_+ (t) - u_+ y_1 (t)
+\end{array}
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="eigen_ode2_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>eigen_ode2_xam.cpp</span></a>
+ contains
+and example and test of <code><font color="blue">eigen_ode2</font></code>.
+It returns true for success and false for failure.
+
+
+<hr>Input File: devel/utility/eigen_ode2.cpp
+
+</body>
+</html>

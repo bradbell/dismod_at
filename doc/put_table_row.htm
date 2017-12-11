@@ -1,0 +1,270 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>C++: Insert New Row at End of a Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++: Insert New Row at End of a Table">
+<meta name="keywords" id="keywords" content=" c++: insert new row end table syntax db table_name col_name_vec row_val_vec null primary_key table_name_id example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_put_table_row_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="log_message.htm" target="_top">Prev</a>
+</td><td><a href="put_table_row_xam.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_table</option>
+<option>put_table_row</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_table-&gt;</option>
+<option>check_child_prior</option>
+<option>check_pini_n_age</option>
+<option>check_rate_limit</option>
+<option>check_table_id</option>
+<option>check_zero_sum</option>
+<option>cpp_create_table</option>
+<option>exec_sql_cmd</option>
+<option>get_age_table</option>
+<option>get_avgint_table</option>
+<option>get_column_max</option>
+<option>get_covariate_table</option>
+<option>get_data_table</option>
+<option>get_db_input</option>
+<option>get_density_table</option>
+<option>get_integrand_table</option>
+<option>get_mulcov_table</option>
+<option>get_node_table</option>
+<option>get_option_table</option>
+<option>get_prior_table</option>
+<option>get_rate_table</option>
+<option>get_sample_table</option>
+<option>get_simulate_table</option>
+<option>get_smooth_grid</option>
+<option>get_nslist_table</option>
+<option>get_nslist_pair</option>
+<option>get_smooth_table</option>
+<option>get_table_column</option>
+<option>get_time_table</option>
+<option>get_weight_grid</option>
+<option>get_weight_table</option>
+<option>log_message</option>
+<option>put_table_row</option>
+<option>open_connection</option>
+<option>smooth_info</option>
+<option>weight_info</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>put_table_row-&gt;</option>
+<option>put_table_row_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>db</option>
+<option>table_name</option>
+<option>col_name_vec</option>
+<option>row_val_vec</option>
+<option>---..null</option>
+<option>primary_key</option>
+<option>table_name_id</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>C++: Insert New Row at End of a Table</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>table_name_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;put_table_row(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_name_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_val_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<code><font color="blue"><span style='white-space: nowrap'>put_table_row(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_name_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_val_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>primary_key</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="db" id="db">db</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sqlite3*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the database we are putting information into.
+
+<br>
+<br>
+<b><big><a name="table_name" id="table_name">table_name</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::string&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the name of the table we are putting information into.
+
+<br>
+<br>
+<b><big><a name="col_name_vec" id="col_name_vec">col_name_vec</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;std::string&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_name_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is a vector of the names for the column names in this table.
+The size of this vector must be the number of columns in the table
+minus one and the primary key column is not included.
+
+<br>
+<br>
+<b><big><a name="row_val_vec" id="row_val_vec">row_val_vec</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;std::string&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_val_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is a vector of the values we are inserting into the table.
+It must have the same size, and be in the same order,
+as 
+<code><i><font color="black"><span style='white-space: nowrap'>col_name_vec</span></font></i></code>
+.
+There cannot be any single quote characters <code><font color="blue">'</font></code>
+in any of the values.
+
+<br>
+<br>
+<b><a name="row_val_vec.null" id="row_val_vec.null">null</a></b>
+<br>
+The special value <code><font color="blue">null</font></code> can be used for <code><font color="blue">integer</font></code> and
+<code><font color="blue">real</font></code> columns. If it is used for a <code><font color="blue">text</font></code> column,
+it will be interpreted as the text <code><font color="blue">'null'</font></code> and not a missing value.
+
+<br>
+<br>
+<b><big><a name="primary_key" id="primary_key">primary_key</a></big></b>
+<br>
+The primary key for this table name must have column name
+
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>_id</span></font></code>
+.
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;size_t&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>primary_key</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+.
+If this argument is present, this value is used for the primary key.
+Otherwise, if the table is empty,
+the value zero is used for the primary key.
+Otherwise, the value is for the primary key is one greater than
+the current maximum value for the primary key column
+
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>_id</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="table_name_id" id="table_name_id">table_name_id</a></big></b>
+<br>
+If the return value is present, it has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the value of the primary key for this row;
+i.e, the value in the 
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>_id</span></font></code>
+ column for this row.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="put_table_row_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>put_table_row_xam.cpp</span></a>
+ contains an example that uses
+this function.
+
+
+<hr>Input File: devel/table/put_table_row.cpp
+
+</body>
+</html>

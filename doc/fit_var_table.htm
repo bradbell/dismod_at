@@ -1,0 +1,276 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Optimization Results for Variables</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Optimization Results for Variables">
+<meta name="keywords" id="keywords" content=" the optimization results variables lagrange multipliers fit_var_id fit_var_value residual_value residual_dage residual_dtime lagrange_value lagrange_dage lagrange_dtime example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_fit_var_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="scale_var_table.htm" target="_top">Prev</a>
+</td><td><a href="fit_data_subset_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>data_flow</option>
+<option>fit_var_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>data_flow-&gt;</option>
+<option>log_table</option>
+<option>var_table</option>
+<option>data_subset_table</option>
+<option>depend_var_table</option>
+<option>start_var_table</option>
+<option>scale_var_table</option>
+<option>fit_var_table</option>
+<option>fit_data_subset_table</option>
+<option>truth_var_table</option>
+<option>simulate_table</option>
+<option>sample_table</option>
+<option>predict_table</option>
+</select>
+</td>
+<td>fit_var_table</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Lagrange Multipliers</option>
+<option>fit_var_id</option>
+<option>fit_var_value</option>
+<option>residual_value</option>
+<option>residual_dage</option>
+<option>residual_dtime</option>
+<option>lagrange_value</option>
+<option>lagrange_dage</option>
+<option>lagrange_dtime</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Optimization Results for Variables</big></big></b></center>
+The fit_var table contains the maximum likelihood estimate
+for the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ corresponding to
+the data table <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+.
+A new <code><font color="blue">fit_var</font></code> table is created each time the
+<a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+ is executed.
+
+<br>
+<br>
+<b><big><a name="Lagrange Multipliers" id="Lagrange Multipliers">Lagrange Multipliers</a></big></b>
+<br>
+Setting good upper and lower limits, not zero or infinite,
+helps <code><font color="blue">dismod_at</font></code> determine the scale for the constraints
+and gives better detection of which constraints are active.
+
+<br>
+<br>
+<b><big><a name="fit_var_id" id="fit_var_id">fit_var_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fit_var_id</span></font></i></code>
+ column is also a foreign key for the
+<a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fit_var_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+In addition, the size of both tables is the same.
+
+<br>
+<br>
+<b><big><a name="fit_var_value" id="fit_var_value">fit_var_value</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and contains the model variable values.
+To be specific, the
+<a href="model_variables.htm#Fixed Effects, theta" target="_top"><span style='white-space: nowrap'>fixed&nbsp;effects</span></a>
+ <small>@(@
+( \theta )
+@)@</small>,
+maximize the total objective <small>@(@
+L( \theta)
+@)@</small>
+and the corresponding optimal random effects
+<small>@(@
+\hat{u} ( \theta )
+@)@</small>; see the
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+
+documentation.
+
+<br>
+<br>
+<b><big><a name="residual_value" id="residual_value">residual_value</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and contains the
+<a href="statistic.htm#Weighted Residual Function, R" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual</span></a>
+
+corresponding to the <a href="smooth_grid_table.htm#value_prior_id" target="_top"><span style='white-space: nowrap'>value_prior_id</span></a>
+
+for this variable.
+If there is no such residual, this column is <code><font color="blue">null</font></code>.
+For example, if the corresponding <a href="density_table.htm" target="_top"><span style='white-space: nowrap'>density</span></a>
+ is
+uniform.
+
+<br>
+<br>
+<b><big><a name="residual_dage" id="residual_dage">residual_dage</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and contains the
+<a href="statistic.htm#Weighted Residual Function, R" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual</span></a>
+
+corresponding to the <a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
+
+for this variable.
+If there is no such residual, this column is <code><font color="blue">null</font></code>.
+For example, if the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>dage_prior_id</span></font></i></code>
+ is <code><font color="blue">null</font></code>.
+
+<br>
+<br>
+<b><big><a name="residual_dtime" id="residual_dtime">residual_dtime</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and contains the
+<a href="statistic.htm#Weighted Residual Function, R" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual</span></a>
+
+corresponding to the <a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
+
+for this variable.
+If there is no such residual, this column is <code><font color="blue">null</font></code>.
+For example, if the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>dtime_prior_id</span></font></i></code>
+ is <code><font color="blue">null</font></code>.
+
+<br>
+<br>
+<b><big><a name="lagrange_value" id="lagrange_value">lagrange_value</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and contains the Lagrange multipliers for
+the <a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
+ and upper limits corresponding the
+<a href="smooth_grid_table.htm#value_prior_id" target="_top"><span style='white-space: nowrap'>value_prior_id</span></a>
+ for this variable.
+If it is positive (negative) the upper (lower) limit is active.
+If neither prior limit is active, this column is zero.
+The Lagrange multipliers are in the
+<a href="fit_model_run_fit.htm#Scaling" target="_top"><span style='white-space: nowrap'>scaled&nbsp;space</span></a>
+
+where the optimization takes place.
+
+<br>
+<br>
+<b><big><a name="lagrange_dage" id="lagrange_dage">lagrange_dage</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and contains the Lagrange multipliers for
+the <a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
+ and upper limits corresponding the
+<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
+ for this variable.
+If it is positive (negative) the upper (lower) limit is active.
+If neither prior limit is active, this column is zero.
+The Lagrange multipliers are in the
+<a href="fit_model_run_fit.htm#Scaling" target="_top"><span style='white-space: nowrap'>scaled&nbsp;space</span></a>
+
+where the optimization takes place.
+
+<br>
+<br>
+<b><big><a name="lagrange_dtime" id="lagrange_dtime">lagrange_dtime</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and contains the Lagrange multipliers for
+the <a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
+ and upper limits corresponding the
+<a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
+ for this variable.
+If it is positive (negative) the upper (lower) limit is active.
+If neither prior limit is active, this column is zero.
+The Lagrange multipliers are in the
+<a href="fit_model_run_fit.htm#Scaling" target="_top"><span style='white-space: nowrap'>scaled&nbsp;space</span></a>
+
+where the optimization takes place.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+See the <a href="fit_command.py.htm" target="_top"><span style='white-space: nowrap'>fit_command.py</span></a>
+ example and test.
+
+
+<hr>Input File: omh/table/fit_var_table.omh
+
+</body>
+</html>

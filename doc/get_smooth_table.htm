@@ -1,0 +1,251 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>C++: Get the Smoothing Table Information</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++: Get the Smoothing Table Information">
+<meta name="keywords" id="keywords" content=" c++: get the smoothing table information smooth syntax purpose db smooth_table smooth_struct example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_get_smooth_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="get_nslist_pair_xam.cpp.htm" target="_top">Prev</a>
+</td><td><a href="get_table_column.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_table</option>
+<option>get_smooth_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_table-&gt;</option>
+<option>check_child_prior</option>
+<option>check_pini_n_age</option>
+<option>check_rate_limit</option>
+<option>check_table_id</option>
+<option>check_zero_sum</option>
+<option>cpp_create_table</option>
+<option>exec_sql_cmd</option>
+<option>get_age_table</option>
+<option>get_avgint_table</option>
+<option>get_column_max</option>
+<option>get_covariate_table</option>
+<option>get_data_table</option>
+<option>get_db_input</option>
+<option>get_density_table</option>
+<option>get_integrand_table</option>
+<option>get_mulcov_table</option>
+<option>get_node_table</option>
+<option>get_option_table</option>
+<option>get_prior_table</option>
+<option>get_rate_table</option>
+<option>get_sample_table</option>
+<option>get_simulate_table</option>
+<option>get_smooth_grid</option>
+<option>get_nslist_table</option>
+<option>get_nslist_pair</option>
+<option>get_smooth_table</option>
+<option>get_table_column</option>
+<option>get_time_table</option>
+<option>get_weight_grid</option>
+<option>get_weight_table</option>
+<option>log_message</option>
+<option>put_table_row</option>
+<option>open_connection</option>
+<option>smooth_info</option>
+<option>weight_info</option>
+</select>
+</td>
+<td>get_smooth_table</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>db</option>
+<option>smooth_table</option>
+<option>smooth_struct</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>C++: Get the Smoothing Table Information</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_table</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;get_smooth_table(</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+To read the <a href="smooth_table.htm" target="_top"><span style='white-space: nowrap'>smooth_table</span></a>
+ and return it as a C++ data structure.
+
+<br>
+<br>
+<b><big><a name="db" id="db">db</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>db</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sqlite3*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is an open connection to the database.
+
+<br>
+<br>
+<b><big><a name="smooth_table" id="smooth_table">smooth_table</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_table</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;smooth_struct&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+For each <a href="smooth_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+is the information for the corresponding
+<a href="smooth_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="smooth_struct" id="smooth_struct">smooth_struct</a></big></b>
+<br>
+This is a structure with the following fields
+<table><tr><td align='left'  valign='top'>
+
+Type </td><td align='left'  valign='top'>
+ Field </td><td align='left'  valign='top'>
+ Description
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">std::string</font></code> <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <code><font color="blue">smooth_name</font></code> </td><td align='left'  valign='top'>
+
+	The <a href="smooth_table.htm#smooth_name" target="_top"><span style='white-space: nowrap'>smooth_name</span></a>
+ for this smoothing.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">int</font></code> </td><td align='left'  valign='top'>
+ <code><font color="blue">n_age</font></code> </td><td align='left'  valign='top'>
+
+	The <a href="smooth_table.htm#n_age" target="_top"><span style='white-space: nowrap'>n_age</span></a>
+ for this smoothing.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">int</font></code> </td><td align='left'  valign='top'>
+ <code><font color="blue">n_time</font></code> </td><td align='left'  valign='top'>
+
+	The <a href="smooth_table.htm#n_time" target="_top"><span style='white-space: nowrap'>n_time</span></a>
+ for this smoothing.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">int</font></code> </td><td align='left'  valign='top'>
+ <code><font color="blue">mulstd_value_prior_id</font></code> </td><td align='left'  valign='top'>
+
+	The <a href="smooth_table.htm#mulstd_value_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_value_prior_id</span></a>
+
+	for this smoothing.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">int</font></code> </td><td align='left'  valign='top'>
+ <code><font color="blue">mulstd_dage_prior_id</font></code> </td><td align='left'  valign='top'>
+
+	The <a href="smooth_table.htm#mulstd_dage_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dage_prior_id</span></a>
+
+	for this smoothing.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">int</font></code> </td><td align='left'  valign='top'>
+ <code><font color="blue">mulstd_dtime_prior_id</font></code> </td><td align='left'  valign='top'>
+
+	The <a href="smooth_table.htm#mulstd_dtime_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dtime_prior_id</span></a>
+
+	for this smoothing.
+</td></tr>
+</table>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="get_smooth_grid_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_smooth_grid_xam.cpp</span></a>
+ contains an example that uses
+this function.
+
+
+<hr>Input File: devel/table/get_smooth_table.cpp
+
+</body>
+</html>

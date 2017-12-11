@@ -1,0 +1,117 @@
+var list_across0 = [
+'_contents.htm',
+'_reference.htm',
+'_index.htm',
+'_search.htm',
+'_external.htm'
+];
+var list_up0 = [
+'dismod_at.htm',
+'devel.htm',
+'devel_utility.htm',
+'eigen_ode2.htm'
+];
+var list_down3 = [
+'install_unix.htm',
+'get_started.htm',
+'user.htm',
+'database.htm',
+'model.htm',
+'command.htm',
+'python.htm',
+'devel.htm',
+'whats_new_2017.htm',
+'wish_list.htm'
+];
+var list_down2 = [
+'devel_table.htm',
+'devel_utility.htm',
+'devel_model.htm'
+];
+var list_down1 = [
+'a2_double.htm',
+'avgint_subset.htm',
+'bilinear_interp.htm',
+'child_info.htm',
+'data_subset.htm',
+'eigen_ode2.htm',
+'error_exit.htm',
+'fixed_effect.htm',
+'integrate_1d.htm',
+'integrate_2d.htm',
+'interp_weight.htm',
+'pack_info.htm',
+'pack_value_prior.htm',
+'pack_diff_prior.htm',
+'residual_density.htm',
+'random_number.htm',
+'random_effect.htm',
+'number_random_const.htm',
+'smooth2ode.htm',
+'solve_ode.htm',
+'split_space.htm'
+];
+var list_down0 = [
+'eigen_ode2_xam.cpp.htm'
+];
+var list_current0 = [
+'eigen_ode2.htm#Syntax',
+'eigen_ode2.htm#Purpose',
+'eigen_ode2.htm#Float',
+'eigen_ode2.htm#b',
+'eigen_ode2.htm#Assumption',
+'eigen_ode2.htm#yi',
+'eigen_ode2.htm#tf',
+'eigen_ode2.htm#yf',
+'eigen_ode2.htm#case_number',
+'eigen_ode2.htm#case_number.One',
+'eigen_ode2.htm#case_number.Two',
+'eigen_ode2.htm#case_number.Three',
+'eigen_ode2.htm#case_number.Four',
+'eigen_ode2.htm#Method',
+'eigen_ode2.htm#Method.Case Three',
+'eigen_ode2.htm#Method.Case Four',
+'eigen_ode2.htm#Example'
+];
+function choose_across0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_across0[index-1];
+}
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
+function choose_down3(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down3[index-1];
+}
+function choose_down2(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down2[index-1];
+}
+function choose_down1(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down1[index-1];
+}
+function choose_down0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down0[index-1];
+}
+function choose_current0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_current0[index-1];
+}

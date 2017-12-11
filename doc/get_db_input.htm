@@ -1,0 +1,263 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>C++: Get the Data Base Input Tables</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++: Get the Data Base Input Tables">
+<meta name="keywords" id="keywords" content=" c++: get the data base input tables syntax purpose primary key initial prevalence grid check rate limits child priors zero sum constraint db db_input ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_get_db_input_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="get_data_table_xam.cpp.htm" target="_top">Prev</a>
+</td><td><a href="get_density_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_table</option>
+<option>get_db_input</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_table-&gt;</option>
+<option>check_child_prior</option>
+<option>check_pini_n_age</option>
+<option>check_rate_limit</option>
+<option>check_table_id</option>
+<option>check_zero_sum</option>
+<option>cpp_create_table</option>
+<option>exec_sql_cmd</option>
+<option>get_age_table</option>
+<option>get_avgint_table</option>
+<option>get_column_max</option>
+<option>get_covariate_table</option>
+<option>get_data_table</option>
+<option>get_db_input</option>
+<option>get_density_table</option>
+<option>get_integrand_table</option>
+<option>get_mulcov_table</option>
+<option>get_node_table</option>
+<option>get_option_table</option>
+<option>get_prior_table</option>
+<option>get_rate_table</option>
+<option>get_sample_table</option>
+<option>get_simulate_table</option>
+<option>get_smooth_grid</option>
+<option>get_nslist_table</option>
+<option>get_nslist_pair</option>
+<option>get_smooth_table</option>
+<option>get_table_column</option>
+<option>get_time_table</option>
+<option>get_weight_grid</option>
+<option>get_weight_table</option>
+<option>log_message</option>
+<option>put_table_row</option>
+<option>open_connection</option>
+<option>smooth_info</option>
+<option>weight_info</option>
+</select>
+</td>
+<td>get_db_input</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>---..Primary Key</option>
+<option>---..Initial Prevalence Grid</option>
+<option>---..Check Rate Limits</option>
+<option>---..Child Priors</option>
+<option>---..Check Zero Sum Constraint</option>
+<option>db</option>
+<option>db_input</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>C++: Get the Data Base Input Tables</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>get_db_input(</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db_input</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Read all the input tables and return them as a C++ data structure.
+In addition, preform the following checks:
+
+<br>
+<br>
+<b><a name="Purpose.Primary Key" id="Purpose.Primary Key">Primary Key</a></b>
+<br>
+Check that all occurrences of 
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>_id</span></font></code>
+ are with in
+the limit for the corresponding table.
+Note that this only checks limits, and not positional dependent limits.
+For example, <code><font color="blue">null</font></code> might appear anywhere in
+<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
+.
+
+<br>
+<br>
+<b><a name="Purpose.Initial Prevalence Grid" id="Purpose.Initial Prevalence Grid">Initial Prevalence Grid</a></b>
+<br>
+See <a href="check_pini_n_age.htm" target="_top"><span style='white-space: nowrap'>check_pini_n_age</span></a>
+.
+
+<br>
+<br>
+<b><a name="Purpose.Check Rate Limits" id="Purpose.Check Rate Limits">Check Rate Limits</a></b>
+<br>
+See <a href="check_rate_limit.htm" target="_top"><span style='white-space: nowrap'>check_rate_limit</span></a>
+.
+
+<br>
+<br>
+<b><a name="Purpose.Child Priors" id="Purpose.Child Priors">Child Priors</a></b>
+<br>
+See <a href="check_child_prior.htm" target="_top"><span style='white-space: nowrap'>check_child_prior</span></a>
+.
+
+<br>
+<br>
+<b><a name="Purpose.Check Zero Sum Constraint" id="Purpose.Check Zero Sum Constraint">Check Zero Sum Constraint</a></b>
+<br>
+See <a href="check_zero_sum.htm" target="_top"><span style='white-space: nowrap'>check_zero_sum</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="db" id="db">db</a></big></b>
+<br>
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>db</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sqlite3*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is an open connection to the database.
+
+<br>
+<br>
+<b><big><a name="db_input" id="db_input">db_input</a></big></b>
+<br>
+The return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;db_input_struct&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db_input</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where <code><font color="blue">db_input_struct</font></code> is defined by
+<code><font color="blue">
+<pre><tt>     <b><font color="#0000FF">struct</font></b> <font color="#008080">db_input_struct</font> <font color="#FF0000">{</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>             age_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>             time_table<font color="#990000">;</font>
+          <i><font color="#9A1900">//</font></i>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;option_struct&gt;</font>      option_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;avgint_struct&gt;</font>      avgint_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>             avgint_cov_value<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;covariate_struct&gt;</font>   covariate_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;data_struct&gt;</font>        data_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>             data_cov_value<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;density_enum&gt;</font>       density_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;integrand_enum&gt;</font>     integrand_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;mulcov_struct&gt;</font>      mulcov_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;node_struct&gt;</font>        node_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;prior_struct&gt;</font>       prior_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;rate_struct&gt;</font>        rate_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;smooth_struct&gt;</font>      smooth_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;smooth_grid_struct&gt;</font> smooth_grid_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;weight_struct&gt;</font>      weight_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;weight_grid_struct&gt;</font> weight_grid_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;std::string&gt;</font>        nslist_table<font color="#990000">;</font>
+          CppAD<font color="#990000">::</font><font color="#008080">vector&lt;nslist_pair_struct&gt;</font> nslist_pair_table<font color="#990000">;</font>
+     <font color="#FF0000">}</font><font color="#990000">;</font>     </tt></pre>
+</font></code><code><span style='white-space: nowrap'><br>
+</span></code>Each 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>_table</span></font></code>
+ above is defined by the corresponding
+
+<code><font color="blue"><span style='white-space: nowrap'>get_</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>_table</span></font></code>
+ routine.
+For example, 
+<code><font color="blue"><span style='white-space: nowrap'>age_table</span></font></code>
+ is the return value of
+<a href="get_age_table.htm" target="_top"><span style='white-space: nowrap'>get_age_table</span></a>
+ routine.
+All of the tables must be empty when <code><font color="blue">get_db_input</font></code> is called; i.e.,
+the size of the corresponding vector must be zero.
+Upon return, each table will have the corresponding database 
+<code><i><font color="black"><span style='white-space: nowrap'>db</span></font></i></code>
+
+information.
+
+
+<hr>Input File: devel/table/get_db_input.cpp
+
+</body>
+</html>

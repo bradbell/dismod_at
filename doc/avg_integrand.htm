@@ -1,0 +1,759 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Model for the Average Integrand</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Model for the Average Integrand">
+<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i s_i t_i x_ij w_i n_i rate functions q_k u_ik j_k alpha_jk r_ik p_i0(t) pini iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j total effect weight integral wbar_i ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_avg_integrand_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="model_variables.htm" target="_top">Prev</a>
+</td><td><a href="data_like.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>avg_integrand</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>model-&gt;</option>
+<option>model_variables</option>
+<option>avg_integrand</option>
+<option>data_like</option>
+<option>fixed_value</option>
+<option>fixed_diff</option>
+<option>fixed_prior</option>
+<option>random_value</option>
+<option>random_diff</option>
+<option>random_prior</option>
+<option>statistic</option>
+<option>bilinear</option>
+<option>ode_grid</option>
+</select>
+</td>
+<td>avg_integrand</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Ordinary Differential Equation</option>
+<option>Data or Avgint Table Notation</option>
+<option>---..i</option>
+<option>---..a_i</option>
+<option>---..b_i</option>
+<option>---..s_i</option>
+<option>---..t_i</option>
+<option>---..x_ij</option>
+<option>---..w_i</option>
+<option>---..n_i</option>
+<option>Rate Functions</option>
+<option>---..q_k</option>
+<option>---..u_i,k</option>
+<option>---..J_k</option>
+<option>---..alpha_jk</option>
+<option>---..r_ik</option>
+<option>---..p_i,0(t), pini</option>
+<option>---..iota_i(a,t)</option>
+<option>---..rho_i(a,t)</option>
+<option>---..chi_i(a,t)</option>
+<option>---..omega_i(a,t)</option>
+<option>S_i(a,t)</option>
+<option>C_i(a,t)</option>
+<option>Differential Equation</option>
+<option>I_i(a,t)</option>
+<option>---..Sincidence</option>
+<option>---..remission</option>
+<option>---..mtexcess</option>
+<option>---..mtother</option>
+<option>---..mtwith</option>
+<option>---..susceptible</option>
+<option>---..withC</option>
+<option>---..prevalence</option>
+<option>---..Tincidence</option>
+<option>---..mtspecific</option>
+<option>---..mtall</option>
+<option>---..mtstandard</option>
+<option>---..relrisk</option>
+<option>Measurement Value Covariates</option>
+<option>---..K_i</option>
+<option>---..beta_j</option>
+<option>---..Total Effect</option>
+<option>Weight Integral, wbar_i</option>
+<option>Average Integrand, A_i</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Model for the Average Integrand</big></big></b></center>
+<br>
+<b><big><a name="Ordinary Differential Equation" id="Ordinary Differential Equation">Ordinary Differential Equation</a></big></b>
+<br>
+In the case where the <a href="rate_table.htm" target="_top"><span style='white-space: nowrap'>rates</span></a>
+ do not depend on time,
+the dismod_ode ordinary differential equation is
+<small>@[@
+
+\begin{array}{rcl}
+	S'(a) & = & - [ \iota(a) + \omega (a) ] S(a) + \rho(a) C(a)
+	\\
+	C'(a) & = & + \iota(a) S(a) - [ \rho(a) + \chi(a) + \omega (a) ] C(a)
+\end{array}
+
+@]@</small>
+with the initial condition <small>@(@
+C(0) = p_0
+@)@</small> and <small>@(@
+S(0) = 1 - p_0
+@)@</small>.
+This equation is made more complicated by the fact that the
+rates vary with time as well as with each data point.
+The reason for the variation between data points due both to the
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
+ as well as the
+<a href="mulcov_table.htm#mulcov_type.rate_value" target="_top"><span style='white-space: nowrap'>rate_value</span></a>
+ covariates.
+
+<br>
+<br>
+<b><big><a name="Data or Avgint Table Notation" id="Data or Avgint Table Notation">Data or Avgint Table Notation</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Data or Avgint Table Notation.i" id="Data or Avgint Table Notation.i">i</a></b>
+<br>
+We use <small>@(@
+i
+@)@</small> to denote either,
+<a href="data_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+ for a row in the data table or,
+<a href="avgint_table.htm#avgint_id" target="_top"><span style='white-space: nowrap'>avgint_id</span></a>
+ for a row in the avgint table.
+
+<br>
+<br>
+<b><a name="Data or Avgint Table Notation.a_i" id="Data or Avgint Table Notation.a_i">a_i</a></b>
+<br>
+We use <small>@(@
+a_i
+@)@</small> to denote the corresponding
+<a href="data_table.htm#age_lower" target="_top"><span style='white-space: nowrap'>age_lower</span></a>
+ value.
+
+<br>
+<br>
+<b><a name="Data or Avgint Table Notation.b_i" id="Data or Avgint Table Notation.b_i">b_i</a></b>
+<br>
+We use <small>@(@
+a_i
+@)@</small> to denote the corresponding
+<a href="data_table.htm#age_upper" target="_top"><span style='white-space: nowrap'>age_upper</span></a>
+ value.
+
+<br>
+<br>
+<b><a name="Data or Avgint Table Notation.s_i" id="Data or Avgint Table Notation.s_i">s_i</a></b>
+<br>
+We use <small>@(@
+a_i
+@)@</small> to denote the corresponding
+<a href="data_table.htm#time_lower" target="_top"><span style='white-space: nowrap'>time_lower</span></a>
+ value.
+
+<br>
+<br>
+<b><a name="Data or Avgint Table Notation.t_i" id="Data or Avgint Table Notation.t_i">t_i</a></b>
+<br>
+We use <small>@(@
+a_i
+@)@</small> to denote the corresponding
+<a href="data_table.htm#time_upper" target="_top"><span style='white-space: nowrap'>time_upper</span></a>
+ value.
+
+<br>
+<br>
+<b><a name="Data or Avgint Table Notation.x_ij" id="Data or Avgint Table Notation.x_ij">x_ij</a></b>
+<br>
+We use <small>@(@
+x_{i,j}
+@)@</small> to denote the corresponding
+<a href="data_table.htm#Covariates" target="_top"><span style='white-space: nowrap'>covariate</span></a>
+ values where <small>@(@
+j
+@)@</small>
+denotes the <a href="covariate_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
+.
+Note that the covariate
+<a href="covariate_table.htm#reference" target="_top"><span style='white-space: nowrap'>reference</span></a>
+ has already
+been subtracted from these values.
+
+<br>
+<br>
+<b><a name="Data or Avgint Table Notation.w_i" id="Data or Avgint Table Notation.w_i">w_i</a></b>
+<br>
+We use <small>@(@
+w_i (a, t)
+@)@</small> for the weighting as a function of age and time
+that corresponds to the
+<a href="data_table.htm#weight_id" target="_top"><span style='white-space: nowrap'>weight_id</span></a>
+
+for this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="Data or Avgint Table Notation.n_i" id="Data or Avgint Table Notation.n_i">n_i</a></b>
+<br>
+We use <small>@(@
+n_i
+@)@</small> to denote the corresponding
+<a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
+ value.
+
+
+<br>
+<br>
+<b><big><a name="Rate Functions" id="Rate Functions">Rate Functions</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Rate Functions.q_k" id="Rate Functions.q_k">q_k</a></b>
+<br>
+We use <small>@(@
+k
+@)@</small> to denote a
+<a href="rate_table.htm#rate_id" target="_top"><span style='white-space: nowrap'>rate_id</span></a>
+ and
+<small>@(@
+q_k (a, t)
+@)@</small> the piecewise linear rate function
+for the corresponding to the
+<a href="model_variables.htm#Fixed Effects, theta.Parent Rates" target="_top"><span style='white-space: nowrap'>parent&nbsp;rate</span></a>
+
+model variables.
+This is an unadjusted rate corresponding to the
+<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
+.
+The adjusted rates are discussed below; see
+<a href="avg_integrand.htm#Rate Functions.r_ik" target="_top"><span style='white-space: nowrap'>r_ik</span></a>
+.
+
+<br>
+<br>
+<b><a name="Rate Functions.u_i,k" id="Rate Functions.u_i,k">u_i,k</a></b>
+<br>
+If <small>@(@
+n_i
+@)@</small> is equal to or a descendant of one of the children of the
+parent node,
+<small>@(@
+u_{i,k} (a, t)
+@)@</small> is the piecewise linear random effect
+for the corresponding
+<a href="model_variables.htm#Random Effects, u.Child Rates" target="_top"><span style='white-space: nowrap'>child&nbsp;rate</span></a>
+
+If <small>@(@
+n_i
+@)@</small> is the parent node,
+there is no random effect for this data and
+<small>@(@
+u_{i,k} (a, t) = 0
+@)@</small>.
+Otherwise <small>@(@
+n_i
+@)@</small> is not a descendant of the parent node
+and the corresponding data is not used.
+
+<br>
+<br>
+<b><a name="Rate Functions.J_k" id="Rate Functions.J_k">J_k</a></b>
+<br>
+For each rate index <small>@(@
+k
+@)@</small>,
+there is a set of rows in the mulcov table such that
+<a href="mulcov_table.htm#rate_id" target="_top"><span style='white-space: nowrap'>rate_id</span></a>
+ is equal to <small>@(@
+k
+@)@</small>
+and
+<a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
+ is <code><font color="blue">rate_value</font></code>.
+We use <small>@(@
+J_k
+@)@</small> to denote the set of
+<a href="mulcov_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
+ values for
+which this is the case.
+
+<br>
+<br>
+<b><a name="Rate Functions.alpha_jk" id="Rate Functions.alpha_jk">alpha_jk</a></b>
+<br>
+For each rate index <small>@(@
+k
+@)@</small>,
+and each covariate index <small>@(@
+j \in J_k
+@)@</small>,
+we use <small>@(@
+\alpha_{j,k} (a, t)
+@)@</small> to denote the
+piecewise linear function corresponding to the
+<a href="model_variables.htm#Fixed Effects, theta.Covariate Multipliers" target="_top"><span style='white-space: nowrap'>covariate&nbsp;multiplier</span></a>
+
+variables for the corresponding
+<a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
+.
+Note that these are only
+<a href="mulcov_table.htm#mulcov_type.rate_value" target="_top"><span style='white-space: nowrap'>rate_value</span></a>
+ covariate multipliers.
+
+<br>
+<br>
+<b><a name="Rate Functions.r_ik" id="Rate Functions.r_ik">r_ik</a></b>
+<br>
+We use the following notation for the adjusted rates:
+<small>@[@
+
+r_{i,k} (a , t)
+=
+\exp \left[
+	u_{i,k} (a, t) + \sum_{j \in J(k)} x_{i,j} \alpha_{j,k} (a, t)
+\right]
+q_{i,k} ( a, t )
+
+@]@</small>
+Note that this is the adjusted rate for node <small>@(@
+n_i
+@)@</small>
+which may, or may not, be the parent node.
+In the <a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node</span></a>
+ case,
+the random effects in the equation above <small>@(@
+u_{i,k} (a, t)
+@)@</small> are zero.
+
+<br>
+<br>
+<b><a name="Rate Functions.p_i,0(t), pini" id="Rate Functions.p_i,0(t), pini">p_i,0(t), pini</a></b>
+<br>
+We use <small>@(@
+p_{i,0} (t)
+@)@</small> to denote the model value
+(as apposed to a measurement value)
+for prevalence at the initial age as a function of time.
+Note that this function is constant with respect to age <small>@(@
+a
+@)@</small>;
+see <a href="rate_table.htm#rate_name.pini" target="_top"><span style='white-space: nowrap'>pini</span></a>
+.
+This is denoted by <small>@(@
+r_{i,0} (a, t)
+@)@</small> above.
+
+<br>
+<br>
+<b><a name="Rate Functions.iota_i(a,t)" id="Rate Functions.iota_i(a,t)">iota_i(a,t)</a></b>
+<br>
+We use 
+<code><font color="blue"><span style='white-space: nowrap'>iota_i(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ and <small>@(@
+\iota_i (a,t)
+@)@</small>
+to denote the model value for adjusted susceptible incidence
+as a function of age and time;
+see <a href="rate_table.htm#rate_name.iota" target="_top"><span style='white-space: nowrap'>iota</span></a>
+.
+This is denoted by <small>@(@
+r_{i,1} ( a, t )
+@)@</small> above.
+
+<br>
+<br>
+<b><a name="Rate Functions.rho_i(a,t)" id="Rate Functions.rho_i(a,t)">rho_i(a,t)</a></b>
+<br>
+We use 
+<code><font color="blue"><span style='white-space: nowrap'>rho_i(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ and <small>@(@
+\rho_i (a,t)
+@)@</small>
+to denote the model value for adjusted remission
+as a function of age and time;
+see <a href="rate_table.htm#rate_name.rho" target="_top"><span style='white-space: nowrap'>rho</span></a>
+.
+This is denoted by <small>@(@
+r_{i,2} ( a, t )
+@)@</small> above.
+
+<br>
+<br>
+<b><a name="Rate Functions.chi_i(a,t)" id="Rate Functions.chi_i(a,t)">chi_i(a,t)</a></b>
+<br>
+We use 
+<code><font color="blue"><span style='white-space: nowrap'>chi_i(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ and <small>@(@
+\chi_i (a,t)
+@)@</small>
+to denote the model value for adjusted excess mortality
+(mortality due to the cause) as a function of age and time.
+This is denoted by <small>@(@
+r_{i,3} ( a, t )
+@)@</small> above.
+
+<br>
+<br>
+<b><a name="Rate Functions.omega_i(a,t)" id="Rate Functions.omega_i(a,t)">omega_i(a,t)</a></b>
+<br>
+We use 
+<code><font color="blue"><span style='white-space: nowrap'>omega_i(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ and <small>@(@
+\omega_i (a,t)
+@)@</small>
+to denote the model value for adjusted other cause mortality
+as a function of age and time;
+see <a href="rate_table.htm#rate_name.omega" target="_top"><span style='white-space: nowrap'>omega</span></a>
+.
+This is denoted by <small>@(@
+r_{i,4} ( a, t )
+@)@</small> above.
+
+<br>
+<br>
+<b><big><a name="S_i(a,t)" id="S_i(a,t)">S_i(a,t)</a></big></b>
+<br>
+We use <small>@(@
+S_i (a,t)
+@)@</small> to denote the
+model value for susceptible fraction of the population.
+
+<br>
+<br>
+<b><big><a name="C_i(a,t)" id="C_i(a,t)">C_i(a,t)</a></big></b>
+<br>
+We use <small>@(@
+C_i (a,t)
+@)@</small> to denote the
+model value for with condition fraction of the population.
+
+
+<br>
+<br>
+<b><big><a name="Differential Equation" id="Differential Equation">Differential Equation</a></big></b>
+<br>
+We drop the subscript <small>@(@
+i
+@)@</small> to simplify notation in the equations below.
+The with condition and susceptible fractions at age zero are
+<small>@[@
+
+	C (0, t) =  p_0 (t) \; , \; S (0, t) = 1 - p_0 (t)
+
+@]@</small>
+We use <small>@(@
+c
+@)@</small> to denote cohort; i.e., <small>@(@
+t = a + c
+@)@</small>,
+Given the rates (initial prevalence is called a rate),
+the functions <small>@(@
+S (a,t)
+@)@</small> and <small>@(@
+C (a,t)
+@)@</small> for <small>@(@
+a > 0
+@)@</small>
+are defined by
+<small>@[@
+
+\begin{array}{rcl}
+( \B{d} / \B{d} a )
+S(a, a+c)
+& = &
+- [ \iota (a, a+c) + \omega (a, a+c) ] S(a, a+c)
++ \rho(a, a+c) C(a, a+c)
+\\
+( \B{d} / \B{d} a )
+C(a, a+c)
+& = &
++ \iota(a, a+c) S(a, a+c)
+- [ \rho(a, a+c) + \chi(a, a+c) + \omega(a, a+c) ] C(a, a+c)
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="I_i(a,t)" id="I_i(a,t)">I_i(a,t)</a></big></b>
+<br>
+We use <small>@(@
+I_i (a, t)
+@)@</small> to denote the integrand as a function of
+age and time.
+Depending on the value of
+see <a href="data_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
+ for data index <small>@(@
+i
+@)@</small>,
+the function <small>@(@
+I_i (a, t)
+@)@</small> is defined as follows
+(with the subscript <small>@(@
+i
+@)@</small> once again dropped to simplify notation):
+
+<br>
+<br>
+<b><a name="I_i(a,t).Sincidence" id="I_i(a,t).Sincidence">Sincidence</a></b>
+
+<br>
+<small>@(@
+I (a, t) = \iota (a,t)
+@)@</small><br>
+<b><a name="I_i(a,t).remission" id="I_i(a,t).remission">remission</a></b>
+
+<br>
+<small>@(@
+I (a, t) = \rho (a,t)
+@)@</small><br>
+<b><a name="I_i(a,t).mtexcess" id="I_i(a,t).mtexcess">mtexcess</a></b>
+
+<br>
+<small>@(@
+I (a, t) = \chi (a,t)
+@)@</small><br>
+<b><a name="I_i(a,t).mtother" id="I_i(a,t).mtother">mtother</a></b>
+
+<br>
+<small>@(@
+I (a, t) = \omega (a,t)
+@)@</small><br>
+<b><a name="I_i(a,t).mtwith" id="I_i(a,t).mtwith">mtwith</a></b>
+
+<br>
+<small>@(@
+I (a, t) = \omega (a,t) + \chi (a,t)
+@)@</small><br>
+<b><a name="I_i(a,t).susceptible" id="I_i(a,t).susceptible">susceptible</a></b>
+
+<br>
+<small>@(@
+I (a, t) = S(a, t)
+@)@</small><br>
+<b><a name="I_i(a,t).withC" id="I_i(a,t).withC">withC</a></b>
+
+<br>
+<small>@(@
+I (a, t) = C(a, t)
+@)@</small><br>
+<b><a name="I_i(a,t).prevalence" id="I_i(a,t).prevalence">prevalence</a></b>
+
+<br>
+<small>@(@
+I (a, t) = p(a,t) = C(a,t) / [ S(a,t) + C(a,t) ]
+@)@</small><br>
+<b><a name="I_i(a,t).Tincidence" id="I_i(a,t).Tincidence">Tincidence</a></b>
+
+<br>
+<small>@(@
+I (a, t) = \iota(a, t) [ 1 - p(a,t) ]
+@)@</small><br>
+<b><a name="I_i(a,t).mtspecific" id="I_i(a,t).mtspecific">mtspecific</a></b>
+
+<br>
+<small>@(@
+I (a, t) = \chi (a,t) p(a, t)
+@)@</small><br>
+<b><a name="I_i(a,t).mtall" id="I_i(a,t).mtall">mtall</a></b>
+
+<br>
+<small>@(@
+I (a, t) = \omega (a,t) + \chi (a,t) p(a,t)
+@)@</small><br>
+<b><a name="I_i(a,t).mtstandard" id="I_i(a,t).mtstandard">mtstandard</a></b>
+
+<br>
+<small>@(@
+I (a, t) =
+	[ \omega (a,t) + \chi (a,t) ] / [ \omega (a,t) + \chi (a,t) p(a,t) ]
+@)@</small><br>
+<b><a name="I_i(a,t).relrisk" id="I_i(a,t).relrisk">relrisk</a></b>
+
+<br>
+<small>@(@
+I (a, t) = [ \omega (a,t) + \chi (a,t) ] / \omega (a,t)
+@)@</small><br>
+<b><big><a name="Measurement Value Covariates" id="Measurement Value Covariates">Measurement Value Covariates</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Measurement Value Covariates.K_i" id="Measurement Value Covariates.K_i">K_i</a></b>
+<br>
+There is a set of rows in the mulcov table such that
+<a href="mulcov_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
+ corresponds to
+<small>@(@
+I_i (a, t)
+@)@</small> and
+<a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
+ is equal to <code><font color="blue">meas_value</font></code>.
+We use <small>@(@
+K_i
+@)@</small> to denote the corresponding set of
+<a href="mulcov_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
+ values for
+which this is the case.
+
+<br>
+<br>
+<b><a name="Measurement Value Covariates.beta_j" id="Measurement Value Covariates.beta_j">beta_j</a></b>
+<br>
+For each covariate index <small>@(@
+j \in K_i
+@)@</small>,
+we use <small>@(@
+\beta_j (a, t)
+@)@</small> to denote the
+piecewise linear function corresponding to the
+<a href="model_variables.htm#Fixed Effects, theta.Covariate Multipliers" target="_top"><span style='white-space: nowrap'>covariate&nbsp;multiplier</span></a>
+
+variables for the corresponding
+<a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
+.
+Note that these are only
+<a href="mulcov_table.htm#mulcov_type.meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ covariate multipliers.
+
+<br>
+<br>
+<b><a name="Measurement Value Covariates.Total Effect" id="Measurement Value Covariates.Total Effect">Total Effect</a></b>
+<br>
+The total effect for the <code><i>i</i></code>-th measurement value,
+as a function of the fixed effects <small>@(@
+\theta
+@)@</small>, is
+<small>@[@
+
+	E_i ( a, t ) = \sum_{j \in K_i} x_{i,j} \beta_j (a, t)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Weight Integral, wbar_i" id="Weight Integral, wbar_i">Weight Integral, wbar_i</a></big></b>
+<br>
+We use <small>@(@
+\bar{w}_i
+@)@</small> to denote the weight integral defined by
+<small>@[@
+
+\bar{w}_i =
+\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)} w_i (a,t) \; \B{d} t \; \B{d} a
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Average Integrand, A_i" id="Average Integrand, A_i">Average Integrand, A_i</a></big></b>
+<br>
+We use <small>@(@
+u
+@)@</small> and <small>@(@
+\theta
+@)@</small> to denote the vector of
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
+ and
+<a href="model_variables.htm#Fixed Effects, theta" target="_top"><span style='white-space: nowrap'>fixed&nbsp;effects</span></a>
+ respectively.
+The model for the <code><i>i</i></code>-th measurement,
+not counting integrand effects or measurement noise, is
+<small>@[@
+
+A_i ( u , \theta )
+=
+\frac{1}{\bar{w}_i} \left[
+\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
+w_i (a,t) I_i (a, t) \; \exp \left[ E_i (a, t) \right]  \; \B{d} t \; \B{d} a
+\right]
+\;
+
+@]@</small>
+Note that this is actually a weighted average of the integrand function
+<small>@(@
+I_i (a, t)
+@)@</small> times the total measurement covariate effect
+<small>@(@
+E_i (a, t)
+@)@</small>
+Also note that in the case where
+<small>@(@
+a(i) = b(i)
+@)@</small>, <small>@(@
+s(i) = t(i)
+@)@</small>, or both,
+the average is defined as the limiting value.
+
+
+<hr>Input File: omh/model/avg_integrand.omh
+
+</body>
+</html>

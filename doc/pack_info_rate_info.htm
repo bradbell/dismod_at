@@ -1,0 +1,269 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Devel Pack Variables: Rates</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Devel Pack Variables: Rates">
+<meta name="keywords" id="keywords" content=" devel pack variables: rates syntax subvec_info pack_object rate_id j info covariate_id smooth_id n_var offset example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_pack_info_rate_info_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="pack_info_mulstd.htm" target="_top">Prev</a>
+</td><td><a href="pack_info_mulcov_meas.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>pack_info</option>
+<option>pack_info_rate_info</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_utility-&gt;</option>
+<option>a2_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_value_prior</option>
+<option>pack_diff_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>pack_info-&gt;</option>
+<option>pack_info_ctor</option>
+<option>pack_info_mulstd</option>
+<option>pack_info_rate_info</option>
+<option>pack_info_mulcov_meas</option>
+<option>pack_info_mulcov_rate</option>
+<option>pack_info_xam.cpp</option>
+</select>
+</td>
+<td>pack_info_rate_info</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>subvec_info</option>
+<option>pack_object</option>
+<option>rate_id</option>
+<option>j</option>
+<option>info</option>
+<option>---..covariate_id</option>
+<option>---..smooth_id</option>
+<option>---..n_var</option>
+<option>---..offset</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Devel Pack Variables: Rates</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>info</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.rate_info(</span></font><i><font color="black"><span style='white-space: nowrap'>rate_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="subvec_info" id="subvec_info">subvec_info</a></big></b>
+<br>
+the type <code><font color="blue">pack_info::subvec_info</font></code> is defined as follows:
+<code><font color="blue">
+<pre><tt>          <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">struct</font></b> <font color="#FF0000">{</font>
+               <font color="#008080">size_t</font> covariate_id<font color="#990000">;</font>
+               <font color="#008080">size_t</font> smooth_id<font color="#990000">;</font>
+               <font color="#008080">size_t</font> n_var<font color="#990000">;</font>
+               <font color="#008080">size_t</font> offset<font color="#990000">;</font>
+          <font color="#FF0000">}</font> subvec_info<font color="#990000">;</font>          </tt></pre>
+</font></code><br>
+<b><big><a name="pack_object" id="pack_object">pack_object</a></big></b>
+<br>
+This object has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;pack_info&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="rate_id" id="rate_id">rate_id</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and it specifies the
+<a href="rate_table.htm#rate_id" target="_top"><span style='white-space: nowrap'>rate_id</span></a>
+ the rate values.
+
+<br>
+<br>
+<b><big><a name="j" id="j">j</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_child</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="info" id="info">info</a></big></b>
+<br>
+The return value  has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pack_info::subvec_info&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>info</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><a name="info.covariate_id" id="info.covariate_id">covariate_id</a></b>
+<br>
+This field is not used or set by <code><font color="blue">rate_info</font></code>.
+
+<br>
+<br>
+<b><a name="info.smooth_id" id="info.smooth_id">smooth_id</a></b>
+<br>
+is the <a href="smooth_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+ for the rate.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_child</span></font></i></code>
+,
+this smoothing corresponds to the parent rates.
+Otherwise it corresponds to the child rates and is the same
+for all children.
+If
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;DISMOD_AT_NULL_SIZE_T<br>
+</span></font></code>
+then this rate is identically zero and there are no corresponding variables.
+
+<br>
+<br>
+<b><a name="info.n_var" id="info.n_var">n_var</a></b>
+<br>
+is the number of packed variables for this 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_id</span></font></i></code>
+
+and is the same for each 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i></code>
+.
+(Not specified when 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+ corresponds to <code><font color="blue">null</font></code>).
+
+<br>
+<br>
+<b><a name="info.offset" id="info.offset">offset</a></b>
+<br>
+is the offset (index) in the packed variable vector for the
+specified rates:
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_child</span></font></i></code>
+,
+it is the rate vector for the <code><i>j</i></code>-th child node.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_child</span></font></i></code>
+,
+this is the rate vector for the
+<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node</span></a>
+.
+(Not specified when 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+ corresponds to <code><font color="blue">null</font></code>).
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+See <a href="pack_info.htm#Example" target="_top"><span style='white-space: nowrap'>pack_info&nbsp;Example</span></a>
+.
+
+
+<hr>Input File: devel/utility/pack_info.cpp
+
+</body>
+</html>

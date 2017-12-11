@@ -1,0 +1,251 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Predict Table: Average Integrand Predictions</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Predict Table: Average Integrand Predictions">
+<meta name="keywords" id="keywords" content=" the predict table: average integrand predictions see also purpose avgint subset node covariates predict_id sample_index avgint_id avg_integrand example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_predict_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sample_table.htm" target="_top">Prev</a>
+</td><td><a href="model.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>data_flow</option>
+<option>predict_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>data_flow-&gt;</option>
+<option>log_table</option>
+<option>var_table</option>
+<option>data_subset_table</option>
+<option>depend_var_table</option>
+<option>start_var_table</option>
+<option>scale_var_table</option>
+<option>fit_var_table</option>
+<option>fit_data_subset_table</option>
+<option>truth_var_table</option>
+<option>simulate_table</option>
+<option>sample_table</option>
+<option>predict_table</option>
+</select>
+</td>
+<td>predict_table</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>See Also</option>
+<option>Purpose</option>
+<option>Avgint Subset</option>
+<option>---..Node</option>
+<option>---..Covariates</option>
+<option>predict_id</option>
+<option>sample_index</option>
+<option>avgint_id</option>
+<option>avg_integrand</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Predict Table: Average Integrand Predictions</big></big></b></center>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This table contains model predictions for the
+<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Avgint Subset" id="Avgint Subset">Avgint Subset</a></big></b>
+<br>
+For each row in the predict table,
+the 
+<code><i><font color="black"><span style='white-space: nowrap'>avgint_id</span></font></i></code>
+ column below identifies
+the corresponding row in the <a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
+.
+Only a subset of the rows of the avgint table is included.
+The subset is defined by the following node and covariate conditions:
+
+<br>
+<br>
+<b><a name="Avgint Subset.Node" id="Avgint Subset.Node">Node</a></b>
+<br>
+The <a href="avgint_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node</span></a>
+ must be
+<a href="node_table.htm#parent.Descendant" target="_top"><span style='white-space: nowrap'>descendant</span></a>
+ of the
+<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
+ specified by the
+option table.
+
+<br>
+<br>
+<b><a name="Avgint Subset.Covariates" id="Avgint Subset.Covariates">Covariates</a></b>
+<br>
+All of the
+<a href="avgint_table.htm#Covariates" target="_top"><span style='white-space: nowrap'>covariates</span></a>
+ must satisfy the
+<a href="covariate_table.htm#max_difference" target="_top"><span style='white-space: nowrap'>max_difference</span></a>
+ criteria.
+
+<br>
+<br>
+<b><big><a name="predict_id" id="predict_id">predict_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="sample_index" id="sample_index">sample_index</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and specifies the set of
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ that the 
+<code><i><font color="black"><span style='white-space: nowrap'>avg_integrand</span></font></i></code>
+ corresponds to.
+To be specific, the model variables are those that have the sample
+
+<code><i><font color="black"><span style='white-space: nowrap'>sample</span></font></i></code>
+ index in the <a href="sample_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+.
+This column is monotone non-decreasing; i.e. the value in each row
+is greater than or equal the value in the previous row.
+Each
+<a href="sample_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_index</span></a>
+ value
+in the sample table appears multiple times in the predict table,
+once for each 
+<code><i><font color="black"><span style='white-space: nowrap'>avgint_id</span></font></i></code>
+ is the subset defined above.
+
+<br>
+<br>
+<b><big><a name="avgint_id" id="avgint_id">avgint_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and specifies the
+<a href="avgint_table.htm#avgint_id" target="_top"><span style='white-space: nowrap'>avgint_id</span></a>
+ that
+
+<code><i><font color="black"><span style='white-space: nowrap'>avg_integrand</span></font></i></code>
+ corresponds to.
+For each 
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
+ value,
+
+<code><i><font color="black"><span style='white-space: nowrap'>avgint_id</span></font></i></code>
+ is monotone increasing and every element
+of the subset appears.
+
+<br>
+<br>
+<b><big><a name="avg_integrand" id="avg_integrand">avg_integrand</a></big></b>
+<br>
+This column type <code><font color="blue">real</font></code> and is the
+<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
+
+<small>@(@
+A_i(u, \theta)
+@)@</small>.
+The model variables <small>@(@
+(u, \theta)
+@)@</small> corresponding to the
+model variables with 
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
+ in <a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+.
+The subscript <small>@(@
+i
+@)@</small> denotes the
+information in the avgint table for the specified
+<a href="avgint_table.htm#avgint_id" target="_top"><span style='white-space: nowrap'>avgint_id</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The <a href="predict_command.py.htm" target="_top"><span style='white-space: nowrap'>predict_command.py</span></a>
+ is an example that creates this table.
+
+
+<hr>Input File: omh/table/predict_table.omh
+
+</body>
+</html>

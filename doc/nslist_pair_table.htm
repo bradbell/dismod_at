@@ -1,0 +1,179 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Lists of Node Smoothing Pairs</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Lists of Node Smoothing Pairs">
+<meta name="keywords" id="keywords" content=" lists node smoothing pairs nslist_pair_id nslist_id node_id smooth_id example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_nslist_pair_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="node_table.py.htm" target="_top">Prev</a>
+</td><td><a href="nslist_pair_table.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>nslist_pair_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>nslist_pair_table-&gt;</option>
+<option>nslist_pair_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>nslist_pair_id</option>
+<option>nslist_id</option>
+<option>node_id</option>
+<option>smooth_id</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Lists of Node Smoothing Pairs</big></big></b></center>
+This table can be used to specify a lists of nodes with
+corresponding smoothings.
+
+<br>
+<br>
+<b><big><a name="nslist_pair_id" id="nslist_pair_id">nslist_pair_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for
+the <code><font color="blue">nslist_pair</font></code> table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="nslist_id" id="nslist_id">nslist_id</a></big></b>
+<br>
+This column has type integer and is used to identify an individual lists
+in this table.
+This column has type <code><font color="blue">integer</font></code> and is the primary key for
+the <a href="nslist_table.htm" target="_top"><span style='white-space: nowrap'>nslist_table</span></a>
+.
+Each 
+<code><i><font color="black"><span style='white-space: nowrap'>nslist_id</span></font></i></code>
+ value corresponds to a different list of
+
+<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ pairs.
+
+<br>
+<br>
+<b><big><a name="node_id" id="node_id">node_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is a
+<a href="node_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
+ in the <code><font color="blue">node</font></code> table.
+It specifies which node this smoothing should be applied to.
+
+<br>
+<br>
+<b><big><a name="smooth_id" id="smooth_id">smooth_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is a
+<a href="smooth_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+.
+It specifies which smoothing to apply at this node.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="nslist_pair_table.py.htm" target="_top"><span style='white-space: nowrap'>nslist_pair_table.py</span></a>
+ and <a href="get_nslist_pair_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_nslist_pair_xam.cpp</span></a>
+
+contain example <code><font color="blue">nslist_pair</font></code> tables.
+
+
+<hr>Input File: omh/table/nslist_pair_table.omh
+
+</body>
+</html>

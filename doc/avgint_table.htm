@@ -1,0 +1,267 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The avgint Table: Defines Average Integrand Cases</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The avgint Table: Defines Average Integrand Cases">
+<meta name="keywords" id="keywords" content=" the avgint table: defines average integrand cases see also purpose usage avgint_id integrand_id node_id weight_id age_lower age_upper time_lower time_upper covariates example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_avgint_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="age_table.py.htm" target="_top">Prev</a>
+</td><td><a href="avgint_table.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>avgint_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>avgint_table-&gt;</option>
+<option>avgint_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>See Also</option>
+<option>Purpose</option>
+<option>Usage</option>
+<option>avgint_id</option>
+<option>integrand_id</option>
+<option>node_id</option>
+<option>weight_id</option>
+<option>age_lower</option>
+<option>age_upper</option>
+<option>time_lower</option>
+<option>time_upper</option>
+<option>Covariates</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The avgint Table: Defines Average Integrand Cases</big></big></b></center>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="predict_table.htm" target="_top"><span style='white-space: nowrap'>predict_table</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Given a value for the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+,
+this table contains the other information necessary to compute the
+<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Usage" id="Usage">Usage</a></big></b>
+<br>
+This table is only used by the <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict_command</span></a>
+,
+and hence it can be changed and the predict command can be re-run,
+without needing to re-run any other commands.
+
+<br>
+<br>
+<b><big><a name="avgint_id" id="avgint_id">avgint_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for the
+<code><font color="blue">avgint</font></code> table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="integrand_id" id="integrand_id">integrand_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the
+<a href="integrand_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
+ that identifies
+the integrand for this case.
+
+<br>
+<br>
+<b><big><a name="node_id" id="node_id">node_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the
+<a href="node_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
+ that identifies
+the node for this case.
+
+<br>
+<br>
+<b><big><a name="weight_id" id="weight_id">weight_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the
+<a href="weight_grid_table.htm#weight_id" target="_top"><span style='white-space: nowrap'>weight_id</span></a>
+ that identifies
+the weighting used for this case.
+
+<br>
+<br>
+<b><big><a name="age_lower" id="age_lower">age_lower</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is the lower age limit
+for this case.
+It must be greater than or equal the minimum <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+ value.
+
+<br>
+<br>
+<b><big><a name="age_upper" id="age_upper">age_upper</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is the upper age limit
+for this case.
+It must be greater than or equal the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i></code>
+
+and less than or equal the maximum <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+ value.
+
+<br>
+<br>
+<b><big><a name="time_lower" id="time_lower">time_lower</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is the lower time limit
+for this case.
+It must be greater than or equal the minimum <a href="time_table.htm" target="_top"><span style='white-space: nowrap'>time_table</span></a>
+ value.
+
+<br>
+<br>
+<b><big><a name="time_upper" id="time_upper">time_upper</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is the upper time limit
+for this case.
+It must be greater than or equal the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i></code>
+
+and less than or equal the maximum <a href="time_table.htm" target="_top"><span style='white-space: nowrap'>time_table</span></a>
+ value.
+
+<br>
+<br>
+<b><big><a name="Covariates" id="Covariates">Covariates</a></big></b>
+<br>
+The covariate columns have type <code><font color="blue">real</font></code> and column names
+that begin with the two characters <code><font color="blue">x_</font></code>.
+For each valid <a href="covariate_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
+,
+column 
+<code><font color="blue"><span style='white-space: nowrap'>x_</span></font><i><font color="black"><span style='white-space: nowrap'>covariate_id</span></font></i></code>
+ contains
+the value, for this measurement, of the covariate specified by
+
+<code><i><font color="black"><span style='white-space: nowrap'>covariate_id</span></font></i></code>
+.
+The covariate value <code><font color="blue">null</font></code> is interpreted as the
+<a href="covariate_table.htm#reference" target="_top"><span style='white-space: nowrap'>reference</span></a>
+ value for
+the corresponding covariate.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="avgint_table.py.htm" target="_top"><span style='white-space: nowrap'>avgint_table.py</span></a>
+ and
+<a href="get_avgint_table_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_avgint_table_xam.cpp</span></a>
+
+create example <code><font color="blue">avgint</font></code> tables.
+
+
+<hr>Input File: omh/table/avgint_table.omh
+
+</body>
+</html>

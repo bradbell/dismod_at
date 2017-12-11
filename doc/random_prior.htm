@@ -1,0 +1,131 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Prior for Random Effect Values</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Prior for Random Effect Values">
+<meta name="keywords" id="keywords" content=" prior random effect values p(u|theta) ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_random_prior_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="random_diff.htm" target="_top">Prev</a>
+</td><td><a href="statistic.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>random_prior</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>model-&gt;</option>
+<option>model_variables</option>
+<option>avg_integrand</option>
+<option>data_like</option>
+<option>fixed_value</option>
+<option>fixed_diff</option>
+<option>fixed_prior</option>
+<option>random_value</option>
+<option>random_diff</option>
+<option>random_prior</option>
+<option>statistic</option>
+<option>bilinear</option>
+<option>ode_grid</option>
+</select>
+</td>
+<td>random_prior</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>p(u|theta)</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Prior for Random Effect Values</big></big></b></center>
+<br>
+<b><big><a name="p(u|theta)" id="p(u|theta)">p(u|theta)</a></big></b>
+<br>
+We define the prior for the random effects,
+given the fixed effects, by
+<small>@[@
+
+\B{p} ( u | \theta )
+=
+V^u ( u | \theta ) A^u ( u | \theta ) T^u ( u | \theta )
+
+@]@</small>
+See
+<a href="random_value.htm#V^u" target="_top"><span style='white-space: nowrap'>V^u</span></a>
+,
+<a href="random_diff.htm#Age Differences.A^u" target="_top"><span style='white-space: nowrap'>A^u</span></a>
+, and
+<a href="random_diff.htm#Time Differences.T^u" target="_top"><span style='white-space: nowrap'>T^u</span></a>
+  for the definitions of
+<small>@(@
+V^u
+@)@</small>, <small>@(@
+A^u
+@)@</small> and <small>@(@
+T^u
+@)@</small>.
+
+
+<hr>Input File: omh/model/random_prior.omh
+
+</body>
+</html>

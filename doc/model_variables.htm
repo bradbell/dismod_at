@@ -1,0 +1,409 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Model Variables</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Model Variables">
+<meta name="keywords" id="keywords" content=" the model variables prior smoothing interpolation number children fixed effects theta standard deviation multipliers lambda parent rates covariate random u child age time variation multiplier initial prevalence other types ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_model_variables_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="model.htm" target="_top">Prev</a>
+</td><td><a href="avg_integrand.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>model_variables</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>model-&gt;</option>
+<option>model_variables</option>
+<option>avg_integrand</option>
+<option>data_like</option>
+<option>fixed_value</option>
+<option>fixed_diff</option>
+<option>fixed_prior</option>
+<option>random_value</option>
+<option>random_diff</option>
+<option>random_prior</option>
+<option>statistic</option>
+<option>bilinear</option>
+<option>ode_grid</option>
+</select>
+</td>
+<td>model_variables</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Prior</option>
+<option>Smoothing</option>
+<option>---..Interpolation</option>
+<option>Number of Children</option>
+<option>Fixed Effects, theta</option>
+<option>---..Smoothing Standard Deviation Multipliers, lambda</option>
+<option>---..Parent Rates</option>
+<option>---..Covariate Multipliers</option>
+<option>Random Effects, u</option>
+<option>---..Child Rates</option>
+<option>Age and Time Variation</option>
+<option>---..Smoothing Standard Deviation Multiplier</option>
+<option>---..Initial Prevalence</option>
+<option>---..Other Variables Types</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Model Variables</big></big></b></center>
+This section describes the model variables.
+These are the possibly unknown inputs to the model and
+are often referred to as model parameters in the statistical literature.
+Each model variable has a prior distribution and corresponds to one row in the
+<a href="db2csv_command.htm#variable.csv" target="_top"><span style='white-space: nowrap'>variable.csv</span></a>
+ file.
+If the lower and upper limits are equal, the model variable is known.
+
+<br>
+<br>
+<b><big><a name="Prior" id="Prior">Prior</a></big></b>
+<br>
+The prior distribution for a model variable is specified using either a
+<a href="smooth_grid_table.htm#const_value" target="_top"><span style='white-space: nowrap'>const_value</span></a>
+ (constant value) or a
+<a href="prior_table.htm#prior_id" target="_top"><span style='white-space: nowrap'>prior_id</span></a>
+.
+A 
+<code><i><font color="black"><span style='white-space: nowrap'>prior_id</span></font></i></code>
+
+specifies a row in the prior table and has the following information:
+<table><tr><td align='left'  valign='top'>
+
+<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+ </td><td align='left'  valign='top'>
+
+	density function corresponding for this prior
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
+ </td><td align='left'  valign='top'>
+
+	lower bound for this prior
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
+ </td><td align='left'  valign='top'>
+
+	upper bound for this prior
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="prior_table.htm#mean" target="_top"><span style='white-space: nowrap'>mean</span></a>
+ </td><td align='left'  valign='top'>
+
+	mean for this prior
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
+ </td><td align='left'  valign='top'>
+
+	standard deviation for this prior
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="prior_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+ </td><td align='left'  valign='top'>
+
+	offset in log transformation for this prior
+</td></tr>
+</table>
+<br>
+<b><big><a name="Smoothing" id="Smoothing">Smoothing</a></big></b>
+<br>
+The model variables are divided into subvectors and
+there is a smoothing for each subvector
+(except for the subvector of smoothing standard deviation multipliers
+which are discussed below).
+The smoothing determines the number of variables in the subvector,
+the age and time corresponding to each variable,
+and the prior for each variable:
+<table><tr><td align='left'  valign='top'>
+
+<a href="smooth_table.htm#n_age" target="_top"><span style='white-space: nowrap'>n_age</span></a>
+ </td><td align='left'  valign='top'>
+
+	number of age points in the subvector
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="smooth_table.htm#n_time" target="_top"><span style='white-space: nowrap'>n_time</span></a>
+ </td><td align='left'  valign='top'>
+
+	number of time points in the subvector
+</td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>n_age</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_time</span></font></i></code>
+ </td><td align='left'  valign='top'>
+
+	number of variables in the subvector
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="smooth_grid_table.htm#age_id" target="_top"><span style='white-space: nowrap'>age_id</span></a>
+ </td><td align='left'  valign='top'>
+
+	identifies age value for a variable
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="smooth_grid_table.htm#time_id" target="_top"><span style='white-space: nowrap'>time_id</span></a>
+ </td><td align='left'  valign='top'>
+
+	identifies time value for a variable
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="smooth_grid_table.htm#const_value" target="_top"><span style='white-space: nowrap'>const_value</span></a>
+ </td><td align='left'  valign='top'>
+
+	null or a value that a variable is constrained to
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="smooth_grid_table.htm#value_prior_id" target="_top"><span style='white-space: nowrap'>value_prior_id</span></a>
+ </td><td align='left'  valign='top'>
+
+	prior for value of a variable
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
+  </td><td align='left'  valign='top'>
+
+	prior for difference between a variable and the next in age direction
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
+  </td><td align='left'  valign='top'>
+
+	prior for difference between a variable and the next in time direction
+</td></tr>
+</table>
+<br>
+<b><a name="Smoothing.Interpolation" id="Smoothing.Interpolation">Interpolation</a></b>
+<br>
+Given values on a smoothing grid,
+<a href="bilinear.htm" target="_top"><span style='white-space: nowrap'>bilinear</span></a>
+ interpolation
+is used to define a corresponding function of age and time.
+For example, given the subvector of model variables corresponding
+to <code><font color="blue">omega</font></code>, the function <small>@(@
+\omega(a, t)
+@)@</small> is the
+corresponding bilinear piecewise interpolant.
+
+<br>
+<br>
+<b><big><a name="Number of Children" id="Number of Children">Number of Children</a></big></b>
+<br>
+The parent node is specified by
+<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
+ in the
+option table.
+The number of children 
+<code><i><font color="black"><span style='white-space: nowrap'>n_child</span></font></i></code>
+ is the size of the
+<a href="node_table.htm#parent.Child Group" target="_top"><span style='white-space: nowrap'>child&nbsp;group</span></a>
+
+corresponding to this parent node.
+
+<br>
+<br>
+<b><big><a name="Fixed Effects, theta" id="Fixed Effects, theta">Fixed Effects, theta</a></big></b>
+<br>
+we use <small>@(@
+\theta
+@)@</small> to denote the vector of fixed effects; i.e.,
+all of the model variables except for the random effects.
+Below is a list of the fixed effects subvectors.
+
+<br>
+<br>
+<b><a name="Fixed Effects, theta.Smoothing Standard Deviation Multipliers, lambda" id="Fixed Effects, theta.Smoothing Standard Deviation Multipliers, lambda">Smoothing Standard Deviation Multipliers, lambda</a></b>
+<br>
+For each <small>@(@
+i =
+@)@</small> <a href="smooth_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+,
+there are three smoothing standard deviation multiplier variables:
+<small>@(@
+\lambda_i^v
+@)@</small>, <small>@(@
+\lambda_i^a
+@)@</small> and <small>@(@
+\lambda_i^t
+@)@</small>.
+The corresponding priors as specified by
+<a href="smooth_table.htm#mulstd_value_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_value_prior_id</span></a>
+,
+<a href="smooth_table.htm#mulstd_dage_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dage_prior_id</span></a>
+, and
+<a href="smooth_table.htm#mulstd_dtime_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dtime_prior_id</span></a>
+.
+
+<br>
+<br>
+<b><a name="Fixed Effects, theta.Parent Rates" id="Fixed Effects, theta.Parent Rates">Parent Rates</a></b>
+<br>
+For each <a href="rate_table.htm#rate_name" target="_top"><span style='white-space: nowrap'>rate</span></a>
+
+(<code><font color="blue">pini</font></code>, <code><font color="blue">iota</font></code>, <code><font color="blue">rho</font></code>, <code><font color="blue">chi</font></code>, and <code><font color="blue">omega</font></code>)
+there is a subvector corresponding to the parent value for the rate.
+The smoothing for each of these subvectors is specified by the corresponding
+<a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-space: nowrap'>parent_smooth_id</span></a>
+.
+Recall that the smoothing determines the number of variables in the
+subvector as well as the corresponding age and time values;
+see the unadjusted rates
+<a href="avg_integrand.htm#Rate Functions.q_k" target="_top"><span style='white-space: nowrap'>q_k</span></a>
+ in the average integrand model.
+
+<br>
+<br>
+<b><a name="Fixed Effects, theta.Covariate Multipliers" id="Fixed Effects, theta.Covariate Multipliers">Covariate Multipliers</a></b>
+<br>
+For each <a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
+
+there is a corresponding subvector and its
+smoothing is specified by the corresponding
+<a href="mulcov_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+.
+For more clarification, see the discussion for
+<a href="mulcov_table.htm#mulcov_type.rate_value" target="_top"><span style='white-space: nowrap'>rate_value</span></a>
+,
+<a href="mulcov_table.htm#mulcov_type.meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+,
+and
+<a href="mulcov_table.htm#mulcov_type.meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+
+covariate multipliers.
+
+<br>
+<br>
+<b><big><a name="Random Effects, u" id="Random Effects, u">Random Effects, u</a></big></b>
+<br>
+we use <small>@(@
+u
+@)@</small> to denote the vector of random effects; i.e.,
+all of the model variables except for the fixed effects.
+Currently, the only random effects are the rates
+for the children.
+
+<br>
+<br>
+<b><a name="Random Effects, u.Child Rates" id="Random Effects, u.Child Rates">Child Rates</a></b>
+<br>
+For each <a href="rate_table.htm#rate_name" target="_top"><span style='white-space: nowrap'>rate</span></a>
+
+(<code><font color="blue">pini</font></code>, <code><font color="blue">iota</font></code>, <code><font color="blue">rho</font></code>, <code><font color="blue">chi</font></code>, and <code><font color="blue">omega</font></code>)
+there is a
+subvector corresponding to the child random effects for the rate.
+The smoothing can be the same for all the children
+(see <a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>child_smooth_id</span></a>
+)
+or it can have a different value for each child
+(see <a href="rate_table.htm#child_nslist_id" target="_top"><span style='white-space: nowrap'>child_nslist_id</span></a>
+).
+If <a href="avg_integrand.htm#Rate Functions.u_i,k" target="_top"><span style='white-space: nowrap'>u_i,k</span></a>
+
+is a random effect for a rate and child,
+the rate for the child is <small>@(@
+\exp( u_{i,k} )
+@)@</small>
+times the rate for the parent;
+see the adjusted rates
+<a href="avg_integrand.htm#Rate Functions.r_ik" target="_top"><span style='white-space: nowrap'>r_ik</span></a>
+ in the average integrand model.
+
+<br>
+<br>
+<b><big><a name="Age and Time Variation" id="Age and Time Variation">Age and Time Variation</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Age and Time Variation.Smoothing Standard Deviation Multiplier" id="Age and Time Variation.Smoothing Standard Deviation Multiplier">Smoothing Standard Deviation Multiplier</a></b>
+<br>
+Each smoothing standard deviation multiplier <small>@(@
+\lambda
+@)@</small>
+is a fixed effect and has a prior
+(not a smoothing) and hence is constant w.r.t.  age and time.
+
+<br>
+<br>
+<b><a name="Age and Time Variation.Initial Prevalence" id="Age and Time Variation.Initial Prevalence">Initial Prevalence</a></b>
+<br>
+Each initial prevalence has a smoothing with only one age point and
+hence is constant w.r.t. age and may vary w.r.t. time.
+This holds for the parent (fixed effect subvector)
+and each child (random effect subvector).
+
+<br>
+<br>
+<b><a name="Age and Time Variation.Other Variables Types" id="Age and Time Variation.Other Variables Types">Other Variables Types</a></b>
+<br>
+All the other model variable types have an arbitrary smoothing and
+hence may vary w.r.t age, may vary w.r.t time, or both.
+This holds for the parent and for each child.
+
+
+
+<hr>Input File: omh/model/model_variable.omh
+
+</body>
+</html>

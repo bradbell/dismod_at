@@ -1,0 +1,205 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Sample Table: Samples of Variable Values</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Sample Table: Samples of Variable Values">
+<meta name="keywords" id="keywords" content=" the sample table: samples variable values simulated data user's choice sample_id sample_index var_id var_value example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_sample_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="simulate_table.htm" target="_top">Prev</a>
+</td><td><a href="predict_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>data_flow</option>
+<option>sample_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>data_flow-&gt;</option>
+<option>log_table</option>
+<option>var_table</option>
+<option>data_subset_table</option>
+<option>depend_var_table</option>
+<option>start_var_table</option>
+<option>scale_var_table</option>
+<option>fit_var_table</option>
+<option>fit_data_subset_table</option>
+<option>truth_var_table</option>
+<option>simulate_table</option>
+<option>sample_table</option>
+<option>predict_table</option>
+</select>
+</td>
+<td>sample_table</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Simulated Data</option>
+<option>User's Choice</option>
+<option>sample_id</option>
+<option>sample_index</option>
+<option>var_id</option>
+<option>var_value</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Sample Table: Samples of Variable Values</big></big></b></center>
+<br>
+<b><big><a name="Simulated Data" id="Simulated Data">Simulated Data</a></big></b>
+<br>
+The <a href="sample_command.htm" target="_top"><span style='white-space: nowrap'>sample_command</span></a>
+ creates this table with
+one optimal estimates of the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+.
+For each valid <a href="simulate_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+.
+in the <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+, there is an equal
+
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
+ in the table with the optimal variables
+for the corresponding measurement.
+
+<br>
+<br>
+<b><big><a name="User's Choice" id="User's Choice">User's Choice</a></big></b>
+<br>
+This table may also be created directly by the user,
+with the aid of the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+.
+This is useful when one wants to use the
+<a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict_command</span></a>
+ with a specific set of variable values; e.g.,
+the values in the <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="sample_id" id="sample_id">sample_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="sample_index" id="sample_index">sample_index</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and specifies the index,
+in the <code><font color="blue">simulate</font></code> table, that a complete set of <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+,
+in the <code><font color="blue">sample</font></code> table, corresponds to.
+
+<br>
+<br>
+<b><big><a name="var_id" id="var_id">var_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and specifies the
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ that 
+<code><i><font color="black"><span style='white-space: nowrap'>var_value</span></font></i></code>
+ corresponds to;
+see <a href="var_table.htm#var_id" target="_top"><span style='white-space: nowrap'>var_id</span></a>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n_var</span></font></i></code>
+ is the number of rows in the variable table,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sample_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_var</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
+ equal zero to the
+<a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
+ minus one.
+
+<br>
+<br>
+<b><big><a name="var_value" id="var_value">var_value</a></big></b>
+<br>
+This column type <code><font color="blue">real</font></code> and is the optimal variable value
+for this 
+<code><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The <a href="sample_command.py.htm" target="_top"><span style='white-space: nowrap'>sample_command.py</span></a>
+ is an example that creates this table.
+
+
+<hr>Input File: omh/table/sample_table.omh
+
+</body>
+</html>

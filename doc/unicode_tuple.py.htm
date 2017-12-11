@@ -1,0 +1,116 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>unicode_tuple: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="unicode_tuple: Example and Test">
+<meta name="keywords" id="keywords" content=" unicode_tuple: example test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_unicode_tuple.py_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="unicode_tuple.htm" target="_top">Prev</a>
+</td><td><a href="sql_command.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>unicode_tuple</option>
+<option>unicode_tuple.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>python-&gt;</option>
+<option>create_connection</option>
+<option>create_table</option>
+<option>create_database</option>
+<option>db2csv_command</option>
+<option>get_name_type</option>
+<option>get_row_list</option>
+<option>get_table_dict</option>
+<option>metropolis</option>
+<option>modify_command</option>
+<option>unicode_tuple</option>
+<option>sql_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>unicode_tuple-&gt;</option>
+<option>unicode_tuple.py</option>
+</select>
+</td>
+<td>unicode_tuple.py</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@ 
+
+
+<center><b><big><big>unicode_tuple: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><i><font color="#9A1900">#</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">unicode_tuple</font></b><font color="#990000">()</font> <font color="#990000">:</font>
+     <b><font color="#000080">import</font></b> dismod_at
+     <i><font color="#9A1900">#</font></i>
+     iterable     <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">2.00</font><font color="#990000">,</font> <font color="#FF0000">'three'</font> <font color="#990000">]</font>
+     quote_string <font color="#990000">=</font> True
+     u_tuple      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">unicode_tuple</font></b><font color="#990000">(</font>iterable<font color="#990000">,</font> quote_string<font color="#990000">)</font>
+     check        <font color="#990000">=</font> u<font color="#FF0000">'( 1, 2.0, \'three\' )'</font>
+     <b><font color="#0000FF">assert</font></b> u_tuple <font color="#990000">==</font> check
+     <i><font color="#9A1900">#</font></i>
+     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'unicode_tuple: OK'</font><font color="#990000">)</font></tt></pre>
+</font></code>
+<hr>Input File: example/table/unicode_tuple.py
+
+</body>
+</html>

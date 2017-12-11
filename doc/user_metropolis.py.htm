@@ -1,0 +1,165 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Predict Average Integrand Using Results of a Fit</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Predict Average Integrand Using Results of a Fit">
+<meta name="keywords" id="keywords" content=" predict average integrand using results fit ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_user_metropolis.py_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="metropolis.htm" target="_top">Prev</a>
+</td><td><a href="modify_command.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>metropolis</option>
+<option>user_metropolis.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>python-&gt;</option>
+<option>create_connection</option>
+<option>create_table</option>
+<option>create_database</option>
+<option>db2csv_command</option>
+<option>get_name_type</option>
+<option>get_row_list</option>
+<option>get_table_dict</option>
+<option>metropolis</option>
+<option>modify_command</option>
+<option>unicode_tuple</option>
+<option>sql_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>metropolis-&gt;</option>
+<option>user_metropolis.py</option>
+</select>
+</td>
+<td>user_metropolis.py</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@ 
+
+
+<center><b><big><big>Predict Average Integrand Using Results of a Fit</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080">import</font></b> sys
+<b><font color="#000080">import</font></b> os
+test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/metropolis.py'</font>
+<b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
+     usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
+     usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
+     usage <font color="#990000">+=</font> <font color="#FF0000">'and working directory is the dismod_at distribution directory\n'</font>
+     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font>test_program<font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># import dismod_at</font></i>
+local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#FF0000">'/python'</font>
+<b><font color="#0000FF">if</font></b><font color="#990000">(</font> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">isdir</font></b><font color="#990000">(</font> local_dir <font color="#990000">+</font> <font color="#FF0000">'/dismod_at'</font> <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+     sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> local_dir<font color="#990000">)</font>
+<b><font color="#000080">import</font></b> dismod_at
+<i><font color="#9A1900">#</font></i>
+<b><font color="#000080">import</font></b> scipy<font color="#990000">.</font>stats
+<b><font color="#000080">import</font></b> numpy
+<b><font color="#000080">import</font></b> time
+<i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Simulate data with and N(2, 0.5^2) distribution</font></i>
+python_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+numpy<font color="#990000">.</font>random<font color="#990000">.</font><b><font color="#000000">seed</font></b><font color="#990000">(</font>seed <font color="#990000">=</font> python_seed<font color="#990000">)</font>
+N          <font color="#990000">=</font> <font color="#993399">1000</font>
+mu_true    <font color="#990000">=</font> <font color="#993399">2.0</font>
+sigma_true <font color="#990000">=</font> <font color="#993399">0.5</font>
+y          <font color="#990000">=</font> scipy<font color="#990000">.</font>stats<font color="#990000">.</font>norm<font color="#990000">.</font><b><font color="#000000">rvs</font></b><font color="#990000">(</font>loc<font color="#990000">=</font>mu_true<font color="#990000">,</font> scale<font color="#990000">=</font>sigma_true<font color="#990000">,</font> size<font color="#990000">=</font> N<font color="#990000">)</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># model the data as N(mu, sigma) where x = (mu, sigma) is unknown</font></i>
+minus_infinity <font color="#990000">=</font> <font color="#990000">-</font> <b><font color="#000000">float</font></b><font color="#990000">(</font><font color="#FF0000">"inf"</font><font color="#990000">)</font>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">log_f</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">:</font>
+     mu    <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+     sigma <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>
+     <b><font color="#0000FF">if</font></b> sigma <font color="#990000">&lt;=</font> <font color="#993399">0</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">return</font></b> minus_infinity
+     <b><font color="#0000FF">return</font></b> <b><font color="#000000">sum</font></b><font color="#990000">(</font> scipy<font color="#990000">.</font>stats<font color="#990000">.</font>norm<font color="#990000">.</font><b><font color="#000000">logpdf</font></b><font color="#990000">(</font>y<font color="#990000">,</font> loc<font color="#990000">=</font>mu<font color="#990000">,</font> scale<font color="#990000">=</font>sigma<font color="#990000">)</font> <font color="#990000">)</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># run the metropolis algorithm to estimate (mu, sigma)</font></i>
+m   <font color="#990000">=</font> <font color="#993399">2000</font>                 <i><font color="#9A1900"># length of the chain</font></i>
+x0  <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">([</font><font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">])</font>  <i><font color="#9A1900"># start at mu = 1, sigma = 1</font></i>
+s   <font color="#990000">=</font> <font color="#993399">0.03</font>                 <i><font color="#9A1900"># scale factor for proposal random walk</font></i>
+<font color="#990000">(</font>a<font color="#990000">,</font> c<font color="#990000">)</font> <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">metropolis</font></b><font color="#990000">(</font>log_f<font color="#990000">,</font> m<font color="#990000">,</font> x0<font color="#990000">,</font> s<font color="#990000">)</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># compute and check estimates for mu and sigma</font></i>
+burn_in        <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> <font color="#993399">0.1</font> <font color="#990000">*</font> m <font color="#990000">)</font>
+c              <font color="#990000">=</font> c<font color="#990000">[</font>burn_in <font color="#990000">:,</font> <font color="#990000">:]</font>
+x_estimate     <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">average</font></b><font color="#990000">(</font>c<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">)</font>
+mu_estimate    <font color="#990000">=</font> x_estimate<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+sigma_estimate <font color="#990000">=</font> x_estimate<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>
+<i><font color="#9A1900">#</font></i>
+relerr <font color="#990000">=</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font> mu_estimate <font color="#990000">/</font> mu_true <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font>
+<b><font color="#0000FF">if</font></b> relerr <font color="#990000">&gt;</font> <font color="#993399">0.05</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'relerr = '</font><font color="#990000">,</font> relerr<font color="#990000">,</font> <font color="#FF0000">", python_seed = "</font><font color="#990000">,</font> python_seed<font color="#990000">)</font>
+     <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
+relerr <font color="#990000">=</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font> sigma_estimate <font color="#990000">/</font> sigma_true <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font>
+<b><font color="#0000FF">if</font></b> relerr <font color="#990000">&gt;</font> <font color="#993399">0.05</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'relerr = '</font><font color="#990000">,</font> relerr<font color="#990000">,</font> <font color="#FF0000">", python_seed = "</font><font color="#990000">,</font> python_seed<font color="#990000">)</font>
+     <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'metropolis.py: OK'</font><font color="#990000">)</font></tt></pre>
+</font></code>
+<hr>Input File: example/user/metropolis.py
+
+</body>
+</html>

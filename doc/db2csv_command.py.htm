@@ -1,0 +1,253 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>init Command: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="init Command: Example and Test">
+<meta name="keywords" id="keywords" content=" init command: example test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_db2csv_command.py_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="db2csv_command.htm" target="_top">Prev</a>
+</td><td><a href="get_name_type.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>db2csv_command</option>
+<option>db2csv_command.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>python-&gt;</option>
+<option>create_connection</option>
+<option>create_table</option>
+<option>create_database</option>
+<option>db2csv_command</option>
+<option>get_name_type</option>
+<option>get_row_list</option>
+<option>get_table_dict</option>
+<option>metropolis</option>
+<option>modify_command</option>
+<option>unicode_tuple</option>
+<option>sql_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>db2csv_command-&gt;</option>
+<option>db2csv_command.py</option>
+</select>
+</td>
+<td>db2csv_command.py</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@ 
+
+
+<center><b><big><big>init Command: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080">import</font></b> sys
+<b><font color="#000080">import</font></b> os
+<b><font color="#000080">import</font></b> copy
+<b><font color="#000080">import</font></b> subprocess
+<b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
+<b><font color="#000080">import</font></b> csv
+<b><font color="#000080">import</font></b> math
+<i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># check execution is from distribution directory</font></i>
+example <font color="#990000">=</font> <font color="#FF0000">'example/get_started/db2csv_command.py'</font>
+<b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> example  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
+     usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> example <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
+     usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
+     usage <font color="#990000">+=</font> <font color="#FF0000">'and working directory is the dismod_at distribution directory\n'</font>
+     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># distribution directory</font></i>
+dist_dir  <font color="#990000">=</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># directory where test files are stored</font></i>
+test_dir  <font color="#990000">=</font> dist_dir <font color="#990000">+</font> <font color="#FF0000">'/build/example/get_started'</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># import sandbox version of dismod_at</font></i>
+local_dir <font color="#990000">=</font> dist_dir <font color="#990000">+</font> <font color="#FF0000">'/python'</font>
+<b><font color="#0000FF">if</font></b><font color="#990000">(</font> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">isdir</font></b><font color="#990000">(</font> local_dir <font color="#990000">+</font> <font color="#FF0000">'/dismod_at'</font> <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+     sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> local_dir<font color="#990000">)</font>
+<b><font color="#000080">import</font></b> dismod_at
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># import get_started_db example</font></i>
+sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#FF0000">'/example/get_started'</font> <font color="#990000">)</font>
+<b><font color="#000080">import</font></b> get_started_db
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># change into the build/example/get_started directory</font></i>
+distutils<font color="#990000">.</font>dir_util<font color="#990000">.</font><b><font color="#000000">mkpath</font></b><font color="#990000">(</font>test_dir<font color="#990000">)</font>
+os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font>test_dir<font color="#990000">)</font>
+<i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># create get_started.db</font></i>
+get_started_db<font color="#990000">.</font><b><font color="#000000">get_started_db</font></b><font color="#990000">()</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
+program        <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
+file_name      <font color="#990000">=</font> <font color="#FF0000">'get_started.db'</font>
+<b><font color="#0000FF">for</font></b> command <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'init'</font><font color="#990000">,</font> <font color="#FF0000">'fit'</font> <font color="#990000">]</font> <font color="#990000">:</font>
+     cmd <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> command <font color="#990000">]</font>
+     <b><font color="#0000FF">if</font></b> command <font color="#990000">==</font> <font color="#FF0000">'fit'</font> <font color="#990000">:</font>
+          variables <font color="#990000">=</font> <font color="#FF0000">'both'</font>
+          cmd<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font>variables<font color="#990000">)</font>
+     <b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font> <font color="#990000">)</font>
+     flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> cmd <font color="#990000">)</font>
+     <b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
+          sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at '</font> <font color="#990000">+</font> command <font color="#990000">+</font> <font color="#FF0000">' command failed'</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># change into distribution directory to run sandbox version of dismodat.py</font></i>
+<i><font color="#9A1900"># return to test_dir when done.</font></i>
+os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font>dist_dir<font color="#990000">)</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+program        <font color="#990000">=</font> <font color="#FF0000">'bin/dismodat.py'</font>
+file_name      <font color="#990000">=</font> test_dir <font color="#990000">+</font> <font color="#FF0000">'/get_started.db'</font>
+command        <font color="#990000">=</font> <font color="#FF0000">'db2csv'</font>
+cmd            <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> command <font color="#990000">]</font>
+<i><font color="#9A1900">#</font></i>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font> <font color="#990000">)</font>
+flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> cmd <font color="#990000">)</font>
+<b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
+     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at db2csv command failed'</font><font color="#990000">)</font>
+os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font>test_dir<font color="#990000">)</font>
+<i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># get_table</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">get_table</font></b><font color="#990000">(</font>name<font color="#990000">)</font> <font color="#990000">:</font>
+     file_name <font color="#990000">=</font> name <font color="#990000">+</font> <font color="#FF0000">'.csv'</font>
+     file_ptr  <font color="#990000">=</font> <b><font color="#000000">open</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> <font color="#FF0000">'r'</font><font color="#990000">)</font>
+     table     <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
+     reader    <font color="#990000">=</font> csv<font color="#990000">.</font><b><font color="#000000">DictReader</font></b><font color="#990000">(</font>file_ptr<font color="#990000">)</font>
+     <b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> reader <font color="#990000">:</font>
+          table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font>row<font color="#990000">)</font>
+     file_ptr<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
+     <b><font color="#0000FF">return</font></b> table
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># near_equal</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">near_equal</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> eps<font color="#990000">)</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">if</font></b> y <font color="#990000">==</font> <font color="#993399">0.0</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">return</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">&lt;</font> eps
+     <b><font color="#0000FF">return</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <b><font color="#000000">float</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">/</font> y <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;=</font> eps
+<i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
+omega_world       <font color="#990000">=</font> <font color="#993399">1e-2</font>
+income_multiplier <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1e-3</font>
+adjusted_omega    <font color="#990000">=</font> omega_world <font color="#990000">*</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font>income_multiplier <font color="#990000">*</font> <font color="#993399">1000.0</font><font color="#990000">)</font>
+meas_value        <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">-</font> adjusted_omega <font color="#990000">*</font> <font color="#993399">50.0</font> <font color="#990000">)</font>
+meas_std          <font color="#990000">=</font> meas_value <font color="#990000">/</font> <font color="#993399">20</font><font color="#990000">.</font>
+<i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># data.csv</font></i>
+data_table <font color="#990000">=</font> <b><font color="#000000">get_table</font></b><font color="#990000">(</font><font color="#FF0000">'data'</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check data.csv correspond to the single row of data</font></i>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>data_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">1</font>
+row <font color="#990000">=</font> data_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+<b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'data_info'</font><font color="#990000">]</font>          <font color="#990000">==</font> <font color="#FF0000">'d1'</font>
+<b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>          <font color="#990000">==</font> <font color="#FF0000">'susceptible'</font>
+<b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'weight'</font><font color="#990000">]</font>             <font color="#990000">==</font> <font color="#FF0000">'constant_one'</font>
+<b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'density'</font><font color="#990000">]</font>            <font color="#990000">==</font> <font color="#FF0000">'gaussian'</font>
+<b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'eta'</font><font color="#990000">]</font>                <font color="#990000">==</font> <font color="#FF0000">''</font>
+<b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'nu'</font><font color="#990000">]</font>                 <font color="#990000">==</font> <font color="#FF0000">''</font>
+<b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'Delta'</font><font color="#990000">]</font>              <font color="#990000">==</font> row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">int</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'data_id'</font><font color="#990000">]</font> <font color="#990000">)</font>     <font color="#990000">==</font> <font color="#993399">0</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">int</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'out'</font><font color="#990000">])</font>           <font color="#990000">==</font> <font color="#993399">0</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'age_lo'</font><font color="#990000">])</font>      <font color="#990000">==</font> <font color="#993399">50.0</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'age_up'</font><font color="#990000">])</font>      <font color="#990000">==</font> <font color="#993399">50.0</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'time_lo'</font><font color="#990000">])</font>     <font color="#990000">==</font> <font color="#993399">2000.0</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'time_up'</font><font color="#990000">])</font>     <font color="#990000">==</font> <font color="#993399">2000.0</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'income'</font><font color="#990000">])</font>      <font color="#990000">==</font> <font color="#993399">1000.0</font>
+<i><font color="#9A1900">#</font></i>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">near_equal</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'residual'</font><font color="#990000">],</font>   <font color="#993399">0.0</font><font color="#990000">,</font>        <font color="#993399">1e-5</font><font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">near_equal</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">],</font> meas_value<font color="#990000">,</font> <font color="#993399">1e-5</font><font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">near_equal</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'avgint'</font><font color="#990000">],</font>     meas_value<font color="#990000">,</font> <font color="#993399">1e-5</font><font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">near_equal</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">],</font>   meas_std<font color="#990000">,</font>   <font color="#993399">1e-5</font><font color="#990000">)</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># variable.csv</font></i>
+variable_table <font color="#990000">=</font> <b><font color="#000000">get_table</font></b><font color="#990000">(</font><font color="#FF0000">'variable'</font><font color="#990000">)</font>
+<i><font color="#9A1900"># note  that res_value is empty because value prior is uniform</font></i>
+empty_field  <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'integrand'</font><font color="#990000">,</font> <font color="#FF0000">'tru_value'</font><font color="#990000">,</font> <font color="#FF0000">'sam_avg'</font><font color="#990000">,</font> <font color="#FF0000">'sam_std'</font> <font color="#990000">]</font>
+empty_field <font color="#990000">+=</font> <font color="#990000">[</font> <font color="#FF0000">'res_value'</font><font color="#990000">,</font> <font color="#FF0000">'res_dage'</font><font color="#990000">,</font> <font color="#FF0000">'res_dtime'</font> <font color="#990000">]</font>
+empty_field <font color="#990000">+=</font> <font color="#990000">[</font> <font color="#FF0000">'std_v'</font><font color="#990000">,</font> <font color="#FF0000">'eta_v'</font><font color="#990000">,</font> <font color="#FF0000">'nu_v'</font> <font color="#990000">]</font>
+<b><font color="#0000FF">for</font></b> prefix <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'lower'</font><font color="#990000">,</font> <font color="#FF0000">'upper'</font><font color="#990000">,</font> <font color="#FF0000">'mean'</font><font color="#990000">,</font> <font color="#FF0000">'std'</font><font color="#990000">,</font> <font color="#FF0000">'eta'</font><font color="#990000">,</font> <font color="#FF0000">'nu'</font><font color="#990000">,</font> <font color="#FF0000">'density'</font> <font color="#990000">]</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">for</font></b> suffix <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#FF0000">'_a'</font><font color="#990000">,</font> <font color="#FF0000">'_t'</font><font color="#990000">]</font> <font color="#990000">:</font>
+          empty_field<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> prefix <font color="#990000">+</font> suffix <font color="#990000">)</font>
+<b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> variable_table <font color="#990000">:</font>
+     <b><font color="#0000FF">for</font></b> field <b><font color="#0000FF">in</font></b> empty_field <font color="#990000">:</font>
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font>field<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">''</font>
+     <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'rate'</font><font color="#990000">]</font>               <font color="#990000">==</font> <font color="#FF0000">'omega'</font>
+     <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'fixed'</font><font color="#990000">]</font>              <font color="#990000">==</font> <font color="#FF0000">'true'</font>
+     <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'density_v'</font><font color="#990000">]</font>          <font color="#990000">==</font> <font color="#FF0000">'uniform'</font>
+     <b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'age'</font><font color="#990000">]</font> <font color="#990000">)</font>       <font color="#990000">==</font> <font color="#993399">0.0</font>
+     <b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'time'</font><font color="#990000">]</font> <font color="#990000">)</font>      <font color="#990000">==</font> <font color="#993399">1995.0</font>
+     <b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'lag_dage'</font><font color="#990000">]</font> <font color="#990000">)</font>  <font color="#990000">==</font> <font color="#993399">0.0</font>
+     <b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'lag_dtime'</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0.0</font>
+     <b><font color="#0000FF">assert</font></b> <b><font color="#000000">near_equal</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'lag_value'</font><font color="#990000">],</font> <font color="#993399">0.0</font><font color="#990000">,</font> <font color="#993399">1e-5</font><font color="#990000">)</font>
+     <b><font color="#0000FF">if</font></b> row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'rate'</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'covariate'</font><font color="#990000">]</font>   <font color="#990000">==</font> <font color="#FF0000">''</font>
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>        <font color="#990000">==</font> <font color="#FF0000">'world'</font>
+          <b><font color="#0000FF">assert</font></b> <b><font color="#000000">int</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'s_id'</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font> <i><font color="#9A1900"># smooth_omega_parent</font></i>
+          <b><font color="#0000FF">assert</font></b> <b><font color="#000000">near_equal</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'fit_value'</font><font color="#990000">],</font> omega_world<font color="#990000">,</font> <font color="#993399">1e-5</font><font color="#990000">)</font>
+     <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'mulcov_rate_value'</font>
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'covariate'</font><font color="#990000">]</font>   <font color="#990000">==</font> <font color="#FF0000">'income'</font>
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>        <font color="#990000">==</font> <font color="#FF0000">''</font>
+          <b><font color="#0000FF">assert</font></b> <b><font color="#000000">int</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'s_id'</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">1</font> <i><font color="#9A1900"># smooth_income_multiplier</font></i>
+          <b><font color="#0000FF">assert</font></b> <b><font color="#000000">near_equal</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'fit_value'</font><font color="#990000">],</font> income_multiplier<font color="#990000">,</font> <font color="#993399">1e-5</font><font color="#990000">)</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'db2csv_command: OK'</font><font color="#990000">)</font></tt></pre>
+</font></code>
+<hr>Input File: example/get_started/db2csv_command.py
+
+</body>
+</html>

@@ -1,0 +1,272 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Fit Model Constructor</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Fit Model Constructor">
+<meta name="keywords" id="keywords" content=" fit model constructor syntax fit_object db bound_random fit_or_sample pack_object start_var prior_table s_info_vec data_object prior_object quasi_fixed zero_sum_random prototype ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_fit_model_ctor_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="fit_model.htm" target="_top">Prev</a>
+</td><td><a href="fit_model_run_fit.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_model</option>
+<option>fit_model</option>
+<option>fit_model_ctor</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_model-&gt;</option>
+<option>devel_data_model</option>
+<option>prior_model</option>
+<option>fit_model</option>
+<option>depend</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>fit_model-&gt;</option>
+<option>fit_model_ctor</option>
+<option>fit_model_run_fit</option>
+<option>fit_model_get_solution</option>
+<option>fit_model_sample_posterior</option>
+</select>
+</td>
+<td>fit_model_ctor</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>fit_object</option>
+<option>db</option>
+<option>bound_random</option>
+<option>fit_or_sample</option>
+<option>pack_object</option>
+<option>start_var</option>
+<option>prior_table</option>
+<option>s_info_vec</option>
+<option>data_object</option>
+<option>prior_object</option>
+<option>quasi_fixed</option>
+<option>zero_sum_random</option>
+<option>Prototype</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Fit Model Constructor</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>fit_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fit_object</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_var</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>quasi_fixed</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>zero_sum_random</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_map</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)<br>
+</span></font></code>
+<br>
+<b><big><a name="fit_object" id="fit_object">fit_object</a></big></b>
+<br>
+The <code><font color="blue">fit_model</font></code> object being constructed.
+
+<br>
+<br>
+<b><big><a name="db" id="db">db</a></big></b>
+<br>
+This argument is the database connection for
+<a href="log_message.htm" target="_top"><span style='white-space: nowrap'>logging</span></a>
+ errors and warnings.
+
+<br>
+<br>
+<b><big><a name="bound_random" id="bound_random">bound_random</a></big></b>
+<br>
+This is the value of the
+<a href="option_table.htm#Optimizer.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+
+in the option table.
+
+<br>
+<br>
+<b><big><a name="fit_or_sample" id="fit_or_sample">fit_or_sample</a></big></b>
+<br>
+This argument is either <code><font color="blue">fit</font></code> or <code><font color="blue">sample</font></code>.
+If it is <code><font color="blue">fit</font></code> (<code><font color="blue">sample</font></code>)
+the <a href="fit_model_run_fit.htm" target="_top"><span style='white-space: nowrap'>run_fit</span></a>
+
+( <a href="fit_model_sample_posterior.htm" target="_top"><span style='white-space: nowrap'>sample_posterior</span></a>
+ )
+function can be used with this object.
+
+<br>
+<br>
+<b><big><a name="pack_object" id="pack_object">pack_object</a></big></b>
+<br>
+This argument is the <a href="pack_info.htm" target="_top"><span style='white-space: nowrap'>pack_info</span></a>
+ information corresponding to the
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="start_var" id="start_var">start_var</a></big></b>
+<br>
+This vector is the starting <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ in the order
+specified by <a href="pack_info.htm" target="_top"><span style='white-space: nowrap'>pack_info</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="prior_table" id="prior_table">prior_table</a></big></b>
+<br>
+This argument is the <a href="get_prior_table.htm#prior_table" target="_top"><span style='white-space: nowrap'>prior_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="s_info_vec" id="s_info_vec">s_info_vec</a></big></b>
+<br>
+For each <a href="smooth_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+is the corresponding <a href="smooth_info.htm" target="_top"><span style='white-space: nowrap'>smooth_info</span></a>
+ information.
+
+<br>
+<br>
+<b><big><a name="data_object" id="data_object">data_object</a></big></b>
+<br>
+This object contains the model for the data density;
+see <a href="devel_data_model.htm" target="_top"><span style='white-space: nowrap'>data_model</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="prior_object" id="prior_object">prior_object</a></big></b>
+<br>
+This object contains the model for the fixed negative log-likelihood;
+see <a href="prior_model.htm" target="_top"><span style='white-space: nowrap'>prior_model</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="quasi_fixed" id="quasi_fixed">quasi_fixed</a></big></b>
+<br>
+If this argument is true,
+a quasi-Newton method is used when optimizing the fixed effects.
+Otherwise a full Newton method is used; see
+<a href="option_table.htm#Optimizer.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="zero_sum_random" id="zero_sum_random">zero_sum_random</a></big></b>
+<br>
+If this vector has size <code><font color="blue">number_rate_enum</font></code>.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>zero_sum_random</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>rate_id</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true,
+for each age, time,
+the sum of the random effects for the corresponding rate
+is constrained to be zero.
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>fit_model<font color="#990000">::</font><b><font color="#000000">fit_model</font></b><font color="#990000">(</font>
+     sqlite3<font color="#990000">*</font>                              db               <font color="#990000">,</font>
+     <font color="#009900">bool</font>                                  warn_on_stderr   <font color="#990000">,</font>
+     <font color="#009900">double</font>                                bound_random     <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>                    fit_or_sample    <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> pack_info<font color="#990000">&amp;</font>                      pack_object      <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>          start_var        <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>          scale_var        <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>prior_struct<font color="#990000">&gt;&amp;</font>    prior_table      <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>smooth_info<font color="#990000">&gt;&amp;</font>     s_info_vec       <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> data_model<font color="#990000">&amp;</font>                     data_object      <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> prior_model<font color="#990000">&amp;</font>                    prior_object     <font color="#990000">,</font>
+     <font color="#009900">bool</font>                                  quasi_fixed      <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>            zero_sum_random  <font color="#990000">)</font></tt></pre>
+
+<hr>Input File: devel/model/fit_model.cpp
+
+</body>
+</html>

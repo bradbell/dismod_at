@@ -1,0 +1,874 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Create Csv Files that Summarize The Database</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Create Csv Files that Summarize The Database">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv variable.csv var_id var_type s_id age time rate integrand covariate node fixed depend tru_value sam_avg sam_std fit_value res_value res_dage res_dtime lag_value lag_dage lag_dtime prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density meas_value meas_std eta nu delta avgint residual sim_value sim_std covariates predict.csv avgint_id avgint_extra_columns s_index example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_db2csv_command_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="create_database.py.htm" target="_top">Prev</a>
+</td><td><a href="db2csv_command.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>db2csv_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>python-&gt;</option>
+<option>create_connection</option>
+<option>create_table</option>
+<option>create_database</option>
+<option>db2csv_command</option>
+<option>get_name_type</option>
+<option>get_row_list</option>
+<option>get_table_dict</option>
+<option>metropolis</option>
+<option>modify_command</option>
+<option>unicode_tuple</option>
+<option>sql_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>db2csv_command-&gt;</option>
+<option>db2csv_command.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>---..As Program</option>
+<option>---..As Python Function</option>
+<option>Convention</option>
+<option>database</option>
+<option>---..dir</option>
+<option>option.csv</option>
+<option>log.csv</option>
+<option>variable.csv</option>
+<option>---..var_id</option>
+<option>---..var_type</option>
+<option>---..s_id</option>
+<option>---..age</option>
+<option>---..time</option>
+<option>---..rate</option>
+<option>---..integrand</option>
+<option>---..covariate</option>
+<option>---..node</option>
+<option>---..fixed</option>
+<option>---..depend</option>
+<option>---..tru_value</option>
+<option>---..sam_avg</option>
+<option>---..sam_std</option>
+<option>---..fit_value</option>
+<option>---..res_value</option>
+<option>---..res_dage</option>
+<option>---..res_dtime</option>
+<option>---..lag_value</option>
+<option>---..lag_dage</option>
+<option>---..lag_dtime</option>
+<option>---..prior_info</option>
+<option>data.csv</option>
+<option>---..data_id</option>
+<option>---..data_extra_columns</option>
+<option>---..child</option>
+<option>---..node</option>
+<option>---..integrand</option>
+<option>---..weight</option>
+<option>---..age_lo</option>
+<option>---..age_up</option>
+<option>---..time_lo</option>
+<option>---..time_up</option>
+<option>---..out</option>
+<option>---..density</option>
+<option>---..meas_value</option>
+<option>---..meas_std</option>
+<option>---..eta</option>
+<option>---..nu</option>
+<option>---..Delta</option>
+<option>---..avgint</option>
+<option>---..residual</option>
+<option>---..sim_value</option>
+<option>---..sim_std</option>
+<option>---..Covariates</option>
+<option>predict.csv</option>
+<option>---..avgint_id</option>
+<option>---..avgint_extra_columns</option>
+<option>---..s_index</option>
+<option>---..avgint</option>
+<option>---..age_lo</option>
+<option>---..age_up</option>
+<option>---..time_lo</option>
+<option>---..time_up</option>
+<option>---..integrand</option>
+<option>---..weight</option>
+<option>---..node</option>
+<option>---..Covariates</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Create Csv Files that Summarize The Database</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Syntax.As Program" id="Syntax.As Program">As Program</a></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismodat.py&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;db2csv</span></font></code>
+
+
+<br>
+<br>
+<b><a name="Syntax.As Python Function" id="Syntax.As Python Function">As Python Function</a></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at.db2csv_command(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Convention" id="Convention">Convention</a></big></b>
+<br>
+The <code><font color="blue">null</font></code> value in the database corresponds
+to an empty string in the csv files.
+
+<br>
+<br>
+<b><big><a name="database" id="database">database</a></big></b>
+<br>
+is the path from the currently directory to the database.
+This must be a <a href="database.htm" target="_top"><span style='white-space: nowrap'>dismod_at</span></a>
+ and
+the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+ must have been run on the database.
+
+<br>
+<br>
+<b><a name="database.dir" id="database.dir">dir</a></b>
+<br>
+We use the notation 
+<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i></code>
+ for the directory where 
+<code><i><font color="black"><span style='white-space: nowrap'>database</span></font></i></code>
+
+is located.
+
+<br>
+<br>
+<b><big><a name="option.csv" id="option.csv">option.csv</a></big></b>
+<br>
+The file 
+<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/option.csv</span></font></code>
+ is written by this command.
+It is a CSV file with one row for each option.
+The columns in this table are
+<a href="option_table.htm#Conventions.option_name" target="_top"><span style='white-space: nowrap'>option_name</span></a>
+ and
+<a href="option_table.htm#Conventions.option_value" target="_top"><span style='white-space: nowrap'>option_value</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="log.csv" id="log.csv">log.csv</a></big></b>
+<br>
+The file 
+<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/log.csv</span></font></code>
+ is written by this command.
+It is a CSV file with one row for each message in the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
+.
+The columns in this table are
+<a href="log_table.htm#message_type" target="_top"><span style='white-space: nowrap'>message_type</span></a>
+,
+<a href="log_table.htm#table_name" target="_top"><span style='white-space: nowrap'>table_name</span></a>
+,
+<a href="log_table.htm#row_id" target="_top"><span style='white-space: nowrap'>row_id</span></a>
+,
+<a href="log_table.htm#unix_time" target="_top"><span style='white-space: nowrap'>unix_time</span></a>
+, and
+<a href="log_table.htm#message" target="_top"><span style='white-space: nowrap'>message</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="variable.csv" id="variable.csv">variable.csv</a></big></b>
+<br>
+The file 
+<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/variable.csv</span></font></code>
+ is written by this command.
+It is a CSV file with one row for each of the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+
+and has the following columns:
+
+<br>
+<br>
+<b><a name="variable.csv.var_id" id="variable.csv.var_id">var_id</a></b>
+<br>
+is the <a href="var_table.htm#var_id" target="_top"><span style='white-space: nowrap'>var_id</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.var_type" id="variable.csv.var_type">var_type</a></b>
+<br>
+is the <a href="var_table.htm#var_type" target="_top"><span style='white-space: nowrap'>var_type</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.s_id" id="variable.csv.s_id">s_id</a></b>
+<br>
+is the <a href="smooth_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+ for this variable.
+If the variable is a
+<a href="model_variables.htm#Fixed Effects, theta.Smoothing Standard Deviation Multipliers, lambda" target="_top"><span style='white-space: nowrap'>smoothing&nbsp;standard&nbsp;deviation&nbsp;multiplier</span></a>
+
+this is the smoothing that this multiplier effects.
+Otherwise, it is the smoothing where the prior for this variable
+comes from.
+
+<br>
+<br>
+<b><a name="variable.csv.age" id="variable.csv.age">age</a></b>
+<br>
+is the <a href="age_table.htm#age" target="_top"><span style='white-space: nowrap'>age</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.time" id="variable.csv.time">time</a></b>
+<br>
+is the <a href="time_table.htm#time" target="_top"><span style='white-space: nowrap'>time</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.rate" id="variable.csv.rate">rate</a></b>
+<br>
+is the <a href="rate_table.htm#rate_name" target="_top"><span style='white-space: nowrap'>rate_name</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.integrand" id="variable.csv.integrand">integrand</a></b>
+<br>
+is the
+<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_name</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.covariate" id="variable.csv.covariate">covariate</a></b>
+<br>
+is the
+<a href="covariate_table.htm#covariate_name" target="_top"><span style='white-space: nowrap'>covariate_name</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.node" id="variable.csv.node">node</a></b>
+<br>
+is the
+<a href="node_table.htm#node_name" target="_top"><span style='white-space: nowrap'>node_name</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.fixed" id="variable.csv.fixed">fixed</a></b>
+<br>
+is <code><font color="blue">true</font></code> if this variable is a
+<a href="model_variables.htm#Fixed Effects, theta" target="_top"><span style='white-space: nowrap'>fixed&nbsp;effect</span></a>
+,
+otherwise it is <code><font color="blue">false</font></code>.
+
+<br>
+<br>
+<b><a name="variable.csv.depend" id="variable.csv.depend">depend</a></b>
+<br>
+If the <a href="depend_var_table.htm" target="_top"><span style='white-space: nowrap'>depend_var_table</span></a>
+ exists, this has one of the following:
+<code><font color="blue">none</font></code> if neither the data nor the prior depends on this variable,
+<code><font color="blue">data</font></code> if only the data depends on this variable,
+<code><font color="blue">prior</font></code> if only the prior depends on this variable,
+<code><font color="blue">both</font></code> if both the data and the prior depend on this variable.
+
+<br>
+<br>
+<b><a name="variable.csv.tru_value" id="variable.csv.tru_value">tru_value</a></b>
+<br>
+If the truth_var table exists, this is the corresponding
+<a href="truth_var_table.htm#truth_var_value" target="_top"><span style='white-space: nowrap'>truth_var_value</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.sam_avg" id="variable.csv.sam_avg">sam_avg</a></b>
+<br>
+If the sample table exists,
+for each <a href="sample_table.htm#var_id" target="_top"><span style='white-space: nowrap'>var_id</span></a>
+
+this is the average with respect to
+with respect to <a href="sample_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_index</span></a>
+
+of the <a href="sample_table.htm#var_value" target="_top"><span style='white-space: nowrap'>var_value</span></a>
+ corresponding to
+this 
+<code><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.sam_std" id="variable.csv.sam_std">sam_std</a></b>
+<br>
+If the sample table exists,
+for each fixed <a href="sample_table.htm#var_id" target="_top"><span style='white-space: nowrap'>var_id</span></a>
+
+this is the estimated standard deviation with respect to
+with respect to <a href="sample_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_index</span></a>
+
+of the # <a href="sample_table.htm#var_value" target="_top"><span style='white-space: nowrap'>var_value</span></a>
+ corresponding to
+this 
+<code><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i></code>
+.
+If there is only one 
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
+ in the sample table,
+this column is empty because the standard deviation cannot be estimated
+from one sample.
+
+<br>
+<br>
+<b><a name="variable.csv.fit_value" id="variable.csv.fit_value">fit_value</a></b>
+<br>
+If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+ has been run, this is the
+<a href="fit_var_table.htm#fit_var_value" target="_top"><span style='white-space: nowrap'>fit_var_value</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.res_value" id="variable.csv.res_value">res_value</a></b>
+<br>
+If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+ has been run, this is the
+<a href="fit_var_table.htm#residual_value" target="_top"><span style='white-space: nowrap'>residual_value</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.res_dage" id="variable.csv.res_dage">res_dage</a></b>
+<br>
+If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+ has been run, this is the
+<a href="fit_var_table.htm#residual_dage" target="_top"><span style='white-space: nowrap'>residual_dage</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.res_dtime" id="variable.csv.res_dtime">res_dtime</a></b>
+<br>
+If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+ has been run, this is the
+<a href="fit_var_table.htm#residual_dtime" target="_top"><span style='white-space: nowrap'>residual_dtime</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.lag_value" id="variable.csv.lag_value">lag_value</a></b>
+<br>
+If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+ has been run, this is the
+<a href="fit_var_table.htm#lagrange_value" target="_top"><span style='white-space: nowrap'>lagrange_value</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.lag_dage" id="variable.csv.lag_dage">lag_dage</a></b>
+<br>
+If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+ has been run, this is the
+<a href="fit_var_table.htm#lagrange_dage" target="_top"><span style='white-space: nowrap'>lagrange_dage</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.lag_dtime" id="variable.csv.lag_dtime">lag_dtime</a></b>
+<br>
+If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+ has been run, this is the
+<a href="fit_var_table.htm#lagrange_dtime" target="_top"><span style='white-space: nowrap'>lagrange_dtime</span></a>
+.
+
+<br>
+<br>
+<b><a name="variable.csv.prior_info" id="variable.csv.prior_info">prior_info</a></b>
+<br>
+There is a column named
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>field</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>character</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>character</span></font></i></code>
+ equal to <code><font color="blue">v</font></code>, <code><font color="blue">a</font></code> and <code><font color="blue">t</font></code>
+and for 
+<code><i><font color="black"><span style='white-space: nowrap'>field</span></font></i></code>
+ equal to
+<a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
+,
+<a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
+,
+<a href="prior_table.htm#mean" target="_top"><span style='white-space: nowrap'>mean</span></a>
+,
+<a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
+,
+<a href="prior_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+,
+<a href="prior_table.htm#nu" target="_top"><span style='white-space: nowrap'>nu</span></a>
+ and
+<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density</span></a>
+.
+<ol type="1"><li>
+The character <code><font color="blue">v</font></code> denotes this is the prior information for a value,
+<code><font color="blue">a</font></code> the prior information for an age difference, and
+<code><font color="blue">t</font></code> the prior information for a time difference.
+</li><li>
+
+The density has been mapped to the corresponding
+<a href="density_table.htm#density_name" target="_top"><span style='white-space: nowrap'>density_name</span></a>
+.
+</li><li>
+
+If the corresponding <a href="smooth_grid_table.htm#value_prior_id" target="_top"><span style='white-space: nowrap'>value_prior_id</span></a>
+
+is <code><font color="blue">null</font></code>,
+the <a href="smooth_grid_table.htm#const_value" target="_top"><span style='white-space: nowrap'>const_value</span></a>
+ prior is displayed.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="data.csv" id="data.csv">data.csv</a></big></b>
+<br>
+The file 
+<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/data.csv</span></font></code>
+ is written by this command.
+It is a CSV file with one row for each row in the <a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
+
+and has the following columns:
+
+<br>
+<br>
+<b><a name="data.csv.data_id" id="data.csv.data_id">data_id</a></b>
+<br>
+is the data table
+<a href="data_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.data_extra_columns" id="data.csv.data_extra_columns">data_extra_columns</a></b>
+<br>
+Each column specified by the
+<a href="option_table.htm#data_extra_columns" target="_top"><span style='white-space: nowrap'>data_extra_columns</span></a>
+
+option is included in the <code><font color="blue">data.csv</font></code> file.
+
+<br>
+<br>
+<b><a name="data.csv.child" id="data.csv.child">child</a></b>
+<br>
+If this data row is associated with a child,
+this is the name of the child. Otherwise, this data is associated
+with the <a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.node" id="data.csv.node">node</a></b>
+<br>
+is the
+<a href="node_table.htm#node_name" target="_top"><span style='white-space: nowrap'>node_name</span></a>
+ for this data row.
+This will correspond directly to the data table
+<a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
+.
+3
+<br>
+<br>
+<b><a name="data.csv.integrand" id="data.csv.integrand">integrand</a></b>
+<br>
+is the integrand table
+<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_name</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.weight" id="data.csv.weight">weight</a></b>
+<br>
+is the
+<a href="weight_table.htm#weight_name" target="_top"><span style='white-space: nowrap'>weight_name</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.age_lo" id="data.csv.age_lo">age_lo</a></b>
+<br>
+is the data table
+<a href="data_table.htm#age_lower" target="_top"><span style='white-space: nowrap'>age_lower</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.age_up" id="data.csv.age_up">age_up</a></b>
+<br>
+is the data table
+<a href="data_table.htm#age_upper" target="_top"><span style='white-space: nowrap'>age_upper</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.time_lo" id="data.csv.time_lo">time_lo</a></b>
+<br>
+is the data table
+<a href="data_table.htm#time_lower" target="_top"><span style='white-space: nowrap'>time_lower</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.time_up" id="data.csv.time_up">time_up</a></b>
+<br>
+is the data table
+<a href="data_table.htm#time_upper" target="_top"><span style='white-space: nowrap'>time_upper</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.out" id="data.csv.out">out</a></b>
+<br>
+is the data table
+<a href="data_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.density" id="data.csv.density">density</a></b>
+<br>
+is the
+<a href="density_table.htm#density_name" target="_top"><span style='white-space: nowrap'>density_name</span></a>
+ for this row.
+
+<br>
+<br>
+<b><a name="data.csv.meas_value" id="data.csv.meas_value">meas_value</a></b>
+<br>
+is the data table
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.meas_std" id="data.csv.meas_std">meas_std</a></b>
+<br>
+is the data table
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.eta" id="data.csv.eta">eta</a></b>
+<br>
+is the data table
+<a href="data_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+ for this row.
+
+<br>
+<br>
+<b><a name="data.csv.nu" id="data.csv.nu">nu</a></b>
+<br>
+is the data table
+<a href="data_table.htm#nu" target="_top"><span style='white-space: nowrap'>nu</span></a>
+ for this row.
+
+<br>
+<br>
+<b><a name="data.csv.Delta" id="data.csv.Delta">Delta</a></b>
+<br>
+is the actual standard deviation used by the model; see
+<a href="data_like.htm#Data Table Notation.Delta_i" target="_top"><span style='white-space: nowrap'>Delta_i</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.avgint" id="data.csv.avgint">avgint</a></b>
+<br>
+If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+ has been run, this is the
+<a href="fit_data_subset_table.htm#avg_integrand" target="_top"><span style='white-space: nowrap'>avg_integrand</span></a>
+ for this row.
+
+<br>
+<br>
+<b><a name="data.csv.residual" id="data.csv.residual">residual</a></b>
+<br>
+If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+ has been run, this is the
+<a href="fit_data_subset_table.htm#weighted_residual" target="_top"><span style='white-space: nowrap'>weighted_residual</span></a>
+
+for this row.
+
+<br>
+<br>
+<b><a name="data.csv.sim_value" id="data.csv.sim_value">sim_value</a></b>
+<br>
+If <a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+
+is present in the previous fit command, it is the simulate table
+<a href="simulate_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ for
+the specified <a href="simulate_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.sim_std" id="data.csv.sim_std">sim_std</a></b>
+<br>
+If <a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+
+is present in the previous fit command, it is the simulate table
+<a href="simulate_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+ for
+the specified <a href="simulate_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+.
+
+<br>
+<br>
+<b><a name="data.csv.Covariates" id="data.csv.Covariates">Covariates</a></b>
+<br>
+For each covariate in the <a href="covariate_table.htm" target="_top"><span style='white-space: nowrap'>covariate_table</span></a>
+ there is a column with
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>covariate_name</span></font></i></code>
+.
+For each covariate column and measurement row, the value in the
+covariate column is covariate value for this measurement minus
+the reference value for this covariate, i.e., the corresponding
+<a href="avg_integrand.htm#Data or Avgint Table Notation.x_ij" target="_top"><span style='white-space: nowrap'>x_ij</span></a>
+ in the model
+for the average integrand.
+
+<br>
+<br>
+<b><big><a name="predict.csv" id="predict.csv">predict.csv</a></big></b>
+<br>
+If the <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict_command</span></a>
+ has was executed,
+the CSV file <code><font color="blue">predict.csv</font></code> is written.
+For each row of the <a href="predict_table.htm" target="_top"><span style='white-space: nowrap'>predict_table</span></a>
+
+there is a corresponding row in <code><font color="blue">predict.csv</font></code>.
+
+<br>
+<br>
+<b><a name="predict.csv.avgint_id" id="predict.csv.avgint_id">avgint_id</a></b>
+<br>
+is the avgint table
+<a href="avgint_table.htm#avgint_id" target="_top"><span style='white-space: nowrap'>avgint_id</span></a>
+.
+
+<br>
+<br>
+<b><a name="predict.csv.avgint_extra_columns" id="predict.csv.avgint_extra_columns">avgint_extra_columns</a></b>
+<br>
+Each column specified by the
+<a href="option_table.htm#avgint_extra_columns" target="_top"><span style='white-space: nowrap'>avgint_extra_columns</span></a>
+
+option is included in the <code><font color="blue">predict.csv</font></code> file.
+
+<br>
+<br>
+<b><a name="predict.csv.s_index" id="predict.csv.s_index">s_index</a></b>
+<br>
+This identifies the set model variables in the sample table.
+To be specific, the model variables correspond to the rows on the
+sample table with the same <a href="sample_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_index</span></a>
+
+equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>s_index</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="predict.csv.avgint" id="predict.csv.avgint">avgint</a></b>
+<br>
+is the <a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
+
+<small>@(@
+A_i(u, \theta)
+@)@</small>. The model variables <small>@(@
+(u, \theta)
+@)@</small>
+correspond to the 
+<code><i><font color="black"><span style='white-space: nowrap'>s_index</span></font></i></code>
+, and measurement subscript <small>@(@
+i
+@)@</small>
+denotes to the <a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
+ information
+for this row of <code><font color="blue">predict.csv</font></code>; i.e., 
+<code><i><font color="black"><span style='white-space: nowrap'>age_lo</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>age_up</span></font></i></code>
+,
+...
+
+<br>
+<br>
+<b><a name="predict.csv.age_lo" id="predict.csv.age_lo">age_lo</a></b>
+<br>
+is the avgint table
+<a href="avgint_table.htm#age_lower" target="_top"><span style='white-space: nowrap'>age_lower</span></a>
+.
+
+<br>
+<br>
+<b><a name="predict.csv.age_up" id="predict.csv.age_up">age_up</a></b>
+<br>
+is the avgint table
+<a href="data_table.htm#age_upper" target="_top"><span style='white-space: nowrap'>age_upper</span></a>
+.
+
+<br>
+<br>
+<b><a name="predict.csv.time_lo" id="predict.csv.time_lo">time_lo</a></b>
+<br>
+is the avgint table
+<a href="data_table.htm#time_lower" target="_top"><span style='white-space: nowrap'>time_lower</span></a>
+.
+
+<br>
+<br>
+<b><a name="predict.csv.time_up" id="predict.csv.time_up">time_up</a></b>
+<br>
+is the avgint table
+<a href="data_table.htm#time_upper" target="_top"><span style='white-space: nowrap'>time_upper</span></a>
+.
+
+<br>
+<br>
+<b><a name="predict.csv.integrand" id="predict.csv.integrand">integrand</a></b>
+<br>
+is the avgint table
+<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_name</span></a>
+.
+
+<br>
+<br>
+<b><a name="predict.csv.weight" id="predict.csv.weight">weight</a></b>
+<br>
+is the
+<a href="weight_table.htm#weight_name" target="_top"><span style='white-space: nowrap'>weight_name</span></a>
+ for this row.
+
+<br>
+<br>
+<b><a name="predict.csv.node" id="predict.csv.node">node</a></b>
+<br>
+is the
+<a href="node_table.htm#node_name" target="_top"><span style='white-space: nowrap'>node_name</span></a>
+ for this row.
+
+<br>
+<br>
+<b><a name="predict.csv.Covariates" id="predict.csv.Covariates">Covariates</a></b>
+<br>
+For each covariate in the <a href="covariate_table.htm" target="_top"><span style='white-space: nowrap'>covariate_table</span></a>
+ there is a column with
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>covariate_name</span></font></i></code>
+.
+For each covariate column and measurement row, the value in the
+covariate column is covariate value in the <a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
+
+minus the reference value for this covariate. i.e., the corresponding
+<a href="avg_integrand.htm#Data or Avgint Table Notation.x_ij" target="_top"><span style='white-space: nowrap'>x_ij</span></a>
+ in the model
+for the average integrand.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="db2csv_command.py.htm" target="_top"><span style='white-space: nowrap'>db2csv_command.py</span></a>
+ contains an example and test
+using this command.
+
+
+<hr>Input File: python/dismod_at/db2csv_command.py
+
+</body>
+</html>

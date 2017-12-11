@@ -1,0 +1,181 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>init Command: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="init Command: Example and Test">
+<meta name="keywords" id="keywords" content=" init command: example test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_modify_command.py_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="modify_command.htm" target="_top">Prev</a>
+</td><td><a href="unicode_tuple.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>modify_command</option>
+<option>modify_command.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>python-&gt;</option>
+<option>create_connection</option>
+<option>create_table</option>
+<option>create_database</option>
+<option>db2csv_command</option>
+<option>get_name_type</option>
+<option>get_row_list</option>
+<option>get_table_dict</option>
+<option>metropolis</option>
+<option>modify_command</option>
+<option>unicode_tuple</option>
+<option>sql_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>modify_command-&gt;</option>
+<option>modify_command.py</option>
+</select>
+</td>
+<td>modify_command.py</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@ 
+
+
+<center><b><big><big>init Command: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080">import</font></b> sys
+<b><font color="#000080">import</font></b> os
+<b><font color="#000080">import</font></b> copy
+<b><font color="#000080">import</font></b> subprocess
+<b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
+<b><font color="#000080">import</font></b> csv
+<b><font color="#000080">import</font></b> math
+<i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># check execution is from distribution directory</font></i>
+example <font color="#990000">=</font> <font color="#FF0000">'example/get_started/modify_command.py'</font>
+<b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> example  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
+     usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> example <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
+     usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
+     usage <font color="#990000">+=</font> <font color="#FF0000">'and working directory is the dismod_at distribution directory\n'</font>
+     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># distribution directory</font></i>
+dist_dir  <font color="#990000">=</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># directory where test files are stored</font></i>
+test_dir  <font color="#990000">=</font> dist_dir <font color="#990000">+</font> <font color="#FF0000">'/build/example/get_started'</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># import sandbox version of dismod_at</font></i>
+local_dir <font color="#990000">=</font> dist_dir <font color="#990000">+</font> <font color="#FF0000">'/python'</font>
+<b><font color="#0000FF">if</font></b><font color="#990000">(</font> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">isdir</font></b><font color="#990000">(</font> local_dir <font color="#990000">+</font> <font color="#FF0000">'/dismod_at'</font> <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+     sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> local_dir<font color="#990000">)</font>
+<b><font color="#000080">import</font></b> dismod_at
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># import get_started_db example</font></i>
+sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#FF0000">'/example/get_started'</font> <font color="#990000">)</font>
+<b><font color="#000080">import</font></b> get_started_db
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># change into the build/example/get_started directory</font></i>
+distutils<font color="#990000">.</font>dir_util<font color="#990000">.</font><b><font color="#000000">mkpath</font></b><font color="#990000">(</font>test_dir<font color="#990000">)</font>
+os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font>test_dir<font color="#990000">)</font>
+<i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># create get_started.db</font></i>
+get_started_db<font color="#990000">.</font><b><font color="#000000">get_started_db</font></b><font color="#990000">()</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># change into distribution directory to run sandbox version of dismodat.py</font></i>
+<i><font color="#9A1900"># return to test_dir when done.</font></i>
+os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font>dist_dir<font color="#990000">)</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+program          <font color="#990000">=</font> <font color="#FF0000">'bin/dismodat.py'</font>
+file_name        <font color="#990000">=</font> test_dir <font color="#990000">+</font> <font color="#FF0000">'/get_started.db'</font>
+command          <font color="#990000">=</font> <font color="#FF0000">'modify'</font>
+table_name       <font color="#990000">=</font> <font color="#FF0000">'data'</font>       <i><font color="#9A1900"># table we are modifiying</font></i>
+column_name      <font color="#990000">=</font> <font color="#FF0000">'density_id'</font> <i><font color="#9A1900"># column we are modifying</font></i>
+row_expression   <font color="#990000">=</font> <font color="#FF0000">'data_id==0'</font> <i><font color="#9A1900"># row we are modifiying</font></i>
+value_expression <font color="#990000">=</font> <font color="#FF0000">'6'</font>          <i><font color="#9A1900"># value we are placeing in that row, column</font></i>
+cmd            <font color="#990000">=</font> <font color="#990000">[</font>
+     program<font color="#990000">,</font>
+     file_name<font color="#990000">,</font>
+     command<font color="#990000">,</font>
+     table_name<font color="#990000">,</font>
+     column_name<font color="#990000">,</font>
+     row_expression<font color="#990000">,</font>
+     value_expression
+<font color="#990000">]</font>
+<i><font color="#9A1900">#</font></i>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font> <font color="#990000">)</font>
+flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> cmd <font color="#990000">)</font>
+<b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
+     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at modify command failed'</font><font color="#990000">)</font>
+os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font>test_dir<font color="#990000">)</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># get data table</font></i>
+new        <font color="#990000">=</font> False
+connection <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
+data_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font> connection<font color="#990000">,</font> <font color="#FF0000">'data'</font><font color="#990000">)</font>
+connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
+data_id     <font color="#990000">=</font> <font color="#993399">0</font>
+column_name <font color="#990000">=</font> <font color="#FF0000">'density_id'</font>
+<b><font color="#0000FF">assert</font></b> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font>column_name<font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">6</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'modify_command.py: OK'</font><font color="#990000">)</font></tt></pre>
+</font></code>
+<hr>Input File: example/get_started/modify_command.py
+
+</body>
+</html>

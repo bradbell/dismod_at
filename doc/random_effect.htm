@@ -1,0 +1,314 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Setting and Getting the Random Effect Vector</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Setting and Getting the Random Effect Vector">
+<meta name="keywords" id="keywords" content=" setting getting the random effect vector syntax float order effects pack_object pack_index unpack_random pack_vec random_vec pack_random example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_random_effect_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="sim_random_xam.cpp.htm" target="_top">Prev</a>
+</td><td><a href="random_effect_xam.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>random_effect</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_utility-&gt;</option>
+<option>a2_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_value_prior</option>
+<option>pack_diff_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>random_effect-&gt;</option>
+<option>random_effect_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Float</option>
+<option>Order of Random Effects</option>
+<option>pack_object</option>
+<option>pack_index</option>
+<option>unpack_random</option>
+<option>---..pack_vec</option>
+<option>---..random_vec</option>
+<option>pack_random</option>
+<option>---..pack_vec</option>
+<option>---..random_vec</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Setting and Getting the Random Effect Vector</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>pack_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;random2var_id(</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>pack_random(</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>random_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>unpack_random(</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>random_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Float" id="Float">Float</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ must be one of the following:
+<code><font color="blue">double</font></code>, <code><font color="blue">AD&lt;double&gt;</font></code>, or <a href="a2_double.htm" target="_top"><span style='white-space: nowrap'>a2_double</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Order of Random Effects" id="Order of Random Effects">Order of Random Effects</a></big></b>
+<br>
+The order of the random effects is unspecified, except for the
+fact that <code><font color="blue">pack_random</font></code> and <code><font color="blue">unpack_random</font></code>
+are inverses of each other; i.e., if you pack the random effects using a
+
+<code><i><font color="black"><span style='white-space: nowrap'>random_vec</span></font></i></code>
+, and then do a unpack, you will get that
+
+<code><i><font color="black"><span style='white-space: nowrap'>random_vec</span></font></i></code>
+ back.
+
+<br>
+<br>
+<b><big><a name="pack_object" id="pack_object">pack_object</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;pack_info&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the <a href="pack_info.htm" target="_top"><span style='white-space: nowrap'>pack_info</span></a>
+ information corresponding
+to the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+.
+
+It is the number of
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
+ in the model.
+
+<br>
+<br>
+<b><big><a name="pack_index" id="pack_index">pack_index</a></big></b>
+<br>
+This return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;size_t&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_index</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It size is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n_random</span></font></i></code>
+; i.e., the number of
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
+ in the model.
+For each random effect index
+
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;=&nbsp;0</span></font><i><font color="black"><span style='white-space: nowrap'>,...,&nbsp;n_random</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>pack_index</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is the corresponding
+index in a packed vector (with both fixed and random effects).
+
+<br>
+<br>
+<b><big><a name="unpack_random" id="unpack_random">unpack_random</a></big></b>
+<br>
+This functions copies information from 
+<code><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i></code>
+
+to 
+<code><i><font color="black"><span style='white-space: nowrap'>random_vec</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="unpack_random.pack_vec" id="unpack_random.pack_vec">pack_vec</a></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is 
+<code><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+.
+It specifies the value for all the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+
+in <a href="pack_info.htm" target="_top"><span style='white-space: nowrap'>pack_info</span></a>
+ format.
+
+<br>
+<br>
+<b><a name="unpack_random.random_vec" id="unpack_random.random_vec">random_vec</a></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>random_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is 
+<code><i><font color="black"><span style='white-space: nowrap'>n_random</span></font></i></code>
+.
+It is a copy of the random effects in 
+<code><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i></code>
+
+as one contiguous vector in an unspecified order.
+
+
+<br>
+<br>
+<b><big><a name="pack_random" id="pack_random">pack_random</a></big></b>
+<br>
+This functions copies information from 
+<code><i><font color="black"><span style='white-space: nowrap'>random_vec</span></font></i></code>
+
+to 
+<code><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="pack_random.pack_vec" id="pack_random.pack_vec">pack_vec</a></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is 
+<code><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+.
+It specifies the value for all the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+
+in <a href="pack_info.htm" target="_top"><span style='white-space: nowrap'>pack_info</span></a>
+ format.
+The input value of its random effects does not matter.  Upon return,
+the random effects correspond to the values in 
+<code><i><font color="black"><span style='white-space: nowrap'>random_vec</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="pack_random.random_vec" id="pack_random.random_vec">random_vec</a></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>random_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and its size is 
+<code><i><font color="black"><span style='white-space: nowrap'>n_random</span></font></i></code>
+.
+It contains the random effects
+as one contiguous vector in an unspecified order.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="random_effect_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>random_effect_xam.cpp</span></a>
+
+contains an example and test that uses this routine.
+
+
+<hr>Input File: devel/utility/random_effect.cpp
+
+</body>
+</html>

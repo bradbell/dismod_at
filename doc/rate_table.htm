@@ -1,0 +1,439 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Rate Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Rate Table">
+<meta name="keywords" id="keywords" content=" the rate table rate_id rate_name pini iota rho chi omega parent_smooth_id null child_smooth_id random effects hessian child_nslist_id child restrictions constant density lower upper example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_rate_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="prior_table.py.htm" target="_top">Prev</a>
+</td><td><a href="rate_table.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>rate_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>rate_table-&gt;</option>
+<option>rate_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>rate_id</option>
+<option>rate_name</option>
+<option>---..pini</option>
+<option>---..iota</option>
+<option>---..rho</option>
+<option>---..chi</option>
+<option>---..omega</option>
+<option>parent_smooth_id</option>
+<option>---..null</option>
+<option>child_smooth_id</option>
+<option>---..Random Effects Hessian</option>
+<option>---..null</option>
+<option>child_nslist_id</option>
+<option>---..null</option>
+<option>Child Restrictions</option>
+<option>---..Constant Random Effects</option>
+<option>---..density</option>
+<option>---..lower</option>
+<option>---..upper</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Rate Table</big></big></b></center>
+The <code><font color="blue">rate</font></code> table is used to set the smoothing for each of the rates.
+It has the following columns:
+
+<br>
+<br>
+<b><big><a name="rate_id" id="rate_id">rate_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code>
+and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="rate_name" id="rate_name">rate_name</a></big></b>
+<br>
+The following values,
+and only the following values,
+appear in the 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_name</span></font></i></code>
+ column:
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>rate_name</span></font></i></code>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description                   </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">pini</font></code>       <code><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ initial prevalence            </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">iota</font></code>       <code><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ model susceptible incidence   </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">rho</font></code>        <code><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ model remission               </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">chi</font></code>        <code><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ model excess mortality        </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">omega</font></code>      <code><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ model other cause mortality
+</td></tr>
+</table>
+In addition, these values must appear in the order above.
+(Note that this column is unique; i.e., each name only appears once.)
+
+<br>
+<br>
+<b><a name="rate_name.pini" id="rate_name.pini">pini</a></b>
+<br>
+The initial
+<a href="avg_integrand.htm#I_i(a,t).prevalence" target="_top"><span style='white-space: nowrap'>prevalence</span></a>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>pini</span></font></i></code>
+ is the model for prevalence at the initial age; i.e.,
+the value <a href="age_table.htm#age" target="_top"><span style='white-space: nowrap'>age</span></a>
+ corresponding to
+
+<code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+;
+see <a href="avg_integrand.htm#Rate Functions.p_i,0(t), pini" target="_top"><span style='white-space: nowrap'>p_i,0(t)</span></a>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_name</span></font></i></code>
+ is <code><font color="blue">pini</font></code>, the
+
+<code><i><font color="black"><span style='white-space: nowrap'>parent_smooth_id</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>child_smooth_id</span></font></i></code>
+ smoothings must have
+<a href="smooth_table.htm#n_age" target="_top"><span style='white-space: nowrap'>n_age</span></a>
+ equal to one.
+This is because prevalence at the initial age
+is only a function of time, and does not depend on age.
+Note that, unlike the other rates, initial prevalence is not a rate in the
+<a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
+.
+On the other hand, and like the other rates,
+initial prevalence is a necessary input to solve the ODE.
+
+<br>
+<br>
+<b><a name="rate_name.iota" id="rate_name.iota">iota</a></b>
+<br>
+The model for susceptible incidence rate 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+
+is the rate at which people who
+are in the susceptible state 
+<code><i><font color="black"><span style='white-space: nowrap'>S</span></font></i></code>
+
+transfer to the with condition state 
+<code><i><font color="black"><span style='white-space: nowrap'>C</span></font></i></code>
+;
+see <a href="avg_integrand.htm#Rate Functions.iota_i(a,t)" target="_top"><span style='white-space: nowrap'>iota_i(a,&nbsp;t)</span></a>
+.
+
+<br>
+<br>
+<b><a name="rate_name.rho" id="rate_name.rho">rho</a></b>
+<br>
+The model for remission rate 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+ is the rate at which people who
+are in the with condition state 
+<code><i><font color="black"><span style='white-space: nowrap'>C</span></font></i></code>
+
+transfer to the susceptible state 
+<code><i><font color="black"><span style='white-space: nowrap'>S</span></font></i></code>
+;
+see <a href="avg_integrand.htm#Rate Functions.rho_i(a,t)" target="_top"><span style='white-space: nowrap'>rho_i(a,&nbsp;t)</span></a>
+.
+
+<br>
+<br>
+<b><a name="rate_name.chi" id="rate_name.chi">chi</a></b>
+<br>
+The model for excess mortality rate 
+<code><i><font color="black"><span style='white-space: nowrap'>chi</span></font></i></code>
+
+is the rate at which people who
+are in the with condition state 
+<code><i><font color="black"><span style='white-space: nowrap'>C</span></font></i></code>
+ die from the condition;
+see <a href="avg_integrand.htm#Rate Functions.chi_i(a,t)" target="_top"><span style='white-space: nowrap'>chi_i(a,&nbsp;t)</span></a>
+.
+
+<br>
+<br>
+<b><a name="rate_name.omega" id="rate_name.omega">omega</a></b>
+<br>
+The model for other mortality rate 
+<code><i><font color="black"><span style='white-space: nowrap'>omega</span></font></i></code>
+
+is the rate at which people who
+are in either state, 
+<code><i><font color="black"><span style='white-space: nowrap'>S</span></font></i></code>
+ or 
+<code><i><font color="black"><span style='white-space: nowrap'>C</span></font></i></code>
+,
+die from causes other than the condition;
+see <a href="avg_integrand.htm#Rate Functions.omega_i(a,t)" target="_top"><span style='white-space: nowrap'>omega_i(a,&nbsp;t)</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="parent_smooth_id" id="parent_smooth_id">parent_smooth_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and its value is a
+<a href="smooth_grid_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+
+in the <code><font color="blue">smooth_grid</font></code> table.
+It specifies the smoothing used as a prior for this rate
+when fitting the parent (fixed effects);
+see <a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
+.
+
+<br>
+<br>
+<b><a name="parent_smooth_id.null" id="parent_smooth_id.null">null</a></b>
+<br>
+If the 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_smooth_id</span></font></i></code>
+ is <code><font color="blue">null</font></code>, the corresponding
+parent rate is always zero and no <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ are
+allocated for it.
+
+<br>
+<br>
+<b><big><a name="child_smooth_id" id="child_smooth_id">child_smooth_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and its value is a
+<a href="smooth_grid_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+
+in the <code><font color="blue">smooth_grid</font></code> table.
+It specifies a single smoothing used as a prior for this rate
+when fitting all the
+<a href="option_table.htm#parent_node_id.Children" target="_top"><span style='white-space: nowrap'>children</span></a>
+; i.e.,
+all the random effects for this rate.
+
+<br>
+<br>
+<b><a name="child_smooth_id.Random Effects Hessian" id="child_smooth_id.Random Effects Hessian">Random Effects Hessian</a></b>
+<br>
+The Hessian of the joint likelihood with respect to the random
+effects must be positive definite.
+If the data does not ensure this, the user will have to make the
+standard deviation for the prior of the random effects small.
+
+<br>
+<br>
+<b><a name="child_smooth_id.null" id="child_smooth_id.null">null</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>child_smooth_id</span></font></i></code>
+ is not <code><font color="blue">null</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>child_nslist_list</span></font></i></code>
+ must be <code><font color="blue">null</font></code>.
+If both are <code><font color="blue">null</font></code>, there are no
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
+.
+for this rate.
+
+<br>
+<br>
+<b><big><a name="child_nslist_id" id="child_nslist_id">child_nslist_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is a
+<a href="nslist_pair_table.htm#nslist_id" target="_top"><span style='white-space: nowrap'>nslist_id</span></a>
+.
+For each smoothing in the list,
+<a href="nslist_pair_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
+ must correspond to a child node
+and all the child nodes must be included.
+
+<br>
+<br>
+<b><a name="child_nslist_id.null" id="child_nslist_id.null">null</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>child_nslist_list</span></font></i></code>
+ is not <code><font color="blue">null</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>child_smooth_id</span></font></i></code>
+ must be <code><font color="blue">null</font></code>.
+If both are <code><font color="blue">null</font></code>, there are no
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
+.
+for this rate.
+
+<br>
+<br>
+<b><big><a name="Child Restrictions" id="Child Restrictions">Child Restrictions</a></big></b>
+<br>
+The child smoothing
+<a href="smooth_grid_table.htm#value_prior_id" target="_top"><span style='white-space: nowrap'>value_prior_id</span></a>
+
+<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
+ and
+<a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
+
+must satisfy the following conditions at each grid point:
+
+<br>
+<br>
+<b><a name="Child Restrictions.Constant Random Effects" id="Child Restrictions.Constant Random Effects">Constant Random Effects</a></b>
+<br>
+If the
+<a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
+ and <a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
+ limit
+are equal, they must be finite and no other conditions need be satisfied.
+Otherwise the other conditions below must be satisfied.
+
+<br>
+<br>
+<b><a name="Child Restrictions.density" id="Child Restrictions.density">density</a></b>
+<br>
+The <a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+ must not correspond to
+<a href="density_table.htm#density_name.laplace" target="_top"><span style='white-space: nowrap'>laplace</span></a>
+ or
+<a href="density_table.htm#density_name.log_laplace" target="_top"><span style='white-space: nowrap'>log_laplace</span></a>
+.
+
+<br>
+<br>
+<b><a name="Child Restrictions.lower" id="Child Restrictions.lower">lower</a></b>
+<br>
+The <a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
+ limit must be <code><font color="blue">null</font></code>,
+which gets interpreted as minus infinity; see
+<a href="database.htm#Bounds That are Null" target="_top"><span style='white-space: nowrap'>bounds&nbsp;that&nbsp;are&nbsp;null</span></a>
+.
+
+<br>
+<br>
+<b><a name="Child Restrictions.upper" id="Child Restrictions.upper">upper</a></b>
+<br>
+The <a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
+ limit must be <code><font color="blue">null</font></code>,
+which gets interpreted as plus infinity; see
+<a href="database.htm#Bounds That are Null" target="_top"><span style='white-space: nowrap'>bounds&nbsp;that&nbsp;are&nbsp;null</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="rate_table.py.htm" target="_top"><span style='white-space: nowrap'>rate_table.py</span></a>
+  and <a href="get_rate_table_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_rate_table_xam.cpp</span></a>
+
+contain an example <code><font color="blue">rate</font></code> tables.
+
+
+<hr>Input File: omh/table/rate_table.omh
+
+</body>
+</html>

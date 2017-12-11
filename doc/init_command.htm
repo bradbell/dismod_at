@@ -1,0 +1,215 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Variable Command</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Variable Command">
+<meta name="keywords" id="keywords" content=" the variable command syntax purpose changing values database var_table data_subset_table start_var_table scale_var_table example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_init_command_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="set_command.py.htm" target="_top">Prev</a>
+</td><td><a href="init_command.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>command</option>
+<option>init_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>command-&gt;</option>
+<option>set_command</option>
+<option>init_command</option>
+<option>depend_command</option>
+<option>fit_command</option>
+<option>simulate_command</option>
+<option>sample_command</option>
+<option>predict_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>init_command-&gt;</option>
+<option>init_command.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Changing Values</option>
+<option>database</option>
+<option>var_table</option>
+<option>data_subset_table</option>
+<option>start_var_table</option>
+<option>scale_var_table</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Variable Command</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;init</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This command initializes the data flow.
+To be specific, it begins by deleting any existing
+<a href="data_flow.htm#Output Tables" target="_top"><span style='white-space: nowrap'>output&nbsp;tables</span></a>
+,
+except for the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
+,
+and then creates new versions of the following tables:
+<table><tr><td align='left'  valign='top'>
+
+<a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+           </td><td align='left'  valign='top'>
+ Identifying Model Variables         </td></tr><tr><td align='left'  valign='top'>
+
+<a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
+   </td><td align='left'  valign='top'>
+ The Data Subset Table </td></tr><tr><td align='left'  valign='top'>
+
+<a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+     </td><td align='left'  valign='top'>
+ Starting Values Used During a Fit   </td></tr><tr><td align='left'  valign='top'>
+
+<a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var_table</span></a>
+     </td><td align='left'  valign='top'>
+ Scaling Values Used During Fit
+</td></tr>
+</table>
+<br>
+<b><big><a name="Changing Values" id="Changing Values">Changing Values</a></big></b>
+<br>
+You must re-run this command when ever any of the
+<a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
+ tables is changed.
+The option table is an exception to this rule; see
+<a href="option_table.htm#Conventions.Changing Values" target="_top"><span style='white-space: nowrap'>changing&nbsp;values</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="database" id="database">database</a></big></b>
+<br>
+Is an
+<a href="http://www.sqlite.org/sqlite/" target="_top"><span style='white-space: nowrap'>http://www.sqlite.org/sqlite/</span></a>
+ database containing the
+<code><font color="blue">dismod_at</font></code> <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
+ tables which are not modified.
+
+<br>
+<br>
+<b><big><a name="var_table" id="var_table">var_table</a></big></b>
+<br>
+A new <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+ is created with the information
+that maps a <a href="var_table.htm#var_id" target="_top"><span style='white-space: nowrap'>var_id</span></a>
+
+to its meaning in terms of the
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="data_subset_table" id="data_subset_table">data_subset_table</a></big></b>
+<br>
+A new <a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
+ is created.
+This makes explicit exactly which rows of the data table are used.
+
+<br>
+<br>
+<b><big><a name="start_var_table" id="start_var_table">start_var_table</a></big></b>
+<br>
+A new <a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+ is created using the
+means of the priors for the model variables.
+
+<br>
+<br>
+<b><big><a name="scale_var_table" id="scale_var_table">scale_var_table</a></big></b>
+<br>
+A new <a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var_table</span></a>
+ is created using the
+means of the priors for the model variables.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="init_command.py.htm" target="_top"><span style='white-space: nowrap'>init_command.py</span></a>
+ contains an example and test
+using this command.
+
+
+<hr>Input File: devel/dismod_at.cpp
+
+</body>
+</html>

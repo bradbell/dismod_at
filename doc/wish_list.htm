@@ -1,0 +1,314 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Dismod_at Wish List</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Dismod_at Wish List">
+<meta name="keywords" id="keywords" content=" dismod_at wish list parent_node simulated data lagrange multipliers ode solution step size large excess mortality conditionals checkpointing reduce number solutions documentation real world example user examples model simulating sampling random effects special hessian starting point tracing optimization windows install ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_wish_list_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="whats_new_2015.htm" target="_top">Prev</a>
+</td><td><a href="_reference.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>wish_list</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>parent_node</option>
+<option>Simulated Data</option>
+<option>Lagrange Multipliers</option>
+<option>ODE Solution</option>
+<option>---..Step Size</option>
+<option>---..Large Excess Mortality</option>
+<option>---..Conditionals</option>
+<option>---..Checkpointing</option>
+<option>---..Reduce Number of ODE Solutions</option>
+<option>Documentation</option>
+<option>---..Real World Example</option>
+<option>---..User Examples</option>
+<option>---..Model Documentation</option>
+<option>Simulating Data</option>
+<option>Sampling Random Effects</option>
+<option>Special Random Effects Hessian</option>
+<option>Random Starting Point</option>
+<option>Tracing Optimization</option>
+<option>Windows Install</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Dismod_at Wish List</big></big></b></center>
+<br>
+<b><big><a name="parent_node" id="parent_node">parent_node</a></big></b>
+<br>
+It would be easier for the user if
+<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
+,
+in the option table,
+were replaced by 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Simulated Data" id="Simulated Data">Simulated Data</a></big></b>
+<br>
+It seems to me that
+<a href="simulate_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+ from the simulate table should
+be used when ever one is fitting simulated data.
+It is not clear to me, looking at the source code and documentation, that this
+is clearly the case. This needs to be checked and fixed if in error.
+
+<br>
+<br>
+<b><big><a name="Lagrange Multipliers" id="Lagrange Multipliers">Lagrange Multipliers</a></big></b>
+<br>
+Change the Lagrange multipliers
+<a href="fit_var_table.htm#lagrange_dage" target="_top"><span style='white-space: nowrap'>lagrange_dage</span></a>
+ (dtime) in the
+fit_var table to be null when there is no corresponding age (time) different; i.e.,
+at the maximum age (time).
+
+<br>
+<br>
+<b><big><a name="ODE Solution" id="ODE Solution">ODE Solution</a></big></b>
+
+
+<br>
+<br>
+<b><a name="ODE Solution.Step Size" id="ODE Solution.Step Size">Step Size</a></b>
+<br>
+Currently there is a single
+<a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+ that is used
+for all ages and times.
+In many models, the older ages have much larger mortality rates.
+Perhaps it would be good to have a step size that varied with age.
+
+<br>
+<br>
+<b><a name="ODE Solution.Large Excess Mortality" id="ODE Solution.Large Excess Mortality">Large Excess Mortality</a></b>
+<br>
+If case where 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_case</span></font></i></code>
+ is
+<a href="option_table.htm#rate_case.iota_pos_rho_zero" target="_top"><span style='white-space: nowrap'>iota_pos_rho_zero</span></a>
+
+corresponds to
+<a href="eigen_ode2.htm#Method.Case Three" target="_top"><span style='white-space: nowrap'>case&nbsp;three</span></a>
+ in the ODE solver.
+If excess mortality <small>@(@
+\chi
+@)@</small> is unreasonably large,
+this can result in exponential overflow and infinity or nan.
+It is possible to redo the calculations in case three to properly
+handle this condition.
+
+<br>
+<br>
+<b><a name="ODE Solution.Conditionals" id="ODE Solution.Conditionals">Conditionals</a></b>
+<br>
+It is now possible to use conditional expressions in the ODE solution
+(CppAD this will now work properly these conditionals
+and two levels of AD and revere mode).
+This change would remove the need for the
+<a href="option_table.htm#rate_case" target="_top"><span style='white-space: nowrap'>rate_case</span></a>
+ option.
+Note that this will also work with checkpointing.
+
+<br>
+<br>
+<b><a name="ODE Solution.Checkpointing" id="ODE Solution.Checkpointing">Checkpointing</a></b>
+<br>
+It should greatly reduce memory if we use
+CppAD checkpointing of an ODE that has been
+extended to include derivatives with respect to parameters; see
+<a href="http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_extended_ode</span></a>
+.
+
+<br>
+<br>
+<b><a name="ODE Solution.Reduce Number of ODE Solutions" id="ODE Solution.Reduce Number of ODE Solutions">Reduce Number of ODE Solutions</a></b>
+<br>
+Currently we compute a separate solution of the ODE for each data point.
+We could solve the differential equation once for each set of data
+points that correspond to the same child (or to the parent)
+and have the same covariate values for covariates that are used with
+<a href="mulcov_table.htm#mulcov_type.rate_value" target="_top"><span style='white-space: nowrap'>rate_value</span></a>
+
+covariate multipliers.
+
+
+<br>
+<br>
+<b><big><a name="Documentation" id="Documentation">Documentation</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Documentation.Real World Example" id="Documentation.Real World Example">Real World Example</a></b>
+<br>
+It would be good to include a real world example.
+Since this is an open source program, we would need a data set
+that could be made distributed freely without any restriction on its use.
+
+<br>
+<br>
+<b><a name="Documentation.User Examples" id="Documentation.User Examples">User Examples</a></b>
+<br>
+Many of the <a href="user.htm" target="_top"><span style='white-space: nowrap'>user</span></a>
+ examples were written a long ago
+before certain options were available. It would improve the documentation
+to go over the user examples and make them more of a how do to certain
+things.
+
+<br>
+<br>
+<b><a name="Documentation.Model Documentation" id="Documentation.Model Documentation">Model Documentation</a></b>
+<br>
+There are some subtitle issues in the documentation that perhaps should
+be made easier to read. For example,
+consider the case where the value and difference priors are
+Log-Gaussian or Log-Laplace.
+In the function
+<a href="fixed_value.htm#V_j" target="_top"><span style='white-space: nowrap'>V_j</span></a>
+,
+the standard deviation
+<a href="fixed_value.htm#delta_j" target="_top"><span style='white-space: nowrap'>delta_j</span></a>
+ has the
+same units as the corresponding
+<a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
+ in the <code><font color="blue">prior_table</font></code>.
+In the function
+<a href="fixed_diff.htm#Age Differences.A^theta" target="_top"><span style='white-space: nowrap'>A^theta</span></a>
+,
+the standard deviation
+<a href="fixed_diff.htm#delta_i,j,k" target="_top"><span style='white-space: nowrap'>delta_j</span></a>
+ is a coefficient of variation
+for the log of the corresponding values.
+This can be seen by noting the difference in the corresponding
+weighted residual function; see
+Log-Gaussian and Log-Laplace weighted residual functions
+<a href="statistic.htm#Weighted Residual Function, R.Log-Gaussian, Log-Laplace, Log-Student's-t" target="_top"><span style='white-space: nowrap'>R</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Simulating Data" id="Simulating Data">Simulating Data</a></big></b>
+<br>
+The random effects currently use the value in the <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
+
+during the <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
+.
+Perhaps it would be good to have an option whereby the priors for the
+random effects are used to simulate different value for each sample.
+
+<br>
+<br>
+<b><big><a name="Sampling Random Effects" id="Sampling Random Effects">Sampling Random Effects</a></big></b>
+<br>
+It is not expected that the
+<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+ statistics for the
+random effects will always be accurate
+(due to insufficient data for individual random effects).
+One could use multiple asymptotic random effects samples as a proposal
+density for a Metropolis algorithm to get better sampling of these variables.
+
+<br>
+<br>
+<b><big><a name="Special Random Effects Hessian" id="Special Random Effects Hessian">Special Random Effects Hessian</a></big></b>
+<br>
+A new option enables the cppad_mixed user
+(in this case dismod_at) to define a special way to compute
+the Hessian w.r.t the random effects; see
+<a href="http://moby.ihme.washington.edu/bradbell/cppad_mixed/ran_likelihood_hes.htm" target="_top"><span style='white-space: nowrap'>ran_likelihood_hes</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Random Starting Point" id="Random Starting Point">Random Starting Point</a></big></b>
+<br>
+Have an option to start at a random point from the prior for the fixed effects
+(instead of the mean of the fixed effects).
+This would better detect local minima and represent solution uncertainty.
+
+<br>
+<br>
+<b><big><a name="Tracing Optimization" id="Tracing Optimization">Tracing Optimization</a></big></b>
+<br>
+Add options to specify the file name for the optimizer trace
+at both the fixed and random effects levels.
+
+<br>
+<br>
+<b><big><a name="Windows Install" id="Windows Install">Windows Install</a></big></b>
+<br>
+Make and test a set of Windows install instructions for <code><font color="blue">dismod_at</font></code>.
+
+
+<hr>Input File: omh/wish_list.omh
+
+</body>
+</html>

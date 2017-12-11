@@ -1,0 +1,449 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Compute Two Dimensional Integration Coefficients</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Compute Two Dimensional Integration Coefficients">
+<meta name="keywords" id="keywords" content=" compute two dimensional integration coefficients syntax see also purpose t b s w c example method ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_integrate_2d_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="integrate_1d_xam.cpp.htm" target="_top">Prev</a>
+</td><td><a href="integrate_2d_xam.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>integrate_2d</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_utility-&gt;</option>
+<option>a2_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_value_prior</option>
+<option>pack_diff_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>integrate_2d-&gt;</option>
+<option>integrate_2d_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>See Also</option>
+<option>Purpose</option>
+<option>a, t, b, s</option>
+<option>w</option>
+<option>c</option>
+<option>Example</option>
+<option>Method</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Compute Two Dimensional Integration Coefficients</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;integrate_2d(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="integrate_1d.htm" target="_top"><span style='white-space: nowrap'>integrate_1d</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The function <small>@(@
+U(a,t)
+@)@</small> is bilinear and defined on a larger rectangle
+that surrounds a rectangle we are integrating over.
+This routine computes the integral of
+<small>@(@
+U(a, t)
+@)@</small> times a weighting 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i></code>
+ on the smaller rectangle.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The function <small>@(@
+U(a, t)
+@)@</small> is defined on the larger rectangle by
+<small>@[@
+
+U(a, t) =
+	u_{11} \frac{ ( a_2 - a )( t_2 - t ) }{( a_2 - a_1 )( t_2 - t_1 )} +
+	u_{12} \frac{ ( a_2 - a )( t - t_1 ) }{( a_2 - a_1 )( t_2 - t_1 )} +
+	u_{21} \frac{ ( a - a_1 )( t_2 - t ) }{( a_2 - a_1 )( t_2 - t_1 )} +
+	u_{22} \frac{ ( a - a_1 )( t - t_1 ) }{( a_2 - a_1 )( t_2 - t_1 )}
+
+@]@</small>
+The product of <small>@(@
+U(a, t)
+@)@</small> times the weighting is defined
+on the smaller rectangle by
+<small>@[@
+
+\begin{array}{rcl}
+V(a, t)
+& = &
+( a_2 - a_1 )^{-1} ( t_2 - t_1 )^{-1} \left[
+	w_{11} U( b_1 , s_1 )( b_2 - a )( s_2 - t )
+	+
+	w_{12} U( b_1, s_2 )( b_2 - a )( t - s_1 )
+\right]
+\\ & + &
+( a_2 - a_1 )^{-1} ( t_2 - t_1 )^{-1} \left[
+	w_{21} U( b_2 , s_1 )( a - b_1 )( s_2 - t )
+	+
+	w_{22} U( b_2, s_2 )( a - b_1 )( t - s_1 )
+\right]
+\end{array}
+
+@]@</small>
+where
+<small>@(@
+a_1 \leq b_1 < b_2 \leq a_2
+@)@</small> and
+<small>@(@
+t_1 \leq s_1 < s_2 \leq t_2
+@)@</small>.
+Note that for <small>@(@
+i = 1,2
+@)@</small>, <small>@(@
+j = 1,2
+@)@</small> we have
+<small>@(@
+U( a_i , t_j ) = u_{ij}
+@)@</small>
+and
+<small>@(@
+V( b_i , s_j ) = w_{ij} U ( b_i , s_j )
+@)@</small>.
+This routine computes coefficients
+<small>@(@
+c_{11}, c_{12}, c_{21}, c_{22}
+@)@</small> such that
+<small>@[@
+
+	I
+	=
+	\int_{s(1)}^{s(2)} \int_{b(1)}^{b(2)} V(a, t) \; \B{d} a \; \B{d} t
+	=
+	c_{11} u_{11} + c_{12} u_{12} + c_{21} u_{21} + c_{22} u_{22}
+
+@]@</small>
+where the coefficients
+<small>@(@
+c_{11}, c_{12}, c_{21}, c_{22}
+@)@</small> do not depend on the values
+<small>@(@
+u_{11}, u_{12}, u_{21}, u_{22}
+@)@</small>.
+
+
+<br>
+<br>
+<b><big><a name="a, t, b, s" id="a, t, b, s">a, t, b, s</a></big></b>
+<br>
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ in the set of arguments
+
+<code><font color="blue"><span style='white-space: nowrap'>{&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>b</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;}</span></font></code>
+,
+the argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::pair&lt;double,&nbsp;double&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+with the following identifications;
+<small>@(@
+x_1 =
+@)@</small> 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.first</span></font></code>
+ and
+<small>@(@
+x_2 =
+@)@</small> 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.second</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="w" id="w">w</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;double&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+with size four and the following identifications:
+<small>@(@
+w_{11} =
+@)@</small> 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
+,
+<small>@(@
+w_{12} =
+@)@</small> 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]</span></font></code>
+,
+<small>@(@
+w_{21} =
+@)@</small> 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>[2]</span></font></code>
+, and
+<small>@(@
+w_{22} =
+@)@</small> 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>[3]</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="c" id="c">c</a></big></b>
+<br>
+The return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;double&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+with size four and the following identifications:
+<small>@(@
+c_{11} =
+@)@</small> 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
+,
+<small>@(@
+c_{12} =
+@)@</small> 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>[1]</span></font></code>
+,
+<small>@(@
+c_{21} =
+@)@</small> 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>[2]</span></font></code>
+, and
+<small>@(@
+c_{22} =
+@)@</small> 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>[3]</span></font></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="integrate_2d_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>integrate_2d_xam.cpp</span></a>
+ contains an example and test
+of using this routine.
+
+<br>
+<br>
+<b><big><a name="Method" id="Method">Method</a></big></b>
+<br>
+Using the notation
+<small>@(@
+d = b_2 - b_1
+@)@</small>, and <small>@(@
+e = s_2 - s_1
+@)@</small>,
+<small>@[@
+
+I  = \int_0^e \int_0^d V( a + b1 , t + s_1 ) \; \B{d} a \; \B{d} t
+
+@]@</small>
+Using the notation <small>@(@
+v_{ij} = w_{ij} U( b_i , s_j )
+@)@</small>,
+<small>@[@
+
+(d e) I  = \int_0^e \int_0^d  \left[
+	v_{11} (d - a)(e - t) + v_{12} (d - a) t + v_{21} a (e - t) + v_{22} at
+\right]
+\; \B{d} a \; \B{d} t
+
+@]@</small>
+Doing the integration w.r.t. <small>@(@
+a
+@)@</small> we have
+<small>@[@
+
+e I  = ( d  / 2 ) \int_0^e \left[
+	v_{11} (e - t) + v_{12} t + v_{21} (e - t) + v_{22} t
+\right]
+\; \B{d} t
+
+@]@</small>
+Doing the integration w.r.t. <small>@(@
+t
+@)@</small> we have
+<small>@[@
+
+I  = ( d e / 4 ) ( v_{11} + v_{12} + v_{21} + v_{22} )
+
+@]@</small>
+Using the definitions for <small>@(@
+v_{ij}
+@)@</small> we obtain
+<small>@[@
+
+I = ( d e / 4 ) \left[
+	w_{11} U( b_1 , s_1 ) +
+	w_{12} U( b_1 , s_2 ) +
+	w_{21} U( b_2 , s_1 ) +
+	w_{22} U( b_2 , s_2 )
+\right]
+
+@]@</small>
+We use the following notation
+<small>@[@
+
+r = \frac{1}{4} \frac{ b_2 - b_1 }{ a_2 - a_1} \frac{ s_2 - s_1 }{ t_2 - t_1}
+
+@]@</small>
+together with definition for <small>@(@
+U(a, t)
+@)@</small> to obtain
+<small>@[@
+
+I = c_{11} u_{11} + c_{12} u_{12} + c_{21} u_{21} + c_{22} u_{22}
+
+@]@</small>
+where
+<small>@[@
+
+\begin{array}{rcl}
+c_{11} & = &
+r [
+	w_{11} ( a_2 - b_1 ) ( t_2 - s_1 ) +
+	w_{12} ( a_2 - b_1 ) ( t_2 - s_2 ) +
+	w_{21} ( a_2 - b_2 ) ( t_2 - s_1 ) +
+	w_{22} ( a_2 - b_2 ) ( t_2 - s_2 )
+]
+\\
+c_{12} & = &
+r [
+	w_{11} ( a_2 - b_1 ) ( s_1 - t_1 ) +
+	w_{12} ( a_2 - b_1 ) ( s_2 - t_1 ) +
+	w_{21} ( a_2 - b_2 ) ( s_1 - t_1 ) +
+	w_{22} ( a_2 - b_2 ) ( s_2 - t_1 )
+]
+\\
+c_{21} & = &
+r [
+	w_{11} ( b_1 - a_1 ) ( t_2 - s_1 ) +
+	w_{12} ( b_1 - a_1 ) ( t_2 - s_2 ) +
+	w_{21} ( b_2 - a_1 ) ( t_2 - s_1 ) +
+	w_{22} ( b_2 - a_1 ) ( t_2 - s_2 )
+]
+\\
+c_{22} & = &
+r [
+	w_{11} ( b_1 - a_1 ) ( s_1 - t_1 ) +
+	w_{12} ( b_1 - a_1 ) ( s_2 - t_1 ) +
+	w_{21} ( b_2 - a_1 ) ( s_1 - t_1 ) +
+	w_{22} ( b_2 - a_1 ) ( s_2 - t_1 )
+]
+\end{array}
+
+@]@</small>
+
+
+
+<hr>Input File: devel/utility/integrate_2d.cpp
+
+</body>
+</html>

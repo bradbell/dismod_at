@@ -1,0 +1,201 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>C++ bilinear_interp: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++ bilinear_interp: Example and Test">
+<meta name="keywords" id="keywords" content=" c++ bilinear_interp: example test C++ bilinear_interp ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_bilinear_interp_xam.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="bilinear_interp.htm" target="_top">Prev</a>
+</td><td><a href="child_info.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>bilinear_interp</option>
+<option>bilinear_interp_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_utility-&gt;</option>
+<option>a2_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_value_prior</option>
+<option>pack_diff_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>bilinear_interp-&gt;</option>
+<option>bilinear_interp_xam.cpp</option>
+</select>
+</td>
+<td>bilinear_interp_xam.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>C++ bilinear_interp: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cmath&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/bilinear_interp.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">bilinear_interp_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>
+     <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b>  std<font color="#990000">::</font>string<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b>  CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+
+     <font color="#009900">double</font> eps <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+
+     <font color="#008080">size_t</font> n_x <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">,</font> n_y <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x_grid</font></b><font color="#990000">(</font>n_x<font color="#990000">),</font> <b><font color="#000000">y_grid</font></b><font color="#990000">(</font>n_y<font color="#990000">),</font> <b><font color="#000000">z_grid</font></b><font color="#990000">(</font>n_x <font color="#990000">*</font> n_y<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_x<font color="#990000">;</font> i<font color="#990000">++)</font>
+          x_grid<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">10.0</font> <font color="#990000">*</font> i<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_y<font color="#990000">;</font> j<font color="#990000">++)</font>
+          y_grid<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1990.0</font> <font color="#990000">+</font> <font color="#993399">10</font> <font color="#990000">*</font> j<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_x<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_y<font color="#990000">;</font> j<font color="#990000">++)</font>
+               z_grid<font color="#990000">[</font>i <font color="#990000">*</font> n_y <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> x_grid<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> y_grid<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// check case where both x and y are interpolated</font></i>
+     <font color="#009900">double</font> x <font color="#990000">=</font> <font color="#993399">10.0</font> <font color="#990000">*</font> <font color="#993399">2.5</font><font color="#990000">;</font>
+     <font color="#009900">double</font> y <font color="#990000">=</font> <font color="#993399">1990.0</font> <font color="#990000">+</font> <font color="#993399">10</font> <font color="#990000">*</font> <font color="#993399">1.5</font><font color="#990000">;</font>
+     i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// evaluate the interpolant</font></i>
+     <font color="#009900">double</font> z <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">bilinear_interp</font></b><font color="#990000">(</font>
+          x<font color="#990000">,</font> y<font color="#990000">,</font> x_grid<font color="#990000">,</font> y_grid<font color="#990000">,</font> z_grid<font color="#990000">,</font> i<font color="#990000">,</font> j
+     <font color="#990000">);</font>
+     ok <font color="#990000">=</font> x_grid<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&lt;=</font> x <font color="#990000">&amp;&amp;</font> x <font color="#990000">&lt;=</font> x_grid<font color="#990000">[</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">];</font>
+     ok <font color="#990000">=</font> y_grid<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&lt;=</font> y <font color="#990000">&amp;&amp;</font> y <font color="#990000">&lt;=</font> y_grid<font color="#990000">[</font>j<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">];</font>
+
+     <font color="#009900">double</font> z_check  <font color="#990000">=</font> x <font color="#990000">*</font> y <font color="#990000">+</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+     ok <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> z <font color="#990000">/</font> z_check  <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">10.0</font> <font color="#990000">*</font> eps<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// check case where only y is interpolated ( x &lt; x_grid[0] )</font></i>
+     x <font color="#990000">=</font> x_grid<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">10</font><font color="#990000">.;</font>
+     y <font color="#990000">=</font> <font color="#993399">1990.0</font> <font color="#990000">+</font> <font color="#993399">10</font> <font color="#990000">*</font> <font color="#993399">1.5</font><font color="#990000">;</font>
+     z <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">bilinear_interp</font></b><font color="#990000">(</font>
+          x<font color="#990000">,</font> y<font color="#990000">,</font> x_grid<font color="#990000">,</font> y_grid<font color="#990000">,</font> z_grid<font color="#990000">,</font> i<font color="#990000">,</font> j
+     <font color="#990000">);</font>
+     z_check  <font color="#990000">=</font> x_grid<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> y <font color="#990000">+</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+     ok       <font color="#990000">=</font>  i <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     ok       <font color="#990000">=</font> y_grid<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&lt;=</font> y <font color="#990000">&amp;&amp;</font> y <font color="#990000">&lt;=</font> y_grid<font color="#990000">[</font>j<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">];</font>
+     ok       <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> z <font color="#990000">/</font> z_check  <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">10.0</font> <font color="#990000">*</font> eps<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// check case where only x is interpolated ( y_grid[n_y-1] &lt; y )</font></i>
+     x <font color="#990000">=</font> <font color="#993399">10.0</font> <font color="#990000">*</font> <font color="#993399">2.5</font><font color="#990000">;</font>
+     y <font color="#990000">=</font> y_grid<font color="#990000">[</font>n_y<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">10.0</font><font color="#990000">;</font>
+     z <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">bilinear_interp</font></b><font color="#990000">(</font>
+          x<font color="#990000">,</font> y<font color="#990000">,</font> x_grid<font color="#990000">,</font> y_grid<font color="#990000">,</font> z_grid<font color="#990000">,</font> i<font color="#990000">,</font> j
+     <font color="#990000">);</font>
+     z_check  <font color="#990000">=</font> x <font color="#990000">*</font> y_grid<font color="#990000">[</font>n_y<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+     ok       <font color="#990000">=</font> x_grid<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&lt;=</font> x <font color="#990000">&amp;&amp;</font> x <font color="#990000">&lt;=</font> x_grid<font color="#990000">[</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">];</font>
+     ok       <font color="#990000">=</font> j <font color="#990000">==</font> <font color="#990000">(</font>n_y<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">);</font>
+     ok       <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> z <font color="#990000">/</font> z_check  <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">10.0</font> <font color="#990000">*</font> eps<font color="#990000">;</font>
+
+
+     <i><font color="#9A1900">// check case where no interpolation is done</font></i>
+     <i><font color="#9A1900">// ( x_grid[n_x-1] &lt; x and y &lt; y_grid[0] )</font></i>
+     x <font color="#990000">=</font> x_grid<font color="#990000">[</font>n_x<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">10.0</font><font color="#990000">;</font>
+     y <font color="#990000">=</font> y_grid<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>     <font color="#990000">-</font> <font color="#993399">10.0</font><font color="#990000">;</font>
+     z <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">bilinear_interp</font></b><font color="#990000">(</font>
+          x<font color="#990000">,</font> y<font color="#990000">,</font> x_grid<font color="#990000">,</font> y_grid<font color="#990000">,</font> z_grid<font color="#990000">,</font> i<font color="#990000">,</font> j
+     <font color="#990000">);</font>
+     z_check  <font color="#990000">=</font> x_grid<font color="#990000">[</font>n_x<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> y_grid<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+     ok       <font color="#990000">=</font> i <font color="#990000">==</font> <font color="#990000">(</font>n_x<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">);</font>
+     ok       <font color="#990000">=</font> j <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+     ok       <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> z <font color="#990000">/</font> z_check  <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">10.0</font> <font color="#990000">*</font> eps<font color="#990000">;</font>
+
+
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/devel/utility/bilinear_interp_xam.cpp
+
+</body>
+</html>

@@ -1,0 +1,394 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>The Data Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Data Table">
+<meta name="keywords" id="keywords" content=" the data table data_id data_name integrand_id density_id node_id parent random effects child weight_id hold_out meas_value meas_std eta null nu age_lower age_upper time_lower time_upper covariates example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_data_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="covariate_table.py.htm" target="_top">Prev</a>
+</td><td><a href="data_table.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>data_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>input-&gt;</option>
+<option>age_table</option>
+<option>avgint_table</option>
+<option>covariate_table</option>
+<option>data_table</option>
+<option>density_table</option>
+<option>integrand_table</option>
+<option>mulcov_table</option>
+<option>node_table</option>
+<option>nslist_pair_table</option>
+<option>nslist_table</option>
+<option>option_table</option>
+<option>prior_table</option>
+<option>rate_table</option>
+<option>smooth_grid_table</option>
+<option>smooth_table</option>
+<option>time_table</option>
+<option>weight_grid_table</option>
+<option>weight_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>data_table-&gt;</option>
+<option>data_table.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>data_id</option>
+<option>data_name</option>
+<option>integrand_id</option>
+<option>density_id</option>
+<option>node_id</option>
+<option>---..Parent Data Random Effects</option>
+<option>---..Child Data Random Effects</option>
+<option>weight_id</option>
+<option>hold_out</option>
+<option>meas_value</option>
+<option>meas_std</option>
+<option>eta</option>
+<option>---..null</option>
+<option>nu</option>
+<option>null</option>
+<option>age_lower</option>
+<option>age_upper</option>
+<option>time_lower</option>
+<option>time_upper</option>
+<option>Covariates</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Data Table</big></big></b></center>
+Each row of the data table corresponds to one measurement;
+see <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ below.
+
+<br>
+<br>
+<b><big><a name="data_id" id="data_id">data_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for the
+<code><font color="blue">data</font></code> table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="data_name" id="data_name">data_name</a></big></b>
+<br>
+This column has type <code><font color="blue">text</font></code> and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+<br>
+<br>
+<b><big><a name="integrand_id" id="integrand_id">integrand_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the
+<a href="integrand_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
+ that identifies
+the integrand for this measurement.
+
+<br>
+<br>
+<b><big><a name="density_id" id="density_id">density_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the
+<a href="density_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+ that identifies
+the density function for the measurement nose.
+The <a href="density_table.htm#density_name" target="_top"><span style='white-space: nowrap'>density_name</span></a>
+
+corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>density_id</span></font></i></code>
+ cannot be <code><font color="blue">uniform</font></code>.
+(Use <a href="data_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+ to ignore data during fitting.)
+
+<br>
+<br>
+<b><big><a name="node_id" id="node_id">node_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the
+<a href="node_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
+ that identifies
+the node for this measurement.
+
+<br>
+<br>
+<b><a name="node_id.Parent Data Random Effects" id="node_id.Parent Data Random Effects">Parent Data Random Effects</a></b>
+<br>
+If the 
+<code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
+ is the
+<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
+,
+this data will be associated with the parent node and not
+have any random effects in its model.
+
+<br>
+<br>
+<b><a name="node_id.Child Data Random Effects" id="node_id.Child Data Random Effects">Child Data Random Effects</a></b>
+<br>
+If the 
+<code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
+ is a
+<a href="node_table.htm#parent.Child Group" target="_top"><span style='white-space: nowrap'>child</span></a>
+ of the parent node,
+or a <a href="node_table.htm#parent.Descendant" target="_top"><span style='white-space: nowrap'>descendant</span></a>
+ of a child,
+the data will be associated with the random effects for that child.
+In this case 
+<code><i><font color="black"><span style='white-space: nowrap'>density_id</span></font></i></code>
+ cannot correspond to
+<a href="density_table.htm#density_name.laplace" target="_top"><span style='white-space: nowrap'>laplace</span></a>
+ or
+<a href="density_table.htm#density_name.log_laplace" target="_top"><span style='white-space: nowrap'>log_laplace</span></a>
+.
+The corresponding densities would not be differentiable at zero
+and the Laplace approximation would not make sense in this case.
+
+<br>
+<br>
+<b><big><a name="weight_id" id="weight_id">weight_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the
+<a href="weight_grid_table.htm#weight_id" target="_top"><span style='white-space: nowrap'>weight_id</span></a>
+ that identifies
+the weighting used for this measurement.
+
+<br>
+<br>
+<b><big><a name="hold_out" id="hold_out">hold_out</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and has value zero or one.
+Only the rows where hold_out is zero are used during a <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="meas_value" id="meas_value">meas_value</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is the measured value
+for each row of the <code><font color="blue">data</font></code> table;
+i.e., the measurement of the integrand, node,  etc.
+
+<br>
+<br>
+<b><big><a name="meas_std" id="meas_std">meas_std</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is the standard deviation
+for this measurement value.
+This standard for this measurement and is in the same units at the data.
+
+<br>
+<br>
+<b><big><a name="eta" id="eta">eta</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code>.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>density_id</span></font></i></code>
+ corresponds to
+<code><font color="blue">log_gaussian</font></code>, <code><font color="blue">log_laplace</font></code>, or <code><font color="blue">log_students</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
+ must be greater than or equal zero and is
+the offset in the log transformation for this data point; see
+the definition of the
+<a href="statistic.htm#Weighted Residual Function, R.Log-Gaussian, Log-Laplace, Log-Student's-t" target="_top"><span style='white-space: nowrap'>Log-Gaussian,&nbsp;Log-Laplace,&nbsp;Log-Student's-t</span></a>
+
+weighted residual function.
+
+<br>
+<br>
+<b><a name="eta.null" id="eta.null">null</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>density_id</span></font></i></code>
+ does not correspond to
+<code><font color="blue">log_gaussian</font></code>, <code><font color="blue">log_laplace</font></code>, or <code><font color="blue">log_students</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
+ can be <code><font color="blue">null</font></code>.
+
+<br>
+<br>
+<b><big><a name="nu" id="nu">nu</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code>.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>density_id</span></font></i></code>
+ corresponds to
+<code><font color="blue">students</font></code> or <code><font color="blue">log_students</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>nu</span></font></i></code>
+ must be greater than two and is
+number of degrees of freedom in the distribution for this point; see
+the definition of the log-density for
+<a href="statistic.htm#Log-Density Function, D.Student's-t" target="_top"><span style='white-space: nowrap'>Student's-t</span></a>
+ and
+<a href="statistic.htm#Log-Density Function, D.Log-Student's-t" target="_top"><span style='white-space: nowrap'>Log-Student's-t</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="null" id="null">null</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>density_id</span></font></i></code>
+ does not correspond to
+<code><font color="blue">students</font></code> or <code><font color="blue">log_students</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>nu</span></font></i></code>
+ can be <code><font color="blue">null</font></code>.
+
+<br>
+<br>
+<b><big><a name="age_lower" id="age_lower">age_lower</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is the lower age limit
+for this measurement.
+It must be greater than or equal the minimum <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+ value.
+
+<br>
+<br>
+<b><big><a name="age_upper" id="age_upper">age_upper</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is the upper age limit
+for this measurement.
+It must be greater than or equal the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i></code>
+
+and less than or equal the maximum <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+ value.
+
+<br>
+<br>
+<b><big><a name="time_lower" id="time_lower">time_lower</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is the lower time limit
+for this measurement.
+It must be greater than or equal the minimum <a href="time_table.htm" target="_top"><span style='white-space: nowrap'>time_table</span></a>
+ value.
+
+<br>
+<br>
+<b><big><a name="time_upper" id="time_upper">time_upper</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is the upper time limit
+for this measurement.
+It must be greater than or equal the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i></code>
+
+and less than or equal the maximum <a href="time_table.htm" target="_top"><span style='white-space: nowrap'>time_table</span></a>
+ value.
+
+<br>
+<br>
+<b><big><a name="Covariates" id="Covariates">Covariates</a></big></b>
+<br>
+The covariate columns have type <code><font color="blue">real</font></code> and column names
+that begin with the two characters <code><font color="blue">x_</font></code>.
+For each valid <a href="covariate_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
+,
+column 
+<code><font color="blue"><span style='white-space: nowrap'>x_</span></font><i><font color="black"><span style='white-space: nowrap'>covariate_id</span></font></i></code>
+ contains
+the value, for this measurement, of the covariate specified by
+
+<code><i><font color="black"><span style='white-space: nowrap'>covariate_id</span></font></i></code>
+.
+The covariate value <code><font color="blue">null</font></code> is interpreted as the
+<a href="covariate_table.htm#reference" target="_top"><span style='white-space: nowrap'>reference</span></a>
+ value for
+the corresponding covariate.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files <a href="data_table.py.htm" target="_top"><span style='white-space: nowrap'>data_table.py</span></a>
+ and <a href="get_data_table_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_data_table_xam.cpp</span></a>
+
+create example <code><font color="blue">data</font></code> tables.
+
+
+<hr>Input File: omh/table/data_table.omh
+
+</body>
+</html>

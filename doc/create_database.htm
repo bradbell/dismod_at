@@ -1,0 +1,783 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Create a Dismod_at Database</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Create a Dismod_at Database">
+<meta name="keywords" id="keywords" content=" create dismod_at database syntax purpose primary key name column file_name age_list time_list integrand_list node_table weight_table covariate_table avgint_table avgint_extra_columns data_table data_extra_columns prior_table smooth_table const_value nslist_table rate_table mulcov_table option_table example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_create_database_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="create_table.py.htm" target="_top">Prev</a>
+</td><td><a href="create_database.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>create_database</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>python-&gt;</option>
+<option>create_connection</option>
+<option>create_table</option>
+<option>create_database</option>
+<option>db2csv_command</option>
+<option>get_name_type</option>
+<option>get_row_list</option>
+<option>get_table_dict</option>
+<option>metropolis</option>
+<option>modify_command</option>
+<option>unicode_tuple</option>
+<option>sql_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>create_database-&gt;</option>
+<option>create_database.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Primary Key</option>
+<option>Name Column</option>
+<option>file_name</option>
+<option>age_list</option>
+<option>time_list</option>
+<option>integrand_list</option>
+<option>node_table</option>
+<option>weight_table</option>
+<option>covariate_table</option>
+<option>avgint_table</option>
+<option>---..avgint_extra_columns</option>
+<option>data_table</option>
+<option>---..data_extra_columns</option>
+<option>prior_table</option>
+<option>smooth_table</option>
+<option>---..const_value</option>
+<option>nslist_table</option>
+<option>rate_table</option>
+<option>mulcov_table</option>
+<option>option_table</option>
+<option>Contents</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Create a Dismod_at Database</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>create_database(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_list</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_list</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_list</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>node_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>weight_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>covariate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>avgint_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nslist_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mulcov_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This routine makes it easy to create a <code><font color="blue">dismod_at</font></code> database
+with all of its <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
+ tables.
+This is only meant for small example and testing cases and is not efficient.
+
+<br>
+<br>
+<b><big><a name="Primary Key" id="Primary Key">Primary Key</a></big></b>
+<br>
+For each of the lists above, the order of the
+elements in the corresponding table is the same as the corresponding list.
+For example, 
+<code><i><font color="black"><span style='white-space: nowrap'>age_list</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ corresponds to the <code><i>i</i></code>-th row
+of the <code><font color="blue">age</font></code> table which has
+<a href="database.htm#Primary Key" target="_top"><span style='white-space: nowrap'>primary&nbsp;key</span></a>
+ value 
+<code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Name Column" id="Name Column">Name Column</a></big></b>
+<br>
+The <a href="database.htm#Name Column" target="_top"><span style='white-space: nowrap'>name&nbsp;columns</span></a>
+ are created with th unique
+constraint; i.e., it will be an error to have the same value appear
+twice in a column 
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>_name</span></font></code>
+ in the table
+
+<code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="file_name" id="file_name">file_name</a></big></b>
+<br>
+is as <code><font color="blue">str</font></code> containing the name of the file where the data base
+is stored.
+If this file already exists, it is deleted and a database is created.
+
+<br>
+<br>
+<b><big><a name="age_list" id="age_list">age_list</a></big></b>
+<br>
+is a <code><font color="blue">list</font></code> of <code><font color="blue">float</font></code> that
+specify the age grid values.
+
+<br>
+<br>
+<b><big><a name="time_list" id="time_list">time_list</a></big></b>
+<br>
+is a <code><font color="blue">list</font></code> of <code><font color="blue">float</font></code> that
+specify the time grid values.
+
+<br>
+<br>
+<b><big><a name="integrand_list" id="integrand_list">integrand_list</a></big></b>
+<br>
+This is a list of <code><font color="blue">str</font></code>
+that specify the <a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand&nbsp;names</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="node_table" id="node_table">node_table</a></big></b>
+<br>
+This is a list of <code><font color="blue">dict</font></code>
+that define the rows of the <a href="node_table.htm" target="_top"><span style='white-space: nowrap'>node_table</span></a>
+.
+The dictionary 
+<code><i><font color="black"><span style='white-space: nowrap'>node_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ has the following:
+<table><tr><td align='left'  valign='top'>
+
+Key     </td><td align='left'  valign='top'>
+ Value Type    <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description       </td></tr><tr><td align='left'  valign='top'>
+
+name    </td><td align='left'  valign='top'>
+ str           </td><td align='left'  valign='top'>
+ name for the <code><i>i</i></code>-th node  </td></tr><tr><td align='left'  valign='top'>
+
+parent  </td><td align='left'  valign='top'>
+ str           </td><td align='left'  valign='top'>
+ name of parent of the <code><i>i</i></code>-th node
+</td></tr>
+</table>
+Note that if the i-th node does not have a parent, the empty string
+should be used for the parent of that node.
+
+<br>
+<br>
+<b><big><a name="weight_table" id="weight_table">weight_table</a></big></b>
+<br>
+This is a list of <code><font color="blue">dict</font></code>
+that define the rows of the <a href="weight_table.htm" target="_top"><span style='white-space: nowrap'>weight_table</span></a>
+ and
+<a href="weight_grid_table.htm" target="_top"><span style='white-space: nowrap'>weight_grid_table</span></a>
+.
+The dictionary 
+<code><i><font color="black"><span style='white-space: nowrap'>weight_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ has the following:
+<table><tr><td align='left'  valign='top'>
+
+Key     </td><td align='left'  valign='top'>
+ Value Type    <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description       </td></tr><tr><td align='left'  valign='top'>
+
+name    </td><td align='left'  valign='top'>
+ str           </td><td align='left'  valign='top'>
+ name of <code><i>i</i></code>-th weighting  </td></tr><tr><td align='left'  valign='top'>
+
+age_id  </td><td align='left'  valign='top'>
+ list of int   </td><td align='left'  valign='top'>
+ indices for age grid       </td></tr><tr><td align='left'  valign='top'>
+
+time_id </td><td align='left'  valign='top'>
+ list of int   </td><td align='left'  valign='top'>
+ indices for time grid      </td></tr><tr><td align='left'  valign='top'>
+
+fun     </td><td align='left'  valign='top'>
+ function      </td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i><font color="blue"><span style='white-space: nowrap'>=</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+</td></tr>
+</table>
+The float 
+<code><i><font color="black"><span style='white-space: nowrap'>w</span></font></i></code>
+ is the value of this weighting a the corresponding
+float age 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
+ and float time 
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="covariate_table" id="covariate_table">covariate_table</a></big></b>
+<br>
+This is a list of <code><font color="blue">dict</font></code>
+that define the rows of the <a href="covariate_table.htm" target="_top"><span style='white-space: nowrap'>covariate_table</span></a>
+.
+The dictionary 
+<code><i><font color="black"><span style='white-space: nowrap'>covariate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ has the following:
+<table><tr><td align='left'  valign='top'>
+
+Key       </td><td align='left'  valign='top'>
+ Value Type  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description            </td></tr><tr><td align='left'  valign='top'>
+
+name      </td><td align='left'  valign='top'>
+ str         </td><td align='left'  valign='top'>
+ name for the <code><i>i</i></code>-th covariate  </td></tr><tr><td align='left'  valign='top'>
+
+reference </td><td align='left'  valign='top'>
+ float       </td><td align='left'  valign='top'>
+ reference value for <code><i>i</i></code>-th covariate
+</td></tr><tr><td align='left'  valign='top'>
+
+max_difference </td><td align='left'  valign='top'>
+ float </td><td align='left'  valign='top'>
+ maximum difference for <code><i>i</i></code>-th covariate
+</td></tr>
+</table>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>max_difference</span></font></i></code>
+ is <code><font color="blue">None</font></code>, the corresponding table entry
+is null and this corresponds to an infinite maximum difference.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>max_difference</span></font></i></code>
+ does not appear, null is written for the
+corresponding covariate entry.
+
+
+<br>
+<br>
+<b><big><a name="avgint_table" id="avgint_table">avgint_table</a></big></b>
+<br>
+This is a list of <code><font color="blue">dict</font></code>
+that define the rows of the <a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
+.
+The dictionary 
+<code><i><font color="black"><span style='white-space: nowrap'>avgint_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ has the following:
+<table><tr><td align='left'  valign='top'>
+
+Key          </td><td align='left'  valign='top'>
+ Value Type  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description        </td></tr><tr><td align='left'  valign='top'>
+
+integrand    </td><td align='left'  valign='top'>
+ str         </td><td align='left'  valign='top'>
+ integrand for <code><i>i</i></code>-th data  </td></tr><tr><td align='left'  valign='top'>
+
+node         </td><td align='left'  valign='top'>
+ str         </td><td align='left'  valign='top'>
+ node in graph               </td></tr><tr><td align='left'  valign='top'>
+
+weight       </td><td align='left'  valign='top'>
+ str         </td><td align='left'  valign='top'>
+ weighting function          </td></tr><tr><td align='left'  valign='top'>
+
+age_lower    </td><td align='left'  valign='top'>
+ float       </td><td align='left'  valign='top'>
+ lower age limit             </td></tr><tr><td align='left'  valign='top'>
+
+age_upper    </td><td align='left'  valign='top'>
+ float       </td><td align='left'  valign='top'>
+ upper age limit             </td></tr><tr><td align='left'  valign='top'>
+
+time_lower   </td><td align='left'  valign='top'>
+ float       </td><td align='left'  valign='top'>
+ lower time limit            </td></tr><tr><td align='left'  valign='top'>
+
+time_lower   </td><td align='left'  valign='top'>
+ float       </td><td align='left'  valign='top'>
+ upper time limit            </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>c_0</span></font></i></code>
+ </td><td align='left'  valign='top'>
+ float       </td><td align='left'  valign='top'>
+ value of first covariate    </td></tr><tr><td align='left'  valign='top'>
+
+...          </td><td align='left'  valign='top'>
+ ...         </td><td align='left'  valign='top'>
+  ...                        </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>c_J</span></font></i></code>
+ </td><td align='left'  valign='top'>
+ float       </td><td align='left'  valign='top'>
+ value of last covariate
+</td></tr>
+</table>
+Note that 
+<code><i><font color="black"><span style='white-space: nowrap'>J</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;len(</span></font><i><font color="black"><span style='white-space: nowrap'>covariate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;-&nbsp;1</span></font></code>
+ and for
+
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>J</span></font></i></code>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c_j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>covariate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]['name']<br>
+</span></font></code>
+We refer to the columns above as the required columns for
+
+<code><i><font color="black"><span style='white-space: nowrap'>avgint_table</span></font></i></code>
+.
+
+<br>
+<br>
+<b><a name="avgint_table.avgint_extra_columns" id="avgint_table.avgint_extra_columns">avgint_extra_columns</a></b>
+<br>
+If a 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ of 
+<code><i><font color="black"><span style='white-space: nowrap'>option_table</span></font></i></code>
+ has 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>['name']</span></font></code>
+
+equal to <code><font color="blue">'avgint_extra_columns'</font></code>, the corresponding
+
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>['value'].split()</span></font></code>
+ is the list of extra avgint table columns.
+Otherwise the list of extra avgint table columns is empty.
+
+<br>
+<br>
+<b><big><a name="data_table" id="data_table">data_table</a></big></b>
+<br>
+This is a list of <code><font color="blue">dict</font></code>
+that define the rows of the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+.
+It has all the columns required for the 
+<code><i><font color="black"><span style='white-space: nowrap'>avgint_table</span></font></i></code>
+.
+In addition, the dictionary 
+<code><i><font color="black"><span style='white-space: nowrap'>data_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ has the following:
+<table><tr><td align='left'  valign='top'>
+
+Key          </td><td align='left'  valign='top'>
+ Value Type  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description        </td></tr><tr><td align='left'  valign='top'>
+
+hold_out     </td><td align='left'  valign='top'>
+ bool        </td><td align='left'  valign='top'>
+ hold out flag               </td></tr><tr><td align='left'  valign='top'>
+
+density      </td><td align='left'  valign='top'>
+ str         </td><td align='left'  valign='top'>
+ density                     </td></tr><tr><td align='left'  valign='top'>
+
+meas_value   </td><td align='left'  valign='top'>
+ float       </td><td align='left'  valign='top'>
+ measured value              </td></tr><tr><td align='left'  valign='top'>
+
+meas_std     </td><td align='left'  valign='top'>
+ float       </td><td align='left'  valign='top'>
+ standard deviation          </td></tr><tr><td align='left'  valign='top'>
+
+eta          </td><td align='left'  valign='top'>
+ float       </td><td align='left'  valign='top'>
+ offset in log-transform     </td></tr><tr><td align='left'  valign='top'>
+
+nu           </td><td align='left'  valign='top'>
+ float       </td><td align='left'  valign='top'>
+ Student's-t degrees of freedom
+</td></tr>
+</table>
+The columns keys <code><font color="blue">meas_std</font></code>, <code><font color="blue">eta</font></code>, and <code><font color="blue">nu</font></code>
+are optional. If they are not present, the value <code><font color="blue">null</font></code> is used
+for the corresponding row of the data table.
+
+<br>
+<br>
+<b><a name="data_table.data_extra_columns" id="data_table.data_extra_columns">data_extra_columns</a></b>
+<br>
+If a 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ of 
+<code><i><font color="black"><span style='white-space: nowrap'>option_table</span></font></i></code>
+ has 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>['name']</span></font></code>
+
+equal to <code><font color="blue">'data_extra_columns'</font></code>, the corresponding
+
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>['value'].split()</span></font></code>
+ is the list of extra data table columns.
+Otherwise the list of extra data table columns is empty.
+
+<br>
+<br>
+<b><big><a name="prior_table" id="prior_table">prior_table</a></big></b>
+<br>
+This is a list of <code><font color="blue">dict</font></code>
+that define the rows of the <a href="prior_table.htm" target="_top"><span style='white-space: nowrap'>prior_table</span></a>
+.
+The dictionary 
+<code><i><font color="black"><span style='white-space: nowrap'>prior_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ has the following:
+<table><tr><td align='left'  valign='top'>
+
+Key     </td><td align='left'  valign='top'>
+ Value Type    <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description       </td></tr><tr><td align='left'  valign='top'>
+
+name    </td><td align='left'  valign='top'>
+ str           </td><td align='left'  valign='top'>
+ name of <code><i>i</i></code>-th prior </td></tr><tr><td align='left'  valign='top'>
+
+lower   </td><td align='left'  valign='top'>
+ float         </td><td align='left'  valign='top'>
+ lower limit                </td></tr><tr><td align='left'  valign='top'>
+
+upper   </td><td align='left'  valign='top'>
+ float         </td><td align='left'  valign='top'>
+ upper limit                </td></tr><tr><td align='left'  valign='top'>
+
+std     </td><td align='left'  valign='top'>
+ float         </td><td align='left'  valign='top'>
+ standard deviation         </td></tr><tr><td align='left'  valign='top'>
+
+density </td><td align='left'  valign='top'>
+ float         </td><td align='left'  valign='top'>
+ density function           </td></tr><tr><td align='left'  valign='top'>
+
+eta     </td><td align='left'  valign='top'>
+ float         </td><td align='left'  valign='top'>
+ offset in log densities    </td></tr><tr><td align='left'  valign='top'>
+
+nu      </td><td align='left'  valign='top'>
+ float         </td><td align='left'  valign='top'>
+ degrees of freed in Student densities
+</td></tr>
+</table>
+The columns keys <code><font color="blue">std</font></code>, <code><font color="blue">eta</font></code>, and <code><font color="blue">nu</font></code>
+are optional. If they are not present, the value <code><font color="blue">null</font></code> is used
+for the corresponding row of the prior table.
+
+<br>
+<br>
+<b><big><a name="smooth_table" id="smooth_table">smooth_table</a></big></b>
+<br>
+This is a list of <code><font color="blue">dict</font></code>
+that define the rows of the <a href="smooth_table.htm" target="_top"><span style='white-space: nowrap'>smooth_table</span></a>
+ and
+<a href="smooth_grid_table.htm" target="_top"><span style='white-space: nowrap'>smooth_grid_table</span></a>
+.
+The dictionary 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ has the following:
+<table><tr><td align='left'  valign='top'>
+
+Key     </td><td align='left'  valign='top'>
+ Value Type  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description       </td></tr><tr><td align='left'  valign='top'>
+
+name    </td><td align='left'  valign='top'>
+ <code><font color="blue">str</font></code>         </td><td align='left'  valign='top'>
+ name of <code><i>i</i></code>-th smoothing  </td></tr><tr><td align='left'  valign='top'>
+
+age_id  </td><td align='left'  valign='top'>
+ list of <code><font color="blue">int</font></code> </td><td align='left'  valign='top'>
+ indices for age values     </td></tr><tr><td align='left'  valign='top'>
+
+time_id </td><td align='left'  valign='top'>
+ list of <code><font color="blue">int</font></code> </td><td align='left'  valign='top'>
+ indices for time values    </td></tr><tr><td align='left'  valign='top'>
+
+mulstd_value_prior_name    </td><td align='left'  valign='top'>
+ <code><font color="blue">str</font></code>   </td><td align='left'  valign='top'>
+
+	name of prior for <a href="smooth_table.htm#mulstd_value_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_value_prior_name</span></a>
+
+	</td></tr><tr><td align='left'  valign='top'>
+
+mulstd_dage_prior_name   </td><td align='left'  valign='top'>
+ <code><font color="blue">str</font></code>   </td><td align='left'  valign='top'>
+
+	name of prior for <a href="smooth_table.htm#mulstd_dage_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dage_prior_name</span></a>
+
+	</td></tr><tr><td align='left'  valign='top'>
+
+mulstd_dtime_prior_name   </td><td align='left'  valign='top'>
+ <code><font color="blue">str</font></code>   </td><td align='left'  valign='top'>
+
+	name of prior for <a href="smooth_table.htm#mulstd_dtime_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dtime_prior_name</span></a>
+
+	</td></tr><tr><td align='left'  valign='top'>
+
+fun     </td><td align='left'  valign='top'>
+ function  </td><td align='left'  valign='top'>
+ 
+<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>,</span></font><i><font color="black"><span style='white-space: nowrap'>da</span></font></i><font color="blue"><span style='white-space: nowrap'>,</span></font><i><font color="black"><span style='white-space: nowrap'>dt</span></font></i><font color="blue"><span style='white-space: nowrap'>)=</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+</td></tr>
+</table>
+<ol type="1"><li>The value <code><font color="blue">None</font></code> is used to represent <code><font color="blue">null</font></code> for
+the smoothing multipliers names; e.g., 
+<code><i><font color="black"><span style='white-space: nowrap'>mulstd_value_prior_name</span></font></i></code>
+.
+</li><li>
+
+The <code><font color="blue">str</font></code> results 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>da</span></font></i></code>
+, and 
+<code><i><font color="black"><span style='white-space: nowrap'>dt</span></font></i></code>
+
+are the prior names for the value, difference in age,
+and difference in time corresponding to this smoothing name.
+</li><li>
+
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i></code>
+ must be in increasing order,
+
+<code><i><font color="black"><span style='white-space: nowrap'>da</span></font></i></code>
+ is not used when age 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i><font color="blue"><span style='white-space: nowrap'>[-1]</span></font></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>dt</span></font></i></code>
+ is not used when time 
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i><font color="blue"><span style='white-space: nowrap'>[-1]</span></font></code>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><a name="smooth_table.const_value" id="smooth_table.const_value">const_value</a></b>
+<br>
+If the return value 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ is a <code><font color="blue">float</font></code>,
+the value of the function, at the corresponding age and time,
+is constrained to be 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ using the
+<a href="smooth_grid_table.htm#const_value" target="_top"><span style='white-space: nowrap'>const_value</span></a>
+ column in the
+<code><font color="blue">smooth_grid</font></code> table.
+
+<br>
+<br>
+<b><big><a name="nslist_table" id="nslist_table">nslist_table</a></big></b>
+<br>
+This is a <code><font color="blue">dict</font></code> that specifies the
+<a href="nslist_table.htm" target="_top"><span style='white-space: nowrap'>nslist_table</span></a>
+ and the <a href="nslist_pair_table.htm" target="_top"><span style='white-space: nowrap'>nslist_pair_table</span></a>
+.
+For each <a href="nslist_table.htm#nslist_name" target="_top"><span style='white-space: nowrap'>nslist_name</span></a>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nslist_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>nslist_name</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;[&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>node_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_name</span></font></i><font color="blue"><span style='white-space: nowrap'>),&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+Note that each pair above is a python <code><font color="blue">tuple</font></code>:
+<table><tr><td align='left'  valign='top'>
+
+Variable    </td><td align='left'  valign='top'>
+ Value Type <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description              </td></tr><tr><td align='left'  valign='top'>
+
+nslist_name </td><td align='left'  valign='top'>
+ str </td><td align='left'  valign='top'>
+ name of one list of node,smoothing pairs </td></tr><tr><td align='left'  valign='top'>
+
+node_name   </td><td align='left'  valign='top'>
+ str </td><td align='left'  valign='top'>
+ name of the node for this pair           </td></tr><tr><td align='left'  valign='top'>
+
+smooth_name </td><td align='left'  valign='top'>
+ str </td><td align='left'  valign='top'>
+ name of the smoothing for this pair
+</td></tr>
+</table>
+<br>
+<b><big><a name="rate_table" id="rate_table">rate_table</a></big></b>
+<br>
+This is a list of <code><font color="blue">dict</font></code>
+that define the rows of the <a href="rate_table.htm" target="_top"><span style='white-space: nowrap'>rate_table</span></a>
+.
+The dictionary 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ has the following:
+<table><tr><td align='left'  valign='top'>
+
+Key           </td><td align='left'  valign='top'>
+ Value Type  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description         </td></tr><tr><td align='left'  valign='top'>
+
+name          </td><td align='left'  valign='top'>
+ str     </td><td align='left'  valign='top'>
+ pini, iota, rho, chi, or omega   </td></tr><tr><td align='left'  valign='top'>
+
+parent_smooth </td><td align='left'  valign='top'>
+ str     </td><td align='left'  valign='top'>
+ parent smoothing                 </td></tr><tr><td align='left'  valign='top'>
+
+child_smooth  </td><td align='left'  valign='top'>
+ str     </td><td align='left'  valign='top'>
+ a single child smoothing         </td></tr><tr><td align='left'  valign='top'>
+
+child_nslist  </td><td align='left'  valign='top'>
+ str     </td><td align='left'  valign='top'>
+ list of child smoothings
+</td></tr>
+</table>
+The value <code><font color="blue">None</font></code> is used to represent a <code><font color="blue">null</font></code> value for
+the parent and child smoothings.
+If a key name does not appear, null is used for the corresponding value.
+If a 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+; e.g. <code><font color="blue">rho</font></code>, does not appear, the value
+null is used for the parent and child smoothings for the corresponding rate.
+
+<br>
+<br>
+<b><big><a name="mulcov_table" id="mulcov_table">mulcov_table</a></big></b>
+<br>
+This is a list of <code><font color="blue">dict</font></code>
+that define the rows of the <a href="mulcov_table.htm" target="_top"><span style='white-space: nowrap'>mulcov_table</span></a>
+.
+The dictionary 
+<code><i><font color="black"><span style='white-space: nowrap'>mulcov_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ has the following:
+<table><tr><td align='left'  valign='top'>
+
+Key       </td><td align='left'  valign='top'>
+ Value Type  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description       </td></tr><tr><td align='left'  valign='top'>
+
+covariate </td><td align='left'  valign='top'>
+ str         </td><td align='left'  valign='top'>
+ is the covariate column    </td></tr><tr><td align='left'  valign='top'>
+
+type      </td><td align='left'  valign='top'>
+ str  </td><td align='left'  valign='top'>
+
+<code><font color="blue">rate_value</font></code>, <code><font color="blue">meas_value</font></code>, or <code><font color="blue">meas_std</font></code> </td></tr><tr><td align='left'  valign='top'>
+
+effected  </td><td align='left'  valign='top'>
+ str         </td><td align='left'  valign='top'>
+ integrand or rate effected </td></tr><tr><td align='left'  valign='top'>
+
+smooth    </td><td align='left'  valign='top'>
+ str         </td><td align='left'  valign='top'>
+ smoothing name
+</td></tr>
+</table>
+<br>
+<b><big><a name="option_table" id="option_table">option_table</a></big></b>
+<br>
+This is a list of <code><font color="blue">dict</font></code>
+that define the values
+<a href="option_table.htm#Conventions.option_name" target="_top"><span style='white-space: nowrap'>option_name</span></a>
+,
+<a href="option_table.htm#Conventions.option_value" target="_top"><span style='white-space: nowrap'>option_value</span></a>
+ in the option table.
+The <code><i>i</i></code>-th row of the table will have
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]['name']<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]['value']<br>
+</span></font></code>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="create_database.py.htm" target="_top">create_database.py</a></td><td>create_database:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table><br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="create_database.py.htm" target="_top"><span style='white-space: nowrap'>create_database.py</span></a>
+ contains
+and example and test of <code><font color="blue">create_database</font></code>.
+
+
+<hr>Input File: python/dismod_at/create_database.py
+
+</body>
+</html>

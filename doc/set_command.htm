@@ -1,0 +1,286 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Directly Setting Table Values</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Directly Setting Table Values">
+<meta name="keywords" id="keywords" content=" directly setting table values syntax database option warning table_out start_var scale_var truth_var source prior_mean fit_var sample example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_set_command_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="command.htm" target="_top">Prev</a>
+</td><td><a href="set_command.py.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>command</option>
+<option>set_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>command-&gt;</option>
+<option>set_command</option>
+<option>init_command</option>
+<option>depend_command</option>
+<option>fit_command</option>
+<option>simulate_command</option>
+<option>sample_command</option>
+<option>predict_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>set_command-&gt;</option>
+<option>set_command.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>database</option>
+<option>option</option>
+<option>---..Warning</option>
+<option>table_out</option>
+<option>---..start_var</option>
+<option>---..scale_var</option>
+<option>---..truth_var</option>
+<option>source</option>
+<option>---..prior_mean</option>
+<option>---..fit_var</option>
+<option>---..sample</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Directly Setting Table Values</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;set&nbsp;option&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;set&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>source</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;set&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>source</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="database" id="database">database</a></big></b>
+<br>
+Is an
+<a href="http://www.sqlite.org/sqlite/" target="_top"><span style='white-space: nowrap'>http://www.sqlite.org/sqlite/</span></a>
+ database containing the
+<code><font color="blue">dismod_at</font></code> <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
+ tables which are not modified.
+
+<br>
+<br>
+<b><big><a name="option" id="option">option</a></big></b>
+<br>
+The <code><font color="blue">option</font></code> syntax sets
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+in the row of the <a href="option_table.htm" target="_top"><span style='white-space: nowrap'>option_table</span></a>
+ specified by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+see <a href="option_table.htm#Conventions.option_name" target="_top"><span style='white-space: nowrap'>option_name</span></a>
+ and
+<a href="option_table.htm#Conventions.option_value" target="_top"><span style='white-space: nowrap'>option_value</span></a>
+.
+
+<br>
+<br>
+<b><a name="option.Warning" id="option.Warning">Warning</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is <code><font color="blue">parent_node_id</font></code>,
+the set of <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ will change and you must
+re-run the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="table_out" id="table_out">table_out</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+ syntax sets the values in 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+
+using the values specified by 
+<code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
+.
+If this table exists before the command,
+the values originally in the table are lost.
+
+<br>
+<br>
+<b><a name="table_out.start_var" id="table_out.start_var">start_var</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+ is <code><font color="blue">start_var</font></code>,
+the <a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var</span></a>
+ table is created.
+Note that this table may also be created directly by the user
+(with the aid of the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+).
+
+<br>
+<br>
+<b><a name="table_out.scale_var" id="table_out.scale_var">scale_var</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+ is <code><font color="blue">scale_var</font></code>,
+the <a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var</span></a>
+ table is created.
+Note that this table may also be created directly by the user
+(with the aid of the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+).
+
+<br>
+<br>
+<b><a name="table_out.truth_var" id="table_out.truth_var">truth_var</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+ is <code><font color="blue">truth_var</font></code>,
+the <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var</span></a>
+ table is created.
+Note that this table may also be created directly by the user
+(with the aid of the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="source" id="source">source</a></big></b>
+<br>
+The set command argument 
+<code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
+ must be one of the following:
+
+<br>
+<br>
+<b><a name="source.prior_mean" id="source.prior_mean">prior_mean</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
+ is <code><font color="blue">prior_mean</font></code>,
+the mean of the priors is used for the values in 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+.
+In this case 
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
+ is not present.
+
+<br>
+<br>
+<b><a name="source.fit_var" id="source.fit_var">fit_var</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
+ is <code><font color="blue">fit_var</font></code>,
+the results of the previous fit is used for the values in 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+.
+In this case 
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
+ is not present.
+
+<br>
+<br>
+<b><a name="source.sample" id="source.sample">sample</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
+ is <code><font color="blue">sample</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
+ must be present.
+In this case the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ in the sample table,
+and corresponding to the specified sample index,
+are used for the values in 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+.
+
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The files
+<a href="set_command.py.htm" target="_top"><span style='white-space: nowrap'>set_command.py</span></a>
+ and <a href="set_command.py.htm" target="_top"><span style='white-space: nowrap'>set_command.py</span></a>
+
+contains examples and tests using this command.
+
+
+<hr>Input File: devel/dismod_at.cpp
+
+</body>
+</html>

@@ -1,0 +1,490 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+>
+</script>
+<head>
+<title>Some Statistical Function Definitions</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Some Statistical Function Definitions">
+<meta name="keywords" id="keywords" content=" some statistical function definitions notation log-transformed standard deviation sigma weighted residual r difference uniform gaussian laplace student's-t log-gaussian log-laplace log-student's-t log-density d ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_statistic_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="random_prior.htm" target="_top">Prev</a>
+</td><td><a href="bilinear.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>statistic</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>model-&gt;</option>
+<option>model_variables</option>
+<option>avg_integrand</option>
+<option>data_like</option>
+<option>fixed_value</option>
+<option>fixed_diff</option>
+<option>fixed_prior</option>
+<option>random_value</option>
+<option>random_diff</option>
+<option>random_prior</option>
+<option>statistic</option>
+<option>bilinear</option>
+<option>ode_grid</option>
+</select>
+</td>
+<td>statistic</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Notation</option>
+<option>Log-Transformed Standard Deviation, sigma</option>
+<option>Weighted Residual Function, R</option>
+<option>---..Difference</option>
+<option>---..Uniform</option>
+<option>---..Gaussian, Laplace, Student's-t</option>
+<option>---..Log-Gaussian, Log-Laplace, Log-Student's-t</option>
+<option>Log-Density Function, D</option>
+<option>---..Difference</option>
+<option>---..Uniform</option>
+<option>---..Gaussian</option>
+<option>---..Laplace</option>
+<option>---..Student's-t</option>
+<option>---..Log-Gaussian</option>
+<option>---..Log-Laplace</option>
+<option>---..Log-Student's-t</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Some Statistical Function Definitions</big></big></b></center>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<small>@(@
+y
+@)@</small>       </td><td align='left'  valign='top'>
+
+quantity that we are computing a statistical density for
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+z
+@)@</small>       </td><td align='left'  valign='top'>
+
+quantity we are differencing from <small>@(@
+y
+@)@</small>
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+\mu
+@)@</small>     </td><td align='left'  valign='top'>
+
+expected value <small>@(@
+y
+@)@</small>, difference, or difference of logs
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+\delta
+@)@</small>  </td><td align='left'  valign='top'>
+
+standard deviation for <small>@(@
+y
+@)@</small>, difference, or difference of logs
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+d:id
+@)@</small>    </td><td align='left'  valign='top'>
+
+<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+d:\eta
+@)@</small>  </td><td align='left'  valign='top'>
+
+<a href="prior_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+ the offset in log transform
+</td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+d:\nu
+@)@</small>   </td><td align='left'  valign='top'>
+
+<a href="data_table.htm#nu" target="_top"><span style='white-space: nowrap'>nu</span></a>
+ degrees of freedom in Student's-t.
+</td></tr>
+</table>
+<br>
+<b><big><a name="Log-Transformed Standard Deviation, sigma" id="Log-Transformed Standard Deviation, sigma">Log-Transformed Standard Deviation, sigma</a></big></b>
+<br>
+We define the log-transformed standard deviation by
+<small>@[@
+
+\sigma( \mu, \delta , \eta )
+=
+\log ( \mu + \eta + \delta ) - \log ( \mu + \eta )
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Weighted Residual Function, R" id="Weighted Residual Function, R">Weighted Residual Function, R</a></big></b>
+<br>
+The weighted residual function
+<small>@[@
+
+	R(y, \mu, \delta, d)
+
+@]@</small>
+is defined separately below for each possible value
+of the density name.
+
+<br>
+<br>
+<b><a name="Weighted Residual Function, R.Difference" id="Weighted Residual Function, R.Difference">Difference</a></b>
+<br>
+The weighted residual function for differences
+<small>@[@
+
+	R(z, y, \mu, \delta, d)
+
+@]@</small>
+has extra argument <small>@(@
+z
+@)@</small> and is also
+is defined separately below for each possible value
+of the density name.
+
+<br>
+<br>
+<b><a name="Weighted Residual Function, R.Uniform" id="Weighted Residual Function, R.Uniform">Uniform</a></b>
+<br>
+If the density name is <code><font color="blue">uniform</font></code>,
+the weighted residual functions are
+<small>@[@
+
+	R(y, \mu, \delta, d) = 0
+
+@]@</small>
+<small>@[@
+
+	R(z, y, \mu, \delta, d) = 0
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Weighted Residual Function, R.Gaussian, Laplace, Student's-t" id="Weighted Residual Function, R.Gaussian, Laplace, Student's-t">Gaussian, Laplace, Student's-t</a></b>
+<br>
+If the density name is
+<code><font color="blue">gaussian</font></code>, <code><font color="blue">laplace</font></code>, or <code><font color="blue">students</font></code>.
+the weighted residual functions are
+<small>@[@
+
+	R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
+
+@]@</small>
+<small>@[@
+
+	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Weighted Residual Function, R.Log-Gaussian, Log-Laplace, Log-Student's-t" id="Weighted Residual Function, R.Log-Gaussian, Log-Laplace, Log-Student's-t">Log-Gaussian, Log-Laplace, Log-Student's-t</a></b>
+<br>
+If the density name is
+<code><font color="blue">log_gaussian</font></code>, <code><font color="blue">log_laplace</font></code>, or <code><font color="blue">log_students</font></code>,
+the weighted residual functions are
+<small>@[@
+
+R(y, \mu, \delta, d)
+=
+\frac{
+	\log( y + d:\eta ) - \log( \mu + d:\eta )
+}{
+	\sigma( \mu , \delta , d:\eta )
+}
+
+@]@</small>
+<small>@[@
+
+R(z, y, \mu, \delta, d)
+=
+\frac{
+	\log(z + d:\eta ) - \log( y + d:\eta ) - \mu
+}{
+	\delta
+}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Log-Density Function, D" id="Log-Density Function, D">Log-Density Function, D</a></big></b>
+<br>
+The log-density function
+<small>@[@
+
+	D(y, \mu, \delta, d)
+
+@]@</small>
+is defined separately below for each possible value
+of the density name.
+
+<br>
+<br>
+<b><a name="Log-Density Function, D.Difference" id="Log-Density Function, D.Difference">Difference</a></b>
+<br>
+The log-density function for differences
+<small>@[@
+
+	D(z, y, \mu, \delta, d)
+
+@]@</small>
+has extra argument <small>@(@
+z
+@)@</small> and is also
+is defined separately below for each possible value
+of the density name.
+
+<br>
+<br>
+<b><a name="Log-Density Function, D.Uniform" id="Log-Density Function, D.Uniform">Uniform</a></b>
+<br>
+If the density name is <code><font color="blue">uniform</font></code>,
+the log-density functions
+<small>@(@
+D(y, \mu, \delta, d)
+@)@</small>, and <small>@(@
+D(z, y, \mu, \delta, d)
+@)@</small>
+are define by <small>@(@
+D = 0
+@)@</small>.
+
+<br>
+<br>
+<b><a name="Log-Density Function, D.Gaussian" id="Log-Density Function, D.Gaussian">Gaussian</a></b>
+<br>
+If the density name is <code><font color="blue">gaussian</font></code>,
+the log-density functions
+<small>@(@
+D(y, \mu, \delta, d)
+@)@</small>, and <small>@(@
+D(z, y, \mu, \delta, d)
+@)@</small>
+are define by
+<small>@[@
+
+D
+=
+- \log \left( \delta \sqrt{2 \pi} \right) - \frac{1}{2} R^2
+
+@]@</small>
+where <small>@(@
+D
+@)@</small> and <small>@(@
+R
+@)@</small> have the same arguments;
+see <a href="statistic.htm#Weighted Residual Function, R" target="_top"><span style='white-space: nowrap'>Weighted&nbsp;Residual&nbsp;Function,&nbsp;R</span></a>
+.
+
+<br>
+<br>
+<b><a name="Log-Density Function, D.Laplace" id="Log-Density Function, D.Laplace">Laplace</a></b>
+<br>
+If the density name is <code><font color="blue">laplace</font></code>,
+the log-density functions
+<small>@(@
+D(y, \mu, \delta, d)
+@)@</small>, and <small>@(@
+D(z, y, \mu, \delta, d)
+@)@</small>
+are define by
+<small>@[@
+
+D
+=
+- \log \left( \delta \sqrt{2} \right) - \sqrt{2} | R |
+
+@]@</small>
+where <small>@(@
+D
+@)@</small> and <small>@(@
+R
+@)@</small> have the same arguments.
+
+<br>
+<br>
+<b><a name="Log-Density Function, D.Student's-t" id="Log-Density Function, D.Student's-t">Student's-t</a></b>
+<br>
+If the density name is <code><font color="blue">students</font></code>,
+the log-density functions
+<small>@(@
+D(y, \mu, \delta, d)
+@)@</small>, and <small>@(@
+D(z, y, \mu, \delta, d)
+@)@</small>
+are define by
+<small>@[@
+
+D
+=
+\log \left(
+\frac{ \Gamma( ( \nu + 1 ) / 2 ) }{ \sqrt{ \nu \pi } \Gamma( \nu / 2 ) }
+\right)
+-
+\frac{\nu + 1}{2} \log \left( 1 + R^2 / ( \nu - 2 ) \right)
+
+@]@</small>
+where <small>@(@
+D
+@)@</small> and <small>@(@
+R
+@)@</small> have the same arguments.
+
+<br>
+<br>
+<b><a name="Log-Density Function, D.Log-Gaussian" id="Log-Density Function, D.Log-Gaussian">Log-Gaussian</a></b>
+<br>
+If the density name is <code><font color="blue">log_gaussian</font></code>,
+the log-density functions are defined by
+<small>@[@
+
+D(y, \mu, \delta, d)
+=
+- \log \left[ \sigma( \mu , \delta , d:\eta ) \sqrt{2 \pi} \right]
+- \frac{1}{2} R(y, \mu, \delta, d)^2
+
+@]@</small>
+<small>@[@
+
+D(z, y, \mu, \delta, d)
+=
+- \log \left( \delta \sqrt{2 \pi} \right)
+- \frac{1}{2} R(z, y, \mu, \delta, d)^2
+
+@]@</small>
+see <a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>Log-Transformed&nbsp;standard&nbsp;deviation</span></a>
+.
+
+<br>
+<br>
+<b><a name="Log-Density Function, D.Log-Laplace" id="Log-Density Function, D.Log-Laplace">Log-Laplace</a></b>
+<br>
+If the density name is <code><font color="blue">log_laplace</font></code>,
+the log-density functions are
+<small>@[@
+
+D(y, \mu, \delta, d)
+=
+- \log \left[ \sigma( \mu , \delta , d:\eta ) \sqrt{2} \right]
+- \sqrt{2} \left| R(y, \mu, \delta, d) \right|
+
+@]@</small>
+<small>@[@
+
+D(z, y, \mu, \delta, d)
+=
+- \log \left( \delta \sqrt{2} \right)
+- \sqrt{2} \left| R(z, y, \mu, \delta, d) \right|
+
+@]@</small>
+
+<br>
+<br>
+<b><a name="Log-Density Function, D.Log-Student's-t" id="Log-Density Function, D.Log-Student's-t">Log-Student's-t</a></b>
+<br>
+If the density name is <code><font color="blue">log_students</font></code>,
+the log-density functions
+<small>@(@
+D(y, \mu, \delta, d)
+@)@</small>, and <small>@(@
+D(z, y, \mu, \delta, d)
+@)@</small>
+are define by
+<small>@[@
+
+D
+=
+\log \left(
+\frac{ \Gamma( ( \nu + 1 ) / 2 ) }{ \sqrt{ \nu \pi } \Gamma( \nu / 2 ) }
+\right)
+-
+\frac{\nu + 1}{2} \log \left( 1 + R^2 / ( \nu - 2 ) \right)
+
+@]@</small>
+where <small>@(@
+D
+@)@</small> and <small>@(@
+R
+@)@</small> have the same arguments.
+
+
+<hr>Input File: omh/model/statistic.omh
+
+</body>
+</html>
