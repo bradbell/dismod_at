@@ -1,41 +1,36 @@
-# temporary file used by bin/install_all.sh
-install_all.err
-# temporary file used to make commits.
-git_commit.sh
-# temporary file for all purposes
-junk
-junk.*
+# temporary file used to make commits
+/git_commit.sh
 #
-# gnu profiling files
-example/devel/gmon.out
-example/devel/gprof.out
+# cmake configuration file that is put in source directory
+/include/cppad/mixed/configure.hpp
 #
-# cmake configure filess
-include/dismod_at/configure.hpp
-bin/dismodat.py
-bin/setup.py
+# Directory with builds take place. Note that /build is a link, hence
+# it looks to git like a file instead of a directory.
+/build
+/bug/build/
 #
-# web version of documentation directory
-doc.tgz
+# a previous release build that /build can point to
+/build.release/
 #
-# directories that are automatically created
-build
-build.debug
-build.release
-doc
+# a previous debug build that /build can point to
+/build.debug/
 #
-# directories that are used for running omhelp by hand
-htm
+# directory where documentation is built
+/doc/
 #
 # directories that are used for stashing files
-new
-new.*
+/new/
+/new.*/
 #
 # vim swap files
 *.swp
 #
-# log files
+# log files (stdout for certain programs)
 *.log
 #
-# python complilation files
-*.pyc
+# error files (stderr for certain programs)
+*.err
+#
+# temporary file for many purposes
+junk
+junk.*
