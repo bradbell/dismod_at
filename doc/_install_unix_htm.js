@@ -25,10 +25,10 @@ var list_down0 = [
 'run_cmake.sh.htm'
 ];
 var list_current0 = [
-'install_unix.htm#Download',
 'install_unix.htm#System Requirements',
 'install_unix.htm#System Requirements.C++ Compiler',
 'install_unix.htm#System Requirements.Fortran Compiler',
+'install_unix.htm#System Requirements.git',
 'install_unix.htm#System Requirements.cmake',
 'install_unix.htm#System Requirements.pkg-config',
 'install_unix.htm#System Requirements.python3',
@@ -43,8 +43,8 @@ var list_current0 = [
 'install_unix.htm#Special Requirements.CppAD',
 'install_unix.htm#Special Requirements.cppad_mixed',
 'install_unix.htm#dismod_at',
+'install_unix.htm#dismod_at.Download',
 'install_unix.htm#dismod_at.Setup',
-'install_unix.htm#dismod_at.build_type',
 'install_unix.htm#dismod_at.Cmake Command',
 'install_unix.htm#dismod_at.Test',
 'install_unix.htm#dismod_at.Install',

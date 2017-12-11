@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Installing dismod_at in Unix</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Installing dismod_at in Unix">
-<meta name="keywords" id="keywords" content=" installing dismod_at unix download system requirements c++ compiler fortran cmake pkg-config python3 sqlite3 gsl special run_cmake.sh libdir.sh eigen ipopt suitesparse cppad cppad_mixed setup build_type command test install executable path python example ">
+<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl special run_cmake.sh libdir.sh eigen ipopt suitesparse cppad cppad_mixed download setup command test install executable path python example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,10 +74,10 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>Download</option>
 <option>System Requirements</option>
 <option>---..C++ Compiler</option>
 <option>---..Fortran Compiler</option>
+<option>---..git</option>
 <option>---..cmake</option>
 <option>---..pkg-config</option>
 <option>---..python3</option>
@@ -92,8 +92,8 @@ A:active { color : purple }
 <option>---..CppAD</option>
 <option>---..cppad_mixed</option>
 <option>dismod_at</option>
+<option>---..Download</option>
 <option>---..Setup</option>
-<option>---..build_type</option>
 <option>---..Cmake Command</option>
 <option>---..Test</option>
 <option>---..Install</option>
@@ -106,16 +106,6 @@ A:active { color : purple }
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Installing dismod_at in Unix</big></big></b></center>
-<br>
-<b><big><a name="Download" id="Download">Download</a></big></b>
-<br>
-Download the tarball <a href="dismod_at-20171211.tgz" target="_top"><span style='white-space: nowrap'>dismod_at-20171211.tgz</span></a>
-
-and then extract it using the command
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tar&nbsp;-xzf&nbsp;dismod_at-20171211.tgz<br>
-</span></font></code>
 <br>
 <b><big><a name="System Requirements" id="System Requirements">System Requirements</a></big></b>
 <br>
@@ -139,12 +129,21 @@ is required by <code><font color="blue">dismod_at</font></code>.
 
 <br>
 <br>
-<b><a name="System Requirements.cmake" id="System Requirements.cmake">cmake</a></b>
+<b><a name="System Requirements.git" id="System Requirements.git">git</a></b>
+<br>
+The <a href="https://git-scm.com/" target="_top"><span style='white-space: nowrap'>git</span></a>
+ program,
+a source code version control system,
+is required by <code><font color="blue">dismod_at</font></code>.
 
 <br>
-<a href="http://www.cmake.org/" target="_top"><span style='white-space: nowrap'>cmake</span></a>
-,
-a program that installs other programs.
+<br>
+<b><a name="System Requirements.cmake" id="System Requirements.cmake">cmake</a></b>
+<br>
+The <a href="http://www.cmake.org/" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ program,
+which installs other programs,
+is required by <code><font color="blue">dismod_at</font></code>.
 
 <br>
 <br>
@@ -332,6 +331,34 @@ a new version of <code><font color="blue">dismod_at</font></code>:
 
 <br>
 <br>
+<b><a name="dismod_at.Download" id="dismod_at.Download">Download</a></b>
+<br>
+After installing the requirements above,
+use the following command to get the current version of dismod_at:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;clone&nbsp;https://github.com/bradbell/dismod_at.git&nbsp;dismod_at.git<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at.git<br>
+</span></font></code>
+You can determine the 
+<code><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i></code>
+ and version number
+corresponding to this checkout of the master branch using the commands:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;show-ref&nbsp;|&nbsp;grep&nbsp;'refs/heads/master'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/version.sh&nbsp;get<br>
+</span></font></code>
+You can checkout an old version corresponding to a specific 
+<code><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i></code>
+,
+and check its version number, using the commands:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;-q&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/version.sh&nbsp;get<br>
+</span></font></code>
+<br>
 <b><a name="dismod_at.Setup" id="dismod_at.Setup">Setup</a></b>
 
 <br>
@@ -341,20 +368,10 @@ you should change so they correspond to your machine.
 
 <br>
 <br>
-<b><a name="dismod_at.build_type" id="dismod_at.build_type">build_type</a></b>
-<br>
-Note that the <code><font color="blue">dismod_at</font></code>
-<a href="run_cmake.sh.htm#build_type" target="_top"><span style='white-space: nowrap'>build_type</span></a>
-
-(in the <code><font color="blue">run_cmake.sh</font></code> file)
-must be the same as the build type in the
-<code><font color="blue">bin/install_cppad_mixed.sh</font></code> file.
-
-<br>
-<br>
 <b><a name="dismod_at.Cmake Command" id="dismod_at.Cmake Command">Cmake Command</a></b>
 <br>
 After changing <code><font color="blue">bin/run_cmake.sh</font></code> to work for your system,
+in the <code><font color="blue">dismod_at.git</font></code> directory
 execute the following command:
 <code><font color='blue'><pre style='display:inline'> 
      bin/run_cmake.sh
@@ -370,6 +387,7 @@ and run the examples, correctness tests, and speed tests:
      cd build
      make check
      make speed
+     cd ..
 </pre></font></code>
 <br>
 <b><a name="dismod_at.Install" id="dismod_at.Install">Install</a></b>
@@ -380,6 +398,7 @@ and install dismod_at:
 <code><font color='blue'><pre style='display:inline'> 
      cd build
      make install
+     cd ..
 </pre></font></code>
 <br>
 <b><a name="dismod_at.Executable Path" id="dismod_at.Executable Path">Executable Path</a></b>
