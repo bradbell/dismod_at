@@ -11,6 +11,8 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin install_unix$$
 $dollar @$$
 $spell
+	grep
+	https://github.com/bradbell/dismod_at.git
 	ls
 	metis
 	py
@@ -36,13 +38,6 @@ $$
 
 $section Installing dismod_at in Unix$$
 
-$head Download$$
-Download the tarball $href%dismod_at-20171211.tgz%$$
-and then extract it using the command
-$codei%
-	tar -xzf dismod_at-20171211.tgz
-%$$
-
 $head System Requirements$$
 The following programs are required by dismod_at
 and should have standard system installs:
@@ -56,9 +51,15 @@ $subhead Fortran Compiler$$
 A fortran compiler is required by $code ipopt$$ which in turn
 is required by $code dismod_at$$.
 
+$subhead git$$
+The $href%https://git-scm.com/%git%$$ program,
+a source code version control system,
+is required by $code dismod_at$$.
+
 $subhead cmake$$
-$href%http://www.cmake.org/%cmake%$$,
-a program that installs other programs.
+The $href%http://www.cmake.org/%cmake%$$ program,
+which installs other programs,
+is required by $code dismod_at$$.
 
 $subhead pkg-config$$
 The $href%http://www.freedesktop.org/wiki/Software/pkg-config/%pkg-config%$$
@@ -167,20 +168,34 @@ each new version of $code dismod_at$$
 The steps below will need to be executed each time you install
 a new version of $code dismod_at$$:
 
+$subhead Download$$
+After installing the requirements above,
+use the following command to get the current version of dismod_at:
+$codei%
+	git clone https://github.com/bradbell/dismod_at.git dismod_at.git
+	cd dismod_at.git
+%$$
+You can determine the $icode git_hash$$ and version number
+corresponding to this checkout of the master branch using the commands:
+$codei%
+	git show-ref | grep 'refs/heads/master'
+	bin/version.sh get
+%$$
+You can checkout an old version corresponding to a specific $icode git_hash$$,
+and check its version number, using the commands:
+$codei%
+	git checkout -q %git_hash%
+	bin/version.sh get
+%$$
+
 $subhead Setup$$
 $children%bin/run_cmake.sh%$$
 The file $cref%bin/run_cmake.sh%run_cmake.sh%$$ has setting that
 you should change so they correspond to your machine.
 
-$subhead build_type$$
-Note that the $code dismod_at$$
-$cref/build_type/run_cmake.sh/build_type/$$
-(in the $code run_cmake.sh$$ file)
-must be the same as the build type in the
-$code bin/install_cppad_mixed.sh$$ file.
-
 $subhead Cmake Command$$
 After changing $code bin/run_cmake.sh$$ to work for your system,
+in the $code dismod_at.git$$ directory
 execute the following command:
 $codep
 	bin/run_cmake.sh
@@ -195,6 +210,7 @@ $codep
 	cd build
 	make check
 	make speed
+	cd ..
 $$
 
 $subhead Install$$
@@ -204,6 +220,7 @@ and install dismod_at:
 $codep
 	cd build
 	make install
+	cd ..
 $$
 
 

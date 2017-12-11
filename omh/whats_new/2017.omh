@@ -41,6 +41,7 @@ $spell
 	ipopt
 	hes
 	rev
+	github
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -50,6 +51,20 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 12-10$$
+$list number$$
+Move documentation from IHME to github; see
+$pre
+$$
+$href%https://bradbell.github.io/dismod_at/doc/index.html%$$.
+$lnext
+The $cref/git/install_unix/System Requirements/git/$$ program
+was added to the system requirements.
+$lnext
+The $cref/download/install_unix/dismod_at/Download/$$ instructions
+were changed to use $code git$$ for distributing the program.
+$lend
 
 $head 11-12$$
 $list number$$
