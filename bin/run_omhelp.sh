@@ -1,8 +1,8 @@
 #! /bin/bash -e
 # $Id$
 #  --------------------------------------------------------------------------
-# dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-16 University of Washington
+# cppad_mixed: C++ Laplace Approximation of Mixed Effects Models
+#           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -20,72 +20,23 @@ echo_eval() {
 	echo $*
 	eval $*
 }
-if [ "$1" != 'htm' ] && [ "$1" != 'xml' ]
+# -----------------------------------------------------------------------------
+if [ -e 'doc' ]
 then
-	echo "usage: bin/run_omhelp.sh (htm|xml) [printable]"
+	echo_eval rm -r doc
+fi
+echo_eval mkdir doc
+# -----------------------------------------------------------------------------
+cd doc
+image_link='https://github.com/bradbell/dismod_at'
+cmd="omhelp ../doc.omh -debug -noframe -image_link $image_link"
+echo "$cmd > omhelp.log"
+if ! $cmd  > ../omhelp.log
+then
+	cat ../omhelp.log
 	exit 1
 fi
-if [ "$2" != '' ] && [ "$2" != 'printable' ]
-then
-	echo "usage: bin/run_omhelp.sh (htm|xml) [printable]"
-	exit 1
-fi
-ext="$1"
-if [ "$2" == 'printable' ]
-then
-	printable='yes'
-else
-	printable='no'
-fi
-# -----------------------------------------------------------------------------
-if [ ! -e 'doc' ]
-then
-	echo_eval mkdir doc
-fi
-# -----------------------------------------------------------------------------
-version=`bin/version.sh get`
-if [ ! -e "doc/dismod_at-$version.tgz" ]
-then
-	echo_eval rm -rf "doc/dismod_at-$version"
-	echo_eval mkdir "doc/dismod_at-$version"
-	for file in `git ls-files`
-	do
-		sub_dir=`echo $file | sed -e 's|/[^/]*$||'`
-		if [ "$sub_dir" != "$file" ]
-		then
-			if [ ! -e doc/dismod_at-$version/$sub_dir ]
-			then
-				mkdir -p doc/dismod_at-$version/$sub_dir
-			fi
-		fi
-		cp $file doc/dismod_at-$version/$file
-	done
-	echo_eval cd doc
-	echo_eval tar -czf dismod_at-$version.tgz dismod_at-$version
-	echo_eval rm -r dismod_at-$version
-else
-	echo_eval cd doc
-fi
-# -----------------------------------------------------------------------------
-#
-flags=''
-if [ "$ext" == 'xml' ]
-then
-	flags="$flags -xml"
-fi
-if [ "$printable" == 'yes' ]
-then
-	flags="$flags -printable"
-fi
-cmd="omhelp ../doc.omh -debug -noframe $flags"
-echo "$cmd > omhelp.$ext.log"
-if ! $cmd  > ../omhelp.$ext.log
-then
-	cat ../omhelp.$ext.log
-	exit 1
-fi
-#
-if grep '^OMhelp Warning:' ../omhelp.$ext.log
+if grep '^OMhelp Warning:' ../omhelp.log
 then
 	exit 1
 fi
