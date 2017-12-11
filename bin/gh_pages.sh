@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 #  --------------------------------------------------------------------------
-# cppad_mixed: C++ Laplace Approximation of Mixed Effects Models
+# dismod_at: Estimating Disease Rates as Functions of Age and Time
 #           Copyright (C) 2014-17 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
