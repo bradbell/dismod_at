@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Installing dismod_at in Unix</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Installing dismod_at in Unix">
-<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl special run_cmake.sh libdir.sh eigen ipopt suitesparse cppad cppad_mixed download setup command test install executable path python example ">
+<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl download special run_cmake.sh libdir.sh eigen ipopt suitesparse cppad cppad_mixed setup command test install executable path python example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -83,6 +83,7 @@ A:active { color : purple }
 <option>---..python3</option>
 <option>---..sqlite3</option>
 <option>---..gsl</option>
+<option>Download</option>
 <option>Special Requirements</option>
 <option>---..run_cmake.sh</option>
 <option>---..libdir.sh</option>
@@ -92,7 +93,6 @@ A:active { color : purple }
 <option>---..CppAD</option>
 <option>---..cppad_mixed</option>
 <option>dismod_at</option>
-<option>---..Download</option>
 <option>---..Setup</option>
 <option>---..Cmake Command</option>
 <option>---..Test</option>
@@ -197,6 +197,34 @@ on Fedora or Red-Hat one needs to install <code><font color="blue">gsl-devel</fo
 
 <br>
 <br>
+<b><big><a name="Download" id="Download">Download</a></big></b>
+<br>
+After installing the requirements above,
+use the following command to get the current version of dismod_at:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;clone&nbsp;https://github.com/bradbell/dismod_at.git&nbsp;dismod_at.git<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at.git<br>
+</span></font></code>
+You can determine the 
+<code><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i></code>
+ and version number
+corresponding to this checkout of the master branch using the commands:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;show-ref&nbsp;|&nbsp;grep&nbsp;'refs/heads/master'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/version.sh&nbsp;get<br>
+</span></font></code>
+You can checkout an old version corresponding to a specific 
+<code><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i></code>
+,
+and check its version number, using the commands:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;-q&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/version.sh&nbsp;get<br>
+</span></font></code>
+<br>
 <b><big><a name="Special Requirements" id="Special Requirements">Special Requirements</a></big></b>
 <br>
 The packages listed below are required by dismod_at
@@ -207,8 +235,9 @@ and may not have standard system installs
 <br>
 <b><a name="Special Requirements.run_cmake.sh" id="Special Requirements.run_cmake.sh">run_cmake.sh</a></b>
 <br>
-The settings in <a href="run_cmake.sh.htm" target="_top"><span style='white-space: nowrap'>bin/run_cmake.sh</span></a>
- are used by the
+The settings in <a href="run_cmake.sh.htm" target="_top"><span style='white-space: nowrap'>dismod_at.git/bin/run_cmake.sh</span></a>
+
+are used by the
 scripts that install the special requirements. You must first change
 these settings to the appropriate values for your system before
 running these scripts.
@@ -217,7 +246,7 @@ running these scripts.
 <br>
 <b><a name="Special Requirements.libdir.sh" id="Special Requirements.libdir.sh">libdir.sh</a></b>
 <br>
-The script <code><font color="blue">bin/libdir.sh</font></code> determines what directory,
+The script <code><font color="blue">dismod_at.git/bin/libdir.sh</font></code> determines what directory,
 below the prefix directories, is use for libraries by the install
 programs discussed below. The following is the default value
 for this script
@@ -250,10 +279,9 @@ for this script
 The <a href="http://eigen.tuxfamily.org" target="_top"><span style='white-space: nowrap'>eigen</span></a>
 
 linear algebra package.
-The commands
+Starting in the <code><font color="blue">dismod_at.git</font></code> directory, the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at-20171211<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_eigen.sh<br>
 </span></font></code>
 can be used to install this package.
@@ -265,10 +293,9 @@ can be used to install this package.
 The <a href="https://projects.coin-or.org/Ipopt" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
 
 optimization package.
-The commands
+Starting in the <code><font color="blue">dismod_at.git</font></code> directory, the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at-20171211<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_ipopt.sh<br>
 </span></font></code>
 can be used to install this package.
@@ -280,10 +307,9 @@ can be used to install this package.
 The <a href="http://faculty.cse.tamu.edu/davis/suitesparse.html" target="_top"><span style='white-space: nowrap'>SuiteSparse</span></a>
 
 sparse matrix package.
-The commands
+Starting in the <code><font color="blue">dismod_at.git</font></code> directory, the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at-20171211<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_suitesparse.sh<br>
 </span></font></code>
 can be used to install this package.
@@ -295,10 +321,9 @@ can be used to install this package.
 The <a href="http://www.coin-or.org/CppAD/" target="_top"><span style='white-space: nowrap'>cppad</span></a>
 
 C++ algorithmic differentiation package.
-The commands
+Starting in the <code><font color="blue">dismod_at.git</font></code> directory, the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at-20171211<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_cppad.sh<br>
 </span></font></code>
 can be used to install this package.
@@ -310,10 +335,9 @@ can be used to install this package.
 The <a href="http://moby.ihme.washington.edu/bradbell/cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
 
 C++ random effects modeling package.
-The commands
+Starting in the <code><font color="blue">dismod_at.git</font></code> directory, the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at-20171211<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_cppad_mixed.sh<br>
 </span></font></code>
 can be used to install this package.
@@ -330,34 +354,6 @@ The steps below will need to be executed each time you install
 a new version of <code><font color="blue">dismod_at</font></code>:
 
 <br>
-<br>
-<b><a name="dismod_at.Download" id="dismod_at.Download">Download</a></b>
-<br>
-After installing the requirements above,
-use the following command to get the current version of dismod_at:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;clone&nbsp;https://github.com/bradbell/dismod_at.git&nbsp;dismod_at.git<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at.git<br>
-</span></font></code>
-You can determine the 
-<code><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i></code>
- and version number
-corresponding to this checkout of the master branch using the commands:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;show-ref&nbsp;|&nbsp;grep&nbsp;'refs/heads/master'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/version.sh&nbsp;get<br>
-</span></font></code>
-You can checkout an old version corresponding to a specific 
-<code><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i></code>
-,
-and check its version number, using the commands:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;-q&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/version.sh&nbsp;get<br>
-</span></font></code>
 <br>
 <b><a name="dismod_at.Setup" id="dismod_at.Setup">Setup</a></b>
 

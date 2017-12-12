@@ -3,8 +3,8 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20171211  ',' ',
-'install_unix  Installing dismod_at in Unix  ',' system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl special run_cmake.sh libdir.sh eigen ipopt suitesparse cppad cppad_mixed download setup command test executable path example ',
+'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20171212  ',' ',
+'install_unix  Installing dismod_at in Unix  ',' system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl download special run_cmake.sh libdir.sh eigen ipopt suitesparse cppad cppad_mixed setup command test executable path example ',
 'run_cmake.sh  bin/run_cmake.sh: User Configuration Options  ',' verbose_makefile build_type python3_executable extra_cxx_flags dismod_at_prefix prefixes debug release choosing c++ compiler checkpoint_newton_step system_specific_library_list ',
 'get_started  Dismod_at Getting Started Examples / Tests  ',' see also database commands ',
 'get_started_db.py  Create get_started Input Tables: Example and Test  ',' syntax purpose reference source code ',
