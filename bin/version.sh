@@ -67,7 +67,6 @@ fi
 # Make the version number in the relevant files is the same
 list='
 	doc.omh
-	omh/install/unix.omh
 	bin/setup.py.in
 '
 for name in $list
