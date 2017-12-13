@@ -1811,6 +1811,7 @@ void predict_command(
 					table_name = "sample";
 					dismod_at::error_exit(msg, table_name, sample_id);
 				}
+				++sample_id;
 			}
 		}
 	}

@@ -52,6 +52,14 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 12-13$$
+There was a bug in the
+$cref/predict sample/predict_command/source/sample/$$ command
+when $cref/build_type/run_cmake.sh/build_type/$$ was $code debug$$.
+To be specific, the check to see if the database was consistent
+had an error in it.
+This has been fixed.
+
 $head 12-10$$
 $list number$$
 Move documentation from IHME to github; see

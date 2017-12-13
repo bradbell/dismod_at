@@ -29,7 +29,7 @@ bin/check_include.sh
 bin/check_srcfile.sh
 bin/check_configure.sh
 #
-bin/run_omhelp.sh xml
+run_omhelp.sh -xml doc
 bin/run_cmake.sh
 # ----------------------------------------------------------------------------
 cd build
