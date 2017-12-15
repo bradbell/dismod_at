@@ -24,6 +24,7 @@ then
 	echo 'check_all.sh: option is not +speed or -speed'
 	exit 1
 fi
+bin/version.sh check
 bin/check_devel_xam.sh
 bin/check_include.sh
 bin/check_srcfile.sh
