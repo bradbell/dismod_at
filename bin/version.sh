@@ -30,4 +30,4 @@ else
 	echo_eval version.sh $*
 fi
 # -----------------------------------------------------------------------------
-echo 'bin/version.sh copy: OK'
+echo "bin/version.sh $1: OK"
