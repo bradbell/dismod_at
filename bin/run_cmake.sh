@@ -12,8 +12,24 @@
 # $OMhelpKeyCharacter=&
 # &begin run_cmake.sh&& &newlinech #&&
 # &spell
-#	cmake makefile cxx std dismod lcppad cholmod xam cpp
-#	usr eigen ipopt cppad bools suitesparse devel hpp pthread
+#	cmake
+#	makefile
+#	cxx
+#	std
+#	dismod
+#	lcppad
+#	cholmod
+#	xam
+#	cpp
+#	usr
+#	eigen
+#	ipopt
+#	cppad
+#	bools
+#	suitesparse
+#	devel
+#	hpp
+#	pthread
 #	checkpointing
 # &&
 #
