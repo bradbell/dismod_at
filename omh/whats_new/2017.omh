@@ -52,6 +52,15 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 12-16$$
+There was a mistake in the linking of the
+$cref/sqlite3/install_unix/System Requirements/sqlite3/$$ and
+$cref/gsl/install_unix/System Requirements/gsl/$$ libraries
+that caused a problem during
+$cref/testing/install_unix/dismod_at/Test/$$ on some systems.
+This has been fixed.
+
+
 $head 12-13$$
 There was a bug in the
 $cref/predict sample/predict_command/source/sample/$$ command

@@ -77,9 +77,8 @@ TARGET_LINK_LIBRARIES(example_devel
 	${cppad_mixed_library_path_list}
 	${suitesparse_library_path_list}
 	${ipopt_library_path_list}
-	sqlite3
-	gsl
-	gslcblas
+	${sqlite3_library_path_list}
+	${gsl_library_path_list}
 	${system_specific_library_list}
 )
 ADD_CUSTOM_TARGET(check_example_devel example_devel DEPENDS example_devel )
