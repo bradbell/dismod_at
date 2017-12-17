@@ -254,7 +254,7 @@ $cref/large excess mortality/wish_list/ODE Solution/Large Excess Mortality/$$
 in the wish list.
 $lnext
 Use one value for $icode libdir$$ for all the install scripts;
-see $cref/libdir.sh/install_unix/Special Requirements/libdir.sh/$$.
+determined by $code bin/libdir.sh$$.
 $lnext
 Change $cref run_cmake.sh$$ to
 use link from build and install prefix to corresponding debug or release

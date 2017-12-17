@@ -38,9 +38,12 @@ eval $cmd
 # cmake_cxx_compiler
 cmd=`grep '^cmake_cxx_compiler=' bin/run_cmake.sh`
 eval $cmd
+#
+# cmake_libdir
+cmd=`grep '^cmake_libdir=' bin/run_cmake.sh`
+eval $cmd
 # --------------------------------------------------------------------------
-libdir=`bin/libdir.sh`
-export PKG_CONFIG_PATH=$ipopt_prefix/$libdir/pkgconfig
+export PKG_CONFIG_PATH=$ipopt_prefix/$cmake_libdir/pkgconfig
 # --------------------------------------------------------------------------
 if echo "$ipopt_prefix" | grep '/dismod_at$' > /dev/null
 then
@@ -105,7 +108,7 @@ cat << EOF > config.sh
 	$skip_warn \\
 	--enable-static \\
 	--prefix=$ipopt_prefix \\
-	--libdir=$ipopt_prefix/$libdir \\
+	--libdir=$ipopt_prefix/$cmake_libdir \\
 	--with-blas-lib="-lblas" \\
 	--with-lapack-lib="-llapack"
 EOF

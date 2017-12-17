@@ -25,7 +25,6 @@ echo_eval() {
 web_page='https://github.com/bradbell/cppad_mixed.git'
 hash_key='8d2fe551d2a7af9ff1d2c236eaed435b076d9521'
 version='20171025'
-libdir=`bin/libdir.sh`
 # ---------------------------------------------------------------------------
 # special cppad_mixed settings (it is not suggested that you change these)
 #
@@ -78,6 +77,10 @@ eval $cmd
 # checkpoint_newton_step
 cmd=`grep '^checkpoint_newton_step=' bin/run_cmake.sh`
 eval $cmd
+#
+# cmake_libdir
+cmd=`grep '^cmake_libdir=' bin/run_cmake.sh`
+eval $cmd
 # ---------------------------------------------------------------------------
 # optimize the AD operation sequences
 if [ "$build_type" == 'debug' ]
@@ -96,9 +99,6 @@ then
 	bin/build_type.sh install_cppad_mixed $cppad_prefix $build_type
 fi
 # --------------------------------------------------------------------------
-libdir=`bin/libdir.sh`
-export PKG_CONFIG_PATH="$ipopt_prefix/$libdir/pkgconfig"
-# --------------------------------------------------------------------------
 if [ ! -e build/external ]
 then
 	mkdir -p build/external
@@ -109,13 +109,8 @@ if [ ! -e cppad_mixed-$version ]
 then
 	echo_eval git clone $web_page cppad_mixed-$version
 fi
-echo_eval cd cppad_mixed-$version
-if [ "$hash_key" != '' ]
-then
-	echo_eval git checkout --quiet $hash_key
-else
-	echo_eval git pull
-fi
+cd cppad_mixed-$version
+echo_eval git checkout --quiet $hash_key
 check=`bin/version.sh get`
 if [ "$check" != "$version" ]
 then
@@ -141,7 +136,7 @@ cmake_args="$cmake_args -D ipopt_prefix=$ipopt_prefix"
 cmake_args="$cmake_args -D eigen_prefix=$eigen_prefix"
 cmake_args="$cmake_args -D suitesparse_prefix=$suitesparse_prefix"
 #
-cmake_args="$cmake_args -D cmake_libdir=$libdir"
+cmake_args="$cmake_args -D cmake_libdir=$cmake_libdir"
 cmake_args="$cmake_args -D bool_sparsity=$bool_sparsity"
 cmake_args="$cmake_args -D ldlt_cholmod=$ldlt_cholmod"
 cmake_args="$cmake_args -D use_atomic_cholesky=$use_atomic_cholesky"

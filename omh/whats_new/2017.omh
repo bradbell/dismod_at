@@ -42,6 +42,7 @@ $spell
 	hes
 	rev
 	github
+	libdir
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -53,12 +54,18 @@ $childtable%
 %$$
 
 $head 12-16$$
+$list number$$
 There was a mistake in the linking of the
 $cref/sqlite3/install_unix/System Requirements/sqlite3/$$ and
 $cref/gsl/install_unix/System Requirements/gsl/$$ libraries
 that caused a problem during
 $cref/testing/install_unix/dismod_at/Test/$$ on some systems.
 This has been fixed.
+$lnext
+The value $cref/libdir/run_cmake.sh/cmake_libdir/$$ is now specified
+in $code bin/run_cmake.sh$$
+(it used to be specified by $code bin/libdir.sh$$).
+$lend
 
 
 $head 12-13$$

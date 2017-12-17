@@ -12,6 +12,7 @@
 # $OMhelpKeyCharacter=&
 # &begin run_cmake.sh&& &newlinech #&&
 # &spell
+#	libdir
 #	cmake
 #	makefile
 #	cxx
@@ -52,20 +53,6 @@ build_type='debug'
 # &icode%dismod_at_prefix%.release%&&
 # depending on the choice &icode build_type&&.
 #
-# &head python3_executable&&
-# Path to the python3 executable on this machine:
-# &codep
-python3_executable='/usr/bin/python3'
-# &&
-# An alternative might be &code '/usr/local/anaconda3-current/bin/python'&&.
-#
-# &head extra_cxx_flags&&
-# Extra C++ flags used during compilation:
-# &codep
-extra_cxx_flags='-std=c++11 -Wall -DCPPAD_DEBUG_AND_RELEASE'
-# &&
-# An alternative might be '-Wall'.
-#
 # &head dismod_at_prefix&&
 # Prefix where dismod_at will be installed:
 # &codep
@@ -104,10 +91,30 @@ suitesparse_prefix="$HOME/prefix/dismod_at"
 # of the &cref/special requirements/install_unix/Special Requirements/&&
 # will need to be installed.
 #
+# &head python3_executable&&
+# Path to the python3 executable on this machine:
+# &codep
+python3_executable='/usr/bin/python3'
+# &&
+# An alternative might be &code '/usr/local/anaconda3-current/bin/python'&&.
+#
 # &head Choosing C++ Compiler&&
 # Which c++ compiler should cmake use (empty means cmake will choose it).
 # &codep
 cmake_cxx_compiler=''
+# &&
+#
+# &head extra_cxx_flags&&
+# Extra C++ flags used during compilation:
+# &codep
+extra_cxx_flags='-std=c++11 -Wall -DCPPAD_DEBUG_AND_RELEASE'
+# &&
+# An alternative might be '-Wall'.
+#
+# &head cmake_libdir&&
+# Sub-directory of each prefix where libraries are installed.
+# &codep
+cmake_libdir='lib64'
 # &&
 #
 # &head checkpoint_newton_step&&
@@ -180,8 +187,7 @@ then
 	fi
 fi
 # --------------------------------------------------------------------------
-libdir=`bin/libdir.sh`
-export PKG_CONFIG_PATH="$ipopt_prefix/$libdir/pkgconfig"
+export PKG_CONFIG_PATH="$ipopt_prefix/$cmake_libdir/pkgconfig"
 # --------------------------------------------------------------------------
 if echo "$dismod_at_prefix" | grep '/dismod_at$' > /dev/null
 then
@@ -215,7 +221,7 @@ cmake \
 	\
 	-D python3_executable=$python3_executable \
 	-D extra_cxx_flags="$extra_cxx_flags" \
-	-D cmake_libdir="$libdir" \
+	-D cmake_libdir="$cmake_libdir" \
 	\
 	-D dismod_at_prefix="$dismod_at_prefix" \
 	-D ipopt_prefix="$ipopt_prefix" \

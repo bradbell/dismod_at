@@ -24,7 +24,6 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 tarball='SuiteSparse-4.4.3.tar.gz'
 web_page='http://faculty.cse.tamu.edu/davis/SuiteSparse'
-libdir=`bin/libdir.sh`
 # ---------------------------------------------------------------------------
 # Get user configuration options from run_cmake.sh
 #
@@ -34,6 +33,10 @@ eval $cmd
 #
 # ipopt_prefix
 cmd=`grep '^ipopt_prefix=' bin/run_cmake.sh`
+eval $cmd
+#
+# cmake_libdir
+cmd=`grep '^cmake_libdir=' bin/run_cmake.sh`
 eval $cmd
 #
 # suitesparse_prefix
@@ -100,9 +103,9 @@ echo_eval mv $metis_version metis-4.0
 # -----------------------------------------------------------------------------
 sed -e \
 "s|^\( *INSTALL_INCLUDE *\)=.*|\1= $suitesparse_prefix.$build_type/include|" \
--e "s|^\( *INSTALL_LIB *\)=.*|\1= $suitesparse_prefix.$build_type/$libdir|" \
+-e "s|^\( *INSTALL_LIB *\)=.*|\1= $suitesparse_prefix.$build_type/$cmake_libdir|" \
 -e 's|^\( *BLAS *\)=.*|\1= -lblas|' \
--e "s|^\( *METIS *\)=.*|\1= $ipopt_prefix/$libdir/libcoinmetis.a|" \
+-e "s|^\( *METIS *\)=.*|\1= $ipopt_prefix/$cmake_libdir/libcoinmetis.a|" \
 -e 's|^ *CF *=.*|& -DNTIMER|' \
 -e '/^ *LIB *=/s| -lrt||' \
 -i.bak SuiteSparse_config/SuiteSparse_config.mk

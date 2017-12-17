@@ -24,9 +24,6 @@ echo_eval() {
 web_page='https://github.com/coin-or/CppAD.git'
 hash_key='f470f0c17b36f7352a064aa2ae340ea8db3e1348'
 version='20171023'
-# --------------------------------------------------------------------------
-libdir=`bin/libdir.sh`
-export PKG_CONFIG_PATH="$ipopt_prefix/$libdir/pkgconfig"
 # ---------------------------------------------------------------------------
 # Get user configuration options from run_cmake.sh
 #
@@ -40,6 +37,10 @@ eval $cmd
 #
 # extra_cxx_flags
 cmd=`grep '^extra_cxx_flags=' bin/run_cmake.sh`
+eval $cmd
+#
+# cmake_libdir
+cmd=`grep '^cmake_libdir=' bin/run_cmake.sh`
 eval $cmd
 # --------------------------------------------------------------------------
 if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
@@ -76,7 +77,7 @@ fi
 # -----------------------------------------------------------------------------
 cmake_args="-D CMAKE_VERBOSE_MAKEFILE=0"
 cmake_args="$cmake_args -D cppad_prefix=$cppad_prefix"
-cmake_args="$cmake_args -D cmake_install_libdirs=$libdir"
+cmake_args="$cmake_args -D cmake_install_libdirs=$cmake_libdir"
 cmake_args="$cmake_args -D ipopt_prefix=$ipopt_prefix"
 echo "cmake $cmake_args -D cppad_cxx_flags='$extra_cxx_flags' .."
 cmake $cmake_args -D cppad_cxx_flags="$extra_cxx_flags" ..

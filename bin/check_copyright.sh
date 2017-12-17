@@ -15,7 +15,8 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-list=`git ls-files | sed -e '/^\.gitignore/d' -e '/^readme.md$/d'`
+list=`git ls-files | sed \
+	-e '/^\.gitignore/d' -e '/^readme.md$/d' -e '/^bin\/version.sh/d'`
 for file in $list
 do
 	text='Copyright (C) 2014-.. University of Washington'
@@ -32,8 +33,9 @@ list=`git status | sed -n \
         -e '/^[#\t ]*modified:/p' \
         -e '/^[#\t ]*both modified:/p' \
         -e '/^[#\t ]*renamed:/p' \
-        -e '/^[#\t ]*new file:/p' | \
-            sed -e 's/^.*: *//' -e 's/ -> /\n/' -e '/^readme.md$/d' | \
+        -e '/^[#\t ]*new file:/p' |
+            sed -e 's/^.*: *//' -e 's/ -> /\n/'  \
+				-e '/^readme.md$/d' -e '/^bin\/version.sh$/d' | \
                 sort -u`
 ok='yes'
 for file in $list
