@@ -295,12 +295,8 @@ ADD_CUSTOM_TARGET(
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 # ----------------------------------------------------------------------------
-SET(setup_py
-	"bin/setup.py install --prefix=${dismod_at_prefix}"
-)
-SET(work_dir
-	"WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}"
-)
+SET(setup_py "bin/setup.py install --prefix=${dismod_at_prefix}" )
+SET(work_dir "${CMAKE_SOURCE_DIR}" )
 INSTALL(CODE
-	"EXECUTE_PROCESS( COMMAND ${setup_py} ${work_dir} )"
+	"EXECUTE_PROCESS( COMMAND ${setup_py} WORKING_DIRECTORY ${work_dir} )"
 )
