@@ -107,8 +107,9 @@ fi
 # -----------------------------------------------------------------------------
 for file in $files_with_version_number
 do
-	sed -e "s|$package-[0-9]\\{8\\}[0-9.]*|${package}-$version|" \
-		< $file > $file.copy
+	sed < $file > $file.copy \
+		-e "s|$package-[0-9]\\{8\\}[0-9.]*|${package}-$version|" \
+		-e "s|version *= *'[0-9]\\{8\\}[0-9.]*'|version = '$version'|"
 	if ! diff $file $file.copy > /dev/null
 	then
 		echo '-------------------------------------------------------------'
