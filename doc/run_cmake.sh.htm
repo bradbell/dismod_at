@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>bin/run_cmake.sh: User Configuration Options</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="bin/run_cmake.sh: User Configuration Options">
-<meta name="keywords" id="keywords" content=" bin/run_cmake.sh: user configuration options verbose_makefile build_type python3_executable extra_cxx_flags dismod_at_prefix prefixes debug release choosing c++ compiler checkpoint_newton_step system_specific_library_list ">
+<meta name="keywords" id="keywords" content=" bin/run_cmake.sh: user configuration options verbose_makefile build_type dismod_at_prefix prefixes debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir checkpoint_newton_step system_specific_library_list ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,12 +78,13 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>verbose_makefile</option>
 <option>build_type</option>
-<option>python3_executable</option>
-<option>extra_cxx_flags</option>
 <option>dismod_at_prefix</option>
 <option>Prefixes</option>
 <option>---..Debug and Release</option>
+<option>python3_executable</option>
 <option>Choosing C++ Compiler</option>
+<option>extra_cxx_flags</option>
+<option>cmake_libdir</option>
 <option>checkpoint_newton_step</option>
 <option>system_specific_library_list</option>
 </select>
@@ -122,26 +123,6 @@ Note that if
 depending on the choice 
 <code><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
 .
-
-<br>
-<br>
-<b><big><a name="python3_executable" id="python3_executable">python3_executable</a></big></b>
-<br>
-Path to the python3 executable on this machine:
-<code><font color='blue'><pre style='display:inline'> 
-python3_executable='/usr/bin/python3'
-</pre></font></code>
-An alternative might be <code><font color="blue">'/usr/local/anaconda3-current/bin/python'</font></code>.
-
-<br>
-<br>
-<b><big><a name="extra_cxx_flags" id="extra_cxx_flags">extra_cxx_flags</a></big></b>
-<br>
-Extra C++ flags used during compilation:
-<code><font color='blue'><pre style='display:inline'> 
-extra_cxx_flags='-std=c++11 -Wall -DCPPAD_DEBUG_AND_RELEASE'
-</pre></font></code>
-An alternative might be '-Wall'.
 
 <br>
 <br>
@@ -195,11 +176,38 @@ will need to be installed.
 
 <br>
 <br>
+<b><big><a name="python3_executable" id="python3_executable">python3_executable</a></big></b>
+<br>
+Path to the python3 executable on this machine:
+<code><font color='blue'><pre style='display:inline'> 
+python3_executable='/usr/bin/python3'
+</pre></font></code>
+An alternative might be <code><font color="blue">'/usr/local/anaconda3-current/bin/python'</font></code>.
+
+<br>
+<br>
 <b><big><a name="Choosing C++ Compiler" id="Choosing C++ Compiler">Choosing C++ Compiler</a></big></b>
 <br>
 Which c++ compiler should cmake use (empty means cmake will choose it).
 <code><font color='blue'><pre style='display:inline'> 
 cmake_cxx_compiler=''
+</pre></font></code>
+<br>
+<b><big><a name="extra_cxx_flags" id="extra_cxx_flags">extra_cxx_flags</a></big></b>
+<br>
+Extra C++ flags used during compilation:
+<code><font color='blue'><pre style='display:inline'> 
+extra_cxx_flags='-std=c++11 -Wall -DCPPAD_DEBUG_AND_RELEASE'
+</pre></font></code>
+An alternative might be '-Wall'.
+
+<br>
+<br>
+<b><big><a name="cmake_libdir" id="cmake_libdir">cmake_libdir</a></big></b>
+<br>
+Sub-directory of each prefix where libraries are installed.
+<code><font color='blue'><pre style='display:inline'> 
+cmake_libdir='lib64'
 </pre></font></code>
 <br>
 <b><big><a name="checkpoint_newton_step" id="checkpoint_newton_step">checkpoint_newton_step</a></big></b>

@@ -37,7 +37,6 @@ var list_current0 = [
 'install_unix.htm#Download',
 'install_unix.htm#Special Requirements',
 'install_unix.htm#Special Requirements.run_cmake.sh',
-'install_unix.htm#Special Requirements.libdir.sh',
 'install_unix.htm#Special Requirements.eigen',
 'install_unix.htm#Special Requirements.ipopt',
 'install_unix.htm#Special Requirements.suitesparse',

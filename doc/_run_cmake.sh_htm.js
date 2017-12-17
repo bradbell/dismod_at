@@ -28,12 +28,13 @@ var list_down1 = [
 var list_current0 = [
 'run_cmake.sh.htm#verbose_makefile',
 'run_cmake.sh.htm#build_type',
-'run_cmake.sh.htm#python3_executable',
-'run_cmake.sh.htm#extra_cxx_flags',
 'run_cmake.sh.htm#dismod_at_prefix',
 'run_cmake.sh.htm#Prefixes',
 'run_cmake.sh.htm#Prefixes.Debug and Release',
+'run_cmake.sh.htm#python3_executable',
 'run_cmake.sh.htm#Choosing C++ Compiler',
+'run_cmake.sh.htm#extra_cxx_flags',
+'run_cmake.sh.htm#cmake_libdir',
 'run_cmake.sh.htm#checkpoint_newton_step',
 'run_cmake.sh.htm#system_specific_library_list'
 ];

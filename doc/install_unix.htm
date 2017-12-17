@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Installing dismod_at in Unix</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Installing dismod_at in Unix">
-<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl download special run_cmake.sh libdir.sh eigen ipopt suitesparse cppad cppad_mixed setup command test install executable path python example ">
+<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl download special run_cmake.sh eigen ipopt suitesparse cppad cppad_mixed setup command test install executable path python example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -86,7 +86,6 @@ A:active { color : purple }
 <option>Download</option>
 <option>Special Requirements</option>
 <option>---..run_cmake.sh</option>
-<option>---..libdir.sh</option>
 <option>---..eigen</option>
 <option>---..ipopt</option>
 <option>---..suitesparse</option>
@@ -229,7 +228,6 @@ and check its version number, using the commands:
 <br>
 The packages listed below are required by dismod_at
 and may not have standard system installs
-(<code><font color="blue">libdir.sh</font></code> is a file not a package).
 
 <br>
 <br>
@@ -244,36 +242,6 @@ running these scripts.
 
 <br>
 <br>
-<b><a name="Special Requirements.libdir.sh" id="Special Requirements.libdir.sh">libdir.sh</a></b>
-<br>
-The script <code><font color="blue">dismod_at.git/bin/libdir.sh</font></code> determines what directory,
-below the prefix directories, is use for libraries by the install
-programs discussed below. The following is the default value
-for this script
-<pre><tt>    <i><font color="#9A1900"># $Id:$</font></i>
-    <i><font color="#9A1900">#  --------------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900"># dismod_at: Estimating Disease Rates as Functions of Age and Time</font></i>
-    <i><font color="#9A1900">#           Copyright (C) 2014-16 University of Washington</font></i>
-    <i><font color="#9A1900">#              (Bradley M. Bell bradbell@uw.edu)</font></i>
-    <i><font color="#9A1900">#</font></i>
-    <i><font color="#9A1900"># This program is distributed under the terms of the</font></i>
-    <i><font color="#9A1900">#          GNU Affero General Public License version 3.0 or later</font></i>
-    <i><font color="#9A1900"># see http://www.gnu.org/licenses/agpl.txt</font></i>
-    <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900"># /bin/bash -e</font></i>
-    <i><font color="#9A1900"># determine if we should use lib or lib64</font></i>
-    <b><font color="#0000FF">if</font></b> <font color="#990000">[</font> <font color="#FF0000">"$0"</font> <font color="#990000">!=</font> <font color="#FF0000">"bin/libdir.sh"</font> <font color="#990000">]</font>
-    <b><font color="#0000FF">then</font></b>
-     echo <font color="#FF0000">"bin/libdir.sh: must be executed from its parent directory"</font>
-     <b><font color="#0000FF">exit</font></b> <font color="#993399">1</font>
-    <b><font color="#0000FF">fi</font></b>
-    <b><font color="#0000FF">if</font></b> <font color="#990000">[</font> -e /usr/lib<font color="#993399">64</font> <font color="#990000">]</font>
-    <b><font color="#0000FF">then</font></b>
-        echo <font color="#FF0000">'lib64'</font>
-    <b><font color="#0000FF">else</font></b>
-        echo <font color="#FF0000">'lib'</font>
-    <b><font color="#0000FF">fi</font></b>
-    </tt></pre>
 <b><a name="Special Requirements.eigen" id="Special Requirements.eigen">eigen</a></b>
 <br>
 The <a href="http://eigen.tuxfamily.org" target="_top"><span style='white-space: nowrap'>eigen</span></a>
