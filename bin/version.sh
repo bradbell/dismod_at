@@ -110,6 +110,10 @@ do
 	sed < $file > $file.copy \
 		-e "s|$package-[0-9]\\{8\\}[0-9.]*|${package}-$version|" \
 		-e "s|version *= *'[0-9]\\{8\\}[0-9.]*'|version = '$version'|"
+	if [ -x "$file" ]
+	then
+		chmod +x $file.copy
+	fi
 	if ! diff $file $file.copy > /dev/null
 	then
 		echo '-------------------------------------------------------------'

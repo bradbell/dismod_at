@@ -43,6 +43,7 @@ $spell
 	rev
 	github
 	libdir
+	py
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -54,11 +55,16 @@ $childtable%
 %$$
 
 $head 12-20$$
+$list number$$
 Advance to using $code cppad_mixed-20171218$$.
 This uses a different method to compute the sparsity of the Hessian
 with respect to the random effects.
 It is expected to be faster on large problems, but more testing is required
 to verify this.
+$lnext
+Sometimes, new versions of the python files were not installed because the
+$code bin/setup.py$$ file was not executable. This has been fixed.
+$lend
 
 $head 12-16$$
 $list number$$
