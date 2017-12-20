@@ -53,6 +53,13 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 12-20$$
+Advance to using $code cppad_mixed-20171218$$.
+This uses a different method to compute the sparsity of the Hessian
+with respect to the random effects.
+It is expected to be faster on large problems, but more testing is required
+to verify this.
+
 $head 12-16$$
 $list number$$
 There was a mistake in the linking of the

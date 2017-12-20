@@ -59,7 +59,8 @@ import distutils.dir_util
 import subprocess
 test_program = 'example/user/speed.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 5 :
-	usage  = 'python3 ' + test_program + ' random_seed n_children\n'
+	usage  = 'python3 ' + test_program
+	usage += ' random_seed n_children n_data_per_child quasi_fixed\n'
 	usage += 'where working directory is dismod_at distribution directory\n'
 	usage += 'python3:          the python 3 program on your system\n'
 	usage += 'random_seed:      non-negative random seed; if zero, use clock\n'

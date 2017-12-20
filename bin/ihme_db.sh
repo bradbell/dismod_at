@@ -1,4 +1,4 @@
-#! /bin/bash -eu
+#! /bin/bash -e
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
@@ -8,19 +8,49 @@
 # This program is distributed under the terms of the
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
-# ---------------------------------------------------------------------------
-if [ "$0" != 'bin/ihme_db.sh' ] || [ "$#" != '2' ]
+# -----------------------------------------------------------------------------
+# bash function that echos and executes a command
+echo_eval() {
+	echo $*
+	eval $*
+}
+# -----------------------------------------------------------------------------
+if [ "$0" != 'bin/ihme_db.sh' ]
 then
-	echo 'usage: bin/ihme_db.sh direction database_path'
-	echo 'direction:     is get or put'
-	echo 'database_path: is an ihme directory following by database name'
-	echo 'alex directory: /snfs1/Project/dismod_at/test_databases'
-	echo 'greg directory: /snfs2/HOME/gma1/tmp'
+	echo 'bin/ihme_db.sh: must be executed from its parent directory'
 	exit 1
 fi
-direction="$1"
-database_path="$2"
-database=`echo $database_path | sed -e 's|.*/||'`
+ok='yes'
+person="$1"
+database="$2"
+direction="$3"
+if [ "$4" != '' ]
+then
+	ok='no'
+fi
+if [ "$person" == 'greg' ]
+then
+	database_path="/snfs2/HOME/gma1/tmp/$database"
+elif [ "$person" == 'alex' ]
+then
+	database_path="/snfs1/Project/dismod_at/test_databases/$database"
+else
+	ok='no'
+fi
+if [ "$direction" != 'get' ] && [ "$direction" != 'put' ]
+then
+	ok='no'
+fi
+if [ "$ok" == 'no' ]
+then
+cat << EOF
+usage: bin/ihme_db.sh person database direction'
+       person:    is alex or greg
+       database:  file name of the database in directory used by person.
+       direction: is get or put
+EOF
+	exit 1
+fi
 # ---------------------------------------------------------------------------
 if [ "$direction" != 'get' ] && [ "$direction" != 'put' ]
 then
