@@ -166,7 +166,8 @@ mulcov_sex_rho_true       <font color="#990000">=</font> <font color="#990000">-
 <b><font color="#000080">import</font></b> subprocess
 test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/speed.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">5</font> <font color="#990000">:</font>
-     usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">' random_seed n_children\n'</font>
+     usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program
+     usage <font color="#990000">+=</font> <font color="#FF0000">' random_seed n_children n_data_per_child quasi_fixed\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'where working directory is dismod_at distribution directory\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'python3:          the python 3 program on your system\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'random_seed:      non-negative random seed; if zero, use clock\n'</font>
