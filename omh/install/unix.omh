@@ -37,6 +37,10 @@ $$
 
 $section Installing dismod_at in Unix$$
 
+$children%bin/run_cmake.sh
+	%bin/example_install.sh
+%$$
+
 $head System Requirements$$
 The following programs are required by dismod_at
 and should have standard system installs:
@@ -176,7 +180,6 @@ The steps below will need to be executed each time you install
 a new version of $code dismod_at$$:
 
 $subhead Setup$$
-$children%bin/run_cmake.sh%$$
 The file $cref%bin/run_cmake.sh%run_cmake.sh%$$ has setting that
 you should change so they correspond to your machine.
 
@@ -267,8 +270,10 @@ $codei%
 to set your python path.
 
 $head Example$$
+The file $cref example_install.sh$$ contains an example
+install of $code dismod_at$$.
 The section $cref get_started$$ contains a list of examples and tests
-of $code dismod_at$$. These tests are run as part of the $code make check$$
-command above.
+of using $code dismod_at$$.
+These tests are run as part of the $code make check$$ command above.
 
 $end

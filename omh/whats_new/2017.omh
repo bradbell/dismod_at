@@ -54,6 +54,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 12-22$$
+Some users did not realize that $code bin/install_all.sh$$ was just
+an example install to help system administrators.
+This script has been included in the documentation and moved to
+$cref%bin/example_install.sh%example_install.sh%$$ to make this clear.
+
 $head 12-21$$
 Advance to using $code cppad-20171215$$
 which is required by $code cppad_mixed-20171218$$.
