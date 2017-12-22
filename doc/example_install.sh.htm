@@ -1,0 +1,171 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>An Example Installation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="An Example Installation">
+<meta name="keywords" id="keywords" content=" example installation syntax ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_example_install.sh_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="run_cmake.sh.htm" target="_top">Prev</a>
+</td><td><a href="get_started.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>install_unix</option>
+<option>example_install.sh</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>install_unix-&gt;</option>
+<option>run_cmake.sh</option>
+<option>example_install.sh</option>
+</select>
+</td>
+<td>example_install.sh</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>An Example Installation</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<code><font color="blue"><br>
+bin/example_install.sh</font></code>
+
+<pre><tt><i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># set build_type to value in run_cmake.sh</font></i>
+<font color="#009900">cmd</font><font color="#990000">=</font>`grep <font color="#FF0000">'^build_type='</font> bin/run_cmake<font color="#990000">.</font>sh`
+<b><font color="#0000FF">eval</font></b> <font color="#009900">$cmd</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># set ipopt_prefix to value in run_cmake.sh</font></i>
+<font color="#009900">cmd</font><font color="#990000">=</font>`grep <font color="#FF0000">'^ipopt_prefix='</font> bin/run_cmake<font color="#990000">.</font>sh`
+<b><font color="#0000FF">eval</font></b> <font color="#009900">$cmd</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># bash function that echos and executes a command</font></i>
+<b><font color="#000000">echo_eval()</font></b> {
+     echo <font color="#009900">$*</font>
+     <b><font color="#0000FF">eval</font></b> <font color="#009900">$*</font>
+}
+<i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># remove old version of example_install.log and example_install.err</font></i>
+<b><font color="#0000FF">for</font></b> ext <b><font color="#0000FF">in</font></b> log err
+<b><font color="#0000FF">do</font></b>
+     <b><font color="#0000FF">if</font></b> <font color="#990000">[</font> -e <font color="#FF0000">"example_install.$ext"</font> <font color="#990000">]</font>
+     <b><font color="#0000FF">then</font></b>
+          echo_eval rm <font color="#FF0000">"example_install.$ext"</font>
+     <b><font color="#0000FF">fi</font></b>
+<b><font color="#0000FF">done</font></b>
+<i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># set build link to build.debug or build.release depending on build_type</font></i>
+<b><font color="#0000FF">if</font></b> echo <font color="#FF0000">"$ipopt_prefix"</font> <font color="#990000">|</font> grep <font color="#FF0000">'/dismod_at$'</font> <font color="#990000">&gt;</font> /dev/null
+<b><font color="#0000FF">then</font></b>
+     bin/build_type<font color="#990000">.</font>sh example_install<font color="#990000">.</font>sh <font color="#009900">$ipopt_prefix</font> <font color="#009900">$build_type</font>
+<b><font color="#0000FF">fi</font></b>
+<i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># install the special requirements</font></i>
+<font color="#009900">list</font><font color="#990000">=</font><font color="#FF0000">"</font>
+<font color="#FF0000">     eigen</font>
+<font color="#FF0000">     ipopt</font>
+<font color="#FF0000">     suitesparse</font>
+<font color="#FF0000">     cppad</font>
+<font color="#FF0000">     cppad_mixed</font>
+<font color="#FF0000">"</font>
+<b><font color="#0000FF">for</font></b> package <b><font color="#0000FF">in</font></b> <font color="#009900">$list</font>
+<b><font color="#0000FF">do</font></b>
+     <font color="#009900">program</font><font color="#990000">=</font><font color="#FF0000">"bin/install_$package.sh"</font>
+     echo <font color="#FF0000">"install_$package.sh 1&gt;&gt; example_install.log 2&gt;&gt; example_install.err"</font>
+     <font color="#009900">$program</font> <font color="#993399">1</font><font color="#990000">&gt;&gt;</font> example_install<font color="#990000">.</font>log <font color="#993399">2</font><font color="#990000">&gt;&gt;</font> example_install<font color="#990000">.</font>err
+<b><font color="#0000FF">done</font></b>
+<i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># dismod_at</font></i>
+<i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Check we can find ipopt.pc, echo PKG_CONFIG_PATH to help user set this value</font></i>
+<font color="#009900">dir</font><font color="#990000">=</font>`find -L <font color="#009900">$ipopt_prefix</font> -name <font color="#FF0000">'ipopt.pc'</font> <font color="#990000">|</font> sed -e <font color="#FF0000">'s|/ipopt.pc||'</font>`
+<b><font color="#0000FF">if</font></b> <font color="#990000">[</font> <font color="#FF0000">"$dir"</font> <font color="#990000">==</font> <font color="#FF0000">''</font> <font color="#990000">]</font>
+<b><font color="#0000FF">then</font></b>
+     echo <font color="#FF0000">"Cannot find ipopt.pc in $ipopt_prefix directory"</font>
+     <b><font color="#0000FF">exit</font></b> <font color="#993399">1</font>
+<b><font color="#0000FF">else</font></b>
+     echo_eval <b><font color="#0000FF">export</font></b> <font color="#009900">PKG_CONFIG_PATH</font><font color="#990000">=</font><font color="#FF0000">"$dir"</font>
+<b><font color="#0000FF">fi</font></b>
+echo_eval <b><font color="#0000FF">export</font></b> <font color="#009900">PYTHONPATH</font><font color="#990000">=</font><font color="#FF0000">''</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># bin/run_cmake.sh</font></i>
+echo <font color="#FF0000">"bin/run_cmake.sh 1&gt;&gt; example_install.log 2&gt;&gt; example_install.err"</font>
+bin/run_cmake<font color="#990000">.</font>sh <font color="#993399">1</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>log <font color="#993399">2</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>err
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># change into build directory</font></i>
+echo_eval cd build
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># make check, speed, and install</font></i>
+<b><font color="#0000FF">for</font></b> cmd <b><font color="#0000FF">in</font></b> check speed install
+<b><font color="#0000FF">do</font></b>
+     echo <font color="#FF0000">"make $cmd 1&gt;&gt; example_install.log 2&gt;&gt; example_install.err"</font>
+     make <font color="#009900">$cmd</font> <font color="#993399">1</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>log <font color="#993399">2</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>err
+<b><font color="#0000FF">done</font></b>
+cd <font color="#990000">..</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+echo <font color="#FF0000">'bin/example_instal.sh: OK'</font></tt></pre>
+
+<hr>Input File: bin/example_install.sh
+
+</body>
+</html>

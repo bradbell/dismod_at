@@ -23,7 +23,8 @@ var list_down2 = [
 'wish_list.htm'
 ];
 var list_down1 = [
-'run_cmake.sh.htm'
+'run_cmake.sh.htm',
+'example_install.sh.htm'
 ];
 var list_current0 = [
 'run_cmake.sh.htm#verbose_makefile',
