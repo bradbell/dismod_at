@@ -22,15 +22,14 @@ var list_down1 = [
 'wish_list.htm'
 ];
 var list_current0 = [
-'wish_list.htm#parent_node',
-'wish_list.htm#Simulated Data',
-'wish_list.htm#Lagrange Multipliers',
 'wish_list.htm#ODE Solution',
+'wish_list.htm#ODE Solution.Reduce Number of ODEs',
 'wish_list.htm#ODE Solution.Step Size',
 'wish_list.htm#ODE Solution.Large Excess Mortality',
 'wish_list.htm#ODE Solution.Conditionals',
 'wish_list.htm#ODE Solution.Checkpointing',
-'wish_list.htm#ODE Solution.Reduce Number of ODE Solutions',
+'wish_list.htm#Simulated Data',
+'wish_list.htm#Lagrange Multipliers',
 'wish_list.htm#Documentation',
 'wish_list.htm#Documentation.Real World Example',
 'wish_list.htm#Documentation.User Examples',
