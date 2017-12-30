@@ -9,6 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/depend.hpp>
+# include <dismod_at/ad_types.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
@@ -47,7 +48,7 @@ CppAD::vector<bool> data_depend(
 	const CppAD::vector<double>& pack_vec     ,
 	const data_model&            data_object  )
 // END DATA_DEPEND PROTOTYPE
-{	typedef CppAD::AD<double>        a1_double;
+{
 	typedef CppAD::vector<a1_double> a1d_vector;
 	//
 	// declare a1_pack_vec to be independent variable vector
@@ -155,7 +156,7 @@ CppAD::vector<bool> prior_depend(
 	const CppAD::vector<double>&   pack_vec     ,
 	const prior_model&            prior_object  )
 // END PRIOR_DEPEND PROTOTYPE
-{	typedef CppAD::AD<double>        a1_double;
+{
 	typedef CppAD::vector<a1_double> a1d_vector;
 	//
 	// declare a1_pack_vec to be independent variable vector

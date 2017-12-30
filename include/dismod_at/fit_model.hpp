@@ -28,7 +28,6 @@ namespace dismod_at {
 	class fit_model : public cppad_mixed {
 	public:
 		// type declarations
-		typedef CppAD::AD<double>          a1_double;
 		typedef CppAD::vector<a1_double>   a1d_vector;
 		typedef CppAD::vector<a2_double>   a2d_vector;
 		//
