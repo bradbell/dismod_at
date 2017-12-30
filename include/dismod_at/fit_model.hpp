@@ -28,8 +28,8 @@ namespace dismod_at {
 	class fit_model : public cppad_mixed {
 	public:
 		// type declarations
-		typedef CppAD::vector<a1_double>   a1d_vector;
-		typedef CppAD::vector<a2_double>   a2d_vector;
+		typedef CppAD::vector<a1_double>   a1_vector;
+		typedef CppAD::vector<a2_double>   a2_vector;
 		//
 	// =======================================================================
 	private:
@@ -151,17 +151,17 @@ namespace dismod_at {
 		}
 		// -------------------------------------------------------------------
 		// virtual functions used by cppad_mixed base class
-		virtual a2d_vector ran_likelihood(
-			const a2d_vector& fixed_vec   ,
-			const a2d_vector& random_vec
+		virtual a2_vector ran_likelihood(
+			const a2_vector& fixed_vec   ,
+			const a2_vector& random_vec
 		);
 		// pass fixed negative log-likelihood to base class
-		virtual a1d_vector fix_likelihood(
-			const a1d_vector& fixed_vec
+		virtual a1_vector fix_likelihood(
+			const a1_vector& fixed_vec
 		);
 		// pass constraint functions to base class
-		virtual a1d_vector fix_constraint(
-			const a1d_vector& fixed_vec
+		virtual a1_vector fix_constraint(
+			const a1_vector& fixed_vec
 		);
 		// display error message and terminate program
 		virtual void fatal_error(const std::string& error_message);

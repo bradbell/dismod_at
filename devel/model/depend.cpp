@@ -49,11 +49,11 @@ CppAD::vector<bool> data_depend(
 	const data_model&            data_object  )
 // END DATA_DEPEND PROTOTYPE
 {
-	typedef CppAD::vector<a1_double> a1d_vector;
+	typedef CppAD::vector<a1_double> a1_vector;
 	//
 	// declare a1_pack_vec to be independent variable vector
 	size_t n_var = pack_vec.size();
-	a1d_vector a1_pack_vec(n_var);
+	a1_vector a1_pack_vec(n_var);
 	for(size_t i = 0; i < n_var; i++)
 		a1_pack_vec[i] = pack_vec[i];
 	CppAD::Independent( a1_pack_vec );
@@ -78,7 +78,7 @@ CppAD::vector<bool> data_depend(
 	}
 	//
 	// declare dependent variable
-	a1d_vector a1_like_sum(1);
+	a1_vector a1_like_sum(1);
 	a1_like_sum[0] = a1_sum;
 	CppAD::ADFun<double> f;
 	f.Dependent(a1_pack_vec, a1_like_sum);
@@ -157,11 +157,11 @@ CppAD::vector<bool> prior_depend(
 	const prior_model&            prior_object  )
 // END PRIOR_DEPEND PROTOTYPE
 {
-	typedef CppAD::vector<a1_double> a1d_vector;
+	typedef CppAD::vector<a1_double> a1_vector;
 	//
 	// declare a1_pack_vec to be independent variable vector
 	size_t n_var = pack_vec.size();
-	a1d_vector a1_pack_vec(n_var);
+	a1_vector a1_pack_vec(n_var);
 	for(size_t i = 0; i < n_var; i++)
 		a1_pack_vec[i] = pack_vec[i];
 	CppAD::Independent( a1_pack_vec );
@@ -188,7 +188,7 @@ CppAD::vector<bool> prior_depend(
 	}
 	//
 	// declare dependent variable
-	a1d_vector a1_like_sum(1);
+	a1_vector a1_like_sum(1);
 	a1_like_sum[0] = a1_sum;
 	CppAD::ADFun<double> f;
 	f.Dependent(a1_pack_vec, a1_like_sum);

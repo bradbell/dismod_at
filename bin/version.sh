@@ -4,6 +4,7 @@
 # It has the same license as the other files in this package.
 # The following settings are different for each package:
 package='dismod_at'
+
 files_with_version_number='doc.omh bin/setup.py.in '
 # -----------------------------------------------------------------------------
 echo_eval() {

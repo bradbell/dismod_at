@@ -22,8 +22,8 @@ rename_cmd='s|random_zero_sum.py|zero_sum_random.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|a2_double.hpp|ad_types.hpp|
-s|\$code double\$\$,.*\$cref a2_double|\$code double\$\$ or one of the \$cref ad_types|
+s|a1d_vector|a1_vector|g
+s|a2d_vector|a2_vector|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
@@ -51,7 +51,7 @@ do
 	echo_eval git mv $old $new
 done
 # ----------------------------------------------------------------------------
-list_all=`bin/ls_files.sh`
+list_all=`git ls-files`
 for file in $list_all
 do
 	if [ "$file" != 'bin/batch_edit.sh' ]

@@ -970,25 +970,25 @@ $end
 // private virtual functions
 // ===========================================================================
 // ran_likelihood
-fit_model::a2d_vector fit_model::ran_likelihood(
-	const a2d_vector& fixed_vec                ,
-	const a2d_vector& cppad_mixed_random_vec   )
+fit_model::a2_vector fit_model::ran_likelihood(
+	const a2_vector& fixed_vec                ,
+	const a2_vector& cppad_mixed_random_vec   )
 {	//
 	// check for case where all random effects are constrained
 	assert( n_random_ >= n_random_equal_ );
 	if( n_random_ == n_random_equal_ )
-		return a2d_vector(0);
+		return a2_vector(0);
 	//
 	// convert from cppad_mixed random effects to dismod_at random effects
-	a2d_vector random_vec = random_cppad_mixed2dismod_at(
+	a2_vector random_vec = random_cppad_mixed2dismod_at(
 		cppad_mixed_random_vec
 	);
 	//
 	// packed vector
-	a2d_vector pack_vec( pack_object_.size() );
+	a2_vector pack_vec( pack_object_.size() );
 	//
 	// put the fixed and random effects into pack_vec
-	a2d_vector fixed_tmp(n_fixed_);
+	a2_vector fixed_tmp(n_fixed_);
 	unscale_fixed_effect(fixed_vec, fixed_tmp);
 	pack_fixed(pack_object_, pack_vec, fixed_tmp);
 	pack_random(pack_object_, pack_vec, random_vec);
@@ -1006,7 +1006,7 @@ fit_model::a2d_vector fit_model::ran_likelihood(
 	//
 	// check for the case where we return the empty vector
 	if( n_data_ran == 0 && n_prior_ran == 0 )
-		return a2d_vector(0);
+		return a2_vector(0);
 	//
 	// count the number of absolute value terms
 	size_t n_abs = 0;
@@ -1021,7 +1021,7 @@ fit_model::a2d_vector fit_model::ran_likelihood(
 			n_abs++;
 	}
 	// size ran_den
-	a2d_vector ran_den(1 + n_abs);
+	a2_vector ran_den(1 + n_abs);
 	//
 	// initialize summation of smooth part
 	ran_den[0] = a2_double(0.0);
@@ -1051,11 +1051,11 @@ fit_model::a2d_vector fit_model::ran_likelihood(
 }
 // ---------------------------------------------------------------------------
 // fix_likelihood
-fit_model::a1d_vector fit_model::fix_likelihood(
-	const a1d_vector& fixed_vec   )
+fit_model::a1_vector fit_model::fix_likelihood(
+	const a1_vector& fixed_vec   )
 {	// local vectors
-	a1d_vector random_vec( pack_object_.random_size() );
-	a1d_vector a1_pack_vec( pack_object_.size() );
+	a1_vector random_vec( pack_object_.random_size() );
+	a1_vector a1_pack_vec( pack_object_.size() );
 	//
 	// set random_vec
 	for(size_t i = 0; i < random_vec.size(); i++)
@@ -1065,7 +1065,7 @@ fit_model::a1d_vector fit_model::fix_likelihood(
 	}
 	//
 	// put the fixed and random effects into pack_vec
-	a1d_vector fixed_tmp(n_fixed_);
+	a1_vector fixed_tmp(n_fixed_);
 	unscale_fixed_effect(fixed_vec, fixed_tmp);
 	pack_fixed(pack_object_, a1_pack_vec, fixed_tmp);
 	pack_random(pack_object_, a1_pack_vec, random_vec);
@@ -1111,7 +1111,7 @@ fit_model::a1d_vector fit_model::fix_likelihood(
 			n_abs++;
 	}
 	// size fix_den
-	a1d_vector fix_den(1 + n_abs);
+	a1_vector fix_den(1 + n_abs);
 	//
 	// initialize summation of smooth part
 	fix_den[0] = a1_double(0.0);
@@ -1142,8 +1142,8 @@ fit_model::a1d_vector fit_model::fix_likelihood(
 }
 // --------------------------------------------------------------------------
 // fix_constraint
-fit_model::a1d_vector fit_model::fix_constraint(const a1d_vector& fixed_vec)
-{	a1d_vector ret_val( diff_prior_.size() );
+fit_model::a1_vector fit_model::fix_constraint(const a1_vector& fixed_vec)
+{	a1_vector ret_val( diff_prior_.size() );
 	for(size_t k = 0; k < diff_prior_.size(); k++)
 	{	size_t plus_var_id    = diff_prior_[k].plus_var_id;
 		size_t minus_var_id   = diff_prior_[k].minus_var_id;
