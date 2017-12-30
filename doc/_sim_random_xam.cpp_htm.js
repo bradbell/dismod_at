@@ -19,7 +19,7 @@ var list_down4 = [
 'devel_model.htm'
 ];
 var list_down3 = [
-'a2_double.htm',
+'ad_types.htm',
 'avgint_subset.htm',
 'bilinear_interp.htm',
 'child_info.htm',

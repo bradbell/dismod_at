@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2017</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2017">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2017 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2017 12-30 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -76,6 +76,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Contents</option>
+<option>12-30</option>
 <option>12-22</option>
 <option>12-21</option>
 <option>12-20</option>
@@ -165,6 +166,17 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="12-30" id="12-30">12-30</a></big></b>
+<br>
+Advance to using <code><font color="blue">cppad_mixed-20171230</font></code>.
+This uses the CppAD subgraph method to compute the Hessian
+with respect to the random effects.
+It is expected to be faster on large problems, but more testing is required
+to verify this.
+
+
+<br>
+<br>
 <b><big><a name="12-22" id="12-22">12-22</a></big></b>
 <br>
 Some users did not realize that <code><font color="blue">bin/install_all.sh</font></code> was just
@@ -186,7 +198,7 @@ which is required by <code><font color="blue">cppad_mixed-20171218</font></code>
 
 <ol type="1"><li>
 Advance to using <code><font color="blue">cppad_mixed-20171218</font></code>.
-This uses a different method to compute the sparsity of the Hessian
+This uses the CppAD subgraph method to compute the sparsity of the Hessian
 with respect to the random effects.
 It is expected to be faster on large problems, but more testing is required
 to verify this.

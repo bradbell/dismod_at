@@ -29,7 +29,7 @@ var list_down2 = [
 'devel_model.htm'
 ];
 var list_down1 = [
-'a2_double.htm',
+'ad_types.htm',
 'avgint_subset.htm',
 'bilinear_interp.htm',
 'child_info.htm',

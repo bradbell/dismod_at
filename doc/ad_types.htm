@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_a2_double_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_ad_types_htm.js'>
 </script>
 </head>
 <body>
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>dismod_at</option>
 <option>devel</option>
 <option>devel_utility</option>
-<option>a2_double</option>
+<option>ad_types</option>
 </select>
 </td>
 <td>
@@ -78,7 +78,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_down1(this)'>
 <option>devel_utility-&gt;</option>
-<option>a2_double</option>
+<option>ad_types</option>
 <option>avgint_subset</option>
 <option>bilinear_interp</option>
 <option>child_info</option>
@@ -101,7 +101,7 @@ A:active { color : purple }
 <option>split_space</option>
 </select>
 </td>
-<td>a2_double</td>
+<td>ad_types</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
@@ -119,27 +119,27 @@ A:active { color : purple }
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;dismod_at/a2_double.hpp&gt;</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;dismod_at/ad_types.hpp&gt;</span></font></code>
 
 
 <br>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-Defines the type <code><font color="blue">a2_double</font></code> as two levels of <code><font color="blue">AD</font></code> in
-the CppAD package.
+Defines, in the <code><font color="blue">dismod_at</font></code> namespace,
+the CppAD types corresponding to one, two and three levels of AD.
 
 <br>
 <br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
-<pre style='display:inline'><tt>
-<b><font color="#0000FF">namespace</font></b> dismod_at <font color="#FF0000">{</font>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt; CppAD::AD&lt;double&gt; &gt;</font> a2_double<font color="#990000">;</font>
-<font color="#FF0000">}</font>
-</tt></pre>
+<pre><tt><b><font color="#0000FF">namespace</font></b> dismod_at <font color="#FF0000">{</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>    a1_double<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;a1_double&gt;</font> a2_double<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;a2_double&gt;</font> a3_double<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
 
-<hr>Input File: include/dismod_at/a2_double.hpp
+<hr>Input File: include/dismod_at/ad_types.hpp
 
 </body>
 </html>

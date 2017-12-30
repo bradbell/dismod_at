@@ -9,7 +9,7 @@ var list_up0 = [
 'dismod_at.htm',
 'devel.htm',
 'devel_utility.htm',
-'a2_double.htm'
+'ad_types.htm'
 ];
 var list_down3 = [
 'install_unix.htm',
@@ -29,7 +29,7 @@ var list_down2 = [
 'devel_model.htm'
 ];
 var list_down1 = [
-'a2_double.htm',
+'ad_types.htm',
 'avgint_subset.htm',
 'bilinear_interp.htm',
 'child_info.htm',
@@ -52,9 +52,9 @@ var list_down1 = [
 'split_space.htm'
 ];
 var list_current0 = [
-'a2_double.htm#Syntax',
-'a2_double.htm#Purpose',
-'a2_double.htm#Source Code'
+'ad_types.htm#Syntax',
+'ad_types.htm#Purpose',
+'ad_types.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
