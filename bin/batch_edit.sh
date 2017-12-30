@@ -22,8 +22,8 @@ rename_cmd='s|random_zero_sum.py|zero_sum_random.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|variable_value |fit_var_value  |g
-s|variable_value|fit_var_value|g
+s|a2_double.hpp|ad_types.hpp|
+s|\$code double\$\$,.*\$cref a2_double|\$code double\$\$ or one of the \$cref ad_types|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

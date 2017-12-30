@@ -195,7 +195,7 @@ $end
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/solve_ode.hpp>
 # include <dismod_at/residual_density.hpp>
-# include <dismod_at/a2_double.hpp>
+# include <dismod_at/ad_types.hpp>
 # include <dismod_at/avgint_subset.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/error_exit.hpp>
@@ -762,7 +762,7 @@ see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, or $cref a2_double$$.
+$code double$$ or one of the $cref ad_types$$.
 
 $head subset_id$$
 This argument has prototype
@@ -1050,7 +1050,7 @@ see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, or $cref a2_double$$.
+$code double$$ or one of the $cref ad_types$$.
 
 $head subset_id$$
 This argument has prototype
@@ -1476,7 +1476,7 @@ see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, or $cref a2_double$$.
+$code double$$ or one of the $cref ad_types$$.
 
 $head subset_id$$
 This argument has prototype
@@ -1666,7 +1666,7 @@ see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, or $cref a2_double$$.
+$code double$$ or one of the $cref ad_types$$.
 
 $head hold_out$$
 This argument has prototype

@@ -40,7 +40,7 @@ for which this function is recorded.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, or $cref a2_double$$.
+$code double$$ or one of the $cref ad_types$$.
 
 
 $head b$$
@@ -268,7 +268,7 @@ $end
 */
 # include <cppad/cppad.hpp>
 # include <dismod_at/eigen_ode2.hpp>
-# include <dismod_at/a2_double.hpp>
+# include <dismod_at/ad_types.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

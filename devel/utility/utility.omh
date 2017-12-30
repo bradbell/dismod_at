@@ -16,7 +16,7 @@ $$
 
 $section Dismod_at Developer Utility Documentation$$
 
-$childtable%include/dismod_at/a2_double.hpp
+$childtable%include/dismod_at/ad_types.hpp
 	%devel/utility/avgint_subset.cpp
 	%devel/utility/bilinear_interp.cpp
 	%devel/utility/child_info.cpp

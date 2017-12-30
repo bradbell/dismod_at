@@ -46,7 +46,7 @@ and $icode t_min$$ for the minimum time in $cref time_table$$.
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
-$code double$$, $code AD<double>$$, or $cref a2_double$$.
+$code double$$ or one of the $cref ad_types$$.
 
 $head i_max$$
 This argument has prototype
@@ -137,7 +137,7 @@ $end
 
 # include <dismod_at/solve_ode.hpp>
 # include <dismod_at/eigen_ode2.hpp>
-# include <dismod_at/a2_double.hpp>
+# include <dismod_at/ad_types.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
