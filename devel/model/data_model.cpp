@@ -1831,9 +1831,10 @@ DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)
 	) const;                                                \
 
 // instantiations
-DISMOD_AT_INSTANTIATE_DATA_MODEL(double)
-DISMOD_AT_INSTANTIATE_DATA_MODEL( CppAD::AD<double> )
+DISMOD_AT_INSTANTIATE_DATA_MODEL( double )
+DISMOD_AT_INSTANTIATE_DATA_MODEL( a1_double )
 DISMOD_AT_INSTANTIATE_DATA_MODEL( a2_double )
+DISMOD_AT_INSTANTIATE_DATA_MODEL( a3_double )
 
 
 } // END DISMOD_AT_NAMESPACE

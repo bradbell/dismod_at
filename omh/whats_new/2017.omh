@@ -44,6 +44,8 @@ $spell
 	github
 	libdir
 	py
+	CppAD
+	subgraph
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -53,6 +55,14 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 12-30$$
+Advance to using $code cppad_mixed-20171230$$.
+This uses the CppAD subgraph method to compute the Hessian
+with respect to the random effects.
+It is expected to be faster on large problems, but more testing is required
+to verify this.
+
 
 $head 12-22$$
 Some users did not realize that $code bin/install_all.sh$$ was just
@@ -67,7 +77,7 @@ which is required by $code cppad_mixed-20171218$$.
 $head 12-20$$
 $list number$$
 Advance to using $code cppad_mixed-20171218$$.
-This uses a different method to compute the sparsity of the Hessian
+This uses the CppAD subgraph method to compute the sparsity of the Hessian
 with respect to the random effects.
 It is expected to be faster on large problems, but more testing is required
 to verify this.

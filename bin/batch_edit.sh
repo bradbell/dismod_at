@@ -22,8 +22,15 @@ rename_cmd='s|random_zero_sum.py|zero_sum_random.py|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|a1d_vector|a1_vector|g
-s|a2d_vector|a2_vector|g
+/DISMOD_AT_INSTANTIATE_[A-Z0-9_]*( *double *)/! b skip
+N
+N
+s|( *double *)|( double )|
+s|CppAD::AD<double>|a1_double|
+s|DISMOD_AT_INSTANTIATE_\\([A-Z0-9_]*\\)( a2_double )|&\\
+DISMOD_AT_INSTANTIATE_\\1( a3_double )|
+#
+: skip
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

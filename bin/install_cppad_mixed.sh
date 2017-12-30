@@ -23,8 +23,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='d3c0c4167eca402c4cf27cffd7517e0ba122779f'
-version='20171218'
+hash_key='302af5553a27753c81dce7a4d07eec161cf318fe'
+version='20171230'
 # ---------------------------------------------------------------------------
 # special cppad_mixed settings (it is not suggested that you change these)
 #
