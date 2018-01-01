@@ -1212,7 +1212,7 @@ Float data_model::avg_yes_ode(
 
 	// value for the rates on the ode subgrid
 	CppAD::vector< CppAD::vector<Float> > rate_ode(number_rate_enum);
-	pack_info::subvec_info                 info;
+	pack_info::subvec_info                info;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	rate_ode[rate_id].resize(n_index);
 		//

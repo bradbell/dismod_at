@@ -74,7 +74,7 @@ in the fit command.
 
 $head pini$$
 This argument has prototype
-$code%
+$codei%
 	const %Float%& %pini%
 %$$
 and is the initial prevalence for this cohort; see
