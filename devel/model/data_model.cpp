@@ -1122,12 +1122,11 @@ Float data_model::avg_yes_ode(
 		break;
 	}
 # endif
-	size_t i, j, k, ell;
 	assert( pack_object_.size() == pack_vec.size() );
 
 	// covariate information for this data pont
 	CppAD::vector<double> x(n_covariate_);
-	for(j = 0; j < n_covariate_; j++)
+	for(size_t j = 0; j < n_covariate_; j++)
 		x[j] = data_cov_value_[subset_id * n_covariate_ + j];
 
 	// data_info information for this data point
@@ -1146,7 +1145,7 @@ Float data_model::avg_yes_ode(
 	CppAD::vector<size_t> ode_index, cohort_start;
 	//
 	// cohorts that end at maximum age index
-	for(j = 0; j < n_time_sub; j++)
+	for(size_t j = 0; j < n_time_sub; j++)
 	{	size_t i_end, j_end, ik, jk;
 		//
 		// age index that this cohort integration will end at
@@ -1159,7 +1158,7 @@ Float data_model::avg_yes_ode(
 		assert( j_end < n_time_ode_ );
 		//
 		// k is index in ode_index at which this cohort integration starts
-		k     = ode_index.size();
+		size_t k = ode_index.size();
 		cohort_start.push_back(k);
 		//
 		// start integration at age index zero and end at i_end
@@ -1178,7 +1177,7 @@ Float data_model::avg_yes_ode(
 	//
 	// cohorts that end at maximum time index
 	// (except for the one that also ends at maximum age)
-	for(i = 0; i < n_age_sub - 1; i++)
+	for(size_t i = 0; i < n_age_sub - 1; i++)
 	{	size_t i_end, j_end, ik, jk;
 		//
 		// time index that this cohort integration will end at
@@ -1191,7 +1190,7 @@ Float data_model::avg_yes_ode(
 		assert( i_end < n_age_ode_ );
 		//
 		// k is ode_index at which this cohort integration starts
-		k     = ode_index.size();
+		size_t k = ode_index.size();
 		cohort_start.push_back(k);
 		//
 		// start integration at age index zero and ent at i_end
@@ -1221,14 +1220,14 @@ Float data_model::avg_yes_ode(
 		size_t smooth_id = info.smooth_id;
 		size_t n_var;
 		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
-		{	for(k = 0; k < n_index; k++)
+		{	for(size_t k = 0; k < n_index; k++)
 				rate_ode[rate_id][k] = 0.0;
 		}
 		else
 		{	n_var     = info.n_var;
 			//
 			CppAD::vector<Float> rate_si(n_var);
-			for(k = 0; k < n_var; k++)
+			for(size_t k = 0; k < n_var; k++)
 				rate_si[k] = pack_vec[info.offset + k];
 			//
 			// interpolate onto the ode grid
@@ -1238,7 +1237,7 @@ Float data_model::avg_yes_ode(
 		//
 		// initialize sum of effects to zero
 		CppAD::vector<Float> effect_ode(n_index);
-		for(k = 0; k < n_index; k++)
+		for(size_t k = 0; k < n_index; k++)
 			effect_ode[k] = 0.0;
 		//
 		// include child random effect
@@ -1249,13 +1248,13 @@ Float data_model::avg_yes_ode(
 			{	n_var     = info.n_var;
 				//
 				CppAD::vector<Float> var_si(n_var);
-				for(k = 0; k < n_var; k++)
+				for(size_t k = 0; k < n_var; k++)
 					var_si[k] = pack_vec[info.offset + k];
 				//
 				CppAD::vector<Float> var_ode =
 					si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 				//
-				for(k = 0; k < n_index; k++)
+				for(size_t k = 0; k < n_index; k++)
 					effect_ode[k] += var_ode[k];
 			}
 		}
@@ -1269,16 +1268,16 @@ Float data_model::avg_yes_ode(
 			double x_j = x[ info.covariate_id ];
 			//
 			CppAD::vector<Float> var_si(n_var);
-			for(k = 0; k < n_var; k++)
+			for(size_t k = 0; k < n_var; k++)
 				var_si[k] = pack_vec[info.offset + k];
 			//
 			CppAD::vector<Float> var_ode =
 				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 			//
-			for(k = 0; k < n_index; k++)
+			for(size_t k = 0; k < n_index; k++)
 				effect_ode[k] += var_ode[k] * x_j;
 		}
-		for(k = 0; k < n_index; k++)
+		for(size_t k = 0; k < n_index; k++)
 			rate_ode[rate_id][k] *= exp( effect_ode[k] );
 	}
 
@@ -1290,9 +1289,9 @@ Float data_model::avg_yes_ode(
 	Float zero = Float(0.0);
 	Float infinity  = Float( std::numeric_limits<double>::infinity() );
 	//
-	for(k = 0; k < n_ode_sub; k++)
+	for(size_t k = 0; k < n_ode_sub; k++)
 			integrand_sub[k] = CppAD::nan(zero);
-	for(ell = 0; ell < n_cohort; ell++)
+	for(size_t ell = 0; ell < n_cohort; ell++)
 	{	size_t k_start, nk;
 		k_start  = cohort_start[ell];
 		if( ell+1 < n_cohort )
@@ -1306,7 +1305,7 @@ Float data_model::avg_yes_ode(
 		S_out.resize(0);
 		C_out.resize(0);
 		Float pini   = Float(rate_ode[pini_enum][k_start]);
-		for(k = 0; k < nk; k++)
+		for(size_t k = 0; k < nk; k++)
 		{	iota[k]  = rate_ode[iota_enum][k_start + k];
 			rho[k]   = rate_ode[rho_enum][k_start + k];
 			chi[k]   = rate_ode[chi_enum][k_start + k];
@@ -1322,7 +1321,7 @@ Float data_model::avg_yes_ode(
 		);
 		//
 		// compute integrand on subgrid
-		for(k = 0; k < nk; k++)
+		for(size_t k = 0; k < nk; k++)
 		{	size_t i = ode_index[k_start + k] / n_time_ode_;
 			size_t j = ode_index[k_start + k] % n_time_ode_;
 			if( i_min <= i && j_min <= j )
@@ -1375,9 +1374,9 @@ Float data_model::avg_yes_ode(
 		}
 	}
 	// ode_index in the same order as c_ode and integrand
-	for(i = 0; i < n_age_sub; i++)
-	{	for(j = 0; j < n_time_sub; j++)
-		{	k = i * n_time_sub + j;
+	for(size_t i = 0; i < n_age_sub; i++)
+	{	for(size_t j = 0; j < n_time_sub; j++)
+		{	size_t k = i * n_time_sub + j;
 			ode_index[k] = (i_min + i) * n_time_ode_ + j_min + j;
 		}
 	}
@@ -1385,7 +1384,7 @@ Float data_model::avg_yes_ode(
 	// measurement value covariate on ode subgrid
 	size_t integrand_id = data_subset_obj_[subset_id].integrand_id;
 	CppAD::vector<Float> meas_cov_ode(n_ode_sub);
-	for(k = 0; k < n_ode_sub; k++)
+	for(size_t k = 0; k < n_ode_sub; k++)
 		meas_cov_ode[k] = 0.0;
 	size_t n_cov = pack_object_.mulcov_meas_value_n_cov(integrand_id);
 	for(size_t j = 0; j < n_cov; j++)
@@ -1395,19 +1394,19 @@ Float data_model::avg_yes_ode(
 		double x_j        = x[ info.covariate_id ];
 		//
 		CppAD::vector<Float> var_si(n_var);
-		for(k = 0; k < n_var; k++)
+		for(size_t k = 0; k < n_var; k++)
 			var_si[k] = pack_vec[info.offset + k];
 		//
 		CppAD::vector<Float> var_ode =
 			si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 		//
-		for(k = 0; k < n_ode_sub; k++)
+		for(size_t k = 0; k < n_ode_sub; k++)
 			meas_cov_ode[k] += var_ode[k] * x_j;
 	}
 	//
 	// compute the average integrand
 	Float avg = Float(0.0);
-	for(k = 0; k < n_ode_sub; k++)
+	for(size_t k = 0; k < n_ode_sub; k++)
 	{	assert( ! CppAD::isnan( integrand_sub[k] ) );
 		avg += c_ode[k] * integrand_sub[k] * exp( meas_cov_ode[k] );
 	}
