@@ -1143,70 +1143,62 @@ Float data_model::avg_yes_ode(
 
 	// information that maps cohorts to indices in the ODE grid
 	CppAD::vector<size_t> ode_index, cohort_start;
-	//
-	// cohorts that end at maximum age index
-	for(size_t j = 0; j < n_time_sub; j++)
-	{	size_t i_end, j_end, ik, jk;
-		//
-		// age index that this cohort integration will end at
-		i_end = i_min + n_age_sub - 1;
-		assert( i_end < n_age_ode_ );
-		assert( i_min < i_end );
-		//
-		// time index that this cohort integration will end at
-		j_end = j_min + j;
-		assert( j_end < n_time_ode_ );
-		//
-		// k is index in ode_index at which this cohort integration starts
-		size_t k = ode_index.size();
-		cohort_start.push_back(k);
-		//
-		// start integration at age index zero and end at i_end
-		for(ik = 0; ik <= i_end; ik++)
-		{	// time index corresponding to index ik in this cohort
-			if( i_end - ik < j_end )
-				jk = j_end - (i_end - ik);
-			else
-			{	// below the minimum time for ODE grid
-				jk = 0;
-			}
-			// pack age index ik and time index jk as one number
-			ode_index.push_back( ik * n_time_ode_ + jk);
-		}
-	}
-	//
-	// cohorts that end at maximum time index
-	// (except for the one that also ends at maximum age)
-	for(size_t i = 0; i < n_age_sub - 1; i++)
-	{	size_t i_end, j_end, ik, jk;
-		//
-		// time index that this cohort integration will end at
-		j_end = j_min + n_time_sub - 1;
-		assert( j_end < n_time_ode_ );
-		assert( j_min < j_end );
-		//
-		// age index that this cohort integation will end at
-		i_end = i_min + i;
-		assert( i_end < n_age_ode_ );
-		//
-		// k is ode_index at which this cohort integration starts
-		size_t k = ode_index.size();
-		cohort_start.push_back(k);
-		//
-		// start integration at age index zero and ent at i_end
-		for(ik = 0; ik <= i_end; ik++)
-		{	// time index corresponding to index ik in this cohort
-			if( i_end - ik < j_end )
-				jk = j_end - (i_end - ik);
-			else
-			{	// before minimum time for ODE grid
-				jk = 0;
-			}
-			// pack age index ik and time index jk as one number
-			ode_index.push_back( ik * n_time_ode_ + jk);
-		}
 
+	// maximum age index
+	assert( n_age_sub > 0);
+	size_t i_max = i_min + n_age_sub - 1;
+
+	// maximum time index plus one
+	assert( n_time_sub > 0 );
+	size_t j_max = j_min + n_time_sub - 1;
+
+	// cohorts that end at maximum age index i_max
+	// j_end is the time index corresponding to end of cohort
+	for(size_t j_end = j_min; j_end <= j_max; ++j_end)
+	{	// k is index in ode_index at which this cohort integration starts
+		size_t k = ode_index.size();
+		cohort_start.push_back(k);
+		//
+		// age index for each (i,j) pair in this cohort
+		for(size_t i = 0; i <= i_max; ++i)
+		{	// time index for this (i,j) pair
+			// j - i = j_end - i_max
+			size_t j;
+			if( j_end > i_max - i )
+				j = j_end - (i_max - i);
+			else
+				j = 0;
+			//
+			// pack pair (i, j) into one number and put in this cohort
+			ode_index.push_back(i * n_time_ode_ + j);
+		}
 	}
+
+
+	// cohorts that end at maximum time index j_max
+	// i_end is the time index corresponding to end of cohort
+	// (case where i_end == i_max is included above)
+	for(size_t i_end = i_min; i_end <= i_max; ++i_end)
+	{	// k is index in ode_index at which this cohort integration starts
+		size_t k = ode_index.size();
+		cohort_start.push_back(k);
+		//
+		// age index for each (i,j) pair in this cohort
+		for(size_t i = 0; i <= i_end; ++i)
+		{	// time index for this (i,j) pair
+			// j - i = j_max - i_end
+			size_t j;
+			if( j_max > i_end - i )
+				j = j_max - (i_end - i);
+			else
+				j = 0;
+			//
+			// pack pair (i, j) into one number and put in this cohort
+			ode_index.push_back(i * n_time_ode_ + j);
+		}
+	}
+
+	// total numer of cohort indices
 	size_t n_index = ode_index.size();
 
 	// value for the rates on the ode subgrid
