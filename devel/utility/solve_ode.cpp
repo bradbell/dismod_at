@@ -33,6 +33,11 @@ $codei%solve_ode(
 	%C_out%
 )%$$
 
+$head 2DO$$
+Remove $icode i_max$$,  $code j_max$$ from the arguments to
+$code solve_ode$$ becasue age and time do not explicitly appear in the
+ODE.
+
 $head Purpose$$
 This routine determines the value of $latex C(a,t)$$
 and $latex S(a, t)$$ that solve the dismod

@@ -1297,7 +1297,7 @@ Float data_model::avg_yes_ode(
 	/* -----------------------------------------------------------------------
 	integrand_sub:
 	For i = 0, ..., n_age_sub-1, j = 0, ..., n_time_sub-1
-		integrand[i * n_age_sub + j]
+		integrand[i * n_time_sub + j]
 	is the value of the integrand for this measurement at the
 	(i_min + i, j_min + j) ODE grid point
 	---------------------------------------------------------------------- */
@@ -1314,25 +1314,31 @@ Float data_model::avg_yes_ode(
 	//
 	// for each cohort
 	for(size_t ell = 0; ell < n_cohort; ell++)
-	{	size_t k_start, nk;
-		k_start  = cohort_start[ell];
+	{	// starting index for this cohort
+		size_t k_start  = cohort_start[ell];
+		// number of indices for this cohort
+		size_t nk;
 		if( ell+1 < n_cohort )
 			nk = cohort_start[ell+1] - cohort_start[ell] ;
 		else
 			nk = ode_index.size() - cohort_start[ell];
+		//
+		// pini, iota, rho, cho, omega for this cohort
+		Float pini   = Float(rate_ode[pini_enum][k_start]);
 		iota.resize(nk);
 		rho.resize(nk);
 		chi.resize(nk);
 		omega.resize(nk);
-		S_out.resize(0);
-		C_out.resize(0);
-		Float pini   = Float(rate_ode[pini_enum][k_start]);
 		for(size_t k = 0; k < nk; k++)
 		{	iota[k]  = rate_ode[iota_enum][k_start + k];
 			rho[k]   = rate_ode[rho_enum][k_start + k];
 			chi[k]   = rate_ode[chi_enum][k_start + k];
 			omega[k] = rate_ode[omega_enum][k_start + k];
 		}
+		//
+		// S and C for this cohort
+		S_out.resize(0);
+		C_out.resize(0);
 		size_t i_max     = ode_index[k_start + nk - 1] / n_time_ode_;
 		size_t j_max     = ode_index[k_start + nk - 1] % n_time_ode_;
 		Float  step_size = Float(ode_step_size_);
@@ -1342,7 +1348,7 @@ Float data_model::avg_yes_ode(
 			i_max, j_max, step_size, pini, iota, rho, chi, omega, S_out, C_out
 		);
 		//
-		// compute integrand on subgrid
+		// extract part of cohort that is in the rectangle for this measurement
 		for(size_t k = 0; k < nk; k++)
 		{	size_t i = ode_index[k_start + k] / n_time_ode_;
 			size_t j = ode_index[k_start + k] % n_time_ode_;
@@ -1395,15 +1401,25 @@ Float data_model::avg_yes_ode(
 			}
 		}
 	}
-	// ode_index in the same order as c_ode and integrand
+	/* -----------------------------------------------------------------------
+	ode_index:
+	We call (i_min+i, j_min+j) for i=0,...,n_age_sub-1, j=0,...,n_time_sub
+	the ODE subgrid for this measurement. For k = 0, ..., n_ode_sub-1
+		ode_index[k] = (i_min + i) * n_time_ode_ + j_min + j
+	where each point in the ODE subgrid has been represented.
+	------------------------------------------------------------------------ */
+	ode_index.resize(n_ode_sub);
 	for(size_t i = 0; i < n_age_sub; i++)
 	{	for(size_t j = 0; j < n_time_sub; j++)
 		{	size_t k = i * n_time_sub + j;
 			ode_index[k] = (i_min + i) * n_time_ode_ + j_min + j;
 		}
 	}
-	//
-	// measurement value covariate on ode subgrid
+	/* ------------------------------------------------------------------------
+	meas_cov_ode:
+	for k = 0,...,n_ode_sub-1, meas_cov_ode[k] is the measurement covariate
+	effect at the gird point correspoinding to ode_index[k].
+	------------------------------------------------------------------------ */
 	size_t integrand_id = data_subset_obj_[subset_id].integrand_id;
 	CppAD::vector<Float> meas_cov_ode(n_ode_sub);
 	for(size_t k = 0; k < n_ode_sub; k++)
@@ -1425,7 +1441,11 @@ Float data_model::avg_yes_ode(
 		for(size_t k = 0; k < n_ode_sub; k++)
 			meas_cov_ode[k] += var_ode[k] * x_j;
 	}
-	//
+	/* ------------------------------------------------------------------------
+	avg:
+	c_ode Weighted average of the integrand times exponential of measurement
+	covariate effect
+	------------------------------------------------------------------------ */
 	// compute the average integrand
 	Float avg = Float(0.0);
 	for(size_t k = 0; k < n_ode_sub; k++)
