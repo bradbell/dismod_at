@@ -1141,8 +1141,19 @@ Float data_model::avg_yes_ode(
 	// check that this data's node is a descendent of the parent node
 	assert( child <= n_child_ );
 
+
+	/* -----------------------------------------------------------------------
+	cohort_start, ode_index:
+	chort_start[k] = index in ode_index for start of k-th cohort.
+	For ell = ode_start[k], ... oed_start[k+1] - 1,
+		ode_index[ell] = i * n_time_ode + j
+	where (i, j) are age, time indices for ell-th grid point in k-th cohort.
+	The first (i,j) pair for each cohort has i = 0. The last (i,j) pair for
+	each cohort has i = i_min + n_age_sub - 1 or j = j_min + n_time_sub - 1.
+	The cohorts include all the ODE grid points in range for this measurement.
+	------------------------------------------------------------------------ */
 	// information that maps cohorts to indices in the ODE grid
-	CppAD::vector<size_t> ode_index, cohort_start;
+	CppAD::vector<size_t> cohort_start, ode_index;
 
 	// maximum age index
 	assert( n_age_sub > 0);
@@ -1174,7 +1185,6 @@ Float data_model::avg_yes_ode(
 		}
 	}
 
-
 	// cohorts that end at maximum time index j_max
 	// i_end is the time index corresponding to end of cohort
 	// (case where i_end == i_max is included above)
@@ -1201,18 +1211,25 @@ Float data_model::avg_yes_ode(
 	// total numer of cohort indices
 	size_t n_index = ode_index.size();
 
-	// value for the rates on the ode subgrid
+	/* --------------------------------------------------------------------
+	rate_ode:
+	For rate_id = 0, ..., n_rate-1, ell = 0, ..., n_index - 1
+		rate_ode[rate_id][ell]
+	is value of the specified rate at the (i, j) grid point specified by
+		ode_index[ell] = i * n_time_ode + j
+	---------------------------------------------------------------------- */
 	CppAD::vector< CppAD::vector<Float> > rate_ode(number_rate_enum);
 	pack_info::subvec_info                info;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	rate_ode[rate_id].resize(n_index);
 		//
-		// extract subvector information for the parent rate
+		// parent information for this rate
 		info             = pack_object_.rate_info(rate_id, n_child_);
 		size_t smooth_id = info.smooth_id;
 		size_t n_var;
 		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
-		{	for(size_t k = 0; k < n_index; k++)
+		{	// in this case the parent rate is zero
+			for(size_t k = 0; k < n_index; k++)
 				rate_ode[rate_id][k] = 0.0;
 		}
 		else
@@ -1222,7 +1239,7 @@ Float data_model::avg_yes_ode(
 			for(size_t k = 0; k < n_var; k++)
 				rate_si[k] = pack_vec[info.offset + k];
 			//
-			// interpolate onto the ode grid
+			// interpolate parent rate onto the ode grid
 			rate_ode[rate_id] =
 				si2ode_vec_[smooth_id]->interpolate(rate_si, ode_index);
 		}
@@ -1232,7 +1249,7 @@ Float data_model::avg_yes_ode(
 		for(size_t k = 0; k < n_index; k++)
 			effect_ode[k] = 0.0;
 		//
-		// include child random effect
+		// include child random effect for this rate
 		if( child < n_child_ )
 		{	info      = pack_object_.rate_info(rate_id, child);
 			smooth_id = info.smooth_id;
@@ -1243,6 +1260,7 @@ Float data_model::avg_yes_ode(
 				for(size_t k = 0; k < n_var; k++)
 					var_si[k] = pack_vec[info.offset + k];
 				//
+				// interpolate child rate onto the ode grid
 				CppAD::vector<Float> var_ode =
 					si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 				//
@@ -1263,17 +1281,26 @@ Float data_model::avg_yes_ode(
 			for(size_t k = 0; k < n_var; k++)
 				var_si[k] = pack_vec[info.offset + k];
 			//
+			// interpolate covariate multiplier onto the ode grid
 			CppAD::vector<Float> var_ode =
 				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 			//
+			// effect for this covariate
 			for(size_t k = 0; k < n_index; k++)
 				effect_ode[k] += var_ode[k] * x_j;
 		}
+		// multiply parent rate by exponential of total effect
 		for(size_t k = 0; k < n_index; k++)
 			rate_ode[rate_id][k] *= exp( effect_ode[k] );
 	}
 
-	// loop over the cohorts
+	/* -----------------------------------------------------------------------
+	integrand_sub:
+	For i = 0, ..., n_age_sub-1, j = 0, ..., n_time_sub-1
+		integrand[i * n_age_sub + j]
+	is the value of the integrand for this measurement at the
+	(i_min + i, j_min + j) ODE grid point
+	---------------------------------------------------------------------- */
 	size_t n_cohort = cohort_start.size();
 	size_t n_ode_sub = n_age_sub * n_time_sub;
 	CppAD::vector<Float> iota, rho, chi, omega, S_out, C_out;
@@ -1281,8 +1308,11 @@ Float data_model::avg_yes_ode(
 	Float zero = Float(0.0);
 	Float infinity  = Float( std::numeric_limits<double>::infinity() );
 	//
+	// initialize the integrand values at nan
 	for(size_t k = 0; k < n_ode_sub; k++)
 			integrand_sub[k] = CppAD::nan(zero);
+	//
+	// for each cohort
 	for(size_t ell = 0; ell < n_cohort; ell++)
 	{	size_t k_start, nk;
 		k_start  = cohort_start[ell];
