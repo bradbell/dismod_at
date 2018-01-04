@@ -727,7 +727,7 @@ void data_model::replace_like(
 }
 /*
 -----------------------------------------------------------------------------
-$begin data_model_sc_ode$$
+$begin data_model_integrand_ode$$
 $spell
 	vec
 	const
@@ -735,11 +735,16 @@ $spell
 	subvectors
 	std
 	xam
+	enum
+	Tincidence
+	mtspecific
+	mtall
+	mtstandard
 $$
-$section Use the ODE to Compute S and C for one Measurement$$
+$section Use the ODE to Integrand for one Measurement$$
 
 $head Syntax$$
-$icode%data_object%.s_and_c(%s_out%, %c_out%, %subset_id%, %pack_vec%)%$$
+$icode%integrand_sub% = %data_object%.integrand_ode(%subset_id%, %pack_vec%)%$$
 
 $head Float$$
 The type $icode Float$$ must be one of the following:
@@ -755,28 +760,35 @@ see $cref/data_object constructor/data_model_ctor/data_object/$$.
 $head Notation$$
 We use the notation
 $codei%
+    %integrand%   = data_info_[subset_id].integrand;
     %i_min%       = data_info_[subset_id].i_min;
     %j_min%       = data_info_[subset_id].j_min;
     %n_age_sub%   = data_info_[subset_id].n_age;
     %n_time_sub%  = data_info_[subset_id].n_time;
 %$$
 
-$head s_out, c_out$$
-The input size and elements of $icode s_out$$ and $icode c_out$$ do not matter.
+$head integrand$$
+The $icode integrand$$ must be one of the following:
+$code susceptible_enum$$,
+$code withC_enum$$,
+$code prevalence_enum$$,
+$code Tincidence_enum$$,
+$code mtspecific_enum$$,
+$code mtall_enum$$,
+$code mtstandard_enum$$.
+
+$head integrand_ode$$
+The input size and elements of $icode integrand_ode$$ do not matter.
 Upon return,
 $codei%
-	%s_out%.size() = %n_age_sub% * %n_time_sub%
-	%c_out%.size() = %n_age_sub% * %n_time_sub%
+	%integrand_ode%.size() = %n_age_sub% * %n_time_sub%
 %$$
 For $icode%i%=0,...,%n_age_sub%-1%$$,
 $icode%j%=0,...,%n_time_sub%-1%$$,
 $codei%
-	%s_out%[%i% * %n_time_sub% + %j%]%
-	%c_out%[%i% * %n_time_sub% + %j%]%
+	%integrand_ode%[%i% * %n_time_sub% + %j%]%
 %$$
-is the fraction of the susceptible population $latex S(a, t)$$
-and with condition population $latex C(a, t)$$ corresponding
-the ODE grid point with index pair
+is the value of the $icode integrand$$ at the ODE grid point with index pair
 $codei%
 	( %i_min% + %i% , %j_min% + %j% )
 %$$.
@@ -809,19 +821,17 @@ This is the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 for the specified data point.
 
-$children%example/devel/model/sc_ode_xam.cpp
+$children%example/devel/model/integrand_ode_xam.cpp
 %$$
 $head Example$$
-The file $cref sc_ode_xam.cpp$$ contains an example and test
+The file $cref integrand_ode_xam.cpp$$ contains an example and test
 of using this routine.
 
 $end
 */
 
 template <class Float>
-void data_model::sc_ode(
-	CppAD::vector<Float>&         s_out     ,
-	CppAD::vector<Float>&         c_out     ,
+CppAD::vector<Float> data_model::integrand_ode(
 	size_t                        subset_id ,
 	const CppAD::vector<Float>&   pack_vec  ) const
 {
@@ -833,11 +843,12 @@ void data_model::sc_ode(
 		x[j] = data_cov_value_[subset_id * n_covariate_ + j];
 
 	// data_info information for this data point
-	size_t i_min       = data_info_[subset_id].i_min;
-	size_t j_min       = data_info_[subset_id].j_min;
-	size_t n_age_sub   = data_info_[subset_id].n_age;
-	size_t n_time_sub  = data_info_[subset_id].n_time;
-	size_t child       = data_info_[subset_id].child;
+	integrand_enum integrand  = data_info_[subset_id].integrand;
+	size_t i_min              = data_info_[subset_id].i_min;
+	size_t j_min              = data_info_[subset_id].j_min;
+	size_t n_age_sub          = data_info_[subset_id].n_age;
+	size_t n_time_sub         = data_info_[subset_id].n_time;
+	size_t child              = data_info_[subset_id].child;
 
 	/* -----------------------------------------------------------------------
 	cohort_start, ode_index:
@@ -992,20 +1003,17 @@ void data_model::sc_ode(
 	}
 
 	/* -----------------------------------------------------------------------
-	s_out, c_out
+	integrand_sub
 	---------------------------------------------------------------------- */
 	size_t n_cohort = cohort_start.size();
 	size_t n_ode_sub = n_age_sub * n_time_sub;
-	s_out.resize(n_ode_sub);
-	c_out.resize(n_ode_sub);
-	CppAD::vector<Float> iota, rho, chi, omega, S, C;
+	CppAD::vector<Float> iota, rho, chi, omega, S_out, C_out;
 	Float zero = Float(0.0);
+	CppAD::vector<Float> integrand_sub(n_ode_sub);
 	//
 	// initialize the output values as nan
 	for(size_t k = 0; k < n_ode_sub; k++)
-	{	s_out[k] = CppAD::nan(zero);
-		c_out[k] = CppAD::nan(zero);
-	}
+		integrand_sub[k] = CppAD::nan(zero);
 	//
 	// for each cohort
 	for(size_t ell = 0; ell < n_cohort; ell++)
@@ -1032,29 +1040,72 @@ void data_model::sc_ode(
 		}
 		//
 		// S and C for this cohort
-		S.resize(0);
-		C.resize(0);
+		S_out.resize(0);
+		C_out.resize(0);
 		size_t i_max     = ode_index[k_start + nk - 1] / n_time_ode_;
 		size_t j_max     = ode_index[k_start + nk - 1] % n_time_ode_;
 		Float  step_size = Float(ode_step_size_);
 		//
 		solve_ode(
 			eigen_ode2_case_number_ ,
-			i_max, j_max, step_size, pini, iota, rho, chi, omega, S, C
+			i_max, j_max, step_size, pini, iota, rho, chi, omega, S_out, C_out
 		);
 		//
 		// extract part of cohort that is in the rectangle for this measurement
+		Float infinity  = Float( std::numeric_limits<double>::infinity() );
 		for(size_t k = 0; k < nk; k++)
 		{	size_t i = ode_index[k_start + k] / n_time_ode_;
 			size_t j = ode_index[k_start + k] % n_time_ode_;
 			if( i_min <= i && j_min <= j )
-			{	size_t ij = (i - i_min) * n_time_sub + (j - j_min);
-				s_out[ij] = S[k];
-				c_out[ij] = C[k];
+			{	Float P   = C_out[k] / ( S_out[k]  + C_out[k]);
+				bool ok = zero <= P && P < infinity;
+				ok     |= integrand == susceptible_enum;
+				ok     |= integrand == withC_enum;
+				if( ! ok )
+				{	std::string message = "Numerical integration error.\n"
+					"Prevalence is negative or infinite or Nan.";
+					throw CppAD::mixed::exception(
+						"avg_yes_ode", message
+					);
+				}
+				size_t ij = (i - i_min) * n_time_sub + (j - j_min);
+				switch(integrand)
+				{	case susceptible_enum:
+					integrand_sub[ij] = S_out[k];
+					break;
+
+					case withC_enum:
+					integrand_sub[ij] = C_out[k];
+					break;
+
+					case prevalence_enum:
+					integrand_sub[ij] = P;
+					break;
+
+					case Tincidence_enum:
+					integrand_sub[ij] = iota[k] * (1.0 - P);
+					break;
+
+					case mtspecific_enum:
+					integrand_sub[ij] = chi[k] * P;
+					break;
+
+					case mtall_enum:
+					integrand_sub[ij] = omega[k] + chi[k] * P;
+					break;
+
+					case mtstandard_enum:
+					integrand_sub[ij] = omega[k] + chi[k];
+					integrand_sub[ij] /= omega[k] + chi[k] * P;
+					break;
+
+					default:
+					assert(false);
+				}
 			}
 		}
 	}
-	return;
+	return integrand_sub;
 }
 
 
@@ -2180,9 +2231,8 @@ DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(data_subset_struct)
 DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \
-	template void data_model::sc_ode(                       \
-		CppAD::vector<Float>&         s_out    ,            \
-		CppAD::vector<Float>&         c_out    ,            \
+	template CppAD::vector<Float>                           \
+	data_model::integrand_ode(                              \
 		size_t                        subset_id,            \
 		const CppAD::vector<Float>&   pack_vec              \
 	) const;                                                \

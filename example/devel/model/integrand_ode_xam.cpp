@@ -9,16 +9,16 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin sc_ode_xam.cpp$$
+$begin integrand_ode_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ sc_ode: Example and Test$$
+$section C++ integrand_ode: Example and Test$$
 
 $code
-$srcfile%example/devel/model/sc_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/devel/model/integrand_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -27,7 +27,7 @@ $end
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/null_int.hpp>
 
-bool sc_ode_xam(void)
+bool integrand_ode_xam(void)
 {	bool   ok = true;
 	using CppAD::abs;
 	using CppAD::vector;
@@ -160,7 +160,7 @@ bool sc_ode_xam(void)
 	vector<double> data_cov_value(data_table.size() * n_covariate);
 	size_t data_id = 0;
 	data_table[data_id].integrand_id =
-		n_integrand - size_t(dismod_at::susceptible_enum) - 1;
+		n_integrand - size_t(dismod_at::prevalence_enum) - 1;
 	data_table[data_id].node_id      = 1; // child node
 	data_table[data_id].weight_id    = 0;
 	data_table[data_id].age_lower    = 40.0;
@@ -268,16 +268,15 @@ bool sc_ode_xam(void)
 	ok            &= data_table.size() == data_subset_obj.size();
 	//
 	size_t subset_id = 0;
-	vector<Float> s_out, c_out;
-	data_object.sc_ode(s_out, c_out, subset_id, pack_vec);
+	vector<Float> integrand_sub =
+		data_object.integrand_ode(subset_id, pack_vec);
 	//
 	size_t i_min        = data_object.data_info_[subset_id].i_min;
 	size_t n_age_sub    = data_object.data_info_[subset_id].n_age;
 	size_t n_time_sub   = data_object.data_info_[subset_id].n_time;
 	size_t n_ode_sub    = n_age_sub * n_time_sub;
 	//
-	ok                 &= s_out.size() == n_ode_sub;
-	ok                 &= c_out.size() == n_ode_sub;
+	ok                 &= integrand_sub.size() == n_ode_sub;
 	//
 	double eps4 = 1e4 * std::numeric_limits<double>::epsilon();
 	for(size_t i = 0; i < n_age_sub; i++)
@@ -287,10 +286,10 @@ bool sc_ode_xam(void)
 			double age = (i_min + i) * ode_step_size + age_min;
 			double S   = exp( - beta * (age - age_min) );
 			double C   = 1.0 - S;
+			double P   = C / (S + C);
 			size_t k   = i * n_time_sub + j;
 			//
-			ok &= fabs(S - s_out[k]) < eps4;
-			ok &= fabs(C - c_out[k]) < eps4;
+			ok &= fabs(P - integrand_sub[k]) < eps4;
 		}
 	}
 	return ok;

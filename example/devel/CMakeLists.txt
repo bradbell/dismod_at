@@ -20,7 +20,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	model/like_all_xam.cpp
 	model/prior_fixed_xam.cpp
 	model/prior_random_xam.cpp
-	model/sc_ode_xam.cpp
+	model/integrand_ode_xam.cpp
 
 	utility/avgint_subset_xam.cpp
 	utility/bilinear_interp_xam.cpp

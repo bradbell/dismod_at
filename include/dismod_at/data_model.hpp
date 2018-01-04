@@ -25,7 +25,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_simulate_table.hpp"
 
 // declare test functions that are friends
-extern bool sc_ode_xam(void);
+extern bool integrand_ode_xam(void);
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -106,13 +106,11 @@ public:
 	//
 	// use ode to compute S and C for one measurement
 	template <class Float>
-	void sc_ode(
-		CppAD::vector<Float>&         s_out    ,
-		CppAD::vector<Float>&         c_out    ,
+	CppAD::vector<Float> integrand_ode(
 		size_t                        data_id  ,
 		const  CppAD::vector<Float>&  pack_vec
 	) const;
-	friend bool ::sc_ode_xam(void);
+	friend bool ::integrand_ode_xam(void);
 	//
 	// compute average for integrands that do not require S or C
 	template <class Float>

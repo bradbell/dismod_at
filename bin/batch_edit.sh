@@ -12,25 +12,18 @@
 new_directories='
 '
 rename_files='
+	example/devel/model/sc_ode_xam.cpp
 '
 spell_files='
 '
 no_change_files='
 '
 #
-rename_cmd='s|random_zero_sum.py|zero_sum_random.py|'
+rename_cmd='s|sc_ode|integrand_ode|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-/DISMOD_AT_INSTANTIATE_[A-Z0-9_]*( *double *)/! b skip
-N
-N
-s|( *double *)|( double )|
-s|CppAD::AD<double>|a1_double|
-s|DISMOD_AT_INSTANTIATE_\\([A-Z0-9_]*\\)( a2_double )|&\\
-DISMOD_AT_INSTANTIATE_\\1( a3_double )|
-#
-: skip
+s|sc_ode|integrand_ode|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
