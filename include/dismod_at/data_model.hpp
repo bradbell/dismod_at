@@ -24,6 +24,9 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "residual_density.hpp"
 # include "get_simulate_table.hpp"
 
+// declare test functions that are friends
+extern bool sc_ode_xam(void);
+
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class data_model {
@@ -100,6 +103,16 @@ public:
 		double                                   minimum_meas_cv ,
 		const CppAD::vector<data_subset_struct>& data_subset_obj
 	);
+	//
+	// use ode to compute S and C for one measurement
+	template <class Float>
+	void sc_ode(
+		CppAD::vector<Float>&         s_out    ,
+		CppAD::vector<Float>&         c_out    ,
+		size_t                        data_id  ,
+		const  CppAD::vector<Float>&  pack_vec
+	) const;
+	friend bool ::sc_ode_xam(void);
 	//
 	// compute average for integrands that do not require S or C
 	template <class Float>

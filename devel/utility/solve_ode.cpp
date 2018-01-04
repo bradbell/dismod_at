@@ -35,7 +35,7 @@ $codei%solve_ode(
 
 $head 2DO$$
 Remove $icode i_max$$,  $code j_max$$ from the arguments to
-$code solve_ode$$ becasue age and time do not explicitly appear in the
+$code solve_ode$$ because age and time do not explicitly appear in the
 ODE.
 
 $head Purpose$$
