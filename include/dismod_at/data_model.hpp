@@ -25,7 +25,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_simulate_table.hpp"
 
 // declare test functions that are friends
-extern bool integrand_ode_xam(void);
+extern bool sci_ode_xam(void);
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -104,13 +104,19 @@ public:
 		const CppAD::vector<data_subset_struct>& data_subset_obj
 	);
 	//
-	// use ode to compute S and C for one measurement
+	// use ode to compute S, C, and integrand on a sub-grid
 	template <class Float>
-	CppAD::vector<Float> integrand_ode(
-		size_t                        data_id  ,
+	CppAD::vector<Float> sci_ode(
+		integrand_enum                integrand  ,
+		size_t                        i_min      ,
+		size_t                        j_min      ,
+		size_t                        n_age_sub  ,
+		size_t                        n_time_sub ,
+		size_t                        child      ,
+		const  CppAD::vector<double>& x          ,
 		const  CppAD::vector<Float>&  pack_vec
 	) const;
-	friend bool ::integrand_ode_xam(void);
+	friend bool ::sci_ode_xam(void);
 	//
 	// compute average for integrands that do not require S or C
 	template <class Float>

@@ -9,16 +9,16 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin integrand_ode_xam.cpp$$
+$begin sci_ode_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ integrand_ode: Example and Test$$
+$section C++ sci_ode: Example and Test$$
 
 $code
-$srcfile%example/devel/model/integrand_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/devel/model/sci_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -27,7 +27,7 @@ $end
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/null_int.hpp>
 
-bool integrand_ode_xam(void)
+bool sci_ode_xam(void)
 {	bool   ok = true;
 	using CppAD::abs;
 	using CppAD::vector;
@@ -268,15 +268,18 @@ bool integrand_ode_xam(void)
 	ok            &= data_table.size() == data_subset_obj.size();
 	//
 	size_t subset_id = 0;
-	vector<Float> integrand_sub =
-		data_object.integrand_ode(subset_id, pack_vec);
-	//
-	size_t i_min        = data_object.data_info_[subset_id].i_min;
-	size_t n_age_sub    = data_object.data_info_[subset_id].n_age;
-	size_t n_time_sub   = data_object.data_info_[subset_id].n_time;
-	size_t n_ode_sub    = n_age_sub * n_time_sub;
-	//
-	ok                 &= integrand_sub.size() == n_ode_sub;
+	dismod_at::integrand_enum integrand =
+		data_object.data_info_[subset_id].integrand;
+	size_t i_min             = data_object.data_info_[subset_id].i_min;
+	size_t j_min             = data_object.data_info_[subset_id].j_min;
+	size_t n_age_sub         = data_object.data_info_[subset_id].n_age;
+	size_t n_time_sub        = data_object.data_info_[subset_id].n_time;
+	size_t child             = data_object.data_info_[subset_id].child;
+	vector<double> x(0);
+	vector<Float> sci_sub = data_object.sci_ode(
+		integrand, i_min, j_min, n_age_sub, n_time_sub, child, x, pack_vec
+	);
+	ok  &= sci_sub.size() == 3 * n_age_sub * n_time_sub;
 	//
 	double eps4 = 1e4 * std::numeric_limits<double>::epsilon();
 	for(size_t i = 0; i < n_age_sub; i++)
@@ -289,7 +292,9 @@ bool integrand_ode_xam(void)
 			double P   = C / (S + C);
 			size_t k   = i * n_time_sub + j;
 			//
-			ok &= fabs(P - integrand_sub[k]) < eps4;
+			ok &= fabs(S - sci_sub[3*k + 0]) < eps4;
+			ok &= fabs(C - sci_sub[3*k + 1]) < eps4;
+			ok &= fabs(P - sci_sub[3*k + 2]) < eps4;
 		}
 	}
 	return ok;

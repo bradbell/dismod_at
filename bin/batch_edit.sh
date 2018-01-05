@@ -12,18 +12,18 @@
 new_directories='
 '
 rename_files='
-	example/devel/model/sc_ode_xam.cpp
+	example/devel/model/integrand_ode_xam.cpp
 '
 spell_files='
 '
 no_change_files='
 '
 #
-rename_cmd='s|sc_ode|integrand_ode|'
+rename_cmd='s|integrand_ode|sci_ode|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|sc_ode|integrand_ode|g
+s|integrand_ode|sci_ode|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
