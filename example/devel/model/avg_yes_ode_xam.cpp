@@ -290,14 +290,15 @@ bool avg_yes_ode_xam(void)
 	ok            &= data_table.size() == data_subset_obj.size();
 	//
 	data_id = 0;
-	Float avg      = data_object.avg_yes_ode(data_id, pack_vec);
+	vector<Float> not_used(0);
+	Float avg      = data_object.avg_yes_ode(data_id, pack_vec, not_used);
 	double b       = data_table[data_id].age_lower;
 	double c       = data_table[data_id].age_upper;
 	double avg_S   = - ( exp(-beta * c) - exp(-beta * b) ) / (beta * (c - b));
 	ok             &= fabs( 1.0 - avg / avg_S ) <= 1e-3;
 	//
 	data_id = 1;
-	avg            = data_object.avg_yes_ode(data_id, pack_vec);
+	avg            = data_object.avg_yes_ode(data_id, pack_vec, not_used);
 	b              = data_table[data_id].age_lower;
 	c              = data_table[data_id].age_upper;
 	avg_S          = - ( exp(-beta * c) - exp(-beta * b) ) / (beta * (c - b));
@@ -305,7 +306,7 @@ bool avg_yes_ode_xam(void)
 	ok             &= fabs( 1.0 - avg / avg_C ) <= 1e-3;
 	//
 	data_id = 2;
-	avg            = data_object.avg_yes_ode(data_id, pack_vec);
+	avg            = data_object.avg_yes_ode(data_id, pack_vec, not_used);
 	b              = data_table[data_id].age_lower;
 	c              = data_table[data_id].age_upper;
 	avg_S          = - ( exp(-beta * c) - exp(-beta * b) ) / (beta * (c - b));

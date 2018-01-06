@@ -127,8 +127,9 @@ public:
 	// compute average for integrands that require S or C
 	template <class Float>
 	Float avg_yes_ode(
-		size_t                        data_id  ,
-		const  CppAD::vector<Float>&  pack_vec
+		size_t                        data_id           ,
+		const  CppAD::vector<Float>&  pack_vec          ,
+		const  CppAD::vector<Float>&  reference_sc
 	) const;
 	// compute weighted residual and log-likelihood for one data points
 	template <class Float>

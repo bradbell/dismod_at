@@ -1060,6 +1060,7 @@ void fit_command(
 	col_type[2]   = "real";
 	col_unique[2] = false;
 	//
+	vector<double> not_used(0);
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	// compute average integrand for this data item
 		double avg;
@@ -1083,7 +1084,7 @@ void fit_command(
 			case dismod_at::mtspecific_enum:
 			case dismod_at::mtall_enum:
 			case dismod_at::mtstandard_enum:
-			avg = data_object.avg_yes_ode(subset_id, opt_value);
+			avg = data_object.avg_yes_ode(subset_id, opt_value, not_used);
 			break;
 
 			default:
@@ -1252,6 +1253,7 @@ void simulate_command(
 	col_type[3]   = "real";
 	col_unique[3] = false;
 	//
+	vector<double> not_used(0);
 	for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	//
@@ -1276,7 +1278,7 @@ void simulate_command(
 			case dismod_at::mtspecific_enum:
 			case dismod_at::mtall_enum:
 			case dismod_at::mtstandard_enum:
-			avg = data_object.avg_yes_ode(subset_id, truth_var);
+			avg = data_object.avg_yes_ode(subset_id, truth_var, not_used);
 			break;
 
 			default:
@@ -1841,7 +1843,7 @@ void predict_command(
 	col_unique[2] = false;
 	//
 	// pack_vec
-	vector<double> pack_vec(n_var);
+	vector<double> pack_vec(n_var), not_used(0);
 	//
 	size_t sample_id = 0;
 	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
@@ -1873,7 +1875,7 @@ void predict_command(
 				case dismod_at::mtspecific_enum:
 				case dismod_at::mtall_enum:
 				case dismod_at::mtstandard_enum:
-				avg = avgint_object.avg_yes_ode(subset_id, pack_vec);
+				avg = avgint_object.avg_yes_ode(subset_id, pack_vec, not_used);
 				break;
 				//
 				default:

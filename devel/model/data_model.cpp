@@ -1434,11 +1434,15 @@ $spell
 	vec
 	CppAD
 	const
+	odegrid
+	covariates
 $$
 $section One Average Integrand That Requires the ODE$$
 
 $head Syntax$$
-$icode%avg% = %data_object%.avg_yes_ode(%subset_id%, %pack_vec%)%$$
+$icode%avg% = %data_object%.avg_yes_ode(
+	%subset_id%, %pack_vec%, %reference_sc%
+)%$$
 
 
 $head data_object$$
@@ -1483,6 +1487,32 @@ Only the following subvectors of $icode pack_vec$$ are used:
 $cref pack_info_rate_info$$,
 $cref pack_info_mulcov_rate$$.
 
+$head reference_sc$$
+This argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %reference_sc%
+%$$
+If the size of this vector is zero, it is not used.
+It's intended use is to avoid repeated solving of the ODE's corresponding
+to the reference value for all of the covariates.
+Let $icode%n_ode% = n_age_ode_ * n_time_ode_%$$.
+If it's size is not zero,be
+$codei%2 * (n_child_ + 1) * %n_ode%$$.
+In this case,
+for $icode%c% = 0, %...%, n_child_%$$,
+for $icode%i% = 0, %...%, n_age_ode_-1%$$,
+for $icode%j% = 0, %...%, n_time_ode_-1%$$,
+$codei%
+	%reference_sc%[ 2*(%child% * %n_ode% + %i% * n_time_ode_ + %j%) + 0]
+%$$
+is the susceptible fraction and
+$codei%
+	%reference_sc%[ 2*(%child% * %n_ode% + %i% * n_time_ode_ + %j%) + 1]
+%$$
+is the with condition fraction corresponding to the specified child
+$icode c$$ and reference value for the covariates
+(the child $icode%c% = n_child_%$$ corresponds to the parent).
+
 $head avg$$
 The return value has prototype
 $codei%
@@ -1503,8 +1533,9 @@ $end
 
 template <class Float>
 Float data_model::avg_yes_ode(
-	size_t                        subset_id ,
-	const CppAD::vector<Float>&   pack_vec  ) const
+	size_t                        subset_id    ,
+	const CppAD::vector<Float>&   pack_vec     ,
+	const CppAD::vector<Float>&   reference_sc ) const
 {
 # ifndef NDEBUG
 	switch( data_info_[subset_id].integrand )
@@ -1521,6 +1552,9 @@ Float data_model::avg_yes_ode(
 		default:
 		break;
 	}
+	size_t n_ode = n_age_ode_ * n_time_ode_;
+	if( reference_sc.size() != 0 )
+		assert( reference_sc.size() == 2 * (n_child_ + 1) * n_ode );
 # endif
 	assert( pack_object_.size() == pack_vec.size() );
 
@@ -1923,6 +1957,46 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 {	assert( replace_like_called_ );
 	CppAD::vector< residual_struct<Float> > residual_vec;
 
+	// -----------------------------------------------------------------------
+	// S = child_ode_grid_sc[ 2*(child * n_ode + i * n_time_ode_ + j) + 0]
+	// C = child_ode_grid_sc[ 2*(child * n_ode + i * n_time_ode_ + j) + 1]
+	// -----------------------------------------------------------------------
+# if 1
+	CppAD::vector<Float> reference_sc(0);
+# else
+	// 2DO switch to using reference_sc
+	size_t n_ode = n_age_ode_ * n_time_ode_;
+	CppAD::vector<Float> reference_sc( (n_child_+1) * n_ode * 2 );
+	//
+	// will not use integrand result
+	integrand_enum integrand = susceptible_enum;
+	// x value correspnding to covariate reference
+	CppAD::vector<double> x(n_covariate_);
+	for(size_t j = 0; j < n_covariate_; ++j)
+		x[j] = 0.0;
+	for(size_t child = 0; child <= n_child_; ++child)
+	{	// limits corresponding to entire ode grid
+		size_t i_min      = 0;
+		size_t j_min      = 0;
+		size_t n_age_sub  = n_age_ode_;
+		size_t n_time_sub = n_time_ode_;
+		//
+		// compute values for this child
+		CppAD::vector<Float> sci_sub = sci_ode(
+			integrand, i_min, j_min, n_age_sub, n_time_sub, child, x, pack_vec
+		);
+		//
+		// copy to child_ode_grid_sc
+		for(size_t i = 0; i < n_age_ode_; ++i)
+		{	for(size_t j = 0; j < n_time_ode_; ++j)
+			{	size_t k = 2 * (child * n_ode + i * n_time_ode_ + j);
+				reference_sc[k + 0] = sci_sub[(i * n_time_ode_ + j)*3 + 0];
+				reference_sc[k + 1] = sci_sub[(i * n_time_ode_ + j)*3 + 1];
+			}
+		}
+	}
+# endif
+
 	// loop over the subsampled data
 	for(size_t subset_id = 0; subset_id < data_subset_obj_.size(); subset_id++)
 	{	bool keep = hold_out == false;
@@ -1953,7 +2027,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 				case mtspecific_enum:
 				case mtall_enum:
 				case mtstandard_enum:
-				avg = avg_yes_ode(subset_id, pack_vec);
+				avg = avg_yes_ode(subset_id, pack_vec, reference_sc);
 				break;
 
 				default:
@@ -2009,8 +2083,9 @@ DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)
 		const CppAD::vector<Float>&   pack_vec              \
 	) const;                                                \
 	template Float data_model::avg_yes_ode(                 \
-		size_t                        subset_id,            \
-		const CppAD::vector<Float>&   pack_vec              \
+		size_t                        subset_id        ,    \
+		const CppAD::vector<Float>&   pack_vec         ,    \
+		const CppAD::vector<Float>&   reference_sc          \
 	) const;                                                \
 	template residual_struct<Float>                         \
 	data_model::like_one(                                   \
