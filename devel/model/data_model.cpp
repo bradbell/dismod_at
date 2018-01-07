@@ -739,13 +739,14 @@ $$
 $section Solve for S and C Corresponding to Reference Covariate Values$$
 
 $head Syntax$$
-$icode%reference_sc% = %data_object%.reference_sc(%pack_vec%)%$$
+$icode%reference_sc% = %data_object%.reference_sc(%pack_vec%, %parent_only%)%$$
+
+$head Prototype$$
+$srcfile%devel/model/data_model.cpp%0
+	%// BEGIN REFERENCE_SC_PROTOTYPE%// END REFERENCE_SC_PROTOTYPE%
+1%$$
 
 $head data_object$$
-This object has prototype
-$codei%
-	const data_model %data_object%
-%$$
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
@@ -753,12 +754,13 @@ The type $icode Float$$ must be one of the following:
 $code double$$ or one of the $cref ad_types$$.
 
 $head pack_vec$$
-This argument has prototype
-$codei%
-	const CppAD::vector<%Float%>& %pack_vec%
-%$$
-and is all the $cref model_variables$$ in the order
+is all the $cref model_variables$$ in the order
 specified by $cref pack_info$$.
+
+$head parent_only$$
+if true, only the parent values in $icode reference_sc$$ are calculated
+($icode%c% = n_child_%$$).
+The other elements in $icode reference_sc$$ are not defined.
 
 $head reference_sc$$
 The return value has prototype
@@ -776,24 +778,29 @@ for $icode%j% = 0, %...%, n_time_ode_-1%$$,
 $codei%
 	%reference_sc%[ 2*(%child% * %n_ode% + %i% * n_time_ode_ + %j%) + 0]
 %$$
-is the susceptible fraction and
+is the susceptible fraction S and
 $codei%
 	%reference_sc%[ 2*(%child% * %n_ode% + %i% * n_time_ode_ + %j%) + 1]
 %$$
-is the with condition fraction corresponding to the specified child
-$icode c$$ and reference value for the covariates
-(the child $icode%c% = n_child_%$$ corresponds to the parent).
+is the with condition fraction C corresponding to the specified child
+$icode c$$ and reference value for the rate covariates.
+The child $icode%c% = n_child_%$$ corresponds to the parent.
 
 $end
 */
 
+// BEGIN REFERENCE_SC_PROTOTYPE
 template <class Float>
 CppAD::vector<Float> data_model::reference_ode(
-	const CppAD::vector<Float>& pack_vec
+	const CppAD::vector<Float>& pack_vec     ,
+	bool                        parent_only
 ) const
+// END REFERENCE_SC_PROTOTYPE
 {
 	size_t n_ode = n_age_ode_ * n_time_ode_;
 	CppAD::vector<Float> reference_sc( (n_child_+1) * n_ode * 2 );
+	for(size_t k = 0; k < reference_sc.size(); ++k)
+		reference_sc[k] = CppAD::numeric_limits<Float>::quiet_NaN();
 	//
 	// will not use integrand result
 	integrand_enum integrand = susceptible_enum;
@@ -806,7 +813,10 @@ CppAD::vector<Float> data_model::reference_ode(
 	// computing new reference_sc, so do not use this argument
 	CppAD::vector<Float> not_used(0);
 	//
-	for(size_t child = 0; child <= n_child_; ++child)
+	size_t first_child = 0;
+	if( parent_only )
+		first_child = n_child_;
+	for(size_t child = first_child; child <= n_child_; ++child)
 	{	// limits corresponding to entire ode grid
 		size_t i_min      = 0;
 		size_t j_min      = 0;
@@ -949,13 +959,13 @@ for $icode%j% = 0, %...%, n_time_ode_-1%$$,
 $codei%
 	%reference_sc%[ 2*(%child% * %n_ode% + %i% * n_time_ode_ + %j%) + 0]
 %$$
-is the susceptible fraction and
+is the susceptible fraction S and
 $codei%
 	%reference_sc%[ 2*(%child% * %n_ode% + %i% * n_time_ode_ + %j%) + 1]
 %$$
-is the with condition fraction corresponding to the specified child
-$icode c$$ and reference value for the covariates
-(the child $icode%c% = n_child_%$$ corresponds to the parent).
+is the with condition fraction C corresponding to the specified child
+$icode c$$ and reference value for the rate covariates.
+The child $icode%c% = n_child_%$$ corresponds to the parent.
 
 $head sci_sub$$
 The return value has size $icode%n_age_sub%*%n_time_sub%*3%$$.
@@ -1673,8 +1683,8 @@ $codei%
 	%reference_sc%[ 2*(%child% * %n_ode% + %i% * n_time_ode_ + %j%) + 1]
 %$$
 is the with condition fraction corresponding to the specified child
-$icode c$$ and reference value for the covariates
-(the child $icode%c% = n_child_%$$ corresponds to the parent).
+$icode c$$ and reference value for the rate covariates.
+The child $icode%c% = n_child_%$$ corresponds to the parent.
 
 $head avg$$
 The return value has prototype
@@ -2126,15 +2136,10 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 	bool                        random_depend ,
 	const CppAD::vector<Float>& pack_vec      ) const
 {	assert( replace_like_called_ );
-	CppAD::vector< residual_struct<Float> > residual_vec;
-
-	// -----------------------------------------------------------------------
-	// S = child_ode_grid_sc[ 2*(child * n_ode + i * n_time_ode_ + j) + 0]
-	// C = child_ode_grid_sc[ 2*(child * n_ode + i * n_time_ode_ + j) + 1]
-	// -----------------------------------------------------------------------
 	CppAD::vector<Float> not_used(0);
 
 	// loop over the subsampled data
+	CppAD::vector< residual_struct<Float> > residual_vec;
 	for(size_t subset_id = 0; subset_id < data_subset_obj_.size(); subset_id++)
 	{	bool keep = hold_out == false;
 		keep     |= data_subset_obj_[subset_id].hold_out == 0;

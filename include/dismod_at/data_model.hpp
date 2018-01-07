@@ -107,7 +107,8 @@ public:
 	// to compute S, C, corresponding to reference value for covariates
 	template <class Float>
 	CppAD::vector<Float> reference_ode(
-		const  CppAD::vector<Float>&  pack_vec
+		const  CppAD::vector<Float>&  pack_vec     ,
+		bool                          parent_only
 	) const;
 	//
 	// use ode to compute S, C, and integrand on a sub-grid
