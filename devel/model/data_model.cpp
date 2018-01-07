@@ -1082,7 +1082,7 @@ CppAD::vector<Float> data_model::sci_ode(
 	size_t n_index = ode_index.size();
 
 	/* --------------------------------------------------------------------
-	rate_ode:
+	rate_ode, use_reference_sc:
 	For rate_id = 0, ..., n_rate-1, ell = 0, ..., n_index - 1
 		rate_ode[rate_id][ell]
 	is value of the specified rate at the (i, j) grid point specified by
@@ -1090,6 +1090,7 @@ CppAD::vector<Float> data_model::sci_ode(
 	---------------------------------------------------------------------- */
 	CppAD::vector< CppAD::vector<Float> > rate_ode(number_rate_enum);
 	pack_info::subvec_info                info;
+	bool use_reference_sc = reference_sc.size() != 0;
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	rate_ode[rate_id].resize(n_index);
 		//
@@ -1147,6 +1148,9 @@ CppAD::vector<Float> data_model::sci_ode(
 			smooth_id  = info.smooth_id;
 			double x_j = x[ info.covariate_id ];
 			//
+			// x_j is relative to the reference covariate value
+			use_reference_sc &= x_j == 0.0;
+			//
 			CppAD::vector<Float> var_si(n_var);
 			for(size_t k = 0; k < n_var; k++)
 				var_si[k] = pack_vec[info.offset + k];
@@ -1167,7 +1171,8 @@ CppAD::vector<Float> data_model::sci_ode(
 	/* -----------------------------------------------------------------------
 	sci_ode
 	---------------------------------------------------------------------- */
-	size_t n_cohort = cohort_start.size();
+	size_t n_cohort  = cohort_start.size();
+	size_t n_ode     = n_age_ode_ * n_time_ode_;
 	size_t n_ode_sub = n_age_sub * n_time_sub;
 	CppAD::vector<Float> iota, rho, chi, omega, S_out, C_out;
 	Float zero = Float(0.0);
@@ -1188,30 +1193,41 @@ CppAD::vector<Float> data_model::sci_ode(
 		else
 			nk = ode_index.size() - cohort_start[ell];
 		//
-		// pini, iota, rho, cho, omega for this cohort
-		Float pini   = Float(rate_ode[pini_enum][k_start]);
-		iota.resize(nk);
-		rho.resize(nk);
-		chi.resize(nk);
-		omega.resize(nk);
-		for(size_t k = 0; k < nk; k++)
-		{	iota[k]  = rate_ode[iota_enum][k_start + k];
-			rho[k]   = rate_ode[rho_enum][k_start + k];
-			chi[k]   = rate_ode[chi_enum][k_start + k];
-			omega[k] = rate_ode[omega_enum][k_start + k];
+		if( use_reference_sc )
+		{	S_out.resize(nk);
+			C_out.resize(nk);
+			for(size_t k = 0; k < nk; ++k)
+			{	size_t ell = 2 * (child * n_ode + ode_index[k_start + k]);
+				S_out[k]   = reference_sc[ell + 0];
+				C_out[k]   = reference_sc[ell + 1];
+			}
 		}
-		//
-		// S and C for this cohort
-		S_out.resize(0);
-		C_out.resize(0);
-		size_t i_max     = ode_index[k_start + nk - 1] / n_time_ode_;
-		size_t j_max     = ode_index[k_start + nk - 1] % n_time_ode_;
-		Float  step_size = Float(ode_step_size_);
-		//
-		solve_ode(
-			eigen_ode2_case_number_ ,
+		else
+		{
+			// pini, iota, rho, cho, omega for this cohort
+			Float pini   = Float(rate_ode[pini_enum][k_start]);
+			iota.resize(nk);
+			rho.resize(nk);
+			chi.resize(nk);
+			omega.resize(nk);
+			for(size_t k = 0; k < nk; k++)
+			{	iota[k]  = rate_ode[iota_enum][k_start + k];
+				rho[k]   = rate_ode[rho_enum][k_start + k];
+				chi[k]   = rate_ode[chi_enum][k_start + k];
+				omega[k] = rate_ode[omega_enum][k_start + k];
+			}
+			//
+			// S and C for this cohort
+			S_out.resize(0);
+			C_out.resize(0);
+			size_t i_max     = ode_index[k_start + nk - 1] / n_time_ode_;
+			size_t j_max     = ode_index[k_start + nk - 1] % n_time_ode_;
+			Float  step_size = Float(ode_step_size_);
+			//
+			solve_ode(eigen_ode2_case_number_ ,
 			i_max, j_max, step_size, pini, iota, rho, chi, omega, S_out, C_out
-		);
+			);
+		}
 		//
 		// extract part of cohort that is in the rectangle for this measurement
 		Float infinity  = Float( std::numeric_limits<double>::infinity() );
