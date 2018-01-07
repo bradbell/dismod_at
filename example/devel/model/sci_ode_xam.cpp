@@ -276,8 +276,17 @@ bool sci_ode_xam(void)
 	size_t n_time_sub        = data_object.data_info_[subset_id].n_time;
 	size_t child             = data_object.data_info_[subset_id].child;
 	vector<double> x(0);
+	vector<Float> not_used(0);
 	vector<Float> sci_sub = data_object.sci_ode(
-		integrand, i_min, j_min, n_age_sub, n_time_sub, child, x, pack_vec
+		integrand,
+		i_min,
+		j_min,
+		n_age_sub,
+		n_time_sub,
+		child,
+		x,
+		pack_vec,
+		not_used
 	);
 	ok  &= sci_sub.size() == 3 * n_age_sub * n_time_sub;
 	//

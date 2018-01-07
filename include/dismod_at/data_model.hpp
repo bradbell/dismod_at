@@ -104,17 +104,24 @@ public:
 		const CppAD::vector<data_subset_struct>& data_subset_obj
 	);
 	//
+	// to compute S, C, corresponding to reference value for covariates
+	template <class Float>
+	CppAD::vector<Float> reference_ode(
+		const  CppAD::vector<Float>&  pack_vec
+	) const;
+	//
 	// use ode to compute S, C, and integrand on a sub-grid
 	template <class Float>
 	CppAD::vector<Float> sci_ode(
-		integrand_enum                integrand  ,
-		size_t                        i_min      ,
-		size_t                        j_min      ,
-		size_t                        n_age_sub  ,
-		size_t                        n_time_sub ,
-		size_t                        child      ,
-		const  CppAD::vector<double>& x          ,
-		const  CppAD::vector<Float>&  pack_vec
+		integrand_enum                integrand    ,
+		size_t                        i_min        ,
+		size_t                        j_min        ,
+		size_t                        n_age_sub    ,
+		size_t                        n_time_sub   ,
+		size_t                        child        ,
+		const  CppAD::vector<double>& x            ,
+		const  CppAD::vector<Float>&  pack_vec     ,
+		const  CppAD::vector<Float>&  reference_sc
 	) const;
 	friend bool ::sci_ode_xam(void);
 	//

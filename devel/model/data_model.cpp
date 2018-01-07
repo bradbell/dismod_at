@@ -726,8 +726,120 @@ void data_model::replace_like(
 	return;
 }
 /*
+-------------------------------------------------------------------------------
+$begin data_model_reference_ode$$
+$spell
+	vec
+	const
+	CppAD
+	Covariate
+	covariates
+$$
+
+$section Solve for S and C Corresponding to Reference Covariate Values$$
+
+$head Syntax$$
+$icode%reference_sc% = %data_object%.reference_sc(%pack_vec%)%$$
+
+$head data_object$$
+This object has prototype
+$codei%
+	const data_model %data_object%
+%$$
+see $cref/data_object constructor/data_model_ctor/data_object/$$.
+
+$head Float$$
+The type $icode Float$$ must be one of the following:
+$code double$$ or one of the $cref ad_types$$.
+
+$head pack_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %pack_vec%
+%$$
+and is all the $cref model_variables$$ in the order
+specified by $cref pack_info$$.
+
+$head reference_sc$$
+The return value has prototype
+$codei%
+	const CppAD::vector<%Float%>& %reference_sc%
+%$$
+It's size is given by
+$codei%
+	%reference_sc%.size() = 2 * (n_child_ + 1) * %n_ode%
+%$$
+Let $icode%n_ode% = n_age_ode_ * n_time_ode_%$$.
+For $icode%c% = 0, %...%, n_child_%$$,
+for $icode%i% = 0, %...%, n_age_ode_-1%$$,
+for $icode%j% = 0, %...%, n_time_ode_-1%$$,
+$codei%
+	%reference_sc%[ 2*(%child% * %n_ode% + %i% * n_time_ode_ + %j%) + 0]
+%$$
+is the susceptible fraction and
+$codei%
+	%reference_sc%[ 2*(%child% * %n_ode% + %i% * n_time_ode_ + %j%) + 1]
+%$$
+is the with condition fraction corresponding to the specified child
+$icode c$$ and reference value for the covariates
+(the child $icode%c% = n_child_%$$ corresponds to the parent).
+
+$end
+*/
+
+template <class Float>
+CppAD::vector<Float> data_model::reference_ode(
+	const CppAD::vector<Float>& pack_vec
+) const
+{
+	size_t n_ode = n_age_ode_ * n_time_ode_;
+	CppAD::vector<Float> reference_sc( (n_child_+1) * n_ode * 2 );
+	//
+	// will not use integrand result
+	integrand_enum integrand = susceptible_enum;
+	//
+	// x value correspnding to covariate reference
+	CppAD::vector<double> x(n_covariate_);
+	for(size_t j = 0; j < n_covariate_; ++j)
+		x[j] = 0.0;
+	//
+	// computing new reference_sc, so do not use this argument
+	CppAD::vector<Float> not_used(0);
+	//
+	for(size_t child = 0; child <= n_child_; ++child)
+	{	// limits corresponding to entire ode grid
+		size_t i_min      = 0;
+		size_t j_min      = 0;
+		size_t n_age_sub  = n_age_ode_;
+		size_t n_time_sub = n_time_ode_;
+		//
+		// compute values for this child
+		CppAD::vector<Float> sci_sub = sci_ode(
+			integrand,
+			i_min,
+			j_min,
+			n_age_sub,
+			n_time_sub,
+			child,
+			x,
+			pack_vec,
+			not_used
+		);
+		//
+		// copy to child_ode_grid_sc
+		for(size_t i = 0; i < n_age_ode_; ++i)
+		{	for(size_t j = 0; j < n_time_ode_; ++j)
+			{	size_t k = 2 * (child * n_ode + i * n_time_ode_ + j);
+				reference_sc[k + 0] = sci_sub[(i * n_time_ode_ + j)*3 + 0];
+				reference_sc[k + 1] = sci_sub[(i * n_time_ode_ + j)*3 + 1];
+			}
+		}
+	}
+	return reference_sc;
+}
+/*
 -----------------------------------------------------------------------------
-$begin data_model_integrand_ode$$
+$begin data_model_sci_ode$$
 $spell
 	vec
 	const
@@ -747,7 +859,14 @@ $section Use the ODE to Integrand for one Measurement$$
 
 $head Syntax$$
 $icode%sci_sub% = data_object%.sci_ode(
-%integrand%, %i_min%, %j_min%, %n_age_sub%, %n_time_sub%, %child%, %pack_vec%
+	%integrand%,
+	%i_min%,
+	%j_min%,
+	%n_age_sub%,
+	%n_time_sub%,
+	%child%,
+	%pack_vec%,
+	%reference_sc%
 )%$$
 
 $head Prototype$$
@@ -812,6 +931,32 @@ Only the following subvectors of $icode pack_vec$$ are used:
 $cref pack_info_rate_info$$,
 $cref pack_info_mulcov_rate$$.
 
+$head reference_sc$$
+This argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %reference_sc%
+%$$
+If the size of this vector is zero, it is not used.
+It's intended use is to avoid repeated solving of the ODE's corresponding
+to the reference value for all of the covariates.
+Let $icode%n_ode% = n_age_ode_ * n_time_ode_%$$.
+If it's size is not zero,be
+$codei%2 * (n_child_ + 1) * %n_ode%$$.
+In this case,
+for $icode%c% = 0, %...%, n_child_%$$,
+for $icode%i% = 0, %...%, n_age_ode_-1%$$,
+for $icode%j% = 0, %...%, n_time_ode_-1%$$,
+$codei%
+	%reference_sc%[ 2*(%child% * %n_ode% + %i% * n_time_ode_ + %j%) + 0]
+%$$
+is the susceptible fraction and
+$codei%
+	%reference_sc%[ 2*(%child% * %n_ode% + %i% * n_time_ode_ + %j%) + 1]
+%$$
+is the with condition fraction corresponding to the specified child
+$icode c$$ and reference value for the covariates
+(the child $icode%c% = n_child_%$$ corresponds to the parent).
+
 $head sci_sub$$
 The return value has size $icode%n_age_sub%*%n_time_sub%*3%$$.
 For $icode%i%=0,...,%n_age_sub%-1%$$,
@@ -850,14 +995,16 @@ $end
 // BEGIN SCI_ODE_PROTOTYPE
 template <class Float>
 CppAD::vector<Float> data_model::sci_ode(
-	integrand_enum                integrand   ,
-	size_t                        i_min       ,
-	size_t                        j_min       ,
-	size_t                        n_age_sub   ,
-	size_t                        n_time_sub  ,
-	size_t                        child       ,
-	const CppAD::vector<double>&  x           ,
-	const CppAD::vector<Float>&   pack_vec    ) const
+	integrand_enum                integrand     ,
+	size_t                        i_min         ,
+	size_t                        j_min         ,
+	size_t                        n_age_sub     ,
+	size_t                        n_time_sub    ,
+	size_t                        child         ,
+	const CppAD::vector<double>&  x             ,
+	const CppAD::vector<Float>&   pack_vec      ,
+	const CppAD::vector<Float>&   reference_sc
+) const
 // END SCI_ODE_PROTOTYPE
 {	assert( pack_object_.size() == pack_vec.size() );
 	assert( i_min + n_age_sub <= n_age_ode_ );
@@ -1574,7 +1721,15 @@ Float data_model::avg_yes_ode(
 
 	// sci_sub
 	CppAD::vector<Float> sci_sub = sci_ode(
-		integrand, i_min, j_min, n_age_sub, n_time_sub, child, x, pack_vec
+		integrand,
+		i_min,
+		j_min,
+		n_age_sub,
+		n_time_sub,
+		child,
+		x,
+		pack_vec,
+		reference_sc
 	);
 
 	/* -----------------------------------------------------------------------
@@ -1961,41 +2116,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 	// S = child_ode_grid_sc[ 2*(child * n_ode + i * n_time_ode_ + j) + 0]
 	// C = child_ode_grid_sc[ 2*(child * n_ode + i * n_time_ode_ + j) + 1]
 	// -----------------------------------------------------------------------
-# if 1
-	CppAD::vector<Float> reference_sc(0);
-# else
-	// 2DO switch to using reference_sc
-	size_t n_ode = n_age_ode_ * n_time_ode_;
-	CppAD::vector<Float> reference_sc( (n_child_+1) * n_ode * 2 );
-	//
-	// will not use integrand result
-	integrand_enum integrand = susceptible_enum;
-	// x value correspnding to covariate reference
-	CppAD::vector<double> x(n_covariate_);
-	for(size_t j = 0; j < n_covariate_; ++j)
-		x[j] = 0.0;
-	for(size_t child = 0; child <= n_child_; ++child)
-	{	// limits corresponding to entire ode grid
-		size_t i_min      = 0;
-		size_t j_min      = 0;
-		size_t n_age_sub  = n_age_ode_;
-		size_t n_time_sub = n_time_ode_;
-		//
-		// compute values for this child
-		CppAD::vector<Float> sci_sub = sci_ode(
-			integrand, i_min, j_min, n_age_sub, n_time_sub, child, x, pack_vec
-		);
-		//
-		// copy to child_ode_grid_sc
-		for(size_t i = 0; i < n_age_ode_; ++i)
-		{	for(size_t j = 0; j < n_time_ode_; ++j)
-			{	size_t k = 2 * (child * n_ode + i * n_time_ode_ + j);
-				reference_sc[k + 0] = sci_sub[(i * n_time_ode_ + j)*3 + 0];
-				reference_sc[k + 1] = sci_sub[(i * n_time_ode_ + j)*3 + 1];
-			}
-		}
-	}
-# endif
+	CppAD::vector<Float> not_used(0);
 
 	// loop over the subsampled data
 	for(size_t subset_id = 0; subset_id < data_subset_obj_.size(); subset_id++)
@@ -2027,7 +2148,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 				case mtspecific_enum:
 				case mtall_enum:
 				case mtstandard_enum:
-				avg = avg_yes_ode(subset_id, pack_vec, reference_sc);
+				avg = avg_yes_ode(subset_id, pack_vec, not_used);
 				break;
 
 				default:
@@ -2069,14 +2190,15 @@ DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \
 	template CppAD::vector<Float>                           \
 	data_model::sci_ode(                                    \
-		integrand_enum                integrand  ,          \
-		size_t                        i_min      ,          \
-		size_t                        j_min      ,          \
-		size_t                        n_age_sub  ,          \
-		size_t                        n_time_sub ,          \
-		size_t                        child      ,          \
-		const CppAD::vector<double>&  x          ,          \
-		const CppAD::vector<Float>&   pack_vec              \
+		integrand_enum                integrand    ,        \
+		size_t                        i_min        ,        \
+		size_t                        j_min        ,        \
+		size_t                        n_age_sub    ,        \
+		size_t                        n_time_sub   ,        \
+		size_t                        child        ,        \
+		const CppAD::vector<double>&  x            ,        \
+		const CppAD::vector<Float>&   pack_vec     ,        \
+		const CppAD::vector<Float>&   reference_sc          \
 	) const;                                                \
 	template Float data_model::avg_no_ode(                  \
 		size_t                        subset_id,            \
