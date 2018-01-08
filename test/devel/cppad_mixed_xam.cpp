@@ -1,16 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
-             (Bradley M. Bell bradbell@uw.edu)
-
-This program is distributed under the terms of the
-	     GNU Affero General Public License version 3.0 or later
-see http://www.gnu.org/licenses/agpl.txt
--------------------------------------------------------------------------- */
-// $Id$
-/* --------------------------------------------------------------------------
-cppad_mixed: C++ Laplace Approximation of Mixed Effects Models
           Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
@@ -53,9 +42,7 @@ namespace {
 			n_fixed_(n_fixed)     ,
 			n_random_(n_random)   ,
 			y_(y)
-		{	assert( n_fixed == 2);
-			assert( y_.size() == n_random_ );
-		}
+		{ }
 	// ----------------------------------------------------------------------
 		// implementation of ran_likelihood
 		template <typename Vector>
@@ -63,115 +50,76 @@ namespace {
 			const Vector&         theta  ,
 			const Vector&         u      )
 		{	typedef typename Vector::value_type scalar;
-
-			assert( theta.size() == n_fixed_ );
-			assert( u.size() == y_.size() );
 			Vector vec(1);
+			assert( n_fixed_ == 1 );
+			assert( n_random_ == 2 );
+			assert( y_.size() == 3 );
 
 			// initialize part of log-density that is always smooth
 			vec[0] = scalar(0.0);
 
-			// sqrt_2pi = CppAD::sqrt(8.0 * CppAD::atan(1.0) );
+			scalar model = theta[0];
+			scalar res   = scalar( y_[0] ) - model;
+			vec[0]      += res * res;
 
+			// p(y_1 | theta, u )
+			model   = theta[0] + u[0];
+			res     = scalar( y_[1] ) - model;
+			vec[0] += res * res;
+
+			// p(y_2 | theta, u )
+			model   = theta[0] + u[1];
+			res     = scalar( y_[2] ) - model;
+			vec[0] += res * res;
+
+			// p(u | theta)
 			for(size_t i = 0; i < n_random_; i++)
-			{	scalar mu     = u[i] + theta[0];
-				scalar sigma  = theta[1];
-				scalar res    = (y_[i] - mu) / sigma;
-
-				// p(y_i | u, theta)
-				vec[0] += log(sigma) + res * res / scalar(2.0);
-				// following term does not depend on fixed or random effects
-				// vec[0] += log(sqrt_2pi);
-
-				// p(u_i | theta)
-				vec[0] += u[i] * u[i] / scalar(2.0);
-				// following term does not depend on fixed or random effects
-				// vec[0] += log(sqrt_2pi);
+			{	vec[0] += u[i] * u[i];
 			}
 			return vec;
 		}
-		// a2_vector version of ran_likelihood
 		// a3_vector version of ran_likelihood
 		virtual a3_vector ran_likelihood(
 			const a3_vector& fixed_vec, const a3_vector& random_vec
 		)
 		{	return template_ran_likelihood( fixed_vec, random_vec ); }
-		// implementation of fix_likelihood
-		template <typename Vector>
-		Vector template_fix_likelihood(
-			const Vector&         fixed_vec  )
-		{	typedef typename Vector::value_type scalar;
-
-			assert( fixed_vec.size() == n_fixed_ );
-			Vector vec(1);
-
-			// initialize part of log-density that is smooth
-			vec[0] = scalar(0.0);
-
-			// sqrt_2pi = CppAD::sqrt( 8.0 * CppAD::atan(1.0) );
-
-			for(size_t j = 0; j < n_fixed_; j++)
-			{	scalar mu     = scalar(4.0);
-				scalar sigma  = scalar(1.0);
-				scalar res    = (fixed_vec[j] - mu) / sigma;
-
-				// This is a Gaussian term, so entire density is smooth
-				vec[0]  += res * res / scalar(2.0);
-				// following term does not depend on fixed effects
-				// vec[0]  += log(sqrt_2pi * sigma);
-			}
-			return vec;
-		}
-		// a1_vector version of fix_likelihood
-		virtual a1_vector fix_likelihood(const a1_vector& fixed_vec)
-		{	return template_fix_likelihood( fixed_vec ); }
 	};
-	// derivative of objective
-	d_vector objective_fixed(
-		const d_vector&       data   ,
-		const d_vector&       theta  )
-	{	d_vector dF(2);
-		//
-		// compute partials of F
-		double sum   = 0.0;
-		double sumsq = 0.0;
-		for(size_t i = 0; i < data.size(); i++)
-		{	sum   += theta[0] - data[i];
-			sumsq += (theta[0] - data[i]) * (theta[0] - data[i]);
-		}
-		double den = 1.0 + theta[1] * theta[1];
-		dF[0]  = (theta[0] - 4.0) + sum / den;
-		dF[1]  = theta[1] - 4.0;
-		dF[1] += double(data.size()) * theta[1] / den;
-		dF[1] -= sumsq * theta[1]  / (den * den);
-		//
-		return dF;
-	}
 }
 
 bool cppad_mixed_xam(void)
 {
 	bool   ok = true;
 	double inf = std::numeric_limits<double>::infinity();
-	double tol = 1e-8;
-
-	size_t n_data   = 10;
-	size_t n_fixed  = 2;
-	size_t n_random = n_data;
-	d_vector
-		fixed_lower(n_fixed), fixed_in(n_fixed), fixed_upper(n_fixed);
-	fixed_lower[0] = - inf; fixed_in[0] = 2.0; fixed_upper[0] = inf;
-	fixed_lower[1] = .01;   fixed_in[1] = 0.5; fixed_upper[1] = inf;
 	//
-	// explicit constriants (in addition to l1 terms)
-	d_vector fix_constraint_lower(0), fix_constraint_upper(0);
+	size_t n_data   = 3;
+	size_t n_fixed  = 1;
+	size_t n_random = 2;
 	//
-	d_vector data(n_data), random_in(n_random);
-	for(size_t i = 0; i < n_data; i++)
-	{	data[i]       = double(i + 1);
-		random_in[i] = 0.0;
+	d_vector fixed_lower(n_fixed),
+	         fixed_upper(n_fixed),
+	         fixed_true(n_fixed),
+	         fixed_in(n_fixed);
+	fixed_lower[0] = 1e-3;
+	fixed_true[0]  = 2.0;
+	fixed_in[0]    = 1.0;
+	fixed_upper[0] = 1e3;
+	//
+	d_vector random_lower(n_random),
+	         random_upper(n_random),
+	         random_true(n_random),
+	         random_in(n_random);
+	for(size_t i = 0; i < n_random; ++i)
+	{	random_lower[i] = -inf;
+		random_true[i]  = 0.0;
+		random_in[i]    = 0.5;
+		random_upper[i] = +inf;
 	}
-
+	//
+	d_vector data(n_data);
+	data[0] = fixed_true[0];
+	data[1] = fixed_true[0] + random_true[0];
+	data[2] = fixed_true[0] + random_true[1];
+	//
 	// object that is derived from cppad_mixed
 	bool quasi_fixed   = true;
 	bool bool_sparsity = true;
@@ -188,25 +136,19 @@ bool cppad_mixed_xam(void)
 		"String  derivative_test           adaptive\n"
 		"String  derivative_test_print_all yes\n"
 		"Integer max_iter                  15\n"
+		"Numeric tol 1e-8\n"
 	;
 	std::string random_ipopt_options =
 		"Integer print_level     0\n"
 		"String  sb              yes\n"
 		"String  derivative_test second-order\n"
-		"Numeric tol             1e-8\n"
+		"Numeric tol             1e-10\n"
 	;
 	//
-	d_vector random_lower(n_random), random_upper(n_random);
-	for(size_t i = 0; i < n_random; i++)
-	{	random_lower[i] = -inf;
-		random_upper[i] = +inf;
-	}
-	// ------------------------------------------------------------------
-	// optimize with tolerance 1e-3
-	std::string temp_string = fixed_ipopt_options + "Numeric tol 1e-3\n";
+	d_vector fix_constraint_lower(0), fix_constraint_upper(0);
 	d_vector fixed_scale = fixed_in;
 	CppAD::mixed::fixed_solution solution = mixed_object.optimize_fixed(
-		temp_string,
+		fixed_ipopt_options,
 		random_ipopt_options,
 		fixed_lower,
 		fixed_upper,
@@ -219,40 +161,8 @@ bool cppad_mixed_xam(void)
 		random_in
 	);
 	d_vector fixed_out = solution.fixed_opt;
-	// ------------------------------------------------------------------
-	// continue optimization, from previous, with new tolerance of 1e-8
-	temp_string = fixed_ipopt_options + "Numeric tol 1e-8\n";
-	fixed_in    = fixed_out;
-	solution    = mixed_object.optimize_fixed(
-		temp_string,
-		random_ipopt_options,
-		fixed_lower,
-		fixed_upper,
-		fix_constraint_lower,
-		fix_constraint_upper,
-		fixed_scale,
-		fixed_in,
-		random_lower,
-		random_upper,
-		random_in
-	);
-	fixed_out = solution.fixed_opt;
-	// ------------------------------------------------------------------
-
-	// deriative of objective at fixed_in and fixed_out
-	d_vector dF_scale = objective_fixed(data, fixed_scale);
-	d_vector dF_out   = objective_fixed(data, fixed_out);
-
-	// scaling for objective
-	double scale = std::max(
-		std::fabs( dF_scale[0] ), std::fabs( dF_scale[1] )
-	);
-	scale = 1.0 / scale;
-
-	// Note that no constraints are active, (not even the l1 terms)
-	// so the partials should be zero.
-	ok &= fabs( scale * dF_out[0] ) <= 5. * tol;
-	ok &= fabs( scale * dF_out[1] ) <= 5. * tol;
-
+	//
+	ok &= std::fabs( fixed_out[0] / fixed_true[0] - 1.0 ) < 1e-8;
+	//
 	return ok;
 }
