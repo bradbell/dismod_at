@@ -18,6 +18,7 @@ $spell
 	covariate
 	jk
 	ij
+	covariates
 $$
 
 $section The mulcov Table: Covariate Multipliers$$
@@ -36,8 +37,19 @@ The possible values are:
 
 $subhead rate_value$$
 This covariate multiplier
-adjusts a model rate in the average integrand calculation;
+adjusts a rate in the average integrand calculation;
 see $cref/alpha_jk/avg_integrand/Rate Functions/alpha_jk/$$.
+A separate solution of the
+$cref/ordinary differential equation
+	/avg_integrand
+	/Ordinary Differential Equation
+/$$
+is required for each cohort and each measurement,
+that has values not equal to the
+$cref/reference/covariate_table/reference/$$ for the covariate specified
+by $cref/covariate_id/mulcov_table/covariate_id/$$.
+In other words, measurements that have the reference value for all the
+rate covariates do not add as much to the computational load.
 
 $subhead meas_value$$
 This covariate multiplier adjusts the average integrand to match the

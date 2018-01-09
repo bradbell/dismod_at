@@ -46,6 +46,8 @@ $spell
 	py
 	CppAD
 	subgraph
+	covariates
+	mulcov
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -55,6 +57,12 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 12-09$$
+A change was made to speed up the calculations for measurements
+that have the reference value for all the rate covariates; see
+$cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ in the mulcov table
+documentation.
 
 $head 12-30$$
 Advance to using $code cppad_mixed-20171230$$.
