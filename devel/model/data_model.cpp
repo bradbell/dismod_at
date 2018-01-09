@@ -2136,8 +2136,10 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 	bool                        random_depend ,
 	const CppAD::vector<Float>& pack_vec      ) const
 {	assert( replace_like_called_ );
-	CppAD::vector<Float> not_used(0);
-
+	//
+	bool parent_only = ! random_depend;
+	CppAD::vector<Float> reference_sc = reference_ode(pack_vec, parent_only);
+	//
 	// loop over the subsampled data
 	CppAD::vector< residual_struct<Float> > residual_vec;
 	for(size_t subset_id = 0; subset_id < data_subset_obj_.size(); subset_id++)
@@ -2169,7 +2171,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 				case mtspecific_enum:
 				case mtall_enum:
 				case mtstandard_enum:
-				avg = avg_yes_ode(subset_id, pack_vec, not_used);
+				avg = avg_yes_ode(subset_id, pack_vec, reference_sc);
 				break;
 
 				default:
