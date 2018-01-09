@@ -88,7 +88,7 @@ def example_db (file_name) :
 	# values that are the same for all data rows
 	row = {
 		'node':        'world',
-		'density':     'gaussian',
+		'density':     'log_gaussian',
 		'weight':      'constant',
 		'hold_out':     False,
 		'time_lower':   time_list[1],
@@ -97,15 +97,17 @@ def example_db (file_name) :
 		'age_upper':    age_list[0],
 		'meas_value':   iota_true,
 		'meas_std':     iota_true * 0.1,
-		'eta':          None,
+		'eta':          1e-10,
 		'integrand':    'Sincidence'
 	}
 	# values that change between rows:
 	for data_id in range( n_data ) :
-		if data_id % 2 == 0 :
+		if data_id % 3 == 0 :
 			row['node'] = 'north_america'
-		else :
+		if data_id % 3 == 1 :
 			row['node'] = 'canada'
+		if data_id % 3 == 2 :
+			row['node'] = 'united_states'
 		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
@@ -133,14 +135,14 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      1.0, # 2DO: 1.0 and 0.01 work but 0.1 fails
+			'std':      0.5,
 			'eta':      None
 		},{ # prior_iota_parent
 			'name':     'prior_iota_parent',
 			'density':  'uniform',
 			'lower':    iota_true / 10.,
 			'upper':    10. * iota_true,
-			'mean':     iota_true,
+			'mean':     2.0 * iota_true,
 			'std':      None,
 			'eta':      None
 		}

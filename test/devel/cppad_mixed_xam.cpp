@@ -54,22 +54,26 @@ namespace {
 			assert( n_fixed_ == 1 );
 			assert( n_random_ == 2 );
 			assert( y_.size() == 3 );
+			//
+			// offset in log transform
+			scalar eta;
+			eta = 1e-10;
 
 			// initialize part of log-density that is always smooth
 			vec[0] = scalar(0.0);
 
 			scalar model = theta[0];
-			scalar res   = scalar( y_[0] ) - model;
+			scalar res   = log( scalar( y_[0] ) + eta) - log( model + eta);
 			vec[0]      += res * res;
 
 			// p(y_1 | theta, u )
-			model   = theta[0] + u[0];
-			res     = scalar( y_[1] ) - model;
+			model   = theta[0] * exp( u[0] );
+			res     = log( scalar( y_[1] ) + eta ) - log( model + eta );
 			vec[0] += res * res;
 
 			// p(y_2 | theta, u )
-			model   = theta[0] + u[1];
-			res     = scalar( y_[2] ) - model;
+			model   = theta[0] * exp( u[1] );
+			res     = log( scalar( y_[2] ) + eta ) - log( model + eta );
 			vec[0] += res * res;
 
 			// p(u | theta)
@@ -162,7 +166,7 @@ bool cppad_mixed_xam(void)
 	);
 	d_vector fixed_out = solution.fixed_opt;
 	//
-	ok &= std::fabs( fixed_out[0] / fixed_true[0] - 1.0 ) < 1e-8;
+	ok &= std::fabs( fixed_out[0] / fixed_true[0] - 1.0 ) < 1e-7;
 	//
 	return ok;
 }
