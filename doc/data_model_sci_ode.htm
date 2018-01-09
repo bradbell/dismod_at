@@ -1,0 +1,387 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Use the ODE to Integrand for one Measurement</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Use the ODE to Integrand for one Measurement">
+<meta name="keywords" id="keywords" content=" use the ode to integrand one measurement syntax prototype float data_object i_min j_min n_age_sub n_time_sub child x pack_vec reference_sc sci_sub example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_data_model_sci_ode_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="data_model_reference_ode.htm" target="_top">Prev</a>
+</td><td><a href="sci_ode_xam.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_model</option>
+<option>devel_data_model</option>
+<option>data_model_sci_ode</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2017</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_model-&gt;</option>
+<option>devel_data_model</option>
+<option>prior_model</option>
+<option>fit_model</option>
+<option>depend</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_data_model-&gt;</option>
+<option>data_model_ctor</option>
+<option>set_eigne_ode2_case_number</option>
+<option>data_model_replace_like</option>
+<option>data_model_reference_ode</option>
+<option>data_model_sci_ode</option>
+<option>data_model_avg_no_ode</option>
+<option>data_model_avg_yes_ode</option>
+<option>data_model_like_one</option>
+<option>data_model_like_all</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>data_model_sci_ode-&gt;</option>
+<option>sci_ode_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>Float</option>
+<option>data_object</option>
+<option>integrand</option>
+<option>i_min</option>
+<option>j_min</option>
+<option>n_age_sub</option>
+<option>n_time_sub</option>
+<option>child</option>
+<option>x</option>
+<option>pack_vec</option>
+<option>reference_sc</option>
+<option>sci_sub</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+<center><b><big><big>Use the ODE to Integrand for one Measurement</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>sci_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;data_object</span></font><i><font color="black"><span style='white-space: nowrap'>.sci_ode(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>integrand</span></font><i><font color="black"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>i_min</span></font><i><font color="black"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>j_min</span></font><i><font color="black"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>n_age_sub</span></font><i><font color="black"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>n_time_sub</span></font><i><font color="black"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>child</span></font><i><font color="black"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>pack_vec</span></font><i><font color="black"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>reference_sc</span></font><i><font color="black"><span style='white-space: nowrap'><br>
+)</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>
+CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Float&gt;</font> data_model<font color="#990000">::</font><b><font color="#000000">sci_ode</font></b><font color="#990000">(</font>
+     <font color="#008080">integrand_enum</font>                integrand     <font color="#990000">,</font>
+     <font color="#008080">size_t</font>                        i_min         <font color="#990000">,</font>
+     <font color="#008080">size_t</font>                        j_min         <font color="#990000">,</font>
+     <font color="#008080">size_t</font>                        n_age_sub     <font color="#990000">,</font>
+     <font color="#008080">size_t</font>                        n_time_sub    <font color="#990000">,</font>
+     <font color="#008080">size_t</font>                        child         <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>  x             <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font>   pack_vec      <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font>   reference_sc
+<font color="#990000">)</font> <b><font color="#0000FF">const</font></b></tt></pre>
+<br>
+<b><big><a name="Float" id="Float">Float</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ must be one of the following:
+<code><font color="blue">double</font></code> or one of the <a href="ad_types.htm" target="_top"><span style='white-space: nowrap'>ad_types</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="data_object" id="data_object">data_object</a></big></b>
+<br>
+This object has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;data_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+see <a href="data_model_ctor.htm#data_object" target="_top"><span style='white-space: nowrap'>data_object&nbsp;constructor</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="integrand" id="integrand">integrand</a></big></b>
+<br>
+Is the integrand we are computing and must be one of the following:
+<code><font color="blue">susceptible_enum</font></code>,
+<code><font color="blue">withC_enum</font></code>,
+<code><font color="blue">prevalence_enum</font></code>,
+<code><font color="blue">Tincidence_enum</font></code>,
+<code><font color="blue">mtspecific_enum</font></code>,
+<code><font color="blue">mtall_enum</font></code>,
+<code><font color="blue">mtstandard_enum</font></code>.
+Note that when 
+<code><i><font color="black"><span style='white-space: nowrap'>integrand</span></font></i></code>
+ is
+<code><font color="blue">susceptible_enum</font></code> or <code><font color="blue">withC_enum</font></code>
+each integrand value appears twice in 
+<code><i><font color="black"><span style='white-space: nowrap'>sci_sub</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="i_min" id="i_min">i_min</a></big></b>
+<br>
+is the age index, in the <a href="ode_grid.htm" target="_top"><span style='white-space: nowrap'>ode_grid</span></a>
+, where the sub-grid starts.
+
+<br>
+<br>
+<b><big><a name="j_min" id="j_min">j_min</a></big></b>
+<br>
+is the time index, in the <a href="ode_grid.htm" target="_top"><span style='white-space: nowrap'>ode_grid</span></a>
+, where the sub-grid starts.
+
+<br>
+<br>
+<b><big><a name="n_age_sub" id="n_age_sub">n_age_sub</a></big></b>
+<br>
+is the number of age points in the sub-grid
+
+<code><font color="blue"><span style='white-space: nowrap'>&nbsp;%i_min%&nbsp;+&nbsp;%n_age_sub%&nbsp;&lt;=&nbsp;n_age_ode_<br>
+%</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="n_time_sub" id="n_time_sub">n_time_sub</a></big></b>
+<br>
+is the number of time points in the sub-grid
+
+<code><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%j_min%&nbsp;+&nbsp;%n_time_sub%&nbsp;&lt;=&nbsp;n_time_ode_<br>
+%</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="child" id="child">child</a></big></b>
+<br>
+Is the child index for this computation.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>child</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;n_child_</span></font></code>
+, this is computation is for the parent.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+Is the value of the covariates for this computation,
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;n_covariate_</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="pack_vec" id="pack_vec">pack_vec</a></big></b>
+<br>
+is all the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ in the order
+specified by <a href="pack_info.htm" target="_top"><span style='white-space: nowrap'>pack_info</span></a>
+.
+Only the following subvectors of 
+<code><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i></code>
+ are used:
+<a href="pack_info_rate_info.htm" target="_top"><span style='white-space: nowrap'>pack_info_rate_info</span></a>
+,
+<a href="pack_info_mulcov_rate.htm" target="_top"><span style='white-space: nowrap'>pack_info_mulcov_rate</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="reference_sc" id="reference_sc">reference_sc</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>reference_sc</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If the size of this vector is zero, it is not used.
+It's intended use is to avoid repeated solving of the ODE's corresponding
+to the reference value for all of the covariates.
+Let 
+<code><i><font color="black"><span style='white-space: nowrap'>n_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;n_age_ode_&nbsp;*&nbsp;n_time_ode_</span></font></code>
+.
+If it's size is not zero,be
+
+<code><font color="blue"><span style='white-space: nowrap'>2&nbsp;*&nbsp;(n_child_&nbsp;+&nbsp;1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_ode</span></font></i></code>
+.
+In this case,
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;n_child_</span></font></code>
+,
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;n_age_ode_-1</span></font></code>
+,
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;n_time_ode_-1</span></font></code>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>reference_sc</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;2*(</span></font><i><font color="black"><span style='white-space: nowrap'>child</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;n_time_ode_&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;+&nbsp;0]<br>
+</span></font></code>
+is the susceptible fraction S and
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>reference_sc</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;2*(</span></font><i><font color="black"><span style='white-space: nowrap'>child</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;n_time_ode_&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;+&nbsp;1]<br>
+</span></font></code>
+is the with condition fraction C corresponding to the specified child
+
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+ and reference value for the rate covariates.
+The child 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;n_child_</span></font></code>
+ corresponds to the parent.
+
+<br>
+<br>
+<b><big><a name="sci_sub" id="sci_sub">sci_sub</a></big></b>
+<br>
+The return value has size 
+<code><i><font color="black"><span style='white-space: nowrap'>n_age_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>*</span></font><i><font color="black"><span style='white-space: nowrap'>n_time_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>*3</span></font></code>
+.
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>=0,...,</span></font><i><font color="black"><span style='white-space: nowrap'>n_age_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>=0,...,</span></font><i><font color="black"><span style='white-space: nowrap'>n_time_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+,
+The corresponding ode grid index is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i_min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j_min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+</span></font></code>
+.
+The value
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sci_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>[(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_time_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)*3&nbsp;+&nbsp;0]<br>
+</span></font></code>
+is the susceptible fraction <small>@(@
+S(a, t)
+@)@</small>
+at sub-grid pair 
+<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+.
+The value
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sci_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>[(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_time_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)*3&nbsp;+&nbsp;1]<br>
+</span></font></code>
+is the with condition fraction <small>@(@
+C(a, t)
+@)@</small>
+at sub-grid pair 
+<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+.
+The value
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sci_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>[(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_time_sub</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)*3&nbsp;+&nbsp;2]<br>
+</span></font></code>
+is the value of the integrand
+at sub-grid pair 
+<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="sci_ode_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>sci_ode_xam.cpp</span></a>
+ contains an example and test
+of using this routine.
+
+
+<hr>Input File: devel/model/data_model.cpp
+
+</body>
+</html>

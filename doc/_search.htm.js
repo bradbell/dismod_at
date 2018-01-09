@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20171230  ',' ',
+'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20180109  ',' ',
 'install_unix  Installing dismod_at in Unix  ',' system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl download special run_cmake.sh eigen ipopt suitesparse cppad cppad_mixed setup command test executable path example ',
 'run_cmake.sh  bin/run_cmake.sh: User Configuration Options  ',' verbose_makefile build_type dismod_at_prefix prefixes debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir checkpoint_newton_step system_specific_library_list ',
 'example_install.sh  An Example Installation  ',' syntax ',
@@ -228,7 +228,7 @@ Keyword =
 'number_random_const  Determine Number of Random Effects that are Constant  ',' syntax bound_random pack_object s_info_vec prior_table ',
 'smooth2ode  Interpolation from Smoothing to Ode Grid  ',' syntax float n_age_ode n_time_ode ode_step_size age_table time_table s_info interpolate var_si ode_index var_ode example ',
 'smooth2ode_xam.cpp  C++ smooth2ode: Example and Test  ',' ',
-'solve_ode  Solving the Dismod Ordinary Differential Equation  ',' syntax purpose notation float i_max j_max step_size pini rate s_out c_out example ',
+'solve_ode  Solving the Dismod Ordinary Differential Equation  ',' syntax 2do purpose notation float i_max j_max step_size pini rate s_out c_out example ',
 'solve_ode_xam.cpp  C++ solve_ode: Example and Test  ',' ',
 'split_space  Split String Into Substrings With Spaces as Delimiter  ',' syntax vec example prototype ',
 'split_space_xam.cpp  C++ split_space: Example and Test  ',' ',
@@ -237,10 +237,13 @@ Keyword =
 'data_model_ctor  Data Model: Constructor  ',' syntax data_object parent_node_id n_covariate n_age_ode n_time_ode ode_step_size age_table time_table integrand_table node_table subset_object subset_cov_value w_info_vec s_info_vec pack_object child_object ',
 'set_eigne_ode2_case_number  Sets the Method Used to Solve the Dismod_at ODE  ',' syntax data_object rate_case ',
 'data_model_replace_like  Set Value Necessary for Likelihood (not for Average Integrand)  ',' syntax purpose data_object minimum_meas_cv subset_object n_subset subset_id data_subset_obj ',
+'data_model_reference_ode  Solve for S and C Corresponding to Reference Covariate Values  ',' syntax prototype data_object float pack_vec parent_only reference_sc ',
+'data_model_sci_ode  Use the ODE to Integrand for one Measurement  ',' syntax prototype float data_object i_min j_min n_age_sub n_time_sub child pack_vec reference_sc sci_sub example ',
 'data_model_avg_no_ode  One Average Integrand That Doesn\'t Require the ODE  ',' syntax data_object float subset_id rates pack_vec example ',
-'data_model_avg_yes_ode  One Average Integrand That Requires the ODE  ',' syntax data_object float subset_id pack_vec example ',
+'data_model_avg_yes_ode  One Average Integrand That Requires the ODE  ',' syntax data_object float subset_id pack_vec reference_sc example ',
 'data_model_like_one  One Weighted Residual and Log-Likelihood for any Integrands  ',' syntax requirement data_object float subset_id pack_vec avg delta_out index example ',
 'data_model_like_all  All the Weighted Residuals and Log-Likelihoods  ',' syntax requirement data_object float hold_out random_depend pack_vec residual_vec index include outs no density ',
+'sci_ode_xam.cpp  C++ sci_ode: Example and Test  ',' ',
 'avg_no_ode_xam.cpp  C++ avg_no_ode: Example and Test  ',' ',
 'avg_yes_ode_xam.cpp  C++ avg_yes_ode: Example and Test  ',' ',
 'like_one_xam.cpp  C++ like_one: Example and Test  ',' ',
@@ -259,10 +262,10 @@ Keyword =
 'depend  Compute Data or Prior Dependencies  ',' ',
 'data_depend  Which Variables The Data Model Depends On  ',' syntax prototype pack_vec data_object ',
 'prior_depend  Which Variables The Prior Depends On  ',' syntax prototype pack_vec prior_object ',
-'whats_new_2017  Changes and Additions to Dismod_at During 2017  ',' 12-30 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15 ',
+'whats_new_2017  Changes and Additions to Dismod_at During 2017  ',' 12-09 12-30 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15 ',
 'whats_new_2016  Changes and Additions to Dismod_at During 2016  ',' 12-03 10-31 10-20 10-19 10-18 10-17 10-16 10-15 10-14 10-13 10-12 10-11 09-30 09-29 09-21 08-28 07-29 07-28 07-15 07-14 07-11 06-13 06-12 06-06 06-05 05-16 05-15 05-11 05-10 05-09 05-08 05-07 05-06 05-05 05-04 05-03 05-01 04-28 04-27 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-11 04-09 04-07 03-29 02-26 02-06 01-26 01-16 01-15 01-10 01-06 01-05 ',
 'whats_new_2015  Changes and Additions to Dismod_at During 2015  ',' 12-29 12-24 12-15 12-14 12-10 12-09 11-23 11-22 11-21 11-20 11-17 11-16 11-15 11-14 11-12 11-10 11-09 11-07 11-06 11-05 11-04 11-03 11-02 11-01 10-30 10-29 10-28 10-27 10-26 10-25 10-24 10-20 10-19 10-16 10-15 10-14 09-18 09-03 08-31 08-27 08-21 08-18 08-15 08-14 08-13 08-12 08-09 08-08 08-04 08-03 08-02 08-01 07-29 07-28 07-27 07-25 07-24 07-23 07-22 07-21 07-20 07-19 07-17 07-16 07-15 07-14 07-13 07-11 07-10 07-09 07-08 07-07 07-05 07-04 07-03 07-01 06-30 06-29 06-27 06-26 06-25 06-24 06-23 06-22 ',
-'wish_list  Dismod_at Wish List  ',' ode solution reduce number odes step size large excess mortality conditionals checkpointing simulated data lagrange multipliers documentation real world example user examples model simulating sampling random effects special hessian starting tracing optimization windows install '
+'wish_list  Dismod_at Wish List  ',' ode solution step size large excess mortality conditionals checkpointing simulated data lagrange multipliers documentation real world example user examples model simulating sampling random effects special hessian starting tracing optimization windows install '
 ]
 
 var MaxList = 100;

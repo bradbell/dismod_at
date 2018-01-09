@@ -10,21 +10,32 @@ var list_up0 = [
 'devel.htm',
 'devel_model.htm',
 'devel_data_model.htm',
-'data_model_avg_no_ode.htm',
-'avg_no_ode_xam.cpp.htm'
+'data_model_sci_ode.htm'
 ];
 var list_down4 = [
+'install_unix.htm',
+'get_started.htm',
+'user.htm',
+'database.htm',
+'model.htm',
+'command.htm',
+'python.htm',
+'devel.htm',
+'whats_new_2017.htm',
+'wish_list.htm'
+];
+var list_down3 = [
 'devel_table.htm',
 'devel_utility.htm',
 'devel_model.htm'
 ];
-var list_down3 = [
+var list_down2 = [
 'devel_data_model.htm',
 'prior_model.htm',
 'fit_model.htm',
 'depend.htm'
 ];
-var list_down2 = [
+var list_down1 = [
 'data_model_ctor.htm',
 'set_eigne_ode2_case_number.htm',
 'data_model_replace_like.htm',
@@ -35,8 +46,25 @@ var list_down2 = [
 'data_model_like_one.htm',
 'data_model_like_all.htm'
 ];
-var list_down1 = [
-'avg_no_ode_xam.cpp.htm'
+var list_down0 = [
+'sci_ode_xam.cpp.htm'
+];
+var list_current0 = [
+'data_model_sci_ode.htm#Syntax',
+'data_model_sci_ode.htm#Prototype',
+'data_model_sci_ode.htm#Float',
+'data_model_sci_ode.htm#data_object',
+'data_model_sci_ode.htm#integrand',
+'data_model_sci_ode.htm#i_min',
+'data_model_sci_ode.htm#j_min',
+'data_model_sci_ode.htm#n_age_sub',
+'data_model_sci_ode.htm#n_time_sub',
+'data_model_sci_ode.htm#child',
+'data_model_sci_ode.htm#x',
+'data_model_sci_ode.htm#pack_vec',
+'data_model_sci_ode.htm#reference_sc',
+'data_model_sci_ode.htm#sci_sub',
+'data_model_sci_ode.htm#Example'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

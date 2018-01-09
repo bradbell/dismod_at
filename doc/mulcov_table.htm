@@ -148,9 +148,20 @@ The possible values are:
 <b><a name="mulcov_type.rate_value" id="mulcov_type.rate_value">rate_value</a></b>
 <br>
 This covariate multiplier
-adjusts a model rate in the average integrand calculation;
+adjusts a rate in the average integrand calculation;
 see <a href="avg_integrand.htm#Rate Functions.alpha_jk" target="_top"><span style='white-space: nowrap'>alpha_jk</span></a>
 .
+A separate solution of the
+<a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
+
+is required for each cohort and each measurement,
+that has values not equal to the
+<a href="covariate_table.htm#reference" target="_top"><span style='white-space: nowrap'>reference</span></a>
+ for the covariate specified
+by <a href="mulcov_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
+.
+In other words, measurements that have the reference value for all the
+rate covariates do not add as much to the computational load.
 
 <br>
 <br>

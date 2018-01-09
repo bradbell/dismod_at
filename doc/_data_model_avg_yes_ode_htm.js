@@ -39,6 +39,8 @@ var list_down1 = [
 'data_model_ctor.htm',
 'set_eigne_ode2_case_number.htm',
 'data_model_replace_like.htm',
+'data_model_reference_ode.htm',
+'data_model_sci_ode.htm',
 'data_model_avg_no_ode.htm',
 'data_model_avg_yes_ode.htm',
 'data_model_like_one.htm',
@@ -54,6 +56,7 @@ var list_current0 = [
 'data_model_avg_yes_ode.htm#subset_id',
 'data_model_avg_yes_ode.htm#subset_id.Integrand',
 'data_model_avg_yes_ode.htm#pack_vec',
+'data_model_avg_yes_ode.htm#reference_sc',
 'data_model_avg_yes_ode.htm#avg',
 'data_model_avg_yes_ode.htm#Example'
 ];

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Solving the Dismod Ordinary Differential Equation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Solving the Dismod Ordinary Differential Equation">
-<meta name="keywords" id="keywords" content=" solving the dismod ordinary differential equation syntax purpose notation float i_max j_max step_size pini rate s_out c_out example ">
+<meta name="keywords" id="keywords" content=" solving the dismod ordinary differential equation syntax 2do purpose notation float i_max j_max step_size pini rate s_out c_out example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -111,6 +111,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
+<option>2DO</option>
 <option>Purpose</option>
 <option>Notation</option>
 <option>Float</option>
@@ -148,6 +149,16 @@ A:active { color : purple }
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>C_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
+
+<br>
+<br>
+<b><big><a name="2DO" id="2DO">2DO</a></big></b>
+<br>
+Remove 
+<code><i><font color="black"><span style='white-space: nowrap'>i_max</span></font></i></code>
+,  <code><font color="blue">j_max</font></code> from the arguments to
+<code><font color="blue">solve_ode</font></code> because age and time do not explicitly appear in the
+ODE.
 
 <br>
 <br>
@@ -232,9 +243,10 @@ in the fit command.
 <b><big><a name="pini" id="pini">pini</a></big></b>
 <br>
 This argument has prototype
-<code><font color="blue">%
-	const %Float%&amp; %pini%
-%</font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pini</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
 and is the initial prevalence for this cohort; see
 <a href="avg_integrand.htm#Rate Functions.p_i,0(t), pini" target="_top"><span style='white-space: nowrap'>pini</span></a>
 .

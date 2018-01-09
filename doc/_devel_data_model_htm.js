@@ -38,6 +38,8 @@ var list_down0 = [
 'data_model_ctor.htm',
 'set_eigne_ode2_case_number.htm',
 'data_model_replace_like.htm',
+'data_model_reference_ode.htm',
+'data_model_sci_ode.htm',
 'data_model_avg_no_ode.htm',
 'data_model_avg_yes_ode.htm',
 'data_model_like_one.htm',

@@ -23,7 +23,6 @@ var list_down1 = [
 ];
 var list_current0 = [
 'wish_list.htm#ODE Solution',
-'wish_list.htm#ODE Solution.Reduce Number of ODEs',
 'wish_list.htm#ODE Solution.Step Size',
 'wish_list.htm#ODE Solution.Large Excess Mortality',
 'wish_list.htm#ODE Solution.Conditionals',

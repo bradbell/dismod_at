@@ -10,8 +10,8 @@ var list_up0 = [
 'devel.htm',
 'devel_model.htm',
 'devel_data_model.htm',
-'data_model_avg_no_ode.htm',
-'avg_no_ode_xam.cpp.htm'
+'data_model_sci_ode.htm',
+'sci_ode_xam.cpp.htm'
 ];
 var list_down4 = [
 'devel_table.htm',
@@ -36,7 +36,7 @@ var list_down2 = [
 'data_model_like_all.htm'
 ];
 var list_down1 = [
-'avg_no_ode_xam.cpp.htm'
+'sci_ode_xam.cpp.htm'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

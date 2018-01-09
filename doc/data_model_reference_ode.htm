@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>One Average Integrand That Requires the ODE</title>
+<title>Solve for S and C Corresponding to Reference Covariate Values</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="One Average Integrand That Requires the ODE">
-<meta name="keywords" id="keywords" content=" one average integrand that requires the ode syntax data_object float subset_id pack_vec reference_sc avg example ">
+<meta name="description" id="description" content="Solve for S and C Corresponding to Reference Covariate Values">
+<meta name="keywords" id="keywords" content=" solve s c corresponding to reference covariate values syntax prototype data_object float pack_vec parent_only reference_sc ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_data_model_avg_yes_ode_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_data_model_reference_ode_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="avg_no_ode_xam.cpp.htm" target="_top">Prev</a>
-</td><td><a href="avg_yes_ode_xam.cpp.htm" target="_top">Next</a>
+<td><a href="data_model_replace_like.htm" target="_top">Prev</a>
+</td><td><a href="data_model_sci_ode.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -50,7 +50,7 @@ A:active { color : purple }
 <option>devel</option>
 <option>devel_model</option>
 <option>devel_data_model</option>
-<option>data_model_avg_yes_ode</option>
+<option>data_model_reference_ode</option>
 </select>
 </td>
 <td>
@@ -99,24 +99,17 @@ A:active { color : purple }
 <option>data_model_like_all</option>
 </select>
 </td>
-<td>
-<select onchange='choose_down0(this)'>
-<option>data_model_avg_yes_ode-&gt;</option>
-<option>avg_yes_ode_xam.cpp</option>
-</select>
-</td>
+<td>data_model_reference_ode</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
+<option>Prototype</option>
 <option>data_object</option>
 <option>Float</option>
-<option>subset_id</option>
-<option>---..Integrand</option>
 <option>pack_vec</option>
+<option>parent_only</option>
 <option>reference_sc</option>
-<option>avg</option>
-<option>Example</option>
 </select>
 </td>
 </tr></table><br>
@@ -125,27 +118,28 @@ A:active { color : purple }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
-<center><b><big><big>One Average Integrand That Requires the ODE</big></big></b></center>
+<center><b><big><big>Solve for S and C Corresponding to Reference Covariate Values</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>avg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.avg_yes_ode(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>reference_sc</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-)</span></font></code>
-
+<code><i><font color="black"><span style='white-space: nowrap'>reference_sc</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.reference_sc(</span></font><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parent_only</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 
 <br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>
+CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Float&gt;</font> data_model<font color="#990000">::</font><b><font color="#000000">reference_ode</font></b><font color="#990000">(</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font> pack_vec     <font color="#990000">,</font>
+     <font color="#009900">bool</font>                        parent_only
+<font color="#990000">)</font> <b><font color="#0000FF">const</font></b></tt></pre>
 <br>
 <b><big><a name="data_object" id="data_object">data_object</a></big></b>
 <br>
-This object has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;data_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
 see <a href="data_model_ctor.htm#data_object" target="_top"><span style='white-space: nowrap'>data_object&nbsp;constructor</span></a>
 .
 
@@ -161,76 +155,45 @@ The type
 
 <br>
 <br>
-<b><big><a name="subset_id" id="subset_id">subset_id</a></big></b>
-<br>
-This argument has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-and is the <a href="data_subset.htm#data_subset_obj.subset_id" target="_top"><span style='white-space: nowrap'>subset_id</span></a>
-
-we are computing the average integrand for.
-
-<br>
-<br>
-<b><a name="subset_id.Integrand" id="subset_id.Integrand">Integrand</a></b>
-<br>
-The <a href="data_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
- corresponding to this
-<a href="data_subset.htm#data_subset_obj.subset_id" target="_top"><span style='white-space: nowrap'>subset_id</span></a>
-
-must be one of the following:
-<code><font color="blue">susceptible_enum</font></code>,
-<code><font color="blue">withC_enum</font></code>,
-<code><font color="blue">prevalence_enum</font></code>,
-<code><font color="blue">Tincidence_enum</font></code>,
-<code><font color="blue">mtspecific_enum</font></code>,
-<code><font color="blue">mtall_enum</font></code>,
-<code><font color="blue">mtstandard_enum</font></code>.
-
-<br>
-<br>
 <b><big><a name="pack_vec" id="pack_vec">pack_vec</a></big></b>
 <br>
-This argument has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-and is all the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+is all the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
  in the order
 specified by <a href="pack_info.htm" target="_top"><span style='white-space: nowrap'>pack_info</span></a>
 .
-Only the following subvectors of 
-<code><i><font color="black"><span style='white-space: nowrap'>pack_vec</span></font></i></code>
- are used:
-<a href="pack_info_rate_info.htm" target="_top"><span style='white-space: nowrap'>pack_info_rate_info</span></a>
-,
-<a href="pack_info_mulcov_rate.htm" target="_top"><span style='white-space: nowrap'>pack_info_mulcov_rate</span></a>
-.
+
+<br>
+<br>
+<b><big><a name="parent_only" id="parent_only">parent_only</a></big></b>
+<br>
+if true, only the parent values in 
+<code><i><font color="black"><span style='white-space: nowrap'>reference_sc</span></font></i></code>
+ are calculated
+(
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;n_child_</span></font></code>
+).
+The other elements in 
+<code><i><font color="black"><span style='white-space: nowrap'>reference_sc</span></font></i></code>
+ are not defined.
 
 <br>
 <br>
 <b><big><a name="reference_sc" id="reference_sc">reference_sc</a></big></b>
 <br>
-This argument has prototype
+The return value has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>reference_sc</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-If the size of this vector is zero, it is not used.
-It's intended use is to avoid repeated solving of the ODE's corresponding
-to the reference value for all of the covariates.
+It's size is given by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>reference_sc</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;=&nbsp;2&nbsp;*&nbsp;(n_child_&nbsp;+&nbsp;1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_ode</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
 Let 
 <code><i><font color="black"><span style='white-space: nowrap'>n_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;n_age_ode_&nbsp;*&nbsp;n_time_ode_</span></font></code>
 .
-If it's size is not zero,be
-
-<code><font color="blue"><span style='white-space: nowrap'>2&nbsp;*&nbsp;(n_child_&nbsp;+&nbsp;1)&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_ode</span></font></i></code>
-.
-In this case,
-for 
+For 
 <code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;n_child_</span></font></code>
 ,
 for 
@@ -243,41 +206,18 @@ for
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>reference_sc</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;2*(</span></font><i><font color="black"><span style='white-space: nowrap'>child</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;n_time_ode_&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;+&nbsp;0]<br>
 </span></font></code>
-is the susceptible fraction and
+is the susceptible fraction S and
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>reference_sc</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;2*(</span></font><i><font color="black"><span style='white-space: nowrap'>child</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;n_time_ode_&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;+&nbsp;1]<br>
 </span></font></code>
-is the with condition fraction corresponding to the specified child
+is the with condition fraction C corresponding to the specified child
 
 <code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
  and reference value for the rate covariates.
 The child 
 <code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;n_child_</span></font></code>
  corresponds to the parent.
-
-<br>
-<br>
-<b><big><a name="avg" id="avg">avg</a></big></b>
-<br>
-The return value has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;avg<br>
-</span></font></code>
-This is the
-<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
-
-for the specified data point.
-
-
-<br>
-<br>
-<b><big><a name="Example" id="Example">Example</a></big></b>
-<br>
-The file <a href="avg_yes_ode_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>avg_yes_ode_xam.cpp</span></a>
- contains an example and test
-of using this routine.
 
 
 <hr>Input File: devel/model/data_model.cpp

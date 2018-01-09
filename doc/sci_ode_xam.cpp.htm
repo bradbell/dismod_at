@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>C++ avg_yes_ode: Example and Test</title>
+<title>C++ sci_ode: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="C++ avg_yes_ode: Example and Test">
-<meta name="keywords" id="keywords" content=" c++ avg_yes_ode: example test C++ avg_yes_ode ">
+<meta name="description" id="description" content="C++ sci_ode: Example and Test">
+<meta name="keywords" id="keywords" content=" c++ sci_ode: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_avg_yes_ode_xam.cpp_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_sci_ode_xam.cpp_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="data_model_avg_yes_ode.htm" target="_top">Prev</a>
-</td><td><a href="data_model_like_one.htm" target="_top">Next</a>
+<td><a href="data_model_sci_ode.htm" target="_top">Prev</a>
+</td><td><a href="data_model_avg_no_ode.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -50,8 +50,8 @@ A:active { color : purple }
 <option>devel</option>
 <option>devel_model</option>
 <option>devel_data_model</option>
-<option>data_model_avg_yes_ode</option>
-<option>avg_yes_ode_xam.cpp</option>
+<option>data_model_sci_ode</option>
+<option>sci_ode_xam.cpp</option>
 </select>
 </td>
 <td>
@@ -87,20 +87,23 @@ A:active { color : purple }
 </td>
 <td>
 <select onchange='choose_down1(this)'>
-<option>data_model_avg_yes_ode-&gt;</option>
-<option>avg_yes_ode_xam.cpp</option>
+<option>data_model_sci_ode-&gt;</option>
+<option>sci_ode_xam.cpp</option>
 </select>
 </td>
-<td>avg_yes_ode_xam.cpp</td>
+<td>sci_ode_xam.cpp</td>
 <td>Headings</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>C++ avg_yes_ode: Example and Test</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>C++ sci_ode: Example and Test</big></big></b></center>
 <code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/data_model.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/null_int.hpp&gt;</font>
 
-<font color="#009900">bool</font> <b><font color="#000000">avg_yes_ode_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#009900">bool</font> <b><font color="#000000">sci_ode_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>    <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
      <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>abs<font color="#990000">;</font>
      <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
@@ -229,37 +232,21 @@ A:active { color : purple }
      <font color="#008080">vector&lt;dismod_at::covariate_struct&gt;</font> <b><font color="#000000">covariate_table</font></b><font color="#990000">(</font>n_covariate<font color="#990000">);</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// data_table</font></i>
-     <font color="#008080">vector&lt;dismod_at::data_struct&gt;</font> <b><font color="#000000">data_table</font></b><font color="#990000">(</font><font color="#993399">3</font><font color="#990000">);</font>
+     <font color="#008080">vector&lt;dismod_at::data_struct&gt;</font> <b><font color="#000000">data_table</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
      <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">data_cov_value</font></b><font color="#990000">(</font>data_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">*</font> n_covariate<font color="#990000">);</font>
      <font color="#008080">size_t</font> data_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
      data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>integrand_id <font color="#990000">=</font>
-          n_integrand <font color="#990000">-</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>dismod_at<font color="#990000">::</font>susceptible_enum<font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+          n_integrand <font color="#990000">-</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>dismod_at<font color="#990000">::</font>prevalence_enum<font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
      data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>node_id      <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// child node</font></i>
      data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>weight_id    <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_lower    <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-     data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_upper    <font color="#990000">=</font> <font color="#993399">100.0</font><font color="#990000">;</font>
+     data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_lower    <font color="#990000">=</font> <font color="#993399">40.0</font><font color="#990000">;</font>
+     data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_upper    <font color="#990000">=</font> <font color="#993399">60.0</font><font color="#990000">;</font>
      data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>time_lower   <font color="#990000">=</font> <font color="#993399">1990.0</font><font color="#990000">;</font>
      data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>time_upper   <font color="#990000">=</font> <font color="#993399">2000.0</font><font color="#990000">;</font>
      data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>meas_value   <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
      data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>meas_std     <font color="#990000">=</font> <font color="#993399">1e-3</font><font color="#990000">;</font>
      data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>eta          <font color="#990000">=</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
      data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>density_id   <font color="#990000">=</font> dismod_at<font color="#990000">::</font>uniform_enum<font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     data_id <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     data_table<font color="#990000">[</font>data_id<font color="#990000">]</font>              <font color="#990000">=</font> data_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-     data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_lower    <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.;</font>
-     data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_upper    <font color="#990000">=</font> <font color="#993399">90.0</font><font color="#990000">;</font>
-     data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>time_lower   <font color="#990000">=</font> <font color="#993399">1990.0</font><font color="#990000">;</font>
-     data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>integrand_id <font color="#990000">=</font>
-          n_integrand <font color="#990000">-</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>dismod_at<font color="#990000">::</font>withC_enum<font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     data_id <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     data_table<font color="#990000">[</font>data_id<font color="#990000">]</font>              <font color="#990000">=</font> data_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
-     data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_lower    <font color="#990000">=</font> <font color="#993399">30</font><font color="#990000">.;</font>
-     data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_upper    <font color="#990000">=</font> <font color="#993399">60.0</font><font color="#990000">;</font>
-     data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>time_lower   <font color="#990000">=</font> <font color="#993399">1990.0</font><font color="#990000">;</font>
-     data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>integrand_id <font color="#990000">=</font>
-          n_integrand <font color="#990000">-</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>dismod_at<font color="#990000">::</font>prevalence_enum<font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// smooth_table</font></i>
      <font color="#008080">vector&lt;dismod_at::smooth_struct&gt;</font> <b><font color="#000000">smooth_table</font></b><font color="#990000">(</font>s_info_vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">());</font>
@@ -350,43 +337,55 @@ A:active { color : purple }
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">/*</font></i>
 <i><font color="#9A1900">     No remission and no excess mortality so solution is:</font></i>
-<i><font color="#9A1900">     S(a) = exp( -beta * a )</font></i>
-<i><font color="#9A1900">     P(a) = C(a) = 1.0 - exp( -beta * a )</font></i>
-
-<i><font color="#9A1900">     int_b^c S(a) / (c - b) = - [ exp( -beta a ) / beta ]_b^c / (c - b)</font></i>
-<i><font color="#9A1900">     int_b^c C(a) / (c - b) = 1.0 - int_b^c S(a) / (c - b)</font></i>
-<i><font color="#9A1900">     int_b^c P(a) / (c - b) = 1.0 - int_b^c S(a) / (c - b)</font></i>
+<i><font color="#9A1900">     S(age) = exp[ -beta * (age - age_min) ]</font></i>
+<i><font color="#9A1900">     C(age) = 1.0 - exp[ -beta * (age - age_min) ]</font></i>
 <i><font color="#9A1900">     */</font></i>
      <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>exp<font color="#990000">;</font>
      ok            <font color="#990000">&amp;=</font> data_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> data_subset_obj<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
      <i><font color="#9A1900">//</font></i>
-     data_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> subset_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     dismod_at<font color="#990000">::</font><font color="#008080">integrand_enum</font> integrand <font color="#990000">=</font>
+          data_object<font color="#990000">.</font>data_info_<font color="#990000">[</font>subset_id<font color="#990000">].</font>integrand<font color="#990000">;</font>
+     <font color="#008080">size_t</font> i_min             <font color="#990000">=</font> data_object<font color="#990000">.</font>data_info_<font color="#990000">[</font>subset_id<font color="#990000">].</font>i_min<font color="#990000">;</font>
+     <font color="#008080">size_t</font> j_min             <font color="#990000">=</font> data_object<font color="#990000">.</font>data_info_<font color="#990000">[</font>subset_id<font color="#990000">].</font>j_min<font color="#990000">;</font>
+     <font color="#008080">size_t</font> n_age_sub         <font color="#990000">=</font> data_object<font color="#990000">.</font>data_info_<font color="#990000">[</font>subset_id<font color="#990000">].</font>n_age<font color="#990000">;</font>
+     <font color="#008080">size_t</font> n_time_sub        <font color="#990000">=</font> data_object<font color="#990000">.</font>data_info_<font color="#990000">[</font>subset_id<font color="#990000">].</font>n_time<font color="#990000">;</font>
+     <font color="#008080">size_t</font> child             <font color="#990000">=</font> data_object<font color="#990000">.</font>data_info_<font color="#990000">[</font>subset_id<font color="#990000">].</font>child<font color="#990000">;</font>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
      <font color="#008080">vector&lt;Float&gt;</font> <b><font color="#000000">not_used</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-     <font color="#008080">Float</font> avg      <font color="#990000">=</font> data_object<font color="#990000">.</font><b><font color="#000000">avg_yes_ode</font></b><font color="#990000">(</font>data_id<font color="#990000">,</font> pack_vec<font color="#990000">,</font> not_used<font color="#990000">);</font>
-     <font color="#009900">double</font> b       <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_lower<font color="#990000">;</font>
-     <font color="#009900">double</font> c       <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_upper<font color="#990000">;</font>
-     <font color="#009900">double</font> avg_S   <font color="#990000">=</font> <font color="#990000">-</font> <font color="#990000">(</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font>beta <font color="#990000">*</font> c<font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font>beta <font color="#990000">*</font> b<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font>beta <font color="#990000">*</font> <font color="#990000">(</font>c <font color="#990000">-</font> b<font color="#990000">));</font>
-     ok             <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> avg <font color="#990000">/</font> avg_S <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-3</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;Float&gt;</font> sci_sub <font color="#990000">=</font> data_object<font color="#990000">.</font><b><font color="#000000">sci_ode</font></b><font color="#990000">(</font>
+          integrand<font color="#990000">,</font>
+          i_min<font color="#990000">,</font>
+          j_min<font color="#990000">,</font>
+          n_age_sub<font color="#990000">,</font>
+          n_time_sub<font color="#990000">,</font>
+          child<font color="#990000">,</font>
+          x<font color="#990000">,</font>
+          pack_vec<font color="#990000">,</font>
+          not_used
+     <font color="#990000">);</font>
+     ok  <font color="#990000">&amp;=</font> sci_sub<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">3</font> <font color="#990000">*</font> n_age_sub <font color="#990000">*</font> n_time_sub<font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
-     data_id <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     avg            <font color="#990000">=</font> data_object<font color="#990000">.</font><b><font color="#000000">avg_yes_ode</font></b><font color="#990000">(</font>data_id<font color="#990000">,</font> pack_vec<font color="#990000">,</font> not_used<font color="#990000">);</font>
-     b              <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_lower<font color="#990000">;</font>
-     c              <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_upper<font color="#990000">;</font>
-     avg_S          <font color="#990000">=</font> <font color="#990000">-</font> <font color="#990000">(</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font>beta <font color="#990000">*</font> c<font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font>beta <font color="#990000">*</font> b<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font>beta <font color="#990000">*</font> <font color="#990000">(</font>c <font color="#990000">-</font> b<font color="#990000">));</font>
-     <font color="#009900">double</font> avg_C   <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">-</font> avg_S<font color="#990000">;</font>
-     ok             <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> avg <font color="#990000">/</font> avg_C <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-3</font><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     data_id <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-     avg            <font color="#990000">=</font> data_object<font color="#990000">.</font><b><font color="#000000">avg_yes_ode</font></b><font color="#990000">(</font>data_id<font color="#990000">,</font> pack_vec<font color="#990000">,</font> not_used<font color="#990000">);</font>
-     b              <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_lower<font color="#990000">;</font>
-     c              <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>age_upper<font color="#990000">;</font>
-     avg_S          <font color="#990000">=</font> <font color="#990000">-</font> <font color="#990000">(</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font>beta <font color="#990000">*</font> c<font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font>beta <font color="#990000">*</font> b<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font>beta <font color="#990000">*</font> <font color="#990000">(</font>c <font color="#990000">-</font> b<font color="#990000">));</font>
-     <font color="#009900">double</font> avg_P   <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">-</font> avg_S<font color="#990000">;</font>
-     ok             <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> avg <font color="#990000">/</font> avg_P <font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">1e-3</font><font color="#990000">;</font>
+     <font color="#009900">double</font> eps4 <font color="#990000">=</font> <font color="#993399">1e4</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_age_sub<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_time_sub<font color="#990000">;</font> j<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>
+               <font color="#009900">double</font> age <font color="#990000">=</font> <font color="#990000">(</font>i_min <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> ode_step_size <font color="#990000">+</font> age_min<font color="#990000">;</font>
+               <font color="#009900">double</font> S   <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">-</font> beta <font color="#990000">*</font> <font color="#990000">(</font>age <font color="#990000">-</font> age_min<font color="#990000">)</font> <font color="#990000">);</font>
+               <font color="#009900">double</font> C   <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">-</font> S<font color="#990000">;</font>
+               <font color="#009900">double</font> P   <font color="#990000">=</font> C <font color="#990000">/</font> <font color="#990000">(</font>S <font color="#990000">+</font> C<font color="#990000">);</font>
+               <font color="#008080">size_t</font> k   <font color="#990000">=</font> i <font color="#990000">*</font> n_time_sub <font color="#990000">+</font> j<font color="#990000">;</font>
+               <i><font color="#9A1900">//</font></i>
+               ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>S <font color="#990000">-</font> sci_sub<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">*</font>k <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">&lt;</font> eps4<font color="#990000">;</font>
+               ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>C <font color="#990000">-</font> sci_sub<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">*</font>k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">&lt;</font> eps4<font color="#990000">;</font>
+               ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>P <font color="#990000">-</font> sci_sub<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">*</font>k <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">])</font> <font color="#990000">&lt;</font> eps4<font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
      <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 </font></code>
-<hr>Input File: example/devel/model/avg_yes_ode_xam.cpp
+<hr>Input File: example/devel/model/sci_ode_xam.cpp
 
 </body>
 </html>
