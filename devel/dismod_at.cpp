@@ -1060,7 +1060,10 @@ void fit_command(
 	col_type[2]   = "real";
 	col_unique[2] = false;
 	//
-	vector<double> not_used(0);
+	bool parent_only = false;
+	CppAD::vector<double> reference_sc =
+		data_object.reference_ode(opt_value, parent_only);
+	//
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	// compute average integrand for this data item
 		double avg;
@@ -1084,7 +1087,7 @@ void fit_command(
 			case dismod_at::mtspecific_enum:
 			case dismod_at::mtall_enum:
 			case dismod_at::mtstandard_enum:
-			avg = data_object.avg_yes_ode(subset_id, opt_value, not_used);
+			avg = data_object.avg_yes_ode(subset_id, opt_value, reference_sc);
 			break;
 
 			default:
@@ -1253,7 +1256,10 @@ void simulate_command(
 	col_type[3]   = "real";
 	col_unique[3] = false;
 	//
-	vector<double> not_used(0);
+	bool parent_only = false;
+	CppAD::vector<double> reference_sc =
+		data_object.reference_ode(truth_var, parent_only);
+	//
 	for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	//
@@ -1278,7 +1284,7 @@ void simulate_command(
 			case dismod_at::mtspecific_enum:
 			case dismod_at::mtall_enum:
 			case dismod_at::mtstandard_enum:
-			avg = data_object.avg_yes_ode(subset_id, truth_var, not_used);
+			avg = data_object.avg_yes_ode(subset_id, truth_var, reference_sc);
 			break;
 
 			default:
@@ -1843,13 +1849,17 @@ void predict_command(
 	col_unique[2] = false;
 	//
 	// pack_vec
-	vector<double> pack_vec(n_var), not_used(0);
+	vector<double> pack_vec(n_var);
 	//
 	size_t sample_id = 0;
 	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
 	{	// copy the variable values for this sample index into pack_vec
 		for(size_t var_id = 0; var_id < n_var; var_id++)
 			pack_vec[var_id] = variable_value[sample_id++];
+		//
+		bool parent_only = false;
+		CppAD::vector<double> reference_sc =
+			avgint_object.reference_ode(pack_vec, parent_only);
 		//
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	int integrand_id = avgint_subset_obj[subset_id].integrand_id;
@@ -1875,7 +1885,9 @@ void predict_command(
 				case dismod_at::mtspecific_enum:
 				case dismod_at::mtall_enum:
 				case dismod_at::mtstandard_enum:
-				avg = avgint_object.avg_yes_ode(subset_id, pack_vec, not_used);
+				avg = avgint_object.avg_yes_ode(
+					subset_id, pack_vec, reference_sc
+				);
 				break;
 				//
 				default:
