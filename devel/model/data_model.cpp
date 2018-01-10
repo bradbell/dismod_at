@@ -30,6 +30,7 @@ $section Data Model: Constructor$$
 
 $head Syntax$$
 $codei%data_model %data_object%(
+	%bound_random%,
 	%parent_node_id%,
 	%n_covariate%,
 	%n_age_ode%,
@@ -52,6 +53,15 @@ This object has prototype
 $codei%
 	data_model %data_object%
 %$$
+
+$head bound_random$$
+This argument has prototype
+$codei%
+	double %bound_random%
+%$$
+and is the
+$cref/bound_random/option_table/Optimizer/bound_random/$$.
+
 
 $head parent_node_id$$
 This argument has prototype
@@ -213,6 +223,7 @@ data_model::~data_model(void)
 // consctructor
 template <class SubsetStruct>
 data_model::data_model(
+	double                                   bound_random    ,
 	size_t                                   parent_node_id  ,
 	size_t                                   n_covariate     ,
 	size_t                                   n_age_ode       ,
@@ -235,7 +246,9 @@ n_age_ode_       (n_age_ode)        ,
 n_time_ode_      (n_time_ode)       ,
 ode_step_size_   (ode_step_size)    ,
 pack_object_     (pack_object)
-{	using std::string;
+{	assert( bound_random >= 0.0 );
+	//
+	using std::string;
 	size_t i, j, k;
 	//
 	// set to nan (until replace_like is called)
@@ -507,9 +520,10 @@ pack_object_     (pack_object)
 		for(k = 0; k < n_age * n_time; k++)
 			data_info_[subset_id].c_ode[k] = c_sum[k] / sum;
 
-		// does this data point depend on the random effects
-		bool random_depend = false;
-		if( child < n_child_ )
+		// Does this data point depend on the random effects
+		// that do not have equal bounds
+		bool random_neq_bnd = false;
+		if( child < n_child_ && bound_random > 0.0 )
 		{	CppAD::vector<size_t> rate_id;
 			switch( integrand )
 			{	case Sincidence_enum:
@@ -555,14 +569,14 @@ pack_object_     (pack_object)
 							{	double lower = prior_table[prior_id].lower;
 								double upper = prior_table[prior_id].upper;
 								if( lower != upper )
-									random_depend = true;
+									random_neq_bnd = true;
 							}
 						}
 					}
 				}
 			}
 		}
-		data_info_[subset_id].random_depend = random_depend;
+		data_info_[subset_id].random_neq_bnd = random_neq_bnd;
 	}
 }
 /*
@@ -2080,9 +2094,8 @@ $head random_depend$$
 This argument has prototype $codei%
 	bool %random_depend%
 %$$
-If it is true, the residuals that depend on the random effects
-are included.
-If it is false, all of the other residuals are included.
+If it is true (false), only residuals that depend on the random effects
+that have non-equal (equal) bounds, are included.
 
 $head pack_vec$$
 This argument has prototype
@@ -2090,8 +2103,10 @@ $codei%
 	const CppAD::vector<%Float%>& %pack_vec%
 %$$
 and is all the $cref model_variables$$ in the order
-specified by $cref pack_info$$; i.e.,
-$latex (u , \theta)$$.
+specified by $cref pack_info$$; i.e., $latex (u , \theta)$$.
+If $icode random_depend$$ is false,
+only the components of $icode u$$ that have equal lower and upper
+bounds are defined (the other components are unspecified).
 
 $head residual_vec$$
 The return value has prototype
@@ -2146,9 +2161,9 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 	{	bool keep = hold_out == false;
 		keep     |= data_subset_obj_[subset_id].hold_out == 0;
 		if( random_depend )
-			keep &= data_info_[subset_id].random_depend == true;
+			keep &= data_info_[subset_id].random_neq_bnd == true;
 		else
-			keep &= data_info_[subset_id].random_depend == false;
+			keep &= data_info_[subset_id].random_neq_bnd == false;
 		assert( data_info_[subset_id].child <= n_child_ );
 		if( keep )
 		{	// compute avgerage of integrand for this data
@@ -2190,6 +2205,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)   \
 template data_model::data_model(                                \
+	double                                   bound_random    ,  \
 	size_t                                   parent_node_id  ,  \
 	size_t                                   n_covariate     ,  \
 	size_t                                   n_age_ode       ,  \

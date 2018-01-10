@@ -301,7 +301,9 @@ bool fit_model_xam(void)
 	size_t n_age_ode = 6;
 	size_t n_time_ode = 2;
 	double ode_step_size = 20.;
+	double bound_random = std::numeric_limits<double>::infinity();
 	dismod_at::data_model data_object(
+		bound_random,
 		parent_node_id,
 		n_covariate,
 		n_age_ode,
@@ -352,9 +354,6 @@ bool fit_model_xam(void)
 	option_map["accept_after_max_steps_random"] = "5";
 	// ----------------------- run the fit -------------------------------
 	bool quasi_fixed = false;
-	//
-	// bound_random
-	double bound_random = std::numeric_limits<double>::infinity();
 	//
 	// zero_sum_random
 	vector<bool> zero_sum_random( dismod_at::number_rate_enum );

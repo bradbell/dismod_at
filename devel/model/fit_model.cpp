@@ -1071,28 +1071,24 @@ fit_model::a1_vector fit_model::fix_likelihood(
 	pack_random(pack_object_, a1_pack_vec, random_vec);
 	//
 	// evaluate the data and prior residuals that only depend on fixed effects
+	// and random effects with bounds that are equal
 	CppAD::vector< residual_struct<a1_double> > data_fix, prior_fix;
 	bool hold_out      = true;
 	bool random_depend = false;
 	data_fix  = data_object_.like_all(hold_out, random_depend, a1_pack_vec);
 	prior_fix = prior_object_.fixed(a1_pack_vec);
-	//
+# ifndef NDEBUG
 	if( n_random_ == n_random_equal_ )
 	{	// ran_likelihood returns the empty vector in this case
 		// so we need to include rest of the data here.
-		random_depend = true;
-# ifndef NDEBUG
 		for(size_t i = 0; i < n_random_; i++)
 			assert( random_lower_[i] == random_upper_[i] );
-# endif
-		pack_random(pack_object_, a1_pack_vec, random_vec);
-		CppAD::vector< residual_struct<a1_double> > data_ran;
-		data_ran  = data_object_.like_all(hold_out, random_depend, a1_pack_vec);
-		//
-		// data_fix = data_fix + data_ran
-		for(size_t i = 0; i < data_ran.size(); i++)
-			data_fix.push_back( data_ran[i] );
+		random_depend = true;
+		CppAD::vector< residual_struct<a1_double> > data_ran =
+			data_object_.like_all(hold_out, random_depend, a1_pack_vec);
+		assert( data_ran.size() == 0 );
 	}
+# endif
 	//
 	// number of data and prior residuals
 	size_t n_data_fix    = data_fix.size();

@@ -40,7 +40,7 @@ class data_model {
 		size_t                n_age;
 		size_t                n_time;
 		CppAD::vector<double> c_ode;
-		bool                  random_depend;
+		bool                  random_neq_bnd;
 	} data_ode_info;
 private:
 	const size_t                              n_covariate_;
@@ -77,6 +77,7 @@ private:
 public:
 	template <class SubsetStruct>
 	data_model(
+		double                                   bound_random    ,
 		size_t                                   parent_node_id  ,
 		size_t                                   n_covariate     ,
 		size_t                                   n_age_ode       ,

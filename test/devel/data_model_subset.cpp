@@ -227,7 +227,9 @@ bool data_model_subset(void)
 		data_subset_cov_value
 	);
 	// data_model
+	double bound_random = std::numeric_limits<double>::infinity();
 	dismod_at::data_model data_object(
+		bound_random,
 		parent_node_id,
 		n_covariate,
 		n_age_ode,

@@ -12,7 +12,6 @@
 new_directories='
 '
 rename_files='
-	example/devel/model/integrand_ode_xam.cpp
 '
 spell_files='
 '
@@ -23,7 +22,7 @@ rename_cmd='s|integrand_ode|sci_ode|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|integrand_ode|sci_ode|g
+s|random_depend|random_neq_bnd|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

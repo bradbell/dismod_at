@@ -2151,6 +2151,17 @@ int main(int n_arg, const char** argv)
 	);
 	// rate_case
 	string rate_case = option_map["rate_case"];
+	//
+	// bound_random
+	double bound_random = 0.0;
+	if( command_arg != "fit" || std::strcmp(argv[3], "fixed") != 0 )
+	{	// null corresponds to infinity
+		std::string tmp_str = option_map["bound_random"];
+		if( tmp_str == "" )
+			bound_random = std::numeric_limits<double>::infinity();
+		else
+			bound_random = std::atof( tmp_str.c_str() );
+	}
 	// =======================================================================
 	if( command_arg == "set" )
 	{	if( std::strcmp(argv[3], "option") == 0 )
@@ -2193,6 +2204,7 @@ int main(int n_arg, const char** argv)
 		//
 		// avgint_object
 		dismod_at::data_model avgint_object(
+			bound_random             ,
 			parent_node_id           ,
 			n_covariate              ,
 			n_age_ode                ,
@@ -2259,6 +2271,7 @@ int main(int n_arg, const char** argv)
 			);
 			// data_object
 			dismod_at::data_model data_object(
+				bound_random             ,
 				parent_node_id           ,
 				n_covariate              ,
 				n_age_ode                ,

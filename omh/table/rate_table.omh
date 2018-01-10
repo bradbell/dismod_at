@@ -167,6 +167,11 @@ The $cref/upper/prior_table/upper/$$ limit must be $code null$$,
 which gets interpreted as plus infinity; see
 $cref/bounds that are null/database/Bounds That are Null/$$.
 
+$subhead bound_random$$
+If the lower and upper limits are plus and minus infinity,
+$cref/bound_random/option_table/Optimizer/bound_random/$$
+is used for the lower and upper limits.
+
 $children%example/table/rate_table.py
 %$$
 $head Example$$
