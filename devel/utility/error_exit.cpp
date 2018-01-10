@@ -47,7 +47,7 @@ If the previous $icode db$$ was a the null pointer
 It is not the null pointer,
 the value $icode message$$ is also written to the
 $cref/message/log_table/message/$$ column of the log table
-(as well as to standard error).
+and to standard error.
 
 $head table_name$$
 This argument has prototype
@@ -73,6 +73,9 @@ If $icode row_id$$ is not present, $code null$$ is used.
 If $icode row_id$$ is present and not $code DISMOD_AT_NULL_SIZE_T$$,
 $icode table_name$$ must not be empty.
 In this case, $icode row_id$$ is also written (with a label) to standard error.
+
+$head assert$$
+An assertion is generated before exiting, incase we are running in debug mode.
 
 $end
 -----------------------------------------------------------------------------

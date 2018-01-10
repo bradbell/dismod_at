@@ -1156,9 +1156,9 @@ fit_model::a1_vector fit_model::fix_constraint(const a1_vector& fixed_vec)
 // ---------------------------------------------------------------------------
 // fatal_error
 void fit_model::fatal_error(const std::string& error_message)
-{	assert(false);
+{
 	std::string msg = "cppad_mixed: " + error_message;
-	// prints on std::cerr as well as logs in database
+	// prints on std::cerr, logs in database, generates an assert, then exits
 	error_exit(msg);
 }
 // warning
