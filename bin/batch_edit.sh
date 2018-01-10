@@ -22,7 +22,7 @@ rename_cmd='s|integrand_ode|sci_ode|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|random_depend|random_neq_bnd|
+s|random_neq_bnd|bound_ran_neq|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

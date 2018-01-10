@@ -522,7 +522,7 @@ pack_object_     (pack_object)
 
 		// Does this data point depend on the random effects
 		// that do not have equal bounds
-		bool random_neq_bnd = false;
+		bool bound_ran_neq = false;
 		if( child < n_child_ && bound_random > 0.0 )
 		{	CppAD::vector<size_t> rate_id;
 			switch( integrand )
@@ -569,14 +569,14 @@ pack_object_     (pack_object)
 							{	double lower = prior_table[prior_id].lower;
 								double upper = prior_table[prior_id].upper;
 								if( lower != upper )
-									random_neq_bnd = true;
+									bound_ran_neq = true;
 							}
 						}
 					}
 				}
 			}
 		}
-		data_info_[subset_id].random_neq_bnd = random_neq_bnd;
+		data_info_[subset_id].bound_ran_neq = bound_ran_neq;
 	}
 }
 /*
@@ -2161,9 +2161,9 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 	{	bool keep = hold_out == false;
 		keep     |= data_subset_obj_[subset_id].hold_out == 0;
 		if( random_depend )
-			keep &= data_info_[subset_id].random_neq_bnd == true;
+			keep &= data_info_[subset_id].bound_ran_neq == true;
 		else
-			keep &= data_info_[subset_id].random_neq_bnd == false;
+			keep &= data_info_[subset_id].bound_ran_neq == false;
 		assert( data_info_[subset_id].child <= n_child_ );
 		if( keep )
 		{	// compute avgerage of integrand for this data
