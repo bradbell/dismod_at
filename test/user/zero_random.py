@@ -95,7 +95,7 @@ def example_db (file_name) :
 	# values that are the same for all data rows
 	row = {
 		'node':        'world',
-		'density':     'gaussian',
+		'density':     'log_gaussian',
 		'weight':      'constant',
 		'hold_out':     False,
 		'time_lower':   time_list[0],
@@ -104,7 +104,7 @@ def example_db (file_name) :
 		'age_upper':    age_list[-1],
 		'meas_value':   iota_true,
 		'meas_std':     iota_true * 0.1,
-		'eta':          None,
+		'eta':          1e-10,
 		'integrand':    'Sincidence'
 	}
 	#
@@ -169,7 +169,7 @@ def example_db (file_name) :
 			'lower':    None,
 			'upper':    None,
 			'mean':     0.0,
-			'std':      1.0, # 2DO: 1.0 and 0.01 work but 0.1 fails
+			'std':      0.1,
 			'eta':      None
 		},{ # prior_rate_parent
 			'name':     'prior_rate_parent',
@@ -318,7 +318,7 @@ var_table     = dismod_at.get_table_dict(connection, 'var')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 #
 parent_node_id = 1
-eps            = 1e-4
+eps            = 1e-7
 #
 # check parent rates values
 count             = 0
