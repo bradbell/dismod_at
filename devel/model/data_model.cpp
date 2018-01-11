@@ -229,7 +229,7 @@ to interpolation structure for specified smoothing on the ode grid.
 
 $head child_ran_zero_$$
 for each $icode%child% < n_child_%$$,
-$codei%child_ran_zero%[%child%]%$$ is true if all the random effects
+$codei%child_ran_zero_%[%child%]%$$ is true if all the random effects
 for this child are constrained to be zero.
 
 $head data_info_$$
@@ -347,9 +347,9 @@ pack_object_     (pack_object)
 	// -----------------------------------------------------------------------
 	// child_ran_zero_
 	double inf = std::numeric_limits<double>::infinity();
-	child_ran_zero.resize(n_child_);
+	child_ran_zero_.resize(n_child_);
 	for(size_t child = 0; child < n_child_; ++child)
-	{	child_ran_zero[child] = true;
+	{	child_ran_zero_[child] = true;
 		for(size_t rate_id = 0; rate_id < number_rate_enum; ++rate_id)
 		{	// check if any random effects for this rate are not constant
 			size_t smooth_id = pack_object.rate_info(rate_id, child).smooth_id;
@@ -369,7 +369,7 @@ pack_object_     (pack_object)
 							bool zero    = upper == 0.0;
 							zero        |= upper == inf && bound_random == 0.0;
 							if( ! zero )
-								child_ran_zero[child] = false;
+								child_ran_zero_[child] = false;
 						}
 					}
 				}
@@ -880,6 +880,9 @@ $codei%
 is the with condition fraction C corresponding to the specified child
 $icode c$$ and reference value for the rate covariates.
 The child $icode%c% = n_child_%$$ corresponds to the parent.
+If $icode%c% < n_child_%$$ and $code%child_ran_zero_[%c%]%$$ is true,
+the corresponding values are not calculated because $icode%c% = n_child_%$$
+can be used instead.
 
 $end
 */
@@ -908,35 +911,38 @@ CppAD::vector<Float> data_model::reference_ode(
 	// computing new reference_sc, so do not use this argument
 	CppAD::vector<Float> not_used(0);
 	//
-	size_t first_child = 0;
-	if( parent_only )
-		first_child = n_child_;
-	for(size_t child = first_child; child <= n_child_; ++child)
-	{	// limits corresponding to entire ode grid
-		size_t i_min      = 0;
-		size_t j_min      = 0;
-		size_t n_age_sub  = n_age_ode_;
-		size_t n_time_sub = n_time_ode_;
-		//
-		// compute values for this child
-		CppAD::vector<Float> sci_sub = sci_ode(
-			integrand,
-			i_min,
-			j_min,
-			n_age_sub,
-			n_time_sub,
-			child,
-			x,
-			pack_vec,
-			not_used
-		);
-		//
-		// copy to child_ode_grid_sc
-		for(size_t i = 0; i < n_age_ode_; ++i)
-		{	for(size_t j = 0; j < n_time_ode_; ++j)
-			{	size_t k = 2 * (child * n_ode + i * n_time_ode_ + j);
-				reference_sc[k + 0] = sci_sub[(i * n_time_ode_ + j)*3 + 0];
-				reference_sc[k + 1] = sci_sub[(i * n_time_ode_ + j)*3 + 1];
+	for(size_t child = 0; child <= n_child_; ++child)
+	{	bool skip = false;
+		if( child < n_child_ )
+			skip = parent_only || child_ran_zero_[child];
+		if( ! skip )
+		{
+			// limits corresponding to entire ode grid
+			size_t i_min      = 0;
+			size_t j_min      = 0;
+			size_t n_age_sub  = n_age_ode_;
+			size_t n_time_sub = n_time_ode_;
+			//
+			// compute values for this child
+			CppAD::vector<Float> sci_sub = sci_ode(
+				integrand,
+				i_min,
+				j_min,
+				n_age_sub,
+				n_time_sub,
+				child,
+				x,
+				pack_vec,
+				not_used
+			);
+			//
+			// copy to child_ode_grid_sc
+			for(size_t i = 0; i < n_age_ode_; ++i)
+			{	for(size_t j = 0; j < n_time_ode_; ++j)
+				{	size_t k = 2 * (child * n_ode + i * n_time_ode_ + j);
+					reference_sc[k + 0] = sci_sub[(i * n_time_ode_ + j)*3 + 0];
+					reference_sc[k + 1] = sci_sub[(i * n_time_ode_ + j)*3 + 1];
+				}
 			}
 		}
 	}
@@ -1303,6 +1309,8 @@ CppAD::vector<Float> data_model::sci_ode(
 			C_out.resize(nk);
 			for(size_t k = 0; k < nk; ++k)
 			{	size_t ell = 2 * (child * n_ode + ode_index[k_start + k]);
+				if( child < n_child_ && child_ran_zero_[child] )
+					ell = 2 * (n_child_ * n_ode + ode_index[k_start + k]);
 				S_out[k]   = reference_sc[ell + 0];
 				C_out[k]   = reference_sc[ell + 1];
 			}

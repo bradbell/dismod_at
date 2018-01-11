@@ -18,7 +18,7 @@ import sys
 import os
 import distutils.dir_util
 import subprocess
-test_program = 'test/user/zero_random.py'
+test_program = 'test/user/zero_random_1.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -351,6 +351,6 @@ for var_id in range( len(var_table) ) :
 		assert abs(value) < eps
 assert count == 3 * 2
 # -----------------------------------------------------------------------------
-print('zero_random.py: OK')
+print('zero_random_1.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

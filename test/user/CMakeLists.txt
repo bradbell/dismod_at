@@ -20,7 +20,8 @@ FOREACH(user_case
 	not_ordered
 	bound_random
 	relrisk
-	zero_random
+	zero_random_1
+	zero_random_2
 )
 	ADD_CUSTOM_TARGET(
 		check_test_user_${user_case}

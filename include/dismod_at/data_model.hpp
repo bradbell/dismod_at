@@ -52,7 +52,7 @@ private:
 	// set by constructor and not changed
 	size_t                       n_child_;
 	CppAD::vector<smooth2ode*>   si2ode_vec_;
-	CppAD::vector<bool>          child_ran_zero;
+	CppAD::vector<bool>          child_ran_zero_;
 	CppAD::vector<data_ode_info> data_info_;
 
 	// set to a default value by consturctor
