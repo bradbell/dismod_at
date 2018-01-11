@@ -88,12 +88,13 @@ bool avg_yes_ode_xam(void)
 	w_info_vec[0] = w_info;
 	//
 	// prior table
+	double inf = std::numeric_limits<double>::infinity();
 	double nan = std::numeric_limits<double>::quiet_NaN();
 	vector<dismod_at::prior_struct> prior_table(1);
 	prior_table[0].prior_name = "prior_zero";
 	prior_table[0].density_id = 0;
-	prior_table[0].lower      = -1.0;
-	prior_table[0].upper      = +1.0;
+	prior_table[0].lower      = -inf;
+	prior_table[0].upper      = +inf;
 	prior_table[0].mean       = 0.0;
 	prior_table[0].std        = nan;
 	prior_table[0].eta        = nan;

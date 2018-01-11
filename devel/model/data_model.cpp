@@ -24,6 +24,7 @@ $spell
 	covariates
 	cov
 	cv
+	eigen
 $$
 
 $section Data Model: Constructor$$
@@ -150,7 +151,6 @@ and is the sub-sampled version of the covariates; see
 $cref/data_subset_cov_value/data_subset/data_subset_cov_value/$$,
 $cref/avgint_subset_cov_value/avgint_subset/avgint_subset_cov_value/$$.
 
-
 $head w_info_vec$$
 This argument has prototype
 $codei%
@@ -191,6 +191,52 @@ $codei%
 %$$
 and is the $cref child_info$$ information corresponding to
 parent node, node table, and data table.
+
+$head n_covariate_$$
+set to $icode n_covariate$$.
+
+$head n_age_ode_$$
+set to $icode n_age_ode$$.
+
+$head n_time_ode_$$
+set to $icode n_time_ode$$.
+
+$head ode_step_size_$$
+set to $icode ode_step_size$$.
+
+$head pack_object_$$
+set to $icode pack_object$$.
+
+$head minimum_meas_cv_$$
+set to $code nan$$ (will be set by replace_like).j
+
+$head eigen_ode2_case_number_$$
+set to the default value.
+
+$head replace_like_called_$$
+initialize as false.
+
+$head n_child_$$
+set to number of children.
+
+$head data_subset_obj_$$
+for each $icode subset_id$$, set $codei%data_subset_obj_[%subset_id%]%$$
+fields that are command both data_subset and avgint_subset.
+
+$head si2ode_vec_$$
+for each $icode smooth_id$$, set $codei%si2ode_vec_[%subset_id%]%$$
+to interpolation structure for specified smoothing on the ode grid.
+
+$head child_ran_zero_$$
+for each $icode%child% < n_child_%$$,
+$codei%child_ran_zero%[%child%]%$$ is true if all the random effects
+for this child are constrained to be zero.
+
+$head data_info_$$
+for each $icode subset_id$$, set $codei%data_info_[%subset_id%]%$$
+is extra information used to speed up computation of average integrand
+for the corresponding data point.
+
 
 $end
 -----------------------------------------------------------------------------
@@ -247,17 +293,30 @@ n_time_ode_      (n_time_ode)       ,
 ode_step_size_   (ode_step_size)    ,
 pack_object_     (pack_object)
 {	assert( bound_random >= 0.0 );
+	assert( n_age_ode  > 1 );
+	assert( n_time_ode > 1 );
 	//
 	using std::string;
 	size_t i, j, k;
 	//
-	// set to nan (until replace_like is called)
+	// minimum_meas_cv_: set to nan (until replace_like is called)
 	minimum_meas_cv_ = std::numeric_limits<double>::quiet_NaN();
+	//
+	// eigen_ode2_case_number_: set default value
+	eigen_ode2_case_number_ = 4;
+	//
+	// replace_like_called_: initialize
+	replace_like_called_ = false;
+	//
+	// n_child_: set to number of children.
+	n_child_ = child_object.child_size();
+	assert( n_child_ == pack_object.child_size() );
+	// -----------------------------------------------------------------------
+	// data_subset_obj_
 	//
 	// only set the fileds that are common to data_subset and avgint_subset
 	size_t n_subset = subset_object.size();
 	data_subset_obj_.resize(n_subset);
-	//
 	assert( subset_cov_value.size() == n_covariate * n_subset );
 	data_cov_value_.resize(n_subset * n_covariate);
 	for(i = 0; i < n_subset; i++)
@@ -273,23 +332,10 @@ pack_object_     (pack_object)
 			data_cov_value_[i * n_covariate_ + j] =
 				subset_cov_value[i * n_covariate + j];
 	}
+	// -----------------------------------------------------------------------
+	// si2ode_vec_
 	//
-	double eps = std::numeric_limits<double>::epsilon() * 100.0;
-	//
-	assert( n_age_ode  > 1 );
-	assert( n_time_ode > 1 );
-	//
-	// set default value for eigen_ode2_case_number_
-	eigen_ode2_case_number_ = 4;
-	//
-	// initialize
-	replace_like_called_ = false;
-	//
-	// set n_child_
-	n_child_ = child_object.child_size();
-	assert( n_child_ == pack_object.child_size() );
-	//
-	// si2ode_vec_ has same size as s_info_vec
+	// has same size as s_info_vec.
 	size_t n_smooth = s_info_vec.size();
 	si2ode_vec_.resize( n_smooth );
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
@@ -298,8 +344,42 @@ pack_object_     (pack_object)
 			s_info_vec[smooth_id]
 		);
 	}
+	// -----------------------------------------------------------------------
+	// child_ran_zero_
+	double inf = std::numeric_limits<double>::infinity();
+	child_ran_zero.resize(n_child_);
+	for(size_t child = 0; child < n_child_; ++child)
+	{	child_ran_zero[child] = true;
+		for(size_t rate_id = 0; rate_id < number_rate_enum; ++rate_id)
+		{	// check if any random effects for this rate are not constant
+			size_t smooth_id = pack_object.rate_info(rate_id, child).smooth_id;
+			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
+			{	const smooth_info& s_info = s_info_vec[smooth_id];
+				size_t             n_age  = s_info.age_size();
+				size_t             n_time = s_info.time_size();
+				for(size_t i = 0; i < n_age; i++)
+				{	for(size_t j = 0; j < n_time; j++)
+					{	size_t prior_id    = s_info.value_prior_id(i, j);
+						// if prior_id is null then const_value is not null
+						if( prior_id != DISMOD_AT_NULL_SIZE_T )
+						{	double lower = prior_table[prior_id].lower;
+							double upper = prior_table[prior_id].upper;
+							assert( upper == inf  || upper == lower );
+							assert( lower == -inf || upper == lower );
+							bool zero    = upper == 0.0;
+							zero        |= upper == inf && bound_random == 0.0;
+							if( ! zero )
+								child_ran_zero[child] = false;
+						}
+					}
+				}
+			}
+		}
+	}
+	// -----------------------------------------------------------------------
+	// data_ode_info_
 	//
-	// data_ode_info_ has same size as data_subset_obj
+	// has same size as data_subset_obj
 	data_info_.resize( n_subset );
 	//
 	// limits of the ode grid
@@ -369,6 +449,7 @@ pack_object_     (pack_object)
 		size_t j_wi = 0;
 
 		// loop over all the ode rectangles that are within limits
+		double eps = std::numeric_limits<double>::epsilon() * 100.0;
 		CppAD::vector<double> w(4), c(4);
 		std::pair<double, double> w_pair, c_pair;
 		for(i = 0; i < n_age-1; i++)
