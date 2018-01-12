@@ -58,6 +58,13 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 12-11$$
+There was a bug in the change on 12-09. To be specific,
+the case where a child had no
+$cref/random effects/model_variables/Random Effects, u/$$,
+and the child had data with no rate covariates,
+was not handled correctly. This has been fixed.
+
 $head 12-09$$
 A change was made to speed up the calculations for measurements
 that have the reference value for all the rate covariates; see
