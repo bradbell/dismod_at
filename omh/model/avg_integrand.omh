@@ -312,8 +312,8 @@ $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 Note that these are only
 $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$ covariate multipliers.
 
-$subhead Total Effect$$
-The total effect for the $th i$$ measurement value,
+$subhead Measurement Effect$$
+The effect for the $th i$$ measurement value,
 as a function of the fixed effects $latex \theta$$, is
 $latex \[
 	E_i ( a, t ) = \sum_{j \in K_i} x_{i,j} \beta_j (a, t)

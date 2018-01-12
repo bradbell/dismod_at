@@ -825,7 +825,7 @@ The definition of the average integrand has been changed to include the
 $cref/measurement value covariate effect
 	/avg_integrand
 	/Measurement Value Covariates
-	/Total Effect
+	/Measurement Effect
 /$$.
 $lnext
 The $code bin/install_suitesparse.sh$$ script has been changed to
