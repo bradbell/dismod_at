@@ -1304,6 +1304,18 @@ CppAD::vector<Float> data_model::sci_ode(
 		else
 			nk = ode_index.size() - cohort_start[ell];
 		//
+		// set iota, rho, chi, omega for this cohort.
+		iota.resize(nk);
+		rho.resize(nk);
+		chi.resize(nk);
+		omega.resize(nk);
+		for(size_t k = 0; k < nk; k++)
+		{	iota[k]  = rate_ode[iota_enum][k_start + k];
+			rho[k]   = rate_ode[rho_enum][k_start + k];
+			chi[k]   = rate_ode[chi_enum][k_start + k];
+			omega[k] = rate_ode[omega_enum][k_start + k];
+		}
+		//
 		if( use_reference_sc )
 		{	S_out.resize(nk);
 			C_out.resize(nk);
@@ -1319,16 +1331,6 @@ CppAD::vector<Float> data_model::sci_ode(
 		{
 			// pini, iota, rho, cho, omega for this cohort
 			Float pini   = Float(rate_ode[pini_enum][k_start]);
-			iota.resize(nk);
-			rho.resize(nk);
-			chi.resize(nk);
-			omega.resize(nk);
-			for(size_t k = 0; k < nk; k++)
-			{	iota[k]  = rate_ode[iota_enum][k_start + k];
-				rho[k]   = rate_ode[rho_enum][k_start + k];
-				chi[k]   = rate_ode[chi_enum][k_start + k];
-				omega[k] = rate_ode[omega_enum][k_start + k];
-			}
 			//
 			// S and C for this cohort
 			S_out.resize(0);
