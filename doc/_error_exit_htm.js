@@ -57,7 +57,8 @@ var list_current0 = [
 'error_exit.htm#message',
 'error_exit.htm#message.null',
 'error_exit.htm#table_name',
-'error_exit.htm#row_id'
+'error_exit.htm#row_id',
+'error_exit.htm#assert'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

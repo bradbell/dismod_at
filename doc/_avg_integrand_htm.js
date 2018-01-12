@@ -78,7 +78,7 @@ var list_current0 = [
 'avg_integrand.htm#Measurement Value Covariates',
 'avg_integrand.htm#Measurement Value Covariates.K_i',
 'avg_integrand.htm#Measurement Value Covariates.beta_j',
-'avg_integrand.htm#Measurement Value Covariates.Total Effect',
+'avg_integrand.htm#Measurement Value Covariates.Measurement Effect',
 'avg_integrand.htm#Weight Integral, wbar_i',
 'avg_integrand.htm#Average Integrand, A_i'
 ];

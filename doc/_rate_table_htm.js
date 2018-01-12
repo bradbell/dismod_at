@@ -70,6 +70,7 @@ var list_current0 = [
 'rate_table.htm#Child Restrictions.density',
 'rate_table.htm#Child Restrictions.lower',
 'rate_table.htm#Child Restrictions.upper',
+'rate_table.htm#Child Restrictions.bound_random',
 'rate_table.htm#Example'
 ];
 function choose_across0(item)

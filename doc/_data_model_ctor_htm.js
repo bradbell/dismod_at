@@ -49,6 +49,7 @@ var list_down1 = [
 var list_current0 = [
 'data_model_ctor.htm#Syntax',
 'data_model_ctor.htm#data_object',
+'data_model_ctor.htm#bound_random',
 'data_model_ctor.htm#parent_node_id',
 'data_model_ctor.htm#n_covariate',
 'data_model_ctor.htm#n_age_ode',
@@ -63,7 +64,20 @@ var list_current0 = [
 'data_model_ctor.htm#w_info_vec',
 'data_model_ctor.htm#s_info_vec',
 'data_model_ctor.htm#pack_object',
-'data_model_ctor.htm#child_object'
+'data_model_ctor.htm#child_object',
+'data_model_ctor.htm#n_covariate_',
+'data_model_ctor.htm#n_age_ode_',
+'data_model_ctor.htm#n_time_ode_',
+'data_model_ctor.htm#ode_step_size_',
+'data_model_ctor.htm#pack_object_',
+'data_model_ctor.htm#minimum_meas_cv_',
+'data_model_ctor.htm#eigen_ode2_case_number_',
+'data_model_ctor.htm#replace_like_called_',
+'data_model_ctor.htm#n_child_',
+'data_model_ctor.htm#data_subset_obj_',
+'data_model_ctor.htm#si2ode_vec_',
+'data_model_ctor.htm#child_ran_zero_',
+'data_model_ctor.htm#data_info_'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

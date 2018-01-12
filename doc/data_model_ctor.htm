@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Data Model: Constructor</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Data Model: Constructor">
-<meta name="keywords" id="keywords" content=" data model: constructor syntax data_object parent_node_id n_covariate n_age_ode n_time_ode ode_step_size age_table time_table integrand_table node_table subset_object subset_cov_value w_info_vec s_info_vec pack_object child_object ">
+<meta name="keywords" id="keywords" content=" data model: constructor syntax data_object bound_random parent_node_id n_covariate n_age_ode n_time_ode ode_step_size age_table time_table integrand_table node_table subset_object subset_cov_value w_info_vec s_info_vec pack_object child_object n_covariate_ n_age_ode_ n_time_ode_ ode_step_size_ pack_object_ minimum_meas_cv_ eigen_ode2_case_number_ replace_like_called_ n_child_ data_subset_obj_ si2ode_vec_ child_ran_zero_ data_info_ ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -105,6 +105,7 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>Syntax</option>
 <option>data_object</option>
+<option>bound_random</option>
 <option>parent_node_id</option>
 <option>n_covariate</option>
 <option>n_age_ode</option>
@@ -120,6 +121,19 @@ A:active { color : purple }
 <option>s_info_vec</option>
 <option>pack_object</option>
 <option>child_object</option>
+<option>n_covariate_</option>
+<option>n_age_ode_</option>
+<option>n_time_ode_</option>
+<option>ode_step_size_</option>
+<option>pack_object_</option>
+<option>minimum_meas_cv_</option>
+<option>eigen_ode2_case_number_</option>
+<option>replace_like_called_</option>
+<option>n_child_</option>
+<option>data_subset_obj_</option>
+<option>si2ode_vec_</option>
+<option>child_ran_zero_</option>
+<option>data_info_</option>
 </select>
 </td>
 </tr></table><br>
@@ -132,6 +146,7 @@ A:active { color : purple }
 <br>
 
 <code><font color="blue"><span style='white-space: nowrap'>data_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_covariate</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_age_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
@@ -159,6 +174,20 @@ This object has prototype
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
+<br>
+<b><big><a name="bound_random" id="bound_random">bound_random</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the
+<a href="option_table.htm#Optimizer.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+.
+
+
+<br>
 <br>
 <b><big><a name="parent_node_id" id="parent_node_id">parent_node_id</a></big></b>
 <br>
@@ -302,7 +331,6 @@ and is the sub-sampled version of the covariates; see
 <a href="avgint_subset.htm#avgint_subset_cov_value" target="_top"><span style='white-space: nowrap'>avgint_subset_cov_value</span></a>
 .
 
-
 <br>
 <br>
 <b><big><a name="w_info_vec" id="w_info_vec">w_info_vec</a></big></b>
@@ -370,6 +398,117 @@ This argument has prototype
 and is the <a href="child_info.htm" target="_top"><span style='white-space: nowrap'>child_info</span></a>
  information corresponding to
 parent node, node table, and data table.
+
+<br>
+<br>
+<b><big><a name="n_covariate_" id="n_covariate_">n_covariate_</a></big></b>
+<br>
+set to 
+<code><i><font color="black"><span style='white-space: nowrap'>n_covariate</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="n_age_ode_" id="n_age_ode_">n_age_ode_</a></big></b>
+<br>
+set to 
+<code><i><font color="black"><span style='white-space: nowrap'>n_age_ode</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="n_time_ode_" id="n_time_ode_">n_time_ode_</a></big></b>
+<br>
+set to 
+<code><i><font color="black"><span style='white-space: nowrap'>n_time_ode</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="ode_step_size_" id="ode_step_size_">ode_step_size_</a></big></b>
+<br>
+set to 
+<code><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="pack_object_" id="pack_object_">pack_object_</a></big></b>
+<br>
+set to 
+<code><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="minimum_meas_cv_" id="minimum_meas_cv_">minimum_meas_cv_</a></big></b>
+<br>
+set to <code><font color="blue">nan</font></code> (will be set by replace_like).j
+
+<br>
+<br>
+<b><big><a name="eigen_ode2_case_number_" id="eigen_ode2_case_number_">eigen_ode2_case_number_</a></big></b>
+<br>
+set to the default value.
+
+<br>
+<br>
+<b><big><a name="replace_like_called_" id="replace_like_called_">replace_like_called_</a></big></b>
+<br>
+initialize as false.
+
+<br>
+<br>
+<b><big><a name="n_child_" id="n_child_">n_child_</a></big></b>
+<br>
+set to number of children.
+
+<br>
+<br>
+<b><big><a name="data_subset_obj_" id="data_subset_obj_">data_subset_obj_</a></big></b>
+<br>
+for each 
+<code><i><font color="black"><span style='white-space: nowrap'>subset_id</span></font></i></code>
+, set 
+<code><font color="blue"><span style='white-space: nowrap'>data_subset_obj_[</span></font><i><font color="black"><span style='white-space: nowrap'>subset_id</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+fields that are command both data_subset and avgint_subset.
+
+<br>
+<br>
+<b><big><a name="si2ode_vec_" id="si2ode_vec_">si2ode_vec_</a></big></b>
+<br>
+for each 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+, set 
+<code><font color="blue"><span style='white-space: nowrap'>si2ode_vec_[</span></font><i><font color="black"><span style='white-space: nowrap'>subset_id</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+to interpolation structure for specified smoothing on the ode grid.
+
+<br>
+<br>
+<b><big><a name="child_ran_zero_" id="child_ran_zero_">child_ran_zero_</a></big></b>
+<br>
+for each 
+<code><i><font color="black"><span style='white-space: nowrap'>child</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;n_child_</span></font></code>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'>child_ran_zero_</span></font><i><font color="black"><span style='white-space: nowrap'>[</span></font></i><font color="blue"><span style='white-space: nowrap'>child</span></font><i><font color="black"><span style='white-space: nowrap'>]</span></font></i></code>
+ is true if all the random effects
+for this child are constrained to be zero.
+
+<br>
+<br>
+<b><big><a name="data_info_" id="data_info_">data_info_</a></big></b>
+<br>
+for each 
+<code><i><font color="black"><span style='white-space: nowrap'>subset_id</span></font></i></code>
+, set 
+<code><font color="blue"><span style='white-space: nowrap'>data_info_[</span></font><i><font color="black"><span style='white-space: nowrap'>subset_id</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+is extra information used to speed up computation of average integrand
+for the corresponding data point.
+
 
 
 <hr>Input File: devel/model/data_model.cpp

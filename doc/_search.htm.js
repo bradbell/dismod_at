@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20180109  ',' ',
+'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20180112  ',' ',
 'install_unix  Installing dismod_at in Unix  ',' system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl download special run_cmake.sh eigen ipopt suitesparse cppad cppad_mixed setup command test executable path example ',
 'run_cmake.sh  bin/run_cmake.sh: User Configuration Options  ',' verbose_makefile build_type dismod_at_prefix prefixes debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir checkpoint_newton_step system_specific_library_list ',
 'example_install.sh  An Example Installation  ',' syntax ',
@@ -53,7 +53,7 @@ Keyword =
 'option_table.py  option_table: Example and Test  ',' ',
 'prior_table  The Prior Table  ',' prior_id prior_name density_id lower upper mean std eta null scaling example ',
 'prior_table.py  prior_table: Example and Test  ',' ',
-'rate_table  The Rate Table  ',' rate_id rate_name pini iota rho chi omega parent_smooth_id null child_smooth_id random effects hessian child_nslist_id restrictions constant density lower upper example ',
+'rate_table  The Rate Table  ',' rate_id rate_name pini iota rho chi omega parent_smooth_id null child_smooth_id random effects hessian child_nslist_id restrictions constant density lower upper bound_random example ',
 'rate_table.py  rate_table: Example and Test  ',' ',
 'smooth_grid_table  The Smooth Grid Table  ',' smooth_grid_id smooth_id age_id time_id value_prior_id dage_prior_id dtime_prior_id const_value rectangular example ',
 'smooth_grid_table.py  smooth_grid_table: Example and Test  ',' ',
@@ -78,7 +78,7 @@ Keyword =
 'predict_table  The Predict Table: Average Integrand Predictions  ',' see also purpose avgint subset node covariates predict_id sample_index avgint_id avg_integrand example ',
 'model  The Age-Time Dismod Model  ',' ',
 'model_variables  The Model Variables  ',' prior smoothing interpolation number children fixed effects theta standard deviation multipliers lambda parent rates covariate random age time variation initial prevalence other types ',
-'avg_integrand  Model for the Average Integrand  ',' ordinary differential equation data avgint table notation a_i b_i s_i t_i x_ij w_i n_i rate functions q_k u_ik j_k alpha_jk r_ik p_i0(t) pini iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j total effect weight integral wbar_i ',
+'avg_integrand  Model for the Average Integrand  ',' ordinary differential equation data avgint table notation a_i b_i s_i t_i x_ij w_i n_i rate functions q_k u_ik j_k alpha_jk r_ik p_i0(t) pini iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j effect weight integral wbar_i ',
 'data_like  Data Likelihood and Weighted Residuals  ',' table notation y_i delta_i b_i s_i t_i d_i i_i x_ij w_i measurement standard deviation covariates k_i gamma_j effects theta average integrand adjusted ',
 'fixed_value  The Fixed Effects Value Density Function  ',' theta_j prior_id lambda_j mu_j delta_j d_j v_j v^theta ',
 'fixed_diff  Fixed Effects Differences Density Function  ',' k i(k) j(k) lambda_k theta_ijk mu_ijk delta_ijk d_ijk age a^theta time t^theta ',
@@ -197,7 +197,7 @@ Keyword =
 'data_subset_xam.cpp  C++ data_subset: Example and Test  ',' ',
 'eigen_ode2  Eigen Vector Solution of ODE with Two Components  ',' syntax purpose float b assumption yi tf yf case_number three four method example ',
 'eigen_ode2_xam.cpp  Example and Test of Eigenvector Method of Solving ODE  ',' ',
-'error_exit  Printing and Logging Fatal Error Messages  ',' syntax db null table_name row_id ',
+'error_exit  Printing and Logging Fatal Error Messages  ',' syntax db null table_name row_id assert ',
 'fixed_effect  Setting and Getting the Fixed Effect Vector  ',' syntax float order effects pack_object n_fixed pack_index unpack_fixed pack_vec fixed_vec example ',
 'fixed_effect_xam.cpp  C++ fixed_effect: Example and Test  ',' ',
 'integrate_1d  Compute One Dimensional Integration Coefficients  ',' syntax see also purpose w example method ',
@@ -234,7 +234,7 @@ Keyword =
 'split_space_xam.cpp  C++ split_space: Example and Test  ',' ',
 'devel_model  Dismod_at Developer Model Documentation  ',' ',
 'devel_data_model  Model for Data Given Model Variables  ',' ',
-'data_model_ctor  Data Model: Constructor  ',' syntax data_object parent_node_id n_covariate n_age_ode n_time_ode ode_step_size age_table time_table integrand_table node_table subset_object subset_cov_value w_info_vec s_info_vec pack_object child_object ',
+'data_model_ctor  Data Model: Constructor  ',' syntax data_object bound_random parent_node_id n_covariate n_age_ode n_time_ode ode_step_size age_table time_table integrand_table node_table subset_object subset_cov_value w_info_vec s_info_vec pack_object child_object n_covariate_ n_age_ode_ n_time_ode_ ode_step_size_ pack_object_ minimum_meas_cv_ eigen_ode2_case_number_ replace_like_called_ n_child_ data_subset_obj_ si2ode_vec_ child_ran_zero_ data_info_ ',
 'set_eigne_ode2_case_number  Sets the Method Used to Solve the Dismod_at ODE  ',' syntax data_object rate_case ',
 'data_model_replace_like  Set Value Necessary for Likelihood (not for Average Integrand)  ',' syntax purpose data_object minimum_meas_cv subset_object n_subset subset_id data_subset_obj ',
 'data_model_reference_ode  Solve for S and C Corresponding to Reference Covariate Values  ',' syntax prototype data_object float pack_vec parent_only reference_sc ',
@@ -262,7 +262,7 @@ Keyword =
 'depend  Compute Data or Prior Dependencies  ',' ',
 'data_depend  Which Variables The Data Model Depends On  ',' syntax prototype pack_vec data_object ',
 'prior_depend  Which Variables The Prior Depends On  ',' syntax prototype pack_vec prior_object ',
-'whats_new_2017  Changes and Additions to Dismod_at During 2017  ',' 12-09 12-30 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15 ',
+'whats_new_2017  Changes and Additions to Dismod_at During 2017  ',' 12-11 12-09 12-30 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15 ',
 'whats_new_2016  Changes and Additions to Dismod_at During 2016  ',' 12-03 10-31 10-20 10-19 10-18 10-17 10-16 10-15 10-14 10-13 10-12 10-11 09-30 09-29 09-21 08-28 07-29 07-28 07-15 07-14 07-11 06-13 06-12 06-06 06-05 05-16 05-15 05-11 05-10 05-09 05-08 05-07 05-06 05-05 05-04 05-03 05-01 04-28 04-27 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-11 04-09 04-07 03-29 02-26 02-06 01-26 01-16 01-15 01-10 01-06 01-05 ',
 'whats_new_2015  Changes and Additions to Dismod_at During 2015  ',' 12-29 12-24 12-15 12-14 12-10 12-09 11-23 11-22 11-21 11-20 11-17 11-16 11-15 11-14 11-12 11-10 11-09 11-07 11-06 11-05 11-04 11-03 11-02 11-01 10-30 10-29 10-28 10-27 10-26 10-25 10-24 10-20 10-19 10-16 10-15 10-14 09-18 09-03 08-31 08-27 08-21 08-18 08-15 08-14 08-13 08-12 08-09 08-08 08-04 08-03 08-02 08-01 07-29 07-28 07-27 07-25 07-24 07-23 07-22 07-21 07-20 07-19 07-17 07-16 07-15 07-14 07-13 07-11 07-10 07-09 07-08 07-07 07-05 07-04 07-03 07-01 06-30 06-29 06-27 06-26 06-25 06-24 06-23 06-22 ',
 'wish_list  Dismod_at Wish List  ',' ode solution step size large excess mortality conditionals checkpointing simulated data lagrange multipliers documentation real world example user examples model simulating sampling random effects special hessian starting tracing optimization windows install '

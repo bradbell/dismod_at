@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Printing and Logging Fatal Error Messages</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Printing and Logging Fatal Error Messages">
-<meta name="keywords" id="keywords" content=" printing logging fatal error messages syntax db message null table_name row_id ">
+<meta name="keywords" id="keywords" content=" printing logging fatal error messages syntax db message null table_name row_id assert ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -111,6 +111,7 @@ A:active { color : purple }
 <option>---..null</option>
 <option>table_name</option>
 <option>row_id</option>
+<option>assert</option>
 </select>
 </td>
 </tr></table><br>
@@ -170,7 +171,7 @@ the value
  is also written to the
 <a href="log_table.htm#message" target="_top"><span style='white-space: nowrap'>message</span></a>
  column of the log table
-(as well as to standard error).
+and to standard error.
 
 <br>
 <br>
@@ -222,6 +223,12 @@ If
 In this case, 
 <code><i><font color="black"><span style='white-space: nowrap'>row_id</span></font></i></code>
  is also written (with a label) to standard error.
+
+<br>
+<br>
+<b><big><a name="assert" id="assert">assert</a></big></b>
+<br>
+An assertion is generated before exiting, incase we are running in debug mode.
 
 
 <hr>Input File: devel/utility/error_exit.cpp

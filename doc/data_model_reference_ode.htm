@@ -218,6 +218,13 @@ is the with condition fraction C corresponding to the specified child
 The child 
 <code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;n_child_</span></font></code>
  corresponds to the parent.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;n_child_</span></font></code>
+ and <code><font color="blue">%child_ran_zero_[%c%]%</font></code> is true,
+the corresponding values are not calculated because 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;n_child_</span></font></code>
+
+can be used instead.
 
 
 <hr>Input File: devel/model/data_model.cpp

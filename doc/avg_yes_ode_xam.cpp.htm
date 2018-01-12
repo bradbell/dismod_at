@@ -159,12 +159,13 @@ A:active { color : purple }
      w_info_vec<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> w_info<font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// prior table</font></i>
+     <font color="#009900">double</font> inf <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font>
      <font color="#009900">double</font> nan <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">quiet_NaN</font></b><font color="#990000">();</font>
      <font color="#008080">vector&lt;dismod_at::prior_struct&gt;</font> <b><font color="#000000">prior_table</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
      prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>prior_name <font color="#990000">=</font> <font color="#FF0000">"prior_zero"</font><font color="#990000">;</font>
      prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>density_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>lower      <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font><font color="#990000">;</font>
-     prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>upper      <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">1.0</font><font color="#990000">;</font>
+     prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>lower      <font color="#990000">=</font> <font color="#990000">-</font>inf<font color="#990000">;</font>
+     prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>upper      <font color="#990000">=</font> <font color="#990000">+</font>inf<font color="#990000">;</font>
      prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>mean       <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
      prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>std        <font color="#990000">=</font> nan<font color="#990000">;</font>
      prior_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>eta        <font color="#990000">=</font> nan<font color="#990000">;</font>
@@ -307,7 +308,9 @@ A:active { color : purple }
      <font color="#990000">);</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// data_model</font></i>
+     <font color="#009900">double</font> bound_random <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font>
      dismod_at<font color="#990000">::</font><font color="#008080">data_model</font> <b><font color="#000000">data_object</font></b><font color="#990000">(</font>
+          bound_random<font color="#990000">,</font>
           parent_node_id<font color="#990000">,</font>
           n_covariate<font color="#990000">,</font>
           n_age_ode<font color="#990000">,</font>

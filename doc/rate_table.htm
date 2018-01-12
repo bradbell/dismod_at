@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Rate Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Rate Table">
-<meta name="keywords" id="keywords" content=" the rate table rate_id rate_name pini iota rho chi omega parent_smooth_id null child_smooth_id random effects hessian child_nslist_id child restrictions constant density lower upper example ">
+<meta name="keywords" id="keywords" content=" the rate table rate_id rate_name pini iota rho chi omega parent_smooth_id null child_smooth_id random effects hessian child_nslist_id child restrictions constant density lower upper bound_random example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -125,6 +125,7 @@ A:active { color : purple }
 <option>---..density</option>
 <option>---..lower</option>
 <option>---..upper</option>
+<option>---..bound_random</option>
 <option>Example</option>
 </select>
 </td>
@@ -421,6 +422,15 @@ The <a href="prior_table.htm#upper" target="_top"><span style='white-space: nowr
 which gets interpreted as plus infinity; see
 <a href="database.htm#Bounds That are Null" target="_top"><span style='white-space: nowrap'>bounds&nbsp;that&nbsp;are&nbsp;null</span></a>
 .
+
+<br>
+<br>
+<b><a name="Child Restrictions.bound_random" id="Child Restrictions.bound_random">bound_random</a></b>
+<br>
+If the lower and upper limits are plus and minus infinity,
+<a href="option_table.htm#Optimizer.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+
+is used for the lower and upper limits.
 
 
 <br>

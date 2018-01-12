@@ -184,9 +184,8 @@ This argument has prototype
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>random_depend</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-If it is true, the residuals that depend on the random effects
-are included.
-If it is false, all of the other residuals are included.
+If it is true (false), only residuals that depend on the random effects
+that have non-equal (equal) bounds, are included.
 
 <br>
 <br>
@@ -200,10 +199,16 @@ This argument has prototype
 and is all the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
  in the order
 specified by <a href="pack_info.htm" target="_top"><span style='white-space: nowrap'>pack_info</span></a>
-; i.e.,
-<small>@(@
+; i.e., <small>@(@
 (u , \theta)
 @)@</small>.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>random_depend</span></font></i></code>
+ is false,
+only the components of 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ that have equal lower and upper
+bounds are defined (the other components are unspecified).
 
 <br>
 <br>
