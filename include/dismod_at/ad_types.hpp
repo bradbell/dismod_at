@@ -22,7 +22,7 @@ $spell
 	hpp
 $$
 
-$section a2_double$$
+$section AD Types$$
 
 $head Syntax$$
 $codei%# include <dismod_at/ad_types.hpp>%$$
