@@ -1,0 +1,41 @@
+$Id:$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-18 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin whats_new_2017$$
+$spell
+	Dismod
+	covariates
+	mulcov
+$$
+
+$section Changes and Additions to Dismod_at During 2017$$
+
+
+$comment Also change bin/copyright.sh when creating whats_new_19$$
+$childtable%
+	omh/whats_new/2016.omh%
+	omh/whats_new/2015.omh
+%$$
+
+$head 01-09$$
+A change was made to speed up the calculations for measurements
+that have the reference value for all the rate covariates; see
+$cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ in the mulcov table
+documentation.
+
+$head 01-12$$
+There was a bug in the change on 12-09. To be specific,
+the case where a child had no
+$cref/random effects/model_variables/Random Effects, u/$$,
+and the child had data with no rate covariates,
+was not handled correctly. This has been fixed.
+
+
+$end

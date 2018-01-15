@@ -42,11 +42,11 @@ for file in $list
 do
 	if [ -e "$file" ] && [ "$file" != '.gitignore' ]
 	then
-		text='Copyright (C) 2014-17 University of Washington'
+		text='Copyright (C) 2014-18 University of Washington'
 		if ! grep "$text" $file > /dev/null
 		then
 			echo $file
-			sed -e 's|Copyright (C) 2014-..|Copyright (C) 2014-17|' -i.$$ $file
+			sed -e 's|Copyright (C) 2014-..|Copyright (C) 2014-18|' -i.$$ $file
 			if diff $file.$$ $file
 			then
 				echo 'bin/check_copyright.sh: program error'
