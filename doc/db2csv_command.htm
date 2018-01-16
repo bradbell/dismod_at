@@ -684,25 +684,34 @@ for this row.
 <br>
 <b><a name="data.csv.sim_value" id="data.csv.sim_value">sim_value</a></b>
 <br>
-If <a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
-
-is present in the previous fit command, it is the simulate table
+If the <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
+ has been run, this is one of the
 <a href="simulate_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
  for
-the specified <a href="simulate_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+data values for the specified
+<a href="db2csv_command.htm#data.csv.data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+ and
+<a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+
+in the previous fit command.
+If there is no
+<a href="simulate_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+
+in the previous fit command, the
+value zero is used for the 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
 .
 
 <br>
 <br>
 <b><a name="data.csv.sim_std" id="data.csv.sim_std">sim_std</a></b>
 <br>
-If <a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
-
-is present in the previous fit command, it is the simulate table
+This is the
 <a href="simulate_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
- for
-the specified <a href="simulate_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
-.
+ for the
+
+<code><i><font color="black"><span style='white-space: nowrap'>sim_value</span></font></i></code>
+ in this table.
 
 <br>
 <br>
