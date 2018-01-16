@@ -7,7 +7,7 @@ var list_across0 = [
 ];
 var list_up0 = [
 'dismod_at.htm',
-'whats_new_2017.htm',
+'whats_new_2018.htm',
 'whats_new_2015.htm'
 ];
 var list_down2 = [
@@ -19,10 +19,11 @@ var list_down2 = [
 'command.htm',
 'python.htm',
 'devel.htm',
-'whats_new_2017.htm',
+'whats_new_2018.htm',
 'wish_list.htm'
 ];
 var list_down1 = [
+'whats_new_2017.htm',
 'whats_new_2016.htm',
 'whats_new_2015.htm'
 ];

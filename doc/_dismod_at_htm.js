@@ -17,7 +17,7 @@ var list_down0 = [
 'command.htm',
 'python.htm',
 'devel.htm',
-'whats_new_2017.htm',
+'whats_new_2018.htm',
 'wish_list.htm'
 ];
 var list_current0 = [

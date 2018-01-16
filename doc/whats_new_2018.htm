@@ -1,0 +1,140 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Changes and Additions to Dismod_at During 2018</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Changes and Additions to Dismod_at During 2018">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 01-16 01-12 01-09 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_whats_new_2018_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="prior_depend.htm" target="_top">Prev</a>
+</td><td><a href="whats_new_2017.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>whats_new_2018</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>whats_new_2018-&gt;</option>
+<option>whats_new_2017</option>
+<option>whats_new_2016</option>
+<option>whats_new_2015</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Contents</option>
+<option>01-16</option>
+<option>01-12</option>
+<option>01-09</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Changes and Additions to Dismod_at During 2018</big></big></b></center>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="01-16" id="01-16">01-16</a></big></b>
+<br>
+The <code><font color="blue">data.csv</font></code> file did not include the
+<a href="db2csv_command.htm#data.csv.sim_value" target="_top"><span style='white-space: nowrap'>sim_value</span></a>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>sim_std</span></font></i></code>
+ columns when there was
+no <a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+
+in the previous fit command.
+If there is a <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+ the default value zero is used for
+
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ when it does not appear in the previous fit command.
+
+<br>
+<br>
+<b><big><a name="01-12" id="01-12">01-12</a></big></b>
+<br>
+There was a bug in the change on 01-09. To be specific,
+the case where a child had no
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
+,
+and the child had data with no rate covariates,
+was not handled correctly. This has been fixed.
+
+<br>
+<br>
+<b><big><a name="01-09" id="01-09">01-09</a></big></b>
+<br>
+A change was made to speed up the calculations for measurements
+that have the reference value for all the rate covariates; see
+<a href="mulcov_table.htm#mulcov_type.rate_value" target="_top"><span style='white-space: nowrap'>rate_value</span></a>
+ in the mulcov table
+documentation.
+
+
+
+<hr>Input File: omh/whats_new/2018.omh
+
+</body>
+</html>
