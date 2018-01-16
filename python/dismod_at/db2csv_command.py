@@ -1,7 +1,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -290,16 +290,21 @@
 # for this row.
 #
 # $subhead sim_value$$
-# If $cref/simulate_index/fit_command/simulate_index/$$
-# is present in the previous fit command, it is the simulate table
+# If the $cref simulate_command$$ has been run, this is one of the
 # $cref/meas_value/simulate_table/meas_value/$$ for
-# the specified $cref/simulate_index/simulate_table/simulate_index/$$.
+# data values for the specified
+# $cref/data_id/db2csv_command/data.csv/data_id/$$ and
+# $cref/simulate_index/fit_command/simulate_index/$$
+# in the previous fit command.
+# If there is no
+# $cref/simulate_index/simulate_table/simulate_index/$$
+# in the previous fit command, the
+# value zero is used for the $icode simulate_index$$.
 #
 # $subhead sim_std$$
-# If $cref/simulate_index/fit_command/simulate_index/$$
-# is present in the previous fit command, it is the simulate table
-# $cref/meas_std/simulate_table/meas_std/$$ for
-# the specified $cref/simulate_index/simulate_table/simulate_index/$$.
+# This is the
+# $cref/meas_std/simulate_table/meas_std/$$ for the
+# $icode sim_value$$ in this table.
 #
 # $subhead Covariates$$
 # For each covariate in the $cref covariate_table$$ there is a column with
@@ -660,10 +665,13 @@ def db2csv_command(database_file_arg) :
 		msg  = 'Previous fit command used simulated data but\n'
 		msg += 'cannot find simulate_table\n'
 		sys.exit(msg)
-	if simulate_index == '' :
+	if not have_table['simulate'] :
 		simulate_index = None
 	else :
-		simulate_index = int(simulate_index)
+		if simulate_index == '' :
+			simulate_index = 0
+		else :
+			simulate_index = int(simulate_index)
 
 	# =========================================================================
 	# option.csv
@@ -976,8 +984,8 @@ def db2csv_command(database_file_arg) :
 			simulate_id =  n_subset * simulate_index + subset_id
 			sim_value = table_data['simulate'][simulate_id]['meas_value']
 			sim_std   = table_data['simulate'][simulate_id]['meas_std']
-			row_out['sim_value'] = sim_value
-			row_out['sim_std']   = sim_std
+			row_out['sim_value'] = convert2output( sim_value )
+			row_out['sim_std']   = convert2output( sim_std )
 		csv_writer.writerow(row_out)
 		subset_id += 1
 	csv_file.close()

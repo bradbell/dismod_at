@@ -13,6 +13,9 @@ $spell
 	Dismod
 	covariates
 	mulcov
+	csv
+	sim
+	std
 $$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -24,18 +27,27 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 01-16$$
+The $code data.csv$$ file did not include the
+$cref/sim_value/db2csv_command/data.csv/sim_value/$$ and
+$icode sim_std$$ columns when there was
+no $cref/simulate_index/fit_command/simulate_index/$$
+in the previous fit command.
+If there is a $cref simulate_table$$ the default value zero is used for
+$icode simulate_index$$ when it does not appear in the previous fit command.
+
+$head 01-12$$
+There was a bug in the change on 01-09. To be specific,
+the case where a child had no
+$cref/random effects/model_variables/Random Effects, u/$$,
+and the child had data with no rate covariates,
+was not handled correctly. This has been fixed.
+
 $head 01-09$$
 A change was made to speed up the calculations for measurements
 that have the reference value for all the rate covariates; see
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ in the mulcov table
 documentation.
-
-$head 01-12$$
-There was a bug in the change on 12-09. To be specific,
-the case where a child had no
-$cref/random effects/model_variables/Random Effects, u/$$,
-and the child had data with no rate covariates,
-was not handled correctly. This has been fixed.
 
 
 $end
