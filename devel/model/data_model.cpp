@@ -389,8 +389,8 @@ pack_object_     (pack_object)
 	double time_max   = max_vector( time_table );
 # endif
 	//
-	assert( age_max  <= age_min  + n_age_ode * ode_step_size );
-	assert( time_max <= time_min + n_time_ode * ode_step_size );
+	assert( age_max  <= age_min  + double(n_age_ode) * ode_step_size );
+	assert( time_max <= time_min + double(n_time_ode) * ode_step_size );
 	//
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	// information for this data point
@@ -412,25 +412,25 @@ pack_object_     (pack_object)
 
 		// determine minimum ode grid age index
 		size_t i_min = 0;
-		while(age_min + (i_min+1) * ode_step_size <= age_lower )
+		while(age_min + double(i_min+1) * ode_step_size <= age_lower )
 			i_min++;
 		i_min = std::min(i_min, n_age_ode - 2);
 
 		// determine number of ode age grid points
 		size_t n_age = 2;
-		while( age_min + (i_min + n_age - 1) * ode_step_size < age_upper )
+		while( age_min + double(i_min + n_age - 1) * ode_step_size < age_upper )
 			n_age++;
 		assert( i_min + n_age <= n_age_ode );
 
 		// determine minimum ode grid time index
 		size_t j_min = 0;
-		while(time_min + (j_min+1) * ode_step_size <= time_lower )
+		while(time_min + double(j_min+1) * ode_step_size <= time_lower )
 			j_min++;
 		j_min  = std::min(j_min, n_age_ode - 2);
 
 		// determine number of ode time grid point
 		size_t n_time = 2;
-		while( time_min + (j_min + n_time - 1) * ode_step_size < time_upper )
+		while( time_min + double(j_min + n_time - 1) * ode_step_size < time_upper )
 			n_time++;
 		assert( j_min + n_time <= n_time_ode );
 
@@ -453,7 +453,7 @@ pack_object_     (pack_object)
 		std::pair<double, double> w_pair, c_pair;
 		for(size_t i = 0; i < n_age-1; i++)
 		{	// age ode grid points
-			double a1 = age_min + (i_min + i) * ode_step_size;
+			double a1 = age_min + double(i_min + i) * ode_step_size;
 			double a2 = a1 + ode_step_size;
 			//
 			// clip to be within limits for this data point
@@ -467,7 +467,7 @@ pack_object_     (pack_object)
 			//
 			for(size_t j = 0; j < n_time-1; j++)
 			{	// time ode grid points
-				double t1 = time_min + (j_min + j) * ode_step_size;
+				double t1 = time_min + double(j_min + j) * ode_step_size;
 				double t2 = t1 + ode_step_size;
 				//
 				// clip to be within limits for this data point
