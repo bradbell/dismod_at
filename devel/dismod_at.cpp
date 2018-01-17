@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -247,8 +247,8 @@ void set_command(
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	// create table_out
-	string table_name = table_out;
-	size_t n_var      = prior_mean.size();
+	string table_name_out = table_out;
+	size_t n_var          = prior_mean.size();
 	vector<string> col_name(1), col_type(1), row_value(n_var);
 	vector<bool>   col_unique(1);
 	col_name[0]       = table_out + "_value";
@@ -262,10 +262,10 @@ void set_command(
 	else if( source == "fit_var" )
 	{	// fit_var_value
 		vector<double> fit_var_value;
-		string table_name  = "fit_var";
-		string column_name = "fit_var_value";
+		string table_name_in  = "fit_var";
+		string column_name    = "fit_var_value";
 		dismod_at::get_table_column(
-			db, table_name, column_name, fit_var_value
+			db, table_name_in, column_name, fit_var_value
 		);
 		//
 		// put it in row_value
@@ -280,10 +280,10 @@ void set_command(
 		//
 		// var_value
 		vector<double> var_value;
-		string table_name  = "sample";
-		string column_name = "var_value";
+		string table_name_in  = "sample";
+		string column_name    = "var_value";
 		dismod_at::get_table_column(
-			db, table_name, column_name, var_value
+			db, table_name_in, column_name, var_value
 		);
 		// n_sample
 		if( var_value.size() % n_var != 0 )
@@ -303,7 +303,7 @@ void set_command(
 		}
 	}
 	dismod_at::create_table(
-		db, table_name, col_name, col_type, col_unique, row_value
+		db, table_name_out, col_name, col_type, col_unique, row_value
 	);
 	return;
 }
@@ -517,7 +517,7 @@ void init_command(
 	// rate variables
 	size_t n_rate  = db_input.rate_table.size();
 	size_t n_child = child_object.child_size();
-	size_t smooth_id, n_var, n_time, node_id;
+	size_t n_var, n_time, node_id;
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
 		{	if( child_id == n_child )
@@ -527,7 +527,7 @@ void init_command(
 			//
 			dismod_at::pack_info::subvec_info info;
 			info      = pack_object.rate_info(rate_id, child_id);
-			smooth_id = info.smooth_id;
+			size_t smooth_id = info.smooth_id;
 			if( smooth_id == DISMOD_AT_NULL_SIZE_T )
 				n_var = 0;
 			else
@@ -548,8 +548,8 @@ void init_command(
 				//
 				// fit_var_value
 # ifndef NDEBUG
-				for(size_t j = 0; j < n_col; j++)
-					assert( row_value[ n_col * var_id + j ] == "" );
+				for(size_t k = 0; k < n_col; k++)
+					assert( row_value[ n_col * var_id + k ] == "" );
 # endif
 				row_value[n_col * var_id + 0] = "rate"; // var_type
 				row_value[n_col * var_id + 1] = to_string( smooth_id );

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -193,98 +193,98 @@ void get_data_table(
 	CppAD::vector<data_struct>& data_table        ,
 	CppAD::vector<double>&      data_cov_value    )
 {	using std::string;
-	// TODO: This could be more efficient if we only allcated one temporary
-	// column at a time (to use with get_table column
 
 	string table_name  = "data";
-	size_t n_data      = check_table_id(db, table_name);
-
-	// column_name
 	string column_name;
+	size_t n_data      = check_table_id(db, table_name);
+	//
+	// data_table
+	{	// read data table
 
-	column_name = "integrand_id";
-	CppAD::vector<int>    integrand_id;
-	get_table_column(db, table_name, column_name, integrand_id);
-	assert( n_data == integrand_id.size() );
+		column_name = "integrand_id";
+		CppAD::vector<int>    integrand_id;
+		get_table_column(db, table_name, column_name, integrand_id);
+		assert( n_data == integrand_id.size() );
 
-	column_name        = "density_id";
-	CppAD::vector<int>    density_id;
-	get_table_column(db, table_name, column_name, density_id);
-	assert( n_data == density_id.size() );
+		column_name        = "density_id";
+		CppAD::vector<int>    density_id;
+		get_table_column(db, table_name, column_name, density_id);
+		assert( n_data == density_id.size() );
 
-	column_name        = "hold_out";
-	CppAD::vector<int>    hold_out;
-	get_table_column(db, table_name, column_name, hold_out);
-	assert( n_data == hold_out.size() );
+		column_name        = "hold_out";
+		CppAD::vector<int>    hold_out;
+		get_table_column(db, table_name, column_name, hold_out);
+		assert( n_data == hold_out.size() );
 
-	column_name        = "node_id";
-	CppAD::vector<int>    node_id;
-	get_table_column(db, table_name, column_name, node_id);
-	assert( n_data == node_id.size() );
+		column_name        = "node_id";
+		CppAD::vector<int>    node_id;
+		get_table_column(db, table_name, column_name, node_id);
+		assert( n_data == node_id.size() );
 
-	column_name        = "weight_id";
-	CppAD::vector<int>    weight_id;
-	get_table_column(db, table_name, column_name, weight_id);
-	assert( n_data == weight_id.size() );
+		column_name        = "weight_id";
+		CppAD::vector<int>    weight_id;
+		get_table_column(db, table_name, column_name, weight_id);
+		assert( n_data == weight_id.size() );
 
-	column_name           =  "meas_value";
-	CppAD::vector<double>     meas_value;
-	get_table_column(db, table_name, column_name, meas_value);
-	assert( n_data == meas_value.size() );
+		column_name           =  "meas_value";
+		CppAD::vector<double>     meas_value;
+		get_table_column(db, table_name, column_name, meas_value);
+		assert( n_data == meas_value.size() );
 
-	column_name           =  "meas_std";
-	CppAD::vector<double>     meas_std;
-	get_table_column(db, table_name, column_name, meas_std);
-	assert( n_data == meas_std.size() );
+		column_name           =  "meas_std";
+		CppAD::vector<double>     meas_std;
+		get_table_column(db, table_name, column_name, meas_std);
+		assert( n_data == meas_std.size() );
 
-	column_name           =  "eta";
-	CppAD::vector<double>     eta;
-	get_table_column(db, table_name, column_name, eta);
-	assert( n_data == eta.size() );
+		column_name           =  "eta";
+		CppAD::vector<double>     eta;
+		get_table_column(db, table_name, column_name, eta);
+		assert( n_data == eta.size() );
 
-	column_name           =  "nu";
-	CppAD::vector<double>     nu;
-	get_table_column(db, table_name, column_name, nu);
-	assert( n_data == nu.size() );
+		column_name           =  "nu";
+		CppAD::vector<double>     nu;
+		get_table_column(db, table_name, column_name, nu);
+		assert( n_data == nu.size() );
 
-	column_name           =  "age_lower";
-	CppAD::vector<double>     age_lower;
-	get_table_column(db, table_name, column_name, age_lower);
-	assert( n_data == age_lower.size() );
+		column_name           =  "age_lower";
+		CppAD::vector<double>     age_lower;
+		get_table_column(db, table_name, column_name, age_lower);
+		assert( n_data == age_lower.size() );
 
-	column_name           =  "age_upper";
-	CppAD::vector<double>     age_upper;
-	get_table_column(db, table_name, column_name, age_upper);
-	assert( n_data == age_upper.size() );
+		column_name           =  "age_upper";
+		CppAD::vector<double>     age_upper;
+		get_table_column(db, table_name, column_name, age_upper);
+		assert( n_data == age_upper.size() );
 
-	column_name           =  "time_lower";
-	CppAD::vector<double>     time_lower;
-	get_table_column(db, table_name, column_name, time_lower);
-	assert( n_data == time_lower.size() );
+		column_name           =  "time_lower";
+		CppAD::vector<double>     time_lower;
+		get_table_column(db, table_name, column_name, time_lower);
+		assert( n_data == time_lower.size() );
 
-	column_name           =  "time_upper";
-	CppAD::vector<double>     time_upper;
-	get_table_column(db, table_name, column_name, time_upper);
-	assert( n_data == time_upper.size() );
+		column_name           =  "time_upper";
+		CppAD::vector<double>     time_upper;
+		get_table_column(db, table_name, column_name, time_upper);
+		assert( n_data == time_upper.size() );
 
-	// fill in the data table
-	assert( data_table.size() == 0 );
-	data_table.resize(n_data);
-	for(size_t i = 0; i < n_data; i++)
-	{
-		data_table[i].integrand_id  = integrand_id[i];
-		data_table[i].density_id    = density_id[i];
-		data_table[i].node_id       = node_id[i];
-		data_table[i].weight_id     = weight_id[i];
-		data_table[i].hold_out      = hold_out[i];
-		data_table[i].meas_value    = meas_value[i];
-		data_table[i].meas_std      = meas_std[i];
-		data_table[i].eta           = eta[i];
-		data_table[i].nu            = nu[i];
-		data_table[i].age_lower     = age_lower[i];
-		data_table[i].age_upper     = age_upper[i];
-		data_table[i].time_lower    = time_lower[i];
-		data_table[i].time_upper    = time_upper[i];
+		// set data_table
+		assert( data_table.size() == 0 );
+		data_table.resize(n_data);
+		for(size_t i = 0; i < n_data; i++)
+		{
+			data_table[i].integrand_id  = integrand_id[i];
+			data_table[i].density_id    = density_id[i];
+			data_table[i].node_id       = node_id[i];
+			data_table[i].weight_id     = weight_id[i];
+			data_table[i].hold_out      = hold_out[i];
+			data_table[i].meas_value    = meas_value[i];
+			data_table[i].meas_std      = meas_std[i];
+			data_table[i].eta           = eta[i];
+			data_table[i].nu            = nu[i];
+			data_table[i].age_lower     = age_lower[i];
+			data_table[i].age_upper     = age_upper[i];
+			data_table[i].time_lower    = time_lower[i];
+			data_table[i].time_upper    = time_upper[i];
+		}
 	}
 
 	// now get the covariates
