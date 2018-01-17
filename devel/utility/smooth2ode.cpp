@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -180,10 +180,10 @@ n_time_si_       ( s_info.time_size() )
 	double time_min = min_vector( time_table );
 # ifndef NDEBUG
 	double age_max    = max_vector( age_table );
-	assert( age_max  <= age_min + (n_age_ode-1) * ode_step_size );
+	assert( age_max  <= age_min + double(n_age_ode-1) * ode_step_size );
 	//
 	double time_max   = max_vector( time_table );
-	assert( time_max <= time_min + (n_time_ode-1) * ode_step_size );
+	assert( time_max <= time_min + double(n_time_ode-1) * ode_step_size );
 # endif
 	// smoothing grid information
 	size_t i_si        = 0;
@@ -198,7 +198,7 @@ n_time_si_       ( s_info.time_size() )
 	// compute the coefficients for each computational grid point
 	coefficient_.resize( n_age_ode * n_time_ode );
 	for(i = 0; i < n_age_ode; i++)
-	{	double age   = i * ode_step_size + age_min;
+	{	double age   = double(i) * ode_step_size + age_min;
 		//
 		if( age <= age_min_si )
 			i_si = 0;
@@ -219,7 +219,7 @@ n_time_si_       ( s_info.time_size() )
 		//
 		for(j = 0; j < n_time_ode; j++)
 		{	// ode grid information
-			double time  = j * ode_step_size + time_min;
+			double time  = double(j) * ode_step_size + time_min;
 			//
 			if( time <= time_min_si )
 				j_si = 0;

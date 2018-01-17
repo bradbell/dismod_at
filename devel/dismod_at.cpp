@@ -2042,13 +2042,13 @@ int main(int n_arg, const char** argv)
 	double age_min    = dismod_at::min_vector( db_input.age_table );
 	double age_max    = dismod_at::max_vector( db_input.age_table );
 	size_t n_age_ode  = size_t( (age_max - age_min) / ode_step_size + 2.0 );
-	assert( age_max  <= age_min  + (n_age_ode - 1) * ode_step_size );
+	assert( age_max  <= age_min  + double(n_age_ode - 1) * ode_step_size );
 	// ---------------------------------------------------------------------
 	// n_time_ode
 	double time_min   = dismod_at::min_vector( db_input.time_table );
 	double time_max   = dismod_at::max_vector( db_input.time_table );
 	size_t n_time_ode = size_t( (time_max - time_min) / ode_step_size + 2.0 );
-	assert( time_max <= time_min  + (n_time_ode - 1) * ode_step_size );
+	assert( time_max <= time_min  + double(n_time_ode - 1) * ode_step_size );
 	// ---------------------------------------------------------------------
 	// parent_node_id
 	size_t parent_node_id   = db_input.node_table.size();

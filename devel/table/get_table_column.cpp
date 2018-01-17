@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -250,7 +250,7 @@ std::string get_table_column_type(
 	//
 	// sqlite seems to use upper case for its types
 	for(size_t i = 0; i < ctype.size(); i++)
-		ctype[i] = std::tolower( ctype[i] );
+		ctype[i] = char( std::tolower( ctype[i] ) );
 	//
 	// sqlite seems to use int for its integer type
 	if( ctype == "int" )
