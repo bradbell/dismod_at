@@ -40,10 +40,10 @@ bin/run_cmake.sh 1> cmake.log 2> cmake.err
 cd build
 #
 echo 'make check 1> check.log 2> check.err'
-make check 1> check.log 2> ../check.err
+make check 1> ../check.log 2> ../check.err
 #
 echo 'make speed 1> speed.log 2> speed.err'
-make speed 1> speed.log 2> ../speed.err
+make speed 1> ../speed.log 2> ../speed.err
 #
 cd ..
 #

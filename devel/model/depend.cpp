@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -90,9 +90,9 @@ CppAD::vector<bool> data_depend(
 	typedef CppAD::sparse_rc< CppAD::vector<size_t> > sparsity_pattern;
 	//
 	// sparsity pattern for 1 by 1 identity matrix
-	size_t nr = 1, nc = 1, nnz = 1, k = 0, r = 0, c = 0;
+	size_t nr = 1, nc = 1, nnz = 1;
 	sparsity_pattern pattern_in(nr, nc, nnz);
-	pattern_in.set(k, r, c);
+	pattern_in.set(0, 0, 0);
 	//
 	// only interested in non-zero derivatives so set dependency false
 	bool dependency    = false;
@@ -200,9 +200,9 @@ CppAD::vector<bool> prior_depend(
 	typedef CppAD::sparse_rc< CppAD::vector<size_t> > sparsity_pattern;
 	//
 	// sparsity pattern for 1 by 1 identity matrix
-	size_t nr = 1, nc = 1, nnz = 1, k = 0, r = 0, c = 0;
+	size_t nr = 1, nc = 1, nnz = 1;
 	sparsity_pattern pattern_in(nr, nc, nnz);
-	pattern_in.set(k, r, c);
+	pattern_in.set(0, 0, 0);
 	//
 	// only interested in non-zero derivatives so set dependency false
 	bool dependency    = false;
